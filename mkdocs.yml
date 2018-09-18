@@ -1,0 +1,5 @@
+site_name: AxonOps Documentation
+theme: 'material'
+nav:
+    - Home: index.md
+
