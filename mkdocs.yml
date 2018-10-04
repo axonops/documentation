@@ -1,5 +1,33 @@
 site_name: AxonOps Documentation
 theme: 'material'
-nav:
-    - Home: index.md
+plugins:
+    - search
 
+nav:
+    - Introduction: index.md
+    - Overview:
+        - 'Motivation': 'overview/motivation.md'
+        - 'Architecture': 'overview/architecture.md'
+    - Getting Started:
+        - 'Installing Server': 'gettingstarted/installing-server.md'
+        - 'Installing Agents': 'gettingstarted/installing-agents.md'
+    - Configuration:
+        - 'Server Configuration': 'configuration/server-configuration.md'
+        - 'Agent Configuration': 'configuration/agent-configuration.md'
+
+
+#    - GUI:
+#        - 'Overview': 'gui-overview.md'
+#        - 'Features': 'gui-features.md'
+#        - 'Setup': 'gui-setup.md'
+#    - Integration:
+#        - 'PagerDuty Integration': 'pagerduy-integration.md'
+#        - 'Slack Integration': 'slack-integration.md'
+#        - 'Email Integration': 'email-integration.md'
+#    - Cassandra:
+#        - 'Dashboards': 'cassandra-dashboards.md'
+#        - Operations:
+#            - 'Repair': 'cassandra-repair.md'
+#            - 'Backup and Restore': 'cassandra-backup-and-restore.md'
+#    - Kafka:
+        
