@@ -14,16 +14,17 @@ nav:
     - Configuration:
         - 'Server Configuration': 'configuration/server-configuration.md'
         - 'Agent Configuration': 'configuration/agent-configuration.md'
+    - Integration:
+            - 'PagerDuty Integration': 'integrations/pagerduy-integration.md'
+            - 'Slack Integration': 'integrations/slack-integration.md'
+            - 'Email Integration': 'integrations/email-integration.md'
 
 
 #    - GUI:
 #        - 'Overview': 'gui-overview.md'
 #        - 'Features': 'gui-features.md'
 #        - 'Setup': 'gui-setup.md'
-#    - Integration:
-#        - 'PagerDuty Integration': 'pagerduy-integration.md'
-#        - 'Slack Integration': 'slack-integration.md'
-#        - 'Email Integration': 'email-integration.md'
+   
 #    - Cassandra:
 #        - 'Dashboards': 'cassandra-dashboards.md'
 #        - Operations:
