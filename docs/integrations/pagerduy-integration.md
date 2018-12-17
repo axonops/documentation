@@ -22,9 +22,9 @@
 <li> 
 
     <div>
-        <h5> Complete the fields in the pop-up form</h5>
+        <h5> Complete the fields in the pop-up form</h5> 
         <ul>
-       <li> <p> Enter routing key from <code> <a href="#step1">step 1</a>.</code> and <code>click</code> <img class="testbtn" src="../../img/testb.png" height="23" width="42" alt="testb"></p></li>
+       <li> <p>  Enter <code>Group name</code> &amp; <code>routing key</code> from <code> <a href="#step1">step 1</a>.</code> and <code>click</code> <img class="testbtn" src="../../img/testb.png" height="23" width="42" alt="testb"></p></li>
        <p class="pagerdutygif"><img src="../../img/routingkey.png" alt="routingkey"></p>
        <li><p>To add additional <code>routing keys</code> click on <img class="testbtn" src="../../img/plusbtn.png"  alt="testb">, enter the additional routing key and <code>click</code> <img class="testbtn" src="../../img/testb.png" height="23" width="42" alt="testb"> </p></li>
        <p class="pagerdutygif"><img src="../../img/additionalroutingkey.png" alt="additionalroutingkey"></p>
