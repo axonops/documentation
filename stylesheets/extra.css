@@ -1,7 +1,15 @@
+
+
 .pagerdutygif{
-text-align: center}
+    text-align: center;
+}
 
 .testbtn {
     position: relative;
     top:7px;
+}
+
+
+.customform.admonition{
+ border-left: none;
 }
