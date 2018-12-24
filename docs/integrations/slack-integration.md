@@ -17,7 +17,8 @@
                 <div class="customform admonition">
                     <p class="pagerdutygif"><img src="../../img/AddConfigSLACK.png" alt="AddConfigSLACK"></p>
                 </div>
-                <li>In <code>Post to Channel</code> Box select an option from the<code>choose a channel</code> dropdown menu .</li>
+                <li>In <code>Post to Channel</code> Box select an option from the<code>choose a channel</code> dropdown
+                    menu .</li>
                 <li><code>Click</code> <code>Add Incoming WebHooks Integration</code></li>
                 <div class="customform admonition">
                     <p class="pagerdutygif"><img src="../../img/ChannelBoxSLACK.png" alt="ChannelBoxSLACK"></p>
@@ -70,12 +71,13 @@
                 <li>
                     <p>To remove any <code>WebHook URL</code> click on<img class="testbtn" src="../../img/minusbtn.png"
                             alt="testb">
-                        <p>
+                    </p>
                 </li>
 
                 <li>
                     <p> Click <img class="testbtn" src="../../img/submit.png" height="auto" width="80" alt="submit">
-                        and close the pop-up form, on the Integrtions Menu the Slack Icon should now read <code>Installed</code>. <p>
+                        and close the pop-up form, on the Integrtions Menu the Slack Icon should now read <code>Installed</code>.
+                        </lip>
                 </li>
                 <div class="customform admonition">
                     <p class="pagerdutygif"><img align="top" src="../../img/installedslack.png" alt="installedslack">
@@ -84,7 +86,7 @@
 
                 <li>
                     <p>To Edit any <code>WebHook URL</code> click on<img src="../../img/edit.png" alt="testb">
-                        <p>
+                    </p>
                 </li>
                 <div class="customform admonition">
                     <p class="pagerdutygif"><img src="../../img/editslack.png" alt="editslack"></p>
@@ -94,7 +96,7 @@
                         <code>WebHook URL</code> or <img class="testbtn" src="../../img/delbtn.png" alt="delbtn"> to
                         remove <code>group of keys</code> and click <img class="testbtn" src="../../img/submit.png"
                             height="auto" width="80" alt="submit">
-                        <p>
+                    </p>
                 </li>
                 <li>
                     <p>To <span style="color:red">Remove</span> Slack <code>groups</code> move the cusror over the

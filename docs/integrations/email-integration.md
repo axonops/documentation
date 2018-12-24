@@ -45,7 +45,7 @@
 
                 <li>
                     <p> Click <img class="testbtn" src="../../img/submit.png" height="auto" width="80" alt="submit">
-                        and close the pop-up form, should now read <code>Installed</code>. <p>
+                        and close the pop-up form, should now read <code>Installed</code>. </p>
                 </li>
                 <div class="customform admonition">
                     <p class="pagerdutygif"><img align="top" src="../../img/installedemail.png" alt="installedemail">
@@ -54,10 +54,10 @@
 
                 <li>
                     <p>To Edit <code>email</code> click on<img src="../../img/edit.png" alt="testb">
-                        <p>
-                            <p>To <span style="color:red">Delete</span> <code>email</code> click on <img class="testbtn"
-                                    src="../../img/delbtnb.png" alt="delbtn">
-                                <p>
+                    </p>
+                    <p>To <span style="color:red">Delete</span> <code>email</code> click on <img class="testbtn" src="../../img/delbtnb.png"
+                            alt="delbtn">
+                    </p>
                 </li>
                 <div class="customform admonition">
                     <p class="pagerdutygif"><img src="../../img/emails.png" alt="emails"></p>

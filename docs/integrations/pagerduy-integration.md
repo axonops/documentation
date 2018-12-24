@@ -18,7 +18,7 @@
                 <code>Add</code> symbol
             </p>
             <div class="customform admonition">
-            <p class="pagerdutygif"><img src="../../img/pagerdutyhover.gif" alt="pagerdutyhover"></p>
+                <p class="pagerdutygif"><img src="../../img/pagerdutyhover.gif" alt="pagerdutyhover"></p>
             </div>
         </div>
 
@@ -43,20 +43,21 @@
                 <li>
                     <p>To remove any <code>routing key</code> click on<img class="testbtn" src="../../img/minusbtn.png"
                             alt="testb">
-                        <p>
+                    </p>
                 </li>
 
                 <li>
                     <p> Click <img class="testbtn" src="../../img/submit.png" height="auto" width="80" alt="submit">
-                        and close the pop-up form, on the Integrations Menu the Pagerduty Icon should now read <code>Installed</code>. <p>
+                        and close the pop-up form, on the Integrations Menu the Pagerduty Icon should now read <code>Installed</code>.
+                    </p>
                 </li>
                 <div class="customform admonition">
-                <p class="pagerdutygif"><img align="top" src="../../img/pdinstalled.png" alt="pdinstalled"> </p>
+                    <p class="pagerdutygif"><img align="top" src="../../img/pdinstalled.png" alt="pdinstalled"> </p>
                 </div>
 
                 <li>
                     <p>To Edit any <code>routing key</code> click on<img src="../../img/edit.png" alt="testb">
-                        <p>
+                    </p>
                 </li>
                 <p class="pagerdutygif"><img src="../../img/pdintegrations.png" alt="pdintegrations"></p>
                 <li>
@@ -64,14 +65,16 @@
                         <code>routing key</code> or <img class="testbtn" src="../../img/delbtn.png" alt="delbtn"> to
                         remove <code>group of keys</code> and click <img class="testbtn" src="../../img/submit.png"
                             height="auto" width="80" alt="submit">
-                        <p>
+                    </p>
                 </li>
                 <li>
                     <p>To <span style="color:red">Remove</span> pagerduty <code>groups</code> move the cusror over the
-                        pagerduty icon <code>click</code> on the <code>Delete</code> symbol and <code>Confirm</code></p>
+                        pagerduty icon <code>click</code> on the <code>Delete</code> symbol and <code>Confirm</code>
+                    </p>
                 </li>
                 <div class="customform admonition">
-                <p class="pagerdutygif"><img src="../../img/deletegif.gif" alt="deletegif"></p>
+                    <p class="pagerdutygif"><img src="../../img/deletegif.gif" alt="deletegif">
+                    </p>
                 </div>
             </ul>
 
