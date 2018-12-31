@@ -59,7 +59,9 @@
                     <p>To Edit any <code>routing key</code> click on<img src="../../img/edit.png" alt="testb">
                     </p>
                 </li>
+                <div class="customform admonition">
                 <p class="pagerdutygif"><img src="../../img/pdintegrations.png" alt="pdintegrations"></p>
+                </div>
                 <li>
                     <p>and press <img class="testbtn" src="../../img/minusbtn.png" alt="minusbtn"> to remove specific
                         <code>routing key</code> or <img class="testbtn" src="../../img/delbtn.png" alt="delbtn"> to
