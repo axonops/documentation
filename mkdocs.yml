@@ -24,7 +24,13 @@ nav:
             - 'PagerDuty Integration': 'integrations/pagerduy-integration.md'
             - 'Slack Integration': 'integrations/slack-integration.md'
             - 'Email Integration': 'integrations/email-integration.md'
-            - 'Default Routing': 'integrations/default-routing.md'
+            
+    - How-to:
+            - 'Setup Alert Rules': how-to/setup-alert-rules.md
+            - 'Setup Healthcheks': how-to/setup-healthcheks.md
+            - 'Setup Default Routing': 'how-to/default-routing.md'
+            - 'Setup Backup-Restore Notifications': 'how-to/backup-restore-notifications.md'
+            - 'Setup Dashboards-Global Integrations': 'how-to/setup-dashboards-global-integrations.md'
 
 
 #    - GUI:
