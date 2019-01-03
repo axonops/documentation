@@ -2,7 +2,7 @@ site_name: AxonOps Documentation
 theme:
   name: 'material'
   favicon: 'img/favicon.ico'
-  logo: 'img/slack_axonops.png'
+  logo: 'img/bg_logo.png'
 extra_css:
   - 'stylesheets/extra.css'
 plugins:
