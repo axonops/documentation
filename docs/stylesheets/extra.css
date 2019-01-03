@@ -26,6 +26,9 @@
     width: 112px;
     height: auto;
 }
+.md-header-nav__button {
+    margin: 0.14rem;
+}
 /*
 
 .md-header[data-md-state="shadow"] {

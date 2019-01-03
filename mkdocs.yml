@@ -1,4 +1,4 @@
-site_name: AxonOps Documentation
+site_name: Documentation
 theme:
   name: 'material'
   favicon: 'img/favicon.ico'
