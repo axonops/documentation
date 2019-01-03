@@ -18,10 +18,10 @@
                     </br>
                     you can either use the slider <img class="testbtn" src="../../img/sliderbar.png" alt="sliderbar">
                     to use <strong>the default routing</strong>
-                    or use the <img class="testbtn" src="../../img/editIcon.png" alt="editIcon"> icon to customize the
+                    or use the <img class="testbtn" src="../../img/editwarningIcon.png" alt="editwarningIcon"> icon to customize the
                     notification integrations. </p>
                 <blockquote>
-                    <p>Notice: <img class="testbtn" src="../../img/editIcon.png" alt="editIcon"> not available when <a
+                    <p>Notice: <img class="testbtn" src="../../img/editwarningIcon.png" alt="editwarningIcon"> not available when <a
                             href="/how-to/default-routing/">default routing</a> <img class="testbtn" src="../../img/defaultroutingselected.png"
                             alt="defaultroutingselected"> selected</p>
                 </blockquote>
@@ -38,8 +38,8 @@
             <h5>Customize notifications</h5>
             <ul>
                 <li>
-                    <p>To customize notifications <code>click</code> on <img class="testbtn" src="../../img/editIcon.png"
-                            alt="editIcon">
+                    <p>To customize notifications <code>click</code> on <img class="testbtn" src="../../img/editwarningIcon.png"
+                            alt="editwarningIcon">
                         select the integrations that you require and click <code>Close</code>.</p>
                 </li>
 
@@ -57,7 +57,7 @@
                 <blockquote>
                     <p>If you want to remove <a href="/how-to/default-routing/">default routing</a> groups from a
                         severity and create custom groups , use the slider bar to remove
-                        default routing <code>click</code> the <img class="testbtn" src="../../img/editIcon.png" alt="editIcon">
+                        default routing <code>click</code> the <img class="testbtn" src="../../img/editwarningIcon.png" alt="editwarningIcon">
                         and follow this <a href="#step1">steps</a> </p>
                 </blockquote>
                 <blockquote>
