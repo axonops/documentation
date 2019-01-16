@@ -22,9 +22,16 @@ nav:
     - Overview:
         - 'Motivation': 'overview/motivation.md'
         - 'Architecture': 'overview/architecture.md'
-    - Getting Started:
-        - 'Installing Server': 'gettingstarted/installing-server.md'
-        - 'Installing Agents': 'gettingstarted/installing-agents.md'
+    - Installation:
+        - Axonops Agents:
+            - 'Installing on Ubuntu/Debian': 'installation/agents/installing-ubuntu.md'
+            - 'Installing on Centos/Redhat': 'installation/agents/installing-centos.md'
+        - Axonops Server:
+            - 'Installing on Ubuntu/Debian': 'installation/server/installing-ubuntu.md'
+            - 'Installing on Centos/Redhat': 'installation/server/installing-centos.md'
+           
+       
+        
     - Configuration:
         - 'Server Configuration': 'configuration/server-configuration.md'
         - 'Agent Configuration': 'configuration/agent-configuration.md'
