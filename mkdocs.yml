@@ -29,18 +29,40 @@ nav:
         - Axonops Server:
             - 'Installing on Ubuntu/Debian': 'installation/server/installing-ubuntu.md'
             - 'Installing on Centos/Redhat': 'installation/server/installing-centos.md'
-           
-       
-        
+
     - Configuration:
         - 'Server Configuration': 'configuration/server-configuration.md'
         - 'Agent Configuration': 'configuration/agent-configuration.md'
-    - Integration: 
-            - 'Overview' : integrations/overview.md
+    
+    - Cluster Overview:
+        - 'Cluster Overview': 'cluster-overview.md'
+
+    - Monitoring:
+        - Health Checks:
+            - 'Health Checks Overview': 'monitoring/health-checs/overview.md'
+            - 'Health Checks Configurations': 'monitoring/health-checks/configurations.md'
+            - 'Health Checks Alerting': 'monitoring/health-checks/alerting.md'
+        - Metrics Dashboard:
+            - Cassandra:
+                - 'Metrics Dashboard Overview': 'monitoring/cassandra-metrics-dashboard/overview.md'
+                - 'Cassandra Metrics': 'monitoring/cassandra-metrics-dashboard/cassandra.md'
+                - 'Metrics Alerting Configurations': 'monitoring/cassandra-metrics-dashboard/overview.md'
+    
+    - Notification Integrations:
+            - 'Notification Integration Overview' : 'integrations/overview.md'
             - 'PagerDuty Integration': 'integrations/pagerduy-integration.md'
             - 'Slack Integration': 'integrations/slack-integration.md'
             - 'Email Integration': 'integrations/email-integration.md'
-            
+
+    - Operations:
+        - Cassandra:
+            - Repair:
+                - 'Cassandra Repair Overview': 'operations/cassandra-repair/overview.md'
+                - 'Cassandra Repair Configurations': 'operations/cassandra-repair/configurations.md'
+            - Backups:
+                - 'Cassandra Backup Overview': 'operations/cassandra-backup/overview.md'
+                - 'Cassandra Backup Configurations': 'operations/cassandra-backup/overview.md'
+
     - How-to:
             - 'Setup Alert Rules': how-to/setup-alert-rules.md
             - 'Setup Healthcheks': how-to/setup-healthcheks.md
