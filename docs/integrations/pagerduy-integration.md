@@ -1,86 +1,65 @@
 # Setup Pagerduty
 
 
-<ol>
-    <li>
-        <div id="step1">
-            <h5> Create pagerduty routing key.</h5>
-            <p> Using these <a href="https://support.pagerduty.com/docs/services-and-integrations" target="_blank">steps.</a>
-                Please note down the pagerduty <strong>routing key</strong></p>
-        </div>
-    </li>
-    <li>
+###  Create Pagerduty Routing Key
 
-        <div>
-            <h5> Insert pagerduty routing key.</h5>
-            <p>On the Axonops application menu, select <code>Alert & Notifications -> Integration </code>.</p>
-            <p>On the <code>Setup</code> menu, move the cursor over the pagerduty icon and <code>click</code> on the
-                <code>Add</code> symbol
-            </p>
-            <div class="customform admonition">
-                <p class="pagerdutygif"><img src="../../img/pagerdutyhover.gif" alt="pagerdutyhover"></p>
-            </div>
-        </div>
+Using these [steps][1]. Please note down the pagerduty ***routing key***
 
-    </li>
-    <li>
+[1]: https://support.pagerduty.com/docs/services-and-integrations
 
-        <div>
-            <h5> Complete the fields in the pop-up form</h5>
-            <ul>
-                <li>
-                    <p> Enter <code>Group name</code> &amp; <code>routing key</code> from <code> <a href="#step1">step 1</a>.</code>
-                        and <code>click</code> <img class="testbtn" src="../../img/testb.png" height="23" width="42"
-                            alt="testb"></p>
-                </li>
-                <p class="pagerdutygif"><img src="../../img/routingkey.png" alt="routingkey"></p>
-                <li>
-                    <p>To add additional <code>routing keys</code> click on <img class="testbtn" src="../../img/plusbtn.png"
-                            alt="testb">, enter the additional routing key and <code>click</code> <img class="testbtn"
-                            src="../../img/testb.png" height="23" width="42" alt="testb"> </p>
-                </li>
-                <p class="pagerdutygif"><img src="../../img/additionalroutingkey.png" alt="additionalroutingkey"></p>
-                <li>
-                    <p>To remove any <code>routing key</code> click on<img class="testbtn" src="../../img/minusbtn.png"
-                            alt="testb">
-                    </p>
-                </li>
 
-                <li>
-                    <p> Click <img class="testbtn" src="../../img/submit.png" height="auto" width="80" alt="submit">
-                        and close the pop-up form, on the Integrations Menu the Pagerduty Icon should now read <code>Installed</code>.
-                    </p>
-                </li>
-                <div class="customform admonition">
-                    <p class="pagerdutygif"><img align="top" src="../../img/pdinstalled.png" alt="pdinstalled"> </p>
-                </div>
+### Insert Pagerduty Routing Key
 
-                <li>
-                    <p>To Edit any <code>routing key</code> click on<img src="../../img/edit.png" alt="testb">
-                    </p>
-                </li>
-                <div class="customform admonition">
-                <p class="pagerdutygif"><img src="../../img/pdintegrations.png" alt="pdintegrations"></p>
-                </div>
-                <li>
-                    <p>and press <img class="testbtn" src="../../img/minusbtn.png" alt="minusbtn"> to remove specific
-                        <code>routing key</code> or <img class="testbtn" src="../../img/delbtn.png" alt="delbtn"> to
-                        remove <code>group of keys</code> and click <img class="testbtn" src="../../img/submit.png"
-                            height="auto" width="80" alt="submit">
-                    </p>
-                </li>
-                <li>
-                    <p>To <span style="color:red">Remove</span> pagerduty <code>groups</code> move the cusror over the
-                        pagerduty icon <code>click</code> on the <code>Delete</code> symbol and <code>Confirm</code>
-                    </p>
-                </li>
-                <div class="customform admonition">
-                    <p class="pagerdutygif"><img src="../../img/deletegif.gif" alt="deletegif">
-                    </p>
-                </div>
-            </ul>
+On the Axonops application menu, select `Alert & Notifications -> Integration` .
 
-        </div>
+On the `Setup` menu, move the cursor over the pagerduty icon and `click` on the `Add` symbol.
 
-    </li>
-    </ul>
+!!! infomy 
+
+    [![Install Pagerduty](/img/pagerdutyhover.gif)](/img/pagerdutyhover.gif)
+    
+
+
+### Add Routing Keys
+
+ Enter `Group name` & `routing key` from [step 1][2]. and click `TEST`
+
+[2]: #insert-pagerduty-routing-key 
+
+ 
+
+[![Routing key](/img/routingkey.png)](/img/routingkey.png)
+
+#### Additional Key(s)
+
+To add `additional routing` keys click on [![plus button](/img/plusbtn.png)](/img/plusbtn.png), enter the additional routing key and `click` `TEST`
+
+[![Routing key](/img/additionalroutingkey.png)](/img/additionalroutingkey.png)
+
+* Click `SUBMIT` and close the pop-up form, on the Integrations Menu the Pagerduty Icon should now read `Installed`.
+
+!!! infomy 
+
+    [![Insralled](/img/pdinstalled.png)](/img/pdinstalled.png)
+
+#### Remove a key
+
+To remove any routing key click on [![minus button](/img/minusbtn.png)](/img/minusbtn.png)
+
+
+### Edit Routing key(s)
+
+* To Edit any `routing key` click on [![Edit](/img/edit.png)](/img/edit.png)
+
+!!! infomy
+    [![Integrations](/img/pdintegrations.png)](/img/pdintegrations.png)
+
+* and press [![minusbtn](/img/minusbtn.png)](/img/minusbtn.png)  to remove specific `routing key` or [![delbtn](/img/delbtn.png)](/img/delbtn.png)  to remove `group of keys` and click `SUMBIT`
+
+##Remove Routing key(s)
+
+* To Remove pagerduty `groups` move the cusror over the pagerduty icon `click` on the `Delete` symbol and `Confirm`
+
+!!! infomy
+    [![delete](/img/deletegif.gif)](/img/deletegif.gif)
+
