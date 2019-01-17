@@ -29,12 +29,13 @@ nav:
         - Axonops Server:
             - 'Installing on Ubuntu/Debian': 'installation/server/installing-ubuntu.md'
             - 'Installing on Centos/Redhat': 'installation/server/installing-centos.md'
-           
-       
-        
+        - Axonops Dashboard:
+            - 'Installing on Ubuntu/Debian': 'installation/gui/installing-ubuntu.md'
+            - 'Installing on Centos/Redhat': 'installation/gui/installing-centos.md'
     - Configuration:
         - 'Server Configuration': 'configuration/server-configuration.md'
         - 'Agent Configuration': 'configuration/agent-configuration.md'
+        - 'Axon-Dash Configuration': 'configuration/axondash.md'
     - Integration: 
             - 'Overview' : integrations/overview.md
             - 'PagerDuty Integration': 'integrations/pagerduy-integration.md'

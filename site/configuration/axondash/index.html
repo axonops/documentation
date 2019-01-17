@@ -36,7 +36,7 @@
     
     
       
-        <title>Setup Dashboards-Global Integrations - Documentation</title>
+        <title>Axon-Dash Configuration - Documentation</title>
       
     
     
@@ -74,7 +74,7 @@
     <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
     <label class="md-overlay" data-md-component="overlay" for="__drawer"></label>
     
-      <a href="#setup-dashboards-global-integrations" tabindex="1" class="md-skip">
+      <a href="#configuring-axonops-agent" tabindex="1" class="md-skip">
         Skip to content
       </a>
     
@@ -100,7 +100,7 @@
                 Documentation
               </span>
               <span class="md-header-nav__topic">
-                Setup Dashboards-Global Integrations
+                Axon-Dash Configuration
               </span>
             
           
@@ -397,10 +397,12 @@
       
       
 
+  
 
-  <li class="md-nav__item md-nav__item--nested">
+
+  <li class="md-nav__item md-nav__item--active md-nav__item--nested">
     
-      <input class="md-toggle md-nav__toggle" data-md-toggle="nav-4" type="checkbox" id="nav-4">
+      <input class="md-toggle md-nav__toggle" data-md-toggle="nav-4" type="checkbox" id="nav-4" checked>
     
     <label class="md-nav__link" for="nav-4">
       Configuration
@@ -418,7 +420,7 @@
 
 
   <li class="md-nav__item">
-    <a href="../../configuration/server-configuration/" title="Server Configuration" class="md-nav__link">
+    <a href="../server-configuration/" title="Server Configuration" class="md-nav__link">
       Server Configuration
     </a>
   </li>
@@ -430,7 +432,7 @@
 
 
   <li class="md-nav__item">
-    <a href="../../configuration/agent-configuration/" title="Agent Configuration" class="md-nav__link">
+    <a href="../agent-configuration/" title="Agent Configuration" class="md-nav__link">
       Agent Configuration
     </a>
   </li>
@@ -440,11 +442,20 @@
           
           
 
+  
 
-  <li class="md-nav__item">
-    <a href="../../configuration/axondash/" title="Axon-Dash Configuration" class="md-nav__link">
+
+  <li class="md-nav__item md-nav__item--active">
+    
+    <input class="md-toggle md-nav__toggle" data-md-toggle="toc" type="checkbox" id="__toc">
+    
+      
+    
+    
+    <a href="./" title="Axon-Dash Configuration" class="md-nav__link md-nav__link--active">
       Axon-Dash Configuration
     </a>
+    
   </li>
 
         
@@ -529,12 +540,10 @@
       
       
 
-  
 
-
-  <li class="md-nav__item md-nav__item--active md-nav__item--nested">
+  <li class="md-nav__item md-nav__item--nested">
     
-      <input class="md-toggle md-nav__toggle" data-md-toggle="nav-6" type="checkbox" id="nav-6" checked>
+      <input class="md-toggle md-nav__toggle" data-md-toggle="nav-6" type="checkbox" id="nav-6">
     
     <label class="md-nav__link" for="nav-6">
       How-to
@@ -552,7 +561,7 @@
 
 
   <li class="md-nav__item">
-    <a href="../setup-alert-rules/" title="Setup Alert Rules" class="md-nav__link">
+    <a href="../../how-to/setup-alert-rules/" title="Setup Alert Rules" class="md-nav__link">
       Setup Alert Rules
     </a>
   </li>
@@ -564,7 +573,7 @@
 
 
   <li class="md-nav__item">
-    <a href="../setup-healthcheks/" title="Setup Healthcheks" class="md-nav__link">
+    <a href="../../how-to/setup-healthcheks/" title="Setup Healthcheks" class="md-nav__link">
       Setup Healthcheks
     </a>
   </li>
@@ -576,7 +585,7 @@
 
 
   <li class="md-nav__item">
-    <a href="../default-routing/" title="Setup Default Routing" class="md-nav__link">
+    <a href="../../how-to/default-routing/" title="Setup Default Routing" class="md-nav__link">
       Setup Default Routing
     </a>
   </li>
@@ -588,7 +597,7 @@
 
 
   <li class="md-nav__item">
-    <a href="../backup-restore-notifications/" title="Setup Backup-Restore Notifications" class="md-nav__link">
+    <a href="../../how-to/backup-restore-notifications/" title="Setup Backup-Restore Notifications" class="md-nav__link">
       Setup Backup-Restore Notifications
     </a>
   </li>
@@ -598,20 +607,11 @@
           
           
 
-  
 
-
-  <li class="md-nav__item md-nav__item--active">
-    
-    <input class="md-toggle md-nav__toggle" data-md-toggle="toc" type="checkbox" id="__toc">
-    
-      
-    
-    
-    <a href="./" title="Setup Dashboards-Global Integrations" class="md-nav__link md-nav__link--active">
+  <li class="md-nav__item">
+    <a href="../../how-to/setup-dashboards-global-integrations/" title="Setup Dashboards-Global Integrations" class="md-nav__link">
       Setup Dashboards-Global Integrations
     </a>
-    
   </li>
 
         
@@ -648,79 +648,8 @@
               
                 
                 
-                <h1 id="setup-dashboards-global-integrations">Setup Dashboards Global Integrations<a class="headerlink" href="#setup-dashboards-global-integrations" title="Permanent link">&para;</a></h1>
-<ol>
-
-    <li>
-
-        <div>
-            <p>On the Axonops application menu, click <code>Alerts &amp; Notifications -> Active </code> and <strong>select</strong>
-                <code>Dashboards Global Routing</code>tab.</p>
-            <div class="customform admonition info">
-                <p class="admonition-title">Notification <code>Severities</code>.</p>
-                <p>For each notifications severity <span class="spanimages"><img class="testbtn" src="../../img/info.png"
-                            alt="info">Info</span>
-                    <span class="spanimages"><img class="testbtn" src="../../img/warning.png" alt="warning">Warning</span>
-                    <span class="spanimages"><img class="testbtn" src="../../img/error.png" alt="error">Error</span>
-                    </br>
-                    you can either use the slider <img class="testbtn" src="../../img/sliderbar.png" alt="sliderbar">
-                    to use <strong>the default routing</strong>
-                    or use the <img class="testbtn" src="../../img/editwarningIcon.png" alt="editwarningIcon"> icon to customize the
-                    notification integrations. </p>
-                <blockquote>
-                    <p>Notice: <img class="testbtn" src="../../img/editwarningIcon.png" alt="editwarningIcon"> not available when <a
-                            href="/how-to/default-routing/">default routing</a> <img class="testbtn" src="../../img/defaultroutingselected.png"
-                            alt="defaultroutingselected"> selected</p>
-                </blockquote>
-            </div>
-            <div class="customform admonition">
-                <p class="pagerdutygif"><img src="../../img/globaldashboardroutings.png" alt="globaldashboardroutings"></p>
-            </div>
-        </div>
-
-    </li>
-    <li id="step1">
-
-        <div>
-            <h5>Customize notifications</h5>
-            <ul>
-                <li>
-                    <p>To customize notifications <code>click</code> on <img class="testbtn" src="../../img/editwarningIcon.png"
-                            alt="editwarningIcon">
-                        select the integrations that you require and click <code>Close</code>.</p>
-                </li>
-
-                <div class="customform admonition">
-                    <p class="pagerdutygif"><img src="../../img/customizednotifications.png" alt="customizednotifications"></p>
-                </div>
-                <li>
-                    <p>Noticed that the <code>Warning Integration</code> were customized. You can <span style="color:red">remove</span>
-                        these by clicking the <img class="testbtn" src="../../img/delbtn.png" alt="delbtn">.
-
-                    </p>
-
-                </li>
-
-                <blockquote>
-                    <p>If you want to remove <a href="/how-to/default-routing/">default routing</a> groups from a
-                        severity and create custom groups , use the slider bar to remove
-                        default routing <code>click</code> the <img class="testbtn" src="../../img/editwarningIcon.png" alt="editwarningIcon">
-                        and follow this <a href="#step1">steps</a> </p>
-                </blockquote>
-                <blockquote>
-                    <p>If you do not require any notifications <strong>ensure</strong> the <code>default routing</code>
-                        is off <img class="testbtn" src="../../img/sliderbar.png" alt="sliderbar"> and <span style="color:red">delete</span>
-                        any previously created custom notification. </p>
-                </blockquote>
-                <div class="customform admonition">
-                    <p class="pagerdutygif"><img src="../../img/globaldashboardroutings.png" alt="globaldashboardroutings"></p>
-                </div>
-
-            </ul>
-        </div>
-
-    </li>
-    </ul>
+                <h1 id="configuring-axonops-agent">Configuring AxonOps Agent<a class="headerlink" href="#configuring-axonops-agent" title="Permanent link">&para;</a></h1>
+<p>Work in progress</p>
                 
                   
                 
@@ -741,7 +670,7 @@
     <div class="md-footer-nav">
       <nav class="md-footer-nav__inner md-grid">
         
-          <a href="../backup-restore-notifications/" title="Setup Backup-Restore Notifications" class="md-flex md-footer-nav__link md-footer-nav__link--prev" rel="prev">
+          <a href="../agent-configuration/" title="Agent Configuration" class="md-flex md-footer-nav__link md-footer-nav__link--prev" rel="prev">
             <div class="md-flex__cell md-flex__cell--shrink">
               <i class="md-icon md-icon--arrow-back md-footer-nav__button"></i>
             </div>
@@ -750,11 +679,25 @@
                 <span class="md-footer-nav__direction">
                   Previous
                 </span>
-                Setup Backup-Restore Notifications
+                Agent Configuration
               </span>
             </div>
           </a>
         
+        
+          <a href="../../integrations/overview/" title="Overview" class="md-flex md-footer-nav__link md-footer-nav__link--next" rel="next">
+            <div class="md-flex__cell md-flex__cell--stretch md-footer-nav__title">
+              <span class="md-flex__ellipsis">
+                <span class="md-footer-nav__direction">
+                  Next
+                </span>
+                Overview
+              </span>
+            </div>
+            <div class="md-flex__cell md-flex__cell--shrink">
+              <i class="md-icon md-icon--arrow-forward md-footer-nav__button"></i>
+            </div>
+          </a>
         
       </nav>
     </div>

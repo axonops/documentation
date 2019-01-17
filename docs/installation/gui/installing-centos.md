@@ -2,7 +2,7 @@
 # Installing on RPM-based Linux (CentOS, Fedora, OpenSuse, RedHat)
 
 
-##  Axon-Server Installation
+##  Axon-Dash Installation
 
 <table style="white-space: nowrap;">
   <thead>
@@ -37,7 +37,7 @@
 
 ### Install Stable
 
-Before installing [axon-server][1], you need to make sure you have ... and ... – ... up and running. You can verify if you're already good to go with the following commands:
+Before installing [axon-dash][1], you need to make sure you have ... and ... – ... up and running. You can verify if you're already good to go with the following commands:
 
 [1]: https://axonops.com
 
@@ -48,7 +48,7 @@ Before installing [axon-server][1], you need to make sure you have ... and ... �
 # ... 9.0.1
 ```
 
-Installing and verifying axon-server is as simple as:
+Installing and verifying axon-dash is as simple as:
 
 ``` debcontrol
  sudo yum install <rpm package url>
@@ -58,7 +58,7 @@ Installing and verifying axon-server is as simple as:
 Example:
 
 ``` debcontrol
- sudo yum install https://dl.axon-server.com/oss/release/axon-server-5.4.2-1.x86_64.rpm
+ sudo yum install https://dl.axon-dash.com/oss/release/axon-dash-5.4.2-1.x86_64.rpm
 
 ```
 Or install manually using rpm. First execute
@@ -69,7 +69,7 @@ Or install manually using rpm. First execute
 Example:
 
 ``` debcontrol
-wget https://dl.axon-server.com/oss/release/axon-server-5.4.2-1.x86_64.rpm
+wget https://dl.axon-dash.com/oss/release/axon-dash-5.4.2-1.x86_64.rpm
 
 ```
 
@@ -92,13 +92,13 @@ sudo rpm -i --nodeps <local rpm package>
 Add the following to a new file at ` /etc/yum.repos.d/axonops.repo `
 
 ``` debcontrol
-[axon-server]
-name=axonserver
-baseurl=https://packages.axonserver.com/oss/rpm
+[axon-dash]
+name=axondash
+baseurl=https://packages.axondash.com/oss/rpm
 repo_gpgcheck=1
 enabled=1
 gpgcheck=1
-gpgkey=https://packages.axonserver.com/gpg.key
+gpgkey=https://packages.axondash.com/gpg.key
 sslverify=1
 sslcacert=/etc/pki/tls/certs/ca-bundle.crt
 
@@ -107,13 +107,13 @@ sslcacert=/etc/pki/tls/certs/ca-bundle.crt
 There is a separate repository if you want beta releases.
 
 ``` debcontrol
-[axon-server]
-name=axonserver
-baseurl=https://packages.axonserver.com/oss/rpm-beta
+[axon-dash]
+name=axondash
+baseurl=https://packages.axondash.com/oss/rpm-beta
 repo_gpgcheck=1
 enabled=1
 gpgcheck=1
-gpgkey=https://packages.axonserver.com/gpg.key
+gpgkey=https://packages.axondash.com/gpg.key
 sslverify=1
 sslcacert=/etc/pki/tls/certs/ca-bundle.crt
 
@@ -121,7 +121,7 @@ sslcacert=/etc/pki/tls/certs/ca-bundle.crt
 Then install Grafana via the yum command.
 
 ``` debcontrol
-sudo yum install axon-server
+sudo yum install axon-dash
 ```
 
 
@@ -130,7 +130,7 @@ sudo yum install axon-server
 The RPMs are signed, you can verify the signature with this [public GPG key][1].
 [1]:https://#
 
-Create a file `/etc/apt/sources.list.d/axon-server.list` and add the following to it.
+Create a file `/etc/apt/sources.list.d/axon-dash.list` and add the following to it.
 
 
 ### Cloning from GitHub
@@ -148,12 +148,12 @@ override some parts of the app. The app will reside in the folder
 
 ### Package details
 
-* Installs binary to ` /usr/sbin/axon-server `
-* Installs Init.d script to `/etc/init.d/axon-server `
-* Creates default file (environment vars) to ` /etc/default/axon-server` 
-* Installs configuration file to ` /etc/axon-server/axon-server.ini `
-* Installs systemd service (if systemd is available) name ` axon-server.agent` 
-* The default configuration sets the log file at ` /var/log/axon-server/axon-server.log` 
+* Installs binary to ` /usr/sbin/axon-dash `
+* Installs Init.d script to `/etc/init.d/axon-dash `
+* Creates default file (environment vars) to ` /etc/default/axon-dash` 
+* Installs configuration file to ` /etc/axon-dash/axon-dash.ini `
+* Installs systemd service (if systemd is available) name ` axon-dash.agent` 
+* The default configuration sets the log file at ` /var/log/axon-dash/axon-dash.log` 
 
 
 ###  Using Docker
@@ -183,14 +183,14 @@ If you're using Windows command prompt (`cmd.exe`), substitute `${PWD}` with
  <small>Start Java Agent by running:</small>
 
 ``` extempore
- sudo service axon-server start
+ sudo service axon-dash start
 ```
-This will start the `axon-server` process as the axon-server user, which was created during the package installation. 
+This will start the `axon-dash` process as the axon-dash user, which was created during the package installation. 
 
-To configure the axon-server to start at boot time:
+To configure the axon-dash to start at boot time:
 
 ``` extempore
-sudo /sbin/chkconfig --add axon-server
+sudo /sbin/chkconfig --add axon-dash
 ```
 
 ### Start the Java Agent (init.d service)
@@ -199,22 +199,28 @@ To start the service using systemd:
 
 ``` debcontrol
 systemctl daemon-reload
-systemctl start axon-server
-systemctl status axon-server
+systemctl start axon-dash
+systemctl status axon-dash
 ```
 
-Enable the systemd service so that axon-server starts at boot.
+Enable the systemd service so that axon-dash starts at boot.
 
 ``` extempore
-sudo systemctl enable axon-server.service
+sudo systemctl enable axon-dash.service
 ```
 
 ### Environment file
-The systemd service file and init.d script both use the file located at ` /etc/default/axon-server ` for environment variables used when starting the agent. Here you can override log directory, data directory and other variables.
+The systemd service file and init.d script both use the file located at ` /etc/default/axon-dash ` for environment variables used when starting the agent. Here you can override log directory, data directory and other variables.
 
 ### Logging
-By default Java Agent will log to /var/log/axon-server
+By default Java Agent will log to /var/log/axon-dash
 
+### Logging in for the first time
+
+Start Axon-Dash by executing ./bin/axon-dash. The axon-dash binary needs the working directory to be the root install directory (where the binary and the public folder is located).
+
+To run Axon-Dash open your browser and go to  <your-ip>:3000. 3000 is the default http port that axon-dash listens to. To configure axon-dash followw the instructions [here][3].
+[3]: /configuration/axondash/
 
 
 
