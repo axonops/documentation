@@ -1,0 +1,1505 @@
+
+
+
+
+<!DOCTYPE html>
+<html lang="en" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      <meta http-equiv="x-ua-compatible" content="ie=edge">
+      
+      
+      
+      
+        <meta name="lang:clipboard.copy" content="Copy to clipboard">
+      
+        <meta name="lang:clipboard.copied" content="Copied to clipboard">
+      
+        <meta name="lang:search.language" content="en">
+      
+        <meta name="lang:search.pipeline.stopwords" content="True">
+      
+        <meta name="lang:search.pipeline.trimmer" content="True">
+      
+        <meta name="lang:search.result.none" content="No matching documents">
+      
+        <meta name="lang:search.result.one" content="1 matching document">
+      
+        <meta name="lang:search.result.other" content="# matching documents">
+      
+        <meta name="lang:search.tokenizer" content="[\s\-]+">
+      
+      <link rel="shortcut icon" href="../../../img/favicon.ico">
+      <meta name="generator" content="mkdocs-1.0.4, mkdocs-material-3.1.0">
+    
+    
+      
+        <title>Installing on Centos/Redhat - Documentation</title>
+      
+    
+    
+      <link rel="stylesheet" href="../../../assets/stylesheets/application.11e41852.css">
+      
+      
+    
+    
+      <script src="../../../assets/javascripts/modernizr.20ef595d.js"></script>
+    
+    
+      
+        <link href="https://fonts.gstatic.com" rel="preconnect" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,400,400i,700|Roboto+Mono">
+        <style>body,input{font-family:"Roboto","Helvetica Neue",Helvetica,Arial,sans-serif}code,kbd,pre{font-family:"Roboto Mono","Courier New",Courier,monospace}</style>
+      
+    
+    <link rel="stylesheet" href="../../../assets/fonts/material-icons.css">
+    
+    
+      <link rel="stylesheet" href="../../../stylesheets/extra.css">
+    
+    
+  </head>
+  
+    <body dir="ltr">
+  
+    <svg class="md-svg">
+      <defs>
+        
+        
+      </defs>
+    </svg>
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" data-md-component="overlay" for="__drawer"></label>
+    
+      <a href="#installing-on-rpm-based-linux-centos-fedora-opensuse-redhat" tabindex="1" class="md-skip">
+        Skip to content
+      </a>
+    
+    
+      <header class="md-header" data-md-component="header">
+  <nav class="md-header-nav md-grid">
+    <div class="md-flex">
+      <div class="md-flex__cell md-flex__cell--shrink">
+        <a href="../../.." title="Documentation" class="md-header-nav__button md-logo">
+          
+            <img src="../../../img/bg_logo.png" width="24" height="24">
+          
+        </a>
+      </div>
+      <div class="md-flex__cell md-flex__cell--shrink">
+        <label class="md-icon md-icon--menu md-header-nav__button" for="__drawer"></label>
+      </div>
+      <div class="md-flex__cell md-flex__cell--stretch">
+        <div class="md-flex__ellipsis md-header-nav__title" data-md-component="title">
+          
+            
+              <span class="md-header-nav__topic">
+                Documentation
+              </span>
+              <span class="md-header-nav__topic">
+                Installing on Centos/Redhat
+              </span>
+            
+          
+        </div>
+      </div>
+      <div class="md-flex__cell md-flex__cell--shrink">
+        
+          
+            <label class="md-icon md-icon--search md-header-nav__button" for="__search"></label>
+            
+<div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="query" data-md-state="active">
+      <label class="md-icon md-search__icon" for="__search"></label>
+      <button type="reset" class="md-icon md-search__icon" data-md-component="reset" tabindex="-1">
+        &#xE5CD;
+      </button>
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="result">
+          <div class="md-search-result__meta">
+            Type to start searching
+          </div>
+          <ol class="md-search-result__list"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+          
+        
+      </div>
+      
+    </div>
+  </nav>
+</header>
+    
+    <div class="md-container">
+      
+        
+      
+      
+      <main class="md-main">
+        <div class="md-main__inner md-grid" data-md-component="container">
+          
+            
+              <div class="md-sidebar md-sidebar--primary" data-md-component="navigation">
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    <nav class="md-nav md-nav--primary" data-md-level="0">
+  <label class="md-nav__title md-nav__title--site" for="__drawer">
+    <a href="../../.." title="Documentation" class="md-nav__button md-logo">
+      
+        <img src="../../../img/bg_logo.png" width="48" height="48">
+      
+    </a>
+    Documentation
+  </label>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+      
+
+
+  <li class="md-nav__item">
+    <a href="../../.." title="Introduction" class="md-nav__link">
+      Introduction
+    </a>
+  </li>
+
+    
+      
+      
+      
+
+
+  <li class="md-nav__item md-nav__item--nested">
+    
+      <input class="md-toggle md-nav__toggle" data-md-toggle="nav-2" type="checkbox" id="nav-2">
+    
+    <label class="md-nav__link" for="nav-2">
+      Overview
+    </label>
+    <nav class="md-nav" data-md-component="collapsible" data-md-level="1">
+      <label class="md-nav__title" for="nav-2">
+        Overview
+      </label>
+      <ul class="md-nav__list" data-md-scrollfix>
+        
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../../overview/motivation/" title="Motivation" class="md-nav__link">
+      Motivation
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../../overview/architecture/" title="Architecture" class="md-nav__link">
+      Architecture
+    </a>
+  </li>
+
+        
+      </ul>
+    </nav>
+  </li>
+
+    
+      
+      
+      
+
+  
+
+
+  <li class="md-nav__item md-nav__item--active md-nav__item--nested">
+    
+      <input class="md-toggle md-nav__toggle" data-md-toggle="nav-3" type="checkbox" id="nav-3" checked>
+    
+    <label class="md-nav__link" for="nav-3">
+      Installation
+    </label>
+    <nav class="md-nav" data-md-component="collapsible" data-md-level="1">
+      <label class="md-nav__title" for="nav-3">
+        Installation
+      </label>
+      <ul class="md-nav__list" data-md-scrollfix>
+        
+        
+          
+          
+          
+
+
+  <li class="md-nav__item md-nav__item--nested">
+    
+      <input class="md-toggle md-nav__toggle" data-md-toggle="nav-3-1" type="checkbox" id="nav-3-1">
+    
+    <label class="md-nav__link" for="nav-3-1">
+      Axonops Agents
+    </label>
+    <nav class="md-nav" data-md-component="collapsible" data-md-level="2">
+      <label class="md-nav__title" for="nav-3-1">
+        Axonops Agents
+      </label>
+      <ul class="md-nav__list" data-md-scrollfix>
+        
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../agents/installing-ubuntu/" title="Installing on Ubuntu/Debian" class="md-nav__link">
+      Installing on Ubuntu/Debian
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../agents/installing-centos/" title="Installing on Centos/Redhat" class="md-nav__link">
+      Installing on Centos/Redhat
+    </a>
+  </li>
+
+        
+      </ul>
+    </nav>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item md-nav__item--nested">
+    
+      <input class="md-toggle md-nav__toggle" data-md-toggle="nav-3-2" type="checkbox" id="nav-3-2">
+    
+    <label class="md-nav__link" for="nav-3-2">
+      Axonops Server
+    </label>
+    <nav class="md-nav" data-md-component="collapsible" data-md-level="2">
+      <label class="md-nav__title" for="nav-3-2">
+        Axonops Server
+      </label>
+      <ul class="md-nav__list" data-md-scrollfix>
+        
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../server/installing-ubuntu/" title="Installing on Ubuntu/Debian" class="md-nav__link">
+      Installing on Ubuntu/Debian
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../server/installing-centos/" title="Installing on Centos/Redhat" class="md-nav__link">
+      Installing on Centos/Redhat
+    </a>
+  </li>
+
+        
+      </ul>
+    </nav>
+  </li>
+
+        
+          
+          
+          
+
+  
+
+
+  <li class="md-nav__item md-nav__item--active md-nav__item--nested">
+    
+      <input class="md-toggle md-nav__toggle" data-md-toggle="nav-3-3" type="checkbox" id="nav-3-3" checked>
+    
+    <label class="md-nav__link" for="nav-3-3">
+      Axonops Dashboard
+    </label>
+    <nav class="md-nav" data-md-component="collapsible" data-md-level="2">
+      <label class="md-nav__title" for="nav-3-3">
+        Axonops Dashboard
+      </label>
+      <ul class="md-nav__list" data-md-scrollfix>
+        
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../installing-ubuntu/" title="Installing on Ubuntu/Debian" class="md-nav__link">
+      Installing on Ubuntu/Debian
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+  
+
+
+  <li class="md-nav__item md-nav__item--active">
+    
+    <input class="md-toggle md-nav__toggle" data-md-toggle="toc" type="checkbox" id="__toc">
+    
+      
+    
+    
+      <label class="md-nav__link md-nav__link--active" for="__toc">
+        Installing on Centos/Redhat
+      </label>
+    
+    <a href="./" title="Installing on Centos/Redhat" class="md-nav__link md-nav__link--active">
+      Installing on Centos/Redhat
+    </a>
+    
+      
+<nav class="md-nav md-nav--secondary">
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">Table of contents</label>
+    <ul class="md-nav__list" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#axon-dash-installation" title="Axon-Dash Installation" class="md-nav__link">
+    Axon-Dash Installation
+  </a>
+  
+    <nav class="md-nav">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#install-stable" title="Install Stable" class="md-nav__link">
+    Install Stable
+  </a>
+  
+    <nav class="md-nav">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#on-centos-fedora-redhat" title="On CentOS / Fedora / Redhat:" class="md-nav__link">
+    On CentOS / Fedora / Redhat:
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#on-opensuse" title="On OpenSuse:" class="md-nav__link">
+    On OpenSuse:
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#install-via-yum-repository" title="Install via YUM Repository" class="md-nav__link">
+    Install via YUM Repository
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#rpm-gpg-key" title="RPM GPG Key" class="md-nav__link">
+    RPM GPG Key
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#cloning-from-github" title="Cloning from GitHub" class="md-nav__link">
+    Cloning from GitHub
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#package-details" title="Package details" class="md-nav__link">
+    Package details
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#using-docker" title="Using Docker" class="md-nav__link">
+    Using Docker
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#start-the-agent-initd-service" title="Start the agent (init.d service)" class="md-nav__link">
+    Start the agent (init.d service)
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#start-the-java-agent-initd-service" title="Start the Java Agent (init.d service)" class="md-nav__link">
+    Start the Java Agent (init.d service)
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#environment-file" title="Environment file" class="md-nav__link">
+    Environment file
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#logging" title="Logging" class="md-nav__link">
+    Logging
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#logging-in-for-the-first-time" title="Logging in for the first time" class="md-nav__link">
+    Logging in for the first time
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+      
+      
+      
+      
+    </ul>
+  
+</nav>
+    
+  </li>
+
+        
+      </ul>
+    </nav>
+  </li>
+
+        
+      </ul>
+    </nav>
+  </li>
+
+    
+      
+      
+      
+
+
+  <li class="md-nav__item md-nav__item--nested">
+    
+      <input class="md-toggle md-nav__toggle" data-md-toggle="nav-4" type="checkbox" id="nav-4">
+    
+    <label class="md-nav__link" for="nav-4">
+      Configuration
+    </label>
+    <nav class="md-nav" data-md-component="collapsible" data-md-level="1">
+      <label class="md-nav__title" for="nav-4">
+        Configuration
+      </label>
+      <ul class="md-nav__list" data-md-scrollfix>
+        
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../../configuration/server-configuration/" title="Server Configuration" class="md-nav__link">
+      Server Configuration
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../../configuration/agent-configuration/" title="Agent Configuration" class="md-nav__link">
+      Agent Configuration
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../../configuration/axondash/" title="Axon-Dash Configuration" class="md-nav__link">
+      Axon-Dash Configuration
+    </a>
+  </li>
+
+        
+      </ul>
+    </nav>
+  </li>
+
+    
+      
+      
+      
+
+
+  <li class="md-nav__item md-nav__item--nested">
+    
+      <input class="md-toggle md-nav__toggle" data-md-toggle="nav-5" type="checkbox" id="nav-5">
+    
+    <label class="md-nav__link" for="nav-5">
+      Cluster Overview
+    </label>
+    <nav class="md-nav" data-md-component="collapsible" data-md-level="1">
+      <label class="md-nav__title" for="nav-5">
+        Cluster Overview
+      </label>
+      <ul class="md-nav__list" data-md-scrollfix>
+        
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../../cluster-overview.md" title="Cluster Overview" class="md-nav__link">
+      Cluster Overview
+    </a>
+  </li>
+
+        
+      </ul>
+    </nav>
+  </li>
+
+    
+      
+      
+      
+
+
+  <li class="md-nav__item md-nav__item--nested">
+    
+      <input class="md-toggle md-nav__toggle" data-md-toggle="nav-6" type="checkbox" id="nav-6">
+    
+    <label class="md-nav__link" for="nav-6">
+      Monitoring
+    </label>
+    <nav class="md-nav" data-md-component="collapsible" data-md-level="1">
+      <label class="md-nav__title" for="nav-6">
+        Monitoring
+      </label>
+      <ul class="md-nav__list" data-md-scrollfix>
+        
+        
+          
+          
+          
+
+
+  <li class="md-nav__item md-nav__item--nested">
+    
+      <input class="md-toggle md-nav__toggle" data-md-toggle="nav-6-1" type="checkbox" id="nav-6-1">
+    
+    <label class="md-nav__link" for="nav-6-1">
+      Health Checks
+    </label>
+    <nav class="md-nav" data-md-component="collapsible" data-md-level="2">
+      <label class="md-nav__title" for="nav-6-1">
+        Health Checks
+      </label>
+      <ul class="md-nav__list" data-md-scrollfix>
+        
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../../monitoring/health-checs/overview.md" title="Health Checks Overview" class="md-nav__link">
+      Health Checks Overview
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../../monitoring/health-checks/configurations.md" title="Health Checks Configurations" class="md-nav__link">
+      Health Checks Configurations
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../../monitoring/health-checks/alerting.md" title="Health Checks Alerting" class="md-nav__link">
+      Health Checks Alerting
+    </a>
+  </li>
+
+        
+      </ul>
+    </nav>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item md-nav__item--nested">
+    
+      <input class="md-toggle md-nav__toggle" data-md-toggle="nav-6-2" type="checkbox" id="nav-6-2">
+    
+    <label class="md-nav__link" for="nav-6-2">
+      Metrics Dashboard
+    </label>
+    <nav class="md-nav" data-md-component="collapsible" data-md-level="2">
+      <label class="md-nav__title" for="nav-6-2">
+        Metrics Dashboard
+      </label>
+      <ul class="md-nav__list" data-md-scrollfix>
+        
+        
+          
+          
+          
+
+
+  <li class="md-nav__item md-nav__item--nested">
+    
+      <input class="md-toggle md-nav__toggle" data-md-toggle="nav-6-2-1" type="checkbox" id="nav-6-2-1">
+    
+    <label class="md-nav__link" for="nav-6-2-1">
+      Cassandra
+    </label>
+    <nav class="md-nav" data-md-component="collapsible" data-md-level="3">
+      <label class="md-nav__title" for="nav-6-2-1">
+        Cassandra
+      </label>
+      <ul class="md-nav__list" data-md-scrollfix>
+        
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../../monitoring/cassandra-metrics-dashboard/overview.md" title="Metrics Dashboard Overview" class="md-nav__link">
+      Metrics Dashboard Overview
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../../monitoring/cassandra-metrics-dashboard/cassandra.md" title="Cassandra Metrics" class="md-nav__link">
+      Cassandra Metrics
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../../monitoring/cassandra-metrics-dashboard/overview.md" title="Metrics Alerting Configurations" class="md-nav__link">
+      Metrics Alerting Configurations
+    </a>
+  </li>
+
+        
+      </ul>
+    </nav>
+  </li>
+
+        
+      </ul>
+    </nav>
+  </li>
+
+        
+      </ul>
+    </nav>
+  </li>
+
+    
+      
+      
+      
+
+
+  <li class="md-nav__item md-nav__item--nested">
+    
+      <input class="md-toggle md-nav__toggle" data-md-toggle="nav-7" type="checkbox" id="nav-7">
+    
+    <label class="md-nav__link" for="nav-7">
+      Notification Integrations
+    </label>
+    <nav class="md-nav" data-md-component="collapsible" data-md-level="1">
+      <label class="md-nav__title" for="nav-7">
+        Notification Integrations
+      </label>
+      <ul class="md-nav__list" data-md-scrollfix>
+        
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../../integrations/overview/" title="Notification Integration Overview" class="md-nav__link">
+      Notification Integration Overview
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../../integrations/pagerduy-integration/" title="PagerDuty Integration" class="md-nav__link">
+      PagerDuty Integration
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../../integrations/slack-integration/" title="Slack Integration" class="md-nav__link">
+      Slack Integration
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../../integrations/email-integration/" title="Email Integration" class="md-nav__link">
+      Email Integration
+    </a>
+  </li>
+
+        
+      </ul>
+    </nav>
+  </li>
+
+    
+      
+      
+      
+
+
+  <li class="md-nav__item md-nav__item--nested">
+    
+      <input class="md-toggle md-nav__toggle" data-md-toggle="nav-8" type="checkbox" id="nav-8">
+    
+    <label class="md-nav__link" for="nav-8">
+      Operations
+    </label>
+    <nav class="md-nav" data-md-component="collapsible" data-md-level="1">
+      <label class="md-nav__title" for="nav-8">
+        Operations
+      </label>
+      <ul class="md-nav__list" data-md-scrollfix>
+        
+        
+          
+          
+          
+
+
+  <li class="md-nav__item md-nav__item--nested">
+    
+      <input class="md-toggle md-nav__toggle" data-md-toggle="nav-8-1" type="checkbox" id="nav-8-1">
+    
+    <label class="md-nav__link" for="nav-8-1">
+      Cassandra
+    </label>
+    <nav class="md-nav" data-md-component="collapsible" data-md-level="2">
+      <label class="md-nav__title" for="nav-8-1">
+        Cassandra
+      </label>
+      <ul class="md-nav__list" data-md-scrollfix>
+        
+        
+          
+          
+          
+
+
+  <li class="md-nav__item md-nav__item--nested">
+    
+      <input class="md-toggle md-nav__toggle" data-md-toggle="nav-8-1-1" type="checkbox" id="nav-8-1-1">
+    
+    <label class="md-nav__link" for="nav-8-1-1">
+      Repair
+    </label>
+    <nav class="md-nav" data-md-component="collapsible" data-md-level="3">
+      <label class="md-nav__title" for="nav-8-1-1">
+        Repair
+      </label>
+      <ul class="md-nav__list" data-md-scrollfix>
+        
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../../operations/cassandra-repair/overview.md" title="Cassandra Repair Overview" class="md-nav__link">
+      Cassandra Repair Overview
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../../operations/cassandra-repair/configurations.md" title="Cassandra Repair Configurations" class="md-nav__link">
+      Cassandra Repair Configurations
+    </a>
+  </li>
+
+        
+      </ul>
+    </nav>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item md-nav__item--nested">
+    
+      <input class="md-toggle md-nav__toggle" data-md-toggle="nav-8-1-2" type="checkbox" id="nav-8-1-2">
+    
+    <label class="md-nav__link" for="nav-8-1-2">
+      Backups
+    </label>
+    <nav class="md-nav" data-md-component="collapsible" data-md-level="3">
+      <label class="md-nav__title" for="nav-8-1-2">
+        Backups
+      </label>
+      <ul class="md-nav__list" data-md-scrollfix>
+        
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../../operations/cassandra-backup/overview.md" title="Cassandra Backup Overview" class="md-nav__link">
+      Cassandra Backup Overview
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../../operations/cassandra-backup/overview.md" title="Cassandra Backup Configurations" class="md-nav__link">
+      Cassandra Backup Configurations
+    </a>
+  </li>
+
+        
+      </ul>
+    </nav>
+  </li>
+
+        
+      </ul>
+    </nav>
+  </li>
+
+        
+      </ul>
+    </nav>
+  </li>
+
+    
+      
+      
+      
+
+
+  <li class="md-nav__item md-nav__item--nested">
+    
+      <input class="md-toggle md-nav__toggle" data-md-toggle="nav-9" type="checkbox" id="nav-9">
+    
+    <label class="md-nav__link" for="nav-9">
+      How-to
+    </label>
+    <nav class="md-nav" data-md-component="collapsible" data-md-level="1">
+      <label class="md-nav__title" for="nav-9">
+        How-to
+      </label>
+      <ul class="md-nav__list" data-md-scrollfix>
+        
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../../how-to/setup-alert-rules/" title="Setup Alert Rules" class="md-nav__link">
+      Setup Alert Rules
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../../how-to/setup-healthcheks/" title="Setup Healthcheks" class="md-nav__link">
+      Setup Healthcheks
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../../how-to/default-routing/" title="Setup Default Routing" class="md-nav__link">
+      Setup Default Routing
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../../how-to/backup-restore-notifications/" title="Setup Backup-Restore Notifications" class="md-nav__link">
+      Setup Backup-Restore Notifications
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../../how-to/setup-dashboards-global-integrations/" title="Setup Dashboards-Global Integrations" class="md-nav__link">
+      Setup Dashboards-Global Integrations
+    </a>
+  </li>
+
+        
+      </ul>
+    </nav>
+  </li>
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="toc">
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+<nav class="md-nav md-nav--secondary">
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">Table of contents</label>
+    <ul class="md-nav__list" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#axon-dash-installation" title="Axon-Dash Installation" class="md-nav__link">
+    Axon-Dash Installation
+  </a>
+  
+    <nav class="md-nav">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#install-stable" title="Install Stable" class="md-nav__link">
+    Install Stable
+  </a>
+  
+    <nav class="md-nav">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#on-centos-fedora-redhat" title="On CentOS / Fedora / Redhat:" class="md-nav__link">
+    On CentOS / Fedora / Redhat:
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#on-opensuse" title="On OpenSuse:" class="md-nav__link">
+    On OpenSuse:
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#install-via-yum-repository" title="Install via YUM Repository" class="md-nav__link">
+    Install via YUM Repository
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#rpm-gpg-key" title="RPM GPG Key" class="md-nav__link">
+    RPM GPG Key
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#cloning-from-github" title="Cloning from GitHub" class="md-nav__link">
+    Cloning from GitHub
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#package-details" title="Package details" class="md-nav__link">
+    Package details
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#using-docker" title="Using Docker" class="md-nav__link">
+    Using Docker
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#start-the-agent-initd-service" title="Start the agent (init.d service)" class="md-nav__link">
+    Start the agent (init.d service)
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#start-the-java-agent-initd-service" title="Start the Java Agent (init.d service)" class="md-nav__link">
+    Start the Java Agent (init.d service)
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#environment-file" title="Environment file" class="md-nav__link">
+    Environment file
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#logging" title="Logging" class="md-nav__link">
+    Logging
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#logging-in-for-the-first-time" title="Logging in for the first time" class="md-nav__link">
+    Logging in for the first time
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+      
+      
+      
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          <div class="md-content">
+            <article class="md-content__inner md-typeset">
+              
+                
+                
+                <h1 id="installing-on-rpm-based-linux-centos-fedora-opensuse-redhat">Installing on RPM-based Linux (CentOS, Fedora, OpenSuse, RedHat)<a class="headerlink" href="#installing-on-rpm-based-linux-centos-fedora-opensuse-redhat" title="Permanent link">&para;</a></h1>
+<h2 id="axon-dash-installation">Axon-Dash Installation<a class="headerlink" href="#axon-dash-installation" title="Permanent link">&para;</a></h2>
+<table style="white-space: nowrap;">
+  <thead>
+    <tr>
+      <th colspan="3">Description</td>
+      <th colspan="1">Download</td>
+    </tr>
+  </thead>
+  <tbody>
+
+    <tr>
+      <td  colspan="3" align="left">Stable for CentOS / Fedora / OpenSuse / Redhat Linux</td>
+      <td colspan="1" align="right">
+        <a href="#">x86-64</a>
+      </td>
+    </tr>
+    <tr>
+      <td colspan="3" align="left">Stable for CentOS / Fedora / OpenSuse / Redhat Linux</td>
+      <td colspan="1" align="right">
+        <a href="#">ARM64</a>
+      </td>
+    </tr>
+    <tr>
+      <td colspan="3" align="left">Stable for CentOS / Fedora / OpenSuse / Redhat Linux</td>
+      <td colspan="1" align="right">
+        <a href="#">ARMv7</a>
+      </td>
+    </tr>
+  </tbody>
+</table>
+
+<h3 id="install-stable">Install Stable<a class="headerlink" href="#install-stable" title="Permanent link">&para;</a></h3>
+<p>Before installing <a href="https://#">axon-dash</a>, you need to make sure you have ... and ... – ... up and running. You can verify if you're already good to go with the following commands:</p>
+<div class="codehilite"><pre><span></span>.. --version
+<span class="c1"># ... 2.7.13</span>
+... --version
+<span class="c1"># ... 9.0.1</span>
+</pre></div>
+
+
+<p>Installing and verifying axon-dash is as simple as:</p>
+<div class="codehilite"><pre><span></span><span class="err"> sudo yum install &lt;rpm package url&gt;</span>
+</pre></div>
+
+
+<p>Example:</p>
+<div class="codehilite"><pre><span></span><span class="err"> sudo yum install https://dl.axon-dash.com/oss/release/axon-dash-5.4.2-1.x86_64.rpm</span>
+</pre></div>
+
+
+<p>Or install manually using rpm. First execute</p>
+<div class="codehilite"><pre><span></span><span class="err"> wget &lt;rpm package url&gt;</span>
+</pre></div>
+
+
+<p>Example:</p>
+<div class="codehilite"><pre><span></span><span class="err">wget https://dl.axon-dash.com/oss/release/axon-dash-5.4.2-1.x86_64.rpm</span>
+</pre></div>
+
+
+<h4 id="on-centos-fedora-redhat">On CentOS / Fedora / Redhat:<a class="headerlink" href="#on-centos-fedora-redhat" title="Permanent link">&para;</a></h4>
+<div class="codehilite"><pre><span></span><span class="err"> sudo yum install initscripts fontconfig</span>
+<span class="err"> sudo rpm -Uvh &lt;local rpm package&gt;</span>
+</pre></div>
+
+
+<h4 id="on-opensuse">On OpenSuse:<a class="headerlink" href="#on-opensuse" title="Permanent link">&para;</a></h4>
+<div class="codehilite"><pre><span></span><span class="err">sudo rpm -i --nodeps &lt;local rpm package&gt;</span>
+</pre></div>
+
+
+<h4 id="install-via-yum-repository">Install via YUM Repository<a class="headerlink" href="#install-via-yum-repository" title="Permanent link">&para;</a></h4>
+<p>Add the following to a new file at <code>/etc/yum.repos.d/axonops.repo</code></p>
+<div class="codehilite"><pre><span></span><span class="err">[axon-dash]</span>
+<span class="err">name=axondash</span>
+<span class="err">baseurl=https://packages.axondash.com/oss/rpm</span>
+<span class="err">repo_gpgcheck=1</span>
+<span class="err">enabled=1</span>
+<span class="err">gpgcheck=1</span>
+<span class="err">gpgkey=https://packages.axondash.com/gpg.key</span>
+<span class="err">sslverify=1</span>
+<span class="err">sslcacert=/etc/pki/tls/certs/ca-bundle.crt</span>
+</pre></div>
+
+
+<p>There is a separate repository if you want beta releases.</p>
+<div class="codehilite"><pre><span></span><span class="err">[axon-dash]</span>
+<span class="err">name=axondash</span>
+<span class="err">baseurl=https://packages.axondash.com/oss/rpm-beta</span>
+<span class="err">repo_gpgcheck=1</span>
+<span class="err">enabled=1</span>
+<span class="err">gpgcheck=1</span>
+<span class="err">gpgkey=https://packages.axondash.com/gpg.key</span>
+<span class="err">sslverify=1</span>
+<span class="err">sslcacert=/etc/pki/tls/certs/ca-bundle.crt</span>
+</pre></div>
+
+
+<p>Then install Grafana via the yum command.</p>
+<div class="codehilite"><pre><span></span><span class="err">sudo yum install axon-dash</span>
+</pre></div>
+
+
+<h3 id="rpm-gpg-key">RPM GPG Key<a class="headerlink" href="#rpm-gpg-key" title="Permanent link">&para;</a></h3>
+<p>The RPMs are signed, you can verify the signature with this <a href="https://#">public GPG key</a>.</p>
+<p>Create a file <code>/etc/apt/sources.list.d/axon-dash.list</code> and add the following to it.</p>
+<h3 id="cloning-from-github">Cloning from GitHub<a class="headerlink" href="#cloning-from-github" title="Permanent link">&para;</a></h3>
+<p>Java agent can also be used without a system-wide installation by cloning the repository into a subfolder of your project's root directory:</p>
+<div class="codehilite"><pre><span></span><span class="nv">git</span> <span class="nv">clone</span> <span class="nv">https://github</span><span class="o">.</span><span class="nv">com/squidfunk/axonops</span><span class="o">.</span><span class="nv">git</span>
+</pre></div>
+
+
+<p>This is especially useful if you want to extend the app and
+override some parts of the app. The app will reside in the folder
+<code>path-to/folder</code>.</p>
+<h3 id="package-details">Package details<a class="headerlink" href="#package-details" title="Permanent link">&para;</a></h3>
+<ul>
+<li>Installs binary to <code>/usr/sbin/axon-dash</code></li>
+<li>Installs Init.d script to <code>/etc/init.d/axon-dash</code></li>
+<li>Creates default file (environment vars) to <code>/etc/default/axon-dash</code> </li>
+<li>Installs configuration file to <code>/etc/axon-dash/axon-dash.ini</code></li>
+<li>Installs systemd service (if systemd is available) name <code>axon-dash.agent</code> </li>
+<li>The default configuration sets the log file at <code>/var/log/axon-dash/axon-dash.log</code> </li>
+</ul>
+<h3 id="using-docker">Using Docker<a class="headerlink" href="#using-docker" title="Permanent link">&para;</a></h3>
+<p>If you're familiar with Docker, the official <a href="https://hub.docker.com/r/squidfunk/mkdocs-material/">Docker image</a> for Material
+comes with all dependencies pre-installed and ready-to-use with the latest
+version published on PyPI, packaged in a very small image. Pull it with:</p>
+<div class="codehilite"><pre><span></span>docker pull squidfunk/mkdocs-material
+</pre></div>
+
+
+<p>The <code>axonops</code> executable is provided as an entrypoint, <code>serve</code> is the default
+command. Start the development agent in your project root with:</p>
+<div class="codehilite"><pre><span></span>docker run --rm -it -p <span class="m">8000</span>:8000 -v <span class="si">${</span><span class="nv">PWD</span><span class="si">}</span>:/docs squidfunk/mkdocs-material
+</pre></div>
+
+
+<p>If you're using Windows command prompt (<code>cmd.exe</code>), substitute <code>${PWD}</code> with
+<code>"%cd%"</code>.</p>
+<h3 id="start-the-agent-initd-service">Start the agent (init.d service)<a class="headerlink" href="#start-the-agent-initd-service" title="Permanent link">&para;</a></h3>
+<p><small>Start Java Agent by running:</small></p>
+<div class="codehilite"><pre><span></span> <span class="nv">sudo</span> <span class="nv">service</span> <span class="nv">axon-dash</span> <span class="nv">start</span>
+</pre></div>
+
+
+<p>This will start the <code>axon-dash</code> process as the axon-dash user, which was created during the package installation. </p>
+<p>To configure the axon-dash to start at boot time:</p>
+<div class="codehilite"><pre><span></span><span class="nv">sudo</span> <span class="nv">/sbin/chkconfig</span> <span class="nv">--add</span> <span class="nv">axon-dash</span>
+</pre></div>
+
+
+<h3 id="start-the-java-agent-initd-service">Start the Java Agent (init.d service)<a class="headerlink" href="#start-the-java-agent-initd-service" title="Permanent link">&para;</a></h3>
+<p>To start the service using systemd:</p>
+<div class="codehilite"><pre><span></span><span class="err">systemctl daemon-reload</span>
+<span class="err">systemctl start axon-dash</span>
+<span class="err">systemctl status axon-dash</span>
+</pre></div>
+
+
+<p>Enable the systemd service so that axon-dash starts at boot.</p>
+<div class="codehilite"><pre><span></span><span class="nv">sudo</span> <span class="nv">systemctl</span> <span class="nv">enable</span> <span class="nv">axon-dash</span><span class="o">.</span><span class="nv">service</span>
+</pre></div>
+
+
+<h3 id="environment-file">Environment file<a class="headerlink" href="#environment-file" title="Permanent link">&para;</a></h3>
+<p>The systemd service file and init.d script both use the file located at <code>/etc/default/axon-dash</code> for environment variables used when starting the agent. Here you can override log directory, data directory and other variables.</p>
+<h3 id="logging">Logging<a class="headerlink" href="#logging" title="Permanent link">&para;</a></h3>
+<p>By default Java Agent will log to /var/log/axon-dash</p>
+<h3 id="logging-in-for-the-first-time">Logging in for the first time<a class="headerlink" href="#logging-in-for-the-first-time" title="Permanent link">&para;</a></h3>
+<p>Start Axon-Dash by executing ./bin/axon-dash. The axon-dash binary needs the working directory to be the root install directory (where the binary and the public folder is located).</p>
+<p>To run Axon-Dash open your browser and go to  <your-ip>:3000. 3000 is the default http port that axon-dash listens to. To configure axon-dash followw the instructions <a href="/configuration/axondash/">here</a>.</p>
+                
+                  
+                
+              
+              
+                
+
+
+              
+            </article>
+          </div>
+        </div>
+      </main>
+      
+        
+<footer class="md-footer">
+  
+    <div class="md-footer-nav">
+      <nav class="md-footer-nav__inner md-grid">
+        
+          <a href="../installing-ubuntu/" title="Installing on Ubuntu/Debian" class="md-flex md-footer-nav__link md-footer-nav__link--prev" rel="prev">
+            <div class="md-flex__cell md-flex__cell--shrink">
+              <i class="md-icon md-icon--arrow-back md-footer-nav__button"></i>
+            </div>
+            <div class="md-flex__cell md-flex__cell--stretch md-footer-nav__title">
+              <span class="md-flex__ellipsis">
+                <span class="md-footer-nav__direction">
+                  Previous
+                </span>
+                Installing on Ubuntu/Debian
+              </span>
+            </div>
+          </a>
+        
+        
+          <a href="../../../configuration/server-configuration/" title="Server Configuration" class="md-flex md-footer-nav__link md-footer-nav__link--next" rel="next">
+            <div class="md-flex__cell md-flex__cell--stretch md-footer-nav__title">
+              <span class="md-flex__ellipsis">
+                <span class="md-footer-nav__direction">
+                  Next
+                </span>
+                Server Configuration
+              </span>
+            </div>
+            <div class="md-flex__cell md-flex__cell--shrink">
+              <i class="md-icon md-icon--arrow-forward md-footer-nav__button"></i>
+            </div>
+          </a>
+        
+      </nav>
+    </div>
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-footer-copyright">
+        
+        powered by
+        <a href="https://www.mkdocs.org">MkDocs</a>
+        and
+        <a href="https://squidfunk.github.io/mkdocs-material/">
+          Material for MkDocs</a>
+      </div>
+      
+        
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    
+      <script src="../../../assets/javascripts/application.9e1f3b71.js"></script>
+      
+      <script>app.initialize({version:"1.0.4",url:{base:"../../.."}})</script>
+      
+    
+    
+      
+    
+  </body>
+</html>

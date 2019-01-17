@@ -10,8 +10,13 @@
 }
 
 
-.customform.admonition{
+.admonition.infomy{
  border-left: none;
+ text-align: center;
+}
+
+.admonition.infomy .admonition-title {
+    display: none;
 }
 
 .spanimages {
