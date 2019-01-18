@@ -1,164 +1,120 @@
 # Setup alert rules
 
-<ol>
-
-    <li>
-
-        <div>
-            <h5> Insert Alert Rules credentials</h5>
-            <p>On the Axonops application menu, click <code>Dashboards </code> and <code>select</code> required <strong>Dashboard</strong>.
-                <code>eg. System</code></p>
-            <p><code>Hover over </code> the desired Chart <title></title> <code>click</code> on the <img src="../../img/edit.png"
-                    alt="testb">
-                button.</p>
-            <div class="customform admonition">
-                <p class="pagerdutygif"><img src="../../img/createrule.gif" alt="createrule"></p>
-            </div>
-        </div>
-
-    </li>
-    <li>
-
-        <div>
-            <h5> Complete the fields in form</h5>
-            <ul>
-                <li>
-                    <p> Below the chart <code>click</code> on the <code>alert</code> tab.</p>
-                </li>
-                <div class="customform admonition ">
-                    <p class="pagerdutygif"><img class="testbtn" src="../../img/alertform.png" alt="alertform"></p>
-                </div>
-                <li>
-                    <p> A form will appear</p>
-                </li>
-                <div class="customform admonition">
-                    <p class="pagerdutygif"><img src="../../img/alertformfields.png" alt="alertformfields"></p>
-                </div>
 
 
-                <li>
-                    <p> Complete Alert settings in <code>Comparator</code> <code>Warning value</code>or <code>Critical value</code>
-                        or <strong>Both</strong>
-                        and the <code>Duration</code> ==> (how often to check) <code>In</code></p>
-                </li>
-                <div class="customform admonition">
-                    <p class="pagerdutygif"><img align="top" src="../../img/allertfields.png" alt="allertfields">
-                    </p>
-                </div>
+###  Insert Alert Rules Credentials
 
-                <li>
-                    <p> <code>Annotations</code> </p>
-                    <p>In the <code>Summary</code> box you can include <strong>free</strong> text &amp; type one <code>or</code>
-                        many of the following <code>$labels</code></p>
+On the Axonops application menu, click `Dashboards` and `select` required Dashboard. eg. `System`
 
-                    <div class="codehilite">
-                        <pre>
-                        <span></span><span class="nt">$labels</span><span class="p">:</span>
-                            <span class="nt">- cluster</span><span class="p">
-                            <span class="nt">- dc</span><span class="p">
-                            <span class="nt">- hostname</span><span class="p">
-                            <span class="nt">- org</span><span class="p">
-                            <span class="nt">- rack</span><span class="p">
-                            <span class="nt">- type</span><span class="p">
-                            <span class="nt">- keyspace</span><span class="p">
-                        <span></span><span class="nt">$value</span><span class="p">:</span>
-                          </pre>
-                    </div>
-
-                    <p>In the <code>Description </code> box you can include <strong>free</strong> along with one <code>or</code>
-                        many of the above <code>$labels</code> </p>
-
-                    <div class="admonition info">
-                        <p class="admonition-title">Example </p>
-                        <p><code>CPU usage per DC Alerts usage on {{ $labels.hostname }}  and cluster {{$labels.cluster}}  
-                                    </code></p>
-                    </div>
-
-                    <div class="customform admonition">
-                        <p class="pagerdutygif"><img src="../../img/annotations.png" alt="annotations"></p>
-                    </div>
-
-                </li>
+`Hover over` the desired Chart `click` on the  [![testb](/img/testb.png)](/img/testb.png) button.
 
 
-                <li>
-                    <p>Using the slider bar <img class="testbtn" src="../../img/sliderbar.png" alt="sliderbar"> you can
-                        select any <a href="/integrations/overview">Integrations</a> </p>
-                    <p>Then <code>click</code> on the <code>Info</code>, <code>Warning</code>, <code>Error</code>
-                        icons, to select the group(s) of <a href="/integrations/overview">Integrations</a> for the
-                        alert.</p>
-                    <div class="customform admonition">
-                        <p class="pagerdutygif"><img src="../../img/alertintegrations.png" alt="alertintegrations"></p>
-                        <p class="pagerdutygif"><img src="../../img/alertintegrationswith.png" alt="alertintegrationswith"></p>
-                    </div>
-                    <div class="admonition info">
-                        <p class="admonition-title">Not selecting integrations </p>
-                        <p class="pagerdutygif">
-                            If you do not select any specific <a href="/integrations/overview">Integrations</a> the
-                            Alert will <strong>automatically</strong>
-                            follow the <code>Global Dashboard Routing</code> <strong>or</strong> if this
-                            has not been <a href="/how-to/setup-dashboards-global-integrations">setup</a> the <a href="/how-to/default-routing">Default
-                                Routing </a>Integrations.
-                        </p>
-                    </div>
-                </li>
+!!! infomy 
+
+    [![createrule](/img/createrule.gif)](/img/createrule.gif)
+
+###  Complete The Fields In Form
+
+* Below the chart `click` on the `alert` tab.
 
 
-            </ul>
+!!! infomy 
 
-        </div>
+    [![alertform](/img/alertform.png)](/img/alertform.png)
 
-    </li>
-    <li>
-        <div>
-            <h5> Edit - Delete and Aler rule</h5>
-            <ul>
-                <li>
-                    <p>Edit <code>Alert Rule</code></p>
-                    <p>On the Axonops application menu, click <code>Alerts &amp; Notifications </code> and <code>click</code>
-                        Active.</p>
 
-                    </p>
-                    <p>
-                        <code>Select</code> the <code>Alert Rules</code> tab and click <img class="testbtn" src="../../img/edit.png"
-                            alt="delbtn">
-                    </p>
-                    <p>
-                        <div class="customform admonition">
-                            <p class="pagerdutygif"><img src="../../img/editalertrule.png" alt="editalertrule"></p>
-                        </div>
-                    </p>
-                </li>
-                <p>To <span style="color:red">Delete</span> An <code>Alert</code> <strong>Either...</strong> </p>
-                <li>
-                    <p>On the Axonops application menu, click <code>Dashboards </code> and <code>select</code> required
-                        <strong>Dashboard</strong>.
-                        <code>eg. System</code></p>
-                    <p><code>Hover over </code> the desired Chart <title></title> <code>click</code> on the <img src="../../img/edit.png"
-                            alt="testb">
-                        button.</p>
-                    <p> Below the chart <code>click</code> on the <code>alert</code> tab and <code>click</code> on the
-                        <img class="testbtn" src="../../img/delbtn.png" alt="delbtn"> of the alert rule you want to
-                        remove.
-                    </p>
-                </li>
-                <p><strong>Or...</strong> </p>
-                <li>
-                    <p>On the Axonops application menu, click <code>Alerts &amp; Notifications </code> and <code>click</code>
-                        Active.</p>
+* A form will appear
 
-                    </p>
-                    <p>
-                        <code>Select</code> the <code>Alert Rules</code> tab and click <img class="testbtn" src="../../img/delbtn.png"
-                            alt="delbtn">
-                    </p>
-                    <p>
-                        <div class="customform admonition">
-                            <p class="pagerdutygif"><img src="../../img/activealertrules.png" alt="activealertrules"></p>
-                        </div>
-                    </p>
-                </li>
-            </ul>
-        </div>
-    </li>
-</ol>
+!!! infomy 
+
+    [![alertformfields](/img/alertformfields.png)](/img/alertformfields.png)
+
+
+* Complete Alert settings in `Comparator Warning value` or `Critical value` or Both and the `Duration` ==> (how often to check) In
+
+!!! infomy 
+
+    [![allertfields](/img/allertfields.png)](/img/allertfields.png)
+
+
+####  Annotations
+
+In the `Summary` box you can include free text & type one `or` many of the following `$labels`
+
+
+``` yaml
+
+$labels:
+   - cluster
+   - dc
+   - hostname
+   - org
+   - rack
+   - type
+   - keyspace
+$value:
+
+```
+
+In the `Description` box you can include free along with one `or` many of the above  `$labels`
+
+!!! info "Example"
+
+    `CPU usage per DC Alerts usage on {{ $labels.hostname }} and cluster {{$labels.cluster}}`
+    
+
+!!! infomy
+
+    
+    [![annotations](/img/annotations.png)](/img/annotations.png)
+
+
+####  Integrations
+
+
+* Using the slider bar [![sliderbar](/img/sliderbar.png)](/img/sliderbar.png) you can select any [Integrations][1].
+
+    Then `click` on the `Info`, `Warning`, `Error` icons, to select the group(s) of [Integrations][1] for the alert.
+
+[1]: /integrations/overview
+
+
+!!! infomy
+
+    [![alertintegrations](/img/alertintegrations.png)](/img/alertintegrations.png)
+    [![alertintegrationswith](/img/alertintegrationswith.png)](/img/alertintegrationswith.png)
+
+    
+!!! info "Not selecting integrations"
+
+    If you do not select any specific [Integrations][1] the Alert will automatically follow the `Global Dashboard Routing` or if this has not been [setup][2] the[ Default Routing][3] Integrations.
+
+
+
+[2]: /how-to/setup-dashboards-global-integrations
+[3]: /how-to/default-routing
+
+
+### Edit Alert Rule
+
+On the Axonops application menu, click `Alerts & Notifications` and `click` Active. `Select` the `Alert Rules` tab and click [![edit](/img/edit.png)](/img/edit.png)
+
+!!! infomy
+
+    [![editalertrule](/img/editalertrule.png)](/img/editalertrule.png)
+
+
+### Delete Alert Rule(s)
+
+To Delete An Alert Either...
+
+* On the Axonops application menu, click `Dashboards` and `select` required Dashboard. `eg. System` `Hover over` the desired Chart click on the [![edit](/img/edit.png)](/img/edit.png) button. Below the chart `click` on the `alert` tab and `click` on the  [![delbtn](/img/delbtn.png)](/img/delbtn.png) of the alert rule you want to remove.
+
+OR...
+
+* On the Axonops application menu, click `Alerts & Notifications` and `click` Active. `Select` the Alert Rules tab and click [![delbtn](/img/delbtn.png)](/img/delbtn.png)
+
+
+!!! infomy
+
+  [![activealertrules](/img/activealertrules.png)](/img/activealertrules.png)
