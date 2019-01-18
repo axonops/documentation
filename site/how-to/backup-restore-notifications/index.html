@@ -478,7 +478,7 @@
 
 
   <li class="md-nav__item">
-    <a href="../../cluster-overview.md" title="Cluster Overview" class="md-nav__link">
+    <a href="../../cluster/cluster-overview/" title="Cluster Overview" class="md-nav__link">
       Cluster Overview
     </a>
   </li>
@@ -533,7 +533,7 @@
 
 
   <li class="md-nav__item">
-    <a href="../../monitoring/health-checs/overview.md" title="Health Checks Overview" class="md-nav__link">
+    <a href="../../monitoring/healthchecs/overview/" title="Health Checks Overview" class="md-nav__link">
       Health Checks Overview
     </a>
   </li>
@@ -545,7 +545,7 @@
 
 
   <li class="md-nav__item">
-    <a href="../../monitoring/health-checks/configurations.md" title="Health Checks Configurations" class="md-nav__link">
+    <a href="../../monitoring/healthchecs/configurations/" title="Health Checks Configurations" class="md-nav__link">
       Health Checks Configurations
     </a>
   </li>
@@ -557,7 +557,7 @@
 
 
   <li class="md-nav__item">
-    <a href="../../monitoring/health-checks/alerting.md" title="Health Checks Alerting" class="md-nav__link">
+    <a href="../../monitoring/healthchecs/alerting/" title="Health Checks Alerting" class="md-nav__link">
       Health Checks Alerting
     </a>
   </li>
@@ -612,7 +612,7 @@
 
 
   <li class="md-nav__item">
-    <a href="../../monitoring/cassandra-metrics-dashboard/overview.md" title="Metrics Dashboard Overview" class="md-nav__link">
+    <a href="../../monitoring/metricsdashboards/cassandra/overview/" title="Metrics Dashboard Overview" class="md-nav__link">
       Metrics Dashboard Overview
     </a>
   </li>
@@ -624,7 +624,7 @@
 
 
   <li class="md-nav__item">
-    <a href="../../monitoring/cassandra-metrics-dashboard/cassandra.md" title="Cassandra Metrics" class="md-nav__link">
+    <a href="../../monitoring/metricsdashboards/cassandra/cassandra/" title="Cassandra Metrics" class="md-nav__link">
       Cassandra Metrics
     </a>
   </li>
@@ -636,7 +636,7 @@
 
 
   <li class="md-nav__item">
-    <a href="../../monitoring/cassandra-metrics-dashboard/overview.md" title="Metrics Alerting Configurations" class="md-nav__link">
+    <a href="../../monitoring/metricsdashboards/cassandra/alerting/" title="Metrics Alerting Configurations" class="md-nav__link">
       Metrics Alerting Configurations
     </a>
   </li>
@@ -792,7 +792,7 @@
 
 
   <li class="md-nav__item">
-    <a href="../../operations/cassandra-repair/overview.md" title="Cassandra Repair Overview" class="md-nav__link">
+    <a href="../../operations/cassandra/repair/overview/" title="Cassandra Repair Overview" class="md-nav__link">
       Cassandra Repair Overview
     </a>
   </li>
@@ -804,7 +804,7 @@
 
 
   <li class="md-nav__item">
-    <a href="../../operations/cassandra-repair/configurations.md" title="Cassandra Repair Configurations" class="md-nav__link">
+    <a href="../../operations/cassandra/repair/configurations/" title="Cassandra Repair Configurations" class="md-nav__link">
       Cassandra Repair Configurations
     </a>
   </li>
@@ -840,7 +840,7 @@
 
 
   <li class="md-nav__item">
-    <a href="../../operations/cassandra-backup/overview.md" title="Cassandra Backup Overview" class="md-nav__link">
+    <a href="../../operations/cassandra/backup/overview/" title="Cassandra Backup Overview" class="md-nav__link">
       Cassandra Backup Overview
     </a>
   </li>
@@ -852,7 +852,7 @@
 
 
   <li class="md-nav__item">
-    <a href="../../operations/cassandra-backup/overview.md" title="Cassandra Backup Configurations" class="md-nav__link">
+    <a href="../../operations/cassandra/backup/configurations/" title="Cassandra Backup Configurations" class="md-nav__link">
       Cassandra Backup Configurations
     </a>
   </li>
@@ -944,9 +944,45 @@
       
     
     
+      <label class="md-nav__link md-nav__link--active" for="__toc">
+        Setup Backup-Restore Notifications
+      </label>
+    
     <a href="./" title="Setup Backup-Restore Notifications" class="md-nav__link md-nav__link--active">
       Setup Backup-Restore Notifications
     </a>
+    
+      
+<nav class="md-nav md-nav--secondary">
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">Table of contents</label>
+    <ul class="md-nav__list" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#notification-severities" title="Notification Severities." class="md-nav__link">
+    Notification Severities.
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#customize-notifications" title="Customize Notifications." class="md-nav__link">
+    Customize Notifications.
+  </a>
+  
+</li>
+      
+      
+      
+      
+      
+    </ul>
+  
+</nav>
     
   </li>
 
@@ -985,6 +1021,29 @@
     
   
   
+    <label class="md-nav__title" for="__toc">Table of contents</label>
+    <ul class="md-nav__list" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#notification-severities" title="Notification Severities." class="md-nav__link">
+    Notification Severities.
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#customize-notifications" title="Customize Notifications." class="md-nav__link">
+    Customize Notifications.
+  </a>
+  
+</li>
+      
+      
+      
+      
+      
+    </ul>
+  
 </nav>
                   </div>
                 </div>
@@ -997,80 +1056,37 @@
                 
                 
                 <h1 id="setup-backup-restore-notications">Setup Backup - Restore Notications<a class="headerlink" href="#setup-backup-restore-notications" title="Permanent link">&para;</a></h1>
-<ol>
-
-    <li>
-
-        <div>
-            <p>On the Axonops application menu, click <code>Operations -> Backups -> Setup </code> and <strong>select</strong>
-                <code>Notificationsg</code>tab.</p>
-            <div class="customform admonition info">
-                <p class="admonition-title">Notification <code>Severities</code>.</p>
-                <p>For each notifications severity <span class="spanimages"><img class="testbtn" src="../../img/info.png"
-                            alt="info">Info</span>
-                    <span class="spanimages"><img class="testbtn" src="../../img/warning.png" alt="warning">Warning</span>
-                    <span class="spanimages"><img class="testbtn" src="../../img/error.png" alt="error">Error</span>
-                    </br>
-                    you can either use the slider <img class="testbtn" src="../../img/sliderbar.png" alt="sliderbar">
-                    to use <strong>the default routing</strong>
-                    or use the <img class="testbtn" src="../../img/editwarningIcon.png" alt="editwarningIcon"> icon to
-                    customize the
-                    notification integrations. </p>
-                <blockquote>
-                    <p>Notice: <img class="testbtn" src="../../img/editwarningIcon.png" alt="editwarningIcon"> not
-                        available when <a href="/how-to/default-routing/">default routing</a> <img class="testbtn" src="../../img/defaultroutingselected.png"
-                            alt="defaultroutingselected"> selected</p>
-                </blockquote>
-            </div>
-            <div class="customform admonition">
-                <p class="pagerdutygif"><img src="../../img/backupnotifications.png" alt="backupnotifications"></p>
-            </div>
-        </div>
-
-    </li>
-    <li id="step1">
-
-        <div>
-            <h5>Customize notifications</h5>
-            <ul>
-                <li>
-                    <p>To customize notifications <code>click</code> on <img class="testbtn" src="../../img/editwarningIcon.png"
-                            alt="editwarningIcon">
-                        select the integrations that you require and click <code>Close</code>.</p>
-                </li>
-
-                <div class="customform admonition">
-                    <p class="pagerdutygif"><img src="../../img/customizednotifications.png" alt="customizednotifications"></p>
-                </div>
-                <li>
-                    <p>Noticed that the <code>Warning Integration</code> were customized. You can <span style="color:red">remove</span>
-                        these by clicking the <img class="testbtn" src="../../img/delbtn.png" alt="delbtn">.
-
-                    </p>
-
-                </li>
-
-                <blockquote>
-                    <p>If you want to remove <a href="/how-to/default-routing/">default routing</a> groups from a
-                        severity and create custom groups , use the slider bar to remove
-                        default routing <code>click</code> the <img class="testbtn" src="../../img/editwarningIcon.png"
-                            alt="editwarningIcon">
-                        and follow this <a href="#step1">steps</a> </p>
-                </blockquote>
-                <blockquote>
-                    <p>If you do not require any notifications <strong>ensure</strong> the <code>default routing</code>
-                        is off <img class="testbtn" src="../../img/sliderbar.png" alt="sliderbar"> and <span style="color:red">delete</span>
-                        any previously created custom notification. </p>
-                </blockquote>
-                <div class="customform admonition">
-                    <p class="pagerdutygif"><img src="../../img/backupnotifications.png" alt="backupnotifications"></p>
-                </div>
-
-            </ul>
-        </div>
-
-    </li>
-</ol>
+<p>On the Axonops application menu, click <code>Operations -&gt; Backups -&gt; Setup</code> and select <code>Notifications</code> tab. </p>
+<h2 id="notification-severities">Notification Severities.<a class="headerlink" href="#notification-severities" title="Permanent link">&para;</a></h2>
+<div class="admonition info">
+<p class="admonition-title">Notification Severities.</p>
+<p>For each notifications severity  <a href="/img/info.png"><img alt="info" src="/img/info.png" /></a> Info    <a href="/img/warning.png"><img alt="warning" src="/img/warning.png" /></a> Warning    <a href="/img/error.png"><img alt="error" src="/img/error.png" /></a> Error
+you can either use the slider <a href="/img/sliderbar.png"><img alt="sliderbar" src="/img/sliderbar.png" /></a> to use the default routing or use the <a href="/img/editwarningIcon.png"><img alt="editwarningIcon" src="/img/editwarningIcon.png" /></a>  icon to customize the notification integrations.</p>
+<blockquote>
+<p>Notice: <a href="/img/editwarningIcon.png"><img alt="editwarningIcon" src="/img/editwarningIcon.png" /></a> not available when <a href="/how-to/default-routing/">default routing</a> <a href="/img/defaultroutingselected.png"><img alt="defaultroutingselected" src="/img/defaultroutingselected.png" /></a>  selected</p>
+</blockquote>
+</div>
+<div class="admonition infomy">
+<p class="admonition-title">Infomy</p>
+<p><a href="/img/backupnotifications.png"><img alt="backupnotifications" src="/img/backupnotifications.png" /></a></p>
+</div>
+<h2 id="customize-notifications">Customize Notifications.<a class="headerlink" href="#customize-notifications" title="Permanent link">&para;</a></h2>
+<p>To customize notifications <code>click</code> on <a href="/img/editwarningIcon.png"><img alt="editwarningIcon" src="/img/editwarningIcon.png" /></a> select the integrations that you require and click <code>Close</code>.</p>
+<div class="admonition infomy">
+<p class="admonition-title">Infomy</p>
+<p><a href="/img/customizednotifications.png"><img alt="customizednotifications" src="/img/customizednotifications.png" /></a></p>
+<blockquote>
+<p>Noticed: The<code>Warning Integration</code> were customized. You can remove these by clicking the <a href="/img/delbtn.png"><img alt="delbtn" src="/img/delbtn.png" /></a>.</p>
+</blockquote>
+</div>
+<blockquote>
+<p>If you want to remove <a href="/how-to/default-routing/">default routing</a> groups from a severity and create custom groups , use the slider bar to remove default routing <code>click</code> the <a href="/img/editwarningIcon.png"><img alt="editwarningIcon" src="/img/editwarningIcon.png" /></a> and follow this <a href="#notification-severities">steps</a></p>
+<p>If you do not require any notifications <code>ensure</code> the <code>default routing</code> is off <a href="/img/sliderbar.png"><img alt="sliderbar" src="/img/sliderbar.png" /></a> and delete any previously created custom notification.</p>
+</blockquote>
+<div class="admonition infomy">
+<p class="admonition-title">Infomy</p>
+<p><a href="/img/backupnotifications.png"><img alt="backupnotifications" src="/img/backupnotifications.png" /></a></p>
+</div>
                 
                   
                 
