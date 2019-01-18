@@ -37,18 +37,18 @@ nav:
         - 'Agent Configuration': 'configuration/agent-configuration.md'
         - 'Axon-Dash Configuration': 'configuration/axondash.md'
     - Cluster Overview:
-        - 'Cluster Overview': 'cluster-overview.md'
+        - 'Cluster Overview': 'cluster/cluster-overview.md'
 
     - Monitoring:
         - Health Checks:
-            - 'Health Checks Overview': 'monitoring/health-checs/overview.md'
-            - 'Health Checks Configurations': 'monitoring/health-checks/configurations.md'
-            - 'Health Checks Alerting': 'monitoring/health-checks/alerting.md'
+            - 'Health Checks Overview': 'monitoring/healthchecs/overview.md'
+            - 'Health Checks Configurations': 'monitoring/healthchecs/configurations.md'
+            - 'Health Checks Alerting': 'monitoring/healthchecs/alerting.md'
         - Metrics Dashboard:
             - Cassandra:
-                - 'Metrics Dashboard Overview': 'monitoring/cassandra-metrics-dashboard/overview.md'
-                - 'Cassandra Metrics': 'monitoring/cassandra-metrics-dashboard/cassandra.md'
-                - 'Metrics Alerting Configurations': 'monitoring/cassandra-metrics-dashboard/overview.md'
+                - 'Metrics Dashboard Overview': 'monitoring/metricsdashboards/cassandra/overview.md'
+                - 'Cassandra Metrics': 'monitoring/metricsdashboards/cassandra/cassandra.md'
+                - 'Metrics Alerting Configurations': 'monitoring/metricsdashboards/cassandra/alerting.md'
     
     - Notification Integrations:
             - 'Notification Integration Overview' : 'integrations/overview.md'
@@ -57,13 +57,13 @@ nav:
             - 'Email Integration': 'integrations/email-integration.md'
 
     - Operations:
-        - Cassandra:
+        - Cassandra: 
             - Repair:
-                - 'Cassandra Repair Overview': 'operations/cassandra-repair/overview.md'
-                - 'Cassandra Repair Configurations': 'operations/cassandra-repair/configurations.md'
+                - 'Cassandra Repair Overview': 'operations/cassandra/repair/overview.md'
+                - 'Cassandra Repair Configurations': 'operations/cassandra/repair/configurations.md'
             - Backups:
-                - 'Cassandra Backup Overview': 'operations/cassandra-backup/overview.md'
-                - 'Cassandra Backup Configurations': 'operations/cassandra-backup/overview.md'
+                - 'Cassandra Backup Overview': 'operations/cassandra/backup/overview.md'
+                - 'Cassandra Backup Configurations': 'operations/cassandra/backup/configurations.md'
 
     - How-to:
             - 'Setup Alert Rules': how-to/setup-alert-rules.md
