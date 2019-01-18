@@ -2,76 +2,42 @@
 
 
 
+On the Axonops application menu, click `Alerts & Notifications -> Active` and select `Dashboards Global Routing` tab.
 
-<ol>
+## Notification Severities.
 
-    <li>
+!!! info "Notification Severities."
 
-        <div>
-            <p>On the Axonops application menu, click <code>Alerts &amp; Notifications -> Active </code> and <strong>select</strong>
-                <code>Dashboards Global Routing</code>tab.</p>
-            <div class="customform admonition info">
-                <p class="admonition-title">Notification <code>Severities</code>.</p>
-                <p>For each notifications severity <span class="spanimages"><img class="testbtn" src="../../img/info.png"
-                            alt="info">Info</span>
-                    <span class="spanimages"><img class="testbtn" src="../../img/warning.png" alt="warning">Warning</span>
-                    <span class="spanimages"><img class="testbtn" src="../../img/error.png" alt="error">Error</span>
-                    </br>
-                    you can either use the slider <img class="testbtn" src="../../img/sliderbar.png" alt="sliderbar">
-                    to use <strong>the default routing</strong>
-                    or use the <img class="testbtn" src="../../img/editwarningIcon.png" alt="editwarningIcon"> icon to customize the
-                    notification integrations. </p>
-                <blockquote>
-                    <p>Notice: <img class="testbtn" src="../../img/editwarningIcon.png" alt="editwarningIcon"> not available when <a
-                            href="/how-to/default-routing/">default routing</a> <img class="testbtn" src="../../img/defaultroutingselected.png"
-                            alt="defaultroutingselected"> selected</p>
-                </blockquote>
-            </div>
-            <div class="customform admonition">
-                <p class="pagerdutygif"><img src="../../img/globaldashboardroutings.png" alt="globaldashboardroutings"></p>
-            </div>
-        </div>
+    For each notifications severity  [![info](/img/info.png)](/img/info.png) Info    [![warning](/img/warning.png)](/img/warning.png) Warning    [![error](/img/error.png)](/img/error.png) Error
+    you can either use the slider [![sliderbar](/img/sliderbar.png)](/img/sliderbar.png) to use the default routing or use the [![editwarningIcon](/img/editwarningIcon.png)](/img/editwarningIcon.png)  icon to customize the notification integrations.
+    > Notice: [![editwarningIcon](/img/editwarningIcon.png)](/img/editwarningIcon.png) not available when [default routing][1] [![defaultroutingselected](/img/defaultroutingselected.png)](/img/defaultroutingselected.png)  selected
 
-    </li>
-    <li id="step1">
 
-        <div>
-            <h5>Customize notifications</h5>
-            <ul>
-                <li>
-                    <p>To customize notifications <code>click</code> on <img class="testbtn" src="../../img/editwarningIcon.png"
-                            alt="editwarningIcon">
-                        select the integrations that you require and click <code>Close</code>.</p>
-                </li>
+[1]: /how-to/default-routing/
 
-                <div class="customform admonition">
-                    <p class="pagerdutygif"><img src="../../img/customizednotifications.png" alt="customizednotifications"></p>
-                </div>
-                <li>
-                    <p>Noticed that the <code>Warning Integration</code> were customized. You can <span style="color:red">remove</span>
-                        these by clicking the <img class="testbtn" src="../../img/delbtn.png" alt="delbtn">.
+!!! infomy 
 
-                    </p>
+    [![globaldashboardroutings](/img/globaldashboardroutings.png)](/img/globaldashboardroutings.png)
 
-                </li>
 
-                <blockquote>
-                    <p>If you want to remove <a href="/how-to/default-routing/">default routing</a> groups from a
-                        severity and create custom groups , use the slider bar to remove
-                        default routing <code>click</code> the <img class="testbtn" src="../../img/editwarningIcon.png" alt="editwarningIcon">
-                        and follow this <a href="#step1">steps</a> </p>
-                </blockquote>
-                <blockquote>
-                    <p>If you do not require any notifications <strong>ensure</strong> the <code>default routing</code>
-                        is off <img class="testbtn" src="../../img/sliderbar.png" alt="sliderbar"> and <span style="color:red">delete</span>
-                        any previously created custom notification. </p>
-                </blockquote>
-                <div class="customform admonition">
-                    <p class="pagerdutygif"><img src="../../img/globaldashboardroutings.png" alt="globaldashboardroutings"></p>
-                </div>
+## Customize Notifications.
 
-            </ul>
-        </div>
+To customize notifications `click` on [![editwarningIcon](/img/editwarningIcon.png)](/img/editwarningIcon.png) select the integrations that you require and click `Close`.
 
-    </li>
-    </ul>
+!!! infomy 
+
+    [![customizednotifications](/img/customizednotifications.png)](/img/customizednotifications.png)
+
+     > Noticed: The` Warning Integration` were customized. You can remove these by clicking the [![delbtn](/img/delbtn.png)](/img/delbtn.png).
+
+
+> If you want to remove [default routing][1] groups from a severity and create custom groups , use the slider bar to remove default routing `click` the [![editwarningIcon](/img/editwarningIcon.png)](/img/editwarningIcon.png) and follow this [steps][2]
+
+> If you do not require any notifications `ensure` the `default routing` is off [![sliderbar](/img/sliderbar.png)](/img/sliderbar.png) and delete any previously created custom notification.
+
+[2]: #notification-severities
+
+!!! infomy 
+
+    [![globaldashboardroutings](/img/globaldashboardroutings.png)](/img/globaldashboardroutings.png)
+
