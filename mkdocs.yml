@@ -46,9 +46,9 @@ nav:
 
         - Monitoring:
             - Health Checks:
-                - 'Health Checks Overview': 'monitoring/healthchecs/overview.md'
-                - 'Health Checks Configurations': 'monitoring/healthchecs/configurations.md'
-                - 'Health Checks Alerting': 'monitoring/healthchecs/alerting.md'
+                - 'Health Checks Overview': 'monitoring/healthchecks/overview.md'
+                - 'Health Checks Configurations': 'monitoring/healthchecks/configurations.md'
+                - 'Health Checks Alerting': 'monitoring/healthchecks/alerting.md'
             - Metrics Dashboard:
                 - Cassandra:
                     - 'Overview': 'monitoring/metricsdashboards/cassandra/overview.md'

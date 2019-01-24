@@ -11,7 +11,7 @@ On the Axonops application menu, click `Healthchecks`, a list of all your **Node
 
  
 
-[0]: /monitoring/healthchecs/configurations/
+[0]: /monitoring/healthchecks/configurations/
 
 
 

@@ -6,7 +6,7 @@
 
 On the Axonops application menu, click `Dashboards` and `select` required Dashboard. eg. `System`
 
-`Hover over` the desired Chart `click` on the  [![testb](/img/testb.png)](/img/testb.png) button.
+`Hover over` the desired Chart `click` on the <span class="buttons"> [![testb](/img/testb.png)](/img/testb.png) </span> button.
 
 
 !!! infomy 
@@ -72,7 +72,7 @@ In the `Description` box you can include free along with one `or` many of the ab
 ####  Integrations
 
 
-* Using the slider bar [![sliderbar](/img/sliderbar.png)](/img/sliderbar.png) you can select any [Integrations][1].
+* Using the slider bar <span class="buttons"> [![sliderbar](/img/sliderbar.png)](/img/sliderbar.png) </span> you can select any [Integrations][1].
 
     Then `click` on the `Info`, `Warning`, `Error` icons, to select the group(s) of [Integrations][1] for the alert.
 
@@ -97,7 +97,7 @@ In the `Description` box you can include free along with one `or` many of the ab
 
 ### Edit Alert Rule
 
-On the Axonops application menu, click `Alerts & Notifications` and `click` Active. `Select` the `Alert Rules` tab and click [![edit](/img/edit.png)](/img/edit.png)
+On the Axonops application menu, click `Alerts & Notifications` and `click` Active. `Select` the `Alert Rules` tab and click <span class="buttons"> [![edit](/img/edit.png)](/img/edit.png) </span>
 
 !!! infomy
 
@@ -108,11 +108,11 @@ On the Axonops application menu, click `Alerts & Notifications` and `click` Acti
 
 To Delete An Alert Either...
 
-* On the Axonops application menu, click `Dashboards` and `select` required Dashboard. `eg. System` `Hover over` the desired Chart click on the [![edit](/img/edit.png)](/img/edit.png) button. Below the chart `click` on the `alert` tab and `click` on the  [![delbtn](/img/delbtn.png)](/img/delbtn.png) of the alert rule you want to remove.
+* On the Axonops application menu, click `Dashboards` and `select` required Dashboard. `eg. System` `Hover over` the desired Chart click on the <span class="buttons"> [![edit](/img/edit.png)](/img/edit.png) </span> button. Below the chart `click` on the `alert` tab and `click` on the <span class="buttons"> [![delbtn](/img/delbtn.png)](/img/delbtn.png) </span> of the alert rule you want to remove.
 
 OR...
 
-* On the Axonops application menu, click `Alerts & Notifications` and `click` Active. `Select` the Alert Rules tab and click [![delbtn](/img/delbtn.png)](/img/delbtn.png)
+* On the Axonops application menu, click `Alerts & Notifications` and `click` Active. `Select` the Alert Rules tab and click  <span class="buttons"> [![delbtn](/img/delbtn.png)](/img/delbtn.png) </span>
 
 
 !!! infomy
