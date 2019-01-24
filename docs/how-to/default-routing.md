@@ -15,9 +15,9 @@ On the Axonops application menu, select `Alert & Notifications` -> Integration a
 
 !!! infomy 
 
-    [![info](/img/info.png)](/img/info.png) Info 
-    [![warning](/img/warning.png)](/img/warning.png) Warning 
-    [![error](/img/error.png)](/img/error.png) Error
+    <span class="buttons"> [![info](/img/info.png)](/img/info.png) </span> Info 
+    <span class="buttons"> [![warning](/img/warning.png)](/img/warning.png) </span> Warning 
+    <span class="buttons"> [![error](/img/error.png)](/img/error.png) </span> Error
     [![defaultrouting](/img/defaultrouting.png)](/img/defaultrouting.png)
 
 
@@ -25,16 +25,16 @@ On the Axonops application menu, select `Alert & Notifications` -> Integration a
 
 ####  Info
 
-To Setup Default Routing For [![info](/img/info.png)](/img/info.png) Info click On [![defaultplus](/img/defaultplus.png)](/img/defaultplus.png)
+To Setup Default Routing For <span class="buttons"> [![info](/img/info.png)](/img/info.png) </span> Info click On <span class="buttons"> [![defaultplus](/img/defaultplus.png)](/img/defaultplus.png) </span>
 
 
-* Select the desired group(s) from the dropdown menu for the desired integrations(s) and  click` [![submit](/img/submit.png)](/img/submit.png) to confirm selections
+* Select the desired group(s) from the dropdown menu for the desired integrations(s) and  click` <span class="buttons"> [![submit](/img/submit.png)](/img/submit.png) </span> to confirm selections
 
 !!! infomy 
 
     [![selectgroups](/img/selectgroups.png)](/img/selectgroups.png) 
 
-The group should now appear in the [![info](/img/info.png)](/img/info.png) Info  Info box on the `Default Routing Tab`
+The group should now appear in the <span class="buttons">[![info](/img/info.png)](/img/info.png) </span> Info  Info box on the `Default Routing Tab`
 
 !!! infomy 
 
@@ -43,14 +43,14 @@ The group should now appear in the [![info](/img/info.png)](/img/info.png) Info 
 ####  Warning - Error
 
 
-Repeat these [steps][1] to setup the Default Routing for [![warning](/img/warning.png)](/img/warning.png) Warning 
-[![error](/img/error.png)](/img/error.png) Error 
+Repeat these [steps][1] to setup the Default Routing for <span class="buttons"> [![warning](/img/warning.png)](/img/warning.png) </span> Warning 
+<span class="buttons">[![error](/img/error.png)](/img/error.png) </span> Error 
 
 [1]: #info
 
 ### Edit Default Routing
 
-To Edit `Default Routing` click on the  [![defaultplus](/img/defaultplus.png)](/img/defaultplus.png) icon on either [![info](/img/info.png)](/img/info.png) [![warning](/img/warning.png)](/img/warning.png) [![error](/img/error.png)](/img/error.png)  Add or `Remove` existing integrations using the `dropdown` menus.
+To Edit `Default Routing` click on the  <span class="buttons">[![defaultplus](/img/defaultplus.png)](/img/defaultplus.png) </spa> icon on either <span class="buttons">[![info](/img/info.png)](/img/info.png) </span> <span class="buttons">[![warning](/img/warning.png)](/img/warning.png) [![error](/img/error.png)](/img/error.png) </span>  Add or `Remove` existing integrations using the `dropdown` menus.
 
 
 ### Delete Default Routing

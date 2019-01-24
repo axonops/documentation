@@ -14,7 +14,7 @@ On the Axonops application menu, click `Healthchecks` and select `Setup` tab.
 
 ####  Create Services
 
-Below there few examples `copy` and `Paste` inside. and click `save` [![save](/img/disk.png)](/img/disk.png)
+Below there few examples `copy` and `Paste` inside. and click `save` <span class="buttons"> [![save](/img/disk.png)](/img/disk.png) </span>
 
 
 ``` jsonld
@@ -76,7 +76,7 @@ Example:
 
 ####  Delete Services
 
-To Delete a service `copy` and `Paste` inside. and `click` save  [![save](/img/disk.png)](/img/disk.png)
+To Delete a service `copy` and `Paste` inside. and `click` save <span class="buttons"> [![save](/img/disk.png)](/img/disk.png) </span>
 
 ``` jsonld
 {
