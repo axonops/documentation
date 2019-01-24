@@ -11,3 +11,12 @@ AxonOps is an extensible operational management tool initially built for Apache 
 * Integrates with ChatOps tools - Slack, PagerDuty etc.
 * Highly efficient metrics collection and storage
 * Domain aware functionalities, including Cassandra repairs and backups.
+
+## Components 
+
+AxonOps is a set of 3 main components:
+
+* axon-server - The main server of axonops that collect metrics, logs, events and more.
+* axon-agents - They corresponds to small binaries deployed onto the nodes of your clusters.
+* axon-dash - The UI to interact with axon-server (dash for AxonOps Dashboards).
+
