@@ -14,9 +14,10 @@ AxonOps is an extensible operational management tool initially built for Apache 
 
 ## Components 
 
-AxonOps is a set of 3 main components:
+AxonOps has four main components:
 
 * axon-server - The main server of axonops that collect metrics, logs, events and more.
 * axon-agents - They corresponds to small binaries deployed onto the nodes of your clusters.
 * axon-dash - The UI to interact with axon-server (dash for AxonOps Dashboards).
+* Elasticsearch - A distributed search engine which stores all of the collected data.
 
