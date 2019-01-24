@@ -54,3 +54,25 @@
     color: #3b78e7;
 } */
 
+.admonition.notemy.custom {
+    width: 214px;
+    height: 150px;
+    margin: 10px 10px;
+    border-left: none;
+    text-align: center;
+    float: left;
+}
+
+.admonition.notemy.custom p a img {
+    height: 47px;
+    width: auto;
+    
+}
+.buttons a img {
+    width: auto;
+    height: 20px;
+    top: 5px;
+    position: relative;
+    margin: 0 4px;
+}
+
