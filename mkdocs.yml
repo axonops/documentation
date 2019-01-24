@@ -36,34 +36,36 @@ nav:
         - 'Server Configuration': 'configuration/server-configuration.md'
         - 'Agent Configuration': 'configuration/agent-configuration.md'
         - 'Axon-Dash Configuration': 'configuration/axondash.md'
-    - Cluster Overview:
-        - 'Cluster Overview': 'cluster/cluster-overview.md'
 
-    - Monitoring:
-        - Health Checks:
-            - 'Health Checks Overview': 'monitoring/healthchecs/overview.md'
-            - 'Health Checks Configurations': 'monitoring/healthchecs/configurations.md'
-            - 'Health Checks Alerting': 'monitoring/healthchecs/alerting.md'
-        - Metrics Dashboard:
-            - Cassandra:
-                - 'Metrics Dashboard Overview': 'monitoring/metricsdashboards/cassandra/overview.md'
-                - 'Cassandra Metrics': 'monitoring/metricsdashboards/cassandra/cassandra.md'
-                - 'Metrics Alerting Configurations': 'monitoring/metricsdashboards/cassandra/alerting.md'
-    
-    - Notification Integrations:
-            - 'Notification Integration Overview' : 'integrations/overview.md'
-            - 'PagerDuty Integration': 'integrations/pagerduy-integration.md'
-            - 'Slack Integration': 'integrations/slack-integration.md'
-            - 'Email Integration': 'integrations/email-integration.md'
+    - Using AxonOps:
+        - Cluster Overview:
+            - 'Cluster Overview': 'cluster/cluster-overview.md'
 
-    - Operations:
-        - Cassandra: 
-            - Repair:
-                - 'Cassandra Repair Overview': 'operations/cassandra/repair/overview.md'
-                - 'Cassandra Repair Configurations': 'operations/cassandra/repair/configurations.md'
-            - Backups:
-                - 'Cassandra Backup Overview': 'operations/cassandra/backup/overview.md'
-                - 'Cassandra Backup Configurations': 'operations/cassandra/backup/configurations.md'
+        - Monitoring:
+            - Health Checks:
+                - 'Health Checks Overview': 'monitoring/healthchecs/overview.md'
+                - 'Health Checks Configurations': 'monitoring/healthchecs/configurations.md'
+                - 'Health Checks Alerting': 'monitoring/healthchecs/alerting.md'
+            - Metrics Dashboard:
+                - Cassandra:
+                    - 'Overview': 'monitoring/metricsdashboards/cassandra/overview.md'
+                    - 'Cassandra Metrics': 'monitoring/metricsdashboards/cassandra/cassandra.md'
+                    - 'Metrics Alerting Configurations': 'monitoring/metricsdashboards/cassandra/alerting.md'
+        
+        - Notification Integrations:
+                - 'Overview' : 'integrations/overview.md'
+                - 'PagerDuty Integration': 'integrations/pagerduy-integration.md'
+                - 'Slack Integration': 'integrations/slack-integration.md'
+                - 'Email Integration': 'integrations/email-integration.md'
+
+        - Operations:
+            - Cassandra: 
+                - Repair:
+                    - 'Overview': 'operations/cassandra/repair/overview.md'
+                    - 'Cassandra Repair Configurations': 'operations/cassandra/repair/configurations.md'
+                - Backups:
+                    - 'Overview': 'operations/cassandra/backup/overview.md'
+                    - 'Cassandra Backup Configurations': 'operations/cassandra/backup/configurations.md'
 
     - How-to:
             - 'Setup Alert Rules': how-to/setup-alert-rules.md
