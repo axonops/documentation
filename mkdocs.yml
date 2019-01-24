@@ -19,23 +19,26 @@ plugins:
 
 nav:
     - Introduction: index.md
+
     - Overview:
         - 'Motivation': 'overview/motivation.md'
         - 'Architecture': 'overview/architecture.md'
+
     - Installation:
-        - Axonops Agents:
-            - 'Installing on Ubuntu/Debian': 'installation/agents/installing-ubuntu.md'
-            - 'Installing on Centos/Redhat': 'installation/agents/installing-centos.md'
         - Axonops Server:
             - 'Installing on Ubuntu/Debian': 'installation/server/installing-ubuntu.md'
             - 'Installing on Centos/Redhat': 'installation/server/installing-centos.md'
         - Axonops Dashboard:
             - 'Installing on Ubuntu/Debian': 'installation/gui/installing-ubuntu.md'
             - 'Installing on Centos/Redhat': 'installation/gui/installing-centos.md'
+        - Axonops Agents:
+            - 'Installing on Ubuntu/Debian': 'installation/agents/installing-ubuntu.md'
+            - 'Installing on Centos/Redhat': 'installation/agents/installing-centos.md'
+
     - Configuration:
-        - 'Server Configuration': 'configuration/server-configuration.md'
-        - 'Agent Configuration': 'configuration/agent-configuration.md'
-        - 'Axon-Dash Configuration': 'configuration/axondash.md'
+        - 'AxonOps Server Configuration': 'configuration/server-configuration.md'
+        - 'AxonOps Agent Configuration': 'configuration/agent-configuration.md'
+        - 'AxonOps GUI Service Configuration': 'configuration/axondash.md'
 
     - Using AxonOps:
         - Cluster Overview:
