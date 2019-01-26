@@ -32,7 +32,7 @@ nav:
         - Axonops Agents:
             - 'Installing on Ubuntu/Debian': 'installation/agents/installing-ubuntu.md'
             - 'Installing on Centos/Redhat': 'installation/agents/installing-centos.md'
-        - Axonops Cassandra Agent: 'installation/cassandra-agent.md'
+        - Axonops Cassandra/DSE Agent: 'installation/cassandra-agent.md'
 
     - Configuration:
         - 'AxonOps Server Configuration': 'configuration/server-configuration.md'

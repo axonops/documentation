@@ -83,7 +83,7 @@ sudo add-apt-repository <TODO>
 sudo apt install axon-server
 ```
 
-#### Install via YUM Repository
+#### Installing axon-server on Centos/Redhat
 
 Add the following to a new file at ` /etc/yum.repos.d/axonops.repo `
 
@@ -100,12 +100,46 @@ sslcacert=/etc/pki/tls/certs/ca-bundle.crt
 
 ```
 
+### Configuration
+
+* Configuration file: `/etc/axonops/axon-server.yml`
+
+``` yaml
+
+host: 0.0.0.0  # axon-server endpoint 
+port: 8080 # axon-server port 
+elastic_host: localhost # Elasticsearch endpoint
+elastic_port: 9200 # Elasticsearch port
+
+# axon-dash configuration
+axon-dash:
+  host: 127.0.0.1
+  port: 3000
+  https: false
+
+alerting:
+# How long to wait before sending a notification again if it has already
+# been sent successfully for an alert. (Usually ~3h or more).
+  notification_interval: 3h
+
+retention:
+  events: 24w # logs and events retention. Must be expressed in weeks (w)
+  metrics:
+      high_resolution: 30d # High frequency metrics. Must be expressed in days (d)
+      med_resolution: 24w # Must be expressed in weeks (w)
+      low_resolution: 24M # Must be expressed in months (M)
+      super_low_resolution: 3y # Must be expressed in years (y)
+  backups: # Those are use as defaults but can be overridden from the UI
+    local: 10d
+    remote: 30d 
+```
+
 
 ### Package details
 
-* Configuration: `/etc/axonops/axon-server.yaml`
 * Logs: ` /var/log/axonops/axon-server.log` 
 * Binary: `usr/share/axonops/axon-server`
+
 
 
 
