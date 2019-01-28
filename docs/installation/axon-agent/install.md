@@ -19,7 +19,7 @@ sudo apt-get install <TODO>
 
 
 #### Configuration
-Make sure **axon-agent** configuration points to the correct **axon-server** address and your organisation name is specified:
+Make sure **axon-agent** configuration points to the correct **axon-server** address and your **organisation name** is specified:
 
 ``` yaml hl_lines="2 8"
 axon-server:
@@ -44,7 +44,7 @@ systemctl start axon-agent
 systemctl status axon-agent
 ```
 
-This will start the `axon-agent` process as the `axonops` user, which was created during the package installation. The default OpenTSDB listening address is `0.0.0.0:9916`.
+This will start the **axon-agent** process as the **axonops** user, which was created during the package installation. The default OpenTSDB listening address is **0.0.0.0:9916**.
 
 
 ## Going further

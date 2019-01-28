@@ -1,3 +1,3 @@
-# axon-java-agent for Cassandra installation  (CentOS / RedHat)
+# axon-java-agent for Cassandra installation
 
-## TODO
+## WIP
