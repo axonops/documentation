@@ -1,4 +1,5 @@
 
+
 #### Package details
 
 * Configuration: `/etc/axonops/axon-server.yml`
@@ -20,7 +21,7 @@ This will start the `axon-server` process as the `axonops` user, which was creat
 
 ``` yaml
 
-host: 0.0.0.0  # axon-server listening address 
+host: 0.0.0.0  # axon-server listening address ()
 port: 8080 # axon-server listening port 
 elastic_host: localhost # Elasticsearch endpoint
 elastic_port: 9200 # Elasticsearch port

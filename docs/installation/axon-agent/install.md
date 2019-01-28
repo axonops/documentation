@@ -46,6 +46,7 @@ systemctl status axon-agent
 
 This will start the **axon-agent** process as the **axonops** user, which was created during the package installation. The default OpenTSDB listening address is **0.0.0.0:9916**.
 
+* Note that you will have to refresh **axon-dash** page to show the newly connected node.
 
 ## Going further
 

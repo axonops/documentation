@@ -40,5 +40,5 @@ Elasticsearch can be started from the command line as follows:
 You can test that your Elasticsearch node is running by sending an HTTP request to port 9200 on localhost:
 
 ``` -
-curl -X GET "localhost:9200/"
+wget -qO- localhost:9200
 ```
