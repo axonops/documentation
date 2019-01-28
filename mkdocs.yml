@@ -9,6 +9,8 @@ extra_css:
   - 'stylesheets/extra.css'
 markdown_extensions:
   - admonition
+  - markdown_include.include:
+      base_path: docs
   - codehilite:
       guess_lang: False
        
