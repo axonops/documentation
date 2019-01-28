@@ -51,5 +51,5 @@ This will start the `axon-agent` process as the `axonops` user, which was create
 
 You can extend axon-agent capabilities for the following applications:
 
-* [cassandra](../cassandra-agent/centos.md)
-* [DSE](../dse-agent/centos.md)
+* [cassandra](../cassandra-agent/install.md)
+* [DSE](../dse-agent/install.md)
