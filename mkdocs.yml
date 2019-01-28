@@ -9,6 +9,8 @@ extra_css:
   - 'stylesheets/extra.css'
 markdown_extensions:
   - admonition
+  - markdown_include.include:
+      base_path: docs
   - codehilite:
       guess_lang: False
        
@@ -26,21 +28,13 @@ nav:
 
     - Installation:
         - Axonops Server:
-            - 'Installing on Ubuntu/Debian': 'installation/server/ubuntu.md'
-            - 'Installing on Centos/Redhat': 'installation/server/centos.md'
-        - Axonops Dashboard:
-            - 'Installing on Ubuntu/Debian': 'installation/gui/ubuntu.md'
-            - 'Installing on Centos/Redhat': 'installation/gui/centos.md'
-        - Axonops Agent:
-            - 'Installing on Ubuntu/Debian': 'installation/agent/ubuntu.md'
-            - 'Installing on Centos/Redhat': 'installation/agent/centos.md'
-        - Axonops Cassandra Agent: 
-            - 'Installing on Ubuntu/Debian': 'installation/cassandra-agent/ubuntu.md'
-            - 'Installing on Centos/Redhat': 'installation/cassandra-agent/centos.md'
-        - Axonops DSE Agent: 
-            - 'Installing on Ubuntu/Debian': 'installation/dse-agent/ubuntu.md'
-            - 'Installing on Centos/Redhat': 'installation/dse-agent/centos.md'
-
+            - 'Installing on Ubuntu/Debian': 'installation/axon-server/ubuntu.md'
+            - 'Installing on Centos/Redhat': 'installation/axon-server/centos.md'
+        - Axonops Dashboard: 'installation/axon-dash/install.md'
+        - Axonops Agent: 'installation/axon-agent/install.md'
+        - Axonops Cassandra Agent: 'installation/cassandra-agent/install.md'
+        - Axonops DSE Agent: 'installation/dse-agent/install.md'
+        - Compatibility matrix: 'installation/compat_matrix/compat_matrix.md'
     - Configuration:
         - 'AxonOps Server Configuration': 'configuration/server-configuration.md'
         - 'AxonOps Agent Configuration': 'configuration/agent-configuration.md'
