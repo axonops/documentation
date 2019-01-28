@@ -1,5 +1,7 @@
 
-### Prerequisites
+# axon-server installation (CentOS / RedHat)
+
+## Prerequisites
 
 Elasticsearch stores all of the collected data by axon-server. Let's install Java 8 and Elasticsearch first.
 
@@ -11,7 +13,7 @@ wget -c --header "Cookie: oraclelicense=accept-securebackup-cookie" http://downl
 ```
 
 ``` -
-sudo yum localinstall jdk-8u131-linux-x64.rpm
+sudo yum jdk-8u131-linux-x64.rpm
 ```
 
 #### Installing Elasticsearch
@@ -53,24 +55,21 @@ You can test that your Elasticsearch node is running by sending an HTTP request 
 curl -X GET "localhost:9200/"
 ```
 
-#### Installing axon-server 
+## Installing axon-server 
 
 ``` -
-sudo add-apt-repository <TODO>
+sudo yum install <TODO>
 ```
 
-``` -
-sudo apt install axon-server
-```
 
-### Package details
+#### Package details
 
 * Configuration: `/etc/axonops/axon-server.yml`
 * Logs: `/var/log/axonops/axon-server.log` 
 * Binary: `usr/share/axonops/axon-server`
 * Systemd service: `usr/lib/systemd/system/axon-server.service`
 
-### Start the server
+#### Start the server
 
 ``` -
 systemctl daemon-reload
@@ -78,20 +77,18 @@ systemctl start axon-server
 systemctl status axon-server
 ```
 
-This will start the `axon-server` process as the `axonops` user, which was created during the package installation. The default API HTTP port is `8080`.
+This will start the `axon-server` process as the `axonops` user, which was created during the package installation.  The default listening address is `0.0.0.0:8080`.
 
-
-### Configuration defaults
+#### Configuration defaults
 
 ``` yaml
 
-host: 0.0.0.0  # axon-server endpoint 
-port: 8080 # axon-server port 
+host: 0.0.0.0  # axon-server listening address 
+port: 8080 # axon-server listening port 
 elastic_host: localhost # Elasticsearch endpoint
 elastic_port: 9200 # Elasticsearch port
 
-# axon-dash configuration
-axon-dash:
+axon-dash: # This must point to axon-dash address
   host: 127.0.0.1
   port: 3000
   https: false
@@ -113,7 +110,9 @@ retention:
     remote: 30d 
 ```
 
+## Installing axon-dash
 
+Now axon-server is installed, you can start installing [axon-dash](../gui/installing-centos.md)
 
 
 
