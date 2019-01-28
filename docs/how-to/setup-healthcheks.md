@@ -21,45 +21,27 @@ Below there few examples `copy` and `Paste` inside. and click `save` <span class
 {
     "shellchecks": [
      {
-         "name" : "check_cassandra_statusbinary",
-         "shell" :  "/bin/bash",
-         "script":  "/var/lib/cassandra_checks/check_cassandra_statusbinary.sh",
-         "interval": "5m" ,
-         "timeout": "1m" 
+        "name" : "check_elastic",
+        "shell" :  "/bin/bash",
+        "script":  "if [ 'ps auxwww | grep elastic | wc -l' -lt 1 ]
+        then
+           exit 2
+           else
+        exit 0
+        fi",
+        "interval": "5m" ,
+        "timeout": "1m" 
      }
    ],
  
-   "httpchecks": [
-     {
-         "name" : "cassandra",
-         "http" :  "http://localhost:9042",
-         "tls_skip_verify":  true,
-         "method": "GET" ,
-         "interval": "10s" ,
-         "timeout": "1m" 
-     },
-     {
-         "name" : "cassandra",
-         "http" :  "http://localhost:9916",
-         "tls_skip_verify":  true,
-         "method": "GET" ,
-         "interval": "10s" ,
-         "timeout": "1m" 
-     }
-   ],
+   "httpchecks": [],
    "tcpchecks": [
-     {
-         "name" : "tcp_cassandra",
-         "tcp" :  "http://localhost:9042",
-         "interval": "30s" ,
-         "timeout": "1m" 
-     },
-     {
-         "name" : "tcp_cassandra",
-         "tcp" :  "http://localhost:9200",
-         "interval": "5m" ,
-         "timeout": "1m" 
-     }
+    {
+        "name": "elastic_tcp_endpoint_check",
+        "interval": "5s",
+        "timeout": "1m",
+        "tcp": "localhost:9200"
+    }
    ]
  
   }
