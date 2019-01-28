@@ -87,8 +87,7 @@ systemctl start axon-server
 systemctl status axon-server
 ```
 
-### Configuration defaults
-
+This will start the `axon-server` process as the `axonops` user, which was created during the package installation. The default API HTTP port is `8080`.
 
 ### Configuration defaults
 
