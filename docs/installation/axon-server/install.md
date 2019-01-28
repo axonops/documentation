@@ -3,8 +3,8 @@
 #### Package details
 
 * Configuration: `/etc/axonops/axon-server.yml`
-* Logs: `/var/log/axonops/axon-server.log` 
 * Binary: `usr/share/axonops/axon-server`
+* Logs: `/var/log/axonops/axon-server.log` 
 * Systemd service: `usr/lib/systemd/system/axon-server.service`
 
 #### Start the server

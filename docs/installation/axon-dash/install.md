@@ -13,8 +13,8 @@ sudo apt-get install <TODO>
 
 * Configuration: `/etc/axonops/axon-dash.yml`
 * Binary: `usr/share/axonops/axon-dash`
+* Logs: `TODO` 
 * Systemd service: `usr/lib/systemd/system/axon-dash.service`
-
 
 
 #### Configuration
