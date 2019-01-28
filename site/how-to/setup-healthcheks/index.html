@@ -2,7 +2,7 @@
 
 
 
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en" class="no-js">
   <head>
     
@@ -32,7 +32,7 @@
         <meta name="lang:search.tokenizer" content="[\s\-]+">
       
       <link rel="shortcut icon" href="../../img/favicon.ico">
-      <meta name="generator" content="mkdocs-1.0.4, mkdocs-material-3.1.0">
+      <meta name="generator" content="mkdocs-1.0.4, mkdocs-material-3.2.0">
     
     
       
@@ -40,12 +40,12 @@
       
     
     
-      <link rel="stylesheet" href="../../assets/stylesheets/application.11e41852.css">
+      <link rel="stylesheet" href="../../assets/stylesheets/application.572ca0f0.css">
       
       
     
     
-      <script src="../../assets/javascripts/modernizr.20ef595d.js"></script>
+      <script src="../../assets/javascripts/modernizr.8c900955.js"></script>
     
     
       
@@ -484,7 +484,7 @@
     <label class="md-nav__link" for="nav-5-2">
       Monitoring
     </label>
-    <nav class="md-nav" data-md-component="collapsible" data-md-level="2">
+    <nav class="md-nav" data-md-component="collapsible" data-md-level="3">
       <label class="md-nav__title" for="nav-5-2">
         Monitoring
       </label>
@@ -503,7 +503,7 @@
     <label class="md-nav__link" for="nav-5-2-1">
       Health Checks
     </label>
-    <nav class="md-nav" data-md-component="collapsible" data-md-level="3">
+    <nav class="md-nav" data-md-component="collapsible" data-md-level="4">
       <label class="md-nav__title" for="nav-5-2-1">
         Health Checks
       </label>
@@ -563,7 +563,7 @@
     <label class="md-nav__link" for="nav-5-2-2">
       Metrics Dashboard
     </label>
-    <nav class="md-nav" data-md-component="collapsible" data-md-level="3">
+    <nav class="md-nav" data-md-component="collapsible" data-md-level="5">
       <label class="md-nav__title" for="nav-5-2-2">
         Metrics Dashboard
       </label>
@@ -582,7 +582,7 @@
     <label class="md-nav__link" for="nav-5-2-2-1">
       Cassandra
     </label>
-    <nav class="md-nav" data-md-component="collapsible" data-md-level="4">
+    <nav class="md-nav" data-md-component="collapsible" data-md-level="6">
       <label class="md-nav__title" for="nav-5-2-2-1">
         Cassandra
       </label>
@@ -652,7 +652,7 @@
     <label class="md-nav__link" for="nav-5-3">
       Notification Integrations
     </label>
-    <nav class="md-nav" data-md-component="collapsible" data-md-level="2">
+    <nav class="md-nav" data-md-component="collapsible" data-md-level="4">
       <label class="md-nav__title" for="nav-5-3">
         Notification Integrations
       </label>
@@ -724,7 +724,7 @@
     <label class="md-nav__link" for="nav-5-4">
       Operations
     </label>
-    <nav class="md-nav" data-md-component="collapsible" data-md-level="2">
+    <nav class="md-nav" data-md-component="collapsible" data-md-level="5">
       <label class="md-nav__title" for="nav-5-4">
         Operations
       </label>
@@ -743,7 +743,7 @@
     <label class="md-nav__link" for="nav-5-4-1">
       Cassandra
     </label>
-    <nav class="md-nav" data-md-component="collapsible" data-md-level="3">
+    <nav class="md-nav" data-md-component="collapsible" data-md-level="6">
       <label class="md-nav__title" for="nav-5-4-1">
         Cassandra
       </label>
@@ -762,7 +762,7 @@
     <label class="md-nav__link" for="nav-5-4-1-1">
       Repair
     </label>
-    <nav class="md-nav" data-md-component="collapsible" data-md-level="4">
+    <nav class="md-nav" data-md-component="collapsible" data-md-level="7">
       <label class="md-nav__title" for="nav-5-4-1-1">
         Repair
       </label>
@@ -810,7 +810,7 @@
     <label class="md-nav__link" for="nav-5-4-1-2">
       Backups
     </label>
-    <nav class="md-nav" data-md-component="collapsible" data-md-level="4">
+    <nav class="md-nav" data-md-component="collapsible" data-md-level="8">
       <label class="md-nav__title" for="nav-5-4-1-2">
         Backups
       </label>
@@ -1081,45 +1081,27 @@
 <div class="codehilite"><pre><span></span><span class="p">{</span>
     <span class="nt">&quot;shellchecks&quot;</span><span class="p">:</span> <span class="p">[</span>
      <span class="p">{</span>
-         <span class="nt">&quot;name&quot;</span> <span class="p">:</span> <span class="s2">&quot;check_cassandra_statusbinary&quot;</span><span class="p">,</span>
-         <span class="nt">&quot;shell&quot;</span> <span class="p">:</span>  <span class="s2">&quot;/bin/bash&quot;</span><span class="p">,</span>
-         <span class="nt">&quot;script&quot;</span><span class="p">:</span>  <span class="s2">&quot;/var/lib/cassandra_checks/check_cassandra_statusbinary.sh&quot;</span><span class="p">,</span>
-         <span class="nt">&quot;interval&quot;</span><span class="p">:</span> <span class="s2">&quot;5m&quot;</span> <span class="p">,</span>
-         <span class="nt">&quot;timeout&quot;</span><span class="p">:</span> <span class="s2">&quot;1m&quot;</span> 
+        <span class="nt">&quot;name&quot;</span> <span class="p">:</span> <span class="s2">&quot;check_elastic&quot;</span><span class="p">,</span>
+        <span class="nt">&quot;shell&quot;</span> <span class="p">:</span>  <span class="s2">&quot;/bin/bash&quot;</span><span class="p">,</span>
+        <span class="nt">&quot;script&quot;</span><span class="p">:</span>  <span class="s2">&quot;if [ &#39;ps auxwww | grep elastic | wc -l&#39; -lt 1 ]</span>
+<span class="s2">        then</span>
+<span class="s2">           exit 2</span>
+<span class="s2">           else</span>
+<span class="s2">        exit 0</span>
+<span class="s2">        fi&quot;</span><span class="p">,</span>
+        <span class="nt">&quot;interval&quot;</span><span class="p">:</span> <span class="s2">&quot;5m&quot;</span> <span class="p">,</span>
+        <span class="nt">&quot;timeout&quot;</span><span class="p">:</span> <span class="s2">&quot;1m&quot;</span> 
      <span class="p">}</span>
    <span class="p">],</span>
 
-   <span class="nt">&quot;httpchecks&quot;</span><span class="p">:</span> <span class="p">[</span>
-     <span class="p">{</span>
-         <span class="nt">&quot;name&quot;</span> <span class="p">:</span> <span class="s2">&quot;cassandra&quot;</span><span class="p">,</span>
-         <span class="nt">&quot;http&quot;</span> <span class="p">:</span>  <span class="s2">&quot;http://localhost:9042&quot;</span><span class="p">,</span>
-         <span class="nt">&quot;tls_skip_verify&quot;</span><span class="p">:</span>  <span class="kc">true</span><span class="p">,</span>
-         <span class="nt">&quot;method&quot;</span><span class="p">:</span> <span class="s2">&quot;GET&quot;</span> <span class="p">,</span>
-         <span class="nt">&quot;interval&quot;</span><span class="p">:</span> <span class="s2">&quot;10s&quot;</span> <span class="p">,</span>
-         <span class="nt">&quot;timeout&quot;</span><span class="p">:</span> <span class="s2">&quot;1m&quot;</span> 
-     <span class="p">},</span>
-     <span class="p">{</span>
-         <span class="nt">&quot;name&quot;</span> <span class="p">:</span> <span class="s2">&quot;cassandra&quot;</span><span class="p">,</span>
-         <span class="nt">&quot;http&quot;</span> <span class="p">:</span>  <span class="s2">&quot;http://localhost:9916&quot;</span><span class="p">,</span>
-         <span class="nt">&quot;tls_skip_verify&quot;</span><span class="p">:</span>  <span class="kc">true</span><span class="p">,</span>
-         <span class="nt">&quot;method&quot;</span><span class="p">:</span> <span class="s2">&quot;GET&quot;</span> <span class="p">,</span>
-         <span class="nt">&quot;interval&quot;</span><span class="p">:</span> <span class="s2">&quot;10s&quot;</span> <span class="p">,</span>
-         <span class="nt">&quot;timeout&quot;</span><span class="p">:</span> <span class="s2">&quot;1m&quot;</span> 
-     <span class="p">}</span>
-   <span class="p">],</span>
+   <span class="nt">&quot;httpchecks&quot;</span><span class="p">:</span> <span class="p">[],</span>
    <span class="nt">&quot;tcpchecks&quot;</span><span class="p">:</span> <span class="p">[</span>
-     <span class="p">{</span>
-         <span class="nt">&quot;name&quot;</span> <span class="p">:</span> <span class="s2">&quot;tcp_cassandra&quot;</span><span class="p">,</span>
-         <span class="nt">&quot;tcp&quot;</span> <span class="p">:</span>  <span class="s2">&quot;http://localhost:9042&quot;</span><span class="p">,</span>
-         <span class="nt">&quot;interval&quot;</span><span class="p">:</span> <span class="s2">&quot;30s&quot;</span> <span class="p">,</span>
-         <span class="nt">&quot;timeout&quot;</span><span class="p">:</span> <span class="s2">&quot;1m&quot;</span> 
-     <span class="p">},</span>
-     <span class="p">{</span>
-         <span class="nt">&quot;name&quot;</span> <span class="p">:</span> <span class="s2">&quot;tcp_cassandra&quot;</span><span class="p">,</span>
-         <span class="nt">&quot;tcp&quot;</span> <span class="p">:</span>  <span class="s2">&quot;http://localhost:9200&quot;</span><span class="p">,</span>
-         <span class="nt">&quot;interval&quot;</span><span class="p">:</span> <span class="s2">&quot;5m&quot;</span> <span class="p">,</span>
-         <span class="nt">&quot;timeout&quot;</span><span class="p">:</span> <span class="s2">&quot;1m&quot;</span> 
-     <span class="p">}</span>
+    <span class="p">{</span>
+        <span class="nt">&quot;name&quot;</span><span class="p">:</span> <span class="s2">&quot;elastic_tcp_endpoint_check&quot;</span><span class="p">,</span>
+        <span class="nt">&quot;interval&quot;</span><span class="p">:</span> <span class="s2">&quot;5s&quot;</span><span class="p">,</span>
+        <span class="nt">&quot;timeout&quot;</span><span class="p">:</span> <span class="s2">&quot;1m&quot;</span><span class="p">,</span>
+        <span class="nt">&quot;tcp&quot;</span><span class="p">:</span> <span class="s2">&quot;localhost:9200&quot;</span>
+    <span class="p">}</span>
    <span class="p">]</span>
 
   <span class="p">}</span>
@@ -1218,7 +1200,7 @@
       
     </div>
     
-      <script src="../../assets/javascripts/application.9e1f3b71.js"></script>
+      <script src="../../assets/javascripts/application.b41f3d20.js"></script>
       
       <script>app.initialize({version:"1.0.4",url:{base:"../.."}})</script>
       
