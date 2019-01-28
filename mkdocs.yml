@@ -25,7 +25,9 @@ nav:
         - 'Architecture': 'overview/architecture.md'
 
     - Installation:
-        - Axonops Server: 'installation/server.md'
+        - Axonops Server:
+            - 'Installing on Ubuntu/Debian': 'installation/server/installing-ubuntu.md'
+            - 'Installing on Centos/Redhat': 'installation/server/installing-centos.md'
         - Axonops Dashboard:
             - 'Installing on Ubuntu/Debian': 'installation/gui/installing-ubuntu.md'
             - 'Installing on Centos/Redhat': 'installation/gui/installing-centos.md'

@@ -1,219 +1,118 @@
 
-# Installing on RPM-based Linux (CentOS, Fedora, OpenSuse, RedHat)
+### Prerequisites
+
+Elasticsearch stores all of the collected data by axon-server. Let's install Java 8 and Elasticsearch first.
+
+#### Installing the Oracle JDK x64
 
 
-##  Axon-Server Installation
-
-<table style="white-space: nowrap;">
-  <thead>
-    <tr>
-      <th colspan="3">Description</td>
-      <th colspan="1">Download</td>
-    </tr>
-  </thead>
-  <tbody>
-   
-    <tr>
-      <td  colspan="3" align="left">Stable for CentOS / Fedora / OpenSuse / Redhat Linux</td>
-      <td colspan="1" align="right">
-        <a href="#">x86-64</a>
-      </td>
-    </tr>
-    <tr>
-      <td colspan="3" align="left">Stable for CentOS / Fedora / OpenSuse / Redhat Linux</td>
-      <td colspan="1" align="right">
-        <a href="#">ARM64</a>
-      </td>
-    </tr>
-    <tr>
-      <td colspan="3" align="left">Stable for CentOS / Fedora / OpenSuse / Redhat Linux</td>
-      <td colspan="1" align="right">
-        <a href="#">ARMv7</a>
-      </td>
-    </tr>
-  </tbody>
-</table>
-
-
-### Install Stable
-
-Before installing [axon-server][1], you need to make sure you have ... and ... – ... up and running. You can verify if you're already good to go with the following commands:
-
-[1]: https://axonops.com
-
-``` sh
-.. --version
-# ... 2.7.13
-... --version
-# ... 9.0.1
+``` - 
+wget -c --header "Cookie: oraclelicense=accept-securebackup-cookie" http://download.oracle.com/otn-pub/java/jdk/8u131-b11/d54c1d3a095b4ff2b6607d096fa80163/jdk-8u131-linux-x64.rpm
 ```
 
-Installing and verifying axon-server is as simple as:
-
-``` debcontrol
- sudo yum install <rpm package url>
-
+``` -
+sudo yum localinstall jdk-8u131-linux-x64.rpm
 ```
 
-Example:
+#### Installing Elasticsearch
 
-``` debcontrol
- sudo yum install https://dl.axon-server.com/oss/release/axon-server-5.4.2-1.x86_64.rpm
-
-```
-Or install manually using rpm. First execute
-``` debcontrol
- wget <rpm package url>
-
-```
-Example:
-
-``` debcontrol
-wget https://dl.axon-server.com/oss/release/axon-server-5.4.2-1.x86_64.rpm
-
+``` -
+wget https://artifacts.elastic.co/downloads/elasticsearch/elasticsearch-6.5.4.tar.gz
 ```
 
-#### On CentOS / Fedora / Redhat:
-
-``` debcontrol
- sudo yum install initscripts fontconfig
- sudo rpm -Uvh <local rpm package>
-
+``` -
+tar -xzf elasticsearch-6.5.4.tar.gz
 ```
 
-#### On OpenSuse:
-
-``` debcontrol
-sudo rpm -i --nodeps <local rpm package>
-
-```
-#### Install via YUM Repository
-
-Add the following to a new file at ` /etc/yum.repos.d/axonops.repo `
-
-``` debcontrol
-[axon-server]
-name=axonserver
-baseurl=https://packages.axonserver.com/oss/rpm
-repo_gpgcheck=1
-enabled=1
-gpgcheck=1
-gpgkey=https://packages.axonserver.com/gpg.key
-sslverify=1
-sslcacert=/etc/pki/tls/certs/ca-bundle.crt
-
+``` -
+cd elasticsearch-6.5.4
 ```
 
-There is a separate repository if you want beta releases.
+Elasticsearch uses a mmapfs directory by default to store its indices. The default operating system limits on mmap counts is likely to be too low, which may result in out of memory exceptions.
 
-``` debcontrol
-[axon-server]
-name=axonserver
-baseurl=https://packages.axonserver.com/oss/rpm-beta
-repo_gpgcheck=1
-enabled=1
-gpgcheck=1
-gpgkey=https://packages.axonserver.com/gpg.key
-sslverify=1
-sslcacert=/etc/pki/tls/certs/ca-bundle.crt
+You can increase the limits by running the following command:
 
-```
-Then install Grafana via the yum command.
-
-``` debcontrol
-sudo yum install axon-server
+``` - 
+sudo sysctl -w vm.max_map_count=262144
 ```
 
+Also, Elasticsearch needs `max file descriptors` system settings at least to 65536.
+You can follow [those instructions][2] to set it up.
 
-### RPM GPG Key
+  [2]: https://www.elastic.co/guide/en/elasticsearch/reference/current/setting-system-settings.html#ulimit
 
-The RPMs are signed, you can verify the signature with this [public GPG key][1].
-[1]:https://#
+Elasticsearch can be started from the command line as follows:
 
-Create a file `/etc/apt/sources.list.d/axon-server.list` and add the following to it.
-
-
-### Cloning from GitHub
-
-Java agent can also be used without a system-wide installation by cloning the repository into a subfolder of your project's root directory:
-
-``` extempore
-git clone https://github.com/squidfunk/axonops.git
+``` -
+./bin/elasticsearch
 ```
 
-This is especially useful if you want to extend the app and
-override some parts of the app. The app will reside in the folder
-`path-to/folder`.
+You can test that your Elasticsearch node is running by sending an HTTP request to port 9200 on localhost:
 
+``` -
+curl -X GET "localhost:9200/"
+```
+
+#### Installing axon-server 
+
+``` -
+sudo add-apt-repository <TODO>
+```
+
+``` -
+sudo apt install axon-server
+```
 
 ### Package details
 
-* Installs binary to ` /usr/sbin/axon-server `
-* Installs Init.d script to `/etc/init.d/axon-server `
-* Creates default file (environment vars) to ` /etc/default/axon-server` 
-* Installs configuration file to ` /etc/axon-server/axon-server.ini `
-* Installs systemd service (if systemd is available) name ` axon-server.agent` 
-* The default configuration sets the log file at ` /var/log/axon-server/axon-server.log` 
+* Configuration: `/etc/axonops/axon-server.yml`
+* Logs: `/var/log/axonops/axon-server.log` 
+* Binary: `usr/share/axonops/axon-server`
+* Systemd service: `usr/lib/systemd/system/axon-server.service`
 
+### Start the server
 
-###  Using Docker
-
-If you're familiar with Docker, the official [Docker image][2] for Material
-comes with all dependencies pre-installed and ready-to-use with the latest
-version published on PyPI, packaged in a very small image. Pull it with:
-
-``` docker
-docker pull squidfunk/mkdocs-material
-```
-
-The `axonops` executable is provided as an entrypoint, `serve` is the default
-command. Start the development agent in your project root with:
-
-``` docker
-docker run --rm -it -p 8000:8000 -v ${PWD}:/docs squidfunk/mkdocs-material
-```
-
-If you're using Windows command prompt (`cmd.exe`), substitute `${PWD}` with
-`"%cd%"`.
-
-  [2]: https://hub.docker.com/r/squidfunk/mkdocs-material/
-
-### Start the agent (init.d service)
-
- <small>Start Java Agent by running:</small>
-
-``` extempore
- sudo service axon-server start
-```
-This will start the `axon-server` process as the axon-server user, which was created during the package installation. 
-
-To configure the axon-server to start at boot time:
-
-``` extempore
-sudo /sbin/chkconfig --add axon-server
-```
-
-### Start the Java Agent (init.d service)
-
-To start the service using systemd:
-
-``` debcontrol
+``` -
 systemctl daemon-reload
 systemctl start axon-server
 systemctl status axon-server
 ```
 
-Enable the systemd service so that axon-server starts at boot.
 
-``` extempore
-sudo systemctl enable axon-server.service
+### Configuration defaults
+
+``` yaml
+
+host: 0.0.0.0  # axon-server endpoint 
+port: 8080 # axon-server port 
+elastic_host: localhost # Elasticsearch endpoint
+elastic_port: 9200 # Elasticsearch port
+
+# axon-dash configuration
+axon-dash:
+  host: 127.0.0.1
+  port: 3000
+  https: false
+
+alerting:
+# How long to wait before sending a notification again if it has already
+# been sent successfully for an alert. (Usually ~3h or more).
+  notification_interval: 3h
+
+retention:
+  events: 24w # logs and events retention. Must be expressed in weeks (w)
+  metrics:
+      high_resolution: 30d # High frequency metrics. Must be expressed in days (d)
+      med_resolution: 24w # Must be expressed in weeks (w)
+      low_resolution: 24M # Must be expressed in months (M)
+      super_low_resolution: 3y # Must be expressed in years (y)
+  backups: # Those are use as defaults but can be overridden from the UI
+    local: 10d
+    remote: 30d 
 ```
 
-### Environment file
-The systemd service file and init.d script both use the file located at ` /etc/default/axon-server ` for environment variables used when starting the agent. Here you can override log directory, data directory and other variables.
 
-### Logging
-By default Java Agent will log to /var/log/axon-server
+
 
 
 
