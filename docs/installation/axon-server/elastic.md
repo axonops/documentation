@@ -13,6 +13,11 @@ tar -xzf elasticsearch-6.5.4.tar.gz
 cd elasticsearch-6.5.4
 ```
 
+Increase the bulk queue size of elastic by adding the following line to it's config located at `config/elasticsearch.yml`:
+``` - 
+thread_pool.bulk.queue_size: 2000
+```
+
 Elasticsearch uses a mmapfs directory by default to store its indices. The default operating system limits on mmap counts is likely to be too low, which may result in out of memory exceptions.
 
 You can increase the limits by running the following command:
