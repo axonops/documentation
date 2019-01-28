@@ -26,10 +26,10 @@ nav:
 
     - Installation:
         - Axonops Server:
-            - 'Installing on Ubuntu/Debian': 'installation/server/ubuntu.md'
-            - 'Installing on Centos/Redhat': 'installation/server/centos.md'
-        - Axonops Dashboard: 'installation/gui/install.md'
-        - Axonops Agent: 'installation/agent/install.md'
+            - 'Installing on Ubuntu/Debian': 'installation/axon-server/ubuntu.md'
+            - 'Installing on Centos/Redhat': 'installation/axon-server/centos.md'
+        - Axonops Dashboard: 'installation/axon-dash/install.md'
+        - Axonops Agent: 'installation/axon-agent/install.md'
         - Axonops Cassandra Agent: 'installation/cassandra-agent/install.md'
         - Axonops DSE Agent: 'installation/dse-agent/install.md'
 

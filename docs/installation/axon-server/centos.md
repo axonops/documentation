@@ -112,7 +112,7 @@ retention:
 
 ## Installing axon-dash
 
-Now axon-server is installed, you can start installing [axon-dash](../gui/centos.md)
+Now **axon-server** is installed, you can start installing [axon-dash](../axon-dash/install.md)
 
 
 

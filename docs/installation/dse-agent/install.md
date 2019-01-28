@@ -1,4 +1,4 @@
-# axon-java-agent for DSE installation (CentOS / RedHat)
+# axon-java-agent for DSE installation
 
 This agent will enable metrics collection from DSE and enable adaptive repairs and backups.
 

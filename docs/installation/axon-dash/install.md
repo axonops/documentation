@@ -83,4 +83,4 @@ This will start the **axon-dash** process as the **axonops** user, which was cre
 
 ## Installing axon-agent
 
-Now axon-dash is installed, you can start installing [axon-agent](../agent/centos.md)
+Now **axon-dash** is installed, you can start installing [axon-agent](../axon-agent/install.md)
