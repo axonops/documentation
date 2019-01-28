@@ -23,12 +23,7 @@ Below there few examples `copy` and `Paste` inside. and click `save` <span class
      {
         "name" : "check_elastic",
         "shell" :  "/bin/bash",
-        "script":  "if [ 'ps auxwww | grep elastic | wc -l' -lt 1 ]
-        then
-           exit 2
-           else
-        exit 0
-        fi",
+        "script":  "if [ 'ps auxwww | grep elastic | wc -l' -lt 1 ] then exit 2 else exit 0  fi",
         "interval": "5m" ,
         "timeout": "1m" 
      }
@@ -44,7 +39,7 @@ Below there few examples `copy` and `Paste` inside. and click `save` <span class
     }
    ]
  
-  }
+}
                
 ```
 
