@@ -23,8 +23,7 @@ Make sure **axon-agent** configuration points to the correct **axon-server** add
 
 ``` yaml hl_lines="2 8"
 axon-server:
-    hosts: "axon-server_endpoint" # Specify axon-server endpoint
-    port: 1888
+    hosts: "axon-server_endpoint" # Specify axon-server IP (ex: "192.168.0.5")
 
 axon-agent:
     host: 0.0.0.0 # axon-agent listening address for it's OpenTSDB endpoint

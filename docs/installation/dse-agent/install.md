@@ -16,7 +16,6 @@ You'll need the specify/update the following lines from **axon-agent.yml** locat
 ``` yaml hl_lines="2 8 9 10 11"
 axon-server:
     hosts: "axon-server_endpoint" # Specify axon-server endpoint
-    port: 1888
 
 axon-agent:
     host: 0.0.0.0 # axon-agent listening address for it's OpenTSDB endpoint
@@ -27,6 +26,10 @@ axon-agent:
     #cluster_name: "standalone" # comment that line
     ssl: false # SSL flag for it's OpenTSDB endpoint
 ```
+* Set `standalone_mode` to **false**
+* Set `type` to **dse**
+* Don't forget to comment or remove the `cluster_name` as it will be deduced from DSE configuration.
+* Don't forget to specify **axon-server** host and port if that's not already specified.
 
 ## DSE agent installation
 
