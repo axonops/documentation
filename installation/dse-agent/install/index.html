@@ -1174,19 +1174,24 @@ page.</p>
 <p>You'll need the specify/update the following lines from <strong>axon-agent.yml</strong> located in <code>/etc/axonops/axon-agent.yml</code>:</p>
 <div class="codehilite"><pre><span></span><span class="nt">axon-server</span><span class="p">:</span>
 <span class="hll">    <span class="nt">hosts</span><span class="p">:</span> <span class="s">&quot;axon-server_endpoint&quot;</span> <span class="c1"># Specify axon-server endpoint</span>
-</span>    <span class="nt">port</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">1888</span>
-
+</span>
 <span class="nt">axon-agent</span><span class="p">:</span>
     <span class="nt">host</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">0.0.0.0</span> <span class="c1"># axon-agent listening address for it&#39;s OpenTSDB endpoint</span>
     <span class="nt">port</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">9916</span> <span class="c1"># axon-agent listening port for it&#39;s OpenTSDB endpoint</span>
-<span class="hll">    <span class="nt">org</span><span class="p">:</span> <span class="s">&quot;your_organisation_name&quot;</span> <span class="c1"># Specify your organisation name</span>
-</span><span class="hll">    <span class="nt">standalone_mode</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">false</span>
+    <span class="nt">org</span><span class="p">:</span> <span class="s">&quot;your_organisation_name&quot;</span> <span class="c1"># Specify your organisation name</span>
+<span class="hll">    <span class="nt">standalone_mode</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">false</span>
 </span><span class="hll">    <span class="nt">type</span><span class="p">:</span> <span class="s">&quot;dse&quot;</span>
 </span><span class="hll">    <span class="c1">#cluster_name: &quot;standalone&quot; # comment that line</span>
-</span>    <span class="nt">ssl</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">false</span> <span class="c1"># SSL flag for it&#39;s OpenTSDB endpoint</span>
-</pre></div>
+</span><span class="hll">    <span class="nt">ssl</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">false</span> <span class="c1"># SSL flag for it&#39;s OpenTSDB endpoint</span>
+</span></pre></div>
 
 
+<ul>
+<li>Set <code>standalone_mode</code> to <strong>false</strong></li>
+<li>Set <code>type</code> to <strong>dse</strong></li>
+<li>Don't forget to comment or remove the <code>cluster_name</code> as it will be deduced from DSE configuration.</li>
+<li>Don't forget to specify <strong>axon-server</strong> host and port if that's not already specified.</li>
+</ul>
 <h2 id="dse-agent-installation">DSE agent installation<a class="headerlink" href="#dse-agent-installation" title="Permanent link">&para;</a></h2>
 <p>Make sure the <code>&lt;version&gt;</code> of your DSE and DSE agent are compatible from the <a href="../../compat_matrix/compat_matrix">compatibility matrix</a>. </p>
 <h4 id="centos-redhat-installer">CentOS / RedHat installer<a class="headerlink" href="#centos-redhat-installer" title="Permanent link">&para;</a></h4>

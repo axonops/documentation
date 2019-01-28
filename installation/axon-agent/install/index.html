@@ -1121,15 +1121,14 @@
 <h4 id="configuration">Configuration<a class="headerlink" href="#configuration" title="Permanent link">&para;</a></h4>
 <p>Make sure <strong>axon-agent</strong> configuration points to the correct <strong>axon-server</strong> address and your <strong>organisation name</strong> is specified:</p>
 <div class="codehilite"><pre><span></span><span class="nt">axon-server</span><span class="p">:</span>
-<span class="hll">    <span class="nt">hosts</span><span class="p">:</span> <span class="s">&quot;axon-server_endpoint&quot;</span> <span class="c1"># Specify axon-server endpoint</span>
-</span>    <span class="nt">port</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">1888</span>
-
+<span class="hll">    <span class="nt">hosts</span><span class="p">:</span> <span class="nt">&quot;axon-server_endpoint&quot; # Specify axon-server IP (ex</span><span class="p">:</span> <span class="s">&quot;192.168.0.5&quot;</span><span class="l l-Scalar l-Scalar-Plain">)</span>
+</span>
 <span class="nt">axon-agent</span><span class="p">:</span>
     <span class="nt">host</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">0.0.0.0</span> <span class="c1"># axon-agent listening address for it&#39;s OpenTSDB endpoint</span>
     <span class="nt">port</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">9916</span> <span class="c1"># axon-agent listening port for it&#39;s OpenTSDB endpoint</span>
-<span class="hll">    <span class="nt">org</span><span class="p">:</span> <span class="s">&quot;your_organisation_name&quot;</span> <span class="c1"># Specify your organisation name</span>
-</span>    <span class="nt">standalone_mode</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">true</span>
-    <span class="nt">type</span><span class="p">:</span> <span class="s">&quot;standalone&quot;</span>
+    <span class="nt">org</span><span class="p">:</span> <span class="s">&quot;your_organisation_name&quot;</span> <span class="c1"># Specify your organisation name</span>
+<span class="hll">    <span class="nt">standalone_mode</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">true</span>
+</span>    <span class="nt">type</span><span class="p">:</span> <span class="s">&quot;standalone&quot;</span>
     <span class="nt">cluster_name</span><span class="p">:</span> <span class="s">&quot;standalone&quot;</span>
     <span class="nt">ssl</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">false</span> <span class="c1"># SSL flag for it&#39;s OpenTSDB endpoint</span>
 </pre></div>
