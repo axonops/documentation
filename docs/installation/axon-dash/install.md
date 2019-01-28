@@ -26,8 +26,8 @@ axon-dash: #  The listening address of axon-dash
   host: 0.0.0.0
   port: 3000
 
-axon-server: # This must point to axon-server listening address
-  host: 127.0.0.1 
+axon-server: # This must point to axon-server interface listening address
+  host: set_axon-server_IP  # 127.0.0.1 is always wrong
   port: 8080
 ```
 
