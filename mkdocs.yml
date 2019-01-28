@@ -26,15 +26,20 @@ nav:
 
     - Installation:
         - Axonops Server:
-            - 'Installing on Ubuntu/Debian': 'installation/server/installing-ubuntu.md'
-            - 'Installing on Centos/Redhat': 'installation/server/installing-centos.md'
+            - 'Installing on Ubuntu/Debian': 'installation/server/ubuntu.md'
+            - 'Installing on Centos/Redhat': 'installation/server/centos.md'
         - Axonops Dashboard:
-            - 'Installing on Ubuntu/Debian': 'installation/gui/installing-ubuntu.md'
-            - 'Installing on Centos/Redhat': 'installation/gui/installing-centos.md'
-        - Axonops Agents:
-            - 'Installing on Ubuntu/Debian': 'installation/agents/installing-ubuntu.md'
-            - 'Installing on Centos/Redhat': 'installation/agents/installing-centos.md'
-        - Axonops Cassandra/DSE Agent: 'installation/cassandra-agent.md'
+            - 'Installing on Ubuntu/Debian': 'installation/gui/ubuntu.md'
+            - 'Installing on Centos/Redhat': 'installation/gui/centos.md'
+        - Axonops Agent:
+            - 'Installing on Ubuntu/Debian': 'installation/agent/ubuntu.md'
+            - 'Installing on Centos/Redhat': 'installation/agent/centos.md'
+        - Axonops Cassandra Agent: 
+            - 'Installing on Ubuntu/Debian': 'installation/cassandra-agent/ubuntu.md'
+            - 'Installing on Centos/Redhat': 'installation/cassandra-agent/centos.md'
+        - Axonops DSE Agent: 
+            - 'Installing on Ubuntu/Debian': 'installation/dse-agent/ubuntu.md'
+            - 'Installing on Centos/Redhat': 'installation/dse-agent/centos.md'
 
     - Configuration:
         - 'AxonOps Server Configuration': 'configuration/server-configuration.md'
