@@ -1226,8 +1226,8 @@ systemctl status axon-server
 
 <p>This will start the <code>axon-server</code> process as the <code>axonops</code> user, which was created during the package installation.  The default listening address is <code>0.0.0.0:8080</code>.</p>
 <h4 id="configuration-defaults">Configuration defaults<a class="headerlink" href="#configuration-defaults" title="Permanent link">&para;</a></h4>
-<div class="codehilite"><pre><span></span><span class="nt">host</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">0.0.0.0</span>  <span class="c1"># axon-server listening address ()</span>
-<span class="nt">port</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">8080</span> <span class="c1"># axon-server listening port </span>
+<div class="codehilite"><pre><span></span><span class="nt">host</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">0.0.0.0</span>  <span class="c1"># axon-server listening address (used by axon-dash and axon-agent)</span>
+<span class="nt">port</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">8080</span> <span class="c1"># axon-server HTTP API listening port (used by axon-dash)</span>
 <span class="nt">elastic_host</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">localhost</span> <span class="c1"># Elasticsearch endpoint</span>
 <span class="nt">elastic_port</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">9200</span> <span class="c1"># Elasticsearch port</span>
 

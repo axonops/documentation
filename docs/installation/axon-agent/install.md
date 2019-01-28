@@ -21,7 +21,7 @@ sudo apt-get install <TODO>
 #### Configuration
 Make sure **axon-agent** configuration points to the correct **axon-server** address and your **organisation name** is specified:
 
-``` yaml hl_lines="2 8"
+``` yaml hl_lines="2 7"
 axon-server:
     hosts: "axon-server_endpoint" # Specify axon-server IP (ex: "192.168.0.5")
 
