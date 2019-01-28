@@ -22,7 +22,7 @@ sudo apt-get install <TODO>
 #### Configuration
 Make sure **axon-agent** configuration points to the correct **axon-server** address and your **organisation name** is specified:
 
-``` yaml hl_lines="2 7"
+``` yaml hl_lines="2 7 14"
 axon-server:
     hosts: "axon-server_endpoint" # Specify axon-server IP (ex: "192.168.0.5")
 
@@ -34,6 +34,9 @@ axon-agent:
     type: "standalone"
     cluster_name: "standalone"
     ssl: false # SSL flag for it's OpenTSDB endpoint
+
+NTP:
+    host: "set_NTP_server" # Specify a NTP to determine a NTP offset 
 ```
 
 #### Start axon-agent

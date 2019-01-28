@@ -36,7 +36,7 @@ Make sure **axon-server** configuration is up to date and point to **axon-dash**
 
 **axon-server** configuration file `/etc/axonops/axon-server.yml`:
 
-``` yaml hl_lines="6 7 8 9"
+``` yaml hl_lines="6 7 8"
 
 host: 0.0.0.0  # axon-server listening address 
 port: 8080 # axon-server listening port 

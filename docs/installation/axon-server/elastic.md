@@ -31,14 +31,14 @@ You can follow [those instructions][2] to set it up.
 
   [2]: https://www.elastic.co/guide/en/elasticsearch/reference/current/setting-system-settings.html#ulimit
 
-Elasticsearch can be started from the command line as follows:
+Elasticsearch can be started in background as a daemon from the command line as follows:
 
 ``` -
-./bin/elasticsearch
+ ./bin/elasticsearch -d
 ```
 
 You can test that your Elasticsearch node is running by sending an HTTP request to port 9200 on localhost:
 
 ``` -
-wget -qO- localhost:9200
+curl -X GET "localhost:9200/"
 ```
