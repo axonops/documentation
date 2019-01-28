@@ -1,4 +1,7 @@
-## Info
+## Ovewview
+
+When monitoring Cassandra there are 
+
 
 Apache Cassandra is a highly scalable open source distributed database management system written in Java.  However, many aspects of Cassandra performance, consistency, and availability depend on the capabilities of the underlying Java runtime platform. The Java garbage collection process freezes the application while memory is defragmented and compacted, resulting in arbitrary Cassandra pauses that lead to response time inconsistency, increased time to data consistency, and can even trigger serious conditions like cascading node failures, where multiple stalled Cassandra nodes trigger cluster-level outages and crashes. 
 

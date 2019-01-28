@@ -46,7 +46,7 @@ nav:
         - 'AxonOps Agent Configuration': 'configuration/agent-configuration.md'
         - 'AxonOps GUI Service Configuration': 'configuration/axondash.md'
 
-    - Using AxonOps:
+    - Using AxonOps: 'monitoring/overview.md'
         - Cluster Overview:
             - 'Cluster Overview': 'cluster/cluster-overview.md'
 
