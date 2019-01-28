@@ -1178,6 +1178,11 @@
 </pre></div>
 
 
+<p>Increase the bulk queue size of elastic by adding the following line to it's config located at <code>config/elasticsearch.yml</code>:</p>
+<div class="codehilite"><pre><span></span>thread_pool.bulk.queue_size: 2000
+</pre></div>
+
+
 <p>Elasticsearch uses a mmapfs directory by default to store its indices. The default operating system limits on mmap counts is likely to be too low, which may result in out of memory exceptions.</p>
 <p>You can increase the limits by running the following command:</p>
 <div class="codehilite"><pre><span></span>sudo sysctl -w vm.max_map_count=262144
