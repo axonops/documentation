@@ -40,15 +40,16 @@ nav:
         - 'AxonOps Agent Configuration': 'configuration/agent-configuration.md'
         - 'AxonOps GUI Service Configuration': 'configuration/axondash.md'
 
-    - Using AxonOps: 'monitoring/overview.md'
+    - Using AxonOps: 
         - Cluster Overview:
             - 'Cluster Overview': 'cluster/cluster-overview.md'
 
         - Monitoring:
-            - Health Checks:
-                - 'Health Checks Overview': 'monitoring/healthchecks/overview.md'
-                - 'Health Checks Configurations': 'monitoring/healthchecks/configurations.md'
-                - 'Health Checks Alerting': 'monitoring/healthchecks/alerting.md'
+            - 'Monitoring Overview': 'monitoring/overview.md'
+            - Service Checks:
+                - 'Service Checks Overview': 'monitoring/servicechecks/overview.md'
+                - 'Service Checks Configurations': 'monitoring/servicechecks/configurations.md'
+                - 'HeServicealth Checks Alerting': 'monitoring/servicechecks/alerting.md'
             - Metrics Dashboard:
                 - Cassandra:
                     - 'Overview': 'monitoring/metricsdashboards/cassandra/overview.md'
@@ -72,7 +73,7 @@ nav:
 
     - How-to:
             - 'Setup Alert Rules': how-to/setup-alert-rules.md
-            - 'Setup Healthcheks': how-to/setup-healthcheks.md
+            - 'Setup Service Checks': how-to/setup-servicechecks.md
             - 'Setup Default Routing': 'how-to/default-routing.md'
             - 'Setup Backup-Restore Notifications': 'how-to/backup-restore-notifications.md'
             - 'Setup Dashboards-Global Integrations': 'how-to/setup-dashboards-global-integrations.md'
