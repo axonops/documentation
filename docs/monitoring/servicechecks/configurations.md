@@ -13,7 +13,7 @@ On the Axonops application menu, click `Service Checks` and select `Setup` tab.
 
 ####  Creating Services
 
-Below there few examples `copy` and `Paste` inside. and click `save` [![save](/img/disk.png)](/img/disk.png)
+Below there few examples. Just `copy`/`paste` inside the editor, then click `save` [![save](/img/disk.png)](/img/disk.png)
 
 
 ``` jsonld
@@ -25,9 +25,9 @@ Below there few examples `copy` and `Paste` inside. and click `save` [![save](/i
             "script":  "
                 if [ `ps -auxwww | grep -v grep | grep org.apache.cassandra.service.CassandraDaemon | wc -l` -lt 1 ]
                 then
-                        exit 2
+                    exit 2
                 else
-                    exit 0\
+                    exit 0
                 fi
             ",
             "interval": "5m",
@@ -38,7 +38,7 @@ Below there few examples `copy` and `Paste` inside. and click `save` [![save](/i
     "httpchecks": [
         {
             "name" : "check_http_endpoint",
-            "http" :  "https://localhost:80",
+            "http" :  "https://{{.listen_address}}:80",
             "tls_skip_verify": true,
             "method": "GET",
             "interval": "10s",
@@ -58,18 +58,19 @@ Below there few examples `copy` and `Paste` inside. and click `save` [![save](/i
             "name": "cassandra_cql_port_check",
             "interval": "10s",
             "timeout": "1m",
-            "tcp": "9042"
+            "tcp": "{{.listen_address}}:9042"
         },
         {
             "name" : "cassandra_storage_port_check",
             "timeout": "1m",
             "interval": "5m",
-            "tcp" : "7000"
+            "tcp" : "{{.listen_address}}:7000"
         }
    ]
 }
                
 ```
+> Note that for a Cassandra node, you can use the variable `{{.listen_address}}` which will correspond to Cassandra listening address.
 
 Example:
 
@@ -81,7 +82,7 @@ Example:
 
 ####  Delete Services
 
-To Delete a service `copy` and `Paste` inside. and `click` save  [![save](/img/disk.png)](/img/disk.png)
+To Delete a service `copy`/`paste` into the editor and `click` save  [![save](/img/disk.png)](/img/disk.png)
 
 ``` jsonld
 {
