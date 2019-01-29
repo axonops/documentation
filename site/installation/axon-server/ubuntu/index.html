@@ -1195,13 +1195,13 @@ sudo apt-get install oracle-java8-installer
 
 <p>Also, Elasticsearch needs <code>max file descriptors</code> system settings at least to 65536.
 You can follow <a href="https://www.elastic.co/guide/en/elasticsearch/reference/current/setting-system-settings.html#ulimit">those instructions</a> to set it up.</p>
-<p>Elasticsearch can be started from the command line as follows:</p>
-<div class="codehilite"><pre><span></span>./bin/elasticsearch
+<p>Elasticsearch can be started in background as a daemon from the command line as follows:</p>
+<div class="codehilite"><pre><span></span> ./bin/elasticsearch -d
 </pre></div>
 
 
 <p>You can test that your Elasticsearch node is running by sending an HTTP request to port 9200 on localhost:</p>
-<div class="codehilite"><pre><span></span>wget -qO- localhost:9200
+<div class="codehilite"><pre><span></span>curl -X GET &quot;localhost:9200/&quot;
 </pre></div>
 
 
