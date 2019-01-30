@@ -49,7 +49,7 @@ nav:
             - Service Checks:
                 - 'Service Checks Overview': 'monitoring/servicechecks/overview.md'
                 - 'Service Checks Configurations': 'monitoring/servicechecks/configurations.md'
-                - 'HeServicealth Checks Alerting': 'monitoring/servicechecks/alerting.md'
+                - 'Service Checks Alerting': 'monitoring/servicechecks/alerting.md'
             - Metrics Dashboard:
                 - Cassandra:
                     - 'Overview': 'monitoring/metricsdashboards/cassandra/overview.md'

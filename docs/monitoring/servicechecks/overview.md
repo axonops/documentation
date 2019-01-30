@@ -15,7 +15,7 @@ Any changes made and saved are automatically pushed down to the agents.
 
 ## AxonDash Service Checks
 
-On the Axonops application menu, click `Service Checks`, a list of all your **Nodes** will appear
+On the AxonOps application menu, click `Service Checks`, a list of all your **Nodes** will appear
 
  
 
