@@ -35,6 +35,7 @@ nav:
         - Axonops Cassandra Agent: 'installation/cassandra-agent/install.md'
         - Axonops DSE Agent: 'installation/dse-agent/install.md'
         - Compatibility matrix: 'installation/compat_matrix/compat_matrix.md'
+    
     - Configuration:
         - 'AxonOps Server Configuration': 'configuration/server-configuration.md'
         - 'AxonOps Agent Configuration': 'configuration/agent-configuration.md'
@@ -49,7 +50,7 @@ nav:
             - Service Checks:
                 - 'Service Checks Overview': 'monitoring/servicechecks/overview.md'
                 - 'Service Checks Configurations': 'monitoring/servicechecks/configurations.md'
-                - 'HeServicealth Checks Alerting': 'monitoring/servicechecks/alerting.md'
+                - 'Service Checks Alerting': 'monitoring/servicechecks/alerting.md'
             - Metrics Dashboard:
                 - Cassandra:
                     - 'Overview': 'monitoring/metricsdashboards/cassandra/overview.md'
@@ -70,6 +71,9 @@ nav:
                 - Backups:
                     - 'Overview': 'operations/cassandra/backup/overview.md'
                     - 'Cassandra Backup Configurations': 'operations/cassandra/backup/configurations.md'
+
+    - AxonOps Server API:
+        - 'AxonOps Server API': 'server/api/overview.md'
 
     - How-to:
             - 'Setup Alert Rules': how-to/setup-alert-rules.md
