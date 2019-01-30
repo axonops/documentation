@@ -640,8 +640,8 @@
 
 
   <li class="md-nav__item">
-    <a href="../../../monitoring/servicechecks/alerting/" title="HeServicealth Checks Alerting" class="md-nav__link">
-      HeServicealth Checks Alerting
+    <a href="../../../monitoring/servicechecks/alerting/" title="Service Checks Alerting" class="md-nav__link">
+      Service Checks Alerting
     </a>
   </li>
 
@@ -971,10 +971,46 @@
       <input class="md-toggle md-nav__toggle" data-md-toggle="nav-6" type="checkbox" id="nav-6">
     
     <label class="md-nav__link" for="nav-6">
-      How-to
+      AxonOps Server API
     </label>
     <nav class="md-nav" data-md-component="collapsible" data-md-level="1">
       <label class="md-nav__title" for="nav-6">
+        AxonOps Server API
+      </label>
+      <ul class="md-nav__list" data-md-scrollfix>
+        
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../../server/api/overview.md" title="AxonOps Server API" class="md-nav__link">
+      AxonOps Server API
+    </a>
+  </li>
+
+        
+      </ul>
+    </nav>
+  </li>
+
+    
+      
+      
+      
+
+
+  <li class="md-nav__item md-nav__item--nested">
+    
+      <input class="md-toggle md-nav__toggle" data-md-toggle="nav-7" type="checkbox" id="nav-7">
+    
+    <label class="md-nav__link" for="nav-7">
+      How-to
+    </label>
+    <nav class="md-nav" data-md-component="collapsible" data-md-level="1">
+      <label class="md-nav__title" for="nav-7">
         How-to
       </label>
       <ul class="md-nav__list" data-md-scrollfix>
@@ -1169,17 +1205,17 @@
 
 
 <h2 id="axon-server-configuration-update">axon-server configuration update<a class="headerlink" href="#axon-server-configuration-update" title="Permanent link">&para;</a></h2>
-<p>Make sure <strong>axon-server</strong> configuration is up to date and point to <strong>axon-dash</strong> listening address:</p>
+<p>Make sure <strong>axon-server</strong> configuration is up to date and point to <strong>axon-dash</strong> and <strong>elasticsearch</strong> listening address:</p>
 <p><strong>axon-server</strong> configuration file <code>/etc/axonops/axon-server.yml</code>:</p>
 <div class="codehilite"><pre><span></span><span class="nt">host</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">0.0.0.0</span>  <span class="c1"># axon-server listening address </span>
 <span class="nt">port</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">8080</span> <span class="c1"># axon-server listening port </span>
-<span class="nt">elastic_host</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">localhost</span> <span class="c1"># Elasticsearch endpoint</span>
-<span class="nt">elastic_port</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">9200</span> <span class="c1"># Elasticsearch port</span>
+<span class="hll"><span class="nt">elastic_host</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">localhost</span> <span class="c1"># Elasticsearch endpoint</span>
+</span><span class="nt">elastic_port</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">9200</span> <span class="c1"># Elasticsearch port</span>
 
 <span class="hll"><span class="nt">axon-dash</span><span class="p">:</span> <span class="c1"># This must point to axon-dash address</span>
 </span><span class="hll">  <span class="nt">host</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">127.0.0.1</span>
-</span><span class="hll">  <span class="nt">port</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">3000</span>
-</span>  <span class="nt">https</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">false</span>
+</span>  <span class="nt">port</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">3000</span>
+  <span class="nt">https</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">false</span>
 
 <span class="nt">alerting</span><span class="p">:</span>
 <span class="c1"># How long to wait before sending a notification again if it has already</span>
@@ -1200,14 +1236,14 @@
 
 
 <p>Restart <strong>axon-server</strong> after updating it's configuration</p>
-<div class="codehilite"><pre><span></span>systemctl restart axon-server
+<div class="codehilite"><pre><span></span>sudo systemctl restart axon-server
 </pre></div>
 
 
 <h4 id="start-axon-dash">Start axon-dash<a class="headerlink" href="#start-axon-dash" title="Permanent link">&para;</a></h4>
-<div class="codehilite"><pre><span></span>systemctl daemon-reload
-systemctl start axon-dash
-systemctl status axon-dash
+<div class="codehilite"><pre><span></span>sudo systemctl daemon-reload
+sudo systemctl start axon-dash
+sudo systemctl status axon-dash
 </pre></div>
 
 
