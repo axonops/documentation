@@ -32,12 +32,11 @@ axon-server: # This must point to axon-server interface listening address
 ```
 
 ## axon-server configuration update
-Make sure **axon-server** configuration is up to date and point to **axon-dash** listening address:
+Make sure **axon-server** configuration is up to date and point to **axon-dash** and **elasticsearch** listening address:
 
 **axon-server** configuration file `/etc/axonops/axon-server.yml`:
 
-``` yaml hl_lines="6 7 8"
-
+``` yaml hl_lines="3 6 7"
 host: 0.0.0.0  # axon-server listening address 
 port: 8080 # axon-server listening port 
 elastic_host: localhost # Elasticsearch endpoint
@@ -67,15 +66,15 @@ retention:
 
 Restart **axon-server** after updating it's configuration
 ``` -
-systemctl restart axon-server
+sudo systemctl restart axon-server
 ```
 
 #### Start axon-dash
 
 ``` -
-systemctl daemon-reload
-systemctl start axon-dash
-systemctl status axon-dash
+sudo systemctl daemon-reload
+sudo systemctl start axon-dash
+sudo systemctl status axon-dash
 ```
 
 This will start the **axon-dash** process as the **axonops** user, which was created during the package installation. The default listening address is `0.0.0.0:3000`.

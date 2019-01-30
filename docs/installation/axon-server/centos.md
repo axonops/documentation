@@ -14,7 +14,7 @@ wget -c --header "Cookie: oraclelicense=accept-securebackup-cookie" http://downl
 ```
 
 ``` -
-sudo yum jdk-8u131-linux-x64.rpm
+sudo rpm -i jdk-8u131-linux-x64.rpm
 ```
 
 {!installation/axon-server/elastic.md!}

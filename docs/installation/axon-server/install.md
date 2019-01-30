@@ -10,9 +10,9 @@
 #### Start the server
 
 ``` -
-systemctl daemon-reload
-systemctl start axon-server
-systemctl status axon-server
+sudo systemctl daemon-reload
+sudo systemctl start axon-server
+sudo systemctl status axon-server
 ```
 
 This will start the `axon-server` process as the `axonops` user, which was created during the package installation.  The default listening address is `0.0.0.0:8080`.
