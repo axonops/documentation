@@ -32,7 +32,7 @@
         <meta name="lang:search.tokenizer" content="[\s\-]+">
       
       <link rel="shortcut icon" href="../../../img/favicon.ico">
-      <meta name="generator" content="mkdocs-1.0.4, mkdocs-material-3.1.0">
+      <meta name="generator" content="mkdocs-1.0.4, mkdocs-material-3.0.4">
     
     
       
@@ -40,12 +40,12 @@
       
     
     
-      <link rel="stylesheet" href="../../../assets/stylesheets/application.11e41852.css">
+      <link rel="stylesheet" href="../../../assets/stylesheets/application.451f80e5.css">
       
       
     
     
-      <script src="../../../assets/javascripts/modernizr.20ef595d.js"></script>
+      <script src="../../../assets/javascripts/modernizr.1aa3b519.js"></script>
     
     
       
@@ -55,7 +55,6 @@
       
     
     <link rel="stylesheet" href="../../../assets/fonts/material-icons.css">
-    
     
       <link rel="stylesheet" href="../../../stylesheets/extra.css">
     
@@ -74,7 +73,7 @@
     <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
     <label class="md-overlay" data-md-component="overlay" for="__drawer"></label>
     
-      <a href="#installing-elasticsearch" tabindex="1" class="md-skip">
+      <a href="../../../#installing-elasticsearch" tabindex="1" class="md-skip">
         Skip to content
       </a>
     
@@ -324,18 +323,6 @@
   <li class="md-nav__item">
     <a href="../../cassandra-agent/install/" title="Axonops Cassandra Agent" class="md-nav__link">
       Axonops Cassandra Agent
-    </a>
-  </li>
-
-        
-          
-          
-          
-
-
-  <li class="md-nav__item">
-    <a href="../../dse-agent/install/" title="Axonops DSE Agent" class="md-nav__link">
-      Axonops DSE Agent
     </a>
   </li>
 
@@ -1046,8 +1033,12 @@
 </pre></div>
 
 
+<div class="codehilite"><pre><span></span>cd elasticsearch-6.5.4
+</pre></div>
+
+
 <p>Increase the bulk queue size of elastic by adding the following line to it's config located at <code>config/elasticsearch.yml</code>:</p>
-<div class="codehilite"><pre><span></span>sudo echo &#39;thread_pool.bulk.queue_size: 2000&#39; &gt;&gt; elasticsearch-6.5.4/config/elasticsearch.yml
+<div class="codehilite"><pre><span></span>thread_pool.bulk.queue_size: 2000
 </pre></div>
 
 
@@ -1057,28 +1048,14 @@
 </pre></div>
 
 
-<p>Also, Elasticsearch needs <code>max file descriptors</code> system settings at least to 65536.</p>
-<div class="codehilite"><pre><span></span>echo &#39;elasticsearch  -  nofile  65536&#39; | sudo tee --append /etc/security/limits.conf &gt; /dev/null
+<p>Also, Elasticsearch needs <code>max file descriptors</code> system settings at least to 65536.
+You can follow <a href="https://www.elastic.co/guide/en/elasticsearch/reference/current/setting-system-settings.html#ulimit">those instructions</a> to set it up.</p>
+<p>Elasticsearch can be started in background as a daemon from the command line as follows:</p>
+<div class="codehilite"><pre><span></span> ./bin/elasticsearch -d
 </pre></div>
 
 
-<p>Add an elasticsearch user</p>
-<div class="codehilite"><pre><span></span>sudo adduser elasticsearch
-</pre></div>
-
-
-<p>Move elasticsearch to elasticsearch home directory</p>
-<div class="codehilite"><pre><span></span>sudo mv elasticsearch-6.5.4 /home/elasticsearch/ 
-sudo chown elasticsearch:elasticsearch /home/elasticsearch/ -R
-</pre></div>
-
-
-<p>Start Elasticsearch as a daemon from the elasticsearch user:</p>
-<div class="codehilite"><pre><span></span>sudo -u elasticsearch /home/elasticsearch/elasticsearch-6.5.4/bin/elasticsearch -d
-</pre></div>
-
-
-<p>After a short period of time, you can verify that your Elasticsearch node is running by sending an HTTP request to port 9200 on localhost:</p>
+<p>You can test that your Elasticsearch node is running by sending an HTTP request to port 9200 on localhost:</p>
 <div class="codehilite"><pre><span></span>curl -X GET &quot;localhost:9200/&quot;
 </pre></div>
                 
@@ -1117,7 +1094,7 @@ sudo chown elasticsearch:elasticsearch /home/elasticsearch/ -R
       
     </div>
     
-      <script src="../../../assets/javascripts/application.9e1f3b71.js"></script>
+      <script src="../../../assets/javascripts/application.583bbe55.js"></script>
       
       <script>app.initialize({version:"1.0.4",url:{base:"../../.."}})</script>
       
