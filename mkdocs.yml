@@ -34,11 +34,6 @@ nav:
         - Axonops Agent: 'installation/axon-agent/install.md'
         - Axonops Cassandra Agent: 'installation/cassandra-agent/install.md'
         - Compatibility matrix: 'installation/compat_matrix/compat_matrix.md'
-    
-    - Configuration:
-        - 'AxonOps Server Configuration': 'configuration/server-configuration.md'
-        - 'AxonOps Agent Configuration': 'configuration/agent-configuration.md'
-        - 'AxonOps GUI Service Configuration': 'configuration/axondash.md'
 
     - Using AxonOps: 
         - Cluster Overview:
