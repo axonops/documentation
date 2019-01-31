@@ -21,7 +21,7 @@ The tools listed above served us well. They gave us the confidence to manage ent
 
 However, using these tools and their problems were realised over time.
 
-1. There are many components including the agents that need to be installed. Takes a lot of time to get them integrated for each customer's environment, even with fully automated implementation using Ansible.
+1. There are many components including the agents that need to be installed. Takes a lot of effort to integrate all components for each customer's on-premises environment, even with fully automated implementation using Ansible.
 2. The learning curve of deploying and configuring all the components is high.
 2. Patching schedule became a nightmare because of the sheer number of components.
 3. Firewall configurations became big for enterprise on-premises customers, often required many hours of tracing which change requests were unsuccessfully executed.
