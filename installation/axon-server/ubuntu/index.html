@@ -1198,7 +1198,11 @@ sudo chown elasticsearch:elasticsearch /home/elasticsearch/ -R
 
 
 <h2 id="axon-server-installer">axon-server installer<a class="headerlink" href="#axon-server-installer" title="Permanent link">&para;</a></h2>
-<div class="codehilite"><pre><span></span>sudo apt-get install &lt;TODO&gt;
+<div class="codehilite"><pre><span></span>sudo cp /etc/apt/sources.list /etc/apt/sources.list_backup
+echo &quot;deb https://repo.digitalis.io/repository/axonops-apt xenial main&quot; | sudo tee /etc/apt/sources.list.d/axonops.list
+sudo apt-key adv --keyserver keyserver.ubuntu.com --recv-keys 727BDA4A
+sudo apt-get update
+sudo apt-get install axon-server
 </pre></div>
 
 
