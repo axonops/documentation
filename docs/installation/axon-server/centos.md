@@ -22,7 +22,8 @@ sudo rpm -i jdk-8u131-linux-x64.rpm
 
 ## axon-server installer
 ``` -
-sudo yum install <TODO>
+sudo yum-config-manager --add-repo https://repo.digitalis.io/repository/axonops-yum/stable/x64
+sudo yum install axon-server
 ```
 
 

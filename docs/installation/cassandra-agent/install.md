@@ -2,6 +2,9 @@
 
 This agent will enable metrics collection from Cassandra and enable adaptive repairs and backups.
 
+## Available versions
+* 3.11.3
+
 ## Prerequisites
 
 Cassandra agent needs **axon-agent** to be installed and configured properly. If not installed already, please go to [axon-agent](../../axon-agent/install) installation 
@@ -39,18 +42,24 @@ axon-agent:
 #### CentOS / RedHat installer
 ``` -
 sudo yum-config-manager --add-repo https://repo.digitalis.io/repository/axonops-yum/stable/x64
-sudo yum install axon-cassandra3.11.3-agent
+sudo yum install axon-cassandra<version>-agent
 ```
 #### Debian / Ubuntu installer
 ``` -
-sudo apt-get install <TODO>
+sudo cp /etc/apt/sources.list /etc/apt/sources.list_backup
+echo "deb https://repo.digitalis.io/repository/axonops-apt xenial main" | sudo tee /etc/apt/sources.list.d/axonops.list
+sudo apt-key adv --keyserver keyserver.ubuntu.com --recv-keys 727BDA4A
+sudo apt-get update
+sudo apt-get install axon-cassandra<version>-agent
 ```
 
 #### Package details
 
 * Configuration: `/etc/axonops/axon-java-agent.yml`
-* Binary: `usr/share/axonops/axon-cassandra<version>-agent.jar`
-* Version number: `usr/share/axonops/axon-cassandra<version>-agent.version`
+* Binary: `/usr/share/axonops/axon-cassandra<version>-agent.jar`
+* Version number: `/usr/share/axonops/axon-cassandra<version>-agent.version`
+* Copyright : `/usr/share/doc/axonops/axon-cassandra<version>-agent/copyright`
+* Licenses : `/usr/share/axonops/licenses/axon-cassandra<version>-agent/`
 
 #### Configure Cassandra 
 
@@ -65,7 +74,12 @@ exemple:
 ``` bash
 JVM_OPTS="$JVM_OPTS -javaagent:/usr/share/axonops/axon-cassandra3.11.3-agent.jar=/etc/axonops/axon-java-agent.yml"
 ```
+#### Add axonops user to Cassandra user group and Cassandra user to axonops group
 
+``` bash
+usermod -aG <your_cassandra_group> axonops
+usermod -aG axonops <your_cassandra_user>
+```
 
 #### Start Cassandra
 
