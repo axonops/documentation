@@ -4,10 +4,19 @@
 
 Elasticsearch stores all of the collected data by axon-server. Let's install Java 8 and Elasticsearch first.
 
-#### Installing the Oracle JDK
+#### Installing the JDK
 
-Run the following commands:
+
+Run the following commands for OpenJDK:
 ``` - 
+sudo apt-get update
+sudo apt-get install default-jdk
+```
+
+
+Run the following commands for Oracle JDK:
+``` - 
+sudo apt-get update
 sudo apt-get install dirmngr
 sudo cp /etc/apt/sources.list /etc/apt/sources.list_backup
 echo "deb http://ppa.launchpad.net/webupd8team/java/ubuntu xenial main" | sudo tee /etc/apt/sources.list.d/webupd8team-java.list

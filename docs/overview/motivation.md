@@ -21,17 +21,16 @@ The tools listed above served us well. They gave us the confidence to manage ent
 
 However, using these tools and their problems were realised over time.
 
-1. There are many components including the agents that need to be installed. Takes a lot of time to get them integrated for each customer's environment, even with fully automated implementation using Ansible.
-2. The learning curve of deploying and configuring all the components is high.
-2. Patching schedule became a nightmare because of the sheer number of components.
-3. Firewall configurations became big for enterprise on-premises customers, often required many hours of tracing which change requests were unsuccessfully executed.
-4. Multiple dashboards for metrics, logs and service availability.
-5. Alert notification configurations were all over the place.
-6. Fine tuning alerts and updating them takes a lot of work.
+1. **Too many components** - There are many components including the agents that need to be installed. Takes a lot of effort to integrate all components for each customer's on-premises environment, even with fully automated implementation using Ansible.
+2. **Steep learning curve** - The learning curve of deploying and configuring all the components is high.
+4. **Patching hell** - Patching schedule became a nightmare because of the sheer number of components. Imagine having to raise change requests for patching all above components!
+5. **Enterprise hell** - Firewall configurations became big for enterprise on-premises customers, often required many hours of tracing which change requests were unsuccessfully executed.
+6. **Multiple dashboards** - Multiple dashboards for metrics, logs and service availability.
+7. **Complex alerting configurations** - Alert notification configurations were all over the place. Fine tuning alerts and updating them takes a lot of work.
 
 ## Wish List
-
-We went back to the drawing board with the aim of reducing the efforts needed to on-board new customers and made a wish list.
+With the above problems in mind, we needed to become more efficient as a company deploying the tools we need to manage our customers.
+After promoting the above tools to our customers, we ate the humble pie, and went back to the drawing board with the aim of reducing the efforts needed to on-board new customers.
 
 * On-premises / cloud deployment
 * Single dashboard for metrics / logs / service health
@@ -51,6 +50,7 @@ We went back to the drawing board with the aim of reducing the efforts needed to
 * Simplified deployment model
 * Single agent for collecting metrics, logs, event, configs
 * The same agent performs execution of health checks, backup, restore
+* No JMX to capture the metrics, and must be push from the JVM and not pull
 * Single socket connection initiated by agent to management server requiring only simple firewall rules
 * Bi-directional communication between agent and management server over the single socket
 * Modern snappy GUI

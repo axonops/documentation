@@ -1,4 +1,8 @@
-# axon-dash installation
+# AxonOps GUI installation
+
+AxonOps GUI service is installed as a separate service to AxonOps Server. The GUI service (axon-dash) can be co-hosted on the same server as the AxonOps Server process, or they can be runnin on 2 separate servers.
+
+This section describes the installation process for the GUI service.
 
 #### CentOS / RedHat installer
 ``` -
