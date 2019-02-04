@@ -1105,7 +1105,7 @@
 <p>AxonOps GUI service is installed as a separate service to AxonOps Server. The GUI service (axon-dash) can be co-hosted on the same server as the AxonOps Server process, or they can be runnin on 2 separate servers.</p>
 <p>This section describes the installation process for the GUI service.</p>
 <h4 id="centos-redhat-installer">CentOS / RedHat installer<a class="headerlink" href="#centos-redhat-installer" title="Permanent link">&para;</a></h4>
-<div class="codehilite"><pre><span></span>sudo yum-config-manager --add-repo https://repo.digitalis.io/repository/axonops-yum/stable/x64
+<div class="codehilite"><pre><span></span>printf &#39;%s\n%s\n%s\n%s\n%s\n%s\n&#39; &#39;[axonops]&#39; &#39;name=axonops Repository&#39; &#39;baseurl=https://repo.digitalis.io/repository/axonops-yum/stable/x64/&#39; &#39;enabled=1&#39; &#39;gpgcheck=1&#39; | sudo tee /etc/yum.repos.d/axonops.repo
 sudo yum install axon-dash
 </pre></div>
 

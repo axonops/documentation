@@ -1205,7 +1205,7 @@ page.</p>
 <p>Make sure the <code>&lt;version&gt;</code> of your Cassandra and Cassandra agent are compatible from the <a href="../../compat_matrix/compat_matrix">compatibility matrix</a>. </p>
 </blockquote>
 <h4 id="centos-redhat-installer">CentOS / RedHat installer<a class="headerlink" href="#centos-redhat-installer" title="Permanent link">&para;</a></h4>
-<div class="codehilite"><pre><span></span>sudo yum-config-manager --add-repo https://repo.digitalis.io/repository/axonops-yum/stable/x64
+<div class="codehilite"><pre><span></span>printf &#39;%s\n%s\n%s\n%s\n%s\n%s\n&#39; &#39;[axonops]&#39; &#39;name=axonops Repository&#39; &#39;baseurl=https://repo.digitalis.io/repository/axonops-yum/stable/x64/&#39; &#39;enabled=1&#39; &#39;gpgcheck=1&#39; | sudo tee /etc/yum.repos.d/axonops.repo
 sudo yum install axon-cassandra&lt;version&gt;-agent
 </pre></div>
 
