@@ -71,7 +71,7 @@ retention:
       super_low_resolution: 2y # Must be expressed in years (y)
   backups: # Those are use as defaults but can be overridden from the UI
     local: 10d
-    remote: 30d 
+    remote: 30d
 ```
 
 Restart **axon-server** after updating it's configuration
