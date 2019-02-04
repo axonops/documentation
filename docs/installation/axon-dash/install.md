@@ -23,7 +23,7 @@ sudo apt-get install axon-dash
 * Configuration: `/etc/axonops/axon-dash.yml`
 * Binary: `/usr/share/axonops/axon-dash`
 * Logs: `/var/log/axonops/axon-dash.log` 
-* Systemd service: `usr/lib/systemd/system/axon-dash.service`
+* Systemd service: `/usr/lib/systemd/system/axon-dash.service`
 * Copyright : `/usr/share/doc/axonops/axon-dash/copyright`
 * Licenses : `/usr/share/axonops/licenses/axon-dash/`
 
