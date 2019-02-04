@@ -1245,12 +1245,12 @@ sudo systemctl status axon-server
   <span class="l l-Scalar l-Scalar-Plain">notification_interval</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">3h</span>
 
 <span class="l l-Scalar l-Scalar-Plain">retention</span><span class="p p-Indicator">:</span>
-  <span class="l l-Scalar l-Scalar-Plain">events</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">24w</span> <span class="c1"># logs and events retention. Must be expressed in weeks (w)</span>
+  <span class="l l-Scalar l-Scalar-Plain">events</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">8w</span> <span class="c1"># logs and events retention. Must be expressed in weeks (w)</span>
   <span class="l l-Scalar l-Scalar-Plain">metrics</span><span class="p p-Indicator">:</span>
-      <span class="l l-Scalar l-Scalar-Plain">high_resolution</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">30d</span> <span class="c1"># High frequency metrics. Must be expressed in days (d)</span>
-      <span class="l l-Scalar l-Scalar-Plain">med_resolution</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">24w</span> <span class="c1"># Must be expressed in weeks (w)</span>
-      <span class="l l-Scalar l-Scalar-Plain">low_resolution</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">24M</span> <span class="c1"># Must be expressed in months (M)</span>
-      <span class="l l-Scalar l-Scalar-Plain">super_low_resolution</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">3y</span> <span class="c1"># Must be expressed in years (y)</span>
+      <span class="l l-Scalar l-Scalar-Plain">high_resolution</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">14d</span> <span class="c1"># High frequency metrics. Must be expressed in days (d)</span>
+      <span class="l l-Scalar l-Scalar-Plain">med_resolution</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">12w</span> <span class="c1"># Must be expressed in weeks (w)</span>
+      <span class="l l-Scalar l-Scalar-Plain">low_resolution</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">12M</span> <span class="c1"># Must be expressed in months (M)</span>
+      <span class="l l-Scalar l-Scalar-Plain">super_low_resolution</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">2y</span> <span class="c1"># Must be expressed in years (y)</span>
   <span class="l l-Scalar l-Scalar-Plain">backups</span><span class="p p-Indicator">:</span> <span class="c1"># Those are use as defaults but can be overridden from the UI</span>
     <span class="l l-Scalar l-Scalar-Plain">local</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">10d</span>
     <span class="l l-Scalar l-Scalar-Plain">remote</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">30d</span> 
