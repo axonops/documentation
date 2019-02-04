@@ -42,19 +42,15 @@ Make sure **axon-agent** configuration points to the correct **axon-server** add
 
 ``` yaml hl_lines="2 7 14"
 axon-server:
-    hosts: "axon-server_endpoint" # Specify axon-server IP (ex: "192.168.0.5")
+    hosts: "axon-server_endpoint" # Specify axon-server IP axon-server.mycompany.com
 
 axon-agent:
-    host: 0.0.0.0 # axon-agent listening address for it's OpenTSDB endpoint
-    port: 9916 # axon-agent listening port for it's OpenTSDB endpoint
-    org: "your_organisation_name" # Specify your organisation name
-    standalone_mode: true
-    type: "standalone"
-    cluster_name: "standalone"
-    ssl: false # SSL flag for it's OpenTSDB endpoint
+    org: "my-company-test" # Specify your organisation name
+    type: "cassandra"
+    cluster_name: "MyCassandra"
 
 NTP:
-    host: "set_NTP_server" # Specify a NTP to determine a NTP offset 
+    host: "set_NTP_server" # Specify you NTP server IP address or hostname
 ```
 
 #### Start axon-agent
