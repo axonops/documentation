@@ -1,14 +1,14 @@
-# Setup Healthcheks
+# Setup Service Checks
 
 
 
-###  Add Healthchek Services
+###  Add Service Checks
 
-On the Axonops application menu, click `Healthchecks` and select `Setup` tab.
+On the Axonops application menu, click `Service Checks` and select `Setup` tab.
 
 !!! infomy 
 
-    [![healthchekcssetup](/img/healthchekcssetup.png)](/img/healthchekcssetup.png)
+    [![servicecheckssetup](/img/servicecheckssetup.png)](/img/servicecheckssetup.png)
 
 
 
@@ -48,7 +48,7 @@ Example:
 !!! infomy
 
     
-    [![healthcheckseditor](/img/healthcheckseditor.png)](/img/healthcheckseditor.png)
+    [![servicecheckseditor](/img/servicecheckseditor.png)](/img/servicecheckseditor.png)
 
 
 ####  Delete Services
