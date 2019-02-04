@@ -2,21 +2,28 @@
 
 #### CentOS / RedHat installer
 ``` -
-sudo yum install <TODO>
+sudo yum-config-manager --add-repo https://repo.digitalis.io/repository/axonops-yum/stable/x64
+sudo yum install axon-agent
 ```
 #### Debian / Ubuntu installer
 ``` -
-sudo apt-get install <TODO>
+sudo cp /etc/apt/sources.list /etc/apt/sources.list_backup
+echo "deb https://repo.digitalis.io/repository/axonops-apt xenial main" | sudo tee /etc/apt/sources.list.d/axonops.list
+sudo apt-key adv --keyserver keyserver.ubuntu.com --recv-keys 727BDA4A
+sudo apt-get update
+sudo apt-get install axon-agent
 ```
 
 #### Package details
 
 * Configuration: `/etc/axonops/axon-agent.yml`
-* Binary: `usr/share/axonops/axon-agent`
+* Binary: `/usr/share/axonops/axon-agent`
 * Logs : `/var/log/axonops/axon-agent.log`
 * Systemd service: `usr/lib/systemd/system/axon-agent.service`
 * certificate file used for it's OpenTSDB endpoint when SSL is active: `/etc/axonops/agent.crt`
-* key file used for it's OpenTSDB endpoint when SSL is active: `/etc/axonops/agent.key `
+* key file used for it's OpenTSDB endpoint when SSL is active: `/etc/axonops/agent.key`
+* Copyright : `/usr/share/doc/axonops/axon-agent/copyright`
+* Licenses : `/usr/share/axonops/licenses/axon-agent/`
 
 
 #### Configuration

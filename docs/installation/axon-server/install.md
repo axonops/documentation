@@ -6,6 +6,9 @@
 * Binary: `usr/share/axonops/axon-server`
 * Logs: `/var/log/axonops/axon-server.log` 
 * Systemd service: `usr/lib/systemd/system/axon-server.service`
+* Copyright : `/usr/share/doc/axonops/axon-server/copyright`
+* Licenses : `/usr/share/axonops/licenses/axon-server/`
+
 
 #### Start the server
 

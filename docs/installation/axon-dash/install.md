@@ -6,20 +6,26 @@ This section describes the installation process for the GUI service.
 
 #### CentOS / RedHat installer
 ``` -
-sudo yum install <TODO>
+sudo yum-config-manager --add-repo https://repo.digitalis.io/repository/axonops-yum/stable/x64
+sudo yum install axon-dash
 ```
 #### Debian / Ubuntu installer
 ``` -
-sudo apt-get install <TODO>
+sudo cp /etc/apt/sources.list /etc/apt/sources.list_backup
+echo "deb https://repo.digitalis.io/repository/axonops-apt xenial main" | sudo tee /etc/apt/sources.list.d/axonops.list
+sudo apt-key adv --keyserver keyserver.ubuntu.com --recv-keys 727BDA4A
+sudo apt-get update
+sudo apt-get install axon-dash
 ```
 
 #### Package details
 
 * Configuration: `/etc/axonops/axon-dash.yml`
-* Binary: `usr/share/axonops/axon-dash`
-* Logs: `TODO` 
+* Binary: `/usr/share/axonops/axon-dash`
+* Logs: `/var/log/axonops/axon-dash.log` 
 * Systemd service: `usr/lib/systemd/system/axon-dash.service`
-
+* Copyright : `/usr/share/doc/axonops/axon-dash/copyright`
+* Licenses : `/usr/share/axonops/licenses/axon-dash/`
 
 #### Configuration
 Make sure **axon-dash** configuration points to the correct **axon-server** listening address:
@@ -30,9 +36,9 @@ axon-dash: #  The listening address of axon-dash
   host: 0.0.0.0
   port: 3000
 
-axon-server: # This must point to axon-server interface listening address
-  host: set_axon-server_IP  # 127.0.0.1 is always wrong
-  port: 8080
+axon-server:
+  public_endpoints: "http://axon-server.public:8080, https://axon-server.public" # Public HTTP endpoint to axon-server API. This can be a list with comma separator. http://127.0.0.1 or http://locahost are always wrong.
+  context_path: "" # exemple: "/gui"
 ```
 
 ## axon-server configuration update

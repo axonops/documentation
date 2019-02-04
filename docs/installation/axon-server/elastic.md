@@ -9,7 +9,7 @@ wget https://artifacts.elastic.co/downloads/elasticsearch/elasticsearch-6.5.4.ta
 tar -xzf elasticsearch-6.5.4.tar.gz
 ```
 
-Increase the bulk queue size of elastic by adding the following line to it's config located at `config/elasticsearch.yml`:
+Increase the bulk queue size of Elasticsearch by running the following command:
 
 ``` - 
 sudo echo 'thread_pool.bulk.queue_size: 2000' >> elasticsearch-6.5.4/config/elasticsearch.yml
