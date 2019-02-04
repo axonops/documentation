@@ -1,5 +1,3 @@
-## Overview
-
 Service Checks in AxonOps allows you to configure custom checks using three types of check invocations:
 
 1. Shell Script

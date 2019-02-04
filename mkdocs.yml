@@ -27,24 +27,24 @@ nav:
         - 'Architecture': 'overview/architecture.md'
 
     - Installation:
-        - Axonops Server:
+        - AxonOps Server:
             - 'Installing on Ubuntu/Debian': 'installation/axon-server/ubuntu.md'
             - 'Installing on Centos/Redhat': 'installation/axon-server/centos.md'
-        - Axonops Dashboard: 'installation/axon-dash/install.md'
-        - Axonops Agent: 'installation/axon-agent/install.md'
-        - Axonops Cassandra Agent: 'installation/cassandra-agent/install.md'
+        - AxonOps GUI Server: 'installation/axon-dash/install.md'
+        - AxonOps Agent: 'installation/axon-agent/install.md'
+        - AxonOps Cassandra Agent: 'installation/cassandra-agent/install.md'
         - Compatibility matrix: 'installation/compat_matrix/compat_matrix.md'
 
     - Using AxonOps: 
         - Cluster Overview:
-            - 'Cluster Overview': 'cluster/cluster-overview.md'
+            - 'Overview': 'cluster/cluster-overview.md'
 
         - Monitoring:
             - 'Monitoring Overview': 'monitoring/overview.md'
             - Service Checks:
-                - 'Service Checks Overview': 'monitoring/servicechecks/overview.md'
-                - 'Service Checks Configurations': 'monitoring/servicechecks/configurations.md'
-                - 'Service Checks Alerting': 'monitoring/servicechecks/alerting.md'
+                - 'Overview': 'monitoring/servicechecks/overview.md'
+                - 'Configurations': 'monitoring/servicechecks/configurations.md'
+                - 'Alerting': 'monitoring/servicechecks/alerting.md'
             - Metrics Dashboard:
                 - Cassandra:
                     - 'Overview': 'monitoring/metricsdashboards/cassandra/overview.md'

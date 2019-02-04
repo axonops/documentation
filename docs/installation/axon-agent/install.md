@@ -1,29 +1,35 @@
 # axon-agent installation
 
+There 2 elements to the AxonOps agent. The first is the axon-agent, which is a native application for Linux running as a standalone daemon process. The second is the Java agent which is added to the Java process. Two components communicate with each other using the Unix domain socket. The reason for this approach are the following requirements we have on the agent process.
+
+* No JMX
+* Metrics must push metrics from Cassandra all the way to the AxonOps server - never pull.
+
+AxonOps Java agent will push the metrics to the AxonOps native agent, which in turn pushes them to the AxonOps server. Scraping a large volume of metrics against the JMX is slow. We also wanted to avoid exposing an HTTP endpoint within Cassandra like the [Prometheus JMX exporter](https://github.com/prometheus/jmx_exporter) does.
+
+The messaging between native agent and Java agent are bi-directional - i.e. AxonOps server sends control messages to Cassandra for operations such as repair and backups without the use of JMX.
+
+This section describes how to install and configure both the native agent and Java agent.
+
+
+
 #### CentOS / RedHat installer
 ``` -
-sudo yum-config-manager --add-repo https://repo.digitalis.io/repository/axonops-yum/stable/x64
-sudo yum install axon-agent
+sudo yum install <TODO>
 ```
 #### Debian / Ubuntu installer
 ``` -
-sudo cp /etc/apt/sources.list /etc/apt/sources.list_backup
-echo "deb https://repo.digitalis.io/repository/axonops-apt xenial main" | sudo tee /etc/apt/sources.list.d/axonops.list
-sudo apt-key adv --keyserver keyserver.ubuntu.com --recv-keys 727BDA4A
-sudo apt-get update
-sudo apt-get install axon-agent
+sudo apt-get install <TODO>
 ```
 
 #### Package details
 
 * Configuration: `/etc/axonops/axon-agent.yml`
-* Binary: `/usr/share/axonops/axon-agent`
+* Binary: `usr/share/axonops/axon-agent`
 * Logs : `/var/log/axonops/axon-agent.log`
 * Systemd service: `usr/lib/systemd/system/axon-agent.service`
 * certificate file used for it's OpenTSDB endpoint when SSL is active: `/etc/axonops/agent.crt`
-* key file used for it's OpenTSDB endpoint when SSL is active: `/etc/axonops/agent.key`
-* Copyright : `/usr/share/doc/axonops/axon-agent/copyright`
-* Licenses : `/usr/share/axonops/licenses/axon-agent/`
+* key file used for it's OpenTSDB endpoint when SSL is active: `/etc/axonops/agent.key `
 
 
 #### Configuration
@@ -54,13 +60,13 @@ systemctl start axon-agent
 systemctl status axon-agent
 ```
 
-This will start the **axon-agent** process as the **axonops** user, which was created during the package installation. The default OpenTSDB listening address is **0.0.0.0:9916**.
+
+This will start the **axon-agent** process as the **axonops** user, which was created during the package installation.
 
 * Note that you will have to refresh **axon-dash** page to show the newly connected node.
 
-## Going further
+## Next Steps
 
-You can extend axon-agent capabilities for the following applications:
+To complete your agent installation you will need to follow the steps in the link below:
 
 * [cassandra](../cassandra-agent/install.md)
-* [DSE](../dse-agent/install.md)
