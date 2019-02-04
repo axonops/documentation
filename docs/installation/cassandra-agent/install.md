@@ -87,15 +87,11 @@ tier1:
 #    frequency: 86400 # 1d
 
 blacklist: # You can blacklist metrics based on MBean query pattern
-  - "org.apache.cassandra.metrics:type=ColumnFamily,*" # dup of tables
-  - "org.apache.cassandra.metrics:name=SnapshotsSize,*" # generally takes time
+  - "org.apache.cassandra.metrics:type=ColumnFamily,*" # duplication of table metrics
+  - "org.apache.cassandra.metrics:name=SnapshotsSize,*" # Collecting SnapshotsSize metrics slows down collection
 
 free_text_blacklist: # You can blacklist metrics based on Regex pattern
   - "org.apache.cassandra.metrics:type=ThreadPools,path=internal,scope=Repair#.*"
 
 warningThresholdMillis: 100 # This will warn in logs when a MBean takes longer than the specified value.
-
-whitelisted_clients: # Whitelist for CQL connections
-  - "127.0.0.1"
-  - "^*.*.*.*"
 ```
