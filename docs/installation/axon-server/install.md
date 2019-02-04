@@ -40,12 +40,12 @@ alerting:
   notification_interval: 3h
 
 retention:
-  events: 24w # logs and events retention. Must be expressed in weeks (w)
+  events: 8w # logs and events retention. Must be expressed in weeks (w)
   metrics:
-      high_resolution: 30d # High frequency metrics. Must be expressed in days (d)
-      med_resolution: 24w # Must be expressed in weeks (w)
-      low_resolution: 24M # Must be expressed in months (M)
-      super_low_resolution: 3y # Must be expressed in years (y)
+      high_resolution: 14d # High frequency metrics. Must be expressed in days (d)
+      med_resolution: 12w # Must be expressed in weeks (w)
+      low_resolution: 12M # Must be expressed in months (M)
+      super_low_resolution: 2y # Must be expressed in years (y)
   backups: # Those are use as defaults but can be overridden from the UI
     local: 10d
     remote: 30d 
