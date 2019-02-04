@@ -40,12 +40,12 @@ axon-agent:
 
 
 #### CentOS / RedHat installer
-``` -
-sudo yum-config-manager --add-repo https://repo.digitalis.io/repository/axonops-yum/stable/x64
+``` bash
+printf '%s\n%s\n%s\n%s\n%s\n%s\n' '[axonops]' 'name=axonops Repository' 'baseurl=https://repo.digitalis.io/repository/axonops-yum/stable/x64/' 'enabled=1' 'gpgcheck=0' | sudo tee /etc/yum.repos.d/axonops.repo
 sudo yum install axon-cassandra<version>-agent
 ```
 #### Debian / Ubuntu installer
-``` -
+``` bash
 sudo cp /etc/apt/sources.list /etc/apt/sources.list_backup
 echo "deb https://repo.digitalis.io/repository/axonops-apt xenial main" | sudo tee /etc/apt/sources.list.d/axonops.list
 sudo apt-key adv --keyserver keyserver.ubuntu.com --recv-keys 727BDA4A

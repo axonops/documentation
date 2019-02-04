@@ -14,12 +14,17 @@ This section describes how to install and configure both the native agent and Ja
 
 
 #### CentOS / RedHat installer
-``` -
-sudo yum install <TODO>
+``` bash
+printf '%s\n%s\n%s\n%s\n%s\n%s\n' '[axonops]' 'name=axonops Repository' 'baseurl=https://repo.digitalis.io/repository/axonops-yum/stable/x64/' 'enabled=1' 'gpgcheck=0' | sudo tee /etc/yum.repos.d/axonops.repo
+sudo yum install axon-agent
 ```
 #### Debian / Ubuntu installer
-``` -
-sudo apt-get install <TODO>
+``` bash
+sudo cp /etc/apt/sources.list /etc/apt/sources.list_backup
+echo "deb https://repo.digitalis.io/repository/axonops-apt xenial main" | sudo tee /etc/apt/sources.list.d/axonops.list
+sudo apt-key adv --keyserver keyserver.ubuntu.com --recv-keys 727BDA4A
+sudo apt-get update
+sudo apt-get install axon-agent
 ```
 
 #### Package details
@@ -27,7 +32,7 @@ sudo apt-get install <TODO>
 * Configuration: `/etc/axonops/axon-agent.yml`
 * Binary: `usr/share/axonops/axon-agent`
 * Logs : `/var/log/axonops/axon-agent.log`
-* Systemd service: `usr/lib/systemd/system/axon-agent.service`
+* Systemd service: `/usr/lib/systemd/system/axon-agent.service`
 * certificate file used for it's OpenTSDB endpoint when SSL is active: `/etc/axonops/agent.crt`
 * key file used for it's OpenTSDB endpoint when SSL is active: `/etc/axonops/agent.key `
 
@@ -54,7 +59,7 @@ NTP:
 
 #### Start axon-agent
 
-``` -
+``` bash
 systemctl daemon-reload
 systemctl start axon-agent
 systemctl status axon-agent

@@ -5,12 +5,12 @@ AxonOps GUI service is installed as a separate service to AxonOps Server. The GU
 This section describes the installation process for the GUI service.
 
 #### CentOS / RedHat installer
-``` -
-sudo yum-config-manager --add-repo https://repo.digitalis.io/repository/axonops-yum/stable/x64
+``` bash
+printf '%s\n%s\n%s\n%s\n%s\n%s\n' '[axonops]' 'name=axonops Repository' 'baseurl=https://repo.digitalis.io/repository/axonops-yum/stable/x64/' 'enabled=1' 'gpgcheck=0' | sudo tee /etc/yum.repos.d/axonops.repo
 sudo yum install axon-dash
 ```
 #### Debian / Ubuntu installer
-``` -
+``` bash
 sudo cp /etc/apt/sources.list /etc/apt/sources.list_backup
 echo "deb https://repo.digitalis.io/repository/axonops-apt xenial main" | sudo tee /etc/apt/sources.list.d/axonops.list
 sudo apt-key adv --keyserver keyserver.ubuntu.com --recv-keys 727BDA4A
@@ -23,7 +23,7 @@ sudo apt-get install axon-dash
 * Configuration: `/etc/axonops/axon-dash.yml`
 * Binary: `/usr/share/axonops/axon-dash`
 * Logs: `/var/log/axonops/axon-dash.log` 
-* Systemd service: `usr/lib/systemd/system/axon-dash.service`
+* Systemd service: `/usr/lib/systemd/system/axon-dash.service`
 * Copyright : `/usr/share/doc/axonops/axon-dash/copyright`
 * Licenses : `/usr/share/axonops/licenses/axon-dash/`
 
@@ -75,13 +75,13 @@ retention:
 ```
 
 Restart **axon-server** after updating it's configuration
-``` -
+``` bash
 sudo systemctl restart axon-server
 ```
 
 #### Start axon-dash
 
-``` -
+``` bash
 sudo systemctl daemon-reload
 sudo systemctl start axon-dash
 sudo systemctl status axon-dash
