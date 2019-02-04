@@ -47,10 +47,9 @@ axon-server:
 axon-agent:
     org: "my-company-test" # Specify your organisation name
     type: "cassandra"
-    cluster_name: "MyCassandra"
 
 NTP:
-    host: "set_NTP_server" # Specify you NTP server IP address or hostname
+    host: "ntp.mycompany.com" # Specify you NTP server IP address or hostname
 ```
 
 #### Start axon-agent
