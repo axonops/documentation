@@ -26,7 +26,7 @@ sudo rpm -i jdk-8u131-linux-x64.rpm
 
 ## axon-server installer
 ``` -
-sudo yum-config-manager --add-repo https://repo.digitalis.io/repository/axonops-yum/stable/x64
+printf '%s\n%s\n%s\n%s\n%s\n%s\n' '[axonops]' 'name=axonops Repository' 'baseurl=https://repo.digitalis.io/repository/axonops-yum/stable/x64/' 'enabled=1' 'gpgcheck=1' | sudo tee /etc/yum.repos.d/axonops.repo
 sudo yum install axon-server
 ```
 
