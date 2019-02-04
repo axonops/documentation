@@ -8,14 +8,14 @@ Elasticsearch stores all of the collected data by axon-server. Let's install Jav
 
 
 Run the following commands for OpenJDK:
-``` - 
+``` bash
 sudo apt-get update
 sudo apt-get install default-jdk
 ```
 
 
 Run the following commands for Oracle JDK:
-``` - 
+``` bash
 sudo apt-get update
 sudo apt-get install dirmngr
 sudo cp /etc/apt/sources.list /etc/apt/sources.list_backup
@@ -30,7 +30,7 @@ Once you've accepted the license agreement the JDK will install.
 {!installation/axon-server/elastic.md!}
 
 ## axon-server installer
-``` -
+``` bash
 sudo cp /etc/apt/sources.list /etc/apt/sources.list_backup
 echo "deb https://repo.digitalis.io/repository/axonops-apt xenial main" | sudo tee /etc/apt/sources.list.d/axonops.list
 sudo apt-key adv --keyserver keyserver.ubuntu.com --recv-keys 727BDA4A
