@@ -3,7 +3,7 @@
 This agent will enable metrics collection from Cassandra and enable adaptive repairs and backups.
 
 ## Available versions
-* 3.11.3
+* 3.11
 
 ## Prerequisites
 
@@ -49,7 +49,7 @@ JVM_OPTS="$JVM_OPTS -javaagent:/usr/share/axonops/axon-cassandra<version>-agent.
 
 exemple:
 ``` bash
-JVM_OPTS="$JVM_OPTS -javaagent:/usr/share/axonops/axon-cassandra3.11.3-agent.jar=/etc/axonops/axon-java-agent.yml"
+JVM_OPTS="$JVM_OPTS -javaagent:/usr/share/axonops/axon-cassandra3.11-agent.jar=/etc/axonops/axon-java-agent.yml"
 ```
 #### Add axonops user to Cassandra user group and Cassandra user to axonops group
 
