@@ -30,7 +30,7 @@ sudo apt-get install axon-cassandra<version>-agent
 #### Configuration
 Update the following highlighted lines from `/etc/axonops/axon-agent.yml`:
 
-``` yaml hl_lines="2 5 9"
+``` yaml hl_lines="2 5 8"
 axon-server:
     hosts: "axon-server_endpoint" # Specify axon-server IP axon-server.mycompany.com
 
@@ -38,7 +38,7 @@ axon-agent:
     org: "my-company-test" # Specify your organisation name
 
 NTP:
-    host: "ntp.mycompany.com" # Specify you NTP server IP address or hostname
+    host: "ntp.mycompany.com" # Specify your NTP server IP address or hostname
 
 cassandra:
   tier0: # metrics collected every 5 seconds
