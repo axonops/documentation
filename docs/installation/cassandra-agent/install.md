@@ -106,7 +106,7 @@ All you need to do now is start Cassandra.
 * Copyright : `/usr/share/doc/axonops/axon-cassandra<version>-agent/copyright`
 * Licenses : `/usr/share/axonops/licenses/axon-cassandra<version>-agent/`
 
-#### axon-agent Package details
+#### axon-agent Package details (dependency of Cassandra agent)
 
 * Configuration: `/etc/axonops/axon-agent.yml`
 * Binary: `usr/share/axonops/axon-agent`
