@@ -3,7 +3,8 @@
 This agent will enable metrics collection, adaptive repairs and backups for Cassandra.
 
 ## Available versions
-* Cassandra 3.11.x
+* Apache Cassandra 3.0.x
+* Apache Cassandra 3.11.x
 
 
 ## Cassandra agent installation
