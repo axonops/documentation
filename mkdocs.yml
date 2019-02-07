@@ -31,7 +31,7 @@ nav:
             - 'Installing on Ubuntu/Debian': 'installation/axon-server/ubuntu.md'
             - 'Installing on Centos/Redhat': 'installation/axon-server/centos.md'
         - AxonOps GUI Server: 'installation/axon-dash/install.md'
-        - AxonOps Agent: 'installation/axon-agent/install.md'
+        #- AxonOps Agent: 'installation/axon-agent/install.md'
         - AxonOps Cassandra Agent: 'installation/cassandra-agent/install.md'
         - Compatibility matrix: 'installation/compat_matrix/compat_matrix.md'
 
