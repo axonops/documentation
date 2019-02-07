@@ -40,7 +40,7 @@ sudo apt-get install axon-cassandra<version>-agent
 
 #### Configure Cassandra 
 
-Edit `cassandra-env.sh` usually located in your Cassandra install path such as `/<path_to_Cassandra>/conf/cassandra-env.sh` and add at the end of the file the following line:
+Edit `cassandra-env.sh` usually located in your Cassandra install path such as `/<Cassandra Installation Directory>/conf/cassandra-env.sh` and add at the end of the file the following line:
 
 ``` bash 
 JVM_OPTS="$JVM_OPTS -javaagent:/usr/share/axonops/axon-cassandra<version>-agent.jar=/etc/axonops/axon-java-agent.yml"
