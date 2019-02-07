@@ -7,12 +7,15 @@
 Elasticsearch stores all of the collected data by axon-server. Let's install Java 8 and Elasticsearch first.
 
 
-#### Installing the OpenJDK
+#### Installing JDK
+Elasticsearch supports either OpenJDK or Oracle JDK. Since Oracle has changed the licensing model as of January 2019 w suggest using OpenJDK.
+
+Run the following commands for OpenJDK:
 ``` bash
 sudo yum install java-1.8.0-openjdk-devel
 ```
 
-#### Installing the Oracle JDK x64
+Run the following commands for Oracle JDK:
 ``` bash
 wget -c --header "Cookie: oraclelicense=accept-securebackup-cookie" http://download.oracle.com/otn-pub/java/jdk/8u131-b11/d54c1d3a095b4ff2b6607d096fa80163/jdk-8u131-linux-x64.rpm
 ```
