@@ -2,7 +2,7 @@
 
 
 
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en" class="no-js">
   <head>
     
@@ -32,7 +32,7 @@
         <meta name="lang:search.tokenizer" content="[\s\-]+">
       
       <link rel="shortcut icon" href="../../../img/favicon.ico">
-      <meta name="generator" content="mkdocs-1.0.4, mkdocs-material-3.0.4">
+      <meta name="generator" content="mkdocs-1.0.4, mkdocs-material-3.2.0">
     
     
       
@@ -40,12 +40,12 @@
       
     
     
-      <link rel="stylesheet" href="../../../assets/stylesheets/application.451f80e5.css">
+      <link rel="stylesheet" href="../../../assets/stylesheets/application.572ca0f0.css">
       
       
     
     
-      <script src="../../../assets/javascripts/modernizr.1aa3b519.js"></script>
+      <script src="../../../assets/javascripts/modernizr.8c900955.js"></script>
     
     
       
@@ -55,6 +55,7 @@
       
     
     <link rel="stylesheet" href="../../../assets/fonts/material-icons.css">
+    
     
       <link rel="stylesheet" href="../../../stylesheets/extra.css">
     
@@ -73,7 +74,7 @@
     <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
     <label class="md-overlay" data-md-component="overlay" for="__drawer"></label>
     
-      <a href="../../../#axonops-cassandra-agent-installation" tabindex="1" class="md-skip">
+      <a href="#axonops-cassandra-agent-installation" tabindex="1" class="md-skip">
         Skip to content
       </a>
     
@@ -508,7 +509,7 @@
     <label class="md-nav__link" for="nav-4-2">
       Monitoring
     </label>
-    <nav class="md-nav" data-md-component="collapsible" data-md-level="2">
+    <nav class="md-nav" data-md-component="collapsible" data-md-level="3">
       <label class="md-nav__title" for="nav-4-2">
         Monitoring
       </label>
@@ -539,7 +540,7 @@
     <label class="md-nav__link" for="nav-4-2-2">
       Service Checks
     </label>
-    <nav class="md-nav" data-md-component="collapsible" data-md-level="3">
+    <nav class="md-nav" data-md-component="collapsible" data-md-level="5">
       <label class="md-nav__title" for="nav-4-2-2">
         Service Checks
       </label>
@@ -599,7 +600,7 @@
     <label class="md-nav__link" for="nav-4-2-3">
       Metrics Dashboard
     </label>
-    <nav class="md-nav" data-md-component="collapsible" data-md-level="3">
+    <nav class="md-nav" data-md-component="collapsible" data-md-level="6">
       <label class="md-nav__title" for="nav-4-2-3">
         Metrics Dashboard
       </label>
@@ -618,7 +619,7 @@
     <label class="md-nav__link" for="nav-4-2-3-1">
       Cassandra
     </label>
-    <nav class="md-nav" data-md-component="collapsible" data-md-level="4">
+    <nav class="md-nav" data-md-component="collapsible" data-md-level="7">
       <label class="md-nav__title" for="nav-4-2-3-1">
         Cassandra
       </label>
@@ -688,7 +689,7 @@
     <label class="md-nav__link" for="nav-4-3">
       Notification Integrations
     </label>
-    <nav class="md-nav" data-md-component="collapsible" data-md-level="2">
+    <nav class="md-nav" data-md-component="collapsible" data-md-level="4">
       <label class="md-nav__title" for="nav-4-3">
         Notification Integrations
       </label>
@@ -760,7 +761,7 @@
     <label class="md-nav__link" for="nav-4-4">
       Operations
     </label>
-    <nav class="md-nav" data-md-component="collapsible" data-md-level="2">
+    <nav class="md-nav" data-md-component="collapsible" data-md-level="5">
       <label class="md-nav__title" for="nav-4-4">
         Operations
       </label>
@@ -779,7 +780,7 @@
     <label class="md-nav__link" for="nav-4-4-1">
       Cassandra
     </label>
-    <nav class="md-nav" data-md-component="collapsible" data-md-level="3">
+    <nav class="md-nav" data-md-component="collapsible" data-md-level="6">
       <label class="md-nav__title" for="nav-4-4-1">
         Cassandra
       </label>
@@ -798,7 +799,7 @@
     <label class="md-nav__link" for="nav-4-4-1-1">
       Repair
     </label>
-    <nav class="md-nav" data-md-component="collapsible" data-md-level="4">
+    <nav class="md-nav" data-md-component="collapsible" data-md-level="7">
       <label class="md-nav__title" for="nav-4-4-1-1">
         Repair
       </label>
@@ -846,7 +847,7 @@
     <label class="md-nav__link" for="nav-4-4-1-2">
       Backups
     </label>
-    <nav class="md-nav" data-md-component="collapsible" data-md-level="4">
+    <nav class="md-nav" data-md-component="collapsible" data-md-level="8">
       <label class="md-nav__title" for="nav-4-4-1-2">
         Backups
       </label>
@@ -1161,28 +1162,28 @@ sudo apt-get install axon-cassandra&lt;version&gt;-agent
 </blockquote>
 <h4 id="configuration">Configuration<a class="headerlink" href="#configuration" title="Permanent link">&para;</a></h4>
 <p>Update the following highlighted lines from <code>/etc/axonops/axon-agent.yml</code>:</p>
-<div class="codehilite"><pre><span></span><span class="l l-Scalar l-Scalar-Plain">axon-server</span><span class="p p-Indicator">:</span>
-<span class="hll">    <span class="l l-Scalar l-Scalar-Plain">hosts</span><span class="p p-Indicator">:</span> <span class="s">&quot;axon-server_endpoint&quot;</span> <span class="c1"># Specify axon-server IP axon-server.mycompany.com</span>
+<div class="codehilite"><pre><span></span><span class="nt">axon-server</span><span class="p">:</span>
+<span class="hll">    <span class="nt">hosts</span><span class="p">:</span> <span class="s">&quot;axon-server_endpoint&quot;</span> <span class="c1"># Specify axon-server IP axon-server.mycompany.com</span>
 </span>
-<span class="l l-Scalar l-Scalar-Plain">axon-agent</span><span class="p p-Indicator">:</span>
-<span class="hll">    <span class="l l-Scalar l-Scalar-Plain">org</span><span class="p p-Indicator">:</span> <span class="s">&quot;my-company-test&quot;</span> <span class="c1"># Specify your organisation name</span>
+<span class="nt">axon-agent</span><span class="p">:</span>
+<span class="hll">    <span class="nt">org</span><span class="p">:</span> <span class="s">&quot;my-company-test&quot;</span> <span class="c1"># Specify your organisation name</span>
 </span>
-<span class="l l-Scalar l-Scalar-Plain">NTP</span><span class="p p-Indicator">:</span>
-<span class="hll">    <span class="l l-Scalar l-Scalar-Plain">host</span><span class="p p-Indicator">:</span> <span class="s">&quot;ntp.mycompany.com&quot;</span> <span class="c1"># Specify your NTP server IP address or hostname</span>
+<span class="nt">NTP</span><span class="p">:</span>
+<span class="hll">    <span class="nt">host</span><span class="p">:</span> <span class="s">&quot;ntp.mycompany.com&quot;</span> <span class="c1"># Specify your NTP server IP address or hostname</span>
 </span>
-<span class="l l-Scalar l-Scalar-Plain">cassandra</span><span class="p p-Indicator">:</span>
-  <span class="l l-Scalar l-Scalar-Plain">tier0</span><span class="p p-Indicator">:</span> <span class="c1"># metrics collected every 5 seconds</span>
-      <span class="l l-Scalar l-Scalar-Plain">metrics</span><span class="p p-Indicator">:</span>
-          <span class="l l-Scalar l-Scalar-Plain">jvm_</span><span class="p p-Indicator">:</span>
+<span class="nt">cassandra</span><span class="p">:</span>
+  <span class="nt">tier0</span><span class="p">:</span> <span class="c1"># metrics collected every 5 seconds</span>
+      <span class="nt">metrics</span><span class="p">:</span>
+          <span class="nt">jvm_</span><span class="p">:</span>
             <span class="p p-Indicator">-</span> <span class="s">&quot;java.lang:*&quot;</span>
-          <span class="l l-Scalar l-Scalar-Plain">cas_</span><span class="p p-Indicator">:</span>
+          <span class="nt">cas_</span><span class="p">:</span>
             <span class="p p-Indicator">-</span> <span class="s">&quot;org.apache.cassandra.metrics:*&quot;</span>
             <span class="p p-Indicator">-</span> <span class="s">&quot;org.apache.cassandra.net:type=FailureDetector&quot;</span>
 
-  <span class="l l-Scalar l-Scalar-Plain">tier1</span><span class="p p-Indicator">:</span>
-      <span class="l l-Scalar l-Scalar-Plain">frequency</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">300</span> <span class="c1"># metrics collected every 300 seconds (5m)</span>
-      <span class="l l-Scalar l-Scalar-Plain">metrics</span><span class="p p-Indicator">:</span>
-          <span class="l l-Scalar l-Scalar-Plain">cas_</span><span class="p p-Indicator">:</span>
+  <span class="nt">tier1</span><span class="p">:</span>
+      <span class="nt">frequency</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">300</span> <span class="c1"># metrics collected every 300 seconds (5m)</span>
+      <span class="nt">metrics</span><span class="p">:</span>
+          <span class="nt">cas_</span><span class="p">:</span>
             <span class="p p-Indicator">-</span> <span class="s">&quot;org.apache.cassandra.metrics:name=EstimatedPartitionCount,*&quot;</span>
 
   <span class="c1">#tier2:</span>
@@ -1191,14 +1192,14 @@ sudo apt-get install axon-cassandra&lt;version&gt;-agent
   <span class="c1">#tier3:</span>
   <span class="c1">#    frequency: 86400 # 1d</span>
 
-  <span class="l l-Scalar l-Scalar-Plain">blacklist</span><span class="p p-Indicator">:</span> <span class="c1"># You can blacklist metrics based on MBean query pattern</span>
+  <span class="nt">blacklist</span><span class="p">:</span> <span class="c1"># You can blacklist metrics based on MBean query pattern</span>
     <span class="p p-Indicator">-</span> <span class="s">&quot;org.apache.cassandra.metrics:type=ColumnFamily,*&quot;</span> <span class="c1"># duplication of table metrics</span>
     <span class="p p-Indicator">-</span> <span class="s">&quot;org.apache.cassandra.metrics:name=SnapshotsSize,*&quot;</span> <span class="c1"># Collecting SnapshotsSize metrics slows down collection</span>
 
-  <span class="l l-Scalar l-Scalar-Plain">free_text_blacklist</span><span class="p p-Indicator">:</span> <span class="c1"># You can blacklist metrics based on Regex pattern</span>
+  <span class="nt">free_text_blacklist</span><span class="p">:</span> <span class="c1"># You can blacklist metrics based on Regex pattern</span>
     <span class="p p-Indicator">-</span> <span class="s">&quot;org.apache.cassandra.metrics:type=ThreadPools,path=internal,scope=Repair#.*&quot;</span>
 
-  <span class="l l-Scalar l-Scalar-Plain">warningThresholdMillis</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">100</span> <span class="c1"># This will warn in logs when a MBean takes longer than the specified value.</span>
+  <span class="nt">warningThresholdMillis</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">100</span> <span class="c1"># This will warn in logs when a MBean takes longer than the specified value.</span>
 </pre></div>
 
 
@@ -1311,7 +1312,7 @@ sudo usermod -aG axonops &lt;your_cassandra_user&gt;
       
     </div>
     
-      <script src="../../../assets/javascripts/application.583bbe55.js"></script>
+      <script src="../../../assets/javascripts/application.b41f3d20.js"></script>
       
       <script>app.initialize({version:"1.0.4",url:{base:"../../.."}})</script>
       
