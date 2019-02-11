@@ -20,17 +20,17 @@ The ```alert``` will be sent based on the ``` Default Routing ``` that has been 
    
 > Noticed: If the ``` Default Routing ``` has not been set up ``` no alerts ``` will be sent.
 
-Service Alerts will be sent using the following roules.
+Service Alerts will be sent using the following rules.
 
 ##Info
 
-Default routing roules will be used to send <span class="myinfo"> success </span> alerts
+Default routing rules will be used to send <span class="myinfo"> success </span> alerts
 
 ## Warning
 
-Default routing roules will be used to send  <span class="warning"> warning </span> alerts
+Default routing rules will be used to send  <span class="warning"> warning </span> alerts
 
 ##Error
 
-Default routing roules will be used to send <span class="error"> error </span> alerts
+Default routing rules will be used to send <span class="error"> error </span> alerts
 
