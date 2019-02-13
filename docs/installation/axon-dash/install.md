@@ -38,7 +38,7 @@ axon-dash: #  The listening address of axon-dash
 
 axon-server:
   public_endpoints: "http://axon-server.public:8080, https://axon-server.public" # Public HTTP endpoint to axon-server API. This can be a list with comma separator. http://127.0.0.1 or http://locahost are always wrong.
-  context_path: "" # exemple: "/gui"
+  context_path: "" # example: "/gui"
 ```
 
 ## axon-server configuration update

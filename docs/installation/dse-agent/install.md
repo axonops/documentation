@@ -60,7 +60,7 @@ JVM_OPTS="$JVM_OPTS -javaagent:/usr/share/axonops/axon-dse<version>-agent-1.0.ja
 ```
 
 
-exemple:
+example:
 ``` bash
 JVM_OPTS="$JVM_OPTS -javaagent:/usr/share/axonops/axon-dse6.0.4-agent-1.0.jar=/etc/axonops/axon-java-agent.yml"
 ```

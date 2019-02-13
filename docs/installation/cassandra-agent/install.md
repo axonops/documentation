@@ -80,7 +80,7 @@ Edit `cassandra-env.sh` usually located in your Cassandra install path such as `
 JVM_OPTS="$JVM_OPTS -javaagent:/usr/share/axonops/axon-cassandra<version>-agent.jar=/etc/axonops/axon-agent.yml"
 ```
 
->Exemple with Cassandra agent version *3.11*:
+>example with Cassandra agent version *3.11*:
 ``` bash
 JVM_OPTS="$JVM_OPTS -javaagent:/usr/share/axonops/axon-cassandra3.11-agent.jar=/etc/axonops/axon-agent.yml"
 ```
