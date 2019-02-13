@@ -59,9 +59,7 @@ nav:
 
         - Operations:
             - Cassandra: 
-                - Repair:
-                    - 'Overview': 'operations/cassandra/repair/overview.md'
-                    - 'Cassandra Repair Configurations': 'operations/cassandra/repair/configurations.md'
+                - 'Repair': 'operations/cassandra/repair.md'
                 - Backups:
                     - 'Overview': 'operations/cassandra/backup/overview.md'
                     - 'Cassandra Backup Configurations': 'operations/cassandra/backup/configurations.md'
