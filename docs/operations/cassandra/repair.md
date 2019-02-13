@@ -47,7 +47,7 @@ The idea of this is to achieve the following:
 * Completion of repair within gc_grace_seconds of each table.
 * Repair process does not affect query performance.
 * In essence, adaptive repair regulator slows down the repair velocity when it deems the load is going to be high based on the gradient of the rate of increase of load, and speeds up to catch up with the repair schedule when the resources are more readily available.
-* This mechanism also doesn't require JMX access. The adaptive repair service running on AxonOps server orchestrates and issues commands to the agents over this existing connection.
+* This mechanism also doesn't require JMX access. The adaptive repair service running on AxonOps server orchestrates and issues commands to the agents over the existing connection.
 
 !!! infomy 
 
