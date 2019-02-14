@@ -11,15 +11,12 @@ Any changes made and saved are automatically pushed down to the agents.
 
 > Notice: To be able to view your service checks you must [setup][0].
 
-## AxonDash Service Checks
+## Service Checks
 
-On the AxonOps application menu, click `Service Checks`, a list of all your **Nodes** will appear
+In the left-hand AxonOps application menu, click `Service Checks`, a list of all your **Nodes** will appear
 
- 
 
 [0]: /monitoring/servicechecks/configurations/
-
-
 
 
 !!! infomy 

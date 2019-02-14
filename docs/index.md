@@ -11,6 +11,7 @@ AxonOps is an extensible operational management tool initially built for Apache 
 * Integrates with ChatOps tools - Slack, PagerDuty etc.
 * Highly efficient metrics collection and storage
 * Domain aware functionalities, including Cassandra repairs and backups.
+* Free version supports up to 6 nodes.
 
 ## Components 
 
