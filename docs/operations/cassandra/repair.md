@@ -9,28 +9,28 @@ AxonOps provide two mechanisms to ease Cassandra repairs:
 
 ## Scheduled repair
 
-You can initiate three types of schedule repair:
+You can initiate three types of scheduled repair:
 
-* Immediate schedule repair: these will trigger immediately **once**
+* Immediate scheduled repair: these will trigger immediately **once**
 
 !!! infomy 
 
     [![scheduled_repair](/img/cass_repairs/scheduled_repair.png)](/img/cass_repairs/scheduled_repair.png)
 
 
-* Simple schedule repair: these will trigger base on the selected schedule **repeatedly**
+* Simple scheduled repair: these will trigger base on the selected schedule **repeatedly**
 
 !!! infomy 
 
     [![scheduled_repair](/img/cass_repairs/scheduled_repair2.png)](/img/cass_repairs/scheduled_repair2.png)
 
-* Cron schedule repair: Same as **simple schedule repair** but the schedule will be based on a Cron expression
+* Cron schedule repair: Same as **simple scheduled repair** but the schedule will be based on a Cron expression
 
 !!! infomy 
 
     [![scheduled_repair](/img/cass_repairs/scheduled_repair3.png)](/img/cass_repairs/scheduled_repair3.png)
 
-> In the following capture, you can see a running repair that has been initiated immediately and a scheduled repair that is scheduled for 12:00 AM UTC:
+> The following capture presents a running repair that has been initiated immediately and a scheduled repair that is scheduled for 12:00 AM UTC:
 
 !!! infomy 
 
