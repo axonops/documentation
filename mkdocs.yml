@@ -46,10 +46,7 @@ nav:
                 - 'Configurations': 'monitoring/servicechecks/configurations.md'
                 - 'Alerting': 'monitoring/servicechecks/alerting.md'
             - Metrics Dashboard:
-                - Cassandra:
-                    - 'Overview': 'monitoring/metricsdashboards/cassandra/overview.md'
-                    - 'Cassandra Metrics': 'monitoring/metricsdashboards/cassandra/cassandra.md'
-                    - 'Metrics Alerting Configurations': 'monitoring/metricsdashboards/cassandra/alerting.md'
+                - 'Cassandra': 'monitoring/metricsdashboards/cassandra.md'
         
         - Notification Integrations:
                 - 'Overview' : 'integrations/overview.md'
