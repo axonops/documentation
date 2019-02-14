@@ -74,6 +74,10 @@
     <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
     <label class="md-overlay" data-md-component="overlay" for="__drawer"></label>
     
+      <a href="#scheduled-backup" tabindex="1" class="md-skip">
+        Skip to content
+      </a>
+    
     
       <header class="md-header" data-md-component="header">
   <nav class="md-header-nav md-grid">
@@ -725,9 +729,43 @@
     <input class="md-toggle md-nav__toggle" data-md-toggle="toc" type="checkbox" id="__toc">
     
     
+      <label class="md-nav__link md-nav__link--active" for="__toc">
+        Overview
+      </label>
+    
     <a href="./" title="Overview" class="md-nav__link md-nav__link--active">
       Overview
     </a>
+    
+      
+<nav class="md-nav md-nav--secondary">
+  
+  
+  
+    <label class="md-nav__title" for="__toc">Table of contents</label>
+    <ul class="md-nav__list" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#scheduled-backup" title="Scheduled backup" class="md-nav__link">
+    Scheduled backup
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#restore" title="Restore" class="md-nav__link">
+    Restore
+  </a>
+  
+</li>
+      
+      
+      
+      
+      
+    </ul>
+  
+</nav>
     
   </li>
 
@@ -891,6 +929,42 @@
               </div>
             
             
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="toc">
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+<nav class="md-nav md-nav--secondary">
+  
+  
+  
+    <label class="md-nav__title" for="__toc">Table of contents</label>
+    <ul class="md-nav__list" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#scheduled-backup" title="Scheduled backup" class="md-nav__link">
+    Scheduled backup
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#restore" title="Restore" class="md-nav__link">
+    Restore
+  </a>
+  
+</li>
+      
+      
+      
+      
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
           
           <div class="md-content">
             <article class="md-content__inner md-typeset">
@@ -899,7 +973,60 @@
                 
                   <h1>Overview</h1>
                 
-                
+                <p>AxonOps provide scheduled backup and restore functionnality for your Cassandra cluster.</p>
+<div class="admonition infomy">
+<p class="admonition-title">Infomy</p>
+<p><a href="/img/cass_backups/backups.png"><img alt="backup" src="/img/cass_backups/backups.png" /></a></p>
+</div>
+<h2 id="scheduled-backup">Scheduled backup<a class="headerlink" href="#scheduled-backup" title="Permanent link">&para;</a></h2>
+<p>You can initiate three types of scheduled backup:</p>
+<ul>
+<li>
+<p>Immediate scheduled backup: these will trigger immediately <strong>once</strong></p>
+</li>
+<li>
+<p>Simple scheduled backup: these will trigger base on the selected schedule <strong>repeatedly</strong></p>
+</li>
+</ul>
+<div class="admonition infomy">
+<p class="admonition-title">Infomy</p>
+<p><a href="/img/cass_backups/backups2.png"><img alt="backup" src="/img/cass_backups/backups2.png" /></a></p>
+</div>
+<ul>
+<li>Cron schedule backup: Same as <strong>simple scheduled backup</strong> but the schedule will be based on a Cron expression</li>
+</ul>
+<div class="admonition infomy">
+<p class="admonition-title">Infomy</p>
+<p><a href="/img/cass_backups/backups3.png"><img alt="backup" src="/img/cass_backups/backups3.png" /></a></p>
+</div>
+<blockquote>
+<p>The following capture presents two backups, a local only and a local and remote backup:</p>
+</blockquote>
+<div class="admonition infomy">
+<p class="admonition-title">Infomy</p>
+<p><a href="/img/cass_backups/backups5.png"><img alt="backup" src="/img/cass_backups/backups5.png" /></a></p>
+</div>
+<blockquote>
+<p>And the details of the local and remote backup on the <code>Restore</code> page:</p>
+</blockquote>
+<div class="admonition infomy">
+<p class="admonition-title">Infomy</p>
+<p><a href="/img/cass_backups/backups4.png"><img alt="backup" src="/img/cass_backups/backups4.png" /></a></p>
+</div>
+<h2 id="restore">Restore<a class="headerlink" href="#restore" title="Permanent link">&para;</a></h2>
+<blockquote>
+<p>Note that <strong>axonops</strong> user will need temporary write access on Cassandra data folders to be able to proceed.</p>
+</blockquote>
+<p>To restore Cassandra, click on a relevant backup.</p>
+<div class="admonition infomy">
+<p class="admonition-title">Infomy</p>
+<p><a href="/img/cass_backups/restore.png"><img alt="restore" src="/img/cass_backups/restore.png" /></a></p>
+</div>
+<p>This will provide the details of that backup and the ability to start the restoration by clicking the <code>Restore</code> button.</p>
+<div class="admonition infomy">
+<p class="admonition-title">Infomy</p>
+<p><a href="/img/cass_backups/restore1.png"><img alt="restore" src="/img/cass_backups/restore1.png" /></a></p>
+</div>
                 
                   
                 
