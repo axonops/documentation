@@ -1,4 +1,6 @@
 site_name: Documentation
+copyright: © 2019 digitalis.io All Rights Reserved
+google_analytics: ['UA-69443441-2', 'axonops.com']
 theme:
   name: 'material'
   favicon: 'img/favicon.ico'
