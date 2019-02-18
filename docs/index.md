@@ -6,18 +6,19 @@ AxonOps is an extensible operational management tool initially built for Apache 
 
 ## Features
 
-* Dashboarding metrics, logs, and healthchecks
-* Integrates with ChatOps tools - Slack, PagerDuty etc.
-* Highly efficient metrics collection and storage
-* Domain aware functionalities, including Cassandra repairs and backups.
-* Free version supports up to 6 nodes.
+* **Inventory** information overview
+* Dashboarding **metrics**, **logs**, and **healthchecks**
+* **Highly efficient** metrics collection and storage from the agents
+* Integrates with ChatOps and alerting tools - **Slack** and **PagerDuty** etc for notifications and alerts
+* Domain aware functionalities, including Cassandra **repairs** and **backups** schedulers.
+* **Free** version supports up to 6 nodes.
 
 ## Components 
 
 AxonOps has four main components:
 
-* axon-server - The main server of axonops that collect metrics, logs, events and more.
-* axon-agents - They corresponds to small binaries deployed onto the nodes of your clusters.
-* axon-dash - The UI to interact with axon-server (dash for AxonOps Dashboards).
-* Elasticsearch - A distributed search engine which stores all of the collected data.
+* **axon-server** - The main server of axonops that collect metrics, logs, events and more.
+* **axon-dash** - The UI to interact with axon-server (dash for AxonOps Dashboards).
+* **axon-agents** - An to small agent binary deployed onto the managed nodes.
+* **Elasticsearch** - A distributed search engine which stores all of the collected data.
 
