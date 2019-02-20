@@ -4,6 +4,8 @@ AxonOps GUI service is installed as a separate service to AxonOps Server. The GU
 
 This section describes the installation process for the GUI service.
 
+## Step 1 - Installation
+
 #### CentOS / RedHat installer
 ``` bash
 printf '%s\n%s\n%s\n%s\n%s\n%s\n' '[axonops]' 'name=axonops Repository' 'baseurl=https://repo.digitalis.io/repository/axonops-yum/stable/x64/' 'enabled=1' 'gpgcheck=0' | sudo tee /etc/yum.repos.d/axonops.repo
@@ -27,7 +29,7 @@ sudo apt-get install axon-dash
 * Copyright : `/usr/share/doc/axonops/axon-dash/copyright`
 * Licenses : `/usr/share/axonops/licenses/axon-dash/`
 
-#### Configuration
+## Step 2 - Configuration
 Make sure **axon-dash** configuration points to the correct **axon-server** listening address:
 
 **axon-dash** configuration file `/etc/axonops/axon-dash.yml`:
@@ -41,7 +43,7 @@ axon-server:
   context_path: "" # example: "/gui"
 ```
 
-## axon-server configuration update
+## Step 3 - axon-server configuration update
 Make sure **axon-server** configuration is up to date and point to **axon-dash** and **elasticsearch** listening address:
 
 **axon-server** configuration file `/etc/axonops/axon-server.yml`:
@@ -74,12 +76,12 @@ retention:
     remote: 30d
 ```
 
-Restart **axon-server** after updating it's configuration
+## Step 4 - Restart **axon-server** after updating it's configuration
 ``` bash
 sudo systemctl restart axon-server
 ```
 
-#### Start axon-dash
+## Step 5 - Start axon-dash
 
 ``` bash
 sudo systemctl daemon-reload
@@ -90,6 +92,6 @@ sudo systemctl status axon-dash
 This will start the **axon-dash** process as the **axonops** user, which was created during the package installation. The default listening address is `0.0.0.0:3000`.
 
 
-## Installing axon-agent
+## Installing agents
 
-Now **axon-dash** is installed, you can start installing [axon-agent](../axon-agent/install.md)
+Now **axon-dash** is installed, you can start installing [cassandra-agent](../cassandra-agent/install.md)

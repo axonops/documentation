@@ -1,13 +1,13 @@
 # AxonOps Cassandra agent installation
 
-This agent will enable metrics collection, adaptive repairs and backups for Cassandra.
+This agent will enable metrics, logs and events collection with adaptive repairs and backups for Cassandra.
 
 ## Available versions
 * Apache Cassandra 3.0.x
 * Apache Cassandra 3.11.x
 
 
-## Cassandra agent installation
+## Step 1 - Installation
 
 > Make sure that the `<version>` of your Cassandra and Cassandra agent are compatible from the [compatibility matrix](../../compat_matrix/compat_matrix). 
 
@@ -25,10 +25,11 @@ sudo apt-key adv --keyserver keyserver.ubuntu.com --recv-keys 727BDA4A
 sudo apt-get update
 sudo apt-get install axon-cassandra<version>-agent
 ```
-> Note: This will install our Cassandra agent and it's dependency axon-agent
+> Note: This will install AxonOps Cassandra agent and it's dependency: axon-agent
 
 
-#### Configuration
+## Step 2 - Agent Configuration
+
 Update the following highlighted lines from `/etc/axonops/axon-agent.yml`:
 
 ``` yaml hl_lines="2 5 8"
@@ -73,7 +74,7 @@ cassandra:
 ```
 
 
-#### Configure Cassandra 
+## Step 3 - Configure Cassandra 
 Edit `cassandra-env.sh` usually located in your Cassandra install path such as `/<Cassandra Installation Directory>/conf/cassandra-env.sh` and append the following line at the end of the file:
 
 ``` bash 
@@ -84,26 +85,25 @@ JVM_OPTS="$JVM_OPTS -javaagent:/usr/share/axonops/axon-cassandra<version>-agent.
 ``` bash
 JVM_OPTS="$JVM_OPTS -javaagent:/usr/share/axonops/axon-cassandra3.11-agent.jar=/etc/axonops/axon-agent.yml"
 ```
+> Make sure that this configuration will not get overridden by an automation tool.
 
-#### Add axonops user to Cassandra user group and Cassandra user to axonops group
+## Step 4 - Add axonops user to Cassandra user group and Cassandra user to axonops group
 
 ``` bash
 sudo usermod -aG <your_cassandra_group> axonops
 sudo usermod -aG axonops <your_cassandra_user>
 ```
 
-#### Start Cassandra
-
-Start your Cassandra node as usual.
+## Step 5 - Start Cassandra
 
 
-#### Start the axon-agent
+## Step 6 - Start axon-agent
 ``` bash
 sudo service axon-agent start
 ```
 
 
-#### Cassandra Remote Backups or Restore Prerequisites
+## (Optional) Step 7 - Cassandra Remote Backups or Restore Prerequisites
 
 * If you plan to use AxonOps remote backup functionality, **axonops** user will require **read** access on Cassandra **data** folder.
 
