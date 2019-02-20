@@ -1,4 +1,6 @@
-site_name: Documentation
+site_name: AxonOps Documentation
+copyright: © 2019 digitalis.io All Rights Reserved
+google_analytics: ['UA-694434414-2', 'docs.axonops.com']
 theme:
   name: 'material'
   favicon: 'img/favicon.ico'
