@@ -39,7 +39,7 @@ You can initiate three types of scheduled backup:
 ## Restore
 
 
-> Note that **axonops** user will need temporary write access on Cassandra data folders to be able to proceed.
+> Note that **axonops** user will need temporary write access on Cassandra data folders to be able to proceed the restoration.
 
 To restore Cassandra, click on a relevant backup.
 

@@ -1,18 +1,20 @@
 
 #### Installing Elasticsearch
 
+You can go with any installation mechanism from [Elasticsearch](https://www.elastic.co/). We'll only demonstrate the tarball installation:
+
 ``` bash
-wget https://artifacts.elastic.co/downloads/elasticsearch/elasticsearch-6.5.4.tar.gz
+wget https://artifacts.elastic.co/downloads/elasticsearch/elasticsearch-6.6.1.tar.gz
 ```
 
 ``` bash
-tar -xzf elasticsearch-6.5.4.tar.gz
+tar -xzf elasticsearch-6.6.1.tar.gz
 ```
 
 Increase the bulk queue size of Elasticsearch by running the following command:
 
 ``` bash 
-sudo echo 'thread_pool.bulk.queue_size: 2000' >> elasticsearch-6.5.4/config/elasticsearch.yml
+sudo echo 'thread_pool.bulk.queue_size: 2000' >> elasticsearch-6.6.1/config/elasticsearch.yml
 
 ```
 
@@ -39,14 +41,14 @@ sudo adduser elasticsearch
 Move elasticsearch to elasticsearch home directory
 ``` bash 
 
-sudo mv elasticsearch-6.5.4 /home/elasticsearch/ 
+sudo mv elasticsearch-6.6.1 /home/elasticsearch/ 
 sudo chown elasticsearch:elasticsearch /home/elasticsearch/ -R
 ```
 
 Start Elasticsearch as a daemon from the elasticsearch user:
 
 ``` bash
-sudo -u elasticsearch /home/elasticsearch/elasticsearch-6.5.4/bin/elasticsearch -d
+sudo -u elasticsearch /home/elasticsearch/elasticsearch-6.6.1/bin/elasticsearch -d
 ```
 
 After a short period of time, you can verify that your Elasticsearch node is running by sending an HTTP request to port 9200 on localhost:

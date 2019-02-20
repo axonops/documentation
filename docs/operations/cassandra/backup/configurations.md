@@ -18,7 +18,7 @@ The following present a local backup setup only:
 
 ###  Remote backup 
 
-> Note that **axonops** user will need read access on Cassandra snapshots folders to be able to proceed the remote backup.
+> Note that **axonops** user will need read access on Cassandra data folders to be able to proceed the remote backup.
 
 
 The current remote options are:
