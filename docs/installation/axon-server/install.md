@@ -1,29 +1,10 @@
+## Step 3 - axon-server configuration update
 
+Make sure **elastic_host** and **elastic_port** are corresponding to your Elasticsearch instance.
 
-#### Package details
+* `/etc/axonops/axon-server.yml`
 
-* Configuration: `/etc/axonops/axon-server.yml`
-* Binary: `/usr/share/axonops/axon-server`
-* Logs: `/var/log/axonops/axon-server.log` 
-* Systemd service: `/usr/lib/systemd/system/axon-server.service`
-* Copyright : `/usr/share/doc/axonops/axon-server/copyright`
-* Licenses : `/usr/share/axonops/licenses/axon-server/`
-
-
-#### Start the server
-
-``` -
-sudo systemctl daemon-reload
-sudo systemctl start axon-server
-sudo systemctl status axon-server
-```
-
-This will start the `axon-server` process as the `axonops` user, which was created during the package installation.  The default listening address is `0.0.0.0:8080`.
-
-#### Configuration defaults
-
-``` yaml
-
+``` yaml hl_lines="3 4"
 host: 0.0.0.0  # axon-server listening address (used by axon-dash and axon-agent)
 port: 8080 # axon-server HTTP API listening port (used by axon-dash)
 elastic_host: localhost # Elasticsearch endpoint
@@ -51,9 +32,29 @@ retention:
     remote: 30d
 ```
 
-## Installing axon-dash
+## Step 4 - Start the server
 
-Now **axon-server** is installed, you can start installing [axon-dash](../axon-dash/install.md)
+``` -
+sudo systemctl daemon-reload
+sudo systemctl start axon-server
+sudo systemctl status axon-server
+```
+
+This will start the `axon-server` process as the `axonops` user, which was created during the package installation.  The default listening address is `0.0.0.0:8080`.
+
+#### Package details
+
+* Configuration: `/etc/axonops/axon-server.yml`
+* Binary: `/usr/share/axonops/axon-server`
+* Logs: `/var/log/axonops/axon-server.log` 
+* Systemd service: `/usr/lib/systemd/system/axon-server.service`
+* Copyright : `/usr/share/doc/axonops/axon-server/copyright`
+* Licenses : `/usr/share/axonops/licenses/axon-server/`
+
+
+## Step 5 - Installing axon-dash
+
+Now **axon-server** is installed, you can start installing the GUI for it: [axon-dash](../axon-dash/install.md)
 
 
 

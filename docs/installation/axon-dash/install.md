@@ -20,20 +20,11 @@ sudo apt-get update
 sudo apt-get install axon-dash
 ```
 
-#### Package details
-
-* Configuration: `/etc/axonops/axon-dash.yml`
-* Binary: `/usr/share/axonops/axon-dash`
-* Logs: `/var/log/axonops/axon-dash.log` 
-* Systemd service: `/usr/lib/systemd/system/axon-dash.service`
-* Copyright : `/usr/share/doc/axonops/axon-dash/copyright`
-* Licenses : `/usr/share/axonops/licenses/axon-dash/`
-
 ## Step 2 - Configuration
-Make sure **axon-dash** configuration points to the correct **axon-server** listening address:
+Change **axon-dash** configuration to specify **axon-server** listening address.
 
-**axon-dash** configuration file `/etc/axonops/axon-dash.yml`:
-``` yaml  hl_lines="5 6 7"
+* `/etc/axonops/axon-dash.yml`
+``` yaml  hl_lines="6"
 axon-dash: #  The listening address of axon-dash
   host: 0.0.0.0
   port: 3000
@@ -42,13 +33,15 @@ axon-server:
   public_endpoints: "http://axon-server.public:8080, https://axon-server.public" # Public HTTP endpoint to axon-server API. This can be a list with comma separator. http://127.0.0.1 or http://locahost are always wrong.
   context_path: "" # example: "/gui"
 ```
+> axon-server default listening port is **8080**
+
 
 ## Step 3 - axon-server configuration update
-Make sure **axon-server** configuration is up to date and point to **axon-dash** and **elasticsearch** listening address:
+Update **axon-server** configuration by setting the correct **axon-dash** **host** and **port**:
 
-**axon-server** configuration file `/etc/axonops/axon-server.yml`:
+* `/etc/axonops/axon-server.yml`
 
-``` yaml hl_lines="3 6 7"
+``` yaml hl_lines="7 8"
 host: 0.0.0.0  # axon-server listening address 
 port: 8080 # axon-server listening port 
 elastic_host: localhost # Elasticsearch endpoint
@@ -92,6 +85,16 @@ sudo systemctl status axon-dash
 This will start the **axon-dash** process as the **axonops** user, which was created during the package installation. The default listening address is `0.0.0.0:3000`.
 
 
-## Installing agents
+#### Package details
+
+* Configuration: `/etc/axonops/axon-dash.yml`
+* Binary: `/usr/share/axonops/axon-dash`
+* Logs: `/var/log/axonops/axon-dash.log` 
+* Systemd service: `/usr/lib/systemd/system/axon-dash.service`
+* Copyright : `/usr/share/doc/axonops/axon-dash/copyright`
+* Licenses : `/usr/share/axonops/licenses/axon-dash/`
+
+
+## Step 6 - Installing agents
 
 Now **axon-dash** is installed, you can start installing [cassandra-agent](../cassandra-agent/install.md)

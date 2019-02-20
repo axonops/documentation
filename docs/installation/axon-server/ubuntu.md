@@ -1,11 +1,11 @@
 # axon-server installation (Debian / Ubuntu)
 
-## Prerequisites
+## Step 1 - Prerequisites
 
 Elasticsearch stores all of the collected data by axon-server. Let's install Java 8 and Elasticsearch first.
 
 #### Installing JDK
-Elasticsearch supports either OpenJDK or Oracle JDK. Since Oracle has changed the licensing model as of January 2019 w suggest using OpenJDK.
+Elasticsearch supports either OpenJDK or Oracle JDK. Since Oracle has changed the licensing model as of January 2019 we suggest using OpenJDK.
 
 Run the following commands for OpenJDK:
 ``` bash
@@ -28,7 +28,7 @@ Once you've accepted the license agreement the JDK will install.
 
 {!installation/axon-server/elastic.md!}
 
-## axon-server installer
+## Step 2 - axon-server installer
 ``` bash
 sudo cp /etc/apt/sources.list /etc/apt/sources.list_backup
 echo "deb https://repo.digitalis.io/repository/axonops-apt xenial main" | sudo tee /etc/apt/sources.list.d/axonops.list
