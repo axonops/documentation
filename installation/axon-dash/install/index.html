@@ -348,13 +348,6 @@
   
 </li>
         
-          <li class="md-nav__item">
-  <a href="#package-details" title="Package details" class="md-nav__link">
-    Package details
-  </a>
-  
-</li>
-        
       </ul>
     </nav>
   
@@ -386,11 +379,24 @@
     Step 5 - Start axon-dash
   </a>
   
+    <nav class="md-nav">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#package-details" title="Package details" class="md-nav__link">
+    Package details
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
 </li>
       
         <li class="md-nav__item">
-  <a href="#installing-agents" title="Installing agents" class="md-nav__link">
-    Installing agents
+  <a href="#step-6-installing-agents" title="Step 6 - Installing agents" class="md-nav__link">
+    Step 6 - Installing agents
   </a>
   
 </li>
@@ -969,13 +975,6 @@
   
 </li>
         
-          <li class="md-nav__item">
-  <a href="#package-details" title="Package details" class="md-nav__link">
-    Package details
-  </a>
-  
-</li>
-        
       </ul>
     </nav>
   
@@ -1007,11 +1006,24 @@
     Step 5 - Start axon-dash
   </a>
   
+    <nav class="md-nav">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#package-details" title="Package details" class="md-nav__link">
+    Package details
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
 </li>
       
         <li class="md-nav__item">
-  <a href="#installing-agents" title="Installing agents" class="md-nav__link">
-    Installing agents
+  <a href="#step-6-installing-agents" title="Step 6 - Installing agents" class="md-nav__link">
+    Step 6 - Installing agents
   </a>
   
 </li>
@@ -1052,40 +1064,38 @@ sudo apt-get install axon-dash
 </pre></div>
 
 
-<h4 id="package-details">Package details<a class="headerlink" href="#package-details" title="Permanent link">&para;</a></h4>
-<ul>
-<li>Configuration: <code>/etc/axonops/axon-dash.yml</code></li>
-<li>Binary: <code>/usr/share/axonops/axon-dash</code></li>
-<li>Logs: <code>/var/log/axonops/axon-dash.log</code> </li>
-<li>Systemd service: <code>/usr/lib/systemd/system/axon-dash.service</code></li>
-<li>Copyright : <code>/usr/share/doc/axonops/axon-dash/copyright</code></li>
-<li>Licenses : <code>/usr/share/axonops/licenses/axon-dash/</code></li>
-</ul>
 <h2 id="step-2-configuration">Step 2 - Configuration<a class="headerlink" href="#step-2-configuration" title="Permanent link">&para;</a></h2>
-<p>Make sure <strong>axon-dash</strong> configuration points to the correct <strong>axon-server</strong> listening address:</p>
-<p><strong>axon-dash</strong> configuration file <code>/etc/axonops/axon-dash.yml</code>:</p>
+<p>Change <strong>axon-dash</strong> configuration to specify <strong>axon-server</strong> listening address.</p>
+<ul>
+<li><code>/etc/axonops/axon-dash.yml</code></li>
+</ul>
 <div class="codehilite"><pre><span></span><span class="nt">axon-dash</span><span class="p">:</span> <span class="c1">#  The listening address of axon-dash</span>
   <span class="nt">host</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">0.0.0.0</span>
   <span class="nt">port</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">3000</span>
 
-<span class="hll"><span class="nt">axon-server</span><span class="p">:</span>
-</span><span class="hll">  <span class="nt">public_endpoints</span><span class="p">:</span> <span class="s">&quot;http://axon-server.public:8080,</span><span class="nv"> </span><span class="s">https://axon-server.public&quot;</span> <span class="c1"># Public HTTP endpoint to axon-server API. This can be a list with comma separator. http://127.0.0.1 or http://locahost are always wrong.</span>
-</span><span class="hll">  <span class="nt">context_path</span><span class="p">:</span> <span class="nt">&quot;&quot; # example</span><span class="p">:</span> <span class="s">&quot;/gui&quot;</span>
-</span></pre></div>
+<span class="nt">axon-server</span><span class="p">:</span>
+<span class="hll">  <span class="nt">public_endpoints</span><span class="p">:</span> <span class="s">&quot;http://axon-server.public:8080,</span><span class="nv"> </span><span class="s">https://axon-server.public&quot;</span> <span class="c1"># Public HTTP endpoint to axon-server API. This can be a list with comma separator. http://127.0.0.1 or http://locahost are always wrong.</span>
+</span>  <span class="nt">context_path</span><span class="p">:</span> <span class="nt">&quot;&quot; # example</span><span class="p">:</span> <span class="s">&quot;/gui&quot;</span>
+</pre></div>
 
 
+<blockquote>
+<p>axon-server default listening port is <strong>8080</strong></p>
+</blockquote>
 <h2 id="step-3-axon-server-configuration-update">Step 3 - axon-server configuration update<a class="headerlink" href="#step-3-axon-server-configuration-update" title="Permanent link">&para;</a></h2>
-<p>Make sure <strong>axon-server</strong> configuration is up to date and point to <strong>axon-dash</strong> and <strong>elasticsearch</strong> listening address:</p>
-<p><strong>axon-server</strong> configuration file <code>/etc/axonops/axon-server.yml</code>:</p>
+<p>Update <strong>axon-server</strong> configuration by setting the correct <strong>axon-dash</strong> <strong>host</strong> and <strong>port</strong>:</p>
+<ul>
+<li><code>/etc/axonops/axon-server.yml</code></li>
+</ul>
 <div class="codehilite"><pre><span></span><span class="nt">host</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">0.0.0.0</span>  <span class="c1"># axon-server listening address </span>
 <span class="nt">port</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">8080</span> <span class="c1"># axon-server listening port </span>
-<span class="hll"><span class="nt">elastic_host</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">localhost</span> <span class="c1"># Elasticsearch endpoint</span>
-</span><span class="nt">elastic_port</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">9200</span> <span class="c1"># Elasticsearch port</span>
+<span class="nt">elastic_host</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">localhost</span> <span class="c1"># Elasticsearch endpoint</span>
+<span class="nt">elastic_port</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">9200</span> <span class="c1"># Elasticsearch port</span>
 
-<span class="hll"><span class="nt">axon-dash</span><span class="p">:</span> <span class="c1"># This must point to axon-dash address</span>
-</span><span class="hll">  <span class="nt">host</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">127.0.0.1</span>
-</span>  <span class="nt">port</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">3000</span>
-  <span class="nt">https</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">false</span>
+<span class="nt">axon-dash</span><span class="p">:</span> <span class="c1"># This must point to axon-dash address</span>
+<span class="hll">  <span class="nt">host</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">127.0.0.1</span>
+</span><span class="hll">  <span class="nt">port</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">3000</span>
+</span>  <span class="nt">https</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">false</span>
 
 <span class="nt">alerting</span><span class="p">:</span>
 <span class="c1"># How long to wait before sending a notification again if it has already</span>
@@ -1118,7 +1128,16 @@ sudo systemctl status axon-dash
 
 
 <p>This will start the <strong>axon-dash</strong> process as the <strong>axonops</strong> user, which was created during the package installation. The default listening address is <code>0.0.0.0:3000</code>.</p>
-<h2 id="installing-agents">Installing agents<a class="headerlink" href="#installing-agents" title="Permanent link">&para;</a></h2>
+<h4 id="package-details">Package details<a class="headerlink" href="#package-details" title="Permanent link">&para;</a></h4>
+<ul>
+<li>Configuration: <code>/etc/axonops/axon-dash.yml</code></li>
+<li>Binary: <code>/usr/share/axonops/axon-dash</code></li>
+<li>Logs: <code>/var/log/axonops/axon-dash.log</code> </li>
+<li>Systemd service: <code>/usr/lib/systemd/system/axon-dash.service</code></li>
+<li>Copyright : <code>/usr/share/doc/axonops/axon-dash/copyright</code></li>
+<li>Licenses : <code>/usr/share/axonops/licenses/axon-dash/</code></li>
+</ul>
+<h2 id="step-6-installing-agents">Step 6 - Installing agents<a class="headerlink" href="#step-6-installing-agents" title="Permanent link">&para;</a></h2>
 <p>Now <strong>axon-dash</strong> is installed, you can start installing <a href="../../cassandra-agent/install/">cassandra-agent</a></p>
                 
                   

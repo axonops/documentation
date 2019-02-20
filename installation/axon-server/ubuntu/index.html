@@ -300,8 +300,8 @@
     <ul class="md-nav__list" data-md-scrollfix>
       
         <li class="md-nav__item">
-  <a href="#prerequisites" title="Prerequisites" class="md-nav__link">
-    Prerequisites
+  <a href="#step-1-prerequisites" title="Step 1 - Prerequisites" class="md-nav__link">
+    Step 1 - Prerequisites
   </a>
   
     <nav class="md-nav">
@@ -327,8 +327,22 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#axon-server-installer" title="axon-server installer" class="md-nav__link">
-    axon-server installer
+  <a href="#step-2-axon-server-installer" title="Step 2 - axon-server installer" class="md-nav__link">
+    Step 2 - axon-server installer
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#step-3-axon-server-configuration-update" title="Step 3 - axon-server configuration update" class="md-nav__link">
+    Step 3 - axon-server configuration update
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#step-4-start-the-server" title="Step 4 - Start the server" class="md-nav__link">
+    Step 4 - Start the server
   </a>
   
     <nav class="md-nav">
@@ -341,28 +355,14 @@
   
 </li>
         
-          <li class="md-nav__item">
-  <a href="#start-the-server" title="Start the server" class="md-nav__link">
-    Start the server
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#configuration-defaults" title="Configuration defaults" class="md-nav__link">
-    Configuration defaults
-  </a>
-  
-</li>
-        
       </ul>
     </nav>
   
 </li>
       
         <li class="md-nav__item">
-  <a href="#installing-axon-dash" title="Installing axon-dash" class="md-nav__link">
-    Installing axon-dash
+  <a href="#step-5-installing-axon-dash" title="Step 5 - Installing axon-dash" class="md-nav__link">
+    Step 5 - Installing axon-dash
   </a>
   
 </li>
@@ -949,8 +949,8 @@
     <ul class="md-nav__list" data-md-scrollfix>
       
         <li class="md-nav__item">
-  <a href="#prerequisites" title="Prerequisites" class="md-nav__link">
-    Prerequisites
+  <a href="#step-1-prerequisites" title="Step 1 - Prerequisites" class="md-nav__link">
+    Step 1 - Prerequisites
   </a>
   
     <nav class="md-nav">
@@ -976,8 +976,22 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#axon-server-installer" title="axon-server installer" class="md-nav__link">
-    axon-server installer
+  <a href="#step-2-axon-server-installer" title="Step 2 - axon-server installer" class="md-nav__link">
+    Step 2 - axon-server installer
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#step-3-axon-server-configuration-update" title="Step 3 - axon-server configuration update" class="md-nav__link">
+    Step 3 - axon-server configuration update
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#step-4-start-the-server" title="Step 4 - Start the server" class="md-nav__link">
+    Step 4 - Start the server
   </a>
   
     <nav class="md-nav">
@@ -990,28 +1004,14 @@
   
 </li>
         
-          <li class="md-nav__item">
-  <a href="#start-the-server" title="Start the server" class="md-nav__link">
-    Start the server
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#configuration-defaults" title="Configuration defaults" class="md-nav__link">
-    Configuration defaults
-  </a>
-  
-</li>
-        
       </ul>
     </nav>
   
 </li>
       
         <li class="md-nav__item">
-  <a href="#installing-axon-dash" title="Installing axon-dash" class="md-nav__link">
-    Installing axon-dash
+  <a href="#step-5-installing-axon-dash" title="Step 5 - Installing axon-dash" class="md-nav__link">
+    Step 5 - Installing axon-dash
   </a>
   
 </li>
@@ -1034,10 +1034,10 @@
                 
                 
                 <h1 id="axon-server-installation-debian-ubuntu">axon-server installation (Debian / Ubuntu)<a class="headerlink" href="#axon-server-installation-debian-ubuntu" title="Permanent link">&para;</a></h1>
-<h2 id="prerequisites">Prerequisites<a class="headerlink" href="#prerequisites" title="Permanent link">&para;</a></h2>
+<h2 id="step-1-prerequisites">Step 1 - Prerequisites<a class="headerlink" href="#step-1-prerequisites" title="Permanent link">&para;</a></h2>
 <p>Elasticsearch stores all of the collected data by axon-server. Let's install Java 8 and Elasticsearch first.</p>
 <h4 id="installing-jdk">Installing JDK<a class="headerlink" href="#installing-jdk" title="Permanent link">&para;</a></h4>
-<p>Elasticsearch supports either OpenJDK or Oracle JDK. Since Oracle has changed the licensing model as of January 2019 w suggest using OpenJDK.</p>
+<p>Elasticsearch supports either OpenJDK or Oracle JDK. Since Oracle has changed the licensing model as of January 2019 we suggest using OpenJDK.</p>
 <p>Run the following commands for OpenJDK:</p>
 <div class="codehilite"><pre><span></span>sudo apt-get update
 sudo apt-get install default-jdk
@@ -1103,7 +1103,7 @@ sudo chown elasticsearch:elasticsearch /home/elasticsearch/ -R
 </pre></div>
 
 
-<h2 id="axon-server-installer">axon-server installer<a class="headerlink" href="#axon-server-installer" title="Permanent link">&para;</a></h2>
+<h2 id="step-2-axon-server-installer">Step 2 - axon-server installer<a class="headerlink" href="#step-2-axon-server-installer" title="Permanent link">&para;</a></h2>
 <div class="codehilite"><pre><span></span>sudo cp /etc/apt/sources.list /etc/apt/sources.list_backup
 <span class="nb">echo</span> <span class="s2">&quot;deb https://repo.digitalis.io/repository/axonops-apt xenial main&quot;</span> <span class="p">|</span> sudo tee /etc/apt/sources.list.d/axonops.list
 sudo apt-key adv --keyserver keyserver.ubuntu.com --recv-keys 727BDA4A
@@ -1112,29 +1112,16 @@ sudo apt-get install axon-server
 </pre></div>
 
 
-<h4 id="package-details">Package details<a class="headerlink" href="#package-details" title="Permanent link">&para;</a></h4>
+<h2 id="step-3-axon-server-configuration-update">Step 3 - axon-server configuration update<a class="headerlink" href="#step-3-axon-server-configuration-update" title="Permanent link">&para;</a></h2>
+<p>Make sure <strong>elastic_host</strong> and <strong>elastic_port</strong> are corresponding to your Elasticsearch instance.</p>
 <ul>
-<li>Configuration: <code>/etc/axonops/axon-server.yml</code></li>
-<li>Binary: <code>/usr/share/axonops/axon-server</code></li>
-<li>Logs: <code>/var/log/axonops/axon-server.log</code> </li>
-<li>Systemd service: <code>/usr/lib/systemd/system/axon-server.service</code></li>
-<li>Copyright : <code>/usr/share/doc/axonops/axon-server/copyright</code></li>
-<li>Licenses : <code>/usr/share/axonops/licenses/axon-server/</code></li>
+<li><code>/etc/axonops/axon-server.yml</code></li>
 </ul>
-<h4 id="start-the-server">Start the server<a class="headerlink" href="#start-the-server" title="Permanent link">&para;</a></h4>
-<div class="codehilite"><pre><span></span>sudo systemctl daemon-reload
-sudo systemctl start axon-server
-sudo systemctl status axon-server
-</pre></div>
-
-
-<p>This will start the <code>axon-server</code> process as the <code>axonops</code> user, which was created during the package installation.  The default listening address is <code>0.0.0.0:8080</code>.</p>
-<h4 id="configuration-defaults">Configuration defaults<a class="headerlink" href="#configuration-defaults" title="Permanent link">&para;</a></h4>
 <div class="codehilite"><pre><span></span><span class="nt">host</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">0.0.0.0</span>  <span class="c1"># axon-server listening address (used by axon-dash and axon-agent)</span>
 <span class="nt">port</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">8080</span> <span class="c1"># axon-server HTTP API listening port (used by axon-dash)</span>
-<span class="nt">elastic_host</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">localhost</span> <span class="c1"># Elasticsearch endpoint</span>
-<span class="nt">elastic_port</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">9200</span> <span class="c1"># Elasticsearch port</span>
-
+<span class="hll"><span class="nt">elastic_host</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">localhost</span> <span class="c1"># Elasticsearch endpoint</span>
+</span><span class="hll"><span class="nt">elastic_port</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">9200</span> <span class="c1"># Elasticsearch port</span>
+</span>
 <span class="nt">axon-dash</span><span class="p">:</span> <span class="c1"># This must point to axon-dash address</span>
   <span class="nt">host</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">127.0.0.1</span>
   <span class="nt">port</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">3000</span>
@@ -1158,8 +1145,25 @@ sudo systemctl status axon-server
 </pre></div>
 
 
-<h2 id="installing-axon-dash">Installing axon-dash<a class="headerlink" href="#installing-axon-dash" title="Permanent link">&para;</a></h2>
-<p>Now <strong>axon-server</strong> is installed, you can start installing <a href="../../axon-dash/install/">axon-dash</a></p>
+<h2 id="step-4-start-the-server">Step 4 - Start the server<a class="headerlink" href="#step-4-start-the-server" title="Permanent link">&para;</a></h2>
+<div class="codehilite"><pre><span></span>sudo systemctl daemon-reload
+sudo systemctl start axon-server
+sudo systemctl status axon-server
+</pre></div>
+
+
+<p>This will start the <code>axon-server</code> process as the <code>axonops</code> user, which was created during the package installation.  The default listening address is <code>0.0.0.0:8080</code>.</p>
+<h4 id="package-details">Package details<a class="headerlink" href="#package-details" title="Permanent link">&para;</a></h4>
+<ul>
+<li>Configuration: <code>/etc/axonops/axon-server.yml</code></li>
+<li>Binary: <code>/usr/share/axonops/axon-server</code></li>
+<li>Logs: <code>/var/log/axonops/axon-server.log</code> </li>
+<li>Systemd service: <code>/usr/lib/systemd/system/axon-server.service</code></li>
+<li>Copyright : <code>/usr/share/doc/axonops/axon-server/copyright</code></li>
+<li>Licenses : <code>/usr/share/axonops/licenses/axon-server/</code></li>
+</ul>
+<h2 id="step-5-installing-axon-dash">Step 5 - Installing axon-dash<a class="headerlink" href="#step-5-installing-axon-dash" title="Permanent link">&para;</a></h2>
+<p>Now <strong>axon-server</strong> is installed, you can start installing the GUI for it: <a href="../../axon-dash/install/">axon-dash</a></p>
                 
                   
                 
