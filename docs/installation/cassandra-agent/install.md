@@ -84,6 +84,7 @@ JVM_OPTS="$JVM_OPTS -javaagent:/usr/share/axonops/axon-cassandra<version>-agent.
 ``` bash
 JVM_OPTS="$JVM_OPTS -javaagent:/usr/share/axonops/axon-cassandra3.11-agent.jar=/etc/axonops/axon-agent.yml"
 ```
+
 #### Add axonops user to Cassandra user group and Cassandra user to axonops group
 
 ``` bash
@@ -91,18 +92,22 @@ sudo usermod -aG <your_cassandra_group> axonops
 sudo usermod -aG axonops <your_cassandra_user>
 ```
 
+#### Start Cassandra
+
+Start your Cassandra node as usual.
+
+
+#### Start the axon-agent
+``` bash
+sudo service axon-agent start
+```
+
+
 #### Cassandra Remote Backups or Restore Prerequisites
 
 * If you plan to use AxonOps remote backup functionality, **axonops** user will require **read** access on Cassandra **data** folder.
 
 * As well if you plan to Restore data with AxonOps,  **axonops** user will require **write** access to Cassandra **data** folder. We recommend to only provide temporary write access to **axonops** when required.
-
-
-
-#### Start Cassandra
-
-All you need to do now is start Cassandra.
-
 
 
 #### Cassandra agent Package details
