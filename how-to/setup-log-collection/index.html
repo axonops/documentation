@@ -858,7 +858,7 @@
                   <h1>Setup Log Collection</h1>
                 
                 <p>AxonOps dashboards provides a comprehensive set of charts with an embedded view for logs and events. The goal is to correlate metrics with logs/events as you can zoom in the logs histogram or metrics charts to drill down both results. </p>
-<p><a href="../../how-to/setup-log-collection.md">Log collection</a> is  defined in the bottom part of that page.</p>
+<p>Log and event view is located in the bottom part of that page that you can expand/collapse with the horizontal splitter.</p>
 <blockquote>
 <p>Note: Currently this configuration is shared accross all the clusters but we will provide a dedicated configuration (per cluster) soon.</p>
 </blockquote>
@@ -868,7 +868,7 @@
 </div>
 <p>The default setup will collect Cassandra system.log, axon-agent.log and axon-java-agent.log.
 You can update the path of your cassandra system.log if it's located in a different folder by updating the <strong>filename</strong> field. The <strong>newlineregex</strong> is used by the log collector to handle multilines logs. Default <strong>newlineregex</strong> should be ok unless you've customized cassandra logs.</p>
-<p>Once all is setup, you should see events from the agents and logs from the log files you've specified.</p>
+<p>Once all is setup and submit is pressed, you should see events from the agents and logs from the log files you've specified.</p>
 <div class="admonition infomy">
 <p class="admonition-title">Infomy</p>
 <p><a href="/img/dashboards/cassandra/dashboards.png"><img alt="logs" src="/img/dashboards/cassandra/dashboards.png" /></a></p>
