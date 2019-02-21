@@ -1168,6 +1168,8 @@ sudo apt-get install axon-cassandra&lt;version&gt;-agent
     <span class="p p-Indicator">-</span> <span class="s">&quot;org.apache.cassandra.metrics:type=ThreadPools,path=internal,scope=Repair#.*&quot;</span>
 
   <span class="nt">warningThresholdMillis</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">100</span> <span class="c1"># This will warn in logs when a MBean takes longer than the specified value.</span>
+
+  <span class="nt">logFormat</span><span class="p">:</span> <span class="s">&quot;%4$s</span><span class="nv"> </span><span class="s">%1$tY-%1$tm-%1$td</span><span class="nv"> </span><span class="s">%1$tH:%1$tM:%1$tS,%1$tL</span><span class="nv"> </span><span class="s">%5$s%6$s%n&quot;</span>
 </pre></div>
 
 
