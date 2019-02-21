@@ -69,6 +69,7 @@ nav:
     - How-to:
             - 'Setup Alert Rules': how-to/setup-alert-rules.md
             - 'Setup Service Checks': how-to/setup-servicechecks.md
+            - 'Setup Log Collection': how-to/setup-log-collection.md
             - 'Setup Default Routing': 'how-to/default-routing.md'
             - 'Setup Backup-Restore Notifications': 'how-to/backup-restore-notifications.md'
             - 'Setup Dashboards-Global Integrations': 'how-to/setup-dashboards-global-integrations.md'
