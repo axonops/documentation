@@ -1173,6 +1173,9 @@ sudo apt-get install axon-cassandra&lt;version&gt;-agent
 </pre></div>
 
 
+<blockquote>
+<p>Note: the log format will only be used by AxonOps Cassandra agent</p>
+</blockquote>
 <h2 id="step-3-configure-cassandra">Step 3 - Configure Cassandra<a class="headerlink" href="#step-3-configure-cassandra" title="Permanent link">&para;</a></h2>
 <p>Edit <code>cassandra-env.sh</code> usually located in your Cassandra install path such as <code>/&lt;Cassandra Installation Directory&gt;/conf/cassandra-env.sh</code> and append the following line at the end of the file:</p>
 <div class="codehilite"><pre><span></span><span class="nv">JVM_OPTS</span><span class="o">=</span><span class="s2">&quot;</span><span class="nv">$JVM_OPTS</span><span class="s2"> -javaagent:/usr/share/axonops/axon-cassandra&lt;version&gt;-agent.jar=/etc/axonops/axon-agent.yml&quot;</span>
