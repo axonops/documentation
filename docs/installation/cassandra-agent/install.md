@@ -75,6 +75,7 @@ cassandra:
   logFormat: "%4$s %1$tY-%1$tm-%1$td %1$tH:%1$tM:%1$tS,%1$tL %5$s%6$s%n"
 ```
 
+> Note: the log format will only be used by AxonOps Cassandra agent
 
 ## Step 3 - Configure Cassandra 
 Edit `cassandra-env.sh` usually located in your Cassandra install path such as `/<Cassandra Installation Directory>/conf/cassandra-env.sh` and append the following line at the end of the file:
