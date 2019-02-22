@@ -26,6 +26,15 @@ sudo apt-get install oracle-java8-installer
 
 Once you've accepted the license agreement the JDK will install.
 
+
+#### Installing Elasticsearch
+
+
+``` bash
+wget https://artifacts.elastic.co/downloads/elasticsearch/elasticsearch-6.6.1.deb
+sudo dpkg -i elasticsearch-6.6.1.deb
+```
+
 {!installation/axon-server/elastic.md!}
 
 ## Step 2 - axon-server installer
