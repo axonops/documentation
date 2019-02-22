@@ -127,5 +127,3 @@ sudo service axon-agent start
 * Binary: `usr/share/axonops/axon-agent`
 * Logs : `/var/log/axonops/axon-agent.log`
 * Systemd service: `/usr/lib/systemd/system/axon-agent.service`
-* certificate file used for it's OpenTSDB endpoint when SSL is active: `/etc/axonops/agent.crt`
-* key file used for it's OpenTSDB endpoint when SSL is active: `/etc/axonops/agent.key `
