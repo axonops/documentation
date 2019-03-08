@@ -977,7 +977,7 @@ page.</p>
 <li>Don't forget to specify <strong>axon-server</strong> host and port if that's not already specified.</li>
 </ul>
 <h2 id="dse-agent-installation">DSE agent installation<a class="headerlink" href="#dse-agent-installation" title="Permanent link">&para;</a></h2>
-<p>Make sure the <code>&lt;version&gt;</code> of your DSE and DSE agent are compatible from the <a href="../../compat_matrix/compat_matrix">compatibility matrix</a>. </p>
+<p>Make sure the <code>{version}</code> of your DSE and DSE agent are compatible from the <a href="../../compat_matrix/compat_matrix">compatibility matrix</a>. </p>
 <h4 id="centos-redhat-installer">CentOS / RedHat installer<a class="headerlink" href="#centos-redhat-installer" title="Permanent link">&para;</a></h4>
 <div class="codehilite"><pre><span></span>sudo yum install &lt;TODO&gt;
 </pre></div>
@@ -991,12 +991,12 @@ page.</p>
 <h4 id="package-details">Package details<a class="headerlink" href="#package-details" title="Permanent link">&para;</a></h4>
 <ul>
 <li>Configuration: <code>/etc/axonops/axon-java-agent.yml</code></li>
-<li>Binary: <code>usr/share/axonops/axon-dse&lt;version&gt;-agent-1.0.jar</code></li>
-<li>Version number: <code>usr/share/axonops/axon-dse&lt;version&gt;-agent-1.0.version</code></li>
+<li>Binary: <code>usr/share/axonops/axon-dse{version}-agent-1.0.jar</code></li>
+<li>Version number: <code>usr/share/axonops/axon-dse{version}-agent-1.0.version</code></li>
 </ul>
 <h4 id="configure-dse">Configure DSE<a class="headerlink" href="#configure-dse" title="Permanent link">&para;</a></h4>
 <p>Edit <code>cassandra-env.sh</code> usually located in your dse install path such as <code>/&lt;path_to_DSE&gt;/resources/cassandra/conf/cassandra-env.sh</code> and add at the end of the file the following line:</p>
-<div class="codehilite"><pre><span></span><span class="nv">JVM_OPTS</span><span class="o">=</span><span class="s2">&quot;</span><span class="nv">$JVM_OPTS</span><span class="s2"> -javaagent:/usr/share/axonops/axon-dse&lt;version&gt;-agent-1.0.jar=/etc/axonops/axon-java-agent.yml&quot;</span>
+<div class="codehilite"><pre><span></span><span class="nv">JVM_OPTS</span><span class="o">=</span><span class="s2">&quot;</span><span class="nv">$JVM_OPTS</span><span class="s2"> -javaagent:/usr/share/axonops/axon-dse{version}-agent-1.0.jar=/etc/axonops/axon-java-agent.yml&quot;</span>
 </pre></div>
 
 

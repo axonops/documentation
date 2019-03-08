@@ -321,6 +321,13 @@
   
 </li>
         
+          <li class="md-nav__item">
+  <a href="#start-elasticsearch" title="Start Elasticsearch" class="md-nav__link">
+    Start Elasticsearch
+  </a>
+  
+</li>
+        
       </ul>
     </nav>
   
@@ -982,6 +989,13 @@
   
 </li>
         
+          <li class="md-nav__item">
+  <a href="#start-elasticsearch" title="Start Elasticsearch" class="md-nav__link">
+    Start Elasticsearch
+  </a>
+  
+</li>
+        
       </ul>
     </nav>
   
@@ -1069,17 +1083,13 @@ sudo apt-get install oracle-java8-installer
 
 <p>Once you've accepted the license agreement the JDK will install.</p>
 <h4 id="installing-elasticsearch">Installing Elasticsearch<a class="headerlink" href="#installing-elasticsearch" title="Permanent link">&para;</a></h4>
-<p>You can go with any installation mechanism from <a href="https://www.elastic.co/">Elasticsearch</a>. We'll only demonstrate the tarball installation:</p>
-<div class="codehilite"><pre><span></span>wget https://artifacts.elastic.co/downloads/elasticsearch/elasticsearch-6.6.1.tar.gz
-</pre></div>
-
-
-<div class="codehilite"><pre><span></span>tar -xzf elasticsearch-6.6.1.tar.gz
+<div class="codehilite"><pre><span></span>wget https://artifacts.elastic.co/downloads/elasticsearch/elasticsearch-6.6.1.deb
+sudo dpkg -i elasticsearch-6.6.1.deb
 </pre></div>
 
 
 <p>Increase the bulk queue size of Elasticsearch by running the following command:</p>
-<div class="codehilite"><pre><span></span>sudo <span class="nb">echo</span> <span class="s1">&#39;thread_pool.bulk.queue_size: 2000&#39;</span> &gt;&gt; elasticsearch-6.6.1/config/elasticsearch.yml
+<div class="codehilite"><pre><span></span>sudo <span class="nb">echo</span> <span class="s1">&#39;thread_pool.bulk.queue_size: 2000&#39;</span> &gt;&gt; /etc/elasticsearch/elasticsearch.yml
 </pre></div>
 
 
@@ -1094,19 +1104,8 @@ sudo apt-get install oracle-java8-installer
 </pre></div>
 
 
-<p>Add an elasticsearch user</p>
-<div class="codehilite"><pre><span></span>sudo adduser elasticsearch
-</pre></div>
-
-
-<p>Move elasticsearch to elasticsearch home directory</p>
-<div class="codehilite"><pre><span></span>sudo mv elasticsearch-6.6.1 /home/elasticsearch/ 
-sudo chown elasticsearch:elasticsearch /home/elasticsearch/ -R
-</pre></div>
-
-
-<p>Start Elasticsearch as a daemon from the elasticsearch user:</p>
-<div class="codehilite"><pre><span></span>sudo -u elasticsearch /home/elasticsearch/elasticsearch-6.6.1/bin/elasticsearch -d
+<h4 id="start-elasticsearch">Start Elasticsearch<a class="headerlink" href="#start-elasticsearch" title="Permanent link">&para;</a></h4>
+<div class="codehilite"><pre><span></span>sudo systemctl start elasticsearch.service
 </pre></div>
 
 
@@ -1116,10 +1115,7 @@ sudo chown elasticsearch:elasticsearch /home/elasticsearch/ -R
 
 
 <h2 id="step-2-axon-server-installer">Step 2 - axon-server installer<a class="headerlink" href="#step-2-axon-server-installer" title="Permanent link">&para;</a></h2>
-<div class="codehilite"><pre><span></span>sudo cp /etc/apt/sources.list /etc/apt/sources.list_backup
-<span class="nb">echo</span> <span class="s2">&quot;deb https://repo.digitalis.io/repository/axonops-apt xenial main&quot;</span> <span class="p">|</span> sudo tee /etc/apt/sources.list.d/axonops.list
-sudo apt-key adv --keyserver keyserver.ubuntu.com --recv-keys 727BDA4A
-sudo apt-get update
+<div class="codehilite"><pre><span></span>curl -1sLf <span class="s1">&#39;https://repo.axonops.com/public/apt/cfg/setup/bash.deb.sh&#39;</span> <span class="p">|</span> sudo bash
 sudo apt-get install axon-server
 </pre></div>
 

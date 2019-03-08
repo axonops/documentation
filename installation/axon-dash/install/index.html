@@ -1062,16 +1062,13 @@
 <p>This section describes the installation process for the GUI service.</p>
 <h2 id="step-1-installation">Step 1 - Installation<a class="headerlink" href="#step-1-installation" title="Permanent link">&para;</a></h2>
 <h4 id="centos-redhat-installer">CentOS / RedHat installer<a class="headerlink" href="#centos-redhat-installer" title="Permanent link">&para;</a></h4>
-<div class="codehilite"><pre><span></span><span class="nb">printf</span> <span class="s1">&#39;%s\n%s\n%s\n%s\n%s\n%s\n&#39;</span> <span class="s1">&#39;[axonops]&#39;</span> <span class="s1">&#39;name=axonops Repository&#39;</span> <span class="s1">&#39;baseurl=https://repo.digitalis.io/repository/axonops-yum/stable/x64/&#39;</span> <span class="s1">&#39;enabled=1&#39;</span> <span class="s1">&#39;gpgcheck=0&#39;</span> <span class="p">|</span> sudo tee /etc/yum.repos.d/axonops.repo
+<div class="codehilite"><pre><span></span>curl -1sLf <span class="s1">&#39;https://repo.axonops.com/public/yum/cfg/setup/bash.rpm.sh&#39;</span> <span class="p">|</span> sudo bash
 sudo yum install axon-dash
 </pre></div>
 
 
 <h4 id="debian-ubuntu-installer">Debian / Ubuntu installer<a class="headerlink" href="#debian-ubuntu-installer" title="Permanent link">&para;</a></h4>
-<div class="codehilite"><pre><span></span>sudo cp /etc/apt/sources.list /etc/apt/sources.list_backup
-<span class="nb">echo</span> <span class="s2">&quot;deb https://repo.digitalis.io/repository/axonops-apt xenial main&quot;</span> <span class="p">|</span> sudo tee /etc/apt/sources.list.d/axonops.list
-sudo apt-key adv --keyserver keyserver.ubuntu.com --recv-keys 727BDA4A
-sudo apt-get update
+<div class="codehilite"><pre><span></span>curl -1sLf <span class="s1">&#39;https://repo.axonops.com/public/apt/cfg/setup/bash.deb.sh&#39;</span> <span class="p">|</span> sudo bash
 sudo apt-get install axon-dash
 </pre></div>
 
