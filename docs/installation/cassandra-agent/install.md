@@ -9,21 +9,18 @@ This agent will enable metrics, logs and events collection with adaptive repairs
 
 ## Step 1 - Installation
 
-> Make sure that the `<version>` of your Cassandra and Cassandra agent are compatible from the [compatibility matrix](../../compat_matrix/compat_matrix). 
+> Make sure that the `{version}` of your Cassandra and Cassandra agent are compatible from the [compatibility matrix](../../compat_matrix/compat_matrix). 
 
 
 #### CentOS / RedHat installer
 ``` bash
-printf '%s\n%s\n%s\n%s\n%s\n%s\n' '[axonops]' 'name=axonops Repository' 'baseurl=https://repo.digitalis.io/repository/axonops-yum/stable/x64/' 'enabled=1' 'gpgcheck=0' | sudo tee /etc/yum.repos.d/axonops.repo
-sudo yum install axon-cassandra<version>-agent
+curl -1sLf 'https://repo.axonops.com/public/yum/cfg/setup/bash.rpm.sh' | sudo bash
+sudo yum install axon-cassandra{version}-agent
 ```
 #### Debian / Ubuntu installer
 ``` bash
-sudo cp /etc/apt/sources.list /etc/apt/sources.list_backup
-echo "deb https://repo.digitalis.io/repository/axonops-apt xenial main" | sudo tee /etc/apt/sources.list.d/axonops.list
-sudo apt-key adv --keyserver keyserver.ubuntu.com --recv-keys 727BDA4A
-sudo apt-get update
-sudo apt-get install axon-cassandra<version>-agent
+curl -1sLf 'https://repo.axonops.com/public/apt/cfg/setup/bash.deb.sh' | sudo bash
+sudo apt-get install axon-cassandra{version}-agent
 ```
 > Note: This will install AxonOps Cassandra agent and it's dependency: axon-agent
 
@@ -81,7 +78,7 @@ cassandra:
 Edit `cassandra-env.sh` usually located in your Cassandra install path such as `/<Cassandra Installation Directory>/conf/cassandra-env.sh` and append the following line at the end of the file:
 
 ``` bash 
-JVM_OPTS="$JVM_OPTS -javaagent:/usr/share/axonops/axon-cassandra<version>-agent.jar=/etc/axonops/axon-agent.yml"
+JVM_OPTS="$JVM_OPTS -javaagent:/usr/share/axonops/axon-cassandra{version}-agent.jar=/etc/axonops/axon-agent.yml"
 ```
 
 >example with Cassandra agent version *3.11*:
@@ -116,10 +113,10 @@ sudo service axon-agent start
 #### Cassandra agent Package details
 
 * Configuration: `/etc/axonops/axon-agent.yml`
-* Binary: `/usr/share/axonops/axon-cassandra<version>-agent.jar`
-* Version number: `/usr/share/axonops/axon-cassandra<version>-agent.version`
-* Copyright : `/usr/share/doc/axonops/axon-cassandra<version>-agent/copyright`
-* Licenses : `/usr/share/axonops/licenses/axon-cassandra<version>-agent/`
+* Binary: `/usr/share/axonops/axon-cassandra{version}-agent.jar`
+* Version number: `/usr/share/axonops/axon-cassandra{version}-agent.version`
+* Copyright : `/usr/share/doc/axonops/axon-cassandra{version}-agent/copyright`
+* Licenses : `/usr/share/axonops/licenses/axon-cassandra{version}-agent/`
 
 #### axon-agent Package details (dependency of Cassandra agent)
 

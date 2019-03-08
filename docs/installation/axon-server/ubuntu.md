@@ -29,7 +29,6 @@ Once you've accepted the license agreement the JDK will install.
 
 #### Installing Elasticsearch
 
-
 ``` bash
 wget https://artifacts.elastic.co/downloads/elasticsearch/elasticsearch-6.6.1.deb
 sudo dpkg -i elasticsearch-6.6.1.deb
@@ -39,10 +38,7 @@ sudo dpkg -i elasticsearch-6.6.1.deb
 
 ## Step 2 - axon-server installer
 ``` bash
-sudo cp /etc/apt/sources.list /etc/apt/sources.list_backup
-echo "deb https://repo.digitalis.io/repository/axonops-apt xenial main" | sudo tee /etc/apt/sources.list.d/axonops.list
-sudo apt-key adv --keyserver keyserver.ubuntu.com --recv-keys 727BDA4A
-sudo apt-get update
+curl -1sLf 'https://repo.axonops.com/public/apt/cfg/setup/bash.deb.sh' | sudo bash
 sudo apt-get install axon-server
 ```
 

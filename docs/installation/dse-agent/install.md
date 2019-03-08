@@ -33,7 +33,7 @@ axon-agent:
 
 ## DSE agent installation
 
-Make sure the `<version>` of your DSE and DSE agent are compatible from the [compatibility matrix](../../compat_matrix/compat_matrix). 
+Make sure the `{version}` of your DSE and DSE agent are compatible from the [compatibility matrix](../../compat_matrix/compat_matrix). 
 
 
 #### CentOS / RedHat installer
@@ -48,15 +48,15 @@ sudo apt-get install <TODO>
 #### Package details
 
 * Configuration: `/etc/axonops/axon-java-agent.yml`
-* Binary: `usr/share/axonops/axon-dse<version>-agent-1.0.jar`
-* Version number: `usr/share/axonops/axon-dse<version>-agent-1.0.version`
+* Binary: `usr/share/axonops/axon-dse{version}-agent-1.0.jar`
+* Version number: `usr/share/axonops/axon-dse{version}-agent-1.0.version`
 
 #### Configure DSE 
 
 Edit `cassandra-env.sh` usually located in your dse install path such as `/<path_to_DSE>/resources/cassandra/conf/cassandra-env.sh` and add at the end of the file the following line:
 
 ``` bash 
-JVM_OPTS="$JVM_OPTS -javaagent:/usr/share/axonops/axon-dse<version>-agent-1.0.jar=/etc/axonops/axon-java-agent.yml"
+JVM_OPTS="$JVM_OPTS -javaagent:/usr/share/axonops/axon-dse{version}-agent-1.0.jar=/etc/axonops/axon-java-agent.yml"
 ```
 
 

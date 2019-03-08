@@ -8,15 +8,12 @@ This section describes the installation process for the GUI service.
 
 #### CentOS / RedHat installer
 ``` bash
-printf '%s\n%s\n%s\n%s\n%s\n%s\n' '[axonops]' 'name=axonops Repository' 'baseurl=https://repo.digitalis.io/repository/axonops-yum/stable/x64/' 'enabled=1' 'gpgcheck=0' | sudo tee /etc/yum.repos.d/axonops.repo
+curl -1sLf 'https://repo.axonops.com/public/yum/cfg/setup/bash.rpm.sh' | sudo bash
 sudo yum install axon-dash
 ```
 #### Debian / Ubuntu installer
 ``` bash
-sudo cp /etc/apt/sources.list /etc/apt/sources.list_backup
-echo "deb https://repo.digitalis.io/repository/axonops-apt xenial main" | sudo tee /etc/apt/sources.list.d/axonops.list
-sudo apt-key adv --keyserver keyserver.ubuntu.com --recv-keys 727BDA4A
-sudo apt-get update
+curl -1sLf 'https://repo.axonops.com/public/apt/cfg/setup/bash.deb.sh' | sudo bash
 sudo apt-get install axon-dash
 ```
 
