@@ -1088,8 +1088,9 @@ sudo dpkg -i elasticsearch-6.6.1.deb
 </pre></div>
 
 
-<p>Increase the bulk queue size of Elasticsearch by running the following command:</p>
+<p>Increase the bulk queue size of Elasticsearch and it's index codec by running the following command:</p>
 <div class="codehilite"><pre><span></span>sudo <span class="nb">echo</span> <span class="s1">&#39;thread_pool.bulk.queue_size: 2000&#39;</span> &gt;&gt; /etc/elasticsearch/elasticsearch.yml
+sudo <span class="nb">echo</span> <span class="s1">&#39;index.codec: best_compression&#39;</span> &gt;&gt; /etc/elasticsearch/elasticsearch.yml
 </pre></div>
 
 
@@ -1104,6 +1105,7 @@ sudo dpkg -i elasticsearch-6.6.1.deb
 </pre></div>
 
 
+<p>And set <code>LimitNOFILE=65536</code> in <code>/etc/systemd/system/elasticsearch.services</code> </p>
 <h4 id="start-elasticsearch">Start Elasticsearch<a class="headerlink" href="#start-elasticsearch" title="Permanent link">&para;</a></h4>
 <div class="codehilite"><pre><span></span>sudo systemctl start elasticsearch.service
 </pre></div>
