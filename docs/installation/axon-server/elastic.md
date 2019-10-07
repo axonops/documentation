@@ -18,6 +18,7 @@ Also, Elasticsearch needs `max file descriptors` system settings at least to 655
 ``` bash 
 echo 'elasticsearch  -  nofile  65536' | sudo tee --append /etc/security/limits.conf > /dev/null
 ```
+And set `LimitNOFILE=65536` in `/etc/systemd/system/elasticsearch.services` 
 
 #### Start Elasticsearch
 
