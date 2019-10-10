@@ -1,9 +1,13 @@
 
-Increase the bulk queue size of Elasticsearch by running the following command:
 
+Increase the bulk queue size of Elasticsearch by running the following command:
+### Elastic 7+:
+``` bash 
+sudo echo 'thread_pool.write.queue_size: 2000' >> /etc/elasticsearch/elasticsearch.yml
+```
+### Elastic 6.x: 
 ``` bash 
 sudo echo 'thread_pool.bulk.queue_size: 2000' >> /etc/elasticsearch/elasticsearch.yml
-
 ```
 
 Elasticsearch uses a mmapfs directory by default to store its indices. The default operating system limits on mmap counts is likely to be too low, which may result in out of memory exceptions.
