@@ -10,6 +10,11 @@ sudo echo 'thread_pool.write.queue_size: 2000' >> /etc/elasticsearch/elasticsear
 sudo echo 'thread_pool.bulk.queue_size: 2000' >> /etc/elasticsearch/elasticsearch.yml
 ```
 
+Set the following index codec by running the following command:
+``` bash 
+sudo echo 'index.codec: best_compression' >> /etc/elasticsearch/elasticsearch.yml
+```
+
 Elasticsearch uses a mmapfs directory by default to store its indices. The default operating system limits on mmap counts is likely to be too low, which may result in out of memory exceptions.
 
 You can increase the limits by running the following command:
@@ -22,6 +27,7 @@ Also, Elasticsearch needs `max file descriptors` system settings at least to 655
 ``` bash 
 echo 'elasticsearch  -  nofile  65536' | sudo tee --append /etc/security/limits.conf > /dev/null
 ```
+And set `LimitNOFILE=65536` in `/etc/systemd/system/elasticsearch.services` 
 
 #### Start Elasticsearch
 
