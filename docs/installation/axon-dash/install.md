@@ -41,7 +41,7 @@ Update **axon-server** configuration by setting the correct **axon-dash** **host
 ``` yaml hl_lines="7 8"
 host: 0.0.0.0  # axon-server listening address 
 port: 8080 # axon-server listening port 
-elastic_host: localhost # Elasticsearch endpoint
+elastic_host: http://localhost # Elasticsearch endpoint
 elastic_port: 9200 # Elasticsearch port
 
 axon-dash: # This must point to axon-dash address

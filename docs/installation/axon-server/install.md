@@ -7,7 +7,7 @@ Make sure **elastic_host** and **elastic_port** are corresponding to your Elasti
 ``` yaml hl_lines="3 4"
 host: 0.0.0.0  # axon-server listening address (used by axon-dash and axon-agent)
 port: 8080 # axon-server HTTP API listening port (used by axon-dash)
-elastic_host: localhost # Elasticsearch endpoint
+elastic_host: http://localhost # Elasticsearch endpoint
 elastic_port: 9200 # Elasticsearch port
 
 axon-dash: # This must point to axon-dash address
