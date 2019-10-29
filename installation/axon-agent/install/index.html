@@ -949,15 +949,39 @@ sudo apt-get install axon-agent
 <h4 id="configuration">Configuration<a class="headerlink" href="#configuration" title="Permanent link">&para;</a></h4>
 <p>Make sure <strong>axon-agent</strong> configuration points to the correct <strong>axon-server</strong> address and your <strong>organisation name</strong> is specified:</p>
 <div class="codehilite"><pre><span></span><span class="nt">axon-server</span><span class="p">:</span>
-<span class="hll">    <span class="nt">hosts</span><span class="p">:</span> <span class="s">&quot;axon-server_endpoint&quot;</span> <span class="c1"># Specify axon-server IP axon-server.mycompany.com</span>
-</span>
+<span class="hll">    <span class="nt">hosts</span><span class="p">:</span> <span class="s">&quot;axon-server_endpoint&quot;</span> <span class="c1"># Specify axon-server IP axon-server.mycompany.</span>
+</span>    <span class="nt">port</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">1888</span>
+
 <span class="nt">axon-agent</span><span class="p">:</span>
     <span class="nt">org</span><span class="p">:</span> <span class="s">&quot;my-company-test&quot;</span> <span class="c1"># Specify your organisation name</span>
-    <span class="nt">type</span><span class="p">:</span> <span class="s">&quot;cassandra&quot;</span>
-<span class="hll">
-</span><span class="nt">NTP</span><span class="p">:</span>
-    <span class="nt">host</span><span class="p">:</span> <span class="s">&quot;ntp.mycompany.com&quot;</span> <span class="c1"># Specify you NTP server IP address or hostname</span>
-</pre></div>
+<span class="hll">    <span class="nt">cluster_name</span><span class="p">:</span> <span class="s">&quot;my-cluster-test&quot;</span> <span class="c1"># Specify a cluster name</span>
+</span>    <span class="nt">human_readable_identifier</span><span class="p">:</span> <span class="nt">&quot;axon_agent_ip&quot; # one of the following</span><span class="p">:</span> 
+    <span class="c1"># # &quot;axon_agent_ip&quot;</span>
+    <span class="c1"># # &quot;env_&lt;env_variable_name&gt;&quot;</span>
+    <span class="c1"># # &quot;awsec2_&lt;variable_name&gt;&quot;</span>
+    <span class="c1"># # &quot;gcs_&lt;variable_name&gt;&quot;</span>
+
+    <span class="c1"># # environment  examples:</span>
+    <span class="c1"># #   &quot;env_hostname&quot; </span>
+    <span class="c1"># # Amazon Web Services EC2 examples:</span>
+    <span class="c1"># #   &quot;awsec2_id&quot;</span>
+    <span class="c1"># #   &quot;awsec2_name&quot;</span>
+    <span class="c1"># #   &quot;awsec2_hostname&quot;</span>
+    <span class="c1"># # Google Cloud examples:</span>
+    <span class="c1"># #   &quot;gcs_id&quot;</span>
+    <span class="c1"># #   &quot;gcs_name&quot;</span>
+    <span class="c1"># #   &quot;gcs_hostname&quot;</span>
+
+    <span class="c1"># tls:</span>
+    <span class="c1">#   mode: &quot;TLS&quot; # disabled, TLS</span>
+    <span class="c1">#   skipVerify: false</span>
+    <span class="c1">#   caFile: &quot;***.crt&quot;</span>
+    <span class="c1">#   certFile: &quot;***.crt&quot;</span>
+    <span class="c1">#   keyFile: &quot;***.key&quot;</span>
+
+<span class="nt">NTP</span><span class="p">:</span>
+<span class="hll">    <span class="nt">host</span><span class="p">:</span> <span class="s">&quot;set_NTP_server&quot;</span> <span class="c1"># Specify a NTP to determine a NTP offset </span>
+</span></pre></div>
 
 
 <h4 id="start-axon-agent">Start axon-agent<a class="headerlink" href="#start-axon-agent" title="Permanent link">&para;</a></h4>

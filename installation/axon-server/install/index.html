@@ -909,35 +909,83 @@
                   <h1>Install</h1>
                 
                 <h2 id="step-3-axon-server-configuration-update">Step 3 - axon-server configuration update<a class="headerlink" href="#step-3-axon-server-configuration-update" title="Permanent link">&para;</a></h2>
-<p>Make sure <strong>elastic_host</strong> and <strong>elastic_port</strong> are corresponding to your Elasticsearch instance.</p>
+<p>Make sure <strong>elastic_hosts</strong> matches your Elasticsearch instances.</p>
 <ul>
 <li><code>/etc/axonops/axon-server.yml</code></li>
 </ul>
-<div class="codehilite"><pre><span></span><span class="nt">host</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">0.0.0.0</span>  <span class="c1"># axon-server listening address (used by axon-dash and axon-agent)</span>
-<span class="nt">port</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">8080</span> <span class="c1"># axon-server HTTP API listening port (used by axon-dash)</span>
-<span class="hll"><span class="nt">elastic_host</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">http://localhost</span> <span class="c1"># Elasticsearch endpoint</span>
-</span><span class="hll"><span class="nt">elastic_port</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">9200</span> <span class="c1"># Elasticsearch port</span>
-</span>
-<span class="nt">axon-dash</span><span class="p">:</span> <span class="c1"># This must point to axon-dash address</span>
+<div class="codehilite"><pre><span></span><span class="nt">host</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">0.0.0.0</span>  <span class="c1"># axon-server endpoint used by the API and the agents</span>
+<span class="nt">api_port</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">8080</span> <span class="c1"># API port (axon-server &lt;&gt; axon-dash)</span>
+<span class="nt">agents_port</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">1888</span> <span class="c1"># axon-server &lt;&gt; axon-agents</span>
+<span class="hll"><span class="nt">elastic_hosts</span><span class="p">:</span> 
+</span><span class="hll">  <span class="p p-Indicator">-</span> <span class="l l-Scalar l-Scalar-Plain">http://localhost:9200</span> 
+</span><span class="hll"><span class="c1">#  - http://localhost:9201</span>
+</span><span class="c1">#elastic_skipVerify: true</span>
+
+<span class="nt">axon-dash</span><span class="p">:</span> <span class="c1"># axon-dash configuration</span>
   <span class="nt">host</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">127.0.0.1</span>
   <span class="nt">port</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">3000</span>
   <span class="nt">https</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">false</span>
 
 <span class="nt">alerting</span><span class="p">:</span>
-<span class="c1"># How long to wait before sending a notification again if it has already</span>
-<span class="c1"># been sent successfully for an alert. (Usually ~3h or more).</span>
-  <span class="nt">notification_interval</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">3h</span>
+  <span class="nt">notification_interval</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">3h</span> <span class="c1"># How long to wait before sending a notification again if it has already</span>
+                            <span class="c1"># been sent successfully for an alert. (Usually ~3h or more).</span>
 
 <span class="nt">retention</span><span class="p">:</span>
-  <span class="nt">events</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">8w</span> <span class="c1"># logs and events retention. Must be expressed in weeks (w)</span>
+  <span class="nt">events</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">4w</span> <span class="c1"># Must be expressed in weeks (w)</span>
+  <span class="nt">security_events</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">8w</span> <span class="c1"># Must be expressed in weeks (w)</span>
   <span class="nt">metrics</span><span class="p">:</span>
-      <span class="nt">high_resolution</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">14d</span> <span class="c1"># High frequency metrics. Must be expressed in days (d)</span>
-      <span class="nt">med_resolution</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">12w</span> <span class="c1"># Must be expressed in weeks (w)</span>
-      <span class="nt">low_resolution</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">12M</span> <span class="c1"># Must be expressed in months (M)</span>
-      <span class="nt">super_low_resolution</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">2y</span> <span class="c1"># Must be expressed in years (y)</span>
+      <span class="nt">high_resolution</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">30d</span> <span class="c1"># Must be expressed in days (d)</span>
+      <span class="nt">med_resolution</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">24w</span> <span class="c1"># Must be expressed in weeks (w)</span>
+      <span class="nt">low_resolution</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">24M</span> <span class="c1"># Must be expressed in months (M)</span>
+      <span class="nt">super_low_resolution</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">3y</span> <span class="c1"># Must be expressed in years (y)</span>
   <span class="nt">backups</span><span class="p">:</span> <span class="c1"># Those are use as defaults but can be overridden from the UI</span>
     <span class="nt">local</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">10d</span>
-    <span class="nt">remote</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">30d</span>
+    <span class="nt">remote</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">30d</span> 
+
+<span class="c1"># tls:</span>
+<span class="c1">#   mode: &quot;disabled&quot; # disabled, TLS, mTLS</span>
+<span class="c1">#   skipVerify: false  </span>
+<span class="c1">#   caFile: &quot;***.crt&quot;</span>
+<span class="c1">#   certFile: &quot;***.crt&quot;</span>
+<span class="c1">#   keyFile: &quot;***.key&quot;</span>
+
+<span class="c1"># auth:</span>
+<span class="c1">#   enabled: false</span>
+<span class="c1">#   type: &quot;LDAP&quot; # only LDAP is supported for now</span>
+<span class="c1">#   settings:</span>
+<span class="c1">#     host: &quot;...&quot;</span>
+<span class="c1">#     port: 636</span>
+<span class="c1">#     base: &quot;...&quot;</span>
+<span class="c1">#     useSSL: true</span>
+<span class="c1">#     startTLS: true</span>
+<span class="c1">#     insecureSkipVerify: false</span>
+<span class="c1">#     bindDN: &quot;...&quot;</span>
+<span class="c1">#     bindPassword: &quot;...&quot;</span>
+<span class="c1">#     userFilter: &quot;(cn=%s)&quot;</span>
+<span class="c1">#     rolesAttribute: &quot;memberOf&quot; # attribute that will contains a user role</span>
+<span class="c1">#     callAttempts: 3 # how much retries in case of network issues</span>
+<span class="c1">#     rolesMapping:</span>
+<span class="c1">#       _global_: # _global_ overrides all other roles (underscores to prevent confusion with an organisationName named &#39;global&#39;)</span>
+<span class="c1">#         superUserRole: &quot;cn=superuser&quot; # can do everything</span>
+<span class="c1">#         readOnlyRole: &quot;cn=readonly&quot; # can view everything but can not make any changes</span>
+<span class="c1">#         adminRole: &quot;cn=admin&quot; # can do everything but not admin users or backups</span>
+<span class="c1">#         backupAdminRole: &quot;cn=backupadmin&quot; # can view everything and can admin backups</span>
+<span class="c1">#       # organisationName/clusterType/cluster</span>
+<span class="c1">#       organisationName: # org permissions </span>
+<span class="c1">#         superUserRole: &quot;cn=xxxx&quot;</span>
+<span class="c1">#         readOnlyRole: &quot;cn=xxxx&quot;</span>
+<span class="c1">#         adminRole: &quot;cn=xxxx&quot;</span>
+<span class="c1">#         backupAdminRole: &quot;cn=xxxx&quot;</span>
+<span class="c1">#       organisationName/cassandra: # cluster type permissions </span>
+<span class="c1">#         superUserRole: &quot;cn=xxxx&quot;</span>
+<span class="c1">#         readOnlyRole: &quot;cn=xxxx&quot;</span>
+<span class="c1">#         adminRole: &quot;cn=xxxx&quot;</span>
+<span class="c1">#         backupAdminRole: &quot;cn=xxxx&quot;</span>
+<span class="c1">#       organisationName/cassandra/prod:  # cluster permissions </span>
+<span class="c1">#         superUserRole: &quot;cn=xxxx&quot;</span>
+<span class="c1">#         readOnlyRole: &quot;cn=xxxx&quot;</span>
+<span class="c1">#         adminRole: &quot;cn=xxxx&quot;</span>
+<span class="c1">#         backupAdminRole: &quot;cn=xxxx&quot;</span>
 </pre></div>
 
 

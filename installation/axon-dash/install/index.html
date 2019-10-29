@@ -1096,31 +1096,21 @@ sudo apt-get install axon-dash
 <ul>
 <li><code>/etc/axonops/axon-server.yml</code></li>
 </ul>
-<div class="codehilite"><pre><span></span><span class="nt">host</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">0.0.0.0</span>  <span class="c1"># axon-server listening address </span>
-<span class="nt">port</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">8080</span> <span class="c1"># axon-server listening port </span>
-<span class="nt">elastic_host</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">http://localhost</span> <span class="c1"># Elasticsearch endpoint</span>
-<span class="nt">elastic_port</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">9200</span> <span class="c1"># Elasticsearch port</span>
+<div class="codehilite"><pre><span></span><span class="nt">host</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">0.0.0.0</span>  <span class="c1"># axon-server endpoint used by the API and the agents</span>
+<span class="nt">api_port</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">8080</span> <span class="c1"># API port (axon-server &lt;&gt; axon-dash)</span>
+<span class="nt">agents_port</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">1888</span> <span class="c1"># axon-server &lt;&gt; axon-agents</span>
+<span class="nt">elastic_hosts</span><span class="p">:</span> 
+  <span class="p p-Indicator">-</span> <span class="l l-Scalar l-Scalar-Plain">http://localhost:9200</span> 
+<span class="c1">#  - http://localhost:9201</span>
+<span class="c1">#elastic_skipVerify: true</span>
 
-<span class="nt">axon-dash</span><span class="p">:</span> <span class="c1"># This must point to axon-dash address</span>
+<span class="c1"># axon-dash configuration</span>
+<span class="nt">axon-dash</span><span class="p">:</span>
 <span class="hll">  <span class="nt">host</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">127.0.0.1</span>
 </span><span class="hll">  <span class="nt">port</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">3000</span>
 </span>  <span class="nt">https</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">false</span>
 
-<span class="nt">alerting</span><span class="p">:</span>
-<span class="c1"># How long to wait before sending a notification again if it has already</span>
-<span class="c1"># been sent successfully for an alert. (Usually ~3h or more).</span>
-  <span class="nt">notification_interval</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">3h</span>
-
-<span class="nt">retention</span><span class="p">:</span>
-  <span class="nt">events</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">8w</span> <span class="c1"># logs and events retention. Must be expressed in weeks (w)</span>
-  <span class="nt">metrics</span><span class="p">:</span>
-      <span class="nt">high_resolution</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">14d</span> <span class="c1"># High frequency metrics. Must be expressed in days (d)</span>
-      <span class="nt">med_resolution</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">12w</span> <span class="c1"># Must be expressed in weeks (w)</span>
-      <span class="nt">low_resolution</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">12M</span> <span class="c1"># Must be expressed in months (M)</span>
-      <span class="nt">super_low_resolution</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">2y</span> <span class="c1"># Must be expressed in years (y)</span>
-  <span class="nt">backups</span><span class="p">:</span> <span class="c1"># Those are use as defaults but can be overridden from the UI</span>
-    <span class="nt">local</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">10d</span>
-    <span class="nt">remote</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">30d</span>
+<span class="nn">...</span>
 </pre></div>
 
 

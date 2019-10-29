@@ -1103,7 +1103,6 @@
 <p>This agent will enable metrics, logs and events collection with adaptive repairs and backups for Cassandra.</p>
 <h2 id="available-versions">Available versions<a class="headerlink" href="#available-versions" title="Permanent link">&para;</a></h2>
 <ul>
-<li>Apache Cassandra 3.0.x</li>
 <li>Apache Cassandra 3.11.x</li>
 </ul>
 <h2 id="step-1-installation">Step 1 - Installation<a class="headerlink" href="#step-1-installation" title="Permanent link">&para;</a></h2>
@@ -1128,13 +1127,37 @@ sudo apt-get install axon-cassandra<span class="o">{</span>version<span class="o
 <h2 id="step-2-agent-configuration">Step 2 - Agent Configuration<a class="headerlink" href="#step-2-agent-configuration" title="Permanent link">&para;</a></h2>
 <p>Update the following highlighted lines from <code>/etc/axonops/axon-agent.yml</code>:</p>
 <div class="codehilite"><pre><span></span><span class="nt">axon-server</span><span class="p">:</span>
-<span class="hll">    <span class="nt">hosts</span><span class="p">:</span> <span class="s">&quot;axon-server_endpoint&quot;</span> <span class="c1"># Specify axon-server IP axon-server.mycompany.com</span>
-</span>
+<span class="hll">    <span class="nt">hosts</span><span class="p">:</span> <span class="s">&quot;axon-server_endpoint&quot;</span> <span class="c1"># Specify axon-server IP axon-server.mycompany.</span>
+</span>    <span class="nt">port</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">1888</span>
+
 <span class="nt">axon-agent</span><span class="p">:</span>
 <span class="hll">    <span class="nt">org</span><span class="p">:</span> <span class="s">&quot;my-company-test&quot;</span> <span class="c1"># Specify your organisation name</span>
-</span>
+</span>    <span class="nt">human_readable_identifier</span><span class="p">:</span> <span class="nt">&quot;axon_agent_ip&quot; # one of the following</span><span class="p">:</span> 
+    <span class="c1"># # &quot;axon_agent_ip&quot;</span>
+    <span class="c1"># # &quot;env_&lt;env_variable_name&gt;&quot;</span>
+    <span class="c1"># # &quot;awsec2_&lt;variable_name&gt;&quot;</span>
+    <span class="c1"># # &quot;gcs_&lt;variable_name&gt;&quot;</span>
+
+    <span class="c1"># # environment  examples:</span>
+    <span class="c1"># #   &quot;env_hostname&quot; </span>
+    <span class="c1"># # Amazon Web Services EC2 examples:</span>
+    <span class="c1"># #   &quot;awsec2_id&quot;</span>
+    <span class="c1"># #   &quot;awsec2_name&quot;</span>
+    <span class="c1"># #   &quot;awsec2_hostname&quot;</span>
+    <span class="c1"># # Google Cloud examples:</span>
+    <span class="c1"># #   &quot;gcs_id&quot;</span>
+    <span class="c1"># #   &quot;gcs_name&quot;</span>
+    <span class="c1"># #   &quot;gcs_hostname&quot;</span>
+
+    <span class="c1"># tls:</span>
+    <span class="c1">#   mode: &quot;disabled&quot; # disabled, TLS</span>
+    <span class="c1">#   skipVerify: false</span>
+    <span class="c1">#   caFile: &quot;***.crt&quot;</span>
+    <span class="c1">#   certFile: &quot;***.crt&quot;</span>
+    <span class="c1">#   keyFile: &quot;***.key&quot;</span>
+
 <span class="nt">NTP</span><span class="p">:</span>
-<span class="hll">    <span class="nt">host</span><span class="p">:</span> <span class="s">&quot;ntp.mycompany.com&quot;</span> <span class="c1"># Specify your NTP server IP address or hostname</span>
+<span class="hll">    <span class="nt">host</span><span class="p">:</span> <span class="s">&quot;set_NTP_server&quot;</span> <span class="c1"># Specify a NTP to determine a NTP offset </span>
 </span>
 <span class="nt">cassandra</span><span class="p">:</span>
   <span class="nt">tier0</span><span class="p">:</span> <span class="c1"># metrics collected every 5 seconds</span>
