@@ -1187,14 +1187,28 @@ sudo apt-get install axon-cassandra3.11-agent
   <span class="c1">#tier3:</span>
   <span class="c1">#    frequency: 86400 # 1d</span>
 
-  <span class="nt">blacklist</span><span class="p">:</span> <span class="c1"># You can blacklist metrics based on MBean query pattern</span>
-    <span class="p p-Indicator">-</span> <span class="s">&quot;org.apache.cassandra.metrics:type=ColumnFamily,*&quot;</span> <span class="c1"># duplication of table metrics</span>
-    <span class="p p-Indicator">-</span> <span class="s">&quot;org.apache.cassandra.metrics:name=SnapshotsSize,*&quot;</span> <span class="c1"># Collecting SnapshotsSize metrics slows down collection</span>
+  <span class="nt">blacklist</span><span class="p">:</span> <span class="c1"># You can blacklist metrics based on Regex pattern. Hit the agent on http://agentIP:9916/metricslist to list JMX metrics it is collecting</span>
+    <span class="p p-Indicator">-</span> <span class="s">&quot;org.apache.cassandra.metrics:type=ColumnFamily.*&quot;</span> <span class="c1"># duplication of table metrics</span>
+    <span class="p p-Indicator">-</span> <span class="s">&quot;org.apache.cassandra.metrics:.*scope=Repair#.*&quot;</span> <span class="c1"># ignore each repair instance metrics</span>
+    <span class="p p-Indicator">-</span> <span class="s">&quot;org.apache.cassandra.metrics:.*name=SnapshotsSize.*&quot;</span> <span class="c1"># Collecting SnapshotsSize metrics slows down collection</span>
+    <span class="p p-Indicator">-</span> <span class="s">&quot;org.apache.cassandra.metrics:.*Max.*&quot;</span>
+    <span class="p p-Indicator">-</span> <span class="s">&quot;org.apache.cassandra.metrics:.*Min.*&quot;</span>
+    <span class="p p-Indicator">-</span> <span class="s">&quot;.*999thPercentile|.*50thPercentile|.*FifteenMinuteRate|.*FiveMinuteRate|.*MeanRate|.*Mean|.*OneMinuteRate|.*StdDev&quot;</span>
 
-  <span class="nt">free_text_blacklist</span><span class="p">:</span> <span class="c1"># You can blacklist metrics based on Regex pattern</span>
-    <span class="p p-Indicator">-</span> <span class="s">&quot;org.apache.cassandra.metrics:type=ThreadPools,path=internal,scope=Repair#.*&quot;</span>
+  <span class="nt">JMXOperationsBlacklist</span><span class="p">:</span>
+    <span class="p p-Indicator">-</span> <span class="s">&quot;getThreadInfo&quot;</span>
+    <span class="p p-Indicator">-</span> <span class="s">&quot;getDatacenter&quot;</span>
+    <span class="p p-Indicator">-</span> <span class="s">&quot;getRack&quot;</span>
 
-  <span class="nt">warningThresholdMillis</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">100</span> <span class="c1"># This will warn in logs when a MBean takes longer than the specified value.</span>
+  <span class="nt">DMLEventsWhitelist</span><span class="p">:</span> <span class="c1"># You can whitelist keyspaces / tables (list of &quot;keyspace&quot; and/or &quot;keyspace.table&quot; to log DML queries. Data is not analysed.</span>
+  <span class="c1"># - &quot;system_distributed&quot;</span>
+
+  <span class="nt">DMLEventsBlacklist</span><span class="p">:</span> <span class="c1"># You can blacklist keyspaces / tables from the DMLEventsWhitelist (list of &quot;keyspace&quot; and/or &quot;keyspace.table&quot; to log DML queries. Data is not analysed.</span>
+  <span class="c1"># - system_distributed.parent_repair_history</span>
+
+  <span class="nt">logSuccessfulRepairs</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">false</span> <span class="c1"># set it to true if you want to log all the successful repair events.</span>
+
+  <span class="nt">warningThresholdMillis</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">200</span> <span class="c1"># This will warn in logs when a MBean takes longer than the specified value.</span>
 
   <span class="nt">logFormat</span><span class="p">:</span> <span class="s">&quot;%4$s</span><span class="nv"> </span><span class="s">%1$tY-%1$tm-%1$td</span><span class="nv"> </span><span class="s">%1$tH:%1$tM:%1$tS,%1$tL</span><span class="nv"> </span><span class="s">%5$s%6$s%n&quot;</span>
 </pre></div>
