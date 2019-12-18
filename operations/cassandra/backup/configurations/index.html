@@ -951,9 +951,8 @@ Then select <code>General Settings</code> tab.</p>
 <p><a href="/img/cass_backups/backups_conf1.png"><img alt="backup" src="/img/cass_backups/backups_conf1.png" /></a></p>
 </div>
 <h3 id="remote-backup">Remote backup<a class="headerlink" href="#remote-backup" title="Permanent link">&para;</a></h3>
-<blockquote>
-<p>Note that <strong>axonops</strong> user will need read access on Cassandra data folders to be able to proceed the remote backup.</p>
-</blockquote>
+<p>For security reasons, the default configuration of the AxonOps agent user (<strong>axonops</strong>) on the Cassandra server does not have read/write access to the Cassandra data directories. When using AxonOps to remotly backup data, the axonops user will need read access to the Cassandra data directories and when restoring a backup, write access is required.</p>
+<p>The exact way this access can be managed is dependent on the security requirements of the cluster being managed. If there are no specific requirements to restrict the AxonOps agent users data folder access then adding the user to the Cassandra DB group would typically grant the user read/write access to the Cassandra data directories e.g <code>usermod -a -G cassandra axonops</code></p>
 <p>The current remote options are:</p>
 <ul>
 <li>local filesystem</li>

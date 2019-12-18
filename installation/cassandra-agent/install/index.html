@@ -1288,14 +1288,8 @@ sudo usermod -aG axonops &lt;your_cassandra_user&gt;
 
 
 <h2 id="optional-step-7-cassandra-remote-backups-or-restore-prerequisites">(Optional) Step 7 - Cassandra Remote Backups or Restore Prerequisites<a class="headerlink" href="#optional-step-7-cassandra-remote-backups-or-restore-prerequisites" title="Permanent link">&para;</a></h2>
-<ul>
-<li>
-<p>If you plan to use AxonOps remote backup functionality, <strong>axonops</strong> user will require <strong>read</strong> access on Cassandra <strong>data</strong> folder.</p>
-</li>
-<li>
-<p>As well if you plan to Restore data with AxonOps,  <strong>axonops</strong> user will require <strong>write</strong> access to Cassandra <strong>data</strong> folder. We recommend to only provide temporary write access to <strong>axonops</strong> when required.</p>
-</li>
-</ul>
+<p>For security reasons, the default configuration of the AxonOps agent user (<strong>axonops</strong>) on the Cassandra server does not have read/write access to the Cassandra data directories. When using AxonOps to remotly backup data, the axonops user will need read access to the Cassandra data directories and when restoring a backup, write access is required.</p>
+<p>The exact way this access can be managed is dependent on the security requirements of the cluster being managed. If there are no specific requirements to restrict the AxonOps agent users data folder access then adding the user to the Cassandra DB group would typically grant the user read/write access to the Cassandra data directories e.g <code>usermod -a -G cassandra axonops</code></p>
 <h4 id="cassandra-agent-package-details">Cassandra agent Package details<a class="headerlink" href="#cassandra-agent-package-details" title="Permanent link">&para;</a></h4>
 <ul>
 <li>Configuration: <code>/etc/axonops/axon-agent.yml</code></li>
