@@ -990,7 +990,7 @@
     <span class="nt">&quot;httpchecks&quot;</span><span class="p">:</span> <span class="p">[</span>
         <span class="p">{</span>
             <span class="nt">&quot;name&quot;</span> <span class="p">:</span> <span class="s2">&quot;check_http_endpoint&quot;</span><span class="p">,</span>
-            <span class="nt">&quot;http&quot;</span> <span class="p">:</span>  <span class="s2">&quot;https://{{.listen_address}}:80&quot;</span><span class="p">,</span>
+            <span class="nt">&quot;http&quot;</span> <span class="p">:</span>  <span class="s2">&quot;https://{{.comp_listen_address}}:80&quot;</span><span class="p">,</span>
             <span class="nt">&quot;tls_skip_verify&quot;</span><span class="p">:</span> <span class="kc">true</span><span class="p">,</span>
             <span class="nt">&quot;method&quot;</span><span class="p">:</span> <span class="s2">&quot;GET&quot;</span><span class="p">,</span>
             <span class="nt">&quot;interval&quot;</span><span class="p">:</span> <span class="s2">&quot;10s&quot;</span><span class="p">,</span>
@@ -1010,13 +1010,13 @@
             <span class="nt">&quot;name&quot;</span><span class="p">:</span> <span class="s2">&quot;cassandra_cql_port_check&quot;</span><span class="p">,</span>
             <span class="nt">&quot;interval&quot;</span><span class="p">:</span> <span class="s2">&quot;10s&quot;</span><span class="p">,</span>
             <span class="nt">&quot;timeout&quot;</span><span class="p">:</span> <span class="s2">&quot;1m&quot;</span><span class="p">,</span>
-            <span class="nt">&quot;tcp&quot;</span><span class="p">:</span> <span class="s2">&quot;{{.listen_address}}:9042&quot;</span>
+            <span class="nt">&quot;tcp&quot;</span><span class="p">:</span> <span class="s2">&quot;{{.comp_listen_address}}:9042&quot;</span>
         <span class="p">},</span>
         <span class="p">{</span>
             <span class="nt">&quot;name&quot;</span> <span class="p">:</span> <span class="s2">&quot;cassandra_storage_port_check&quot;</span><span class="p">,</span>
             <span class="nt">&quot;timeout&quot;</span><span class="p">:</span> <span class="s2">&quot;1m&quot;</span><span class="p">,</span>
             <span class="nt">&quot;interval&quot;</span><span class="p">:</span> <span class="s2">&quot;5m&quot;</span><span class="p">,</span>
-            <span class="nt">&quot;tcp&quot;</span> <span class="p">:</span> <span class="s2">&quot;{{.listen_address}}:7000&quot;</span>
+            <span class="nt">&quot;tcp&quot;</span> <span class="p">:</span> <span class="s2">&quot;{{.comp_listen_address}}:7000&quot;</span>
         <span class="p">}</span>
    <span class="p">]</span>
 <span class="p">}</span>
@@ -1024,7 +1024,7 @@
 
 
 <blockquote>
-<p>Note that for a Cassandra node, you can use the variable <code>{{.listen_address}}</code> which will correspond to Cassandra listening address.</p>
+<p>Note that for a Cassandra node, you can use the variable <code>{{.comp_listen_address}}</code> which will correspond to Cassandra listening address.</p>
 </blockquote>
 <p>Example:</p>
 <div class="admonition infomy">
