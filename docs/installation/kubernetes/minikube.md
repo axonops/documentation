@@ -53,7 +53,7 @@ releases:
     labels:
       env: dev
     values:
-      - values.yml
+      - values.yaml
   - name: axon-elastic
     namespace: {{ env "NAMESPACE" | default "monitoring" }}
     chart: "bitnami/elasticsearch"
@@ -87,7 +87,7 @@ releases:
     labels:
       env: minikube
     values:
-      - values.yml
+      - values.yaml
 ```
 
 #### values.yaml
