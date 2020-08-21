@@ -138,7 +138,7 @@ extraVolumeMounts:
 
 extraContainers:
   - name: axonops-agent
-    image: digitalisdocker/axon-server:latest
+    image: digitalisdocker/axon-agent:latest
     env:
       - name: AXON_AGENT_VERBOSITY
         value: "1"
