@@ -41,7 +41,7 @@ repositories:
     url: https://kubernetes-charts.storage.googleapis.com
   - name: incubator
     url: https://kubernetes-charts-incubator.storage.googleapis.com
-  - name: digitalis
+  - name: axonops-helm
     url: https://repo.axonops.com/public/helm/helm/charts/
   - name: bitnami
     url: https://charts.bitnami.com/bitnami
