@@ -12,6 +12,7 @@ The deployment should work fine on latest versions of [minikube](https://kuberne
 minikube start --memory 10240 --cpus=4 --driver=hyperkit
 minikube addons enable storage-provisioner
 ```
+**:warning: Make sure you use a recent version of minikube**
 
 ## Helmfile
 
