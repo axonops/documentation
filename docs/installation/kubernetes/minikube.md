@@ -232,6 +232,7 @@ cassandra:
 ### Create Axon Agent configuration
 
 ```sh
+kubectl create ns cassandra
 kubectl create configmap axonops-agent --from-file=axon-agent.yml -n cassandra
 ```
 
