@@ -12,7 +12,7 @@ The deployment should work fine on latest versions of [minikube](https://kuberne
 minikube start --memory 10240 --cpus=4
 minikube addons enable storage-provisioner
 ```
-**:warning: Make sure you use a recent version of minikube. Also check available [https://minikube.sigs.k8s.io/docs/drivers/](drivers) and select the most appropiate for your platform**
+**:warning: Make sure you use a recent version of minikube. Also check available [drivers](https://minikube.sigs.k8s.io/docs/drivers/) and select the most appropiate for your platform**
 
 ## Helmfile
 
