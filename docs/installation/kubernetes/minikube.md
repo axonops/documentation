@@ -9,10 +9,10 @@ The following shows how to install AxonOps for monitoring cassandra. This proces
 The deployment should work fine on latest versions of [minikube](https://kubernetes.io/docs/tasks/tools/install-minikube/) as long as you provide enough memory for it.
 
 ```sh
-minikube start --memory 10240 --cpus=4 --driver=hyperkit
+minikube start --memory 10240 --cpus=4
 minikube addons enable storage-provisioner
 ```
-**:warning: Make sure you use a recent version of minikube**
+**:warning: Make sure you use a recent version of minikube. Also check available [https://minikube.sigs.k8s.io/docs/drivers/](drivers) and select the most appropiate for your platform**
 
 ## Helmfile
 
@@ -276,3 +276,46 @@ kubectl get svc -n monitoring -o wide
 ```
 
 Open your browser and copy and paste the URL.
+
+## Troubleshooting
+
+Check the status of the pods:
+
+```sh
+kubectl get pod -n monitoring
+kubectl get pod -n cassandra
+```
+
+Any pod which is not on state `Running` check it out with
+
+```sh
+kubectl describe -n NAMESPACE pod POD-NAME
+```
+
+### Storage
+
+One common problem is regarding storage. If you have enabled persistent storage you may see an error about persistent volume claims (not found, unclaimed, etc). If you're using `minikube` make sure you enable storage with 
+
+```sh
+minikube addons enable storage-provisioner
+```
+
+### Memory
+
+The second most common problem is not enough memory (OOMKilled). You will see this often if you're node does not have enough memory to run the containers or if the `heap` settings for Cassandra are not right. `kubectl describe` command will be showing `Error 127` when this occurs.
+
+In the `values.yaml` file adjust the heap options to match your hardware:
+
+```yaml
+  max_heap_size: 512M
+  heap_new_size: 512M
+```
+
+
+#### Minikube
+
+Review the way you have started up `minikube` and assign more memory if you can. Also check the [available drivers](https://minikube.sigs.k8s.io/docs/drivers/) and select the appropiate for your platform. On MacOS where I tested `hyperkit` or `virtualbox` are the best ones.
+
+```sh
+minikube start --memory 10240 --cpus=4 --driver=hyperkit
+```
