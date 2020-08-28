@@ -319,3 +319,7 @@ Review the way you have started up `minikube` and assign more memory if you can.
 ```sh
 minikube start --memory 10240 --cpus=4 --driver=hyperkit
 ```
+
+## Putting it all together
+
+[![AxonOps on Minikube](https://img.youtube.com/vi/Qa1dWx5atqQ/0.jpg)](https://youtu.be/Qa1dWx5atqQ "AxonOps Minikube")
