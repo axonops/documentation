@@ -9,7 +9,7 @@ The following shows how to install AxonOps for monitoring cassandra. This proces
 The deployment should work fine on latest versions of [minikube](https://kubernetes.io/docs/tasks/tools/install-minikube/) as long as you provide enough memory for it.
 
 ```sh
-minikube start --memory 10240 --cpus=4
+minikube start --memory 8192 --cpus=4
 minikube addons enable storage-provisioner
 ```
 **:warning: Make sure you use a recent version of minikube. Also check available [drivers](https://minikube.sigs.k8s.io/docs/drivers/) and select the most appropiate for your platform**
