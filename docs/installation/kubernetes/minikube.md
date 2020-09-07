@@ -126,6 +126,8 @@ extraVolumes:
     emptyDir: {}
   - name: axonops-logs
     emptyDir: {}
+  - name: cassandra-logs
+    emptyDir: {}
 
 extraVolumeMounts:
   - name: axonops-shared
@@ -136,6 +138,8 @@ extraVolumeMounts:
     readOnly: true
   - name: axonops-logs
     mountPath: /var/log/axonops
+  - name: cassandra-logs
+    mountPath: /var/log/cassandra
 
 extraContainers:
   - name: axonops-agent
@@ -152,6 +156,8 @@ extraContainers:
         readOnly: false
       - name: axonops-logs
         mountPath: /var/log/axonops
+      - name: cassandra-logs
+        mountPath: /var/log/cassandra
 
 axon-server:
   elastic_host: http://axon-elastic-elasticsearch-master
