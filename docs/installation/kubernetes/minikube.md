@@ -158,6 +158,9 @@ extraContainers:
         mountPath: /var/log/axonops
       - name: cassandra-logs
         mountPath: /var/log/cassandra
+      - name: data
+        mountPath: /var/lib/cassandra
+        readOnly: false
 
 axon-server:
   elastic_host: http://axon-elastic-elasticsearch-master
