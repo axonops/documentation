@@ -47,14 +47,6 @@ repositories:
   - name: bitnami
     url: https://charts.bitnami.com/bitnami
 releases:
-  - name: cassandra
-    namespace: cassandra
-    chart: "incubator/cassandra"
-    wait: true
-    labels:
-      env: dev
-    values:
-      - values.yaml
   - name: axon-elastic
     namespace: {{ env "NAMESPACE" | default "monitoring" }}
     chart: "bitnami/elasticsearch"
@@ -87,6 +79,15 @@ releases:
     wait: true
     labels:
       env: minikube
+    values:
+      - values.yaml
+
+  - name: cassandra
+    namespace: cassandra
+    chart: "incubator/cassandra"
+    wait: true
+    labels:
+      env: dev
     values:
       - values.yaml
 ```
