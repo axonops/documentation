@@ -1,12 +1,12 @@
 site_name: AxonOps Documentation
-copyright: © 2019 digitalis.io All Rights Reserved
+copyright: © 2020 digitalis.io All Rights Reserved
 google_analytics: ['UA-69443414-2', 'docs.axonops.com']
 theme:
   name: 'material'
   favicon: 'img/favicon.ico'
   logo: 'img/bg_logo.png'
   language: 'en'
-  
+
 extra_css:
   - 'stylesheets/extra.css'
 markdown_extensions:
@@ -15,7 +15,7 @@ markdown_extensions:
       base_path: docs
   - codehilite:
       guess_lang: False
-       
+
   - toc:
       permalink: true
 plugins:
@@ -36,6 +36,7 @@ nav:
         #- AxonOps Agent: 'installation/axon-agent/install.md'
         - AxonOps Cassandra Agent: 'installation/cassandra-agent/install.md'
         - Compatibility matrix: 'installation/compat_matrix/compat_matrix.md'
+        - Kubernetes: 'installation/kubernetes/minikube.md'
 
     - Using AxonOps: 
         - Cluster Overview:
