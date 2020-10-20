@@ -1,0 +1,1702 @@
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+      
+      
+      <link rel="shortcut icon" href="../../../img/favicon.ico">
+      <meta name="generator" content="mkdocs-1.1.2, mkdocs-material-6.1.0">
+    
+    
+      
+        <title>Kubernetes - AxonOps Documentation</title>
+      
+    
+    
+      <link rel="stylesheet" href="../../../assets/stylesheets/main.bc7e593a.min.css">
+      
+        
+        <link rel="stylesheet" href="../../../assets/stylesheets/palette.ab28b872.min.css">
+        
+      
+    
+    
+    
+      
+        
+        <link href="https://fonts.gstatic.com" rel="preconnect" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,400,400i,700%7CRoboto+Mono&display=fallback">
+        <style>body,input{font-family:"Roboto",-apple-system,BlinkMacSystemFont,Helvetica,Arial,sans-serif}code,kbd,pre{font-family:"Roboto Mono",SFMono-Regular,Consolas,Menlo,monospace}</style>
+      
+    
+    
+    
+      <link rel="stylesheet" href="../../../stylesheets/extra.css">
+    
+    
+      
+        
+<script>window.ga=window.ga||function(){(ga.q=ga.q||[]).push(arguments)},ga.l=+new Date,ga("create","UA-69443414-2","docs.axonops.com"),ga("set","anonymizeIp",!0),ga("send","pageview"),document.addEventListener("DOMContentLoaded",function(){document.forms.search&&document.forms.search.query.addEventListener("blur",function(){if(this.value){var e=document.location.pathname;ga("send","pageview",e+"?q="+this.value)}})}),document.addEventListener("DOMContentSwitch",function(){ga("send","pageview",document.location.pathname)})</script>
+<script async src="https://www.google-analytics.com/analytics.js"></script>
+      
+    
+    
+  </head>
+  
+  
+    
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="" data-md-color-primary="none" data-md-color-accent="none">
+      
+  
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#cassandra-with-axonops-on-kubernetes" class="md-skip">
+          Skip to content
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+      
+
+<header class="md-header" data-md-component="header">
+  <nav class="md-header-nav md-grid" aria-label="Header">
+    <a href="../../.." title="AxonOps Documentation" class="md-header-nav__button md-logo" aria-label="AxonOps Documentation">
+      
+  <img src="../../../img/axonops_logo.svg" alt="logo">
+
+    </a>
+    <label class="md-header-nav__button md-icon" for="__drawer">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3V6m0 5h18v2H3v-2m0 5h18v2H3v-2z"/></svg>
+    </label>
+    <div class="md-header-nav__title" data-md-component="header-title">
+      
+        <div class="md-header-nav__ellipsis">
+          <span class="md-header-nav__topic md-ellipsis">
+            AxonOps Documentation
+          </span>
+          <span class="md-header-nav__topic md-ellipsis">
+            
+              Kubernetes
+            
+          </span>
+        </div>
+      
+    </div>
+    
+      <label class="md-header-nav__button md-icon" for="__search">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0116 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.516 6.516 0 019.5 16 6.5 6.5 0 013 9.5 6.5 6.5 0 019.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5z"/></svg>
+      </label>
+      
+<div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Search" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" data-md-state="active">
+      <label class="md-search__icon md-icon" for="__search">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0116 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.516 6.516 0 019.5 16 6.5 6.5 0 013 9.5 6.5 6.5 0 019.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5z"/></svg>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12z"/></svg>
+      </label>
+      <button type="reset" class="md-search__icon md-icon" aria-label="Clear" data-md-component="search-reset" tabindex="-1">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12 19 6.41z"/></svg>
+      </button>
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Initializing search
+          </div>
+          <ol class="md-search-result__list"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+    
+    
+  </nav>
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              <div class="md-sidebar md-sidebar--primary" data-md-component="navigation">
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--primary" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href="../../.." title="AxonOps Documentation" class="md-nav__button md-logo" aria-label="AxonOps Documentation">
+      
+  <img src="../../../img/axonops_logo.svg" alt="logo">
+
+    </a>
+    AxonOps Documentation
+  </label>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+      
+
+
+  <li class="md-nav__item">
+    <a href="../../.." class="md-nav__link">
+      Introduction
+    </a>
+  </li>
+
+    
+      
+      
+      
+
+
+  <li class="md-nav__item md-nav__item--nested">
+    
+      <input class="md-nav__toggle md-toggle" data-md-toggle="nav-2" type="checkbox" id="nav-2">
+    
+    <label class="md-nav__link" for="nav-2">
+      Overview
+      <span class="md-nav__icon md-icon"></span>
+    </label>
+    <nav class="md-nav" aria-label="Overview" data-md-level="1">
+      <label class="md-nav__title" for="nav-2">
+        <span class="md-nav__icon md-icon"></span>
+        Overview
+      </label>
+      <ul class="md-nav__list" data-md-scrollfix>
+        
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../../overview/motivation/" class="md-nav__link">
+      Motivation
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../../overview/architecture/" class="md-nav__link">
+      Architecture
+    </a>
+  </li>
+
+        
+      </ul>
+    </nav>
+  </li>
+
+    
+      
+      
+      
+
+  
+
+
+  <li class="md-nav__item md-nav__item--active md-nav__item--nested">
+    
+      <input class="md-nav__toggle md-toggle" data-md-toggle="nav-3" type="checkbox" id="nav-3" checked>
+    
+    <label class="md-nav__link" for="nav-3">
+      Installation
+      <span class="md-nav__icon md-icon"></span>
+    </label>
+    <nav class="md-nav" aria-label="Installation" data-md-level="1">
+      <label class="md-nav__title" for="nav-3">
+        <span class="md-nav__icon md-icon"></span>
+        Installation
+      </label>
+      <ul class="md-nav__list" data-md-scrollfix>
+        
+        
+          
+          
+          
+
+
+  <li class="md-nav__item md-nav__item--nested">
+    
+      <input class="md-nav__toggle md-toggle" data-md-toggle="nav-3-1" type="checkbox" id="nav-3-1">
+    
+    <label class="md-nav__link" for="nav-3-1">
+      AxonOps Server
+      <span class="md-nav__icon md-icon"></span>
+    </label>
+    <nav class="md-nav" aria-label="AxonOps Server" data-md-level="2">
+      <label class="md-nav__title" for="nav-3-1">
+        <span class="md-nav__icon md-icon"></span>
+        AxonOps Server
+      </label>
+      <ul class="md-nav__list" data-md-scrollfix>
+        
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../axon-server/ubuntu/" class="md-nav__link">
+      Installing on Ubuntu/Debian
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../axon-server/centos/" class="md-nav__link">
+      Installing on Centos/Redhat
+    </a>
+  </li>
+
+        
+      </ul>
+    </nav>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../axon-dash/install/" class="md-nav__link">
+      AxonOps GUI Server
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../cassandra-agent/install/" class="md-nav__link">
+      AxonOps Cassandra Agent
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../compat_matrix/compat_matrix/" class="md-nav__link">
+      Compatibility matrix
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+  
+
+
+  <li class="md-nav__item md-nav__item--active">
+    
+    <input class="md-nav__toggle md-toggle" data-md-toggle="toc" type="checkbox" id="__toc">
+    
+      
+    
+    
+      <label class="md-nav__link md-nav__link--active" for="__toc">
+        Kubernetes
+        <span class="md-nav__icon md-icon"></span>
+      </label>
+    
+    <a href="./" class="md-nav__link md-nav__link--active">
+      Kubernetes
+    </a>
+    
+      
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#introduction" class="md-nav__link">
+    Introduction
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#using-minikube" class="md-nav__link">
+    Using minikube
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#helmfile" class="md-nav__link">
+    Helmfile
+  </a>
+  
+    <nav class="md-nav" aria-label="Helmfile">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#overview" class="md-nav__link">
+    Overview
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#install-requirements" class="md-nav__link">
+    Install requirements
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#config-files" class="md-nav__link">
+    Config files
+  </a>
+  
+    <nav class="md-nav" aria-label="Config files">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#helmfileyaml" class="md-nav__link">
+    helmfile.yaml
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#valuesyaml" class="md-nav__link">
+    values.yaml
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#axon-agentyml" class="md-nav__link">
+    axon-agent.yml
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#start-up" class="md-nav__link">
+    Start up
+  </a>
+  
+    <nav class="md-nav" aria-label="Start up">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#create-axon-agent-configuration" class="md-nav__link">
+    Create Axon Agent configuration
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#run-helmfile" class="md-nav__link">
+    Run helmfile
+  </a>
+  
+    <nav class="md-nav" aria-label="Run helmfile">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#with-locally-installed-helm-and-helmfile" class="md-nav__link">
+    With locally installed helm and helmfile
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#with-docker-image" class="md-nav__link">
+    With docker image
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#access" class="md-nav__link">
+    Access
+  </a>
+  
+    <nav class="md-nav" aria-label="Access">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#minikube" class="md-nav__link">
+    Minikube
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#loadbalancer" class="md-nav__link">
+    LoadBalancer
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#troubleshooting" class="md-nav__link">
+    Troubleshooting
+  </a>
+  
+    <nav class="md-nav" aria-label="Troubleshooting">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#storage" class="md-nav__link">
+    Storage
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#memory" class="md-nav__link">
+    Memory
+  </a>
+  
+    <nav class="md-nav" aria-label="Memory">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#minikube_1" class="md-nav__link">
+    Minikube
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#putting-it-all-together" class="md-nav__link">
+    Putting it all together
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+    
+  </li>
+
+        
+      </ul>
+    </nav>
+  </li>
+
+    
+      
+      
+      
+
+
+  <li class="md-nav__item md-nav__item--nested">
+    
+      <input class="md-nav__toggle md-toggle" data-md-toggle="nav-4" type="checkbox" id="nav-4">
+    
+    <label class="md-nav__link" for="nav-4">
+      Using AxonOps
+      <span class="md-nav__icon md-icon"></span>
+    </label>
+    <nav class="md-nav" aria-label="Using AxonOps" data-md-level="1">
+      <label class="md-nav__title" for="nav-4">
+        <span class="md-nav__icon md-icon"></span>
+        Using AxonOps
+      </label>
+      <ul class="md-nav__list" data-md-scrollfix>
+        
+        
+          
+          
+          
+
+
+  <li class="md-nav__item md-nav__item--nested">
+    
+      <input class="md-nav__toggle md-toggle" data-md-toggle="nav-4-1" type="checkbox" id="nav-4-1">
+    
+    <label class="md-nav__link" for="nav-4-1">
+      Cluster Overview
+      <span class="md-nav__icon md-icon"></span>
+    </label>
+    <nav class="md-nav" aria-label="Cluster Overview" data-md-level="2">
+      <label class="md-nav__title" for="nav-4-1">
+        <span class="md-nav__icon md-icon"></span>
+        Cluster Overview
+      </label>
+      <ul class="md-nav__list" data-md-scrollfix>
+        
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../../cluster/cluster-overview/" class="md-nav__link">
+      Overview
+    </a>
+  </li>
+
+        
+      </ul>
+    </nav>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item md-nav__item--nested">
+    
+      <input class="md-nav__toggle md-toggle" data-md-toggle="nav-4-2" type="checkbox" id="nav-4-2">
+    
+    <label class="md-nav__link" for="nav-4-2">
+      Monitoring
+      <span class="md-nav__icon md-icon"></span>
+    </label>
+    <nav class="md-nav" aria-label="Monitoring" data-md-level="2">
+      <label class="md-nav__title" for="nav-4-2">
+        <span class="md-nav__icon md-icon"></span>
+        Monitoring
+      </label>
+      <ul class="md-nav__list" data-md-scrollfix>
+        
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../../monitoring/overview/" class="md-nav__link">
+      Monitoring Overview
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item md-nav__item--nested">
+    
+      <input class="md-nav__toggle md-toggle" data-md-toggle="nav-4-2-2" type="checkbox" id="nav-4-2-2">
+    
+    <label class="md-nav__link" for="nav-4-2-2">
+      Service Checks
+      <span class="md-nav__icon md-icon"></span>
+    </label>
+    <nav class="md-nav" aria-label="Service Checks" data-md-level="3">
+      <label class="md-nav__title" for="nav-4-2-2">
+        <span class="md-nav__icon md-icon"></span>
+        Service Checks
+      </label>
+      <ul class="md-nav__list" data-md-scrollfix>
+        
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../../monitoring/servicechecks/overview/" class="md-nav__link">
+      Overview
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../../monitoring/servicechecks/configurations/" class="md-nav__link">
+      Configurations
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../../monitoring/servicechecks/alerting/" class="md-nav__link">
+      Alerting
+    </a>
+  </li>
+
+        
+      </ul>
+    </nav>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item md-nav__item--nested">
+    
+      <input class="md-nav__toggle md-toggle" data-md-toggle="nav-4-2-3" type="checkbox" id="nav-4-2-3">
+    
+    <label class="md-nav__link" for="nav-4-2-3">
+      Metrics Dashboard
+      <span class="md-nav__icon md-icon"></span>
+    </label>
+    <nav class="md-nav" aria-label="Metrics Dashboard" data-md-level="3">
+      <label class="md-nav__title" for="nav-4-2-3">
+        <span class="md-nav__icon md-icon"></span>
+        Metrics Dashboard
+      </label>
+      <ul class="md-nav__list" data-md-scrollfix>
+        
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../../monitoring/metricsdashboards/cassandra/" class="md-nav__link">
+      Cassandra
+    </a>
+  </li>
+
+        
+      </ul>
+    </nav>
+  </li>
+
+        
+      </ul>
+    </nav>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item md-nav__item--nested">
+    
+      <input class="md-nav__toggle md-toggle" data-md-toggle="nav-4-3" type="checkbox" id="nav-4-3">
+    
+    <label class="md-nav__link" for="nav-4-3">
+      Notification Integrations
+      <span class="md-nav__icon md-icon"></span>
+    </label>
+    <nav class="md-nav" aria-label="Notification Integrations" data-md-level="2">
+      <label class="md-nav__title" for="nav-4-3">
+        <span class="md-nav__icon md-icon"></span>
+        Notification Integrations
+      </label>
+      <ul class="md-nav__list" data-md-scrollfix>
+        
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../../integrations/overview/" class="md-nav__link">
+      Overview
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../../integrations/pagerduy-integration/" class="md-nav__link">
+      PagerDuty Integration
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../../integrations/slack-integration/" class="md-nav__link">
+      Slack Integration
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../../integrations/email-integration/" class="md-nav__link">
+      Email Integration
+    </a>
+  </li>
+
+        
+      </ul>
+    </nav>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item md-nav__item--nested">
+    
+      <input class="md-nav__toggle md-toggle" data-md-toggle="nav-4-4" type="checkbox" id="nav-4-4">
+    
+    <label class="md-nav__link" for="nav-4-4">
+      Operations
+      <span class="md-nav__icon md-icon"></span>
+    </label>
+    <nav class="md-nav" aria-label="Operations" data-md-level="2">
+      <label class="md-nav__title" for="nav-4-4">
+        <span class="md-nav__icon md-icon"></span>
+        Operations
+      </label>
+      <ul class="md-nav__list" data-md-scrollfix>
+        
+        
+          
+          
+          
+
+
+  <li class="md-nav__item md-nav__item--nested">
+    
+      <input class="md-nav__toggle md-toggle" data-md-toggle="nav-4-4-1" type="checkbox" id="nav-4-4-1">
+    
+    <label class="md-nav__link" for="nav-4-4-1">
+      Cassandra
+      <span class="md-nav__icon md-icon"></span>
+    </label>
+    <nav class="md-nav" aria-label="Cassandra" data-md-level="3">
+      <label class="md-nav__title" for="nav-4-4-1">
+        <span class="md-nav__icon md-icon"></span>
+        Cassandra
+      </label>
+      <ul class="md-nav__list" data-md-scrollfix>
+        
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../../operations/cassandra/repair/" class="md-nav__link">
+      Repair
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item md-nav__item--nested">
+    
+      <input class="md-nav__toggle md-toggle" data-md-toggle="nav-4-4-1-2" type="checkbox" id="nav-4-4-1-2">
+    
+    <label class="md-nav__link" for="nav-4-4-1-2">
+      Backups
+      <span class="md-nav__icon md-icon"></span>
+    </label>
+    <nav class="md-nav" aria-label="Backups" data-md-level="4">
+      <label class="md-nav__title" for="nav-4-4-1-2">
+        <span class="md-nav__icon md-icon"></span>
+        Backups
+      </label>
+      <ul class="md-nav__list" data-md-scrollfix>
+        
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../../operations/cassandra/backup/overview/" class="md-nav__link">
+      Overview
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../../operations/cassandra/backup/configurations/" class="md-nav__link">
+      Cassandra Backup Configurations
+    </a>
+  </li>
+
+        
+      </ul>
+    </nav>
+  </li>
+
+        
+      </ul>
+    </nav>
+  </li>
+
+        
+      </ul>
+    </nav>
+  </li>
+
+        
+      </ul>
+    </nav>
+  </li>
+
+    
+      
+      
+      
+
+
+  <li class="md-nav__item md-nav__item--nested">
+    
+      <input class="md-nav__toggle md-toggle" data-md-toggle="nav-5" type="checkbox" id="nav-5">
+    
+    <label class="md-nav__link" for="nav-5">
+      AxonOps Server API
+      <span class="md-nav__icon md-icon"></span>
+    </label>
+    <nav class="md-nav" aria-label="AxonOps Server API" data-md-level="1">
+      <label class="md-nav__title" for="nav-5">
+        <span class="md-nav__icon md-icon"></span>
+        AxonOps Server API
+      </label>
+      <ul class="md-nav__list" data-md-scrollfix>
+        
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../../server/api/overview/" class="md-nav__link">
+      AxonOps Server API
+    </a>
+  </li>
+
+        
+      </ul>
+    </nav>
+  </li>
+
+    
+      
+      
+      
+
+
+  <li class="md-nav__item md-nav__item--nested">
+    
+      <input class="md-nav__toggle md-toggle" data-md-toggle="nav-6" type="checkbox" id="nav-6">
+    
+    <label class="md-nav__link" for="nav-6">
+      How-to
+      <span class="md-nav__icon md-icon"></span>
+    </label>
+    <nav class="md-nav" aria-label="How-to" data-md-level="1">
+      <label class="md-nav__title" for="nav-6">
+        <span class="md-nav__icon md-icon"></span>
+        How-to
+      </label>
+      <ul class="md-nav__list" data-md-scrollfix>
+        
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../../how-to/setup-alert-rules/" class="md-nav__link">
+      Setup Alert Rules
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../../how-to/setup-servicechecks/" class="md-nav__link">
+      Setup Service Checks
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../../how-to/setup-log-collection/" class="md-nav__link">
+      Setup Log Collection
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../../how-to/default-routing/" class="md-nav__link">
+      Setup Default Routing
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../../how-to/backup-restore-notifications/" class="md-nav__link">
+      Setup Backup-Restore Notifications
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../../how-to/setup-dashboards-global-integrations/" class="md-nav__link">
+      Setup Dashboards-Global Integrations
+    </a>
+  </li>
+
+        
+      </ul>
+    </nav>
+  </li>
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="toc">
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#introduction" class="md-nav__link">
+    Introduction
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#using-minikube" class="md-nav__link">
+    Using minikube
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#helmfile" class="md-nav__link">
+    Helmfile
+  </a>
+  
+    <nav class="md-nav" aria-label="Helmfile">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#overview" class="md-nav__link">
+    Overview
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#install-requirements" class="md-nav__link">
+    Install requirements
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#config-files" class="md-nav__link">
+    Config files
+  </a>
+  
+    <nav class="md-nav" aria-label="Config files">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#helmfileyaml" class="md-nav__link">
+    helmfile.yaml
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#valuesyaml" class="md-nav__link">
+    values.yaml
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#axon-agentyml" class="md-nav__link">
+    axon-agent.yml
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#start-up" class="md-nav__link">
+    Start up
+  </a>
+  
+    <nav class="md-nav" aria-label="Start up">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#create-axon-agent-configuration" class="md-nav__link">
+    Create Axon Agent configuration
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#run-helmfile" class="md-nav__link">
+    Run helmfile
+  </a>
+  
+    <nav class="md-nav" aria-label="Run helmfile">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#with-locally-installed-helm-and-helmfile" class="md-nav__link">
+    With locally installed helm and helmfile
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#with-docker-image" class="md-nav__link">
+    With docker image
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#access" class="md-nav__link">
+    Access
+  </a>
+  
+    <nav class="md-nav" aria-label="Access">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#minikube" class="md-nav__link">
+    Minikube
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#loadbalancer" class="md-nav__link">
+    LoadBalancer
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#troubleshooting" class="md-nav__link">
+    Troubleshooting
+  </a>
+  
+    <nav class="md-nav" aria-label="Troubleshooting">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#storage" class="md-nav__link">
+    Storage
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#memory" class="md-nav__link">
+    Memory
+  </a>
+  
+    <nav class="md-nav" aria-label="Memory">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#minikube_1" class="md-nav__link">
+    Minikube
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#putting-it-all-together" class="md-nav__link">
+    Putting it all together
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          <div class="md-content">
+            <article class="md-content__inner md-typeset">
+              
+                
+                
+                <h1 id="cassandra-with-axonops-on-kubernetes">Cassandra with AxonOps on Kubernetes<a class="headerlink" href="#cassandra-with-axonops-on-kubernetes" title="Permanent link">&para;</a></h1>
+<h2 id="introduction">Introduction<a class="headerlink" href="#introduction" title="Permanent link">&para;</a></h2>
+<p>The following shows how to install AxonOps for monitoring cassandra. This process specifically requires the official <a href="https://github.com/helm/charts/tree/master/incubator/cassandra">cassandra helm repository</a>.</p>
+<h2 id="using-minikube">Using minikube<a class="headerlink" href="#using-minikube" title="Permanent link">&para;</a></h2>
+<p>The deployment should work fine on latest versions of <a href="https://kubernetes.io/docs/tasks/tools/install-minikube/">minikube</a> as long as you provide enough memory for it.</p>
+<div class="codehilite"><pre><span></span><code>minikube start --memory <span class="m">8192</span> --cpus<span class="o">=</span><span class="m">4</span>
+minikube addons <span class="nb">enable</span> storage-provisioner
+</code></pre></div>
+
+<p><strong>:warning: Make sure you use a recent version of minikube. Also check available <a href="https://minikube.sigs.k8s.io/docs/drivers/">drivers</a> and select the most appropiate for your platform</strong></p>
+<h2 id="helmfile">Helmfile<a class="headerlink" href="#helmfile" title="Permanent link">&para;</a></h2>
+<h3 id="overview">Overview<a class="headerlink" href="#overview" title="Permanent link">&para;</a></h3>
+<p>As this deployment contains multiple applications we recommend you use an automation system such as Ansible or <a href="https://github.com/roboll/helmfile">Helmfile</a> to put together the config. The example below uses helmfile.</p>
+<h3 id="install-requirements">Install requirements<a class="headerlink" href="#install-requirements" title="Permanent link">&para;</a></h3>
+<p>You would need to install the following components:</p>
+<ul>
+<li>helm: https://helm.sh/docs/intro/install/</li>
+<li>helmfile: https://github.com/roboll/helmfile/releases</li>
+</ul>
+<p>Alternatively you can consider using a dockerized version of them both such as https://hub.docker.com/r/chatwork/helmfile</p>
+<h3 id="config-files">Config files<a class="headerlink" href="#config-files" title="Permanent link">&para;</a></h3>
+<p>The values below are set for running on a laptop with <code>minikube</code>, adjust accordingly for larger deployments.</p>
+<h4 id="helmfileyaml">helmfile.yaml<a class="headerlink" href="#helmfileyaml" title="Permanent link">&para;</a></h4>
+<div class="codehilite"><pre><span></span><code><span class="nn">---</span>
+<span class="nt">repositories</span><span class="p">:</span>
+  <span class="p p-Indicator">-</span> <span class="nt">name</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">stable</span>
+    <span class="nt">url</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">https://kubernetes-charts.storage.googleapis.com</span>
+  <span class="p p-Indicator">-</span> <span class="nt">name</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">incubator</span>
+    <span class="nt">url</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">https://kubernetes-charts-incubator.storage.googleapis.com</span>
+  <span class="p p-Indicator">-</span> <span class="nt">name</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">axonops-helm</span>
+    <span class="nt">url</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">https://repo.axonops.com/public/helm/helm/charts/</span>
+  <span class="p p-Indicator">-</span> <span class="nt">name</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">bitnami</span>
+    <span class="nt">url</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">https://charts.bitnami.com/bitnami</span>
+<span class="nt">releases</span><span class="p">:</span>
+  <span class="p p-Indicator">-</span> <span class="nt">name</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">axon-elastic</span>
+    <span class="nt">namespace</span><span class="p">:</span> <span class="p p-Indicator">{{</span> <span class="nv">env &quot;NAMESPACE&quot; | default &quot;monitoring&quot;</span> <span class="p p-Indicator">}}</span>
+    <span class="nt">chart</span><span class="p">:</span> <span class="s">&quot;bitnami/elasticsearch&quot;</span>
+    <span class="nt">wait</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">true</span>
+    <span class="nt">labels</span><span class="p">:</span>
+      <span class="nt">env</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">minikube</span>
+    <span class="nt">values</span><span class="p">:</span>
+      <span class="p p-Indicator">-</span> <span class="nt">fullnameOverride</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">axon-elastic</span>
+      <span class="p p-Indicator">-</span> <span class="nt">imageTag</span><span class="p">:</span> <span class="s">&quot;7.8.0&quot;</span>
+      <span class="p p-Indicator">-</span> <span class="nt">data</span><span class="p">:</span>
+          <span class="nt">replicas</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">1</span>
+          <span class="nt">persistence</span><span class="p">:</span>
+            <span class="nt">size</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">1Gi</span>
+            <span class="nt">enabled</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">true</span>
+            <span class="nt">accessModes</span><span class="p">:</span> <span class="p p-Indicator">[</span> <span class="s">&quot;ReadWriteOnce&quot;</span> <span class="p p-Indicator">]</span>
+      <span class="p p-Indicator">-</span> <span class="nt">curator</span><span class="p">:</span>
+          <span class="nt">enabled</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">true</span>
+      <span class="p p-Indicator">-</span> <span class="nt">coordinating</span><span class="p">:</span>
+          <span class="nt">replicas</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">1</span>
+      <span class="p p-Indicator">-</span> <span class="nt">master</span><span class="p">:</span>
+          <span class="nt">replicas</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">1</span>
+          <span class="nt">persistence</span><span class="p">:</span>
+            <span class="nt">size</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">1Gi</span>
+            <span class="nt">enabled</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">true</span>
+            <span class="nt">accessModes</span><span class="p">:</span> <span class="p p-Indicator">[</span> <span class="s">&quot;ReadWriteOnce&quot;</span> <span class="p p-Indicator">]</span>
+
+  <span class="p p-Indicator">-</span> <span class="nt">name</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">axonops</span>
+    <span class="nt">namespace</span><span class="p">:</span> <span class="p p-Indicator">{{</span> <span class="nv">env &quot;NAMESPACE&quot; | default &quot;monitoring&quot;</span> <span class="p p-Indicator">}}</span>
+    <span class="nt">chart</span><span class="p">:</span> <span class="s">&quot;axonops-helm/axonops&quot;</span>
+    <span class="nt">wait</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">true</span>
+    <span class="nt">labels</span><span class="p">:</span>
+      <span class="nt">env</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">minikube</span>
+    <span class="nt">values</span><span class="p">:</span>
+      <span class="p p-Indicator">-</span> <span class="l l-Scalar l-Scalar-Plain">values.yaml</span>
+
+  <span class="p p-Indicator">-</span> <span class="nt">name</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">cassandra</span>
+    <span class="nt">namespace</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">cassandra</span>
+    <span class="nt">chart</span><span class="p">:</span> <span class="s">&quot;incubator/cassandra&quot;</span>
+    <span class="nt">wait</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">true</span>
+    <span class="nt">labels</span><span class="p">:</span>
+      <span class="nt">env</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">dev</span>
+    <span class="nt">values</span><span class="p">:</span>
+      <span class="p p-Indicator">-</span> <span class="l l-Scalar l-Scalar-Plain">values.yaml</span>
+</code></pre></div>
+
+<h4 id="valuesyaml">values.yaml<a class="headerlink" href="#valuesyaml" title="Permanent link">&para;</a></h4>
+<div class="codehilite"><pre><span></span><code><span class="nn">---</span>
+<span class="nt">persistence</span><span class="p">:</span>
+  <span class="nt">enabled</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">true</span>
+  <span class="nt">size</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">1Gi</span>
+  <span class="nt">accessMode</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">ReadWriteMany</span>
+
+<span class="nt">podSettings</span><span class="p">:</span>
+  <span class="nt">terminationGracePeriodSeconds</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">300</span>
+
+<span class="nt">image</span><span class="p">:</span>
+  <span class="nt">tag</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">3.11.6</span>
+  <span class="nt">pullPolicy</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">IfNotPresent</span>
+
+<span class="nt">config</span><span class="p">:</span>
+  <span class="nt">cluster_name</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">minikube</span>
+  <span class="nt">cluster_size</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">3</span>
+  <span class="nt">seed_size</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">2</span>
+  <span class="nt">num_tokens</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">256</span>
+  <span class="nt">max_heap_size</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">512M</span>
+  <span class="nt">heap_new_size</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">512M</span>
+
+<span class="nt">env</span><span class="p">:</span>
+  <span class="nt">JVM_OPTS</span><span class="p">:</span> <span class="s">&quot;-javaagent:/var/lib/axonops/axon-cassandra3.11-agent.jar=/etc/axonops/axon-agent.yml&quot;</span>
+
+<span class="nt">extraVolumes</span><span class="p">:</span>
+  <span class="p p-Indicator">-</span> <span class="nt">name</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">axonops-agent-config</span>
+    <span class="nt">configMap</span><span class="p">:</span>
+      <span class="nt">name</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">axonops-agent</span>
+  <span class="p p-Indicator">-</span> <span class="nt">name</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">axonops-shared</span>
+    <span class="nt">emptyDir</span><span class="p">:</span> <span class="p p-Indicator">{}</span>
+  <span class="p p-Indicator">-</span> <span class="nt">name</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">axonops-logs</span>
+    <span class="nt">emptyDir</span><span class="p">:</span> <span class="p p-Indicator">{}</span>
+  <span class="p p-Indicator">-</span> <span class="nt">name</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">cassandra-logs</span>
+    <span class="nt">emptyDir</span><span class="p">:</span> <span class="p p-Indicator">{}</span>
+
+<span class="nt">extraVolumeMounts</span><span class="p">:</span>
+  <span class="p p-Indicator">-</span> <span class="nt">name</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">axonops-shared</span>
+    <span class="nt">mountPath</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">/var/lib/axonops</span>
+    <span class="nt">readOnly</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">false</span>
+  <span class="p p-Indicator">-</span> <span class="nt">name</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">axonops-agent-config</span>
+    <span class="nt">mountPath</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">/etc/axonops</span>
+    <span class="nt">readOnly</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">true</span>
+  <span class="p p-Indicator">-</span> <span class="nt">name</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">axonops-logs</span>
+    <span class="nt">mountPath</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">/var/log/axonops</span>
+  <span class="p p-Indicator">-</span> <span class="nt">name</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">cassandra-logs</span>
+    <span class="nt">mountPath</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">/var/log/cassandra</span>
+
+<span class="nt">extraContainers</span><span class="p">:</span>
+  <span class="p p-Indicator">-</span> <span class="nt">name</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">axonops-agent</span>
+    <span class="nt">image</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">digitalisdocker/axon-agent:latest</span>
+    <span class="nt">env</span><span class="p">:</span>
+      <span class="p p-Indicator">-</span> <span class="nt">name</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">AXON_AGENT_VERBOSITY</span>
+        <span class="nt">value</span><span class="p">:</span> <span class="s">&quot;1&quot;</span>
+    <span class="nt">volumeMounts</span><span class="p">:</span>
+      <span class="p p-Indicator">-</span> <span class="nt">name</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">axonops-agent-config</span>
+        <span class="nt">mountPath</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">/etc/axonops</span>
+        <span class="nt">readOnly</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">true</span>
+      <span class="p p-Indicator">-</span> <span class="nt">name</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">axonops-shared</span>
+        <span class="nt">mountPath</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">/var/lib/axonops</span>
+        <span class="nt">readOnly</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">false</span>
+      <span class="p p-Indicator">-</span> <span class="nt">name</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">axonops-logs</span>
+        <span class="nt">mountPath</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">/var/log/axonops</span>
+      <span class="p p-Indicator">-</span> <span class="nt">name</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">cassandra-logs</span>
+        <span class="nt">mountPath</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">/var/log/cassandra</span>
+      <span class="p p-Indicator">-</span> <span class="nt">name</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">data</span>
+        <span class="nt">mountPath</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">/var/lib/cassandra</span>
+        <span class="nt">readOnly</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">false</span>
+
+<span class="nt">axon-server</span><span class="p">:</span>
+  <span class="nt">elastic_host</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">http://axon-elastic-elasticsearch-master</span>
+  <span class="nt">image</span><span class="p">:</span>
+    <span class="nt">repository</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">digitalisdocker/axon-server</span>
+    <span class="nt">tag</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">latest</span>
+    <span class="nt">pullPolicy</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">IfNotPresent</span>
+
+
+<span class="nt">axon-dash</span><span class="p">:</span>
+  <span class="nt">axonServerUrl</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">http://axonops-axon-server:8080</span>
+  <span class="nt">service</span><span class="p">:</span>
+    <span class="c1"># use NodePort for minikube, change to ClusterIP or LoadBalancer on fully featured</span>
+    <span class="c1"># k8s deployments such as AWS or Google</span>
+    <span class="nt">type</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">NodePort</span>
+  <span class="nt">image</span><span class="p">:</span>
+    <span class="nt">repository</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">digitalisdocker/axon-dash</span>
+    <span class="nt">tag</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">latest</span>
+    <span class="nt">pullPolicy</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">IfNotPresent</span>
+</code></pre></div>
+
+<h4 id="axon-agentyml">axon-agent.yml<a class="headerlink" href="#axon-agentyml" title="Permanent link">&para;</a></h4>
+<div class="codehilite"><pre><span></span><code><span class="nt">axon-server</span><span class="p">:</span>
+    <span class="nt">hosts</span><span class="p">:</span> <span class="s">&quot;axonops-axon-server.monitoring&quot;</span> <span class="c1"># Specify axon-server IP axon-server.mycompany.</span>
+    <span class="nt">port</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">1888</span>
+
+<span class="nt">axon-agent</span><span class="p">:</span>
+    <span class="nt">org</span><span class="p">:</span> <span class="s">&quot;minikube&quot;</span> <span class="c1"># Specify your organisation name</span>
+    <span class="nt">human_readable_identifier</span><span class="p">:</span> <span class="s">&quot;axon_agent_ip&quot;</span> <span class="c1"># one of the following:</span>
+
+<span class="nt">NTP</span><span class="p">:</span>
+    <span class="nt">host</span><span class="p">:</span> <span class="s">&quot;pool.ntp.org&quot;</span> <span class="c1"># Specify a NTP to determine a NTP offset</span>
+
+<span class="nt">cassandra</span><span class="p">:</span>
+  <span class="nt">tier0</span><span class="p">:</span> <span class="c1"># metrics collected every 5 seconds</span>
+      <span class="nt">metrics</span><span class="p">:</span>
+          <span class="nt">jvm_</span><span class="p">:</span>
+            <span class="p p-Indicator">-</span> <span class="s">&quot;java.lang:*&quot;</span>
+          <span class="nt">cas_</span><span class="p">:</span>
+            <span class="p p-Indicator">-</span> <span class="s">&quot;org.apache.cassandra.metrics:*&quot;</span>
+            <span class="p p-Indicator">-</span> <span class="s">&quot;org.apache.cassandra.net:type=FailureDetector&quot;</span>
+
+  <span class="nt">tier1</span><span class="p">:</span>
+      <span class="nt">frequency</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">300</span> <span class="c1"># metrics collected every 300 seconds (5m)</span>
+      <span class="nt">metrics</span><span class="p">:</span>
+          <span class="nt">cas_</span><span class="p">:</span>
+            <span class="p p-Indicator">-</span> <span class="s">&quot;org.apache.cassandra.metrics:name=EstimatedPartitionCount,*&quot;</span>
+
+  <span class="nt">blacklist</span><span class="p">:</span> <span class="c1"># You can blacklist metrics based on Regex pattern. Hit the agent on http://agentIP:9916/metricslist to list JMX metrics it is collecting</span>
+    <span class="p p-Indicator">-</span> <span class="s">&quot;org.apache.cassandra.metrics:type=ColumnFamily.*&quot;</span> <span class="c1"># duplication of table metrics</span>
+    <span class="p p-Indicator">-</span> <span class="s">&quot;org.apache.cassandra.metrics:.*scope=Repair#.*&quot;</span> <span class="c1"># ignore each repair instance metrics</span>
+    <span class="p p-Indicator">-</span> <span class="s">&quot;org.apache.cassandra.metrics:.*name=SnapshotsSize.*&quot;</span> <span class="c1"># Collecting SnapshotsSize metrics slows down collection</span>
+    <span class="p p-Indicator">-</span> <span class="s">&quot;org.apache.cassandra.metrics:.*Max.*&quot;</span>
+    <span class="p p-Indicator">-</span> <span class="s">&quot;org.apache.cassandra.metrics:.*Min.*&quot;</span>
+    <span class="p p-Indicator">-</span> <span class="s">&quot;.*999thPercentile|.*50thPercentile|.*FifteenMinuteRate|.*FiveMinuteRate|.*MeanRate|.*Mean|.*OneMinuteRate|.*StdDev&quot;</span>
+
+  <span class="nt">JMXOperationsBlacklist</span><span class="p">:</span>
+    <span class="p p-Indicator">-</span> <span class="s">&quot;getThreadInfo&quot;</span>
+    <span class="p p-Indicator">-</span> <span class="s">&quot;getDatacenter&quot;</span>
+    <span class="p p-Indicator">-</span> <span class="s">&quot;getRack&quot;</span>
+
+  <span class="nt">DMLEventsWhitelist</span><span class="p">:</span> <span class="c1"># You can whitelist keyspaces / tables (list of &quot;keyspace&quot; and/or &quot;keyspace.table&quot; to log DML queries. Data is not analysed.</span>
+  <span class="c1"># - &quot;system_distributed&quot;</span>
+
+  <span class="nt">DMLEventsBlacklist</span><span class="p">:</span> <span class="c1"># You can blacklist keyspaces / tables from the DMLEventsWhitelist (list of &quot;keyspace&quot; and/or &quot;keyspace.table&quot; to log DML queries. Data is not analysed.</span>
+  <span class="c1"># - system_distributed.parent_repair_history</span>
+
+  <span class="nt">logSuccessfulRepairs</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">false</span> <span class="c1"># set it to true if you want to log all the successful repair events.</span>
+
+  <span class="nt">warningThresholdMillis</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">200</span> <span class="c1"># This will warn in logs when a MBean takes longer than the specified value.</span>
+
+  <span class="nt">logFormat</span><span class="p">:</span> <span class="s">&quot;%4$s</span><span class="nv"> </span><span class="s">%1$tY-%1$tm-%1$td</span><span class="nv"> </span><span class="s">%1$tH:%1$tM:%1$tS,%1$tL</span><span class="nv"> </span><span class="s">%5$s%6$s%n&quot;</span>
+</code></pre></div>
+
+<h2 id="start-up">Start up<a class="headerlink" href="#start-up" title="Permanent link">&para;</a></h2>
+<h3 id="create-axon-agent-configuration">Create Axon Agent configuration<a class="headerlink" href="#create-axon-agent-configuration" title="Permanent link">&para;</a></h3>
+<div class="codehilite"><pre><span></span><code>kubectl create ns cassandra
+kubectl create configmap axonops-agent --from-file<span class="o">=</span>axon-agent.yml -n cassandra
+</code></pre></div>
+
+<h3 id="run-helmfile">Run helmfile<a class="headerlink" href="#run-helmfile" title="Permanent link">&para;</a></h3>
+<h4 id="with-locally-installed-helm-and-helmfile">With locally installed helm and helmfile<a class="headerlink" href="#with-locally-installed-helm-and-helmfile" title="Permanent link">&para;</a></h4>
+<div class="codehilite"><pre><span></span><code><span class="nb">cd</span> your/config/directory
+hemlfile sync
+</code></pre></div>
+
+<h4 id="with-docker-image">With docker image<a class="headerlink" href="#with-docker-image" title="Permanent link">&para;</a></h4>
+<div class="codehilite"><pre><span></span><code>docker run --rm <span class="se">\</span>
+    -v ~/.kube:/root/.kube <span class="se">\</span>
+    -v <span class="si">${</span><span class="nv">PWD</span><span class="si">}</span>/.helm:/root/.helm <span class="se">\</span>
+    -v <span class="si">${</span><span class="nv">PWD</span><span class="si">}</span>/helmfile.yaml:/helmfile.yaml <span class="se">\</span>
+    -v <span class="si">${</span><span class="nv">PWD</span><span class="si">}</span>/values.yaml:/values.yaml <span class="se">\</span>
+    --net<span class="o">=</span>host chatwork/helmfile sync
+</code></pre></div>
+
+<h2 id="access">Access<a class="headerlink" href="#access" title="Permanent link">&para;</a></h2>
+<h3 id="minikube">Minikube<a class="headerlink" href="#minikube" title="Permanent link">&para;</a></h3>
+<p>If you used <code>minikube</code>, identify the name of the service with <code>kubectl get svc -n monitoring</code> and launch it with </p>
+<div class="codehilite"><pre><span></span><code>minikube service axonops-axon-dash -n monitoring
+</code></pre></div>
+
+<h3 id="loadbalancer">LoadBalancer<a class="headerlink" href="#loadbalancer" title="Permanent link">&para;</a></h3>
+<p>Find the DNS entry for it:</p>
+<div class="codehilite"><pre><span></span><code>kubectl get svc -n monitoring -o wide
+</code></pre></div>
+
+<p>Open your browser and copy and paste the URL.</p>
+<h2 id="troubleshooting">Troubleshooting<a class="headerlink" href="#troubleshooting" title="Permanent link">&para;</a></h2>
+<p>Check the status of the pods:</p>
+<div class="codehilite"><pre><span></span><code>kubectl get pod -n monitoring
+kubectl get pod -n cassandra
+</code></pre></div>
+
+<p>Any pod which is not on state <code>Running</code> check it out with</p>
+<div class="codehilite"><pre><span></span><code>kubectl describe -n NAMESPACE pod POD-NAME
+</code></pre></div>
+
+<h3 id="storage">Storage<a class="headerlink" href="#storage" title="Permanent link">&para;</a></h3>
+<p>One common problem is regarding storage. If you have enabled persistent storage you may see an error about persistent volume claims (not found, unclaimed, etc). If you're using <code>minikube</code> make sure you enable storage with </p>
+<div class="codehilite"><pre><span></span><code>minikube addons <span class="nb">enable</span> storage-provisioner
+</code></pre></div>
+
+<h3 id="memory">Memory<a class="headerlink" href="#memory" title="Permanent link">&para;</a></h3>
+<p>The second most common problem is not enough memory (OOMKilled). You will see this often if you're node does not have enough memory to run the containers or if the <code>heap</code> settings for Cassandra are not right. <code>kubectl describe</code> command will be showing <code>Error 127</code> when this occurs.</p>
+<p>In the <code>values.yaml</code> file adjust the heap options to match your hardware:</p>
+<div class="codehilite"><pre><span></span><code>  <span class="nt">max_heap_size</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">512M</span>
+  <span class="nt">heap_new_size</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">512M</span>
+</code></pre></div>
+
+<h4 id="minikube_1">Minikube<a class="headerlink" href="#minikube_1" title="Permanent link">&para;</a></h4>
+<p>Review the way you have started up <code>minikube</code> and assign more memory if you can. Also check the <a href="https://minikube.sigs.k8s.io/docs/drivers/">available drivers</a> and select the appropiate for your platform. On MacOS where I tested <code>hyperkit</code> or <code>virtualbox</code> are the best ones.</p>
+<div class="codehilite"><pre><span></span><code>minikube start --memory <span class="m">10240</span> --cpus<span class="o">=</span><span class="m">4</span> --driver<span class="o">=</span>hyperkit
+</code></pre></div>
+
+<h2 id="putting-it-all-together">Putting it all together<a class="headerlink" href="#putting-it-all-together" title="Permanent link">&para;</a></h2>
+<p><a href="https://youtu.be/Qa1dWx5atqQ" title="AxonOps Minikube"><img alt="AxonOps on Minikube" src="https://img.youtube.com/vi/Qa1dWx5atqQ/0.jpg" /></a></p>
+                
+              
+              
+                
+
+
+              
+            </article>
+          </div>
+        </div>
+      </main>
+      
+        
+<footer class="md-footer">
+  
+    <div class="md-footer-nav">
+      <nav class="md-footer-nav__inner md-grid" aria-label="Footer">
+        
+          <a href="../../compat_matrix/compat_matrix/" class="md-footer-nav__link md-footer-nav__link--prev" rel="prev">
+            <div class="md-footer-nav__button md-icon">
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12z"/></svg>
+            </div>
+            <div class="md-footer-nav__title">
+              <div class="md-ellipsis">
+                <span class="md-footer-nav__direction">
+                  Previous
+                </span>
+                Compatibility matrix
+              </div>
+            </div>
+          </a>
+        
+        
+          <a href="../../../cluster/cluster-overview/" class="md-footer-nav__link md-footer-nav__link--next" rel="next">
+            <div class="md-footer-nav__title">
+              <div class="md-ellipsis">
+                <span class="md-footer-nav__direction">
+                  Next
+                </span>
+                Overview
+              </div>
+            </div>
+            <div class="md-footer-nav__button md-icon">
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M4 11v2h12l-5.5 5.5 1.42 1.42L19.84 12l-7.92-7.92L10.5 5.5 16 11H4z"/></svg>
+            </div>
+          </a>
+        
+      </nav>
+    </div>
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-footer-copyright">
+        
+          <div class="md-footer-copyright__highlight">
+            © 2020 digitalis.io All Rights Reserved
+          </div>
+        
+        Made with
+        <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+          Material for MkDocs
+        </a>
+      </div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    
+      <script src="../../../assets/javascripts/vendor.6a3d08fc.min.js"></script>
+      <script src="../../../assets/javascripts/bundle.71201edf.min.js"></script><script id="__lang" type="application/json">{"clipboard.copy": "Copy to clipboard", "clipboard.copied": "Copied to clipboard", "search.config.lang": "en", "search.config.pipeline": "trimmer, stopWordFilter", "search.config.separator": "[\\s\\-]+", "search.placeholder": "Search", "search.result.placeholder": "Type to start searching", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.term.missing": "Missing"}</script>
+      
+      <script>
+        app = initialize({
+          base: "../../..",
+          features: [],
+          search: Object.assign({
+            worker: "../../../assets/javascripts/worker/search.4ac00218.min.js"
+          }, typeof search !== "undefined" && search)
+        })
+      </script>
+      
+    
+  </body>
+</html>
