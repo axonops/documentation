@@ -1,10 +1,10 @@
 site_name: AxonOps Documentation
-copyright: © 2019 digitalis.io All Rights Reserved
+copyright: © 2020 digitalis.io All Rights Reserved
 google_analytics: ['UA-69443414-2', 'docs.axonops.com']
 theme:
   name: 'material'
   favicon: 'img/favicon.ico'
-  logo: 'img/bg_logo.png'
+  logo: 'img/axonops_logo.svg'
   language: 'en'
   
 extra_css:
