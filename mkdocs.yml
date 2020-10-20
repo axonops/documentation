@@ -6,7 +6,7 @@ theme:
   favicon: 'img/favicon.ico'
   logo: 'img/axonops_logo.svg'
   language: 'en'
-  
+
 extra_css:
   - 'stylesheets/extra.css'
 markdown_extensions:
@@ -15,7 +15,7 @@ markdown_extensions:
       base_path: docs
   - codehilite:
       guess_lang: False
-       
+
   - toc:
       permalink: true
 plugins:
@@ -36,6 +36,7 @@ nav:
         #- AxonOps Agent: 'installation/axon-agent/install.md'
         - AxonOps Cassandra Agent: 'installation/cassandra-agent/install.md'
         - Compatibility matrix: 'installation/compat_matrix/compat_matrix.md'
+        - Kubernetes: 'installation/kubernetes/minikube.md'
 
     - Using AxonOps: 
         - Cluster Overview:
