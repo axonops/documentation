@@ -10,6 +10,21 @@ sudo echo 'thread_pool.write.queue_size: 2000' >> /etc/elasticsearch/elasticsear
 sudo echo 'thread_pool.bulk.queue_size: 2000' >> /etc/elasticsearch/elasticsearch.yml
 ```
 
+Increase the default heap size of elasticsearch by editing `/etc/elasticsearch/jvm.options`.
+From:
+``` bash
+-Xms1g
+-Xmx1g 
+```
+To: 
+``` bash
+-Xms8g
+-Xmx8g 
+```
+This will set the minimum and maximum heap size to 8 GB.
+Set Xmx and Xms to no more than 50% of your physical RAM. Elasticsearch requires memory for purposes other than the JVM heap and it is important to leave space for this.
+
+
 Set the following index codec by running the following command:
 ``` bash 
 sudo echo 'index.codec: best_compression' >> /etc/elasticsearch/elasticsearch.yml
