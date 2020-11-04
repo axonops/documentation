@@ -1166,6 +1166,19 @@ sudo dpkg -i elasticsearch-6.6.1.deb
 <div class="codehilite"><pre><span></span><code>sudo <span class="nb">echo</span> <span class="s1">&#39;thread_pool.bulk.queue_size: 2000&#39;</span> &gt;&gt; /etc/elasticsearch/elasticsearch.yml
 </code></pre></div>
 
+<p>Increase the default heap size of elasticsearch by editing <code>/etc/elasticsearch/jvm.options</code>.
+From:</p>
+<div class="codehilite"><pre><span></span><code>-Xms1g
+-Xmx1g 
+</code></pre></div>
+
+<p>To: </p>
+<div class="codehilite"><pre><span></span><code>-Xms8g
+-Xmx8g 
+</code></pre></div>
+
+<p>This will set the minimum and maximum heap size to 8 GB.
+Set Xmx and Xms to no more than 50% of your physical RAM. Elasticsearch requires memory for purposes other than the JVM heap and it is important to leave space for this.</p>
 <p>Set the following index codec by running the following command:</p>
 <div class="codehilite"><pre><span></span><code>sudo <span class="nb">echo</span> <span class="s1">&#39;index.codec: best_compression&#39;</span> &gt;&gt; /etc/elasticsearch/elasticsearch.yml
 </code></pre></div>
