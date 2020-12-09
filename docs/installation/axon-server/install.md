@@ -1,17 +1,20 @@
 ## Step 3 - axon-server configuration update
 
+
 Make sure **elastic_host** and **elastic_port** are corresponding to your Elasticsearch instance.
 
 * `/etc/axonops/axon-server.yml`
 
 ``` yaml hl_lines="3 4"
-host: 0.0.0.0  # axon-server listening address (used by axon-dash and axon-agent)
-port: 8080 # axon-server HTTP API listening port (used by axon-dash)
-elastic_host: http://localhost # Elasticsearch endpoint
-elastic_port: 9200 # Elasticsearch port
+host: 0.0.0.0  # axon-server listening address (used by axon-dash and axon-agent) (env variable: AXONSERVER_HOST)
+port: 8080 # axon-server HTTP API listening port (used by axon-dash) (AXONSERVER_PORT)
+elastic_hosts: # Elasticsearch endpoint (env variable:ELASTIC_HOSTS, comma separated list)
+  -http://localhost 
 #integrations_proxy: # proxy endpoint for integrations. (INTEGRATIONS_PROXY)
 
-# The following CLQ params are if you plan to use a CQL store for the metrics (recommended for large clusters)
+# For better performance on large clusters, you can use a CQL store for the metrics.
+# To opt-in for CQL metrics storage, just specify at least one CQL host.
+# We do recommend to specify a NetworkTopologyStrategy for cql_keyspace_replication
 #cql_hosts: #  (CQL_HOSTS, comma separated list)
 #  - 192.168.0.10:9042
 #  - 192.168.0.11:9042
@@ -27,8 +30,8 @@ elastic_port: 9200 # Elasticsearch port
 #cql_max_concurrent_reads: 1000  # (CQL_MAX_CONCURRENT_READS)
 #cql_batch_size: 1  # (CQL_BATCH_SIZE)
 #cql_page_size: 10  # (CQL_PAGE_SIZE)
-#cql_autocreate_tables: true # (CQL_AUTO_CREATE_TABLES) this will tell axon-server to automatically create the metrics tables
-#cql_keyspace_replication: "{ 'class': 'NetworkTopologyStrategy', 'dc1': 1 }" # (CQL_KS_REPLICATION) keyspace replication for the metrics tables
+#cql_autocreate_tables: true # (CQL_AUTO_CREATE_TABLES) this will tell axon-server to automatically create the metrics tables (true is recommended)
+#cql_keyspace_replication: "{ 'class' : 'SimpleStrategy', 'replication_factor' : 1 }" # (CQL_KS_REPLICATION) keyspace replication for the metrics tables
 #cql_retrypolicy_numretries: 3  # (CQL_RETRY_POLICY_NUM_RETRIES)
 #cql_retrypolicy_min: 1s  # (CQL_RETRY_POLICY_MIN)
 #cql_retrypolicy_max: 10s  # (CQL_RETRY_POLICY_MAX)
@@ -43,8 +46,6 @@ elastic_port: 9200 # Elasticsearch port
 #cql_lvl3_compaction_window_size: 1 # (CQL_LVL3_COMPACTION_WINDOW_SIZE)
 #cql_lvl4_compaction_window_size: 10 # (CQL_LVL4_COMPACTION_WINDOW_SIZE)
 #cql_lvl5_compaction_window_size: 120 # (CQL_LVL5_COMPACTION_WINDOW_SIZE)
-
-
 
 axon-dash: # This must point to axon-dash address
   host: 127.0.0.1
