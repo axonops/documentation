@@ -21,10 +21,11 @@ sudo apt-get install axon-dash
 Change **axon-dash** configuration to specify **axon-server** listening address.
 
 * `/etc/axonops/axon-dash.yml`
-``` yaml  hl_lines="6"
+``` yaml  hl_lines="7"
 axon-dash: #  The listening address of axon-dash
   host: 0.0.0.0
   port: 3000
+  line_charts_max_results: 256
 
 axon-server:
   public_endpoints: "http://axon-server.public:8080, https://axon-server.public" # Public HTTP endpoint to axon-server API. This can be a list with comma separator. http://127.0.0.1 or http://locahost are always wrong.
