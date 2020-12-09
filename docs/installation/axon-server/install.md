@@ -9,7 +9,42 @@ host: 0.0.0.0  # axon-server listening address (used by axon-dash and axon-agent
 port: 8080 # axon-server HTTP API listening port (used by axon-dash)
 elastic_host: http://localhost # Elasticsearch endpoint
 elastic_port: 9200 # Elasticsearch port
-#integrations_proxy: proxy endpoint for integrations. (INTEGRATIONS_PROXY)
+#integrations_proxy: # proxy endpoint for integrations. (INTEGRATIONS_PROXY)
+
+# The following CLQ params are if you plan to use a CQL store for the metrics (recommended for large clusters)
+#cql_hosts: #  (CQL_HOSTS, comma separated list)
+#  - 192.168.0.10:9042
+#  - 192.168.0.11:9042
+#cql_username: "cassandra" # (CQL_USERNAME)
+#cql_password: "cassandra" # (CQL_PASSWORD)
+#cql_local_dc: datacenter1 # (CQL_LOCAL_DC)
+#cql_ssl: false # (CQL_SSL)
+#cql_skip_verify: false  # (CQL_SSL_SKIP_VERIFY)
+#cql_ca_file: /path/to/ca_file  # (CQL_CA_FILE)
+#cql_cert_file: /path/to/cert_file  # (CQL_CERT_FILE)
+#cql_key_file: /path/to/key_file  # (CQL_KEY_FILE)
+#cql_proto_version: 4  # (CQL_PROTO_VERSION)
+#cql_max_concurrent_reads: 1000  # (CQL_MAX_CONCURRENT_READS)
+#cql_batch_size: 1  # (CQL_BATCH_SIZE)
+#cql_page_size: 10  # (CQL_PAGE_SIZE)
+#cql_autocreate_tables: true # (CQL_AUTO_CREATE_TABLES) this will tell axon-server to automatically create the metrics tables
+#cql_keyspace_replication: "{ 'class': 'NetworkTopologyStrategy', 'dc1': 1 }" # (CQL_KS_REPLICATION) keyspace replication for the metrics tables
+#cql_retrypolicy_numretries: 3  # (CQL_RETRY_POLICY_NUM_RETRIES)
+#cql_retrypolicy_min: 1s  # (CQL_RETRY_POLICY_MIN)
+#cql_retrypolicy_max: 10s  # (CQL_RETRY_POLICY_MAX)
+#cql_reconnectionpolicy_maxretries: 10 # (CQL_RECONNECTION_POLICY_MAX_RETRIES)
+#cql_reconnectionpolicy_initialinterval: 1s # (CQL_RECONNECTION_POLICY_INITIAL_INTERVAL)
+#cql_reconnectionpolicy_maxinterval: 10s # (CQL_RECONNECTION_POLICY_MAX_INTERVAL)
+#cql_metrics_cache_max_size_mb: 100  #MB # (CQL_METRICS_CACHE_MAX_SIZE_MB)
+#cql_read_consistency: "LOCAL_ONE" # (CQL_READ_CONSISTENCY) #One of the following:	ANY, ONE, TWO, THREE, QUORUM, ALL, LOCAL_QUORUM, EACH_QUORUM, LOCAL_ONE
+#cql_write_consistency: "LOCAL_ONE" # (CQL_WRITE_CONSISTENCY) #One of the following:	ANY, ONE, TWO, THREE, QUORUM, ALL, LOCAL_QUORUM, EACH_QUORUM, LOCAL_ONE
+#cql_lvl1_compaction_window_size: 12 # (CQL_LVL1_COMPACTION_WINDOW_SIZE)
+#cql_lvl2_compaction_window_size: 1 # (CQL_LVL2_COMPACTION_WINDOW_SIZE)
+#cql_lvl3_compaction_window_size: 1 # (CQL_LVL3_COMPACTION_WINDOW_SIZE)
+#cql_lvl4_compaction_window_size: 10 # (CQL_LVL4_COMPACTION_WINDOW_SIZE)
+#cql_lvl5_compaction_window_size: 120 # (CQL_LVL5_COMPACTION_WINDOW_SIZE)
+
+
 
 axon-dash: # This must point to axon-dash address
   host: 127.0.0.1
