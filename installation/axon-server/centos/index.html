@@ -1187,13 +1187,15 @@ sudo yum install axon-server
 <ul>
 <li><code>/etc/axonops/axon-server.yml</code></li>
 </ul>
-<div class="codehilite"><pre><span></span><code><span class="nt">host</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">0.0.0.0</span>  <span class="c1"># axon-server listening address (used by axon-dash and axon-agent)</span>
-<span class="nt">port</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">8080</span> <span class="c1"># axon-server HTTP API listening port (used by axon-dash)</span>
-<span class="hll"><span class="nt">elastic_host</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">http://localhost</span> <span class="c1"># Elasticsearch endpoint</span>
-</span><span class="hll"><span class="nt">elastic_port</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">9200</span> <span class="c1"># Elasticsearch port</span>
+<div class="codehilite"><pre><span></span><code><span class="nt">host</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">0.0.0.0</span>  <span class="c1"># axon-server listening address (used by axon-dash and axon-agent) (env variable: AXONSERVER_HOST)</span>
+<span class="nt">port</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">8080</span> <span class="c1"># axon-server HTTP API listening port (used by axon-dash) (AXONSERVER_PORT)</span>
+<span class="hll"><span class="nt">elastic_hosts</span><span class="p">:</span> <span class="c1"># Elasticsearch endpoint (env variable:ELASTIC_HOSTS, comma separated list)</span>
+</span><span class="hll">  <span class="l l-Scalar l-Scalar-Plain">-http://localhost</span> 
 </span><span class="c1">#integrations_proxy: # proxy endpoint for integrations. (INTEGRATIONS_PROXY)</span>
 
-<span class="c1"># The following CLQ params are if you plan to use a CQL store for the metrics (recommended for large clusters)</span>
+<span class="c1"># For better performance on large clusters, you can use a CQL store for the metrics.</span>
+<span class="c1"># To opt-in for CQL metrics storage, just specify at least one CQL host.</span>
+<span class="c1"># We do recommend to specify a NetworkTopologyStrategy for cql_keyspace_replication</span>
 <span class="c1">#cql_hosts: #  (CQL_HOSTS, comma separated list)</span>
 <span class="c1">#  - 192.168.0.10:9042</span>
 <span class="c1">#  - 192.168.0.11:9042</span>
@@ -1209,8 +1211,8 @@ sudo yum install axon-server
 <span class="c1">#cql_max_concurrent_reads: 1000  # (CQL_MAX_CONCURRENT_READS)</span>
 <span class="c1">#cql_batch_size: 1  # (CQL_BATCH_SIZE)</span>
 <span class="c1">#cql_page_size: 10  # (CQL_PAGE_SIZE)</span>
-<span class="c1">#cql_autocreate_tables: true # (CQL_AUTO_CREATE_TABLES) this will tell axon-server to automatically create the metrics tables</span>
-<span class="c1">#cql_keyspace_replication: &quot;{ &#39;class&#39;: &#39;NetworkTopologyStrategy&#39;, &#39;dc1&#39;: 1 }&quot; # (CQL_KS_REPLICATION) keyspace replication for the metrics tables</span>
+<span class="c1">#cql_autocreate_tables: true # (CQL_AUTO_CREATE_TABLES) this will tell axon-server to automatically create the metrics tables (true is recommended)</span>
+<span class="c1">#cql_keyspace_replication: &quot;{ &#39;class&#39; : &#39;SimpleStrategy&#39;, &#39;replication_factor&#39; : 1 }&quot; # (CQL_KS_REPLICATION) keyspace replication for the metrics tables</span>
 <span class="c1">#cql_retrypolicy_numretries: 3  # (CQL_RETRY_POLICY_NUM_RETRIES)</span>
 <span class="c1">#cql_retrypolicy_min: 1s  # (CQL_RETRY_POLICY_MIN)</span>
 <span class="c1">#cql_retrypolicy_max: 10s  # (CQL_RETRY_POLICY_MAX)</span>
@@ -1225,8 +1227,6 @@ sudo yum install axon-server
 <span class="c1">#cql_lvl3_compaction_window_size: 1 # (CQL_LVL3_COMPACTION_WINDOW_SIZE)</span>
 <span class="c1">#cql_lvl4_compaction_window_size: 10 # (CQL_LVL4_COMPACTION_WINDOW_SIZE)</span>
 <span class="c1">#cql_lvl5_compaction_window_size: 120 # (CQL_LVL5_COMPACTION_WINDOW_SIZE)</span>
-
-
 
 <span class="nt">axon-dash</span><span class="p">:</span> <span class="c1"># This must point to axon-dash address</span>
   <span class="nt">host</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">127.0.0.1</span>
