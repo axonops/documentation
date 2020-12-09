@@ -9,6 +9,7 @@ host: 0.0.0.0  # axon-server listening address (used by axon-dash and axon-agent
 port: 8080 # axon-server HTTP API listening port (used by axon-dash)
 elastic_host: http://localhost # Elasticsearch endpoint
 elastic_port: 9200 # Elasticsearch port
+#integrations_proxy: proxy endpoint for integrations. (INTEGRATIONS_PROXY)
 
 axon-dash: # This must point to axon-dash address
   host: 127.0.0.1
