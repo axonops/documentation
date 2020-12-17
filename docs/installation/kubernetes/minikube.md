@@ -50,6 +50,7 @@ releases:
   - name: axon-elastic
     namespace: {{ env "NAMESPACE" | default "monitoring" }}
     chart: "bitnami/elasticsearch"
+    version: '12.8.1'
     wait: true
     labels:
       env: minikube
@@ -84,7 +85,7 @@ releases:
 
   - name: cassandra
     namespace: cassandra
-    chart: "incubator/cassandra"
+    chart: "axonops-helm/cassandra"
     wait: true
     labels:
       env: dev
@@ -148,6 +149,25 @@ extraContainers:
     env:
       - name: AXON_AGENT_VERBOSITY
         value: "1"
+      - name: DATA_FILE_DIRECTORY
+        value: "/var/lib/cassandra"
+      - name: CASSANDRA_POD_NAME
+        valueFrom:
+          fieldRef:
+            fieldPath: metadata.name
+      - name: CASSANDRA_POD_NAMESPACE
+        valueFrom:
+          fieldRef:
+            fieldPath: metadata.namespace
+      - name: CASSANDRA_NODE_NAME
+        valueFrom:
+          fieldRef:
+            fieldPath: spec.nodeName
+      - name: CASSANDRA_POD_IP
+        valueFrom:
+          fieldRef:
+            apiVersion: v1
+            fieldPath: status.podIP
     volumeMounts:
       - name: axonops-agent-config
         mountPath: /etc/axonops
