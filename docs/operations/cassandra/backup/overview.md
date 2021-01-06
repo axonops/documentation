@@ -36,19 +36,3 @@ You can initiate three types of scheduled backup:
     [![backup](/img/cass_backups/backups4.png)](/img/cass_backups/backups4.png)
 
 
-## Restore
-
-
-> Note that **axonops** user will need temporary write access on Cassandra data folders to be able to proceed the restoration.
-
-To restore Cassandra, click on a relevant backup.
-
-!!! infomy 
-
-    [![restore](/img/cass_backups/restore.png)](/img/cass_backups/restore.png)
-
-This will provide the details of that backup and the ability to start the restoration by clicking the `Restore` button.
-
-!!! infomy 
-
-    [![restore](/img/cass_backups/restore1.png)](/img/cass_backups/restore1.png)

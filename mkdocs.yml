@@ -59,10 +59,12 @@ nav:
 
         - Operations:
             - Cassandra: 
-                - 'Repair': 'operations/cassandra/repair.md'
+                - Repair: 'operations/cassandra/repair.md'
                 - Backups:
                     - 'Overview': 'operations/cassandra/backup/overview.md'
+                    - 'Restore': 'operations/cassandra/restore/overview.md'
                     - 'Cassandra Backup Configurations': 'operations/cassandra/backup/configurations.md'
+                - 'Rolling Restart': 'operations/cassandra/rollingrestart/overview.md'
 
     - AxonOps Server API:
         - 'AxonOps Server API': 'server/api/overview.md'
