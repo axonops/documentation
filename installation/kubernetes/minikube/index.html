@@ -937,6 +937,18 @@
 
 
   <li class="md-nav__item">
+    <a href="../../../operations/cassandra/restore/overview/" class="md-nav__link">
+      Restore
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
     <a href="../../../operations/cassandra/backup/configurations/" class="md-nav__link">
       Cassandra Backup Configurations
     </a>
@@ -945,6 +957,18 @@
         
       </ul>
     </nav>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../../operations/cassandra/rollingrestart/overview/" class="md-nav__link">
+      Rolling Restart
+    </a>
   </li>
 
         
@@ -1368,6 +1392,7 @@ minikube addons <span class="nb">enable</span> storage-provisioner
   <span class="p p-Indicator">-</span> <span class="nt">name</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">axon-elastic</span>
     <span class="nt">namespace</span><span class="p">:</span> <span class="p p-Indicator">{{</span> <span class="nv">env &quot;NAMESPACE&quot; | default &quot;monitoring&quot;</span> <span class="p p-Indicator">}}</span>
     <span class="nt">chart</span><span class="p">:</span> <span class="s">&quot;bitnami/elasticsearch&quot;</span>
+    <span class="nt">version</span><span class="p">:</span> <span class="s">&#39;12.8.1&#39;</span>
     <span class="nt">wait</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">true</span>
     <span class="nt">labels</span><span class="p">:</span>
       <span class="nt">env</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">minikube</span>
@@ -1402,7 +1427,7 @@ minikube addons <span class="nb">enable</span> storage-provisioner
 
   <span class="p p-Indicator">-</span> <span class="nt">name</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">cassandra</span>
     <span class="nt">namespace</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">cassandra</span>
-    <span class="nt">chart</span><span class="p">:</span> <span class="s">&quot;incubator/cassandra&quot;</span>
+    <span class="nt">chart</span><span class="p">:</span> <span class="s">&quot;axonops-helm/cassandra&quot;</span>
     <span class="nt">wait</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">true</span>
     <span class="nt">labels</span><span class="p">:</span>
       <span class="nt">env</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">dev</span>
@@ -1464,6 +1489,25 @@ minikube addons <span class="nb">enable</span> storage-provisioner
     <span class="nt">env</span><span class="p">:</span>
       <span class="p p-Indicator">-</span> <span class="nt">name</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">AXON_AGENT_VERBOSITY</span>
         <span class="nt">value</span><span class="p">:</span> <span class="s">&quot;1&quot;</span>
+      <span class="p p-Indicator">-</span> <span class="nt">name</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">DATA_FILE_DIRECTORY</span>
+        <span class="nt">value</span><span class="p">:</span> <span class="s">&quot;/var/lib/cassandra&quot;</span>
+      <span class="p p-Indicator">-</span> <span class="nt">name</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">CASSANDRA_POD_NAME</span>
+        <span class="nt">valueFrom</span><span class="p">:</span>
+          <span class="nt">fieldRef</span><span class="p">:</span>
+            <span class="nt">fieldPath</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">metadata.name</span>
+      <span class="p p-Indicator">-</span> <span class="nt">name</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">CASSANDRA_POD_NAMESPACE</span>
+        <span class="nt">valueFrom</span><span class="p">:</span>
+          <span class="nt">fieldRef</span><span class="p">:</span>
+            <span class="nt">fieldPath</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">metadata.namespace</span>
+      <span class="p p-Indicator">-</span> <span class="nt">name</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">CASSANDRA_NODE_NAME</span>
+        <span class="nt">valueFrom</span><span class="p">:</span>
+          <span class="nt">fieldRef</span><span class="p">:</span>
+            <span class="nt">fieldPath</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">spec.nodeName</span>
+      <span class="p p-Indicator">-</span> <span class="nt">name</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">CASSANDRA_POD_IP</span>
+        <span class="nt">valueFrom</span><span class="p">:</span>
+          <span class="nt">fieldRef</span><span class="p">:</span>
+            <span class="nt">apiVersion</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">v1</span>
+            <span class="nt">fieldPath</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">status.podIP</span>
     <span class="nt">volumeMounts</span><span class="p">:</span>
       <span class="p p-Indicator">-</span> <span class="nt">name</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">axonops-agent-config</span>
         <span class="nt">mountPath</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">/etc/axonops</span>
