@@ -1,8 +1,10 @@
 AxonOps provide scheduled backup and restore functionnality for your Cassandra cluster.
 
+The functionality is accessible via ***Operations > Backups & Restore > Backups***
+
 !!! infomy 
 
-    [![backup](/img/cass_backups/backups.png)](/img/cass_backups/backups.png)
+    [![backup](./1.JPG)](./1.JPG)
 
 
 ## Scheduled backup
@@ -29,10 +31,28 @@ You can initiate three types of scheduled backup:
 
     [![backup](/img/cass_backups/backups5.png)](/img/cass_backups/backups5.png)
 
-> And the details of the local and remote backup on the `Restore` page:
+> And the details of the local and remote backup:
 
 !!! infomy 
 
-    [![backup](/img/cass_backups/backups4.png)](/img/cass_backups/backups4.png)
+    [![backup](./2.JPG)](./2.JPG)
 
+###  Remote backups 
+
+> Note that **axonops** user will need read access on Cassandra data folders to be able to proceed the remote backup.
+
+
+The current remote options are:
+
+* AWS S3
+* Google Cloud Storage
+* Microsoft Azure Blob Storage
+* SFTP/SSH
+* local filesystem
+
+example of the AWS S3 remote interface:
+
+!!! infomy 
+
+    [![backup](./3.JPG)](./3.JPG)
 
