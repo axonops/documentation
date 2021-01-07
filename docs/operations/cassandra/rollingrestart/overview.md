@@ -1,4 +1,6 @@
-AxonOps provides a rolling restart functionnality for Cassandra within the `Operations > Rolling Restart` menu.
+AxonOps provides a rolling restart functionnality for Cassandra.
+
+The functionality is accessible via ***Operations > Rolling Restart***
 
 !!! infomy 
 

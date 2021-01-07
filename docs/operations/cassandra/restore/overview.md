@@ -1,4 +1,6 @@
-AxonOps provides a restore functionnality from previous Cassandra snapshots within the `Operations > Backups & Restore > Restore` menu.
+AxonOps provides a restore functionnality from previous Cassandra snapshots.
+
+The functionality is accessible via ***Operations > Backups & Restore > Restore***
 
 !!! infomy 
 
