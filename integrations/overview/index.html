@@ -62,7 +62,7 @@
     <div data-md-component="skip">
       
         
-        <a href="#overview" class="md-skip">
+        <a href="#routing" class="md-skip">
           Skip to content
         </a>
       
@@ -577,8 +577,6 @@
     
     <input class="md-nav__toggle md-toggle" data-md-toggle="toc" type="checkbox" id="__toc">
     
-      
-    
     
       <label class="md-nav__link md-nav__link--active" for="__toc">
         Overview
@@ -593,8 +591,6 @@
 <nav class="md-nav md-nav--secondary" aria-label="Table of contents">
   
   
-    
-  
   
     <label class="md-nav__title" for="__toc">
       <span class="md-nav__icon md-icon"></span>
@@ -603,8 +599,8 @@
     <ul class="md-nav__list" data-md-scrollfix>
       
         <li class="md-nav__item">
-  <a href="#integrations" class="md-nav__link">
-    Integrations
+  <a href="#routing" class="md-nav__link">
+    Routing
   </a>
   
 </li>
@@ -938,8 +934,6 @@
 <nav class="md-nav md-nav--secondary" aria-label="Table of contents">
   
   
-    
-  
   
     <label class="md-nav__title" for="__toc">
       <span class="md-nav__icon md-icon"></span>
@@ -948,8 +942,8 @@
     <ul class="md-nav__list" data-md-scrollfix>
       
         <li class="md-nav__item">
-  <a href="#integrations" class="md-nav__link">
-    Integrations
+  <a href="#routing" class="md-nav__link">
+    Routing
   </a>
   
 </li>
@@ -967,21 +961,37 @@
               
                 
                 
-                <h1 id="overview">Overview<a class="headerlink" href="#overview" title="Permanent link">&para;</a></h1>
-<h2 id="integrations">Integrations<a class="headerlink" href="#integrations" title="Permanent link">&para;</a></h2>
-<p>List of current Integrations</p>
-<div class="admonition notemy custom">
-<p>Send alerts to your team's Slack channel.</p>
-<p><a href="/integrations/slack-integration/"><img alt="slack" src="/img/slack.png" /></a></p>
+                  <h1>Overview</h1>
+                
+                <p>AxonOps provide various integrations for the notifications.</p>
+<p>The functionality is accessible via <strong><em>Settings &gt; Integrations</em></strong></p>
+<p>The current integrations are:</p>
+<ul>
+<li>SMTP</li>
+<li>Pagerduty</li>
+<li>Slack</li>
+<li>ServiceNow</li>
+<li>Generic webhooks</li>
+</ul>
+<div class="admonition infomy">
+<p class="admonition-title">Infomy</p>
+<p><a href="../0.JPG"><img alt="slack" src="../0.JPG" /></a></p>
 </div>
-<div class="admonition notemy custom">
-<p>Generate PagerDuty alerts and events.</p>
-<p><a href="/integrations/pagerduy-integration/"><img alt="pagerduty" src="/img/pagerduty.png" /></a></p>
-</div>
-<div class="admonition notemy custom email">
-<p>Send alerts and events to your Email.</p>
-<p><a href="/integrations/email-integration/"><img alt="email" src="/img/email.png" /></a></p>
-</div>
+<h3 id="routing">Routing<a class="headerlink" href="#routing" title="Permanent link">&para;</a></h3>
+<p>AxonOps provide a rich routing mechanism for the notifications.</p>
+<p>The current routing options are:</p>
+<ul>
+<li>Global - this will route all the notifications</li>
+<li>Metrics - notifications about the alerts on metrics</li>
+<li>Backups - notifications about the backups / restore</li>
+<li>Service Checks - notifications about the service checks / healthchecks</li>
+<li>Nodes - notifications raised from the nodes</li>
+<li>Commands - notifications from generic tasks</li>
+<li>Repairs - notifications from Cassandra repairs</li>
+<li>Rolling Restart - notification from the rolling restart feature</li>
+</ul>
+<p>Each severity (<code>info, warning, error</code>) can be routed independently </p>
+<p><img alt="" src="../routing.JPG" /></p>
                 
               
               
