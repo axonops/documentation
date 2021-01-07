@@ -735,6 +735,19 @@
     Scheduled backup
   </a>
   
+    <nav class="md-nav" aria-label="Scheduled backup">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#remote-backups" class="md-nav__link">
+    Remote backups
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
 </li>
       
     </ul>
@@ -752,18 +765,6 @@
   <li class="md-nav__item">
     <a href="../../restore/overview/" class="md-nav__link">
       Restore
-    </a>
-  </li>
-
-        
-          
-          
-          
-
-
-  <li class="md-nav__item">
-    <a href="../configurations/" class="md-nav__link">
-      Cassandra Backup Configurations
     </a>
   </li>
 
@@ -962,6 +963,19 @@
     Scheduled backup
   </a>
   
+    <nav class="md-nav" aria-label="Scheduled backup">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#remote-backups" class="md-nav__link">
+    Remote backups
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
 </li>
       
     </ul>
@@ -980,9 +994,10 @@
                   <h1>Overview</h1>
                 
                 <p>AxonOps provide scheduled backup and restore functionnality for your Cassandra cluster.</p>
+<p>The functionality is accessible via <strong><em>Operations &gt; Backups &amp; Restore &gt; Backups</em></strong></p>
 <div class="admonition infomy">
 <p class="admonition-title">Infomy</p>
-<p><a href="/img/cass_backups/backups.png"><img alt="backup" src="/img/cass_backups/backups.png" /></a></p>
+<p><a href="../1.JPG"><img alt="backup" src="../1.JPG" /></a></p>
 </div>
 <h2 id="scheduled-backup">Scheduled backup<a class="headerlink" href="#scheduled-backup" title="Permanent link">&para;</a></h2>
 <p>You can initiate three types of scheduled backup:</p>
@@ -1013,11 +1028,28 @@
 <p><a href="/img/cass_backups/backups5.png"><img alt="backup" src="/img/cass_backups/backups5.png" /></a></p>
 </div>
 <blockquote>
-<p>And the details of the local and remote backup on the <code>Restore</code> page:</p>
+<p>And the details of the local and remote backup:</p>
 </blockquote>
 <div class="admonition infomy">
 <p class="admonition-title">Infomy</p>
-<p><a href="/img/cass_backups/backups4.png"><img alt="backup" src="/img/cass_backups/backups4.png" /></a></p>
+<p><a href="../2.JPG"><img alt="backup" src="../2.JPG" /></a></p>
+</div>
+<h3 id="remote-backups">Remote backups<a class="headerlink" href="#remote-backups" title="Permanent link">&para;</a></h3>
+<blockquote>
+<p>Note that <strong>axonops</strong> user will need read access on Cassandra data folders to be able to proceed the remote backup.</p>
+</blockquote>
+<p>The current remote options are:</p>
+<ul>
+<li>AWS S3</li>
+<li>Google Cloud Storage</li>
+<li>Microsoft Azure Blob Storage</li>
+<li>SFTP/SSH</li>
+<li>local filesystem</li>
+</ul>
+<p>example of the AWS S3 remote interface:</p>
+<div class="admonition infomy">
+<p class="admonition-title">Infomy</p>
+<p><a href="../3.JPG"><img alt="backup" src="../3.JPG" /></a></p>
 </div>
                 
               
