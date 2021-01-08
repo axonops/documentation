@@ -1,7 +1,5 @@
 
-## Intro
-
-Service checks are automatically checked and this checks will return on of the three statuses:
+Service checks will notify with one of the three statuses:
 
 !!! info "Service Statuses."
 

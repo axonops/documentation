@@ -1,39 +1,22 @@
-Service Checks in AxonOps allows you to configure custom checks using three types of check invocations:
+Service Checks in AxonOps allows you to configure custom checks using three types of checks:
 
-1. Shell Script
-2. HTTP endpoint check
-3. TCP endpoint check
-
-These checks are configured on the server side in the GUI, but pushed down dynamically to the agents and executed on the agents. There is no need to deploy the check scripts to individual servers like you may do with Nagios.
-
-Any changes made and saved are automatically pushed down to the agents.
+1. Shell Scripts
+2. HTTP endpoint checks
+3. TCP endpoint checks
 
 
-> Notice: To be able to view your service checks you must [setup][0].
+The functionality is accessible via ***Service Checks*** menu
 
-## Service Checks
+You can list the service checks by **node**:
+![](./0.JPG)
 
-In the left-hand AxonOps application menu, click `Service Checks`, a list of all your **Nodes** will appear
+Or by **services**:
+![](./1.JPG)
 
-
-[0]: /monitoring/servicechecks/configurations/
-
+You can click on a row to view all the `services` for a given **Node**.
 
 !!! infomy 
-
-    [![servicechecks_overview](/img/servicechecks_overview.png)](/img/servicehecks_overview.png)
-
-### Service Checks
-There are 2 dimensional views to the service health status - by node or by service.
-
-####  By Node
-
-To view all the `services` for eah **Node** select `Nodes` tab and `click` on `node's name`to expand the node service's.
-
-!!! infomy 
-
-    [![servicechecks_by_node](/img/servicechecks_by_node.png)](/img/servicechecks_by_node.png)
-
+![](./3.JPG)
 
 the services will apprear with `status`:
 
@@ -52,6 +35,35 @@ the services will apprear with `status`:
 !!! infomy 
         
     [![status_error](/img/status_error.png)](/img/status_error.png)
+
+
+
+These checks are configured on the server side in the GUI and pushed down dynamically to the agents for execution. There is no need to deploy the check scripts to individual servers like you may do for instance with Nagios.
+
+To setup the checks, go to  ***Settings > Service Checks*** and click on one of the `+` buttons
+
+![](./2.JPG)
+> Any changes made and saved are automatically pushed down to the agents. The status will show once the check has been executed on the agent so it might take some time depending on the interval you have specified within the Service Checks. Although the first execution of the checks will be spread across 30 seconds to prevent running all the checks at the same time.
+
+
+
+
+> Notice: To be able to view your service checks you must [setup][0].
+
+
+
+In the left-hand AxonOps application menu, click `Service Checks`, a list of all your **Nodes** will appear
+
+
+[0]: /monitoring/servicechecks/configurations/
+
+
+!!! infomy 
+
+    [![servicechecks_overview](/img/servicechecks_overview.png)](/img/servicehecks_overview.png)
+
+
+
 
 #### By Service
 

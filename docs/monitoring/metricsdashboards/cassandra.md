@@ -6,7 +6,6 @@ You can correlate metrics with logs/events as you can zoom in the logs histogram
 
 !!! infomy 
 
-    [![dashboards](/img/dashboards/cassandra/dashboards.png)](/img/dashboards/cassandra/dashboards.png)
-
+![](./0.JPG)
 
 

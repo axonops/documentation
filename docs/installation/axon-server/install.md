@@ -68,6 +68,7 @@ retention:
     local: 10d
     remote: 30d
 ```
+> For better performances on large clusters (100+ nodes), you can use a CQL store for the metrics such as **Cassandra**, **Scylla** or **Elassandra**. To opt-in for CQL metrics storage, just specify at least one CQL host with axon-server configuration.
 
 ## Step 4 - Start the server
 
