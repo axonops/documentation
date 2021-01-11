@@ -564,60 +564,10 @@
           
 
 
-  <li class="md-nav__item md-nav__item--nested">
-    
-      <input class="md-nav__toggle md-toggle" data-md-toggle="nav-4-2-2" type="checkbox" id="nav-4-2-2">
-    
-    <label class="md-nav__link" for="nav-4-2-2">
-      Service Checks
-      <span class="md-nav__icon md-icon"></span>
-    </label>
-    <nav class="md-nav" aria-label="Service Checks" data-md-level="3">
-      <label class="md-nav__title" for="nav-4-2-2">
-        <span class="md-nav__icon md-icon"></span>
-        Service Checks
-      </label>
-      <ul class="md-nav__list" data-md-scrollfix>
-        
-        
-          
-          
-          
-
-
   <li class="md-nav__item">
     <a href="../../../monitoring/servicechecks/overview/" class="md-nav__link">
-      Overview
+      Service Checks
     </a>
-  </li>
-
-        
-          
-          
-          
-
-
-  <li class="md-nav__item">
-    <a href="../../../monitoring/servicechecks/configurations/" class="md-nav__link">
-      Configurations
-    </a>
-  </li>
-
-        
-          
-          
-          
-
-
-  <li class="md-nav__item">
-    <a href="../../../monitoring/servicechecks/alerting/" class="md-nav__link">
-      Alerting
-    </a>
-  </li>
-
-        
-      </ul>
-    </nav>
   </li>
 
         
@@ -879,49 +829,11 @@
       <input class="md-nav__toggle md-toggle" data-md-toggle="nav-5" type="checkbox" id="nav-5">
     
     <label class="md-nav__link" for="nav-5">
-      AxonOps Server API
-      <span class="md-nav__icon md-icon"></span>
-    </label>
-    <nav class="md-nav" aria-label="AxonOps Server API" data-md-level="1">
-      <label class="md-nav__title" for="nav-5">
-        <span class="md-nav__icon md-icon"></span>
-        AxonOps Server API
-      </label>
-      <ul class="md-nav__list" data-md-scrollfix>
-        
-        
-          
-          
-          
-
-
-  <li class="md-nav__item">
-    <a href="../../../server/api/overview/" class="md-nav__link">
-      AxonOps Server API
-    </a>
-  </li>
-
-        
-      </ul>
-    </nav>
-  </li>
-
-    
-      
-      
-      
-
-
-  <li class="md-nav__item md-nav__item--nested">
-    
-      <input class="md-nav__toggle md-toggle" data-md-toggle="nav-6" type="checkbox" id="nav-6">
-    
-    <label class="md-nav__link" for="nav-6">
       How-to
       <span class="md-nav__icon md-icon"></span>
     </label>
     <nav class="md-nav" aria-label="How-to" data-md-level="1">
-      <label class="md-nav__title" for="nav-6">
+      <label class="md-nav__title" for="nav-5">
         <span class="md-nav__icon md-icon"></span>
         How-to
       </label>
@@ -946,56 +858,8 @@
 
 
   <li class="md-nav__item">
-    <a href="../../../how-to/setup-servicechecks/" class="md-nav__link">
-      Setup Service Checks
-    </a>
-  </li>
-
-        
-          
-          
-          
-
-
-  <li class="md-nav__item">
     <a href="../../../how-to/setup-log-collection/" class="md-nav__link">
       Setup Log Collection
-    </a>
-  </li>
-
-        
-          
-          
-          
-
-
-  <li class="md-nav__item">
-    <a href="../../../how-to/default-routing/" class="md-nav__link">
-      Setup Default Routing
-    </a>
-  </li>
-
-        
-          
-          
-          
-
-
-  <li class="md-nav__item">
-    <a href="../../../how-to/backup-restore-notifications/" class="md-nav__link">
-      Setup Backup-Restore Notifications
-    </a>
-  </li>
-
-        
-          
-          
-          
-
-
-  <li class="md-nav__item">
-    <a href="../../../how-to/setup-dashboards-global-integrations/" class="md-nav__link">
-      Setup Dashboards-Global Integrations
     </a>
   </li>
 
@@ -1262,6 +1126,9 @@ sudo yum install axon-server
     <span class="nt">remote</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">30d</span>
 </code></pre></div>
 
+<blockquote>
+<p>For better performances on large clusters (100+ nodes), you can use a CQL store for the metrics such as <strong>Cassandra</strong>, <strong>Scylla</strong> or <strong>Elassandra</strong>. To opt-in for CQL metrics storage, just specify at least one CQL host with axon-server configuration.</p>
+</blockquote>
 <h2 id="step-4-start-the-server">Step 4 - Start the server<a class="headerlink" href="#step-4-start-the-server" title="Permanent link">&para;</a></h2>
 <div class="codehilite"><pre><span></span><code>sudo systemctl daemon-reload
 sudo systemctl start axon-server

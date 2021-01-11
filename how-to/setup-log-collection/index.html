@@ -436,60 +436,10 @@
           
 
 
-  <li class="md-nav__item md-nav__item--nested">
-    
-      <input class="md-nav__toggle md-toggle" data-md-toggle="nav-4-2-2" type="checkbox" id="nav-4-2-2">
-    
-    <label class="md-nav__link" for="nav-4-2-2">
-      Service Checks
-      <span class="md-nav__icon md-icon"></span>
-    </label>
-    <nav class="md-nav" aria-label="Service Checks" data-md-level="3">
-      <label class="md-nav__title" for="nav-4-2-2">
-        <span class="md-nav__icon md-icon"></span>
-        Service Checks
-      </label>
-      <ul class="md-nav__list" data-md-scrollfix>
-        
-        
-          
-          
-          
-
-
   <li class="md-nav__item">
     <a href="../../monitoring/servicechecks/overview/" class="md-nav__link">
-      Overview
+      Service Checks
     </a>
-  </li>
-
-        
-          
-          
-          
-
-
-  <li class="md-nav__item">
-    <a href="../../monitoring/servicechecks/configurations/" class="md-nav__link">
-      Configurations
-    </a>
-  </li>
-
-        
-          
-          
-          
-
-
-  <li class="md-nav__item">
-    <a href="../../monitoring/servicechecks/alerting/" class="md-nav__link">
-      Alerting
-    </a>
-  </li>
-
-        
-      </ul>
-    </nav>
   </li>
 
         
@@ -745,57 +695,19 @@
       
       
 
-
-  <li class="md-nav__item md-nav__item--nested">
-    
-      <input class="md-nav__toggle md-toggle" data-md-toggle="nav-5" type="checkbox" id="nav-5">
-    
-    <label class="md-nav__link" for="nav-5">
-      AxonOps Server API
-      <span class="md-nav__icon md-icon"></span>
-    </label>
-    <nav class="md-nav" aria-label="AxonOps Server API" data-md-level="1">
-      <label class="md-nav__title" for="nav-5">
-        <span class="md-nav__icon md-icon"></span>
-        AxonOps Server API
-      </label>
-      <ul class="md-nav__list" data-md-scrollfix>
-        
-        
-          
-          
-          
-
-
-  <li class="md-nav__item">
-    <a href="../../server/api/overview/" class="md-nav__link">
-      AxonOps Server API
-    </a>
-  </li>
-
-        
-      </ul>
-    </nav>
-  </li>
-
-    
-      
-      
-      
-
   
 
 
   <li class="md-nav__item md-nav__item--active md-nav__item--nested">
     
-      <input class="md-nav__toggle md-toggle" data-md-toggle="nav-6" type="checkbox" id="nav-6" checked>
+      <input class="md-nav__toggle md-toggle" data-md-toggle="nav-5" type="checkbox" id="nav-5" checked>
     
-    <label class="md-nav__link" for="nav-6">
+    <label class="md-nav__link" for="nav-5">
       How-to
       <span class="md-nav__icon md-icon"></span>
     </label>
     <nav class="md-nav" aria-label="How-to" data-md-level="1">
-      <label class="md-nav__title" for="nav-6">
+      <label class="md-nav__title" for="nav-5">
         <span class="md-nav__icon md-icon"></span>
         How-to
       </label>
@@ -818,18 +730,6 @@
           
           
 
-
-  <li class="md-nav__item">
-    <a href="../setup-servicechecks/" class="md-nav__link">
-      Setup Service Checks
-    </a>
-  </li>
-
-        
-          
-          
-          
-
   
 
 
@@ -842,42 +742,6 @@
       Setup Log Collection
     </a>
     
-  </li>
-
-        
-          
-          
-          
-
-
-  <li class="md-nav__item">
-    <a href="../default-routing/" class="md-nav__link">
-      Setup Default Routing
-    </a>
-  </li>
-
-        
-          
-          
-          
-
-
-  <li class="md-nav__item">
-    <a href="../backup-restore-notifications/" class="md-nav__link">
-      Setup Backup-Restore Notifications
-    </a>
-  </li>
-
-        
-          
-          
-          
-
-
-  <li class="md-nav__item">
-    <a href="../setup-dashboards-global-integrations/" class="md-nav__link">
-      Setup Dashboards-Global Integrations
-    </a>
   </li>
 
         
@@ -903,25 +767,13 @@
                 
                 <p>AxonOps dashboards provides a comprehensive set of charts with an embedded view for logs and events. The goal is to correlate metrics with logs/events as you can zoom in the logs histogram or metrics charts to drill down both results. </p>
 <p>Log and event view is located in the bottom part of that page that you can expand/collapse with the horizontal splitter.</p>
-<blockquote>
-<p>Note: Currently this configuration is shared accross all the clusters but we will provide a dedicated configuration (per cluster) soon.</p>
-</blockquote>
+<p><img alt="" src="../dashboard.JPG" /></p>
+<p>The setup for log collection is accessible via <strong><em>Settings &gt; logs</em></strong></p>
 <div class="admonition infomy">
 <p class="admonition-title">Infomy</p>
-<p><a href="/img/howto/logs.png"><img alt="logs" src="/img/howto/logs.png" /></a></p>
 </div>
-<p>The default setup will collect Cassandra system.log, axon-agent.log and axon-java-agent.log.
-You can update the path of your cassandra system.log if it's located in a different folder by updating the <strong>filename</strong> field. The <strong>newlineregex</strong> is used by the log collector to handle multilines logs. Default <strong>newlineregex</strong> should be ok unless you've customized cassandra logs.</p>
-<p>Once all is setup and submit is pressed, you should see events from the agents and logs from the log files you've specified.</p>
-<div class="admonition infomy">
-<p class="admonition-title">Infomy</p>
-<p><a href="/img/dashboards/cassandra/dashboards.png"><img alt="logs" src="/img/dashboards/cassandra/dashboards.png" /></a></p>
-</div>
-<p>You can edit that configuration by clicking the wheel icon on the top right of the log view:</p>
-<div class="admonition infomy">
-<p class="admonition-title">Infomy</p>
-<p><a href="/img/howto/logs2.png"><img alt="logs" src="/img/howto/logs2.png" /></a></p>
-</div>
+<p><img alt="" src="../log_1.JPG" /></p>
+<p><strong>newlineregex</strong> is used by the log collector to handle multilines logs. Default <strong>newlineregex</strong> for Cassandra should be ok unless you've customized it.</p>
                 
               
               
@@ -940,7 +792,7 @@ You can update the path of your cassandra system.log if it's located in a differ
     <div class="md-footer-nav">
       <nav class="md-footer-nav__inner md-grid" aria-label="Footer">
         
-          <a href="../setup-servicechecks/" class="md-footer-nav__link md-footer-nav__link--prev" rel="prev">
+          <a href="../setup-alert-rules/" class="md-footer-nav__link md-footer-nav__link--prev" rel="prev">
             <div class="md-footer-nav__button md-icon">
               <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12z"/></svg>
             </div>
@@ -949,25 +801,11 @@ You can update the path of your cassandra system.log if it's located in a differ
                 <span class="md-footer-nav__direction">
                   Previous
                 </span>
-                Setup Service Checks
+                Setup Alert Rules
               </div>
             </div>
           </a>
         
-        
-          <a href="../default-routing/" class="md-footer-nav__link md-footer-nav__link--next" rel="next">
-            <div class="md-footer-nav__title">
-              <div class="md-ellipsis">
-                <span class="md-footer-nav__direction">
-                  Next
-                </span>
-                Setup Default Routing
-              </div>
-            </div>
-            <div class="md-footer-nav__button md-icon">
-              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M4 11v2h12l-5.5 5.5 1.42 1.42L19.84 12l-7.92-7.92L10.5 5.5 16 11H4z"/></svg>
-            </div>
-          </a>
         
       </nav>
     </div>
