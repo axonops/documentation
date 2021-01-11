@@ -12,4 +12,4 @@ The setup for log collection is accessible via ***Settings > logs***
 
 ![](./log_1.JPG)
 
-***newlineregex** is used by the log collector to handle multilines logs. Default **newlineregex** for Cassandra should be ok unless you've customized it.
+**newlineregex** is used by the log collector to handle multilines logs. Default **newlineregex** for Cassandra should be ok unless you've customized it.

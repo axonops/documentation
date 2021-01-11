@@ -53,6 +53,8 @@ The idea of this is to achieve the following:
 
     [![adaptive_repair](/img/cass_repairs/adaptive_repair.png)](/img/cass_repairs/adaptive_repair.png)
 
+> If you want to keep the tables as fresh as possible, we do recommend to increate the `table parallelism` to be greater than the total number of tables of your cluster and reduce the `segments per VNode` to generate less repair requests.
+
 From a user’s point of view, there is only a single switch to enable this service. Keep this enabled and AxonOps will take care of the repair of all tables for you. Also you can customize the following:
 
 * Blacklist some tables

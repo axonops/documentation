@@ -62,9 +62,6 @@ nav:
                     - 'Restore': 'operations/cassandra/restore/overview.md'
                 - 'Rolling Restart': 'operations/cassandra/rollingrestart/overview.md'
 
-    - AxonOps Server API:
-        - 'AxonOps Server API': 'server/api/overview.md'
-
     - How-to:
             - 'Setup Alert Rules': how-to/setup-alert-rules.md
             # - 'Setup Service Checks': how-to/setup-servicechecks.md
