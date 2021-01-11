@@ -1,4 +1,8 @@
-Once you have your **instance name**, **username** and **password**, you can create a ServiceNow integration:
+Navigate to  ***Settings > Integrations*** and click on ***ServiceNow***
+
+ ![](2021-01-11-12-11-59.png)
+
+Once you have gather your **instance name**, **username** and **password** from ServiceNow, you can validate the form:
 ![](2021-01-11-11-45-57.png)
 
 
