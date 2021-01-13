@@ -38,22 +38,16 @@ The values below are set for running on a laptop with `minikube`, adjust accordi
 ```yaml
 ---
 repositories:
-  - name: stable
-    url: https://kubernetes-charts.storage.googleapis.com
-  - name: incubator
-    url: https://kubernetes-charts-incubator.storage.googleapis.com
-  - name: axonops-helm
+  - name: digitalis
     url: https://repo.axonops.com/public/helm/helm/charts/
   - name: bitnami
     url: https://charts.bitnami.com/bitnami
 releases:
   - name: axon-elastic
-    namespace: {{ env "NAMESPACE" | default "monitoring" }}
+    namespace: {{ env "NAMESPACE" | default "axonops" }}
     chart: "bitnami/elasticsearch"
     version: '12.8.1'
     wait: true
-    labels:
-      env: minikube
     values:
       - fullnameOverride: axon-elastic
       - imageTag: "7.8.0"
@@ -75,20 +69,16 @@ releases:
             accessModes: [ "ReadWriteOnce" ]
 
   - name: axonops
-    namespace: {{ env "NAMESPACE" | default "monitoring" }}
-    chart: "axonops-helm/axonops"
+    namespace: {{ env "NAMESPACE" | default "axonops" }}
+    chart: "digitalis/axonops"
     wait: true
-    labels:
-      env: minikube
     values:
       - values.yaml
 
   - name: cassandra
     namespace: cassandra
-    chart: "axonops-helm/cassandra"
+    chart: "digitalis/cassandra"
     wait: true
-    labels:
-      env: dev
     values:
       - values.yaml
 ```
@@ -99,7 +89,7 @@ releases:
 ---
 persistence:
   enabled: true
-  size: 1Gi
+  size: 2Gi
   accessMode: ReadWriteMany
 
 podSettings:
@@ -110,15 +100,35 @@ image:
   pullPolicy: IfNotPresent
 
 config:
-  cluster_name: minikube
-  cluster_size: 3
-  seed_size: 2
+  cluster_name: digitalis
+  cluster_size: 2
+  dc_name: dc1
+  seed_size: 1
   num_tokens: 256
   max_heap_size: 512M
   heap_new_size: 512M
+  endpoint_snitch: GossipingPropertyFileSnitch
 
 env:
   JVM_OPTS: "-javaagent:/var/lib/axonops/axon-cassandra3.11-agent.jar=/etc/axonops/axon-agent.yml"
+
+serviceAccount:
+  create: true
+  rules:
+  - apiGroups:
+    - ""
+    resources:
+    - nodes
+    - nodes/metrics
+    - pods
+    verbs:
+    - get
+    - list
+    - watch
+  - nonResourceURLs:
+    - /metrics
+    verbs:
+    - get
 
 extraVolumes:
   - name: axonops-agent-config
@@ -127,8 +137,6 @@ extraVolumes:
   - name: axonops-shared
     emptyDir: {}
   - name: axonops-logs
-    emptyDir: {}
-  - name: cassandra-logs
     emptyDir: {}
 
 extraVolumeMounts:
@@ -140,8 +148,6 @@ extraVolumeMounts:
     readOnly: true
   - name: axonops-logs
     mountPath: /var/log/axonops
-  - name: cassandra-logs
-    mountPath: /var/log/cassandra
 
 extraContainers:
   - name: axonops-agent
@@ -149,6 +155,8 @@ extraContainers:
     env:
       - name: AXON_AGENT_VERBOSITY
         value: "1"
+      - name: AXON_AGENT_ARGS
+        value: "-v 1"
       - name: DATA_FILE_DIRECTORY
         value: "/var/lib/cassandra"
       - name: CASSANDRA_POD_NAME
@@ -177,41 +185,82 @@ extraContainers:
         readOnly: false
       - name: axonops-logs
         mountPath: /var/log/axonops
-      - name: cassandra-logs
-        mountPath: /var/log/cassandra
       - name: data
         mountPath: /var/lib/cassandra
-        readOnly: false
+
 
 axon-server:
-  elastic_host: http://axon-elastic-elasticsearch-master
+  global:
+    customer: minikube
+    baseDomain: axonops.com
+
+  elasticHost: http://axon-elastic-elasticsearch-master.axonops:9200
+  dashboardUrl: https://axonops.axonops.com
+
   image:
     repository: digitalisdocker/axon-server
     tag: latest
     pullPolicy: IfNotPresent
-
+  config:
+    extraConfig:
+      cql_hosts:
+        - cassandra-0.cassandra.cassandra.svc.cluster.local
+      cql_username: "cassandra"
+      cql_password: "cassandra"
+      cql_local_dc: dc1
+      cql_proto_version: 4
+      cql_max_searchqueriesparallelism: 100
+      cql_batch_size: 100
+      cql_page_size: 100
+      cql_autocreate_tables: false
+      cql_retrypolicy_numretries: 3
+      cql_retrypolicy_min: 2s
+      cql_retrypolicy_max: 10s
+      cql_reconnectionpolicy_maxretries: 10
+      cql_reconnectionpolicy_initialinterval: 1s
+      cql_reconnectionpolicy_maxinterval: 10s
+      cql_keyspace_replication: "{ 'class': 'NetworkTopologyStrategy', 'dc1': 1 }"
+      cql_metrics_cache_max_size: 128  #MB
+      cql_metrics_cache_max_items : 500000
 
 axon-dash:
-  axonServerUrl: http://axonops-axon-server:8080
+  replicaCount: 1
+  config:
+    axonServerUrl: http://axonops-axon-server:8080
   service:
-    # use NodePort for minikube, change to ClusterIP or LoadBalancer on fully featured
-    # k8s deployments such as AWS or Google
     type: NodePort
+  ingress:
+    enabled: true
+    annotations:
+      nginx.ingress.kubernetes.io/ssl-redirect: "true"
+    hosts:
+      - hosts: axonops.axonops.com
+        paths:
+          - /
   image:
     repository: digitalisdocker/axon-dash
     tag: latest
     pullPolicy: IfNotPresent
+  autoscaling:
+    enabled: true
+  resources:
+    limits:
+      cpu: 500m
+      memory: 512Mi
+    requests:
+      cpu: 50m
+      memory: 128Mi
 ```
 
 #### axon-agent.yml
 
 ```yaml
 axon-server:
-    hosts: "axonops-axon-server.monitoring" # Specify axon-server IP axon-server.mycompany.
+    hosts: "axonops-axon-server.axonops" # Specify axon-server IP axon-server.mycompany.
     port: 1888
 
 axon-agent:
-    org: "minikube" # Specify your organisation name
+    org: "digitalis"
     human_readable_identifier: "axon_agent_ip" # one of the following:
 
 NTP:
