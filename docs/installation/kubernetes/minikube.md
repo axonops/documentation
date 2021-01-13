@@ -81,6 +81,23 @@ releases:
     wait: true
     values:
       - values.yaml
+  
+  - name: cadvisor
+    namespace: kube-system
+    chart: ckotzbauer/cadvisor
+    version: 1.2.0
+    values:
+      - container:
+          additionalArgs:
+            - --housekeeping_interval=5s                       # kubernetes default args
+            - --max_housekeeping_interval=10s
+            - --event_storage_event_limit=default=0
+            - --event_storage_age_limit=default=0
+            - --disable_metrics=percpu,process,sched,tcp,udp    # enable only diskIO, cpu, memory, network, disk
+            - --docker_only
+      - image:
+          repository: gcr.io/cadvisor/cadvisor
+          tag: v0.37.0
 ```
 
 #### values.yaml
