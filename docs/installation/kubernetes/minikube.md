@@ -42,6 +42,8 @@ repositories:
     url: https://repo.axonops.com/public/helm/helm/charts/
   - name: bitnami
     url: https://charts.bitnami.com/bitnami
+  - name: ckotzbauer
+    url: https://ckotzbauer.github.io/helm-charts
 releases:
   - name: axon-elastic
     namespace: {{ env "NAMESPACE" | default "axonops" }}
