@@ -64,5 +64,3 @@ From a user’s point of view, there is only a single switch to enable this serv
 * Specify the number of segments per VNode to repair
 
 * The GC grace threshold in seconds: if a table has a gc grace lesser than the specified value, it will be ignored from the adaptive repair service
-
-We are also looking into implementing adaptive compaction control using a similar logic to the adaptive repair.
