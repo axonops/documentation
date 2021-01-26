@@ -13,7 +13,7 @@
     
     
       
-        <title>Configurations - AxonOps Documentation</title>
+        <title>Logs & Events - AxonOps Documentation</title>
       
     
     
@@ -62,7 +62,7 @@
     <div data-md-component="skip">
       
         
-        <a href="#adding-service-checks" class="md-skip">
+        <a href="#logs-and-events" class="md-skip">
           Skip to content
         </a>
       
@@ -91,7 +91,7 @@
           </span>
           <span class="md-header-nav__topic md-ellipsis">
             
-              Configurations
+              Logs & Events
             
           </span>
         </div>
@@ -348,10 +348,12 @@
       
       
 
+  
 
-  <li class="md-nav__item md-nav__item--nested">
+
+  <li class="md-nav__item md-nav__item--active md-nav__item--nested">
     
-      <input class="md-nav__toggle md-toggle" data-md-toggle="nav-4" type="checkbox" id="nav-4">
+      <input class="md-nav__toggle md-toggle" data-md-toggle="nav-4" type="checkbox" id="nav-4" checked>
     
     <label class="md-nav__link" for="nav-4">
       Using AxonOps
@@ -407,10 +409,12 @@
           
           
 
+  
 
-  <li class="md-nav__item md-nav__item--nested">
+
+  <li class="md-nav__item md-nav__item--active md-nav__item--nested">
     
-      <input class="md-nav__toggle md-toggle" data-md-toggle="nav-4-2" type="checkbox" id="nav-4-2">
+      <input class="md-nav__toggle md-toggle" data-md-toggle="nav-4-2" type="checkbox" id="nav-4-2" checked>
     
     <label class="md-nav__link" for="nav-4-2">
       Monitoring
@@ -442,7 +446,7 @@
 
 
   <li class="md-nav__item">
-    <a href="../overview/" class="md-nav__link">
+    <a href="../../servicechecks/overview/" class="md-nav__link">
       Service Checks
     </a>
   </li>
@@ -490,11 +494,45 @@
           
           
 
+  
 
-  <li class="md-nav__item">
-    <a href="../../logsandevents/logsandevents/" class="md-nav__link">
+
+  <li class="md-nav__item md-nav__item--active">
+    
+    <input class="md-nav__toggle md-toggle" data-md-toggle="toc" type="checkbox" id="__toc">
+    
+    
+      <label class="md-nav__link md-nav__link--active" for="__toc">
+        Logs & Events
+        <span class="md-nav__icon md-icon"></span>
+      </label>
+    
+    <a href="./" class="md-nav__link md-nav__link--active">
       Logs & Events
     </a>
+    
+      
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#logs-and-events" class="md-nav__link">
+    Logs and Events
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+    
   </li>
 
         
@@ -792,22 +830,9 @@
     <ul class="md-nav__list" data-md-scrollfix>
       
         <li class="md-nav__item">
-  <a href="#adding-service-checks" class="md-nav__link">
-    Adding Service Checks
+  <a href="#logs-and-events" class="md-nav__link">
+    Logs and Events
   </a>
-  
-    <nav class="md-nav" aria-label="Adding Service Checks">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#creating-services" class="md-nav__link">
-    Creating Services
-  </a>
-  
-</li>
-        
-      </ul>
-    </nav>
   
 </li>
       
@@ -824,40 +849,14 @@
               
                 
                 
-                  <h1>Configurations</h1>
+                  <h1>Logs & Events</h1>
                 
-                <h3 id="adding-service-checks">Adding Service Checks<a class="headerlink" href="#adding-service-checks" title="Permanent link">&para;</a></h3>
-<p>On the Axonops application menu, click <code>Service Checks</code> and select <code>Setup</code> tab.</p>
+                <h3 id="logs-and-events">Logs and Events<a class="headerlink" href="#logs-and-events" title="Permanent link">&para;</a></h3>
+<p>The logs and events are visible within AxonOps dashboard allowing quick access to them without having to log in to the individual servers.</p>
 <p><img alt="" src="../0.JPG" /></p>
-<h4 id="creating-services">Creating Services<a class="headerlink" href="#creating-services" title="Permanent link">&para;</a></h4>
-<div class="codehilite"><pre><span></span><code>&gt; Note that for a Cassandra node, you can use the variable `{{.listen_address}}` which will correspond to Cassandra listening address.
-
-Example:
-
-!!! infomy
-
-
-    [![servicecheckseditor](/img/servicecheckseditor.png)](/img/servicecheckseditor.png)
-
-
-####  Delete Services
-
-To Delete a service `copy`/`paste` into the editor and `click` save  [![save](/img/disk.png)](/img/disk.png)
-
-``` jsonld
-{
-    &quot;shellchecks&quot;: [],
-    &quot;httpchecks&quot;: [],
-    &quot;tcpchecks&quot;: []
-
-}
-</code></pre></div>
-
-<p>Example:</p>
-<div class="admonition infomy">
-<p class="admonition-title">Infomy</p>
-<p><a href="/img/deleteservices.png"><img alt="deleteservices" src="/img/deleteservices.png" /></a></p>
-</div>
+<p>For a free text search fulfill the <strong><em>content</em></strong> input.</p>
+<p>You can search by regex expression via the <code>/&lt;expression&gt;/</code> pattern.</p>
+<p><img alt="" src="../2021-01-26-14-25-08.png" /></p>
                 
               
               
@@ -872,6 +871,41 @@ To Delete a service `copy`/`paste` into the editor and `click` save  [![save](/i
       
         
 <footer class="md-footer">
+  
+    <div class="md-footer-nav">
+      <nav class="md-footer-nav__inner md-grid" aria-label="Footer">
+        
+          <a href="../../metricsdashboards/cassandra/" class="md-footer-nav__link md-footer-nav__link--prev" rel="prev">
+            <div class="md-footer-nav__button md-icon">
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12z"/></svg>
+            </div>
+            <div class="md-footer-nav__title">
+              <div class="md-ellipsis">
+                <span class="md-footer-nav__direction">
+                  Previous
+                </span>
+                Cassandra
+              </div>
+            </div>
+          </a>
+        
+        
+          <a href="../../../integrations/overview/" class="md-footer-nav__link md-footer-nav__link--next" rel="next">
+            <div class="md-footer-nav__title">
+              <div class="md-ellipsis">
+                <span class="md-footer-nav__direction">
+                  Next
+                </span>
+                Overview
+              </div>
+            </div>
+            <div class="md-footer-nav__button md-icon">
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M4 11v2h12l-5.5 5.5 1.42 1.42L19.84 12l-7.92-7.92L10.5 5.5 16 11H4z"/></svg>
+            </div>
+          </a>
+        
+      </nav>
+    </div>
   
   <div class="md-footer-meta md-typeset">
     <div class="md-footer-meta__inner md-grid">
