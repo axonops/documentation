@@ -47,6 +47,7 @@ nav:
             - Service Checks: 'monitoring/servicechecks/overview.md'
             - Metrics Dashboard:
                 - 'Cassandra': 'monitoring/metricsdashboards/cassandra.md'
+            - Logs & Events: 'monitoring/logsandevents/logsandevents.md'
         
         - Notification Integrations:
                 - 'Overview' : 'integrations/overview.md'
