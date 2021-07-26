@@ -1,4 +1,4 @@
-## Step 3 - axon-server configuration update
+## Step 3 - axon-server configurations
 
 
 Make sure **elastic_host** and **elastic_port** are corresponding to your Elasticsearch instance.

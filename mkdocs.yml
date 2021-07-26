@@ -1,11 +1,24 @@
 site_name: AxonOps Documentation
-copyright: © 2020 digitalis.io All Rights Reserved
-google_analytics: ['UA-69443414-2', 'docs.axonops.com']
+copyright: © 2021 digitalis.io All Rights Reserved
+
 theme:
   name: 'material'
   favicon: 'img/favicon.ico'
   logo: 'img/axonops_logo.svg'
   language: 'en'
+
+extra:
+    analytics:
+        provider: google
+        property: UA-69443414-2
+    consent:
+        title: Cookie Consent
+        description:
+            We use cookies to recognize your repeated visits and preferences, as well
+            as to measure the effectiveness of our documentation and whether users
+            find what they're searching for. With your consent, you're helping us to
+            make our documentation better.
+    generator: false
 
 extra_css:
   - 'stylesheets/extra.css'
