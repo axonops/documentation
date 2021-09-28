@@ -2,7 +2,7 @@
 
 ## Introduction
 
-AxonOps is an extensible operational management tool initially built for Apache Cassandra (https://cassandra.apache.org). It is currently being extended to manage Apache Kafka (http://kafka.apache.org), Elasticsearch (https://www.elastic.co/products/elasticsearch), and others.
+AxonOps is an operational management tool built for Apache Cassandra (https://cassandra.apache.org).
 
 ## Features
 

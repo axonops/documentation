@@ -40,6 +40,8 @@ nav:
     - Overview:
         - 'Motivation': 'overview/motivation.md'
         - 'Architecture': 'overview/architecture.md'
+        # TODO: - - 'AxonOps Cloud': 'overview/axonops-cloud.md'
+        # TODO: - 'AxonOps Enterprise': 'overview/axonops-enterprise.md'
 
     - Installation:
         - AxonOps Server:

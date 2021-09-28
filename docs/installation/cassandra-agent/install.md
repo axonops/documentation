@@ -60,9 +60,9 @@ cassandra:
   #tier3:
   #    frequency: 86400 # 1d
 
-  blacklist: # You can blacklist metrics based on MBean query pattern
-    - "org.apache.cassandra.metrics:type=ColumnFamily,*" # duplication of table metrics
-    - "org.apache.cassandra.metrics:name=SnapshotsSize,*" # Collecting SnapshotsSize metrics slows down collection
+  blacklist: # You can blacklist metrics based on MBean query pattern (regular expression)
+    - "org.apache.cassandra.metrics:type=ColumnFamily.*" # duplication of table metrics
+    - "org.apache.cassandra.metrics:name=SnapshotsSize.*" # Collecting SnapshotsSize metrics slows down collection
 
   free_text_blacklist: # You can blacklist metrics based on Regex pattern
     - "org.apache.cassandra.metrics:type=ThreadPools,path=internal,scope=Repair#.*"
