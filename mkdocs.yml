@@ -53,7 +53,7 @@ nav:
         - Compatibility matrix: 'installation/compat_matrix/compat_matrix.md'
         - Kubernetes: 'installation/kubernetes/minikube.md'
 
-    - Using AxonOps: 
+    - Using AxonOps:
         - Cluster Overview:
             - 'Overview': 'cluster/cluster-overview.md'
 
@@ -63,7 +63,7 @@ nav:
             - Metrics Dashboard:
                 - 'Cassandra': 'monitoring/metricsdashboards/cassandra.md'
             - Logs & Events: 'monitoring/logsandevents/logsandevents.md'
-        
+
         - Notification Integrations:
                 - 'Overview' : 'integrations/overview.md'
                 - 'PagerDuty Integration': 'integrations/pagerduy-integration.md'
@@ -72,7 +72,7 @@ nav:
                 - 'Email Integration': 'integrations/email-integration.md'
 
         - Operations:
-            - Cassandra: 
+            - Cassandra:
                 - Repair: 'operations/cassandra/repair.md'
                 - Backups:
                     - 'Overview': 'operations/cassandra/backup/overview.md'
@@ -86,17 +86,18 @@ nav:
             # - 'Setup Default Routing': 'how-to/default-routing.md'
             # - 'Setup Backup-Restore Notifications': 'how-to/backup-restore-notifications.md'
             # - 'Setup Dashboards-Global Integrations': 'how-to/setup-dashboards-global-integrations.md'
+            - 'Re-use an existing host ID': how-to/reuse-host-id.md
 
 
 #    - GUI:
 #        - 'Overview': 'gui-overview.md'
 #        - 'Features': 'gui-features.md'
 #        - 'Setup': 'gui-setup.md'
-   
+
 #    - Cassandra:
 #        - 'Dashboards': 'cassandra-dashboards.md'
 #        - Operations:
 #            - 'Repair': 'cassandra-repair.md'
 #            - 'Backup and Restore': 'cassandra-backup-and-restore.md'
 #    - Kafka:
-        
+
