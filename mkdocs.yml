@@ -51,7 +51,7 @@ nav:
         #- AxonOps Agent: 'installation/axon-agent/install.md'
         - AxonOps Cassandra Agent: 'installation/cassandra-agent/install.md'
         - Compatibility matrix: 'installation/compat_matrix/compat_matrix.md'
-        - Kubernetes: 'installation/kubernetes/minikube.md'
+        - Kubernetes: 'installation/kubernetes/index.md'
 
     - Using AxonOps:
         - Cluster Overview:
