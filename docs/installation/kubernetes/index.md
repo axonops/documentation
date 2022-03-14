@@ -82,14 +82,14 @@ axon-dash:
   ingress:
     enabled: true
     annotations:
-      external-dns.alpha.kubernetes.io/hostname: demo-dash.axonopsdev.com
+      external-dns.alpha.kubernetes.io/hostname: axonops.mycompany.com
     hosts:
-      - host: demo-dash.axonopsdev.com
+      - host: axonops.mycompany.com
         paths:
           - /
     tls:
       - hosts:
-          - demo-dash.axonopsdev.com
+          - axonops.mycompany.com
         secretName: axon-dash-tls
   resources:
     limits:
@@ -99,9 +99,11 @@ axon-dash:
       cpu: 25m
       memory: 64Mi
 
+# If you are not installing ElasticSearch and using an existing one,
+# make sure you update the below `elasticHost` URL
 axon-server:
   elasticHost: http://axonops-elastic-master:9200
-  dashboardUrl: https://demo-dash.axonopsdev.com
+  dashboardUrl: https://axonops.mycompany.com
   config:
     org_name: demo
     auth:
@@ -129,14 +131,14 @@ axon-server:
   ingress:
     enabled: true
     annotations:
-      external-dns.alpha.kubernetes.io/hostname: demo-server.axonopsdev.com
+      external-dns.alpha.kubernetes.io/hostname: axonops-server.mycompany.com
     hosts:
-      - host: demo-server.axonopsdev.com
+      - host: axonops-server.mycompany.com
         paths:
           - /
     tls:
       - hosts:
-          - demo-server.axonopsdev.com
+          - axonops-server.mycompany.com
         secretName: axon-server-tls
   resources:
     limits:
