@@ -22,9 +22,10 @@ helm update
 
 | Cassandra Nodes  | ElasticSearch CPU  | ElasticSearch Memory | AxonOps Server CPU | AxonOps Server Memory |
 |---|---|---|---|---|
-| <50  | 1000m | 4Gbi | 1000m | 2Gi |
-| 100  | 2000m | 16Gbi | 2000m | 8Gi |
-| 200  | 4000m | 32Gbi | 4000m | 16Gi |
+| <10  | 1000m | 4Gi | 500m | 1Gi |
+| <50  | 1000m | 4Gi | 1000m | 2Gi |
+| 100  | 2000m | 16Gi | 2000m | 8Gi |
+| 200  | 4000m | 32Gi | 4000m | 16Gi |
 
 ### ElasticSearch
 
@@ -34,59 +35,57 @@ The example below is a configuration file for the official ElasticSearch helm re
 ---
 clusterName: "axonops-elastic"
 
-replicas: 3
+replicas: 1
 
 esConfig:
   elasticsearch.yml: |
     thread_pool.write.queue_size: 2000
 
+roles:
+  master: "true"
+  ingest: "true"
+  data: "true"
+  remote_cluster_client: "false"
+  ml: "false"
+
 # Adjust the memory and cpu requirements to your deployment
 # 
-esJavaOpts: "-Xms10g -Xmx10g"
+esJavaOpts: "-Xms2g -Xmx2g"
 
 resources:
   requests:
     cpu: "750m"
-    memory: "5Gi"
+    memory: "2Gi"
   limits:
-    cpu: "2000m"
-    memory: "12Gi"
+    cpu: "1500m"
+    memory: "4Gi"
 
 volumeClaimTemplate:
   accessModes: ["ReadWriteOnce"]
-  storageClassName: "gp2"
+  storageClassName: "" # adjust to your storageClass if you don't want to use default
   resources:
     requests:
       storage: 50Gi
 
 rbac:
   create: true
-  serviceAccountAnnotations: {}
-  serviceAccountName: ""
-  automountToken: true
 ```
 
 
 ### AxonOps
 
-AxonOps installation will work with default settings fine for most people. Below you can find a more complex example using `Ingress` to expose both
-the dashboard and the AxonOps server.
+The default AxonOps installation does not expose the services outside of the cluster. We recommend that you use either a LoadBalancer service or an Ingress.
+
+Below you can find an example using `Ingress` to expose both the dashboard and the AxonOps server.
 
 ```yaml
 axon-dash:
-  autoscaling:
-    enabled: "true"
-    maxReplicas: "2"
-    minReplicas: "1"
-    targetCPUUtilizationPercentage: "75"
   config:
     axonServerUrl: http://axonops-axon-server:8080
   image:
     pullPolicy: IfNotPresent
-    repository: docker.cloudsmith.io/axonops/axonops-private/axon-dash
+    repository: docker.axonops.com/axonops-public/axon-dash
     tag: 1.0.2
-  imagePullSecrets:
-    - axonops-registry
   ingress:
     enabled: true
     annotations:
@@ -113,15 +112,12 @@ axon-server:
   elasticHost: http://axonops-elastic-master:9200
   dashboardUrl: https://axonops.mycompany.com
   config:
+    # Set up your organization name here
     org_name: demo
-    auth:
-      enabled: false
   image:
     pullPolicy: IfNotPresent
-    repository: docker.cloudsmith.io/axonops/axonops-private/axon-server
+    repository: docker.axonops.com/axonops-public/axon-server
     tag: 1.0.4
-  imagePullSecrets:
-    - axonops-registry
   ingress:
     enabled: true
     annotations:
@@ -136,14 +132,13 @@ axon-server:
         secretName: axon-server-tls
   resources:
     limits:
-      cpu: 2
-      memory: 4Gi
+      cpu: 1
+      memory: 1Gi
     requests:
       cpu: 100m
-      memory: 1Gi
+      memory: 256Mi
   serviceAccount:
     create: true
-    createClusterRole: false
 ```
 
 ## Installing
@@ -161,17 +156,7 @@ helm upgrade -n axonops --install \
 
 ### AxonOps
 
-Before you can install AxonOps you will need access the the private container repository and to create the required secret.
-
-```sh
-kubectl create secret docker-registry \
-  -n axonops \
-  axonops-registry \
-  --docker-username=axonops/axonops-private \
-  --docker-password=XXXXXXXXXXX
-```
-
-And finally install the AxonOps helm chart:
+Finally install the AxonOps helm chart:
 
 ```sh
 helm upgrade -n axonops --install \
