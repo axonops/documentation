@@ -18,6 +18,14 @@ helm update
 
 ## Preparing the configuration
 
+### Resources
+
+| Cassandra Nodes  | ElasticSearch CPU  | ElasticSearch Memory | AxonOps Server CPU | AxonOps Server Memory |
+|---|---|---|---|---|
+| <50  | 1000m | 4Gbi | 1000m | 2Gi |
+| 100  | 2000m | 16Gbi | 2000m | 8Gi |
+| 200  | 4000m | 64Gbi | 4000m | 24Gi |
+
 ### ElasticSearch
 
 The example below is a configuration file for the official ElasticSearch helm repository. See inline comments:
@@ -99,8 +107,8 @@ axon-dash:
       cpu: 25m
       memory: 64Mi
 
-# If you are not installing ElasticSearch and using an existing one,
-# make sure you update the below `elasticHost` URL
+# If you are using an existing ElasticSearch rather than installing it 
+# as shown here then make sure you update the elasticHost URL below
 axon-server:
   elasticHost: http://axonops-elastic-master:9200
   dashboardUrl: https://axonops.mycompany.com
@@ -108,20 +116,6 @@ axon-server:
     org_name: demo
     auth:
       enabled: false
-    extraConfig:
-      cql_autocreate_tables: false
-      cql_keyspace: metrics
-      cql_hosts:
-        - cassandra-node01
-        - cassandra-node02
-        - cassandra-node03
-        - cassandra-node04
-      cql_local_dc: AWS
-      cql_metrics_cache_max_items: 300000
-      cql_metrics_cache_max_size_mb: 1024 # Update this based on the amount of memory
-      cql_password: cassandra
-      cql_username: cassandra
-      cql_ssl: false
   image:
     pullPolicy: IfNotPresent
     repository: docker.cloudsmith.io/axonops/axonops-private/axon-server
