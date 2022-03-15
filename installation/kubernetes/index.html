@@ -13,7 +13,7 @@
     
     
       
-        <title>Monitoring Overview - AxonOps Documentation</title>
+        <title>Kubernetes - AxonOps Documentation</title>
       
     
     
@@ -71,7 +71,7 @@
     <div data-md-component="skip">
       
         
-        <a href="#performance-metrics" class="md-skip">
+        <a href="#running-axonops-on-kubernetes" class="md-skip">
           Skip to content
         </a>
       
@@ -103,7 +103,7 @@
         <div class="md-header__topic" data-md-component="header-topic">
           <span class="md-ellipsis">
             
-              Monitoring Overview
+              Kubernetes
             
           </span>
         </div>
@@ -263,12 +263,14 @@
 
   
   
+    
+  
   
     
-    <li class="md-nav__item md-nav__item--nested">
+    <li class="md-nav__item md-nav__item--active md-nav__item--nested">
       
       
-        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_3" type="checkbox" id="__nav_3" >
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_3" type="checkbox" id="__nav_3" checked>
       
       
       
@@ -317,7 +319,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../installation/axon-server/ubuntu/" class="md-nav__link">
+      <a href="../axon-server/ubuntu/" class="md-nav__link">
         Installing on Ubuntu/Debian
       </a>
     </li>
@@ -331,7 +333,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../installation/axon-server/centos/" class="md-nav__link">
+      <a href="../axon-server/centos/" class="md-nav__link">
         Installing on Centos/Redhat
       </a>
     </li>
@@ -352,7 +354,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../installation/axon-dash/install/" class="md-nav__link">
+      <a href="../axon-dash/install/" class="md-nav__link">
         AxonOps GUI Server
       </a>
     </li>
@@ -366,7 +368,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../installation/cassandra-agent/install/" class="md-nav__link">
+      <a href="../cassandra-agent/install/" class="md-nav__link">
         AxonOps Cassandra Agent
       </a>
     </li>
@@ -380,7 +382,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../installation/compat_matrix/compat_matrix/" class="md-nav__link">
+      <a href="../compat_matrix/compat_matrix/" class="md-nav__link">
         Compatibility matrix
       </a>
     </li>
@@ -392,11 +394,120 @@
               
   
   
+    
   
-    <li class="md-nav__item">
-      <a href="../../installation/kubernetes/" class="md-nav__link">
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" data-md-toggle="toc" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          Kubernetes
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
         Kubernetes
       </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#introduction" class="md-nav__link">
+    Introduction
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#adding-the-helm-repositories" class="md-nav__link">
+    Adding the helm repositories
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#preparing-the-configuration" class="md-nav__link">
+    Preparing the configuration
+  </a>
+  
+    <nav class="md-nav" aria-label="Preparing the configuration">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#resources" class="md-nav__link">
+    Resources
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#elasticsearch" class="md-nav__link">
+    ElasticSearch
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#axonops" class="md-nav__link">
+    AxonOps
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#installing" class="md-nav__link">
+    Installing
+  </a>
+  
+    <nav class="md-nav" aria-label="Installing">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#elasticsearch_1" class="md-nav__link">
+    ElasticSearch
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#axonops_1" class="md-nav__link">
+    AxonOps
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
     </li>
   
 
@@ -414,14 +525,12 @@
 
   
   
-    
-  
   
     
-    <li class="md-nav__item md-nav__item--active md-nav__item--nested">
+    <li class="md-nav__item md-nav__item--nested">
       
       
-        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_4" type="checkbox" id="__nav_4" checked>
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_4" type="checkbox" id="__nav_4" >
       
       
       
@@ -489,14 +598,12 @@
               
   
   
-    
-  
   
     
-    <li class="md-nav__item md-nav__item--active md-nav__item--nested">
+    <li class="md-nav__item md-nav__item--nested">
       
       
-        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_4_2" type="checkbox" id="__nav_4_2" checked>
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_4_2" type="checkbox" id="__nav_4_2" >
       
       
       
@@ -517,69 +624,11 @@
               
   
   
-    
   
-  
-    <li class="md-nav__item md-nav__item--active">
-      
-      <input class="md-nav__toggle md-toggle" data-md-toggle="toc" type="checkbox" id="__toc">
-      
-      
-      
-        <label class="md-nav__link md-nav__link--active" for="__toc">
-          Monitoring Overview
-          <span class="md-nav__icon md-icon"></span>
-        </label>
-      
-      <a href="./" class="md-nav__link md-nav__link--active">
+    <li class="md-nav__item">
+      <a href="../../monitoring/overview/" class="md-nav__link">
         Monitoring Overview
       </a>
-      
-        
-
-<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
-  
-  
-  
-  
-    <label class="md-nav__title" for="__toc">
-      <span class="md-nav__icon md-icon"></span>
-      Table of contents
-    </label>
-    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
-      
-        <li class="md-nav__item">
-  <a href="#performance-metrics" class="md-nav__link">
-    Performance Metrics
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#events" class="md-nav__link">
-    Events
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#service-availability" class="md-nav__link">
-    Service Availability
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#axonops-monitoring" class="md-nav__link">
-    AxonOps Monitoring
-  </a>
-  
-</li>
-      
-    </ul>
-  
-</nav>
-      
     </li>
   
 
@@ -591,7 +640,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../servicechecks/overview/" class="md-nav__link">
+      <a href="../../monitoring/servicechecks/overview/" class="md-nav__link">
         Service Checks
       </a>
     </li>
@@ -631,7 +680,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../metricsdashboards/cassandra/" class="md-nav__link">
+      <a href="../../monitoring/metricsdashboards/cassandra/" class="md-nav__link">
         Cassandra
       </a>
     </li>
@@ -652,7 +701,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../logsandevents/logsandevents/" class="md-nav__link">
+      <a href="../../monitoring/logsandevents/logsandevents/" class="md-nav__link">
         Logs & Events
       </a>
     </li>
@@ -1024,6 +1073,8 @@
   
   
   
+    
+  
   
     <label class="md-nav__title" for="__toc">
       <span class="md-nav__icon md-icon"></span>
@@ -1032,30 +1083,77 @@
     <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
       
         <li class="md-nav__item">
-  <a href="#performance-metrics" class="md-nav__link">
-    Performance Metrics
+  <a href="#introduction" class="md-nav__link">
+    Introduction
   </a>
   
 </li>
       
         <li class="md-nav__item">
-  <a href="#events" class="md-nav__link">
-    Events
+  <a href="#adding-the-helm-repositories" class="md-nav__link">
+    Adding the helm repositories
   </a>
   
 </li>
       
         <li class="md-nav__item">
-  <a href="#service-availability" class="md-nav__link">
-    Service Availability
+  <a href="#preparing-the-configuration" class="md-nav__link">
+    Preparing the configuration
   </a>
+  
+    <nav class="md-nav" aria-label="Preparing the configuration">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#resources" class="md-nav__link">
+    Resources
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#elasticsearch" class="md-nav__link">
+    ElasticSearch
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#axonops" class="md-nav__link">
+    AxonOps
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
   
 </li>
       
         <li class="md-nav__item">
-  <a href="#axonops-monitoring" class="md-nav__link">
-    AxonOps Monitoring
+  <a href="#installing" class="md-nav__link">
+    Installing
   </a>
+  
+    <nav class="md-nav" aria-label="Installing">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#elasticsearch_1" class="md-nav__link">
+    ElasticSearch
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#axonops_1" class="md-nav__link">
+    AxonOps
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
   
 </li>
       
@@ -1073,30 +1171,182 @@
                 
 
 
-  <h1>Monitoring Overview</h1>
+<h1 id="running-axonops-on-kubernetes">Running AxonOps on Kubernetes<a class="headerlink" href="#running-axonops-on-kubernetes" title="Permanent link">&para;</a></h1>
+<h2 id="introduction">Introduction<a class="headerlink" href="#introduction" title="Permanent link">&para;</a></h2>
+<p>The following shows how to install AxonOps for monitoring cassandra. AxonOps requires ElasticSearch and the documentation below shows how to install both. If you already have ElasticSearch running, you can omit the installation and just ensure the AxonOps config points to it.</p>
+<p>AxonOps installation uses Helm Charts.</p>
+<h2 id="adding-the-helm-repositories">Adding the helm repositories<a class="headerlink" href="#adding-the-helm-repositories" title="Permanent link">&para;</a></h2>
+<p>To follow this guide, you need two helm repositories: AxonOps and Elastic. You can add them using the commands:</p>
+<div class="codehilite"><pre><span></span><code>helm repo add axonops https://repo.axonops.com/public/helm/helm/charts/
+helm repo add elastic https://helm.elastic.co
+helm update
+</code></pre></div>
 
-<p>When monitoring enterprise service there are 3 categories of how the service is performing that we generally capture and monitor. These are;</p>
-<ul>
-<li>Performance metrics</li>
-<li>Events (logs)</li>
-<li>Service availability</li>
-</ul>
-<h3 id="performance-metrics">Performance Metrics<a class="headerlink" href="#performance-metrics" title="Permanent link">&para;</a></h3>
-<p>Performance metrics in Cassandra is highly extensive and there is a large number that can be captured to understand how Cassandra is performing. Another key metrics that also must be captured in order to effectively understand the performance of a database is the system resource utilisations.</p>
-<p>AxonOps agent captures both Cassandra and OS metrics and pushes them to the AxonOps server.</p>
-<h3 id="events">Events<a class="headerlink" href="#events" title="Permanent link">&para;</a></h3>
-<p>Cassandra event logs are, by default, written to log files. There are important information in the log files that allows SRE's and DevOps engineers to identify issues when they occur. AxonOps agent captures the logs and pushes them to the AxonOps server. These logs are visible within AxonOps dashboard allowing quick access to them without having to log in to the individual servers.</p>
-<h3 id="service-availability">Service Availability<a class="headerlink" href="#service-availability" title="Permanent link">&para;</a></h3>
-<p>Checking the momentary service availability and dashboards gives confidence that all services are running correctly as expected. Example service checks that allow engineers to gain confidence in the service availability are:</p>
-<ul>
-<li>System process</li>
-<li>Network open ports - e.g. CQL and storage ports</li>
-<li>Database availability - e.g. can execute CQL query</li>
-</ul>
-<h2 id="axonops-monitoring">AxonOps Monitoring<a class="headerlink" href="#axonops-monitoring" title="Permanent link">&para;</a></h2>
-<p>AxonOps implements all three types of monitoring described above. AxonOps agent captures the information, sends them securely to AxonOps server, and the information is stored in the backend data store.</p>
-<p>AxonOps GUI provides comprehensive set of metrics dashboards combined with the event log view. It also provides separate service check status view showing the health of the cluster.</p>
-<p>This section describes how the AxonOps GUI organises the dashboards of all three types of monitoring.</p>
+<h2 id="preparing-the-configuration">Preparing the configuration<a class="headerlink" href="#preparing-the-configuration" title="Permanent link">&para;</a></h2>
+<h3 id="resources">Resources<a class="headerlink" href="#resources" title="Permanent link">&para;</a></h3>
+<table>
+<thead>
+<tr>
+<th>Cassandra Nodes</th>
+<th>ElasticSearch CPU</th>
+<th>ElasticSearch Memory</th>
+<th>AxonOps Server CPU</th>
+<th>AxonOps Server Memory</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>&lt;10</td>
+<td>1000m</td>
+<td>4Gi</td>
+<td>500m</td>
+<td>1Gi</td>
+</tr>
+<tr>
+<td>&lt;50</td>
+<td>1000m</td>
+<td>4Gi</td>
+<td>1000m</td>
+<td>2Gi</td>
+</tr>
+<tr>
+<td>100</td>
+<td>2000m</td>
+<td>16Gi</td>
+<td>2000m</td>
+<td>8Gi</td>
+</tr>
+<tr>
+<td>200</td>
+<td>4000m</td>
+<td>32Gi</td>
+<td>4000m</td>
+<td>16Gi</td>
+</tr>
+</tbody>
+</table>
+<h3 id="elasticsearch">ElasticSearch<a class="headerlink" href="#elasticsearch" title="Permanent link">&para;</a></h3>
+<p>The example below is a configuration file for the official ElasticSearch helm repository. See inline comments:</p>
+<div class="codehilite"><pre><span></span><code><span class="nn">---</span><span class="w"></span>
+<span class="nt">clusterName</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;axonops-elastic&quot;</span><span class="w"></span>
+
+<span class="nt">replicas</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">1</span><span class="w"></span>
+
+<span class="nt">esConfig</span><span class="p">:</span><span class="w"></span>
+<span class="w">  </span><span class="nt">elasticsearch.yml</span><span class="p">:</span><span class="w"> </span><span class="p p-Indicator">|</span><span class="w"></span>
+<span class="w">    </span><span class="no">thread_pool.write.queue_size: 2000</span><span class="w"></span>
+
+<span class="nt">roles</span><span class="p">:</span><span class="w"></span>
+<span class="w">  </span><span class="nt">master</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;true&quot;</span><span class="w"></span>
+<span class="w">  </span><span class="nt">ingest</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;true&quot;</span><span class="w"></span>
+<span class="w">  </span><span class="nt">data</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;true&quot;</span><span class="w"></span>
+<span class="w">  </span><span class="nt">remote_cluster_client</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;false&quot;</span><span class="w"></span>
+<span class="w">  </span><span class="nt">ml</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;false&quot;</span><span class="w"></span>
+
+<span class="c1"># Adjust the memory and cpu requirements to your deployment</span><span class="w"></span>
+<span class="c1"># </span><span class="w"></span>
+<span class="nt">esJavaOpts</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;-Xms2g</span><span class="nv"> </span><span class="s">-Xmx2g&quot;</span><span class="w"></span>
+
+<span class="nt">resources</span><span class="p">:</span><span class="w"></span>
+<span class="w">  </span><span class="nt">requests</span><span class="p">:</span><span class="w"></span>
+<span class="w">    </span><span class="nt">cpu</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;750m&quot;</span><span class="w"></span>
+<span class="w">    </span><span class="nt">memory</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;2Gi&quot;</span><span class="w"></span>
+<span class="w">  </span><span class="nt">limits</span><span class="p">:</span><span class="w"></span>
+<span class="w">    </span><span class="nt">cpu</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;1500m&quot;</span><span class="w"></span>
+<span class="w">    </span><span class="nt">memory</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;4Gi&quot;</span><span class="w"></span>
+
+<span class="nt">volumeClaimTemplate</span><span class="p">:</span><span class="w"></span>
+<span class="w">  </span><span class="nt">accessModes</span><span class="p">:</span><span class="w"> </span><span class="p p-Indicator">[</span><span class="s">&quot;ReadWriteOnce&quot;</span><span class="p p-Indicator">]</span><span class="w"></span>
+<span class="w">  </span><span class="nt">storageClassName</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;&quot;</span><span class="w"> </span><span class="c1"># adjust to your storageClass if you don&#39;t want to use default</span><span class="w"></span>
+<span class="w">  </span><span class="nt">resources</span><span class="p">:</span><span class="w"></span>
+<span class="w">    </span><span class="nt">requests</span><span class="p">:</span><span class="w"></span>
+<span class="w">      </span><span class="nt">storage</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">50Gi</span><span class="w"></span>
+
+<span class="nt">rbac</span><span class="p">:</span><span class="w"></span>
+<span class="w">  </span><span class="nt">create</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">true</span><span class="w"></span>
+</code></pre></div>
+
+<h3 id="axonops">AxonOps<a class="headerlink" href="#axonops" title="Permanent link">&para;</a></h3>
+<p>The default AxonOps installation does not expose the services outside of the cluster. We recommend that you use either a LoadBalancer service or an Ingress.</p>
+<p>Below you can find an example using <code>Ingress</code> to expose both the dashboard and the AxonOps server.</p>
+<div class="codehilite"><pre><span></span><code><span class="nt">axon-dash</span><span class="p">:</span><span class="w"></span>
+<span class="w">  </span><span class="nt">config</span><span class="p">:</span><span class="w"></span>
+<span class="w">    </span><span class="nt">axonServerUrl</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">http://axonops-axon-server:8080</span><span class="w"></span>
+<span class="w">  </span><span class="nt">image</span><span class="p">:</span><span class="w"></span>
+<span class="w">    </span><span class="nt">pullPolicy</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">IfNotPresent</span><span class="w"></span>
+<span class="w">    </span><span class="nt">repository</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">docker.axonops.com/axonops-public/axon-dash</span><span class="w"></span>
+<span class="w">    </span><span class="nt">tag</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">1.0.2</span><span class="w"></span>
+<span class="w">  </span><span class="nt">ingress</span><span class="p">:</span><span class="w"></span>
+<span class="w">    </span><span class="nt">enabled</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">true</span><span class="w"></span>
+<span class="w">    </span><span class="nt">annotations</span><span class="p">:</span><span class="w"></span>
+<span class="w">      </span><span class="nt">external-dns.alpha.kubernetes.io/hostname</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">axonops.mycompany.com</span><span class="w"></span>
+<span class="w">    </span><span class="nt">hosts</span><span class="p">:</span><span class="w"></span>
+<span class="w">      </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">host</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">axonops.mycompany.com</span><span class="w"></span>
+<span class="w">        </span><span class="nt">paths</span><span class="p">:</span><span class="w"></span>
+<span class="w">          </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">/</span><span class="w"></span>
+<span class="w">    </span><span class="nt">tls</span><span class="p">:</span><span class="w"></span>
+<span class="w">      </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">hosts</span><span class="p">:</span><span class="w"></span>
+<span class="w">          </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">axonops.mycompany.com</span><span class="w"></span>
+<span class="w">        </span><span class="nt">secretName</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">axon-dash-tls</span><span class="w"></span>
+<span class="w">  </span><span class="nt">resources</span><span class="p">:</span><span class="w"></span>
+<span class="w">    </span><span class="nt">limits</span><span class="p">:</span><span class="w"></span>
+<span class="w">      </span><span class="nt">cpu</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">500m</span><span class="w"></span>
+<span class="w">      </span><span class="nt">memory</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">512Mi</span><span class="w"></span>
+<span class="w">    </span><span class="nt">requests</span><span class="p">:</span><span class="w"></span>
+<span class="w">      </span><span class="nt">cpu</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">25m</span><span class="w"></span>
+<span class="w">      </span><span class="nt">memory</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">64Mi</span><span class="w"></span>
+
+<span class="c1"># If you are using an existing ElasticSearch rather than installing it </span><span class="w"></span>
+<span class="c1"># as shown here then make sure you update the elasticHost URL below</span><span class="w"></span>
+<span class="nt">axon-server</span><span class="p">:</span><span class="w"></span>
+<span class="w">  </span><span class="nt">elasticHost</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">http://axonops-elastic-master:9200</span><span class="w"></span>
+<span class="w">  </span><span class="nt">dashboardUrl</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">https://axonops.mycompany.com</span><span class="w"></span>
+<span class="w">  </span><span class="nt">config</span><span class="p">:</span><span class="w"></span>
+<span class="w">    </span><span class="c1"># Set up your organization name here</span><span class="w"></span>
+<span class="w">    </span><span class="nt">org_name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">demo</span><span class="w"></span>
+<span class="w">  </span><span class="nt">image</span><span class="p">:</span><span class="w"></span>
+<span class="w">    </span><span class="nt">pullPolicy</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">IfNotPresent</span><span class="w"></span>
+<span class="w">    </span><span class="nt">repository</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">docker.axonops.com/axonops-public/axon-server</span><span class="w"></span>
+<span class="w">    </span><span class="nt">tag</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">1.0.4</span><span class="w"></span>
+<span class="w">  </span><span class="nt">ingress</span><span class="p">:</span><span class="w"></span>
+<span class="w">    </span><span class="nt">enabled</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">true</span><span class="w"></span>
+<span class="w">    </span><span class="nt">annotations</span><span class="p">:</span><span class="w"></span>
+<span class="w">      </span><span class="nt">external-dns.alpha.kubernetes.io/hostname</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">axonops-server.mycompany.com</span><span class="w"></span>
+<span class="w">    </span><span class="nt">hosts</span><span class="p">:</span><span class="w"></span>
+<span class="w">      </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">host</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">axonops-server.mycompany.com</span><span class="w"></span>
+<span class="w">        </span><span class="nt">paths</span><span class="p">:</span><span class="w"></span>
+<span class="w">          </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">/</span><span class="w"></span>
+<span class="w">    </span><span class="nt">tls</span><span class="p">:</span><span class="w"></span>
+<span class="w">      </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">hosts</span><span class="p">:</span><span class="w"></span>
+<span class="w">          </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">axonops-server.mycompany.com</span><span class="w"></span>
+<span class="w">        </span><span class="nt">secretName</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">axon-server-tls</span><span class="w"></span>
+<span class="w">  </span><span class="nt">resources</span><span class="p">:</span><span class="w"></span>
+<span class="w">    </span><span class="nt">limits</span><span class="p">:</span><span class="w"></span>
+<span class="w">      </span><span class="nt">cpu</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">1</span><span class="w"></span>
+<span class="w">      </span><span class="nt">memory</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">1Gi</span><span class="w"></span>
+<span class="w">    </span><span class="nt">requests</span><span class="p">:</span><span class="w"></span>
+<span class="w">      </span><span class="nt">cpu</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">100m</span><span class="w"></span>
+<span class="w">      </span><span class="nt">memory</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">256Mi</span><span class="w"></span>
+<span class="w">  </span><span class="nt">serviceAccount</span><span class="p">:</span><span class="w"></span>
+<span class="w">    </span><span class="nt">create</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">true</span><span class="w"></span>
+</code></pre></div>
+
+<h2 id="installing">Installing<a class="headerlink" href="#installing" title="Permanent link">&para;</a></h2>
+<h3 id="elasticsearch_1">ElasticSearch<a class="headerlink" href="#elasticsearch_1" title="Permanent link">&para;</a></h3>
+<p>Now you can install Elasticsearch referencing the configuration file created in the previous step:</p>
+<div class="codehilite"><pre><span></span><code>helm upgrade -n axonops --install <span class="se">\</span>
+  --create-namespace <span class="se">\</span>
+  -f <span class="s2">&quot;elasticsearch.yaml&quot;</span> <span class="se">\</span>
+  elasticsearch elastic/elasticsearch
+</code></pre></div>
+
+<h3 id="axonops_1">AxonOps<a class="headerlink" href="#axonops_1" title="Permanent link">&para;</a></h3>
+<p>Finally install the AxonOps helm chart:</p>
+<div class="codehilite"><pre><span></span><code>helm upgrade -n axonops --install <span class="se">\</span>
+  --create-namespace <span class="se">\</span>
+  -f <span class="s2">&quot;axonops.yaml&quot;</span> <span class="se">\</span>
+  axonops axonops/axonops
+</code></pre></div>
 
               
             </article>
@@ -1110,7 +1360,7 @@
     <nav class="md-footer__inner md-grid" aria-label="Footer">
       
         
-        <a href="../../cluster/cluster-overview/" class="md-footer__link md-footer__link--prev" aria-label="Previous: Overview" rel="prev">
+        <a href="../compat_matrix/compat_matrix/" class="md-footer__link md-footer__link--prev" aria-label="Previous: Compatibility matrix" rel="prev">
           <div class="md-footer__button md-icon">
             <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12z"/></svg>
           </div>
@@ -1119,20 +1369,20 @@
               <span class="md-footer__direction">
                 Previous
               </span>
-              Overview
+              Compatibility matrix
             </div>
           </div>
         </a>
       
       
         
-        <a href="../servicechecks/overview/" class="md-footer__link md-footer__link--next" aria-label="Next: Service Checks" rel="next">
+        <a href="../../cluster/cluster-overview/" class="md-footer__link md-footer__link--next" aria-label="Next: Overview" rel="next">
           <div class="md-footer__title">
             <div class="md-ellipsis">
               <span class="md-footer__direction">
                 Next
               </span>
-              Service Checks
+              Overview
             </div>
           </div>
           <div class="md-footer__button md-icon">
