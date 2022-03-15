@@ -1,0 +1,13 @@
+[[source]]
+url = 'https://pypi.python.org/simple'
+verify_ssl = true
+name = 'pypi'
+
+[requires]
+python_version = '3.8'
+
+[packages]
+mkdocs = "1.2.3"
+mkdocs-material = "8.2.5"
+mkdocs-material-extensions = "1.0.3"
+markdown-include = "0.6.0"
