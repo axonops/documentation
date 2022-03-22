@@ -85,7 +85,7 @@ axon-dash:
   image:
     pullPolicy: IfNotPresent
     repository: docker.axonops.com/axonops-public/axon-dash
-    tag: 1.0.2
+    tag: 1.0.6
   ingress:
     enabled: true
     annotations:
@@ -117,7 +117,7 @@ axon-server:
   image:
     pullPolicy: IfNotPresent
     repository: docker.axonops.com/axonops-public/axon-server
-    tag: 1.0.4
+    tag: 1.0.9
   ingress:
     enabled: true
     annotations:
