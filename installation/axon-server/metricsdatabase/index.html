@@ -300,38 +300,9 @@
       
     
     
-      <label class="md-nav__link md-nav__link--active" for="__toc">
-        Metrics database
-        <span class="md-nav__icon md-icon"></span>
-      </label>
-    
     <a href="./" class="md-nav__link md-nav__link--active">
       Metrics database
     </a>
-    
-      
-<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
-  
-  
-    
-  
-  
-    <label class="md-nav__title" for="__toc">
-      <span class="md-nav__icon md-icon"></span>
-      Table of contents
-    </label>
-    <ul class="md-nav__list" data-md-scrollfix>
-      
-        <li class="md-nav__item">
-  <a href="#using-cassandra-as-a-metrics-store" class="md-nav__link">
-    Using Cassandra as a metrics store
-  </a>
-  
-</li>
-      
-    </ul>
-  
-</nav>
     
   </li>
 
@@ -849,21 +820,6 @@
     
   
   
-    <label class="md-nav__title" for="__toc">
-      <span class="md-nav__icon md-icon"></span>
-      Table of contents
-    </label>
-    <ul class="md-nav__list" data-md-scrollfix>
-      
-        <li class="md-nav__item">
-  <a href="#using-cassandra-as-a-metrics-store" class="md-nav__link">
-    Using Cassandra as a metrics store
-  </a>
-  
-</li>
-      
-    </ul>
-  
 </nav>
                   </div>
                 </div>
@@ -876,7 +832,7 @@
                 
                 
                 <h1 id="axon-server-metrics-database">axon-server metrics database<a class="headerlink" href="#axon-server-metrics-database" title="Permanent link">&para;</a></h1>
-<h3 id="using-cassandra-as-a-metrics-store">Using Cassandra as a metrics store<a class="headerlink" href="#using-cassandra-as-a-metrics-store" title="Permanent link">&para;</a></h3>
+<h1 id="using-cassandra-as-a-metrics-store">Using Cassandra as a metrics store<a class="headerlink" href="#using-cassandra-as-a-metrics-store" title="Permanent link">&para;</a></h1>
 <p>You can use Cassandra as a metrics store instead of Elasticsearch for better performances.
 To start using a CQL store you just have to specify CQL hosts in <strong>axon-server.yml</strong>:</p>
 <div class="codehilite"><pre><span></span><code>cql_hosts :
@@ -893,13 +849,18 @@ cql_keyspace_replication : <span class="s2">&quot;{ &#39;class&#39; : &#39;Simpl
 </code></pre></div>
 
 <p>We recommend to setup at least a 3 nodes cluster with <strong>NetworkTopologyStrategy</strong> and a <strong>replication_factor</strong> of <strong>3</strong>.</p>
+<h2 id="connecting-to-encrypted-cassandra-metrics-store">Connecting to encrypted Cassandra metrics store<a class="headerlink" href="#connecting-to-encrypted-cassandra-metrics-store" title="Permanent link">&para;</a></h2>
+<p>We recommend to setup a Secured Socket Layer to Cassandra with the following field in <strong>axon-server.yml</strong>:</p>
+<div class="codehilite"><pre><span></span><code>cql_ssl: <span class="nb">true</span>
+cql_skip_verify: <span class="nb">false</span>
+cql_ca_file: <span class="s1">&#39;/path/to/ca_cert&#39;</span>
+cql_cert_file: <span class="s1">&#39;/path/to/cert_file&#39;</span>
+cql_key_file: <span class="s1">&#39;/path/to/key_file&#39;</span>
+</code></pre></div>
+
+<h2 id="other-cql-fields">Other CQL fields<a class="headerlink" href="#other-cql-fields" title="Permanent link">&para;</a></h2>
 <p>You can also specify the following fields:</p>
-<div class="codehilite"><pre><span></span><code>cql_ssl bool 
-cql_skip_verify bool  
-cql_ca_file string
-cql_cert_file string
-cql_key_file string
-cql_proto_version int                   
+<div class="codehilite"><pre><span></span><code>cql_proto_version int                   
 cql_batch_size  int                   
 cql_page_size int                   
 cql_local_dc string                
@@ -916,11 +877,11 @@ cql_metrics_cache_max_size_mb int64 in MB
 cql_metrics_cache_max_items  int64 in MB                        
 cql_read_consistency string                
 cql_write_consistency string                
-cql_lvl1_compaction_window_size int                   
-cql_lvl2_compaction_window_size int                   
-cql_lvl3_compaction_window_size int                   
-cql_lvl4_compaction_window_size int                   
-cql_lvl5_compaction_window_size int                   
+cql_lvl1_compaction_window_size int <span class="o">(</span>used <span class="k">for</span> the table named <span class="s1">&#39;metrics5&#39;</span> when you <span class="nb">let</span> axonserver managing the tables automatically<span class="o">)</span>                  
+cql_lvl2_compaction_window_size int <span class="o">(</span>used <span class="k">for</span> the table named <span class="s1">&#39;metrics60&#39;</span> when you <span class="nb">let</span> axonserver managing the tables automatically<span class="o">)</span>                  
+cql_lvl3_compaction_window_size int <span class="o">(</span>used <span class="k">for</span> the table named <span class="s1">&#39;metrics720&#39;</span> when you <span class="nb">let</span> axonserver managing the tables automatically<span class="o">)</span>                  
+cql_lvl4_compaction_window_size int <span class="o">(</span>used <span class="k">for</span> the table named <span class="s1">&#39;metrics7200&#39;</span> when you <span class="nb">let</span> axonserver managing the tables automatically<span class="o">)</span>                  
+cql_lvl5_compaction_window_size int <span class="o">(</span>used <span class="k">for</span> the table named <span class="s1">&#39;metrics86400&#39;</span> when you <span class="nb">let</span> axonserver managing the tables automatically<span class="o">)</span>                  
 </code></pre></div>
 
 <p>The CQL for the default tables are the following:</p>
