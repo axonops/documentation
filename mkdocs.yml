@@ -1,11 +1,24 @@
 site_name: AxonOps Documentation
-copyright: © 2020 digitalis.io All Rights Reserved
-google_analytics: ['UA-69443414-2', 'docs.axonops.com']
+copyright: © 2022 digitalis.io All Rights Reserved
+
 theme:
   name: 'material'
   favicon: 'img/favicon.ico'
   logo: 'img/axonops_logo.svg'
   language: 'en'
+
+extra:
+    analytics:
+        provider: google
+        property: UA-69443414-2
+    consent:
+        title: Cookie Consent
+        description:
+            We use cookies to recognize your repeated visits and preferences, as well
+            as to measure the effectiveness of our documentation and whether users
+            find what they're searching for. With your consent, you're helping us to
+            make our documentation better.
+    generator: false
 
 extra_css:
   - 'stylesheets/extra.css'
@@ -27,6 +40,8 @@ nav:
     - Overview:
         - 'Motivation': 'overview/motivation.md'
         - 'Architecture': 'overview/architecture.md'
+        # TODO: - - 'AxonOps Cloud': 'overview/axonops-cloud.md'
+        # TODO: - 'AxonOps Enterprise': 'overview/axonops-enterprise.md'
 
     - Installation:
         - AxonOps Server:
@@ -37,9 +52,9 @@ nav:
         #- AxonOps Agent: 'installation/axon-agent/install.md'
         - AxonOps Cassandra Agent: 'installation/cassandra-agent/install.md'
         - Compatibility matrix: 'installation/compat_matrix/compat_matrix.md'
-        - Kubernetes: 'installation/kubernetes/minikube.md'
+        - Kubernetes: 'installation/kubernetes/index.md'
 
-    - Using AxonOps: 
+    - Using AxonOps:
         - Cluster Overview:
             - 'Overview': 'cluster/cluster-overview.md'
 
@@ -49,7 +64,7 @@ nav:
             - Metrics Dashboard:
                 - 'Cassandra': 'monitoring/metricsdashboards/cassandra.md'
             - Logs & Events: 'monitoring/logsandevents/logsandevents.md'
-        
+
         - Notification Integrations:
                 - 'Overview' : 'integrations/overview.md'
                 - 'PagerDuty Integration': 'integrations/pagerduy-integration.md'
@@ -58,7 +73,7 @@ nav:
                 - 'Email Integration': 'integrations/email-integration.md'
 
         - Operations:
-            - Cassandra: 
+            - Cassandra:
                 - Repair: 'operations/cassandra/repair.md'
                 - Backups:
                     - 'Overview': 'operations/cassandra/backup/overview.md'
@@ -72,17 +87,18 @@ nav:
             # - 'Setup Default Routing': 'how-to/default-routing.md'
             # - 'Setup Backup-Restore Notifications': 'how-to/backup-restore-notifications.md'
             # - 'Setup Dashboards-Global Integrations': 'how-to/setup-dashboards-global-integrations.md'
+            - 'Re-use an existing host ID': how-to/reuse-host-id.md
 
 
 #    - GUI:
 #        - 'Overview': 'gui-overview.md'
 #        - 'Features': 'gui-features.md'
 #        - 'Setup': 'gui-setup.md'
-   
+
 #    - Cassandra:
 #        - 'Dashboards': 'cassandra-dashboards.md'
 #        - Operations:
 #            - 'Repair': 'cassandra-repair.md'
 #            - 'Backup and Restore': 'cassandra-backup-and-restore.md'
 #    - Kafka:
-        
+
