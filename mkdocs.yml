@@ -32,6 +32,7 @@ nav:
         - AxonOps Server:
             - 'Installing on Ubuntu/Debian': 'installation/axon-server/ubuntu.md'
             - 'Installing on Centos/Redhat': 'installation/axon-server/centos.md'
+            - 'Metrics database': 'installation/axon-server/metricsdatabase.md'
         - AxonOps GUI Server: 'installation/axon-dash/install.md'
         #- AxonOps Agent: 'installation/axon-agent/install.md'
         - AxonOps Cassandra Agent: 'installation/cassandra-agent/install.md'
