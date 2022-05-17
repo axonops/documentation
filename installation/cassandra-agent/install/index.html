@@ -1063,12 +1063,12 @@
 <p>Make sure that the <code>{version}</code> of your Cassandra and Cassandra agent are compatible from the <a href="../../compat_matrix/compat_matrix">compatibility matrix</a>. </p>
 </blockquote>
 <h4 id="centos-redhat-installer">CentOS / RedHat installer<a class="headerlink" href="#centos-redhat-installer" title="Permanent link">&para;</a></h4>
-<div class="codehilite"><pre><span></span><code>curl -1sLf <span class="s1">&#39;https://repo.axonops.com/public/yum/cfg/setup/bash.rpm.sh&#39;</span> <span class="p">|</span> sudo bash
+<div class="codehilite"><pre><span></span><code>curl -1sLf <span class="s1">&#39;https://repo.axonops.com/public/axonops-public/setup.rpm.sh&#39;</span> <span class="p">|</span> sudo -E bash
 sudo yum install axon-cassandra<span class="o">{</span>version<span class="o">}</span>-agent
 </code></pre></div>
 
 <h4 id="debian-ubuntu-installer">Debian / Ubuntu installer<a class="headerlink" href="#debian-ubuntu-installer" title="Permanent link">&para;</a></h4>
-<div class="codehilite"><pre><span></span><code>curl -1sLf <span class="s1">&#39;https://repo.axonops.com/public/apt/cfg/setup/bash.deb.sh&#39;</span> <span class="p">|</span> sudo bash
+<div class="codehilite"><pre><span></span><code>curl -1sLf <span class="s1">&#39;https://repo.axonops.com/public/axonops-public/setup.deb.sh&#39;</span> <span class="p">|</span> sudo -E bash
 sudo apt-get install axon-cassandra<span class="o">{</span>version<span class="o">}</span>-agent
 </code></pre></div>
 

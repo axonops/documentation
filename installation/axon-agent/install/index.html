@@ -878,12 +878,12 @@
 <p>The messaging between native agent and Java agent are bi-directional - i.e. AxonOps server sends control messages to Cassandra for operations such as repair and backups without the use of JMX.</p>
 <p>This section describes how to install and configure both the native agent and Java agent.</p>
 <h4 id="centos-redhat-installer">CentOS / RedHat installer<a class="headerlink" href="#centos-redhat-installer" title="Permanent link">&para;</a></h4>
-<div class="codehilite"><pre><span></span><code>curl -1sLf <span class="s1">&#39;https://repo.axonops.com/public/yum/cfg/setup/bash.rpm.sh&#39;</span> <span class="p">|</span> sudo bash
+<div class="codehilite"><pre><span></span><code>curl -1sLf <span class="s1">&#39;https://repo.axonops.com/public/axonops-public/setup.rpm.sh&#39;</span> <span class="p">|</span> sudo -E bash
 sudo yum install axon-agent
 </code></pre></div>
 
 <h4 id="debian-ubuntu-installer">Debian / Ubuntu installer<a class="headerlink" href="#debian-ubuntu-installer" title="Permanent link">&para;</a></h4>
-<div class="codehilite"><pre><span></span><code>curl -1sLf <span class="s1">&#39;https://repo.axonops.com/public/apt/cfg/setup/bash.deb.sh&#39;</span> <span class="p">|</span> sudo bash
+<div class="codehilite"><pre><span></span><code>curl -1sLf <span class="s1">&#39;https://repo.axonops.com/public/axonops-public/setup.deb.sh&#39;</span> <span class="p">|</span> sudo -E bash
 sudo apt-get install axon-agent
 </code></pre></div>
 
