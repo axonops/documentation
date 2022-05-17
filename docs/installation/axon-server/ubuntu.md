@@ -38,7 +38,7 @@ sudo dpkg -i elasticsearch-6.6.1.deb
 
 ## Step 2 - axon-server installer
 ``` bash
-curl -1sLf 'https://repo.axonops.com/public/apt/cfg/setup/bash.deb.sh' | sudo bash
+curl -1sLf 'https://repo.axonops.com/public/axonops-public/setup.deb.sh' | sudo -E bash
 sudo apt-get install axon-server
 ```
 

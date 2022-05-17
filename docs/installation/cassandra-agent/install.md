@@ -14,12 +14,12 @@ This agent will enable metrics, logs and events collection with adaptive repairs
 
 #### CentOS / RedHat installer
 ``` bash
-curl -1sLf 'https://repo.axonops.com/public/yum/cfg/setup/bash.rpm.sh' | sudo bash
+curl -1sLf 'https://repo.axonops.com/public/axonops-public/setup.rpm.sh' | sudo -E bash
 sudo yum install axon-cassandra{version}-agent
 ```
 #### Debian / Ubuntu installer
 ``` bash
-curl -1sLf 'https://repo.axonops.com/public/apt/cfg/setup/bash.deb.sh' | sudo bash
+curl -1sLf 'https://repo.axonops.com/public/axonops-public/setup.deb.sh' | sudo -E bash
 sudo apt-get install axon-cassandra{version}-agent
 ```
 > Note: This will install AxonOps Cassandra agent and it's dependency: axon-agent

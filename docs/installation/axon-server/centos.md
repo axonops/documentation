@@ -29,7 +29,7 @@ sudo rpm -i jdk-8u131-linux-x64.rpm
 
 ## Step 2 - axon-server installer
 ``` bash
-curl -1sLf 'https://repo.axonops.com/public/yum/cfg/setup/bash.rpm.sh' | sudo bash
+curl -1sLf 'https://repo.axonops.com/public/axonops-public/setup.rpm.sh' | sudo -E bash
 sudo yum install axon-server
 ```
 
