@@ -12,17 +12,28 @@ This agent will enable metrics, logs and events collection with adaptive repairs
 > Make sure that the `{version}` of your Cassandra and Cassandra agent are compatible from the [compatibility matrix](../../compat_matrix/compat_matrix). 
 
 
-#### CentOS / RedHat installer
+#### CentOS / RedHat
 ``` bash
-curl -1sLf 'https://repo.axonops.com/public/axonops-public/setup.rpm.sh' | sudo -E bash
+sudo tee /etc/yum.repos.d/axonops-yum.repo << EOL
+[axonops-yum]
+name=axonops-yum
+baseurl=https://packages.axonops.com/yum/
+enabled=1
+repo_gpgcheck=0
+gpgcheck=0
+EOL
+
 sudo yum install axon-cassandra{version}-agent
 ```
-#### Debian / Ubuntu installer
+#### Debian / Ubuntu
 ``` bash
-curl -1sLf 'https://repo.axonops.com/public/axonops-public/setup.deb.sh' | sudo -E bash
+curl https://packages.axonops.com/apt/repo-signing-key.gpg | sudo apt-key add -
+echo "deb https://packages.axonops.com/apt axonops-apt main" | sudo tee /etc/apt/sources.list.d/axonops-apt.list
+sudo apt-get update
+
 sudo apt-get install axon-cassandra{version}-agent
 ```
-> Note: This will install AxonOps Cassandra agent and it's dependency: axon-agent
+> Note: This will install AxonOps Cassandra agent and its dependency: axon-agent
 
 
 ## Step 2 - Agent Configuration

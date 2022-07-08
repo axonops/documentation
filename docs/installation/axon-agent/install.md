@@ -13,14 +13,24 @@ This section describes how to install and configure both the native agent and Ja
 
 
 
-#### CentOS / RedHat installer
+#### CentOS / RedHat
 ``` bash
-curl -1sLf 'https://repo.axonops.com/public/axonops-public/setup.rpm.sh' | sudo -E bash
+sudo tee /etc/yum.repos.d/axonops-yum.repo << EOL
+[axonops-yum]
+name=axonops-yum
+baseurl=https://packages.axonops.com/yum/
+enabled=1
+repo_gpgcheck=0
+gpgcheck=0
+EOL
+
 sudo yum install axon-agent
 ```
-#### Debian / Ubuntu installer
+#### Debian / Ubuntu
 ``` bash
-curl -1sLf 'https://repo.axonops.com/public/axonops-public/setup.deb.sh' | sudo -E bash
+curl https://packages.axonops.com/apt/repo-signing-key.gpg | sudo apt-key add -
+echo "deb https://packages.axonops.com/apt axonops-apt main" | sudo tee /etc/apt/sources.list.d/axonops-apt.list
+sudo apt-get update
 sudo apt-get install axon-agent
 ```
 
@@ -46,7 +56,7 @@ axon-agent:
     type: "cassandra"
 
 NTP:
-    host: "ntp.mycompany.com" # Specify you NTP server IP address or hostname
+    host: "ntp.mycompany.com" # Specify you NTP server IP address or hostname
 ```
 
 #### Start axon-agent

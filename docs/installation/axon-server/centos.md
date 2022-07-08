@@ -27,9 +27,17 @@ sudo rpm -i jdk-8u131-linux-x64.rpm
 {!installation/axon-server/elastic.md!}
 
 
-## Step 2 - axon-server installer
+## Step 2 - axon-server
 ``` bash
-curl -1sLf 'https://repo.axonops.com/public/axonops-public/setup.rpm.sh' | sudo -E bash
+sudo tee /etc/yum.repos.d/axonops-yum.repo << EOL
+[axonops-yum]
+name=axonops-yum
+baseurl=https://packages.axonops.com/yum/
+enabled=1
+repo_gpgcheck=0
+gpgcheck=0
+EOL
+
 sudo yum install axon-server
 ```
 

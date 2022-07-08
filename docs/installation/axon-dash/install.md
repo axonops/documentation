@@ -6,14 +6,24 @@ This section describes the installation process for the GUI service.
 
 ## Step 1 - Installation
 
-#### CentOS / RedHat installer
+#### CentOS / RedHat
 ``` bash
-curl -1sLf 'https://repo.axonops.com/public/axonops-public/setup.rpm.sh' | sudo -E bash
+sudo tee /etc/yum.repos.d/axonops-yum.repo << EOL
+[axonops-yum]
+name=axonops-yum
+baseurl=https://packages.axonops.com/yum/
+enabled=1
+repo_gpgcheck=0
+gpgcheck=0
+EOL
+
 sudo yum install axon-dash
 ```
-#### Debian / Ubuntu installer
+#### Debian / Ubuntu
 ``` bash
-curl -1sLf 'https://repo.axonops.com/public/axonops-public/setup.deb.sh' | sudo -E bash
+curl https://packages.axonops.com/apt/repo-signing-key.gpg | sudo apt-key add -
+echo "deb https://packages.axonops.com/apt axonops-apt main" | sudo tee /etc/apt/sources.list.d/axonops-apt.list
+sudo apt-get update
 sudo apt-get install axon-dash
 ```
 
@@ -22,7 +32,7 @@ Change **axon-dash** configuration to specify **axon-server** listening address.
 
 * `/etc/axonops/axon-dash.yml`
 ``` yaml  hl_lines="7"
-axon-dash: #  The listening address of axon-dash
+axon-dash: # The listening address of axon-dash
   host: 0.0.0.0
   port: 3000
   line_charts_max_results: 256
@@ -42,8 +52,8 @@ Update **axon-server** configuration by setting the correct **axon-dash** **host
 ``` yaml hl_lines="7 8"
 host: 0.0.0.0  # axon-server listening address 
 port: 8080 # axon-server listening port 
-elastic_host: http://localhost # Elasticsearch endpoint
-elastic_port: 9200 # Elasticsearch port
+elastic_host: http://localhost # Elasticsearch endpoint
+elastic_port: 9200 # Elasticsearch port
 
 axon-dash: # This must point to axon-dash address
   host: 127.0.0.1
