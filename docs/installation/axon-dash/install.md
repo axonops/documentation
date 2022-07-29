@@ -21,6 +21,7 @@ sudo yum install axon-dash
 ```
 #### Debian / Ubuntu
 ``` bash
+apt-get install curl gnupg
 curl https://packages.axonops.com/apt/repo-signing-key.gpg | sudo apt-key add -
 echo "deb https://packages.axonops.com/apt axonops-apt main" | sudo tee /etc/apt/sources.list.d/axonops-apt.list
 sudo apt-get update
