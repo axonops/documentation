@@ -13,7 +13,7 @@
     
     
       
-        <title>Restore - AxonOps Documentation</title>
+        <title>Overview - AxonOps Documentation</title>
       
     
     
@@ -71,11 +71,6 @@
     <label class="md-overlay" for="__drawer"></label>
     <div data-md-component="skip">
       
-        
-        <a href="#restore-on-a-replacement-node" class="md-skip">
-          Skip to content
-        </a>
-      
     </div>
     <div data-md-component="announce">
       
@@ -104,7 +99,7 @@
         <div class="md-header__topic" data-md-component="header-topic">
           <span class="md-ellipsis">
             
-              Restore
+              Overview
             
           </span>
         </div>
@@ -830,12 +825,40 @@
   
     <li class="md-nav__item">
       <a href="../../backup/overview/" class="md-nav__link">
-        Overview
+        Backups Overview
       </a>
     </li>
   
 
             
+          
+            
+              
+  
+  
+    
+  
+  
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_4_4_1_2_2" type="checkbox" id="__nav_4_4_1_2_2" checked>
+      
+      
+      
+      
+        <label class="md-nav__link" for="__nav_4_4_1_2_2">
+          Restore
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" aria-label="Restore" data-md-level="5">
+        <label class="md-nav__title" for="__nav_4_4_1_2_2">
+          <span class="md-nav__icon md-icon"></span>
+          Restore
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
           
             
               
@@ -850,39 +873,59 @@
       
       
       
-        <label class="md-nav__link md-nav__link--active" for="__toc">
-          Restore
-          <span class="md-nav__icon md-icon"></span>
-        </label>
-      
       <a href="./" class="md-nav__link md-nav__link--active">
-        Restore
+        Overview
       </a>
       
-        
+    </li>
+  
 
-<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+            
+          
+            
+              
   
   
   
+    <li class="md-nav__item">
+      <a href="../restore-node-same-ip/" class="md-nav__link">
+        Single node
+      </a>
+    </li>
   
-    <label class="md-nav__title" for="__toc">
-      <span class="md-nav__icon md-icon"></span>
-      Table of contents
-    </label>
-    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
-      
-        <li class="md-nav__item">
-  <a href="#restore-on-a-replacement-node" class="md-nav__link">
-    Restore on a replacement node
-  </a>
+
+            
+          
+            
+              
   
-</li>
-      
-    </ul>
   
-</nav>
-      
+  
+    <li class="md-nav__item">
+      <a href="../restore-node-different-ip/" class="md-nav__link">
+        Single node with a different IP address
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../restore-cluster-same-ip/" class="md-nav__link">
+        Whole cluster
+      </a>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
     </li>
   
 
@@ -1023,21 +1066,6 @@
   
   
   
-    <label class="md-nav__title" for="__toc">
-      <span class="md-nav__icon md-icon"></span>
-      Table of contents
-    </label>
-    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
-      
-        <li class="md-nav__item">
-  <a href="#restore-on-a-replacement-node" class="md-nav__link">
-    Restore on a replacement node
-  </a>
-  
-</li>
-      
-    </ul>
-  
 </nav>
                   </div>
                 </div>
@@ -1050,50 +1078,29 @@
                 
 
 
-  <h1>Restore</h1>
+  <h1>Overview</h1>
 
-<p>AxonOps provides a restore functionnality from previous Cassandra snapshots.</p>
-<p>The functionality is accessible via <strong><em>Operations &gt; Backups &amp; Restore &gt; Restore</em></strong></p>
+<p>AxonOps provides the ability to restore from local snapshots and remote backups.</p>
+<p>The Restore feature is accessible via <strong><em>Operations &gt; Restore</em></strong></p>
 <div class="admonition infomy">
 <p class="admonition-title">Infomy</p>
-<p><a href="/img/cass_backups/restore.JPG"><img alt="restore" src="/img/cass_backups/restore.JPG" /></a></p>
+<p><a href="/img/cass_backups/restore.png"><img alt="restore" src="/img/cass_backups/restore.png" /></a></p>
 </div>
 <blockquote>
-<p>Note that <strong>axonops</strong> user will need temporary write access on Cassandra data folders to be able to proceed the restoration.</p>
+<p>Note that <strong>axonops</strong> user will need temporary write access on Cassandra data folders to be able to perform the restoration.</p>
 </blockquote>
-<p>To restore Cassandra, click on a relevant backup.</p>
-<p>This will provide the details of that backup and the ability to start the restoration by clicking the <code>LOCAL RESTORE</code> or <code>REMOTE RESTORE</code> button depending on if you prefer
-to restore from the local snapshot or the remote one (if you have one).
-You can also select which nodes you would like to restore on via the checkboxes in the Hosts list.</p>
+<p>To restore Cassandra, click on the backup you wish to restore.</p>
+<p>This will provide the details of that backup and the ability to start the restoration by clicking the <code>LOCAL RESTORE</code> or <code>REMOTE RESTORE</code> 
+button depending on if you prefer to restore from the local snapshot or the remote backup (if remote backups were configured).
+Here you can also select a subset of nodes to restore via the checkboxes in the Nodes list.</p>
 <div class="admonition infomy">
 <p class="admonition-title">Infomy</p>
-<p><a href="/img/cass_backups/restore1.JPG"><img alt="restore" src="/img/cass_backups/restore1.JPG" /></a></p>
+<p><a href="/img/cass_backups/restore1.png"><img alt="restore" src="/img/cass_backups/restore1.png" /></a></p>
 </div>
-<h2 id="restore-on-a-replacement-node">Restore on a replacement node<a class="headerlink" href="#restore-on-a-replacement-node" title="Permanent link">&para;</a></h2>
-<p>Use this procedure when a node in the Cassandra cluster needs to be replaced.</p>
-<blockquote>
-<p>Make sure that Cassandra is not running while you are doing the restoration on the replacement node and that Cassandra configuration is identical to the dead node.</p>
-</blockquote>
-<p>First you'll need to retrieve the <strong><em>axon-agent hostID</em></strong> of the dead node.
-You'll find it in the cluster overview by selecting a node:</p>
-<div class="admonition infomy">
-<p class="admonition-title">Infomy</p>
-<p><a href="../hostID2.JPG"><img alt="restore" src="../hostID2.JPG" /></a></p>
-</div>
-<p>Once you get the hostID of the dead node, you'll start <strong><em>axon-agent</em></strong> on the new node passing the previous hostID as an env var:</p>
-<div class="codehilite"><pre><span></span><code><span class="nv">AXON_AGENT_HOSTID</span><span class="o">=</span>54cb2777-34e7-49dd-8fa9-5563aa5f05d8 /usr/share/axonops/axon-agent
-</code></pre></div>
-
-<p>Once the agent is started and connected to axon-server with the previous hostID, you'll navigate to <code>Operations &gt; Backups &amp; Restore &gt; Restore</code>; select the backup you'd like to restore from; select the replacement node via the red checkbox and click <strong><em>REMOTE RESTORE</em></strong>.
-This will restore the data from the remote location to the selected node. </p>
-<blockquote>
-<p>Note that <strong>axonops</strong> user will need write access on Cassandra data folders to be able to proceed the restoration.</p>
-</blockquote>
-<div class="admonition infomy">
-<p class="admonition-title">Infomy</p>
-<p><a href="../restore_replace.JPG"><img alt="restore" src="../restore_replace.JPG" /></a></p>
-</div>
-<p>Once the restore process is finished, you can start Cassandra on the replacement node.</p>
+<p>Follow the links below for some more detailed backup restore scenarios</p>
+<p><a href="../restore-node-same-ip/">Restore a single node - same IP address</a></p>
+<p><a href="../restore-node-different-ip/">Replace a node - different IP address</a></p>
+<p><a href="../restore-cluster-same-ip/">Restore whole cluster - same IP addresses</a></p>
 
               
             </article>
@@ -1109,7 +1116,7 @@ This will restore the data from the remote location to the selected node. </p>
     <nav class="md-footer__inner md-grid" aria-label="Footer" >
       
         
-        <a href="../../backup/overview/" class="md-footer__link md-footer__link--prev" aria-label="Previous: Overview" rel="prev">
+        <a href="../../backup/overview/" class="md-footer__link md-footer__link--prev" aria-label="Previous: Backups Overview" rel="prev">
           <div class="md-footer__button md-icon">
             <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12Z"/></svg>
           </div>
@@ -1118,20 +1125,20 @@ This will restore the data from the remote location to the selected node. </p>
               <span class="md-footer__direction">
                 Previous
               </span>
-              Overview
+              Backups Overview
             </div>
           </div>
         </a>
       
       
         
-        <a href="../../rollingrestart/overview/" class="md-footer__link md-footer__link--next" aria-label="Next: Rolling Restart" rel="next">
+        <a href="../restore-node-same-ip/" class="md-footer__link md-footer__link--next" aria-label="Next: Single node" rel="next">
           <div class="md-footer__title">
             <div class="md-ellipsis">
               <span class="md-footer__direction">
                 Next
               </span>
-              Rolling Restart
+              Single node
             </div>
           </div>
           <div class="md-footer__button md-icon">

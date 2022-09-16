@@ -13,7 +13,7 @@
     
     
       
-        <title>Rolling Restart - AxonOps Documentation</title>
+        <title>Restore temp - AxonOps Documentation</title>
       
     
     
@@ -99,7 +99,7 @@
         <div class="md-header__topic" data-md-component="header-topic">
           <span class="md-ellipsis">
             
-              Rolling Restart
+              Restore temp
             
           </span>
         </div>
@@ -424,14 +424,12 @@
 
   
   
-    
-  
   
     
-    <li class="md-nav__item md-nav__item--active md-nav__item--nested">
+    <li class="md-nav__item md-nav__item--nested">
       
       
-        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_4" type="checkbox" id="__nav_4" checked>
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_4" type="checkbox" id="__nav_4" >
       
       
       
@@ -724,14 +722,12 @@
               
   
   
-    
-  
   
     
-    <li class="md-nav__item md-nav__item--active md-nav__item--nested">
+    <li class="md-nav__item md-nav__item--nested">
       
       
-        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_4_4" type="checkbox" id="__nav_4_4" checked>
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_4_4" type="checkbox" id="__nav_4_4" >
       
       
       
@@ -752,14 +748,12 @@
               
   
   
-    
-  
   
     
-    <li class="md-nav__item md-nav__item--active md-nav__item--nested">
+    <li class="md-nav__item md-nav__item--nested">
       
       
-        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_4_4_1" type="checkbox" id="__nav_4_4_1" checked>
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_4_4_1" type="checkbox" id="__nav_4_4_1" >
       
       
       
@@ -862,7 +856,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../restore/overview/" class="md-nav__link">
+      <a href="../overview/" class="md-nav__link">
         Overview
       </a>
     </li>
@@ -876,7 +870,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../restore/restore-node-same-ip/" class="md-nav__link">
+      <a href="../restore-node-same-ip/" class="md-nav__link">
         Single node
       </a>
     </li>
@@ -890,7 +884,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../restore/restore-node-different-ip/" class="md-nav__link">
+      <a href="../restore-node-different-ip/" class="md-nav__link">
         Single node with a different IP address
       </a>
     </li>
@@ -904,7 +898,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../restore/restore-cluster-same-ip/" class="md-nav__link">
+      <a href="../restore-cluster-same-ip/" class="md-nav__link">
         Whole cluster
       </a>
     </li>
@@ -930,19 +924,11 @@
               
   
   
-    
   
-  
-    <li class="md-nav__item md-nav__item--active">
-      
-      <input class="md-nav__toggle md-toggle" data-md-toggle="toc" type="checkbox" id="__toc">
-      
-      
-      
-      <a href="./" class="md-nav__link md-nav__link--active">
+    <li class="md-nav__item">
+      <a href="../../rollingrestart/overview/" class="md-nav__link">
         Rolling Restart
       </a>
-      
     </li>
   
 
@@ -1074,35 +1060,113 @@
                 
 
 
-  <h1>Rolling Restart</h1>
+  <h1>Restore temp</h1>
 
-<p>AxonOps provides a rolling restart functionnality for Cassandra.</p>
-<p>The functionality is accessible via <strong><em>Operations &gt; Rolling Restart</em></strong></p>
-<div class="admonition infomy">
-<p class="admonition-title">Infomy</p>
-<p><a href="../1.JPG"><img alt="rollingrestart" src="../1.JPG" /></a></p>
-</div>
-<blockquote>
-<p><strong>axonops</strong> user will require permissions to be able to stop and start Cassandra service. To do so you will add <strong>axonops</strong> user in the sudoers with for instance the following permissions:</p>
-</blockquote>
-<div class="codehilite"><pre><span></span><code><span class="c1">#/etc/sudoers.d/axonops</span>
-axonops <span class="nv">ALL</span><span class="o">=</span>NOPASSWD: /sbin/service cassandra *, /usr/bin/systemctl * cassandra*
-</code></pre></div>
-
-<p>You can start an <strong>immediate</strong> rolling restart or <strong>schedule</strong> it.</p>
-<p>The <strong>script</strong> field let you able to tweak the predefined script executed by <strong>axon-agents</strong> during the restart process.</p>
-<p>You can also specify different degree of parallelism for the restart: <strong>DC</strong>, <strong>Rack</strong> and <strong>Node</strong>.</p>
-<p>For instance, to <strong>restart one entire rack</strong> at once across the cluster, you can set a large <strong>Node parallelism</strong> (greater than the number of nodes the rack has, ie 999).</p>
-<div class="codehilite"><pre><span></span><code>DC parallelism: <span class="m">1</span>
-Rack parallelism: <span class="m">1</span>
-Node parallelism: <span class="m">999</span>
-</code></pre></div>
-
-<p>To <strong>restart one entire rack across each DC</strong>:</p>
-<div class="codehilite"><pre><span></span><code>DC parallelism: <span class="m">999</span>
-Rack parallelism: <span class="m">1</span>
-Node parallelism: <span class="m">999</span>
-</code></pre></div>
+<p>See also https://digitalisio.atlassian.net/wiki/spaces/AS/pages/3070001153/AxonOps+Backups+Restore</p>
+<p>Next to test:
+1. Restore cluster with same IPs but without setting agent host ID
+2. Restore single node with same IP but without setting agent host ID</p>
+<p>Test single node restore with schema change:
+1. Start with fresh Cassandra and axon-agent data
+2. Create a keyspace and table, insert some data
+3. Run a remote backup
+4. Create another keyspace and table, insert some data
+5. Run another remote backup
+6. Shut down Cassandra and axon-agent on one node, wipe all Cassandra data, wipe /var/lib/axonops except for the hostId file
+7. Start up axon-agent again
+8. Restore the first backup to this node only (from the remote storage)</p>
+<p>Whole cluster restore with missing hostId:
+1. Stop Cassandra and axon-agent
+2. Wipe Cassandra data and /var/lib/axonops
+3. Start axon-agent
+4. Restore backup
+5. Start Cassandra</p>
+<p>=======================</p>
+<p>Restore a single node (total node loss but same IP address)</p>
+<ol>
+<li>Ensure Cassandra is stopped on the new node and that its data directories are all empty
+   systemctl stop cassandra
+   rm -rf /var/lib/cassandra/commitlog/<em> /var/lib/cassandra/data/</em> /var/lib/cassandra/hints/<em> /var/lib/cassandra/saved_caches/</em></li>
+<li>Allow the AxonOps user to the Cassandra data directory
+   chmod -R g+w /var/lib/cassandra/data</li>
+<li>Start axon-agent if it is not already running
+   systemctl start axon-agent</li>
+<li>Trigger a REMOTE restore on only this node from the AxonOps dashboard</li>
+<li>Once the restore has completed, fix the permissions on the Cassandra data directories
+   chown -R cassandra.cassandra /var/lib/cassandra/data</li>
+<li>Remove write permission for the AxonOps user
+   chmod -R g-w /var/lib/cassandra/data</li>
+<li>Start Cassandra on the restored node</li>
+<li>Run a repair (or let AxonOps deal with it)</li>
+</ol>
+<p>=======================</p>
+<p>Restore a single node with a different IP (total node loss, IP address changed)</p>
+<ol>
+<li>Get the agent ID for the old node from AxonOps Dashboard or from /var/lib/axonops/hostId on the old node</li>
+<li>Ensure Cassandra is stopped on the new node and that the data directories are all empty
+   systemctl stop cassandra
+   rm -rf /var/lib/cassandra/commitlog/<em> /var/lib/cassandra/data/</em> /var/lib/cassandra/hints/<em> /var/lib/cassandra/saved_caches/</em></li>
+<li>Allow the AxonOps user to the Cassandra data directories
+   chmod -R g+w /var/lib/cassandra/data</li>
+<li>Stop axon-agent if it is running
+   systemctl stop axon-agent</li>
+<li>Remove all files and directories in /var/lib/axonops
+   rm -rf /var/lib/axonops/*</li>
+<li>Start axon-agent with the old node's host ID
+   echo 'old-host-id' &gt;/var/lib/axonops/hostId
+   systemctl start axon-agent</li>
+<li>Trigger a REMOTE restore on only this node from the AxonOps dashboard</li>
+<li>Once the restore has completed, fix the permissions on the Cassandra data directories
+   chown -R cassandra.cassandra /var/lib/cassandra/data
+   chmod -R g-w /var/lib/cassandra/data</li>
+<li>Remove system keyspace files (these will be recreated during bootstrap): system, system_auth, system_distributed, system_schema, system_traces</li>
+<li>Configure Cassandra to replace the old node by adding this line to cassandra-env.sh (replace 1.2.3.4 with the IP address of the old node):
+    JVM_OPTS="$JVM_OPTS -Dcassandra.replace_address=1.2.3.4 -Dcassandra.allow_unsafe_replace=true"</li>
+<li>Disable auto-bootstrap on the replacement node by adding this line to cassandra.yaml:
+    auto_bootstrap: false</li>
+<li>Start Cassandra on the restored node</li>
+<li>Remove or comment-out the lines added to cassandra.yaml and cassandra-env.sh so they are ready for the next restart</li>
+</ol>
+<p>=======================</p>
+<p>Whole cluster restore (Rolling back the entire cluster to a backup)</p>
+<ol>
+<li>Stop cassandra on all nodes, leave the AxonOps agent running</li>
+<li>Clear the Cassandra data from all nodes
+   rm -rf /var/lib/cassandra/commitlog/<em> /var/lib/cassandra/data/</em> /var/lib/cassandra/hints/<em> /var/lib/cassandra/saved_caches/</em></li>
+<li>Allow the axonops user to write to the Cassandra data directories
+   chmod -R g+w /var/lib/cassandra/data</li>
+<li>Trigger a REMOTE restore from AxonOps dashboard</li>
+<li>Once the restore has completed, fix the permissions on the Cassandra data directories
+   chown -R cassandra.cassandra /var/lib/cassandra/data</li>
+<li>Remove write permission for the AxonOps user
+   chmod -R g-w /var/lib/cassandra/data</li>
+<li>Start Cassandra on one node at a time, seeds first</li>
+</ol>
+<p>=======================</p>
+<p>Whole cluster restore (All nodes lost but cluster recreated with same IPs)</p>
+<p>For each node in the new cluster:
+1. Ensure Cassandra is stopped and that its data directories are all empty
+   systemctl stop cassandra
+   rm -rf /var/lib/cassandra/commitlog/<em> /var/lib/cassandra/data/</em> /var/lib/cassandra/hints/<em> /var/lib/cassandra/saved_caches/</em>
+2. Start axon-agent on all nodes if it is not already running
+   systemctl start axon-agent
+3. Start a REMOTE restore on all nodes from the AxonOps dashboard
+4. Once the restore has completed, fix the permissions on the Cassandra data directories
+   chown -R cassandra.cassandra /var/lib/cassandra/data
+5. Remove write permission for the AxonOps user
+   chmod -R g-w /var/lib/cassandra/data
+6. Start Cassandra on one node at a time, seeds first</p>
+<p>=======================</p>
+<p>Restore to a different cluster (same number of nodes but different IPs)
+* NEEDS PARTIAL SYSTEM KEYSPACE RESTORE? - see case 2 here: https://github.com/thelastpickle/cassandra-medusa/blob/master/docs/Restoring-a-full-cluster.md *</p>
+<p>TODO...
+Work out agent IDs and token assignments for the old hosts and how they will map to the new hosts
+Restore backup
+Start cassandra with initial_token set to the old node's tokens</p>
+<p>=======================</p>
+<p>Restore to a different cluster topology
+* NEEDS SCHEMA RESTORED BUT NOT SYSTEM KEYSPACES ??? *
+* TODO: sstableloader restore</p>
 
               
             </article>
@@ -1113,42 +1177,6 @@ Node parallelism: <span class="m">999</span>
       </main>
       
         <footer class="md-footer">
-  
-    
-    <nav class="md-footer__inner md-grid" aria-label="Footer" >
-      
-        
-        <a href="../../restore/restore-cluster-same-ip/" class="md-footer__link md-footer__link--prev" aria-label="Previous: Whole cluster" rel="prev">
-          <div class="md-footer__button md-icon">
-            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12Z"/></svg>
-          </div>
-          <div class="md-footer__title">
-            <div class="md-ellipsis">
-              <span class="md-footer__direction">
-                Previous
-              </span>
-              Whole cluster
-            </div>
-          </div>
-        </a>
-      
-      
-        
-        <a href="../../../../how-to/setup-alert-rules/" class="md-footer__link md-footer__link--next" aria-label="Next: Setup Alert Rules" rel="next">
-          <div class="md-footer__title">
-            <div class="md-ellipsis">
-              <span class="md-footer__direction">
-                Next
-              </span>
-              Setup Alert Rules
-            </div>
-          </div>
-          <div class="md-footer__button md-icon">
-            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M4 11v2h12l-5.5 5.5 1.42 1.42L19.84 12l-7.92-7.92L10.5 5.5 16 11H4Z"/></svg>
-          </div>
-        </a>
-      
-    </nav>
   
   <div class="md-footer-meta md-typeset">
     <div class="md-footer-meta__inner md-grid">
