@@ -1,9 +1,9 @@
 # Restore a single node from a remote backup
 
-> NOTE: Restoring a node from a total loss can only be performed from a remote backup
+*Follow this procedure to restore a single Cassandra node from a total loss of all data where the replacement node
+has the same IP address as the original.*
 
-Follow this procedure to restore a single Cassandra node from a total loss of all data where the replacement node
-has the same IP address as the original.
+> NOTE: Restoring a node from a total loss can only be performed from a remote backup
 
 Ensure Cassandra is stopped on the new node and that its data directories are all empty
 ```bash

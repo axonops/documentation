@@ -1,6 +1,6 @@
-# Restore a whole cluster from a backup
+# Restore a whole cluster from a remote backup
 
-Follow this procedure when you have lost all nodes in a cluster but they have been recreated with the same IP addresses.
+*Follow this procedure when you have lost all nodes in a cluster but they have been recreated with the same IP addresses.*
 
 Ensure that Cassandra is stopped on all nodes and that its data directories are empty
 

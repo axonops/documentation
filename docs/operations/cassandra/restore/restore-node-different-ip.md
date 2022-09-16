@@ -1,9 +1,9 @@
 # Replace a node from a remote backup
 
-> NOTE: Restoring a node from a total loss can only be performed from a remote backup
+*Follow this procedure to restore a single Cassandra node from a total loss of all data where the replacement node
+has a different IP address from the original.*
 
-Follow this procedure to restore a single Cassandra node from a total loss of all data where the replacement node
-has a different IP address from the original.
+> NOTE: Restoring a node from a total loss can only be performed from a remote backup
 
 AxonOps identifies nodes by a unique host ID which is assigned when the agent starts up. In order to restore a backup to
 a node with a different IP address you must manually assign the AxonOps host ID of the old node to its new replacement.
@@ -14,7 +14,7 @@ You can find the host ID of the old node on the Cluster Overview page of the Axo
 
     [![restore](/img/cass_backups/hostID.png)](/img/cass_backups/hostID.png)
 
-If you still have access to the old server then its host ID can also be found in `/var/lib/axonops/hostId`
+If you still have access to the old server or its data then its host ID can also be found in the file `/var/lib/axonops/hostId`
 
 ## Manually configure the AxonOps Agent host ID
 
