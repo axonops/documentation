@@ -37,3 +37,21 @@ This will show the details of the backup and allow you to restore to all nodes o
     [![restore](/img/cass_backups/restore2.png)](/img/cass_backups/restore2.png)
 
 Select all nodes in the checkbox list then start the restore by clicking the `REMOTE RESTORE` button.
+
+The restore progress will be displayed in the *Backup Restorations in Progress* list
+
+!!! infomy
+
+    [![restore](/img/cass_backups/restores-table.png)](/img/cass_backups/restores-table.png)
+
+After the restore operation has completed successfully, fix the ownership and permissions on the Cassandra data 
+directories on all nodes in the cluster
+```bash
+sudo chown -R cassandra.cassandra /var/lib/cassandra/data
+sudo chmod -R g-w /var/lib/cassandra/data
+```
+
+Start cassandra on the restored nodes, starting with the seeds first
+```bash
+sudo systemctl start cassandra
+```
