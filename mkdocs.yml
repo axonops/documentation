@@ -76,8 +76,12 @@ nav:
             - Cassandra:
                 - Repair: 'operations/cassandra/repair.md'
                 - Backups:
-                    - 'Overview': 'operations/cassandra/backup/overview.md'
-                    - 'Restore': 'operations/cassandra/restore/overview.md'
+                    - 'Backups Overview': 'operations/cassandra/backup/overview.md'
+                    - 'Restore':
+                      - 'Overview': 'operations/cassandra/restore/overview.md'
+                      - 'Single node': 'operations/cassandra/restore/restore-node-same-ip.md'
+                      - 'Single node with a different IP address': 'operations/cassandra/restore/restore-node-different-ip.md'
+                      - 'Whole cluster': 'operations/cassandra/restore/restore-cluster-same-ip.md'
                 - 'Rolling Restart': 'operations/cassandra/rollingrestart/overview.md'
 
     - How-to:
