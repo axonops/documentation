@@ -69,6 +69,7 @@ nav:
                 - 'Overview' : 'integrations/overview.md'
                 - 'PagerDuty Integration': 'integrations/pagerduy-integration.md'
                 - 'Slack Integration': 'integrations/slack-integration.md'
+                - 'Microsoft Teams': 'integrations/microsoft-teams-integration.md'
                 - 'ServiceNow': 'integrations/servicenow-integration.md'
                 - 'Email Integration': 'integrations/email-integration.md'
 

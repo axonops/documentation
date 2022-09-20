@@ -7,13 +7,15 @@ The current integrations are:
 * SMTP
 * Pagerduty
 * Slack
+* Microsoft Teams
 * ServiceNow
 * Generic webhooks
 
-
 !!! infomy 
 
-    [![slack](./0.JPG)](./0.JPG)
+![](2022-09-20-11-08-58.png)
+
+
 
 ###  Routing
 AxonOps provide a rich routing mechanism for the notifications.
