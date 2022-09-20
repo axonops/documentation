@@ -6,16 +6,6 @@ The following shows how to install AxonOps for monitoring cassandra. AxonOps req
 
 AxonOps installation uses Helm Charts.
 
-## Adding the helm repositories
-
-To follow this guide, you need two helm repositories: AxonOps and Elastic. You can add them using the commands:
-
-```sh
-helm repo add axonops https://repo.axonops.com/public/helm/helm/charts/
-helm repo add elastic https://helm.elastic.co
-helm update
-```
-
 ## Preparing the configuration
 
 ### Resources
@@ -84,8 +74,8 @@ axon-dash:
     axonServerUrl: http://axonops-axon-server:8080
   image:
     pullPolicy: IfNotPresent
-    repository: docker.axonops.com/axonops-public/axon-dash
-    tag: 1.0.6
+    repository: registry.axonops.com/axonops-public/axonops-docker/axon-dash
+    tag: 1.0.13
   ingress:
     enabled: true
     annotations:
@@ -116,8 +106,8 @@ axon-server:
     org_name: demo
   image:
     pullPolicy: IfNotPresent
-    repository: docker.axonops.com/axonops-public/axon-server
-    tag: 1.0.9
+    repository: registry.axonops.com/axonops-public/axonops-docker/axon-server
+    tag: 1.0.40
   ingress:
     enabled: true
     annotations:
@@ -148,6 +138,8 @@ axon-server:
 Now you can install Elasticsearch referencing the configuration file created in the previous step:
 
 ```sh
+helm repo add elastic https://helm.elastic.co
+helm update
 helm upgrade -n axonops --install \
   --create-namespace \
   -f "elasticsearch.yaml" \
@@ -162,5 +154,5 @@ Finally install the AxonOps helm chart:
 helm upgrade -n axonops --install \
   --create-namespace \
   -f "axonops.yaml" \
-  axonops axonops/axonops
+  axonops oci://helm.axonops.com/axonops-public/axonops-helm/axonops
 ```

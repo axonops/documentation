@@ -1,6 +1,6 @@
 AxonOps provide scheduled backup and restore functionnality for your Cassandra cluster.
 
-The functionality is accessible via ***Operations > Backups & Restore > Backups***
+The functionality is accessible via ***Operations > Backups***
 
 !!! infomy 
 
@@ -13,7 +13,7 @@ You can initiate three types of scheduled backup:
 
 * Immediate scheduled backup: these will trigger immediately **once**
 
-* Simple scheduled backup: these will trigger base on the selected schedule **repeatedly**
+* Simple scheduled backup: these will trigger based on the selected schedule **repeatedly**
 
 !!! infomy 
 
@@ -39,10 +39,10 @@ You can initiate three types of scheduled backup:
 
 ###  Remote backups 
 
-> Note that **axonops** user will need read access on Cassandra data folders to be able to proceed the remote backup.
+> Note that **axonops** user will need read access on Cassandra data folders to be able to perform a remote backup.
 
 
-The current remote options are:
+The available remote options are:
 
 * AWS S3
 * Google Cloud Storage

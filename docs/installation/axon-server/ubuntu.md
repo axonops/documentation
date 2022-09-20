@@ -36,9 +36,12 @@ sudo dpkg -i elasticsearch-6.6.1.deb
 
 {!installation/axon-server/elastic.md!}
 
-## Step 2 - axon-server installer
+## Step 2 - axon-server
 ``` bash
-curl -1sLf 'https://repo.axonops.com/public/axonops-public/setup.deb.sh' | sudo -E bash
+apt-get install curl gnupg
+curl https://packages.axonops.com/apt/repo-signing-key.gpg | sudo apt-key add -
+echo "deb https://packages.axonops.com/apt axonops-apt main" | sudo tee /etc/apt/sources.list.d/axonops-apt.list
+sudo apt-get update
 sudo apt-get install axon-server
 ```
 

@@ -38,8 +38,9 @@ The values below are set for running on a laptop with `minikube`, adjust accordi
 ```yaml
 ---
 repositories:
-  - name: digitalis
-    url: https://repo.axonops.com/public/helm/helm/charts/
+  - name: axonops
+    url: helm.axonops.com/axonops-public/axonops-helm/axonops
+    oci: true
   - name: bitnami
     url: https://charts.bitnami.com/bitnami
   - name: ckotzbauer
