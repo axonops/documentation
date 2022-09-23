@@ -25,10 +25,10 @@ sudo systemctl stop axon-agent
 sudo rm -rf /var/lib/axonops/*
 ```
 
-Manually apply the old node's host ID on the replacement
+Manually apply the old node's host ID on the replacement (replace the host ID shown with your host ID from the previous steps)
 
 ```bash
-echo 'old-host-id' | sudo tee /var/lib/axonops/hostId
+echo '24d0cbf9-3b5a-11ed-8433-16b3c6a7bcc5' | sudo tee /var/lib/axonops/hostId
 sudo chown axonops.axonops /var/lib/axonops/hostId
 ```
 
@@ -83,34 +83,10 @@ sudo chown -R cassandra.cassandra /var/lib/cassandra/data
 sudo chmod -R g-w /var/lib/cassandra/data
 ```
 
-## Prepare Cassandra for replacing the old node
-
-Now that the data has been restored you can configure Cassandra to start up and take over the token ranges of the
-old node. We will also prevent the node from auto-bootstrapping because otherwise it would stream all of its data
-back from the other replicas in the cluster, which should not be necessary as we have restored it from a backup.
-
-Add this line to the end of `cassandra.yaml` on the replacement node:
-```yaml
-auto_bootstrap: false
-```
-
-Configure the JVM options to tell Cassandra to replace the old node's IP address by adding this line to the end of
-`cassandra-env.sh` (replace `1.2.3.4` with the IP address of the old Cassandra node):
-```bash
-JVM_OPTS="$JVM_OPTS -Dcassandra.replace_address=1.2.3.4 -Dcassandra.allow_unsafe_replace=true"
-```
-
-The restored backup will include the system keyspace so this must first be removed to allow Cassandra to recreate
-it with the updated cluster topology
-
-```bash
-sudo rm -rf /var/lib/cassandra/data/system
-```
-
 Now you can start cassandra on the restored node
 ```bash
 sudo systemctl start cassandra
 ```
 
-After Cassandra has started up successfully you should remove or comment out the lines added to `cassandra.yaml` and 
-`cassandra-env.sh` above to prevent issues on the next restart.
+After the replacement node has started up the old IP address may still be visible in Gossip. It should clear out automatically
+after a day or two, or you can perform a rolling restart of the cluster to make sure everything is up-to-date.
