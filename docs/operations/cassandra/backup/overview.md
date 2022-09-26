@@ -1,4 +1,4 @@
-AxonOps provide scheduled backup and restore functionnality for your Cassandra cluster.
+AxonOps provide scheduled backup and restore functionality for your Cassandra data.
 
 The functionality is accessible via ***Operations > Backups***
 
