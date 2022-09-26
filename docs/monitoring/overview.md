@@ -6,13 +6,13 @@ When monitoring enterprise service there are 3 categories of how the service is 
 
 
 ### Performance Metrics
-Performance metrics in Cassandra is highly extensive and there is a large number that can be captured to understand how Cassandra is performing. Another key metrics that also must be captured in order to effectively understand the performance of a database is the system resource utilisations.
+Performance metrics in Cassandra is highly extensive and there is a large number that can be captured to understand how Cassandra is performing. Another key metrics that also must be captured in order to effectively understand the performance of a database is the system resource utilisation.
 
 AxonOps agent captures both Cassandra and OS metrics and pushes them to the AxonOps server.
 
 
 ### Events
-Cassandra event logs are, by default, written to log files. There are important information in the log files that allows SRE's and DevOps engineers to identify issues when they occur. AxonOps agent captures the logs and pushes them to the AxonOps server. These logs are visible within AxonOps dashboard allowing quick access to them without having to log in to the individual servers.
+Cassandra event logs are, by default, written to log files. There are important information in the log files that allows SREs and DevOps engineers to identify issues when they occur. AxonOps agent captures the logs and pushes them to the AxonOps server. These logs are visible within AxonOps dashboard allowing quick access to them without having to log in to the individual servers.
 
 
 ### Service Availability

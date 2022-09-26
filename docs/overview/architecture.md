@@ -16,7 +16,7 @@ As you can see from the diagram below, we have massively simplified the stack wi
 
 
 You can also use a **CQL** datastore such as **Cassandra**, **Elassandra**, or **Scylla** to store the metrics.
-We recommand storing metrics on a CQL store on 100+ nodes clusters to improve your experience navigating the metrics dashboards.
+We recommend storing metrics on a CQL store on 100+ nodes clusters to improve your experience navigating the metrics dashboards.
 
 
 

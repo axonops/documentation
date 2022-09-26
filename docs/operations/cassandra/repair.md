@@ -4,7 +4,7 @@ AxonOps provide two mechanisms to ease Cassandra repairs:
 
 * Scheduled repair
 
-* Adapative repair service
+* Adaptive repair service
 
 
 ## Scheduled repair
@@ -38,7 +38,7 @@ You can initiate three types of scheduled repair:
 
 
 
-## Adapative repair service
+## Adaptive repair service
 
 Since AxonOps collects performance metrics and logs, we built an “Adaptive” repair system which regulates the velocity (parallelism and pauses between each subrange repair) based on performance trending data. The regulation of repair velocity takes input from various metrics including CPU utilisation, query latencies, Cassandra thread pools pending statistics, and IOwait percentage, while tracking the schedule of repair based on **gc_grace_seconds** for each table.
 
@@ -53,9 +53,9 @@ The idea of this is to achieve the following:
 
     [![adaptive_repair](/img/cass_repairs/adaptive_repair.png)](/img/cass_repairs/adaptive_repair.png)
 
-> If you want to keep the tables as fresh as possible, we do recommend to increate the `table parallelism` to be greater than the total number of tables of your cluster and reduce the `segments per VNode` to generate less repair requests.
+> If you want to keep the tables as fresh as possible we recommend to increase the `table parallelism` to be greater than the total number of tables of your cluster and reduce the `segments per VNode` to generate less repair requests.
 
-From a user’s point of view, there is only a single switch to enable this service. Keep this enabled and AxonOps will take care of the repair of all tables for you. Also you can customize the following:
+From a user’s point of view there is only a single switch to enable this service. Keep this enabled and AxonOps will take care of the repair of all tables for you. You can also customize the following:
 
 * Blacklist some tables
 

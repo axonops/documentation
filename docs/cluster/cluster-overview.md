@@ -1,7 +1,7 @@
 
 **Cluster Overview** is the home page and provides an overview of your cluster health, including **OS**, **Cassandra** and **JVM** details.
 
-The informations are automatically extracted by the AxonOps agent and pushed to AxonOps server. There is no need to configure anything on the agent or the server side for this information to be populated in the Cluster Overview dashboard.
+The information is automatically extracted by the AxonOps agent and pushed to AxonOps server. There is no need to configure anything on the agent or the server side for this information to be populated in the Cluster Overview dashboard.
 
 
 On the Axonops application menu, select `Cluster Overview`.

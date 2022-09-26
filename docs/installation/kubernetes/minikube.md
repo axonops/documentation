@@ -12,7 +12,7 @@ The deployment should work fine on latest versions of [minikube](https://kuberne
 minikube start --memory 8192 --cpus=4
 minikube addons enable storage-provisioner
 ```
-**:warning: Make sure you use a recent version of minikube. Also check available [drivers](https://minikube.sigs.k8s.io/docs/drivers/) and select the most appropiate for your platform**
+**:warning: Make sure you use a recent version of minikube. Also check available [drivers](https://minikube.sigs.k8s.io/docs/drivers/) and select the most appropriate for your platform**
 
 ## Helmfile
 
@@ -314,10 +314,10 @@ cassandra:
     - "getDatacenter"
     - "getRack"
 
-  DMLEventsWhitelist: # You can whitelist keyspaces / tables (list of "keyspace" and/or "keyspace.table" to log DML queries. Data is not analysed.
+  DMLEventsWhitelist: # You can whitelist keyspaces / tables (list of "keyspace" and/or "keyspace.table") to log DML queries. Data is not analysed.
   # - "system_distributed"
 
-  DMLEventsBlacklist: # You can blacklist keyspaces / tables from the DMLEventsWhitelist (list of "keyspace" and/or "keyspace.table" to log DML queries. Data is not analysed.
+  DMLEventsBlacklist: # You can blacklist keyspaces / tables from the DMLEventsWhitelist (list of "keyspace" and/or "keyspace.table") to log DML queries. Data is not analysed.
   # - system_distributed.parent_repair_history
 
   logSuccessfulRepairs: false # set it to true if you want to log all the successful repair events.
@@ -393,7 +393,7 @@ kubectl describe -n NAMESPACE pod POD-NAME
 
 ### Storage
 
-One common problem is regarding storage. If you have enabled persistent storage you may see an error about persistent volume claims (not found, unclaimed, etc). If you're using `minikube` make sure you enable storage with 
+One common problem is regarding storage. If you have enabled persistent storage you may see an error about persistent volume claims (not found, unclaimed, etc.). If you're using `minikube` make sure you enable storage with 
 
 ```sh
 minikube addons enable storage-provisioner
@@ -401,7 +401,7 @@ minikube addons enable storage-provisioner
 
 ### Memory
 
-The second most common problem is not enough memory (OOMKilled). You will see this often if you're node does not have enough memory to run the containers or if the `heap` settings for Cassandra are not right. `kubectl describe` command will be showing `Error 127` when this occurs.
+The second most common problem is not enough memory (OOMKilled). You will see this often if your node does not have enough memory to run the containers or if the `heap` settings for Cassandra are not right. `kubectl describe` command will be showing `Error 127` when this occurs.
 
 In the `values.yaml` file adjust the heap options to match your hardware:
 
@@ -413,7 +413,7 @@ In the `values.yaml` file adjust the heap options to match your hardware:
 
 #### Minikube
 
-Review the way you have started up `minikube` and assign more memory if you can. Also check the [available drivers](https://minikube.sigs.k8s.io/docs/drivers/) and select the appropiate for your platform. On MacOS where I tested `hyperkit` or `virtualbox` are the best ones.
+Review the way you have started up `minikube` and assign more memory if you can. Also check the [available drivers](https://minikube.sigs.k8s.io/docs/drivers/) and select the appropriate for your platform. On macOS where I tested `hyperkit` or `virtualbox` are the best ones.
 
 ```sh
 minikube start --memory 10240 --cpus=4 --driver=hyperkit

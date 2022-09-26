@@ -10,7 +10,7 @@ cql_hosts :
     ...
 ```
 
-By default, axonserver will automatically creates the necessary keyspace and tables.
+By default, the AxonOps server automatically creates the necessary keyspace and tables.
 You can override this behavior by specifying the following field in **axon-server.yml**:
 ``` bash
 cql_autocreate_tables : false
@@ -18,10 +18,10 @@ cql_keyspace : "axonops"
 cql_keyspace_replication : "{ 'class' : 'SimpleStrategy', 'replication_factor' : 1 }"
 ```
 
-We recommend to setup at least a 3 nodes cluster with **NetworkTopologyStrategy** and a **replication_factor** of **3**.
+We recommend setting up at least a 3 nodes cluster with **NetworkTopologyStrategy** and a **replication_factor** of **3**.
 
 ## Connecting to encrypted Cassandra metrics store
-We recommend to setup a Secured Socket Layer to Cassandra with the following field in **axon-server.yml**:
+We recommend setting up a Secured Socket Layer connection to Cassandra with the following fields in **axon-server.yml**:
 ``` bash
 cql_ssl: true
 cql_skip_verify: false

@@ -1,6 +1,6 @@
-# Setup Backup - Restore Notications
+# Setup Backup - Restore Notifications
 
-On the Axonops application menu, click `Operations -> Backups -> Setup` and select `Notifications` tab. 
+On the AxonOps application menu, click `Operations -> Backups -> Setup` and select `Notifications` tab. 
 
 ## Notification Severities.
 

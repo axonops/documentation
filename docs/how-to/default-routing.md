@@ -1,6 +1,6 @@
 # Setup Default Routing
 
-!!! info "Deafult Routing." 
+!!! info "Default Routing." 
 
     Allows you to set up the channels though which alerts & notifications will be received and the specific groups that will receive the alerts & notifications
 

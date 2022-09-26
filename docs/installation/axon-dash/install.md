@@ -78,7 +78,7 @@ retention:
     remote: 30d
 ```
 
-## Step 4 - Restart **axon-server** after updating it's configuration
+## Step 4 - Restart **axon-server** after updating its configuration
 ``` bash
 sudo systemctl restart axon-server
 ```

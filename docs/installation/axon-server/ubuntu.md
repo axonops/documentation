@@ -2,7 +2,7 @@
 
 ## Step 1 - Prerequisites
 
-Elasticsearch stores all of the collected data by axon-server. Let's install Java 8 and Elasticsearch first.
+Elasticsearch stores the data collected by axon-server. Let's install Java 8 and Elasticsearch first.
 
 #### Installing JDK
 Elasticsearch supports either OpenJDK or Oracle JDK. Since Oracle has changed the licensing model as of January 2019 we suggest using OpenJDK.

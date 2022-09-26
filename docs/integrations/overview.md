@@ -25,7 +25,7 @@ The current routing options are:
 * Global - this will route all the notifications
 * Metrics - notifications about the alerts on metrics
 * Backups - notifications about the backups / restore
-* Service Checks - notifications about the service checks / healthchecks
+* Service Checks - notifications about the service checks / health checks
 * Nodes - notifications raised from the nodes
 * Commands - notifications from generic tasks
 * Repairs - notifications from Cassandra repairs

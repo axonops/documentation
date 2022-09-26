@@ -7,7 +7,7 @@ There 2 elements to the AxonOps agent. The first is the axon-agent, which is a n
 
 AxonOps Java agent will push the metrics to the AxonOps native agent, which in turn pushes them to the AxonOps server. Scraping a large volume of metrics against the JMX is slow. We also wanted to avoid exposing an HTTP endpoint within Cassandra like the [Prometheus JMX exporter](https://github.com/prometheus/jmx_exporter) does.
 
-The messaging between native agent and Java agent are bi-directional - i.e. AxonOps server sends control messages to Cassandra for operations such as repair and backups without the use of JMX.
+The messaging between native agent and Java agent is bidirectional, i.e. AxonOps server sends control messages to Cassandra for operations such as repair and backups without the use of JMX.
 
 This section describes how to install and configure both the native agent and Java agent.
 

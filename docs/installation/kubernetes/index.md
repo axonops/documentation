@@ -10,12 +10,12 @@ AxonOps installation uses Helm Charts.
 
 ### Resources
 
-| Cassandra Nodes  | ElasticSearch CPU  | ElasticSearch Memory | AxonOps Server CPU | AxonOps Server Memory |
-|---|---|---|---|---|
-| <10  | 1000m | 4Gi | 500m | 1Gi |
-| <50  | 1000m | 4Gi | 1000m | 2Gi |
-| 100  | 2000m | 16Gi | 2000m | 8Gi |
-| 200  | 4000m | 32Gi | 4000m | 16Gi |
+| Cassandra Nodes | ElasticSearch CPU | ElasticSearch Memory | AxonOps Server CPU | AxonOps Server Memory |
+|-----------------|-------------------|----------------------|--------------------|-----------------------|
+| <10             | 1000m             | 4Gi                  | 500m               | 1Gi                   |
+| <50             | 1000m             | 4Gi                  | 1000m              | 2Gi                   |
+| 100             | 2000m             | 16Gi                 | 2000m              | 8Gi                   |
+| 200             | 4000m             | 32Gi                 | 4000m              | 16Gi                  |
 
 ### ElasticSearch
 

@@ -28,11 +28,11 @@ And a failing check:
 
 ![](5.png)
 
-## Setup service checks
-To setup the checks, go to ***Settings > Service Checks*** and click on one of the `+` buttons
+## Configure service checks
+To set up the checks, go to ***Settings > Service Checks*** and click one of the `+` buttons
 
 ![](./2.JPG)
-> Any changes made and saved are automatically pushed down to the agents. There is no need to deploy the check scripts to individual servers like you may do for instance with Nagios. The status will show once the check has been executed on the agent so it might take some time depending on the interval you have specified within the Service Checks. Although the first execution of the checks will be spread across 30 seconds to prevent running all the checks at the same time.
+> Any changes made and saved are automatically pushed down to the agents. There is no need to deploy the check scripts to individual servers like you may do for instance with Nagios. The status will show once the check has been executed on the agent, so it might take some time depending on the interval you have specified within the Service Checks. Although the first execution of the checks will be spread across 30 seconds to prevent running all the checks at the same time.
 
 ## Service checks templating
 You can provide templated checks with the following pattern: `{{.variable_name}}`

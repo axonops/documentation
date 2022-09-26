@@ -30,7 +30,7 @@ Set the following index codec by running the following command:
 sudo echo 'index.codec: best_compression' >> /etc/elasticsearch/elasticsearch.yml
 ```
 
-Elasticsearch uses a mmapfs directory by default to store its indices. The default operating system limits on mmap counts is likely to be too low, which may result in out of memory exceptions.
+Elasticsearch uses an mmapfs directory by default to store its indices. The default operating system limits on mmap counts is likely to be too low, which may result in out of memory exceptions.
 
 You can increase the limits by running the following command:
 
