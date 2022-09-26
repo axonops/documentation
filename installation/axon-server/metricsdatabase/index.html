@@ -1119,16 +1119,16 @@ To start using a CQL store you just have to specify CQL hosts in <strong>axon-se
     ...
 </code></pre></div>
 
-<p>By default, axonserver will automatically creates the necessary keyspace and tables.
+<p>By default, the AxonOps server automatically creates the necessary keyspace and tables.
 You can override this behavior by specifying the following field in <strong>axon-server.yml</strong>:</p>
 <div class="codehilite"><pre><span></span><code>cql_autocreate_tables : <span class="nb">false</span>
 cql_keyspace : <span class="s2">&quot;axonops&quot;</span>
 cql_keyspace_replication : <span class="s2">&quot;{ &#39;class&#39; : &#39;SimpleStrategy&#39;, &#39;replication_factor&#39; : 1 }&quot;</span>
 </code></pre></div>
 
-<p>We recommend to setup at least a 3 nodes cluster with <strong>NetworkTopologyStrategy</strong> and a <strong>replication_factor</strong> of <strong>3</strong>.</p>
+<p>We recommend setting up at least a 3 nodes cluster with <strong>NetworkTopologyStrategy</strong> and a <strong>replication_factor</strong> of <strong>3</strong>.</p>
 <h2 id="connecting-to-encrypted-cassandra-metrics-store">Connecting to encrypted Cassandra metrics store<a class="headerlink" href="#connecting-to-encrypted-cassandra-metrics-store" title="Permanent link">&para;</a></h2>
-<p>We recommend to setup a Secured Socket Layer to Cassandra with the following field in <strong>axon-server.yml</strong>:</p>
+<p>We recommend setting up a Secured Socket Layer connection to Cassandra with the following fields in <strong>axon-server.yml</strong>:</p>
 <div class="codehilite"><pre><span></span><code>cql_ssl: <span class="nb">true</span>
 cql_skip_verify: <span class="nb">false</span>
 cql_ca_file: <span class="s1">&#39;/path/to/ca_cert&#39;</span>

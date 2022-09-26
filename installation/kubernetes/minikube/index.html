@@ -1308,7 +1308,7 @@
 minikube addons <span class="nb">enable</span> storage-provisioner
 </code></pre></div>
 
-<p><strong>:warning: Make sure you use a recent version of minikube. Also check available <a href="https://minikube.sigs.k8s.io/docs/drivers/">drivers</a> and select the most appropiate for your platform</strong></p>
+<p><strong>:warning: Make sure you use a recent version of minikube. Also check available <a href="https://minikube.sigs.k8s.io/docs/drivers/">drivers</a> and select the most appropriate for your platform</strong></p>
 <h2 id="helmfile">Helmfile<a class="headerlink" href="#helmfile" title="Permanent link">&para;</a></h2>
 <h3 id="overview">Overview<a class="headerlink" href="#overview" title="Permanent link">&para;</a></h3>
 <p>As this deployment contains multiple applications we recommend you use an automation system such as Ansible or <a href="https://github.com/roboll/helmfile">Helmfile</a> to put together the config. The example below uses helmfile.</p>
@@ -1596,10 +1596,10 @@ minikube addons <span class="nb">enable</span> storage-provisioner
 <span class="w">    </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="s">&quot;getDatacenter&quot;</span><span class="w"></span>
 <span class="w">    </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="s">&quot;getRack&quot;</span><span class="w"></span>
 
-<span class="w">  </span><span class="nt">DMLEventsWhitelist</span><span class="p">:</span><span class="w"> </span><span class="c1"># You can whitelist keyspaces / tables (list of &quot;keyspace&quot; and/or &quot;keyspace.table&quot; to log DML queries. Data is not analysed.</span><span class="w"></span>
+<span class="w">  </span><span class="nt">DMLEventsWhitelist</span><span class="p">:</span><span class="w"> </span><span class="c1"># You can whitelist keyspaces / tables (list of &quot;keyspace&quot; and/or &quot;keyspace.table&quot;) to log DML queries. Data is not analysed.</span><span class="w"></span>
 <span class="w">  </span><span class="c1"># - &quot;system_distributed&quot;</span><span class="w"></span>
 
-<span class="w">  </span><span class="nt">DMLEventsBlacklist</span><span class="p">:</span><span class="w"> </span><span class="c1"># You can blacklist keyspaces / tables from the DMLEventsWhitelist (list of &quot;keyspace&quot; and/or &quot;keyspace.table&quot; to log DML queries. Data is not analysed.</span><span class="w"></span>
+<span class="w">  </span><span class="nt">DMLEventsBlacklist</span><span class="p">:</span><span class="w"> </span><span class="c1"># You can blacklist keyspaces / tables from the DMLEventsWhitelist (list of &quot;keyspace&quot; and/or &quot;keyspace.table&quot;) to log DML queries. Data is not analysed.</span><span class="w"></span>
 <span class="w">  </span><span class="c1"># - system_distributed.parent_repair_history</span><span class="w"></span>
 
 <span class="w">  </span><span class="nt">logSuccessfulRepairs</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">false</span><span class="w"> </span><span class="c1"># set it to true if you want to log all the successful repair events.</span><span class="w"></span>
@@ -1653,19 +1653,19 @@ kubectl get pod -n cassandra
 </code></pre></div>
 
 <h3 id="storage">Storage<a class="headerlink" href="#storage" title="Permanent link">&para;</a></h3>
-<p>One common problem is regarding storage. If you have enabled persistent storage you may see an error about persistent volume claims (not found, unclaimed, etc). If you're using <code>minikube</code> make sure you enable storage with </p>
+<p>One common problem is regarding storage. If you have enabled persistent storage you may see an error about persistent volume claims (not found, unclaimed, etc.). If you're using <code>minikube</code> make sure you enable storage with </p>
 <div class="codehilite"><pre><span></span><code>minikube addons <span class="nb">enable</span> storage-provisioner
 </code></pre></div>
 
 <h3 id="memory">Memory<a class="headerlink" href="#memory" title="Permanent link">&para;</a></h3>
-<p>The second most common problem is not enough memory (OOMKilled). You will see this often if you're node does not have enough memory to run the containers or if the <code>heap</code> settings for Cassandra are not right. <code>kubectl describe</code> command will be showing <code>Error 127</code> when this occurs.</p>
+<p>The second most common problem is not enough memory (OOMKilled). You will see this often if your node does not have enough memory to run the containers or if the <code>heap</code> settings for Cassandra are not right. <code>kubectl describe</code> command will be showing <code>Error 127</code> when this occurs.</p>
 <p>In the <code>values.yaml</code> file adjust the heap options to match your hardware:</p>
 <div class="codehilite"><pre><span></span><code><span class="w">  </span><span class="nt">max_heap_size</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">512M</span><span class="w"></span>
 <span class="w">  </span><span class="nt">heap_new_size</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">512M</span><span class="w"></span>
 </code></pre></div>
 
 <h4 id="minikube_1">Minikube<a class="headerlink" href="#minikube_1" title="Permanent link">&para;</a></h4>
-<p>Review the way you have started up <code>minikube</code> and assign more memory if you can. Also check the <a href="https://minikube.sigs.k8s.io/docs/drivers/">available drivers</a> and select the appropiate for your platform. On MacOS where I tested <code>hyperkit</code> or <code>virtualbox</code> are the best ones.</p>
+<p>Review the way you have started up <code>minikube</code> and assign more memory if you can. Also check the <a href="https://minikube.sigs.k8s.io/docs/drivers/">available drivers</a> and select the appropriate for your platform. On macOS where I tested <code>hyperkit</code> or <code>virtualbox</code> are the best ones.</p>
 <div class="codehilite"><pre><span></span><code>minikube start --memory <span class="m">10240</span> --cpus<span class="o">=</span><span class="m">4</span> --driver<span class="o">=</span>hyperkit
 </code></pre></div>
 

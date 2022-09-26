@@ -1319,7 +1319,7 @@
 
 <h1 id="axon-server-installation-centos-redhat">axon-server installation (CentOS / RedHat)<a class="headerlink" href="#axon-server-installation-centos-redhat" title="Permanent link">&para;</a></h1>
 <h2 id="step-1-prerequisites">Step 1 - Prerequisites<a class="headerlink" href="#step-1-prerequisites" title="Permanent link">&para;</a></h2>
-<p>Elasticsearch stores all of the collected data by axon-server. Let's install Java 8 and Elasticsearch first.</p>
+<p>Elasticsearch stores all of the data collected by axon-server. Let's install Java 8 and Elasticsearch first.</p>
 <h4 id="installing-jdk">Installing JDK<a class="headerlink" href="#installing-jdk" title="Permanent link">&para;</a></h4>
 <p>Elasticsearch supports either OpenJDK or Oracle JDK. Since Oracle has changed the licensing model as of January 2019 we suggest using OpenJDK.</p>
 <p>Run the following commands for OpenJDK:</p>
@@ -1359,7 +1359,7 @@ Set Xmx and Xms to no more than 50% of your physical RAM. Elasticsearch requires
 <div class="codehilite"><pre><span></span><code>sudo <span class="nb">echo</span> <span class="s1">&#39;index.codec: best_compression&#39;</span> &gt;&gt; /etc/elasticsearch/elasticsearch.yml
 </code></pre></div>
 
-<p>Elasticsearch uses a mmapfs directory by default to store its indices. The default operating system limits on mmap counts is likely to be too low, which may result in out of memory exceptions.</p>
+<p>Elasticsearch uses an mmapfs directory by default to store its indices. The default operating system limits on mmap counts is likely to be too low, which may result in out of memory exceptions.</p>
 <p>You can increase the limits by running the following command:</p>
 <div class="codehilite"><pre><span></span><code>sudo sysctl -w vm.max_map_count<span class="o">=</span><span class="m">262144</span>
 </code></pre></div>

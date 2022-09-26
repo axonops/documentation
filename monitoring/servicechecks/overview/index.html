@@ -585,8 +585,8 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#setup-service-checks" class="md-nav__link">
-    Setup service checks
+  <a href="#configure-service-checks" class="md-nav__link">
+    Configure service checks
   </a>
   
 </li>
@@ -1157,8 +1157,8 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#setup-service-checks" class="md-nav__link">
-    Setup service checks
+  <a href="#configure-service-checks" class="md-nav__link">
+    Configure service checks
   </a>
   
 </li>
@@ -1211,11 +1211,11 @@
 <p><img alt="" src="../4.png" /></p>
 <p>And a failing check:</p>
 <p><img alt="" src="../5.png" /></p>
-<h2 id="setup-service-checks">Setup service checks<a class="headerlink" href="#setup-service-checks" title="Permanent link">&para;</a></h2>
-<p>To setup the checks, go to <strong><em>Settings &gt; Service Checks</em></strong> and click on one of the <code>+</code> buttons</p>
+<h2 id="configure-service-checks">Configure service checks<a class="headerlink" href="#configure-service-checks" title="Permanent link">&para;</a></h2>
+<p>To set up the checks, go to <strong><em>Settings &gt; Service Checks</em></strong> and click one of the <code>+</code> buttons</p>
 <p><img alt="" src="../2.JPG" /></p>
 <blockquote>
-<p>Any changes made and saved are automatically pushed down to the agents. There is no need to deploy the check scripts to individual servers like you may do for instance with Nagios. The status will show once the check has been executed on the agent so it might take some time depending on the interval you have specified within the Service Checks. Although the first execution of the checks will be spread across 30 seconds to prevent running all the checks at the same time.</p>
+<p>Any changes made and saved are automatically pushed down to the agents. There is no need to deploy the check scripts to individual servers like you may do for instance with Nagios. The status will show once the check has been executed on the agent, so it might take some time depending on the interval you have specified within the Service Checks. Although the first execution of the checks will be spread across 30 seconds to prevent running all the checks at the same time.</p>
 </blockquote>
 <h2 id="service-checks-templating">Service checks templating<a class="headerlink" href="#service-checks-templating" title="Permanent link">&para;</a></h2>
 <p>You can provide templated checks with the following pattern: <code>{{.variable_name}}</code></p>

@@ -1152,7 +1152,7 @@
 <li>Metrics must push metrics from Cassandra all the way to the AxonOps server - never pull.</li>
 </ul>
 <p>AxonOps Java agent will push the metrics to the AxonOps native agent, which in turn pushes them to the AxonOps server. Scraping a large volume of metrics against the JMX is slow. We also wanted to avoid exposing an HTTP endpoint within Cassandra like the <a href="https://github.com/prometheus/jmx_exporter">Prometheus JMX exporter</a> does.</p>
-<p>The messaging between native agent and Java agent are bi-directional - i.e. AxonOps server sends control messages to Cassandra for operations such as repair and backups without the use of JMX.</p>
+<p>The messaging between native agent and Java agent is bidirectional, i.e. AxonOps server sends control messages to Cassandra for operations such as repair and backups without the use of JMX.</p>
 <p>This section describes how to install and configure both the native agent and Java agent.</p>
 <h4 id="centos-redhat">CentOS / RedHat<a class="headerlink" href="#centos-redhat" title="Permanent link">&para;</a></h4>
 <div class="codehilite"><pre><span></span><code>sudo tee /etc/yum.repos.d/axonops-yum.repo <span class="s">&lt;&lt; EOL</span>

@@ -838,8 +838,8 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#adapative-repair-service" class="md-nav__link">
-    Adapative repair service
+  <a href="#adaptive-repair-service" class="md-nav__link">
+    Adaptive repair service
   </a>
   
 </li>
@@ -1145,8 +1145,8 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#adapative-repair-service" class="md-nav__link">
-    Adapative repair service
+  <a href="#adaptive-repair-service" class="md-nav__link">
+    Adaptive repair service
   </a>
   
 </li>
@@ -1174,7 +1174,7 @@
 <p>Scheduled repair</p>
 </li>
 <li>
-<p>Adapative repair service</p>
+<p>Adaptive repair service</p>
 </li>
 </ul>
 <h2 id="scheduled-repair">Scheduled repair<a class="headerlink" href="#scheduled-repair" title="Permanent link">&para;</a></h2>
@@ -1207,7 +1207,7 @@
 <p class="admonition-title">Infomy</p>
 <p><a href="/img/cass_repairs/scheduled_repair4.png"><img alt="scheduled_repair" src="/img/cass_repairs/scheduled_repair4.png" /></a></p>
 </div>
-<h2 id="adapative-repair-service">Adapative repair service<a class="headerlink" href="#adapative-repair-service" title="Permanent link">&para;</a></h2>
+<h2 id="adaptive-repair-service">Adaptive repair service<a class="headerlink" href="#adaptive-repair-service" title="Permanent link">&para;</a></h2>
 <p>Since AxonOps collects performance metrics and logs, we built an “Adaptive” repair system which regulates the velocity (parallelism and pauses between each subrange repair) based on performance trending data. The regulation of repair velocity takes input from various metrics including CPU utilisation, query latencies, Cassandra thread pools pending statistics, and IOwait percentage, while tracking the schedule of repair based on <strong>gc_grace_seconds</strong> for each table.</p>
 <p>The idea of this is to achieve the following:</p>
 <ul>
@@ -1221,9 +1221,9 @@
 <p><a href="/img/cass_repairs/adaptive_repair.png"><img alt="adaptive_repair" src="/img/cass_repairs/adaptive_repair.png" /></a></p>
 </div>
 <blockquote>
-<p>If you want to keep the tables as fresh as possible, we do recommend to increate the <code>table parallelism</code> to be greater than the total number of tables of your cluster and reduce the <code>segments per VNode</code> to generate less repair requests.</p>
+<p>If you want to keep the tables as fresh as possible we recommend to increase the <code>table parallelism</code> to be greater than the total number of tables of your cluster and reduce the <code>segments per VNode</code> to generate less repair requests.</p>
 </blockquote>
-<p>From a user’s point of view, there is only a single switch to enable this service. Keep this enabled and AxonOps will take care of the repair of all tables for you. Also you can customize the following:</p>
+<p>From a user’s point of view there is only a single switch to enable this service. Keep this enabled and AxonOps will take care of the repair of all tables for you. You can also customize the following:</p>
 <ul>
 <li>
 <p>Blacklist some tables</p>

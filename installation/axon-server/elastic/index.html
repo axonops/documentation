@@ -1156,7 +1156,7 @@ Set Xmx and Xms to no more than 50% of your physical RAM. Elasticsearch requires
 <div class="codehilite"><pre><span></span><code>sudo <span class="nb">echo</span> <span class="s1">&#39;index.codec: best_compression&#39;</span> &gt;&gt; /etc/elasticsearch/elasticsearch.yml
 </code></pre></div>
 
-<p>Elasticsearch uses a mmapfs directory by default to store its indices. The default operating system limits on mmap counts is likely to be too low, which may result in out of memory exceptions.</p>
+<p>Elasticsearch uses an mmapfs directory by default to store its indices. The default operating system limits on mmap counts is likely to be too low, which may result in out of memory exceptions.</p>
 <p>You can increase the limits by running the following command:</p>
 <div class="codehilite"><pre><span></span><code>sudo sysctl -w vm.max_map_count<span class="o">=</span><span class="m">262144</span>
 </code></pre></div>
