@@ -19,8 +19,13 @@ Allow the AxonOps user to write to the Cassandra data directory on all nodes
 sudo chmod -R g+w /var/lib/cassandra/data
 ```
 
-> These commands assume you are storing the Cassandra data in the default location `/var/lib/cassandra`, you will
+> The commands above assume you are storing the Cassandra data in the default location `/var/lib/cassandra`, you will
 > need to change the paths shown if your data is stored at a different location
+
+As the IP addresses of the replacement Cassandra nodes are different to the old cluster you will need to update the
+seeds list in `cassandra.yaml` to point to the IPs of the nodes that are replacing the old seeds. For package-based 
+installations (RPM or DEB) you can find this in `/etc/cassandra/cassandra.yaml` or for tarball installations it should
+be in `<install_path>/conf/cassandra.yaml`.
 
 ### Manually configure the AxonOps Agent host IDs
 
