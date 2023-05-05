@@ -12,10 +12,10 @@ AxonOps installation uses Helm Charts.
 
 | Cassandra Nodes | ElasticSearch CPU | ElasticSearch Memory | AxonOps Server CPU | AxonOps Server Memory |
 |-----------------|-------------------|----------------------|--------------------|-----------------------|
-| <10             | 1000m             | 4Gi                  | 500m               | 1Gi                   |
-| <50             | 1000m             | 4Gi                  | 1000m              | 2Gi                   |
-| 100             | 2000m             | 16Gi                 | 2000m              | 8Gi                   |
-| 200             | 4000m             | 32Gi                 | 4000m              | 16Gi                  |
+| <10             | 1000m             | 4Gi                  | 750m               | 1Gi                   |
+| <50             | 1000m             | 4Gi                  | 2000m              | 6Gi                   |
+| 100             | 2000m             | 16Gi                 | 4000m              | 12Gi                  |
+| 200             | 4000m             | 32Gi                 | 8000m              | 24Gi                  |
 
 ### ElasticSearch
 
@@ -70,56 +70,58 @@ Below you can find an example using `Ingress` to expose both the dashboard and t
 
 ```yaml
 axon-dash:
-  config:
-    axonServerUrl: http://axonops-axon-server:8080
   image:
     pullPolicy: IfNotPresent
     repository: registry.axonops.com/axonops-public/axonops-docker/axon-dash
-    tag: 1.0.13
+    tag: 1.0.61
   ingress:
     enabled: true
+    className: nginx
     annotations:
       external-dns.alpha.kubernetes.io/hostname: axonops.mycompany.com
     hosts:
       - host: axonops.mycompany.com
-        paths:
-          - /
+        path: "/"
     tls:
       - hosts:
           - axonops.mycompany.com
         secretName: axon-dash-tls
   resources:
     limits:
-      cpu: 500m
-      memory: 512Mi
+      cpu: 1000m
+      memory: 1536Mi
     requests:
       cpu: 25m
-      memory: 64Mi
+      memory: 256Mi
 
 # If you are using an existing ElasticSearch rather than installing it 
-# as shown here then make sure you update the elasticHost URL below
+# as shown above then make sure you update the elasticHost URL below
 axon-server:
   elasticHost: http://axonops-elastic-master:9200
   dashboardUrl: https://axonops.mycompany.com
   config:
-    # Set up your organization name here
+    # Set your organization name here. This must match the name used in your license key
     org_name: demo
+    # Enter your AxonOps license key here
+    license_key: "..."
   image:
     pullPolicy: IfNotPresent
     repository: registry.axonops.com/axonops-public/axonops-docker/axon-server
-    tag: 1.0.40
-  ingress:
+    tag: 1.0.98
+  # Enable the agent ingress to allow agents to connect from outside the Kubernetes cluster
+  agentIngress:
     enabled: true
+    className: nginx
     annotations:
       external-dns.alpha.kubernetes.io/hostname: axonops-server.mycompany.com
     hosts:
       - host: axonops-server.mycompany.com
-        paths:
-          - /
+        path: "/"
     tls:
       - hosts:
           - axonops-server.mycompany.com
         secretName: axon-server-tls
+
   resources:
     limits:
       cpu: 1
@@ -127,8 +129,6 @@ axon-server:
     requests:
       cpu: 100m
       memory: 256Mi
-  serviceAccount:
-    create: true
 ```
 
 ## Installing
