@@ -2,6 +2,8 @@
 
 This agent will enable metrics, logs and events collection with adaptive repairs and backups for Cassandra.
 
+See [Installing axon-agent for Cassandra in Docker](docker.md) if you are running Cassandra under Docker.
+
 ## Available versions
 * Apache Cassandra 4.0.x
 * Apache Cassandra 3.11.x
