@@ -84,53 +84,61 @@ The CQL for the default tables are the following:
 ``` bash
 CREATE TABLE IF NOT EXISTS axonops.metrics5 (
     orgid text,
-    metricid int,   
+    metricid int,
     time int,
     value float,
-    PRIMARY KEY ((orgid, metricid), time)) WITH CLUSTERING ORDER BY (time DESC)
-    AND default_time_to_live = 2592000
-    AND compaction = { 'class' : 'TimeWindowCompactionStrategy', 'compaction_window_unit' : 'DAYS', 'compaction_window_size' : '12'}
-    ;
-
+    PRIMARY KEY ((orgid, metricid), time)
+) WITH CLUSTERING ORDER BY (time DESC)
+   AND caching = {'keys': 'ALL', 'rows_per_partition': '256'}
+   AND compaction = {'class': 'TimeWindowCompactionStrategy', 'compaction_window_size': '1', 'compaction_window_unit': 'DAYS', 'max_threshold': '32', 'min_threshold': '4'}
+   AND default_time_to_live = 604800
+   AND comment = '7 days retention for 5 seconds resolution metrics';
 
 CREATE TABLE IF NOT EXISTS axonops.metrics60 (
-		orgid text,
-		metricid int, 
-		time int,
-		value float,
-		PRIMARY KEY ((orgid, metricid), time)) WITH CLUSTERING ORDER BY (time DESC)
-	 AND default_time_to_live = 14515200
-	 AND compaction = { 'class' : 'TimeWindowCompactionStrategy', 'compaction_window_unit' : 'DAYS', 'compaction_window_size' : '1'}
-	 ;
+    orgid text,
+    metricid int,
+    time int,
+    value float,
+    PRIMARY KEY ((orgid, metricid), time)
+) WITH CLUSTERING ORDER BY (time DESC)
+   AND caching = {'keys': 'ALL', 'rows_per_partition': '256'}
+   AND compaction = {'class': 'TimeWindowCompactionStrategy', 'compaction_window_size': '1', 'compaction_window_unit': 'DAYS', 'max_threshold': '32', 'min_threshold': '4'}
+   AND default_time_to_live = 2592000
+   AND comment = '30 days retention for 60 seconds resolution metrics';
 
 CREATE TABLE IF NOT EXISTS axonops.metrics720 (
-		orgid text,
-		metricid int, 
-		time int,
-		value float,
-		PRIMARY KEY ((orgid, metricid), time)) WITH CLUSTERING ORDER BY (time DESC)
-	 AND default_time_to_live = 14515200
-	 AND compaction = { 'class' : 'TimeWindowCompactionStrategy', 'compaction_window_unit' : 'DAYS', 'compaction_window_size' : '1'}
-	 ;
+    orgid text,
+    metricid int,
+    time int,
+    value float,
+    PRIMARY KEY ((orgid, metricid), time)
+) WITH CLUSTERING ORDER BY (time DESC)
+   AND caching = {'keys': 'ALL', 'rows_per_partition': '256'}
+   AND compaction = {'class': 'TimeWindowCompactionStrategy', 'compaction_window_size': '4', 'compaction_window_unit': 'DAYS', 'max_threshold': '32', 'min_threshold': '4'}
+   AND default_time_to_live = 5184000
+   AND comment = '60 days retention for 720 seconds resolution metrics';
 
 CREATE TABLE IF NOT EXISTS axonops.metrics7200 (
-		orgid text,
-		metricid int, 
-		time int,
-		value float,
-		PRIMARY KEY ((orgid, metricid), time)) WITH CLUSTERING ORDER BY (time DESC)
-	 AND default_time_to_live = 63037440
-	 AND compaction = { 'class' : 'TimeWindowCompactionStrategy', 'compaction_window_unit' : 'DAYS', 'compaction_window_size' : '10'}
-	 ;
+    orgid text,
+    metricid int,
+    time int,
+    value float,
+    PRIMARY KEY ((orgid, metricid), time)
+) WITH CLUSTERING ORDER BY (time DESC)
+   AND caching = {'keys': 'ALL', 'rows_per_partition': '256'}
+   AND compaction = {'class': 'TimeWindowCompactionStrategy', 'compaction_window_size': '30', 'compaction_window_unit': 'DAYS', 'max_threshold': '32', 'min_threshold': '4'}
+   AND default_time_to_live = 15552000
+   AND comment = '180 days retention for 7200 seconds resolution metrics';
 
 CREATE TABLE IF NOT EXISTS axonops.metrics86400 (
-		orgid text,
-		metricid int, 
-		time int,
-		value float,
-		PRIMARY KEY ((orgid, metricid), time)) WITH CLUSTERING ORDER BY (time DESC)
-	 AND default_time_to_live = 94608000
-	 AND compaction = { 'class' : 'TimeWindowCompactionStrategy', 'compaction_window_unit' : 'DAYS', 'compaction_window_size' : '120'}
-	 ;
-
+    orgid text,
+    metricid int,
+    time int,
+    value float,
+    PRIMARY KEY ((orgid, metricid), time)
+) WITH CLUSTERING ORDER BY (time DESC)
+   AND caching = {'keys': 'ALL', 'rows_per_partition': '365'}
+   AND compaction = {'class': 'TimeWindowCompactionStrategy', 'compaction_window_size': '60', 'compaction_window_unit': 'DAYS', 'max_threshold': '32', 'min_threshold': '4'}
+   AND default_time_to_live = 31536000
+   AND comment = '365 days retention for 86400 seconds resolution metrics';
 ```
