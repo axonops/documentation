@@ -8,8 +8,14 @@
       
       
       
+      
+        <link rel="prev" href="../centos/">
+      
+      
+        <link rel="next" href="../../axon-dash/install/">
+      
       <link rel="icon" href="../../../img/favicon.ico">
-      <meta name="generator" content="mkdocs-1.3.1, mkdocs-material-8.3.9">
+      <meta name="generator" content="mkdocs-1.4.3, mkdocs-material-9.1.9">
     
     
       
@@ -17,13 +23,10 @@
       
     
     
-      <link rel="stylesheet" href="../../../assets/stylesheets/main.1d29e8d0.min.css">
-      
-        
-        <link rel="stylesheet" href="../../../assets/stylesheets/palette.cbb835fc.min.css">
-        
+      <link rel="stylesheet" href="../../../assets/stylesheets/main.85bb2934.min.css">
       
       
+
     
     
     
@@ -38,7 +41,7 @@
     
       <link rel="stylesheet" href="../../../stylesheets/extra.css">
     
-    <script>__md_scope=new URL("../../..",location),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    <script>__md_scope=new URL("../../..",location),__md_hash=e=>[...e].reduce((e,_)=>(e<<5)-e+_.charCodeAt(0),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
     
       
   
@@ -48,23 +51,23 @@
   
 
 
-  <script>window.ga=window.ga||function(){(ga.q=ga.q||[]).push(arguments)},ga.l=+new Date,ga("create","UA-69443414-2","auto"),ga("set","anonymizeIp",!0),ga("send","pageview"),document.addEventListener("DOMContentLoaded",function(){document.forms.search&&document.forms.search.query.addEventListener("blur",function(){var e;this.value&&(e=document.location.pathname,ga("send","pageview",e+"?q="+this.value))}),"undefined"!=typeof location$&&location$.subscribe(function(e){ga("send","pageview",e.pathname)})})</script>
-  <script async src="https://www.google-analytics.com/analytics.js"></script>
+  <script id="__analytics">function __md_analytics(){window.ga=window.ga||function(){(ga.q=ga.q||[]).push(arguments)},ga.l=+new Date,ga("create","UA-69443414-2","auto"),ga("set","anonymizeIp",!0),ga("send","pageview"),document.addEventListener("DOMContentLoaded",function(){document.forms.search&&document.forms.search.query.addEventListener("blur",function(){var e;this.value&&(e=document.location.pathname,ga("send","pageview",e+"?q="+this.value))}),document$.subscribe(function(){var a=document.forms.feedback;if(void 0!==a)for(var e of a.querySelectorAll("[type=submit]"))e.addEventListener("click",function(e){e.preventDefault();var t=document.location.pathname,e=this.getAttribute("data-md-value");ga("send","event","feedback","click",t,e),a.firstElementChild.disabled=!0;e=a.querySelector(".md-feedback__note [data-md-value='"+e+"']");e&&(e.hidden=!1)}),a.hidden=!1}),location$.subscribe(function(e){ga("send","pageview",e.pathname)})});var e=document.createElement("script");e.async=!0,e.src="https://www.google-analytics.com/analytics.js",document.getElementById("__analytics").insertAdjacentElement("afterEnd",e)}</script>
 
+  
+    <script>var consent;"undefined"==typeof __md_analytics||(consent=__md_get("__consent"))&&consent.analytics&&__md_analytics()</script>
+  
 
+    
     
     
   </head>
   
   
-    
-    
-    
-    
-    
-    <body dir="ltr" data-md-color-scheme="" data-md-color-primary="none" data-md-color-accent="none">
+    <body dir="ltr">
   
     
+    
+      <script>var palette=__md_get("__palette");if(palette&&"object"==typeof palette.color)for(var key of Object.keys(palette.color))document.body.setAttribute("data-md-color-"+key,palette.color[key])</script>
     
     <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
     <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
@@ -84,7 +87,9 @@
     
       
 
-<header class="md-header" data-md-component="header">
+  
+
+<header class="md-header md-header--shadow" data-md-component="header">
   <nav class="md-header__inner md-grid" aria-label="Header">
     <a href="../../.." title="AxonOps Documentation" class="md-header__button md-logo" aria-label="AxonOps Documentation" data-md-component="logo">
       
@@ -127,7 +132,7 @@
       </label>
       <nav class="md-search__options" aria-label="Search">
         
-        <button type="reset" class="md-search__icon md-icon" aria-label="Clear" tabindex="-1">
+        <button type="reset" class="md-search__icon md-icon" title="Clear" aria-label="Clear" tabindex="-1">
           <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12 19 6.41Z"/></svg>
         </button>
       </nav>
@@ -139,7 +144,7 @@
           <div class="md-search-result__meta">
             Initializing search
           </div>
-          <ol class="md-search-result__list"></ol>
+          <ol class="md-search-result__list" role="presentation"></ol>
         </div>
       </div>
     </div>
@@ -207,17 +212,18 @@
     <li class="md-nav__item md-nav__item--nested">
       
       
-        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_2" type="checkbox" id="__nav_2" >
+      
+      
+      <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_2" >
       
       
       
-      
-        <label class="md-nav__link" for="__nav_2">
+        <label class="md-nav__link" for="__nav_2" id="__nav_2_label" tabindex="0">
           Overview
           <span class="md-nav__icon md-icon"></span>
         </label>
       
-      <nav class="md-nav" aria-label="Overview" data-md-level="1">
+      <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_2_label" aria-expanded="false">
         <label class="md-nav__title" for="__nav_2">
           <span class="md-nav__icon md-icon"></span>
           Overview
@@ -271,17 +277,18 @@
     <li class="md-nav__item md-nav__item--active md-nav__item--nested">
       
       
-        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_3" type="checkbox" id="__nav_3" checked>
+      
+      
+      <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3" checked>
       
       
       
-      
-        <label class="md-nav__link" for="__nav_3">
+        <label class="md-nav__link" for="__nav_3" id="__nav_3_label" tabindex="0">
           Installation
           <span class="md-nav__icon md-icon"></span>
         </label>
       
-      <nav class="md-nav" aria-label="Installation" data-md-level="1">
+      <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_3_label" aria-expanded="true">
         <label class="md-nav__title" for="__nav_3">
           <span class="md-nav__icon md-icon"></span>
           Installation
@@ -299,17 +306,18 @@
     <li class="md-nav__item md-nav__item--active md-nav__item--nested">
       
       
-        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_3_1" type="checkbox" id="__nav_3_1" checked>
+      
+      
+      <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3_1" checked>
       
       
       
-      
-        <label class="md-nav__link" for="__nav_3_1">
+        <label class="md-nav__link" for="__nav_3_1" id="__nav_3_1_label" tabindex="0">
           AxonOps Server
           <span class="md-nav__icon md-icon"></span>
         </label>
       
-      <nav class="md-nav" aria-label="AxonOps Server" data-md-level="2">
+      <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_3_1_label" aria-expanded="true">
         <label class="md-nav__title" for="__nav_3_1">
           <span class="md-nav__icon md-icon"></span>
           AxonOps Server
@@ -353,7 +361,7 @@
   
     <li class="md-nav__item md-nav__item--active">
       
-      <input class="md-nav__toggle md-toggle" data-md-toggle="toc" type="checkbox" id="__toc">
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
       
       
         
@@ -394,10 +402,58 @@
   
   
   
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+      
+      
+      <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3_3" >
+      
+      
+      
+        <label class="md-nav__link" for="__nav_3_3" id="__nav_3_3_label" tabindex="0">
+          AxonOps Cassandra Agent
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_3_3_label" aria-expanded="false">
+        <label class="md-nav__title" for="__nav_3_3">
+          <span class="md-nav__icon md-icon"></span>
+          AxonOps Cassandra Agent
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
     <li class="md-nav__item">
       <a href="../../cassandra-agent/install/" class="md-nav__link">
-        AxonOps Cassandra Agent
+        Agent Installation
       </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../cassandra-agent/docker/" class="md-nav__link">
+        Installation with Docker
+      </a>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
     </li>
   
 
@@ -448,17 +504,18 @@
     <li class="md-nav__item md-nav__item--nested">
       
       
-        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_4" type="checkbox" id="__nav_4" >
+      
+      
+      <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_4" >
       
       
       
-      
-        <label class="md-nav__link" for="__nav_4">
+        <label class="md-nav__link" for="__nav_4" id="__nav_4_label" tabindex="0">
           Using AxonOps
           <span class="md-nav__icon md-icon"></span>
         </label>
       
-      <nav class="md-nav" aria-label="Using AxonOps" data-md-level="1">
+      <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_4_label" aria-expanded="false">
         <label class="md-nav__title" for="__nav_4">
           <span class="md-nav__icon md-icon"></span>
           Using AxonOps
@@ -474,17 +531,18 @@
     <li class="md-nav__item md-nav__item--nested">
       
       
-        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_4_1" type="checkbox" id="__nav_4_1" >
+      
+      
+      <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_4_1" >
       
       
       
-      
-        <label class="md-nav__link" for="__nav_4_1">
+        <label class="md-nav__link" for="__nav_4_1" id="__nav_4_1_label" tabindex="0">
           Cluster Overview
           <span class="md-nav__icon md-icon"></span>
         </label>
       
-      <nav class="md-nav" aria-label="Cluster Overview" data-md-level="2">
+      <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_4_1_label" aria-expanded="false">
         <label class="md-nav__title" for="__nav_4_1">
           <span class="md-nav__icon md-icon"></span>
           Cluster Overview
@@ -521,17 +579,18 @@
     <li class="md-nav__item md-nav__item--nested">
       
       
-        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_4_2" type="checkbox" id="__nav_4_2" >
+      
+      
+      <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_4_2" >
       
       
       
-      
-        <label class="md-nav__link" for="__nav_4_2">
+        <label class="md-nav__link" for="__nav_4_2" id="__nav_4_2_label" tabindex="0">
           Monitoring
           <span class="md-nav__icon md-icon"></span>
         </label>
       
-      <nav class="md-nav" aria-label="Monitoring" data-md-level="2">
+      <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_4_2_label" aria-expanded="false">
         <label class="md-nav__title" for="__nav_4_2">
           <span class="md-nav__icon md-icon"></span>
           Monitoring
@@ -575,17 +634,18 @@
     <li class="md-nav__item md-nav__item--nested">
       
       
-        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_4_2_3" type="checkbox" id="__nav_4_2_3" >
+      
+      
+      <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_4_2_3" >
       
       
       
-      
-        <label class="md-nav__link" for="__nav_4_2_3">
+        <label class="md-nav__link" for="__nav_4_2_3" id="__nav_4_2_3_label" tabindex="0">
           Metrics Dashboard
           <span class="md-nav__icon md-icon"></span>
         </label>
       
-      <nav class="md-nav" aria-label="Metrics Dashboard" data-md-level="3">
+      <nav class="md-nav" data-md-level="3" aria-labelledby="__nav_4_2_3_label" aria-expanded="false">
         <label class="md-nav__title" for="__nav_4_2_3">
           <span class="md-nav__icon md-icon"></span>
           Metrics Dashboard
@@ -643,17 +703,18 @@
     <li class="md-nav__item md-nav__item--nested">
       
       
-        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_4_3" type="checkbox" id="__nav_4_3" >
+      
+      
+      <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_4_3" >
       
       
       
-      
-        <label class="md-nav__link" for="__nav_4_3">
+        <label class="md-nav__link" for="__nav_4_3" id="__nav_4_3_label" tabindex="0">
           Notification Integrations
           <span class="md-nav__icon md-icon"></span>
         </label>
       
-      <nav class="md-nav" aria-label="Notification Integrations" data-md-level="2">
+      <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_4_3_label" aria-expanded="false">
         <label class="md-nav__title" for="__nav_4_3">
           <span class="md-nav__icon md-icon"></span>
           Notification Integrations
@@ -760,17 +821,18 @@
     <li class="md-nav__item md-nav__item--nested">
       
       
-        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_4_4" type="checkbox" id="__nav_4_4" >
+      
+      
+      <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_4_4" >
       
       
       
-      
-        <label class="md-nav__link" for="__nav_4_4">
+        <label class="md-nav__link" for="__nav_4_4" id="__nav_4_4_label" tabindex="0">
           Operations
           <span class="md-nav__icon md-icon"></span>
         </label>
       
-      <nav class="md-nav" aria-label="Operations" data-md-level="2">
+      <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_4_4_label" aria-expanded="false">
         <label class="md-nav__title" for="__nav_4_4">
           <span class="md-nav__icon md-icon"></span>
           Operations
@@ -786,17 +848,18 @@
     <li class="md-nav__item md-nav__item--nested">
       
       
-        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_4_4_1" type="checkbox" id="__nav_4_4_1" >
+      
+      
+      <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_4_4_1" >
       
       
       
-      
-        <label class="md-nav__link" for="__nav_4_4_1">
+        <label class="md-nav__link" for="__nav_4_4_1" id="__nav_4_4_1_label" tabindex="0">
           Cassandra
           <span class="md-nav__icon md-icon"></span>
         </label>
       
-      <nav class="md-nav" aria-label="Cassandra" data-md-level="3">
+      <nav class="md-nav" data-md-level="3" aria-labelledby="__nav_4_4_1_label" aria-expanded="false">
         <label class="md-nav__title" for="__nav_4_4_1">
           <span class="md-nav__icon md-icon"></span>
           Cassandra
@@ -826,17 +889,18 @@
     <li class="md-nav__item md-nav__item--nested">
       
       
-        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_4_4_1_2" type="checkbox" id="__nav_4_4_1_2" >
+      
+      
+      <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_4_4_1_2" >
       
       
       
-      
-        <label class="md-nav__link" for="__nav_4_4_1_2">
+        <label class="md-nav__link" for="__nav_4_4_1_2" id="__nav_4_4_1_2_label" tabindex="0">
           Backups
           <span class="md-nav__icon md-icon"></span>
         </label>
       
-      <nav class="md-nav" aria-label="Backups" data-md-level="4">
+      <nav class="md-nav" data-md-level="4" aria-labelledby="__nav_4_4_1_2_label" aria-expanded="false">
         <label class="md-nav__title" for="__nav_4_4_1_2">
           <span class="md-nav__icon md-icon"></span>
           Backups
@@ -866,17 +930,18 @@
     <li class="md-nav__item md-nav__item--nested">
       
       
-        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_4_4_1_2_2" type="checkbox" id="__nav_4_4_1_2_2" >
+      
+      
+      <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_4_4_1_2_2" >
       
       
       
-      
-        <label class="md-nav__link" for="__nav_4_4_1_2_2">
+        <label class="md-nav__link" for="__nav_4_4_1_2_2" id="__nav_4_4_1_2_2_label" tabindex="0">
           Restore
           <span class="md-nav__icon md-icon"></span>
         </label>
       
-      <nav class="md-nav" aria-label="Restore" data-md-level="5">
+      <nav class="md-nav" data-md-level="5" aria-labelledby="__nav_4_4_1_2_2_label" aria-expanded="false">
         <label class="md-nav__title" for="__nav_4_4_1_2_2">
           <span class="md-nav__icon md-icon"></span>
           Restore
@@ -1012,17 +1077,18 @@
     <li class="md-nav__item md-nav__item--nested">
       
       
-        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_5" type="checkbox" id="__nav_5" >
+      
+      
+      <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_5" >
       
       
       
-      
-        <label class="md-nav__link" for="__nav_5">
+        <label class="md-nav__link" for="__nav_5" id="__nav_5_label" tabindex="0">
           How-to
           <span class="md-nav__icon md-icon"></span>
         </label>
       
-      <nav class="md-nav" aria-label="How-to" data-md-level="1">
+      <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_5_label" aria-expanded="false">
         <label class="md-nav__title" for="__nav_5">
           <span class="md-nav__icon md-icon"></span>
           How-to
@@ -1103,163 +1169,187 @@
               </div>
             
           
-          <div class="md-content" data-md-component="content">
-            <article class="md-content__inner md-typeset">
-              
+          
+            <div class="md-content" data-md-component="content">
+              <article class="md-content__inner md-typeset">
                 
+                  
 
 
 <h1 id="axon-server-metrics-database">axon-server metrics database<a class="headerlink" href="#axon-server-metrics-database" title="Permanent link">&para;</a></h1>
 <h1 id="using-cassandra-as-a-metrics-store">Using Cassandra as a metrics store<a class="headerlink" href="#using-cassandra-as-a-metrics-store" title="Permanent link">&para;</a></h1>
 <p>You can use Cassandra as a metrics store instead of Elasticsearch for better performances.
 To start using a CQL store you just have to specify CQL hosts in <strong>axon-server.yml</strong>:</p>
-<div class="codehilite"><pre><span></span><code>cql_hosts :
-    - <span class="m">192</span>.168.0.1:9042
-    - <span class="m">192</span>.168.0.2:9042
-    ...
+<div class="codehilite"><pre><span></span><code>cql_hosts<span class="w"> </span>:
+<span class="w">    </span>-<span class="w"> </span><span class="m">192</span>.168.0.1:9042
+<span class="w">    </span>-<span class="w"> </span><span class="m">192</span>.168.0.2:9042
+<span class="w">    </span>...
 </code></pre></div>
 
 <p>By default, the AxonOps server automatically creates the necessary keyspace and tables.
 You can override this behavior by specifying the following field in <strong>axon-server.yml</strong>:</p>
-<div class="codehilite"><pre><span></span><code>cql_autocreate_tables : <span class="nb">false</span>
-cql_keyspace : <span class="s2">&quot;axonops&quot;</span>
-cql_keyspace_replication : <span class="s2">&quot;{ &#39;class&#39; : &#39;SimpleStrategy&#39;, &#39;replication_factor&#39; : 1 }&quot;</span>
+<div class="codehilite"><pre><span></span><code>cql_autocreate_tables<span class="w"> </span>:<span class="w"> </span><span class="nb">false</span>
+cql_keyspace<span class="w"> </span>:<span class="w"> </span><span class="s2">&quot;axonops&quot;</span>
+cql_keyspace_replication<span class="w"> </span>:<span class="w"> </span><span class="s2">&quot;{ &#39;class&#39; : &#39;SimpleStrategy&#39;, &#39;replication_factor&#39; : 1 }&quot;</span>
 </code></pre></div>
 
 <p>We recommend setting up at least a 3 nodes cluster with <strong>NetworkTopologyStrategy</strong> and a <strong>replication_factor</strong> of <strong>3</strong>.</p>
 <h2 id="connecting-to-encrypted-cassandra-metrics-store">Connecting to encrypted Cassandra metrics store<a class="headerlink" href="#connecting-to-encrypted-cassandra-metrics-store" title="Permanent link">&para;</a></h2>
 <p>We recommend setting up a Secured Socket Layer connection to Cassandra with the following fields in <strong>axon-server.yml</strong>:</p>
-<div class="codehilite"><pre><span></span><code>cql_ssl: <span class="nb">true</span>
-cql_skip_verify: <span class="nb">false</span>
-cql_ca_file: <span class="s1">&#39;/path/to/ca_cert&#39;</span>
-cql_cert_file: <span class="s1">&#39;/path/to/cert_file&#39;</span>
-cql_key_file: <span class="s1">&#39;/path/to/key_file&#39;</span>
+<div class="codehilite"><pre><span></span><code>cql_ssl:<span class="w"> </span><span class="nb">true</span>
+cql_skip_verify:<span class="w"> </span><span class="nb">false</span>
+cql_ca_file:<span class="w"> </span><span class="s1">&#39;/path/to/ca_cert&#39;</span>
+cql_cert_file:<span class="w"> </span><span class="s1">&#39;/path/to/cert_file&#39;</span>
+cql_key_file:<span class="w"> </span><span class="s1">&#39;/path/to/key_file&#39;</span>
 </code></pre></div>
 
+<h2 id="metrics-cache-recommendations">Metrics cache recommendations<a class="headerlink" href="#metrics-cache-recommendations" title="Permanent link">&para;</a></h2>
+<p>When using Cassandra as a metrics store the AxonOps server can cache metrics data in memory to further improve
+performance. This is configured using the <code>cql_metrics_cache_max_items</code> and <code>cql_metrics_cache_max_size_mb</code> options 
+in <strong>axon-server.yml</strong>. The default values are shown here:</p>
+<div class="codehilite"><pre><span></span><code><span class="nt">cql_metrics_cache_max_items</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">5000000</span>
+<span class="nt">cql_metrics_cache_max_size_mb</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">400</span>
+</code></pre></div>
+
+<p>The recommended settings for these options are as follows:</p>
+<table>
+<thead>
+<tr>
+<th>Cassandra Nodes</th>
+<th>cql_metrics_cache_max_items</th>
+<th>cql_metrics_cache_max_size_mb</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>&lt;10</td>
+<td>5000000</td>
+<td>1000</td>
+</tr>
+<tr>
+<td>&lt;50</td>
+<td>5000000</td>
+<td>4000</td>
+</tr>
+<tr>
+<td>100</td>
+<td>10000000</td>
+<td>10000</td>
+</tr>
+<tr>
+<td>200</td>
+<td>10000000</td>
+<td>20000</td>
+</tr>
+</tbody>
+</table>
+<p>These sizes can be tuned to balance memory use in AxonOps against the read workload on Cassandra.
+When tuning these parameters it is recommended to set <code>cql_metrics_cache_max_items</code> to a high value and limit the
+cache size with <code>cql_metrics_cache_max_size_mb</code>.</p>
 <h2 id="other-cql-fields">Other CQL fields<a class="headerlink" href="#other-cql-fields" title="Permanent link">&para;</a></h2>
 <p>You can also specify the following fields:</p>
-<div class="codehilite"><pre><span></span><code>cql_proto_version int                   
-cql_batch_size  int                   
-cql_page_size int                   
-cql_local_dc string                
-cql_username string                
-cql_password string                
-cql_max_concurrent_reads int                   
-cql_retrypolicy_numretries int                   
-cql_retrypolicy_min string <span class="s2">&quot;1s&quot;</span>
-cql_retrypolicy_max string <span class="s2">&quot;10s&quot;</span>
-cql_reconnectionpolicy_maxretries int                   
-cql_reconnectionpolicy_initialinterval string <span class="s2">&quot;1s&quot;</span>
-cql_reconnectionpolicy_maxinterval string  <span class="s2">&quot;10s&quot;</span>
-cql_metrics_cache_max_size_mb int64 <span class="k">in</span> MB               
-cql_metrics_cache_max_items  int64 <span class="k">in</span> MB                        
-cql_read_consistency string                
-cql_write_consistency string                
-cql_lvl1_compaction_window_size int <span class="o">(</span>used <span class="k">for</span> the table named <span class="s1">&#39;metrics5&#39;</span> when you <span class="nb">let</span> axonserver managing the tables automatically<span class="o">)</span>                  
-cql_lvl2_compaction_window_size int <span class="o">(</span>used <span class="k">for</span> the table named <span class="s1">&#39;metrics60&#39;</span> when you <span class="nb">let</span> axonserver managing the tables automatically<span class="o">)</span>                  
-cql_lvl3_compaction_window_size int <span class="o">(</span>used <span class="k">for</span> the table named <span class="s1">&#39;metrics720&#39;</span> when you <span class="nb">let</span> axonserver managing the tables automatically<span class="o">)</span>                  
-cql_lvl4_compaction_window_size int <span class="o">(</span>used <span class="k">for</span> the table named <span class="s1">&#39;metrics7200&#39;</span> when you <span class="nb">let</span> axonserver managing the tables automatically<span class="o">)</span>                  
-cql_lvl5_compaction_window_size int <span class="o">(</span>used <span class="k">for</span> the table named <span class="s1">&#39;metrics86400&#39;</span> when you <span class="nb">let</span> axonserver managing the tables automatically<span class="o">)</span>                  
+<div class="codehilite"><pre><span></span><code>cql_proto_version<span class="w"> </span>int<span class="w">                   </span>
+cql_batch_size<span class="w">  </span>int<span class="w">                   </span>
+cql_page_size<span class="w"> </span>int<span class="w">                   </span>
+cql_local_dc<span class="w"> </span>string<span class="w">                </span>
+cql_username<span class="w"> </span>string<span class="w">                </span>
+cql_password<span class="w"> </span>string<span class="w">                </span>
+cql_max_concurrent_reads<span class="w"> </span>int<span class="w">                   </span>
+cql_retrypolicy_numretries<span class="w"> </span>int<span class="w">                   </span>
+cql_retrypolicy_min<span class="w"> </span>string<span class="w"> </span><span class="s2">&quot;1s&quot;</span>
+cql_retrypolicy_max<span class="w"> </span>string<span class="w"> </span><span class="s2">&quot;10s&quot;</span>
+cql_reconnectionpolicy_maxretries<span class="w"> </span>int<span class="w">                   </span>
+cql_reconnectionpolicy_initialinterval<span class="w"> </span>string<span class="w"> </span><span class="s2">&quot;1s&quot;</span>
+cql_reconnectionpolicy_maxinterval<span class="w"> </span>string<span class="w">  </span><span class="s2">&quot;10s&quot;</span>
+cql_metrics_cache_max_size_mb<span class="w"> </span>int64<span class="w"> </span><span class="k">in</span><span class="w"> </span>MB<span class="w">               </span>
+cql_metrics_cache_max_items<span class="w">  </span>int64<span class="w"> </span><span class="k">in</span><span class="w"> </span>MB<span class="w">                        </span>
+cql_read_consistency<span class="w"> </span>string<span class="w"> </span><span class="o">(</span>controls<span class="w"> </span>the<span class="w"> </span>consistency<span class="w"> </span>of<span class="w"> </span><span class="nb">read</span><span class="w"> </span>operations,<span class="w"> </span>defaults<span class="w"> </span>to<span class="w"> </span>LOCAL_ONE<span class="o">)</span><span class="w">              </span>
+cql_write_consistency<span class="w"> </span>string<span class="w"> </span><span class="o">(</span>controls<span class="w"> </span>the<span class="w"> </span>consistency<span class="w"> </span>of<span class="w"> </span>write<span class="w"> </span>operations,<span class="w"> </span>defaults<span class="w"> </span>to<span class="w"> </span>LOCAL_ONE<span class="o">)</span><span class="w">               </span>
+cql_lvl1_compaction_window_size<span class="w"> </span>int<span class="w"> </span><span class="o">(</span>used<span class="w"> </span><span class="k">for</span><span class="w"> </span>the<span class="w"> </span>table<span class="w"> </span>named<span class="w"> </span><span class="s1">&#39;metrics5&#39;</span><span class="w"> </span>when<span class="w"> </span>you<span class="w"> </span><span class="nb">let</span><span class="w"> </span>axonserver<span class="w"> </span>managing<span class="w"> </span>the<span class="w"> </span>tables<span class="w"> </span>automatically<span class="o">)</span><span class="w">                  </span>
+cql_lvl2_compaction_window_size<span class="w"> </span>int<span class="w"> </span><span class="o">(</span>used<span class="w"> </span><span class="k">for</span><span class="w"> </span>the<span class="w"> </span>table<span class="w"> </span>named<span class="w"> </span><span class="s1">&#39;metrics60&#39;</span><span class="w"> </span>when<span class="w"> </span>you<span class="w"> </span><span class="nb">let</span><span class="w"> </span>axonserver<span class="w"> </span>managing<span class="w"> </span>the<span class="w"> </span>tables<span class="w"> </span>automatically<span class="o">)</span><span class="w">                  </span>
+cql_lvl3_compaction_window_size<span class="w"> </span>int<span class="w"> </span><span class="o">(</span>used<span class="w"> </span><span class="k">for</span><span class="w"> </span>the<span class="w"> </span>table<span class="w"> </span>named<span class="w"> </span><span class="s1">&#39;metrics720&#39;</span><span class="w"> </span>when<span class="w"> </span>you<span class="w"> </span><span class="nb">let</span><span class="w"> </span>axonserver<span class="w"> </span>managing<span class="w"> </span>the<span class="w"> </span>tables<span class="w"> </span>automatically<span class="o">)</span><span class="w">                  </span>
+cql_lvl4_compaction_window_size<span class="w"> </span>int<span class="w"> </span><span class="o">(</span>used<span class="w"> </span><span class="k">for</span><span class="w"> </span>the<span class="w"> </span>table<span class="w"> </span>named<span class="w"> </span><span class="s1">&#39;metrics7200&#39;</span><span class="w"> </span>when<span class="w"> </span>you<span class="w"> </span><span class="nb">let</span><span class="w"> </span>axonserver<span class="w"> </span>managing<span class="w"> </span>the<span class="w"> </span>tables<span class="w"> </span>automatically<span class="o">)</span><span class="w">                  </span>
+cql_lvl5_compaction_window_size<span class="w"> </span>int<span class="w"> </span><span class="o">(</span>used<span class="w"> </span><span class="k">for</span><span class="w"> </span>the<span class="w"> </span>table<span class="w"> </span>named<span class="w"> </span><span class="s1">&#39;metrics86400&#39;</span><span class="w"> </span>when<span class="w"> </span>you<span class="w"> </span><span class="nb">let</span><span class="w"> </span>axonserver<span class="w"> </span>managing<span class="w"> </span>the<span class="w"> </span>tables<span class="w"> </span>automatically<span class="o">)</span><span class="w">                  </span>
 </code></pre></div>
 
 <p>The CQL for the default tables are the following:</p>
-<div class="codehilite"><pre><span></span><code>CREATE TABLE IF NOT EXISTS axonops.metrics5 <span class="o">(</span>
-    orgid text,
-    metricid int,   
-    <span class="nb">time</span> int,
-    value float,
-    PRIMARY KEY <span class="o">((</span>orgid, metricid<span class="o">)</span>, <span class="nb">time</span><span class="o">))</span> WITH CLUSTERING ORDER BY <span class="o">(</span><span class="nb">time</span> DESC<span class="o">)</span>
-    AND <span class="nv">default_time_to_live</span> <span class="o">=</span> <span class="m">2592000</span>
-    AND <span class="nv">compaction</span> <span class="o">=</span> <span class="o">{</span> <span class="s1">&#39;class&#39;</span> : <span class="s1">&#39;TimeWindowCompactionStrategy&#39;</span>, <span class="s1">&#39;compaction_window_unit&#39;</span> : <span class="s1">&#39;DAYS&#39;</span>, <span class="s1">&#39;compaction_window_size&#39;</span> : <span class="s1">&#39;12&#39;</span><span class="o">}</span>
-    <span class="p">;</span>
+<div class="codehilite"><pre><span></span><code>CREATE<span class="w"> </span>TABLE<span class="w"> </span>IF<span class="w"> </span>NOT<span class="w"> </span>EXISTS<span class="w"> </span>axonops.metrics5<span class="w"> </span><span class="o">(</span>
+<span class="w">    </span>orgid<span class="w"> </span>text,
+<span class="w">    </span>metricid<span class="w"> </span>int,
+<span class="w">    </span><span class="nb">time</span><span class="w"> </span>int,
+<span class="w">    </span>value<span class="w"> </span>float,
+<span class="w">    </span>PRIMARY<span class="w"> </span>KEY<span class="w"> </span><span class="o">((</span>orgid,<span class="w"> </span>metricid<span class="o">)</span>,<span class="w"> </span><span class="nb">time</span><span class="o">)</span>
+<span class="o">)</span><span class="w"> </span>WITH<span class="w"> </span>CLUSTERING<span class="w"> </span>ORDER<span class="w"> </span>BY<span class="w"> </span><span class="o">(</span><span class="nb">time</span><span class="w"> </span>DESC<span class="o">)</span>
+<span class="w">   </span>AND<span class="w"> </span><span class="nv">caching</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="o">{</span><span class="s1">&#39;keys&#39;</span>:<span class="w"> </span><span class="s1">&#39;ALL&#39;</span>,<span class="w"> </span><span class="s1">&#39;rows_per_partition&#39;</span>:<span class="w"> </span><span class="s1">&#39;256&#39;</span><span class="o">}</span>
+<span class="w">   </span>AND<span class="w"> </span><span class="nv">compaction</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="o">{</span><span class="s1">&#39;class&#39;</span>:<span class="w"> </span><span class="s1">&#39;TimeWindowCompactionStrategy&#39;</span>,<span class="w"> </span><span class="s1">&#39;compaction_window_size&#39;</span>:<span class="w"> </span><span class="s1">&#39;1&#39;</span>,<span class="w"> </span><span class="s1">&#39;compaction_window_unit&#39;</span>:<span class="w"> </span><span class="s1">&#39;DAYS&#39;</span>,<span class="w"> </span><span class="s1">&#39;max_threshold&#39;</span>:<span class="w"> </span><span class="s1">&#39;32&#39;</span>,<span class="w"> </span><span class="s1">&#39;min_threshold&#39;</span>:<span class="w"> </span><span class="s1">&#39;4&#39;</span><span class="o">}</span>
+<span class="w">   </span>AND<span class="w"> </span><span class="nv">default_time_to_live</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="m">604800</span>
+<span class="w">   </span>AND<span class="w"> </span><span class="nv">comment</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s1">&#39;7 days retention for 5 seconds resolution metrics&#39;</span><span class="p">;</span>
 
+CREATE<span class="w"> </span>TABLE<span class="w"> </span>IF<span class="w"> </span>NOT<span class="w"> </span>EXISTS<span class="w"> </span>axonops.metrics60<span class="w"> </span><span class="o">(</span>
+<span class="w">    </span>orgid<span class="w"> </span>text,
+<span class="w">    </span>metricid<span class="w"> </span>int,
+<span class="w">    </span><span class="nb">time</span><span class="w"> </span>int,
+<span class="w">    </span>value<span class="w"> </span>float,
+<span class="w">    </span>PRIMARY<span class="w"> </span>KEY<span class="w"> </span><span class="o">((</span>orgid,<span class="w"> </span>metricid<span class="o">)</span>,<span class="w"> </span><span class="nb">time</span><span class="o">)</span>
+<span class="o">)</span><span class="w"> </span>WITH<span class="w"> </span>CLUSTERING<span class="w"> </span>ORDER<span class="w"> </span>BY<span class="w"> </span><span class="o">(</span><span class="nb">time</span><span class="w"> </span>DESC<span class="o">)</span>
+<span class="w">   </span>AND<span class="w"> </span><span class="nv">caching</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="o">{</span><span class="s1">&#39;keys&#39;</span>:<span class="w"> </span><span class="s1">&#39;ALL&#39;</span>,<span class="w"> </span><span class="s1">&#39;rows_per_partition&#39;</span>:<span class="w"> </span><span class="s1">&#39;256&#39;</span><span class="o">}</span>
+<span class="w">   </span>AND<span class="w"> </span><span class="nv">compaction</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="o">{</span><span class="s1">&#39;class&#39;</span>:<span class="w"> </span><span class="s1">&#39;TimeWindowCompactionStrategy&#39;</span>,<span class="w"> </span><span class="s1">&#39;compaction_window_size&#39;</span>:<span class="w"> </span><span class="s1">&#39;1&#39;</span>,<span class="w"> </span><span class="s1">&#39;compaction_window_unit&#39;</span>:<span class="w"> </span><span class="s1">&#39;DAYS&#39;</span>,<span class="w"> </span><span class="s1">&#39;max_threshold&#39;</span>:<span class="w"> </span><span class="s1">&#39;32&#39;</span>,<span class="w"> </span><span class="s1">&#39;min_threshold&#39;</span>:<span class="w"> </span><span class="s1">&#39;4&#39;</span><span class="o">}</span>
+<span class="w">   </span>AND<span class="w"> </span><span class="nv">default_time_to_live</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="m">2592000</span>
+<span class="w">   </span>AND<span class="w"> </span><span class="nv">comment</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s1">&#39;30 days retention for 60 seconds resolution metrics&#39;</span><span class="p">;</span>
 
-CREATE TABLE IF NOT EXISTS axonops.metrics60 <span class="o">(</span>
-        orgid text,
-        metricid int, 
-        <span class="nb">time</span> int,
-        value float,
-        PRIMARY KEY <span class="o">((</span>orgid, metricid<span class="o">)</span>, <span class="nb">time</span><span class="o">))</span> WITH CLUSTERING ORDER BY <span class="o">(</span><span class="nb">time</span> DESC<span class="o">)</span>
-     AND <span class="nv">default_time_to_live</span> <span class="o">=</span> <span class="m">14515200</span>
-     AND <span class="nv">compaction</span> <span class="o">=</span> <span class="o">{</span> <span class="s1">&#39;class&#39;</span> : <span class="s1">&#39;TimeWindowCompactionStrategy&#39;</span>, <span class="s1">&#39;compaction_window_unit&#39;</span> : <span class="s1">&#39;DAYS&#39;</span>, <span class="s1">&#39;compaction_window_size&#39;</span> : <span class="s1">&#39;1&#39;</span><span class="o">}</span>
-     <span class="p">;</span>
+CREATE<span class="w"> </span>TABLE<span class="w"> </span>IF<span class="w"> </span>NOT<span class="w"> </span>EXISTS<span class="w"> </span>axonops.metrics720<span class="w"> </span><span class="o">(</span>
+<span class="w">    </span>orgid<span class="w"> </span>text,
+<span class="w">    </span>metricid<span class="w"> </span>int,
+<span class="w">    </span><span class="nb">time</span><span class="w"> </span>int,
+<span class="w">    </span>value<span class="w"> </span>float,
+<span class="w">    </span>PRIMARY<span class="w"> </span>KEY<span class="w"> </span><span class="o">((</span>orgid,<span class="w"> </span>metricid<span class="o">)</span>,<span class="w"> </span><span class="nb">time</span><span class="o">)</span>
+<span class="o">)</span><span class="w"> </span>WITH<span class="w"> </span>CLUSTERING<span class="w"> </span>ORDER<span class="w"> </span>BY<span class="w"> </span><span class="o">(</span><span class="nb">time</span><span class="w"> </span>DESC<span class="o">)</span>
+<span class="w">   </span>AND<span class="w"> </span><span class="nv">caching</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="o">{</span><span class="s1">&#39;keys&#39;</span>:<span class="w"> </span><span class="s1">&#39;ALL&#39;</span>,<span class="w"> </span><span class="s1">&#39;rows_per_partition&#39;</span>:<span class="w"> </span><span class="s1">&#39;256&#39;</span><span class="o">}</span>
+<span class="w">   </span>AND<span class="w"> </span><span class="nv">compaction</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="o">{</span><span class="s1">&#39;class&#39;</span>:<span class="w"> </span><span class="s1">&#39;TimeWindowCompactionStrategy&#39;</span>,<span class="w"> </span><span class="s1">&#39;compaction_window_size&#39;</span>:<span class="w"> </span><span class="s1">&#39;4&#39;</span>,<span class="w"> </span><span class="s1">&#39;compaction_window_unit&#39;</span>:<span class="w"> </span><span class="s1">&#39;DAYS&#39;</span>,<span class="w"> </span><span class="s1">&#39;max_threshold&#39;</span>:<span class="w"> </span><span class="s1">&#39;32&#39;</span>,<span class="w"> </span><span class="s1">&#39;min_threshold&#39;</span>:<span class="w"> </span><span class="s1">&#39;4&#39;</span><span class="o">}</span>
+<span class="w">   </span>AND<span class="w"> </span><span class="nv">default_time_to_live</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="m">5184000</span>
+<span class="w">   </span>AND<span class="w"> </span><span class="nv">comment</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s1">&#39;60 days retention for 720 seconds resolution metrics&#39;</span><span class="p">;</span>
 
-CREATE TABLE IF NOT EXISTS axonops.metrics720 <span class="o">(</span>
-        orgid text,
-        metricid int, 
-        <span class="nb">time</span> int,
-        value float,
-        PRIMARY KEY <span class="o">((</span>orgid, metricid<span class="o">)</span>, <span class="nb">time</span><span class="o">))</span> WITH CLUSTERING ORDER BY <span class="o">(</span><span class="nb">time</span> DESC<span class="o">)</span>
-     AND <span class="nv">default_time_to_live</span> <span class="o">=</span> <span class="m">14515200</span>
-     AND <span class="nv">compaction</span> <span class="o">=</span> <span class="o">{</span> <span class="s1">&#39;class&#39;</span> : <span class="s1">&#39;TimeWindowCompactionStrategy&#39;</span>, <span class="s1">&#39;compaction_window_unit&#39;</span> : <span class="s1">&#39;DAYS&#39;</span>, <span class="s1">&#39;compaction_window_size&#39;</span> : <span class="s1">&#39;1&#39;</span><span class="o">}</span>
-     <span class="p">;</span>
+CREATE<span class="w"> </span>TABLE<span class="w"> </span>IF<span class="w"> </span>NOT<span class="w"> </span>EXISTS<span class="w"> </span>axonops.metrics7200<span class="w"> </span><span class="o">(</span>
+<span class="w">    </span>orgid<span class="w"> </span>text,
+<span class="w">    </span>metricid<span class="w"> </span>int,
+<span class="w">    </span><span class="nb">time</span><span class="w"> </span>int,
+<span class="w">    </span>value<span class="w"> </span>float,
+<span class="w">    </span>PRIMARY<span class="w"> </span>KEY<span class="w"> </span><span class="o">((</span>orgid,<span class="w"> </span>metricid<span class="o">)</span>,<span class="w"> </span><span class="nb">time</span><span class="o">)</span>
+<span class="o">)</span><span class="w"> </span>WITH<span class="w"> </span>CLUSTERING<span class="w"> </span>ORDER<span class="w"> </span>BY<span class="w"> </span><span class="o">(</span><span class="nb">time</span><span class="w"> </span>DESC<span class="o">)</span>
+<span class="w">   </span>AND<span class="w"> </span><span class="nv">caching</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="o">{</span><span class="s1">&#39;keys&#39;</span>:<span class="w"> </span><span class="s1">&#39;ALL&#39;</span>,<span class="w"> </span><span class="s1">&#39;rows_per_partition&#39;</span>:<span class="w"> </span><span class="s1">&#39;256&#39;</span><span class="o">}</span>
+<span class="w">   </span>AND<span class="w"> </span><span class="nv">compaction</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="o">{</span><span class="s1">&#39;class&#39;</span>:<span class="w"> </span><span class="s1">&#39;TimeWindowCompactionStrategy&#39;</span>,<span class="w"> </span><span class="s1">&#39;compaction_window_size&#39;</span>:<span class="w"> </span><span class="s1">&#39;30&#39;</span>,<span class="w"> </span><span class="s1">&#39;compaction_window_unit&#39;</span>:<span class="w"> </span><span class="s1">&#39;DAYS&#39;</span>,<span class="w"> </span><span class="s1">&#39;max_threshold&#39;</span>:<span class="w"> </span><span class="s1">&#39;32&#39;</span>,<span class="w"> </span><span class="s1">&#39;min_threshold&#39;</span>:<span class="w"> </span><span class="s1">&#39;4&#39;</span><span class="o">}</span>
+<span class="w">   </span>AND<span class="w"> </span><span class="nv">default_time_to_live</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="m">15552000</span>
+<span class="w">   </span>AND<span class="w"> </span><span class="nv">comment</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s1">&#39;180 days retention for 7200 seconds resolution metrics&#39;</span><span class="p">;</span>
 
-CREATE TABLE IF NOT EXISTS axonops.metrics7200 <span class="o">(</span>
-        orgid text,
-        metricid int, 
-        <span class="nb">time</span> int,
-        value float,
-        PRIMARY KEY <span class="o">((</span>orgid, metricid<span class="o">)</span>, <span class="nb">time</span><span class="o">))</span> WITH CLUSTERING ORDER BY <span class="o">(</span><span class="nb">time</span> DESC<span class="o">)</span>
-     AND <span class="nv">default_time_to_live</span> <span class="o">=</span> <span class="m">63037440</span>
-     AND <span class="nv">compaction</span> <span class="o">=</span> <span class="o">{</span> <span class="s1">&#39;class&#39;</span> : <span class="s1">&#39;TimeWindowCompactionStrategy&#39;</span>, <span class="s1">&#39;compaction_window_unit&#39;</span> : <span class="s1">&#39;DAYS&#39;</span>, <span class="s1">&#39;compaction_window_size&#39;</span> : <span class="s1">&#39;10&#39;</span><span class="o">}</span>
-     <span class="p">;</span>
-
-CREATE TABLE IF NOT EXISTS axonops.metrics86400 <span class="o">(</span>
-        orgid text,
-        metricid int, 
-        <span class="nb">time</span> int,
-        value float,
-        PRIMARY KEY <span class="o">((</span>orgid, metricid<span class="o">)</span>, <span class="nb">time</span><span class="o">))</span> WITH CLUSTERING ORDER BY <span class="o">(</span><span class="nb">time</span> DESC<span class="o">)</span>
-     AND <span class="nv">default_time_to_live</span> <span class="o">=</span> <span class="m">94608000</span>
-     AND <span class="nv">compaction</span> <span class="o">=</span> <span class="o">{</span> <span class="s1">&#39;class&#39;</span> : <span class="s1">&#39;TimeWindowCompactionStrategy&#39;</span>, <span class="s1">&#39;compaction_window_unit&#39;</span> : <span class="s1">&#39;DAYS&#39;</span>, <span class="s1">&#39;compaction_window_size&#39;</span> : <span class="s1">&#39;120&#39;</span><span class="o">}</span>
-     <span class="p">;</span>
+CREATE<span class="w"> </span>TABLE<span class="w"> </span>IF<span class="w"> </span>NOT<span class="w"> </span>EXISTS<span class="w"> </span>axonops.metrics86400<span class="w"> </span><span class="o">(</span>
+<span class="w">    </span>orgid<span class="w"> </span>text,
+<span class="w">    </span>metricid<span class="w"> </span>int,
+<span class="w">    </span><span class="nb">time</span><span class="w"> </span>int,
+<span class="w">    </span>value<span class="w"> </span>float,
+<span class="w">    </span>PRIMARY<span class="w"> </span>KEY<span class="w"> </span><span class="o">((</span>orgid,<span class="w"> </span>metricid<span class="o">)</span>,<span class="w"> </span><span class="nb">time</span><span class="o">)</span>
+<span class="o">)</span><span class="w"> </span>WITH<span class="w"> </span>CLUSTERING<span class="w"> </span>ORDER<span class="w"> </span>BY<span class="w"> </span><span class="o">(</span><span class="nb">time</span><span class="w"> </span>DESC<span class="o">)</span>
+<span class="w">   </span>AND<span class="w"> </span><span class="nv">caching</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="o">{</span><span class="s1">&#39;keys&#39;</span>:<span class="w"> </span><span class="s1">&#39;ALL&#39;</span>,<span class="w"> </span><span class="s1">&#39;rows_per_partition&#39;</span>:<span class="w"> </span><span class="s1">&#39;365&#39;</span><span class="o">}</span>
+<span class="w">   </span>AND<span class="w"> </span><span class="nv">compaction</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="o">{</span><span class="s1">&#39;class&#39;</span>:<span class="w"> </span><span class="s1">&#39;TimeWindowCompactionStrategy&#39;</span>,<span class="w"> </span><span class="s1">&#39;compaction_window_size&#39;</span>:<span class="w"> </span><span class="s1">&#39;60&#39;</span>,<span class="w"> </span><span class="s1">&#39;compaction_window_unit&#39;</span>:<span class="w"> </span><span class="s1">&#39;DAYS&#39;</span>,<span class="w"> </span><span class="s1">&#39;max_threshold&#39;</span>:<span class="w"> </span><span class="s1">&#39;32&#39;</span>,<span class="w"> </span><span class="s1">&#39;min_threshold&#39;</span>:<span class="w"> </span><span class="s1">&#39;4&#39;</span><span class="o">}</span>
+<span class="w">   </span>AND<span class="w"> </span><span class="nv">default_time_to_live</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="m">31536000</span>
+<span class="w">   </span>AND<span class="w"> </span><span class="nv">comment</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s1">&#39;365 days retention for 86400 seconds resolution metrics&#39;</span><span class="p">;</span>
 </code></pre></div>
 
-              
-            </article>
-            
-          </div>
+
+  
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
         </div>
         
       </main>
       
         <footer class="md-footer">
-  
-    
-    <nav class="md-footer__inner md-grid" aria-label="Footer" >
-      
-        
-        <a href="../centos/" class="md-footer__link md-footer__link--prev" aria-label="Previous: Installing on Centos/Redhat" rel="prev">
-          <div class="md-footer__button md-icon">
-            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12Z"/></svg>
-          </div>
-          <div class="md-footer__title">
-            <div class="md-ellipsis">
-              <span class="md-footer__direction">
-                Previous
-              </span>
-              Installing on Centos/Redhat
-            </div>
-          </div>
-        </a>
-      
-      
-        
-        <a href="../../axon-dash/install/" class="md-footer__link md-footer__link--next" aria-label="Next: AxonOps GUI Server" rel="next">
-          <div class="md-footer__title">
-            <div class="md-ellipsis">
-              <span class="md-footer__direction">
-                Next
-              </span>
-              AxonOps GUI Server
-            </div>
-          </div>
-          <div class="md-footer__button md-icon">
-            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M4 11v2h12l-5.5 5.5 1.42 1.42L19.84 12l-7.92-7.92L10.5 5.5 16 11H4Z"/></svg>
-          </div>
-        </a>
-      
-    </nav>
   
   <div class="md-footer-meta md-typeset">
     <div class="md-footer-meta__inner md-grid">
@@ -1280,10 +1370,68 @@ CREATE TABLE IF NOT EXISTS axonops.metrics86400 <span class="o">(</span>
     <div class="md-dialog" data-md-component="dialog">
       <div class="md-dialog__inner md-typeset"></div>
     </div>
-    <script id="__config" type="application/json">{"base": "../../..", "features": [], "search": "../../../assets/javascripts/workers/search.b97dbffb.min.js", "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.config.lang": "en", "search.config.pipeline": "trimmer, stopWordFilter", "search.config.separator": "[\\s\\-]+", "search.placeholder": "Search", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version.title": "Select version"}}</script>
+    
+      <div class="md-consent" data-md-component="consent" id="__consent" hidden>
+        <div class="md-consent__overlay"></div>
+        <aside class="md-consent__inner">
+          <form class="md-consent__form md-grid md-typeset" name="consent">
+            
+
+  
+    
+  
+
+
+
+
+  
+
+
+<h4>Cookie Consent</h4>
+<p>We use cookies to recognize your repeated visits and preferences, as well as to measure the effectiveness of our documentation and whether users find what they're searching for. With your consent, you're helping us to make our documentation better.</p>
+<input class="md-toggle" type="checkbox" id="__settings" >
+<div class="md-consent__settings">
+  <ul class="task-list">
+    
+      
+      
+        
+        
+      
+      <li class="task-list-item">
+        <label class="task-list-control">
+          <input type="checkbox" name="analytics" checked>
+          <span class="task-list-indicator"></span>
+          Google Analytics
+        </label>
+      </li>
+    
+  </ul>
+</div>
+<div class="md-consent__controls">
+  
+    
+      <button class="md-button md-button--primary">Accept</button>
     
     
-      <script src="../../../assets/javascripts/bundle.6c7ad80a.min.js"></script>
+    
+  
+    
+    
+    
+      <label class="md-button" for="__settings">Manage settings</label>
+    
+  
+</div>
+          </form>
+        </aside>
+      </div>
+      <script>var consent=__md_get("__consent");if(consent)for(var input of document.forms.consent.elements)input.name&&(input.checked=consent[input.name]||!1);else"file:"!==location.protocol&&setTimeout(function(){document.querySelector("[data-md-component=consent]").hidden=!1},250);var action,form=document.forms.consent;for(action of["submit","reset"])form.addEventListener(action,function(e){if(e.preventDefault(),"reset"===e.type)for(var n of document.forms.consent.elements)n.name&&(n.checked=!1);__md_set("__consent",Object.fromEntries(Array.from(new FormData(form).keys()).map(function(e){return[e,!0]}))),location.hash="",location.reload()})</script>
+    
+    <script id="__config" type="application/json">{"base": "../../..", "features": [], "search": "../../../assets/javascripts/workers/search.208ed371.min.js", "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}}</script>
+    
+    
+      <script src="../../../assets/javascripts/bundle.fac441b0.min.js"></script>
       
     
   </body>
