@@ -4,7 +4,8 @@
 
 The following shows how to install AxonOps for monitoring cassandra. AxonOps requires ElasticSearch and the documentation below shows how to install both. If you already have ElasticSearch running, you can omit the installation and just ensure the AxonOps config points to it.
 
-AxonOps installation uses Helm Charts.
+AxonOps installation uses Helm Charts. Helm v3.8.0 or later is required in order to access the OCI repository hosting the charts.
+The raw charts can be downloaded from the [GitHub repository](https://github.com/axonops/helm-axonops).
 
 ## Preparing the configuration
 
@@ -73,7 +74,7 @@ axon-dash:
   image:
     pullPolicy: IfNotPresent
     repository: registry.axonops.com/axonops-public/axonops-docker/axon-dash
-    tag: 1.0.61
+    tag: latest
   ingress:
     enabled: true
     className: nginx
@@ -107,7 +108,7 @@ axon-server:
   image:
     pullPolicy: IfNotPresent
     repository: registry.axonops.com/axonops-public/axonops-docker/axon-server
-    tag: 1.0.98
+    tag: latest
   # Enable the agent ingress to allow agents to connect from outside the Kubernetes cluster
   agentIngress:
     enabled: true
@@ -130,6 +131,9 @@ axon-server:
       cpu: 100m
       memory: 256Mi
 ```
+
+An example values file showing all available options can be found in the GitHub repository here: [values-full.yaml](https://github.com/axonops/helm-axonops/blob/main/values-full.yaml)
+
 
 ## Installing
 

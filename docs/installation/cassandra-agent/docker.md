@@ -46,7 +46,7 @@ services:
       - CASSANDRA_CLUSTER_NAME=my-cluster
 
   axon-agent:
-    image: registry.axonops.com/axonops-public/axonops-docker/axon-agent:1.0.51
+    image: registry.axonops.com/axonops-public/axonops-docker/axon-agent:latest
     restart: always
     environment:
       # Enter the hostname or IP address of your AxonOps server here
