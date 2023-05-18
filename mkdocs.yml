@@ -50,7 +50,9 @@ nav:
             - 'Metrics database': 'installation/axon-server/metricsdatabase.md'
         - AxonOps GUI Server: 'installation/axon-dash/install.md'
         #- AxonOps Agent: 'installation/axon-agent/install.md'
-        - AxonOps Cassandra Agent: 'installation/cassandra-agent/install.md'
+        - AxonOps Cassandra Agent:
+            - 'Agent Installation': 'installation/cassandra-agent/install.md'
+            - 'Installation with Docker': 'installation/cassandra-agent/docker.md'
         - Compatibility matrix: 'installation/compat_matrix/compat_matrix.md'
         - Kubernetes: 'installation/kubernetes/index.md'
 
