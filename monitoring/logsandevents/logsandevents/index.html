@@ -703,6 +703,46 @@
     Logs and Events
   </a>
   
+    <nav class="md-nav" aria-label="Logs and Events">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#search-by-log-level" class="md-nav__link">
+    Search by Log Level
+  </a>
+  
+    <nav class="md-nav" aria-label="Search by Log Level">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#setting-up-the-debug-level" class="md-nav__link">
+    Setting up the Debug Level
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#search-by-logs-source-and-event-type" class="md-nav__link">
+    Search by Logs Source and Event Type
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#search-by-content" class="md-nav__link">
+    Search by Content
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
 </li>
       
     </ul>
@@ -1199,6 +1239,46 @@
     Logs and Events
   </a>
   
+    <nav class="md-nav" aria-label="Logs and Events">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#search-by-log-level" class="md-nav__link">
+    Search by Log Level
+  </a>
+  
+    <nav class="md-nav" aria-label="Search by Log Level">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#setting-up-the-debug-level" class="md-nav__link">
+    Setting up the Debug Level
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#search-by-logs-source-and-event-type" class="md-nav__link">
+    Search by Logs Source and Event Type
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#search-by-content" class="md-nav__link">
+    Search by Content
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
 </li>
       
     </ul>
@@ -1219,11 +1299,38 @@
   <h1>Logs & Events</h1>
 
 <h3 id="logs-and-events">Logs and Events<a class="headerlink" href="#logs-and-events" title="Permanent link">&para;</a></h3>
-<p>The logs and events are visible within AxonOps dashboard allowing quick access to them without having to log in to the individual servers.</p>
-<p><img alt="" src="../0.JPG" /></p>
-<p>For a free text search fulfill the <strong><em>content</em></strong> input.</p>
-<p>You can search by regex expression via the <code>/&lt;expression&gt;/</code> pattern.</p>
-<p><img alt="" src="../2021-01-26-14-25-08.png" /></p>
+<p>AxonOps provides a powerful logging feature that allows you to search and filter logs based on different parameters such as DC/Rack/Node, Log Level, Event Type, Source and Log Content.</p>
+<p><img alt="" src="../logs_ui.png" /></p>
+<p>The logs and events are visible within AxonOps dashboard and Logs &amp; Events tab allowing quick access to them without having to login to the individual servers.</p>
+<h4 id="search-by-log-level">Search by Log Level<a class="headerlink" href="#search-by-log-level" title="Permanent link">&para;</a></h4>
+<p>Filter logs based on their log levels to focus on specific severity levels. The log level indicates the importance or severity of a message from the most critical (ERROR) to less severe (DEBUG).</p>
+<p><img alt="" src="../log_level.png" /></p>
+<h5 id="setting-up-the-debug-level">Setting up the Debug Level<a class="headerlink" href="#setting-up-the-debug-level" title="Permanent link">&para;</a></h5>
+<p>To search logs by debug level you have to enable debug mode in cassandra by editing the <strong><em>logback.xml</em></strong> file:</p>
+<div class="codehilite"><pre><span></span><code>&lt;appender name=&quot;SYSTEMLOG&quot; class=&quot;ch.qos.logback.core.rolling.RollingFileAppender&quot;&gt;
+    &lt;filter class=&quot;ch.qos.logback.classic.filter.ThresholdFilter&quot;&gt;
+        &lt;level&gt;DEBUG&lt;/level&gt;
+</code></pre></div>
+
+<h4 id="search-by-logs-source-and-event-type">Search by Logs Source and Event Type<a class="headerlink" href="#search-by-logs-source-and-event-type" title="Permanent link">&para;</a></h4>
+<p>You can filter logs based on the log source (cassandra, axon-server and axon-agent logs) and event type to narrow down search results.</p>
+<p><img alt="" src="../logs_event_type1.png" />
+<img alt="" src="../logs_event_type2.png" /></p>
+<h4 id="search-by-content">Search by Content<a class="headerlink" href="#search-by-content" title="Permanent link">&para;</a></h4>
+<p>For a free text search enter a keyword in the <strong><em>content</em></strong> input or use the <code>/&lt;expression&gt;/</code> syntax to search by regex expression.</p>
+<p>Here are some examples:</p>
+<ul>
+<li>Display logs that contain a specific word or phrase:</li>
+</ul>
+<p><img alt="" src="../logs_example_regexp1.png" /> </p>
+<ul>
+<li>Display logs that contain a match either what is before or after the |, in this case "Validated" or "Compacted":</li>
+</ul>
+<p><img alt="" src="../logs_example_regexp2.png" /></p>
+<ul>
+<li>Display logs that contain both patterns in a line, in this case "Segment" and "deleted:</li>
+</ul>
+<p><img alt="" src="../logs_example_regexp3.png" /></p>
 
 
   
