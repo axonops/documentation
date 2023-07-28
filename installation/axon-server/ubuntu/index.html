@@ -1542,6 +1542,23 @@ sudo<span class="w"> </span>apt-get<span class="w"> </span>install<span class="w
 <span class="w">  </span><span class="nt">backups</span><span class="p">:</span><span class="w"> </span><span class="c1"># Those are use as defaults but can be overridden from the UI</span>
 <span class="w">    </span><span class="nt">local</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">10d</span>
 <span class="w">    </span><span class="nt">remote</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">30d</span>
+
+
+<span class="c1"># Storage options for PDF reports</span>
+<span class="c1"># Override the default local path of /var/lib/axonops/reports</span>
+<span class="c1">#report_storage_path: /my/reports/storage/directory</span>
+
+<span class="c1"># Alternatively store PDF reports in an object store by providing report_storage_config</span>
+<span class="c1">#report_storage_path: my-reports-s3-bucket/reports-folder</span>
+<span class="c1">#report_storage_config:</span>
+<span class="c1">#  type: s3</span>
+<span class="c1">#  provider: AWS</span>
+<span class="c1">#  access_key_id: MY_ACCESS_KEY_ID</span>
+<span class="c1">#  secret_access_key: MY_SECRET_ACCESS_KEY</span>
+<span class="c1">#  region: us-east-1</span>
+<span class="c1">#  acl: private</span>
+<span class="c1">#  server_side_encryption: AES256</span>
+<span class="c1">#  storage_class: STANDARD</span>
 </code></pre></div>
 
 <blockquote>
