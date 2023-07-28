@@ -67,6 +67,23 @@ retention:
   backups: # Those are use as defaults but can be overridden from the UI
     local: 10d
     remote: 30d
+
+
+# Storage options for PDF reports
+# Override the default local path of /var/lib/axonops/reports
+#report_storage_path: /my/reports/storage/directory
+
+# Alternatively store PDF reports in an object store by providing report_storage_config
+#report_storage_path: my-reports-s3-bucket/reports-folder
+#report_storage_config:
+#  type: s3
+#  provider: AWS
+#  access_key_id: MY_ACCESS_KEY_ID
+#  secret_access_key: MY_SECRET_ACCESS_KEY
+#  region: us-east-1
+#  acl: private
+#  server_side_encryption: AES256
+#  storage_class: STANDARD
 ```
 > For better performances on large clusters (100+ nodes), you can use a CQL store for the metrics such as **Cassandra**, **Scylla** or **Elassandra**. To opt-in for CQL metrics storage, just specify at least one CQL host with axon-server configuration.
 
