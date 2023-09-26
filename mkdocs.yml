@@ -86,6 +86,7 @@ nav:
                       - 'Single node with a different IP address': 'operations/cassandra/restore/restore-node-different-ip.md'
                       - 'Whole cluster': 'operations/cassandra/restore/restore-cluster-same-ip.md'
                       - 'Whole cluster with changed IP addresses': 'operations/cassandra/restore/restore-cluster-different-ips.md'
+                      - 'Restore to a different cluster': 'operations/cassandra/restore/restore-different-cluster.md'
                 - 'Rolling Restart': 'operations/cassandra/rollingrestart/overview.md'
 
     - How-to:
