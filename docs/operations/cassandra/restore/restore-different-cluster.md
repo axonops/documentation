@@ -2,9 +2,9 @@
 
 *Follow this procedure to restore an AxonOps backup from remote storage onto a different cluster*
 
-> NOTE: This facility is only available for backups created using AxonOps Agent version 1.0.58 or later
+> NOTE: This facility is only available for backups created using AxonOps Agent version 1.0.60 or later
 
-AxonOps Agent version 1.0.58 and later includes a command-line tool which can be used to restore a backup created by
+AxonOps Agent version 1.0.60 and later includes a command-line tool which can be used to restore a backup created by
 AxonOps from remote storage (e.g. S3, GCS). This tool connects directly to your remote storage and does not require an
 AxonOps server or an active AxonOps Cloud account in order to function.
 
