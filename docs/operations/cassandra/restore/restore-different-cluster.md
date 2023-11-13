@@ -37,18 +37,20 @@ sudo yum install axon-agent
 After the package has been installed you can find the Cassandra Restore Tool at `/usr/share/axonops/axon-cassandra-restore`.
 
 Run the tool with `--help` to see the available options:
-```bash
+```
 ~# /usr/share/axonops/axon-cassandra-restore --help
 Usage of /usr/share/axonops/axon-cassandra-restore:
   -i, --backup-id string                UUID of the backup to restore
       --cassandra-bin-dir string        Where the Cassandra binary files are stored (e.g. /opt/cassandra/bin)
       --cqlsh-options string            Options to pass to cqlsh when restoring a table schema
+      --dest-table string               The name of the destination table for the restore in keyspace.table format. Requires --tables with a single source table. (Added in v1.0.61)
   -h, --help                            Show command-line help
   -l, --list                            List backups available in remote storage
   -d, --local-sstable-dir string        A local directory in which to store sstables downloaded from backup storage
       --org-id string                   ID of the AxonOps organisation from which the backup was created
   -r, --restore                         Restore a backup from remote storage
       --restore-schema                  Set this when using --use-sstable-loader to restore the CQL schema for each table. Keyspaces must already exist.
+  -e, --skip-existing-files             Don't download files that already exist in the local destination path (Added in v1.0.61)
   -c, --source-cluster string           The name of the cluster from which to restore
   -s, --source-hosts string             Comma-separated list containing host IDs for which to restore backups
       --sstable-loader-options string   Options to pass to sstableloader when restoring a backup
@@ -169,7 +171,7 @@ to import the downloaded files into a new cluster with contact points 10.0.0.1, 
 #### Importing CQL schemas during the restore
 
 When a backup is imported to a cluster using `sstableloader` it assumes that the destination tables already exist and
-will skip the import for any that are missing. AxonOps backs up the current table schema with each backup so it is
+will skip the import for any that are missing. AxonOps stores the current table schema with each backup, so it is
 possible to create any missing tables as part of the restore operation. This can be enabled with the `--restore-schema`
 and `--cqlsh-options` arguments to `axon-cassandra-restore`.
 
@@ -188,7 +190,7 @@ tables, and import the downloaded data with `sstableloader`:
   --cassandra-bin-dir /opt/cassandra/bin \
   --sstable-loader-options "-d 10.0.0.1,10.0.0.2,10.0.0.3 -u cassandra -pw cassandra" \
   --restore-schema \
-  --cqlsh-options `-u cassandra -p cassandra 10.0.0.1`
+  --cqlsh-options "-u cassandra -p cassandra 10.0.0.1"
 ```
 > NOTE: This will not create missing keyspaces. You must ensure that the target keyspaces already exist in the
 > destination cluster before running the restore command.
@@ -215,4 +217,32 @@ Here are some examples of the most common storage types:
 #### Google Cloud Storage
 ```bash
 --storage-config '{"type":"googlecloudstorage","location":"us","service_account_credentials":"ESCAPED_JSON_PRIVATE_KEY"}'
+```
+
+## Restore to a different table
+> This feature is available in AxonOps Agent v1.0.61 or later
+
+When restoring a single table from a backup it is possible to use the `--dest-table` option on the command-line to load
+the restored data into table with a different name and/or keyspace to the original table. If you also supply the 
+`--restore-schema` option then the new table will be created as part of the restore process.
+
+> NOTE: The destination keyspace must already exist before running the restore command.
+
+This example shows restoring the table `keyspace1.table1` into a table named `table1_restored` in keysace `restoreks`:
+```
+/usr/share/axonops/axon-cassandra-restore \
+  --restore \
+  --org-id myaxonopsorg \
+  --storage-config '{"type":"s3","path":"/axonops-cassandra-backups","access_key_id":"MY_AWS_ACCESS_KEY","secret_access_key":"MY_AWS_SECRET_ACCESS_KEY","region":"eu-west-3"}' \
+  --source-cluster testcluster \
+  --backup-id 2c1d9aca-5312-11ee-b686-bed50b9335ec \
+  --source-hosts 026346a0-dc89-4235-ae34-552fcd453b42,84759df0-8a19-497e-965f-200bdb4c1c9b,94ed3811-12ce-487f-ac49-ae31299efa31 \
+  --local-sstable-dir /opt/cassandra/axonops-restore \
+  --use-sstable-loader \
+  --cassandra-bin-dir /opt/cassandra/bin \
+  --sstable-loader-options "-d 10.0.0.1,10.0.0.2,10.0.0.3 -u cassandra -pw cassandra" \
+  --restore-schema \
+  --cqlsh-options "-u cassandra -p cassandra 10.0.0.1" \
+  --tables keyspace1.table1 \
+  --dest-table restoreks.table1_restored
 ```
