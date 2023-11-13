@@ -1168,6 +1168,13 @@
   
 </li>
       
+        <li class="md-nav__item">
+  <a href="#restore-to-a-different-table" class="md-nav__link">
+    Restore to a different table
+  </a>
+  
+</li>
+      
     </ul>
   
 </nav>
@@ -1443,6 +1450,13 @@
   
 </li>
       
+        <li class="md-nav__item">
+  <a href="#restore-to-a-different-table" class="md-nav__link">
+    Restore to a different table
+  </a>
+  
+</li>
+      
     </ul>
   
 </nav>
@@ -1490,25 +1504,27 @@ sudo<span class="w"> </span>yum<span class="w"> </span>install<span class="w"> <
 
 <p>After the package has been installed you can find the Cassandra Restore Tool at <code>/usr/share/axonops/axon-cassandra-restore</code>.</p>
 <p>Run the tool with <code>--help</code> to see the available options:</p>
-<div class="codehilite"><pre><span></span><code>~#<span class="w"> </span>/usr/share/axonops/axon-cassandra-restore<span class="w"> </span>--help
-Usage<span class="w"> </span>of<span class="w"> </span>/usr/share/axonops/axon-cassandra-restore:
-<span class="w">  </span>-i,<span class="w"> </span>--backup-id<span class="w"> </span>string<span class="w">                </span>UUID<span class="w"> </span>of<span class="w"> </span>the<span class="w"> </span>backup<span class="w"> </span>to<span class="w"> </span>restore
-<span class="w">      </span>--cassandra-bin-dir<span class="w"> </span>string<span class="w">        </span>Where<span class="w"> </span>the<span class="w"> </span>Cassandra<span class="w"> </span>binary<span class="w"> </span>files<span class="w"> </span>are<span class="w"> </span>stored<span class="w"> </span><span class="o">(</span>e.g.<span class="w"> </span>/opt/cassandra/bin<span class="o">)</span>
-<span class="w">      </span>--cqlsh-options<span class="w"> </span>string<span class="w">            </span>Options<span class="w"> </span>to<span class="w"> </span>pass<span class="w"> </span>to<span class="w"> </span>cqlsh<span class="w"> </span>when<span class="w"> </span>restoring<span class="w"> </span>a<span class="w"> </span>table<span class="w"> </span>schema
-<span class="w">  </span>-h,<span class="w"> </span>--help<span class="w">                            </span>Show<span class="w"> </span>command-line<span class="w"> </span><span class="nb">help</span>
-<span class="w">  </span>-l,<span class="w"> </span>--list<span class="w">                            </span>List<span class="w"> </span>backups<span class="w"> </span>available<span class="w"> </span><span class="k">in</span><span class="w"> </span>remote<span class="w"> </span>storage
-<span class="w">  </span>-d,<span class="w"> </span>--local-sstable-dir<span class="w"> </span>string<span class="w">        </span>A<span class="w"> </span><span class="nb">local</span><span class="w"> </span>directory<span class="w"> </span><span class="k">in</span><span class="w"> </span>which<span class="w"> </span>to<span class="w"> </span>store<span class="w"> </span>sstables<span class="w"> </span>downloaded<span class="w"> </span>from<span class="w"> </span>backup<span class="w"> </span>storage
-<span class="w">      </span>--org-id<span class="w"> </span>string<span class="w">                   </span>ID<span class="w"> </span>of<span class="w"> </span>the<span class="w"> </span>AxonOps<span class="w"> </span>organisation<span class="w"> </span>from<span class="w"> </span>which<span class="w"> </span>the<span class="w"> </span>backup<span class="w"> </span>was<span class="w"> </span>created
-<span class="w">  </span>-r,<span class="w"> </span>--restore<span class="w">                         </span>Restore<span class="w"> </span>a<span class="w"> </span>backup<span class="w"> </span>from<span class="w"> </span>remote<span class="w"> </span>storage
-<span class="w">      </span>--restore-schema<span class="w">                  </span>Set<span class="w"> </span>this<span class="w"> </span>when<span class="w"> </span>using<span class="w"> </span>--use-sstable-loader<span class="w"> </span>to<span class="w"> </span>restore<span class="w"> </span>the<span class="w"> </span>CQL<span class="w"> </span>schema<span class="w"> </span><span class="k">for</span><span class="w"> </span>each<span class="w"> </span>table.<span class="w"> </span>Keyspaces<span class="w"> </span>must<span class="w"> </span>already<span class="w"> </span>exist.
-<span class="w">  </span>-c,<span class="w"> </span>--source-cluster<span class="w"> </span>string<span class="w">           </span>The<span class="w"> </span>name<span class="w"> </span>of<span class="w"> </span>the<span class="w"> </span>cluster<span class="w"> </span>from<span class="w"> </span>which<span class="w"> </span>to<span class="w"> </span>restore
-<span class="w">  </span>-s,<span class="w"> </span>--source-hosts<span class="w"> </span>string<span class="w">             </span>Comma-separated<span class="w"> </span>list<span class="w"> </span>containing<span class="w"> </span>host<span class="w"> </span>IDs<span class="w"> </span><span class="k">for</span><span class="w"> </span>which<span class="w"> </span>to<span class="w"> </span>restore<span class="w"> </span>backups
-<span class="w">      </span>--sstable-loader-options<span class="w"> </span>string<span class="w">   </span>Options<span class="w"> </span>to<span class="w"> </span>pass<span class="w"> </span>to<span class="w"> </span>sstableloader<span class="w"> </span>when<span class="w"> </span>restoring<span class="w"> </span>a<span class="w"> </span>backup
-<span class="w">      </span>--storage-config<span class="w"> </span>string<span class="w">           </span>JSON-formatted<span class="w"> </span>remote<span class="w"> </span>storage<span class="w"> </span>configuration
-<span class="w">  </span>-t,<span class="w"> </span>--tables<span class="w"> </span>string<span class="w">                   </span>Comma-separated<span class="w"> </span>list<span class="w"> </span>of<span class="w"> </span>keyspace.table<span class="w"> </span>to<span class="w"> </span>restore.<span class="w"> </span>Defaults<span class="w"> </span>to<span class="w"> </span>all<span class="w"> </span>tables<span class="w"> </span><span class="k">if</span><span class="w"> </span>omitted.
-<span class="w">      </span>--use-sstable-loader<span class="w">              </span>Use<span class="w"> </span>sstableloader<span class="w"> </span>to<span class="w"> </span>restore<span class="w"> </span>the<span class="w"> </span>backup.<span class="w"> </span>Requires<span class="w"> </span>--sstable-loader-options<span class="w"> </span>and<span class="w"> </span>--cassandra-bin-dir.
-<span class="w">  </span>-v,<span class="w"> </span>--verbose<span class="w">                         </span>Show<span class="w"> </span>verbose<span class="w"> </span>output<span class="w"> </span>when<span class="w"> </span>listing<span class="w"> </span>backups
-<span class="w">      </span>--version<span class="w">                         </span>Show<span class="w"> </span>version<span class="w"> </span>information<span class="w"> </span>and<span class="w"> </span><span class="nb">exit</span>
+<div class="codehilite"><pre><span></span><code>~# /usr/share/axonops/axon-cassandra-restore --help
+Usage of /usr/share/axonops/axon-cassandra-restore:
+  -i, --backup-id string                UUID of the backup to restore
+      --cassandra-bin-dir string        Where the Cassandra binary files are stored (e.g. /opt/cassandra/bin)
+      --cqlsh-options string            Options to pass to cqlsh when restoring a table schema
+      --dest-table string               The name of the destination table for the restore in keyspace.table format. Requires --tables with a single source table. (Added in v1.0.61)
+  -h, --help                            Show command-line help
+  -l, --list                            List backups available in remote storage
+  -d, --local-sstable-dir string        A local directory in which to store sstables downloaded from backup storage
+      --org-id string                   ID of the AxonOps organisation from which the backup was created
+  -r, --restore                         Restore a backup from remote storage
+      --restore-schema                  Set this when using --use-sstable-loader to restore the CQL schema for each table. Keyspaces must already exist.
+  -e, --skip-existing-files             Don&#39;t download files that already exist in the local destination path (Added in v1.0.61)
+  -c, --source-cluster string           The name of the cluster from which to restore
+  -s, --source-hosts string             Comma-separated list containing host IDs for which to restore backups
+      --sstable-loader-options string   Options to pass to sstableloader when restoring a backup
+      --storage-config string           JSON-formatted remote storage configuration
+  -t, --tables string                   Comma-separated list of keyspace.table to restore. Defaults to all tables if omitted.
+      --use-sstable-loader              Use sstableloader to restore the backup. Requires --sstable-loader-options and --cassandra-bin-dir.
+  -v, --verbose                         Show verbose output when listing backups
+      --version                         Show version information and exit
 </code></pre></div>
 
 <h2 id="listing-the-available-backups">Listing the available backups<a class="headerlink" href="#listing-the-available-backups" title="Permanent link">&para;</a></h2>
@@ -1608,7 +1624,7 @@ to import the downloaded files into a new cluster with contact points 10.0.0.1, 
 
 <h4 id="importing-cql-schemas-during-the-restore">Importing CQL schemas during the restore<a class="headerlink" href="#importing-cql-schemas-during-the-restore" title="Permanent link">&para;</a></h4>
 <p>When a backup is imported to a cluster using <code>sstableloader</code> it assumes that the destination tables already exist and
-will skip the import for any that are missing. AxonOps backs up the current table schema with each backup so it is
+will skip the import for any that are missing. AxonOps stores the current table schema with each backup, so it is
 possible to create any missing tables as part of the restore operation. This can be enabled with the <code>--restore-schema</code>
 and <code>--cqlsh-options</code> arguments to <code>axon-cassandra-restore</code>.</p>
 <p>Building on the example above this command will download the files from the backup, create the schema for any missing
@@ -1625,7 +1641,7 @@ tables, and import the downloaded data with <code>sstableloader</code>:</p>
 <span class="w">  </span>--cassandra-bin-dir<span class="w"> </span>/opt/cassandra/bin<span class="w"> </span><span class="se">\</span>
 <span class="w">  </span>--sstable-loader-options<span class="w"> </span><span class="s2">&quot;-d 10.0.0.1,10.0.0.2,10.0.0.3 -u cassandra -pw cassandra&quot;</span><span class="w"> </span><span class="se">\</span>
 <span class="w">  </span>--restore-schema<span class="w"> </span><span class="se">\</span>
-<span class="w">  </span>--cqlsh-options<span class="w"> </span><span class="sb">`</span>-u<span class="w"> </span>cassandra<span class="w"> </span>-p<span class="w"> </span>cassandra<span class="w"> </span><span class="m">10</span>.0.0.1<span class="sb">`</span>
+<span class="w">  </span>--cqlsh-options<span class="w"> </span><span class="s2">&quot;-u cassandra -p cassandra 10.0.0.1&quot;</span>
 </code></pre></div>
 
 <blockquote>
@@ -1650,6 +1666,34 @@ destination cluster before running the restore command.</p>
 
 <h4 id="google-cloud-storage">Google Cloud Storage<a class="headerlink" href="#google-cloud-storage" title="Permanent link">&para;</a></h4>
 <div class="codehilite"><pre><span></span><code>--storage-config<span class="w"> </span><span class="s1">&#39;{&quot;type&quot;:&quot;googlecloudstorage&quot;,&quot;location&quot;:&quot;us&quot;,&quot;service_account_credentials&quot;:&quot;ESCAPED_JSON_PRIVATE_KEY&quot;}&#39;</span>
+</code></pre></div>
+
+<h2 id="restore-to-a-different-table">Restore to a different table<a class="headerlink" href="#restore-to-a-different-table" title="Permanent link">&para;</a></h2>
+<blockquote>
+<p>This feature is available in AxonOps Agent v1.0.61 or later</p>
+</blockquote>
+<p>When restoring a single table from a backup it is possible to use the <code>--dest-table</code> option on the command-line to load
+the restored data into table with a different name and/or keyspace to the original table. If you also supply the 
+<code>--restore-schema</code> option then the new table will be created as part of the restore process.</p>
+<blockquote>
+<p>NOTE: The destination keyspace must already exist before running the restore command.</p>
+</blockquote>
+<p>This example shows restoring the table <code>keyspace1.table1</code> into a table named <code>table1_restored</code> in keysace <code>restoreks</code>:</p>
+<div class="codehilite"><pre><span></span><code>/usr/share/axonops/axon-cassandra-restore \
+  --restore \
+  --org-id myaxonopsorg \
+  --storage-config &#39;{&quot;type&quot;:&quot;s3&quot;,&quot;path&quot;:&quot;/axonops-cassandra-backups&quot;,&quot;access_key_id&quot;:&quot;MY_AWS_ACCESS_KEY&quot;,&quot;secret_access_key&quot;:&quot;MY_AWS_SECRET_ACCESS_KEY&quot;,&quot;region&quot;:&quot;eu-west-3&quot;}&#39; \
+  --source-cluster testcluster \
+  --backup-id 2c1d9aca-5312-11ee-b686-bed50b9335ec \
+  --source-hosts 026346a0-dc89-4235-ae34-552fcd453b42,84759df0-8a19-497e-965f-200bdb4c1c9b,94ed3811-12ce-487f-ac49-ae31299efa31 \
+  --local-sstable-dir /opt/cassandra/axonops-restore \
+  --use-sstable-loader \
+  --cassandra-bin-dir /opt/cassandra/bin \
+  --sstable-loader-options &quot;-d 10.0.0.1,10.0.0.2,10.0.0.3 -u cassandra -pw cassandra&quot; \
+  --restore-schema \
+  --cqlsh-options &quot;-u cassandra -p cassandra 10.0.0.1&quot; \
+  --tables keyspace1.table1 \
+  --dest-table restoreks.table1_restored
 </code></pre></div>
 
 
