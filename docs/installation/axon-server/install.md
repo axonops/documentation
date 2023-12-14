@@ -7,9 +7,10 @@ Make sure **elastic_host** and **elastic_port** are corresponding to your Elasti
 
 ``` yaml hl_lines="3 4"
 host: 0.0.0.0  # axon-server listening address (used by axon-dash and axon-agent) (env variable: AXONSERVER_HOST)
-port: 8080 # axon-server HTTP API listening port (used by axon-dash) (AXONSERVER_PORT)
+api_port: 8080 # axon-server HTTP API listening port (used by axon-dash) (AXONSERVER_PORT)
+agents_port: 1888 # axon-server listening port for agent connections 
 elastic_hosts: # Elasticsearch endpoint (env variable:ELASTIC_HOSTS, comma separated list)
-  -http://localhost 
+  - http://localhost
 #integrations_proxy: # proxy endpoint for integrations. (INTEGRATIONS_PROXY)
 
 # For better performance on large clusters, you can use a CQL store for the metrics.
@@ -47,7 +48,7 @@ elastic_hosts: # Elasticsearch endpoint (env variable:ELASTIC_HOSTS, comma sepa
 #cql_lvl4_compaction_window_size: 10 # (CQL_LVL4_COMPACTION_WINDOW_SIZE)
 #cql_lvl5_compaction_window_size: 120 # (CQL_LVL5_COMPACTION_WINDOW_SIZE)
 
-axon-dash: # This must point to axon-dash address
+axon-dash: # This must point to the axon-dash address accessible from axon-server
   host: 127.0.0.1
   port: 3000
   https: false
@@ -57,6 +58,7 @@ alerting:
 # been sent successfully for an alert. (Usually ~3h or more).
   notification_interval: 3h
 
+# Default retention settings, most can be overridden from the frontend
 retention:
   events: 8w # logs and events retention. Must be expressed in weeks (w)
   metrics:
@@ -85,7 +87,7 @@ retention:
 #  server_side_encryption: AES256
 #  storage_class: STANDARD
 ```
-> For better performances on large clusters (100+ nodes), you can use a CQL store for the metrics such as **Cassandra**, **Scylla** or **Elassandra**. To opt-in for CQL metrics storage, just specify at least one CQL host with axon-server configuration.
+> For better performances on large clusters (100+ nodes), you can use a CQL store for the metrics such as **Cassandra**. To opt-in for CQL metrics storage, specify at least one CQL host with axon-server configuration.
 
 ## Step 4 - Start the server
 

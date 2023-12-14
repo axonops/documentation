@@ -2,36 +2,21 @@
 
 ## Step 1 - Prerequisites
 
-Elasticsearch stores the data collected by axon-server. Let's install Java 8 and Elasticsearch first.
-
-#### Installing JDK
-Elasticsearch supports either OpenJDK or Oracle JDK. Since Oracle has changed the licensing model as of January 2019 we suggest using OpenJDK.
-
-Run the following commands for OpenJDK:
-``` bash
-sudo apt-get update
-sudo apt-get install default-jdk
-```
-
-Run the following commands for Oracle JDK:
-``` bash
-sudo apt-get update
-sudo apt-get install dirmngr
-sudo cp /etc/apt/sources.list /etc/apt/sources.list_backup
-echo "deb http://ppa.launchpad.net/webupd8team/java/ubuntu xenial main" | sudo tee /etc/apt/sources.list.d/webupd8team-java.list
-sudo apt-key adv --keyserver hkp://keyserver.ubuntu.com:80 --recv-keys EEA14886
-sudo apt-get update
-sudo apt-get install oracle-java8-installer
-```
-
-Once you've accepted the license agreement the JDK will install.
-
+Elasticsearch stores the data collected by axon-server.
+AxonOps is currently only compatible with Elasticsearch 7.x, we recommend installing the latest available 7.x release.
 
 #### Installing Elasticsearch
 
 ``` bash
-wget https://artifacts.elastic.co/downloads/elasticsearch/elasticsearch-6.6.1.deb
-sudo dpkg -i elasticsearch-6.6.1.deb
+wget https://artifacts.elastic.co/downloads/elasticsearch/elasticsearch-7.17.16-amd64.deb
+wget https://artifacts.elastic.co/downloads/elasticsearch/elasticsearch-7.17.16-amd64.deb.sha512
+shasum -a 512 -c elasticsearch-7.17.16-amd64.deb.sha512
+sudo dpkg -i elasticsearch-7.17.16-amd64.deb
+```
+
+The `shasum` command above verifies the downloaded package and should show this output:
+```
+elasticsearch-7.17.16-amd64.deb: OK
 ```
 
 {!installation/axon-server/elastic.md!}

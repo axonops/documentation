@@ -4,24 +4,21 @@
 
 ## Step 1 - Prerequisites
 
-Elasticsearch stores all of the data collected by axon-server. Let's install Java 8 and Elasticsearch first.
+Elasticsearch stores the data collected by axon-server.
+AxonOps is currently only compatible with Elasticsearch 7.x, we recommend installing the latest available 7.x release.
 
+#### Installing Elasticsearch
 
-#### Installing JDK
-Elasticsearch supports either OpenJDK or Oracle JDK. Since Oracle has changed the licensing model as of January 2019 we suggest using OpenJDK.
-
-Run the following commands for OpenJDK:
 ``` bash
-sudo yum install java-1.8.0-openjdk-devel
+wget https://artifacts.elastic.co/downloads/elasticsearch/elasticsearch-7.17.16-x86_64.rpm
+wget https://artifacts.elastic.co/downloads/elasticsearch/elasticsearch-7.17.16-x86_64.rpm.sha512
+sha512sum -c elasticsearch-7.17.16-x86_64.rpm.sha512
+sudo rpm -i elasticsearch-7.17.16-x86_64.rpm
 ```
 
-Run the following commands for Oracle JDK:
-``` bash
-wget -c --header "Cookie: oraclelicense=accept-securebackup-cookie" http://download.oracle.com/otn-pub/java/jdk/8u131-b11/d54c1d3a095b4ff2b6607d096fa80163/jdk-8u131-linux-x64.rpm
+The `sha512sum` command above verifies the downloaded package and should show this output:
 ```
-
-``` bash
-sudo rpm -i jdk-8u131-linux-x64.rpm
+elasticsearch-7.17.16-x86_64.rpm: OK
 ```
 
 {!installation/axon-server/elastic.md!}
