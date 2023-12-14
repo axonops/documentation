@@ -1451,7 +1451,7 @@ sudo<span class="w"> </span>apt-get<span class="w"> </span>install<span class="w
 </code></pre></div>
 
 <blockquote>
-<p>Note: This will install the AxonOps Cassandra agent and its dependency: axon-agent</p>
+<p>Note: This will install the AxonOps Cassandra agent and its dependency: <strong>axon-agent</strong></p>
 </blockquote>
 <h2 id="step-2-agent-configuration">Step 2 - Agent Configuration<a class="headerlink" href="#step-2-agent-configuration" title="Permanent link">&para;</a></h2>
 <p>Update the following highlighted lines from <code>/etc/axonops/axon-agent.yml</code>:</p>
@@ -1474,7 +1474,7 @@ and append the following line at the end of the file:</p>
 </code></pre></div>
 
 <blockquote>
-<p>example with Cassandra agent version <em>3.11</em>:</p>
+<p>for example with Cassandra agent version <em>3.11</em>:</p>
 </blockquote>
 <div class="codehilite"><pre><span></span><code><span class="nv">JVM_OPTS</span><span class="o">=</span><span class="s2">&quot;</span><span class="nv">$JVM_OPTS</span><span class="s2"> -javaagent:/usr/share/axonops/axon-cassandra3.11-agent.jar=/etc/axonops/axon-agent.yml&quot;</span>
 </code></pre></div>

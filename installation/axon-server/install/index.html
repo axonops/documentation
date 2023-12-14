@@ -1220,10 +1220,11 @@
 <li><code>/etc/axonops/axon-server.yml</code></li>
 </ul>
 <div class="codehilite"><pre><span></span><code><span class="nt">host</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">0.0.0.0</span><span class="w">  </span><span class="c1"># axon-server listening address (used by axon-dash and axon-agent) (env variable: AXONSERVER_HOST)</span>
-<span class="nt">port</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">8080</span><span class="w"> </span><span class="c1"># axon-server HTTP API listening port (used by axon-dash) (AXONSERVER_PORT)</span>
-<span class="hll"><span class="nt">elastic_hosts</span><span class="p">:</span><span class="w"> </span><span class="c1"># Elasticsearch endpoint (env variable:ELASTIC_HOSTS, comma separated list)</span>
-</span><span class="hll"><span class="w">  </span><span class="l l-Scalar l-Scalar-Plain">-http://localhost</span><span class="w"> </span>
-</span><span class="c1">#integrations_proxy: # proxy endpoint for integrations. (INTEGRATIONS_PROXY)</span>
+<span class="nt">api_port</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">8080</span><span class="w"> </span><span class="c1"># axon-server HTTP API listening port (used by axon-dash) (AXONSERVER_PORT)</span>
+<span class="hll"><span class="nt">agents_port</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">1888</span><span class="w"> </span><span class="c1"># axon-server listening port for agent connections </span>
+</span><span class="hll"><span class="nt">elastic_hosts</span><span class="p">:</span><span class="w"> </span><span class="c1"># Elasticsearch endpoint (env variable:ELASTIC_HOSTS, comma separated list)</span>
+</span><span class="w">  </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">http://localhost</span>
+<span class="c1">#integrations_proxy: # proxy endpoint for integrations. (INTEGRATIONS_PROXY)</span>
 
 <span class="c1"># For better performance on large clusters, you can use a CQL store for the metrics.</span>
 <span class="c1"># To opt-in for CQL metrics storage, just specify at least one CQL host.</span>
@@ -1260,7 +1261,7 @@
 <span class="c1">#cql_lvl4_compaction_window_size: 10 # (CQL_LVL4_COMPACTION_WINDOW_SIZE)</span>
 <span class="c1">#cql_lvl5_compaction_window_size: 120 # (CQL_LVL5_COMPACTION_WINDOW_SIZE)</span>
 
-<span class="nt">axon-dash</span><span class="p">:</span><span class="w"> </span><span class="c1"># This must point to axon-dash address</span>
+<span class="nt">axon-dash</span><span class="p">:</span><span class="w"> </span><span class="c1"># This must point to the axon-dash address accessible from axon-server</span>
 <span class="w">  </span><span class="nt">host</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">127.0.0.1</span>
 <span class="w">  </span><span class="nt">port</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">3000</span>
 <span class="w">  </span><span class="nt">https</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">false</span>
@@ -1270,6 +1271,7 @@
 <span class="c1"># been sent successfully for an alert. (Usually ~3h or more).</span>
 <span class="w">  </span><span class="nt">notification_interval</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">3h</span>
 
+<span class="c1"># Default retention settings, most can be overridden from the frontend</span>
 <span class="nt">retention</span><span class="p">:</span>
 <span class="w">  </span><span class="nt">events</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">8w</span><span class="w"> </span><span class="c1"># logs and events retention. Must be expressed in weeks (w)</span>
 <span class="w">  </span><span class="nt">metrics</span><span class="p">:</span>
@@ -1300,7 +1302,7 @@
 </code></pre></div>
 
 <blockquote>
-<p>For better performances on large clusters (100+ nodes), you can use a CQL store for the metrics such as <strong>Cassandra</strong>, <strong>Scylla</strong> or <strong>Elassandra</strong>. To opt-in for CQL metrics storage, just specify at least one CQL host with axon-server configuration.</p>
+<p>For better performances on large clusters (100+ nodes), you can use a CQL store for the metrics such as <strong>Cassandra</strong>. To opt-in for CQL metrics storage, specify at least one CQL host with axon-server configuration.</p>
 </blockquote>
 <h2 id="step-4-start-the-server">Step 4 - Start the server<a class="headerlink" href="#step-4-start-the-server" title="Permanent link">&para;</a></h2>
 <div class="codehilite"><pre><span></span><code>sudo systemctl daemon-reload

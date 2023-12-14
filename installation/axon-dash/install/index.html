@@ -1406,43 +1406,24 @@ sudo<span class="w"> </span>apt-get<span class="w"> </span>install<span class="w
 <span class="w">  </span><span class="nt">line_charts_max_results</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">256</span>
 
 <span class="nt">axon-server</span><span class="p">:</span>
-<span class="hll"><span class="w">  </span><span class="nt">public_endpoints</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;http://axon-server.public:8080,</span><span class="nv"> </span><span class="s">https://axon-server.public&quot;</span><span class="w"> </span><span class="c1"># Public HTTP endpoint to axon-server API. This can be a list with comma separator. http://127.0.0.1 or http://locahost are always wrong.</span>
+<span class="hll"><span class="w">  </span><span class="nt">private_endpoints</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;http://127.0.0.1:8080&quot;</span><span class="w"> </span><span class="c1"># HTTP endpoint to access axon-server API from axon-dash.</span>
 </span><span class="w">  </span><span class="nt">context_path</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;&quot;</span><span class="w"> </span><span class="c1"># example: &quot;/gui&quot;</span>
 </code></pre></div>
 
 <blockquote>
-<p>axon-server default listening port is <strong>8080</strong></p>
+<p>axon-server default API port is <strong>8080</strong></p>
 </blockquote>
 <h2 id="step-3-axon-server-configuration-update">Step 3 - axon-server configuration update<a class="headerlink" href="#step-3-axon-server-configuration-update" title="Permanent link">&para;</a></h2>
-<p>Update <strong>axon-server</strong> configuration by setting the correct <strong>axon-dash</strong> <strong>host</strong> and <strong>port</strong>:</p>
+<p>if required, update <strong>axon-server</strong> configuration by setting the correct <strong>axon-dash</strong> <strong>host</strong> and <strong>port</strong>:</p>
 <ul>
 <li><code>/etc/axonops/axon-server.yml</code></li>
 </ul>
-<div class="codehilite"><pre><span></span><code><span class="nt">host</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">0.0.0.0</span><span class="w">  </span><span class="c1"># axon-server listening address </span>
-<span class="nt">port</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">8080</span><span class="w"> </span><span class="c1"># axon-server listening port </span>
-<span class="nt">elastic_host</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">http://localhost</span><span class="w"> </span><span class="c1"># Elasticsearch endpoint</span>
-<span class="nt">elastic_port</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">9200</span><span class="w"> </span><span class="c1"># Elasticsearch port</span>
-
-<span class="nt">axon-dash</span><span class="p">:</span><span class="w"> </span><span class="c1"># This must point to axon-dash address</span>
-<span class="hll"><span class="w">  </span><span class="nt">host</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">127.0.0.1</span>
-</span><span class="hll"><span class="w">  </span><span class="nt">port</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">3000</span>
-</span><span class="w">  </span><span class="nt">https</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">false</span>
-
-<span class="nt">alerting</span><span class="p">:</span>
-<span class="c1"># How long to wait before sending a notification again if it has already</span>
-<span class="c1"># been sent successfully for an alert. (Usually ~3h or more).</span>
-<span class="w">  </span><span class="nt">notification_interval</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">3h</span>
-
-<span class="nt">retention</span><span class="p">:</span>
-<span class="w">  </span><span class="nt">events</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">8w</span><span class="w"> </span><span class="c1"># logs and events retention. Must be expressed in weeks (w)</span>
-<span class="w">  </span><span class="nt">metrics</span><span class="p">:</span>
-<span class="w">      </span><span class="nt">high_resolution</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">14d</span><span class="w"> </span><span class="c1"># High frequency metrics. Must be expressed in days (d)</span>
-<span class="w">      </span><span class="nt">med_resolution</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">12w</span><span class="w"> </span><span class="c1"># Must be expressed in weeks (w)</span>
-<span class="w">      </span><span class="nt">low_resolution</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">12M</span><span class="w"> </span><span class="c1"># Must be expressed in months (M)</span>
-<span class="w">      </span><span class="nt">super_low_resolution</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">2y</span><span class="w"> </span><span class="c1"># Must be expressed in years (y)</span>
-<span class="w">  </span><span class="nt">backups</span><span class="p">:</span><span class="w"> </span><span class="c1"># Those are use as defaults but can be overridden from the UI</span>
-<span class="w">    </span><span class="nt">local</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">10d</span>
-<span class="w">    </span><span class="nt">remote</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">30d</span>
+<div class="codehilite"><pre><span></span><code><span class="nn">...</span>
+<span class="nt">axon-dash</span><span class="p">:</span><span class="w"> </span><span class="c1"># This must point to the axon-dash address accessible from axon-server</span>
+<span class="w">  </span><span class="nt">host</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">127.0.0.1</span>
+<span class="w">  </span><span class="nt">port</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">3000</span>
+<span class="w">  </span><span class="nt">https</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">false</span>
+<span class="nn">...</span>
 </code></pre></div>
 
 <h2 id="step-4-restart-axon-server-after-updating-its-configuration">Step 4 - Restart <strong>axon-server</strong> after updating its configuration<a class="headerlink" href="#step-4-restart-axon-server-after-updating-its-configuration" title="Permanent link">&para;</a></h2>

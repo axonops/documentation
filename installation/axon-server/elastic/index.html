@@ -71,7 +71,7 @@
     <div data-md-component="skip">
       
         
-        <a href="#elastic-7" class="md-skip">
+        <a href="#start-elasticsearch" class="md-skip">
           Skip to content
         </a>
       
@@ -1164,29 +1164,9 @@
     <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
       
         <li class="md-nav__item">
-  <a href="#elastic-7" class="md-nav__link">
-    Elastic 7+:
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#elastic-6x" class="md-nav__link">
-    Elastic 6.x:
-  </a>
-  
-    <nav class="md-nav" aria-label="Elastic 6.x:">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
   <a href="#start-elasticsearch" class="md-nav__link">
     Start Elasticsearch
   </a>
-  
-</li>
-        
-      </ul>
-    </nav>
   
 </li>
       
@@ -1208,12 +1188,7 @@
   <h1>Elastic</h1>
 
 <p>Increase the bulk queue size of Elasticsearch by running the following command:</p>
-<h3 id="elastic-7">Elastic 7+:<a class="headerlink" href="#elastic-7" title="Permanent link">&para;</a></h3>
 <div class="codehilite"><pre><span></span><code>sudo<span class="w"> </span><span class="nb">echo</span><span class="w"> </span><span class="s1">&#39;thread_pool.write.queue_size: 2000&#39;</span><span class="w"> </span>&gt;&gt;<span class="w"> </span>/etc/elasticsearch/elasticsearch.yml
-</code></pre></div>
-
-<h3 id="elastic-6x">Elastic 6.x:<a class="headerlink" href="#elastic-6x" title="Permanent link">&para;</a></h3>
-<div class="codehilite"><pre><span></span><code>sudo<span class="w"> </span><span class="nb">echo</span><span class="w"> </span><span class="s1">&#39;thread_pool.bulk.queue_size: 2000&#39;</span><span class="w"> </span>&gt;&gt;<span class="w"> </span>/etc/elasticsearch/elasticsearch.yml
 </code></pre></div>
 
 <p>Increase the default heap size of elasticsearch by editing <code>/etc/elasticsearch/jvm.options</code>.
@@ -1238,17 +1213,20 @@ Set Xmx and Xms to no more than 50% of your physical RAM. Elasticsearch requires
 <div class="codehilite"><pre><span></span><code>sudo<span class="w"> </span>sysctl<span class="w"> </span>-w<span class="w"> </span>vm.max_map_count<span class="o">=</span><span class="m">262144</span>
 </code></pre></div>
 
+<p>To make this change persist across reboots run this command: </p>
+<div class="codehilite"><pre><span></span><code><span class="nb">echo</span><span class="w"> </span><span class="s2">&quot;vm.max_map_count = 262144&quot;</span><span class="w"> </span><span class="p">|</span><span class="w"> </span>sudo<span class="w"> </span>tee<span class="w"> </span>/etc/sysctl.d/10-elasticsearch.conf<span class="w"> </span>&gt;dev/null
+</code></pre></div>
+
 <p>Also, Elasticsearch needs <code>max file descriptors</code> system settings at least to 65536.</p>
 <div class="codehilite"><pre><span></span><code><span class="nb">echo</span><span class="w"> </span><span class="s1">&#39;elasticsearch  -  nofile  65536&#39;</span><span class="w"> </span><span class="p">|</span><span class="w"> </span>sudo<span class="w"> </span>tee<span class="w"> </span>--append<span class="w"> </span>/etc/security/limits.conf<span class="w"> </span>&gt;<span class="w"> </span>/dev/null
 </code></pre></div>
 
-<p>And set <code>LimitNOFILE=65536</code> in <code>/etc/systemd/system/elasticsearch.services</code> </p>
 <h4 id="start-elasticsearch">Start Elasticsearch<a class="headerlink" href="#start-elasticsearch" title="Permanent link">&para;</a></h4>
 <div class="codehilite"><pre><span></span><code>sudo<span class="w"> </span>systemctl<span class="w"> </span>start<span class="w"> </span>elasticsearch.service
 </code></pre></div>
 
 <p>After a short period of time, you can verify that your Elasticsearch node is running by sending an HTTP request to port 9200 on localhost:</p>
-<div class="codehilite"><pre><span></span><code>curl<span class="w"> </span>-X<span class="w"> </span>GET<span class="w"> </span><span class="s2">&quot;localhost:9200/&quot;</span>
+<div class="codehilite"><pre><span></span><code>curl<span class="w"> </span><span class="s2">&quot;localhost:9200&quot;</span>
 </code></pre></div>
 
 
