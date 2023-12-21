@@ -13,15 +13,28 @@ AxonOps server or an active AxonOps Cloud account in order to function.
 The AxonOps Cassandra Restore tool is included in the AxonOps Agent package.
 
 #### Installing on Debian / Ubuntu
+
 ```bash
-apt-get install curl gnupg
+sudo apt-get install -y curl gnupg ca-certificates
 curl https://packages.axonops.com/apt/repo-signing-key.gpg | sudo apt-key add -
 echo "deb https://packages.axonops.com/apt axonops-apt main" | sudo tee /etc/apt/sources.list.d/axonops-apt.list
 sudo apt-get update
 sudo apt-get install axon-agent
 ```
 
+For new versions of Debian (>= bookworm) and Ubuntu (>= 22.04) the process of setting up the apt repository has changed. See below:
+
+```bash
+sudo apt-get update
+sudo apt-get install -y curl gnupg ca-certificates
+curl -L https://packages.axonops.com/apt/repo-signing-key.gpg | gpg --dearmor -o /usr/share/keyrings/axonops.gpg
+echo "deb [arch=arm64,amd64 signed-by=/usr/share/keyrings/axonops.gpg] https://packages.axonops.com/apt axonops-apt main" | sudo tee /etc/apt/sources.list.d/axonops-apt.list
+sudo apt-get update
+sudo apt-get install axon-agent
+```
+
 #### Installing on CentOS / RedHat
+
 ```bash
 sudo tee /etc/yum.repos.d/axonops-yum.repo << EOL
 [axonops-yum]
