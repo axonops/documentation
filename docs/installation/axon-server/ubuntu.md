@@ -23,7 +23,7 @@ elasticsearch-7.17.16-amd64.deb: OK
 
 ## Step 2 - axon-server
 ``` bash
-apt-get install curl gnupg
+apt-get install curl gnupg ca-certificates
 curl https://packages.axonops.com/apt/repo-signing-key.gpg | sudo apt-key add -
 echo "deb https://packages.axonops.com/apt axonops-apt main" | sudo tee /etc/apt/sources.list.d/axonops-apt.list
 sudo apt-get update

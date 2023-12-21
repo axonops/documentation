@@ -14,7 +14,7 @@ The AxonOps Cassandra Restore tool is included in the AxonOps Agent package.
 
 #### Installing on Debian / Ubuntu
 ```bash
-apt-get install curl gnupg
+apt-get install curl gnupg ca-certificates
 curl https://packages.axonops.com/apt/repo-signing-key.gpg | sudo apt-key add -
 echo "deb https://packages.axonops.com/apt axonops-apt main" | sudo tee /etc/apt/sources.list.d/axonops-apt.list
 sudo apt-get update
