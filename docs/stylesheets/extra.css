@@ -1,4 +1,16 @@
+@font-face {
+  font-family: "ETmodules";
+  src: url("./ElegantIcons.ttf");
+}
 
+@font-face {
+  font-family: "Inter";
+  src: url(https://fonts.google.com/specimen/Inter);
+}
+
+body {
+  font-family: 'Inter', Helvetica, Arial, Lucida, sans-serif;
+}
 
 .pagerdutygif{
     text-align: center;
@@ -88,3 +100,155 @@
     color: orange;
 }
 
+.md-banner {
+  padding-top: 6px;
+  padding-bottom: 0px;
+  margin-top: 0px;
+  margin-bottom: 0px;
+  margin-left: auto;
+  margin-right: auto;
+  background-color: #7CD825 !important;
+  height: 69px;
+  font-family: 'Inter', sans-serif;
+  font-weight: 400;
+  color: #030737;
+  text-align: center;
+  vertical-align: middle;
+}
+
+.md-banner-child{
+  display: inline-block;
+  vertical-align: middle;
+}
+
+
+.events_button {
+  color: #FFFFFF !important;
+  border-width: 0px !important;
+  border-radius: 100px;
+  letter-spacing: 0px;
+  font-size: 13px;
+  font-weight: 800 !important;
+  background-color: #0080FF;
+  padding-top: 10px !important;
+  padding-right: 25px !important;
+  padding-bottom: 10px !important;
+  padding-left: 25px !important;
+  text-align: center;
+}
+
+.t_nav ul {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.t_nav ul li {
+  display: inline-block;
+  position: relative;
+}
+
+.t_nav ul li a {
+  display: block;
+  padding: 20px 20px 20px 0px;
+  /* padding-bottom: 45px;
+  padding-right: 20px;
+  padding-top: 20px; */
+  text-decoration: none;
+  font-weight: 600;
+  font-size: 15px;
+  font-family: Inter, Helvetica, Arial, Lucida, sans-serif;
+  cursor: pointer;
+  /* color: #333; */
+  transition: background-color 0.3s;
+}
+
+.top_li{
+color: rgb(0, 128, 255);
+font-family: "ETmodules";
+}
+
+.t_nav ul li a:hover {
+  background-color: transparent;
+  color: grey;
+}
+
+.t_nav ul li ul {
+  display: none;
+  position: absolute;
+  /* background-color: #fff; */
+  background-color: rgb(10, 26, 59);
+  color: rgb(255, 255, 255);
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  border: 1px solid #ccc;
+}
+
+.t_nav ul li:hover ul {
+  display: block;
+}
+
+.t_nav ul li ul li {
+  display: block;
+  white-space: nowrap;
+}
+
+.t_nav ul li ul li a {
+  display: block;
+  padding: 10px 20px;
+  text-decoration: none;
+  /* color: #333; */
+  color: rgb(255, 255, 255);
+  transition: background-color 0.3s;
+}
+
+.t_nav ul li ul li a:hover {
+  background-color: transparent;
+  color: grey;
+  font-weight: 800;
+}
+
+.sign-up-button {
+  color: #0A1A3B !important;
+  border-width: 0px !important;
+  border-radius: 50px;
+  font-size: 14px;
+  font-weight: 700 !important;
+  background-color: #7CD825;
+  padding-top: 18px !important;
+  padding-right: 35px !important;
+  padding-bottom: 18px !important;
+  padding-left: 35px !important;
+}
+
+.hero {
+  overflow: hidden;
+  /* position: absolute; */
+  object-fit: cover;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+}
+
+.book_expert {
+  color: #000000 !important;
+  border-width: 0px !important;
+  border-radius: 100px;
+  font-size: 17px;
+  font-family: 'Inter', Helvetica, Arial, Lucida, sans-serif !important;
+  font-weight: 600 !important;
+  background-color: #7CD825;
+  padding-top: 15px !important;
+  padding-right: 40px !important;
+  padding-bottom: 15px !important;
+  padding-left: 40px !important;
+}
+
+.row {
+  display: flex;
+}
+
+.column {
+  flex: 50%;
+  text-align:center;
+}
