@@ -11,21 +11,17 @@ Book a consultation with a Cassandra Expert.
 ## Enterprise edition features
 
 * Cloud or Self-Hosted, you choose.
-* Up to 6 Cassandra nodes
-* 2 Cloud User Accounts
-* 14 day metrics & logs retention
+* Unlimited Cassandra nodes
+* Unlimited Cloud User Accounts
+* Maximum metrics & logs retention
 * Pre-configured Dashboards
 * All metrics at 5 sec resolutions
 * Hands-free Adaptive Repair
 * Integrated Log & Event Search
-* Alerting Integration
 * Cluster Health Service Checks
 * Automate Rolling Restarts
 * Backups & Restore for all storage needs
+* Extensive Alerting Integrations
 * Optional Cassandra Support
 * Optional Consulting Services
-* Unlimited Cassandra nodes
-* Unlimited Cloud User Accounts
-* Maximum metrics & logs retention
-* Extensive Alerting Integrations
 * Optional Fully Managed Cassandra

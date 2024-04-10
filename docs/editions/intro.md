@@ -11,7 +11,7 @@ Soon you’ll be enjoying the only Cassandra management tool that combines:
 * PDF reporting to quickly deliver insights across the team
 * Highly efficient protocol ensuring exceptional performance
 
-All of this is underpinned by an efficient bi-directional protocol ensuring exception performance and scale.
+All of this is underpinned by an efficient bi-directional protocol ensuring exceptional performance and scale.
 If you would like to schedule some time with an AxonOps Cassandra expert to walk you through the install and the AxonOps platform please follow the link below.
 
 
