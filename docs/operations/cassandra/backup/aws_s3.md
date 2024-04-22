@@ -26,10 +26,33 @@ This is a drop down selection of all the AWS regions that are available for your
 
 #### Access Key ID and Secret Access Key
 
-This is the standard AWS Access and Secret key that are associated with a IAM user. This user that has the key assigned  should have at minimum the following set of permissions.
+This is the standard AWS Access and Secret key that are associated with a IAM user. 
+This AxonOps IAM user that has the key assigned ideally would have the following permissions for accessing the S3 buckets.
+
+Please change the following 3 values
+
+* BUCKETNAME : for some bucket naming rules please have a look [here](https://docs.aws.amazon.com/AmazonS3/latest/userguide/bucketnamingrules.html)
+* ACCOUNT_ID : for info on the AWS Account ID please have a look [here](https://docs.aws.amazon.com/IAM/latest/UserGuide/console_account-alias.html)
+* AxonOpsS3User : the placeholder is an example name , it can be changed to any value for the the IAM User Name field
 
 ``` 
-Permissions to follow
+{
+  "Id": "AxonOpsBackupBucketPolicy",
+  "Version": "2012-10-17",
+  "Statement": [
+    {
+      "Sid": "BackupsSID",
+      "Action": [
+        "s3:CreateAccessGrant"
+      ],
+      "Effect": "Allow",
+      "Resource": "arn:aws:s3:::<BUCKETNAME>",
+      "Principal": {
+        "AWS": "arn:aws:iam::<ACCOUNT_ID>:<AxonOpsS3User>"
+      }
+    }
+  ]
+}
 ```
 
 #### Storage Class
