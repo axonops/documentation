@@ -42,7 +42,11 @@ markdown_extensions:
       permalink: true
 
 plugins:
-    - search
+  - search
+  - glightbox:
+      width: 100%
+      height: auto
+      zoomable: true
 
 extra_javascript:
   - javascripts/extra.js
@@ -93,18 +97,22 @@ nav:
       - 'Email Integration': 'integrations/email-integration.md'
 
     - Operations:
-      - Cassandra:
-        - Repair: 'operations/cassandra/repair.md'
-        - Backups:
-          - 'Backups Overview': 'operations/cassandra/backup/overview.md'
-          - 'Restore':
-            - 'Overview': 'operations/cassandra/restore/overview.md'
-            - 'Single node': 'operations/cassandra/restore/restore-node-same-ip.md'
-            - 'Single node with a different IP address': 'operations/cassandra/restore/restore-node-different-ip.md'
-            - 'Whole cluster': 'operations/cassandra/restore/restore-cluster-same-ip.md'
-            - 'Whole cluster with changed IP addresses': 'operations/cassandra/restore/restore-cluster-different-ips.md'
-            - 'Restore to a different cluster': 'operations/cassandra/restore/restore-different-cluster.md'
-        - 'Rolling Restart': 'operations/cassandra/rollingrestart/overview.md'
+      # - Cassandra:
+      - Repair: 'operations/cassandra/repair.md'
+      - Rolling Restart: 'operations/cassandra/rollingrestart/overview.md'
+    - Backup:
+      - 'Overview': 'operations/cassandra/backup/overview.md'
+      - Remote Backups:
+        - Overview: 'operations/cassandra/backup/remote.md'
+        - AWS S3: 'operations/cassandra/backup/aws_s3.md'
+    - 'Restore':
+      - 'Overview': 'operations/cassandra/restore/overview.md'
+      - 'Single node': 'operations/cassandra/restore/restore-node-same-ip.md'
+      - 'Single node with a different IP address': 'operations/cassandra/restore/restore-node-different-ip.md'
+      - 'Whole cluster': 'operations/cassandra/restore/restore-cluster-same-ip.md'
+      - 'Whole cluster with changed IP addresses': 'operations/cassandra/restore/restore-cluster-different-ips.md'
+      - 'Restore to a different cluster': 'operations/cassandra/restore/restore-different-cluster.md'
+      
     
     - How-to:
       - 'Setup Alert Rules': how-to/setup-alert-rules.md
