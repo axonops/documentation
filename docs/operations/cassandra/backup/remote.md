@@ -33,7 +33,7 @@ Note that the units are Byte/s, not bit/s. Typically connections are measured in
 You will calculate the limit value as 5MB/8 = 0.625 MiB/s.
 The value you would set it 0.625
 
-In most modern storage systems the value is not normally this low but if you have a VPN Gateway connection setup betweena an on-premise cluster and a storage provider that has a 100MB connection you could potentially limit how much of the pipe gets used by backups. 
+In most modern storage systems the value is not normally this low but if you have a VPN Gateway connection setup between an on-premise cluster and a storage provider that has a 100MB connection you could potentially limit how much of the pipe gets used by backups. 
 
 #### The available remote options are:
 
