@@ -43,7 +43,12 @@ Please change the following 3 values
     {
       "Sid": "BackupsSID",
       "Action": [
-        "s3:CreateAccessGrant"
+        "s3:ListBucket",
+        "s3:GetBucketLocation",
+        "s3:DeleteObject",
+        "s3:GetObject",
+        "s3:PutObject",
+        "s3:PutObjectAcl"
       ],
       "Effect": "Allow",
       "Resource": "arn:aws:s3:::<BUCKETNAME>",
