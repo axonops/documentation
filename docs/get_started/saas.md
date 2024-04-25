@@ -1,3 +1,7 @@
+---
+glightbox: false
+---
+
 ## Setup your account 
 
 Click on the <a href="https://axonops.com/starter/"><span class="sign-up-button">Free Sign Up</span></a> button to get started.
