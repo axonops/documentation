@@ -22,6 +22,7 @@ body {
 }
 
 
+
 .admonition.infomy{
  border-left: none;
  text-align: center;
@@ -39,6 +40,13 @@ body {
     background-color: #030737;
    
 }
+
+[dir=ltr] .md-header__title {
+  margin-left: -0.25rem;
+  margin-right: .4rem;
+  margin-bottom: 0.15rem;
+}
+
 .md-header-nav__button.md-logo * {
     width: 112px;
     height: auto;
@@ -46,6 +54,8 @@ body {
 .md-header-nav__button {
     margin: 0.14rem;
 }
+
+
 /*
 
 .md-header[data-md-state="shadow"] {
@@ -251,4 +261,12 @@ font-family: "ETmodules";
 .column {
   flex: 50%;
   text-align:center;
+}
+
+.axon_header {
+  padding-right: 0px;
+  display: block;
+  box-shadow: 4px 4px 2px #ccc;
+  -webkit-box-shadow: 4px 4px 2px #ccc;
+  -moz-box-shadow: 4px 4px 2px #ccc;
 }
