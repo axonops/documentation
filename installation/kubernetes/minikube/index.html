@@ -16,7 +16,7 @@
     
     
       
-        <title>Cassandra with AxonOps on Kubernetes - AxonOps Docs</title>
+        <title>Cassandra with AxonOps on Kubernetes - docs</title>
       
     
     
@@ -139,8 +139,8 @@
   <nav class="md-header__inner md-grid" aria-label="Header">
 
     <!-- Link to home -->
-    <a href="https://axonops.com" title="AxonOps Docs"
-      class="md-header__button md-logo" aria-label="AxonOps Docs" data-md-component="logo">
+    <a href="https://axonops.com" title="docs"
+      class="md-header__button md-logo" aria-label="docs" data-md-component="logo">
       <!--
   Copyright (c) 2016-2024 Martin Donath <martin.donath@squidfunk.com>
 
@@ -165,7 +165,7 @@
 
 <!-- Logo -->
 
-  <img src="../../../img/axonops_logo.svg" alt="logo" />
+  <img src="/img/axonops_logo.png" alt="logo" />
 
     </a>
 
@@ -180,7 +180,7 @@
       <div class="md-header__ellipsis">
         <div class="md-header__topic">
           <span class="md-ellipsis">
-            AxonOps Docs
+            docs
           </span>
         </div>
         <div class="md-header__topic" data-md-component="header-topic">
@@ -449,7 +449,7 @@ data-et-multi-view="{&quot;schema&quot;:{&quot;content&quot;:{&quot;desktop&quot
 
 <nav class="md-nav md-nav--primary md-nav--lifted" aria-label="Navigation" data-md-level="0">
   <label class="md-nav__title" for="__drawer">
-    <a href="https://axonops.com" title="AxonOps Docs" class="md-nav__button md-logo" aria-label="AxonOps Docs" data-md-component="logo">
+    <a href="https://axonops.com" title="docs" class="md-nav__button md-logo" aria-label="docs" data-md-component="logo">
       <!--
   Copyright (c) 2016-2024 Martin Donath <martin.donath@squidfunk.com>
 
@@ -474,10 +474,10 @@ data-et-multi-view="{&quot;schema&quot;:{&quot;content&quot;:{&quot;desktop&quot
 
 <!-- Logo -->
 
-  <img src="../../../img/axonops_logo.svg" alt="logo" />
+  <img src="/img/axonops_logo.png" alt="logo" />
 
     </a>
-    AxonOps Docs
+    docs
   </label>
   
   <ul class="md-nav__list" data-md-scrollfix>
@@ -2378,11 +2378,10 @@ data-et-multi-view="{&quot;schema&quot;:{&quot;content&quot;:{&quot;desktop&quot
 <p>The following shows how to install AxonOps for monitoring cassandra. This process specifically requires the official <a href="https://github.com/helm/charts/tree/master/incubator/cassandra">cassandra helm repository</a>.</p>
 <h2 id="using-minikube">Using minikube<a class="headerlink" href="#using-minikube" title="Permanent link">&para;</a></h2>
 <p>The deployment should work fine on latest versions of <a href="https://kubernetes.io/docs/tasks/tools/install-minikube/">minikube</a> as long as you provide enough memory for it.</p>
-<div class="codehilite"><pre><span></span><code>minikube<span class="w"> </span>start<span class="w"> </span>--memory<span class="w"> </span><span class="m">8192</span><span class="w"> </span>--cpus<span class="o">=</span><span class="m">4</span>
+<p><div class="highlight"><pre><span></span><code>minikube<span class="w"> </span>start<span class="w"> </span>--memory<span class="w"> </span><span class="m">8192</span><span class="w"> </span>--cpus<span class="o">=</span><span class="m">4</span>
 minikube<span class="w"> </span>addons<span class="w"> </span><span class="nb">enable</span><span class="w"> </span>storage-provisioner
 </code></pre></div>
-
-<p><strong>:warning: Make sure you use a recent version of minikube. Also check available <a href="https://minikube.sigs.k8s.io/docs/drivers/">drivers</a> and select the most appropriate for your platform</strong></p>
+<strong>:warning: Make sure you use a recent version of minikube. Also check available <a href="https://minikube.sigs.k8s.io/docs/drivers/">drivers</a> and select the most appropriate for your platform</strong></p>
 <h2 id="helmfile">Helmfile<a class="headerlink" href="#helmfile" title="Permanent link">&para;</a></h2>
 <h3 id="overview">Overview<a class="headerlink" href="#overview" title="Permanent link">&para;</a></h3>
 <p>As this deployment contains multiple applications we recommend you use an automation system such as Ansible or <a href="https://github.com/roboll/helmfile">Helmfile</a> to put together the config. The example below uses helmfile.</p>
@@ -2396,7 +2395,7 @@ minikube<span class="w"> </span>addons<span class="w"> </span><span class="nb">e
 <h3 id="config-files">Config files<a class="headerlink" href="#config-files" title="Permanent link">&para;</a></h3>
 <p>The values below are set for running on a laptop with <code>minikube</code>, adjust accordingly for larger deployments.</p>
 <h4 id="helmfileyaml">helmfile.yaml<a class="headerlink" href="#helmfileyaml" title="Permanent link">&para;</a></h4>
-<div class="codehilite"><pre><span></span><code><span class="nn">---</span>
+<div class="highlight"><pre><span></span><code><span class="nn">---</span>
 <span class="nt">repositories</span><span class="p">:</span>
 <span class="w">  </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">axonops</span>
 <span class="w">    </span><span class="nt">url</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">helm.axonops.com/axonops-public/axonops-helm/axonops</span>
@@ -2462,9 +2461,8 @@ minikube<span class="w"> </span>addons<span class="w"> </span><span class="nb">e
 <span class="w">          </span><span class="nt">repository</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">gcr.io/cadvisor/cadvisor</span>
 <span class="w">          </span><span class="nt">tag</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">v0.37.0</span>
 </code></pre></div>
-
 <h4 id="valuesyaml">values.yaml<a class="headerlink" href="#valuesyaml" title="Permanent link">&para;</a></h4>
-<div class="codehilite"><pre><span></span><code><span class="nn">---</span>
+<div class="highlight"><pre><span></span><code><span class="nn">---</span>
 <span class="nt">persistence</span><span class="p">:</span>
 <span class="w">  </span><span class="nt">enabled</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">true</span>
 <span class="w">  </span><span class="nt">size</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">2Gi</span>
@@ -2629,9 +2627,8 @@ minikube<span class="w"> </span>addons<span class="w"> </span><span class="nb">e
 <span class="w">      </span><span class="nt">cpu</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">50m</span>
 <span class="w">      </span><span class="nt">memory</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">128Mi</span>
 </code></pre></div>
-
 <h4 id="axon-agentyml">axon-agent.yml<a class="headerlink" href="#axon-agentyml" title="Permanent link">&para;</a></h4>
-<div class="codehilite"><pre><span></span><code><span class="nt">axon-server</span><span class="p">:</span>
+<div class="highlight"><pre><span></span><code><span class="nt">axon-server</span><span class="p">:</span>
 <span class="w">    </span><span class="nt">hosts</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;axonops-axon-server.axonops&quot;</span><span class="w"> </span><span class="c1"># Specify axon-server IP axon-server.mycompany.</span>
 <span class="w">    </span><span class="nt">port</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">1888</span>
 
@@ -2682,67 +2679,56 @@ minikube<span class="w"> </span>addons<span class="w"> </span><span class="nb">e
 
 <span class="w">  </span><span class="nt">logFormat</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;%4$s</span><span class="nv"> </span><span class="s">%1$tY-%1$tm-%1$td</span><span class="nv"> </span><span class="s">%1$tH:%1$tM:%1$tS,%1$tL</span><span class="nv"> </span><span class="s">%5$s%6$s%n&quot;</span>
 </code></pre></div>
-
 <h2 id="start-up">Start up<a class="headerlink" href="#start-up" title="Permanent link">&para;</a></h2>
 <h3 id="create-axon-agent-configuration">Create Axon Agent configuration<a class="headerlink" href="#create-axon-agent-configuration" title="Permanent link">&para;</a></h3>
-<div class="codehilite"><pre><span></span><code>kubectl<span class="w"> </span>create<span class="w"> </span>ns<span class="w"> </span>cassandra
+<div class="highlight"><pre><span></span><code>kubectl<span class="w"> </span>create<span class="w"> </span>ns<span class="w"> </span>cassandra
 kubectl<span class="w"> </span>create<span class="w"> </span>configmap<span class="w"> </span>axonops-agent<span class="w"> </span>--from-file<span class="o">=</span>axon-agent.yml<span class="w"> </span>-n<span class="w"> </span>cassandra
 </code></pre></div>
-
 <h3 id="run-helmfile">Run helmfile<a class="headerlink" href="#run-helmfile" title="Permanent link">&para;</a></h3>
 <h4 id="with-locally-installed-helm-and-helmfile">With locally installed helm and helmfile<a class="headerlink" href="#with-locally-installed-helm-and-helmfile" title="Permanent link">&para;</a></h4>
-<div class="codehilite"><pre><span></span><code><span class="nb">cd</span><span class="w"> </span>your/config/directory
+<div class="highlight"><pre><span></span><code><span class="nb">cd</span><span class="w"> </span>your/config/directory
 hemlfile<span class="w"> </span>sync
 </code></pre></div>
-
 <h4 id="with-docker-image">With docker image<a class="headerlink" href="#with-docker-image" title="Permanent link">&para;</a></h4>
-<div class="codehilite"><pre><span></span><code>docker<span class="w"> </span>run<span class="w"> </span>--rm<span class="w"> </span><span class="se">\</span>
+<div class="highlight"><pre><span></span><code>docker<span class="w"> </span>run<span class="w"> </span>--rm<span class="w"> </span><span class="se">\</span>
 <span class="w">    </span>-v<span class="w"> </span>~/.kube:/root/.kube<span class="w"> </span><span class="se">\</span>
 <span class="w">    </span>-v<span class="w"> </span><span class="si">${</span><span class="nv">PWD</span><span class="si">}</span>/.helm:/root/.helm<span class="w"> </span><span class="se">\</span>
 <span class="w">    </span>-v<span class="w"> </span><span class="si">${</span><span class="nv">PWD</span><span class="si">}</span>/helmfile.yaml:/helmfile.yaml<span class="w"> </span><span class="se">\</span>
 <span class="w">    </span>-v<span class="w"> </span><span class="si">${</span><span class="nv">PWD</span><span class="si">}</span>/values.yaml:/values.yaml<span class="w"> </span><span class="se">\</span>
 <span class="w">    </span>--net<span class="o">=</span>host<span class="w"> </span>chatwork/helmfile<span class="w"> </span>sync
 </code></pre></div>
-
 <h2 id="access">Access<a class="headerlink" href="#access" title="Permanent link">&para;</a></h2>
 <h3 id="minikube">Minikube<a class="headerlink" href="#minikube" title="Permanent link">&para;</a></h3>
 <p>If you used <code>minikube</code>, identify the name of the service with <code>kubectl get svc -n monitoring</code> and launch it with </p>
-<div class="codehilite"><pre><span></span><code>minikube<span class="w"> </span>service<span class="w"> </span>axonops-axon-dash<span class="w"> </span>-n<span class="w"> </span>monitoring
+<div class="highlight"><pre><span></span><code>minikube<span class="w"> </span>service<span class="w"> </span>axonops-axon-dash<span class="w"> </span>-n<span class="w"> </span>monitoring
 </code></pre></div>
-
 <h3 id="loadbalancer">LoadBalancer<a class="headerlink" href="#loadbalancer" title="Permanent link">&para;</a></h3>
 <p>Find the DNS entry for it:</p>
-<div class="codehilite"><pre><span></span><code>kubectl<span class="w"> </span>get<span class="w"> </span>svc<span class="w"> </span>-n<span class="w"> </span>monitoring<span class="w"> </span>-o<span class="w"> </span>wide
+<div class="highlight"><pre><span></span><code>kubectl<span class="w"> </span>get<span class="w"> </span>svc<span class="w"> </span>-n<span class="w"> </span>monitoring<span class="w"> </span>-o<span class="w"> </span>wide
 </code></pre></div>
-
 <p>Open your browser and copy and paste the URL.</p>
 <h2 id="troubleshooting">Troubleshooting<a class="headerlink" href="#troubleshooting" title="Permanent link">&para;</a></h2>
 <p>Check the status of the pods:</p>
-<div class="codehilite"><pre><span></span><code>kubectl<span class="w"> </span>get<span class="w"> </span>pod<span class="w"> </span>-n<span class="w"> </span>monitoring
+<div class="highlight"><pre><span></span><code>kubectl<span class="w"> </span>get<span class="w"> </span>pod<span class="w"> </span>-n<span class="w"> </span>monitoring
 kubectl<span class="w"> </span>get<span class="w"> </span>pod<span class="w"> </span>-n<span class="w"> </span>cassandra
 </code></pre></div>
-
 <p>Any pod which is not on state <code>Running</code> check it out with</p>
-<div class="codehilite"><pre><span></span><code>kubectl<span class="w"> </span>describe<span class="w"> </span>-n<span class="w"> </span>NAMESPACE<span class="w"> </span>pod<span class="w"> </span>POD-NAME
+<div class="highlight"><pre><span></span><code>kubectl<span class="w"> </span>describe<span class="w"> </span>-n<span class="w"> </span>NAMESPACE<span class="w"> </span>pod<span class="w"> </span>POD-NAME
 </code></pre></div>
-
 <h3 id="storage">Storage<a class="headerlink" href="#storage" title="Permanent link">&para;</a></h3>
 <p>One common problem is regarding storage. If you have enabled persistent storage you may see an error about persistent volume claims (not found, unclaimed, etc.). If you're using <code>minikube</code> make sure you enable storage with </p>
-<div class="codehilite"><pre><span></span><code>minikube<span class="w"> </span>addons<span class="w"> </span><span class="nb">enable</span><span class="w"> </span>storage-provisioner
+<div class="highlight"><pre><span></span><code>minikube<span class="w"> </span>addons<span class="w"> </span><span class="nb">enable</span><span class="w"> </span>storage-provisioner
 </code></pre></div>
-
 <h3 id="memory">Memory<a class="headerlink" href="#memory" title="Permanent link">&para;</a></h3>
 <p>The second most common problem is not enough memory (OOMKilled). You will see this often if your node does not have enough memory to run the containers or if the <code>heap</code> settings for Cassandra are not right. <code>kubectl describe</code> command will be showing <code>Error 127</code> when this occurs.</p>
 <p>In the <code>values.yaml</code> file adjust the heap options to match your hardware:</p>
-<div class="codehilite"><pre><span></span><code><span class="w">  </span><span class="nt">max_heap_size</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">512M</span>
+<div class="highlight"><pre><span></span><code><span class="w">  </span><span class="nt">max_heap_size</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">512M</span>
 <span class="w">  </span><span class="nt">heap_new_size</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">512M</span>
 </code></pre></div>
-
 <h4 id="minikube_1">Minikube<a class="headerlink" href="#minikube_1" title="Permanent link">&para;</a></h4>
 <p>Review the way you have started up <code>minikube</code> and assign more memory if you can. Also check the <a href="https://minikube.sigs.k8s.io/docs/drivers/">available drivers</a> and select the appropriate for your platform. On macOS where I tested <code>hyperkit</code> or <code>virtualbox</code> are the best ones.</p>
-<div class="codehilite"><pre><span></span><code>minikube<span class="w"> </span>start<span class="w"> </span>--memory<span class="w"> </span><span class="m">10240</span><span class="w"> </span>--cpus<span class="o">=</span><span class="m">4</span><span class="w"> </span>--driver<span class="o">=</span>hyperkit
+<div class="highlight"><pre><span></span><code>minikube<span class="w"> </span>start<span class="w"> </span>--memory<span class="w"> </span><span class="m">10240</span><span class="w"> </span>--cpus<span class="o">=</span><span class="m">4</span><span class="w"> </span>--driver<span class="o">=</span>hyperkit
 </code></pre></div>
-
 <h2 id="putting-it-all-together">Putting it all together<a class="headerlink" href="#putting-it-all-together" title="Permanent link">&para;</a></h2>
 <p><a href="https://youtu.be/Qa1dWx5atqQ" title="AxonOps Minikube"><img alt="AxonOps on Minikube" src="https://img.youtube.com/vi/Qa1dWx5atqQ/0.jpg" /></a></p>
 
@@ -2764,6 +2750,8 @@ kubectl<span class="w"> </span>get<span class="w"> </span>pod<span class="w"> </
             </div>
           
           
+  <script>var tabs=__md_get("__tabs");if(Array.isArray(tabs))e:for(var set of document.querySelectorAll(".tabbed-set")){var tab,labels=set.querySelector(".tabbed-labels");for(tab of tabs)for(var label of labels.getElementsByTagName("label"))if(label.innerText.trim()===tab){var input=document.getElementById(label.htmlFor);input.checked=!0;continue e}}</script>
+
 <script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
         </div>
         
@@ -2857,7 +2845,7 @@ kubectl<span class="w"> </span>get<span class="w"> </span>pod<span class="w"> </
       </div>
       <script>var consent=__md_get("__consent");if(consent)for(var input of document.forms.consent.elements)input.name&&(input.checked=consent[input.name]||!1);else"file:"!==location.protocol&&setTimeout(function(){document.querySelector("[data-md-component=consent]").hidden=!1},250);var action,form=document.forms.consent;for(action of["submit","reset"])form.addEventListener(action,function(e){if(e.preventDefault(),"reset"===e.type)for(var n of document.forms.consent.elements)n.name&&(n.checked=!1);__md_set("__consent",Object.fromEntries(Array.from(new FormData(form).keys()).map(function(e){return[e,!0]}))),location.hash="",location.reload()})</script>
     
-    <script id="__config" type="application/json">{"base": "../../..", "features": ["navigation.tabs", "announce.dismiss", "navigation.sections", "navigation.top", "navigation.footer"], "search": "../../../assets/javascripts/workers/search.b8dbb3d2.min.js", "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}}</script>
+    <script id="__config" type="application/json">{"base": "../../..", "features": ["navigation.tabs", "announce.dismiss", "navigation.sections", "navigation.top", "navigation.footer", "content.code.copy", "content.tabs.link"], "search": "../../../assets/javascripts/workers/search.b8dbb3d2.min.js", "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}}</script>
     
     
       <script src="../../../assets/javascripts/bundle.1e8ae164.min.js"></script>

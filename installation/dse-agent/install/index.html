@@ -16,7 +16,7 @@
     
     
       
-        <title>axon-java-agent for DSE installation - AxonOps Docs</title>
+        <title>axon-java-agent for DSE installation - docs</title>
       
     
     
@@ -139,8 +139,8 @@
   <nav class="md-header__inner md-grid" aria-label="Header">
 
     <!-- Link to home -->
-    <a href="https://axonops.com" title="AxonOps Docs"
-      class="md-header__button md-logo" aria-label="AxonOps Docs" data-md-component="logo">
+    <a href="https://axonops.com" title="docs"
+      class="md-header__button md-logo" aria-label="docs" data-md-component="logo">
       <!--
   Copyright (c) 2016-2024 Martin Donath <martin.donath@squidfunk.com>
 
@@ -165,7 +165,7 @@
 
 <!-- Logo -->
 
-  <img src="../../../img/axonops_logo.svg" alt="logo" />
+  <img src="/img/axonops_logo.png" alt="logo" />
 
     </a>
 
@@ -180,7 +180,7 @@
       <div class="md-header__ellipsis">
         <div class="md-header__topic">
           <span class="md-ellipsis">
-            AxonOps Docs
+            docs
           </span>
         </div>
         <div class="md-header__topic" data-md-component="header-topic">
@@ -449,7 +449,7 @@ data-et-multi-view="{&quot;schema&quot;:{&quot;content&quot;:{&quot;desktop&quot
 
 <nav class="md-nav md-nav--primary md-nav--lifted" aria-label="Navigation" data-md-level="0">
   <label class="md-nav__title" for="__drawer">
-    <a href="https://axonops.com" title="AxonOps Docs" class="md-nav__button md-logo" aria-label="AxonOps Docs" data-md-component="logo">
+    <a href="https://axonops.com" title="docs" class="md-nav__button md-logo" aria-label="docs" data-md-component="logo">
       <!--
   Copyright (c) 2016-2024 Martin Donath <martin.donath@squidfunk.com>
 
@@ -474,10 +474,10 @@ data-et-multi-view="{&quot;schema&quot;:{&quot;content&quot;:{&quot;desktop&quot
 
 <!-- Logo -->
 
-  <img src="../../../img/axonops_logo.svg" alt="logo" />
+  <img src="/img/axonops_logo.png" alt="logo" />
 
     </a>
-    AxonOps Docs
+    docs
   </label>
   
   <ul class="md-nav__list" data-md-scrollfix>
@@ -2233,7 +2233,7 @@ data-et-multi-view="{&quot;schema&quot;:{&quot;content&quot;:{&quot;desktop&quot
 page.</p>
 <h4 id="setup-axon-agent-for-dse">Setup axon-agent for DSE<a class="headerlink" href="#setup-axon-agent-for-dse" title="Permanent link">&para;</a></h4>
 <p>You'll need the specify/update the following lines from <strong>axon-agent.yml</strong> located in <code>/etc/axonops/axon-agent.yml</code>:</p>
-<div class="codehilite"><pre><span></span><code><span class="nt">axon-server</span><span class="p">:</span>
+<p><div class="highlight"><pre><span></span><code><span class="nt">axon-server</span><span class="p">:</span>
 <span class="hll"><span class="w">    </span><span class="nt">hosts</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;axon-server_endpoint&quot;</span><span class="w"> </span><span class="c1"># Specify axon-server endpoint</span>
 </span>
 <span class="nt">axon-agent</span><span class="p">:</span>
@@ -2245,23 +2245,18 @@ page.</p>
 </span><span class="hll"><span class="w">    </span><span class="c1">#cluster_name: &quot;standalone&quot; # comment that line</span>
 </span><span class="hll"><span class="w">    </span><span class="nt">ssl</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">false</span><span class="w"> </span><span class="c1"># SSL flag for it&#39;s OpenTSDB endpoint</span>
 </span></code></pre></div>
-
-<ul>
-<li>Set <code>standalone_mode</code> to <strong>false</strong></li>
-<li>Set <code>type</code> to <strong>dse</strong></li>
-<li>Don't forget to comment or remove the <code>cluster_name</code> as it will be deduced from DSE configuration.</li>
-<li>Don't forget to specify <strong>axon-server</strong> host and port if that's not already specified.</li>
-</ul>
+* Set <code>standalone_mode</code> to <strong>false</strong>
+* Set <code>type</code> to <strong>dse</strong>
+* Don't forget to comment or remove the <code>cluster_name</code> as it will be deduced from DSE configuration.
+* Don't forget to specify <strong>axon-server</strong> host and port if that's not already specified.</p>
 <h2 id="dse-agent-installation">DSE agent installation<a class="headerlink" href="#dse-agent-installation" title="Permanent link">&para;</a></h2>
 <p>Make sure the <code>{version}</code> of your DSE and DSE agent are compatible from the <a href="../../compat_matrix/compat_matrix">compatibility matrix</a>. </p>
 <h4 id="centos-redhat-installer">CentOS / RedHat installer<a class="headerlink" href="#centos-redhat-installer" title="Permanent link">&para;</a></h4>
-<div class="codehilite"><pre><span></span><code>sudo yum install &lt;TODO&gt;
+<div class="highlight"><pre><span></span><code>sudo yum install &lt;TODO&gt;
 </code></pre></div>
-
 <h4 id="debian-ubuntu-installer">Debian / Ubuntu installer<a class="headerlink" href="#debian-ubuntu-installer" title="Permanent link">&para;</a></h4>
-<div class="codehilite"><pre><span></span><code>sudo apt-get install &lt;TODO&gt;
+<div class="highlight"><pre><span></span><code>sudo apt-get install &lt;TODO&gt;
 </code></pre></div>
-
 <h4 id="package-details">Package details<a class="headerlink" href="#package-details" title="Permanent link">&para;</a></h4>
 <ul>
 <li>Configuration: <code>/etc/axonops/axon-java-agent.yml</code></li>
@@ -2270,17 +2265,15 @@ page.</p>
 </ul>
 <h4 id="configure-dse">Configure DSE<a class="headerlink" href="#configure-dse" title="Permanent link">&para;</a></h4>
 <p>Edit <code>cassandra-env.sh</code> usually located in your dse install path such as <code>/&lt;path_to_DSE&gt;/resources/cassandra/conf/cassandra-env.sh</code> and add at the end of the file the following line:</p>
-<div class="codehilite"><pre><span></span><code><span class="nv">JVM_OPTS</span><span class="o">=</span><span class="s2">&quot;</span><span class="nv">$JVM_OPTS</span><span class="s2"> -javaagent:/usr/share/axonops/axon-dse{version}-agent-1.0.jar=/etc/axonops/axon-java-agent.yml&quot;</span>
+<div class="highlight"><pre><span></span><code><span class="nv">JVM_OPTS</span><span class="o">=</span><span class="s2">&quot;</span><span class="nv">$JVM_OPTS</span><span class="s2"> -javaagent:/usr/share/axonops/axon-dse{version}-agent-1.0.jar=/etc/axonops/axon-java-agent.yml&quot;</span>
 </code></pre></div>
-
-<p>example:</p>
-<div class="codehilite"><pre><span></span><code><span class="nv">JVM_OPTS</span><span class="o">=</span><span class="s2">&quot;</span><span class="nv">$JVM_OPTS</span><span class="s2"> -javaagent:/usr/share/axonops/axon-dse6.0.4-agent-1.0.jar=/etc/axonops/axon-java-agent.yml&quot;</span>
-</code></pre></div>
-
+<p>example:
+<div class="highlight"><pre><span></span><code><span class="nv">JVM_OPTS</span><span class="o">=</span><span class="s2">&quot;</span><span class="nv">$JVM_OPTS</span><span class="s2"> -javaagent:/usr/share/axonops/axon-dse6.0.4-agent-1.0.jar=/etc/axonops/axon-java-agent.yml&quot;</span>
+</code></pre></div></p>
 <h4 id="start-dse">Start DSE<a class="headerlink" href="#start-dse" title="Permanent link">&para;</a></h4>
 <p>All you need to do now is start DSE.</p>
 <h4 id="configuration-defaults">Configuration defaults<a class="headerlink" href="#configuration-defaults" title="Permanent link">&para;</a></h4>
-<div class="codehilite"><pre><span></span><code><span class="nt">tier0</span><span class="p">:</span><span class="w"> </span><span class="c1"># metrics collected every 5 seconds</span>
+<div class="highlight"><pre><span></span><code><span class="nt">tier0</span><span class="p">:</span><span class="w"> </span><span class="c1"># metrics collected every 5 seconds</span>
 <span class="w">    </span><span class="nt">metrics</span><span class="p">:</span>
 <span class="w">        </span><span class="nt">jvm_</span><span class="p">:</span>
 <span class="w">          </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="s">&quot;java.lang:*&quot;</span>
@@ -2333,6 +2326,8 @@ page.</p>
             </div>
           
           
+  <script>var tabs=__md_get("__tabs");if(Array.isArray(tabs))e:for(var set of document.querySelectorAll(".tabbed-set")){var tab,labels=set.querySelector(".tabbed-labels");for(tab of tabs)for(var label of labels.getElementsByTagName("label"))if(label.innerText.trim()===tab){var input=document.getElementById(label.htmlFor);input.checked=!0;continue e}}</script>
+
 <script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
         </div>
         
@@ -2426,7 +2421,7 @@ page.</p>
       </div>
       <script>var consent=__md_get("__consent");if(consent)for(var input of document.forms.consent.elements)input.name&&(input.checked=consent[input.name]||!1);else"file:"!==location.protocol&&setTimeout(function(){document.querySelector("[data-md-component=consent]").hidden=!1},250);var action,form=document.forms.consent;for(action of["submit","reset"])form.addEventListener(action,function(e){if(e.preventDefault(),"reset"===e.type)for(var n of document.forms.consent.elements)n.name&&(n.checked=!1);__md_set("__consent",Object.fromEntries(Array.from(new FormData(form).keys()).map(function(e){return[e,!0]}))),location.hash="",location.reload()})</script>
     
-    <script id="__config" type="application/json">{"base": "../../..", "features": ["navigation.tabs", "announce.dismiss", "navigation.sections", "navigation.top", "navigation.footer"], "search": "../../../assets/javascripts/workers/search.b8dbb3d2.min.js", "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}}</script>
+    <script id="__config" type="application/json">{"base": "../../..", "features": ["navigation.tabs", "announce.dismiss", "navigation.sections", "navigation.top", "navigation.footer", "content.code.copy", "content.tabs.link"], "search": "../../../assets/javascripts/workers/search.b8dbb3d2.min.js", "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}}</script>
     
     
       <script src="../../../assets/javascripts/bundle.1e8ae164.min.js"></script>

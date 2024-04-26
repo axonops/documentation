@@ -20,7 +20,7 @@
     
     
       
-        <title>Metrics database - AxonOps Docs</title>
+        <title>Metrics database - docs</title>
       
     
     
@@ -143,8 +143,8 @@
   <nav class="md-header__inner md-grid" aria-label="Header">
 
     <!-- Link to home -->
-    <a href="https://axonops.com" title="AxonOps Docs"
-      class="md-header__button md-logo" aria-label="AxonOps Docs" data-md-component="logo">
+    <a href="https://axonops.com" title="docs"
+      class="md-header__button md-logo" aria-label="docs" data-md-component="logo">
       <!--
   Copyright (c) 2016-2024 Martin Donath <martin.donath@squidfunk.com>
 
@@ -169,7 +169,7 @@
 
 <!-- Logo -->
 
-  <img src="../../../img/axonops_logo.svg" alt="logo" />
+  <img src="/img/axonops_logo.png" alt="logo" />
 
     </a>
 
@@ -184,7 +184,7 @@
       <div class="md-header__ellipsis">
         <div class="md-header__topic">
           <span class="md-ellipsis">
-            AxonOps Docs
+            docs
           </span>
         </div>
         <div class="md-header__topic" data-md-component="header-topic">
@@ -457,7 +457,7 @@ data-et-multi-view="{&quot;schema&quot;:{&quot;content&quot;:{&quot;desktop&quot
 
 <nav class="md-nav md-nav--primary md-nav--lifted" aria-label="Navigation" data-md-level="0">
   <label class="md-nav__title" for="__drawer">
-    <a href="https://axonops.com" title="AxonOps Docs" class="md-nav__button md-logo" aria-label="AxonOps Docs" data-md-component="logo">
+    <a href="https://axonops.com" title="docs" class="md-nav__button md-logo" aria-label="docs" data-md-component="logo">
       <!--
   Copyright (c) 2016-2024 Martin Donath <martin.donath@squidfunk.com>
 
@@ -482,10 +482,10 @@ data-et-multi-view="{&quot;schema&quot;:{&quot;content&quot;:{&quot;desktop&quot
 
 <!-- Logo -->
 
-  <img src="../../../img/axonops_logo.svg" alt="logo" />
+  <img src="/img/axonops_logo.png" alt="logo" />
 
     </a>
-    AxonOps Docs
+    docs
   </label>
   
   <ul class="md-nav__list" data-md-scrollfix>
@@ -2167,38 +2167,34 @@ data-et-multi-view="{&quot;schema&quot;:{&quot;content&quot;:{&quot;desktop&quot
 <h1 id="axon-server-metrics-database">axon-server metrics database<a class="headerlink" href="#axon-server-metrics-database" title="Permanent link">&para;</a></h1>
 <h1 id="using-cassandra-as-a-metrics-store">Using Cassandra as a metrics store<a class="headerlink" href="#using-cassandra-as-a-metrics-store" title="Permanent link">&para;</a></h1>
 <p>You can use Cassandra as a metrics store instead of Elasticsearch for better performances.
-To start using a CQL store you just have to specify CQL hosts in <strong>axon-server.yml</strong>:</p>
-<div class="codehilite"><pre><span></span><code>cql_hosts<span class="w"> </span>:
+To start using a CQL store you just have to specify CQL hosts in <strong>axon-server.yml</strong>:
+<div class="highlight"><pre><span></span><code>cql_hosts<span class="w"> </span>:
 <span class="w">    </span>-<span class="w"> </span><span class="m">192</span>.168.0.1:9042
 <span class="w">    </span>-<span class="w"> </span><span class="m">192</span>.168.0.2:9042
 <span class="w">    </span>...
-</code></pre></div>
-
+</code></pre></div></p>
 <p>By default, the AxonOps server automatically creates the necessary keyspace and tables.
-You can override this behavior by specifying the following field in <strong>axon-server.yml</strong>:</p>
-<div class="codehilite"><pre><span></span><code>cql_autocreate_tables<span class="w"> </span>:<span class="w"> </span><span class="nb">false</span>
+You can override this behavior by specifying the following field in <strong>axon-server.yml</strong>:
+<div class="highlight"><pre><span></span><code>cql_autocreate_tables<span class="w"> </span>:<span class="w"> </span><span class="nb">false</span>
 cql_keyspace<span class="w"> </span>:<span class="w"> </span><span class="s2">&quot;axonops&quot;</span>
 cql_keyspace_replication<span class="w"> </span>:<span class="w"> </span><span class="s2">&quot;{ &#39;class&#39; : &#39;SimpleStrategy&#39;, &#39;replication_factor&#39; : 1 }&quot;</span>
-</code></pre></div>
-
+</code></pre></div></p>
 <p>We recommend setting up at least a 3 nodes cluster with <strong>NetworkTopologyStrategy</strong> and a <strong>replication_factor</strong> of <strong>3</strong>.</p>
 <h2 id="connecting-to-encrypted-cassandra-metrics-store">Connecting to encrypted Cassandra metrics store<a class="headerlink" href="#connecting-to-encrypted-cassandra-metrics-store" title="Permanent link">&para;</a></h2>
-<p>We recommend setting up a Secured Socket Layer connection to Cassandra with the following fields in <strong>axon-server.yml</strong>:</p>
-<div class="codehilite"><pre><span></span><code>cql_ssl:<span class="w"> </span><span class="nb">true</span>
+<p>We recommend setting up a Secured Socket Layer connection to Cassandra with the following fields in <strong>axon-server.yml</strong>:
+<div class="highlight"><pre><span></span><code>cql_ssl:<span class="w"> </span><span class="nb">true</span>
 cql_skip_verify:<span class="w"> </span><span class="nb">false</span>
 cql_ca_file:<span class="w"> </span><span class="s1">&#39;/path/to/ca_cert&#39;</span>
 cql_cert_file:<span class="w"> </span><span class="s1">&#39;/path/to/cert_file&#39;</span>
 cql_key_file:<span class="w"> </span><span class="s1">&#39;/path/to/key_file&#39;</span>
-</code></pre></div>
-
+</code></pre></div></p>
 <h2 id="metrics-cache-recommendations">Metrics cache recommendations<a class="headerlink" href="#metrics-cache-recommendations" title="Permanent link">&para;</a></h2>
 <p>When using Cassandra as a metrics store the AxonOps server can cache metrics data in memory to further improve
 performance. This is configured using the <code>cql_metrics_cache_max_items</code> and <code>cql_metrics_cache_max_size_mb</code> options 
-in <strong>axon-server.yml</strong>. The default values are shown here:</p>
-<div class="codehilite"><pre><span></span><code><span class="nt">cql_metrics_cache_max_items</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">5000000</span>
+in <strong>axon-server.yml</strong>. The default values are shown here:
+<div class="highlight"><pre><span></span><code><span class="nt">cql_metrics_cache_max_items</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">5000000</span>
 <span class="nt">cql_metrics_cache_max_size_mb</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">400</span>
-</code></pre></div>
-
+</code></pre></div></p>
 <p>The recommended settings for these options are as follows:</p>
 <table>
 <thead>
@@ -2235,8 +2231,8 @@ in <strong>axon-server.yml</strong>. The default values are shown here:</p>
 When tuning these parameters it is recommended to set <code>cql_metrics_cache_max_items</code> to a high value and limit the
 cache size with <code>cql_metrics_cache_max_size_mb</code>.</p>
 <h2 id="other-cql-fields">Other CQL fields<a class="headerlink" href="#other-cql-fields" title="Permanent link">&para;</a></h2>
-<p>You can also specify the following fields:</p>
-<div class="codehilite"><pre><span></span><code>cql_proto_version<span class="w"> </span>int<span class="w">                   </span>
+<p>You can also specify the following fields:
+<div class="highlight"><pre><span></span><code>cql_proto_version<span class="w"> </span>int<span class="w">                   </span>
 cql_batch_size<span class="w">  </span>int<span class="w">                   </span>
 cql_page_size<span class="w"> </span>int<span class="w">                   </span>
 cql_local_dc<span class="w"> </span>string<span class="w">                </span>
@@ -2258,10 +2254,9 @@ cql_lvl2_compaction_window_size<span class="w"> </span>int<span class="w"> </spa
 cql_lvl3_compaction_window_size<span class="w"> </span>int<span class="w"> </span><span class="o">(</span>used<span class="w"> </span><span class="k">for</span><span class="w"> </span>the<span class="w"> </span>table<span class="w"> </span>named<span class="w"> </span><span class="s1">&#39;metrics720&#39;</span><span class="w"> </span>when<span class="w"> </span>you<span class="w"> </span><span class="nb">let</span><span class="w"> </span>axonserver<span class="w"> </span>managing<span class="w"> </span>the<span class="w"> </span>tables<span class="w"> </span>automatically<span class="o">)</span><span class="w">                  </span>
 cql_lvl4_compaction_window_size<span class="w"> </span>int<span class="w"> </span><span class="o">(</span>used<span class="w"> </span><span class="k">for</span><span class="w"> </span>the<span class="w"> </span>table<span class="w"> </span>named<span class="w"> </span><span class="s1">&#39;metrics7200&#39;</span><span class="w"> </span>when<span class="w"> </span>you<span class="w"> </span><span class="nb">let</span><span class="w"> </span>axonserver<span class="w"> </span>managing<span class="w"> </span>the<span class="w"> </span>tables<span class="w"> </span>automatically<span class="o">)</span><span class="w">                  </span>
 cql_lvl5_compaction_window_size<span class="w"> </span>int<span class="w"> </span><span class="o">(</span>used<span class="w"> </span><span class="k">for</span><span class="w"> </span>the<span class="w"> </span>table<span class="w"> </span>named<span class="w"> </span><span class="s1">&#39;metrics86400&#39;</span><span class="w"> </span>when<span class="w"> </span>you<span class="w"> </span><span class="nb">let</span><span class="w"> </span>axonserver<span class="w"> </span>managing<span class="w"> </span>the<span class="w"> </span>tables<span class="w"> </span>automatically<span class="o">)</span><span class="w">                  </span>
-</code></pre></div>
-
-<p>The CQL for the default tables are the following:</p>
-<div class="codehilite"><pre><span></span><code>CREATE<span class="w"> </span>TABLE<span class="w"> </span>IF<span class="w"> </span>NOT<span class="w"> </span>EXISTS<span class="w"> </span>axonops.metrics5<span class="w"> </span><span class="o">(</span>
+</code></pre></div></p>
+<p>The CQL for the default tables are the following:
+<div class="highlight"><pre><span></span><code>CREATE<span class="w"> </span>TABLE<span class="w"> </span>IF<span class="w"> </span>NOT<span class="w"> </span>EXISTS<span class="w"> </span>axonops.metrics5<span class="w"> </span><span class="o">(</span>
 <span class="w">    </span>orgid<span class="w"> </span>text,
 <span class="w">    </span>metricid<span class="w"> </span>int,
 <span class="w">    </span><span class="nb">time</span><span class="w"> </span>int,
@@ -2320,7 +2315,7 @@ CREATE<span class="w"> </span>TABLE<span class="w"> </span>IF<span class="w"> </
 <span class="w">   </span>AND<span class="w"> </span><span class="nv">compaction</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="o">{</span><span class="s1">&#39;class&#39;</span>:<span class="w"> </span><span class="s1">&#39;TimeWindowCompactionStrategy&#39;</span>,<span class="w"> </span><span class="s1">&#39;compaction_window_size&#39;</span>:<span class="w"> </span><span class="s1">&#39;60&#39;</span>,<span class="w"> </span><span class="s1">&#39;compaction_window_unit&#39;</span>:<span class="w"> </span><span class="s1">&#39;DAYS&#39;</span>,<span class="w"> </span><span class="s1">&#39;max_threshold&#39;</span>:<span class="w"> </span><span class="s1">&#39;32&#39;</span>,<span class="w"> </span><span class="s1">&#39;min_threshold&#39;</span>:<span class="w"> </span><span class="s1">&#39;4&#39;</span><span class="o">}</span>
 <span class="w">   </span>AND<span class="w"> </span><span class="nv">default_time_to_live</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="m">31536000</span>
 <span class="w">   </span>AND<span class="w"> </span><span class="nv">comment</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s1">&#39;365 days retention for 86400 seconds resolution metrics&#39;</span><span class="p">;</span>
-</code></pre></div>
+</code></pre></div></p>
 
 
 
@@ -2340,6 +2335,8 @@ CREATE<span class="w"> </span>TABLE<span class="w"> </span>IF<span class="w"> </
             </div>
           
           
+  <script>var tabs=__md_get("__tabs");if(Array.isArray(tabs))e:for(var set of document.querySelectorAll(".tabbed-set")){var tab,labels=set.querySelector(".tabbed-labels");for(tab of tabs)for(var label of labels.getElementsByTagName("label"))if(label.innerText.trim()===tab){var input=document.getElementById(label.htmlFor);input.checked=!0;continue e}}</script>
+
 <script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
         </div>
         
@@ -2471,7 +2468,7 @@ CREATE<span class="w"> </span>TABLE<span class="w"> </span>IF<span class="w"> </
       </div>
       <script>var consent=__md_get("__consent");if(consent)for(var input of document.forms.consent.elements)input.name&&(input.checked=consent[input.name]||!1);else"file:"!==location.protocol&&setTimeout(function(){document.querySelector("[data-md-component=consent]").hidden=!1},250);var action,form=document.forms.consent;for(action of["submit","reset"])form.addEventListener(action,function(e){if(e.preventDefault(),"reset"===e.type)for(var n of document.forms.consent.elements)n.name&&(n.checked=!1);__md_set("__consent",Object.fromEntries(Array.from(new FormData(form).keys()).map(function(e){return[e,!0]}))),location.hash="",location.reload()})</script>
     
-    <script id="__config" type="application/json">{"base": "../../..", "features": ["navigation.tabs", "announce.dismiss", "navigation.sections", "navigation.top", "navigation.footer"], "search": "../../../assets/javascripts/workers/search.b8dbb3d2.min.js", "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}}</script>
+    <script id="__config" type="application/json">{"base": "../../..", "features": ["navigation.tabs", "announce.dismiss", "navigation.sections", "navigation.top", "navigation.footer", "content.code.copy", "content.tabs.link"], "search": "../../../assets/javascripts/workers/search.b8dbb3d2.min.js", "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}}</script>
     
     
       <script src="../../../assets/javascripts/bundle.1e8ae164.min.js"></script>

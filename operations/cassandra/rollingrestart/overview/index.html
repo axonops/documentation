@@ -20,7 +20,7 @@
     
     
       
-        <title>Rolling Restart - AxonOps Docs</title>
+        <title>Rolling Restart - docs</title>
       
     
     
@@ -138,8 +138,8 @@
   <nav class="md-header__inner md-grid" aria-label="Header">
 
     <!-- Link to home -->
-    <a href="https://axonops.com" title="AxonOps Docs"
-      class="md-header__button md-logo" aria-label="AxonOps Docs" data-md-component="logo">
+    <a href="https://axonops.com" title="docs"
+      class="md-header__button md-logo" aria-label="docs" data-md-component="logo">
       <!--
   Copyright (c) 2016-2024 Martin Donath <martin.donath@squidfunk.com>
 
@@ -164,7 +164,7 @@
 
 <!-- Logo -->
 
-  <img src="../../../../img/axonops_logo.svg" alt="logo" />
+  <img src="/img/axonops_logo.png" alt="logo" />
 
     </a>
 
@@ -179,7 +179,7 @@
       <div class="md-header__ellipsis">
         <div class="md-header__topic">
           <span class="md-ellipsis">
-            AxonOps Docs
+            docs
           </span>
         </div>
         <div class="md-header__topic" data-md-component="header-topic">
@@ -452,7 +452,7 @@ data-et-multi-view="{&quot;schema&quot;:{&quot;content&quot;:{&quot;desktop&quot
 
 <nav class="md-nav md-nav--primary md-nav--lifted" aria-label="Navigation" data-md-level="0">
   <label class="md-nav__title" for="__drawer">
-    <a href="https://axonops.com" title="AxonOps Docs" class="md-nav__button md-logo" aria-label="AxonOps Docs" data-md-component="logo">
+    <a href="https://axonops.com" title="docs" class="md-nav__button md-logo" aria-label="docs" data-md-component="logo">
       <!--
   Copyright (c) 2016-2024 Martin Donath <martin.donath@squidfunk.com>
 
@@ -477,10 +477,10 @@ data-et-multi-view="{&quot;schema&quot;:{&quot;content&quot;:{&quot;desktop&quot
 
 <!-- Logo -->
 
-  <img src="../../../../img/axonops_logo.svg" alt="logo" />
+  <img src="/img/axonops_logo.png" alt="logo" />
 
     </a>
-    AxonOps Docs
+    docs
   </label>
   
   <ul class="md-nav__list" data-md-scrollfix>
@@ -2171,26 +2171,24 @@ data-et-multi-view="{&quot;schema&quot;:{&quot;content&quot;:{&quot;desktop&quot
 <p><a href="../1.JPG"><img alt="rollingrestart" src="../1.JPG" /></a></p>
 </div>
 <blockquote>
-<p><strong>axonops</strong> user will require permissions to be able to stop and start Cassandra service. To do so you will add <strong>axonops</strong> user in the sudoers with for instance the following permissions:</p>
-</blockquote>
-<div class="codehilite"><pre><span></span><code><span class="c1">#/etc/sudoers.d/axonops</span>
+<p><strong>axonops</strong> user will require permissions to be able to stop and start Cassandra service. To do so you will add <strong>axonops</strong> user in the sudoers with for instance the following permissions:
+<div class="highlight"><pre><span></span><code><span class="c1">#/etc/sudoers.d/axonops</span>
 axonops<span class="w"> </span><span class="nv">ALL</span><span class="o">=</span>NOPASSWD:<span class="w"> </span>/sbin/service<span class="w"> </span>cassandra<span class="w"> </span>*,<span class="w"> </span>/usr/bin/systemctl<span class="w"> </span>*<span class="w"> </span>cassandra*
-</code></pre></div>
-
+</code></pre></div></p>
+</blockquote>
 <p>You can start an <strong>immediate</strong> rolling restart or <strong>schedule</strong> it.</p>
 <p>The <strong>script</strong> field let you able to tweak the predefined script executed by <strong>axon-agents</strong> during the restart process.</p>
 <p>You can also specify different degree of parallelism for the restart: <strong>DC</strong>, <strong>Rack</strong> and <strong>Node</strong>.</p>
-<p>For instance, to <strong>restart one entire rack</strong> at once across the cluster, you can set a large <strong>Node parallelism</strong> (greater than the number of nodes the rack has, ie 999).</p>
-<div class="codehilite"><pre><span></span><code>DC<span class="w"> </span>parallelism:<span class="w"> </span><span class="m">1</span>
+<p>For instance, to <strong>restart one entire rack</strong> at once across the cluster, you can set a large <strong>Node parallelism</strong> (greater than the number of nodes the rack has, ie 999).
+<div class="highlight"><pre><span></span><code>DC<span class="w"> </span>parallelism:<span class="w"> </span><span class="m">1</span>
 Rack<span class="w"> </span>parallelism:<span class="w"> </span><span class="m">1</span>
 Node<span class="w"> </span>parallelism:<span class="w"> </span><span class="m">999</span>
-</code></pre></div>
-
-<p>To <strong>restart one entire rack across each DC</strong>:</p>
-<div class="codehilite"><pre><span></span><code>DC<span class="w"> </span>parallelism:<span class="w"> </span><span class="m">999</span>
+</code></pre></div></p>
+<p>To <strong>restart one entire rack across each DC</strong>:
+<div class="highlight"><pre><span></span><code>DC<span class="w"> </span>parallelism:<span class="w"> </span><span class="m">999</span>
 Rack<span class="w"> </span>parallelism:<span class="w"> </span><span class="m">1</span>
 Node<span class="w"> </span>parallelism:<span class="w"> </span><span class="m">999</span>
-</code></pre></div>
+</code></pre></div></p>
 
 
 
@@ -2210,6 +2208,8 @@ Node<span class="w"> </span>parallelism:<span class="w"> </span><span class="m">
             </div>
           
           
+  <script>var tabs=__md_get("__tabs");if(Array.isArray(tabs))e:for(var set of document.querySelectorAll(".tabbed-set")){var tab,labels=set.querySelector(".tabbed-labels");for(tab of tabs)for(var label of labels.getElementsByTagName("label"))if(label.innerText.trim()===tab){var input=document.getElementById(label.htmlFor);input.checked=!0;continue e}}</script>
+
 <script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
         </div>
         
@@ -2341,7 +2341,7 @@ Node<span class="w"> </span>parallelism:<span class="w"> </span><span class="m">
       </div>
       <script>var consent=__md_get("__consent");if(consent)for(var input of document.forms.consent.elements)input.name&&(input.checked=consent[input.name]||!1);else"file:"!==location.protocol&&setTimeout(function(){document.querySelector("[data-md-component=consent]").hidden=!1},250);var action,form=document.forms.consent;for(action of["submit","reset"])form.addEventListener(action,function(e){if(e.preventDefault(),"reset"===e.type)for(var n of document.forms.consent.elements)n.name&&(n.checked=!1);__md_set("__consent",Object.fromEntries(Array.from(new FormData(form).keys()).map(function(e){return[e,!0]}))),location.hash="",location.reload()})</script>
     
-    <script id="__config" type="application/json">{"base": "../../../..", "features": ["navigation.tabs", "announce.dismiss", "navigation.sections", "navigation.top", "navigation.footer"], "search": "../../../../assets/javascripts/workers/search.b8dbb3d2.min.js", "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}}</script>
+    <script id="__config" type="application/json">{"base": "../../../..", "features": ["navigation.tabs", "announce.dismiss", "navigation.sections", "navigation.top", "navigation.footer", "content.code.copy", "content.tabs.link"], "search": "../../../../assets/javascripts/workers/search.b8dbb3d2.min.js", "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}}</script>
     
     
       <script src="../../../../assets/javascripts/bundle.1e8ae164.min.js"></script>

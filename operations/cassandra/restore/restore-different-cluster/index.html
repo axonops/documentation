@@ -20,7 +20,7 @@
     
     
       
-        <title>Restore to a different cluster - AxonOps Docs</title>
+        <title>Restore to a different cluster - docs</title>
       
     
     
@@ -143,8 +143,8 @@
   <nav class="md-header__inner md-grid" aria-label="Header">
 
     <!-- Link to home -->
-    <a href="https://axonops.com" title="AxonOps Docs"
-      class="md-header__button md-logo" aria-label="AxonOps Docs" data-md-component="logo">
+    <a href="https://axonops.com" title="docs"
+      class="md-header__button md-logo" aria-label="docs" data-md-component="logo">
       <!--
   Copyright (c) 2016-2024 Martin Donath <martin.donath@squidfunk.com>
 
@@ -169,7 +169,7 @@
 
 <!-- Logo -->
 
-  <img src="../../../../img/axonops_logo.svg" alt="logo" />
+  <img src="/img/axonops_logo.png" alt="logo" />
 
     </a>
 
@@ -184,7 +184,7 @@
       <div class="md-header__ellipsis">
         <div class="md-header__topic">
           <span class="md-ellipsis">
-            AxonOps Docs
+            docs
           </span>
         </div>
         <div class="md-header__topic" data-md-component="header-topic">
@@ -457,7 +457,7 @@ data-et-multi-view="{&quot;schema&quot;:{&quot;content&quot;:{&quot;desktop&quot
 
 <nav class="md-nav md-nav--primary md-nav--lifted" aria-label="Navigation" data-md-level="0">
   <label class="md-nav__title" for="__drawer">
-    <a href="https://axonops.com" title="AxonOps Docs" class="md-nav__button md-logo" aria-label="AxonOps Docs" data-md-component="logo">
+    <a href="https://axonops.com" title="docs" class="md-nav__button md-logo" aria-label="docs" data-md-component="logo">
       <!--
   Copyright (c) 2016-2024 Martin Donath <martin.donath@squidfunk.com>
 
@@ -482,10 +482,10 @@ data-et-multi-view="{&quot;schema&quot;:{&quot;content&quot;:{&quot;desktop&quot
 
 <!-- Logo -->
 
-  <img src="../../../../img/axonops_logo.svg" alt="logo" />
+  <img src="/img/axonops_logo.png" alt="logo" />
 
     </a>
-    AxonOps Docs
+    docs
   </label>
   
   <ul class="md-nav__list" data-md-scrollfix>
@@ -2520,24 +2520,22 @@ AxonOps server or an active AxonOps Cloud account in order to function.</p>
 <h2 id="installing-the-cassandra-restore-tool">Installing the Cassandra Restore Tool<a class="headerlink" href="#installing-the-cassandra-restore-tool" title="Permanent link">&para;</a></h2>
 <p>The AxonOps Cassandra Restore tool is included in the AxonOps Agent package.</p>
 <h4 id="installing-on-debian-ubuntu">Installing on Debian / Ubuntu<a class="headerlink" href="#installing-on-debian-ubuntu" title="Permanent link">&para;</a></h4>
-<div class="codehilite"><pre><span></span><code>sudo<span class="w"> </span>apt-get<span class="w"> </span>install<span class="w"> </span>-y<span class="w"> </span>curl<span class="w"> </span>gnupg<span class="w"> </span>ca-certificates
+<div class="highlight"><pre><span></span><code>sudo<span class="w"> </span>apt-get<span class="w"> </span>install<span class="w"> </span>-y<span class="w"> </span>curl<span class="w"> </span>gnupg<span class="w"> </span>ca-certificates
 curl<span class="w"> </span>https://packages.axonops.com/apt/repo-signing-key.gpg<span class="w"> </span><span class="p">|</span><span class="w"> </span>sudo<span class="w"> </span>apt-key<span class="w"> </span>add<span class="w"> </span>-
 <span class="nb">echo</span><span class="w"> </span><span class="s2">&quot;deb https://packages.axonops.com/apt axonops-apt main&quot;</span><span class="w"> </span><span class="p">|</span><span class="w"> </span>sudo<span class="w"> </span>tee<span class="w"> </span>/etc/apt/sources.list.d/axonops-apt.list
 sudo<span class="w"> </span>apt-get<span class="w"> </span>update
 sudo<span class="w"> </span>apt-get<span class="w"> </span>install<span class="w"> </span>axon-agent
 </code></pre></div>
-
 <p>For new versions of Debian (&gt;= bookworm) and Ubuntu (&gt;= 22.04) the process of setting up the apt repository has changed. See below:</p>
-<div class="codehilite"><pre><span></span><code>sudo<span class="w"> </span>apt-get<span class="w"> </span>update
+<div class="highlight"><pre><span></span><code>sudo<span class="w"> </span>apt-get<span class="w"> </span>update
 sudo<span class="w"> </span>apt-get<span class="w"> </span>install<span class="w"> </span>-y<span class="w"> </span>curl<span class="w"> </span>gnupg<span class="w"> </span>ca-certificates
 curl<span class="w"> </span>-L<span class="w"> </span>https://packages.axonops.com/apt/repo-signing-key.gpg<span class="w"> </span><span class="p">|</span><span class="w"> </span>gpg<span class="w"> </span>--dearmor<span class="w"> </span>-o<span class="w"> </span>/usr/share/keyrings/axonops.gpg
 <span class="nb">echo</span><span class="w"> </span><span class="s2">&quot;deb [arch=arm64,amd64 signed-by=/usr/share/keyrings/axonops.gpg] https://packages.axonops.com/apt axonops-apt main&quot;</span><span class="w"> </span><span class="p">|</span><span class="w"> </span>sudo<span class="w"> </span>tee<span class="w"> </span>/etc/apt/sources.list.d/axonops-apt.list
 sudo<span class="w"> </span>apt-get<span class="w"> </span>update
 sudo<span class="w"> </span>apt-get<span class="w"> </span>install<span class="w"> </span>axon-agent
 </code></pre></div>
-
 <h4 id="installing-on-centos-redhat">Installing on CentOS / RedHat<a class="headerlink" href="#installing-on-centos-redhat" title="Permanent link">&para;</a></h4>
-<div class="codehilite"><pre><span></span><code>sudo<span class="w"> </span>tee<span class="w"> </span>/etc/yum.repos.d/axonops-yum.repo<span class="w"> </span><span class="s">&lt;&lt; EOL</span>
+<div class="highlight"><pre><span></span><code>sudo<span class="w"> </span>tee<span class="w"> </span>/etc/yum.repos.d/axonops-yum.repo<span class="w"> </span><span class="s">&lt;&lt; EOL</span>
 <span class="s">[axonops-yum]</span>
 <span class="s">name=axonops-yum</span>
 <span class="s">baseurl=https://packages.axonops.com/yum/</span>
@@ -2547,10 +2545,9 @@ sudo<span class="w"> </span>apt-get<span class="w"> </span>install<span class="w
 <span class="s">EOL</span>
 sudo<span class="w"> </span>yum<span class="w"> </span>install<span class="w"> </span>axon-agent
 </code></pre></div>
-
 <p>After the package has been installed you can find the Cassandra Restore Tool at <code>/usr/share/axonops/axon-cassandra-restore</code>.</p>
-<p>Run the tool with <code>--help</code> to see the available options:</p>
-<div class="codehilite"><pre><span></span><code>~# /usr/share/axonops/axon-cassandra-restore --help
+<p>Run the tool with <code>--help</code> to see the available options:
+<div class="highlight"><pre><span></span><code>~# /usr/share/axonops/axon-cassandra-restore --help
 Usage of /usr/share/axonops/axon-cassandra-restore:
   -i, --backup-id string                UUID of the backup to restore
       --cassandra-bin-dir string        Where the Cassandra binary files are stored (e.g. /opt/cassandra/bin)
@@ -2571,8 +2568,7 @@ Usage of /usr/share/axonops/axon-cassandra-restore:
       --use-sstable-loader              Use sstableloader to restore the backup. Requires --sstable-loader-options and --cassandra-bin-dir.
   -v, --verbose                         Show verbose output when listing backups
       --version                         Show version information and exit
-</code></pre></div>
-
+</code></pre></div></p>
 <h2 id="listing-the-available-backups">Listing the available backups<a class="headerlink" href="#listing-the-available-backups" title="Permanent link">&para;</a></h2>
 <blockquote>
 <p>NOTE: The host IDs used in this tool are the ID given to each host by AxonOps and do not relate to the Cassandra
@@ -2581,14 +2577,13 @@ and looking at the Agent ID field.</p>
 </blockquote>
 <p>To list the backups available in the remote storage bucket you can run the tool with the <code>--list</code> option.
 For example to list the backups in an Amazon S3 bucket you could use a command similar to this:</p>
-<div class="codehilite"><pre><span></span><code>/usr/share/axonops/axon-cassandra-restore<span class="w"> </span>--list<span class="w"> </span><span class="se">\</span>
+<p><div class="highlight"><pre><span></span><code>/usr/share/axonops/axon-cassandra-restore<span class="w"> </span>--list<span class="w"> </span><span class="se">\</span>
 <span class="w">  </span>--org-id<span class="w"> </span>myaxonopsorg<span class="w"> </span><span class="se">\</span>
 <span class="w">  </span>--storage-config<span class="w"> </span><span class="s1">&#39;{&quot;type&quot;:&quot;s3&quot;,&quot;path&quot;:&quot;/axonops-cassandra-backups&quot;,&quot;access_key_id&quot;:&quot;MY_AWS_ACCESS_KEY&quot;,&quot;secret_access_key&quot;:&quot;MY_AWS_SECRET_ACCESS_KEY&quot;,&quot;region&quot;:&quot;eu-west-3&quot;}&#39;</span>
 </code></pre></div>
-
-<p>The restore tool will then scan the specified S3 bucket for AxonOps backups and it will display the
-date and backup ID for any backups it finds:</p>
-<div class="codehilite"><pre><span></span><code>Org<span class="w"> </span>ID:<span class="w">    </span>myaxonopsorg
+The restore tool will then scan the specified S3 bucket for AxonOps backups and it will display the
+date and backup ID for any backups it finds:
+<div class="highlight"><pre><span></span><code>Org<span class="w"> </span>ID:<span class="w">    </span>myaxonopsorg
 Cluster:<span class="w">   </span>testcluster
 Time<span class="w">                   </span>Backup<span class="w"> </span>ID
 <span class="m">2023</span>-09-14<span class="w"> </span><span class="m">14</span>:30<span class="w"> </span>UTC<span class="w">   </span>c67cea2a-5310-11ee-b686-bed50b9335ec
@@ -2597,10 +2592,9 @@ Time<span class="w">                   </span>Backup<span class="w"> </span>ID
 <span class="m">2023</span>-09-17<span class="w"> </span><span class="m">14</span>:31<span class="w"> </span>UTC<span class="w">   </span>f75f13d9-5314-11ee-b686-bed50b9335ec
 <span class="m">2023</span>-09-18<span class="w"> </span><span class="m">14</span>:30<span class="w"> </span>UTC<span class="w">   </span>5cffc1e6-5316-11ee-b686-bed50b9335ec
 </code></pre></div>
-
-<p>If you pass the <code>--verbose</code> option when listing backups it will show the list of nodes and tables in each backup,
-for example:</p>
-<div class="codehilite"><pre><span></span><code>Org<span class="w"> </span>ID:<span class="w">    </span>myaxonopsorg
+If you pass the <code>--verbose</code> option when listing backups it will show the list of nodes and tables in each backup,
+for example:
+<div class="highlight"><pre><span></span><code>Org<span class="w"> </span>ID:<span class="w">    </span>myaxonopsorg
 Cluster:<span class="w">   </span>testcluster
 Time:<span class="w">      </span><span class="m">2023</span>-09-14<span class="w"> </span><span class="m">14</span>:30<span class="w"> </span>UTC
 Backup<span class="w"> </span>ID:<span class="w"> </span>c67cea2a-5310-11ee-b686-bed50b9335ec
@@ -2613,12 +2607,11 @@ Tables:<span class="w"> </span>system_traces.events,<span class="w"> </span>syst
 
 Host:<span class="w">   </span>94ed3811-12ce-487f-ac49-ae31299efa31
 Tables:<span class="w"> </span>system.peers_v2,<span class="w"> </span>system.view_builds_in_progress,<span class="w"> </span>system_auth.resource_role_permissons_index,<span class="w"> </span>system_auth.role_permissions,<span class="w"> </span>system_schema.aggregates,<span class="w"> </span>system_schema.indexes,<span class="w"> </span>test.test,<span class="w"> </span>system.available_ranges_v2,<span class="w"> </span>system_distributed.parent_repair_history,<span class="w"> </span>system_schema.keyspaces,<span class="w"> </span>system_traces.sessions,<span class="w"> </span>system_auth.role_members,<span class="w"> </span>system_auth.network_permissions,<span class="w"> </span>system_schema.dropped_columns,<span class="w"> </span>system_schema.types,<span class="w"> </span>system.repairs,<span class="w"> </span>system.size_estimates,<span class="w"> </span>system_auth.roles,<span class="w"> </span>system_schema.tables,<span class="w"> </span>system_schema.views,<span class="w"> </span>system.paxos,<span class="w"> </span>system.table_estimates,<span class="w"> </span>system.transferred_ranges,<span class="w"> </span>system.peers,<span class="w"> </span>system.prepared_statements,<span class="w"> </span>system.sstable_activity,<span class="w"> </span>system.peer_events_v2,<span class="w"> </span>system.batches,<span class="w"> </span>system.built_views,<span class="w"> </span>system.compaction_history,<span class="w"> </span>system_traces.events,<span class="w"> </span>system.IndexInfo,<span class="w"> </span>system.local,<span class="w"> </span>keyspace1.table2,<span class="w"> </span>system.peer_events,<span class="w"> </span>system.transferred_ranges_v2,<span class="w"> </span>system_distributed.repair_history,<span class="w"> </span>system_distributed.view_build_status,<span class="w"> </span>system_schema.columns,<span class="w"> </span>system_schema.functions,<span class="w"> </span>system.available_ranges,<span class="w"> </span>system_schema.triggers,<span class="w"> </span>keyspace1.table1
-</code></pre></div>
-
+</code></pre></div></p>
 <p>Scanning for backups can take a long time depending on the storage type and the amount of data, so you can use
 command-line options to restrict the search. For example this will restrict the search to a specific backup, 
-cluster, hosts and tables:</p>
-<div class="codehilite"><pre><span></span><code>/usr/share/axonops/axon-cassandra-restore<span class="w"> </span>--list<span class="w"> </span><span class="se">\</span>
+cluster, hosts and tables:
+<div class="highlight"><pre><span></span><code>/usr/share/axonops/axon-cassandra-restore<span class="w"> </span>--list<span class="w"> </span><span class="se">\</span>
 <span class="w">  </span>--verbose<span class="w"> </span><span class="se">\</span>
 <span class="w">  </span>--org-id<span class="w"> </span>myaxonopsorg<span class="w"> </span><span class="se">\</span>
 <span class="w">  </span>--storage-config<span class="w"> </span><span class="s1">&#39;{&quot;type&quot;:&quot;s3&quot;,&quot;path&quot;:&quot;/axonops-cassandra-backups&quot;,&quot;access_key_id&quot;:&quot;MY_AWS_ACCESS_KEY&quot;,&quot;secret_access_key&quot;:&quot;MY_AWS_SECRET_ACCESS_KEY&quot;,&quot;region&quot;:&quot;eu-west-3&quot;}&#39;</span><span class="w"> </span><span class="se">\</span>
@@ -2626,8 +2619,7 @@ cluster, hosts and tables:</p>
 <span class="w">  </span>--source-cluster<span class="w"> </span>testcluster<span class="w"> </span><span class="se">\</span>
 <span class="w">  </span>--source-hosts<span class="w"> </span>026346a0-dc89-4235-ae34-552fcd453b42,84759df0-8a19-497e-965f-200bdb4c1c9b
 <span class="w">  </span>--tables<span class="w"> </span>keyspace1.table1,keyspace1.table2
-</code></pre></div>
-
+</code></pre></div></p>
 <h2 id="restoring-a-backup">Restoring a Backup<a class="headerlink" href="#restoring-a-backup" title="Permanent link">&para;</a></h2>
 <p>The <code>axon-cassandra-restore</code> tool can perform the following operations to restore a backup from remote storage:
 1. Download the sstable files from the bucket
@@ -2636,8 +2628,8 @@ cluster, hosts and tables:</p>
 <p>The default behaviour is to only download the sstable files to a local directory.</p>
 <h3 id="downloading-a-backup-to-a-local-directory">Downloading a backup to a local directory<a class="headerlink" href="#downloading-a-backup-to-a-local-directory" title="Permanent link">&para;</a></h3>
 <p>This command will download the backup with ID <code>2c1d9aca-5312-11ee-b686-bed50b9335ec</code> for the 3 hosts listed in the
-<code>--list</code> output above into the local directory <code>/opt/cassandra/axonops-restore</code></p>
-<div class="codehilite"><pre><span></span><code>/usr/share/axonops/axon-cassandra-restore<span class="w"> </span><span class="se">\</span>
+<code>--list</code> output above into the local directory <code>/opt/cassandra/axonops-restore</code>
+<div class="highlight"><pre><span></span><code>/usr/share/axonops/axon-cassandra-restore<span class="w"> </span><span class="se">\</span>
 <span class="w">  </span>--restore<span class="w"> </span><span class="se">\</span>
 <span class="w">  </span>--org-id<span class="w"> </span>myaxonopsorg<span class="w"> </span><span class="se">\</span>
 <span class="w">  </span>--storage-config<span class="w"> </span><span class="s1">&#39;{&quot;type&quot;:&quot;s3&quot;,&quot;path&quot;:&quot;/axonops-cassandra-backups&quot;,&quot;access_key_id&quot;:&quot;MY_AWS_ACCESS_KEY&quot;,&quot;secret_access_key&quot;:&quot;MY_AWS_SECRET_ACCESS_KEY&quot;,&quot;region&quot;:&quot;eu-west-3&quot;}&#39;</span><span class="w"> </span><span class="se">\</span>
@@ -2646,16 +2638,15 @@ cluster, hosts and tables:</p>
 <span class="w">  </span>--source-hosts<span class="w"> </span>026346a0-dc89-4235-ae34-552fcd453b42,84759df0-8a19-497e-965f-200bdb4c1c9b,94ed3811-12ce-487f-ac49-ae31299efa31<span class="w"> </span><span class="se">\</span>
 <span class="w">  </span>--local-sstable-dir<span class="w"> </span>/opt/cassandra/axonops-restore
 </code></pre></div>
-
-<p>The sstable files will be restored into directories named <code>{local-sstable-dir}/{host-id}/keyspace/table/</code> and from here
+The sstable files will be restored into directories named <code>{local-sstable-dir}/{host-id}/keyspace/table/</code> and from here
 you can copy/move the files to another location or import them into a cluster using <code>sstableloader</code>.</p>
 <h3 id="download-and-import-a-backup-in-a-single-operation">Download and import a backup in a single operation<a class="headerlink" href="#download-and-import-a-backup-in-a-single-operation" title="Permanent link">&para;</a></h3>
 <p>The above example shows how to download the backed up files into a local directory but it does not import them into
 a new cluster. You can make the <code>axon-cassandra-restore</code> tool do this for you after it downloads the files by passing
 the <code>--use-sstable-loader</code>, <code>--cassandra-bin-dir</code> and <code>--sstable-loader-options</code> command-line arguments.</p>
 <p>For example this command will download the same backup files as the previous example but it will also run <code>sstableloader</code>
-to import the downloaded files into a new cluster with contact points 10.0.0.1, 10.0.0.2 and 10.0.0.3:</p>
-<div class="codehilite"><pre><span></span><code>/usr/share/axonops/axon-cassandra-restore<span class="w"> </span><span class="se">\</span>
+to import the downloaded files into a new cluster with contact points 10.0.0.1, 10.0.0.2 and 10.0.0.3:
+<div class="highlight"><pre><span></span><code>/usr/share/axonops/axon-cassandra-restore<span class="w"> </span><span class="se">\</span>
 <span class="w">  </span>--restore<span class="w"> </span><span class="se">\</span>
 <span class="w">  </span>--org-id<span class="w"> </span>myaxonopsorg<span class="w"> </span><span class="se">\</span>
 <span class="w">  </span>--storage-config<span class="w"> </span><span class="s1">&#39;{&quot;type&quot;:&quot;s3&quot;,&quot;path&quot;:&quot;/axonops-cassandra-backups&quot;,&quot;access_key_id&quot;:&quot;MY_AWS_ACCESS_KEY&quot;,&quot;secret_access_key&quot;:&quot;MY_AWS_SECRET_ACCESS_KEY&quot;,&quot;region&quot;:&quot;eu-west-3&quot;}&#39;</span><span class="w"> </span><span class="se">\</span>
@@ -2666,16 +2657,15 @@ to import the downloaded files into a new cluster with contact points 10.0.0.1, 
 <span class="w">  </span>--use-sstable-loader<span class="w"> </span><span class="se">\</span>
 <span class="w">  </span>--cassandra-bin-dir<span class="w"> </span>/opt/cassandra/bin<span class="w"> </span><span class="se">\</span>
 <span class="w">  </span>--sstable-loader-options<span class="w"> </span><span class="s2">&quot;-d 10.0.0.1,10.0.0.2,10.0.0.3 -u cassandra -pw cassandra&quot;</span>
-</code></pre></div>
-
+</code></pre></div></p>
 <h4 id="importing-cql-schemas-during-the-restore">Importing CQL schemas during the restore<a class="headerlink" href="#importing-cql-schemas-during-the-restore" title="Permanent link">&para;</a></h4>
 <p>When a backup is imported to a cluster using <code>sstableloader</code> it assumes that the destination tables already exist and
 will skip the import for any that are missing. AxonOps stores the current table schema with each backup, so it is
 possible to create any missing tables as part of the restore operation. This can be enabled with the <code>--restore-schema</code>
 and <code>--cqlsh-options</code> arguments to <code>axon-cassandra-restore</code>.</p>
 <p>Building on the example above this command will download the files from the backup, create the schema for any missing
-tables, and import the downloaded data with <code>sstableloader</code>:</p>
-<div class="codehilite"><pre><span></span><code>/usr/share/axonops/axon-cassandra-restore<span class="w"> </span><span class="se">\</span>
+tables, and import the downloaded data with <code>sstableloader</code>:
+<div class="highlight"><pre><span></span><code>/usr/share/axonops/axon-cassandra-restore<span class="w"> </span><span class="se">\</span>
 <span class="w">  </span>--restore<span class="w"> </span><span class="se">\</span>
 <span class="w">  </span>--org-id<span class="w"> </span>myaxonopsorg<span class="w"> </span><span class="se">\</span>
 <span class="w">  </span>--storage-config<span class="w"> </span><span class="s1">&#39;{&quot;type&quot;:&quot;s3&quot;,&quot;path&quot;:&quot;/axonops-cassandra-backups&quot;,&quot;access_key_id&quot;:&quot;MY_AWS_ACCESS_KEY&quot;,&quot;secret_access_key&quot;:&quot;MY_AWS_SECRET_ACCESS_KEY&quot;,&quot;region&quot;:&quot;eu-west-3&quot;}&#39;</span><span class="w"> </span><span class="se">\</span>
@@ -2688,8 +2678,7 @@ tables, and import the downloaded data with <code>sstableloader</code>:</p>
 <span class="w">  </span>--sstable-loader-options<span class="w"> </span><span class="s2">&quot;-d 10.0.0.1,10.0.0.2,10.0.0.3 -u cassandra -pw cassandra&quot;</span><span class="w"> </span><span class="se">\</span>
 <span class="w">  </span>--restore-schema<span class="w"> </span><span class="se">\</span>
 <span class="w">  </span>--cqlsh-options<span class="w"> </span><span class="s2">&quot;-u cassandra -p cassandra 10.0.0.1&quot;</span>
-</code></pre></div>
-
+</code></pre></div></p>
 <blockquote>
 <p>NOTE: This will not create missing keyspaces. You must ensure that the target keyspaces already exist in the
 destination cluster before running the restore command.</p>
@@ -2699,21 +2688,17 @@ destination cluster before running the restore command.</p>
 <code>--storage-config</code> command-line option configures the type of remote storage and the credentials required for access.</p>
 <p>Here are some examples of the most common storage types:</p>
 <h4 id="local-filesystem">Local filesystem<a class="headerlink" href="#local-filesystem" title="Permanent link">&para;</a></h4>
-<div class="codehilite"><pre><span></span><code>--storage-config<span class="w"> </span><span class="s1">&#39;{&quot;type&quot;:&quot;local&quot;,&quot;path&quot;:&quot;/backups/cassandra&quot;}&#39;</span>
+<div class="highlight"><pre><span></span><code>--storage-config<span class="w"> </span><span class="s1">&#39;{&quot;type&quot;:&quot;local&quot;,&quot;path&quot;:&quot;/backups/cassandra&quot;}&#39;</span>
 </code></pre></div>
-
 <h4 id="amazon-s3">Amazon S3<a class="headerlink" href="#amazon-s3" title="Permanent link">&para;</a></h4>
-<div class="codehilite"><pre><span></span><code>--storage-config<span class="w"> </span><span class="s1">&#39;{&quot;type&quot;:&quot;s3&quot;,&quot;path&quot;:&quot;/axonops-cassandra-backups&quot;,&quot;access_key_id&quot;:&quot;MY_AWS_ACCESS_KEY&quot;,&quot;secret_access_key&quot;:&quot;MY_AWS_SECRET_ACCESS_KEY&quot;,&quot;region&quot;:&quot;eu-west-3&quot;}&#39;</span>
+<div class="highlight"><pre><span></span><code>--storage-config<span class="w"> </span><span class="s1">&#39;{&quot;type&quot;:&quot;s3&quot;,&quot;path&quot;:&quot;/axonops-cassandra-backups&quot;,&quot;access_key_id&quot;:&quot;MY_AWS_ACCESS_KEY&quot;,&quot;secret_access_key&quot;:&quot;MY_AWS_SECRET_ACCESS_KEY&quot;,&quot;region&quot;:&quot;eu-west-3&quot;}&#39;</span>
 </code></pre></div>
-
 <h4 id="azure-blob-storage">Azure Blob Storage<a class="headerlink" href="#azure-blob-storage" title="Permanent link">&para;</a></h4>
-<div class="codehilite"><pre><span></span><code>--storage-config<span class="w"> </span><span class="s1">&#39;{&quot;type&quot;:&quot;azureblob&quot;,&quot;account&quot;:&quot;MY_AZURE_ACCOUNT_NAME&quot;,&quot;key&quot;:&quot;MY_AZURE_STORAGE_KEY&quot;}&#39;</span>
+<div class="highlight"><pre><span></span><code>--storage-config<span class="w"> </span><span class="s1">&#39;{&quot;type&quot;:&quot;azureblob&quot;,&quot;account&quot;:&quot;MY_AZURE_ACCOUNT_NAME&quot;,&quot;key&quot;:&quot;MY_AZURE_STORAGE_KEY&quot;}&#39;</span>
 </code></pre></div>
-
 <h4 id="google-cloud-storage">Google Cloud Storage<a class="headerlink" href="#google-cloud-storage" title="Permanent link">&para;</a></h4>
-<div class="codehilite"><pre><span></span><code>--storage-config<span class="w"> </span><span class="s1">&#39;{&quot;type&quot;:&quot;googlecloudstorage&quot;,&quot;location&quot;:&quot;us&quot;,&quot;service_account_credentials&quot;:&quot;ESCAPED_JSON_PRIVATE_KEY&quot;}&#39;</span>
+<div class="highlight"><pre><span></span><code>--storage-config<span class="w"> </span><span class="s1">&#39;{&quot;type&quot;:&quot;googlecloudstorage&quot;,&quot;location&quot;:&quot;us&quot;,&quot;service_account_credentials&quot;:&quot;ESCAPED_JSON_PRIVATE_KEY&quot;}&#39;</span>
 </code></pre></div>
-
 <h2 id="restore-to-a-different-table">Restore to a different table<a class="headerlink" href="#restore-to-a-different-table" title="Permanent link">&para;</a></h2>
 <blockquote>
 <p>This feature is available in AxonOps Agent v1.0.61 or later</p>
@@ -2724,8 +2709,8 @@ the restored data into table with a different name and/or keyspace to the origin
 <blockquote>
 <p>NOTE: The destination keyspace must already exist before running the restore command.</p>
 </blockquote>
-<p>This example shows restoring the table <code>keyspace1.table1</code> into a table named <code>table1_restored</code> in keysace <code>restoreks</code>:</p>
-<div class="codehilite"><pre><span></span><code>/usr/share/axonops/axon-cassandra-restore \
+<p>This example shows restoring the table <code>keyspace1.table1</code> into a table named <code>table1_restored</code> in keysace <code>restoreks</code>:
+<div class="highlight"><pre><span></span><code>/usr/share/axonops/axon-cassandra-restore \
   --restore \
   --org-id myaxonopsorg \
   --storage-config &#39;{&quot;type&quot;:&quot;s3&quot;,&quot;path&quot;:&quot;/axonops-cassandra-backups&quot;,&quot;access_key_id&quot;:&quot;MY_AWS_ACCESS_KEY&quot;,&quot;secret_access_key&quot;:&quot;MY_AWS_SECRET_ACCESS_KEY&quot;,&quot;region&quot;:&quot;eu-west-3&quot;}&#39; \
@@ -2740,7 +2725,7 @@ the restored data into table with a different name and/or keyspace to the origin
   --cqlsh-options &quot;-u cassandra -p cassandra 10.0.0.1&quot; \
   --tables keyspace1.table1 \
   --dest-table restoreks.table1_restored
-</code></pre></div>
+</code></pre></div></p>
 
 
 
@@ -2760,6 +2745,8 @@ the restored data into table with a different name and/or keyspace to the origin
             </div>
           
           
+  <script>var tabs=__md_get("__tabs");if(Array.isArray(tabs))e:for(var set of document.querySelectorAll(".tabbed-set")){var tab,labels=set.querySelector(".tabbed-labels");for(tab of tabs)for(var label of labels.getElementsByTagName("label"))if(label.innerText.trim()===tab){var input=document.getElementById(label.htmlFor);input.checked=!0;continue e}}</script>
+
 <script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
         </div>
         
@@ -2891,7 +2878,7 @@ the restored data into table with a different name and/or keyspace to the origin
       </div>
       <script>var consent=__md_get("__consent");if(consent)for(var input of document.forms.consent.elements)input.name&&(input.checked=consent[input.name]||!1);else"file:"!==location.protocol&&setTimeout(function(){document.querySelector("[data-md-component=consent]").hidden=!1},250);var action,form=document.forms.consent;for(action of["submit","reset"])form.addEventListener(action,function(e){if(e.preventDefault(),"reset"===e.type)for(var n of document.forms.consent.elements)n.name&&(n.checked=!1);__md_set("__consent",Object.fromEntries(Array.from(new FormData(form).keys()).map(function(e){return[e,!0]}))),location.hash="",location.reload()})</script>
     
-    <script id="__config" type="application/json">{"base": "../../../..", "features": ["navigation.tabs", "announce.dismiss", "navigation.sections", "navigation.top", "navigation.footer"], "search": "../../../../assets/javascripts/workers/search.b8dbb3d2.min.js", "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}}</script>
+    <script id="__config" type="application/json">{"base": "../../../..", "features": ["navigation.tabs", "announce.dismiss", "navigation.sections", "navigation.top", "navigation.footer", "content.code.copy", "content.tabs.link"], "search": "../../../../assets/javascripts/workers/search.b8dbb3d2.min.js", "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}}</script>
     
     
       <script src="../../../../assets/javascripts/bundle.1e8ae164.min.js"></script>

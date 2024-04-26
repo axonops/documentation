@@ -20,7 +20,7 @@
     
     
       
-        <title>Whole cluster with changed IP addresses - AxonOps Docs</title>
+        <title>Whole cluster with changed IP addresses - docs</title>
       
     
     
@@ -143,8 +143,8 @@
   <nav class="md-header__inner md-grid" aria-label="Header">
 
     <!-- Link to home -->
-    <a href="https://axonops.com" title="AxonOps Docs"
-      class="md-header__button md-logo" aria-label="AxonOps Docs" data-md-component="logo">
+    <a href="https://axonops.com" title="docs"
+      class="md-header__button md-logo" aria-label="docs" data-md-component="logo">
       <!--
   Copyright (c) 2016-2024 Martin Donath <martin.donath@squidfunk.com>
 
@@ -169,7 +169,7 @@
 
 <!-- Logo -->
 
-  <img src="../../../../img/axonops_logo.svg" alt="logo" />
+  <img src="/img/axonops_logo.png" alt="logo" />
 
     </a>
 
@@ -184,7 +184,7 @@
       <div class="md-header__ellipsis">
         <div class="md-header__topic">
           <span class="md-ellipsis">
-            AxonOps Docs
+            docs
           </span>
         </div>
         <div class="md-header__topic" data-md-component="header-topic">
@@ -457,7 +457,7 @@ data-et-multi-view="{&quot;schema&quot;:{&quot;content&quot;:{&quot;desktop&quot
 
 <nav class="md-nav md-nav--primary md-nav--lifted" aria-label="Navigation" data-md-level="0">
   <label class="md-nav__title" for="__drawer">
-    <a href="https://axonops.com" title="AxonOps Docs" class="md-nav__button md-logo" aria-label="AxonOps Docs" data-md-component="logo">
+    <a href="https://axonops.com" title="docs" class="md-nav__button md-logo" aria-label="docs" data-md-component="logo">
       <!--
   Copyright (c) 2016-2024 Martin Donath <martin.donath@squidfunk.com>
 
@@ -482,10 +482,10 @@ data-et-multi-view="{&quot;schema&quot;:{&quot;content&quot;:{&quot;desktop&quot
 
 <!-- Logo -->
 
-  <img src="../../../../img/axonops_logo.svg" alt="logo" />
+  <img src="/img/axonops_logo.png" alt="logo" />
 
     </a>
-    AxonOps Docs
+    docs
   </label>
   
   <ul class="md-nav__list" data-md-scrollfix>
@@ -2311,15 +2311,13 @@ data-et-multi-view="{&quot;schema&quot;:{&quot;content&quot;:{&quot;desktop&quot
 different IP addresses from the original cluster.</em></p>
 <p><strong>NOTE: This process is for disaster recovery and cannot be used to clone a backup to a different cluster</strong></p>
 <h2 id="prepare-the-cluster-for-restoring-a-backup">Prepare the cluster for restoring a backup<a class="headerlink" href="#prepare-the-cluster-for-restoring-a-backup" title="Permanent link">&para;</a></h2>
-<p>Before you start, ensure that Cassandra is stopped on all replacement nodes and that their data directories are empty</p>
-<div class="codehilite"><pre><span></span><code>sudo<span class="w"> </span>systemctl<span class="w"> </span>stop<span class="w"> </span>cassandra
+<p>Before you start, ensure that Cassandra is stopped on all replacement nodes and that their data directories are empty
+<div class="highlight"><pre><span></span><code>sudo<span class="w"> </span>systemctl<span class="w"> </span>stop<span class="w"> </span>cassandra
 sudo<span class="w"> </span>rm<span class="w"> </span>-rf<span class="w"> </span>/var/lib/cassandra/commitlog/*<span class="w"> </span>/var/lib/cassandra/data/*<span class="w"> </span>/var/lib/cassandra/hints/*<span class="w"> </span>/var/lib/cassandra/saved_caches/*
-</code></pre></div>
-
-<p>Allow the AxonOps user to write to the Cassandra data directory on all nodes</p>
-<div class="codehilite"><pre><span></span><code>sudo<span class="w"> </span>chmod<span class="w"> </span>-R<span class="w"> </span>g+w<span class="w"> </span>/var/lib/cassandra/data
-</code></pre></div>
-
+</code></pre></div></p>
+<p>Allow the AxonOps user to write to the Cassandra data directory on all nodes
+<div class="highlight"><pre><span></span><code>sudo<span class="w"> </span>chmod<span class="w"> </span>-R<span class="w"> </span>g+w<span class="w"> </span>/var/lib/cassandra/data
+</code></pre></div></p>
 <blockquote>
 <p>The commands above assume you are storing the Cassandra data in the default location <code>/var/lib/cassandra</code>, you will
 need to change the paths shown if your data is stored at a different location</p>
@@ -2341,19 +2339,16 @@ the replacement cluster.</p>
 <p>If you still have access to the old server or its data then its host ID can also be found in the file <code>/var/lib/axonops/hostId</code></p>
 <h4 id="apply-the-old-nodes-host-id-to-its-replacement">Apply the old node's host ID to its replacement<a class="headerlink" href="#apply-the-old-nodes-host-id-to-its-replacement" title="Permanent link">&para;</a></h4>
 <p>Ensure the AxonOps Agent is stopped and clear any data that it may have created on startup</p>
-<div class="codehilite"><pre><span></span><code>sudo<span class="w"> </span>systemctl<span class="w"> </span>stop<span class="w"> </span>axon-agent
+<div class="highlight"><pre><span></span><code>sudo<span class="w"> </span>systemctl<span class="w"> </span>stop<span class="w"> </span>axon-agent
 sudo<span class="w"> </span>rm<span class="w"> </span>-rf<span class="w"> </span>/var/lib/axonops/*
 </code></pre></div>
-
 <p>Manually apply the old node's host ID on the replacement (replace the host ID shown with your host ID from the previous steps)</p>
-<div class="codehilite"><pre><span></span><code><span class="nb">echo</span><span class="w"> </span><span class="s1">&#39;24d0cbf9-3b5a-11ed-8433-16b3c6a7bcc5&#39;</span><span class="w"> </span><span class="p">|</span><span class="w"> </span>sudo<span class="w"> </span>tee<span class="w"> </span>/var/lib/axonops/hostId
+<div class="highlight"><pre><span></span><code><span class="nb">echo</span><span class="w"> </span><span class="s1">&#39;24d0cbf9-3b5a-11ed-8433-16b3c6a7bcc5&#39;</span><span class="w"> </span><span class="p">|</span><span class="w"> </span>sudo<span class="w"> </span>tee<span class="w"> </span>/var/lib/axonops/hostId
 sudo<span class="w"> </span>chown<span class="w"> </span>axonops.axonops<span class="w"> </span>/var/lib/axonops/hostId
 </code></pre></div>
-
 <p>Start the AxonOps agent</p>
-<div class="codehilite"><pre><span></span><code>sudo<span class="w"> </span>systemctl<span class="w"> </span>start<span class="w"> </span>axon-agent
+<div class="highlight"><pre><span></span><code>sudo<span class="w"> </span>systemctl<span class="w"> </span>start<span class="w"> </span>axon-agent
 </code></pre></div>
-
 <p>In the AxonOps dashboard you should see the replacement nodes start up and take over from the old nodes after a few minutes.</p>
 <h2 id="restore-the-backup">Restore the backup<a class="headerlink" href="#restore-the-backup" title="Permanent link">&para;</a></h2>
 <p>Open the Restore page in the AxonOps Dashboard by going to <strong><em>Operations &gt; Restore</em></strong></p>
@@ -2374,15 +2369,13 @@ sudo<span class="w"> </span>chown<span class="w"> </span>axonops.axonops<span cl
 <p><a href="/img/cass_backups/restores-table.png"><img alt="restore" src="/img/cass_backups/restores-table.png" /></a></p>
 </div>
 <p>After the restore operation has completed successfully, fix the ownership and permissions on the Cassandra data
-directories on all nodes in the cluster</p>
-<div class="codehilite"><pre><span></span><code>sudo<span class="w"> </span>chown<span class="w"> </span>-R<span class="w"> </span>cassandra.cassandra<span class="w"> </span>/var/lib/cassandra/data
+directories on all nodes in the cluster
+<div class="highlight"><pre><span></span><code>sudo<span class="w"> </span>chown<span class="w"> </span>-R<span class="w"> </span>cassandra.cassandra<span class="w"> </span>/var/lib/cassandra/data
 sudo<span class="w"> </span>chmod<span class="w"> </span>-R<span class="w"> </span>g-w<span class="w"> </span>/var/lib/cassandra/data
-</code></pre></div>
-
-<p>Start cassandra on the restored nodes one at a time, starting with the seeds first</p>
-<div class="codehilite"><pre><span></span><code>sudo<span class="w"> </span>systemctl<span class="w"> </span>start<span class="w"> </span>cassandra
-</code></pre></div>
-
+</code></pre></div></p>
+<p>Start cassandra on the restored nodes one at a time, starting with the seeds first
+<div class="highlight"><pre><span></span><code>sudo<span class="w"> </span>systemctl<span class="w"> </span>start<span class="w"> </span>cassandra
+</code></pre></div></p>
 <p>After the whole cluster is started up you should be able to see the replaced nodes with their new IP addresses
 in the output of <code>nodetool status</code>. You may still see the IP addresses of the old cluster nodes in the output of
 <code>nodetool gossipinfo</code>, these should clear out automatically after a few days or they can be manually tidied up by
@@ -2406,6 +2399,8 @@ performing a rolling restart of the cluster.</p>
             </div>
           
           
+  <script>var tabs=__md_get("__tabs");if(Array.isArray(tabs))e:for(var set of document.querySelectorAll(".tabbed-set")){var tab,labels=set.querySelector(".tabbed-labels");for(tab of tabs)for(var label of labels.getElementsByTagName("label"))if(label.innerText.trim()===tab){var input=document.getElementById(label.htmlFor);input.checked=!0;continue e}}</script>
+
 <script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
         </div>
         
@@ -2537,7 +2532,7 @@ performing a rolling restart of the cluster.</p>
       </div>
       <script>var consent=__md_get("__consent");if(consent)for(var input of document.forms.consent.elements)input.name&&(input.checked=consent[input.name]||!1);else"file:"!==location.protocol&&setTimeout(function(){document.querySelector("[data-md-component=consent]").hidden=!1},250);var action,form=document.forms.consent;for(action of["submit","reset"])form.addEventListener(action,function(e){if(e.preventDefault(),"reset"===e.type)for(var n of document.forms.consent.elements)n.name&&(n.checked=!1);__md_set("__consent",Object.fromEntries(Array.from(new FormData(form).keys()).map(function(e){return[e,!0]}))),location.hash="",location.reload()})</script>
     
-    <script id="__config" type="application/json">{"base": "../../../..", "features": ["navigation.tabs", "announce.dismiss", "navigation.sections", "navigation.top", "navigation.footer"], "search": "../../../../assets/javascripts/workers/search.b8dbb3d2.min.js", "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}}</script>
+    <script id="__config" type="application/json">{"base": "../../../..", "features": ["navigation.tabs", "announce.dismiss", "navigation.sections", "navigation.top", "navigation.footer", "content.code.copy", "content.tabs.link"], "search": "../../../../assets/javascripts/workers/search.b8dbb3d2.min.js", "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}}</script>
     
     
       <script src="../../../../assets/javascripts/bundle.1e8ae164.min.js"></script>

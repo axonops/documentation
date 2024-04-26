@@ -20,7 +20,7 @@
     
     
       
-        <title>Kubernetes - AxonOps Docs</title>
+        <title>Kubernetes - docs</title>
       
     
     
@@ -143,8 +143,8 @@
   <nav class="md-header__inner md-grid" aria-label="Header">
 
     <!-- Link to home -->
-    <a href="https://axonops.com" title="AxonOps Docs"
-      class="md-header__button md-logo" aria-label="AxonOps Docs" data-md-component="logo">
+    <a href="https://axonops.com" title="docs"
+      class="md-header__button md-logo" aria-label="docs" data-md-component="logo">
       <!--
   Copyright (c) 2016-2024 Martin Donath <martin.donath@squidfunk.com>
 
@@ -169,7 +169,7 @@
 
 <!-- Logo -->
 
-  <img src="../../img/axonops_logo.svg" alt="logo" />
+  <img src="/img/axonops_logo.png" alt="logo" />
 
     </a>
 
@@ -184,7 +184,7 @@
       <div class="md-header__ellipsis">
         <div class="md-header__topic">
           <span class="md-ellipsis">
-            AxonOps Docs
+            docs
           </span>
         </div>
         <div class="md-header__topic" data-md-component="header-topic">
@@ -457,7 +457,7 @@ data-et-multi-view="{&quot;schema&quot;:{&quot;content&quot;:{&quot;desktop&quot
 
 <nav class="md-nav md-nav--primary md-nav--lifted" aria-label="Navigation" data-md-level="0">
   <label class="md-nav__title" for="__drawer">
-    <a href="https://axonops.com" title="AxonOps Docs" class="md-nav__button md-logo" aria-label="AxonOps Docs" data-md-component="logo">
+    <a href="https://axonops.com" title="docs" class="md-nav__button md-logo" aria-label="docs" data-md-component="logo">
       <!--
   Copyright (c) 2016-2024 Martin Donath <martin.donath@squidfunk.com>
 
@@ -482,10 +482,10 @@ data-et-multi-view="{&quot;schema&quot;:{&quot;content&quot;:{&quot;desktop&quot
 
 <!-- Logo -->
 
-  <img src="../../img/axonops_logo.svg" alt="logo" />
+  <img src="/img/axonops_logo.png" alt="logo" />
 
     </a>
-    AxonOps Docs
+    docs
   </label>
   
   <ul class="md-nav__list" data-md-scrollfix>
@@ -2418,7 +2418,7 @@ The raw charts can be downloaded from the <a href="https://github.com/axonops/he
 </table>
 <h3 id="elasticsearch">ElasticSearch<a class="headerlink" href="#elasticsearch" title="Permanent link">&para;</a></h3>
 <p>The example below is a configuration file for the official ElasticSearch helm repository. See inline comments:</p>
-<div class="codehilite"><pre><span></span><code><span class="nn">---</span>
+<div class="highlight"><pre><span></span><code><span class="nn">---</span>
 <span class="nt">clusterName</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;axonops-elastic&quot;</span>
 
 <span class="nt">replicas</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">1</span>
@@ -2456,11 +2456,10 @@ The raw charts can be downloaded from the <a href="https://github.com/axonops/he
 <span class="nt">rbac</span><span class="p">:</span>
 <span class="w">  </span><span class="nt">create</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">true</span>
 </code></pre></div>
-
 <h3 id="axonops">AxonOps<a class="headerlink" href="#axonops" title="Permanent link">&para;</a></h3>
 <p>The default AxonOps installation does not expose the services outside of the cluster. We recommend that you use either a LoadBalancer service or an Ingress.</p>
 <p>Below you can find an example using <code>Ingress</code> to expose both the dashboard and the AxonOps server.</p>
-<div class="codehilite"><pre><span></span><code><span class="nt">axon-dash</span><span class="p">:</span>
+<div class="highlight"><pre><span></span><code><span class="nt">axon-dash</span><span class="p">:</span>
 <span class="w">  </span><span class="nt">image</span><span class="p">:</span>
 <span class="w">    </span><span class="nt">pullPolicy</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">IfNotPresent</span>
 <span class="w">    </span><span class="nt">repository</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">registry.axonops.com/axonops-public/axonops-docker/axon-dash</span>
@@ -2521,22 +2520,20 @@ The raw charts can be downloaded from the <a href="https://github.com/axonops/he
 <span class="w">      </span><span class="nt">cpu</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">100m</span>
 <span class="w">      </span><span class="nt">memory</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">256Mi</span>
 </code></pre></div>
-
 <p>An example values file showing all available options can be found in the GitHub repository here: <a href="https://github.com/axonops/helm-axonops/blob/main/values-full.yaml">values-full.yaml</a></p>
 <h2 id="installing">Installing<a class="headerlink" href="#installing" title="Permanent link">&para;</a></h2>
 <h3 id="elasticsearch_1">ElasticSearch<a class="headerlink" href="#elasticsearch_1" title="Permanent link">&para;</a></h3>
 <p>Now you can install Elasticsearch referencing the configuration file created in the previous step:</p>
-<div class="codehilite"><pre><span></span><code>helm<span class="w"> </span>repo<span class="w"> </span>add<span class="w"> </span>elastic<span class="w"> </span>https://helm.elastic.co
+<div class="highlight"><pre><span></span><code>helm<span class="w"> </span>repo<span class="w"> </span>add<span class="w"> </span>elastic<span class="w"> </span>https://helm.elastic.co
 helm<span class="w"> </span>update
 helm<span class="w"> </span>upgrade<span class="w"> </span>-n<span class="w"> </span>axonops<span class="w"> </span>--install<span class="w"> </span><span class="se">\</span>
 <span class="w">  </span>--create-namespace<span class="w"> </span><span class="se">\</span>
 <span class="w">  </span>-f<span class="w"> </span><span class="s2">&quot;elasticsearch.yaml&quot;</span><span class="w"> </span><span class="se">\</span>
 <span class="w">  </span>elasticsearch<span class="w"> </span>elastic/elasticsearch
 </code></pre></div>
-
 <h3 id="axonops_1">AxonOps<a class="headerlink" href="#axonops_1" title="Permanent link">&para;</a></h3>
 <p>Finally install the AxonOps helm chart:</p>
-<div class="codehilite"><pre><span></span><code>helm<span class="w"> </span>upgrade<span class="w"> </span>-n<span class="w"> </span>axonops<span class="w"> </span>--install<span class="w"> </span><span class="se">\</span>
+<div class="highlight"><pre><span></span><code>helm<span class="w"> </span>upgrade<span class="w"> </span>-n<span class="w"> </span>axonops<span class="w"> </span>--install<span class="w"> </span><span class="se">\</span>
 <span class="w">  </span>--create-namespace<span class="w"> </span><span class="se">\</span>
 <span class="w">  </span>-f<span class="w"> </span><span class="s2">&quot;axonops.yaml&quot;</span><span class="w"> </span><span class="se">\</span>
 <span class="w">  </span>axonops<span class="w"> </span>oci://helm.axonops.com/axonops-public/axonops-helm/axonops
@@ -2560,6 +2557,8 @@ helm<span class="w"> </span>upgrade<span class="w"> </span>-n<span class="w"> </
             </div>
           
           
+  <script>var tabs=__md_get("__tabs");if(Array.isArray(tabs))e:for(var set of document.querySelectorAll(".tabbed-set")){var tab,labels=set.querySelector(".tabbed-labels");for(tab of tabs)for(var label of labels.getElementsByTagName("label"))if(label.innerText.trim()===tab){var input=document.getElementById(label.htmlFor);input.checked=!0;continue e}}</script>
+
 <script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
         </div>
         
@@ -2691,7 +2690,7 @@ helm<span class="w"> </span>upgrade<span class="w"> </span>-n<span class="w"> </
       </div>
       <script>var consent=__md_get("__consent");if(consent)for(var input of document.forms.consent.elements)input.name&&(input.checked=consent[input.name]||!1);else"file:"!==location.protocol&&setTimeout(function(){document.querySelector("[data-md-component=consent]").hidden=!1},250);var action,form=document.forms.consent;for(action of["submit","reset"])form.addEventListener(action,function(e){if(e.preventDefault(),"reset"===e.type)for(var n of document.forms.consent.elements)n.name&&(n.checked=!1);__md_set("__consent",Object.fromEntries(Array.from(new FormData(form).keys()).map(function(e){return[e,!0]}))),location.hash="",location.reload()})</script>
     
-    <script id="__config" type="application/json">{"base": "../..", "features": ["navigation.tabs", "announce.dismiss", "navigation.sections", "navigation.top", "navigation.footer"], "search": "../../assets/javascripts/workers/search.b8dbb3d2.min.js", "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}}</script>
+    <script id="__config" type="application/json">{"base": "../..", "features": ["navigation.tabs", "announce.dismiss", "navigation.sections", "navigation.top", "navigation.footer", "content.code.copy", "content.tabs.link"], "search": "../../assets/javascripts/workers/search.b8dbb3d2.min.js", "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}}</script>
     
     
       <script src="../../assets/javascripts/bundle.1e8ae164.min.js"></script>
