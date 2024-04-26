@@ -1,10 +1,10 @@
-site_name: AxonOps Docs
+site_name: docs
 copyright: © 2024 AxonOps. All rights reserved.
 
 theme:
   name: 'material'
   favicon: 'img/favicon.ico'
-  logo: 'img/axonops_logo.svg'
+  logo: '/img/axonops_logo.png'
   language: 'en'
   custom_dir: overrides
   features:
@@ -13,6 +13,9 @@ theme:
     - announce.dismiss
     - navigation.sections
     - navigation.top
+    - navigation.footer
+    - content.code.copy
+    - content.tabs.link
     # - navigation.expand
 
 extra:
@@ -34,12 +37,16 @@ extra_css:
 
 markdown_extensions:
   - admonition
+  - attr_list
   - markdown_include.include:
       base_path: docs
   - codehilite:
       guess_lang: False
   - toc:
       permalink: true
+  - pymdownx.superfences
+  - pymdownx.tabbed:
+      alternate_style: true
 
 plugins:
   - search
@@ -47,6 +54,8 @@ plugins:
       width: 100%
       height: auto
       zoomable: true
+      skip_classes:
+        - skip-lightbox
 
 extra_javascript:
   - javascripts/extra.js
@@ -199,4 +208,3 @@ nav:
 #            - 'Repair': 'cassandra-repair.md'
 #            - 'Backup and Restore': 'cassandra-backup-and-restore.md'
 #    - Kafka:
-
