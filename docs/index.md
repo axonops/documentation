@@ -1,18 +1,10 @@
-<style>
-    /* Hide table of contents */
-    @media screen and (min-width: 60em) {
-      .md-sidebar--secondary {
-        display: none;
-      }
-    }
+---
+hide:
+  - navigation
+  - toc
+---
 
-    /* Hide navigation */
-    @media screen and (min-width: 76.25em) {
-      .md-sidebar--primary {
-        display: none;
-      }
-    }
-  </style>
+![](/img/AxonOps-RGB-Dark-web.png){ .skip-lightbox class="axon_header" }
 
 # Welcome to AxonOps
 AxonOps is the only platform available for the one-stop operations of Apache Cassandra. Built by Cassandra experts, AxonOps provides access to all of the capability required to effectively monitor, maintain and backup an Apache Cassandra environment. Accessed through a single intuitive UI and driven by a highly efficient bi-directional protocol ensuring unprecedented functionality and exceptional performance.
