@@ -83,7 +83,7 @@
     <div data-md-component="skip">
       
         
-        <a href="#scheduled-repair" class="md-skip">
+        <a href="#adaptive-repair-service" class="md-skip">
           Skip to content
         </a>
       
@@ -1667,18 +1667,18 @@ data-et-multi-view="{&quot;schema&quot;:{&quot;content&quot;:{&quot;desktop&quot
     <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
       
         <li class="md-nav__item">
-  <a href="#scheduled-repair" class="md-nav__link">
+  <a href="#adaptive-repair-service" class="md-nav__link">
     <span class="md-ellipsis">
-      Scheduled repair
+      Adaptive repair service
     </span>
   </a>
   
 </li>
       
         <li class="md-nav__item">
-  <a href="#adaptive-repair-service" class="md-nav__link">
+  <a href="#scheduled-repair" class="md-nav__link">
     <span class="md-ellipsis">
-      Adaptive repair service
+      Scheduled repair
     </span>
   </a>
   
@@ -2207,18 +2207,18 @@ data-et-multi-view="{&quot;schema&quot;:{&quot;content&quot;:{&quot;desktop&quot
     <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
       
         <li class="md-nav__item">
-  <a href="#scheduled-repair" class="md-nav__link">
+  <a href="#adaptive-repair-service" class="md-nav__link">
     <span class="md-ellipsis">
-      Scheduled repair
+      Adaptive repair service
     </span>
   </a>
   
 </li>
       
         <li class="md-nav__item">
-  <a href="#adaptive-repair-service" class="md-nav__link">
+  <a href="#scheduled-repair" class="md-nav__link">
     <span class="md-ellipsis">
-      Adaptive repair service
+      Scheduled repair
     </span>
   </a>
   
@@ -2245,10 +2245,41 @@ data-et-multi-view="{&quot;schema&quot;:{&quot;content&quot;:{&quot;desktop&quot
 <p>AxonOps provide two mechanisms to ease Cassandra repairs:</p>
 <ul>
 <li>
-<p>Scheduled repair</p>
+<p>Adaptive repair service</p>
 </li>
 <li>
-<p>Adaptive repair service</p>
+<p>Scheduled repair</p>
+</li>
+</ul>
+<h2 id="adaptive-repair-service">Adaptive repair service<a class="headerlink" href="#adaptive-repair-service" title="Permanent link">&para;</a></h2>
+<p>Since AxonOps collects performance metrics and logs, we built an “Adaptive” repair system which regulates the velocity (parallelism and pauses between each subrange repair) based on performance trending data. The regulation of repair velocity takes input from various metrics including CPU utilisation, query latencies, Cassandra thread pools pending statistics, and IOwait percentage, while tracking the schedule of repair based on <strong>gc_grace_seconds</strong> for each table.</p>
+<p>The idea of this is to achieve the following:</p>
+<ul>
+<li>Completion of repair within gc_grace_seconds of each table.</li>
+<li>Repair process does not affect query performance.</li>
+<li>In essence, adaptive repair regulator slows down the repair velocity when it deems the load is going to be high based on the gradient of the rate of increase of load, and speeds up to catch up with the repair schedule when the resources are more readily available.</li>
+<li>This mechanism also doesn't require JMX access. The adaptive repair service running on AxonOps server orchestrates and issues commands to the agents over the existing connection.</li>
+</ul>
+<div class="admonition infomy">
+<p class="admonition-title">Infomy</p>
+<p><a href="/img/cass_repairs/adaptive_repair.png"><img alt="adaptive_repair" src="/img/cass_repairs/adaptive_repair.png" /></a></p>
+</div>
+<blockquote>
+<p>If you want to keep the tables as fresh as possible we recommend to increase the <code>table parallelism</code> to be greater than the total number of tables of your cluster and reduce the <code>segments per VNode</code> to generate less repair requests.</p>
+</blockquote>
+<p>From a user’s point of view there is only a single switch to enable this service. Keep this enabled and AxonOps will take care of the repair of all tables for you. You can also customize the following:</p>
+<ul>
+<li>
+<p>Blacklist some tables</p>
+</li>
+<li>
+<p>Specify the number of tables to repair in parallel</p>
+</li>
+<li>
+<p>Specify the number of segments per VNode to repair</p>
+</li>
+<li>
+<p>The GC grace threshold in seconds: if a table has a gc grace lesser than the specified value, it will be ignored from the adaptive repair service</p>
 </li>
 </ul>
 <h2 id="scheduled-repair">Scheduled repair<a class="headerlink" href="#scheduled-repair" title="Permanent link">&para;</a></h2>
@@ -2281,37 +2312,6 @@ data-et-multi-view="{&quot;schema&quot;:{&quot;content&quot;:{&quot;desktop&quot
 <p class="admonition-title">Infomy</p>
 <p><a href="/img/cass_repairs/scheduled_repair4.png"><img alt="scheduled_repair" src="/img/cass_repairs/scheduled_repair4.png" /></a></p>
 </div>
-<h2 id="adaptive-repair-service">Adaptive repair service<a class="headerlink" href="#adaptive-repair-service" title="Permanent link">&para;</a></h2>
-<p>Since AxonOps collects performance metrics and logs, we built an “Adaptive” repair system which regulates the velocity (parallelism and pauses between each subrange repair) based on performance trending data. The regulation of repair velocity takes input from various metrics including CPU utilisation, query latencies, Cassandra thread pools pending statistics, and IOwait percentage, while tracking the schedule of repair based on <strong>gc_grace_seconds</strong> for each table.</p>
-<p>The idea of this is to achieve the following:</p>
-<ul>
-<li>Completion of repair within gc_grace_seconds of each table.</li>
-<li>Repair process does not affect query performance.</li>
-<li>In essence, adaptive repair regulator slows down the repair velocity when it deems the load is going to be high based on the gradient of the rate of increase of load, and speeds up to catch up with the repair schedule when the resources are more readily available.</li>
-<li>This mechanism also doesn't require JMX access. The adaptive repair service running on AxonOps server orchestrates and issues commands to the agents over the existing connection.</li>
-</ul>
-<div class="admonition infomy">
-<p class="admonition-title">Infomy</p>
-<p><a href="/img/cass_repairs/adaptive_repair.png"><img alt="adaptive_repair" src="/img/cass_repairs/adaptive_repair.png" /></a></p>
-</div>
-<blockquote>
-<p>If you want to keep the tables as fresh as possible we recommend to increase the <code>table parallelism</code> to be greater than the total number of tables of your cluster and reduce the <code>segments per VNode</code> to generate less repair requests.</p>
-</blockquote>
-<p>From a user’s point of view there is only a single switch to enable this service. Keep this enabled and AxonOps will take care of the repair of all tables for you. You can also customize the following:</p>
-<ul>
-<li>
-<p>Blacklist some tables</p>
-</li>
-<li>
-<p>Specify the number of tables to repair in parallel</p>
-</li>
-<li>
-<p>Specify the number of segments per VNode to repair</p>
-</li>
-<li>
-<p>The GC grace threshold in seconds: if a table has a gc grace lesser than the specified value, it will be ignored from the adaptive repair service</p>
-</li>
-</ul>
 
 
 
