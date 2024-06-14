@@ -10,8 +10,13 @@ host: 0.0.0.0  # axon-server listening address (used by axon-dash and axon-agent
 api_port: 8080 # axon-server HTTP API listening port (used by axon-dash) (AXONSERVER_PORT)
 agents_port: 1888 # axon-server listening port for agent connections 
 elastic_hosts: # Elasticsearch endpoint (env variable:ELASTIC_HOSTS, comma separated list)
-  - http://localhost
+  - http://localhost:9200
 #integrations_proxy: # proxy endpoint for integrations. (INTEGRATIONS_PROXY)
+
+
+# AxonOps licensing
+license_key: license-key
+org_name: my-company
 
 # For better performance on large clusters, you can use a CQL store for the metrics.
 # To opt-in for CQL metrics storage, just specify at least one CQL host.

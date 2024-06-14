@@ -5,7 +5,7 @@ Our deployment model with the use of open source tools
 
 !!! infomy 
 
-    [![digitalis.io_monitoring_before](/img/digitalis.io_stack.png)](/img/digitalis.io_stack.png)
+    [![axonops_ltd_monitoring_before](/img/axonops_ltd_stack.png)](/img/axonops_ltd_stack.png)
 
 ## AxonOps Deployment Model
 As you can see from the diagram below, we have massively simplified the stack with AxonOps.
