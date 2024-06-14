@@ -23,7 +23,7 @@ To view the journey we have embarked on since 2017 have a look [here](https://ax
 
 ## Motivation
 
-AxonOps has been developed and actively maintained by [axonops limited](https://axonops.com), a company providing managed services for Apache Cassandra™ and other modern distributed data technologies.
+AxonOps has been developed and actively maintained by [AxonOps Limited](https://axonops.com), a company providing managed services for Apache Cassandra™ and other modern distributed data technologies.
 
 AxonOps used a variety of modern and popular open source tools to manage its customer's data platforms to gain quick insight into how the clusters are working, and be alerted when there are issues.
 
