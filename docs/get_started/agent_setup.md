@@ -81,7 +81,6 @@ You should expect the following response:
     repo_gpgcheck=0
     gpgcheck=0
     EOL
-    sudo yum makecache
     ```
 
 ## Install Cassandra Agent

@@ -7,7 +7,7 @@ Built by Cassandra experts, the only cloud native solution to monitor, maintain 
 
 ## Why ?
 
-Frustrated by the lack of tooling available to manage the next generation open source data platforms, Digitalis engineers decided to build a one-stop monitoring and operations platform to ensure they could provide the highest quality of services. Proven in some of the most demanding environments, AxonOps is now available as a standalone platform supporting Apache Cassandra today with Apache Kafka coming soon.
+Frustrated by the lack of tooling available to manage the next generation open source data platforms, AxonOps engineers decided to build a one-stop monitoring and operations platform to ensure they could provide the highest quality of services. Proven in some of the most demanding environments, AxonOps is now available as a standalone platform supporting Apache Cassandra today with Apache Kafka coming soon.
 
 ## Features
 * [**Metric Dashboard**](https://axonops.com/pricing/) - The AxonOps dashboard is pre-configured and well laid out in order for you to easily visualise the performance of your multiple Cassandra clusters across all of your data centres,
@@ -23,9 +23,9 @@ To view the journey we have embarked on since 2017 have a look [here](https://ax
 
 ## Motivation
 
-AxonOps has been developed and actively maintained by [digitalis.io](https://digitalis.io), a company providing managed services for Apache Cassandra™ and other modern distributed data technologies.
+AxonOps has been developed and actively maintained by [AxonOps Limited](https://axonops.com), a company providing managed services for Apache Cassandra™ and other modern distributed data technologies.
 
-digitalis.io used a variety of modern and popular open source tools to manage its customer's data platforms to gain quick insight into how the clusters are working, and be alerted when there are issues.
+AxonOps used a variety of modern and popular open source tools to manage its customer's data platforms to gain quick insight into how the clusters are working, and be alerted when there are issues.
 
 The open source tools we used are:
 
