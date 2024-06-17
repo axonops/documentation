@@ -2427,7 +2427,7 @@ sudo<span class="w"> </span>apt-get<span class="w"> </span>install<span class="w
 <p>For new versions of Debian (&gt;= bookworm) and Ubuntu (&gt;= 22.04) the process of setting up the apt repository has changed. See below:</p>
 <div class="highlight"><pre><span></span><code>sudo<span class="w"> </span>apt-get<span class="w"> </span>update
 sudo<span class="w"> </span>apt-get<span class="w"> </span>install<span class="w"> </span>-y<span class="w"> </span>curl<span class="w"> </span>gnupg<span class="w"> </span>ca-certificates
-curl<span class="w"> </span>-L<span class="w"> </span>https://packages.axonops.com/apt/repo-signing-key.gpg<span class="w"> </span><span class="p">|</span><span class="w"> </span>gpg<span class="w"> </span>--dearmor<span class="w"> </span>-o<span class="w"> </span>/usr/share/keyrings/axonops.gpg
+curl<span class="w"> </span>-L<span class="w"> </span>https://packages.axonops.com/apt/repo-signing-key.gpg<span class="w"> </span><span class="p">|</span><span class="w"> </span>sudo<span class="w"> </span>gpg<span class="w"> </span>--dearmor<span class="w"> </span>-o<span class="w"> </span>/usr/share/keyrings/axonops.gpg
 <span class="nb">echo</span><span class="w"> </span><span class="s2">&quot;deb [arch=arm64,amd64 signed-by=/usr/share/keyrings/axonops.gpg] https://packages.axonops.com/apt axonops-apt main&quot;</span><span class="w"> </span><span class="p">|</span><span class="w"> </span>sudo<span class="w"> </span>tee<span class="w"> </span>/etc/apt/sources.list.d/axonops-apt.list
 sudo<span class="w"> </span>apt-get<span class="w"> </span>update
 sudo<span class="w"> </span>apt-get<span class="w"> </span>install<span class="w"> </span>axon-server
@@ -2441,8 +2441,13 @@ sudo<span class="w"> </span>apt-get<span class="w"> </span>install<span class="w
 <span class="nt">api_port</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">8080</span><span class="w"> </span><span class="c1"># axon-server HTTP API listening port (used by axon-dash) (AXONSERVER_PORT)</span>
 <span class="hll"><span class="nt">agents_port</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">1888</span><span class="w"> </span><span class="c1"># axon-server listening port for agent connections </span>
 </span><span class="hll"><span class="nt">elastic_hosts</span><span class="p">:</span><span class="w"> </span><span class="c1"># Elasticsearch endpoint (env variable:ELASTIC_HOSTS, comma separated list)</span>
-</span><span class="w">  </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">http://localhost</span>
+</span><span class="w">  </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">http://localhost:9200</span>
 <span class="c1">#integrations_proxy: # proxy endpoint for integrations. (INTEGRATIONS_PROXY)</span>
+
+
+<span class="c1"># AxonOps licensing</span>
+<span class="nt">license_key</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">license-key</span>
+<span class="nt">org_name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">my-company</span>
 
 <span class="c1"># For better performance on large clusters, you can use a CQL store for the metrics.</span>
 <span class="c1"># To opt-in for CQL metrics storage, just specify at least one CQL host.</span>
@@ -2617,7 +2622,7 @@ sudo systemctl status axon-server
       <div class="md-copyright">
   
     <div class="md-copyright__highlight">
-      © 2024 AxonOps. All rights reserved.
+      © 2024 AxonOps Limited. All rights reserved.
     </div>
   
   

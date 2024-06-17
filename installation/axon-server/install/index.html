@@ -2184,8 +2184,13 @@ data-et-multi-view="{&quot;schema&quot;:{&quot;content&quot;:{&quot;desktop&quot
 <span class="nt">api_port</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">8080</span><span class="w"> </span><span class="c1"># axon-server HTTP API listening port (used by axon-dash) (AXONSERVER_PORT)</span>
 <span class="hll"><span class="nt">agents_port</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">1888</span><span class="w"> </span><span class="c1"># axon-server listening port for agent connections </span>
 </span><span class="hll"><span class="nt">elastic_hosts</span><span class="p">:</span><span class="w"> </span><span class="c1"># Elasticsearch endpoint (env variable:ELASTIC_HOSTS, comma separated list)</span>
-</span><span class="w">  </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">http://localhost</span>
+</span><span class="w">  </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">http://localhost:9200</span>
 <span class="c1">#integrations_proxy: # proxy endpoint for integrations. (INTEGRATIONS_PROXY)</span>
+
+
+<span class="c1"># AxonOps licensing</span>
+<span class="nt">license_key</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">license-key</span>
+<span class="nt">org_name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">my-company</span>
 
 <span class="c1"># For better performance on large clusters, you can use a CQL store for the metrics.</span>
 <span class="c1"># To opt-in for CQL metrics storage, just specify at least one CQL host.</span>
@@ -2322,7 +2327,7 @@ sudo systemctl status axon-server
       <div class="md-copyright">
   
     <div class="md-copyright__highlight">
-      © 2024 AxonOps. All rights reserved.
+      © 2024 AxonOps Limited. All rights reserved.
     </div>
   
   
