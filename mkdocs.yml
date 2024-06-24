@@ -131,6 +131,11 @@ nav:
       # - 'Setup Backup-Restore Notifications': 'how-to/backup-restore-notifications.md'
       # - 'Setup Dashboards-Global Integrations': 'how-to/setup-dashboards-global-integrations.md'
       - 'Re-use an existing host ID': how-to/reuse-host-id.md
+    
+  - Workbench:
+    - 'Cassandra': 
+      - 'Overview' : workbench/cassandra/cassandra.md
+      - 'Licence': workbench/cassandra/licence.md 
 
   # - Release Notes:
   #   - Release notes: 'release_notes/releases.md'
