@@ -132,10 +132,10 @@ nav:
       # - 'Setup Dashboards-Global Integrations': 'how-to/setup-dashboards-global-integrations.md'
       - 'Re-use an existing host ID': how-to/reuse-host-id.md
     
-  - Workbench:
+  - Developer Workbench:
     - 'Cassandra': 
-      - 'Overview' : workbench/cassandra/cassandra.md
-      - 'Licence': workbench/cassandra/licence.md 
+      # - 'Overview' : workbench/cassandra/cassandra.md
+      - 'License': workbench/cassandra/license.md 
 
   # - Release Notes:
   #   - Release notes: 'release_notes/releases.md'
