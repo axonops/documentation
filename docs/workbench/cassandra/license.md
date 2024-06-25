@@ -45,4 +45,4 @@ This End-User License Agreement ("EULA") is a legal agreement between you (eithe
 
 10. Contact Information
 
-    If you have any questions about this EULA, please contact AxonOps Limited at 124 City Road, London, EC1V 2NX. This EULA covers the essential aspects of licensing, ownership, restrictions, telemetry tracking, disclaimers, limitations of liability, termination, governing law, and contact information. It ensures that your company is protected from liability and that users are informed about the terms of use and data collection practices.
+    If you have any questions about this EULA, please contact AxonOps Limited at 124 City Road, London, EC1V 2NX.
