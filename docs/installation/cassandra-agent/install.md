@@ -31,16 +31,6 @@ EOL
 sudo yum install axon-cassandra{version}-agent
 ```
 #### Debian / Ubuntu
-``` bash
-sudo apt-get update
-sudo apt-get install curl gnupg ca-certificates
-curl https://packages.axonops.com/apt/repo-signing-key.gpg | sudo apt-key add -
-echo "deb https://packages.axonops.com/apt axonops-apt main" | sudo tee /etc/apt/sources.list.d/axonops-apt.list
-sudo apt-get update
-sudo apt-get install axon-cassandra{version}-agent
-```
-
-For new versions of Debian (>= bookworm) and Ubuntu (>= 22.04) the process of setting up the apt repository has changed. See below:
 
 ```bash
 sudo apt-get update
