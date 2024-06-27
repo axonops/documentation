@@ -66,12 +66,6 @@ You should expect the following response:
 
 ===+ "Debian / Ubuntu"
     ```bash
-    curl https://packages.axonops.com/apt/repo-signing-key.gpg | sudo apt-key add -
-    echo "deb https://packages.axonops.com/apt axonops-apt main" | sudo tee /etc/apt/sources.list.d/axonops-apt.list
-    sudo apt-get update
-    ```
-    For new versions of Debian (>= bookworm) and Ubuntu (>= 22.04) the process of setting up the apt repository has changed. See below:
-    ```bash
     sudo apt-get update
     sudo apt-get install -y curl gnupg ca-certificates
     curl -L https://packages.axonops.com/apt/repo-signing-key.gpg | sudo gpg --dearmor -o /usr/share/keyrings/axonops.gpg
