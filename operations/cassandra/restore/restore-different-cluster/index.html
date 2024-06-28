@@ -2663,13 +2663,6 @@ AxonOps server or an active AxonOps Cloud account in order to function.</p>
 <h2 id="installing-the-cassandra-restore-tool">Installing the Cassandra Restore Tool<a class="headerlink" href="#installing-the-cassandra-restore-tool" title="Permanent link">&para;</a></h2>
 <p>The AxonOps Cassandra Restore tool is included in the AxonOps Agent package.</p>
 <h4 id="installing-on-debian-ubuntu">Installing on Debian / Ubuntu<a class="headerlink" href="#installing-on-debian-ubuntu" title="Permanent link">&para;</a></h4>
-<div class="highlight"><pre><span></span><code>sudo<span class="w"> </span>apt-get<span class="w"> </span>install<span class="w"> </span>-y<span class="w"> </span>curl<span class="w"> </span>gnupg<span class="w"> </span>ca-certificates
-curl<span class="w"> </span>https://packages.axonops.com/apt/repo-signing-key.gpg<span class="w"> </span><span class="p">|</span><span class="w"> </span>sudo<span class="w"> </span>apt-key<span class="w"> </span>add<span class="w"> </span>-
-<span class="nb">echo</span><span class="w"> </span><span class="s2">&quot;deb https://packages.axonops.com/apt axonops-apt main&quot;</span><span class="w"> </span><span class="p">|</span><span class="w"> </span>sudo<span class="w"> </span>tee<span class="w"> </span>/etc/apt/sources.list.d/axonops-apt.list
-sudo<span class="w"> </span>apt-get<span class="w"> </span>update
-sudo<span class="w"> </span>apt-get<span class="w"> </span>install<span class="w"> </span>axon-agent
-</code></pre></div>
-<p>For new versions of Debian (&gt;= bookworm) and Ubuntu (&gt;= 22.04) the process of setting up the apt repository has changed. See below:</p>
 <div class="highlight"><pre><span></span><code>sudo<span class="w"> </span>apt-get<span class="w"> </span>update
 sudo<span class="w"> </span>apt-get<span class="w"> </span>install<span class="w"> </span>-y<span class="w"> </span>curl<span class="w"> </span>gnupg<span class="w"> </span>ca-certificates
 curl<span class="w"> </span>-L<span class="w"> </span>https://packages.axonops.com/apt/repo-signing-key.gpg<span class="w"> </span><span class="p">|</span><span class="w"> </span>sudo<span class="w"> </span>gpg<span class="w"> </span>--dearmor<span class="w"> </span>-o<span class="w"> </span>/usr/share/keyrings/axonops.gpg
