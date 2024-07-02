@@ -9,8 +9,8 @@ function random(){
 window.onload = random;
 
 const tabSync = () => {
-  document.getElementsByName('osFamily')[0].checked == true;
-  document.getElementsByName('casFamily')[0].checked == true;
+  document.getElementsByName('osFamily')[0].checked = true;
+  document.getElementsByName('casFamily')[0].checked = true;
   const tabs = document.querySelectorAll(".tabbed-set > input")
   for (const tab of tabs) {
     tab.addEventListener("change", function() {
