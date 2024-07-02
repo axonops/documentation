@@ -1,3 +1,5 @@
+!function(){var e,t,n;e="16863fd582763a2",t=function(){Reo.init({clientID:"16863fd582763a2"})},(n=document.createElement("script")).src="https://static.reo.dev/"+e+"/reo.js",n.async=!0,n.onload=t,document.head.appendChild(n)}();
+
 function random(){
   setTimeout('', 1000);
   document.getElementById("myNumber").innerHTML = Math.floor(Math.random() * 10000000);
