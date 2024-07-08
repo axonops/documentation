@@ -28,7 +28,7 @@ The aim of the AxonOps Cassandra Commitlog Archiving(PITR) feature is to provide
 
 #### The Point-in-Time recovery (PITR) feature is implemented in Cassandra as “Commitlog Archiving”.
 
-In ```$CASSANDRA_HOME/conf/``` there is a file called ```commitlog-archiving.properties```. 
+Depending on the installation method used for Cassandra, in either ```$CASSANDRA_HOME/conf/```(tarball) or ```/etc/cassandra/```(package) there is a file called ```commitlog-archiving.properties```. 
 
 To enable Commitlog Archiving(PITR) in Cassandra, some properties need to be set in the configuration file for every Cassandra node.
 
