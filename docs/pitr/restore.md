@@ -125,19 +125,3 @@ Successful Point-in-time restore.
 Please confirm the details and data in the tables that have been restored are present as expected.
 
 <img src="/pitr/step_7_full.png" width="700">
-
-
-
-
-
-
-
-
-
-
-
-
-
-<br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/>
-
-bottom please remove
