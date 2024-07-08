@@ -1,73 +1,82 @@
 # Point in Time Recovery
 
-The aim of the AxonOps Cassandra Commitlog Archiving(PITR) feature is to provide an easy to use graphical user interface instead of users having to configure it manually on every Cassandra node in a cluster. 
+The aim of the AxonOps Cassandra Commitlog Archiving(PITR) feature is to provide an easy to use graphical user interface instead of users having to configure it manually on every Cassandra node in a cluster.
 
 #### Features
+
 - UI to configure Commitlog archiving per Data Center(DC) in your cluster.
-- Local or Remote Storage locations to store your commitlog archives.
-- Retention periods for storing and retrieving your commitlog archives.
 - UI that uses backups and commitlogs to specify the Point-in-Time to restore your cluster state too. 
-- UI for current commitlog archiving status / statistics
+- UI for for viewing current commitlog archiving status.
+- Local or Remote Storage locations to store your commitlog archives.
+- Retention periods for how long to keep your commitlog archives.
 
 
-#### Assumptions
+#### Understanding Commitlog Archiving
 
-- Native Cassandra installation:
-    Axon-agent has write access to Cassandra conf directory
+In Apache Cassandra, the commitlog is a vital component of the database that records every write operation before it is applied to the data files (SSTables). 
+This mechanism ensures durability and helps recover data in case of a node failure.
 
-- Docker Cassandra installation:
-    Axon-agent has the ability to start/stop Cassandra containers
+Commitlog Archiving takes this a step further by continuously saving these logs to a secure location. This process involves:
 
+  - **```Capturing Every Change```**
+  
+    Every modification to the database, including inserts, updates, and deletions, is recorded in the commitlog.
 
-#### Commit logs are archived in three different ways: 
+  - **```Archiving Logs```**
+  
+    These logs are periodically copied to an external storage location, creating a history of all database operations.
 
-- At Cassandra node startup 
-- When a commit log is written to disk 
-- At a specified point-in-time or when a backup is taken. 
+  - **```Ensuring Data Durability```**
+  
+    In the event of a hardware failure or data corruption, the archived commitlogs can be used to reconstruct the state of the database.
 
+This archiving process is essential for maintaining data integrity, enabling disaster recovery, and supporting compliance with data retention policies.
 
-#### The Point-in-Time recovery (PITR) feature is implemented in Cassandra as “Commitlog Archiving”.
+#### Point-in-Time Restore (PITR)
 
-Depending on the installation method used for Cassandra, in either ```$CASSANDRA_HOME/conf/```(tarball) or ```/etc/cassandra/```(package) there is a file called ```commitlog-archiving.properties```. 
+Point-in-Time Restore (PITR) is a powerful feature that allows you to restore your database to a specific moment in time.
+This is particularly useful for recovering from data corruption, accidental deletions, or other operational errors.
 
-To enable Commitlog Archiving(PITR) in Cassandra, some properties need to be set in the configuration file for every Cassandra node.
+Here’s how PITR works in Apache Cassandra:
 
-- **archive_command**
+  - **```Continuous Archiving```**
 
-    One command can be inserted with %path and %name arguments. %path is the fully qualified path of the commitlog segment to archive. %name is the filename of the commitlog. STDOUT, STDIN, or multiple commands cannot be executed. If multiple commands are required, add a pointer to a script in this option.
+    As mentioned, commitlogs are continuously archived, creating a comprehensive record of all database operations.
 
-    ```Example: archive_command=/bin/ln %path /backup/%name```
+  - **```Restore Process```**
 
-    ```Default value: blank```
+    When a restore is needed, the archived commitlogs are replayed from the last known good snapshot up to the desired point in time. This involves:
 
-- **restore_command**
-    
-    One command can be inserted with %from and %to arguments. %from is the fully qualified path to an archived commitlog segment using the specified restore directories. %to defines the directory to the live commitlog location.
+    - **```Stopping the Database:```** Halting operations to ensure data consistency.
+    - **```Applying Logs:```** Reapplying the archived commitlogs to reconstruct the database state up to the specified timestamp.
+    - **```Restarting Operations:```** Bringing the database back online, now restored to the desired point in time.
 
-    ```Example: restore_command=/bin/cp -f %from %to```
+PITR is invaluable for maintaining business continuity and minimizing data loss in critical situations.
+It provides a granular level of control over data recovery, allowing enterprises to revert their databases to any precise moment before an issue occurred.
 
-    ```Default value: blank```
+#### Why Commitlog Archiving and PITR Matter
 
-- **restore_directories**
-    
-    Defines the directory to scan the recovery files into.
+Commitlog archiving and PITR are not just advanced database features; they are essential tools for enterprise-grade data management. They ensure that:
+  - **```Data Integrity```**
+  
+    Your data remains accurate and consistent, even in the face of failures.
 
-    ```Example: restore_directories=/path/to/restore_dir_location```
+  - **```Disaster Recovery```**
+  
+    You can recover quickly from unforeseen disasters with minimal data loss.
 
-    ```Default value: blank```
+  - **```Regulatory Compliance```**
+  
+    You meet stringent data retention and auditing requirements.
 
-- **restore_point_in_time**
-    
-    Restore mutations created up to and including this timestamp in GMT in the format yyyy:MM:dd HH:mm:ss. Recovery will continue through the segment when the first client-supplied timestamp greater than this time is encountered, but only mutations less than or equal to this timestamp will be applied.
+  - **```Operational Resilience```**
+  
+    You can handle accidental data modifications or deletions without significant downtime.
 
-    ```Example: restore_point_in_time=2020:04:31 20:43:12```
+#### The Traditional Challenges of Cassandra Commitlog Archiving and Point-in-Time Restore
 
-    ```Default value: blank```
+Typically, setting up Commitlog Archiving and Point-in-Time Restore in Cassandra is a complex and time-consuming process. 
+It involves configuring various components, ensuring compatibility between different systems, and maintaining an intricate setup that can often be fragile and prone to errors.
+These configurations require in-depth knowledge and continuous monitoring to ensure everything runs smoothly.
 
-- **precision**
-
-    Precision of the timestamp used in the inserts. Choice is generally MILLISECONDS or MICROSECONDS
-
-    ```Example: precision=MICROSECONDS```
-
-    ```Default value: MICROSECONDS```
+Setup Commitlog (PITR) in a couple easy steps [here](/pitr/configuration/)

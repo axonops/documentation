@@ -1,4 +1,4 @@
-#### Assumptions
+#### Prerequisites
 
 Backups are enabled and setup. For more on how to setup backups please follow the guide [here](/operations/cassandra/backup/overview/)
 
@@ -18,17 +18,18 @@ Complete the fields with the required value and click <img src="/pitr/create_con
 
 #### Fields 
 
-- **```Data Centers(Mandatory)```**
+- **```Data Centers (Mandatory)```**
     
     The Cassandra Cluster DC that you want to enable Commitlog Archiving.
 
-- **```Retention```**
+- **```Retention (Mandatory)```**
     
-    The amount of time in days(d), weeks(w), month(M) or year(y) that you want to archive the commit logs for.
+    The amount of time in hours(h), days(d), weeks(w), month(M) or year(y) that you want to archive the commit logs for.
 
 - **```Remote Storage```**
 
     The following options are available for Remote storage locations.
+
     - AWS S3
     - Google Cloud Storage
     - local filesystem

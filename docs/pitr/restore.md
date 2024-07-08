@@ -1,8 +1,8 @@
 #### Requirements
 
 - Make sure Cassandra service is stopped on every node in the Cluster/Data Center(DC)
-- Make sure $COMMITLOG_DIR is empty and writable
-- Check target table directories are empty and writable
+- Make sure Cassandra commitlog directory is emptied for every node you want to restore too.
+- Check Cassandra Application Keyspace table directories are emptied for every node and keyspace/table you want to restore. 
 
 #### Steps:
 
@@ -14,7 +14,7 @@ On the top tab select Point-In-Time Recovery
 
 <img src="/pitr/pitr_top_recovery.png" width="700">
 
-You will be presented with the Point-In-Time recovery screen. There are several steps that need to be done to complete a Point-in-time restore. 
+You will be presented with the Point-In-Time restore screen. There are several steps that need to be done to complete a Point-in-time restore. 
 
 <br/>
 
@@ -84,7 +84,7 @@ Confirm by clicking show details that all the tables and keyspaces you want to r
 
 #### Step 3: Confirmation of Point-in-time restoration to proceed.
 
-Confirm you are ready to start the Point-in-time recovery.
+Confirm you are ready to start the Point-in-time restore.
 
 <img src="/pitr/step_3_full.png" width="700">
 
@@ -92,22 +92,25 @@ Confirm you are ready to start the Point-in-time recovery.
 - Delete the SStable files in the target table directories
 - Delete commitlog files in the commitlog directory
 
-#### Step 4: Final checks and last steps before Point-in-time recovery starts.
+#### Step 4: Final checks and last steps before Point-in-time restore starts.
 
 The Axon-Agent service confirm the Cassandra nodes are stopped.
-Checks to ensure the clstuer is ready for the Point-in-time recovery.
+Checks to ensure the clstuer is ready for the Point-in-time restore.
 
 <img src="/pitr/step_4_full.png" width="700">
 
-Once you have clicked Check PITR Readiness a warning will be displayed. 
+Once you have clicked Check PITR Readiness it will confirm that the Cluster is in the correct state for recovery to proceed.
+
+If any of the data directories still contain sstables a warning may be displayed. 
+
 Click on show details button to view the tables affected and any errors/warnings.
 
 <img src="/pitr/step_4_full_details.png" width="700">
 
 
-#### Step 5: Start the Point-in-time recovery.
+#### Step 5: Start the Point-in-time restore.
 
-Start the recovery process
+Start the restore process
 
 <img src="/pitr/step_5_full.png" width="700">
 

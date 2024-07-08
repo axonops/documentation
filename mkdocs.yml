@@ -121,9 +121,9 @@ nav:
       - 'Whole cluster': 'operations/cassandra/restore/restore-cluster-same-ip.md'
       - 'Whole cluster with changed IP addresses': 'operations/cassandra/restore/restore-cluster-different-ips.md'
       - 'Restore to a different cluster': 'operations/cassandra/restore/restore-different-cluster.md'
-    - 'Point-in-time Recovery':
+    - 'Point-in-time Restore':
       - 'Overview': pitr/overview.md
-      - 'Configure Point-in-Time Recovery': pitr/configuration.md
+      - 'Configure Commitlog Archiving': pitr/configuration.md
       - 'Restore from Point-in-Time': pitr/restore.md
       
     
