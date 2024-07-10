@@ -1,8 +1,8 @@
-This license applies to the AxonOps™ Developer Workbench product. Source Code for AxonOps™ Developer Workbench is available at [https://github.com/axonops/axonops-developer-workbench-cassandra](https://github.com/axonops/axonops-developer-workbench-cassandra){:target="_blank"} under the Apache License 2.0 agreement at [https://github.com/axonops/axonops-developer-workbench-cassandra/blob/main/LICENSE](https://github.com/axonops/axonops-developer-workbench-cassandra/blob/main/LICENSE){:target="_blank"}
+This license applies to the AxonOps™ Workbench product. Source Code for AxonOps™ Workbench is available at [https://github.com/axonops/axonops-workbench-cassandra](https://github.com/axonops/axonops-workbench-cassandra){:target="_blank"} under the Apache License 2.0 agreement at [https://github.com/axonops/axonops-workbench-cassandra/blob/main/LICENSE](https://github.com/axonops/axonops-workbench-cassandra/blob/main/LICENSE){:target="_blank"}
 
-# End-User License Agreement (EULA) for AxonOps™ Developer Workbench
+# End-User License Agreement (EULA) for AxonOps™ Workbench
 
-This End-User License Agreement ("EULA") is a legal agreement between you (either an individual or an entity) and AxonOps Limited ("Licensor") regarding your use of the AxonOps™ Developer Workbench desktop application and associated documentation (the "Software"). By downloading, installing, or using the Software, you agree to be bound by the terms of this EULA. If you do not agree to the terms of this EULA, do not download, install, or use the Software.
+This End-User License Agreement ("EULA") is a legal agreement between you (either an individual or an entity) and AxonOps Limited ("Licensor") regarding your use of the AxonOps™ Workbench desktop application and associated documentation (the "Software"). By downloading, installing, or using the Software, you agree to be bound by the terms of this EULA. If you do not agree to the terms of this EULA, do not download, install, or use the Software.
 
 1. License Grant
 
