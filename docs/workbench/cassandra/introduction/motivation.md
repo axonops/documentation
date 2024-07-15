@@ -6,7 +6,7 @@ It's an exceptional database, offering unparalleled performance and availability
 
 We initially developed the AxonOps platform to provide the essential operational and administation tools needed to monitor, maintain, and protect Cassandra deployments. However, we recognized a significant gap in the market: the lack of a quality desktop application specifically designed for Cassandra. 
 
-While there have been some attempts to create such tools over the years, they often fell short. Many were not built natively for Cassandra, relying instead on JDBC connections or just as plugins for other tools. Additionally, these tools were often poorly maintained or closed-source, limiting their usability and adaptability for the Cassandra community. 
+While there have been some attempts to create such tools over the years, they often fell short. Many were not built natively for Cassandra, relying instead on weirdness using JDBC connections or just as adhoc plugins for other tools. Additionally, these tools were often poorly maintained or closed-source, limiting their usability and adaptability for the Cassandra community. 
 
 Unlike other databases, Cassandra has had a very limited selection of dedicated desktop applications, and we believed it was time to change that. We wanted to provide a tool that matched the quality and usability of desktop applications available for other databases. Thus, we created AxonOps Workbench to make it easier for developers and DBAs to connect to, use, develop, and administer Cassandra through an intuitive and modern desktop application.
 
