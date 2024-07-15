@@ -1,4 +1,4 @@
-# Why we built AxonOps Workbench for Apache Cassandra®?
+# Why we built AxonOps™ Workbench for Apache Cassandra®?
 
 The team at AxonOps has a deep appreciation for Apache Cassandra. It's an exceptional database, offering unparalleled performance and availability, built on robust distributed system principles. This makes Cassandra the go-to choice for always-on, always-available, highly performant, and modern databases tailored for cloud, hybrid, and internet-facing enterprises.
 

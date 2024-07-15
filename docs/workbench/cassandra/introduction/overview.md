@@ -1,4 +1,4 @@
-# What is AxonOps Workbench for Cassandra®?
+# What is AxonOps™ Workbench for Cassandra®?
 
 AxonOps Workbench for Apache Cassandra is a powerful desktop application designed to simplify the management, development, and administration of Apache Cassandra clusters. Available for Mac, Windows, and Linux, AxonOps Workbench offers a modern and intuitive graphical user interface (GUI) that allows users to connect to Cassandra clusters directly or via SSH. 
 
