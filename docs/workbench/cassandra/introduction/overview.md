@@ -5,7 +5,7 @@ AxonOps Workbench for Apache Cassandra is a powerful desktop application designe
 This tool is built to address the gaps in existing Cassandra tools, providing a dedicated, high-quality solution that matches the usability and functionality of desktop applications available for other databases.
 
 ## About Apache Cassandra
-Apache Cassandra is an open-source, distributed NoSQL database known for its exceptional scalability, high availability, and performance. Initially released as an open-source project in 2008, Cassandra has since become a top-level project under the Apache Software Foundation. It is trusted by thousands of companies worldwide, including major organizations like Netflix, Apple, and American Express, to handle their mission-critical data needs.
+Apache Cassandra is a genuinely open-source, distributed NoSQL database known for its exceptional scalability, high availability, and performance. Initially released as an open-source project in 2008, Cassandra has since become a top-level project under the Apache Software Foundation. It is trusted by thousands of companies worldwide, including major organizations like Netflix, Apple, and American Express, to handle their mission-critical data needs.
 
 The Cassandra community is a vibrant and diverse group of developers and users from around the globe. This community-driven project thrives on collaboration, with contributions from numerous individuals and organizations that continuously enhance its features and stability. The open-source nature of Cassandra ensures that it remains flexible, extensible, and free from vendor lock-in, making it an attractive choice for modern enterprises.
 
