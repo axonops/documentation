@@ -24,7 +24,7 @@ AxonOps Workbench is designed to enhance the user experience for developers and 
 # Getting Started
 To get started with AxonOps Workbench, follow these steps:
 
-1. **Sign-up to AxonOps to use our AI**: Sign-up to AxonOps to use the built-in AI assistant. You dont need to use the AxonOps to manage your Cassandra clusters to use the AI assistant (although we would love you to give it a try 😊 ), we just need you to register and login to use our AI assistant. *Note: this is not required to use workbench if you dont want to*.
+1. **Sign-up to AxonOps to use our AI**: Sign-up to AxonOps to use the built-in AI assistant. You dont need to use the AxonOps to manage your Cassandra clusters to use the AI assistant (although we would love you to give it a try 😊 ), we just need you to register and login to use our AI assistant in the workbench application. *Note: this is not required to use workbench if you dont want to*.
 1. **Download and Install**: Download the application for your operating system (Mac, Windows, or Linux) and follow the installation instructions.
 1. **Connect to a Cluster**: Set up a connection to your Cassandra cluster, either directly or via an SSH tunnel.
 1. **Deploy a cluster on your desktop**: Deploy a Cassandra cluster with the AxonOps managment tool locally on your desktop via a sandbox workspace.
