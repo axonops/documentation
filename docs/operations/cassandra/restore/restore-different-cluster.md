@@ -221,6 +221,11 @@ Here are some examples of the most common storage types:
 ```bash
 --storage-config '{"type":"googlecloudstorage","location":"us","service_account_credentials":"ESCAPED_JSON_PRIVATE_KEY"}'
 ```
+#### SSH/SFTP
+```
+--storage-config '{"type":"sftp","host":"<sftp_server_hostname>","port","22","path":"/backup/path","user":"<sftp_username>","key_file":"~/private/key/file"}'
+```
+
 
 ## Restore to a different table
 > This feature is available in AxonOps Agent v1.0.61 or later
