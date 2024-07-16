@@ -448,7 +448,7 @@ data-et-multi-view="{&quot;schema&quot;:{&quot;content&quot;:{&quot;desktop&quot
     
     
       <li class="md-tabs__item">
-        <a href="../../../../workbench/cassandra/license/" class="md-tabs__link">
+        <a href="../../../../workbench/cassandra/introduction/overview.md" class="md-tabs__link">
           
   
   AxonOps Workbench
@@ -2193,6 +2193,15 @@ data-et-multi-view="{&quot;schema&quot;:{&quot;content&quot;:{&quot;desktop&quot
   
 </li>
         
+          <li class="md-nav__item">
+  <a href="#sshsftp" class="md-nav__link">
+    <span class="md-ellipsis">
+      SSH/SFTP
+    </span>
+  </a>
+  
+</li>
+        
       </ul>
     </nav>
   
@@ -2546,7 +2555,28 @@ data-et-multi-view="{&quot;schema&quot;:{&quot;content&quot;:{&quot;desktop&quot
   
   
     <li class="md-nav__item">
-      <a href="../../../../workbench/cassandra/license/" class="md-nav__link">
+      <a href="../../../../workbench/cassandra/introduction/overview.md" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Overview
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../workbench/cassandra/licencing/license.md" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -2732,6 +2762,15 @@ data-et-multi-view="{&quot;schema&quot;:{&quot;content&quot;:{&quot;desktop&quot
   <a href="#google-cloud-storage" class="md-nav__link">
     <span class="md-ellipsis">
       Google Cloud Storage
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#sshsftp" class="md-nav__link">
+    <span class="md-ellipsis">
+      SSH/SFTP
     </span>
   </a>
   
@@ -2948,6 +2987,9 @@ destination cluster before running the restore command.</p>
 </code></pre></div>
 <h4 id="google-cloud-storage">Google Cloud Storage<a class="headerlink" href="#google-cloud-storage" title="Permanent link">&para;</a></h4>
 <div class="highlight"><pre><span></span><code>--storage-config<span class="w"> </span><span class="s1">&#39;{&quot;type&quot;:&quot;googlecloudstorage&quot;,&quot;location&quot;:&quot;us&quot;,&quot;service_account_credentials&quot;:&quot;ESCAPED_JSON_PRIVATE_KEY&quot;}&#39;</span>
+</code></pre></div>
+<h4 id="sshsftp">SSH/SFTP<a class="headerlink" href="#sshsftp" title="Permanent link">&para;</a></h4>
+<div class="highlight"><pre><span></span><code>--storage-config &#39;{&quot;type&quot;:&quot;sftp&quot;,&quot;host&quot;:&quot;&lt;sftp_server_hostname&gt;&quot;,&quot;port&quot;,&quot;22&quot;,&quot;path&quot;:&quot;/backup/path&quot;,&quot;user&quot;:&quot;&lt;sftp_username&gt;&quot;,&quot;key_file&quot;:&quot;~/private/key/file&quot;}&#39;
 </code></pre></div>
 <h2 id="restore-to-a-different-table">Restore to a different table<a class="headerlink" href="#restore-to-a-different-table" title="Permanent link">&para;</a></h2>
 <blockquote>
