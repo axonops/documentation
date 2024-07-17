@@ -9,18 +9,22 @@
       
       
       
+        <link rel="prev" href="../cassandra/">
       
       
-      <link rel="icon" href="../../img/favicon.ico">
+        <link rel="next" href="../../logsandevents/logsandevents/">
+      
+      
+      <link rel="icon" href="../../../img/favicon.ico">
       <meta name="generator" content="mkdocs-1.5.3, mkdocs-material-9.5.17">
     
     
       
-        <title>Setup Backup - Restore Notifications - docs</title>
+        <title>Metrics Query Syntax - docs</title>
       
     
     
-      <link rel="stylesheet" href="../../assets/stylesheets/main.bcfcd587.min.css">
+      <link rel="stylesheet" href="../../../assets/stylesheets/main.bcfcd587.min.css">
       
       
 
@@ -39,9 +43,9 @@
       
     
     
-      <link rel="stylesheet" href="../../stylesheets/extra.css">
+      <link rel="stylesheet" href="../../../stylesheets/extra.css">
     
-    <script>__md_scope=new URL("../..",location),__md_hash=e=>[...e].reduce((e,_)=>(e<<5)-e+_.charCodeAt(0),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    <script>__md_scope=new URL("../../..",location),__md_hash=e=>[...e].reduce((e,_)=>(e<<5)-e+_.charCodeAt(0),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
     
       
   
@@ -58,7 +62,7 @@
     
     
     
-   <link href="../../assets/stylesheets/glightbox.min.css" rel="stylesheet"/><style>
+   <link href="../../../assets/stylesheets/glightbox.min.css" rel="stylesheet"/><style>
     html.glightbox-open { overflow: initial; height: 100%; }
     .gslide-title { margin-top: 0px; user-select: text; }
     .gslide-desc { color: #666; user-select: text; }
@@ -67,7 +71,7 @@
     .gdesc-inner { font-size: 0.75rem; }
     body[data-md-color-scheme="slate"] .gdesc-inner { background: var(--md-default-bg-color);}
     body[data-md-color-scheme="slate"] .gslide-title { color: var(--md-default-fg-color);}
-    body[data-md-color-scheme="slate"] .gslide-desc { color: var(--md-default-fg-color);}</style> <script src="../../assets/javascripts/glightbox.min.js"></script></head>
+    body[data-md-color-scheme="slate"] .gslide-desc { color: var(--md-default-fg-color);}</style> <script src="../../../assets/javascripts/glightbox.min.js"></script></head>
   
   
     <body dir="ltr">
@@ -79,7 +83,7 @@
     <div data-md-component="skip">
       
         
-        <a href="#setup-backup-restore-notifications" class="md-skip">
+        <a href="#axonops-query-language-documentation" class="md-skip">
           Skip to content
         </a>
       
@@ -186,7 +190,7 @@
         <div class="md-header__topic" data-md-component="header-topic">
           <span class="md-ellipsis">
             
-            Setup Backup - Restore Notifications
+            Metrics Query Syntax
             
           </span>
         </div>
@@ -343,7 +347,7 @@ data-et-multi-view="{&quot;schema&quot;:{&quot;content&quot;:{&quot;desktop&quot
   
   
     <li class="md-tabs__item">
-      <a href="../.." class="md-tabs__link">
+      <a href="../../.." class="md-tabs__link">
         
   
     
@@ -362,7 +366,7 @@ data-et-multi-view="{&quot;schema&quot;:{&quot;content&quot;:{&quot;desktop&quot
     
     
       <li class="md-tabs__item">
-        <a href="../../editions/free_editions/" class="md-tabs__link">
+        <a href="../../../editions/free_editions/" class="md-tabs__link">
           
   
   Editions
@@ -386,7 +390,7 @@ data-et-multi-view="{&quot;schema&quot;:{&quot;content&quot;:{&quot;desktop&quot
     
     
       <li class="md-tabs__item">
-        <a href="../../get_started/saas/" class="md-tabs__link">
+        <a href="../../../get_started/saas/" class="md-tabs__link">
           
   
   Get Started
@@ -403,17 +407,21 @@ data-et-multi-view="{&quot;schema&quot;:{&quot;content&quot;:{&quot;desktop&quot
         
   
   
+    
+  
   
     
     
       
   
   
+    
+  
   
     
     
-      <li class="md-tabs__item">
-        <a href="../../cluster/cluster-overview/" class="md-tabs__link">
+      <li class="md-tabs__item md-tabs__item--active">
+        <a href="../../../cluster/cluster-overview/" class="md-tabs__link">
           
   
   Using AxonOps
@@ -440,7 +448,7 @@ data-et-multi-view="{&quot;schema&quot;:{&quot;content&quot;:{&quot;desktop&quot
     
     
       <li class="md-tabs__item">
-        <a href="../../workbench/cassandra/license/" class="md-tabs__link">
+        <a href="../../../workbench/cassandra/license/" class="md-tabs__link">
           
   
   AxonOps Workbench
@@ -516,7 +524,7 @@ data-et-multi-view="{&quot;schema&quot;:{&quot;content&quot;:{&quot;desktop&quot
   
   
     <li class="md-nav__item">
-      <a href="../.." class="md-nav__link">
+      <a href="../../.." class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -576,7 +584,7 @@ data-et-multi-view="{&quot;schema&quot;:{&quot;content&quot;:{&quot;desktop&quot
   
   
     <li class="md-nav__item">
-      <a href="../../editions/free_editions/" class="md-nav__link">
+      <a href="../../../editions/free_editions/" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -597,7 +605,7 @@ data-et-multi-view="{&quot;schema&quot;:{&quot;content&quot;:{&quot;desktop&quot
   
   
     <li class="md-nav__item">
-      <a href="../../editions/enterprise_edition/" class="md-nav__link">
+      <a href="../../../editions/enterprise_edition/" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -705,7 +713,7 @@ data-et-multi-view="{&quot;schema&quot;:{&quot;content&quot;:{&quot;desktop&quot
   
   
     <li class="md-nav__item">
-      <a href="../../get_started/saas/" class="md-nav__link">
+      <a href="../../../get_started/saas/" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -726,7 +734,7 @@ data-et-multi-view="{&quot;schema&quot;:{&quot;content&quot;:{&quot;desktop&quot
   
   
     <li class="md-nav__item">
-      <a href="../../get_started/agent_setup/" class="md-nav__link">
+      <a href="../../../get_started/agent_setup/" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -835,7 +843,7 @@ data-et-multi-view="{&quot;schema&quot;:{&quot;content&quot;:{&quot;desktop&quot
   
   
     <li class="md-nav__item">
-      <a href="../../installation/axon-server/ubuntu/" class="md-nav__link">
+      <a href="../../../installation/axon-server/ubuntu/" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -856,7 +864,7 @@ data-et-multi-view="{&quot;schema&quot;:{&quot;content&quot;:{&quot;desktop&quot
   
   
     <li class="md-nav__item">
-      <a href="../../installation/axon-server/centos/" class="md-nav__link">
+      <a href="../../../installation/axon-server/centos/" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -877,7 +885,7 @@ data-et-multi-view="{&quot;schema&quot;:{&quot;content&quot;:{&quot;desktop&quot
   
   
     <li class="md-nav__item">
-      <a href="../../installation/axon-server/metricsdatabase/" class="md-nav__link">
+      <a href="../../../installation/axon-server/metricsdatabase/" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -906,7 +914,7 @@ data-et-multi-view="{&quot;schema&quot;:{&quot;content&quot;:{&quot;desktop&quot
   
   
     <li class="md-nav__item">
-      <a href="../../installation/axon-dash/install/" class="md-nav__link">
+      <a href="../../../installation/axon-dash/install/" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -927,7 +935,7 @@ data-et-multi-view="{&quot;schema&quot;:{&quot;content&quot;:{&quot;desktop&quot
   
   
     <li class="md-nav__item">
-      <a href="../../installation/cassandra-agent/install/" class="md-nav__link">
+      <a href="../../../installation/cassandra-agent/install/" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -948,7 +956,7 @@ data-et-multi-view="{&quot;schema&quot;:{&quot;content&quot;:{&quot;desktop&quot
   
   
     <li class="md-nav__item">
-      <a href="../../installation/kubernetes/" class="md-nav__link">
+      <a href="../../../installation/kubernetes/" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -1017,7 +1025,7 @@ data-et-multi-view="{&quot;schema&quot;:{&quot;content&quot;:{&quot;desktop&quot
   
   
     <li class="md-nav__item">
-      <a href="../../installation/compat_matrix/compat_matrix/" class="md-nav__link">
+      <a href="../../../installation/compat_matrix/compat_matrix/" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -1086,7 +1094,7 @@ data-et-multi-view="{&quot;schema&quot;:{&quot;content&quot;:{&quot;desktop&quot
   
   
     <li class="md-nav__item">
-      <a href="../../get_started/docker/" class="md-nav__link">
+      <a href="../../../get_started/docker/" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -1119,25 +1127,30 @@ data-et-multi-view="{&quot;schema&quot;:{&quot;content&quot;:{&quot;desktop&quot
       
   
   
+    
   
   
+  
     
     
     
+      
+        
+        
       
       
         
       
     
     
-    <li class="md-nav__item md-nav__item--nested">
+    <li class="md-nav__item md-nav__item--active md-nav__item--section md-nav__item--nested">
       
         
         
-        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_4" >
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_4" checked>
         
           
-          <label class="md-nav__link" for="__nav_4" id="__nav_4_label" tabindex="0">
+          <label class="md-nav__link" for="__nav_4" id="__nav_4_label" tabindex="">
             
   
   <span class="md-ellipsis">
@@ -1148,7 +1161,7 @@ data-et-multi-view="{&quot;schema&quot;:{&quot;content&quot;:{&quot;desktop&quot
             <span class="md-nav__icon md-icon"></span>
           </label>
         
-        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_4_label" aria-expanded="false">
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_4_label" aria-expanded="true">
           <label class="md-nav__title" for="__nav_4">
             <span class="md-nav__icon md-icon"></span>
             Using AxonOps
@@ -1167,17 +1180,20 @@ data-et-multi-view="{&quot;schema&quot;:{&quot;content&quot;:{&quot;desktop&quot
       
       
         
+          
+          
+        
       
     
     
-    <li class="md-nav__item md-nav__item--nested">
+    <li class="md-nav__item md-nav__item--section md-nav__item--nested">
       
         
         
         <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_4_1" >
         
           
-          <label class="md-nav__link" for="__nav_4_1" id="__nav_4_1_label" tabindex="0">
+          <label class="md-nav__link" for="__nav_4_1" id="__nav_4_1_label" tabindex="">
             
   
   <span class="md-ellipsis">
@@ -1202,7 +1218,7 @@ data-et-multi-view="{&quot;schema&quot;:{&quot;content&quot;:{&quot;desktop&quot
   
   
     <li class="md-nav__item">
-      <a href="../../cluster/cluster-overview/" class="md-nav__link">
+      <a href="../../../cluster/cluster-overview/" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -1228,25 +1244,30 @@ data-et-multi-view="{&quot;schema&quot;:{&quot;content&quot;:{&quot;desktop&quot
                 
   
   
+    
   
   
+  
     
     
     
       
       
-        
-      
-    
-    
-    <li class="md-nav__item md-nav__item--nested">
-      
-        
-        
-        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_4_2" >
         
           
-          <label class="md-nav__link" for="__nav_4_2" id="__nav_4_2_label" tabindex="0">
+          
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_4_2" checked>
+        
+          
+          <label class="md-nav__link" for="__nav_4_2" id="__nav_4_2_label" tabindex="">
             
   
   <span class="md-ellipsis">
@@ -1257,7 +1278,7 @@ data-et-multi-view="{&quot;schema&quot;:{&quot;content&quot;:{&quot;desktop&quot
             <span class="md-nav__icon md-icon"></span>
           </label>
         
-        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_4_2_label" aria-expanded="false">
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_4_2_label" aria-expanded="true">
           <label class="md-nav__title" for="__nav_4_2">
             <span class="md-nav__icon md-icon"></span>
             Monitoring
@@ -1271,7 +1292,7 @@ data-et-multi-view="{&quot;schema&quot;:{&quot;content&quot;:{&quot;desktop&quot
   
   
     <li class="md-nav__item">
-      <a href="../../monitoring/overview/" class="md-nav__link">
+      <a href="../../overview/" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -1292,7 +1313,7 @@ data-et-multi-view="{&quot;schema&quot;:{&quot;content&quot;:{&quot;desktop&quot
   
   
     <li class="md-nav__item">
-      <a href="../../monitoring/servicechecks/overview/" class="md-nav__link">
+      <a href="../../servicechecks/overview/" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -1310,8 +1331,10 @@ data-et-multi-view="{&quot;schema&quot;:{&quot;content&quot;:{&quot;desktop&quot
                 
   
   
+    
   
   
+  
     
     
     
@@ -1321,11 +1344,11 @@ data-et-multi-view="{&quot;schema&quot;:{&quot;content&quot;:{&quot;desktop&quot
       
     
     
-    <li class="md-nav__item md-nav__item--nested">
+    <li class="md-nav__item md-nav__item--active md-nav__item--nested">
       
         
         
-        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_4_2_3" >
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_4_2_3" checked>
         
           
           <label class="md-nav__link" for="__nav_4_2_3" id="__nav_4_2_3_label" tabindex="0">
@@ -1339,7 +1362,7 @@ data-et-multi-view="{&quot;schema&quot;:{&quot;content&quot;:{&quot;desktop&quot
             <span class="md-nav__icon md-icon"></span>
           </label>
         
-        <nav class="md-nav" data-md-level="3" aria-labelledby="__nav_4_2_3_label" aria-expanded="false">
+        <nav class="md-nav" data-md-level="3" aria-labelledby="__nav_4_2_3_label" aria-expanded="true">
           <label class="md-nav__title" for="__nav_4_2_3">
             <span class="md-nav__icon md-icon"></span>
             Metrics Dashboard
@@ -1353,7 +1376,7 @@ data-et-multi-view="{&quot;schema&quot;:{&quot;content&quot;:{&quot;desktop&quot
   
   
     <li class="md-nav__item">
-      <a href="../../monitoring/metricsdashboards/cassandra/" class="md-nav__link">
+      <a href="../cassandra/" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -1371,10 +1394,30 @@ data-et-multi-view="{&quot;schema&quot;:{&quot;content&quot;:{&quot;desktop&quot
                 
   
   
+    
   
   
-    <li class="md-nav__item">
-      <a href="../../monitoring/metricsdashboards/querysyntax/" class="md-nav__link">
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  <span class="md-ellipsis">
+    Metrics Query Syntax
+  </span>
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
         
   
   <span class="md-ellipsis">
@@ -1383,6 +1426,77 @@ data-et-multi-view="{&quot;schema&quot;:{&quot;content&quot;:{&quot;desktop&quot
   
 
       </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#key-difference-in-axonops-query-language" class="md-nav__link">
+    <span class="md-ellipsis">
+      Key Difference in AxonOps Query Language
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#querying-rated-metrics" class="md-nav__link">
+    <span class="md-ellipsis">
+      Querying Rated Metrics
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Querying Rated Metrics">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#example-query" class="md-nav__link">
+    <span class="md-ellipsis">
+      Example Query
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#explanation-of-the-query" class="md-nav__link">
+    <span class="md-ellipsis">
+      Explanation of the Query
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#parameters" class="md-nav__link">
+    <span class="md-ellipsis">
+      Parameters
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
     </li>
   
 
@@ -1403,7 +1517,7 @@ data-et-multi-view="{&quot;schema&quot;:{&quot;content&quot;:{&quot;desktop&quot
   
   
     <li class="md-nav__item">
-      <a href="../../monitoring/logsandevents/logsandevents/" class="md-nav__link">
+      <a href="../../logsandevents/logsandevents/" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -1437,17 +1551,20 @@ data-et-multi-view="{&quot;schema&quot;:{&quot;content&quot;:{&quot;desktop&quot
       
       
         
+          
+          
+        
       
     
     
-    <li class="md-nav__item md-nav__item--nested">
+    <li class="md-nav__item md-nav__item--section md-nav__item--nested">
       
         
         
         <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_4_3" >
         
           
-          <label class="md-nav__link" for="__nav_4_3" id="__nav_4_3_label" tabindex="0">
+          <label class="md-nav__link" for="__nav_4_3" id="__nav_4_3_label" tabindex="">
             
   
   <span class="md-ellipsis">
@@ -1472,7 +1589,7 @@ data-et-multi-view="{&quot;schema&quot;:{&quot;content&quot;:{&quot;desktop&quot
   
   
     <li class="md-nav__item">
-      <a href="../../integrations/overview/" class="md-nav__link">
+      <a href="../../../integrations/overview/" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -1493,7 +1610,7 @@ data-et-multi-view="{&quot;schema&quot;:{&quot;content&quot;:{&quot;desktop&quot
   
   
     <li class="md-nav__item">
-      <a href="../../integrations/pagerduy-integration/" class="md-nav__link">
+      <a href="../../../integrations/pagerduy-integration/" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -1514,7 +1631,7 @@ data-et-multi-view="{&quot;schema&quot;:{&quot;content&quot;:{&quot;desktop&quot
   
   
     <li class="md-nav__item">
-      <a href="../../integrations/slack-integration/" class="md-nav__link">
+      <a href="../../../integrations/slack-integration/" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -1535,7 +1652,7 @@ data-et-multi-view="{&quot;schema&quot;:{&quot;content&quot;:{&quot;desktop&quot
   
   
     <li class="md-nav__item">
-      <a href="../../integrations/microsoft-teams-integration/" class="md-nav__link">
+      <a href="../../../integrations/microsoft-teams-integration/" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -1556,7 +1673,7 @@ data-et-multi-view="{&quot;schema&quot;:{&quot;content&quot;:{&quot;desktop&quot
   
   
     <li class="md-nav__item">
-      <a href="../../integrations/servicenow-integration/" class="md-nav__link">
+      <a href="../../../integrations/servicenow-integration/" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -1577,7 +1694,7 @@ data-et-multi-view="{&quot;schema&quot;:{&quot;content&quot;:{&quot;desktop&quot
   
   
     <li class="md-nav__item">
-      <a href="../../integrations/email-integration/" class="md-nav__link">
+      <a href="../../../integrations/email-integration/" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -1611,17 +1728,20 @@ data-et-multi-view="{&quot;schema&quot;:{&quot;content&quot;:{&quot;desktop&quot
       
       
         
+          
+          
+        
       
     
     
-    <li class="md-nav__item md-nav__item--nested">
+    <li class="md-nav__item md-nav__item--section md-nav__item--nested">
       
         
         
         <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_4_4" >
         
           
-          <label class="md-nav__link" for="__nav_4_4" id="__nav_4_4_label" tabindex="0">
+          <label class="md-nav__link" for="__nav_4_4" id="__nav_4_4_label" tabindex="">
             
   
   <span class="md-ellipsis">
@@ -1646,7 +1766,7 @@ data-et-multi-view="{&quot;schema&quot;:{&quot;content&quot;:{&quot;desktop&quot
   
   
     <li class="md-nav__item">
-      <a href="../../operations/cassandra/repair/" class="md-nav__link">
+      <a href="../../../operations/cassandra/repair/" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -1667,7 +1787,7 @@ data-et-multi-view="{&quot;schema&quot;:{&quot;content&quot;:{&quot;desktop&quot
   
   
     <li class="md-nav__item">
-      <a href="../../operations/cassandra/rollingrestart/overview/" class="md-nav__link">
+      <a href="../../../operations/cassandra/rollingrestart/overview/" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -1701,17 +1821,20 @@ data-et-multi-view="{&quot;schema&quot;:{&quot;content&quot;:{&quot;desktop&quot
       
       
         
+          
+          
+        
       
     
     
-    <li class="md-nav__item md-nav__item--nested">
+    <li class="md-nav__item md-nav__item--section md-nav__item--nested">
       
         
         
         <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_4_5" >
         
           
-          <label class="md-nav__link" for="__nav_4_5" id="__nav_4_5_label" tabindex="0">
+          <label class="md-nav__link" for="__nav_4_5" id="__nav_4_5_label" tabindex="">
             
   
   <span class="md-ellipsis">
@@ -1736,7 +1859,7 @@ data-et-multi-view="{&quot;schema&quot;:{&quot;content&quot;:{&quot;desktop&quot
   
   
     <li class="md-nav__item">
-      <a href="../../operations/cassandra/backup/overview/" class="md-nav__link">
+      <a href="../../../operations/cassandra/backup/overview/" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -1797,7 +1920,7 @@ data-et-multi-view="{&quot;schema&quot;:{&quot;content&quot;:{&quot;desktop&quot
   
   
     <li class="md-nav__item">
-      <a href="../../operations/cassandra/backup/remote/" class="md-nav__link">
+      <a href="../../../operations/cassandra/backup/remote/" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -1818,7 +1941,7 @@ data-et-multi-view="{&quot;schema&quot;:{&quot;content&quot;:{&quot;desktop&quot
   
   
     <li class="md-nav__item">
-      <a href="../../operations/cassandra/backup/aws_s3/" class="md-nav__link">
+      <a href="../../../operations/cassandra/backup/aws_s3/" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -1860,17 +1983,20 @@ data-et-multi-view="{&quot;schema&quot;:{&quot;content&quot;:{&quot;desktop&quot
       
       
         
+          
+          
+        
       
     
     
-    <li class="md-nav__item md-nav__item--nested">
+    <li class="md-nav__item md-nav__item--section md-nav__item--nested">
       
         
         
         <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_4_6" >
         
           
-          <label class="md-nav__link" for="__nav_4_6" id="__nav_4_6_label" tabindex="0">
+          <label class="md-nav__link" for="__nav_4_6" id="__nav_4_6_label" tabindex="">
             
   
   <span class="md-ellipsis">
@@ -1895,7 +2021,7 @@ data-et-multi-view="{&quot;schema&quot;:{&quot;content&quot;:{&quot;desktop&quot
   
   
     <li class="md-nav__item">
-      <a href="../../operations/cassandra/restore/overview/" class="md-nav__link">
+      <a href="../../../operations/cassandra/restore/overview/" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -1916,7 +2042,7 @@ data-et-multi-view="{&quot;schema&quot;:{&quot;content&quot;:{&quot;desktop&quot
   
   
     <li class="md-nav__item">
-      <a href="../../operations/cassandra/restore/restore-node-same-ip/" class="md-nav__link">
+      <a href="../../../operations/cassandra/restore/restore-node-same-ip/" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -1937,7 +2063,7 @@ data-et-multi-view="{&quot;schema&quot;:{&quot;content&quot;:{&quot;desktop&quot
   
   
     <li class="md-nav__item">
-      <a href="../../operations/cassandra/restore/restore-node-different-ip/" class="md-nav__link">
+      <a href="../../../operations/cassandra/restore/restore-node-different-ip/" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -1958,7 +2084,7 @@ data-et-multi-view="{&quot;schema&quot;:{&quot;content&quot;:{&quot;desktop&quot
   
   
     <li class="md-nav__item">
-      <a href="../../operations/cassandra/restore/restore-cluster-same-ip/" class="md-nav__link">
+      <a href="../../../operations/cassandra/restore/restore-cluster-same-ip/" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -1979,7 +2105,7 @@ data-et-multi-view="{&quot;schema&quot;:{&quot;content&quot;:{&quot;desktop&quot
   
   
     <li class="md-nav__item">
-      <a href="../../operations/cassandra/restore/restore-cluster-different-ips/" class="md-nav__link">
+      <a href="../../../operations/cassandra/restore/restore-cluster-different-ips/" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -2000,7 +2126,7 @@ data-et-multi-view="{&quot;schema&quot;:{&quot;content&quot;:{&quot;desktop&quot
   
   
     <li class="md-nav__item">
-      <a href="../../operations/cassandra/restore/restore-different-cluster/" class="md-nav__link">
+      <a href="../../../operations/cassandra/restore/restore-different-cluster/" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -2034,17 +2160,20 @@ data-et-multi-view="{&quot;schema&quot;:{&quot;content&quot;:{&quot;desktop&quot
       
       
         
+          
+          
+        
       
     
     
-    <li class="md-nav__item md-nav__item--nested">
+    <li class="md-nav__item md-nav__item--section md-nav__item--nested">
       
         
         
         <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_4_7" >
         
           
-          <label class="md-nav__link" for="__nav_4_7" id="__nav_4_7_label" tabindex="0">
+          <label class="md-nav__link" for="__nav_4_7" id="__nav_4_7_label" tabindex="">
             
   
   <span class="md-ellipsis">
@@ -2069,7 +2198,7 @@ data-et-multi-view="{&quot;schema&quot;:{&quot;content&quot;:{&quot;desktop&quot
   
   
     <li class="md-nav__item">
-      <a href="../../pitr/overview/" class="md-nav__link">
+      <a href="../../../pitr/overview/" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -2090,7 +2219,7 @@ data-et-multi-view="{&quot;schema&quot;:{&quot;content&quot;:{&quot;desktop&quot
   
   
     <li class="md-nav__item">
-      <a href="../../pitr/configuration/" class="md-nav__link">
+      <a href="../../../pitr/configuration/" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -2111,7 +2240,7 @@ data-et-multi-view="{&quot;schema&quot;:{&quot;content&quot;:{&quot;desktop&quot
   
   
     <li class="md-nav__item">
-      <a href="../../pitr/restore/" class="md-nav__link">
+      <a href="../../../pitr/restore/" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -2145,17 +2274,20 @@ data-et-multi-view="{&quot;schema&quot;:{&quot;content&quot;:{&quot;desktop&quot
       
       
         
+          
+          
+        
       
     
     
-    <li class="md-nav__item md-nav__item--nested">
+    <li class="md-nav__item md-nav__item--section md-nav__item--nested">
       
         
         
         <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_4_8" >
         
           
-          <label class="md-nav__link" for="__nav_4_8" id="__nav_4_8_label" tabindex="0">
+          <label class="md-nav__link" for="__nav_4_8" id="__nav_4_8_label" tabindex="">
             
   
   <span class="md-ellipsis">
@@ -2180,7 +2312,7 @@ data-et-multi-view="{&quot;schema&quot;:{&quot;content&quot;:{&quot;desktop&quot
   
   
     <li class="md-nav__item">
-      <a href="../setup-alert-rules/" class="md-nav__link">
+      <a href="../../../how-to/setup-alert-rules/" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -2201,7 +2333,7 @@ data-et-multi-view="{&quot;schema&quot;:{&quot;content&quot;:{&quot;desktop&quot
   
   
     <li class="md-nav__item">
-      <a href="../setup-log-collection/" class="md-nav__link">
+      <a href="../../../how-to/setup-log-collection/" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -2222,7 +2354,7 @@ data-et-multi-view="{&quot;schema&quot;:{&quot;content&quot;:{&quot;desktop&quot
   
   
     <li class="md-nav__item">
-      <a href="../reuse-host-id/" class="md-nav__link">
+      <a href="../../../how-to/reuse-host-id/" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -2338,7 +2470,7 @@ data-et-multi-view="{&quot;schema&quot;:{&quot;content&quot;:{&quot;desktop&quot
   
   
     <li class="md-nav__item">
-      <a href="../../workbench/cassandra/license/" class="md-nav__link">
+      <a href="../../../workbench/cassandra/license/" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -2394,20 +2526,53 @@ data-et-multi-view="{&quot;schema&quot;:{&quot;content&quot;:{&quot;desktop&quot
     <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
       
         <li class="md-nav__item">
-  <a href="#notification-severities" class="md-nav__link">
+  <a href="#key-difference-in-axonops-query-language" class="md-nav__link">
     <span class="md-ellipsis">
-      Notification Severities.
+      Key Difference in AxonOps Query Language
     </span>
   </a>
   
 </li>
       
         <li class="md-nav__item">
-  <a href="#customize-notifications" class="md-nav__link">
+  <a href="#querying-rated-metrics" class="md-nav__link">
     <span class="md-ellipsis">
-      Customize Notifications.
+      Querying Rated Metrics
     </span>
   </a>
+  
+    <nav class="md-nav" aria-label="Querying Rated Metrics">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#example-query" class="md-nav__link">
+    <span class="md-ellipsis">
+      Example Query
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#explanation-of-the-query" class="md-nav__link">
+    <span class="md-ellipsis">
+      Explanation of the Query
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#parameters" class="md-nav__link">
+    <span class="md-ellipsis">
+      Parameters
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
   
 </li>
       
@@ -2426,38 +2591,34 @@ data-et-multi-view="{&quot;schema&quot;:{&quot;content&quot;:{&quot;desktop&quot
                   
 
 
-<h1 id="setup-backup-restore-notifications">Setup Backup - Restore Notifications<a class="headerlink" href="#setup-backup-restore-notifications" title="Permanent link">&para;</a></h1>
-<p>On the AxonOps application menu, click <code>Operations -&gt; Backups -&gt; Setup</code> and select <code>Notifications</code> tab. </p>
-<h2 id="notification-severities">Notification Severities.<a class="headerlink" href="#notification-severities" title="Permanent link">&para;</a></h2>
-<div class="admonition info">
-<p class="admonition-title">Notification Severities.</p>
-<p>For each notifications severity  <a href="/img/info.png"><img alt="info" src="/img/info.png" /></a> Info    <a href="/img/warning.png"><img alt="warning" src="/img/warning.png" /></a> Warning    <a href="/img/error.png"><img alt="error" src="/img/error.png" /></a> Error
-you can either use the slider <a href="/img/sliderbar.png"><img alt="sliderbar" src="/img/sliderbar.png" /></a> to use the default routing or use the <a href="/img/editwarningIcon.png"><img alt="editwarningIcon" src="/img/editwarningIcon.png" /></a>  icon to customize the notification integrations.</p>
-<blockquote>
-<p>Notice: <a href="/img/editwarningIcon.png"><img alt="editwarningIcon" src="/img/editwarningIcon.png" /></a> not available when <a href="/how-to/default-routing/">default routing</a> <a href="/img/defaultroutingselected.png"><img alt="defaultroutingselected" src="/img/defaultroutingselected.png" /></a>  selected</p>
-</blockquote>
-</div>
-<div class="admonition infomy">
-<p class="admonition-title">Infomy</p>
-<p><a href="/img/backupnotifications.png"><img alt="backupnotifications" src="/img/backupnotifications.png" /></a></p>
-</div>
-<h2 id="customize-notifications">Customize Notifications.<a class="headerlink" href="#customize-notifications" title="Permanent link">&para;</a></h2>
-<p>To customize notifications <code>click</code> on <a href="/img/editwarningIcon.png"><img alt="editwarningIcon" src="/img/editwarningIcon.png" /></a> select the integrations that you require and click <code>Close</code>.</p>
-<div class="admonition infomy">
-<p class="admonition-title">Infomy</p>
-<p><a href="/img/customizednotifications.png"><img alt="customizednotifications" src="/img/customizednotifications.png" /></a></p>
-<blockquote>
-<p>Noticed: The<code>Warning Integration</code> were customized. You can remove these by clicking the <a href="/img/delbtn.png"><img alt="delbtn" src="/img/delbtn.png" /></a>.</p>
-</blockquote>
-</div>
-<blockquote>
-<p>If you want to remove <a href="/how-to/default-routing/">default routing</a> groups from a severity and create custom groups , use the slider bar to remove default routing <code>click</code> the <a href="/img/editwarningIcon.png"><img alt="editwarningIcon" src="/img/editwarningIcon.png" /></a> and follow this <a href="#notification-severities">steps</a></p>
-<p>If you do not require any notifications <code>ensure</code> the <code>default routing</code> is off <a href="/img/sliderbar.png"><img alt="sliderbar" src="/img/sliderbar.png" /></a> and delete any previously created custom notification.</p>
-</blockquote>
-<div class="admonition infomy">
-<p class="admonition-title">Infomy</p>
-<p><a href="/img/backupnotifications.png"><img alt="backupnotifications" src="/img/backupnotifications.png" /></a></p>
-</div>
+<h1 id="axonops-query-language-documentation">AxonOps Query Language Documentation<a class="headerlink" href="#axonops-query-language-documentation" title="Permanent link">&para;</a></h1>
+<p>AxonOps uses a powerful query language for dashboarding performance metrics collected from the AxonOps agent. This language is largely based on the Prometheus query language, allowing users familiar with Prometheus to quickly adapt to AxonOps. For a comprehensive guide on the Prometheus query language, please refer to the <a href="https://prometheus.io/docs/prometheus/latest/querying/basics/">Prometheus Query Language documentation</a>.</p>
+<h2 id="key-difference-in-axonops-query-language">Key Difference in AxonOps Query Language<a class="headerlink" href="#key-difference-in-axonops-query-language" title="Permanent link">&para;</a></h2>
+<p>While most of the AxonOps query language is identical to Prometheus, there is a notable difference in the handling of the <code>rate</code> function, specifically for metrics of the "Count" type. AxonOps has implemented an optimized method for generating rate graphs for these metrics at the source in the agent. This method ensures accurate rated metrics, as well as faster query time for the rated metrics when compared to dynamically calculating at query time.</p>
+<h2 id="querying-rated-metrics">Querying Rated Metrics<a class="headerlink" href="#querying-rated-metrics" title="Permanent link">&para;</a></h2>
+<p>To query rated metrics in AxonOps, you need to use a specific syntax that includes embedding the <code>axonfunction='rate'</code> label within the query. This informs the AxonOps agent to generate the rated values for the Count metrics data at source. The following is an example of how to structure such a query:</p>
+<h3 id="example-query">Example Query<a class="headerlink" href="#example-query" title="Permanent link">&para;</a></h3>
+<div class="highlight"><pre><span></span><code><span class="nv">cas_ClientRequest_Latency</span><span class="p">{</span><span class="nl">axonfunction</span><span class="o">=</span><span class="p">&#39;</span><span class="s">rate</span><span class="p">&#39;,</span><span class="nl">scope</span><span class="o">=</span><span class="p">&#39;</span><span class="s">Write.*$consistency</span><span class="p">&#39;,</span><span class="nl">function</span><span class="o">=</span><span class="p">&#39;</span><span class="s">Count</span><span class="p">&#39;,</span><span class="nl">dc</span><span class="o">=~</span><span class="p">&#39;</span><span class="s">$dc</span><span class="p">&#39;,</span><span class="nl">rack</span><span class="o">=~</span><span class="p">&#39;</span><span class="s">$rack</span><span class="p">&#39;,</span><span class="nl">host_id</span><span class="o">=~</span><span class="p">&#39;</span><span class="s">$host_id</span><span class="p">&#39;}</span>
+</code></pre></div>
+<h3 id="explanation-of-the-query">Explanation of the Query<a class="headerlink" href="#explanation-of-the-query" title="Permanent link">&para;</a></h3>
+<ul>
+<li><code>cas_ClientRequest_Latency</code>: The specific metric being queried.</li>
+<li><code>{axonfunction='rate', ...}</code>: The label set that includes <code>axonfunction='rate'</code>, which instructs the AxonOps agent to generate the rated values.</li>
+<li><code>axonfunction='rate'</code>: This label indicates that the agent should compute rate values.</li>
+<li><code>scope='Write.*$consistency'</code>: A scope pattern that matches the relevant metrics.</li>
+<li><code>function='Count'</code>: Specifies that the metric type is Count.</li>
+<li><code>dc=~'$dc'</code>, <code>rack=~'$rack'</code>, <code>host_id=~'$host_id'</code>: Additional labels that allow filtering by data center, rack, and host ID using regular expressions.</li>
+<li><code>by (dc,host_id)</code>: Groups the results by data center and host ID.</li>
+</ul>
+<h3 id="parameters">Parameters<a class="headerlink" href="#parameters" title="Permanent link">&para;</a></h3>
+<ul>
+<li><strong><code>axonfunction='rate'</code></strong>: Tells the AxonOps agent to generate rated values for Count metrics.</li>
+<li><strong><code>scope</code></strong>: A pattern for filtering the scope of the query.</li>
+<li><strong><code>function</code></strong>: Specifies the metric type, which should be "Count" for rated metrics.</li>
+<li><strong><code>dc</code></strong>: Filters metrics by data center.</li>
+<li><strong><code>rack</code></strong>: Filters metrics by rack.</li>
+<li><strong><code>host_id</code></strong>: Filters metrics by host ID.</li>
+</ul>
 
 
 
@@ -2492,6 +2653,44 @@ you can either use the slider <a href="/img/sliderbar.png"><img alt="sliderbar" 
       
         <footer class="md-footer">
   
+    
+      
+      <nav class="md-footer__inner md-grid" aria-label="Footer" >
+        
+          
+          <a href="../cassandra/" class="md-footer__link md-footer__link--prev" aria-label="Previous: Cassandra">
+            <div class="md-footer__button md-icon">
+              
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12Z"/></svg>
+            </div>
+            <div class="md-footer__title">
+              <span class="md-footer__direction">
+                Previous
+              </span>
+              <div class="md-ellipsis">
+                Cassandra
+              </div>
+            </div>
+          </a>
+        
+        
+          
+          <a href="../../logsandevents/logsandevents/" class="md-footer__link md-footer__link--next" aria-label="Next: Logs &amp; Events">
+            <div class="md-footer__title">
+              <span class="md-footer__direction">
+                Next
+              </span>
+              <div class="md-ellipsis">
+                Logs & Events
+              </div>
+            </div>
+            <div class="md-footer__button md-icon">
+              
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M4 11v2h12l-5.5 5.5 1.42 1.42L19.84 12l-7.92-7.92L10.5 5.5 16 11H4Z"/></svg>
+            </div>
+          </a>
+        
+      </nav>
     
   
   <div class="md-footer-meta md-typeset">
@@ -2572,12 +2771,12 @@ you can either use the slider <a href="/img/sliderbar.png"><img alt="sliderbar" 
       </div>
       <script>var consent=__md_get("__consent");if(consent)for(var input of document.forms.consent.elements)input.name&&(input.checked=consent[input.name]||!1);else"file:"!==location.protocol&&setTimeout(function(){document.querySelector("[data-md-component=consent]").hidden=!1},250);var action,form=document.forms.consent;for(action of["submit","reset"])form.addEventListener(action,function(e){if(e.preventDefault(),"reset"===e.type)for(var n of document.forms.consent.elements)n.name&&(n.checked=!1);__md_set("__consent",Object.fromEntries(Array.from(new FormData(form).keys()).map(function(e){return[e,!0]}))),location.hash="",location.reload()})</script>
     
-    <script id="__config" type="application/json">{"base": "../..", "features": ["navigation.tabs", "announce.dismiss", "navigation.sections", "navigation.top", "navigation.footer", "content.code.copy", "content.tabs.link"], "search": "../../assets/javascripts/workers/search.b8dbb3d2.min.js", "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}}</script>
+    <script id="__config" type="application/json">{"base": "../../..", "features": ["navigation.tabs", "announce.dismiss", "navigation.sections", "navigation.top", "navigation.footer", "content.code.copy", "content.tabs.link"], "search": "../../../assets/javascripts/workers/search.b8dbb3d2.min.js", "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}}</script>
     
     
-      <script src="../../assets/javascripts/bundle.1e8ae164.min.js"></script>
+      <script src="../../../assets/javascripts/bundle.1e8ae164.min.js"></script>
       
-        <script src="../../javascripts/extra.js"></script>
+        <script src="../../../javascripts/extra.js"></script>
       
     
   <script>document$.subscribe(() => {const lightbox = GLightbox({"touchNavigation": true, "loop": false, "zoomable": true, "draggable": true, "openEffect": "zoom", "closeEffect": "zoom", "slideEffect": "slide"});})</script></body>
