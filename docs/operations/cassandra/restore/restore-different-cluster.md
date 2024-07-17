@@ -223,7 +223,7 @@ Here are some examples of the most common storage types:
 ```
 #### SSH/SFTP
 ```
---storage-config '{"type":"sftp","host":"<sftp_server_hostname>","port","22","path":"/backup/path","user":"<sftp_username>","key_file":"~/private/key/file"}'
+--storage-config '{"type":"sftp","host":"<sftp_server_hostname>","port":"22","path":"/backup/path","user":"<sftp_username>","key_file":"~/private/key/file"}'
 ```
 
 
