@@ -14,7 +14,7 @@ To query rated metrics in AxonOps, you need to use a specific syntax that includ
 
 ```promql
 cas_ClientRequest_Latency{axonfunction='rate',scope='Write.*$consistency',function='Count',dc=~'$dc',rack=~'$rack',host_id=~'$host_id'}
-
+```
 
 ### Explanation of the Query
 
