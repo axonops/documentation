@@ -95,6 +95,7 @@ nav:
       - Service Checks: 'monitoring/servicechecks/overview.md'
       - Metrics Dashboard:
           - 'Cassandra': 'monitoring/metricsdashboards/cassandra.md'
+          - 'Metrics Query Syntax': 'monitoring/metricsdashboards/querysyntax.md'
       - Logs & Events: 'monitoring/logsandevents/logsandevents.md'
 
     - Notification Integrations:
