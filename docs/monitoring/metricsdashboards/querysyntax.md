@@ -1,6 +1,6 @@
 # AxonOps Query Language Documentation
 
-AxonOps uses a powerful query language for dashboarding performance metrics collected from the AxonOps agent. This language is largely based on the Prometheus query language, allowing users familiar with Prometheus to quickly adapt to AxonOps. For a comprehensive guide on the Prometheus query language, please refer to the [Prometheus Query Language documentation](https://prometheus.io/docs/prometheus/latest/querying/basics/).
+AxonOps uses a powerful query language for dashboarding performance metrics collected from the AxonOps agent. This language is largely based on the Prometheus query language, allowing users familiar with Prometheus to quickly adapt to AxonOps. For a comprehensive guide on the Prometheus query language, please refer to the [Prometheus Query Language documentation](https://prometheus.io/docs/prometheus/latest/querying/basics/){target="_blank"}
 
 ## Key Difference in AxonOps Query Language
 
@@ -13,7 +13,7 @@ To query rated metrics in AxonOps, you need to use a specific syntax that includ
 ### Example Query
 
 ```promql
-cas_ClientRequest_Latency{axonfunction='rate',scope='Write.*$consistency',function='Count',dc=~'$dc',rack=~'$rack',host_id=~'$host_id'}
+cas_ClientRequest_Latency{axonfunction='rate',scope='Write_*$consistency',function='Count',dc=~'$dc',rack=~'$rack',host_id=~'$host_id'}
 ```
 
 ### Explanation of the Query
@@ -21,10 +21,9 @@ cas_ClientRequest_Latency{axonfunction='rate',scope='Write.*$consistency',functi
 - `cas_ClientRequest_Latency`: The specific metric being queried.
 - `{axonfunction='rate', ...}`: The label set that includes `axonfunction='rate'`, which instructs the AxonOps agent to generate the rated values.
   - `axonfunction='rate'`: This label indicates that the agent should compute rate values.
-  - `scope='Write.*$consistency'`: A scope pattern that matches the relevant metrics.
+  - `scope='Write_*$consistency'`: A scope pattern that matches the relevant metrics.
   - `function='Count'`: Specifies that the metric type is Count.
   - `dc=~'$dc'`, `rack=~'$rack'`, `host_id=~'$host_id'`: Additional labels that allow filtering by data center, rack, and host ID using regular expressions.
-- `by (dc,host_id)`: Groups the results by data center and host ID.
 
 ### Parameters
 
