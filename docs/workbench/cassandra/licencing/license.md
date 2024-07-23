@@ -1,3 +1,5 @@
+# License
+
 This license applies to the AxonOps™ Workbench product. Source Code for AxonOps™ Workbench is available at [https://github.com/axonops/axonops-workbench-cassandra](https://github.com/axonops/axonops-workbench-cassandra){:target="_blank"} under the Apache License 2.0 agreement at [https://github.com/axonops/axonops-workbench-cassandra/blob/main/LICENSE](https://github.com/axonops/axonops-workbench-cassandra/blob/main/LICENSE){:target="_blank"}
 
 # End-User License Agreement (EULA) for AxonOps™ Workbench

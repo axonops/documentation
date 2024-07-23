@@ -16,7 +16,9 @@ theme:
     - navigation.footer
     - content.code.copy
     - content.tabs.link
-    # - navigation.expand
+    - navigation.indexes
+    - navigation.tracking
+    - navigation.expand
 
 extra:
   analytics:
@@ -138,83 +140,66 @@ nav:
       - 'Re-use an existing host ID': how-to/reuse-host-id.md
     
   - AxonOps Workbench:
-    - 'Cassandra': 
-      # - 'Overview' : workbench/cassandra/cassandra.md
-      - 'License': workbench/cassandra/license.md 
+    - workbench/cassandra/introduction/index.md
+    # - 'Overview' : workbench/cassandra/introduction/overview.md
+    - 'Motivation' : workbench/cassandra/introduction/motivation.md
+    
+    - Getting Started:
+      - workbench/cassandra/gettingstarted/index.md
+      - Installation Guide: workbench/cassandra/gettingstarted/installationguide.md
+      - System Requirement: workbench/cassandra/gettingstarted/systemrequirements.md
+    
+    - User Interface:
+      - workbench/cassandra/userinterface/index.md
+      - Overview: workbench/cassandra/userinterface/overview.md
+      - Navigation: workbench/cassandra/userinterface/navigation.md
+      
+    - Features:
+      - AI Assistant:
+        - workbench/cassandra/aiassistant/index.md
+        - Signing Up: workbench/cassandra/aiassistant/signingupforaiassistant.md
+        - Using the AI Assistant: workbench/cassandra/aiassistant/usingtheaiassistant.md
+        - Capabilities: workbench/cassandra/aiassistant/capabilities.md
+        
+      - Connect to Cassandra:
+        - workbench/cassandra/connectingtocassandra/index.md
+        - Direct Connection: workbench/cassandra/connectingtocassandra/directconnection.md
+        - SSH Connection: workbench/cassandra/connectingtocassandra/sshconnection.md
 
-  # - Release Notes:
-  #   - Release notes: 'release_notes/releases.md'
+      - CQL Shell: 
+        - workbench/cassandra/cqlconsole/index.md
+        - AxonOps CQL Shell: workbench/cassandra/cqlconsole/axonopscql.md
+        - Cassandra CQL Shell: workbench/cassandra/cqlconsole/cqlsh.md
 
-  # - Overview:
-  #     - 'Motivation': 'overview/motivation.md'
-  #     - 'Architecture': 'overview/architecture.md'
-  #     # TODO: - - 'AxonOps Cloud': 'overview/axonops-cloud.md'
-  #     # TODO: - 'AxonOps Enterprise': 'overview/axonops-enterprise.md'
+      - Customization: workbench/cassandra/advancedfeatures/customization.md
 
-  # - Installation:
-  #     - AxonOps Server:
-  #         - 'Installing on Ubuntu/Debian': 'installation/axon-server/ubuntu.md'
-  #         - 'Installing on Centos/Redhat': 'installation/axon-server/centos.md'
-  #         - 'Metrics database': 'installation/axon-server/metricsdatabase.md'
-  #     - AxonOps GUI Server: 'installation/axon-dash/install.md'
-  #     #- AxonOps Agent: 'installation/axon-agent/install.md'
-  #     - AxonOps Cassandra Agent:
-  #         - 'Agent Installation': 'installation/cassandra-agent/install.md'
-  #         - 'Installation with Docker': 'installation/cassandra-agent/docker.md'
-  #     - Compatibility matrix: 'installation/compat_matrix/compat_matrix.md'
-  #     - Kubernetes: 'installation/kubernetes/index.md'
+      - Developer Sandbox: workbench/cassandra/developersandbox/gettingstarted.md
 
-  # - Using AxonOps:
-  #     - Cluster Overview:
-  #         - 'Overview': 'cluster/cluster-overview.md'
+      - Enhanced Query Tracing: 
+        - workbench/cassandra/enhancedquerytracing/index.md
+        - AI Trace Analysis: workbench/cassandra/enhancedquerytracing/aitraceanalysis.md
+        - Query Tracing: workbench/cassandra/enhancedquerytracing/querytracing.md
+        - Tracing Features: workbench/cassandra/enhancedquerytracing/tracingfeatures.md
+      
+      - Schema Browser: 
+        - workbench/cassandra/schemabrowser/index.md
+        - Schema Explorer: workbench/cassandra/schemabrowser/schemaexplorer.md
+        - Schema Management: workbench/cassandra/schemabrowser/schemamanagement.md
+      
+      - Workspace Management:
+        - workbench/cassandra/workspacemanagement/index.md
+        - Collaboration Features: workbench/cassandra/workspacemanagement/collaborationfeatures.md
+        - Creating Workspaces: workbench/cassandra/workspacemanagement/creatingworkspaces.md
+        - Sharing Workspaces: workbench/cassandra/workspacemanagement/sharingworkspaces.md
 
-  #     - Monitoring:
-  #         - 'Monitoring Overview': 'monitoring/overview.md'
-  #         - Service Checks: 'monitoring/servicechecks/overview.md'
-  #         - Metrics Dashboard:
-  #             - 'Cassandra': 'monitoring/metricsdashboards/cassandra.md'
-  #         - Logs & Events: 'monitoring/logsandevents/logsandevents.md'
+    - FAQ: workbench/cassandra/faq/faqs.md
 
-  #     - Notification Integrations:
-  #             - 'Overview' : 'integrations/overview.md'
-  #             - 'PagerDuty Integration': 'integrations/pagerduy-integration.md'
-  #             - 'Slack Integration': 'integrations/slack-integration.md'
-  #             - 'Microsoft Teams': 'integrations/microsoft-teams-integration.md'
-  #             - 'ServiceNow': 'integrations/servicenow-integration.md'
-  #             - 'Email Integration': 'integrations/email-integration.md'
+    - Release Notes: workbench/cassandra/releasenotes/versions.md
 
-  #     - Operations:
-  #         - Cassandra:
-  #             - Repair: 'operations/cassandra/repair.md'
-  #             - Backups:
-  #                 - 'Backups Overview': 'operations/cassandra/backup/overview.md'
-  #                 - 'Restore':
-  #                   - 'Overview': 'operations/cassandra/restore/overview.md'
-  #                   - 'Single node': 'operations/cassandra/restore/restore-node-same-ip.md'
-  #                   - 'Single node with a different IP address': 'operations/cassandra/restore/restore-node-different-ip.md'
-  #                   - 'Whole cluster': 'operations/cassandra/restore/restore-cluster-same-ip.md'
-  #                   - 'Whole cluster with changed IP addresses': 'operations/cassandra/restore/restore-cluster-different-ips.md'
-  #                   - 'Restore to a different cluster': 'operations/cassandra/restore/restore-different-cluster.md'
-  #             - 'Rolling Restart': 'operations/cassandra/rollingrestart/overview.md'
+    - Support: workbench/cassandra/support/gettinghelp.md
+    
+    - Feedback: workbench/cassandra/support/feedback.md
 
-  # - How-to:
-  #         - 'Setup Alert Rules': how-to/setup-alert-rules.md
-  #         # - 'Setup Service Checks': how-to/setup-servicechecks.md
-  #         - 'Setup Log Collection': how-to/setup-log-collection.md
-  #         # - 'Setup Default Routing': 'how-to/default-routing.md'
-  #         # - 'Setup Backup-Restore Notifications': 'how-to/backup-restore-notifications.md'
-  #         # - 'Setup Dashboards-Global Integrations': 'how-to/setup-dashboards-global-integrations.md'
-  #         - 'Re-use an existing host ID': how-to/reuse-host-id.md
+    - Contributing: workbench/cassandra/support/contributing.md
 
-
-#    - GUI:
-#        - 'Overview': 'gui-overview.md'
-#        - 'Features': 'gui-features.md'
-#        - 'Setup': 'gui-setup.md'
-
-#    - Cassandra:
-#        - 'Dashboards': 'cassandra-dashboards.md'
-#        - Operations:
-#            - 'Repair': 'cassandra-repair.md'
-#            - 'Backup and Restore': 'cassandra-backup-and-restore.md'
-#    - Kafka:
+    - License: workbench/cassandra/licencing/license.md 
