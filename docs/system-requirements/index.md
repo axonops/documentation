@@ -10,7 +10,7 @@ Please note this is not a system requirements spec for your Cassandra nodes wher
 | **AxonOps Server and AxonOps Dashboard** {: colspan=2} ||
 | Processor	| 1 gigahertz (GHz) or faster with 4 or more cores on a compatible 64-bit processor. |
 | RAM | 8 gigabytes (GB) |
-| Storage |	50 GB or larger storage device. |
+| Storage |	20 GB or larger storage device. |
 |||
 | **Elasticsearch Metrics Store** {: colspan=2} ||
 | Processor	| 1 gigahertz (GHz) or faster with 4, ideally 8 or more cores on a compatible 64-bit processor. |
