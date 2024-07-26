@@ -47,6 +47,7 @@ markdown_extensions:
   - pymdownx.superfences
   - pymdownx.tabbed:
       alternate_style: true
+  - tables
 
 plugins:
   - search
@@ -80,6 +81,7 @@ nav:
       - AxonOps Dash: 'installation/axon-dash/install.md'
       - AxonOps Agent: 'installation/cassandra-agent/install.md'
       - Kubernetes: 'installation/kubernetes/index.md'
+      - System Requirements: system-requirements/index.md
     
     - Compatibility:
       - Interoperability matrix: 'installation/compat_matrix/compat_matrix.md'
