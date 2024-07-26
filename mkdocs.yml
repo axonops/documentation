@@ -78,7 +78,7 @@ nav:
         - 'Installing on Ubuntu/Debian': 'installation/axon-server/ubuntu.md'
         - 'Installing on Centos/Redhat': 'installation/axon-server/centos.md'
         - 'Metrics database': 'installation/axon-server/metricsdatabase.md'
-      - AxonOps Dash: 'installation/axon-dash/install.md'
+      - AxonOps Dashboard: 'installation/axon-dash/install.md'
       - AxonOps Agent: 'installation/cassandra-agent/install.md'
       - Kubernetes: 'installation/kubernetes/index.md'
       - System Requirements: system-requirements/index.md
