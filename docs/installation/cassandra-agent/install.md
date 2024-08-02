@@ -58,6 +58,15 @@ axon-agent:
 
 NTP:
     host: "ntp.mycompany.com" # Your NTP server IP address or hostname 
+
+# SSL/TLS Settings
+tls:
+  mode: "disabled" # disabled, TLS
+  skipVerify: false
+  # Only set if mode is TLS
+  caFile: "path_to_certs_on_cassandra_node.crt"
+  certFile: "path_to_certs_on_cassandra_node.crt"
+  keyFile: "path_to_key_file_on_cassandra_node.key"
 ```
 
 ## Step 3 - Configure Cassandra 
