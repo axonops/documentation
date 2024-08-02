@@ -21,8 +21,8 @@ org_name: my-company
 # SSL/TLS Settings
 tls:
   mode: "disabled" # disabled, TLS
-  skipVerify: false
   # Only set if mode is TLS
+  skipVerify: false
   caFile: "path_to_certs_on_cassandra_node.crt" 
   certFile: "path_to_certs_on_cassandra_node.crt"
   keyFile: "path_to_key_file_on_cassandra_node.key"
