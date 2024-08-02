@@ -2488,6 +2488,15 @@ data-et-multi-view="{&quot;schema&quot;:{&quot;content&quot;:{&quot;desktop&quot
 <span class="nt">license_key</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">license-key</span>
 <span class="nt">org_name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">my-company</span>
 
+<span class="c1"># SSL/TLS Settings</span>
+<span class="nt">tls</span><span class="p">:</span>
+<span class="w">  </span><span class="nt">mode</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;disabled&quot;</span><span class="w"> </span><span class="c1"># disabled, TLS</span>
+<span class="w">  </span><span class="c1"># Only set if mode is TLS</span>
+<span class="w">  </span><span class="nt">skipVerify</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">false</span>
+<span class="w">  </span><span class="nt">caFile</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;path_to_certs_on_cassandra_node.crt&quot;</span><span class="w"> </span>
+<span class="w">  </span><span class="nt">certFile</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;path_to_certs_on_cassandra_node.crt&quot;</span>
+<span class="w">  </span><span class="nt">keyFile</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;path_to_key_file_on_cassandra_node.key&quot;</span>
+
 <span class="c1"># For better performance on large clusters, you can use a CQL store for the metrics.</span>
 <span class="c1"># To opt-in for CQL metrics storage, just specify at least one CQL host.</span>
 <span class="c1"># We do recommend to specify a NetworkTopologyStrategy for cql_keyspace_replication</span>
