@@ -50,7 +50,7 @@ sudo apt-get install axon-agent
 #### Configuration
 Make sure **axon-agent** configuration points to the correct **axon-server** address and your **organisation name** is specified:
 
-``` yaml hl_lines="2 7 14"
+``` yaml
 axon-server:
     hosts: "axon-server_endpoint" # Specify axon-server IP axon-server.mycompany.com
 

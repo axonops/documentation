@@ -18,6 +18,15 @@ elastic_hosts: # Elasticsearch endpoint (env variable:ELASTIC_HOSTS, comma sepa
 license_key: license-key
 org_name: my-company
 
+# SSL/TLS Settings
+tls:
+  mode: "disabled" # disabled, TLS
+  # Only set if mode is TLS
+  skipVerify: false
+  caFile: "path_to_certs_on_cassandra_node.crt" 
+  certFile: "path_to_certs_on_cassandra_node.crt"
+  keyFile: "path_to_key_file_on_cassandra_node.key"
+
 # For better performance on large clusters, you can use a CQL store for the metrics.
 # To opt-in for CQL metrics storage, just specify at least one CQL host.
 # We do recommend to specify a NetworkTopologyStrategy for cql_keyspace_replication

@@ -48,7 +48,7 @@ sudo apt-get install axon-cassandra{version}-agent
 
 Update the following highlighted lines from `/etc/axonops/axon-agent.yml`:
 
-``` yaml hl_lines="2 5 8"
+``` yaml hl_lines="2 6 9"
 axon-server:
     hosts: "axon-server_endpoint" # Your axon-server IP or hostname, e.g. axonops.mycompany.com
     port: 1888 # The default axon-server port is 1888
@@ -58,6 +58,15 @@ axon-agent:
 
 NTP:
     host: "ntp.mycompany.com" # Your NTP server IP address or hostname 
+
+# SSL/TLS Settings
+tls:
+  mode: "disabled" # disabled, TLS
+  # Only set if mode is TLS
+  skipVerify: false
+  caFile: "path_to_certs_on_cassandra_node.crt"
+  certFile: "path_to_certs_on_cassandra_node.crt"
+  keyFile: "path_to_key_file_on_cassandra_node.key"
 ```
 
 ## Step 3 - Configure Cassandra 

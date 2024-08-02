@@ -35,7 +35,7 @@ sudo sysctl -w vm.max_map_count=262144
 ```
 To make this change persist across reboots run this command: 
 ``` bash
-echo "vm.max_map_count = 262144" | sudo tee /etc/sysctl.d/10-elasticsearch.conf >dev/null
+echo "vm.max_map_count = 262144" | sudo tee /etc/sysctl.d/10-elasticsearch.conf > /dev/null
 ```
 
 
