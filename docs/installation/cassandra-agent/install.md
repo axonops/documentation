@@ -48,7 +48,7 @@ sudo apt-get install axon-cassandra{version}-agent
 
 Update the following highlighted lines from `/etc/axonops/axon-agent.yml`:
 
-``` yaml hl_lines="2 5 8"
+``` yaml hl_lines="2 6 9"
 axon-server:
     hosts: "axon-server_endpoint" # Your axon-server IP or hostname, e.g. axonops.mycompany.com
     port: 1888 # The default axon-server port is 1888
