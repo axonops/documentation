@@ -1,4 +1,4 @@
-These license apply to the AxonOps™ Workbench source code and product. 
+These licenses apply to the AxonOps™ Workbench source code and product. 
 
 # End-User License Agreement (EULA) for AxonOps™ Workbench product
 
