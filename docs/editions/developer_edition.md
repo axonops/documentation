@@ -2,7 +2,7 @@
 
 The free plan is avaialble for AxonOps SaaS. Developer which has a limited set of features and a Starter version that is free up to 6 nodes.
 
-<a href="https://axonops.com/starter/" target="_blank"><span class="sign-up-button">Free Sign Up</span></a></li>
+<a href="https://axonops.com/developer/" target="_blank"><span class="sign-up-button">Free Sign Up</span></a></li>
 
 ## Developer edition features
 

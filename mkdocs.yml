@@ -68,7 +68,7 @@ nav:
   - AxonOps Cloud(SaaS): 
     - Editions: 
       # - Intro to AxonOps: 'editions/intro.md'
-      # - Developer Edition: 'editions/developer_edition.md'
+      - Developer Edition: 'editions/developer_edition.md'
       - Starter Edition: 'editions/starter_edition.md'
       - Enterprise Edition: 'editions/enterprise_edition.md'
 
