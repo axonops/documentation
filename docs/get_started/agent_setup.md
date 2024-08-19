@@ -1,21 +1,3 @@
-<script>
-function updateOS() {
-  var ele = document.getElementsByName('osFamily');
-  for(i = 0; i < ele.length; i++) {
-      if(ele[i].checked)
-      // document.getElementById("result").innerHTML = "Choosen: "+ele[i].value;
-      window.location.href = ele[i].value;
-  }
-}
-
-function updateCas() {
-  var ele = document.getElementsByName('casFamily');
-  for(i = 0; i < ele.length; i++) {
-      if(ele[i].checked)
-      window.location.href = ele[i].value;
-  }
-}
-</script>
 # Axon Agent Setup
 <!-- ![](agent_steps.png) -->
 

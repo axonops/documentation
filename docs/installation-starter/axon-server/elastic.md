@@ -19,8 +19,8 @@ From:
 ```
 To: 
 ``` bash
--Xms8g
--Xmx8g 
+-Xms6g
+-Xmx6g 
 ```
 This will set the minimum and maximum heap size to 8 GB.
 
@@ -66,7 +66,3 @@ After a short period of time, you can verify that your Elasticsearch node is run
 ``` bash
 curl "localhost:9200"
 ```
-
-### Configure Elasticsearch 
-
-[Configure Elasticsearch](./configure_elastic.md)

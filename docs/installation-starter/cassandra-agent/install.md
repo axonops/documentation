@@ -2,7 +2,7 @@
 
 This agent will enable metrics, logs and events collection with adaptive repairs and backups for Cassandra.
 
-See [Installing axon-agent for Cassandra in Docker](docker.md) if you are running Cassandra under Docker.
+See [Installing axon-agent for Cassandra in Docker](./docker.md) if you are running Cassandra under Docker.
 
 ## Available versions
 
@@ -18,11 +18,11 @@ See [Installing axon-agent for Cassandra in Docker](docker.md) if you are runnin
 
 ### Select the OS Family. 
 <label>
-  <input type="radio" name="osFamily" value="/installation/cassandra-agent/install/#__tabbed_1_1" onChange="updateOS()">
+  <input type="radio" name="osFamily" value="/installation-starter/cassandra-agent/install/#__tabbed_1_1" onChange="updateOS()">
   <img src="/get_started/debian.png" class="skip-lightbox" width="180px">
 </label>
 <label>
-  <input type="radio" name="osFamily" value="/installation/cassandra-agent/install/#__tabbed_1_2" onChange="updateOS()">
+  <input type="radio" name="osFamily" value="/installation-starter/cassandra-agent/install/#__tabbed_1_2" onChange="updateOS()">
   <img src="/get_started/red_hat.png" class="skip-lightbox" width="180px">
 </label>
 
@@ -67,11 +67,6 @@ axon-agent:
     # SSL/TLS Settings from AxonOps Agent to AxonOps Server
     tls:
         mode: "disabled" # disabled, TLS
-        # Only set if mode is TLS
-        skipVerify: false # Disables CA and Hostname verification
-        caFile: "path_to_certs_on_axon_agent_node.crt"
-        certFile: "path_to_certs_on_axon_agent_node.crt"
-        keyFile: "path_to_key_file_on_axon_agent_node.key"
 
 NTP:
     host: "ntp.mycompany.com" # Your NTP server IP address or hostname 

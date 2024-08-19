@@ -4,7 +4,7 @@ glightbox: false
 
 ## Setup your account 
 
-Click on the <a href="https://axonops.com/starter/"><span class="sign-up-button">Free Sign Up</span></a> button to get started.
+Click on the <a href="https://axonops.com/starter/" target="_blank"><span class="sign-up-button">Free Sign Up</span></a> button to get started.
 
 Fill in your details on the registration screen
 

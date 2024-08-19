@@ -8,11 +8,11 @@ This section describes the installation process for the GUI service.
 
 ### Select the OS Family. 
 <label>
-  <input type="radio" name="osFamily" value="/installation/axon-dash/install/#__tabbed_1_1" onChange="updateOS()">
+  <input type="radio" name="osFamily" value="/installation-starter/axon-dash/install/#__tabbed_1_1" onChange="updateOS()">
   <img src="/get_started/debian.png" class="skip-lightbox" width="180px">
 </label>
 <label>
-  <input type="radio" name="osFamily" value="/installation/axon-dash/install/#__tabbed_1_2" onChange="updateOS()">
+  <input type="radio" name="osFamily" value="/installation-starter/axon-dash/install/#__tabbed_1_2" onChange="updateOS()">
   <img src="/get_started/red_hat.png" class="skip-lightbox" width="180px">
 </label>
 
@@ -96,10 +96,7 @@ This will start the **axon-dash** process as the **axonops** user, which was cre
 * Copyright : `/usr/share/doc/axonops/axon-dash/copyright`
 * Licenses : `/usr/share/axonops/licenses/axon-dash/`
 
-## Step 6 - Setting up SSL/TLS for AxonDash
 
-AxonDash does not support SSL/TLS and needs to be fronted by Nginx. You can install and configure Nginx by following the [Configure Nginx](../axon-server/configure_nginx.md) guide.
-
-## Step 7 - Installing agents
+## Step 6 - Installing agents
 
 Now **axon-dash** is installed, you can start installing [cassandra-agent](../cassandra-agent/install.md)

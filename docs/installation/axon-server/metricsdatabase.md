@@ -1,5 +1,3 @@
-# axon-server metrics database
-
 # Using Cassandra as a metrics store
 You can use Cassandra as a metrics store instead of Elasticsearch for better performances.
 To start using a CQL store you just have to specify CQL hosts in **axon-server.yml**:
