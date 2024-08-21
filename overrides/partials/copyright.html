@@ -1,0 +1,19 @@
+<div class="md-copyright">
+  {% if config.copyright %}
+    <div class="md-copyright__highlight">
+      {{ config.copyright }}
+      <br/>
+      <br/>
+      Apache, Apache Cassandra, Cassandra, Apache Lucene, Apache Solr, Apache Spark, Spark, Apache TinkerPop, TinkerPop, Apache Kafka and Kafka 
+      are either registered trademarks or trademarks of the Apache Software Foundation or its subsidiaries in Canada, the United States and/or other countries.
+      <br/>
+      Kubernetes is the registered trademark of the Linux Foundation.
+    </div>
+  {% endif %}
+  {% if not config.extra.generator == false %}
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+      Material for MkDocs
+    </a>
+  {% endif %}
+</div>

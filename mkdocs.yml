@@ -31,6 +31,13 @@ extra:
         make our documentation better.
   generator: false
   homepage: https://axonops.com
+  social:
+    - icon: fontawesome/brands/linkedin
+      link: https://www.linkedin.com/company/axonops/
+    - icon: fontawesome/brands/x-twitter
+      link: https://twitter.com/AxonOpsSoftware
+    - icon: fontawesome/brands/youtube
+      link: https://www.youtube.com/channel/UC33iN3vrQmpYOXTSWzWr5Ng
 
 extra_css:
   - 'stylesheets/extra.css'
