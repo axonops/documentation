@@ -21,8 +21,6 @@ body {
     top:7px;
 }
 
-
-
 .admonition.infomy{
  border-left: none;
  text-align: center;
@@ -36,9 +34,8 @@ body {
     margin-right: 80px;
 }
 
- .md-header {
-    background-color: #030737;
-   
+.md-header {
+    background-color: #030737;   
 }
 
 [dir=ltr] .md-header__title {
@@ -71,25 +68,14 @@ html .md-footer-meta.md-typeset a {
   width: 95%;
 }
 
-/*
-
-.md-header[data-md-state="shadow"] {
-    box-shadow: 0px 1px 5px 0px rgba(0, 0, 0, 0.2), 0px 2px 2px 0px rgba(0, 0, 0, 0.14), 0px 3px 1px -2px rgba(0, 0, 0, 0.12);
+.md-search__input {
+  color: white;
+  background-color: rgb(27, 40, 79);
 }
-.md-search__input + .md-search__icon {
-    color: #3772b8;
-} */
 
-.md-search__input{
-    background-color: rgb(27, 40, 79);
+[data-md-toggle=search]:checked~.md-header .md-search__input+.md-search__icon {
+  color: white;
 }
-/*
-.md-header ::placeholder{
-   color:#757575;
-} */
-/* .codehilite .nt, .md-typeset .highlight .nt {
-    color: #3b78e7;
-} */
 
 .admonition.notemy.custom {
     width: 214px;
@@ -176,9 +162,6 @@ html .md-footer-meta.md-typeset a {
 .t_nav ul li a {
   display: block;
   padding: 20px 20px 20px 0px;
-  /* padding-bottom: 45px;
-  padding-right: 20px;
-  padding-top: 20px; */
   text-decoration: none;
   font-weight: 600;
   font-size: 15px;
@@ -201,7 +184,6 @@ font-family: "ETmodules";
 .t_nav ul li ul {
   display: none;
   position: absolute;
-  /* background-color: #fff; */
   background-color: rgb(10, 26, 59);
   color: rgb(255, 255, 255);
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
@@ -221,7 +203,6 @@ font-family: "ETmodules";
   display: block;
   padding: 10px 20px;
   text-decoration: none;
-  /* color: #333; */
   color: rgb(255, 255, 255);
   transition: background-color 0.3s;
 }
@@ -247,7 +228,6 @@ font-family: "ETmodules";
 
 .hero {
   overflow: hidden;
-  /* position: absolute; */
   object-fit: cover;
   top: 0;
   right: 0;
