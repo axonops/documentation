@@ -92,8 +92,6 @@ api_port: 8080 # axon-server HTTP API listening port (used by axon-dash) (AXONSE
 elastic_hosts: # Elasticsearch endpoint (env variable:ELASTIC_HOSTS, comma separated list)
   - http://localhost:9200
 
-# AxonOps licensing
-license_key: license-key
 org_name: my-company
 
 # SSL/TLS Settings for AxonOps Agent connections

@@ -38,11 +38,11 @@ You should expect the following response:
 
 ### Select the OS Family. 
 <label>
-  <input type="radio" name="osFamily" value="/get_started/agent_setup/#__tabbed_1_1" onChange="updateOS()">
+  <input type="radio" id="Debian" name="osFamily" value="/get_started/agent_setup/#debian--ubuntu" onChange="updateOS()" />
   <img src="/get_started/debian.png" class="skip-lightbox" width="180px">
 </label>
 <label>
-  <input type="radio" name="osFamily" value="/get_started/agent_setup/#__tabbed_1_2" onChange="updateOS()">
+  <input type="radio" id="RedHat" name="osFamily" value="/get_started/agent_setup/#redhat--centos" onChange="updateOS()" />
   <img src="/get_started/red_hat.png" class="skip-lightbox" width="180px">
 </label>
 
@@ -53,7 +53,6 @@ You should expect the following response:
     curl -L https://packages.axonops.com/apt/repo-signing-key.gpg | sudo gpg --dearmor -o /usr/share/keyrings/axonops.gpg
     echo "deb [arch=arm64,amd64 signed-by=/usr/share/keyrings/axonops.gpg] https://packages.axonops.com/apt axonops-apt main" | sudo tee /etc/apt/sources.list.d/axonops-apt.list
     sudo apt-get update
-    sudo apt-get install axon-cassandra{version}-agent
     ```
 
 === "RedHat / CentOS"
@@ -72,63 +71,105 @@ You should expect the following response:
 
 ### Select the Cassandra Version
 <label>
-  <input type="radio" name="casFamily" value="/get_started/agent_setup/#__tabbed_3_1" onChange="updateCas()">
+  <input type="radio" name="casFamily" value="/get_started/agent_setup/#__tabbed_4_1" onChange="updateCas()">
   <img src="/get_started/cas_3.png" class="skip-lightbox" width="180px">
 </label>
 <label>
-  <input type="radio" name="casFamily" value="/get_started/agent_setup/#__tabbed_3_2" onChange="updateCas()">
+  <input type="radio" name="casFamily" value="/get_started/agent_setup/#__tabbed_4_2" onChange="updateCas()">
   <img src="/get_started/cas_3_11.png" class="skip-lightbox" width="180px">
 </label>
 <label>
-  <input type="radio" name="casFamily" value="/get_started/agent_setup/#__tabbed_3_3" onChange="updateCas()">
+  <input type="radio" name="casFamily" value="/get_started/agent_setup/#__tabbed_4_3" onChange="updateCas()">
   <img src="/get_started/cas_4.png" class="skip-lightbox" width="180px">
 </label>
 <label>
-  <input type="radio" name="casFamily" value="/get_started/agent_setup/#__tabbed_3_4" onChange="updateCas()">
+  <input type="radio" name="casFamily" value="/get_started/agent_setup/#__tabbed_4_4" onChange="updateCas()">
   <img src="/get_started/cas_4_1.png" class="skip-lightbox" width="180px">
 </label>
+<label>
+  <input type="radio" name="casFamily" value="/get_started/agent_setup/#__tabbed_5_3" onChange="updateCas()">
+  <img src="/get_started/cas_5_0.png" class="skip-lightbox" width="180px">
+</label>
+
+<!-- ### Select the Java Version. 
+<label>
+  <input type="radio" name="javaFamily" value="/get_started/agent_setup/#__tabbed_3_1" onChange="updateJava()">
+  <img src="/get_started/Java_8.png" class="skip-lightbox" width="180px">
+</label>
+<label>
+  <input type="radio" name="javaFamily" value="/get_started/agent_setup/#__tabbed_3_2" onChange="updateJava()">
+  <img src="/get_started/Java_11.png" class="skip-lightbox" width="180px">
+</label> -->
 
 ===+ "Debian / Ubuntu"
-    ===+ "Cassandra 3.0"
-        ```
-        sudo apt-get install axon-cassandra3.0-agent
-        ```
+    ===+ "Java/OpenJDK 8"
+        ===+ "Cassandra 3.0"
+            ```
+            sudo apt-get install axon-cassandra3.0-agent
+            ```
+        === "Cassandra 3.11"
+            ```
+            sudo apt-get install axon-cassandra3.11-agent
+            ```
+        === "Cassandra 4.0"
+            ```
+            sudo apt-get install axon-cassandra4.0-agent-jdk8
+            ```
+        === "Cassandra 4.1"
+            ```
+            sudo apt-get install axon-cassandra4.1-agent-jdk8
+            ```
     
-    === "Cassandra 3.11"
-        ```
-        sudo apt-get install axon-cassandra3.11-agent
-        ```
-    
-    === "Cassandra 4.0"
-        ```
-        sudo apt-get install axon-cassandra4.0-agent
-        ```
-
-    === "Cassandra 4.1"
-        ```
-        sudo apt-get install axon-cassandra4.1-agent
-        ```
+    === "Java/OpenJDK 11"
+        === "Cassandra 4.0"
+            ```
+            sudo apt-get install axon-cassandra4.0-agent
+            ```
+        === "Cassandra 4.1"
+            ```
+            sudo apt-get install axon-cassandra4.1-agent
+            ```
+        === "Cassandra 5.0"
+            ```
+            sudo apt-get install axon-cassandra5.0-agent-jdk11
+            ```
 
 === "RedHat / CentOS"
-    === "Cassandra 3.0"
-        ```
-        sudo yum install axon-cassandra3.0-agent
-        ```
+    ===+ "Java/OpenJDK8"
+        ===+ "Cassandra 3.0"
+            ```
+            sudo yum install axon-cassandra3.0-agent
+            ```
+        === "Cassandra 3.11"
+            ```
+            sudo yum install axon-cassandra3.11-agent
+            ```
+        === "Cassandra 4.0"
+            ```
+            sudo yum install axon-cassandra4.0-agent
+            ```
+        === "Cassandra 4.1"
+            ```
+            sudo yum install axon-cassandra4.1-agent
+            ```
     
-    === "Cassandra 3.11"
-        ```
-        sudo yum install axon-cassandra3.11-agent
-        ```
-    
-    === "Cassandra 4.0"
-        ```
-        sudo yum install axon-cassandra4.0-agent
-        ```
-
-    === "Cassandra 4.1"
-        ```
-        sudo yum install axon-cassandra4.1-agent
-        ```
+    === "Java/OpenJDK 11"
+        ===+ "Cassandra 3.0"
+            ```
+            sudo yum install axon-cassandra3.0-agent
+            ```
+        === "Cassandra 3.11"
+            ```
+            sudo yum install axon-cassandra3.11-agent
+            ```
+        === "Cassandra 4.0"
+            ```
+            sudo yum install axon-cassandra4.0-agent
+            ```
+        === "Cassandra 4.1"
+            ```
+            sudo yum install axon-cassandra4.1-agent
+            ```
 
 ## Agent Configuration
 
