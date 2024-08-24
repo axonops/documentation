@@ -4,58 +4,30 @@ This agent will enable metrics, logs and events collection with adaptive repairs
 
 See [Installing axon-agent for Cassandra in Docker](./docker.md) if you are running Cassandra under Docker.
 
-## Available versions
+## AxonOps Agent is a available for the followig versions of Apache Casssandra
 
-* Apache Cassandra 4.1.x
-* Apache Cassandra 4.0.x
-* Apache Cassandra 3.11.x
 * Apache Cassandra 3.0.x
+* Apache Cassandra 3.11.x
+* Apache Cassandra 4.0.x
+* Apache Cassandra 4.1.x
+* Apache Cassandra 5.0.x
 
 
-## Step 1 - Installation
+## Step 1 - Setup the AxonOps repository and install AxonOps Agent
 
-> Make sure that the `{version}` of your Cassandra and Cassandra agent are compatible from the [compatibility matrix](../../compat_matrix/compat_matrix). 
+{!dynamic_pages/axon_agent/os.md!}
 
-### Select the OS Family. 
-<label>
-  <input type="radio" name="osFamily" value="/installation-starter/cassandra-agent/install/#__tabbed_1_1" onChange="updateOS()">
-  <img src="/get_started/debian.png" class="skip-lightbox" width="180px">
-</label>
-<label>
-  <input type="radio" name="osFamily" value="/installation-starter/cassandra-agent/install/#__tabbed_1_2" onChange="updateOS()">
-  <img src="/get_started/red_hat.png" class="skip-lightbox" width="180px">
-</label>
+## Step 2 - Install Cassandra Agent
 
-===+ "Debian / Ubuntu"
-    ``` bash
-    sudo apt-get update
-    sudo apt-get install -y curl gnupg ca-certificates
-    curl -L https://packages.axonops.com/apt/repo-signing-key.gpg | sudo gpg --dearmor -o /usr/share/keyrings/axonops.gpg
-    echo "deb [arch=arm64,amd64 signed-by=/usr/share/keyrings/axonops.gpg] https://packages.axonops.com/apt axonops-apt main" | sudo tee /etc/apt/sources.list.d/axonops-apt.list
-    sudo apt-get update
-    sudo apt-get install axon-cassandra{version}-agent
-    ```
-=== "RedHat / CentOS"
-    ``` bash
-    sudo tee /etc/yum.repos.d/axonops-yum.repo << EOL
-    [axonops-yum]
-    name=axonops-yum
-    baseurl=https://packages.axonops.com/yum/
-    enabled=1
-    repo_gpgcheck=0
-    gpgcheck=0
-    EOL
-
-    sudo yum install axon-cassandra{version}-agent
-    ```
+{!dynamic_pages/axon_agent/cassandra.md!}
 
 > Note: This will install the AxonOps Cassandra agent and its dependency: **axon-agent**
 
-
-## Step 2 - Agent Configuration
+## Step 3 - Agent Configuration
 
 Update the following highlighted lines from `/etc/axonops/axon-agent.yml`:
-When setting up SSL/TLS on the AxonOps Server the agents need to be able to connect 
+
+These need to match the config that you have in your axon-server.yml setup.
 
 ``` yaml hl_lines="2 6"
 axon-server:
@@ -72,38 +44,40 @@ NTP:
     host: "ntp.mycompany.com" # Your NTP server IP address or hostname 
 ```
 
-## Step 3 - Configure Cassandra 
-Edit `cassandra-env.sh`, which is usually located in `/<Cassandra Installation Directory>/conf/cassandra-env.sh` for
-tarball installs or `/etc/cassandra/cassandra-env.sh` for package installs,
-and append the following line at the end of the file:
+Set file permissions on /etc/axonops/axon-agent.yml file by executing the following command
 
-``` bash 
-JVM_OPTS="$JVM_OPTS -javaagent:/usr/share/axonops/axon-cassandra{version}-agent.jar=/etc/axonops/axon-agent.yml"
+```
+sudo chmod 0644 /etc/axonops/axon-agent.yml
 ```
 
-> for example with Cassandra agent version *3.11*:
-``` bash
-JVM_OPTS="$JVM_OPTS -javaagent:/usr/share/axonops/axon-cassandra3.11-agent.jar=/etc/axonops/axon-agent.yml"
-```
-> Make sure that this configuration will not get overridden by an automation tool.
+## Step 4 - Configure Cassandra 
 
-## Step 4 - Add axonops user to Cassandra user group and Cassandra user to axonops group
+{!dynamic_pages/axon_agent/java.md!}
+
+> **NB.** Make sure that this configuration will not get overridden by an automation tool.
+
+## Step 5 - Add axonops user to Cassandra user group and Cassandra user to axonops group
 
 ``` bash
 sudo usermod -aG <your_cassandra_group> axonops
 sudo usermod -aG axonops <your_cassandra_user>
 ```
 
-## Step 5 - Start Cassandra
+## Step 6 - Start/Restart Cassandra
+
+To load the Axon java agent and Cassandra config changes please,
+
+- Start the Cassandra service if stopped.
+- Restart the Cassandra service if already running.
 
 
-## Step 6 - Start axon-agent
+## Step 7 - Start axon-agent
 ``` bash
 sudo systemctl start axon-agent
 ```
 
 
-## (Optional) Step 7 - Cassandra Remote Backups or Restore Prerequisites
+## (Optional) Step 8 - Cassandra Remote Backups or Restore Prerequisites
 
 * If you plan to use AxonOps remote backup functionality, **axonops** user will require **read** access on Cassandra **data** folder.
 

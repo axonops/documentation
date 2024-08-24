@@ -18,4 +18,6 @@ Services to be installed:
 | RAM | 12 gigabytes (GB) |
 | Storage |	120 GB or larger storage device. |
 
-If you need to increase the amount of nodes to be monitored, you can get in touch with us at [here](https://axonops.com/contact/){target="_blank"}
+If you need to increase the amount of nodes to be monitored, you can get in touch with us
+
+<a href="https://axonops.com/contact/" target="_blank"><span class="sign-up-button">Contact Us</span></a>

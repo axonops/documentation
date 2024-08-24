@@ -7,68 +7,15 @@ AxonOps is currently only compatible with Elasticsearch 7.x, we recommend instal
 
 #### Installing Elasticsearch
 
-### Select the OS Family. 
-<label>
-  <input type="radio" name="osFamily" value="/installation/axon-server/axonserver_install/#__tabbed_1_1" onChange="updateOS()">
-  <img src="/get_started/debian.png" class="skip-lightbox" width="180px">
-</label>
-<label>
-  <input type="radio" name="osFamily" value="/installation/axon-server/axonserver_install/#__tabbed_1_2" onChange="updateOS()">
-  <img src="/get_started/red_hat.png" class="skip-lightbox" width="180px">
-</label>
-
-===+ "Debian / Ubuntu"
-    ``` bash
-    wget https://artifacts.elastic.co/downloads/elasticsearch/elasticsearch-7.17.16-amd64.deb
-    wget https://artifacts.elastic.co/downloads/elasticsearch/elasticsearch-7.17.16-amd64.deb.sha512
-    shasum -a 512 -c elasticsearch-7.17.16-amd64.deb.sha512
-    sudo dpkg -i elasticsearch-7.17.16-amd64.deb
-    ```
-    The `shasum` command above verifies the downloaded package and should show this output:
-    ```
-    elasticsearch-7.17.16-amd64.deb: OK
-    ```
-=== "RedHat / CentOS"
-    ``` bash
-    wget https://artifacts.elastic.co/downloads/elasticsearch/elasticsearch-7.17.16-x86_64.rpm
-    wget https://artifacts.elastic.co/downloads/elasticsearch/elasticsearch-7.17.16-x86_64.rpm.sha512
-    sha512sum -c elasticsearch-7.17.16-x86_64.rpm.sha512
-    sudo rpm -i elasticsearch-7.17.16-x86_64.rpm
-    ```
-    The `sha512sum` command above verifies the downloaded package and should show this output:
-    ```
-    elasticsearch-7.17.16-x86_64.rpm: OK
-    ```
+{!dynamic_pages/axon_server/elastic.md!}
 
 {!installation/axon-server/elastic.md!}
 
 ## Step 2 - axon-server installation
 
-===+ "Debian / Ubuntu"
-    ``` bash
-    sudo apt-get update
-    sudo apt-get install -y curl gnupg ca-certificates
-    curl -L https://packages.axonops.com/apt/repo-signing-key.gpg | sudo gpg --dearmor -o /usr/share/keyrings/axonops.gpg
-    echo "deb [arch=arm64,amd64 signed-by=/usr/share/keyrings/axonops.gpg] https://packages.axonops.com/apt axonops-apt main" | sudo tee /etc/apt/sources.list.d/axonops-apt.list
-    sudo apt-get update
-    sudo apt-get install axon-server
-    ```
-=== "RedHat / CentOS"
-    ``` bash
-    sudo tee /etc/yum.repos.d/axonops-yum.repo << EOL
-    [axonops-yum]
-    name=axonops-yum
-    baseurl=https://packages.axonops.com/yum/
-    enabled=1
-    repo_gpgcheck=0
-    gpgcheck=0
-    EOL
-
-    sudo yum install axon-server
-    ```
+{!dynamic_pages/axon_server/os.md!}
 
 ## Step 3 - axon-server configurations
-
 
 Make sure **elastic_host** and **elastic_port** are corresponding to your Elasticsearch instance.
 
@@ -190,6 +137,7 @@ retention:
 #  server_side_encryption: AES256
 #  storage_class: STANDARD
 ```
+
 > For better performances on large clusters (100+ nodes), you can use a CQL store for the metrics such as **Cassandra**. To opt-in for CQL metrics storage, specify at least one CQL host with axon-server configuration.
 
 ## Step 4 - Start the server

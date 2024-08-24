@@ -6,38 +6,7 @@ This section describes the installation process for the GUI service.
 
 ## Step 1 - Installation
 
-### Select the OS Family. 
-<label>
-  <input type="radio" name="osFamily" value="/installation/axon-dash/install/#__tabbed_1_1" onChange="updateOS()">
-  <img src="/get_started/debian.png" class="skip-lightbox" width="180px">
-</label>
-<label>
-  <input type="radio" name="osFamily" value="/installation/axon-dash/install/#__tabbed_1_2" onChange="updateOS()">
-  <img src="/get_started/red_hat.png" class="skip-lightbox" width="180px">
-</label>
-
-===+ "Debian / Ubuntu"
-    ``` bash
-    sudo apt-get update
-    sudo apt-get install -y curl gnupg ca-certificates
-    curl -L https://packages.axonops.com/apt/repo-signing-key.gpg | sudo gpg --dearmor -o /usr/share/keyrings/axonops.gpg
-    echo "deb [arch=arm64,amd64 signed-by=/usr/share/keyrings/axonops.gpg] https://packages.axonops.com/apt axonops-apt main" | sudo tee /etc/apt/sources.list.d/axonops-apt.list
-    sudo apt-get update
-    sudo apt-get install axon-dash
-    ```
-=== "RedHat / CentOS"
-    ``` bash
-    sudo tee /etc/yum.repos.d/axonops-yum.repo << EOL
-    [axonops-yum]
-    name=axonops-yum
-    baseurl=https://packages.axonops.com/yum/
-    enabled=1
-    repo_gpgcheck=0
-    gpgcheck=0
-    EOL
-
-    sudo yum install axon-dash
-    ```
+{!dynamic_pages/axon_dash/os.md!}
 
 ## Step 2 - Configuration
 
@@ -98,7 +67,7 @@ This will start the **axon-dash** process as the **axonops** user, which was cre
 
 ## Step 6 - Setting up SSL/TLS for AxonDash
 
-AxonDash does not support SSL/TLS and needs to be fronted by Nginx. You can install and configure Nginx by following the [Configure Nginx](../axon-server/configure_nginx.md) guide.
+AxonDash does not support SSL/TLS and needs to be fronted by Nginx. You can install and configure Nginx by following the [Configure Nginx](../axon-dash/configure_nginx.md) guide.
 
 ## Step 7 - Installing agents
 

@@ -1,6 +1,8 @@
 # Configure Nginx
 
-Setting up SSL/TLS connection to AxonServer
+AxonOps Dashboard does not support SSL/TLS and needs to be fronted by Nginx.
+
+Setting up SSL/TLS connection to AxonOps Dashboarb/UI
 
 ## Installing Nginx
 

@@ -3,97 +3,17 @@
 function random() {
   setTimeout('', 1000);
   document.getElementById("myNumber").innerHTML = Math.floor(Math.random() * 10000000);
+  window.localStorage.removeItem("/.__announce");
 }
-window.onload = random;
-
-const tabSync = () => {
-  if (document.getElementsByName('osFamily')[0] != null)
-    document.getElementsByName('osFamily')[0].checked = true;
-  if (document.getElementsByName('casFamily')[0] != null)
-    document.getElementsByName('casFamily')[0].checked = true;
-  if (document.getElementsByName('javaFamily')[0] != null)
-    document.getElementsByName('javaFamily')[0].checked = true;
-
-  const tabs = document.querySelectorAll(".tabbed-set > input")
-  for (const tab of tabs) {
-    tab.addEventListener("change", function () {
-      const tabInner = document.querySelector(`label[for=${tab.id}]`).innerHTML
-      // Check if Debian or RedHat
-      if (tab.checked && tabInner.includes("Debian")) {
-        document.getElementsByName('osFamily')[0].checked = true;
-        window.localStorage.setItem("yScroll", document.documentElement.scrollTop);
-      }
-      if (tab.checked && tabInner.includes("RedHat")) {
-        document.getElementsByName('osFamily')[1].checked = true;
-        window.localStorage.setItem("yScroll", document.documentElement.scrollTop);
-      }
-
-      //Check if Java8 or Java11
-      if (tab.checked && tabInner.includes("OpenJDK 8")) {
-        document.getElementsByName('javaFamily')[0].checked = true;
-        window.localStorage.setItem("yScroll", document.documentElement.scrollTop);
-      }
-      if (tab.checked && tabInner.includes("OpenJDK 11")) {
-        document.getElementsByName('javaFamily')[1].checked = true;
-        window.localStorage.setItem("yScroll", document.documentElement.scrollTop);
-      }
-
-      // Check Cassandra and Debian
-      if (tab.checked && tabInner.includes("Cassandra 3.0") && tabs[0].checked) {
-        document.getElementsByName('osFamily')[0].checked = true;
-        document.getElementsByName('casFamily')[0].checked = true;
-        window.localStorage.setItem("yScroll", document.documentElement.scrollTop);
-      }
-      if (tab.checked && tabInner.includes("Cassandra 3.11") && tabs[0].checked) {
-        document.getElementsByName('osFamily')[0].checked = true;
-        document.getElementsByName('casFamily')[1].checked = true;
-        window.localStorage.setItem("yScroll", document.documentElement.scrollTop);
-      }
-      if (tab.checked && tabInner.includes("Cassandra 4.0") && tabs[0].checked) {
-        document.getElementsByName('osFamily')[0].checked = true;
-        document.getElementsByName('casFamily')[2].checked = true;
-        window.localStorage.setItem("yScroll", document.documentElement.scrollTop);
-      }
-      if (tab.checked && tabInner.includes("Cassandra 4.1") && tabs[0].checked) {
-        document.getElementsByName('osFamily')[0].checked = true;
-        document.getElementsByName('casFamily')[3].checked = true;
-        window.localStorage.setItem("yScroll", document.documentElement.scrollTop);
-      }
-
-      // Check Cassandra and RedHat
-      if (tab.checked && tabInner.includes("Cassandra 3.0") && tabs[1].checked) {
-        document.getElementsByName('osFamily')[1].checked = true;
-        document.getElementsByName('casFamily')[0].checked = true;
-        window.localStorage.setItem("yScroll", document.documentElement.scrollTop);
-      }
-      if (tab.checked && tabInner.includes("Cassandra 3.11") && tabs[1].checked) {
-        document.getElementsByName('osFamily')[1].checked = true;
-        document.getElementsByName('casFamily')[1].checked = true;
-        window.localStorage.setItem("yScroll", document.documentElement.scrollTop);
-      }
-      if (tab.checked && tabInner.includes("Cassandra 4.0") && tabs[1].checked) {
-        document.getElementsByName('osFamily')[1].checked = true;
-        document.getElementsByName('casFamily')[2].checked = true;
-        window.localStorage.setItem("yScroll", document.documentElement.scrollTop);
-      }
-      if (tab.checked && tabInner.includes("Cassandra 4.1") && tabs[1].checked) {
-        document.getElementsByName('osFamily')[1].checked = true;
-        document.getElementsByName('casFamily')[3].checked = true;
-        window.localStorage.setItem("yScroll", document.documentElement.scrollTop);
-      }
-    });
-  }
-}
-window.onload = tabSync;
-
+window.addEventListener("load",random);
+// window.onload = random;
 
 function updateOS() {
   var ele = document.getElementsByName('osFamily');
   for (i = 0; i < ele.length; i++) {
     if (ele[i].checked) {
       window.localStorage.setItem("OS_State", ele[i].id);
-      window.localStorage.setItem("yScroll", document.documentElement.scrollTop);
-      window.localStorage.setItem("pageURL", ele[i].value);
+      openOS(ele[i].id);
       updatePage();
     }
   }
@@ -102,40 +22,138 @@ function updateOS() {
 function updateCas() {
   var ele = document.getElementsByName('casFamily');
   for (i = 0; i < ele.length; i++) {
-    if (ele[i].checked)
-      window.location.href = ele[i].value;
+    if (ele[i].checked) {
+      window.localStorage.setItem("CAS_State", ele[i].id);
+      updatePage();
+    }
   }
 }
 
 function updateJava() {
   var ele = document.getElementsByName('javaFamily');
   for (i = 0; i < ele.length; i++) {
-    if (ele[i].checked)
-      window.location.href = ele[i].value;
+    if (ele[i].checked) {
+      window.localStorage.setItem("JAVA_State", ele[i].id);
+      updatePage();
+    }
   }
 }
 
-// rbtn.style.display = 'none';
-// Get Qeury parameter on page load and sync the image buttons 
-// window.localStorage.setItem("OS_State", "Debian");
-// window.localStorage.getItem("OS_State");
+function openOS(os) {
+  var i;
+  var x = document.getElementsByClassName("os");
+  for (i = 0; i < x.length; i++) {
+    x[i].style.display = "none";
+  }
+  os += 'Div';
+  for (i = 0; i < x.length; i++) {
+    if(x[i].id == os)
+      x[i].style.display = "block"
+    // document.getElementById(os)[i].style.display = "block";
+  }
+}
 
+function openCAS() {
+  var i;
+  if(document.getElementsByClassName("cas").length == 0)
+    return;
+  var x = document.getElementsByClassName("cas");
+  for (i = 0; i < x.length; i++) {
+    x[i].style.display = "none";
+  }
+  let cas = "";
+  cas += window.localStorage.getItem("OS_State");
+  cas += window.localStorage.getItem("CAS_State");
+  cas += window.localStorage.getItem("JAVA_State");
+  cas += 'Div';
+  document.getElementById(cas).style.display = "block";
+}
+
+function openJAVACAS() {
+  var i;
+  if(document.getElementsByClassName("javacas").length == 0)
+    return;
+  var jx = document.getElementsByClassName("javacas");
+  for (i = 0; i < jx.length; i++) {
+    jx[i].style.display = "none";
+  }
+  let javacas = "";
+  javacas += window.localStorage.getItem("CAS_State");
+  // javacas += window.localStorage.getItem("JAVA_State");
+  javacas += 'Div';
+  document.getElementById(javacas).style.display = "block";
+}
 
 function updatePage() {
-  if (document.getElementsByName('osFamily')[0] != null || document.getElementsByName('casFamily')[0] != null || document.getElementsByName('javaFamily')[0] != null) {
-    window.scrollY = window.localStorage.getItem("yScroll");
-    window.location.href = window.localStorage.getItem("pageURL");
+  if (document.getElementsByName('osFamily')[0] != null && window.localStorage.getItem("OS_State") == null)
+    window.localStorage.setItem("OS_State", "Debian");
+  if (document.getElementsByName('casFamily')[0] != null && window.localStorage.getItem("CAS_State") == null)
+    window.localStorage.setItem("CAS_State", "Cassandra30");
+  if (document.getElementsByName('javaFamily')[0] != null && window.localStorage.getItem("JAVA_State") == null)
+    window.localStorage.setItem("JAVA_State", "Java8");    
+  hidePanels();
+}
+
+function hidePanels() {
+  if(window.localStorage.getItem("CAS_State") != null){
+    switch(window.localStorage.getItem("CAS_State")){
+      case "Cassandra30":
+        document.getElementById('Java8img').style.display = 'inline';  
+        document.getElementById('Java11img').style.display = 'none';
+        window.localStorage.setItem("JAVA_State", "Java8");
+        document.getElementsByName('javaFamily')[0].checked = true
+        openCAS();
+        openJAVACAS();
+        break;
+      case "Cassandra311":
+        document.getElementById('Java8img').style.display = 'inline';
+        document.getElementById('Java11img').style.display = 'none';
+        window.localStorage.setItem("JAVA_State", "Java8");
+        document.getElementsByName('javaFamily')[0].checked = true
+        openCAS();
+        openJAVACAS();
+        break;
+      case "Cassandra40":
+        document.getElementById('Java8img').style.display = 'inline';
+        document.getElementById('Java11img').style.display = 'inline';
+        if(window.localStorage.getItem("JAVA_State") == "Java8")
+          document.getElementsByName('javaFamily')[0].checked = true;
+        else
+          document.getElementsByName('javaFamily')[1].checked = true;
+        openCAS();
+        openJAVACAS();
+        break;
+      case "Cassandra41":
+        document.getElementById('Java8img').style.display = 'inline';
+        document.getElementById('Java11img').style.display = 'inline';
+        document.getElementsByName('javaFamily')[0].checked = true;
+        if(window.localStorage.getItem("JAVA_State") == "Java8")
+          document.getElementsByName('javaFamily')[0].checked = true;
+        else
+          document.getElementsByName('javaFamily')[1].checked = true;
+        openCAS();
+        openJAVACAS();
+        break;
+      case "Cassandra50":
+        document.getElementById('Java8img').style.display = 'none';
+        document.getElementById('Java11img').style.display = 'inline';
+        window.localStorage.setItem("JAVA_State", "Java11")
+        document.getElementsByName('javaFamily')[1].checked = true;
+        openCAS();
+        openJAVACAS();
+        break;
+    }
   }
 }
 
-function clearPage() {
-  if (window.location.href.includes("#") = false) {
+function resetLocalStorage(){
+  if(window.localStorage.getItem("OS_State") != null)
     window.localStorage.removeItem("OS_State");
-    window.localStorage.removeItem("yScroll");
-    window.localStorage.removeItem("pageURL");
-    window.localStorage.removeItem("./__tabs");
-    document.getElementsByName('osFamily')[0].checked = true;
-  }
+  if(window.localStorage.getItem("CAS_State") != null)
+    window.localStorage.removeItem("CAS_State");
+  if(window.localStorage.getItem("JAVA_State") != null)
+    window.localStorage.removeItem("JAVA_State");
 }
 
-// window.onload = clearPage;
+window.addEventListener("beforeunload",resetLocalStorage);
+// window.onbeforeunload = resetLocalStorage();
