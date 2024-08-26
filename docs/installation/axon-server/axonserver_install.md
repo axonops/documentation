@@ -57,9 +57,9 @@ org_name: my-company
 # SSL/TLS Settings for AxonOps Agent connections
 tls:
   mode: "disabled" # disabled, TLS
-  # Only set if mode is TLS
+  # Only set below if mode is TLS
   skipVerify: false # Disables CA and Hostname verification
-  caFile: "path_to_certs_on_axonops_server.crt"
+  caFile: "path_to_certs_on_axonops_server.crt" # required if skipVerify is not set and you are using a self-signed cert
   certFile: "path_to_certs_on_axonops_server.crt"
   keyFile: "path_to_key_file_on_axonops_server.key"
 

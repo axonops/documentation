@@ -39,11 +39,12 @@ axon-agent:
     # SSL/TLS Settings from AxonOps Agent to AxonOps Server
     tls:
         mode: "disabled" # disabled, TLS
-        # Only set if mode is TLS
+        # Only set below if mode is TLS
         skipVerify: false # Disables CA and Hostname verification
-        caFile: "path_to_certs_on_axon_agent_node.crt"
+        caFile: "path_to_certs_on_axon_agent_node.crt" # required if skipVerify is not set and you are using a self-signed cert
         certFile: "path_to_certs_on_axon_agent_node.crt"
         keyFile: "path_to_key_file_on_axon_agent_node.key"
+    disable_auto_update: true
 
 NTP:
     host: "ntp.mycompany.com" # Your NTP server IP address or hostname 

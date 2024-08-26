@@ -43,16 +43,17 @@ In the Elasticsearch `home` folder run the following commands to setup the defau
 
 **Please only run one of the commands.**
 
-This will create a random secure password for you.
+The below example will create a random secure password for the elastic user.
 
 ```
-./bin/elasticsearch-reset-password -u elastic
+<DEFAULT LOCATION>/bin/elasticsearch-reset-password -u elastic
 ```
 
-If you want to set the password to a specific value, run the command with the interactive (-i) parameter.
+If you want to set the password using your own password, run the command with the interactive (-i) parameter. 
+The example will set a self-assigned password for the elastic built-in user.
 
 ```
-./bin/elasticsearch-reset-password -i -u elastic
+<DEFAULT LOCATION>/bin/elasticsearch-reset-password -i -u elastic
 ```
 
 

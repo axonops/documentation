@@ -39,6 +39,7 @@ axon-agent:
     # SSL/TLS Settings from AxonOps Agent to AxonOps Server
     tls:
         mode: "disabled" # disabled, TLS
+    disable_auto_update: true
 
 NTP:
     host: "ntp.mycompany.com" # Your NTP server IP address or hostname 

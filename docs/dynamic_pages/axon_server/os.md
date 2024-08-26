@@ -1,4 +1,4 @@
-Execute the following command to setup the AxonOps repository for your OS
+Execute the following command to setup the AxonOps repository for your OS using the built in Package manager.
 
 <div id="DebianDiv" class="os">
     ```bash
