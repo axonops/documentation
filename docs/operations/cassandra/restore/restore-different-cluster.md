@@ -46,27 +46,25 @@ Usage of /usr/share/axonops/axon-cassandra-restore:
   -i, --backup-id string                UUID of the backup to restore
       --cassandra-bin-dir string        Where the Cassandra binary files are stored (e.g. /opt/cassandra/bin)
       --cqlsh-options string            Options to pass to cqlsh when restoring a table schema
-      --dest-table string               The name of the destination table for the restore in keyspace.table format. Requires --tables with a single source table.
+      --dest-table string               The name of the destination table for the restore in keyspace.table format. Requires --tables with a single source table. (Added in v1.0.61)
   -h, --help                            Show command-line help
   -l, --list                            List backups available in remote storage
   -d, --local-sstable-dir string        A local directory in which to store sstables downloaded from backup storage
       --org-id string                   ID of the AxonOps organisation from which the backup was created
   -r, --restore                         Restore a backup from remote storage
       --restore-schema                  Set this when using --use-sstable-loader to restore the CQL schema for each table. Keyspaces must already exist.
-  -e, --skip-existing-files             Don't download files that already exist in the local destination path
+  -e, --skip-existing-files             Don't download files that already exist in the local destination path (Added in v1.0.61)
   -c, --source-cluster string           The name of the cluster from which to restore
   -s, --source-hosts string             Comma-separated list containing host IDs for which to restore backups
       --sstable-loader-options string   Options to pass to sstableloader when restoring a backup
       --storage-config string           JSON-formatted remote storage configuration
-      --storage-config-file string      Path to a file containing JSON-formatted remote storage configuration
+      --storage-config-file string      Path to a file containing JSON-formatted remote storage configuration (Added in v1.0.95)
   -t, --tables string                   Comma-separated list of keyspace.table to restore. Defaults to all tables if omitted.
       --use-sstable-loader              Use sstableloader to restore the backup. Requires --sstable-loader-options and --cassandra-bin-dir.
   -v, --verbose                         Show verbose output when listing backups
       --version                         Show version information and exit
-```
 
-> **_NOTE:_** `--storage-config-file` is only available from axon-agent 1.0.95. Use `--storage-config` for previous versions as demonstrated in this document
-or upgrade your `axon-agent` to the latest available version.
+```
 
 ## Listing the available backups
 
