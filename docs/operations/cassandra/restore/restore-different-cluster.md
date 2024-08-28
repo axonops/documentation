@@ -46,23 +46,27 @@ Usage of /usr/share/axonops/axon-cassandra-restore:
   -i, --backup-id string                UUID of the backup to restore
       --cassandra-bin-dir string        Where the Cassandra binary files are stored (e.g. /opt/cassandra/bin)
       --cqlsh-options string            Options to pass to cqlsh when restoring a table schema
-      --dest-table string               The name of the destination table for the restore in keyspace.table format. Requires --tables with a single source table. (Added in v1.0.61)
+      --dest-table string               The name of the destination table for the restore in keyspace.table format. Requires --tables with a single source table.
   -h, --help                            Show command-line help
   -l, --list                            List backups available in remote storage
   -d, --local-sstable-dir string        A local directory in which to store sstables downloaded from backup storage
       --org-id string                   ID of the AxonOps organisation from which the backup was created
   -r, --restore                         Restore a backup from remote storage
       --restore-schema                  Set this when using --use-sstable-loader to restore the CQL schema for each table. Keyspaces must already exist.
-  -e, --skip-existing-files             Don't download files that already exist in the local destination path (Added in v1.0.61)
+  -e, --skip-existing-files             Don't download files that already exist in the local destination path
   -c, --source-cluster string           The name of the cluster from which to restore
   -s, --source-hosts string             Comma-separated list containing host IDs for which to restore backups
       --sstable-loader-options string   Options to pass to sstableloader when restoring a backup
       --storage-config string           JSON-formatted remote storage configuration
+      --storage-config-file string      Path to a file containing JSON-formatted remote storage configuration
   -t, --tables string                   Comma-separated list of keyspace.table to restore. Defaults to all tables if omitted.
       --use-sstable-loader              Use sstableloader to restore the backup. Requires --sstable-loader-options and --cassandra-bin-dir.
   -v, --verbose                         Show verbose output when listing backups
       --version                         Show version information and exit
 ```
+
+> **_NOTE:_** `--storage-config-file` is only available from axon-agent 1.0.95. Use `--storage-config` for previous versions as demonstrated in this document
+or upgrade your `axon-agent` to the latest available version.
 
 ## Listing the available backups
 
@@ -126,8 +130,9 @@ cluster, hosts and tables:
 ## Restoring a Backup
 
 The `axon-cassandra-restore` tool can perform the following operations to restore a backup from remote storage:
+
 1. Download the sstable files from the bucket
-2. Create table schemas in the target cluster
+2. Create table schemas in the target cluster.
 3. Import the downloaded sstable files into the target cluster using `sstableloader`
 
 The default behaviour is to only download the sstable files to a local directory.
@@ -149,6 +154,9 @@ This command will download the backup with ID `2c1d9aca-5312-11ee-b686-bed50b933
 The sstable files will be restored into directories named `{local-sstable-dir}/{host-id}/keyspace/table/` and from here
 you can copy/move the files to another location or import them into a cluster using `sstableloader`.
 
+> **_NOTE:_** At least the `keyspaces` must exist in the target cluster. If you did not create the tables remember to add
+the option `--restore-schema` to the command line. See [Importing CQL schemas during the restore](#importing-cql-schemas-during-the-restore)
+
 ### Download and import a backup in a single operation
 
 The above example shows how to download the backed up files into a local directory but it does not import them into
@@ -157,6 +165,7 @@ the `--use-sstable-loader`, `--cassandra-bin-dir` and `--sstable-loader-options`
 
 For example this command will download the same backup files as the previous example but it will also run `sstableloader`
 to import the downloaded files into a new cluster with contact points 10.0.0.1, 10.0.0.2 and 10.0.0.3:
+
 ```bash
 /usr/share/axonops/axon-cassandra-restore \
   --restore \
@@ -171,6 +180,9 @@ to import the downloaded files into a new cluster with contact points 10.0.0.1, 
   --sstable-loader-options "-d 10.0.0.1,10.0.0.2,10.0.0.3 -u cassandra -pw cassandra"
 ```
 
+> **_NOTE:_** if you are using an Apache Cassandra version installed using either the Debian or RedHat package manager use `--cassandra-bin-dir /usr/bin` when
+specifying the bin directory.
+
 #### Importing CQL schemas during the restore
 
 When a backup is imported to a cluster using `sstableloader` it assumes that the destination tables already exist and
@@ -180,6 +192,7 @@ and `--cqlsh-options` arguments to `axon-cassandra-restore`.
 
 Building on the example above this command will download the files from the backup, create the schema for any missing
 tables, and import the downloaded data with `sstableloader`:
+
 ```bash
 /usr/share/axonops/axon-cassandra-restore \
   --restore \
@@ -195,7 +208,7 @@ tables, and import the downloaded data with `sstableloader`:
   --restore-schema \
   --cqlsh-options "-u cassandra -p cassandra 10.0.0.1"
 ```
-> NOTE: This will not create missing keyspaces. You must ensure that the target keyspaces already exist in the
+> **_NOTE:_** This will not create missing keyspaces. You must ensure that the target keyspaces already exist in the
 > destination cluster before running the restore command.
 
 ## Storage Config Examples
@@ -222,9 +235,14 @@ Here are some examples of the most common storage types:
 --storage-config '{"type":"googlecloudstorage","location":"us","service_account_credentials":"ESCAPED_JSON_PRIVATE_KEY"}'
 ```
 #### SSH/SFTP
-```
+```sh
 --storage-config '{"type":"sftp","host":"<sftp_server_hostname>","port":"22","path":"/backup/path","user":"<sftp_username>","key_file":"~/private/key/file"}'
 ```
+or with password
+```sh
+--storage-config '{"type":"sftp","host":"<sftp_server_hostname>","port":"22","path":"/backup/path","user":"<sftp_username>","pass":"<sftp_password>"}'
+```
+
 
 
 ## Restore to a different table
