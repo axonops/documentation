@@ -63,7 +63,6 @@ Usage of /usr/share/axonops/axon-cassandra-restore:
       --use-sstable-loader              Use sstableloader to restore the backup. Requires --sstable-loader-options and --cassandra-bin-dir.
   -v, --verbose                         Show verbose output when listing backups
       --version                         Show version information and exit
-
 ```
 
 ## Listing the available backups
