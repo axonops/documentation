@@ -34,15 +34,15 @@ You should expect the following response:
 
 *AxonOps Agent Test Page*
 
-## Setup the AxonOps repository on your Operating system
+## Step 1 - Setup the AxonOps repository and install AxonOps Agent
 
 {!dynamic_pages/axon_agent/os.md!}
 
-## Install Cassandra Agent
+## Step 2 - Install Cassandra Agent
 
 {!dynamic_pages/axon_agent/cassandra.md!}
 
-## Agent Configuration
+## Step 3 - Agent Configuration
 
 Update and copy the below code snippet into /etc/axonops/axon-agent.yml file.
 
@@ -83,26 +83,26 @@ Set file permissions on /etc/axonops/axon-agent.yml file by executing the follow
 sudo chmod 0644 /etc/axonops/axon-agent.yml
 ```
 
-## Cassandra Configuration
+## Step 4 - Configure Cassandra
 
 {!dynamic_pages/axon_agent/java.md!}
 
 **NB.** Make sure that this configuration will not get overridden by an automation tool.
 
-## Add AxonOps user to Cassandra user group and Cassandra user to AxonOps group
+## Step 5 - Add axonops user to Cassandra user group and Cassandra user to axonops group
 ```
 sudo usermod -aG <your_cassandra_group> axonops
 sudo usermod -aG axonops <your_cassandra_user>
 ```
 
-## Start/Restart Cassandra
+## Step 6 - Start/Restart Cassandra
 
 To load the Axon java agent and Cassandra config changes please,
 
 * Start the Cassandra service if stopped. 
 * Restart the Cassandra service if already running.
 
-## Start axon-agent
+## Step 7 - Start axon-agent
 
 ```
 sudo systemctl start axon-agent

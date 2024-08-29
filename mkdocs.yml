@@ -71,17 +71,17 @@ nav:
   - Home: index.md
   
   # - Get Started:
-  - AxonOps Cloud(SaaS): 
+  - AxonOps Cloud: 
     - Editions: 
       - Developer Edition: 'editions/developer_edition.md'
       - Starter Edition: 'editions/starter_edition.md'
       - Enterprise Edition: 'editions/enterprise_edition.md'
 
     - Setup:
-      - AxonOps Cloud account: 'get_started/saas.md'
+      - AxonOps Cloud account: 'get_started/cloud.md'
       - AxonOps Cloud agents: 'get_started/agent_setup.md'
 
-  - AxonOps Self Hosted:
+  - AxonOps Self-Hosted:
     - Starter:
       - AxonOps Server: 'installation-starter/axon-server/axonserver_install.md'
       - AxonOps Dashboard: 'installation-starter/axon-dash/install.md'

@@ -17,14 +17,14 @@ help:
 	@grep -E '^[a-zA-Z_-]+:.*?## .*$$' $(MAKEFILE_LIST) | sort | awk 'BEGIN {FS = ":.*?## "}; {printf "\033[36m%-30s\033[0m %s\n", $$1, $$2}'
 
 prep:
-	pipenv install
+	[ "${PIPENV}" == "true" ] && pipenv install
 
 serve: prep ## Serve locally the generated pages
-	pipenv run mkdocs serve
+	${PIPENVCMD} mkdocs serve
 
 build: prep ## Build locally the generated pages
-	pipenv run mkdocs build --clean
+	${PIPENVCMD} mkdocs build --clean
 
 publish: prep ## Publish new docs
-	pipenv run mkdocs gh-deploy
+	${PIPENVCMD} mkdocs gh-deploy
 

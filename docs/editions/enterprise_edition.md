@@ -10,7 +10,6 @@ Book a consultation with a Cassandra Expert.
 
 ## Enterprise edition features
 
-* Cloud or Self-Hosted, you choose.
 * Unlimited Cassandra nodes
 * Unlimited Cloud User Accounts
 * Maximum metrics & logs retention
