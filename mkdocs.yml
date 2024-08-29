@@ -1,5 +1,6 @@
 site_name: docs
 copyright: © 2024 AxonOps Limited. All rights reserved.
+dev_addr: '0.0.0.0:8000'
 
 theme:
   name: 'material'
