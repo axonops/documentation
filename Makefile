@@ -22,6 +22,9 @@ prep:
 serve: prep ## Serve locally the generated pages
 	${PIPENVCMD} mkdocs serve
 
+build: prep ## Build locally the generated pages
+	${PIPENVCMD} mkdocs build --clean
+
 publish: prep ## Publish new docs
 	${PIPENVCMD} mkdocs gh-deploy
 

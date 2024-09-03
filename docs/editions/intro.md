@@ -17,4 +17,4 @@ If you would like to schedule some time with an AxonOps Cassandra expert to walk
 
 If you would like to schedule some time with an AxonOps Cassandra expert to walk you through the install and the AxonOps platform please follow the link below.
 
-<a class="book_expert" href="https://axonops.com/book-an-expert/">Book an Expert</a>
+<a class="book_expert" href="https://axonops.com/book-an-expert/" target="_blank">Book an Expert</a>

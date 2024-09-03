@@ -1,5 +1,6 @@
 site_name: docs
 copyright: © 2024 AxonOps Limited. All rights reserved.
+dev_addr: '0.0.0.0:8000'
 
 theme:
   name: 'material'
@@ -8,15 +9,12 @@ theme:
   language: 'en'
   custom_dir: overrides
   features:
-    # - header.autohide
     - navigation.tabs
     - announce.dismiss
     - navigation.sections
     - navigation.top
     - navigation.footer
     - content.code.copy
-    - content.tabs.link
-    # - navigation.expand
 
 extra:
   analytics:
@@ -55,8 +53,6 @@ markdown_extensions:
   - toc:
       permalink: true
   - pymdownx.superfences
-  - pymdownx.tabbed:
-      alternate_style: true
   - tables
 
 plugins:
@@ -73,160 +69,91 @@ extra_javascript:
 
 nav:
   - Home: index.md
-
-  - Editions: 
-    # - Intro to AxonOps: 'editions/intro.md'
-    - Free Editions: 'editions/free_editions.md'
-    - Enterprise Edition: 'editions/enterprise_edition.md'
   
-  - Get Started:
-    - AxonOps Cloud(SaaS): 
-      - Setup account: 'get_started/saas.md'
-      - Agent setup: 'get_started/agent_setup.md'
-    - Self Hosted:
-      - AxonOps Server:
-        - 'Installing on Ubuntu/Debian': 'installation/axon-server/ubuntu.md'
-        - 'Installing on Centos/Redhat': 'installation/axon-server/centos.md'
-        - 'Metrics database': 'installation/axon-server/metricsdatabase.md'
+  # - Get Started:
+  - AxonOps Cloud: 
+    - Editions: 
+      - Developer Edition: 'editions/developer_edition.md'
+      - Starter Edition: 'editions/starter_edition.md'
+      - Enterprise Edition: 'editions/enterprise_edition.md'
+
+    - Setup:
+      - AxonOps Cloud account: 'get_started/cloud.md'
+      - AxonOps Cloud agents: 'get_started/agent_setup.md'
+
+  - AxonOps Self-Hosted:
+    - Starter:
+      - AxonOps Server: 'installation-starter/axon-server/axonserver_install.md'
+      - AxonOps Dashboard: 'installation-starter/axon-dash/install.md'
+      - AxonOps Agent: 'installation-starter/cassandra-agent/install.md'
+      - AxonOps Agent in Docker: 'installation-starter/cassandra-agent/docker.md'
+      - System Requirements: system-requirements/developer.md
+
+    - Enterprise:
+      - AxonOps Server: 'installation/axon-server/axonserver_install.md'
+      - Configure Elasticsearch: 'installation/axon-server/configure_elastic.md'
+      - Cassandra as Metrics database: 'installation/axon-server/metricsdatabase.md'
       - AxonOps Dashboard: 'installation/axon-dash/install.md'
+      - Configure Nginx: 'installation/axon-dash/configure_nginx.md'
       - AxonOps Agent: 'installation/cassandra-agent/install.md'
       - Kubernetes: 'installation/kubernetes/index.md'
       - System Requirements: system-requirements/index.md
-    
-    - Compatibility:
-      - Interoperability matrix: 'installation/compat_matrix/compat_matrix.md'
+
     - Developer:
       - Quickstart - Docker: 'get_started/docker.md'
-
+      
+    - Compatibility:
+      - Interoperability matrix: 'installation/compat_matrix/compat_matrix.md'
+    
   - Using AxonOps:
     - Cluster Overview:
-      - 'Overview': 'cluster/cluster-overview.md'
+      - Overview: 'cluster/cluster-overview.md'
 
     - Monitoring:
-      - 'Monitoring Overview': 'monitoring/overview.md'
+      - Monitoring Overview: 'monitoring/overview.md'
       - Service Checks: 'monitoring/servicechecks/overview.md'
       - Metrics Dashboard:
-          - 'Cassandra': 'monitoring/metricsdashboards/cassandra.md'
-          - 'Metrics Query Syntax': 'monitoring/metricsdashboards/querysyntax.md'
+          - Cassandra: 'monitoring/metricsdashboards/cassandra.md'
+          - Metrics Query Syntax: 'monitoring/metricsdashboards/querysyntax.md'
       - Logs & Events: 'monitoring/logsandevents/logsandevents.md'
 
     - Notification Integrations:
-      - 'Overview' : 'integrations/overview.md'
-      - 'PagerDuty Integration': 'integrations/pagerduy-integration.md'
-      - 'Slack Integration': 'integrations/slack-integration.md'
-      - 'Microsoft Teams': 'integrations/microsoft-teams-integration.md'
-      - 'ServiceNow': 'integrations/servicenow-integration.md'
-      - 'Email Integration': 'integrations/email-integration.md'
+      - Overview : 'integrations/overview.md'
+      - PagerDuty Integration: 'integrations/pagerduy-integration.md'
+      - Slack Integration: 'integrations/slack-integration.md'
+      - Microsoft Teams: 'integrations/microsoft-teams-integration.md'
+      - ServiceNow: 'integrations/servicenow-integration.md'
+      - Email Integration: 'integrations/email-integration.md'
 
     - Operations:
-      # - Cassandra:
       - Repair: 'operations/cassandra/repair.md'
       - Rolling Restart: 'operations/cassandra/rollingrestart/overview.md'
     - Backup:
-      - 'Overview': 'operations/cassandra/backup/overview.md'
+      - Overview: 'operations/cassandra/backup/overview.md'
       - Remote Backups:
         - Overview: 'operations/cassandra/backup/remote.md'
         - AWS S3: 'operations/cassandra/backup/aws_s3.md'
-    - 'Restore':
-      - 'Overview': 'operations/cassandra/restore/overview.md'
-      - 'Single node': 'operations/cassandra/restore/restore-node-same-ip.md'
-      - 'Single node with a different IP address': 'operations/cassandra/restore/restore-node-different-ip.md'
-      - 'Whole cluster': 'operations/cassandra/restore/restore-cluster-same-ip.md'
-      - 'Whole cluster with changed IP addresses': 'operations/cassandra/restore/restore-cluster-different-ips.md'
-      - 'Restore to a different cluster': 'operations/cassandra/restore/restore-different-cluster.md'
-    - 'Point-in-time Restore':
-      - 'Overview': pitr/overview.md
-      - 'Configure Commitlog Archiving': pitr/configuration.md
-      - 'Restore from Point-in-Time': pitr/restore.md
+    - Restore:
+      - Overview: 'operations/cassandra/restore/overview.md'
+      - Single node: 'operations/cassandra/restore/restore-node-same-ip.md'
+      - Single node with a different IP address: 'operations/cassandra/restore/restore-node-different-ip.md'
+      - Whole cluster: 'operations/cassandra/restore/restore-cluster-same-ip.md'
+      - Whole cluster with changed IP addresses: 'operations/cassandra/restore/restore-cluster-different-ips.md'
+      - Restore to a different cluster: 'operations/cassandra/restore/restore-different-cluster.md'
+    - Point-in-time Restore:
+      - Overview: pitr/overview.md
+      - Configure Commitlog Archiving: pitr/configuration.md
+      - Restore from Point-in-Time: pitr/restore.md
       
-    
     - How-to:
-      - 'Setup Alert Rules': how-to/setup-alert-rules.md
-      # - 'Setup Service Checks': how-to/setup-servicechecks.md
-      - 'Setup Log Collection': how-to/setup-log-collection.md
-      # - 'Setup Default Routing': 'how-to/default-routing.md'
-      # - 'Setup Backup-Restore Notifications': 'how-to/backup-restore-notifications.md'
-      # - 'Setup Dashboards-Global Integrations': 'how-to/setup-dashboards-global-integrations.md'
-      - 'Re-use an existing host ID': how-to/reuse-host-id.md
+      - Setup Alert Rules: how-to/setup-alert-rules.md
+      - Setup Log Collection: how-to/setup-log-collection.md
+      - Re-use an existing host ID: how-to/reuse-host-id.md
     
   - AxonOps Workbench:
-    - 'Cassandra': 
+    - Cassandra: 
       # - 'Overview' : workbench/cassandra/cassandra.md
-      - 'License': workbench/cassandra/license.md 
+      - License: workbench/cassandra/license.md 
 
   # - Release Notes:
   #   - Release notes: 'release_notes/releases.md'
-
-  # - Overview:
-  #     - 'Motivation': 'overview/motivation.md'
-  #     - 'Architecture': 'overview/architecture.md'
-  #     # TODO: - - 'AxonOps Cloud': 'overview/axonops-cloud.md'
-  #     # TODO: - 'AxonOps Enterprise': 'overview/axonops-enterprise.md'
-
-  # - Installation:
-  #     - AxonOps Server:
-  #         - 'Installing on Ubuntu/Debian': 'installation/axon-server/ubuntu.md'
-  #         - 'Installing on Centos/Redhat': 'installation/axon-server/centos.md'
-  #         - 'Metrics database': 'installation/axon-server/metricsdatabase.md'
-  #     - AxonOps GUI Server: 'installation/axon-dash/install.md'
-  #     #- AxonOps Agent: 'installation/axon-agent/install.md'
-  #     - AxonOps Cassandra Agent:
-  #         - 'Agent Installation': 'installation/cassandra-agent/install.md'
-  #         - 'Installation with Docker': 'installation/cassandra-agent/docker.md'
-  #     - Compatibility matrix: 'installation/compat_matrix/compat_matrix.md'
-  #     - Kubernetes: 'installation/kubernetes/index.md'
-
-  # - Using AxonOps:
-  #     - Cluster Overview:
-  #         - 'Overview': 'cluster/cluster-overview.md'
-
-  #     - Monitoring:
-  #         - 'Monitoring Overview': 'monitoring/overview.md'
-  #         - Service Checks: 'monitoring/servicechecks/overview.md'
-  #         - Metrics Dashboard:
-  #             - 'Cassandra': 'monitoring/metricsdashboards/cassandra.md'
-  #         - Logs & Events: 'monitoring/logsandevents/logsandevents.md'
-
-  #     - Notification Integrations:
-  #             - 'Overview' : 'integrations/overview.md'
-  #             - 'PagerDuty Integration': 'integrations/pagerduy-integration.md'
-  #             - 'Slack Integration': 'integrations/slack-integration.md'
-  #             - 'Microsoft Teams': 'integrations/microsoft-teams-integration.md'
-  #             - 'ServiceNow': 'integrations/servicenow-integration.md'
-  #             - 'Email Integration': 'integrations/email-integration.md'
-
-  #     - Operations:
-  #         - Cassandra:
-  #             - Repair: 'operations/cassandra/repair.md'
-  #             - Backups:
-  #                 - 'Backups Overview': 'operations/cassandra/backup/overview.md'
-  #                 - 'Restore':
-  #                   - 'Overview': 'operations/cassandra/restore/overview.md'
-  #                   - 'Single node': 'operations/cassandra/restore/restore-node-same-ip.md'
-  #                   - 'Single node with a different IP address': 'operations/cassandra/restore/restore-node-different-ip.md'
-  #                   - 'Whole cluster': 'operations/cassandra/restore/restore-cluster-same-ip.md'
-  #                   - 'Whole cluster with changed IP addresses': 'operations/cassandra/restore/restore-cluster-different-ips.md'
-  #                   - 'Restore to a different cluster': 'operations/cassandra/restore/restore-different-cluster.md'
-  #             - 'Rolling Restart': 'operations/cassandra/rollingrestart/overview.md'
-
-  # - How-to:
-  #         - 'Setup Alert Rules': how-to/setup-alert-rules.md
-  #         # - 'Setup Service Checks': how-to/setup-servicechecks.md
-  #         - 'Setup Log Collection': how-to/setup-log-collection.md
-  #         # - 'Setup Default Routing': 'how-to/default-routing.md'
-  #         # - 'Setup Backup-Restore Notifications': 'how-to/backup-restore-notifications.md'
-  #         # - 'Setup Dashboards-Global Integrations': 'how-to/setup-dashboards-global-integrations.md'
-  #         - 'Re-use an existing host ID': how-to/reuse-host-id.md
-
-
-#    - GUI:
-#        - 'Overview': 'gui-overview.md'
-#        - 'Features': 'gui-features.md'
-#        - 'Setup': 'gui-setup.md'
-
-#    - Cassandra:
-#        - 'Dashboards': 'cassandra-dashboards.md'
-#        - Operations:
-#            - 'Repair': 'cassandra-repair.md'
-#            - 'Backup and Restore': 'cassandra-backup-and-restore.md'
-#    - Kafka:

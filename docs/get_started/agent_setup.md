@@ -1,21 +1,3 @@
-<script>
-function updateOS() {
-  var ele = document.getElementsByName('osFamily');
-  for(i = 0; i < ele.length; i++) {
-      if(ele[i].checked)
-      // document.getElementById("result").innerHTML = "Choosen: "+ele[i].value;
-      window.location.href = ele[i].value;
-  }
-}
-
-function updateCas() {
-  var ele = document.getElementsByName('casFamily');
-  for(i = 0; i < ele.length; i++) {
-      if(ele[i].checked)
-      window.location.href = ele[i].value;
-  }
-}
-</script>
 # Axon Agent Setup
 <!-- ![](agent_steps.png) -->
 
@@ -52,103 +34,15 @@ You should expect the following response:
 
 *AxonOps Agent Test Page*
 
-## Setup the AxonOps repository on your Operating system
+## Step 1 - Setup the AxonOps repository and install AxonOps Agent
 
-### Select the OS Family. 
-<label>
-  <input type="radio" name="osFamily" value="/get_started/agent_setup/#__tabbed_1_1" onChange="updateOS()">
-  <img src="/get_started/debian.png" class="skip-lightbox" width="180px">
-</label>
-<label>
-  <input type="radio" name="osFamily" value="/get_started/agent_setup/#__tabbed_1_2" onChange="updateOS()">
-  <img src="/get_started/red_hat.png" class="skip-lightbox" width="180px">
-</label>
+{!dynamic_pages/axon_agent/os.md!}
 
-===+ "Debian / Ubuntu"
-    ```bash
-    sudo apt-get update
-    sudo apt-get install -y curl gnupg ca-certificates
-    curl -L https://packages.axonops.com/apt/repo-signing-key.gpg | sudo gpg --dearmor -o /usr/share/keyrings/axonops.gpg
-    echo "deb [arch=arm64,amd64 signed-by=/usr/share/keyrings/axonops.gpg] https://packages.axonops.com/apt axonops-apt main" | sudo tee /etc/apt/sources.list.d/axonops-apt.list
-    sudo apt-get update
-    sudo apt-get install axon-cassandra{version}-agent
-    ```
+## Step 2 - Install Cassandra Agent
 
-=== "RedHat / CentOS"
-    ```bash
-    sudo tee /etc/yum.repos.d/axonops-yum.repo << EOL
-    [axonops-yum]
-    name=axonops-yum
-    baseurl=https://packages.axonops.com/yum/
-    enabled=1
-    repo_gpgcheck=0
-    gpgcheck=0
-    EOL
-    ```
+{!dynamic_pages/axon_agent/cassandra.md!}
 
-## Install Cassandra Agent
-
-### Select the Cassandra Version
-<label>
-  <input type="radio" name="casFamily" value="/get_started/agent_setup/#__tabbed_3_1" onChange="updateCas()">
-  <img src="/get_started/cas_3.png" class="skip-lightbox" width="180px">
-</label>
-<label>
-  <input type="radio" name="casFamily" value="/get_started/agent_setup/#__tabbed_3_2" onChange="updateCas()">
-  <img src="/get_started/cas_3_11.png" class="skip-lightbox" width="180px">
-</label>
-<label>
-  <input type="radio" name="casFamily" value="/get_started/agent_setup/#__tabbed_3_3" onChange="updateCas()">
-  <img src="/get_started/cas_4.png" class="skip-lightbox" width="180px">
-</label>
-<label>
-  <input type="radio" name="casFamily" value="/get_started/agent_setup/#__tabbed_3_4" onChange="updateCas()">
-  <img src="/get_started/cas_4_1.png" class="skip-lightbox" width="180px">
-</label>
-
-===+ "Debian / Ubuntu"
-    ===+ "Cassandra 3.0"
-        ```
-        sudo apt-get install axon-cassandra3.0-agent
-        ```
-    
-    === "Cassandra 3.11"
-        ```
-        sudo apt-get install axon-cassandra3.11-agent
-        ```
-    
-    === "Cassandra 4.0"
-        ```
-        sudo apt-get install axon-cassandra4.0-agent
-        ```
-
-    === "Cassandra 4.1"
-        ```
-        sudo apt-get install axon-cassandra4.1-agent
-        ```
-
-=== "RedHat / CentOS"
-    === "Cassandra 3.0"
-        ```
-        sudo yum install axon-cassandra3.0-agent
-        ```
-    
-    === "Cassandra 3.11"
-        ```
-        sudo yum install axon-cassandra3.11-agent
-        ```
-    
-    === "Cassandra 4.0"
-        ```
-        sudo yum install axon-cassandra4.0-agent
-        ```
-
-    === "Cassandra 4.1"
-        ```
-        sudo yum install axon-cassandra4.1-agent
-        ```
-
-## Agent Configuration
+## Step 3 - Agent Configuration
 
 Update and copy the below code snippet into /etc/axonops/axon-agent.yml file.
 
@@ -189,50 +83,29 @@ Set file permissions on /etc/axonops/axon-agent.yml file by executing the follow
 sudo chmod 0644 /etc/axonops/axon-agent.yml
 ```
 
-## Cassandra Configuration
+## Step 4 - Configure Cassandra
 
-Edit cassandra-env.sh, usually located in your Cassandra install path such as /<Cassandra Installation Directory>/conf/cassandra-env.sh, and append the following line at the end of the file:
-
-=== "Cassandra 3.0"
-    ```
-    JVM_OPTS="$JVM_OPTS -javaagent:/usr/share/axonops/axon-cassandra3.0-agent.jar=/etc/axonops/axon-agent.yml"
-    ```
-
-=== "Cassandra 3.11"
-    ```
-    JVM_OPTS="$JVM_OPTS -javaagent:/usr/share/axonops/axon-cassandra3.11-agent.jar=/etc/axonops/axon-agent.yml"
-    ```
-
-=== "Cassandra 4.0"
-    ```
-    JVM_OPTS="$JVM_OPTS -javaagent:/usr/share/axonops/axon-cassandra4.0-agent.jar=/etc/axonops/axon-agent.yml"
-    ```
-
-=== "Cassandra 4.1"
-    ```
-    JVM_OPTS="$JVM_OPTS -javaagent:/usr/share/axonops/axon-cassandra4.1-agent.jar=/etc/axonops/axon-agent.yml"
-    ```
+{!dynamic_pages/axon_agent/java.md!}
 
 **NB.** Make sure that this configuration will not get overridden by an automation tool.
 
-## Add AxonOps user to Cassandra user group and Cassandra user to AxonOps group
+## Step 5 - Add axonops user to Cassandra user group and Cassandra user to axonops group
 ```
 sudo usermod -aG <your_cassandra_group> axonops
 sudo usermod -aG axonops <your_cassandra_user>
 ```
 
-## Start/Restart Cassandra
+## Step 6 - Start/Restart Cassandra
 
 To load the Axon java agent and Cassandra config changes please,
 
 * Start the Cassandra service if stopped. 
 * Restart the Cassandra service if already running.
 
-## Start axon-agent
+## Step 7 - Start axon-agent
 
 ```
 sudo systemctl start axon-agent
 ```
-
 
 Once the Agents have been setup please use the [Using AxonOps](/cluster/cluster-overview/) to familiarise yourself with AxonOps UI.

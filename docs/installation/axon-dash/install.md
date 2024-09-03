@@ -1,4 +1,4 @@
-# AxonOps GUI installation
+# AxonOps Dash/GUI installation
 
 AxonOps GUI service is installed as a separate service to AxonOps Server. The GUI service (axon-dash) can be co-hosted on the same server as the AxonOps Server process, or they can be running on 2 separate servers.
 
@@ -6,29 +6,7 @@ This section describes the installation process for the GUI service.
 
 ## Step 1 - Installation
 
-#### CentOS / RedHat
-``` bash
-sudo tee /etc/yum.repos.d/axonops-yum.repo << EOL
-[axonops-yum]
-name=axonops-yum
-baseurl=https://packages.axonops.com/yum/
-enabled=1
-repo_gpgcheck=0
-gpgcheck=0
-EOL
-
-sudo yum install axon-dash
-```
-#### Debian / Ubuntu
-
-```bash
-sudo apt-get update
-sudo apt-get install -y curl gnupg ca-certificates
-curl -L https://packages.axonops.com/apt/repo-signing-key.gpg | sudo gpg --dearmor -o /usr/share/keyrings/axonops.gpg
-echo "deb [arch=arm64,amd64 signed-by=/usr/share/keyrings/axonops.gpg] https://packages.axonops.com/apt axonops-apt main" | sudo tee /etc/apt/sources.list.d/axonops-apt.list
-sudo apt-get update
-sudo apt-get install axon-dash
-```
+{!dynamic_pages/axon_dash/os.md!}
 
 ## Step 2 - Configuration
 
@@ -87,7 +65,10 @@ This will start the **axon-dash** process as the **axonops** user, which was cre
 * Copyright : `/usr/share/doc/axonops/axon-dash/copyright`
 * Licenses : `/usr/share/axonops/licenses/axon-dash/`
 
+## Step 6 - Setting up SSL/TLS for AxonDash
 
-## Step 6 - Installing agents
+AxonDash does not support SSL/TLS and needs to be fronted by Nginx. You can install and configure Nginx by following the [Configure Nginx](../axon-dash/configure_nginx.md) guide.
+
+## Step 7 - Installing agents
 
 Now **axon-dash** is installed, you can start installing [cassandra-agent](../cassandra-agent/install.md)

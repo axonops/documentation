@@ -3,29 +3,50 @@
 
 Make sure **elastic_host** and **elastic_port** are corresponding to your Elasticsearch instance.
 
-* `/etc/axonops/axon-server.yml`
+**Basic Auth in Elasticsearch** 
 
-``` yaml hl_lines="3 4"
-host: 0.0.0.0  # axon-server listening address (used by axon-dash and axon-agent) (env variable: AXONSERVER_HOST)
-api_port: 8080 # axon-server HTTP API listening port (used by axon-dash) (AXONSERVER_PORT)
+- Create a user that has a dedicated role and username password.
+- Please dont use any of the built in users for Elasticsearch.
+
+To create users please refer to the Elasticsearch docs [here](https://www.elastic.co/guide/en/elasticsearch/reference/current/setting-up-authentication.html){target="_blank"}
+
+
+*AxonOps Server configuration file location :* `/etc/axonops/axon-server.yml`
+
+``` yaml hl_lines="6 17 18"
+host: 0.0.0.0  # axon-server listening address (used by axon-agents for connections) (env variable: AXONSERVER_HOST)
 agents_port: 1888 # axon-server listening port for agent connections 
+
+api_host: 127.0.0.1 # axon-server listening address (used by axon-dash for connections)
+api_port: 8080 # axon-server HTTP API listening port (used by axon-dash) (AXONSERVER_PORT)
+
 elastic_hosts: # Elasticsearch endpoint (env variable:ELASTIC_HOSTS, comma separated list)
   - http://localhost:9200
-#integrations_proxy: # proxy endpoint for integrations. (INTEGRATIONS_PROXY)
+# SSL/TLS config for Elasticsearch
+# elastic_hosts:
+# - https://username:password@ip.or.hostname
+# - https://username:password@ip.or.hostname
+# - https://username:password@ip.or.hostname
+# elastic_skipVerify: true # Disables CA and Hostname verification
 
+# Used by Axon-Server to auto discover Elasticsearch nodes in a cluster.
+# Allows more nodes to be added to Elasticsearch for Metrics storage without having to restart Axon-Server and update elastic_hosts with all the ELK node values.
+# elastic_discover_nodes: true # Default = true
+
+#integrations_proxy: # proxy endpoint for integrations. (INTEGRATIONS_PROXY)
 
 # AxonOps licensing
 license_key: license-key
 org_name: my-company
 
-# SSL/TLS Settings
+# SSL/TLS Settings for AxonOps Agent connections
 tls:
   mode: "disabled" # disabled, TLS
   # Only set if mode is TLS
-  skipVerify: false
-  caFile: "path_to_certs_on_cassandra_node.crt" 
-  certFile: "path_to_certs_on_cassandra_node.crt"
-  keyFile: "path_to_key_file_on_cassandra_node.key"
+  skipVerify: false # Disables CA and Hostname verification
+  caFile: "path_to_certs_on_axonops_server.crt"
+  certFile: "path_to_certs_on_axonops_server.crt"
+  keyFile: "path_to_key_file_on_axonops_server.key"
 
 # For better performance on large clusters, you can use a CQL store for the metrics.
 # To opt-in for CQL metrics storage, just specify at least one CQL host.

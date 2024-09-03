@@ -64,17 +64,17 @@ If you would like to schedule some time with an AxonOps Cassandra expert to walk
 
 ## AxonOps Editions
 
-We offer AxonOps Cloud(SaaS) and Self-hosted solutions.
+We offer AxonOps Cloud and Self-hosted solutions.
 
 To read more about our editions: 
 
-[Free Edition](/editions/free_editions/)
+[Starter Edition](/editions/starter_edition/)
 
 [Enterprise Edition](/editions/enterprise_edition/)
 
 ## Ready to work with AxonOps? 
 
-Dive into the [Get Started](/get_started/saas/) guide and setup your account with everything you need to monitor, maintain and backup Cassandra in a matter of minutes.
+Dive into the [Get Started](/get_started/cloud/) guide and setup your account with everything you need to monitor, maintain and backup Cassandra in a matter of minutes.
 
 If you would like to schedule some time with an AxonOps Cassandra expert to walk you through the install and the AxonOps platform please follow the link below.
 

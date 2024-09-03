@@ -6,11 +6,10 @@ Scale-out with one-stop operations, full data retention, extended functionality 
 
 Book a consultation with a Cassandra Expert.
 
-<a class="book_expert" href="https://axonops.com/book-an-expert/">Book an Expert</a>
+<a class="book_expert" href="https://axonops.com/book-an-expert/" target="_blank">Book an Expert</a>
 
 ## Enterprise edition features
 
-* Cloud or Self-Hosted, you choose.
 * Unlimited Cassandra nodes
 * Unlimited Cloud User Accounts
 * Maximum metrics & logs retention
