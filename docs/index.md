@@ -30,12 +30,12 @@ AxonOps is the only platform available for the one-stop operations of Apache Cas
   <div class="column"> 
     Notifications: 
 
-    <img src="/img/alerts.webp" width="500" height="500">
+    <img src="/docs/img/alerts.webp" width="500" height="500">
   </div>
   <div class="column">
     Backups: 
 
-    <img src="/img/backups.webp" width="500" height="500">
+    <img src="/docs/img/backups.webp" width="500" height="500">
   </div>
 </div>
 
@@ -68,13 +68,13 @@ We offer AxonOps Cloud and Self-hosted solutions.
 
 To read more about our editions: 
 
-[Starter Edition](/editions/starter_edition/)
+[Starter Edition](/docs/editions/starter_edition/)
 
-[Enterprise Edition](/editions/enterprise_edition/)
+[Enterprise Edition](/docs/editions/enterprise_edition/)
 
 ## Ready to work with AxonOps? 
 
-Dive into the [Get Started](/get_started/cloud/) guide and setup your account with everything you need to monitor, maintain and backup Cassandra in a matter of minutes.
+Dive into the [Get Started](/docs/get_started/cloud/) guide and setup your account with everything you need to monitor, maintain and backup Cassandra in a matter of minutes.
 
 If you would like to schedule some time with an AxonOps Cassandra expert to walk you through the install and the AxonOps platform please follow the link below.
 

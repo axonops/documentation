@@ -11,7 +11,7 @@ The current integrations are:
 * ServiceNow
 * Generic webhooks
 
-!!! infomy 
+ 
 
 ![](2022-09-20-11-08-58.png)
 

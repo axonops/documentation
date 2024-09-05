@@ -1,33 +1,33 @@
 ### Select the Cassandra Version
 <label>
   <input type="radio" id="Cassandra30" name="casFamily" onChange="updateCas()" checked=true />
-  <img src="/get_started/cas_3.png" class="skip-lightbox" width="180px">
+  <img src="/docs/get_started/cas_3.png" class="skip-lightbox" width="180px">
 </label>
 <label>
   <input type="radio" id="Cassandra311" name="casFamily" onChange="updateCas()" />
-  <img src="/get_started/cas_3_11.png" class="skip-lightbox" width="180px">
+  <img src="/docs/get_started/cas_3_11.png" class="skip-lightbox" width="180px">
 </label>
 <label>
   <input type="radio" id="Cassandra40" name="casFamily" onChange="updateCas()" />
-  <img src="/get_started/cas_4.png" class="skip-lightbox" width="180px">
+  <img src="/docs/get_started/cas_4.png" class="skip-lightbox" width="180px">
 </label>
 <label>
   <input type="radio" id="Cassandra41" name="casFamily" onChange="updateCas()" />
-  <img src="/get_started/cas_4_1.png" class="skip-lightbox" width="180px">
+  <img src="/docs/get_started/cas_4_1.png" class="skip-lightbox" width="180px">
 </label>
 <label>
   <input type="radio" id="Cassandra50" name="casFamily" onChange="updateCas()" />
-  <img src="/get_started/cas_5_0.png" class="skip-lightbox" width="180px">
+  <img src="/docs/get_started/cas_5_0.png" class="skip-lightbox" width="180px">
 </label>
 
 ### Select the Java Version. 
 <label>
   <input type="radio" id="Java8" name="javaFamily" onChange="updateJava()" checked=true />
-  <img id="Java8img" src="/get_started/Java_8.png" class="skip-lightbox" width="180px">
+  <img id="Java8img" src="/docs/get_started/Java_8.png" class="skip-lightbox" width="180px">
 </label>
 <label>
   <input type="radio" id="Java11" name="javaFamily" onChange="updateJava()" />
-  <img id="Java11img" src="/get_started/Java_11.png" class="skip-lightbox" width="180px" style="display:none">
+  <img id="Java11img" src="/docs/get_started/Java_11.png" class="skip-lightbox" width="180px" style="display:none">
 </label>
 
 <!-- Debian -->

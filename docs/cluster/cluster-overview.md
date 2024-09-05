@@ -12,8 +12,6 @@ On the Axonops application menu, select `Cluster Overview`.
 
 You can select a **node** to view some details on the **OS**, **Cassandra** or the **JVM**.
 
-!!! infomy
-
 ![](./2.JPG)
 
 
@@ -26,15 +24,13 @@ Operating System Details section shows general information including:
 * Swap
 * Disk volumes
 
-!!! infomy
-
 ![](./3.JPG)
 
 
 ### Cassandra Details
 Cassandra Details view shows the details from cassandra.yaml loaded into Cassandra. There is a search field available near the top to filter the parameters.
 
-!!! infomy
+
 
 ![](./4.JPG)
 
@@ -43,6 +39,6 @@ Cassandra Details view shows the details from cassandra.yaml loaded into Cassand
 ### JVM Details
 JVM Details section shows the general information about the JVM, including the version and some configurations such as the heap and Garbage Collection settings.
 
-!!! infomy
+
 
 ![](./5.JPG)

@@ -6,15 +6,15 @@
 
 On the Axonops application menu, click `Service Checks` and select `Setup` tab.
 
-!!! infomy 
+ 
 
-    [![servicecheckssetup](/img/servicecheckssetup.png)](/img/servicecheckssetup.png)
+    [![servicecheckssetup](/docs/img/servicecheckssetup.png)](/docs/img/servicecheckssetup.png)
 
 
 
 ####  Create Services
 
-Below there few examples `copy` and `Paste` inside. and click `save` <span class="buttons"> [![save](/img/disk.png)](/img/disk.png) </span>
+Below there few examples `copy` and `Paste` inside. and click `save` <span class="buttons"> [![save](/docs/img/disk.png)](/docs/img/disk.png) </span>
 
 
 ``` jsonld
@@ -45,15 +45,15 @@ Below there few examples `copy` and `Paste` inside. and click `save` <span class
 
 Example:
 
-!!! infomy
+
 
     
-    [![servicecheckseditor](/img/servicecheckseditor.png)](/img/servicecheckseditor.png)
+    [![servicecheckseditor](/docs/img/servicecheckseditor.png)](/docs/img/servicecheckseditor.png)
 
 
 ####  Delete Services
 
-To Delete a service `copy` and `Paste` inside. and `click` save <span class="buttons"> [![save](/img/disk.png)](/img/disk.png) </span>
+To Delete a service `copy` and `Paste` inside. and `click` save <span class="buttons"> [![save](/docs/img/disk.png)](/docs/img/disk.png) </span>
 
 ``` jsonld
 {
@@ -67,8 +67,8 @@ To Delete a service `copy` and `Paste` inside. and `click` save <span class="but
 
 Example:
 
-!!! infomy
+
 
     
-    [![deleteservices](/img/deleteservices.png)](/img/deleteservices.png)
+    [![deleteservices](/docs/img/deleteservices.png)](/docs/img/deleteservices.png)
 

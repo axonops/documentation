@@ -8,7 +8,7 @@ Log and event view is located in the bottom part of that page that you can expan
 The setup for log collection is accessible via ***Settings > logs***
 
 
-!!! infomy 
+ 
 
 ![](./log_1.JPG)
 

@@ -4,34 +4,34 @@
 ###  Create Slack Incoming Webhooks
 
 * Go to Slack `Application`
-* On the side menu click [![addslackapp](/img/addslackapp.png)](/img/addslackapp.png) 
+* On the side menu click [![addslackapp](/docs/img/addslackapp.png)](/docs/img/addslackapp.png) 
 * In search box type `Incoming Webhook`s
 * From the App directory click `Install` on `Incoming WebHooks App`.
 
 
-!!! infomy 
+ 
 
-    [![incomingwebhook](/img/incomingwebhook.gif)](/img/incomingwebhook.gif)
+[![incomingwebhook](/docs/img/incomingwebhook.gif)](/docs/img/incomingwebhook.gif)
 
 * `Click` Add Configuration
 
-!!! infomy 
+ 
 
-    [![AddConfigSLACK](/img/AddConfigSLACK.png)](/img/AddConfigSLACK.png)
+[![AddConfigSLACK](/docs/img/AddConfigSLACK.png)](/docs/img/AddConfigSLACK.png)
 
 * In `Post to Channel` Box select an option from the `choose a channel` dropdown menu .
 
 * `Click` `Add Incoming WebHooks Integration`
 
-!!! infomy 
+ 
 
-    [![ChannelBoxSLACK](/img/ChannelBoxSLACK.png)](/img/ChannelBoxSLACK.png)
+[![ChannelBoxSLACK](/docs/img/ChannelBoxSLACK.png)](/docs/img/ChannelBoxSLACK.png)
 
 * `Copy` and make a note of the `WebHook URL` that appears in the `Setup Instructions`.
 
-!!! infomy 
+ 
 
-    [![SetupInstrucSLACK](/img/SetupInstrucSLACK.png)](/img/SetupInstrucSLACK.png)
+[![SetupInstrucSLACK](/docs/img/SetupInstrucSLACK.png)](/docs/img/SetupInstrucSLACK.png)
 
 
 ### Creating the Slack integration on axon-server
@@ -40,15 +40,15 @@ On the Axonops application menu, select `Settings -> Integrations` .
 
 `Click` on the `Slack` area.
 
-!!! infomy 
+ 
 
-    [![slack](./0.JPG)](./0.JPG)
+[![slack](./0.JPG)](./0.JPG)
 
 
 [1]: #create-slack-incoming-webhooks
 
-!!! infomy 
+ 
 
-    [![slack](./slack.JPG)](./slack.JPG)
+[![slack](./slack.JPG)](./slack.JPG)
 
 

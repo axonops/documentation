@@ -2,9 +2,9 @@ AxonOps provides the ability to restore from local snapshots and remote backups.
 
 The Restore feature is accessible via ***Operations > Restore***
 
-!!! infomy 
+ 
 
-    [![restore](/img/cass_backups/restore.png)](/img/cass_backups/restore.png)
+[![restore](/docs/img/cass_backups/restore.png)](/docs/img/cass_backups/restore.png)
 
 
 
@@ -17,9 +17,9 @@ This will provide the details of that backup and the ability to start the restor
 button depending on if you prefer to restore from the local snapshot or the remote backup (if remote backups were configured).
 Here you can also select a subset of nodes to restore via the checkboxes in the Nodes list.
 
-!!! infomy 
+ 
 
-    [![restore](/img/cass_backups/restore1.png)](/img/cass_backups/restore1.png)
+[![restore](/docs/img/cass_backups/restore1.png)](/docs/img/cass_backups/restore1.png)
 
 Follow the links below for some more detailed backup restore scenarios
 

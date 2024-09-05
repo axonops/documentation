@@ -1,20 +1,20 @@
 #### Prerequisites
 
-Backups are enabled and setup. For more on how to setup backups please follow the guide [here](/operations/cassandra/backup/overview/)
+Backups are enabled and setup. For more on how to setup backups please follow the guide [here](/docs/operations/cassandra/backup/overview/)
 
 #### Steps:
 
 In the AxonOps Dashboard on the left hand menu navigate to Operations --> Backups
 
-<img src="/pitr/pitr_left_backup.png" width="200">
+<img src="/docs/pitr/pitr_left_backup.png" width="200">
 
 On the top tab select Commitlog Archiving.
 
-<img src="/pitr/pitr_top_commitlog.png" width="700">
+<img src="/docs/pitr/pitr_top_commitlog.png" width="700">
 
 #### Configuration
 
-Complete the fields with the required value and click <img src="/pitr/create_configuration.png" width="150">
+Complete the fields with the required value and click <img src="/docs/pitr/create_configuration.png" width="150">
 
 #### Fields 
 

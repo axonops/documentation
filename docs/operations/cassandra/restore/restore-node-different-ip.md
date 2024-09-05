@@ -10,9 +10,9 @@ a node with a different IP address you must manually assign the AxonOps host ID 
 
 You can find the host ID of the old node on the Cluster Overview page of the AxonOps dashboard
 
-!!! infomy
 
-    [![restore](/img/cass_backups/hostID.png)](/img/cass_backups/hostID.png)
+
+[![restore](/docs/img/cass_backups/hostID.png)](/docs/img/cass_backups/hostID.png)
 
 If you still have access to the old server or its data then its host ID can also be found in the file `/var/lib/axonops/hostId`
 
@@ -56,26 +56,26 @@ sudo chmod -R g+w /var/lib/cassandra/data
 
 Now open the Restore page in the AxonOps Dashboard by going to ***Operations > Restore***
 
-!!! infomy
 
-    [![restore](/img/cass_backups/restore.png)](/img/cass_backups/restore.png)
+
+[![restore](/docs/img/cass_backups/restore.png)](/docs/img/cass_backups/restore.png)
 
 Choose the backup you wish to restore from the list and click the `RESTORE` button
 
 This will show the details of the backup and allow you to restore to all nodes or a subset using the checkboxes in the Nodes list.
 
-!!! infomy
 
-    [![restore](/img/cass_backups/restore1.png)](/img/cass_backups/restore1.png)
+
+[![restore](/docs/img/cass_backups/restore1.png)](/docs/img/cass_backups/restore1.png)
 
 Ensure only the node you wish to restore is selected in the checkbox list and start the restore by clicking the
 `REMOTE RESTORE` button.
 
 The restore progress will be displayed in the *Backup Restorations in Progress* list
 
-!!! infomy
 
-    [![restore](/img/cass_backups/restores-table.png)](/img/cass_backups/restores-table.png)
+
+[![restore](/docs/img/cass_backups/restores-table.png)](/docs/img/cass_backups/restores-table.png)
 
 After the restore has completed successfully, fix the ownership and permissions on the Cassandra data directories
 ```bash

@@ -8,11 +8,11 @@
 
 In the AxonOps Dashboard on the left hand menu navigate to Operations --> Restore
 
-<img src="/pitr/pitr_left_restore.png" width="200">
+<img src="/docs/pitr/pitr_left_restore.png" width="200">
 
 On the top tab select Point-In-Time Recovery
 
-<img src="/pitr/pitr_top_recovery.png" width="700">
+<img src="/docs/pitr/pitr_top_recovery.png" width="700">
 
 You will be presented with the Point-In-Time restore screen. There are several steps that need to be done to complete a Point-in-time restore. 
 
@@ -20,7 +20,7 @@ You will be presented with the Point-In-Time restore screen. There are several s
 
 #### Step 1: Select Restore Point-in-time.
 
-<img src="/pitr/pitr_full.png" width="700">
+<img src="/docs/pitr/pitr_full.png" width="700">
 
 Select the Point-In-Time you want to restore your cluster too. 
 
@@ -63,11 +63,11 @@ Please complete the Date/Time selection and fields of the keyspace and table/s t
 
 #### Step 2: Overview of Point-in-time nodes,keyspaces and tables.
 
-<img src="/pitr/step_2_full.png" width="700">
+<img src="/docs/pitr/step_2_full.png" width="700">
 
 Confirm by clicking show details that all the tables and keyspaces you want to restore will be part of the restoration. You will be presented with the following screen. 
 
-<img src="/pitr/step_2_full_details.png" width="700">
+<img src="/docs/pitr/step_2_full_details.png" width="700">
 
 - **```Tables```**
 
@@ -86,7 +86,7 @@ Confirm by clicking show details that all the tables and keyspaces you want to r
 
 Confirm you are ready to start the Point-in-time restore.
 
-<img src="/pitr/step_3_full.png" width="700">
+<img src="/docs/pitr/step_3_full.png" width="700">
 
 - Stop Cassandra on the nodes that need to be restored. 
 - Delete the SStable files in the target table directories
@@ -97,7 +97,7 @@ Confirm you are ready to start the Point-in-time restore.
 The Axon-Agent service confirm the Cassandra nodes are stopped.
 Checks to ensure the clstuer is ready for the Point-in-time restore.
 
-<img src="/pitr/step_4_full.png" width="700">
+<img src="/docs/pitr/step_4_full.png" width="700">
 
 Once you have clicked Check PITR Readiness it will confirm that the Cluster is in the correct state for recovery to proceed.
 
@@ -105,21 +105,21 @@ If any of the data directories still contain sstables a warning may be displayed
 
 Click on show details button to view the tables affected and any errors/warnings.
 
-<img src="/pitr/step_4_full_details.png" width="700">
+<img src="/docs/pitr/step_4_full_details.png" width="700">
 
 
 #### Step 5: Start the Point-in-time restore.
 
 Start the restore process
 
-<img src="/pitr/step_5_full.png" width="700">
+<img src="/docs/pitr/step_5_full.png" width="700">
 
 #### Step 6: Wait for completion and start Cassandra nodes.
 
 The Status page of the Point-in-time restore process. 
 Once the restore has been completed the status will remain in a progressing state until the Cassandra nodes are restarted.
 
-<img src="/pitr/step_6_full.png" width="700">
+<img src="/docs/pitr/step_6_full.png" width="700">
 
 
 #### Step 7: Check data in Cassandra has been recovered to specified Point-in-time.
@@ -127,4 +127,4 @@ Once the restore has been completed the status will remain in a progressing stat
 Successful Point-in-time restore. 
 Please confirm the details and data in the tables that have been restored are present as expected.
 
-<img src="/pitr/step_7_full.png" width="700">
+<img src="/docs/pitr/step_7_full.png" width="700">

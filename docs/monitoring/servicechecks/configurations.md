@@ -17,15 +17,15 @@ On the Axonops application menu, click `Service Checks` and select `Setup` tab.
 
 Example:
 
-!!! infomy
+
 
     
-    [![servicecheckseditor](/img/servicecheckseditor.png)](/img/servicecheckseditor.png)
+    [![servicecheckseditor](/docs/img/servicecheckseditor.png)](/docs/img/servicecheckseditor.png)
 
 
 ####  Delete Services
 
-To Delete a service `copy`/`paste` into the editor and `click` save  [![save](/img/disk.png)](/img/disk.png)
+To Delete a service `copy`/`paste` into the editor and `click` save  [![save](/docs/img/disk.png)](/docs/img/disk.png)
 
 ``` jsonld
 {
@@ -39,8 +39,8 @@ To Delete a service `copy`/`paste` into the editor and `click` save  [![save](/i
 
 Example:
 
-!!! infomy
+
 
     
-    [![deleteservices](/img/deleteservices.png)](/img/deleteservices.png)
+    [![deleteservices](/docs/img/deleteservices.png)](/docs/img/deleteservices.png)
 

@@ -17,9 +17,9 @@ The idea of this is to achieve the following:
 * In essence, adaptive repair regulator slows down the repair velocity when it deems the load is going to be high based on the gradient of the rate of increase of load, and speeds up to catch up with the repair schedule when the resources are more readily available.
 * This mechanism also doesn't require JMX access. The adaptive repair service running on AxonOps server orchestrates and issues commands to the agents over the existing connection.
 
-!!! infomy 
+ 
 
-    [![adaptive_repair](/img/cass_repairs/adaptive_repair.png)](/img/cass_repairs/adaptive_repair.png)
+[![adaptive_repair](/docs/img/cass_repairs/adaptive_repair.png)](/docs/img/cass_repairs/adaptive_repair.png)
 
 > If you want to keep the tables as fresh as possible we recommend to increase the `table parallelism` to be greater than the total number of tables of your cluster and reduce the `segments per VNode` to generate less repair requests.
 
@@ -39,25 +39,25 @@ You can initiate three types of scheduled repair:
 
 * Immediate scheduled repair: these will trigger immediately **once**
 
-!!! infomy 
+ 
 
-    [![scheduled_repair](/img/cass_repairs/scheduled_repair.png)](/img/cass_repairs/scheduled_repair.png)
+[![scheduled_repair](/docs/img/cass_repairs/scheduled_repair.png)](/docs/img/cass_repairs/scheduled_repair.png)
 
 
 * Simple scheduled repair: these will trigger base on the selected schedule **repeatedly**
 
-!!! infomy 
+ 
 
-    [![scheduled_repair](/img/cass_repairs/scheduled_repair2.png)](/img/cass_repairs/scheduled_repair2.png)
+[![scheduled_repair](/docs/img/cass_repairs/scheduled_repair2.png)](/docs/img/cass_repairs/scheduled_repair2.png)
 
 * Cron schedule repair: Same as **simple scheduled repair** but the schedule will be based on a Cron expression
 
-!!! infomy 
+ 
 
-    [![scheduled_repair](/img/cass_repairs/scheduled_repair3.png)](/img/cass_repairs/scheduled_repair3.png)
+[![scheduled_repair](/docs/img/cass_repairs/scheduled_repair3.png)](/docs/img/cass_repairs/scheduled_repair3.png)
 
 > The following capture presents a running repair that has been initiated immediately and a scheduled repair that is scheduled for 12:00 AM UTC:
 
-!!! infomy 
+ 
 
-    [![scheduled_repair](/img/cass_repairs/scheduled_repair4.png)](/img/cass_repairs/scheduled_repair4.png)
+[![scheduled_repair](/docs/img/cass_repairs/scheduled_repair4.png)](/docs/img/cass_repairs/scheduled_repair4.png)

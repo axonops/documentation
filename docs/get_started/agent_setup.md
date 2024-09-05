@@ -108,4 +108,4 @@ To load the Axon java agent and Cassandra config changes please,
 sudo systemctl start axon-agent
 ```
 
-Once the Agents have been setup please use the [Using AxonOps](/cluster/cluster-overview/) to familiarise yourself with AxonOps UI.
+Once the Agents have been setup please use the [Using AxonOps](/docs/cluster/cluster-overview/) to familiarise yourself with AxonOps UI.

@@ -79,4 +79,4 @@ Typically, setting up Commitlog Archiving and Point-in-Time Restore in Cassandra
 It involves configuring various components, ensuring compatibility between different systems, and maintaining an intricate setup that can often be fragile and prone to errors.
 These configurations require in-depth knowledge and continuous monitoring to ensure everything runs smoothly.
 
-Setup Commitlog (PITR) in a couple easy steps [here](/pitr/configuration/)
+Setup Commitlog (PITR) in a couple easy steps [here](/docs/pitr/configuration/)
