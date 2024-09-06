@@ -286,3 +286,7 @@ font-family: "ETmodules";
   outline: 3px solid rgb(0, 99, 204);
   border-radius: 10px;
 }
+
+.admonition.infomy {
+  border: none;
+}
