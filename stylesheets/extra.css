@@ -22,8 +22,9 @@ body {
 }
 
 .admonition.infomy{
- border-left: none;
+ border: none;
  text-align: center;
+ color: inherit;
 }
 
 .admonition.infomy .admonition-title {
@@ -285,8 +286,4 @@ font-family: "ETmodules";
   /* outline: 2px solid #2a77d0; */
   outline: 3px solid rgb(0, 99, 204);
   border-radius: 10px;
-}
-
-.admonition.infomy {
-  border: none;
 }
