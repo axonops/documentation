@@ -4,8 +4,8 @@ dev_addr: '0.0.0.0:8000'
 
 theme:
   name: 'material'
-  favicon: '/docs/img/favicon.ico'
-  logo: '/docs/img/axonops_logo.png'
+  favicon: '/img/favicon.ico'
+  logo: '/img/axonops_logo.png'
   language: 'en'
   custom_dir: overrides
   palette: 
