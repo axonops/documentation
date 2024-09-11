@@ -65,6 +65,20 @@ Usage of /usr/share/axonops/axon-cassandra-restore:
       --version                         Show version information and exit
 ```
 
+## Storage Config and Storage Config File options
+
+> **The `--storage-config-file` option was added to v1.0.95 and later of AxonOps Agent**
+
+The `axonops-cassandra-restore` tool has two options when passing the remote storage configuration. The fist option is to pass a JSON formatted string to --storage-config or pre-populated JSON file to --storage-config-file
+
+> **NOTE:** You can only use one of the options when doing a restore. 
+
+For examples of both please see: 
+
+- [Storage Config Examples](#storage-config-examples)
+
+- [Storage Config File Examples](#storage-config-file-examples)
+
 ## Listing the available backups
 
 > NOTE: The host IDs used in this tool are the ID given to each host by AxonOps and do not relate to the Cassandra
@@ -74,11 +88,23 @@ Usage of /usr/share/axonops/axon-cassandra-restore:
 To list the backups available in the remote storage bucket you can run the tool with the `--list` option.
 For example to list the backups in an Amazon S3 bucket you could use a command similar to this:
 
+**`--storage-config`**
+
 ```bash
 /usr/share/axonops/axon-cassandra-restore --list \
   --org-id myaxonopsorg \
   --storage-config '{"type":"s3","path":"/axonops-cassandra-backups","access_key_id":"MY_AWS_ACCESS_KEY","secret_access_key":"MY_AWS_SECRET_ACCESS_KEY","region":"eu-west-3"}'
 ```
+
+**`--storage-config-file`**
+
+```bash
+/usr/share/axonops/axon-cassandra-restore --list \
+  --org-id myaxonopsorg \
+  --storage-config-file /full/path/to/remote_storage_config_file.json
+```
+
+
 The restore tool will then scan the specified S3 bucket for AxonOps backups and it will display the
 date and backup ID for any backups it finds:
 ```bash
@@ -113,11 +139,25 @@ Tables: system.peers_v2, system.view_builds_in_progress, system_auth.resource_ro
 Scanning for backups can take a long time depending on the storage type and the amount of data, so you can use
 command-line options to restrict the search. For example this will restrict the search to a specific backup, 
 cluster, hosts and tables:
+
+**`--storage-config`**
 ```bash
 /usr/share/axonops/axon-cassandra-restore --list \
   --verbose \
   --org-id myaxonopsorg \
   --storage-config '{"type":"s3","path":"/axonops-cassandra-backups","access_key_id":"MY_AWS_ACCESS_KEY","secret_access_key":"MY_AWS_SECRET_ACCESS_KEY","region":"eu-west-3"}' \
+  --backup-id 2c1d9aca-5312-11ee-b686-bed50b9335ec \
+  --source-cluster testcluster \
+  --source-hosts 026346a0-dc89-4235-ae34-552fcd453b42,84759df0-8a19-497e-965f-200bdb4c1c9b
+  --tables keyspace1.table1,keyspace1.table2
+```
+
+**`--storage-config-file`**
+```bash
+/usr/share/axonops/axon-cassandra-restore --list \
+  --verbose \
+  --org-id myaxonopsorg \
+  --storage-config-file /full/path/to/remote_storage_config_file.json \
   --backup-id 2c1d9aca-5312-11ee-b686-bed50b9335ec \
   --source-cluster testcluster \
   --source-hosts 026346a0-dc89-4235-ae34-552fcd453b42,84759df0-8a19-497e-965f-200bdb4c1c9b
@@ -138,6 +178,9 @@ The default behaviour is to only download the sstable files to a local directory
 
 This command will download the backup with ID `2c1d9aca-5312-11ee-b686-bed50b9335ec` for the 3 hosts listed in the
 `--list` output above into the local directory `/opt/cassandra/axonops-restore`
+
+**`--storage-config`**
+
 ```bash
 /usr/share/axonops/axon-cassandra-restore \
   --restore \
@@ -148,6 +191,20 @@ This command will download the backup with ID `2c1d9aca-5312-11ee-b686-bed50b933
   --source-hosts 026346a0-dc89-4235-ae34-552fcd453b42,84759df0-8a19-497e-965f-200bdb4c1c9b,94ed3811-12ce-487f-ac49-ae31299efa31 \
   --local-sstable-dir /opt/cassandra/axonops-restore
 ```
+
+**`--storage-config-file`**
+
+```bash
+/usr/share/axonops/axon-cassandra-restore \
+  --restore \
+  --org-id myaxonopsorg \
+  --storage-config-file /full/path/to/remote_storage_config_file.json \
+  --source-cluster testcluster \
+  --backup-id 2c1d9aca-5312-11ee-b686-bed50b9335ec \
+  --source-hosts 026346a0-dc89-4235-ae34-552fcd453b42,84759df0-8a19-497e-965f-200bdb4c1c9b,94ed3811-12ce-487f-ac49-ae31299efa31 \
+  --local-sstable-dir /opt/cassandra/axonops-restore
+```
+
 The sstable files will be restored into directories named `{local-sstable-dir}/{host-id}/keyspace/table/` and from here
 you can copy/move the files to another location or import them into a cluster using `sstableloader`.
 
@@ -163,11 +220,29 @@ the `--use-sstable-loader`, `--cassandra-bin-dir` and `--sstable-loader-options`
 For example this command will download the same backup files as the previous example but it will also run `sstableloader`
 to import the downloaded files into a new cluster with contact points 10.0.0.1, 10.0.0.2 and 10.0.0.3:
 
+**`--storage-config`**
+
 ```bash
 /usr/share/axonops/axon-cassandra-restore \
   --restore \
   --org-id myaxonopsorg \
   --storage-config '{"type":"s3","path":"/axonops-cassandra-backups","access_key_id":"MY_AWS_ACCESS_KEY","secret_access_key":"MY_AWS_SECRET_ACCESS_KEY","region":"eu-west-3"}' \
+  --source-cluster testcluster \
+  --backup-id 2c1d9aca-5312-11ee-b686-bed50b9335ec \
+  --source-hosts 026346a0-dc89-4235-ae34-552fcd453b42,84759df0-8a19-497e-965f-200bdb4c1c9b,94ed3811-12ce-487f-ac49-ae31299efa31 \
+  --local-sstable-dir /opt/cassandra/axonops-restore \
+  --use-sstable-loader \
+  --cassandra-bin-dir /opt/cassandra/bin \
+  --sstable-loader-options "-d 10.0.0.1,10.0.0.2,10.0.0.3 -u cassandra -pw cassandra"
+```
+
+**`--storage-config-file`**
+
+```bash
+/usr/share/axonops/axon-cassandra-restore \
+  --restore \
+  --org-id myaxonopsorg \
+  --storage-config-file /full/path/to/remote_storage_config_file.json \
   --source-cluster testcluster \
   --backup-id 2c1d9aca-5312-11ee-b686-bed50b9335ec \
   --source-hosts 026346a0-dc89-4235-ae34-552fcd453b42,84759df0-8a19-497e-965f-200bdb4c1c9b,94ed3811-12ce-487f-ac49-ae31299efa31 \
@@ -190,6 +265,8 @@ and `--cqlsh-options` arguments to `axon-cassandra-restore`.
 Building on the example above this command will download the files from the backup, create the schema for any missing
 tables, and import the downloaded data with `sstableloader`:
 
+**`--storage-config`**
+
 ```bash
 /usr/share/axonops/axon-cassandra-restore \
   --restore \
@@ -205,6 +282,25 @@ tables, and import the downloaded data with `sstableloader`:
   --restore-schema \
   --cqlsh-options "-u cassandra -p cassandra 10.0.0.1"
 ```
+
+**`--storage-config-file`**
+
+```bash
+/usr/share/axonops/axon-cassandra-restore \
+  --restore \
+  --org-id myaxonopsorg \
+  --storage-config-file /full/path/to/remote_storage_config_file.json \
+  --source-cluster testcluster \
+  --backup-id 2c1d9aca-5312-11ee-b686-bed50b9335ec \
+  --source-hosts 026346a0-dc89-4235-ae34-552fcd453b42,84759df0-8a19-497e-965f-200bdb4c1c9b,94ed3811-12ce-487f-ac49-ae31299efa31 \
+  --local-sstable-dir /opt/cassandra/axonops-restore \
+  --use-sstable-loader \
+  --cassandra-bin-dir /opt/cassandra/bin \
+  --sstable-loader-options "-d 10.0.0.1,10.0.0.2,10.0.0.3 -u cassandra -pw cassandra" \
+  --restore-schema \
+  --cqlsh-options "-u cassandra -p cassandra 10.0.0.1"
+```
+
 > **_NOTE:_** This will not create missing keyspaces. You must ensure that the target keyspaces already exist in the
 > destination cluster before running the restore command.
 
@@ -235,11 +331,68 @@ Here are some examples of the most common storage types:
 ```sh
 --storage-config '{"type":"sftp","host":"<sftp_server_hostname>","port":"22","path":"/backup/path","user":"<sftp_username>","key_file":"~/private/key/file"}'
 ```
-or with password
+#### SSH/SFTP with password
 ```sh
 --storage-config '{"type":"sftp","host":"<sftp_server_hostname>","port":"22","path":"/backup/path","user":"<sftp_username>","pass":"<sftp_password>"}'
 ```
 
+## Storage Config File Examples
+
+#### Local filesystem
+```json
+{
+  "type": "local",
+  "path": "/backups/cassandra"
+}
+```
+#### Amazon S3
+```json
+{
+  "type": "s3",
+  "path": "/axonops-cassandra-backups",
+  "access_key_id": "MY_AWS_ACCESS_KEY",
+  "secret_access_key": "MY_AWS_SECRET_ACCESS_KEY",
+  "region": "eu-west-3"
+}
+```
+#### Azure Blob Storage
+```json
+{
+  "type": "azureblob",
+  "account": "MY_AZURE_ACCOUNT_NAME",
+  "key": "MY_AZURE_STORAGE_KEY"
+}
+```
+#### Google Cloud Storage
+```json
+{
+  "type": "googlecloudstorage",
+  "location": "us",
+  "service_account_credentials": "ESCAPED_JSON_PRIVATE_KEY"
+}
+```
+#### SSH/SFTP
+```json
+{
+  "type": "sftp",
+  "host": "<sftp_server_hostname>",
+  "port": "22",
+  "path": "/backup/path",
+  "user": "<sftp_username>",
+  "key_file": "~/private/key/file"
+}
+```
+#### SSH/SFTP with password
+```json
+{
+  "type": "sftp",
+  "host": "<sftp_server_hostname>",
+  "port": "22",
+  "path": "/backup/path",
+  "user": "<sftp_username>",
+  "pass": "<sftp_password>"
+}
+```
 
 
 ## Restore to a different table
@@ -252,11 +405,33 @@ the restored data into table with a different name and/or keyspace to the origin
 > NOTE: The destination keyspace must already exist before running the restore command.
 
 This example shows restoring the table `keyspace1.table1` into a table named `table1_restored` in keysace `restoreks`:
-```
+
+**`--storage-config`**
+
+```bash
 /usr/share/axonops/axon-cassandra-restore \
   --restore \
   --org-id myaxonopsorg \
   --storage-config '{"type":"s3","path":"/axonops-cassandra-backups","access_key_id":"MY_AWS_ACCESS_KEY","secret_access_key":"MY_AWS_SECRET_ACCESS_KEY","region":"eu-west-3"}' \
+  --source-cluster testcluster \
+  --backup-id 2c1d9aca-5312-11ee-b686-bed50b9335ec \
+  --source-hosts 026346a0-dc89-4235-ae34-552fcd453b42,84759df0-8a19-497e-965f-200bdb4c1c9b,94ed3811-12ce-487f-ac49-ae31299efa31 \
+  --local-sstable-dir /opt/cassandra/axonops-restore \
+  --use-sstable-loader \
+  --cassandra-bin-dir /opt/cassandra/bin \
+  --sstable-loader-options "-d 10.0.0.1,10.0.0.2,10.0.0.3 -u cassandra -pw cassandra" \
+  --restore-schema \
+  --cqlsh-options "-u cassandra -p cassandra 10.0.0.1" \
+  --tables keyspace1.table1 \
+  --dest-table restoreks.table1_restored
+```
+
+**`--storage-config-file`**
+```bash
+/usr/share/axonops/axon-cassandra-restore \
+  --restore \
+  --org-id myaxonopsorg \
+  --storage-config-file /full/path/to/remote_storage_config_file.json \
   --source-cluster testcluster \
   --backup-id 2c1d9aca-5312-11ee-b686-bed50b9335ec \
   --source-hosts 026346a0-dc89-4235-ae34-552fcd453b42,84759df0-8a19-497e-965f-200bdb4c1c9b,94ed3811-12ce-487f-ac49-ae31299efa31 \
