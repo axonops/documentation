@@ -287,3 +287,11 @@ font-family: "ETmodules";
   outline: 3px solid rgb(0, 99, 204);
   border-radius: 10px;
 }
+
+.md-typeset__table {
+  min-width: 100%;
+}
+
+.md-typeset table:not([class]) {
+  display: table;
+}
