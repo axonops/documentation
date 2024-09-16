@@ -87,12 +87,11 @@ In the `Description` box you can include free along with one `or` many of the ab
     
 !!! info "Not selecting integrations"
 
-    If you do not select any specific [Integrations][1] the Alert will automatically follow the `Global Dashboard Routing` or if this has not been [setup][2] the[ Default Routing][3] Integrations.
+    If you do not select any specific [Integrations][1] the Alert will automatically follow the `Global Dashboard Routing` or if this has not been setup the[ Default Routing][2] Integrations.
 
 
 
-[2]: /how-to/setup-dashboards-global-integrations
-[3]: /how-to/default-routing
+[2]: /how-to/default-routing
 
 
 ### Edit Alert Rule

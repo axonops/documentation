@@ -21,8 +21,6 @@ On the Axonops application menu, select `Alert & Notifications` -> Integration a
     [![defaultrouting](/img/defaultrouting.png)](/img/defaultrouting.png)
 
 
-
-
 ####  Info
 
 To Setup Default Routing For <span class="buttons"> [![info](/img/info.png)](/img/info.png) </span> Info click On <span class="buttons"> [![defaultplus](/img/defaultplus.png)](/img/defaultplus.png) </span>

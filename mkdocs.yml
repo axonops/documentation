@@ -159,6 +159,7 @@ nav:
       
     - How-to:
       - Setup Alert Rules: how-to/setup-alert-rules.md
+      - Setup Default Routing: how-to/default-routing.md
       - Setup Log Collection: how-to/setup-log-collection.md
       - Re-use an existing host ID: how-to/reuse-host-id.md
     
