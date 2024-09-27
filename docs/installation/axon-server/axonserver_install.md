@@ -12,7 +12,7 @@ AxonOps is currently compatible with Elasticsearch 7.x, we recommend installing 
 #### Cassandra
 
 You can use Cassandra as a metrics store instead of Elasticsearch for better performance.
-Elasticsearch is still required in conjunction with the dedicated AxonOps Cassandra cluster and is used to store all the AxonOps config and Cassandra metrics metadata.
+Elasticsearch is still required in conjunction with the dedicated AxonOps Cassandra cluster, Elasticsearch is used to store all the AxonOps configuration, logs data and metrics metadata.
 
 For more information on setting up Cassandra as a metric store: [Cassandra as Metrics Database](./metricsdatabase.md)
 
@@ -51,9 +51,9 @@ elastic_hosts: # Elasticsearch endpoint (env variable:ELASTIC_HOSTS, comma sepa
 
 # Configure multiple Elasticsearch hosts with username and password authentication
 # elastic_hosts:
-# - https://username:password@ip.or.hostname
-# - https://username:password@ip.or.hostname
-# - https://username:password@ip.or.hostname
+# - https://username:password@ip.or.hostname:port
+# - https://username:password@ip.or.hostname:port
+# - https://username:password@ip.or.hostname:port
 
 # SSL/TLS config for Elasticsearch
 # elastic_skipVerify: true # Disables CA and Hostname verification
