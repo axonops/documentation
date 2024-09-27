@@ -67,6 +67,6 @@ After a short period of time, you can verify that your Elasticsearch node is run
 curl "localhost:9200"
 ```
 
-### Configure Elasticsearch 
+### Securing Elasticsearch
 
-[Configure Elasticsearch](./configure_elastic.md)
+[Securing Elasticsearch](./securing_elastic.md)
