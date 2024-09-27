@@ -20,7 +20,7 @@
     
     
       
-        <title>Configure Elasticsearch - docs</title>
+        <title>Securing Elasticsearch - docs</title>
       
     
     
@@ -93,7 +93,7 @@
     <div data-md-component="skip">
       
         
-        <a href="#configure-elasticsearch" class="md-skip">
+        <a href="#securing-elasticsearch" class="md-skip">
           Skip to content
         </a>
       
@@ -200,7 +200,7 @@
         <div class="md-header__topic" data-md-component="header-topic">
           <span class="md-ellipsis">
             
-            Configure Elasticsearch
+            Securing Elasticsearch
             
           </span>
         </div>
@@ -1117,7 +1117,7 @@ data-et-multi-view="{&quot;schema&quot;:{&quot;content&quot;:{&quot;desktop&quot
           
   
   <span class="md-ellipsis">
-    Configure Elasticsearch
+    Securing Elasticsearch
   </span>
   
 
@@ -1128,7 +1128,7 @@ data-et-multi-view="{&quot;schema&quot;:{&quot;content&quot;:{&quot;desktop&quot
         
   
   <span class="md-ellipsis">
-    Configure Elasticsearch
+    Securing Elasticsearch
   </span>
   
 
@@ -1180,6 +1180,15 @@ data-et-multi-view="{&quot;schema&quot;:{&quot;content&quot;:{&quot;desktop&quot
   <a href="#set-passwords-for-default-elastic-built-in-user" class="md-nav__link">
     <span class="md-ellipsis">
       Set passwords for default elastic built-in user
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#create-a-dedicated-role-for-axonops" class="md-nav__link">
+    <span class="md-ellipsis">
+      Create a dedicated role for AxonOps
     </span>
   </a>
   
@@ -2814,6 +2823,15 @@ data-et-multi-view="{&quot;schema&quot;:{&quot;content&quot;:{&quot;desktop&quot
   
 </li>
       
+        <li class="md-nav__item">
+  <a href="#create-a-dedicated-role-for-axonops" class="md-nav__link">
+    <span class="md-ellipsis">
+      Create a dedicated role for AxonOps
+    </span>
+  </a>
+  
+</li>
+      
     </ul>
   
 </nav>
@@ -2829,7 +2847,7 @@ data-et-multi-view="{&quot;schema&quot;:{&quot;content&quot;:{&quot;desktop&quot
                   
 
 
-<h1 id="configure-elasticsearch">Configure Elasticsearch<a class="headerlink" href="#configure-elasticsearch" title="Permanent link">&para;</a></h1>
+<h1 id="securing-elasticsearch">Securing Elasticsearch<a class="headerlink" href="#securing-elasticsearch" title="Permanent link">&para;</a></h1>
 <h2 id="configuration-file-location">Configuration file location<a class="headerlink" href="#configuration-file-location" title="Permanent link">&para;</a></h2>
 <p>Most installations of Elasticsearch have the default config location at <code>/etc/elasticsearch/</code></p>
 <p>The default location depends on whether or not the installation is from an archive distribution (tar.gz or zip) or a package distribution (Debian or RPM packages).</p>
@@ -2866,6 +2884,19 @@ data-et-multi-view="{&quot;schema&quot;:{&quot;content&quot;:{&quot;desktop&quot
 The example will set a self-assigned password for the elastic built-in user.</p>
 <div class="highlight"><pre><span></span><code>&lt;DEFAULT LOCATION&gt;/bin/elasticsearch-reset-password -i -u elastic
 </code></pre></div>
+<h2 id="create-a-dedicated-role-for-axonops">Create a dedicated role for AxonOps<a class="headerlink" href="#create-a-dedicated-role-for-axonops" title="Permanent link">&para;</a></h2>
+<p>The permissions required in Elasticsearch for the AxonOps Role should be as follows:</p>
+<p>Cluster privileges: monitor, manage_index_templates</p>
+<p>Index privileges: auto_configure, manage, read, view_index_metadata, write</p>
+<p>You can specify the indices that the role is applied to as follows:</p>
+<ul>
+<li>orgs</li>
+<li><strong>orgname</strong>_*</li>
+</ul>
+<blockquote>
+<p><strong>orgname</strong> is the organisation name that is set in your AxonOps server and agent config files</p>
+</blockquote>
+<p><a class="glightbox" href="/installation/axon-server/elastic_role.png" data-type="image" data-width="100%" data-height="auto" data-desc-position="bottom"><img src="/installation/axon-server/elastic_role.png"></a></p>
 
 
 

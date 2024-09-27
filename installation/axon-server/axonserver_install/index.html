@@ -12,7 +12,7 @@
         <link rel="prev" href="../../../system-requirements/developer/">
       
       
-        <link rel="next" href="../configure_elastic/">
+        <link rel="next" href="../securing_elastic/">
       
       
       <link rel="icon" href="/img/favicon.ico">
@@ -1139,11 +1139,44 @@ data-et-multi-view="{&quot;schema&quot;:{&quot;content&quot;:{&quot;desktop&quot
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
+  <a href="#metrics-storage-engine" class="md-nav__link">
+    <span class="md-ellipsis">
+      Metrics Storage Engine
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Metrics Storage Engine">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#elasticsearch" class="md-nav__link">
+    <span class="md-ellipsis">
+      Elasticsearch
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#cassandra" class="md-nav__link">
+    <span class="md-ellipsis">
+      Cassandra
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
   <a href="#installing-elasticsearch" class="md-nav__link">
     <span class="md-ellipsis">
       Installing Elasticsearch
     </span>
   </a>
+  
+</li>
+        
+      </ul>
+    </nav>
   
 </li>
         
@@ -1172,9 +1205,9 @@ data-et-multi-view="{&quot;schema&quot;:{&quot;content&quot;:{&quot;desktop&quot
 </li>
         
           <li class="md-nav__item">
-  <a href="#configure-elasticsearch" class="md-nav__link">
+  <a href="#securing-elasticsearch" class="md-nav__link">
     <span class="md-ellipsis">
-      Configure Elasticsearch
+      Securing Elasticsearch
     </span>
   </a>
   
@@ -1252,11 +1285,11 @@ data-et-multi-view="{&quot;schema&quot;:{&quot;content&quot;:{&quot;desktop&quot
   
   
     <li class="md-nav__item">
-      <a href="../configure_elastic/" class="md-nav__link">
+      <a href="../securing_elastic/" class="md-nav__link">
         
   
   <span class="md-ellipsis">
-    Configure Elasticsearch
+    Securing Elasticsearch
   </span>
   
 
@@ -2861,11 +2894,44 @@ data-et-multi-view="{&quot;schema&quot;:{&quot;content&quot;:{&quot;desktop&quot
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
+  <a href="#metrics-storage-engine" class="md-nav__link">
+    <span class="md-ellipsis">
+      Metrics Storage Engine
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Metrics Storage Engine">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#elasticsearch" class="md-nav__link">
+    <span class="md-ellipsis">
+      Elasticsearch
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#cassandra" class="md-nav__link">
+    <span class="md-ellipsis">
+      Cassandra
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
   <a href="#installing-elasticsearch" class="md-nav__link">
     <span class="md-ellipsis">
       Installing Elasticsearch
     </span>
   </a>
+  
+</li>
+        
+      </ul>
+    </nav>
   
 </li>
         
@@ -2894,9 +2960,9 @@ data-et-multi-view="{&quot;schema&quot;:{&quot;content&quot;:{&quot;desktop&quot
 </li>
         
           <li class="md-nav__item">
-  <a href="#configure-elasticsearch" class="md-nav__link">
+  <a href="#securing-elasticsearch" class="md-nav__link">
     <span class="md-ellipsis">
-      Configure Elasticsearch
+      Securing Elasticsearch
     </span>
   </a>
   
@@ -2975,8 +3041,14 @@ data-et-multi-view="{&quot;schema&quot;:{&quot;content&quot;:{&quot;desktop&quot
 
 <h1 id="axonops-server-installation">AxonOps Server installation<a class="headerlink" href="#axonops-server-installation" title="Permanent link">&para;</a></h1>
 <h2 id="step-1-prerequisites">Step 1 - Prerequisites<a class="headerlink" href="#step-1-prerequisites" title="Permanent link">&para;</a></h2>
-<p>Elasticsearch stores the data collected by axon-server.
-AxonOps is currently only compatible with Elasticsearch 7.x, we recommend installing the latest available 7.x release.</p>
+<h3 id="metrics-storage-engine">Metrics Storage Engine<a class="headerlink" href="#metrics-storage-engine" title="Permanent link">&para;</a></h3>
+<h4 id="elasticsearch">Elasticsearch<a class="headerlink" href="#elasticsearch" title="Permanent link">&para;</a></h4>
+<p>Elasticsearch is the default data storage engine for all Cassandra metrics and AxonOps config.
+AxonOps is currently compatible with Elasticsearch 7.x, we recommend installing the latest available 7.x release.</p>
+<h4 id="cassandra">Cassandra<a class="headerlink" href="#cassandra" title="Permanent link">&para;</a></h4>
+<p>You can use Cassandra as a metrics store instead of Elasticsearch for better performance.
+Elasticsearch is still required in conjunction with the dedicated AxonOps Cassandra cluster, Elasticsearch is used to store all the AxonOps configuration, logs data and metrics metadata.</p>
+<p>For more information on setting up Cassandra as a metric store: <a href="../metricsdatabase/">Cassandra as Metrics Database</a></p>
 <h4 id="installing-elasticsearch">Installing Elasticsearch<a class="headerlink" href="#installing-elasticsearch" title="Permanent link">&para;</a></h4>
 <h3 id="select-the-os-family">Select the OS Family.<a class="headerlink" href="#select-the-os-family" title="Permanent link">&para;</a></h3>
 <p><label>
@@ -3045,8 +3117,8 @@ This will set the minimum and maximum heap size to 8 GB.</p>
 <p>After a short period of time, you can verify that your Elasticsearch node is running by sending an HTTP request to port 9200 on localhost:</p>
 <div class="highlight"><pre><span></span><code>curl<span class="w"> </span><span class="s2">&quot;localhost:9200&quot;</span>
 </code></pre></div>
-<h3 id="configure-elasticsearch">Configure Elasticsearch<a class="headerlink" href="#configure-elasticsearch" title="Permanent link">&para;</a></h3>
-<p><a href="../configure_elastic/">Configure Elasticsearch</a></p>
+<h3 id="securing-elasticsearch">Securing Elasticsearch<a class="headerlink" href="#securing-elasticsearch" title="Permanent link">&para;</a></h3>
+<p><a href="../securing_elastic/">Securing Elasticsearch</a></p>
 <h2 id="step-2-axon-server-installation">Step 2 - axon-server installation<a class="headerlink" href="#step-2-axon-server-installation" title="Permanent link">&para;</a></h2>
 <p>Execute the following command to setup the AxonOps repository for your OS using the built in Package manager.</p>
 <div id="DebianDiv" class="os">
@@ -3087,26 +3159,36 @@ sudo<span class="w"> </span>yum<span class="w"> </span>install<span class="w"> <
 
 <span class="nt">api_host</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">127.0.0.1</span><span class="w"> </span><span class="c1"># axon-server listening address (used by axon-dash for connections)</span>
 <span class="nt">api_port</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">8080</span><span class="w"> </span><span class="c1"># axon-server HTTP API listening port (used by axon-dash) (AXONSERVER_PORT)</span>
-<span class="hll">
-</span><span class="nt">elastic_hosts</span><span class="p">:</span><span class="w"> </span><span class="c1"># Elasticsearch endpoint (env variable:ELASTIC_HOSTS, comma separated list)</span>
-<span class="w">  </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">http://localhost:9200</span>
-<span class="c1"># SSL/TLS config for Elasticsearch</span>
+
+<span class="hll"><span class="nt">elastic_hosts</span><span class="p">:</span><span class="w"> </span><span class="c1"># Elasticsearch endpoint (env variable:ELASTIC_HOSTS, comma separated list)</span>
+</span><span class="w">  </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">http://localhost:9200</span>
+
+<span class="c1"># Configure multiple Elasticsearch hosts with username and password authentication</span>
 <span class="c1"># elastic_hosts:</span>
-<span class="c1"># - https://username:password@ip.or.hostname</span>
-<span class="c1"># - https://username:password@ip.or.hostname</span>
-<span class="c1"># - https://username:password@ip.or.hostname</span>
+<span class="c1"># - https://username:password@ip.or.hostname:port</span>
+<span class="c1"># - https://username:password@ip.or.hostname:port</span>
+<span class="c1"># - https://username:password@ip.or.hostname:port</span>
+
+<span class="c1"># SSL/TLS config for Elasticsearch</span>
 <span class="c1"># elastic_skipVerify: true # Disables CA and Hostname verification</span>
 
-<span class="c1"># Used by Axon-Server to auto discover Elasticsearch nodes in a cluster.</span>
-<span class="hll"><span class="c1"># Allows more nodes to be added to Elasticsearch for Metrics storage without having to restart Axon-Server and update elastic_hosts with all the ELK node values.</span>
-</span><span class="hll"><span class="c1"># elastic_discover_nodes: true # Default = true</span>
-</span>
+<span class="c1"># Configure the number of shards per index. The default value of 1 is recommended for most use cases</span>
+<span class="nt">elastic_shards</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">1</span>
+<span class="c1"># Configure the number of replicas per shard. Defaults to 0 if not specified.</span>
+<span class="nt">elastic_replicas</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">0</span>
+
+<span class="c1"># Enable/disable Elasticsearch cluster discovery (sniffing). Defaults to true, set to false to disable</span>
+<span class="c1"># Allows more nodes to be added to Elasticsearch for Metrics storage without having to restart Axon-Server and update elastic_hosts with all the ELK node values.</span>
+<span class="nt">elastic_discover_nodes</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">true</span>
+<span class="c1"># How often to perform cluster discovery. Default is every 5 minutes if this is omitted</span>
+<span class="nt">elastic_discover_node_interval</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">5m</span>
+
 <span class="c1">#integrations_proxy: # proxy endpoint for integrations. (INTEGRATIONS_PROXY)</span>
 
 <span class="c1"># AxonOps licensing</span>
-<span class="nt">license_key</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">license-key</span>
-<span class="nt">org_name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">my-company</span>
-
+<span class="hll"><span class="nt">license_key</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">license-key</span>
+</span><span class="hll"><span class="nt">org_name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">my-company</span>
+</span>
 <span class="c1"># SSL/TLS Settings for AxonOps Agent connections</span>
 <span class="nt">tls</span><span class="p">:</span>
 <span class="w">  </span><span class="nt">mode</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;disabled&quot;</span><span class="w"> </span><span class="c1"># disabled, TLS</span>
@@ -3264,13 +3346,13 @@ sudo systemctl status axon-server
         
         
           
-          <a href="../configure_elastic/" class="md-footer__link md-footer__link--next" aria-label="Next: Configure Elasticsearch">
+          <a href="../securing_elastic/" class="md-footer__link md-footer__link--next" aria-label="Next: Securing Elasticsearch">
             <div class="md-footer__title">
               <span class="md-footer__direction">
                 Next
               </span>
               <div class="md-ellipsis">
-                Configure Elasticsearch
+                Securing Elasticsearch
               </div>
             </div>
             <div class="md-footer__button md-icon">
