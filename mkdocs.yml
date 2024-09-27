@@ -103,7 +103,7 @@ nav:
 
     - Enterprise:
       - AxonOps Server: 'installation/axon-server/axonserver_install.md'
-      - Configure Elasticsearch: 'installation/axon-server/configure_elastic.md'
+      - Securing Elasticsearch: 'installation/axon-server/securing_elastic.md'
       - Cassandra as Metrics database: 'installation/axon-server/metricsdatabase.md'
       - AxonOps Dashboard: 'installation/axon-dash/install.md'
       - Configure Nginx: 'installation/axon-dash/configure_nginx.md'

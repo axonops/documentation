@@ -2,8 +2,19 @@
 
 ## Step 1 - Prerequisites
 
-Elasticsearch stores the data collected by axon-server.
-AxonOps is currently only compatible with Elasticsearch 7.x, we recommend installing the latest available 7.x release.
+### Metrics Storage Engine
+
+#### Elasticsearch
+
+Elasticsearch is the default data storage engine for all Cassandra metrics and AxonOps config.
+AxonOps is currently compatible with Elasticsearch 7.x, we recommend installing the latest available 7.x release.
+
+#### Cassandra
+
+You can use Cassandra as a metrics store instead of Elasticsearch for better performance.
+Elasticsearch is still required in conjunction with the dedicated AxonOps Cassandra cluster and is used to store all the AxonOps config and Cassandra metrics metadata.
+
+For more information on setting up Cassandra as a metric store: [Cassandra as Metrics Database](./metricsdatabase.md)
 
 #### Installing Elasticsearch
 
@@ -28,7 +39,7 @@ To create users please refer to the Elasticsearch docs [here](https://www.elasti
 
 *AxonOps Server configuration file location :* `/etc/axonops/axon-server.yml`
 
-``` yaml hl_lines="6 17 18"
+``` yaml hl_lines="7 33 34"
 host: 0.0.0.0  # axon-server listening address (used by axon-agents for connections) (env variable: AXONSERVER_HOST)
 agents_port: 1888 # axon-server listening port for agent connections 
 
@@ -37,16 +48,26 @@ api_port: 8080 # axon-server HTTP API listening port (used by axon-dash) (AXONSE
 
 elastic_hosts: # Elasticsearch endpoint (env variable:ELASTIC_HOSTS, comma separated list)
   - http://localhost:9200
-# SSL/TLS config for Elasticsearch
+
+# Configure multiple Elasticsearch hosts with username and password authentication
 # elastic_hosts:
 # - https://username:password@ip.or.hostname
 # - https://username:password@ip.or.hostname
 # - https://username:password@ip.or.hostname
+
+# SSL/TLS config for Elasticsearch
 # elastic_skipVerify: true # Disables CA and Hostname verification
 
-# Used by Axon-Server to auto discover Elasticsearch nodes in a cluster.
+# Configure the number of shards per index. The default value of 1 is recommended for most use cases
+elastic_shards: 1
+# Configure the number of replicas per shard. Defaults to 0 if not specified.
+elastic_replicas: 0
+
+# Enable/disable Elasticsearch cluster discovery (sniffing). Defaults to true, set to false to disable
 # Allows more nodes to be added to Elasticsearch for Metrics storage without having to restart Axon-Server and update elastic_hosts with all the ELK node values.
-# elastic_discover_nodes: true # Default = true
+elastic_discover_nodes: true
+# How often to perform cluster discovery. Default is every 5 minutes if this is omitted
+elastic_discover_node_interval: 5m
 
 #integrations_proxy: # proxy endpoint for integrations. (INTEGRATIONS_PROXY)
 

@@ -1,4 +1,4 @@
-# Configure Elasticsearch
+# Securing Elasticsearch
 
 ## Configuration file location
 
@@ -55,6 +55,22 @@ The example will set a self-assigned password for the elastic built-in user.
 ```
 <DEFAULT LOCATION>/bin/elasticsearch-reset-password -i -u elastic
 ```
+## Create a dedicated role for AxonOps
+
+The permissions required in Elasticsearch for the AxonOps Role should be as follows:
+
+Cluster privileges: monitor, manage_index_templates
+
+Index privileges: auto_configure, manage, read, view_index_metadata, write
+
+You can specify the indices that the role is applied to as follows:
+
+- orgs
+- **orgname**_*
+
+> **orgname** is the organisation name that is set in your AxonOps server and agent config files
+
+<img src="/installation/axon-server/elastic_role.png">
 
 
 
