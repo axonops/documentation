@@ -69,6 +69,13 @@ markdown_extensions:
 
 plugins:
   - search
+  - mkdocs-video:
+      is_video: true
+      video_muted: true
+      video_controls: true
+      css_style:
+        width: "100%"
+        height: "15vw"
   - glightbox:
       width: 100%
       height: auto
@@ -127,6 +134,7 @@ nav:
       - Metrics Dashboard:
           - Cassandra: 'monitoring/metricsdashboards/cassandra.md'
           - Metrics Query Syntax: 'monitoring/metricsdashboards/querysyntax.md'
+      - 'Metrics in Grafana': 'monitoring/grafana/grafana.md'
       - Logs & Events: 'monitoring/logsandevents/logsandevents.md'
 
     - Notification Integrations:
