@@ -1,6 +1,8 @@
 # Accessing AxonOps Metrics with Grafana
 
-## Generate an API token with read-only permission to the clusters you wish to access
+## Generate API Token
+
+Generate an API token with *read-only* permission to the clusters you wish to access.
 
 - Login to (https://console.axonops.com)[https://console.axonops.com]
 - Navigate in the left menu to API Tokens.
