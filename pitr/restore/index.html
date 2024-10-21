@@ -1683,6 +1683,27 @@ data-et-multi-view="{&quot;schema&quot;:{&quot;content&quot;:{&quot;desktop&quot
   
   
     <li class="md-nav__item">
+      <a href="../../monitoring/grafana/grafana/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Metrics in Grafana
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
       <a href="../../monitoring/logsandevents/logsandevents/" class="md-nav__link">
         
   
@@ -2927,20 +2948,20 @@ data-et-multi-view="{&quot;schema&quot;:{&quot;content&quot;:{&quot;desktop&quot
 
   <h1>Restore from Point-in-Time</h1>
 
-<h4 id="requirements">Requirements<a class="headerlink" href="#requirements" title="Permanent link">&para;</a></h4>
+<div><h4 id="requirements">Requirements<a class="headerlink" href="#requirements" title="Permanent link">¶</a></h4>
 <ul>
 <li>Make sure Cassandra service is stopped on every node in the Cluster/Data Center(DC)</li>
 <li>Make sure Cassandra commitlog directory is emptied for every node you want to restore too.</li>
 <li>Check Cassandra Application Keyspace table directories are emptied for every node and keyspace/table you want to restore. </li>
 </ul>
-<h4 id="steps">Steps:<a class="headerlink" href="#steps" title="Permanent link">&para;</a></h4>
+<h4 id="steps">Steps:<a class="headerlink" href="#steps" title="Permanent link">¶</a></h4>
 <p>In the AxonOps Dashboard on the left hand menu navigate to Operations --&gt; Restore</p>
 <p><a class="glightbox" href="/pitr/pitr_left_restore.png" data-type="image" data-width="100%" data-height="auto" data-desc-position="bottom"><img src="/pitr/pitr_left_restore.png" width="200"></a></p>
 <p>On the top tab select Point-In-Time Recovery</p>
 <p><a class="glightbox" href="/pitr/pitr_top_recovery.png" data-type="image" data-width="100%" data-height="auto" data-desc-position="bottom"><img src="/pitr/pitr_top_recovery.png" width="700"></a></p>
 <p>You will be presented with the Point-In-Time restore screen. There are several steps that need to be done to complete a Point-in-time restore. </p>
-<p><br/></p>
-<h4 id="step-1-select-restore-point-in-time">Step 1: Select Restore Point-in-time.<a class="headerlink" href="#step-1-select-restore-point-in-time" title="Permanent link">&para;</a></h4>
+<p><br></p>
+<h4 id="step-1-select-restore-point-in-time">Step 1: Select Restore Point-in-time.<a class="headerlink" href="#step-1-select-restore-point-in-time" title="Permanent link">¶</a></h4>
 <p><a class="glightbox" href="/pitr/pitr_full.png" data-type="image" data-width="100%" data-height="auto" data-desc-position="bottom"><img src="/pitr/pitr_full.png" width="700"></a></p>
 <p>Select the Point-In-Time you want to restore your cluster too. </p>
 <p>Please complete the Date/Time selection and fields of the keyspace and table/s that you would like to restore.</p>
@@ -2948,7 +2969,7 @@ data-et-multi-view="{&quot;schema&quot;:{&quot;content&quot;:{&quot;desktop&quot
 <li>
 <p><strong><code>Wide Time Range</code></strong></p>
 <p>The wide time range is always a calendar month from the 1st to the last day of the selected month.</p>
-<p>To select a different month please use the <img alt="" class="skip-lightbox" src="../previous.png" width="15" /> and <img alt="" class="skip-lightbox" src="../next.png" width="15" /> arrows on either side of the slider.</p>
+<p>To select a different month please use the <img alt="" class="skip-lightbox" src="../previous.png" width="15"> and <img alt="" class="skip-lightbox" src="../next.png" width="15"> arrows on either side of the slider.</p>
 <p>At the beginning and end of the Wide Time Range slider there is a black bar that you can slide left and right to narrow the Date/Time of when you want to restore to.</p>
 </li>
 <li>
@@ -2957,9 +2978,9 @@ data-et-multi-view="{&quot;schema&quot;:{&quot;content&quot;:{&quot;desktop&quot
 <p>By default if the Wide Time Range slider is 30 days the Zoomed Section will be 30 days. </p>
 <p>The narrower the time range in the Wide Time Range slider the more precise the available date/time selection will be in the Zoomed section.</p>
 <p>Example of what the Zoomed section will look like when snapshots are available to select for PITR.</p>
-<p><a class="glightbox" href="../zoomed_section.png" data-type="image" data-width="100%" data-height="auto" data-desc-position="bottom"><img alt="" src="../zoomed_section.png" /></a>
-<div class="highlight"><pre><span></span><code>The Camera Icon represents a snapshot at a point-in-time where a commitlog is archived.
-</code></pre></div></p>
+<p><a class="glightbox" href="../zoomed_section.png" data-type="image" data-width="100%" data-height="auto" data-desc-position="bottom"><img alt="" src="../zoomed_section.png"></a>
+</p><div class="highlight"><pre><span></span><code>The Camera Icon represents a snapshot at a point-in-time where a commitlog is archived.
+</code></pre></div>
 </li>
 <li>
 <p><strong><code>Point in time</code></strong></p>
@@ -2974,7 +2995,7 @@ data-et-multi-view="{&quot;schema&quot;:{&quot;content&quot;:{&quot;desktop&quot
 <p>The Application or System Tables that were included as part of the commitlog archive process. If you don't specify a Table all Tables will be included in the restore process.</p>
 </li>
 </ul>
-<h4 id="step-2-overview-of-point-in-time-nodeskeyspaces-and-tables">Step 2: Overview of Point-in-time nodes,keyspaces and tables.<a class="headerlink" href="#step-2-overview-of-point-in-time-nodeskeyspaces-and-tables" title="Permanent link">&para;</a></h4>
+<h4 id="step-2-overview-of-point-in-time-nodeskeyspaces-and-tables">Step 2: Overview of Point-in-time nodes,keyspaces and tables.<a class="headerlink" href="#step-2-overview-of-point-in-time-nodeskeyspaces-and-tables" title="Permanent link">¶</a></h4>
 <p><a class="glightbox" href="/pitr/step_2_full.png" data-type="image" data-width="100%" data-height="auto" data-desc-position="bottom"><img src="/pitr/step_2_full.png" width="700"></a></p>
 <p>Confirm by clicking show details that all the tables and keyspaces you want to restore will be part of the restoration. You will be presented with the following screen. </p>
 <p><a class="glightbox" href="/pitr/step_2_full_details.png" data-type="image" data-width="100%" data-height="auto" data-desc-position="bottom"><img src="/pitr/step_2_full_details.png" width="700"></a></p>
@@ -2993,7 +3014,7 @@ The search box will allow you to search for and confirm specific tables or keysp
 <p>The Snapshot/s that will be used to recover to the specified point-in-time</p>
 </li>
 </ul>
-<h4 id="step-3-confirmation-of-point-in-time-restoration-to-proceed">Step 3: Confirmation of Point-in-time restoration to proceed.<a class="headerlink" href="#step-3-confirmation-of-point-in-time-restoration-to-proceed" title="Permanent link">&para;</a></h4>
+<h4 id="step-3-confirmation-of-point-in-time-restoration-to-proceed">Step 3: Confirmation of Point-in-time restoration to proceed.<a class="headerlink" href="#step-3-confirmation-of-point-in-time-restoration-to-proceed" title="Permanent link">¶</a></h4>
 <p>Confirm you are ready to start the Point-in-time restore.</p>
 <p><a class="glightbox" href="/pitr/step_3_full.png" data-type="image" data-width="100%" data-height="auto" data-desc-position="bottom"><img src="/pitr/step_3_full.png" width="700"></a></p>
 <ul>
@@ -3001,7 +3022,7 @@ The search box will allow you to search for and confirm specific tables or keysp
 <li>Delete the SStable files in the target table directories</li>
 <li>Delete commitlog files in the commitlog directory</li>
 </ul>
-<h4 id="step-4-final-checks-and-last-steps-before-point-in-time-restore-starts">Step 4: Final checks and last steps before Point-in-time restore starts.<a class="headerlink" href="#step-4-final-checks-and-last-steps-before-point-in-time-restore-starts" title="Permanent link">&para;</a></h4>
+<h4 id="step-4-final-checks-and-last-steps-before-point-in-time-restore-starts">Step 4: Final checks and last steps before Point-in-time restore starts.<a class="headerlink" href="#step-4-final-checks-and-last-steps-before-point-in-time-restore-starts" title="Permanent link">¶</a></h4>
 <p>The Axon-Agent service confirm the Cassandra nodes are stopped.
 Checks to ensure the clstuer is ready for the Point-in-time restore.</p>
 <p><a class="glightbox" href="/pitr/step_4_full.png" data-type="image" data-width="100%" data-height="auto" data-desc-position="bottom"><img src="/pitr/step_4_full.png" width="700"></a></p>
@@ -3009,17 +3030,17 @@ Checks to ensure the clstuer is ready for the Point-in-time restore.</p>
 <p>If any of the data directories still contain sstables a warning may be displayed. </p>
 <p>Click on show details button to view the tables affected and any errors/warnings.</p>
 <p><a class="glightbox" href="/pitr/step_4_full_details.png" data-type="image" data-width="100%" data-height="auto" data-desc-position="bottom"><img src="/pitr/step_4_full_details.png" width="700"></a></p>
-<h4 id="step-5-start-the-point-in-time-restore">Step 5: Start the Point-in-time restore.<a class="headerlink" href="#step-5-start-the-point-in-time-restore" title="Permanent link">&para;</a></h4>
+<h4 id="step-5-start-the-point-in-time-restore">Step 5: Start the Point-in-time restore.<a class="headerlink" href="#step-5-start-the-point-in-time-restore" title="Permanent link">¶</a></h4>
 <p>Start the restore process</p>
 <p><a class="glightbox" href="/pitr/step_5_full.png" data-type="image" data-width="100%" data-height="auto" data-desc-position="bottom"><img src="/pitr/step_5_full.png" width="700"></a></p>
-<h4 id="step-6-wait-for-completion-and-start-cassandra-nodes">Step 6: Wait for completion and start Cassandra nodes.<a class="headerlink" href="#step-6-wait-for-completion-and-start-cassandra-nodes" title="Permanent link">&para;</a></h4>
+<h4 id="step-6-wait-for-completion-and-start-cassandra-nodes">Step 6: Wait for completion and start Cassandra nodes.<a class="headerlink" href="#step-6-wait-for-completion-and-start-cassandra-nodes" title="Permanent link">¶</a></h4>
 <p>The Status page of the Point-in-time restore process. 
 Once the restore has been completed the status will remain in a progressing state until the Cassandra nodes are restarted.</p>
 <p><a class="glightbox" href="/pitr/step_6_full.png" data-type="image" data-width="100%" data-height="auto" data-desc-position="bottom"><img src="/pitr/step_6_full.png" width="700"></a></p>
-<h4 id="step-7-check-data-in-cassandra-has-been-recovered-to-specified-point-in-time">Step 7: Check data in Cassandra has been recovered to specified Point-in-time.<a class="headerlink" href="#step-7-check-data-in-cassandra-has-been-recovered-to-specified-point-in-time" title="Permanent link">&para;</a></h4>
+<h4 id="step-7-check-data-in-cassandra-has-been-recovered-to-specified-point-in-time">Step 7: Check data in Cassandra has been recovered to specified Point-in-time.<a class="headerlink" href="#step-7-check-data-in-cassandra-has-been-recovered-to-specified-point-in-time" title="Permanent link">¶</a></h4>
 <p>Successful Point-in-time restore. 
 Please confirm the details and data in the tables that have been restored are present as expected.</p>
-<p><a class="glightbox" href="/pitr/step_7_full.png" data-type="image" data-width="100%" data-height="auto" data-desc-position="bottom"><img src="/pitr/step_7_full.png" width="700"></a></p>
+<p><a class="glightbox" href="/pitr/step_7_full.png" data-type="image" data-width="100%" data-height="auto" data-desc-position="bottom"><img src="/pitr/step_7_full.png" width="700"></a></p></div>
 
 
 

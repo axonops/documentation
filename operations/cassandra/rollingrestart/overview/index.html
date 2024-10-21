@@ -1678,6 +1678,27 @@ data-et-multi-view="{&quot;schema&quot;:{&quot;content&quot;:{&quot;desktop&quot
   
   
     <li class="md-nav__item">
+      <a href="../../../../monitoring/grafana/grafana/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Metrics in Grafana
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
       <a href="../../../../monitoring/logsandevents/logsandevents/" class="md-nav__link">
         
   
@@ -2724,31 +2745,31 @@ data-et-multi-view="{&quot;schema&quot;:{&quot;content&quot;:{&quot;desktop&quot
 
   <h1>Rolling Restart</h1>
 
-<p>AxonOps provides a rolling restart functionality for Cassandra.</p>
+<div><p>AxonOps provides a rolling restart functionality for Cassandra.</p>
 <p>The feature is accessible via <strong><em>Operations &gt; Rolling Restart</em></strong></p>
 <div class="admonition infomy">
 <p class="admonition-title">Infomy</p>
-<p><a href="../1.JPG"><img alt="rollingrestart" src="../1.JPG" /></a></p>
+<p><a href="../1.JPG"><img alt="rollingrestart" src="../1.JPG"></a></p>
 </div>
 <blockquote>
 <p><strong>axonops</strong> user will require permissions to be able to stop and start Cassandra service. To do so you will add <strong>axonops</strong> user in the sudoers with for instance the following permissions:
-<div class="highlight"><pre><span></span><code><span class="c1">#/etc/sudoers.d/axonops</span>
+</p><div class="highlight"><pre><span></span><code><span class="c1">#/etc/sudoers.d/axonops</span>
 axonops<span class="w"> </span><span class="nv">ALL</span><span class="o">=</span>NOPASSWD:<span class="w"> </span>/sbin/service<span class="w"> </span>cassandra<span class="w"> </span>*,<span class="w"> </span>/usr/bin/systemctl<span class="w"> </span>*<span class="w"> </span>cassandra*
-</code></pre></div></p>
+</code></pre></div>
 </blockquote>
 <p>You can start an <strong>immediate</strong> rolling restart or <strong>schedule</strong> it.</p>
 <p>The <strong>script</strong> field let you able to tweak the predefined script executed by <strong>axon-agents</strong> during the restart process.</p>
 <p>You can also specify different degree of parallelism for the restart: <strong>DC</strong>, <strong>Rack</strong> and <strong>Node</strong>.</p>
 <p>For instance, to <strong>restart one entire rack</strong> at once across the cluster, you can set a large <strong>Node parallelism</strong> (greater than the number of nodes the rack has, ie 999).
-<div class="highlight"><pre><span></span><code>DC<span class="w"> </span>parallelism:<span class="w"> </span><span class="m">1</span>
+</p><div class="highlight"><pre><span></span><code>DC<span class="w"> </span>parallelism:<span class="w"> </span><span class="m">1</span>
 Rack<span class="w"> </span>parallelism:<span class="w"> </span><span class="m">1</span>
 Node<span class="w"> </span>parallelism:<span class="w"> </span><span class="m">999</span>
-</code></pre></div></p>
+</code></pre></div>
 <p>To <strong>restart one entire rack across each DC</strong>:
-<div class="highlight"><pre><span></span><code>DC<span class="w"> </span>parallelism:<span class="w"> </span><span class="m">999</span>
+</p><div class="highlight"><pre><span></span><code>DC<span class="w"> </span>parallelism:<span class="w"> </span><span class="m">999</span>
 Rack<span class="w"> </span>parallelism:<span class="w"> </span><span class="m">1</span>
 Node<span class="w"> </span>parallelism:<span class="w"> </span><span class="m">999</span>
-</code></pre></div></p>
+</code></pre></div></div>
 
 
 

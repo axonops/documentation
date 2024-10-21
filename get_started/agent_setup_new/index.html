@@ -1664,6 +1664,27 @@ data-et-multi-view="{&quot;schema&quot;:{&quot;content&quot;:{&quot;desktop&quot
   
   
     <li class="md-nav__item">
+      <a href="../../monitoring/grafana/grafana/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Metrics in Grafana
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
       <a href="../../monitoring/logsandevents/logsandevents/" class="md-nav__link">
         
   
@@ -2801,10 +2822,10 @@ data-et-multi-view="{&quot;schema&quot;:{&quot;content&quot;:{&quot;desktop&quot
                   
 
 
-<h1 id="axon-agent-setup">Axon Agent Setup<a class="headerlink" href="#axon-agent-setup" title="Permanent link">&para;</a></h1>
+<div><h1 id="axon-agent-setup">Axon Agent Setup<a class="headerlink" href="#axon-agent-setup" title="Permanent link">¶</a></h1>
 <!-- ![](agent_steps.png) -->
 
-<h2 id="axonops-cloud-agent-network-requirements">AxonOps Cloud Agent Network Requirements<a class="headerlink" href="#axonops-cloud-agent-network-requirements" title="Permanent link">&para;</a></h2>
+<h2 id="axonops-cloud-agent-network-requirements">AxonOps Cloud Agent Network Requirements<a class="headerlink" href="#axonops-cloud-agent-network-requirements" title="Permanent link">¶</a></h2>
 <p>AxonOps agent connects securely to the following AxonOps Cloud service endpoint;</p>
 <div class="no-copy highlight"><pre><span></span><code>https://agents.axonops.cloud
 </code></pre></div>
@@ -2821,14 +2842,14 @@ https://agents.axonops.cloud/ips-v6
 </code></pre></div>
 <p>You should expect the following response:</p>
 <p><em>AxonOps Agent Test Page</em></p>
-<h2 id="setup-the-axonops-repository-on-your-operating-system">Setup the AxonOps repository on your Operating system<a class="headerlink" href="#setup-the-axonops-repository-on-your-operating-system" title="Permanent link">&para;</a></h2>
-<h3 id="select-the-os-family">Select the OS Family.<a class="headerlink" href="#select-the-os-family" title="Permanent link">&para;</a></h3>
+<h2 id="setup-the-axonops-repository-on-your-operating-system">Setup the AxonOps repository on your Operating system<a class="headerlink" href="#setup-the-axonops-repository-on-your-operating-system" title="Permanent link">¶</a></h2>
+<h3 id="select-the-os-family">Select the OS Family.<a class="headerlink" href="#select-the-os-family" title="Permanent link">¶</a></h3>
 <p><label>
-  <input type="radio" id="Debian" name="osFamily" onChange="updateOS()" checked=true />
+  <input type="radio" id="Debian" name="osFamily" onchange="updateOS()" checked>
   <img src="/get_started/debian.png" class="skip-lightbox" width="180px">
 </label>
 <label>
-  <input type="radio" id="RedHat" name="osFamily" onChange="updateOS()" />
+  <input type="radio" id="RedHat" name="osFamily" onchange="updateOS()">
   <img src="/get_started/red_hat.png" class="skip-lightbox" width="180px">
 </label></p>
 <p>Execute the following command to setup the AxonOps repository for your OS</p>
@@ -2836,7 +2857,7 @@ https://agents.axonops.cloud/ips-v6
     <div class="highlight"><pre><span></span><code>sudo<span class="w"> </span>apt-get<span class="w"> </span>update
 sudo<span class="w"> </span>apt-get<span class="w"> </span>install<span class="w"> </span>-y<span class="w"> </span>curl<span class="w"> </span>gnupg<span class="w"> </span>ca-certificates
 curl<span class="w"> </span>-L<span class="w"> </span>https://packages.axonops.com/apt/repo-signing-key.gpg<span class="w"> </span><span class="p">|</span><span class="w"> </span>sudo<span class="w"> </span>gpg<span class="w"> </span>--dearmor<span class="w"> </span>-o<span class="w"> </span>/usr/share/keyrings/axonops.gpg
-<span class="nb">echo</span><span class="w"> </span><span class="s2">&quot;deb [arch=arm64,amd64 signed-by=/usr/share/keyrings/axonops.gpg] https://packages.axonops.com/apt axonops-apt main&quot;</span><span class="w"> </span><span class="p">|</span><span class="w"> </span>sudo<span class="w"> </span>tee<span class="w"> </span>/etc/apt/sources.list.d/axonops-apt.list
+<span class="nb">echo</span><span class="w"> </span><span class="s2">"deb [arch=arm64,amd64 signed-by=/usr/share/keyrings/axonops.gpg] https://packages.axonops.com/apt axonops-apt main"</span><span class="w"> </span><span class="p">|</span><span class="w"> </span>sudo<span class="w"> </span>tee<span class="w"> </span>/etc/apt/sources.list.d/axonops-apt.list
 sudo<span class="w"> </span>apt-get<span class="w"> </span>update
 </code></pre></div>
 </div>
@@ -2853,35 +2874,35 @@ sudo<span class="w"> </span>apt-get<span class="w"> </span>update
 </code></pre></div>
 </div>
 
-<h2 id="install-cassandra-agent">Install Cassandra Agent<a class="headerlink" href="#install-cassandra-agent" title="Permanent link">&para;</a></h2>
-<h3 id="select-the-cassandra-version">Select the Cassandra Version<a class="headerlink" href="#select-the-cassandra-version" title="Permanent link">&para;</a></h3>
+<h2 id="install-cassandra-agent">Install Cassandra Agent<a class="headerlink" href="#install-cassandra-agent" title="Permanent link">¶</a></h2>
+<h3 id="select-the-cassandra-version">Select the Cassandra Version<a class="headerlink" href="#select-the-cassandra-version" title="Permanent link">¶</a></h3>
 <p><label>
-  <input type="radio" id="Cassandra30" name="casFamily" onChange="updateCas()" checked=true />
+  <input type="radio" id="Cassandra30" name="casFamily" onchange="updateCas()" checked>
   <img src="/get_started/cas_3.png" class="skip-lightbox" width="180px">
 </label>
 <label>
-  <input type="radio" id="Cassandra311" name="casFamily" onChange="updateCas()" />
+  <input type="radio" id="Cassandra311" name="casFamily" onchange="updateCas()">
   <img src="/get_started/cas_3_11.png" class="skip-lightbox" width="180px">
 </label>
 <label>
-  <input type="radio" id="Cassandra40" name="casFamily" onChange="updateCas()" />
+  <input type="radio" id="Cassandra40" name="casFamily" onchange="updateCas()">
   <img src="/get_started/cas_4.png" class="skip-lightbox" width="180px">
 </label>
 <label>
-  <input type="radio" id="Cassandra41" name="casFamily" onChange="updateCas()" />
+  <input type="radio" id="Cassandra41" name="casFamily" onchange="updateCas()">
   <img src="/get_started/cas_4_1.png" class="skip-lightbox" width="180px">
 </label>
 <label>
-  <input type="radio" id="Cassandra50" name="casFamily" onChange="updateCas()" />
+  <input type="radio" id="Cassandra50" name="casFamily" onchange="updateCas()">
   <img src="/get_started/cas_5_0.png" class="skip-lightbox" width="180px">
 </label></p>
-<h3 id="select-the-java-version">Select the Java Version.<a class="headerlink" href="#select-the-java-version" title="Permanent link">&para;</a></h3>
+<h3 id="select-the-java-version">Select the Java Version.<a class="headerlink" href="#select-the-java-version" title="Permanent link">¶</a></h3>
 <p><label>
-  <input type="radio" id="Java8" name="javaFamily" onChange="updateJava()" checked=true />
+  <input type="radio" id="Java8" name="javaFamily" onchange="updateJava()" checked>
   <img id="Java8img" src="/get_started/Java_8.png" class="skip-lightbox" width="180px">
 </label>
 <label>
-  <input type="radio" id="Java11" name="javaFamily" onChange="updateJava()" />
+  <input type="radio" id="Java11" name="javaFamily" onchange="updateJava()">
   <img id="Java11img" src="/get_started/Java_11.png" class="skip-lightbox" width="180px" style="display:none">
 </label></p>
 <!-- Debian -->
@@ -2943,17 +2964,17 @@ sudo<span class="w"> </span>apt-get<span class="w"> </span>update
 </code></pre></div>
 </div>
 
-<h2 id="agent-configuration">Agent Configuration<a class="headerlink" href="#agent-configuration" title="Permanent link">&para;</a></h2>
+<h2 id="agent-configuration">Agent Configuration<a class="headerlink" href="#agent-configuration" title="Permanent link">¶</a></h2>
 <p>Update and copy the below code snippet into /etc/axonops/axon-agent.yml file.</p>
 <p>Please update the <strong>key</strong> and <strong>org</strong> values by logging into <a href="https://console.axonops.cloud" target="_blank">console.axonops.cloud</a></p>
 <ul>
 <li><strong>Organization(org)</strong> name is next to the logo in the console</li>
 <li><strong>Agent Keys(key)</strong> found in Agent Setup</li>
 </ul>
-<p><a class="glightbox" href="../agent_keys.png" data-type="image" data-width="100%" data-height="auto" data-desc-position="bottom"><img alt="" src="../agent_keys.png" /></a></p>
+<p><a class="glightbox" href="../agent_keys.png" data-type="image" data-width="100%" data-height="auto" data-desc-position="bottom"><img alt="" src="../agent_keys.png"></a></p>
 <p>If there is a Dedicated NTP server in your Organization please uncomment and update the NTP section. </p>
 <div class="highlight"><pre><span></span><code>  axon-server:
-      hosts: &quot;agents.axonops.cloud&quot;
+      hosts: "agents.axonops.cloud"
 
   axon-agent:
       key: &lt;THIS_IS_A_DUMMY_KEY_PLEASE_UPDATE&gt;
@@ -2964,9 +2985,9 @@ sudo<span class="w"> </span>apt-get<span class="w"> </span>update
   # The port defaults to 123 if not specified.
   # NTP:
   #    hosts:
-  #        - &quot;x.x.x.x:123&quot;
+  #        - "x.x.x.x:123"
   # Optionally restrict which commands can be executed by axon-agent.
-  # If &quot;true&quot;, only scripts placed in scripts_location can be executed by axon-agent.
+  # If "true", only scripts placed in scripts_location can be executed by axon-agent.
   # disable_command_exec: false
   # If disable_command_exec is true then axon-agent is only allowed to execute scripts
   # under this path
@@ -2975,46 +2996,46 @@ sudo<span class="w"> </span>apt-get<span class="w"> </span>update
 <p>Set file permissions on /etc/axonops/axon-agent.yml file by executing the following command</p>
 <div class="highlight"><pre><span></span><code>sudo chmod 0644 /etc/axonops/axon-agent.yml
 </code></pre></div>
-<h2 id="cassandra-configuration">Cassandra Configuration<a class="headerlink" href="#cassandra-configuration" title="Permanent link">&para;</a></h2>
+<h2 id="cassandra-configuration">Cassandra Configuration<a class="headerlink" href="#cassandra-configuration" title="Permanent link">¶</a></h2>
 <p>Edit cassandra-env.sh, usually located in your Cassandra install path such as: </p>
 <p><code>/&lt;Cassandra Installation Directory&gt;/conf/cassandra-env.sh</code></p>
 <p>Add the following line at the end of the file:</p>
 <div id="Cassandra30Div" class="javacas">
-  <div class="highlight"><pre><span></span><code>JVM_OPTS=&quot;$JVM_OPTS -javaagent:/usr/share/axonops/axon-cassandra3.0-agent.jar=/etc/axonops/axon-agent.yml&quot;
+  <div class="highlight"><pre><span></span><code>JVM_OPTS="$JVM_OPTS -javaagent:/usr/share/axonops/axon-cassandra3.0-agent.jar=/etc/axonops/axon-agent.yml"
 </code></pre></div>
 </div>
 <div id="Cassandra311Div" class="javacas" style="display:none">
-  <div class="highlight"><pre><span></span><code>JVM_OPTS=&quot;$JVM_OPTS -javaagent:/usr/share/axonops/axon-cassandra3.11-agent.jar=/etc/axonops/axon-agent.yml&quot;
+  <div class="highlight"><pre><span></span><code>JVM_OPTS="$JVM_OPTS -javaagent:/usr/share/axonops/axon-cassandra3.11-agent.jar=/etc/axonops/axon-agent.yml"
 </code></pre></div>
 </div>
 <div id="Cassandra40Div" class="javacas" style="display:none">
-  <div class="highlight"><pre><span></span><code>JVM_OPTS=&quot;$JVM_OPTS -javaagent:/usr/share/axonops/axon-cassandra4.0-agent.jar=/etc/axonops/axon-agent.yml&quot;
+  <div class="highlight"><pre><span></span><code>JVM_OPTS="$JVM_OPTS -javaagent:/usr/share/axonops/axon-cassandra4.0-agent.jar=/etc/axonops/axon-agent.yml"
 </code></pre></div>
 </div>
 <div id="Cassandra41Div" class="javacas" style="display:none">
-  <div class="highlight"><pre><span></span><code>JVM_OPTS=&quot;$JVM_OPTS -javaagent:/usr/share/axonops/axon-cassandra4.1-agent.jar=/etc/axonops/axon-agent.yml&quot;
+  <div class="highlight"><pre><span></span><code>JVM_OPTS="$JVM_OPTS -javaagent:/usr/share/axonops/axon-cassandra4.1-agent.jar=/etc/axonops/axon-agent.yml"
 </code></pre></div>
 </div>
 <div id="Cassandra50Div" class="javacas" style="display:none">
-  <div class="highlight"><pre><span></span><code>JVM_OPTS=&quot;$JVM_OPTS -javaagent:/usr/share/axonops/axon-cassandra5.0-agent.jar=/etc/axonops/axon-agent.yml&quot;
+  <div class="highlight"><pre><span></span><code>JVM_OPTS="$JVM_OPTS -javaagent:/usr/share/axonops/axon-cassandra5.0-agent.jar=/etc/axonops/axon-agent.yml"
 </code></pre></div>
 </div>
 
 <p><strong>NB.</strong> Make sure that this configuration will not get overridden by an automation tool.</p>
-<h2 id="add-axonops-user-to-cassandra-user-group-and-cassandra-user-to-axonops-group">Add AxonOps user to Cassandra user group and Cassandra user to AxonOps group<a class="headerlink" href="#add-axonops-user-to-cassandra-user-group-and-cassandra-user-to-axonops-group" title="Permanent link">&para;</a></h2>
+<h2 id="add-axonops-user-to-cassandra-user-group-and-cassandra-user-to-axonops-group">Add AxonOps user to Cassandra user group and Cassandra user to AxonOps group<a class="headerlink" href="#add-axonops-user-to-cassandra-user-group-and-cassandra-user-to-axonops-group" title="Permanent link">¶</a></h2>
 <div class="highlight"><pre><span></span><code>sudo usermod -aG &lt;your_cassandra_group&gt; axonops
 sudo usermod -aG axonops &lt;your_cassandra_user&gt;
 </code></pre></div>
-<h2 id="startrestart-cassandra">Start/Restart Cassandra<a class="headerlink" href="#startrestart-cassandra" title="Permanent link">&para;</a></h2>
+<h2 id="startrestart-cassandra">Start/Restart Cassandra<a class="headerlink" href="#startrestart-cassandra" title="Permanent link">¶</a></h2>
 <p>To load the Axon java agent and Cassandra config changes please,</p>
 <ul>
 <li>Start the Cassandra service if stopped. </li>
 <li>Restart the Cassandra service if already running.</li>
 </ul>
-<h2 id="start-axon-agent">Start axon-agent<a class="headerlink" href="#start-axon-agent" title="Permanent link">&para;</a></h2>
+<h2 id="start-axon-agent">Start axon-agent<a class="headerlink" href="#start-axon-agent" title="Permanent link">¶</a></h2>
 <div class="highlight"><pre><span></span><code>sudo systemctl start axon-agent
 </code></pre></div>
-<p>Once the Agents have been setup please use the <a href="/cluster/cluster-overview/">Using AxonOps</a> to familiarise yourself with AxonOps UI.</p>
+<p>Once the Agents have been setup please use the <a href="/cluster/cluster-overview/">Using AxonOps</a> to familiarise yourself with AxonOps UI.</p></div>
 
 
 

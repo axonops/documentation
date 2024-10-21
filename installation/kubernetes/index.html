@@ -1815,6 +1815,27 @@ data-et-multi-view="{&quot;schema&quot;:{&quot;content&quot;:{&quot;desktop&quot
   
   
     <li class="md-nav__item">
+      <a href="../../monitoring/grafana/grafana/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Metrics in Grafana
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
       <a href="../../monitoring/logsandevents/logsandevents/" class="md-nav__link">
         
   
@@ -2925,13 +2946,13 @@ data-et-multi-view="{&quot;schema&quot;:{&quot;content&quot;:{&quot;desktop&quot
                   
 
 
-<h1 id="running-axonops-on-kubernetes">Running AxonOps on Kubernetes<a class="headerlink" href="#running-axonops-on-kubernetes" title="Permanent link">&para;</a></h1>
-<h2 id="introduction">Introduction<a class="headerlink" href="#introduction" title="Permanent link">&para;</a></h2>
+<div><h1 id="running-axonops-on-kubernetes">Running AxonOps on Kubernetes<a class="headerlink" href="#running-axonops-on-kubernetes" title="Permanent link">¶</a></h1>
+<h2 id="introduction">Introduction<a class="headerlink" href="#introduction" title="Permanent link">¶</a></h2>
 <p>The following shows how to install AxonOps for monitoring cassandra. AxonOps requires ElasticSearch and the documentation below shows how to install both. If you already have ElasticSearch running, you can omit the installation and just ensure the AxonOps config points to it.</p>
 <p>AxonOps installation uses Helm Charts. Helm v3.8.0 or later is required in order to access the OCI repository hosting the charts.
 The raw charts can be downloaded from the <a href="https://github.com/axonops/helm-axonops">GitHub repository</a>.</p>
-<h2 id="preparing-the-configuration">Preparing the configuration<a class="headerlink" href="#preparing-the-configuration" title="Permanent link">&para;</a></h2>
-<h3 id="resources">Resources<a class="headerlink" href="#resources" title="Permanent link">&para;</a></h3>
+<h2 id="preparing-the-configuration">Preparing the configuration<a class="headerlink" href="#preparing-the-configuration" title="Permanent link">¶</a></h2>
+<h3 id="resources">Resources<a class="headerlink" href="#resources" title="Permanent link">¶</a></h3>
 <table>
 <thead>
 <tr>
@@ -2973,10 +2994,10 @@ The raw charts can be downloaded from the <a href="https://github.com/axonops/he
 </tr>
 </tbody>
 </table>
-<h3 id="elasticsearch">ElasticSearch<a class="headerlink" href="#elasticsearch" title="Permanent link">&para;</a></h3>
+<h3 id="elasticsearch">ElasticSearch<a class="headerlink" href="#elasticsearch" title="Permanent link">¶</a></h3>
 <p>The example below is a configuration file for the official ElasticSearch helm repository. See inline comments:</p>
 <div class="highlight"><pre><span></span><code><span class="nn">---</span>
-<span class="nt">clusterName</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;axonops-elastic&quot;</span>
+<span class="nt">clusterName</span><span class="p">:</span><span class="w"> </span><span class="s">"axonops-elastic"</span>
 
 <span class="nt">replicas</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">1</span>
 
@@ -2985,27 +3006,27 @@ The raw charts can be downloaded from the <a href="https://github.com/axonops/he
 <span class="w">    </span><span class="no">thread_pool.write.queue_size: 2000</span>
 
 <span class="nt">roles</span><span class="p">:</span>
-<span class="w">  </span><span class="nt">master</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;true&quot;</span>
-<span class="w">  </span><span class="nt">ingest</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;true&quot;</span>
-<span class="w">  </span><span class="nt">data</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;true&quot;</span>
-<span class="w">  </span><span class="nt">remote_cluster_client</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;false&quot;</span>
-<span class="w">  </span><span class="nt">ml</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;false&quot;</span>
+<span class="w">  </span><span class="nt">master</span><span class="p">:</span><span class="w"> </span><span class="s">"true"</span>
+<span class="w">  </span><span class="nt">ingest</span><span class="p">:</span><span class="w"> </span><span class="s">"true"</span>
+<span class="w">  </span><span class="nt">data</span><span class="p">:</span><span class="w"> </span><span class="s">"true"</span>
+<span class="w">  </span><span class="nt">remote_cluster_client</span><span class="p">:</span><span class="w"> </span><span class="s">"false"</span>
+<span class="w">  </span><span class="nt">ml</span><span class="p">:</span><span class="w"> </span><span class="s">"false"</span>
 
 <span class="c1"># Adjust the memory and cpu requirements to your deployment</span>
 <span class="c1"># </span>
-<span class="nt">esJavaOpts</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;-Xms2g</span><span class="nv"> </span><span class="s">-Xmx2g&quot;</span>
+<span class="nt">esJavaOpts</span><span class="p">:</span><span class="w"> </span><span class="s">"-Xms2g</span><span class="nv"> </span><span class="s">-Xmx2g"</span>
 
 <span class="nt">resources</span><span class="p">:</span>
 <span class="w">  </span><span class="nt">requests</span><span class="p">:</span>
-<span class="w">    </span><span class="nt">cpu</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;750m&quot;</span>
-<span class="w">    </span><span class="nt">memory</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;2Gi&quot;</span>
+<span class="w">    </span><span class="nt">cpu</span><span class="p">:</span><span class="w"> </span><span class="s">"750m"</span>
+<span class="w">    </span><span class="nt">memory</span><span class="p">:</span><span class="w"> </span><span class="s">"2Gi"</span>
 <span class="w">  </span><span class="nt">limits</span><span class="p">:</span>
-<span class="w">    </span><span class="nt">cpu</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;1500m&quot;</span>
-<span class="w">    </span><span class="nt">memory</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;4Gi&quot;</span>
+<span class="w">    </span><span class="nt">cpu</span><span class="p">:</span><span class="w"> </span><span class="s">"1500m"</span>
+<span class="w">    </span><span class="nt">memory</span><span class="p">:</span><span class="w"> </span><span class="s">"4Gi"</span>
 
 <span class="nt">volumeClaimTemplate</span><span class="p">:</span>
-<span class="w">  </span><span class="nt">accessModes</span><span class="p">:</span><span class="w"> </span><span class="p p-Indicator">[</span><span class="s">&quot;ReadWriteOnce&quot;</span><span class="p p-Indicator">]</span>
-<span class="w">  </span><span class="nt">storageClassName</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;&quot;</span><span class="w"> </span><span class="c1"># adjust to your storageClass if you don&#39;t want to use default</span>
+<span class="w">  </span><span class="nt">accessModes</span><span class="p">:</span><span class="w"> </span><span class="p p-Indicator">[</span><span class="s">"ReadWriteOnce"</span><span class="p p-Indicator">]</span>
+<span class="w">  </span><span class="nt">storageClassName</span><span class="p">:</span><span class="w"> </span><span class="s">""</span><span class="w"> </span><span class="c1"># adjust to your storageClass if you don't want to use default</span>
 <span class="w">  </span><span class="nt">resources</span><span class="p">:</span>
 <span class="w">    </span><span class="nt">requests</span><span class="p">:</span>
 <span class="w">      </span><span class="nt">storage</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">50Gi</span>
@@ -3013,7 +3034,7 @@ The raw charts can be downloaded from the <a href="https://github.com/axonops/he
 <span class="nt">rbac</span><span class="p">:</span>
 <span class="w">  </span><span class="nt">create</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">true</span>
 </code></pre></div>
-<h3 id="axonops">AxonOps<a class="headerlink" href="#axonops" title="Permanent link">&para;</a></h3>
+<h3 id="axonops">AxonOps<a class="headerlink" href="#axonops" title="Permanent link">¶</a></h3>
 <p>The default AxonOps installation does not expose the services outside of the cluster. We recommend that you use either a LoadBalancer service or an Ingress.</p>
 <p>Below you can find an example using <code>Ingress</code> to expose both the dashboard and the AxonOps server.</p>
 <div class="highlight"><pre><span></span><code><span class="nt">axon-dash</span><span class="p">:</span>
@@ -3028,7 +3049,7 @@ The raw charts can be downloaded from the <a href="https://github.com/axonops/he
 <span class="w">      </span><span class="nt">external-dns.alpha.kubernetes.io/hostname</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">axonops.mycompany.com</span>
 <span class="w">    </span><span class="nt">hosts</span><span class="p">:</span>
 <span class="w">      </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">host</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">axonops.mycompany.com</span>
-<span class="w">        </span><span class="nt">path</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;/&quot;</span>
+<span class="w">        </span><span class="nt">path</span><span class="p">:</span><span class="w"> </span><span class="s">"/"</span>
 <span class="w">    </span><span class="nt">tls</span><span class="p">:</span>
 <span class="w">      </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">hosts</span><span class="p">:</span>
 <span class="w">          </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">axonops.mycompany.com</span>
@@ -3050,7 +3071,7 @@ The raw charts can be downloaded from the <a href="https://github.com/axonops/he
 <span class="w">    </span><span class="c1"># Set your organization name here. This must match the name used in your license key</span>
 <span class="w">    </span><span class="nt">org_name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">demo</span>
 <span class="w">    </span><span class="c1"># Enter your AxonOps license key here</span>
-<span class="w">    </span><span class="nt">license_key</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;...&quot;</span>
+<span class="w">    </span><span class="nt">license_key</span><span class="p">:</span><span class="w"> </span><span class="s">"..."</span>
 <span class="w">  </span><span class="nt">image</span><span class="p">:</span>
 <span class="w">    </span><span class="nt">pullPolicy</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">IfNotPresent</span>
 <span class="w">    </span><span class="nt">repository</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">registry.axonops.com/axonops-public/axonops-docker/axon-server</span>
@@ -3063,7 +3084,7 @@ The raw charts can be downloaded from the <a href="https://github.com/axonops/he
 <span class="w">      </span><span class="nt">external-dns.alpha.kubernetes.io/hostname</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">axonops-server.mycompany.com</span>
 <span class="w">    </span><span class="nt">hosts</span><span class="p">:</span>
 <span class="w">      </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">host</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">axonops-server.mycompany.com</span>
-<span class="w">        </span><span class="nt">path</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;/&quot;</span>
+<span class="w">        </span><span class="nt">path</span><span class="p">:</span><span class="w"> </span><span class="s">"/"</span>
 <span class="w">    </span><span class="nt">tls</span><span class="p">:</span>
 <span class="w">      </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">hosts</span><span class="p">:</span>
 <span class="w">          </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">axonops-server.mycompany.com</span>
@@ -3078,23 +3099,23 @@ The raw charts can be downloaded from the <a href="https://github.com/axonops/he
 <span class="w">      </span><span class="nt">memory</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">256Mi</span>
 </code></pre></div>
 <p>An example values file showing all available options can be found in the GitHub repository here: <a href="https://github.com/axonops/helm-axonops/blob/main/values-full.yaml">values-full.yaml</a></p>
-<h2 id="installing">Installing<a class="headerlink" href="#installing" title="Permanent link">&para;</a></h2>
-<h3 id="elasticsearch_1">ElasticSearch<a class="headerlink" href="#elasticsearch_1" title="Permanent link">&para;</a></h3>
+<h2 id="installing">Installing<a class="headerlink" href="#installing" title="Permanent link">¶</a></h2>
+<h3 id="elasticsearch_1">ElasticSearch<a class="headerlink" href="#elasticsearch_1" title="Permanent link">¶</a></h3>
 <p>Now you can install Elasticsearch referencing the configuration file created in the previous step:</p>
 <div class="highlight"><pre><span></span><code>helm<span class="w"> </span>repo<span class="w"> </span>add<span class="w"> </span>elastic<span class="w"> </span>https://helm.elastic.co
 helm<span class="w"> </span>update
 helm<span class="w"> </span>upgrade<span class="w"> </span>-n<span class="w"> </span>axonops<span class="w"> </span>--install<span class="w"> </span><span class="se">\</span>
 <span class="w">  </span>--create-namespace<span class="w"> </span><span class="se">\</span>
-<span class="w">  </span>-f<span class="w"> </span><span class="s2">&quot;elasticsearch.yaml&quot;</span><span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>-f<span class="w"> </span><span class="s2">"elasticsearch.yaml"</span><span class="w"> </span><span class="se">\</span>
 <span class="w">  </span>elasticsearch<span class="w"> </span>elastic/elasticsearch
 </code></pre></div>
-<h3 id="axonops_1">AxonOps<a class="headerlink" href="#axonops_1" title="Permanent link">&para;</a></h3>
+<h3 id="axonops_1">AxonOps<a class="headerlink" href="#axonops_1" title="Permanent link">¶</a></h3>
 <p>Finally install the AxonOps helm chart:</p>
 <div class="highlight"><pre><span></span><code>helm<span class="w"> </span>upgrade<span class="w"> </span>-n<span class="w"> </span>axonops<span class="w"> </span>--install<span class="w"> </span><span class="se">\</span>
 <span class="w">  </span>--create-namespace<span class="w"> </span><span class="se">\</span>
-<span class="w">  </span>-f<span class="w"> </span><span class="s2">&quot;axonops.yaml&quot;</span><span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>-f<span class="w"> </span><span class="s2">"axonops.yaml"</span><span class="w"> </span><span class="se">\</span>
 <span class="w">  </span>axonops<span class="w"> </span>oci://helm.axonops.com/axonops-public/axonops-helm/axonops
-</code></pre></div>
+</code></pre></div></div>
 
 
 

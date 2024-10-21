@@ -1664,6 +1664,27 @@ data-et-multi-view="{&quot;schema&quot;:{&quot;content&quot;:{&quot;desktop&quot
   
   
     <li class="md-nav__item">
+      <a href="../../../monitoring/grafana/grafana/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Metrics in Grafana
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
       <a href="../../../monitoring/logsandevents/logsandevents/" class="md-nav__link">
         
   
@@ -2930,28 +2951,28 @@ data-et-multi-view="{&quot;schema&quot;:{&quot;content&quot;:{&quot;desktop&quot
                   
 
 
-<h1 id="cassandra-with-axonops-on-kubernetes">Cassandra with AxonOps on Kubernetes<a class="headerlink" href="#cassandra-with-axonops-on-kubernetes" title="Permanent link">&para;</a></h1>
-<h2 id="introduction">Introduction<a class="headerlink" href="#introduction" title="Permanent link">&para;</a></h2>
+<div><h1 id="cassandra-with-axonops-on-kubernetes">Cassandra with AxonOps on Kubernetes<a class="headerlink" href="#cassandra-with-axonops-on-kubernetes" title="Permanent link">¶</a></h1>
+<h2 id="introduction">Introduction<a class="headerlink" href="#introduction" title="Permanent link">¶</a></h2>
 <p>The following shows how to install AxonOps for monitoring cassandra. This process specifically requires the official <a href="https://github.com/helm/charts/tree/master/incubator/cassandra">cassandra helm repository</a>.</p>
-<h2 id="using-minikube">Using minikube<a class="headerlink" href="#using-minikube" title="Permanent link">&para;</a></h2>
+<h2 id="using-minikube">Using minikube<a class="headerlink" href="#using-minikube" title="Permanent link">¶</a></h2>
 <p>The deployment should work fine on latest versions of <a href="https://kubernetes.io/docs/tasks/tools/install-minikube/">minikube</a> as long as you provide enough memory for it.</p>
-<p><div class="highlight"><pre><span></span><code>minikube<span class="w"> </span>start<span class="w"> </span>--memory<span class="w"> </span><span class="m">8192</span><span class="w"> </span>--cpus<span class="o">=</span><span class="m">4</span>
+<p></p><div class="highlight"><pre><span></span><code>minikube<span class="w"> </span>start<span class="w"> </span>--memory<span class="w"> </span><span class="m">8192</span><span class="w"> </span>--cpus<span class="o">=</span><span class="m">4</span>
 minikube<span class="w"> </span>addons<span class="w"> </span><span class="nb">enable</span><span class="w"> </span>storage-provisioner
 </code></pre></div>
-<strong>:warning: Make sure you use a recent version of minikube. Also check available <a href="https://minikube.sigs.k8s.io/docs/drivers/">drivers</a> and select the most appropriate for your platform</strong></p>
-<h2 id="helmfile">Helmfile<a class="headerlink" href="#helmfile" title="Permanent link">&para;</a></h2>
-<h3 id="overview">Overview<a class="headerlink" href="#overview" title="Permanent link">&para;</a></h3>
+<strong>:warning: Make sure you use a recent version of minikube. Also check available <a href="https://minikube.sigs.k8s.io/docs/drivers/">drivers</a> and select the most appropriate for your platform</strong>
+<h2 id="helmfile">Helmfile<a class="headerlink" href="#helmfile" title="Permanent link">¶</a></h2>
+<h3 id="overview">Overview<a class="headerlink" href="#overview" title="Permanent link">¶</a></h3>
 <p>As this deployment contains multiple applications we recommend you use an automation system such as Ansible or <a href="https://github.com/roboll/helmfile">Helmfile</a> to put together the config. The example below uses helmfile.</p>
-<h3 id="install-requirements">Install requirements<a class="headerlink" href="#install-requirements" title="Permanent link">&para;</a></h3>
+<h3 id="install-requirements">Install requirements<a class="headerlink" href="#install-requirements" title="Permanent link">¶</a></h3>
 <p>You would need to install the following components:</p>
 <ul>
 <li>helm: https://helm.sh/docs/intro/install/</li>
 <li>helmfile: https://github.com/roboll/helmfile/releases</li>
 </ul>
 <p>Alternatively you can consider using a dockerized version of them both such as https://hub.docker.com/r/chatwork/helmfile</p>
-<h3 id="config-files">Config files<a class="headerlink" href="#config-files" title="Permanent link">&para;</a></h3>
+<h3 id="config-files">Config files<a class="headerlink" href="#config-files" title="Permanent link">¶</a></h3>
 <p>The values below are set for running on a laptop with <code>minikube</code>, adjust accordingly for larger deployments.</p>
-<h4 id="helmfileyaml">helmfile.yaml<a class="headerlink" href="#helmfileyaml" title="Permanent link">&para;</a></h4>
+<h4 id="helmfileyaml">helmfile.yaml<a class="headerlink" href="#helmfileyaml" title="Permanent link">¶</a></h4>
 <div class="highlight"><pre><span></span><code><span class="nn">---</span>
 <span class="nt">repositories</span><span class="p">:</span>
 <span class="w">  </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">axonops</span>
@@ -2963,19 +2984,19 @@ minikube<span class="w"> </span>addons<span class="w"> </span><span class="nb">e
 <span class="w">    </span><span class="nt">url</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">https://ckotzbauer.github.io/helm-charts</span>
 <span class="nt">releases</span><span class="p">:</span>
 <span class="w">  </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">axon-elastic</span>
-<span class="w">    </span><span class="nt">namespace</span><span class="p">:</span><span class="w"> </span><span class="p p-Indicator">{{</span><span class="w"> </span><span class="nv">env &quot;NAMESPACE&quot; | default &quot;axonops&quot;</span><span class="w"> </span><span class="p p-Indicator">}}</span>
-<span class="w">    </span><span class="nt">chart</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;bitnami/elasticsearch&quot;</span>
-<span class="w">    </span><span class="nt">version</span><span class="p">:</span><span class="w"> </span><span class="s">&#39;12.8.1&#39;</span>
+<span class="w">    </span><span class="nt">namespace</span><span class="p">:</span><span class="w"> </span><span class="p p-Indicator">{{</span><span class="w"> </span><span class="nv">env "NAMESPACE" | default "axonops"</span><span class="w"> </span><span class="p p-Indicator">}}</span>
+<span class="w">    </span><span class="nt">chart</span><span class="p">:</span><span class="w"> </span><span class="s">"bitnami/elasticsearch"</span>
+<span class="w">    </span><span class="nt">version</span><span class="p">:</span><span class="w"> </span><span class="s">'12.8.1'</span>
 <span class="w">    </span><span class="nt">wait</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">true</span>
 <span class="w">    </span><span class="nt">values</span><span class="p">:</span>
 <span class="w">      </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">fullnameOverride</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">axon-elastic</span>
-<span class="w">      </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">imageTag</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;7.8.0&quot;</span>
+<span class="w">      </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">imageTag</span><span class="p">:</span><span class="w"> </span><span class="s">"7.8.0"</span>
 <span class="w">      </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">data</span><span class="p">:</span>
 <span class="w">          </span><span class="nt">replicas</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">1</span>
 <span class="w">          </span><span class="nt">persistence</span><span class="p">:</span>
 <span class="w">            </span><span class="nt">size</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">1Gi</span>
 <span class="w">            </span><span class="nt">enabled</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">true</span>
-<span class="w">            </span><span class="nt">accessModes</span><span class="p">:</span><span class="w"> </span><span class="p p-Indicator">[</span><span class="w"> </span><span class="s">&quot;ReadWriteOnce&quot;</span><span class="w"> </span><span class="p p-Indicator">]</span>
+<span class="w">            </span><span class="nt">accessModes</span><span class="p">:</span><span class="w"> </span><span class="p p-Indicator">[</span><span class="w"> </span><span class="s">"ReadWriteOnce"</span><span class="w"> </span><span class="p p-Indicator">]</span>
 <span class="w">      </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">curator</span><span class="p">:</span>
 <span class="w">          </span><span class="nt">enabled</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">true</span>
 <span class="w">      </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">coordinating</span><span class="p">:</span>
@@ -2985,18 +3006,18 @@ minikube<span class="w"> </span>addons<span class="w"> </span><span class="nb">e
 <span class="w">          </span><span class="nt">persistence</span><span class="p">:</span>
 <span class="w">            </span><span class="nt">size</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">1Gi</span>
 <span class="w">            </span><span class="nt">enabled</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">true</span>
-<span class="w">            </span><span class="nt">accessModes</span><span class="p">:</span><span class="w"> </span><span class="p p-Indicator">[</span><span class="w"> </span><span class="s">&quot;ReadWriteOnce&quot;</span><span class="w"> </span><span class="p p-Indicator">]</span>
+<span class="w">            </span><span class="nt">accessModes</span><span class="p">:</span><span class="w"> </span><span class="p p-Indicator">[</span><span class="w"> </span><span class="s">"ReadWriteOnce"</span><span class="w"> </span><span class="p p-Indicator">]</span>
 
 <span class="w">  </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">axonops</span>
-<span class="w">    </span><span class="nt">namespace</span><span class="p">:</span><span class="w"> </span><span class="p p-Indicator">{{</span><span class="w"> </span><span class="nv">env &quot;NAMESPACE&quot; | default &quot;axonops&quot;</span><span class="w"> </span><span class="p p-Indicator">}}</span>
-<span class="w">    </span><span class="nt">chart</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;digitalis/axonops&quot;</span>
+<span class="w">    </span><span class="nt">namespace</span><span class="p">:</span><span class="w"> </span><span class="p p-Indicator">{{</span><span class="w"> </span><span class="nv">env "NAMESPACE" | default "axonops"</span><span class="w"> </span><span class="p p-Indicator">}}</span>
+<span class="w">    </span><span class="nt">chart</span><span class="p">:</span><span class="w"> </span><span class="s">"digitalis/axonops"</span>
 <span class="w">    </span><span class="nt">wait</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">true</span>
 <span class="w">    </span><span class="nt">values</span><span class="p">:</span>
 <span class="w">      </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">values.yaml</span>
 
 <span class="w">  </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">cassandra</span>
 <span class="w">    </span><span class="nt">namespace</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">cassandra</span>
-<span class="w">    </span><span class="nt">chart</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;digitalis/cassandra&quot;</span>
+<span class="w">    </span><span class="nt">chart</span><span class="p">:</span><span class="w"> </span><span class="s">"digitalis/cassandra"</span>
 <span class="w">    </span><span class="nt">wait</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">true</span>
 <span class="w">    </span><span class="nt">values</span><span class="p">:</span>
 <span class="w">      </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">values.yaml</span>
@@ -3018,7 +3039,7 @@ minikube<span class="w"> </span>addons<span class="w"> </span><span class="nb">e
 <span class="w">          </span><span class="nt">repository</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">gcr.io/cadvisor/cadvisor</span>
 <span class="w">          </span><span class="nt">tag</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">v0.37.0</span>
 </code></pre></div>
-<h4 id="valuesyaml">values.yaml<a class="headerlink" href="#valuesyaml" title="Permanent link">&para;</a></h4>
+<h4 id="valuesyaml">values.yaml<a class="headerlink" href="#valuesyaml" title="Permanent link">¶</a></h4>
 <div class="highlight"><pre><span></span><code><span class="nn">---</span>
 <span class="nt">persistence</span><span class="p">:</span>
 <span class="w">  </span><span class="nt">enabled</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">true</span>
@@ -3043,13 +3064,13 @@ minikube<span class="w"> </span>addons<span class="w"> </span><span class="nb">e
 <span class="w">  </span><span class="nt">endpoint_snitch</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">GossipingPropertyFileSnitch</span>
 
 <span class="nt">env</span><span class="p">:</span>
-<span class="w">  </span><span class="nt">JVM_OPTS</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;-javaagent:/var/lib/axonops/axon-cassandra3.11-agent.jar=/etc/axonops/axon-agent.yml&quot;</span>
+<span class="w">  </span><span class="nt">JVM_OPTS</span><span class="p">:</span><span class="w"> </span><span class="s">"-javaagent:/var/lib/axonops/axon-cassandra3.11-agent.jar=/etc/axonops/axon-agent.yml"</span>
 
 <span class="nt">serviceAccount</span><span class="p">:</span>
 <span class="w">  </span><span class="nt">create</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">true</span>
 <span class="w">  </span><span class="nt">rules</span><span class="p">:</span>
 <span class="w">  </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">apiGroups</span><span class="p">:</span>
-<span class="w">    </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="s">&quot;&quot;</span>
+<span class="w">    </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="s">""</span>
 <span class="w">    </span><span class="nt">resources</span><span class="p">:</span>
 <span class="w">    </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">nodes</span>
 <span class="w">    </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">nodes/metrics</span>
@@ -3087,11 +3108,11 @@ minikube<span class="w"> </span>addons<span class="w"> </span><span class="nb">e
 <span class="w">    </span><span class="nt">image</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">digitalisdocker/axon-agent:latest</span>
 <span class="w">    </span><span class="nt">env</span><span class="p">:</span>
 <span class="w">      </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">AXON_AGENT_VERBOSITY</span>
-<span class="w">        </span><span class="nt">value</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;1&quot;</span>
+<span class="w">        </span><span class="nt">value</span><span class="p">:</span><span class="w"> </span><span class="s">"1"</span>
 <span class="w">      </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">AXON_AGENT_ARGS</span>
-<span class="w">        </span><span class="nt">value</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;-v</span><span class="nv"> </span><span class="s">1&quot;</span>
+<span class="w">        </span><span class="nt">value</span><span class="p">:</span><span class="w"> </span><span class="s">"-v</span><span class="nv"> </span><span class="s">1"</span>
 <span class="w">      </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">DATA_FILE_DIRECTORY</span>
-<span class="w">        </span><span class="nt">value</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;/var/lib/cassandra&quot;</span>
+<span class="w">        </span><span class="nt">value</span><span class="p">:</span><span class="w"> </span><span class="s">"/var/lib/cassandra"</span>
 <span class="w">      </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">CASSANDRA_POD_NAME</span>
 <span class="w">        </span><span class="nt">valueFrom</span><span class="p">:</span>
 <span class="w">          </span><span class="nt">fieldRef</span><span class="p">:</span>
@@ -3138,8 +3159,8 @@ minikube<span class="w"> </span>addons<span class="w"> </span><span class="nb">e
 <span class="w">    </span><span class="nt">extraConfig</span><span class="p">:</span>
 <span class="w">      </span><span class="nt">cql_hosts</span><span class="p">:</span>
 <span class="w">        </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">cassandra-0.cassandra.cassandra.svc.cluster.local</span>
-<span class="w">      </span><span class="nt">cql_username</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;cassandra&quot;</span>
-<span class="w">      </span><span class="nt">cql_password</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;cassandra&quot;</span>
+<span class="w">      </span><span class="nt">cql_username</span><span class="p">:</span><span class="w"> </span><span class="s">"cassandra"</span>
+<span class="w">      </span><span class="nt">cql_password</span><span class="p">:</span><span class="w"> </span><span class="s">"cassandra"</span>
 <span class="w">      </span><span class="nt">cql_local_dc</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">dc1</span>
 <span class="w">      </span><span class="nt">cql_proto_version</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">4</span>
 <span class="w">      </span><span class="nt">cql_max_searchqueriesparallelism</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">100</span>
@@ -3152,7 +3173,7 @@ minikube<span class="w"> </span>addons<span class="w"> </span><span class="nb">e
 <span class="w">      </span><span class="nt">cql_reconnectionpolicy_maxretries</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">10</span>
 <span class="w">      </span><span class="nt">cql_reconnectionpolicy_initialinterval</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">1s</span>
 <span class="w">      </span><span class="nt">cql_reconnectionpolicy_maxinterval</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">10s</span>
-<span class="w">      </span><span class="nt">cql_keyspace_replication</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;{</span><span class="nv"> </span><span class="s">&#39;class&#39;:</span><span class="nv"> </span><span class="s">&#39;NetworkTopologyStrategy&#39;,</span><span class="nv"> </span><span class="s">&#39;dc1&#39;:</span><span class="nv"> </span><span class="s">1</span><span class="nv"> </span><span class="s">}&quot;</span>
+<span class="w">      </span><span class="nt">cql_keyspace_replication</span><span class="p">:</span><span class="w"> </span><span class="s">"{</span><span class="nv"> </span><span class="s">'class':</span><span class="nv"> </span><span class="s">'NetworkTopologyStrategy',</span><span class="nv"> </span><span class="s">'dc1':</span><span class="nv"> </span><span class="s">1</span><span class="nv"> </span><span class="s">}"</span>
 <span class="w">      </span><span class="nt">cql_metrics_cache_max_size</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">128</span><span class="w">  </span><span class="c1">#MB</span>
 <span class="w">      </span><span class="nt">cql_metrics_cache_max_items </span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">500000</span>
 
@@ -3165,7 +3186,7 @@ minikube<span class="w"> </span>addons<span class="w"> </span><span class="nb">e
 <span class="w">  </span><span class="nt">ingress</span><span class="p">:</span>
 <span class="w">    </span><span class="nt">enabled</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">true</span>
 <span class="w">    </span><span class="nt">annotations</span><span class="p">:</span>
-<span class="w">      </span><span class="nt">nginx.ingress.kubernetes.io/ssl-redirect</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;true&quot;</span>
+<span class="w">      </span><span class="nt">nginx.ingress.kubernetes.io/ssl-redirect</span><span class="p">:</span><span class="w"> </span><span class="s">"true"</span>
 <span class="w">    </span><span class="nt">hosts</span><span class="p">:</span>
 <span class="w">      </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">hosts</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">axonops.axonops.com</span>
 <span class="w">        </span><span class="nt">paths</span><span class="p">:</span>
@@ -3184,69 +3205,69 @@ minikube<span class="w"> </span>addons<span class="w"> </span><span class="nb">e
 <span class="w">      </span><span class="nt">cpu</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">50m</span>
 <span class="w">      </span><span class="nt">memory</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">128Mi</span>
 </code></pre></div>
-<h4 id="axon-agentyml">axon-agent.yml<a class="headerlink" href="#axon-agentyml" title="Permanent link">&para;</a></h4>
+<h4 id="axon-agentyml">axon-agent.yml<a class="headerlink" href="#axon-agentyml" title="Permanent link">¶</a></h4>
 <div class="highlight"><pre><span></span><code><span class="nt">axon-server</span><span class="p">:</span>
-<span class="w">    </span><span class="nt">hosts</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;axonops-axon-server.axonops&quot;</span><span class="w"> </span><span class="c1"># Specify axon-server IP axon-server.mycompany.</span>
+<span class="w">    </span><span class="nt">hosts</span><span class="p">:</span><span class="w"> </span><span class="s">"axonops-axon-server.axonops"</span><span class="w"> </span><span class="c1"># Specify axon-server IP axon-server.mycompany.</span>
 <span class="w">    </span><span class="nt">port</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">1888</span>
 
 <span class="nt">axon-agent</span><span class="p">:</span>
-<span class="w">    </span><span class="nt">org</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;digitalis&quot;</span>
-<span class="w">    </span><span class="nt">human_readable_identifier</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;axon_agent_ip&quot;</span><span class="w"> </span><span class="c1"># one of the following:</span>
+<span class="w">    </span><span class="nt">org</span><span class="p">:</span><span class="w"> </span><span class="s">"digitalis"</span>
+<span class="w">    </span><span class="nt">human_readable_identifier</span><span class="p">:</span><span class="w"> </span><span class="s">"axon_agent_ip"</span><span class="w"> </span><span class="c1"># one of the following:</span>
 
 <span class="nt">NTP</span><span class="p">:</span>
-<span class="w">    </span><span class="nt">host</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;pool.ntp.org&quot;</span><span class="w"> </span><span class="c1"># Specify a NTP to determine a NTP offset</span>
+<span class="w">    </span><span class="nt">host</span><span class="p">:</span><span class="w"> </span><span class="s">"pool.ntp.org"</span><span class="w"> </span><span class="c1"># Specify a NTP to determine a NTP offset</span>
 
 <span class="nt">cassandra</span><span class="p">:</span>
 <span class="w">  </span><span class="nt">tier0</span><span class="p">:</span><span class="w"> </span><span class="c1"># metrics collected every 5 seconds</span>
 <span class="w">      </span><span class="nt">metrics</span><span class="p">:</span>
 <span class="w">          </span><span class="nt">jvm_</span><span class="p">:</span>
-<span class="w">            </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="s">&quot;java.lang:*&quot;</span>
+<span class="w">            </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="s">"java.lang:*"</span>
 <span class="w">          </span><span class="nt">cas_</span><span class="p">:</span>
-<span class="w">            </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="s">&quot;org.apache.cassandra.metrics:*&quot;</span>
-<span class="w">            </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="s">&quot;org.apache.cassandra.net:type=FailureDetector&quot;</span>
+<span class="w">            </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="s">"org.apache.cassandra.metrics:*"</span>
+<span class="w">            </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="s">"org.apache.cassandra.net:type=FailureDetector"</span>
 
 <span class="w">  </span><span class="nt">tier1</span><span class="p">:</span>
 <span class="w">      </span><span class="nt">frequency</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">300</span><span class="w"> </span><span class="c1"># metrics collected every 300 seconds (5m)</span>
 <span class="w">      </span><span class="nt">metrics</span><span class="p">:</span>
 <span class="w">          </span><span class="nt">cas_</span><span class="p">:</span>
-<span class="w">            </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="s">&quot;org.apache.cassandra.metrics:name=EstimatedPartitionCount,*&quot;</span>
+<span class="w">            </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="s">"org.apache.cassandra.metrics:name=EstimatedPartitionCount,*"</span>
 
 <span class="w">  </span><span class="nt">blacklist</span><span class="p">:</span><span class="w"> </span><span class="c1"># You can blacklist metrics based on Regex pattern. Hit the agent on http://agentIP:9916/metricslist to list JMX metrics it is collecting</span>
-<span class="w">    </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="s">&quot;org.apache.cassandra.metrics:type=ColumnFamily.*&quot;</span><span class="w"> </span><span class="c1"># duplication of table metrics</span>
-<span class="w">    </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="s">&quot;org.apache.cassandra.metrics:.*scope=Repair#.*&quot;</span><span class="w"> </span><span class="c1"># ignore each repair instance metrics</span>
-<span class="w">    </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="s">&quot;org.apache.cassandra.metrics:.*name=SnapshotsSize.*&quot;</span><span class="w"> </span><span class="c1"># Collecting SnapshotsSize metrics slows down collection</span>
-<span class="w">    </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="s">&quot;org.apache.cassandra.metrics:.*Max.*&quot;</span>
-<span class="w">    </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="s">&quot;org.apache.cassandra.metrics:.*Min.*&quot;</span>
-<span class="w">    </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="s">&quot;.*999thPercentile|.*50thPercentile|.*FifteenMinuteRate|.*FiveMinuteRate|.*MeanRate|.*Mean|.*OneMinuteRate|.*StdDev&quot;</span>
+<span class="w">    </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="s">"org.apache.cassandra.metrics:type=ColumnFamily.*"</span><span class="w"> </span><span class="c1"># duplication of table metrics</span>
+<span class="w">    </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="s">"org.apache.cassandra.metrics:.*scope=Repair#.*"</span><span class="w"> </span><span class="c1"># ignore each repair instance metrics</span>
+<span class="w">    </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="s">"org.apache.cassandra.metrics:.*name=SnapshotsSize.*"</span><span class="w"> </span><span class="c1"># Collecting SnapshotsSize metrics slows down collection</span>
+<span class="w">    </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="s">"org.apache.cassandra.metrics:.*Max.*"</span>
+<span class="w">    </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="s">"org.apache.cassandra.metrics:.*Min.*"</span>
+<span class="w">    </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="s">".*999thPercentile|.*50thPercentile|.*FifteenMinuteRate|.*FiveMinuteRate|.*MeanRate|.*Mean|.*OneMinuteRate|.*StdDev"</span>
 
 <span class="w">  </span><span class="nt">JMXOperationsBlacklist</span><span class="p">:</span>
-<span class="w">    </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="s">&quot;getThreadInfo&quot;</span>
-<span class="w">    </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="s">&quot;getDatacenter&quot;</span>
-<span class="w">    </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="s">&quot;getRack&quot;</span>
+<span class="w">    </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="s">"getThreadInfo"</span>
+<span class="w">    </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="s">"getDatacenter"</span>
+<span class="w">    </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="s">"getRack"</span>
 
-<span class="w">  </span><span class="nt">DMLEventsWhitelist</span><span class="p">:</span><span class="w"> </span><span class="c1"># You can whitelist keyspaces / tables (list of &quot;keyspace&quot; and/or &quot;keyspace.table&quot;) to log DML queries. Data is not analysed.</span>
-<span class="w">  </span><span class="c1"># - &quot;system_distributed&quot;</span>
+<span class="w">  </span><span class="nt">DMLEventsWhitelist</span><span class="p">:</span><span class="w"> </span><span class="c1"># You can whitelist keyspaces / tables (list of "keyspace" and/or "keyspace.table") to log DML queries. Data is not analysed.</span>
+<span class="w">  </span><span class="c1"># - "system_distributed"</span>
 
-<span class="w">  </span><span class="nt">DMLEventsBlacklist</span><span class="p">:</span><span class="w"> </span><span class="c1"># You can blacklist keyspaces / tables from the DMLEventsWhitelist (list of &quot;keyspace&quot; and/or &quot;keyspace.table&quot;) to log DML queries. Data is not analysed.</span>
+<span class="w">  </span><span class="nt">DMLEventsBlacklist</span><span class="p">:</span><span class="w"> </span><span class="c1"># You can blacklist keyspaces / tables from the DMLEventsWhitelist (list of "keyspace" and/or "keyspace.table") to log DML queries. Data is not analysed.</span>
 <span class="w">  </span><span class="c1"># - system_distributed.parent_repair_history</span>
 
 <span class="w">  </span><span class="nt">logSuccessfulRepairs</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">false</span><span class="w"> </span><span class="c1"># set it to true if you want to log all the successful repair events.</span>
 
 <span class="w">  </span><span class="nt">warningThresholdMillis</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">200</span><span class="w"> </span><span class="c1"># This will warn in logs when a MBean takes longer than the specified value.</span>
 
-<span class="w">  </span><span class="nt">logFormat</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;%4$s</span><span class="nv"> </span><span class="s">%1$tY-%1$tm-%1$td</span><span class="nv"> </span><span class="s">%1$tH:%1$tM:%1$tS,%1$tL</span><span class="nv"> </span><span class="s">%5$s%6$s%n&quot;</span>
+<span class="w">  </span><span class="nt">logFormat</span><span class="p">:</span><span class="w"> </span><span class="s">"%4$s</span><span class="nv"> </span><span class="s">%1$tY-%1$tm-%1$td</span><span class="nv"> </span><span class="s">%1$tH:%1$tM:%1$tS,%1$tL</span><span class="nv"> </span><span class="s">%5$s%6$s%n"</span>
 </code></pre></div>
-<h2 id="start-up">Start up<a class="headerlink" href="#start-up" title="Permanent link">&para;</a></h2>
-<h3 id="create-axon-agent-configuration">Create Axon Agent configuration<a class="headerlink" href="#create-axon-agent-configuration" title="Permanent link">&para;</a></h3>
+<h2 id="start-up">Start up<a class="headerlink" href="#start-up" title="Permanent link">¶</a></h2>
+<h3 id="create-axon-agent-configuration">Create Axon Agent configuration<a class="headerlink" href="#create-axon-agent-configuration" title="Permanent link">¶</a></h3>
 <div class="highlight"><pre><span></span><code>kubectl<span class="w"> </span>create<span class="w"> </span>ns<span class="w"> </span>cassandra
 kubectl<span class="w"> </span>create<span class="w"> </span>configmap<span class="w"> </span>axonops-agent<span class="w"> </span>--from-file<span class="o">=</span>axon-agent.yml<span class="w"> </span>-n<span class="w"> </span>cassandra
 </code></pre></div>
-<h3 id="run-helmfile">Run helmfile<a class="headerlink" href="#run-helmfile" title="Permanent link">&para;</a></h3>
-<h4 id="with-locally-installed-helm-and-helmfile">With locally installed helm and helmfile<a class="headerlink" href="#with-locally-installed-helm-and-helmfile" title="Permanent link">&para;</a></h4>
+<h3 id="run-helmfile">Run helmfile<a class="headerlink" href="#run-helmfile" title="Permanent link">¶</a></h3>
+<h4 id="with-locally-installed-helm-and-helmfile">With locally installed helm and helmfile<a class="headerlink" href="#with-locally-installed-helm-and-helmfile" title="Permanent link">¶</a></h4>
 <div class="highlight"><pre><span></span><code><span class="nb">cd</span><span class="w"> </span>your/config/directory
 hemlfile<span class="w"> </span>sync
 </code></pre></div>
-<h4 id="with-docker-image">With docker image<a class="headerlink" href="#with-docker-image" title="Permanent link">&para;</a></h4>
+<h4 id="with-docker-image">With docker image<a class="headerlink" href="#with-docker-image" title="Permanent link">¶</a></h4>
 <div class="highlight"><pre><span></span><code>docker<span class="w"> </span>run<span class="w"> </span>--rm<span class="w"> </span><span class="se">\</span>
 <span class="w">    </span>-v<span class="w"> </span>~/.kube:/root/.kube<span class="w"> </span><span class="se">\</span>
 <span class="w">    </span>-v<span class="w"> </span><span class="si">${</span><span class="nv">PWD</span><span class="si">}</span>/.helm:/root/.helm<span class="w"> </span><span class="se">\</span>
@@ -3254,17 +3275,17 @@ hemlfile<span class="w"> </span>sync
 <span class="w">    </span>-v<span class="w"> </span><span class="si">${</span><span class="nv">PWD</span><span class="si">}</span>/values.yaml:/values.yaml<span class="w"> </span><span class="se">\</span>
 <span class="w">    </span>--net<span class="o">=</span>host<span class="w"> </span>chatwork/helmfile<span class="w"> </span>sync
 </code></pre></div>
-<h2 id="access">Access<a class="headerlink" href="#access" title="Permanent link">&para;</a></h2>
-<h3 id="minikube">Minikube<a class="headerlink" href="#minikube" title="Permanent link">&para;</a></h3>
+<h2 id="access">Access<a class="headerlink" href="#access" title="Permanent link">¶</a></h2>
+<h3 id="minikube">Minikube<a class="headerlink" href="#minikube" title="Permanent link">¶</a></h3>
 <p>If you used <code>minikube</code>, identify the name of the service with <code>kubectl get svc -n monitoring</code> and launch it with </p>
 <div class="highlight"><pre><span></span><code>minikube<span class="w"> </span>service<span class="w"> </span>axonops-axon-dash<span class="w"> </span>-n<span class="w"> </span>monitoring
 </code></pre></div>
-<h3 id="loadbalancer">LoadBalancer<a class="headerlink" href="#loadbalancer" title="Permanent link">&para;</a></h3>
+<h3 id="loadbalancer">LoadBalancer<a class="headerlink" href="#loadbalancer" title="Permanent link">¶</a></h3>
 <p>Find the DNS entry for it:</p>
 <div class="highlight"><pre><span></span><code>kubectl<span class="w"> </span>get<span class="w"> </span>svc<span class="w"> </span>-n<span class="w"> </span>monitoring<span class="w"> </span>-o<span class="w"> </span>wide
 </code></pre></div>
 <p>Open your browser and copy and paste the URL.</p>
-<h2 id="troubleshooting">Troubleshooting<a class="headerlink" href="#troubleshooting" title="Permanent link">&para;</a></h2>
+<h2 id="troubleshooting">Troubleshooting<a class="headerlink" href="#troubleshooting" title="Permanent link">¶</a></h2>
 <p>Check the status of the pods:</p>
 <div class="highlight"><pre><span></span><code>kubectl<span class="w"> </span>get<span class="w"> </span>pod<span class="w"> </span>-n<span class="w"> </span>monitoring
 kubectl<span class="w"> </span>get<span class="w"> </span>pod<span class="w"> </span>-n<span class="w"> </span>cassandra
@@ -3272,22 +3293,22 @@ kubectl<span class="w"> </span>get<span class="w"> </span>pod<span class="w"> </
 <p>Any pod which is not on state <code>Running</code> check it out with</p>
 <div class="highlight"><pre><span></span><code>kubectl<span class="w"> </span>describe<span class="w"> </span>-n<span class="w"> </span>NAMESPACE<span class="w"> </span>pod<span class="w"> </span>POD-NAME
 </code></pre></div>
-<h3 id="storage">Storage<a class="headerlink" href="#storage" title="Permanent link">&para;</a></h3>
+<h3 id="storage">Storage<a class="headerlink" href="#storage" title="Permanent link">¶</a></h3>
 <p>One common problem is regarding storage. If you have enabled persistent storage you may see an error about persistent volume claims (not found, unclaimed, etc.). If you're using <code>minikube</code> make sure you enable storage with </p>
 <div class="highlight"><pre><span></span><code>minikube<span class="w"> </span>addons<span class="w"> </span><span class="nb">enable</span><span class="w"> </span>storage-provisioner
 </code></pre></div>
-<h3 id="memory">Memory<a class="headerlink" href="#memory" title="Permanent link">&para;</a></h3>
+<h3 id="memory">Memory<a class="headerlink" href="#memory" title="Permanent link">¶</a></h3>
 <p>The second most common problem is not enough memory (OOMKilled). You will see this often if your node does not have enough memory to run the containers or if the <code>heap</code> settings for Cassandra are not right. <code>kubectl describe</code> command will be showing <code>Error 127</code> when this occurs.</p>
 <p>In the <code>values.yaml</code> file adjust the heap options to match your hardware:</p>
 <div class="highlight"><pre><span></span><code><span class="w">  </span><span class="nt">max_heap_size</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">512M</span>
 <span class="w">  </span><span class="nt">heap_new_size</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">512M</span>
 </code></pre></div>
-<h4 id="minikube_1">Minikube<a class="headerlink" href="#minikube_1" title="Permanent link">&para;</a></h4>
+<h4 id="minikube_1">Minikube<a class="headerlink" href="#minikube_1" title="Permanent link">¶</a></h4>
 <p>Review the way you have started up <code>minikube</code> and assign more memory if you can. Also check the <a href="https://minikube.sigs.k8s.io/docs/drivers/">available drivers</a> and select the appropriate for your platform. On macOS where I tested <code>hyperkit</code> or <code>virtualbox</code> are the best ones.</p>
 <div class="highlight"><pre><span></span><code>minikube<span class="w"> </span>start<span class="w"> </span>--memory<span class="w"> </span><span class="m">10240</span><span class="w"> </span>--cpus<span class="o">=</span><span class="m">4</span><span class="w"> </span>--driver<span class="o">=</span>hyperkit
 </code></pre></div>
-<h2 id="putting-it-all-together">Putting it all together<a class="headerlink" href="#putting-it-all-together" title="Permanent link">&para;</a></h2>
-<p><a href="https://youtu.be/Qa1dWx5atqQ" title="AxonOps Minikube"><img alt="AxonOps on Minikube" src="https://img.youtube.com/vi/Qa1dWx5atqQ/0.jpg" /></a></p>
+<h2 id="putting-it-all-together">Putting it all together<a class="headerlink" href="#putting-it-all-together" title="Permanent link">¶</a></h2>
+<p><a href="https://youtu.be/Qa1dWx5atqQ" title="AxonOps Minikube"><img alt="AxonOps on Minikube" src="https://img.youtube.com/vi/Qa1dWx5atqQ/0.jpg"></a></p></div>
 
 
 

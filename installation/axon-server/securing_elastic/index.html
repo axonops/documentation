@@ -1776,6 +1776,27 @@ data-et-multi-view="{&quot;schema&quot;:{&quot;content&quot;:{&quot;desktop&quot
   
   
     <li class="md-nav__item">
+      <a href="../../../monitoring/grafana/grafana/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Metrics in Grafana
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
       <a href="../../../monitoring/logsandevents/logsandevents/" class="md-nav__link">
         
   
@@ -2847,12 +2868,12 @@ data-et-multi-view="{&quot;schema&quot;:{&quot;content&quot;:{&quot;desktop&quot
                   
 
 
-<h1 id="securing-elasticsearch">Securing Elasticsearch<a class="headerlink" href="#securing-elasticsearch" title="Permanent link">&para;</a></h1>
-<h2 id="configuration-file-location">Configuration file location<a class="headerlink" href="#configuration-file-location" title="Permanent link">&para;</a></h2>
+<div><h1 id="securing-elasticsearch">Securing Elasticsearch<a class="headerlink" href="#securing-elasticsearch" title="Permanent link">¶</a></h1>
+<h2 id="configuration-file-location">Configuration file location<a class="headerlink" href="#configuration-file-location" title="Permanent link">¶</a></h2>
 <p>Most installations of Elasticsearch have the default config location at <code>/etc/elasticsearch/</code></p>
 <p>The default location depends on whether or not the installation is from an archive distribution (tar.gz or zip) or a package distribution (Debian or RPM packages).</p>
 <p>For more info on Elasticsearch configuration please read <a href="https://www.elastic.co/guide/en/elasticsearch/reference/7.17/settings.html" target="_blank">Configuring Elasticsearch</a></p>
-<h2 id="other-default-locations">Other default locations<a class="headerlink" href="#other-default-locations" title="Permanent link">&para;</a></h2>
+<h2 id="other-default-locations">Other default locations<a class="headerlink" href="#other-default-locations" title="Permanent link">¶</a></h2>
 <p>Depending on the installation method the default location for Elasticsearch configuration and binary files can change. </p>
 <ul>
 <li>
@@ -2868,13 +2889,13 @@ data-et-multi-view="{&quot;schema&quot;:{&quot;content&quot;:{&quot;desktop&quot
 <p><a href="https://www.elastic.co/guide/en/elasticsearch/reference/7.17/rpm.html#rpm-layout" target="_blank">Default Layout</a></p>
 </li>
 </ul>
-<h2 id="enable-security-features">Enable security features<a class="headerlink" href="#enable-security-features" title="Permanent link">&para;</a></h2>
+<h2 id="enable-security-features">Enable security features<a class="headerlink" href="#enable-security-features" title="Permanent link">¶</a></h2>
 <p>Enabling the Elasticsearch security features enables basic authentication so that you can run a local cluster with username and password authentication.</p>
 <p>This is part of the basic Elasticsearch licence, security is disabled by default on all Elasticsearch installs.</p>
 <p>Edit <code>/etc/elasticsearch/elasticsearch.yml</code> and add/update the following line</p>
 <div class="highlight"><pre><span></span><code><span class="nt">xpack.security.enabled</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">true</span>
 </code></pre></div>
-<h2 id="set-passwords-for-default-elastic-built-in-user">Set passwords for default elastic built-in user<a class="headerlink" href="#set-passwords-for-default-elastic-built-in-user" title="Permanent link">&para;</a></h2>
+<h2 id="set-passwords-for-default-elastic-built-in-user">Set passwords for default elastic built-in user<a class="headerlink" href="#set-passwords-for-default-elastic-built-in-user" title="Permanent link">¶</a></h2>
 <p>In the Elasticsearch <code>home</code> folder run the following commands to setup the default passwords.</p>
 <p><strong>Please only run one of the commands.</strong></p>
 <p>The below example will create a random secure password for the elastic user.</p>
@@ -2884,7 +2905,7 @@ data-et-multi-view="{&quot;schema&quot;:{&quot;content&quot;:{&quot;desktop&quot
 The example will set a self-assigned password for the elastic built-in user.</p>
 <div class="highlight"><pre><span></span><code>&lt;DEFAULT LOCATION&gt;/bin/elasticsearch-reset-password -i -u elastic
 </code></pre></div>
-<h2 id="create-a-dedicated-role-for-axonops">Create a dedicated role for AxonOps<a class="headerlink" href="#create-a-dedicated-role-for-axonops" title="Permanent link">&para;</a></h2>
+<h2 id="create-a-dedicated-role-for-axonops">Create a dedicated role for AxonOps<a class="headerlink" href="#create-a-dedicated-role-for-axonops" title="Permanent link">¶</a></h2>
 <p>The permissions required in Elasticsearch for the AxonOps Role should be as follows:</p>
 <p>Cluster privileges: monitor, manage_index_templates</p>
 <p>Index privileges: auto_configure, manage, read, view_index_metadata, write</p>
@@ -2896,7 +2917,7 @@ The example will set a self-assigned password for the elastic built-in user.</p>
 <blockquote>
 <p><strong>orgname</strong> is the organisation name that is set in your AxonOps server and agent config files</p>
 </blockquote>
-<p><a class="glightbox" href="/installation/axon-server/elastic_role.png" data-type="image" data-width="100%" data-height="auto" data-desc-position="bottom"><img src="/installation/axon-server/elastic_role.png"></a></p>
+<p><a class="glightbox" href="/installation/axon-server/elastic_role.png" data-type="image" data-width="100%" data-height="auto" data-desc-position="bottom"><img src="/installation/axon-server/elastic_role.png"></a></p></div>
 
 
 

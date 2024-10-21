@@ -1683,6 +1683,27 @@ data-et-multi-view="{&quot;schema&quot;:{&quot;content&quot;:{&quot;desktop&quot
   
   
     <li class="md-nav__item">
+      <a href="../../../../monitoring/grafana/grafana/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Metrics in Grafana
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
       <a href="../../../../monitoring/logsandevents/logsandevents/" class="md-nav__link">
         
   
@@ -2941,20 +2962,20 @@ data-et-multi-view="{&quot;schema&quot;:{&quot;content&quot;:{&quot;desktop&quot
 
   <h1>AWS S3</h1>
 
-<h2 id="what-is-s3">What is S3<a class="headerlink" href="#what-is-s3" title="Permanent link">&para;</a></h2>
+<div><h2 id="what-is-s3">What is S3<a class="headerlink" href="#what-is-s3" title="Permanent link">¶</a></h2>
 <p>Amazon Simple Storage Service (Amazon S3) is an object storage service that offers industry-leading scalability, data availability, security, and performance. Read more at <a href="https://docs.aws.amazon.com/AmazonS3/latest/userguide/Welcome.html">Amazon S3</a></p>
 <p>When selecting AWS S3 as a remote option there are a few fields that are mandatory the rest are optional.</p>
 <p>S3 allows any valid UTF-8 string as a key.</p>
-<p><a class="glightbox" href="../s3.png" data-type="image" data-width="100%" data-height="auto" data-desc-position="bottom"><img alt="" src="../s3.png" /></a></p>
-<h4 id="remote-backup-retention">Remote Backup Retention<a class="headerlink" href="#remote-backup-retention" title="Permanent link">&para;</a></h4>
+<p><a class="glightbox" href="../s3.png" data-type="image" data-width="100%" data-height="auto" data-desc-position="bottom"><img alt="" src="../s3.png"></a></p>
+<h4 id="remote-backup-retention">Remote Backup Retention<a class="headerlink" href="#remote-backup-retention" title="Permanent link">¶</a></h4>
 <p>The amount of days that backup files will be kept in the remote storage provider location. 
 After this amount of days the file that are older will be removed.</p>
-<h4 id="base-remote-path">Base Remote Path<a class="headerlink" href="#base-remote-path" title="Permanent link">&para;</a></h4>
+<h4 id="base-remote-path">Base Remote Path<a class="headerlink" href="#base-remote-path" title="Permanent link">¶</a></h4>
 <p>This is the name of the storage buckets, you can also add subfolders if using shared storage buckets or saving multiple clusters to the same bucket. by default AxonOps will save the backups to /bucket/folder/org/clustertype/clustername/host-id/</p>
 <p>The org/clustertype/clustername/host-id/ will match the top breadcrump navigation in your AxonOps Dashboard.</p>
-<h4 id="region">Region<a class="headerlink" href="#region" title="Permanent link">&para;</a></h4>
+<h4 id="region">Region<a class="headerlink" href="#region" title="Permanent link">¶</a></h4>
 <p>This is a drop down selection of all the AWS regions that are available for your AWS account.</p>
-<h4 id="access-key-id-and-secret-access-key">Access Key ID and Secret Access Key<a class="headerlink" href="#access-key-id-and-secret-access-key" title="Permanent link">&para;</a></h4>
+<h4 id="access-key-id-and-secret-access-key">Access Key ID and Secret Access Key<a class="headerlink" href="#access-key-id-and-secret-access-key" title="Permanent link">¶</a></h4>
 <p>This is the standard AWS Access and Secret key that are associated with a IAM user. 
 This AxonOps IAM user that has the key assigned ideally would have the following permissions for accessing the S3 buckets.</p>
 <p>Please change the following 3 values</p>
@@ -2964,29 +2985,29 @@ This AxonOps IAM user that has the key assigned ideally would have the following
 <li>AxonOpsS3User : the placeholder is an example name , it can be changed to any value for the the IAM User Name field</li>
 </ul>
 <div class="highlight"><pre><span></span><code>{
-  &quot;Id&quot;: &quot;AxonOpsBackupBucketPolicy&quot;,
-  &quot;Version&quot;: &quot;2012-10-17&quot;,
-  &quot;Statement&quot;: [
+  "Id": "AxonOpsBackupBucketPolicy",
+  "Version": "2012-10-17",
+  "Statement": [
     {
-      &quot;Sid&quot;: &quot;BackupsSID&quot;,
-      &quot;Action&quot;: [
-        &quot;s3:ListBucket&quot;,
-        &quot;s3:GetBucketLocation&quot;,
-        &quot;s3:DeleteObject&quot;,
-        &quot;s3:GetObject&quot;,
-        &quot;s3:PutObject&quot;,
-        &quot;s3:PutObjectAcl&quot;
+      "Sid": "BackupsSID",
+      "Action": [
+        "s3:ListBucket",
+        "s3:GetBucketLocation",
+        "s3:DeleteObject",
+        "s3:GetObject",
+        "s3:PutObject",
+        "s3:PutObjectAcl"
       ],
-      &quot;Effect&quot;: &quot;Allow&quot;,
-      &quot;Resource&quot;: &quot;arn:aws:s3:::&lt;BUCKETNAME&gt;&quot;,
-      &quot;Principal&quot;: {
-        &quot;AWS&quot;: &quot;arn:aws:iam::&lt;ACCOUNT_ID&gt;:&lt;AxonOpsS3User&gt;&quot;
+      "Effect": "Allow",
+      "Resource": "arn:aws:s3:::&lt;BUCKETNAME&gt;",
+      "Principal": {
+        "AWS": "arn:aws:iam::&lt;ACCOUNT_ID&gt;:&lt;AxonOpsS3User&gt;"
       }
     }
   ]
 }
 </code></pre></div>
-<h4 id="storage-class">Storage Class<a class="headerlink" href="#storage-class" title="Permanent link">&para;</a></h4>
+<h4 id="storage-class">Storage Class<a class="headerlink" href="#storage-class" title="Permanent link">¶</a></h4>
 <p>Amazon S3 offers a range of storage classes that you can choose from based on the performance, data access, resiliency, and cost requirements of your workloads. S3 storage classes are purpose-built to provide the lowest cost storage for different access patterns.</p>
 <p>Please pick from the available AWS Storage classes:</p>
 <ul>
@@ -2999,7 +3020,7 @@ This AxonOps IAM user that has the key assigned ideally would have the following
 <li>Stadard Infrequent Access</li>
 </ul>
 <p>For more inforamtion on S3 Storage classes please go <a href="https://aws.amazon.com/s3/storage-classes/">here</a></p>
-<h4 id="acl">ACL<a class="headerlink" href="#acl" title="Permanent link">&para;</a></h4>
+<h4 id="acl">ACL<a class="headerlink" href="#acl" title="Permanent link">¶</a></h4>
 <p>Amazon S3 access control lists (ACLs) enable you to manage access to buckets and objects. Each bucket and object has an ACL attached to it as a subresource. It defines which AWS accounts or groups are granted access and the type of access. When a request is received against a resource, Amazon S3 checks the corresponding ACL to verify that the requester has the necessary access permissions.</p>
 <p>Please pick from the available AWS ACL's:</p>
 <ul>
@@ -3011,10 +3032,10 @@ This AxonOps IAM user that has the key assigned ideally would have the following
 <li>Bucket Owner Full Control</li>
 </ul>
 <p>For more inforamtion on S3 ACL's please go <a href="https://docs.aws.amazon.com/AmazonS3/latest/userguide/acl-overview.html#canned-acl">here</a></p>
-<h4 id="server-side-encryption">Server Side Encryption<a class="headerlink" href="#server-side-encryption" title="Permanent link">&para;</a></h4>
+<h4 id="server-side-encryption">Server Side Encryption<a class="headerlink" href="#server-side-encryption" title="Permanent link">¶</a></h4>
 <p>The server-side encryption algorithm used when storing this object in S3.</p>
-<h4 id="disable-checksum">Disable Checksum<a class="headerlink" href="#disable-checksum" title="Permanent link">&para;</a></h4>
-<p>Normally AxonOps Backups will check that the checksums of transferred files match, and give an error "corrupted on transfer" if they don't. If you disable this then the checksum will be ignored if there are differences. This is not advised. </p>
+<h4 id="disable-checksum">Disable Checksum<a class="headerlink" href="#disable-checksum" title="Permanent link">¶</a></h4>
+<p>Normally AxonOps Backups will check that the checksums of transferred files match, and give an error "corrupted on transfer" if they don't. If you disable this then the checksum will be ignored if there are differences. This is not advised. </p></div>
 
 
 

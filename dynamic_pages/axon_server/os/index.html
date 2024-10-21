@@ -1659,6 +1659,27 @@ data-et-multi-view="{&quot;schema&quot;:{&quot;content&quot;:{&quot;desktop&quot
   
   
     <li class="md-nav__item">
+      <a href="../../../monitoring/grafana/grafana/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Metrics in Grafana
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
       <a href="../../../monitoring/logsandevents/logsandevents/" class="md-nav__link">
         
   
@@ -2677,12 +2698,12 @@ data-et-multi-view="{&quot;schema&quot;:{&quot;content&quot;:{&quot;desktop&quot
 
   <h1>Os</h1>
 
-<p>Execute the following command to setup the AxonOps repository for your OS using the built in Package manager.</p>
+<div><p>Execute the following command to setup the AxonOps repository for your OS using the built in Package manager.</p>
 <div id="DebianDiv" class="os">
     <div class="highlight"><pre><span></span><code>sudo<span class="w"> </span>apt-get<span class="w"> </span>update
 sudo<span class="w"> </span>apt-get<span class="w"> </span>install<span class="w"> </span>-y<span class="w"> </span>curl<span class="w"> </span>gnupg<span class="w"> </span>ca-certificates
 curl<span class="w"> </span>-L<span class="w"> </span>https://packages.axonops.com/apt/repo-signing-key.gpg<span class="w"> </span><span class="p">|</span><span class="w"> </span>sudo<span class="w"> </span>gpg<span class="w"> </span>--dearmor<span class="w"> </span>-o<span class="w"> </span>/usr/share/keyrings/axonops.gpg
-<span class="nb">echo</span><span class="w"> </span><span class="s2">&quot;deb [arch=arm64,amd64 signed-by=/usr/share/keyrings/axonops.gpg] https://packages.axonops.com/apt axonops-apt main&quot;</span><span class="w"> </span><span class="p">|</span><span class="w"> </span>sudo<span class="w"> </span>tee<span class="w"> </span>/etc/apt/sources.list.d/axonops-apt.list
+<span class="nb">echo</span><span class="w"> </span><span class="s2">"deb [arch=arm64,amd64 signed-by=/usr/share/keyrings/axonops.gpg] https://packages.axonops.com/apt axonops-apt main"</span><span class="w"> </span><span class="p">|</span><span class="w"> </span>sudo<span class="w"> </span>tee<span class="w"> </span>/etc/apt/sources.list.d/axonops-apt.list
 sudo<span class="w"> </span>apt-get<span class="w"> </span>update
 sudo<span class="w"> </span>apt-get<span class="w"> </span>install<span class="w"> </span>axon-server
 </code></pre></div>
@@ -2700,7 +2721,7 @@ sudo<span class="w"> </span>apt-get<span class="w"> </span>install<span class="w
 
 sudo<span class="w"> </span>yum<span class="w"> </span>install<span class="w"> </span>axon-server
 </code></pre></div>
-</div>
+</div></div>
 
 
 

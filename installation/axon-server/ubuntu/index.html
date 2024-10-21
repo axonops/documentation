@@ -1664,6 +1664,27 @@ data-et-multi-view="{&quot;schema&quot;:{&quot;content&quot;:{&quot;desktop&quot
   
   
     <li class="md-nav__item">
+      <a href="../../../monitoring/grafana/grafana/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Metrics in Grafana
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
       <a href="../../../monitoring/logsandevents/logsandevents/" class="md-nav__link">
         
   
@@ -2783,37 +2804,37 @@ data-et-multi-view="{&quot;schema&quot;:{&quot;content&quot;:{&quot;desktop&quot
                   
 
 
-<h1 id="axon-server-installation-debian-ubuntu">axon-server installation (Debian / Ubuntu)<a class="headerlink" href="#axon-server-installation-debian-ubuntu" title="Permanent link">&para;</a></h1>
-<h2 id="step-1-prerequisites">Step 1 - Prerequisites<a class="headerlink" href="#step-1-prerequisites" title="Permanent link">&para;</a></h2>
+<div><h1 id="axon-server-installation-debian-ubuntu">axon-server installation (Debian / Ubuntu)<a class="headerlink" href="#axon-server-installation-debian-ubuntu" title="Permanent link">¶</a></h1>
+<h2 id="step-1-prerequisites">Step 1 - Prerequisites<a class="headerlink" href="#step-1-prerequisites" title="Permanent link">¶</a></h2>
 <p>Elasticsearch stores the data collected by axon-server.
 AxonOps is currently only compatible with Elasticsearch 7.x, we recommend installing the latest available 7.x release.</p>
-<h4 id="installing-elasticsearch">Installing Elasticsearch<a class="headerlink" href="#installing-elasticsearch" title="Permanent link">&para;</a></h4>
+<h4 id="installing-elasticsearch">Installing Elasticsearch<a class="headerlink" href="#installing-elasticsearch" title="Permanent link">¶</a></h4>
 <div class="highlight"><pre><span></span><code>wget<span class="w"> </span>https://artifacts.elastic.co/downloads/elasticsearch/elasticsearch-7.17.16-amd64.deb
 wget<span class="w"> </span>https://artifacts.elastic.co/downloads/elasticsearch/elasticsearch-7.17.16-amd64.deb.sha512
 shasum<span class="w"> </span>-a<span class="w"> </span><span class="m">512</span><span class="w"> </span>-c<span class="w"> </span>elasticsearch-7.17.16-amd64.deb.sha512
 sudo<span class="w"> </span>dpkg<span class="w"> </span>-i<span class="w"> </span>elasticsearch-7.17.16-amd64.deb
 </code></pre></div>
 <p>The <code>shasum</code> command above verifies the downloaded package and should show this output:
-<div class="highlight"><pre><span></span><code>elasticsearch-7.17.16-amd64.deb: OK
-</code></pre></div></p>
+</p><div class="highlight"><pre><span></span><code>elasticsearch-7.17.16-amd64.deb: OK
+</code></pre></div>
 <p>Increase the bulk queue size of Elasticsearch by running the following command:</p>
-<div class="highlight"><pre><span></span><code>sudo<span class="w"> </span><span class="nb">echo</span><span class="w"> </span><span class="s1">&#39;thread_pool.write.queue_size: 2000&#39;</span><span class="w"> </span>&gt;&gt;<span class="w"> </span>/etc/elasticsearch/elasticsearch.yml
+<div class="highlight"><pre><span></span><code>sudo<span class="w"> </span><span class="nb">echo</span><span class="w"> </span><span class="s1">'thread_pool.write.queue_size: 2000'</span><span class="w"> </span>&gt;&gt;<span class="w"> </span>/etc/elasticsearch/elasticsearch.yml
 </code></pre></div>
 <p>Increase the default heap size of elasticsearch by editing <code>/etc/elasticsearch/jvm.options</code>.</p>
 <p>Set Xmx and Xms to no more than 50% of your physical RAM.</p>
 <p><strong>Example:</strong></p>
 <p>From:
-<div class="highlight"><pre><span></span><code>-Xms1g
+</p><div class="highlight"><pre><span></span><code>-Xms1g
 -Xmx1g<span class="w"> </span>
 </code></pre></div>
 To: 
 <div class="highlight"><pre><span></span><code>-Xms8g
 -Xmx8g<span class="w"> </span>
 </code></pre></div>
-This will set the minimum and maximum heap size to 8 GB.</p>
+This will set the minimum and maximum heap size to 8 GB.
 <p>Elasticsearch requires memory for purposes other than the JVM heap and it is important to leave available memory(RAM) space for this.</p>
 <p>Set the following index codec by running the following command:</p>
-<div class="highlight"><pre><span></span><code>sudo<span class="w"> </span><span class="nb">echo</span><span class="w"> </span><span class="s1">&#39;index.codec: best_compression&#39;</span><span class="w"> </span>&gt;&gt;<span class="w"> </span>/etc/elasticsearch/elasticsearch.yml
+<div class="highlight"><pre><span></span><code>sudo<span class="w"> </span><span class="nb">echo</span><span class="w"> </span><span class="s1">'index.codec: best_compression'</span><span class="w"> </span>&gt;&gt;<span class="w"> </span>/etc/elasticsearch/elasticsearch.yml
 </code></pre></div>
 <p>Elasticsearch uses an mmapfs directory by default to store its indices. </p>
 <p>The default operating system limits on mmap counts is likely to be too low, which may result in out of memory exceptions.</p>
@@ -2821,28 +2842,28 @@ This will set the minimum and maximum heap size to 8 GB.</p>
 <div class="highlight"><pre><span></span><code>sudo<span class="w"> </span>sysctl<span class="w"> </span>-w<span class="w"> </span>vm.max_map_count<span class="o">=</span><span class="m">262144</span>
 </code></pre></div>
 <p>To make this change persist across reboots run this command:</p>
-<div class="highlight"><pre><span></span><code><span class="nb">echo</span><span class="w"> </span><span class="s2">&quot;vm.max_map_count = 262144&quot;</span><span class="w"> </span><span class="p">|</span><span class="w"> </span>sudo<span class="w"> </span>tee<span class="w"> </span>/etc/sysctl.d/10-elasticsearch.conf<span class="w"> </span>&gt;<span class="w"> </span>/dev/null
+<div class="highlight"><pre><span></span><code><span class="nb">echo</span><span class="w"> </span><span class="s2">"vm.max_map_count = 262144"</span><span class="w"> </span><span class="p">|</span><span class="w"> </span>sudo<span class="w"> </span>tee<span class="w"> </span>/etc/sysctl.d/10-elasticsearch.conf<span class="w"> </span>&gt;<span class="w"> </span>/dev/null
 </code></pre></div>
 <p>Elasticsearch needs <code>max file descriptors</code> system settings at least to 65536.</p>
-<div class="highlight"><pre><span></span><code><span class="nb">echo</span><span class="w"> </span><span class="s1">&#39;elasticsearch  -  nofile  65536&#39;</span><span class="w"> </span><span class="p">|</span><span class="w"> </span>sudo<span class="w"> </span>tee<span class="w"> </span>--append<span class="w"> </span>/etc/security/limits.conf<span class="w"> </span>&gt;<span class="w"> </span>/dev/null
+<div class="highlight"><pre><span></span><code><span class="nb">echo</span><span class="w"> </span><span class="s1">'elasticsearch  -  nofile  65536'</span><span class="w"> </span><span class="p">|</span><span class="w"> </span>sudo<span class="w"> </span>tee<span class="w"> </span>--append<span class="w"> </span>/etc/security/limits.conf<span class="w"> </span>&gt;<span class="w"> </span>/dev/null
 </code></pre></div>
-<h4 id="start-elasticsearch">Start Elasticsearch<a class="headerlink" href="#start-elasticsearch" title="Permanent link">&para;</a></h4>
+<h4 id="start-elasticsearch">Start Elasticsearch<a class="headerlink" href="#start-elasticsearch" title="Permanent link">¶</a></h4>
 <div class="highlight"><pre><span></span><code>sudo<span class="w"> </span>systemctl<span class="w"> </span>start<span class="w"> </span>elasticsearch.service
 </code></pre></div>
 <p>After a short period of time, you can verify that your Elasticsearch node is running by sending an HTTP request to port 9200 on localhost:</p>
-<div class="highlight"><pre><span></span><code>curl<span class="w"> </span><span class="s2">&quot;localhost:9200&quot;</span>
+<div class="highlight"><pre><span></span><code>curl<span class="w"> </span><span class="s2">"localhost:9200"</span>
 </code></pre></div>
-<h3 id="securing-elasticsearch">Securing Elasticsearch<a class="headerlink" href="#securing-elasticsearch" title="Permanent link">&para;</a></h3>
+<h3 id="securing-elasticsearch">Securing Elasticsearch<a class="headerlink" href="#securing-elasticsearch" title="Permanent link">¶</a></h3>
 <p><a href="../securing_elastic/">Securing Elasticsearch</a></p>
-<h2 id="step-2-axon-server">Step 2 - axon-server<a class="headerlink" href="#step-2-axon-server" title="Permanent link">&para;</a></h2>
+<h2 id="step-2-axon-server">Step 2 - axon-server<a class="headerlink" href="#step-2-axon-server" title="Permanent link">¶</a></h2>
 <div class="highlight"><pre><span></span><code>sudo<span class="w"> </span>apt-get<span class="w"> </span>update
 sudo<span class="w"> </span>apt-get<span class="w"> </span>install<span class="w"> </span>-y<span class="w"> </span>curl<span class="w"> </span>gnupg<span class="w"> </span>ca-certificates
 curl<span class="w"> </span>-L<span class="w"> </span>https://packages.axonops.com/apt/repo-signing-key.gpg<span class="w"> </span><span class="p">|</span><span class="w"> </span>sudo<span class="w"> </span>gpg<span class="w"> </span>--dearmor<span class="w"> </span>-o<span class="w"> </span>/usr/share/keyrings/axonops.gpg
-<span class="nb">echo</span><span class="w"> </span><span class="s2">&quot;deb [arch=arm64,amd64 signed-by=/usr/share/keyrings/axonops.gpg] https://packages.axonops.com/apt axonops-apt main&quot;</span><span class="w"> </span><span class="p">|</span><span class="w"> </span>sudo<span class="w"> </span>tee<span class="w"> </span>/etc/apt/sources.list.d/axonops-apt.list
+<span class="nb">echo</span><span class="w"> </span><span class="s2">"deb [arch=arm64,amd64 signed-by=/usr/share/keyrings/axonops.gpg] https://packages.axonops.com/apt axonops-apt main"</span><span class="w"> </span><span class="p">|</span><span class="w"> </span>sudo<span class="w"> </span>tee<span class="w"> </span>/etc/apt/sources.list.d/axonops-apt.list
 sudo<span class="w"> </span>apt-get<span class="w"> </span>update
 sudo<span class="w"> </span>apt-get<span class="w"> </span>install<span class="w"> </span>axon-server
 </code></pre></div>
-<h2 id="step-3-axon-server-configurations">Step 3 - axon-server configurations<a class="headerlink" href="#step-3-axon-server-configurations" title="Permanent link">&para;</a></h2>
+<h2 id="step-3-axon-server-configurations">Step 3 - axon-server configurations<a class="headerlink" href="#step-3-axon-server-configurations" title="Permanent link">¶</a></h2>
 <p>Make sure <strong>elastic_host</strong> and <strong>elastic_port</strong> are corresponding to your Elasticsearch instance.</p>
 <p><strong>Basic Auth in Elasticsearch</strong> </p>
 <ul>
@@ -2878,12 +2899,12 @@ sudo<span class="w"> </span>apt-get<span class="w"> </span>install<span class="w
 
 <span class="c1"># SSL/TLS Settings for AxonOps Agent connections</span>
 <span class="nt">tls</span><span class="p">:</span>
-<span class="w">  </span><span class="nt">mode</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;disabled&quot;</span><span class="w"> </span><span class="c1"># disabled, TLS</span>
+<span class="w">  </span><span class="nt">mode</span><span class="p">:</span><span class="w"> </span><span class="s">"disabled"</span><span class="w"> </span><span class="c1"># disabled, TLS</span>
 <span class="w">  </span><span class="c1"># Only set if mode is TLS</span>
 <span class="w">  </span><span class="nt">skipVerify</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">false</span><span class="w"> </span><span class="c1"># Disables CA and Hostname verification</span>
-<span class="w">  </span><span class="nt">caFile</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;path_to_certs_on_axonops_server.crt&quot;</span>
-<span class="w">  </span><span class="nt">certFile</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;path_to_certs_on_axonops_server.crt&quot;</span>
-<span class="w">  </span><span class="nt">keyFile</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;path_to_key_file_on_axonops_server.key&quot;</span>
+<span class="w">  </span><span class="nt">caFile</span><span class="p">:</span><span class="w"> </span><span class="s">"path_to_certs_on_axonops_server.crt"</span>
+<span class="w">  </span><span class="nt">certFile</span><span class="p">:</span><span class="w"> </span><span class="s">"path_to_certs_on_axonops_server.crt"</span>
+<span class="w">  </span><span class="nt">keyFile</span><span class="p">:</span><span class="w"> </span><span class="s">"path_to_key_file_on_axonops_server.key"</span>
 
 <span class="c1"># For better performance on large clusters, you can use a CQL store for the metrics.</span>
 <span class="c1"># To opt-in for CQL metrics storage, just specify at least one CQL host.</span>
@@ -2891,8 +2912,8 @@ sudo<span class="w"> </span>apt-get<span class="w"> </span>install<span class="w
 <span class="c1">#cql_hosts: #  (CQL_HOSTS, comma separated list)</span>
 <span class="c1">#  - 192.168.0.10:9042</span>
 <span class="c1">#  - 192.168.0.11:9042</span>
-<span class="c1">#cql_username: &quot;cassandra&quot; # (CQL_USERNAME)</span>
-<span class="c1">#cql_password: &quot;cassandra&quot; # (CQL_PASSWORD)</span>
+<span class="c1">#cql_username: "cassandra" # (CQL_USERNAME)</span>
+<span class="c1">#cql_password: "cassandra" # (CQL_PASSWORD)</span>
 <span class="c1">#cql_local_dc: datacenter1 # (CQL_LOCAL_DC)</span>
 <span class="c1">#cql_ssl: false # (CQL_SSL)</span>
 <span class="c1">#cql_skip_verify: false  # (CQL_SSL_SKIP_VERIFY)</span>
@@ -2904,7 +2925,7 @@ sudo<span class="w"> </span>apt-get<span class="w"> </span>install<span class="w
 <span class="c1">#cql_batch_size: 1  # (CQL_BATCH_SIZE)</span>
 <span class="c1">#cql_page_size: 10  # (CQL_PAGE_SIZE)</span>
 <span class="c1">#cql_autocreate_tables: true # (CQL_AUTO_CREATE_TABLES) this will tell axon-server to automatically create the metrics tables (true is recommended)</span>
-<span class="c1">#cql_keyspace_replication: &quot;{ &#39;class&#39; : &#39;SimpleStrategy&#39;, &#39;replication_factor&#39; : 1 }&quot; # (CQL_KS_REPLICATION) keyspace replication for the metrics tables</span>
+<span class="c1">#cql_keyspace_replication: "{ 'class' : 'SimpleStrategy', 'replication_factor' : 1 }" # (CQL_KS_REPLICATION) keyspace replication for the metrics tables</span>
 <span class="c1">#cql_retrypolicy_numretries: 3  # (CQL_RETRY_POLICY_NUM_RETRIES)</span>
 <span class="c1">#cql_retrypolicy_min: 1s  # (CQL_RETRY_POLICY_MIN)</span>
 <span class="c1">#cql_retrypolicy_max: 10s  # (CQL_RETRY_POLICY_MAX)</span>
@@ -2912,8 +2933,8 @@ sudo<span class="w"> </span>apt-get<span class="w"> </span>install<span class="w
 <span class="c1">#cql_reconnectionpolicy_initialinterval: 1s # (CQL_RECONNECTION_POLICY_INITIAL_INTERVAL)</span>
 <span class="c1">#cql_reconnectionpolicy_maxinterval: 10s # (CQL_RECONNECTION_POLICY_MAX_INTERVAL)</span>
 <span class="c1">#cql_metrics_cache_max_size_mb: 100  #MB # (CQL_METRICS_CACHE_MAX_SIZE_MB)</span>
-<span class="c1">#cql_read_consistency: &quot;LOCAL_ONE&quot; # (CQL_READ_CONSISTENCY) #One of the following:  ANY, ONE, TWO, THREE, QUORUM, ALL, LOCAL_QUORUM, EACH_QUORUM, LOCAL_ONE</span>
-<span class="c1">#cql_write_consistency: &quot;LOCAL_ONE&quot; # (CQL_WRITE_CONSISTENCY) #One of the following:    ANY, ONE, TWO, THREE, QUORUM, ALL, LOCAL_QUORUM, EACH_QUORUM, LOCAL_ONE</span>
+<span class="c1">#cql_read_consistency: "LOCAL_ONE" # (CQL_READ_CONSISTENCY) #One of the following:  ANY, ONE, TWO, THREE, QUORUM, ALL, LOCAL_QUORUM, EACH_QUORUM, LOCAL_ONE</span>
+<span class="c1">#cql_write_consistency: "LOCAL_ONE" # (CQL_WRITE_CONSISTENCY) #One of the following:    ANY, ONE, TWO, THREE, QUORUM, ALL, LOCAL_QUORUM, EACH_QUORUM, LOCAL_ONE</span>
 <span class="c1">#cql_lvl1_compaction_window_size: 12 # (CQL_LVL1_COMPACTION_WINDOW_SIZE)</span>
 <span class="c1">#cql_lvl2_compaction_window_size: 1 # (CQL_LVL2_COMPACTION_WINDOW_SIZE)</span>
 <span class="c1">#cql_lvl3_compaction_window_size: 1 # (CQL_LVL3_COMPACTION_WINDOW_SIZE)</span>
@@ -2962,13 +2983,13 @@ sudo<span class="w"> </span>apt-get<span class="w"> </span>install<span class="w
 <blockquote>
 <p>For better performances on large clusters (100+ nodes), you can use a CQL store for the metrics such as <strong>Cassandra</strong>. To opt-in for CQL metrics storage, specify at least one CQL host with axon-server configuration.</p>
 </blockquote>
-<h2 id="step-4-start-the-server">Step 4 - Start the server<a class="headerlink" href="#step-4-start-the-server" title="Permanent link">&para;</a></h2>
+<h2 id="step-4-start-the-server">Step 4 - Start the server<a class="headerlink" href="#step-4-start-the-server" title="Permanent link">¶</a></h2>
 <div class="highlight"><pre><span></span><code>sudo systemctl daemon-reload
 sudo systemctl start axon-server
 sudo systemctl status axon-server
 </code></pre></div>
 <p>This will start the <code>axon-server</code> process as the <code>axonops</code> user, which was created during the package installation.  The default listening address is <code>0.0.0.0:8080</code>.</p>
-<h4 id="package-details">Package details<a class="headerlink" href="#package-details" title="Permanent link">&para;</a></h4>
+<h4 id="package-details">Package details<a class="headerlink" href="#package-details" title="Permanent link">¶</a></h4>
 <ul>
 <li>Configuration: <code>/etc/axonops/axon-server.yml</code></li>
 <li>Binary: <code>/usr/share/axonops/axon-server</code></li>
@@ -2977,8 +2998,8 @@ sudo systemctl status axon-server
 <li>Copyright : <code>/usr/share/doc/axonops/axon-server/copyright</code></li>
 <li>Licenses : <code>/usr/share/axonops/licenses/axon-server/</code></li>
 </ul>
-<h2 id="step-5-installing-axon-dash">Step 5 - Installing axon-dash<a class="headerlink" href="#step-5-installing-axon-dash" title="Permanent link">&para;</a></h2>
-<p>Now <strong>axon-server</strong> is installed, you can start installing the GUI for it: <a href="../../axon-dash/install/">axon-dash</a></p>
+<h2 id="step-5-installing-axon-dash">Step 5 - Installing axon-dash<a class="headerlink" href="#step-5-installing-axon-dash" title="Permanent link">¶</a></h2>
+<p>Now <strong>axon-server</strong> is installed, you can start installing the GUI for it: <a href="../../axon-dash/install/">axon-dash</a></p></div>
 
 
 

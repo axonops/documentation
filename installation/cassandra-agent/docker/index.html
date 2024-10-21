@@ -1664,6 +1664,27 @@ data-et-multi-view="{&quot;schema&quot;:{&quot;content&quot;:{&quot;desktop&quot
   
   
     <li class="md-nav__item">
+      <a href="../../../monitoring/grafana/grafana/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Metrics in Grafana
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
       <a href="../../../monitoring/logsandevents/logsandevents/" class="md-nav__link">
         
   
@@ -2699,7 +2720,7 @@ data-et-multi-view="{&quot;schema&quot;:{&quot;content&quot;:{&quot;desktop&quot
                   
 
 
-<h1 id="installing-axon-agent-for-cassandra-in-docker">Installing axon-agent for Cassandra in Docker<a class="headerlink" href="#installing-axon-agent-for-cassandra-in-docker" title="Permanent link">&para;</a></h1>
+<div><h1 id="installing-axon-agent-for-cassandra-in-docker">Installing axon-agent for Cassandra in Docker<a class="headerlink" href="#installing-axon-agent-for-cassandra-in-docker" title="Permanent link">¶</a></h1>
 <div class="admonition info">
 <p class="admonition-title">Caveats</p>
 <ul>
@@ -2746,10 +2767,10 @@ AxonOps Agent processes.</p>
 Docker container. When installing on the host follow the instructions under
 <a href="../install/">AxonOps Cassandra agent installation</a> to install the agent and ensure that the appropriate directories are
 mapped into the Cassandra container.</p>
-<h2 id="example-with-docker-compose">Example with Docker Compose<a class="headerlink" href="#example-with-docker-compose" title="Permanent link">&para;</a></h2>
+<h2 id="example-with-docker-compose">Example with Docker Compose<a class="headerlink" href="#example-with-docker-compose" title="Permanent link">¶</a></h2>
 <p>This example shows running a single Cassandra node and the AxonOps agent under Docker Compose using host volumes
 to share data between the containers.</p>
-<div class="highlight"><pre><span></span><code><span class="nt">version</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;3&quot;</span>
+<div class="highlight"><pre><span></span><code><span class="nt">version</span><span class="p">:</span><span class="w"> </span><span class="s">"3"</span>
 
 <span class="nt">services</span><span class="p">:</span>
 <span class="w">  </span><span class="nt">cassandra</span><span class="p">:</span>
@@ -2762,7 +2783,7 @@ to share data between the containers.</p>
 <span class="w">      </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">./axonops/etc:/etc/axonops</span>
 <span class="w">      </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">./axonops/log:/var/log/axonops</span>
 <span class="w">    </span><span class="nt">ports</span><span class="p">:</span>
-<span class="w">      </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="s">&quot;9042:9042&quot;</span>
+<span class="w">      </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="s">"9042:9042"</span>
 <span class="w">    </span><span class="nt">environment</span><span class="p">:</span>
 <span class="w">      </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">JVM_EXTRA_OPTS=-javaagent:/var/lib/axonops/axon-cassandra4.0-agent.jar=/etc/axonops/axon-agent.yml</span>
 <span class="w">      </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">CASSANDRA_CLUSTER_NAME=my-cluster</span>
@@ -2778,7 +2799,7 @@ to share data between the containers.</p>
 <span class="w">      </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">./axonops/var:/var/lib/axonops</span>
 <span class="w">      </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">./axonops/etc:/etc/axonops</span>
 <span class="w">      </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">./axonops/log:/var/log/axonops</span>
-</code></pre></div>
+</code></pre></div></div>
 
 
 

@@ -1683,6 +1683,27 @@ data-et-multi-view="{&quot;schema&quot;:{&quot;content&quot;:{&quot;desktop&quot
   
   
     <li class="md-nav__item">
+      <a href="../../../monitoring/grafana/grafana/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Metrics in Grafana
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
       <a href="../../../monitoring/logsandevents/logsandevents/" class="md-nav__link">
         
   
@@ -2801,7 +2822,7 @@ data-et-multi-view="{&quot;schema&quot;:{&quot;content&quot;:{&quot;desktop&quot
 
   <h1>Repair</h1>
 
-<p>Repairs must be completed regularly to maintain Cassandra nodes.</p>
+<div><p>Repairs must be completed regularly to maintain Cassandra nodes.</p>
 <p>AxonOps provide two mechanisms to ease Cassandra repairs:</p>
 <ul>
 <li>
@@ -2811,7 +2832,7 @@ data-et-multi-view="{&quot;schema&quot;:{&quot;content&quot;:{&quot;desktop&quot
 <p>Scheduled repair</p>
 </li>
 </ul>
-<h2 id="adaptive-repair-service">Adaptive repair service<a class="headerlink" href="#adaptive-repair-service" title="Permanent link">&para;</a></h2>
+<h2 id="adaptive-repair-service">Adaptive repair service<a class="headerlink" href="#adaptive-repair-service" title="Permanent link">¶</a></h2>
 <p>Since AxonOps collects performance metrics and logs, we built an “Adaptive” repair system which regulates the velocity (parallelism and pauses between each subrange repair) based on performance trending data. The regulation of repair velocity takes input from various metrics including CPU utilisation, query latencies, Cassandra thread pools pending statistics, and IOwait percentage, while tracking the schedule of repair based on <strong>gc_grace_seconds</strong> for each table.</p>
 <p>The idea of this is to achieve the following:</p>
 <ul>
@@ -2822,7 +2843,7 @@ data-et-multi-view="{&quot;schema&quot;:{&quot;content&quot;:{&quot;desktop&quot
 </ul>
 <div class="admonition infomy">
 <p class="admonition-title">Infomy</p>
-<p><a href="/img/cass_repairs/adaptive_repair.png"><img alt="adaptive_repair" src="/img/cass_repairs/adaptive_repair.png" /></a></p>
+<p><a href="/img/cass_repairs/adaptive_repair.png"><img alt="adaptive_repair" src="/img/cass_repairs/adaptive_repair.png"></a></p>
 </div>
 <blockquote>
 <p>If you want to keep the tables as fresh as possible we recommend to increase the <code>table parallelism</code> to be greater than the total number of tables of your cluster and reduce the <code>segments per VNode</code> to generate less repair requests.</p>
@@ -2842,36 +2863,36 @@ data-et-multi-view="{&quot;schema&quot;:{&quot;content&quot;:{&quot;desktop&quot
 <p>The GC grace threshold in seconds: if a table has a gc grace lesser than the specified value, it will be ignored from the adaptive repair service</p>
 </li>
 </ul>
-<h2 id="scheduled-repair">Scheduled repair<a class="headerlink" href="#scheduled-repair" title="Permanent link">&para;</a></h2>
+<h2 id="scheduled-repair">Scheduled repair<a class="headerlink" href="#scheduled-repair" title="Permanent link">¶</a></h2>
 <p>You can initiate three types of scheduled repair:</p>
 <ul>
 <li>Immediate scheduled repair: these will trigger immediately <strong>once</strong></li>
 </ul>
 <div class="admonition infomy">
 <p class="admonition-title">Infomy</p>
-<p><a href="/img/cass_repairs/scheduled_repair.png"><img alt="scheduled_repair" src="/img/cass_repairs/scheduled_repair.png" /></a></p>
+<p><a href="/img/cass_repairs/scheduled_repair.png"><img alt="scheduled_repair" src="/img/cass_repairs/scheduled_repair.png"></a></p>
 </div>
 <ul>
 <li>Simple scheduled repair: these will trigger base on the selected schedule <strong>repeatedly</strong></li>
 </ul>
 <div class="admonition infomy">
 <p class="admonition-title">Infomy</p>
-<p><a href="/img/cass_repairs/scheduled_repair2.png"><img alt="scheduled_repair" src="/img/cass_repairs/scheduled_repair2.png" /></a></p>
+<p><a href="/img/cass_repairs/scheduled_repair2.png"><img alt="scheduled_repair" src="/img/cass_repairs/scheduled_repair2.png"></a></p>
 </div>
 <ul>
 <li>Cron schedule repair: Same as <strong>simple scheduled repair</strong> but the schedule will be based on a Cron expression</li>
 </ul>
 <div class="admonition infomy">
 <p class="admonition-title">Infomy</p>
-<p><a href="/img/cass_repairs/scheduled_repair3.png"><img alt="scheduled_repair" src="/img/cass_repairs/scheduled_repair3.png" /></a></p>
+<p><a href="/img/cass_repairs/scheduled_repair3.png"><img alt="scheduled_repair" src="/img/cass_repairs/scheduled_repair3.png"></a></p>
 </div>
 <blockquote>
 <p>The following capture presents a running repair that has been initiated immediately and a scheduled repair that is scheduled for 12:00 AM UTC:</p>
 </blockquote>
 <div class="admonition infomy">
 <p class="admonition-title">Infomy</p>
-<p><a href="/img/cass_repairs/scheduled_repair4.png"><img alt="scheduled_repair" src="/img/cass_repairs/scheduled_repair4.png" /></a></p>
-</div>
+<p><a href="/img/cass_repairs/scheduled_repair4.png"><img alt="scheduled_repair" src="/img/cass_repairs/scheduled_repair4.png"></a></p>
+</div></div>
 
 
 

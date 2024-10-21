@@ -1875,6 +1875,27 @@ data-et-multi-view="{&quot;schema&quot;:{&quot;content&quot;:{&quot;desktop&quot
   
   
     <li class="md-nav__item">
+      <a href="../../../monitoring/grafana/grafana/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Metrics in Grafana
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
       <a href="../../../monitoring/logsandevents/logsandevents/" class="md-nav__link">
         
   
@@ -3045,10 +3066,10 @@ data-et-multi-view="{&quot;schema&quot;:{&quot;content&quot;:{&quot;desktop&quot
                   
 
 
-<h1 id="axonops-cassandra-agent-installation">AxonOps Cassandra agent installation<a class="headerlink" href="#axonops-cassandra-agent-installation" title="Permanent link">&para;</a></h1>
+<div><h1 id="axonops-cassandra-agent-installation">AxonOps Cassandra agent installation<a class="headerlink" href="#axonops-cassandra-agent-installation" title="Permanent link">¶</a></h1>
 <p>This agent will enable metrics, logs and events collection with adaptive repairs and backups for Cassandra.</p>
 <p>See <a href="../docker/">Installing axon-agent for Cassandra in Docker</a> if you are running Cassandra under Docker.</p>
-<h2 id="axonops-agent-is-a-available-for-the-followig-versions-of-apache-casssandra">AxonOps Agent is a available for the followig versions of Apache Casssandra<a class="headerlink" href="#axonops-agent-is-a-available-for-the-followig-versions-of-apache-casssandra" title="Permanent link">&para;</a></h2>
+<h2 id="axonops-agent-is-a-available-for-the-followig-versions-of-apache-casssandra">AxonOps Agent is a available for the followig versions of Apache Casssandra<a class="headerlink" href="#axonops-agent-is-a-available-for-the-followig-versions-of-apache-casssandra" title="Permanent link">¶</a></h2>
 <ul>
 <li>Apache Cassandra 3.0.x</li>
 <li>Apache Cassandra 3.11.x</li>
@@ -3056,14 +3077,14 @@ data-et-multi-view="{&quot;schema&quot;:{&quot;content&quot;:{&quot;desktop&quot
 <li>Apache Cassandra 4.1.x</li>
 <li>Apache Cassandra 5.0.x</li>
 </ul>
-<h2 id="step-1-setup-the-axonops-repository-and-install-axonops-agent">Step 1 - Setup the AxonOps repository and install AxonOps Agent<a class="headerlink" href="#step-1-setup-the-axonops-repository-and-install-axonops-agent" title="Permanent link">&para;</a></h2>
-<h3 id="select-the-os-family">Select the OS Family.<a class="headerlink" href="#select-the-os-family" title="Permanent link">&para;</a></h3>
+<h2 id="step-1-setup-the-axonops-repository-and-install-axonops-agent">Step 1 - Setup the AxonOps repository and install AxonOps Agent<a class="headerlink" href="#step-1-setup-the-axonops-repository-and-install-axonops-agent" title="Permanent link">¶</a></h2>
+<h3 id="select-the-os-family">Select the OS Family.<a class="headerlink" href="#select-the-os-family" title="Permanent link">¶</a></h3>
 <p><label>
-  <input type="radio" id="Debian" name="osFamily" onChange="updateOS()" checked=true />
+  <input type="radio" id="Debian" name="osFamily" onchange="updateOS()" checked>
   <img src="/get_started/debian.png" class="skip-lightbox" width="180px">
 </label>
 <label>
-  <input type="radio" id="RedHat" name="osFamily" onChange="updateOS()" />
+  <input type="radio" id="RedHat" name="osFamily" onchange="updateOS()">
   <img src="/get_started/red_hat.png" class="skip-lightbox" width="180px">
 </label></p>
 <p>Execute the following command to setup the AxonOps repository for your OS</p>
@@ -3071,7 +3092,7 @@ data-et-multi-view="{&quot;schema&quot;:{&quot;content&quot;:{&quot;desktop&quot
     <div class="highlight"><pre><span></span><code>sudo<span class="w"> </span>apt-get<span class="w"> </span>update
 sudo<span class="w"> </span>apt-get<span class="w"> </span>install<span class="w"> </span>-y<span class="w"> </span>curl<span class="w"> </span>gnupg<span class="w"> </span>ca-certificates
 curl<span class="w"> </span>-L<span class="w"> </span>https://packages.axonops.com/apt/repo-signing-key.gpg<span class="w"> </span><span class="p">|</span><span class="w"> </span>sudo<span class="w"> </span>gpg<span class="w"> </span>--dearmor<span class="w"> </span>-o<span class="w"> </span>/usr/share/keyrings/axonops.gpg
-<span class="nb">echo</span><span class="w"> </span><span class="s2">&quot;deb [arch=arm64,amd64 signed-by=/usr/share/keyrings/axonops.gpg] https://packages.axonops.com/apt axonops-apt main&quot;</span><span class="w"> </span><span class="p">|</span><span class="w"> </span>sudo<span class="w"> </span>tee<span class="w"> </span>/etc/apt/sources.list.d/axonops-apt.list
+<span class="nb">echo</span><span class="w"> </span><span class="s2">"deb [arch=arm64,amd64 signed-by=/usr/share/keyrings/axonops.gpg] https://packages.axonops.com/apt axonops-apt main"</span><span class="w"> </span><span class="p">|</span><span class="w"> </span>sudo<span class="w"> </span>tee<span class="w"> </span>/etc/apt/sources.list.d/axonops-apt.list
 sudo<span class="w"> </span>apt-get<span class="w"> </span>update
 </code></pre></div>
 </div>
@@ -3088,35 +3109,35 @@ sudo<span class="w"> </span>apt-get<span class="w"> </span>update
 </code></pre></div>
 </div>
 
-<h2 id="step-2-install-cassandra-agent">Step 2 - Install Cassandra Agent<a class="headerlink" href="#step-2-install-cassandra-agent" title="Permanent link">&para;</a></h2>
-<h3 id="select-the-cassandra-version">Select the Cassandra Version<a class="headerlink" href="#select-the-cassandra-version" title="Permanent link">&para;</a></h3>
+<h2 id="step-2-install-cassandra-agent">Step 2 - Install Cassandra Agent<a class="headerlink" href="#step-2-install-cassandra-agent" title="Permanent link">¶</a></h2>
+<h3 id="select-the-cassandra-version">Select the Cassandra Version<a class="headerlink" href="#select-the-cassandra-version" title="Permanent link">¶</a></h3>
 <p><label>
-  <input type="radio" id="Cassandra30" name="casFamily" onChange="updateCas()" checked=true />
+  <input type="radio" id="Cassandra30" name="casFamily" onchange="updateCas()" checked>
   <img src="/get_started/cas_3.png" class="skip-lightbox" width="180px">
 </label>
 <label>
-  <input type="radio" id="Cassandra311" name="casFamily" onChange="updateCas()" />
+  <input type="radio" id="Cassandra311" name="casFamily" onchange="updateCas()">
   <img src="/get_started/cas_3_11.png" class="skip-lightbox" width="180px">
 </label>
 <label>
-  <input type="radio" id="Cassandra40" name="casFamily" onChange="updateCas()" />
+  <input type="radio" id="Cassandra40" name="casFamily" onchange="updateCas()">
   <img src="/get_started/cas_4.png" class="skip-lightbox" width="180px">
 </label>
 <label>
-  <input type="radio" id="Cassandra41" name="casFamily" onChange="updateCas()" />
+  <input type="radio" id="Cassandra41" name="casFamily" onchange="updateCas()">
   <img src="/get_started/cas_4_1.png" class="skip-lightbox" width="180px">
 </label>
 <label>
-  <input type="radio" id="Cassandra50" name="casFamily" onChange="updateCas()" />
+  <input type="radio" id="Cassandra50" name="casFamily" onchange="updateCas()">
   <img src="/get_started/cas_5_0.png" class="skip-lightbox" width="180px">
 </label></p>
-<h3 id="select-the-java-version">Select the Java Version.<a class="headerlink" href="#select-the-java-version" title="Permanent link">&para;</a></h3>
+<h3 id="select-the-java-version">Select the Java Version.<a class="headerlink" href="#select-the-java-version" title="Permanent link">¶</a></h3>
 <p><label>
-  <input type="radio" id="Java8" name="javaFamily" onChange="updateJava()" checked=true />
+  <input type="radio" id="Java8" name="javaFamily" onchange="updateJava()" checked>
   <img id="Java8img" src="/get_started/Java_8.png" class="skip-lightbox" width="180px">
 </label>
 <label>
-  <input type="radio" id="Java11" name="javaFamily" onChange="updateJava()" />
+  <input type="radio" id="Java11" name="javaFamily" onchange="updateJava()">
   <img id="Java11img" src="/get_started/Java_11.png" class="skip-lightbox" width="180px" style="display:none">
 </label></p>
 <!-- Debian -->
@@ -3181,68 +3202,68 @@ sudo<span class="w"> </span>apt-get<span class="w"> </span>update
 <blockquote>
 <p>Note: This will install the AxonOps Cassandra agent and its dependency: <strong>axon-agent</strong></p>
 </blockquote>
-<h2 id="step-3-agent-configuration">Step 3 - Agent Configuration<a class="headerlink" href="#step-3-agent-configuration" title="Permanent link">&para;</a></h2>
+<h2 id="step-3-agent-configuration">Step 3 - Agent Configuration<a class="headerlink" href="#step-3-agent-configuration" title="Permanent link">¶</a></h2>
 <p>Update the following highlighted lines from <code>/etc/axonops/axon-agent.yml</code>:</p>
 <p>These need to match the config that you have in your axon-server.yml setup.</p>
 <div class="highlight"><pre><span></span><code><span class="nt">axon-server</span><span class="p">:</span>
-<span class="hll"><span class="w">    </span><span class="nt">hosts</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;axon-server_endpoint&quot;</span><span class="w"> </span><span class="c1"># Your axon-server IP or hostname, e.g. axonops.mycompany.com</span>
+<span class="hll"><span class="w">    </span><span class="nt">hosts</span><span class="p">:</span><span class="w"> </span><span class="s">"axon-server_endpoint"</span><span class="w"> </span><span class="c1"># Your axon-server IP or hostname, e.g. axonops.mycompany.com</span>
 </span><span class="w">    </span><span class="nt">port</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">1888</span><span class="w"> </span><span class="c1"># The default axon-server port is 1888</span>
 
 <span class="nt">axon-agent</span><span class="p">:</span>
-<span class="hll"><span class="w">    </span><span class="nt">org</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;my-company&quot;</span><span class="w"> </span><span class="c1"># Your organisation name</span>
+<span class="hll"><span class="w">    </span><span class="nt">org</span><span class="p">:</span><span class="w"> </span><span class="s">"my-company"</span><span class="w"> </span><span class="c1"># Your organisation name</span>
 </span><span class="w">    </span><span class="c1"># SSL/TLS Settings from AxonOps Agent to AxonOps Server</span>
 <span class="w">    </span><span class="nt">tls</span><span class="p">:</span>
-<span class="w">        </span><span class="nt">mode</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;disabled&quot;</span><span class="w"> </span><span class="c1"># disabled, TLS</span>
+<span class="w">        </span><span class="nt">mode</span><span class="p">:</span><span class="w"> </span><span class="s">"disabled"</span><span class="w"> </span><span class="c1"># disabled, TLS</span>
 <span class="w">    </span><span class="nt">disable_auto_update</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">true</span>
 
 <span class="nt">NTP</span><span class="p">:</span>
-<span class="w">    </span><span class="nt">host</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;ntp.mycompany.com&quot;</span><span class="w"> </span><span class="c1"># Your NTP server IP address or hostname </span>
+<span class="w">    </span><span class="nt">host</span><span class="p">:</span><span class="w"> </span><span class="s">"ntp.mycompany.com"</span><span class="w"> </span><span class="c1"># Your NTP server IP address or hostname </span>
 </code></pre></div>
 <p>Set file permissions on /etc/axonops/axon-agent.yml file by executing the following command</p>
 <div class="highlight"><pre><span></span><code>sudo chmod 0644 /etc/axonops/axon-agent.yml
 </code></pre></div>
-<h2 id="step-4-configure-cassandra">Step 4 - Configure Cassandra<a class="headerlink" href="#step-4-configure-cassandra" title="Permanent link">&para;</a></h2>
+<h2 id="step-4-configure-cassandra">Step 4 - Configure Cassandra<a class="headerlink" href="#step-4-configure-cassandra" title="Permanent link">¶</a></h2>
 <p>Edit cassandra-env.sh, usually located in your Cassandra install path such as: </p>
 <p><code>/&lt;Cassandra Installation Directory&gt;/conf/cassandra-env.sh</code></p>
 <p>Add the following line at the end of the file:</p>
 <div id="Cassandra30Div" class="javacas">
-  <div class="highlight"><pre><span></span><code>JVM_OPTS=&quot;$JVM_OPTS -javaagent:/usr/share/axonops/axon-cassandra3.0-agent.jar=/etc/axonops/axon-agent.yml&quot;
+  <div class="highlight"><pre><span></span><code>JVM_OPTS="$JVM_OPTS -javaagent:/usr/share/axonops/axon-cassandra3.0-agent.jar=/etc/axonops/axon-agent.yml"
 </code></pre></div>
 </div>
 <div id="Cassandra311Div" class="javacas" style="display:none">
-  <div class="highlight"><pre><span></span><code>JVM_OPTS=&quot;$JVM_OPTS -javaagent:/usr/share/axonops/axon-cassandra3.11-agent.jar=/etc/axonops/axon-agent.yml&quot;
+  <div class="highlight"><pre><span></span><code>JVM_OPTS="$JVM_OPTS -javaagent:/usr/share/axonops/axon-cassandra3.11-agent.jar=/etc/axonops/axon-agent.yml"
 </code></pre></div>
 </div>
 <div id="Cassandra40Div" class="javacas" style="display:none">
-  <div class="highlight"><pre><span></span><code>JVM_OPTS=&quot;$JVM_OPTS -javaagent:/usr/share/axonops/axon-cassandra4.0-agent.jar=/etc/axonops/axon-agent.yml&quot;
+  <div class="highlight"><pre><span></span><code>JVM_OPTS="$JVM_OPTS -javaagent:/usr/share/axonops/axon-cassandra4.0-agent.jar=/etc/axonops/axon-agent.yml"
 </code></pre></div>
 </div>
 <div id="Cassandra41Div" class="javacas" style="display:none">
-  <div class="highlight"><pre><span></span><code>JVM_OPTS=&quot;$JVM_OPTS -javaagent:/usr/share/axonops/axon-cassandra4.1-agent.jar=/etc/axonops/axon-agent.yml&quot;
+  <div class="highlight"><pre><span></span><code>JVM_OPTS="$JVM_OPTS -javaagent:/usr/share/axonops/axon-cassandra4.1-agent.jar=/etc/axonops/axon-agent.yml"
 </code></pre></div>
 </div>
 <div id="Cassandra50Div" class="javacas" style="display:none">
-  <div class="highlight"><pre><span></span><code>JVM_OPTS=&quot;$JVM_OPTS -javaagent:/usr/share/axonops/axon-cassandra5.0-agent.jar=/etc/axonops/axon-agent.yml&quot;
+  <div class="highlight"><pre><span></span><code>JVM_OPTS="$JVM_OPTS -javaagent:/usr/share/axonops/axon-cassandra5.0-agent.jar=/etc/axonops/axon-agent.yml"
 </code></pre></div>
 </div>
 
 <blockquote>
 <p><strong>NB.</strong> Make sure that this configuration will not get overridden by an automation tool.</p>
 </blockquote>
-<h2 id="step-5-add-axonops-user-to-cassandra-user-group-and-cassandra-user-to-axonops-group">Step 5 - Add axonops user to Cassandra user group and Cassandra user to axonops group<a class="headerlink" href="#step-5-add-axonops-user-to-cassandra-user-group-and-cassandra-user-to-axonops-group" title="Permanent link">&para;</a></h2>
+<h2 id="step-5-add-axonops-user-to-cassandra-user-group-and-cassandra-user-to-axonops-group">Step 5 - Add axonops user to Cassandra user group and Cassandra user to axonops group<a class="headerlink" href="#step-5-add-axonops-user-to-cassandra-user-group-and-cassandra-user-to-axonops-group" title="Permanent link">¶</a></h2>
 <div class="highlight"><pre><span></span><code>sudo<span class="w"> </span>usermod<span class="w"> </span>-aG<span class="w"> </span>&lt;your_cassandra_group&gt;<span class="w"> </span>axonops
 sudo<span class="w"> </span>usermod<span class="w"> </span>-aG<span class="w"> </span>axonops<span class="w"> </span>&lt;your_cassandra_user&gt;
 </code></pre></div>
-<h2 id="step-6-startrestart-cassandra">Step 6 - Start/Restart Cassandra<a class="headerlink" href="#step-6-startrestart-cassandra" title="Permanent link">&para;</a></h2>
+<h2 id="step-6-startrestart-cassandra">Step 6 - Start/Restart Cassandra<a class="headerlink" href="#step-6-startrestart-cassandra" title="Permanent link">¶</a></h2>
 <p>To load the Axon java agent and Cassandra config changes please,</p>
 <ul>
 <li>Start the Cassandra service if stopped.</li>
 <li>Restart the Cassandra service if already running.</li>
 </ul>
-<h2 id="step-7-start-axon-agent">Step 7 - Start axon-agent<a class="headerlink" href="#step-7-start-axon-agent" title="Permanent link">&para;</a></h2>
+<h2 id="step-7-start-axon-agent">Step 7 - Start axon-agent<a class="headerlink" href="#step-7-start-axon-agent" title="Permanent link">¶</a></h2>
 <div class="highlight"><pre><span></span><code>sudo<span class="w"> </span>systemctl<span class="w"> </span>start<span class="w"> </span>axon-agent
 </code></pre></div>
-<h2 id="optional-step-8-cassandra-remote-backups-or-restore-prerequisites">(Optional) Step 8 - Cassandra Remote Backups or Restore Prerequisites<a class="headerlink" href="#optional-step-8-cassandra-remote-backups-or-restore-prerequisites" title="Permanent link">&para;</a></h2>
+<h2 id="optional-step-8-cassandra-remote-backups-or-restore-prerequisites">(Optional) Step 8 - Cassandra Remote Backups or Restore Prerequisites<a class="headerlink" href="#optional-step-8-cassandra-remote-backups-or-restore-prerequisites" title="Permanent link">¶</a></h2>
 <ul>
 <li>
 <p>If you plan to use AxonOps remote backup functionality, <strong>axonops</strong> user will require <strong>read</strong> access on Cassandra <strong>data</strong> folder.</p>
@@ -3251,7 +3272,7 @@ sudo<span class="w"> </span>usermod<span class="w"> </span>-aG<span class="w"> <
 <p>As well if you plan to Restore data with AxonOps,  <strong>axonops</strong> user will require <strong>write</strong> access to Cassandra <strong>data</strong> folder. We recommend to only provide temporary write access to <strong>axonops</strong> when required.</p>
 </li>
 </ul>
-<h4 id="cassandra-agent-package-details">Cassandra agent Package details<a class="headerlink" href="#cassandra-agent-package-details" title="Permanent link">&para;</a></h4>
+<h4 id="cassandra-agent-package-details">Cassandra agent Package details<a class="headerlink" href="#cassandra-agent-package-details" title="Permanent link">¶</a></h4>
 <ul>
 <li>Configuration: <code>/etc/axonops/axon-agent.yml</code></li>
 <li>Binary: <code>/usr/share/axonops/axon-cassandra{version}-agent.jar</code></li>
@@ -3259,13 +3280,13 @@ sudo<span class="w"> </span>usermod<span class="w"> </span>-aG<span class="w"> <
 <li>Copyright : <code>/usr/share/doc/axonops/axon-cassandra{version}-agent/copyright</code></li>
 <li>Licenses : <code>/usr/share/axonops/licenses/axon-cassandra{version}-agent/</code></li>
 </ul>
-<h4 id="axon-agent-package-details-dependency-of-cassandra-agent">axon-agent Package details (dependency of Cassandra agent)<a class="headerlink" href="#axon-agent-package-details-dependency-of-cassandra-agent" title="Permanent link">&para;</a></h4>
+<h4 id="axon-agent-package-details-dependency-of-cassandra-agent">axon-agent Package details (dependency of Cassandra agent)<a class="headerlink" href="#axon-agent-package-details-dependency-of-cassandra-agent" title="Permanent link">¶</a></h4>
 <ul>
 <li>Configuration: <code>/etc/axonops/axon-agent.yml</code></li>
 <li>Binary: <code>usr/share/axonops/axon-agent</code></li>
 <li>Logs : <code>/var/log/axonops/axon-agent.log</code></li>
 <li>Systemd service: <code>/usr/lib/systemd/system/axon-agent.service</code></li>
-</ul>
+</ul></div>
 
 
 

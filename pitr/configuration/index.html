@@ -1683,6 +1683,27 @@ data-et-multi-view="{&quot;schema&quot;:{&quot;content&quot;:{&quot;desktop&quot
   
   
     <li class="md-nav__item">
+      <a href="../../monitoring/grafana/grafana/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Metrics in Grafana
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
       <a href="../../monitoring/logsandevents/logsandevents/" class="md-nav__link">
         
   
@@ -2837,16 +2858,16 @@ data-et-multi-view="{&quot;schema&quot;:{&quot;content&quot;:{&quot;desktop&quot
 
   <h1>Configure Commitlog Archiving</h1>
 
-<h4 id="prerequisites">Prerequisites<a class="headerlink" href="#prerequisites" title="Permanent link">&para;</a></h4>
+<div><h4 id="prerequisites">Prerequisites<a class="headerlink" href="#prerequisites" title="Permanent link">¶</a></h4>
 <p>Backups are enabled and setup. For more on how to setup backups please follow the guide <a href="/operations/cassandra/backup/overview/">here</a></p>
-<h4 id="steps">Steps:<a class="headerlink" href="#steps" title="Permanent link">&para;</a></h4>
+<h4 id="steps">Steps:<a class="headerlink" href="#steps" title="Permanent link">¶</a></h4>
 <p>In the AxonOps Dashboard on the left hand menu navigate to Operations --&gt; Backups</p>
 <p><a class="glightbox" href="/pitr/pitr_left_backup.png" data-type="image" data-width="100%" data-height="auto" data-desc-position="bottom"><img src="/pitr/pitr_left_backup.png" width="200"></a></p>
 <p>On the top tab select Commitlog Archiving.</p>
 <p><a class="glightbox" href="/pitr/pitr_top_commitlog.png" data-type="image" data-width="100%" data-height="auto" data-desc-position="bottom"><img src="/pitr/pitr_top_commitlog.png" width="700"></a></p>
-<h4 id="configuration">Configuration<a class="headerlink" href="#configuration" title="Permanent link">&para;</a></h4>
+<h4 id="configuration">Configuration<a class="headerlink" href="#configuration" title="Permanent link">¶</a></h4>
 <p>Complete the fields with the required value and click <a class="glightbox" href="/pitr/create_configuration.png" data-type="image" data-width="100%" data-height="auto" data-desc-position="bottom"><img src="/pitr/create_configuration.png" width="150"></a></p>
-<h4 id="fields">Fields<a class="headerlink" href="#fields" title="Permanent link">&para;</a></h4>
+<h4 id="fields">Fields<a class="headerlink" href="#fields" title="Permanent link">¶</a></h4>
 <ul>
 <li>
 <p><strong><code>Data Centers (Mandatory)</code></strong></p>
@@ -2873,7 +2894,7 @@ data-et-multi-view="{&quot;schema&quot;:{&quot;content&quot;:{&quot;desktop&quot
 <p>This is the name of the storage buckets, you can also add subfolders if using shared storage buckets or saving multiple clusters to the same bucket. By default AxonOps will save the backups to /bucket/folder/org/clustertype/clustername/host-id/</p>
 <p>The org/clustertype/clustername/host-id/ will match the top breadcrump navigation in your AxonOps Dashboard.</p>
 </li>
-</ul>
+</ul></div>
 
 
 

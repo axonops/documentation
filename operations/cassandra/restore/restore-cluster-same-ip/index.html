@@ -1683,6 +1683,27 @@ data-et-multi-view="{&quot;schema&quot;:{&quot;content&quot;:{&quot;desktop&quot
   
   
     <li class="md-nav__item">
+      <a href="../../../../monitoring/grafana/grafana/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Metrics in Grafana
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
       <a href="../../../../monitoring/logsandevents/logsandevents/" class="md-nav__link">
         
   
@@ -2731,7 +2752,7 @@ data-et-multi-view="{&quot;schema&quot;:{&quot;content&quot;:{&quot;desktop&quot
                   
 
 
-<h1 id="restore-a-whole-cluster-from-a-remote-backup">Restore a whole cluster from a remote backup<a class="headerlink" href="#restore-a-whole-cluster-from-a-remote-backup" title="Permanent link">&para;</a></h1>
+<div><h1 id="restore-a-whole-cluster-from-a-remote-backup">Restore a whole cluster from a remote backup<a class="headerlink" href="#restore-a-whole-cluster-from-a-remote-backup" title="Permanent link">¶</a></h1>
 <p><em>Follow this procedure when you have lost all nodes in a cluster but they have been recreated in the same cluster 
 topology (Cluster, DC and rack names are all the same and the same number of nodes in each) and the replacement
 nodes have the same IP addresses as the original cluster.</em></p>
@@ -2740,40 +2761,40 @@ nodes have the same IP addresses as the original cluster.</em></p>
 sudo<span class="w"> </span>rm<span class="w"> </span>-rf<span class="w"> </span>/var/lib/cassandra/commitlog/*<span class="w"> </span>/var/lib/cassandra/data/*<span class="w"> </span>/var/lib/cassandra/hints/*<span class="w"> </span>/var/lib/cassandra/saved_caches/*
 </code></pre></div>
 <p>Allow the AxonOps user to write to the Cassandra data directory
-<div class="highlight"><pre><span></span><code>sudo<span class="w"> </span>chmod<span class="w"> </span>-R<span class="w"> </span>g+w<span class="w"> </span>/var/lib/cassandra/data
-</code></pre></div></p>
+</p><div class="highlight"><pre><span></span><code>sudo<span class="w"> </span>chmod<span class="w"> </span>-R<span class="w"> </span>g+w<span class="w"> </span>/var/lib/cassandra/data
+</code></pre></div>
 <blockquote>
 <p>These commands assume you are storing the Cassandra data in the default location <code>/var/lib/cassandra/</code>, you will
 need to change the paths shown if your data is stored at a different location</p>
 </blockquote>
 <p>Start the AxonOps agent on all nodes
-<div class="highlight"><pre><span></span><code>sudo<span class="w"> </span>systemctl<span class="w"> </span>start<span class="w"> </span>axon-agent
-</code></pre></div></p>
+</p><div class="highlight"><pre><span></span><code>sudo<span class="w"> </span>systemctl<span class="w"> </span>start<span class="w"> </span>axon-agent
+</code></pre></div>
 <p>Now open the Restore page in the AxonOps Dashboard by going to <strong><em>Operations &gt; Restore</em></strong></p>
 <div class="admonition infomy">
 <p class="admonition-title">Infomy</p>
-<p><a href="/img/cass_backups/restore.png"><img alt="restore" src="/img/cass_backups/restore.png" /></a></p>
+<p><a href="/img/cass_backups/restore.png"><img alt="restore" src="/img/cass_backups/restore.png"></a></p>
 </div>
 <p>Choose the backup you wish to restore from the list and click the <code>RESTORE</code> button</p>
 <p>This will show the details of the backup and allow you to restore to all nodes or a subset using the checkboxes in the Nodes list.</p>
 <div class="admonition infomy">
 <p class="admonition-title">Infomy</p>
-<p><a href="/img/cass_backups/restore2.png"><img alt="restore" src="/img/cass_backups/restore2.png" /></a></p>
+<p><a href="/img/cass_backups/restore2.png"><img alt="restore" src="/img/cass_backups/restore2.png"></a></p>
 </div>
 <p>Select all nodes in the checkbox list then start the restore by clicking the <code>REMOTE RESTORE</code> button.</p>
 <p>The restore progress will be displayed in the <em>Backup Restorations in Progress</em> list</p>
 <div class="admonition infomy">
 <p class="admonition-title">Infomy</p>
-<p><a href="/img/cass_backups/restores-table.png"><img alt="restore" src="/img/cass_backups/restores-table.png" /></a></p>
+<p><a href="/img/cass_backups/restores-table.png"><img alt="restore" src="/img/cass_backups/restores-table.png"></a></p>
 </div>
 <p>After the restore operation has completed successfully, fix the ownership and permissions on the Cassandra data 
 directories on all nodes in the cluster
-<div class="highlight"><pre><span></span><code>sudo<span class="w"> </span>chown<span class="w"> </span>-R<span class="w"> </span>cassandra.cassandra<span class="w"> </span>/var/lib/cassandra/data
+</p><div class="highlight"><pre><span></span><code>sudo<span class="w"> </span>chown<span class="w"> </span>-R<span class="w"> </span>cassandra.cassandra<span class="w"> </span>/var/lib/cassandra/data
 sudo<span class="w"> </span>chmod<span class="w"> </span>-R<span class="w"> </span>g-w<span class="w"> </span>/var/lib/cassandra/data
-</code></pre></div></p>
+</code></pre></div>
 <p>Start cassandra on the restored nodes, starting with the seeds first
-<div class="highlight"><pre><span></span><code>sudo<span class="w"> </span>systemctl<span class="w"> </span>start<span class="w"> </span>cassandra
-</code></pre></div></p>
+</p><div class="highlight"><pre><span></span><code>sudo<span class="w"> </span>systemctl<span class="w"> </span>start<span class="w"> </span>cassandra
+</code></pre></div></div>
 
 
 

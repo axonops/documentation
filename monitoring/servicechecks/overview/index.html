@@ -1757,6 +1757,27 @@ data-et-multi-view="{&quot;schema&quot;:{&quot;content&quot;:{&quot;desktop&quot
   
   
     <li class="md-nav__item">
+      <a href="../../grafana/grafana/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Metrics in Grafana
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
       <a href="../../logsandevents/logsandevents/" class="md-nav__link">
         
   
@@ -2837,7 +2858,7 @@ data-et-multi-view="{&quot;schema&quot;:{&quot;content&quot;:{&quot;desktop&quot
 
   <h1>Service Checks</h1>
 
-<h2 id="overview">Overview<a class="headerlink" href="#overview" title="Permanent link">&para;</a></h2>
+<div><h2 id="overview">Overview<a class="headerlink" href="#overview" title="Permanent link">¶</a></h2>
 <p>Service Checks in AxonOps allows you to configure custom checks using three types of checks:</p>
 <ol>
 <li>Shell Scripts</li>
@@ -2846,32 +2867,32 @@ data-et-multi-view="{&quot;schema&quot;:{&quot;content&quot;:{&quot;desktop&quot
 </ol>
 <p>The functionality is accessible via the <strong><em>Service Checks</em></strong> menu</p>
 <p>You can list the service checks by <strong>node</strong>:
-<a class="glightbox" href="../0.JPG" data-type="image" data-width="100%" data-height="auto" data-desc-position="bottom"><img alt="" src="../0.JPG" /></a></p>
+<a class="glightbox" href="../0.JPG" data-type="image" data-width="100%" data-height="auto" data-desc-position="bottom"><img alt="" src="../0.JPG"></a></p>
 <p>Or by <strong>services</strong>:
-<a class="glightbox" href="../1.JPG" data-type="image" data-width="100%" data-height="auto" data-desc-position="bottom"><img alt="" src="../1.JPG" /></a></p>
+<a class="glightbox" href="../1.JPG" data-type="image" data-width="100%" data-height="auto" data-desc-position="bottom"><img alt="" src="../1.JPG"></a></p>
 <p>You can click on a row within the node view to see all the <code>services</code> for that given <strong>Node</strong>.
-<a class="glightbox" href="../3.JPG" data-type="image" data-width="100%" data-height="auto" data-desc-position="bottom"><img alt="" src="../3.JPG" /></a></p>
+<a class="glightbox" href="../3.JPG" data-type="image" data-width="100%" data-height="auto" data-desc-position="bottom"><img alt="" src="../3.JPG"></a></p>
 <p>The following shows a successful check:</p>
-<p><a class="glightbox" href="../4.png" data-type="image" data-width="100%" data-height="auto" data-desc-position="bottom"><img alt="" src="../4.png" /></a></p>
+<p><a class="glightbox" href="../4.png" data-type="image" data-width="100%" data-height="auto" data-desc-position="bottom"><img alt="" src="../4.png"></a></p>
 <p>And a failing check:</p>
-<p><a class="glightbox" href="../5.png" data-type="image" data-width="100%" data-height="auto" data-desc-position="bottom"><img alt="" src="../5.png" /></a></p>
-<h2 id="configure-service-checks">Configure service checks<a class="headerlink" href="#configure-service-checks" title="Permanent link">&para;</a></h2>
+<p><a class="glightbox" href="../5.png" data-type="image" data-width="100%" data-height="auto" data-desc-position="bottom"><img alt="" src="../5.png"></a></p>
+<h2 id="configure-service-checks">Configure service checks<a class="headerlink" href="#configure-service-checks" title="Permanent link">¶</a></h2>
 <p>To set up the checks, go to <strong><em>Settings &gt; Service Checks</em></strong> and click one of the <code>+</code> buttons</p>
-<p><a class="glightbox" href="../2.JPG" data-type="image" data-width="100%" data-height="auto" data-desc-position="bottom"><img alt="" src="../2.JPG" /></a></p>
+<p><a class="glightbox" href="../2.JPG" data-type="image" data-width="100%" data-height="auto" data-desc-position="bottom"><img alt="" src="../2.JPG"></a></p>
 <blockquote>
 <p>Any changes made and saved are automatically pushed down to the agents. There is no need to deploy the check scripts to individual servers like you may do for instance with Nagios. The status will show once the check has been executed on the agent, so it might take some time depending on the interval you have specified within the Service Checks. Although the first execution of the checks will be spread across 30 seconds to prevent running all the checks at the same time.</p>
 </blockquote>
-<h2 id="service-checks-templating">Service checks templating<a class="headerlink" href="#service-checks-templating" title="Permanent link">&para;</a></h2>
+<h2 id="service-checks-templating">Service checks templating<a class="headerlink" href="#service-checks-templating" title="Permanent link">¶</a></h2>
 <p>You can provide templated checks with the following pattern: <code>{{.variable_name}}</code></p>
-<p><a class="glightbox" href="../2021-01-08-18-32-37.png" data-type="image" data-width="100%" data-height="auto" data-desc-position="bottom"><img alt="" src="../2021-01-08-18-32-37.png" /></a></p>
+<p><a class="glightbox" href="../2021-01-08-18-32-37.png" data-type="image" data-width="100%" data-height="auto" data-desc-position="bottom"><img alt="" src="../2021-01-08-18-32-37.png"></a></p>
 <blockquote>
 <p><code>{{.comp_listen_address}}</code> will be replace with <strong>Cassandra listen address</strong>.</p>
 </blockquote>
 <p>For instance, port <code>7000</code> in the previous example for <strong><em>check storage port</em></strong> could be replaced with <strong>{{.comp_storage_port}}</strong> on a Cassandra cluster:</p>
 <p>endpoint: <code>{{.comp_listen_address}}:{{.comp_storage_port}}</code> </p>
-<h2 id="cassandra-variables">Cassandra variables<a class="headerlink" href="#cassandra-variables" title="Permanent link">&para;</a></h2>
+<h2 id="cassandra-variables">Cassandra variables<a class="headerlink" href="#cassandra-variables" title="Permanent link">¶</a></h2>
 <p>Here is the full list of variables that can be specified in any service check:
-<div class="highlight"><pre><span></span><code>agent_version
+</p><div class="highlight"><pre><span></span><code>agent_version
 comp_PROPERTY_PREFIX
 comp_SENSITIVE_KEYS
 comp_allocate_tokens_for_keyspace
@@ -3231,7 +3252,7 @@ host_virtualmem_Writeback
 host_virtualmem_WritebackTmp
 human_readable_identifier
 human_readable_identifier_field
-</code></pre></div></p>
+</code></pre></div></div>
 
 
 

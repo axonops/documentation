@@ -1664,6 +1664,27 @@ data-et-multi-view="{&quot;schema&quot;:{&quot;content&quot;:{&quot;desktop&quot
   
   
     <li class="md-nav__item">
+      <a href="../../../monitoring/grafana/grafana/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Metrics in Grafana
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
       <a href="../../../monitoring/logsandevents/logsandevents/" class="md-nav__link">
         
   
@@ -2783,67 +2804,67 @@ data-et-multi-view="{&quot;schema&quot;:{&quot;content&quot;:{&quot;desktop&quot
                   
 
 
-<h1 id="axon-java-agent-for-dse-installation">axon-java-agent for DSE installation<a class="headerlink" href="#axon-java-agent-for-dse-installation" title="Permanent link">&para;</a></h1>
+<div><h1 id="axon-java-agent-for-dse-installation">axon-java-agent for DSE installation<a class="headerlink" href="#axon-java-agent-for-dse-installation" title="Permanent link">¶</a></h1>
 <p>This agent will enable metrics collection from DSE and enable adaptive repairs and backups.</p>
-<h2 id="prerequisites">Prerequisites<a class="headerlink" href="#prerequisites" title="Permanent link">&para;</a></h2>
+<h2 id="prerequisites">Prerequisites<a class="headerlink" href="#prerequisites" title="Permanent link">¶</a></h2>
 <p>DSE agent needs <strong>axon-agent</strong> to be installed and configured properly. If not installed already, please go to <a href="../../axon-agent/install">axon-agent</a> installation 
 page.</p>
-<h4 id="setup-axon-agent-for-dse">Setup axon-agent for DSE<a class="headerlink" href="#setup-axon-agent-for-dse" title="Permanent link">&para;</a></h4>
+<h4 id="setup-axon-agent-for-dse">Setup axon-agent for DSE<a class="headerlink" href="#setup-axon-agent-for-dse" title="Permanent link">¶</a></h4>
 <p>You'll need the specify/update the following lines from <strong>axon-agent.yml</strong> located in <code>/etc/axonops/axon-agent.yml</code>:</p>
-<p><div class="highlight"><pre><span></span><code><span class="nt">axon-server</span><span class="p">:</span>
-<span class="hll"><span class="w">    </span><span class="nt">hosts</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;axon-server_endpoint&quot;</span><span class="w"> </span><span class="c1"># Specify axon-server endpoint</span>
+<p></p><div class="highlight"><pre><span></span><code><span class="nt">axon-server</span><span class="p">:</span>
+<span class="hll"><span class="w">    </span><span class="nt">hosts</span><span class="p">:</span><span class="w"> </span><span class="s">"axon-server_endpoint"</span><span class="w"> </span><span class="c1"># Specify axon-server endpoint</span>
 </span>
 <span class="nt">axon-agent</span><span class="p">:</span>
-<span class="w">    </span><span class="nt">host</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">0.0.0.0</span><span class="w"> </span><span class="c1"># axon-agent listening address for it&#39;s OpenTSDB endpoint</span>
-<span class="w">    </span><span class="nt">port</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">9916</span><span class="w"> </span><span class="c1"># axon-agent listening port for it&#39;s OpenTSDB endpoint</span>
-<span class="w">    </span><span class="nt">org</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;your_organisation_name&quot;</span><span class="w"> </span><span class="c1"># Specify your organisation name</span>
+<span class="w">    </span><span class="nt">host</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">0.0.0.0</span><span class="w"> </span><span class="c1"># axon-agent listening address for it's OpenTSDB endpoint</span>
+<span class="w">    </span><span class="nt">port</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">9916</span><span class="w"> </span><span class="c1"># axon-agent listening port for it's OpenTSDB endpoint</span>
+<span class="w">    </span><span class="nt">org</span><span class="p">:</span><span class="w"> </span><span class="s">"your_organisation_name"</span><span class="w"> </span><span class="c1"># Specify your organisation name</span>
 <span class="hll"><span class="w">    </span><span class="nt">standalone_mode</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">false</span>
-</span><span class="hll"><span class="w">    </span><span class="nt">type</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;dse&quot;</span>
-</span><span class="hll"><span class="w">    </span><span class="c1">#cluster_name: &quot;standalone&quot; # comment that line</span>
-</span><span class="hll"><span class="w">    </span><span class="nt">ssl</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">false</span><span class="w"> </span><span class="c1"># SSL flag for it&#39;s OpenTSDB endpoint</span>
+</span><span class="hll"><span class="w">    </span><span class="nt">type</span><span class="p">:</span><span class="w"> </span><span class="s">"dse"</span>
+</span><span class="hll"><span class="w">    </span><span class="c1">#cluster_name: "standalone" # comment that line</span>
+</span><span class="hll"><span class="w">    </span><span class="nt">ssl</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">false</span><span class="w"> </span><span class="c1"># SSL flag for it's OpenTSDB endpoint</span>
 </span></code></pre></div>
 * Set <code>standalone_mode</code> to <strong>false</strong>
 * Set <code>type</code> to <strong>dse</strong>
 * Don't forget to comment or remove the <code>cluster_name</code> as it will be deduced from DSE configuration.
-* Don't forget to specify <strong>axon-server</strong> host and port if that's not already specified.</p>
-<h2 id="dse-agent-installation">DSE agent installation<a class="headerlink" href="#dse-agent-installation" title="Permanent link">&para;</a></h2>
+* Don't forget to specify <strong>axon-server</strong> host and port if that's not already specified.
+<h2 id="dse-agent-installation">DSE agent installation<a class="headerlink" href="#dse-agent-installation" title="Permanent link">¶</a></h2>
 <p>Make sure the <code>{version}</code> of your DSE and DSE agent are compatible from the <a href="../../compat_matrix/compat_matrix">compatibility matrix</a>. </p>
-<h4 id="centos-redhat-installer">CentOS / RedHat installer<a class="headerlink" href="#centos-redhat-installer" title="Permanent link">&para;</a></h4>
+<h4 id="centos-redhat-installer">CentOS / RedHat installer<a class="headerlink" href="#centos-redhat-installer" title="Permanent link">¶</a></h4>
 <div class="highlight"><pre><span></span><code>sudo yum install &lt;TODO&gt;
 </code></pre></div>
-<h4 id="debian-ubuntu-installer">Debian / Ubuntu installer<a class="headerlink" href="#debian-ubuntu-installer" title="Permanent link">&para;</a></h4>
+<h4 id="debian-ubuntu-installer">Debian / Ubuntu installer<a class="headerlink" href="#debian-ubuntu-installer" title="Permanent link">¶</a></h4>
 <div class="highlight"><pre><span></span><code>sudo apt-get install &lt;TODO&gt;
 </code></pre></div>
-<h4 id="package-details">Package details<a class="headerlink" href="#package-details" title="Permanent link">&para;</a></h4>
+<h4 id="package-details">Package details<a class="headerlink" href="#package-details" title="Permanent link">¶</a></h4>
 <ul>
 <li>Configuration: <code>/etc/axonops/axon-java-agent.yml</code></li>
 <li>Binary: <code>usr/share/axonops/axon-dse{version}-agent-1.0.jar</code></li>
 <li>Version number: <code>usr/share/axonops/axon-dse{version}-agent-1.0.version</code></li>
 </ul>
-<h4 id="configure-dse">Configure DSE<a class="headerlink" href="#configure-dse" title="Permanent link">&para;</a></h4>
+<h4 id="configure-dse">Configure DSE<a class="headerlink" href="#configure-dse" title="Permanent link">¶</a></h4>
 <p>Edit <code>cassandra-env.sh</code> usually located in your dse install path such as <code>/&lt;path_to_DSE&gt;/resources/cassandra/conf/cassandra-env.sh</code> and add at the end of the file the following line:</p>
-<div class="highlight"><pre><span></span><code><span class="nv">JVM_OPTS</span><span class="o">=</span><span class="s2">&quot;</span><span class="nv">$JVM_OPTS</span><span class="s2"> -javaagent:/usr/share/axonops/axon-dse{version}-agent-1.0.jar=/etc/axonops/axon-java-agent.yml&quot;</span>
+<div class="highlight"><pre><span></span><code><span class="nv">JVM_OPTS</span><span class="o">=</span><span class="s2">"</span><span class="nv">$JVM_OPTS</span><span class="s2"> -javaagent:/usr/share/axonops/axon-dse{version}-agent-1.0.jar=/etc/axonops/axon-java-agent.yml"</span>
 </code></pre></div>
 <p>example:
-<div class="highlight"><pre><span></span><code><span class="nv">JVM_OPTS</span><span class="o">=</span><span class="s2">&quot;</span><span class="nv">$JVM_OPTS</span><span class="s2"> -javaagent:/usr/share/axonops/axon-dse6.0.4-agent-1.0.jar=/etc/axonops/axon-java-agent.yml&quot;</span>
-</code></pre></div></p>
-<h4 id="start-dse">Start DSE<a class="headerlink" href="#start-dse" title="Permanent link">&para;</a></h4>
+</p><div class="highlight"><pre><span></span><code><span class="nv">JVM_OPTS</span><span class="o">=</span><span class="s2">"</span><span class="nv">$JVM_OPTS</span><span class="s2"> -javaagent:/usr/share/axonops/axon-dse6.0.4-agent-1.0.jar=/etc/axonops/axon-java-agent.yml"</span>
+</code></pre></div>
+<h4 id="start-dse">Start DSE<a class="headerlink" href="#start-dse" title="Permanent link">¶</a></h4>
 <p>All you need to do now is start DSE.</p>
-<h4 id="configuration-defaults">Configuration defaults<a class="headerlink" href="#configuration-defaults" title="Permanent link">&para;</a></h4>
+<h4 id="configuration-defaults">Configuration defaults<a class="headerlink" href="#configuration-defaults" title="Permanent link">¶</a></h4>
 <div class="highlight"><pre><span></span><code><span class="nt">tier0</span><span class="p">:</span><span class="w"> </span><span class="c1"># metrics collected every 5 seconds</span>
 <span class="w">    </span><span class="nt">metrics</span><span class="p">:</span>
 <span class="w">        </span><span class="nt">jvm_</span><span class="p">:</span>
-<span class="w">          </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="s">&quot;java.lang:*&quot;</span>
+<span class="w">          </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="s">"java.lang:*"</span>
 <span class="w">        </span><span class="nt">cas_</span><span class="p">:</span>
-<span class="w">          </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="s">&quot;org.apache.cassandra.metrics:*&quot;</span>
-<span class="w">          </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="s">&quot;org.apache.cassandra.net:type=FailureDetector&quot;</span>
-<span class="w">          </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="s">&quot;com.datastax.bdp:type=dsefs,*&quot;</span>
+<span class="w">          </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="s">"org.apache.cassandra.metrics:*"</span>
+<span class="w">          </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="s">"org.apache.cassandra.net:type=FailureDetector"</span>
+<span class="w">          </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="s">"com.datastax.bdp:type=dsefs,*"</span>
 
 <span class="nt">tier1</span><span class="p">:</span>
 <span class="w">    </span><span class="nt">frequency</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">300</span><span class="w"> </span><span class="c1"># metrics collected every 300 seconds (5m)</span>
 <span class="w">    </span><span class="nt">metrics</span><span class="p">:</span>
 <span class="w">        </span><span class="nt">cas_</span><span class="p">:</span>
-<span class="w">          </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="s">&quot;org.apache.cassandra.metrics:name=EstimatedPartitionCount,*&quot;</span>
+<span class="w">          </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="s">"org.apache.cassandra.metrics:name=EstimatedPartitionCount,*"</span>
 
 <span class="c1">#tier2:</span>
 <span class="c1">#    frequency: 3600 # 1h</span>
@@ -2852,18 +2873,18 @@ page.</p>
 <span class="c1">#    frequency: 86400 # 1d</span>
 
 <span class="nt">blacklist</span><span class="p">:</span><span class="w"> </span><span class="c1"># You can blacklist metrics based on MBean query pattern</span>
-<span class="w">  </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="s">&quot;org.apache.cassandra.metrics:type=ColumnFamily,*&quot;</span><span class="w"> </span><span class="c1"># dup of tables</span>
-<span class="w">  </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="s">&quot;org.apache.cassandra.metrics:name=SnapshotsSize,*&quot;</span><span class="w"> </span><span class="c1"># generally takes time</span>
+<span class="w">  </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="s">"org.apache.cassandra.metrics:type=ColumnFamily,*"</span><span class="w"> </span><span class="c1"># dup of tables</span>
+<span class="w">  </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="s">"org.apache.cassandra.metrics:name=SnapshotsSize,*"</span><span class="w"> </span><span class="c1"># generally takes time</span>
 
 <span class="nt">free_text_blacklist</span><span class="p">:</span><span class="w"> </span><span class="c1"># You can blacklist metrics based on Regex pattern</span>
-<span class="w">  </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="s">&quot;org.apache.cassandra.metrics:type=ThreadPools,path=internal,scope=Repair#.*&quot;</span>
+<span class="w">  </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="s">"org.apache.cassandra.metrics:type=ThreadPools,path=internal,scope=Repair#.*"</span>
 
 <span class="nt">warningThresholdMillis</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">100</span><span class="w"> </span><span class="c1"># This will warn in logs when a MBean takes longer than the specified value.</span>
 
 <span class="nt">whitelisted_clients</span><span class="p">:</span><span class="w"> </span><span class="c1"># Whitelist for CQL connections</span>
-<span class="w">  </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="s">&quot;127.0.0.1&quot;</span>
-<span class="w">  </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="s">&quot;^*.*.*.*&quot;</span>
-</code></pre></div>
+<span class="w">  </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="s">"127.0.0.1"</span>
+<span class="w">  </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="s">"^*.*.*.*"</span>
+</code></pre></div></div>
 
 
 

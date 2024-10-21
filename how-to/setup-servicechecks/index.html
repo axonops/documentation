@@ -1664,6 +1664,27 @@ data-et-multi-view="{&quot;schema&quot;:{&quot;content&quot;:{&quot;desktop&quot
   
   
     <li class="md-nav__item">
+      <a href="../../monitoring/grafana/grafana/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Metrics in Grafana
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
       <a href="../../monitoring/logsandevents/logsandevents/" class="md-nav__link">
         
   
@@ -2723,33 +2744,33 @@ data-et-multi-view="{&quot;schema&quot;:{&quot;content&quot;:{&quot;desktop&quot
                   
 
 
-<h1 id="setup-service-checks">Setup Service Checks<a class="headerlink" href="#setup-service-checks" title="Permanent link">&para;</a></h1>
-<h3 id="add-service-checks">Add Service Checks<a class="headerlink" href="#add-service-checks" title="Permanent link">&para;</a></h3>
+<div><h1 id="setup-service-checks">Setup Service Checks<a class="headerlink" href="#setup-service-checks" title="Permanent link">¶</a></h1>
+<h3 id="add-service-checks">Add Service Checks<a class="headerlink" href="#add-service-checks" title="Permanent link">¶</a></h3>
 <p>On the Axonops application menu, click <code>Service Checks</code> and select <code>Setup</code> tab.</p>
 <div class="admonition infomy">
 <p class="admonition-title">Infomy</p>
-<p><a href="/img/servicecheckssetup.png"><img alt="servicecheckssetup" src="/img/servicecheckssetup.png" /></a></p>
+<p><a href="/img/servicecheckssetup.png"><img alt="servicecheckssetup" src="/img/servicecheckssetup.png"></a></p>
 </div>
-<h4 id="create-services">Create Services<a class="headerlink" href="#create-services" title="Permanent link">&para;</a></h4>
-<p>Below there few examples <code>copy</code> and <code>Paste</code> inside. and click <code>save</code> <span class="buttons"> <a href="/img/disk.png"><img alt="save" src="/img/disk.png" /></a> </span></p>
+<h4 id="create-services">Create Services<a class="headerlink" href="#create-services" title="Permanent link">¶</a></h4>
+<p>Below there few examples <code>copy</code> and <code>Paste</code> inside. and click <code>save</code> <span class="buttons"> <a href="/img/disk.png"><img alt="save" src="/img/disk.png"></a> </span></p>
 <div class="highlight"><pre><span></span><code><span class="p">{</span>
-<span class="w">    </span><span class="nt">&quot;shellchecks&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span>
+<span class="w">    </span><span class="nt">"shellchecks"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span>
 <span class="w">     </span><span class="p">{</span>
-<span class="w">        </span><span class="nt">&quot;name&quot;</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;check_elastic&quot;</span><span class="p">,</span>
-<span class="w">        </span><span class="nt">&quot;shell&quot;</span><span class="w"> </span><span class="p">:</span><span class="w">  </span><span class="s2">&quot;/bin/bash&quot;</span><span class="p">,</span>
-<span class="w">        </span><span class="nt">&quot;script&quot;</span><span class="p">:</span><span class="w">  </span><span class="s2">&quot;if [ &#39;ps auxwww | grep elastic | wc -l&#39; -lt 1 ] then exit 2 else exit 0  fi&quot;</span><span class="p">,</span>
-<span class="w">        </span><span class="nt">&quot;interval&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;5m&quot;</span><span class="w"> </span><span class="p">,</span>
-<span class="w">        </span><span class="nt">&quot;timeout&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;1m&quot;</span><span class="w"> </span>
+<span class="w">        </span><span class="nt">"name"</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="s2">"check_elastic"</span><span class="p">,</span>
+<span class="w">        </span><span class="nt">"shell"</span><span class="w"> </span><span class="p">:</span><span class="w">  </span><span class="s2">"/bin/bash"</span><span class="p">,</span>
+<span class="w">        </span><span class="nt">"script"</span><span class="p">:</span><span class="w">  </span><span class="s2">"if [ 'ps auxwww | grep elastic | wc -l' -lt 1 ] then exit 2 else exit 0  fi"</span><span class="p">,</span>
+<span class="w">        </span><span class="nt">"interval"</span><span class="p">:</span><span class="w"> </span><span class="s2">"5m"</span><span class="w"> </span><span class="p">,</span>
+<span class="w">        </span><span class="nt">"timeout"</span><span class="p">:</span><span class="w"> </span><span class="s2">"1m"</span><span class="w"> </span>
 <span class="w">     </span><span class="p">}</span>
 <span class="w">   </span><span class="p">],</span>
 
-<span class="w">   </span><span class="nt">&quot;httpchecks&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[],</span>
-<span class="w">   </span><span class="nt">&quot;tcpchecks&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span>
+<span class="w">   </span><span class="nt">"httpchecks"</span><span class="p">:</span><span class="w"> </span><span class="p">[],</span>
+<span class="w">   </span><span class="nt">"tcpchecks"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span>
 <span class="w">    </span><span class="p">{</span>
-<span class="w">        </span><span class="nt">&quot;name&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;elastic_tcp_endpoint_check&quot;</span><span class="p">,</span>
-<span class="w">        </span><span class="nt">&quot;interval&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;5s&quot;</span><span class="p">,</span>
-<span class="w">        </span><span class="nt">&quot;timeout&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;1m&quot;</span><span class="p">,</span>
-<span class="w">        </span><span class="nt">&quot;tcp&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;localhost:9200&quot;</span>
+<span class="w">        </span><span class="nt">"name"</span><span class="p">:</span><span class="w"> </span><span class="s2">"elastic_tcp_endpoint_check"</span><span class="p">,</span>
+<span class="w">        </span><span class="nt">"interval"</span><span class="p">:</span><span class="w"> </span><span class="s2">"5s"</span><span class="p">,</span>
+<span class="w">        </span><span class="nt">"timeout"</span><span class="p">:</span><span class="w"> </span><span class="s2">"1m"</span><span class="p">,</span>
+<span class="w">        </span><span class="nt">"tcp"</span><span class="p">:</span><span class="w"> </span><span class="s2">"localhost:9200"</span>
 <span class="w">    </span><span class="p">}</span>
 <span class="w">   </span><span class="p">]</span>
 
@@ -2758,22 +2779,22 @@ data-et-multi-view="{&quot;schema&quot;:{&quot;content&quot;:{&quot;desktop&quot
 <p>Example:</p>
 <div class="admonition infomy">
 <p class="admonition-title">Infomy</p>
-<p><a href="/img/servicecheckseditor.png"><img alt="servicecheckseditor" src="/img/servicecheckseditor.png" /></a></p>
+<p><a href="/img/servicecheckseditor.png"><img alt="servicecheckseditor" src="/img/servicecheckseditor.png"></a></p>
 </div>
-<h4 id="delete-services">Delete Services<a class="headerlink" href="#delete-services" title="Permanent link">&para;</a></h4>
-<p>To Delete a service <code>copy</code> and <code>Paste</code> inside. and <code>click</code> save <span class="buttons"> <a href="/img/disk.png"><img alt="save" src="/img/disk.png" /></a> </span></p>
+<h4 id="delete-services">Delete Services<a class="headerlink" href="#delete-services" title="Permanent link">¶</a></h4>
+<p>To Delete a service <code>copy</code> and <code>Paste</code> inside. and <code>click</code> save <span class="buttons"> <a href="/img/disk.png"><img alt="save" src="/img/disk.png"></a> </span></p>
 <div class="highlight"><pre><span></span><code><span class="p">{</span>
-<span class="w">    </span><span class="nt">&quot;shellchecks&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[],</span>
-<span class="w">    </span><span class="nt">&quot;httpchecks&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[],</span>
-<span class="w">    </span><span class="nt">&quot;tcpchecks&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[]</span>
+<span class="w">    </span><span class="nt">"shellchecks"</span><span class="p">:</span><span class="w"> </span><span class="p">[],</span>
+<span class="w">    </span><span class="nt">"httpchecks"</span><span class="p">:</span><span class="w"> </span><span class="p">[],</span>
+<span class="w">    </span><span class="nt">"tcpchecks"</span><span class="p">:</span><span class="w"> </span><span class="p">[]</span>
 
 <span class="p">}</span>
 </code></pre></div>
 <p>Example:</p>
 <div class="admonition infomy">
 <p class="admonition-title">Infomy</p>
-<p><a href="/img/deleteservices.png"><img alt="deleteservices" src="/img/deleteservices.png" /></a></p>
-</div>
+<p><a href="/img/deleteservices.png"><img alt="deleteservices" src="/img/deleteservices.png"></a></p>
+</div></div>
 
 
 

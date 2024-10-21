@@ -9,7 +9,7 @@
       
       
       
-        <link rel="prev" href="../../metricsdashboards/querysyntax/">
+        <link rel="prev" href="../../grafana/grafana/">
       
       
         <link rel="next" href="../../../integrations/overview/">
@@ -1682,6 +1682,27 @@ data-et-multi-view="{&quot;schema&quot;:{&quot;content&quot;:{&quot;desktop&quot
                 
   
   
+  
+  
+    <li class="md-nav__item">
+      <a href="../../grafana/grafana/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Metrics in Grafana
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
     
   
   
@@ -2879,38 +2900,38 @@ data-et-multi-view="{&quot;schema&quot;:{&quot;content&quot;:{&quot;desktop&quot
 
   <h1>Logs & Events</h1>
 
-<h3 id="logs-and-events">Logs and Events<a class="headerlink" href="#logs-and-events" title="Permanent link">&para;</a></h3>
+<div><h3 id="logs-and-events">Logs and Events<a class="headerlink" href="#logs-and-events" title="Permanent link">¶</a></h3>
 <p>AxonOps provides a powerful logging feature that allows you to search and filter logs based on different parameters such as DC/Rack/Node, Log Level, Event Type, Source and Log Content.</p>
-<p><a class="glightbox" href="../logs_ui.png" data-type="image" data-width="100%" data-height="auto" data-desc-position="bottom"><img alt="" src="../logs_ui.png" /></a></p>
+<p><a class="glightbox" href="../logs_ui.png" data-type="image" data-width="100%" data-height="auto" data-desc-position="bottom"><img alt="" src="../logs_ui.png"></a></p>
 <p>The logs and events are visible within AxonOps dashboard and Logs &amp; Events tab allowing quick access to them without having to login to the individual servers.</p>
-<h4 id="search-by-log-level">Search by Log Level<a class="headerlink" href="#search-by-log-level" title="Permanent link">&para;</a></h4>
+<h4 id="search-by-log-level">Search by Log Level<a class="headerlink" href="#search-by-log-level" title="Permanent link">¶</a></h4>
 <p>Filter logs based on their log levels to focus on specific severity levels. The log level indicates the importance or severity of a message from the most critical (ERROR) to less severe (DEBUG).</p>
-<p><a class="glightbox" href="../log_level.png" data-type="image" data-width="100%" data-height="auto" data-desc-position="bottom"><img alt="" src="../log_level.png" /></a></p>
-<h5 id="setting-up-the-debug-level">Setting up the Debug Level<a class="headerlink" href="#setting-up-the-debug-level" title="Permanent link">&para;</a></h5>
+<p><a class="glightbox" href="../log_level.png" data-type="image" data-width="100%" data-height="auto" data-desc-position="bottom"><img alt="" src="../log_level.png"></a></p>
+<h5 id="setting-up-the-debug-level">Setting up the Debug Level<a class="headerlink" href="#setting-up-the-debug-level" title="Permanent link">¶</a></h5>
 <p>To search logs by debug level you have to enable debug mode in cassandra by editing the <strong><em>logback.xml</em></strong> file:
-<div class="highlight"><pre><span></span><code>&lt;appender name=&quot;SYSTEMLOG&quot; class=&quot;ch.qos.logback.core.rolling.RollingFileAppender&quot;&gt;
-    &lt;filter class=&quot;ch.qos.logback.classic.filter.ThresholdFilter&quot;&gt;
+</p><div class="highlight"><pre><span></span><code>&lt;appender name="SYSTEMLOG" class="ch.qos.logback.core.rolling.RollingFileAppender"&gt;
+    &lt;filter class="ch.qos.logback.classic.filter.ThresholdFilter"&gt;
         &lt;level&gt;DEBUG&lt;/level&gt;
-</code></pre></div></p>
-<h4 id="search-by-logs-source-and-event-type">Search by Logs Source and Event Type<a class="headerlink" href="#search-by-logs-source-and-event-type" title="Permanent link">&para;</a></h4>
+</code></pre></div>
+<h4 id="search-by-logs-source-and-event-type">Search by Logs Source and Event Type<a class="headerlink" href="#search-by-logs-source-and-event-type" title="Permanent link">¶</a></h4>
 <p>You can filter logs based on the log source (cassandra, axon-server and axon-agent logs) and event type to narrow down search results.</p>
-<p><a class="glightbox" href="../logs_event_type1.png" data-type="image" data-width="100%" data-height="auto" data-desc-position="bottom"><img alt="" src="../logs_event_type1.png" /></a>
-<a class="glightbox" href="../logs_event_type2.png" data-type="image" data-width="100%" data-height="auto" data-desc-position="bottom"><img alt="" src="../logs_event_type2.png" /></a></p>
-<h4 id="search-by-content">Search by Content<a class="headerlink" href="#search-by-content" title="Permanent link">&para;</a></h4>
+<p><a class="glightbox" href="../logs_event_type1.png" data-type="image" data-width="100%" data-height="auto" data-desc-position="bottom"><img alt="" src="../logs_event_type1.png"></a>
+<a class="glightbox" href="../logs_event_type2.png" data-type="image" data-width="100%" data-height="auto" data-desc-position="bottom"><img alt="" src="../logs_event_type2.png"></a></p>
+<h4 id="search-by-content">Search by Content<a class="headerlink" href="#search-by-content" title="Permanent link">¶</a></h4>
 <p>For a free text search enter a keyword in the <strong><em>content</em></strong> input or use the <code>/&lt;expression&gt;/</code> syntax to search by regex expression.</p>
 <p>Here are some examples:</p>
 <ul>
 <li>Display logs that contain a specific word or phrase:</li>
 </ul>
-<p><a class="glightbox" href="../logs_example_regexp1.png" data-type="image" data-width="100%" data-height="auto" data-desc-position="bottom"><img alt="" src="../logs_example_regexp1.png" /></a> </p>
+<p><a class="glightbox" href="../logs_example_regexp1.png" data-type="image" data-width="100%" data-height="auto" data-desc-position="bottom"><img alt="" src="../logs_example_regexp1.png"></a> </p>
 <ul>
 <li>Display logs that contain a match either what is before or after the |, in this case "Validated" or "Compacted":</li>
 </ul>
-<p><a class="glightbox" href="../logs_example_regexp2.png" data-type="image" data-width="100%" data-height="auto" data-desc-position="bottom"><img alt="" src="../logs_example_regexp2.png" /></a></p>
+<p><a class="glightbox" href="../logs_example_regexp2.png" data-type="image" data-width="100%" data-height="auto" data-desc-position="bottom"><img alt="" src="../logs_example_regexp2.png"></a></p>
 <ul>
 <li>Display logs that contain both patterns in a line, in this case "Segment" and "deleted:</li>
 </ul>
-<p><a class="glightbox" href="../logs_example_regexp3.png" data-type="image" data-width="100%" data-height="auto" data-desc-position="bottom"><img alt="" src="../logs_example_regexp3.png" /></a></p>
+<p><a class="glightbox" href="../logs_example_regexp3.png" data-type="image" data-width="100%" data-height="auto" data-desc-position="bottom"><img alt="" src="../logs_example_regexp3.png"></a></p></div>
 
 
 
@@ -2948,7 +2969,7 @@ data-et-multi-view="{&quot;schema&quot;:{&quot;content&quot;:{&quot;desktop&quot
       <nav class="md-footer__inner md-grid" aria-label="Footer" >
         
           
-          <a href="../../metricsdashboards/querysyntax/" class="md-footer__link md-footer__link--prev" aria-label="Previous: Metrics Query Syntax">
+          <a href="../../grafana/grafana/" class="md-footer__link md-footer__link--prev" aria-label="Previous: Metrics in Grafana">
             <div class="md-footer__button md-icon">
               
               <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12Z"/></svg>
@@ -2958,7 +2979,7 @@ data-et-multi-view="{&quot;schema&quot;:{&quot;content&quot;:{&quot;desktop&quot
                 Previous
               </span>
               <div class="md-ellipsis">
-                Metrics Query Syntax
+                Metrics in Grafana
               </div>
             </div>
           </a>

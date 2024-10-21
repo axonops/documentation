@@ -1815,6 +1815,27 @@ data-et-multi-view="{&quot;schema&quot;:{&quot;content&quot;:{&quot;desktop&quot
   
   
     <li class="md-nav__item">
+      <a href="../../../monitoring/grafana/grafana/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Metrics in Grafana
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
       <a href="../../../monitoring/logsandevents/logsandevents/" class="md-nav__link">
         
   
@@ -2925,25 +2946,25 @@ data-et-multi-view="{&quot;schema&quot;:{&quot;content&quot;:{&quot;desktop&quot
                   
 
 
-<h1 id="axonops-dashgui-installation">AxonOps Dash/GUI installation<a class="headerlink" href="#axonops-dashgui-installation" title="Permanent link">&para;</a></h1>
+<div><h1 id="axonops-dashgui-installation">AxonOps Dash/GUI installation<a class="headerlink" href="#axonops-dashgui-installation" title="Permanent link">¶</a></h1>
 <p>AxonOps GUI service is installed as a separate service to AxonOps Server. The GUI service (axon-dash) can be co-hosted on the same server as the AxonOps Server process, or they can be running on 2 separate servers.</p>
 <p>This section describes the installation process for the GUI service.</p>
-<h2 id="step-1-installation">Step 1 - Installation<a class="headerlink" href="#step-1-installation" title="Permanent link">&para;</a></h2>
+<h2 id="step-1-installation">Step 1 - Installation<a class="headerlink" href="#step-1-installation" title="Permanent link">¶</a></h2>
 <p>Execute the following command to setup the AxonOps repository for your OS</p>
-<h3 id="select-the-os-family">Select the OS Family.<a class="headerlink" href="#select-the-os-family" title="Permanent link">&para;</a></h3>
+<h3 id="select-the-os-family">Select the OS Family.<a class="headerlink" href="#select-the-os-family" title="Permanent link">¶</a></h3>
 <p><label>
-  <input type="radio" id="Debian" name="osFamily" onChange="updateOS()" checked=true />
+  <input type="radio" id="Debian" name="osFamily" onchange="updateOS()" checked>
   <img src="/get_started/debian.png" class="skip-lightbox" width="180px">
 </label>
 <label>
-  <input type="radio" id="RedHat" name="osFamily" onChange="updateOS()" />
+  <input type="radio" id="RedHat" name="osFamily" onchange="updateOS()">
   <img src="/get_started/red_hat.png" class="skip-lightbox" width="180px">
 </label></p>
 <div id="DebianDiv" class="os">
     <div class="highlight"><pre><span></span><code>sudo<span class="w"> </span>apt-get<span class="w"> </span>update
 sudo<span class="w"> </span>apt-get<span class="w"> </span>install<span class="w"> </span>-y<span class="w"> </span>curl<span class="w"> </span>gnupg<span class="w"> </span>ca-certificates
 curl<span class="w"> </span>-L<span class="w"> </span>https://packages.axonops.com/apt/repo-signing-key.gpg<span class="w"> </span><span class="p">|</span><span class="w"> </span>sudo<span class="w"> </span>gpg<span class="w"> </span>--dearmor<span class="w"> </span>-o<span class="w"> </span>/usr/share/keyrings/axonops.gpg
-<span class="nb">echo</span><span class="w"> </span><span class="s2">&quot;deb [arch=arm64,amd64 signed-by=/usr/share/keyrings/axonops.gpg] https://packages.axonops.com/apt axonops-apt main&quot;</span><span class="w"> </span><span class="p">|</span><span class="w"> </span>sudo<span class="w"> </span>tee<span class="w"> </span>/etc/apt/sources.list.d/axonops-apt.list
+<span class="nb">echo</span><span class="w"> </span><span class="s2">"deb [arch=arm64,amd64 signed-by=/usr/share/keyrings/axonops.gpg] https://packages.axonops.com/apt axonops-apt main"</span><span class="w"> </span><span class="p">|</span><span class="w"> </span>sudo<span class="w"> </span>tee<span class="w"> </span>/etc/apt/sources.list.d/axonops-apt.list
 sudo<span class="w"> </span>apt-get<span class="w"> </span>update
 sudo<span class="w"> </span>apt-get<span class="w"> </span>install<span class="w"> </span>axon-dash
 </code></pre></div>
@@ -2963,7 +2984,7 @@ sudo<span class="w"> </span>yum<span class="w"> </span>install<span class="w"> <
 </code></pre></div>
 </div>
 
-<h2 id="step-2-configuration">Step 2 - Configuration<a class="headerlink" href="#step-2-configuration" title="Permanent link">&para;</a></h2>
+<h2 id="step-2-configuration">Step 2 - Configuration<a class="headerlink" href="#step-2-configuration" title="Permanent link">¶</a></h2>
 <p>Change <strong>axon-dash</strong> configuration to specify <strong>axon-server</strong> listening address.</p>
 <ul>
 <li><code>/etc/axonops/axon-dash.yml</code>
@@ -2973,14 +2994,14 @@ sudo<span class="w"> </span>yum<span class="w"> </span>install<span class="w"> <
 <span class="w">  </span><span class="nt">line_charts_max_results</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">256</span>
 
 <span class="nt">axon-server</span><span class="p">:</span>
-<span class="hll"><span class="w">  </span><span class="nt">private_endpoints</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;http://127.0.0.1:8080&quot;</span><span class="w"> </span><span class="c1"># HTTP endpoint to access axon-server API from axon-dash.</span>
-</span><span class="w">  </span><span class="nt">context_path</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;&quot;</span><span class="w"> </span><span class="c1"># example: &quot;/gui&quot;</span>
+<span class="hll"><span class="w">  </span><span class="nt">private_endpoints</span><span class="p">:</span><span class="w"> </span><span class="s">"http://127.0.0.1:8080"</span><span class="w"> </span><span class="c1"># HTTP endpoint to access axon-server API from axon-dash.</span>
+</span><span class="w">  </span><span class="nt">context_path</span><span class="p">:</span><span class="w"> </span><span class="s">""</span><span class="w"> </span><span class="c1"># example: "/gui"</span>
 </code></pre></div><blockquote>
 <p>axon-server default API port is <strong>8080</strong></p>
 </blockquote>
 </li>
 </ul>
-<h2 id="step-3-axon-server-configuration-update">Step 3 - axon-server configuration update<a class="headerlink" href="#step-3-axon-server-configuration-update" title="Permanent link">&para;</a></h2>
+<h2 id="step-3-axon-server-configuration-update">Step 3 - axon-server configuration update<a class="headerlink" href="#step-3-axon-server-configuration-update" title="Permanent link">¶</a></h2>
 <p>if required, update <strong>axon-server</strong> configuration by setting the correct <strong>axon-dash</strong> <strong>host</strong> and <strong>port</strong>:</p>
 <ul>
 <li><code>/etc/axonops/axon-server.yml</code></li>
@@ -2992,16 +3013,16 @@ sudo<span class="w"> </span>yum<span class="w"> </span>install<span class="w"> <
 <span class="w">  </span><span class="nt">https</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">false</span>
 <span class="nn">...</span>
 </code></pre></div>
-<h2 id="step-4-restart-axon-server-after-updating-its-configuration">Step 4 - Restart <strong>axon-server</strong> after updating its configuration<a class="headerlink" href="#step-4-restart-axon-server-after-updating-its-configuration" title="Permanent link">&para;</a></h2>
+<h2 id="step-4-restart-axon-server-after-updating-its-configuration">Step 4 - Restart <strong>axon-server</strong> after updating its configuration<a class="headerlink" href="#step-4-restart-axon-server-after-updating-its-configuration" title="Permanent link">¶</a></h2>
 <div class="highlight"><pre><span></span><code>sudo<span class="w"> </span>systemctl<span class="w"> </span>restart<span class="w"> </span>axon-server
 </code></pre></div>
-<h2 id="step-5-start-axon-dash">Step 5 - Start axon-dash<a class="headerlink" href="#step-5-start-axon-dash" title="Permanent link">&para;</a></h2>
+<h2 id="step-5-start-axon-dash">Step 5 - Start axon-dash<a class="headerlink" href="#step-5-start-axon-dash" title="Permanent link">¶</a></h2>
 <div class="highlight"><pre><span></span><code>sudo<span class="w"> </span>systemctl<span class="w"> </span>daemon-reload
 sudo<span class="w"> </span>systemctl<span class="w"> </span>start<span class="w"> </span>axon-dash
 sudo<span class="w"> </span>systemctl<span class="w"> </span>status<span class="w"> </span>axon-dash
 </code></pre></div>
 <p>This will start the <strong>axon-dash</strong> process as the <strong>axonops</strong> user, which was created during the package installation. The default listening address is <code>0.0.0.0:3000</code>.</p>
-<h4 id="package-details">Package details<a class="headerlink" href="#package-details" title="Permanent link">&para;</a></h4>
+<h4 id="package-details">Package details<a class="headerlink" href="#package-details" title="Permanent link">¶</a></h4>
 <ul>
 <li>Configuration: <code>/etc/axonops/axon-dash.yml</code></li>
 <li>Binary: <code>/usr/share/axonops/axon-dash</code></li>
@@ -3010,8 +3031,8 @@ sudo<span class="w"> </span>systemctl<span class="w"> </span>status<span class="
 <li>Copyright : <code>/usr/share/doc/axonops/axon-dash/copyright</code></li>
 <li>Licenses : <code>/usr/share/axonops/licenses/axon-dash/</code></li>
 </ul>
-<h2 id="step-6-installing-agents">Step 6 - Installing agents<a class="headerlink" href="#step-6-installing-agents" title="Permanent link">&para;</a></h2>
-<p>Now <strong>axon-dash</strong> is installed, you can start installing <a href="../../cassandra-agent/install/">cassandra-agent</a></p>
+<h2 id="step-6-installing-agents">Step 6 - Installing agents<a class="headerlink" href="#step-6-installing-agents" title="Permanent link">¶</a></h2>
+<p>Now <strong>axon-dash</strong> is installed, you can start installing <a href="../../cassandra-agent/install/">cassandra-agent</a></p></div>
 
 
 

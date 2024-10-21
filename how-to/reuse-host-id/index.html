@@ -1683,6 +1683,27 @@ data-et-multi-view="{&quot;schema&quot;:{&quot;content&quot;:{&quot;desktop&quot
   
   
     <li class="md-nav__item">
+      <a href="../../monitoring/grafana/grafana/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Metrics in Grafana
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
       <a href="../../monitoring/logsandevents/logsandevents/" class="md-nav__link">
         
   
@@ -2731,7 +2752,7 @@ data-et-multi-view="{&quot;schema&quot;:{&quot;content&quot;:{&quot;desktop&quot
                   
 
 
-<h1 id="re-using-an-existing-host-id">Re-using an existing Host ID<a class="headerlink" href="#re-using-an-existing-host-id" title="Permanent link">&para;</a></h1>
+<div><h1 id="re-using-an-existing-host-id">Re-using an existing Host ID<a class="headerlink" href="#re-using-an-existing-host-id" title="Permanent link">¶</a></h1>
 <p>Each agent connected to the AxonOps server is assigned a unique host ID that is used internally to associate metrics and events with the node. If a Cassandra host dies and is replaced by another one with the same IP and token range then normally a new host ID will be generated and the replacement server will appear as a new machine in AxonOps. In this situation it is possible to re-use the same host ID so AxonOps sees the replacement server as the same as the original one.</p>
 <p>You can find the host ID of a node in the AxonOps GUI by going to Cluster Overview and selecting a node. In Graph View the host ID is shown next to the hostname in the details panel and in List View it is shown as Agent ID at the top of the details popup. If the old server's filesystem is still accessible you can also find the host ID stored in <code>/var/lib/axonops/hostId</code>.</p>
 <p>Follow these steps to start up a replacement server using the old host ID:</p>
@@ -2740,7 +2761,7 @@ data-et-multi-view="{&quot;schema&quot;:{&quot;content&quot;:{&quot;desktop&quot
 <li>Stop axon-agent if it is running then delete these files if they exist: <code>/var/lib/axonops/hostId</code>, <code>/var/lib/axonops/local.db</code></li>
 <li>Create a new file at <code>/var/lib/axonops/hostId</code> containing the host ID you wish to use</li>
 <li>Start axon-agent</li>
-</ol>
+</ol></div>
 
 
 

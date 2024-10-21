@@ -1659,6 +1659,27 @@ data-et-multi-view="{&quot;schema&quot;:{&quot;content&quot;:{&quot;desktop&quot
   
   
     <li class="md-nav__item">
+      <a href="../../../monitoring/grafana/grafana/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Metrics in Grafana
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
       <a href="../../../monitoring/logsandevents/logsandevents/" class="md-nav__link">
         
   
@@ -2677,29 +2698,29 @@ data-et-multi-view="{&quot;schema&quot;:{&quot;content&quot;:{&quot;desktop&quot
 
   <h1>Java</h1>
 
-<p>Edit cassandra-env.sh, usually located in your Cassandra install path such as: </p>
+<div><p>Edit cassandra-env.sh, usually located in your Cassandra install path such as: </p>
 <p><code>/&lt;Cassandra Installation Directory&gt;/conf/cassandra-env.sh</code></p>
 <p>Add the following line at the end of the file:</p>
 <div id="Cassandra30Div" class="javacas">
-  <div class="highlight"><pre><span></span><code>JVM_OPTS=&quot;$JVM_OPTS -javaagent:/usr/share/axonops/axon-cassandra3.0-agent.jar=/etc/axonops/axon-agent.yml&quot;
+  <div class="highlight"><pre><span></span><code>JVM_OPTS="$JVM_OPTS -javaagent:/usr/share/axonops/axon-cassandra3.0-agent.jar=/etc/axonops/axon-agent.yml"
 </code></pre></div>
 </div>
 <div id="Cassandra311Div" class="javacas" style="display:none">
-  <div class="highlight"><pre><span></span><code>JVM_OPTS=&quot;$JVM_OPTS -javaagent:/usr/share/axonops/axon-cassandra3.11-agent.jar=/etc/axonops/axon-agent.yml&quot;
+  <div class="highlight"><pre><span></span><code>JVM_OPTS="$JVM_OPTS -javaagent:/usr/share/axonops/axon-cassandra3.11-agent.jar=/etc/axonops/axon-agent.yml"
 </code></pre></div>
 </div>
 <div id="Cassandra40Div" class="javacas" style="display:none">
-  <div class="highlight"><pre><span></span><code>JVM_OPTS=&quot;$JVM_OPTS -javaagent:/usr/share/axonops/axon-cassandra4.0-agent.jar=/etc/axonops/axon-agent.yml&quot;
+  <div class="highlight"><pre><span></span><code>JVM_OPTS="$JVM_OPTS -javaagent:/usr/share/axonops/axon-cassandra4.0-agent.jar=/etc/axonops/axon-agent.yml"
 </code></pre></div>
 </div>
 <div id="Cassandra41Div" class="javacas" style="display:none">
-  <div class="highlight"><pre><span></span><code>JVM_OPTS=&quot;$JVM_OPTS -javaagent:/usr/share/axonops/axon-cassandra4.1-agent.jar=/etc/axonops/axon-agent.yml&quot;
+  <div class="highlight"><pre><span></span><code>JVM_OPTS="$JVM_OPTS -javaagent:/usr/share/axonops/axon-cassandra4.1-agent.jar=/etc/axonops/axon-agent.yml"
 </code></pre></div>
 </div>
 <div id="Cassandra50Div" class="javacas" style="display:none">
-  <div class="highlight"><pre><span></span><code>JVM_OPTS=&quot;$JVM_OPTS -javaagent:/usr/share/axonops/axon-cassandra5.0-agent.jar=/etc/axonops/axon-agent.yml&quot;
+  <div class="highlight"><pre><span></span><code>JVM_OPTS="$JVM_OPTS -javaagent:/usr/share/axonops/axon-cassandra5.0-agent.jar=/etc/axonops/axon-agent.yml"
 </code></pre></div>
-</div>
+</div></div>
 
 
 

@@ -1664,6 +1664,27 @@ data-et-multi-view="{&quot;schema&quot;:{&quot;content&quot;:{&quot;desktop&quot
   
   
     <li class="md-nav__item">
+      <a href="../../../monitoring/grafana/grafana/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Metrics in Grafana
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
       <a href="../../../monitoring/logsandevents/logsandevents/" class="md-nav__link">
         
   
@@ -2732,7 +2753,7 @@ data-et-multi-view="{&quot;schema&quot;:{&quot;content&quot;:{&quot;desktop&quot
 
   <h1>Install</h1>
 
-<h2 id="step-3-axon-server-configurations">Step 3 - axon-server configurations<a class="headerlink" href="#step-3-axon-server-configurations" title="Permanent link">&para;</a></h2>
+<div><h2 id="step-3-axon-server-configurations">Step 3 - axon-server configurations<a class="headerlink" href="#step-3-axon-server-configurations" title="Permanent link">¶</a></h2>
 <p>Make sure <strong>elastic_host</strong> and <strong>elastic_port</strong> are corresponding to your Elasticsearch instance.</p>
 <p><strong>Basic Auth in Elasticsearch</strong> </p>
 <ul>
@@ -2756,20 +2777,20 @@ data-et-multi-view="{&quot;schema&quot;:{&quot;content&quot;:{&quot;desktop&quot
 </span>
 <span class="c1"># SSL/TLS Settings for AxonOps Agent connections</span>
 <span class="nt">tls</span><span class="p">:</span>
-<span class="w">  </span><span class="nt">mode</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;disabled&quot;</span><span class="w"> </span><span class="c1"># disabled, TLS</span>
+<span class="w">  </span><span class="nt">mode</span><span class="p">:</span><span class="w"> </span><span class="s">"disabled"</span><span class="w"> </span><span class="c1"># disabled, TLS</span>
 
 <span class="nt">axon-dash</span><span class="p">:</span><span class="w"> </span><span class="c1"># This must point to the axon-dash address accessible from axon-server</span>
 <span class="w">  </span><span class="nt">host</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">127.0.0.1</span>
 <span class="w">  </span><span class="nt">port</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">3000</span>
 <span class="w">  </span><span class="nt">https</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">false</span>
 </code></pre></div>
-<h2 id="step-4-start-the-server">Step 4 - Start the server<a class="headerlink" href="#step-4-start-the-server" title="Permanent link">&para;</a></h2>
+<h2 id="step-4-start-the-server">Step 4 - Start the server<a class="headerlink" href="#step-4-start-the-server" title="Permanent link">¶</a></h2>
 <div class="highlight"><pre><span></span><code>sudo systemctl daemon-reload
 sudo systemctl start axon-server
 sudo systemctl status axon-server
 </code></pre></div>
 <p>This will start the <code>axon-server</code> process as the <code>axonops</code> user, which was created during the package installation.  The default listening address is <code>0.0.0.0:8080</code>.</p>
-<h4 id="package-details">Package details<a class="headerlink" href="#package-details" title="Permanent link">&para;</a></h4>
+<h4 id="package-details">Package details<a class="headerlink" href="#package-details" title="Permanent link">¶</a></h4>
 <ul>
 <li>Configuration: <code>/etc/axonops/axon-server.yml</code></li>
 <li>Binary: <code>/usr/share/axonops/axon-server</code></li>
@@ -2778,8 +2799,8 @@ sudo systemctl status axon-server
 <li>Copyright : <code>/usr/share/doc/axonops/axon-server/copyright</code></li>
 <li>Licenses : <code>/usr/share/axonops/licenses/axon-server/</code></li>
 </ul>
-<h2 id="step-5-installing-axon-dash">Step 5 - Installing axon-dash<a class="headerlink" href="#step-5-installing-axon-dash" title="Permanent link">&para;</a></h2>
-<p>Now <strong>axon-server</strong> is installed, you can start installing the GUI for it: <a href="../../axon-dash/install/">axon-dash</a></p>
+<h2 id="step-5-installing-axon-dash">Step 5 - Installing axon-dash<a class="headerlink" href="#step-5-installing-axon-dash" title="Permanent link">¶</a></h2>
+<p>Now <strong>axon-server</strong> is installed, you can start installing the GUI for it: <a href="../../axon-dash/install/">axon-dash</a></p></div>
 
 
 

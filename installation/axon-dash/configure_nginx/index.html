@@ -1758,6 +1758,27 @@ data-et-multi-view="{&quot;schema&quot;:{&quot;content&quot;:{&quot;desktop&quot
   
   
     <li class="md-nav__item">
+      <a href="../../../monitoring/grafana/grafana/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Metrics in Grafana
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
       <a href="../../../monitoring/logsandevents/logsandevents/" class="md-nav__link">
         
   
@@ -2811,12 +2832,12 @@ data-et-multi-view="{&quot;schema&quot;:{&quot;content&quot;:{&quot;desktop&quot
                   
 
 
-<h1 id="configure-nginx">Configure Nginx<a class="headerlink" href="#configure-nginx" title="Permanent link">&para;</a></h1>
+<div><h1 id="configure-nginx">Configure Nginx<a class="headerlink" href="#configure-nginx" title="Permanent link">¶</a></h1>
 <p>AxonOps Dashboard does not support SSL/TLS and needs to be fronted by Nginx.</p>
 <p>Setting up SSL/TLS connection to AxonOps Dashboarb/UI</p>
-<h2 id="installing-nginx">Installing Nginx<a class="headerlink" href="#installing-nginx" title="Permanent link">&para;</a></h2>
+<h2 id="installing-nginx">Installing Nginx<a class="headerlink" href="#installing-nginx" title="Permanent link">¶</a></h2>
 <p>Please follow the <a href="https://docs.nginx.com/nginx/admin-guide/installing-nginx/installing-nginx-open-source/" target="_blank">Installing Nginx</a> guide.</p>
-<h2 id="configuration-file-location">Configuration file location<a class="headerlink" href="#configuration-file-location" title="Permanent link">&para;</a></h2>
+<h2 id="configuration-file-location">Configuration file location<a class="headerlink" href="#configuration-file-location" title="Permanent link">¶</a></h2>
 <p>Most installations of Nginx have the default config location at <code>/etc/nginx/</code></p>
 <p>The default location depends on whether or not the installation is from an archive distribution (tar.gz or zip) or a package distribution (Debian or RPM packages).</p>
 <p>Based on the installation the default location can be either:</p>
@@ -2825,7 +2846,7 @@ data-et-multi-view="{&quot;schema&quot;:{&quot;content&quot;:{&quot;desktop&quot
 - /usr/local/etc/nginx
 </code></pre></div>
 <p>For more info on Nginx configuration please read <a href="https://docs.nginx.com/nginx/admin-guide/basic-functionality/managing-configuration-files/#:~:text=By%20default%20the%20file%20is,local%2Fetc%2Fnginx." target="_blank">Creating Nginx Configuration Files</a></p>
-<h2 id="nginx-config-file">Nginx config file<a class="headerlink" href="#nginx-config-file" title="Permanent link">&para;</a></h2>
+<h2 id="nginx-config-file">Nginx config file<a class="headerlink" href="#nginx-config-file" title="Permanent link">¶</a></h2>
 <p>Edit <code>/etc/nginx/nginx.conf</code> and add/update the following line</p>
 <div class="highlight"><pre><span></span><code>server {
   listen &lt;ip&gt;:443 ssl;
@@ -2845,7 +2866,7 @@ data-et-multi-view="{&quot;schema&quot;:{&quot;content&quot;:{&quot;desktop&quot
     proxy_pass http://localhost:3000; #Default AxonOps-Dash port
   }
 }
-</code></pre></div>
+</code></pre></div></div>
 
 
 

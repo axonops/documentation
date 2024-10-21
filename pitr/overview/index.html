@@ -1683,6 +1683,27 @@ data-et-multi-view="{&quot;schema&quot;:{&quot;content&quot;:{&quot;desktop&quot
   
   
     <li class="md-nav__item">
+      <a href="../../monitoring/grafana/grafana/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Metrics in Grafana
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
       <a href="../../monitoring/logsandevents/logsandevents/" class="md-nav__link">
         
   
@@ -2859,9 +2880,9 @@ data-et-multi-view="{&quot;schema&quot;:{&quot;content&quot;:{&quot;desktop&quot
                   
 
 
-<h1 id="point-in-time-recovery">Point in Time Recovery<a class="headerlink" href="#point-in-time-recovery" title="Permanent link">&para;</a></h1>
+<div><h1 id="point-in-time-recovery">Point in Time Recovery<a class="headerlink" href="#point-in-time-recovery" title="Permanent link">¶</a></h1>
 <p>The aim of the AxonOps Cassandra Commitlog Archiving(PITR) feature is to provide an easy to use graphical user interface instead of users having to configure it manually on every Cassandra node in a cluster.</p>
-<h4 id="features">Features<a class="headerlink" href="#features" title="Permanent link">&para;</a></h4>
+<h4 id="features">Features<a class="headerlink" href="#features" title="Permanent link">¶</a></h4>
 <ul>
 <li>UI to configure Commitlog archiving per Data Center(DC) in your cluster.</li>
 <li>UI that uses backups and commitlogs to specify the Point-in-Time to restore your cluster state too. </li>
@@ -2869,7 +2890,7 @@ data-et-multi-view="{&quot;schema&quot;:{&quot;content&quot;:{&quot;desktop&quot
 <li>Local or Remote Storage locations to store your commitlog archives.</li>
 <li>Retention periods for how long to keep your commitlog archives.</li>
 </ul>
-<h4 id="understanding-commitlog-archiving">Understanding Commitlog Archiving<a class="headerlink" href="#understanding-commitlog-archiving" title="Permanent link">&para;</a></h4>
+<h4 id="understanding-commitlog-archiving">Understanding Commitlog Archiving<a class="headerlink" href="#understanding-commitlog-archiving" title="Permanent link">¶</a></h4>
 <p>In Apache Cassandra, the commitlog is a vital component of the database that records every write operation before it is applied to the data files (SSTables). 
 This mechanism ensures durability and helps recover data in case of a node failure.</p>
 <p>Commitlog Archiving takes this a step further by continuously saving these logs to a secure location. This process involves:</p>
@@ -2888,7 +2909,7 @@ This mechanism ensures durability and helps recover data in case of a node failu
 </li>
 </ul>
 <p>This archiving process is essential for maintaining data integrity, enabling disaster recovery, and supporting compliance with data retention policies.</p>
-<h4 id="point-in-time-restore-pitr">Point-in-Time Restore (PITR)<a class="headerlink" href="#point-in-time-restore-pitr" title="Permanent link">&para;</a></h4>
+<h4 id="point-in-time-restore-pitr">Point-in-Time Restore (PITR)<a class="headerlink" href="#point-in-time-restore-pitr" title="Permanent link">¶</a></h4>
 <p>Point-in-Time Restore (PITR) is a powerful feature that allows you to restore your database to a specific moment in time.
 This is particularly useful for recovering from data corruption, accidental deletions, or other operational errors.</p>
 <p>Here’s how PITR works in Apache Cassandra:</p>
@@ -2909,7 +2930,7 @@ This is particularly useful for recovering from data corruption, accidental dele
 </ul>
 <p>PITR is invaluable for maintaining business continuity and minimizing data loss in critical situations.
 It provides a granular level of control over data recovery, allowing enterprises to revert their databases to any precise moment before an issue occurred.</p>
-<h4 id="why-commitlog-archiving-and-pitr-matter">Why Commitlog Archiving and PITR Matter<a class="headerlink" href="#why-commitlog-archiving-and-pitr-matter" title="Permanent link">&para;</a></h4>
+<h4 id="why-commitlog-archiving-and-pitr-matter">Why Commitlog Archiving and PITR Matter<a class="headerlink" href="#why-commitlog-archiving-and-pitr-matter" title="Permanent link">¶</a></h4>
 <p>Commitlog archiving and PITR are not just advanced database features; they are essential tools for enterprise-grade data management. They ensure that:
   - <strong><code>Data Integrity</code></strong></p>
 <div class="codehilite"><pre><span></span><code>Your data remains accurate and consistent, even in the face of failures.
@@ -2929,11 +2950,11 @@ It provides a granular level of control over data recovery, allowing enterprises
 <p>You can handle accidental data modifications or deletions without significant downtime.</p>
 </li>
 </ul>
-<h4 id="the-traditional-challenges-of-cassandra-commitlog-archiving-and-point-in-time-restore">The Traditional Challenges of Cassandra Commitlog Archiving and Point-in-Time Restore<a class="headerlink" href="#the-traditional-challenges-of-cassandra-commitlog-archiving-and-point-in-time-restore" title="Permanent link">&para;</a></h4>
+<h4 id="the-traditional-challenges-of-cassandra-commitlog-archiving-and-point-in-time-restore">The Traditional Challenges of Cassandra Commitlog Archiving and Point-in-Time Restore<a class="headerlink" href="#the-traditional-challenges-of-cassandra-commitlog-archiving-and-point-in-time-restore" title="Permanent link">¶</a></h4>
 <p>Typically, setting up Commitlog Archiving and Point-in-Time Restore in Cassandra is a complex and time-consuming process. 
 It involves configuring various components, ensuring compatibility between different systems, and maintaining an intricate setup that can often be fragile and prone to errors.
 These configurations require in-depth knowledge and continuous monitoring to ensure everything runs smoothly.</p>
-<p>Setup Commitlog (PITR) in a couple easy steps <a href="/pitr/configuration/">here</a></p>
+<p>Setup Commitlog (PITR) in a couple easy steps <a href="/pitr/configuration/">here</a></p></div>
 
 
 

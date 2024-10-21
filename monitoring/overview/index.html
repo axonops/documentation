@@ -1757,6 +1757,27 @@ data-et-multi-view="{&quot;schema&quot;:{&quot;content&quot;:{&quot;desktop&quot
   
   
     <li class="md-nav__item">
+      <a href="../grafana/grafana/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Metrics in Grafana
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
       <a href="../logsandevents/logsandevents/" class="md-nav__link">
         
   
@@ -2837,28 +2858,28 @@ data-et-multi-view="{&quot;schema&quot;:{&quot;content&quot;:{&quot;desktop&quot
 
   <h1>Monitoring Overview</h1>
 
-<p>When monitoring enterprise service there are 3 categories of how the service is performing that we generally capture and monitor. These are;</p>
+<div><p>When monitoring enterprise service there are 3 categories of how the service is performing that we generally capture and monitor. These are;</p>
 <ul>
 <li>Performance metrics</li>
 <li>Events (logs)</li>
 <li>Service availability</li>
 </ul>
-<h3 id="performance-metrics">Performance Metrics<a class="headerlink" href="#performance-metrics" title="Permanent link">&para;</a></h3>
+<h3 id="performance-metrics">Performance Metrics<a class="headerlink" href="#performance-metrics" title="Permanent link">¶</a></h3>
 <p>Performance metrics in Cassandra is highly extensive and there is a large number that can be captured to understand how Cassandra is performing. Another key metrics that also must be captured in order to effectively understand the performance of a database is the system resource utilisation.</p>
 <p>AxonOps agent captures both Cassandra and OS metrics and pushes them to the AxonOps server.</p>
-<h3 id="events">Events<a class="headerlink" href="#events" title="Permanent link">&para;</a></h3>
+<h3 id="events">Events<a class="headerlink" href="#events" title="Permanent link">¶</a></h3>
 <p>Cassandra event logs are, by default, written to log files. There are important information in the log files that allows SREs and DevOps engineers to identify issues when they occur. AxonOps agent captures the logs and pushes them to the AxonOps server. These logs are visible within AxonOps dashboard allowing quick access to them without having to log in to the individual servers.</p>
-<h3 id="service-availability">Service Availability<a class="headerlink" href="#service-availability" title="Permanent link">&para;</a></h3>
+<h3 id="service-availability">Service Availability<a class="headerlink" href="#service-availability" title="Permanent link">¶</a></h3>
 <p>Checking the momentary service availability and dashboards gives confidence that all services are running correctly as expected. Example service checks that allow engineers to gain confidence in the service availability are:</p>
 <ul>
 <li>System process</li>
 <li>Network open ports - e.g. CQL and storage ports</li>
 <li>Database availability - e.g. can execute CQL query</li>
 </ul>
-<h2 id="axonops-monitoring">AxonOps Monitoring<a class="headerlink" href="#axonops-monitoring" title="Permanent link">&para;</a></h2>
+<h2 id="axonops-monitoring">AxonOps Monitoring<a class="headerlink" href="#axonops-monitoring" title="Permanent link">¶</a></h2>
 <p>AxonOps implements all three types of monitoring described above. AxonOps agent captures the information, sends them securely to AxonOps server, and the information is stored in the backend data store.</p>
 <p>AxonOps GUI provides comprehensive set of metrics dashboards combined with the event log view. It also provides separate service check status view showing the health of the cluster.</p>
-<p>This section describes how the AxonOps GUI organises the dashboards of all three types of monitoring.</p>
+<p>This section describes how the AxonOps GUI organises the dashboards of all three types of monitoring.</p></div>
 
 
 

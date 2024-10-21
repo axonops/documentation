@@ -1664,6 +1664,27 @@ data-et-multi-view="{&quot;schema&quot;:{&quot;content&quot;:{&quot;desktop&quot
   
   
     <li class="md-nav__item">
+      <a href="../../../monitoring/grafana/grafana/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Metrics in Grafana
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
       <a href="../../../monitoring/logsandevents/logsandevents/" class="md-nav__link">
         
   
@@ -2732,7 +2753,7 @@ data-et-multi-view="{&quot;schema&quot;:{&quot;content&quot;:{&quot;desktop&quot
 
   <h1>Install</h1>
 
-<h2 id="step-3-axon-server-configurations">Step 3 - axon-server configurations<a class="headerlink" href="#step-3-axon-server-configurations" title="Permanent link">&para;</a></h2>
+<div><h2 id="step-3-axon-server-configurations">Step 3 - axon-server configurations<a class="headerlink" href="#step-3-axon-server-configurations" title="Permanent link">¶</a></h2>
 <p>Make sure <strong>elastic_host</strong> and <strong>elastic_port</strong> are corresponding to your Elasticsearch instance.</p>
 <p><strong>Basic Auth in Elasticsearch</strong> </p>
 <ul>
@@ -2768,12 +2789,12 @@ data-et-multi-view="{&quot;schema&quot;:{&quot;content&quot;:{&quot;desktop&quot
 
 <span class="c1"># SSL/TLS Settings for AxonOps Agent connections</span>
 <span class="nt">tls</span><span class="p">:</span>
-<span class="w">  </span><span class="nt">mode</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;disabled&quot;</span><span class="w"> </span><span class="c1"># disabled, TLS</span>
+<span class="w">  </span><span class="nt">mode</span><span class="p">:</span><span class="w"> </span><span class="s">"disabled"</span><span class="w"> </span><span class="c1"># disabled, TLS</span>
 <span class="w">  </span><span class="c1"># Only set if mode is TLS</span>
 <span class="w">  </span><span class="nt">skipVerify</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">false</span><span class="w"> </span><span class="c1"># Disables CA and Hostname verification</span>
-<span class="w">  </span><span class="nt">caFile</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;path_to_certs_on_axonops_server.crt&quot;</span>
-<span class="w">  </span><span class="nt">certFile</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;path_to_certs_on_axonops_server.crt&quot;</span>
-<span class="w">  </span><span class="nt">keyFile</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;path_to_key_file_on_axonops_server.key&quot;</span>
+<span class="w">  </span><span class="nt">caFile</span><span class="p">:</span><span class="w"> </span><span class="s">"path_to_certs_on_axonops_server.crt"</span>
+<span class="w">  </span><span class="nt">certFile</span><span class="p">:</span><span class="w"> </span><span class="s">"path_to_certs_on_axonops_server.crt"</span>
+<span class="w">  </span><span class="nt">keyFile</span><span class="p">:</span><span class="w"> </span><span class="s">"path_to_key_file_on_axonops_server.key"</span>
 
 <span class="c1"># For better performance on large clusters, you can use a CQL store for the metrics.</span>
 <span class="c1"># To opt-in for CQL metrics storage, just specify at least one CQL host.</span>
@@ -2781,8 +2802,8 @@ data-et-multi-view="{&quot;schema&quot;:{&quot;content&quot;:{&quot;desktop&quot
 <span class="c1">#cql_hosts: #  (CQL_HOSTS, comma separated list)</span>
 <span class="c1">#  - 192.168.0.10:9042</span>
 <span class="c1">#  - 192.168.0.11:9042</span>
-<span class="c1">#cql_username: &quot;cassandra&quot; # (CQL_USERNAME)</span>
-<span class="c1">#cql_password: &quot;cassandra&quot; # (CQL_PASSWORD)</span>
+<span class="c1">#cql_username: "cassandra" # (CQL_USERNAME)</span>
+<span class="c1">#cql_password: "cassandra" # (CQL_PASSWORD)</span>
 <span class="c1">#cql_local_dc: datacenter1 # (CQL_LOCAL_DC)</span>
 <span class="c1">#cql_ssl: false # (CQL_SSL)</span>
 <span class="c1">#cql_skip_verify: false  # (CQL_SSL_SKIP_VERIFY)</span>
@@ -2794,7 +2815,7 @@ data-et-multi-view="{&quot;schema&quot;:{&quot;content&quot;:{&quot;desktop&quot
 <span class="c1">#cql_batch_size: 1  # (CQL_BATCH_SIZE)</span>
 <span class="c1">#cql_page_size: 10  # (CQL_PAGE_SIZE)</span>
 <span class="c1">#cql_autocreate_tables: true # (CQL_AUTO_CREATE_TABLES) this will tell axon-server to automatically create the metrics tables (true is recommended)</span>
-<span class="c1">#cql_keyspace_replication: &quot;{ &#39;class&#39; : &#39;SimpleStrategy&#39;, &#39;replication_factor&#39; : 1 }&quot; # (CQL_KS_REPLICATION) keyspace replication for the metrics tables</span>
+<span class="c1">#cql_keyspace_replication: "{ 'class' : 'SimpleStrategy', 'replication_factor' : 1 }" # (CQL_KS_REPLICATION) keyspace replication for the metrics tables</span>
 <span class="c1">#cql_retrypolicy_numretries: 3  # (CQL_RETRY_POLICY_NUM_RETRIES)</span>
 <span class="c1">#cql_retrypolicy_min: 1s  # (CQL_RETRY_POLICY_MIN)</span>
 <span class="c1">#cql_retrypolicy_max: 10s  # (CQL_RETRY_POLICY_MAX)</span>
@@ -2802,8 +2823,8 @@ data-et-multi-view="{&quot;schema&quot;:{&quot;content&quot;:{&quot;desktop&quot
 <span class="c1">#cql_reconnectionpolicy_initialinterval: 1s # (CQL_RECONNECTION_POLICY_INITIAL_INTERVAL)</span>
 <span class="c1">#cql_reconnectionpolicy_maxinterval: 10s # (CQL_RECONNECTION_POLICY_MAX_INTERVAL)</span>
 <span class="c1">#cql_metrics_cache_max_size_mb: 100  #MB # (CQL_METRICS_CACHE_MAX_SIZE_MB)</span>
-<span class="c1">#cql_read_consistency: &quot;LOCAL_ONE&quot; # (CQL_READ_CONSISTENCY) #One of the following:  ANY, ONE, TWO, THREE, QUORUM, ALL, LOCAL_QUORUM, EACH_QUORUM, LOCAL_ONE</span>
-<span class="c1">#cql_write_consistency: &quot;LOCAL_ONE&quot; # (CQL_WRITE_CONSISTENCY) #One of the following:    ANY, ONE, TWO, THREE, QUORUM, ALL, LOCAL_QUORUM, EACH_QUORUM, LOCAL_ONE</span>
+<span class="c1">#cql_read_consistency: "LOCAL_ONE" # (CQL_READ_CONSISTENCY) #One of the following:  ANY, ONE, TWO, THREE, QUORUM, ALL, LOCAL_QUORUM, EACH_QUORUM, LOCAL_ONE</span>
+<span class="c1">#cql_write_consistency: "LOCAL_ONE" # (CQL_WRITE_CONSISTENCY) #One of the following:    ANY, ONE, TWO, THREE, QUORUM, ALL, LOCAL_QUORUM, EACH_QUORUM, LOCAL_ONE</span>
 <span class="c1">#cql_lvl1_compaction_window_size: 12 # (CQL_LVL1_COMPACTION_WINDOW_SIZE)</span>
 <span class="c1">#cql_lvl2_compaction_window_size: 1 # (CQL_LVL2_COMPACTION_WINDOW_SIZE)</span>
 <span class="c1">#cql_lvl3_compaction_window_size: 1 # (CQL_LVL3_COMPACTION_WINDOW_SIZE)</span>
@@ -2852,13 +2873,13 @@ data-et-multi-view="{&quot;schema&quot;:{&quot;content&quot;:{&quot;desktop&quot
 <blockquote>
 <p>For better performances on large clusters (100+ nodes), you can use a CQL store for the metrics such as <strong>Cassandra</strong>. To opt-in for CQL metrics storage, specify at least one CQL host with axon-server configuration.</p>
 </blockquote>
-<h2 id="step-4-start-the-server">Step 4 - Start the server<a class="headerlink" href="#step-4-start-the-server" title="Permanent link">&para;</a></h2>
+<h2 id="step-4-start-the-server">Step 4 - Start the server<a class="headerlink" href="#step-4-start-the-server" title="Permanent link">¶</a></h2>
 <div class="highlight"><pre><span></span><code>sudo systemctl daemon-reload
 sudo systemctl start axon-server
 sudo systemctl status axon-server
 </code></pre></div>
 <p>This will start the <code>axon-server</code> process as the <code>axonops</code> user, which was created during the package installation.  The default listening address is <code>0.0.0.0:8080</code>.</p>
-<h4 id="package-details">Package details<a class="headerlink" href="#package-details" title="Permanent link">&para;</a></h4>
+<h4 id="package-details">Package details<a class="headerlink" href="#package-details" title="Permanent link">¶</a></h4>
 <ul>
 <li>Configuration: <code>/etc/axonops/axon-server.yml</code></li>
 <li>Binary: <code>/usr/share/axonops/axon-server</code></li>
@@ -2867,8 +2888,8 @@ sudo systemctl status axon-server
 <li>Copyright : <code>/usr/share/doc/axonops/axon-server/copyright</code></li>
 <li>Licenses : <code>/usr/share/axonops/licenses/axon-server/</code></li>
 </ul>
-<h2 id="step-5-installing-axon-dash">Step 5 - Installing axon-dash<a class="headerlink" href="#step-5-installing-axon-dash" title="Permanent link">&para;</a></h2>
-<p>Now <strong>axon-server</strong> is installed, you can start installing the GUI for it: <a href="../../axon-dash/install/">axon-dash</a></p>
+<h2 id="step-5-installing-axon-dash">Step 5 - Installing axon-dash<a class="headerlink" href="#step-5-installing-axon-dash" title="Permanent link">¶</a></h2>
+<p>Now <strong>axon-server</strong> is installed, you can start installing the GUI for it: <a href="../../axon-dash/install/">axon-dash</a></p></div>
 
 
 
