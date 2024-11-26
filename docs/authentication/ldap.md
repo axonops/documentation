@@ -9,7 +9,7 @@ To setup LDAP(Lightweight Directory Authentication Protocol) in AxonOps(On Premi
 
 !!! tip "All the configuration for the below fields should be provided by the LDAP Server administrator."
 
-  - **host** : IP Address or Hostname of the LDAP server(A domain controller for Active Directory).
+  - **host** : IP Address or Hostname of the LDAP server(A domain controller for LDAP).
   - **port** : The configured LDAP port of the server.
 
           Standard Default ports are either 
@@ -68,12 +68,12 @@ Distinguished Names that are used in the role mappings can comprise of the follo
 
 !!! warning "Take Note"
 
-    The default built-in Active directory OU names are case-sensitive.
+    The default built-in LDAP OU names are case-sensitive.
 
 
 The following examples can be configured differently based on your LDAP setup.
 
-  - **Active Directory Groups or Distribution Groups** :
+  - **LDAP Groups or Distribution Groups** :
     
     ```cn=cassandra_superusers,ou=Groups,dc=example,dc=com```
 
@@ -81,7 +81,7 @@ The following examples can be configured differently based on your LDAP setup.
     - ou = Groups or Distribution Groups
     - dc = example.com
 
-  - **Active Directory Users** : 
+  - **LDAP Users** : 
     
     ```cn=superuser,ou=Users,dc=example,dc=com```
 
