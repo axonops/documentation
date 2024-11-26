@@ -41,7 +41,7 @@ The rolesMapping has multiple levels based on the configuration of your AxonOps 
 
 **CLUSTER_TYPE** : `cassandra` or `kafka`
 
-**CLUSTER_NAME** : Will match the cluster name configured in `/etc/axonops/axon-agent.yml` on the Cassandra or Kafka nodes.
+**CLUSTER_NAME** : Will match the cluster name as shown in the AxonOps frontend.
 
 For the above levels there are 4 role mappings which are required fields :
 
