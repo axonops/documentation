@@ -104,8 +104,8 @@ auth:
     startTLS: true
     insecureSkipVerify: false
     
-    base: "OU=Users,DC=example,DC=com"   
-    bindDN: "CN=administrator,OU=Users,DC=example,DC=com"
+    base: "ou=Users,dc=example,dc=com"   
+    bindDN: "CN=administrator,ou=Users,dc=example,dc=com"
     bindPassword: "##############"
     userFilter: "(cn=%s)"
     rolesAttribute: "memberOf"
