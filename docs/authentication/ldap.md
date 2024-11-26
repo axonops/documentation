@@ -25,15 +25,15 @@ To setup LDAP(Lightweight Directory Authentication Protocol) in AxonOps(On Premi
   - **userFilter** : This is the LDAP filter that AxonOps will use to locate users.
                  
           Some examples could be 
-          - (uid=%s) : Search for user's by using the LDAP "uid" field.
-          - (cn=%s) : Search for user's by using the "cn" (Common Name) field.
+          - (uid=%s) : Search for users by using the LDAP "uid" field.
+          - (cn=%s) : Search for users by using the "cn" (Common Name) field.
 
-  - **rolesAttribute** : The LDAP attribute that contains the user's list of groups. Default is `memberOf`
+  - **rolesAttribute** : The LDAP attribute that contains the user's list of groups.
   - **rolesMapping** : Mapping of LDAP user/groups to AxonOps security groups.
 
 ### Role Mapping
 
-The rolesMapping has multiple levels based on the configuration of you On-premise AxonOps setup : 
+The rolesMapping has multiple levels based on the configuration of your AxonOps setup : 
 
   - **\_global\_** : Roles assigned to the _global_ scope apply to all clusters connected to AxonOps
   - **organisationName/CLUSTER_TYPE**: Roles assigned to this scope apply to all clusters of the specified type, 
