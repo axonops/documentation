@@ -118,6 +118,9 @@ nav:
       - Kubernetes: 'installation/kubernetes/index.md'
       - System Requirements: system-requirements/index.md
 
+    - Authentication:
+      - LDAP: 'authentication/ldap.md' 
+      
     - Developer:
       - Quickstart - Docker: 'get_started/docker.md'
       
