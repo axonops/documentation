@@ -101,11 +101,11 @@ auth:
     host: "myldapserver.example.com"
     port: 636
     useSSL: true
-    startTLS: true
-    insecureSkipVerify: false
+    startTLS: false
+    insecureSkipVerify: false # If true then skip SSL/TLS certificate verification
     
     base: "ou=Users,dc=example,dc=com"   
-    bindDN: "CN=administrator,ou=Users,dc=example,dc=com"
+    bindDN: "cn=administrator,ou=Users,dc=example,dc=com"
     bindPassword: "##############"
     userFilter: "(cn=%s)"
     rolesAttribute: "memberOf"
