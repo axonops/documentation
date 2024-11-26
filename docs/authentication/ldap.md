@@ -18,33 +18,37 @@ To setup LDAP(Lightweight Directory Authentication Protocol) in AxonOps(On Premi
           The ports can be changed by LDAP adminstrators.
 
   - **useSSL** : true/false - Connects to LDAP using a secure port.
-  - **startTLS** : true/false - Only upgrades to an encrypted connection once the authentication is successful, only needs to be enabled if the server requires it.
-  - **base**: A base DN is the point from where the users/groups will be searched. 
-  - **bindDN** : the DN of the user who has access to read from and bind to LDAP.
-  - **bindPassword** : The bindDN users password.
-  - **userFilter** : Filters are a key element in defining the criteria used to identify entries in search requests.
+  - **startTLS** : true/false - Start SSL/TLS encryption before LDAP authentication takes place, set this to true if your LDAP server uses StartTLS.
+  - **base**: A base DN is the point from which AxonOps wil search for users or groups. 
+  - **bindDN** : The DN of the user who has access to bind to LDAP.
+  - **bindPassword** : The bindDN user's password.
+  - **userFilter** : This is the LDAP filter that AxonOps will use to locate users.
                  
           Some examples could be 
-          - (uid=%s) UID of a user.
-          - (cn=%s) is the Common Name of a user/group.
+          - (uid=%s) : Search for user's by using the LDAP "uid" field.
+          - (cn=%s) : Search for user's by using the "cn" (Common Name) field.
 
-  - **roleAttribute** : the LDAP attribute that contains the users groups or a groups members.
+  - **rolesAttribute** : The LDAP attribute that contains the user's list of groups. Default is `memberOf`
   - **rolesMapping** : Mapping of LDAP user/groups to AxonOps security groups.
 
 ### Role Mapping
 
-The rolesMapping has multiple levels based on the configuration of you On-premise AxonOps Server setup : 
+The rolesMapping has multiple levels based on the configuration of you On-premise AxonOps setup : 
 
-  - **\_global\_** : Overarching level that has full coverage of all the configurations per AxonOps Server installation or setup.
-  - **organisationName/<CLUSTER TYPE>**: This can be either Cassandra or Kafka depending on what cluster types you are monitoring.
-  - **organisationName/<Cluster TYPE>/<CLUSTER NAME>** : This level will give fine grained permission to specific clusters and cluster types being monitored.
+  - **\_global\_** : Roles assigned to the _global_ scope apply to all clusters connected to AxonOps
+  - **organisationName/CLUSTER_TYPE**: Roles assigned to this scope apply to all clusters of the specified type, 
+  - **organisationName/CLUSTER_TYPE/CLUSTER_NAME** : Roles assigned to this scope apply to a single cluster.
+
+**CLUSTER_TYPE** : `cassandra` or `kafka`
+
+**CLUSTER_NAME** : Will match the cluster name configured in `/etc/axonops/axon-agent.yml` on the Cassandra or Kafka nodes.
 
 For the above levels there are 4 role mappings which are required fields :
 
-  - **superUserRole** : The Super user which has permission to do everything on AxonOps setup. For e.g. Deleting a cluster from AxonOps Server.
+  - **superUserRole** : The Super user which has permission to do everything on AxonOps setup. For e.g. Deleting a cluster from AxonOps.
   - **adminRole** : The Admin role can do most adminstration tasks but cannot delete clusters from AxonOps.
   - **backupAdminRole** : The user that has adminstration priviledges to create and manage backups. Has read only access to the rest of the AxonOps server pages and components.
-  - **readOnlyRole** : A basic read-only role that cannot modify any configuration in AxonOps Server.
+  - **readOnlyRole** : A basic read-only role that cannot modify any configuration in AxonOps.
 
 Distinguished Names that are used in the role mappings can comprise of the following parts which define hierarchical structure in a LDAP directory.
 
@@ -94,24 +98,24 @@ auth:
     startTLS: true
     insecureSkipVerify: false
     
-    base: "DC=example,DC=com"   
+    base: "OU=Users,DC=example,DC=com"   
     bindDN: "CN=administrator,OU=Users,DC=example,DC=com"
     bindPassword: "##############"
-    userFilter: "(cn=%s)" # The filter will search all AD entities(Users, Groups, Ditributed Groups etc.)
-    rolesAttribute: "memberOf" # Default attribute that will contains a user groups
-    callAttempts: 3 # how much retries in case of network issues
+    userFilter: "(cn=%s)"
+    rolesAttribute: "memberOf"
+    callAttempts: 3 # how many times to retry a connection to LDAP, in case of network issues.
     rolesMapping:
-      _global_: # _global_ overrides all other roles (underscores to prevent confusion with an organisationName named 'global')
-        superUserRole: "cn=superuser,ou=Users,dc=example,dc=com"
-        readOnlyRole: "cn=readonly,ou=Users,dc=example,dc=com"
-        adminRole: "cn=admin,ou=Users,dc=example,dc=com"
-        backupAdminRole: "cn=backupadmin,ou=Users,dc=example,dc=com"
-      organisationName/cassandra: # cluster type permissions
+      _global_:
+        superUserRole: "cn=superuser,ou=Groups,dc=example,dc=com"
+        readOnlyRole: "cn=readonly,ou=Groups,dc=example,dc=com"
+        adminRole: "cn=admin,ou=Groups,dc=example,dc=com"
+        backupAdminRole: "cn=backupadmin,ou=Groups,dc=example,dc=com"
+      organisationName/cassandra:
         superUserRole: "cn=cassandra_superusers,ou=Groups,dc=example,dc=com"
         readOnlyRole: "cn=cassandra_readonly,ou=Groups,dc=example,dc=com"
         adminRole: "cn=cassandra_admins,ou=Groups,dc=example,dc=com"
         backupAdminRole: "cn=cassandra_backupadmins,ou=Groups,dc=example,dc=com"
-      organisationName/cassandra/prod:  # Example Production Cassandra cluster permissions
+      organisationName/cassandra/prod:
         superUserRole: "cn=cassandra_prod_superusers,ou=Groups,dc=example,dc=com"
         readOnlyRole: "cn=cassandra_prod_readonly,ou=Groups,dc=example,dc=com"
         adminRole: "cn=cassandra_prod_admins,ou=Groups,dc=example,dc=com"
