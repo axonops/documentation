@@ -35,9 +35,15 @@ To setup LDAP(Lightweight Directory Authentication Protocol) in AxonOps(On Premi
 
 The rolesMapping has multiple levels based on the configuration of your AxonOps setup : 
 
+!!! Info "Please Note :"
+
+    Values in UPPERCASE need to be updated with your configuration specific values.
+
   - **\_global\_** : Roles assigned to the _global_ scope apply to all clusters connected to AxonOps
-  - **organisationName/CLUSTER_TYPE**: Roles assigned to this scope apply to all clusters of the specified type, 
-  - **organisationName/CLUSTER_TYPE/CLUSTER_NAME** : Roles assigned to this scope apply to a single cluster.
+  - **ORGANISATIONNAME/CLUSTER_TYPE**: Roles assigned to this scope apply to all clusters of the specified type, 
+  - **ORGANISATIONNAME/CLUSTER_TYPE/CLUSTER_NAME** : Roles assigned to this scope apply to a single cluster.
+
+**ORGANISATIONNAME** :  The name of your organisation as shown in the AxonOps frontend, should be equal to the org_name option in axon-server.yml
 
 **CLUSTER_TYPE** : `cassandra` or `kafka`
 
@@ -45,8 +51,8 @@ The rolesMapping has multiple levels based on the configuration of your AxonOps 
 
 For the above levels there are 4 role mappings which are required fields :
 
-  - **superUserRole** : The Super user which has permission to do everything on AxonOps setup. For e.g. Deleting a cluster from AxonOps.
-  - **adminRole** : The Admin role can do most adminstration tasks but cannot delete clusters from AxonOps.
+  - **superUserRole** : The Super user which has permission to do everything on AxonOps setup.
+  - **adminRole** : Similar to superUserRole but cannot configure AxonOps settings or log collectors.
   - **backupAdminRole** : The user that has adminstration priviledges to create and manage backups. Has read only access to the rest of the AxonOps server pages and components.
   - **readOnlyRole** : A basic read-only role that cannot modify any configuration in AxonOps.
 
