@@ -35,6 +35,20 @@ For a free text search enter a keyword in the ***content*** input or use the `/<
 
 Here are some examples:
 
+* Currently the following keyword syntax is supported:
+
+`hello` - matches `hello`
+
+`hello world` - matches `hello` or `world`
+
+`"hello world"` - matches exact `hello world`
+
+`+-hello` - matches excluding `hello`
+
+`+-"hello world"` - matches excluding `hello world`
+
+`+-hello +-world` - matches excluding `hello` or `world`
+
 * Display logs that contain a specific word or phrase:
 
 ![](logs_example_regexp1.png) 
