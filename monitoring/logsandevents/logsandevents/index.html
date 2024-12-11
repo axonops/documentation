@@ -2990,6 +2990,15 @@ data-et-multi-view="{&quot;schema&quot;:{&quot;content&quot;:{&quot;desktop&quot
 <p>For a free text search enter a keyword in the <strong><em>content</em></strong> input or use the <code>/&lt;expression&gt;/</code> syntax to search by regex expression.</p>
 <p>Here are some examples:</p>
 <ul>
+<li>Currently the following keyword syntax is supported:</li>
+</ul>
+<p><code>hello</code> - matches <code>hello</code></p>
+<p><code>hello world</code> - matches <code>hello</code> or <code>world</code></p>
+<p><code>"hello world"</code> - matches exact <code>hello world</code></p>
+<p><code>+-hello</code> - matches excluding <code>hello</code></p>
+<p><code>+-"hello world"</code> - matches excluding <code>hello world</code></p>
+<p><code>+-hello +-world</code> - matches excluding <code>hello</code> or <code>world</code></p>
+<ul>
 <li>Display logs that contain a specific word or phrase:</li>
 </ul>
 <p><a class="glightbox" href="../logs_example_regexp1.png" data-type="image" data-width="100%" data-height="auto" data-desc-position="bottom"><img alt="" src="../logs_example_regexp1.png"></a> </p>
