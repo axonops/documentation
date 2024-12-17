@@ -9,6 +9,7 @@ The current integrations are:
 * Slack
 * Microsoft Teams
 * ServiceNow
+* OpsGennie
 * Generic webhooks
 
 !!! infomy 

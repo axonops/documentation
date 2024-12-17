@@ -51,7 +51,10 @@ Please change the following 3 values
         "s3:PutObjectAcl"
       ],
       "Effect": "Allow",
-      "Resource": "arn:aws:s3:::<BUCKETNAME>",
+      "Resource": [
+        "arn:aws:s3:::<BUCKETNAME>",
+        "arn:aws:s3:::<BUCKETNAME>/*",
+      ],
       "Principal": {
         "AWS": "arn:aws:iam::<ACCOUNT_ID>:<AxonOpsS3User>"
       }
