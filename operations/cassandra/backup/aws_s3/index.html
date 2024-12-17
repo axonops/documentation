@@ -3068,7 +3068,10 @@ This AxonOps IAM user that has the key assigned ideally would have the following
         "s3:PutObjectAcl"
       ],
       "Effect": "Allow",
-      "Resource": "arn:aws:s3:::&lt;BUCKETNAME&gt;",
+      "Resource": [
+        "arn:aws:s3:::&lt;BUCKETNAME&gt;",
+        "arn:aws:s3:::&lt;BUCKETNAME&gt;/*",
+      ],
       "Principal": {
         "AWS": "arn:aws:iam::&lt;ACCOUNT_ID&gt;:&lt;AxonOpsS3User&gt;"
       }
