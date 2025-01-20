@@ -3067,7 +3067,7 @@ The raw charts can be downloaded from the <a href="https://github.com/axonops/he
 </tbody>
 </table>
 <h3 id="elasticsearch">ElasticSearch<a class="headerlink" href="#elasticsearch" title="Permanent link">¶</a></h3>
-<p>The example below is a configuration file for the official ElasticSearch helm repository. See inline comments:</p>
+<p>The example below is a configuration file for the official <a href="https://artifacthub.io/packages/helm/elastic/elasticsearch">ElasticSearch helm repository</a>. See inline comments:</p>
 <div class="highlight"><pre><span></span><code><span class="nn">---</span>
 <span class="nt">clusterName</span><span class="p">:</span><span class="w"> </span><span class="s">"axonops-elastic"</span>
 
@@ -3106,6 +3106,14 @@ The raw charts can be downloaded from the <a href="https://github.com/axonops/he
 <span class="nt">rbac</span><span class="p">:</span>
 <span class="w">  </span><span class="nt">create</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">true</span>
 </code></pre></div>
+<p>Save the configuration as <code>elastic.yaml</code> and you install it with:</p>
+<div class="highlight"><pre><span></span><code>helm<span class="w"> </span>upgrade<span class="w"> </span>--install<span class="w"> </span>elasticsearch<span class="w"> </span>elastic/elasticsearch<span class="w"> </span>--create-namespace<span class="w"> </span>-n<span class="w"> </span>axonops<span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>--set<span class="w"> </span>secret.password<span class="o">=</span><span class="s2">"password"</span><span class="w"> </span>-f<span class="w"> </span>elastic.yaml
+</code></pre></div>
+<blockquote>
+<p><strong><em>NOTE:</em></strong> This example uses as password in plaintext. Check out the helm chart documentation on how to use
+secrets and consider using a secrets manager.</p>
+</blockquote>
 <h3 id="axonops">AxonOps<a class="headerlink" href="#axonops" title="Permanent link">¶</a></h3>
 <p>The default AxonOps installation does not expose the services outside of the cluster. We recommend that you use either a LoadBalancer service or an Ingress.</p>
 <p>Below you can find an example using <code>Ingress</code> to expose both the dashboard and the AxonOps server.</p>
@@ -3137,7 +3145,7 @@ The raw charts can be downloaded from the <a href="https://github.com/axonops/he
 <span class="c1"># If you are using an existing ElasticSearch rather than installing it </span>
 <span class="c1"># as shown above then make sure you update the elasticHost URL below</span>
 <span class="nt">axon-server</span><span class="p">:</span>
-<span class="w">  </span><span class="nt">elasticHost</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">http://axonops-elastic-master:9200</span>
+<span class="w">  </span><span class="nt">elasticHost</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">http://username:password@axonops-elastic-master:9200</span>
 <span class="w">  </span><span class="nt">dashboardUrl</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">https://axonops.mycompany.com</span>
 <span class="w">  </span><span class="nt">config</span><span class="p">:</span>
 <span class="w">    </span><span class="c1"># Set your organization name here. This must match the name used in your license key</span>
