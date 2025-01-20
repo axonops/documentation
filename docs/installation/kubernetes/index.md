@@ -20,7 +20,7 @@ The raw charts can be downloaded from the [GitHub repository](https://github.com
 
 ### ElasticSearch
 
-The example below is a configuration file for the official ElasticSearch helm repository. See inline comments:
+The example below is a configuration file for the official [ElasticSearch helm repository](https://artifacthub.io/packages/helm/elastic/elasticsearch). See inline comments:
 
 ```yaml
 ---
@@ -62,6 +62,15 @@ rbac:
   create: true
 ```
 
+Save the configuration as `elastic.yaml` and you install it with:
+
+```sh
+helm upgrade --install elasticsearch elastic/elasticsearch --create-namespace -n axonops \
+  --set secret.password="password" -f elastic.yaml
+```
+
+> **_NOTE:_** This example uses as password in plaintext. Check out the helm chart documentation on how to use
+secrets and consider using a secrets manager.
 
 ### AxonOps
 
@@ -98,7 +107,7 @@ axon-dash:
 # If you are using an existing ElasticSearch rather than installing it 
 # as shown above then make sure you update the elasticHost URL below
 axon-server:
-  elasticHost: http://axonops-elastic-master:9200
+  elasticHost: http://username:password@axonops-elastic-master:9200
   dashboardUrl: https://axonops.mycompany.com
   config:
     # Set your organization name here. This must match the name used in your license key
