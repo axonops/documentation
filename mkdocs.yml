@@ -98,7 +98,8 @@ nav:
 
     - Setup:
       - AxonOps Cloud account: 'get_started/cloud.md'
-      - AxonOps Cloud agents: 'get_started/agent_setup.md'
+      - AxonOps Cloud Cassandra agents: 'get_started/cassandra_agent_setup.md'
+      - AxonOps Cloud Kafka agents: 'get_started/kafka_agent_setup.md'
 
   - AxonOps Self-Hosted:
     - Starter:
