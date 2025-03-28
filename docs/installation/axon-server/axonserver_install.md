@@ -37,6 +37,14 @@ Make sure **elastic_host** and **elastic_port** are corresponding to your Elasti
 
 To create users please refer to the Elasticsearch docs [here](https://www.elastic.co/guide/en/elasticsearch/reference/current/setting-up-authentication.html){target="_blank"}
 
+**Load Balancer** or **Dedicated Coordinator** nodes fronting Elasticsearch.
+
+By default AxonOps Server will discover all the nodes in the Elasticsearch cluster. It will utilise the list of dicovered nodes to round-robin requests to Elasticsearch.
+
+When setting up a load balancing nodes or infrastrcutre that fronts Elasticsearch it has smart load balancing capabilites and the node discovery is not required.  
+
+To turn off node discovery set `elastic_discover_nodes:false`
+
 *AxonOps Server configuration file location :* `/etc/axonops/axon-server.yml`
 
 ``` yaml hl_lines="7 33 34"
