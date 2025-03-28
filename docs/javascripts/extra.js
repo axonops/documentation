@@ -100,6 +100,7 @@ function hidePanels() {
       case "Cassandra30":
         document.getElementById('Java8img').style.display = 'inline';  
         document.getElementById('Java11img').style.display = 'none';
+        document.getElementById('Java17img').style.display = 'none';
         window.localStorage.setItem("JAVA_State", "Java8");
         document.getElementsByName('javaFamily')[0].checked = true
         openCAS();
@@ -108,6 +109,7 @@ function hidePanels() {
       case "Cassandra311":
         document.getElementById('Java8img').style.display = 'inline';
         document.getElementById('Java11img').style.display = 'none';
+        document.getElementById('Java17img').style.display = 'none';
         window.localStorage.setItem("JAVA_State", "Java8");
         document.getElementsByName('javaFamily')[0].checked = true
         openCAS();
@@ -116,6 +118,9 @@ function hidePanels() {
       case "Cassandra40":
         document.getElementById('Java8img').style.display = 'inline';
         document.getElementById('Java11img').style.display = 'inline';
+        document.getElementById('Java17img').style.display = 'none';
+        if(window.localStorage.getItem("JAVA_State") == "Java17")
+          window.localStorage.setItem("JAVA_State", "Java11")
         if(window.localStorage.getItem("JAVA_State") == "Java8")
           document.getElementsByName('javaFamily')[0].checked = true;
         else
@@ -126,7 +131,10 @@ function hidePanels() {
       case "Cassandra41":
         document.getElementById('Java8img').style.display = 'inline';
         document.getElementById('Java11img').style.display = 'inline';
-        document.getElementsByName('javaFamily')[0].checked = true;
+        document.getElementById('Java17img').style.display = 'none';
+        // document.getElementsByName('javaFamily')[0].checked = true;
+        if(window.localStorage.getItem("JAVA_State") == "Java17")
+          window.localStorage.setItem("JAVA_State", "Java11")
         if(window.localStorage.getItem("JAVA_State") == "Java8")
           document.getElementsByName('javaFamily')[0].checked = true;
         else
@@ -137,8 +145,13 @@ function hidePanels() {
       case "Cassandra50":
         document.getElementById('Java8img').style.display = 'none';
         document.getElementById('Java11img').style.display = 'inline';
-        window.localStorage.setItem("JAVA_State", "Java11")
-        document.getElementsByName('javaFamily')[1].checked = true;
+        document.getElementById('Java17img').style.display = 'inline';
+        if(window.localStorage.getItem("JAVA_State") == "Java8")
+          window.localStorage.setItem("JAVA_State", "Java11")
+        if(window.localStorage.getItem("JAVA_State") == "Java11")
+          document.getElementsByName('javaFamily')[1].checked = true;
+        else
+          document.getElementsByName('javaFamily')[2].checked = true;
         openCAS();
         openJAVACAS();
         break;

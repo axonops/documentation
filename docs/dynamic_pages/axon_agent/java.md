@@ -26,6 +26,6 @@ Add the following line at the end of the file:
 </div>
 <div id="Cassandra50Div" class="javacas" style="display:none">
   ```
-  JVM_OPTS="$JVM_OPTS -javaagent:/usr/share/axonops/axon-cassandra5.0-agent.jar=/etc/axonops/axon-agent.yml"
+  . /usr/share/axonops/axonops-jvm.options
   ```
-</div> 
+</div>
