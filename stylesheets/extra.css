@@ -5,7 +5,8 @@
 
 @font-face {
   font-family: "Inter";
-  src: url(https://fonts.google.com/specimen/Inter);
+  src: url("./Inter.ttf");
+  /* src: url(https://fonts.google.com/specimen/Inter); */
 }
 
 body {
