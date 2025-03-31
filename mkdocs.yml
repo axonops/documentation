@@ -104,8 +104,8 @@ nav:
     - Starter:
       - AxonOps Server: 'installation-starter/axon-server/axonserver_install.md'
       - AxonOps Dashboard: 'installation-starter/axon-dash/install.md'
-      - AxonOps Agent: 'installation-starter/cassandra-agent/install.md'
-      - AxonOps Agent in Docker: 'installation-starter/cassandra-agent/docker.md'
+      - AxonOps Agent: 'installation-starter/agent/install.md'
+      - AxonOps Agent in Docker: 'installation-starter/agent/docker.md'
       - System Requirements: system-requirements/developer.md
 
     - Enterprise:
@@ -114,7 +114,7 @@ nav:
       - Cassandra as Metrics database: 'installation/axon-server/metricsdatabase.md'
       - AxonOps Dashboard: 'installation/axon-dash/install.md'
       - Configure Nginx: 'installation/axon-dash/configure_nginx.md'
-      - AxonOps Agent: 'installation/cassandra-agent/install.md'
+      - AxonOps Agent: 'installation/agent/install.md'
       - Kubernetes: 'installation/kubernetes/index.md'
       - System Requirements: system-requirements/index.md
 

@@ -1,3 +1,8 @@
+---
+hide:
+  - toc
+---
+
 # Axon Agent Setup
 <!-- ![](agent_steps.png) -->
 
@@ -38,69 +43,23 @@ You should expect the following response:
 
 {!dynamic_pages/axon_agent/os.md!}
 
-## Step 2 - Install Cassandra Agent
+### Select the Service you want to configure 
+<label>
+  <input type="radio" id="Cassandra" name="Service" onChange="updateService()" checked=true />
+  <img src="/get_started/cassandra.png" class="skip-lightbox" width="180px" height="180px">
+</label>
+<label>
+  <input type="radio" id="Kafka" name="Service" onChange="updateService()" />
+  <img src="/get_started/kafka.png" class="skip-lightbox" width="180px" height="180px">
+</label>
 
-{!dynamic_pages/axon_agent/cassandra.md!}
+<div id="CassandraDiv" name="service_div">
+    {!get_started/agent_setup_cassandra.md!}
+</div>
 
-## Step 3 - Agent Configuration
-
-Update and copy the below code snippet into /etc/axonops/axon-agent.yml file.
-
-Please update the **key** and **org** values by logging into [console.axonops.cloud](https://console.axonops.cloud){target="_blank"}
-
-* **Organization(org)** name is next to the logo in the console
-* **Agent Keys(key)** found in Agent Setup
-
-![](agent_keys.png)
-
-If there is a Dedicated NTP server in your Organization please uncomment and update the NTP section. 
-
-```
-  axon-server:
-      hosts: "agents.axonops.cloud"
-  
-  axon-agent:
-      key: <THIS_IS_A_DUMMY_KEY_PLEASE_UPDATE>
-      org: <THIS_IS_A_DUMMY_ORG_NAME_PLEASE_UPDATE>
-
-  # Specify the NTP server IP addresses or hostnames configured for your Cassandra hosts
-  # if using Cassandra deployed in Kubernetes or if auto-detection fails.
-  # The port defaults to 123 if not specified.
-  # NTP:
-  #    hosts:
-  #        - "x.x.x.x:123"
-  # Optionally restrict which commands can be executed by axon-agent.
-  # If "true", only scripts placed in scripts_location can be executed by axon-agent.
-  # disable_command_exec: false
-  # If disable_command_exec is true then axon-agent is only allowed to execute scripts
-  # under this path
-  # scripts_location: /var/lib/axonops/scripts/
-```
-
-Set file permissions on /etc/axonops/axon-agent.yml file by executing the following command
-
-```
-sudo chmod 0644 /etc/axonops/axon-agent.yml
-```
-
-## Step 4 - Configure Cassandra
-
-{!dynamic_pages/axon_agent/java.md!}
-
-**NB.** Make sure that this configuration will not get overridden by an automation tool.
-
-## Step 5 - Add axonops user to Cassandra user group and Cassandra user to axonops group
-```
-sudo usermod -aG <your_cassandra_group> axonops
-sudo usermod -aG axonops <your_cassandra_user>
-```
-
-## Step 6 - Start/Restart Cassandra
-
-To load the Axon java agent and Cassandra config changes please,
-
-* Start the Cassandra service if stopped. 
-* Restart the Cassandra service if already running.
+<div id="KafkaDiv" name="service_div" style="display:none">
+    {!get_started/agent_setup_kafka.md!}
+</div>
 
 ## Step 7 - Start axon-agent
 

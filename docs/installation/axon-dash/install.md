@@ -71,4 +71,4 @@ AxonDash does not support SSL/TLS and needs to be fronted by Nginx. You can inst
 
 ## Step 7 - Installing agents
 
-Now **axon-dash** is installed, you can start installing [cassandra-agent](../cassandra-agent/install.md)
+Now **axon-dash** is installed, you can start installing [cassandra-agent](../agent/install.md)

@@ -1,6 +1,6 @@
 Edit cassandra-env.sh, usually located in your Cassandra install path such as: 
 
-`/<Cassandra Installation Directory>/conf/cassandra-env.sh`
+<p><code>/&lt;Cassandra Installation Directory&gt;/conf/cassandra-env.sh</code></p>
 
 Add the following line at the end of the file:
 
