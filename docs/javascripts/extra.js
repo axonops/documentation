@@ -202,6 +202,8 @@ function resetLocalStorage(){
     window.localStorage.removeItem("KAFKA_State");
   if(window.localStorage.getItem("KJAVA_State") != null)
     window.localStorage.removeItem("KJAVA_State");
+  if(window.localStorage.getItem("KAFKATYPE_State") != null)
+    window.localStorage.removeItem("KAFKATYPE_State");
 }
 
 window.addEventListener("beforeunload",resetLocalStorage);
@@ -283,4 +285,68 @@ function openJAVAKAFKA() {
   // javacas += window.localStorage.getItem("JAVA_State");
   kjavacas += 'Div';
   document.getElementById(kjavacas).style.display = "block";
+  
+  if(window.localStorage.getItem("KAFKATYPE_State") != null){
+    selectKafkaType(null,window.localStorage.getItem("KAFKATYPE_State"));
+  }
+  else
+    window.localStorage.setItem("KAFKATYPE_State", "Broker");
+}
+
+function selectKafkaType(evt,kafkaType) {
+  var i, tablinks;
+  window.localStorage.setItem("KAFKATYPE_State", kafkaType);
+
+  var u = document.getElementsByClassName("axon_kafka_dynamic_s1");
+  for (i = 0; i < u.length; i++) {
+    if (u[i].id != kafkaType)
+      u[i].style.display = "none";
+    else
+      u[i].style.display = "block";
+  }
+
+  var w = document.getElementsByClassName("axon_kafka_dynamic_s2");
+  for (i = 0; i < w.length; i++) {
+    if (w[i].id != kafkaType)
+      w[i].style.display = "none";
+    else
+      w[i].style.display = "block";
+  }
+
+  var x = document.getElementsByClassName("axon_kafka_dynamic_s3");
+  for (i = 0; i < x.length; i++) {
+    if (x[i].id != kafkaType)
+      x[i].style.display = "none";
+    else
+      x[i].style.display = "block";
+  }
+
+  var y = document.getElementsByClassName("axon_kafka_dynamic_s4");
+  for (i = 0; i < y.length; i++) {
+    if (y[i].id != kafkaType)
+      y[i].style.display = "none";
+    else
+      y[i].style.display = "block";
+  }
+
+  var z = document.getElementsByClassName("axon_kafka_dynamic_s5");
+  for (i = 0; i < z.length; i++) {
+    if (z[i].id != kafkaType)
+      z[i].style.display = "none";
+    else
+      z[i].style.display = "block";
+  }
+  
+  tablinks = document.getElementsByClassName("tabSelected");
+  for (i = 0; i < x.length; i++) {
+    tablinks[i].className = tablinks[i].className.replace(" w3-grey", "");
+    if(tablinks[i].id == window.localStorage.getItem("KAFKATYPE_State"))
+    {
+      tablinks[i].className += " w3-grey";
+    }
+  }
+
+  // if (evt != null){
+  //   evt.currentTarget.className += " w3-grey";
+  // }
 }
