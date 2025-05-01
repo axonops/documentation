@@ -169,21 +169,6 @@ kafka:
         username: <THIS_IS_A_DUMMY_USERNAME_PLEASE_UPDATE>
         password: <THIS_IS_A_DUMMY_PASSWORD_PLEASE_UPDATE>
         mechanism: PLAIN # SCRAM-SHA-256, SCRAM-SHA-512, OAUTHBEARER, GSSAPI
-    connect:
-      enabled: false
-      clusters:
-        - name: testconnectcluster
-          url: "http://<host_listener_ip_address_or_fqdn>:<port>>" #Can be HTTP/HTTPS
-  drift:
-    enabled: false
-    request_interval: 10s
-    max_retries: 20
-    startup:
-      retry_interval: 5s
-      max_interval: 1h
-      multiplier: 1    
-  streaming:
-    enabled: true
   metrics:
     enabled: true
     request_interval: 5
