@@ -13,7 +13,11 @@
 <h3>Select the Java Version.</h3>
 <label>
   <input type="radio" id="Java" name="kjavaFamily" onChange="updateKJava()" checked=true />
-  <img id="Javaimg" src="/get_started/java.png" class="skip-lightbox" width="180px">
+  <img id="KJavaimg" src="/get_started/Java_11.png" class="skip-lightbox" width="180px">
+</label>
+<label>
+  <input type="radio" id="Java17" name="kjavaFamily" onChange="updateKJava()" />
+  <img id="KJava17img" src="/get_started/Java_17.png" class="skip-lightbox" width="180px">
 </label>
 
 <!-- Debian -->
@@ -27,6 +31,17 @@
   sudo apt-get install axon-kafka3.0-agent axon-agent
   ```
 </div>
+<!-- Debian Java17 -->
+<div id="DebianKafka20Java17Div" class="kafka">
+  ```
+  sudo apt-get install axon-kafka2.0-agent axon-agent
+  ```
+</div>
+<div id="DebianKafka30Java17Div" class="kafka">
+  ```
+  sudo apt-get install axon-kafka3.0-agent axon-agent
+  ```
+</div>
 <!-- RedHat -->
 <div id="RedHatKafka20JavaDiv" class="kafka" style="display:none">
   ```
@@ -34,6 +49,17 @@
   ```
 </div>
 <div id="RedHatKafka30JavaDiv" class="kafka" style="display:none">
+  ```
+  sudo yum install axon-kafka3.0-agent axon-agent
+  ```
+</div>
+<!-- RedHat Java17 -->
+<div id="RedHatKafka20Java17Div" class="kafka" style="display:none">
+  ```
+  sudo yum install axon-kafka2.0-agent axon-agent
+  ```
+</div>
+<div id="RedHatKafka30Java17Div" class="kafka" style="display:none">
   ```
   sudo yum install axon-kafka3.0-agent axon-agent
   ```

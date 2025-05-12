@@ -168,20 +168,27 @@ function hidePanels() {
   if(window.localStorage.getItem("KAFKA_State") != null && window.localStorage.getItem("Service_State") == "Kafka"){
     switch(window.localStorage.getItem("KAFKA_State")){
       case "Kafka20":
-        document.getElementById('Javaimg').style.display = 'inline';  
+        document.getElementById('KJavaimg').style.display = 'inline';  
         // document.getElementById('Java11img').style.display = 'none';
-        // document.getElementById('Java17img').style.display = 'none';
-        window.localStorage.setItem("KJAVA_State", "Java");
-        document.getElementsByName('kjavaFamily')[0].checked = true
+        document.getElementById('KJava17img').style.display = 'inline';
+        // window.localStorage.setItem("KJAVA_State", "Java");
+        if(window.localStorage.getItem("KJAVA_State") == "Java")
+          document.getElementsByName('kjavaFamily')[0].checked = true
+        else
+          document.getElementsByName('kjavaFamily')[1].checked = true
         showHideKAFKAPanel();
         openJAVAKAFKA();
         break;
       case "Kafka30":
-        document.getElementById('Javaimg').style.display = 'inline';  
+        document.getElementById('KJavaimg').style.display = 'inline';  
         // document.getElementById('Java11img').style.display = 'none';
-        // document.getElementById('Java17img').style.display = 'none';
-        window.localStorage.setItem("KJAVA_State", "Java");
-        document.getElementsByName('kjavaFamily')[0].checked = true
+        document.getElementById('KJava17img').style.display = 'inline';
+        // window.localStorage.setItem("KJAVA_State", "Java");
+        if(window.localStorage.getItem("KJAVA_State") == "Java")
+          document.getElementsByName('kjavaFamily')[0].checked = true
+        else
+          document.getElementsByName('kjavaFamily')[1].checked = true
+        // document.getElementsByName('kjavaFamily')[0].checked = true
         showHideKAFKAPanel();
         openJAVAKAFKA();
         break;
@@ -282,7 +289,7 @@ function openJAVAKAFKA() {
   }
   let kjavacas = "";
   kjavacas += window.localStorage.getItem("KAFKA_State");
-  // javacas += window.localStorage.getItem("JAVA_State");
+  kjavacas += window.localStorage.getItem("KJAVA_State");
   kjavacas += 'Div';
   document.getElementById(kjavacas).style.display = "block";
   
@@ -294,57 +301,88 @@ function openJAVAKAFKA() {
 }
 
 function selectKafkaType(evt,kafkaType) {
-  var i, tablinks;
+  // Store selection in localStorage
   window.localStorage.setItem("KAFKATYPE_State", kafkaType);
 
-  var u = document.getElementsByClassName("axon_kafka_dynamic_s1");
-  for (i = 0; i < u.length; i++) {
-    if (u[i].id != kafkaType)
-      u[i].style.display = "none";
-    else
-      u[i].style.display = "block";
-  }
+  // Array of class names to process
+  const classNames = [
+    "axon_kafka_dynamic_s1",
+    "axon_kafka_dynamic_s2",
+    "axon_kafka_dynamic_s3",
+    "axon_kafka_dynamic_s4",
+    "axon_kafka_dynamic_s5",
+    "axon_kafka_dynamic_s6",
+    "axon_kafka_dynamic_s7"
+  ];
 
-  var w = document.getElementsByClassName("axon_kafka_dynamic_s2");
-  for (i = 0; i < w.length; i++) {
-    if (w[i].id != kafkaType)
-      w[i].style.display = "none";
-    else
-      w[i].style.display = "block";
-  }
+  // Hide/show sections based on kafkaType
+  classNames.forEach(className => {
+    const elements = document.getElementsByClassName(className);
+    for (let i = 0; i < elements.length; i++) {
+      elements[i].style.display = (elements[i].id === kafkaType) ? "block" : "none";
+    }
+  });
 
-  var x = document.getElementsByClassName("axon_kafka_dynamic_s3");
-  for (i = 0; i < x.length; i++) {
-    if (x[i].id != kafkaType)
-      x[i].style.display = "none";
-    else
-      x[i].style.display = "block";
-  }
-
-  var y = document.getElementsByClassName("axon_kafka_dynamic_s4");
-  for (i = 0; i < y.length; i++) {
-    if (y[i].id != kafkaType)
-      y[i].style.display = "none";
-    else
-      y[i].style.display = "block";
-  }
-
-  var z = document.getElementsByClassName("axon_kafka_dynamic_s5");
-  for (i = 0; i < z.length; i++) {
-    if (z[i].id != kafkaType)
-      z[i].style.display = "none";
-    else
-      z[i].style.display = "block";
-  }
-  
-  tablinks = document.getElementsByClassName("tabSelected");
-  for (i = 0; i < x.length; i++) {
+  // Handle tab selection highlighting
+  const tablinks = document.getElementsByClassName("tabSelected");
+  for (let i = 0; i < tablinks.length; i++) {
     tablinks[i].className = tablinks[i].className.replace(" w3-grey", "");
-    if(tablinks[i].id == window.localStorage.getItem("KAFKATYPE_State"))
-    {
+    if (tablinks[i].id === kafkaType) {
       tablinks[i].className += " w3-grey";
     }
   }
+
+  // var i, tablinks;
+  // window.localStorage.setItem("KAFKATYPE_State", kafkaType);
+
+  // var u = document.getElementsByClassName("axon_kafka_dynamic_s1");
+  // for (i = 0; i < u.length; i++) {
+  //   if (u[i].id != kafkaType)
+  //     u[i].style.display = "none";
+  //   else
+  //     u[i].style.display = "block";
+  // }
+
+  // var w = document.getElementsByClassName("axon_kafka_dynamic_s2");
+  // for (i = 0; i < w.length; i++) {
+  //   if (w[i].id != kafkaType)
+  //     w[i].style.display = "none";
+  //   else
+  //     w[i].style.display = "block";
+  // }
+
+  // var x = document.getElementsByClassName("axon_kafka_dynamic_s3");
+  // for (i = 0; i < x.length; i++) {
+  //   if (x[i].id != kafkaType)
+  //     x[i].style.display = "none";
+  //   else
+  //     x[i].style.display = "block";
+  // }
+
+  // var y = document.getElementsByClassName("axon_kafka_dynamic_s4");
+  // for (i = 0; i < y.length; i++) {
+  //   if (y[i].id != kafkaType)
+  //     y[i].style.display = "none";
+  //   else
+  //     y[i].style.display = "block";
+  // }
+
+  // var z = document.getElementsByClassName("axon_kafka_dynamic_s5");
+  // for (i = 0; i < z.length; i++) {
+  //   if (z[i].id != kafkaType)
+  //     z[i].style.display = "none";
+  //   else
+  //     z[i].style.display = "block";
+  // }
+  
+  // tablinks = document.getElementsByClassName("tabSelected");
+  // for (i = 0; i < x.length; i++) {
+  //   tablinks[i].className = tablinks[i].className.replace(" w3-grey", "");
+  //   if(tablinks[i].id == window.localStorage.getItem("KAFKATYPE_State"))
+  //   {
+  //     tablinks[i].className += " w3-grey";
+  //   }
+  // }
 
   // if (evt != null){
   //   evt.currentTarget.className += " w3-grey";

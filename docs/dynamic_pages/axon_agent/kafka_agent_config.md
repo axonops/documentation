@@ -10,7 +10,7 @@
 </div>
 <div id="Broker" class="axon_kafka_dynamic_s1">
 
-```yaml hl_lines="9"
+```yaml hl_lines="7 8 9"
 axon-server:
   hosts: "agents.axonops.cloud" # AxonOps SaaS
   # hosts: "${AXONOPS_SERVER_HOSTS}" # AxonOps Server On-Premise Endpoint
@@ -41,7 +41,6 @@ axon-agent:
 # under this path
 # scripts_location: /var/lib/axonops/scripts/
 
-# PLEASE ONLY USE THE SECTION THAT MATCHES THE NODE TYPE
 kafka:
   node_type: "broker" # broker, kraft-broker, kraft-controller, zookeeper, connect
   rack: "testrack" # Picked up from Kafka config, can override the Rack for grouping nodes by Rack in Monitoring Topology
@@ -85,7 +84,7 @@ kafka:
 
 <div id="Zookeeper" class="axon_kafka_dynamic_s1" style="display:none">
 
-```yaml hl_lines="9"
+```yaml hl_lines="7 8 9"
 axon-server:
   hosts: "agents.axonops.cloud" # AxonOps SaaS
   # hosts: "${AXONOPS_SERVER_HOSTS}" # AxonOps Server On-Premise Endpoint
@@ -131,7 +130,7 @@ kafka:
 
 <div id="KRaftBroker" class="axon_kafka_dynamic_s1" style="display:none">
 
-```yaml hl_lines="9"
+```yaml hl_lines="7 8 9"
 axon-server:
   hosts: "agents.axonops.cloud" # AxonOps SaaS
   # hosts: "${AXONOPS_SERVER_HOSTS}" # AxonOps Server On-Premise Endpoint
@@ -205,7 +204,7 @@ kafka:
 
 <div id="KRaftController" class="axon_kafka_dynamic_s1" style="display:none">
 
-```yaml hl_lines="9"
+```yaml hl_lines="7 8 9"
 axon-server:
   hosts: "agents.axonops.cloud" # AxonOps SaaS
   # hosts: "${AXONOPS_SERVER_HOSTS}" # AxonOps Server On-Premise Endpoint
@@ -279,7 +278,7 @@ kafka:
 
 <div id="Connect" class="axon_kafka_dynamic_s1" style="display:none">
 
-```yaml hl_lines="9"
+```yaml hl_lines="7 8 9"
 axon-server:
   hosts: "agents.axonops.cloud" # AxonOps SaaS
   # hosts: "${AXONOPS_SERVER_HOSTS}" # AxonOps Server On-Premise Endpoint
@@ -326,9 +325,10 @@ kafka:
 <!-- Set the Axon-Agent File Permissions -->
 Set file permissions on /etc/axonops/axon-agent.yml file by executing the following command
 
-```
+```shell
 sudo chmod 0644 /etc/axonops/axon-agent.yml
 ```
+
 <!-- Step 4 -->
 <div id="Broker" class="axon_kafka_dynamic_s2">
 <h2>Step 4 - Configure Kafka</h2>
