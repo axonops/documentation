@@ -313,12 +313,6 @@ kafka:
   node_type: "connect" # broker, kraft-broker, kraft-controller, zookeeper, connect
   datacenter: "testdc"
   rack: "testrack"
-  config:
-    connect:
-      enabled: true
-      clusters:
-        - name: testconnectcluster
-          url: "http://<host_listener_ip_address_or_fqdn>:<port>>" #Can be HTTP/HTTPS
 ```
 </div>
 
