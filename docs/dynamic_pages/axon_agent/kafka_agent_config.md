@@ -21,12 +21,11 @@ axon-agent:
   org: "<THIS_IS_A_DUMMY_ORG_NAME_PLEASE_UPDATE>"
   cluster_name: "<THIS_IS_A_DUMMY_CLUSTER_NAME_PLEASE_UPDATE>"
   tls:
-    mode: "disabled" # disabled, TLS
-    # Only set below if mode is TLS
-    skipVerify: false # Disables CA and Hostname verification
-    caFile: "path_to_certs_on_axon_agent_node.crt" # required if skipVerify is not set and you are using a self-signed cert
-    certFile: "path_to_certs_on_axon_agent_node.crt"
-    keyFile: "path_to_key_file_on_axon_agent_node.key"
+    mode: "TLS" # disabled, TLS
+    #skipVerify: false # Disables CA and Hostname verification
+    #caFile: "path_to_certs_on_axon_agent_node.crt" # required if skipVerify is not set and you are using a self-signed cert
+    #certFile: "path_to_certs_on_axon_agent_node.crt"
+    #keyFile: "path_to_key_file_on_axon_agent_node.key"
   disable_auto_update: true
 
 # Specify the NTP server IP addresses or hostnames configured for your hosts
@@ -95,12 +94,11 @@ axon-agent:
   org: "<THIS_IS_A_DUMMY_ORG_NAME_PLEASE_UPDATE>"
   cluster_name: "<THIS_IS_A_DUMMY_CLUSTER_NAME_PLEASE_UPDATE>"
   tls:
-    mode: "disabled" # disabled, TLS
-    # Only set below if mode is TLS
-    skipVerify: false # Disables CA and Hostname verification
-    caFile: "path_to_certs_on_axon_agent_node.crt" # required if skipVerify is not set and you are using a self-signed cert
-    certFile: "path_to_certs_on_axon_agent_node.crt"
-    keyFile: "path_to_key_file_on_axon_agent_node.key"
+    mode: "TLS" # disabled, TLS
+    #skipVerify: false # Disables CA and Hostname verification
+    #caFile: "path_to_certs_on_axon_agent_node.crt" # required if skipVerify is not set and you are using a self-signed cert
+    #certFile: "path_to_certs_on_axon_agent_node.crt"
+    #keyFile: "path_to_key_file_on_axon_agent_node.key"
   disable_auto_update: true
 
 # Specify the NTP server IP addresses or hostnames configured for your hosts
@@ -141,12 +139,11 @@ axon-agent:
   org: "<THIS_IS_A_DUMMY_ORG_NAME_PLEASE_UPDATE>"
   cluster_name: "<THIS_IS_A_DUMMY_CLUSTER_NAME_PLEASE_UPDATE>"
   tls:
-    mode: "disabled" # disabled, TLS
-    # Only set below if mode is TLS
-    skipVerify: false # Disables CA and Hostname verification
-    caFile: "path_to_certs_on_axon_agent_node.crt" # required if skipVerify is not set and you are using a self-signed cert
-    certFile: "path_to_certs_on_axon_agent_node.crt"
-    keyFile: "path_to_key_file_on_axon_agent_node.key"
+    mode: "TLS" # disabled, TLS
+    #skipVerify: false # Disables CA and Hostname verification
+    #caFile: "path_to_certs_on_axon_agent_node.crt" # required if skipVerify is not set and you are using a self-signed cert
+    #certFile: "path_to_certs_on_axon_agent_node.crt"
+    #keyFile: "path_to_key_file_on_axon_agent_node.key"
   disable_auto_update: true
 
 # Specify the NTP server IP addresses or hostnames configured for your hosts
@@ -215,12 +212,11 @@ axon-agent:
   org: "<THIS_IS_A_DUMMY_ORG_NAME_PLEASE_UPDATE>"
   cluster_name: "<THIS_IS_A_DUMMY_CLUSTER_NAME_PLEASE_UPDATE>"
   tls:
-    mode: "disabled" # disabled, TLS
-    # Only set below if mode is TLS
-    skipVerify: false # Disables CA and Hostname verification
-    caFile: "path_to_certs_on_axon_agent_node.crt" # required if skipVerify is not set and you are using a self-signed cert
-    certFile: "path_to_certs_on_axon_agent_node.crt"
-    keyFile: "path_to_key_file_on_axon_agent_node.key"
+    mode: "TLS" # disabled, TLS
+    #skipVerify: false # Disables CA and Hostname verification
+    #caFile: "path_to_certs_on_axon_agent_node.crt" # required if skipVerify is not set and you are using a self-signed cert
+    #certFile: "path_to_certs_on_axon_agent_node.crt"
+    #keyFile: "path_to_key_file_on_axon_agent_node.key"
   disable_auto_update: true
 
 # Specify the NTP server IP addresses or hostnames configured for your hosts
@@ -289,12 +285,11 @@ axon-agent:
   org: "<THIS_IS_A_DUMMY_ORG_NAME_PLEASE_UPDATE>"
   cluster_name: "<THIS_IS_A_DUMMY_CLUSTER_NAME_PLEASE_UPDATE>"
   tls:
-    mode: "disabled" # disabled, TLS
-    # Only set below if mode is TLS
-    skipVerify: false # Disables CA and Hostname verification
-    caFile: "path_to_certs_on_axon_agent_node.crt" # required if skipVerify is not set and you are using a self-signed cert
-    certFile: "path_to_certs_on_axon_agent_node.crt"
-    keyFile: "path_to_key_file_on_axon_agent_node.key"
+    mode: "TLS" # disabled, TLS
+    #skipVerify: false # Disables CA and Hostname verification
+    #caFile: "path_to_certs_on_axon_agent_node.crt" # required if skipVerify is not set and you are using a self-signed cert
+    #certFile: "path_to_certs_on_axon_agent_node.crt"
+    #keyFile: "path_to_key_file_on_axon_agent_node.key"
   disable_auto_update: true
 
 # Specify the NTP server IP addresses or hostnames configured for your hosts
