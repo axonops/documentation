@@ -3,7 +3,7 @@ hide:
   - toc
 ---
 
-# Opensearch Cross Cluster Replication Failover
+# OpenSearch Cross Cluster Replication Failover
 
 For Every Index on the Follower Cluster you will need to perform theses Steps 1 and 2.
 
@@ -37,7 +37,19 @@ curl -XDELETE -k -H 'Content-Type: application/json' -u '<CCR_USER>:<CCR_USER_PA
 }'
 ```
 
-## Step 4 - Switchover Axon-Server config to connect to Follower Cluster
+## Step 4 - Switchover axon-server config to connect to Follower Cluster
+
+In the axon-server.yml file located /etc/axonops/axon-server.yml
+
+Change the following to point to the Follower Cluster
+
+Update all the values in the Angle Brackets(**&lt;BRACKET&gt;**)
+
+```yaml
+elastic_hosts: # Search endpoint
+  - https://<FOLLOWER_IP_ADDRESS>:<9200>
+
+```
 
 ## Step 5 - Setup previous Leader Cluster as Follower Cluster.
 

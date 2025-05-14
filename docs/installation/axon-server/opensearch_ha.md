@@ -3,7 +3,7 @@ hide:
   - toc
 ---
 
-# Opensearch Cross Cluster Replication Setup
+# OpenSearch Cross Cluster Replication Setup
 
 Cross cluster replication allows you to index data to a leader index and then replicate that to a follower index. 
 
@@ -12,7 +12,7 @@ For more [Read Here](https://docs.opensearch.org/docs/latest/tuning-your-cluster
 ## Prerequisites
 
 !!! warning "Please take note"
-    Cross Cluster Replication needs to be setup before installing and starting Axon-Server
+    Cross Cluster Replication needs to be setup before installing and starting axon-server
 
 Cross-cluster replication has the following prerequisites:
 
@@ -25,7 +25,7 @@ Cross-cluster replication has the following prerequisites:
 ## Permissions
 On both the Leader and the Follower cluster
 
-- Make sure the Opensearch Security plugin is either enabled or disabled. 
+- Make sure the OpenSearch Security plugin is either enabled or disabled. 
 
 If you disabled the Security plugin, you can skip the following section.
 
@@ -36,7 +36,7 @@ For index and cluster-level permission requirements, see [Cross-cluster replicat
 
 ## Step 1 - Create Replication Role (If Security Enabled)
 
-Opensearch has built-in roles that can be applied on both the leader and follower user.
+OpenSearch has built-in roles that can be applied on both the leader and follower user.
 
 - Create a user on both the Leader and Follower cluster. 
 - Assign the role to the user on the Leader and Follower cluster.
@@ -74,7 +74,7 @@ curl -XPUT -k -H 'Content-Type: application/json' -u '<CCR_USER>:<CCR_USER_PASSW
 
 On the Follower Cluster:
 
-Please take note that the auto-follow pattern is setup with using wildcard(*) matching. This will pick up all the indexes that Axon-Server creates.
+Please take note that the auto-follow pattern is setup with using wildcard(*) matching. This will pick up all the indexes that axon-server creates.
 
 Update all the values in the Angle Brackets(**&lt;BRACKET&gt;**)
 
@@ -94,6 +94,6 @@ curl -XPOST -k -H 'Content-Type: application/json' -u '<CCR_USER>:<CCR_USER_PASS
 !!! note "Roles"
     If you have Security disabled you can exclude the **use_roles** section.
 
-## Step 4  - Start Axon-Server
+## Step 4  - Start axon-server
 
 On the Primary DC start axon-server. Once started axon-server will create the initial indices needed and the follower node will start replicating all the indices based on the auto-follow pattern setup in Step 3.
