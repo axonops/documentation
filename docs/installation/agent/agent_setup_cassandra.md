@@ -27,7 +27,6 @@ axon-agent:
         caFile: "path_to_certs_on_axon_agent_node.crt" # required if skipVerify is not set and you are using a self-signed cert
         certFile: "path_to_certs_on_axon_agent_node.crt"
         keyFile: "path_to_key_file_on_axon_agent_node.key"
-    disable_auto_update: true
 
 NTP:
     host: "ntp.mycompany.com" # Your NTP server IP address or hostname 
@@ -36,7 +35,7 @@ NTP:
 Set file permissions on /etc/axonops/axon-agent.yml file by executing the following command
 
 ```
-sudo chmod 0644 /etc/axonops/axon-agent.yml
+sudo chmod 0640 /etc/axonops/axon-agent.yml
 ```
 
 <h2>Step 4 - Configure Cassandra</h2>

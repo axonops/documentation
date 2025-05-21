@@ -93,7 +93,7 @@ nav:
   - Home: index.md
   
   # - Get Started:
-  - AxonOps Cloud: 
+  - AxonOps Cloud:
     - Editions: 
       - Developer Edition: 'editions/developer_edition.md'
       - Starter Edition: 'editions/starter_edition.md'
@@ -104,6 +104,12 @@ nav:
       - AxonOps Cloud agents: 'get_started/agent_setup.md'
 
   - AxonOps Self-Hosted:
+    - Get Started:
+      - Installation Types: get_started/installation_types.md
+
+    - Security:
+      - Firewall Rules: firewall/overview.md 
+      
     - Starter:
       - AxonOps Server: 'installation-starter/axon-server/axonserver_install.md'
       - AxonOps Dashboard: 'installation-starter/axon-dash/install.md'
@@ -129,6 +135,7 @@ nav:
       
     - Compatibility:
       - Interoperability matrix: 'installation/compat_matrix/compat_matrix.md'
+
     
   - Using AxonOps:
     - Cluster Overview:

@@ -26,8 +26,6 @@ axon-agent:
     #caFile: "path_to_certs_on_axon_agent_node.crt" # required if skipVerify is not set and you are using a self-signed cert
     #certFile: "path_to_certs_on_axon_agent_node.crt"
     #keyFile: "path_to_key_file_on_axon_agent_node.key"
-  disable_auto_update: true
-
 # Specify the NTP server IP addresses or hostnames configured for your hosts
 # The port defaults to 123 if not specified.
 # NTP:
@@ -99,7 +97,6 @@ axon-agent:
     #caFile: "path_to_certs_on_axon_agent_node.crt" # required if skipVerify is not set and you are using a self-signed cert
     #certFile: "path_to_certs_on_axon_agent_node.crt"
     #keyFile: "path_to_key_file_on_axon_agent_node.key"
-  disable_auto_update: true
 
 # Specify the NTP server IP addresses or hostnames configured for your hosts
 # The port defaults to 123 if not specified.
@@ -144,7 +141,6 @@ axon-agent:
     #caFile: "path_to_certs_on_axon_agent_node.crt" # required if skipVerify is not set and you are using a self-signed cert
     #certFile: "path_to_certs_on_axon_agent_node.crt"
     #keyFile: "path_to_key_file_on_axon_agent_node.key"
-  disable_auto_update: true
 
 # Specify the NTP server IP addresses or hostnames configured for your hosts
 # The port defaults to 123 if not specified.
@@ -217,7 +213,6 @@ axon-agent:
     #caFile: "path_to_certs_on_axon_agent_node.crt" # required if skipVerify is not set and you are using a self-signed cert
     #certFile: "path_to_certs_on_axon_agent_node.crt"
     #keyFile: "path_to_key_file_on_axon_agent_node.key"
-  disable_auto_update: true
 
 # Specify the NTP server IP addresses or hostnames configured for your hosts
 # The port defaults to 123 if not specified.
@@ -290,7 +285,6 @@ axon-agent:
     #caFile: "path_to_certs_on_axon_agent_node.crt" # required if skipVerify is not set and you are using a self-signed cert
     #certFile: "path_to_certs_on_axon_agent_node.crt"
     #keyFile: "path_to_key_file_on_axon_agent_node.key"
-  disable_auto_update: true
 
 # Specify the NTP server IP addresses or hostnames configured for your hosts
 # The port defaults to 123 if not specified.
@@ -315,7 +309,7 @@ kafka:
 Set file permissions on /etc/axonops/axon-agent.yml file by executing the following command
 
 ```shell
-sudo chmod 0644 /etc/axonops/axon-agent.yml
+sudo chmod 0640 /etc/axonops/axon-agent.yml
 ```
 
 <!-- Step 4 -->

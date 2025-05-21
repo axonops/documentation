@@ -22,7 +22,6 @@ axon-agent:
     # SSL/TLS Settings from AxonOps Agent to AxonOps Server
     tls:
         mode: "disabled" # disabled, TLS
-    disable_auto_update: true
 
 NTP:
     host: "ntp.mycompany.com" # Your NTP server IP address or hostname 
@@ -31,7 +30,7 @@ NTP:
 Set file permissions on /etc/axonops/axon-agent.yml file by executing the following command
 
 ```
-sudo chmod 0644 /etc/axonops/axon-agent.yml
+sudo chmod 0640 /etc/axonops/axon-agent.yml
 ```
 
 <h2>Step 4 - Configure Cassandra</h2>

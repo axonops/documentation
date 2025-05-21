@@ -39,7 +39,7 @@ If there is a Dedicated NTP server in your Organization please uncomment and upd
 Set file permissions on /etc/axonops/axon-agent.yml file by executing the following command
 
 ```
-sudo chmod 0644 /etc/axonops/axon-agent.yml
+sudo chmod 0640 /etc/axonops/axon-agent.yml
 ```
 
 <h2>Step 4 - Configure Cassandra</h2>
