@@ -359,3 +359,12 @@ html .md-footer-meta.md-typeset a {
   color: #000 !important;
   background-color: #9e9e9e !important
 }
+
+
+.delete_config {
+  color: #EE0F0F;
+}
+
+.edit_config{
+  color: #df8600;
+}

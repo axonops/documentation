@@ -1,38 +1,97 @@
 
-**Cluster Overview** is the home page and provides an overview of your cluster health, including **OS**, **Cassandra** and **JVM** details.
+## Cluster Overview
+
+**Cluster Overview** is the home page and provides a visual overview of your clusters health.
 
 The information is automatically extracted by the AxonOps agent and pushed to AxonOps server. There is no need to configure anything on the agent or the server side for this information to be populated in the Cluster Overview dashboard.
 
-
-On the Axonops application menu, select `Cluster Overview`.
+<br/>
 
 ![](./0.JPG)
 
 ![](./1.JPG)
 
-You can select a **node** to view some details on the **OS**, **Cassandra** or the **JVM**.
+## Supported Clusters
 
-!!! infomy
+- Apache Cassandra
+
+- Apache Kafka
+
+### Switching between Clusters
+
+- On the page breadcrumb click on Show List of Clusters
+
+![](./show_clusters.png)
+
+- Select the Apache Cassandra or Apache Kafka Cluster
+
+![](./select_cluster.png)
+
+
+### Overview - Graph and List Views
+
+On the Axonops application menu, select `Cluster Overview`.
+
+Select a node to view configuration details.
+
+#### Graph View
 
 ![](./2.JPG)
 
+#### List View
 
-### OS Details
+![](./list_view.png)
+![](./list_view2.png)
+
+
+### Configuration detail sections:
+
+Configuration detail sections show service specific information and differ based on cluster and node type.
+
+- *Operating System(OS) Configuration*
+- *Cassandra Configuration*
+- *Kafka Configuration*
+- *Zookeeper Configuration*
+- *KRaft Broker Configuration*
+- *KRaft Controller Configuration*
+- *Kafka Connect Configuration*
+- *Java(JVM) Configuration*
+
+#### OS Details
+
 Operating System Details section shows general information including:
 
-* General Information
-* CPU
-* Memory
-* Swap
-* Disk volumes
+- *General Information*
+- *CPU*
+- *Memory*
+- *Swap*
+- *Disk volumes*
 
 !!! infomy
 
 ![](./3.JPG)
 
 
-### Cassandra Details
-Cassandra Details view shows the details from cassandra.yaml loaded into Cassandra. There is a search field available near the top to filter the parameters.
+#### Node Details
+
+Node Details view shows the details from the specific node configuration files and differ based on cluster and node type. 
+
+There is a search field available near the top to filter the configuration parameters.
+
+Node configuration files:
+
+- Casssandra
+    - cassandra.yml
+- Kafka 
+    - server.properties
+    - zookeeper.properties
+- KRaft
+    - broker.properties
+    - controller.properties
+    - server.properties
+- Kafka Connect
+    - connect-standalone.properties
+    - connect-distributed.properties
 
 !!! infomy
 
@@ -40,8 +99,9 @@ Cassandra Details view shows the details from cassandra.yaml loaded into Cassand
 
 
 
-### JVM Details
-JVM Details section shows the general information about the JVM, including the version and some configurations such as the heap and Garbage Collection settings.
+#### JVM Details
+
+JVM Details section shows the general information about the Java Virtual Machine(JVM), including the version and some configuration options such as the heap and Garbage Collection settings.
 
 !!! infomy
 
