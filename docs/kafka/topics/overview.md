@@ -16,19 +16,27 @@ A Kafka topic is a core concept in Apache Kafka, serving as a logical channel or
 
 ## Topic Overview
 
-In the topic overview page you can get a holistic view of all the topics in you Kafka Cluster. 
-
-On the overview page you can see information relating to Topics, Partitions, ISR(In-Sync Replicas), Alerts, Counters and Sizes.
-
-You can also perform certain operations per topic: 
-
-- Edit Topic
-- Clone Topic
-- Delete Topic
-
-<img src="/kafka/topics/topic_overview.png" width="700">
-
+In the topic overview page you can get a holistic view of all the topics in you Kafka Cluster.
 
 **Click Topics in the Left Navigation to open the Overview page.**
 
 <img src="/kafka/topics/topic_click.png" width="700">
+
+On the overview page interact with topics and topic information relating to Topics, Partitions, ISR(In-Sync Replicas), Alerts, Counters, Sizes and Topic Actions like:
+
+- Edit Topic : :material-pencil:{ .edit_config }
+- Clone Topic : :material-content-copy:{ .copy_config }
+- Delete Topic : :material-trash-can:{ .delete_config }
+
+<img src="/kafka/topics/topic_overview.png" width="700">
+
+### Selected Topic Information
+
+<img src="/kafka/topics/topic_configuration.png" width="700">
+
+Once a topic has been selected the following information is displayed.
+
+- Configuration - Kafka Topic Configuration Options. To read more about configuration options [Click here](/kafka/topics/configure_topic/#topic-configuration)
+- Partitions - View information such as Partition ID, Brokers the Partition resides and offsets.
+- Consumers - Current list of consumers that are consuming from the topic.
+- ACLs -  Current ACLs applied to the Topic. To read more about ACLs [Click here](/kafka/acl/overview)

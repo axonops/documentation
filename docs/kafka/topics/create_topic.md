@@ -6,9 +6,9 @@
 
 <img src="/kafka/topics/topic_click.png" width="700">
 
-### Click "Create Topic" Button
+### Click Create Topic Button
 
-<img src="/kafka/topics/topic_create_buton.png" width="700">
+<img src="/kafka/topics/topic_create_button.png" width="700">
 
 ### Topic Creation Configuration.
 

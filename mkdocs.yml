@@ -181,7 +181,7 @@ nav:
       - Topics: 
         - Overview: kafka/topics/overview.md
         - Create Topic: kafka/topics/create_topic.md
-        - Configiure Topic: kafka/topics/configure_topic.md
+        - Configure Topic: kafka/topics/configure_topic.md
       
       - Brokers: 
         - Overview : kafka/brokers/overview.md
