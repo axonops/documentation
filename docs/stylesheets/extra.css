@@ -372,3 +372,13 @@ html .md-footer-meta.md-typeset a {
 .copy_config{
   color: #49a84d;
 }
+
+table th:first-of-type {
+    width: 25%;
+}
+table th:nth-of-type(2) {
+    width: 50%;
+}
+table th:nth-of-type(3) {
+    width: 25%;
+}
