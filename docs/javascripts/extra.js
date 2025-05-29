@@ -170,7 +170,7 @@ function hidePanels() {
       case "Kafka20":
         document.getElementById('KJavaimg').style.display = 'inline';  
         // document.getElementById('Java11img').style.display = 'none';
-        document.getElementById('KJava17img').style.display = 'inline';
+        // document.getElementById('KJava17img').style.display = 'inline';
         // window.localStorage.setItem("KJAVA_State", "Java");
         if(window.localStorage.getItem("KJAVA_State") == "Java")
           document.getElementsByName('kjavaFamily')[0].checked = true
@@ -182,7 +182,7 @@ function hidePanels() {
       case "Kafka30":
         document.getElementById('KJavaimg').style.display = 'inline';  
         // document.getElementById('Java11img').style.display = 'none';
-        document.getElementById('KJava17img').style.display = 'inline';
+        // document.getElementById('KJava17img').style.display = 'inline';
         // window.localStorage.setItem("KJAVA_State", "Java");
         if(window.localStorage.getItem("KJAVA_State") == "Java")
           document.getElementsByName('kjavaFamily')[0].checked = true

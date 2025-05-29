@@ -40,42 +40,37 @@ axon-agent:
 
 kafka:
   node_type: "broker" # broker, kraft-broker, kraft-controller, zookeeper, connect
-  rack: "testrack" # Picked up from Kafka config, can override the Rack for grouping nodes by Rack in Monitoring Topology
-  datacenter: "testdc" # Group you kafka nodes by DC for Monitoring topology. 
-  config:
-    kafka:
-      brokers: ["<host_listener_ip_address_or_fqdn>:<port>>"] # 10.0.0.2:9092 or 10.20.30.40:9094 or this_is_my_server.domain.com:9093
-      # Authentication Settings
-      sasl:
-        enabled: true
-        username: <THIS_IS_A_DUMMY_USERNAME_PLEASE_UPDATE>
-        password: <THIS_IS_A_DUMMY_PASSWORD_PLEASE_UPDATE>
-        mechanism: PLAIN # SCRAM-SHA-256, SCRAM-SHA-512, OAUTHBEARER, GSSAPI
-        # For oauth support
-        # oauth:
-        #   token:
-        #   clientId:
-        #   clientSecret:
-        #   tokenEndpoint:
-        #   scope:
-        # For gsappi support
-        # gsappi:
-        #   authType:
-        #   keyTabPath:
-        #   kerberosConfigPath:
-        #   serviceName:
-        #   username:
-        #   password:
-        #   realm:
-        #   enableFast: true
-      # SSL settings for connection to Kafka
-      tls:
-        enabled: true
-        caFilepath: <THIS_IS_A_DUMMY_CA_PATH_PLEASE_UPDATE>
-        insecureSkipTlsVerify: false
-  metrics:
-    enabled: true
-    request_interval: 5
+  # rack: "testrack" # Picked up from Kafka config, can override the Rack for grouping nodes by Rack in Monitoring Topology
+  datacenter: "testdc" # Group you Kafka nodes by DC for Monitoring topology. 
+  kafka_client:
+    brokers: ["<host_listener_ip_address_or_fqdn>:<port>>"] # 10.0.0.2:9092 or 10.20.30.40:9094 or this_is_my_server.domain.com:9093
+    # Authentication Settings
+    sasl:
+      username: <THIS_IS_A_DUMMY_USERNAME_PLEASE_UPDATE>
+      password: <THIS_IS_A_DUMMY_PASSWORD_PLEASE_UPDATE>
+      mechanism: PLAIN # SCRAM-SHA-256, SCRAM-SHA-512, OAUTHBEARER, GSSAPI
+      # For oauth support
+      # oauth:
+      #   token:
+      #   clientId:
+      #   clientSecret:
+      #   tokenEndpoint:
+      #   scope:
+      # For gsappi support
+      # gsappi:
+      #   authType:
+      #   keyTabPath:
+      #   kerberosConfigPath:
+      #   serviceName:
+      #   username:
+      #   password:
+      #   realm:
+      #   enableFast: true
+    # SSL settings for connection to Kafka
+    tls:
+      enabled: true
+      caFilepath: <THIS_IS_A_DUMMY_CA_PATH_PLEASE_UPDATE>
+      insecureSkipTlsVerify: false
 ```
 </div>
 
@@ -112,14 +107,8 @@ axon-agent:
 
 kafka:
   node_type: "zookeeper" # broker, kraft-broker, kraft-controller, zookeeper, connect
-  rack: "<EXAMPLE_COULD_BE_A_RACK_AZ_OR_REGION>"
-  # Please do not change the below value for Zookeeper Nodes
-  tier0:
-    metrics:
-      jvm_:
-        - "java.lang:*"
-      zk_:
-        - "org.apache.ZooKeeperService:*"
+  # rack: "testrack" # Picked up from Zookeeper config, can override the Rack for grouping nodes by Rack in Monitoring Topology
+  # datacenter: "testdc" # Group your Zookeeper nodes by DC for Monitoring topology.
 ```
 </div>
 
@@ -156,42 +145,37 @@ axon-agent:
 
 kafka:
   node_type: "kraft-broker" # broker, kraft-broker, kraft-controller, zookeeper, connect
-  rack: "testrack" # Picked up from Kafka config, can override the Rack for grouping nodes by Rack in Monitoring Topology
+  # rack: "testrack" # Picked up from Kafka config, can override the Rack for grouping nodes by Rack in Monitoring Topology
   datacenter: "testdc" # Group you kafka nodes by DC for Monitoring topology. 
-  config:
-    kafka:
-      brokers: ["<host_listener_ip_address_or_fqdn>:<port>>"] # 10.0.0.2:9092 or 10.20.30.40:9094 or this_is_my_server.domain.com:9093
-      # Authentication Settings
-      sasl:
-        enabled: true
-        username: <THIS_IS_A_DUMMY_USERNAME_PLEASE_UPDATE>
-        password: <THIS_IS_A_DUMMY_PASSWORD_PLEASE_UPDATE>
-        mechanism: PLAIN # SCRAM-SHA-256, SCRAM-SHA-512, OAUTHBEARER, GSSAPI
-        # For oauth support
-        # oauth:
-        #   token:
-        #   clientId:
-        #   clientSecret:
-        #   tokenEndpoint:
-        #   scope:
-        # For gsappi support
-        # gsappi:
-        #   authType:
-        #   keyTabPath:
-        #   kerberosConfigPath:
-        #   serviceName:
-        #   username:
-        #   password:
-        #   realm:
-        #   enableFast: true
-      # SSL settings for connection to Kafka
-      tls:
-        enabled: true
-        caFilepath: <THIS_IS_A_DUMMY_CA_PATH_PLEASE_UPDATE>
-        insecureSkipTlsVerify: false
-  metrics:
-    enabled: true
-    request_interval: 5
+  kafka_client:
+    brokers: ["<host_listener_ip_address_or_fqdn>:<port>>"] # 10.0.0.2:9092 or 10.20.30.40:9094 or this_is_my_server.domain.com:9093
+    # Authentication Settings
+    sasl:
+      username: <THIS_IS_A_DUMMY_USERNAME_PLEASE_UPDATE>
+      password: <THIS_IS_A_DUMMY_PASSWORD_PLEASE_UPDATE>
+      mechanism: PLAIN # SCRAM-SHA-256, SCRAM-SHA-512, OAUTHBEARER, GSSAPI
+      # For oauth support
+      # oauth:
+      #   token:
+      #   clientId:
+      #   clientSecret:
+      #   tokenEndpoint:
+      #   scope:
+      # For gsappi support
+      # gsappi:
+      #   authType:
+      #   keyTabPath:
+      #   kerberosConfigPath:
+      #   serviceName:
+      #   username:
+      #   password:
+      #   realm:
+      #   enableFast: true
+    # SSL settings for connection to Kafka
+    tls:
+      enabled: true
+      caFilepath: <THIS_IS_A_DUMMY_CA_PATH_PLEASE_UPDATE>
+      insecureSkipTlsVerify: false
 ```
 </div>
 
@@ -228,42 +212,37 @@ axon-agent:
 
 kafka:
   node_type: "kraft-controller" # broker, kraft-broker, kraft-controller, zookeeper, connect
-  rack: "testrack" # Picked up from Kafka config, can override the Rack for grouping nodes by Rack in Monitoring Topology
-  datacenter: "testdc" # Group you kafka nodes by DC for Monitoring topology. 
-  config:
-    kafka:
-      brokers: ["<host_listener_ip_address_or_fqdn>:<port>>"] # 10.0.0.2:9092 or 10.20.30.40:9094 or this_is_my_server.domain.com:9093
-      # Authentication Settings
-      sasl:
-        enabled: true
-        username: <THIS_IS_A_DUMMY_USERNAME_PLEASE_UPDATE>
-        password: <THIS_IS_A_DUMMY_PASSWORD_PLEASE_UPDATE>
-        mechanism: PLAIN # SCRAM-SHA-256, SCRAM-SHA-512, OAUTHBEARER, GSSAPI
-        # For oauth support
-        # oauth:
-        #   token:
-        #   clientId:
-        #   clientSecret:
-        #   tokenEndpoint:
-        #   scope:
-        # For gsappi support
-        # gsappi:
-        #   authType:
-        #   keyTabPath:
-        #   kerberosConfigPath:
-        #   serviceName:
-        #   username:
-        #   password:
-        #   realm:
-        #   enableFast: true
-      # SSL settings for connection to Kafka
-      tls:
-        enabled: true
-        caFilepath: <THIS_IS_A_DUMMY_CA_PATH_PLEASE_UPDATE>
-        insecureSkipTlsVerify: false
-  metrics:
-    enabled: true
-    request_interval: 5
+  # rack: "testrack" # Picked up from Kafka config, can override the Rack for grouping nodes by Rack in Monitoring Topology
+  datacenter: "testdc" # Group you kafka nodes by DC for Monitoring topology.
+  kafka_client:
+    brokers: ["<host_listener_ip_address_or_fqdn>:<port>>"] # 10.0.0.2:9092 or 10.20.30.40:9094 or this_is_my_server.domain.com:9093
+    # Authentication Settings
+    sasl:
+      username: <THIS_IS_A_DUMMY_USERNAME_PLEASE_UPDATE>
+      password: <THIS_IS_A_DUMMY_PASSWORD_PLEASE_UPDATE>
+      mechanism: PLAIN # SCRAM-SHA-256, SCRAM-SHA-512, OAUTHBEARER, GSSAPI
+      # For oauth support
+      # oauth:
+      #   token:
+      #   clientId:
+      #   clientSecret:
+      #   tokenEndpoint:
+      #   scope:
+      # For gsappi support
+      # gsappi:
+      #   authType:
+      #   keyTabPath:
+      #   kerberosConfigPath:
+      #   serviceName:
+      #   username:
+      #   password:
+      #   realm:
+      #   enableFast: true
+    # SSL settings for connection to Kafka
+    tls:
+      enabled: true
+      caFilepath: <THIS_IS_A_DUMMY_CA_PATH_PLEASE_UPDATE>
+      insecureSkipTlsVerify: false
 ```
 </div>
 
@@ -300,8 +279,8 @@ axon-agent:
 
 kafka:
   node_type: "connect" # broker, kraft-broker, kraft-controller, zookeeper, connect
-  datacenter: "testdc"
-  rack: "testrack"
+  # rack: "testrack" # Picked up from Connect config, can override the Rack for grouping nodes by Rack in Monitoring Topology
+  datacenter: "testdc" # Group you Connect nodes by DC for Monitoring topology.
 ```
 </div>
 

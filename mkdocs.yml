@@ -178,20 +178,21 @@ nav:
       # - Operations:
       #   - Rolling Restart: 'operations/kafka/rollingrestart/overview.md'
 
+      - Brokers: 
+        - Overview : kafka/brokers/overview.md
+      
       - Topics: 
         - Overview: kafka/topics/overview.md
         - Create Topic: kafka/topics/create_topic.md
         - Configure Topic: kafka/topics/configure_topic.md
       
-      - Brokers: 
-        - Overview : kafka/brokers/overview.md
+      - ACL: 
+        - Overview: kafka/acl/overview.md
+        - Create ACL: kafka/acl/create_acl.md
+        - Configure ACL: kafka/acl/configure_acl.md
 
       - Consumers: 
         - Overview: kafka/consumers/overview.md
-
-      - ACL: 
-        - Overview: kafka/acl/overview.md
-        - Create: kafka/acl/create_acl.md
     
     - Notification Integrations:
       - Overview : 'integrations/overview.md'

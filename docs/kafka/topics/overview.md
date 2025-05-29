@@ -30,7 +30,7 @@ On the overview page interact with topics and topic information relating to Topi
 
 <img src="/kafka/topics/topic_overview.png" width="700">
 
-### Selected Topic Information
+### Selected Topic Information
 
 <img src="/kafka/topics/topic_configuration.png" width="700">
 
