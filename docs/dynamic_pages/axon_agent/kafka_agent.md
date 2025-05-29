@@ -10,8 +10,8 @@
   <img src="/get_started/kafka30.png" class="skip-lightbox" width="180px">
 </label>
 
-<h3>Select the Java Version.</h3>
-<label>
+<h3 style="display: none;">Select the Java Version.</h3>
+<label style="display: none;">
   <input type="radio" id="Java" name="kjavaFamily" onChange="updateKJava()" checked=true />
   <img id="KJavaimg" src="/get_started/java.png" class="skip-lightbox" width="180px">
 </label>

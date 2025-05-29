@@ -4,12 +4,6 @@
 
 <h2>Step 3 - Agent Configuration </h2>
 
-<p>Update the AxonOps Agent Service file:</p>
-
-```shell
-echo "kafka" > /var/lib/axonops/agent_service
-```
-
 <p>Update the highlighted lines in <code>/etc/axonops/axon-agent.yml</code>:</p>
 
 <p>Please update the <strong>key</strong> and <strong>org</strong> values, they can be viewed by logging into <a href="https://console.axonops.cloud" target="_blank">console.axonops.cloud</a></p>
