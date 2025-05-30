@@ -41,7 +41,6 @@ axon-agent:
 kafka:
   node_type: "broker" # broker, kraft-broker, kraft-controller, zookeeper, connect
   # rack: "testrack" # Picked up from Kafka config, can override the Rack for grouping nodes by Rack in Monitoring Topology
-  datacenter: "testdc" # Group you Kafka nodes by DC for Monitoring topology. 
   kafka_client:
     brokers: ["<host_listener_ip_address_or_fqdn>:<port>>"] # 10.0.0.2:9092 or 10.20.30.40:9094 or this_is_my_server.domain.com:9093
     # Authentication Settings
@@ -108,7 +107,6 @@ axon-agent:
 kafka:
   node_type: "zookeeper" # broker, kraft-broker, kraft-controller, zookeeper, connect
   # rack: "testrack" # Picked up from Zookeeper config, can override the Rack for grouping nodes by Rack in Monitoring Topology
-  # datacenter: "testdc" # Group your Zookeeper nodes by DC for Monitoring topology.
 ```
 </div>
 
@@ -146,7 +144,6 @@ axon-agent:
 kafka:
   node_type: "kraft-broker" # broker, kraft-broker, kraft-controller, zookeeper, connect
   # rack: "testrack" # Picked up from Kafka config, can override the Rack for grouping nodes by Rack in Monitoring Topology
-  datacenter: "testdc" # Group you kafka nodes by DC for Monitoring topology. 
   kafka_client:
     brokers: ["<host_listener_ip_address_or_fqdn>:<port>>"] # 10.0.0.2:9092 or 10.20.30.40:9094 or this_is_my_server.domain.com:9093
     # Authentication Settings
@@ -213,7 +210,6 @@ axon-agent:
 kafka:
   node_type: "kraft-controller" # broker, kraft-broker, kraft-controller, zookeeper, connect
   # rack: "testrack" # Picked up from Kafka config, can override the Rack for grouping nodes by Rack in Monitoring Topology
-  datacenter: "testdc" # Group you kafka nodes by DC for Monitoring topology.
   kafka_client:
     brokers: ["<host_listener_ip_address_or_fqdn>:<port>>"] # 10.0.0.2:9092 or 10.20.30.40:9094 or this_is_my_server.domain.com:9093
     # Authentication Settings
@@ -280,7 +276,6 @@ axon-agent:
 kafka:
   node_type: "connect" # broker, kraft-broker, kraft-controller, zookeeper, connect
   # rack: "testrack" # Picked up from Connect config, can override the Rack for grouping nodes by Rack in Monitoring Topology
-  datacenter: "testdc" # Group you Connect nodes by DC for Monitoring topology.
 ```
 </div>
 

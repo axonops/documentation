@@ -144,13 +144,14 @@ nav:
     - Monitoring:
       - Monitoring Overview: 'monitoring/overview.md'
       - Service Checks: 'monitoring/servicechecks/overview.md'
-      - Metrics Dashboard:
-          - Cassandra: 'monitoring/metricsdashboards/cassandra.md'
-          - Metrics Query Syntax: 'monitoring/metricsdashboards/querysyntax.md'
       - 'Metrics in Grafana': 'monitoring/grafana/grafana.md'
       - Logs & Events: 'monitoring/logsandevents/logsandevents.md'
 
     - Cassandra:
+      - Metrics Dashboard:
+        - Cassandra: 'monitoring/metricsdashboards/cassandra.md'
+        - Metrics Query Syntax: 'monitoring/metricsdashboards/querysyntax.md'
+
       - Operations:
         - Repair: 'operations/cassandra/repair.md'
         - Rolling Restart: 'operations/cassandra/rollingrestart/overview.md'
@@ -177,6 +178,9 @@ nav:
     - Kafka:
       # - Operations:
       #   - Rolling Restart: 'operations/kafka/rollingrestart/overview.md'
+      - Metrics Dashboard:
+        - Kafka: 'monitoring/metricsdashboards/kafka.md'
+        - Metrics Query Syntax: 'monitoring/metricsdashboards/querysyntax_kafka.md'
 
       - Brokers: 
         - Overview : kafka/brokers/overview.md
