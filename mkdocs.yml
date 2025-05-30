@@ -193,7 +193,8 @@ nav:
       - ACL: 
         - Overview: kafka/acl/overview.md
         - Create ACL: kafka/acl/create_acl.md
-        - Configure ACL: kafka/acl/configure_acl.md
+        # - Configure ACL: kafka/acl/configure_acl.md
+        # - Delete ACL: kafka/acl/delete_acl.md
 
       - Consumers: 
         - Overview: kafka/consumers/overview.md
