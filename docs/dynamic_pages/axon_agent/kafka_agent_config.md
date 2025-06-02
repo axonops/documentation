@@ -343,7 +343,7 @@ sudo usermod -aG axonops <your_kafka_user>
 
 <h2>Step 6 - Start/Restart Kafka</h2>
 
-To load the AxonOps Java Agent and Kafka config changes please either start the Kafka service if stopped. restart the Kafka service if already running.
+To load the AxonOps Java Agent and Kafka config changes please either start the Kafka service if stopped restart the Kafka service if already running.
 </div>
 
 <div id="Zookeeper" class="axon_kafka_dynamic_s5" style="display:none">
