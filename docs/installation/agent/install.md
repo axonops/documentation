@@ -63,7 +63,7 @@ sudo systemctl start axon-agent
 <br/>
 <h4>Cassandra agent Package details</h4>
 <ul>
-<li>Configuration: <code>/etc/axonops/axon-agent.yml</code></li>
+<li>Configuration File: <code>/etc/axonops/axon-agent.yml</code></li>
 <li>Binary: <code>/usr/share/axonops/axon-cassandra{version}-agent.jar</code></li>
 <li>Version number: <code>/usr/share/axonops/axon-cassandra{version}-agent.version</code></li>
 <li>Copyright : <code>/usr/share/doc/axonops/axon-cassandra{version}-agent/copyright</code></li>
@@ -71,7 +71,7 @@ sudo systemctl start axon-agent
 </ul>
 <h4>axon-agent Package details (dependency of Cassandra agent)</h4>
 <ul>
-<li>Configuration: <code>/etc/axonops/axon-agent.yml</code></li>
+<li>Configuration File: <code>/etc/axonops/axon-agent.yml</code></li>
 <li>Binary: <code>usr/share/axonops/axon-agent</code></li>
 <li>Logs : <code>/var/log/axonops/axon-agent.log</code></li>
 <li>Systemd service: <code>/usr/lib/systemd/system/axon-agent.service</code></li>
@@ -83,7 +83,7 @@ sudo systemctl start axon-agent
 <br/>
 <h4>Kafka agent Package details</h4>
 <ul>
-<li>Configuration: <code>/etc/axonops/axon-agent.yml</code></li>
+<li>Configuration File: <code>/etc/axonops/axon-agent.yml</code></li>
 <li>Binary: <code>/usr/share/axonops/axon-kafka{version}-agent.jar</code></li>
 <li>Version number: <code>/usr/share/axonops/axon-kafka{version}-agent.version</code></li>
 <li>Copyright : <code>/usr/share/doc/axonops/axon-kafka{version}-agent/copyright</code></li>
@@ -91,7 +91,7 @@ sudo systemctl start axon-agent
 </ul>
 <h4>axon-agent Package details (dependency of Kafka agent)</h4>
 <ul>
-<li>Configuration: <code>/etc/axonops/axon-agent.yml</code></li>
+<li>Configuration File: <code>/etc/axonops/axon-agent.yml</code></li>
 <li>Binary: <code>usr/share/axonops/axon-agent</code></li>
 <li>Logs : <code>/var/log/axonops/axon-agent.log</code></li>
 <li>Systemd service: <code>/usr/lib/systemd/system/axon-agent.service</code></li>

@@ -1,5 +1,19 @@
 # Using Cassandra as a metrics store
 
+## Prerequisites
+
+A dedicated server/s with supported version of Cassandra installed and configured.
+
+Current supported versions of Cassandra: 
+
+- Latest GA Version
+- Previous Stable Version
+- Older Stable Version
+
+For more information on versioning please see [Cassandra Downloads Page](https://cassandra.apache.org/_/download.html)
+
+## Update axon-server.yml
+
 To start using a CQL store you just have to specify CQL hosts in **axon-server.yml**:
 ``` bash
 cql_hosts :
@@ -19,6 +33,7 @@ cql_keyspace_replication : "{ 'class' : 'SimpleStrategy', 'replication_factor' :
 We recommend setting up at least a 3 nodes cluster with **NetworkTopologyStrategy** and a **replication_factor** of **3**.
 
 ## Connecting to encrypted Cassandra metrics store
+
 We recommend setting up a Secured Socket Layer connection to Cassandra with the following fields in **axon-server.yml**:
 ``` bash
 cql_ssl: true
@@ -29,6 +44,7 @@ cql_key_file: '/path/to/key_file'
 ```
 
 ## Metrics cache recommendations
+
 When using Cassandra as a metrics store the AxonOps server can cache metrics data in memory to further improve
 performance. This is configured using the `cql_metrics_cache_max_items` and `cql_metrics_cache_max_size_mb` options 
 in **axon-server.yml**. The default values are shown here:
@@ -51,7 +67,9 @@ When tuning these parameters it is recommended to set `cql_metrics_cache_max_ite
 cache size with `cql_metrics_cache_max_size_mb`.
 
 ## Other CQL fields
-You can also specify the following fields:
+
+You can also specify the following fields as required:
+
 ``` bash
 cql_proto_version int                   
 cql_batch_size  int                   
@@ -77,8 +95,10 @@ cql_lvl4_compaction_window_size int (used for the table named 'metrics7200' when
 cql_lvl5_compaction_window_size int (used for the table named 'metrics86400' when you let axonserver managing the tables automatically)                  
 ```
 
+## Create AxonOps Schema
 
 The CQL for the default tables are the following:
+
 ``` bash
 CREATE TABLE IF NOT EXISTS axonops.metrics5 (
     orgid text,

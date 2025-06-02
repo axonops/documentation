@@ -136,7 +136,7 @@ This will start the `axon-server` process as the `axonops` user, which was creat
 
 #### Package details
 
-* Configuration: `/etc/axonops/axon-server.yml`
+* Configuration File: `/etc/axonops/axon-server.yml`
 * Binary: `/usr/share/axonops/axon-server`
 * Logs: `/var/log/axonops/axon-server.log` 
 * Systemd service: `/usr/lib/systemd/system/axon-server.service`
@@ -144,7 +144,7 @@ This will start the `axon-server` process as the `axonops` user, which was creat
 * Licenses : `/usr/share/axonops/licenses/axon-server/`
 
 
-## Step 5 - Installing axon-dash
+## Next - Installing axon-dash
 
 Now **axon-server** is installed, you can start installing the GUI for it: [axon-dash](../axon-dash/install.md)
 

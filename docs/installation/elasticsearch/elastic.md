@@ -55,7 +55,11 @@ Elasticsearch needs `max file descriptors` system settings at least to 65536.
 echo 'elasticsearch  -  nofile  65536' | sudo tee --append /etc/security/limits.conf > /dev/null
 ```
 
-#### Start Elasticsearch
+## Create AxonOps Elasticsearch service account or user
+
+To create users please refer to the Elasticsearch docs [here](https://www.elastic.co/guide/en/elasticsearch/reference/current/setting-up-authentication.html){target="_blank"}
+
+## Start Elasticsearch
 
 ``` bash
 sudo systemctl start elasticsearch.service
@@ -67,6 +71,6 @@ After a short period of time, you can verify that your Elasticsearch node is run
 curl "localhost:9200"
 ```
 
-### Securing Elasticsearch
+## Securing Elasticsearch
 
 [Securing Elasticsearch](./securing_elastic.md)

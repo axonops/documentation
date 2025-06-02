@@ -58,7 +58,7 @@ This will start the **axon-dash** process as the **axonops** user, which was cre
 
 #### Package details
 
-* Configuration: `/etc/axonops/axon-dash.yml`
+* Configuration File: `/etc/axonops/axon-dash.yml`
 * Binary: `/usr/share/axonops/axon-dash`
 * Logs: `/var/log/axonops/axon-dash.log` 
 * Systemd service: `/usr/lib/systemd/system/axon-dash.service`
@@ -69,6 +69,6 @@ This will start the **axon-dash** process as the **axonops** user, which was cre
 
 AxonDash does not support SSL/TLS and needs to be fronted by Nginx. You can install and configure Nginx by following the [Configure Nginx](../axon-dash/configure_nginx.md) guide.
 
-## Step 7 - Installing agents
+## Next - Installing agents
 
 Now **axon-dash** is installed, you can start installing [cassandra-agent](../agent/install.md)

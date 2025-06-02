@@ -104,23 +104,26 @@ nav:
       - AxonOps Cloud agents: 'get_started/agent_setup.md'
 
   - AxonOps Self-Hosted:
-    - Get Started:
-      - Installation Types: get_started/installation_types.md
+    - Get Started: get_started/getting_started.md
 
     - Security:
       - Firewall Rules: firewall/overview.md 
       
-    - Starter:
-      - AxonOps Server: 'installation-starter/axon-server/axonserver_install.md'
-      - AxonOps Dashboard: 'installation-starter/axon-dash/install.md'
-      - AxonOps Agent: 'installation-starter/agent/install.md'
-      - AxonOps Agent in Docker: 'installation-starter/agent/docker.md'
-      - System Requirements: system-requirements/developer.md
+    # - Starter:
+    #   - AxonOps Server: 'installation-starter/axon-server/axonserver_install.md'
+    #   - AxonOps Dashboard: 'installation-starter/axon-dash/install.md'
+    #   - AxonOps Agent: 'installation-starter/agent/install.md'
+    #   - AxonOps Agent in Docker: 'installation-starter/agent/docker.md'
+    #   - System Requirements: system-requirements/developer.md
 
-    - Enterprise:
+    - Installing AxonOps:
+      - Elasticsearch: 
+        - Install Elasticsearch: 'installation/elasticsearch/install.md'
+        - Secure Elasticsearch: 'installation/elasticsearch/securing_elastic.md'
+      
+      - Cassandra as Metrics store: 'installation/axon-server/metricsdatabase.md'
+
       - AxonOps Server: 'installation/axon-server/axonserver_install.md'
-      - Securing Elasticsearch: 'installation/axon-server/securing_elastic.md'
-      - Cassandra as Metrics database: 'installation/axon-server/metricsdatabase.md'
       - AxonOps Dashboard: 'installation/axon-dash/install.md'
       - Configure Nginx: 'installation/axon-dash/configure_nginx.md'
       - AxonOps Agent: 'installation/agent/install.md'
