@@ -31,6 +31,7 @@ To turn off node discovery set `elastic_discover_nodes:false`
 This section is for Enterprise plan clients and is not needed on the Free Forever plan.
 
 `license_key` : This key will be used to unlock the Enterprise features of AxonOps.
+
 `org_name` : Needs to match the Name provided during the Enterprise onboarding process.
 
 ### Update Configuration File
@@ -123,7 +124,7 @@ retention:
     
 ```
 
-> For better performances on large clusters (100+ nodes), you can use a CQL store for the metrics such as **Cassandra**. To opt-in for CQL metrics storage, specify at least one CQL host with axon-server configuration.
+> For better performance on larger clusters (10+ nodes), it is recommended to use Cassandra as a Metrics Storage engine. To opt-in for CQL metrics storage, specify at least one CQL host in the axon-server configuration.
 
 ## Step 3 - Start the server
 
