@@ -1,43 +1,24 @@
 # AxonOps Server installation
 
-## Step 1 - Prerequisites
+## Step 1 - Installation
 
-### Metrics Storage Engine
-
-#### Elasticsearch
-
-Elasticsearch is the default data storage engine for all Cassandra metrics and AxonOps config.
-AxonOps is currently compatible with Elasticsearch 7.x, we recommend installing the latest available 7.x release.
-
-#### Cassandra
-
-You can use Cassandra as a metrics store instead of Elasticsearch for better performance.
-Elasticsearch is still required in conjunction with the dedicated AxonOps Cassandra cluster, Elasticsearch is used to store all the AxonOps configuration, logs data and metrics metadata.
-
-For more information on setting up Cassandra as a metric store: [Cassandra as Metrics Database](./metricsdatabase.md)
-
-#### Installing Elasticsearch
-
-{!dynamic_pages/axon_server/elastic.md!}
-
-{!installation/axon-server/elastic.md!}
-
-## Step 2 - axon-server installation
+Execute the following command to setup the AxonOps repository for your OS
 
 {!dynamic_pages/axon_server/os.md!}
 
-## Step 3 - axon-server configurations
+## Step 2 - Configure axon-server
 
-Make sure **elastic_host** and **elastic_port** are corresponding to your Elasticsearch instance.
+*AxonOps Server configuration file location :* `/etc/axonops/axon-server.yml`
 
-**Basic Auth in Elasticsearch** 
+### Update elastic_hosts
 
-- Create a user that has a dedicated role and username password.
-- Please dont use any of the built in users for Elasticsearch.
+Confirm the **elastic_url** and **elastic_port** correspond to the dedicated Elasticsearch instance.
 
-To create users please refer to the Elasticsearch docs [here](https://www.elastic.co/guide/en/elasticsearch/reference/current/setting-up-authentication.html){target="_blank"}
+#### Basic Auth in Elasticsearch (If enabled)
 
-**Load Balancer** or **Dedicated Coordinator** nodes fronting Elasticsearch.
+Update the username and password with the dedicated service account/user created in Elasticsearch
+
+#### Load Balancer or Dedicated Coordinator nodes fronting Elasticsearch
 
 By default AxonOps Server will discover all the nodes in the Elasticsearch cluster. It will utilise the list of dicovered nodes to round-robin requests to Elasticsearch.
 
@@ -45,7 +26,15 @@ When setting up a load balancing nodes or infrastrcutre that fronts Elasticsearc
 
 To turn off node discovery set `elastic_discover_nodes:false`
 
-*AxonOps Server configuration file location :* `/etc/axonops/axon-server.yml`
+### AxonOps Licensing
+
+This section is for Enterprise plan clients and is not needed on the Free Forever plan.
+
+`license_key` : This key will be used to unlock the Enterprise features of AxonOps.
+
+`org_name` : Needs to match the Name provided during the Enterprise onboarding process.
+
+### Update Configuration File
 
 ``` yaml hl_lines="7 33 34"
 host: 0.0.0.0  # axon-server listening address (used by axon-agents for connections) (env variable: AXONSERVER_HOST)
@@ -135,9 +124,9 @@ retention:
     
 ```
 
-> For better performances on large clusters (100+ nodes), you can use a CQL store for the metrics such as **Cassandra**. To opt-in for CQL metrics storage, specify at least one CQL host with axon-server configuration.
+> For better performance on larger clusters (10+ nodes), it is recommended to use Cassandra as a Metrics Storage engine. To opt-in for CQL metrics storage, specify at least one CQL host in the axon-server configuration.
 
-## Step 4 - Start the server
+## Step 3 - Start the server
 
 ``` -
 sudo systemctl daemon-reload
@@ -147,9 +136,9 @@ sudo systemctl status axon-server
 
 This will start the `axon-server` process as the `axonops` user, which was created during the package installation.  The default listening address is `0.0.0.0:8080`.
 
-#### Package details
+## Package details
 
-* Configuration: `/etc/axonops/axon-server.yml`
+* Configuration File: `/etc/axonops/axon-server.yml`
 * Binary: `/usr/share/axonops/axon-server`
 * Logs: `/var/log/axonops/axon-server.log` 
 * Systemd service: `/usr/lib/systemd/system/axon-server.service`
@@ -157,11 +146,6 @@ This will start the `axon-server` process as the `axonops` user, which was creat
 * Licenses : `/usr/share/axonops/licenses/axon-server/`
 
 
-## Step 5 - Installing axon-dash
+## Next - Install axon-dash
 
 Now **axon-server** is installed, you can start installing the GUI for it: [axon-dash](../axon-dash/install.md)
-
-
-
-
-

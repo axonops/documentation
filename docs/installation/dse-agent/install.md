@@ -47,7 +47,7 @@ sudo apt-get install <TODO>
 
 #### Package details
 
-* Configuration: `/etc/axonops/axon-java-agent.yml`
+* Configuration File: `/etc/axonops/axon-java-agent.yml`
 * Binary: `usr/share/axonops/axon-dse{version}-agent-1.0.jar`
 * Version number: `usr/share/axonops/axon-dse{version}-agent-1.0.version`
 

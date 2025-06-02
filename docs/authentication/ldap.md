@@ -1,6 +1,6 @@
 # LDAP Authentication
 
-To setup LDAP(Lightweight Directory Authentication Protocol) in AxonOps(On Premise Only) you will need to update the axon-server.yml configuration at the following location:
+To setup LDAP (Lightweight Directory Authentication Protocol) in AxonOps (On Premise Only) you will need to update the axon-server.yml configuration at the following location:
 
 ```/etc/axonops/axon-server.yml```
 
@@ -9,12 +9,12 @@ To setup LDAP(Lightweight Directory Authentication Protocol) in AxonOps(On Premi
 
 !!! tip "All the configuration for the below fields should be provided by the LDAP Server administrator."
 
-  - **host** : IP Address or Hostname of the LDAP server(A domain controller for LDAP).
+  - **host** : IP Address or Hostname of the LDAP server (A domain controller for LDAP).
   - **port** : The configured LDAP port of the server.
 
           Standard Default ports are either 
-          - 389(Unencrypted) 
-          - 636(Encrypted LDAPS)
+          - 389 (Unencrypted) 
+          - 636 (Encrypted LDAPS)
           The ports can be changed by LDAP adminstrators.
 
   - **useSSL** : true/false - Connects to LDAP using a secure port.

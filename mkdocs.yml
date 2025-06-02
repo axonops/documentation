@@ -1,5 +1,5 @@
 site_name: docs
-copyright: © 2024 AxonOps Limited. All rights reserved.
+copyright: © 2025 AxonOps Limited. All rights reserved.
 dev_addr: '0.0.0.0:8000'
 
 theme:
@@ -66,6 +66,9 @@ markdown_extensions:
       permalink: true
   - pymdownx.superfences
   - tables
+  - pymdownx.emoji:
+      emoji_index: !!python/name:material.extensions.emoji.twemoji 
+      emoji_generator: !!python/name:material.extensions.emoji.to_svg
 
 plugins:
   - search
@@ -90,7 +93,7 @@ nav:
   - Home: index.md
   
   # - Get Started:
-  - AxonOps Cloud: 
+  - AxonOps Cloud:
     - Editions: 
       - Developer Edition: 'editions/developer_edition.md'
       - Starter Edition: 'editions/starter_edition.md'
@@ -101,20 +104,29 @@ nav:
       - AxonOps Cloud agents: 'get_started/agent_setup.md'
 
   - AxonOps Self-Hosted:
-    - Starter:
-      - AxonOps Server: 'installation-starter/axon-server/axonserver_install.md'
-      - AxonOps Dashboard: 'installation-starter/axon-dash/install.md'
-      - AxonOps Agent: 'installation-starter/cassandra-agent/install.md'
-      - AxonOps Agent in Docker: 'installation-starter/cassandra-agent/docker.md'
-      - System Requirements: system-requirements/developer.md
+    - Get Started: get_started/getting_started.md
 
-    - Enterprise:
+    - Security:
+      - Firewall Rules: firewall/overview.md 
+      
+    # - Starter:
+    #   - AxonOps Server: 'installation-starter/axon-server/axonserver_install.md'
+    #   - AxonOps Dashboard: 'installation-starter/axon-dash/install.md'
+    #   - AxonOps Agent: 'installation-starter/agent/install.md'
+    #   - AxonOps Agent in Docker: 'installation-starter/agent/docker.md'
+    #   - System Requirements: system-requirements/developer.md
+
+    - Installing AxonOps:
+      - Elasticsearch: 
+        - Install Elasticsearch: 'installation/elasticsearch/install.md'
+        - Secure Elasticsearch: 'installation/elasticsearch/securing_elastic.md'
+      
+      - Cassandra as Metrics store: 'installation/axon-server/metricsdatabase.md'
+
       - AxonOps Server: 'installation/axon-server/axonserver_install.md'
-      - Securing Elasticsearch: 'installation/axon-server/securing_elastic.md'
-      - Cassandra as Metrics database: 'installation/axon-server/metricsdatabase.md'
       - AxonOps Dashboard: 'installation/axon-dash/install.md'
       - Configure Nginx: 'installation/axon-dash/configure_nginx.md'
-      - AxonOps Agent: 'installation/cassandra-agent/install.md'
+      - AxonOps Agent: 'installation/agent/install.md'
       - Kubernetes: 'installation/kubernetes/index.md'
       - System Requirements: system-requirements/index.md
 
@@ -126,47 +138,77 @@ nav:
       
     - Compatibility:
       - Interoperability matrix: 'installation/compat_matrix/compat_matrix.md'
+
     
   - Using AxonOps:
     - Cluster Overview:
       - Overview: 'cluster/cluster-overview.md'
-
+    
     - Monitoring:
       - Monitoring Overview: 'monitoring/overview.md'
       - Service Checks: 'monitoring/servicechecks/overview.md'
-      - Metrics Dashboard:
-          - Cassandra: 'monitoring/metricsdashboards/cassandra.md'
-          - Metrics Query Syntax: 'monitoring/metricsdashboards/querysyntax.md'
       - 'Metrics in Grafana': 'monitoring/grafana/grafana.md'
       - Logs & Events: 'monitoring/logsandevents/logsandevents.md'
 
+    - Cassandra:
+      - Metrics Dashboard:
+        - Cassandra: 'monitoring/metricsdashboards/cassandra.md'
+        - Metrics Query Syntax: 'monitoring/metricsdashboards/querysyntax.md'
+
+      - Operations:
+        - Repair: 'operations/cassandra/repair.md'
+        - Rolling Restart: 'operations/cassandra/rollingrestart/overview.md'
+
+      - Backup:
+        - Overview: 'operations/cassandra/backup/overview.md'
+        - Remote Backups:
+          - Overview: 'operations/cassandra/backup/remote.md'
+          - AWS S3: 'operations/cassandra/backup/aws_s3.md'
+      
+      - Restore:
+        - Overview: 'operations/cassandra/restore/overview.md'
+        - Single node: 'operations/cassandra/restore/restore-node-same-ip.md'
+        - Single node with a different IP address: 'operations/cassandra/restore/restore-node-different-ip.md'
+        - Whole cluster: 'operations/cassandra/restore/restore-cluster-same-ip.md'
+        - Whole cluster with changed IP addresses: 'operations/cassandra/restore/restore-cluster-different-ips.md'
+        - Restore to a different cluster: 'operations/cassandra/restore/restore-different-cluster.md'
+      
+      - Point-in-time Restore:
+        - Overview: pitr/overview.md
+        - Configure Commitlog Archiving: pitr/configuration.md
+        - Restore from Point-in-Time: pitr/restore.md
+      
+    - Kafka:
+      # - Operations:
+      #   - Rolling Restart: 'operations/kafka/rollingrestart/overview.md'
+      - Metrics Dashboard:
+        - Kafka: 'monitoring/metricsdashboards/kafka.md'
+        - Metrics Query Syntax: 'monitoring/metricsdashboards/querysyntax_kafka.md'
+
+      - Brokers: 
+        - Overview : kafka/brokers/overview.md
+      
+      - Topics: 
+        - Overview: kafka/topics/overview.md
+        - Create Topic: kafka/topics/create_topic.md
+        - Configure Topic: kafka/topics/configure_topic.md
+      
+      - ACL: 
+        - Overview: kafka/acl/overview.md
+        - Create ACL: kafka/acl/create_acl.md
+        # - Configure ACL: kafka/acl/configure_acl.md
+        # - Delete ACL: kafka/acl/delete_acl.md
+
+      - Consumers: 
+        - Overview: kafka/consumers/overview.md
+    
     - Notification Integrations:
       - Overview : 'integrations/overview.md'
       - PagerDuty Integration: 'integrations/pagerduy-integration.md'
       - Slack Integration: 'integrations/slack-integration.md'
       - Microsoft Teams: 'integrations/microsoft-teams-integration.md'
       - ServiceNow: 'integrations/servicenow-integration.md'
-      - Email Integration: 'integrations/email-integration.md'
-
-    - Operations:
-      - Repair: 'operations/cassandra/repair.md'
-      - Rolling Restart: 'operations/cassandra/rollingrestart/overview.md'
-    - Backup:
-      - Overview: 'operations/cassandra/backup/overview.md'
-      - Remote Backups:
-        - Overview: 'operations/cassandra/backup/remote.md'
-        - AWS S3: 'operations/cassandra/backup/aws_s3.md'
-    - Restore:
-      - Overview: 'operations/cassandra/restore/overview.md'
-      - Single node: 'operations/cassandra/restore/restore-node-same-ip.md'
-      - Single node with a different IP address: 'operations/cassandra/restore/restore-node-different-ip.md'
-      - Whole cluster: 'operations/cassandra/restore/restore-cluster-same-ip.md'
-      - Whole cluster with changed IP addresses: 'operations/cassandra/restore/restore-cluster-different-ips.md'
-      - Restore to a different cluster: 'operations/cassandra/restore/restore-different-cluster.md'
-    - Point-in-time Restore:
-      - Overview: pitr/overview.md
-      - Configure Commitlog Archiving: pitr/configuration.md
-      - Restore from Point-in-Time: pitr/restore.md
+      - Email Integration: 'integrations/email-integration.md' 
       
     - How-to:
       - Setup Alert Rules: how-to/setup-alert-rules.md

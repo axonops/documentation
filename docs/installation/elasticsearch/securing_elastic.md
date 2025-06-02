@@ -70,7 +70,7 @@ You can specify the indices that the role is applied to as follows:
 
 > **orgname** is the organisation name that is set in your AxonOps server and agent config files
 
-<img src="/installation/axon-server/elastic_role.png">
+<img src="/installation/elasticsearch/elastic_role.png">
 
 
 

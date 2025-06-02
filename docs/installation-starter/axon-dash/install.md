@@ -68,4 +68,4 @@ This will start the **axon-dash** process as the **axonops** user, which was cre
 
 ## Step 6 - Installing agents
 
-Now **axon-dash** is installed, you can start installing [cassandra-agent](../cassandra-agent/install.md)
+Now **axon-dash** is installed, you can start installing [agent](../agent/install.md)
