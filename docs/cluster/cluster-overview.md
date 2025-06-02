@@ -48,14 +48,14 @@ Select a node to view configuration details.
 
 Configuration detail sections show service specific information and differ based on cluster and node type.
 
-- *Operating System(OS) Configuration*
+- *Operating System (OS) Configuration*
 - *Cassandra Configuration*
 - *Kafka Configuration*
 - *Zookeeper Configuration*
 - *KRaft Broker Configuration*
 - *KRaft Controller Configuration*
 - *Kafka Connect Configuration*
-- *Java(JVM) Configuration*
+- *Java (JVM) Configuration*
 
 #### OS Details
 
@@ -101,7 +101,7 @@ Node configuration files:
 
 #### JVM Details
 
-JVM Details section shows the general information about the Java Virtual Machine(JVM), including the version and some configuration options such as the heap and Garbage Collection settings.
+JVM Details section shows the general information about the Java Virtual Machine (JVM), including the version and some configuration options such as the heap and Garbage Collection settings.
 
 !!! infomy
 

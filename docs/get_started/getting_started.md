@@ -1,8 +1,8 @@
 # Getting Started
 
-Installing AxonOps Unified Monitoring on you own premises as a self-managed cluster gives you full control over every aspect of you AxonOps deployment.
+Installing AxonOps Unified Monitoring on your own premises as a self-managed cluster gives you full control over every aspect of you AxonOps deployment.
 
-AxonOps components run on a wide array of operating systems including(but not limited to):
+AxonOps components run on a wide array of operating systems including (but not limited to):
 
 - Ubuntu
 - Debian
@@ -18,13 +18,13 @@ AxonOps Unified Monitoring consists of 4 main components:
 - storage engine
 
 
-## Please follow the following steps to get you on-premise AxonOps Unified Monitoring installed and configured: 
+## Please follow the following steps to get your on-premise AxonOps Unified Monitoring installed and configured: 
 
 ### Step 1 : Storage Engine
 
 Elasticsearch is always required and the default data storage for all Cassandra and Kafka metrics as well as application logs, AxonOps configuration and metrics metadata. 
 
-You can choose to use Cassandra as a metrics store instead of Elasticsearch for better performance when monitoring larger numbers of Cassandra clusters.
+You can choose to use Cassandra as a metrics store instead of Elasticsearch for better performance when monitoring larger numbers of nodes.
 
 Elasticsearch is still required in conjunction with the dedicated AxonOps Cassandra cluster. 
 
@@ -42,7 +42,7 @@ For more information please read more on setting up [Cassandra as a Metrics Data
 
 ### Step 2 : Install and configure axon-server.
 
-[Install and configure axon-server](/installation-starter/axon-server/axonserver_install/) 
+[Install and configure axon-server](/installation/axon-server/axonserver_install/) 
 
 ### Step 3 : Install and configure axon-dash 
 
