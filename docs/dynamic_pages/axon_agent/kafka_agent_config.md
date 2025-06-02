@@ -343,12 +343,7 @@ sudo usermod -aG axonops <your_kafka_user>
 
 <h2>Step 6 - Start/Restart Kafka</h2>
 
-To load the Axon java agent and Kafka config changes please,
-
-<ul>
-<li>Start the Kafka service if stopped. </li>
-<li>Restart the Kafka service if already running.</li>
-</ul>
+To load the AxonOps Java Agent and Kafka config changes please either start the Kafka service if stopped. restart the Kafka service if already running.
 </div>
 
 <div id="Zookeeper" class="axon_kafka_dynamic_s5" style="display:none">
@@ -360,12 +355,7 @@ sudo usermod -aG axonops <your_zookeeper_user>
 
 <h2>Step 6 - Start/Restart Zookeeper</h2>
 
-To load the Axon java agent and Zookeeper config changes please,
-
-<ul>
-<li>Start the Zookeeper service if stopped. </li>
-<li>Restart the Zookeeper service if already running.</li>
-</ul>
+To load the AxonOps Java Agent and Zookeeper config changes please either start the Zookeeper service if stopped or restart the Zookeeper service if already running.
 </div>
 
 <div id="KRaftBroker" class="axon_kafka_dynamic_s5" style="display:none">
@@ -377,12 +367,7 @@ sudo usermod -aG axonops <your_kraft_user>
 
 <h2>Step 6 - Start/Restart KRaft Broker</h2>
 
-To load the Axon java agent and Kafka KRaft config changes please,
-
-<ul>
-<li>Start the Kafka KRaft service if stopped. </li>
-<li>Restart the Kafka KRaft service if already running.</li>
-</ul>
+To load the AxonOps Java Agent and Kafka KRaft config changes please either start the Kafka KRaft service if stopped or restart the Kafka KRaft service if already running.
 </div>
 
 <div id="KRaftController" class="axon_kafka_dynamic_s5" style="display:none">
@@ -394,12 +379,7 @@ sudo usermod -aG axonops <your_kraft_user>
 
 <h2>Step 6 - Start/Restart KRaft Controller</h2>
 
-To load the Axon java agent and Kafka KRaft config changes please,
-
-<ul>
-<li>Start the Kafka KRaft service if stopped. </li>
-<li>Restart the Kafka KRaft service if already running.</li>
-</ul>
+To load the AxonOps Java Agent and Kafka KRaft config changes please either start the Kafka KRaft service if stopped or restart the Kafka KRaft service if already running.
 </div>
 
 <div id="Connect" class="axon_kafka_dynamic_s5" style="display:none">
@@ -411,10 +391,9 @@ sudo usermod -aG axonops <your_connect_user>
 
 <h2>Step 6 - Start/Restart Kafka Connect</h2>
 
-To load the Axon java agent and Kafka Connect config changes please,
+To load the AxonOps Java Agent and Kafka Connect config changes please either:
 
-<ul>
-<li>Start the Kafka Connect service if stopped. </li>
-<li>Restart the Kafka Connect service if already running.</li>
+* Start the Kafka Connect service if stopped.
+* Restart the Kafka Connect service if already running.
 </ul>
 </div>

@@ -50,7 +50,7 @@ sudo usermod -aG axonops <your_cassandra_user>
 
 <h2>Step 6 - Start/Restart Cassandra</h2>
 
-To load the Axon java agent and Cassandra config changes please,
+To load the AxonOps Java Agent and Cassandra config changes please,
 
 - Start the Cassandra service if stopped.
 - Restart the Cassandra service if already running.
