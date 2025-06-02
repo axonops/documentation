@@ -1,7 +1,4 @@
-The last line in the config file starts with <code>exec</code>
-<br/>
-Add the following: <code>. /usr/share/axonops/axonops-jvm.options</code>
-<br/>
+<p>Insert the line <code>. /usr/share/axonops/axonops-jvm.options</code> right before the final line in your config file. Look for the last line that starts with <code>exec</code>, as demonstrated in the example below.</p>
 <blockquote>
 <p><strong>NB.</strong> Please note the period(.) at the beginning of the config line.</p>
 </blockquote>
