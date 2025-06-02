@@ -34,7 +34,7 @@ AxonOps is currently compatible with Elasticsearch 7.x and 8.x.
 
 We recommend installing the latest available release.
 
-[Install Elasticearch](/installation/elasticsearch/install/)
+[Install Elasticsearch](/installation/elasticsearch/install/)
 
 #### Cassandra (Optional)
 
