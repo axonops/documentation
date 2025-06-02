@@ -3,7 +3,7 @@ The last line in the config file starts with <code>exec</code>
 Add the following: <code>. /usr/share/axonops/axonops-jvm.options</code>
 <br/>
 <blockquote>
-<p><strong>NB.</strong> Please note the period(.) at the begining of the config line.</p>
+<p><strong>NB.</strong> Please note the period(.) at the beginning of the config line.</p>
 </blockquote>
 Example:
 <!-- Kafka 2.0 Java 11 -->

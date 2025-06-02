@@ -55,8 +55,8 @@ kafka:
       #   clientSecret:
       #   tokenEndpoint:
       #   scope:
-      # For gsappi support
-      # gsappi:
+      # For gssapi support
+      # gssapi:
       #   authType:
       #   keyTabPath:
       #   kerberosConfigPath:
@@ -158,8 +158,8 @@ kafka:
       #   clientSecret:
       #   tokenEndpoint:
       #   scope:
-      # For gsappi support
-      # gsappi:
+      # For gssapi support
+      # gssapi:
       #   authType:
       #   keyTabPath:
       #   kerberosConfigPath:
@@ -224,8 +224,8 @@ kafka:
       #   clientSecret:
       #   tokenEndpoint:
       #   scope:
-      # For gsappi support
-      # gsappi:
+      # For gssapi support
+      # gssapi:
       #   authType:
       #   keyTabPath:
       #   kerberosConfigPath:
