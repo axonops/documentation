@@ -395,5 +395,5 @@ To load the AxonOps Java Agent and Kafka Connect config changes please either:
 
 * Start the Kafka Connect service if stopped.
 * Restart the Kafka Connect service if already running.
-</ul>
+
 </div>

@@ -19,8 +19,8 @@ From:
 ```
 To: 
 ``` bash
--Xms6g
--Xmx6g 
+-Xms8g
+-Xmx8g 
 ```
 This will set the minimum and maximum heap size to 8 GB.
 
