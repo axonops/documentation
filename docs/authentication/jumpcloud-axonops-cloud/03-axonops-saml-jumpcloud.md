@@ -25,11 +25,11 @@ Enter `https://axonops.com/saml/metadata` in the SP Entity ID field
 
 ![Fill 'https://axonops.com/saml/metadata'](img/03-axonops-saml-jumpcloud/image-3.png)
 
-### 6\. Click "SP Certificate \*"
+### 6\. Click "SP Certificate"
 
 Access the SP Certificate section.
 
-![Click 'SP Certificate *'](img/03-axonops-saml-jumpcloud/image-4.png)
+![Click 'SP Certificate'](img/03-axonops-saml-jumpcloud/image-4.png)
 
 ### 7\. Paste in your certificate
 
@@ -37,11 +37,11 @@ Paste the PEM-format certificate you generated in the prerequisites into the `SP
 
 ![Fill '-----BEGIN...'](img/03-axonops-saml-jumpcloud/image-5.png)
 
-### 8\. Click "SP Private Key \*"
+### 8\. Click "SP Private Key"
 
 Access the SP Private Key section.
 
-![Click 'SP Private Key *'](img/03-axonops-saml-jumpcloud/image-6.png)
+![Click 'SP Private Key'](img/03-axonops-saml-jumpcloud/image-6.png)
 
 ### 9. Paste your private key
 
