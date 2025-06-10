@@ -23,8 +23,8 @@ This does not affect normal operation but any bookmarks you have to dashboard pa
 
 After SAML has been configured you will have 2 ways to login to the AxonOps console:
 
-1. https://console.axonops.cloud Login with username+password or Google login
-2. https://orgname.axonops.cloud Login with SAML via JumpCloud
+1. https://console.axonops.cloud - Login with username+password or Google login
+2. https://orgname.axonops.cloud - Login with SAML via JumpCloud
 
 ## Next Steps
 
