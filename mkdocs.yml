@@ -163,7 +163,12 @@ nav:
         - Overview: 'operations/cassandra/backup/overview.md'
         - Remote Backups:
           - Overview: 'operations/cassandra/backup/remote.md'
+          - Local Storage: 'operations/cassandra/backup/local_storage.md'
           - AWS S3: 'operations/cassandra/backup/aws_s3.md'
+          - Generic S3: 'operations/cassandra/backup/generic_s3.md'
+          - Google Cloud Storage: 'operations/cassandra/backup/gcs.md'
+          - Azure Blob Storage: 'operations/cassandra/backup/azure_blob.md'
+          - SSH/SFTP: 'operations/cassandra/backup/ssh_sftp.md'
       
       - Restore:
         - Overview: 'operations/cassandra/restore/overview.md'

@@ -24,24 +24,43 @@ The org/clustertype/clustername/host-id/ will match the top breadcrump navigatio
 
 This is a drop down selection of all the AWS regions that are available for your AWS account.
 
-#### Access Key ID and Secret Access Key
+#### Authentication Methods
 
-This is the standard AWS Access and Secret key that are associated with a IAM user. 
-This AxonOps IAM user that has the key assigned ideally would have the following permissions for accessing the S3 buckets.
+**IAM Role (Recommended)**
 
-Please change the following 3 values
+The recommended approach is to use IAM roles attached to your EC2 instances. This method is more secure as it doesn't require storing credentials:
 
-* BUCKETNAME : for some bucket naming rules please have a look [here](https://docs.aws.amazon.com/AmazonS3/latest/userguide/bucketnamingrules.html)
-* ACCOUNT_ID : for info on the AWS Account ID please have a look [here](https://docs.aws.amazon.com/IAM/latest/UserGuide/console_account-alias.html)
-* AxonOpsS3User : the placeholder is an example name , it can be changed to any value for the the IAM User Name field
+1. Create an IAM role with the necessary S3 permissions (see policy below)
+2. Attach the role to your EC2 instances running Cassandra
+3. Leave the Access Key ID and Secret Access Key fields empty in AxonOps
+4. AxonOps will automatically use the instance's IAM role credentials
 
-``` 
+This approach provides:
+* No credential management or rotation needed
+* More secure - no long-lived access keys
+* Automatic credential refresh
+* Follows AWS security best practices
+
+**Access Key ID and Secret Access Key (Alternative)**
+
+If IAM roles are not available (e.g., on-premises installations), you can use explicit credentials:
+* This is the standard AWS Access and Secret key that are associated with an IAM user
+* These credentials should be protected and rotated regularly
+* Only use this method when IAM roles are not an option
+
+#### Required IAM Permissions
+
+Whether using IAM roles or user credentials, the following permissions are needed for accessing the S3 buckets:
+
+For IAM roles, use this policy (attach to the role, not the bucket):
+
+```json
 {
-  "Id": "AxonOpsBackupBucketPolicy",
   "Version": "2012-10-17",
   "Statement": [
     {
-      "Sid": "BackupsSID",
+      "Sid": "AxonOpsBackupPermissions",
+      "Effect": "Allow",
       "Action": [
         "s3:ListBucket",
         "s3:GetBucketLocation",
@@ -50,18 +69,18 @@ Please change the following 3 values
         "s3:PutObject",
         "s3:PutObjectAcl"
       ],
-      "Effect": "Allow",
       "Resource": [
         "arn:aws:s3:::<BUCKETNAME>",
-        "arn:aws:s3:::<BUCKETNAME>/*",
-      ],
-      "Principal": {
-        "AWS": "arn:aws:iam::<ACCOUNT_ID>:<AxonOpsS3User>"
-      }
+        "arn:aws:s3:::<BUCKETNAME>/*"
+      ]
     }
   ]
 }
 ```
+
+Replace `<BUCKETNAME>` with your actual bucket name. For bucket naming rules, see [AWS documentation](https://docs.aws.amazon.com/AmazonS3/latest/userguide/bucketnamingrules.html).
+
+For cross-account access or when using IAM users, you may need to configure a bucket policy as well.
 
 #### Storage Class
 

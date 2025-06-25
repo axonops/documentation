@@ -5,26 +5,55 @@ hide:
 ---
 
 # Welcome to AxonOps
-AxonOps is the only platform available for the one-stop operations of Apache Cassandra. Built by Cassandra experts, AxonOps provides access to all of the capability required to effectively monitor, maintain and backup an Apache Cassandra environment. Accessed through a single intuitive UI and driven by a highly efficient bi-directional protocol ensuring unprecedented functionality and exceptional performance.
+AxonOps is the comprehensive operations platform for Apache Cassandra and Apache Kafka. Built by distributed systems experts, AxonOps provides all the capabilities required to effectively monitor, maintain, and manage your Cassandra databases and Kafka streaming infrastructure. Accessed through a single intuitive UI and driven by a highly efficient bi-directional protocol ensuring unprecedented functionality and exceptional performance.
 
-## Features
+## Unified Platform for Cassandra & Kafka
+
+<div class="platform-grid">
+  <div class="platform-section">
+    <h3>Apache Cassandra</h3>
+    <p>Complete lifecycle management for your distributed database</p>
+    <ul>
+      <li>Adaptive repairs & maintenance automation</li>
+      <li>Comprehensive backup & restore</li>
+      <li>Performance monitoring & optimization</li>
+      <li>Configuration management</li>
+    </ul>
+  </div>
+  <div class="platform-section">
+    <h3>Apache Kafka</h3>
+    <p>Full operational control for your streaming platform</p>
+    <ul>
+      <li>Topic & consumer group management</li>
+      <li>ACL & security administration</li>
+      <li>Real-time performance monitoring</li>
+      <li>KRaft & ZooKeeper support</li>
+    </ul>
+  </div>
+</div>
+
+## Core Capabilities
+
 ### [Monitoring](https://axonops.com/monitoring/)
-- Visualize metrics & logs with dynamic dashboards
-- Proactive Service Checks to never miss an issue
-- Comprehensive alerting with enterprise-wide integration
+- **Unified Dashboards**: Visualize metrics & logs for both Cassandra and Kafka clusters
+- **Proactive Service Checks**: Never miss an issue across your entire data infrastructure
+- **Comprehensive Alerting**: Enterprise-wide integration for both platforms
+- **Real-time Insights**: Monitor brokers, topics, consumer groups, nodes, and tables
 
-### [Maintenance](https://axonops.com/cassandra-maintenance/)
-- Adaptive and Scheduled Cassandra Repairs to always be one step ahead
-- Maintenance Job Scheduler to automate your key tasks
-- Detailed cluster Configuration Views for the insights you need
+### [Maintenance & Operations](https://axonops.com/cassandra-maintenance/)
+- **Cassandra**: Adaptive repairs, rolling restarts, and maintenance scheduling
+- **Kafka**: Topic management, ACL administration, and configuration control
+- **Unified Job Scheduler**: Automate key tasks across both platforms
+- **Configuration Management**: Detailed views and controls for both systems
 
-### [Backup](https://axonops.com/backup/)
-- Backup scheduling
-- Visualise your backups and restores
-- Restore backups with confidence
+### [Data Protection](https://axonops.com/backup/)
+- **Cassandra Backup**: Scheduled backups with point-in-time recovery
+- **Visual Management**: Monitor and manage all backup operations
+- **Reliable Restore**: Restore data with confidence and minimal downtime
+- **Cloud Storage Integration**: S3, Azure Blob, and GCS support
 
-### [Integrations](https://axonops.com/#integrations)
-- AxonOps provide various integrations for notifications and backups
+### [Enterprise Integrations](https://axonops.com/#integrations)
+AxonOps provides extensive integrations for notifications and operations:
 
 <div class="row">
   <div class="column"> 
@@ -39,43 +68,50 @@ AxonOps is the only platform available for the one-stop operations of Apache Cas
   </div>
 </div>
 
+## Why Choose AxonOps?
 
-<h2> Soon you’ll be enjoying the only Cassandra management tool that combines: </h2>
+<h3>For Your Cassandra Clusters:</h3>
 
-* Dynamic responsive dashboards curated by experts
-* Adaptive Repair process that will never let you down
+* Dynamic responsive dashboards curated by Cassandra experts
+* Adaptive Repair process that maintains data integrity
 * Efficient and intuitive backup you can rely on
 * Easy log-file association and interrogation
 * Reliable rolling restart through automation
+
+<h3>For Your Kafka Infrastructure:</h3>
+
+* Comprehensive broker and topic monitoring
+* Advanced ACL and security management
+* Real-time consumer group tracking
+* Support for both KRaft and ZooKeeper modes
+* Multi-version compatibility (Kafka 2.x and 3.x)
+
+<h3>Platform Benefits:</h3>
+
+* Single pane of glass for all your distributed systems
 * Sophisticated alerting integration and routing
-* PDF reporting to quickly deliver insights across the team
-* Highly efficient protocol ensuring exceptional performance
+* PDF reporting to deliver insights across teams
+* Highly efficient protocol ensuring exceptional performance at scale
+* Built by experts who understand distributed systems
 
-All of this is underpinned by an efficient bi-directional protocol ensuring exception performance and scale.
-If you would like to schedule some time with an AxonOps Cassandra expert to walk you through the install and the AxonOps platform please follow the link below.
-<!-- 
-* [**Metric Dashboard**](https://axonops.com/#features/) - The AxonOps dashboard is pre-configured and well laid out in order for you to easily visualise the performance of your multiple Cassandra clusters across all of your data centres,
-* [**Logs and Events**](https://axonops.com/#features/) - AxonOps agents collect logs from log files, as well as internal Cassandra events such as “repair” and JMX calls.
-* [**Service Checks**](https://axonops.com/#features/) - As a site reliability engineer, service checks and the RAG status dashboard gives you great confidence in how your platform is operating. Regular checks against your processes, open ports, service health can be quickly implemented and deployed with minimum setup.
-* [**Alert Integrations**](https://axonops.com/#features/) - Alerts can be configured for multiple services including Slack, Pagerduty, SMTP, and generic webhooks.
-* [**Adaptive Repairs**](https://axonops.com/#features/) - Cassandra repairs are essential for maintaining the data integrity across all replicas.
-* [**Backup and Restore**](https://axonops.com/#features/) - There are very few Cassandra tools that allow to setup Cassandra data backups as easily as AxonOps. -->
-
+All of this is underpinned by an efficient bi-directional protocol ensuring exceptional performance and scale across both Cassandra and Kafka deployments.
 
 ## AxonOps Editions
 
-We offer AxonOps Cloud and Self-hosted solutions.
+We offer flexible deployment options to match your needs:
 
-To read more about our editions: 
+### Cloud & Self-Hosted Solutions
+- **[Starter Edition](/editions/starter_edition/)** - Perfect for smaller deployments
+- **[Enterprise Edition](/editions/enterprise_edition/)** - Full-featured for production workloads
 
-[Starter Edition](/editions/starter_edition/)
+Both editions support Cassandra and Kafka with the same powerful feature set.
 
-[Enterprise Edition](/editions/enterprise_edition/)
+## Ready to Transform Your Operations?
 
-## Ready to work with AxonOps? 
+Whether you're managing Cassandra databases, Kafka streaming platforms, or both, AxonOps provides the tools you need for operational excellence.
 
-Dive into the [Get Started](/get_started/cloud/) guide and setup your account with everything you need to monitor, maintain and backup Cassandra in a matter of minutes.
+Dive into the [Get Started](/get_started/cloud/) guide and set up your account to start monitoring, maintaining, and managing your distributed systems in minutes.
 
-If you would like to schedule some time with an AxonOps Cassandra expert to walk you through the install and the AxonOps platform please follow the link below.
+If you would like to schedule time with our distributed systems experts to walk through the platform and discuss your specific Cassandra or Kafka requirements:
 
 <a class="book_expert" href="https://axonops.com/book-an-expert/">Book an Expert</a>
