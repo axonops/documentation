@@ -123,9 +123,11 @@ Common issues and solutions:
 ## Support
 
 For assistance with SAML configuration:
+
 1. Review the specific guide for your identity provider
+
 2. Contact AxonOps support with:
-   - Your organization name
-   - Identity provider being used
-   - Any error messages
-   - SAML response (sanitized of sensitive data)
+    - Your organization name
+    - Identity provider being used
+    - Any error messages
+    - SAML response (sanitized of sensitive data)
