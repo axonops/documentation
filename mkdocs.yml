@@ -102,6 +102,23 @@ nav:
     - Setup:
       - AxonOps Cloud account: 'get_started/cloud.md'
       - AxonOps Cloud agents: 'get_started/agent_setup.md'
+      - SAML Authentication:
+        - Overview: 'cloud/saml/index.md'
+        - Azure Entra ID:
+          - Getting Started: 'cloud/saml/azure-entra/index.md'
+          - Configure Azure App: 'cloud/saml/azure-entra/01-azure-app.md'
+          - Configure Roles: 'cloud/saml/azure-entra/02-azure-roles.md'
+          - Configure AxonOps: 'cloud/saml/azure-entra/03-axonops-saml-azure.md'
+        - Okta:
+          - Getting Started: 'cloud/saml/okta/index.md'
+          - Configure Okta App: 'cloud/saml/okta/01-okta-app.md'
+          - Configure Roles: 'cloud/saml/okta/02-okta-roles.md'
+          - Configure AxonOps: 'cloud/saml/okta/03-axonops-saml-okta.md'
+        - JumpCloud:
+          - Getting Started: 'cloud/saml/jumpcloud/index.md'
+          - Configure JumpCloud App: 'cloud/saml/jumpcloud/01-jumpcloud-app.md'
+          - Configure Roles: 'cloud/saml/jumpcloud/02-jumpcloud-roles.md'
+          - Configure AxonOps: 'cloud/saml/jumpcloud/03-axonops-saml-jumpcloud.md'
 
   - AxonOps Self-Hosted:
     - Get Started: get_started/getting_started.md
