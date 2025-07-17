@@ -12,7 +12,6 @@ This document provides a comprehensive reference of all metrics used across Axon
 6. [Kafka Connect Metrics](#kafka-connect-metrics)
 7. [ZooKeeper Metrics](#zookeeper-metrics)
 8. [Special Functions and Attributes](#special-functions-and-attributes)
-9. [Dashboard Coverage](#dashboard-coverage)
 
 ## System Metrics (host_ and jvm_)
 
