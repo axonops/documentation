@@ -10,7 +10,7 @@
   <img src="/get_started/red_hat.png" class="skip-lightbox" width="180px">
 </label>
 
-### Download and Install Package
+## Download and Install Package
 
 <div id="DebianDiv" class="os" markdown="span">
 

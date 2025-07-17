@@ -111,9 +111,7 @@ nav:
       - Firewall Rules: firewall/overview.md 
 
     - Installing AxonOps:
-      - Elasticsearch: 
-        - Install Elasticsearch: 'installation/elasticsearch/install.md'
-        - Secure Elasticsearch: 'installation/elasticsearch/securing_elastic.md'
+      - Elasticsearch: 'installation/elasticsearch/install.md'
       
       - Cassandra as Metrics store: 'installation/axon-server/metricsdatabase.md'
 
