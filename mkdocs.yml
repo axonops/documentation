@@ -102,6 +102,23 @@ nav:
     - Setup:
       - AxonOps Cloud account: 'get_started/cloud.md'
       - AxonOps Cloud agents: 'get_started/agent_setup.md'
+      - SAML Authentication:
+        - Overview: 'cloud/saml/index.md'
+        - Azure Entra ID:
+          - Getting Started: 'cloud/saml/azure-entra/index.md'
+          - Configure Azure App: 'cloud/saml/azure-entra/01-azure-app.md'
+          - Configure Roles: 'cloud/saml/azure-entra/02-azure-roles.md'
+          - Configure AxonOps: 'cloud/saml/azure-entra/03-axonops-saml-azure.md'
+        - Okta:
+          - Getting Started: 'cloud/saml/okta/index.md'
+          - Configure Okta App: 'cloud/saml/okta/01-okta-app.md'
+          - Configure Roles: 'cloud/saml/okta/02-okta-roles.md'
+          - Configure AxonOps: 'cloud/saml/okta/03-axonops-saml-okta.md'
+        - JumpCloud:
+          - Getting Started: 'cloud/saml/jumpcloud/index.md'
+          - Configure JumpCloud App: 'cloud/saml/jumpcloud/01-jumpcloud-app.md'
+          - Configure Roles: 'cloud/saml/jumpcloud/02-jumpcloud-roles.md'
+          - Configure AxonOps: 'cloud/saml/jumpcloud/03-axonops-saml-jumpcloud.md'
 
   - AxonOps Self-Hosted:
     - Get Started: get_started/getting_started.md
@@ -154,6 +171,23 @@ nav:
       - Metrics Dashboard:
         - Cassandra: 'monitoring/metricsdashboards/cassandra.md'
         - Metrics Query Syntax: 'monitoring/metricsdashboards/querysyntax.md'
+      - Metrics:
+        - Master Reference: metrics/cassandra/all_dashboards_metrics_reference.md
+        - Dashboard Mappings:
+          - System Dashboard: metrics/cassandra/system_metrics_mapping.md
+          - Application Dashboard: metrics/cassandra/application_metrics_mapping.md
+          - Cache Dashboard: metrics/cassandra/cache_metrics_mapping.md
+          - Compactions Dashboard: metrics/cassandra/compactions_metrics_mapping.md
+          - Thread Pools Dashboard: metrics/cassandra/thread_pools_metrics_mapping.md
+          - Coordinator Dashboard: metrics/cassandra/coordinator_metrics_mapping.md
+          - Data Dashboard: metrics/cassandra/data_metrics_mapping.md
+          - Keyspace Dashboard: metrics/cassandra/keyspace_metrics_mapping.md
+          - Table Dashboard: metrics/cassandra/table_metrics_mapping.md
+          - CQL Dashboard: metrics/cassandra/cql_metrics_mapping.md
+          - Dropped Messages Dashboard: metrics/cassandra/dropped_messages_metrics_mapping.md
+          - Entropy Dashboard: metrics/cassandra/entropy_metrics_mapping.md
+          - Security Dashboard: metrics/cassandra/security_metrics_mapping.md
+          - Reporting Dashboard: metrics/cassandra/reporting_metrics_mapping.md
 
       - Operations:
         - Repair: 'operations/cassandra/repair.md'
@@ -189,6 +223,23 @@ nav:
       - Metrics Dashboard:
         - Kafka: 'monitoring/metricsdashboards/kafka.md'
         - Metrics Query Syntax: 'monitoring/metricsdashboards/querysyntax_kafka.md'
+      
+      - Metrics:
+        - Master Reference: metrics/kafka/all_kafka_dashboards_metrics_reference.md
+        - Dashboard Mappings:
+          - Overview Dashboard: metrics/kafka/overview_metrics_mapping.md
+          - System Dashboard: metrics/kafka/system_metrics_mapping.md
+          - Performance Dashboard: metrics/kafka/performance_metrics_mapping.md
+          - Connections Dashboard: metrics/kafka/connections_metrics_mapping.md
+          - Replication Dashboard: metrics/kafka/replication_metrics_mapping.md
+          - Topics Dashboard: metrics/kafka/topics_metrics_mapping.md
+          - Requests Dashboard: metrics/kafka/requests_metrics_mapping.md
+          - Controller Dashboard: metrics/kafka/controller_metrics_mapping.md
+          - Consumer Groups Dashboard: metrics/kafka/consumer_groups_metrics_mapping.md
+          - ZooKeeper Dashboard: metrics/kafka/zookeeper_metrics_mapping.md
+          - Connect Overview Dashboard: metrics/kafka/connect_overview_metrics_mapping.md
+          - Connect Tasks Dashboard: metrics/kafka/connect_tasks_metrics_mapping.md
+          - Connect Workers Dashboard: metrics/kafka/connect_workers_metrics_mapping.md
 
       - Brokers: 
         - Overview : kafka/brokers/overview.md
