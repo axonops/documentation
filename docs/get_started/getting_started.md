@@ -13,9 +13,13 @@ AxonOps components run on a wide array of operating systems including (but not l
 AxonOps Unified Monitoring consists of 4 main components:
 
 - axon-server
+    - backend that collects cluster information and interacts with your clusters.
 - axon-dash
+    - web UI to display and interact with your clusters.
 - axon-agent
+    - called from within the JVM to send metrics to axon-server.
 - storage engine
+    - stores metrics, logs, configurations, and metadata about your cluster.
 
 
 ## Please follow the following steps to get your on-premise AxonOps Unified Monitoring installed and configured: 

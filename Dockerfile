@@ -1,7 +1,12 @@
 FROM python:3.12-slim
-COPY . /AxonOps.Docs/
+
 WORKDIR /AxonOps.Docs/
+
 RUN pip install pipenv
+
+COPY Pipfile* /AxonOps.Docs/
 RUN pipenv install
+
+COPY . /AxonOps.Docs/
 EXPOSE 8000
-CMD pipenv run mkdocs serve
+CMD ["pipenv", "run", "mkdocs", "serve"]

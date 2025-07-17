@@ -1,0 +1,12 @@
+services:
+  build:
+    build: .
+    command: pipenv run mkdocs build --clean
+    volumes:
+      - ./:/AxonOps.Docs
+  serve:
+    build: .
+    volumes:
+      - ./:/AxonOps.Docs
+    ports:
+      - 8000:8000

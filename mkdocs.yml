@@ -64,6 +64,7 @@ markdown_extensions:
       guess_lang: False
   - toc:
       permalink: true
+  - pymdownx.extra
   - pymdownx.superfences
   - tables
   - pymdownx.emoji:
@@ -108,13 +109,6 @@ nav:
 
     - Security:
       - Firewall Rules: firewall/overview.md 
-      
-    # - Starter:
-    #   - AxonOps Server: 'installation-starter/axon-server/axonserver_install.md'
-    #   - AxonOps Dashboard: 'installation-starter/axon-dash/install.md'
-    #   - AxonOps Agent: 'installation-starter/agent/install.md'
-    #   - AxonOps Agent in Docker: 'installation-starter/agent/docker.md'
-    #   - System Requirements: system-requirements/developer.md
 
     - Installing AxonOps:
       - Elasticsearch: 
