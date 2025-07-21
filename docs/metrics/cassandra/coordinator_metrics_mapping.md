@@ -135,22 +135,26 @@ cas_CommitLog_WaitingOnSegmentAllocation{dc=~'$dc',rack='$rack',host_id=~'$host_
 
 ## Important Considerations
 
-1. **Latency vs Consistency Trade-off**:
+**Latency vs Consistency Trade-off**:
+
    - Higher consistency levels increase latency
    - Monitor percentiles to understand impact
    - Consider LOCAL variants for multi-DC
 
-2. **Throughput Patterns**:
+**Throughput Patterns**:
+
    - Distribution shows application consistency preferences
    - Imbalanced distribution may indicate issues
    - Monitor for consistency level changes
 
-3. **Coordinator Load**:
+**Coordinator Load**:
+
    - Each node can be a coordinator
    - High coordinator load impacts performance
    - Balance using client-side load balancing
 
-4. **Range Queries**:
+**Range Queries**:
+
    - Typically more expensive than point reads
    - Monitor separately from regular reads
    - Consider pagination for large ranges

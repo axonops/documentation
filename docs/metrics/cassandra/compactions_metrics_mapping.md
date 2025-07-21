@@ -83,22 +83,26 @@ sum(cas_Keyspace_PendingCompactions{axonfunction='rate',keyspace='$keyspace',dc=
 
 ## Important Considerations
 
-1. **Compaction Performance**:
+**Compaction Performance**:
+
    - High pending tasks indicate compaction bottleneck
    - May need to tune concurrent_compactors
    - Consider compaction throughput limits
 
-2. **Resource Impact**:
+**Resource Impact**:
+
    - Compactions consume CPU, disk I/O, and memory
    - Monitor bytes compacted rate vs write rate
    - Balance between compaction speed and query performance
 
-3. **Keyspace Specifics**:
+**Keyspace Specifics**:
+
    - Different keyspaces may have different compaction strategies
    - Monitor pending compactions per keyspace
    - Some keyspaces may require different tuning
 
-4. **Thread Pool Monitoring**:
+**Thread Pool Monitoring**:
+
    - CompactionExecutor thread pool handles all compactions
    - Pool saturation affects all keyspaces
    - May need to adjust thread pool size
@@ -113,7 +117,11 @@ sum(cas_Keyspace_PendingCompactions{axonfunction='rate',keyspace='$keyspace',dc=
 ## Compaction Strategy Impact
 
 Different compaction strategies have different characteristics:
-- **STCS**: Fewer, larger compactions
-- **LCS**: Many smaller, predictable compactions
-- **TWCS**: Time-based, minimal overlap
-- Monitor patterns based on your strategy
+
+  - **STCS**: Fewer, larger compactions
+
+  - **LCS**: Many smaller, predictable compactions
+  
+  - **TWCS**: Time-based, minimal overlap
+  
+  - Monitor patterns based on your strategy
