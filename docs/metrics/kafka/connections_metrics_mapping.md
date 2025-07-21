@@ -8,13 +8,11 @@ The Kafka Connections Dashboard provides comprehensive monitoring of client conn
 
 | Dashboard Metric | Description | Attributes |
 |-----------------|-----------|-------------|
-| **Connection Metrics** |
-| `kaf_socket_server_metrics_` (function='connection_count') | Current number of active connections | listener={listener}, networkProcessor={id} |
+| **Connection Metrics** || `kaf_socket_server_metrics_` (function='connection_count') | Current number of active connections | listener={listener}, networkProcessor={id} |
 | `kaf_socket_server_metrics_` (function='connection_creation_rate') | Rate of new connections created per second | listener={listener} |
 | `kaf_socket_server_metrics_` (function='connection_close_rate') | Rate of connections closed per second | listener={listener} |
 | `kaf_socket_server_metrics_` (function='connections') | Connections by client software version | listener={listener}, clientSoftwareName={name}, clientSoftwareVersion={version} |
-| **Acceptor Metrics** |
-| `kaf_Acceptor_AcceptorBlockedPercent` | Percentage of time acceptor thread is blocked | listener={listener} |
+| **Acceptor Metrics** || `kaf_Acceptor_AcceptorBlockedPercent` | Percentage of time acceptor thread is blocked | listener={listener} |
 
 ## Query Examples
 
@@ -59,10 +57,12 @@ kaf_Acceptor_AcceptorBlockedPercent{function='MeanRate',rack=~'$rack',host_id=~'
 
 ## Panel Organization
 
-1. **Overview Section**
+**Overview Section**
+
    - Empty row for spacing/organization
 
-2. **Connections**
+**Connections**
+
    - Connections count per broker
    - Connections count per listener
    - Connections creation rate per broker
@@ -75,41 +75,49 @@ kaf_Acceptor_AcceptorBlockedPercent{function='MeanRate',rack=~'$rack',host_id=~'
 ## Filters
 
 - **rack**: Filter by rack location
+
 - **host_id**: Filter by specific host/broker
 
 ## Best Practices
 
-1. **Connection Monitoring**
+**Connection Monitoring**
+
    - Monitor total connection count against broker limits
    - Track connection creation/close rates for unusual patterns
    - High connection churn may indicate client issues
 
-2. **Listener Analysis**
+**Listener Analysis**
+
    - Monitor connections per listener (PLAINTEXT, SSL, SASL)
    - Different listeners may have different performance characteristics
    - Ensure balanced connection distribution across listeners
 
-3. **Client Version Tracking**
+**Client Version Tracking**
+
    - Track client software versions for compatibility
    - Identify outdated clients that need upgrading
    - Monitor for unauthorized or unexpected client versions
 
-4. **Acceptor Performance**
+**Acceptor Performance**
+
    - High acceptor blocked percentage indicates connection bottlenecks
    - May need to tune acceptor thread configuration
    - Consider increasing network threads if consistently blocked
 
-5. **Connection Limits**
+**Connection Limits**
+
    - Set appropriate connection limits per broker
    - Monitor approaching connection limit thresholds
    - Plan capacity based on connection growth trends
 
-6. **Security Considerations**
+**Security Considerations**
+
    - Monitor for connection spikes (potential DoS)
    - Track connections from unexpected sources
    - Ensure proper authentication/authorization on all listeners
 
-7. **Performance Tuning**
+**Performance Tuning**
+
    - Adjust `max.connections.per.ip` for client fairness
    - Tune `num.network.threads` based on connection load
    - Monitor connection creation rate during peak times

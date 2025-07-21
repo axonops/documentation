@@ -91,14 +91,17 @@ con_connect_worker_rebalance_metrics_{function="completed_rebalances_total",type
 
 ## Panel Organization
 
-1. **Overview Section**
+**Overview Section**
+
    - Empty row for spacing/organization
 
-2. **Workers**
+**Workers**
+
    - Connector Count (counter)
    - Task Count (counter)
 
-3. **Worker Metrics**
+**Worker Metrics**
+
    - Connector Count (time series)
    - Connector Startup
    - Connector Failed
@@ -107,55 +110,65 @@ con_connect_worker_rebalance_metrics_{function="completed_rebalances_total",type
    - Connector Paused Tasks
    - Connector Destroyed
 
-4. **Worker Tasks**
+**Worker Tasks**
+
    - Connector Running Tasks
    - Connector Failed Tasks
    - Connector Destroyed Tasks
 
-5. **Rebalance Metrics**
+**Rebalance Metrics**
+
    - Connector Rebalances (duplicate panels)
    - Connectors Avg Rebalance Time
 
 ## Filters
 
 - **host_id**: Filter by specific Connect worker node
+
 - **connector**: Filter by specific connector name
 
 ## Best Practices
 
-1. **Worker Health Monitoring**
+**Worker Health Monitoring**
+
    - Monitor task and connector counts per worker
    - Ensure balanced distribution across workers
    - Track failed task counts for issues
 
-2. **Connector Lifecycle**
+**Connector Lifecycle**
+
    - Monitor startup success vs failure rates
    - High failure rates indicate configuration issues
    - Track connector count changes over time
 
-3. **Task State Management**
+**Task State Management**
+
    - Running tasks should match expected count
    - Paused tasks may indicate manual intervention
    - Failed tasks require investigation
    - Destroyed tasks indicate connector removal
 
-4. **Startup Monitoring**
+**Startup Monitoring**
+
    - Compare startup attempts vs successes
    - High failure rates suggest configuration problems
    - Monitor both connector and task startups
 
-5. **Rebalancing Analysis**
+**Rebalancing Analysis**
+
    - Frequent rebalances impact availability
    - High rebalance times affect task availability
    - Monitor after adding/removing workers
 
-6. **Troubleshooting**
+**Troubleshooting**
+
    - Failed connectors: Check logs and configuration
    - Paused tasks: Verify intentional vs error state
    - Startup failures: Review connector configs
    - Destroyed tasks: Confirm planned removals
 
-7. **Capacity Planning**
+**Capacity Planning**
+
    - Monitor task distribution across workers
    - Plan worker scaling based on task counts
    - Balance connectors for even resource usage

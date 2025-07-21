@@ -68,22 +68,26 @@ kaf_LogManager_LogDirectoryOffline{rack=~'$rack',host_id=~'$host_id'}
 
 ## Panel Organization
 
-1. **Overview Section**
+**Overview Section**
+
    - Empty row for spacing/organization
 
-2. **General**
+**General**
+
    - Messages In
    - Bytes In
    - Bytes Out
    - End Offset Increase Per Topic
    - No. Log Segments per topic
 
-3. **Log Size**
+**Log Size**
+
    - Log size per Topic
    - Log size per Broker
    - Log Directories Offline
 
-4. **Throughput**
+**Throughput**
+
    - Messages In Per Topic
    - Bytes In Per Topic
    - Bytes Out Per Topic
@@ -91,44 +95,55 @@ kaf_LogManager_LogDirectoryOffline{rack=~'$rack',host_id=~'$host_id'}
 ## Filters
 
 - **rack**: Filter by rack location
+
 - **host_id**: Filter by specific host/broker
+
 - **topic**: Filter by specific topic(s)
+
 - **percentile**: Select percentile for latency metrics
+
 - **groupBy**: Group results by rack or host_id
 
 ## Best Practices
 
-1. **Topic Throughput Monitoring**
+**Topic Throughput Monitoring**
+
    - Monitor message and byte rates for capacity planning
    - Identify hot topics with disproportionate traffic
    - Compare bytes in vs bytes out for consumption patterns
 
-2. **Log Management**
+**Log Management**
+
    - Monitor log sizes to prevent disk space issues
    - Track segment counts for retention policy effectiveness
    - Watch for rapid offset increases indicating high activity
 
-3. **Performance Analysis**
+**Performance Analysis**
+
    - High bytes in with low messages indicates large messages
    - Compare throughput across brokers for load distribution
    - Monitor topic growth trends for capacity planning
 
-4. **Log Directory Health**
+**Log Directory Health**
+
    - Offline log directories indicate disk failures
    - Requires immediate attention to prevent data loss
    - May trigger under-replicated partitions
 
-5. **Segment Management**
+**Segment Management**
+
    - High segment counts may impact performance
    - Consider adjusting segment.ms or segment.bytes
    - Monitor segment creation rate for tuning
 
-6. **Topic-Specific Tuning**
+**Topic-Specific Tuning**
+
    - Different topics may need different configurations
    - High-throughput topics may need more partitions
    - Consider compression for high-volume topics
 
-7. **Retention Monitoring**
+**Retention Monitoring**
+
    - Log size indicates retention effectiveness
    - Monitor growth rate vs retention settings
    - Ensure cleanup policies are working correctly

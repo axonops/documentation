@@ -55,23 +55,33 @@ sum(cas_authentication_success{axonfunction='rate',dc=~'$dc',rack=~'$rack',host_
 ## Panel Types and Descriptions
 
 ### Throughput Section
-1. **Reads/sec** - Line chart showing read operations per second by user, IP, keyspace, and table
-2. **Writes/sec** - Line chart showing write operations per second by user, IP, keyspace, and table
-3. **Batches/sec (logged)** - Line chart showing logged batch operations per second
-4. **Batches/sec (counter)** - Line chart showing counter batch operations per second
-5. **Batches/sec (unlogged)** - Line chart showing unlogged batch operations per second
+- **Reads/sec** - Line chart showing read operations per second by user, IP, keyspace, and table
+
+- **Writes/sec** - Line chart showing write operations per second by user, IP, keyspace, and table
+
+- **Batches/sec (logged)** - Line chart showing logged batch operations per second
+
+- **Batches/sec (counter)** - Line chart showing counter batch operations per second
+
+- **Batches/sec (unlogged)** - Line chart showing unlogged batch operations per second
 
 ### Connections Section
-1. **Native connections** - Line chart showing number of connected native protocol clients
-2. **Successful Authentications by user (rate)** - Line chart showing authentication success rate by username
+- **Native connections** - Line chart showing number of connected native protocol clients
+
+- **Successful Authentications by user (rate)** - Line chart showing authentication success rate by username
 
 ## Filters
 
 - **data center** (`dc`) - Filter by data center
+
 - **rack** - Filter by rack
+
 - **node** (`host_id`) - Filter by specific node
+
 - **username** - Filter by client username
+
 - **keyspace** - Filter by keyspace
+
 - **table** (`scope`) - Filter by table
 
 ## Metric Details
@@ -90,6 +100,7 @@ sum(cas_authentication_success{axonfunction='rate',dc=~'$dc',rack=~'$rack',host_
 ## Legend Format
 
 The dashboard uses descriptive legends combining multiple attributes:
+
 - Throughput: `$username @ $remoteIP $keyspace $table`
 - Connections: `$dc - $host_id`
 - Authentication: `$username`

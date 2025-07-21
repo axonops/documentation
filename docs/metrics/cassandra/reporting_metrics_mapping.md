@@ -74,29 +74,45 @@ max(cas_ClientRequest_Latency{scope='Write.*$consistency',function='$percentile'
 ## Panel Organization
 
 ### System Resource Utilisation
-1. **Average Disk % Usage** - Pie chart showing used vs free disk space
-2. **Used Disk Space Per Node** - Line chart of disk usage trends
-3. **Max Disk Read Per Second** - Peak disk read throughput
-4. **Max Disk Write Per Second** - Peak disk write throughput
-5. **Average CPU Usage per DC** - CPU utilization by datacenter
+- **Average Disk % Usage** - Pie chart showing used vs free disk space
+
+- **Used Disk Space Per Node** - Line chart of disk usage trends
+
+- **Max Disk Read Per Second** - Peak disk read throughput
+
+- **Max Disk Write Per Second** - Peak disk write throughput
+
+- **Average CPU Usage per DC** - CPU utilization by datacenter
 
 ### Coordinator
-1. **Coordinator Reads distribution** - Pie chart of read consistency level distribution
-2. **Coordinator Writes distribution** - Pie chart of write consistency level distribution
-3. **Coordinator Read Throughput Per $groupBy ($consistency)** - Read ops/sec by consistency
-4. **Total Coordinator Write Throughput Per $groupBy ($consistency)** - Write ops/sec by consistency
-5. **Max Coordinator Read $consistency Latency** - Maximum read latency for selected consistency
-6. **Max Coordinator Write $consistency Latency** - Maximum write latency for selected consistency
+- **Coordinator Reads distribution** - Pie chart of read consistency level distribution
+
+- **Coordinator Writes distribution** - Pie chart of write consistency level distribution
+
+- **Coordinator Read Throughput Per $groupBy ($consistency)** - Read ops/sec by consistency
+
+- **Total Coordinator Write Throughput Per $groupBy ($consistency)** - Write ops/sec by consistency
+
+- **Max Coordinator Read $consistency Latency** - Maximum read latency for selected consistency
+
+- **Max Coordinator Write $consistency Latency** - Maximum write latency for selected consistency
 
 ## Filters
 
 - **data center** (`dc`) - Filter by data center
+
 - **rack** - Filter by rack
+
 - **node** (`host_id`) - Filter by specific node
+
 - **percentile** - Select latency percentile (50th, 75th, 95th, 98th, 99th, 999th)
+
 - **groupBy** - Dynamic grouping (dc, rack, host_id)
+
 - **mount point** (`mountpoint`) - Filter by disk mount point
+
 - **partition** - Filter by disk partition
+
 - **consistency** - Filter by consistency level (ALL, ANY, ONE, TWO, THREE, SERIAL, QUORUM, etc.)
 
 ## Understanding the Reporting Dashboard
@@ -109,17 +125,20 @@ max(cas_ClientRequest_Latency{scope='Write.*$consistency',function='$percentile'
 
 ### Key Metrics for Reporting
 
-1. **Resource Utilization**:
+**Resource Utilization**:
+
    - Disk usage trends for capacity planning
    - I/O throughput for performance baseline
    - CPU usage for load distribution
 
-2. **Consistency Patterns**:
+**Consistency Patterns**:
+
    - Distribution shows application behavior
    - Performance impact of consistency choices
    - Helps optimize consistency settings
 
-3. **Aggregated Views**:
+**Aggregated Views**:
+
    - DC-level CPU averages
    - Cluster-wide consistency distribution
    - Peak performance metrics
@@ -153,28 +172,33 @@ Metrics to Include:
 ## Best Practices
 
 ### Resource Monitoring
-1. **Disk Space**:
+**Disk Space**:
+
    - Monitor usage trends
    - Set alerts at 80% utilization
    - Plan expansion at 70%
 
-2. **I/O Performance**:
+**I/O Performance**:
+
    - Track peak read/write rates
    - Identify I/O bottlenecks
    - Correlate with application load
 
-3. **CPU Usage**:
+**CPU Usage**:
+
    - Monitor DC-level averages
    - Identify hot spots
    - Balance load distribution
 
 ### Consistency Reporting
-1. **Distribution Analysis**:
+**Distribution Analysis**:
+
    - Understand application patterns
    - Identify consistency misuse
    - Optimize for performance
 
-2. **Performance Impact**:
+**Performance Impact**:
+
    - Compare latency by consistency
    - Measure throughput differences
    - Make data-driven decisions
@@ -199,11 +223,17 @@ Metrics to Include:
 ## Units and Display
 
 - **Disk Space**: bytes (binary units)
+
 - **Disk I/O**: bytes/second
+
 - **CPU**: percent (0-100)
+
 - **Latency**: microseconds
+
 - **Throughput**: rps/wps (reads/writes per second)
-- **Legend Format**: 
+
+**Legend Format**:
+
   - Resources: `$dc - $host_id - $mountpoint/$partition`
   - Coordinator: `$groupBy` or `$scope`
 

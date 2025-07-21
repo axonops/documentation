@@ -65,30 +65,44 @@ sum(cas_Cache_Capacity{scope='CounterCache',dc=~'$dc',rack=~'$rack',host_id=~'$h
 ## Panel Organization
 
 ### Key Cache Section
-1. **KeyCache HitRate Per Node** - Line chart showing cache hit effectiveness (0-1 scale)
-2. **KeyCache Size** - Line chart showing memory used by cache
-3. **KeyCache Capacity** - Line chart showing maximum cache size
-4. **KeyCache Number of Entries** - Line chart showing entry count
-5. **KeyCache Requests Count Per Second** - Line chart showing request rate
+- **KeyCache HitRate Per Node** - Line chart showing cache hit effectiveness (0-1 scale)
+
+- **KeyCache Size** - Line chart showing memory used by cache
+
+- **KeyCache Capacity** - Line chart showing maximum cache size
+
+- **KeyCache Number of Entries** - Line chart showing entry count
+
+- **KeyCache Requests Count Per Second** - Line chart showing request rate
 
 ### Row Cache Section
-1. **RowCache Size** - Line chart showing memory used
-2. **RowCache Capacity** - Line chart showing maximum size
-3. **RowCache Number of Entries** - Line chart showing entry count
-4. **RowCache Requests Count Per Second** - Line chart showing request rate
+- **RowCache Size** - Line chart showing memory used
+
+- **RowCache Capacity** - Line chart showing maximum size
+
+- **RowCache Number of Entries** - Line chart showing entry count
+
+- **RowCache Requests Count Per Second** - Line chart showing request rate
 
 ### Counter Cache Section
-1. **CounterCache HitRate** - Line chart showing hit ratio
-2. **CounterCache Size** - Line chart showing memory used
-3. **CounterCache Capacity** - Line chart showing maximum size
-4. **CounterCache Number of Entries** - Line chart showing entry count
-5. **CounterCache Requests Count Per Second** - Line chart showing request rate
+- **CounterCache HitRate** - Line chart showing hit ratio
+
+- **CounterCache Size** - Line chart showing memory used
+
+- **CounterCache Capacity** - Line chart showing maximum size
+
+- **CounterCache Number of Entries** - Line chart showing entry count
+
+- **CounterCache Requests Count Per Second** - Line chart showing request rate
 
 ## Filters
 
 - **data center** (`dc`) - Filter by data center
+
 - **rack** - Filter by rack
+
 - **node** (`host_id`) - Filter by specific node
+
 - **groupBy** - Dynamic grouping by dc, rack, or host_id
 
 ## Metric Aggregation
@@ -105,26 +119,31 @@ Legend format:
 
 ## Important Notes
 
-1. **Hit Rate Interpretation**:
+**Hit Rate Interpretation**:
+
    - Value between 0.0 and 1.0 (shown as `percentunit`)
    - Higher values indicate better cache effectiveness
    - Low hit rates may indicate cache size needs adjustment
 
-2. **Cache Sizing**:
+**Cache Sizing**:
+
    - Size should not exceed Capacity
    - Monitor the Size/Capacity ratio
    - Adjust capacity in cassandra.yaml if needed
 
-3. **Version Compatibility**:
+**Version Compatibility**:
+
    - Note states "Only Cassandra and DSE prior to version 6.0" for some metrics
    - Cache metrics may vary in newer versions
 
-4. **Performance Impact**:
+**Performance Impact**:
+
    - KeyCache has minimal overhead and high benefit
    - RowCache can consume significant memory
    - Monitor request rates to understand cache load
 
-5. **Units**:
+**Units**:
+
    - Size and Capacity: bytes (with SI units disabled)
    - Hit Rate: percentunit (0.0-1.0 scale)
    - Requests: operations per second (ops)

@@ -79,65 +79,78 @@ kaf_RequestMetrics_RemoteTimeMs{request='FetchFollower',function=~'$percentile',
 
 ## Panel Organization
 
-1. **Overview Section**
+**Overview Section**
+
    - Empty row for spacing/organization
 
-2. **Replication**
+**Replication**
+
    - Under Replicated Partitions
    - Online Partitions
    - Offline Partitions
    - Under Min ISR Partitions
 
-3. **Leader Performance**
+**Leader Performance**
+
    - Leader FetchFollower Requests
    - Leader Fetch Requests
    - Leader FetchConsumer Requests
    - Leader Produce Requests
 
-4. **Follower Performance**
+**Follower Performance**
+
    - Follower Produce Requests Time
    - Follower Fetch Requests Time
    - Follower FetchConsumer Request Time
    - Follower FetchFollower Request Time
 
-5. **ISR Shrinks / Expands**
+**ISR Shrinks / Expands**
+
    - IsrShrinks per Sec by Host
    - IsrExpands per Sec By Host
 
 ## Filters
 
 - **rack**: Filter by rack location
+
 - **host_id**: Filter by specific host/broker
+
 - **percentile**: Select percentile for latency metrics (50th, 95th, 99th, etc.)
 
 ## Best Practices
 
-1. **Partition Health Monitoring**
+**Partition Health Monitoring**
+
    - Under-replicated partitions should be 0
    - Offline partitions indicate serious issues
    - Monitor under min ISR for potential data loss risk
 
-2. **ISR Monitoring**
+**ISR Monitoring**
+
    - Frequent ISR shrinks indicate replication lag
    - High ISR churn suggests network or performance issues
    - ISR expansions should follow shrinks during recovery
 
-3. **Leader Performance**
+**Leader Performance**
+
    - Monitor leader request processing times
    - High FetchFollower times indicate replication bottlenecks
    - Compare produce vs fetch latencies
 
-4. **Follower Performance**
+**Follower Performance**
+
    - High RemoteTimeMs indicates replication delays
    - Monitor follower fetch times for lag issues
    - Ensure followers can keep up with leaders
 
-5. **Replication Tuning**
+**Replication Tuning**
+
    - Adjust `replica.lag.time.max.ms` for ISR membership
    - Tune `num.replica.fetchers` for better throughput
    - Monitor `min.insync.replicas` compliance
 
-6. **Troubleshooting**
+**Troubleshooting**
+
    - Under-replicated partitions: Check broker health and network
    - ISR shrinks: Investigate disk I/O and network latency
    - High follower lag: Check replication thread count

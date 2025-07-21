@@ -96,108 +96,147 @@ sum(cas_ThreadPools_internal{axonfunction='rate',scope='HintsDispatcher',key='Co
 ## Panel Organization
 
 ### Hints Section
-1. **Total Hints Created By Each Node** - Rate of hint creation
-2. **Total Hints In Progress** - Active hint delivery count
+- **Total Hints Created By Each Node** - Rate of hint creation
+
+- **Total Hints In Progress** - Active hint delivery count
 
 ### Read Repairs Section
-1. **Attempted Per Second** - Read repair attempt rate
-2. **Repaired Background** - Background repairs completed
-3. **Repaired Blocked** - Blocking repairs completed
+- **Attempted Per Second** - Read repair attempt rate
+
+- **Repaired Background** - Background repairs completed
+
+- **Repaired Blocked** - Blocking repairs completed
 
 ### Coordinator Requests Errors Section
-1. **Read Timeouts Per Second** - Read operation timeout rate
-2. **Read Unavailables Per Second** - Read unavailable exception rate
-3. **Write Timeouts Per Second** - Write operation timeout rate
-4. **Write Unavailables Per Second** - Write unavailable exception rate
+- **Read Timeouts Per Second** - Read operation timeout rate
+
+- **Read Unavailables Per Second** - Read unavailable exception rate
+
+- **Write Timeouts Per Second** - Write operation timeout rate
+
+- **Write Unavailables Per Second** - Write unavailable exception rate
 
 ### Thread Pools Section
-1. **ThreadPools Request** - Request thread pool activity distribution
-2. **ThreadPools Internal** - Internal thread pool activity distribution
-3. **Completed Tasks per sec - Anti Entropy Stage** - Repair coordination tasks
-4. **Completed Tasks per sec - Read Repair Stage** - Read repair execution tasks
-5. **Completed Tasks per sec - Hinted Handoff** - Hint delivery tasks
+- **ThreadPools Request** - Request thread pool activity distribution
+
+- **ThreadPools Internal** - Internal thread pool activity distribution
+
+- **Completed Tasks per sec - Anti Entropy Stage** - Repair coordination tasks
+
+- **Completed Tasks per sec - Read Repair Stage** - Read repair execution tasks
+
+- **Completed Tasks per sec - Hinted Handoff** - Hint delivery tasks
 
 ### Events Section
-1. **Starting Repair Events** - Repair start event frequency
-2. **Streaming Events** - Data streaming event frequency
+- **Starting Repair Events** - Repair start event frequency
+
+- **Streaming Events** - Data streaming event frequency
 
 ## Filters
 
 - **data center** (`dc`) - Filter by data center
+
 - **rack** - Filter by rack
+
 - **node** (`host_id`) - Filter by specific node
+
 - **groupBy** - Dynamic grouping (dc, rack, host_id, keyspace)
 
 ## Understanding Anti-Entropy Mechanisms
 
 ### Hinted Handoff
 - **Purpose**: Temporary storage of writes when replicas are unavailable
+
 - **TotalHints**: Accumulating counter of all hints created
+
 - **HintsInProgress**: Current active hint deliveries
+
 - **Impact**: High hint rates indicate replica availability issues
 
 ### Read Repair
 - **Attempted**: All read repair attempts
+
 - **RepairedBackground**: Asynchronous repairs (non-blocking)
+
 - **RepairedBlocking**: Synchronous repairs (blocks read response)
-- **Types**:
+
+**Types**:
+
   - Background: Happens after read completes
   - Blocking: Happens before read response
 
 ### Coordinator Errors
 - **Timeouts**: Request exceeded configured timeout
+
 - **Unavailables**: Not enough replicas available
-- **Causes**:
+
+**Causes**:
+
   - Node overload
   - Network issues
   - Insufficient replicas
 
 ### Thread Pools
 - **AntiEntropyStage**: Handles repair coordination
+
 - **ReadRepairStage**: Executes read repairs
+
 - **HintsDispatcher**: Delivers hints to recovered nodes
 
 ## Best Practices
 
 ### Hints Monitoring
-1. **Zero Hints Ideal**: Indicates all replicas available
-2. **Growing Hints**: Sign of persistent replica issues
-3. **High In-Progress**: May indicate slow hint delivery
-4. **Actions**:
+- **Zero Hints Ideal**: Indicates all replicas available
+
+- **Growing Hints**: Sign of persistent replica issues
+
+- **High In-Progress**: May indicate slow hint delivery
+
+**Actions**:
+
    - Check node health
    - Review network connectivity
    - Monitor hint storage capacity
 
 ### Read Repair Monitoring
-1. **Background vs Blocking**:
+**Background vs Blocking**:
+
    - High blocking repairs impact read latency
    - Background repairs are preferred
-2. **High Attempt Rate**:
+**High Attempt Rate**:
+
    - Indicates data inconsistency
    - May need full repair
-3. **Success Rate**:
+**Success Rate**:
+
    - Compare attempted vs repaired
    - Low success indicates issues
 
 ### Error Monitoring
-1. **Zero Tolerance**:
+**Zero Tolerance**:
+
    - Any timeouts/unavailables are concerning
    - Investigate root cause immediately
-2. **Read vs Write**:
+**Read vs Write**:
+
    - Different implications
    - Write unavailables risk data loss
-3. **Correlation**:
+**Correlation**:
+
    - Check with dropped messages
    - Monitor system resources
 
 ### Thread Pool Health
-1. **Balanced Distribution**:
+**Balanced Distribution**:
+
    - Even work across pools
    - No single pool dominating
-2. **Anti-Entropy Activity**:
+**Anti-Entropy Activity**:
+
    - Spikes during repairs
    - Should be low normally
-3. **Hints Dispatcher**:
+**Hints Dispatcher**:
+
    - Activity indicates recovery
    - Should complete eventually
 
@@ -230,8 +269,11 @@ sum(cas_ThreadPools_internal{axonfunction='rate',scope='HintsDispatcher',key='Co
 ## Units and Display
 
 - **Rates**: operations per second (short)
+
 - **Counts**: absolute numbers (short)
-- **Legend Format**: 
+
+**Legend Format**:
+
   - Aggregated: `$groupBy`
   - Node-specific: `$dc - $host_id`
   - Thread pools: `$scope`

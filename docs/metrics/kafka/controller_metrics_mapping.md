@@ -68,10 +68,12 @@ kaf_raft_channel_metrics_{function='failed_reauthentication_rate'}
 
 ## Panel Organization
 
-1. **Overview Section**
+**Overview Section**
+
    - Empty row for spacing/organization
 
-2. **Controller**
+**Controller**
+
    - Fenced Broker Count (counter)
    - Current Raft Leader (counter)
    - Last record offset timestamp
@@ -82,7 +84,8 @@ kaf_raft_channel_metrics_{function='failed_reauthentication_rate'}
    - Metadata Error Rate
    - New Active Controllers Count (placeholder)
 
-3. **Authentication**
+**Authentication**
+
    - Successful Auth Rate
    - Failed Auth Rate
 
@@ -92,37 +95,44 @@ Note: The controller dashboard has no configurable filters, as controller metric
 
 ## Best Practices
 
-1. **Controller Health Monitoring**
+**Controller Health Monitoring**
+
    - Fenced broker count should be 0 for healthy clusters
    - Monitor metadata error rate for controller issues
    - Track last applied record timestamp for activity
 
-2. **Raft Consensus Monitoring**
+**Raft Consensus Monitoring**
+
    - Ensure stable Raft leader (minimal changes)
    - Monitor commit latency for consensus performance
    - High fetch records rate indicates active metadata changes
 
-3. **Log Growth Monitoring**
+**Log Growth Monitoring**
+
    - Track Raft log offset growth rate
    - Rapid growth may indicate frequent metadata changes
    - Monitor for log compaction effectiveness
 
-4. **Authentication Monitoring**
+**Authentication Monitoring**
+
    - High failed authentication rates indicate security issues
    - Monitor successful auth rate for normal operations
    - Investigate spikes in failed re-authentication
 
-5. **Performance Tuning**
+**Performance Tuning**
+
    - Low commit latency ensures fast metadata propagation
    - Monitor request rates for controller load
    - Balance metadata operations across the cluster
 
-6. **Troubleshooting**
+**Troubleshooting**
+
    - Fenced brokers indicate network or configuration issues
    - Metadata errors suggest controller processing problems
    - Authentication failures may indicate credential issues
 
-7. **KRaft Mode Considerations**
+**KRaft Mode Considerations**
+
    - Controller metrics are specific to KRaft mode
    - In ZooKeeper mode, different metrics apply
    - Monitor for smooth leader elections and stable consensus

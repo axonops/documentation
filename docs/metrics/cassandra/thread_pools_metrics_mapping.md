@@ -71,18 +71,26 @@ sum(cas_ThreadPools_internal{scope=~'$scope',key='CurrentlyBlockedTasks',dc=~'$d
 
 For each selected thread pool ($scope), the dashboard shows:
 
-1. **Active Tasks** - Line chart showing currently executing tasks
-2. **Pending Tasks** - Line chart showing queued tasks waiting for execution
-3. **Completed Tasks Rate by $groupBy** - Line chart showing task completion rate
-4. **Total Blocked Tasks Rate** - Line chart showing rate of tasks being blocked
-5. **Currently Blocked Tasks Rate** - Line chart showing currently blocked tasks
+- **Active Tasks** - Line chart showing currently executing tasks
+
+- **Pending Tasks** - Line chart showing queued tasks waiting for execution
+
+- **Completed Tasks Rate by $groupBy** - Line chart showing task completion rate
+
+- **Total Blocked Tasks Rate** - Line chart showing rate of tasks being blocked
+
+- **Currently Blocked Tasks Rate** - Line chart showing currently blocked tasks
 
 ## Filters
 
 - **data center** (`dc`) - Filter by data center
+
 - **rack** - Filter by rack
+
 - **node** (`host_id`) - Filter by specific node
+
 - **Pool (scope)** - Select specific thread pool(s) to monitor
+
 - **groupBy** - Dynamic grouping (scope, dc, rack, host_id)
 
 ## Important Thread Pools to Monitor
@@ -123,17 +131,20 @@ For each selected thread pool ($scope), the dashboard shows:
 
 ## Tuning Considerations
 
-1. **Thread Pool Sizing**:
+**Thread Pool Sizing**:
+
    - Configured in cassandra.yaml
    - Balance between concurrency and resource usage
    - Consider CPU cores and workload type
 
-2. **Common Adjustments**:
+**Common Adjustments**:
+
    - `concurrent_reads`: For read-heavy workloads
    - `concurrent_writes`: For write-heavy workloads
    - `concurrent_compactors`: For compaction throughput
 
-3. **Monitoring Strategy**:
+**Monitoring Strategy**:
+
    - Watch for sustained pending tasks
    - Monitor blocked tasks for resource contention
    - Compare completion rates across nodes
@@ -141,6 +152,7 @@ For each selected thread pool ($scope), the dashboard shows:
 ## Grouping and Aggregation
 
 The `groupBy` variable allows flexible analysis:
+
 - By `scope`: Compare different thread pools
 - By `dc`: Data center level patterns
 - By `rack`: Rack level distribution
@@ -149,6 +161,9 @@ The `groupBy` variable allows flexible analysis:
 ## Units and Display
 
 - **Task Counts**: Displayed as short numbers
+
 - **Rates**: Tasks per second
+
 - **Legend**: Shows the groupBy dimension
+
 - **Time Series**: Real-time and historical trends

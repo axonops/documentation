@@ -73,25 +73,34 @@ cas_Table_MaxPartitionSize{dc=~'$dc',rack=~'$rack',host_id=~'$host_id',scope=~'$
 ## Panel Organization
 
 ### Compression Section
-1. **Compression Ratio** - Line chart showing compression effectiveness (lower is better)
-2. **Compression Metadata Off-Heap Memory per Table** - Memory overhead of compression
+- **Compression Ratio** - Line chart showing compression effectiveness (lower is better)
+
+- **Compression Metadata Off-Heap Memory per Table** - Memory overhead of compression
 
 ### Disk Space Per Node Section
-1. **Live Disk Space Per Table** - Active data size per table
-2. **Total Disk Space Per Table** - Total size including tombstones
-3. **Live SSTable Count Per Table** - Number of SSTables per table
+- **Live Disk Space Per Table** - Active data size per table
+
+- **Total Disk Space Per Table** - Total size including tombstones
+
+- **Live SSTable Count Per Table** - Number of SSTables per table
 
 ### Row Size Per Node Section
-1. **Min Partition Size Per Table** - Smallest partition in each table
-2. **Mean Partition Size Per Table** - Average partition size
-3. **Max Row Size Per Table** - Largest partition (identifies potential hotspots)
+- **Min Partition Size Per Table** - Smallest partition in each table
+
+- **Mean Partition Size Per Table** - Average partition size
+
+- **Max Row Size Per Table** - Largest partition (identifies potential hotspots)
 
 ## Filters
 
 - **data center** (`dc`) - Filter by data center
+
 - **rack** - Filter by rack
+
 - **node** (`host_id`) - Filter by specific node
+
 - **keyspace** - Filter by keyspace
+
 - **table** (`scope`) - Filter by table
 
 ## Important Metrics Explained
@@ -104,44 +113,56 @@ cas_Table_MaxPartitionSize{dc=~'$dc',rack=~'$rack',host_id=~'$host_id',scope=~'$
 
 ### Disk Space Metrics
 - **Live Space**: Only counts active data
+
 - **Total Space**: Includes tombstones and deleted data
+
 - Difference indicates space that can be reclaimed by compaction
 
 ### SSTable Count
 - High counts may indicate:
-  - Need for compaction tuning
-  - High write load
-  - Compaction falling behind
+
+    - Need for compaction tuning
+    - High write load
+    - Compaction falling behind
+
 - Affects read performance (more SSTables = more files to check)
 
 ### Partition Size Distribution
 - **Min Size**: Usually very small (empty or near-empty partitions)
+
 - **Mean Size**: Average across all partitions
+
 - **Max Size**: Critical for identifying large partitions
+
   - Partitions > 100MB can cause performance issues
   - Partitions > 1GB should be investigated
 
 ## Legend Format
 
 All panels use: `$dc - $host_id-$keyspace-$scope`
+
 - Shows data center, node, keyspace, and table
 - Allows easy identification of specific table metrics
 
 ## Best Practices
 
-1. **Monitor Compression Ratio**:
+**Monitor Compression Ratio**:
+
    - Sudden changes may indicate data pattern changes
    - Poor compression might suggest wrong algorithm choice
 
-2. **Watch Disk Space Growth**:
+**Watch Disk Space Growth**:
+
    - Compare live vs total space
    - Large differences suggest need for compaction
 
-3. **Track SSTable Counts**:
+**Track SSTable Counts**:
+
    - Consistently high counts impact read performance
    - May need to adjust compaction strategy
 
-4. **Monitor Partition Sizes**:
+**Monitor Partition Sizes**:
+
    - Large partitions (>100MB) need investigation
    - Very large partitions (>1GB) can cause operational issues
    - Consider data model changes for tables with large partitions

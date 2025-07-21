@@ -47,24 +47,33 @@ cas_CQL_PreparedStatementsRatio{function='Value',dc=~'$dc',rack=~'$rack',host_id
 ## Panel Organization
 
 ### CQL Stats Section
-1. **Prepared Statements Executed per Second** - Rate of prepared statement execution
-2. **Regular Statements Executed per Second** - Rate of regular statement execution
-3. **Number of Cached Prepared Statements per Node** - Current cache size
-4. **Prepared Statements Evicted per Second per Node** - Cache eviction rate
-5. **Prepared Statements Ratio per Node** - Ratio of prepared to total statements
+- **Prepared Statements Executed per Second** - Rate of prepared statement execution
+
+- **Regular Statements Executed per Second** - Rate of regular statement execution
+
+- **Number of Cached Prepared Statements per Node** - Current cache size
+
+- **Prepared Statements Evicted per Second per Node** - Cache eviction rate
+
+- **Prepared Statements Ratio per Node** - Ratio of prepared to total statements
 
 ## Filters
 
 - **data center** (`dc`) - Filter by data center
+
 - **rack** - Filter by rack
+
 - **node** (`host_id`) - Filter by specific node
+
 - **groupBy** - Dynamic grouping (dc, rack, host_id, keyspace)
 
 ## Important Metrics Explained
 
 ### Prepared vs Regular Statements
 - **Prepared Statements**: Pre-parsed and optimized queries with placeholders
+
 - **Regular Statements**: Ad-hoc queries parsed on each execution
+
 - Prepared statements are more efficient for repeated queries
 
 ### Prepared Statement Count
@@ -84,39 +93,46 @@ cas_CQL_PreparedStatementsRatio{function='Value',dc=~'$dc',rack=~'$rack',host_id
 
 ## Best Practices
 
-1. **Maximize Prepared Statement Usage**:
+**Maximize Prepared Statement Usage**:
+
    - Aim for high prepared statement ratio (>90%)
    - Use prepared statements for all repeated queries
    - Avoid string concatenation in queries
 
-2. **Monitor Cache Size**:
+**Monitor Cache Size**:
+
    - Watch for increasing cache counts
    - Set appropriate cache size limits
    - Monitor memory usage
 
-3. **Track Eviction Rates**:
+**Track Eviction Rates**:
+
    - Zero evictions is ideal
    - Positive rates indicate cache thrashing
    - May need to increase cache size or optimize queries
 
-4. **Analyze Query Patterns**:
+**Analyze Query Patterns**:
+
    - Group by keyspace to identify heavy users
    - Compare prepared vs regular by node
    - Look for imbalanced query distribution
 
 ## Performance Considerations
 
-1. **Prepared Statement Benefits**:
+**Prepared Statement Benefits**:
+
    - Reduced parsing overhead
    - Better performance for repeated queries
    - Protection against CQL injection
 
-2. **Cache Management**:
+**Cache Management**:
+
    - Each unique prepared statement uses memory
    - Too many unique statements can cause evictions
    - Balance between reuse and memory usage
 
-3. **Regular Statement Overhead**:
+**Regular Statement Overhead**:
+
    - Each execution requires full parsing
    - Higher CPU usage on coordinator
    - Should be minimized in production
@@ -124,25 +140,32 @@ cas_CQL_PreparedStatementsRatio{function='Value',dc=~'$dc',rack=~'$rack',host_id
 ## Units and Display
 
 - **Execution Rates**: statements per second (short)
+
 - **Counts**: absolute numbers (short)
+
 - **Ratio**: decimal between 0-1 (short)
-- **Legend Format**: 
+
+**Legend Format**:
+
   - Aggregated views: `$groupBy`
   - Node-specific views: `$host_id`
 
 ## Troubleshooting
 
-1. **High Regular Statement Rate**:
+**High Regular Statement Rate**:
+
    - Review application code for ad-hoc queries
    - Convert repeated patterns to prepared statements
    - Check for dynamic query generation
 
-2. **High Eviction Rate**:
+**High Eviction Rate**:
+
    - Increase prepared statement cache size
    - Review for unique statement explosion
    - Consider query consolidation
 
-3. **Low Prepared Statement Ratio**:
+**Low Prepared Statement Ratio**:
+
    - Audit application query patterns
    - Implement prepared statement best practices
    - Monitor after code changes

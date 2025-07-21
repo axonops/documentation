@@ -198,17 +198,23 @@ The Security dashboard primarily uses event filtering rather than metrics.
 
 ### Common Function Values
 - **Percentiles**: `50thPercentile`, `75thPercentile`, `95thPercentile`, `98thPercentile`, `99thPercentile`, `999thPercentile`
+
 - **Aggregations**: `Count`, `Min`, `Max`, `Mean`, `Value`
+
 - **Special**: `axonfunction='rate'` - Converts counter to rate
 
 ### Common Attributes
 - **Location**: `dc` (datacenter), `rack`, `host_id` (node)
+
 - **Scope**: Varies by metric type (table name, cache name, thread pool name, etc.)
+
 - **Filtering**: `groupBy` - Dynamic aggregation dimension
 
 ### Scope Patterns for ClientRequest Metrics
 - **Read Operations**: `Read`, `Read-ALL`, `Read-ONE`, `Read-QUORUM`, etc.
+
 - **Write Operations**: `Write`, `Write-ALL`, `Write-ANY`, `Write-QUORUM`, etc.
+
 - **Range Operations**: `RangeSlice`
 
 ### Dropped Message Scopes
@@ -217,16 +223,19 @@ The Security dashboard primarily uses event filtering rather than metrics.
 
 ## Metric Naming Conventions
 
-1. **Prefix indicates source**:
+**Prefix indicates source**:
+
    - `host_` - System metrics
    - `jvm_` - JVM metrics
    - `cas_` - Cassandra metrics
    - `client_` - Client application metrics
 
-2. **Middle part indicates component**:
+**Middle part indicates component**:
+
    - Examples: `CPU`, `Memory`, `Disk`, `Table`, `Keyspace`, `Cache`
 
-3. **Suffix indicates measurement**:
+**Suffix indicates measurement**:
+
    - Examples: `Latency`, `Count`, `Size`, `Ratio`, `Used`
 
 ## Notes

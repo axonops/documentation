@@ -169,88 +169,128 @@ jvm_GarbageCollector_G1_Young_Generation{axonfunction='rate',function='Collectio
 ## Panel Organization
 
 ### Tables Overview
-1. **Table Data Size % Distribution** - Pie chart showing relative data size per table
-2. **Coordinator Table Reads % Distribution** - Read request distribution by table
-3. **Coordinator Table Writes % Distribution** - Write request distribution by table
+- **Table Data Size % Distribution** - Pie chart showing relative data size per table
+
+- **Coordinator Table Reads % Distribution** - Read request distribution by table
+
+- **Coordinator Table Writes % Distribution** - Write request distribution by table
 
 ### Coordinator Table Statistics
-1. **Max Coordinator Table Read Latency** - Maximum read latency at coordinator
-2. **Max Coordinator Table Write Latency** - Maximum write latency at coordinator
-3. **Max Coordinator Table Range Read Latency** - Maximum range query latency
-4. **Total Coordinator Table Reads/Sec** - Read throughput at coordinator
-5. **Average Coordinator Table Range Reads/Sec** - Range query throughput
-6. **Total Coordinator Table Writes/Sec** - Write throughput at coordinator
+- **Max Coordinator Table Read Latency** - Maximum read latency at coordinator
+
+- **Max Coordinator Table Write Latency** - Maximum write latency at coordinator
+
+- **Max Coordinator Table Range Read Latency** - Maximum range query latency
+
+- **Total Coordinator Table Reads/Sec** - Read throughput at coordinator
+
+- **Average Coordinator Table Range Reads/Sec** - Range query throughput
+
+- **Total Coordinator Table Writes/Sec** - Write throughput at coordinator
 
 ### Table Replica Statistics
-1. **Average Replica Read Latency** - Local read latency
-2. **Average Replica Range Read Latency** - Local range query latency
-3. **Average Replica Write Latency** - Local write latency
-4. **Total Replica Reads/sec** - Local read throughput
-5. **Total Replica Table Range Reads/sec** - Local range query throughput
-6. **Total Replica Writes/sec** - Local write throughput
+- **Average Replica Read Latency** - Local read latency
+
+- **Average Replica Range Read Latency** - Local range query latency
+
+- **Average Replica Write Latency** - Local write latency
+
+- **Total Replica Reads/sec** - Local read throughput
+
+- **Total Replica Table Range Reads/sec** - Local range query throughput
+
+- **Total Replica Writes/sec** - Local write throughput
 
 ### Latency Causes
-1. **Average Mean Table Partition Size** - Average partition size indicator
-2. **Total Estimated Table Partitions Count** - Partition count per table
-3. **Max Table Partition Size** - Largest partition (hotspot indicator)
-4. **SSTables Per Read** - SSTable access efficiency
-5. **Max Live SSTables per Table** - SSTable count (compaction indicator)
-6. **Tombstones Scanned per Table** - Tombstone impact on reads
-7. **SpeculativeRetries By Node For Table Reads** - Retry attempts
-8. **Bloom Filter False Positive Ratio** - Filter efficiency
-9. **Max Table Bloom Filter Disk** - Bloom filter storage
+- **Average Mean Table Partition Size** - Average partition size indicator
+
+- **Total Estimated Table Partitions Count** - Partition count per table
+
+- **Max Table Partition Size** - Largest partition (hotspot indicator)
+
+- **SSTables Per Read** - SSTable access efficiency
+
+- **Max Live SSTables per Table** - SSTable count (compaction indicator)
+
+- **Tombstones Scanned per Table** - Tombstone impact on reads
+
+- **SpeculativeRetries By Node For Table Reads** - Retry attempts
+
+- **Bloom Filter False Positive Ratio** - Filter efficiency
+
+- **Max Table Bloom Filter Disk** - Bloom filter storage
 
 ### Memory Statistics
-1. **Total Table Heap Memory** - Memtable heap usage
-2. **Total Table Off-Heap Memory** - Memtable off-heap usage
-3. **GC duration - G1 YoungGen** - Young generation GC time
-4. **GC count per sec - G1 YoungGen** - Young generation GC frequency
-5. **GC duration - Shenandoah** - Shenandoah GC time
-6. **GC Count per sec - Shenandoah** - Shenandoah GC frequency
-7. **GC duration - ZGC** - ZGC time
-8. **GC Count per sec - ZGC** - ZGC frequency
+- **Total Table Heap Memory** - Memtable heap usage
+
+- **Total Table Off-Heap Memory** - Memtable off-heap usage
+
+- **GC duration - G1 YoungGen** - Young generation GC time
+
+- **GC count per sec - G1 YoungGen** - Young generation GC frequency
+
+- **GC duration - Shenandoah** - Shenandoah GC time
+
+- **GC Count per sec - Shenandoah** - Shenandoah GC frequency
+
+- **GC duration - ZGC** - ZGC time
+
+- **GC Count per sec - ZGC** - ZGC frequency
 
 ## Filters
 
 - **data center** (`dc`) - Filter by data center
+
 - **rack** - Filter by rack
+
 - **node** (`host_id`) - Filter by specific node
+
 - **groupBy** - Dynamic grouping (dc, rack, host_id)
+
 - **percentile** - Select latency percentile (50th, 75th, 95th, 98th, 99th, 999th)
+
 - **keyspace** - Filter by keyspace
+
 - **table** (`scope`) - Filter by table
 
 ## Understanding Table Metrics
 
 ### Coordinator vs Replica Metrics
 - **Coordinator**: Metrics from the node coordinating the request
+
 - **Replica**: Metrics from nodes storing the data
+
 - Coordinator latency includes network and replica time
 - Replica latency is local operation time only
 
 ### Performance Indicators
 
-1. **Partition Size**:
+**Partition Size**:
+
    - Large partitions (>100MB) cause performance issues
    - Monitor max size for hotspot detection
    - Mean size indicates data distribution
 
-2. **SSTable Metrics**:
+**SSTable Metrics**:
+
    - High SSTable count impacts read performance
    - More SSTables = more files to check
    - Indicates compaction strategy effectiveness
 
-3. **Tombstones**:
+**Tombstones**:
+
    - Deleted data markers
    - High tombstone counts slow reads
    - Indicates need for compaction or TTL review
 
-4. **Bloom Filters**:
+**Bloom Filters**:
+
    - Probabilistic data structure for SSTable lookups
    - False positive ratio should be <0.1
    - Higher ratios mean unnecessary SSTable reads
 
-5. **Speculative Retries**:
+**Speculative Retries**:
+
    - Proactive retry mechanism for slow reads
    - High rates indicate inconsistent performance
    - May need tuning or investigation
@@ -258,41 +298,50 @@ jvm_GarbageCollector_G1_Young_Generation{axonfunction='rate',function='Collectio
 ## Best Practices
 
 ### Table Design
-1. **Partition Size**: Keep <100MB, ideally <10MB
-2. **Even Distribution**: Avoid hotspots
-3. **Appropriate TTL**: Manage tombstone creation
-4. **Compression**: Choose based on workload
+- **Partition Size**: Keep <100MB, ideally <10MB
+
+- **Even Distribution**: Avoid hotspots
+
+- **Appropriate TTL**: Manage tombstone creation
+
+- **Compression**: Choose based on workload
 
 ### Performance Monitoring
-1. **Latency Percentiles**:
+**Latency Percentiles**:
+
    - p50: Median performance
    - p99: Tail latency
    - Large p50-p99 gap indicates issues
 
-2. **Throughput Balance**:
+**Throughput Balance**:
+
    - Even distribution across tables
    - Identify heavy tables
    - Plan capacity accordingly
 
-3. **Resource Usage**:
+**Resource Usage**:
+
    - Monitor memory per table
    - Track GC impact
    - Balance heap/off-heap usage
 
 ### Troubleshooting
 
-1. **High Latency**:
+**High Latency**:
+
    - Check partition sizes
    - Review SSTable counts
    - Monitor tombstones
    - Verify bloom filter efficiency
 
-2. **Memory Issues**:
+**Memory Issues**:
+
    - Check memtable sizes
    - Monitor GC frequency
    - Review flush thresholds
 
-3. **Throughput Problems**:
+**Throughput Problems**:
+
    - Analyze coordinator distribution
    - Check speculative retries
    - Review consistency levels
@@ -300,12 +349,19 @@ jvm_GarbageCollector_G1_Young_Generation{axonfunction='rate',function='Collectio
 ## Units and Display
 
 - **Latency**: microseconds
+
 - **Throughput**: ops/sec (rps/wps)
+
 - **Size**: bytes (binary units)
+
 - **Ratio**: decimal/percentage
+
 - **Count**: short (absolute numbers)
+
 - **GC**: milliseconds/count per sec
-- **Legend Format**: 
+
+**Legend Format**:
+
   - Overview: `$keyspace $scope`
   - Details: `$groupBy - $keyspace $scope`
   - Node-specific: `$dc - $host_id`

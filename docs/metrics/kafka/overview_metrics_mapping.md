@@ -113,59 +113,88 @@ sum(kaf_RequestMetrics_RequestsPerSec{axonfunction='rate',function='Count',reque
 ## Panel Organization
 
 ### Healthcheck Section
-1. **Active Controllers** - Counter showing cluster controller status
-2. **Brokers Online** - Number of active brokers
-3. **Online Partitions** - Total partition count
-4. **Offline Partitions** - Partitions without leaders
-5. **Preferred Replica Imbalance** - Leader distribution health
-6. **Under Replicated Partitions** - Replication lag indicator
-7. **Connections** - Total client connections
-8. **Under min insync replicas partitions** - Critical replication status
-9. **Unclean Leader Election Rate** - Data loss risk indicator
-10. **Cluster network throughput** - Overall I/O performance
-11. **Incoming Messages** - Message ingestion rate
-12. **Cluster Connections** - Connection trend
+- **Active Controllers** - Counter showing cluster controller status
+
+- **Brokers Online** - Number of active brokers
+
+- **Online Partitions** - Total partition count
+
+- **Offline Partitions** - Partitions without leaders
+
+- **Preferred Replica Imbalance** - Leader distribution health
+
+- **Under Replicated Partitions** - Replication lag indicator
+
+- **Connections** - Total client connections
+
+- **Under min insync replicas partitions** - Critical replication status
+
+- **Unclean Leader Election Rate** - Data loss risk indicator
+
+- **Cluster network throughput** - Overall I/O performance
+
+- **Incoming Messages** - Message ingestion rate
+
+- **Cluster Connections** - Connection trend
 
 ### General Section
-1. **Broker Count** - Total brokers in cluster
-2. **Active Controller** - Controller assignment over time
-3. **Request Handler Avg Idle Percent** - Request handler capacity
-4. **Under Replicated Partitions** - Replication health trends
-5. **Unclean Leader Elections Per Sec** - Data integrity monitoring
-6. **In-sync replicas Shrinks vs Expands** - ISR stability
+- **Broker Count** - Total brokers in cluster
+
+- **Active Controller** - Controller assignment over time
+
+- **Request Handler Avg Idle Percent** - Request handler capacity
+
+- **Under Replicated Partitions** - Replication health trends
+
+- **Unclean Leader Elections Per Sec** - Data integrity monitoring
+
+- **In-sync replicas Shrinks vs Expands** - ISR stability
 
 ### Group Coordinator Section
-1. **Consumer groups number per coordinator** - Group distribution
-2. **No consumer groups per state** - Group lifecycle monitoring
+- **Consumer groups number per coordinator** - Group distribution
+
+- **No consumer groups per state** - Group lifecycle monitoring
 
 ### Request Rate Section
-1. **Total Request Per Sec** - Overall request load
-2. **Metadata Request Per Sec** - Metadata request patterns
+- **Total Request Per Sec** - Overall request load
+
+- **Metadata Request Per Sec** - Metadata request patterns
 
 ## Filters
 
 - **rack** - Filter by rack location
+
 - **node** (`host_id`) - Filter by specific Kafka broker
+
 - **topic** - Filter by Kafka topic
+
 - **node type** - Filter by node type
+
 - **percentile** - Select latency percentile (for request metrics)
+
 - **groupBy** - Dynamic grouping (topic, host_id)
 
 ## Understanding the Metrics
 
 ### Critical Health Indicators
-1. **Active Controllers**: Must be exactly 1. More or less indicates cluster issues
-2. **Offline Partitions**: Should be 0. Any value > 0 means data unavailability
-3. **Under Replicated Partitions**: Should be 0. Indicates replication lag
-4. **Under Min ISR**: Critical - indicates potential data loss risk
+- **Active Controllers**: Must be exactly 1. More or less indicates cluster issues
+
+- **Offline Partitions**: Should be 0. Any value > 0 means data unavailability
+
+- **Under Replicated Partitions**: Should be 0. Indicates replication lag
+
+- **Under Min ISR**: Critical - indicates potential data loss risk
 
 ### Performance Indicators
-1. **Network Throughput**: Monitor for capacity planning
-2. **Request Handler Idle %**: Lower values indicate high load
-3. **ISR Shrinks/Expands**: Frequent changes indicate instability
+- **Network Throughput**: Monitor for capacity planning
+
+- **Request Handler Idle %**: Lower values indicate high load
+
+- **ISR Shrinks/Expands**: Frequent changes indicate instability
 
 ### Consumer Group Health
-1. **Group States**: 
+**Group States**:
+
    - Stable: Normal operating state
    - Rebalancing: Temporary during membership changes
    - Dead: Groups that need cleanup
@@ -174,30 +203,35 @@ sum(kaf_RequestMetrics_RequestsPerSec{axonfunction='rate',function='Count',reque
 ## Best Practices
 
 ### Monitoring Guidelines
-1. **Set Alerts for**:
+**Set Alerts for**:
+
    - Active Controllers ≠ 1
    - Offline Partitions > 0
    - Under Replicated Partitions > 0
    - Unclean Leader Elections > 0
 
-2. **Regular Checks**:
+**Regular Checks**:
+
    - Network throughput trends
    - Consumer group stability
    - Request rate patterns
 
 ### Troubleshooting
 
-1. **No Active Controller**:
+**No Active Controller**:
+
    - Check ZooKeeper connectivity
    - Review controller logs
    - Verify network partitions
 
-2. **High Under-Replicated Partitions**:
+**High Under-Replicated Partitions**:
+
    - Check broker health
    - Verify network bandwidth
    - Review replica lag settings
 
-3. **Consumer Group Issues**:
+**Consumer Group Issues**:
+
    - Monitor rebalance frequency
    - Check consumer lag
    - Verify coordinator load
@@ -211,8 +245,11 @@ sum(kaf_RequestMetrics_RequestsPerSec{axonfunction='rate',function='Count',reque
 ## Units
 
 - **Bytes**: Network throughput (bytes/sec)
+
 - **short**: Counts and rates
+
 - **percent**: Utilization metrics (0-100)
+
 - **rps**: Requests per second
 
 ## Notes

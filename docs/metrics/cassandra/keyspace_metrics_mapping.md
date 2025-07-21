@@ -62,26 +62,36 @@ cas_Keyspace_WriteLatency{axonfunction='rate',keyspace=~'$keyspace',function='Co
 ## Panel Organization
 
 ### Keyspaces Overview Section
-1. **Keyspace Data Size % Distribution** - Pie chart showing relative data size per keyspace
+- **Keyspace Data Size % Distribution** - Pie chart showing relative data size per keyspace
 
 ### Latency Statistics Section
-1. **Read Latency $percentile** - Line chart showing read latency at selected percentile
-2. **Range Read Request Latency $percentile** - Line chart for range query latency
-3. **Write Latency $percentile** - Line chart showing write latency
+- **Read Latency $percentile** - Line chart showing read latency at selected percentile
+
+- **Range Read Request Latency $percentile** - Line chart for range query latency
+
+- **Write Latency $percentile** - Line chart showing write latency
 
 ### Throughput Statistics Section
-1. **Reads/sec** - Line chart showing read operations per second
-2. **Range Read Requests/sec** - Line chart for range queries per second
-3. **Writes/sec** - Line chart showing write operations per second
+- **Reads/sec** - Line chart showing read operations per second
+
+- **Range Read Requests/sec** - Line chart for range queries per second
+
+- **Writes/sec** - Line chart showing write operations per second
 
 ## Filters
 
 - **data center** (`dc`) - Filter by data center
+
 - **rack** - Filter by rack
+
 - **node** (`host_id`) - Filter by specific node
+
 - **groupBy** - Dynamic grouping (dc, rack, host_id)
+
 - **percentile** - Select latency percentile (50th, 75th, 95th, 98th, 99th, 999th)
+
 - **keyspace** - Filter by specific keyspace(s)
+
 - **table** (`scope`) - Filter by specific table(s)
 
 ## Metric Details
@@ -111,34 +121,40 @@ cas_Keyspace_WriteLatency{axonfunction='rate',keyspace=~'$keyspace',function='Co
 
 ## Performance Insights
 
-1. **Keyspace Comparison**:
+**Keyspace Comparison**:
+
    - Compare latencies across keyspaces
    - Identify keyspaces with performance issues
    - Monitor throughput distribution
 
-2. **Data Distribution**:
+**Data Distribution**:
+
    - Pie chart shows storage distribution
    - Helps with capacity planning
    - Identifies data hotspots
 
-3. **Operation Types**:
+**Operation Types**:
+
    - Separate metrics for reads, writes, and range queries
    - Range queries typically have higher latency
    - Monitor all three for complete picture
 
 ## Best Practices
 
-1. **Monitor Latency Percentiles**:
+**Monitor Latency Percentiles**:
+
    - 50th percentile: median performance
    - 95th/99th percentile: tail latencies
    - Large differences indicate inconsistent performance
 
-2. **Track Throughput Patterns**:
+**Track Throughput Patterns**:
+
    - Correlate with application usage
    - Identify peak usage times
    - Plan capacity accordingly
 
-3. **Data Size Monitoring**:
+**Data Size Monitoring**:
+
    - Regular growth indicates active keyspace
    - Sudden changes may indicate issues
    - Use for storage capacity planning

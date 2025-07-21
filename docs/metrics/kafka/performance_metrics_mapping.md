@@ -8,21 +8,16 @@ The Kafka Performance Dashboard provides detailed insights into Kafka broker per
 
 | Dashboard Metric | Description | Attributes |
 |-----------------|-----------|-------------|
-| **Request Timing Metrics** |
-| `kaf_RequestMetrics_TotalTimeMs` | Total time to process requests (produce/fetch) | request={Produce,Fetch,FetchFollower} |
+| **Request Timing Metrics** || `kaf_RequestMetrics_TotalTimeMs` | Total time to process requests (produce/fetch) | request={Produce,Fetch,FetchFollower} |
 | `kaf_RequestMetrics_RequestQueueTimeMs` | Time requests spend in request queue | request={Fetch,FetchFollower} |
-| **Throughput Metrics** |
-| `kaf_BrokerTopicMetrics_MessagesInPerSec` | Rate of messages received per second | topic={topic} |
+| **Throughput Metrics** || `kaf_BrokerTopicMetrics_MessagesInPerSec` | Rate of messages received per second | topic={topic} |
 | `kaf_BrokerTopicMetrics_BytesInPerSec` | Rate of bytes received per second | topic={topic} |
 | `kaf_BrokerTopicMetrics_BytesOutPerSec` | Rate of bytes sent per second | topic={topic} |
-| **Queue Metrics** |
-| `kaf_RequestChannel_RequestQueueSize` | Current size of request queue | - |
+| **Queue Metrics** || `kaf_RequestChannel_RequestQueueSize` | Current size of request queue | - |
 | `kaf_RequestChannel_ResponseQueueSize` | Current size of response queue | processor={id} |
-| **Thread Utilization Metrics** |
-| `kaf_SocketServer_NetworkProcessorAvgIdlePercent` | Average idle percentage of network threads | - |
+| **Thread Utilization Metrics** || `kaf_SocketServer_NetworkProcessorAvgIdlePercent` | Average idle percentage of network threads | - |
 | `kaf_KafkaRequestHandlerPool_RequestHandlerAvgIdlePercent` | Average idle percentage of request handler threads | - |
-| **Purgatory Metrics** |
-| `kaf_DelayedOperationPurgatory_PurgatorySize` | Number of delayed operations in purgatory | delayedOperation={Produce,Fetch} |
+| **Purgatory Metrics** || `kaf_DelayedOperationPurgatory_PurgatorySize` | Number of delayed operations in purgatory | delayedOperation={Produce,Fetch} |
 
 ## Query Examples
 
@@ -88,24 +83,29 @@ kaf_DelayedOperationPurgatory_PurgatorySize{delayedOperation='Fetch', rack=~'$ra
 
 ## Panel Organization
 
-1. **Overview Section**
+**Overview Section**
+
    - Empty row for spacing/organization
 
-2. **Throughput**
+**Throughput**
+
    - Total time (produce/fetch) by percentile
    - Messages In Per Broker
    - Bytes In Per Broker
    - Bytes Out Per Broker
 
-3. **Purgatory**
+**Purgatory**
+
    - Producer Purgatory Size
    - Fetch Purgatory Size
 
-4. **Request Queue**
+**Request Queue**
+
    - Request Queue Fetch Follower Requests Time
    - Request Queue Fetch Requests Time
 
-5. **Thread Utilization**
+**Thread Utilization**
+
    - Request Queue Size
    - Response Queue Size
    - Network Processor Avg Idle Percent
@@ -114,38 +114,47 @@ kaf_DelayedOperationPurgatory_PurgatorySize{delayedOperation='Fetch', rack=~'$ra
 ## Filters
 
 - **rack**: Filter by rack location
+
 - **host_id**: Filter by specific host/broker
+
 - **percentile**: Select percentile for latency metrics (50th, 95th, 99th, etc.)
+
 - **topic**: Filter metrics by specific topics
 
 ## Best Practices
 
-1. **Request Latency Monitoring**
+**Request Latency Monitoring**
+
    - Monitor 99th percentile latencies to catch outliers
    - High total time indicates performance issues
    - Compare produce vs fetch latencies
 
-2. **Throughput Monitoring**
+**Throughput Monitoring**
+
    - Balance bytes in/out across brokers
    - Monitor message rates for capacity planning
    - Identify hot partitions or uneven load distribution
 
-3. **Queue Monitoring**
+**Queue Monitoring**
+
    - Request queue size should remain low
    - High queue sizes indicate thread pool saturation
    - Monitor queue time to identify bottlenecks
 
-4. **Thread Utilization**
+**Thread Utilization**
+
    - Network processor idle % should be > 30%
    - Request handler idle % should be > 30%  
    - Low idle percentages indicate need for more threads
 
-5. **Purgatory Monitoring**
+**Purgatory Monitoring**
+
    - High purgatory sizes indicate delayed operations
    - Producer purgatory: waiting for replication
    - Fetch purgatory: waiting for data availability
 
-6. **Performance Tuning**
+**Performance Tuning**
+
    - Adjust thread pools based on utilization
    - Optimize batch sizes for better throughput
    - Monitor and tune request timeouts

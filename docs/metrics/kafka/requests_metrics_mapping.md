@@ -82,10 +82,12 @@ sum(kaf_socket_server_metrics_{function='connections',rack=~'$rack',host_id=~'$h
 
 ## Panel Organization
 
-1. **Overview Section**
+**Overview Section**
+
    - Empty row for spacing/organization
 
-2. **Requests**
+**Requests**
+
    - Total Request Per Sec
    - Metadata Request Per Sec
    - Produce Request Per Sec
@@ -93,16 +95,19 @@ sum(kaf_socket_server_metrics_{function='connections',rack=~'$rack',host_id=~'$h
    - Produce request per sec per topic
    - Fetch request per sec per topic
 
-3. **Request Times**
+**Request Times**
+
    - Produce Time
    - Fetch Time
    - FetchFollower Time
 
-4. **Request Queues**
+**Request Queues**
+
    - Request Queue Fetch Follower Requests Time
    - Request Queue Fetch Requests Time
 
-5. **Message Conversion**
+**Message Conversion**
+
    - Number of produced message conversion
    - Number of consumed message conversion
    - Client version repartition
@@ -110,43 +115,53 @@ sum(kaf_socket_server_metrics_{function='connections',rack=~'$rack',host_id=~'$h
 ## Filters
 
 - **rack**: Filter by rack location
+
 - **host_id**: Filter by specific host/broker
+
 - **topic**: Filter by specific topic(s)
+
 - **percentile**: Select percentile for latency metrics (50th, 95th, 99th, etc.)
 
 ## Best Practices
 
-1. **Request Rate Monitoring**
+**Request Rate Monitoring**
+
    - Monitor total request rates for capacity planning
    - High metadata request rates may indicate client issues
    - Balance request rates across brokers
 
-2. **Request Timing Analysis**
+**Request Timing Analysis**
+
    - Monitor 99th percentile for worst-case scenarios
    - High total time indicates processing bottlenecks
    - Compare request types to identify slow operations
 
-3. **Queue Time Monitoring**
+**Queue Time Monitoring**
+
    - High queue times indicate thread pool saturation
    - Consider increasing request handler threads
    - Queue time should be minimal compared to total time
 
-4. **Message Conversion Impact**
+**Message Conversion Impact**
+
    - Message conversions impact performance significantly
    - High conversion rates suggest client version mismatches
    - Update clients to match broker message format version
 
-5. **Client Version Management**
+**Client Version Management**
+
    - Monitor client version distribution
    - Identify and upgrade outdated clients
    - Ensure compatibility with broker version
 
-6. **Performance Tuning**
+**Performance Tuning**
+
    - Adjust `num.network.threads` for high request rates
    - Tune `num.io.threads` for I/O operations
    - Monitor and adjust `queued.max.requests`
 
-7. **Troubleshooting**
+**Troubleshooting**
+
    - High produce times: Check replication settings
    - High fetch times: Review consumer configurations
    - Message conversions: Align client/broker versions

@@ -69,38 +69,51 @@ cas_DroppedMessage_Dropped{function='Count',scope='PAGED_RANGE',dc=~'$dc',rack=~
 
 ### Dropped Messages Section
 Row 1:
-1. **Dropped Mutation per secs** - Write operation drops
-2. **Dropped Hints per secs** - Hinted handoff drops
-3. **Dropped Read per secs** - Read operation drops
+- **Dropped Mutation per secs** - Write operation drops
+
+- **Dropped Hints per secs** - Hinted handoff drops
+
+- **Dropped Read per secs** - Read operation drops
 
 Row 2:
-1. **Dropped Counter Mutation** - Counter operation drops (total count)
-2. **Dropped Read Repair per secs** - Read repair drops
-3. **Dropped Paged Range** - Paginated range query drops (total count)
+- **Dropped Counter Mutation** - Counter operation drops (total count)
+
+- **Dropped Read Repair per secs** - Read repair drops
+
+- **Dropped Paged Range** - Paginated range query drops (total count)
 
 Row 3:
-1. **Dropped Batch Store** - Batch log write drops (total count)
-2. **Dropped Batch Remove** - Batch log cleanup drops (total count)
-3. **Dropped Request Response** - Inter-node response drops (total count)
+- **Dropped Batch Store** - Batch log write drops (total count)
+
+- **Dropped Batch Remove** - Batch log cleanup drops (total count)
+
+- **Dropped Request Response** - Inter-node response drops (total count)
 
 Row 4:
-1. **Dropped Range Slice** - Range query drops (total count)
-2. **Dropped Trace** - Tracing message drops (total count)
+- **Dropped Range Slice** - Range query drops (total count)
+
+- **Dropped Trace** - Tracing message drops (total count)
 
 ## Filters
 
 - **data center** (`dc`) - Filter by data center
+
 - **rack** - Filter by rack
+
 - **node** (`host_id`) - Filter by specific node
+
 - **groupBy** - Dynamic grouping (dc, rack, host_id, keyspace)
 
 ## Understanding Dropped Messages
 
 ### Why Messages Are Dropped
-1. **Timeout**: Message exceeds configured timeout
-2. **Queue Full**: Internal queue reaches capacity
-3. **Overload**: Node cannot keep up with request rate
-4. **Resource Constraints**: Memory, CPU, or I/O limitations
+- **Timeout**: Message exceeds configured timeout
+
+- **Queue Full**: Internal queue reaches capacity
+
+- **Overload**: Node cannot keep up with request rate
+
+- **Resource Constraints**: Memory, CPU, or I/O limitations
 
 ### Message Type Timeouts (Default)
 - `MUTATION`: 5000ms (write_request_timeout_in_ms)
@@ -111,22 +124,26 @@ Row 4:
 
 ### Impact of Dropped Messages
 
-1. **Dropped Mutations**:
+**Dropped Mutations**:
+
    - Write failures at consistency level
    - Potential data loss if hints also dropped
    - Client receives timeout exceptions
 
-2. **Dropped Reads**:
+**Dropped Reads**:
+
    - Read timeouts for clients
    - Incomplete query results
    - Application errors
 
-3. **Dropped Hints**:
+**Dropped Hints**:
+
    - Delayed consistency
    - Requires repair to fix
    - Indicates replica communication issues
 
-4. **Dropped Read Repairs**:
+**Dropped Read Repairs**:
+
    - Inconsistencies persist longer
    - Manual repair may be needed
    - Background repair falling behind
@@ -155,30 +172,38 @@ Row 4:
 5. Consider hint delivery throttling
 
 ### General Recommendations
-1. **Zero Tolerance**: Aim for zero dropped messages
-2. **Early Warning**: Any drops indicate problems
-3. **Root Cause**: Always investigate underlying cause
-4. **Capacity Planning**: Drops often indicate need for scaling
+- **Zero Tolerance**: Aim for zero dropped messages
+
+- **Early Warning**: Any drops indicate problems
+
+- **Root Cause**: Always investigate underlying cause
+
+- **Capacity Planning**: Drops often indicate need for scaling
 
 ## Units and Display
 
 - **Rate Metrics**: messages per second (short)
+
 - **Count Metrics**: absolute count (short)
+
 - **Legend Format**: `$dc - $host_id`
 
 ## Best Practices
 
-1. **Monitor Continuously**:
+**Monitor Continuously**:
+
    - Set alerts for any dropped messages
    - Track trends over time
    - Correlate with other metrics
 
-2. **Investigate Immediately**:
+**Investigate Immediately**:
+
    - Dropped messages indicate serious issues
    - Check system resources
    - Review recent changes
 
-3. **Preventive Measures**:
+**Preventive Measures**:
+
    - Proper capacity planning
    - Regular performance tuning
    - Appropriate timeout configuration

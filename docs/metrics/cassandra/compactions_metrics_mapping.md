@@ -48,37 +48,49 @@ sum(cas_Keyspace_PendingCompactions{axonfunction='rate',keyspace='$keyspace',dc=
 ## Panel Organization
 
 ### Compactions Per Node Section
-1. **Total Compactions Completed per sec** - Line chart showing overall compaction completion rate
-2. **Completed TP Compactions Tasks per sec** - Line chart showing thread pool task completion rate
-3. **Bytes Compacted per sec** - Line chart showing data throughput of compactions
-4. **Pending TP Compaction Tasks** - Line chart showing backlog of compaction tasks
+- **Total Compactions Completed per sec** - Line chart showing overall compaction completion rate
+
+- **Completed TP Compactions Tasks per sec** - Line chart showing thread pool task completion rate
+
+- **Bytes Compacted per sec** - Line chart showing data throughput of compactions
+
+- **Pending TP Compaction Tasks** - Line chart showing backlog of compaction tasks
 
 ### Pending Compactions Per Keyspace Section
-1. **$keyspace TP Keyspace Pending Compactions per sec** - Line chart showing pending compactions rate for selected keyspace
+- **$keyspace TP Keyspace Pending Compactions per sec** - Line chart showing pending compactions rate for selected keyspace
 
 ## Filters
 
 - **data center** (`dc`) - Filter by data center
+
 - **rack** - Filter by rack
+
 - **node** (`host_id`) - Filter by specific node
+
 - **groupBy** - Dynamic grouping (dc, rack, host_id, keyspace)
+
 - **keyspace** - Filter by specific keyspace
 
 ## Metric Details
 
 ### Compaction Task Metrics
 - **TotalCompactionsCompleted**: Cumulative counter of all compactions finished
+
 - **CompletedTasks**: Thread pool level metric for task completion
+
 - Both metrics use `axonfunction='rate'` to show per-second rates
 
 ### Throughput Metrics
 - **BytesCompacted**: Shows data processing rate
+
 - Helps identify if compaction is keeping up with write load
 - Unit displayed as bytes/second
 
 ### Pending Tasks
 - **PendingTasks**: Thread pool queue size
+
 - **PendingCompactions**: Keyspace-specific pending count
+
 - High values indicate compaction falling behind
 
 ## Important Considerations
@@ -110,8 +122,11 @@ sum(cas_Keyspace_PendingCompactions{axonfunction='rate',keyspace='$keyspace',dc=
 ## Units and Display
 
 - **Rates**: Operations per second (short unit)
+
 - **Bytes**: Displayed with binary units (bytes/s)
+
 - **Counts**: Simple numeric values (short unit)
+
 - **Legend Format**: `$dc - $host_id` for most panels
 
 ## Compaction Strategy Impact

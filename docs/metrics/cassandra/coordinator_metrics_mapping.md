@@ -86,51 +86,69 @@ cas_CommitLog_WaitingOnSegmentAllocation{dc=~'$dc',rack='$rack',host_id=~'$host_
 ## Panel Organization
 
 ### Consistency Distribution Section
-1. **Coordinator Reads distribution** - Pie chart showing read request distribution by consistency level
-2. **Coordinator Writes distribution** - Pie chart showing write request distribution by consistency level
+- **Coordinator Reads distribution** - Pie chart showing read request distribution by consistency level
+
+- **Coordinator Writes distribution** - Pie chart showing write request distribution by consistency level
 
 ### Latency Statistics By Node Section
-1. **Coordinator Read $consistency Latency - $percentile** - Line chart for read latency at selected consistency
-2. **Coordinator Range Read Request Latency - $percentile** - Line chart for range query latency
-3. **Coordinator Write $consistency Latency - $percentile** - Line chart for write latency at selected consistency
+- **Coordinator Read $consistency Latency - $percentile** - Line chart for read latency at selected consistency
+
+- **Coordinator Range Read Request Latency - $percentile** - Line chart for range query latency
+
+- **Coordinator Write $consistency Latency - $percentile** - Line chart for write latency at selected consistency
 
 ### Throughput Statistics Section
-1. **Coordinator Read Throughput Per $groupBy ($consistency) - Count Per Second** - Read operations per second
-2. **Coordinator Range Read Request Throughput - Count Per Second** - Range queries per second
-3. **Coordinator Write Throughput Per $groupBy ($consistency) - Count Per Second** - Write operations per second
+- **Coordinator Read Throughput Per $groupBy ($consistency) - Count Per Second** - Read operations per second
+
+- **Coordinator Range Read Request Throughput - Count Per Second** - Range queries per second
+
+- **Coordinator Write Throughput Per $groupBy ($consistency) - Count Per Second** - Write operations per second
 
 ### Connections Section
-1. **Number of Native Connections per host** - Line chart showing client connections
+- **Number of Native Connections per host** - Line chart showing client connections
 
 ### Commitlog Statistics Section
-1. **Waiting on Segment Allocation** - Time spent waiting for commit log segments
+- **Waiting on Segment Allocation** - Time spent waiting for commit log segments
 
 ## Filters
 
 - **data center** (`dc`) - Filter by data center
+
 - **rack** - Filter by rack
+
 - **node** (`host_id`) - Filter by specific node
+
 - **groupBy** - Dynamic grouping (dc, rack, host_id)
+
 - **percentile** - Select latency percentile (50th, 75th, 95th, 98th, 99th, 999th)
+
 - **consistency** - Filter by consistency level (ALL, ANY, ONE, TWO, THREE, SERIAL, QUORUM, etc.)
 
 ## Consistency Levels
 
 ### Strong Consistency
 - **ALL** - All replicas must respond
+
 - **QUORUM** - Majority of replicas must respond
+
 - **LOCAL_QUORUM** - Majority in local datacenter
+
 - **EACH_QUORUM** - Quorum in each datacenter
 
 ### Weak Consistency
 - **ONE** - Only one replica must respond
+
 - **TWO** - Two replicas must respond
+
 - **THREE** - Three replicas must respond
+
 - **ANY** - Any node can accept write (including hints)
+
 - **LOCAL_ONE** - One replica in local datacenter
 
 ### Serial Consistency
 - **SERIAL** - Linearizable consistency
+
 - **LOCAL_SERIAL** - Linearizable in local datacenter
 
 ## Important Considerations
@@ -162,6 +180,9 @@ cas_CommitLog_WaitingOnSegmentAllocation{dc=~'$dc',rack='$rack',host_id=~'$host_
 ## Units and Display
 
 - **Latency**: microseconds
+
 - **Throughput**: reads/writes per second (rps/wps)
+
 - **Connections**: count (short)
+
 - **Legend Format**: `$dc - $host_id` or `$groupBy` for aggregated views

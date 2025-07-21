@@ -83,63 +83,87 @@ sum(cas_authentication_success{axonfunction='rate',dc=~'$dc',rack=~'$rack',host_
 ## Panel Organization
 
 ### Authentications Section
-1. **Failed Authentications** - Timeline view of authentication failures
-2. **Failed Authentications** - Table view with detailed event information
+- **Failed Authentications** - Timeline view of authentication failures
+
+- **Failed Authentications** - Table view with detailed event information
 
 ### Cassandra Queries Section
-1. **DDL queries** - Timeline of schema changes
-2. **DDL queries** - Table view of DDL operations
-3. **DCL queries** - Timeline of permission changes
-4. **DCL query** - Table view of DCL operations
-5. **DML queries** - Timeline of data modifications
-6. **DML queries** - Table view of DML operations
+- **DDL queries** - Timeline of schema changes
+
+- **DDL queries** - Table view of DDL operations
+
+- **DCL queries** - Timeline of permission changes
+
+- **DCL query** - Table view of DCL operations
+
+- **DML queries** - Timeline of data modifications
+
+- **DML queries** - Table view of DML operations
 
 ### Authorizations Section
-1. **Failed Authorizations** - Timeline of authorization failures
-2. **Failed Authorizations** - Table view with details
+- **Failed Authorizations** - Timeline of authorization failures
+
+- **Failed Authorizations** - Table view with details
 
 ### JMX Section
-1. **JMX** - Timeline of JMX access events
-2. **JMX** - Table view of JMX operations
-3. **Successful Authentications by user (rate)** - Line chart showing authentication success rates per user
+- **JMX** - Timeline of JMX access events
+
+- **JMX** - Table view of JMX operations
+
+- **Successful Authentications by user (rate)** - Line chart showing authentication success rates per user
 
 ## Filters
 
 - **data center** (`dc`) - Filter by data center
+
 - **rack** - Filter by rack
+
 - **node** (`host_id`) - Filter by specific node
+
 - **groupBy** - Dynamic grouping (dc, rack, host_id)
 
 ## Security Event Details
 
 ### Authentication Events
 - **Failed Authentication**: Captured when invalid credentials are provided
+
 - **Successful Authentication**: Tracked via metrics for rate analysis
+
 - **Event Fields**: timestamp, host_id, username, source IP, error message
 
 ### DDL Query Events
 - **CREATE**: Keyspace, table, index, user, role creation
+
 - **ALTER**: Schema modifications
+
 - **DROP**: Object deletion
+
 - **Event Fields**: timestamp, host_id, username, query, keyspace, table
 
 ### DCL Query Events
 - **GRANT**: Permission grants to users/roles
+
 - **REVOKE**: Permission revocations
+
 - **Event Fields**: timestamp, host_id, username, query, resource, permission
 
 ### DML Query Events
 - **SELECT**: Data reads (when audit enabled)
+
 - **INSERT/UPDATE**: Data modifications
+
 - **DELETE**: Data removal
+
 - **Event Fields**: timestamp, host_id, username, query, keyspace, table
 
 ### Authorization Events
 - **Failed Authorization**: User lacks required permissions
+
 - **Event Fields**: timestamp, host_id, username, resource, operation, required permission
 
 ### JMX Events
 - **JMX Operations**: MBean access and modifications
+
 - **Event Fields**: timestamp, host_id, operation, MBean, user
 
 ## Event Timeline vs Table Views
@@ -158,40 +182,47 @@ sum(cas_authentication_success{axonfunction='rate',dc=~'$dc',rack=~'$rack',host_
 ## Security Best Practices
 
 ### Authentication Monitoring
-1. **Monitor Failed Attempts**:
+**Monitor Failed Attempts**:
+
    - Set alerts for repeated failures
    - Identify brute force attempts
    - Track source IPs
 
-2. **Track Success Rates**:
+**Track Success Rates**:
+
    - Monitor per-user authentication rates
    - Identify unusual access patterns
    - Detect compromised accounts
 
 ### Query Auditing
-1. **DDL Monitoring**:
+**DDL Monitoring**:
+
    - Track all schema changes
    - Maintain change history
    - Identify unauthorized modifications
 
-2. **DCL Monitoring**:
+**DCL Monitoring**:
+
    - Track permission changes
    - Audit role modifications
    - Ensure least privilege
 
-3. **DML Monitoring** (if enabled):
+**DML Monitoring** (if enabled):
+
    - Monitor sensitive data access
    - Track data modifications
    - Compliance reporting
 
 ### Authorization Monitoring
-1. **Failed Authorization**:
+**Failed Authorization**:
+
    - Identify permission gaps
    - Detect privilege escalation attempts
    - Review access patterns
 
 ### JMX Security
-1. **Access Monitoring**:
+**Access Monitoring**:
+
    - Track administrative operations
    - Monitor configuration changes
    - Audit system modifications
@@ -199,9 +230,11 @@ sum(cas_authentication_success{axonfunction='rate',dc=~'$dc',rack=~'$rack',host_
 ## Configuration Requirements
 
 ### Enable Security Features
-1. **Authentication**: Set `authenticator` in cassandra.yaml
-2. **Authorization**: Set `authorizer` in cassandra.yaml
-3. **Audit Logging**: Configure audit log settings
+- **Authentication**: Set `authenticator` in cassandra.yaml
+
+- **Authorization**: Set `authorizer` in cassandra.yaml
+
+- **Audit Logging**: Configure audit log settings
 
 ### AxonOps Agent Configuration
 1. Enable event collection

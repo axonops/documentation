@@ -109,15 +109,18 @@ con_connect_coordinator_metrics_{function="sync_rate",type='kafka', node_type='c
 
 ## Panel Organization
 
-1. **Overview Section**
+**Overview Section**
+
    - Empty row for spacing/organization
 
-2. **Overview**
+**Overview**
+
    - Connector Workers (counter)
    - Connectors Rebalancing (counter)
    - Connector Tasks Failed (counter)
 
-3. **Coordinator Metrics**
+**Coordinator Metrics**
+
    - Assigned Connectors
    - Assigned Tasks
    - Failed Rebalances
@@ -126,7 +129,8 @@ con_connect_coordinator_metrics_{function="sync_rate",type='kafka', node_type='c
    - Joins
    - Sync Rate
 
-4. **Connect Metrics**
+**Connect Metrics**
+
    - Connections
    - Connection Close
    - Connection Creations
@@ -142,41 +146,49 @@ con_connect_coordinator_metrics_{function="sync_rate",type='kafka', node_type='c
 ## Filters
 
 - **host_id**: Filter by specific Connect worker node
+
 - **client_id**: Filter by specific client ID
 
 ## Best Practices
 
-1. **Worker Health Monitoring**
+**Worker Health Monitoring**
+
    - Monitor failed task count - should be 0
    - Track total tasks for capacity planning
    - Watch for frequent rebalancing
 
-2. **Task Distribution**
+**Task Distribution**
+
    - Ensure even distribution of connectors/tasks
    - Monitor for workers with no assignments
    - Check for imbalanced workloads
 
-3. **Rebalancing Analysis**
+**Rebalancing Analysis**
+
    - Frequent rebalances indicate instability
    - High rebalance time impacts availability
    - Monitor failed rebalances for issues
 
-4. **Heartbeat Monitoring**
+**Heartbeat Monitoring**
+
    - High heartbeat lag indicates worker issues
    - Set alerts for heartbeat timeouts
    - Correlate with worker failures
 
-5. **Connection Management**
+**Connection Management**
+
    - Monitor connection churn rate
    - High authentication failures indicate security issues
    - Track connection count for capacity
 
-6. **Network Performance**
+**Network Performance**
+
    - Monitor byte rates for throughput
    - Check request/response balance
    - High I/O wait time indicates bottlenecks
 
-7. **Troubleshooting**
+**Troubleshooting**
+
    - Failed tasks: Check connector logs
    - Rebalancing issues: Review worker health
    - Authentication failures: Verify credentials

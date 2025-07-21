@@ -29,51 +29,61 @@ sum(kaf_consumer_group{Topic='$topic'}) by (GroupID, Partition)
 
 ## Panel Organization
 
-1. **Overview Section**
+**Overview Section**
+
    - Empty row for spacing/organization
 
-2. **Consumer Groups**
+**Consumer Groups**
+
    - Consumer Group Lag (detailed view by GroupID, Topic, and Partition)
 
 ## Filters
 
 - **groupid**: Filter by specific consumer group ID(s)
+
 - **topic**: Filter by specific topic(s)
 
 ## Best Practices
 
-1. **Lag Monitoring**
+**Lag Monitoring**
+
    - Monitor lag trends over time, not just absolute values
    - Set alerts for increasing lag trends
    - Consider normal lag during consumer restarts
 
-2. **Performance Analysis**
+**Performance Analysis**
+
    - High lag indicates consumers can't keep up with producers
    - Compare lag across partitions to identify imbalances
    - Monitor lag spikes during peak traffic
 
-3. **Consumer Group Health**
+**Consumer Group Health**
+
    - Zero lag doesn't always mean healthy consumption
    - Check for stalled consumers (lag not changing)
    - Monitor consumer group state (active, rebalancing, dead)
 
-4. **Troubleshooting High Lag**
+**Troubleshooting High Lag**
+
    - Check consumer processing time
    - Verify consumer parallelism matches partition count
    - Look for rebalancing issues
    - Check for consumer errors or failures
 
-5. **Capacity Planning**
+**Capacity Planning**
+
    - Use lag trends for scaling decisions
    - Add consumers when lag consistently increases
    - Monitor lag during traffic peaks
 
-6. **Partition Assignment**
+**Partition Assignment**
+
    - Ensure even distribution of partitions to consumers
    - Monitor for partition ownership changes
    - Check for idle consumers (no partitions assigned)
 
-7. **Alert Configuration**
+**Alert Configuration**
+
    - Alert on lag threshold (e.g., > 100k messages)
    - Alert on lag growth rate
    - Alert on consumer group state changes

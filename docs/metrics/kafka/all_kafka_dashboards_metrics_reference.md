@@ -255,33 +255,43 @@ Metrics for consumer group coordination and lag monitoring.
 
 ### Common Function Values
 - **Percentiles**: `50thPercentile`, `75thPercentile`, `95thPercentile`, `98thPercentile`, `99thPercentile`, `999thPercentile`
+
 - **Rates**: `OneMinuteRate`, `FiveMinuteRate`, `FifteenMinuteRate`, `MeanRate`
+
 - **Aggregations**: `Count`, `Min`, `Max`, `Mean`, `Value`
+
 - **Special**: `axonfunction='rate'` - Converts counter to rate
 
 ### Common Attributes
 - **Location**: `dc` (datacenter), `rack`, `host_id` (node)
+
 - **Kafka Components**: `topic`, `partition`, `group_id`, `connector`, `task`
+
 - **Request Types**: `request` (Produce, Fetch, Metadata, etc.)
+
 - **Filtering**: `groupBy` - Dynamic aggregation dimension
 
 ### Request Type Values
 Common request types for RequestMetrics:
+
 - `Produce`, `Fetch`, `Metadata`, `ListOffsets`, `OffsetCommit`, `OffsetFetch`
 - `FindCoordinator`, `JoinGroup`, `Heartbeat`, `LeaveGroup`, `SyncGroup`
 - `DescribeGroups`, `ListGroups`, `ApiVersions`, `CreateTopics`, `DeleteTopics`
 
 ## Metric Naming Conventions
 
-1. **Prefix indicates source**:
+**Prefix indicates source**:
+
    - `host_` - System metrics
    - `jvm_` - JVM metrics
    - `kaf_` - Kafka metrics
 
-2. **Middle part indicates component**:
+**Middle part indicates component**:
+
    - Examples: `KafkaController`, `ReplicaManager`, `BrokerTopicMetrics`, `RequestMetrics`
 
-3. **Suffix indicates measurement**:
+**Suffix indicates measurement**:
+
    - Examples: `Count`, `PerSec`, `TimeMs`, `Percent`
 
 ## Notes

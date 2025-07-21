@@ -88,16 +88,19 @@ kaf_SessionExpireListener_ZooKeeperDisconnectsPerSec{axonfunction='rate',rack=~'
 
 ## Panel Organization
 
-1. **Overview Section**
+**Overview Section**
+
    - Empty row for spacing/organization
 
-2. **Health Check**
+**Health Check**
+
    - Alive Connections
    - Outstanding Requests
    - Number of Watchers
    - Number of ZNodes
 
-3. **Request Latency**
+**Request Latency**
+
    - Packets (sent/received rates)
    - Znode Creation Rate
    - Request Latency - Minimum
@@ -105,7 +108,8 @@ kaf_SessionExpireListener_ZooKeeperDisconnectsPerSec{axonfunction='rate',rack=~'
    - Request Latency - Maximum
    - Kafka Reported Request Latency
 
-4. **Connections**
+**Connections**
+
    - Zookeeper expired connections per sec
    - Zookeeper auth failures per sec
    - Zookeeper disconnect per sec
@@ -114,42 +118,50 @@ kaf_SessionExpireListener_ZooKeeperDisconnectsPerSec{axonfunction='rate',rack=~'
 ## Filters
 
 - **host_id**: Filter by specific ZooKeeper node
+
 - **rack**: Filter by rack location
 
 ## Best Practices
 
-1. **Health Monitoring**
+**Health Monitoring**
+
    - Monitor alive connections for capacity planning
    - Outstanding requests should remain low
    - High watch count may impact performance
    - Monitor znode count growth
 
-2. **Latency Analysis**
+**Latency Analysis**
+
    - Average latency should be below tickTime
    - High max latency indicates potential issues
    - Compare ZK-reported vs Kafka-reported latency
 
-3. **Connection Management**
+**Connection Management**
+
    - Monitor session expirations for client issues
    - Auth failures indicate security problems
    - High disconnect rate suggests network issues
 
-4. **Performance Tuning**
+**Performance Tuning**
+
    - Adjust tickTime based on latency requirements
    - Monitor packet rates for network saturation
    - Balance connections across ensemble members
 
-5. **Troubleshooting**
+**Troubleshooting**
+
    - High outstanding requests: Check ZK performance
    - Session expirations: Review session timeout settings
    - Auth failures: Check SASL/ACL configurations
 
-6. **Capacity Planning**
+**Capacity Planning**
+
    - Monitor znode growth rate
    - Track connection count trends
    - Plan for watch count scaling
 
-7. **ZooKeeper Ensemble Health**
+**ZooKeeper Ensemble Health**
+
    - Ensure all ensemble members are responsive
    - Monitor for leader elections
    - Check fsync latency on ZK data directory

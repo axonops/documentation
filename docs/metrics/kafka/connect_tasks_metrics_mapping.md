@@ -84,23 +84,27 @@ sum(con_sink_task_metrics_{axonfunction="rate", function="sink_record_send_total
 
 ## Panel Organization
 
-1. **Overview Section**
+**Overview Section**
+
    - Empty row for spacing/organization
 
-2. **Tasks Metrics**
+**Tasks Metrics**
+
    - Connector Tasks Batch Size
    - Connector Task Running Ratio
    - Connector Task Commit Success %
    - Connector Task Commit Avg vs Max time
 
-3. **Task Error Metrics**
+**Task Error Metrics**
+
    - Deadletter Produce Failures (duplicate panels)
    - Record Errors
    - Record Failures
    - Record Skipped
    - Total Retries
 
-4. **Sink Task Metrics**
+**Sink Task Metrics**
+
    - Sink Task Record Active Count
    - Sink Task Record Read
    - Sink Task Partition Count
@@ -109,44 +113,53 @@ sum(con_sink_task_metrics_{axonfunction="rate", function="sink_record_send_total
 ## Filters
 
 - **host_id**: Filter by specific Connect worker node
+
 - **connector**: Filter by specific connector name
+
 - **task**: Filter by specific task ID
 
 ## Best Practices
 
-1. **Task Performance Monitoring**
+**Task Performance Monitoring**
+
    - Running ratio should be close to 1.0 for active tasks
    - Monitor batch sizes for throughput optimization
    - Low commit success rate indicates processing issues
 
-2. **Offset Commit Analysis**
+**Offset Commit Analysis**
+
    - High commit times indicate performance issues
    - Compare average vs max times for outliers
    - Frequent commit failures suggest configuration issues
 
-3. **Error Management**
+**Error Management**
+
    - Monitor DLQ failures for error handling issues
    - Track record errors vs failures vs skipped
    - High retry counts indicate transient issues
 
-4. **Sink Task Optimization**
+**Sink Task Optimization**
+
    - Balance partition assignment across tasks
    - Monitor active record count for backpressure
    - Compare read vs send rates for processing lag
 
-5. **Troubleshooting**
+**Troubleshooting**
+
    - Low running ratio: Check for task pauses/failures
    - High error rates: Review connector configuration
    - DLQ failures: Check DLQ topic permissions
    - Commit failures: Verify offset storage configuration
 
-6. **Performance Tuning**
+**Performance Tuning**
+
    - Adjust batch sizes for optimal throughput
    - Tune commit intervals based on latency requirements
    - Configure appropriate retry policies
    - Monitor partition assignment balance
 
-7. **Capacity Planning**
+**Capacity Planning**
+
    - Track record processing rates
    - Monitor active record counts for memory usage
    - Plan task scaling based on partition count

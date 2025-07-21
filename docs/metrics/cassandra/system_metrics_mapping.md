@@ -89,21 +89,32 @@ jvm_GarbageCollector_G1_Young_Generation{axonfunction='rate',function='Collectio
 
 ## Panel Types and Descriptions
 
-1. **CPU usage per host** - Line chart showing overall CPU utilization
-2. **Avg IO wait CPU per Host** - Line chart highlighting I/O wait time
-3. **Load Average (15m)** - Line chart displaying system load
-4. **CPU Usage Detail** - Multiple line charts for different CPU modes (User, System, Nice, I/O Wait, Interrupt)
-5. **Disk Statistics** - Charts for disk usage, IOPS, bytes read/write, queue size
-6. **Memory Statistics** - Charts for memory usage, JVM heap, GC activity
-7. **Network Statistics** - Charts for network I/O and NTP offset
+- **CPU usage per host** - Line chart showing overall CPU utilization
+
+- **Avg IO wait CPU per Host** - Line chart highlighting I/O wait time
+
+- **Load Average (15m)** - Line chart displaying system load
+
+- **CPU Usage Detail** - Multiple line charts for different CPU modes (User, System, Nice, I/O Wait, Interrupt)
+
+- **Disk Statistics** - Charts for disk usage, IOPS, bytes read/write, queue size
+
+- **Memory Statistics** - Charts for memory usage, JVM heap, GC activity
+
+- **Network Statistics** - Charts for network I/O and NTP offset
 
 ## Filters
 
 - **data center** (`dc`) - Filter by data center
+
 - **rack** - Filter by rack
+
 - **node** (`host_id`) - Filter by specific node
+
 - **mount point** (`mountpoint`) - Filter by disk mount point
+
 - **partition** - Filter by disk partition
+
 - **interface** (`Interface`) - Filter by network interface
 
 ## Notes
