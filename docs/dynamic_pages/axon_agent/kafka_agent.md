@@ -20,6 +20,8 @@
   <img id="KJava17img" src="/get_started/Java_17.png" class="skip-lightbox" width="180px">
 </label> -->
 
+Install the AxonOps Kafka Agent and its dependency `axon-agent`:
+
 <!-- Debian -->
 <div id="DebianKafka20JavaDiv" class="kafka">
   ```
@@ -64,3 +66,25 @@
   sudo yum install axon-kafka3-agent
   ```
 </div>
+
+### Configuration File Locations
+
+#### AxonOps Kafka Agent
+
+The AxonOps Kafka Agent is the jar that's loaded by Kafka to provide the functionality
+provided by the AxonOps Agent.
+
+- Configuration File: `/etc/axonops/axon-agent.yml`
+- Binary: `/usr/share/axonops/axon-kafka{version}-agent.jar`
+- Version number: `/usr/share/axonops/axon-kafka{version}-agent.version`
+- Copyright: `/usr/share/doc/axonops/axon-kafka{version}-agent/copyright`
+- Licenses: `/usr/share/axonops/licenses/axon-kafka{version}-agent/`
+
+#### AxonOps Agent
+
+The AxonOps Agent is a dependency of the AxonOps Kafka Agent.
+
+- Configuration File: `/etc/axonops/axon-agent.yml`
+- Binary: `usr/share/axonops/axon-agent`
+- Logs: `/var/log/axonops/axon-agent.log`
+- Systemd service: `/usr/lib/systemd/system/axon-agent.service`
