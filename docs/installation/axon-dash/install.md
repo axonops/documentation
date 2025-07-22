@@ -1,74 +1,134 @@
-# AxonOps Dash/GUI installation
+# AxonOps Dashboard Installation
 
-AxonOps GUI service is installed as a separate service to AxonOps Server. The GUI service (axon-dash) can be co-hosted on the same server as the AxonOps Server process, or they can be running on 2 separate servers.
+The AxonOps Dashboard (`axon-dash`) is a GUI service that is installed as a separate service to AxonOps Server (`axon-server`).
+The GUI service can be co-hosted on the same server as the AxonOps Server process,
+or can be run on a separate server.
 
 This section describes the installation process for the GUI service.
 
-## Step 1 - Installation
+## Installation
 
 {!dynamic_pages/axon_dash/os.md!}
 
-## Step 2 - Configuration
+### Configuration File Locations
 
-Change **axon-dash** configuration to specify **axon-server** listening address.
+The following files are installed into the local file system:
 
-* `/etc/axonops/axon-dash.yml`
-``` yaml  hl_lines="7"
-axon-dash: # The listening address of axon-dash
-  host: 0.0.0.0
-  port: 3000
-  line_charts_max_results: 256
+* Configuration File: `/etc/axonops/axon-dash.yml`
+* Binary: `/usr/share/axonops/axon-dash`
+* Logs: `/var/log/axonops/axon-dash.log`
+* Systemd service: `/usr/lib/systemd/system/axon-dash.service`
+* Copyright : `/usr/share/doc/axonops/axon-dash/copyright`
+* Licenses : `/usr/share/axonops/licenses/axon-dash/`
 
+## Configure AxonOps Dashboard
+
+If AxonOps Server has been installed on a different machine,
+update the `axon-dash` configuration file found at `/etc/axonops/axon-dash.yml`
+to specify the `axon-server` listening address:
+
+```yaml
 axon-server:
-  private_endpoints: "http://127.0.0.1:8080" # HTTP endpoint to access axon-server API from axon-dash.
-  context_path: "" # example: "/gui"
+  # HTTP endpoint to access axon-server API from axon-dash
+  private_endpoints: "http://127.0.0.1:8080"
+  # example: "/gui"
+  context_path: ""
 ```
-> axon-server default API port is **8080**
+Note: The AxonOps Server `api_port` defaults to `8080`.
+
+## Configure AxonOps Server
 
 
-## Step 3 - axon-server configuration update
-if required, update **axon-server** configuration by setting the correct **axon-dash** **host** and **port**:
+If AxonOps Dashboard requires being bound and exposed to a different `host` and `port`,
+update the `host` and/or `port` values for `axon-dash` from their defaults
+within `/etc/axonops/axon-dash.yml`:
 
-* `/etc/axonops/axon-server.yml`
 
-``` yaml hl_lines="7 8"
-...
-axon-dash: # This must point to the axon-dash address accessible from axon-server
+```yaml
+axon-dash:
   host: 127.0.0.1
   port: 3000
   https: false
-...
 ```
 
-## Step 4 - Restart **axon-server** after updating its configuration
-``` bash
+Subesquently, update the `axon_dash_url` value within `/etc/axonops/axon-server.yml`:
+
+```yaml
+axon_dash_url: http://127.0.0.1:3000
+```
+
+Note: The `axon-dash` address must be accessible from `axon-server`.
+
+### Restart `axon-server` to Apply Changes
+
+```bash
 sudo systemctl restart axon-server
 ```
 
-## Step 5 - Start axon-dash
+## Start AxonOps Dashboard
 
-``` bash
+The following will start the `axon-dash` process as the `axonops` user, which was created during the package installation.
+
+
+```bash
 sudo systemctl daemon-reload
 sudo systemctl start axon-dash
 sudo systemctl status axon-dash
 ```
 
-This will start the **axon-dash** process as the **axonops** user, which was created during the package installation. The default listening address is `0.0.0.0:3000`.
+The default listening address is [0.0.0.0:3000](http://0.0.0.0:3000).
+
+## Setup SSL/TLS for AxonOps Dashboard
+
+The AxonOps Dashboard does not support SSL/TLS and needs Nginx to be setup in front of
+the dashboard.
+
+### Installing Nginx
+
+Install Nginx using the [official guide](https://docs.nginx.com/nginx/admin-guide/installing-nginx/installing-nginx-open-source/){target="_blank"}.
+
+#### Configuration File Locations
+
+Most installations of Nginx use the default config location of `/etc/nginx/`.
+
+The default location depends on whether or not the installation is from an
+archive distribution (tar.gz or zip) or a package distribution (Debian or RPM packages).
+
+Based on the installation the default location can be either:
+
+- `/etc/nginx`
+- `/usr/local/nginx/conf`
+- `/usr/local/etc/nginx`
+
+For more info on Nginx configuration, read [Creating Nginx Configuration Files](https://docs.nginx.com/nginx/admin-guide/basic-functionality/managing-configuration-files/#:~:text=By%20default%20the%20file%20is,local%2Fetc%2Fnginx.){target="_blank"}.
+
+### Configure Nginx
+
+Edit `/etc/nginx/nginx.conf` and add/update the following lines:
 
 
-#### Package details
+```nginx
+server {
+  listen <ip>:443 ssl;
 
-* Configuration File: `/etc/axonops/axon-dash.yml`
-* Binary: `/usr/share/axonops/axon-dash`
-* Logs: `/var/log/axonops/axon-dash.log` 
-* Systemd service: `/usr/lib/systemd/system/axon-dash.service`
-* Copyright : `/usr/share/doc/axonops/axon-dash/copyright`
-* Licenses : `/usr/share/axonops/licenses/axon-dash/`
+  server_name <hostname>;
 
-## Step 6 - Setting up SSL/TLS for AxonDash
+  client_max_body_size 100M;
 
-AxonDash does not support SSL/TLS and needs to be fronted by Nginx. You can install and configure Nginx by following the [Configure Nginx](../axon-dash/configure_nginx.md) guide.
+  root /usr/share/nginx;
+  index index.html;
 
-## Next - Installing agents
+  ssl_certificate     /full/path/to/ssl_cert;
+  ssl_certificate_key /full/path/to/ssl_key/;
+  ssl_protocols       TLSv1.2 TLSv1.3;
 
-Now **axon-dash** is installed, you can start installing [cassandra-agent](../agent/install.md)
+  location / {
+    proxy_pass http://localhost:3000; #Default AxonOps-Dash port
+  }
+}
+```
+
+## Next - Installing AxonOps Agents
+
+Now that the AxonOps Dashboard is installed,
+we will  [install the AxonOps Agents](../agent/install.md) to populate the dashboard.
