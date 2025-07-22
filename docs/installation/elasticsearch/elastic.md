@@ -1,5 +1,5 @@
 
-## Configuration File Locations
+### Configuration File Locations
 
 Most installations of Elasticsearch have the default configuration location at `/etc/elasticsearch/`.
 
@@ -7,7 +7,7 @@ The default location depends on whether the installation is from an archive dist
 
 All commands on this page assume Elasticsearch was installed via a Debian or RPM package.
 
-### Other Default Locations
+#### Other Default Locations
 
 Depending on the installation method the default location for Elasticsearch configuration and binary files can change. Use these Elasticsearch docs for more information:
 
@@ -115,7 +115,7 @@ curl "localhost:9200"
 
 ## Securing Elasticsearch
 
-### Set Passwords for Default User
+### Set Passwords for Default User
 
 In the Elasticsearch `home` folder run **one** of the following commands to setup the default passwords for the built-in `elastic` user:
 
@@ -124,7 +124,7 @@ In the Elasticsearch `home` folder run **one** of the following commands to setu
 * `/usr/share/elasticsearch/bin/elasticsearch-reset-password -i -u elastic`
     * Sets a self-assigned password.
 
-### Create a Dedicated Role
+### Create a Dedicated Role
 
 When creating a dedicated AxonOps role in Elasticsearch, the following privileges are required:
 
@@ -146,5 +146,7 @@ The index privileges should be applied to the the following indices:
 
 <img src="/installation/elasticsearch/elastic_role.png">
 
-Once Elasticsearch is online, move onto the next section to
-[secure the Elasticsearch instance](./securing_elastic.md).
+### Advanced User Setups
+
+You can learn more about other User Authentication options using the
+[Elastic's official documentation](https://www.elastic.co/guide/en/elasticsearch/reference/current/setting-up-authentication.html){target="_blank"}.
