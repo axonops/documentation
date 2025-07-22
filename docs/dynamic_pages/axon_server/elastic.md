@@ -1,5 +1,7 @@
 
-### Select the OS Family
+## Installation
+
+Select the OS Family
 
 <label>
   <input type="radio" id="Debian" name="osFamily" onChange="selectOS()" checked=true />
@@ -10,7 +12,7 @@
   <img src="/get_started/red_hat.png" class="skip-lightbox" width="180px">
 </label>
 
-## Download and Install Package
+Execute the following commands to setup Elasticsearch for your OS:
 
 <div id="DebianDiv" class="os" markdown="span">
 
