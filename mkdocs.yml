@@ -117,7 +117,6 @@ nav:
 
       - AxonOps Server: 'installation/axon-server/axonserver_install.md'
       - AxonOps Dashboard: 'installation/axon-dash/install.md'
-      - Configure Nginx: 'installation/axon-dash/configure_nginx.md'
       - AxonOps Agent: 'installation/agent/install.md'
       - Kubernetes: 'installation/kubernetes/index.md'
       - System Requirements: system-requirements/index.md
