@@ -139,7 +139,9 @@ which contacts the AxonOps Server directly.
 
 #### AxonOps Agent
 
-The AxonOps Agent is a dependency of the AxonOps Cassandra Agent.
+The AxonOps Agent is a dependency of the AxonOps Cassandra Agent. This binary
+contacts the AxonOps Server directly while minimizing the memory footprint
+and CPU utilization of the Cassandra process.
 
 - Configuration File: `/etc/axonops/axon-agent.yml`
 - Binary: `usr/share/axonops/axon-agent`

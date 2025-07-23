@@ -83,7 +83,9 @@ which contacts the AxonOps Server directly.
 
 #### AxonOps Agent
 
-The AxonOps Agent is a dependency of the AxonOps Kafka Agent.
+The AxonOps Agent is a dependency of the AxonOps Kafka Agent. This binary
+contacts the AxonOps Server directly while minimizing the memory footprint
+and CPU utilization of the Kafka process.
 
 - Configuration File: `/etc/axonops/axon-agent.yml`
 - Binary: `usr/share/axonops/axon-agent`
