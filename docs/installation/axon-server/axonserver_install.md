@@ -43,15 +43,15 @@ elastic_hosts:
 Update the above `username` and `password` with the dedicated service account/user
 [created in Elasticsearch](../../elasticsearch/install/#set-passwords-for-default-user).
 
-#### Using a Load Balancer or Dedicated Coordinator Nodes for Elasticsearch
+#### Load Balancing for Elasticsearch
 
-By default, AxonOps Server will discover all the nodes in the Elasticsearch cluster.
-It will utilize the list of discovered nodes to round-robin requests to Elasticsearch.
+By default, AxonOps Server will not discover all the nodes in the Elasticsearch cluster.
+To enable AxonOps' node discovery, set `elastic_discover_nodes:true` which will
+utilize the full list of discovered nodes to round-robin requests sent to Elasticsearch.
 
 When setting up load balancing nodes or infrastructure in front of Elasticsearch,
-the load balancer has smart load balancing capabilites and AxonOps' node discovery is not required.
-
-To turn off AxonOps' node discovery, set `elastic_discover_nodes:false`.
+the load balancer has smart load balancing capabilites and AxonOps' node discovery
+is not required.
 
 ### Setup AxonOps License
 
