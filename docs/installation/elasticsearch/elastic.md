@@ -87,7 +87,7 @@ which can be updated with this command:
 
 ``` bash 
 echo 'elasticsearch  -  nofile  65536' \
-    | sudo tee --append /etc/security/limits.conf
+    | sudo tee --append /etc/security/limits.conf.d/elastic.conf
 ```
 
 ### Enable Security Features
