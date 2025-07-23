@@ -18,56 +18,35 @@ Execute the following commands to setup Elasticsearch for your OS:
 
 
 ```bash
-wget https://artifacts.elastic.co/downloads/elasticsearch/elasticsearch-7.17.29-amd64.deb
-wget https://artifacts.elastic.co/downloads/elasticsearch/elasticsearch-7.17.29-amd64.deb.sha512
-wget https://artifacts.elastic.co/downloads/elasticsearch/elasticsearch-7.17.29-amd64.deb.asc
-wget https://artifacts.elastic.co/GPG-KEY-elasticsearch
+wget -qO - https://artifacts.elastic.co/GPG-KEY-elasticsearch \
+  | sudo gpg --dearmor -o /usr/share/keyrings/elasticsearch-keyring.gpg
 
-sha512sum -c elasticsearch-7.17.29-amd64.deb.sha512
+sudo apt-get install apt-transport-https
+echo "deb [signed-by=/usr/share/keyrings/elasticsearch-keyring.gpg]\
+ https://artifacts.elastic.co/packages/7.x/apt stable main" | \
+  sudo tee /etc/apt/sources.list.d/elastic-7.x.list
 
-gpg --import GPG-KEY-elasticsearch
-gpg --lsign-key "rsa2048/D27D666CD88E42B4"
-gpg --verify elasticsearch-7.17.29-amd64.deb
-
-sudo dpkg -i elasticsearch-7.17.29-amd64.deb
+sudo apt-get update
+sudo apt-get install elasticsearch
 ```
-
-The `sha512sum` command above verifies the integrity of the downloaded package and should show this output:
-
-```
-elasticsearch-7.17.29-amd64.deb: OK
-```
-
-The `gpg` command above also verifies the package has not been tampered with and should show a `Good signature` on the third line of the following output:
-
-```
-gpg: Signature made Thu 19 Jun 2025 02:31:53 AM UTC
-gpg:                using RSA key 46095ACC8548582C1A2699A9D27D666CD88E42B4
-gpg: Good signature from "Elasticsearch (Elasticsearch Signing Key) <dev_ops@elasticsearch.org>" [unknown]
-gpg: WARNING: This key is not certified with a trusted signature!
-gpg:          There is no indication that the signature belongs to the owner.
-Primary key fingerprint: 4609 5ACC 8548 582C 1A26  99A9 D27D 666C D88E 42B4
-```
-
-`WARNING: This key is not certified with a trusted signature` should not be a concern.
-However, to remove this warning, follow the man pages to increase Elasticsearch's
-Signing Key's [trust level](https://www.gnupg.org/gph/en/manual/x334.html){target="_blank"}.
 
 </div>
 
 <div id="RedHatDiv" class="os" style="display:none">
 
 ```bash
-wget https://artifacts.elastic.co/downloads/elasticsearch/elasticsearch-7.17.29-x86_64.rpm
-wget https://artifacts.elastic.co/downloads/elasticsearch/elasticsearch-7.17.29-x86_64.rpm.sha512
-sha512sum -c elasticsearch-7.17.29-x86_64.rpm.sha512
-sudo rpm -i elasticsearch-7.17.29-x86_64.rpm
-```
+rpm --import https://artifacts.elastic.co/GPG-KEY-elasticsearch
 
-The sha512sum command above verifies the downloaded package and should show this output:
+echo '[elasticsearch]
+name=Elasticsearch repository for 7.x packages
+baseurl=https://artifacts.elastic.co/packages/7.x/yum
+gpgcheck=1
+gpgkey=https://artifacts.elastic.co/GPG-KEY-elasticsearch
+enabled=0
+autorefresh=1
+type=rpm-md' | sudo tee /etc/yum.repos.d/elasticsearch.repo
 
-```
-elasticsearch-7.17.29-x86_64.rpm: OK
+sudo yum install --enablerepo=elasticsearch elasticsearch
 ```
 
 </div>
