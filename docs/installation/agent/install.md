@@ -68,16 +68,3 @@ AxonOps Agent is available for the following versions of Apache Casssandra and A
 ``` bash
 sudo systemctl start axon-agent
 ```
-
-<div id="CassandraDiv" name="service_div" markdown="1">
-
-## Cassandra Remote Backups/Restore Prerequisites (Optional)
-
-If you plan to use AxonOps' remote backup functionality, the `axonops` user will require `read` access to the Cassandra `data_file_directories`.
-
-If you plan to restore data using AxonOps, the `axonops` user will require `write` access to the Cassandra `data_file_directories`.
-We recommend only providing temporary write access to the `axonops` user when a restoration is required.
-
-> Note: `data_file_directories` defaults to `/var/lib/cassandra/data` and is set within `/etc/cassandra/cassandra.yaml`.
-
-</div>
