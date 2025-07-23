@@ -21,23 +21,25 @@ The following files are installed into the local file system:
 
 Confirm the `network.host` and `http.port` values within
 `/etc/elasticsearch/elasticsearch.yml` for the dedicated Elasticsearch instance
-correspond to the values for `elastic_hosts` within `/etc/axonops/axon-server.yml`.
+correspond to the values for `search_db` within `/etc/axonops/axon-server.yml`.
 
 The following example works for the default Single-Server configuration:
 
 ```yaml
-elastic_hosts:
-  - http://localhost:9200
+search_db:
+  hosts:
+    - http://localhost:9200
 ```
 
 #### Basic Auth in Elasticsearch
 
 If using Basic Auth with the default Single-Server configuration,
-ensure `elastic_hosts` values are setup using the following format:
+ensure `search_db` values are setup using the following format:
 
 ```yaml
-elastic_hosts:
-  - https://username:password@localhost:9200
+search_db:
+  hosts:
+    - https://username:password@localhost:9200
 ```
 
 Update the above `username` and `password` with the dedicated service account/user
@@ -46,7 +48,7 @@ Update the above `username` and `password` with the dedicated service account/us
 #### Load Balancing for Elasticsearch
 
 By default, AxonOps Server will not discover all the nodes in the Elasticsearch cluster.
-To enable AxonOps' node discovery, set `elastic_discover_nodes:true` which will
+To enable AxonOps' node discovery, set `search_db.discover_nodes:true` which will
 utilize the full list of discovered nodes to round-robin requests sent to Elasticsearch.
 
 When setting up load balancing nodes or infrastructure in front of Elasticsearch,
@@ -82,34 +84,51 @@ it is recommended to use Cassandra as a Metrics Storage engine.
 The following is a sample configuration file that can be used as a quick reference:
 
 ```yaml hl_lines="7 8 33 34"
-host: 0.0.0.0  # axon-server listening address (used by axon-agents for connections) (env variable: AXONSERVER_HOST)
-agents_port: 1888 # axon-server listening port for agent connections 
+# axon-server listening address (used by axon-agents for connections)
+# (env variable: AXONSERVER_HOST)
+host: 0.0.0.0
+# axon-server listening port for agent connections
+agents_port: 1888
 
-api_host: 127.0.0.1 # axon-server listening address (used by axon-dash for connections)
-api_port: 8080 # axon-server HTTP API listening port (used by axon-dash) (AXONSERVER_PORT)
+# axon-server listening address
+# (env variable: used by axon-dash for connections)
+api_host: 127.0.0.1
 
-elastic_hosts: # Elasticsearch endpoint (env variable:ELASTIC_HOSTS, comma separated list)
-  - http://localhost:9200
+# axon-server HTTP API listening port (used by axon-dash)
+# (AXONSERVER_PORT)
+api_port: 8080
 
-# Configure multiple Elasticsearch hosts with username and password authentication
-# elastic_hosts:
-# - https://username:password@ip.or.hostname:port
-# - https://username:password@ip.or.hostname:port
-# - https://username:password@ip.or.hostname:port
+search_db:
+  # Elasticsearch endpoint
+  # (env variable:ELASTIC_HOSTS, comma separated list)
+  hosts:
+    - http://localhost:9200
 
-# SSL/TLS config for Elasticsearch
-# elastic_skipVerify: true # Disables CA and Hostname verification
+  username: opensearch-user
+  password: my-strong-password
 
-# Configure the number of shards per index. The default value of 1 is recommended for most use cases
-elastic_shards: 1
-# Configure the number of replicas per shard. Defaults to 0 if not specified.
-elastic_replicas: 0
+  # SSL/TLS config for Elasticsearch
+  skip_verify: false # Disables CA and Hostname verification
 
-# Enable/disable Elasticsearch cluster discovery (sniffing). Defaults to true, set to false to disable
-# Allows more nodes to be added to Elasticsearch for Metrics storage without having to restart Axon-Server and update elastic_hosts with all the ELK node values.
-elastic_discover_nodes: true
-# How often to perform cluster discovery. Default is every 5 minutes if this is omitted
-elastic_discover_node_interval: 5m
+  # Configure the number of replicas per shard. Defaults to 0 if not specified.
+  replicas: 0
+
+  # Configure the number of shards per index.
+  # The default value of 1 is recommended for most use cases
+  shards: 1
+
+  # Enable/disable Elasticsearch cluster discovery (sniffing).
+  # Defaults to false, set to true to enable
+  # Allows more nodes to be added to Elasticsearch for Metrics storage
+  # without having to restart Axon-Server
+  # and update search_db.hosts with all the ELK node values.
+  discover_nodes: false
+
+  # How often to perform cluster discovery.
+  # Default is every 5 minutes if this is omitted
+  discover_nodes_interval: 1m
+
+  max_results: 1000
 
 #integrations_proxy: # proxy endpoint for integrations. (INTEGRATIONS_PROXY)
 
