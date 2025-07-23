@@ -3,11 +3,11 @@ Service checks will notify with one of the three statuses:
 
 !!! info "Service Statuses."
 
-    <span class="buttons"> [![info](/img/success_service.png)](/img/info.png)</span> Success
+    <span class="buttons"> [![info](../../img/success_service.png)](../../img/info.png)</span> Success
 
-    <span class="buttons"> [![warning](/img/warning.png)](/img/warning.png)</span> Warning  
+    <span class="buttons"> [![warning](../../img/warning.png)](../../img/warning.png)</span> Warning
 
-    <span class="buttons"> [![error](/img/error_service.png)](/img/error.png)</span> Error
+    <span class="buttons"> [![error](../../img/error_service.png)](../../img/error.png)</span> Error
 
 
 
