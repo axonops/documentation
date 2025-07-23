@@ -71,4 +71,4 @@ You should expect the following response:
 sudo systemctl start axon-agent
 ```
 
-Once the Agents have been setup please use the [Using AxonOps](/cluster/cluster-overview/) to familiarise yourself with AxonOps UI.
+Once the Agents have been setup please use the [Using AxonOps](../cluster/cluster-overview.md) to familiarise yourself with AxonOps UI.

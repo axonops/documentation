@@ -13,7 +13,7 @@ On the Axonops application menu, click `Alerts & Notifications -> Active` and se
     > Notice: <span class="buttons">[![editwarningIcon](../img/editwarningIcon.png)](../img/editwarningIcon.png) </span> not available when [default routing][1] <span class="buttons">[![defaultroutingselected](../img/defaultroutingselected.png)](../img/defaultroutingselected.png) </span> selected
 
 
-[1]: /how-to/default-routing/
+[1]: default-routing.md
 
 !!! infomy 
 

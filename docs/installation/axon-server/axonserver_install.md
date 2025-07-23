@@ -41,7 +41,7 @@ elastic_hosts:
 ```
 
 Update the above `username` and `password` with the dedicated service account/user
-[created in Elasticsearch](../../elasticsearch/install/#set-passwords-for-default-user).
+[created in Elasticsearch](../elasticsearch/install.md#set-passwords-for-default-user).
 
 #### Using a Load Balancer or Dedicated Coordinator Nodes for Elasticsearch
 
@@ -71,7 +71,7 @@ Note:
 
 ### Configure Cassandra as Metrics Store
 
-To use [Cassandra as AxonOps' metrics store](../metricsdatabase/),
+To use [Cassandra as AxonOps' metrics store](metricsdatabase.md),
 specify at least one CQL host within the `cql_hosts` key within `/etc/axonops/axon-server.yml`.
 
 For better performance on larger clusters (10+ nodes),

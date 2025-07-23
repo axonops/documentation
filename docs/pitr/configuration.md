@@ -1,6 +1,6 @@
 #### Prerequisites
 
-Backups are enabled and setup. For more on how to setup backups please follow the guide [here](/operations/cassandra/backup/overview/)
+Backups are enabled and setup. For more on how to setup backups please follow the guide [here](../operations/cassandra/backup/overview.md).
 
 #### Steps:
 

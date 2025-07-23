@@ -91,7 +91,7 @@ In the `Description` box you can include free along with one `or` many of the ab
 
 
 
-[2]: /how-to/default-routing
+[2]: default-routing.md
 
 
 ### Edit Alert Rule

@@ -28,8 +28,8 @@ After SAML has been configured you will have 2 ways to login to the AxonOps cons
 
 ## Next Steps
 
-[Configure JumpCloud](01-jumpcloud-app)
+[Configure JumpCloud](01-jumpcloud-app.md)
 
-[Configure roles in JumpCloud](02-jumpcloud-roles)
+[Configure roles in JumpCloud](02-jumpcloud-roles.md)
 
-[Configure SAML in AxonOps Cloud](03-axonops-saml-jumpcloud)
+[Configure SAML in AxonOps Cloud](03-axonops-saml-jumpcloud.md)

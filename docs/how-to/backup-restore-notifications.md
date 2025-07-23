@@ -11,7 +11,7 @@ On the AxonOps application menu, click `Operations -> Backups -> Setup` and sele
     > Notice: [![editwarningIcon](../img/editwarningIcon.png)](../img/editwarningIcon.png) not available when [default routing][1] [![defaultroutingselected](../img/defaultroutingselected.png)](../img/defaultroutingselected.png)  selected
 
 
-[1]: /how-to/default-routing/
+[1]: default-routing.md
 
 !!! infomy 
 
