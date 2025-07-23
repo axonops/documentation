@@ -71,8 +71,9 @@ Install the AxonOps Kafka Agent and its dependency `axon-agent`:
 
 #### AxonOps Kafka Agent
 
-The AxonOps Kafka Agent is the jar that's loaded by Kafka to provide the functionality
-provided by the AxonOps Agent.
+The AxonOps Kafka Agent is the jar that is directly loaded by Kafka.
+The AxonOps Kafka Agent then reaches out directly to the AxonOps Agent binary
+which contacts the AxonOps Server directly.
 
 - Configuration File: `/etc/axonops/axon-agent.yml`
 - Binary: `/usr/share/axonops/axon-kafka{version}-agent.jar`

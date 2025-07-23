@@ -126,8 +126,9 @@ Install the AxonOps Cassandra Agent and its dependency `axon-agent`:
 
 #### AxonOps Cassandra Agent
 
-The AxonOps Cassandra Agent is the jar that's loaded by Cassandra to provide the functionality
-provided by the AxonOps Agent.
+The AxonOps Cassandra Agent is the jar that is directly loaded by Cassandra.
+The AxonOps Cassandra Agent then reaches out directly to the AxonOps Agent binary
+which contacts the AxonOps Server directly.
 
 - Configuration File: `/etc/axonops/axon-agent.yml`
 - Binary: `/usr/share/axonops/axon-cassandra{version}-agent.jar`
