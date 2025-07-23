@@ -38,23 +38,23 @@ AxonOps is currently compatible with Elasticsearch 7.x and 8.x.
 
 We recommend installing the latest available release.
 
-[Install Elasticsearch](/installation/elasticsearch/install/)
+[Install Elasticsearch](../installation/elasticsearch/install.md)
 
 #### Cassandra (Optional)
 
-For more information please read more on setting up [Cassandra as a Metrics Database](/installation/axon-server/metricsdatabase/)
+For more information please read more on setting up [Cassandra as a Metrics Database](../installation/axon-server/metricsdatabase.md)
 
 ### Step 2 : Install and configure axon-server.
 
-[Install and configure axon-server](/installation/axon-server/axonserver_install/) 
+[Install and configure axon-server](../installation/axon-server/axonserver_install.md)
 
 ### Step 3 : Install and configure axon-dash 
 
-[Install and configure axon-dash](/installation/axon-dash/install/) 
+[Install and configure axon-dash](../installation/axon-dash/install.md)
 
 ### Step 4 : Install and configure axon-agent for Cassandra or Kafka
 
-[Install and configure axon-agent for Cassandra or Kafka](/installation/agent/install/) 
+[Install and configure axon-agent for Cassandra or Kafka](../installation/agent/install.md)
 
 ## Alternative installation options: 
 

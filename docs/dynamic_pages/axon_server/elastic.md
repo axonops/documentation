@@ -16,7 +16,6 @@ Execute the following commands to setup Elasticsearch for your OS:
 
 <div id="DebianDiv" class="os" markdown="span">
 
-
 ```bash
 wget https://artifacts.elastic.co/downloads/elasticsearch/elasticsearch-7.17.29-amd64.deb
 wget https://artifacts.elastic.co/downloads/elasticsearch/elasticsearch-7.17.29-amd64.deb.sha512

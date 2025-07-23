@@ -76,7 +76,7 @@ In the `Description` box you can include free along with one `or` many of the ab
 
     Then `click` on the `Info`, `Warning`, `Error` icons, to select the group(s) of [Integrations][1] for the alert.
 
-[1]: /integrations/overview
+[1]: ../integrations/overview.md
 
 
 !!! infomy
