@@ -82,6 +82,11 @@ echo "vm.max_map_count = 262144" \
     | sudo tee --append /etc/sysctl.d/10-elasticsearch.conf
 ```
 
+### Increase Number of File Descriptors
+
+> Note: This section is only required for non-package installations. Debian and RPM
+packages already use the intended value.
+
 Elasticsearch needs `max file descriptors` system settings to be at least `65536`,
 which can be updated with this command:
 

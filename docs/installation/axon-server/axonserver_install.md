@@ -39,7 +39,10 @@ ensure `search_db` values are setup using the following format:
 ```yaml
 search_db:
   hosts:
-    - https://username:password@localhost:9200
+    - http://localhost:9200
+
+  username: opensearch-user
+  password: my-strong-password
 ```
 
 Update the above `username` and `password` with the dedicated service account/user
@@ -47,7 +50,8 @@ Update the above `username` and `password` with the dedicated service account/us
 
 #### Load Balancing for Elasticsearch
 
-By default, AxonOps Server will not discover all the nodes in the Elasticsearch cluster.
+By default, AxonOps Server will only connect to the Elasticsearch nodes listed in its
+configuration and will not automatically discover other nodes in the cluster.
 To enable AxonOps' node discovery, set `search_db.discover_nodes:true` which will
 utilize the full list of discovered nodes to round-robin requests sent to Elasticsearch.
 
