@@ -46,4 +46,4 @@ Once the email has been verified you are signed in to AxonOps Cloud Console.
 
 ## Step 5 - Setup AxonOps Agents
 
-Follow the [AxonOps Cloud agent setup](/get_started/agent_setup/) to connect your cluster to AxonOps Cloud.
+Follow the [AxonOps Cloud agent setup](agent_setup.md) to connect your cluster to AxonOps Cloud.

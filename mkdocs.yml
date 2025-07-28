@@ -90,6 +90,9 @@ plugins:
 extra_javascript:
   - javascripts/extra.js
 
+not_in_nav: |
+  dynamic_pages
+
 nav:
   - Home: index.md
   

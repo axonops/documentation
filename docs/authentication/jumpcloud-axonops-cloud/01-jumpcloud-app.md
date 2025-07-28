@@ -130,6 +130,6 @@ Save the changes.
 
 ## Next Steps
 
-[Configure roles in JumpCloud](../02-jumpcloud-roles)
+[Configure roles in JumpCloud](02-jumpcloud-roles.md)
 
-[Configure SAML in AxonOps Cloud](../03-axonops-saml-jumpcloud)
+[Configure SAML in AxonOps Cloud](03-axonops-saml-jumpcloud.md)

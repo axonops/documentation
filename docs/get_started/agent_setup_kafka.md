@@ -14,7 +14,7 @@ The values can be found by logging into
 * Organization (`org`) can be found next to the logo at the top of the console.
 * Agent Keys (`key`) can be found within Agent setup > Agent keys.
 
-![Console Screenshot](/get_started/agent_keys.png)
+![Console Screenshot](agent_keys.png)
 
 If there is a Dedicated NTP server in your Organization please uncomment and update the NTP section.
 

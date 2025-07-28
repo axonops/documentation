@@ -16,7 +16,6 @@ Execute the following commands to setup Elasticsearch for your OS:
 
 <div id="DebianDiv" class="os" markdown="span">
 
-
 ```bash
 wget -qO - https://artifacts.elastic.co/GPG-KEY-elasticsearch \
   | sudo gpg --dearmor -o /usr/share/keyrings/elasticsearch-keyring.gpg
