@@ -51,11 +51,7 @@ Configure the Linux user groups by:
 * Adding the `cassandra` user to the `axonops` user group.
 
 ```bash
-CASSANDRA_GROUP=cassandra
-CASSANDRA_USER=cassandra
-
-sudo usermod -aG "$CASSANDRA_GROUP" axonops
-sudo usermod -aG axonops "$CASSANDRA_USER"
+{!installation/axon-agent/scripts/setup-users.sh!}
 ```
 
 If Cassandra was setup to use a non-default user or group,
@@ -67,5 +63,5 @@ will need be updated accordingly for the above commands to work properly.
 To load the AxonOps Java Agent and Cassandra config changes, run the following command:
 
 ```bash
-sudo systemctl restart cassandra
+{!installation/axon-agent/scripts/restart-cassandra.sh!}
 ```

@@ -71,9 +71,7 @@ The following will start the `axon-dash` process as the `axonops` user, which wa
 
 
 ```bash
-sudo systemctl daemon-reload
-sudo systemctl start axon-dash
-sudo systemctl status axon-dash
+{!installation/axon-dash/scripts/start-axon-dash.sh!}
 ```
 
 The default listening address is [0.0.0.0:3000](http://0.0.0.0:3000).

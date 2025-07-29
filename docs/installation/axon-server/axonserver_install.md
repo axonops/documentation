@@ -198,10 +198,8 @@ This following will start the `axon-server` process as the `axonops` user,
 which was created during the package installation.
 The default listening address is [0.0.0.0:8080](http://0.0.0.0:8080){target="_blank"}.
 
-``` -
-sudo systemctl daemon-reload
-sudo systemctl start axon-server
-sudo systemctl status axon-server
+```bash
+{!installation/axon-server/scripts/start-axon-server.sh!}
 ```
 
 ## Next - Install AxonOps Dashboard

@@ -21,9 +21,8 @@ Depending on the installation method the default location for Elasticsearch conf
 
 Increase the bulk queue size of Elasticsearch by running the following command:
 
-``` bash 
-echo 'thread_pool.write.queue_size: 2000' \
-    | sudo tee --append /etc/elasticsearch/elasticsearch.yml
+``` bash
+{!installation/elasticsearch/scripts/increase-bulk-queue-size.sh!}
 ```
 
 ### Increase Heap Size
@@ -58,9 +57,8 @@ In the above example, we set the minimum and maximum heap size to 8 GB.
 
 Set the following index codec by running the following command:
 
-``` bash 
-echo 'index.codec: best_compression' \
-    | sudo tee --append /etc/elasticsearch/elasticsearch.yml
+``` bash
+{!installation/elasticsearch/scripts/set-compression.sh!}
 ```
 
 ### Increase Number of Available Memory Maps
@@ -71,15 +69,14 @@ The default operating system limits on mmap counts is likely to be too low, whic
 
 To increase the limits, run the following command:
 
-``` bash 
-sudo sysctl -w vm.max_map_count=262144
+``` bash
+{!installation/elasticsearch/scripts/max-map-count.sh!}
 ```
 
 To make this change persist across reboots run this command:
 
 ``` bash
-echo "vm.max_map_count = 262144" \
-    | sudo tee --append /etc/sysctl.d/10-elasticsearch.conf
+{!installation/elasticsearch/scripts/max-map-count-persisted.sh!}
 ```
 
 ### Increase Number of File Descriptors
@@ -90,9 +87,8 @@ packages already use the intended value.
 Elasticsearch needs `max file descriptors` system settings to be at least `65536`,
 which can be updated with this command:
 
-``` bash 
-echo 'elasticsearch  -  nofile  65536' \
-    | sudo tee --append /etc/security/limits.conf.d/elastic.conf
+``` bash
+{!installation/elasticsearch/scripts/increase-file-descriptors.sh!}
 ```
 
 ### Enable Security Features
@@ -102,14 +98,13 @@ Enable the Elasticsearch security features to enable basic authentication. Basic
 Run the following command to allow access to the cluster using username and password authentication:
 
 ``` bash
-echo 'xpack.security.enabled: true' \
-    | sudo tee --append /etc/elasticsearch/elasticsearch.yml
+{!installation/elasticsearch/scripts/install-security-features.sh!}
 ```
 
 ## Start Elasticsearch
 
 ``` bash
-sudo systemctl start elasticsearch.service
+{!installation/elasticsearch/scripts/start-elasticsearch.sh!}
 ```
 
 After a short period of time, it is possible to verify that the Elasticsearch node is running by sending an HTTP request to port 9200 on localhost:
@@ -122,12 +117,19 @@ curl "localhost:9200"
 
 ### Set Passwords for Default User
 
-In the Elasticsearch `home` folder run **one** of the following commands to setup the default passwords for the built-in `elastic` user:
+In the Elasticsearch `home` folder run **one** of the following commands to setup the default passwords for the built-in `elastic` user.
 
-* `/usr/share/elasticsearch/bin/elasticsearch-reset-password -u elastic`
-    *  Creates a random secure password.
-* `/usr/share/elasticsearch/bin/elasticsearch-reset-password -i -u elastic`
-    * Sets a self-assigned password.
+This commands creates a random secure password:
+
+```bash
+{!installation/elasticsearch/scripts/create-password-random.sh!}
+```
+
+This commands sets a self-assigned password:
+
+```bash
+{!installation/elasticsearch/scripts/create-password.sh!}
+```
 
 ### Create a Dedicated Role
 
