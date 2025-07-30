@@ -1,70 +1,138 @@
-# AxonOps Server installation
+# AxonOps Server Installation
 
-## Step 1 - Installation
-
-Execute the following command to setup the AxonOps repository for your OS
+## Installation
 
 {!dynamic_pages/axon_server/os.md!}
 
-## Step 2 - Configure axon-server
+### Configuration File Locations
 
-*AxonOps Server configuration file location :* `/etc/axonops/axon-server.yml`
+The following files are installed into the local file system:
 
-### Update elastic_hosts
+- Configuration File: `/etc/axonops/axon-server.yml`
+- Binary: `/usr/share/axonops/axon-server`
+- Logs: `/var/log/axonops/axon-server.log`
+- Systemd service: `/usr/lib/systemd/system/axon-server.service`
+- Copyright : `/usr/share/doc/axonops/axon-server/copyright`
+- Licenses : `/usr/share/axonops/licenses/axon-server/`
 
-Confirm the **elastic_url** and **elastic_port** correspond to the dedicated Elasticsearch instance.
+## Configure AxonOps Server
 
-#### Basic Auth in Elasticsearch (If enabled)
+### Configure Elasticsearch
 
-Update the username and password with the dedicated service account/user created in Elasticsearch
+Confirm the `network.host` and `http.port` values within
+`/etc/elasticsearch/elasticsearch.yml` for the dedicated Elasticsearch instance
+correspond to the values for `search_db` within `/etc/axonops/axon-server.yml`.
 
-#### Load Balancer or Dedicated Coordinator nodes fronting Elasticsearch
+The following example works for the default Single-Server configuration:
 
-By default AxonOps Server will discover all the nodes in the Elasticsearch cluster. It will utilise the list of dicovered nodes to round-robin requests to Elasticsearch.
+```yaml
+search_db:
+  hosts:
+    - http://localhost:9200
+```
 
-When setting up a load balancing nodes or infrastrcutre that fronts Elasticsearch it has smart load balancing capabilites and the node discovery is not required.  
+#### Basic Auth in Elasticsearch
 
-To turn off node discovery set `elastic_discover_nodes:false`
+If using Basic Auth with the default Single-Server configuration,
+ensure `search_db` values are setup using the following format:
 
-### AxonOps Licensing
+```yaml
+search_db:
+  hosts:
+    - http://localhost:9200
 
-This section is for Enterprise plan clients and is not needed on the Free Forever plan.
+  username: opensearch-user
+  password: my-strong-password
+```
 
-`license_key` : This key will be used to unlock the Enterprise features of AxonOps.
+Update the above `username` and `password` with the dedicated service account/user
+[created in Elasticsearch](../elasticsearch/install.md#set-passwords-for-default-user).
 
-`org_name` : Needs to match the Name provided during the Enterprise onboarding process.
+#### Load Balancing for Elasticsearch
 
-### Update Configuration File
+By default, AxonOps Server will only connect to the Elasticsearch nodes listed in its
+configuration and will not automatically discover other nodes in the cluster.
+To enable AxonOps' node discovery, set `search_db.discover_nodes:true` which will
+utilize the full list of discovered nodes to round-robin requests sent to Elasticsearch.
 
-``` yaml hl_lines="7 33 34"
-host: 0.0.0.0  # axon-server listening address (used by axon-agents for connections) (env variable: AXONSERVER_HOST)
-agents_port: 1888 # axon-server listening port for agent connections 
+When setting up load balancing nodes or infrastructure in front of Elasticsearch,
+the load balancer has smart load balancing capabilites and AxonOps' node discovery
+is not required.
 
-api_host: 127.0.0.1 # axon-server listening address (used by axon-dash for connections)
-api_port: 8080 # axon-server HTTP API listening port (used by axon-dash) (AXONSERVER_PORT)
+### Setup AxonOps License
 
-elastic_hosts: # Elasticsearch endpoint (env variable:ELASTIC_HOSTS, comma separated list)
-  - http://localhost:9200
+> This section is for Enterprise plan clients and is not needed on the Free Forever plan.
 
-# Configure multiple Elasticsearch hosts with username and password authentication
-# elastic_hosts:
-# - https://username:password@ip.or.hostname:port
-# - https://username:password@ip.or.hostname:port
-# - https://username:password@ip.or.hostname:port
+Ensure the following values are set to unlock the Enterprise features of AxonOps:
 
-# SSL/TLS config for Elasticsearch
-# elastic_skipVerify: true # Disables CA and Hostname verification
+```yaml
+license_key: license-key
+org_name: my-company
+```
 
-# Configure the number of shards per index. The default value of 1 is recommended for most use cases
-elastic_shards: 1
-# Configure the number of replicas per shard. Defaults to 0 if not specified.
-elastic_replicas: 0
+Note:
 
-# Enable/disable Elasticsearch cluster discovery (sniffing). Defaults to true, set to false to disable
-# Allows more nodes to be added to Elasticsearch for Metrics storage without having to restart Axon-Server and update elastic_hosts with all the ELK node values.
-elastic_discover_nodes: true
-# How often to perform cluster discovery. Default is every 5 minutes if this is omitted
-elastic_discover_node_interval: 5m
+- `license_key` can be found within [console.axonops.com](https://console.axonops.com) > Agent Setup > Agent Keys.
+- `org_name` needs to match the Organization Name provided during the Enterprise onboarding process.
+
+### Configure Cassandra as Metrics Store
+
+To use [Cassandra as AxonOps' metrics store](metricsdatabase.md),
+specify at least one CQL host within the `cql_hosts` key within `/etc/axonops/axon-server.yml`.
+
+For better performance on larger clusters (10+ nodes),
+it is recommended to use Cassandra as a Metrics Storage engine.
+
+### Sample Configuration File
+
+The following is a sample configuration file that can be used as a quick reference:
+
+```yaml hl_lines="7 8 33 34"
+# axon-server listening address (used by axon-agents for connections)
+# (env variable: AXONSERVER_HOST)
+host: 0.0.0.0
+# axon-server listening port for agent connections
+agents_port: 1888
+
+# axon-server listening address
+# (env variable: used by axon-dash for connections)
+api_host: 127.0.0.1
+
+# axon-server HTTP API listening port (used by axon-dash)
+# (AXONSERVER_PORT)
+api_port: 8080
+
+search_db:
+  # Elasticsearch endpoint
+  # (env variable:ELASTIC_HOSTS, comma separated list)
+  hosts:
+    - http://localhost:9200
+
+  username: opensearch-user
+  password: my-strong-password
+
+  # SSL/TLS config for Elasticsearch
+  skip_verify: false # Disables CA and Hostname verification
+
+  # Configure the number of replicas per shard. Defaults to 0 if not specified.
+  replicas: 0
+
+  # Configure the number of shards per index.
+  # The default value of 1 is recommended for most use cases
+  shards: 1
+
+  # Enable/disable Elasticsearch cluster discovery (sniffing).
+  # Defaults to false, set to true to enable
+  # Allows more nodes to be added to Elasticsearch for Metrics storage
+  # without having to restart Axon-Server
+  # and update search_db.hosts with all the ELK node values.
+  discover_nodes: false
+
+  # How often to perform cluster discovery.
+  # Default is every 5 minutes if this is omitted
+  discover_nodes_interval: 1m
+
+  max_results: 1000
 
 #integrations_proxy: # proxy endpoint for integrations. (INTEGRATIONS_PROXY)
 
@@ -124,9 +192,11 @@ retention:
     
 ```
 
-> For better performance on larger clusters (10+ nodes), it is recommended to use Cassandra as a Metrics Storage engine. To opt-in for CQL metrics storage, specify at least one CQL host in the axon-server configuration.
+## Start the AxonOps Server
 
-## Step 3 - Start the server
+This following will start the `axon-server` process as the `axonops` user,
+which was created during the package installation.
+The default listening address is [0.0.0.0:8080](http://0.0.0.0:8080){target="_blank"}.
 
 ``` -
 sudo systemctl daemon-reload
@@ -134,18 +204,6 @@ sudo systemctl start axon-server
 sudo systemctl status axon-server
 ```
 
-This will start the `axon-server` process as the `axonops` user, which was created during the package installation.  The default listening address is `0.0.0.0:8080`.
+## Next - Install AxonOps Dashboard
 
-## Package details
-
-* Configuration File: `/etc/axonops/axon-server.yml`
-* Binary: `/usr/share/axonops/axon-server`
-* Logs: `/var/log/axonops/axon-server.log` 
-* Systemd service: `/usr/lib/systemd/system/axon-server.service`
-* Copyright : `/usr/share/doc/axonops/axon-server/copyright`
-* Licenses : `/usr/share/axonops/licenses/axon-server/`
-
-
-## Next - Install axon-dash
-
-Now **axon-server** is installed, you can start installing the GUI for it: [axon-dash](../axon-dash/install.md)
+Now that AxonOps Server (`axon-server`) is installed, you can start installing the GUI for it: [AxonOps Dashboard (axon-dash)](../axon-dash/install.md).

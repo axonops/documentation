@@ -36,7 +36,7 @@ On the overview page interact with topics and topic information relating to Topi
 
 Once a topic has been selected the following information is displayed.
 
-- Configuration - Kafka Topic Configuration Options. To read more about configuration options [Click here](/kafka/topics/configure_topic/#topic-configuration)
+- Configuration - Kafka Topic Configuration Options. To read more about configuration options [Click here](configure_topic.md#topic-configuration)
 - Partitions - View information such as Partition ID, Brokers the Partition resides and offsets.
 - Consumers - Current list of consumers that are consuming from the topic.
-- ACLs -  Current ACLs applied to the Topic. To read more about ACLs [Click here](/kafka/acl/overview)
+- ACLs -  Current ACLs applied to the Topic. To read more about ACLs [Click here](../acl/overview.md)

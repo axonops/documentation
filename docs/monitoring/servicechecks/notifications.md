@@ -3,18 +3,18 @@ Service checks will notify with one of the three statuses:
 
 !!! info "Service Statuses."
 
-    <span class="buttons"> [![info](/img/success_service.png)](/img/info.png)</span> Success
+    <span class="buttons"> [![info](../../img/success_service.png)](../../img/info.png)</span> Success
 
-    <span class="buttons"> [![warning](/img/warning.png)](/img/warning.png)</span> Warning  
+    <span class="buttons"> [![warning](../../img/warning.png)](../../img/warning.png)</span> Warning
 
-    <span class="buttons"> [![error](/img/error_service.png)](/img/error.png)</span> Error
+    <span class="buttons"> [![error](../../img/error_service.png)](../../img/error.png)</span> Error
 
 
 
 Depending on the status of the service an appropriate alert will be sent.
 The ```alert``` will be sent based on the ``` Default Routing ``` that has been [setup][1] via the integrations menu.
 
-[1]: /how-to/default-routing/
+[1]: ../../how-to/default-routing.md
    
 > Noticed: If the ``` Default Routing ``` has not been set up ``` no alerts ``` will be sent.
 

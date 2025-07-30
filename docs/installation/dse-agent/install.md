@@ -4,7 +4,7 @@ This agent will enable metrics collection from DSE and enable adaptive repairs a
 
 ## Prerequisites
 
-DSE agent needs **axon-agent** to be installed and configured properly. If not installed already, please go to [axon-agent](../../axon-agent/install) installation 
+DSE agent needs **axon-agent** to be installed and configured properly. If not installed already, please go to [axon-agent](../agent/install.md) installation 
 page.
 
 #### Setup axon-agent for DSE
@@ -33,7 +33,7 @@ axon-agent:
 
 ## DSE agent installation
 
-Make sure the `{version}` of your DSE and DSE agent are compatible from the [compatibility matrix](../../compat_matrix/compat_matrix). 
+Make sure the `{version}` of your DSE and DSE agent are compatible from the [compatibility matrix](../compat_matrix/compat_matrix.md). 
 
 
 #### CentOS / RedHat installer

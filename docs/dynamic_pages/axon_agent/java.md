@@ -1,8 +1,6 @@
-Edit cassandra-env.sh, usually located in your Cassandra install path such as: 
 
-<p><code>/&lt;Cassandra Installation Directory&gt;/conf/cassandra-env.sh</code></p>
 
-Add the following line at the end of the file:
+Add the following line at the end of `/etc/cassandra/cassandra-env.sh`:
 
 <div id="Cassandra30Div" class="javacas">
   ```
@@ -29,3 +27,8 @@ Add the following line at the end of the file:
   . /usr/share/axonops/axonops-jvm.options
   ```
 </div>
+
+If Cassandra was installed using a tarball, the correct path for the `cassandra-env.sh`
+will be `<Cassandra Installation Directory>/conf/cassandra-env.sh`.
+
+> **NB.** Make sure this configuration is not overridden by automation tools.

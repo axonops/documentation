@@ -19,7 +19,7 @@ The idea of this is to achieve the following:
 
 !!! infomy 
 
-    [![adaptive_repair](/img/cass_repairs/adaptive_repair.png)](/img/cass_repairs/adaptive_repair.png)
+    [![adaptive_repair](../../img/cass_repairs/adaptive_repair.png)](../../img/cass_repairs/adaptive_repair.png)
 
 > If you want to keep the tables as fresh as possible we recommend to increase the `table parallelism` to be greater than the total number of tables of your cluster and reduce the `segments per VNode` to generate less repair requests.
 
@@ -41,23 +41,23 @@ You can initiate three types of scheduled repair:
 
 !!! infomy 
 
-    [![scheduled_repair](/img/cass_repairs/scheduled_repair.png)](/img/cass_repairs/scheduled_repair.png)
+    [![scheduled_repair](../../img/cass_repairs/scheduled_repair.png)](../../img/cass_repairs/scheduled_repair.png)
 
 
 * Simple scheduled repair: these will trigger base on the selected schedule **repeatedly**
 
 !!! infomy 
 
-    [![scheduled_repair](/img/cass_repairs/scheduled_repair2.png)](/img/cass_repairs/scheduled_repair2.png)
+    [![scheduled_repair](../../img/cass_repairs/scheduled_repair2.png)](../../img/cass_repairs/scheduled_repair2.png)
 
 * Cron schedule repair: Same as **simple scheduled repair** but the schedule will be based on a Cron expression
 
 !!! infomy 
 
-    [![scheduled_repair](/img/cass_repairs/scheduled_repair3.png)](/img/cass_repairs/scheduled_repair3.png)
+    [![scheduled_repair](../../img/cass_repairs/scheduled_repair3.png)](../../img/cass_repairs/scheduled_repair3.png)
 
 > The following capture presents a running repair that has been initiated immediately and a scheduled repair that is scheduled for 12:00 AM UTC:
 
 !!! infomy 
 
-    [![scheduled_repair](/img/cass_repairs/scheduled_repair4.png)](/img/cass_repairs/scheduled_repair4.png)
+    [![scheduled_repair](../../img/cass_repairs/scheduled_repair4.png)](../../img/cass_repairs/scheduled_repair4.png)

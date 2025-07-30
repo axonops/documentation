@@ -2,7 +2,7 @@
 
 !!! info "Caveats"
       - Cassandra logs cannot normally be collected by AxonOps as they are sent to stdout and handled by the
-        Docker logging driver
+        Docker logging driver.
       - If axon-agent is running under Docker it assumes that the Cassandra user's GID is 999 as it is in the
         official Cassandra images. If this is not the case then AxonOps may not be able to backup the Cassandra data.
 
@@ -17,7 +17,7 @@ AxonOps Agent processes.
 | `/var/lib/cassandra` | Optional | For the backups feature to function correctly the Cassandra data directory must be readable by the AxonOps agent                                                                      |
 
 When running Cassandra under Docker it is possible to run the AxonOps agent either on the host or in another 
-Docker container. When installing on the host follow the instructions under
+Docker container. When installing on the host, follow the instructions under
 [AxonOps Cassandra agent installation](install.md) to install the agent and ensure that the appropriate directories are
 mapped into the Cassandra container.
 
