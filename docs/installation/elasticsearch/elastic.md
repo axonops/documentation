@@ -76,7 +76,7 @@ To increase the limits, run the following command:
 To make this change persist across reboots run this command:
 
 ``` bash
-{!installation/elasticsearch/scripts/max-map-count-persisted.sh!
+{!installation/elasticsearch/scripts/max-map-count-persisted.sh!}
 ```
 
 ### Increase Number of File Descriptors
