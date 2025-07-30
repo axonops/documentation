@@ -43,7 +43,6 @@ We recommend [installing the latest available Elasticsearch release](../installa
 For more information please read more on setting up [Cassandra as a Metrics Database](../installation/axon-server/metricsdatabase.md).
 
 ### Setup AxonOps Server
-
 [Install and configure AxonOps Server (`axon-server`)](../installation/axon-server/axonserver_install.md).
 
 ### Setup AxonOps Dashboard
