@@ -3410,14 +3410,14 @@ data-et-multi-view="{&quot;schema&quot;:{&quot;content&quot;:{&quot;desktop&quot
 <p>Execute the following commands to setup the AxonOps repository:</p>
 <div id="DebianDiv" class="os">
 
-    <div class="highlight"><pre><span></span><code>sudo<span class="w"> </span>apt-get<span class="w"> </span>update
+<div class="highlight"><pre><span></span><code>sudo<span class="w"> </span>apt-get<span class="w"> </span>update
 sudo<span class="w"> </span>apt-get<span class="w"> </span>install<span class="w"> </span>-y<span class="w"> </span>curl<span class="w"> </span>gnupg<span class="w"> </span>ca-certificates
 
 curl<span class="w"> </span>-L<span class="w"> </span>https://packages.axonops.com/apt/repo-signing-key.gpg<span class="w"> </span><span class="se">\</span>
 <span class="w">  </span><span class="p">|</span><span class="w"> </span>sudo<span class="w"> </span>gpg<span class="w"> </span>--dearmor<span class="w"> </span>-o<span class="w"> </span>/usr/share/keyrings/axonops.gpg
 
 <span class="nb">echo</span><span class="w"> </span><span class="s2">"deb [arch=arm64,amd64 signed-by=/usr/share/keyrings/axonops.gpg]\</span>
-<span class="s2"> https://packages.axonops.com/apt axonops-apt main"</span><span class="w"> </span><span class="se">\</span>
+<span class="s2">  https://packages.axonops.com/apt axonops-apt main"</span><span class="w"> </span><span class="se">\</span>
 <span class="w">  </span><span class="p">|</span><span class="w"> </span>sudo<span class="w"> </span>tee<span class="w"> </span>/etc/apt/sources.list.d/axonops-apt.list
 sudo<span class="w"> </span>apt-get<span class="w"> </span>update
 </code></pre></div>
@@ -3426,7 +3426,7 @@ sudo<span class="w"> </span>apt-get<span class="w"> </span>update
 
 <div id="RedHatDiv" class="os" style="display:none">
 
-    <div class="highlight"><pre><span></span><code>sudo<span class="w"> </span>tee<span class="w"> </span>/etc/yum.repos.d/axonops-yum.repo<span class="w"> </span><span class="s">&lt;&lt; EOL</span>
+<div class="highlight"><pre><span></span><code>sudo<span class="w"> </span>tee<span class="w"> </span>/etc/yum.repos.d/axonops-yum.repo<span class="w"> </span><span class="s">&lt;&lt; EOL</span>
 <span class="s">[axonops-yum]</span>
 <span class="s">name=axonops-yum</span>
 <span class="s">baseurl=https://packages.axonops.com/yum/</span>
