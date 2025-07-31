@@ -1,0 +1,7 @@
+Ensure the Elasticsearch security features are enabled for basic authentication.
+Basic authentication is available as part of the basic Elasticsearch license.
+
+Run the following command to ensure access to the cluster using username and password authentication
+is enabled:
+
+grep xpack.security.enabled /etc/elasticsearch/elasticsearch.yml

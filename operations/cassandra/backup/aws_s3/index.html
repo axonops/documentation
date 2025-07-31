@@ -9,10 +9,10 @@
       
       
       
-        <link rel="prev" href="../remote/">
+        <link rel="prev" href="../local_storage/">
       
       
-        <link rel="next" href="../../restore/overview/">
+        <link rel="next" href="../generic_s3/">
       
       
       <link rel="icon" href="/img/favicon.ico">
@@ -1011,24 +1011,9 @@ data-et-multi-view="{&quot;schema&quot;:{&quot;content&quot;:{&quot;desktop&quot
   
   
   
-    
-    
-    
-      
-      
+    <li class="md-nav__item">
+      <a href="../../../../installation/elasticsearch/install/" class="md-nav__link">
         
-      
-    
-    
-    <li class="md-nav__item md-nav__item--nested">
-      
-        
-        
-        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3_3_1" >
-        
-          
-          <label class="md-nav__link" for="__nav_3_3_1" id="__nav_3_3_1_label" tabindex="0">
-            
   
   <span class="md-ellipsis">
     Elasticsearch
@@ -1036,63 +1021,7 @@ data-et-multi-view="{&quot;schema&quot;:{&quot;content&quot;:{&quot;desktop&quot
   </span>
   
 
-            <span class="md-nav__icon md-icon"></span>
-          </label>
-        
-        <nav class="md-nav" data-md-level="3" aria-labelledby="__nav_3_3_1_label" aria-expanded="false">
-          <label class="md-nav__title" for="__nav_3_3_1">
-            <span class="md-nav__icon md-icon"></span>
-            Elasticsearch
-          </label>
-          <ul class="md-nav__list" data-md-scrollfix>
-            
-              
-                
-  
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="../../../../installation/elasticsearch/install/" class="md-nav__link">
-        
-  
-  <span class="md-ellipsis">
-    Install Elasticsearch
-    
-  </span>
-  
-
       </a>
-    </li>
-  
-
-              
-            
-              
-                
-  
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="../../../../installation/elasticsearch/securing_elastic/" class="md-nav__link">
-        
-  
-  <span class="md-ellipsis">
-    Secure Elasticsearch
-    
-  </span>
-  
-
-      </a>
-    </li>
-  
-
-              
-            
-          </ul>
-        </nav>
-      
     </li>
   
 
@@ -1154,28 +1083,6 @@ data-et-multi-view="{&quot;schema&quot;:{&quot;content&quot;:{&quot;desktop&quot
   
   <span class="md-ellipsis">
     AxonOps Dashboard
-    
-  </span>
-  
-
-      </a>
-    </li>
-  
-
-              
-            
-              
-                
-  
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="../../../../installation/axon-dash/configure_nginx/" class="md-nav__link">
-        
-  
-  <span class="md-ellipsis">
-    Configure Nginx
     
   </span>
   
@@ -2106,6 +2013,28 @@ data-et-multi-view="{&quot;schema&quot;:{&quot;content&quot;:{&quot;desktop&quot
                 
   
   
+  
+  
+    <li class="md-nav__item">
+      <a href="../local_storage/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Local Storage
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
     
   
   
@@ -2190,9 +2119,18 @@ data-et-multi-view="{&quot;schema&quot;:{&quot;content&quot;:{&quot;desktop&quot
 </li>
         
           <li class="md-nav__item">
-  <a href="#access-key-id-and-secret-access-key" class="md-nav__link">
+  <a href="#authentication-methods" class="md-nav__link">
     <span class="md-ellipsis">
-      Access Key ID and Secret Access Key
+      Authentication Methods
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#required-iam-permissions" class="md-nav__link">
+    <span class="md-ellipsis">
+      Required IAM Permissions
     </span>
   </a>
   
@@ -2243,6 +2181,94 @@ data-et-multi-view="{&quot;schema&quot;:{&quot;content&quot;:{&quot;desktop&quot
   
 </nav>
       
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../generic_s3/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Generic S3
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../gcs/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Google Cloud Storage
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../azure_blob/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Azure Blob Storage
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../ssh_sftp/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    SSH/SFTP
+    
+  </span>
+  
+
+      </a>
     </li>
   
 
@@ -3575,9 +3601,18 @@ data-et-multi-view="{&quot;schema&quot;:{&quot;content&quot;:{&quot;desktop&quot
 </li>
         
           <li class="md-nav__item">
-  <a href="#access-key-id-and-secret-access-key" class="md-nav__link">
+  <a href="#authentication-methods" class="md-nav__link">
     <span class="md-ellipsis">
-      Access Key ID and Secret Access Key
+      Authentication Methods
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#required-iam-permissions" class="md-nav__link">
+    <span class="md-ellipsis">
+      Required IAM Permissions
     </span>
   </a>
   
@@ -3655,41 +3690,52 @@ After this amount of days the file that are older will be removed.</p>
 <p>The org/clustertype/clustername/host-id/ will match the top breadcrump navigation in your AxonOps Dashboard.</p>
 <h4 id="region">Region<a class="headerlink" href="#region" title="Permanent link">¶</a></h4>
 <p>This is a drop down selection of all the AWS regions that are available for your AWS account.</p>
-<h4 id="access-key-id-and-secret-access-key">Access Key ID and Secret Access Key<a class="headerlink" href="#access-key-id-and-secret-access-key" title="Permanent link">¶</a></h4>
-<p>This is the standard AWS Access and Secret key that are associated with a IAM user. 
-This AxonOps IAM user that has the key assigned ideally would have the following permissions for accessing the S3 buckets.</p>
-<p>Please change the following 3 values</p>
-<ul>
-<li>BUCKETNAME : for some bucket naming rules please have a look <a href="https://docs.aws.amazon.com/AmazonS3/latest/userguide/bucketnamingrules.html">here</a></li>
-<li>ACCOUNT_ID : for info on the AWS Account ID please have a look <a href="https://docs.aws.amazon.com/IAM/latest/UserGuide/console_account-alias.html">here</a></li>
-<li>AxonOpsS3User : the placeholder is an example name , it can be changed to any value for the the IAM User Name field</li>
-</ul>
-<div class="highlight"><pre><span></span><code>{
-  "Id": "AxonOpsBackupBucketPolicy",
-  "Version": "2012-10-17",
-  "Statement": [
-    {
-      "Sid": "BackupsSID",
-      "Action": [
-        "s3:ListBucket",
-        "s3:GetBucketLocation",
-        "s3:DeleteObject",
-        "s3:GetObject",
-        "s3:PutObject",
-        "s3:PutObjectAcl"
-      ],
-      "Effect": "Allow",
-      "Resource": [
-        "arn:aws:s3:::&lt;BUCKETNAME&gt;",
-        "arn:aws:s3:::&lt;BUCKETNAME&gt;/*",
-      ],
-      "Principal": {
-        "AWS": "arn:aws:iam::&lt;ACCOUNT_ID&gt;:&lt;AxonOpsS3User&gt;"
-      }
-    }
-  ]
-}
+<h4 id="authentication-methods">Authentication Methods<a class="headerlink" href="#authentication-methods" title="Permanent link">¶</a></h4>
+<p><strong>IAM Role (Recommended)</strong></p>
+<p>The recommended approach is to use IAM roles attached to your EC2 instances. This method is more secure as it doesn't require storing credentials:</p>
+<ol>
+<li>Create an IAM role with the necessary S3 permissions (see policy below)</li>
+<li>Attach the role to your EC2 instances running Cassandra</li>
+<li>Leave the Access Key ID and Secret Access Key fields empty in AxonOps</li>
+<li>AxonOps will automatically use the instance's IAM role credentials</li>
+</ol>
+<p>This approach provides:
+* No credential management or rotation needed
+* More secure - no long-lived access keys
+* Automatic credential refresh
+* Follows AWS security best practices</p>
+<p><strong>Access Key ID and Secret Access Key (Alternative)</strong></p>
+<p>If IAM roles are not available (e.g., on-premises installations), you can use explicit credentials:
+* This is the standard AWS Access and Secret key that are associated with an IAM user
+* These credentials should be protected and rotated regularly
+* Only use this method when IAM roles are not an option</p>
+<h4 id="required-iam-permissions">Required IAM Permissions<a class="headerlink" href="#required-iam-permissions" title="Permanent link">¶</a></h4>
+<p>Whether using IAM roles or user credentials, the following permissions are needed for accessing the S3 buckets:</p>
+<p>For IAM roles, use this policy (attach to the role, not the bucket):</p>
+<div class="highlight"><pre><span></span><code><span class="p">{</span>
+<span class="w">  </span><span class="nt">"Version"</span><span class="p">:</span><span class="w"> </span><span class="s2">"2012-10-17"</span><span class="p">,</span>
+<span class="w">  </span><span class="nt">"Statement"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span>
+<span class="w">    </span><span class="p">{</span>
+<span class="w">      </span><span class="nt">"Sid"</span><span class="p">:</span><span class="w"> </span><span class="s2">"AxonOpsBackupPermissions"</span><span class="p">,</span>
+<span class="w">      </span><span class="nt">"Effect"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Allow"</span><span class="p">,</span>
+<span class="w">      </span><span class="nt">"Action"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span>
+<span class="w">        </span><span class="s2">"s3:ListBucket"</span><span class="p">,</span>
+<span class="w">        </span><span class="s2">"s3:GetBucketLocation"</span><span class="p">,</span>
+<span class="w">        </span><span class="s2">"s3:DeleteObject"</span><span class="p">,</span>
+<span class="w">        </span><span class="s2">"s3:GetObject"</span><span class="p">,</span>
+<span class="w">        </span><span class="s2">"s3:PutObject"</span><span class="p">,</span>
+<span class="w">        </span><span class="s2">"s3:PutObjectAcl"</span>
+<span class="w">      </span><span class="p">],</span>
+<span class="w">      </span><span class="nt">"Resource"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span>
+<span class="w">        </span><span class="s2">"arn:aws:s3:::&lt;BUCKETNAME&gt;"</span><span class="p">,</span>
+<span class="w">        </span><span class="s2">"arn:aws:s3:::&lt;BUCKETNAME&gt;/*"</span>
+<span class="w">      </span><span class="p">]</span>
+<span class="w">    </span><span class="p">}</span>
+<span class="w">  </span><span class="p">]</span>
+<span class="p">}</span>
 </code></pre></div>
+<p>Replace <code>&lt;BUCKETNAME&gt;</code> with your actual bucket name. For bucket naming rules, see <a href="https://docs.aws.amazon.com/AmazonS3/latest/userguide/bucketnamingrules.html">AWS documentation</a>.</p>
+<p>For cross-account access or when using IAM users, you may need to configure a bucket policy as well.</p>
 <h4 id="storage-class">Storage Class<a class="headerlink" href="#storage-class" title="Permanent link">¶</a></h4>
 <p>Amazon S3 offers a range of storage classes that you can choose from based on the performance, data access, resiliency, and cost requirements of your workloads. S3 storage classes are purpose-built to provide the lowest cost storage for different access patterns.</p>
 <p>Please pick from the available AWS Storage classes:</p>
@@ -3756,7 +3802,7 @@ This AxonOps IAM user that has the key assigned ideally would have the following
       <nav class="md-footer__inner md-grid" aria-label="Footer" >
         
           
-          <a href="../remote/" class="md-footer__link md-footer__link--prev" aria-label="Previous: Overview">
+          <a href="../local_storage/" class="md-footer__link md-footer__link--prev" aria-label="Previous: Local Storage">
             <div class="md-footer__button md-icon">
               
               <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
@@ -3766,20 +3812,20 @@ This AxonOps IAM user that has the key assigned ideally would have the following
                 Previous
               </span>
               <div class="md-ellipsis">
-                Overview
+                Local Storage
               </div>
             </div>
           </a>
         
         
           
-          <a href="../../restore/overview/" class="md-footer__link md-footer__link--next" aria-label="Next: Overview">
+          <a href="../generic_s3/" class="md-footer__link md-footer__link--next" aria-label="Next: Generic S3">
             <div class="md-footer__title">
               <span class="md-footer__direction">
                 Next
               </span>
               <div class="md-ellipsis">
-                Overview
+                Generic S3
               </div>
             </div>
             <div class="md-footer__button md-icon">

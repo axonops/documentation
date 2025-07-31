@@ -12,7 +12,7 @@
         <link rel="prev" href="../../axon-server/axonserver_install/">
       
       
-        <link rel="next" href="../configure_nginx/">
+        <link rel="next" href="../../agent/install/">
       
       
       <link rel="icon" href="/img/favicon.ico">
@@ -93,7 +93,7 @@
     <div data-md-component="skip">
       
         
-        <a href="#axonops-dashgui-installation" class="md-skip">
+        <a href="#axonops-dashboard-installation" class="md-skip">
           Skip to content
         </a>
       
@@ -1022,24 +1022,9 @@ data-et-multi-view="{&quot;schema&quot;:{&quot;content&quot;:{&quot;desktop&quot
   
   
   
-    
-    
-    
-      
-      
+    <li class="md-nav__item">
+      <a href="../../elasticsearch/install/" class="md-nav__link">
         
-      
-    
-    
-    <li class="md-nav__item md-nav__item--nested">
-      
-        
-        
-        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3_3_1" >
-        
-          
-          <label class="md-nav__link" for="__nav_3_3_1" id="__nav_3_3_1_label" tabindex="0">
-            
   
   <span class="md-ellipsis">
     Elasticsearch
@@ -1047,63 +1032,7 @@ data-et-multi-view="{&quot;schema&quot;:{&quot;content&quot;:{&quot;desktop&quot
   </span>
   
 
-            <span class="md-nav__icon md-icon"></span>
-          </label>
-        
-        <nav class="md-nav" data-md-level="3" aria-labelledby="__nav_3_3_1_label" aria-expanded="false">
-          <label class="md-nav__title" for="__nav_3_3_1">
-            <span class="md-nav__icon md-icon"></span>
-            Elasticsearch
-          </label>
-          <ul class="md-nav__list" data-md-scrollfix>
-            
-              
-                
-  
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="../../elasticsearch/install/" class="md-nav__link">
-        
-  
-  <span class="md-ellipsis">
-    Install Elasticsearch
-    
-  </span>
-  
-
       </a>
-    </li>
-  
-
-              
-            
-              
-                
-  
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="../../elasticsearch/securing_elastic/" class="md-nav__link">
-        
-  
-  <span class="md-ellipsis">
-    Secure Elasticsearch
-    
-  </span>
-  
-
-      </a>
-    </li>
-  
-
-              
-            
-          </ul>
-        </nav>
-      
     </li>
   
 
@@ -1208,19 +1137,19 @@ data-et-multi-view="{&quot;schema&quot;:{&quot;content&quot;:{&quot;desktop&quot
     <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
       
         <li class="md-nav__item">
-  <a href="#step-1-installation" class="md-nav__link">
+  <a href="#installation" class="md-nav__link">
     <span class="md-ellipsis">
-      Step 1 - Installation
+      Installation
     </span>
   </a>
   
-    <nav class="md-nav" aria-label="Step 1 - Installation">
+    <nav class="md-nav" aria-label="Installation">
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
-  <a href="#select-the-os-family" class="md-nav__link">
+  <a href="#configuration-file-locations" class="md-nav__link">
     <span class="md-ellipsis">
-      Select the OS Family.
+      Configuration File Locations
     </span>
   </a>
   
@@ -1232,46 +1161,28 @@ data-et-multi-view="{&quot;schema&quot;:{&quot;content&quot;:{&quot;desktop&quot
 </li>
       
         <li class="md-nav__item">
-  <a href="#step-2-configuration" class="md-nav__link">
+  <a href="#configure-axonops-dashboard" class="md-nav__link">
     <span class="md-ellipsis">
-      Step 2 - Configuration
+      Configure AxonOps Dashboard
     </span>
   </a>
   
 </li>
       
         <li class="md-nav__item">
-  <a href="#step-3-axon-server-configuration-update" class="md-nav__link">
+  <a href="#configure-axonops-server" class="md-nav__link">
     <span class="md-ellipsis">
-      Step 3 - axon-server configuration update
+      Configure AxonOps Server
     </span>
   </a>
   
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#step-4-restart-axon-server-after-updating-its-configuration" class="md-nav__link">
-    <span class="md-ellipsis">
-      Step 4 - Restart axon-server after updating its configuration
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#step-5-start-axon-dash" class="md-nav__link">
-    <span class="md-ellipsis">
-      Step 5 - Start axon-dash
-    </span>
-  </a>
-  
-    <nav class="md-nav" aria-label="Step 5 - Start axon-dash">
+    <nav class="md-nav" aria-label="Configure AxonOps Server">
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
-  <a href="#package-details" class="md-nav__link">
+  <a href="#restart-axon-server-to-apply-changes" class="md-nav__link">
     <span class="md-ellipsis">
-      Package details
+      Restart axon-server to Apply Changes
     </span>
   </a>
   
@@ -1283,18 +1194,66 @@ data-et-multi-view="{&quot;schema&quot;:{&quot;content&quot;:{&quot;desktop&quot
 </li>
       
         <li class="md-nav__item">
-  <a href="#step-6-setting-up-ssltls-for-axondash" class="md-nav__link">
+  <a href="#start-axonops-dashboard" class="md-nav__link">
     <span class="md-ellipsis">
-      Step 6 - Setting up SSL/TLS for AxonDash
+      Start AxonOps Dashboard
     </span>
   </a>
   
 </li>
       
         <li class="md-nav__item">
-  <a href="#next-installing-agents" class="md-nav__link">
+  <a href="#setup-ssltls-for-axonops-dashboard" class="md-nav__link">
     <span class="md-ellipsis">
-      Next - Installing agents
+      Setup SSL/TLS for AxonOps Dashboard
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Setup SSL/TLS for AxonOps Dashboard">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#installing-nginx" class="md-nav__link">
+    <span class="md-ellipsis">
+      Installing Nginx
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Installing Nginx">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#configuration-file-locations_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      Configuration File Locations
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#configure-nginx" class="md-nav__link">
+    <span class="md-ellipsis">
+      Configure Nginx
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#next-installing-axonops-agents" class="md-nav__link">
+    <span class="md-ellipsis">
+      Next - Installing AxonOps Agents
     </span>
   </a>
   
@@ -1304,28 +1263,6 @@ data-et-multi-view="{&quot;schema&quot;:{&quot;content&quot;:{&quot;desktop&quot
   
 </nav>
       
-    </li>
-  
-
-              
-            
-              
-                
-  
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="../configure_nginx/" class="md-nav__link">
-        
-  
-  <span class="md-ellipsis">
-    Configure Nginx
-    
-  </span>
-  
-
-      </a>
     </li>
   
 
@@ -2243,11 +2180,121 @@ data-et-multi-view="{&quot;schema&quot;:{&quot;content&quot;:{&quot;desktop&quot
   
   
     <li class="md-nav__item">
+      <a href="../../../operations/cassandra/backup/local_storage/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Local Storage
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
       <a href="../../../operations/cassandra/backup/aws_s3/" class="md-nav__link">
         
   
   <span class="md-ellipsis">
     AWS S3
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../operations/cassandra/backup/generic_s3/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Generic S3
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../operations/cassandra/backup/gcs/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Google Cloud Storage
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../operations/cassandra/backup/azure_blob/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Azure Blob Storage
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../operations/cassandra/backup/ssh_sftp/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    SSH/SFTP
     
   </span>
   
@@ -3541,19 +3588,19 @@ data-et-multi-view="{&quot;schema&quot;:{&quot;content&quot;:{&quot;desktop&quot
     <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
       
         <li class="md-nav__item">
-  <a href="#step-1-installation" class="md-nav__link">
+  <a href="#installation" class="md-nav__link">
     <span class="md-ellipsis">
-      Step 1 - Installation
+      Installation
     </span>
   </a>
   
-    <nav class="md-nav" aria-label="Step 1 - Installation">
+    <nav class="md-nav" aria-label="Installation">
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
-  <a href="#select-the-os-family" class="md-nav__link">
+  <a href="#configuration-file-locations" class="md-nav__link">
     <span class="md-ellipsis">
-      Select the OS Family.
+      Configuration File Locations
     </span>
   </a>
   
@@ -3565,46 +3612,28 @@ data-et-multi-view="{&quot;schema&quot;:{&quot;content&quot;:{&quot;desktop&quot
 </li>
       
         <li class="md-nav__item">
-  <a href="#step-2-configuration" class="md-nav__link">
+  <a href="#configure-axonops-dashboard" class="md-nav__link">
     <span class="md-ellipsis">
-      Step 2 - Configuration
+      Configure AxonOps Dashboard
     </span>
   </a>
   
 </li>
       
         <li class="md-nav__item">
-  <a href="#step-3-axon-server-configuration-update" class="md-nav__link">
+  <a href="#configure-axonops-server" class="md-nav__link">
     <span class="md-ellipsis">
-      Step 3 - axon-server configuration update
+      Configure AxonOps Server
     </span>
   </a>
   
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#step-4-restart-axon-server-after-updating-its-configuration" class="md-nav__link">
-    <span class="md-ellipsis">
-      Step 4 - Restart axon-server after updating its configuration
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#step-5-start-axon-dash" class="md-nav__link">
-    <span class="md-ellipsis">
-      Step 5 - Start axon-dash
-    </span>
-  </a>
-  
-    <nav class="md-nav" aria-label="Step 5 - Start axon-dash">
+    <nav class="md-nav" aria-label="Configure AxonOps Server">
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
-  <a href="#package-details" class="md-nav__link">
+  <a href="#restart-axon-server-to-apply-changes" class="md-nav__link">
     <span class="md-ellipsis">
-      Package details
+      Restart axon-server to Apply Changes
     </span>
   </a>
   
@@ -3616,18 +3645,66 @@ data-et-multi-view="{&quot;schema&quot;:{&quot;content&quot;:{&quot;desktop&quot
 </li>
       
         <li class="md-nav__item">
-  <a href="#step-6-setting-up-ssltls-for-axondash" class="md-nav__link">
+  <a href="#start-axonops-dashboard" class="md-nav__link">
     <span class="md-ellipsis">
-      Step 6 - Setting up SSL/TLS for AxonDash
+      Start AxonOps Dashboard
     </span>
   </a>
   
 </li>
       
         <li class="md-nav__item">
-  <a href="#next-installing-agents" class="md-nav__link">
+  <a href="#setup-ssltls-for-axonops-dashboard" class="md-nav__link">
     <span class="md-ellipsis">
-      Next - Installing agents
+      Setup SSL/TLS for AxonOps Dashboard
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Setup SSL/TLS for AxonOps Dashboard">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#installing-nginx" class="md-nav__link">
+    <span class="md-ellipsis">
+      Installing Nginx
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Installing Nginx">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#configuration-file-locations_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      Configuration File Locations
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#configure-nginx" class="md-nav__link">
+    <span class="md-ellipsis">
+      Configure Nginx
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#next-installing-axonops-agents" class="md-nav__link">
+    <span class="md-ellipsis">
+      Next - Installing AxonOps Agents
     </span>
   </a>
   
@@ -3649,12 +3726,13 @@ data-et-multi-view="{&quot;schema&quot;:{&quot;content&quot;:{&quot;desktop&quot
 
 
 
-<div><h1 id="axonops-dashgui-installation">AxonOps Dash/GUI installation<a class="headerlink" href="#axonops-dashgui-installation" title="Permanent link">¶</a></h1>
-<p>AxonOps GUI service is installed as a separate service to AxonOps Server. The GUI service (axon-dash) can be co-hosted on the same server as the AxonOps Server process, or they can be running on 2 separate servers.</p>
+<div><h1 id="axonops-dashboard-installation">AxonOps Dashboard Installation<a class="headerlink" href="#axonops-dashboard-installation" title="Permanent link">¶</a></h1>
+<p>The AxonOps Dashboard (<code>axon-dash</code>) is a GUI service that is installed as a separate service to AxonOps Server (<code>axon-server</code>).
+The GUI service can be co-hosted on the same server as the AxonOps Server process,
+or can be run on a separate server.</p>
 <p>This section describes the installation process for the GUI service.</p>
-<h2 id="step-1-installation">Step 1 - Installation<a class="headerlink" href="#step-1-installation" title="Permanent link">¶</a></h2>
-<p>Execute the following command to setup the AxonOps repository for your OS</p>
-<h3 id="select-the-os-family">Select the OS Family.<a class="headerlink" href="#select-the-os-family" title="Permanent link">¶</a></h3>
+<h2 id="installation">Installation<a class="headerlink" href="#installation" title="Permanent link">¶</a></h2>
+<p>Select the OS Family</p>
 <p><label>
   <input type="radio" id="Debian" name="osFamily" onchange="selectOS()" checked>
   <img src="/get_started/debian.png" class="skip-lightbox" width="180px">
@@ -3663,17 +3741,27 @@ data-et-multi-view="{&quot;schema&quot;:{&quot;content&quot;:{&quot;desktop&quot
   <input type="radio" id="RedHat" name="osFamily" onchange="selectOS()">
   <img src="/get_started/red_hat.png" class="skip-lightbox" width="180px">
 </label></p>
+<p>Execute the following commands to setup the AxonOps GUI for your OS:</p>
 <div id="DebianDiv" class="os">
+
     <div class="highlight"><pre><span></span><code>sudo<span class="w"> </span>apt-get<span class="w"> </span>update
 sudo<span class="w"> </span>apt-get<span class="w"> </span>install<span class="w"> </span>-y<span class="w"> </span>curl<span class="w"> </span>gnupg<span class="w"> </span>ca-certificates
-curl<span class="w"> </span>-L<span class="w"> </span>https://packages.axonops.com/apt/repo-signing-key.gpg<span class="w"> </span><span class="p">|</span><span class="w"> </span>sudo<span class="w"> </span>gpg<span class="w"> </span>--dearmor<span class="w"> </span>-o<span class="w"> </span>/usr/share/keyrings/axonops.gpg
-<span class="nb">echo</span><span class="w"> </span><span class="s2">"deb [arch=arm64,amd64 signed-by=/usr/share/keyrings/axonops.gpg] https://packages.axonops.com/apt axonops-apt main"</span><span class="w"> </span><span class="p">|</span><span class="w"> </span>sudo<span class="w"> </span>tee<span class="w"> </span>/etc/apt/sources.list.d/axonops-apt.list
+
+curl<span class="w"> </span>-L<span class="w"> </span>https://packages.axonops.com/apt/repo-signing-key.gpg<span class="w"> </span><span class="se">\</span>
+<span class="w">  </span><span class="p">|</span><span class="w"> </span>sudo<span class="w"> </span>gpg<span class="w"> </span>--dearmor<span class="w"> </span>-o<span class="w"> </span>/usr/share/keyrings/axonops.gpg
+
+<span class="nb">echo</span><span class="w"> </span><span class="s2">"deb [arch=arm64,amd64 signed-by=/usr/share/keyrings/axonops.gpg]\</span>
+<span class="s2"> https://packages.axonops.com/apt axonops-apt main"</span><span class="w"> </span><span class="se">\</span>
+<span class="w">  </span><span class="p">|</span><span class="w"> </span>sudo<span class="w"> </span>tee<span class="w"> </span>/etc/apt/sources.list.d/axonops-apt.list
 sudo<span class="w"> </span>apt-get<span class="w"> </span>update
+
 sudo<span class="w"> </span>apt-get<span class="w"> </span>install<span class="w"> </span>axon-dash
 </code></pre></div>
+
 </div>
 
 <div id="RedHatDiv" class="os" style="display:none">
+
     <div class="highlight"><pre><span></span><code>sudo<span class="w"> </span>tee<span class="w"> </span>/etc/yum.repos.d/axonops-yum.repo<span class="w"> </span><span class="s">&lt;&lt; EOL</span>
 <span class="s">[axonops-yum]</span>
 <span class="s">name=axonops-yum</span>
@@ -3685,59 +3773,93 @@ sudo<span class="w"> </span>apt-get<span class="w"> </span>install<span class="w
 
 sudo<span class="w"> </span>yum<span class="w"> </span>install<span class="w"> </span>axon-dash
 </code></pre></div>
+
 </div>
 
-<h2 id="step-2-configuration">Step 2 - Configuration<a class="headerlink" href="#step-2-configuration" title="Permanent link">¶</a></h2>
-<p>Change <strong>axon-dash</strong> configuration to specify <strong>axon-server</strong> listening address.</p>
-<ul>
-<li><code>/etc/axonops/axon-dash.yml</code>
-<div class="highlight"><pre><span></span><code><span class="nt">axon-dash</span><span class="p">:</span><span class="w"> </span><span class="c1"># The listening address of axon-dash</span>
-<span class="w">  </span><span class="nt">host</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">0.0.0.0</span>
-<span class="w">  </span><span class="nt">port</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">3000</span>
-<span class="w">  </span><span class="nt">line_charts_max_results</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">256</span>
-
-<span class="nt">axon-server</span><span class="p">:</span>
-<span class="hll"><span class="w">  </span><span class="nt">private_endpoints</span><span class="p">:</span><span class="w"> </span><span class="s">"http://127.0.0.1:8080"</span><span class="w"> </span><span class="c1"># HTTP endpoint to access axon-server API from axon-dash.</span>
-</span><span class="w">  </span><span class="nt">context_path</span><span class="p">:</span><span class="w"> </span><span class="s">""</span><span class="w"> </span><span class="c1"># example: "/gui"</span>
-</code></pre></div><blockquote>
-<p>axon-server default API port is <strong>8080</strong></p>
-</blockquote>
-</li>
-</ul>
-<h2 id="step-3-axon-server-configuration-update">Step 3 - axon-server configuration update<a class="headerlink" href="#step-3-axon-server-configuration-update" title="Permanent link">¶</a></h2>
-<p>if required, update <strong>axon-server</strong> configuration by setting the correct <strong>axon-dash</strong> <strong>host</strong> and <strong>port</strong>:</p>
-<ul>
-<li><code>/etc/axonops/axon-server.yml</code></li>
-</ul>
-<div class="highlight"><pre><span></span><code><span class="nn">...</span>
-<span class="nt">axon-dash</span><span class="p">:</span><span class="w"> </span><span class="c1"># This must point to the axon-dash address accessible from axon-server</span>
-<span class="w">  </span><span class="nt">host</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">127.0.0.1</span>
-<span class="w">  </span><span class="nt">port</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">3000</span>
-<span class="w">  </span><span class="nt">https</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">false</span>
-<span class="nn">...</span>
-</code></pre></div>
-<h2 id="step-4-restart-axon-server-after-updating-its-configuration">Step 4 - Restart <strong>axon-server</strong> after updating its configuration<a class="headerlink" href="#step-4-restart-axon-server-after-updating-its-configuration" title="Permanent link">¶</a></h2>
-<div class="highlight"><pre><span></span><code>sudo<span class="w"> </span>systemctl<span class="w"> </span>restart<span class="w"> </span>axon-server
-</code></pre></div>
-<h2 id="step-5-start-axon-dash">Step 5 - Start axon-dash<a class="headerlink" href="#step-5-start-axon-dash" title="Permanent link">¶</a></h2>
-<div class="highlight"><pre><span></span><code>sudo<span class="w"> </span>systemctl<span class="w"> </span>daemon-reload
-sudo<span class="w"> </span>systemctl<span class="w"> </span>start<span class="w"> </span>axon-dash
-sudo<span class="w"> </span>systemctl<span class="w"> </span>status<span class="w"> </span>axon-dash
-</code></pre></div>
-<p>This will start the <strong>axon-dash</strong> process as the <strong>axonops</strong> user, which was created during the package installation. The default listening address is <code>0.0.0.0:3000</code>.</p>
-<h4 id="package-details">Package details<a class="headerlink" href="#package-details" title="Permanent link">¶</a></h4>
+<h3 id="configuration-file-locations">Configuration File Locations<a class="headerlink" href="#configuration-file-locations" title="Permanent link">¶</a></h3>
+<p>The following files are installed into the local file system:</p>
 <ul>
 <li>Configuration File: <code>/etc/axonops/axon-dash.yml</code></li>
 <li>Binary: <code>/usr/share/axonops/axon-dash</code></li>
-<li>Logs: <code>/var/log/axonops/axon-dash.log</code> </li>
+<li>Logs: <code>/var/log/axonops/axon-dash.log</code></li>
 <li>Systemd service: <code>/usr/lib/systemd/system/axon-dash.service</code></li>
 <li>Copyright : <code>/usr/share/doc/axonops/axon-dash/copyright</code></li>
 <li>Licenses : <code>/usr/share/axonops/licenses/axon-dash/</code></li>
 </ul>
-<h2 id="step-6-setting-up-ssltls-for-axondash">Step 6 - Setting up SSL/TLS for AxonDash<a class="headerlink" href="#step-6-setting-up-ssltls-for-axondash" title="Permanent link">¶</a></h2>
-<p>AxonDash does not support SSL/TLS and needs to be fronted by Nginx. You can install and configure Nginx by following the <a href="../configure_nginx/">Configure Nginx</a> guide.</p>
-<h2 id="next-installing-agents">Next - Installing agents<a class="headerlink" href="#next-installing-agents" title="Permanent link">¶</a></h2>
-<p>Now <strong>axon-dash</strong> is installed, you can start installing <a href="../../agent/install/">cassandra-agent</a></p></div>
+<h2 id="configure-axonops-dashboard">Configure AxonOps Dashboard<a class="headerlink" href="#configure-axonops-dashboard" title="Permanent link">¶</a></h2>
+<p>If AxonOps Server has been installed on a different machine,
+update the <code>axon-dash</code> configuration file found at <code>/etc/axonops/axon-dash.yml</code>
+to specify the <code>axon-server</code> listening address:</p>
+<p></p><div class="highlight"><pre><span></span><code><span class="nt">axon-server</span><span class="p">:</span>
+<span class="w">  </span><span class="c1"># HTTP endpoint to access axon-server API from axon-dash</span>
+<span class="w">  </span><span class="nt">private_endpoints</span><span class="p">:</span><span class="w"> </span><span class="s">"http://127.0.0.1:8080"</span>
+<span class="w">  </span><span class="c1"># example: "/gui"</span>
+<span class="w">  </span><span class="nt">context_path</span><span class="p">:</span><span class="w"> </span><span class="s">""</span>
+</code></pre></div>
+Note: The AxonOps Server <code>api_port</code> defaults to <code>8080</code>.
+<h2 id="configure-axonops-server">Configure AxonOps Server<a class="headerlink" href="#configure-axonops-server" title="Permanent link">¶</a></h2>
+<p>If AxonOps Dashboard requires being bound and exposed to a different <code>host</code> and <code>port</code>,
+update the <code>host</code> and/or <code>port</code> values for <code>axon-dash</code> from their defaults
+within <code>/etc/axonops/axon-dash.yml</code>:</p>
+<div class="highlight"><pre><span></span><code><span class="nt">axon-dash</span><span class="p">:</span>
+<span class="w">  </span><span class="nt">host</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">127.0.0.1</span>
+<span class="w">  </span><span class="nt">port</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">3000</span>
+<span class="w">  </span><span class="nt">https</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">false</span>
+</code></pre></div>
+<p>Subesquently, update the <code>axon_dash_url</code> value within <code>/etc/axonops/axon-server.yml</code>:</p>
+<div class="highlight"><pre><span></span><code><span class="nt">axon_dash_url</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">http://127.0.0.1:3000</span>
+</code></pre></div>
+<p>Note: The <code>axon-dash</code> address must be accessible from <code>axon-server</code>.</p>
+<h3 id="restart-axon-server-to-apply-changes">Restart <code>axon-server</code> to Apply Changes<a class="headerlink" href="#restart-axon-server-to-apply-changes" title="Permanent link">¶</a></h3>
+<div class="highlight"><pre><span></span><code>sudo<span class="w"> </span>systemctl<span class="w"> </span>restart<span class="w"> </span>axon-server
+</code></pre></div>
+<h2 id="start-axonops-dashboard">Start AxonOps Dashboard<a class="headerlink" href="#start-axonops-dashboard" title="Permanent link">¶</a></h2>
+<p>The following will start the <code>axon-dash</code> process as the <code>axonops</code> user, which was created during the package installation.</p>
+<div class="highlight"><pre><span></span><code>sudo<span class="w"> </span>systemctl<span class="w"> </span>daemon-reload
+sudo<span class="w"> </span>systemctl<span class="w"> </span>start<span class="w"> </span>axon-dash
+sudo<span class="w"> </span>systemctl<span class="w"> </span>status<span class="w"> </span>axon-dash
+</code></pre></div>
+<p>The default listening address is <a href="http://0.0.0.0:3000">0.0.0.0:3000</a>.</p>
+<h2 id="setup-ssltls-for-axonops-dashboard">Setup SSL/TLS for AxonOps Dashboard<a class="headerlink" href="#setup-ssltls-for-axonops-dashboard" title="Permanent link">¶</a></h2>
+<p>The AxonOps Dashboard does not support SSL/TLS and needs Nginx to be setup in front of
+the dashboard.</p>
+<h3 id="installing-nginx">Installing Nginx<a class="headerlink" href="#installing-nginx" title="Permanent link">¶</a></h3>
+<p>Install Nginx using the <a href="https://docs.nginx.com/nginx/admin-guide/installing-nginx/installing-nginx-open-source/" target="_blank">official guide</a>.</p>
+<h4 id="configuration-file-locations_1">Configuration File Locations<a class="headerlink" href="#configuration-file-locations_1" title="Permanent link">¶</a></h4>
+<p>Most installations of Nginx use the default config location of <code>/etc/nginx/</code>.</p>
+<p>The default location depends on whether or not the installation is from an
+archive distribution (tar.gz or zip) or a package distribution (Debian or RPM packages).</p>
+<p>Based on the installation the default location can be either:</p>
+<ul>
+<li><code>/etc/nginx</code></li>
+<li><code>/usr/local/nginx/conf</code></li>
+<li><code>/usr/local/etc/nginx</code></li>
+</ul>
+<p>For more info on Nginx configuration, read <a href="https://docs.nginx.com/nginx/admin-guide/basic-functionality/managing-configuration-files/#:~:text=By%20default%20the%20file%20is,local%2Fetc%2Fnginx." target="_blank">Creating Nginx Configuration Files</a>.</p>
+<h3 id="configure-nginx">Configure Nginx<a class="headerlink" href="#configure-nginx" title="Permanent link">¶</a></h3>
+<p>Edit <code>/etc/nginx/nginx.conf</code> and add/update the following lines:</p>
+<div class="highlight"><pre><span></span><code><span class="k">server</span><span class="w"> </span><span class="p">{</span>
+<span class="w">  </span><span class="kn">listen</span><span class="w"> </span><span class="s">&lt;ip&gt;:443</span><span class="w"> </span><span class="s">ssl</span><span class="p">;</span>
+
+<span class="w">  </span><span class="kn">server_name</span><span class="w"> </span><span class="s">&lt;hostname&gt;</span><span class="p">;</span>
+
+<span class="w">  </span><span class="kn">client_max_body_size</span><span class="w"> </span><span class="s">100M</span><span class="p">;</span>
+
+<span class="w">  </span><span class="kn">root</span><span class="w"> </span><span class="s">/usr/share/nginx</span><span class="p">;</span>
+<span class="w">  </span><span class="kn">index</span><span class="w"> </span><span class="s">index.html</span><span class="p">;</span>
+
+<span class="w">  </span><span class="kn">ssl_certificate</span><span class="w">     </span><span class="s">/full/path/to/ssl_cert</span><span class="p">;</span>
+<span class="w">  </span><span class="kn">ssl_certificate_key</span><span class="w"> </span><span class="s">/full/path/to/ssl_key/</span><span class="p">;</span>
+<span class="w">  </span><span class="kn">ssl_protocols</span><span class="w">       </span><span class="s">TLSv1.2</span><span class="w"> </span><span class="s">TLSv1.3</span><span class="p">;</span>
+
+<span class="w">  </span><span class="kn">location</span><span class="w"> </span><span class="s">/</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="kn">proxy_pass</span><span class="w"> </span><span class="s">http://localhost:3000</span><span class="p">;</span><span class="w"> </span><span class="c1">#Default AxonOps-Dash port</span>
+<span class="w">  </span><span class="p">}</span>
+<span class="p">}</span>
+</code></pre></div>
+<h2 id="next-installing-axonops-agents">Next - Installing AxonOps Agents<a class="headerlink" href="#next-installing-axonops-agents" title="Permanent link">¶</a></h2>
+<p>Now that the AxonOps Dashboard is installed,
+we will  <a href="../../agent/install/">install the AxonOps Agents</a> to populate the dashboard.</p></div>
 
 
 
@@ -3792,13 +3914,13 @@ sudo<span class="w"> </span>systemctl<span class="w"> </span>status<span class="
         
         
           
-          <a href="../configure_nginx/" class="md-footer__link md-footer__link--next" aria-label="Next: Configure Nginx">
+          <a href="../../agent/install/" class="md-footer__link md-footer__link--next" aria-label="Next: AxonOps Agent">
             <div class="md-footer__title">
               <span class="md-footer__direction">
                 Next
               </span>
               <div class="md-ellipsis">
-                Configure Nginx
+                AxonOps Agent
               </div>
             </div>
             <div class="md-footer__button md-icon">

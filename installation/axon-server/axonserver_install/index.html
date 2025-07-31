@@ -1022,24 +1022,9 @@ data-et-multi-view="{&quot;schema&quot;:{&quot;content&quot;:{&quot;desktop&quot
   
   
   
-    
-    
-    
-      
-      
+    <li class="md-nav__item">
+      <a href="../../elasticsearch/install/" class="md-nav__link">
         
-      
-    
-    
-    <li class="md-nav__item md-nav__item--nested">
-      
-        
-        
-        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3_3_1" >
-        
-          
-          <label class="md-nav__link" for="__nav_3_3_1" id="__nav_3_3_1_label" tabindex="0">
-            
   
   <span class="md-ellipsis">
     Elasticsearch
@@ -1047,63 +1032,7 @@ data-et-multi-view="{&quot;schema&quot;:{&quot;content&quot;:{&quot;desktop&quot
   </span>
   
 
-            <span class="md-nav__icon md-icon"></span>
-          </label>
-        
-        <nav class="md-nav" data-md-level="3" aria-labelledby="__nav_3_3_1_label" aria-expanded="false">
-          <label class="md-nav__title" for="__nav_3_3_1">
-            <span class="md-nav__icon md-icon"></span>
-            Elasticsearch
-          </label>
-          <ul class="md-nav__list" data-md-scrollfix>
-            
-              
-                
-  
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="../../elasticsearch/install/" class="md-nav__link">
-        
-  
-  <span class="md-ellipsis">
-    Install Elasticsearch
-    
-  </span>
-  
-
       </a>
-    </li>
-  
-
-              
-            
-              
-                
-  
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="../../elasticsearch/securing_elastic/" class="md-nav__link">
-        
-  
-  <span class="md-ellipsis">
-    Secure Elasticsearch
-    
-  </span>
-  
-
-      </a>
-    </li>
-  
-
-              
-            
-          </ul>
-        </nav>
-      
     </li>
   
 
@@ -1186,70 +1115,19 @@ data-et-multi-view="{&quot;schema&quot;:{&quot;content&quot;:{&quot;desktop&quot
     <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
       
         <li class="md-nav__item">
-  <a href="#step-1-installation" class="md-nav__link">
+  <a href="#installation" class="md-nav__link">
     <span class="md-ellipsis">
-      Step 1 - Installation
+      Installation
     </span>
   </a>
   
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#step-2-configure-axon-server" class="md-nav__link">
-    <span class="md-ellipsis">
-      Step 2 - Configure axon-server
-    </span>
-  </a>
-  
-    <nav class="md-nav" aria-label="Step 2 - Configure axon-server">
+    <nav class="md-nav" aria-label="Installation">
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
-  <a href="#update-elastic_hosts" class="md-nav__link">
+  <a href="#configuration-file-locations" class="md-nav__link">
     <span class="md-ellipsis">
-      Update elastic_hosts
-    </span>
-  </a>
-  
-    <nav class="md-nav" aria-label="Update elastic_hosts">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#basic-auth-in-elasticsearch-if-enabled" class="md-nav__link">
-    <span class="md-ellipsis">
-      Basic Auth in Elasticsearch (If enabled)
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#load-balancer-or-dedicated-coordinator-nodes-fronting-elasticsearch" class="md-nav__link">
-    <span class="md-ellipsis">
-      Load Balancer or Dedicated Coordinator nodes fronting Elasticsearch
-    </span>
-  </a>
-  
-</li>
-        
-      </ul>
-    </nav>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#axonops-licensing" class="md-nav__link">
-    <span class="md-ellipsis">
-      AxonOps Licensing
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#update-configuration-file" class="md-nav__link">
-    <span class="md-ellipsis">
-      Update Configuration File
+      Configuration File Locations
     </span>
   </a>
   
@@ -1261,27 +1139,93 @@ data-et-multi-view="{&quot;schema&quot;:{&quot;content&quot;:{&quot;desktop&quot
 </li>
       
         <li class="md-nav__item">
-  <a href="#step-3-start-the-server" class="md-nav__link">
+  <a href="#configure-axonops-server" class="md-nav__link">
     <span class="md-ellipsis">
-      Step 3 - Start the server
+      Configure AxonOps Server
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Configure AxonOps Server">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#configure-elasticsearch" class="md-nav__link">
+    <span class="md-ellipsis">
+      Configure Elasticsearch
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Configure Elasticsearch">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#basic-auth-in-elasticsearch" class="md-nav__link">
+    <span class="md-ellipsis">
+      Basic Auth in Elasticsearch
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#load-balancing-for-elasticsearch" class="md-nav__link">
+    <span class="md-ellipsis">
+      Load Balancing for Elasticsearch
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#setup-axonops-license" class="md-nav__link">
+    <span class="md-ellipsis">
+      Setup AxonOps License
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#configure-cassandra-as-metrics-store" class="md-nav__link">
+    <span class="md-ellipsis">
+      Configure Cassandra as Metrics Store
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#sample-configuration-file" class="md-nav__link">
+    <span class="md-ellipsis">
+      Sample Configuration File
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#start-the-axonops-server" class="md-nav__link">
+    <span class="md-ellipsis">
+      Start the AxonOps Server
     </span>
   </a>
   
 </li>
       
         <li class="md-nav__item">
-  <a href="#package-details" class="md-nav__link">
+  <a href="#next-install-axonops-dashboard" class="md-nav__link">
     <span class="md-ellipsis">
-      Package details
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#next-install-axon-dash" class="md-nav__link">
-    <span class="md-ellipsis">
-      Next - Install axon-dash
+      Next - Install AxonOps Dashboard
     </span>
   </a>
   
@@ -1308,28 +1252,6 @@ data-et-multi-view="{&quot;schema&quot;:{&quot;content&quot;:{&quot;desktop&quot
   
   <span class="md-ellipsis">
     AxonOps Dashboard
-    
-  </span>
-  
-
-      </a>
-    </li>
-  
-
-              
-            
-              
-                
-  
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="../../axon-dash/configure_nginx/" class="md-nav__link">
-        
-  
-  <span class="md-ellipsis">
-    Configure Nginx
     
   </span>
   
@@ -2252,11 +2174,121 @@ data-et-multi-view="{&quot;schema&quot;:{&quot;content&quot;:{&quot;desktop&quot
   
   
     <li class="md-nav__item">
+      <a href="../../../operations/cassandra/backup/local_storage/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Local Storage
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
       <a href="../../../operations/cassandra/backup/aws_s3/" class="md-nav__link">
         
   
   <span class="md-ellipsis">
     AWS S3
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../operations/cassandra/backup/generic_s3/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Generic S3
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../operations/cassandra/backup/gcs/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Google Cloud Storage
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../operations/cassandra/backup/azure_blob/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Azure Blob Storage
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../operations/cassandra/backup/ssh_sftp/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    SSH/SFTP
     
   </span>
   
@@ -3550,70 +3582,19 @@ data-et-multi-view="{&quot;schema&quot;:{&quot;content&quot;:{&quot;desktop&quot
     <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
       
         <li class="md-nav__item">
-  <a href="#step-1-installation" class="md-nav__link">
+  <a href="#installation" class="md-nav__link">
     <span class="md-ellipsis">
-      Step 1 - Installation
+      Installation
     </span>
   </a>
   
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#step-2-configure-axon-server" class="md-nav__link">
-    <span class="md-ellipsis">
-      Step 2 - Configure axon-server
-    </span>
-  </a>
-  
-    <nav class="md-nav" aria-label="Step 2 - Configure axon-server">
+    <nav class="md-nav" aria-label="Installation">
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
-  <a href="#update-elastic_hosts" class="md-nav__link">
+  <a href="#configuration-file-locations" class="md-nav__link">
     <span class="md-ellipsis">
-      Update elastic_hosts
-    </span>
-  </a>
-  
-    <nav class="md-nav" aria-label="Update elastic_hosts">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#basic-auth-in-elasticsearch-if-enabled" class="md-nav__link">
-    <span class="md-ellipsis">
-      Basic Auth in Elasticsearch (If enabled)
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#load-balancer-or-dedicated-coordinator-nodes-fronting-elasticsearch" class="md-nav__link">
-    <span class="md-ellipsis">
-      Load Balancer or Dedicated Coordinator nodes fronting Elasticsearch
-    </span>
-  </a>
-  
-</li>
-        
-      </ul>
-    </nav>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#axonops-licensing" class="md-nav__link">
-    <span class="md-ellipsis">
-      AxonOps Licensing
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#update-configuration-file" class="md-nav__link">
-    <span class="md-ellipsis">
-      Update Configuration File
+      Configuration File Locations
     </span>
   </a>
   
@@ -3625,27 +3606,93 @@ data-et-multi-view="{&quot;schema&quot;:{&quot;content&quot;:{&quot;desktop&quot
 </li>
       
         <li class="md-nav__item">
-  <a href="#step-3-start-the-server" class="md-nav__link">
+  <a href="#configure-axonops-server" class="md-nav__link">
     <span class="md-ellipsis">
-      Step 3 - Start the server
+      Configure AxonOps Server
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Configure AxonOps Server">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#configure-elasticsearch" class="md-nav__link">
+    <span class="md-ellipsis">
+      Configure Elasticsearch
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Configure Elasticsearch">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#basic-auth-in-elasticsearch" class="md-nav__link">
+    <span class="md-ellipsis">
+      Basic Auth in Elasticsearch
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#load-balancing-for-elasticsearch" class="md-nav__link">
+    <span class="md-ellipsis">
+      Load Balancing for Elasticsearch
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#setup-axonops-license" class="md-nav__link">
+    <span class="md-ellipsis">
+      Setup AxonOps License
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#configure-cassandra-as-metrics-store" class="md-nav__link">
+    <span class="md-ellipsis">
+      Configure Cassandra as Metrics Store
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#sample-configuration-file" class="md-nav__link">
+    <span class="md-ellipsis">
+      Sample Configuration File
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#start-the-axonops-server" class="md-nav__link">
+    <span class="md-ellipsis">
+      Start the AxonOps Server
     </span>
   </a>
   
 </li>
       
         <li class="md-nav__item">
-  <a href="#package-details" class="md-nav__link">
+  <a href="#next-install-axonops-dashboard" class="md-nav__link">
     <span class="md-ellipsis">
-      Package details
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#next-install-axon-dash" class="md-nav__link">
-    <span class="md-ellipsis">
-      Next - Install axon-dash
+      Next - Install AxonOps Dashboard
     </span>
   </a>
   
@@ -3667,10 +3714,9 @@ data-et-multi-view="{&quot;schema&quot;:{&quot;content&quot;:{&quot;desktop&quot
 
 
 
-<div><h1 id="axonops-server-installation">AxonOps Server installation<a class="headerlink" href="#axonops-server-installation" title="Permanent link">¶</a></h1>
-<h2 id="step-1-installation">Step 1 - Installation<a class="headerlink" href="#step-1-installation" title="Permanent link">¶</a></h2>
-<p>Execute the following command to setup the AxonOps repository for your OS</p>
-<p>Select the OS Family. </p>
+<div><h1 id="axonops-server-installation">AxonOps Server Installation<a class="headerlink" href="#axonops-server-installation" title="Permanent link">¶</a></h1>
+<h2 id="installation">Installation<a class="headerlink" href="#installation" title="Permanent link">¶</a></h2>
+<p>Select the OS Family</p>
 <p><label>
   <input type="radio" id="Debian" name="osFamily" onchange="selectOS()" checked>
   <img src="/get_started/debian.png" class="skip-lightbox" width="180px">
@@ -3679,18 +3725,27 @@ data-et-multi-view="{&quot;schema&quot;:{&quot;content&quot;:{&quot;desktop&quot
   <input type="radio" id="RedHat" name="osFamily" onchange="selectOS()">
   <img src="/get_started/red_hat.png" class="skip-lightbox" width="180px">
 </label></p>
-<p>Execute the following command to setup the AxonOps repository for your OS using the built in Package manager.</p>
+<p>Execute the following commands to setup the AxonOps repository and install AxonOps Server:</p>
 <div id="DebianDiv" class="os">
+
   <div class="highlight"><pre><span></span><code>sudo<span class="w"> </span>apt-get<span class="w"> </span>update
 sudo<span class="w"> </span>apt-get<span class="w"> </span>install<span class="w"> </span>-y<span class="w"> </span>curl<span class="w"> </span>gnupg<span class="w"> </span>ca-certificates
-curl<span class="w"> </span>-L<span class="w"> </span>https://packages.axonops.com/apt/repo-signing-key.gpg<span class="w"> </span><span class="p">|</span><span class="w"> </span>sudo<span class="w"> </span>gpg<span class="w"> </span>--dearmor<span class="w"> </span>-o<span class="w"> </span>/usr/share/keyrings/axonops.gpg
-<span class="nb">echo</span><span class="w"> </span><span class="s2">"deb [arch=arm64,amd64 signed-by=/usr/share/keyrings/axonops.gpg] https://packages.axonops.com/apt axonops-apt main"</span><span class="w"> </span><span class="p">|</span><span class="w"> </span>sudo<span class="w"> </span>tee<span class="w"> </span>/etc/apt/sources.list.d/axonops-apt.list
+
+curl<span class="w"> </span>-L<span class="w"> </span>https://packages.axonops.com/apt/repo-signing-key.gpg<span class="w"> </span><span class="se">\</span>
+<span class="w">  </span><span class="p">|</span><span class="w"> </span>sudo<span class="w"> </span>gpg<span class="w"> </span>--dearmor<span class="w"> </span>-o<span class="w"> </span>/usr/share/keyrings/axonops.gpg
+
+<span class="nb">echo</span><span class="w"> </span><span class="s2">"deb [arch=arm64,amd64 signed-by=/usr/share/keyrings/axonops.gpg]\</span>
+<span class="s2"> https://packages.axonops.com/apt axonops-apt main"</span><span class="w"> </span><span class="se">\</span>
+<span class="w">  </span><span class="p">|</span><span class="w"> </span>sudo<span class="w"> </span>tee<span class="w"> </span>/etc/apt/sources.list.d/axonops-apt.list
 sudo<span class="w"> </span>apt-get<span class="w"> </span>update
+
 sudo<span class="w"> </span>apt-get<span class="w"> </span>install<span class="w"> </span>axon-server
 </code></pre></div>
+
 </div>
 
 <div id="RedHatDiv" class="os" style="display:none">
+
   <div class="highlight"><pre><span></span><code>sudo<span class="w"> </span>tee<span class="w"> </span>/etc/yum.repos.d/axonops-yum.repo<span class="w"> </span><span class="s">&lt;&lt; EOL</span>
 <span class="s">[axonops-yum]</span>
 <span class="s">name=axonops-yum</span>
@@ -3701,58 +3756,121 @@ sudo<span class="w"> </span>apt-get<span class="w"> </span>install<span class="w
 <span class="s">EOL</span>
 sudo<span class="w"> </span>yum<span class="w"> </span>install<span class="w"> </span>axon-server
 </code></pre></div>
+
 </div>
 
-<h2 id="step-2-configure-axon-server">Step 2 - Configure axon-server<a class="headerlink" href="#step-2-configure-axon-server" title="Permanent link">¶</a></h2>
-<p><em>AxonOps Server configuration file location :</em> <code>/etc/axonops/axon-server.yml</code></p>
-<h3 id="update-elastic_hosts">Update elastic_hosts<a class="headerlink" href="#update-elastic_hosts" title="Permanent link">¶</a></h3>
-<p>Confirm the <strong>elastic_url</strong> and <strong>elastic_port</strong> correspond to the dedicated Elasticsearch instance.</p>
-<h4 id="basic-auth-in-elasticsearch-if-enabled">Basic Auth in Elasticsearch (If enabled)<a class="headerlink" href="#basic-auth-in-elasticsearch-if-enabled" title="Permanent link">¶</a></h4>
-<p>Update the username and password with the dedicated service account/user created in Elasticsearch</p>
-<h4 id="load-balancer-or-dedicated-coordinator-nodes-fronting-elasticsearch">Load Balancer or Dedicated Coordinator nodes fronting Elasticsearch<a class="headerlink" href="#load-balancer-or-dedicated-coordinator-nodes-fronting-elasticsearch" title="Permanent link">¶</a></h4>
-<p>By default AxonOps Server will discover all the nodes in the Elasticsearch cluster. It will utilise the list of dicovered nodes to round-robin requests to Elasticsearch.</p>
-<p>When setting up a load balancing nodes or infrastrcutre that fronts Elasticsearch it has smart load balancing capabilites and the node discovery is not required.  </p>
-<p>To turn off node discovery set <code>elastic_discover_nodes:false</code></p>
-<h3 id="axonops-licensing">AxonOps Licensing<a class="headerlink" href="#axonops-licensing" title="Permanent link">¶</a></h3>
+<h3 id="configuration-file-locations">Configuration File Locations<a class="headerlink" href="#configuration-file-locations" title="Permanent link">¶</a></h3>
+<p>The following files are installed into the local file system:</p>
+<ul>
+<li>Configuration File: <code>/etc/axonops/axon-server.yml</code></li>
+<li>Binary: <code>/usr/share/axonops/axon-server</code></li>
+<li>Logs: <code>/var/log/axonops/axon-server.log</code></li>
+<li>Systemd service: <code>/usr/lib/systemd/system/axon-server.service</code></li>
+<li>Copyright : <code>/usr/share/doc/axonops/axon-server/copyright</code></li>
+<li>Licenses : <code>/usr/share/axonops/licenses/axon-server/</code></li>
+</ul>
+<h2 id="configure-axonops-server">Configure AxonOps Server<a class="headerlink" href="#configure-axonops-server" title="Permanent link">¶</a></h2>
+<h3 id="configure-elasticsearch">Configure Elasticsearch<a class="headerlink" href="#configure-elasticsearch" title="Permanent link">¶</a></h3>
+<p>Confirm the <code>network.host</code> and <code>http.port</code> values within
+<code>/etc/elasticsearch/elasticsearch.yml</code> for the dedicated Elasticsearch instance
+correspond to the values for <code>search_db</code> within <code>/etc/axonops/axon-server.yml</code>.</p>
+<p>The following example works for the default Single-Server configuration:</p>
+<div class="highlight"><pre><span></span><code><span class="nt">search_db</span><span class="p">:</span>
+<span class="w">  </span><span class="nt">hosts</span><span class="p">:</span>
+<span class="w">    </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">http://localhost:9200</span>
+</code></pre></div>
+<h4 id="basic-auth-in-elasticsearch">Basic Auth in Elasticsearch<a class="headerlink" href="#basic-auth-in-elasticsearch" title="Permanent link">¶</a></h4>
+<p>If using Basic Auth with the default Single-Server configuration,
+ensure <code>search_db</code> values are setup using the following format:</p>
+<div class="highlight"><pre><span></span><code><span class="nt">search_db</span><span class="p">:</span>
+<span class="w">  </span><span class="nt">hosts</span><span class="p">:</span>
+<span class="w">    </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">http://localhost:9200</span>
+
+<span class="w">  </span><span class="nt">username</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">opensearch-user</span>
+<span class="w">  </span><span class="nt">password</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">my-strong-password</span>
+</code></pre></div>
+<p>Update the above <code>username</code> and <code>password</code> with the dedicated service account/user
+<a href="../../elasticsearch/install/#set-passwords-for-default-user">created in Elasticsearch</a>.</p>
+<h4 id="load-balancing-for-elasticsearch">Load Balancing for Elasticsearch<a class="headerlink" href="#load-balancing-for-elasticsearch" title="Permanent link">¶</a></h4>
+<p>By default, AxonOps Server will only connect to the Elasticsearch nodes listed in its
+configuration and will not automatically discover other nodes in the cluster.
+To enable AxonOps' node discovery, set <code>search_db.discover_nodes:true</code> which will
+utilize the full list of discovered nodes to round-robin requests sent to Elasticsearch.</p>
+<p>When setting up load balancing nodes or infrastructure in front of Elasticsearch,
+the load balancer has smart load balancing capabilites and AxonOps' node discovery
+is not required.</p>
+<h3 id="setup-axonops-license">Setup AxonOps License<a class="headerlink" href="#setup-axonops-license" title="Permanent link">¶</a></h3>
+<blockquote>
 <p>This section is for Enterprise plan clients and is not needed on the Free Forever plan.</p>
-<p><code>license_key</code> : This key will be used to unlock the Enterprise features of AxonOps.</p>
-<p><code>org_name</code> : Needs to match the Name provided during the Enterprise onboarding process.</p>
-<h3 id="update-configuration-file">Update Configuration File<a class="headerlink" href="#update-configuration-file" title="Permanent link">¶</a></h3>
-<div class="highlight"><pre><span></span><code><span class="nt">host</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">0.0.0.0</span><span class="w">  </span><span class="c1"># axon-server listening address (used by axon-agents for connections) (env variable: AXONSERVER_HOST)</span>
-<span class="nt">agents_port</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">1888</span><span class="w"> </span><span class="c1"># axon-server listening port for agent connections </span>
+</blockquote>
+<p>Ensure the following values are set to unlock the Enterprise features of AxonOps:</p>
+<div class="highlight"><pre><span></span><code><span class="nt">license_key</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">license-key</span>
+<span class="nt">org_name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">my-company</span>
+</code></pre></div>
+<p>Note:</p>
+<ul>
+<li><code>license_key</code> can be found within <a href="https://console.axonops.com">console.axonops.com</a> &gt; Agent Setup &gt; Agent Keys.</li>
+<li><code>org_name</code> needs to match the Organization Name provided during the Enterprise onboarding process.</li>
+</ul>
+<h3 id="configure-cassandra-as-metrics-store">Configure Cassandra as Metrics Store<a class="headerlink" href="#configure-cassandra-as-metrics-store" title="Permanent link">¶</a></h3>
+<p>To use <a href="../metricsdatabase/">Cassandra as AxonOps' metrics store</a>,
+specify at least one CQL host within the <code>cql_hosts</code> key within <code>/etc/axonops/axon-server.yml</code>.</p>
+<p>For better performance on larger clusters (10+ nodes),
+it is recommended to use Cassandra as a Metrics Storage engine.</p>
+<h3 id="sample-configuration-file">Sample Configuration File<a class="headerlink" href="#sample-configuration-file" title="Permanent link">¶</a></h3>
+<p>The following is a sample configuration file that can be used as a quick reference:</p>
+<div class="highlight"><pre><span></span><code><span class="c1"># axon-server listening address (used by axon-agents for connections)</span>
+<span class="c1"># (env variable: AXONSERVER_HOST)</span>
+<span class="nt">host</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">0.0.0.0</span>
+<span class="c1"># axon-server listening port for agent connections</span>
+<span class="nt">agents_port</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">1888</span>
 
-<span class="nt">api_host</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">127.0.0.1</span><span class="w"> </span><span class="c1"># axon-server listening address (used by axon-dash for connections)</span>
-<span class="nt">api_port</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">8080</span><span class="w"> </span><span class="c1"># axon-server HTTP API listening port (used by axon-dash) (AXONSERVER_PORT)</span>
+<span class="hll"><span class="c1"># axon-server listening address</span>
+</span><span class="hll"><span class="c1"># (env variable: used by axon-dash for connections)</span>
+</span><span class="nt">api_host</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">127.0.0.1</span>
 
-<span class="hll"><span class="nt">elastic_hosts</span><span class="p">:</span><span class="w"> </span><span class="c1"># Elasticsearch endpoint (env variable:ELASTIC_HOSTS, comma separated list)</span>
-</span><span class="w">  </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">http://localhost:9200</span>
+<span class="c1"># axon-server HTTP API listening port (used by axon-dash)</span>
+<span class="c1"># (AXONSERVER_PORT)</span>
+<span class="nt">api_port</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">8080</span>
 
-<span class="c1"># Configure multiple Elasticsearch hosts with username and password authentication</span>
-<span class="c1"># elastic_hosts:</span>
-<span class="c1"># - https://username:password@ip.or.hostname:port</span>
-<span class="c1"># - https://username:password@ip.or.hostname:port</span>
-<span class="c1"># - https://username:password@ip.or.hostname:port</span>
+<span class="nt">search_db</span><span class="p">:</span>
+<span class="w">  </span><span class="c1"># Elasticsearch endpoint</span>
+<span class="w">  </span><span class="c1"># (env variable:ELASTIC_HOSTS, comma separated list)</span>
+<span class="w">  </span><span class="nt">hosts</span><span class="p">:</span>
+<span class="w">    </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">http://localhost:9200</span>
 
-<span class="c1"># SSL/TLS config for Elasticsearch</span>
-<span class="c1"># elastic_skipVerify: true # Disables CA and Hostname verification</span>
+<span class="w">  </span><span class="nt">username</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">opensearch-user</span>
+<span class="w">  </span><span class="nt">password</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">my-strong-password</span>
 
-<span class="c1"># Configure the number of shards per index. The default value of 1 is recommended for most use cases</span>
-<span class="nt">elastic_shards</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">1</span>
-<span class="c1"># Configure the number of replicas per shard. Defaults to 0 if not specified.</span>
-<span class="nt">elastic_replicas</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">0</span>
+<span class="w">  </span><span class="c1"># SSL/TLS config for Elasticsearch</span>
+<span class="w">  </span><span class="nt">skip_verify</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">false</span><span class="w"> </span><span class="c1"># Disables CA and Hostname verification</span>
 
-<span class="c1"># Enable/disable Elasticsearch cluster discovery (sniffing). Defaults to true, set to false to disable</span>
-<span class="c1"># Allows more nodes to be added to Elasticsearch for Metrics storage without having to restart Axon-Server and update elastic_hosts with all the ELK node values.</span>
-<span class="nt">elastic_discover_nodes</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">true</span>
-<span class="c1"># How often to perform cluster discovery. Default is every 5 minutes if this is omitted</span>
-<span class="nt">elastic_discover_node_interval</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">5m</span>
+<span class="w">  </span><span class="c1"># Configure the number of replicas per shard. Defaults to 0 if not specified.</span>
+<span class="w">  </span><span class="nt">replicas</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">0</span>
+
+<span class="w">  </span><span class="c1"># Configure the number of shards per index.</span>
+<span class="w">  </span><span class="c1"># The default value of 1 is recommended for most use cases</span>
+<span class="w">  </span><span class="nt">shards</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">1</span>
+<span class="hll">
+</span><span class="hll"><span class="w">  </span><span class="c1"># Enable/disable Elasticsearch cluster discovery (sniffing).</span>
+</span><span class="w">  </span><span class="c1"># Defaults to false, set to true to enable</span>
+<span class="w">  </span><span class="c1"># Allows more nodes to be added to Elasticsearch for Metrics storage</span>
+<span class="w">  </span><span class="c1"># without having to restart Axon-Server</span>
+<span class="w">  </span><span class="c1"># and update search_db.hosts with all the ELK node values.</span>
+<span class="w">  </span><span class="nt">discover_nodes</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">false</span>
+
+<span class="w">  </span><span class="c1"># How often to perform cluster discovery.</span>
+<span class="w">  </span><span class="c1"># Default is every 5 minutes if this is omitted</span>
+<span class="w">  </span><span class="nt">discover_nodes_interval</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">1m</span>
+
+<span class="w">  </span><span class="nt">max_results</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">1000</span>
 
 <span class="c1">#integrations_proxy: # proxy endpoint for integrations. (INTEGRATIONS_PROXY)</span>
 
 <span class="c1"># AxonOps licensing</span>
-<span class="hll"><span class="nt">license_key</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">license-key</span>
-</span><span class="hll"><span class="nt">org_name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">my-company</span>
-</span>
+<span class="nt">license_key</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">license-key</span>
+<span class="nt">org_name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">my-company</span>
+
 <span class="c1"># SSL/TLS Settings for AxonOps Agent connections</span>
 <span class="nt">tls</span><span class="p">:</span>
 <span class="w">  </span><span class="nt">mode</span><span class="p">:</span><span class="w"> </span><span class="s">"disabled"</span><span class="w"> </span><span class="c1"># disabled, TLS</span>
@@ -3803,26 +3921,16 @@ sudo<span class="w"> </span>yum<span class="w"> </span>install<span class="w"> <
 <span class="w">    </span><span class="nt">local</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">10d</span>
 <span class="w">    </span><span class="nt">remote</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">30d</span>
 </code></pre></div>
-<blockquote>
-<p>For better performance on larger clusters (10+ nodes), it is recommended to use Cassandra as a Metrics Storage engine. To opt-in for CQL metrics storage, specify at least one CQL host in the axon-server configuration.</p>
-</blockquote>
-<h2 id="step-3-start-the-server">Step 3 - Start the server<a class="headerlink" href="#step-3-start-the-server" title="Permanent link">¶</a></h2>
+<h2 id="start-the-axonops-server">Start the AxonOps Server<a class="headerlink" href="#start-the-axonops-server" title="Permanent link">¶</a></h2>
+<p>This following will start the <code>axon-server</code> process as the <code>axonops</code> user,
+which was created during the package installation.
+The default listening address is <a href="http://0.0.0.0:8080" target="_blank">0.0.0.0:8080</a>.</p>
 <div class="highlight"><pre><span></span><code>sudo systemctl daemon-reload
 sudo systemctl start axon-server
 sudo systemctl status axon-server
 </code></pre></div>
-<p>This will start the <code>axon-server</code> process as the <code>axonops</code> user, which was created during the package installation.  The default listening address is <code>0.0.0.0:8080</code>.</p>
-<h2 id="package-details">Package details<a class="headerlink" href="#package-details" title="Permanent link">¶</a></h2>
-<ul>
-<li>Configuration File: <code>/etc/axonops/axon-server.yml</code></li>
-<li>Binary: <code>/usr/share/axonops/axon-server</code></li>
-<li>Logs: <code>/var/log/axonops/axon-server.log</code> </li>
-<li>Systemd service: <code>/usr/lib/systemd/system/axon-server.service</code></li>
-<li>Copyright : <code>/usr/share/doc/axonops/axon-server/copyright</code></li>
-<li>Licenses : <code>/usr/share/axonops/licenses/axon-server/</code></li>
-</ul>
-<h2 id="next-install-axon-dash">Next - Install axon-dash<a class="headerlink" href="#next-install-axon-dash" title="Permanent link">¶</a></h2>
-<p>Now <strong>axon-server</strong> is installed, you can start installing the GUI for it: <a href="../../axon-dash/install/">axon-dash</a></p></div>
+<h2 id="next-install-axonops-dashboard">Next - Install AxonOps Dashboard<a class="headerlink" href="#next-install-axonops-dashboard" title="Permanent link">¶</a></h2>
+<p>Now that AxonOps Server (<code>axon-server</code>) is installed, you can start installing the GUI for it: <a href="../../axon-dash/install/">AxonOps Dashboard (axon-dash)</a>.</p></div>
 
 
 

@@ -1003,24 +1003,9 @@ data-et-multi-view="{&quot;schema&quot;:{&quot;content&quot;:{&quot;desktop&quot
   
   
   
-    
-    
-    
-      
-      
+    <li class="md-nav__item">
+      <a href="../../elasticsearch/install/" class="md-nav__link">
         
-      
-    
-    
-    <li class="md-nav__item md-nav__item--nested">
-      
-        
-        
-        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3_3_1" >
-        
-          
-          <label class="md-nav__link" for="__nav_3_3_1" id="__nav_3_3_1_label" tabindex="0">
-            
   
   <span class="md-ellipsis">
     Elasticsearch
@@ -1028,63 +1013,7 @@ data-et-multi-view="{&quot;schema&quot;:{&quot;content&quot;:{&quot;desktop&quot
   </span>
   
 
-            <span class="md-nav__icon md-icon"></span>
-          </label>
-        
-        <nav class="md-nav" data-md-level="3" aria-labelledby="__nav_3_3_1_label" aria-expanded="false">
-          <label class="md-nav__title" for="__nav_3_3_1">
-            <span class="md-nav__icon md-icon"></span>
-            Elasticsearch
-          </label>
-          <ul class="md-nav__list" data-md-scrollfix>
-            
-              
-                
-  
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="../../elasticsearch/install/" class="md-nav__link">
-        
-  
-  <span class="md-ellipsis">
-    Install Elasticsearch
-    
-  </span>
-  
-
       </a>
-    </li>
-  
-
-              
-            
-              
-                
-  
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="../../elasticsearch/securing_elastic/" class="md-nav__link">
-        
-  
-  <span class="md-ellipsis">
-    Secure Elasticsearch
-    
-  </span>
-  
-
-      </a>
-    </li>
-  
-
-              
-            
-          </ul>
-        </nav>
-      
     </li>
   
 
@@ -1146,28 +1075,6 @@ data-et-multi-view="{&quot;schema&quot;:{&quot;content&quot;:{&quot;desktop&quot
   
   <span class="md-ellipsis">
     AxonOps Dashboard
-    
-  </span>
-  
-
-      </a>
-    </li>
-  
-
-              
-            
-              
-                
-  
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="../../axon-dash/configure_nginx/" class="md-nav__link">
-        
-  
-  <span class="md-ellipsis">
-    Configure Nginx
     
   </span>
   
@@ -2081,11 +1988,121 @@ data-et-multi-view="{&quot;schema&quot;:{&quot;content&quot;:{&quot;desktop&quot
   
   
     <li class="md-nav__item">
+      <a href="../../../operations/cassandra/backup/local_storage/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Local Storage
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
       <a href="../../../operations/cassandra/backup/aws_s3/" class="md-nav__link">
         
   
   <span class="md-ellipsis">
     AWS S3
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../operations/cassandra/backup/generic_s3/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Generic S3
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../operations/cassandra/backup/gcs/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Google Cloud Storage
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../operations/cassandra/backup/azure_blob/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Azure Blob Storage
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../operations/cassandra/backup/ssh_sftp/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    SSH/SFTP
     
   </span>
   
@@ -3490,7 +3507,7 @@ data-et-multi-view="{&quot;schema&quot;:{&quot;content&quot;:{&quot;desktop&quot
 <div><h1 id="axon-java-agent-for-dse-installation">axon-java-agent for DSE installation<a class="headerlink" href="#axon-java-agent-for-dse-installation" title="Permanent link">¶</a></h1>
 <p>This agent will enable metrics collection from DSE and enable adaptive repairs and backups.</p>
 <h2 id="prerequisites">Prerequisites<a class="headerlink" href="#prerequisites" title="Permanent link">¶</a></h2>
-<p>DSE agent needs <strong>axon-agent</strong> to be installed and configured properly. If not installed already, please go to <a href="../../axon-agent/install">axon-agent</a> installation 
+<p>DSE agent needs <strong>axon-agent</strong> to be installed and configured properly. If not installed already, please go to <a href="../../agent/install/">axon-agent</a> installation 
 page.</p>
 <h4 id="setup-axon-agent-for-dse">Setup axon-agent for DSE<a class="headerlink" href="#setup-axon-agent-for-dse" title="Permanent link">¶</a></h4>
 <p>You'll need the specify/update the following lines from <strong>axon-agent.yml</strong> located in <code>/etc/axonops/axon-agent.yml</code>:</p>
@@ -3511,7 +3528,7 @@ page.</p>
 * Don't forget to comment or remove the <code>cluster_name</code> as it will be deduced from DSE configuration.
 * Don't forget to specify <strong>axon-server</strong> host and port if that's not already specified.
 <h2 id="dse-agent-installation">DSE agent installation<a class="headerlink" href="#dse-agent-installation" title="Permanent link">¶</a></h2>
-<p>Make sure the <code>{version}</code> of your DSE and DSE agent are compatible from the <a href="../../compat_matrix/compat_matrix">compatibility matrix</a>. </p>
+<p>Make sure the <code>{version}</code> of your DSE and DSE agent are compatible from the <a href="../../compat_matrix/compat_matrix/">compatibility matrix</a>. </p>
 <h4 id="centos-redhat-installer">CentOS / RedHat installer<a class="headerlink" href="#centos-redhat-installer" title="Permanent link">¶</a></h4>
 <div class="highlight"><pre><span></span><code>sudo yum install &lt;TODO&gt;
 </code></pre></div>

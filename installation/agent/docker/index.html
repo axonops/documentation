@@ -1003,24 +1003,9 @@ data-et-multi-view="{&quot;schema&quot;:{&quot;content&quot;:{&quot;desktop&quot
   
   
   
-    
-    
-    
-      
-      
+    <li class="md-nav__item">
+      <a href="../../elasticsearch/install/" class="md-nav__link">
         
-      
-    
-    
-    <li class="md-nav__item md-nav__item--nested">
-      
-        
-        
-        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3_3_1" >
-        
-          
-          <label class="md-nav__link" for="__nav_3_3_1" id="__nav_3_3_1_label" tabindex="0">
-            
   
   <span class="md-ellipsis">
     Elasticsearch
@@ -1028,63 +1013,7 @@ data-et-multi-view="{&quot;schema&quot;:{&quot;content&quot;:{&quot;desktop&quot
   </span>
   
 
-            <span class="md-nav__icon md-icon"></span>
-          </label>
-        
-        <nav class="md-nav" data-md-level="3" aria-labelledby="__nav_3_3_1_label" aria-expanded="false">
-          <label class="md-nav__title" for="__nav_3_3_1">
-            <span class="md-nav__icon md-icon"></span>
-            Elasticsearch
-          </label>
-          <ul class="md-nav__list" data-md-scrollfix>
-            
-              
-                
-  
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="../../elasticsearch/install/" class="md-nav__link">
-        
-  
-  <span class="md-ellipsis">
-    Install Elasticsearch
-    
-  </span>
-  
-
       </a>
-    </li>
-  
-
-              
-            
-              
-                
-  
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="../../elasticsearch/securing_elastic/" class="md-nav__link">
-        
-  
-  <span class="md-ellipsis">
-    Secure Elasticsearch
-    
-  </span>
-  
-
-      </a>
-    </li>
-  
-
-              
-            
-          </ul>
-        </nav>
-      
     </li>
   
 
@@ -1146,28 +1075,6 @@ data-et-multi-view="{&quot;schema&quot;:{&quot;content&quot;:{&quot;desktop&quot
   
   <span class="md-ellipsis">
     AxonOps Dashboard
-    
-  </span>
-  
-
-      </a>
-    </li>
-  
-
-              
-            
-              
-                
-  
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="../../axon-dash/configure_nginx/" class="md-nav__link">
-        
-  
-  <span class="md-ellipsis">
-    Configure Nginx
     
   </span>
   
@@ -2081,11 +1988,121 @@ data-et-multi-view="{&quot;schema&quot;:{&quot;content&quot;:{&quot;desktop&quot
   
   
     <li class="md-nav__item">
+      <a href="../../../operations/cassandra/backup/local_storage/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Local Storage
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
       <a href="../../../operations/cassandra/backup/aws_s3/" class="md-nav__link">
         
   
   <span class="md-ellipsis">
     AWS S3
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../operations/cassandra/backup/generic_s3/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Generic S3
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../operations/cassandra/backup/gcs/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Google Cloud Storage
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../operations/cassandra/backup/azure_blob/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Azure Blob Storage
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../operations/cassandra/backup/ssh_sftp/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    SSH/SFTP
     
   </span>
   
@@ -3408,7 +3425,7 @@ data-et-multi-view="{&quot;schema&quot;:{&quot;content&quot;:{&quot;desktop&quot
 <p class="admonition-title">Caveats</p>
 <ul>
 <li>Cassandra logs cannot normally be collected by AxonOps as they are sent to stdout and handled by the
-    Docker logging driver</li>
+    Docker logging driver.</li>
 <li>If axon-agent is running under Docker it assumes that the Cassandra user's GID is 999 as it is in the
     official Cassandra images. If this is not the case then AxonOps may not be able to backup the Cassandra data.</li>
 </ul>
@@ -3447,7 +3464,7 @@ AxonOps Agent processes.</p>
 </tbody>
 </table>
 <p>When running Cassandra under Docker it is possible to run the AxonOps agent either on the host or in another 
-Docker container. When installing on the host follow the instructions under
+Docker container. When installing on the host, follow the instructions under
 <a href="../install/">AxonOps Cassandra agent installation</a> to install the agent and ensure that the appropriate directories are
 mapped into the Cassandra container.</p>
 <h2 id="example-with-docker-compose">Example with Docker Compose<a class="headerlink" href="#example-with-docker-compose" title="Permanent link">¶</a></h2>

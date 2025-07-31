@@ -1196,24 +1196,9 @@ data-et-multi-view="{&quot;schema&quot;:{&quot;content&quot;:{&quot;desktop&quot
   
   
   
-    
-    
-    
-      
-      
+    <li class="md-nav__item">
+      <a href="../../installation/elasticsearch/install/" class="md-nav__link">
         
-      
-    
-    
-    <li class="md-nav__item md-nav__item--nested">
-      
-        
-        
-        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3_3_1" >
-        
-          
-          <label class="md-nav__link" for="__nav_3_3_1" id="__nav_3_3_1_label" tabindex="0">
-            
   
   <span class="md-ellipsis">
     Elasticsearch
@@ -1221,63 +1206,7 @@ data-et-multi-view="{&quot;schema&quot;:{&quot;content&quot;:{&quot;desktop&quot
   </span>
   
 
-            <span class="md-nav__icon md-icon"></span>
-          </label>
-        
-        <nav class="md-nav" data-md-level="3" aria-labelledby="__nav_3_3_1_label" aria-expanded="false">
-          <label class="md-nav__title" for="__nav_3_3_1">
-            <span class="md-nav__icon md-icon"></span>
-            Elasticsearch
-          </label>
-          <ul class="md-nav__list" data-md-scrollfix>
-            
-              
-                
-  
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="../../installation/elasticsearch/install/" class="md-nav__link">
-        
-  
-  <span class="md-ellipsis">
-    Install Elasticsearch
-    
-  </span>
-  
-
       </a>
-    </li>
-  
-
-              
-            
-              
-                
-  
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="../../installation/elasticsearch/securing_elastic/" class="md-nav__link">
-        
-  
-  <span class="md-ellipsis">
-    Secure Elasticsearch
-    
-  </span>
-  
-
-      </a>
-    </li>
-  
-
-              
-            
-          </ul>
-        </nav>
-      
     </li>
   
 
@@ -1339,28 +1268,6 @@ data-et-multi-view="{&quot;schema&quot;:{&quot;content&quot;:{&quot;desktop&quot
   
   <span class="md-ellipsis">
     AxonOps Dashboard
-    
-  </span>
-  
-
-      </a>
-    </li>
-  
-
-              
-            
-              
-                
-  
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="../../installation/axon-dash/configure_nginx/" class="md-nav__link">
-        
-  
-  <span class="md-ellipsis">
-    Configure Nginx
     
   </span>
   
@@ -2283,11 +2190,121 @@ data-et-multi-view="{&quot;schema&quot;:{&quot;content&quot;:{&quot;desktop&quot
   
   
     <li class="md-nav__item">
+      <a href="../../operations/cassandra/backup/local_storage/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Local Storage
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
       <a href="../../operations/cassandra/backup/aws_s3/" class="md-nav__link">
         
   
   <span class="md-ellipsis">
     AWS S3
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../operations/cassandra/backup/generic_s3/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Generic S3
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../operations/cassandra/backup/gcs/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Google Cloud Storage
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../operations/cassandra/backup/azure_blob/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Azure Blob Storage
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../operations/cassandra/backup/ssh_sftp/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    SSH/SFTP
     
   </span>
   
@@ -3742,10 +3759,22 @@ data-et-multi-view="{&quot;schema&quot;:{&quot;content&quot;:{&quot;desktop&quot
 </ul>
 <p>AxonOps Unified Monitoring consists of 4 main components:</p>
 <ul>
-<li>axon-server</li>
-<li>axon-dash</li>
-<li>axon-agent</li>
-<li>storage engine</li>
+<li>axon-server<ul>
+<li>backend that collects cluster information and interacts with your clusters.</li>
+</ul>
+</li>
+<li>axon-dash<ul>
+<li>web UI to display and interact with your clusters.</li>
+</ul>
+</li>
+<li>axon-agent<ul>
+<li>called from within the JVM to send metrics to axon-server.</li>
+</ul>
+</li>
+<li>storage engine<ul>
+<li>stores metrics, logs, configurations, and metadata about your cluster.</li>
+</ul>
+</li>
 </ul>
 <h2 id="please-follow-the-following-steps-to-get-your-on-premise-axonops-unified-monitoring-installed-and-configured">Please follow the following steps to get your on-premise AxonOps Unified Monitoring installed and configured:<a class="headerlink" href="#please-follow-the-following-steps-to-get-your-on-premise-axonops-unified-monitoring-installed-and-configured" title="Permanent link">¶</a></h2>
 <h3 id="step-1-storage-engine">Step 1 : Storage Engine<a class="headerlink" href="#step-1-storage-engine" title="Permanent link">¶</a></h3>
@@ -3755,15 +3784,15 @@ data-et-multi-view="{&quot;schema&quot;:{&quot;content&quot;:{&quot;desktop&quot
 <h4 id="elasticsearch-required">Elasticsearch (Required)<a class="headerlink" href="#elasticsearch-required" title="Permanent link">¶</a></h4>
 <p>AxonOps is currently compatible with Elasticsearch 7.x and 8.x.</p>
 <p>We recommend installing the latest available release.</p>
-<p><a href="/installation/elasticsearch/install/">Install Elasticsearch</a></p>
+<p><a href="../../installation/elasticsearch/install/">Install Elasticsearch</a></p>
 <h4 id="cassandra-optional">Cassandra (Optional)<a class="headerlink" href="#cassandra-optional" title="Permanent link">¶</a></h4>
-<p>For more information please read more on setting up <a href="/installation/axon-server/metricsdatabase/">Cassandra as a Metrics Database</a></p>
+<p>For more information please read more on setting up <a href="../../installation/axon-server/metricsdatabase/">Cassandra as a Metrics Database</a></p>
 <h3 id="step-2-install-and-configure-axon-server">Step 2 : Install and configure axon-server.<a class="headerlink" href="#step-2-install-and-configure-axon-server" title="Permanent link">¶</a></h3>
-<p><a href="/installation/axon-server/axonserver_install/">Install and configure axon-server</a> </p>
+<p><a href="../../installation/axon-server/axonserver_install/">Install and configure axon-server</a></p>
 <h3 id="step-3-install-and-configure-axon-dash">Step 3 : Install and configure axon-dash<a class="headerlink" href="#step-3-install-and-configure-axon-dash" title="Permanent link">¶</a></h3>
-<p><a href="/installation/axon-dash/install/">Install and configure axon-dash</a> </p>
+<p><a href="../../installation/axon-dash/install/">Install and configure axon-dash</a></p>
 <h3 id="step-4-install-and-configure-axon-agent-for-cassandra-or-kafka">Step 4 : Install and configure axon-agent for Cassandra or Kafka<a class="headerlink" href="#step-4-install-and-configure-axon-agent-for-cassandra-or-kafka" title="Permanent link">¶</a></h3>
-<p><a href="/installation/agent/install/">Install and configure axon-agent for Cassandra or Kafka</a> </p>
+<p><a href="../../installation/agent/install/">Install and configure axon-agent for Cassandra or Kafka</a></p>
 <h2 id="alternative-installation-options">Alternative installation options:<a class="headerlink" href="#alternative-installation-options" title="Permanent link">¶</a></h2>
 <p>The different options for setting up the AxonOps platform on-premises, depending on your environment and preferences:</p>
 <h3 id="docker-or-podman">Docker or Podman:<a class="headerlink" href="#docker-or-podman" title="Permanent link">¶</a></h3>

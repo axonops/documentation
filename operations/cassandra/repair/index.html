@@ -1011,24 +1011,9 @@ data-et-multi-view="{&quot;schema&quot;:{&quot;content&quot;:{&quot;desktop&quot
   
   
   
-    
-    
-    
-      
-      
+    <li class="md-nav__item">
+      <a href="../../../installation/elasticsearch/install/" class="md-nav__link">
         
-      
-    
-    
-    <li class="md-nav__item md-nav__item--nested">
-      
-        
-        
-        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3_3_1" >
-        
-          
-          <label class="md-nav__link" for="__nav_3_3_1" id="__nav_3_3_1_label" tabindex="0">
-            
   
   <span class="md-ellipsis">
     Elasticsearch
@@ -1036,63 +1021,7 @@ data-et-multi-view="{&quot;schema&quot;:{&quot;content&quot;:{&quot;desktop&quot
   </span>
   
 
-            <span class="md-nav__icon md-icon"></span>
-          </label>
-        
-        <nav class="md-nav" data-md-level="3" aria-labelledby="__nav_3_3_1_label" aria-expanded="false">
-          <label class="md-nav__title" for="__nav_3_3_1">
-            <span class="md-nav__icon md-icon"></span>
-            Elasticsearch
-          </label>
-          <ul class="md-nav__list" data-md-scrollfix>
-            
-              
-                
-  
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="../../../installation/elasticsearch/install/" class="md-nav__link">
-        
-  
-  <span class="md-ellipsis">
-    Install Elasticsearch
-    
-  </span>
-  
-
       </a>
-    </li>
-  
-
-              
-            
-              
-                
-  
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="../../../installation/elasticsearch/securing_elastic/" class="md-nav__link">
-        
-  
-  <span class="md-ellipsis">
-    Secure Elasticsearch
-    
-  </span>
-  
-
-      </a>
-    </li>
-  
-
-              
-            
-          </ul>
-        </nav>
-      
     </li>
   
 
@@ -1154,28 +1083,6 @@ data-et-multi-view="{&quot;schema&quot;:{&quot;content&quot;:{&quot;desktop&quot
   
   <span class="md-ellipsis">
     AxonOps Dashboard
-    
-  </span>
-  
-
-      </a>
-    </li>
-  
-
-              
-            
-              
-                
-  
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="../../../installation/axon-dash/configure_nginx/" class="md-nav__link">
-        
-  
-  <span class="md-ellipsis">
-    Configure Nginx
     
   </span>
   
@@ -2162,11 +2069,121 @@ data-et-multi-view="{&quot;schema&quot;:{&quot;content&quot;:{&quot;desktop&quot
   
   
     <li class="md-nav__item">
+      <a href="../backup/local_storage/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Local Storage
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
       <a href="../backup/aws_s3/" class="md-nav__link">
         
   
   <span class="md-ellipsis">
     AWS S3
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../backup/generic_s3/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Generic S3
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../backup/gcs/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Google Cloud Storage
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../backup/azure_blob/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Azure Blob Storage
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../backup/ssh_sftp/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    SSH/SFTP
     
   </span>
   
@@ -3523,7 +3540,7 @@ data-et-multi-view="{&quot;schema&quot;:{&quot;content&quot;:{&quot;desktop&quot
 </ul>
 <div class="admonition infomy">
 <p class="admonition-title">Infomy</p>
-<p><a href="/img/cass_repairs/adaptive_repair.png"><img alt="adaptive_repair" src="/img/cass_repairs/adaptive_repair.png"></a></p>
+<p><a href="../../../img/cass_repairs/adaptive_repair.png"><img alt="adaptive_repair" src="../../../img/cass_repairs/adaptive_repair.png"></a></p>
 </div>
 <blockquote>
 <p>If you want to keep the tables as fresh as possible we recommend to increase the <code>table parallelism</code> to be greater than the total number of tables of your cluster and reduce the <code>segments per VNode</code> to generate less repair requests.</p>
@@ -3550,28 +3567,28 @@ data-et-multi-view="{&quot;schema&quot;:{&quot;content&quot;:{&quot;desktop&quot
 </ul>
 <div class="admonition infomy">
 <p class="admonition-title">Infomy</p>
-<p><a href="/img/cass_repairs/scheduled_repair.png"><img alt="scheduled_repair" src="/img/cass_repairs/scheduled_repair.png"></a></p>
+<p><a href="../../../img/cass_repairs/scheduled_repair.png"><img alt="scheduled_repair" src="../../../img/cass_repairs/scheduled_repair.png"></a></p>
 </div>
 <ul>
 <li>Simple scheduled repair: these will trigger base on the selected schedule <strong>repeatedly</strong></li>
 </ul>
 <div class="admonition infomy">
 <p class="admonition-title">Infomy</p>
-<p><a href="/img/cass_repairs/scheduled_repair2.png"><img alt="scheduled_repair" src="/img/cass_repairs/scheduled_repair2.png"></a></p>
+<p><a href="../../../img/cass_repairs/scheduled_repair2.png"><img alt="scheduled_repair" src="../../../img/cass_repairs/scheduled_repair2.png"></a></p>
 </div>
 <ul>
 <li>Cron schedule repair: Same as <strong>simple scheduled repair</strong> but the schedule will be based on a Cron expression</li>
 </ul>
 <div class="admonition infomy">
 <p class="admonition-title">Infomy</p>
-<p><a href="/img/cass_repairs/scheduled_repair3.png"><img alt="scheduled_repair" src="/img/cass_repairs/scheduled_repair3.png"></a></p>
+<p><a href="../../../img/cass_repairs/scheduled_repair3.png"><img alt="scheduled_repair" src="../../../img/cass_repairs/scheduled_repair3.png"></a></p>
 </div>
 <blockquote>
 <p>The following capture presents a running repair that has been initiated immediately and a scheduled repair that is scheduled for 12:00 AM UTC:</p>
 </blockquote>
 <div class="admonition infomy">
 <p class="admonition-title">Infomy</p>
-<p><a href="/img/cass_repairs/scheduled_repair4.png"><img alt="scheduled_repair" src="/img/cass_repairs/scheduled_repair4.png"></a></p>
+<p><a href="../../../img/cass_repairs/scheduled_repair4.png"><img alt="scheduled_repair" src="../../../img/cass_repairs/scheduled_repair4.png"></a></p>
 </div></div>
 
 
