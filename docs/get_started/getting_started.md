@@ -1,6 +1,6 @@
 # Getting Started
 
-Installing AxonOps Unified Monitoring on your own premises as a self-managed cluster gives you full control over every aspect of you AxonOps deployment.
+Installing AxonOps Unified Monitoring on your own premises as a self-managed cluster gives you full control over every aspect of your AxonOps deployment.
 
 AxonOps components run on a wide array of operating systems including (but not limited to):
 
@@ -22,9 +22,9 @@ AxonOps Unified Monitoring consists of 4 main components:
     - stores metrics, logs, configurations, and metadata about your cluster.
 
 
-## Please follow the following steps to get your on-premise AxonOps Unified Monitoring installed and configured: 
+Below are the steps to install and configure an on-premise AxonOps Unified Monitoring installation.
 
-### Step 1 : Storage Engine
+### Setup Storage Engine
 
 Elasticsearch is always required and the default data storage for all Cassandra and Kafka metrics as well as application logs, AxonOps configuration and metrics metadata. 
 
@@ -36,58 +36,57 @@ Elasticsearch is still required in conjunction with the dedicated AxonOps Cassan
 
 AxonOps is currently compatible with Elasticsearch 7.x and 8.x.
 
-We recommend installing the latest available release.
-
-[Install Elasticsearch](../installation/elasticsearch/install.md)
+We recommend [installing the latest available Elasticsearch release](../installation/elasticsearch/install.md).
 
 #### Cassandra (Optional)
 
-For more information please read more on setting up [Cassandra as a Metrics Database](../installation/axon-server/metricsdatabase.md)
+For more information please read more on setting up [Cassandra as a Metrics Database](../installation/axon-server/metricsdatabase.md).
 
-### Step 2 : Install and configure axon-server.
+### Setup AxonOps Server
 
-[Install and configure axon-server](../installation/axon-server/axonserver_install.md)
+[Install and configure AxonOps Server (`axon-server`)](../installation/axon-server/axonserver_install.md).
 
-### Step 3 : Install and configure axon-dash 
+### Setup AxonOps Dashboard
 
-[Install and configure axon-dash](../installation/axon-dash/install.md)
+[Install and configure AxonOps Dashboard (`axon-dash`)](../installation/axon-dash/install.md).
 
-### Step 4 : Install and configure axon-agent for Cassandra or Kafka
+### Setup AxonOps Agent
 
-[Install and configure axon-agent for Cassandra or Kafka](../installation/agent/install.md)
+[Install and configure AxonOps Agent (`axon-agent`) for Cassandra or Kafka](../installation/agent/install.md).
 
-## Alternative installation options: 
+## Alternative Installation Options
 
-The different options for setting up the AxonOps platform on-premises, depending on your environment and preferences:
+Below are different options for on-premise installations of the AxonOps platform,
+depending on your environment and preferences.
  
-### Docker or Podman: 
+### Docker or Podman
   
 For quick evaluations or smaller clusters, our Docker and Podman Compose setup is the fastest way to get everything running.
 
-Instructions and files at [AxonOps Docker/Podman Compose:](https://github.com/axonops/axonops-server-compose)
+Instructions and files can be found [here](https://github.com/axonops/axonops-server-compose).
 
-### Ansible: 
+### Ansible
 
-A more automated and repeatable approach,the Ansible collection can install both the AxonOps server and agents across your Cassandra or Kafka nodes.
+For an automated and repeatable approach, the Ansible collection can install both the
+AxonOps Server and Agents across Cassandra or Kafka clusters.
 
-Instructions and files at [AxonOps Ansible Collection:](https://github.com/axonops/axonops-ansible-collection)
+Instructions and files can be found [here](https://github.com/axonops/axonops-ansible-collection).
 
-### Kubernetes: 
+### Kubernetes
 
 For deployments into Kubernetes environments, a Helm chart is available.
 
-Instructions and files at [AxonOps Helm Chart:](https://github.com/axonops/helm-axonops)
+Instructions and files can be found [here](https://github.com/axonops/helm-axonops).
 
-### Offline Installations: 
+### Offline Installations
 
 If you need to download packages for offline installation due to security requirements, you can use our package downloader script.
 
-Instructions and files at [AxonOps Offline Script:](https://github.com/axonops/axonops-installer-packages-downloader)
+Instructions and files can be found [here](https://github.com/axonops/axonops-installer-packages-downloader).
 
-## Configuration Automation: 
+## Configuration Automation
 
-A repository of ansible playbooks that automate AxonOps configuration.
+To easily setup alerts, dashboards, backups, integrations, and other configurations,
+use this repository of Ansible playbooks to automate AxonOps configuration.
 
-Easily setup alerts, dashboards, backups, integrations and other configurations.
-
-Instructions and files at [AxonOps Config Automation:](https://github.com/axonops/axonops-config-automation)
+Instructions and files can be found [here](https://github.com/axonops/axonops-config-automation).

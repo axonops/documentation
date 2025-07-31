@@ -66,5 +66,5 @@ AxonOps Agent is available for the following versions of Apache Casssandra and A
 ## Start the AxonOps Agent
 
 ``` bash
-sudo systemctl start axon-agent
+{!installation/axon-agent/scripts/restart-axon-agent.sh!}
 ```
