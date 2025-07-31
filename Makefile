@@ -3,7 +3,8 @@
 #
 .EXPORT_ALL_VARIABLES:
 .ONESHELL:
-.SHELL := /bin/bash
+.SHELL: path=/bin/bash
+SHELL := /usr/bin/bash
 .PHONY: serve publish
 # Default to use pipenv unless disabled
 PIPENV=true
