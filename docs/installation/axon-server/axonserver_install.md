@@ -72,7 +72,7 @@ org_name: my-company
 
 Note: Both values need to match the information provided during the Enterprise
 onboarding process and are case-sensitive.
-These values *cannot* found on [console.axonops.com](https://console.axonops.com).
+These values *cannot* be found on [console.axonops.com](https://console.axonops.com).
 
 ### Configure Cassandra as Metrics Store
 
