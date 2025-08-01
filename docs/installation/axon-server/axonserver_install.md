@@ -70,10 +70,9 @@ license_key: license-key
 org_name: my-company
 ```
 
-Note:
-
-- `license_key` can be found within [console.axonops.com](https://console.axonops.com) > Agent Setup > Agent Keys.
-- `org_name` needs to match the Organization Name provided during the Enterprise onboarding process.
+Note: Both values need to match the information provided during the Enterprise
+onboarding process and are case-sensitive.
+These values *cannot* be found on [console.axonops.com](https://console.axonops.com).
 
 ### Configure Cassandra as Metrics Store
 
