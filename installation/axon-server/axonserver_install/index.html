@@ -3807,11 +3807,9 @@ is not required.</p>
 <div class="highlight"><pre><span></span><code><span class="nt">license_key</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">license-key</span>
 <span class="nt">org_name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">my-company</span>
 </code></pre></div>
-<p>Note:</p>
-<ul>
-<li><code>license_key</code> can be found within <a href="https://console.axonops.com">console.axonops.com</a> &gt; Agent Setup &gt; Agent Keys.</li>
-<li><code>org_name</code> needs to match the Organization Name provided during the Enterprise onboarding process.</li>
-</ul>
+<p>Note: Both values need to match the information provided during the Enterprise
+onboarding process and are case-sensitive.
+These values <em>cannot</em> be found on <a href="https://console.axonops.com">console.axonops.com</a>.</p>
 <h3 id="configure-cassandra-as-metrics-store">Configure Cassandra as Metrics Store<a class="headerlink" href="#configure-cassandra-as-metrics-store" title="Permanent link">¶</a></h3>
 <p>To use <a href="../metricsdatabase/">Cassandra as AxonOps' metrics store</a>,
 specify at least one CQL host within the <code>cql_hosts</code> key within <code>/etc/axonops/axon-server.yml</code>.</p>
