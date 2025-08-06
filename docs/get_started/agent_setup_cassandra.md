@@ -46,16 +46,6 @@ sudo chmod 0640 /etc/axonops/axon-agent.yml
 
 {!dynamic_pages/axon_agent/java.md!}
 
-<blockquote>
-<p><strong>NB.</strong> Make sure that this configuration will not get overridden by an automation tool.</p>
-</blockquote>
-
-<h2>Add axonops user to Cassandra user group and Cassandra user to axonops group</h2>
-```
-sudo usermod -aG <your_cassandra_group> axonops
-sudo usermod -aG axonops <your_cassandra_user>
-```
-
 <h2>Start/Restart Cassandra</h2>
 
 To load the AxonOps Java Agent and Cassandra config changes please,
