@@ -73,3 +73,42 @@
 * [Server] Introduce OpenSearch support.
 * [Dash] Filters can now be customized on new dashboards.
 * [Dash] Allow restoring snapshots to new keyspace/tables when the keyspace/table no longer exists.
+
+## Release 2024-07-01
+
+* Axon Dash: 2.0.7
+    * Risk: Low.
+
+### Bug Fixes / Hardening
+
+* [Dash] Allow deleting dashboards that contain widgets.
+* [Dash] Remove PDF dependency preventing Axon Dash RPM package installation on RHEL 9.
+
+### Customer Requests
+
+* [Dash] Improve Firefox compatibility by no longer using experimental Javascript features.
+
+## Release 2024-06-26
+
+* Axon Kafka Agent: 1.0.2
+    * Risk: Low.
+
+### Bug Fixes / Hardening
+
+* [Kafka Agent] Remove override within the agent configuration and apply it the codebase.
+
+## Release 2024-06-24
+
+* Axon Agent: 2.0.4
+    * Risk: Low.
+* Axon Kafka Agent: 1.0.1
+    * Risk: Low.
+
+### Bug Fixes / Hardening
+
+* [Agent] Improve log collector logic and reliability.
+* [Agent] Update Go and dependencies to eliminate known security vulnerabilities.
+
+### New Features
+
+* [Agent, Kafka Agent] Allow Kafka Agent to be configured solely with environment variables.
