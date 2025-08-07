@@ -1,16 +1,16 @@
 ## Release 2024-08-06
 
-* Axon Server: 2.0.5
+* axon-server: 2.0.5
     * Risk: Low.
     * Mainly new features and simple bug fixes.
-* Axon Agent: 2.0.6
+* axon-agent: 2.0.6
     * Risk: Medium.
     * Introduction of new, efficient log collector. Tested thoroughly with edge cases.
-* Axon Dash: 2.0.9
+* axon-dash: 2.0.9
     * Risk: Low.
     * Fixes for adaptive repairs and Alerts dashboard timeline, along with new features.
 
-### Bug Fixes / Hardening
+### Fixes
 
 * [Server] Handle race condition seen where restarting axon-server while running adaptive repairs would cancel the repair.
 * [Agent] Redesign log collectors to avoid throwing too many open files errors and use inotify file handles efficiently.
@@ -25,28 +25,26 @@
 
 ### New Features
 
-* [Server, Agent] Add Prometheus scraper support to the axon-agent.
-* [Server] Replace the `elastic_hosts` configuration key with the forward-looking `search_db` key in the default axon-server.yml.
-* [Server] Retrieve Kafka configuration and broker ID values from the JVM and display then within the UI and APIs.
+* [Server] Replace the `elastic_hosts` configuration keyaaa with the forward-looking `search_db` key in the default axon-server.yml.
 * [Agent] Add `--validate` to `axon-cassandra-restore` tooling that verifies all files referenced by a backup manifest are still accessible.
 * [Dash] Add deeplinking URLs for better Workbench support.
 * [Dash] New fluid progress animation for adaptive repairs.
 
 ## Release 2024-07-28
 
-* Axon Server: 2.0.4
+* axon-server: 2.0.4
     * Risk: Medium.
     * Internal messages for repairs and backups have changed.
-* Axon Agent: 2.0.5
+* axon-agent: 2.0.5
     * Risk: Medium.
     * Internal messages for repairs and backups have changed.
     * OpenSearch support required changes that could have affected Elasticsearch access
       code. Routinely tested with our nightly builds.
-* Axon Dash: 2.0.8
+* axon-dash: 2.0.8
     * Risk: Low.
     * Mainly internal changes and bug fixes.
 
-### Bug Fixes / Hardening
+### Fixes
 
 * [Server, Agent] Improve resilience of repair and backup messages.
 * [Server] Update Go and dependencies to eliminate known security vulnerabilities.
@@ -76,13 +74,13 @@
 
 ## Release 2024-07-01
 
-* Axon Dash: 2.0.7
+* axon-dash: 2.0.7
     * Risk: Low.
 
-### Bug Fixes / Hardening
+### Fixes
 
 * [Dash] Allow deleting dashboards that contain widgets.
-* [Dash] Remove PDF dependency preventing Axon Dash RPM package installation on RHEL 9.
+* [Dash] Remove PDF dependency preventing axon-dash RPM package installation on RHEL 9.
 
 ### Customer Requests
 
@@ -90,21 +88,23 @@
 
 ## Release 2024-06-26
 
-* Axon Kafka Agent: 1.0.2
+* axon-kafka3-agent: 1.0.2
     * Risk: Low.
 
-### Bug Fixes / Hardening
+### Fixes
 
 * [Kafka Agent] Remove override within the agent configuration and apply it the codebase.
 
 ## Release 2024-06-24
 
-* Axon Agent: 2.0.4
+* axon-agent: 2.0.4
     * Risk: Low.
-* Axon Kafka Agent: 1.0.1
+* axon-kafka3-agent: 1.0.1
+    * Risk: Low.
+* axon-kafka2-agent: 1.0.1
     * Risk: Low.
 
-### Bug Fixes / Hardening
+### Fixes
 
 * [Agent] Improve log collector logic and reliability.
 * [Agent] Update Go and dependencies to eliminate known security vulnerabilities.
