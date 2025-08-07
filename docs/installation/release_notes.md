@@ -1,4 +1,4 @@
-# Release 2024-08-06
+## Release 2024-08-06
 
 * Axon Server: 2.0.5
     * Risk: Low.
@@ -10,20 +10,20 @@
     * Risk: Low.
     * Fixes for adaptive repairs and Alerts dashboard timeline, along with new features.
 
-## Bug Fixes / Hardening
+### Bug Fixes / Hardening
 
 * [Server] Handle race condition seen where restarting axon-server while running adaptive repairs would cancel the repair.
 * [Agent] Redesign log collectors to avoid throwing too many open files errors and use inotify file handles efficiently.
 * [Dash] Remove broken metrics tab from the Kafka broker view.
 * [Dash] Ensure all alerts are displayed on the Alerts dashboard timeline.
 
-## Customer Requests
+### Customer Requests
 
 * [Server] Failed backups have been downgraded from Critical (red) alerts to Warning (yellow) alerts, reserving Critical alerts for operational issues.
 * [Dash] Improve Firefox compatibilty.
 * [Dash] Disable auto-saving of adaptive repair settings and add ability to revert settings.
 
-## New Features
+### New Features
 
 * [Server, Agent] Add Prometheus scraper support to the axon-agent.
 * [Server] Replace the `elastic_hosts` configuration key with the forward-looking `search_db` key in the default axon-server.yml.
@@ -32,7 +32,7 @@
 * [Dash] Add deeplinking URLs for better Workbench support.
 * [Dash] New fluid progress animation for adaptive repairs.
 
-# Release 2024-07-28
+## Release 2024-07-28
 
 * Axon Server: 2.0.4
     * Risk: Medium.
@@ -46,7 +46,7 @@
     * Risk: Low.
     * Mainly internal changes and bug fixes.
 
-## Bug Fixes / Hardening
+### Bug Fixes / Hardening
 
 * [Server, Agent] Improve resilience of repair and backup messages.
 * [Server] Update Go and dependencies to eliminate known security vulnerabilities.
@@ -63,12 +63,12 @@
 * [Dash] Remove unused internal dashboard template model definition.
 * [Dash] Upgrade AppImage.
 
-## Customer Requests
+### Customer Requests
 
 * [Server] Make alert emails user friendly.
 * [Server] Add ability to log alerts to file for ingestion by external log readers.
 
-## New Features
+### New Features
 
 * [Server] Introduce OpenSearch support.
 * [Dash] Filters can now be customized on new dashboards.
