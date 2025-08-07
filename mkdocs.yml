@@ -131,7 +131,8 @@ nav:
       - Quickstart - Docker: 'get_started/docker.md'
       
     - Compatibility:
-      - Interoperability matrix: 'installation/compat_matrix/compat_matrix.md'
+      - Interoperability Matrix: 'installation/compat_matrix/compat_matrix.md'
+      - Release Notes: 'installation/release_notes.md'
 
     
   - Using AxonOps:
