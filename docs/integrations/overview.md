@@ -35,7 +35,7 @@ The current routing options are:
 
 Each severity (`info, warning, error`) can be routed independently 
 
-   ![](./routing.JPG)
+   ![](imgs/routing.jpg)
 
 ### Errors per routing mechanism and severity levels
 
