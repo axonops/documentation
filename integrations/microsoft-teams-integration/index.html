@@ -93,7 +93,7 @@
     <div data-md-component="skip">
       
         
-        <a href="#setup-microsoft-teams-integration" class="md-skip">
+        <a href="#setup-microsoft-teams-notifications" class="md-skip">
           Skip to content
         </a>
       
@@ -3029,7 +3029,7 @@ data-et-multi-view="{&quot;schema&quot;:{&quot;content&quot;:{&quot;desktop&quot
         
   
   <span class="md-ellipsis">
-    PagerDuty
+    PagerDuty Integration
     
   </span>
   
@@ -3051,7 +3051,7 @@ data-et-multi-view="{&quot;schema&quot;:{&quot;content&quot;:{&quot;desktop&quot
         
   
   <span class="md-ellipsis">
-    Slack
+    Slack Integration
     
   </span>
   
@@ -3117,18 +3117,9 @@ data-et-multi-view="{&quot;schema&quot;:{&quot;content&quot;:{&quot;desktop&quot
     <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
       
         <li class="md-nav__item">
-  <a href="#create-microsoft-teams-webhook" class="md-nav__link">
+  <a href="#create-microsoft-teams-webhooks" class="md-nav__link">
     <span class="md-ellipsis">
-      Create Microsoft Teams Webhook
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#create-the-slack-integration-on-axon-server" class="md-nav__link">
-    <span class="md-ellipsis">
-      Create the Slack Integration on axon-server
+      Create Microsoft Teams Webhooks
     </span>
   </a>
   
@@ -3176,29 +3167,7 @@ data-et-multi-view="{&quot;schema&quot;:{&quot;content&quot;:{&quot;desktop&quot
         
   
   <span class="md-ellipsis">
-    SMTP / Email
-    
-  </span>
-  
-
-      </a>
-    </li>
-  
-
-              
-            
-              
-                
-  
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="../log-file-integration/" class="md-nav__link">
-        
-  
-  <span class="md-ellipsis">
-    Log Files
+    Email Integration
     
   </span>
   
@@ -3510,18 +3479,9 @@ data-et-multi-view="{&quot;schema&quot;:{&quot;content&quot;:{&quot;desktop&quot
     <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
       
         <li class="md-nav__item">
-  <a href="#create-microsoft-teams-webhook" class="md-nav__link">
+  <a href="#create-microsoft-teams-webhooks" class="md-nav__link">
     <span class="md-ellipsis">
-      Create Microsoft Teams Webhook
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#create-the-slack-integration-on-axon-server" class="md-nav__link">
-    <span class="md-ellipsis">
-      Create the Slack Integration on axon-server
+      Create Microsoft Teams Webhooks
     </span>
   </a>
   
@@ -3543,22 +3503,41 @@ data-et-multi-view="{&quot;schema&quot;:{&quot;content&quot;:{&quot;desktop&quot
 
 
 
-<div><h1 id="setup-microsoft-teams-integration">Setup Microsoft Teams Integration<a class="headerlink" href="#setup-microsoft-teams-integration" title="Permanent link">¶</a></h1>
-<h2 id="create-microsoft-teams-webhook">Create Microsoft Teams Webhook<a class="headerlink" href="#create-microsoft-teams-webhook" title="Permanent link">¶</a></h2>
-<p>On the Microsoft Teams interface, go to <code>Connectors</code>.</p>
-<p><a class="glightbox" href="../imgs/teams-1.png" data-type="image" data-width="100%" data-height="auto" data-desc-position="bottom"><img alt="" src="../imgs/teams-1.png"></a></p>
-<p><code>Configure</code> the <code>Incoming Webhook</code> connector.</p>
-<p><a class="glightbox" href="../imgs/teams-2.png" data-type="image" data-width="100%" data-height="auto" data-desc-position="bottom"><img alt="" src="../imgs/teams-2.png"></a></p>
-<p>Provide a name and select <code>Create</code>.</p>
-<p><a class="glightbox" href="../imgs/teams-3.png" data-type="image" data-width="100%" data-height="auto" data-desc-position="bottom"><img alt="" src="../imgs/teams-3.png"></a></p>
-<p>Copy the url provided to the clipboard.</p>
-<p><a class="glightbox" href="../imgs/teams-4.png" data-type="image" data-width="100%" data-height="auto" data-desc-position="bottom"><img alt="" src="../imgs/teams-4.png"></a></p>
-<h2 id="create-the-slack-integration-on-axon-server">Create the Slack Integration on axon-server<a class="headerlink" href="#create-the-slack-integration-on-axon-server" title="Permanent link">¶</a></h2>
-<p>On the AxonOps application menu, select <code>Settings -&gt; Integrations</code>.</p>
-<p>Click on the <code>Microsoft Teams</code> area.</p>
-<p><a class="glightbox" href="../imgs/integrations.png" data-type="image" data-width="100%" data-height="auto" data-desc-position="bottom"><img alt="" src="../imgs/integrations.png"></a></p>
-<p>Enter a <code>name</code> and copy the url in the <code>Webhook URL</code> field and select <code>Create</code>.</p>
-<p><a class="glightbox" href="../imgs/teams-6.png" data-type="image" data-width="100%" data-height="auto" data-desc-position="bottom"><img alt="" src="../imgs/teams-6.png"></a></p></div>
+<div><h1 id="setup-microsoft-teams-notifications">Setup Microsoft Teams notifications<a class="headerlink" href="#setup-microsoft-teams-notifications" title="Permanent link">¶</a></h1>
+<h3 id="create-microsoft-teams-webhooks">Create Microsoft Teams Webhooks<a class="headerlink" href="#create-microsoft-teams-webhooks" title="Permanent link">¶</a></h3>
+<ul>
+<li>On the Microsoft Teams interface, go to <code>Connectors</code>
+<kbd>
+<a class="glightbox" href="../2022-09-20-14-39-01.png" data-type="image" data-width="100%" data-height="auto" data-desc-position="bottom"><img alt="" src="../2022-09-20-14-39-01.png"></a>
+</kbd></li>
+</ul>
+<hr>
+<p>
+* Click on configure on the <code>Incoming Webhook</code> connector
+<kbd>
+<a class="glightbox" href="../2022-09-20-14-27-58.png" data-type="image" data-width="100%" data-height="auto" data-desc-position="bottom"><img alt="" src="../2022-09-20-14-27-58.png"></a>
+</kbd></p>
+<hr>
+<p>
+* Provide a name and select <code>Create</code>
+<kbd>
+<a class="glightbox" href="../2022-09-20-14-28-17.png" data-type="image" data-width="100%" data-height="auto" data-desc-position="bottom"><img alt="" src="../2022-09-20-14-28-17.png"></a>
+</kbd></p>
+<hr>
+<p>
+* Copy the url provided to the clipboard
+<kbd>
+<a class="glightbox" href="../2022-09-20-14-28-45.png" data-type="image" data-width="100%" data-height="auto" data-desc-position="bottom"><img alt="" src="../2022-09-20-14-28-45.png"></a>
+</kbd></p>
+<hr>
+<p>
+* On the Axonops application menu, select <code>Settings -&gt; Integrations</code>
+*  <code>Click</code> on the <code>Microsoft Teams</code> area.</p>
+<p><a class="glightbox" href="../2022-09-20-11-08-58.png" data-type="image" data-width="100%" data-height="auto" data-desc-position="bottom"><img alt="" src="../2022-09-20-11-08-58.png"></a></p>
+<ul>
+<li>Enter a <code>name</code> and copy the url in the <code>Webhook URL</code> field and select <code>Create</code>
+<a class="glightbox" href="../2022-09-20-11-10-34.png" data-type="image" data-width="100%" data-height="auto" data-desc-position="bottom"><img alt="" src="../2022-09-20-11-10-34.png"></a></li>
+</ul></div>
 
 
 
@@ -3596,7 +3575,7 @@ data-et-multi-view="{&quot;schema&quot;:{&quot;content&quot;:{&quot;desktop&quot
       <nav class="md-footer__inner md-grid" aria-label="Footer" >
         
           
-          <a href="../slack-integration/" class="md-footer__link md-footer__link--prev" aria-label="Previous: Slack">
+          <a href="../slack-integration/" class="md-footer__link md-footer__link--prev" aria-label="Previous: Slack Integration">
             <div class="md-footer__button md-icon">
               
               <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
@@ -3606,7 +3585,7 @@ data-et-multi-view="{&quot;schema&quot;:{&quot;content&quot;:{&quot;desktop&quot
                 Previous
               </span>
               <div class="md-ellipsis">
-                Slack
+                Slack Integration
               </div>
             </div>
           </a>
