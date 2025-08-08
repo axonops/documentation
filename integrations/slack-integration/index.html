@@ -20,7 +20,7 @@
     
     
       
-        <title>Slack Integration - docs</title>
+        <title>Slack - docs</title>
       
     
     
@@ -93,7 +93,7 @@
     <div data-md-component="skip">
       
         
-        <a href="#setup-slack" class="md-skip">
+        <a href="#setup-slack-integration" class="md-skip">
           Skip to content
         </a>
       
@@ -200,7 +200,7 @@
         <div class="md-header__topic" data-md-component="header-topic">
           <span class="md-ellipsis">
             
-            Slack Integration
+            Slack
             
           </span>
         </div>
@@ -3029,7 +3029,7 @@ data-et-multi-view="{&quot;schema&quot;:{&quot;content&quot;:{&quot;desktop&quot
         
   
   <span class="md-ellipsis">
-    PagerDuty Integration
+    PagerDuty
     
   </span>
   
@@ -3060,7 +3060,7 @@ data-et-multi-view="{&quot;schema&quot;:{&quot;content&quot;:{&quot;desktop&quot
           
   
   <span class="md-ellipsis">
-    Slack Integration
+    Slack
     
   </span>
   
@@ -3072,7 +3072,7 @@ data-et-multi-view="{&quot;schema&quot;:{&quot;content&quot;:{&quot;desktop&quot
         
   
   <span class="md-ellipsis">
-    Slack Integration
+    Slack
     
   </span>
   
@@ -3176,7 +3176,29 @@ data-et-multi-view="{&quot;schema&quot;:{&quot;content&quot;:{&quot;desktop&quot
         
   
   <span class="md-ellipsis">
-    Email Integration
+    SMTP / Email
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../log-file-integration/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Log Files
     
   </span>
   
@@ -3521,54 +3543,34 @@ data-et-multi-view="{&quot;schema&quot;:{&quot;content&quot;:{&quot;desktop&quot
 
 
 
-<div><h1 id="setup-slack">Setup Slack<a class="headerlink" href="#setup-slack" title="Permanent link">¶</a></h1>
+<div><h1 id="setup-slack-integration">Setup Slack Integration<a class="headerlink" href="#setup-slack-integration" title="Permanent link">¶</a></h1>
 <h3 id="create-slack-incoming-webhooks">Create Slack Incoming Webhooks<a class="headerlink" href="#create-slack-incoming-webhooks" title="Permanent link">¶</a></h3>
-<ul>
-<li>Go to Slack <code>Application</code></li>
-<li>On the side menu click <a href="../../img/addslackapp.png"><img alt="addslackapp" src="../../img/addslackapp.png"></a></li>
-<li>In search box type <code>Incoming Webhook</code>s</li>
-<li>From the App directory click <code>Install</code> on <code>Incoming WebHooks App</code>.</li>
-</ul>
+<p>Add the <a href="https://axonopsworkspace.slack.com/marketplace/A0F7XDUAZ-incoming-webhooks" target="_blank">Incoming WebHooks</a> app to Slack.</p>
+<blockquote>
+<p>Note: Ensure you're on the correct Slack Workspace by using the Workspace indicator on the top left.</p>
+</blockquote>
+<p>In the <code>Post to Channel</code> Box, select an option from the <code>Choose a channel...</code> dropdown menu.</p>
+<p>Click <code>Add Incoming WebHooks Integration</code>.</p>
 <div class="admonition infomy">
 <p class="admonition-title">Infomy</p>
-<p><a href="../../img/incomingwebhook.gif"><img alt="incomingwebhook" src="../../img/incomingwebhook.gif"></a></p>
+<p><a href="../imgs/slack-1.png"><img alt="ChannelBoxSLACK" src="../imgs/slack-1.png"></a></p>
 </div>
-<ul>
-<li><code>Click</code> Add Configuration</li>
-</ul>
+<p>Copy and make a note of the <code>WebHook URL</code> that appears in the <code>Setup Instructions</code>.</p>
 <div class="admonition infomy">
 <p class="admonition-title">Infomy</p>
-<p><a href="../../img/AddConfigSLACK.png"><img alt="AddConfigSLACK" src="../../img/AddConfigSLACK.png"></a></p>
-</div>
-<ul>
-<li>
-<p>In <code>Post to Channel</code> Box select an option from the <code>choose a channel</code> dropdown menu .</p>
-</li>
-<li>
-<p><code>Click</code> <code>Add Incoming WebHooks Integration</code></p>
-</li>
-</ul>
-<div class="admonition infomy">
-<p class="admonition-title">Infomy</p>
-<p><a href="../../img/ChannelBoxSLACK.png"><img alt="ChannelBoxSLACK" src="../../img/ChannelBoxSLACK.png"></a></p>
-</div>
-<ul>
-<li><code>Copy</code> and make a note of the <code>WebHook URL</code> that appears in the <code>Setup Instructions</code>.</li>
-</ul>
-<div class="admonition infomy">
-<p class="admonition-title">Infomy</p>
-<p><a href="../../img/SetupInstrucSLACK.png"><img alt="SetupInstrucSLACK" src="../../img/SetupInstrucSLACK.png"></a></p>
+<p><a href="../imgs/slack-2.png"><img alt="SetupInstrucSLACK" src="../imgs/slack-2.png"></a></p>
 </div>
 <h3 id="creating-the-slack-integration-on-axon-server">Creating the Slack integration on axon-server<a class="headerlink" href="#creating-the-slack-integration-on-axon-server" title="Permanent link">¶</a></h3>
 <p>On the Axonops application menu, select <code>Settings -&gt; Integrations</code> .</p>
-<p><code>Click</code> on the <code>Slack</code> area.</p>
+<p>Click on the <code>Slack</code> area.</p>
 <div class="admonition infomy">
 <p class="admonition-title">Infomy</p>
-<p><a href="../0.JPG"><img alt="slack" src="../0.JPG"></a></p>
+<p><a href="../imgs/integrations.png"><img alt="slack" src="../imgs/integrations.png"></a></p>
 </div>
+<p>Add the <code>Webhook URL</code> from the previous step into the <code>url</code> field.</p>
 <div class="admonition infomy">
 <p class="admonition-title">Infomy</p>
-<p><a href="../slack.JPG"><img alt="slack" src="../slack.JPG"></a></p>
+<p><a href="../imgs/slack-2.jpg"><img alt="slack" src="../imgs/slack-2.jpg"></a></p>
 </div></div>
 
 
@@ -3607,7 +3609,7 @@ data-et-multi-view="{&quot;schema&quot;:{&quot;content&quot;:{&quot;desktop&quot
       <nav class="md-footer__inner md-grid" aria-label="Footer" >
         
           
-          <a href="../pagerduy-integration/" class="md-footer__link md-footer__link--prev" aria-label="Previous: PagerDuty Integration">
+          <a href="../pagerduy-integration/" class="md-footer__link md-footer__link--prev" aria-label="Previous: PagerDuty">
             <div class="md-footer__button md-icon">
               
               <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
@@ -3617,7 +3619,7 @@ data-et-multi-view="{&quot;schema&quot;:{&quot;content&quot;:{&quot;desktop&quot
                 Previous
               </span>
               <div class="md-ellipsis">
-                PagerDuty Integration
+                PagerDuty
               </div>
             </div>
           </a>

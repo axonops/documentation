@@ -88,6 +88,11 @@
     <label class="md-overlay" for="__drawer"></label>
     <div data-md-component="skip">
       
+        
+        <a href="#configure-cassandra-user-group" class="md-skip">
+          Skip to content
+        </a>
+      
     </div>
     <div data-md-component="announce">
       
@@ -2994,7 +2999,7 @@ data-et-multi-view="{&quot;schema&quot;:{&quot;content&quot;:{&quot;desktop&quot
         
   
   <span class="md-ellipsis">
-    PagerDuty Integration
+    PagerDuty
     
   </span>
   
@@ -3016,7 +3021,7 @@ data-et-multi-view="{&quot;schema&quot;:{&quot;content&quot;:{&quot;desktop&quot
         
   
   <span class="md-ellipsis">
-    Slack Integration
+    Slack
     
   </span>
   
@@ -3082,7 +3087,29 @@ data-et-multi-view="{&quot;schema&quot;:{&quot;content&quot;:{&quot;desktop&quot
         
   
   <span class="md-ellipsis">
-    Email Integration
+    SMTP / Email
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../integrations/log-file-integration/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Log Files
     
   </span>
   
@@ -3382,6 +3409,32 @@ data-et-multi-view="{&quot;schema&quot;:{&quot;content&quot;:{&quot;desktop&quot
   
   
   
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#configure-cassandra-user-group" class="md-nav__link">
+    <span class="md-ellipsis">
+      Configure Cassandra user group
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#uninstall-needrestart-package" class="md-nav__link">
+    <span class="md-ellipsis">
+      Uninstall needrestart Package
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
 </nav>
                   </div>
                 </div>
@@ -3424,7 +3477,27 @@ data-et-multi-view="{&quot;schema&quot;:{&quot;content&quot;:{&quot;desktop&quot
 will be <code>&lt;Cassandra Installation Directory&gt;/conf/cassandra-env.sh</code>.</p>
 <blockquote>
 <p><strong>NB.</strong> Make sure this configuration is not overridden by automation tools.</p>
-</blockquote></div>
+</blockquote>
+<h3 id="configure-cassandra-user-group">Configure Cassandra user group<a class="headerlink" href="#configure-cassandra-user-group" title="Permanent link">¶</a></h3>
+<p>Configure the Linux user groups by:</p>
+<ul>
+<li>Adding the <code>axonops</code> user to the <code>cassandra</code> user group.</li>
+<li>Adding the <code>cassandra</code> user to the <code>axonops</code> user group.</li>
+</ul>
+<div class="highlight"><pre><span></span><code><span class="nv">CASSANDRA_GROUP</span><span class="o">=</span>cassandra
+<span class="nv">CASSANDRA_USER</span><span class="o">=</span>cassandra
+
+sudo<span class="w"> </span>usermod<span class="w"> </span>-aG<span class="w"> </span><span class="s2">"</span><span class="nv">$CASSANDRA_GROUP</span><span class="s2">"</span><span class="w"> </span>axonops
+sudo<span class="w"> </span>usermod<span class="w"> </span>-aG<span class="w"> </span>axonops<span class="w"> </span><span class="s2">"</span><span class="nv">$CASSANDRA_USER</span><span class="s2">"</span>
+</code></pre></div>
+<p>If Cassandra was setup to use a non-default user or group,
+<code>CASSANDRA_GROUP</code> and/or <code>CASSANDRA_USER</code>
+will need be updated accordingly for the above commands to work properly.</p>
+<h3 id="uninstall-needrestart-package">Uninstall <code>needrestart</code> Package<a class="headerlink" href="#uninstall-needrestart-package" title="Permanent link">¶</a></h3>
+<p>Due to recent change with <code>needrestart</code>, as seen in Ubuntu 24.04, uninstalling the
+<code>needrestart</code> package is currently recommended.</p>
+<p>Failure to uninstall the <code>needrestart</code> package may cause the Cassandra service to be
+restarted when updating the <code>axon-agent</code> package.</p></div>
 
 
 
