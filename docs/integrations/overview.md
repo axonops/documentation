@@ -4,13 +4,14 @@ The functionality is accessible via ***Settings > Integrations***
 
 The current integrations are:
 
-* SMTP
-* Pagerduty
-* Slack
-* Microsoft Teams
-* ServiceNow
-* OpsGennie
+* [SMTP / Email](email-integration.md)
+* [Pagerduty](pagerduy-integration.md)
+* [Slack](slack-integration.md)
+* [Microsoft Teams](microsoft-teams-integration.md)
+* [ServiceNow](servicenow-integration.md)
+* OpsGenie
 * Generic webhooks
+* [Log file](log-file-integration.md) (configurable through `axon-server.yml`)
 
 !!! infomy 
 
