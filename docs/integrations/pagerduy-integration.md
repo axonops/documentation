@@ -1,11 +1,8 @@
-# Setup Pagerduty
-
+# Setup Pagerduty Integration
 
 ###  Create Pagerduty Routing Key
 
-Using these [steps][1]. Please note down the pagerduty ***routing key***
-
-[1]: https://support.pagerduty.com/docs/services-and-integrations
+Using these [steps](https://support.pagerduty.com/docs/services-and-integrations){target="_blank"}, note the pagerduty `routing key`.
 
 
 ### Insert Pagerduty Routing Key
@@ -16,10 +13,9 @@ On the Axonops application menu, select `Settings -> Integrations` .
 
 !!! infomy 
 
-    [![slack](./0.JPG)](./0.JPG)
+    [![slack](imgs/integrations.png)](imgs/integrations.png)
     
+ Add the Pagerduty `routing key` from the previous step into the `integration_key` field.
 
- 
-
-[![Routing key](./pd.JPG)](./pd.JPG)
+[![Routing key](imgs/pagerduty-2.jpg)](imgs/pagerduty-2.jpg)
 

@@ -4,17 +4,18 @@ The functionality is accessible via ***Settings > Integrations***
 
 The current integrations are:
 
-* SMTP
-* Pagerduty
-* Slack
-* Microsoft Teams
-* ServiceNow
-* OpsGennie
+* [SMTP / Email](email-integration.md)
+* [Pagerduty](pagerduy-integration.md)
+* [Slack](slack-integration.md)
+* [Microsoft Teams](microsoft-teams-integration.md)
+* [ServiceNow](servicenow-integration.md)
+* OpsGenie
 * Generic webhooks
+* [Log file](log-file-integration.md) (configurable through `axon-server.yml`)
 
 !!! infomy 
 
-![](2022-09-20-11-08-58.png)
+![](imgs/integrations.png)
 
 
 
@@ -34,7 +35,7 @@ The current routing options are:
 
 Each severity (`info, warning, error`) can be routed independently 
 
-   ![](./routing.JPG)
+   ![](imgs/routing.jpg)
 
 ### Errors per routing mechanism and severity levels
 
