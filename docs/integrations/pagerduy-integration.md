@@ -15,6 +15,7 @@ On the Axonops application menu, select `Settings -> Integrations` .
 
     [![slack](imgs/integrations.png)](imgs/integrations.png)
     
+ Add the Pagerduty `routing key` from the previous step into the `integration_key` field.
 
 [![Routing key](imgs/pagerduty-2.jpg)](imgs/pagerduty-2.jpg)
 

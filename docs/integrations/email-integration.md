@@ -8,6 +8,7 @@ Click on the `SMTP` area.
 
     [![slack](imgs/integrations.jpg)](imgs/integrations.jpg)
 
+Fill in the appropriate details.
 
 [![Routing key](imgs/email-2.jpg)](imgs/email-2.jpg)
 
