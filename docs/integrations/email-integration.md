@@ -7,8 +7,8 @@ On the Axonops application menu, select `Settings -> Integrations` .
 
 !!! infomy 
 
-    [![slack](./0.JPG)](./0.JPG)
+    [![slack](imgs/integrations.jpg)](imgs/integrations.jpg)
 
 
-[![Routing key](./email.JPG)](./email.JPG)
+[![Routing key](imgs/email-2.jpg)](imgs/email-2.jpg)
 

@@ -17,7 +17,7 @@
 
 !!! infomy 
 
-    [![AddConfigSLACK](../img/AddConfigSLACK.png)](../img/AddConfigSLACK.png)
+    [![ChannelBoxSLACK](imgs/slack-1.png)](imgs/slack-1.png)
 
 * In `Post to Channel` Box select an option from the `choose a channel` dropdown menu .
 
@@ -42,13 +42,13 @@ On the Axonops application menu, select `Settings -> Integrations` .
 
 !!! infomy 
 
-    [![slack](./0.JPG)](./0.JPG)
+    [![slack](imgs/integrations.png)](imgs/integrations.png)
 
 
 [1]: #create-slack-incoming-webhooks
 
 !!! infomy 
 
-    [![slack](./slack.JPG)](./slack.JPG)
+    [![slack](imgs/slack-2.jpg)](imgs/slack-2.jpg)
 
 

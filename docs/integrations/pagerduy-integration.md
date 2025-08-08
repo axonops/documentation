@@ -16,10 +16,8 @@ On the Axonops application menu, select `Settings -> Integrations` .
 
 !!! infomy 
 
-    [![slack](./0.JPG)](./0.JPG)
+    [![slack](imgs/integrations.png)](imgs/integrations.png)
     
 
- 
-
-[![Routing key](./pd.JPG)](./pd.JPG)
+[![Routing key](imgs/pagerduty-2.jpg)](imgs/pagerduty-2.jpg)
 

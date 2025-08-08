@@ -14,7 +14,7 @@ The current integrations are:
 
 !!! infomy 
 
-![](2022-09-20-11-08-58.png)
+![](imgs/integrations.png)
 
 
 
