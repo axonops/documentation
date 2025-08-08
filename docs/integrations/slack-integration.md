@@ -1,5 +1,4 @@
-# Setup Slack
-
+# Setup Slack Integration
 
 ###  Create Slack Incoming Webhooks
 
@@ -13,7 +12,7 @@
 
     [![incomingwebhook](../img/incomingwebhook.gif)](../img/incomingwebhook.gif)
 
-* `Click` Add Configuration
+Click `Add Incoming WebHooks Integration`.
 
 !!! infomy 
 
@@ -38,7 +37,7 @@
 
 On the Axonops application menu, select `Settings -> Integrations` .
 
-`Click` on the `Slack` area.
+Click on the `Slack` area.
 
 !!! infomy 
 

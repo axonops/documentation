@@ -1,5 +1,6 @@
-# Setup Microsoft Teams notifications
+# Setup Microsoft Teams Integration
 
+## Create Microsoft Teams Webhook
 
 ###  Create Microsoft Teams Webhooks
 

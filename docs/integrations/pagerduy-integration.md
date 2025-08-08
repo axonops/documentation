@@ -1,11 +1,8 @@
-# Setup Pagerduty
-
+# Setup Pagerduty Integration
 
 ###  Create Pagerduty Routing Key
 
-Using these [steps][1]. Please note down the pagerduty ***routing key***
-
-[1]: https://support.pagerduty.com/docs/services-and-integrations
+Using these [steps](https://support.pagerduty.com/docs/services-and-integrations){target="_blank"}, note the pagerduty `routing key`.
 
 
 ### Insert Pagerduty Routing Key

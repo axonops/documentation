@@ -1,6 +1,6 @@
-Navigate to  ***Settings > Integrations*** and click on ***ServiceNow***
+# Setup ServiceNow Integration
 
-![](2021-01-11-12-11-59.png)
+## Login to ServiceNow
 
 Once you have gathered your **instance name**, **username** and **password** from ServiceNow, you can validate the form:
 ![](2021-01-11-11-45-57.png)

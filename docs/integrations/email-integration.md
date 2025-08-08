@@ -1,9 +1,8 @@
-# Setup SMTP notifications
-
+# Setup SMTP / Email Notifications
 
 On the Axonops application menu, select `Settings -> Integrations` .
 
-`Click` on the `SMTP` area.
+Click on the `SMTP` area.
 
 !!! infomy 
 
