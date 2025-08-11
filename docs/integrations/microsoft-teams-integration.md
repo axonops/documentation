@@ -18,7 +18,7 @@ Copy the url provided to the clipboard.
 
 ![](imgs/teams-4.png)
 
-## Create the Slack Integration on axon-server
+## Create the Microsoft Teams Integration on axon-server
 
 On the AxonOps application menu, select `Settings -> Integrations`.
 

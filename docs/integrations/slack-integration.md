@@ -2,7 +2,7 @@
 
 ###  Create Slack Incoming Webhooks
 
-Add the [Incoming WebHooks](https://axonopsworkspace.slack.com/marketplace/A0F7XDUAZ-incoming-webhooks){target="_blank"} app to Slack.
+Add the [Incoming WebHooks](https://slack.com/marketplace/A0F7XDUAZ-incoming-webhooks){target="_blank"} app to Slack.
 
 > Note: Ensure you're on the correct Slack Workspace by using the Workspace indicator on the top left.
 
@@ -36,8 +36,11 @@ Click on the `Slack` area.
 
 Add the `Webhook URL` from the previous step into the `url` field.
 
+Optionally, set the `Channel` field to send alerts to a channel other than the default channel
+that was defined when the WebHooks Integration was added to the Slack Workspace.
+
 !!! infomy 
 
-    [![slack](imgs/slack-2.jpg)](imgs/slack-2.jpg)
+    [![slack](imgs/slack-4.png)](imgs/slack-4.png)
 
 
