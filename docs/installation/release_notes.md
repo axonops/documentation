@@ -1,7 +1,6 @@
 ## Release 2025-08-06
 
 * axon-dash: 2.0.10
-    * Risk: Low.
     * Fixes for user permissions and editing Alert Definitions.
 
 ### Fixes
@@ -12,13 +11,10 @@
 ## Release 2025-08-06
 
 * axon-server: 2.0.5
-    * Risk: Low.
     * Mainly new features and simple bug fixes.
 * axon-agent: 2.0.6
-    * Risk: Medium.
     * Introduction of new, efficient log collector. Tested thoroughly with edge cases.
 * axon-dash: 2.0.9
-    * Risk: Low.
     * Fixes for adaptive repairs and Alerts dashboard timeline, along with new features.
 
 ### Fixes
@@ -44,24 +40,19 @@
 ## Release 2025-07-28
 
 * axon-server: 2.0.4
-    * Risk: Medium.
     * Internal messages for repairs and backups have changed.
 * axon-agent: 2.0.5
-    * Risk: Medium.
     * Internal messages for repairs and backups have changed.
     * OpenSearch support required changes that could have affected Elasticsearch access
       code. Routinely tested with our nightly builds.
 * axon-dash: 2.0.8
-    * Risk: Low.
     * Mainly internal changes and bug fixes.
 
 ### Fixes
 
 * [Server, Agent] Improve resilience of repair and backup messages.
 * [Server] Update Go and dependencies to eliminate known security vulnerabilities.
-* [Server] Fix nil pointer dereference in MQTT broker.
 * [Server] Fix issues displayed when there are no failed adapative repair segments.
-* [Server] Disable call home to minimize collected data.
 * [Agent] Fix concurrency issues for service checks.
 * [Agent] Fix security issues when `disable_command_exec` is set to `true`.
 * [Dash] Ensure the default shell that appears in the dashboard matches the backend `/bin/sh`.
@@ -86,7 +77,6 @@
 ## Release 2025-07-01
 
 * axon-dash: 2.0.7
-    * Risk: Low.
 
 ### Fixes
 
@@ -100,7 +90,6 @@
 ## Release 2025-06-26
 
 * axon-kafka3-agent: 1.0.2
-    * Risk: Low.
 
 ### Fixes
 
@@ -109,11 +98,8 @@
 ## Release 2025-06-24
 
 * axon-agent: 2.0.4
-    * Risk: Low.
 * axon-kafka3-agent: 1.0.1
-    * Risk: Low.
 * axon-kafka2-agent: 1.0.1
-    * Risk: Low.
 
 ### Fixes
 
