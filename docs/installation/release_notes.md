@@ -1,4 +1,15 @@
-## Release 2024-08-06
+## Release 2025-08-06
+
+* axon-dash: 2.0.10
+    * Risk: Low.
+    * Fixes for user permissions and editing Alert Definitions.
+
+### Fixes
+
+* [Dash] Fix permissions issue when a user has multiple roles assigned.
+* [Dash] Fix issue with certain strings causing blank fields when editing Alert Definitions.
+
+## Release 2025-08-06
 
 * axon-server: 2.0.5
     * Risk: Low.
@@ -30,7 +41,7 @@
 * [Dash] Add deeplinking URLs for better Workbench support.
 * [Dash] New fluid progress animation for adaptive repairs.
 
-## Release 2024-07-28
+## Release 2025-07-28
 
 * axon-server: 2.0.4
     * Risk: Medium.
@@ -72,7 +83,7 @@
 * [Dash] Filters can now be customized on new dashboards.
 * [Dash] Allow restoring snapshots to new keyspace/tables when the keyspace/table no longer exists.
 
-## Release 2024-07-01
+## Release 2025-07-01
 
 * axon-dash: 2.0.7
     * Risk: Low.
@@ -86,7 +97,7 @@
 
 * [Dash] Improve Firefox compatibility by no longer using experimental Javascript features.
 
-## Release 2024-06-26
+## Release 2025-06-26
 
 * axon-kafka3-agent: 1.0.2
     * Risk: Low.
@@ -95,7 +106,7 @@
 
 * [Kafka Agent] Remove override within the agent configuration and apply it the codebase.
 
-## Release 2024-06-24
+## Release 2025-06-24
 
 * axon-agent: 2.0.4
     * Risk: Low.
