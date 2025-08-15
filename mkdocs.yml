@@ -151,8 +151,8 @@ nav:
         - Metrics Query Syntax: 'monitoring/metricsdashboards/querysyntax.md'
 
       - Operations:
-        - Repair: 'operations/cassandra/repair.md'
-        - Rolling Restart: 'operations/cassandra/rollingrestart/overview.md'
+        - Repairs: 'operations/cassandra/repair.md'
+        - Rolling Restarts: 'operations/cassandra/rollingrestart/overview.md'
 
       - Backup:
         - Overview: 'operations/cassandra/backup/overview.md'
