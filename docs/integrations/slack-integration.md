@@ -1,54 +1,46 @@
-# Setup Slack
-
+# Setup Slack Integration
 
 ###  Create Slack Incoming Webhooks
 
-* Go to Slack `Application`
-* On the side menu click [![addslackapp](../img/addslackapp.png)](../img/addslackapp.png)
-* In search box type `Incoming Webhook`s
-* From the App directory click `Install` on `Incoming WebHooks App`.
+Add the [Incoming WebHooks](https://slack.com/marketplace/A0F7XDUAZ-incoming-webhooks){target="_blank"} app to Slack.
 
+> Note: Ensure you're on the correct Slack Workspace by using the Workspace indicator on the top left.
 
-!!! infomy 
+In the `Post to Channel` Box, select an option from the `Choose a channel...` dropdown menu.
 
-    [![incomingwebhook](../img/incomingwebhook.gif)](../img/incomingwebhook.gif)
-
-* `Click` Add Configuration
+Click `Add Incoming WebHooks Integration`.
 
 !!! infomy 
 
-    [![AddConfigSLACK](../img/AddConfigSLACK.png)](../img/AddConfigSLACK.png)
+    [![ChannelBoxSLACK](imgs/slack-1.png)](imgs/slack-1.png)
 
-* In `Post to Channel` Box select an option from the `choose a channel` dropdown menu .
-
-* `Click` `Add Incoming WebHooks Integration`
+Copy and make a note of the `WebHook URL` that appears in the `Setup Instructions`.
 
 !!! infomy 
 
-    [![ChannelBoxSLACK](../img/ChannelBoxSLACK.png)](../img/ChannelBoxSLACK.png)
-
-* `Copy` and make a note of the `WebHook URL` that appears in the `Setup Instructions`.
-
-!!! infomy 
-
-    [![SetupInstrucSLACK](../img/SetupInstrucSLACK.png)](../img/SetupInstrucSLACK.png)
+    [![SetupInstrucSLACK](imgs/slack-2.png)](imgs/slack-2.png)
 
 
 ### Creating the Slack integration on axon-server
 
 On the Axonops application menu, select `Settings -> Integrations` .
 
-`Click` on the `Slack` area.
+Click on the `Slack` area.
 
 !!! infomy 
 
-    [![slack](./0.JPG)](./0.JPG)
+    [![slack](imgs/integrations.png)](imgs/integrations.png)
 
 
 [1]: #create-slack-incoming-webhooks
 
+Add the `Webhook URL` from the previous step into the `url` field.
+
+Optionally, set the `Channel` field to send alerts to a channel other than the default channel
+that was defined when the WebHooks Integration was added to the Slack Workspace.
+
 !!! infomy 
 
-    [![slack](./slack.JPG)](./slack.JPG)
+    [![slack](imgs/slack-4.png)](imgs/slack-4.png)
 
 

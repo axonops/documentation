@@ -204,11 +204,12 @@ nav:
     
     - Notification Integrations:
       - Overview : 'integrations/overview.md'
-      - PagerDuty Integration: 'integrations/pagerduy-integration.md'
-      - Slack Integration: 'integrations/slack-integration.md'
+      - PagerDuty: 'integrations/pagerduy-integration.md'
+      - Slack: 'integrations/slack-integration.md'
       - Microsoft Teams: 'integrations/microsoft-teams-integration.md'
       - ServiceNow: 'integrations/servicenow-integration.md'
-      - Email Integration: 'integrations/email-integration.md' 
+      - SMTP / Email: 'integrations/email-integration.md'
+      - Log Files: 'integrations/log-file-integration.md'
       
     - How-to:
       - Setup Alert Rules: how-to/setup-alert-rules.md
