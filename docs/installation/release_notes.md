@@ -1,4 +1,14 @@
-## Release 2025-08-06
+## Release 2025-08-15
+
+* axon-dash: 2.0.6
+    * Fixes a couple of rare race conditions seen at startup.
+
+### Fixes
+
+* [Server] Fix race condition getting org details during startup.
+* [Server] Fix race condition getting license details during startup.
+
+## Release 2025-08-11
 
 * axon-dash: 2.0.10
     * Fixes for user permissions and editing Alert Definitions.
