@@ -7,7 +7,7 @@ AxonOps provides two mechanisms to ease management of repairs in Cassandra:
 
 ## Adaptive Repair Service
 
-Since AxonOps collects performance metrics and logs, we built an “Adaptive” repair system which regulates the velocity (parallelism and pauses between each subrange repair) based on performance trending data. The regulation of repair velocity takes input from various metrics including CPU utilization, query latencies, Cassandra thread pools pending statistics, and IOwait percentage, while tracking the repair schedule based on `gc_grace_seconds` for each table.
+Since AxonOps collects performance metrics and logs, we built an "Adaptive" repair system which regulates the velocity (parallelism and pauses between each subrange repair) based on performance trending data. The regulation of repair velocity takes input from various metrics including CPU utilization, query latencies, Cassandra thread pools pending statistics, and IOwait percentage, while tracking the repair schedule based on `gc_grace_seconds` for each table.
 
 The idea of this is to achieve the following:
 
