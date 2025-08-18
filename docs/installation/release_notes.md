@@ -42,7 +42,7 @@
 
 ### New Features
 
-* [Server] Replace the `elastic_hosts` configuration keyaaa with the forward-looking `search_db` key in the default axon-server.yml.
+* [Server] Replace the `elastic_hosts` configuration key with the forward-looking `search_db` key in the default axon-server.yml.
 * [Agent] Add `--validate` to `axon-cassandra-restore` tooling that verifies all files referenced by a backup manifest are still accessible.
 * [Dash] Add deeplinking URLs for better Workbench support.
 * [Dash] New fluid progress animation for adaptive repairs.
