@@ -1,3 +1,13 @@
+## Release 2025-08-20
+
+* axon-server: 2.0.7
+    * Fixes status messaging for backup/repairs as well as DSE thread pool metrics.
+
+### Fixes
+
+* [Server] Fix critical issue in backup and repair messaging (introduced in axon-server 2.0.4).
+* [Server] Fix dashboard thread pool templates to support newer versions of DSE.
+
 ## Release 2025-08-15
 
 * axon-dash: 2.0.6
