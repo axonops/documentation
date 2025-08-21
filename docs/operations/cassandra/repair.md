@@ -24,9 +24,10 @@ From a user’s point of view there is only a single switch to enable this servi
 
 You can, however, customize the following:
 
-* Blacklist select tables.
+* Exclude select tables.
 * Specify the number of tables to repair in parallel.
-* Specify the number of segments per VNode to repair.
+* Specify the target segment size to repair.
+    * This value is used to group the target number of segments within a table into the same repair grouping.
 * The GC grace threshold in seconds.
     * If a table has a gc grace lesser than the specified value, the table will be ignored by the adaptive repair service.
 
@@ -34,8 +35,8 @@ You can, however, customize the following:
 
 To keep tables as up-to-date as possible we recommend both:
 
-* Increasing the `table parallelism` to be greater than the total number of tables in the cluster.
-* Reducing the `segments per VNode` to generate fewer repair requests.
+* Increasing the `Concurrent Repair Processes` to be greater than the total number of tables in the cluster.
+* Reducing the `Target Segment Size` to generate fewer repair requests.
 
 ## Scheduled Repairs
 
@@ -55,14 +56,6 @@ These will trigger immediately **once**.
 
     [![scheduled_repair](../../img/cass_repairs/scheduled_repair.png)](../../img/cass_repairs/scheduled_repair.png)
 
-
-### Simple Scheduled Repairs
-
-These will trigger based on the selected schedule **repeatedly**.
-
-!!! infomy 
-
-    [![scheduled_repair](../../img/cass_repairs/scheduled_repair2.png)](../../img/cass_repairs/scheduled_repair2.png)
 
 ### Cron Scheduled Repairs
 
