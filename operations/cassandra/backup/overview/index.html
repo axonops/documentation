@@ -93,7 +93,7 @@
     <div data-md-component="skip">
       
         
-        <a href="#scheduled-backup" class="md-skip">
+        <a href="#scheduled-backups" class="md-skip">
           Skip to content
         </a>
       
@@ -1995,9 +1995,18 @@ data-et-multi-view="{&quot;schema&quot;:{&quot;content&quot;:{&quot;desktop&quot
     <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
       
         <li class="md-nav__item">
-  <a href="#scheduled-backup" class="md-nav__link">
+  <a href="#scheduled-backups" class="md-nav__link">
     <span class="md-ellipsis">
-      Scheduled backup
+      Scheduled Backups
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#remote-backups" class="md-nav__link">
+    <span class="md-ellipsis">
+      Remote Backups
     </span>
   </a>
   
@@ -3519,9 +3528,18 @@ data-et-multi-view="{&quot;schema&quot;:{&quot;content&quot;:{&quot;desktop&quot
     <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
       
         <li class="md-nav__item">
-  <a href="#scheduled-backup" class="md-nav__link">
+  <a href="#scheduled-backups" class="md-nav__link">
     <span class="md-ellipsis">
-      Scheduled backup
+      Scheduled Backups
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#remote-backups" class="md-nav__link">
+    <span class="md-ellipsis">
+      Remote Backups
     </span>
   </a>
   
@@ -3546,45 +3564,43 @@ data-et-multi-view="{&quot;schema&quot;:{&quot;content&quot;:{&quot;desktop&quot
   <h1>Overview</h1>
 
 <div><p>AxonOps provides scheduled backup funtionality for your Cassandra data to local and remote storage options.</p>
-<p>The Backup feature is accessible via <strong><em>Operations &gt; Backups</em></strong> </p>
+<p>The Backup feature is accessible via <strong><em>Operations &gt; Backups</em></strong>.</p>
 <div class="admonition infomy">
 <p class="admonition-title">Infomy</p>
-<p><a href="../1.JPG"><img alt="backup" src="../1.JPG"></a></p>
+<p><a href="../imgs/backup-overview.jpg"><img alt="backup" src="../imgs/backup-overview.jpg"></a></p>
 </div>
-<h2 id="scheduled-backup">Scheduled backup<a class="headerlink" href="#scheduled-backup" title="Permanent link">¶</a></h2>
+<h2 id="scheduled-backups">Scheduled Backups<a class="headerlink" href="#scheduled-backups" title="Permanent link">¶</a></h2>
 <p>You can initiate three types of scheduled backup:</p>
 <ul>
 <li>
-<p>Immediate scheduled backup: these will trigger immediately <strong>once</strong></p>
+<p>Immediate scheduled backup: will trigger backup immediately <strong>once</strong>.</p>
 </li>
 <li>
-<p>Simple scheduled backup: these will trigger based on the selected schedule <strong>repeatedly</strong></p>
+<p>Cron schedule backup: triggered based on the selected schedule and based on a Cron expression.</p>
 </li>
 </ul>
 <div class="admonition infomy">
 <p class="admonition-title">Infomy</p>
-<p><a href="../../../../img/cass_backups/backups2.png"><img alt="backup" src="../../../../img/cass_backups/backups2.png"></a></p>
+<p><a href="../imgs/cronjobs.png"><img alt="backup" src="../imgs/cronjobs.png"></a></p>
 </div>
+<h2 id="remote-backups">Remote Backups<a class="headerlink" href="#remote-backups" title="Permanent link">¶</a></h2>
+<p>Backups can be created and stored locally and/or remotely.</p>
+<div class="admonition infomy">
+<p class="admonition-title">Infomy</p>
+<p><a href="../imgs/remote-backups.png"><img alt="backup" src="../imgs/remote-backups.png"></a></p>
+</div>
+<p>Backups can be stored to:</p>
 <ul>
-<li>Cron schedule backup: Same as <strong>simple scheduled backup</strong> but the schedule will be based on a Cron expression</li>
+<li>AWS S3</li>
+<li>Google Cloud Storage</li>
+<li>Local filesystem</li>
+<li>Microsoft Azure Blog Storage</li>
+<li>S3 Compatible storage systems</li>
+<li>SFTP/SSH servers</li>
 </ul>
 <div class="admonition infomy">
 <p class="admonition-title">Infomy</p>
-<p><a href="../../../../img/cass_backups/backups3.png"><img alt="backup" src="../../../../img/cass_backups/backups3.png"></a></p>
-</div>
-<blockquote>
-<p>The following capture presents two backups, a local only and a local and remote backup:</p>
-</blockquote>
-<div class="admonition infomy">
-<p class="admonition-title">Infomy</p>
-<p><a href="../../../../img/cass_backups/backups5.png"><img alt="backup" src="../../../../img/cass_backups/backups5.png"></a></p>
-</div>
-<blockquote>
-<p>And the details of the local and remote backup:</p>
-</blockquote>
-<div class="admonition infomy">
-<p class="admonition-title">Infomy</p>
-<p><a href="../2.JPG"><img alt="backup" src="../2.JPG"></a></p>
+<p><a href="../imgs/remote-options.png"><img alt="backup" src="../imgs/remote-options.png"></a></p>
 </div></div>
 
 
