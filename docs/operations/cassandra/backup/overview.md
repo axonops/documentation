@@ -1,38 +1,37 @@
 AxonOps provides scheduled backup funtionality for your Cassandra data to local and remote storage options.
 
-The Backup feature is accessible via ***Operations > Backups*** 
+The Backup feature is accessible via ***Operations > Backups***.
 
-!!! infomy 
+!!! infomy
+    [![backup](imgs/backup-overview.jpg)](imgs/backup-overview.jpg)
 
-    [![backup](./1.JPG)](./1.JPG)
 
-
-## Scheduled backup
+## Scheduled Backups
 
 You can initiate three types of scheduled backup:
 
-* Immediate scheduled backup: these will trigger immediately **once**
+* Immediate scheduled backup: will trigger backup immediately **once**.
 
-* Simple scheduled backup: these will trigger based on the selected schedule **repeatedly**
+* Cron schedule backup: triggered based on the selected schedule and based on a Cron expression.
 
-!!! infomy 
+!!! infomy
+    [![backup](imgs/cronjobs.png)](imgs/cronjobs.png)
 
-    [![backup](../../../img/cass_backups/backups2.png)](../../../img/cass_backups/backups2.png)
+## Remote Backups
 
-* Cron schedule backup: Same as **simple scheduled backup** but the schedule will be based on a Cron expression
+Backups can be created and stored locally and/or remotely.
 
-!!! infomy 
+!!! infomy
+    [![backup](imgs/remote-backups.png)](imgs/remote-backups.png)
 
-    [![backup](../../../img/cass_backups/backups3.png)](../../../img/cass_backups/backups3.png)
+Backups can be stored to:
 
-> The following capture presents two backups, a local only and a local and remote backup:
+* AWS S3
+* Google Cloud Storage
+* Local filesystem
+* Microsoft Azure Blog Storage
+* S3 Compatible storage systems
+* SFTP/SSH servers
 
-!!! infomy 
-
-    [![backup](../../../img/cass_backups/backups5.png)](../../../img/cass_backups/backups5.png)
-
-> And the details of the local and remote backup:
-
-!!! infomy 
-
-    [![backup](./2.JPG)](./2.JPG)
+!!! infomy
+    [![backup](imgs/remote-options.png)](imgs/remote-options.png)
