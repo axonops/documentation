@@ -40,7 +40,7 @@ You can, however, customize the following:
 
 * Segment size
   
-    This value is used to group the target number of segments within a table into the same repair grouping.
+    Splits each table into segments of up to this size and repairs each segment in turn.
 
 * GC grace threshold
   
