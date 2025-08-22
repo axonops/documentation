@@ -4,7 +4,7 @@ The feature is accessible via ***Operations > Rolling Restart***
 
 !!! infomy 
 
-    [![rollingrestart](./1.JPG)](./1.JPG)
+    ![](./1.JPG)
 
 > **axonops** user will require permissions to be able to stop and start Cassandra service. To do so you will add **axonops** user in the sudoers with for instance the following permissions:
 ``` bash

@@ -12,7 +12,7 @@ Since AxonOps collects performance metrics and logs, we built an "Adaptive" repa
 * CPU utilization
 * Query latencies
 * Cassandra thread pools pending statistics
-* IOwait percentage
+* I/O wait percentage
 * Tracking of the repair schedule based on `gc_grace_seconds` for each table
 
 The idea of this is to achieve the following:
@@ -23,17 +23,28 @@ The idea of this is to achieve the following:
 * This mechanism does not require JMX access. The adaptive repair service running on AxonOps server orchestrates and issues commands to the agents over the existing connection.
 
 !!! infomy
+    
+    ![](imgs/adaptive_repair.png)
 
-    [![adaptive_repair](imgs/adaptive_repair.png)](imgs/adaptive_repair.png)
+From a user's point of view there is only a single switch to enable this service. Keep this enabled and AxonOps will take care of the repair of all tables for you. 
 
-From a user's point of view there is only a single switch to enable this service. Keep this enabled and AxonOps will take care of the repair of all tables for you. You can, however, customize the following:
+You can, however, customize the following:
 
-* Exclude select tables.
-* Specify the number of tables to repair in parallel.
-* Specify the target segment size to repair.
-    * This value is used to group the target number of segments within a table into the same repair grouping.
-* The GC grace threshold in seconds.
-    * If a table has a gc grace lesser than the specified value, the table will be ignored by the adaptive repair service.
+* Exclude tables
+  
+    Skip specific tables from automatic repair
+
+* Parallel processing
+  
+    Set how many tables to repair simultaneously
+
+* Segment size
+  
+    This value is used to group the target number of segments within a table into the same repair grouping.
+
+* GC grace threshold
+  
+    If a table has a gc grace lesser than the specified value, the table will be ignored by the adaptive repair service.
 
 ### Increasing Data Consistency
 
@@ -48,7 +59,8 @@ You can initiate two types of scheduled repairs with AxonOps.
 
 !!! infomy 
 
-    [![running_repairs](imgs/running_repairs.png)](imgs/running_repairs.png)
+    ![](imgs/running_repairs.png)
+    
 
 The above screenshot showcases a running repair that has been initiated immediately and a scheduled repair that is scheduled for 12:00 AM UTC.
 
@@ -58,7 +70,7 @@ These will trigger immediately **once**.
 
 !!! infomy 
 
-    [![immediate_repairs](imgs/immediate_repairs.png)](imgs/immediate_repairs.png)
+    ![](imgs/immediate_repairs.png)
 
 
 ### Cron Scheduled Repairs
@@ -67,4 +79,4 @@ These will trigger based on the selected schedule **repeatedly**.
 
 !!! infomy 
 
-    [![scheduled_repairs](imgs/scheduled_repairs.png)](imgs/scheduled_repairs.png)
+    ![](imgs/scheduled_repairs.png)
