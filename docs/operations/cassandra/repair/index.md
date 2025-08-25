@@ -24,7 +24,7 @@ The idea of this is to achieve the following:
 
 !!! infomy
     
-    ![](imgs/adaptive_repair.png)
+    ![Adaptive Repairs](imgs/adaptive_repair.png)
 
 From a user's point of view there is only a single switch to enable this service. Keep this enabled and AxonOps will take care of the repair of all tables for you. 
 
@@ -59,7 +59,7 @@ You can initiate two types of scheduled repairs with AxonOps.
 
 !!! infomy 
 
-    ![](imgs/running_repairs.png)
+    ![Running Repairs](imgs/running_repairs.png)
     
 
 The above screenshot showcases a running repair that has been initiated immediately and a scheduled repair that is scheduled for 12:00 AM UTC.
@@ -70,7 +70,7 @@ These will trigger immediately **once**.
 
 !!! infomy 
 
-    ![](imgs/immediate_repairs.png)
+    ![Immediate Repairs](imgs/immediate_repairs.png)
 
 
 ### Cron Scheduled Repairs
@@ -79,4 +79,4 @@ These will trigger based on the selected schedule **repeatedly**.
 
 !!! infomy 
 
-    ![](imgs/scheduled_repairs.png)
+    ![Scheduled Repairs](imgs/scheduled_repairs.png)
