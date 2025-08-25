@@ -123,6 +123,7 @@ nav:
       - AxonOps Agent: 'installation/agent/install.md'
       - Kubernetes: 'installation/kubernetes/index.md'
       - System Requirements: system-requirements/index.md
+      - Air-Gapped Installation: installation/air-gapped/index.md
 
     - Authentication:
       - LDAP: 'authentication/ldap.md' 
