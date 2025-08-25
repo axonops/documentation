@@ -13,9 +13,13 @@ services=(
   axon-cassandra5.0-agent-jdk17
 )
 for service in "${services[@]}"; do
+  arch=x86_64
+  if [[ $service == axon-cassandra* ]]; then
+    arch=noarch
+  fi
   # downloads all direct dependencies, including target package
   dnf5 download \
-    --arch x86_64 \
+    --arch "${arch}" \
     --resolve \
     --alldeps \
     --refresh \
@@ -23,21 +27,26 @@ for service in "${services[@]}"; do
     "${service}"
 
   # downloads all dependencies, recursively
-  dnf5 download \
-    --arch x86_64 \
-    --resolve \
-    --alldeps \
-    --refresh \
-    --destdir=/tmp/downloads \
-    $(dnf5 repoquery \
-      --arch x86_64 \
-      --recursive \
-      --providers-of=requires \
-      --qf '%{name}-%{version}-%{release}.%{arch} ' \
-      "${service}" \
-    | sort -u)
+  DEPENDENCIES=$(dnf5 repoquery \
+    --arch "${arch}" \
+    --recursive \
+    --providers-of=requires \
+    --qf '%{name}-%{version}-%{release}.%{arch} ' \
+    "${service}" | sort -u)
+  if [[ -n $DEPENDENCIES ]]; then
+    dnf5 download \
+      --arch "${arch}" \
+      --resolve \
+      --alldeps \
+      --refresh \
+      --destdir=/tmp/downloads \
+      $DEPENDENCIES
+  fi
 done
 
 # create and compress repomd repository
-createrepo_c /tmp/downloads
-tar -C /tmp -czf "/tmp/axonops_repo_x86_64.rpm.tgz" /tmp/downloads/
+cd /tmp/downloads
+createrepo_c .
+tar \
+  -czf /tmp/axonops-x86_64.rpm.tgz \
+  .

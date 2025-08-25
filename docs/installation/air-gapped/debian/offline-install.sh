@@ -4,9 +4,16 @@ function install_dependency() {
 
   mkdir -p "/var/cache/apt/archives/${service}"
   tar xf "${service}.deb.tgz" --directory "/var/cache/apt/archives/${service}"
-  while ! sudo dpkg -i /var/cache/apt/archives/${service}/*.deb; do
-    echo "Working through dependencies..."
-  done
+  if [[ "$service" == "axon-dash-pdf-predependencies" ]]; then
+    sudo dpkg -i /var/cache/apt/archives/${service}/libpython3.9-minimal*
+    sudo dpkg -i /var/cache/apt/archives/${service}/python3.9-minimal*
+    sudo dpkg -i /var/cache/apt/archives/${service}/*.deb || (
+      echo "Working through Python dependencies..."
+      sudo dpkg -i /var/cache/apt/archives/${service}/*.deb
+    )
+  else
+    sudo dpkg -i /var/cache/apt/archives/${service}/*.deb
+  fi
 }
 
 # install axon-dash
@@ -15,7 +22,7 @@ install_dependency axon-dash-pdf
 install_dependency axon-dash
 
 # install axon-server
-install_dependency axon-dash
+install_dependency axon-server
 
 # install axon-agent on Cassandra node
 install_dependency axon-agent

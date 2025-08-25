@@ -1,7 +1,7 @@
 # extract packages into the offline repository location
 sudo mkdir -p /opt/offline/axonops
 sudo tar -C /opt/offline/axonops \
-  -xzf ./axonops_repo_x86_64.rpm.tgz \
+  -xzf ./axonops-x86_64.rpm.tgz \
   --strip-components=1
 
 # setup the offline repository
@@ -18,8 +18,6 @@ EOF
 function install_dependency() {
   service=${1}
 
-  sudo dnf5 clean all
-  sudo dnf5 makecache
   sudo dnf5 \
     --disablerepo='*' \
     --enablerepo="axonops-offline" \
