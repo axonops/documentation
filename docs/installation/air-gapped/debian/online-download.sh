@@ -19,9 +19,16 @@ for service in "${services[@]}"; do
   cd "/tmp/downloads/${service}"
 
   # download dependencies
-  sudo apt-get download \
-    $(sudo apt-rdepends "${service}" | grep -v "^ ")
-
+  sudo apt-get download $(\
+    sudo apt-rdepends "${service}" \
+      | grep -v "^ " \
+      | sed 's|debconf-2.0|debconf|' \
+      | sed 's|libappindicator1|libayatana-appindicator3-1|' \
+      | sed 's|libgcc1|libgcc-s1|' \
+      | sed 's|default-dbus-session-bus|dbus-user-session|' \
+      | sed 's|dbus-session-bus|dbus|' \
+      | sed 's|^gsettings-backend$||' \
+    )
   # create Packages index files
   dpkg-scanpackages $(pwd) /dev/null | gzip -9c > Packages.gz
 
