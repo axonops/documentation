@@ -49,8 +49,8 @@ due to its high CPU usage.
 
 You can filter logs based on the log Source (`cassandra`, `axon-server`, and `axon-agent` logs) and Event Type to narrow down search results.
 
-![](imgs/logs_event_type1.png)
-![](imgs/logs_event_type2.png)
+![Event Types](imgs/logs_event_type1.png)
+![Event Types continued](imgs/logs_event_type2.png)
 
 ## Search by Content
 
