@@ -1,3 +1,5 @@
+#!/usr/bin/env /bin/bash
+
 # define installation helper function
 function install_dependency() {
   service=${1}

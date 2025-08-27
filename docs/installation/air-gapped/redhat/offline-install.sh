@@ -1,3 +1,5 @@
+#!/usr/bin/env /bin/bash
+
 # extract packages into the offline repository location
 sudo mkdir -p /opt/offline/axonops
 sudo tar -C /opt/offline/axonops \

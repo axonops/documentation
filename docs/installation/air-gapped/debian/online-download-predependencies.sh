@@ -1,3 +1,5 @@
+#!/usr/bin/env /bin/bash
+
 # create temporary location for downloading packages
 mkdir -p "/tmp/downloads/axon-dash-pdf2-predependencies"
 cd "/tmp/downloads/axon-dash-pdf2-predependencies"

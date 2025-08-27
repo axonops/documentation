@@ -1,3 +1,5 @@
+#!/usr/bin/env /bin/bash
+
 # download axonops packages and dependencies
 services=(
   axon-dash-pdf2

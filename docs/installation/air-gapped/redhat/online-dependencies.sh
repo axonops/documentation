@@ -1,3 +1,5 @@
+#!/usr/bin/env /bin/bash
+
 # install dependency needed for creating repomd repository
 sudo dnf install -y createrepo_c
 
