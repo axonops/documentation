@@ -7,7 +7,7 @@ To configure the AxonOps agent to use a proxy, you can use a `systemd` override.
 1.  Create an override file for the `axon-agent` service:
 
     ```bash
-    sudo systemctl edit axon-agent
+    sudo systemctl edit axon-agent.service
     ```
 
 2.  This will open an editor with a blank file. Add the following content, replacing `your_proxy_server` and `port` with your proxy's details:
