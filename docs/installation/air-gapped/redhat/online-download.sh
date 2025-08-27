@@ -1,5 +1,7 @@
+#!/usr/bin/env /bin/bash
+
 services=(
-  axon-dash-pdf
+  axon-dash-pdf2
   axon-dash
   axon-server
   axon-agent

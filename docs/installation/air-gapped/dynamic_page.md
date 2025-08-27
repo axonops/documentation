@@ -42,7 +42,7 @@ machine.
 
 <div id="DebianDiv" class="os" markdown="span">
 
-Since `axon-dash-pdf` relies on virtual Debian packages, we must first download these
+Since `axon-dash-pdf2` relies on virtual Debian packages, we must first download these
 packages separately and by name: 
 
 ```bash
