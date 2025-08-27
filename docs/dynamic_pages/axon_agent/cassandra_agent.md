@@ -1,6 +1,6 @@
 
+### Select the Cassandra Version
 
-<h3>Select the Cassandra Version</h3>
 <label>
   <input type="radio" id="Cassandra30" name="casFamily" onChange="selectCas()" checked=true />
   <img src="/get_started/cas_3.png" class="skip-lightbox" width="180px">
@@ -22,7 +22,8 @@
   <img src="/get_started/cas_5_0.png" class="skip-lightbox" width="180px">
 </label>
 
-<h3>Select the Java Version.</h3>
+### Select the Java Version
+
 <label>
   <input type="radio" id="Java8" name="javaFamily" onChange="selectJava()" checked=true />
   <img id="Java8img" src="/get_started/Java_8.png" class="skip-lightbox" width="180px">
@@ -35,6 +36,8 @@
   <input type="radio" id="Java17" name="javaFamily" onChange="selectJava()" />
   <img id="Java17img" src="/get_started/Java_17.png" class="skip-lightbox" width="180px" style="display:none">
 </label>
+
+Install the AxonOps Cassandra Agent and its dependency `axon-agent`:
 
 <!-- Debian -->
 <div id="DebianCassandra30Java8Div" class="cas">
@@ -118,3 +121,29 @@
   sudo yum install axon-cassandra5.0-agent-jdk17
   ```
 </div>
+
+### Configuration File Locations
+
+#### AxonOps Cassandra Agent
+
+The AxonOps Cassandra Agent is the jar that is directly loaded by Cassandra.
+The AxonOps Cassandra Agent then reaches out directly to the AxonOps Agent binary
+which contacts the AxonOps Server directly.
+
+- Configuration File: `/etc/axonops/axon-agent.yml`
+- Binary: `/usr/share/axonops/axon-cassandra{version}-agent.jar`
+- Version number: `/usr/share/axonops/axon-cassandra{version}-agent.version`
+- Copyright: `/usr/share/doc/axonops/axon-cassandra{version}-agent/copyright`
+- Licenses: `/usr/share/axonops/licenses/axon-cassandra{version}-agent/`
+
+
+#### AxonOps Agent
+
+The AxonOps Agent is a dependency of the AxonOps Cassandra Agent. This binary
+contacts the AxonOps Server directly while minimizing the memory footprint
+and CPU utilization of the Cassandra process.
+
+- Configuration File: `/etc/axonops/axon-agent.yml`
+- Binary: `usr/share/axonops/axon-agent`
+- Logs: `/var/log/axonops/axon-agent.log`
+- Systemd service: `/usr/lib/systemd/system/axon-agent.service`

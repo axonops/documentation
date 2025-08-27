@@ -1,14 +1,14 @@
-# Setup SMTP notifications
-
+# Setup SMTP / Email Notifications
 
 On the Axonops application menu, select `Settings -> Integrations` .
 
-`Click` on the `SMTP` area.
+Click on the `SMTP` area.
 
 !!! infomy 
 
-    [![slack](./0.JPG)](./0.JPG)
+    [![slack](imgs/integrations.jpg)](imgs/integrations.jpg)
 
+Fill in the appropriate details.
 
-[![Routing key](./email.JPG)](./email.JPG)
+[![Routing key](imgs/email-2.jpg)](imgs/email-2.jpg)
 

@@ -30,7 +30,7 @@ Please complete the Date/Time selection and fields of the keyspace and table/s t
     
     The wide time range is always a calendar month from the 1st to the last day of the selected month.
 
-    To select a different month please use the ![](../previous.png){ .skip-lightbox width="15" } and ![](../next.png){ .skip-lightbox width="15" } arrows on either side of the slider.
+    To select a different month please use the ![previous](previous.png){ .skip-lightbox width="15" } and ![next](next.png){ .skip-lightbox width="15" } arrows on either side of the slider.
 
     At the beginning and end of the Wide Time Range slider there is a black bar that you can slide left and right to narrow the Date/Time of when you want to restore to.
 
@@ -44,7 +44,7 @@ Please complete the Date/Time selection and fields of the keyspace and table/s t
 
     Example of what the Zoomed section will look like when snapshots are available to select for PITR.
 
-    ![](../zoomed_section.png)
+    ![zoomed section](zoomed_section.png)
     ```
     The Camera Icon represents a snapshot at a point-in-time where a commitlog is archived.
     ```

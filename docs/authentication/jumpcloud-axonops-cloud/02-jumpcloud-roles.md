@@ -67,4 +67,4 @@ Save the group settings.
 
 ## Next Steps
 
-[Configure SAML in AxonOps Cloud](../03-axonops-saml-jumpcloud)
+[Configure SAML in AxonOps Cloud](03-axonops-saml-jumpcloud.md)

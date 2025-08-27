@@ -4,7 +4,7 @@ The Restore feature is accessible via ***Operations > Restore***
 
 !!! infomy 
 
-    [![restore](/img/cass_backups/restore.png)](/img/cass_backups/restore.png)
+    [![restore](../../../img/cass_backups/restore.png)](../../../img/cass_backups/restore.png)
 
 
 
@@ -19,7 +19,7 @@ Here you can also select a subset of nodes to restore via the checkboxes in the 
 
 !!! infomy 
 
-    [![restore](/img/cass_backups/restore1.png)](/img/cass_backups/restore1.png)
+    [![restore](../../../img/cass_backups/restore1.png)](../../../img/cass_backups/restore1.png)
 
 Follow the links below for some more detailed backup restore scenarios
 

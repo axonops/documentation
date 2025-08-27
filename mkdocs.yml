@@ -64,6 +64,7 @@ markdown_extensions:
       guess_lang: False
   - toc:
       permalink: true
+  - pymdownx.extra
   - pymdownx.superfences
   - tables
   - pymdownx.emoji:
@@ -89,6 +90,9 @@ plugins:
 extra_javascript:
   - javascripts/extra.js
 
+not_in_nav: |
+  dynamic_pages
+
 nav:
   - Home: index.md
   
@@ -101,48 +105,23 @@ nav:
 
     - Setup:
       - AxonOps Cloud account: 'get_started/cloud.md'
-      - AxonOps Cloud agents: 'get_started/agent_setup.md'
-      - SAML Authentication:
-        - Overview: 'cloud/saml/index.md'
-        - Azure Entra ID:
-          - Getting Started: 'cloud/saml/azure-entra/index.md'
-          - Configure Azure App: 'cloud/saml/azure-entra/01-azure-app.md'
-          - Configure Roles: 'cloud/saml/azure-entra/02-azure-roles.md'
-          - Configure AxonOps: 'cloud/saml/azure-entra/03-axonops-saml-azure.md'
-        - Okta:
-          - Getting Started: 'cloud/saml/okta/index.md'
-          - Configure Okta App: 'cloud/saml/okta/01-okta-app.md'
-          - Configure Roles: 'cloud/saml/okta/02-okta-roles.md'
-          - Configure AxonOps: 'cloud/saml/okta/03-axonops-saml-okta.md'
-        - JumpCloud:
-          - Getting Started: 'cloud/saml/jumpcloud/index.md'
-          - Configure JumpCloud App: 'cloud/saml/jumpcloud/01-jumpcloud-app.md'
-          - Configure Roles: 'cloud/saml/jumpcloud/02-jumpcloud-roles.md'
-          - Configure AxonOps: 'cloud/saml/jumpcloud/03-axonops-saml-jumpcloud.md'
+      - AxonOps Cloud agents: 
+        - Agent Setup: 'get_started/agent_setup.md'
+        - Proxy Configuration: 'get_started/proxy.md'
 
   - AxonOps Self-Hosted:
     - Get Started: get_started/getting_started.md
 
     - Security:
       - Firewall Rules: firewall/overview.md 
-      
-    # - Starter:
-    #   - AxonOps Server: 'installation-starter/axon-server/axonserver_install.md'
-    #   - AxonOps Dashboard: 'installation-starter/axon-dash/install.md'
-    #   - AxonOps Agent: 'installation-starter/agent/install.md'
-    #   - AxonOps Agent in Docker: 'installation-starter/agent/docker.md'
-    #   - System Requirements: system-requirements/developer.md
 
     - Installing AxonOps:
-      - Elasticsearch: 
-        - Install Elasticsearch: 'installation/elasticsearch/install.md'
-        - Secure Elasticsearch: 'installation/elasticsearch/securing_elastic.md'
+      - Elasticsearch: 'installation/elasticsearch/install.md'
       
       - Cassandra as Metrics store: 'installation/axon-server/metricsdatabase.md'
 
       - AxonOps Server: 'installation/axon-server/axonserver_install.md'
       - AxonOps Dashboard: 'installation/axon-dash/install.md'
-      - Configure Nginx: 'installation/axon-dash/configure_nginx.md'
       - AxonOps Agent: 'installation/agent/install.md'
       - Kubernetes: 'installation/kubernetes/index.md'
       - System Requirements: system-requirements/index.md
@@ -154,7 +133,8 @@ nav:
       - Quickstart - Docker: 'get_started/docker.md'
       
     - Compatibility:
-      - Interoperability matrix: 'installation/compat_matrix/compat_matrix.md'
+      - Interoperability Matrix: 'installation/compat_matrix/compat_matrix.md'
+      - Release Notes: 'installation/release_notes.md'
 
     
   - Using AxonOps:
@@ -260,11 +240,12 @@ nav:
     
     - Notification Integrations:
       - Overview : 'integrations/overview.md'
-      - PagerDuty Integration: 'integrations/pagerduy-integration.md'
-      - Slack Integration: 'integrations/slack-integration.md'
+      - PagerDuty: 'integrations/pagerduy-integration.md'
+      - Slack: 'integrations/slack-integration.md'
       - Microsoft Teams: 'integrations/microsoft-teams-integration.md'
       - ServiceNow: 'integrations/servicenow-integration.md'
-      - Email Integration: 'integrations/email-integration.md' 
+      - SMTP / Email: 'integrations/email-integration.md'
+      - Log Files: 'integrations/log-file-integration.md'
       
     - How-to:
       - Setup Alert Rules: how-to/setup-alert-rules.md

@@ -39,7 +39,7 @@ You should expect the following response:
 
 *AxonOps Agent Test Page*
 
-## Step 1 - Setup the AxonOps repository and install AxonOps Agent
+## Setup the AxonOps repository and install AxonOps Agent
 
 {!dynamic_pages/axon_agent/os.md!}
 
@@ -53,18 +53,27 @@ You should expect the following response:
   <img src="/get_started/kafka.png" class="skip-lightbox" width="180px" height="180px">
 </label>
 
-<div id="CassandraDiv" name="service_div">
-    {!get_started/agent_setup_cassandra.md!}
+<div id="CassandraDiv" name="service_div" markdown="1">
+
+{!get_started/agent_setup_cassandra.md!}
+
 </div>
 
-<div id="KafkaDiv" name="service_div" style="display:none">
-    {!get_started/agent_setup_kafka.md!}
+<div id="KafkaDiv" name="service_div" style="display:none" markdown="1">
+
+{!get_started/agent_setup_kafka.md!}
+
 </div>
 
-## Step 7 - Start axon-agent
+## AxonOps agent behind a proxy
+
+If your network does not have direct internet access and it requires a proxy to connect to the AxonOps Server, follow
+[these instructions](proxy.md).
+
+## Start axon-agent
 
 ```
 sudo systemctl start axon-agent
 ```
 
-Once the Agents have been setup please use the [Using AxonOps](/cluster/cluster-overview/) to familiarise yourself with AxonOps UI.
+Once the Agents have been setup please use the [Using AxonOps](../cluster/cluster-overview.md) to familiarise yourself with AxonOps UI.
