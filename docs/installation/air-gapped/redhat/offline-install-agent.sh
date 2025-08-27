@@ -29,9 +29,16 @@ function install_dependency() {
     "${service}"
 }
 
-# (optional) install axon-dash dependency to enable pdf generation
-install_dependency axon-dash-pdf2
-install_dependency axon-dash
+# install axon-agent on Cassandra node
+install_dependency axon-agent
 
-# install axon-server
-install_dependency axon-server
+## (choose one of the following)
+## install matching axon-cassandra agent on the Cassandra nodes
+# install_dependency axon-cassandra3.0-agent
+# install_dependency axon-cassandra3.11-agent
+# install_dependency axon-cassandra4.0-agent
+# install_dependency axon-cassandra4.0-agent-jdk8
+# install_dependency axon-cassandra4.1-agent
+# install_dependency axon-cassandra4.1-agent-jdk8
+# install_dependency axon-cassandra5.0-agent-jdk11
+# install_dependency axon-cassandra5.0-agent-jdk17

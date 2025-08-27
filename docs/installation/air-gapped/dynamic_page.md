@@ -76,14 +76,7 @@ On the air-gapped machine:
 * and run the following commands to:
     * define the helper function
     * and install the targetted software(s).
-
-
-```bash
-{!installation/air-gapped/debian/offline-install.sh!}
-```
-
 </div>
-
 <div id="RedHatDiv" class="os" style="display:none" markdown="1">
 
 On the air-gapped machine:
@@ -95,8 +88,49 @@ On the air-gapped machine:
     * define the helper function,
     * and install the targetted software(s).
 
+</div>
+
+### Install the AxonOps Server and Dashboard
+
+Use the following script to install `axon-server` and `axon-dash` on the offline
+machine. `axon-server` and `axon-dash` can be installed on the same machine or be
+configured to communicate across two machines.
+
+The `axon-dash-pdf2` package is optional and provides support for generating PDF reports.
+
+<div id="DebianDiv" class="os" markdown="1">
+
+```bash
+{!installation/air-gapped/debian/offline-install.sh!}
+```
+
+</div>
+
+<div id="RedHatDiv" class="os" style="display:none" markdown="1">
+
 ```bash
 {!installation/air-gapped/redhat/offline-install.sh!}
+```
+
+</div>
+
+### Install the AxonOps Agent
+
+Use the following script to install the `axon-agent` as well as a version of
+`axon-cassandra*-agent` that coincides with the version of Cassandra and the Java JDK
+that is being used.
+
+<div id="DebianDiv" class="os" markdown="1">
+
+```bash
+{!installation/air-gapped/debian/offline-install-agent.sh!}
+```
+
+</div>
+<div id="RedHatDiv" class="os" style="display:none" markdown="1">
+
+```bash
+{!installation/air-gapped/redhat/offline-install-agent.sh!}
 ```
 
 </div>
