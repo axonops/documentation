@@ -12,7 +12,7 @@
         <link rel="prev" href="../cloud/">
       
       
-        <link rel="next" href="../getting_started/">
+        <link rel="next" href="../proxy/">
       
       
       <link rel="icon" href="/img/favicon.ico">
@@ -20,7 +20,7 @@
     
     
       
-        <title>AxonOps Cloud agents - docs</title>
+        <title>Agent Setup - docs</title>
       
     
     
@@ -200,7 +200,7 @@
         <div class="md-header__topic" data-md-component="header-topic">
           <span class="md-ellipsis">
             
-            AxonOps Cloud agents
+            Agent Setup
             
           </span>
         </div>
@@ -816,6 +816,49 @@ data-et-multi-view="{&quot;schema&quot;:{&quot;content&quot;:{&quot;desktop&quot
   
   
   
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_2_2_2" checked>
+        
+          
+          <label class="md-nav__link" for="__nav_2_2_2" id="__nav_2_2_2_label" tabindex="0">
+            
+  
+  <span class="md-ellipsis">
+    AxonOps Cloud agents
+    
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="3" aria-labelledby="__nav_2_2_2_label" aria-expanded="true">
+          <label class="md-nav__title" for="__nav_2_2_2">
+            <span class="md-nav__icon md-icon"></span>
+            AxonOps Cloud agents
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+    
+  
+  
+  
     <li class="md-nav__item md-nav__item--active">
       
       <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
@@ -828,7 +871,7 @@ data-et-multi-view="{&quot;schema&quot;:{&quot;content&quot;:{&quot;desktop&quot
           
   
   <span class="md-ellipsis">
-    AxonOps Cloud agents
+    Agent Setup
     
   </span>
   
@@ -840,7 +883,7 @@ data-et-multi-view="{&quot;schema&quot;:{&quot;content&quot;:{&quot;desktop&quot
         
   
   <span class="md-ellipsis">
-    AxonOps Cloud agents
+    Agent Setup
     
   </span>
   
@@ -1223,6 +1266,15 @@ data-et-multi-view="{&quot;schema&quot;:{&quot;content&quot;:{&quot;desktop&quot
 </li>
       
         <li class="md-nav__item">
+  <a href="#axonops-agent-behind-a-proxy" class="md-nav__link">
+    <span class="md-ellipsis">
+      AxonOps agent behind a proxy
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#start-axon-agent" class="md-nav__link">
     <span class="md-ellipsis">
       Start axon-agent
@@ -1234,6 +1286,36 @@ data-et-multi-view="{&quot;schema&quot;:{&quot;content&quot;:{&quot;desktop&quot
     </ul>
   
 </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../proxy/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Proxy Configuration
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
       
     </li>
   
@@ -4235,6 +4317,15 @@ data-et-multi-view="{&quot;schema&quot;:{&quot;content&quot;:{&quot;desktop&quot
 </li>
       
         <li class="md-nav__item">
+  <a href="#axonops-agent-behind-a-proxy" class="md-nav__link">
+    <span class="md-ellipsis">
+      AxonOps agent behind a proxy
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#start-axon-agent" class="md-nav__link">
     <span class="md-ellipsis">
       Start axon-agent
@@ -5134,6 +5225,9 @@ To load the AxonOps Java Agent and Kafka Connect config changes please either:
 
 </div>
 </div>
+<h2 id="axonops-agent-behind-a-proxy">AxonOps agent behind a proxy<a class="headerlink" href="#axonops-agent-behind-a-proxy" title="Permanent link">¶</a></h2>
+<p>If your network does not have direct internet access and it requires a proxy to connect to the AxonOps Server, follow
+<a href="../proxy/">these instructions</a>.</p>
 <h2 id="start-axon-agent">Start axon-agent<a class="headerlink" href="#start-axon-agent" title="Permanent link">¶</a></h2>
 <div class="highlight"><pre><span></span><code>sudo systemctl start axon-agent
 </code></pre></div>
@@ -5199,13 +5293,13 @@ To load the AxonOps Java Agent and Kafka Connect config changes please either:
         
         
           
-          <a href="../getting_started/" class="md-footer__link md-footer__link--next" aria-label="Next: Get Started">
+          <a href="../proxy/" class="md-footer__link md-footer__link--next" aria-label="Next: Proxy Configuration">
             <div class="md-footer__title">
               <span class="md-footer__direction">
                 Next
               </span>
               <div class="md-ellipsis">
-                Get Started
+                Proxy Configuration
               </div>
             </div>
             <div class="md-footer__button md-icon">
