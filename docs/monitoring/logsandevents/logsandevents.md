@@ -1,62 +1,82 @@
 
-### Logs and Events
+# Logs and Events
 
-AxonOps provides a powerful logging feature that allows you to search and filter logs based on different parameters such as DC/Rack/Node, Log Level, Event Type, Source and Log Content.
+AxonOps provides a powerful logging feature that allows you to search and filter logs
+based on different parameters such as:
 
-![](logs_ui.png)
+* DC/Rack/Node
+* Log Level
+* Event Type
+* Source
+* Log Content
 
-The logs and events are visible within AxonOps dashboard and Logs & Events tab allowing quick access to them without having to login to the individual servers.
+The logs and events are visible in two locations allowing quick access to them without
+having to login to the individual servers:
 
-#### Search by Log Level
+1. Within the Logs & Events tab:
+
+    ![Logs & Events UI](imgs/logs_ui.png)
+
+2. Within the AxonOps Dashboard by dragging the bottom handle icon up:
+
+    ![Dashboard UI](imgs/logs_ui_dashboard.png)
+
+## Search by Log Level
 
 Filter logs based on their log levels to focus on specific severity levels. The log level indicates the importance or severity of a message from the most critical (ERROR) to less severe (DEBUG).
 
-![](log_level.png)
+![Selecting Log Levels](imgs/log_level.png)
 
-##### Setting up the Debug Level
+### Setting up the Debug Level
 
-To search logs by debug level you have to enable debug mode in cassandra by editing the ***logback.xml*** file:
-```
+To search logs by DEBUG level you have to enable DEBUG logs in Cassandra by editing
+the `logback.xml` file:
+
+```xml
 <appender name="SYSTEMLOG" class="ch.qos.logback.core.rolling.RollingFileAppender">
     <filter class="ch.qos.logback.classic.filter.ThresholdFilter">
         <level>DEBUG</level>
 ```
 
-#### Search by Logs Source and Event Type
+> Note: Enabling DEBUG logs within Cassandra is not advised during normal operations and
+should only be activated for short periods of time on select nodes when debugging issues
+where INFO logs do not provide enough visibility.
+>
+> Leaving DEBUG logs on indefinitely can cause immense strain on the Cassandra process
+due to its high CPU usage.
 
-You can filter logs based on the log source (cassandra, axon-server and axon-agent logs) and event type to narrow down search results.
+## Search by Logs Source and Event Type
 
-![](logs_event_type1.png)
-![](logs_event_type2.png)
+You can filter logs based on the log Source (`cassandra`, `axon-server`, and `axon-agent` logs) and Event Type to narrow down search results.
 
-#### Search by Content
+![](imgs/logs_event_type1.png)
+![](imgs/logs_event_type2.png)
 
-For a free text search enter a keyword in the ***content*** input or use the `/<expression>/` syntax to search by regex expression.
+## Search by Content
 
-Here are some examples:
+For free text search, enter a keyword in the Message field or use the `/<expression>/` syntax to search by regex expressions.
 
-* Currently the following keyword syntax is supported:
+### Example Search Terms
 
-`hello` - matches `hello`
+Currently the following keyword syntax is supported:
 
-`hello world` - matches `hello` or `world`
-
-`"hello world"` - matches exact `hello world`
-
-`+-hello` - matches excluding `hello`
-
-`+-"hello world"` - matches excluding `hello world`
-
-`+-hello +-world` - matches excluding `hello` or `world`
-
-* Display logs that contain a specific word or phrase:
-
-![](logs_example_regexp1.png) 
-
-* Display logs that contain a match either what is before or after the |, in this case "Validated" or "Compacted":
-
-![](logs_example_regexp2.png)
-
-* Display logs that contain both patterns in a line, in this case "Segment" and "deleted:
-
-![](logs_example_regexp3.png)
+* `hello`
+    * matches `hello`
+* `hello world`
+    * matches `hello` or `world`
+* `"hello world"`
+    * matches exact `hello world`
+* `+-hello`
+    * matches excluding `hello`
+* `+-"hello world"`
+    * matches excluding `hello world`
+* `+-hello +-world`
+    * matches excluding `hello` or `world`
+* `/.*repair.*/`
+    * display logs that contain a specific word or phrase
+* `/(Validated|Compacted)/`
+    * display logs that matches either what is before or after the `|`, in this case
+    `Validated` or `Compacted`
+* `/Segment.*deleted/`
+    * display logs that contain both patterns in a line, in this case `Segment` and
+    `deleted`
