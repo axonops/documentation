@@ -2,17 +2,17 @@
 function install_dependency() {
   service=${1}
 
-  mkdir -p "/var/cache/apt/archives/${service}"
-  tar xf "${service}.deb.tgz" --directory "/var/cache/apt/archives/${service}"
-  if [[ "$service" == "axon-dash-pdf-predependencies" ]]; then
-    sudo dpkg -i /var/cache/apt/archives/${service}/libpython3.9-minimal*
-    sudo dpkg -i /var/cache/apt/archives/${service}/python3.9-minimal*
-    sudo dpkg -i /var/cache/apt/archives/${service}/*.deb || (
+  mkdir -p "/opt/offline/axonops/${service}"
+  tar xf "${service}.deb.tgz" --directory "/opt/offline/axonops/${service}"
+  if [[ "$service" == "axon-dash-pdf2-predependencies" ]]; then
+    sudo dpkg -i /opt/offline/axonops/${service}/libpython3*-minimal*
+    sudo dpkg -i /opt/offline/axonops/${service}/python3*-minimal*
+    sudo dpkg -i /opt/offline/axonops/${service}/*.deb || (
       echo "Working through Python dependencies..."
-      sudo dpkg -i /var/cache/apt/archives/${service}/*.deb
+      sudo dpkg -i /opt/offline/axonops/${service}/*.deb
     )
   else
-    sudo dpkg -i /var/cache/apt/archives/${service}/*.deb
+    sudo dpkg -i /opt/offline/axonops/${service}/*.deb
   fi
 }
 
