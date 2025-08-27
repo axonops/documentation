@@ -105,7 +105,9 @@ nav:
 
     - Setup:
       - AxonOps Cloud account: 'get_started/cloud.md'
-      - AxonOps Cloud agents: 'get_started/agent_setup.md'
+      - AxonOps Cloud agents: 
+        - Agent Setup: 'get_started/agent_setup.md'
+        - Proxy Configuration: 'get_started/proxy.md'
 
   - AxonOps Self-Hosted:
     - Get Started: get_started/getting_started.md
