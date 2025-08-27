@@ -65,6 +65,11 @@ You should expect the following response:
 
 </div>
 
+## AxonOps agent behind a proxy
+
+If your network does not have direct internet access and it requires a proxy to connect to the AxonOps Server, follow
+[this instructions](proxy.md).
+
 ## Start axon-agent
 
 ```
