@@ -16,9 +16,11 @@ function install_dependency() {
   fi
 }
 
+# (optional) install axon-dash dependency to enable pdf generation
+install_dependency axon-dash-pdf2-predependencies
+install_dependency axon-dash-pdf2
+
 # install axon-dash
-install_dependency axon-dash-pdf-predependencies
-install_dependency axon-dash-pdf
 install_dependency axon-dash
 
 # install axon-server

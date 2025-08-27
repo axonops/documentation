@@ -27,8 +27,8 @@ function install_dependency() {
     "${service}"
 }
 
-# install axon-dash
-install_dependency axon-dash-pdf
+# (optional) install axon-dash dependency to enable pdf generation
+install_dependency axon-dash-pdf2
 install_dependency axon-dash
 
 # install axon-server
