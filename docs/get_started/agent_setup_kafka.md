@@ -20,7 +20,3 @@ If there is a Dedicated NTP server in your Organization please uncomment and upd
 
 {!dynamic_pages/axon_agent/kafka_agent_config.md!}
 
-## AxonOps agent behind a proxy
-
-If your network does not have direct internet access and it requires a proxy to connect to the AxonOps Server, follow
-[this instructions](proxy.md).
