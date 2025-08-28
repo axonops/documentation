@@ -8,12 +8,8 @@
 ### Fixes
 
 * [Server] Stop `clearing snapshot timed out` errors and prevent erroneously raised alerts.
-* [Agent] Remove duplicate environment variables used to configure Kafka cluster name. Also, fixes an issue when running with Strimzi.
+* [Agent] Remove duplicate environment variables used to configure Kafka cluster name. Fixes an issue when running with Strimzi.
 * [Agent] Reconnect idle Kafka agent connections instead of treating them as failed or terminated connections.
-
-### New Features
-
-* [Agent] Agent-side support for managing Kafka connectors and schemas.
 
 ## Release 2025-08-20
 
