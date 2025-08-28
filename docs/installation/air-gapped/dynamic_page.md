@@ -90,7 +90,7 @@ On the air-gapped machine:
 
 </div>
 
-### Install the AxonOps Server and Dashboard
+### Install the Server and Dashboard
 
 Use the following script to install `axon-server` and `axon-dash` on the offline
 machine. `axon-server` and `axon-dash` can be installed on the same machine or be
@@ -114,11 +114,11 @@ The `axon-dash-pdf2` package is optional and provides support for generating PDF
 
 </div>
 
-### Install the AxonOps Agent
+### Install the Agent
 
 Use the following script to install the `axon-agent` as well as a version of
-`axon-cassandra*-agent` that coincides with the version of Cassandra and the Java JDK
-that is being used.
+`axon-cassandra*-agent` or `axon-kafka*-agent` that coincides with the version of
+Cassandra/Kafka and the Java JDK that is being used.
 
 <div id="DebianDiv" class="os" markdown="1">
 

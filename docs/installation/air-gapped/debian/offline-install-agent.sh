@@ -18,11 +18,11 @@ function install_dependency() {
   fi
 }
 
-# install axon-agent on Cassandra node
+# install axon-agent on Cassandra/Kafka nodes
 install_dependency axon-agent
 
 ## (choose one of the following)
-## install matching axon-cassandra agent on the Cassandra nodes
+## install matching axon-cassandra/axon-kafka agent on the Cassandra/Kafka nodes
 # install_dependency axon-cassandra3.0-agent
 # install_dependency axon-cassandra3.11-agent
 # install_dependency axon-cassandra4.0-agent
@@ -31,3 +31,5 @@ install_dependency axon-agent
 # install_dependency axon-cassandra4.1-agent-jdk8
 # install_dependency axon-cassandra5.0-agent-jdk11
 # install_dependency axon-cassandra5.0-agent-jdk17
+# install_dependency axon-kafka2-agent
+# install_dependency axon-kafka3-agent

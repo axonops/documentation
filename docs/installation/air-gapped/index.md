@@ -2,7 +2,9 @@ Follow the process below to install AxonOps within air-gapped systems.
 
 {!installation/air-gapped/dynamic_page.md!}
 
-### Configure Software
+## Configure Software
+
+### Configure Server and Dashboard
 
 Once installed, ensure the `axon-server` and `axon-dash` are configured
 correctly by:
@@ -16,14 +18,16 @@ configuration file,
 {!installation/air-gapped/configure-software.sh!}
 ```
 
-### Install Agent
+### Configure and Load Agents
 
-On the Cassandra machine, run the following commands to configure `axon-agent` and
-ensure Cassandra loads the agent. Use the instructions found [here](../agent/install.md)
-to:
+On the Cassandra/Kafka machine, run the following commands to configure `axon-agent` and
+ensure Cassandra/Kafka loads the agent. Use the instructions found on the
+[AxonOps Agent Installation](../agent/install.md) page to:
 
-* configure `axon-agent`
-* and configure Cassandra to load the agent.
+* configure `axon-agent`,
+* configure Cassandra/Kafka to load the agent,
+* configure the Cassandra/Kafka user groups,
+* and restart the Cassandra/Kafka process.
 
 ```bash
 {!installation/air-gapped/install-agent.sh!}

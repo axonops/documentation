@@ -13,6 +13,8 @@ services=(
   axon-cassandra4.1-agent-jdk8
   axon-cassandra5.0-agent-jdk11
   axon-cassandra5.0-agent-jdk17
+  axon-kafka2-agent
+  axon-kafka3-agent
 )
 for service in "${services[@]}"; do
   arch=x86_64
