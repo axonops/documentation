@@ -1,3 +1,16 @@
+## Release 2025-08-21
+
+* axon-server: 2.0.8
+    * Prevents erroneously raised snapshot errors.
+* axon-agent: 2.0.7
+    * Strengthen connection management and environment variable configurations for Kafka agent.
+
+### Fixes
+
+* [Server] Stop `clearing snapshot timed out` errors and prevent erroneously raised alerts.
+* [Agent] Remove duplicate environment variables used to configure Kafka cluster name. Fixes an issue when running with Strimzi.
+* [Agent] Reconnect idle Kafka agent connections instead of treating them as failed or terminated connections.
+
 ## Release 2025-08-20
 
 * axon-server: 2.0.7
