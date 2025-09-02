@@ -1788,6 +1788,8 @@ data-et-multi-view="{&quot;schema&quot;:{&quot;content&quot;:{&quot;desktop&quot
       <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
       
       
+        
+      
       
         <label class="md-nav__link md-nav__link--active" for="__toc">
           
@@ -1820,6 +1822,8 @@ data-et-multi-view="{&quot;schema&quot;:{&quot;content&quot;:{&quot;desktop&quot
   
   
   
+    
+  
   
     <label class="md-nav__title" for="__toc">
       <span class="md-nav__icon md-icon"></span>
@@ -1828,16 +1832,6 @@ data-et-multi-view="{&quot;schema&quot;:{&quot;content&quot;:{&quot;desktop&quot
     <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
       
         <li class="md-nav__item">
-  <a href="#logs-and-events" class="md-nav__link">
-    <span class="md-ellipsis">
-      Logs and Events
-    </span>
-  </a>
-  
-    <nav class="md-nav" aria-label="Logs and Events">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
   <a href="#search-by-log-level" class="md-nav__link">
     <span class="md-ellipsis">
       Search by Log Level
@@ -1860,8 +1854,8 @@ data-et-multi-view="{&quot;schema&quot;:{&quot;content&quot;:{&quot;desktop&quot
     </nav>
   
 </li>
-        
-          <li class="md-nav__item">
+      
+        <li class="md-nav__item">
   <a href="#search-by-logs-source-and-event-type" class="md-nav__link">
     <span class="md-ellipsis">
       Search by Logs Source and Event Type
@@ -1869,11 +1863,21 @@ data-et-multi-view="{&quot;schema&quot;:{&quot;content&quot;:{&quot;desktop&quot
   </a>
   
 </li>
-        
-          <li class="md-nav__item">
+      
+        <li class="md-nav__item">
   <a href="#search-by-content" class="md-nav__link">
     <span class="md-ellipsis">
       Search by Content
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Search by Content">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#example-search-terms" class="md-nav__link">
+    <span class="md-ellipsis">
+      Example Search Terms
     </span>
   </a>
   
@@ -2099,7 +2103,7 @@ data-et-multi-view="{&quot;schema&quot;:{&quot;content&quot;:{&quot;desktop&quot
   
   
   <span class="md-ellipsis">
-    Repair
+    Repairs
     
   </span>
   
@@ -2122,7 +2126,7 @@ data-et-multi-view="{&quot;schema&quot;:{&quot;content&quot;:{&quot;desktop&quot
   
   
   <span class="md-ellipsis">
-    Rolling Restart
+    Rolling Restarts
     
   </span>
   
@@ -3769,6 +3773,8 @@ data-et-multi-view="{&quot;schema&quot;:{&quot;content&quot;:{&quot;desktop&quot
   
   
   
+    
+  
   
     <label class="md-nav__title" for="__toc">
       <span class="md-nav__icon md-icon"></span>
@@ -3777,16 +3783,6 @@ data-et-multi-view="{&quot;schema&quot;:{&quot;content&quot;:{&quot;desktop&quot
     <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
       
         <li class="md-nav__item">
-  <a href="#logs-and-events" class="md-nav__link">
-    <span class="md-ellipsis">
-      Logs and Events
-    </span>
-  </a>
-  
-    <nav class="md-nav" aria-label="Logs and Events">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
   <a href="#search-by-log-level" class="md-nav__link">
     <span class="md-ellipsis">
       Search by Log Level
@@ -3809,8 +3805,8 @@ data-et-multi-view="{&quot;schema&quot;:{&quot;content&quot;:{&quot;desktop&quot
     </nav>
   
 </li>
-        
-          <li class="md-nav__item">
+      
+        <li class="md-nav__item">
   <a href="#search-by-logs-source-and-event-type" class="md-nav__link">
     <span class="md-ellipsis">
       Search by Logs Source and Event Type
@@ -3818,11 +3814,21 @@ data-et-multi-view="{&quot;schema&quot;:{&quot;content&quot;:{&quot;desktop&quot
   </a>
   
 </li>
-        
-          <li class="md-nav__item">
+      
+        <li class="md-nav__item">
   <a href="#search-by-content" class="md-nav__link">
     <span class="md-ellipsis">
       Search by Content
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Search by Content">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#example-search-terms" class="md-nav__link">
+    <span class="md-ellipsis">
+      Example Search Terms
     </span>
   </a>
   
@@ -3849,49 +3855,93 @@ data-et-multi-view="{&quot;schema&quot;:{&quot;content&quot;:{&quot;desktop&quot
 
 
 
-  <h1>Logs & Events</h1>
-
-<div><h3 id="logs-and-events">Logs and Events<a class="headerlink" href="#logs-and-events" title="Permanent link">¶</a></h3>
-<p>AxonOps provides a powerful logging feature that allows you to search and filter logs based on different parameters such as DC/Rack/Node, Log Level, Event Type, Source and Log Content.</p>
-<p><a class="glightbox" href="../logs_ui.png" data-type="image" data-width="100%" data-height="auto" data-desc-position="bottom"><img alt="" src="../logs_ui.png"></a></p>
-<p>The logs and events are visible within AxonOps dashboard and Logs &amp; Events tab allowing quick access to them without having to login to the individual servers.</p>
-<h4 id="search-by-log-level">Search by Log Level<a class="headerlink" href="#search-by-log-level" title="Permanent link">¶</a></h4>
+<div><h1 id="logs-and-events">Logs and Events<a class="headerlink" href="#logs-and-events" title="Permanent link">¶</a></h1>
+<p>AxonOps provides a powerful logging feature that allows you to search and filter logs
+based on different parameters such as:</p>
+<ul>
+<li>DC/Rack/Node</li>
+<li>Log Level</li>
+<li>Event Type</li>
+<li>Source</li>
+<li>Log Content</li>
+</ul>
+<p>The logs and events are visible in two locations allowing quick access to them without
+having to login to the individual servers:</p>
+<ol>
+<li>
+<p>Within the Logs &amp; Events tab:</p>
+<p><a class="glightbox" href="../imgs/logs_ui.png" data-type="image" data-width="100%" data-height="auto" data-desc-position="bottom"><img alt="Logs &amp; Events UI" src="../imgs/logs_ui.png"></a></p>
+</li>
+<li>
+<p>Within the AxonOps Dashboard by dragging the bottom handle icon up:</p>
+<p><a class="glightbox" href="../imgs/logs_ui_dashboard.png" data-type="image" data-width="100%" data-height="auto" data-desc-position="bottom"><img alt="Dashboard UI" src="../imgs/logs_ui_dashboard.png"></a></p>
+</li>
+</ol>
+<h2 id="search-by-log-level">Search by Log Level<a class="headerlink" href="#search-by-log-level" title="Permanent link">¶</a></h2>
 <p>Filter logs based on their log levels to focus on specific severity levels. The log level indicates the importance or severity of a message from the most critical (ERROR) to less severe (DEBUG).</p>
-<p><a class="glightbox" href="../log_level.png" data-type="image" data-width="100%" data-height="auto" data-desc-position="bottom"><img alt="" src="../log_level.png"></a></p>
-<h5 id="setting-up-the-debug-level">Setting up the Debug Level<a class="headerlink" href="#setting-up-the-debug-level" title="Permanent link">¶</a></h5>
-<p>To search logs by debug level you have to enable debug mode in cassandra by editing the <strong><em>logback.xml</em></strong> file:
-</p><div class="highlight"><pre><span></span><code>&lt;appender name="SYSTEMLOG" class="ch.qos.logback.core.rolling.RollingFileAppender"&gt;
-    &lt;filter class="ch.qos.logback.classic.filter.ThresholdFilter"&gt;
-        &lt;level&gt;DEBUG&lt;/level&gt;
+<p><a class="glightbox" href="../imgs/log_level.png" data-type="image" data-width="100%" data-height="auto" data-desc-position="bottom"><img alt="Selecting Log Levels" src="../imgs/log_level.png"></a></p>
+<h3 id="setting-up-the-debug-level">Setting up the Debug Level<a class="headerlink" href="#setting-up-the-debug-level" title="Permanent link">¶</a></h3>
+<p>To search logs by DEBUG level you have to enable DEBUG logs in Cassandra by editing
+the <code>logback.xml</code> file:</p>
+<div class="highlight"><pre><span></span><code><span class="nt">&lt;appender</span><span class="w"> </span><span class="na">name=</span><span class="s">"SYSTEMLOG"</span><span class="w"> </span><span class="na">class=</span><span class="s">"ch.qos.logback.core.rolling.RollingFileAppender"</span><span class="nt">&gt;</span>
+<span class="w">    </span><span class="nt">&lt;filter</span><span class="w"> </span><span class="na">class=</span><span class="s">"ch.qos.logback.classic.filter.ThresholdFilter"</span><span class="nt">&gt;</span>
+<span class="w">        </span><span class="nt">&lt;level&gt;</span>DEBUG<span class="nt">&lt;/level&gt;</span>
 </code></pre></div>
-<h4 id="search-by-logs-source-and-event-type">Search by Logs Source and Event Type<a class="headerlink" href="#search-by-logs-source-and-event-type" title="Permanent link">¶</a></h4>
-<p>You can filter logs based on the log source (cassandra, axon-server and axon-agent logs) and event type to narrow down search results.</p>
-<p><a class="glightbox" href="../logs_event_type1.png" data-type="image" data-width="100%" data-height="auto" data-desc-position="bottom"><img alt="" src="../logs_event_type1.png"></a>
-<a class="glightbox" href="../logs_event_type2.png" data-type="image" data-width="100%" data-height="auto" data-desc-position="bottom"><img alt="" src="../logs_event_type2.png"></a></p>
-<h4 id="search-by-content">Search by Content<a class="headerlink" href="#search-by-content" title="Permanent link">¶</a></h4>
-<p>For a free text search enter a keyword in the <strong><em>content</em></strong> input or use the <code>/&lt;expression&gt;/</code> syntax to search by regex expression.</p>
-<p>Here are some examples:</p>
+<blockquote>
+<p>Note: Enabling DEBUG logs within Cassandra is not advised during normal operations and
+should only be activated for short periods of time on select nodes when debugging issues
+where INFO logs do not provide enough visibility.</p>
+<p>Leaving DEBUG logs on indefinitely can cause immense strain on the Cassandra process
+due to its high CPU usage.</p>
+</blockquote>
+<h2 id="search-by-logs-source-and-event-type">Search by Logs Source and Event Type<a class="headerlink" href="#search-by-logs-source-and-event-type" title="Permanent link">¶</a></h2>
+<p>You can filter logs based on the log Source (<code>cassandra</code>, <code>axon-server</code>, and <code>axon-agent</code> logs) and Event Type to narrow down search results.</p>
+<p><a class="glightbox" href="../imgs/logs_event_type1.png" data-type="image" data-width="100%" data-height="auto" data-desc-position="bottom"><img alt="Event Types" src="../imgs/logs_event_type1.png"></a>
+<a class="glightbox" href="../imgs/logs_event_type2.png" data-type="image" data-width="100%" data-height="auto" data-desc-position="bottom"><img alt="Event Types continued" src="../imgs/logs_event_type2.png"></a></p>
+<h2 id="search-by-content">Search by Content<a class="headerlink" href="#search-by-content" title="Permanent link">¶</a></h2>
+<p>For free text search, enter a keyword in the Message field or use the <code>/&lt;expression&gt;/</code> syntax to search by regex expressions.</p>
+<h3 id="example-search-terms">Example Search Terms<a class="headerlink" href="#example-search-terms" title="Permanent link">¶</a></h3>
+<p>Currently the following keyword syntax is supported:</p>
 <ul>
-<li>Currently the following keyword syntax is supported:</li>
+<li><code>hello</code><ul>
+<li>matches <code>hello</code></li>
 </ul>
-<p><code>hello</code> - matches <code>hello</code></p>
-<p><code>hello world</code> - matches <code>hello</code> or <code>world</code></p>
-<p><code>"hello world"</code> - matches exact <code>hello world</code></p>
-<p><code>+-hello</code> - matches excluding <code>hello</code></p>
-<p><code>+-"hello world"</code> - matches excluding <code>hello world</code></p>
-<p><code>+-hello +-world</code> - matches excluding <code>hello</code> or <code>world</code></p>
-<ul>
-<li>Display logs that contain a specific word or phrase:</li>
+</li>
+<li><code>hello world</code><ul>
+<li>matches <code>hello</code> or <code>world</code></li>
 </ul>
-<p><a class="glightbox" href="../logs_example_regexp1.png" data-type="image" data-width="100%" data-height="auto" data-desc-position="bottom"><img alt="" src="../logs_example_regexp1.png"></a> </p>
-<ul>
-<li>Display logs that contain a match either what is before or after the |, in this case "Validated" or "Compacted":</li>
+</li>
+<li><code>"hello world"</code><ul>
+<li>matches exact <code>hello world</code></li>
 </ul>
-<p><a class="glightbox" href="../logs_example_regexp2.png" data-type="image" data-width="100%" data-height="auto" data-desc-position="bottom"><img alt="" src="../logs_example_regexp2.png"></a></p>
-<ul>
-<li>Display logs that contain both patterns in a line, in this case "Segment" and "deleted:</li>
+</li>
+<li><code>+-hello</code><ul>
+<li>matches excluding <code>hello</code></li>
 </ul>
-<p><a class="glightbox" href="../logs_example_regexp3.png" data-type="image" data-width="100%" data-height="auto" data-desc-position="bottom"><img alt="" src="../logs_example_regexp3.png"></a></p></div>
+</li>
+<li><code>+-"hello world"</code><ul>
+<li>matches excluding <code>hello world</code></li>
+</ul>
+</li>
+<li><code>+-hello +-world</code><ul>
+<li>matches excluding <code>hello</code> or <code>world</code></li>
+</ul>
+</li>
+<li><code>/.*repair.*/</code><ul>
+<li>display logs that contain a specific word or phrase</li>
+</ul>
+</li>
+<li><code>/(Validated|Compacted)/</code><ul>
+<li>display logs that matches either what is before or after the <code>|</code>, in this case
+<code>Validated</code> or <code>Compacted</code></li>
+</ul>
+</li>
+<li><code>/Segment.*deleted/</code><ul>
+<li>display logs that contain both patterns in a line, in this case <code>Segment</code> and
+<code>deleted</code></li>
+</ul>
+</li>
+</ul></div>
 
 
 

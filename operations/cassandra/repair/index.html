@@ -20,7 +20,7 @@
     
     
       
-        <title>Repair - docs</title>
+        <title>Repairs - docs</title>
       
     
     
@@ -200,7 +200,7 @@
         <div class="md-header__topic" data-md-component="header-topic">
           <span class="md-ellipsis">
             
-            Repair
+            Repairs
             
           </span>
         </div>
@@ -2013,7 +2013,7 @@ data-et-multi-view="{&quot;schema&quot;:{&quot;content&quot;:{&quot;desktop&quot
   
   
   <span class="md-ellipsis">
-    Repair
+    Repairs
     
   </span>
   
@@ -2026,7 +2026,7 @@ data-et-multi-view="{&quot;schema&quot;:{&quot;content&quot;:{&quot;desktop&quot
   
   
   <span class="md-ellipsis">
-    Repair
+    Repairs
     
   </span>
   
@@ -2049,18 +2049,57 @@ data-et-multi-view="{&quot;schema&quot;:{&quot;content&quot;:{&quot;desktop&quot
         <li class="md-nav__item">
   <a href="#adaptive-repair-service" class="md-nav__link">
     <span class="md-ellipsis">
-      Adaptive repair service
+      Adaptive Repair Service
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Adaptive Repair Service">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#increasing-data-consistency" class="md-nav__link">
+    <span class="md-ellipsis">
+      Increasing Data Consistency
     </span>
   </a>
   
 </li>
+        
+      </ul>
+    </nav>
+  
+</li>
       
         <li class="md-nav__item">
-  <a href="#scheduled-repair" class="md-nav__link">
+  <a href="#scheduled-repairs" class="md-nav__link">
     <span class="md-ellipsis">
-      Scheduled repair
+      Scheduled Repairs
     </span>
   </a>
+  
+    <nav class="md-nav" aria-label="Scheduled Repairs">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#immediate-repairs" class="md-nav__link">
+    <span class="md-ellipsis">
+      Immediate Repairs
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#cron-scheduled-repairs" class="md-nav__link">
+    <span class="md-ellipsis">
+      Cron Scheduled Repairs
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
   
 </li>
       
@@ -2085,7 +2124,7 @@ data-et-multi-view="{&quot;schema&quot;:{&quot;content&quot;:{&quot;desktop&quot
   
   
   <span class="md-ellipsis">
-    Rolling Restart
+    Rolling Restarts
     
   </span>
   
@@ -3742,18 +3781,57 @@ data-et-multi-view="{&quot;schema&quot;:{&quot;content&quot;:{&quot;desktop&quot
         <li class="md-nav__item">
   <a href="#adaptive-repair-service" class="md-nav__link">
     <span class="md-ellipsis">
-      Adaptive repair service
+      Adaptive Repair Service
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Adaptive Repair Service">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#increasing-data-consistency" class="md-nav__link">
+    <span class="md-ellipsis">
+      Increasing Data Consistency
     </span>
   </a>
   
 </li>
+        
+      </ul>
+    </nav>
+  
+</li>
       
         <li class="md-nav__item">
-  <a href="#scheduled-repair" class="md-nav__link">
+  <a href="#scheduled-repairs" class="md-nav__link">
     <span class="md-ellipsis">
-      Scheduled repair
+      Scheduled Repairs
     </span>
   </a>
+  
+    <nav class="md-nav" aria-label="Scheduled Repairs">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#immediate-repairs" class="md-nav__link">
+    <span class="md-ellipsis">
+      Immediate Repairs
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#cron-scheduled-repairs" class="md-nav__link">
+    <span class="md-ellipsis">
+      Cron Scheduled Repairs
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
   
 </li>
       
@@ -3773,78 +3851,78 @@ data-et-multi-view="{&quot;schema&quot;:{&quot;content&quot;:{&quot;desktop&quot
 
 
 
-  <h1>Repair</h1>
+  <h1>Repairs</h1>
 
 <div><p>Repairs must be completed regularly to maintain Cassandra nodes.</p>
-<p>AxonOps provide two mechanisms to ease Cassandra repairs:</p>
+<p>AxonOps provides two mechanisms to ease management of repairs in Cassandra:</p>
 <ul>
-<li>
-<p>Adaptive repair service</p>
-</li>
-<li>
-<p>Scheduled repair</p>
-</li>
+<li>Adaptive Repair Service</li>
+<li>Scheduled Repairs</li>
 </ul>
-<h2 id="adaptive-repair-service">Adaptive repair service<a class="headerlink" href="#adaptive-repair-service" title="Permanent link">¶</a></h2>
-<p>Since AxonOps collects performance metrics and logs, we built an “Adaptive” repair system which regulates the velocity (parallelism and pauses between each subrange repair) based on performance trending data. The regulation of repair velocity takes input from various metrics including CPU utilisation, query latencies, Cassandra thread pools pending statistics, and IOwait percentage, while tracking the schedule of repair based on <strong>gc_grace_seconds</strong> for each table.</p>
+<h2 id="adaptive-repair-service">Adaptive Repair Service<a class="headerlink" href="#adaptive-repair-service" title="Permanent link">¶</a></h2>
+<p>Since AxonOps collects performance metrics and logs, we built an "Adaptive" repair system which regulates the velocity (parallelism and pauses between each subrange repair) based on performance trending data. The regulation of repair velocity takes input from various metrics including:</p>
+<ul>
+<li>CPU utilization</li>
+<li>Query latencies</li>
+<li>Cassandra thread pools pending statistics</li>
+<li>I/O wait percentage</li>
+<li>Tracking of the repair schedule based on <code>gc_grace_seconds</code> for each table</li>
+</ul>
 <p>The idea of this is to achieve the following:</p>
 <ul>
-<li>Completion of repair within gc_grace_seconds of each table.</li>
+<li>Completion of repair within <code>gc_grace_seconds</code> of each table.</li>
 <li>Repair process does not affect query performance.</li>
-<li>In essence, adaptive repair regulator slows down the repair velocity when it deems the load is going to be high based on the gradient of the rate of increase of load, and speeds up to catch up with the repair schedule when the resources are more readily available.</li>
-<li>This mechanism also doesn't require JMX access. The adaptive repair service running on AxonOps server orchestrates and issues commands to the agents over the existing connection.</li>
+<li>In essence, the adaptive repair regulator slows down the repair velocity when it detects an increase in load and speeds up to catch up with the repair schedule when resources are more readily available.</li>
+<li>This mechanism does not require JMX access. The adaptive repair service running on AxonOps server orchestrates and issues commands to the agents over the existing connection.</li>
 </ul>
 <div class="admonition infomy">
 <p class="admonition-title">Infomy</p>
-<p><a href="../../../img/cass_repairs/adaptive_repair.png"><img alt="adaptive_repair" src="../../../img/cass_repairs/adaptive_repair.png"></a></p>
+<p><a class="glightbox" href="imgs/adaptive_repair.png" data-type="image" data-width="100%" data-height="auto" data-desc-position="bottom"><img alt="Adaptive Repairs" src="imgs/adaptive_repair.png"></a></p>
 </div>
-<blockquote>
-<p>If you want to keep the tables as fresh as possible we recommend to increase the <code>table parallelism</code> to be greater than the total number of tables of your cluster and reduce the <code>segments per VNode</code> to generate less repair requests.</p>
-</blockquote>
-<p>From a user’s point of view there is only a single switch to enable this service. Keep this enabled and AxonOps will take care of the repair of all tables for you. You can also customize the following:</p>
+<p>From a user's point of view there is only a single switch to enable this service. Keep this enabled and AxonOps will take care of the repair of all tables for you. </p>
+<p>You can, however, customize the following:</p>
 <ul>
 <li>
-<p>Blacklist some tables</p>
+<p>Exclude tables</p>
+<p>Skip specific tables from automatic repair</p>
 </li>
 <li>
-<p>Specify the number of tables to repair in parallel</p>
+<p>Parallel processing</p>
+<p>Set how many tables to repair simultaneously</p>
 </li>
 <li>
-<p>Specify the number of segments per VNode to repair</p>
+<p>Segment size</p>
+<p>Splits each table into segments of up to this size and repairs each segment in turn.</p>
 </li>
 <li>
-<p>The GC grace threshold in seconds: if a table has a gc grace lesser than the specified value, it will be ignored from the adaptive repair service</p>
+<p>GC grace threshold</p>
+<p>If a table has a gc grace lesser than the specified value, the table will be ignored by the adaptive repair service.</p>
 </li>
 </ul>
-<h2 id="scheduled-repair">Scheduled repair<a class="headerlink" href="#scheduled-repair" title="Permanent link">¶</a></h2>
-<p>You can initiate three types of scheduled repair:</p>
+<h3 id="increasing-data-consistency">Increasing Data Consistency<a class="headerlink" href="#increasing-data-consistency" title="Permanent link">¶</a></h3>
+<p>To keep tables as up-to-date as possible we recommend both:</p>
 <ul>
-<li>Immediate scheduled repair: these will trigger immediately <strong>once</strong></li>
+<li>Increasing the <code>Concurrent Repair Processes</code> to be greater than the total number of tables in the cluster.</li>
+<li>Reducing the <code>Target Segment Size</code> to generate fewer repair requests.</li>
 </ul>
+<h2 id="scheduled-repairs">Scheduled Repairs<a class="headerlink" href="#scheduled-repairs" title="Permanent link">¶</a></h2>
+<p>You can initiate two types of scheduled repairs with AxonOps.</p>
 <div class="admonition infomy">
 <p class="admonition-title">Infomy</p>
-<p><a href="../../../img/cass_repairs/scheduled_repair.png"><img alt="scheduled_repair" src="../../../img/cass_repairs/scheduled_repair.png"></a></p>
+<p><a class="glightbox" href="imgs/running_repairs.png" data-type="image" data-width="100%" data-height="auto" data-desc-position="bottom"><img alt="Running Repairs" src="imgs/running_repairs.png"></a></p>
 </div>
-<ul>
-<li>Simple scheduled repair: these will trigger base on the selected schedule <strong>repeatedly</strong></li>
-</ul>
+<p>The above screenshot showcases a running repair that has been initiated immediately and a scheduled repair that is scheduled for 12:00 AM UTC.</p>
+<h3 id="immediate-repairs">Immediate Repairs<a class="headerlink" href="#immediate-repairs" title="Permanent link">¶</a></h3>
+<p>These will trigger immediately <strong>once</strong>.</p>
 <div class="admonition infomy">
 <p class="admonition-title">Infomy</p>
-<p><a href="../../../img/cass_repairs/scheduled_repair2.png"><img alt="scheduled_repair" src="../../../img/cass_repairs/scheduled_repair2.png"></a></p>
+<p><a class="glightbox" href="imgs/immediate_repairs.png" data-type="image" data-width="100%" data-height="auto" data-desc-position="bottom"><img alt="Immediate Repairs" src="imgs/immediate_repairs.png"></a></p>
 </div>
-<ul>
-<li>Cron schedule repair: Same as <strong>simple scheduled repair</strong> but the schedule will be based on a Cron expression</li>
-</ul>
+<h3 id="cron-scheduled-repairs">Cron Scheduled Repairs<a class="headerlink" href="#cron-scheduled-repairs" title="Permanent link">¶</a></h3>
+<p>These will trigger based on the selected schedule <strong>repeatedly</strong>.</p>
 <div class="admonition infomy">
 <p class="admonition-title">Infomy</p>
-<p><a href="../../../img/cass_repairs/scheduled_repair3.png"><img alt="scheduled_repair" src="../../../img/cass_repairs/scheduled_repair3.png"></a></p>
-</div>
-<blockquote>
-<p>The following capture presents a running repair that has been initiated immediately and a scheduled repair that is scheduled for 12:00 AM UTC:</p>
-</blockquote>
-<div class="admonition infomy">
-<p class="admonition-title">Infomy</p>
-<p><a href="../../../img/cass_repairs/scheduled_repair4.png"><img alt="scheduled_repair" src="../../../img/cass_repairs/scheduled_repair4.png"></a></p>
+<p><a class="glightbox" href="imgs/scheduled_repairs.png" data-type="image" data-width="100%" data-height="auto" data-desc-position="bottom"><img alt="Scheduled Repairs" src="imgs/scheduled_repairs.png"></a></p>
 </div></div>
 
 
@@ -3900,13 +3978,13 @@ data-et-multi-view="{&quot;schema&quot;:{&quot;content&quot;:{&quot;desktop&quot
         
         
           
-          <a href="../rollingrestart/overview/" class="md-footer__link md-footer__link--next" aria-label="Next: Rolling Restart">
+          <a href="../rollingrestart/overview/" class="md-footer__link md-footer__link--next" aria-label="Next: Rolling Restarts">
             <div class="md-footer__title">
               <span class="md-footer__direction">
                 Next
               </span>
               <div class="md-ellipsis">
-                Rolling Restart
+                Rolling Restarts
               </div>
             </div>
             <div class="md-footer__button md-icon">
