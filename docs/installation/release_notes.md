@@ -1,3 +1,21 @@
+## Release 2025-08-29
+
+* axon-server: 2.0.10
+    * Fix ordering when displaying event logs.
+
+### Fixes
+
+* [Server] Fix event log sorting with a faster tie-breaker mechanism.
+
+## Release 2025-08-28
+
+* axon-server: 2.0.9
+    * Update dashboard templates for select installations.
+
+### Fixes
+
+* [Server] Update dashboard templates to support missing thread pool metrics for certain installations.
+
 ## Release 2025-08-21
 
 * axon-server: 2.0.8
