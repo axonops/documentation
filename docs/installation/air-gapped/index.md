@@ -43,3 +43,11 @@ instructions to:
 * and run the select `install_dependency` commands.
 
 Feel free to adjust the extracted path to maintain proper versioning accordingly.
+
+After the new versions have been installed, run the following commands to load the new
+configuration file changes and restart the select service(s):
+
+```bash
+sudo systemctl daemon-reload
+sudo systemctl restart $service
+```
