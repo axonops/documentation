@@ -1,4 +1,4 @@
-# Kafka Topics Dashboard Metrics Mapping
+# AxonOps Kafka Topics Dashboard Metrics Mapping
 
 ## Overview
 
@@ -23,46 +23,46 @@ The Kafka Topics Dashboard provides detailed monitoring of individual topic perf
 
 ### Topic Throughput - General View
 ```promql
-# Messages in per topic
+// Messages in per topic
 sum(kaf_BrokerTopicMetrics_MessagesInPerSec{axonfunction='rate',rack=~'$rack',host_id=~'$host_id',topic!='',topic='$topic'}) by (topic)
 
-# Bytes in per topic
+// Bytes in per topic
 sum(kaf_BrokerTopicMetrics_BytesInPerSec{axonfunction='rate',rack=~'$rack',host_id=~'$host_id', topic!='', topic='$topic'}) by(topic)
 
-# Bytes out per topic
+// Bytes out per topic
 sum(kaf_BrokerTopicMetrics_BytesOutPerSec{axonfunction='rate',rack=~'$rack',host_id=~'$host_id', topic!='',topic='$topic'}) by(topic)
 ```
 
 ### Topic Throughput - Detailed View
 ```promql
-# Messages in per topic (all topics)
+// Messages in per topic (all topics)
 sum(kaf_BrokerTopicMetrics_MessagesInPerSec{axonfunction='rate',rack=~'$rack',host_id=~'$host_id',topic=~'$topic',topic!=''}) by (topic)
 
-# Bytes in per topic (all topics)
+// Bytes in per topic (all topics)
 sum(kaf_BrokerTopicMetrics_BytesInPerSec{axonfunction='rate', topic='$topic',rack=~'$rack',host_id=~'$host_id',topic!=''}) by (topic)
 
-# Bytes out per topic (all topics)
+// Bytes out per topic (all topics)
 sum(kaf_BrokerTopicMetrics_BytesOutPerSec{axonfunction='rate', topic='$topic',rack=~'$rack',host_id=~'$host_id',topic!=''}) by (topic)
 ```
 
 ### Log Offset and Segments
 ```promql
-# End offset increase rate per topic
+// End offset increase rate per topic
 sum(rate(kaf_Log_LogEndOffset{rack=~'$rack',host_id=~'$host_id',topic!='',topic='$topic'}[5m])) by (topic)
 
-# Number of log segments per topic
+// Number of log segments per topic
 sum(kaf_Log_NumLogSegments{rack=~'$rack',host_id=~'$host_id',topic='$topic'}) by (topic)
 ```
 
 ### Log Size Metrics
 ```promql
-# Log size per topic
+// Log size per topic
 sum(kaf_Log_Size{rack=~'$rack',host_id=~'$host_id', topic='$topic'}) by (topic)
 
-# Log size per broker
+// Log size per broker
 sum(kaf_Log_Size{rack=~'$rack',host_id=~'$host_id', topic='$topic'}) by (host_id)
 
-# Offline log directories
+// Offline log directories
 kaf_LogManager_LogDirectoryOffline{rack=~'$rack',host_id=~'$host_id'}
 ```
 

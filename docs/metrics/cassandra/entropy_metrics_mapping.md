@@ -41,66 +41,68 @@ The Entropy dashboard (also known as Anti-Entropy) monitors Cassandra's data con
 
 ### Hints Section
 ```promql
-# Total Hints Created Rate
+// Total Hints Created Rate
 cas_Storage_TotalHints{axonfunction='rate',dc=~'$dc',rack=~'$rack',host_id=~'$host_id'}
 
-# Hints Currently In Progress
+// Hints Currently In Progress
 cas_Storage_TotalHintsInProgress{dc=~'$dc',rack=~'$rack',host_id=~'$host_id'}
 ```
 
 ### Read Repairs Section
 ```promql
-# Attempted Per Second
+// Attempted Per Second
 sum(cas_ReadRepair_Attempted{axonfunction='rate',function='Count',dc=~'$dc',rack=~'$rack',host_id=~'$host_id'}) by ($groupBy)
 
-# Repaired Background
+// Repaired Background
 sum(cas_ReadRepair_RepairedBackground{axonfunction='rate',function='Count',dc=~'$dc',rack=~'$rack',host_id=~'$host_id'}) by ($groupBy)
 
-# Repaired Blocking
+// Repaired Blocking
 sum(cas_ReadRepair_RepairedBlocking{axonfunction='rate',function='Count',dc=~'$dc',rack=~'$rack',host_id=~'$host_id'}) by ($groupBy)
 ```
 
 ### Coordinator Request Errors Section
 ```promql
-# Read Timeouts
+// Read Timeouts
 sum(cas_ClientRequest_Timeouts{axonfunction='rate',function='Count',scope='Read',dc=~'$dc',rack=~'$rack',host_id=~'$host_id'}) by ($groupBy)
 
-# Read Unavailables
+// Read Unavailables
 sum(cas_ClientRequest_Unavailables{axonfunction='rate',function='Count',scope='Read',dc=~'$dc',rack=~'$rack',host_id=~'$host_id'}) by ($groupBy)
 
-# Write Timeouts
+// Write Timeouts
 sum(cas_ClientRequest_Timeouts{axonfunction='rate',scope='Write',function='Count',dc=~'$dc',rack=~'$rack',host_id=~'$host_id'}) by ($groupBy)
 
-# Write Unavailables
+// Write Unavailables
 sum(cas_ClientRequest_Unavailables{axonfunction='rate',scope='Write',function='Count',dc=~'$dc',rack=~'$rack',host_id=~'$host_id'}) by ($groupBy)
 ```
 
 ### Thread Pools Section
 ```promql
-# Request Thread Pool Distribution (Pie Chart)
+// Request Thread Pool Distribution (Pie Chart)
 sum(cas_ThreadPools_request{axonfunction='rate',key='CompletedTasks',dc=~'$dc',rack=~'$rack',host_id=~'$host_id'}) by (scope)
 
-# Internal Thread Pool Distribution (Pie Chart)
+// Internal Thread Pool Distribution (Pie Chart)
 sum(cas_ThreadPools_internal{axonfunction='rate',key='CompletedTasks',dc=~'$dc',rack=~'$rack',host_id=~'$host_id'}) by (scope)
 
-# Anti-Entropy Stage Tasks
+// Anti-Entropy Stage Tasks
 sum(cas_ThreadPools_internal{axonfunction='rate',scope='AntiEntropyStage',key='CompletedTasks',dc=~'$dc',rack=~'$rack',host_id=~'$host_id'}) by ($groupBy)
 
-# Read Repair Stage Tasks
+// Read Repair Stage Tasks
 sum(cas_ThreadPools_internal{axonfunction='rate',scope='ReadRepairStage',key='CompletedTasks',dc=~'$dc',rack=~'$rack',host_id=~'$host_id'}) by ($groupBy)
 
-# Hints Dispatcher Tasks
+// Hints Dispatcher Tasks
 sum(cas_ThreadPools_internal{axonfunction='rate',scope='HintsDispatcher',key='CompletedTasks',dc=~'$dc',rack=~'$rack',host_id=~'$host_id'}) by ($groupBy)
 ```
 
 ## Panel Organization
 
 ### Hints Section
+
 - **Total Hints Created By Each Node** - Rate of hint creation
 
 - **Total Hints In Progress** - Active hint delivery count
 
 ### Read Repairs Section
+
 - **Attempted Per Second** - Read repair attempt rate
 
 - **Repaired Background** - Background repairs completed
@@ -108,6 +110,7 @@ sum(cas_ThreadPools_internal{axonfunction='rate',scope='HintsDispatcher',key='Co
 - **Repaired Blocked** - Blocking repairs completed
 
 ### Coordinator Requests Errors Section
+
 - **Read Timeouts Per Second** - Read operation timeout rate
 
 - **Read Unavailables Per Second** - Read unavailable exception rate
@@ -117,6 +120,7 @@ sum(cas_ThreadPools_internal{axonfunction='rate',scope='HintsDispatcher',key='Co
 - **Write Unavailables Per Second** - Write unavailable exception rate
 
 ### Thread Pools Section
+
 - **ThreadPools Request** - Request thread pool activity distribution
 
 - **ThreadPools Internal** - Internal thread pool activity distribution
@@ -128,6 +132,7 @@ sum(cas_ThreadPools_internal{axonfunction='rate',scope='HintsDispatcher',key='Co
 - **Completed Tasks per sec - Hinted Handoff** - Hint delivery tasks
 
 ### Events Section
+
 - **Starting Repair Events** - Repair start event frequency
 
 - **Streaming Events** - Data streaming event frequency
@@ -145,6 +150,7 @@ sum(cas_ThreadPools_internal{axonfunction='rate',scope='HintsDispatcher',key='Co
 ## Understanding Anti-Entropy Mechanisms
 
 ### Hinted Handoff
+
 - **Purpose**: Temporary storage of writes when replicas are unavailable
 
 - **TotalHints**: Accumulating counter of all hints created
@@ -154,6 +160,7 @@ sum(cas_ThreadPools_internal{axonfunction='rate',scope='HintsDispatcher',key='Co
 - **Impact**: High hint rates indicate replica availability issues
 
 ### Read Repair
+
 - **Attempted**: All read repair attempts
 
 - **RepairedBackground**: Asynchronous repairs (non-blocking)
@@ -166,6 +173,7 @@ sum(cas_ThreadPools_internal{axonfunction='rate',scope='HintsDispatcher',key='Co
   - Blocking: Happens before read response
 
 ### Coordinator Errors
+
 - **Timeouts**: Request exceeded configured timeout
 
 - **Unavailables**: Not enough replicas available
@@ -177,6 +185,7 @@ sum(cas_ThreadPools_internal{axonfunction='rate',scope='HintsDispatcher',key='Co
   - Insufficient replicas
 
 ### Thread Pools
+
 - **AntiEntropyStage**: Handles repair coordination
 
 - **ReadRepairStage**: Executes read repairs
@@ -186,6 +195,7 @@ sum(cas_ThreadPools_internal{axonfunction='rate',scope='HintsDispatcher',key='Co
 ## Best Practices
 
 ### Hints Monitoring
+
 - **Zero Hints Ideal**: Indicates all replicas available
 
 - **Growing Hints**: Sign of persistent replica issues
@@ -199,42 +209,51 @@ sum(cas_ThreadPools_internal{axonfunction='rate',scope='HintsDispatcher',key='Co
    - Monitor hint storage capacity
 
 ### Read Repair Monitoring
+
 **Background vs Blocking**:
 
    - High blocking repairs impact read latency
    - Background repairs are preferred
+
 **High Attempt Rate**:
 
    - Indicates data inconsistency
    - May need full repair
+
 **Success Rate**:
 
    - Compare attempted vs repaired
    - Low success indicates issues
 
 ### Error Monitoring
+
 **Zero Tolerance**:
 
    - Any timeouts/unavailables are concerning
    - Investigate root cause immediately
+
 **Read vs Write**:
 
    - Different implications
    - Write unavailables risk data loss
+
 **Correlation**:
 
    - Check with dropped messages
    - Monitor system resources
 
 ### Thread Pool Health
+
 **Balanced Distribution**:
 
    - Even work across pools
    - No single pool dominating
+
 **Anti-Entropy Activity**:
 
    - Spikes during repairs
    - Should be low normally
+
 **Hints Dispatcher**:
 
    - Activity indicates recovery
@@ -243,24 +262,28 @@ sum(cas_ThreadPools_internal{axonfunction='rate',scope='HintsDispatcher',key='Co
 ## Troubleshooting Guide
 
 ### High Hint Rate
+
 1. Check node status
 2. Review network connectivity
 3. Monitor disk space for hints
 4. Consider max_hint_window_in_ms setting
 
 ### High Read Repair Rate
+
 1. Run nodetool repair
 2. Check consistency levels
 3. Review replication factor
 4. Monitor for flapping nodes
 
 ### Timeout/Unavailable Errors
+
 1. Check system resources
 2. Review timeout settings
 3. Monitor GC activity
 4. Check request patterns
 
 ### Thread Pool Congestion
+
 1. Monitor pending tasks
 2. Check blocked tasks
 3. Review pool sizing

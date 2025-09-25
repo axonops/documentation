@@ -1,4 +1,4 @@
-# Kafka Requests Dashboard Metrics Mapping
+# AxonOps Kafka Requests Dashboard Metrics Mapping
 
 ## Overview
 
@@ -25,58 +25,58 @@ The Kafka Requests Dashboard provides comprehensive monitoring of request rates,
 
 ### Request Rates
 ```promql
-# Total requests per second per broker
+// Total requests per second per broker
 sum(kaf_RequestMetrics_RequestsPerSec{axonfunction='rate',function='Count',rack=~'$rack',host_id=~'$host_id'}) by (host_id)
 
-# Produce requests per second
+// Produce requests per second
 sum(kaf_RequestMetrics_RequestsPerSec{axonfunction='rate',function='Count',request='Produce',rack=~'$rack',host_id=~'$host_id'}) by (host_id)
 
-# Fetch consumer requests per second
+// Fetch consumer requests per second
 sum(kaf_RequestMetrics_RequestsPerSec{axonfunction='rate',function='Count',request='FetchConsumer',rack=~'$rack',host_id=~'$host_id'}) by (host_id)
 
-# Metadata requests per second
+// Metadata requests per second
 sum(kaf_RequestMetrics_RequestsPerSec{axonfunction='rate',function='Count',request='Metadata',rack=~'$rack',host_id=~'$host_id'}) by (host_id)
 ```
 
 ### Topic-Level Request Rates
 ```promql
-# Produce requests per topic
+// Produce requests per topic
 sum(kaf_BrokerTopicMetrics_TotalProduceRequestsPerSec{axonfunction='rate',function='Count',rack=~'$rack',host_id=~'$host_id', topic!=''}) by (topic)
 
-# Fetch requests per topic
+// Fetch requests per topic
 sum(kaf_BrokerTopicMetrics_TotalFetchRequestsPerSec{axonfunction='rate',function='Count',rack=~'$rack',host_id=~'$host_id',topic=~'$topic', topic!=''}) by (topic)
 ```
 
 ### Request Processing Times
 ```promql
-# Produce request total time
+// Produce request total time
 kaf_RequestMetrics_TotalTimeMs{request='Produce',function=~'$percentile',rack=~'$rack',host_id=~'$host_id'}
 
-# Fetch request total time
+// Fetch request total time
 kaf_RequestMetrics_TotalTimeMs{request='Fetch',function=~'$percentile',rack=~'$rack',host_id=~'$host_id'}
 
-# Fetch follower request total time
+// Fetch follower request total time
 kaf_RequestMetrics_TotalTimeMs{request='FetchFollower',function=~'$percentile',rack=~'$rack',host_id=~'$host_id'}
 ```
 
 ### Request Queue Times
 ```promql
-# Fetch request queue time
+// Fetch request queue time
 kaf_RequestMetrics_RequestQueueTimeMs{request='Fetch',function=~'$percentile',rack=~'$rack',host_id=~'$host_id'}
 
-# Fetch follower request queue time
+// Fetch follower request queue time
 kaf_RequestMetrics_RequestQueueTimeMs{request='FetchFollower',function=~'$percentile',rack=~'$rack',host_id=~'$host_id'}
 ```
 
 ### Message Conversions
 ```promql
-# Fetch message conversions per second
+// Fetch message conversions per second
 sum(kaf_BrokerTopicMetrics_FetchMessageConversionsPerSec{axonfunction='rate',rack=~'$rack',host_id=~'$host_id'})
 
-# Produce message conversions per second
+// Produce message conversions per second
 kaf_BrokerTopicMetrics_ProduceMessageConversionsPerSec{function='MeanRate',rack=~'$rack',host_id=~'$host_id'}
 
-# Client version distribution
+// Client version distribution
 sum(kaf_socket_server_metrics_{function='connections',rack=~'$rack',host_id=~'$host_id'}) by (clientSoftwareVersion, clientSoftwareName)
 ```
 

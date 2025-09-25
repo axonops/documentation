@@ -58,10 +58,10 @@ cas_DroppedMessage_Dropped{axonfunction='rate',function='Count',scope='READ',dc=
 
 ### Total Count Queries (not rate)
 ```promql
-# Counter Mutations
+// Counter Mutations
 cas_DroppedMessage_Dropped{function='Count',scope='COUNTER_MUTATION',dc=~'$dc',rack=~'$rack',host_id=~'$host_id'}
 
-# Paged Range
+// Paged Range
 cas_DroppedMessage_Dropped{function='Count',scope='PAGED_RANGE',dc=~'$dc',rack=~'$rack',host_id=~'$host_id'}
 ```
 

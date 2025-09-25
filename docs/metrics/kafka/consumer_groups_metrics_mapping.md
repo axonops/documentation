@@ -1,4 +1,4 @@
-# Kafka Consumer Groups Dashboard Metrics Mapping
+# AxonOps Kafka Consumer Groups Dashboard Metrics Mapping
 
 ## Overview
 
@@ -17,13 +17,13 @@ Note: Consumer group metrics are typically collected from Kafka's consumer group
 
 ### Consumer Group Lag
 ```promql
-# Consumer group lag by group, topic, and partition
+// Consumer group lag by group, topic, and partition
 sum(kaf_consumer_group{Topic='$topic',GroupID='$groupid'}) by (GroupID, Topic, Partition)
 
-# Total lag for a consumer group across all partitions
+// Total lag for a consumer group across all partitions
 sum(kaf_consumer_group{GroupID='$groupid'}) by (GroupID)
 
-# Lag for specific topic
+// Lag for specific topic
 sum(kaf_consumer_group{Topic='$topic'}) by (GroupID, Partition)
 ```
 

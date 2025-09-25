@@ -60,13 +60,13 @@ cas_Table_LiveSSTableCount{dc=~'$dc',rack=~'$rack',host_id=~'$host_id',scope=~'$
 
 ### Partition Size Metrics
 ```promql
-# Minimum
+// Minimum
 cas_Table_MinPartitionSize{dc=~'$dc',rack=~'$rack',host_id=~'$host_id',scope=~'$scope', scope!=''}
 
-# Mean
+// Mean
 cas_Table_MeanPartitionSize{dc=~'$dc',rack=~'$rack',host_id=~'$host_id',scope=~'$scope', scope!=''}
 
-# Maximum
+// Maximum
 cas_Table_MaxPartitionSize{dc=~'$dc',rack=~'$rack',host_id=~'$host_id',scope=~'$scope', scope!=''}
 ```
 

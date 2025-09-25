@@ -65,37 +65,37 @@ The Kafka Overview dashboard provides a comprehensive view of Kafka cluster heal
 
 ### Healthcheck Queries
 ```promql
-# Active Controllers (should be 1)
+// Active Controllers (should be 1)
 sum(kaf_KafkaController_ActiveControllerCount{host_id!=""})
 
-# Under min insync replicas partitions
+// Under min insync replicas partitions
 kaf_ReplicaManager_UnderMinIsrPartitionCount{dc=~'$dc',rack=~'$rack',host_id=~'$host_id'}
 
-# Under Replicated Partitions
+// Under Replicated Partitions
 kaf_ReplicaManager_UnderReplicatedPartitions{dc=~'$dc',rack=~'$rack',host_id=~'$host_id'}
 
-# Offline Partitions
+// Offline Partitions
 kaf_KafkaController_OfflinePartitionsCount{dc=~'$dc',rack=~'$rack',host_id=~'$host_id'}
 ```
 
 ### Network Throughput
 ```promql
-# Cluster network throughput - Bytes in
+// Cluster network throughput - Bytes in
 sum(kaf_BrokerTopicMetrics_BytesInPerSec{axonfunction='rate',rack=~'$rack',host_id=~'$host_id', topic!='',node_type='$node_type'})
 
-# Cluster network throughput - Bytes out
+// Cluster network throughput - Bytes out
 sum(kaf_BrokerTopicMetrics_BytesOutPerSec{axonfunction='rate',rack=~'$rack',host_id=~'$host_id', topic!='',node_type='$node_type'})
 
-# Incoming Messages
+// Incoming Messages
 sum(kaf_BrokerTopicMetrics_MessagesInPerSec{axonfunction='rate',rack=~'$rack',host_id=~'$host_id', topic=''})
 ```
 
 ### Group Coordinator
 ```promql
-# Consumer groups per coordinator
+// Consumer groups per coordinator
 kaf_GroupMetadataManager_NumGroups{rack=~'$rack',host_id=~'$host_id'}
 
-# Consumer groups by state
+// Consumer groups by state
 sum(kaf_GroupMetadataManager_NumGroupsStable{rack=~'$rack',host_id=~'$host_id'})
 sum(kaf_GroupMetadataManager_NumGroupsPreparingRebalance{rack=~'$rack',host_id=~'$host_id'})
 sum(kaf_GroupMetadataManager_NumGroupsDead{rack=~'$rack',host_id=~'$host_id'})
@@ -103,10 +103,10 @@ sum(kaf_GroupMetadataManager_NumGroupsDead{rack=~'$rack',host_id=~'$host_id'})
 
 ### Request Rates
 ```promql
-# Total Request Per Sec
+// Total Request Per Sec
 sum(kaf_RequestMetrics_RequestsPerSec{axonfunction='rate',function='Count',rack=~'$rack',host_id=~'$host_id'}) by (host_id)
 
-# Metadata Request Per Sec
+// Metadata Request Per Sec
 sum(kaf_RequestMetrics_RequestsPerSec{axonfunction='rate',function='Count',request='Metadata',rack=~'$rack',host_id=~'$host_id'}) by (host_id)
 ```
 

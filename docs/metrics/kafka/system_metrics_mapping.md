@@ -1,4 +1,4 @@
-# Kafka System Dashboard Metrics Mapping
+# AxonOps Kafka System Dashboard Metrics Mapping
 
 ## Overview
 
@@ -8,10 +8,12 @@ The Kafka System Dashboard provides comprehensive monitoring of system-level res
 
 | Dashboard Metric | Description | Attributes |
 |-----------------|---------------------------|-------------|
-| **CPU Metrics** || `host_CPU_Percent_Merge` | Overall CPU utilization percentage | time='real' |
+| **CPU Metrics** | | | |
+| `host_CPU_Percent_Merge` | Overall CPU utilization percentage | time='real' |
 | `host_CPU` (mode='iowait') | CPU time waiting for I/O operations | mode='iowait' |
 | `host_load15` | 15-minute load average | - |
-| **Disk Metrics** || `host_Disk_UsedPercent` | Percentage of disk space used | - |
+| **Disk Metrics** | | | |
+| `host_Disk_UsedPercent` | Percentage of disk space used | - |
 | `host_Disk_Used` | Absolute disk space used in bytes | - |
 | `host_Disk_SectorsRead` | Disk read throughput in bytes/sec | - |
 | `host_Disk_SectorsWrite` | Disk write throughput in bytes/sec | - |
@@ -21,17 +23,20 @@ The Kafka System Dashboard provides comprehensive monitoring of system-level res
 | `host_Disk_IoTime` | Time spent on disk I/O operations | - |
 | `host_filefd_allocated` | Number of allocated file descriptors | - |
 | `host_filefd_max` | Maximum available file descriptors | - |
-| **Memory Metrics** || `host_Memory_Used` | Used system memory in bytes | - |
+| **Memory Metrics** | | | |
+| `host_Memory_Used` | Used system memory in bytes | - |
 | `host_Memory_Cached` | Cached memory in bytes | - |
 | `host_Memory_UsedPercent` | Memory usage percentage | - |
-| **JVM Metrics** || `jvm_Threading_` | JVM thread count | type=Threading |
+| **JVM Metrics** | | | |
+| `jvm_Threading_` | JVM thread count | type=Threading |
 | `jvm_GarbageCollector_G1_Young_Generation` | G1 GC statistics | name=G1 Young Generation |
 | `jvm_GarbageCollector_ZGC` | ZGC statistics | name=ZGC |
 | `jvm_GarbageCollector_Shenandoah_Cycles` | Shenandoah GC statistics | name=Shenandoah |
 | `jvm_GarbageCollector_ConcurrentMarkSweep` | CMS GC statistics | name=ConcurrentMarkSweep |
 | `jvm_GarbageCollector_ParNew` | ParNew GC statistics | name=ParNew |
 | `jvm_Memory_` | JVM heap and non-heap memory usage | type=Memory |
-| **Network Metrics** || `host_netIOCounters_BytesRecv` | Network bytes received per second | - |
+| **Network Metrics** | | | |
+| `host_netIOCounters_BytesRecv` | Network bytes received per second | - |
 | `host_netIOCounters_BytesSent` | Network bytes sent per second | - |
 | `host_ntp_offset_seconds` | NTP time offset in seconds | - |
 
@@ -49,10 +54,10 @@ avg(host_CPU{axonfunction='rate',mode='iowait',rack=~'$rack',host_id=~'$host_id'
 
 ### Disk I/O Throughput
 ```promql
-# Read throughput
+// Read throughput
 host_Disk_SectorsRead{axonfunction='rate',rack=~'$rack',host_id=~'$host_id',partition=~'$partition',node_type='$node_type', type='kafka'}
 
-# Write throughput
+// Write throughput
 host_Disk_SectorsWrite{axonfunction='rate',rack=~'$rack',host_id=~'$host_id',partition=~'$partition', node_type='$node_type', type='kafka'}
 ```
 

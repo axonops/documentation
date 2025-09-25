@@ -28,46 +28,46 @@ The Reporting dashboard provides high-level system resource utilization and coor
 
 ### System Resource Utilization
 ```promql
-# Used Disk Space Per Node
+// Used Disk Space Per Node
 host_Disk_Used{mountpoint=~'$mountpoint',dc=~'$dc',rack=~'$rack',host_id=~'$host_id'}
 
-# Average Disk % Usage (Pie Chart)
-# Used
+// Average Disk % Usage (Pie Chart)
+// Used
 avg(host_Disk_UsedPercent{mountpoint=~'$mountpoint',dc=~'$dc',rack=~'$rack',host_id=~'$host_id'})
-# Free
+// Free
 avg(100-host_Disk_UsedPercent{mountpoint=~'$mountpoint',dc=~'$dc',rack=~'$rack',host_id=~'$host_id'})
 
-# Max Disk Write Per Second
+// Max Disk Write Per Second
 max(host_Disk_SectorsWrite{axonfunction='rate',dc=~'$dc',rack=~'$rack',host_id=~'$host_id',partition=~'$partition'})
 
-# Max Disk Read Per Second
+// Max Disk Read Per Second
 max(host_Disk_SectorsRead{axonfunction='rate',dc=~'$dc',rack=~'$rack',host_id=~'$host_id',partition=~'$partition'})
 
-# Average CPU Usage per DC
+// Average CPU Usage per DC
 avg(host_CPU_Percent_Merge{time='real',dc=~'$dc',rack=~'$rack',host_id=~'$host_id'}) by (dc)
 ```
 
 ### Coordinator Distribution
 ```promql
-# Coordinator Reads Distribution (Pie Chart)
+// Coordinator Reads Distribution (Pie Chart)
 sum(cas_ClientRequest_Latency{axonfunction='rate',scope='Read*',scope!='Read',function='Count',function!='Min|Max',dc=~'$dc',rack=~'$rack',host_id=~'$host_id'}) by (scope)
 
-# Coordinator Writes Distribution (Pie Chart)
+// Coordinator Writes Distribution (Pie Chart)
 sum(cas_ClientRequest_Latency{axonfunction='rate',scope='Write*',scope!='Write',function='Count',function!='Min|Max',dc=~'$dc',rack=~'$rack',host_id=~'$host_id'}) by (scope)
 ```
 
 ### Coordinator Performance by Consistency
 ```promql
-# Read Throughput by Consistency
+// Read Throughput by Consistency
 sum(cas_ClientRequest_Latency{axonfunction='rate',scope='Read.*$consistency',function='Count',function!='Min|Max',dc=~'$dc',rack=~'$rack', host_id=~'$host_id'}) by ($groupBy)
 
-# Write Throughput by Consistency
+// Write Throughput by Consistency
 sum(cas_ClientRequest_Latency{axonfunction='rate',scope='Write.*$consistency',function='Count',function!='Min|Max',dc=~'$dc',rack=~'$rack', host_id=~'$host_id'}) by ($groupBy)
 
-# Max Read Latency by Consistency
+// Max Read Latency by Consistency
 max(cas_ClientRequest_Latency{scope='Read.*$consistency',function='$percentile',function!='Min|Max',dc=~'$dc',rack=~'$rack',host_id=~'$host_id'})
 
-# Max Write Latency by Consistency
+// Max Write Latency by Consistency
 max(cas_ClientRequest_Latency{scope='Write.*$consistency',function='$percentile',function!='Min|Max',dc=~'$dc',rack=~'$rack',host_id=~'$host_id'})
 ```
 
@@ -256,7 +256,6 @@ Metrics to Include:
 
 ## Notes
 
-- The dashboard uses `extrapolate` for some panels to handle missing data points
 - Pie charts show current distribution, not historical
 - Max functions used for worst-case reporting
 - Some queries use special filtering like excluding empty consistency (`.*$consistency`)

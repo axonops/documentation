@@ -1,4 +1,4 @@
-# Kafka Replication Dashboard Metrics Mapping
+# AxonOps Kafka Replication Dashboard Metrics Mapping
 
 ## Overview
 
@@ -31,49 +31,49 @@ The Kafka Replication Dashboard provides comprehensive monitoring of Kafka's dat
 
 ### Partition Health
 ```promql
-# Under-replicated partitions
+// Under-replicated partitions
 kaf_ReplicaManager_UnderReplicatedPartitions{rack=~'$rack',host_id=~'$host_id'}
 
-# Offline partitions
+// Offline partitions
 kaf_KafkaController_OfflinePartitionsCount{rack=~'$rack',host_id=~'$host_id'}
 
-# Total partition count
+// Total partition count
 kaf_ReplicaManager_PartitionCount{rack=~'$rack',host_id=~'$host_id'}
 
-# Under min ISR partitions
+// Under min ISR partitions
 kaf_ReplicaManager_UnderMinIsrPartitionCount{rack=~'$rack',host_id=~'$host_id'}
 ```
 
 ### ISR Changes
 ```promql
-# ISR shrink rate
+// ISR shrink rate
 kaf_ReplicaManager_IsrShrinksPerSec{function='MeanRate',rack=~'$rack',host_id=~'$host_id'}
 
-# ISR expand rate
+// ISR expand rate
 kaf_ReplicaManager_IsrExpandsPerSec{function='MeanRate', rack=~'$rack',host_id=~'$host_id'}
 ```
 
 ### Leader Performance
 ```promql
-# Leader processing time for follower fetch requests
+// Leader processing time for follower fetch requests
 kaf_RequestMetrics_LocalTimeMs{request='FetchFollower',function=~'$percentile',rack=~'$rack',host_id=~'$host_id'}
 
-# Leader processing time for consumer fetch requests
+// Leader processing time for consumer fetch requests
 kaf_RequestMetrics_LocalTimeMs{request='Fetch',function=~'$percentile',rack=~'$rack',host_id=~'$host_id'}
 
-# Leader processing time for produce requests
+// Leader processing time for produce requests
 kaf_RequestMetrics_LocalTimeMs{request='Produce',function=~'$percentile',rack=~'$rack',host_id=~'$host_id'}
 ```
 
 ### Follower Performance
 ```promql
-# Follower wait time for produce replication
+// Follower wait time for produce replication
 kaf_RequestMetrics_RemoteTimeMs{request='Produce', function=~'$percentile',rack=~'$rack',host_id=~'$host_id'}
 
-# Follower wait time for fetch requests
+// Follower wait time for fetch requests
 kaf_RequestMetrics_RemoteTimeMs{request='Fetch',function=~'$percentile',rack=~'$rack',host_id=~'$host_id'}
 
-# Follower wait time for follower fetch
+// Follower wait time for follower fetch
 kaf_RequestMetrics_RemoteTimeMs{request='FetchFollower',function=~'$percentile',rack=~'$rack',host_id=~'$host_id'}
 ```
 

@@ -1,4 +1,4 @@
-# Kafka ZooKeeper Dashboard Metrics Mapping
+# AxonOps Kafka ZooKeeper Dashboard Metrics Mapping
 
 ## Overview
 
@@ -31,58 +31,58 @@ The Kafka ZooKeeper Dashboard monitors the health and performance of ZooKeeper e
 
 ### Health Check Metrics
 ```promql
-# Alive connections
+// Alive connections
 zk_NumAliveConnections{rack='$rack',host_id=~'$host_id'}
 
-# Total znode count
+// Total znode count
 sum(zk_NodeCount{host_id=~'$host_id',type='kafka',node_type='zookeeper'})
 
-# Total watch count
+// Total watch count
 sum(zk_WatchCount{host_id=~'$host_id',type='kafka',node_type='zookeeper'})
 
-# Outstanding requests
+// Outstanding requests
 sum(zk_OutstandingRequests{host_id=~'$host_id',type='kafka',node_type='zookeeper'})
 ```
 
 ### Request Latency
 ```promql
-# Minimum request latency
+// Minimum request latency
 zk_MinRequestLatency{host_id=~'$host_id',type='kafka',node_type='zookeeper'}
 
-# Average request latency
+// Average request latency
 zk_AvgRequestLatency{host_id=~'$host_id',node_type='zookeeper',type='kafka'}
 
-# Maximum request latency
+// Maximum request latency
 zk_MaxRequestLatency{host_id=~'$host_id',node_type='zookeeper',type='kafka'}
 
-# Kafka-reported ZooKeeper latency
+// Kafka-reported ZooKeeper latency
 kaf_ZooKeeperClientMetrics_ZooKeeperRequestLatencyMs{rack=~'$rack',host_id=~'$host_id'}
 ```
 
 ### Traffic Metrics
 ```promql
-# Packets sent rate
+// Packets sent rate
 sum(zk_PacketsSent{host_id=~'$host_id', axonfunction='rate', type='kafka',node_type='zookeeper'})
 
-# Packets received rate
+// Packets received rate
 sum(zk_PacketsReceived{host_id=~'$host_id', axonfunction='rate', type='kafka',node_type='zookeeper'})
 
-# Znode creation rate
+// Znode creation rate
 avg(zk_NodeCount{host_id=~'$host_id', axonfunction='rate',type='kafka',node_type='zookeeper'})
 ```
 
 ### Connection Management
 ```promql
-# Session expiration rate
+// Session expiration rate
 kaf_SessionExpireListener_ZooKeeperExpiresPerSec{axonfunction='rate',rack=~'$rack',host_id=~'$host_id'}
 
-# Authentication failure rate
+// Authentication failure rate
 kaf_SessionExpireListener_ZooKeeperAuthFailuresPerSec{axonfunction='rate',rack=~'$rack',host_id=~'$host_id'}
 
-# Connection rate
+// Connection rate
 kaf_SessionExpireListener_ZooKeeperSyncConnectsPerSec{axonfunction='rate',rack=~'$rack',host_id=~'$host_id'}
 
-# Disconnection rate
+// Disconnection rate
 kaf_SessionExpireListener_ZooKeeperDisconnectsPerSec{axonfunction='rate',rack=~'$rack',host_id=~'$host_id'}
 ```
 

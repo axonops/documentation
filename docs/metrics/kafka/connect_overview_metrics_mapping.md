@@ -1,4 +1,4 @@
-# Kafka Connect Overview Dashboard Metrics Mapping
+# AxonOps Kafka Connect Overview Dashboard Metrics Mapping
 
 ## Overview
 
@@ -39,71 +39,71 @@ The Kafka Connect Overview Dashboard provides comprehensive monitoring of Kafka 
 
 ### Worker Health
 ```promql
-# Failed task count
+// Failed task count
 con_connect_worker_metrics_{function="connectorfailedtaskcount",type='kafka', node_type='connect'}
 
-# Total task count
+// Total task count
 sum(con_connect_worker_metrics_{function='task_count',type='kafka', node_type='connect'})
 
-# Rebalancing status
+// Rebalancing status
 con_connect_worker_rebalance_metrics_{function="rebalancing",type='kafka', node_type='connect'}
 ```
 
 ### Coordinator Metrics
 ```promql
-# Assigned connectors per worker
+// Assigned connectors per worker
 con_connect_coordinator_metrics_{function="assigned_connectors",type='kafka', node_type='connect',client_id=~'$client_id'}
 
-# Assigned tasks per worker
+// Assigned tasks per worker
 con_connect_coordinator_metrics_{function="assigned_tasks",type='kafka', node_type='connect',client_id=~'$client_id'}
 
-# Failed rebalances
+// Failed rebalances
 con_connect_coordinator_metrics_{function="failed_rebalance_total",type='kafka', node_type='connect',client_id=~'$client_id'}
 
-# Heartbeat monitoring
+// Heartbeat monitoring
 con_connect_coordinator_metrics_{function="last_heartbeat_seconds_ago",type='kafka', node_type='connect',client_id=~'$client_id'}
 ```
 
 ### Connection Management
 ```promql
-# Active connections
+// Active connections
 con_connect_metrics_{function="connection_count",type='kafka', node_type='connect',client_id=~'$client_id'}
 
-# Connection creation/close rates
+// Connection creation/close rates
 con_connect_metrics_{function="connection_creation_total",type='kafka', node_type='connect',client_id=~'$client_id'}
 con_connect_metrics_{function="connection_close_total",type='kafka', node_type='connect',client_id=~'$client_id'}
 
-# Authentication failures
+// Authentication failures
 con_connect_metrics_{function="failed_authentication_total",type='kafka', node_type='connect'}
 ```
 
 ### Network Performance
 ```promql
-# Request/Response tracking
+// Request/Response tracking
 con_connect_metrics_{function="request_total",type='kafka', node_type='connect'}
 con_connect_metrics_{function="response_total",type='kafka', node_type='connect'}
 
-# Byte rates
+// Byte rates
 con_connect_metrics_{function="incoming_byte_rate",type='kafka', node_type='connect'}
 con_connect_metrics_{function="outgoing_byte_rate",type='kafka', node_type='connect'}
 
-# I/O performance
+// I/O performance
 con_connect_metrics_{axonfunction='rate',function="iotime_total",type='kafka', node_type='connect'}
 con_connect_metrics_{axonfunction='rate',function="io_waittime_total",type='kafka', node_type='connect'} / 1000
 ```
 
 ### Rebalancing Metrics
 ```promql
-# Average rebalance time
+// Average rebalance time
 con_connect_worker_rebalance_metrics_{function="rebalance_avg_time_ms",type='kafka', node_type='connect'}
 
-# Total rebalances
+// Total rebalances
 con_connect_coordinator_metrics_{function="rebalance_total",type='kafka', node_type='connect',client_id=~'$client_id'}
 
-# Join operations
+// Join operations
 con_connect_coordinator_metrics_{function="join_total",type='kafka', node_type='connect',client_id=~'$client_id'}
 
-# Sync rate
+// Sync rate
 con_connect_coordinator_metrics_{function="sync_rate",type='kafka', node_type='connect',client_id=~'$client_id'}
 ```
 

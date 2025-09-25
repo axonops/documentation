@@ -148,11 +148,10 @@ nav:
       - Logs & Events: 'monitoring/logsandevents/logsandevents.md'
 
     - Cassandra:
-      - Metrics Dashboard:
+      - Metrics Dashboards:
         - Cassandra: 'monitoring/metricsdashboards/cassandra.md'
-        - Metrics Query Syntax: 'monitoring/metricsdashboards/querysyntax.md'
-      - Metrics:
-        - Master Reference: metrics/cassandra/all_dashboards_metrics_reference.md
+        - Query Syntax: 'monitoring/metricsdashboards/querysyntax.md'
+        - Metrics Reference: metrics/cassandra/all_dashboards_metrics_reference.md
         - Dashboard Mappings:
           - System Dashboard: metrics/cassandra/system_metrics_mapping.md
           - Application Dashboard: metrics/cassandra/application_metrics_mapping.md
@@ -200,12 +199,10 @@ nav:
     - Kafka:
       # - Operations:
       #   - Rolling Restart: 'operations/kafka/rollingrestart/overview.md'
-      - Metrics Dashboard:
+      - Metrics Dashboards:
         - Kafka: 'monitoring/metricsdashboards/kafka.md'
-        - Metrics Query Syntax: 'monitoring/metricsdashboards/querysyntax_kafka.md'
-      
-      - Metrics:
-        - Master Reference: metrics/kafka/all_kafka_dashboards_metrics_reference.md
+        - Query Syntax: 'monitoring/metricsdashboards/querysyntax_kafka.md'
+        - Metrics Reference: metrics/kafka/all_kafka_dashboards_metrics_reference.md
         - Dashboard Mappings:
           - Overview Dashboard: metrics/kafka/overview_metrics_mapping.md
           - System Dashboard: metrics/kafka/system_metrics_mapping.md

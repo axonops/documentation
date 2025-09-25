@@ -1,4 +1,4 @@
-# Kafka Connections Dashboard Metrics Mapping
+# AxonOps Kafka Connections Dashboard Metrics Mapping
 
 ## Overview
 
@@ -8,50 +8,52 @@ The Kafka Connections Dashboard provides comprehensive monitoring of client conn
 
 | Dashboard Metric | Description | Attributes |
 |-----------------|-----------|-------------|
-| **Connection Metrics** || `kaf_socket_server_metrics_` (function='connection_count') | Current number of active connections | listener={listener}, networkProcessor={id} |
+| **Connection Metrics** | | | |
+| `kaf_socket_server_metrics_` (function='connection_count') | Current number of active connections | listener={listener}, networkProcessor={id} |
 | `kaf_socket_server_metrics_` (function='connection_creation_rate') | Rate of new connections created per second | listener={listener} |
 | `kaf_socket_server_metrics_` (function='connection_close_rate') | Rate of connections closed per second | listener={listener} |
 | `kaf_socket_server_metrics_` (function='connections') | Connections by client software version | listener={listener}, clientSoftwareName={name}, clientSoftwareVersion={version} |
-| **Acceptor Metrics** || `kaf_Acceptor_AcceptorBlockedPercent` | Percentage of time acceptor thread is blocked | listener={listener} |
+| **Acceptor Metrics** | | | |
+| `kaf_Acceptor_AcceptorBlockedPercent` | Percentage of time acceptor thread is blocked | listener={listener} |
 
 ## Query Examples
 
 ### Connection Count
 ```promql
-# Total connections per broker
+// Total connections per broker
 sum(kaf_socket_server_metrics_{function='connection_count',rack=~'$rack',host_id=~'$host_id'}) by (host_id)
 
-# Total connections per listener
+// Total connections per listener
 sum(kaf_socket_server_metrics_{function='connection_count',rack=~'$rack',host_id=~'$host_id'}) by (listener)
 ```
 
 ### Connection Creation Rate
 ```promql
-# Connection creation rate per broker
+// Connection creation rate per broker
 sum(kaf_socket_server_metrics_{function='connection_creation_rate',rack=~'$rack',host_id=~'$host_id'}) by (host_id)
 
-# Connection creation rate per listener
+// Connection creation rate per listener
 sum(kaf_socket_server_metrics_{function='connection_creation_rate',rack=~'$rack',host_id=~'$host_id'}) by (listener)
 ```
 
 ### Connection Close Rate
 ```promql
-# Connection close rate per broker
+// Connection close rate per broker
 sum(kaf_socket_server_metrics_{function='connection_close_rate',rack=~'$rack',host_id=~'$host_id'}) by (host_id)
 
-# Connection close rate per listener
+// Connection close rate per listener
 sum(kaf_socket_server_metrics_{function='connection_close_rate',rack=~'$rack',host_id=~'$host_id'}) by (listener)
 ```
 
 ### Client Version Distribution
 ```promql
-# Connections grouped by client software and version
+// Connections grouped by client software and version
 sum(kaf_socket_server_metrics_{function='connections',rack=~'$rack',host_id=~'$host_id'}) by (clientSoftwareVersion, clientSoftwareName)
 ```
 
 ### Acceptor Performance
 ```promql
-# Acceptor blocked percentage
+// Acceptor blocked percentage
 kaf_Acceptor_AcceptorBlockedPercent{function='MeanRate',rack=~'$rack',host_id=~'$host_id'}
 ```
 

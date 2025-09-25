@@ -1,4 +1,4 @@
-# Kafka Connect Tasks Dashboard Metrics Mapping
+# AxonOps Kafka Connect Tasks Dashboard Metrics Mapping
 
 ## Overview
 
@@ -30,55 +30,55 @@ The Kafka Connect Tasks Dashboard provides detailed monitoring of individual con
 
 ### Task Performance
 ```promql
-# Running ratio per task
+// Running ratio per task
 sum(con_connector_task_metrics_{function="running_ratio",type='kafka', node_type='connect', connector='$connector', task='$task'}) by (connector,task)
 
-# Average batch size
+// Average batch size
 sum(con_connector_task_metrics_{function="batch_size_avg",type='kafka', node_type='connect', connector='$connector', task='$task'}) by (connector,task)
 
-# Offset commit success rate
+// Offset commit success rate
 sum(con_connector_task_metrics_{function="offset_commit_success_percentage",type='kafka', node_type='connect', connector='$connector', task='$task'}) by (connector,task) * 100
 ```
 
 ### Offset Commit Times
 ```promql
-# Average commit time
+// Average commit time
 sum(con_connector_task_metrics_{function="offset_commit_avg_time_ms",type='kafka', node_type='connect', connector='$connector', task='$task'}) by (connector,task)
 
-# Maximum commit time
+// Maximum commit time
 sum(con_connector_task_metrics_{function="offset_commit_max_time_ms",type='kafka', node_type='connect', connector='$connector', task='$task'}) by (connector,task)
 ```
 
 ### Error Tracking
 ```promql
-# DLQ produce failures
+// DLQ produce failures
 sum(con_task_error_metrics_{function="deadletterqueue_produce_failures",type='kafka', node_type='connect', connector='$connector', task='$task'})
 
-# Total record errors
+// Total record errors
 sum(con_task_error_metrics_{function="total_record_errors",type='kafka', node_type='connect'})
 
-# Total record failures
+// Total record failures
 sum(con_task_error_metrics_{function="total_record_failures",type='kafka', node_type='connect'})
 
-# Records skipped
+// Records skipped
 sum(con_task_error_metrics_{function="total_records_skipped",type='kafka', node_type='connect'})
 
-# Total retries
+// Total retries
 sum(con_task_error_metrics_{function="total_retries",type='kafka', node_type='connect'})
 ```
 
 ### Sink Task Metrics
 ```promql
-# Partition count per sink task
+// Partition count per sink task
 sum(con_sink_task_metrics_{function="partition_count",type='kafka', node_type='connect', connector='$connector', task='$task'}) by (connector,task)
 
-# Records read rate
+// Records read rate
 sum(con_sink_task_metrics_{axonfunction="rate",function="sink_record_read_total",type='kafka', node_type='connect', connector='$connector', task='$task'}) by (connector,task)
 
-# Active record count
+// Active record count
 sum(con_sink_task_metrics_{function="sink_record_active_count",type='kafka', node_type='connect', connector='$connector', task='$task'}) by (connector,task)
 
-# Records sent rate
+// Records sent rate
 sum(con_sink_task_metrics_{axonfunction="rate", function="sink_record_send_total",type='kafka', node_type='connect', connector='$connector', task='$task'}) by (connector,task)
 ```
 

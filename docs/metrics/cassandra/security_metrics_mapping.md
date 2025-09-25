@@ -33,7 +33,7 @@ Unlike other dashboards that primarily use metrics, the Security dashboard is he
 
 ### Authentication Metrics
 ```promql
-# Successful Authentications by User (Rate)
+// Successful Authentications by User (Rate)
 sum(cas_authentication_success{axonfunction='rate',dc=~'$dc',rack=~'$rack',host_id=~'$host_id'}) by (username)
 ```
 

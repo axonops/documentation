@@ -1,4 +1,4 @@
-# Kafka Connect Workers Dashboard Metrics Mapping
+# AxonOps Kafka Connect Workers Dashboard Metrics Mapping
 
 ## Overview
 
@@ -33,22 +33,22 @@ The Kafka Connect Workers Dashboard provides comprehensive monitoring of individ
 
 ### Worker Overview
 ```promql
-# Total task count
+// Total task count
 con_connect_worker_metrics_{function="task_count",type='kafka', node_type='connect'}
 
-# Total connector count
+// Total connector count
 con_connect_worker_metrics_{function="connector_count",type='kafka', node_type='connect'}
 ```
 
 ### Connector Lifecycle
 ```promql
-# Connector count by host
+// Connector count by host
 sum(con_connect_worker_metrics_{function="connector_count",type='kafka', node_type='connect'}) by (host_id)
 
-# Failed tasks by connector
+// Failed tasks by connector
 con_connect_worker_metrics_{function="connector_failed_task_count",type='kafka', node_type='connect'}
 
-# Connector startup attempts (total, failed, successful)
+// Connector startup attempts (total, failed, successful)
 con_connect_worker_metrics_{function='connector_startup_attempts_total',type='kafka', node_type='connect'}
 con_connect_worker_metrics_{function='connector_startup_failure_total',type='kafka', node_type='connect'}
 con_connect_worker_metrics_{function='connector_startup_success_total',type='kafka', node_type='connect'}
@@ -56,36 +56,36 @@ con_connect_worker_metrics_{function='connector_startup_success_total',type='kaf
 
 ### Task States
 ```promql
-# Running tasks by connector
+// Running tasks by connector
 sum(con_connect_worker_metrics_{function="connector_running_task_count",type='kafka', node_type='connect', connector='$connector'}) by (connector)
 
-# Paused tasks by connector
+// Paused tasks by connector
 sum(con_connect_worker_metrics_{function="connector_paused_task_count",type='kafka', node_type='connect', connector='$connector'}) by (connector)
 
-# Failed tasks by connector
+// Failed tasks by connector
 sum(con_connect_worker_metrics_{function="connector_failed_task_count",type='kafka', node_type='connect', connector='$connector'}) by (connector)
 
-# Destroyed tasks by connector
+// Destroyed tasks by connector
 sum(con_connect_worker_metrics_{function="connector_destroyed_task_count",type='kafka', node_type='connect', connector='$connector'}) by (connector)
 ```
 
 ### Task Lifecycle
 ```promql
-# Task startup attempts (total, failed, successful)
+// Task startup attempts (total, failed, successful)
 con_connect_worker_metrics_{function='task_startup_attempts_total',type='kafka', node_type='connect'}
 con_connect_worker_metrics_{function='task_startup_failure_total',type='kafka', node_type='connect'}
 con_connect_worker_metrics_{function='task_startup_success_total',type='kafka', node_type='connect'}
 
-# Total tasks per connector
+// Total tasks per connector
 con_connect_worker_metrics_{function="connector_total_task_count",type='kafka', node_type='connect', connector='$connector'}
 ```
 
 ### Rebalancing
 ```promql
-# Average rebalance time
+// Average rebalance time
 con_connect_worker_rebalance_metrics_{function="rebalance_avg_time_ms",type='kafka', node_type='connect'}
 
-# Completed rebalances
+// Completed rebalances
 con_connect_worker_rebalance_metrics_{function="completed_rebalances_total",type='kafka', node_type='connect'}
 ```
 

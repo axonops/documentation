@@ -1,4 +1,4 @@
-# Kafka Controller Dashboard Metrics Mapping
+# AxonOps Kafka Controller Dashboard Metrics Mapping
 
 ## Overview
 
@@ -26,43 +26,43 @@ The Kafka Controller Dashboard monitors the health and performance of the Kafka 
 
 ### Controller State
 ```promql
-# Fenced broker count
+// Fenced broker count
 kaf_KafkaController_FencedBrokerCount
 
-# Last applied record timestamp rate of change
+// Last applied record timestamp rate of change
 kaf_KafkaController_LastAppliedRecordTimestamp{axonfunction='rate'}
 
-# Metadata error rate
+// Metadata error rate
 kaf_KafkaController_MetadataErrorCount{axonfunction='rate'}
 ```
 
 ### Raft Leader Information
 ```promql
-# Current Raft leader
+// Current Raft leader
 kaf_raft_metrics_{function='current_leader'}
 
-# Raft log end offset changes
+// Raft log end offset changes
 sum(kaf_raft_metrics_{function='log_end_offset'}) by (host_id)
 ```
 
 ### Raft Performance
 ```promql
-# Commit latency average
+// Commit latency average
 kaf_raft_metrics_{function='commit_latency_avg'}
 
-# Fetch records rate
+// Fetch records rate
 kaf_raft_metrics_{function='fetch_records_rate'}
 
-# Request rate
+// Request rate
 kaf_raft_channel_metrics_{function='request_rate'}
 ```
 
 ### Authentication Metrics
 ```promql
-# Successful authentication rate
+// Successful authentication rate
 kaf_raft_channel_metrics_{function='successful_authentication_rate'}
 
-# Failed re-authentication rate
+// Failed re-authentication rate
 kaf_raft_channel_metrics_{function='failed_reauthentication_rate'}
 ```
 

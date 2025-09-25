@@ -69,100 +69,100 @@ The Table dashboard provides comprehensive table-level metrics including coordin
 
 ### Tables Overview Section
 ```promql
-# Table Data Size Distribution (Pie Chart)
+// Table Data Size Distribution (Pie Chart)
 sum by (keyspace,scope) (cas_Table_LiveDiskSpaceUsed{function='Count',dc=~'$dc',rack=~'$rack',host_id=~'$host_id'})
 
-# Coordinator Table Reads Distribution (Pie Chart)
+// Coordinator Table Reads Distribution (Pie Chart)
 sum by (keyspace,scope) (cas_Table_CoordinatorReadLatency{axonfunction='rate',dc=~'$dc',rack=~'$rack',host_id=~'$host_id',function='Count'})
 
-# Coordinator Table Writes Distribution (Pie Chart)
+// Coordinator Table Writes Distribution (Pie Chart)
 sum by (keyspace, scope) (cas_Table_CoordinatorWriteLatency{dc=~'$dc',rack=~'$rack',host_id=~'$host_id',axonfunction='rate',function=~'Count'})
 ```
 
 ### Coordinator Table Statistics
 ```promql
-# Max Coordinator Read Latency
+// Max Coordinator Read Latency
 max(cas_Table_CoordinatorReadLatency{dc=~'$dc',rack=~'$rack',host_id=~'$host_id',function='$percentile',keyspace=~'$keyspace',scope=~'$scope'}) by ($groupBy,keyspace,scope)
 
-# Max Coordinator Write Latency
+// Max Coordinator Write Latency
 max(cas_Table_CoordinatorWriteLatency{dc=~'$dc',rack=~'$rack',host_id=~'$host_id',function='$percentile',keyspace=~'$keyspace',scope=~'$scope'}) by ($groupBy,keyspace,scope)
 
-# Max Coordinator Range Read Latency
+// Max Coordinator Range Read Latency
 max(cas_Table_CoordinatorScanLatency{dc=~'$dc',rack=~'$rack',host_id=~'$host_id',function=~'$percentile',keyspace=~'$keyspace',scope=~'$scope'}) by ($groupBy,keyspace,scope)
 
-# Total Coordinator Reads/sec
+// Total Coordinator Reads/sec
 sum (cas_Table_CoordinatorReadLatency{dc=~'$dc',rack=~'$rack',host_id=~'$host_id',axonfunction='rate',function=~'Count',keyspace=~'$keyspace',scope=~'$scope'}) by ($groupBy,keyspace,scope)
 
-# Average Coordinator Range Reads/sec
+// Average Coordinator Range Reads/sec
 avg(cas_Table_CoordinatorScanLatency{dc=~'$dc',rack=~'$rack',host_id=~'$host_id',axonfunction='rate',function=~'Count',keyspace=~'$keyspace',scope=~'$scope'}) by ($groupBy,keyspace,scope)
 
-# Total Coordinator Writes/sec
+// Total Coordinator Writes/sec
 sum (cas_Table_CoordinatorWriteLatency{dc=~'$dc',rack=~'$rack',host_id=~'$host_id',axonfunction='rate',function='Count',keyspace=~'$keyspace',scope=~'$scope'}) by ($groupBy,keyspace,scope)
 ```
 
 ### Table Replica Statistics
 ```promql
-# Average Replica Read Latency
+// Average Replica Read Latency
 avg(cas_Table_ReadLatency{scope=~'$scope',scope!='',keyspace=~'$keyspace',function='$percentile',function!='Min|Max',dc=~'$dc',rack=~'$rack',host_id=~'$host_id'}) by ($groupBy,keyspace,scope)
 
-# Average Replica Range Read Latency
+// Average Replica Range Read Latency
 avg(cas_Table_RangeLatency{scope=~'$scope',scope!='',keyspace=~'$keyspace',function='$percentile',function!='Min|Max',dc=~'$dc',rack=~'$rack',host_id=~'$host_id'}) by ($groupBy,keyspace,scope)
 
-# Average Replica Write Latency
+// Average Replica Write Latency
 avg(cas_Table_WriteLatency{scope=~'$scope',scope!='',keyspace=~'$keyspace',function='$percentile',function!='Min|Max',dc=~'$dc',rack=~'$rack',host_id=~'$host_id'}) by ($groupBy,keyspace,scope)
 
-# Total Replica Reads/sec
+// Total Replica Reads/sec
 sum(cas_Table_ReadLatency{axonfunction='rate',scope=~'$scope',scope!='',keyspace=~'$keyspace',function='Count',dc=~'$dc',rack=~'$rack',host_id=~'$host_id'}) by ($groupBy,keyspace,scope)
 
-# Total Replica Range Reads/sec
+// Total Replica Range Reads/sec
 sum(cas_Table_RangeLatency{axonfunction='rate',scope=~'$scope',scope!='',keyspace=~'$keyspace',function='Count',dc=~'$dc',rack=~'$rack',host_id=~'$host_id'}) by ($groupBy,keyspace,scope)
 
-# Total Replica Writes/sec
+// Total Replica Writes/sec
 sum(cas_Table_WriteLatency{axonfunction='rate',scope=~'$scope',scope!='',keyspace=~'$keyspace',function='Count',dc=~'$dc',rack=~'$rack',host_id=~'$host_id'}) by ($groupBy,keyspace,scope)
 ```
 
 ### Latency Causes
 ```promql
-# Average Mean Partition Size
+// Average Mean Partition Size
 avg(cas_Table_MeanPartitionSize{dc=~'$dc',rack=~'$rack',host_id=~'$host_id',scope=~'$scope',scope!=''}) by ($groupBy,keyspace,scope)
 
-# Total Estimated Partitions
+// Total Estimated Partitions
 sum(cas_Table_EstimatedPartitionCount{dc=~'$dc',rack=~'$rack',host_id=~'$host_id',keyspace='$keyspace',scope='$scope'}) by ($groupBy,keyspace,scope)
 
-# Max Partition Size
+// Max Partition Size
 max(cas_Table_MaxPartitionSize{dc=~'$dc',rack=~'$rack',host_id=~'$host_id',scope=~'$scope',scope!=''}) by ($groupBy,keyspace,scope)
 
-# SSTables Per Read
+// SSTables Per Read
 cas_Table_SSTablesPerReadHistogram{scope=~'$scope',scope!='',keyspace=~'$keyspace',function='$percentile',function!='Min|Max',dc=~'$dc',rack=~'$rack',host_id=~'$host_id'}
 
-# Max Live SSTables
+// Max Live SSTables
 max(cas_Table_LiveSSTableCount{dc=~'$dc',rack=~'$rack',host_id=~'$host_id',scope=~'$scope',scope!=''}) by ($groupBy,keyspace,scope)
 
-# Tombstones Scanned
+// Tombstones Scanned
 cas_Table_TombstoneScannedHistogram{scope=~'$scope',scope!='',keyspace=~'$keyspace',function='$percentile',function!='Count|Min|Max',dc=~'$dc',rack=~'$rack',host_id=~'$host_id'}
 
-# Speculative Retries
+// Speculative Retries
 cas_Table_SpeculativeRetries{axonfunction='rate',scope=~'$scope',scope!='',keyspace=~'$keyspace',function='Count',dc=~'$dc',rack=~'$rack',host_id=~'$host_id'}
 
-# Bloom Filter False Ratio
+// Bloom Filter False Ratio
 cas_Table_BloomFilterFalseRatio{scope=~'$scope',scope!='',keyspace=~'$keyspace',dc=~'$dc',rack=~'$rack',host_id=~'$host_id'}
 
-# Max Bloom Filter Disk
+// Max Bloom Filter Disk
 max(cas_Table_BloomFilterDiskSpaceUsed{dc=~'$dc',rack=~'$rack',host_id=~'$host_id',keyspace='$keyspace',scope='$scope'}) by ($groupBy,keyspace,scope)
 ```
 
 ### Memory Statistics
 ```promql
-# Total Table Heap Memory
+// Total Table Heap Memory
 sum(cas_Table_AllMemtablesHeapSize{dc=~'$dc',rack='$rack',host_id=~'$host_id',keyspace='$keyspace',scope='$scope'}) by ($groupBy,keyspace,scope)
 
-# Total Table Off-Heap Memory
+// Total Table Off-Heap Memory
 sum(cas_Table_AllMemtablesOffHeapSize{dc=~'$dc',rack='$rack',host_id=~'$host_id',keyspace='$keyspace',scope='$scope'}) by ($groupBy,keyspace,scope)
 
-# GC Duration - G1 YoungGen
+// GC Duration - G1 YoungGen
 jvm_GarbageCollector_G1_Young_Generation{axonfunction='rate',function='CollectionTime',dc=~'$dc',rack=~'$rack',host_id=~'$host_id'}
 
-# GC Count per sec - G1 YoungGen
+// GC Count per sec - G1 YoungGen
 jvm_GarbageCollector_G1_Young_Generation{axonfunction='rate',function='CollectionCount',dc=~'$dc',rack=~'$rack',host_id=~'$host_id'}
 ```
 
