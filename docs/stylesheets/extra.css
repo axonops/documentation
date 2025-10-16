@@ -155,6 +155,7 @@ html .md-footer-meta.md-typeset a {
 .t_nav ul {
   list-style: none;
   margin: 0;
+  margin-bottom: 5px;
   padding: 0;
 }
 
@@ -381,4 +382,10 @@ table th:nth-of-type(2) {
 }
 table th:nth-of-type(3) {
     width: 25%;
+}
+
+.menu-icon{
+  color: #7cd825 !important;
+  align-items: center;
+  justify-content: center;
 }
