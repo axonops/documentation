@@ -2,7 +2,7 @@
 
 The free plan is avaialble for AxonOps Cloud. Developer which has a limited set of features
 
-<a href="https://axonops.com/developer/" target="_blank"><span class="sign-up-button">Free Sign Up</span></a></li>
+<a href="https://axonops.com/free/" target="_blank"><span class="sign-up-button">Free Sign Up</span></a></li>
 
 ## Developer edition features
 
