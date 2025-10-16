@@ -2,7 +2,7 @@
 
 The free plan is avaialble for AxonOps Cloud. Starter version is free up to 6 nodes.
 
-<a href="https://axonops.com/starter/" target="_blank"><span class="sign-up-button">Free Sign Up</span></a></li>
+<a href="https://axonops.com/free" target="_blank"><span class="sign-up-button">Free Sign Up</span></a></li>
 
 ## Starter edition features
 

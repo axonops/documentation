@@ -2,7 +2,7 @@
 glightbox: false
 ---
 
-Click on the <a href="https://axonops.com/starter/" target="_blank"><span class="sign-up-button">Free Sign Up</span></a> button to get started.
+Click on the <a href="https://axonops.com/free" target="_blank"><span class="sign-up-button">Free Sign Up</span></a> button to get started.
 
 ## Step 1 - Register your interest in AxonOps Cloud 
 
