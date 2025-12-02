@@ -93,7 +93,7 @@
     <div data-md-component="skip">
       
         
-        <a href="#routing" class="md-skip">
+        <a href="#incident-management-integration" class="md-skip">
           Skip to content
         </a>
       
@@ -4123,6 +4123,30 @@ data-et-multi-view="{&quot;schema&quot;:{&quot;content&quot;:{&quot;desktop&quot
     <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
       
         <li class="md-nav__item">
+  <a href="#incident-management-integration" class="md-nav__link">
+    <span class="md-ellipsis">
+      Incident Management Integration
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Incident Management Integration">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#reducing-alert-fatigue" class="md-nav__link">
+    <span class="md-ellipsis">
+      Reducing Alert Fatigue
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#routing" class="md-nav__link">
     <span class="md-ellipsis">
       Routing
@@ -4621,6 +4645,30 @@ data-et-multi-view="{&quot;schema&quot;:{&quot;content&quot;:{&quot;desktop&quot
     <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
       
         <li class="md-nav__item">
+  <a href="#incident-management-integration" class="md-nav__link">
+    <span class="md-ellipsis">
+      Incident Management Integration
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Incident Management Integration">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#reducing-alert-fatigue" class="md-nav__link">
+    <span class="md-ellipsis">
+      Reducing Alert Fatigue
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#routing" class="md-nav__link">
     <span class="md-ellipsis">
       Routing
@@ -4697,7 +4745,32 @@ data-et-multi-view="{&quot;schema&quot;:{&quot;content&quot;:{&quot;desktop&quot
 <p class="admonition-title">Infomy</p>
 </div>
 <p><a class="glightbox" href="../imgs/integrations.png" data-type="image" data-width="100%" data-height="auto" data-desc-position="bottom"><img alt="" src="../imgs/integrations.png"></a></p>
-<h3 id="routing">Routing<a class="headerlink" href="#routing" title="Permanent link">¶</a></h3>
+<h2 id="incident-management-integration">Incident Management Integration<a class="headerlink" href="#incident-management-integration" title="Permanent link">¶</a></h2>
+<p>AxonOps is designed as a monitoring and alerting system that:</p>
+<ul>
+<li>Detects issues</li>
+<li>Triggers alerts</li>
+<li>Sends recovery events when conditions return to normal</li>
+</ul>
+<p>However, AxonOps is not intended to replace dedicated incident management platforms like PagerDuty or OpsGenie.</p>
+<p>Incident management platforms provide capabilities such as:</p>
+<ul>
+<li>Converting alerts into incidents with defined workflows</li>
+<li>Escalation policies when initial responders don't acknowledge</li>
+<li>Repeat notifications until someone takes action</li>
+<li>Acknowledgment to pause notifications while investigating</li>
+<li>Auto-resolution when recovery events arrive</li>
+</ul>
+<h3 id="reducing-alert-fatigue">Reducing Alert Fatigue<a class="headerlink" href="#reducing-alert-fatigue" title="Permanent link">¶</a></h3>
+<p>One of the most valuable features of incident management platforms is alert grouping. When a systemic issue affects your Cassandra or Kafka cluster, it often triggers alerts from multiple nodes simultaneously. Without grouping, an on-call engineer might receive dozens of notifications for what is essentially a single incident.</p>
+<p>Alert grouping consolidates related alerts into a single incident, providing clarity on the nature of the outage while dramatically reducing notification noise.</p>
+<p>For more information on configuring alert grouping and incident rules, see:</p>
+<ul>
+<li><a href="https://support.atlassian.com/opsgenie/docs/automatically-create-an-incident-via-incident-rules/">OpsGenie: Automatically Create an Incident via Incident Rules</a> - Configure rules to automatically create incidents from matching alerts, with built-in deduplication</li>
+<li><a href="https://support.pagerduty.com/main/docs/content-based-alert-grouping">PagerDuty: Content-Based Alert Grouping</a> - Group alerts based on matching field values like source, component, or severity</li>
+<li><a href="https://support.pagerduty.com/main/docs/time-based-alert-grouping">PagerDuty: Time-Based Alert Grouping</a> - Group all alerts on a service within a specified time window</li>
+</ul>
+<h2 id="routing">Routing<a class="headerlink" href="#routing" title="Permanent link">¶</a></h2>
 <p>AxonOps provide a rich routing mechanism for the notifications.</p>
 <p>The current routing options are:</p>
 <ul>
@@ -4712,8 +4785,8 @@ data-et-multi-view="{&quot;schema&quot;:{&quot;content&quot;:{&quot;desktop&quot
 </ul>
 <p>Each severity (<code>info, warning, error</code>) can be routed independently </p>
 <p><a class="glightbox" href="../imgs/routing.jpg" data-type="image" data-width="100%" data-height="auto" data-desc-position="bottom"><img alt="" src="../imgs/routing.jpg"></a></p>
-<h3 id="errors-per-routing-mechanism-and-severity-levels">Errors per routing mechanism and severity levels<a class="headerlink" href="#errors-per-routing-mechanism-and-severity-levels" title="Permanent link">¶</a></h3>
-<h4 id="backup">Backup<a class="headerlink" href="#backup" title="Permanent link">¶</a></h4>
+<h2 id="errors-per-routing-mechanism-and-severity-levels">Errors per routing mechanism and severity levels<a class="headerlink" href="#errors-per-routing-mechanism-and-severity-levels" title="Permanent link">¶</a></h2>
+<h3 id="backup">Backup<a class="headerlink" href="#backup" title="Permanent link">¶</a></h3>
 <table>
 <thead>
 <tr>
@@ -4805,7 +4878,7 @@ data-et-multi-view="{&quot;schema&quot;:{&quot;content&quot;:{&quot;desktop&quot
 </tr>
 </tbody>
 </table>
-<h4 id="repair">Repair<a class="headerlink" href="#repair" title="Permanent link">¶</a></h4>
+<h3 id="repair">Repair<a class="headerlink" href="#repair" title="Permanent link">¶</a></h3>
 <table>
 <thead>
 <tr>
