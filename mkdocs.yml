@@ -23,7 +23,6 @@ theme:
   features:
     - navigation.tabs
     - announce.dismiss
-    - navigation.sections
     - navigation.top
     - navigation.footer
     - content.code.copy
@@ -64,11 +63,20 @@ markdown_extensions:
       guess_lang: False
   - toc:
       permalink: true
-  - pymdownx.superfences
+  - pymdownx.superfences:
+      custom_fences:
+        - name: mermaid
+          class: mermaid
+          format: !!python/name:pymdownx.superfences.fence_code_format
   - tables
   - pymdownx.emoji:
-      emoji_index: !!python/name:material.extensions.emoji.twemoji 
+      emoji_index: !!python/name:material.extensions.emoji.twemoji
       emoji_generator: !!python/name:material.extensions.emoji.to_svg
+  - pymdownx.arithmatex:
+      generic: true
+  - plantuml_markdown:
+      server: http://www.plantuml.com/plantuml
+  - mkdocs_graphviz
 
 plugins:
   - search
@@ -88,10 +96,13 @@ plugins:
 
 extra_javascript:
   - javascripts/extra.js
+  - javascripts/mathjax.js
+  - https://unpkg.com/mathjax@3/es5/tex-mml-chtml.js
 
 nav:
   - Home: index.md
-  
+
+
   # - Get Started:
   - AxonOps Cloud:
     - Editions: 
@@ -241,7 +252,184 @@ nav:
   - AxonOps Workbench:
     - Cassandra: 
       # - 'Overview' : workbench/cassandra/cassandra.md
-      - License: workbench/cassandra/license.md 
+      - License: workbench/cassandra/license.md
+
+  - Data Platforms:
+    - Overview: data-platforms/index.md
+    - Apache Cassandra:
+      - Overview: cassandra/index.md
+      - Getting Started:
+        - Overview: cassandra/getting-started/index.md
+        - Installation: cassandra/getting-started/installation/index.md
+        - Drivers: cassandra/getting-started/drivers/index.md
+      - Architecture:
+        - Overview: cassandra/architecture/index.md
+        - Storage Engine:
+          - Overview: cassandra/architecture/storage-engine/index.md
+          - Write Path: cassandra/architecture/storage-engine/write-path.md
+          - Read Path: cassandra/architecture/storage-engine/read-path.md
+          - SSTable Reference: cassandra/architecture/storage-engine/sstables.md
+          - Tombstones: cassandra/architecture/storage-engine/tombstones.md
+          - Memory Management: cassandra/architecture/storage-engine/memory.md
+          - Compaction:
+            - Overview: cassandra/architecture/storage-engine/compaction/index.md
+            - Size-Tiered (STCS): cassandra/architecture/storage-engine/compaction/stcs.md
+            - Leveled (LCS): cassandra/architecture/storage-engine/compaction/lcs.md
+            - Time-Window (TWCS): cassandra/architecture/storage-engine/compaction/twcs.md
+            - Unified (UCS): cassandra/architecture/storage-engine/compaction/ucs.md
+            - Operations: cassandra/architecture/storage-engine/compaction/operations.md
+        - Distributed Data:
+          - Overview: cassandra/architecture/distributed-data/index.md
+          - Partitioning: cassandra/architecture/distributed-data/partitioning.md
+          - Replication: cassandra/architecture/distributed-data/replication.md
+          - Consistency: cassandra/architecture/distributed-data/consistency.md
+          - Replica Synchronization: cassandra/architecture/distributed-data/replica-synchronization.md
+          - Counters: cassandra/architecture/distributed-data/counters.md
+        - Gossip Protocol: cassandra/architecture/gossip/index.md
+      - CQL Reference:
+        - Overview: cassandra/cql/index.md
+        - Data Types: cassandra/cql/data-types/index.md
+        - DDL Commands: cassandra/cql/ddl/index.md
+        - DML Commands: cassandra/cql/dml/index.md
+        - Indexing: cassandra/cql/indexing/index.md
+        - Functions: cassandra/cql/functions/index.md
+      - Data Modeling:
+        - Overview: cassandra/data-modeling/index.md
+        - Concepts: cassandra/data-modeling/concepts/index.md
+        - Anti-Patterns: cassandra/data-modeling/anti-patterns/index.md
+      - Operations:
+        - Overview: cassandra/operations/index.md
+        - Cluster Management: cassandra/operations/cluster-management/index.md
+        - Backup & Restore:
+          - Overview: cassandra/operations/backup-restore/index.md
+          - Backup Procedures: cassandra/operations/backup-restore/backup.md
+          - Restore Guide: cassandra/operations/backup-restore/restore.md
+        - Repair: cassandra/operations/repair/index.md
+        - Maintenance: cassandra/operations/maintenance/index.md
+      - Configuration:
+        - Overview: cassandra/configuration/index.md
+        - cassandra.yaml: cassandra/configuration/cassandra-yaml/index.md
+        - JVM Options: cassandra/configuration/jvm-options/index.md
+        - Snitch Configuration: cassandra/configuration/snitch-config/index.md
+      - JMX Reference:
+        - Overview: cassandra/jmx-reference/index.md
+        - MBeans: cassandra/jmx-reference/mbeans/index.md
+        - Metrics: cassandra/jmx-reference/metrics/index.md
+        - Connecting: cassandra/jmx-reference/connecting/index.md
+      - Monitoring:
+        - Overview: cassandra/monitoring/index.md
+        - Key Metrics: cassandra/monitoring/key-metrics/index.md
+        - Alerting: cassandra/monitoring/alerting/index.md
+        - Logging: cassandra/monitoring/logging/index.md
+      - Performance:
+        - Overview: cassandra/performance/index.md
+        - Benchmarking: cassandra/performance/benchmarking/index.md
+        - Hardware: cassandra/performance/hardware/index.md
+        - JVM Tuning: cassandra/performance/jvm-tuning/index.md
+        - OS Tuning: cassandra/performance/os-tuning/index.md
+        - Query Optimization: cassandra/performance/query-optimization/index.md
+      - Security:
+        - Overview: cassandra/security/index.md
+        - Authentication: cassandra/security/authentication/index.md
+        - Authorization: cassandra/security/authorization/index.md
+        - Network Authorization: cassandra/security/network/index.md
+        - Encryption:
+          - Overview: cassandra/security/encryption/index.md
+          - PKI Fundamentals: cassandra/security/encryption/pki-fundamentals.md
+          - TLS Versions: cassandra/security/encryption/tls-versions.md
+          - Certificates: cassandra/security/encryption/certificates.md
+          - Hostname Verification: cassandra/security/encryption/hostname-verification.md
+          - Cassandra Configuration: cassandra/security/encryption/configuration.md
+          - Client Configuration: cassandra/security/encryption/client-configuration.md
+          - Enterprise Recommendations: cassandra/security/encryption/enterprise-recommendations.md
+          - Troubleshooting: cassandra/security/encryption/troubleshooting.md
+      - Tools:
+        - nodetool:
+          - Overview: cassandra/tools/nodetool/index.md
+          - Cluster Information:
+            - status: cassandra/tools/nodetool/commands/status.md
+            - info: cassandra/tools/nodetool/commands/info.md
+            - ring: cassandra/tools/nodetool/commands/ring.md
+            - describecluster: cassandra/tools/nodetool/commands/describecluster.md
+            - gossipinfo: cassandra/tools/nodetool/commands/gossipinfo.md
+            - version: cassandra/tools/nodetool/commands/version.md
+          - Performance:
+            - tpstats: cassandra/tools/nodetool/commands/tpstats.md
+            - tablestats: cassandra/tools/nodetool/commands/tablestats.md
+            - tablehistograms: cassandra/tools/nodetool/commands/tablehistograms.md
+            - proxyhistograms: cassandra/tools/nodetool/commands/proxyhistograms.md
+            - toppartitions: cassandra/tools/nodetool/commands/toppartitions.md
+            - gcstats: cassandra/tools/nodetool/commands/gcstats.md
+          - Maintenance:
+            - repair: cassandra/tools/nodetool/commands/repair.md
+            - repair_admin: cassandra/tools/nodetool/commands/repair_admin.md
+            - cleanup: cassandra/tools/nodetool/commands/cleanup.md
+            - compact: cassandra/tools/nodetool/commands/compact.md
+            - flush: cassandra/tools/nodetool/commands/flush.md
+            - drain: cassandra/tools/nodetool/commands/drain.md
+            - garbagecollect: cassandra/tools/nodetool/commands/garbagecollect.md
+            - scrub: cassandra/tools/nodetool/commands/scrub.md
+            - verify: cassandra/tools/nodetool/commands/verify.md
+          - Backup:
+            - snapshot: cassandra/tools/nodetool/commands/snapshot.md
+            - listsnapshots: cassandra/tools/nodetool/commands/listsnapshots.md
+            - clearsnapshot: cassandra/tools/nodetool/commands/clearsnapshot.md
+            - refresh: cassandra/tools/nodetool/commands/refresh.md
+          - Cluster Topology:
+            - decommission: cassandra/tools/nodetool/commands/decommission.md
+            - removenode: cassandra/tools/nodetool/commands/removenode.md
+            - assassinate: cassandra/tools/nodetool/commands/assassinate.md
+            - rebuild: cassandra/tools/nodetool/commands/rebuild.md
+            - move: cassandra/tools/nodetool/commands/move.md
+            - bootstrap: cassandra/tools/nodetool/commands/bootstrap.md
+          - Compaction:
+            - compactionstats: cassandra/tools/nodetool/commands/compactionstats.md
+            - setcompactionthroughput: cassandra/tools/nodetool/commands/setcompactionthroughput.md
+            - getcompactionthroughput: cassandra/tools/nodetool/commands/getcompactionthroughput.md
+            - enableautocompaction: cassandra/tools/nodetool/commands/enableautocompaction.md
+            - disableautocompaction: cassandra/tools/nodetool/commands/disableautocompaction.md
+            - stop: cassandra/tools/nodetool/commands/stop.md
+          - Streaming:
+            - netstats: cassandra/tools/nodetool/commands/netstats.md
+            - setstreamthroughput: cassandra/tools/nodetool/commands/setstreamthroughput.md
+            - getstreamthroughput: cassandra/tools/nodetool/commands/getstreamthroughput.md
+          - Configuration:
+            - setlogginglevel: cassandra/tools/nodetool/commands/setlogginglevel.md
+            - getlogginglevels: cassandra/tools/nodetool/commands/getlogginglevels.md
+            - settraceprobability: cassandra/tools/nodetool/commands/settraceprobability.md
+            - gettraceprobability: cassandra/tools/nodetool/commands/gettraceprobability.md
+            - reloadtriggers: cassandra/tools/nodetool/commands/reloadtriggers.md
+            - reloadlocalschema: cassandra/tools/nodetool/commands/reloadlocalschema.md
+            - resetlocalschema: cassandra/tools/nodetool/commands/resetlocalschema.md
+        - cqlsh: cassandra/tools/cqlsh/index.md
+        - CQLAI:
+          - Overview: cassandra/tools/cqlai/index.md
+          - Installation: cassandra/tools/cqlai/installation/index.md
+          - Getting Started: cassandra/tools/cqlai/getting-started/index.md
+          - Features: cassandra/tools/cqlai/features/index.md
+          - AI Features:
+            - Overview: cassandra/tools/cqlai/ai-features/index.md
+            - AI Providers: cassandra/tools/cqlai/ai-features/ai-providers/index.md
+          - Data Import/Export: cassandra/tools/cqlai/data-import-export/index.md
+          - Configuration: cassandra/tools/cqlai/configuration/index.md
+          - Commands: cassandra/tools/cqlai/commands/index.md
+          - Parquet: cassandra/tools/cqlai/parquet/index.md
+        - SSTable Tools: cassandra/tools/sstable-tools/index.md
+        - cassandra-stress: cassandra/tools/cassandra-stress/index.md
+      - Troubleshooting:
+        - Overview: cassandra/troubleshooting/index.md
+        - Diagnosis: cassandra/troubleshooting/diagnosis/index.md
+        - Log Analysis: cassandra/troubleshooting/log-analysis/index.md
+      - Multi-Datacenter: cassandra/multi-datacenter/index.md
+      - Cloud:
+        - Overview: cassandra/cloud/index.md
+        - AWS: cassandra/cloud/aws/index.md
+        - Azure: cassandra/cloud/azure/index.md
+        - GCP: cassandra/cloud/gcp/index.md
+        - Kubernetes: cassandra/cloud/kubernetes/index.md
+      - Reference: cassandra/reference/index.md
+    - Apache Kafka:
+      - Overview: kafka/index.md
 
   # - Release Notes:
   #   - Release notes: 'release_notes/releases.md'
