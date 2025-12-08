@@ -61,28 +61,55 @@ After 3600 seconds, each cell becomes a tombstone.
 
 ## Tombstone Lifecycle
 
-```
-T+0: DELETE issued
-     │
-     v
-Tombstone written to commit log and memtable
-     │
-     v
-Tombstone flushed to SSTable
-     │
-     v
-T+0 to T+gc_grace_seconds: Tombstone is ACTIVE
-- Reads see tombstone, filter out deleted data
-- Tombstone replicates to all nodes
-- Repair propagates tombstone to nodes that missed it
-     │
-     v
-T+gc_grace_seconds: Tombstone ELIGIBLE for removal
-     │
-     v
-Next compaction: Tombstone and original data removed
-- Only if all SSTables containing the data are compacted
-- Only if tombstone is older than gc_grace_seconds
+```graphviz dot tombstone-lifecycle.svg
+digraph TombstoneLifecycle {
+    bgcolor="transparent"
+    graph [fontname="Helvetica", fontsize=11, rankdir=TB, nodesep=0.4, ranksep=0.5]
+    node [fontname="Helvetica", fontsize=10, fontcolor="black", shape=box, style="rounded,filled"]
+    edge [fontname="Helvetica", fontsize=9, color="black", fontcolor="black", penwidth=1.5]
+
+    // Timeline stages
+    delete [label="T+0: DELETE issued", fillcolor="#ffcccc"]
+    write [label="Tombstone written to\ncommit log and memtable", fillcolor="#ffe0cc"]
+    flush [label="Tombstone flushed to SSTable", fillcolor="#fff0cc"]
+
+    // Active period with details
+    subgraph cluster_active {
+        label="T+0 to T+gc_grace_seconds"
+        labeljust="l"
+        style="rounded,filled"
+        bgcolor="#e6ffe6"
+        fontcolor="black"
+        fontsize=10
+
+        active [label="Tombstone is ACTIVE", fillcolor="#ccffcc"]
+        active_details [label="• Reads see tombstone, filter out deleted data\n• Tombstone replicates to all nodes\n• Repair propagates tombstone to nodes that missed it", shape=note, fillcolor="#f0fff0", fontsize=9]
+    }
+
+    eligible [label="T+gc_grace_seconds:\nTombstone ELIGIBLE for removal", fillcolor="#cce6ff"]
+
+    // Removal with conditions
+    subgraph cluster_removal {
+        label="Next Compaction"
+        labeljust="l"
+        style="rounded,filled"
+        bgcolor="#f0e6ff"
+        fontcolor="black"
+        fontsize=10
+
+        removed [label="Tombstone and original\ndata removed", fillcolor="#e6ccff"]
+        conditions [label="• Only if all SSTables containing\n  the data are compacted\n• Only if tombstone is older\n  than gc_grace_seconds", shape=note, fillcolor="#f8f0ff", fontsize=9]
+    }
+
+    // Flow
+    delete -> write
+    write -> flush
+    flush -> active
+    active -> active_details [style=dashed, arrowhead=none]
+    active -> eligible
+    eligible -> removed
+    removed -> conditions [style=dashed, arrowhead=none]
+}
 ```
 
 ---

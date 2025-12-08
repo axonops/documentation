@@ -8,96 +8,251 @@ This design creates a fundamental trade-off. Writes are fast because they simply
 
 ## Read Path Overview
 
-```
-┌─────────────────────────────────────────────────────────────────┐
-│ READ PATH: SELECT * FROM users WHERE user_id = X                 │
-│                                                                  │
-│ ┌──────────────────────────────────────────────────────────────┐ │
-│ │ 1. ROW CACHE (if enabled)                                    │ │
-│ │    Entire row cached? Return immediately.                    │ │
-│ └──────────────────────────────────────────────────────────────┘ │
-│                         │ Miss                                   │
-│                         v                                        │
-│ ┌──────────────────────────────────────────────────────────────┐ │
-│ │ 2. MEMTABLE(S)                                               │ │
-│ │    Check active memtable                                     │ │
-│ │    Check any flushing memtables                              │ │
-│ └──────────────────────────────────────────────────────────────┘ │
-│                         │                                        │
-│                         v                                        │
-│ ┌──────────────────────────────────────────────────────────────┐ │
-│ │ 3. SSTABLES (for each SSTable):                              │ │
-│ │    a. Bloom Filter - partition possibly present?             │ │
-│ │    b. Partition Index - find data offset                     │ │
-│ │    c. Data File - read partition data                        │ │
-│ └──────────────────────────────────────────────────────────────┘ │
-│                         │                                        │
-│                         v                                        │
-│ ┌──────────────────────────────────────────────────────────────┐ │
-│ │ 4. MERGE                                                     │ │
-│ │    Combine results from all sources                          │ │
-│ │    Most recent timestamp wins per cell                       │ │
-│ │    Apply tombstones                                          │ │
-│ └──────────────────────────────────────────────────────────────┘ │
-│                         │                                        │
-│                         v                                        │
-│                      RESULT                                      │
-└─────────────────────────────────────────────────────────────────┘
-```
+When a read request arrives, Cassandra locates and assembles data from multiple storage locations using a tiered approach. Each stage is optimized to either satisfy the query immediately or efficiently narrow down where to search next.
 
-```mermaid
-flowchart TB
-    Q[Query] --> RC{Row Cache?}
-    RC -->|Hit| RES[Result]
-    RC -->|Miss| MEM[Memtables]
+### How the Read Path Achieves High Performance
 
-    MEM --> SST[SSTables]
+The LSM-tree architecture enables Cassandra's exceptional write throughput by appending data sequentially rather than updating in place. The read path complements this design with a series of optimizations that efficiently locate and assemble data from multiple sources.
 
-    subgraph SST_CHECK["For Each SSTable"]
-        BF{Bloom Filter}
-        BF -->|Maybe| IDX[Partition Index]
-        BF -->|No| SKIP[Skip SSTable]
-        IDX --> DATA[Read Data]
-    end
+| Location | Contents | Why Data Exists Here |
+|----------|----------|---------------------|
+| **Active memtable** | Most recent writes | Writes go to memtable first; not yet flushed |
+| **Flushing memtables** | Recent writes | Memtable being written to disk; still in memory |
+| **SSTable 1** | Older writes | Flushed yesterday |
+| **SSTable 2** | Even older writes | Flushed last week |
+| **SSTable N** | Historical writes | Flushed months ago, not yet compacted away |
 
-    SST --> SST_CHECK
-    DATA --> MERGE[Merge Results]
-    MEM --> MERGE
-    MERGE --> RES
+The read path intelligently searches these locations using a layered optimization strategy—bloom filters eliminate unnecessary disk access, indexes enable direct seeks, and caches accelerate repeated access patterns. The result is predictable, low-latency reads even with data distributed across many SSTables.
+
+### The Four Stages
+
+**Stage 1: Row Cache (optional fast path)**
+
+If row caching is enabled for the table and the entire partition is cached in memory, return it immediately. This is the fastest possible path—no memtable or SSTable access required. However, row cache is rarely beneficial (see Row Cache section) and is disabled by default.
+
+**Stage 2: Memtables**
+
+Check the active memtable and any memtables currently being flushed to disk. Memtables are in-memory sorted structures, so lookups are fast (O(log n)). Data found here represents the most recent writes that have not yet been persisted to SSTables.
+
+**Stage 3: SSTables**
+
+For each SSTable that might contain the partition:
+
+1. **Bloom filter check**: A probabilistic filter answers "Is this partition possibly in this SSTable?" If the answer is "definitely no," skip this SSTable entirely—no disk I/O required. If "maybe yes," proceed to the next step.
+
+2. **Partition index lookup**: Find the byte offset where this partition's data begins in the data file. This is an O(log n) or O(key_length) operation depending on the index format.
+
+3. **Data file read**: Seek to the offset and read the partition's data from disk.
+
+This three-step process is repeated for each SSTable. Bloom filters make this scalable—they eliminate the vast majority of SSTables from consideration with a simple memory lookup, keeping read latency consistent even as SSTable count grows.
+
+**Stage 4: Merge**
+
+Data fragments from memtables and SSTables are merged into a single result:
+
+- **Timestamp comparison**: For each cell (column value), the version with the highest timestamp wins
+- **Tombstone application**: Deleted data (marked with tombstones) is filtered out
+- **TTL expiration**: Expired data is excluded from the result
+
+The merge process reconstructs the current state of the partition from its distributed fragments.
+
+### Why This Order?
+
+The stages are ordered by cost and likelihood of success:
+
+| Stage | Cost | Rationale |
+|-------|------|-----------|
+| Row cache | Lowest (memory lookup) | If hit, avoids all other work; checked first |
+| Memtables | Low (memory, sorted structure) | Contains newest data; must be checked before SSTables |
+| SSTables | High (disk I/O) | Bloom filters minimize unnecessary disk access |
+| Merge | CPU-bound | Only performed after all data is collected |
+
+Memtables must be checked before SSTables because they contain more recent writes. If an SSTable contains `column=A, value=1, timestamp=100` and the memtable contains `column=A, value=2, timestamp=200`, the memtable's value must win—but both must be read to make this determination.
+
+```graphviz dot read-path-overview.svg
+digraph ReadPath {
+    bgcolor="transparent"
+    graph [fontname="Helvetica", fontsize=11, rankdir=TB, nodesep=0.4, ranksep=0.5]
+    node [fontname="Helvetica", fontsize=10, fontcolor="black"]
+    edge [fontname="Helvetica", fontsize=9, fontcolor="black", color="black", penwidth=1.5]
+
+    // Query
+    query [label="SELECT * FROM users\nWHERE user_id = X", shape=box, style="rounded,filled", fillcolor="#e8e8e8"]
+
+    // Row Cache
+    subgraph cluster_rowcache {
+        label="1. ROW CACHE (if enabled)"
+        style="rounded,filled"
+        bgcolor="#fff8e8"
+        labeljust="l"
+        fontcolor="#000000"
+
+        rc [label="Entire row cached?\nReturn immediately", shape=box, style="rounded,filled", fillcolor="#ffffcc"]
+    }
+
+    // Memtables
+    subgraph cluster_memtable {
+        label="2. MEMTABLES"
+        style="rounded,filled"
+        bgcolor="#e8f8e8"
+        labeljust="l"
+        fontcolor="#000000"
+
+        mem [label="Check active memtable\nCheck any flushing memtables", shape=box, style="rounded,filled", fillcolor="#c8e8c8"]
+    }
+
+    // SSTables
+    subgraph cluster_sstable {
+        label="3. SSTABLES (for each SSTable)"
+        style="rounded,filled"
+        bgcolor="#e8f0f8"
+        labeljust="l"
+        fontcolor="#000000"
+
+        bf [label="a. Bloom Filter\nPartition possibly present?", shape=diamond, style=filled, fillcolor="#c8d8e8"]
+        idx [label="b. Partition Index\nFind data offset", shape=box, style="rounded,filled", fillcolor="#c8d8e8"]
+        data [label="c. Data File\nRead partition data", shape=box, style="rounded,filled", fillcolor="#c8d8e8"]
+        skip [label="Skip SSTable", shape=box, style="rounded,dashed,filled", fillcolor="#e8e8e8"]
+
+        bf -> idx [label="Maybe", fontcolor="#006600", color="#006600", penwidth=2]
+        bf -> skip [label="No = Skip", fontcolor="#cc0000", color="#cc0000", penwidth=2]
+        idx -> data [color="#006600", penwidth=2]
+    }
+
+    // Merge
+    subgraph cluster_merge {
+        label="4. MERGE"
+        style="rounded,filled"
+        bgcolor="#f8e8f8"
+        labeljust="l"
+        fontcolor="#000000"
+
+        merge [label="Combine results from all sources\nMost recent timestamp wins per cell\nApply tombstones", shape=box, style="rounded,filled", fillcolor="#e8d0e8"]
+    }
+
+    // Result
+    result [label="RESULT", shape=box, style="rounded,filled", fillcolor="#c8e8c8", penwidth=2]
+
+    // Flow
+    query -> rc [color="black", penwidth=2]
+    rc -> result [label="Hit", style=dashed, color="#006600", fontcolor="#006600", penwidth=2]
+    rc -> mem [label="Miss", color="#cc0000", fontcolor="#cc0000", penwidth=2]
+    mem -> bf [color="black", penwidth=2]
+    mem -> merge [style=dashed, label="memtable data", color="#006600", fontcolor="#006600", penwidth=2]
+    data -> merge [label="SSTable data", color="#006600", fontcolor="#006600", penwidth=2]
+    merge -> result [color="#006600", penwidth=2]
+}
 ```
 
 ---
 
 ## Bloom Filters
 
-Bloom filters are probabilistic data structures that quickly determine if a partition key is **possibly** present in an SSTable.
+Bloom filters are probabilistic data structures that quickly determine if a partition key is **possibly** present in an SSTable. They were introduced by Burton Howard Bloom in 1970 ([Bloom, B.H., 1970, "Space/Time Trade-offs in Hash Coding with Allowable Errors"](https://dl.acm.org/doi/10.1145/362686.362692)).
+
+### Why Bloom Filters Are Essential in Cassandra
+
+The LSM-tree architecture creates a fundamental read challenge: data for a single partition may be spread across dozens or hundreds of SSTables. Without optimization, reading a single row could require checking every SSTable on disk.
+
+| Scenario | SSTables to Check | Disk I/O Without Bloom Filters |
+|----------|-------------------|-------------------------------|
+| New table | 5-10 | 5-10 disk seeks per read |
+| Mature table | 50-100 | 50-100 disk seeks per read |
+| Write-heavy workload | 200+ | 200+ disk seeks per read |
+
+Bloom filters solve this by providing a **space-efficient probabilistic test** for set membership. For each SSTable, Cassandra maintains a bloom filter in memory that can answer: "Is partition key X possibly in this SSTable?"
+
+- **"Definitely NO"** → Skip this SSTable entirely (no disk I/O)
+- **"Maybe YES"** → Check the index and data files (may be a false positive)
+
+The critical property: **false negatives are impossible**. If the bloom filter says "no," the partition is guaranteed not to be in that SSTable. This allows Cassandra to eliminate most SSTables from consideration without any disk access.
 
 ### How Bloom Filters Work
 
+A bloom filter consists of a bit array of *m* bits and *k* independent hash functions. Both insertion and lookup are O(k) operations—constant time regardless of how many elements are stored.
+
+**Insertion:**
+
+When a partition key is added to the SSTable, it is hashed with *k* different hash functions. Each hash function produces a position in the bit array, and those *k* bits are set to 1.
+
+**Lookup:**
+
+To check if a key exists, hash it with the same *k* functions and check the corresponding bits:
+
+- If **all** *k* bits are 1 → the key is **possibly** present (could be a false positive)
+- If **any** bit is 0 → the key is **definitely not** present (guaranteed)
+
+```graphviz dot bloom-filter-structure.svg
+digraph BloomFilter {
+    bgcolor="transparent"
+    graph [fontname="Helvetica", fontsize=11, rankdir=TB]
+    node [fontname="Helvetica", fontsize=10, fontcolor="black"]
+    edge [fontname="Helvetica", fontsize=9, color="black", fontcolor="black"]
+
+    // Bit array
+    subgraph cluster_bits {
+        label="Bit Array (m bits)"
+        labeljust="l"
+        style="rounded"
+        bgcolor="#f8f8f8"
+        fontcolor="black"
+
+        bits [shape=record, style=filled, fillcolor="white",
+            label="0|1|0|1|1|0|1|0|0|1|1|0|1|0|0|1"]
+    }
+
+    // Key and hash functions
+    key [label="Partition Key\n\"user:123\"", shape=box, style="rounded,filled", fillcolor="#ffffcc"]
+
+    h1 [label="hash₁", shape=ellipse, style=filled, fillcolor="#e8e8e8"]
+    h2 [label="hash₂", shape=ellipse, style=filled, fillcolor="#e8e8e8"]
+    h3 [label="hash₃", shape=ellipse, style=filled, fillcolor="#e8e8e8"]
+
+    key -> h1
+    key -> h2
+    key -> h3
+
+    h1 -> bits [label="pos 3", color="#006600", fontcolor="#006600"]
+    h2 -> bits [label="pos 6", color="#006600", fontcolor="#006600"]
+    h3 -> bits [label="pos 10", color="#006600", fontcolor="#006600"]
+
+    // Result
+    result [label="All bits = 1?\nMaybe present", shape=box, style="rounded,filled", fillcolor="#c8e8c8"]
+    bits -> result
+}
 ```
-Query: "Is partition key X in this SSTable?"
 
-Bloom filter response:
-- "Definitely NO"  → Skip this SSTable (no disk I/O)
-- "Maybe YES"      → Check index and data (may be false positive)
+### False Positive Probability
 
-False positives possible, false negatives impossible.
-```
+False positives occur when different keys happen to set the same bit positions. The probability of a false positive depends on:
 
-### Bloom Filter Structure
+- *m* = number of bits in the array
+- *n* = number of elements inserted
+- *k* = number of hash functions
 
-```
-Bit array: [0,1,0,1,1,0,1,0,0,1,1,0,1,0,0,1]
+The optimal number of hash functions and the false positive probability are:
 
-For each partition key:
-- Hash with K functions → K bit positions
-- Set those bits to 1
+$$
+k_{\text{optimal}} = \frac{m}{n} \ln 2
+$$
 
-Query key X:
-- Hash with same K functions → K bit positions
-- If ALL bits are 1 → "Maybe present"
-- If ANY bit is 0 → "Definitely not present"
-```
+$$
+P_{\text{false positive}} \approx \left(1 - e^{-kn/m}\right)^k
+$$
+
+In practice, Cassandra uses the `bloom_filter_fp_chance` setting to configure the desired false positive rate, and calculates the required bit array size accordingly.
+
+### Impact on Read Performance
+
+Consider a read that must check 100 SSTables:
+
+| Bloom Filter FP Rate | Expected False Positives | Disk Reads Avoided |
+|---------------------|-------------------------|-------------------|
+| 1% (default) | 1 | 99 |
+| 0.1% | 0.1 | 99.9 |
+| 10% | 10 | 90 |
+
+With the default 1% false positive rate, bloom filters eliminate approximately 99% of unnecessary SSTable reads. The trade-off is memory: lower false positive rates require larger bit arrays.
 
 ### Configuration
 
@@ -143,50 +298,255 @@ nodetool tablestats keyspace.table | grep -i bloom
 
 ## Partition Index
 
-The partition index maps partition keys to byte offsets in the data file.
+Once a bloom filter indicates that a partition key is **possibly** present in an SSTable, the next step is to find the exact byte offset where that partition's data begins in the data file. This is the role of the partition index.
+
+### The Problem: Finding Data on Disk
+
+Each SSTable consists of multiple files. The data file (`*-Data.db`) contains the actual row data, but it may be gigabytes in size. Without an index, finding a specific partition would require scanning the entire file sequentially—an O(n) operation that would make reads impossibly slow.
+
+```graphviz dot sstable-files.svg
+digraph SSTableFiles {
+    bgcolor="transparent"
+    graph [fontname="Helvetica", fontsize=11, rankdir=LR]
+    node [fontname="Helvetica", fontsize=10, fontcolor="black"]
+    edge [fontname="Helvetica", fontsize=9, color="black", fontcolor="black"]
+
+    subgraph cluster_sstable {
+        label="SSTable File Components"
+        labeljust="l"
+        style="rounded"
+        bgcolor="#f8f8f8"
+        fontcolor="black"
+
+        bf [label="Bloom Filter\n(*-Filter.db)\n\nQuick rejection", shape=box, style="rounded,filled", fillcolor="#ffffcc"]
+        idx [label="Partition Index\n(*-Index.db)\n\nKey → Offset mapping", shape=box, style="rounded,filled", fillcolor="#cce5ff"]
+        data [label="Data File\n(*-Data.db)\n\nActual row data", shape=box, style="rounded,filled", fillcolor="#d4edda"]
+    }
+
+    query [label="Query:\nPartition Key X", shape=box, style="rounded,filled", fillcolor="#e8e8e8"]
+
+    query -> bf [label="1. Check"]
+    bf -> idx [label="2. Lookup\n(if maybe)"]
+    idx -> data [label="3. Seek to\noffset 847291"]
+}
+```
+
+The partition index provides an O(log n) or O(key_length) lookup to translate a partition key into a byte offset, enabling direct disk seeks to the data location.
+
+### How the Index Lookup Works
+
+After the bloom filter returns "maybe present," the read path consults the partition index:
+
+1. **Look up the partition key** in the index structure
+2. **Retrieve the byte offset** where the partition begins in the data file
+3. **Seek directly** to that offset and read the partition data
+
+```graphviz dot index-lookup-flow.svg
+digraph IndexLookup {
+    bgcolor="transparent"
+    graph [fontname="Helvetica", fontsize=11, rankdir=TB, nodesep=0.5]
+    node [fontname="Helvetica", fontsize=10, fontcolor="black"]
+    edge [fontname="Helvetica", fontsize=9, color="black", fontcolor="black", penwidth=1.5]
+
+    // Input
+    key [label="Partition Key\n\"user:12345\"", shape=box, style="rounded,filled", fillcolor="#ffffcc"]
+
+    // Index lookup
+    subgraph cluster_index {
+        label="Partition Index"
+        labeljust="l"
+        style="rounded"
+        bgcolor="#e8f4fc"
+        fontcolor="black"
+
+        lookup [label="Index Lookup\nO(log n) or O(key_length)", shape=box, style="rounded,filled", fillcolor="#cce5ff"]
+    }
+
+    // Result
+    offset [label="Byte Offset\n847,291", shape=box, style="rounded,filled", fillcolor="#d4edda"]
+
+    // Data file
+    subgraph cluster_data {
+        label="Data File (*-Data.db)"
+        labeljust="l"
+        style="rounded"
+        bgcolor="#f0fff0"
+        fontcolor="black"
+
+        d1 [label="... other partitions ...", shape=box, style="filled", fillcolor="#e8e8e8"]
+        d2 [label="user:12345 data\n(offset 847,291)", shape=box, style="rounded,filled", fillcolor="#90EE90"]
+        d3 [label="... other partitions ...", shape=box, style="filled", fillcolor="#e8e8e8"]
+
+        d1 -> d2 -> d3 [style=invis]
+    }
+
+    key -> lookup [label="1. Query"]
+    lookup -> offset [label="2. Return offset"]
+    offset -> d2 [label="3. Seek & read", color="#006600", fontcolor="#006600"]
+}
+```
 
 ### Index Evolution
 
-**Pre-Cassandra 4.0 (Legacy Index):**
+Cassandra's partition index implementation has evolved significantly to improve memory efficiency and lookup performance.
 
+#### Pre-Cassandra 4.0: Legacy Index
+
+The original index architecture used a three-tier system:
+
+```graphviz dot legacy-index.svg
+digraph LegacyIndex {
+    bgcolor="transparent"
+    graph [fontname="Helvetica", fontsize=11, rankdir=LR, nodesep=0.6]
+    node [fontname="Helvetica", fontsize=10, fontcolor="black"]
+    edge [fontname="Helvetica", fontsize=9, color="black", fontcolor="black", penwidth=1.5]
+
+    key [label="Partition Key", shape=box, style="rounded,filled", fillcolor="#ffffcc"]
+
+    subgraph cluster_memory {
+        label="In Memory (Heap)"
+        labeljust="l"
+        style="rounded"
+        bgcolor="#fff0f0"
+        fontcolor="black"
+
+        cache [label="Key Cache\n(hot keys only)", shape=box, style="rounded,filled", fillcolor="#ffcccc"]
+        summary [label="Partition Summary\n(sampled every\n128th key)", shape=box, style="rounded,filled", fillcolor="#ffcccc"]
+    }
+
+    subgraph cluster_disk {
+        label="On Disk"
+        labeljust="l"
+        style="rounded"
+        bgcolor="#f0f0ff"
+        fontcolor="black"
+
+        index [label="Index File\n(*-Index.db)\n(all keys + offsets)", shape=box, style="rounded,filled", fillcolor="#ccccff"]
+        data [label="Data File\n(*-Data.db)", shape=box, style="rounded,filled", fillcolor="#d4edda"]
+    }
+
+    key -> cache [label="1. Check cache"]
+    cache -> data [label="Hit: direct\nto offset", style=dashed, color="#006600", fontcolor="#006600"]
+    cache -> summary [label="Miss"]
+    summary -> index [label="2. Find range\nin index file"]
+    index -> data [label="3. Seek to\noffset"]
+}
 ```
-┌─────────────┐     ┌─────────────┐     ┌─────────────┐
-│ Key Cache   │────>│ Partition   │────>│ Partition   │
-│ (in memory) │     │ Summary     │     │ Index File  │
-│             │     │ (sampled)   │     │ (all keys)  │
-└─────────────┘     └─────────────┘     └─────────────┘
 
-Problems:
-- Summary consumes heap
-- Index file requires disk seek
-- Memory scales with partition count
+**How the legacy index worked:**
+
+1. **Key Cache** (heap): Stores recently accessed partition key → offset mappings. Cache hit = skip directly to data file.
+2. **Partition Summary** (heap): A sampled index that stores every Nth key (default: every 128th). Provides a starting point for binary search in the index file.
+3. **Index File** (disk): Contains all partition keys and their data file offsets, sorted by token order.
+
+**Lookup process for cache miss:**
+
+1. Binary search the partition summary to find the range containing the key
+2. Seek to that position in the index file
+3. Scan/binary search within the index file to find the exact key
+4. Read the data file offset
+5. Seek to the data file and read
+
+**Problems with the legacy approach:**
+
+| Issue | Impact |
+|-------|--------|
+| Heap memory consumption | Partition summary grows with partition count; causes GC pressure |
+| Multiple disk seeks | Summary → Index File → Data File = 2-3 seeks per read |
+| Memory scales with data | More partitions = more heap required |
+| Index file size | Full copy of every partition key on disk |
+
+#### Cassandra 4.0+: Trie-Based Index
+
+Cassandra 4.0 introduced a new index format based on tries (prefix trees), implemented in [CASSANDRA-8371](https://issues.apache.org/jira/browse/CASSANDRA-8371). This approach was inspired by research on succinct data structures and space-efficient tries.
+
+```graphviz dot trie-index.svg
+digraph TrieIndex {
+    bgcolor="transparent"
+    graph [fontname="Helvetica", fontsize=11, rankdir=TB]
+    node [fontname="Helvetica", fontsize=10, fontcolor="black"]
+    edge [fontname="Helvetica", fontsize=9, color="black", fontcolor="black"]
+
+    subgraph cluster_trie {
+        label="Trie Index Structure (memory-mapped, off-heap)"
+        labeljust="l"
+        style="rounded"
+        bgcolor="#e8f4fc"
+        fontcolor="black"
+
+        root [label="root", shape=circle, style=filled, fillcolor="#cce5ff"]
+
+        u [label="u", shape=circle, style=filled, fillcolor="#cce5ff"]
+        a [label="a", shape=circle, style=filled, fillcolor="#cce5ff"]
+
+        us [label="s", shape=circle, style=filled, fillcolor="#cce5ff"]
+
+        user [label="e", shape=circle, style=filled, fillcolor="#cce5ff"]
+        admin [label="d", shape=circle, style=filled, fillcolor="#cce5ff"]
+
+        usercolon [label="r:", shape=circle, style=filled, fillcolor="#cce5ff"]
+        admincolon [label="min:", shape=circle, style=filled, fillcolor="#cce5ff"]
+
+        user1 [label="1\n→ offset\n1000", shape=box, style="rounded,filled", fillcolor="#90EE90"]
+        user2 [label="2\n→ offset\n5000", shape=box, style="rounded,filled", fillcolor="#90EE90"]
+        admin1 [label="1\n→ offset\n9000", shape=box, style="rounded,filled", fillcolor="#90EE90"]
+
+        root -> u
+        root -> a
+
+        u -> us
+        us -> user
+        user -> usercolon
+        usercolon -> user1
+        usercolon -> user2
+
+        a -> admin
+        admin -> admincolon
+        admincolon -> admin1
+    }
+
+    note [label="Keys: user:1, user:2, admin:1\nShared prefixes compressed\nLookup: O(key_length)", shape=note, style=filled, fillcolor="#ffffcc"]
+}
 ```
 
-**Cassandra 4.0+ (Trie Index):**
+**How the trie index works:**
 
-```
-┌─────────────────────────────────────┐
-│ Trie Index                          │
-│ - Off-heap, memory-mapped           │
-│ - Shared prefixes = compression     │
-│ - O(key_length) lookup              │
-└─────────────────────────────────────┘
+1. Partition keys are stored in a trie structure where common prefixes are shared
+2. The trie is serialized to disk and memory-mapped (off-heap)
+3. Lookup traverses the trie character by character: O(key_length)
+4. Leaf nodes contain the byte offset into the data file
 
-Benefits:
-- 50-80% smaller than legacy
-- No heap usage
-- Single disk read to find partition
-```
+**Advantages of the trie index:**
+
+| Improvement | Benefit |
+|-------------|---------|
+| **Off-heap** | No GC pressure; memory-mapped from disk |
+| **Prefix compression** | Keys sharing prefixes stored once; 50-80% smaller |
+| **O(key_length) lookup** | Consistent performance regardless of partition count |
+| **Single disk read** | Trie traversal finds offset directly; no summary + index two-step |
+| **Better for long keys** | Prefix sharing particularly effective for UUIDs, paths |
+
+**Size comparison:**
+
+| Index Type | 10M Partitions (UUID keys) | Memory Type |
+|------------|---------------------------|-------------|
+| Legacy (summary) | ~200-400 MB heap | On-heap |
+| Trie | ~50-100 MB | Off-heap (mmap) |
 
 ### Key Cache
 
-The key cache stores partition key to SSTable offset mappings, avoiding index lookups for hot partitions.
+The key cache stores partition key → SSTable offset mappings in memory, bypassing index lookups entirely for frequently accessed partitions. This optimization works with both legacy and trie indexes.
 
 ```yaml
 # cassandra.yaml
 
+# Global key cache size
 key_cache_size_in_mb: 100
+
+# Keys to save when flushing cache to disk
 key_cache_keys_to_save: 10000
+
+# How often to save key cache (seconds)
 key_cache_save_period: 14400  # 4 hours
 ```
 
@@ -195,6 +555,19 @@ key_cache_save_period: 14400  # 4 hours
 ALTER TABLE hot_table WITH caching = {'keys': 'ALL'};
 ALTER TABLE cold_table WITH caching = {'keys': 'NONE'};
 ```
+
+**When key cache helps:**
+
+- Tables with hot partitions accessed repeatedly
+- Read-heavy workloads with temporal locality
+- Partitions that are read more often than they are written
+
+**Key cache lookup flow:**
+
+1. Hash the partition key
+2. Check key cache for (SSTable ID, partition key) → offset mapping
+3. **Hit**: Seek directly to data file offset (skip bloom filter and index)
+4. **Miss**: Fall back to bloom filter → index lookup path
 
 ---
 

@@ -10,30 +10,6 @@ For cluster-level write coordination—how writes are routed to replicas and how
 
 When a node receives a write (whether as coordinator or replica), the storage engine performs these steps:
 
-```
-Incoming Mutation
-       │
-       ▼
-┌─────────────────────────────────────────────────────────┐
-│ 1. COMMIT LOG                                            │
-│    Append mutation to write-ahead log                   │
-│    Purpose: Durability (crash recovery)                 │
-└───────────────────────────┬─────────────────────────────┘
-                            │
-                            ▼
-┌─────────────────────────────────────────────────────────┐
-│ 2. MEMTABLE                                              │
-│    Insert into in-memory sorted structure               │
-│    Purpose: Fast writes, queryable immediately          │
-└───────────────────────────┬─────────────────────────────┘
-                            │
-                            ▼
-┌─────────────────────────────────────────────────────────┐
-│ 3. ACKNOWLEDGMENT                                        │
-│    Write complete from this node's perspective          │
-│    Memtable flushed to SSTable asynchronously           │
-└─────────────────────────────────────────────────────────┘
-```
 
 ```mermaid
 flowchart TB
@@ -334,24 +310,61 @@ The memtable is an in-memory sorted data structure holding recent writes. Data i
 
 ### Memtable Structure
 
-```
-┌─────────────────────────────────────────────────────────────┐
-│ MEMTABLE (ConcurrentSkipListMap)                             │
-│                                                              │
-│ Sorted by: partition token → clustering columns              │
-│                                                              │
-│ ┌──────────────────────────────────────────────────────────┐ │
-│ │ Token: -923874...  │ Partition: user_id=abc123           │ │
-│ │                    │ ├─ Row: created=2024-01-01 → {data} │ │
-│ │                    │ ├─ Row: created=2024-01-02 → {data} │ │
-│ │                    │ └─ Row: created=2024-01-03 → {data} │ │
-│ ├──────────────────────────────────────────────────────────┤ │
-│ │ Token: -512983...  │ Partition: user_id=def456           │ │
-│ │                    │ └─ Row: created=2024-01-15 → {data} │ │
-│ └──────────────────────────────────────────────────────────┘ │
-│                                                              │
-│ One memtable per table per node                              │
-└─────────────────────────────────────────────────────────────┘
+```graphviz dot memtable-structure.svg
+digraph Memtable {
+    bgcolor="transparent"
+    graph [fontname="Helvetica", fontsize=11, rankdir=TB, nodesep=0.3, ranksep=0.4]
+    node [fontname="Helvetica", fontsize=10]
+    edge [fontname="Helvetica", fontsize=9]
+
+    // Main container
+    subgraph cluster_memtable {
+        label="MEMTABLE (ConcurrentSkipListMap)\nSorted by: partition token → clustering columns"
+        labeljust="l"
+        style="rounded"
+        bgcolor="#f5f5f5"
+        fontsize=11
+
+        // First partition
+        subgraph cluster_p1 {
+            label=""
+            style="rounded,filled"
+            bgcolor="#e8f4e8"
+
+            p1_header [shape=record, style=filled, fillcolor="#a8d5a2",
+                label="{Token: -923874...|Partition: user_id=abc123}"]
+
+            p1_rows [shape=record, style=filled, fillcolor="white",
+                label="{Row: created=2024-01-01|{col1|col2|col3}}|\
+{Row: created=2024-01-02|{col1|col2|col3}}|\
+{Row: created=2024-01-03|{col1|col2|col3}}"]
+
+            p1_header -> p1_rows [style=invis]
+        }
+
+        // Second partition
+        subgraph cluster_p2 {
+            label=""
+            style="rounded,filled"
+            bgcolor="#e8f0f8"
+
+            p2_header [shape=record, style=filled, fillcolor="#a8c8e8",
+                label="{Token: -512983...|Partition: user_id=def456}"]
+
+            p2_rows [shape=record, style=filled, fillcolor="white",
+                label="{Row: created=2024-01-15|{col1|col2|col3}}"]
+
+            p2_header -> p2_rows [style=invis]
+        }
+
+        // Ordering indicator
+        p1_header -> p2_header [label="token order", style=dashed, color="#333333", fontcolor="#000000", constraint=true]
+    }
+
+    // Note
+    note [shape=note, style=filled, fillcolor="#ffffcc",
+        label="One memtable\nper table\nper node"]
+}
 ```
 
 ### Configuration
@@ -439,28 +452,47 @@ Memtables are flushed to SSTables under the following conditions:
 
 ### Flush Sequence
 
+1. Current memtable marked "flushing" (no new writes accepted)
+2. New empty memtable created for incoming writes
+3. Flushing memtable written to disk as [SSTable](sstables.md) (sorted, sequential I/O)
+4. [SSTable](sstables.md) files created atomically
+5. Flushing memtable discarded; commit log segments eligible for recycling
+
+During flush, a single table may temporarily have multiple memtables: one active memtable receiving new writes, while older memtables are still being written to disk. This allows writes to continue uninterrupted during flush operations.
+
+```graphviz dot memtable-flush-lifecycle.svg
+digraph FlushLifecycle {
+    bgcolor="transparent"
+    graph [fontname="Helvetica", fontsize=11, rankdir=LR, nodesep=0.5]
+    node [fontname="Helvetica", fontsize=10]
+    edge [fontname="Helvetica", fontsize=9]
+
+    label="Single table: memtable lifecycle during flush"
+    labelloc="t"
+
+    // Memtable states
+    node [shape=box, style="rounded,filled", width=1.5, height=0.8]
+
+    active [label="Active\nMemtable\n(receives writes)", fillcolor="#a8d5a2"]
+    flushing [label="Flushing\nMemtable\n(writing to disk)", fillcolor="#fff3b0"]
+    discarded [label="Discarded\n(SSTable created)", fillcolor="#e0e0e0", style="rounded,dashed,filled"]
+
+    // Flow
+    edge [penwidth=1.5, color="#333333"]
+    active -> flushing [label="flush triggered"]
+    flushing -> discarded [label="flush complete"]
+
+    // New memtable note
+    node [shape=note, style=filled, fillcolor="#e8f4fc", width=1.2, height=0.6]
+    note [label="New empty\nmemtable\ncreated"]
+
+    edge [style=dashed, color="#666666"]
+    flushing -> note [label="immediately", dir=none]
+    note -> active [style=invis]
+}
 ```
-1. Current memtable marked "flushing"
-   (no new writes to this memtable)
 
-2. New memtable created for incoming writes
-
-3. Flushing memtable written to disk as SSTable
-   (sorted write, sequential I/O)
-
-4. SSTable files created atomically
-
-5. Commit log segments eligible for recycling
-
-Multiple memtables may exist during flush:
-┌─────────────┐   ┌─────────────┐   ┌─────────────┐
-│ Active      │   │ Flushing    │   │ Flushing    │
-│ Memtable    │   │ Memtable 1  │   │ Memtable 2  │
-│ (new writes)│   │ (to SSTable)│   │ (to SSTable)│
-└─────────────┘   └─────────────┘   └─────────────┘
-
-All memtables checked during reads
-```
+All memtables (active and flushing) are checked during reads to ensure data visibility.
 
 ### Flush Commands
 
@@ -592,4 +624,4 @@ nodetool tablestats | grep -i memtable
 - **[Storage Engine Overview](index.md)** - Architecture overview
 - **[Read Path](read-path.md)** - How reads work
 - **[SSTable Reference](sstables.md)** - SSTable file format
-- **[Memory Management](memory.md)** - Memory configuration
+- **[Memory Management](../memory-management/memory.md)** - Memory configuration

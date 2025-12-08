@@ -2,7 +2,7 @@
 
 SSTables (Sorted String Tables) are Cassandra's persistent storage files. All data ultimately resides in SSTables on disk—they are the database files. When a memtable flushes, it creates an SSTable. When compaction runs, it reads SSTables and writes new ones. When a node restarts, it reads SSTables to rebuild its state.
 
-Each SSTable is immutable once written. This immutability simplifies concurrency (no locks needed for reads), enables efficient sequential writes, and allows safe snapshots via hard links. However, it also means that updates and deletes create new data rather than modifying existing files, requiring background compaction to reclaim space and merge versions.
+Each SSTable is **immutable** once written. This immutability simplifies concurrency (no locks needed for reads), enables efficient sequential writes, and allows safe snapshots via hard links. However, it also means that updates and deletes create new data rather than modifying existing files, requiring background compaction to reclaim space and merge versions.
 
 An SSTable is not a single file but a set of component files: data, indexes, bloom filter, compression metadata, and statistics. Understanding these components is essential for troubleshooting, capacity planning, and performance analysis.
 
@@ -48,9 +48,185 @@ db      - File extension
 | `mb` | 3.0 | Storage format revision |
 | `mc` | 3.0 | Storage format revision |
 | `md` | 3.11 | Storage format revision |
-| `na` | 4.0 | Current format, trie-based indexes |
+| `na` | 4.0 | Trie-based partition index |
 | `nb` | 4.0+ | Format revision |
 | `nc` | 5.0 | Latest format |
+
+### SSTable Format Types
+
+The second-to-last component in the filename (e.g., `big` or `bti`) indicates the SSTable format type. Cassandra 5.0 introduces the BTI format as an alternative to the legacy "big" format.
+
+| Format | Name | Introduced | Description |
+|--------|------|------------|-------------|
+| `big` | Big Table Format | Original | Legacy format with separate index and summary files |
+| `bti` | Big Trie Index | 5.0 | New format with block-based trie indexes |
+
+---
+
+## SSTable Formats: Big vs BTI
+
+Cassandra 5.0 introduced the **BTI (Big Trie Index)** format ([CASSANDRA-17056](https://issues.apache.org/jira/browse/CASSANDRA-17056)), a significant redesign of SSTable on-disk structure. The BTI format uses block-based trie indexes for both partition and row lookups, replacing the legacy index structures.
+
+### Format Comparison
+
+```graphviz dot sstable-formats.svg
+digraph SSTableFormats {
+    bgcolor="transparent"
+    graph [fontname="Helvetica", fontsize=11, rankdir=TB, nodesep=0.5]
+    node [fontname="Helvetica", fontsize=10, fontcolor="black"]
+    edge [fontname="Helvetica", fontsize=9, color="black", fontcolor="black"]
+
+    subgraph cluster_big {
+        label="Big Format (legacy)"
+        labeljust="l"
+        style="rounded,filled"
+        bgcolor="#fff0f0"
+        fontcolor="black"
+
+        big_data [label="Data.db\n(row data)", shape=box, style="rounded,filled", fillcolor="#ffcccc"]
+        big_index [label="Index.db\n(partition index)", shape=box, style="rounded,filled", fillcolor="#ffcccc"]
+        big_summary [label="Summary.db\n(sampled index)", shape=box, style="rounded,filled", fillcolor="#ffcccc"]
+        big_filter [label="Filter.db\n(bloom filter)", shape=box, style="rounded,filled", fillcolor="#ffcccc"]
+    }
+
+    subgraph cluster_bti {
+        label="BTI Format (Cassandra 5.0+)"
+        labeljust="l"
+        style="rounded,filled"
+        bgcolor="#f0fff0"
+        fontcolor="black"
+
+        bti_data [label="Data.db\n(row data)", shape=box, style="rounded,filled", fillcolor="#ccffcc"]
+        bti_partitions [label="Partitions.db\n(trie partition index)", shape=box, style="rounded,filled", fillcolor="#ccffcc"]
+        bti_rows [label="Rows.db\n(trie row index)", shape=box, style="rounded,filled", fillcolor="#ccffcc"]
+        bti_filter [label="Filter.db\n(bloom filter)", shape=box, style="rounded,filled", fillcolor="#ccffcc"]
+    }
+
+    note [label="BTI eliminates Summary.db\nand uses trie-based indexes\nfor both partitions and rows", shape=note, style=filled, fillcolor="#ffffcc"]
+}
+```
+
+| Aspect | Big Format | BTI Format |
+|--------|-----------|------------|
+| **Partition index** | Index.db + Summary.db | Partitions.db (trie) |
+| **Row index** | Embedded in Index.db | Rows.db (trie) |
+| **Memory usage** | Higher (summary in heap) | Lower (off-heap, memory-mapped) |
+| **Index size** | Larger | 50-80% smaller (prefix compression) |
+| **Lookup complexity** | O(log n) | O(key length) |
+| **Write amplification** | Standard | Slightly higher during flush |
+
+### BTI Format File Components
+
+The BTI format introduces new file extensions:
+
+| Component | Big Format | BTI Format | Description |
+|-----------|-----------|------------|-------------|
+| Partition Index | `-Index.db` | `-Partitions.db` | Maps partition keys to data offsets |
+| Row Index | (in Index.db) | `-Rows.db` | Maps clustering keys within partitions |
+| Summary | `-Summary.db` | (eliminated) | Not needed with trie index |
+
+**BTI SSTable file listing:**
+
+```
+data_directory/keyspace_name/table_name-table_uuid/
+├── nc-1-bti-Data.db           # Row data (same as big format)
+├── nc-1-bti-Partitions.db     # Trie-based partition index (replaces Index.db)
+├── nc-1-bti-Rows.db           # Trie-based row index (new)
+├── nc-1-bti-Filter.db         # Bloom filter (same as big format)
+├── nc-1-bti-Statistics.db     # SSTable metadata
+├── nc-1-bti-CompressionInfo.db
+├── nc-1-bti-Digest.crc32
+└── nc-1-bti-TOC.txt
+```
+
+### How BTI Trie Indexes Work
+
+The BTI format uses **byte-ordered trie** data structures for both partition and row indexes. This approach provides several advantages over the legacy format:
+
+**1. Prefix Compression**
+
+Partition keys with common prefixes share storage in the trie structure:
+
+```
+Keys: user:1001, user:1002, user:1003, user:2001
+
+Legacy Index.db:
+  user:1001 → offset 1000
+  user:1002 → offset 2000
+  user:1003 → offset 3000
+  user:2001 → offset 4000
+  (each key stored in full)
+
+BTI Partitions.db (trie):
+  root → "user:" → "100" → "1" → offset 1000
+                         → "2" → offset 2000
+                         → "3" → offset 3000
+               → "2001" → offset 4000
+  (common prefixes stored once)
+```
+
+**2. Block-Based Organization**
+
+The trie is organized into fixed-size blocks that can be:
+
+- Memory-mapped for efficient access
+- Loaded on-demand (not all in memory)
+- Cached at the OS page cache level
+
+**3. Efficient Range Queries**
+
+The trie structure naturally supports efficient iteration for range queries, as entries are stored in sorted order.
+
+### Configuration
+
+SSTable format is configured cluster-wide in `cassandra.yaml`:
+
+```yaml
+# cassandra.yaml
+
+# Default SSTable format for new SSTables
+# Options: big, bti
+# Default: big (for compatibility), bti recommended for 5.0+
+sstable_format: bti
+```
+
+Per-table SSTable format configuration is not yet available. See [CASSANDRA-18534](https://issues.apache.org/jira/browse/CASSANDRA-18534) for status.
+
+### Migration Considerations
+
+| Consideration | Details |
+|---------------|---------|
+| **Compatibility** | Big and BTI SSTables can coexist in the same table |
+| **Conversion** | Existing SSTables remain in their format until rewritten |
+| **Upgrade path** | Set `sstable_format: bti`, then run `nodetool upgradesstables -a` |
+| **Downgrade** | BTI SSTables cannot be read by Cassandra < 5.0 |
+| **Tools** | All SSTable tools (sstablemetadata, sstabledump, etc.) support BTI |
+
+**Converting existing tables to BTI:**
+
+```bash
+# 1. Update cassandra.yaml to use BTI format
+# 2. Rewrite all SSTables to the new format
+nodetool upgradesstables -a keyspace table
+
+# -a flag rewrites all SSTables, even if already at current version
+# Without -a, only SSTables from older Cassandra versions are rewritten
+```
+
+### When to Use BTI Format
+
+**Recommended for:**
+
+- New Cassandra 5.0+ clusters
+- Tables with many partitions (index size savings)
+- Tables with long partition keys (prefix compression benefits)
+- Memory-constrained environments (lower heap usage)
+
+**Consider staying with Big format if:**
+
+- Running mixed-version clusters during upgrade
+- Need to maintain downgrade capability to < 5.0
+- Existing tooling depends on legacy file structure
 
 ### SSTable Identifiers (Cassandra 4.1+)
 
@@ -63,15 +239,31 @@ na-2-big-Data.db
 na-3-big-Data.db
 ```
 
-**UUID-based (Cassandra 4.1+):**
+**ULID-based (Cassandra 4.1+):**
 ```
 nb-1-big-Data.db                              (sequential)
-nb-3fw2_0zer_0000wjnhm8y18d-big-Data.db       (UUID-based)
+nb-3fw2_0zer_0000wjnhm8y18d-big-Data.db       (ULID-based)
 ```
+
+#### What is ULID?
+
+ULID (Universally Unique Lexicographically Sortable Identifier) is a 128-bit identifier designed as an alternative to UUID that maintains chronological ordering when sorted as strings.
+
+**Why ULID instead of UUID:**
+
+| Characteristic | UUID v1/v4 | ULID |
+|----------------|------------|------|
+| Sortability | Not sortable (random bits) | Lexicographically sortable by time |
+| Time component | UUID v1: present but not prefix | First 48 bits are timestamp |
+| String encoding | Hex with dashes (36 chars) | Base32/Base36 (26-28 chars) |
+| Natural ordering | None | Creation time order |
+| Filesystem friendliness | Contains dashes | No special characters |
+
+Standard UUIDs (even time-based UUID v1) do not sort lexicographically by creation time because the timestamp bits are not positioned at the start. ULID places the timestamp in the most significant bits, ensuring that lexicographic string comparison produces chronological ordering.
 
 **Identifier Structure:**
 
-The UUID-based identifier is 28 characters using Base36 encoding (`0-9a-z`):
+Cassandra's ULID implementation uses 28 characters in Base36 encoding (`0-9a-z`):
 
 ```
 3fw2_0zer_0000wjnhm8y18d000
@@ -85,26 +277,30 @@ The UUID-based identifier is 28 characters using Base36 encoding (`0-9a-z`):
 
 Format regex: `([0-9a-z]{4})_([0-9a-z]{4})_([0-9a-z]{5})([0-9a-z]{13})`
 
-This structure ensures identifiers are:
+**Benefits of ULID for SSTables:**
 
-- **Lexicographically sortable** - Natural ordering by creation time
-- **Globally unique** - No collisions across the entire cluster
-- **Self-describing** - Creation time encoded in the identifier
+- **Lexicographically sortable** - SSTable files sort naturally by creation time in directory listings
+- **Globally unique** - No collisions across the entire cluster, even after truncate and restart
+- **Self-describing** - Creation time encoded directly in the identifier without metadata lookup
+- **Monotonic** - Within the same millisecond, identifiers increment to preserve ordering
+- **Compact** - 28 characters vs 36 for standard UUID string representation
 
 **Configuration:**
 
 ```yaml
 # cassandra.yaml
 
-# Enable UUID-based SSTable identifiers
+# Enable ULID-based SSTable identifiers
 # Default: false (4.1), true (5.0+)
-# WARNING: Cannot be disabled once SSTables are created with UUIDs
+# WARNING: Cannot be disabled once SSTables are created with ULIDs
 uuid_sstable_identifiers_enabled: true
 ```
 
+Note: The configuration parameter retains the name `uuid_sstable_identifiers_enabled` for historical reasons, though the implementation uses ULID.
+
 **Comparison:**
 
-| Aspect | Sequential | UUID-based |
+| Aspect | Sequential | ULID-based |
 |--------|------------|------------|
 | Uniqueness | Per-table only | Cluster-wide |
 | Streaming conflicts | Possible | None |
@@ -168,7 +364,7 @@ Next incremental backup runs:
 
 The original backup data is permanently lost. Backup tools cannot distinguish between "same file updated" and "different file with same name."
 
-*Same scenario with UUID identifiers:*
+*Same scenario with ULID identifiers:*
 
 ```
 Step 1: Table has data, take a snapshot backup
@@ -181,7 +377,7 @@ Step 1: Table has data, take a snapshot backup
 
 Step 2: Truncate and restart
     → TRUNCATE keyspace.table;
-    → Restart node (UUID generator continues with new random component)
+    → Restart node (ULID generator continues with new random component)
 
 Step 3: New data written to table
 └── keyspace/table-abc123/
@@ -199,11 +395,11 @@ Step 4: Restore backup - no conflicts
     └── nb-3fw3_1abc_0002yghi789jkl22-big-Data.db
 ```
 
-UUID identifiers incorporate a random component unique to each Cassandra process, so identifiers never repeat even after truncate and restart.
+ULID identifiers incorporate a random component unique to each Cassandra process, so identifiers never repeat even after truncate and restart.
 
-**Scenarios where UUID identifiers prevent collisions:**
+**Scenarios where ULID identifiers prevent collisions:**
 
-| Operation | Sequential Problem | UUID Solution |
+| Operation | Sequential Problem | ULID Solution |
 |-----------|-------------------|---------------|
 | Restore after truncate | Generation resets, filenames collide | Unique identifiers always |
 | Incremental backup to S3/GCS | New files overwrite old backups | Each backup file unique |
@@ -248,38 +444,72 @@ Contains the actual row data for all partitions in the SSTable.
 
 ---
 
-### Partition Index (Index.db / Partitions.db)
+### Partition Index
 
-Maps partition keys to byte offsets in the Data file.
+Maps partition keys to byte offsets in the Data file. The implementation differs between SSTable formats.
 
-**Pre-4.0 (Index.db):**
+#### Big Format: Index.db
 
 | Attribute | Description |
 |-----------|-------------|
+| **File** | `-Index.db` |
 | **Purpose** | Map partition keys to data file offsets |
-| **Contents** | Partition key → offset pairs |
-| **Access** | Requires Summary.db for efficient lookup |
+| **Structure** | Sorted list of (partition key, offset) pairs with embedded trie (4.0+) |
+| **Memory** | Off-heap trie index (4.0+), or heap-based with Summary.db (pre-4.0) |
 
-**Cassandra 4.0+ (Partitions.db):**
+**Pre-4.0 lookup flow:**
+```
+Partition Key → Summary.db (sampled) → Index.db (scan) → Data.db offset
+```
+
+**4.0+ lookup flow:**
+```
+Partition Key → Index.db (trie lookup) → Data.db offset
+```
+
+#### BTI Format: Partitions.db (Cassandra 5.0+)
 
 | Attribute | Description |
 |-----------|-------------|
-| **Purpose** | Trie-based partition index |
-| **Contents** | Compressed prefix trie of partition keys |
-| **Access** | Direct lookup without summary file |
-| **Benefits** | 50-80% smaller, off-heap, faster lookups |
+| **File** | `-Partitions.db` |
+| **Purpose** | Block-based trie partition index |
+| **Structure** | Byte-ordered trie with fixed-size blocks |
+| **Memory** | Memory-mapped, fully off-heap |
+| **Benefits** | 50-80% smaller than Index.db, O(key length) lookups |
+
+**BTI lookup flow:**
+```
+Partition Key → Partitions.db (trie traversal) → Data.db offset
+```
+
+The BTI format's block-based organization allows efficient memory mapping and on-demand loading—only accessed blocks are read from disk.
 
 ---
 
-### Row Index (Rows.db) - Cassandra 4.0+
+### Row Index
 
-Maps clustering keys to positions within partitions.
+Maps clustering keys to positions within large partitions, enabling efficient lookups without scanning entire partitions.
+
+#### Big Format: Embedded in Index.db
 
 | Attribute | Description |
 |-----------|-------------|
-| **Purpose** | Locate rows within large partitions |
-| **Contents** | Clustering key → intra-partition offset |
-| **When Created** | Only for partitions exceeding threshold |
+| **Location** | Stored within Index.db |
+| **Purpose** | Locate rows within partitions exceeding column_index_size |
+| **Contents** | Clustering key boundaries at configurable intervals |
+| **Threshold** | Created when partition exceeds `column_index_size_in_kb` (default: 64KB) |
+
+#### BTI Format: Rows.db (Cassandra 5.0+)
+
+| Attribute | Description |
+|-----------|-------------|
+| **File** | `-Rows.db` |
+| **Purpose** | Separate trie-based row index |
+| **Structure** | Byte-ordered trie of clustering keys |
+| **Memory** | Memory-mapped, off-heap |
+| **Benefits** | Faster row lookups in wide partitions, separate from partition index |
+
+The BTI format separates row indexing into its own file, improving cache efficiency and allowing independent optimization of partition and row lookups.
 
 ---
 
@@ -303,24 +533,35 @@ ALTER TABLE my_table WITH bloom_filter_fp_chance = 0.01;
 
 ---
 
-### Summary (Summary.db) - Pre-4.0
+### Summary (Summary.db) - Big Format Pre-4.0 Only
 
-Sampled index for efficient partition lookup.
+Sampled index for efficient partition lookup. **Not present in Cassandra 4.0+ Big format or BTI format.**
 
 | Attribute | Description |
 |-----------|-------------|
+| **File** | `-Summary.db` |
 | **Purpose** | In-memory sample of partition index |
-| **Contents** | Every Nth partition key from index |
+| **Contents** | Every Nth partition key from Index.db |
 | **Memory** | Loaded into JVM heap |
-| **Note** | Replaced by trie index in Cassandra 4.0+ |
+| **Status** | Eliminated in 4.0 (Big format uses trie in Index.db); not used in BTI |
 
-**Configuration (pre-4.0):**
+The summary file was necessary in pre-4.0 because Index.db contained a flat list of all partition keys. Scanning the entire index for each lookup was too slow, so the summary provided jump points into the index.
+
+Cassandra 4.0+ replaced this with trie-based indexes that provide O(key length) lookups directly, eliminating the need for sampling.
+
+**Configuration (pre-4.0 only):**
 
 ```yaml
 # cassandra.yaml
 min_index_interval: 128    # Minimum sampling rate
 max_index_interval: 2048   # Maximum sampling rate
 ```
+
+| Format | Summary.db Present? |
+|--------|-------------------|
+| Big (pre-4.0) | Yes |
+| Big (4.0+) | No |
+| BTI (5.0+) | No |
 
 ---
 
@@ -399,7 +640,7 @@ Lists all component files for the SSTable.
 | **Contents** | List of component file names |
 | **Format** | Plain text, one file per line |
 
-**Example contents:**
+**Example contents (Big format):**
 
 ```
 TOC.txt
@@ -407,7 +648,19 @@ Data.db
 Index.db
 Filter.db
 Statistics.db
-Summary.db
+CompressionInfo.db
+Digest.crc32
+```
+
+**Example contents (BTI format):**
+
+```
+TOC.txt
+Data.db
+Partitions.db
+Rows.db
+Filter.db
+Statistics.db
 CompressionInfo.db
 Digest.crc32
 ```
@@ -416,18 +669,30 @@ Digest.crc32
 
 ## Component File Reference Summary
 
-| Component | File Extension | Purpose | Memory Location |
-|-----------|---------------|---------|-----------------|
-| Data | `-Data.db` | Row data | Disk (page cache) |
-| Partition Index | `-Index.db` | Key → offset map | Heap (pre-4.0) |
-| Partition Index | `-Partitions.db` | Trie index | Off-heap (4.0+) |
-| Row Index | `-Rows.db` | Clustering → offset | Off-heap (4.0+) |
-| Bloom Filter | `-Filter.db` | Existence check | Off-heap |
-| Summary | `-Summary.db` | Sampled index | Heap (pre-4.0) |
-| Compression Info | `-CompressionInfo.db` | Chunk offsets | Off-heap |
-| Statistics | `-Statistics.db` | Metadata | Loaded on demand |
-| Digest | `-Digest.*` | Checksum | Loaded on demand |
-| TOC | `-TOC.txt` | File list | Loaded on demand |
+### By SSTable Format
+
+| Component | Big Format | BTI Format | Purpose |
+|-----------|-----------|------------|---------|
+| Data | `-Data.db` | `-Data.db` | Row data |
+| Partition Index | `-Index.db` | `-Partitions.db` | Key → offset mapping |
+| Row Index | (in Index.db) | `-Rows.db` | Clustering key → offset |
+| Bloom Filter | `-Filter.db` | `-Filter.db` | Partition existence check |
+| Summary | `-Summary.db` (pre-4.0) | — | Sampled index (legacy) |
+| Compression Info | `-CompressionInfo.db` | `-CompressionInfo.db` | Chunk offsets |
+| Statistics | `-Statistics.db` | `-Statistics.db` | SSTable metadata |
+| Digest | `-Digest.*` | `-Digest.*` | Data checksum |
+| TOC | `-TOC.txt` | `-TOC.txt` | Component file list |
+
+### Memory Location by Component
+
+| Component | Pre-4.0 | 4.0+ Big Format | BTI Format |
+|-----------|---------|-----------------|------------|
+| Data | Page cache | Page cache | Page cache |
+| Partition Index | Heap (via Summary) | Off-heap | Off-heap (mmap) |
+| Row Index | — | Off-heap | Off-heap (mmap) |
+| Bloom Filter | Off-heap | Off-heap | Off-heap |
+| Summary | Heap | — | — |
+| Compression Info | Off-heap | Off-heap | Off-heap |
 
 ---
 

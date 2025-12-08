@@ -21,7 +21,7 @@ Cassandra's gossip implementation is based on epidemic protocols described in ac
 |-----------|-------|----------------------|
 | SWIM Protocol | [Das, A., Gupta, I., & Motivala, A. (2002). "SWIM: Scalable Weakly-consistent Infection-style Process Group Membership Protocol"](https://www.cs.cornell.edu/projects/Quicksilver/public_pdfs/SWIM.pdf) | Membership protocol structure |
 | Amazon Dynamo | [DeCandia, G. et al. (2007). "Dynamo: Amazon's Highly Available Key-value Store"](https://www.allthingsdistributed.com/files/amazon-dynamo-sosp2007.pdf) | Gossip-based membership and failure detection |
-| Phi Accrual Failure Detector | [Hayashibara, N. et al. (2004). "The φ Accrual Failure Detector"](https://www.computer.org/csdl/proceedings-article/srds/2004/22390066/12OmNAXglPx) | Adaptive failure detection |
+| Phi Accrual Failure Detector | [Hayashibara, N. et al. (2004). "The φ Accrual Failure Detector"](https://www.researchgate.net/publication/29682135_The_ph_accrual_failure_detector) | Adaptive failure detection |
 
 ---
 
@@ -39,22 +39,6 @@ Every second, each node performs a gossip round:
 ### The Three-Way Handshake
 
 Gossip uses a three-message exchange to synchronize state efficiently:
-
-```
-Node A                                     Node B
-  │                                          │
-  │──── GossipDigestSyn ────────────────────▶│
-  │     (digests of A's knowledge)           │
-  │                                          │
-  │◀─── GossipDigestAck ─────────────────────│
-  │     (digests B needs + data A needs)     │
-  │                                          │
-  │──── GossipDigestAck2 ───────────────────▶│
-  │     (data B requested)                   │
-  │                                          │
-
-After exchange: Both nodes have consistent state
-```
 
 ```mermaid
 sequenceDiagram
@@ -199,7 +183,7 @@ Gossip merges states by comparing versions per-key.
 
 ### Phi Accrual Failure Detector
 
-Cassandra uses the Phi Accrual Failure Detector algorithm ([Hayashibara et al., 2004](https://www.computer.org/csdl/proceedings-article/srds/2004/22390066/12OmNAXglPx)) rather than simple heartbeat timeouts. This provides adaptive failure detection that accounts for network variability.
+Cassandra uses the Phi Accrual Failure Detector algorithm ([Hayashibara et al., 2004](https://www.researchgate.net/publication/29682135_The_ph_accrual_failure_detector)) rather than simple heartbeat timeouts. This provides adaptive failure detection that accounts for network variability.
 
 **Problem with fixed timeouts:**
 
@@ -347,6 +331,7 @@ This ensures:
 Nodes progress through states that are gossiped to the cluster:
 
 **Starting/Joining:**
+
 ```
 STARTING → JOINING → NORMAL
     │          │         │
@@ -355,7 +340,8 @@ STARTING → JOINING → NORMAL
     └── Initial startup, not yet joined ring
 ```
 
-**Leaving:**
+**Leaving (decommission):**
+
 ```
 NORMAL → LEAVING → LEFT
     │        │        │
@@ -364,7 +350,8 @@ NORMAL → LEAVING → LEFT
     └── Operator initiated decommission
 ```
 
-**Moving:**
+**Moving (token rebalance):**
+
 ```
 NORMAL → MOVING → NORMAL
     │        │        │
@@ -373,13 +360,17 @@ NORMAL → MOVING → NORMAL
     └── Operator initiated move
 ```
 
-**Removal (forced):**
+**Forced removal (dead node):**
+
 ```
 DOWN → (removenode) → LEFT
     │                     │
     │                     └── Node removed from cluster
     └── Node is down, operator forces removal
 ```
+
+
+**Combined state diagram:**
 
 ```mermaid
 stateDiagram-v2

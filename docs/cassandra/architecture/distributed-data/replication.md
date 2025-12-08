@@ -1,6 +1,10 @@
 # Replication
 
-Replication copies each partition to multiple nodes for fault tolerance. The replication factor (RF) determines how many copies exist, and the replication strategy determines where those copies are placed.
+Replication is fundamental to Cassandra's architecture. Every write is automatically copied to multiple nodes with no special configuration, no external tools, no application logic required. This built-in redundancy means nodes can fail, disks can die, and entire datacenters can go offline, yet the data remains available and intact.
+
+Unlike traditional databases that treat replication as an add-on feature, Cassandra was designed from the ground up with replication as a core primitive. The system assumes failures will happen and handles them transparently. A node crashes during a write? The replicas have the data. Network partitions a datacenter? The other datacenters continue serving requests. This design enables true 24/7 availability without the operational complexity of failover procedures.
+
+The **replication factor (RF)** determines how many copies of each partition exist, and the **replication strategy** determines where those copies are placed across the cluster topology.
 
 ---
 
@@ -50,32 +54,37 @@ This causes Unavailable exceptions for QUORUM (needs 3)
 
 SimpleStrategy places replicas on consecutive nodes around the ring with no awareness of racks or datacenters:
 
-```
-SIMPLESTRATEGY (RF=3)
+**Algorithm:**
 
-Algorithm:
 1. Hash partition key → token
 2. Find node that owns this token (primary replica)
 3. Walk clockwise, place replicas on next (RF-1) nodes
 
-Example: partition token = -1×10^18
+```graphviz circo simplestrategy.svg
+digraph SimpleStrategy {
+    bgcolor="transparent"
+    graph [fontname="Helvetica", fontsize=11]
+    node [fontname="Helvetica", fontsize=10]
+    edge [fontname="Helvetica", fontsize=9]
 
-          ┌───┐
-         ╱ B  ╲  ← Primary (owns token -1×10^18)
-        │     │
-    A ┌─┘     └─┐ C ← Replica 2 (next clockwise)
-     ╱           ╲
-    │             │
-    └─┐         ┌─┘
-      ╲         ╱
-       └───────┘
-           D
-           ↑
-      Replica 3 (next clockwise after C)
+    // Nodes on the ring
+    node [shape=circle, style=filled, width=0.9, fixedsize=true]
+    A [label="Node A", fillcolor="#e0e0e0"]
+    B [label="Node B\n(primary)", fillcolor="#c8e6c9"]
+    C [label="Node C\n(replica 2)", fillcolor="#c8e6c9"]
+    D [label="Node D\n(replica 3)", fillcolor="#c8e6c9"]
 
-Problem: B, C, D might all be on the same rack.
-If that rack loses power → ALL replicas lost.
+    // Ring structure
+    edge [color="#666666", penwidth=2, arrowsize=0.8]
+    A -> B
+    B -> C [label=" clockwise"]
+    C -> D
+    D -> A
+}
 ```
+
+!!! warning "Rack Unawareness"
+    SimpleStrategy has no rack awareness. Nodes B, C, D might all be on the same rack—if that rack loses power, all replicas are lost.
 
 ```sql
 -- SimpleStrategy configuration
@@ -89,60 +98,85 @@ CREATE KEYSPACE dev_keyspace WITH replication = {
 
 ### NetworkTopologyStrategy (Production Standard)
 
-NetworkTopologyStrategy (NTS) places replicas while respecting datacenter and rack boundaries:
+NetworkTopologyStrategy (NTS) places replicas while respecting datacenter and rack boundaries.
 
-```
-NETWORKTOPOLOGYSTRATEGY (RF=3 per DC)
+**Algorithm (for each datacenter):**
 
-Algorithm (for each datacenter):
 1. Hash partition key → token
 2. Find node in this DC that owns token (primary replica)
-3. Walk clockwise, selecting nodes on DIFFERENT racks
+3. Walk clockwise, selecting nodes on **different racks**
 4. Continue until RF replicas placed in this DC
 5. Repeat for each DC
 
-DC1 (RF=3)                      DC2 (RF=3)
-┌─────────────────────────┐    ┌─────────────────────────┐
-│ Rack A    Rack B    Rack C│  │ Rack X    Rack Y    Rack Z│
-│ ┌───┐    ┌───┐    ┌───┐ │    │ ┌───┐    ┌───┐    ┌───┐ │
-│ │N1 │    │N2 │    │N3 │ │    │ │N4 │    │N5 │    │N6 │ │
-│ │ ✓ │    │ ✓ │    │ ✓ │ │    │ │ ✓ │    │ ✓ │    │ ✓ │ │
-│ └───┘    └───┘    └───┘ │    │ └───┘    └───┘    └───┘ │
-│ Replica  Replica Replica │    │ Replica  Replica Replica │
-│   1        2       3    │    │   4        5       6    │
-└─────────────────────────┘    └─────────────────────────┘
+```dot
+digraph NTS {
+    rankdir=LR
+    node [shape=box, style=filled, fontname="Helvetica"]
+    edge [style=invis]
 
-Each DC has replicas on different racks.
-Total copies: 6 (3 per DC × 2 DCs)
-```
+    subgraph cluster_dc1 {
+        label="DC1 (RF=3)"
+        style=rounded
+        bgcolor="#e8f4f8"
+        fontname="Helvetica-Bold"
 
-```mermaid
-flowchart LR
-    subgraph DC1["DC1 (RF=3)"]
-        direction TB
-        subgraph R1A["Rack A"]
-            N1["N1 ✓"]
-        end
-        subgraph R1B["Rack B"]
-            N2["N2 ✓"]
-        end
-        subgraph R1C["Rack C"]
-            N3["N3 ✓"]
-        end
-    end
+        subgraph cluster_rack_a {
+            label="Rack A"
+            style=dashed
+            bgcolor="#ffffff"
+            N1 [label="N1 ✓\nReplica 1", fillcolor="#90EE90"]
+        }
 
-    subgraph DC2["DC2 (RF=3)"]
-        direction TB
-        subgraph R2X["Rack X"]
-            N4["N4 ✓"]
-        end
-        subgraph R2Y["Rack Y"]
-            N5["N5 ✓"]
-        end
-        subgraph R2Z["Rack Z"]
-            N6["N6 ✓"]
-        end
-    end
+        subgraph cluster_rack_b {
+            label="Rack B"
+            style=dashed
+            bgcolor="#ffffff"
+            N2 [label="N2 ✓\nReplica 2", fillcolor="#90EE90"]
+        }
+
+        subgraph cluster_rack_c {
+            label="Rack C"
+            style=dashed
+            bgcolor="#ffffff"
+            N3 [label="N3 ✓\nReplica 3", fillcolor="#90EE90"]
+        }
+
+        N1 -> N2 -> N3
+    }
+
+    subgraph cluster_dc2 {
+        label="DC2 (RF=3)"
+        style=rounded
+        bgcolor="#fff8e8"
+        fontname="Helvetica-Bold"
+
+        subgraph cluster_rack_x {
+            label="Rack X"
+            style=dashed
+            bgcolor="#ffffff"
+            N4 [label="N4 ✓\nReplica 4", fillcolor="#87CEEB"]
+        }
+
+        subgraph cluster_rack_y {
+            label="Rack Y"
+            style=dashed
+            bgcolor="#ffffff"
+            N5 [label="N5 ✓\nReplica 5", fillcolor="#87CEEB"]
+        }
+
+        subgraph cluster_rack_z {
+            label="Rack Z"
+            style=dashed
+            bgcolor="#ffffff"
+            N6 [label="N6 ✓\nReplica 6", fillcolor="#87CEEB"]
+        }
+
+        N4 -> N5 -> N6
+    }
+
+    // Force left-to-right layout
+    N3 -> N4 [constraint=true]
+}
 ```
 
 ```sql
@@ -162,51 +196,86 @@ CREATE KEYSPACE single_dc WITH replication = {
 
 ### NTS Replica Placement Algorithm
 
-```
-NTS ALGORITHM (for one DC with RF=3)
+For a partition with token T in a DC with RF=3:
 
-Given: Partition with token T, DC has nodes in 3 racks
+| Step | Action | Result |
+|------|--------|--------|
+| 1 | Find first node clockwise from T | Replica 1 (e.g., Rack A) |
+| 2 | Walk clockwise, find node on **different** rack | Replica 2 (Rack B or C) |
+| 3 | Continue clockwise, find node on **third** rack | Replica 3 |
 
-Step 1: Find first node clockwise from T
-        This is Replica 1 (say it is on Rack A)
+**Rack availability impact:**
 
-Step 2: Walk clockwise, find next node on DIFFERENT rack
-        This is Replica 2 (must be Rack B or C)
+| Racks Available | Replica Distribution |
+|-----------------|---------------------|
+| 3+ racks | Full diversity—each replica on different rack |
+| 2 racks | Two replicas share a rack |
+| 1 rack | All replicas on same rack (no diversity) |
 
-Step 3: Continue clockwise, find node on third different rack
-        This is Replica 3
-
-If only 2 racks exist:
-        Replica 1: Rack A
-        Replica 2: Rack B (different from A)
-        Replica 3: Rack A or B (cannot find third unique rack)
-
-If only 1 rack exists:
-        All 3 replicas on same rack (no rack diversity possible)
-```
-
-**Key insight**: With RF=3, at least 3 racks are needed for full rack diversity. With only 2 racks, 2 replicas will share a rack.
+!!! tip "Rack Diversity"
+    With RF=3, at least 3 racks are needed for full rack diversity.
 
 ---
 
 ## Snitches: Topology Awareness
 
-The snitch tells Cassandra which datacenter and rack each node belongs to.
+### Why Snitches Exist
+
+NetworkTopologyStrategy places replicas on different racks to survive hardware failures—but Cassandra has no inherent knowledge of physical infrastructure. IP addresses alone reveal nothing about which nodes share a rack, power supply, or network switch.
+
+The **snitch** solves this problem by mapping physical infrastructure to logical Cassandra topology. Given any node's IP address, the snitch returns that node's datacenter and rack. This mapping enables:
+
+| Function | How Snitch Enables It |
+|----------|----------------------|
+| Replica placement | NTS uses rack information to spread replicas across failure domains |
+| Request routing | Coordinators prefer nodes in the local datacenter for lower latency |
+| Consistency enforcement | LOCAL_QUORUM identifies which nodes are "local" via datacenter membership |
+
+Without accurate snitch configuration, Cassandra cannot distinguish between nodes in the same rack versus different racks, potentially placing all replicas in a single failure domain.
+
+### Configuration Considerations
+
+The snitch must be configured during initial cluster deployment, before starting the node for the first time. Once a node joins the cluster with a particular datacenter and rack assignment, changing this topology is operationally complex and requires careful coordination (see [Snitch Configuration Issues](#snitch-configuration-issues)).
+
+Two categories of snitches exist:
+
+- **Manual configuration** — The administrator explicitly defines each node's datacenter and rack (e.g., GossipingPropertyFileSnitch)
+- **Automatic detection** — The snitch queries cloud provider metadata APIs to determine topology (e.g., Ec2Snitch, GoogleCloudSnitch)
+
+**GossipingPropertyFileSnitch is recommended** for most deployments because it provides full flexibility: topology names can match organizational conventions, nodes can be moved between logical racks without infrastructure changes, and the configuration works identically across on-premises, cloud, and hybrid environments.
+
+### Available Snitches
+
+| Snitch | Use Case | Topology Source |
+|--------|----------|-----------------|
+| **GossipingPropertyFileSnitch** | Production (recommended) | Local properties file |
+| **Ec2Snitch** | AWS single region | EC2 metadata API |
+| **Ec2MultiRegionSnitch** | AWS multi-region | EC2 metadata API + public IPs |
+| **GoogleCloudSnitch** | Google Cloud Platform | GCE metadata API |
+| **AzureSnitch** | Microsoft Azure | Azure metadata API |
+| **SimpleSnitch** | Single-node development | None (all nodes in same DC/rack) |
+| **PropertyFileSnitch** | Legacy | Central topology file (deprecated) |
 
 ### How Snitches Work
 
-```
-For any node (by IP address), snitch returns:
-  - Datacenter name (e.g., "us-east-1")
-  - Rack name (e.g., "us-east-1a")
+Each node runs a snitch implementation that:
 
-This information is used for:
-  1. Replica placement (NTS algorithm)
-  2. Request routing (prefer local DC)
-  3. Consistency level enforcement (LOCAL_QUORUM)
+1. **Determines local topology** — On startup, the snitch identifies the local node's datacenter and rack (from configuration file or cloud metadata API)
+2. **Propagates via gossip** — The local topology is included in gossip messages, so all nodes learn each other's DC/rack membership
+3. **Resolves queries** — When Cassandra needs to know any node's location, it queries the snitch (which returns cached gossip data for remote nodes)
 
-Topology propagates via gossip to all nodes.
 ```
+Snitch query flow:
+
+Application:  getDatacenter(10.0.1.5) → "us-east"
+              getRack(10.0.1.5)       → "rack-a"
+
+Internal lookup:
+  Local node?  → Read from configuration
+  Remote node? → Return cached gossip state
+```
+
+---
 
 ### GossipingPropertyFileSnitch (Recommended)
 
@@ -353,24 +422,6 @@ CREATE KEYSPACE active_active WITH replication = {
 | Total storage | 6× raw data |
 | Failure tolerance | Either DC can serve all traffic |
 
-### Active-Passive
-
-One datacenter for production, one for disaster recovery:
-
-```sql
-CREATE KEYSPACE active_passive WITH replication = {
-    'class': 'NetworkTopologyStrategy',
-    'primary': 3,
-    'backup': 1
-};
-```
-
-| Characteristic | Value |
-|----------------|-------|
-| Consistency | LOCAL_QUORUM in primary, ONE in backup |
-| Total storage | 4× raw data |
-| Limitation | Cannot serve quorum from backup DC |
-
 ### Three-Region Global
 
 Global distribution with local consistency:
@@ -413,6 +464,8 @@ CREATE KEYSPACE with_analytics WITH replication = {
 
 ### Increasing Replication Factor
 
+Increasing RF is operationally simple but has significant consequences that require careful planning.
+
 ```sql
 -- Current: RF=2, Target: RF=3
 
@@ -424,12 +477,24 @@ ALTER KEYSPACE my_keyspace WITH replication = {
 ```
 
 ```bash
-# Step 2: Run repair to stream data to new replicas
+# Step 2: Run repair to stream data to new replicas on all nodes
 nodetool repair -full my_keyspace
 
 # This streams data to the third replica for each partition
 # Can take hours/days depending on data size
 ```
+
+**Critical warning**: The `ALTER KEYSPACE` command changes metadata immediately, but new replicas contain no data. To populate the new replica endpoints, the repair process must be executed to stream data from existing replicas. This process takes a significant amount of time—hours to days depending on data volume.
+
+During this repair window, **queries will fail or return incomplete data**:
+
+| Issue | Consequence |
+|-------|-------------|
+| New replicas are empty | Reads from new replicas return no data |
+| QUORUM uses new RF | QUORUM now requires ⌊3/2⌋+1 = 2 nodes, but only 2 have data |
+| Read repair is insufficient | Only helps for rows that are read; most data remains missing |
+
+This operation requires careful planning and should be scheduled during low-traffic periods with appropriate consistency level adjustments.
 
 ### Decreasing Replication Factor
 
@@ -531,19 +596,6 @@ nodetool netstats
 # - Receiving streams (from other nodes)
 # - Sending streams (to other nodes)
 # - Progress percentage
-```
-
-### JMX Metrics
-
-```
-# Hint accumulation (writes to unavailable replicas)
-org.apache.cassandra.metrics:type=Storage,name=TotalHints
-org.apache.cassandra.metrics:type=HintsService,name=HintsSucceeded
-org.apache.cassandra.metrics:type=HintsService,name=HintsFailed
-
-# Stream throughput
-org.apache.cassandra.metrics:type=Streaming,name=TotalIncomingBytes
-org.apache.cassandra.metrics:type=Streaming,name=TotalOutgoingBytes
 ```
 
 ---

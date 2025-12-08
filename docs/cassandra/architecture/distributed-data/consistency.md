@@ -26,34 +26,6 @@ Different operations can be optimized differently within the same application.
 
 Every client request goes to a coordinator node, which manages the consistency guarantee:
 
-```
-Client
-  │
-  │ INSERT INTO users (id, name) VALUES (123, 'Alice')
-  │ WITH CONSISTENCY = QUORUM
-  │
-  ▼
-┌──────────────────────────────────────────────────────┐
-│ COORDINATOR NODE                                      │
-│                                                       │
-│ 1. Parse request                                      │
-│ 2. Calculate partition token: token(123)              │
-│ 3. Look up replicas for that token                    │
-│ 4. Send write to ALL replicas (regardless of CL)      │
-│ 5. Wait for QUORUM (2 of 3) acknowledgments           │
-│ 6. Return success to client                           │
-└──────────────────────────────────────────────────────┘
-         │           │           │
-         ▼           ▼           ▼
-      ┌──────┐   ┌──────┐   ┌──────┐
-      │Replica│   │Replica│   │Replica│
-      │  1    │   │  2    │   │  3    │
-      │ [ACK] │   │ [ACK] │   │ [...] │ ← May still be writing
-      └──────┘   └──────┘   └──────┘
-
-Coordinator sends to ALL replicas, but only WAITS for
-enough acknowledgments to satisfy the consistency level.
-```
 
 ```mermaid
 flowchart TB
@@ -91,31 +63,47 @@ The data is not necessarily flushed to SSTable yet, but it is durable because of
 
 ### ANY: Maximum Availability
 
+```mermaid
+flowchart LR
+    subgraph Replicas["All Replicas Down"]
+        R1[N1 ✗]
+        R2[N2 ✗]
+        R3[N3 ✗]
+    end
+
+    C[Coordinator] -->|write| R1
+    C -->|write| R2
+    C -->|write| R3
+    C -->|store hint| H[(Hint Storage)]
+    H -->|"later delivery"| Replicas
+
+    style R1 fill:#ffcccc
+    style R2 fill:#ffcccc
+    style R3 fill:#ffcccc
+    style H fill:#ffffcc
 ```
-ANY: At least one node acknowledges, INCLUDING hints
 
-Scenario: All 3 replicas are down
-
-   Coordinator stores a "hint" locally and returns SUCCESS.
-   When replicas come back online, hint is delivered.
-
-DANGER: If coordinator crashes before delivering hint = DATA LOST
-```
+!!! danger "Data Loss Risk"
+    If the coordinator crashes before delivering the hint, the data is **permanently lost**. Use ANY only for truly non-critical data.
 
 **When to use**: Almost never. Only for truly non-critical data where losing some writes is acceptable.
 
 ### ONE: Single Replica
 
-```
-ONE: One replica must acknowledge the write
+```mermaid
+flowchart LR
+    C[Coordinator] -->|write| N1[N1 ✓]
+    C -.->|write| N2[N2 ...]
+    C -.->|write| N3[N3 ...]
+    N1 -->|ACK| C
+    C -->|SUCCESS| Client
 
-┌───┐   ┌───┐   ┌───┐
-│ N1│   │ N2│   │ N3│      RF = 3
-│ ✓ │   │...│   │...│      ONE requires 1 ACK
-└───┘   └───┘   └───┘
-  │
-  └── SUCCESS returned to client
+    style N1 fill:#90EE90
+    style N2 fill:#f0f0f0
+    style N3 fill:#f0f0f0
 ```
+
+RF = 3, ONE requires 1 ACK. Other replicas receive the write asynchronously.
 
 **When to use**:
 
@@ -125,36 +113,66 @@ ONE: One replica must acknowledge the write
 
 ### QUORUM: Majority of All Replicas
 
-```
-QUORUM = floor(RF / 2) + 1
-
-RF = 3:  QUORUM = floor(3/2) + 1 = 2
-RF = 5:  QUORUM = floor(5/2) + 1 = 3
-RF = 7:  QUORUM = floor(7/2) + 1 = 4
-```
+| RF | QUORUM | Formula |
+|----|--------|---------|
+| 3 | 2 | floor(3/2) + 1 |
+| 5 | 3 | floor(5/2) + 1 |
+| 7 | 4 | floor(7/2) + 1 |
 
 **Why majority matters**:
 
-```
-With RF=3, QUORUM=2:
+```mermaid
+flowchart LR
+    subgraph Write["Write QUORUM"]
+        WA[A ✓]
+        WB[B ✓]
+        WC[C]
+    end
 
-Write QUORUM succeeds to nodes {A, B}
-Read QUORUM contacts nodes {B, C}
+    subgraph Read["Read QUORUM"]
+        RA[A]
+        RB[B ✓]
+        RC[C ✓]
+    end
 
-The OVERLAP is B, which has the write.
-Since R + W > N (2 + 2 > 3), at least one node in the read
-set MUST have the most recent write.
+    WB -.->|OVERLAP| RB
+
+    style WA fill:#90EE90
+    style WB fill:#90EE90,stroke:#ff0000,stroke-width:3px
+    style RB fill:#87CEEB,stroke:#ff0000,stroke-width:3px
+    style RC fill:#87CEEB
 ```
+
+With RF=3, QUORUM=2: Write to {A, B}, Read from {B, C}. The overlap (B) guarantees the read sees the write.
 
 **Multi-datacenter QUORUM**:
 
-```
-DC1: RF=3           DC2: RF=3
-Total RF = 6, QUORUM = 4
+```mermaid
+flowchart TB
+    subgraph DC1["DC1 (RF=3)"]
+        A[A ✓]
+        B[B ✓]
+        C[C]
+    end
 
-Write QUORUM might contact: A, B (DC1) + D, E (DC2)
-This means waiting for cross-DC network round trip!
+    subgraph DC2["DC2 (RF=3)"]
+        D[D ✓]
+        E[E ✓]
+        F[F]
+    end
+
+    Coord[Coordinator] -->|write| A
+    Coord -->|write| B
+    Coord -->|"cross-DC"| D
+    Coord -->|"cross-DC"| E
+
+    style A fill:#90EE90
+    style B fill:#90EE90
+    style D fill:#90EE90
+    style E fill:#90EE90
 ```
+
+Total RF = 6, QUORUM = 4. Must wait for cross-DC network round trip (50-200ms).
 
 **When to use**:
 
@@ -163,50 +181,76 @@ This means waiting for cross-DC network round trip!
 
 ### LOCAL_QUORUM: Majority in Local Datacenter
 
+```mermaid
+flowchart TB
+    subgraph DC1["DC1 - Coordinator Here"]
+        A[A ✓]
+        B[B ✓]
+        C[C]
+    end
+
+    subgraph DC2["DC2 - Remote"]
+        D[D]
+        E[E]
+        F[F]
+    end
+
+    Coord[Coordinator] -->|write + wait| A
+    Coord -->|write + wait| B
+    Coord -.->|"async (no wait)"| D
+    Coord -.->|"async (no wait)"| E
+
+    A -->|ACK| Coord
+    B -->|ACK| Coord
+    Coord -->|SUCCESS| Client[Client]
+
+    style A fill:#90EE90
+    style B fill:#90EE90
+    style DC1 fill:#e6ffe6
+    style DC2 fill:#f0f0f0
 ```
-LOCAL_QUORUM: Quorum within the coordinator's datacenter only
 
-DC1 (coordinator here)     DC2
-┌───┐ ┌───┐ ┌───┐         ┌───┐ ┌───┐ ┌───┐
-│ A │ │ B │ │ C │         │ D │ │ E │ │ F │
-│ ✓ │ │ ✓ │ │   │         │   │ │   │ │   │
-└───┘ └───┘ └───┘         └───┘ └───┘ └───┘
+2 ACKs from DC1 = SUCCESS. Data is still sent to DC2, but coordinator does not wait.
 
-2 ACKs from DC1 = SUCCESS
-Data is STILL sent to DC2, but coordinator does not wait.
-```
+!!! tip "Latency Advantage"
+    | Consistency | Path | Typical Latency |
+    |-------------|------|-----------------|
+    | QUORUM (multi-DC) | Client → DC1 → DC2 → DC1 → Client | 50-200ms |
+    | LOCAL_QUORUM | Client → DC1 → Client | 1-5ms |
 
-**The latency advantage**:
-
-```
-QUORUM in multi-DC:
-Client → DC1 → DC2 → DC1 → Client
-         └───────────┘
-         Cross-DC RTT (~50-200ms)
-
-LOCAL_QUORUM:
-Client → DC1 → Client
-         └─┘
-         Local RTT (~1-5ms)
-
-LOCAL_QUORUM is 10-100x faster for multi-DC.
-```
+    LOCAL_QUORUM is **10-100x faster** for multi-DC deployments.
 
 **When to use**: Multi-DC deployments (almost always the right choice).
 
 ### EACH_QUORUM: Quorum in Every Datacenter
 
-```
-EACH_QUORUM: Quorum must be achieved in EACH datacenter
+```mermaid
+flowchart TB
+    subgraph DC1["DC1"]
+        A[A ✓]
+        B[B ✓]
+        C[C]
+    end
 
-DC1                        DC2
-┌───┐ ┌───┐ ┌───┐         ┌───┐ ┌───┐ ┌───┐
-│ A │ │ B │ │ C │         │ D │ │ E │ │ F │
-│ ✓ │ │ ✓ │ │   │         │ ✓ │ │ ✓ │ │   │
-└───┘ └───┘ └───┘         └───┘ └───┘ └───┘
+    subgraph DC2["DC2"]
+        D[D ✓]
+        E[E ✓]
+        F[F]
+    end
 
-Must wait for slowest DC.
+    Coord[Coordinator] -->|"must get quorum"| DC1
+    Coord -->|"must get quorum"| DC2
+    DC1 -->|"2/3 ACK"| Coord
+    DC2 -->|"2/3 ACK"| Coord
+    Coord -->|SUCCESS| Client[Client]
+
+    style A fill:#90EE90
+    style B fill:#90EE90
+    style D fill:#90EE90
+    style E fill:#90EE90
 ```
+
+Must wait for the **slowest DC** to achieve quorum.
 
 **When to use**:
 
@@ -216,16 +260,22 @@ Must wait for slowest DC.
 
 ### ALL: Every Replica
 
-```
-ALL: Every single replica must acknowledge
+```mermaid
+flowchart LR
+    C[Coordinator] -->|write| N1[N1 ✓]
+    C -->|write| N2[N2 ✓]
+    C -->|write| N3[N3 ✓]
+    N1 -->|ACK| C
+    N2 -->|ACK| C
+    N3 -->|ACK| C
 
-┌───┐   ┌───┐   ┌───┐
-│ N1│   │ N2│   │ N3│
-│ ✓ │   │ ✓ │   │ ✓ │  ← ALL must ACK
-└───┘   └───┘   └───┘
-
-If ANY replica is down, write FAILS.
+    style N1 fill:#90EE90
+    style N2 fill:#90EE90
+    style N3 fill:#90EE90
 ```
+
+!!! warning "Availability Risk"
+    If **any** replica is down, the write **fails**. Single node failure causes complete write unavailability.
 
 **When to use**: Almost never for writes. Single node failure causes all writes to fail.
 
@@ -235,43 +285,78 @@ If ANY replica is down, write FAILS.
 
 ### ONE: Fastest Reads
 
-```
-ONE: Read from one replica, return immediately
+```mermaid
+sequenceDiagram
+    participant Client
+    participant Coord as Coordinator
+    participant N1 as N1
+    participant N2 as N2
 
-Client → Coordinator → N1 → Data returned
-
-If N1 has stale data, stale data is returned.
-Background read repair may fix inconsistency later.
+    Client->>Coord: Read request
+    Coord->>N1: Read
+    N1->>Coord: Data (possibly stale)
+    Coord->>Client: Return data
+    Note over Coord,N2: N2, N3 not contacted
 ```
+
+If N1 has stale data, stale data is returned. Background read repair may fix inconsistency later.
 
 ### QUORUM: Strong Consistency Reads
 
-```
-QUORUM read with RF=3:
+```mermaid
+sequenceDiagram
+    participant Client
+    participant Coord as Coordinator
+    participant N1 as N1
+    participant N2 as N2
 
-Coordinator contacts 2 replicas:
-  N1: returns data with timestamp 1000
-  N2: returns data with timestamp 2000  ← Newer
-
-Coordinator returns the NEWEST data (timestamp 2000).
-If N1 and N2 disagree, coordinator triggers read repair.
+    Client->>Coord: Read request (QUORUM)
+    par Contact replicas
+        Coord->>N1: Read
+        Coord->>N2: Read
+    end
+    N1->>Coord: Data (ts=1000)
+    N2->>Coord: Data (ts=2000)
+    Note over Coord: Compare timestamps<br/>Return newest (ts=2000)
+    Coord->>Client: Data (ts=2000)
+    Note over Coord,N1: Trigger read repair for N1
 ```
+
+Coordinator returns the **newest** data based on timestamp. If replicas disagree, coordinator triggers read repair.
 
 ### LOCAL_QUORUM: Fast Strong Reads
 
-Same logic as QUORUM, but only contacts local DC replicas.
+Same logic as QUORUM, but only contacts local DC replicas. Provides strong consistency within the datacenter with lower latency.
 
 ### EACH_QUORUM: Not Supported for Reads
 
-EACH_QUORUM is write-only. For reads, use QUORUM (for cross-DC consistency) or LOCAL_QUORUM (for local consistency).
+!!! note
+    EACH_QUORUM is **write-only**. For reads, use QUORUM (for cross-DC consistency) or LOCAL_QUORUM (for local consistency).
 
 ### ALL: Read From Every Replica
 
-```
-ALL: Contact every replica, return newest
+```mermaid
+sequenceDiagram
+    participant Client
+    participant Coord as Coordinator
+    participant N1 as N1
+    participant N2 as N2
+    participant N3 as N3
 
-If ANY replica is down or slow, read TIMES OUT.
+    Client->>Coord: Read request (ALL)
+    par Contact all replicas
+        Coord->>N1: Read
+        Coord->>N2: Read
+        Coord->>N3: Read
+    end
+    N1->>Coord: Data
+    N2->>Coord: Data
+    N3--xCoord: Timeout/Down
+    Coord->>Client: TIMEOUT ERROR
 ```
+
+!!! warning
+    If **any** replica is down or slow, the read **times out**.
 
 **When ALL reads make sense**:
 
@@ -326,23 +411,12 @@ Overlap: B ← Has the write
 
 ### Multi-DC Complexity
 
-```
-DC1: RF=3, DC2: RF=3, Total RF=6
-
-QUORUM = 4 (global)
-LOCAL_QUORUM = 2 (per DC)
-
-With QUORUM/QUORUM:
-- Write to 4 replicas (could be 2 per DC, or 3+1)
-- Read from 4 replicas
-- Guarantees global consistency
-
-With LOCAL_QUORUM/LOCAL_QUORUM:
-- Write to 2 replicas IN LOCAL DC
-- Read from 2 replicas IN LOCAL DC
-- Strong consistency WITHIN each DC
-- Cross-DC consistency is eventual
-```
+| Configuration | QUORUM | LOCAL_QUORUM |
+|---------------|--------|--------------|
+| DC1: RF=3, DC2: RF=3 | 4 (global) | 2 (per DC) |
+| **Write behavior** | 4 replicas (any DC) | 2 replicas (local DC only) |
+| **Read behavior** | 4 replicas (any DC) | 2 replicas (local DC only) |
+| **Consistency** | Global | Per-DC (cross-DC eventual) |
 
 For most applications, LOCAL_QUORUM is sufficient because cross-DC replication happens in milliseconds.
 
@@ -352,13 +426,17 @@ For most applications, LOCAL_QUORUM is sufficient because cross-DC replication h
 
 ### Single Node Failure (RF=3)
 
-```
-RF=3, One node down:
+```mermaid
+flowchart LR
+    subgraph Cluster["RF=3, One Node Down"]
+        A[A ✓]
+        B[B ✓]
+        C[C ✗]
+    end
 
-┌───┐   ┌───┐   ┌───┐
-│ A │   │ B │   │ C │
-│ ✓ │   │ ✓ │   │ ✗ │ ← Down
-└───┘   └───┘   └───┘
+    style A fill:#90EE90
+    style B fill:#90EE90
+    style C fill:#ffcccc
 ```
 
 | CL | Works? | Reason |
@@ -369,13 +447,17 @@ RF=3, One node down:
 
 ### Two Node Failure (RF=3)
 
-```
-RF=3, Two nodes down:
+```mermaid
+flowchart LR
+    subgraph Cluster["RF=3, Two Nodes Down"]
+        A[A ✓]
+        B[B ✗]
+        C[C ✗]
+    end
 
-┌───┐   ┌───┐   ┌───┐
-│ A │   │ B │   │ C │
-│ ✓ │   │ ✗ │   │ ✗ │ ← Both down
-└───┘   └───┘   └───┘
+    style A fill:#90EE90
+    style B fill:#ffcccc
+    style C fill:#ffcccc
 ```
 
 | CL | Works? | Reason |
@@ -386,12 +468,28 @@ RF=3, Two nodes down:
 
 ### Entire Datacenter Failure
 
-```
-DC1 (UP)            DC2 (DOWN)
-┌───┐ ┌───┐ ┌───┐   ┌───┐ ┌───┐ ┌───┐
-│ A │ │ B │ │ C │   │ D │ │ E │ │ F │
-│ ✓ │ │ ✓ │ │ ✓ │   │ ✗ │ │ ✗ │ │ ✗ │
-└───┘ └───┘ └───┘   └───┘ └───┘ └───┘
+```mermaid
+flowchart LR
+    subgraph DC1["DC1 (UP)"]
+        A[A ✓]
+        B[B ✓]
+        C[C ✓]
+    end
+
+    subgraph DC2["DC2 (DOWN)"]
+        D[D ✗]
+        E[E ✗]
+        F[F ✗]
+    end
+
+    style A fill:#90EE90
+    style B fill:#90EE90
+    style C fill:#90EE90
+    style D fill:#ffcccc
+    style E fill:#ffcccc
+    style F fill:#ffcccc
+    style DC1 fill:#e6ffe6
+    style DC2 fill:#ffe6e6
 ```
 
 | CL | Works? | Reason |
@@ -401,7 +499,8 @@ DC1 (UP)            DC2 (DOWN)
 | QUORUM (4/6) | ✗ | Only 3 of 6 available |
 | EACH_QUORUM | ✗ | DC2 has no quorum |
 
-**Key insight**: LOCAL_QUORUM survives entire DC failure while maintaining strong local consistency.
+!!! tip "Key Insight"
+    LOCAL_QUORUM survives **entire DC failure** while maintaining strong local consistency. This is why it is recommended for multi-DC deployments.
 
 ---
 
@@ -436,28 +535,62 @@ UPDATE account SET balance = 50 WHERE id = 1 IF balance = 100;
 
 ### How LWT Works
 
+LWT uses four Paxos phases, requiring 4 round trips compared to 1 for regular writes:
+
+```mermaid
+sequenceDiagram
+    participant Client
+    participant Coord as Coordinator
+    participant R1 as Replica 1
+    participant R2 as Replica 2
+    participant R3 as Replica 3
+
+    Client->>Coord: UPDATE ... IF balance = 100
+
+    Note over Coord,R3: Phase 1: PREPARE
+    par Send prepare
+        Coord->>R1: PREPARE(ballot=1)
+        Coord->>R2: PREPARE(ballot=1)
+        Coord->>R3: PREPARE(ballot=1)
+    end
+    R1->>Coord: PROMISE
+    R2->>Coord: PROMISE
+    R3->>Coord: PROMISE
+
+    Note over Coord,R3: Phase 2: READ (check IF condition)
+    par Read current value
+        Coord->>R1: READ
+        Coord->>R2: READ
+    end
+    R1->>Coord: balance=100
+    R2->>Coord: balance=100
+    Note over Coord: IF condition passes
+
+    Note over Coord,R3: Phase 3: PROPOSE
+    par Send proposal
+        Coord->>R1: PROPOSE(ballot=1, balance=50)
+        Coord->>R2: PROPOSE(ballot=1, balance=50)
+        Coord->>R3: PROPOSE(ballot=1, balance=50)
+    end
+    R1->>Coord: ACCEPT
+    R2->>Coord: ACCEPT
+    R3->>Coord: ACCEPT
+
+    Note over Coord,R3: Phase 4: COMMIT
+    par Commit value
+        Coord->>R1: COMMIT
+        Coord->>R2: COMMIT
+        Coord->>R3: COMMIT
+    end
+
+    Coord->>Client: [applied]=true
 ```
-LWT PAXOS PHASES
 
-Phase 1: PREPARE
-  Coordinator sends PREPARE(ballot) to replicas
-  Replicas promise not to accept lower ballots
-
-Phase 2: READ (for IF clause)
-  Coordinator reads current value to check IF condition
-  IF condition fails: Return [applied]=false, abort
-
-Phase 3: PROPOSE
-  Coordinator sends PROPOSE(ballot, value) to replicas
-  Replicas accept if ballot matches promise
-
-Phase 4: COMMIT
-  Once quorum accepts, coordinator sends COMMIT
-  Replicas durably store the value
-
-Total: 4 round trips (vs 1 for regular writes)
-Latency: ~4x regular writes
-```
+| Aspect | Regular Write | LWT Write |
+|--------|---------------|-----------|
+| Round trips | 1 | 4 |
+| Latency | ~1-5ms | ~4-20ms |
+| Throughput | High | Low |
 
 ### Serial Consistency Levels
 
@@ -498,27 +631,71 @@ INSERT INTO events (id, data) VALUES (uuid(), ?) IF NOT EXISTS;
 
 ## Speculative Execution
 
-Speculative execution sends duplicate requests to reduce tail latency when one replica is slow:
+Speculative execution sends duplicate requests to reduce tail latency when one replica is slow.
 
+### Without Speculative Execution
+
+When one replica is slow (e.g., due to GC pause), the client must wait for it:
+
+```mermaid
+sequenceDiagram
+    participant Client
+    participant Coord as Coordinator
+    participant N1 as N1 (fast)
+    participant N2 as N2 (slow)
+
+    Note over Client: QUORUM read (need 2 of 3)
+    Client->>Coord: Read request
+    Note over Coord: T+0ms
+    par Send to replicas
+        Coord->>N1: Read
+        Coord->>N2: Read
+    end
+    Note over Coord: T+5ms
+    N1->>Coord: Response
+    Note over Coord: Have 1, need 2...waiting
+    Note over N2: GC pause
+    Note over Coord: T+500ms
+    N2->>Coord: Response (delayed)
+    Coord->>Client: Return result
+    Note over Client: Total latency: 500ms
 ```
-WITHOUT SPECULATIVE EXECUTION
 
-QUORUM read (need 2 of 3):
+### With Speculative Execution
 
-T+0ms:   Send to N1, N2
-T+5ms:   N1 responds (fast)
-T+500ms: N2 responds (slow, maybe GC pause)
-T+500ms: Return to client
+When a replica exceeds the expected latency threshold, the coordinator sends a speculative request to another replica:
 
-WITH SPECULATIVE EXECUTION (99percentile trigger)
+```mermaid
+sequenceDiagram
+    participant Client
+    participant Coord as Coordinator
+    participant N1 as N1 (fast)
+    participant N2 as N2 (slow)
+    participant N3 as N3 (fast)
 
-T+0ms:   Send to N1, N2
-T+5ms:   N1 responds
-T+10ms:  N2 has not responded (>99th percentile)
-T+10ms:  Speculatively send to N3
-T+15ms:  N3 responds
-T+15ms:  Return to client (2 responses: N1, N3)
+    Note over Client: QUORUM read (need 2 of 3)
+    Client->>Coord: Read request
+    Note over Coord: T+0ms
+    par Send to replicas
+        Coord->>N1: Read
+        Coord->>N2: Read
+    end
+    Note over Coord: T+5ms
+    N1->>Coord: Response
+    Note over Coord: T+10ms: N2 exceeds 99th percentile
+    Coord->>N3: Speculative read
+    Note over Coord: T+15ms
+    N3->>Coord: Response
+    Note over Coord: Have 2 responses (N1, N3)
+    Coord->>Client: Return result
+    Note over Client: Total latency: 15ms
+    Note over N2: Still processing...ignored
 ```
+
+| Scenario | Latency |
+|----------|---------|
+| Without speculative execution | 500ms (waiting for slow N2) |
+| With speculative execution | 15ms (N3 responds instead) |
 
 ### Configuration
 

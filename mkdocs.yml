@@ -98,6 +98,8 @@ extra_javascript:
   - javascripts/extra.js
   - javascripts/mathjax.js
   - https://unpkg.com/mathjax@3/es5/tex-mml-chtml.js
+  - https://unpkg.com/mermaid@10/dist/mermaid.min.js
+  - javascripts/mermaid-init.js
 
 nav:
   - Home: index.md
@@ -264,13 +266,16 @@ nav:
         - Drivers: cassandra/getting-started/drivers/index.md
       - Architecture:
         - Overview: cassandra/architecture/index.md
+        - Memory Management:
+          - JVM: cassandra/architecture/memory-management/jvm.md
+          - Cassandra Memory: cassandra/architecture/memory-management/memory.md
+          - Linux: cassandra/architecture/memory-management/linux.md
         - Storage Engine:
           - Overview: cassandra/architecture/storage-engine/index.md
           - Write Path: cassandra/architecture/storage-engine/write-path.md
           - Read Path: cassandra/architecture/storage-engine/read-path.md
           - SSTable Reference: cassandra/architecture/storage-engine/sstables.md
           - Tombstones: cassandra/architecture/storage-engine/tombstones.md
-          - Memory Management: cassandra/architecture/storage-engine/memory.md
           - Compaction:
             - Overview: cassandra/architecture/storage-engine/compaction/index.md
             - Size-Tiered (STCS): cassandra/architecture/storage-engine/compaction/stcs.md
@@ -286,17 +291,30 @@ nav:
           - Replica Synchronization: cassandra/architecture/distributed-data/replica-synchronization.md
           - Counters: cassandra/architecture/distributed-data/counters.md
         - Gossip Protocol: cassandra/architecture/gossip/index.md
-      - CQL Reference:
-        - Overview: cassandra/cql/index.md
-        - Data Types: cassandra/cql/data-types/index.md
-        - DDL Commands: cassandra/cql/ddl/index.md
-        - DML Commands: cassandra/cql/dml/index.md
-        - Indexing: cassandra/cql/indexing/index.md
-        - Functions: cassandra/cql/functions/index.md
-      - Data Modeling:
-        - Overview: cassandra/data-modeling/index.md
-        - Concepts: cassandra/data-modeling/concepts/index.md
-        - Anti-Patterns: cassandra/data-modeling/anti-patterns/index.md
+      - Application Development:
+        - Overview: cassandra/application-development/index.md
+        - CQL Reference:
+          - Overview: cassandra/cql/index.md
+          - Data Types: cassandra/cql/data-types/index.md
+          - DDL Commands: cassandra/cql/ddl/index.md
+          - DML Commands: cassandra/cql/dml/index.md
+          - Indexing: cassandra/cql/indexing/index.md
+          - Functions: cassandra/cql/functions/index.md
+        - Data Modeling:
+          - Overview: cassandra/data-modeling/index.md
+          - Concepts: cassandra/data-modeling/concepts/index.md
+          - Anti-Patterns: cassandra/data-modeling/anti-patterns/index.md
+        - Drivers:
+          - Overview: cassandra/application-development/drivers/index.md
+          - Connection Management: cassandra/application-development/drivers/connection-management.md
+          - Policies:
+            - Overview: cassandra/application-development/drivers/policies/index.md
+            - Load Balancing: cassandra/application-development/drivers/policies/load-balancing.md
+            - Retry: cassandra/application-development/drivers/policies/retry.md
+            - Reconnection: cassandra/application-development/drivers/policies/reconnection.md
+            - Speculative Execution: cassandra/application-development/drivers/policies/speculative-execution.md
+          - Prepared Statements: cassandra/application-development/drivers/prepared-statements.md
+          - Best Practices: cassandra/application-development/drivers/best-practices.md
       - Operations:
         - Overview: cassandra/operations/index.md
         - Cluster Management: cassandra/operations/cluster-management/index.md

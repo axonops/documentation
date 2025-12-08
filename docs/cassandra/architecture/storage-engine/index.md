@@ -41,43 +41,81 @@ LSM-tree costs:
 
 ## Storage Architecture
 
-```
-                            ┌─────────────────────────┐
-                            │     Client Request      │
-                            └───────────┬─────────────┘
-                                        │
-                                        v
-                            ┌───────────────────────┐
-                            │   Coordinator Node    │
-                            │   (routes request)    │
-                            └───────────┬───────────┘
-                                        │
-                                        v
-            ┌───────────────────────────────────────────────────────┐
-            │                   REPLICA NODE                         │
-            ├───────────────────────────────────────────────────────┤
-            │                                                        │
-            │   1. COMMIT LOG                                       │
-            │   ┌─────────────────────────────────────────────────┐ │
-            │   │ Append-only write-ahead log for durability      │ │
-            │   └─────────────────────────┬───────────────────────┘ │
-            │                             │                          │
-            │   2. MEMTABLE               v                          │
-            │   ┌─────────────────────────────────────────────────┐ │
-            │   │ In-memory sorted structure                      │ │
-            │   └─────────────────────────┬───────────────────────┘ │
-            │                             │ Flush                    │
-            │   3. SSTABLE                v                          │
-            │   ┌─────────────────────────────────────────────────┐ │
-            │   │ Immutable sorted files on disk                  │ │
-            │   └─────────────────────────┬───────────────────────┘ │
-            │                             │                          │
-            │   4. COMPACTION             v                          │
-            │   ┌─────────────────────────────────────────────────┐ │
-            │   │ Background merge of SSTables                    │ │
-            │   └─────────────────────────────────────────────────┘ │
-            │                                                        │
-            └───────────────────────────────────────────────────────┘
+```graphviz dot storage-architecture.svg
+digraph StorageArchitecture {
+    bgcolor="transparent"
+    graph [fontname="Helvetica", fontsize=11, rankdir=TB, nodesep=0.5, ranksep=0.6]
+    node [fontname="Helvetica", fontsize=10, fontcolor="black"]
+    edge [fontname="Helvetica", fontsize=9, color="black", fontcolor="black", penwidth=1.5]
+
+    // Client and Coordinator
+    client [label="Client Request", shape=box, style="rounded,filled", fillcolor="#e8e8e8"]
+    coord [label="Coordinator Node\n(routes request)", shape=box, style="rounded,filled", fillcolor="#ffffcc"]
+
+    client -> coord [penwidth=2, color="#0066cc", fontcolor="#0066cc"]
+
+    // Replica Node container
+    subgraph cluster_replica {
+        label="REPLICA NODE"
+        labeljust="l"
+        style="rounded,filled"
+        bgcolor="#f5f5f5"
+        fontcolor="black"
+        fontsize=12
+
+        // Commit Log
+        subgraph cluster_commitlog {
+            label="1. COMMIT LOG"
+            labeljust="l"
+            style="rounded,filled"
+            bgcolor="#fff0f0"
+            fontcolor="black"
+
+            commitlog [label="Append-only write-ahead log\nfor durability", shape=box, style="rounded,filled", fillcolor="#ffcccc"]
+        }
+
+        // Memtable
+        subgraph cluster_memtable {
+            label="2. MEMTABLE"
+            labeljust="l"
+            style="rounded,filled"
+            bgcolor="#f0fff0"
+            fontcolor="black"
+
+            memtable [label="In-memory sorted structure\n(ConcurrentSkipListMap)", shape=box, style="rounded,filled", fillcolor="#c8e8c8"]
+        }
+
+        // SSTable
+        subgraph cluster_sstable {
+            label="3. SSTABLES"
+            labeljust="l"
+            style="rounded,filled"
+            bgcolor="#f0f0ff"
+            fontcolor="black"
+
+            sstable [label="Immutable sorted files on disk", shape=box, style="rounded,filled", fillcolor="#c8c8e8"]
+        }
+
+        // Compaction
+        subgraph cluster_compaction {
+            label="4. COMPACTION"
+            labeljust="l"
+            style="rounded,filled"
+            bgcolor="#fff8f0"
+            fontcolor="black"
+
+            compaction [label="Background merge of SSTables\n(reduces file count)", shape=box, style="rounded,filled", fillcolor="#e8d8c8"]
+        }
+
+        // Flow within replica
+        commitlog -> memtable [label="write", color="#006600", fontcolor="#006600"]
+        memtable -> sstable [label="flush", color="#006600", fontcolor="#006600"]
+        sstable -> compaction [label="merge", color="#0066cc", fontcolor="#0066cc", style=dashed]
+        compaction -> sstable [label="new SSTable", color="#0066cc", fontcolor="#0066cc", style=dashed]
+    }
+
+    coord -> commitlog [label="write request", penwidth=2, color="#0066cc", fontcolor="#0066cc"]
+}
 ```
 
 ---
@@ -134,7 +172,7 @@ See [Compaction](compaction/index.md) for strategy details.
 | [Read Path](read-path.md) | Bloom filters, indexes, caching |
 | [SSTable Reference](sstables.md) | File components and format |
 | [Tombstones](tombstones.md) | Deletion markers and gc_grace |
-| [Memory Management](memory.md) | Heap, off-heap, and page cache |
+| [Memory Management](../memory-management/memory.md) | Heap, off-heap, and page cache |
 | [Compaction](compaction/index.md) | SSTable merge strategies and operations |
 
 ---
