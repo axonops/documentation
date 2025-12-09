@@ -19,7 +19,7 @@
 
 <div style="position: relative; padding-top: 56.25%;">
   <iframe
-    src="https://customer-e7nrn6nt0ozdk9tl.cloudflarestream.com/76769890028e91aa27d91f6562448394/iframe?muted=true&preload=true&loop=true&autoplay=true&poster=https%3A%2F%2Fcustomer-e7nrn6nt0ozdk9tl.cloudflarestream.com%2F76769890028e91aa27d91f6562448394%2Fthumbnails%2Fthumbnail.jpg%3Ftime%3D%26height%3D600"
+    src="https://customer-e7nrn6nt0ozdk9tl.cloudflarestream.com/e44f3932551b2b90944be9b8ea7c0093/iframe?muted=true&preload=true&loop=true&autoplay=true&poster=https%3A%2F%2Fcustomer-e7nrn6nt0ozdk9tl.cloudflarestream.com%2Fe44f3932551b2b90944be9b8ea7c0093%2Fthumbnails%2Fthumbnail.jpg%3Ftime%3D%26height%3D600"
     loading="lazy"
     style="border: none; position: absolute; top: 0; left: 0; height: 100%; width: 100%;"
     allow="accelerometer; gyroscope; autoplay; encrypted-media; picture-in-picture;"
@@ -28,6 +28,9 @@
 </div>
 
 AxonOps is a comprehensive platform for managing and monitoring Apache Cassandra and Apache Kafka. From observability and alerting to automated operations like repairs, backups, and rolling restarts, AxonOps provides everything you need to run production clusters confidently without requiring deep distributed systems expertise on your team.
+
+!!! note "Demo Walkthrough Guide"
+    If you came here from our Demo Environment, you can visit our [Walkthrough Guide](../editions/walkthrough_guide.md) for an in-depth, step-by-step guide.
 
 
 ## Unified Observability

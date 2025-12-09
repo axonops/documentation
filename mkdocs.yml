@@ -102,8 +102,11 @@ nav:
   # - Get Started:
   - AxonOps Cloud:
     - Editions: 
-      - Starter Edition: 'editions/starter_edition.md'
+      - Free Edition: 'editions/free_edition.md'
       - Enterprise Edition: 'editions/enterprise_edition.md'
+
+    - Demo:
+      - Walkthrough Guide: 'editions/walkthrough_guide.md'
 
     - Setup:
       - AxonOps Cloud account: 'get_started/cloud.md'
