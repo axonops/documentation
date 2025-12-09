@@ -102,7 +102,6 @@ nav:
   # - Get Started:
   - AxonOps Cloud:
     - Editions: 
-      - Developer Edition: 'editions/developer_edition.md'
       - Starter Edition: 'editions/starter_edition.md'
       - Enterprise Edition: 'editions/enterprise_edition.md'
 
