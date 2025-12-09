@@ -1,5 +1,12 @@
 !function () { var e, t, n; e = "16863fd582763a2", t = function () { Reo.init({ clientID: "16863fd582763a2" }) }, (n = document.createElement("script")).src = "https://static.reo.dev/" + e + "/reo.js", n.async = !0, n.onload = t, document.head.appendChild(n) }();
 
+// Process CQL syntax blocks to convert *placeholder* to italics
+document.addEventListener('DOMContentLoaded', function() {
+  document.querySelectorAll('code.language-cqlsyntax').forEach(function(block) {
+    block.innerHTML = block.innerHTML.replace(/\*([a-zA-Z_][a-zA-Z0-9_]*)\*/g, '<em>$1</em>');
+  });
+});
+
 function random() {
   setTimeout('', 1000);
   document.getElementById("myNumber").innerHTML = Math.floor(Math.random() * 10000000);

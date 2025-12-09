@@ -834,4 +834,4 @@ org.apache.cassandra.metrics:type=Table,name=CompressionRatio
 - **[Storage Engine Overview](index.md)** - Architecture overview
 - **[Write Path](write-path.md)** - How SSTables are created
 - **[Read Path](read-path.md)** - How SSTables are read
-- **[Compaction](../compaction/index.md)** - How SSTables are merged
+- **[Compaction](compaction/index.md)** - How SSTables are merged

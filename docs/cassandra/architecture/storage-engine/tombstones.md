@@ -374,4 +374,4 @@ nodetool compact --user-defined /path/to/sstables
 
 - **[Storage Engine Overview](index.md)** - Architecture overview
 - **[Read Path](read-path.md)** - How tombstones affect reads
-- **[Compaction](../compaction/index.md)** - Tombstone removal
+- **[Compaction](compaction/index.md)** - Tombstone removal

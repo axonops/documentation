@@ -610,5 +610,5 @@ In very large clusters (500+ nodes):
 
 ## Related Documentation
 
-- **[Replication](../replication/index.md)** - How gossip enables replica placement
-- **[Consistency](../consistency/index.md)** - How gossip enables consistency guarantees
+- **[Replication](../distributed-data/replication.md)** - How gossip enables replica placement
+- **[Consistency](../distributed-data/consistency.md)** - How gossip enables consistency guarantees

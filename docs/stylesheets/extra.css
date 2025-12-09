@@ -1178,3 +1178,16 @@ html .md-footer-meta.md-typeset a:hover {
 .md-typeset pre ::selection {
   background-color: rgba(124, 216, 37, 0.3);
 }
+
+/* ----------------------------------------------------------------------------
+   CQL SYNTAX BLOCKS - Italics for placeholders
+   ---------------------------------------------------------------------------- */
+.md-typeset code.language-cqlsyntax em {
+  font-style: italic;
+  color: #7dd3fc;
+}
+
+[data-md-color-scheme="slate"] .md-typeset code.language-cqlsyntax em {
+  color: #7dd3fc;
+}
+

@@ -36,10 +36,10 @@ New to Cassandra? Start here:
 Understand how Cassandra works:
 
 - [Architecture Overview](architecture/index.md) - Distributed architecture fundamentals
-- [Data Distribution](architecture/data-distribution.md) - Partitioning and token rings
-- [Replication](architecture/replication/index.md) - How data is replicated for fault tolerance
-- [Consistency Levels](architecture/consistency/index.md) - Tunable consistency explained
-- [Compaction Strategies](architecture/compaction/index.md) - STCS, LCS, TWCS, and UCS
+- [Data Distribution](architecture/distributed-data/index.md) - Partitioning and token rings
+- [Replication](architecture/distributed-data/replication.md) - How data is replicated for fault tolerance
+- [Consistency Levels](architecture/distributed-data/consistency.md) - Tunable consistency explained
+- [Compaction Strategies](architecture/storage-engine/compaction/index.md) - STCS, LCS, TWCS, and UCS
 - [Storage Engine](architecture/storage-engine/index.md) - Memtables, SSTables, and commit log
 
 ### CQL Reference
@@ -59,9 +59,7 @@ Design effective Cassandra data models:
 
 - [Data Modeling Guide](data-modeling/index.md) - Query-first design methodology
 - [Key Concepts](data-modeling/concepts/index.md) - Partition keys, clustering columns
-- [Patterns](data-modeling/patterns/index.md) - Time-series, bucketing, denormalization
 - [Anti-Patterns](data-modeling/anti-patterns/index.md) - Common mistakes to avoid
-- [Real-World Examples](data-modeling/examples/index.md) - Production-ready schemas
 
 ### Operations
 
@@ -71,7 +69,7 @@ Run Cassandra in production:
 - [Cluster Management](operations/cluster-management/index.md) - Add, remove, replace nodes
 - [Backup & Restore](operations/backup-restore/index.md) - Snapshots and recovery
 - [Repair](operations/repair/index.md) - Maintain data consistency
-- [Rolling Restart](operations/rolling-restart.md) - Zero-downtime restarts
+- [Maintenance](operations/maintenance/index.md) - Routine maintenance tasks
 
 ### Configuration
 
@@ -97,7 +95,7 @@ Monitor your Cassandra cluster:
 - [Monitoring Guide](monitoring/index.md) - What and how to monitor
 - [Key Metrics](monitoring/key-metrics/index.md) - Essential metrics to track
 - [Alerting](monitoring/alerting/index.md) - Alert thresholds and setup
-- [Dashboards](monitoring/dashboards/index.md) - Grafana and AxonOps dashboards
+- [Logging](monitoring/logging/index.md) - Log analysis and configuration
 
 ### Performance
 
@@ -122,7 +120,6 @@ Secure your cluster:
 
 Essential Cassandra tools:
 
-- [Tools Overview](tools/index.md) - All available tools
 - [nodetool](tools/nodetool/index.md) - Cluster management commands
 - [cqlsh](tools/cqlsh/index.md) - CQL shell reference
 - [CQLAI](tools/cqlai/index.md) - Modern AI-powered CQL shell
@@ -134,9 +131,7 @@ Essential Cassandra tools:
 Diagnose and fix issues:
 
 - [Troubleshooting Guide](troubleshooting/index.md) - Problem-solving methodology
-- [Common Errors](troubleshooting/common-errors/index.md) - Exception reference
 - [Diagnosis Procedures](troubleshooting/diagnosis/index.md) - Root cause analysis
-- [Playbooks](troubleshooting/playbooks/index.md) - Step-by-step runbooks
 - [Log Analysis](troubleshooting/log-analysis/index.md) - Interpreting logs
 
 ### Multi-Datacenter
@@ -144,18 +139,12 @@ Diagnose and fix issues:
 Deploy across datacenters:
 
 - [Multi-DC Guide](multi-datacenter/index.md) - Multi-datacenter architecture
-- [Replication Strategies](multi-datacenter/replication.md) - Cross-DC replication
-- [Failover](multi-datacenter/failover.md) - DC failover procedures
 
 ### Reference
 
 Quick reference materials:
 
 - [Reference](reference/index.md) - Quick reference
-- [System Tables](reference/system-tables.md) - System keyspace tables
-- [Virtual Tables](reference/virtual-tables.md) - Virtual table reference
-- [Limits](reference/limits.md) - Cassandra limits
-- [Glossary](reference/glossary.md) - Terminology
 
 ---
 
@@ -190,7 +179,7 @@ Quick reference materials:
 | Install Cassandra | [Installation Guide](getting-started/installation/index.md) |
 | Design a data model | [Data Modeling Guide](data-modeling/index.md) |
 | Fix timeout errors | [ReadTimeoutException](troubleshooting/common-errors/read-timeout.md) |
-| Add a node | [Adding Nodes](operations/cluster-management/adding-nodes.md) |
+| Manage cluster nodes | [Cluster Management](operations/cluster-management/index.md) |
 | Configure backups | [Backup Guide](operations/backup-restore/index.md) |
 | Monitor the cluster | [Monitoring Guide](monitoring/index.md) |
 | Tune performance | [Performance Guide](performance/index.md) |

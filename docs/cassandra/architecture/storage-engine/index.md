@@ -180,5 +180,5 @@ See [Compaction](compaction/index.md) for strategy details.
 ## Related Documentation
 
 - **[Compaction](compaction/index.md)** - SSTable merge strategies
-- **[Replication](../replication/index.md)** - Data distribution
-- **[Consistency](../consistency/index.md)** - Read and write consistency levels
+- **[Replication](../distributed-data/replication.md)** - Data distribution
+- **[Consistency](../distributed-data/consistency.md)** - Read and write consistency levels
