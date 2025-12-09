@@ -101,7 +101,7 @@ All of this is underpinned by an efficient bi-directional protocol ensuring exce
 We offer flexible deployment options to match your needs:
 
 ### Cloud & Self-Hosted Solutions
-- **[Starter Edition](editions/starter_edition.md)** - Perfect for smaller deployments
+- **[Free Edition](editions/free_edition.md)** - Perfect for smaller deployments
 - **[Enterprise Edition](editions/enterprise_edition.md)** - Full-featured for production workloads
 
 Both editions support Cassandra and Kafka with the same powerful feature set.
