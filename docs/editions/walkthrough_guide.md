@@ -15,7 +15,7 @@ This is a typical Cassandra set-up providing redundancy across data centers, rac
 
  
 
-**To get started with the Cassandra Sandbox:**
+**To get started with the Demo Sandbox:**
 
 Log in at [https://demo.axonops.cloud](https://demo.axonops.cloud)
 
