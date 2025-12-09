@@ -8,20 +8,20 @@ The Free Edition is available for AxonOps Cloud. The Free Edition is free up to 
 
 One-stop operations for your production cluster with everything you need to monitor, maintain and backup Cassandra.
 
-* Cloud or Self-Hosted, you choose
-* Pre-configured Dashboards
-* All metrics at 5 sec resolutions
-* Hands-free Adaptive Repair
-* Integrated Log & Event Search
+* Cloud or Self-Hosted Deployment
+* Pre-Configured Dashboards
+* All Metrics at 5-Second Resolution
+* Hands-Free Adaptive Repair
+* Integrated Log and Event Search
 * Cluster Health Service Checks
 * Extensive Alerting Integrations
-* Automate Rolling Restarts
-* Backups & Restore for all storage needs
+* Automated Rolling Restarts
+* Backups and Restore for All Storage Needs
 * Optional Cassandra Support
 * Optional Consulting Services
 
 ## Free Edition Restrictions
 
-* Up to 6 Cassandra nodes
+* Up to 6 Cassandra Nodes
 * 2 Cloud User Accounts
-* 14 day metrics & logs retention
+* 14-Day Metrics and Logs Retention
