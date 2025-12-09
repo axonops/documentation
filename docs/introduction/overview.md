@@ -1,236 +1,272 @@
-Thank you for your interest in AxonOps, the only tool in the market that provides a single environment to monitor, maintain and backup your Apache Cassandra clusters.
+# Introduction to AxonOps
 
-As a Get Started Free user you are able to connect up to 6 nodes and enjoy the full functionality of AxonOps.
+<style>
+  video {
+    max-width: 100%;
+    width: 100%;
+    display: block;
+  }
+</style>
 
-As a Cassandra Sandbox user you have access to a realistic representation of a production Cassandra environment consisting of the following:
+<script>
+  document.addEventListener('DOMContentLoaded', function() {
+    const urlParams = new URLSearchParams(window.location.search);
+    if (urlParams.has('presales')) {
+      document.body.classList.add('presales-mode');
+    }
+  });
+</script>
 
-* Qty of clusters – 1
-* Qty of racks – 4
-* Qty of DCs – 2
-* Qty of nodes – 8
-* Nodes per Rack – 2
-* Nodes per DC – 4
+<div style="position: relative; padding-top: 56.25%;">
+  <iframe
+    src="https://customer-e7nrn6nt0ozdk9tl.cloudflarestream.com/76769890028e91aa27d91f6562448394/iframe?muted=true&preload=true&loop=true&autoplay=true&poster=https%3A%2F%2Fcustomer-e7nrn6nt0ozdk9tl.cloudflarestream.com%2F76769890028e91aa27d91f6562448394%2Fthumbnails%2Fthumbnail.jpg%3Ftime%3D%26height%3D600"
+    loading="lazy"
+    style="border: none; position: absolute; top: 0; left: 0; height: 100%; width: 100%;"
+    allow="accelerometer; gyroscope; autoplay; encrypted-media; picture-in-picture;"
+    allowfullscreen="true"
+  ></iframe>
+</div>
 
-This is a typical Cassandra set-up providing redundancy across data centers, racks and nodes. It should be noted that AxonOps can scale to 100s of clusters and 1000s of nodes across many data centers.
+AxonOps is a comprehensive platform for managing and monitoring Apache Cassandra and Apache Kafka. From observability and alerting to automated operations like repairs, backups, and rolling restarts, AxonOps provides everything you need to run production clusters confidently without requiring deep distributed systems expertise on your team.
 
- 
 
-**To get started with the Cassandra Sandbox:**
+## Unified Observability
 
-Log in at [https://demo.axonops.cloud](https://demo.axonops.cloud)
+### Cluster View
 
-**To get started with the Starter:**
+<div style="position: relative; padding-top: 56.25%;">
+  <iframe
+    src="https://customer-e7nrn6nt0ozdk9tl.cloudflarestream.com/5e1b6de8a7c6cee94a389ca23a753fad/iframe?muted=true&preload=true&loop=true&autoplay=true&poster=https%3A%2F%2Fcustomer-e7nrn6nt0ozdk9tl.cloudflarestream.com%2F5e1b6de8a7c6cee94a389ca23a753fad%2Fthumbnails%2Fthumbnail.jpg%3Ftime%3D%26height%3D600"
+    loading="lazy"
+    style="border: none; position: absolute; top: 0; left: 0; height: 100%; width: 100%;"
+    allow="accelerometer; gyroscope; autoplay; encrypted-media; picture-in-picture;"
+    allowfullscreen="true"
+  ></iframe>
+</div>
 
-Log in at [https://axonops.com/signin](https://axonops.com/signin)
 
-Input the user name and password provided to you after you selected the Cassandra Sandbox instant access link or via the Get Started Free signup process.
+The Cluster Overview gives you instant visibility into node health, service status, and cluster configuration, whether you're troubleshooting an incident at 3 AM or planning capacity expansion. AxonOps provides a unified topology view that visualizes your entire distributed infrastructure in a single intuitive interface, eliminating the need for SSH sessions, manual host inventories, and jumping between disparate tools.
 
-For a Cassandra Sandbox user you have immediate access to a live Cassandra environment.
+This consolidated perspective transforms cluster management from a scattered, knowledge intensive task into a straightforward visual experience that any team member can navigate, regardless of their Cassandra or Kafka expertise. Learn more about [Cluster View](cluster-view.md).
 
-For a Get Started Free user simply follow the instructions displayed after login to connect your cluster.
 
-If you have any issues or questions please email <a href="mailto:community@axonops.com">community@axonops.com</a>
+### Dashboards
 
-As mentioned, AxonOps is all about monitoring, maintaining and backup of Apache Cassandra.
+<div style="position: relative; padding-top: 56.25%;">
+  <iframe
+    src="https://customer-e7nrn6nt0ozdk9tl.cloudflarestream.com/036eec9c63346ec5978d6603c975374f/iframe?muted=true&preload=true&loop=true&autoplay=true&poster=https%3A%2F%2Fcustomer-e7nrn6nt0ozdk9tl.cloudflarestream.com%2F036eec9c63346ec5978d6603c975374f%2Fthumbnails%2Fthumbnail.jpg%3Ftime%3D%26height%3D600"
+    loading="lazy"
+    style="border: none; position: absolute; top: 0; left: 0; height: 100%; width: 100%;"
+    allow="accelerometer; gyroscope; autoplay; encrypted-media; picture-in-picture;"
+    allowfullscreen="true"
+  ></iframe>
+</div>
 
-This walk-through is intended to help you quickly review the power and ease of use of AxonOps and covers the following areas.
+Understanding what's actually happening inside your Cassandra and Kafka clusters shouldn't require assembling a patchwork of monitoring tools or spending months figuring out which metrics matter. AxonOps delivers pre-configured dashboards built from decades of real world production experience across enterprises, startups, and everything in between, spanning diverse geographical deployments and use cases.
 
-## 1. Monitoring
+These aren't generic monitoring templates. Every dashboard reflects hard won knowledge about what actually indicates trouble, which metrics correlate during incidents, and how to organize information so you can diagnose issues in minutes instead of hours. The result is immediate operational intelligence without the trial and error, giving your team the insight that typically takes years of Cassandra battle scars to develop. Learn more about [Dashboards](dashboards.md).
 
-You will now see the Cluster Overview, a graphic representation of the cluster.
 
-![](alpha/1.0.1.png)
+### Event Logs
 
-The demo cluster has two data centers, with each DC having two racks, with each rack having two nodes. When hovering over your mouse, you will see the details of each DC, rack and node.
+<div style="position: relative; padding-top: 56.25%;">
+  <iframe
+    src="https://customer-e7nrn6nt0ozdk9tl.cloudflarestream.com/996ed10f1b950ee926f14df9d931b01a/iframe?muted=true&preload=true&loop=true&autoplay=true&poster=https%3A%2F%2Fcustomer-e7nrn6nt0ozdk9tl.cloudflarestream.com%2F996ed10f1b950ee926f14df9d931b01a%2Fthumbnails%2Fthumbnail.jpg%3Ftime%3D%26height%3D600"
+    loading="lazy"
+    style="border: none; position: absolute; top: 0; left: 0; height: 100%; width: 100%;"
+    allow="accelerometer; gyroscope; autoplay; encrypted-media; picture-in-picture;"
+    allowfullscreen="true"
+  ></iframe>
+</div>
 
-If you prefer a table view, just click on the List view.
+When something goes wrong in a distributed system, the answer is usually buried in log files scattered across dozens or hundreds of nodes. AxonOps brings all your Cassandra and Kafka logs into a unified search interface, letting you hunt down authentication failures, schema changes, compaction events, and errors without SSH-ing into individual servers or maintaining separate log aggregation infrastructure.
 
-![](alpha/1.0.2.png)
+The real power comes from correlation. Spot a latency spike in a dashboard? Click directly into the time window and search logs from that exact moment across your entire cluster. Filter by datacenter, rack, node, severity, or regex patterns to pinpoint root causes fast, turning what used to be hours of investigation into focused diagnostics so you can get back to shipping features instead of fighting fires. Learn more about [Event Logs](event-logs.md).
 
-For this demo environment, we are also using ChaosMonkey to randomly cause failures in the cluster. If that’s the case at the moment, you’ll see areas of the cluster showing red for errors or orange for warnings.
 
-You can click on the nodes to see the details of each node.
+## Active Monitoring
 
-![](alpha/1.0.3.png)
+### Alerts
 
-If there is an issue, you’ll see the alerts.
+<div style="position: relative; padding-top: 56.25%;">
+  <iframe
+    src="https://customer-e7nrn6nt0ozdk9tl.cloudflarestream.com/0d6c7a294bb18a5567a7eeaba7d8c43d/iframe?muted=true&preload=true&loop=true&autoplay=true&poster=https%3A%2F%2Fcustomer-e7nrn6nt0ozdk9tl.cloudflarestream.com%2F0d6c7a294bb18a5567a7eeaba7d8c43d%2Fthumbnails%2Fthumbnail.jpg%3Ftime%3D%26height%3D600"
+    loading="lazy"
+    style="border: none; position: absolute; top: 0; left: 0; height: 100%; width: 100%;"
+    allow="accelerometer; gyroscope; autoplay; encrypted-media; picture-in-picture;"
+    allowfullscreen="true"
+  ></iframe>
+</div>
 
-![](alpha/1.0.4.png)
+The difference between a well monitored system and alert fatigue is knowing what deserves attention and routing it to the right people at the right time. AxonOps lets you define metric thresholds directly from dashboard charts and route notifications through your existing workflow tools like PagerDuty, Slack, ServiceNow, or OpsGenie based on severity and alert type.
 
-### 1.1. Dashboards
+Stop configuring complex alerting rules across multiple systems or waking up the entire team for every minor blip. Intelligent routing means backup failures go to your operations team, performance degradation alerts your database specialists, and informational events flow to Slack channels where they belong, keeping everyone informed without the noise. Learn more about [Alerts](alerts.md).
 
-Our experts have carefully crafted all relevant dashboards for you to drill deeper into what’s going on with your cluster. But you can also create your own dashboards or add to existing ones. The dashboards have been built from the ground up to be best described as snappy with great performance and zero lag. The last thing you want when you are woken up in the middle of the night to solve an issue with your Cassandra cluster is to wait for dashboards to load.
 
-You can easily filter your dashboards by DC, rack and node.
+### Service Checks
 
-![](alpha/1.1.0.png)
+<div style="position: relative; padding-top: 56.25%;">
+  <iframe
+    src="https://customer-e7nrn6nt0ozdk9tl.cloudflarestream.com/e00ec30b7f79bf65cf6ab8786d819329/iframe?muted=true&preload=true&loop=true&autoplay=true&poster=https%3A%2F%2Fcustomer-e7nrn6nt0ozdk9tl.cloudflarestream.com%2Fe00ec30b7f79bf65cf6ab8786d819329%2Fthumbnails%2Fthumbnail.jpg%3Ftime%3D%26height%3D600"
+    loading="lazy"
+    style="border: none; position: absolute; top: 0; left: 0; height: 100%; width: 100%;"
+    allow="accelerometer; gyroscope; autoplay; encrypted-media; picture-in-picture;"
+    allowfullscreen="true"
+  ></iframe>
+</div>
 
-AxonOps also allows you to select the timeline you’re looking at. You can stop the dashboard from refreshing by clicking on the pause button (॥) in the top right corner.
+Metrics tell you how your system is performing, but service checks tell you if it's actually working. AxonOps provides proactive health monitoring through customizable shell scripts, HTTP endpoint checks, and TCP connectivity tests that run continuously across your infrastructure, surfacing issues before they cascade into outages.
 
-![](alpha/1.1.1.png)
+These checks are automatically deployed to your agents without manual configuration on every node, giving you Red/Amber/Green confidence indicators at a glance. Whether you're validating that your application endpoints respond correctly, ensuring backup scripts execute successfully, or confirming connectivity to external services, service checks close the gap between system metrics and real world availability. Learn more about [Service Checks](service-checks.md).
 
-The timeline can be selected by either the last 5 minutes, 30 minutes, day, etc., or by entering a date and time range.
 
-![](alpha/1.1.2.png)
+### Integrations
 
-If you want to look at it closer, you can enlarge the dashboard by clicking on two arrows in the top right corner of the dashboard.
+<div style="position: relative; padding-top: 56.25%;">
+  <iframe
+    src="https://customer-e7nrn6nt0ozdk9tl.cloudflarestream.com/4b772c370349eeeb7b54d4bb2e9d172a/iframe?muted=true&preload=true&loop=true&autoplay=true&poster=https%3A%2F%2Fcustomer-e7nrn6nt0ozdk9tl.cloudflarestream.com%2F4b772c370349eeeb7b54d4bb2e9d172a%2Fthumbnails%2Fthumbnail.jpg%3Ftime%3D%26height%3D600"
+    loading="lazy"
+    style="border: none; position: absolute; top: 0; left: 0; height: 100%; width: 100%;"
+    allow="accelerometer; gyroscope; autoplay; encrypted-media; picture-in-picture;"
+    allowfullscreen="true"
+  ></iframe>
+</div>
 
-![](alpha/1.1.3.png)
+Effective monitoring should amplify your existing operational processes, not force you to abandon the tools your teams already rely on. AxonOps integrates with PagerDuty and OpsGenie for incident management, Slack and Microsoft Teams for collaboration, ServiceNow for ticketing, and SMTP for email notifications, fitting seamlessly into the way your organization already works.
 
-It’s also possible to zoom in on an event by selecting the timeline on a graph when dragging your mouse over a portion of the timeline.
+Sophisticated routing lets you send different alert types to different destinations based on severity and category. Critical backup failures can page your on-call team through PagerDuty while informational repair completions flow to a Slack channel, ensuring the right information reaches the right people through the channels they already monitor. Learn more about [Integrations](integrations.md).
 
-Switch back to 1hr timeline to see the data coming in again. Click on the time range area on the top of the screen to do this.
 
-![](alpha/1.1.4.png)
+## Automated Operations
 
-### 1.2. Alerts
+### Rolling Restarts
 
-Alerts can be sent to various platforms that you can set up in the Settings → Integrations menu.
+<div style="position: relative; padding-top: 56.25%;">
+  <iframe
+    src="https://customer-e7nrn6nt0ozdk9tl.cloudflarestream.com/34fda982a8e0799038feeb849cbd1e95/iframe?muted=true&preload=true&loop=true&autoplay=true&poster=https%3A%2F%2Fcustomer-e7nrn6nt0ozdk9tl.cloudflarestream.com%2F34fda982a8e0799038feeb849cbd1e95%2Fthumbnails%2Fthumbnail.jpg%3Ftime%3D%26height%3D600"
+    loading="lazy"
+    style="border: none; position: absolute; top: 0; left: 0; height: 100%; width: 100%;"
+    allow="accelerometer; gyroscope; autoplay; encrypted-media; picture-in-picture;"
+    allowfullscreen="true"
+  ></iframe>
+</div>
 
-You can easily filter your dashboards by DC, rack and node.
+Restarting a distributed cluster for configuration changes, upgrades, or patches shouldn't mean hours of manual server access and hoping you remembered the correct sequence. AxonOps orchestrates rolling restarts across your Cassandra and Kafka clusters with configurable parallelism at the datacenter, rack, and node levels, executing restarts safely while maintaining cluster availability.
 
-![](alpha/1.2.0.png)
+Schedule restarts for maintenance windows or execute them immediately when needed. Customize the restart scripts to fit your environment, and let AxonOps handle the orchestration. What used to require careful runbooks and multiple engineers becomes a guided operation that runs reliably every time. Learn more about [Rolling Restarts](rolling-restarts.md).
 
-Once the integration has been set up, you can use it for various types of alerts. And the great thing is, you can override certain notifications. For example, if you have a separate team dealing with backups, you can route backup-related alerts to their Slack channel.
 
-![](alpha/1.2.1.png)
+## Cassandra Operations
 
-In AxonOps we are running Service Checks that you can configure in the Settings menu.
+### Repairs
 
-![](alpha/1.2.3.png)
+<div style="position: relative; padding-top: 56.25%;">
+  <iframe
+    src="https://customer-e7nrn6nt0ozdk9tl.cloudflarestream.com/910960f7e4e6fa708c2325d09c0ea45e/iframe?muted=true&preload=true&loop=true&autoplay=true&poster=https%3A%2F%2Fcustomer-e7nrn6nt0ozdk9tl.cloudflarestream.com%2F910960f7e4e6fa708c2325d09c0ea45e%2Fthumbnails%2Fthumbnail.jpg%3Ftime%3D%26height%3D600"
+    loading="lazy"
+    style="border: none; position: absolute; top: 0; left: 0; height: 100%; width: 100%;"
+    allow="accelerometer; gyroscope; autoplay; encrypted-media; picture-in-picture;"
+    allowfullscreen="true"
+  ></iframe>
+</div>
 
-You can add your own checks.
-For example, let’s create a simple Shell check echo “Hello”.
-Scroll down to click on “ADD NEW SHELL CHECK”.
-Enter a name in Check Name – this will identify your script.
-Click on the Script bar and enter your desired script. In our case, this is:
+Cassandra repairs are essential for data integrity, but they're notoriously difficult to execute correctly without impacting production performance. AxonOps Adaptive Repair eliminates the guesswork with intelligent, hands-free automation that continuously monitors your cluster's workload and adjusts repair velocity in real time based on CPU utilization, query latencies, and I/O patterns.
 
-echo “Hello world”
+This isn't a scheduled job that runs blindly. Adaptive Repair slows down when it detects load and speeds up when resources are available, ensuring repairs complete within gc_grace_seconds without affecting your applications. Your data stays consistent, your SLAs stay green, and your team stays focused on building products instead of babysitting repair jobs. Learn more about [Repairs](repairs.md).
 
-But this could be any script you want to run.
-Click on X to save the script.
 
-You can enter the parameters for how often you want to run this script and when it times out.
+### Backups
 
-Then click on the green SAVE CHANGES button to save everything.
+<div style="position: relative; padding-top: 56.25%;">
+  <iframe
+    src="https://customer-e7nrn6nt0ozdk9tl.cloudflarestream.com/7f63f96656425c695ec2f0a0428ef79a/iframe?muted=true&preload=true&loop=true&autoplay=true&poster=https%3A%2F%2Fcustomer-e7nrn6nt0ozdk9tl.cloudflarestream.com%2F7f63f96656425c695ec2f0a0428ef79a%2Fthumbnails%2Fthumbnail.jpg%3Ftime%3D%26height%3D600"
+    loading="lazy"
+    style="border: none; position: absolute; top: 0; left: 0; height: 100%; width: 100%;"
+    allow="accelerometer; gyroscope; autoplay; encrypted-media; picture-in-picture;"
+    allowfullscreen="true"
+  ></iframe>
+</div>
 
-AxonOps will now start deploying the script to all the nodes and execute accordingly.
+Data loss isn't an option, but configuring reliable backup strategies across distributed Cassandra clusters traditionally requires custom scripts, careful scheduling, and constant validation. AxonOps provides GUI-driven backup configuration with support for AWS S3, Google Cloud Storage, Azure Blob Storage, SFTP, and local storage, letting you schedule immediate or recurring backups without writing a single line of code.
 
-![](alpha/1.2.4.png)
-![](alpha/1.2.5.png)
+Beyond simple backups, AxonOps includes point-in-time recovery through automated commitlog archiving, giving you the ability to restore to any precise moment. Whether you need to recover a single node, rebuild an entire cluster, or restore to a different environment altogether, the process is streamlined and reliable, turning disaster recovery from a dreaded procedure into a confident operational capability. Learn more about [Backups](backups.md).
 
-NOTE: We made a mapping from the cluster configuration, so you don’t have to use IP addresses, port numbers, etc. Any script you create will work in other DCs, clusters, etc.
 
-NOTE: You can prevent rogue commands in the scripts by maintaining a whitelist of commands in the AxonOps agent configuration.
+## Kafka Monitoring
 
-You can also create your own events. For example, let’s create a security event. If you go to the Security dashboard, you’ll see the Failed Authentication dashboard.
+### Broker Monitoring
 
-![](alpha/1.2.6.png)
+<div style="position: relative; padding-top: 56.25%;">
+  <iframe
+    src="https://customer-e7nrn6nt0ozdk9tl.cloudflarestream.com/1ca32022c98d3d2edb4b7c9f6733a5bd/iframe?muted=true&preload=true&loop=true&autoplay=true&poster=https%3A%2F%2Fcustomer-e7nrn6nt0ozdk9tl.cloudflarestream.com%2F1ca32022c98d3d2edb4b7c9f6733a5bd%2Fthumbnails%2Fthumbnail.jpg%3Ftime%3D%26height%3D600"
+    loading="lazy"
+    style="border: none; position: absolute; top: 0; left: 0; height: 100%; width: 100%;"
+    allow="accelerometer; gyroscope; autoplay; encrypted-media; picture-in-picture;"
+    allowfullscreen="true"
+  ></iframe>
+</div>
 
-When you click on the three dots in the top right corner of that window and click Edit, you can create an Alert Definition by clicking on the ALERT DEFINITIONS and then the blue ADD NEW ALERT DEFINITION button.
+Comprehensive visibility into controller status, partition distribution, replication health, performance metrics, and system resource utilization organized exactly where you need them. Learn more about [Broker Monitoring](kafka-brokers.md).
 
-![](alpha/1.2.7.png)
-![](alpha/1.2.8.png)
-![](alpha/1.2.9.png)
 
-AxonOps already creates the matching Alert Expression for you. The Alert Expressions are Prometheus Query language compatible.
-If necessary, change the values for the number of events and duration before a Warning or Error is raised.
+### Consumer Tracking
 
-Each alert will be sent to the default integration which you can override here too by clicking on the OVERRIDE INTEGRATIONS slider and selecting where you want to send the alerts using your defined integrations.
+<div style="position: relative; padding-top: 56.25%;">
+  <iframe
+    src="https://customer-e7nrn6nt0ozdk9tl.cloudflarestream.com/35bddbbd01e800e73f102fe0a6d0bee9/iframe?muted=true&preload=true&loop=true&autoplay=true&poster=https%3A%2F%2Fcustomer-e7nrn6nt0ozdk9tl.cloudflarestream.com%2F35bddbbd01e800e73f102fe0a6d0bee9%2Fthumbnails%2Fthumbnail.jpg%3Ftime%3D%26height%3D600"
+    loading="lazy"
+    style="border: none; position: absolute; top: 0; left: 0; height: 100%; width: 100%;"
+    allow="accelerometer; gyroscope; autoplay; encrypted-media; picture-in-picture;"
+    allowfullscreen="true"
+  ></iframe>
+</div>
 
-Click on CREATE ALERT DEFINITION to save the Alert.
+Real-time lag visibility for every consumer group with alerts on thresholds that matter for your SLAs. Drill into partition assignments and understand which consumers are keeping up versus falling behind. Learn more about [Consumer Tracking](kafka-consumers.md).
 
-### 1.3. Logs
 
-So we’ve been looking at predefined monitoring dashboards and alerts so far. Let’s have a look at the logs.
+### Kafka Connect
 
-AxonOps is a great tool to dive deeper into your Cassandra logs to solve an issue with your cluster.
+<div style="position: relative; padding-top: 56.25%;">
+  <iframe
+    src="https://customer-e7nrn6nt0ozdk9tl.cloudflarestream.com/91f327a34a384dc22d271c9efe72b83d/iframe?muted=true&preload=true&loop=true&autoplay=true&poster=https%3A%2F%2Fcustomer-e7nrn6nt0ozdk9tl.cloudflarestream.com%2F91f327a34a384dc22d271c9efe72b83d%2Fthumbnails%2Fthumbnail.jpg%3Ftime%3D%26height%3D600"
+    loading="lazy"
+    style="border: none; position: absolute; top: 0; left: 0; height: 100%; width: 100%;"
+    allow="accelerometer; gyroscope; autoplay; encrypted-media; picture-in-picture;"
+    allowfullscreen="true"
+  ></iframe>
+</div>
 
-Let’s assume we’re looking at CPU utilisation at the Performance dashboard.
+Comprehensive monitoring showing worker status, task health, connector throughput, and error rates for your data integration pipelines. Learn more about [Kafka Connect](kafka-connect.md).
 
-At the bottom of the screen, you can pull up the log files for the selection you are looking at.
 
-![](alpha/1.3.0.png)
+## Kafka Operations
 
-Even the filters are applied to the log entries.
+### Topic Management
 
-You see, how easy it is to zoom in with laser precision on the issue you want to investigate.
+<div style="position: relative; padding-top: 56.25%;">
+  <iframe
+    src="https://customer-e7nrn6nt0ozdk9tl.cloudflarestream.com/19db702178db8f95c0b6adc7b627072d/iframe?muted=true&preload=true&loop=true&autoplay=true&poster=https%3A%2F%2Fcustomer-e7nrn6nt0ozdk9tl.cloudflarestream.com%2F19db702178db8f95c0b6adc7b627072d%2Fthumbnails%2Fthumbnail.jpg%3Ftime%3D%26height%3D600"
+    loading="lazy"
+    style="border: none; position: absolute; top: 0; left: 0; height: 100%; width: 100%;"
+    allow="accelerometer; gyroscope; autoplay; encrypted-media; picture-in-picture;"
+    allowfullscreen="true"
+  ></iframe>
+</div>
 
-You can also look at all the logs and zoom in on the Logs & Events part of the menu.
+GUI-driven topic creation, configuration editing, cloning, and deletion without command line complexity. View partition distribution, ISR status, and current consumers for any topic. Learn more about [Topic Management](kafka-topics.md).
 
-![](alpha/1.3.1.png)
 
-Now, we have been looking at Monitoring, all the dashboards that give you all the necessary information about your Cassandra cluster. We looked at events & alerts and how they can be integrated with your own messaging system of choice. And we looked at Service Checks and how you can customise these.
+### ACL Administration
 
-Let’s move on to the Maintaining side of Cassandra operations.
+<div style="position: relative; padding-top: 56.25%;">
+  <iframe
+    src="https://customer-e7nrn6nt0ozdk9tl.cloudflarestream.com/0d161e3395ab1f452e27c6e5125a9573/iframe?muted=true&preload=true&loop=true&autoplay=true&poster=https%3A%2F%2Fcustomer-e7nrn6nt0ozdk9tl.cloudflarestream.com%2F0d161e3395ab1f452e27c6e5125a9573%2Fthumbnails%2Fthumbnail.jpg%3Ftime%3D%26height%3D600"
+    loading="lazy"
+    style="border: none; position: absolute; top: 0; left: 0; height: 100%; width: 100%;"
+    allow="accelerometer; gyroscope; autoplay; encrypted-media; picture-in-picture;"
+    allowfullscreen="true"
+  ></iframe>
+</div>
 
-## 2. Maintenance
+Intuitive interface for security governance. View existing ACLs organized by resource, create access rules specifying principals and operations, configure permissions with full context about access being granted. Learn more about [ACL Administration](kafka-acls.md).
 
-### 2.1. Repairs
-
-AxonOps has a powerful feature called Adaptive Repairs, enabled through the fact AxonOps monitors node throughput and pushes repair operations via a single agent.
-
-This is a unique feature ensuring repair processes do not run when the cluster is busy and accelerates repair processes when there is spare capacity. So when enabled, Adaptive Repair automatically increases and decreases the intensity of repairs depending on the workload of a node. When the node is busy we slow down the repairs so there is no impact on query latencies. And when there is available headroom, we increase the repairs.
-
-That’s all there is to it! Just enable Adaptive Repairs and you’re done. AxonOps will ensure your nodes are always ahead of their repair schedule.
-
-![](alpha/2.1.0.png)
-
-If there are not enough resources available to complete repairs at all (within the GC grace period), we will generate an alert.
-
-Because of the way Adaptive Repairs works, when you do capacity planning for your cluster, you have a reduced need for capacity. You do not need to take into account capacity for these heavy repairs that also run when you need the cluster to perform. With speeding repairs up and down, you can use the headroom on the server and save on
-
-There may be edge cases when you still want to schedule your repairs which can be managed through Scheduled Repair.
-
-### 2.2. Rolling Restarts / Job Scheduler
-
-Being able to schedule Rolling Restarts and automate key tasks such as nodetool commands is available straight from the console.
-
-You can configure how the Rolling Restart is executed in the Settings menu. The number of DCs, racks or nodes in parallel and the script you want to run.
-
-![](alpha/2.2.0.png)
-
-By entering the script you want to execute in the Script field many different commands can be executed through a schedule or immediately, with or without the execution of a Rolling Restart.
-
-Note AxonOps is already populated with Cassandra stop and Cassandra start commands.
-
-![](alpha/2.2.1.png)
-
-You can see how this can save you from running commands on many nodes, wait until they’re running again, and then move on to the next node.
-
-## 3. Backup & Restore
-
-With AxonOps, you can easily schedule and run all the backups you need. We can store the backups locally or remotely on any of the popular cloud providers or just through an SFTP upload.
-
-![](alpha/3.0.0.png)
-
-You can see what backup schedules are running. Under that list, you can create your own backup schedule.
-Enter the details of what you want to back up.
-
-When clicking the REMOTE BACKUP tick-box, you can enter the remote location where you want to store the backups.
-
-AxonOps is highly efficient as it detects what data files have changed and only backups the delta changes of the files. It should be noted that implementing a generic backup solution to handle delta changes of Cassandra storage is complex and often not implemented. AxonOps delivers this capability out of the box.
-
-Restoring a backup is simply selecting the backups available and then selecting whether to restore it locally or remotely.
-
-![](alpha/3.0.1.png)
-
-## 4. PDF Reports
-
-One final feature to walk you through is the ability to generate PDF reports.
-
-You can instantly create a PDF report of any dashboard you select. By default, we have a Report dashboard that will be used to generate reports.
-
-Select the dashboard you want to create a report for.
-
-You can filter the report data based on DC, rack, or a few other parameters.
-
-You can select to create a PDF immediately which opens a new window with the PDF.
-
-You can also create a daily, weekly or monthly schedule and have the report automatically sent to an email address being setup at the integrations.
-
-![](alpha/4.0.0.png)
-
-You can test AxonOps for free on one of your own clusters too.
-
-Go to [https://axonops.com/signin](https://axonops.com/signin) to create your own account and connect your cluster.
