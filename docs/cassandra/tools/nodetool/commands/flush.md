@@ -200,13 +200,6 @@ fi
 - [nodetool tablestats](tablestats.md) - Check memtable statistics
 - [nodetool tpstats](tpstats.md) - Monitor flush thread pool
 
-## Related Documentation
-
-- [Architecture - Storage Engine](../../../architecture/storage-engine/index.md) - Memtable and SSTable concepts
-- [Operations - Backup & Restore](../../../operations/backup-restore/index.md) - Backup procedures
-- [Operations - Maintenance](../../../operations/maintenance/index.md) - Routine maintenance
-- [Configuration - cassandra.yaml](../../../configuration/cassandra-yaml/index.md) - Memtable settings
-
 ## Version Information
 
 Available in all Apache Cassandra versions with consistent behavior.

@@ -661,4 +661,4 @@ org.apache.cassandra.metrics:type=Table,keyspace=*,scope=*,name=LiveSSTableCount
 - **[Compaction Overview](index.md)** - Concepts and strategy selection
 - **[Size-Tiered Compaction (STCS)](stcs.md)** - Traditional write-heavy strategy
 - **[Leveled Compaction (LCS)](lcs.md)** - Traditional read-heavy strategy
-- **[Compaction Management](../../../../operations/compaction-management/index.md)** - Tuning and troubleshooting
+- **[Compaction Management](../../../operations/compaction-management/index.md)** - Tuning and troubleshooting

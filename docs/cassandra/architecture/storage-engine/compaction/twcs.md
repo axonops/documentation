@@ -753,4 +753,4 @@ watch 'nodetool tablestats keyspace.table | grep "Space used"'
 
 - **[Compaction Overview](index.md)** - Concepts and strategy selection
 - **[Tombstones](../tombstones.md)** - gc_grace_seconds and tombstone handling
-- **[Compaction Management](../../../../operations/compaction-management/index.md)** - Tuning and troubleshooting
+- **[Compaction Management](../../../operations/compaction-management/index.md)** - Tuning and troubleshooting

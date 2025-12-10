@@ -4,16 +4,16 @@ This guide covers connecting applications to Apache Cassandra using official dri
 
 ## Available Drivers
 
-| Language | Driver | Status | Documentation |
-|----------|--------|--------|---------------|
-| **Java** | DataStax Java Driver | Production | [Java Guide](java-driver.md) |
-| **Python** | DataStax Python Driver | Production | [Python Guide](python-driver.md) |
-| **Node.js** | DataStax Node.js Driver | Production | [Node.js Guide](nodejs-driver.md) |
-| **Go** | GoCQL | Production | [Go Guide](go-driver.md) |
-| **C#/.NET** | DataStax C# Driver | Production | [.NET Guide](dotnet-driver.md) |
-| **C/C++** | DataStax C++ Driver | Production | [C++ Guide](cpp-driver.md) |
-| **Ruby** | DataStax Ruby Driver | Production | - |
-| **PHP** | DataStax PHP Driver | Production | - |
+| Language | Driver | Status | Repository |
+|----------|--------|--------|------------|
+| **Java** | Apache Cassandra Java Driver | Production | [GitHub](https://github.com/apache/cassandra-java-driver) |
+| **Python** | Apache Cassandra Python Driver | Production | [GitHub](https://github.com/apache/cassandra-python-driver) |
+| **Node.js** | DataStax Node.js Driver | Production | [GitHub](https://github.com/datastax/nodejs-driver) |
+| **Go** | GoCQL | Production | [GitHub](https://github.com/gocql/gocql) |
+| **C#/.NET** | Apache Cassandra C# Driver | Production | [GitHub](https://github.com/apache/cassandra-csharp-driver) |
+| **C/C++** | Apache Cassandra C++ Driver | Production | [GitHub](https://github.com/apache/cassandra-cpp-driver) |
+| **Ruby** | Apache Cassandra Ruby Driver | Production | [GitHub](https://github.com/apache/cassandra-ruby-driver) |
+| **PHP** | Apache Cassandra PHP Driver | Production | [GitHub](https://github.com/apache/cassandra-php-driver) |
 
 ---
 
@@ -462,14 +462,14 @@ except NoHostAvailable as e:
 
 ---
 
-## Driver-Specific Guides
+## Driver Documentation
 
-Detailed guides for each language:
+For detailed driver documentation, refer to the official repositories:
 
-- **[Java Driver](java-driver.md)** - Complete Java integration guide
-- **[Python Driver](python-driver.md)** - Python with asyncio support
-- **[Node.js Driver](nodejs-driver.md)** - JavaScript/TypeScript guide
-- **[Go Driver](go-driver.md)** - GoCQL integration
+- **[Java Driver](https://github.com/apache/cassandra-java-driver)** - Apache Cassandra Java Driver
+- **[Python Driver](https://github.com/apache/cassandra-python-driver)** - Apache Cassandra Python Driver
+- **[Node.js Driver](https://github.com/datastax/nodejs-driver)** - DataStax Node.js Driver
+- **[Go Driver](https://github.com/gocql/gocql)** - GoCQL
 
 ---
 

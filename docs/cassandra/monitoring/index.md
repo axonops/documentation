@@ -25,33 +25,6 @@ This guide covers key metrics, alerting thresholds, and dashboard configuration.
 
 ---
 
-## Documentation Structure
-
-### Key Metrics
-
-- **[Key Metrics Overview](key-metrics/index.md)** - Essential metrics to track
-- **[Latency Metrics](key-metrics/latency.md)** - Request latencies
-- **[Throughput Metrics](key-metrics/throughput.md)** - Request rates
-- **[Resource Metrics](key-metrics/resources.md)** - CPU, memory, disk
-- **[JVM Metrics](key-metrics/jvm.md)** - Heap and GC
-
-### Alerting
-
-- **[Alert Setup](alerting/index.md)** - Configuring alerts
-- **[Alert Thresholds](alerting/thresholds.md)** - Recommended values
-- **[Alert Runbooks](alerting/runbooks.md)** - Response procedures
-
-### Dashboards
-
-- **[Dashboard Overview](dashboards/index.md)** - Visualization best practices
-- **[AxonOps Dashboards](dashboards/axonops.md)** - AxonOps dashboard configuration
-
-### Logging
-
-- **[Log Configuration](logging/index.md)** - Logback setup
-- **[Log Analysis](logging/analysis.md)** - Understanding logs
-- **[Log Aggregation](logging/aggregation.md)** - Centralized logging
-
 ---
 
 ## Essential Metrics Quick Reference
@@ -301,6 +274,5 @@ Time to capacity:
 
 ## Next Steps
 
-- **[Key Metrics Detail](key-metrics/index.md)** - Deep dive on metrics
-- **[Alert Configuration](alerting/index.md)** - Set up alerts
-- **[AxonOps Dashboards](dashboards/axonops.md)** - Dashboard configuration
+- **[JMX Reference](../jmx-reference/index.md)** - JMX metrics and MBeans reference
+- **[Performance Tuning](../performance/index.md)** - Performance optimization guide

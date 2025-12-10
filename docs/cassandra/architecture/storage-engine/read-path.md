@@ -69,79 +69,46 @@ The stages are ordered by cost and likelihood of success:
 
 Memtables must be checked before SSTables because they contain more recent writes. If an SSTable contains `column=A, value=1, timestamp=100` and the memtable contains `column=A, value=2, timestamp=200`, the memtable's value must win—but both must be read to make this determination.
 
-```graphviz dot read-path-overview.svg
-digraph ReadPath {
-    bgcolor="transparent"
-    graph [fontname="Helvetica", fontsize=11, rankdir=TB, nodesep=0.4, ranksep=0.5]
-    node [fontname="Helvetica", fontsize=10, fontcolor="black"]
-    edge [fontname="Helvetica", fontsize=9, fontcolor="black", color="black", penwidth=1.5]
+```plantuml
+@startuml
+skinparam backgroundColor transparent
 
-    // Query
-    query [label="SELECT * FROM users\nWHERE user_id = X", shape=box, style="rounded,filled", fillcolor="#e8e8e8"]
+rectangle "SELECT * FROM users\nWHERE user_id = X" as query #e8e8e8
 
-    // Row Cache
-    subgraph cluster_rowcache {
-        label="1. ROW CACHE (if enabled)"
-        style="rounded,filled"
-        bgcolor="#fff8e8"
-        labeljust="l"
-        fontcolor="#000000"
-
-        rc [label="Entire row cached?\nReturn immediately", shape=box, style="rounded,filled", fillcolor="#ffffcc"]
-    }
-
-    // Memtables
-    subgraph cluster_memtable {
-        label="2. MEMTABLES"
-        style="rounded,filled"
-        bgcolor="#e8f8e8"
-        labeljust="l"
-        fontcolor="#000000"
-
-        mem [label="Check active memtable\nCheck any flushing memtables", shape=box, style="rounded,filled", fillcolor="#c8e8c8"]
-    }
-
-    // SSTables
-    subgraph cluster_sstable {
-        label="3. SSTABLES (for each SSTable)"
-        style="rounded,filled"
-        bgcolor="#e8f0f8"
-        labeljust="l"
-        fontcolor="#000000"
-
-        bf [label="a. Bloom Filter\nPartition possibly present?", shape=diamond, style=filled, fillcolor="#c8d8e8"]
-        idx [label="b. Partition Index\nFind data offset", shape=box, style="rounded,filled", fillcolor="#c8d8e8"]
-        data [label="c. Data File\nRead partition data", shape=box, style="rounded,filled", fillcolor="#c8d8e8"]
-        skip [label="Skip SSTable", shape=box, style="rounded,dashed,filled", fillcolor="#e8e8e8"]
-
-        bf -> idx [label="Maybe", fontcolor="#006600", color="#006600", penwidth=2]
-        bf -> skip [label="No = Skip", fontcolor="#cc0000", color="#cc0000", penwidth=2]
-        idx -> data [color="#006600", penwidth=2]
-    }
-
-    // Merge
-    subgraph cluster_merge {
-        label="4. MERGE"
-        style="rounded,filled"
-        bgcolor="#f8e8f8"
-        labeljust="l"
-        fontcolor="#000000"
-
-        merge [label="Combine results from all sources\nMost recent timestamp wins per cell\nApply tombstones", shape=box, style="rounded,filled", fillcolor="#e8d0e8"]
-    }
-
-    // Result
-    result [label="RESULT", shape=box, style="rounded,filled", fillcolor="#c8e8c8", penwidth=2]
-
-    // Flow
-    query -> rc [color="black", penwidth=2]
-    rc -> result [label="Hit", style=dashed, color="#006600", fontcolor="#006600", penwidth=2]
-    rc -> mem [label="Miss", color="#cc0000", fontcolor="#cc0000", penwidth=2]
-    mem -> bf [color="black", penwidth=2]
-    mem -> merge [style=dashed, label="memtable data", color="#006600", fontcolor="#006600", penwidth=2]
-    data -> merge [label="SSTable data", color="#006600", fontcolor="#006600", penwidth=2]
-    merge -> result [color="#006600", penwidth=2]
+package "1. ROW CACHE (if enabled)" #fff8e8 {
+    rectangle "Entire row cached?\nReturn immediately" as rc #ffffcc
 }
+
+package "2. MEMTABLES" #e8f8e8 {
+    rectangle "Check active memtable\nCheck any flushing memtables" as mem #c8e8c8
+}
+
+package "3. SSTABLES (for each SSTable)" #e8f0f8 {
+    card "a. Bloom Filter\nPartition possibly present?" as bf #c8d8e8
+    rectangle "b. Partition Index\nFind data offset" as idx #c8d8e8
+    rectangle "c. Data File\nRead partition data" as data #c8d8e8
+    rectangle "Skip SSTable" as skip #e8e8e8
+
+    bf --> idx : Maybe
+    bf --> skip : No
+    idx --> data
+}
+
+package "4. MERGE" #f8e8f8 {
+    rectangle "Combine results from all sources\nMost recent timestamp wins per cell\nApply tombstones" as merge #e8d0e8
+}
+
+rectangle "RESULT" as result #c8e8c8
+
+query --> rc
+rc --> result : Hit
+rc --> mem : Miss
+mem --> bf
+mem ..> merge : memtable data
+data --> merge : SSTable data
+merge --> result
+
+@enduml
 ```
 
 ---

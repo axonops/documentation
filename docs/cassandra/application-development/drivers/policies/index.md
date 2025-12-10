@@ -62,22 +62,26 @@ Understanding common failure scenarios helps in selecting appropriate policies.
 
 ### Scenario 1: Single Node Failure
 
-```mermaid
-sequenceDiagram
-    participant App as Application
-    participant Drv as Driver
-    participant N1 as Node1
-    participant N2 as Node2
-    participant N3 as Node3
+```plantuml
+@startuml
+skinparam backgroundColor transparent
 
-    Note over N1: Node1 fails
-    App->>Drv: Execute query
-    Drv->>N1: Request (token owner)
-    N1--xDrv: Connection failed
-    Note over Drv: Load balancer selects next node
-    Drv->>N2: Request (replica)
-    N2->>Drv: Success
-    Drv->>App: Result
+participant "Application" as App
+participant "Driver" as Drv
+participant "Node1" as N1
+participant "Node2" as N2
+participant "Node3" as N3
+
+note over N1: Node1 fails
+App -> Drv: Execute query
+Drv -> N1: Request [token owner]
+N1 -x Drv: Connection failed
+note over Drv: Load balancer selects next node
+Drv -> N2: Request [replica]
+N2 --> Drv: Success
+Drv --> App: Result
+
+@enduml
 ```
 
 **Policy involvement:**
@@ -88,26 +92,30 @@ sequenceDiagram
 
 ### Scenario 2: Read Timeout (Partial Response)
 
-```mermaid
-sequenceDiagram
-    participant App as Application
-    participant Drv as Driver
-    participant Coord as Coordinator
-    participant R1 as Replica1
-    participant R2 as Replica2
-    participant R3 as Replica3
+```plantuml
+@startuml
+skinparam backgroundColor transparent
 
-    App->>Drv: SELECT (QUORUM)
-    Drv->>Coord: Query
-    Coord->>R1: Read request
-    Coord->>R2: Read request
-    Coord->>R3: Read request
-    R1->>Coord: Data
-    Note over R2,R3: Slow or unresponsive
-    Note over Coord: Timeout waiting for quorum
-    Coord->>Drv: ReadTimeoutException (received=1, required=2)
-    Note over Drv: Retry policy consulted
-    Drv->>App: Retry or throw?
+participant "Application" as App
+participant "Driver" as Drv
+participant "Coordinator" as Coord
+participant "Replica1" as R1
+participant "Replica2" as R2
+participant "Replica3" as R3
+
+App -> Drv: SELECT [QUORUM]
+Drv -> Coord: Query
+Coord -> R1: Read request
+Coord -> R2: Read request
+Coord -> R3: Read request
+R1 --> Coord: Data
+note over R2,R3: Slow or unresponsive
+note over Coord: Timeout waiting for quorum
+Coord --> Drv: ReadTimeoutException\n[received=1, required=2]
+note over Drv: Retry policy consulted
+Drv --> App: Retry or throw?
+
+@enduml
 ```
 
 **Policy involvement:**
@@ -117,51 +125,55 @@ sequenceDiagram
 
 ### Scenario 3: Write Timeout (Dangerous)
 
-```mermaid
-sequenceDiagram
-    participant App as Application
-    participant Drv as Driver
-    participant Coord as Coordinator
-    participant R1 as Replica1
-    participant R2 as Replica2
+```plantuml
+@startuml
+skinparam backgroundColor transparent
 
-    App->>Drv: INSERT (QUORUM)
-    Drv->>Coord: Write
-    Coord->>R1: Write request
-    Coord->>R2: Write request
-    R1->>Coord: ACK
-    Note over R2: Slow - no response
-    Note over Coord: Timeout (received=1, required=2)
-    Coord->>Drv: WriteTimeoutException
-    Note over Drv: Did R2 receive the write?
-    Note over Drv: Retry could cause duplicate!
+participant "Application" as App
+participant "Driver" as Drv
+participant "Coordinator" as Coord
+participant "Replica1" as R1
+participant "Replica2" as R2
+
+App -> Drv: INSERT [QUORUM]
+Drv -> Coord: Write
+Coord -> R1: Write request
+Coord -> R2: Write request
+R1 --> Coord: ACK
+note over R2: Slow - no response
+note over Coord: Timeout [received=1, required=2]
+Coord --> Drv: WriteTimeoutException
+note over Drv: Did R2 receive the write?
+note over Drv: Retry could cause duplicate!
+
+@enduml
 ```
 
 **Critical consideration**: Write may have succeeded on R2 but acknowledgment was lost. Retrying non-idempotent writes risks data corruption.
 
 ### Scenario 4: Network Partition
 
-```mermaid
-flowchart TB
-    subgraph Reachable
-        App[Application]
-        N1[Node1]
-        N2[Node2]
-    end
+```plantuml
+@startuml
+skinparam backgroundColor transparent
 
-    subgraph Partitioned
-        N3[Node3]
-        N4[Node4]
-        N5[Node5]
-    end
+package "Reachable" {
+    rectangle "Application" as App
+    rectangle "Node1" as N1
+    rectangle "Node2" as N2
+}
 
-    App --> N1
-    App --> N2
-    App -.->|blocked| N3
+package "Partitioned" #ffeeee {
+    rectangle "Node3" as N3 #ffcccc
+    rectangle "Node4" as N4 #ffcccc
+    rectangle "Node5" as N5 #ffcccc
+}
 
-    style N3 fill:#ffcccc
-    style N4 fill:#ffcccc
-    style N5 fill:#ffcccc
+App --> N1
+App --> N2
+App ..> N3 : blocked
+
+@enduml
 ```
 
 **Policy involvement:**
@@ -197,32 +209,33 @@ cluster = Cluster(
 
 ### Multi-DC Request Routing
 
-```mermaid
-flowchart LR
-    subgraph AppDC["Application in DC1"]
-        App[Application]
-    end
+```plantuml
+@startuml
+skinparam backgroundColor transparent
 
-    subgraph DC1["DC1 (Local)"]
-        N1[Node1]
-        N2[Node2]
-        N3[Node3]
-    end
+package "Application in DC1" {
+    rectangle "Application" as App
+}
 
-    subgraph DC2["DC2 (Remote)"]
-        N4[Node4]
-        N5[Node5]
-        N6[Node6]
-    end
+package "DC1 (Local)" #e6ffe6 {
+    rectangle "Node1" as N1
+    rectangle "Node2" as N2
+    rectangle "Node3" as N3
+}
 
-    App -->|"PRIMARY (low latency)"| N1
-    App -->|"PRIMARY"| N2
-    App -->|"PRIMARY"| N3
-    App -.->|"FAILOVER ONLY"| N4
-    App -.->|"FAILOVER ONLY"| N5
+package "DC2 (Remote)" #fff0e6 {
+    rectangle "Node4" as N4
+    rectangle "Node5" as N5
+    rectangle "Node6" as N6
+}
 
-    style DC1 fill:#e6ffe6
-    style DC2 fill:#fff0e6
+App --> N1 : PRIMARY\n(low latency)
+App --> N2 : PRIMARY
+App --> N3 : PRIMARY
+App ..> N4 : FAILOVER ONLY
+App ..> N5 : FAILOVER ONLY
+
+@enduml
 ```
 
 ### DC Failover Behavior
@@ -296,37 +309,56 @@ Default policies are designed for general use cases but may not match specific a
 
 Policies do not operate in isolation—they interact during request execution:
 
-```mermaid
-flowchart TB
-    A[Application executes query] --> B[Load Balancing Policy]
-    B -->|"Returns node order: [N1, N3, N2]"| C[Send to Node1]
-    C --> D{Response?}
-    D -->|Success| E[Return result]
-    D -->|Failure| F[Retry Policy]
-    F -->|Retry allowed| G[Send to Node3]
-    F -->|No retry| H[Return error]
-    G --> I{Response?}
-    I -->|Success| E
-    I -->|Failure| J[Continue or fail]
+```plantuml
+@startuml
+skinparam backgroundColor transparent
+
+rectangle "Application executes query" as A
+rectangle "Load Balancing Policy" as B
+rectangle "Send to Node1" as C
+card "Response?" as D
+rectangle "Return result" as E
+rectangle "Retry Policy" as F
+rectangle "Send to Node3" as G
+rectangle "Return error" as H
+card "Response?" as I
+rectangle "Continue or fail" as J
+
+A --> B
+B --> C : Returns node order:\n[N1, N3, N2]
+C --> D
+D --> E : Success
+D --> F : Failure
+F --> G : Retry allowed
+F --> H : No retry
+G --> I
+I --> E : Success
+I --> J : Failure
+
+@enduml
 ```
 
 If speculative execution is enabled, requests are sent concurrently:
 
-```mermaid
-sequenceDiagram
-    participant App as Application
-    participant Drv as Driver
-    participant N1 as Node1
-    participant N3 as Node3
+```plantuml
+@startuml
+skinparam backgroundColor transparent
 
-    App->>Drv: Execute query
-    Drv->>N1: Request
-    Note over Drv: Start 50ms timer
-    Drv->>N3: Speculative request
-    N3->>Drv: Response (fast)
-    Drv->>App: Return result
-    Note over N1: Original still pending
-    N1-->>Drv: Response (ignored)
+participant "Application" as App
+participant "Driver" as Drv
+participant "Node1" as N1
+participant "Node3" as N3
+
+App -> Drv: Execute query
+Drv -> N1: Request
+note over Drv: Start 50ms timer
+Drv -> N3: Speculative request
+N3 --> Drv: Response [fast]
+Drv --> App: Return result
+note over N1: Original still pending
+N1 --> Drv: Response [ignored]
+
+@enduml
 ```
 
 ---

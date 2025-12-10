@@ -42,42 +42,6 @@ This guide covers what to tune, how to tune it, and how to measure whether it wo
 
 ---
 
-## Documentation Structure
-
-### Hardware Planning
-
-- **[Hardware Recommendations](hardware/index.md)** - CPU, RAM, storage selection
-- **[Disk Configuration](hardware/disk.md)** - SSD vs NVMe, RAID
-- **[Network Requirements](hardware/network.md)** - Bandwidth, latency
-- **[Cloud Instances](hardware/cloud.md)** - AWS, GCP, Azure sizing
-
-### JVM Tuning
-
-- **[Heap Sizing](jvm-tuning/heap.md)** - Memory allocation
-- **[G1GC Tuning](jvm-tuning/g1gc.md)** - G1 garbage collector
-- **[ZGC Tuning](jvm-tuning/zgc.md)** - Low-latency GC
-- **[Off-Heap Memory](jvm-tuning/offheap.md)** - Native memory
-
-### OS Tuning
-
-- **[Linux Kernel Settings](os-tuning/kernel.md)** - sysctl parameters
-- **[File Descriptors](os-tuning/file-descriptors.md)** - ulimit settings
-- **[I/O Scheduler](os-tuning/io-scheduler.md)** - Disk scheduling
-- **[Filesystem](os-tuning/filesystem.md)** - XFS, ext4 settings
-
-### Query Optimization
-
-- **[Query Patterns](query-optimization/patterns.md)** - Efficient queries
-- **[Prepared Statements](query-optimization/prepared-statements.md)** - Performance gains
-- **[Pagination](query-optimization/pagination.md)** - Large result sets
-- **[Batch Operations](query-optimization/batches.md)** - When to batch
-
-### Benchmarking
-
-- **[Cassandra Stress](benchmarking/cassandra-stress.md)** - Load testing
-- **[Performance Baselines](benchmarking/baselines.md)** - Establishing benchmarks
-- **[Profiling](benchmarking/profiling.md)** - Finding bottlenecks
-
 ---
 
 ## Hardware Recommendations
@@ -575,8 +539,5 @@ Results:
 
 ## Next Steps
 
-- **[Hardware Deep Dive](hardware/index.md)** - Detailed hardware guidance
-- **[JVM Tuning Guide](jvm-tuning/index.md)** - GC optimization
-- **[OS Tuning Guide](os-tuning/index.md)** - Linux tuning
-- **[Query Patterns](query-optimization/patterns.md)** - Efficient queries
-- **[Benchmarking Guide](benchmarking/index.md)** - Load testing
+- **[Monitoring Guide](../monitoring/index.md)** - Monitoring cluster health
+- **[Configuration Reference](../configuration/index.md)** - Cassandra configuration

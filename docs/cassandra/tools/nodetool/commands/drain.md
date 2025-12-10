@@ -235,12 +235,6 @@ If node is marked down but drain wasn't run:
 - [nodetool info](info.md) - Check node state
 - [nodetool stopdaemon](stopdaemon.md) - Stop Cassandra daemon
 
-## Related Documentation
-
-- [Operations - Maintenance](../../../operations/maintenance/index.md) - Maintenance procedures
-- [Operations - Rolling Restart](../../../operations/rolling-restart.md) - Restarting nodes
-- [Architecture - Storage Engine](../../../architecture/storage-engine/index.md) - Memtable and flush concepts
-
 ## Version Information
 
 Available in all Apache Cassandra versions with consistent behavior.

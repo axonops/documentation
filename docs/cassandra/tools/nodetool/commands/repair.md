@@ -290,13 +290,6 @@ nodetool repair -full my_keyspace
 - [nodetool setstreamthroughput](setstreamthroughput.md) - Adjust streaming speed
 - [nodetool tablestats](tablestats.md) - Check percent repaired
 
-## Related Documentation
-
-- [Operations - Repair](../../../operations/repair/index.md) - Comprehensive repair guide
-- [Architecture - Consistency](../../../architecture/consistency/index.md) - Understanding consistency and repair
-- [Troubleshooting - Repair Failures](../../../troubleshooting/playbooks/repair-failures.md) - Diagnosing repair issues
-- [Configuration - cassandra.yaml](../../../configuration/cassandra-yaml/index.md) - gc_grace_seconds and repair settings
-
 ## Version Information
 
 | Feature | Version |

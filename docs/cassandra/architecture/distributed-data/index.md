@@ -16,7 +16,7 @@ Cassandra's distributed architecture derives from Amazon's Dynamo paper ([DeCand
 | Sloppy quorum | Availability during failures | Hinted handoff |
 | Vector clocks | Conflict resolution | Timestamps (last-write-wins) |
 | Merkle trees | Efficient synchronization | Merkle tree synchronization |
-| Gossip protocol | Failure detection, membership | [Gossip protocol](../gossip/index.md) |
+| Gossip protocol | Failure detection, membership | [Gossip protocol](../cluster-management/gossip.md) |
 | CAP theorem | Consistency/availability trade-off | Tunable consistency per operation |
 
 Cassandra implements most Dynamo concepts but makes different trade-offs in some areas.
@@ -590,7 +590,7 @@ Cassandra's tunable consistency allows choosing different PACELC positions for d
 
 ## Related Documentation
 
-- **[Gossip Protocol](../gossip/index.md)** - Cluster membership and failure detection
+- **[Gossip Protocol](../cluster-management/gossip.md)** - Cluster membership and failure detection
 - **[Storage Engine](../storage-engine/index.md)** - How data is stored on each node
 - **[Indexes](../storage-engine/indexes/index.md)** - Secondary index types and selection
 - **[Operations](../../operations/index.md)** - Maintenance and operational procedures

@@ -46,81 +46,39 @@ LSM-tree costs:
 
 ## Storage Architecture
 
-```graphviz dot storage-architecture.svg
-digraph StorageArchitecture {
-    bgcolor="transparent"
-    graph [fontname="Helvetica", fontsize=11, rankdir=TB, nodesep=0.5, ranksep=0.6]
-    node [fontname="Helvetica", fontsize=10, fontcolor="black"]
-    edge [fontname="Helvetica", fontsize=9, color="black", fontcolor="black", penwidth=1.5]
+```plantuml
+@startuml
+skinparam backgroundColor transparent
 
-    // Client and Coordinator
-    client [label="Client Request", shape=box, style="rounded,filled", fillcolor="#e8e8e8"]
-    coord [label="Coordinator Node\n(routes request)", shape=box, style="rounded,filled", fillcolor="#ffffcc"]
+rectangle "Client Request" as client #E8E8E8
+rectangle "Coordinator Node\n(routes request)" as coord #FFFFCC
 
-    client -> coord [penwidth=2, color="#0066cc", fontcolor="#0066cc"]
-
-    // Replica Node container
-    subgraph cluster_replica {
-        label="REPLICA NODE"
-        labeljust="l"
-        style="rounded,filled"
-        bgcolor="#f5f5f5"
-        fontcolor="black"
-        fontsize=12
-
-        // Commit Log
-        subgraph cluster_commitlog {
-            label="1. COMMIT LOG"
-            labeljust="l"
-            style="rounded,filled"
-            bgcolor="#fff0f0"
-            fontcolor="black"
-
-            commitlog [label="Append-only write-ahead log\nfor durability", shape=box, style="rounded,filled", fillcolor="#ffcccc"]
-        }
-
-        // Memtable
-        subgraph cluster_memtable {
-            label="2. MEMTABLE"
-            labeljust="l"
-            style="rounded,filled"
-            bgcolor="#f0fff0"
-            fontcolor="black"
-
-            memtable [label="In-memory sorted structure\n(ConcurrentSkipListMap)", shape=box, style="rounded,filled", fillcolor="#c8e8c8"]
-        }
-
-        // SSTable
-        subgraph cluster_sstable {
-            label="3. SSTABLES"
-            labeljust="l"
-            style="rounded,filled"
-            bgcolor="#f0f0ff"
-            fontcolor="black"
-
-            sstable [label="Immutable sorted files on disk", shape=box, style="rounded,filled", fillcolor="#c8c8e8"]
-        }
-
-        // Compaction
-        subgraph cluster_compaction {
-            label="4. COMPACTION"
-            labeljust="l"
-            style="rounded,filled"
-            bgcolor="#fff8f0"
-            fontcolor="black"
-
-            compaction [label="Background merge of SSTables\n(reduces file count)", shape=box, style="rounded,filled", fillcolor="#e8d8c8"]
-        }
-
-        // Flow within replica
-        commitlog -> memtable [label="write", color="#006600", fontcolor="#006600"]
-        memtable -> sstable [label="flush", color="#006600", fontcolor="#006600"]
-        sstable -> compaction [label="merge", color="#0066cc", fontcolor="#0066cc", style=dashed]
-        compaction -> sstable [label="new SSTable", color="#0066cc", fontcolor="#0066cc", style=dashed]
+package "REPLICA NODE" #F5F5F5 {
+    package "1. COMMIT LOG" #FFF0F0 {
+        rectangle "Append-only write-ahead log\nfor durability" as commitlog #FFCCCC
     }
 
-    coord -> commitlog [label="write request", penwidth=2, color="#0066cc", fontcolor="#0066cc"]
+    package "2. MEMTABLE" #F0FFF0 {
+        rectangle "In-memory sorted structure\n(ConcurrentSkipListMap)" as memtable #C8E8C8
+    }
+
+    package "3. SSTABLES" #F0F0FF {
+        rectangle "Immutable sorted files on disk" as sstable #C8C8E8
+    }
+
+    package "4. COMPACTION" #FFF8F0 {
+        rectangle "Background merge of SSTables\n(reduces file count)" as compaction #E8D8C8
+    }
 }
+
+client --> coord
+coord --> commitlog : write request
+commitlog --> memtable : write
+memtable --> sstable : flush
+sstable ..> compaction : merge
+compaction ..> sstable : new SSTable
+
+@enduml
 ```
 
 ---

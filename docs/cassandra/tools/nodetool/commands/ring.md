@@ -43,7 +43,3 @@ Address        Rack   Status State   Load           Owns   Token
 
 - [status](status.md) - Cluster status overview
 - [describecluster](describecluster.md) - Cluster configuration
-
-## Related Documentation
-
-- [Architecture - Data Distribution](../../../architecture/data-distribution.md)

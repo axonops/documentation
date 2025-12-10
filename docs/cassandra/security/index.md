@@ -37,33 +37,6 @@ digraph security_layers {
 
 ---
 
-## Documentation Structure
-
-### Authentication
-
-- **[Authentication Overview](authentication/index.md)** - Authentication concepts
-- **[Password Authentication](authentication/password.md)** - Built-in authenticator
-- **[LDAP Authentication](authentication/ldap.md)** - LDAP integration
-- **[Kerberos Authentication](authentication/kerberos.md)** - Kerberos/GSSAPI
-
-### Authorization
-
-- **[Authorization Overview](authorization/index.md)** - Permission model
-- **[Role Management](authorization/roles.md)** - Creating and managing roles
-- **[Permissions](authorization/permissions.md)** - Permission types
-- **[Data Masking](authorization/data-masking.md)** - Column-level security
-
-### Network Authorization
-
-- **[Network Authorization Overview](network/index.md)** - Datacenter and CIDR-based access control
-
-### Encryption
-
-- **[Encryption Overview](encryption/index.md)** - SSL/TLS concepts
-- **[Client Encryption](encryption/client.md)** - Client-to-node encryption
-- **[Internode Encryption](encryption/internode.md)** - Node-to-node encryption
-- **[Certificate Management](encryption/certificates.md)** - PKI setup
-
 ---
 
 ## Authentication
@@ -596,8 +569,4 @@ auditlogviewer /var/log/cassandra/audit/
 
 ## Next Steps
 
-- **[Authentication Deep Dive](authentication/index.md)** - Authentication options
-- **[Authorization Guide](authorization/index.md)** - Permission management
-- **[Encryption Setup](encryption/index.md)** - SSL/TLS configuration
-- **[Network Security](network/index.md)** - Firewall and isolation
-- **[Audit Logging](audit/index.md)** - Compliance and monitoring
+- **[Configuration Reference](../configuration/index.md)** - Cassandra configuration

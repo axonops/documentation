@@ -190,7 +190,7 @@ With vnodes (recommended), token allocation is automatic:
 
 ```yaml
 # cassandra.yaml
-num_tokens: 256  # Default, provides good distribution
+num_tokens: 16  # Default, provides good distribution
 
 # Optional: Allocate tokens for specific keyspace
 allocate_tokens_for_keyspace: my_keyspace

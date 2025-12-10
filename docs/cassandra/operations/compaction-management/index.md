@@ -21,7 +21,7 @@ concurrent_compactors: 4
 # Compaction large partition warning threshold
 compaction_large_partition_warning_threshold_mb: 100
 ```
-
+  
 ### Runtime Adjustments
 
 ```bash

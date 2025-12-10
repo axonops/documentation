@@ -252,13 +252,6 @@ nodetool snapshot -t pre_backup_$(date +%Y%m%d) $KEYSPACE
 - [nodetool enableautocompaction](enableautocompaction.md) - Control automatic compaction
 - [nodetool disableautocompaction](disableautocompaction.md) - Disable automatic compaction
 
-## Related Documentation
-
-- [Architecture - Compaction](../../../architecture/compaction/index.md) - Compaction strategies and concepts
-- [Troubleshooting - Compaction Backlog](../../../troubleshooting/playbooks/compaction-backlog.md) - Resolving compaction issues
-- [Operations - Maintenance](../../../operations/maintenance/index.md) - Routine maintenance procedures
-- [Configuration - cassandra.yaml](../../../configuration/cassandra-yaml/index.md) - Compaction configuration
-
 ## Version Information
 
 Available in all Apache Cassandra versions. The `--user-defined` option replaced the older major compaction syntax. Token range options provide finer control in Cassandra 4.0+.

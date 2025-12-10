@@ -8,33 +8,28 @@ Compaction is the process of merging SSTables to reduce read amplification, recl
 
 As described in the **[Write Path](../write-path.md)**, Cassandra writes first go to the commit log and memtable. When a memtable reaches its threshold, it flushes to disk as an immutable SSTable. This append-only design enables fast writes but creates a side effect: SSTables accumulate continuously.
 
-```graphviz dot sstable-accumulation.svg
-digraph sstable_accumulation {
-    rankdir=LR;
-    node [fontname="Helvetica", fontsize=11];
-    edge [fontname="Helvetica", fontsize=10];
+```plantuml
+@startuml
+skinparam backgroundColor transparent
 
-    writes [label="Writes", shape=box, style=filled, fillcolor="#fff3cd"];
-    memtable [label="Memtable", shape=box, style=filled, fillcolor="#d4edda"];
+rectangle "Writes" as writes
+rectangle "Memtable" as memtable
 
-    subgraph cluster_disk {
-        label="Disk (SSTables accumulate over time)";
-        style=filled;
-        fillcolor="#f8f9fa";
-
-        ss1 [label="SSTable 1\n(Day 1)", shape=box, style=filled, fillcolor="#e8f4f8"];
-        ss2 [label="SSTable 2\n(Day 2)", shape=box, style=filled, fillcolor="#e8f4f8"];
-        ss3 [label="SSTable 3\n(Day 3)", shape=box, style=filled, fillcolor="#e8f4f8"];
-        dots [label="...", shape=plaintext];
-        ssN [label="SSTable N\n(Day N)", shape=box, style=filled, fillcolor="#e8f4f8"];
-    }
-
-    writes -> memtable [label="write"];
-    memtable -> ss1 [label="flush", style=dashed];
-    memtable -> ss2 [label="flush", style=dashed];
-    memtable -> ss3 [label="flush", style=dashed];
-    memtable -> ssN [label="flush", style=dashed];
+package "Disk (SSTables accumulate over time)" {
+    rectangle "SSTable 1\n(Day 1)" as ss1
+    rectangle "SSTable 2\n(Day 2)" as ss2
+    rectangle "SSTable 3\n(Day 3)" as ss3
+    rectangle "..." as dots
+    rectangle "SSTable N\n(Day N)" as ssN
 }
+
+writes --> memtable : write
+memtable ..> ss1 : flush
+memtable ..> ss2 : flush
+memtable ..> ss3 : flush
+memtable ..> ssN : flush
+
+@enduml
 ```
 
 Each flush creates a new SSTable containing:
@@ -52,38 +47,34 @@ Without intervention, a table receiving continuous writes accumulates hundreds o
 
 Without compaction, SSTable accumulation degrades read performance:
 
-```graphviz dot read-amplification-problem.svg
-digraph read_amplification {
-    rankdir=LR;
-    node [fontname="Helvetica", fontsize=11];
-    edge [fontname="Helvetica", fontsize=10];
+```plantuml
+@startuml
+skinparam backgroundColor transparent
 
-    subgraph cluster_sstables {
-        label="After 100 Days: 100 SSTables";
-        style=filled;
-        fillcolor="#f8f9fa";
+rectangle "Read 'user123'" as query
 
-        ss1 [label="SSTable 1", shape=box, style=filled, fillcolor="#e8f4f8"];
-        ss2 [label="SSTable 2", shape=box, style=filled, fillcolor="#e8f4f8"];
-        ss3 [label="SSTable 3", shape=box, style=filled, fillcolor="#e8f4f8"];
-        dots [label="...", shape=plaintext];
-        ss100 [label="SSTable 100", shape=box, style=filled, fillcolor="#e8f4f8"];
-    }
-
-    query [label="Read 'user123'", shape=box, style=filled, fillcolor="#fff3cd"];
-    result [label="Potentially 100\ndisk seeks", shape=box, style=filled, fillcolor="#f8d7da"];
-
-    query -> ss1 [label="check"];
-    query -> ss2 [label="check"];
-    query -> ss3 [label="check"];
-    query -> dots [style=dashed];
-    query -> ss100 [label="check"];
-
-    ss1 -> result [style=dashed];
-    ss2 -> result [style=dashed];
-    ss3 -> result [style=dashed];
-    ss100 -> result [style=dashed];
+package "After 100 Days: 100 SSTables" {
+    rectangle "SSTable 1" as ss1
+    rectangle "SSTable 2" as ss2
+    rectangle "SSTable 3" as ss3
+    rectangle "..." as dots
+    rectangle "SSTable 100" as ss100
 }
+
+rectangle "Potentially 100\ndisk seeks" as result
+
+query --> ss1 : check
+query --> ss2 : check
+query --> ss3 : check
+query ..> dots
+query --> ss100 : check
+
+ss1 ..> result
+ss2 ..> result
+ss3 ..> result
+ss100 ..> result
+
+@enduml
 ```
 
 Each read must check bloom filters across all SSTables. Even with bloom filter optimization, false positives accumulate—potentially requiring disk seeks to dozens of SSTables for a single partition read.
@@ -92,46 +83,32 @@ Each read must check bloom filters across all SSTables. Even with bloom filter o
 
 ## The Compaction Process
 
-```graphviz dot compaction-process.svg
-digraph compaction_process {
-    rankdir=LR;
-    node [fontname="Helvetica", fontsize=10];
-    edge [fontname="Helvetica", fontsize=9];
-    compound=true;
+```plantuml
+@startuml
+skinparam backgroundColor transparent
 
-    subgraph cluster_before {
-        label="Before Compaction";
-        style=filled;
-        fillcolor="#f8f9fa";
-
-        s1 [label="SSTable 1\nuser123→A\nuser789→D", shape=box, style=filled, fillcolor="#e8f4f8"];
-        s2 [label="SSTable 2\nuser123→B\nuser456→Y", shape=box, style=filled, fillcolor="#e8f4f8"];
-        s3 [label="SSTable 3\nuser456→X", shape=box, style=filled, fillcolor="#e8f4f8"];
-        s4 [label="SSTable 4\nuser123→C\n(deleted)", shape=box, style=filled, fillcolor="#f8d7da"];
-    }
-
-    subgraph cluster_process {
-        label="Compaction Process";
-        style=filled;
-        fillcolor="#fff3cd";
-
-        merge [label="1. Merge-sort all SSTables\n2. Keep newest timestamp per cell\n3. Apply tombstones\n4. Discard expired tombstones", shape=box, style=filled, fillcolor="#ffeeba"];
-    }
-
-    subgraph cluster_after {
-        label="After Compaction";
-        style=filled;
-        fillcolor="#f8f9fa";
-
-        new [label="New SSTable\nuser123→C (newest)\nuser456→X (merged)\nuser789→D\n(deletion applied)", shape=box, style=filled, fillcolor="#d4edda"];
-    }
-
-    s1 -> merge [lhead=cluster_process];
-    s2 -> merge [lhead=cluster_process];
-    s3 -> merge [lhead=cluster_process];
-    s4 -> merge [lhead=cluster_process];
-    merge -> new [ltail=cluster_process];
+package "Before Compaction" {
+    rectangle "SSTable 1\nuser123→A\nuser789→D" as s1
+    rectangle "SSTable 2\nuser123→B\nuser456→Y" as s2
+    rectangle "SSTable 3\nuser456→X" as s3
+    rectangle "SSTable 4\nuser123→C\n(deleted)" as s4
 }
+
+package "Compaction Process" {
+    rectangle "1. Merge-sort all SSTables\n2. Keep newest timestamp per cell\n3. Apply tombstones\n4. Discard expired tombstones" as merge
+}
+
+package "After Compaction" {
+    rectangle "New SSTable\nuser123→C (newest)\nuser456→X (merged)\nuser789→D\n(deletion applied)" as new
+}
+
+s1 --> merge
+s2 --> merge
+s3 --> merge
+s4 --> merge
+merge --> new
+
+@enduml
 ```
 
 ### Benefits
@@ -224,25 +201,37 @@ Example:
 
 ## Strategy Selection
 
-```
-┌─────────────────────────────────────────────────────────────────────┐
-│ COMPACTION STRATEGY DECISION GUIDE                                   │
-├─────────────────────────────────────────────────────────────────────┤
-│                                                                      │
-│ Is the data time-series with TTL?                                   │
-│   YES → TWCS                                                        │
-│   NO  → Continue...                                                 │
-│                                                                      │
-│ Is the workload >70% reads?                                         │
-│   YES → Are SSDs available?                                         │
-│          YES → LCS                                                  │
-│          NO  → STCS                                                 │
-│   NO  → STCS                                                        │
-│                                                                      │
-│ Using Cassandra 5.0+?                                               │
-│   Consider UCS for new deployments                                  │
-│                                                                      │
-└─────────────────────────────────────────────────────────────────────┘
+```plantuml
+@startuml
+skinparam backgroundColor transparent
+
+start
+
+if (Is the data time-series with TTL?) then (YES)
+    :TWCS;
+    stop
+else (NO)
+endif
+
+if (Is the workload >70% reads?) then (YES)
+    if (Are SSDs available?) then (YES)
+        :LCS;
+        stop
+    else (NO)
+        :STCS;
+        stop
+    endif
+else (NO)
+    :STCS;
+    stop
+endif
+
+note right
+  Using Cassandra 5.0+?
+  Consider UCS for new deployments
+end note
+
+@enduml
 ```
 
 ### Strategy by Workload Pattern
@@ -341,6 +330,6 @@ nodetool setconcurrentcompactors 4
 - **[Leveled Compaction (LCS)](lcs.md)** - Optimized for read-heavy workloads
 - **[Time-Window Compaction (TWCS)](twcs.md)** - Designed for time-series data
 - **[Unified Compaction (UCS)](ucs.md)** - Adaptive strategy in Cassandra 5.0+
-- **[Compaction Management](../../../../operations/compaction-management/index.md)** - Tuning, troubleshooting, and maintenance
+- **[Compaction Management](../../../operations/compaction-management/index.md)** - Tuning, troubleshooting, and maintenance
 - **[Tombstones](../tombstones.md)** - How compaction removes deleted data
 - **[SSTable Reference](../sstables.md)** - SSTable file format

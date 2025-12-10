@@ -255,58 +255,33 @@ previous increments plus additional ones.
 
 Counter updates follow a different path than regular writes:
 
-```
+```sql
 UPDATE page_views SET count = count + 1 WHERE page_id = 'home';
-
-┌──────────────────────────────────────────────────────────────────┐
-│ 1. REQUEST ARRIVES AT COORDINATOR                                 │
-│                                                                   │
-│    Client sends increment request                                 │
-│    Coordinator identified (may be any node)                       │
-└───────────────────────────┬──────────────────────────────────────┘
-                            │
-                            ▼
-┌──────────────────────────────────────────────────────────────────┐
-│ 2. LOCAL READ (Critical Step)                                     │
-│                                                                   │
-│    Coordinator reads current counter value from LOCAL replica     │
-│    This retrieves coordinator's current shard value               │
-│    Example: coordinator's shard currently at 150                  │
-└───────────────────────────┬──────────────────────────────────────┘
-                            │
-                            ▼
-┌──────────────────────────────────────────────────────────────────┐
-│ 3. COMPUTE NEW SHARD VALUE                                        │
-│                                                                   │
-│    new_value = current_shard + increment = 150 + 1 = 151         │
-│    new_clock = current_timestamp                                  │
-└───────────────────────────┬──────────────────────────────────────┘
-                            │
-                            ▼
-┌──────────────────────────────────────────────────────────────────┐
-│ 4. REPLICATE TO ALL REPLICAS                                      │
-│                                                                   │
-│    Coordinator sends: { host_id: self, count: 151, clock: now }  │
-│    Sent to ALL replicas (not just CL requirement)                │
-│    Each replica merges shard into its counter cell               │
-└───────────────────────────┬──────────────────────────────────────┘
-                            │
-                            ▼
-┌──────────────────────────────────────────────────────────────────┐
-│ 5. WAIT FOR ACKNOWLEDGMENTS                                       │
-│                                                                   │
-│    Wait for CL replicas to acknowledge                           │
-│    Return success to client                                       │
-└──────────────────────────────────────────────────────────────────┘
 ```
 
-```mermaid
-flowchart TB
-    A["1. REQUEST ARRIVES<br/>Client sends increment"] --> B["2. LOCAL READ<br/>Read current shard value"]
-    B --> C["3. COMPUTE NEW VALUE<br/>current + increment"]
-    C --> D["4. REPLICATE<br/>Send shard to all replicas"]
-    D --> E["5. WAIT FOR ACK<br/>Return success"]
+```plantuml
+@startuml
+skinparam backgroundColor transparent
+title Counter Write Path
+
+rectangle "1. REQUEST ARRIVES AT COORDINATOR\n\nClient sends increment request\nCoordinator identified (may be any node)" as step1
+
+rectangle "2. LOCAL READ (Critical Step)\n\nCoordinator reads current counter value from LOCAL replica\nThis retrieves coordinator's current shard value\nExample: coordinator's shard currently at 150" as step2
+
+rectangle "3. COMPUTE NEW SHARD VALUE\n\nnew_value = current_shard + increment = 150 + 1 = 151\nnew_clock = current_timestamp" as step3
+
+rectangle "4. REPLICATE TO ALL REPLICAS\n\nCoordinator sends: { host_id: self, count: 151, clock: now }\nSent to ALL replicas (not just CL requirement)\nEach replica merges shard into its counter cell" as step4
+
+rectangle "5. WAIT FOR ACKNOWLEDGMENTS\n\nWait for CL replicas to acknowledge\nReturn success to client" as step5
+
+step1 --> step2
+step2 --> step3
+step3 --> step4
+step4 --> step5
+
+@enduml
 ```
+
 
 **Key implications:**
 
@@ -321,48 +296,28 @@ flowchart TB
 
 Reading a counter aggregates shards from multiple replicas:
 
-```
+```sql
 SELECT count FROM page_views WHERE page_id = 'home';
-
-┌──────────────────────────────────────────────────────────────────┐
-│ 1. CONTACT REPLICAS                                               │
-│                                                                   │
-│    Coordinator contacts CL replicas                               │
-│    Each replica returns its complete counter cell (all shards)   │
-└───────────────────────────┬──────────────────────────────────────┘
-                            │
-                            ▼
-┌──────────────────────────────────────────────────────────────────┐
-│ 2. MERGE SHARDS                                                   │
-│                                                                   │
-│    Replica 1: { A: 150@t1, B: 75@t2 }                            │
-│    Replica 2: { A: 150@t1, B: 80@t3, C: 25@t4 }                  │
-│                                                                   │
-│    Merged: { A: 150, B: 80 (higher clock), C: 25 }               │
-└───────────────────────────┬──────────────────────────────────────┘
-                            │
-                            ▼
-┌──────────────────────────────────────────────────────────────────┐
-│ 3. COMPUTE VALUE                                                  │
-│                                                                   │
-│    Sum all shards: 150 + 80 + 25 = 255                           │
-│    Return to client                                               │
-└───────────────────────────┬──────────────────────────────────────┘
-                            │
-                            ▼
-┌──────────────────────────────────────────────────────────────────┐
-│ 4. READ REPAIR (if needed)                                        │
-│                                                                   │
-│    If replicas had different shard sets, trigger repair          │
-│    Ensures replicas converge                                      │
-└──────────────────────────────────────────────────────────────────┘
 ```
 
-```mermaid
-flowchart TB
-    A["1. CONTACT REPLICAS<br/>Request counter from CL nodes"] --> B["2. MERGE SHARDS<br/>Take max clock per host_id"]
-    B --> C["3. COMPUTE VALUE<br/>Sum all shards"]
-    C --> D["4. READ REPAIR<br/>Sync diverged replicas"]
+```plantuml
+@startuml
+skinparam backgroundColor transparent
+title Counter Read Path
+
+rectangle "1. CONTACT REPLICAS\n\nCoordinator contacts CL replicas\nEach replica returns its complete counter cell (all shards)" as step1
+
+rectangle "2. MERGE SHARDS\n\nReplica 1: { A: 150@t1, B: 75@t2 }\nReplica 2: { A: 150@t1, B: 80@t3, C: 25@t4 }\n\nMerged: { A: 150, B: 80 (higher clock), C: 25 }" as step2
+
+rectangle "3. COMPUTE VALUE\n\nSum all shards: 150 + 80 + 25 = 255\nReturn to client" as step3
+
+rectangle "4. READ REPAIR (if needed)\n\nIf replicas had different shard sets, trigger repair\nEnsures replicas converge" as step4
+
+step1 --> step2
+step2 --> step3
+step3 --> step4
+
+@enduml
 ```
 
 ### Consistency Level Behavior

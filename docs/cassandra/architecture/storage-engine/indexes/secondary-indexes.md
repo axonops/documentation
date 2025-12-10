@@ -37,44 +37,29 @@ The implementation made trade-offs that limit secondary index utility:
 
 Secondary indexes store data in hidden tables within the same keyspace as the base table:
 
-```graphviz dot 2i-architecture.svg
-digraph SecondaryIndexArchitecture {
-    fontname="Roboto";
-    node [fontname="Roboto", fontsize=10, fontcolor="white"];
-    edge [fontname="Roboto", fontsize=9, fontcolor="white"];
+```plantuml
+@startuml
+skinparam backgroundColor transparent
+title Secondary Index Storage Architecture
 
-    label="Secondary Index Storage Architecture";
-    labelloc="t";
-    fontsize=14;
-
-    node [shape=box, style="rounded,filled"];
-
-    subgraph cluster_node1 {
-        label="Node 1 (owns tokens 0-100)";
-        style="rounded,filled";
-        fillcolor="#F9E5FF";
-        color="#CC99CC";
-
-        base1 [label="Base Table\nusers\n\npk=user1, city='NYC'\npk=user3, city='LA'", fillcolor="#7B4B96", fontcolor="white"];
-        idx1 [label="Index Table\n.users_city_idx\n\n'NYC' → user1\n'LA' → user3", fillcolor="#964B7B", fontcolor="white"];
-
-        base1 -> idx1 [label="local only", style=dashed, color="#555555"];
-    }
-
-    subgraph cluster_node2 {
-        label="Node 2 (owns tokens 101-200)";
-        style="rounded,filled";
-        fillcolor="#E5F9FF";
-        color="#99CCCC";
-
-        base2 [label="Base Table\nusers\n\npk=user2, city='NYC'\npk=user4, city='Chicago'", fillcolor="#4B7B96", fontcolor="white"];
-        idx2 [label="Index Table\n.users_city_idx\n\n'NYC' → user2\n'Chicago' → user4", fillcolor="#4B9696", fontcolor="white"];
-
-        base2 -> idx2 [label="local only", style=dashed, color="#555555"];
-    }
-
-    note [shape=note, label="Each node indexes only\nits local partitions.\nIndex for 'NYC' is split\nacross multiple nodes.", fillcolor="#FFFFCC", fontcolor="black"];
+package "Node 1 (owns tokens 0-100)" {
+    rectangle "Base Table\nusers\n\npk=user1, city='NYC'\npk=user3, city='LA'" as base1
+    rectangle "Index Table\n.users_city_idx\n\n'NYC' → user1\n'LA' → user3" as idx1
+    base1 ..> idx1 : local only
 }
+
+package "Node 2 (owns tokens 101-200)" {
+    rectangle "Base Table\nusers\n\npk=user2, city='NYC'\npk=user4, city='Chicago'" as base2
+    rectangle "Index Table\n.users_city_idx\n\n'NYC' → user2\n'Chicago' → user4" as idx2
+    base2 ..> idx2 : local only
+}
+
+note bottom
+  Each node indexes only its local partitions.
+  Index for 'NYC' is split across multiple nodes.
+end note
+
+@enduml
 ```
 
 **Key characteristics:**
@@ -124,41 +109,33 @@ data/
 
 When a row is written to a table with secondary indexes:
 
-```graphviz dot 2i-write-path.svg
-digraph WritePathWithIndex {
-    fontname="Roboto";
-    node [fontname="Roboto", fontsize=10];
-    edge [fontname="Roboto", fontsize=9];
+```plantuml
+@startuml
+skinparam backgroundColor transparent
+title Secondary Index Write Path
 
-    label="Secondary Index Write Path";
-    labelloc="t";
-    fontsize=14;
+rectangle "INSERT INTO users\n(id, name, city)\nVALUES (user1, 'Alice', 'NYC')" as write
 
-    node [shape=box, style="rounded,filled", fillcolor="#7B4B96", fontcolor="white"];
-
-    write [label="INSERT INTO users\n(id, name, city)\nVALUES (user1, 'Alice', 'NYC')"];
-
-    subgraph cluster_local {
-        label="Local Node Processing";
-        style="rounded,filled";
-        fillcolor="#F9E5FF";
-        color="#CC99CC";
-
-        commitlog [label="1. Commit Log\n(base + index)"];
-        memtable_base [label="2a. Base Table\nMemtable"];
-        memtable_idx [label="2b. Index Table\nMemtable"];
-    }
-
-    ack [label="ACK to Client", fillcolor="#4B964B"];
-
-    write -> commitlog;
-    commitlog -> memtable_base;
-    commitlog -> memtable_idx;
-    memtable_base -> ack [style=dashed];
-    memtable_idx -> ack [style=dashed];
-
-    note [shape=note, label="Both writes are atomic\nwithin the local node", fillcolor="#FFFFCC", fontcolor="black"];
+package "Local Node Processing" {
+    rectangle "1. Commit Log\n(base + index)" as commitlog
+    rectangle "2a. Base Table\nMemtable" as memtable_base
+    rectangle "2b. Index Table\nMemtable" as memtable_idx
 }
+
+rectangle "ACK to Client" as ack
+
+write --> commitlog
+commitlog --> memtable_base
+commitlog --> memtable_idx
+memtable_base ..> ack
+memtable_idx ..> ack
+
+note bottom of commitlog
+  Both writes are atomic
+  within the local node
+end note
+
+@enduml
 ```
 
 1. Write arrives at replica node
@@ -170,50 +147,34 @@ digraph WritePathWithIndex {
 
 Secondary index queries follow a scatter-gather pattern:
 
-```graphviz dot 2i-query-path.svg
-digraph QueryPath {
-    fontname="Roboto";
-    node [fontname="Roboto", fontsize=10];
-    edge [fontname="Roboto", fontsize=9];
+```plantuml
+@startuml
+skinparam backgroundColor transparent
+title Secondary Index Query: WHERE city = 'NYC'
 
-    label="Secondary Index Query: WHERE city = 'NYC'";
-    labelloc="t";
-    fontsize=14;
+rectangle "Client Query" as client
+rectangle "Coordinator" as coord
 
-    node [shape=box, style="rounded,filled", fillcolor="#7B4B96", fontcolor="white"];
-
-    client [label="Client Query", fillcolor="#CCCCCC", fontcolor="black"];
-    coord [label="Coordinator"];
-
-    subgraph cluster_scatter {
-        label="1. Scatter to ALL nodes";
-        style="rounded,filled";
-        fillcolor="#FFE8E8";
-        color="#CC9999";
-
-        node1 [label="Node 1\nQuery local index"];
-        node2 [label="Node 2\nQuery local index"];
-        node3 [label="Node 3\nQuery local index"];
-    }
-
-    subgraph cluster_gather {
-        label="2. Gather results";
-        style="rounded,filled";
-        fillcolor="#E8FFE8";
-        color="#99CC99";
-
-        results [label="Merge Results\n(coordinator)", fillcolor="#4B964B"];
-    }
-
-    client -> coord;
-    coord -> node1;
-    coord -> node2;
-    coord -> node3;
-    node1 -> results;
-    node2 -> results;
-    node3 -> results;
-    results -> client [label="final result"];
+package "1. Scatter to ALL nodes" {
+    rectangle "Node 1\nQuery local index" as node1
+    rectangle "Node 2\nQuery local index" as node2
+    rectangle "Node 3\nQuery local index" as node3
 }
+
+package "2. Gather results" {
+    rectangle "Merge Results\n(coordinator)" as results
+}
+
+client --> coord
+coord --> node1
+coord --> node2
+coord --> node3
+node1 --> results
+node2 --> results
+node3 --> results
+results --> client : final result
+
+@enduml
 ```
 
 **Query execution steps:**

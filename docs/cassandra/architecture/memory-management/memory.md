@@ -8,60 +8,28 @@ For JVM configuration and garbage collection tuning, see [JVM](jvm.md).
 
 ## Memory Architecture
 
-```graphviz dot memory-architecture.svg
-digraph MemoryArchitecture {
-    bgcolor="transparent"
-    graph [fontname="Helvetica", fontsize=11, rankdir=TB, nodesep=0.3, ranksep=0.4, compound=true]
-    node [fontname="Helvetica", fontsize=10, fontcolor="black", shape=box, style="rounded,filled"]
-    edge [style=invis]
+```plantuml
+@startuml
+skinparam backgroundColor transparent
 
-    subgraph cluster_system {
-        label="SYSTEM MEMORY"
-        labeljust="l"
-        style="rounded,filled"
-        bgcolor="#f0f0f0"
-        fontcolor="black"
-        fontsize=12
-        penwidth=2
+package "SYSTEM MEMORY" {
+    package "JVM HEAP (managed by garbage collector)" #FFE6E6 {
+        card "• Memtables (configurable: heap or off-heap)\n• Key Cache\n• Row Cache (if enabled)\n• Partition Summary (pre-4.0)\n• Internal data structures" as heap_items #FFCCCC
+    }
 
-        subgraph cluster_heap {
-            label="JVM HEAP (managed by garbage collector)"
-            labeljust="l"
-            style="rounded,filled"
-            bgcolor="#ffe6e6"
-            fontcolor="black"
-            fontsize=10
+    package "OFF-HEAP (native memory, not garbage collected)" #E6FFE6 {
+        card "• Bloom filters\n• Compression metadata\n• Partition index (trie, 4.0+)\n• Memtables (if offheap_objects or offheap_buffers)\n• Chunk cache" as offheap_items #CCFFCC
+    }
 
-            heap_items [label="• Memtables (configurable: heap or off-heap)\l• Key Cache\l• Row Cache (if enabled)\l• Partition Summary (pre-4.0)\l• Internal data structures\l", shape=box, style="filled", fillcolor="#ffcccc", fontsize=9]
-        }
-
-        subgraph cluster_offheap {
-            label="OFF-HEAP (native memory, not garbage collected)"
-            labeljust="l"
-            style="rounded,filled"
-            bgcolor="#e6ffe6"
-            fontcolor="black"
-            fontsize=10
-
-            offheap_items [label="• Bloom filters\l• Compression metadata\l• Partition index (trie, 4.0+)\l• Memtables (if offheap_objects or offheap_buffers)\l• Chunk cache\l", shape=box, style="filled", fillcolor="#ccffcc", fontsize=9]
-        }
-
-        subgraph cluster_pagecache {
-            label="OS PAGE CACHE (managed by operating system)"
-            labeljust="l"
-            style="rounded,filled"
-            bgcolor="#e6e6ff"
-            fontcolor="black"
-            fontsize=10
-
-            pagecache_items [label="• Recently read SSTable data\l• Memory-mapped files\l", shape=box, style="filled", fillcolor="#ccccff", fontsize=9]
-        }
-
-        // Force vertical ordering
-        heap_items -> offheap_items
-        offheap_items -> pagecache_items
+    package "OS PAGE CACHE (managed by operating system)" #E6E6FF {
+        card "• Recently read SSTable data\n• Memory-mapped files" as pagecache_items #CCCCFF
     }
 }
+
+heap_items -[hidden]down-> offheap_items
+offheap_items -[hidden]down-> pagecache_items
+
+@enduml
 ```
 
 ---
@@ -215,42 +183,35 @@ Example (64GB server):
 
 ### 64GB Server Configuration
 
-```graphviz dot memory-sizing-64gb.svg
-digraph MemorySizing {
-    bgcolor="transparent"
-    graph [fontname="Helvetica", fontsize=11, rankdir=TB, nodesep=0.3, ranksep=0.4]
-    node [fontname="Helvetica", fontsize=10, fontcolor="black", shape=box, style="rounded,filled"]
-    edge [fontname="Helvetica", fontsize=9, color="black", fontcolor="black", penwidth=1.5]
+```plantuml
+@startuml
+skinparam backgroundColor transparent
 
-    total [label="Total RAM: 64GB", fillcolor="#e0e0e0", penwidth=2]
+rectangle "Total RAM: 64GB" as total #E0E0E0
 
-    subgraph cluster_heap {
-        label=""
-        style=invis
+rectangle "JVM Heap: 24GB" as heap #FFCCCC
+note right of heap
+  • Memtables (heap portion): 4GB
+  • Key Cache: 100MB
+  • Internal: ~20GB
+end note
 
-        heap [label="JVM Heap: 24GB", fillcolor="#ffcccc"]
-        heap_details [label="• Memtables (heap portion): 4GB\l• Key Cache: 100MB\l• Internal: ~20GB\l", shape=box, style="filled", fillcolor="#ffe6e6", fontsize=9]
-    }
+rectangle "Off-Heap: 4-6GB" as offheap #CCFFCC
+note right of offheap
+  • Bloom filters: ~1GB (varies)
+  • Partition indexes: ~2GB (varies)
+  • Chunk cache: 1-3GB
+end note
 
-    subgraph cluster_offheap {
-        label=""
-        style=invis
+rectangle "OS Overhead: 4GB" as os #FFFFCC
+rectangle "Page Cache: 30-32GB" as pagecache #CCCCFF
 
-        offheap [label="Off-Heap: 4-6GB", fillcolor="#ccffcc"]
-        offheap_details [label="• Bloom filters: ~1GB (varies)\l• Partition indexes: ~2GB (varies)\l• Chunk cache: 1-3GB\l", shape=box, style="filled", fillcolor="#e6ffe6", fontsize=9]
-    }
+total --> heap
+total --> offheap
+total --> os
+total --> pagecache
 
-    os [label="OS Overhead: 4GB", fillcolor="#ffffcc"]
-    pagecache [label="Page Cache: 30-32GB", fillcolor="#ccccff"]
-
-    total -> heap
-    total -> offheap
-    total -> os
-    total -> pagecache
-
-    heap -> heap_details [style=dashed, arrowhead=none]
-    offheap -> offheap_details [style=dashed, arrowhead=none]
-}
+@enduml
 ```
 
 ### Configuration

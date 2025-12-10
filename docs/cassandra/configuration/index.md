@@ -23,24 +23,14 @@ This reference covers each configuration file and the settings that matter most.
 ### cassandra.yaml
 
 - **[cassandra.yaml Overview](cassandra-yaml/index.md)** - Main configuration
-- **[Cluster Settings](cassandra-yaml/cluster.md)** - cluster_name, seeds, snitch
-- **[Network Settings](cassandra-yaml/network.md)** - listen_address, ports
-- **[Performance Settings](cassandra-yaml/performance.md)** - Throughput, concurrency
-- **[Storage Settings](cassandra-yaml/storage.md)** - Directories, commit log
-- **[Security Settings](cassandra-yaml/security.md)** - Authentication, encryption
 
 ### JVM Options
 
 - **[JVM Tuning Overview](jvm-options/index.md)** - Heap and GC settings
-- **[Heap Sizing](jvm-options/heap.md)** - Memory allocation
-- **[G1GC Tuning](jvm-options/g1gc.md)** - G1 garbage collector
-- **[ZGC Tuning](jvm-options/zgc.md)** - Z garbage collector (JDK 17+)
 
 ### Snitch Configuration
 
 - **[Snitch Overview](snitch-config/index.md)** - Topology awareness
-- **[GossipingPropertyFileSnitch](snitch-config/gpfs.md)** - Production snitch
-- **[Cloud Snitches](snitch-config/cloud.md)** - AWS, GCP, Azure
 
 ---
 

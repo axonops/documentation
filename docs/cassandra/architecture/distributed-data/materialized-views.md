@@ -72,104 +72,74 @@ The promise: write once, query many ways, with Cassandra handling synchronizatio
 
 MVs face a fundamental distributed systems challenge: a single write to the base table must atomically update views that may reside on completely different nodes.
 
-```graphviz dot mv-distributed-challenge.svg
-digraph MVDistributedChallenge {
-    fontname="Helvetica";
-    node [fontname="Helvetica", fontsize=10];
-    edge [fontname="Helvetica", fontsize=9];
+```plantuml
+@startuml
+skinparam backgroundColor transparent
+title MV Distributed Coordination Challenge
 
-    label="MV Distributed Coordination Challenge";
-    labelloc="t";
-    fontsize=12;
+rectangle "Client" as client
 
-    node [shape=box, style="rounded,filled"];
-
-    client [label="Client Write\nINSERT INTO users\n(user_id=X, email='a@x.com')", fillcolor="#E8E8E8"];
-
-    subgraph cluster_base {
-        label="Base Table Replicas\ntoken(user_id=X) → Nodes 1,2,3";
-        style="rounded,filled";
-        fillcolor="#FFE8E8";
-        color="#CC9999";
-
-        b1 [label="Node 1\n(base replica)", fillcolor="#7B4B96", fontcolor="white"];
-        b2 [label="Node 2\n(base replica)", fillcolor="#7B4B96", fontcolor="white"];
-        b3 [label="Node 3\n(base replica)", fillcolor="#7B4B96", fontcolor="white"];
-    }
-
-    subgraph cluster_view {
-        label="View Replicas\ntoken(email='a@x.com') → Nodes 4,5,6";
-        style="rounded,filled";
-        fillcolor="#E8FFE8";
-        color="#99CC99";
-
-        v1 [label="Node 4\n(view replica)", fillcolor="#4B964B", fontcolor="white"];
-        v2 [label="Node 5\n(view replica)", fillcolor="#4B964B", fontcolor="white"];
-        v3 [label="Node 6\n(view replica)", fillcolor="#4B964B", fontcolor="white"];
-    }
-
-    client -> b1 [label="1. write"];
-    client -> b2;
-    client -> b3;
-
-    b1 -> v1 [label="2. async\nview update", style=dashed];
-    b1 -> v2 [style=dashed];
-    b1 -> v3 [style=dashed];
-
-    note [shape=box, style="rounded,filled", fillcolor="#FFF3CD",
-        label="Base and view replicas are typically\non DIFFERENT nodes because\npartition keys differ"];
+package "Base Table Replicas\ntoken(user_id=X) → Nodes 1,2,3" {
+    rectangle "Node 1\n(coordinator)" as b1
+    rectangle "Node 2" as b2
+    rectangle "Node 3" as b3
 }
+
+package "View Replicas\ntoken(email='a@x.com') → Nodes 4,5,6" {
+    rectangle "Node 4" as v1
+    rectangle "Node 5" as v2
+    rectangle "Node 6" as v3
+}
+
+client --> b1 : 1. write request
+b1 --> b2 : 2. replicate
+b1 --> b3 : 2. replicate
+
+b1 ..> v1 : 3. async\nview update
+b1 ..> v2
+b1 ..> v3
+
+note bottom
+  Base and view replicas are typically
+  on DIFFERENT nodes because
+  partition keys differ.
+end note
+
+@enduml
 ```
 
 ### Write Path Coordination
 
 When a write arrives, the MV coordination involves multiple asynchronous steps:
 
-```graphviz dot mv-write-coordination.svg
-digraph MVWriteCoordination {
-    fontname="Helvetica";
-    node [fontname="Helvetica", fontsize=10];
-    edge [fontname="Helvetica", fontsize=9];
-    rankdir=TB;
+```plantuml
+@startuml
+skinparam backgroundColor transparent
+title MV Write Coordination Flow
 
-    label="MV Write Coordination Flow";
-    labelloc="t";
-    fontsize=12;
+rectangle "1. Client Write Arrives\nat Coordinator" as write
 
-    node [shape=box, style="rounded,filled", fillcolor="#7B4B96", fontcolor="white"];
-
-    write [label="1. Client Write Arrives\nat Coordinator"];
-
-    subgraph cluster_base_coord {
-        label="Base Table Processing";
-        style="rounded,filled";
-        fillcolor="#FFE8E8";
-        color="#CC9999";
-
-        send_base [label="2. Send to Base\nTable Replicas"];
-        apply_base [label="3. Apply Mutation\n+ Compute View Delta"];
-    }
-
-    subgraph cluster_view_coord {
-        label="View Update Processing";
-        style="rounded,filled";
-        fillcolor="#E8FFE8";
-        color="#99CC99";
-
-        batchlog [label="4. Write to\nLocal Batchlog", fillcolor="#FFC107", fontcolor="black"];
-        send_view [label="5. Send View\nMutations", fillcolor="#4B964B"];
-        clear_batch [label="6. Clear\nBatchlog", fillcolor="#4B964B"];
-    }
-
-    ack [label="7. Acknowledge\nto Client"];
-
-    write -> send_base;
-    send_base -> apply_base;
-    apply_base -> batchlog;
-    batchlog -> send_view;
-    send_view -> clear_batch;
-    apply_base -> ack [label="ACK based on\nbase table CL only", style=dashed];
+package "Base Table Processing" {
+    rectangle "2. Send to Base\nTable Replicas" as send_base
+    rectangle "3. Apply Mutation\n+ Compute View Delta" as apply_base
 }
+
+package "View Update Processing" {
+    rectangle "4. Write to\nLocal Batchlog" as batchlog
+    rectangle "5. Send View\nMutations" as send_view
+    rectangle "6. Clear\nBatchlog" as clear_batch
+}
+
+rectangle "7. Acknowledge\nto Client" as ack
+
+write --> send_base
+send_base --> apply_base
+apply_base --> batchlog
+batchlog --> send_view
+send_view --> clear_batch
+apply_base ..> ack : ACK based on\nbase table CL only
+
+@enduml
 ```
 
 **Critical observation**: The client receives acknowledgment after the base table write succeeds, but *before* view updates are guaranteed complete.
@@ -234,44 +204,29 @@ UPDATE users SET email = 'new@x.com' WHERE user_id = X;
 -- 3. INSERT into users_by_email WHERE email = 'new@x.com'
 ```
 
-```graphviz dot mv-read-before-write.svg
-digraph ReadBeforeWrite {
-    fontname="Helvetica";
-    node [fontname="Helvetica", fontsize=10];
-    edge [fontname="Helvetica", fontsize=9];
-    rankdir=LR;
+```plantuml
+@startuml
+skinparam backgroundColor transparent
+title Read-Before-Write for MV Updates
 
-    label="Read-Before-Write for MV Updates";
-    labelloc="t";
-    fontsize=12;
+rectangle "UPDATE users\nSET email='new@x.com'\nWHERE user_id=X" as update
 
-    node [shape=box, style="rounded,filled"];
-
-    update [label="UPDATE users\nSET email='new@x.com'\nWHERE user_id=X", fillcolor="#E8E8E8"];
-
-    subgraph cluster_base {
-        label="Base Table Replica";
-        style="rounded,filled";
-        fillcolor="#FFE8E8";
-
-        read [label="1. Read current row\nemail='old@x.com'", fillcolor="#7B4B96", fontcolor="white"];
-        apply [label="2. Apply update\nemail='new@x.com'", fillcolor="#7B4B96", fontcolor="white"];
-    }
-
-    subgraph cluster_view {
-        label="View Mutations";
-        style="rounded,filled";
-        fillcolor="#E8FFE8";
-
-        del [label="3. DELETE\nemail='old@x.com'", fillcolor="#DC3545", fontcolor="white"];
-        ins [label="4. INSERT\nemail='new@x.com'", fillcolor="#28A745", fontcolor="white"];
-    }
-
-    update -> read;
-    read -> apply;
-    apply -> del;
-    apply -> ins;
+package "Base Table Replica" {
+    rectangle "1. Read current row\nemail='old@x.com'" as read
+    rectangle "2. Apply update\nemail='new@x.com'" as apply
 }
+
+package "View Mutations" {
+    rectangle "3. DELETE\nemail='old@x.com'" as del
+    rectangle "4. INSERT\nemail='new@x.com'" as ins
+}
+
+update --> read
+read --> apply
+apply --> del
+apply --> ins
+
+@enduml
 ```
 
 ### Performance Impact

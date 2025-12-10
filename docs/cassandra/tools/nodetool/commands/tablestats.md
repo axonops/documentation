@@ -300,14 +300,6 @@ nodetool tablestats -F json | jq -r '
 - [nodetool compactionstats](compactionstats.md) - Compaction status
 - [nodetool tpstats](tpstats.md) - Thread pool statistics
 
-## Related Documentation
-
-- [Data Modeling - Anti-Patterns](../../../data-modeling/anti-patterns/index.md) - Avoiding common mistakes
-- [Architecture - Compaction](../../../architecture/compaction/index.md) - Understanding SSTable count
-- [Troubleshooting - Tombstone Accumulation](../../../troubleshooting/playbooks/tombstone-accumulation.md) - Resolving tombstone issues
-- [Troubleshooting - Large Partition](../../../troubleshooting/playbooks/large-partition.md) - Handling large partitions
-- [Monitoring - Key Metrics](../../../monitoring/key-metrics/index.md) - Table-level monitoring
-
 ## Version Information
 
 Available in all Apache Cassandra versions. The command was renamed from `cfstats` to `tablestats` in Cassandra 3.0, with `cfstats` maintained as an alias. JSON/YAML output formats were added in Cassandra 4.0.

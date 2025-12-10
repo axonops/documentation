@@ -17,25 +17,34 @@ Cassandra uses the CQL Native Protocol, a binary protocol designed for high-thro
 | Non-blocking I/O | Driver does not block threads waiting for responses |
 | Configurable concurrency | Limit in-flight requests per connection (default typically 1024-2048) |
 
-```mermaid
-sequenceDiagram
-    participant App as Application
-    participant Drv as Driver
-    participant Node as Cassandra Node
+```plantuml
+@startuml
+skinparam backgroundColor #FFFFFF
+skinparam sequenceArrowThickness 1
+skinparam sequenceParticipantBorderColor #666666
+skinparam sequenceParticipantBackgroundColor #E8E8E8
+skinparam sequenceLifeLineBorderColor #999999
 
-    App->>Drv: Request A
-    Drv->>Node: [Stream 1] Request A
-    App->>Drv: Request B
-    Drv->>Node: [Stream 2] Request B
-    App->>Drv: Request C
-    Drv->>Node: [Stream 3] Request C
+participant "Application" as App
+participant "Driver" as Drv
+participant "Cassandra Node" as Node
 
-    Node-->>Drv: [Stream 2] Response B
-    Drv-->>App: Response B
-    Node-->>Drv: [Stream 1] Response A
-    Drv-->>App: Response A
-    Node-->>Drv: [Stream 3] Response C
-    Drv-->>App: Response C
+App -> Drv: Request A
+Drv -> Node: [Stream 1] Request A
+App -> Drv: Request B
+Drv -> Node: [Stream 2] Request B
+App -> Drv: Request C
+Drv -> Node: [Stream 3] Request C
+
+Node --> Drv: [Stream 2] Response B
+Drv --> App: Response B
+Node --> Drv: [Stream 1] Response A
+Drv --> App: Response A
+Node --> Drv: [Stream 3] Response C
+Drv --> App: Response C
+
+note right of Node: Responses return in\ncompletion order,\nnot request order
+@enduml
 ```
 
 Responses return in completion order, not request order. A single TCP connection handles thousands of concurrent requests.
@@ -158,37 +167,40 @@ Pool configuration parameters:
 
 A typical request flows through these stages:
 
-```mermaid
-flowchart TB
-    A[Application calls session.execute] --> B[Load Balancing Policy]
-    B --> |Select target nodes| C[Acquire Connection]
-    C --> |From pool| D[Serialize & Send]
-    D --> |Assign stream ID| E[Wait for Response]
-    E --> F{Response?}
-    F --> |Success| G[Deserialize & Return]
-    F --> |Error| H{Retry Policy}
-    H --> |Retry allowed| B
-    H --> |No retry| I[Return Error]
+```plantuml
+@startuml
+skinparam backgroundColor transparent
 
-    subgraph "1. ROUTING"
-        B
-    end
+rectangle "**1. ROUTING**" as R {
+    (session.execute) as A
+    (Load Balancing Policy) as B
+}
 
-    subgraph "2. CONNECTION"
-        C
-    end
+rectangle "**2. CONNECTION**" as C {
+    (Acquire Connection) as AC
+}
 
-    subgraph "3. EXECUTE"
-        D
-        E
-    end
+rectangle "**3. EXECUTE**" as E {
+    (Serialize & Send) as D
+    (Wait for Response) as W
+}
 
-    subgraph "4. HANDLE"
-        F
-        G
-        H
-        I
-    end
+rectangle "**4. HANDLE**" as H {
+    (Deserialize & Return) as G
+    (Retry Policy) as RP
+    (Return Error) as ERR
+}
+
+A --> B : select nodes
+B --> AC : target node
+AC --> D : from pool
+D --> W : stream ID
+W --> G : success
+W --> RP : error
+RP --> B : retry
+RP --> ERR : no retry
+
+@enduml
 ```
 
 

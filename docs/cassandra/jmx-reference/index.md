@@ -93,48 +93,6 @@ Cassandra organizes MBeans into these primary domains:
 
 ---
 
-## Documentation Structure
-
-### MBeans Reference
-
-Detailed documentation for all 30+ MBeans:
-
-- **[StorageServiceMBean](mbeans/storage-service.md)** - Core cluster operations
-- **[StorageProxyMBean](mbeans/storage-proxy.md)** - Request coordination
-- **[CompactionManagerMBean](mbeans/compaction-manager.md)** - Compaction management
-- **[ColumnFamilyStoreMBean](mbeans/column-family-store.md)** - Per-table operations
-- **[GossiperMBean](mbeans/gossiper.md)** - Gossip protocol
-- **[StreamManagerMBean](mbeans/stream-manager.md)** - Data streaming
-- **[CacheServiceMBean](mbeans/cache-service.md)** - Cache management
-- **[CommitLogMBean](mbeans/commit-log.md)** - Commit log operations
-- **[HintedHandoffManagerMBean](mbeans/hinted-handoff.md)** - Hint management
-- **[MessagingServiceMBean](mbeans/messaging-service.md)** - Messaging statistics
-- **[EndpointSnitchMBean](mbeans/endpoint-snitch.md)** - Topology awareness
-- **[FailureDetectorMBean](mbeans/failure-detector.md)** - Node failure detection
-- **[BatchlogManagerMBean](mbeans/batchlog-manager.md)** - Batch operations
-
-### Metrics Reference
-
-Comprehensive metrics documentation organized by category:
-
-- **[Client Request Metrics](metrics/client-requests.md)** - Read/write latencies
-- **[Table Metrics](metrics/tables.md)** - Per-table statistics
-- **[Compaction Metrics](metrics/compaction.md)** - Compaction statistics
-- **[Cache Metrics](metrics/caches.md)** - Key/row/chunk cache
-- **[Thread Pool Metrics](metrics/thread-pools.md)** - Executor statistics
-- **[Storage Metrics](metrics/storage.md)** - Disk usage
-- **[Streaming Metrics](metrics/streaming.md)** - Data transfer
-- **[Connection Metrics](metrics/connections.md)** - Client/internode
-- **[Dropped Messages](metrics/dropped-messages.md)** - Timeout tracking
-- **[Memory Metrics](metrics/memory.md)** - Heap/off-heap
-
-### Connecting
-
-- **[JMX Configuration](connecting/configuration.md)** - Enable and secure JMX
-- **[Authentication](connecting/authentication.md)** - JMX security
-- **[Remote Access](connecting/remote-access.md)** - Connect remotely
-- **[SSL/TLS](connecting/ssl.md)** - Encrypted connections
-
 ---
 
 ## Essential Metrics Quick Reference
@@ -296,7 +254,4 @@ List<String> liveNodes = (List<String>) mbsc.getAttribute(
 
 ## Next Steps
 
-1. **[MBeans Reference](mbeans/index.md)** - Detailed MBean documentation
-2. **[Metrics Reference](metrics/index.md)** - Complete metrics catalog
-3. **[JMX Configuration](connecting/configuration.md)** - Setup and security
-4. **[Monitoring Guide](../monitoring/index.md)** - End-to-end monitoring
+- **[Monitoring Guide](../monitoring/index.md)** - End-to-end monitoring

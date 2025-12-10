@@ -221,12 +221,6 @@ fi
 - [nodetool decommission](decommission.md) - Remove node
 - [nodetool setstreamthroughput](setstreamthroughput.md) - Adjust streaming speed
 
-## Related Documentation
-
-- [Operations - Repair](../../../operations/repair/index.md) - Repair operations
-- [Architecture - Consistency](../../../architecture/consistency/index.md) - Read repair concepts
-- [Troubleshooting - Streaming Failures](../../../troubleshooting/playbooks/streaming-failures.md) - Resolving issues
-
 ## Version Information
 
 Available in all Apache Cassandra versions.

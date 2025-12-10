@@ -45,109 +45,67 @@ The feature remains supported but is not recommended for all use cases.
 
 When a base table row is modified, Cassandra automatically updates corresponding rows in all materialized views:
 
-```graphviz dot mv-architecture.svg
-digraph MVArchitecture {
-    fontname="Helvetica";
-    node [fontname="Helvetica", fontsize=10];
-    edge [fontname="Helvetica", fontsize=9];
+```plantuml
+@startuml
+skinparam backgroundColor transparent
+title Materialized View Architecture
 
-    label="Materialized View Architecture";
-    labelloc="t";
-    fontsize=14;
+rectangle "INSERT/UPDATE/DELETE\nBase Table Row" as write
 
-    node [shape=box, style="rounded,filled", fillcolor="#7B4B96", fontcolor="white"];
-
-    write [label="INSERT/UPDATE/DELETE\nBase Table Row"];
-
-    subgraph cluster_base {
-        label="Base Table: users";
-        style="rounded,filled";
-        fillcolor="#F9E5FF";
-        color="#CC99CC";
-
-        base [label="user_id (PK) | email | city | age\n───────────────────────────\nuser1 | a@x.com | NYC | 25\nuser2 | b@y.com | LA | 30"];
-    }
-
-    subgraph cluster_mv1 {
-        label="MV: users_by_email";
-        style="rounded,filled";
-        fillcolor="#E8FFE8";
-        color="#99CC99";
-
-        mv1 [label="email (PK) | user_id | city | age\n───────────────────────────\na@x.com | user1 | NYC | 25\nb@y.com | user2 | LA | 30", fillcolor="#4B964B"];
-    }
-
-    subgraph cluster_mv2 {
-        label="MV: users_by_city";
-        style="rounded,filled";
-        fillcolor="#E8E8FF";
-        color="#9999CC";
-
-        mv2 [label="city (PK) | user_id | email | age\n───────────────────────────\nNYC | user1 | a@x.com | 25\nLA | user2 | b@y.com | 30", fillcolor="#4B4B96"];
-    }
-
-    write -> base;
-    base -> mv1 [label="auto-sync", style=dashed];
-    base -> mv2 [label="auto-sync", style=dashed];
+package "Base Table: users" {
+    rectangle "user_id (PK) | email | city | age\n───────────────────────────\nuser1 | a@x.com | NYC | 25\nuser2 | b@y.com | LA | 30" as base
 }
+
+package "MV: users_by_email" {
+    rectangle "email (PK) | user_id | city | age\n───────────────────────────\na@x.com | user1 | NYC | 25\nb@y.com | user2 | LA | 30" as mv1
+}
+
+package "MV: users_by_city" {
+    rectangle "city (PK) | user_id | email | age\n───────────────────────────\nNYC | user1 | a@x.com | 25\nLA | user2 | b@y.com | 30" as mv2
+}
+
+write --> base
+base ..> mv1 : auto-sync
+base ..> mv2 : auto-sync
+
+@enduml
 ```
 
 ### View Update Mechanism
 
 The MV update process involves several steps:
 
-```graphviz dot mv-update-flow.svg
-digraph MVUpdateFlow {
-    fontname="Helvetica";
-    node [fontname="Helvetica", fontsize=10];
-    edge [fontname="Helvetica", fontsize=9];
+```plantuml
+@startuml
+skinparam backgroundColor transparent
+title Materialized View Update Flow
 
-    label="Materialized View Update Flow";
-    labelloc="t";
-    fontsize=14;
+rectangle "1. Client Write\nto Base Table" as write
 
-    node [shape=box, style="rounded,filled", fillcolor="#7B4B96", fontcolor="white"];
-
-    write [label="1. Client Write\nto Base Table"];
-
-    subgraph cluster_coordinator {
-        label="Coordinator";
-        style="rounded,filled";
-        fillcolor="#F9E5FF";
-        color="#CC99CC";
-
-        receive [label="2. Receive Write"];
-        compute [label="3. Compute MV\nMutations"];
-    }
-
-    subgraph cluster_base_replica {
-        label="Base Table Replica";
-        style="rounded,filled";
-        fillcolor="#FFE8E8";
-        color="#CC9999";
-
-        base_write [label="4a. Apply Base\nTable Write"];
-        read_before [label="4b. Read Current\nRow (if needed)"];
-    }
-
-    subgraph cluster_mv_replica {
-        label="MV Replica (may differ)";
-        style="rounded,filled";
-        fillcolor="#E8FFE8";
-        color="#99CC99";
-
-        mv_write [label="5. Apply MV\nMutation", fillcolor="#4B964B"];
-    }
-
-    ack [label="6. Acknowledge\nto Client"];
-
-    write -> receive;
-    receive -> compute;
-    compute -> base_write;
-    compute -> read_before;
-    read_before -> mv_write [label="async"];
-    base_write -> ack;
+package "Coordinator" {
+    rectangle "2. Receive Write" as receive
+    rectangle "3. Compute MV\nMutations" as compute
 }
+
+package "Base Table Replica" {
+    rectangle "4a. Apply Base\nTable Write" as base_write
+    rectangle "4b. Read Current\nRow (if needed)" as read_before
+}
+
+package "MV Replica (may differ)" {
+    rectangle "5. Apply MV\nMutation" as mv_write
+}
+
+rectangle "6. Acknowledge\nto Client" as ack
+
+write --> receive
+receive --> compute
+compute --> base_write
+compute --> read_before
+read_before ..> mv_write : async
+base_write --> ack
+
+@enduml
 ```
 
 **Key points:**

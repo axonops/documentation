@@ -48,43 +48,32 @@ SAI represents the third generation of Cassandra secondary indexing:
 
 Like SASI, SAI stores index data alongside SSTable components. However, SAI uses a more sophisticated storage format:
 
-```graphviz dot sai-architecture.svg
-digraph SAIArchitecture {
-    fontname="Roboto";
-    node [fontname="Roboto", fontsize=10, fontcolor="white"];
-    edge [fontname="Roboto", fontsize=9, fontcolor="white"];
+```plantuml
+@startuml
+skinparam backgroundColor transparent
+title SAI: Storage Attached Index Architecture
 
-    label="SAI: Storage Attached Index Architecture";
-    labelloc="t";
-    fontsize=14;
+package "SSTable with SAI Components" {
+    rectangle "Data.db" as data
+    rectangle "Index.db" as index
+    rectangle "Filter.db" as filter
 
-    node [shape=box, style="rounded,filled", fillcolor="#7B4B96", fontcolor="white"];
-
-    subgraph cluster_sstable {
-        label="SSTable with SAI Components";
-        style="rounded,filled";
-        fillcolor="#F9E5FF";
-        color="#CC99CC";
-
-        data [label="Data.db"];
-        index [label="Index.db"];
-        filter [label="Filter.db"];
-
-        subgraph cluster_sai {
-            label="SAI Components";
-            style="rounded,filled";
-            fillcolor="#E8E8FF";
-            color="#9999CC";
-
-            kdtree [label="KDTree.db\n(numeric ranges)", fillcolor="#4B4B96"];
-            terms [label="Terms.db\n(string index)", fillcolor="#4B4B96"];
-            postings [label="Postings.db\n(row references)", fillcolor="#4B4B96"];
-            meta [label="Meta.db\n(index metadata)", fillcolor="#4B4B96"];
-        }
+    package "SAI Components" {
+        rectangle "KDTree.db\n(numeric ranges)" as kdtree
+        rectangle "Terms.db\n(string index)" as terms
+        rectangle "Postings.db\n(row references)" as postings
+        rectangle "Meta.db\n(index metadata)" as meta
     }
-
-    note [shape=note, label="Separate component files\nper indexed column\nOptimized structures\nper data type", fillcolor="#FFFFCC", fontcolor="black"];
 }
+
+note right of meta
+  Separate component files
+  per indexed column
+  Optimized structures
+  per data type
+end note
+
+@enduml
 ```
 
 **SAI storage characteristics:**
@@ -174,45 +163,24 @@ data/
 
 SAI uses different internal structures based on data type:
 
-```graphviz dot sai-structures.svg
-digraph SAIStructures {
-    fontname="Roboto";
-    node [fontname="Roboto", fontsize=10, fontcolor="white"];
-    edge [fontname="Roboto", fontsize=9, fontcolor="white"];
+```plantuml
+@startuml
+skinparam backgroundColor transparent
+title SAI Index Structures by Data Type
 
-    label="SAI Index Structures by Data Type";
-    labelloc="t";
-    fontsize=14;
-
-    node [shape=box, style="rounded,filled", fillcolor="#7B4B96", fontcolor="white"];
-
-    subgraph cluster_numeric {
-        label="Numeric Types (int, bigint, float, double, timestamp)";
-        style="rounded,filled";
-        fillcolor="#E8FFE8";
-        color="#99CC99";
-
-        kdtree [label="Balanced KD-Tree\n\nRange queries: O(log n + k)\nPoint queries: O(log n)\nSpace efficient", fillcolor="#4B964B"];
-    }
-
-    subgraph cluster_string {
-        label="String Types (text, varchar, ascii)";
-        style="rounded,filled";
-        fillcolor="#FFE8E8";
-        color="#CC9999";
-
-        trie [label="Trie / Term Dictionary\n\nPrefix queries: O(m)\nEquality: O(m)\nOptional analysis", fillcolor="#964B4B"];
-    }
-
-    subgraph cluster_other {
-        label="Other Types (uuid, inet, blob)";
-        style="rounded,filled";
-        fillcolor="#E8E8FF";
-        color="#9999CC";
-
-        hash [label="Hash-based Index\n\nEquality only: O(1)\nNo range support\nCompact storage", fillcolor="#4B4B96"];
-    }
+package "Numeric Types (int, bigint, float, double, timestamp)" {
+    rectangle "Balanced KD-Tree\n\nRange queries: O(log n + k)\nPoint queries: O(log n)\nSpace efficient" as kdtree
 }
+
+package "String Types (text, varchar, ascii)" {
+    rectangle "Trie / Term Dictionary\n\nPrefix queries: O(m)\nEquality: O(m)\nOptional analysis" as trie
+}
+
+package "Other Types (uuid, inet, blob)" {
+    rectangle "Hash-based Index\n\nEquality only: O(1)\nNo range support\nCompact storage" as hash
+}
+
+@enduml
 ```
 
 | Data Type | Structure | Query Types |
@@ -232,51 +200,34 @@ SAI implements a notification-based architecture that receives mutation events f
 
 Upon table mutation, SAI receives notification callbacks for all write operations. The system processes inserts and updates uniformly, and supports partition-level deletions, range tombstones, and individual row removals.
 
-```graphviz dot sai-write-path.svg
-digraph SAIWritePath {
-    fontname="Helvetica";
-    node [fontname="Helvetica", fontsize=10];
-    edge [fontname="Helvetica", fontsize=9];
-    rankdir=TB;
+```plantuml
+@startuml
+skinparam backgroundColor transparent
+title SAI Write Path Architecture
 
-    label="SAI Write Path Architecture";
-    labelloc="t";
-    fontsize=12;
+rectangle "CQL Mutation\n(INSERT/UPDATE/DELETE)" as mutation
 
-    node [shape=box, style="rounded,filled"];
-
-    mutation [label="CQL Mutation\n(INSERT/UPDATE/DELETE)", fillcolor="#E8E8E8"];
-
-    subgraph cluster_memtable {
-        label="Memtable Phase";
-        style="rounded,filled";
-        fillcolor="#E8F4E8";
-        color="#99CC99";
-
-        notify [label="1. Mutation Notification\nto SAI Indexer", fillcolor="#7B4B96", fontcolor="white"];
-        validate [label="2. Column Value\nExtraction & Validation", fillcolor="#7B4B96", fontcolor="white"];
-        memidx [label="3. Memtable Index Update\n+ Heap Estimation", fillcolor="#7B4B96", fontcolor="white"];
-    }
-
-    subgraph cluster_flush {
-        label="Flush Phase (Two-Stage)";
-        style="rounded,filled";
-        fillcolor="#FFF8E8";
-        color="#CCAA66";
-
-        phase1 [label="4. Phase 1: Row Metadata\n• Token → Row ID mapping\n• Partition offset index\n• Primary key mappings", fillcolor="#4B7B96", fontcolor="white"];
-        phase2 [label="5. Phase 2: Term Index\n• String: Trie construction\n• Numeric: KD-tree construction", fillcolor="#4B7B96", fontcolor="white"];
-    }
-
-    sstable [label="6. SSTable + SAI Components\nPersisted to Disk", fillcolor="#4B964B", fontcolor="white"];
-
-    mutation -> notify;
-    notify -> validate;
-    validate -> memidx;
-    memidx -> phase1 [label="flush trigger"];
-    phase1 -> phase2;
-    phase2 -> sstable;
+package "Memtable Phase" {
+    rectangle "1. Mutation Notification\nto SAI Indexer" as notify
+    rectangle "2. Column Value\nExtraction & Validation" as validate
+    rectangle "3. Memtable Index Update\n+ Heap Estimation" as memidx
 }
+
+package "Flush Phase (Two-Stage)" {
+    rectangle "4. Phase 1: Row Metadata\n• Token → Row ID mapping\n• Partition offset index\n• Primary key mappings" as phase1
+    rectangle "5. Phase 2: Term Index\n• String: Trie construction\n• Numeric: KD-tree construction" as phase2
+}
+
+rectangle "6. SSTable + SAI Components\nPersisted to Disk" as sstable
+
+mutation --> notify
+notify --> validate
+validate --> memidx
+memidx --> phase1 : flush trigger
+phase1 --> phase2
+phase2 --> sstable
+
+@enduml
 ```
 
 #### Memtable Indexing

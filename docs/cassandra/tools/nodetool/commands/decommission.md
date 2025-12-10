@@ -228,13 +228,6 @@ Use `removenode` instead of `decommission` when:
 - [nodetool status](status.md) - Check cluster state
 - [nodetool cleanup](cleanup.md) - Clean up after topology changes
 
-## Related Documentation
-
-- [Operations - Cluster Management](../../../operations/cluster-management/index.md) - Topology operations
-- [Operations - Removing Nodes](../../../operations/cluster-management/removing-nodes.md) - Node removal guide
-- [Architecture - Data Distribution](../../../architecture/data-distribution.md) - Token ownership
-- [Troubleshooting - Streaming Failures](../../../troubleshooting/playbooks/streaming-failures.md) - Resolving stream issues
-
 ## Version Information
 
 Available in all Apache Cassandra versions. Streaming performance improvements were added in Cassandra 4.0.

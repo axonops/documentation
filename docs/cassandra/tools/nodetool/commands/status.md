@@ -188,13 +188,6 @@ nodetool status | awk '
 - [nodetool describecluster](describecluster.md) - Cluster-wide configuration
 - [nodetool gossipinfo](gossipinfo.md) - Gossip protocol state
 
-## Related Documentation
-
-- [Architecture - Data Distribution](../../../architecture/data-distribution.md) - Understanding token ownership
-- [Operations - Cluster Management](../../../operations/cluster-management/index.md) - Managing cluster topology
-- [Troubleshooting - Node Down](../../../troubleshooting/playbooks/node-down.md) - Responding to node failures
-- [Configuration - Snitch Configuration](../../../configuration/snitch-config/index.md) - Datacenter and rack configuration
-
 ## Version Information
 
 This command is available in all Apache Cassandra versions. Output format is consistent across Cassandra 4.x and 5.x releases.

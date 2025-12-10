@@ -206,12 +206,6 @@ done
 - [nodetool compactionstats](compactionstats.md) - Monitor cleanup progress
 - [nodetool decommission](decommission.md) - Remove node from cluster
 
-## Related Documentation
-
-- [Operations - Cluster Management](../../../operations/cluster-management/index.md) - Adding and removing nodes
-- [Operations - Adding Nodes](../../../operations/cluster-management/adding-nodes.md) - Node addition procedures
-- [Architecture - Data Distribution](../../../architecture/data-distribution.md) - Token ownership
-
 ## Version Information
 
 Available in all Apache Cassandra versions. The `-j` parallel jobs option provides control over concurrent cleanup operations.

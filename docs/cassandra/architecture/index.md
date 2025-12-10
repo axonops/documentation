@@ -171,7 +171,20 @@ CREATE KEYSPACE my_app WITH replication = {
 
 ### Cluster Communication
 
-- **[Gossip Protocol](gossip/index.md)** - How nodes discover each other
+- **[Gossip Protocol](cluster-management/gossip.md)** - How nodes discover each other
+
+### Client Connections
+
+- **[Client Connection Architecture](client-connections/index.md)** - How clients communicate with Cassandra
+- **[CQL Protocol](client-connections/cql-protocol.md)** - Binary wire protocol specification
+- **[Async Connections](client-connections/async-connections.md)** - Connection pooling and multiplexing
+- **[Authentication](client-connections/authentication.md)** - SASL authentication mechanisms
+- **[Load Balancing](client-connections/load-balancing.md)** - Request routing policies
+- **[Prepared Statements](client-connections/prepared-statements.md)** - Statement preparation lifecycle
+- **[Pagination](client-connections/pagination.md)** - Query result paging
+- **[Throttling](client-connections/throttling.md)** - Rate limiting and backpressure
+- **[Compression](client-connections/compression.md)** - Protocol compression
+- **[Failure Handling](client-connections/failure-handling.md)** - Retry and speculative execution
 
 ---
 
@@ -179,27 +192,22 @@ CREATE KEYSPACE my_app WITH replication = {
 
 ### Write Path
 
-```graphviz dot writepath.svg
-digraph WritePath {
-    bgcolor="transparent"
-    rankdir=LR
-    graph [fontname="Roboto Flex", fontsize=12]
-    node [fontname="Roboto Flex", fontsize=12]
-    edge [fontname="Roboto Flex", fontsize=12]
+```plantuml
+@startuml
+skinparam backgroundColor transparent
 
-    node [shape=box, style=filled, fillcolor=lightblue]
+rectangle "Client Write\nRequest" as client
+rectangle "Coordinator\nNode\n(any node)" as coord
+rectangle "Commit Log\n(durability)" as commit
+rectangle "Memtable\n(in-memory)" as mem
+rectangle "SSTable\n(on disk)" as sst
 
-    client [label="Client Write\nRequest"]
-    coord [label="Coordinator\nNode\n(any node)"]
-    commit [label="Commit Log\n(durability)"]
-    mem [label="Memtable\n(in-memory)"]
-    sst [label="SSTable\n(on disk)"]
+client -> coord
+coord -> commit
+commit -> mem
+mem -> sst : when full
 
-    client -> coord
-    coord -> commit
-    commit -> mem
-    mem -> sst [label="when full"]
-}
+@enduml
 ```
 
 1. **Commit Log**: Write-ahead log for durability
@@ -208,25 +216,20 @@ digraph WritePath {
 
 ### Read Path
 
-```graphviz dot readpath.svg
-digraph ReadPath {
-    bgcolor="transparent"
-    rankdir=TB
-    graph [fontname="Roboto Flex", fontsize=12]
-    node [fontname="Roboto Flex", fontsize=12]
-    edge [fontname="Roboto Flex", fontsize=12]
+```plantuml
+@startuml
+skinparam backgroundColor transparent
 
-    node [shape=box, style=filled, fillcolor=lightblue]
+rectangle "Client Read Request" as client
+rectangle "Coordinator Node" as coord
+rectangle "Node 1" as n1
+rectangle "Node 2" as n2
 
-    client [label="Client Read Request"]
-    coord [label="Coordinator Node"]
-    n1 [label="Node 1"]
-    n2 [label="Node 2"]
+client -> coord
+coord -> n1 : parallel read
+coord -> n2
 
-    client -> coord
-    coord -> n1 [label="parallel read"]
-    coord -> n2
-}
+@enduml
 ```
 
 ### [SSTable](storage-engine/sstables.md) Structure

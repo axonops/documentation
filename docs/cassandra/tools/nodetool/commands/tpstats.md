@@ -265,14 +265,6 @@ nodetool tpstats | awk '
 - [nodetool compactionstats](compactionstats.md) - Compaction progress
 - [nodetool netstats](netstats.md) - Network and streaming statistics
 
-## Related Documentation
-
-- [Monitoring - Key Metrics](../../../monitoring/key-metrics/index.md) - Understanding thread pool metrics
-- [Troubleshooting - Read Timeout](../../../troubleshooting/playbooks/read-timeout.md) - Diagnosing read issues
-- [Troubleshooting - Write Timeout](../../../troubleshooting/playbooks/write-timeout.md) - Diagnosing write issues
-- [Performance - JVM Tuning](../../../performance/jvm-tuning/index.md) - Thread and memory optimization
-- [Configuration - cassandra.yaml](../../../configuration/cassandra-yaml/index.md) - Thread pool configuration
-
 ## Version Information
 
 Available in all Apache Cassandra versions. The `-F` format option was added in Cassandra 4.0. Thread pool names and availability may vary slightly between versions.

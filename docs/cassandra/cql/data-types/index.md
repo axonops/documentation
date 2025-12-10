@@ -795,7 +795,4 @@ LIMIT 10;
 
 ## Next Steps
 
-- **[Native Types Detail](native-types.md)** - In-depth native type reference
-- **[Collections Detail](collections.md)** - Collection operations
-- **[User-Defined Types](udts.md)** - Creating and using UDTs
 - **[DDL Commands](../ddl/index.md)** - Schema management

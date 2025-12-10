@@ -48,9 +48,8 @@ docker exec -it cassandra cqlsh
 
 For production deployments, follow our detailed guides:
 
-1. **[Linux Installation](installation/linux.md)** - Ubuntu, Debian, RHEL, CentOS
-2. **[Kubernetes Deployment](installation/kubernetes.md)** - K8ssandra and operators
-3. **[Cloud Deployment](../cloud/index.md)** - AWS, GCP, Azure
+1. **[Installation Overview](installation/index.md)** - Various installation methods
+2. **[Cloud Deployment](../cloud/index.md)** - AWS, GCP, Azure
 
 ## Getting Started Guides
 
@@ -63,10 +62,7 @@ For production deployments, follow our detailed guides:
 
 ### 2. Installation
 
-- **[Installation Overview](installation/index.md)**
-  - [Linux Installation](installation/linux.md) - Package managers and tarball
-  - [Docker](installation/docker.md) - Development and testing
-  - [Kubernetes](installation/kubernetes.md) - Production Kubernetes deployment
+- **[Installation Overview](installation/index.md)** - Various installation methods
   - [Cloud Providers](../cloud/index.md) - AWS, GCP, Azure
 
 ### 3. First Cluster Setup
@@ -86,11 +82,7 @@ For production deployments, follow our detailed guides:
 
 ### 5. Connect the Application
 
-- **[Driver Setup](drivers/index.md)**
-  - [Java Driver](drivers/java-driver.md)
-  - [Python Driver](drivers/python-driver.md)
-  - [Node.js Driver](drivers/nodejs-driver.md)
-  - [Go Driver](drivers/go-driver.md)
+- **[Driver Setup](drivers/index.md)** - Client drivers for various languages
 
 ### 6. Production Readiness
 

@@ -63,97 +63,57 @@ Each generation addressed limitations of its predecessors while introducing new 
 
 All Cassandra secondary indexes share a common principle: they create a mapping from indexed column values to partition keys. The implementation of this mapping differs significantly between index types.
 
-```graphviz dot index-concept.svg
-digraph IndexConcept {
-    fontname="Helvetica";
-    node [fontname="Helvetica", fontsize=10];
-    edge [fontname="Helvetica", fontsize=9];
+```plantuml
+@startuml
+skinparam backgroundColor transparent
+title Secondary Index Concept: Value → Partition Key Mapping
 
-    label="Secondary Index Concept: Value → Partition Key Mapping";
-    labelloc="t";
-    fontsize=14;
-
-    node [shape=box, style="rounded,filled", fillcolor="#7B4B96", fontcolor="white"];
-
-    subgraph cluster_base {
-        label="Base Table: users";
-        style="rounded,filled";
-        fillcolor="#F9E5FF";
-        color="#CC99CC";
-
-        row1 [label="pk=user1 | name='Alice' | city='NYC'"];
-        row2 [label="pk=user2 | name='Bob' | city='LA'"];
-        row3 [label="pk=user3 | name='Carol' | city='NYC'"];
-    }
-
-    subgraph cluster_index {
-        label="Index on city";
-        style="rounded,filled";
-        fillcolor="#E8F4E8";
-        color="#99CC99";
-
-        idx1 [label="'NYC' → [user1, user3]", fillcolor="#4B964B"];
-        idx2 [label="'LA' → [user2]", fillcolor="#4B964B"];
-    }
-
-    row1 -> idx1 [style=dashed, color="#555555"];
-    row3 -> idx1 [style=dashed, color="#555555"];
-    row2 -> idx2 [style=dashed, color="#555555"];
+package "Base Table: users" {
+    rectangle "pk=user1 | name='Alice' | city='NYC'" as row1
+    rectangle "pk=user2 | name='Bob' | city='LA'" as row2
+    rectangle "pk=user3 | name='Carol' | city='NYC'" as row3
 }
+
+package "Index on city" {
+    rectangle "'NYC' → [user1, user3]" as idx1
+    rectangle "'LA' → [user2]" as idx2
+}
+
+row1 ..> idx1
+row3 ..> idx1
+row2 ..> idx2
+
+@enduml
 ```
 
 ### Storage Location Differences
 
 The primary architectural distinction between index types is where index data is stored:
 
-```graphviz dot index-storage.svg
-digraph IndexStorage {
-    fontname="Helvetica";
-    node [fontname="Helvetica", fontsize=10];
-    edge [fontname="Helvetica", fontsize=9];
+```plantuml
+@startuml
+skinparam backgroundColor transparent
+title Index Storage Architecture Comparison
 
-    label="Index Storage Architecture Comparison";
-    labelloc="t";
-    fontsize=14;
-
-    node [shape=box, style="rounded,filled"];
-
-    subgraph cluster_2i {
-        label="Secondary Index (2i)\nSeparate Hidden Tables";
-        style="rounded,filled";
-        fillcolor="#FFE8E8";
-        color="#CC9999";
-
-        base2i [label="Base Table\nSSTable", fillcolor="#7B4B96", fontcolor="white"];
-        idx2i [label="Index Table\n(hidden)\nSSTable", fillcolor="#964B4B", fontcolor="white"];
-
-        base2i -> idx2i [label="separate\ncompaction", style=dashed];
-    }
-
-    subgraph cluster_sasi {
-        label="SASI\nSSTable-Attached";
-        style="rounded,filled";
-        fillcolor="#E8FFE8";
-        color="#99CC99";
-
-        baseSASI [label="Base Table\nSSTable", fillcolor="#7B4B96", fontcolor="white"];
-        idxSASI [label="Index Component\n(attached to SSTable)", fillcolor="#4B964B", fontcolor="white"];
-
-        baseSASI -> idxSASI [label="same\nSSTable", style=solid];
-    }
-
-    subgraph cluster_sai {
-        label="SAI\nSSTable-Attached";
-        style="rounded,filled";
-        fillcolor="#E8E8FF";
-        color="#9999CC";
-
-        baseSAI [label="Base Table\nSSTable", fillcolor="#7B4B96", fontcolor="white"];
-        idxSAI [label="Index Component\n(attached to SSTable)", fillcolor="#4B4B96", fontcolor="white"];
-
-        baseSAI -> idxSAI [label="same\nSSTable", style=solid];
-    }
+package "Secondary Index (2i) - Separate Hidden Tables" {
+    rectangle "Base Table\nSSTable" as base2i
+    rectangle "Index Table\n(hidden)\nSSTable" as idx2i
+    base2i ..> idx2i : separate\ncompaction
 }
+
+package "SASI - SSTable-Attached" {
+    rectangle "Base Table\nSSTable" as baseSASI
+    rectangle "Index Component\n(attached to SSTable)" as idxSASI
+    baseSASI --> idxSASI : same\nSSTable
+}
+
+package "SAI - SSTable-Attached" {
+    rectangle "Base Table\nSSTable" as baseSAI
+    rectangle "Index Component\n(attached to SSTable)" as idxSAI
+    baseSAI --> idxSAI : same\nSSTable
+}
+
+@enduml
 ```
 
 **Separate Tables (2i)**: Legacy secondary indexes store index data in hidden tables. These tables have their own SSTables and compact independently from base table data.
@@ -179,44 +139,40 @@ digraph IndexStorage {
 
 ### Choosing an Index Type
 
-```graphviz dot index-selection.svg
-digraph IndexSelection {
-    fontname="Helvetica";
-    node [fontname="Helvetica", fontsize=10];
-    edge [fontname="Helvetica", fontsize=9];
+```plantuml
+@startuml
+skinparam backgroundColor transparent
+title Index Type Selection Guide
 
-    label="Index Type Selection Guide";
-    labelloc="t";
-    fontsize=14;
+start
 
-    node [shape=diamond, style="filled", fillcolor="#F9E5FF", color="#CC99CC"];
-    edge [color="#555555"];
+if (Using Cassandra 5.0+?) then (YES)
+    :Use SAI\n(recommended);
+    stop
+else (NO)
+endif
 
-    q1 [label="Using\nCassandra 5.0+?"];
-    q2 [label="Need text search\n(LIKE, CONTAINS)?"];
-    q3 [label="Need numeric\nrange queries?"];
-    q4 [label="High cardinality\ncolumn?"];
+if (Need text search\n(LIKE, CONTAINS)?) then (YES)
+    :Use SASI (3.4+)\nor external search;
+    stop
+else (NO)
+endif
 
-    node [shape=box, style="rounded,filled", fillcolor="#7B4B96", fontcolor="white"];
+if (Need numeric\nrange queries?) then (YES)
+    :Use SASI (3.4+)\nor redesign model;
+    stop
+else (NO)
+endif
 
-    sai [label="Use SAI\n(recommended)"];
-    sasi [label="Use SASI (3.4+)\nor external search"];
-    sasi2 [label="Use SASI (3.4+)\nor redesign model"];
-    redesign [label="Avoid 2i\nRedesign model or use SAI"];
-    si [label="Secondary Index (2i)\nacceptable"];
+if (High cardinality\ncolumn?) then (YES)
+    :Avoid 2i\nRedesign model or use SAI;
+    stop
+else (NO)
+    :Secondary Index (2i)\nacceptable;
+    stop
+endif
 
-    q1 -> sai [label="YES", fontcolor="#006600"];
-    q1 -> q2 [label="NO", fontcolor="#660000"];
-
-    q2 -> sasi [label="YES", fontcolor="#006600"];
-    q2 -> q3 [label="NO", fontcolor="#660000"];
-
-    q3 -> sasi2 [label="YES", fontcolor="#006600"];
-    q3 -> q4 [label="NO", fontcolor="#660000"];
-
-    q4 -> redesign [label="YES", fontcolor="#006600"];
-    q4 -> si [label="NO", fontcolor="#660000"];
-}
+@enduml
 ```
 
 ---

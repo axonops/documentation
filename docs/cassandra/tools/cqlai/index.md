@@ -132,28 +132,6 @@ CONSISTENCY QUORUM;
 
 ---
 
-## Documentation
-
-### Getting Started
-
-- **[Installation](installation/index.md)** - Install CQLAI on any platform
-- **[Quick Start](quickstart.md)** - Get running in 5 minutes
-- **[Configuration](configuration/index.md)** - Configure connections and AI providers
-
-### Features
-
-- **[Commands Reference](commands/index.md)** - All supported commands
-- **[AI Query Generation](ai-features/index.md)** - Natural language to CQL
-- **[Parquet Support](parquet/index.md)** - Import/export Parquet files
-- **[Keyboard Shortcuts](keyboard-shortcuts.md)** - Navigation and editing
-
-### Reference
-
-- **[CLI Options](cli-options.md)** - Command-line flags
-- **[Configuration File](configuration/config-file.md)** - cqlai.json reference
-- **[cqlshrc Compatibility](configuration/cqlshrc.md)** - Migrate from cqlsh
-- **[Troubleshooting](troubleshooting.md)** - Common issues
-
 ---
 
 ## Comparison with cqlsh
@@ -256,6 +234,4 @@ cqlai>
 
 ## Next Steps
 
-1. **[Install CQLAI](installation/index.md)** - Get started
-2. **[Configure AI](ai-features/index.md)** - Set up AI query generation
-3. **[Learn Commands](commands/index.md)** - Full command reference
+- **[GitHub Repository](https://github.com/axonops/cqlai)** - Download and documentation

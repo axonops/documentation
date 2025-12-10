@@ -204,13 +204,6 @@ fi
 - [nodetool tpstats](tpstats.md) - Thread pool statistics
 - [nodetool tablestats](tablestats.md) - Per-table statistics
 
-## Related Documentation
-
-- [Monitoring - Key Metrics](../../../monitoring/key-metrics/index.md) - Understanding node metrics
-- [Performance - JVM Tuning](../../../performance/jvm-tuning/index.md) - Heap and GC optimization
-- [Configuration - cassandra.yaml](../../../configuration/cassandra-yaml/index.md) - Cache configuration settings
-- [Operations - Repair](../../../operations/repair/index.md) - Maintaining repair percentage
-
 ## Version Information
 
 Available in all Apache Cassandra versions. The `Chunk Cache` field was added in Cassandra 4.0. Output format is consistent across 4.x and 5.x releases.

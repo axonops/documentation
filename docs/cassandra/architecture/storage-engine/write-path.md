@@ -6,20 +6,62 @@ For cluster-level write coordination—how writes are routed to replicas and how
 
 ---
 
-## Scope: Node-Level Storage
+## Architecture Overview
 
 When a node receives a write (whether as coordinator or replica), the storage engine performs these steps:
 
 
-```mermaid
-flowchart TB
-    A[Incoming Mutation] --> B[1. COMMIT LOG]
-    B --> C[2. MEMTABLE]
-    C --> D[3. ACKNOWLEDGMENT]
+```plantuml
+@startuml
+skinparam backgroundColor transparent
 
-    B -.- B1[/"Append mutation to write-ahead log<br/>Purpose: Durability"/]
-    C -.- C1[/"Insert into sorted structure<br/>Purpose: Fast writes, queryable"/]
-    D -.- D1[/"Write complete<br/>SSTable flush is async"/]
+rectangle "Coordinator Node" as coordinator #e8e8e8
+
+package "Replica Node (Linux Server)" {
+    package "Cassandra Process (JVM)" {
+        rectangle "Storage Engine" as engine #f0f0f0
+
+        package "Off-Heap Memory" {
+            rectangle "Memtable\n(per table)" as memtable #c8e8c8
+            rectangle "Row Cache\n(optional)" as rowcache #ffffcc
+            rectangle "Key Cache" as keycache #ffffcc
+            rectangle "Bloom Filters" as bloom #e8e8f8
+            rectangle "Compression\nMetadata" as compress #e8e8f8
+        }
+    }
+
+    package "Filesystem" {
+        package "/var/lib/cassandra/commitlog" as commitlog_dir {
+            card "CommitLog-7-001.log" as cl1
+            card "CommitLog-7-002.log" as cl2
+        }
+
+        package "/var/lib/cassandra/data/keyspace/table" as data_dir {
+            card "SSTable-1-Data.db" as sst1
+            card "SSTable-2-Data.db" as sst2
+            card "SSTable-3-Data.db" as sst3
+        }
+
+        commitlog_dir -[hidden]down- data_dir
+    }
+}
+
+coordinator --> engine : Mutation
+engine --> cl1 : 1. Append\n(durability)
+engine --> memtable : 2. Insert\n(queryable)
+memtable --> sst3 : 3. Flush\n(background)
+
+note bottom of cl1
+    Write-ahead log
+    Replayed on crash recovery
+end note
+
+note bottom of sst3
+    Immutable sorted files
+    Created by flush
+end note
+
+@enduml
 ```
 
 The write is considered durable once it reaches the commit log. The memtable update makes the data immediately queryable. Flushing to SSTable happens later, in the background.
@@ -460,36 +502,24 @@ Memtables are flushed to SSTables under the following conditions:
 
 During flush, a single table may temporarily have multiple memtables: one active memtable receiving new writes, while older memtables are still being written to disk. This allows writes to continue uninterrupted during flush operations.
 
-```graphviz dot memtable-flush-lifecycle.svg
-digraph FlushLifecycle {
-    bgcolor="transparent"
-    graph [fontname="Helvetica", fontsize=11, rankdir=LR, nodesep=0.5]
-    node [fontname="Helvetica", fontsize=10]
-    edge [fontname="Helvetica", fontsize=9]
+```plantuml
+@startuml
+skinparam backgroundColor transparent
+title Single table: memtable lifecycle during flush
 
-    label="Single table: memtable lifecycle during flush"
-    labelloc="t"
+rectangle "Active\nMemtable\n(receives writes)" as active #a8d5a2
+rectangle "Flushing\nMemtable\n(writing to disk)" as flushing #fff3b0
+rectangle "Discarded\n(SSTable created)" as discarded #e0e0e0
 
-    // Memtable states
-    node [shape=box, style="rounded,filled", width=1.5, height=0.8]
+active --> flushing : flush triggered
+flushing --> discarded : flush complete
 
-    active [label="Active\nMemtable\n(receives writes)", fillcolor="#a8d5a2"]
-    flushing [label="Flushing\nMemtable\n(writing to disk)", fillcolor="#fff3b0"]
-    discarded [label="Discarded\n(SSTable created)", fillcolor="#e0e0e0", style="rounded,dashed,filled"]
+note bottom of flushing
+    New empty memtable
+    created immediately
+end note
 
-    // Flow
-    edge [penwidth=1.5, color="#333333"]
-    active -> flushing [label="flush triggered"]
-    flushing -> discarded [label="flush complete"]
-
-    // New memtable note
-    node [shape=note, style=filled, fillcolor="#e8f4fc", width=1.2, height=0.6]
-    note [label="New empty\nmemtable\ncreated"]
-
-    edge [style=dashed, color="#666666"]
-    flushing -> note [label="immediately", dir=none]
-    note -> active [style=invis]
-}
+@enduml
 ```
 
 All memtables (active and flushing) are checked during reads to ensure data visibility.

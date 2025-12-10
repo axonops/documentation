@@ -75,7 +75,8 @@ markdown_extensions:
   - pymdownx.arithmatex:
       generic: true
   - plantuml_markdown:
-      server: http://www.plantuml.com/plantuml
+      format: svg         # or png
+      cachedir: .plantuml # optional cache dir
   - mkdocs_graphviz
 
 plugins:
@@ -305,6 +306,18 @@ nav:
           - Node Lifecycle: cassandra/architecture/cluster-management/node-lifecycle.md
           - Node Replacement: cassandra/architecture/cluster-management/node-replacement.md
           - Scaling Operations: cassandra/architecture/cluster-management/scaling.md
+        - Fault Tolerance: cassandra/architecture/fault-tolerance/index.md
+        - Client Connections:
+          - Overview: cassandra/architecture/client-connections/index.md
+          - CQL Protocol: cassandra/architecture/client-connections/cql-protocol.md
+          - Async Connections: cassandra/architecture/client-connections/async-connections.md
+          - Authentication: cassandra/architecture/client-connections/authentication.md
+          - Pagination: cassandra/architecture/client-connections/pagination.md
+          - Throttling: cassandra/architecture/client-connections/throttling.md
+          - Load Balancing: cassandra/architecture/client-connections/load-balancing.md
+          - Compression: cassandra/architecture/client-connections/compression.md
+          - Prepared Statements: cassandra/architecture/client-connections/prepared-statements.md
+          - Failure Handling: cassandra/architecture/client-connections/failure-handling.md
       - Application Development:
         - Overview: cassandra/application-development/index.md
         - CQL Reference:

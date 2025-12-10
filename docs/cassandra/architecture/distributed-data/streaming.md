@@ -10,44 +10,28 @@ Data streaming is the mechanism by which Cassandra nodes transfer SSTable data d
 
 Streaming is Cassandra's bulk data transfer protocol for moving SSTable segments between nodes. Unlike the normal read/write path that operates on individual rows, streaming transfers entire SSTable files or portions thereof at the file level.
 
-```graphviz dot streaming-overview.svg
-digraph StreamingOverview {
-    fontname="Helvetica";
-    node [fontname="Helvetica", fontsize=10];
-    edge [fontname="Helvetica", fontsize=9];
+```plantuml
+@startuml
+skinparam backgroundColor transparent
+title Streaming vs Normal Read/Write Path
 
-    label="Streaming vs Normal Read/Write Path";
-    labelloc="t";
-    fontsize=12;
+package "Normal Path (row-level)" {
+    rectangle "Client" as client
+    rectangle "Coordinator" as coord
+    rectangle "Replica" as replica
 
-    node [shape=box, style="rounded,filled"];
-
-    subgraph cluster_normal {
-        label="Normal Path\n(row-level)";
-        style="rounded,filled";
-        fillcolor="#E8F4E8";
-        color="#99CC99";
-
-        client [label="Client", fillcolor="#E8E8E8", fontcolor="black"];
-        coord [label="Coordinator", fillcolor="#5B9BD5", fontcolor="white"];
-        replica [label="Replica", fillcolor="#5B9BD5", fontcolor="white"];
-
-        client -> coord [label="CQL query"];
-        coord -> replica [label="row mutation"];
-    }
-
-    subgraph cluster_streaming {
-        label="Streaming Path\n(SSTable-level)";
-        style="rounded,filled";
-        fillcolor="#FFE8E8";
-        color="#CC9999";
-
-        source [label="Source Node\nSSTable files", fillcolor="#C55A11", fontcolor="white"];
-        target [label="Target Node\nSSTable files", fillcolor="#C55A11", fontcolor="white"];
-
-        source -> target [label="SSTable segments\n(bulk transfer)", penwidth=2];
-    }
+    client --> coord : CQL query
+    coord --> replica : row mutation
 }
+
+package "Streaming Path (SSTable-level)" {
+    rectangle "Source Node\nSSTable files" as source
+    rectangle "Target Node\nSSTable files" as target
+
+    source ==> target : SSTable segments\n(bulk transfer)
+}
+
+@enduml
 ```
 
 ### When Streaming Occurs
@@ -69,71 +53,46 @@ digraph StreamingOverview {
 
 Cassandra's streaming protocol operates as a separate subsystem from the CQL protocol:
 
-```graphviz dot protocol-stack.svg
-digraph ProtocolStack {
-    fontname="Helvetica";
-    node [fontname="Helvetica", fontsize=10];
-    edge [fontname="Helvetica", fontsize=9];
-    rankdir=TB;
+```plantuml
+@startuml
+skinparam backgroundColor transparent
+title Streaming Protocol Stack
 
-    label="Streaming Protocol Stack";
-    labelloc="t";
-    fontsize=12;
-
-    node [shape=box, style="rounded,filled", width=5];
-
-    subgraph cluster_session {
-        label="Streaming Session";
-        style="rounded,filled";
-        fillcolor="#E8E8E8";
-        color="#999999";
-
-        coord [label="Stream Coordinator\n• Identifies ranges\n• Selects SSTables\n• Manages transfers", fillcolor="#5B9BD5", fontcolor="white"];
-        recv [label="Stream Receiver\n• Accepts connections\n• Receives file segments\n• Writes to local storage", fillcolor="#5B9BD5", fontcolor="white"];
-
-        coord -> recv [style=invis];
-        {rank=same; coord; recv}
-    }
-
-    messaging [label="Messaging Layer\nStreamInitMessage | FileMessage | StreamReceivedMessage | StreamCompleteMessage", fillcolor="#70AD47", fontcolor="white"];
-
-    transport [label="Transport Layer\n• Dedicated streaming port (default: storage_port)\n• Optionally encrypted (TLS)\n• Compression (LZ4)", fillcolor="#C55A11", fontcolor="white"];
-
-    coord -> messaging [style=invis];
-    recv -> messaging [style=invis];
-    messaging -> transport;
+package "Streaming Session" {
+    rectangle "Stream Coordinator\n• Identifies ranges\n• Selects SSTables\n• Manages transfers" as coord
+    rectangle "Stream Receiver\n• Accepts connections\n• Receives file segments\n• Writes to local storage" as recv
 }
+
+rectangle "Messaging Layer\nStreamInitMessage | FileMessage | StreamReceivedMessage | StreamCompleteMessage" as messaging
+
+rectangle "Transport Layer\n• Dedicated streaming port (default: storage_port)\n• Optionally encrypted (TLS)\n• Compression (LZ4)" as transport
+
+coord -[hidden]down-> messaging
+recv -[hidden]down-> messaging
+messaging --> transport
+
+@enduml
 ```
 
 ### Streaming Session Lifecycle
 
 A streaming session progresses through distinct phases:
 
-```graphviz dot streaming-lifecycle.svg
-digraph StreamingLifecycle {
-    fontname="Helvetica";
-    node [fontname="Helvetica", fontsize=10];
-    edge [fontname="Helvetica", fontsize=9];
-    rankdir=LR;
+```plantuml
+@startuml
+skinparam backgroundColor transparent
+title Streaming Session State Machine
 
-    label="Streaming Session State Machine";
-    labelloc="t";
-    fontsize=12;
+[*] --> INITIALIZED
+INITIALIZED --> PREPARING : session start
+PREPARING --> STREAMING : plans exchanged
+PREPARING --> FAILED : error
+STREAMING --> COMPLETE : all files transferred
+STREAMING --> FAILED : error/timeout
+COMPLETE --> [*]
+FAILED --> [*]
 
-    node [shape=box, style="rounded,filled", fillcolor="#5B9BD5", fontcolor="white"];
-
-    init [label="INITIALIZED"];
-    preparing [label="PREPARING"];
-    streaming [label="STREAMING"];
-    complete [label="COMPLETE", fillcolor="#70AD47"];
-    failed [label="FAILED", fillcolor="#C00000"];
-
-    init -> preparing [label="session start"];
-    preparing -> streaming [label="plans exchanged"];
-    streaming -> complete [label="all files transferred"];
-    streaming -> failed [label="error/timeout"];
-    preparing -> failed [label="error"];
-}
+@enduml
 ```
 
 **Phase descriptions:**
@@ -150,49 +109,36 @@ digraph StreamingLifecycle {
 
 Cassandra 4.0 introduced zero-copy streaming, which transfers entire SSTable components without deserialization:
 
-```graphviz dot zero-copy-comparison.svg
-digraph ZeroCopyComparison {
-    fontname="Helvetica";
-    node [fontname="Helvetica", fontsize=10];
-    edge [fontname="Helvetica", fontsize=9];
-    rankdir=LR;
+```plantuml
+@startuml
+skinparam backgroundColor transparent
+title Traditional vs Zero-Copy Streaming
 
-    label="Traditional vs Zero-Copy Streaming";
-    labelloc="t";
-    fontsize=12;
+package "Traditional Streaming (pre-4.0)" {
+    rectangle "SSTable\n(source)" as src1
+    rectangle "Memory\n(heap)" as mem
+    rectangle "SSTable\n(target)" as tgt1
 
-    node [shape=box, style="rounded,filled"];
+    src1 --> mem : deserialize
+    mem --> tgt1 : serialize
 
-    subgraph cluster_traditional {
-        label="Traditional Streaming (pre-4.0)";
-        style="rounded,filled";
-        fillcolor="#FFE8E8";
-        color="#CC9999";
-
-        src1 [label="SSTable\n(source)", fillcolor="#5B9BD5", fontcolor="white"];
-        mem [label="Memory\n(heap)", fillcolor="#FFC000", fontcolor="black"];
-        tgt1 [label="SSTable\n(target)", fillcolor="#5B9BD5", fontcolor="white"];
-
-        src1 -> mem [label="deserialize"];
-        mem -> tgt1 [label="serialize"];
-
-        overhead [label="CPU + GC overhead", shape=plaintext, fontcolor="#C00000"];
-    }
-
-    subgraph cluster_zerocopy {
-        label="Zero-Copy Streaming (4.0+)";
-        style="rounded,filled";
-        fillcolor="#E8F4E8";
-        color="#99CC99";
-
-        src2 [label="SSTable\n(source)", fillcolor="#70AD47", fontcolor="white"];
-        tgt2 [label="SSTable\n(target)", fillcolor="#70AD47", fontcolor="white"];
-
-        src2 -> tgt2 [label="direct file transfer\n(kernel buffer)", penwidth=2];
-
-        minimal [label="Minimal CPU/heap usage", shape=plaintext, fontcolor="#507E32"];
-    }
+    note bottom of mem
+      CPU + GC overhead
+    end note
 }
+
+package "Zero-Copy Streaming (4.0+)" {
+    rectangle "SSTable\n(source)" as src2
+    rectangle "SSTable\n(target)" as tgt2
+
+    src2 ==> tgt2 : direct file transfer\n(kernel buffer)
+
+    note bottom of tgt2
+      Minimal CPU/heap usage
+    end note
+}
+
+@enduml
 ```
 
 | Characteristic | Traditional | Zero-Copy |
@@ -220,94 +166,63 @@ Bootstrap is the process by which a new node joins the cluster and receives its 
 
 ### Bootstrap Sequence
 
-```graphviz dot bootstrap-sequence.svg
-digraph BootstrapSequence {
-    fontname="Helvetica";
-    node [fontname="Helvetica", fontsize=10];
-    edge [fontname="Helvetica", fontsize=9];
-    rankdir=TB;
+```plantuml
+@startuml
+skinparam backgroundColor transparent
+title Bootstrap Process
 
-    label="Bootstrap Process";
-    labelloc="t";
-    fontsize=12;
+rectangle "1. New Node Starts\nContacts seed nodes" as start
+rectangle "2. Gossip Integration\nLearns cluster topology" as gossip
+rectangle "3. Token Selection\nDetermines owned ranges" as token
+rectangle "4. Stream Planning\nIdentifies source nodes" as plan
+rectangle "5. Data Streaming\nReceives SSTables" as stream
+rectangle "6. Bootstrap Complete\nAccepts client requests" as finish
 
-    node [shape=box, style="rounded,filled"];
+start --> gossip
+gossip --> token
+token --> plan
+plan --> stream
+stream --> finish
 
-    start [label="1. New Node Starts\nContacts seed nodes", fillcolor="#E8E8E8", fontcolor="black"];
-    gossip [label="2. Gossip Integration\nLearns cluster topology", fillcolor="#5B9BD5", fontcolor="white"];
-    token [label="3. Token Selection\nDetermines owned ranges", fillcolor="#5B9BD5", fontcolor="white"];
-    plan [label="4. Stream Planning\nIdentifies source nodes", fillcolor="#5B9BD5", fontcolor="white"];
-    stream [label="5. Data Streaming\nReceives SSTables", fillcolor="#FFC000", fontcolor="black"];
-    finish [label="6. Bootstrap Complete\nAccepts client requests", fillcolor="#70AD47", fontcolor="white"];
-
-    start -> gossip;
-    gossip -> token;
-    token -> plan;
-    plan -> stream;
-    stream -> finish;
-}
+@enduml
 ```
 
 ### Token Range Calculation
 
 During bootstrap, the new node must determine which token ranges it will own:
 
-```graphviz dot token-range-bootstrap.svg
-digraph TokenRangeBootstrap {
-    fontname="Helvetica";
-    node [fontname="Helvetica", fontsize=10];
-    edge [fontname="Helvetica", fontsize=9];
-    rankdir=TB;
+```plantuml
+@startuml
+skinparam backgroundColor transparent
+title Token Range Calculation During Bootstrap
 
-    label="Token Range Calculation During Bootstrap";
-    labelloc="t";
-    fontsize=12;
-
-    node [shape=box, style="rounded,filled"];
-
-    subgraph cluster_before {
-        label="Before Bootstrap (4 nodes)";
-        style="rounded,filled";
-        fillcolor="#E8E8E8";
-        color="#999999";
-
-        before [label=<<TABLE BORDER="0" CELLBORDER="1" CELLSPACING="0">
-            <TR><TD BGCOLOR="#5B9BD5"><FONT COLOR="white">Token Range</FONT></TD><TD BGCOLOR="#5B9BD5"><FONT COLOR="white">Owner</FONT></TD></TR>
-            <TR><TD>(0, 25]</TD><TD>Node A</TD></TR>
-            <TR><TD>(25, 50]</TD><TD>Node B</TD></TR>
-            <TR><TD>(50, 75]</TD><TD>Node C</TD></TR>
-            <TR><TD>(75, 0]</TD><TD>Node D</TD></TR>
-        </TABLE>>, shape=none];
+package "Before Bootstrap (4 nodes)" {
+    map "Token Ownership" as before {
+        0-25 => Node A
+        25-50 => Node B
+        50-75 => Node C
+        75-0 => Node D
     }
-
-    subgraph cluster_after {
-        label="After Bootstrap (5 nodes)";
-        style="rounded,filled";
-        fillcolor="#E8F4E8";
-        color="#99CC99";
-
-        after [label=<<TABLE BORDER="0" CELLBORDER="1" CELLSPACING="0">
-            <TR><TD BGCOLOR="#70AD47"><FONT COLOR="white">Token Range</FONT></TD><TD BGCOLOR="#70AD47"><FONT COLOR="white">Owner</FONT></TD></TR>
-            <TR><TD>(0, 25]</TD><TD>Node A</TD></TR>
-            <TR><TD>(25, 50]</TD><TD>Node B</TD></TR>
-            <TR><TD>(50, 62]</TD><TD>Node C</TD></TR>
-            <TR><TD BGCOLOR="#FFC000">(62, 75]</TD><TD BGCOLOR="#FFC000">Node E (new)</TD></TR>
-            <TR><TD>(75, 0]</TD><TD>Node D</TD></TR>
-        </TABLE>>, shape=none];
-    }
-
-    subgraph cluster_streaming {
-        label="Node E Must Receive";
-        style="rounded,filled";
-        fillcolor="#FFE8E8";
-        color="#CC9999";
-
-        receive [label="• Primary range: (62, 75] from Node D\n• Replica ranges based on RF=3 topology", fillcolor="#C55A11", fontcolor="white"];
-    }
-
-    before -> after [label="Node E joins\n(token 62)"];
-    after -> receive [style=dashed];
 }
+
+package "After Bootstrap (5 nodes)" {
+    map "Token Ownership" as after {
+        0-25 => Node A
+        25-50 => Node B
+        50-62 => Node C
+        62-75 => **Node E (new)**
+        75-0 => Node D
+    }
+}
+
+package "Node E Must Receive" {
+    card "Primary range: 62-75 from Node D\nReplica ranges based on RF=3 topology" as receive
+}
+
+before --> after : Node E joins\nat token 62
+after ..> receive
+
+@enduml
 ```
 
 ### Streaming Source Selection
@@ -352,95 +267,66 @@ Decommission is the orderly removal of a node from the cluster, streaming all lo
 
 ### Decommission Sequence
 
-```graphviz dot decommission-sequence.svg
-digraph DecommissionSequence {
-    fontname="Helvetica";
-    node [fontname="Helvetica", fontsize=10];
-    edge [fontname="Helvetica", fontsize=9];
-    rankdir=TB;
+```plantuml
+@startuml
+skinparam backgroundColor transparent
+title Decommission Process
 
-    label="Decommission Process";
-    labelloc="t";
-    fontsize=12;
+rectangle "1. Decommission Initiated\nnodetool decommission" as start
+rectangle "2. State Announcement\nGossip: LEAVING status" as announce
+rectangle "3. Stream Planning\nCalculate target nodes" as plan
+rectangle "4. Data Streaming\nTransfer all local data" as stream
+rectangle "5. State: LEFT\nRemoved from ring" as left
+rectangle "6. Node Shutdown\nProcess terminates" as shutdown
 
-    node [shape=box, style="rounded,filled"];
+start --> announce
+announce --> plan
+plan --> stream
+stream --> left
+left --> shutdown
 
-    start [label="1. Decommission Initiated\nnodetool decommission", fillcolor="#E8E8E8", fontcolor="black"];
-    announce [label="2. State Announcement\nGossip: LEAVING status", fillcolor="#5B9BD5", fontcolor="white"];
-    plan [label="3. Stream Planning\nCalculate target nodes", fillcolor="#5B9BD5", fontcolor="white"];
-    stream [label="4. Data Streaming\nTransfer all local data", fillcolor="#FFC000", fontcolor="black"];
-    left [label="5. State: LEFT\nRemoved from ring", fillcolor="#C00000", fontcolor="white"];
-    shutdown [label="6. Node Shutdown\nProcess terminates", fillcolor="#7F7F7F", fontcolor="white"];
-
-    start -> announce;
-    announce -> plan;
-    plan -> stream;
-    stream -> left;
-    left -> shutdown;
-}
+@enduml
 ```
 
 ### Range Redistribution
 
 During decommission, the departing node's ranges must be redistributed:
 
-```graphviz dot range-redistribution.svg
-digraph RangeRedistribution {
-    fontname="Helvetica";
-    node [fontname="Helvetica", fontsize=10];
-    edge [fontname="Helvetica", fontsize=9];
-    rankdir=TB;
+```plantuml
+@startuml
+skinparam backgroundColor transparent
+title Range Redistribution During Decommission
 
-    label="Range Redistribution During Decommission";
-    labelloc="t";
-    fontsize=12;
+package "Before Decommission (RF=3, 5 nodes)" {
+    rectangle "Range (40, 60]" as range1
+    rectangle "Node C\n(primary)" as c1
+    rectangle "Node D\n(replica)" as d1
+    rectangle "Node E\n(replica)" as e1
 
-    node [shape=box, style="rounded,filled"];
-
-    subgraph cluster_before {
-        label="Before Decommission (RF=3, 5 nodes)";
-        style="rounded,filled";
-        fillcolor="#E8E8E8";
-        color="#999999";
-
-        range1 [label="Range (40, 60]", fillcolor="#FFC000", fontcolor="black"];
-        c1 [label="Node C\n(primary)", fillcolor="#C00000", fontcolor="white"];
-        d1 [label="Node D\n(replica)", fillcolor="#5B9BD5", fontcolor="white"];
-        e1 [label="Node E\n(replica)", fillcolor="#5B9BD5", fontcolor="white"];
-
-        range1 -> c1;
-        range1 -> d1;
-        range1 -> e1;
-    }
-
-    subgraph cluster_after {
-        label="After Decommission (4 nodes)";
-        style="rounded,filled";
-        fillcolor="#E8F4E8";
-        color="#99CC99";
-
-        range2 [label="Range (40, 60]", fillcolor="#FFC000", fontcolor="black"];
-        d2 [label="Node D\n(new primary)", fillcolor="#70AD47", fontcolor="white"];
-        e2 [label="Node E\n(replica)", fillcolor="#5B9BD5", fontcolor="white"];
-        a2 [label="Node A\n(new replica)", fillcolor="#70AD47", fontcolor="white"];
-
-        range2 -> d2;
-        range2 -> e2;
-        range2 -> a2;
-    }
-
-    subgraph cluster_stream {
-        label="Streaming Plan";
-        style="rounded,filled";
-        fillcolor="#FFE8E8";
-        color="#CC9999";
-
-        stream [label="Node C → Node A\nRange (40, 60] data\n\n(D and E already have replicas)", fillcolor="#C55A11", fontcolor="white"];
-    }
-
-    c1 -> stream [label="decommission", style=dashed];
-    stream -> a2 [label="stream data", penwidth=2, color="#70AD47"];
+    range1 --> c1
+    range1 --> d1
+    range1 --> e1
 }
+
+package "After Decommission (4 nodes)" {
+    rectangle "Range (40, 60]" as range2
+    rectangle "Node D\n(new primary)" as d2
+    rectangle "Node E\n(replica)" as e2
+    rectangle "Node A\n(new replica)" as a2
+
+    range2 --> d2
+    range2 --> e2
+    range2 --> a2
+}
+
+package "Streaming Plan" {
+    rectangle "Node C → Node A\nRange (40, 60] data\n\n(D and E already have replicas)" as stream
+}
+
+c1 ..> stream : decommission
+stream ==> a2 : stream data
+
+@enduml
 ```
 
 ### Decommission vs RemoveNode
@@ -473,79 +359,55 @@ Repair operations use streaming to synchronize data between replicas that have d
 
 Before streaming, repair uses Merkle trees to identify divergent ranges:
 
-```graphviz dot merkle-tree-repair.svg
-digraph MerkleTreeRepair {
-    fontname="Helvetica";
-    node [fontname="Helvetica", fontsize=10];
-    edge [fontname="Helvetica", fontsize=9];
-    rankdir=TB;
+```plantuml
+@startuml
+skinparam backgroundColor transparent
+title Merkle Tree Comparison for Repair
 
-    label="Merkle Tree Comparison for Repair";
-    labelloc="t";
-    fontsize=12;
-
-    node [shape=box, style="rounded,filled"];
-
-    subgraph cluster_node1 {
-        label="Replica A";
-        style="rounded,filled";
-        fillcolor="#E8F4E8";
-        color="#99CC99";
-
-        build1 [label="1. Build Merkle Tree\nfrom local SSTables", fillcolor="#5B9BD5", fontcolor="white"];
-        tree1 [label="Root: hash_A\n├─ L: hash_1\n└─ R: hash_2", fillcolor="#70AD47", fontcolor="white"];
-    }
-
-    subgraph cluster_node2 {
-        label="Replica B";
-        style="rounded,filled";
-        fillcolor="#FFE8E8";
-        color="#CC9999";
-
-        build2 [label="1. Build Merkle Tree\nfrom local SSTables", fillcolor="#5B9BD5", fontcolor="white"];
-        tree2 [label="Root: hash_B\n├─ L: hash_1\n└─ R: hash_3", fillcolor="#C55A11", fontcolor="white"];
-    }
-
-    compare [label="2. Compare Trees\nhash_A ≠ hash_B\nhash_2 ≠ hash_3", fillcolor="#FFC000", fontcolor="black"];
-
-    stream [label="3. Stream Differing Range\nOnly R subtree data", fillcolor="#70AD47", fontcolor="white"];
-
-    tree1 -> compare;
-    tree2 -> compare;
-    compare -> stream;
+package "Replica A" {
+    rectangle "1. Build Merkle Tree\nfrom local SSTables" as build1
+    rectangle "Root: hash_A\n├─ L: hash_1\n└─ R: hash_2" as tree1
 }
+
+package "Replica B" {
+    rectangle "1. Build Merkle Tree\nfrom local SSTables" as build2
+    rectangle "Root: hash_B\n├─ L: hash_1\n└─ R: hash_3" as tree2
+}
+
+rectangle "2. Compare Trees\nhash_A ≠ hash_B\nhash_2 ≠ hash_3" as compare
+
+rectangle "3. Stream Differing Range\nOnly R subtree data" as stream
+
+tree1 --> compare
+tree2 --> compare
+compare --> stream
+
+@enduml
 ```
 
 ### Streaming During Repair
 
-```graphviz dot repair-streaming-flow.svg
-digraph RepairStreamingFlow {
-    fontname="Helvetica";
-    node [fontname="Helvetica", fontsize=10];
-    edge [fontname="Helvetica", fontsize=9];
-    rankdir=TB;
+```plantuml
+@startuml
+skinparam backgroundColor transparent
+title Repair Streaming Flow
 
-    label="Repair Streaming Flow";
-    labelloc="t";
-    fontsize=12;
+rectangle "1. Coordinator initiates repair\nfor keyspace/table" as init
+rectangle "2. Each replica builds Merkle tree\nfor requested ranges" as build
+rectangle "3. Trees exchanged and\ncompared pairwise" as exchange
+rectangle "4. Differing ranges identified\n(may be small subset)" as diff
+rectangle "5. Streaming sessions created\nfor each difference" as session
+rectangle "6. Data streamed from authoritative\nreplica to divergent replica" as stream
+rectangle "7. Received SSTables integrated\nrepair marked complete" as complete
 
-    node [shape=box, style="rounded,filled"];
+init --> build
+build --> exchange
+exchange --> diff
+diff --> session
+session --> stream
+stream --> complete
 
-    init [label="1. Coordinator initiates repair\nfor keyspace/table", fillcolor="#E8E8E8", fontcolor="black"];
-    build [label="2. Each replica builds Merkle tree\nfor requested ranges", fillcolor="#5B9BD5", fontcolor="white"];
-    exchange [label="3. Trees exchanged and\ncompared pairwise", fillcolor="#5B9BD5", fontcolor="white"];
-    diff [label="4. Differing ranges identified\n(may be small subset)", fillcolor="#FFC000", fontcolor="black"];
-    session [label="5. Streaming sessions created\nfor each difference", fillcolor="#5B9BD5", fontcolor="white"];
-    stream [label="6. Data streamed from authoritative\nreplica to divergent replica", fillcolor="#C55A11", fontcolor="white"];
-    complete [label="7. Received SSTables integrated\nrepair marked complete", fillcolor="#70AD47", fontcolor="white"];
-
-    init -> build;
-    build -> exchange;
-    exchange -> diff;
-    diff -> session;
-    session -> stream;
-    stream -> complete;
-}
+@enduml
 ```
 
 ### Incremental Repair Optimization
@@ -566,85 +428,61 @@ Hinted handoff is a lightweight streaming mechanism that delivers missed writes 
 
 ### Hint Storage and Delivery
 
-```graphviz dot hinted-handoff.svg
-digraph HintedHandoff {
-    fontname="Helvetica";
-    node [fontname="Helvetica", fontsize=10];
-    edge [fontname="Helvetica", fontsize=9];
-    rankdir=TB;
+```plantuml
+@startuml
+skinparam backgroundColor transparent
+title Hinted Handoff Mechanism
 
-    label="Hinted Handoff Mechanism";
-    labelloc="t";
-    fontsize=12;
+package "1. Write Arrives (Node B down)" {
+    rectangle "Client Write\n(RF=3)" as write
+    rectangle "Node A\n✓ Success" as a
+    rectangle "Node B\n✗ Down" as b
+    rectangle "Node C\n✓ Success" as c
 
-    node [shape=box, style="rounded,filled"];
-
-    subgraph cluster_write {
-        label="1. Write Arrives (Node B down)";
-        style="rounded,filled";
-        fillcolor="#FFE8E8";
-        color="#CC9999";
-
-        write [label="Client Write\n(RF=3)", fillcolor="#E8E8E8", fontcolor="black"];
-        a [label="Node A\n✓ Success", fillcolor="#70AD47", fontcolor="white"];
-        b [label="Node B\n✗ Down", fillcolor="#C00000", fontcolor="white"];
-        c [label="Node C\n✓ Success", fillcolor="#70AD47", fontcolor="white"];
-
-        write -> a;
-        write -> b [style=dashed];
-        write -> c;
-    }
-
-    hint [label="2. Coordinator Stores Hint\nfor Node B", fillcolor="#FFC000", fontcolor="black"];
-
-    subgraph cluster_replay {
-        label="3. Node B Recovers";
-        style="rounded,filled";
-        fillcolor="#E8F4E8";
-        color="#99CC99";
-
-        recover [label="Node B\nBack Online", fillcolor="#5B9BD5", fontcolor="white"];
-        deliver [label="Hints Delivered\nto Node B", fillcolor="#70AD47", fontcolor="white"];
-    }
-
-    b -> hint [style=dashed, label="failure detected"];
-    hint -> deliver [label="gossip: B is UP"];
-    deliver -> recover;
+    write --> a
+    write ..> b
+    write --> c
 }
+
+rectangle "2. Coordinator Stores Hint\nfor Node B" as hint
+
+package "3. Node B Recovers" {
+    rectangle "Node B\nBack Online" as recover
+    rectangle "Hints Delivered\nto Node B" as deliver
+}
+
+b ..> hint : failure detected
+hint --> deliver : gossip: B is UP
+deliver --> recover
+
+@enduml
 ```
 
 ### Hint Structure
 
 Hints are stored locally on the coordinator node:
 
-```graphviz dot hint-record.svg
-digraph HintRecord {
-    fontname="Helvetica";
-    node [fontname="Helvetica", fontsize=10];
-    edge [fontname="Helvetica", fontsize=9];
-    rankdir=TB;
+```plantuml
+@startuml
+skinparam backgroundColor transparent
+title Hint Record Structure
 
-    label="Hint Record Structure";
-    labelloc="t";
-    fontsize=12;
-
-    hint [label=<<TABLE BORDER="0" CELLBORDER="1" CELLSPACING="0" CELLPADDING="8">
-        <TR><TD COLSPAN="2" BGCOLOR="#5B9BD5"><FONT COLOR="white"><B>Hint Record</B></FONT></TD></TR>
-        <TR><TD ALIGN="LEFT">Target Host ID</TD><TD>uuid</TD></TR>
-        <TR><TD ALIGN="LEFT">Hint ID</TD><TD>timeuuid</TD></TR>
-        <TR><TD ALIGN="LEFT">Creation Time</TD><TD>timestamp</TD></TR>
-        <TR><TD ALIGN="LEFT">Mutation</TD><TD>serialized write</TD></TR>
-        <TR><TD ALIGN="LEFT">Message Version</TD><TD>protocol version</TD></TR>
-    </TABLE>>, shape=none];
-
-    storage [label=<<TABLE BORDER="0" CELLBORDER="1" CELLSPACING="0" CELLPADDING="8">
-        <TR><TD BGCOLOR="#70AD47"><FONT COLOR="white"><B>Storage</B></FONT></TD></TR>
-        <TR><TD ALIGN="LEFT">Location: $CASSANDRA_HOME/data/hints/</TD></TR>
-        <TR><TD ALIGN="LEFT">File Format: &lt;host_id&gt;-&lt;timestamp&gt;-&lt;version&gt;.hints</TD></TR>
-    </TABLE>>, shape=none];
-
-    hint -> storage [style=invis];
+map "Hint Record" as hint {
+    Target Host ID => uuid
+    Hint ID => timeuuid
+    Creation Time => timestamp
+    Mutation => serialized write
+    Message Version => protocol version
 }
+
+map "Storage" as storage {
+    Location => $CASSANDRA_HOME/data/hints/
+    File Format => <host_id>-<timestamp>-<version>.hints
+}
+
+hint -[hidden]down-> storage
+
+@enduml
 ```
 
 ### Hint Configuration
@@ -676,59 +514,40 @@ hints_compression:
 
 Unlike full SSTable streaming used in bootstrap and repair, hint delivery uses a lighter-weight mutation replay mechanism. Hints are streamed as individual mutations rather than file segments.
 
-```graphviz dot hint-delivery-streaming.svg
-digraph HintDeliveryStreaming {
-    fontname="Helvetica";
-    node [fontname="Helvetica", fontsize=10];
-    edge [fontname="Helvetica", fontsize=9];
-    rankdir=TB;
+```plantuml
+@startuml
+skinparam backgroundColor transparent
+title Hint Delivery Streaming Flow
 
-    label="Hint Delivery Streaming Flow";
-    labelloc="t";
-    fontsize=12;
-
-    node [shape=box, style="rounded,filled"];
-
-    subgraph cluster_source {
-        label="Hint Source (Coordinator)";
-        style="rounded,filled";
-        fillcolor="#E8E8E8";
-        color="#999999";
-
-        gossip [label="1. Gossip Detects\nTarget Node UP", fillcolor="#5B9BD5", fontcolor="white"];
-        dispatch [label="2. HintsDispatcher\nSchedules Delivery", fillcolor="#5B9BD5", fontcolor="white"];
-        read [label="3. Read Hints from\nLocal Hint Files", fillcolor="#5B9BD5", fontcolor="white"];
-        throttle [label="4. Apply Throttle\n(hinted_handoff_throttle_in_kb)", fillcolor="#FFC000", fontcolor="black"];
-    }
-
-    subgraph cluster_transfer {
-        label="Transfer";
-        style="rounded,filled";
-        fillcolor="#FFE8E8";
-        color="#CC9999";
-
-        send [label="5. Send Mutation\nvia Messaging Service", fillcolor="#C55A11", fontcolor="white"];
-    }
-
-    subgraph cluster_target {
-        label="Hint Target (Recovered Node)";
-        style="rounded,filled";
-        fillcolor="#E8F4E8";
-        color="#99CC99";
-
-        receive [label="6. Receive Mutation", fillcolor="#70AD47", fontcolor="white"];
-        apply [label="7. Apply to Memtable\n(normal write path)", fillcolor="#70AD47", fontcolor="white"];
-        ack [label="8. Acknowledge\nReceipt", fillcolor="#70AD47", fontcolor="white"];
-    }
-
-    cleanup [label="9. Delete Hint\nfrom Source", fillcolor="#7F7F7F", fontcolor="white"];
-
-    gossip -> dispatch -> read -> throttle;
-    throttle -> send;
-    send -> receive;
-    receive -> apply -> ack;
-    ack -> cleanup [style=dashed];
+package "Hint Source (Coordinator)" {
+    rectangle "1. Gossip Detects\nTarget Node UP" as gossip
+    rectangle "2. HintsDispatcher\nSchedules Delivery" as dispatch
+    rectangle "3. Read Hints from\nLocal Hint Files" as read
+    rectangle "4. Apply Throttle\n(hinted_handoff_throttle_in_kb)" as throttle
 }
+
+package "Transfer" {
+    rectangle "5. Send Mutation\nvia Messaging Service" as send
+}
+
+package "Hint Target (Recovered Node)" {
+    rectangle "6. Receive Mutation" as receive
+    rectangle "7. Apply to Memtable\n(normal write path)" as apply
+    rectangle "8. Acknowledge\nReceipt" as ack
+}
+
+rectangle "9. Delete Hint\nfrom Source" as cleanup
+
+gossip --> dispatch
+dispatch --> read
+read --> throttle
+throttle --> send
+send --> receive
+receive --> apply
+apply --> ack
+ack ..> cleanup
+
+@enduml
 ```
 
 **Delivery mechanism details:**
@@ -809,57 +628,32 @@ max_hints_file_size_in_mb: 64
 
 SSTable streaming operates on file segments:
 
-```graphviz dot file-transfer-protocol.svg
-digraph FileTransferProtocol {
-    fontname="Helvetica";
-    node [fontname="Helvetica", fontsize=10];
-    edge [fontname="Helvetica", fontsize=9];
-    rankdir=LR;
+```plantuml
+@startuml
+skinparam backgroundColor transparent
+title SSTable File Transfer Protocol
 
-    label="SSTable File Transfer Protocol";
-    labelloc="t";
-    fontsize=12;
-
-    node [shape=box, style="rounded,filled"];
-
-    subgraph cluster_source {
-        label="Source Node";
-        style="rounded,filled";
-        fillcolor="#E8E8E8";
-        color="#999999";
-
-        sstable [label=<<TABLE BORDER="0" CELLBORDER="0" CELLSPACING="2">
-            <TR><TD><B>SSTable Components</B></TD></TR>
-            <TR><TD ALIGN="LEFT">• Data.db</TD></TR>
-            <TR><TD ALIGN="LEFT">• Index.db</TD></TR>
-            <TR><TD ALIGN="LEFT">• Filter.db</TD></TR>
-            <TR><TD ALIGN="LEFT">• Statistics.db</TD></TR>
-            <TR><TD ALIGN="LEFT">• Summary.db</TD></TR>
-            <TR><TD ALIGN="LEFT">• TOC.txt</TD></TR>
-        </TABLE>>, shape=none, fillcolor="white"];
-    }
-
-    filemsg [label="FileMessage\n(segment)", fillcolor="#FFC000", fontcolor="black"];
-
-    subgraph cluster_target {
-        label="Target Node";
-        style="rounded,filled";
-        fillcolor="#E8F4E8";
-        color="#99CC99";
-
-        buffer [label="Receive Buffer", fillcolor="#5B9BD5", fontcolor="white"];
-        disk [label="Write to Disk", fillcolor="#70AD47", fontcolor="white"];
-
-        buffer -> disk;
-    }
-
-    streamrecv [label="StreamReceived\n(acknowledgment)", fillcolor="#70AD47", fontcolor="white"];
-
-    sstable -> filemsg;
-    filemsg -> buffer [penwidth=2];
-    disk -> streamrecv [style=dashed];
-    streamrecv -> sstable [style=dashed, constraint=false];
+package "Source Node" {
+    rectangle "SSTable Components\n• Data.db\n• Index.db\n• Filter.db\n• Statistics.db\n• Summary.db\n• TOC.txt" as sstable
 }
+
+rectangle "FileMessage\n(segment)" as filemsg
+
+package "Target Node" {
+    rectangle "Receive Buffer" as buffer
+    rectangle "Write to Disk" as disk
+
+    buffer --> disk
+}
+
+rectangle "StreamReceived\n(acknowledgment)" as streamrecv
+
+sstable ==> filemsg
+filemsg ==> buffer
+disk ..> streamrecv
+streamrecv ..> sstable
+
+@enduml
 ```
 
 ### Segment Size and Buffering
@@ -875,29 +669,28 @@ digraph FileTransferProtocol {
 
 Streaming data is compressed in transit:
 
-```graphviz dot compression-pipeline.svg
-digraph CompressionPipeline {
-    fontname="Helvetica";
-    node [fontname="Helvetica", fontsize=10];
-    edge [fontname="Helvetica", fontsize=9];
-    rankdir=LR;
+```plantuml
+@startuml
+skinparam backgroundColor transparent
+title Streaming Compression Pipeline
 
-    label="Streaming Compression Pipeline";
-    labelloc="t";
-    fontsize=12;
+rectangle "SSTable\nData" as data
+rectangle "LZ4\nCompression" as compress
+rectangle "Network\nTransfer" as network
+rectangle "LZ4\nDecompression" as decompress
+rectangle "Disk\nWrite" as disk
 
-    node [shape=box, style="rounded,filled"];
+data --> compress
+compress --> network
+network --> decompress
+decompress --> disk
 
-    data [label="SSTable\nData", fillcolor="#5B9BD5", fontcolor="white"];
-    compress [label="LZ4\nCompression", fillcolor="#FFC000", fontcolor="black"];
-    network [label="Network\nTransfer", fillcolor="#70AD47", fontcolor="white"];
-    decompress [label="LZ4\nDecompression", fillcolor="#FFC000", fontcolor="black"];
-    disk [label="Disk\nWrite", fillcolor="#5B9BD5", fontcolor="white"];
+note bottom of network
+  Compression ratio: 2:1 to 10:1
+  CPU overhead: ~10-20%
+end note
 
-    data -> compress -> network -> decompress -> disk;
-
-    stats [label="Compression ratio: 2:1 to 10:1\nCPU overhead: ~10-20%", shape=note, fillcolor="#E8E8E8", fontcolor="black"];
-}
+@enduml
 ```
 
 ### Progress Tracking
@@ -946,39 +739,22 @@ Streaming operations can saturate network capacity:
 
 ### Disk I/O Impact
 
-```graphviz dot streaming-io-patterns.svg
-digraph StreamingIOPatterns {
-    fontname="Helvetica";
-    node [fontname="Helvetica", fontsize=10];
-    edge [fontname="Helvetica", fontsize=9];
-    rankdir=LR;
+```plantuml
+@startuml
+skinparam backgroundColor transparent
+title Streaming I/O Patterns
 
-    label="Streaming I/O Patterns";
-    labelloc="t";
-    fontsize=12;
-
-    node [shape=box, style="rounded,filled"];
-
-    subgraph cluster_source {
-        label="Source Node";
-        style="rounded,filled";
-        fillcolor="#FFE8E8";
-        color="#CC9999";
-
-        src [label="• Sequential read from SSTable files\n• Minimal random I/O\n• May compete with normal reads", fillcolor="#C55A11", fontcolor="white"];
-    }
-
-    subgraph cluster_target {
-        label="Target Node";
-        style="rounded,filled";
-        fillcolor="#E8F4E8";
-        color="#99CC99";
-
-        tgt [label="• Sequential write to new SSTables\n• Post-streaming compaction required\n• Temporary 2x space usage", fillcolor="#70AD47", fontcolor="white"];
-    }
-
-    src -> tgt [label="streaming", penwidth=2];
+package "Source Node" {
+    rectangle "• Sequential read from SSTable files\n• Minimal random I/O\n• May compete with normal reads" as src
 }
+
+package "Target Node" {
+    rectangle "• Sequential write to new SSTables\n• Post-streaming compaction required\n• Temporary 2x space usage" as tgt
+}
+
+src ==> tgt : streaming
+
+@enduml
 ```
 
 ### Memory Pressure
@@ -1058,5 +834,5 @@ nodetool repair -pr keyspace  # Retry affected ranges
 
 - **[Replica Synchronization](replica-synchronization.md)** - Anti-entropy repair details
 - **[Consistency](consistency.md)** - Consistency levels and guarantees
-- **[Gossip Protocol](../gossip/index.md)** - Cluster state dissemination
+- **[Gossip Protocol](../cluster-management/gossip.md)** - Cluster state dissemination
 - **[Compaction](../storage-engine/compaction/index.md)** - Post-streaming compaction

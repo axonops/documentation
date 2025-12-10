@@ -763,4 +763,4 @@ ls -lh /var/lib/cassandra/data/keyspace/table-*/*-Data.db | \
 
 - **[Compaction Overview](index.md)** - Concepts and strategy selection
 - **[Leveled Compaction (LCS)](lcs.md)** - Alternative for read-heavy workloads
-- **[Compaction Management](../../../../operations/compaction-management/index.md)** - Tuning and troubleshooting
+- **[Compaction Management](../../../operations/compaction-management/index.md)** - Tuning and troubleshooting

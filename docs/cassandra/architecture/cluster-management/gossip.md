@@ -237,16 +237,20 @@ digraph GossipTask {
 
 Gossip uses a three-message exchange to synchronize state efficiently:
 
-```mermaid
-sequenceDiagram
-    participant A as Node A
-    participant B as Node B
+```plantuml
+@startuml
+skinparam backgroundColor transparent
 
-    A->>B: GossipDigestSyn<br/>(digests of A's knowledge)
-    B->>A: GossipDigestAck<br/>(digests B needs + data A needs)
-    A->>B: GossipDigestAck2<br/>(data B requested)
+participant "Node A" as A
+participant "Node B" as B
 
-    Note over A,B: Both nodes now have consistent state
+A -> B: GossipDigestSyn\n[digests of A's knowledge]
+B -> A: GossipDigestAck\n[digests B needs + data A needs]
+A -> B: GossipDigestAck2\n[data B requested]
+
+note over A,B: Both nodes now have consistent state
+
+@enduml
 ```
 
 **GossipDigestSyn (SYN):**
@@ -564,9 +568,8 @@ digraph ConvictionProcess {
 | Parameter | Default | JVM Property | Description |
 |-----------|---------|--------------|-------------|
 | Gossip interval | 1000 ms | - | Fixed interval between gossip rounds |
-| Gossip digest timeout | 1000 ms | `cassandra.gossip_digest_timeout` | Maximum wait for SYN response |
-| Shadow round timeout | 60000 ms | `cassandra.shadow_round_timeout_millis` | Timeout for shadow round verification |
-| Quarantine delay | 60000 ms | - | Minimum time before re-evaluating quarantined nodes |
+| Ring delay (quarantine) | 1000 ms | `cassandra.ring_delay_ms` | Delay before node is considered for ring membership changes |
+| Shutdown announce delay | 2000 ms | `cassandra.shutdown_announce_in_ms` | Time to announce shutdown before stopping gossip |
 
 ### Convergence Analysis
 
@@ -600,30 +603,66 @@ This yields expected convergence in O(log N) rounds:
 | 500 nodes | ~9 rounds | ~9 seconds |
 | 1000 nodes | ~10 rounds | ~10 seconds |
 
-```graphviz dot convergence-curve.svg
-digraph ConvergenceCurve {
+```graphviz circo convergence-curve.svg
+digraph GossipConvergence {
     fontname="Helvetica";
-    node [fontname="Helvetica", fontsize=10];
-    rankdir=LR;
+    node [fontname="Helvetica", fontsize=9];
+    edge [fontname="Helvetica", fontsize=8];
 
-    label="Gossip Propagation (100 nodes)";
+    label="Cassandra Gossip Propagation - Epidemic Convergence (100 nodes)";
     labelloc="t";
     fontsize=12;
 
-    node [shape=box, style="rounded,filled", fillcolor="#5B9BD5", fontcolor="white", width=0.8];
+    graph [overlap=false, splines=true];
 
-    r0 [label="t=0\n1 node"];
-    r1 [label="t=1\n2 nodes"];
-    r2 [label="t=2\n4 nodes"];
-    r3 [label="t=3\n8 nodes"];
-    r4 [label="t=4\n15 nodes"];
-    r5 [label="t=5\n28 nodes"];
-    r6 [label="t=6\n50 nodes"];
-    r7 [label="t=7\n75 nodes", fillcolor="#70AD47"];
-    r8 [label="t=8\n93 nodes", fillcolor="#70AD47"];
-    r9 [label="t=9\n99 nodes", fillcolor="#70AD47"];
+    node [shape=circle, style="filled", width=0.8, fixedsize=true];
 
-    r0 -> r1 -> r2 -> r3 -> r4 -> r5 -> r6 -> r7 -> r8 -> r9;
+    // Center - origin (t=0)
+    r0  [label="t=0\n1",  fillcolor="#C00000", fontcolor="white"];
+
+    // Ring 1
+    r1  [label="t=1\n2",  fillcolor="#C55A11", fontcolor="white"];
+    r2  [label="t=2\n4",  fillcolor="#C55A11", fontcolor="white"];
+
+    // Ring 2
+    r3  [label="t=3\n8",   fillcolor="#FFC000", fontcolor="black"];
+    r4  [label="t=4\n15",  fillcolor="#FFC000", fontcolor="black"];
+    r5  [label="t=5\n28",  fillcolor="#FFC000", fontcolor="black"];
+
+    // Ring 3
+    r6  [label="t=6\n50",  fillcolor="#5B9BD5", fontcolor="white"];
+    r7  [label="t=7\n75",  fillcolor="#5B9BD5", fontcolor="white"];
+    r8  [label="t=8\n93",  fillcolor="#70AD47", fontcolor="white"];
+    r9  [label="t=9\n99",  fillcolor="#70AD47", fontcolor="white"];
+
+    // -----------------------------
+    // Layering / ring hints
+    // -----------------------------
+    { rank = same; r0 }
+    { rank = same; r1 r2 }
+    { rank = same; r3 r4 r5 }
+    { rank = same; r6 r7 r8 r9 }
+
+    // -----------------------------
+    // Edges: clean outward gossip
+    // -----------------------------
+
+    // Origin to first ring
+    r0 -> { r1 r2 };
+
+    // First ring to second ring
+    r1 -> { r3 r4 };
+    r2 -> { r4 r5 };
+
+    // Second ring to third ring
+    r3 -> { r6 };
+    r4 -> { r6 r7 };
+    r5 -> { r7 r8 };
+
+    // Third ring towards convergence
+    r6 -> { r8 };
+    r7 -> { r8 r9 };
+    r8 -> { r9 };
 }
 ```
 
@@ -680,11 +719,14 @@ phi_convict_threshold: 8
 ```bash
 # Gossip-related JVM options (jvm.options or jvm-server.options)
 
-# Gossip digest timeout
--Dcassandra.gossip_digest_timeout=1000
+# Shutdown announce delay (ms) - time to gossip shutdown before stopping
+-Dcassandra.shutdown_announce_in_ms=2000
 
-# Shadow round timeout
--Dcassandra.shadow_round_timeout_millis=60000
+# Skip waiting for gossip to settle (use with caution, testing only)
+-Dcassandra.skip_wait_for_gossip_to_settle=0
+
+# Disable loading ring state from system tables on startup
+-Dcassandra.load_ring_state=false
 ```
 
 ---

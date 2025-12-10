@@ -1,12 +1,16 @@
 # Node Replacement
 
-This section covers procedures for handling failed nodes and replacing them with new nodes. Understanding the distinction between different failure scenarios and their corresponding recovery procedures is critical for maintaining cluster health and data integrity.
+This section examines the architectural considerations for handling failed nodes in a Cassandra cluster. Understanding failure classification, recovery strategies, and the mechanics of node replacement is essential for designing resilient cluster topologies.
+
+For operational procedures and step-by-step instructions, see **[Operations: Cluster Management](../../operations/cluster-management/index.md)**.
 
 ---
 
 ## Failure Classification
 
 ### Types of Node Failures
+
+Node failures fall into distinct categories, each requiring different recovery approaches:
 
 ```graphviz dot failure-types.svg
 digraph FailureTypes {
@@ -44,13 +48,24 @@ digraph FailureTypes {
 | **Recoverable** | Node can restart, possible data issues | Restart + repair |
 | **Permanent** | Hardware failed, node cannot return | Replace or remove |
 
+### Failure Detection
+
+Cassandra detects node failures through the gossip protocol's Phi Accrual Failure Detector. When a node stops responding to gossip messages, other nodes independently calculate a suspicion level (φ). Once φ exceeds the configured threshold (default: 8), the node is marked DOWN locally.
+
+Key characteristics:
+- **Local determination**: Each node independently decides if a peer is DOWN
+- **Not gossiped**: DOWN status is not propagated; each node must observe failure directly
+- **Adaptive**: Phi Accrual adjusts to network latency variations
+
+See **[Gossip Protocol](gossip.md)** for failure detection mechanics.
+
 ---
 
 ## Decision Framework
 
 ### Replace vs Remove
 
-When a node permanently fails, operators must choose between replacement and removal:
+When a node permanently fails, the architectural decision between replacement and removal affects cluster capacity, data distribution, and recovery time:
 
 ```graphviz dot replace-vs-remove.svg
 digraph ReplaceVsRemove {
@@ -82,21 +97,87 @@ digraph ReplaceVsRemove {
 }
 ```
 
+### Comparison of Approaches
+
 | Factor | Replace | Remove |
 |--------|---------|--------|
 | **Cluster capacity** | Maintained | Reduced |
-| **Data movement** | Stream to new node | Redistribute to existing |
-| **Token ownership** | Assumed from dead node | Redistributed |
-| **Disk usage** | New node only | Increased on remaining |
-| **Time to complete** | Longer (full data stream) | Shorter (less data movement) |
+| **Data movement** | Stream to new node only | Redistribute across all remaining nodes |
+| **Token ownership** | New node assumes dead node's tokens | Tokens redistributed to existing nodes |
+| **Disk usage impact** | Isolated to new node | Increased on all remaining nodes |
+| **Time to complete** | Longer (full data stream to one node) | Shorter (parallel redistribution) |
+| **Network impact** | Concentrated streaming | Distributed streaming |
+
+### Capacity Constraints
+
+Before choosing an approach, verify capacity constraints:
+
+| Constraint | Replace | Remove |
+|------------|---------|--------|
+| **Minimum nodes** | N ≥ RF after operation | N - 1 ≥ RF after operation |
+| **Disk headroom** | New node needs capacity for its share | Remaining nodes need capacity for redistributed data |
+| **Network bandwidth** | Streaming to single node | Parallel streaming between remaining nodes |
 
 ---
 
-## Node Replacement Procedure
+## Replacement Architecture
 
-### Overview
+### Token Assumption Model
 
-Node replacement allows a new node to assume the identity (tokens) of a failed node:
+Node replacement operates on the principle of **token assumption**—the new node takes ownership of the failed node's token ranges without redistributing tokens across the cluster:
+
+```graphviz dot token-assumption.svg
+digraph TokenAssumption {
+    fontname="Helvetica";
+    node [fontname="Helvetica", fontsize=10];
+    edge [fontname="Helvetica", fontsize=9];
+    rankdir=LR;
+
+    label="Token Assumption During Replacement";
+    labelloc="t";
+    fontsize=12;
+
+    node [shape=box, style="rounded,filled"];
+
+    subgraph cluster_before {
+        label="Before Failure";
+        style="rounded,filled";
+        fillcolor="#E8E8E8";
+        color="#999999";
+
+        ring1 [label="Token Ring\n\nNode A: tokens 0-33\nNode B: tokens 34-66\nNode C: tokens 67-100", fillcolor="#5B9BD5", fontcolor="white"];
+    }
+
+    subgraph cluster_failed {
+        label="Node B Failed";
+        style="rounded,filled";
+        fillcolor="#FFE8E8";
+        color="#CC9999";
+
+        ring2 [label="Token Ring\n\nNode A: tokens 0-33\nNode B: DOWN\nNode C: tokens 67-100", fillcolor="#C00000", fontcolor="white"];
+    }
+
+    subgraph cluster_after {
+        label="After Replacement";
+        style="rounded,filled";
+        fillcolor="#E8F4E8";
+        color="#99CC99";
+
+        ring3 [label="Token Ring\n\nNode A: tokens 0-33\nNode D: tokens 34-66\nNode C: tokens 67-100", fillcolor="#70AD47", fontcolor="white"];
+    }
+
+    ring1 -> ring2 [label="failure"];
+    ring2 -> ring3 [label="replace"];
+}
+```
+
+**Advantages of token assumption:**
+- No token recalculation required
+- Other nodes unaffected
+- Predictable data movement
+- Faster recovery than full rebalance
+
+### Replacement Process Flow
 
 ```graphviz dot replacement-process.svg
 digraph ReplacementProcess {
@@ -117,9 +198,9 @@ digraph ReplacementProcess {
         fillcolor="#E8E8E8";
         color="#999999";
 
-        identify [label="1. Identify Dead Node\nGet IP and Host ID", fillcolor="#5B9BD5", fontcolor="white"];
-        provision [label="2. Provision New Node\nInstall Cassandra", fillcolor="#5B9BD5", fontcolor="white"];
-        config [label="3. Configure Replacement\nSet replace_address_first_boot", fillcolor="#5B9BD5", fontcolor="white"];
+        identify [label="Identify Dead Node\nObtain IP and Host ID", fillcolor="#5B9BD5", fontcolor="white"];
+        provision [label="Provision New Node\nSame Cassandra version", fillcolor="#5B9BD5", fontcolor="white"];
+        config [label="Configure Replacement\nSet replace_address_first_boot", fillcolor="#5B9BD5", fontcolor="white"];
     }
 
     subgraph cluster_exec {
@@ -128,9 +209,9 @@ digraph ReplacementProcess {
         fillcolor="#FFE8E8";
         color="#CC9999";
 
-        start [label="4. Start New Node\nContacts cluster", fillcolor="#C55A11", fontcolor="white"];
-        assume [label="5. Assume Tokens\nTakes dead node's ranges", fillcolor="#C55A11", fontcolor="white"];
-        stream [label="6. Stream Data\nReceive from replicas", fillcolor="#C55A11", fontcolor="white"];
+        start [label="New Node Starts\nContacts seeds", fillcolor="#C55A11", fontcolor="white"];
+        assume [label="Token Assumption\nClaims dead node's ranges", fillcolor="#C55A11", fontcolor="white"];
+        stream [label="Data Streaming\nReceives from replicas", fillcolor="#C55A11", fontcolor="white"];
     }
 
     subgraph cluster_complete {
@@ -139,127 +220,47 @@ digraph ReplacementProcess {
         fillcolor="#E8F4E8";
         color="#99CC99";
 
-        normal [label="7. Enter NORMAL State\nServe traffic", fillcolor="#70AD47", fontcolor="white"];
-        cleanup [label="8. Remove Dead Node\nClean gossip state", fillcolor="#70AD47", fontcolor="white"];
+        normal [label="NORMAL State\nServes client traffic", fillcolor="#70AD47", fontcolor="white"];
+        repair [label="Repair\nEnsures consistency", fillcolor="#70AD47", fontcolor="white"];
     }
 
-    identify -> provision -> config -> start -> assume -> stream -> normal -> cleanup;
+    identify -> provision -> config -> start -> assume -> stream -> normal -> repair;
 }
 ```
 
-### Step-by-Step Replacement
+### Replace Address Mechanism
 
-#### Step 1: Identify the Dead Node
+The `replace_address_first_boot` JVM option instructs a new node to assume a dead node's identity:
 
-```bash
-# Get dead node information
-nodetool status
+| Option | Behavior | Recommendation |
+|--------|----------|----------------|
+| `replace_address_first_boot` | Cleared after successful first boot | Preferred—prevents accidental re-replacement |
+| `replace_address` | Persists across restarts | Legacy—can cause issues on restart |
 
-# Example output:
-# Datacenter: datacenter1
-# =======================
-# Status=Up/Down  State=Normal/Leaving/Joining/Moving
-# DN  10.0.1.3  256  50.5%  abc123-def456-...  rack1
+**Architectural behavior:**
+1. New node contacts seeds with replacement intent
+2. Cluster validates dead node is actually DOWN
+3. New node receives dead node's token assignments
+4. Streaming begins from surviving replicas
+5. Upon completion, new node announces NORMAL status
+6. Dead node's gossip state is eventually purged
 
-# Note the IP address (10.0.1.3) and Host ID (abc123-def456-...)
-```
+### Same-IP vs Different-IP Replacement
 
-#### Step 2: Provision Replacement Hardware
+| Scenario | Token Handling | Host ID | Configuration |
+|----------|---------------|---------|---------------|
+| **Same IP** | Assumed from dead node | New ID generated | `replace_address_first_boot` with same IP |
+| **Different IP** | Assumed from dead node | New ID generated | `replace_address_first_boot` with dead node's IP |
 
-1. Install same Cassandra version as cluster
-2. Configure same `cluster_name`
-3. Configure same `snitch` and DC/rack (if replacing in same location)
-4. **Do NOT start Cassandra yet**
-
-#### Step 3: Configure for Replacement
-
-```yaml
-# cassandra.yaml on NEW node
-
-# Same cluster name
-cluster_name: 'Production Cluster'
-
-# IP of the DEAD node being replaced
-# This is REMOVED after first boot
-# JVM option format: -Dcassandra.replace_address_first_boot=10.0.1.3
-```
-
-**JVM option (preferred method):**
-
-```bash
-# jvm.options or jvm-server.options (or command line)
--Dcassandra.replace_address_first_boot=10.0.1.3
-```
-
-!!! note "replace_address vs replace_address_first_boot"
-    Use `replace_address_first_boot` (requires Cassandra 3.0+). This option is automatically cleared after first successful boot, preventing accidental re-replacement on subsequent restarts. The older `replace_address` persists and can cause issues.
-
-#### Step 4: Start the New Node
-
-```bash
-# Start Cassandra
-sudo systemctl start cassandra
-# or
-cassandra -f  # foreground for monitoring
-```
-
-**During startup, the new node:**
-1. Contacts seeds and discovers cluster
-2. Announces intention to replace dead node
-3. Assumes dead node's tokens
-4. Begins streaming data from remaining replicas
-
-#### Step 5: Monitor Progress
-
-```bash
-# Watch streaming progress
-watch -n 5 'nodetool netstats'
-
-# Check status
-nodetool status
-# New node shows as UJ (Up Joining) during streaming
-
-# View logs for progress
-tail -f /var/log/cassandra/system.log
-```
-
-#### Step 6: Verify Completion
-
-```bash
-# Confirm new node is NORMAL
-nodetool status
-# Should show UN (Up Normal) for new node
-# Dead node should no longer appear
-
-# Verify token ownership
-nodetool ring | grep <new_node_ip>
-
-# Confirm gossip health
-nodetool gossipinfo | grep <new_node_ip>
-```
-
-#### Step 7: Post-Replacement Tasks
-
-```bash
-# Run repair on the new node to ensure consistency
-nodetool repair -pr  # Primary range only
-
-# Clean up the JVM option (if not using _first_boot variant)
-# Remove -Dcassandra.replace_address from jvm.options
-```
+Both scenarios require the `replace_address_first_boot` option—the IP in the option always refers to the **dead node's address**, regardless of the new node's IP.
 
 ---
 
-## Node Removal Procedure
+## Removal Architecture
 
-### When to Use Removal
+### Token Redistribution Model
 
-Use `removenode` when:
-- No replacement hardware available immediately
-- Intentionally reducing cluster capacity
-- Node is stuck in an unrecoverable state
-
-### Removal Process
+Node removal triggers token redistribution—the dead node's token ranges are reassigned to remaining nodes:
 
 ```graphviz dot removal-process.svg
 digraph RemovalProcess {
@@ -268,123 +269,55 @@ digraph RemovalProcess {
     edge [fontname="Helvetica", fontsize=9];
     rankdir=TB;
 
-    label="Node Removal Process (removenode)";
+    label="Node Removal - Token Redistribution";
     labelloc="t";
     fontsize=12;
 
     node [shape=box, style="rounded,filled"];
 
-    verify [label="1. Verify Node is DOWN\nnodetool status shows DN", fillcolor="#5B9BD5", fontcolor="white"];
-    hostid [label="2. Get Host ID\nFrom nodetool status", fillcolor="#5B9BD5", fontcolor="white"];
-    remove [label="3. Execute removenode\nnodetool removenode <host_id>", fillcolor="#FFC000", fontcolor="black"];
-    redistribute [label="4. Data Redistributes\nRemaining nodes stream", fillcolor="#C55A11", fontcolor="white"];
-    complete [label="5. Removal Complete\nNode removed from ring", fillcolor="#70AD47", fontcolor="white"];
+    dead [label="Dead Node Identified\nHost ID known", fillcolor="#5B9BD5", fontcolor="white"];
+    initiate [label="Removal Initiated\nFrom any live node", fillcolor="#5B9BD5", fontcolor="white"];
+    recalc [label="Token Recalculation\nRanges redistributed", fillcolor="#FFC000", fontcolor="black"];
+    stream [label="Data Streaming\nBetween remaining nodes", fillcolor="#C55A11", fontcolor="white"];
+    complete [label="Removal Complete\nNode purged from ring", fillcolor="#70AD47", fontcolor="white"];
 
-    verify -> hostid -> remove -> redistribute -> complete;
+    dead -> initiate -> recalc -> stream -> complete;
 }
-```
-
-### Removal Command
-
-```bash
-# Get host ID of dead node
-nodetool status
-
-# Execute removal (run from any live node)
-nodetool removenode <host_id>
-
-# Example:
-nodetool removenode abc123-def456-789...
-
-# Monitor progress
-nodetool removenode status
 ```
 
 ### Removal vs Decommission
 
 | Aspect | removenode | decommission |
 |--------|------------|--------------|
-| **Node state** | Dead (DN) | Alive (UN) |
-| **Initiated from** | Any live node | The leaving node |
-| **Data transfer** | Remaining nodes stream to each other | Leaving node streams out |
-| **Token handling** | Tokens redistributed | Tokens released |
+| **Precondition** | Node is DOWN | Node is UP and operational |
+| **Initiated from** | Any live node | The departing node itself |
+| **Data source** | Remaining replicas stream to each other | Departing node streams its data out |
+| **Coordination** | Distributed among remaining nodes | Centralized on departing node |
+| **Use case** | Unplanned failure | Planned capacity reduction |
 
-!!! warning "removenode Requirements"
-    The node being removed must be DOWN. Do not use `removenode` on a running node—use `decommission` instead.
+### Assassinate Operation
 
----
+The `assassinate` operation forcibly removes a node from gossip state without data redistribution:
 
-## Assassinate (Emergency)
+| Characteristic | Description |
+|----------------|-------------|
+| **Purpose** | Emergency removal of stuck nodes |
+| **Data handling** | None—no streaming occurs |
+| **Risk** | Potential data loss if replicas insufficient |
+| **Post-action** | Full repair required on all nodes |
 
-### When to Use Assassinate
-
-Use `assassinate` only when:
-- Node is stuck (not responding but not fully dead)
-- `removenode` fails or hangs
-- Emergency cluster recovery needed
-
-!!! danger "Risk of Data Loss"
-    `assassinate` forcibly removes a node from gossip without data redistribution. Use only as last resort.
-
-### Assassinate Command
-
-```bash
-# Emergency removal (use carefully!)
-nodetool assassinate <ip_address>
-
-# Example:
-nodetool assassinate 10.0.1.3
-```
-
-**After assassination:**
-1. Run repair on all nodes to restore consistency
-2. Verify no data loss occurred
-3. Review why normal procedures failed
+**Use only when:**
+- Node is unresponsive but not fully DOWN
+- `removenode` fails or hangs indefinitely
+- Emergency cluster recovery is required
 
 ---
 
-## Same-IP Replacement
+## Multiple Failure Scenarios
 
-### Replacing with Same IP Address
+### Concurrent Failure Analysis
 
-When the replacement node uses the same IP as the dead node:
-
-```yaml
-# cassandra.yaml on replacement node
-
-# Same IP, but new Host ID generated automatically
-listen_address: 10.0.1.3  # Same as dead node
-
-# Still need replace_address
-# JVM option: -Dcassandra.replace_address_first_boot=10.0.1.3
-```
-
-**Procedure:**
-1. Ensure dead node's data directory is empty/removed
-2. Configure `replace_address_first_boot` with same IP
-3. Start node normally
-4. Node generates new Host ID but assumes old tokens
-
-### Different-IP Replacement
-
-When replacement uses different IP:
-
-```yaml
-# cassandra.yaml on replacement node
-
-listen_address: 10.0.1.10  # NEW IP address
-
-# JVM option references the DEAD node's IP
-# -Dcassandra.replace_address_first_boot=10.0.1.3  # OLD IP
-```
-
----
-
-## Handling Multiple Failures
-
-### Concurrent Failures
-
-If multiple nodes fail simultaneously:
+When multiple nodes fail, data availability depends on the relationship between failures and replication:
 
 ```graphviz dot multiple-failures.svg
 digraph MultipleFailures {
@@ -393,122 +326,83 @@ digraph MultipleFailures {
     edge [fontname="Helvetica", fontsize=9];
     rankdir=TB;
 
-    label="Multiple Node Failure Handling";
+    label="Multiple Failure Impact Analysis";
     labelloc="t";
     fontsize=12;
 
     node [shape=box, style="rounded,filled"];
 
-    assess [label="1. Assess Situation\nHow many nodes? RF still satisfied?", fillcolor="#5B9BD5", fontcolor="white"];
+    assess [label="Assess Failure Scope\nCount failed nodes per token range", fillcolor="#5B9BD5", fontcolor="white"];
 
-    check [label="Data Available?\n(remaining replicas ≥ 1)", shape=diamond, fillcolor="#E8E8E8", fontcolor="black"];
+    check [label="Surviving Replicas ≥ 1\nfor all ranges?", shape=diamond, fillcolor="#E8E8E8", fontcolor="black"];
 
-    sequential [label="2. Replace Sequentially\nOne node at a time", fillcolor="#70AD47", fontcolor="white"];
-    emergency [label="2. Emergency Recovery\nRestore from backup", fillcolor="#C00000", fontcolor="white"];
+    recoverable [label="Data Recoverable\nSequential replacement possible", fillcolor="#70AD47", fontcolor="white"];
+    critical [label="Data At Risk\nBackup restoration may be required", fillcolor="#C00000", fontcolor="white"];
 
-    repair [label="3. Repair After Each\nEnsure consistency", fillcolor="#FFC000", fontcolor="black"];
+    sequential [label="Replace One at a Time\nRepair between each", fillcolor="#70AD47", fontcolor="white"];
+    restore [label="Restore from Backup\nThen rebuild cluster", fillcolor="#C00000", fontcolor="white"];
 
     assess -> check;
-    check -> sequential [label="Yes"];
-    check -> emergency [label="No\n(data loss risk)"];
-    sequential -> repair;
+    check -> recoverable [label="Yes"];
+    check -> critical [label="No"];
+    recoverable -> sequential;
+    critical -> restore;
 }
 ```
 
-**Guidelines:**
-- Replace one node at a time
-- Wait for each replacement to complete (NORMAL state)
-- Run repair between replacements
-- If RF nodes failed for any range, data may be unavailable
+### Quorum Impact Matrix
 
-### Quorum Considerations
+| Failed Nodes | RF=3 Availability | Recovery Strategy |
+|--------------|-------------------|-------------------|
+| 1 | QUORUM available (2 of 3) | Standard replacement |
+| 2 | ONE available only | Urgent replacement, sequential |
+| 3 (same range) | Data unavailable | Backup restoration required |
 
-| Scenario | RF=3, CL=QUORUM | Impact |
-|----------|-----------------|--------|
-| 1 node down | 2 replicas remain | Reads/writes succeed |
-| 2 nodes down | 1 replica remains | Quorum unavailable |
-| 3 nodes down | 0 replicas | Data unavailable |
+### Recovery Ordering
 
----
+When multiple nodes require replacement:
 
-## Verification and Repair
-
-### Post-Replacement Verification
-
-```bash
-# 1. Verify node status
-nodetool status
-# All nodes should show UN
-
-# 2. Verify token ownership
-nodetool describering <keyspace>
-
-# 3. Check for pending streaming
-nodetool netstats
-
-# 4. Verify gossip state
-nodetool gossipinfo
-
-# 5. Check for schema agreement
-nodetool describecluster
-```
-
-### Post-Replacement Repair
-
-```bash
-# Run repair on replacement node
-nodetool repair -pr <keyspace>
-
-# For thorough consistency
-nodetool repair --full <keyspace>
-```
-
-| Repair Type | When to Use |
-|-------------|-------------|
-| Primary range (`-pr`) | Standard post-replacement |
-| Full repair (`--full`) | Suspected consistency issues |
-| Incremental | Ongoing maintenance |
+1. **Assess scope**: Identify which token ranges are affected
+2. **Prioritize**: Replace nodes affecting most-critical ranges first
+3. **Sequential execution**: Complete one replacement before starting next
+4. **Repair between**: Run repair after each replacement to ensure consistency
+5. **Verify coverage**: Confirm all ranges have sufficient replicas before proceeding
 
 ---
 
-## Troubleshooting
+## Data Consistency Considerations
 
-### Replacement Fails to Start
+### Streaming During Replacement
 
-| Symptom | Cause | Solution |
-|---------|-------|----------|
-| "Cannot replace a live node" | Target node not marked DOWN | Wait for failure detection or use `assassinate` |
-| "Replace address must be peer" | Wrong IP in config | Verify dead node's IP |
-| "Unable to find host ID" | Gossip doesn't know dead node | Clear gossip state, check seeds |
+During replacement, the new node receives data from surviving replicas:
 
-### Streaming Stalls
+| Source Selection | Criteria |
+|------------------|----------|
+| **Prefer local DC** | Minimize cross-datacenter traffic |
+| **Prefer least loaded** | Distribute streaming impact |
+| **Avoid concurrent streamers** | Prevent resource contention |
 
-```bash
-# Check streaming status
-nodetool netstats
+### Post-Replacement Consistency
 
-# If stuck, check logs
-grep -i "stream" /var/log/cassandra/system.log
+After replacement completes, data consistency may require repair:
 
-# Possible causes:
-# - Network issues between nodes
-# - Disk full on source or target
-# - Timeout (increase streaming_socket_timeout_in_ms)
-```
+| Scenario | Repair Recommendation |
+|----------|----------------------|
+| Short downtime (< hint window) | Hints cover gap; repair optional |
+| Extended downtime (> hint window) | Repair required for missed writes |
+| Multiple failures | Full repair recommended |
+| Consistency-critical data | Always run repair |
 
-### Post-Replacement Issues
-
-| Issue | Resolution |
-|-------|------------|
-| Data inconsistency | Run repair |
-| Missing data | Verify RF, run full repair |
-| Performance degradation | Wait for compaction, tune compaction_throughput |
+The hint window (default: 3 hours) determines whether hinted handoff can cover writes during downtime. Beyond this window, hints expire and repair becomes necessary.
 
 ---
 
 ## Related Documentation
 
-- **[Node Lifecycle](node-lifecycle.md)** - Normal join/leave procedures
-- **[Data Streaming](../distributed-data/streaming.md)** - Streaming mechanics during replacement
-- **[Gossip Protocol](gossip.md)** - Failure detection and state propagation
-- **[Scaling Operations](scaling.md)** - Adding nodes after removal
+- **[Node Lifecycle](node-lifecycle.md)** - Bootstrap, decommission, and state transitions
+- **[Gossip Protocol](gossip.md)** - Failure detection mechanics
+- **[Data Streaming](../distributed-data/streaming.md)** - Streaming architecture during replacement
+- **[Scaling Operations](scaling.md)** - Capacity planning after node removal
+- **[Fault Tolerance](../fault-tolerance/index.md)** - Failure scenarios and recovery patterns
+- **[Operations: Cluster Management](../../operations/cluster-management/index.md)** - Step-by-step procedures
+

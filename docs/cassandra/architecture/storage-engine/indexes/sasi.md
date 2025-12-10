@@ -44,36 +44,29 @@ Despite its capabilities, SASI has remained experimental since introduction:
 
 Unlike legacy secondary indexes that use separate hidden tables, SASI stores index data as additional SSTable components:
 
-```graphviz dot sasi-architecture.svg
-digraph SASIArchitecture {
-    fontname="Roboto";
-    node [fontname="Roboto", fontsize=10, fontcolor="white"];
-    edge [fontname="Roboto", fontsize=9, fontcolor="white"];
+```plantuml
+@startuml
+skinparam backgroundColor transparent
+title SASI: Index Data Attached to SSTable
 
-    label="SASI: Index Data Attached to SSTable";
-    labelloc="t";
-    fontsize=14;
+package "SSTable Components" {
+    rectangle "Data.db\n(row data)" as data
+    rectangle "Index.db\n(partition index)" as index
+    rectangle "Filter.db\n(bloom filter)" as filter
+    rectangle "*-SASI.db\n(SASI index)" as sasi
 
-    node [shape=box, style="rounded,filled", fillcolor="#7B4B96", fontcolor="white"];
-
-    subgraph cluster_sstable {
-        label="SSTable Components";
-        style="rounded,filled";
-        fillcolor="#F9E5FF";
-        color="#CC99CC";
-
-        data [label="Data.db\n(row data)"];
-        index [label="Index.db\n(partition index)"];
-        filter [label="Filter.db\n(bloom filter)"];
-        sasi [label="*-SASI.db\n(SASI index)", fillcolor="#4B7B96"];
-
-        data -> index [style=invis];
-        index -> filter [style=invis];
-        filter -> sasi [style=invis];
-    }
-
-    note [shape=note, label="SASI index files created\nper indexed column\nCompacted with SSTable", fillcolor="#FFFFCC", fontcolor="black"];
+    data -[hidden]down-> index
+    index -[hidden]down-> filter
+    filter -[hidden]down-> sasi
 }
+
+note right of sasi
+  SASI index files created
+  per indexed column
+  Compacted with SSTable
+end note
+
+@enduml
 ```
 
 **Benefits of SSTable attachment:**
@@ -87,45 +80,24 @@ digraph SASIArchitecture {
 
 SASI supports three index modes optimized for different data types:
 
-```graphviz dot sasi-modes.svg
-digraph SASIModes {
-    fontname="Roboto";
-    node [fontname="Roboto", fontsize=10, fontcolor="white"];
-    edge [fontname="Roboto", fontsize=9, fontcolor="white"];
+```plantuml
+@startuml
+skinparam backgroundColor transparent
+title SASI Index Modes
 
-    label="SASI Index Modes";
-    labelloc="t";
-    fontsize=14;
-
-    node [shape=box, style="rounded,filled", fillcolor="#7B4B96", fontcolor="white"];
-
-    subgraph cluster_prefix {
-        label="PREFIX Mode";
-        style="rounded,filled";
-        fillcolor="#FFE8E8";
-        color="#CC9999";
-
-        prefix [label="Trie-based structure\nOptimized for string prefixes\nLIKE 'abc%' queries"];
-    }
-
-    subgraph cluster_contains {
-        label="CONTAINS Mode";
-        style="rounded,filled";
-        fillcolor="#E8FFE8";
-        color="#99CC99";
-
-        contains [label="N-gram tokenization\nFull substring search\nLIKE '%abc%' queries", fillcolor="#4B964B"];
-    }
-
-    subgraph cluster_sparse {
-        label="SPARSE Mode";
-        style="rounded,filled";
-        fillcolor="#E8E8FF";
-        color="#9999CC";
-
-        sparse [label="B+ tree structure\nNumeric range queries\nGreater/less than", fillcolor="#4B4B96"];
-    }
+package "PREFIX Mode" {
+    rectangle "Trie-based structure\nOptimized for string prefixes\nLIKE 'abc%' queries" as prefix
 }
+
+package "CONTAINS Mode" {
+    rectangle "N-gram tokenization\nFull substring search\nLIKE '%abc%' queries" as contains
+}
+
+package "SPARSE Mode" {
+    rectangle "B+ tree structure\nNumeric range queries\nGreater/less than" as sparse
+}
+
+@enduml
 ```
 
 | Mode | Data Type | Query Support | Use Case |
@@ -138,44 +110,32 @@ digraph SASIModes {
 
 SASI queries iterate through SSTables, applying predicates locally before returning results:
 
-```graphviz dot sasi-query.svg
-digraph SASIQuery {
-    fontname="Roboto";
-    node [fontname="Roboto", fontsize=10, fontcolor="white"];
-    edge [fontname="Roboto", fontsize=9, fontcolor="white"];
+```plantuml
+@startuml
+skinparam backgroundColor transparent
+title SASI Query Execution
 
-    label="SASI Query Execution";
-    labelloc="t";
-    fontsize=14;
+rectangle "Query:\nWHERE age > 25\nAND city LIKE 'New%'" as query
 
-    node [shape=box, style="rounded,filled", fillcolor="#7B4B96", fontcolor="white"];
+package "Local Node Processing" {
+    rectangle "SSTable 1" as ss1
+    rectangle "SSTable 2" as ss2
+    rectangle "SSTable 3" as ss3
+    rectangle "Single-pass\nintersection" as intersect
 
-    query [label="Query:\nWHERE age > 25\nAND city LIKE 'New%'"];
-
-    subgraph cluster_node {
-        label="Local Node Processing";
-        style="rounded,filled";
-        fillcolor="#F9E5FF";
-        color="#CC99CC";
-
-        ss1 [label="SSTable 1"];
-        ss2 [label="SSTable 2"];
-        ss3 [label="SSTable 3"];
-
-        intersect [label="Single-pass\nintersection", fillcolor="#4B964B"];
-
-        ss1 -> intersect;
-        ss2 -> intersect;
-        ss3 -> intersect;
-    }
-
-    results [label="Matching\nPartition Keys"];
-
-    query -> ss1;
-    query -> ss2;
-    query -> ss3;
-    intersect -> results;
+    ss1 --> intersect
+    ss2 --> intersect
+    ss3 --> intersect
 }
+
+rectangle "Matching\nPartition Keys" as results
+
+query --> ss1
+query --> ss2
+query --> ss3
+intersect --> results
+
+@enduml
 ```
 
 **Single-pass intersection**: Multiple SASI predicates are intersected within each SSTable iteration, avoiding the scatter-gather pattern of legacy indexes for multi-predicate queries.

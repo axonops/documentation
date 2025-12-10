@@ -250,12 +250,6 @@ done
 - [nodetool flush](flush.md) - Flush memtables before snapshot
 - [nodetool refresh](refresh.md) - Load restored SSTables
 
-## Related Documentation
-
-- [Operations - Backup & Restore](../../../operations/backup-restore/index.md) - Complete backup guide
-- [Architecture - Storage Engine](../../../architecture/storage-engine/index.md) - Understanding SSTables
-- [Configuration - cassandra.yaml](../../../configuration/cassandra-yaml/index.md) - Backup configuration
-
 ## Version Information
 
 Available in all Apache Cassandra versions. The `--kt-list` option for multiple table snapshots was enhanced in Cassandra 4.0.

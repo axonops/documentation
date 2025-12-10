@@ -17,22 +17,36 @@ Developers familiar with traditional relational databases encounter a fundamenta
 | **Request routing** | Database decides execution node | Driver chooses target node via load balancing policy |
 | **Connection count** | Pool size × 1 server | Pool size × N nodes |
 
-```mermaid
-flowchart LR
-    subgraph RDBMS["Traditional RDBMS"]
-        direction TB
-        App1[Application] --> Pool1[Connection Pool]
-        Pool1 --> DB[(Database Server)]
-    end
+```plantuml
+@startuml
+skinparam backgroundColor transparent
+title Connection Model Comparison
 
-    subgraph Cassandra["Cassandra"]
-        direction TB
-        App2[Application] --> Driver[Driver Session]
-        Driver --> P1[Pool → Node 1]
-        Driver --> P2[Pool → Node 2]
-        Driver --> P3[Pool → Node 3]
-        Driver --> P4[Pool → Node N]
-    end
+package "Traditional RDBMS" {
+    rectangle "Application" as App1
+    rectangle "Connection Pool" as Pool1
+    database "Database Server" as DB
+
+    App1 --> Pool1
+    Pool1 --> DB
+}
+
+package "Cassandra" {
+    rectangle "Application" as App2
+    rectangle "Driver Session" as Driver
+    rectangle "Pool → Node 1" as P1
+    rectangle "Pool → Node 2" as P2
+    rectangle "Pool → Node 3" as P3
+    rectangle "Pool → Node N" as P4
+
+    App2 --> Driver
+    Driver --> P1
+    Driver --> P2
+    Driver --> P3
+    Driver --> P4
+}
+
+@enduml
 ```
 
 ### Key Differences for RDBMS Developers
@@ -165,34 +179,39 @@ In practice, most deployments need only 1-2 connections per node due to the mult
 
 When the driver session starts, it connects to a contact point and discovers the cluster topology:
 
-```mermaid
-sequenceDiagram
-    participant D as Driver
-    participant CP as ContactPoint
-    participant N2 as Node2
-    participant N3 as Node3
+```plantuml
+@startuml
+skinparam backgroundColor transparent
+title Initial Bootstrap Sequence
 
-    Note over D,CP: 1. Connect to Contact Point
-    D->>CP: TCP + CQL Handshake
-    CP->>D: READY
+participant "Driver" as D
+participant "ContactPoint" as CP
+participant "Node2" as N2
+participant "Node3" as N3
 
-    Note over D,CP: 2. Discover Cluster Topology
-    D->>CP: Query system.local
-    CP->>D: Local node info, tokens
-    D->>CP: Query system.peers
-    CP->>D: All other nodes
+== 1. Connect to Contact Point ==
+D -> CP: TCP + CQL Handshake
+CP --> D: READY
 
-    Note over D,N3: 3. Connect to Discovered Nodes
-    D->>N2: TCP + CQL Handshake
-    N2->>D: READY
-    D->>N3: TCP + CQL Handshake
-    N3->>D: READY
+== 2. Discover Cluster Topology ==
+D -> CP: Query system.local
+CP --> D: Local node info, tokens
+D -> CP: Query system.peers
+CP --> D: All other nodes
 
-    Note over D,CP: 4. Subscribe to Cluster Events
-    D->>CP: REGISTER for events
-    CP->>D: Event notifications
+== 3. Connect to Discovered Nodes ==
+D -> N2: TCP + CQL Handshake
+N2 --> D: READY
+D -> N3: TCP + CQL Handshake
+N3 --> D: READY
 
-    Note over D,N3: Session Ready
+== 4. Subscribe to Cluster Events ==
+D -> CP: REGISTER for events
+CP --> D: Event notifications
+
+note over D,N3: Session Ready
+
+@enduml
 ```
 
 The control connection remains on one node (typically the first successful contact point) and receives push notifications when nodes join, leave, or change status.
@@ -201,32 +220,37 @@ The control connection remains on one node (typically the first successful conta
 
 Each individual connection follows this sequence:
 
-```mermaid
-sequenceDiagram
-    participant D as Driver
-    participant N as Node
+```plantuml
+@startuml
+skinparam backgroundColor transparent
+title Per-Connection Handshake
 
-    D->>N: TCP Connect
+participant "Driver" as D
+participant "Node" as N
 
-    opt TLS Enabled
-        D->>N: TLS ClientHello
-        N->>D: ServerHello + Certificate
-        D->>N: Key Exchange
-    end
+D -> N: TCP Connect
 
-    D->>N: OPTIONS
-    N->>D: SUPPORTED
-    D->>N: STARTUP
+group TLS Enabled [optional]
+    D -> N: TLS ClientHello
+    N --> D: ServerHello + Certificate
+    D -> N: Key Exchange
+end
 
-    alt Authentication Required
-        N->>D: AUTHENTICATE
-        D->>N: AUTH_RESPONSE
-        N->>D: AUTH_SUCCESS
-    else No Authentication
-        N->>D: READY
-    end
+D -> N: OPTIONS
+N --> D: SUPPORTED
+D -> N: STARTUP
 
-    Note over D,N: Connection added to pool
+alt Authentication Required
+    N --> D: AUTHENTICATE
+    D -> N: AUTH_RESPONSE
+    N --> D: AUTH_SUCCESS
+else No Authentication
+    N --> D: READY
+end
+
+note over D,N: Connection added to pool
+
+@enduml
 ```
 
 ### Health Monitoring
@@ -255,20 +279,25 @@ Connections close due to:
 
 The driver tracks node availability independently of Cassandra's gossip:
 
-```mermaid
-stateDiagram-v2
-    [*] --> UP: Initial connection succeeds
+```plantuml
+@startuml
+skinparam backgroundColor transparent
+title Node State Management
 
-    UP --> DOWN: Connection failures\nRequest timeouts
-    DOWN --> UP: Reconnection succeeds
+[*] --> UP : Initial connection succeeds
 
-    UP: Normal operation
-    UP: Connections healthy
-    UP: Requests succeeding
+UP --> DOWN : Connection failures\nRequest timeouts
+DOWN --> UP : Reconnection succeeds
 
-    DOWN: Node considered unavailable
-    DOWN: No requests routed here
-    DOWN: Reconnection policy active
+UP : Normal operation
+UP : Connections healthy
+UP : Requests succeeding
+
+DOWN : Node considered unavailable
+DOWN : No requests routed here
+DOWN : Reconnection policy active
+
+@enduml
 ```
 
 ### Down Detection

@@ -46,54 +46,6 @@ We use the **SDRR Framework** for consistent problem resolution:
 
 ---
 
-## Documentation Structure
-
-### Common Errors
-
-Detailed documentation for specific exceptions:
-
-- **[ReadTimeoutException](common-errors/read-timeout.md)** - Read operations timing out
-- **[WriteTimeoutException](common-errors/write-timeout.md)** - Write operations timing out
-- **[UnavailableException](common-errors/unavailable.md)** - Insufficient replicas
-- **[TombstoneOverwhelmingException](common-errors/tombstone-overwhelming.md)** - Too many tombstones
-- **[NoHostAvailableException](common-errors/no-host-available.md)** - Driver connection issues
-- **[SSTableCorruptedException](common-errors/sstable-corrupted.md)** - Data corruption
-- **[OutOfMemoryError](common-errors/out-of-memory.md)** - Heap exhaustion
-- **[BootstrapException](common-errors/bootstrap-exception.md)** - Node joining failures
-- **[MutationFailedException](common-errors/mutation-failed.md)** - Write failures
-- **[InvalidQueryException](common-errors/invalid-query.md)** - CQL errors
-
-### Diagnosis Procedures
-
-Root cause analysis guides:
-
-- **[Performance Diagnosis](diagnosis/performance.md)** - Slow queries and latency
-- **[Memory Diagnosis](diagnosis/memory.md)** - Heap and off-heap issues
-- **[Disk Diagnosis](diagnosis/disk.md)** - I/O and storage problems
-- **[Network Diagnosis](diagnosis/network.md)** - Connectivity issues
-- **[Data Diagnosis](diagnosis/data.md)** - Corruption and consistency
-- **[Startup Diagnosis](diagnosis/startup.md)** - Node will not start
-
-### Operational Playbooks
-
-Step-by-step procedures for common scenarios:
-
-- **[Replace Dead Node](playbooks/replace-dead-node.md)**
-- **[Recover from OOM](playbooks/recover-from-oom.md)**
-- **[Handle Full Disk](playbooks/handle-full-disk.md)**
-- **[Fix Schema Disagreement](playbooks/fix-schema-disagreement.md)**
-- **[Repair Corrupted Data](playbooks/repair-corrupted-data.md)**
-- **[Resolve Network Partition](playbooks/network-partition.md)**
-
-### Log Analysis
-
-Understanding Cassandra logs:
-
-- **[Log Levels and Locations](log-analysis/log-locations.md)**
-- **[Common Log Patterns](log-analysis/log-patterns.md)**
-- **[GC Log Analysis](log-analysis/gc-logs.md)**
-- **[Error Message Reference](log-analysis/error-messages.md)**
-
 ---
 
 ## First Response Checklist
@@ -325,7 +277,5 @@ When seeking help, gather:
 
 ## Next Steps
 
-- **[Common Errors](common-errors/index.md)** - Error reference
-- **[Diagnosis Procedures](diagnosis/index.md)** - Root cause analysis
-- **[Playbooks](playbooks/index.md)** - Step-by-step procedures
-- **[Log Analysis](log-analysis/index.md)** - Understanding logs
+- **[Monitoring Guide](../monitoring/index.md)** - Proactive monitoring
+- **[Performance Tuning](../performance/index.md)** - Performance optimization

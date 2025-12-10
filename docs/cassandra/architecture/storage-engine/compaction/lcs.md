@@ -636,4 +636,4 @@ org.apache.cassandra.metrics:type=Table,keyspace=*,scope=*,name=BytesCompacted
 
 - **[Compaction Overview](index.md)** - Concepts and strategy selection
 - **[Size-Tiered Compaction (STCS)](stcs.md)** - Alternative for write-heavy workloads
-- **[Compaction Management](../../../../operations/compaction-management/index.md)** - Tuning and troubleshooting
+- **[Compaction Management](../../../operations/compaction-management/index.md)** - Tuning and troubleshooting

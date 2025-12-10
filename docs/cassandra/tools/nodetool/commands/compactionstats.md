@@ -208,12 +208,6 @@ top -p $(pgrep -f cassandra)
 - [nodetool stop](stop.md) - Stop compaction
 - [nodetool tablestats](tablestats.md) - Check SSTable counts
 
-## Related Documentation
-
-- [Architecture - Compaction](../../../architecture/compaction/index.md) - Compaction strategies
-- [Troubleshooting - Compaction Backlog](../../../troubleshooting/playbooks/compaction-backlog.md) - Resolving issues
-- [Configuration - cassandra.yaml](../../../configuration/cassandra-yaml/index.md) - Compaction settings
-
 ## Version Information
 
 Available in all Apache Cassandra versions.

@@ -428,14 +428,14 @@ Contains the actual row data for all partitions in the SSTable.
 
 ```
 ┌─────────────────────────────────────────────────────────┐
-│ Partition 1                                              │
+│ Partition 1                                             │
 │ ├── Partition Key (serialized)                          │
 │ ├── Partition Header (deletion info, flags)             │
 │ ├── Row 1 (clustering key + cells)                      │
 │ ├── Row 2 (clustering key + cells)                      │
 │ └── ...                                                 │
 ├─────────────────────────────────────────────────────────┤
-│ Partition 2                                              │
+│ Partition 2                                             │
 │ └── ...                                                 │
 ├─────────────────────────────────────────────────────────┤
 │ ...                                                     │

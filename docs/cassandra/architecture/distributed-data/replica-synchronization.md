@@ -26,26 +26,30 @@ Hinted handoff handles writes to temporarily unavailable replicas by storing the
 
 ### How It Works
 
-```mermaid
-sequenceDiagram
-    participant C as Coordinator
-    participant N1 as Node 1
-    participant N2 as Node 2
-    participant N3 as Node 3
+```plantuml
+@startuml
+skinparam backgroundColor transparent
 
-    C->>N1: Write
-    N1-->>C: ACK ✓
-    C->>N2: Write
-    N2-->>C: ACK ✓
-    C-xN3: Write (failed)
+participant "Coordinator" as C
+participant "Node 1" as N1
+participant "Node 2" as N2
+participant "Node 3" as N3
 
-    Note over C: QUORUM met, store hint
+C -> N1: Write
+N1 --> C: ACK
+C -> N2: Write
+N2 --> C: ACK
+C -x N3: Write [failed]
 
-    Note over N3: Node recovers
+note over C: QUORUM met, store hint
 
-    C->>N3: Replay hint
-    N3-->>C: ACK ✓
-    Note over C: Delete hint
+note over N3: Node recovers
+
+C -> N3: Replay hint
+N3 --> C: ACK
+note over C: Delete hint
+
+@enduml
 ```
 
 ### Configuration
@@ -238,20 +242,37 @@ Scenarios where hinted handoff and read reconciliation are insufficient:
 
 Merkle trees, introduced by Ralph Merkle ([Merkle, R., 1987, "A Digital Signature Based on a Conventional Encryption Function"](https://link.springer.com/chapter/10.1007/3-540-48184-2_32)), enable efficient comparison of large datasets by hierarchically hashing data segments. When two replicas exchange only their root hashes, a mismatch indicates divergence somewhere in the dataset. By recursively comparing child hashes, the algorithm identifies exactly which segments differ—requiring only O(log n) comparisons rather than comparing every record.
 
-```mermaid
-flowchart TB
-    subgraph MT["Build Merkle Tree - Each replica builds a hash tree"]
-        H1["Hash 1-1000"] --> ROOT["Root Hash"]
-        H2["Hash 1001-2000"] --> ROOT
-        H1A["Hash 1-500"] --> H1
-        H1B["Hash 501-1000"] --> H1
-        H2A["Hash 1001-1500"] --> H2
-        H2B["Hash 1501-2000"] --> H2
-    end
+```plantuml
+@startuml
+skinparam backgroundColor transparent
 
-    R1["Replica 1 Tree"] -->|"Compare Hash"| COMP["Coordinator"]
-    R2["Replica 2 Tree"] -->|"Compare Hash"| COMP
-    COMP -->|"Mismatch in range 501-1000"| STREAM["Stream only differing data"]
+package "Build Merkle Tree - Each replica builds a hash tree" {
+    rectangle "Hash 1-500" as H1A
+    rectangle "Hash 501-1000" as H1B
+    rectangle "Hash 1001-1500" as H2A
+    rectangle "Hash 1501-2000" as H2B
+    rectangle "Hash 1-1000" as H1
+    rectangle "Hash 1001-2000" as H2
+    rectangle "Root Hash" as ROOT
+
+    H1A --> H1
+    H1B --> H1
+    H2A --> H2
+    H2B --> H2
+    H1 --> ROOT
+    H2 --> ROOT
+}
+
+rectangle "Replica 1 Tree" as R1
+rectangle "Replica 2 Tree" as R2
+rectangle "Coordinator" as COMP
+rectangle "Stream only differing data" as STREAM
+
+R1 --> COMP : Compare Hash
+R2 --> COMP : Compare Hash
+COMP --> STREAM : Mismatch in\nrange 501-1000
+
+@enduml
 ```
 
 ### Synchronization Modes
