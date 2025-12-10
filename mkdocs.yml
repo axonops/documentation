@@ -68,6 +68,7 @@ markdown_extensions:
         - name: mermaid
           class: mermaid
           format: !!python/name:pymdownx.superfences.fence_code_format
+  - pymdownx.extra
   - tables
   - pymdownx.emoji:
       emoji_index: !!python/name:material.extensions.emoji.twemoji
@@ -102,16 +103,21 @@ extra_javascript:
   - https://unpkg.com/mermaid@10/dist/mermaid.min.js
   - javascripts/mermaid-init.js
 
+not_in_nav: |
+  dynamic_pages
+
 nav:
   - Home: index.md
 
-
+  - Introduction:
+    - Overview: 'introduction/overview.md'
+  
   # - Get Started:
   - AxonOps Cloud:
     - Editions: 
-      - Developer Edition: 'editions/developer_edition.md'
-      - Starter Edition: 'editions/starter_edition.md'
+      - Free Edition: 'editions/free_edition.md'
       - Enterprise Edition: 'editions/enterprise_edition.md'
+
 
     - Setup:
       - AxonOps Cloud account: 'get_started/cloud.md'
@@ -139,24 +145,14 @@ nav:
 
     - Security:
       - Firewall Rules: firewall/overview.md 
-      
-    # - Starter:
-    #   - AxonOps Server: 'installation-starter/axon-server/axonserver_install.md'
-    #   - AxonOps Dashboard: 'installation-starter/axon-dash/install.md'
-    #   - AxonOps Agent: 'installation-starter/agent/install.md'
-    #   - AxonOps Agent in Docker: 'installation-starter/agent/docker.md'
-    #   - System Requirements: system-requirements/developer.md
 
     - Installing AxonOps:
-      - Elasticsearch: 
-        - Install Elasticsearch: 'installation/elasticsearch/install.md'
-        - Secure Elasticsearch: 'installation/elasticsearch/securing_elastic.md'
+      - Elasticsearch: 'installation/elasticsearch/install.md'
       
       - Cassandra as Metrics store: 'installation/axon-server/metricsdatabase.md'
 
       - AxonOps Server: 'installation/axon-server/axonserver_install.md'
       - AxonOps Dashboard: 'installation/axon-dash/install.md'
-      - Configure Nginx: 'installation/axon-dash/configure_nginx.md'
       - AxonOps Agent: 'installation/agent/install.md'
       - Kubernetes: 'installation/kubernetes/index.md'
       - System Requirements: system-requirements/index.md
@@ -168,7 +164,8 @@ nav:
       - Quickstart - Docker: 'get_started/docker.md'
       
     - Compatibility:
-      - Interoperability matrix: 'installation/compat_matrix/compat_matrix.md'
+      - Interoperability Matrix: 'installation/compat_matrix/compat_matrix.md'
+      - Release Notes: 'installation/release_notes.md'
 
     
   - Using AxonOps:
@@ -182,13 +179,29 @@ nav:
       - Logs & Events: 'monitoring/logsandevents/logsandevents.md'
 
     - Cassandra:
-      - Metrics Dashboard:
+      - Metrics Dashboards:
         - Cassandra: 'monitoring/metricsdashboards/cassandra.md'
-        - Metrics Query Syntax: 'monitoring/metricsdashboards/querysyntax.md'
+        - Query Syntax: 'monitoring/metricsdashboards/querysyntax.md'
+        - Metrics Reference: metrics/cassandra/all_dashboards_metrics_reference.md
+        - Dashboard Mappings:
+          - System Dashboard: metrics/cassandra/system_metrics_mapping.md
+          - Application Dashboard: metrics/cassandra/application_metrics_mapping.md
+          - Cache Dashboard: metrics/cassandra/cache_metrics_mapping.md
+          - Compactions Dashboard: metrics/cassandra/compactions_metrics_mapping.md
+          - Thread Pools Dashboard: metrics/cassandra/thread_pools_metrics_mapping.md
+          - Coordinator Dashboard: metrics/cassandra/coordinator_metrics_mapping.md
+          - Data Dashboard: metrics/cassandra/data_metrics_mapping.md
+          - Keyspace Dashboard: metrics/cassandra/keyspace_metrics_mapping.md
+          - Table Dashboard: metrics/cassandra/table_metrics_mapping.md
+          - CQL Dashboard: metrics/cassandra/cql_metrics_mapping.md
+          - Dropped Messages Dashboard: metrics/cassandra/dropped_messages_metrics_mapping.md
+          - Entropy Dashboard: metrics/cassandra/entropy_metrics_mapping.md
+          - Security Dashboard: metrics/cassandra/security_metrics_mapping.md
+          - Reporting Dashboard: metrics/cassandra/reporting_metrics_mapping.md
 
       - Operations:
-        - Repair: 'operations/cassandra/repair.md'
-        - Rolling Restart: 'operations/cassandra/rollingrestart/overview.md'
+        - Repairs: 'operations/cassandra/repair/index.md'
+        - Rolling Restarts: 'operations/cassandra/rollingrestart/overview.md'
 
       - Backup:
         - Overview: 'operations/cassandra/backup/overview.md'
@@ -217,9 +230,24 @@ nav:
     - Kafka:
       # - Operations:
       #   - Rolling Restart: 'operations/kafka/rollingrestart/overview.md'
-      - Metrics Dashboard:
+      - Metrics Dashboards:
         - Kafka: 'monitoring/metricsdashboards/kafka.md'
-        - Metrics Query Syntax: 'monitoring/metricsdashboards/querysyntax_kafka.md'
+        - Query Syntax: 'monitoring/metricsdashboards/querysyntax_kafka.md'
+        - Metrics Reference: metrics/kafka/all_kafka_dashboards_metrics_reference.md
+        - Dashboard Mappings:
+          - Overview Dashboard: metrics/kafka/overview_metrics_mapping.md
+          - System Dashboard: metrics/kafka/system_metrics_mapping.md
+          - Performance Dashboard: metrics/kafka/performance_metrics_mapping.md
+          - Connections Dashboard: metrics/kafka/connections_metrics_mapping.md
+          - Replication Dashboard: metrics/kafka/replication_metrics_mapping.md
+          - Topics Dashboard: metrics/kafka/topics_metrics_mapping.md
+          - Requests Dashboard: metrics/kafka/requests_metrics_mapping.md
+          - Controller Dashboard: metrics/kafka/controller_metrics_mapping.md
+          - Consumer Groups Dashboard: metrics/kafka/consumer_groups_metrics_mapping.md
+          - ZooKeeper Dashboard: metrics/kafka/zookeeper_metrics_mapping.md
+          - Connect Overview Dashboard: metrics/kafka/connect_overview_metrics_mapping.md
+          - Connect Tasks Dashboard: metrics/kafka/connect_tasks_metrics_mapping.md
+          - Connect Workers Dashboard: metrics/kafka/connect_workers_metrics_mapping.md
 
       - Brokers: 
         - Overview : kafka/brokers/overview.md
@@ -240,11 +268,12 @@ nav:
     
     - Notification Integrations:
       - Overview : 'integrations/overview.md'
-      - PagerDuty Integration: 'integrations/pagerduy-integration.md'
-      - Slack Integration: 'integrations/slack-integration.md'
+      - PagerDuty: 'integrations/pagerduy-integration.md'
+      - Slack: 'integrations/slack-integration.md'
       - Microsoft Teams: 'integrations/microsoft-teams-integration.md'
       - ServiceNow: 'integrations/servicenow-integration.md'
-      - Email Integration: 'integrations/email-integration.md' 
+      - SMTP / Email: 'integrations/email-integration.md'
+      - Log Files: 'integrations/log-file-integration.md'
       
     - How-to:
       - Setup Alert Rules: how-to/setup-alert-rules.md

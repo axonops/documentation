@@ -1,36 +1,31 @@
-# Setup Microsoft Teams notifications
+# Setup Microsoft Teams Integration
 
+## Create Microsoft Teams Webhook
 
-###  Create Microsoft Teams Webhooks
+On the Microsoft Teams interface, go to `Connectors`.
 
-* On the Microsoft Teams interface, go to `Connectors`
-<kbd>
-![](2022-09-20-14-39-01.png)
-</kbd>
+![](imgs/teams-1.png)
 
-<hr></hr>
-* Click on configure on the `Incoming Webhook` connector
-<kbd>
-![](2022-09-20-14-27-58.png)
-</kbd>
+`Configure` the `Incoming Webhook` connector.
 
-<hr></hr>
-* Provide a name and select `Create`
-<kbd>
-![](2022-09-20-14-28-17.png)
-</kbd>
+![](imgs/teams-2.png)
 
-<hr></hr>
-* Copy the url provided to the clipboard
-<kbd>
-![](2022-09-20-14-28-45.png)
-</kbd>
+Provide a name and select `Create`.
 
-<hr></hr>
-* On the Axonops application menu, select `Settings -> Integrations`
-*  `Click` on the `Microsoft Teams` area.
+![](imgs/teams-3.png)
 
-![](2022-09-20-11-08-58.png)
+Copy the url provided to the clipboard.
 
-* Enter a `name` and copy the url in the `Webhook URL` field and select `Create`
-![](2022-09-20-11-10-34.png)
+![](imgs/teams-4.png)
+
+## Create the Microsoft Teams Integration on axon-server
+
+On the AxonOps application menu, select `Settings -> Integrations`.
+
+Click on the `Microsoft Teams` area.
+
+![](imgs/integrations.png)
+
+Enter a `name`, copy the url in the `Webhook URL` field, and select `Create`.
+
+![](imgs/teams-6.png)

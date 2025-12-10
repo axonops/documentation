@@ -39,7 +39,7 @@ The host ID of the old node can be found on the Cluster Overview page of the Axo
 
 !!! infomy
 
-    [![restore](/img/cass_backups/hostID.png)](/img/cass_backups/hostID.png)
+    [![restore](../../../img/cass_backups/hostID.png)](../../../img/cass_backups/hostID.png)
 
 If you still have access to the old server or its data then its host ID can also be found in the file `/var/lib/axonops/hostId`
 
@@ -74,7 +74,7 @@ Open the Restore page in the AxonOps Dashboard by going to ***Operations > Resto
 
 !!! infomy
 
-    [![restore](/img/cass_backups/restore.png)](/img/cass_backups/restore.png)
+    [![restore](../../../img/cass_backups/restore.png)](../../../img/cass_backups/restore.png)
 
 Choose the backup you wish to restore from the list and click the `RESTORE` button
 
@@ -82,7 +82,7 @@ This will show the details of the backup and allow you to restore to all nodes o
 
 !!! infomy
 
-    [![restore](/img/cass_backups/restore2.png)](/img/cass_backups/restore2.png)
+    [![restore](../../../img/cass_backups/restore2.png)](../../../img/cass_backups/restore2.png)
 
 Select all nodes in the checkbox list then start the restore by clicking the `REMOTE RESTORE` button.
 
@@ -90,7 +90,7 @@ The restore progress will be displayed in the *Backup Restorations in Progress* 
 
 !!! infomy
 
-    [![restore](/img/cass_backups/restores-table.png)](/img/cass_backups/restores-table.png)
+    [![restore](../../../img/cass_backups/restores-table.png)](../../../img/cass_backups/restores-table.png)
 
 After the restore operation has completed successfully, fix the ownership and permissions on the Cassandra data
 directories on all nodes in the cluster

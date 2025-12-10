@@ -854,6 +854,7 @@ html .md-footer-meta.md-typeset a:hover {
 .t_nav ul {
   list-style: none;
   margin: 0;
+  margin-bottom: 5px;
   padding: 0;
 }
 
@@ -1145,6 +1146,16 @@ html .md-footer-meta.md-typeset a:hover {
   border-radius: var(--radius-sm);
 }
 
+table th:nth-of-type(3) {
+    width: 25%;
+}
+
+.menu-icon{
+  color: #7cd825 !important;
+  align-items: center;
+  justify-content: center;
+}
+
 ::-webkit-scrollbar-thumb {
   background: var(--border-medium);
   border-radius: var(--radius-sm);
@@ -1198,4 +1209,3 @@ html .md-footer-meta.md-typeset a:hover {
 [data-md-color-scheme="slate"] .md-typeset code em {
   color: #60a5fa;
 }
-

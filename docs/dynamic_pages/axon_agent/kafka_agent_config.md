@@ -288,7 +288,7 @@ sudo chmod 0640 /etc/axonops/axon-agent.yml
 
 <!-- Step 4 -->
 <div id="Broker" class="axon_kafka_dynamic_s2">
-<h2>Step 4 - Configure Kafka</h2>
+<h2>Configure Kafka</h2>
 
 Edit kafka-server-start.sh, usually located in your Kafka install path such as: 
 
@@ -296,7 +296,7 @@ Edit kafka-server-start.sh, usually located in your Kafka install path such as:
 </div>
 
 <div id="Zookeeper" class="axon_kafka_dynamic_s2" style="display:none">
-<h2>Step 4 - Configure Zookeeper</h2>
+<h2>Configure Zookeeper</h2>
 
 Edit zookeeper-server-start.sh, usually located in your Zookeeper install path such as: 
 
@@ -304,7 +304,7 @@ Edit zookeeper-server-start.sh, usually located in your Zookeeper install path s
 </div>
 
 <div id="KRaftBroker" class="axon_kafka_dynamic_s2" style="display:none">
-<h2>Step 4 - Configure KRaft Broker</h2>
+<h2>Configure KRaft Broker</h2>
 
 Edit kafka-server-start.sh, usually located in your Kafka install path such as: 
 
@@ -312,7 +312,7 @@ Edit kafka-server-start.sh, usually located in your Kafka install path such as:
 </div>
 
 <div id="KRaftController" class="axon_kafka_dynamic_s2" style="display:none">
-<h2>Step 4 - Configure KRaft Controller</h2>
+<h2>Configure KRaft Controller</h2>
 
 Edit kafka-server-start.sh, usually located in your Kafka install path such as: 
 
@@ -320,7 +320,7 @@ Edit kafka-server-start.sh, usually located in your Kafka install path such as:
 </div>
 
 <div id="Connect" class="axon_kafka_dynamic_s2" style="display:none">
-<h2>Step 4 - Configure Connect</h2>
+<h2>Configure Connect</h2>
 
 Edit connect-distributed.sh, usually located in your Kafka install path such as: 
 
@@ -335,61 +335,61 @@ Edit connect-distributed.sh, usually located in your Kafka install path such as:
 
  <!-- Step 5 to 6 -->
 <div id="Broker" class="axon_kafka_dynamic_s5">
-<h2>Step 5 - Add axonops user to Kafka user group and Kafka user to axonops group</h2>
+<h2>Add axonops user to Kafka user group and Kafka user to axonops group</h2>
 ```
 sudo usermod -aG <your_kafka_group> axonops
 sudo usermod -aG axonops <your_kafka_user>
 ```
 
-<h2>Step 6 - Start/Restart Kafka</h2>
+<h2>Start/Restart Kafka</h2>
 
 To load the AxonOps Java Agent and Kafka config changes please either start the Kafka service if stopped restart the Kafka service if already running.
 </div>
 
 <div id="Zookeeper" class="axon_kafka_dynamic_s5" style="display:none">
-<h2>Step 5 - Add axonops user to Zookeeper user group and Zookeeper user to axonops group</h2>
+<h2>Add axonops user to Zookeeper user group and Zookeeper user to axonops group</h2>
 ```
 sudo usermod -aG <your_zookeeper_group> axonops
 sudo usermod -aG axonops <your_zookeeper_user>
 ```
 
-<h2>Step 6 - Start/Restart Zookeeper</h2>
+<h2>Start/Restart Zookeeper</h2>
 
 To load the AxonOps Java Agent and Zookeeper config changes please either start the Zookeeper service if stopped or restart the Zookeeper service if already running.
 </div>
 
 <div id="KRaftBroker" class="axon_kafka_dynamic_s5" style="display:none">
-<h2>Step 5 - Add axonops user to KRaft Broker user group and KRaft Broker user to axonops group</h2>
+<h2>Add axonops user to KRaft Broker user group and KRaft Broker user to axonops group</h2>
 ```
 sudo usermod -aG <your_kraft_group> axonops
 sudo usermod -aG axonops <your_kraft_user>
 ```
 
-<h2>Step 6 - Start/Restart KRaft Broker</h2>
+<h2>Start/Restart KRaft Broker</h2>
 
 To load the AxonOps Java Agent and Kafka KRaft config changes please either start the Kafka KRaft service if stopped or restart the Kafka KRaft service if already running.
 </div>
 
 <div id="KRaftController" class="axon_kafka_dynamic_s5" style="display:none">
-<h2>Step 5 - Add axonops user to KRaft Controller user group and KRaft Controller user to axonops group</h2>
+<h2>Add axonops user to KRaft Controller user group and KRaft Controller user to axonops group</h2>
 ```
 sudo usermod -aG <your_kraft_group> axonops
 sudo usermod -aG axonops <your_kraft_user>
 ```
 
-<h2>Step 6 - Start/Restart KRaft Controller</h2>
+<h2>Start/Restart KRaft Controller</h2>
 
 To load the AxonOps Java Agent and Kafka KRaft config changes please either start the Kafka KRaft service if stopped or restart the Kafka KRaft service if already running.
 </div>
 
 <div id="Connect" class="axon_kafka_dynamic_s5" style="display:none">
-<h2>Step 5 - Add axonops user to Kafka Connect user group and Kafka Connect user to axonops group</h2>
+<h2>Add axonops user to Kafka Connect user group and Kafka Connect user to axonops group</h2>
 ```
 sudo usermod -aG <your_connect_group> axonops
 sudo usermod -aG axonops <your_connect_user>
 ```
 
-<h2>Step 6 - Start/Restart Kafka Connect</h2>
+<h2>Start/Restart Kafka Connect</h2>
 
 To load the AxonOps Java Agent and Kafka Connect config changes please either:
 
