@@ -69,41 +69,31 @@ Cassandra 5.0 introduced the **BTI (Big Trie Index)** format ([CASSANDRA-17056](
 
 ### Format Comparison
 
-```graphviz dot sstable-formats.svg
-digraph SSTableFormats {
-    bgcolor="transparent"
-    graph [fontname="Helvetica", fontsize=11, rankdir=TB, nodesep=0.5]
-    node [fontname="Helvetica", fontsize=10, fontcolor="black"]
-    edge [fontname="Helvetica", fontsize=9, color="black", fontcolor="black"]
+```plantuml
+@startuml
+skinparam backgroundColor transparent
 
-    subgraph cluster_big {
-        label="Big Format (legacy)"
-        labeljust="l"
-        style="rounded,filled"
-        bgcolor="#fff0f0"
-        fontcolor="black"
-
-        big_data [label="Data.db\n(row data)", shape=box, style="rounded,filled", fillcolor="#ffcccc"]
-        big_index [label="Index.db\n(partition index)", shape=box, style="rounded,filled", fillcolor="#ffcccc"]
-        big_summary [label="Summary.db\n(sampled index)", shape=box, style="rounded,filled", fillcolor="#ffcccc"]
-        big_filter [label="Filter.db\n(bloom filter)", shape=box, style="rounded,filled", fillcolor="#ffcccc"]
-    }
-
-    subgraph cluster_bti {
-        label="BTI Format (Cassandra 5.0+)"
-        labeljust="l"
-        style="rounded,filled"
-        bgcolor="#f0fff0"
-        fontcolor="black"
-
-        bti_data [label="Data.db\n(row data)", shape=box, style="rounded,filled", fillcolor="#ccffcc"]
-        bti_partitions [label="Partitions.db\n(trie partition index)", shape=box, style="rounded,filled", fillcolor="#ccffcc"]
-        bti_rows [label="Rows.db\n(trie row index)", shape=box, style="rounded,filled", fillcolor="#ccffcc"]
-        bti_filter [label="Filter.db\n(bloom filter)", shape=box, style="rounded,filled", fillcolor="#ccffcc"]
-    }
-
-    note [label="BTI eliminates Summary.db\nand uses trie-based indexes\nfor both partitions and rows", shape=note, style=filled, fillcolor="#ffffcc"]
+package "Big Format (legacy)" #fff0f0 {
+    rectangle "Data.db\n(row data)" as big_data #ffcccc
+    rectangle "Index.db\n(partition index)" as big_index #ffcccc
+    rectangle "Summary.db\n(sampled index)" as big_summary #ffcccc
+    rectangle "Filter.db\n(bloom filter)" as big_filter #ffcccc
 }
+
+package "BTI Format (Cassandra 5.0+)" #f0fff0 {
+    rectangle "Data.db\n(row data)" as bti_data #ccffcc
+    rectangle "Partitions.db\n(trie partition index)" as bti_partitions #ccffcc
+    rectangle "Rows.db\n(trie row index)" as bti_rows #ccffcc
+    rectangle "Filter.db\n(bloom filter)" as bti_filter #ccffcc
+}
+
+note bottom
+    BTI eliminates Summary.db
+    and uses trie-based indexes
+    for both partitions and rows
+end note
+
+@enduml
 ```
 
 | Aspect | Big Format | BTI Format |

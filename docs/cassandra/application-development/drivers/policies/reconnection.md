@@ -15,44 +15,33 @@ The driver initiates reconnection when:
 | STATUS_CHANGE event | Cassandra reports node status change |
 | Startup discovery | Initial connection to contact points |
 
-```
-Reconnection Timeline:
+```plantuml
+@startuml
+skinparam backgroundColor transparent
+title Reconnection Timeline
 
-Node becomes unreachable
-        │
-        ▼
-Driver marks node DOWN
-        │
-        ▼
-Reconnection policy starts
-        │
-    ┌───┴───┐
-    ▼       │
-Attempt 1   │ (delay from policy)
-  Fail      │
-    │       │
-    ▼       │
-  Wait      │
-    │       │
-    ▼       │
-Attempt 2   │
-  Fail      │
-    │       │
-    ▼       │
-  Wait      │ (longer delay)
-    │       │
-    ...     │
-    │       │
-    ▼       │
-Attempt N   │
-  Success ──┘
-        │
-        ▼
-Node marked UP
-Connections established
-        │
-        ▼
-Node available for requests
+start
+
+:Node becomes unreachable;
+
+:Driver marks node DOWN;
+
+:Reconnection policy starts;
+
+repeat
+    :Attempt reconnection;
+    if (Connection successful?) then (No)
+        :Wait (delay from policy);
+        note right: Delay increases\nwith each attempt
+    else (Yes)
+        :Node marked UP;
+        :Connections established;
+        :Node available for requests;
+        stop
+    endif
+repeat while (Keep trying)
+
+@enduml
 ```
 
 ---

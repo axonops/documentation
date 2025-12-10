@@ -48,105 +48,51 @@ LCS organizes SSTables into numbered levels (L0, L1, L2, ...) with specific prop
 - Default fanout is 10, so L2 is 10× L1, L3 is 10× L2, etc.
 - Individual SSTable size is fixed (default 160MB)
 
-```graphviz dot lcs-levels2.svg
-digraph CassandraLCS {
-    rankdir=TB;
-    labelloc="t";
-    label="Cassandra Leveled Compaction Strategy (LCS)";
+```plantuml
+@startuml
+skinparam backgroundColor transparent
+title Leveled Compaction Strategy (LCS)
 
-    bgcolor="transparent";
-    fontname="Helvetica";
-
-    // Default SSTable style
-    node [
-        shape=box
-        style="rounded,filled"
-        fillcolor="#7B4B96"
-        fontcolor="white"
-        fontname="Helvetica"
-        height=0.5
-    ];
-
-    // ----- Level 0 -----
-    subgraph cluster_L0 {
-        label="Level 0 (L0)  |  many small, overlapping SSTables";
-        labelloc="t";
-        fontsize=12;
-        style="rounded,filled";
-        color="#CC99CC";
-        fillcolor="#F9E5FF";
-
-        // small SSTables, same width
-        L0_1 [label="SSTable", width=0.9];
-        L0_2 [label="SSTable", width=0.9];
-        L0_3 [label="SSTable", width=0.9];
-        L0_4 [label="SSTable", width=0.9];
-        L0_5 [label="SSTable", width=0.9];
-        L0_6 [label="SSTable", width=0.9];
-
-        { rank = same; L0_1; L0_2; L0_3; L0_4; L0_5; L0_6; }
-    }
-
-    // ----- Level 1 -----
-    subgraph cluster_L1 {
-        label="Level 1 (L1)  |  non-overlapping by key range, total size ≈ L0";
-        labelloc="t";
-        fontsize=12;
-        style="rounded,filled";
-        color="#C58FC5";
-        fillcolor="#F5DCF9";
-
-        // medium SSTables
-        L1_1 [label="SSTable\n[key A–M]", width=1.8];
-        L1_2 [label="SSTable\n[key N–T]", width=1.8];
-        L1_3 [label="SSTable\n[key U–Z]", width=1.8];
-
-        { rank = same; L1_1; L1_2; L1_3; }
-    }
-
-    // ----- Level 2 -----
-    subgraph cluster_L2 {
-        label="Level 2 (L2)  |  more total data, still size-balanced with L1";
-        labelloc="t";
-        fontsize=12;
-        style="rounded,filled";
-        color="#B883B8";
-        fillcolor="#F2D3F5";
-
-        // larger SSTables (wider boxes)
-        L2_1 [label="SSTable\n[key A–L]", width=2.6];
-        L2_2 [label="SSTable\n[key M–Z]", width=2.6];
-
-        { rank = same; L2_1; L2_2; }
-    }
-
-    // ----- Compaction flow arrows -----
-
-    // use invisible helper nodes to draw arrows between bands
-    edge [fontname="Helvetica", fontsize=10, color="#555555"];
-
-    // L0 -> L1 compaction (many small to fewer larger)
-    L0_1 -> L1_1 [label="compaction\n(merge overlapping ranges)"];
-    L0_2 -> L1_1;
-    L0_3 -> L1_2;
-    L0_4 -> L1_2;
-    L0_5 -> L1_3;
-    L0_6 -> L1_3;
-
-    // L1 -> L2 compaction (promoting data to next level)
-    L1_1 -> L2_1 [label="compaction\n(when L1 size > target)"];
-    L1_2 -> L2_1;
-    L1_3 -> L2_2;
-
-    // ----- Side note -----
-    Note [shape=note,
-          style="filled",
-          fillcolor="#FFFFFF",
-          fontcolor="#333333",
-          label="LCS properties:\n• Only L0 has overlapping SSTables\n• Each level has a target size\n• Higher levels have larger, fewer files\n  with disjoint key ranges"];
-
-    L2_2 -> Note [style=dotted, arrowhead=none];
+package "Level 0 (L0) - many small, overlapping SSTables" #F9E5FF {
+    rectangle "SSTable" as L0_1 #7B4B96
+    rectangle "SSTable" as L0_2 #7B4B96
+    rectangle "SSTable" as L0_3 #7B4B96
+    rectangle "SSTable" as L0_4 #7B4B96
+    rectangle "SSTable" as L0_5 #7B4B96
+    rectangle "SSTable" as L0_6 #7B4B96
 }
+
+package "Level 1 (L1) - non-overlapping by key range" #F5DCF9 {
+    rectangle "SSTable\n[key A-M]" as L1_1 #7B4B96
+    rectangle "SSTable\n[key N-T]" as L1_2 #7B4B96
+    rectangle "SSTable\n[key U-Z]" as L1_3 #7B4B96
+}
+
+package "Level 2 (L2) - 10x size of L1, disjoint ranges" #F2D3F5 {
+    rectangle "SSTable\n[key A-L]" as L2_1 #7B4B96
+    rectangle "SSTable\n[key M-Z]" as L2_2 #7B4B96
+}
+
+L0_1 --> L1_1 : compaction\n(merge overlapping)
+L0_2 --> L1_1
+L0_3 --> L1_2
+L0_4 --> L1_2
+L0_5 --> L1_3
+L0_6 --> L1_3
+
+L1_1 --> L2_1 : compaction\n(when L1 > target)
+L1_2 --> L2_1
+L1_3 --> L2_2
+
+note right of L2_2
+    LCS properties:
+    * Only L0 has overlapping SSTables
+    * Each level has a target size
+    * Higher levels have larger, fewer files
+      with disjoint key ranges
+end note
+
+@enduml
 ```
 
 ### Compaction Mechanics

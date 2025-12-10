@@ -68,105 +68,75 @@ UCS introduces several concepts that differ from traditional strategies:
 
 ### Shard Structure
 
-```graphviz dot ucs-shards.svg
-digraph ShardedTokens {
-    fontname="Helvetica";
-    node  [fontname="Roboto"];
-    edge  [fontname="Roboto"];
+```plantuml
+@startuml
+skinparam backgroundColor transparent
+title Token Range Sharding (base_shard_count = 4)
 
-    label="Token range [-2^63, 2^63] with base_shard_count = 4";
-    labelloc="t";
-    fontsize=16;
+skinparam packageBackgroundColor #F9E5FF
+skinparam packageBorderColor #7B4B96
 
-    // Common SSTable style
-    node [shape=box, style="rounded,filled", fillcolor="#7B4B96", fontcolor="white"];
-
-    // ----- Shard 0 -----
-    subgraph cluster_0 {
-        label="Shard 0  [-2^63, -2^61)";
-        style="rounded,filled";
-        color="#C58FC5";
-        fillcolor="#F4E5FF";
-
-        s0a [label="SSTable"];
-        s0b [label="SSTable"];
-        s0c [label="SSTable"];
-
-        { rank = same; s0a; s0b; s0c; }
-
-        comp0 [label="Compacts\nindependently", width=2, fillcolor="#7B4B96"];
-
-        // down arrow inside shard
-        s0a -> comp0 [color="#555555"];
-        s0b -> comp0 [color="#555555"];
-        s0c -> comp0 [color="#555555"];
-    }
-
-    // ----- Shard 1 -----
-    subgraph cluster_1 {
-        label="Shard 1  [-2^61, 0)";
-        style="rounded,filled";
-        color="#B883B8";
-        fillcolor="#F1DBFA";
-
-        s1a [label="SSTable"];
-        s1b [label="SSTable"];
-        s1c [label="SSTable"];
-
-        { rank = same; s1a; s1b; }
-
-        comp1 [label="Compacts\nindependently", width=2, fillcolor="#7B4B96"];
-
-        s1a -> comp1 [color="#555555"];
-        s1b -> comp1 [color="#555555"];
-        s1c -> comp1 [color="#555555"];
-    }
-
-    // ----- Shard 2 -----
-    subgraph cluster_2 {
-        label="Shard 2  [0, 2^61)";
-        style="rounded,filled";
-        color="#AA76AA";
-        fillcolor="#EED0F5";
-
-        s2a [label="SSTable"];
-        s2b [label="SSTable"];
-        s2c [label="SSTable"];
-
-
-        comp2 [label="Compacts\nindependently", width=2, fillcolor="#7B4B96"];
-
-        s2a -> comp2 [color="#555555"];
-        s2b -> comp2 [color="#555555"];
-        s2c -> comp2 [color="#555555"];
-    }
-
-    // ----- Shard 3 -----
-    subgraph cluster_3 {
-        label="Shard 3  [2^61, 2^63]";
-        style="rounded,filled";
-        color="#9A659A";
-        fillcolor="#E8C4F1";
-
-        s3a [label="SSTable"];
-        s3b [label="SSTable"];
-        s3c [label="SSTable"];
-
-        { rank = same; s3a; s3b; }
-
-        comp3 [label="Compacts\nindependently", width=2, fillcolor="#7B4B96"];
-
-        s3a -> comp3 [color="#555555"];
-        s3b -> comp3 [color="#555555"];
-        s3c -> comp3 [color="#555555"];
-    }
-
-    // ----- Stack clusters vertically (like angles.gv: n5 -> n14) -----
-    // These edges are invisible; they just force a vertical order of clusters.
-    comp0 -> s1b [style=invis];
-    comp1 -> s2b [style=invis];
-    comp2 -> s3b [style=invis];
+skinparam rectangle {
+    BackgroundColor #7B4B96
+    FontColor white
+    BorderColor #5A3670
+    roundCorner 10
 }
+
+package "Shard 0\n[-2^63, -2^61)" as S0 #F4E5FF {
+    rectangle "SSTable" as s0a
+    rectangle "SSTable" as s0b
+    rectangle "SSTable" as s0c
+    rectangle "Compacts\nindependently" as comp0
+}
+
+package "Shard 1\n[-2^61, 0)" as S1 #F1DBFA {
+    rectangle "SSTable" as s1a
+    rectangle "SSTable" as s1b
+    rectangle "SSTable" as s1c
+    rectangle "Compacts\nindependently" as comp1
+}
+
+package "Shard 2\n[0, 2^61)" as S2 #EED0F5 {
+    rectangle "SSTable" as s2a
+    rectangle "SSTable" as s2b
+    rectangle "SSTable" as s2c
+    rectangle "Compacts\nindependently" as comp2
+}
+
+package "Shard 3\n[2^61, 2^63]" as S3 #E8C4F1 {
+    rectangle "SSTable" as s3a
+    rectangle "SSTable" as s3b
+    rectangle "SSTable" as s3c
+    rectangle "Compacts\nindependently" as comp3
+}
+
+s0a -down-> comp0
+s0b -down-> comp0
+s0c -down-> comp0
+
+s1a -down-> comp1
+s1b -down-> comp1
+s1c -down-> comp1
+
+s2a -down-> comp2
+s2b -down-> comp2
+s2c -down-> comp2
+
+s3a -down-> comp3
+s3b -down-> comp3
+s3c -down-> comp3
+
+S0 -[hidden]right- S1
+S1 -[hidden]right- S2
+S2 -[hidden]right- S3
+
+note as N1 #FFFDE7
+  Each shard compacts independently
+  enabling parallel compaction
+  across multiple CPU cores
+end note
+@enduml
 ```
 
 Each shard maintains its own set of SSTables and compacts without coordination with other shards. This provides:
@@ -179,41 +149,39 @@ Each shard maintains its own set of SSTables and compacts without coordination w
 
 When `scaling_parameters` starts with `T` (e.g., T4), UCS behaves similarly to STCS:
 
-```graphviz dot ucs-tiered.svg
-digraph T4WithinShard {
-    fontname="Roboto";
-    node  [fontname="Roboto", fontcolor="white"];
-    edge  [fontname="Roboto", fontcolor="white"];
+```plantuml
+@startuml
+skinparam backgroundColor transparent
+title T4 Behavior Within a Shard
 
-    label="T4 behavior within a shard with 4 similar sized SSTables";
-    labelloc="t";
-    fontsize=16;
-
-    // Default style for SSTables
-    node [shape=box, style="rounded,filled", fillcolor="#7B4B96", fontcolor="white"];
-
-    // Four similar-sized SSTables (1MB), grouped on same rank
-    s1 [label="1 MB"];
-    s2 [label="1 MB"];
-    s3 [label="1 MB"];
-    s4 [label="1 MB"];
-
-    { rank = same; s1; s2; s3; s4; }
-
-    // Annotation above the group
-
-    // Compacted output SSTable (4 MB)
-    big [label="4 MB", width=1.5];
-
-    // Show compaction from one of the 1 MB SSTables down to the 4 MB
-    s2 -> big [color="#555555", label="compact when 4 accumulate", fontsize=10];
-
-    // Amplification notes
-    amp [shape=plaintext, fontcolor="white",
-         label="Write amplification: ~log₄(data_size) ≈ STCS\nRead amplification: multiple SSTables per query"];
-
-    big -> amp [style=dotted, arrowhead=none, color="#555555"];
+skinparam rectangle {
+    BackgroundColor #7B4B96
+    FontColor white
+    BorderColor #5A3670
+    roundCorner 10
 }
+
+rectangle "1 MB" as s1
+rectangle "1 MB" as s2
+rectangle "1 MB" as s3
+rectangle "1 MB" as s4
+
+rectangle "4 MB" as big #9B6BB6
+
+s1 -[hidden]right- s2
+s2 -[hidden]right- s3
+s3 -[hidden]right- s4
+
+s1 -down-> big : compact when\n4 accumulate
+s2 -down-> big
+s3 -down-> big
+s4 -down-> big
+
+note bottom of big #FFFDE7
+  Write amplification: ~log4(data_size)
+  Read amplification: multiple SSTables per query
+end note
+@enduml
 ```
 
 The number after `T` specifies the fanout—how many SSTables accumulate before compaction. Higher values (T8, T16) reduce write amplification but increase read amplification.
@@ -221,52 +189,49 @@ The number after `T` specifies the fanout—how many SSTables accumulate before 
 ### Leveled Mode (L)
 
 When `scaling_parameters` starts with `L` (e.g., L10), UCS behaves similarly to LCS:
-```graphviz dot ucs-leveled.svg
-digraph L10WithinShard {
-    fontname="Helvetica";
-    node  [fontname="Helvetica"];
-    edge  [fontname="Helvetica"];
 
-    label="L10 behavior within a shard";
-    labelloc="t";
-    fontsize=16;
+```plantuml
+@startuml
+skinparam backgroundColor transparent
+title L10 Behavior Within a Shard
 
-    // Default box style
-    node [shape=box, style="rounded,filled", fillcolor="#7B4B96", fontcolor="white"];
-
-    // ----- Level 0 -----
-    L0Label [shape=plaintext, label="Level 0", fontcolor="white"];
-    l0_1 [label="flush"];
-    l0_2 [label="flush"];
-    l0_3 [label="flush"];
-    l0_4 [label="flush"];
-
-    { rank = same; L0Label; l0_1; l0_2; l0_3; l0_4; }
-
-    // ----- Level 1 -----
-    L1Label [shape=plaintext, label="Level 1", fontcolor="white"];
-    L1Box   [label="~10× L0 size", width=3.0];
-
-    { rank = same; L1Label; L1Box; }
-
-    // ----- Level 2 -----
-    L2Label [shape=plaintext, label="Level 2", fontcolor="white"];
-    L2Box   [label="~10× L1 size", width=4.5];
-
-    { rank = same; L2Label; L2Box; }
-
-    // ----- Compaction / promotion arrows -----
-    edge [color="#555555", fontsize=10];
-
-    l0_3 -> L1Box [label="compact to L1\nwhen threshold reached"];
-    L1Box -> L2Box [label="promote when L1 full"];
-
-    // ----- Amplification notes -----
-    Amp [shape=plaintext, fontcolor="white",
-         label="Write amplification: ~10× per level ≈ LCS\nRead amplification: bounded (one SSTable per level per shard)"];
-
-    L2Box -> Amp [style=dotted, arrowhead=none];
+skinparam rectangle {
+    BackgroundColor #7B4B96
+    FontColor white
+    BorderColor #5A3670
+    roundCorner 10
 }
+
+package "Level 0" as L0 #F9E5FF {
+    rectangle "flush" as l0_1
+    rectangle "flush" as l0_2
+    rectangle "flush" as l0_3
+    rectangle "flush" as l0_4
+}
+
+package "Level 1" as L1 #F3DAFA {
+    rectangle "~10x L0 size" as L1Box
+}
+
+package "Level 2" as L2 #EED0F5 {
+    rectangle "~10x L1 size" as L2Box
+}
+
+l0_1 -[hidden]right- l0_2
+l0_2 -[hidden]right- l0_3
+l0_3 -[hidden]right- l0_4
+
+L0 -[hidden]down- L1
+L1 -[hidden]down- L2
+
+l0_3 -down-> L1Box : compact to L1\nwhen threshold reached
+L1Box -down-> L2Box : promote when L1 full
+
+note bottom of L2 #FFFDE7
+  Write amplification: ~10x per level
+  Read amplification: bounded (one SSTable per level per shard)
+end note
+@enduml
 ```
 
 

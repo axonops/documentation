@@ -22,7 +22,8 @@ Before running any installation commands, certain decisions must be made that ar
 - **4.0**: Audit logging, full query logging, Java 11 support, improved compaction
 - **3.11**: Still runs Java 8, no audit logging, missing modern features
 
-**Recommendation**: Use Cassandra 4.1 for production unless 5.0 features are specifically required. It has the best balance of stability and features.
+!!! tip "Recommendation"
+    Use Cassandra 4.1 for production unless 5.0 features are specifically required. It has the best balance of stability and features.
 
 ### 2. Hardware Requirements by Use Case
 
@@ -110,13 +111,13 @@ java -version
 
 1. **Eclipse Temurin (Adoptium)** - Recommended for most deployments
 2. **Amazon Corretto** - Best for AWS deployments
-3. **Azul Zulu** - Good commercial support option
+3. **Azul Zulu** - Free with optional commercial support
 4. **Oracle JDK** - Requires license for production
 
-**⚠️ WARNING: Never use these JDKs with Cassandra:**
-- GraalVM (incompatible bytecode optimizations)
-- OpenJ9/IBM J9 (different memory model causes data corruption)
-- Any JDK < 11.0.11 (critical GC bugs)
+!!! danger "Never use these JDKs with Cassandra"
+    - **GraalVM** - Incompatible bytecode optimizations
+    - **OpenJ9/IBM J9** - Different memory model causes data corruption
+    - **Any JDK < 11.0.11** - Critical GC bugs
 
 ---
 
@@ -211,7 +212,8 @@ apt-cache policy cassandra
 
 #### Step 4: Configure System Limits (BEFORE Installing)
 
-This is critical. Cassandra will fail or perform terribly without proper limits.
+!!! warning "Critical Step"
+    Cassandra will fail or perform terribly without proper limits. Configure these before installing.
 
 ```bash
 # Create limits configuration
@@ -238,7 +240,8 @@ grep -q "pam_limits.so" /etc/pam.d/common-session-noninteractive || \
 
 #### Step 5: Disable Transparent Huge Pages
 
-THP causes severe latency spikes with Cassandra. This is mandatory.
+!!! danger "Mandatory Configuration"
+    THP causes severe latency spikes with Cassandra. Disabling THP is mandatory for production.
 
 ```bash
 # Check current THP status
@@ -305,7 +308,7 @@ sudo sysctl -p
 # Install Cassandra
 sudo apt-get install -y cassandra
 
-# DON'T START IT YET - we need to configure first
+# Don't start it yet - configuration is required first
 sudo systemctl stop cassandra
 
 # Verify installation
@@ -506,10 +509,10 @@ sudo yum install -y \
 # SELinux in enforcing mode blocks Cassandra file access
 sudo setenforce 0
 sudo sed -i 's/SELINUX=enforcing/SELINUX=permissive/' /etc/selinux/config
-
-# WARNING: For high-security environments, configure SELinux properly instead:
-# https://access.redhat.com/documentation/en-us/red_hat_enterprise_linux/8/html/using_selinux/
 ```
+
+!!! warning "SELinux in High-Security Environments"
+    For high-security environments, configure SELinux policies properly instead of disabling. See [Red Hat SELinux documentation](https://access.redhat.com/documentation/en-us/red_hat_enterprise_linux/8/html/using_selinux/).
 
 #### Step 2: Install Java 11
 
@@ -765,7 +768,8 @@ nodetool status
 
 ## Method 3: Docker Installation
 
-Docker is excellent for development, CI/CD pipelines, and learning. For production, consider Kubernetes operators instead.
+!!! info "Docker Use Cases"
+    Docker is excellent for development, CI/CD pipelines, and learning. For production, consider Kubernetes operators instead.
 
 ### Development: Single Node
 
@@ -932,7 +936,8 @@ docker-compose down -v
 
 ## Method 4: Kubernetes Installation
 
-For Kubernetes, use an operator rather than raw StatefulSets. Operators handle complex operations like scaling, repairs, and upgrades.
+!!! tip "Use an Operator"
+    For Kubernetes, use an operator rather than raw StatefulSets. Operators handle complex operations like scaling, repairs, and upgrades.
 
 ### Option A: K8ssandra (Recommended)
 

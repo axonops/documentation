@@ -2,7 +2,7 @@
 
 In an LSM-tree storage engine, data for a single partition may exist in multiple locations: the active memtable, any flushing memtables, and numerous SSTables on disk. Unlike B-tree databases where a row exists in exactly one location, Cassandra must check all potential sources and merge results to reconstruct the current state of the data.
 
-This design creates a fundamental trade-off. Writes are fast because they simply append to the memtable, but reads must potentially examine many files. The read path employs several optimization techniques—bloom filters, partition indexes, key caches, and row caches—to minimize disk I/O and maintain acceptable read latency despite this multi-source architecture.
+This design creates a fundamental trade-off. Writes are fast because they simply append to the memtable, but reads must potentially examine many files. The read path employs several optimization techniques—bloom filters, partition indexes, and row caches—to minimize disk I/O and maintain acceptable read latency despite this multi-source architecture. The BTI (Big Trie Index) format introduced in Cassandra 5.0 uses memory-mapped off-heap indexes, eliminating the need for the key cache used by the legacy index format.
 
 ---
 
@@ -24,7 +24,10 @@ The LSM-tree architecture enables Cassandra's exceptional write throughput by ap
 
 The read path intelligently searches these locations using a layered optimization strategy—bloom filters eliminate unnecessary disk access, indexes enable direct seeks, and caches accelerate repeated access patterns. The result is predictable, low-latency reads even with data distributed across many SSTables.
 
-### The Four Stages
+### The Four Stages (BTI Format)
+
+!!! info "This describes Cassandra 5.0+ with BTI (Big Trie Index)"
+    The legacy index format (pre-5.0) includes an additional key cache lookup between the bloom filter and partition index steps. See the [Partition Index](#partition-index) section for details on both formats.
 
 **Stage 1: Row Cache (optional fast path)**
 
@@ -40,11 +43,13 @@ For each SSTable that might contain the partition:
 
 1. **Bloom filter check**: A probabilistic filter answers "Is this partition possibly in this SSTable?" If the answer is "definitely no," skip this SSTable entirely—no disk I/O required. If "maybe yes," proceed to the next step.
 
-2. **Partition index lookup**: Find the byte offset where this partition's data begins in the data file. This is an O(log n) or O(key_length) operation depending on the index format.
+2. **Partition index lookup**: Find the uncompressed byte offset where this partition's data begins in the data file. This is an O(log n) or O(key_length) operation depending on the index format.
 
-3. **Data file read**: Seek to the offset and read the partition's data from disk.
+3. **Compression metadata lookup**: If the SSTable is compressed (default), translate the uncompressed offset to the actual compressed chunk position on disk. The compression metadata maps uncompressed offsets to compressed chunk boundaries.
 
-This three-step process is repeated for each SSTable. Bloom filters make this scalable—they eliminate the vast majority of SSTables from consideration with a simple memory lookup, keeping read latency consistent even as SSTable count grows.
+4. **Data file read**: Seek to the compressed chunk, decompress it, and read the partition's data.
+
+This four-step process is repeated for each SSTable. Bloom filters make this scalable—they eliminate the vast majority of SSTables from consideration with a simple memory lookup, keeping read latency consistent even as SSTable count grows.
 
 **Stage 4: Merge**
 
@@ -85,13 +90,15 @@ package "2. MEMTABLES" #e8f8e8 {
 
 package "3. SSTABLES (for each SSTable)" #e8f0f8 {
     card "a. Bloom Filter\nPartition possibly present?" as bf #c8d8e8
-    rectangle "b. Partition Index\nFind data offset" as idx #c8d8e8
-    rectangle "c. Data File\nRead partition data" as data #c8d8e8
+    rectangle "b. Partition Index\nFind uncompressed offset" as idx #c8d8e8
+    rectangle "c. Compression Metadata\nMap to compressed chunk" as comp #c8d8e8
+    rectangle "d. Data File\nDecompress & read" as data #c8d8e8
     rectangle "Skip SSTable" as skip #e8e8e8
 
     bf --> idx : Maybe
     bf --> skip : No
-    idx --> data
+    idx --> comp
+    comp --> data
 }
 
 package "4. MERGE" #f8e8f8 {
@@ -133,6 +140,59 @@ Bloom filters solve this by providing a **space-efficient probabilistic test** f
 - **"Maybe YES"** → Check the index and data files (may be a false positive)
 
 The critical property: **false negatives are impossible**. If the bloom filter says "no," the partition is guaranteed not to be in that SSTable. This allows Cassandra to eliminate most SSTables from consideration without any disk access.
+
+```plantuml
+@startuml
+skinparam backgroundColor transparent
+title Bloom Filter SSTable Elimination
+
+rectangle "Query: partition_key = 'user:42'" as query #ffffcc
+
+package "SSTables on Disk" {
+    rectangle "SSTable 1" as sst1 {
+        card "Bloom Filter" as bf1 #e8e8e8
+    }
+    rectangle "SSTable 2" as sst2 {
+        card "Bloom Filter" as bf2 #e8e8e8
+    }
+    rectangle "SSTable 3" as sst3 {
+        card "Bloom Filter" as bf3 #e8e8e8
+    }
+    rectangle "SSTable 4" as sst4 {
+        card "Bloom Filter" as bf4 #e8e8e8
+    }
+    rectangle "SSTable 5" as sst5 {
+        card "Bloom Filter" as bf5 #e8e8e8
+    }
+}
+
+rectangle "Skip\n(no disk I/O)" as skip #ffcccc
+rectangle "Check Index\n& Read Data" as check #c8e8c8
+
+query --> bf1
+query --> bf2
+query --> bf3
+query --> bf4
+query --> bf5
+
+bf1 --> skip : NO
+bf2 --> check : MAYBE
+bf3 --> skip : NO
+bf4 --> skip : NO
+bf5 --> check : MAYBE
+
+note bottom of skip
+    3 SSTables skipped
+    (guaranteed not present)
+end note
+
+note bottom of check
+    Only 2 SSTables need
+    disk I/O (may be false positive)
+end note
+
+@enduml
+```
 
 ### How Bloom Filters Work
 
@@ -271,31 +331,26 @@ Once a bloom filter indicates that a partition key is **possibly** present in an
 
 Each SSTable consists of multiple files. The data file (`*-Data.db`) contains the actual row data, but it may be gigabytes in size. Without an index, finding a specific partition would require scanning the entire file sequentially—an O(n) operation that would make reads impossibly slow.
 
-```graphviz dot sstable-files.svg
-digraph SSTableFiles {
-    bgcolor="transparent"
-    graph [fontname="Helvetica", fontsize=11, rankdir=LR]
-    node [fontname="Helvetica", fontsize=10, fontcolor="black"]
-    edge [fontname="Helvetica", fontsize=9, color="black", fontcolor="black"]
+```plantuml
+@startuml
+skinparam backgroundColor transparent
+title SSTable File Components
 
-    subgraph cluster_sstable {
-        label="SSTable File Components"
-        labeljust="l"
-        style="rounded"
-        bgcolor="#f8f8f8"
-        fontcolor="black"
+rectangle "Query:\nPartition Key X" as query #e8e8e8
 
-        bf [label="Bloom Filter\n(*-Filter.db)\n\nQuick rejection", shape=box, style="rounded,filled", fillcolor="#ffffcc"]
-        idx [label="Partition Index\n(*-Index.db)\n\nKey → Offset mapping", shape=box, style="rounded,filled", fillcolor="#cce5ff"]
-        data [label="Data File\n(*-Data.db)\n\nActual row data", shape=box, style="rounded,filled", fillcolor="#d4edda"]
-    }
-
-    query [label="Query:\nPartition Key X", shape=box, style="rounded,filled", fillcolor="#e8e8e8"]
-
-    query -> bf [label="1. Check"]
-    bf -> idx [label="2. Lookup\n(if maybe)"]
-    idx -> data [label="3. Seek to\noffset 847291"]
+package "SSTable File Components" #f8f8f8 {
+    rectangle "Bloom Filter\n(*-Filter.db)\n\nQuick rejection" as bf #ffffcc
+    rectangle "Partition Index\n(*-Index.db)\n\nKey to offset mapping" as idx #cce5ff
+    rectangle "Compression Metadata\n(*-CompressionInfo.db)\n\nChunk offset mapping" as comp #ffe8cc
+    rectangle "Data File\n(*-Data.db)\n\nCompressed row data" as data #d4edda
 }
+
+query --> bf : 1. Check
+bf --> idx : 2. Lookup\n(if maybe)
+idx --> comp : 3. Map to\ncompressed chunk
+comp --> data : 4. Seek & decompress
+
+@enduml
 ```
 
 The partition index provides an O(log n) or O(key_length) lookup to translate a partition key into a byte offset, enabling direct disk seeks to the data location.
@@ -305,114 +360,101 @@ The partition index provides an O(log n) or O(key_length) lookup to translate a 
 After the bloom filter returns "maybe present," the read path consults the partition index:
 
 1. **Look up the partition key** in the index structure
-2. **Retrieve the byte offset** where the partition begins in the data file
-3. **Seek directly** to that offset and read the partition data
+2. **Retrieve the uncompressed byte offset** where the partition begins
+3. **Look up compression metadata** to find the compressed chunk containing that offset
+4. **Seek to the compressed chunk**, decompress it, and read the partition data
 
-```graphviz dot index-lookup-flow.svg
-digraph IndexLookup {
-    bgcolor="transparent"
-    graph [fontname="Helvetica", fontsize=11, rankdir=TB, nodesep=0.5]
-    node [fontname="Helvetica", fontsize=10, fontcolor="black"]
-    edge [fontname="Helvetica", fontsize=9, color="black", fontcolor="black", penwidth=1.5]
+```plantuml
+@startuml
+skinparam backgroundColor transparent
+title Partition Index Lookup Flow
 
-    // Input
-    key [label="Partition Key\n\"user:12345\"", shape=box, style="rounded,filled", fillcolor="#ffffcc"]
+rectangle "Partition Key\n\"user:12345\"" as key #ffffcc
 
-    // Index lookup
-    subgraph cluster_index {
-        label="Partition Index"
-        labeljust="l"
-        style="rounded"
-        bgcolor="#e8f4fc"
-        fontcolor="black"
-
-        lookup [label="Index Lookup\nO(log n) or O(key_length)", shape=box, style="rounded,filled", fillcolor="#cce5ff"]
-    }
-
-    // Result
-    offset [label="Byte Offset\n847,291", shape=box, style="rounded,filled", fillcolor="#d4edda"]
-
-    // Data file
-    subgraph cluster_data {
-        label="Data File (*-Data.db)"
-        labeljust="l"
-        style="rounded"
-        bgcolor="#f0fff0"
-        fontcolor="black"
-
-        d1 [label="... other partitions ...", shape=box, style="filled", fillcolor="#e8e8e8"]
-        d2 [label="user:12345 data\n(offset 847,291)", shape=box, style="rounded,filled", fillcolor="#90EE90"]
-        d3 [label="... other partitions ...", shape=box, style="filled", fillcolor="#e8e8e8"]
-
-        d1 -> d2 -> d3 [style=invis]
-    }
-
-    key -> lookup [label="1. Query"]
-    lookup -> offset [label="2. Return offset"]
-    offset -> d2 [label="3. Seek & read", color="#006600", fontcolor="#006600"]
+package "Partition Index" #e8f4fc {
+    rectangle "Index Lookup\nO(log n) or O(key_length)" as lookup #cce5ff
 }
+
+rectangle "Uncompressed Offset\n847,291" as offset #d4edda
+
+package "Compression Metadata" #fff0e8 {
+    rectangle "Map offset to\ncompressed chunk 13" as comp #ffe8cc
+}
+
+rectangle "Compressed Chunk\nOffset: 234,567" as chunk #e8d4ff
+
+package "Data File (*-Data.db)" #f0fff0 {
+    rectangle "... other chunks ..." as d1 #e8e8e8
+    rectangle "Chunk 13 (compressed)\nDecompress to find\nuser:12345 data" as d2 #90EE90
+    rectangle "... other chunks ..." as d3 #e8e8e8
+
+    d1 -[hidden]down- d2
+    d2 -[hidden]down- d3
+}
+
+key --> lookup : 1. Query
+lookup --> offset : 2. Uncompressed offset
+offset --> comp : 3. Lookup chunk
+comp --> chunk : 4. Compressed offset
+chunk --> d2 : 5. Seek & decompress
+
+@enduml
 ```
 
 ### Index Evolution
 
 Cassandra's partition index implementation has evolved significantly to improve memory efficiency and lookup performance.
 
-#### Pre-Cassandra 4.0: Legacy Index
+#### Pre-Cassandra 5.0: Legacy Index
 
 The original index architecture used a three-tier system:
 
-```graphviz dot legacy-index.svg
-digraph LegacyIndex {
-    bgcolor="transparent"
-    graph [fontname="Helvetica", fontsize=11, rankdir=LR, nodesep=0.6]
-    node [fontname="Helvetica", fontsize=10, fontcolor="black"]
-    edge [fontname="Helvetica", fontsize=9, color="black", fontcolor="black", penwidth=1.5]
+```plantuml
+@startuml
+skinparam backgroundColor transparent
+title Legacy Index Lookup (Pre-Cassandra 5.0)
 
-    key [label="Partition Key", shape=box, style="rounded,filled", fillcolor="#ffffcc"]
+rectangle "Partition Key" as key #ffffcc
 
-    subgraph cluster_memory {
-        label="In Memory (Heap)"
-        labeljust="l"
-        style="rounded"
-        bgcolor="#fff0f0"
-        fontcolor="black"
-
-        cache [label="Key Cache\n(hot keys only)", shape=box, style="rounded,filled", fillcolor="#ffcccc"]
-        summary [label="Partition Summary\n(sampled every\n128th key)", shape=box, style="rounded,filled", fillcolor="#ffcccc"]
-    }
-
-    subgraph cluster_disk {
-        label="On Disk"
-        labeljust="l"
-        style="rounded"
-        bgcolor="#f0f0ff"
-        fontcolor="black"
-
-        index [label="Index File\n(*-Index.db)\n(all keys + offsets)", shape=box, style="rounded,filled", fillcolor="#ccccff"]
-        data [label="Data File\n(*-Data.db)", shape=box, style="rounded,filled", fillcolor="#d4edda"]
-    }
-
-    key -> cache [label="1. Check cache"]
-    cache -> data [label="Hit: direct\nto offset", style=dashed, color="#006600", fontcolor="#006600"]
-    cache -> summary [label="Miss"]
-    summary -> index [label="2. Find range\nin index file"]
-    index -> data [label="3. Seek to\noffset"]
+package "In Memory (On-Heap)" #fff0f0 {
+    rectangle "Key Cache\n(hot keys only)" as cache #ffcccc
+    rectangle "Partition Summary\n(sampled every 128th key)" as summary #ffcccc
 }
+
+package "Off-Heap" #f0fff0 {
+    rectangle "Compression Metadata\n(chunk offset mapping)" as comp #ffe8cc
+}
+
+package "On Disk" #f0f0ff {
+    rectangle "Index File\n(*-Index.db)\n(all keys + offsets)" as index #ccccff
+    rectangle "Data File\n(*-Data.db)" as data #d4edda
+}
+
+key --> cache : 1. Check cache
+cache ..> comp : Hit: to\ncompression lookup
+cache --> summary : Miss
+summary --> index : 2. Find range\nin index file
+index --> comp : 3. Uncompressed offset
+comp --> data : 4. Seek to\ncompressed chunk
+
+@enduml
 ```
 
 **How the legacy index worked:**
 
-1. **Key Cache** (heap): Stores recently accessed partition key → offset mappings. Cache hit = skip directly to data file.
+1. **Key Cache** (heap): Stores recently accessed partition key → offset mappings. Cache hit = skip to compression metadata lookup.
 2. **Partition Summary** (heap): A sampled index that stores every Nth key (default: every 128th). Provides a starting point for binary search in the index file.
 3. **Index File** (disk): Contains all partition keys and their data file offsets, sorted by token order.
+4. **Compression Metadata** (off-heap): Maps uncompressed offsets to compressed chunk positions.
 
 **Lookup process for cache miss:**
 
 1. Binary search the partition summary to find the range containing the key
 2. Seek to that position in the index file
 3. Scan/binary search within the index file to find the exact key
-4. Read the data file offset
-5. Seek to the data file and read
+4. Read the uncompressed data file offset
+5. Look up compression metadata to find the compressed chunk
+6. Seek to the compressed chunk and decompress
 
 **Problems with the legacy approach:**
 
@@ -423,9 +465,9 @@ digraph LegacyIndex {
 | Memory scales with data | More partitions = more heap required |
 | Index file size | Full copy of every partition key on disk |
 
-#### Cassandra 4.0+: Trie-Based Index
+#### Cassandra 5.0+: Trie-Based Index (BTI)
 
-Cassandra 4.0 introduced a new index format based on tries (prefix trees), implemented in [CASSANDRA-8371](https://issues.apache.org/jira/browse/CASSANDRA-8371). This approach was inspired by research on succinct data structures and space-efficient tries.
+Cassandra 5.0 introduced a new index format based on tries (prefix trees), implemented in [CASSANDRA-18398](https://issues.apache.org/jira/browse/CASSANDRA-18398). This approach was inspired by research on succinct data structures and space-efficient tries.
 
 ```graphviz dot trie-index.svg
 digraph TrieIndex {
@@ -500,12 +542,15 @@ digraph TrieIndex {
 | Legacy (summary) | ~200-400 MB heap | On-heap |
 | Trie | ~50-100 MB | Off-heap (mmap) |
 
-### Key Cache
+### Key Cache (Legacy Index Only)
 
-The key cache stores partition key → SSTable offset mappings in memory, bypassing index lookups entirely for frequently accessed partitions. This optimization works with both legacy and trie indexes.
+!!! warning "BTI Format Does Not Use Key Cache"
+    Starting with Cassandra 5.0, the default BTI (Big Trie Index) format does not use the key cache. The trie-based index is already memory-mapped and provides efficient O(key_length) lookups without caching. Key cache settings are only relevant for SSTables using the legacy index format (Cassandra 4.x and earlier).
+
+The key cache stores partition key → SSTable offset mappings in memory, bypassing index lookups entirely for frequently accessed partitions. This optimization is only relevant for the legacy index format.
 
 ```yaml
-# cassandra.yaml
+# cassandra.yaml (legacy index only)
 
 # Global key cache size
 key_cache_size_in_mb: 100
@@ -518,18 +563,18 @@ key_cache_save_period: 14400  # 4 hours
 ```
 
 ```sql
--- Per-table key cache settings
+-- Per-table key cache settings (legacy index only)
 ALTER TABLE hot_table WITH caching = {'keys': 'ALL'};
 ALTER TABLE cold_table WITH caching = {'keys': 'NONE'};
 ```
 
-**When key cache helps:**
+**When key cache helps (legacy index):**
 
 - Tables with hot partitions accessed repeatedly
 - Read-heavy workloads with temporal locality
 - Partitions that are read more often than they are written
 
-**Key cache lookup flow:**
+**Key cache lookup flow (legacy index):**
 
 1. Hash the partition key
 2. Check key cache for (SSTable ID, partition key) → offset mapping
@@ -651,11 +696,11 @@ ALTER TABLE my_table WITH dclocal_read_repair_chance = 0.1;
 ### Optimize for Read-Heavy Workloads
 
 ```yaml
-# Larger key cache
-key_cache_size_in_mb: 200
-
 # More concurrent reads
 concurrent_reads: 64
+
+# Larger key cache (legacy index only - not used with BTI format)
+# key_cache_size_in_mb: 200
 ```
 
 ```sql
@@ -703,7 +748,7 @@ nodetool tablestats ks.table      # SSTable count, bloom filter stats
 | High SSTable count | Compaction behind | Check compaction stats |
 | High bloom filter false positives | fp_chance too high | Lower fp_chance |
 | Many tombstones scanned | Delete-heavy workload | Review data model |
-| Low key cache hit rate | Cache too small | Increase cache size |
+| High index lookup time | Large partitions, disk I/O | Ensure SSDs, check partition sizes |
 
 ### Tombstone Warnings
 

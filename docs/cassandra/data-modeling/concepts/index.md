@@ -79,29 +79,25 @@ Cassandra's distributed architecture fundamentally changes how data modeling is 
 
 This is not a limitation—it is how Cassandra achieves consistent performance at any scale.
 
-```
-Traditional RDBMS Approach:
-┌─────────────────────────────────────────────────────────────────┐
-│  1. Identify entities (Users, Orders, Products)                 │
-│  2. Normalize to eliminate redundancy                           │
-│  3. Write queries with JOINs                                    │
-│  4. Add indexes when queries are slow                           │
-│  5. Scale vertically when database is overwhelmed               │
-└─────────────────────────────────────────────────────────────────┘
+**Traditional RDBMS Approach:**
 
-Result: Flexible queries, but joins + indexes + locks = unpredictable latency
+1. Identify entities (Users, Orders, Products)
+2. Normalize to eliminate redundancy
+3. Write queries with JOINs
+4. Add indexes when queries are slow
+5. Scale vertically when database is overwhelmed
 
-Cassandra Approach:
-┌─────────────────────────────────────────────────────────────────┐
-│  1. List ALL queries the application needs                      │
-│  2. Design one table per query pattern                          │
-│  3. Denormalize data across tables                              │
-│  4. Accept write duplication for read optimization              │
-│  5. Scale horizontally by adding nodes                          │
-└─────────────────────────────────────────────────────────────────┘
+*Result: Flexible queries, but joins + indexes + locks = unpredictable latency*
 
-Result: Predictable latency regardless of data size, but queries must be planned
-```
+**Cassandra Approach:**
+
+1. List ALL queries the application needs
+2. Design one table per query pattern
+3. Denormalize data across tables
+4. Accept write duplication for read optimization
+5. Scale horizontally by adding nodes
+
+*Result: Predictable latency regardless of data size, but queries must be planned*
 
 A poorly designed Cassandra table does not just slow down—it can bring down the entire cluster:
 
@@ -133,24 +129,34 @@ PRIMARY KEY ((partition_key_col1, partition_key_col2), clustering_col1, clusteri
 
 The partition key is hashed (using Murmur3) to determine which node owns the data:
 
-```
-                    ┌──────────────────────────────────────────────┐
-                    │     Partition Key: user_id = 'alice'         │
-                    └──────────────────────┬───────────────────────┘
-                                           │
-                                    Murmur3 Hash
-                                           │
-                                           ▼
-                    ┌──────────────────────────────────────────────┐
-                    │        Token: 3478921746238471623            │
-                    └──────────────────────┬───────────────────────┘
-                                           │
-                                  Token Range Lookup
-                                           │
-                    ┌──────────┬───────────┼───────────┬──────────┐
-                    ▼          ▼           ▼           ▼          ▼
-                 Node A     Node B      Node C     Node D      Node E
-                (owner)    (replica)   (replica)
+```plantuml
+@startuml
+skinparam backgroundColor transparent
+
+rectangle "Partition Key: user_id = 'alice'" as pk #e8e8e8
+
+rectangle "Murmur3 Hash" as hash #f0f0f0
+
+rectangle "Token: 3478921746238471623" as token #e8e8e8
+
+rectangle "Token Range Lookup" as lookup #f0f0f0
+
+rectangle "Node A\n(owner)" as nodeA #c8e8c8
+rectangle "Node B\n(replica)" as nodeB #c8e8c8
+rectangle "Node C\n(replica)" as nodeC #c8e8c8
+rectangle "Node D" as nodeD #e8e8e8
+rectangle "Node E" as nodeE #e8e8e8
+
+pk --> hash
+hash --> token
+token --> lookup
+lookup --> nodeA
+lookup --> nodeB
+lookup --> nodeC
+lookup ..> nodeD
+lookup ..> nodeE
+
+@enduml
 ```
 
 **Critical implications:**
@@ -279,18 +285,18 @@ PRIMARY KEY ((sensor_id, month), reading_time)
 
 Target partition size: **10MB - 100MB**
 
-```
-Partition Size Formula:
-─────────────────────────────────────────────────────────────
-partition_size = Nv × (Ck + Cs + average_column_sizes)
-                 + Nstatic × static_column_sizes
+**Partition Size Formula:**
 
-Where:
-  Nv      = Number of rows (cells in wide rows)
-  Ck      = Clustering key size
-  Cs      = Per-cell overhead (~23 bytes)
-  Nstatic = 1 if static columns exist, 0 otherwise
 ```
+partition_size = Nv × (Ck + Cs + average_column_sizes) + Nstatic × static_column_sizes
+```
+
+| Variable | Description |
+|----------|-------------|
+| Nv | Number of rows (cells in wide rows) |
+| Ck | Clustering key size |
+| Cs | Per-cell overhead (~23 bytes) |
+| Nstatic | 1 if static columns exist, 0 otherwise |
 
 **Practical example:**
 
@@ -306,25 +312,26 @@ CREATE TABLE sensor_readings (
 );
 ```
 
-```
-Per-row storage:
-  Clustering key (timestamp):     8 bytes
-  temperature (double):           8 bytes
-  humidity (double):              8 bytes
-  pressure (double):              8 bytes
-  Per-cell overhead (4 cells):   92 bytes
-  ─────────────────────────────────────────
-  Total per row:                ~124 bytes
+**Per-row storage:**
 
-Readings per day at 1/second:   86,400
-Daily partition size:           86,400 × 124 = 10.7 MB ✓
+| Component | Size |
+|-----------|------|
+| Clustering key (timestamp) | 8 bytes |
+| temperature (double) | 8 bytes |
+| humidity (double) | 8 bytes |
+| pressure (double) | 8 bytes |
+| Per-cell overhead (4 cells) | 92 bytes |
+| **Total per row** | **~124 bytes** |
 
-Readings per day at 10/second:  864,000
-Daily partition size:           864,000 × 124 = 107 MB ⚠ (borderline)
+**Partition size projections:**
 
-Solution for high-frequency: Use hourly buckets instead
-Hourly partition size:          36,000 × 124 = 4.5 MB ✓
-```
+| Frequency | Readings/Day | Daily Partition Size | Status |
+|-----------|--------------|---------------------|--------|
+| 1/second | 86,400 | 10.7 MB | ✓ Good |
+| 10/second | 864,000 | 107 MB | ⚠ Borderline |
+
+!!! tip "High-Frequency Solution"
+    Use hourly buckets instead of daily. Hourly partition size: 36,000 × 124 = 4.5 MB ✓
 
 ### Monitoring Partition Size in Production
 
@@ -437,15 +444,14 @@ WHERE user_id = ?;
 
 The cost of denormalization is write amplification and consistency complexity:
 
-```
-Write Patterns:
-─────────────────────────────────────────────────────────────
-Single write (normalized):    1 table
-Denormalized (2 tables):      2 writes needed
-Denormalized (5 tables):      5 writes needed
+| Schema Type | Writes Required |
+|-------------|-----------------|
+| Single write (normalized) | 1 table |
+| Denormalized (2 tables) | 2 writes |
+| Denormalized (5 tables) | 5 writes |
 
-Consistency concern: What if write #3 of 5 fails?
-```
+!!! warning "Consistency Concern"
+    What if write #3 of 5 fails? Use batches for atomicity.
 
 **Batch writes for atomicity:**
 
@@ -480,37 +486,37 @@ UPDATE users SET email = ? WHERE user_id = ?;
 
 Before creating any tables, enumerate every query the application needs:
 
-```
-Application: E-commerce Platform
-───────────────────────────────────────────────────────────────
-Q1: Get product details by product_id
-Q2: List products in a category (paginated)
-Q3: Get user profile by user_id
-Q4: Authenticate user by email
-Q5: Get user's recent orders
-Q6: Get order details with items
-Q7: Get shopping cart contents
-Q8: Check inventory for product
-Q9: Get product reviews (recent first)
-Q10: Search products by name prefix
-```
+**Application: E-commerce Platform**
+
+| Query | Description |
+|-------|-------------|
+| Q1 | Get product details by product_id |
+| Q2 | List products in a category (paginated) |
+| Q3 | Get user profile by user_id |
+| Q4 | Authenticate user by email |
+| Q5 | Get user's recent orders |
+| Q6 | Get order details with items |
+| Q7 | Get shopping cart contents |
+| Q8 | Check inventory for product |
+| Q9 | Get product reviews (recent first) |
+| Q10 | Search products by name prefix |
 
 ### Step 2: Analyze Query Requirements
 
 For each query, identify:
 
-```
-Q5: Get user's recent orders
-───────────────────────────────────────────────────────────────
-Access pattern:    Point lookup + range scan
-Partition key:     user_id (equality)
-Clustering:        order_date (descending range)
-Columns needed:    order_id, order_date, status, total, item_count
-Cardinality:       High (millions of users)
-Growth pattern:    Bounded (users have limited orders)
-Access frequency:  High (every user profile view)
-Latency SLA:       < 50ms p99
-```
+**Q5: Get user's recent orders**
+
+| Attribute | Value |
+|-----------|-------|
+| Access pattern | Point lookup + range scan |
+| Partition key | user_id (equality) |
+| Clustering | order_date (descending range) |
+| Columns needed | order_id, order_date, status, total, item_count |
+| Cardinality | High (millions of users) |
+| Growth pattern | Bounded (users have limited orders) |
+| Access frequency | High (every user profile view) |
+| Latency SLA | < 50ms p99 |
 
 ### Step 3: Design Tables
 
@@ -544,15 +550,15 @@ WHERE user_id = ?
 
 Checklist for each table:
 
-```
-✓ Primary access query uses partition key equality
-✓ Range queries on clustering columns (in order)
-✓ Partition size bounded (< 100MB)
-✓ Even distribution (high cardinality partition key)
-✓ No ALLOW FILTERING needed
-✓ All columns needed by query are present
-✓ Sort order matches query requirements
-```
+| Check | Requirement |
+|-------|-------------|
+| ✓ | Primary access query uses partition key equality |
+| ✓ | Range queries on clustering columns (in order) |
+| ✓ | Partition size bounded (< 100 MB) |
+| ✓ | Even distribution (high cardinality partition key) |
+| ✓ | No `ALLOW FILTERING` needed |
+| ✓ | All columns needed by query are present |
+| ✓ | Sort order matches query requirements |
 
 ---
 
@@ -755,33 +761,33 @@ Partition: team_id = engineering-team
 
 ### Do
 
-```
-✓ Start with queries, not entities
-✓ One table per query pattern
-✓ Choose partition keys with high cardinality
-✓ Keep partitions bounded (< 100MB)
-✓ Use clustering columns for sort order
-✓ Denormalize for read performance
-✓ Use TTL for temporary data
-✓ Use batches for atomic multi-table writes
-✓ Use counters for aggregations
-✓ Test with production-like data volumes
-```
+| Practice |
+|----------|
+| Start with queries, not entities |
+| One table per query pattern |
+| Choose partition keys with high cardinality |
+| Keep partitions bounded (< 100 MB) |
+| Use clustering columns for sort order |
+| Denormalize for read performance |
+| Use TTL for temporary data |
+| Use batches for atomic multi-table writes |
+| Use counters for aggregations |
+| Test with production-like data volumes |
 
 ### Don't
 
-```
-✗ Design tables before knowing queries
-✗ Use ALLOW FILTERING in production
-✗ Create unbounded partitions
-✗ Use secondary indexes as primary access pattern
-✗ Store large collections (> 100 elements)
-✗ Update individual UDT fields (use FROZEN)
-✗ Rely on Cassandra materialized views
-✗ Use Cassandra as a queue
-✗ Perform frequent deletes (use TTL instead)
-✗ Normalize data like in RDBMS
-```
+| Anti-Practice |
+|---------------|
+| Design tables before knowing queries |
+| Use `ALLOW FILTERING` in production |
+| Create unbounded partitions |
+| Use secondary indexes as primary access pattern |
+| Store large collections (> 100 elements) |
+| Update individual UDT fields (use FROZEN) |
+| Rely on Cassandra materialized views |
+| Use Cassandra as a queue |
+| Perform frequent deletes (use TTL instead) |
+| Normalize data like in RDBMS |
 
 ---
 

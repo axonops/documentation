@@ -35,123 +35,64 @@ STCS organizes compaction around size similarity rather than key ranges or level
 3. **Merging**: All SSTables in the bucket are merged into a single larger SSTable
 4. **Growth**: The output SSTable joins a larger size bucket, and the process repeats
 
-```graphviz dot stcs-tiers.svg
-digraph CassandraSTCS {
-    rankdir=TB;
-    labelloc="t";
-    label="Cassandra Size-Tiered Compaction Strategy (STCS)";
+```plantuml
+@startuml
+skinparam backgroundColor transparent
+title Size-Tiered Compaction Strategy (STCS)
 
-    bgcolor="transparent";
-    fontname="Helvetica";
-
-    // Default SSTable style
-    node [
-        shape=box
-        style="rounded,filled"
-        fillcolor="#7B4B96"
-        fontcolor="white"
-        fontname="Helvetica"
-        height=0.5
-    ];
-
-    // ----- Tier 1 (Tiny) -----
-    subgraph cluster_T1 {
-        label="Tier 1 (tiny)  |  4 SSTables of similar size (~1MB each)";
-        labelloc="t";
-        fontsize=12;
-        style="rounded,filled";
-        color="#CC99CC";
-        fillcolor="#F9E5FF";
-
-        T1_1 [label="1MB", width=0.8];
-        T1_2 [label="1MB", width=0.8];
-        T1_3 [label="1MB", width=0.8];
-        T1_4 [label="1MB", width=0.8];
-
-        { rank = same; T1_1; T1_2; T1_3; T1_4; }
-    }
-
-    // ----- Tier 2 (Small) -----
-    subgraph cluster_T2 {
-        label="Tier 2 (small)  |  4 SSTables of similar size (~4MB each)";
-        labelloc="t";
-        fontsize=12;
-        style="rounded,filled";
-        color="#C58FC5";
-        fillcolor="#F5DCF9";
-
-        T2_1 [label="4MB", width=1.0];
-        T2_2 [label="4MB", width=1.0];
-        T2_3 [label="4MB", width=1.0];
-        T2_4 [label="4MB", width=1.0];
-
-        { rank = same; T2_1; T2_2; T2_3; T2_4; }
-    }
-
-    // ----- Tier 3 (Medium) -----
-    subgraph cluster_T3 {
-        label="Tier 3 (medium)  |  4 SSTables of similar size (~16MB each)";
-        labelloc="t";
-        fontsize=12;
-        style="rounded,filled";
-        color="#B883B8";
-        fillcolor="#F2D3F5";
-
-        T3_1 [label="16MB", width=1.2];
-        T3_2 [label="16MB", width=1.2];
-        T3_3 [label="16MB", width=1.2];
-        T3_4 [label="16MB", width=1.2];
-
-        { rank = same; T3_1; T3_2; T3_3; T3_4; }
-    }
-
-    // ----- Large SSTables -----
-    subgraph cluster_Large {
-        label="Eventually  |  Large SSTables accumulate (harder to compact)";
-        labelloc="t";
-        fontsize=12;
-        style="rounded,filled";
-        color="#A070A0";
-        fillcolor="#E8C8E8";
-
-        L1 [label="64MB", width=1.6];
-        L2 [label="1GB", width=2.0];
-        L3 [label="4GB", width=2.4];
-        L4 [label="16GB", width=2.8];
-
-        { rank = same; L1; L2; L3; L4; }
-    }
-
-    // ----- Compaction flow arrows -----
-    edge [fontname="Helvetica", fontsize=10, color="#555555"];
-
-    // Tier 1 -> Tier 2 compaction
-    T1_1 -> T2_1 [label="compaction\n(when 4 similar sizes)"];
-    T1_2 -> T2_1;
-    T1_3 -> T2_1;
-    T1_4 -> T2_1;
-
-    // Tier 2 -> Tier 3 compaction
-    T2_1 -> T3_1 [label="compaction\n(merge → larger SSTable)"];
-    T2_2 -> T3_1;
-    T2_3 -> T3_1;
-    T2_4 -> T3_1;
-
-    // Tier 3 -> Large (exponential growth)
-    T3_1 -> L1 [label="continues\ngrowing..."];
-    T3_2 -> L1;
-    T3_3 -> L1;
-    T3_4 -> L1;
-
-    // ----- Side note -----
-    Note [shape=note,
-          style="filled",
-          fillcolor="#FFFFFF",
-          fontcolor="#333333",
-          label="STCS properties:\n• Groups SSTables by similar size\n• Compacts when min_threshold reached\n• Low write amplification\n• High read amplification\n  (any key may be in any SSTable)"];
-
-    L4 -> Note [style=dotted, arrowhead=none];
+package "Tier 1 (tiny) - 4 SSTables ~1MB each" #F9E5FF {
+    rectangle "1MB" as T1_1 #7B4B96
+    rectangle "1MB" as T1_2 #7B4B96
+    rectangle "1MB" as T1_3 #7B4B96
+    rectangle "1MB" as T1_4 #7B4B96
 }
+
+package "Tier 2 (small) - 4 SSTables ~4MB each" #F5DCF9 {
+    rectangle "4MB" as T2_1 #7B4B96
+    rectangle "4MB" as T2_2 #7B4B96
+    rectangle "4MB" as T2_3 #7B4B96
+    rectangle "4MB" as T2_4 #7B4B96
+}
+
+package "Tier 3 (medium) - 4 SSTables ~16MB each" #F2D3F5 {
+    rectangle "16MB" as T3_1 #7B4B96
+    rectangle "16MB" as T3_2 #7B4B96
+    rectangle "16MB" as T3_3 #7B4B96
+    rectangle "16MB" as T3_4 #7B4B96
+}
+
+package "Eventually - Large SSTables accumulate" #E8C8E8 {
+    rectangle "64MB" as L1 #7B4B96
+    rectangle "1GB" as L2 #7B4B96
+    rectangle "4GB" as L3 #7B4B96
+    rectangle "16GB" as L4 #7B4B96
+}
+
+T1_1 --> T2_1 : compaction\n(when 4 similar sizes)
+T1_2 --> T2_1
+T1_3 --> T2_1
+T1_4 --> T2_1
+
+T2_1 --> T3_1 : compaction\n(merge → larger SSTable)
+T2_2 --> T3_1
+T2_3 --> T3_1
+T2_4 --> T3_1
+
+T3_1 --> L1 : continues\ngrowing...
+T3_2 --> L1
+T3_3 --> L1
+T3_4 --> L1
+
+note right of L4
+    STCS properties:
+    * Groups SSTables by similar size
+    * Compacts when min_threshold reached
+    * Low write amplification
+    * High read amplification
+      (any key may be in any SSTable)
+end note
+
+@enduml
 ```
 
 ### Size Buckets
@@ -340,125 +281,6 @@ Deleted data persists until the containing SSTable compacts:
 | Consistent latency required | P99 varies with compaction state |
 
 ---
-
-
-digraph CassandraSTCS {
-    rankdir=TB;
-    labelloc="t";
-    label="Cassandra Size-Tiered Compaction Strategy (STCS)";
-
-    bgcolor="transparent";
-    fontname="Helvetica";
-
-    // Default SSTable style
-    node [
-        shape=box
-        style="rounded,filled"
-        fillcolor="#7B4B96"
-        fontcolor="white"
-        fontname="Helvetica"
-        height=0.5
-    ];
-
-    // ----- Tier 1 (Tiny) -----
-    subgraph cluster_T1 {
-        label="Tier 1 (tiny)  |  4 SSTables of similar size (~1MB each)";
-        labelloc="t";
-        fontsize=12;
-        style="rounded,filled";
-        color="#CC99CC";
-        fillcolor="#F9E5FF";
-
-        T1_1 [label="1MB", width=0.8];
-        T1_2 [label="1MB", width=0.8];
-        T1_3 [label="1MB", width=0.8];
-        T1_4 [label="1MB", width=0.8];
-
-        { rank = same; T1_1; T1_2; T1_3; T1_4; }
-    }
-
-    // ----- Tier 2 (Small) -----
-    subgraph cluster_T2 {
-        label="Tier 2 (small)  |  4 SSTables of similar size (~4MB each)";
-        labelloc="t";
-        fontsize=12;
-        style="rounded,filled";
-        color="#C58FC5";
-        fillcolor="#F5DCF9";
-
-        T2_1 [label="4MB", width=1.0];
-        T2_2 [label="4MB", width=1.0];
-        T2_3 [label="4MB", width=1.0];
-        T2_4 [label="4MB", width=1.0];
-
-        { rank = same; T2_1; T2_2; T2_3; T2_4; }
-    }
-
-    // ----- Tier 3 (Medium) -----
-    subgraph cluster_T3 {
-        label="Tier 3 (medium)  |  4 SSTables of similar size (~16MB each)";
-        labelloc="t";
-        fontsize=12;
-        style="rounded,filled";
-        color="#B883B8";
-        fillcolor="#F2D3F5";
-
-        T3_1 [label="16MB", width=1.2];
-        T3_2 [label="16MB", width=1.2];
-        T3_3 [label="16MB", width=1.2];
-        T3_4 [label="16MB", width=1.2];
-
-        { rank = same; T3_1; T3_2; T3_3; T3_4; }
-    }
-
-    // ----- Large SSTables -----
-    subgraph cluster_Large {
-        label="Eventually  |  Large SSTables accumulate (harder to compact)";
-        labelloc="t";
-        fontsize=12;
-        style="rounded,filled";
-        color="#A070A0";
-        fillcolor="#E8C8E8";
-
-        L1 [label="64MB", width=1.6];
-        L2 [label="1GB", width=2.0];
-        L3 [label="4GB", width=2.4];
-        L4 [label="16GB", width=2.8];
-
-        { rank = same; L1; L2; L3; L4; }
-    }
-
-    // ----- Compaction flow arrows -----
-    edge [fontname="Helvetica", fontsize=10, color="#555555"];
-
-    // Tier 1 -> Tier 2 compaction
-    T1_1 -> T2_1 [label="compaction\n(when 4 similar sizes)"];
-    T1_2 -> T2_1;
-    T1_3 -> T2_1;
-    T1_4 -> T2_1;
-
-    // Tier 2 -> Tier 3 compaction
-    T2_1 -> T3_1 [label="compaction\n(merge → larger SSTable)"];
-    T2_2 -> T3_1;
-    T2_3 -> T3_1;
-    T2_4 -> T3_1;
-
-    // Tier 3 -> Large (exponential growth)
-    T3_1 -> L1 [label="continues\ngrowing..."];
-    T3_2 -> L1;
-    T3_3 -> L1;
-    T3_4 -> L1;
-
-    // ----- Side note -----
-    Note [shape=note,
-          style="filled",
-          fillcolor="#FFFFFF",
-          fontcolor="#333333",
-          label="STCS properties:\n• Groups SSTables by similar size\n• Compacts when min_threshold reached\n• Low write amplification\n• High read amplification\n  (any key may be in any SSTable)"];
-
-    L4 -> Note [style=dotted, arrowhead=none];
-}
-```
 
 ## Bucketing Logic
 

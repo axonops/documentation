@@ -4,6 +4,59 @@ This section covers developing applications against Apache Cassandra, including 
 
 ---
 
+## Understanding Consistency in Cassandra
+
+A common misconception is that Cassandra is "eventually consistent" and therefore unsuitable for applications requiring strong consistency guarantees. In reality, Cassandra provides **tunable consistency**—developers control the consistency level on a per-query basis, ranging from eventual consistency to full linearizable consistency.
+
+### Consistency Is a Developer Choice
+
+| Consistency Level | Guarantee | Use Case |
+|-------------------|-----------|----------|
+| `ONE` | Acknowledged by one replica | Maximum availability, eventual consistency |
+| `QUORUM` | Acknowledged by majority of replicas | Strong consistency with good availability |
+| `LOCAL_QUORUM` | Majority within local datacenter | Strong consistency with low latency in multi-DC |
+| `ALL` | Acknowledged by all replicas | Maximum consistency, reduced availability |
+| `SERIAL` / `LOCAL_SERIAL` | Linearizable (via Paxos) | Compare-and-set operations |
+
+!!! tip "Strong Consistency Formula"
+    When `R + W > RF` (reads + writes > replication factor), strong consistency is achieved. With `RF=3`, using `QUORUM` for both reads and writes satisfies this: `2 + 2 > 3`.
+
+### Common Patterns
+
+**Strong consistency (most applications):**
+```cql
+-- Write with QUORUM
+INSERT INTO users (id, name) VALUES (?, ?) USING CONSISTENCY QUORUM;
+
+-- Read with QUORUM
+SELECT * FROM users WHERE id = ? CONSISTENCY QUORUM;
+```
+
+**Eventual consistency (high-throughput, loss-tolerant):**
+```cql
+-- Metrics, logs, time-series where some loss is acceptable
+INSERT INTO metrics (sensor_id, ts, value) VALUES (?, ?, ?) USING CONSISTENCY ONE;
+```
+
+**Linearizable consistency (compare-and-set):**
+```cql
+-- Lightweight transaction for conditional updates
+UPDATE accounts SET balance = ? WHERE id = ? IF balance = ?;
+```
+
+### Why the Misconception Exists
+
+Early Cassandra documentation emphasized availability and partition tolerance (the "AP" in CAP theorem), leading many to assume consistency was sacrificed. In practice:
+
+- Cassandra defaults to `ONE` for reads and writes, which is eventually consistent
+- Developers who do not explicitly set consistency levels experience eventual consistency
+- The CAP theorem describes behavior during network partitions, not normal operation
+
+!!! warning "Configure Consistency Explicitly"
+    Driver defaults are optimized for availability, not consistency. Production applications should explicitly set consistency levels based on data requirements rather than relying on defaults.
+
+---
+
 ## Developer Responsibility
 
 Cassandra drivers differ fundamentally from traditional database drivers. A connection to a relational database typically abstracts away server topology—the application connects to a single endpoint, and failover (if any) is handled transparently by the database or a proxy layer.

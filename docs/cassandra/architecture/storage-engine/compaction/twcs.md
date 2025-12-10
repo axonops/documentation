@@ -1,5 +1,11 @@
 # Time-Window Compaction Strategy (TWCS)
 
+!!! warning "Append-Only Workloads Only"
+    TWCS is designed exclusively for **immutable, append-only time-series data**. Once data is written, it must never be updated. Updates to existing rows create new SSTables in the current time window while original data remains in older windows—these versions never merge through compaction, causing read amplification and preventing efficient space reclamation.
+
+!!! danger "Do Not Use DELETE Statements"
+    Avoid explicit `DELETE` operations with TWCS. Tombstones are written to the current window while the data they mark for deletion exists in older windows. Since TWCS never compacts across window boundaries, tombstones and their target data never meet, preventing proper space reclamation. Use TTL-based expiration instead.
+
 TWCS is designed for time-series data. It groups SSTables by time window and never compacts across window boundaries, enabling efficient space reclamation when data expires via TTL.
 
 ---
@@ -51,103 +57,69 @@ TWCS organizes compaction around time windows:
 
 ### Time Window Structure
 
-```graphviz dot twcs-windows.svg
-digraph CassandraTWCS {
-    rankdir=TB;
-    labelloc="t";
-    label="Cassandra Time Window Compaction Strategy (TWCS)";
+```plantuml
+@startuml
+skinparam backgroundColor transparent
+title Time-Window Compaction Strategy (TWCS)
 
-    bgcolor="transparent";
-    fontname="Helvetica";
+skinparam defaultFontName Helvetica
+skinparam packageBackgroundColor #F9E5FF
+skinparam packageBorderColor #7B4B96
 
-    // Default SSTable style
-    node [
-        shape=box
-        style="rounded,filled"
-        fillcolor="#7B4B96"
-        fontcolor="white"
-        fontname="Helvetica"
-        height=0.5
-    ];
-
-    // Memtable as a box with different color
-    Memtable [label="Memtable\n(new writes)", fillcolor="#FFC857"];
-
-    // ----- Newest time window (current) -----
-    subgraph cluster_W0 {
-        label="Time window W0 (current)\nexample: now to now - 1 hour\nSSTables frequently compacted";
-        labelloc="t";
-        fontsize=12;
-        style="rounded,filled";
-        color="#C58FC5";
-        fillcolor="#F9E5FF";
-
-        W0_1 [label="SSTable", width=0.9];
-        W0_2 [label="SSTable", width=0.9];
-        W0_3 [label="SSTable", width=0.9];
-        W0_4 [label="SSTable", width=0.9];
-
-        W0_M [label="Compacted\nSSTable", width=1.6];
-
-        { rank = same; W0_1; W0_2; W0_3; W0_4; }
-    }
-
-    // ----- Older window W1 -----
-    subgraph cluster_W1 {
-        label="Time window W1 (older)\nexample: 1–2 hours ago\nmostly sealed, rare compaction";
-        labelloc="t";
-        fontsize=12;
-        style="rounded,filled";
-        color="#B883B8";
-        fillcolor="#F3DAFA";
-
-        W1_1 [label="SSTable", width=1.8];
-
-        { rank = same; W1_1; }
-    }
-
-    // ----- Oldest window W2 -----
-    subgraph cluster_W2 {
-        label="Time window W2 (cold)\nexample: 2–3 hours ago\nstatic, mainly for TTL/tombstone drop";
-        labelloc="t";
-        fontsize=12;
-        style="rounded,filled";
-        color="#AA76AA";
-        fillcolor="#EED0F5";
-
-        W2_1 [label="SSTable", width=2.0];
-
-        { rank = same; W2_1; }
-    }
-
-    // ----- Edges -----
-    edge [fontname="Helvetica", fontsize=10, color="#555555"];
-
-    // Flushes from memtable into current window
-    Memtable -> W0_1 [label="flush"];
-    Memtable -> W0_2;
-    Memtable -> W0_3;
-    Memtable -> W0_4;
-
-    // Compaction inside a single time window (W0 only)
-    W0_1 -> W0_M [label="compact\nwithin same window"];
-    W0_2 -> W0_M;
-    W0_3 -> W0_M;
-    W0_4 -> W0_M;
-
-    // Window rollover: when time moves on, W0 becomes W1, etc.
-    W0_M -> W1_1 [style=dashed, label="time passes,\nwindow closes"];
-    W1_1 -> W2_1 [style=dashed, label="older data\nmoves to colder window"];
-
-    // ----- Side note -----
-    Note [shape=note,
-          style="filled",
-          fillcolor="#FFFFFF",
-          fontcolor="#333333",
-          label="TWCS behaviour:\n• Data grouped by time windows\n• Compaction only within a window\n• Windows become immutable when closed\n• Ideal for TTL / time-series workloads"];
-
-    W2_1 -> Note [style=dotted, arrowhead=none];
+skinparam rectangle {
+    BackgroundColor #7B4B96
+    FontColor white
+    BorderColor #5A3670
+    roundCorner 10
 }
+
+package "Window W4: 10:00-11:00\n**ACTIVE**" as W4 <<active>> #E8F5E9 {
+    rectangle "SST1" as W4_S1
+    rectangle "SST2" as W4_S2
+    rectangle "SST3" as W4_S3
+}
+
+package "Window W3: 09:00-10:00\nTTL: 3h left" as W3 #F9E5FF {
+    rectangle "SSTable\n(compacted)" as W3_SST
+}
+
+package "Window W2: 08:00-09:00\nTTL: 2h left" as W2 #F5DCF9 {
+    rectangle "SSTable\n(compacted)" as W2_SST
+}
+
+package "Window W1: 07:00-08:00\nTTL: 1h left" as W1 #F3DAFA {
+    rectangle "SSTable\n(compacted)" as W1_SST
+}
+
+package "Window W0: 06:00-07:00\n**TTL EXPIRED**" as W0 <<expired>> #FFE0E0 {
+    rectangle "SSTable\n(compacted)" as W0_SST #CC6666
+}
+
+W4 -[hidden]right- W3
+W3 -[hidden]right- W2
+W2 -[hidden]right- W1
+W1 -[hidden]right- W0
+
+note bottom of W4 #E8F5E9
+  STCS compaction
+  within window only
+end note
+
+note bottom of W0 #FFCDD2
+  **DROP entire SSTable**
+  No compaction needed
+  Space reclaimed: O(1)
+end note
+
+note as props #FFFDE7
+  **TWCS Properties**
+  ....
+  Data grouped by time windows
+  STCS compaction within each window
+  Never compact across windows
+  Drop entire SSTable on TTL expiry
+end note
+@enduml
 ```
 
 ### Window Assignment Algorithm
@@ -324,95 +296,45 @@ Some time-series patterns don't fit:
 
 ## How TWCS Works
 
-```graphviz dot twcs-windows.svg
-digraph CassandraTWCS {
-    rankdir=TB;
-    labelloc="t";
-    label="Cassandra Time-Window Compaction Strategy (TWCS)";
+```plantuml
+@startuml
+skinparam backgroundColor transparent
+title TWCS Compaction Flow
 
-    bgcolor="transparent";
-    fontname="Helvetica";
+skinparam ActivityBackgroundColor #F9E5FF
+skinparam ActivityBorderColor #7B4B96
+skinparam ActivityDiamondBackgroundColor #E8F5E9
+skinparam ActivityDiamondBorderColor #4CAF50
 
-    // Default SSTable style
-    node [
-        shape=box
-        style="rounded,filled"
-        fillcolor="#7B4B96"
-        fontcolor="white"
-        fontname="Helvetica"
-        height=0.5
-    ];
+start
 
-    // ----- Window 1 (Completed) -----
-    subgraph cluster_W1 {
-        label="Window 1: 00:00-01:00  |  Completed (single SSTable)";
-        labelloc="t";
-        fontsize=12;
-        style="rounded,filled";
-        color="#CC99CC";
-        fillcolor="#F9E5FF";
+:Memtable flushes to SSTable;
 
-        W1_SST [label="SSTable\n(compacted)", width=2.5];
-    }
+:Assign SSTable to time window
+based on maximum timestamp;
 
-    // ----- Window 2 (Completed) -----
-    subgraph cluster_W2 {
-        label="Window 2: 01:00-02:00  |  Completed (single SSTable)";
-        labelloc="t";
-        fontsize=12;
-        style="rounded,filled";
-        color="#C58FC5";
-        fillcolor="#F5DCF9";
+if (Window still active?) then (yes)
+    :Add SSTable to active window;
+    if (min_threshold SSTables?) then (yes)
+        :Run STCS compaction
+        within window only;
+    else (no)
+        :Wait for more SSTables;
+    endif
+else (no)
+    :Window is sealed;
+endif
 
-        W2_SST [label="SSTable\n(compacted)", width=2.5];
-    }
+if (All data TTL expired?) then (yes)
+    #FFCDD2:Drop entire SSTable
+    O(1) space reclamation;
+else (no)
+    :SSTable remains until
+    all data expires;
+endif
 
-    // ----- Window 3 (Active) -----
-    subgraph cluster_W3 {
-        label="Window 3: 02:00-03:00  |  Active (multiple SSTables)";
-        labelloc="t";
-        fontsize=12;
-        style="rounded,filled";
-        color="#B883B8";
-        fillcolor="#F2D3F5";
-
-        W3_S1 [label="SST1", width=0.9];
-        W3_S2 [label="SST2", width=0.9];
-        W3_S3 [label="SST3", width=0.9];
-
-        { rank = same; W3_S1; W3_S2; W3_S3; }
-    }
-
-    // Compaction within window
-    W3_compact [label="STCS compaction\nwithin window", shape=plaintext, fontsize=10, fontcolor="white"];
-
-    // TTL expiration
-    TTL_drop [label="When TTL expires:\nDrop entire SSTable\n(no compaction needed)", shape=note, style="filled", fillcolor="#FFFFFF", fontcolor="#333333"];
-
-    // Never cross-compact
-    no_cross [label="Never compact\nacross windows", shape=plaintext, fontcolor="#CC0000", fontsize=10];
-
-    // ----- Edges -----
-    edge [fontname="Helvetica", fontsize=10, color="#555555"];
-
-    W3_S1 -> W3_compact [style=dashed];
-    W3_S2 -> W3_compact [style=dashed];
-    W3_S3 -> W3_compact [style=dashed];
-
-    W1_SST -> TTL_drop [style=dotted, label="expires"];
-
-    W1_SST -> no_cross [style=invis];
-    no_cross -> W2_SST [style=invis];
-
-    // ----- Side note -----
-    Note [shape=note,
-          style="filled",
-          fillcolor="#FFFFFF",
-          fontcolor="#333333",
-          label="TWCS properties:\n• Groups SSTables by time window\n• STCS compaction within window\n• Never compacts across windows\n• Drop entire SSTable when TTL expires\n• Ideal for time-series with TTL"];
-
-    W2_SST -> Note [style=dotted, arrowhead=none];
-}
+stop
+@enduml
 ```
 
 ### Window Assignment

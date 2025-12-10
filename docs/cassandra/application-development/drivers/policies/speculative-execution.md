@@ -23,8 +23,8 @@ With Speculative Execution (delay=50ms):
 Time:   0ms         50ms              80ms         150ms
         │            │                  │             │
         ▼            ▼                  ▼             │
-    Send to      Send to           Response          │
-    Node1        Node2             from Node2        │
+    Send to      Send to           Response           │
+    Node1        Node2             from Node2         │
         │            │                  │             │
         └────────────┴──────────────────┘             │
                Use first response              Node1 response

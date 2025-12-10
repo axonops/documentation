@@ -1,12 +1,43 @@
 # Apache Cassandra Documentation
 
-Apache Cassandra is a distributed NoSQL database that scales horizontally across commodity hardware while providing continuous availability. There is no master node—every node can handle reads and writes, so the failure of any single node (or even an entire datacenter) does not take down the database.
+Apache Cassandra is a distributed NoSQL database designed for extreme scale, exceptional performance, and continuous availability. There is no master node—every node can handle reads and writes, so the failure of any single node (or even an entire datacenter) does not take down the database.
 
 Cassandra excels at write-heavy workloads, time-series data, and applications requiring geographic distribution. Cassandra is less suited for complex queries, ad-hoc analytics, or workloads requiring strong consistency with frequent cross-partition transactions.
 
 ## What is Apache Cassandra?
 
 Cassandra's design draws from two foundational distributed systems papers: Google's BigTable (2006) provided the storage model—SSTables, memtables, and the LSM-tree architecture. Amazon's Dynamo (2007) provided the distribution model—consistent hashing, gossip-based cluster membership, and tunable consistency levels.
+
+### Performance Characteristics
+
+Cassandra delivers exceptional performance at scale:
+
+| Metric | Typical Performance | Notes |
+|--------|---------------------|-------|
+| **Write Throughput** | 100,000+ writes/sec per node | Sequential I/O to commit log; parallel memtable inserts |
+| **Read Latency (P99)** | 1-5 ms | With proper data modeling and warm caches |
+| **Write Latency (P99)** | 1-2 ms | Commit log append + memtable insert |
+| **Scalability** | Linear to 1000+ nodes | Proven in production at petabyte scale |
+
+Performance derives from Cassandra's architecture:
+
+- **Log-structured writes**: All writes append sequentially to the commit log, avoiding random disk seeks
+- **Memtable buffering**: Recent writes held in memtables before flushing to disk
+- **Parallel execution**: Requests distributed across nodes; no single bottleneck
+- **Token-aware routing**: Drivers send requests directly to replica nodes, avoiding extra network hops
+
+### Fault Tolerance
+
+Cassandra is designed to survive failures at every level:
+
+| Failure Scenario | Cassandra Behavior |
+|------------------|-------------------|
+| **Single node failure** | Remaining replicas serve requests; hinted handoff queues writes for recovery |
+| **Rack failure** | Rack-aware replication ensures replicas exist in other racks |
+| **Datacenter failure** | Multi-DC replication provides geographic redundancy; traffic fails over automatically |
+| **Network partition** | Nodes continue serving requests independently; reconciliation occurs on recovery |
+
+Unlike primary-replica databases that fail over to a standby, Cassandra has no failover—all nodes are active and capable of serving any request. This eliminates failover latency and split-brain scenarios.
 
 ### Key Features
 
@@ -18,6 +49,22 @@ Cassandra's design draws from two foundational distributed systems papers: Googl
 | **Tunable Consistency** | Choose consistency level per operation |
 | **Multi-Datacenter Replication** | Built-in support for geographically distributed clusters |
 | **Flexible Schema** | Wide-column store with support for complex data types |
+
+## Common Misconceptions
+
+Understanding what Cassandra is *not* helps set appropriate expectations.
+
+| Misconception | Reality |
+|---------------|---------|
+| **"Cassandra is eventually consistent"** | Cassandra offers **tunable** consistency. With `QUORUM` reads and writes, strong consistency is achieved. "Eventually consistent" only applies when using weaker consistency levels like `ONE`. |
+| **"Cassandra doesn't support transactions"** | Cassandra supports lightweight transactions (LWT) using Paxos for compare-and-set operations. Accord, a general-purpose distributed transaction protocol, is under active development for a future release. LWT provides linearizable consistency for specific use cases, though not ACID transactions across arbitrary rows. |
+| **"Cassandra can't do joins"** | Correct—by design. Cassandra optimizes for fast reads at scale by denormalizing data. Model data according to query patterns rather than normalizing and joining at read time. |
+| **"Cassandra is only for write-heavy workloads"** | Cassandra handles read-heavy workloads effectively when data is modeled correctly. The key is designing tables around query patterns, not write patterns. |
+| **"Cassandra requires expensive hardware"** | Cassandra runs effectively on both commodity hardware and high-end servers. Modern Cassandra scales well both horizontally (adding nodes) and vertically (larger instances with more CPU cores and memory). |
+| **"Cassandra is hard to operate"** | Modern tooling such as [AxonOps](https://axonops.com) automates most operational tasks. The learning curve exists, but operational complexity is manageable with proper tooling and training. |
+| **"Data modeling is too difficult"** | Query-first modeling is different from relational modeling, not harder. Once the principles are understood (partition keys, clustering columns, denormalization), modeling becomes straightforward. Tools like [AxonOps Workbench](https://github.com/axonops/axonops-workbench) provide visual data modeling assistance. |
+| **"Cassandra loses data"** | Data loss occurs from misconfiguration (improper `gc_grace_seconds`, skipped repairs) or hardware failures beyond the replication factor—not from Cassandra itself. With proper operations, Cassandra provides strong durability guarantees. |
+| **"Cassandra is an in-memory database"** | Cassandra is a persistent, disk-based database. While memtables buffer recent writes in memory, all data is durably written to the commit log immediately and flushed to SSTables on disk. Memory caches improve read performance but are not the primary storage. |
 
 ## Documentation Sections
 

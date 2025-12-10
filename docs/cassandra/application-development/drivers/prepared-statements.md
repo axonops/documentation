@@ -10,47 +10,59 @@ Prepared statements separate query parsing from execution:
 
 ### Simple Statement (every execution)
 
-```mermaid
-sequenceDiagram
-    participant App as Application
-    participant C as Cassandra
+```plantuml
+@startuml
+skinparam backgroundColor transparent
 
-    App->>C: SELECT * FROM users WHERE id = 'abc123'
-    Note right of C: Parse query
-    Note right of C: Validate schema
-    Note right of C: Create execution plan
-    Note right of C: Execute query
-    C-->>App: Results
+participant "Application" as App
+participant "Cassandra" as C
+
+App -> C: SELECT * FROM users WHERE id = 'abc123'
+note right of C: Parse query
+note right of C: Validate schema
+note right of C: Create execution plan
+note right of C: Execute query
+C --> App: Results
+
+@enduml
 ```
 
 ### Prepared Statement
 
 **PREPARE phase (once):**
 
-```mermaid
-sequenceDiagram
-    participant App as Application
-    participant C as Cassandra
+```plantuml
+@startuml
+skinparam backgroundColor transparent
 
-    App->>C: PREPARE: SELECT * FROM users WHERE id = ?
-    Note right of C: Parse query
-    Note right of C: Validate schema
-    Note right of C: Create execution plan
-    Note right of C: Cache plan with ID
-    C-->>App: Prepared ID + column metadata
+participant "Application" as App
+participant "Cassandra" as C
+
+App -> C: PREPARE: SELECT * FROM users WHERE id = ?
+note right of C: Parse query
+note right of C: Validate schema
+note right of C: Create execution plan
+note right of C: Cache plan with ID
+C --> App: Prepared ID + column metadata
+
+@enduml
 ```
 
 **EXECUTE phase (every request):**
 
-```mermaid
-sequenceDiagram
-    participant App as Application
-    participant C as Cassandra
+```plantuml
+@startuml
+skinparam backgroundColor transparent
 
-    App->>C: EXECUTE: Prepared ID + [bound values]
-    Note right of C: Look up cached plan
-    Note right of C: Execute (no parsing)
-    C-->>App: Results
+participant "Application" as App
+participant "Cassandra" as C
+
+App -> C: EXECUTE: Prepared ID + [bound values]
+note right of C: Look up cached plan
+note right of C: Execute (no parsing)
+C --> App: Results
+
+@enduml
 ```
 
 ---
@@ -85,29 +97,33 @@ Prepared statements:
 
 Prepared statements enable token-aware routing because the driver knows the partition key structure:
 
-```mermaid
-sequenceDiagram
-    participant App as Application
-    participant Driver as Driver
-    participant N1 as Node 1 (Replica)
-    participant N2 as Node 2
-    participant N3 as Node 3
+```plantuml
+@startuml
+skinparam backgroundColor transparent
 
-    Note over App,Driver: Preparation Phase
-    App->>Driver: Prepare: SELECT * FROM users<br/>WHERE user_id = ? AND region = ?
-    Driver->>N1: PREPARE request
-    N1-->>Driver: Prepared ID + Metadata:<br/>- user_id: partition key[0]<br/>- region: partition key[1]
+participant "Application" as App
+participant "Driver" as Driver
+participant "Node 1 (Replica)" as N1
+participant "Node 2" as N2
+participant "Node 3" as N3
 
-    Note over App,Driver: Execution Phase
-    App->>Driver: Execute with user_id='abc', region='us-east'
-    Note over Driver: Extract partition key values
-    Note over Driver: Calculate token = murmur3('abc', 'us-east')
-    Note over Driver: Token maps to Node 1
-    Driver->>N1: EXECUTE (direct to replica)
-    Note right of N2: Skipped - not a replica
-    Note right of N3: Skipped - not a replica
-    N1-->>Driver: Results
-    Driver-->>App: Results
+== Preparation Phase ==
+App -> Driver: Prepare: SELECT * FROM users\nWHERE user_id = ? AND region = ?
+Driver -> N1: PREPARE request
+N1 --> Driver: Prepared ID + Metadata:\n- user_id: partition key[0]\n- region: partition key[1]
+
+== Execution Phase ==
+App -> Driver: Execute with user_id='abc', region='us-east'
+note over Driver: Extract partition key values
+note over Driver: Calculate token = murmur3('abc', 'us-east')
+note over Driver: Token maps to Node 1
+Driver -> N1: EXECUTE (direct to replica)
+note right of N2: Skipped - not a replica
+note right of N3: Skipped - not a replica
+N1 --> Driver: Results
+Driver --> App: Results
+
+@enduml
 ```
 
 Without prepared statements, the driver cannot determine partition key values from embedded query strings.
@@ -150,23 +166,27 @@ The driver:
 
 If a node restarts or does not have the prepared statement, the driver automatically re-prepares:
 
-```mermaid
-sequenceDiagram
-    participant App as Application
-    participant Driver as Driver
-    participant N2 as Node 2
+```plantuml
+@startuml
+skinparam backgroundColor transparent
 
-    App->>Driver: Execute prepared statement
-    Driver->>N2: EXECUTE (Prepared ID + values)
-    Note right of N2: Statement not in cache
-    N2-->>Driver: UNPREPARED error
-    Driver->>N2: PREPARE (query string)
-    Note right of N2: Parse and cache
-    N2-->>Driver: Prepared ID
-    Driver->>N2: EXECUTE (Prepared ID + values)
-    Note right of N2: Execute query
-    N2-->>Driver: Results
-    Driver-->>App: Results
+participant "Application" as App
+participant "Driver" as Driver
+participant "Node 2" as N2
+
+App -> Driver: Execute prepared statement
+Driver -> N2: EXECUTE (Prepared ID + values)
+note right of N2: Statement not in cache
+N2 --> Driver: UNPREPARED error
+Driver -> N2: PREPARE (query string)
+note right of N2: Parse and cache
+N2 --> Driver: Prepared ID
+Driver -> N2: EXECUTE (Prepared ID + values)
+note right of N2: Execute query
+N2 --> Driver: Results
+Driver --> App: Results
+
+@enduml
 ```
 
 This is transparent to the application.
@@ -309,33 +329,35 @@ The driver caches prepared statements, so re-preparing is not catastrophic, but 
 
 When schema changes, prepared statements may become invalid:
 
-```mermaid
-sequenceDiagram
-    participant App as Application
-    participant Driver as Driver
-    participant C as Cassandra
+```plantuml
+@startuml
+skinparam backgroundColor transparent
 
-    Note over App,C: Initial State
-    App->>Driver: Prepare SELECT * FROM users WHERE id = ?
-    Driver->>C: PREPARE request
-    C-->>Driver: Prepared ID + metadata (id, name, email)
-    Driver-->>App: PreparedStatement
+participant "Application" as App
+participant "Driver" as Driver
+participant "Cassandra" as C
 
-    Note over App,C: Schema Change Occurs
-    rect rgb(255, 240, 240)
-        Note over C: ALTER TABLE users DROP email
-    end
+== Initial State ==
+App -> Driver: Prepare SELECT * FROM users WHERE id = ?
+Driver -> C: PREPARE request
+C --> Driver: Prepared ID + metadata (id, name, email)
+Driver --> App: PreparedStatement
 
-    Note over App,C: Next Execution
-    App->>Driver: Execute with bound values
-    Driver->>C: EXECUTE request
-    Note right of C: Detects schema mismatch
-    C-->>Driver: Schema changed notification
-    Driver->>C: Re-PREPARE request
-    C-->>Driver: New Prepared ID + metadata (id, name)
-    Driver->>C: EXECUTE with new ID
-    C-->>Driver: Results
-    Driver-->>App: Results (without email column)
+== Schema Change Occurs ==
+note over C #ffeeee: ALTER TABLE users DROP email
+
+== Next Execution ==
+App -> Driver: Execute with bound values
+Driver -> C: EXECUTE request
+note right of C: Detects schema mismatch
+C --> Driver: Schema changed notification
+Driver -> C: Re-PREPARE request
+C --> Driver: New Prepared ID + metadata (id, name)
+Driver -> C: EXECUTE with new ID
+C --> Driver: Results
+Driver --> App: Results (without email column)
+
+@enduml
 ```
 
 ### Handling Schema Changes
@@ -380,24 +402,28 @@ Cassandra limits prepared statements per node:
 
 When cache is full, least-recently-used statements are evicted:
 
-```mermaid
-sequenceDiagram
-    participant Driver as Driver
-    participant C as Cassandra
+```plantuml
+@startuml
+skinparam backgroundColor transparent
 
-    Note over C: Cache full (10MB)
-    Driver->>C: PREPARE new statement
-    Note right of C: Evict LRU statement
-    Note right of C: Cache new statement
-    C-->>Driver: Prepared ID
+participant "Driver" as Driver
+participant "Cassandra" as C
 
-    Note over Driver,C: Later: Execute evicted statement
-    Driver->>C: EXECUTE (evicted statement ID)
-    C-->>Driver: UNPREPARED error
-    Driver->>C: PREPARE (query string)
-    C-->>Driver: New Prepared ID
-    Driver->>C: EXECUTE (new ID)
-    C-->>Driver: Results
+note over C: Cache full (10MB)
+Driver -> C: PREPARE new statement
+note right of C: Evict LRU statement
+note right of C: Cache new statement
+C --> Driver: Prepared ID
+
+== Later: Execute evicted statement ==
+Driver -> C: EXECUTE (evicted statement ID)
+C --> Driver: UNPREPARED error
+Driver -> C: PREPARE (query string)
+C --> Driver: New Prepared ID
+Driver -> C: EXECUTE (new ID)
+C --> Driver: Results
+
+@enduml
 ```
 
 ### Avoiding Cache Churn

@@ -2,38 +2,297 @@
 
 Cassandra drivers use asynchronous, non-blocking I/O to achieve high throughput with minimal resources. This architecture enables thousands of concurrent requests using a small number of connections.
 
-## Asynchronous Model
+---
 
-### Why Asynchronous?
+## Traditional RDBMS Connection Model
 
-Traditional synchronous database access follows a blocking model:
+### The Synchronous RPC Pattern
+
+Traditional relational databases (PostgreSQL, MySQL, Oracle, SQL Server) use a synchronous, thread-per-connection model inherited from RPC (Remote Procedure Call) patterns:
+
+```plantuml
+@startuml
+skinparam backgroundColor transparent
+title Traditional RDBMS: Thread-per-Connection Model
+
+skinparam rectangle {
+    BackgroundColor #7B4B96
+    FontColor white
+    BorderColor #5A3670
+    roundCorner 10
+}
+
+package "Application Server" as App #F9E5FF {
+    rectangle "Thread 1\n(blocked)" as T1
+    rectangle "Thread 2\n(blocked)" as T2
+    rectangle "Thread 3\n(blocked)" as T3
+    rectangle "Thread 4\n(blocked)" as T4
+    rectangle "...\n(500+ threads)" as TN
+}
+
+package "Connection Pool" as Pool #F3DAFA {
+    rectangle "Conn 1" as C1
+    rectangle "Conn 2" as C2
+    rectangle "Conn 3" as C3
+    rectangle "Conn 4" as C4
+    rectangle "..." as CN
+}
+
+package "Database Server" as DB #EED0F5 {
+    rectangle "Worker 1" as W1
+    rectangle "Worker 2" as W2
+    rectangle "Worker 3" as W3
+    rectangle "Worker 4" as W4
+}
+
+T1 --> C1
+T2 --> C2
+T3 --> C3
+T4 --> C4
+
+C1 --> W1
+C2 --> W2
+C3 --> W3
+C4 --> W4
+
+note bottom of App #FFCDD2
+  Each thread blocked waiting
+  for database response
+  ~1MB stack per thread
+end note
+
+note bottom of DB #FFFDE7
+  Server spawns worker
+  process/thread per connection
+end note
+@enduml
+```
+
+In this model:
+
+1. **One thread per request**: Each database query requires a dedicated application thread
+2. **Thread blocks until response**: The thread cannot do other work while waiting
+3. **One connection per active thread**: The connection is exclusively held during query execution
+4. **Server-side resources**: Database creates a worker process/thread for each connection
+
+### Problems with the Traditional Model
+
+**Resource Exhaustion:**
+
+| Resource | Consumption | Impact |
+|----------|-------------|--------|
+| Application threads | 1 per concurrent query | 500 queries = 500 threads = 500MB+ memory |
+| TCP connections | 1 per thread | File descriptor limits, server connection limits |
+| Database workers | 1 per connection | `max_connections` parameter limits concurrency |
+| Context switches | 2 per request (app + DB) | CPU overhead scales with concurrency |
+
+**Connection Pool Challenges:**
 
 ```
-Thread 1: send request → wait → receive response → process
-Thread 2: send request → wait → receive response → process
+Pool size too small:
+  - Threads block waiting for connections
+  - Request queuing and timeouts
+  - Underutilized server capacity
+
+Pool size too large:
+  - Memory wasted on idle connections
+  - Database overwhelmed during bursts
+  - Connection limits exhausted
 ```
 
-This model requires one thread per concurrent request, leading to:
-- High memory usage (1MB+ stack per thread)
-- Context switching overhead
-- Thread pool sizing challenges
+**Stale Connection Problem:**
 
-Asynchronous I/O eliminates these limitations:
+Traditional connection pools suffer from stale connections:
+
+```plantuml
+@startuml
+skinparam backgroundColor transparent
+title Stale Connection Detection
+
+skinparam ActivityBackgroundColor #F9E5FF
+skinparam ActivityBorderColor #7B4B96
+
+start
+
+:Application requests connection;
+
+if (Connection in pool?) then (yes)
+    if (Connection still valid?) then (unknown)
+        :Send validation query;
+        note right
+          "SELECT 1" or similar
+          Adds latency to every request
+        end note
+        if (Validation succeeds?) then (yes)
+            :Use connection;
+        else (no)
+            :Discard connection;
+            :Create new connection;
+        endif
+    endif
+else (no)
+    :Create new connection;
+    note right
+      TCP handshake
+      TLS negotiation
+      Authentication
+      ~10-50ms overhead
+    end note
+endif
+
+:Execute query;
+:Return connection to pool;
+
+stop
+@enduml
+```
+
+Stale connections occur when:
+
+- **Network interruption**: Firewall drops idle connection, load balancer timeout
+- **Server restart**: Database recycled but client unaware
+- **Idle timeout**: Connection exceeds server's `wait_timeout`
+- **TCP keepalive failure**: Underlying socket becomes invalid
+
+**Connection Recycling Overhead:**
+
+| Operation | Typical Latency | Notes |
+|-----------|-----------------|-------|
+| TCP handshake | 0.5-1ms (same DC) | 3-way handshake |
+| TLS negotiation | 2-5ms | Certificate exchange, key derivation |
+| Authentication | 1-3ms | Credential validation |
+| Session setup | 1-2ms | Set timezone, charset, schema |
+| **Total** | **5-15ms** | Per new connection |
+
+**Scaling Limitations:**
 
 ```
-Event Loop: send request 1 → send request 2 → send request 3 →
-            receive response 2 → receive response 1 → receive response 3
+Traditional Scaling:
+  1000 requests/sec @ 10ms latency = 10 connections needed
+  10000 requests/sec @ 10ms latency = 100 connections needed
+  100000 requests/sec @ 10ms latency = 1000 connections needed ← hits limits
+
+Database limits:
+  PostgreSQL: max_connections default 100
+  MySQL: max_connections default 151
+  Oracle: processes parameter limits
+
+Application limits:
+  Thread pool sizing
+  Memory for thread stacks
+  Context switch overhead
 ```
 
-### Benefits
+!!! danger "Connection Explosion Under Load"
+    During traffic spikes, applications often exhaust connection pools. New connection creation adds latency, and if the database hits `max_connections`, requests fail entirely. This creates a cascading failure pattern where increased load leads to decreased capacity.
+
+---
+
+## Cassandra's Asynchronous Model
+
+### Stream Multiplexing Architecture
+
+Cassandra drivers use a fundamentally different approach: multiplexed asynchronous connections with stream IDs:
+
+```plantuml
+@startuml
+skinparam backgroundColor transparent
+title Cassandra: Stream Multiplexing Model
+
+skinparam rectangle {
+    BackgroundColor #7B4B96
+    FontColor white
+    BorderColor #5A3670
+    roundCorner 10
+}
+
+package "Application Server" as App #E8F5E9 {
+    rectangle "Event Loop\n(1-2 threads)" as EL
+    rectangle "Request Queue" as RQ
+}
+
+package "Multiplexed Connection" as Conn #F9E5FF {
+    rectangle "Stream 1" as S1
+    rectangle "Stream 2" as S2
+    rectangle "Stream 3" as S3
+    rectangle "...\nStream 32768" as SN
+}
+
+package "Cassandra Node" as Cass #F3DAFA {
+    rectangle "Native Transport\n(shared thread pool)" as NT
+}
+
+RQ --> EL
+EL --> S1
+EL --> S2
+EL --> S3
+EL --> SN
+
+S1 --> NT
+S2 --> NT
+S3 --> NT
+SN --> NT
+
+note bottom of App #E8F5E9
+  Single connection handles
+  thousands of concurrent requests
+  No thread-per-request
+end note
+
+note bottom of Conn #FFFDE7
+  32,768 streams per connection
+  Requests identified by stream ID
+  Out-of-order responses
+end note
+@enduml
+```
+
+**Key Differences:**
+
+| Aspect | Traditional RDBMS | Cassandra |
+|--------|-------------------|-----------|
+| Connection utilization | 1 query at a time | 32,768 concurrent queries |
+| Threads required | 1 per query | 1-2 for all I/O |
+| Connection count | 100s needed | 2-8 per node sufficient |
+| Response ordering | Sequential | Multiplexed (any order) |
+| Memory per connection | ~1MB (thread) | ~64KB (buffers) |
+| New connection cost | Paid frequently | Paid rarely (persistent) |
+
+### Why This Works for Cassandra
+
+1. **No server-side session state**: Unlike RDBMS, Cassandra connections have no transaction context, cursors, or prepared statement binding that requires connection affinity
+
+2. **Protocol-level multiplexing**: The CQL binary protocol includes stream IDs (0-32767), allowing response matching without connection-per-request
+
+3. **Stateless request handling**: Each request contains all necessary context (consistency level, timestamp, etc.), enabling any server thread to handle any request
+
+4. **Designed for distribution**: Cassandra expects many nodes, so minimizing per-node connection overhead is essential
+
+### Asynchronous I/O Benefits
+
+Traditional synchronous model:
+```
+Thread 1: send request → [blocked waiting 5ms] → receive response → process
+Thread 2: send request → [blocked waiting 5ms] → receive response → process
+Thread 3: send request → [blocked waiting 5ms] → receive response → process
+```
+
+Cassandra asynchronous model:
+```
+Event Loop: send Q1 → send Q2 → send Q3 → send Q4 → send Q5 →
+            receive R3 → receive R1 → receive R5 → receive R2 → receive R4
+```
 
 | Aspect | Synchronous | Asynchronous |
 |--------|-------------|--------------|
 | Threads per request | 1 | 0 (shared) |
 | Memory per connection | ~1MB (thread stack) | ~64KB (buffers) |
 | Context switches | Per request | Per I/O event |
-| Concurrent requests | Limited by threads | Limited by protocol |
+| Concurrent requests | Limited by threads | Limited by protocol (32K) |
 | Latency overhead | Thread scheduling | Minimal |
+
+!!! tip "Connection Efficiency"
+    A single Cassandra connection can handle the same throughput that would require 100+ PostgreSQL connections. For a 9-node cluster, 8 connections per node (72 total) can sustain hundreds of thousands of requests per second.
 
 ---
 
@@ -41,41 +300,52 @@ Event Loop: send request 1 → send request 2 → send request 3 →
 
 ### Connection Components
 
-```mermaid
-flowchart TB
-    subgraph Application
-        App[Application Code]
-    end
+```plantuml
+@startuml
+skinparam backgroundColor transparent
+title Driver Connection Components
 
-    subgraph Driver
-        RQ[Request Queue]
-        RH[Response Handler]
-        EL[Event Loop]
+skinparam rectangle {
+    BackgroundColor #7B4B96
+    FontColor white
+    BorderColor #5A3670
+    roundCorner 10
+}
 
-        subgraph Connection
-            SM[Stream Manager]
-            FC[Frame Codec]
-            WB[Write Buffer]
-            RB[Read Buffer]
-        end
-    end
+package "Application" as AppPkg #E8F5E9 {
+    rectangle "Application Code" as App
+}
 
-    subgraph Network
-        Net[TCP Socket]
-    end
+package "Driver" as DrvPkg #F9E5FF {
+    rectangle "Request Queue" as RQ
+    rectangle "Response Handler" as RH
+    rectangle "Event Loop" as EL
 
-    App -->|1. submit request| RQ
-    RQ -->|2. allocate stream| SM
-    SM -->|3. encode frame| FC
-    FC -->|4. queue write| WB
-    EL -->|5. flush| WB
-    WB -->|6. TCP write| Net
-    Net -->|7. TCP read| RB
-    EL -->|8. read events| RB
-    RB -->|9. decode frame| FC
-    FC -->|10. match stream| SM
-    SM -->|11. complete future| RH
-    RH -->|12. result| App
+    package "Connection" as ConnPkg #F3DAFA {
+        rectangle "Stream Manager" as SM
+        rectangle "Frame Codec" as FC
+        rectangle "Write Buffer" as WB
+        rectangle "Read Buffer" as RB
+    }
+}
+
+package "Network" as NetPkg #EED0F5 {
+    rectangle "TCP Socket" as Net
+}
+
+App -down-> RQ : 1. submit request
+RQ -down-> SM : 2. allocate stream
+SM -down-> FC : 3. encode frame
+FC -down-> WB : 4. queue write
+EL -right-> WB : 5. flush
+WB -down-> Net : 6. TCP write
+Net -up-> RB : 7. TCP read
+EL -right-> RB : 8. read events
+RB -up-> FC : 9. decode frame
+FC -up-> SM : 10. match stream
+SM -up-> RH : 11. complete future
+RH -up-> App : 12. result
+@enduml
 ```
 
 ### Event Loop

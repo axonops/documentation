@@ -108,37 +108,32 @@ For each failed request, the retry policy returns one of:
 
 ### Decision Flow
 
-```
-Retry Policy Decision Flow:
+```plantuml
+@startuml
+skinparam backgroundColor transparent
+title Retry Policy Decision Flow
 
-         Request Failed
-              │
-              ▼
-    ┌─────────────────────┐
-    │ Classify Error Type │
-    └──────────┬──────────┘
-               │
-    ┌──────────┴──────────┐
-    │                     │
-    ▼                     ▼
-Transient              Permanent
-(timeout,              (syntax error,
-unavailable)           unauthorized)
-    │                     │
-    ▼                     ▼
-┌───────────────┐    RETHROW
-│ Check retry   │    (no point
-│ count/limit   │     retrying)
-└───────┬───────┘
-        │
-   ┌────┴────┐
-   │         │
-   ▼         ▼
-Under     Exceeded
-limit      limit
-   │         │
-   ▼         ▼
-RETRY_*   RETHROW
+start
+
+:Request Failed;
+
+:Classify Error Type;
+
+if (Error Type?) then (Transient\n(timeout, unavailable))
+    :Check retry count/limit;
+    if (Retry count?) then (Under limit)
+        :RETRY_SAME or RETRY_NEXT;
+        stop
+    else (Exceeded limit)
+        :RETHROW;
+        stop
+    endif
+else (Permanent\n(syntax error, unauthorized))
+    :RETHROW\n(no point retrying);
+    stop
+endif
+
+@enduml
 ```
 
 ---

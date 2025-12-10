@@ -51,32 +51,12 @@ Year 5:    15,000,000 rows per user   ~1.5 GB per partition ☠
 
 ### What Goes Wrong
 
-```
-┌─────────────────────────────────────────────────────────────────────────────┐
-│  Stage 1: Read Performance Degrades                                         │
-│  ─────────────────────────────────────────────────────────────────────────  │
-│  Partition > 100MB: Queries slow down. "Get latest activity" now scans      │
-│  gigabytes to find recent rows. Bloom filters help but not enough.          │
-├─────────────────────────────────────────────────────────────────────────────┤
-│  Stage 2: Compaction Problems                                               │
-│  ─────────────────────────────────────────────────────────────────────────  │
-│  Partition > 500MB: Compaction must load entire partition into memory.      │
-│  Compaction threads consume heap, leading to GC pauses. Other operations    │
-│  stall waiting for compaction to complete.                                  │
-├─────────────────────────────────────────────────────────────────────────────┤
-│  Stage 3: Repair Failures                                                   │
-│  ─────────────────────────────────────────────────────────────────────────  │
-│  Partition > 1GB: Repair streams entire partitions between nodes.           │
-│  Streaming 1GB over network causes timeouts. Repair fails repeatedly.       │
-│  Data consistency cannot be maintained.                                     │
-├─────────────────────────────────────────────────────────────────────────────┤
-│  Stage 4: Cluster Instability                                               │
-│  ─────────────────────────────────────────────────────────────────────────  │
-│  Partition > 2GB: Nodes hosting these partitions become unresponsive.       │
-│  Hints queue up for unavailable nodes. Cascade failures begin.              │
-│  Full cluster becomes unstable.                                             │
-└─────────────────────────────────────────────────────────────────────────────┘
-```
+| Stage | Partition Size | Symptoms |
+|-------|----------------|----------|
+| **1. Read Performance Degrades** | > 100 MB | Queries slow down. "Get latest activity" now scans gigabytes to find recent rows. Bloom filters help but not enough. |
+| **2. Compaction Problems** | > 500 MB | Compaction must load entire partition into memory. Compaction threads consume heap, leading to GC pauses. Other operations stall waiting for compaction to complete. |
+| **3. Repair Failures** | > 1 GB | Repair streams entire partitions between nodes. Streaming 1GB over network causes timeouts. Repair fails repeatedly. Data consistency cannot be maintained. |
+| **4. Cluster Instability** | > 2 GB | Nodes hosting these partitions become unresponsive. Hints queue up for unavailable nodes. Cascade failures begin. Full cluster becomes unstable. |
 
 ### Detection
 
@@ -184,19 +164,16 @@ Tombstones cannot be removed until:
 2. All replicas have the tombstone (ensured by repair)
 3. Compaction runs and merges SSTables containing the tombstone
 
-```
-┌──────────────────────────────────────────────────────────────────────────┐
-│  Timeline for tombstone removal:                                         │
-│                                                                          │
-│  Day 0: DELETE executed → Tombstone created                              │
-│  Day 1-9: Tombstone must stay (gc_grace_seconds = 10 days)               │
-│  Day 10: Tombstone eligible for removal                                  │
-│  Day ??: Compaction runs → Tombstone finally removed                     │
-│                                                                          │
-│  If repair has not run: Tombstone removal is UNSAFE                       │
-│  If compaction is behind: Tombstone persists indefinitely                │
-└──────────────────────────────────────────────────────────────────────────┘
-```
+| Day | Event | Notes |
+|-----|-------|-------|
+| 0 | DELETE executed | Tombstone created |
+| 1-9 | Tombstone must stay | `gc_grace_seconds` = 10 days |
+| 10 | Tombstone eligible for removal | Requires compaction to actually remove |
+| ?? | Compaction runs | Tombstone finally removed |
+
+!!! warning "Tombstone Removal Risks"
+    - If repair has not run: Tombstone removal is **unsafe** (data resurrection risk)
+    - If compaction is behind: Tombstone persists indefinitely
 
 ### Detection
 
@@ -294,29 +271,23 @@ SELECT * FROM users WHERE country = 'US' ALLOW FILTERING;
 
 ### What Actually Happens
 
-```
-┌─────────────────────────────────────────────────────────────────────────────┐
-│  Query: SELECT * FROM users WHERE country = 'US' ALLOW FILTERING            │
-│                                                                             │
-│  Coordinator receives query                                                 │
-│       │                                                                     │
-│       ├──► Request to Node 1: "Scan ALL your partitions, filter country"   │
-│       ├──► Request to Node 2: "Scan ALL your partitions, filter country"   │
-│       ├──► Request to Node 3: "Scan ALL your partitions, filter country"   │
-│       ├──► Request to Node 4: "Scan ALL your partitions, filter country"   │
-│       └──► Request to Node 5: "Scan ALL your partitions, filter country"   │
-│                                                                             │
-│  Each node:                                                                 │
-│  - Reads every SSTable                                                      │
-│  - Deserializes every row                                                   │
-│  - Checks if country = 'US'                                                 │
-│  - Returns matching rows                                                    │
-│                                                                             │
-│  Result: O(n) where n = total rows in table                                 │
-│          1 million users = 1 million rows scanned                           │
-│          10 million users = 10 million rows scanned                         │
-└─────────────────────────────────────────────────────────────────────────────┘
-```
+For `SELECT * FROM users WHERE country = 'US' ALLOW FILTERING`:
+
+| Step | Action |
+|------|--------|
+| 1 | Coordinator receives query |
+| 2 | Coordinator sends request to **all nodes**: "Scan ALL your partitions, filter by country" |
+| 3 | Each node reads every SSTable, deserializes every row, checks if `country = 'US'` |
+| 4 | Each node returns matching rows to coordinator |
+| 5 | Coordinator aggregates and returns results |
+
+**Complexity**: O(n) where n = total rows in table
+
+| Table Size | Rows Scanned |
+|------------|--------------|
+| 1 million users | 1 million rows |
+| 10 million users | 10 million rows |
+| 100 million users | 100 million rows |
 
 ### When ALLOW FILTERING Is Acceptable
 
@@ -410,33 +381,12 @@ WHILE true:
 
 ### What Goes Wrong
 
-```
-┌─────────────────────────────────────────────────────────────────────────────┐
-│  Problem 1: Tombstone Accumulation                                          │
-│  Every DELETE creates a tombstone. After 10,000 jobs:                       │
-│  - 10 live rows (pending jobs)                                              │
-│  - 10,000 tombstones (completed jobs)                                       │
-│  - SELECT scans 10,010 entries to return 10 rows                            │
-├─────────────────────────────────────────────────────────────────────────────┤
-│  Problem 2: Hot Partition                                                   │
-│  All workers read from same partition (queue_name = 'processing').          │
-│  One partition handles 100% of queue traffic.                               │
-│  Node hosting this partition is overwhelmed while others idle.              │
-├─────────────────────────────────────────────────────────────────────────────┤
-│  Problem 3: Race Conditions                                                 │
-│  Multiple workers poll simultaneously:                                      │
-│  - Worker A reads job_id = 123                                              │
-│  - Worker B reads job_id = 123 (same job!)                                  │
-│  - Both process the same job                                                │
-│  - Data corruption or duplicate processing                                  │
-├─────────────────────────────────────────────────────────────────────────────┤
-│  Problem 4: No Ordering Guarantees                                          │
-│  Cassandra's eventual consistency means:                                    │
-│  - DELETE might not be visible immediately                                  │
-│  - Job might be re-read before delete propagates                            │
-│  - FIFO ordering not guaranteed                                             │
-└─────────────────────────────────────────────────────────────────────────────┘
-```
+| Problem | Description |
+|---------|-------------|
+| **1. Tombstone Accumulation** | Every DELETE creates a tombstone. After 10,000 jobs: 10 live rows, 10,000 tombstones. SELECT scans 10,010 entries to return 10 rows. |
+| **2. Hot Partition** | All workers read from same partition (`queue_name = 'processing'`). One partition handles 100% of queue traffic. Node hosting this partition is overwhelmed while others idle. |
+| **3. Race Conditions** | Multiple workers poll simultaneously. Worker A and Worker B both read `job_id = 123`. Both process the same job → data corruption or duplicate processing. |
+| **4. No Ordering Guarantees** | Cassandra's eventual consistency means DELETE might not be visible immediately, job might be re-read before delete propagates, and FIFO ordering is not guaranteed. |
 
 ### Solution: Use a Real Message Queue
 
@@ -502,23 +452,16 @@ SELECT * FROM users WHERE email = ?;
 
 ### What Happens
 
-```
-┌─────────────────────────────────────────────────────────────────────────────┐
-│  Query: SELECT * FROM users WHERE email = 'alice@example.com'               │
-│                                                                             │
-│  With PRIMARY KEY query:                                                    │
-│    Coordinator → 1-3 nodes (based on RF) → Response                         │
-│    Latency: 2-5ms                                                           │
-│                                                                             │
-│  With secondary index:                                                      │
-│    Coordinator → ALL nodes → Each node scans local index → Response         │
-│    Latency: 20-200ms (scales with cluster size)                             │
-│                                                                             │
-│  5-node cluster: 5 nodes queried                                            │
-│  50-node cluster: 50 nodes queried                                          │
-│  500-node cluster: 500 nodes queried                                        │
-└─────────────────────────────────────────────────────────────────────────────┘
-```
+| Query Type | Nodes Contacted | Latency |
+|------------|-----------------|---------|
+| **PRIMARY KEY query** | 1-3 nodes (based on RF) | 2-5 ms |
+| **Secondary index query** | ALL nodes | 20-200 ms (scales with cluster size) |
+
+| Cluster Size | Nodes Queried (Secondary Index) |
+|--------------|--------------------------------|
+| 5 nodes | 5 nodes |
+| 50 nodes | 50 nodes |
+| 500 nodes | 500 nodes |
 
 ### When Secondary Indexes Are OK
 
@@ -588,25 +531,22 @@ SELECT * FROM products WHERE product_id IN (
 
 ### What Happens
 
-```
-┌─────────────────────────────────────────────────────────────────────────────┐
-│  IN clause with 500 values:                                                 │
-│                                                                             │
-│  Coordinator receives query                                                 │
-│       │                                                                     │
-│       ├──► Spawns 500 sub-queries                                           │
-│       ├──► Each sub-query → different partition → different node(s)        │
-│       ├──► Coordinator must track 500 outstanding requests                  │
-│       ├──► Coordinator memory: 500 × (request state + response buffer)     │
-│       └──► All 500 must complete before response sent                       │
-│                                                                             │
-│  Problems:                                                                  │
-│  - Coordinator heap pressure                                                │
-│  - Timeout if any sub-query slow                                           │
-│  - No partial results on failure                                           │
-│  - Latency = max(all sub-query latencies)                                  │
-└─────────────────────────────────────────────────────────────────────────────┘
-```
+For an IN clause with 500 values:
+
+| Step | Action |
+|------|--------|
+| 1 | Coordinator receives query |
+| 2 | Spawns 500 sub-queries (one per value) |
+| 3 | Each sub-query routes to different partition on different node(s) |
+| 4 | Coordinator tracks 500 outstanding requests in memory |
+| 5 | All 500 must complete before response sent |
+
+| Problem | Impact |
+|---------|--------|
+| Coordinator heap pressure | Memory: 500 × (request state + response buffer) |
+| Single slow sub-query | Entire query times out |
+| Any failure | No partial results returned |
+| Latency | = max(all sub-query latencies) |
 
 ### Solutions
 
@@ -789,31 +729,12 @@ UPDATE page_views SET views = 0 WHERE page_id = ?;
 
 ### Counter Rules
 
-```
-┌─────────────────────────────────────────────────────────────────────────────┐
-│  Counter Column Rules:                                                      │
-│                                                                             │
-│  1. Counter tables can ONLY contain:                                        │
-│     - Primary key columns                                                   │
-│     - Counter columns                                                       │
-│     NO other column types allowed                                           │
-│                                                                             │
-│  2. Counters can ONLY be:                                                   │
-│     - Incremented: views = views + 1                                        │
-│     - Decremented: views = views - 1                                        │
-│     NOT set to specific value                                               │
-│                                                                             │
-│  3. Counter operations:                                                     │
-│     - No TTL allowed                                                        │
-│     - No lightweight transactions                                           │
-│     - No batches with non-counter operations                                │
-│                                                                             │
-│  4. Counter consistency:                                                    │
-│     - Eventual consistency (may show stale values)                          │
-│     - Not suitable for exact counts                                         │
-│     - Good for approximate metrics                                          │
-└─────────────────────────────────────────────────────────────────────────────┘
-```
+| Rule | Restriction |
+|------|-------------|
+| **Table contents** | Counter tables can ONLY contain primary key columns and counter columns. No other column types allowed. |
+| **Operations** | Counters can ONLY be incremented (`views = views + 1`) or decremented (`views = views - 1`). Cannot be set to a specific value. |
+| **Limitations** | No TTL allowed. No lightweight transactions. No batches with non-counter operations. |
+| **Consistency** | Eventual consistency (may show stale values). Not suitable for exact counts. Good for approximate metrics. |
 
 ### Correct Counter Usage
 
@@ -936,19 +857,17 @@ SELECT * FROM orders_with_details WHERE order_id = ?;
 
 ### Trade-off Management
 
-```
-Denormalization trade-offs:
-─────────────────────────────────────────────────────────────
-Storage:          More disk space (data duplicated)
-Write complexity: Update multiple tables on change
-Consistency:      Denormalized data may become stale
+| Aspect | Trade-off |
+|--------|-----------|
+| **Storage** | More disk space (data duplicated) |
+| **Write complexity** | Must update multiple tables on change |
+| **Consistency** | Denormalized data may become stale |
 
-Benefits:
-─────────────────────────────────────────────────────────────
-Read performance: Single query, single partition
-Latency:          Predictable, low latency
-Scalability:      Horizontal scaling works
-```
+| Aspect | Benefit |
+|--------|---------|
+| **Read performance** | Single query, single partition |
+| **Latency** | Predictable, low latency |
+| **Scalability** | Horizontal scaling works |
 
 ---
 
@@ -1009,18 +928,18 @@ PendingCompactions                 - Compaction backlog
 
 Before deploying any Cassandra table:
 
-```
-□ Partition key has high cardinality
-□ Partition size bounded (< 100MB)
-□ No unbounded growth patterns
-□ Queries do not require ALLOW FILTERING
-□ No secondary indexes on high-cardinality columns
-□ Collections limited to ~100 elements
-□ DELETE operations minimized (use TTL)
-□ Counter tables properly isolated
-□ All access patterns have dedicated tables
-□ IN clauses limited to ~20 values
-```
+| Check | Requirement |
+|-------|-------------|
+| ☐ Partition key | Has high cardinality |
+| ☐ Partition size | Bounded (< 100 MB) |
+| ☐ Growth pattern | No unbounded growth |
+| ☐ Queries | Do not require `ALLOW FILTERING` |
+| ☐ Secondary indexes | Not on high-cardinality columns |
+| ☐ Collections | Limited to ~100 elements |
+| ☐ DELETEs | Minimized (use TTL instead) |
+| ☐ Counters | Properly isolated in counter-only tables |
+| ☐ Access patterns | Each pattern has a dedicated table |
+| ☐ IN clauses | Limited to ~20 values |
 
 ---
 
