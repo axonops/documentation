@@ -2,58 +2,465 @@
 
 STCS is the default compaction strategy. It groups SSTables of similar size and compacts them together, optimizing for write throughput at the cost of read amplification.
 
-## How STCS Works
+---
+
+## Background and History
+
+### Origins
+
+Size-Tiered Compaction Strategy is Cassandra's original compaction implementation, present since the earliest versions. It derives from classical LSM-tree (Log-Structured Merge-tree) compaction as described in the 1996 paper by O'Neil et al. The strategy was designed to optimize write throughput—a primary design goal for Cassandra's original use case as a high-volume write store.
+
+STCS remained Cassandra's only compaction strategy until version 1.0 (October 2011), when Leveled Compaction Strategy was introduced to address STCS's read amplification problems.
+
+### Design Philosophy
+
+STCS follows a simple principle: minimize write amplification by only compacting SSTables of similar size together. This approach ensures that:
+
+1. Small SSTables are compacted frequently (low cost per compaction)
+2. Large SSTables are compacted infrequently (high cost but rare)
+3. Each byte of data is rewritten approximately log(N) times over its lifetime
+
+The trade-off is that partition keys are scattered across many SSTables, requiring reads to check multiple files.
+
+---
+
+## How STCS Works in Theory
+
+### Core Concept
+
+STCS organizes compaction around size similarity rather than key ranges or levels:
+
+1. **Grouping**: SSTables are grouped into "buckets" based on size
+2. **Threshold**: When a bucket contains `min_threshold` SSTables (default: 4), compaction is triggered
+3. **Merging**: All SSTables in the bucket are merged into a single larger SSTable
+4. **Growth**: The output SSTable joins a larger size bucket, and the process repeats
+
+```graphviz dot stcs-tiers.svg
+digraph CassandraSTCS {
+    rankdir=TB;
+    labelloc="t";
+    label="Cassandra Size-Tiered Compaction Strategy (STCS)";
+
+    bgcolor="transparent";
+    fontname="Helvetica";
+
+    // Default SSTable style
+    node [
+        shape=box
+        style="rounded,filled"
+        fillcolor="#7B4B96"
+        fontcolor="white"
+        fontname="Helvetica"
+        height=0.5
+    ];
+
+    // ----- Tier 1 (Tiny) -----
+    subgraph cluster_T1 {
+        label="Tier 1 (tiny)  |  4 SSTables of similar size (~1MB each)";
+        labelloc="t";
+        fontsize=12;
+        style="rounded,filled";
+        color="#CC99CC";
+        fillcolor="#F9E5FF";
+
+        T1_1 [label="1MB", width=0.8];
+        T1_2 [label="1MB", width=0.8];
+        T1_3 [label="1MB", width=0.8];
+        T1_4 [label="1MB", width=0.8];
+
+        { rank = same; T1_1; T1_2; T1_3; T1_4; }
+    }
+
+    // ----- Tier 2 (Small) -----
+    subgraph cluster_T2 {
+        label="Tier 2 (small)  |  4 SSTables of similar size (~4MB each)";
+        labelloc="t";
+        fontsize=12;
+        style="rounded,filled";
+        color="#C58FC5";
+        fillcolor="#F5DCF9";
+
+        T2_1 [label="4MB", width=1.0];
+        T2_2 [label="4MB", width=1.0];
+        T2_3 [label="4MB", width=1.0];
+        T2_4 [label="4MB", width=1.0];
+
+        { rank = same; T2_1; T2_2; T2_3; T2_4; }
+    }
+
+    // ----- Tier 3 (Medium) -----
+    subgraph cluster_T3 {
+        label="Tier 3 (medium)  |  4 SSTables of similar size (~16MB each)";
+        labelloc="t";
+        fontsize=12;
+        style="rounded,filled";
+        color="#B883B8";
+        fillcolor="#F2D3F5";
+
+        T3_1 [label="16MB", width=1.2];
+        T3_2 [label="16MB", width=1.2];
+        T3_3 [label="16MB", width=1.2];
+        T3_4 [label="16MB", width=1.2];
+
+        { rank = same; T3_1; T3_2; T3_3; T3_4; }
+    }
+
+    // ----- Large SSTables -----
+    subgraph cluster_Large {
+        label="Eventually  |  Large SSTables accumulate (harder to compact)";
+        labelloc="t";
+        fontsize=12;
+        style="rounded,filled";
+        color="#A070A0";
+        fillcolor="#E8C8E8";
+
+        L1 [label="64MB", width=1.6];
+        L2 [label="1GB", width=2.0];
+        L3 [label="4GB", width=2.4];
+        L4 [label="16GB", width=2.8];
+
+        { rank = same; L1; L2; L3; L4; }
+    }
+
+    // ----- Compaction flow arrows -----
+    edge [fontname="Helvetica", fontsize=10, color="#555555"];
+
+    // Tier 1 -> Tier 2 compaction
+    T1_1 -> T2_1 [label="compaction\n(when 4 similar sizes)"];
+    T1_2 -> T2_1;
+    T1_3 -> T2_1;
+    T1_4 -> T2_1;
+
+    // Tier 2 -> Tier 3 compaction
+    T2_1 -> T3_1 [label="compaction\n(merge → larger SSTable)"];
+    T2_2 -> T3_1;
+    T2_3 -> T3_1;
+    T2_4 -> T3_1;
+
+    // Tier 3 -> Large (exponential growth)
+    T3_1 -> L1 [label="continues\ngrowing..."];
+    T3_2 -> L1;
+    T3_3 -> L1;
+    T3_4 -> L1;
+
+    // ----- Side note -----
+    Note [shape=note,
+          style="filled",
+          fillcolor="#FFFFFF",
+          fontcolor="#333333",
+          label="STCS properties:\n• Groups SSTables by similar size\n• Compacts when min_threshold reached\n• Low write amplification\n• High read amplification\n  (any key may be in any SSTable)"];
+
+    L4 -> Note [style=dotted, arrowhead=none];
+}
+```
+
+### Size Buckets
+
+SSTables are assigned to buckets based on size similarity:
 
 ```
-┌─────────────────────────────────────────────────────────────────────┐
-│ SIZE-TIERED COMPACTION                                               │
-│                                                                      │
-│ Concept: Group SSTables by size, compact when enough similar sizes  │
-│                                                                      │
-│ Tier 1 (tiny):    [1MB] [1MB] [1MB] [1MB]  ← 4 SSTables ~1MB each  │
-│                          │                                          │
-│                          ▼ Compact when 4 similar sizes             │
-│                      [4MB]                                          │
-│                                                                      │
-│ Tier 2 (small):   [4MB] [4MB] [4MB] [4MB]  ← 4 SSTables ~4MB each  │
-│                          │                                          │
-│                          ▼ Compact when 4 similar sizes             │
-│                      [16MB]                                         │
-│                                                                      │
-│ Tier 3 (medium):  [16MB] [16MB] [16MB] [16MB]                      │
-│                          │                                          │
-│                          ▼                                          │
-│                      [64MB]                                         │
-│                                                                      │
-│ ... continues growing exponentially ...                             │
-│                                                                      │
-│ Eventually: [256MB] [1GB] [4GB] [16GB] ← Large SSTables accumulate │
-└─────────────────────────────────────────────────────────────────────┘
+Bucket membership formula:
+  average_size × bucket_low ≤ sstable_size ≤ average_size × bucket_high
+
+Default values:
+  bucket_low = 0.5
+  bucket_high = 1.5
+
+Example bucket with average 10MB:
+  5MB ≤ sstable_size ≤ 15MB
 ```
 
-```mermaid
-flowchart TB
-    subgraph T1["Tier 1 (Tiny)"]
-        S1["1MB"] & S2["1MB"] & S3["1MB"] & S4["1MB"]
-    end
+SSTables outside this range form separate buckets. The `min_sstable_size` parameter (default 50MB) groups all smaller SSTables together, preventing proliferation of tiny SSTable buckets.
 
-    S1 & S2 & S3 & S4 --> C1["Compact"]
-    C1 --> M1["4MB"]
+### Compaction Trigger
 
-    subgraph T2["Tier 2 (Small)"]
-        M1
-        M2["4MB"] & M3["4MB"] & M4["4MB"]
-    end
+Compaction occurs when:
 
-    M1 & M2 & M3 & M4 --> C2["Compact"]
-    C2 --> L1["16MB"]
+1. A bucket reaches `min_threshold` SSTables (default: 4)
+2. The bucket is selected by the compaction scheduler
+3. Up to `max_threshold` SSTables (default: 32) are included
 
-    subgraph T3["Tier 3 (Medium)"]
-        L1
-    end
+The scheduler prioritizes buckets with more SSTables and considers the ratio of droppable tombstones.
+
+### Write Amplification Calculation
+
+STCS achieves logarithmic write amplification:
+
+```
+With min_threshold = 4:
+
+Data progression:
+  1MB × 4 → 4MB    (rewrite #1)
+  4MB × 4 → 16MB   (rewrite #2)
+  16MB × 4 → 64MB  (rewrite #3)
+  64MB × 4 → 256MB (rewrite #4)
+  ...
+
+For N bytes of data:
+  Write amplification ≈ log₄(N / flush_size)
+
+Example: 1GB dataset with 1MB flushes
+  log₄(1024) ≈ 5× write amplification
 ```
 
-### Bucketing Logic
+This is significantly lower than LCS's 10× per level amplification.
+
+### Read Amplification Problem
+
+The fundamental weakness of STCS is that any partition key may exist in any SSTable:
+
+```
+After extended operation, SSTables accumulate:
+  [1MB] [4MB] [16MB] [64MB] [256MB] [1GB] [4GB]
+
+Read for partition key K:
+  1. Check bloom filter on each SSTable
+  2. For positive results, read index and data
+  3. Merge all fragments found
+
+Worst case: Every SSTable contains data for K
+  → 7+ disk reads for a single partition
+```
+
+Large SSTables compound this problem because they take longer to compact together, leading to long periods with many SSTables.
+
+---
+
+## Benefits
+
+### Low Write Amplification
+
+STCS minimizes how often data is rewritten:
+
+- Logarithmic growth: ~5-10× total amplification for typical datasets
+- SSD-friendly: Less wear compared to LCS
+- Sustained write throughput: Compaction I/O remains bounded
+
+### Simple and Predictable
+
+The bucketing algorithm is straightforward:
+
+- Easy to understand and debug
+- Predictable compaction sizes
+- No complex level management
+
+### Efficient for Sequential Writes
+
+Append-only and time-series patterns benefit from STCS:
+
+- New data stays in small, recent SSTables
+- Old data migrates to large SSTables
+- Natural temporal locality
+
+### Handles Variable Write Rates
+
+STCS adapts to changing workloads:
+
+- Burst writes: Small SSTables accumulate, compact later
+- Steady writes: Regular compaction cadence
+- Idle periods: Compaction catches up
+
+---
+
+## Drawbacks
+
+### High Read Amplification
+
+The primary cost of STCS is read performance:
+
+- Point queries may touch many SSTables
+- No upper bound on SSTable count
+- P99 latency degrades as data ages
+
+### Large SSTable Accumulation
+
+Over time, large SSTables accumulate without compacting:
+
+```
+"The big SSTable problem":
+
+To compact 4GB SSTables, need 4 of them = 16GB similar size
+To compact 16GB SSTables, need 4 of them = 64GB similar size
+
+These large SSTables may exist for months without partners,
+degrading read performance throughout.
+```
+
+### High Space Amplification During Compaction
+
+STCS requires temporary space during compaction:
+
+```
+Compacting 4 × 1GB SSTables:
+  Before: 4GB used
+  During: 4GB old + 4GB new = 8GB peak
+  After:  4GB used
+
+Requires 50%+ free space headroom
+```
+
+### Unpredictable Read Latency
+
+SSTable count varies widely:
+
+- After compaction: Few SSTables, fast reads
+- Before compaction: Many SSTables, slow reads
+- P99 latency fluctuates with compaction state
+
+### Tombstone Accumulation
+
+Deleted data persists until the containing SSTable compacts:
+
+- Large SSTables hold tombstones for extended periods
+- Space is not reclaimed promptly
+- May cause "zombie data" issues if tombstones expire before compaction
+
+---
+
+## When to Use STCS
+
+### Ideal Use Cases
+
+| Workload Pattern | Why STCS Works |
+|------------------|----------------|
+| Write-heavy (>90% writes) | Low write amplification maximizes throughput |
+| Append-only logs | Data rarely read, write cost dominates |
+| Time-series ingestion | Natural size tiering as data ages |
+| Batch ETL | Bulk writes followed by bulk reads |
+| HDD storage | Sequential I/O patterns suit spinning disks |
+
+### Avoid STCS When
+
+| Workload Pattern | Why STCS Is Wrong |
+|------------------|-------------------|
+| Read-heavy (<30% writes) | Read amplification dominates performance |
+| Point query latency matters | Unpredictable SSTable count |
+| Frequently updated rows | Multiple versions scatter across SSTables |
+| Limited disk space | Requires 50%+ headroom for compaction |
+| Consistent latency required | P99 varies with compaction state |
+
+---
+
+
+digraph CassandraSTCS {
+    rankdir=TB;
+    labelloc="t";
+    label="Cassandra Size-Tiered Compaction Strategy (STCS)";
+
+    bgcolor="transparent";
+    fontname="Helvetica";
+
+    // Default SSTable style
+    node [
+        shape=box
+        style="rounded,filled"
+        fillcolor="#7B4B96"
+        fontcolor="white"
+        fontname="Helvetica"
+        height=0.5
+    ];
+
+    // ----- Tier 1 (Tiny) -----
+    subgraph cluster_T1 {
+        label="Tier 1 (tiny)  |  4 SSTables of similar size (~1MB each)";
+        labelloc="t";
+        fontsize=12;
+        style="rounded,filled";
+        color="#CC99CC";
+        fillcolor="#F9E5FF";
+
+        T1_1 [label="1MB", width=0.8];
+        T1_2 [label="1MB", width=0.8];
+        T1_3 [label="1MB", width=0.8];
+        T1_4 [label="1MB", width=0.8];
+
+        { rank = same; T1_1; T1_2; T1_3; T1_4; }
+    }
+
+    // ----- Tier 2 (Small) -----
+    subgraph cluster_T2 {
+        label="Tier 2 (small)  |  4 SSTables of similar size (~4MB each)";
+        labelloc="t";
+        fontsize=12;
+        style="rounded,filled";
+        color="#C58FC5";
+        fillcolor="#F5DCF9";
+
+        T2_1 [label="4MB", width=1.0];
+        T2_2 [label="4MB", width=1.0];
+        T2_3 [label="4MB", width=1.0];
+        T2_4 [label="4MB", width=1.0];
+
+        { rank = same; T2_1; T2_2; T2_3; T2_4; }
+    }
+
+    // ----- Tier 3 (Medium) -----
+    subgraph cluster_T3 {
+        label="Tier 3 (medium)  |  4 SSTables of similar size (~16MB each)";
+        labelloc="t";
+        fontsize=12;
+        style="rounded,filled";
+        color="#B883B8";
+        fillcolor="#F2D3F5";
+
+        T3_1 [label="16MB", width=1.2];
+        T3_2 [label="16MB", width=1.2];
+        T3_3 [label="16MB", width=1.2];
+        T3_4 [label="16MB", width=1.2];
+
+        { rank = same; T3_1; T3_2; T3_3; T3_4; }
+    }
+
+    // ----- Large SSTables -----
+    subgraph cluster_Large {
+        label="Eventually  |  Large SSTables accumulate (harder to compact)";
+        labelloc="t";
+        fontsize=12;
+        style="rounded,filled";
+        color="#A070A0";
+        fillcolor="#E8C8E8";
+
+        L1 [label="64MB", width=1.6];
+        L2 [label="1GB", width=2.0];
+        L3 [label="4GB", width=2.4];
+        L4 [label="16GB", width=2.8];
+
+        { rank = same; L1; L2; L3; L4; }
+    }
+
+    // ----- Compaction flow arrows -----
+    edge [fontname="Helvetica", fontsize=10, color="#555555"];
+
+    // Tier 1 -> Tier 2 compaction
+    T1_1 -> T2_1 [label="compaction\n(when 4 similar sizes)"];
+    T1_2 -> T2_1;
+    T1_3 -> T2_1;
+    T1_4 -> T2_1;
+
+    // Tier 2 -> Tier 3 compaction
+    T2_1 -> T3_1 [label="compaction\n(merge → larger SSTable)"];
+    T2_2 -> T3_1;
+    T2_3 -> T3_1;
+    T2_4 -> T3_1;
+
+    // Tier 3 -> Large (exponential growth)
+    T3_1 -> L1 [label="continues\ngrowing..."];
+    T3_2 -> L1;
+    T3_3 -> L1;
+    T3_4 -> L1;
+
+    // ----- Side note -----
+    Note [shape=note,
+          style="filled",
+          fillcolor="#FFFFFF",
+          fontcolor="#333333",
+          label="STCS properties:\n• Groups SSTables by similar size\n• Compacts when min_threshold reached\n• Low write amplification\n• High read amplification\n  (any key may be in any SSTable)"];
+
+    L4 -> Note [style=dotted, arrowhead=none];
+}
+```
+
+## Bucketing Logic
 
 SSTables are grouped into "buckets" based on size similarity:
 
@@ -356,4 +763,4 @@ ls -lh /var/lib/cassandra/data/keyspace/table-*/*-Data.db | \
 
 - **[Compaction Overview](index.md)** - Concepts and strategy selection
 - **[Leveled Compaction (LCS)](lcs.md)** - Alternative for read-heavy workloads
-- **[Compaction Operations](operations.md)** - Tuning and troubleshooting
+- **[Compaction Management](../../../../operations/compaction-management/index.md)** - Tuning and troubleshooting

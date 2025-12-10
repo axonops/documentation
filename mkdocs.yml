@@ -282,22 +282,54 @@ nav:
             - Leveled (LCS): cassandra/architecture/storage-engine/compaction/lcs.md
             - Time-Window (TWCS): cassandra/architecture/storage-engine/compaction/twcs.md
             - Unified (UCS): cassandra/architecture/storage-engine/compaction/ucs.md
-            - Operations: cassandra/architecture/storage-engine/compaction/operations.md
+          - Indexes:
+            - Overview: cassandra/architecture/storage-engine/indexes/index.md
+            - Secondary Indexes (2i): cassandra/architecture/storage-engine/indexes/secondary-indexes.md
+            - SASI: cassandra/architecture/storage-engine/indexes/sasi.md
+            - SAI: cassandra/architecture/storage-engine/indexes/sai.md
+          - Materialized Views: cassandra/architecture/storage-engine/materialized-views.md
         - Distributed Data:
           - Overview: cassandra/architecture/distributed-data/index.md
           - Partitioning: cassandra/architecture/distributed-data/partitioning.md
           - Replication: cassandra/architecture/distributed-data/replication.md
           - Consistency: cassandra/architecture/distributed-data/consistency.md
           - Replica Synchronization: cassandra/architecture/distributed-data/replica-synchronization.md
+          - Secondary Index Queries: cassandra/architecture/distributed-data/secondary-index-queries.md
+          - Materialized Views: cassandra/architecture/distributed-data/materialized-views.md
+          - Data Streaming: cassandra/architecture/distributed-data/streaming.md
           - Counters: cassandra/architecture/distributed-data/counters.md
-        - Gossip Protocol: cassandra/architecture/gossip/index.md
+        - Cluster Management:
+          - Overview: cassandra/architecture/cluster-management/index.md
+          - Gossip Protocol: cassandra/architecture/cluster-management/gossip.md
+          - Seeds and Discovery: cassandra/architecture/cluster-management/seeds.md
+          - Node Lifecycle: cassandra/architecture/cluster-management/node-lifecycle.md
+          - Node Replacement: cassandra/architecture/cluster-management/node-replacement.md
+          - Scaling Operations: cassandra/architecture/cluster-management/scaling.md
       - Application Development:
         - Overview: cassandra/application-development/index.md
         - CQL Reference:
           - Overview: cassandra/cql/index.md
           - Data Types: cassandra/cql/data-types/index.md
-          - DDL Commands: cassandra/cql/ddl/index.md
-          - DML Commands: cassandra/cql/dml/index.md
+          - DDL Commands:
+            - Overview: cassandra/cql/ddl/index.md
+            - Keyspace: cassandra/cql/ddl/keyspace.md
+            - Table: cassandra/cql/ddl/table.md
+            - Index: cassandra/cql/ddl/create-index.md
+            - Materialized View: cassandra/cql/ddl/materialized-view.md
+            - User-Defined Type: cassandra/cql/ddl/type.md
+            - Function: cassandra/cql/ddl/function.md
+            - Aggregate: cassandra/cql/ddl/aggregate.md
+          - DML Commands:
+            - Overview: cassandra/cql/dml/index.md
+            - SELECT: cassandra/cql/dml/select.md
+            - INSERT: cassandra/cql/dml/insert.md
+            - UPDATE: cassandra/cql/dml/update.md
+            - DELETE: cassandra/cql/dml/delete.md
+            - BATCH: cassandra/cql/dml/batch.md
+            - Secondary Index Queries: cassandra/cql/dml/secondary-index-queries.md
+            - Vector Search: cassandra/cql/dml/vector-search.md
+            - Lightweight Transactions: cassandra/cql/dml/lightweight-transactions.md
+          - Security Commands: cassandra/cql/security/index.md
           - Indexing: cassandra/cql/indexing/index.md
           - Functions: cassandra/cql/functions/index.md
         - Data Modeling:
@@ -323,6 +355,7 @@ nav:
           - Backup Procedures: cassandra/operations/backup-restore/backup.md
           - Restore Guide: cassandra/operations/backup-restore/restore.md
         - Repair: cassandra/operations/repair/index.md
+        - Compaction Management: cassandra/operations/compaction-management/index.md
         - Maintenance: cassandra/operations/maintenance/index.md
       - Configuration:
         - Overview: cassandra/configuration/index.md
@@ -350,7 +383,9 @@ nav:
         - Overview: cassandra/security/index.md
         - Authentication: cassandra/security/authentication/index.md
         - Authorization: cassandra/security/authorization/index.md
-        - Network Authorization: cassandra/security/network/index.md
+        - Privileged Access Management: cassandra/security/privileged-access-management/index.md
+        - Audit Logging: cassandra/security/audit-logging/index.md
+        - Network Security: cassandra/security/network/index.md
         - Encryption:
           - Overview: cassandra/security/encryption/index.md
           - PKI Fundamentals: cassandra/security/encryption/pki-fundamentals.md

@@ -306,96 +306,362 @@ INSERT INTO access_logs (log_id, client_ip, request) VALUES
 
 ## Collection Types
 
+Collections store multiple values in a single column. Cassandra provides three collection types: LIST, SET, and MAP. Collections are designed for small, bounded datasets that are typically read together with the row.
+
+### Collection Architecture
+
+Collections are stored as a set of cells within the row, not as a separate data structure:
+
+```
+Row Storage:
+┌──────────────┬─────────────────────────────────────────────────┐
+│ Primary Key  │ Cells                                           │
+├──────────────┼─────────────────────────────────────────────────┤
+│ user_id=123  │ name="Alice" │ tags[0]="a" │ tags[1]="b" │ ... │
+└──────────────┴─────────────────────────────────────────────────┘
+```
+
+Each collection element is stored as an individual cell with its own timestamp. This enables:
+
+- Partial updates without reading the entire collection
+- Per-element TTL
+- Last-write-wins conflict resolution at element level
+
+!!! warning "Collections Are Not Tables"
+    Collections are optimized for small datasets (tens to hundreds of elements). For large or unbounded data, use a separate table with a clustering column instead of a collection.
+
+### When to Use Collections
+
+| Use Case | Recommended Type | Example |
+|----------|------------------|---------|
+| Ordered items with duplicates | LIST | Recent search queries, action history |
+| Unique tags or categories | SET | User roles, product tags, permissions |
+| Key-value properties | MAP | User preferences, metadata, attributes |
+| Large or unbounded data | **Separate table** | Order line items, comments, events |
+
 ### LIST
 
-Ordered collection allowing duplicates.
+Ordered collection that maintains insertion order and allows duplicate values. Elements are accessed by index position.
+
+**Characteristics:**
+
+- Maintains insertion order
+- Allows duplicate values
+- Index-based access (0-indexed)
+- Append and prepend operations
+- Read-before-write required for index updates
 
 ```sql
 CREATE TABLE users (
     user_id UUID PRIMARY KEY,
     phone_numbers LIST<TEXT>,
-    tags LIST<TEXT>
+    recent_searches LIST<TEXT>
 );
 
 -- Insert list
-INSERT INTO users (user_id, phone_numbers, tags)
-VALUES (uuid(), ['+1-555-0100', '+1-555-0101'], ['premium', 'verified']);
+INSERT INTO users (user_id, phone_numbers, recent_searches)
+VALUES (uuid(), ['+1-555-0100', '+1-555-0101'], ['cassandra', 'database']);
 
--- Append to list
+-- Append to end (efficient)
 UPDATE users SET phone_numbers = phone_numbers + ['+1-555-0102']
 WHERE user_id = ?;
 
--- Prepend to list
-UPDATE users SET tags = ['vip'] + tags
+-- Prepend to beginning (efficient)
+UPDATE users SET recent_searches = ['nosql'] + recent_searches
 WHERE user_id = ?;
 
--- Remove from list
-UPDATE users SET tags = tags - ['verified']
+-- Remove by value (removes all occurrences)
+UPDATE users SET recent_searches = recent_searches - ['database']
 WHERE user_id = ?;
 
--- Update by index
+-- Update by index (requires read-before-write internally)
 UPDATE users SET phone_numbers[0] = '+1-555-9999'
 WHERE user_id = ?;
+
+-- Delete by index
+DELETE phone_numbers[1] FROM users WHERE user_id = ?;
 ```
+
+!!! danger "LIST Anti-Patterns"
+    - **Index-based updates**: `list[i] = value` requires reading the list first, creating a race condition under concurrent writes
+    - **Large lists**: Reading a list reads all elements; large lists cause latency spikes
+    - **Frequent middle insertions**: No efficient way to insert at arbitrary positions
+
+**When to Use LIST:**
+
+- Small, bounded ordered sequences (< 100 elements)
+- Append/prepend-only patterns (logs, history)
+- When duplicates are meaningful
+- When order matters
 
 ### SET
 
-Unordered collection of unique elements.
+Unordered collection of unique elements. Elements are stored in sorted order internally (by element value).
+
+**Characteristics:**
+
+- Unique elements only (duplicates ignored)
+- Sorted internally by element value
+- Efficient add/remove operations
+- No index-based access
+- Idempotent additions
 
 ```sql
 CREATE TABLE articles (
     article_id UUID PRIMARY KEY,
-    categories SET<TEXT>
+    tags SET<TEXT>,
+    liked_by SET<UUID>
 );
 
 -- Insert set
-INSERT INTO articles (article_id, categories)
-VALUES (uuid(), {'technology', 'programming', 'database'});
+INSERT INTO articles (article_id, tags)
+VALUES (uuid(), {'technology', 'programming', 'cassandra'});
 
--- Add elements
-UPDATE articles SET categories = categories + {'nosql', 'distributed'}
+-- Add elements (idempotent - adding existing element has no effect)
+UPDATE articles SET tags = tags + {'database', 'nosql'}
 WHERE article_id = ?;
 
 -- Remove elements
-UPDATE articles SET categories = categories - {'programming'}
+UPDATE articles SET tags = tags - {'programming'}
 WHERE article_id = ?;
+
+-- Check membership with CONTAINS (requires index or ALLOW FILTERING)
+SELECT * FROM articles WHERE tags CONTAINS 'cassandra' ALLOW FILTERING;
+
+-- With secondary index
+CREATE INDEX ON articles (tags);
+SELECT * FROM articles WHERE tags CONTAINS 'cassandra';
 ```
+
+**When to Use SET:**
+
+- Tags, categories, labels
+- Many-to-many relationships (small cardinality)
+- Permissions or roles
+- When uniqueness is required
+- When order doesn't matter
 
 ### MAP
 
-Key-value pairs.
+Collection of key-value pairs. Keys must be unique; values can be any type.
+
+**Characteristics:**
+
+- Unique keys
+- Keys sorted internally
+- Direct key-based access
+- Efficient single-key updates
+- Keys and values can be different types
 
 ```sql
-CREATE TABLE user_preferences (
+CREATE TABLE user_profiles (
     user_id UUID PRIMARY KEY,
     preferences MAP<TEXT, TEXT>,
-    scores MAP<TEXT, INT>
+    scores MAP<TEXT, INT>,
+    metadata MAP<TEXT, FROZEN<some_udt>>
 );
 
 -- Insert map
-INSERT INTO user_preferences (user_id, preferences, scores)
+INSERT INTO user_profiles (user_id, preferences, scores)
 VALUES (uuid(),
     {'theme': 'dark', 'language': 'en', 'timezone': 'UTC'},
-    {'level': 5, 'points': 1000});
+    {'level': 5, 'points': 1000, 'achievements': 42});
 
--- Update specific key
-UPDATE user_preferences SET preferences['theme'] = 'light'
+-- Update specific key (efficient, no read required)
+UPDATE user_profiles SET preferences['theme'] = 'light'
 WHERE user_id = ?;
 
--- Add new keys
-UPDATE user_preferences SET preferences = preferences + {'notifications': 'enabled'}
+-- Add multiple keys
+UPDATE user_profiles SET preferences = preferences + {'notifications': 'on', 'beta': 'true'}
 WHERE user_id = ?;
 
--- Remove keys
-DELETE preferences['timezone'] FROM user_preferences
+-- Remove specific key
+DELETE preferences['timezone'] FROM user_profiles
 WHERE user_id = ?;
+
+-- Remove multiple keys
+UPDATE user_profiles SET preferences = preferences - {'beta', 'notifications'}
+WHERE user_id = ?;
+
+-- Query by key (requires index or ALLOW FILTERING)
+CREATE INDEX ON user_profiles (KEYS(preferences));
+SELECT * FROM user_profiles WHERE preferences CONTAINS KEY 'theme';
+
+-- Query by value
+CREATE INDEX ON user_profiles (VALUES(preferences));
+SELECT * FROM user_profiles WHERE preferences CONTAINS 'dark';
+
+-- Query by entry (key-value pair)
+CREATE INDEX ON user_profiles (ENTRIES(preferences));
+SELECT * FROM user_profiles WHERE preferences['theme'] = 'dark';
 ```
 
-**Collection Limitations**:
-- Max 64KB per element
-- Max 2 billion elements
-- Cannot be part of primary key (unless frozen)
-- Overwrites on concurrent updates (last write wins)
+**When to Use MAP:**
+
+- Configuration or preferences
+- Dynamic attributes (schema-less properties)
+- Counters by category
+- Localized content (language → text)
+- Metadata storage
+
+### Collection Storage and Performance
+
+#### Cell-Per-Element Storage
+
+Each collection element is stored as a separate cell:
+
+| Collection | Cell Key | Cell Value |
+|------------|----------|------------|
+| `LIST<TEXT>` | UUID (timeuuid) | Element value |
+| `SET<TEXT>` | Element value | Empty |
+| `MAP<K,V>` | Key | Value |
+
+This means:
+
+- **Reading**: All elements are read together (no partial reads)
+- **Writing**: Individual elements can be added/removed without reading
+- **Size**: Collection overhead scales with element count
+
+#### Performance Implications
+
+| Operation | LIST | SET | MAP |
+|-----------|------|-----|-----|
+| Read entire collection | O(n) | O(n) | O(n) |
+| Append/prepend | O(1) | N/A | N/A |
+| Add element | O(1) | O(1) | O(1) |
+| Remove by value | O(n) | O(1) | O(1) |
+| Update by index | O(n)* | N/A | N/A |
+| Update by key | N/A | N/A | O(1) |
+
+*Requires read-before-write
+
+### Collection Restrictions
+
+!!! danger "Hard Limits"
+    | Limit | Value | Notes |
+    |-------|-------|-------|
+    | Maximum element size | 64 KB | Per individual element |
+    | Maximum elements | 2 billion | Practical limit much lower |
+    | Maximum collection size | 2 GB | Total serialized size |
+    | Primary key usage | Frozen only | Non-frozen cannot be in PK |
+
+!!! warning "Practical Limits"
+    - **Recommended max elements**: ~100 for optimal performance
+    - **Query impact**: Large collections cause GC pressure and latency
+    - **Tombstones**: Removing elements creates tombstones until compaction
+    - **No pagination**: Cannot partially read a collection
+
+#### Operations Not Supported
+
+- **No sorting**: Cannot ORDER BY collection contents
+- **No aggregation**: Cannot SUM/AVG collection elements
+- **No filtering on non-indexed**: CONTAINS requires index or ALLOW FILTERING
+- **No atomic pop**: Cannot atomically read-and-remove
+- **No intersection/union**: Set operations must be done client-side
+
+### Frozen Collections
+
+The `FROZEN` modifier serializes the entire collection as a single blob value.
+
+```sql
+-- Non-frozen (default): individual element updates possible
+tags SET<TEXT>
+
+-- Frozen: entire collection replaced on update
+tags FROZEN<SET<TEXT>>
+```
+
+| Aspect | Non-Frozen | Frozen |
+|--------|------------|--------|
+| Element updates | Individual | Replace entire collection |
+| Storage | Cell per element | Single blob |
+| Primary key | Not allowed | Allowed |
+| Nested collections | Not allowed | Required for nesting |
+| Equality comparison | Not supported | Supported |
+
+```sql
+-- Frozen required for primary key
+CREATE TABLE user_groups (
+    members FROZEN<SET<UUID>> PRIMARY KEY,
+    group_name TEXT
+);
+
+-- Frozen required for nested collections
+CREATE TABLE complex_data (
+    id UUID PRIMARY KEY,
+    matrix LIST<FROZEN<LIST<INT>>>,
+    nested_map MAP<TEXT, FROZEN<MAP<TEXT, INT>>>
+);
+```
+
+!!! tip "When to Use Frozen"
+    - Collection is part of primary key
+    - Nested collections (always required)
+    - Collection is always replaced entirely
+    - Need equality comparison (`WHERE col = {frozen_value}`)
+
+### Collection Anti-Patterns
+
+!!! danger "Avoid These Patterns"
+
+    **Unbounded collections**
+    ```sql
+    -- BAD: followers can grow infinitely
+    followers SET<UUID>
+
+    -- GOOD: use a separate table
+    CREATE TABLE followers (
+        user_id UUID,
+        follower_id UUID,
+        PRIMARY KEY ((user_id), follower_id)
+    );
+    ```
+
+    **Large collections**
+    ```sql
+    -- BAD: storing all order items in collection
+    items LIST<FROZEN<order_item>>
+
+    -- GOOD: use clustering column
+    CREATE TABLE order_items (
+        order_id UUID,
+        item_id UUID,
+        ...,
+        PRIMARY KEY ((order_id), item_id)
+    );
+    ```
+
+    **Concurrent list index updates**
+    ```sql
+    -- BAD: race condition
+    UPDATE users SET history[0] = 'new' WHERE user_id = ?;
+
+    -- GOOD: append-only
+    UPDATE users SET history = history + ['new'] WHERE user_id = ?;
+    ```
+
+    **Using collections for querying**
+    ```sql
+    -- BAD: scanning all rows
+    SELECT * FROM products WHERE tags CONTAINS 'sale' ALLOW FILTERING;
+
+    -- GOOD: denormalize to separate table
+    CREATE TABLE products_by_tag (
+        tag TEXT,
+        product_id UUID,
+        PRIMARY KEY ((tag), product_id)
+    );
+    ```
+
+### Best Practices
+
+1. **Keep collections small**: Target < 100 elements
+2. **Use frozen for immutable data**: Better performance when not updating elements
+3. **Prefer SET over LIST**: Unless order or duplicates matter
+4. **Avoid index updates on LIST**: Use append/prepend only
+5. **Consider denormalization**: Large collections → separate table
+6. **Index strategically**: CONTAINS queries need secondary index
+7. **Monitor tombstones**: Element deletes create tombstones
 
 ---
 

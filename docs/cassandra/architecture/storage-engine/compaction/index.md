@@ -2,82 +2,136 @@
 
 Compaction is the process of merging SSTables to reduce read amplification, reclaim space from tombstones, and maintain manageable file counts. Selecting an appropriate strategy and configuration is critical for cluster performance.
 
+---
+
+## SSTable Accumulation
+
+As described in the **[Write Path](../write-path.md)**, Cassandra writes first go to the commit log and memtable. When a memtable reaches its threshold, it flushes to disk as an immutable SSTable. This append-only design enables fast writes but creates a side effect: SSTables accumulate continuously.
+
+```graphviz dot sstable-accumulation.svg
+digraph sstable_accumulation {
+    rankdir=LR;
+    node [fontname="Helvetica", fontsize=11];
+    edge [fontname="Helvetica", fontsize=10];
+
+    writes [label="Writes", shape=box, style=filled, fillcolor="#fff3cd"];
+    memtable [label="Memtable", shape=box, style=filled, fillcolor="#d4edda"];
+
+    subgraph cluster_disk {
+        label="Disk (SSTables accumulate over time)";
+        style=filled;
+        fillcolor="#f8f9fa";
+
+        ss1 [label="SSTable 1\n(Day 1)", shape=box, style=filled, fillcolor="#e8f4f8"];
+        ss2 [label="SSTable 2\n(Day 2)", shape=box, style=filled, fillcolor="#e8f4f8"];
+        ss3 [label="SSTable 3\n(Day 3)", shape=box, style=filled, fillcolor="#e8f4f8"];
+        dots [label="...", shape=plaintext];
+        ssN [label="SSTable N\n(Day N)", shape=box, style=filled, fillcolor="#e8f4f8"];
+    }
+
+    writes -> memtable [label="write"];
+    memtable -> ss1 [label="flush", style=dashed];
+    memtable -> ss2 [label="flush", style=dashed];
+    memtable -> ss3 [label="flush", style=dashed];
+    memtable -> ssN [label="flush", style=dashed];
+}
+```
+
+Each flush creates a new SSTable containing:
+
+- Data from the memtable at flush time
+- Potentially overlapping partition keys with existing SSTables
+- Updated values for previously written rows
+- Tombstones for deleted data
+
+Without intervention, a table receiving continuous writes accumulates hundreds or thousands of SSTables. This creates problems for both reads and disk management.
+
+---
+
 ## Why Compaction is Necessary
 
-Every memtable flush creates a new SSTable. Without compaction:
+Without compaction, SSTable accumulation degrades read performance:
 
-```
-Day 1:    [SSTable 1]
-Day 2:    [SSTable 1] [SSTable 2]
-Day 3:    [SSTable 1] [SSTable 2] [SSTable 3]
-...
-Day 100:  [SSTable 1] [SSTable 2] ... [SSTable 100]
+```graphviz dot read-amplification-problem.svg
+digraph read_amplification {
+    rankdir=LR;
+    node [fontname="Helvetica", fontsize=11];
+    edge [fontname="Helvetica", fontsize=10];
 
-Read for partition key "user123":
-┌─────────────────────────────────────────────────────────────────────┐
-│ Must check EVERY SSTable (after bloom filter)                       │
-│                                                                     │
-│ 1. Check bloom filter: SSTable 1  → Maybe present → Read index/data│
-│ 2. Check bloom filter: SSTable 2  → Definitely not present → Skip  │
-│ 3. Check bloom filter: SSTable 3  → Maybe present → Read index/data│
-│ ...                                                                 │
-│ 100. Check bloom filter: SSTable 100 → Maybe present → Read        │
-│                                                                     │
-│ Result: Potentially 100 disk seeks for a single partition read     │
-└─────────────────────────────────────────────────────────────────────┘
+    subgraph cluster_sstables {
+        label="After 100 Days: 100 SSTables";
+        style=filled;
+        fillcolor="#f8f9fa";
+
+        ss1 [label="SSTable 1", shape=box, style=filled, fillcolor="#e8f4f8"];
+        ss2 [label="SSTable 2", shape=box, style=filled, fillcolor="#e8f4f8"];
+        ss3 [label="SSTable 3", shape=box, style=filled, fillcolor="#e8f4f8"];
+        dots [label="...", shape=plaintext];
+        ss100 [label="SSTable 100", shape=box, style=filled, fillcolor="#e8f4f8"];
+    }
+
+    query [label="Read 'user123'", shape=box, style=filled, fillcolor="#fff3cd"];
+    result [label="Potentially 100\ndisk seeks", shape=box, style=filled, fillcolor="#f8d7da"];
+
+    query -> ss1 [label="check"];
+    query -> ss2 [label="check"];
+    query -> ss3 [label="check"];
+    query -> dots [style=dashed];
+    query -> ss100 [label="check"];
+
+    ss1 -> result [style=dashed];
+    ss2 -> result [style=dashed];
+    ss3 -> result [style=dashed];
+    ss100 -> result [style=dashed];
+}
 ```
+
+Each read must check bloom filters across all SSTables. Even with bloom filter optimization, false positives accumulate—potentially requiring disk seeks to dozens of SSTables for a single partition read.
 
 ---
 
 ## The Compaction Process
 
-```
-Before Compaction:
-┌──────────┐ ┌──────────┐ ┌──────────┐ ┌──────────┐
-│ SSTable1 │ │ SSTable2 │ │ SSTable3 │ │ SSTable4 │
-│ user123→A│ │ user123→B│ │ user456→X│ │ user123→C│
-│ user789→D│ │ user456→Y│ │          │ │ (deleted)│
-└──────────┘ └──────────┘ └──────────┘ └──────────┘
+```graphviz dot compaction-process.svg
+digraph compaction_process {
+    rankdir=LR;
+    node [fontname="Helvetica", fontsize=10];
+    edge [fontname="Helvetica", fontsize=9];
+    compound=true;
 
-Compaction Process:
-1. Read all input SSTables in merge-sorted order
-2. For each partition key:
-   - Merge all versions
-   - Keep most recent timestamp for each cell
-   - Apply tombstones (filter deleted data)
-   - If tombstone is old enough, discard both tombstone and data
-3. Write merged data to new SSTable(s)
-4. Delete old SSTables
+    subgraph cluster_before {
+        label="Before Compaction";
+        style=filled;
+        fillcolor="#f8f9fa";
 
-After Compaction:
-┌─────────────────────────────────────┐
-│ New SSTable                          │
-│ user123→C (most recent)             │
-│ user456→X (merged from Y)           │
-│ user789→D                           │
-│ (user123 deletion applied)          │
-└─────────────────────────────────────┘
-```
+        s1 [label="SSTable 1\nuser123→A\nuser789→D", shape=box, style=filled, fillcolor="#e8f4f8"];
+        s2 [label="SSTable 2\nuser123→B\nuser456→Y", shape=box, style=filled, fillcolor="#e8f4f8"];
+        s3 [label="SSTable 3\nuser456→X", shape=box, style=filled, fillcolor="#e8f4f8"];
+        s4 [label="SSTable 4\nuser123→C\n(deleted)", shape=box, style=filled, fillcolor="#f8d7da"];
+    }
 
-```mermaid
-flowchart LR
-    subgraph BEFORE["Before Compaction"]
-        S1["SSTable 1<br/>user123→A"]
-        S2["SSTable 2<br/>user123→B"]
-        S3["SSTable 3<br/>user456→X"]
-        S4["SSTable 4<br/>user123→C"]
-    end
+    subgraph cluster_process {
+        label="Compaction Process";
+        style=filled;
+        fillcolor="#fff3cd";
 
-    S1 --> MERGE
-    S2 --> MERGE
-    S3 --> MERGE
-    S4 --> MERGE
+        merge [label="1. Merge-sort all SSTables\n2. Keep newest timestamp per cell\n3. Apply tombstones\n4. Discard expired tombstones", shape=box, style=filled, fillcolor="#ffeeba"];
+    }
 
-    MERGE["Merge + Filter"] --> NEW["New SSTable<br/>user123→C<br/>user456→X<br/>user789→D"]
+    subgraph cluster_after {
+        label="After Compaction";
+        style=filled;
+        fillcolor="#f8f9fa";
 
-    subgraph AFTER["After Compaction"]
-        NEW
-    end
+        new [label="New SSTable\nuser123→C (newest)\nuser456→X (merged)\nuser789→D\n(deletion applied)", shape=box, style=filled, fillcolor="#d4edda"];
+    }
+
+    s1 -> merge [lhead=cluster_process];
+    s2 -> merge [lhead=cluster_process];
+    s3 -> merge [lhead=cluster_process];
+    s4 -> merge [lhead=cluster_process];
+    merge -> new [ltail=cluster_process];
+}
 ```
 
 ### Benefits
@@ -287,6 +341,6 @@ nodetool setconcurrentcompactors 4
 - **[Leveled Compaction (LCS)](lcs.md)** - Optimized for read-heavy workloads
 - **[Time-Window Compaction (TWCS)](twcs.md)** - Designed for time-series data
 - **[Unified Compaction (UCS)](ucs.md)** - Adaptive strategy in Cassandra 5.0+
-- **[Compaction Operations](operations.md)** - Tuning, troubleshooting, and maintenance
+- **[Compaction Management](../../../../operations/compaction-management/index.md)** - Tuning, troubleshooting, and maintenance
 - **[Tombstones](../tombstones.md)** - How compaction removes deleted data
 - **[SSTable Reference](../sstables.md)** - SSTable file format

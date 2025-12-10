@@ -8,40 +8,49 @@ Prepared statements are the recommended method for executing CQL queries in prod
 
 Prepared statements separate query parsing from execution:
 
+### Simple Statement (every execution)
+
+```mermaid
+sequenceDiagram
+    participant App as Application
+    participant C as Cassandra
+
+    App->>C: SELECT * FROM users WHERE id = 'abc123'
+    Note right of C: Parse query
+    Note right of C: Validate schema
+    Note right of C: Create execution plan
+    Note right of C: Execute query
+    C-->>App: Results
 ```
-Simple Statement (every execution):
 
-Application                     Cassandra
-    │                              │
-    ├── "SELECT * FROM users     ──►│
-    │    WHERE id = 'abc123'"       │
-    │                              │ Parse query
-    │                              │ Validate schema
-    │                              │ Create execution plan
-    │                              │ Execute
-    │◄── Results ──────────────────┤
+### Prepared Statement
 
+**PREPARE phase (once):**
 
-Prepared Statement:
+```mermaid
+sequenceDiagram
+    participant App as Application
+    participant C as Cassandra
 
-PREPARE (once):
-Application                     Cassandra
-    │                              │
-    ├── "SELECT * FROM users     ──►│
-    │    WHERE id = ?"              │
-    │                              │ Parse query
-    │                              │ Validate schema
-    │                              │ Create execution plan
-    │◄── Prepared ID + metadata ───┤
+    App->>C: PREPARE: SELECT * FROM users WHERE id = ?
+    Note right of C: Parse query
+    Note right of C: Validate schema
+    Note right of C: Create execution plan
+    Note right of C: Cache plan with ID
+    C-->>App: Prepared ID + column metadata
+```
 
+**EXECUTE phase (every request):**
 
-EXECUTE (every request):
-Application                     Cassandra
-    │                              │
-    ├── Prepared ID + [values]   ──►│
-    │                              │ Look up plan
-    │                              │ Execute (no parsing)
-    │◄── Results ──────────────────┤
+```mermaid
+sequenceDiagram
+    participant App as Application
+    participant C as Cassandra
+
+    App->>C: EXECUTE: Prepared ID + [bound values]
+    Note right of C: Look up cached plan
+    Note right of C: Execute (no parsing)
+    C-->>App: Results
 ```
 
 ---
@@ -76,20 +85,29 @@ Prepared statements:
 
 Prepared statements enable token-aware routing because the driver knows the partition key structure:
 
-```
-Prepared Statement Metadata:
+```mermaid
+sequenceDiagram
+    participant App as Application
+    participant Driver as Driver
+    participant N1 as Node 1 (Replica)
+    participant N2 as Node 2
+    participant N3 as Node 3
 
-Query: SELECT * FROM users WHERE user_id = ? AND region = ?
+    Note over App,Driver: Preparation Phase
+    App->>Driver: Prepare: SELECT * FROM users<br/>WHERE user_id = ? AND region = ?
+    Driver->>N1: PREPARE request
+    N1-->>Driver: Prepared ID + Metadata:<br/>- user_id: partition key[0]<br/>- region: partition key[1]
 
-Metadata returned:
-  - Column 0: user_id (partition key component 0)
-  - Column 1: region (partition key component 1)
-  - Result columns: [id, name, email, ...]
-
-When executing:
-  Driver extracts: user_id='abc', region='us-east'
-  Calculates: token = murmur3(user_id, region)
-  Routes to: replica owning that token
+    Note over App,Driver: Execution Phase
+    App->>Driver: Execute with user_id='abc', region='us-east'
+    Note over Driver: Extract partition key values
+    Note over Driver: Calculate token = murmur3('abc', 'us-east')
+    Note over Driver: Token maps to Node 1
+    Driver->>N1: EXECUTE (direct to replica)
+    Note right of N2: Skipped - not a replica
+    Note right of N3: Skipped - not a replica
+    N1-->>Driver: Results
+    Driver-->>App: Results
 ```
 
 Without prepared statements, the driver cannot determine partition key values from embedded query strings.
@@ -132,25 +150,23 @@ The driver:
 
 If a node restarts or does not have the prepared statement, the driver automatically re-prepares:
 
-```
-Automatic Re-Preparation:
+```mermaid
+sequenceDiagram
+    participant App as Application
+    participant Driver as Driver
+    participant N2 as Node 2
 
-Execute on Node2 (never seen this prepared statement)
-        │
-        ▼
-    Node2 returns: UNPREPARED error
-        │
-        ▼
-    Driver sends: PREPARE request to Node2
-        │
-        ▼
-    Node2 returns: Prepared ID
-        │
-        ▼
-    Driver retries: EXECUTE request
-        │
-        ▼
-    Success
+    App->>Driver: Execute prepared statement
+    Driver->>N2: EXECUTE (Prepared ID + values)
+    Note right of N2: Statement not in cache
+    N2-->>Driver: UNPREPARED error
+    Driver->>N2: PREPARE (query string)
+    Note right of N2: Parse and cache
+    N2-->>Driver: Prepared ID
+    Driver->>N2: EXECUTE (Prepared ID + values)
+    Note right of N2: Execute query
+    N2-->>Driver: Results
+    Driver-->>App: Results
 ```
 
 This is transparent to the application.
@@ -208,20 +224,48 @@ bound.setString("middle_name", null);
 
 Drivers maintain a cache of prepared statements:
 
-```
-Driver Prepared Statement Cache:
+```graphviz dot prepared-statement-cache.svg
+digraph PreparedStatementCache {
+    fontname="Helvetica";
+    node [fontname="Helvetica", fontsize=10];
+    rankdir=TB;
 
-┌─────────────────────────────────────────────────────────────┐
-│                    Prepared Statement Cache                  │
-├─────────────────────────────────────────────────────────────┤
-│  Query String                    │ Prepared ID │ Metadata   │
-├──────────────────────────────────┼─────────────┼────────────┤
-│  SELECT * FROM users WHERE id=?  │ 0x8a3f...   │ [columns]  │
-│  INSERT INTO events (...) VALUES │ 0x2b7c...   │ [columns]  │
-│  UPDATE users SET name=? WHERE   │ 0x9d1e...   │ [columns]  │
-└──────────────────────────────────┴─────────────┴────────────┘
+    label="Driver Prepared Statement Cache";
+    labelloc="t";
+    fontsize=12;
 
-Cache lookup: O(1) by query string hash
+    cache [shape=none, label=<
+        <TABLE BORDER="1" CELLBORDER="1" CELLSPACING="0" CELLPADDING="6" BGCOLOR="#f8f9fa">
+            <TR>
+                <TD COLSPAN="3" BGCOLOR="#7B4B96"><FONT COLOR="white"><B>Prepared Statement Cache</B></FONT></TD>
+            </TR>
+            <TR>
+                <TD BGCOLOR="#e8e8e8"><B>Query String</B></TD>
+                <TD BGCOLOR="#e8e8e8"><B>Prepared ID</B></TD>
+                <TD BGCOLOR="#e8e8e8"><B>Metadata</B></TD>
+            </TR>
+            <TR>
+                <TD ALIGN="LEFT">SELECT * FROM users WHERE id=?</TD>
+                <TD><FONT FACE="monospace">0x8a3f...</FONT></TD>
+                <TD>[id, name, email]</TD>
+            </TR>
+            <TR>
+                <TD ALIGN="LEFT">INSERT INTO events (...) VALUES</TD>
+                <TD><FONT FACE="monospace">0x2b7c...</FONT></TD>
+                <TD>[partition_id, event_id]</TD>
+            </TR>
+            <TR>
+                <TD ALIGN="LEFT">UPDATE users SET name=? WHERE</TD>
+                <TD><FONT FACE="monospace">0x9d1e...</FONT></TD>
+                <TD>[name, id]</TD>
+            </TR>
+        </TABLE>
+    >];
+
+    lookup [shape=box, style="rounded,filled", fillcolor="#E8F4E8", label="Cache lookup: O(1)\nby query string hash"];
+
+    cache -> lookup [style=invis];
+}
 ```
 
 ### Application-Level Caching
@@ -265,19 +309,33 @@ The driver caches prepared statements, so re-preparing is not catastrophic, but 
 
 When schema changes, prepared statements may become invalid:
 
-```
-Schema Change Impact:
+```mermaid
+sequenceDiagram
+    participant App as Application
+    participant Driver as Driver
+    participant C as Cassandra
 
-Before:
-  Table: users (id UUID, name TEXT, email TEXT)
-  Prepared: SELECT * FROM users WHERE id = ?
+    Note over App,C: Initial State
+    App->>Driver: Prepare SELECT * FROM users WHERE id = ?
+    Driver->>C: PREPARE request
+    C-->>Driver: Prepared ID + metadata (id, name, email)
+    Driver-->>App: PreparedStatement
 
-Schema change:
-  ALTER TABLE users DROP email;
+    Note over App,C: Schema Change Occurs
+    rect rgb(255, 240, 240)
+        Note over C: ALTER TABLE users DROP email
+    end
 
-After:
-  Prepared statement returns different columns
-  Driver may need to re-prepare
+    Note over App,C: Next Execution
+    App->>Driver: Execute with bound values
+    Driver->>C: EXECUTE request
+    Note right of C: Detects schema mismatch
+    C-->>Driver: Schema changed notification
+    Driver->>C: Re-PREPARE request
+    C-->>Driver: New Prepared ID + metadata (id, name)
+    Driver->>C: EXECUTE with new ID
+    C-->>Driver: Results
+    Driver-->>App: Results (without email column)
 ```
 
 ### Handling Schema Changes
@@ -322,24 +380,24 @@ Cassandra limits prepared statements per node:
 
 When cache is full, least-recently-used statements are evicted:
 
-```
-Cache Eviction:
+```mermaid
+sequenceDiagram
+    participant Driver as Driver
+    participant C as Cassandra
 
-Cache full (10MB used)
-        │
-        ▼
-New PREPARE request arrives
-        │
-        ▼
-Evict LRU prepared statement
-        │
-        ▼
-Add new prepared statement
-        │
-        ▼
-Next EXECUTE of evicted statement:
-  → UNPREPARED error
-  → Driver re-prepares automatically
+    Note over C: Cache full (10MB)
+    Driver->>C: PREPARE new statement
+    Note right of C: Evict LRU statement
+    Note right of C: Cache new statement
+    C-->>Driver: Prepared ID
+
+    Note over Driver,C: Later: Execute evicted statement
+    Driver->>C: EXECUTE (evicted statement ID)
+    C-->>Driver: UNPREPARED error
+    Driver->>C: PREPARE (query string)
+    C-->>Driver: New Prepared ID
+    Driver->>C: EXECUTE (new ID)
+    C-->>Driver: Results
 ```
 
 ### Avoiding Cache Churn

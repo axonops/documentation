@@ -1182,12 +1182,20 @@ html .md-footer-meta.md-typeset a:hover {
 /* ----------------------------------------------------------------------------
    CQL SYNTAX BLOCKS - Italics for placeholders
    ---------------------------------------------------------------------------- */
-.md-typeset code.language-cqlsyntax em {
+/* Fenced code blocks */
+.md-typeset .highlight code em {
   font-style: italic;
-  color: #7dd3fc;
+  color: #60a5fa;
 }
 
-[data-md-color-scheme="slate"] .md-typeset code.language-cqlsyntax em {
-  color: #7dd3fc;
+/* Inline code (tables, paragraphs) */
+.md-typeset code em {
+  font-style: italic;
+  color: #60a5fa;
+}
+
+[data-md-color-scheme="slate"] .md-typeset .highlight code em,
+[data-md-color-scheme="slate"] .md-typeset code em {
+  color: #60a5fa;
 }
 

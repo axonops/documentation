@@ -8,23 +8,54 @@ The load balancing policy determines which nodes receive requests. This policy d
 
 For each request, the load balancing policy returns an ordered list of nodes to try:
 
-```
-Load Balancing Query Plan:
+```graphviz dot load-balancing-query-plan.svg
+digraph QueryPlan {
+    fontname="Helvetica";
+    node [fontname="Helvetica", fontsize=10];
+    edge [fontname="Helvetica", fontsize=9];
+    rankdir=TB;
 
-Request: SELECT * FROM users WHERE user_id = 'abc123'
+    label="Load Balancing Query Plan";
+    labelloc="t";
+    fontsize=12;
 
-Load Balancing Policy evaluates:
-  1. Which nodes are replicas for this partition key?
-  2. Which nodes are in the local datacenter?
-  3. Which nodes are currently healthy?
-  4. How should nodes be ordered?
+    request [shape=box, style="rounded,filled", fillcolor="#E8E8E8",
+        label="Request:\nSELECT * FROM users\nWHERE user_id = 'abc123'"];
 
-Returns query plan: [Node2, Node5, Node1, Node3, Node6]
-                     │      │      └─────────────────┘
-                     │      │         Non-replicas
-                     │      │         (fallback only)
-                     └──────┴─────────────────────────
-                           Replicas (preferred)
+    policy [shape=box, style="rounded,filled", fillcolor="#FFE8CC",
+        label="Load Balancing Policy Evaluates:\n1. Which nodes are replicas?\n2. Which nodes are in local DC?\n3. Which nodes are healthy?\n4. How to order nodes?"];
+
+    subgraph cluster_plan {
+        label="Query Plan (ordered)";
+        style="rounded,filled";
+        fillcolor="#E8F4E8";
+        color="#99CC99";
+
+        subgraph cluster_replicas {
+            label="Replicas (preferred)";
+            style="rounded,filled";
+            fillcolor="#D4EDDA";
+            color="#28A745";
+
+            n2 [shape=box, style="rounded,filled", fillcolor="#7B4B96", fontcolor="white", label="1. Node2"];
+            n5 [shape=box, style="rounded,filled", fillcolor="#7B4B96", fontcolor="white", label="2. Node5"];
+        }
+
+        subgraph cluster_fallback {
+            label="Non-replicas (fallback)";
+            style="rounded,filled";
+            fillcolor="#FFF3CD";
+            color="#FFC107";
+
+            n1 [shape=box, style="rounded,filled", fillcolor="#6C757D", fontcolor="white", label="3. Node1"];
+            n3 [shape=box, style="rounded,filled", fillcolor="#6C757D", fontcolor="white", label="4. Node3"];
+            n6 [shape=box, style="rounded,filled", fillcolor="#6C757D", fontcolor="white", label="5. Node6"];
+        }
+    }
+
+    request -> policy;
+    policy -> n2 [style=invis];
+}
 ```
 
 The driver sends the request to the first node. If that fails and the retry policy allows retry, the next node in the list is tried.
@@ -35,23 +66,47 @@ The driver sends the request to the first node. If that fails and the retry poli
 
 Token-aware load balancing sends requests directly to replica nodes, avoiding an extra network hop:
 
-```
-Without Token-Aware (coordinator must forward):
+```graphviz dot token-aware-comparison.svg
+digraph TokenAware {
+    fontname="Helvetica";
+    node [fontname="Helvetica", fontsize=10];
+    edge [fontname="Helvetica", fontsize=9];
+    rankdir=LR;
+    newrank=true;
 
-Application ──► Node1 (coordinator) ──► Node3 (replica)
-                       │                     │
-                       │◄────────────────────┘
-               ◄───────┘
+    label="Token-Aware Routing Comparison";
+    labelloc="t";
+    fontsize=12;
 
-Latency: 2 network hops
+    subgraph cluster_without {
+        label="Without Token-Aware\n(2 network hops)";
+        style="rounded,filled";
+        fillcolor="#FFE8E8";
+        color="#CC9999";
 
+        app1 [shape=box, style="rounded,filled", fillcolor="#E8E8E8", label="Application"];
+        coord [shape=box, style="rounded,filled", fillcolor="#FFE8CC", label="Node1\n(coordinator)"];
+        replica1 [shape=box, style="rounded,filled", fillcolor="#7B4B96", fontcolor="white", label="Node3\n(coordinator/replica)"];
 
-With Token-Aware (direct to replica):
+        app1 -> coord [label="1. request"];
+        coord -> replica1 [label="2. forward"];
+        replica1 -> coord [label="3. response", style=dashed];
+        coord -> app1 [label="4. response", style=dashed];
+    }
 
-Application ──► Node3 (replica)
-               ◄───────┘
+    subgraph cluster_with {
+        label="With Token-Aware\n(1 network hop)";
+        style="rounded,filled";
+        fillcolor="#E8F4E8";
+        color="#99CC99";
 
-Latency: 1 network hop
+        app2 [shape=box, style="rounded,filled", fillcolor="#E8E8E8", label="Application"];
+        replica2 [shape=box, style="rounded,filled", fillcolor="#7B4B96", fontcolor="white", label="Node3\n(replica)"];
+
+        app2 -> replica2 [label="1. request"];
+        replica2 -> app2 [label="2. response", style=dashed];
+    }
+}
 ```
 
 ### Requirements for Token-Aware Routing
@@ -81,31 +136,52 @@ session.execute(simple);  // Cannot extract partition key, uses round-robin
 
 In multi-datacenter deployments, the load balancing policy must be configured with the local datacenter:
 
-```
-Datacenter-Aware Routing:
+```graphviz dot datacenter-aware-routing.svg
+digraph DatacenterAware {
+    fontname="Helvetica";
+    node [fontname="Helvetica", fontsize=10];
+    edge [fontname="Helvetica", fontsize=9];
+    rankdir=TB;
+    compound=true;
 
-┌─────────────────────────────────────────────────────────────────────┐
-│                         Application                                  │
-│                    (configured: local_dc = "dc1")                   │
-└───────────────────────────────┬─────────────────────────────────────┘
-                                │
-            ┌───────────────────┼───────────────────┐
-            ▼                   │                   ▼
-    ┌───────────────┐           │           ┌───────────────┐
-    │      DC1      │           │           │      DC2      │
-    │   (local)     │           │           │   (remote)    │
-    │               │           │           │               │
-    │  ┌─────────┐  │  Requests │           │  ┌─────────┐  │
-    │  │ Node1   │◄─┼───────────┘           │  │ Node4   │  │
-    │  │ Node2   │  │                       │  │ Node5   │  │
-    │  │ Node3   │  │                       │  │ Node6   │  │
-    │  └─────────┘  │                       │  └─────────┘  │
-    │               │                       │               │
-    │  Latency: 1ms │                       │  Latency: 50ms│
-    └───────────────┘                       └───────────────┘
+    label="Datacenter-Aware Routing";
+    labelloc="t";
+    fontsize=12;
 
-Local DC nodes always preferred.
-Remote DC used only if all local nodes unavailable.
+    app [shape=box, style="rounded,filled", fillcolor="#E8E8E8",
+        label="Application\n(configured: local_dc = \"dc1\")"];
+
+    subgraph cluster_dc1 {
+        label="DC1 (local)\nLatency: ~1ms";
+        style="rounded,filled";
+        fillcolor="#E8F4E8";
+        color="#28A745";
+
+        n1 [shape=box, style="rounded,filled", fillcolor="#7B4B96", fontcolor="white", label="Node1"];
+        n2 [shape=box, style="rounded,filled", fillcolor="#7B4B96", fontcolor="white", label="Node2"];
+        n3 [shape=box, style="rounded,filled", fillcolor="#7B4B96", fontcolor="white", label="Node3"];
+    }
+
+    subgraph cluster_dc2 {
+        label="DC2 (remote)\nLatency: ~50ms";
+        style="rounded,filled";
+        fillcolor="#FFF3CD";
+        color="#FFC107";
+
+        n4 [shape=box, style="rounded,filled", fillcolor="#6C757D", fontcolor="white", label="Node4"];
+        n5 [shape=box, style="rounded,filled", fillcolor="#6C757D", fontcolor="white", label="Node5"];
+        n6 [shape=box, style="rounded,filled", fillcolor="#6C757D", fontcolor="white", label="Node6"];
+    }
+
+    app -> n1 [label="requests", lhead=cluster_dc1, penwidth=2];
+    app -> n4 [label="fallback only", style=dashed, lhead=cluster_dc2];
+
+    note [shape=box, style="rounded,filled", fillcolor="#F8F9FA",
+        label="Local DC nodes always preferred.\nRemote DC used only if all local nodes unavailable."];
+
+    n3 -> note [style=invis];
+    n6 -> note [style=invis];
+}
 ```
 
 ### Configuration
@@ -181,17 +257,58 @@ This is the default and recommended policy for most production deployments.
 
 Some load balancing policies consider rack placement to improve fault tolerance:
 
-```
-Rack-Aware Replica Selection:
+```graphviz dot rack-awareness.svg
+digraph RackAware {
+    fontname="Helvetica";
+    node [fontname="Helvetica", fontsize=10];
+    edge [fontname="Helvetica", fontsize=9];
+    rankdir=TB;
 
-Replicas for partition: [Node1 (rack-a), Node2 (rack-b), Node3 (rack-c)]
+    label="Rack-Aware Replica Selection";
+    labelloc="t";
+    fontsize=12;
 
-If application is in rack-a:
-  Preferred order: [Node1, Node2, Node3]
-                    └─ Same rack first (lowest latency)
+    app [shape=box, style="rounded,filled", fillcolor="#E8E8E8",
+        label="Application\n(in rack-a)"];
 
-If rack awareness disabled:
-  Order may be: [Node2, Node1, Node3] (arbitrary)
+    subgraph cluster_racks {
+        label="Replicas for partition";
+        style="rounded,filled";
+        fillcolor="#F8F9FA";
+
+        subgraph cluster_racka {
+            label="rack-a";
+            style="rounded,filled";
+            fillcolor="#E8F4E8";
+            color="#28A745";
+
+            n1 [shape=box, style="rounded,filled", fillcolor="#7B4B96", fontcolor="white",
+                label="Node1\n(1st choice)"];
+        }
+
+        subgraph cluster_rackb {
+            label="rack-b";
+            style="rounded,filled";
+            fillcolor="#FFF3CD";
+
+            n2 [shape=box, style="rounded,filled", fillcolor="#6C757D", fontcolor="white",
+                label="Node2\n(2nd choice)"];
+        }
+
+        subgraph cluster_rackc {
+            label="rack-c";
+            style="rounded,filled";
+            fillcolor="#FFF3CD";
+
+            n3 [shape=box, style="rounded,filled", fillcolor="#6C757D", fontcolor="white",
+                label="Node3\n(3rd choice)"];
+        }
+    }
+
+    app -> n1 [label="same rack\n(lowest latency)", penwidth=2];
+    app -> n2 [style=dashed];
+    app -> n3 [style=dashed];
+}
 ```
 
 Rack awareness provides marginal latency improvement when:
@@ -216,12 +333,30 @@ Load balancing policies typically exclude nodes that are:
 
 Some drivers offer latency-aware policies that track response times and prefer faster nodes:
 
-```
-Latency Tracking:
+```graphviz dot latency-aware.svg
+digraph LatencyAware {
+    fontname="Helvetica";
+    node [fontname="Helvetica", fontsize=10];
+    edge [fontname="Helvetica", fontsize=9];
+    rankdir=LR;
 
-Node1: avg_latency = 2ms   ← Preferred
-Node2: avg_latency = 5ms
-Node3: avg_latency = 15ms  ← Deprioritized (likely overloaded or degraded)
+    label="Latency-Aware Node Selection";
+    labelloc="t";
+    fontsize=12;
+
+    driver [shape=box, style="rounded,filled", fillcolor="#E8E8E8", label="Driver\n(tracks latency)"];
+
+    n1 [shape=box, style="rounded,filled", fillcolor="#28A745", fontcolor="white",
+        label="Node1\navg: 2ms\n(preferred)"];
+    n2 [shape=box, style="rounded,filled", fillcolor="#FFC107", fontcolor="black",
+        label="Node2\navg: 5ms"];
+    n3 [shape=box, style="rounded,filled", fillcolor="#DC3545", fontcolor="white",
+        label="Node3\navg: 15ms\n(deprioritized)"];
+
+    driver -> n1 [label="1st", penwidth=2];
+    driver -> n2 [label="2nd"];
+    driver -> n3 [label="3rd", style=dashed];
+}
 ```
 
 Considerations:

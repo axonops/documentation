@@ -2,7 +2,7 @@
 
 Counting is among the most deceptively simple operations in computing. On a single machine, incrementing a counter is trivial: read the current value, add one, write the result. This read-modify-write cycle executes atomically, and the counter maintains perfect accuracy regardless of how many clients perform concurrent increments.
 
-Distributed systems shatter this simplicity. When data is replicated across multiple nodes—each capable of accepting writes independently—the read-modify-write pattern breaks down fundamentally. Two clients incrementing "simultaneously" may each read the same value, compute the same result, and write it to different replicas. When those replicas synchronize, one increment vanishes. The system has lost information that was successfully acknowledged to a client.
+Distributed systems shatter this simplicity. When data is replicated across multiple nodes, each capable of accepting writes independently—the read-modify-write pattern breaks down fundamentally. Two clients incrementing "simultaneously" may each read the same value, compute the same result, and write it to different replicas. When those replicas synchronize, one increment vanishes. The system has lost information that was successfully acknowledged to a client.
 
 This problem has no trivial solution. Strong consistency mechanisms like distributed locks or consensus protocols can serialize all counter operations, but at the cost of availability and latency that make them impractical for high-throughput counting scenarios. The challenge is achieving accurate counting while preserving the availability and partition tolerance that define distributed databases.
 

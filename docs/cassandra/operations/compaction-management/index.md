@@ -1,4 +1,4 @@
-# Compaction Operations
+# Compaction Management
 
 This document covers compaction configuration, tuning, strategy changes, and troubleshooting procedures.
 
@@ -520,9 +520,9 @@ cqlsh -e "SELECT compaction FROM system_schema.tables
 
 ## Related Documentation
 
-- **[Compaction Overview](index.md)** - Concepts and strategy selection
-- **[STCS](stcs.md)** - Size-Tiered Compaction Strategy
-- **[LCS](lcs.md)** - Leveled Compaction Strategy
-- **[TWCS](twcs.md)** - Time-Window Compaction Strategy
-- **[UCS](ucs.md)** - Unified Compaction Strategy
-- **[Tombstones](../tombstones.md)** - gc_grace_seconds and tombstone handling
+- **[Compaction Overview](../../architecture/storage-engine/compaction/index.md)** - Concepts and strategy selection
+- **[STCS](../../architecture/storage-engine/compaction/stcs.md)** - Size-Tiered Compaction Strategy
+- **[LCS](../../architecture/storage-engine/compaction/lcs.md)** - Leveled Compaction Strategy
+- **[TWCS](../../architecture/storage-engine/compaction/twcs.md)** - Time-Window Compaction Strategy
+- **[UCS](../../architecture/storage-engine/compaction/ucs.md)** - Unified Compaction Strategy
+- **[Tombstones](../../architecture/storage-engine/tombstones.md)** - gc_grace_seconds and tombstone handling

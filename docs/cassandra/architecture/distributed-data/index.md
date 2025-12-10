@@ -581,6 +581,9 @@ Cassandra's tunable consistency allows choosing different PACELC positions for d
 | [Replication](replication.md) | Strategies, snitches, replication factor |
 | [Consistency](consistency.md) | Consistency levels, guarantees, LWT |
 | [Replica Synchronization](replica-synchronization.md) | Hinted handoff, read reconciliation, Merkle trees |
+| [Secondary Index Queries](secondary-index-queries.md) | Distributed query execution with indexes |
+| [Materialized Views](materialized-views.md) | Distributed MV coordination and consistency challenges |
+| [Data Streaming](streaming.md) | Bootstrap, decommission, repair, and hinted handoff streaming |
 | [Counters](counters.md) | Distributed counting, CRDTs, counter operations |
 
 ---
@@ -589,4 +592,5 @@ Cassandra's tunable consistency allows choosing different PACELC positions for d
 
 - **[Gossip Protocol](../gossip/index.md)** - Cluster membership and failure detection
 - **[Storage Engine](../storage-engine/index.md)** - How data is stored on each node
+- **[Indexes](../storage-engine/indexes/index.md)** - Secondary index types and selection
 - **[Operations](../../operations/index.md)** - Maintenance and operational procedures

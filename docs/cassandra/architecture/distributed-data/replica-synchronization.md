@@ -26,35 +26,6 @@ Hinted handoff handles writes to temporarily unavailable replicas by storing the
 
 ### How It Works
 
-```
-Scenario: N3 is temporarily down during a QUORUM write
-
-Coordinator
-   │
-   ├──► N1: Write succeeds ✓
-   ├──► N2: Write succeeds ✓
-   └──► N3: Connection failed ✗
-
-QUORUM (2) is met, return SUCCESS to client.
-
-But what about N3?
-
-Coordinator stores a "hint":
-┌─────────────────────────────────────────────────┐
-│ HINT for N3:                                     │
-│   Target: N3                                     │
-│   Data: INSERT INTO users (id, name)            │
-│         VALUES (123, 'Alice')                    │
-│   Timestamp: 2024-01-15 10:30:00                │
-└─────────────────────────────────────────────────┘
-
-When N3 comes back online:
-1. Coordinator detects N3 is available
-2. Sends hint to N3
-3. N3 applies the write
-4. Coordinator deletes the hint
-```
-
 ```mermaid
 sequenceDiagram
     participant C as Coordinator
@@ -267,42 +238,19 @@ Scenarios where hinted handoff and read reconciliation are insufficient:
 
 Merkle trees, introduced by Ralph Merkle ([Merkle, R., 1987, "A Digital Signature Based on a Conventional Encryption Function"](https://link.springer.com/chapter/10.1007/3-540-48184-2_32)), enable efficient comparison of large datasets by hierarchically hashing data segments. When two replicas exchange only their root hashes, a mismatch indicates divergence somewhere in the dataset. By recursively comparing child hashes, the algorithm identifies exactly which segments differ—requiring only O(log n) comparisons rather than comparing every record.
 
-```
-Synchronization process:
-
-1. Build Merkle Trees
-   Each replica builds a hash tree of its data:
-
-   Root Hash
-      ├── Hash(range 1-1000)
-      │     ├── Hash(range 1-500)
-      │     └── Hash(range 501-1000)
-      └── Hash(range 1001-2000)
-            ├── Hash(range 1001-1500)
-            └── Hash(range 1501-2000)
-
-2. Compare Trees
-   Coordinator compares Merkle trees from replicas.
-   Differences identified at leaf level.
-
-3. Stream Differences
-   Only differing ranges are streamed between replicas.
-   Much more efficient than full data transfer.
-```
-
 ```mermaid
 flowchart TB
-    subgraph MT["Merkle Tree"]
-        ROOT["Root Hash"] --> H1["Hash 1-1000"]
-        ROOT --> H2["Hash 1001-2000"]
-        H1 --> H1A["Hash 1-500"]
-        H1 --> H1B["Hash 501-1000"]
-        H2 --> H2A["Hash 1001-1500"]
-        H2 --> H2B["Hash 1501-2000"]
+    subgraph MT["Build Merkle Tree - Each replica builds a hash tree"]
+        H1["Hash 1-1000"] --> ROOT["Root Hash"]
+        H2["Hash 1001-2000"] --> ROOT
+        H1A["Hash 1-500"] --> H1
+        H1B["Hash 501-1000"] --> H1
+        H2A["Hash 1001-1500"] --> H2
+        H2B["Hash 1501-2000"] --> H2
     end
 
-    R1["Replica 1 Tree"] -->|"Compare"| COMP["Coordinator"]
-    R2["Replica 2 Tree"] -->|"Compare"| COMP
+    R1["Replica 1 Tree"] -->|"Compare Hash"| COMP["Coordinator"]
+    R2["Replica 2 Tree"] -->|"Compare Hash"| COMP
     COMP -->|"Mismatch in range 501-1000"| STREAM["Stream only differing data"]
 ```
 

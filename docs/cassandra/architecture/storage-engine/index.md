@@ -1,8 +1,13 @@
 # Storage Engine
 
-The storage engine is the core database component on each Cassandra node, responsible for persisting data to disk and retrieving it efficiently. Cassandra's storage engine is based on the Log-Structured Merge-tree (LSM-tree) design described in Google's Bigtable paper ([Chang et al., 2006, "Bigtable: A Distributed Storage System for Structured Data"](https://static.googleusercontent.com/media/research.google.com/en//archive/bigtable-osdi06.pdf)), adapted for Cassandra's distributed architecture.
+This section describes the internal operations of a single Cassandra node. While Cassandra is a distributed database, each node operates an independent storage engine that manages local data persistence and retrieval. The distributed aspects—replication, consistency coordination, and cross-node communication—are covered in [Distributed Data](../distributed-data/index.md).
+
+The storage engine is the core database component responsible for persisting data to disk and retrieving it efficiently. Cassandra's storage engine is based on the Log-Structured Merge-tree (LSM-tree) design described in Google's Bigtable paper ([Chang et al., 2006, "Bigtable: A Distributed Storage System for Structured Data"](https://static.googleusercontent.com/media/research.google.com/en//archive/bigtable-osdi06.pdf)), adapted for Cassandra's requirements.
 
 Unlike traditional relational databases that update data in place, Cassandra's storage engine treats all writes as sequential appends. This design choice optimizes for write throughput and enables consistent performance regardless of dataset size.
+
+!!! note "Node-Local Focus"
+    All operations described in this section—commit log writes, memtable management, SSTable creation, compaction, and indexing—occur independently on each node. A write operation arriving at a node is processed entirely by that node's storage engine, with no coordination with other nodes during the local persistence phase.
 
 ---
 
@@ -172,13 +177,16 @@ See [Compaction](compaction/index.md) for strategy details.
 | [Read Path](read-path.md) | Bloom filters, indexes, caching |
 | [SSTable Reference](sstables.md) | File components and format |
 | [Tombstones](tombstones.md) | Deletion markers and gc_grace |
-| [Memory Management](../memory-management/memory.md) | Heap, off-heap, and page cache |
 | [Compaction](compaction/index.md) | SSTable merge strategies and operations |
+| [Indexes](indexes/index.md) | Secondary indexes, SASI, and SAI |
+| [Materialized Views](materialized-views.md) | Automatic denormalization |
 
 ---
 
 ## Related Documentation
 
 - **[Compaction](compaction/index.md)** - SSTable merge strategies
+- **[Indexes](indexes/index.md)** - Secondary indexes, SASI, and SAI
+- **[Materialized Views](materialized-views.md)** - Automatic denormalization
 - **[Replication](../distributed-data/replication.md)** - Data distribution
 - **[Consistency](../distributed-data/consistency.md)** - Read and write consistency levels

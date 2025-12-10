@@ -1,6 +1,6 @@
 # CQL Functions Reference
 
-CQL includes built-in functions for common operations: generating UUIDs, working with timestamps, computing aggregates. The most useful ones—`now()` for time-based UUIDs, `token()` for understanding data distribution, `toTimestamp()` for converting between time formats—show up constantly in production schemas.
+CQL includes built-in functions for common operations: generating UUIDs, working with timestamps, computing aggregates. The most useful ones `now()` for time-based UUIDs, `token()` for understanding data distribution, `toTimestamp()` for converting between time formats show up constantly in production schemas.
 
 Aggregates deserve a warning: `SELECT COUNT(*) FROM users` looks innocent, but without a partition key it scans the entire cluster. That is fine for a thousand rows; it will timeout with a billion. Aggregates work efficiently when scoped to a partition.
 

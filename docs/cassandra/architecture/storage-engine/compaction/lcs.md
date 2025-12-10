@@ -2,63 +2,310 @@
 
 LCS organizes SSTables into levels where each level is 10x larger than the previous. Within each level (except L0), SSTables have non-overlapping token ranges, providing predictable read performance at the cost of higher write amplification.
 
-## How LCS Works
+---
+
+## Background and History
+
+### Origins
+
+Leveled Compaction Strategy derives from the LSM-tree (Log-Structured Merge-tree) compaction approach pioneered by Google's LevelDB (2011) and later adopted by RocksDB. The strategy was introduced to Cassandra in version 1.0 (October 2011) to address read amplification problems inherent in the original Size-Tiered Compaction Strategy.
+
+The core insight from LevelDB was that organizing SSTables into levels with non-overlapping key ranges within each level dramatically reduces the number of files that must be consulted during reads.
+
+### Design Motivation
+
+STCS groups SSTables by size and compacts similar-sized files together. While this minimizes write amplification, it creates a fundamental problem: any partition key might exist in any SSTable. A point query must potentially check every SSTable.
+
+LCS inverts this trade-off. By ensuring that SSTables within each level (except L0) cover disjoint key ranges, a point query touches at most one SSTable per level. The cost is significantly higher write amplification—data may be rewritten 10× or more as it progresses through levels.
+
+| Aspect | STCS | LCS |
+|--------|------|-----|
+| SSTable organization | By size similarity | By key range per level |
+| Read amplification | High (check many SSTables) | Low (one per level) |
+| Write amplification | Low (~4-10×) | High (~10× per level) |
+| Space amplification | Medium-High | Low |
+| Compaction predictability | Variable | Consistent |
+
+---
+
+## How LCS Works in Theory
+
+### Level Structure
+
+LCS organizes SSTables into numbered levels (L0, L1, L2, ...) with specific properties:
+
+**Level 0 (L0):**
+
+- Receives memtable flushes directly
+- SSTables may have overlapping key ranges
+- Maximum 4 SSTables before triggering compaction to L1
+- Acts as a buffer between memory and the leveled structure
+
+**Level 1+ (L1, L2, L3, ...):**
+
+- SSTables have non-overlapping, contiguous key ranges
+- Each level has a target total size: L(n) = L(n-1) × fanout_size
+- Default fanout is 10, so L2 is 10× L1, L3 is 10× L2, etc.
+- Individual SSTable size is fixed (default 160MB)
+
+```graphviz dot lcs-levels2.svg
+digraph CassandraLCS {
+    rankdir=TB;
+    labelloc="t";
+    label="Cassandra Leveled Compaction Strategy (LCS)";
+
+    bgcolor="transparent";
+    fontname="Helvetica";
+
+    // Default SSTable style
+    node [
+        shape=box
+        style="rounded,filled"
+        fillcolor="#7B4B96"
+        fontcolor="white"
+        fontname="Helvetica"
+        height=0.5
+    ];
+
+    // ----- Level 0 -----
+    subgraph cluster_L0 {
+        label="Level 0 (L0)  |  many small, overlapping SSTables";
+        labelloc="t";
+        fontsize=12;
+        style="rounded,filled";
+        color="#CC99CC";
+        fillcolor="#F9E5FF";
+
+        // small SSTables, same width
+        L0_1 [label="SSTable", width=0.9];
+        L0_2 [label="SSTable", width=0.9];
+        L0_3 [label="SSTable", width=0.9];
+        L0_4 [label="SSTable", width=0.9];
+        L0_5 [label="SSTable", width=0.9];
+        L0_6 [label="SSTable", width=0.9];
+
+        { rank = same; L0_1; L0_2; L0_3; L0_4; L0_5; L0_6; }
+    }
+
+    // ----- Level 1 -----
+    subgraph cluster_L1 {
+        label="Level 1 (L1)  |  non-overlapping by key range, total size ≈ L0";
+        labelloc="t";
+        fontsize=12;
+        style="rounded,filled";
+        color="#C58FC5";
+        fillcolor="#F5DCF9";
+
+        // medium SSTables
+        L1_1 [label="SSTable\n[key A–M]", width=1.8];
+        L1_2 [label="SSTable\n[key N–T]", width=1.8];
+        L1_3 [label="SSTable\n[key U–Z]", width=1.8];
+
+        { rank = same; L1_1; L1_2; L1_3; }
+    }
+
+    // ----- Level 2 -----
+    subgraph cluster_L2 {
+        label="Level 2 (L2)  |  more total data, still size-balanced with L1";
+        labelloc="t";
+        fontsize=12;
+        style="rounded,filled";
+        color="#B883B8";
+        fillcolor="#F2D3F5";
+
+        // larger SSTables (wider boxes)
+        L2_1 [label="SSTable\n[key A–L]", width=2.6];
+        L2_2 [label="SSTable\n[key M–Z]", width=2.6];
+
+        { rank = same; L2_1; L2_2; }
+    }
+
+    // ----- Compaction flow arrows -----
+
+    // use invisible helper nodes to draw arrows between bands
+    edge [fontname="Helvetica", fontsize=10, color="#555555"];
+
+    // L0 -> L1 compaction (many small to fewer larger)
+    L0_1 -> L1_1 [label="compaction\n(merge overlapping ranges)"];
+    L0_2 -> L1_1;
+    L0_3 -> L1_2;
+    L0_4 -> L1_2;
+    L0_5 -> L1_3;
+    L0_6 -> L1_3;
+
+    // L1 -> L2 compaction (promoting data to next level)
+    L1_1 -> L2_1 [label="compaction\n(when L1 size > target)"];
+    L1_2 -> L2_1;
+    L1_3 -> L2_2;
+
+    // ----- Side note -----
+    Note [shape=note,
+          style="filled",
+          fillcolor="#FFFFFF",
+          fontcolor="#333333",
+          label="LCS properties:\n• Only L0 has overlapping SSTables\n• Each level has a target size\n• Higher levels have larger, fewer files\n  with disjoint key ranges"];
+
+    L2_2 -> Note [style=dotted, arrowhead=none];
+}
+```
+
+### Compaction Mechanics
+
+**L0 → L1 Compaction:**
+
+When L0 accumulates 4 SSTables, compaction selects all L0 files plus all L1 files whose key ranges overlap with any L0 file. These are merged, and the output is written as new L1 SSTables with non-overlapping ranges.
+
+**L(n) → L(n+1) Compaction:**
+
+When a level exceeds its size target, the compaction process:
+
+1. Selects one SSTable from L(n)
+2. Finds all overlapping SSTables in L(n+1)
+3. Merges and rewrites to L(n+1)
+4. Deletes source SSTables
+
+This "promote one, merge with overlapping" approach ensures that each compaction is bounded in scope while maintaining the non-overlapping invariant.
+
+### Write Amplification Calculation
+
+Write amplification in LCS is determined by how many times data is rewritten as it moves through levels:
 
 ```
-┌─────────────────────────────────────────────────────────────────────┐
-│ LEVELED COMPACTION                                                   │
-│                                                                      │
-│ L0 (memtable flushes, overlapping):                                 │
-│ ┌────┐ ┌────┐ ┌────┐ ┌────┐                                        │
-│ │    │ │    │ │    │ │    │  Max 4 before compaction to L1         │
-│ └────┘ └────┘ └────┘ └────┘                                        │
-│      All token ranges overlap                                       │
-│      │                                                              │
-│      │ Compact L0 → L1                                              │
-│      ▼                                                              │
-│ L1 (~160MB total, each SSTable ~160MB, non-overlapping):            │
-│ ┌──────────┬──────────┬──────────┬──────────┬──────────┐           │
-│ │ tokens   │ tokens   │ tokens   │ tokens   │ tokens   │           │
-│ │ 0-20%    │ 20-40%   │ 40-60%   │ 60-80%   │ 80-100%  │           │
-│ └──────────┴──────────┴──────────┴──────────┴──────────┘           │
-│      │                                                              │
-│      │ When L1 exceeds size limit, promote to L2                   │
-│      ▼                                                              │
-│ L2 (~1.6GB total, each SSTable ~160MB, non-overlapping):            │
-│ ┌────┬────┬────┬────┬────┬────┬────┬────┬────┬────┐ ... ×10       │
-│ │    │    │    │    │    │    │    │    │    │    │                │
-│ └────┴────┴────┴────┴────┴────┴────┴────┴────┴────┘                │
-│                                                                      │
-│ L3 (~16GB total)                                                    │
-│ L4 (~160GB total)                                                   │
-│ ...                                                                 │
-└─────────────────────────────────────────────────────────────────────┘
+Write path for one piece of data:
+1. Written to memtable (memory)
+2. Flushed to L0 (1 write)
+3. Compacted L0 → L1 (1 write)
+4. Compacted L1 → L2 (potentially 10 writes, merging with ~10 L2 files)
+5. Compacted L2 → L3 (potentially 10 writes)
+...
+
+Worst case: 1 + fanout × number_of_levels
+With fanout=10 and 5 levels: ~50× write amplification
 ```
 
-```mermaid
-flowchart TB
-    subgraph L0["L0 (Overlapping)"]
-        direction LR
-        A1["SST"] & A2["SST"] & A3["SST"] & A4["SST"]
-    end
+### Read Amplification Guarantee
 
-    L0 -->|"Compact"| L1
+The leveled structure provides bounded read amplification:
 
-    subgraph L1["L1 (~160MB, Non-overlapping)"]
-        direction LR
-        B1["0-20%"] --> B2["20-40%"] --> B3["40-60%"] --> B4["60-80%"] --> B5["80-100%"]
-    end
-
-    L1 -->|"Promote when full"| L2
-
-    subgraph L2["L2 (~1.6GB, 10x L1)"]
-        direction LR
-        C["10 non-overlapping SSTables"]
-    end
-
-    L2 -->|"Promote"| L3["L3 (~16GB)"]
-    L3 -->|"Promote"| L4["L4 (~160GB)"]
 ```
+Point query for partition key K:
+1. Check all L0 SSTables (max 4)
+2. Check exactly 1 SSTable in L1 (non-overlapping ranges)
+3. Check exactly 1 SSTable in L2
+4. Check exactly 1 SSTable in L3
+...
+
+Total: 4 + number_of_levels
+With 5 levels: max 9 SSTables per read
+```
+
+This is dramatically better than STCS, which may require checking 50+ SSTables.
+
+---
+
+## Benefits
+
+### Predictable Read Latency
+
+The bounded number of SSTables per read provides consistent latency:
+
+- P50 and P99 latencies converge
+- No "bad partitions" that require scanning many files
+- Read performance does not degrade as data ages
+
+### Low Space Amplification
+
+Unlike STCS, which may temporarily require 2× space during large compactions, LCS operates incrementally:
+
+- Compactions involve small, bounded sets of files
+- Temporary space overhead is minimal
+- Easier capacity planning
+
+### Efficient Tombstone Removal
+
+Tombstones are garbage collected when the SSTable containing them is compacted. In LCS:
+
+- Data moves through levels predictably
+- Tombstones reach deeper levels and are purged
+- Less tombstone accumulation than STCS
+
+### Consistent Compaction Load
+
+Compaction work is distributed evenly over time:
+
+- No massive compaction events
+- More predictable I/O patterns
+- Easier to provision for sustained throughput
+
+---
+
+## Drawbacks
+
+### High Write Amplification
+
+The primary cost of LCS is rewriting data multiple times:
+
+- Each level transition involves merging with existing data
+- Write amplification of 10-30× is common
+- SSD endurance is consumed faster
+
+### Compaction Throughput Limits
+
+Write rate is bounded by how fast compaction can promote data:
+
+- If writes exceed L0→L1 compaction rate, L0 backs up
+- L0 backlog increases read amplification (defeating LCS purpose)
+- May require throttling writes
+
+### Inefficient for Write-Heavy Workloads
+
+Workloads with >30% writes may see:
+
+- Compaction unable to keep pace
+- Growing pending compaction tasks
+- Disk I/O saturated by compaction
+
+### Poor Fit for Time-Series
+
+Time-series data has sequential writes and time-based queries:
+
+- LCS wastes effort organizing by key range
+- TWCS is purpose-built for this pattern
+- LCS provides no benefit for time-range queries
+
+### Large Partition Problems
+
+Partitions exceeding `sstable_size_in_mb` create "oversized" SSTables:
+
+- Cannot be split across levels properly
+- May stall compaction
+- Require data model changes to fix
+
+---
+
+## When to Use LCS
+
+### Ideal Use Cases
+
+| Workload Pattern | Why LCS Works |
+|------------------|---------------|
+| Read-heavy (>70% reads) | Low read amplification pays for write cost |
+| Point queries | Bounded SSTable checks per query |
+| Frequently updated rows | Versions consolidated quickly |
+| Latency-sensitive reads | Predictable, consistent response times |
+| SSD storage | Handles write amplification efficiently |
+
+### Avoid LCS When
+
+| Workload Pattern | Why LCS Is Wrong |
+|------------------|------------------|
+| Write-heavy (>30% writes) | Write amplification overwhelms I/O |
+| Time-series data | TWCS is more efficient |
+| Append-only logs | STCS or TWCS better suited |
+| HDD storage | Random I/O from compaction is slow |
+| Very large datasets | Compaction may not keep pace |
+
+---
 
 ### Non-Overlapping Token Ranges
 
@@ -389,4 +636,4 @@ org.apache.cassandra.metrics:type=Table,keyspace=*,scope=*,name=BytesCompacted
 
 - **[Compaction Overview](index.md)** - Concepts and strategy selection
 - **[Size-Tiered Compaction (STCS)](stcs.md)** - Alternative for write-heavy workloads
-- **[Compaction Operations](operations.md)** - Tuning and troubleshooting
+- **[Compaction Management](../../../../operations/compaction-management/index.md)** - Tuning and troubleshooting
