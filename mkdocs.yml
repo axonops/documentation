@@ -342,7 +342,9 @@ nav:
             - Secondary Index Queries: cassandra/cql/dml/secondary-index-queries.md
             - Vector Search: cassandra/cql/dml/vector-search.md
             - Lightweight Transactions: cassandra/cql/dml/lightweight-transactions.md
-          - Security Commands: cassandra/cql/security/index.md
+          - Security Commands:
+            - Overview: cassandra/cql/security/index.md
+            - Dynamic Data Masking: cassandra/cql/security/dynamic-data-masking.md
           - Indexing: cassandra/cql/indexing/index.md
           - Functions: cassandra/cql/functions/index.md
         - Data Modeling:
@@ -367,31 +369,82 @@ nav:
           - Overview: cassandra/operations/backup-restore/index.md
           - Backup Procedures: cassandra/operations/backup-restore/backup.md
           - Restore Guide: cassandra/operations/backup-restore/restore.md
-        - Repair: cassandra/operations/repair/index.md
+        - Repair:
+          - Overview: cassandra/operations/repair/index.md
+          - Concepts: cassandra/operations/repair/concepts.md
+          - Options Reference: cassandra/operations/repair/options-reference.md
+          - Strategies: cassandra/operations/repair/strategies.md
+          - Scheduling: cassandra/operations/repair/scheduling.md
+        - Nodetool Reference:
+          - Overview: cassandra/operations/nodetool/index.md
+          - Cluster Information:
+            - status: cassandra/operations/nodetool/status.md
+            - ring: cassandra/operations/nodetool/ring.md
+            - info: cassandra/operations/nodetool/info.md
+            - describecluster: cassandra/operations/nodetool/describecluster.md
+            - gossipinfo: cassandra/operations/nodetool/gossipinfo.md
+            - version: cassandra/operations/nodetool/version.md
+          - Data Management:
+            - flush: cassandra/operations/nodetool/flush.md
+            - compact: cassandra/operations/nodetool/compact.md
+            - cleanup: cassandra/operations/nodetool/cleanup.md
+            - scrub: cassandra/operations/nodetool/scrub.md
+          - Repair:
+            - repair: cassandra/operations/nodetool/repair.md
+            - repair_admin: cassandra/operations/nodetool/repair_admin.md
+          - Snapshots:
+            - snapshot: cassandra/operations/nodetool/snapshot.md
+            - clearsnapshot: cassandra/operations/nodetool/clearsnapshot.md
+            - listsnapshots: cassandra/operations/nodetool/listsnapshots.md
+          - Compaction:
+            - compactionstats: cassandra/operations/nodetool/compactionstats.md
+            - setcompactionthroughput: cassandra/operations/nodetool/setcompactionthroughput.md
+            - getcompactionthroughput: cassandra/operations/nodetool/getcompactionthroughput.md
+          - Streaming:
+            - netstats: cassandra/operations/nodetool/netstats.md
+            - setstreamthroughput: cassandra/operations/nodetool/setstreamthroughput.md
+          - Cluster Topology:
+            - decommission: cassandra/operations/nodetool/decommission.md
+            - removenode: cassandra/operations/nodetool/removenode.md
+            - assassinate: cassandra/operations/nodetool/assassinate.md
+            - rebuild: cassandra/operations/nodetool/rebuild.md
+            - drain: cassandra/operations/nodetool/drain.md
+          - Gossip & Binary:
+            - enablegossip: cassandra/operations/nodetool/enablegossip.md
+            - disablegossip: cassandra/operations/nodetool/disablegossip.md
+            - enablebinary: cassandra/operations/nodetool/enablebinary.md
+            - disablebinary: cassandra/operations/nodetool/disablebinary.md
+          - Diagnostics:
+            - tpstats: cassandra/operations/nodetool/tpstats.md
+            - tablestats: cassandra/operations/nodetool/tablestats.md
+            - proxyhistograms: cassandra/operations/nodetool/proxyhistograms.md
+            - gcstats: cassandra/operations/nodetool/gcstats.md
         - Compaction Management: cassandra/operations/compaction-management/index.md
         - Maintenance: cassandra/operations/maintenance/index.md
-      - Configuration:
-        - Overview: cassandra/configuration/index.md
-        - cassandra.yaml: cassandra/configuration/cassandra-yaml/index.md
-        - JVM Options: cassandra/configuration/jvm-options/index.md
-        - Snitch Configuration: cassandra/configuration/snitch-config/index.md
-      - JMX Reference:
-        - Overview: cassandra/jmx-reference/index.md
-        - MBeans: cassandra/jmx-reference/mbeans/index.md
-        - Metrics: cassandra/jmx-reference/metrics/index.md
-        - Connecting: cassandra/jmx-reference/connecting/index.md
-      - Monitoring:
-        - Overview: cassandra/monitoring/index.md
-        - Key Metrics: cassandra/monitoring/key-metrics/index.md
-        - Alerting: cassandra/monitoring/alerting/index.md
-        - Logging: cassandra/monitoring/logging/index.md
-      - Performance:
-        - Overview: cassandra/performance/index.md
-        - Benchmarking: cassandra/performance/benchmarking/index.md
-        - Hardware: cassandra/performance/hardware/index.md
-        - JVM Tuning: cassandra/performance/jvm-tuning/index.md
-        - OS Tuning: cassandra/performance/os-tuning/index.md
-        - Query Optimization: cassandra/performance/query-optimization/index.md
+        - Configuration:
+          - Overview: cassandra/operations/configuration/index.md
+          - cassandra.yaml: cassandra/operations/configuration/cassandra-yaml/index.md
+          - JVM Options: cassandra/operations/configuration/jvm-options/index.md
+          - Snitch Configuration: cassandra/operations/configuration/snitch-config/index.md
+        - JMX Reference:
+          - Overview: cassandra/operations/jmx-reference/index.md
+          - MBeans: cassandra/operations/jmx-reference/mbeans/index.md
+          - Metrics: cassandra/operations/jmx-reference/metrics/index.md
+          - Connecting: cassandra/operations/jmx-reference/connecting/index.md
+        - Monitoring:
+          - Overview: cassandra/operations/monitoring/index.md
+          - Key Metrics: cassandra/operations/monitoring/key-metrics/index.md
+          - Alerting: cassandra/operations/monitoring/alerting/index.md
+          - Logging: cassandra/operations/monitoring/logging/index.md
+        - Performance:
+          - Overview: cassandra/operations/performance/index.md
+          - Benchmarking: cassandra/operations/performance/benchmarking/index.md
+          - Hardware: cassandra/operations/performance/hardware/index.md
+          - JVM Tuning: cassandra/operations/performance/jvm-tuning/index.md
+          - OS Tuning: cassandra/operations/performance/os-tuning/index.md
+          - Query Optimization: cassandra/operations/performance/query-optimization/index.md
+        - Performance Tuning: cassandra/operations/performance-tuning/index.md
+        - Troubleshooting: cassandra/operations/troubleshooting/index.md
       - Security:
         - Overview: cassandra/security/index.md
         - Authentication: cassandra/security/authentication/index.md

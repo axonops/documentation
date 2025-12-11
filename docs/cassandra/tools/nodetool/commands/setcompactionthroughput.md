@@ -44,5 +44,5 @@ nodetool setcompactionthroughput 0
 
 ## Related Documentation
 
-- [Architecture - Compaction](../../../architecture/compaction/index.md)
-- [Configuration - cassandra.yaml](../../../configuration/cassandra-yaml/index.md)
+- [Architecture - Compaction](../../../architecture/storage-engine/compaction/index.md)
+- [Configuration - cassandra.yaml](../../../operations/configuration/cassandra-yaml/index.md)

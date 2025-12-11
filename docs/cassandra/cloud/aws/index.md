@@ -225,4 +225,4 @@ Configuration:
 
 - **[GCP Deployment](../gcp/index.md)** - Google Cloud guide
 - **[Multi-DC Setup](../../multi-datacenter/index.md)** - Multi-region
-- **[Performance Tuning](../../performance/index.md)** - Optimization
+- **[Performance Tuning](../../operations/performance/index.md)** - Optimization

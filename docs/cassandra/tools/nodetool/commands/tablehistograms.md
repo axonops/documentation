@@ -55,4 +55,4 @@ Max                 5.00           1489.45          10066.33          5242880   
 
 ## Related Documentation
 
-- [Performance - Query Optimization](../../../performance/query-optimization/index.md)
+- [Performance - Query Optimization](../../../operations/performance/query-optimization/index.md)

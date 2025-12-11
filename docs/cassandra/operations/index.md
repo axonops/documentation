@@ -517,11 +517,34 @@ nodetool resetlocalschema
 - Troubleshooting repair
 - Automation tools
 
+### [Compaction Management](compaction-management/index.md)
+- Compaction configuration
+- Strategy selection and tuning
+- Troubleshooting compaction issues
+
 ### [Maintenance](maintenance/index.md)
 - Rolling restarts
-- Compaction management
+- Schema management
 - Cleanup operations
 - Upgrade procedures
+
+### [Monitoring](monitoring/index.md)
+- Critical metrics to monitor
+- JMX metrics reference
+- Alert configuration
+- Dashboard design
+
+### [Performance Tuning](performance-tuning/index.md)
+- Read/write optimization
+- JVM and GC tuning
+- Compaction tuning
+- Hardware sizing
+
+### [Troubleshooting](troubleshooting/index.md)
+- Node issues
+- Performance issues
+- Cluster issues
+- Emergency procedures
 
 ---
 
@@ -540,11 +563,50 @@ nodetool resetlocalschema
 
 ---
 
+## AxonOps Operations Platform
+
+Operating Cassandra at scale requires coordinating multiple tools, scripts, and processes across nodes. [AxonOps](https://axonops.com) provides an integrated operations platform designed specifically for Cassandra.
+
+### Unified Operations Console
+
+AxonOps provides:
+
+- **Single-pane-of-glass**: All cluster metrics, logs, and operations in one interface
+- **Multi-cluster management**: Manage multiple Cassandra clusters from a single console
+- **Role-based access control**: Define who can view, operate, or administer clusters
+- **Audit logging**: Complete history of all operational actions
+
+### Automated Maintenance
+
+- **Scheduled repairs**: Intelligent repair scheduling that minimizes impact
+- **Automated backups**: Policy-driven backup with multiple storage backends
+- **Rolling operations**: Coordinated rolling restarts and upgrades across nodes
+- **Cleanup automation**: Post-topology-change cleanup orchestration
+
+### Proactive Monitoring
+
+- **Pre-configured alerts**: Out-of-the-box alerts for common issues
+- **Trend analysis**: Identify gradual degradation before failures
+- **Capacity forecasting**: Predict when resources will be exhausted
+- **Anomaly detection**: ML-based detection of unusual patterns
+
+### Operational Workflows
+
+- **Guided procedures**: Step-by-step wizards for complex operations
+- **Pre-flight checks**: Automatic validation before operations
+- **Rollback support**: Quick recovery from failed operations
+- **Runbook integration**: Link alerts to resolution procedures
+
+See the [AxonOps documentation](/operations/) for setup and configuration.
+
+---
+
 ## Next Steps
 
 - **[Cluster Management](cluster-management/index.md)** - Node lifecycle operations
 - **[Backup & Restore](backup-restore/index.md)** - Data protection procedures
 - **[Repair](repair/index.md)** - Maintain consistency
 - **[Maintenance](maintenance/index.md)** - Day-to-day upkeep
-- **[Monitoring](../monitoring/index.md)** - Observability setup
-- **[Troubleshooting](../troubleshooting/index.md)** - Problem resolution
+- **[Monitoring](monitoring/index.md)** - Observability setup
+- **[Performance Tuning](performance-tuning/index.md)** - Optimization procedures
+- **[Troubleshooting](troubleshooting/index.md)** - Problem resolution

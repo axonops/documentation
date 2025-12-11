@@ -33,4 +33,4 @@ nodetool setstreamthroughput 200
 ## Related Documentation
 
 - [Operations - Repair](../../../operations/repair/index.md)
-- [Configuration - cassandra.yaml](../../../configuration/cassandra-yaml/index.md)
+- [Configuration - cassandra.yaml](../../../operations/configuration/cassandra-yaml/index.md)

@@ -235,9 +235,9 @@ nodetool netstats | grep -A 5 "Sending\|Receiving" || echo "No active streaming"
 ## Related Documentation
 
 - [Operations Guide](../../operations/index.md) - Operational procedures
-- [Monitoring - Key Metrics](../../monitoring/key-metrics/index.md) - Understanding metrics
+- [Monitoring - Key Metrics](../../operations/monitoring/key-metrics/index.md) - Understanding metrics
 - [Troubleshooting Guide](../../troubleshooting/index.md) - Problem resolution
-- [JMX Reference](../../jmx-reference/index.md) - JMX metrics
+- [JMX Reference](../../operations/jmx-reference/index.md) - JMX metrics
 - [cqlsh Reference](../cqlsh/index.md) - CQL shell
 
 ---

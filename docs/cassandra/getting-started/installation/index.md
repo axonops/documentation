@@ -1317,4 +1317,4 @@ iostat -xm 2
 2. **[Security Setup](../../security/index.md)** - Enable authentication and encryption
 3. **[Production Checklist](../production-checklist.md)** - Complete production readiness
 4. **[Install CQLAI](../../tools/cqlai/installation/index.md)** - Modern CQL shell with AI assistance
-5. **[Set Up Monitoring](../../monitoring/index.md)** - Monitor the cluster with AxonOps
+5. **[Set Up Monitoring](../../operations/monitoring/index.md)** - Monitor the cluster with AxonOps

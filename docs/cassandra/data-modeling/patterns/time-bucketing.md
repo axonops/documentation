@@ -794,6 +794,6 @@ WITH default_time_to_live = 604800    -- 7 days
 ## Next Steps
 
 - **[Anti-Patterns](../anti-patterns/index.md)** - Large partition dangers
-- **[TWCS Compaction](../../architecture/compaction/index.md)** - Time-series compaction
+- **[TWCS Compaction](../../architecture/storage-engine/compaction/index.md)** - Time-series compaction
 - **[E-Commerce Example](../examples/e-commerce.md)** - Complete schema design
 - **[Operations Guide](../../operations/index.md)** - Production maintenance

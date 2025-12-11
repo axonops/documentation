@@ -114,4 +114,4 @@ FATAL - Cannot start Cassandra
 
 - **[Diagnosis Guide](../diagnosis/index.md)** - Systematic diagnosis
 - **[Common Errors](../common-errors/index.md)** - Error reference
-- **[Monitoring](../../monitoring/index.md)** - Proactive monitoring
+- **[Monitoring](../../operations/monitoring/index.md)** - Proactive monitoring

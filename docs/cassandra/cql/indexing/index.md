@@ -447,5 +447,5 @@ Need to query by non-PK column?
 
 - **[Data Modeling](../../data-modeling/index.md)** - Query-first design
 - **[DML Reference](../dml/index.md)** - Query syntax
-- **[Performance Tuning](../../performance/index.md)** - Optimization
+- **[Performance Tuning](../../operations/performance/index.md)** - Optimization
 - **[Anti-Patterns](../../data-modeling/anti-patterns/index.md)** - What to avoid

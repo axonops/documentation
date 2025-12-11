@@ -393,5 +393,5 @@ With **LOCAL_QUORUM**, each datacenter operates independently—surviving node f
 ### Related Topics
 
 - [Data Modeling](../data-modeling/index.md) - Design for Cassandra
-- [Performance Tuning](../performance/index.md) - Optimize cluster performance
+- [Performance Tuning](../operations/performance/index.md) - Optimize cluster performance
 - [Operations](../operations/index.md) - Day-to-day management

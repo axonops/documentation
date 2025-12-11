@@ -345,13 +345,11 @@ try {
 ## Related Issues
 
 - **[ReadTimeoutException](read-timeout.md)** - Read timeout troubleshooting
-- **[UnavailableException](unavailable.md)** - Replica unavailability
-- **[OverloadedException](overloaded.md)** - Node overload
 
 ---
 
 ## Next Steps
 
-- **[Thread Pool Tuning](../../performance/index.md)** - Optimize thread pools
-- **[Network Troubleshooting](../../troubleshooting/index.md)** - Network issues
-- **[Monitoring Guide](../../monitoring/index.md)** - Set up alerts
+- **[Thread Pool Tuning](../../operations/performance/index.md)** - Optimize thread pools
+- **[Troubleshooting Guide](../index.md)** - Additional troubleshooting guidance
+- **[Monitoring Guide](../../operations/monitoring/index.md)** - Set up alerts

@@ -29,4 +29,4 @@ Current trace probability: 0.01
 
 ## Related Documentation
 
-- [Performance - Query Optimization](../../../performance/query-optimization/index.md)
+- [Performance - Query Optimization](../../../operations/performance/query-optimization/index.md)

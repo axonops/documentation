@@ -947,5 +947,5 @@ Before deploying any Cassandra table:
 
 - **[Data Modeling Concepts](../concepts/index.md)** - Correct design patterns
 - **[Time Bucketing](../patterns/time-bucketing.md)** - Partition management
-- **[Performance Tuning](../../performance/index.md)** - Optimization
+- **[Performance Tuning](../../operations/performance/index.md)** - Optimization
 - **[Troubleshooting](../../troubleshooting/index.md)** - Problem diagnosis

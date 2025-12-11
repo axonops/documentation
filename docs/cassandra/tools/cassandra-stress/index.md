@@ -357,6 +357,6 @@ cassandra-stress write n=10000000
 
 ## Next Steps
 
-- **[Benchmarking](../../performance/benchmarking/index.md)** - Benchmarking guide
-- **[Performance](../../performance/index.md)** - Performance tuning
-- **[Monitoring](../../monitoring/index.md)** - Monitor during tests
+- **[Benchmarking](../../operations/performance/benchmarking/index.md)** - Benchmarking guide
+- **[Performance](../../operations/performance/index.md)** - Performance tuning
+- **[Monitoring](../../operations/monitoring/index.md)** - Monitor during tests

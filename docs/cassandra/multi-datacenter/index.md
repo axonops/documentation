@@ -568,7 +568,7 @@ alerts:
 
 ## Next Steps
 
-- **[Replication Guide](../architecture/replication/index.md)** - Replication strategies
-- **[Consistency Guide](../architecture/consistency/index.md)** - Consistency levels
+- **[Replication Guide](../architecture/distributed-data/replication.md)** - Replication strategies
+- **[Consistency Guide](../architecture/distributed-data/consistency.md)** - Consistency levels
 - **[Operations Guide](../operations/index.md)** - Operational procedures
 - **[Cloud Deployment](../cloud/index.md)** - Cloud-specific guidance

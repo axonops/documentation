@@ -127,4 +127,4 @@ Deploy across 3 Availability Zones:
 
 - **[Kubernetes](../kubernetes/index.md)** - AKS deployment
 - **[Multi-DC](../../multi-datacenter/index.md)** - Multi-region
-- **[Performance](../../performance/index.md)** - Optimization
+- **[Performance](../../operations/performance/index.md)** - Optimization

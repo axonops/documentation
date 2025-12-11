@@ -369,6 +369,6 @@ nodetool compactionstats
 
 ## Next Steps
 
-- **[Performance Tuning](../../performance/index.md)** - Optimization guide
-- **[Monitoring Guide](../../monitoring/index.md)** - Set up alerts
+- **[Performance Tuning](../../operations/performance/index.md)** - Optimization guide
+- **[Monitoring Guide](../../operations/monitoring/index.md)** - Set up alerts
 - **[Data Modeling](../../data-modeling/index.md)** - Schema design

@@ -38,4 +38,4 @@ High trace probability impacts performance. Use 0.01 or lower in production.
 
 ## Related Documentation
 
-- [Performance - Query Optimization](../../../performance/query-optimization/index.md)
+- [Performance - Query Optimization](../../../operations/performance/query-optimization/index.md)

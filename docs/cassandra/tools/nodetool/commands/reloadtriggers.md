@@ -24,4 +24,4 @@ After adding or modifying trigger JAR files in the triggers directory, use this 
 
 ## Related Documentation
 
-- [Configuration - cassandra.yaml](../../../configuration/cassandra-yaml/index.md)
+- [Configuration - cassandra.yaml](../../../operations/configuration/cassandra-yaml/index.md)

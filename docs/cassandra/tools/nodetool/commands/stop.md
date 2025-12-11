@@ -49,4 +49,4 @@ Stopping compaction may leave partially written SSTables that will be cleaned up
 
 ## Related Documentation
 
-- [Architecture - Compaction](../../../architecture/compaction/index.md)
+- [Architecture - Compaction](../../../architecture/storage-engine/compaction/index.md)

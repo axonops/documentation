@@ -122,37 +122,37 @@ Run Cassandra in production:
 
 Configure Cassandra for your workload:
 
-- [Configuration Reference](configuration/index.md) - All configuration files
-- [cassandra.yaml](configuration/cassandra-yaml/index.md) - Main configuration file
-- [JVM Options](configuration/jvm-options/index.md) - Heap and GC settings
-- [Snitch Configuration](configuration/snitch-config/index.md) - Topology awareness
+- [Configuration Reference](operations/configuration/index.md) - All configuration files
+- [cassandra.yaml](operations/configuration/cassandra-yaml/index.md) - Main configuration file
+- [JVM Options](operations/configuration/jvm-options/index.md) - Heap and GC settings
+- [Snitch Configuration](operations/configuration/snitch-config/index.md) - Topology awareness
 
 ### JMX Reference
 
 Monitor and manage via JMX:
 
-- [JMX Overview](jmx-reference/index.md) - Connecting and using JMX
-- [MBeans Reference](jmx-reference/mbeans/index.md) - All 30 MBeans documented
-- [Metrics Reference](jmx-reference/metrics/index.md) - 500+ metrics with thresholds
+- [JMX Overview](operations/jmx-reference/index.md) - Connecting and using JMX
+- [MBeans Reference](operations/jmx-reference/mbeans/index.md) - All 30 MBeans documented
+- [Metrics Reference](operations/jmx-reference/metrics/index.md) - 500+ metrics with thresholds
 
 ### Monitoring
 
 Monitor your Cassandra cluster:
 
-- [Monitoring Guide](monitoring/index.md) - What and how to monitor
-- [Key Metrics](monitoring/key-metrics/index.md) - Essential metrics to track
-- [Alerting](monitoring/alerting/index.md) - Alert thresholds and setup
-- [Logging](monitoring/logging/index.md) - Log analysis and configuration
+- [Monitoring Guide](operations/monitoring/index.md) - What and how to monitor
+- [Key Metrics](operations/monitoring/key-metrics/index.md) - Essential metrics to track
+- [Alerting](operations/monitoring/alerting/index.md) - Alert thresholds and setup
+- [Logging](operations/monitoring/logging/index.md) - Log analysis and configuration
 
 ### Performance
 
 Optimize Cassandra performance:
 
-- [Performance Tuning](performance/index.md) - Optimization strategies
-- [Hardware Sizing](performance/hardware/index.md) - CPU, memory, disk recommendations
-- [JVM Tuning](performance/jvm-tuning/index.md) - GC and heap optimization
-- [OS Tuning](performance/os-tuning/index.md) - Linux kernel parameters
-- [Query Optimization](performance/query-optimization/index.md) - Efficient queries
+- [Performance Tuning](operations/performance/index.md) - Optimization strategies
+- [Hardware Sizing](operations/performance/hardware/index.md) - CPU, memory, disk recommendations
+- [JVM Tuning](operations/performance/jvm-tuning/index.md) - GC and heap optimization
+- [OS Tuning](operations/performance/os-tuning/index.md) - Linux kernel parameters
+- [Query Optimization](operations/performance/query-optimization/index.md) - Efficient queries
 
 ### Security
 
@@ -211,13 +211,13 @@ Quick reference materials:
 
 **Operators**:
 [Operations](operations/index.md) →
-[Monitoring](monitoring/index.md) →
+[Monitoring](operations/monitoring/index.md) →
 [Troubleshooting](troubleshooting/index.md)
 
 **Performance Engineers**:
-[JMX Metrics](jmx-reference/metrics/index.md) →
-[Performance Tuning](performance/index.md) →
-[Benchmarking](performance/benchmarking/index.md)
+[JMX Metrics](operations/jmx-reference/metrics/index.md) →
+[Performance Tuning](operations/performance/index.md) →
+[Benchmarking](operations/performance/benchmarking/index.md)
 
 ### Common Tasks
 
@@ -228,8 +228,8 @@ Quick reference materials:
 | Fix timeout errors | [ReadTimeoutException](troubleshooting/common-errors/read-timeout.md) |
 | Manage cluster nodes | [Cluster Management](operations/cluster-management/index.md) |
 | Configure backups | [Backup Guide](operations/backup-restore/index.md) |
-| Monitor the cluster | [Monitoring Guide](monitoring/index.md) |
-| Tune performance | [Performance Guide](performance/index.md) |
+| Monitor the cluster | [Monitoring Guide](operations/monitoring/index.md) |
+| Tune performance | [Performance Guide](operations/performance/index.md) |
 
 ---
 

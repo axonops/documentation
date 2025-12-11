@@ -738,9 +738,46 @@ nodetool tablestats | grep -i tombstone
 
 ---
 
+## AxonOps Maintenance Automation
+
+Manual maintenance requires careful coordination, scripting expertise, and vigilant monitoring. [AxonOps](https://axonops.com) provides automated maintenance that reduces operational burden and risk.
+
+### Automated Rolling Operations
+
+AxonOps provides:
+
+- **Coordinated rolling restarts**: Automated drain, restart, and health verification across nodes
+- **Pre-flight validation**: Automatic checks before each operation (cluster health, disk space, pending operations)
+- **Progress tracking**: Real-time visibility into rolling operation progress
+- **Automatic pacing**: Intelligent delays between nodes based on cluster state
+
+### Scheduled Maintenance
+
+- **Repair scheduling**: Automated repair with configurable frequency and scope
+- **Cleanup orchestration**: Automatic cleanup after topology changes
+- **Snapshot management**: Scheduled backups with retention policies
+- **Log rotation**: Centralized log management and retention
+
+### Upgrade Management
+
+- **Version tracking**: Monitor Cassandra versions across clusters
+- **Upgrade planning**: Impact analysis before upgrades
+- **Rolling upgrade automation**: Coordinated upgrade with health gates
+- **Rollback support**: Quick rollback if issues detected
+
+### Compliance and Audit
+
+- **Change tracking**: Complete audit log of all maintenance activities
+- **Compliance reporting**: Documentation for regulatory requirements
+- **SLA monitoring**: Track maintenance windows and availability
+
+See the [AxonOps documentation](/operations/) for maintenance automation features.
+
+---
+
 ## Next Steps
 
 - **[Repair Guide](../repair/index.md)** - Detailed repair procedures
 - **[Backup Guide](../backup-restore/index.md)** - Backup strategies
-- **[Monitoring](../../monitoring/index.md)** - Set up observability
-- **[Troubleshooting](../../troubleshooting/index.md)** - Problem resolution
+- **[Monitoring](../monitoring/index.md)** - Set up observability
+- **[Troubleshooting](../troubleshooting/index.md)** - Problem resolution

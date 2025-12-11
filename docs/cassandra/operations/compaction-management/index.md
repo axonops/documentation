@@ -518,6 +518,37 @@ cqlsh -e "SELECT compaction FROM system_schema.tables
 
 ---
 
+## AxonOps Compaction Management
+
+Managing compaction across a cluster requires monitoring multiple nodes, correlating metrics, and understanding workload patterns. [AxonOps](https://axonops.com) provides integrated compaction management tools.
+
+### Compaction Visibility
+
+AxonOps provides:
+
+- **Cross-cluster view**: Pending compactions and SSTable counts across all nodes
+- **Per-table analysis**: Identify tables with compaction issues
+- **Historical trends**: Track compaction throughput and backlog over time
+- **Anomaly detection**: Alert when compaction patterns deviate from normal
+
+### Strategy Optimization
+
+- **Workload analysis**: Recommendations based on read/write patterns
+- **Strategy comparison**: Simulate impact of strategy changes
+- **Migration support**: Guided strategy transitions with monitoring
+- **Impact assessment**: Predict resource requirements for strategy changes
+
+### Automated Response
+
+- **Throttle management**: Automatic throughput adjustment based on cluster load
+- **Alert-driven actions**: Automated response to compaction backlogs
+- **Capacity warnings**: Proactive alerts when disk space will be exhausted
+- **Performance correlation**: Link compaction activity to latency changes
+
+See the [AxonOps documentation](/monitoring/) for compaction monitoring features.
+
+---
+
 ## Related Documentation
 
 - **[Compaction Overview](../../architecture/storage-engine/compaction/index.md)** - Concepts and strategy selection

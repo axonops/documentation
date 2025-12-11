@@ -934,5 +934,5 @@ The cluster is running. Next steps:
 1. **[Production Checklist](production-checklist.md)** - Security hardening and optimization
 2. **[CQL Quickstart](quickstart-cql.md)** - Start writing queries
 3. **[Data Modeling](../data-modeling/index.md)** - Design the schema properly
-4. **[Set Up Monitoring](../monitoring/index.md)** - Monitor with AxonOps
+4. **[Set Up Monitoring](../operations/monitoring/index.md)** - Monitor with AxonOps
 5. **[Operations Guide](../operations/index.md)** - Day-to-day management

@@ -277,5 +277,5 @@ When seeking help, gather:
 
 ## Next Steps
 
-- **[Monitoring Guide](../monitoring/index.md)** - Proactive monitoring
-- **[Performance Tuning](../performance/index.md)** - Performance optimization
+- **[Monitoring Guide](../operations/monitoring/index.md)** - Proactive monitoring
+- **[Performance Tuning](../operations/performance/index.md)** - Performance optimization

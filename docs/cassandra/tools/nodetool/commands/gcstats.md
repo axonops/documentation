@@ -39,5 +39,5 @@ nodetool gcstats
 
 ## Related Documentation
 
-- [Performance - JVM Tuning](../../../performance/jvm-tuning/index.md)
+- [Performance - JVM Tuning](../../../operations/performance/jvm-tuning/index.md)
 - [Troubleshooting - GC Pause](../../../troubleshooting/playbooks/gc-pause.md)

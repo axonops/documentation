@@ -200,7 +200,7 @@ After getting started:
 1. **[Learn Data Modeling](../data-modeling/index.md)** - Design effective schemas
 2. **[Understand Architecture](../architecture/index.md)** - How Cassandra works
 3. **[Explore CQL](../cql/index.md)** - Full query language reference
-4. **[Set Up Monitoring](../monitoring/index.md)** - Monitor the cluster
+4. **[Set Up Monitoring](../operations/monitoring/index.md)** - Monitor the cluster
 
 ## Getting Help
 

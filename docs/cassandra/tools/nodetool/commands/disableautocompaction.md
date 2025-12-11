@@ -43,4 +43,4 @@ nodetool disableautocompaction my_keyspace
 
 ## Related Documentation
 
-- [Architecture - Compaction](../../../architecture/compaction/index.md)
+- [Architecture - Compaction](../../../architecture/storage-engine/compaction/index.md)

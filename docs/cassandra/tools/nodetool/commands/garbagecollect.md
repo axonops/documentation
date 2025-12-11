@@ -36,5 +36,5 @@ nodetool garbagecollect -g CELL my_keyspace users
 
 ## Related Documentation
 
-- [Architecture - Compaction](../../../architecture/compaction/index.md)
+- [Architecture - Compaction](../../../architecture/storage-engine/compaction/index.md)
 - [Troubleshooting - Tombstone Accumulation](../../../troubleshooting/playbooks/tombstone-accumulation.md)

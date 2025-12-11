@@ -569,4 +569,4 @@ auditlogviewer /var/log/cassandra/audit/
 
 ## Next Steps
 
-- **[Configuration Reference](../configuration/index.md)** - Cassandra configuration
+- **[Configuration Reference](../operations/configuration/index.md)** - Cassandra configuration

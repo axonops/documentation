@@ -707,8 +707,6 @@ GRANT ALTER ON ALL KEYSPACES TO schema_admin;
 
 ## Related Documentation
 
+- **[Dynamic Data Masking](dynamic-data-masking.md)** - Automatic data obfuscation for sensitive columns
 - **[DDL Commands](../ddl/index.md)** - Schema management commands
 - **[DML Commands](../dml/index.md)** - Data manipulation commands
-- **[Architecture: Security](../../security/index.md)** - Security internals
-- **[Authentication](../../security/authentication/index.md)** - Authentication configuration
-- **[Authorization](../../security/authorization/index.md)** - Authorization configuration

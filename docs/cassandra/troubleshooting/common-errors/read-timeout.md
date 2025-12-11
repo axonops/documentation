@@ -290,6 +290,4 @@ Set up alerts for:
 ## Related
 
 - **[WriteTimeoutException](write-timeout.md)**
-- **[UnavailableException](unavailable.md)**
-- **[TombstoneOverwhelmingException](tombstone-overwhelming.md)**
-- **[Performance Diagnosis](../diagnosis/performance.md)**
+- **[Diagnosis Guide](../diagnosis/index.md)**

@@ -479,4 +479,4 @@ After connecting the application:
 
 1. **[Data Modeling](../../data-modeling/index.md)** - Design effective schemas
 2. **[CQL Reference](../../cql/index.md)** - Full query language reference
-3. **[Performance Tuning](../../performance/index.md)** - Optimize application performance
+3. **[Performance Tuning](../../operations/performance/index.md)** - Optimize application performance

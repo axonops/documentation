@@ -533,6 +533,6 @@ Ensure documentation exists for:
 After completing this checklist:
 
 1. **[Operations Guide](../operations/index.md)** - Day-to-day procedures
-2. **[Monitoring Setup](../monitoring/index.md)** - Detailed monitoring configuration
+2. **[Monitoring Setup](../operations/monitoring/index.md)** - Detailed monitoring configuration
 3. **[Troubleshooting](../troubleshooting/index.md)** - Common issues and solutions
-4. **[Performance Tuning](../performance/index.md)** - Optimize for the workload
+4. **[Performance Tuning](../operations/performance/index.md)** - Optimize for the workload
