@@ -12,9 +12,30 @@ nodetool [connection_options] disablebinary
 
 ## Description
 
-`nodetool disablebinary` disables the CQL native transport protocol, which handles all CQL client connections. Once disabled, the node stops accepting new connections on the native transport port (default: 9042), while existing connections may continue briefly before being terminated.
+`nodetool disablebinary` disables the CQL native transport protocol, which handles all CQL client connections. Once disabled, the node stops listening on the native transport port, and existing connections are terminated.
 
-This is commonly used for:
+### Native Transport Port Configuration
+
+The native transport port is configured in `cassandra.yaml`:
+
+```yaml
+native_transport_port: 9042  # Default CQL port
+```
+
+To verify the current port and whether it is listening:
+
+```bash
+# Check if Cassandra is listening on the CQL port
+netstat -tlnp | grep 9042
+
+# Alternative using ss
+ss -tlnp | grep 9042
+
+# Check the configured port in cassandra.yaml
+grep native_transport_port /etc/cassandra/cassandra.yaml
+```
+
+This command is commonly used for:
 
 - **Controlled maintenance** - Stop new traffic before maintenance
 - **Load shedding** - Remove node from client traffic during issues

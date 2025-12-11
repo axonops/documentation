@@ -6,6 +6,9 @@ Proper tuning happens at multiple layers: JVM (heap size and garbage collector),
 
 This guide covers what to tune, how to tune it, and how to measure whether it worked.
 
+!!! info "Measure Before Tuning"
+    Always establish baseline metrics before making changes. Tune one parameter at a time and measure the impact. Changes that improve one workload may degrade another.
+
 ## Performance Overview
 
 ### Performance Layers
@@ -537,7 +540,273 @@ Results:
 
 ---
 
+## Read Performance Tuning
+
+### Diagnosing Slow Reads
+
+```bash
+# Step 1: Identify affected tables
+nodetool tablestats <keyspace> | grep -A 15 "Table:"
+
+# Step 2: Check read latency breakdown
+nodetool proxyhistograms
+
+# Step 3: Check for tombstone issues
+nodetool tablestats <keyspace>.<table> | grep -i tombstone
+
+# Step 4: Check SSTable count
+nodetool cfstats <keyspace>.<table> | grep "SSTable count"
+
+# Step 5: Check bloom filter effectiveness
+nodetool tablestats <keyspace>.<table> | grep -i bloom
+```
+
+### Common Read Performance Issues
+
+#### High SSTable Count
+
+**Symptoms:** Read latency increases over time, many SSTables per read
+
+**Diagnosis:**
+```bash
+nodetool tablestats <keyspace>.<table> | grep "SSTable count"
+# Healthy: <10 for STCS, <100 total for LCS
+```
+
+**Solutions:**
+
+```bash
+# Force compaction to reduce SSTable count
+nodetool compact <keyspace> <table>
+```
+
+```sql
+-- Adjust compaction strategy if needed
+ALTER TABLE <keyspace>.<table>
+WITH compaction = {
+    'class': 'LeveledCompactionStrategy',
+    'sstable_size_in_mb': 160
+};
+```
+
+#### Excessive Tombstones
+
+**Symptoms:** Read latency spikes, "TombstoneOverwhelmingException" in logs
+
+**Diagnosis:**
+```bash
+nodetool tablestats <keyspace>.<table> | grep -i tombstone
+# Warning if tombstones_per_read > 1000
+```
+
+**Solutions:**
+
+```sql
+-- Reduce gc_grace_seconds if repair runs frequently
+ALTER TABLE <keyspace>.<table>
+WITH gc_grace_seconds = 86400;  -- 1 day instead of 10 days
+```
+
+```bash
+# Force major compaction to purge tombstones
+nodetool compact <keyspace> <table>
+```
+
+#### Poor Cache Hit Rates
+
+**Symptoms:** High disk reads, low cache hit rates
+
+**Diagnosis:**
+```bash
+nodetool info | grep -i cache
+# Key cache hit rate should be >80%
+```
+
+**Solutions:**
+
+```yaml
+# cassandra.yaml - increase key cache
+key_cache_size_in_mb: 100  # Default: auto (5% heap)
+
+# Enable row cache for frequently accessed tables (use sparingly)
+# ALTER TABLE with row_cache_enabled = true
+```
+
+### Read Path Optimization Summary
+
+| Optimization | Impact | Configuration |
+|--------------|--------|---------------|
+| Increase key cache | Fewer index lookups | `key_cache_size_in_mb` |
+| Use prepared statements | Reduced parsing | Application code |
+| Token-aware routing | Reduced coordinator hops | Driver configuration |
+| Appropriate consistency | Fewer replicas read | Application code |
+| Compression | Faster disk reads | Table compression settings |
+
+---
+
+## Write Performance Tuning
+
+### Diagnosing Slow Writes
+
+```bash
+# Step 1: Check write latency
+nodetool proxyhistograms
+
+# Step 2: Check memtable status
+nodetool tpstats | grep -i memtable
+
+# Step 3: Check commit log disk
+df -h /var/lib/cassandra/commitlog
+iostat -x 1 5
+
+# Step 4: Check pending mutations
+nodetool tpstats | grep -i mutation
+
+# Step 5: Check if compaction is overwhelming
+nodetool compactionstats
+```
+
+### Common Write Performance Issues
+
+#### Commit Log Contention
+
+**Symptoms:** Write latency spikes, commit log disk at 100% utilization
+
+**Solutions:**
+
+```yaml
+# cassandra.yaml - use separate disk for commitlog
+commitlog_directory: /mnt/commitlog  # SSD recommended
+
+# Adjust sync mode
+commitlog_sync: periodic
+commitlog_sync_period_in_ms: 10000  # Default
+
+# Or for durability-critical workloads
+commitlog_sync: batch
+commitlog_sync_batch_window_in_ms: 2
+```
+
+#### Memtable Flush Bottleneck
+
+**Symptoms:** Memtable flush taking too long, high memory pressure
+
+**Solutions:**
+
+```yaml
+# cassandra.yaml
+memtable_cleanup_threshold: 0.33  # Flush when 33% of heap in memtables
+memtable_flush_writers: 4         # Increase for more flush parallelism
+```
+
+#### Compaction Falling Behind
+
+**Symptoms:** Growing pending compactions, disk space increasing
+
+**Solutions:**
+
+```yaml
+# cassandra.yaml - increase compaction throughput
+compaction_throughput_mb_per_sec: 64  # Default 64, increase if disk allows
+
+# Increase concurrent compactors
+concurrent_compactors: 4  # Default: min(num_cpus, disk_count)
+```
+
+```bash
+# Runtime adjustment
+nodetool setcompactionthroughput 128
+```
+
+### Write Path Optimization Summary
+
+| Optimization | Impact | Configuration |
+|--------------|--------|---------------|
+| Separate commit log disk | Reduced write latency | `commitlog_directory` |
+| Increase memtable size | Fewer flushes | `memtable_heap_space_in_mb` |
+| Tune commit log sync | Latency vs durability | `commitlog_sync` |
+| Batch writes | Amortized overhead | Application batching |
+| Use UNLOGGED batches | Reduced coordinator work | For same-partition writes |
+
+---
+
+## Troubleshooting Performance
+
+### Systematic Investigation
+
+```bash
+#!/bin/bash
+# performance-investigation.sh
+
+echo "=== System Resources ==="
+top -bn1 | head -20
+free -h
+df -h /var/lib/cassandra
+
+echo -e "\n=== Cassandra Status ==="
+nodetool status
+nodetool tpstats | grep -v "^$"
+
+echo -e "\n=== Latency Histograms ==="
+nodetool proxyhistograms
+
+echo -e "\n=== Compaction Status ==="
+nodetool compactionstats
+
+echo -e "\n=== GC Stats ==="
+nodetool gcstats
+
+echo -e "\n=== Recent Errors ==="
+tail -50 /var/log/cassandra/system.log | grep -i error
+```
+
+### Common Issues Quick Reference
+
+| Symptom | First Check | Common Cause |
+|---------|-------------|--------------|
+| High read latency | `nodetool tablestats` | Tombstones, SSTable count |
+| High write latency | `iostat`, commit log disk | Disk saturation |
+| Request timeouts | `nodetool tpstats` | Thread pool exhaustion |
+| Memory pressure | `nodetool info` | Heap too small, large partitions |
+| Cluster imbalance | `nodetool status` | Uneven token distribution |
+
+---
+
+## AxonOps Performance Management
+
+Identifying and resolving performance issues requires correlating metrics, analyzing query patterns, and understanding the impact of configuration changes. [AxonOps](https://axonops.com) provides tools that simplify performance management.
+
+### Performance Analytics
+
+AxonOps provides:
+
+- **Slow query identification**: Automatic detection and ranking of slow queries
+- **Query pattern analysis**: Identify inefficient access patterns
+- **Hot partition detection**: Find partitions causing load imbalance
+- **Historical comparison**: Compare current performance to baselines
+
+### Capacity Planning
+
+- **Growth forecasting**: Predict when capacity will be exhausted
+- **Trend analysis**: Identify gradual performance degradation
+- **What-if modeling**: Simulate impact of configuration changes
+- **Right-sizing recommendations**: Optimize resource allocation
+
+### Configuration Management
+
+- **Configuration drift detection**: Identify nodes with different settings
+- **Change tracking**: Audit log of all configuration changes
+- **Impact analysis**: Correlate configuration changes with performance
+- **Rollback guidance**: Quickly identify when changes caused issues
+
+See the [AxonOps documentation](/monitoring/) for performance management features.
+
+---
+
 ## Next Steps
 
 - **[Monitoring Guide](../monitoring/index.md)** - Monitoring cluster health
-- **[Configuration Reference](../configuration/index.md)** - Cassandra configuration
+- **[Compaction Management](../compaction-management/index.md)** - Compaction tuning details
+- **[Maintenance](../maintenance/index.md)** - Maintenance for performance
+- **[Architecture: Read Path](../../architecture/storage-engine/read-path.md)** - Understanding read performance
+- **[Architecture: Write Path](../../architecture/storage-engine/write-path.md)** - Understanding write performance

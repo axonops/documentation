@@ -14,59 +14,39 @@ Cassandra's fault tolerance derives from three architectural properties:
 | **Decentralization** | No master node, peer-to-peer | No single point of failure for coordination |
 | **Tunable consistency** | Configurable read/write guarantees | Trade-off availability vs consistency |
 
-```graphviz dot fault-tolerance-layers.svg
-digraph FaultToleranceLayers {
-    fontname="Helvetica";
-    node [fontname="Helvetica", fontsize=10];
-    edge [fontname="Helvetica", fontsize=9];
-    rankdir=TB;
+```plantuml
+@startuml
+skinparam backgroundColor #FEFEFE
 
-    label="Fault Tolerance Architecture";
-    labelloc="t";
-    fontsize=12;
+title Fault Tolerance Architecture
 
-    node [shape=box, style="rounded,filled"];
-
-    subgraph cluster_client {
-        label="Client Layer";
-        style="rounded,filled";
-        fillcolor="#E8F4E8";
-        color="#99CC99";
-
-        driver [label="Driver\n• Connection pooling\n• Request routing\n• Retry policies", fillcolor="#5B9BD5", fontcolor="white"];
-        lb [label="Load Balancing Policy\n• Token-aware routing\n• DC-aware routing\n• Latency-aware", fillcolor="#5B9BD5", fontcolor="white"];
-        retry [label="Retry Policy\n• Idempotent retries\n• Speculative execution\n• Fallback strategies", fillcolor="#5B9BD5", fontcolor="white"];
-    }
-
-    subgraph cluster_server {
-        label="Server Layer";
-        style="rounded,filled";
-        fillcolor="#FFE8E8";
-        color="#CC9999";
-
-        coordinator [label="Coordinator\n• Request routing\n• Replica selection\n• Timeout handling", fillcolor="#C55A11", fontcolor="white"];
-        gossip [label="Gossip\n• Failure detection\n• Topology awareness\n• State propagation", fillcolor="#C55A11", fontcolor="white"];
-        hints [label="Hinted Handoff\n• Write buffering\n• Eventual delivery\n• Consistency repair", fillcolor="#C55A11", fontcolor="white"];
-    }
-
-    subgraph cluster_data {
-        label="Data Layer";
-        style="rounded,filled";
-        fillcolor="#E8E8F4";
-        color="#9999CC";
-
-        replication [label="Replication\n• RF copies per partition\n• Multi-DC replication\n• Rack distribution", fillcolor="#70AD47", fontcolor="white"];
-        repair [label="Repair\n• Anti-entropy\n• Merkle trees\n• Consistency restoration", fillcolor="#70AD47", fontcolor="white"];
-    }
-
-    driver -> lb -> retry;
-    retry -> coordinator [style=dashed];
-    coordinator -> gossip;
-    coordinator -> hints;
-    gossip -> replication;
-    hints -> replication;
-    replication -> repair;
+rectangle "Client Layer" as client_layer #E8F4E8 {
+    card "Driver\n• Connection pooling\n• Request routing\n• Retry policies" as driver #5B9BD5
+    card "Load Balancing Policy\n• Token-aware routing\n• DC-aware routing\n• Latency-aware" as lb #5B9BD5
+    card "Retry Policy\n• Idempotent retries\n• Speculative execution\n• Fallback strategies" as retry #5B9BD5
 }
+
+rectangle "Server Layer" as server_layer #FFE8E8 {
+    card "Coordinator\n• Request routing\n• Replica selection\n• Timeout handling" as coordinator #C55A11
+    card "Gossip\n• Failure detection\n• Topology awareness\n• State propagation" as gossip #C55A11
+    card "Hinted Handoff\n• Write buffering\n• Eventual delivery\n• Consistency repair" as hints #C55A11
+}
+
+rectangle "Data Layer" as data_layer #E8E8F4 {
+    card "Replication\n• RF copies per partition\n• Multi-DC replication\n• Rack distribution" as replication #70AD47
+    card "Repair\n• Anti-entropy\n• Merkle trees\n• Consistency restoration" as repair #70AD47
+}
+
+driver --> lb
+lb --> retry
+retry ..> coordinator
+coordinator --> gossip
+coordinator --> hints
+gossip --> replication
+hints --> replication
+replication --> repair
+
+@enduml
 ```
 
 ---
@@ -77,30 +57,24 @@ digraph FaultToleranceLayers {
 
 Failures occur at different scopes, each with distinct characteristics and recovery strategies:
 
-```graphviz dot failure-hierarchy.svg
-digraph FailureHierarchy {
-    fontname="Helvetica";
-    node [fontname="Helvetica", fontsize=10];
-    edge [fontname="Helvetica", fontsize=9];
-    rankdir=TB;
+```plantuml
+@startuml
+skinparam backgroundColor #FEFEFE
 
-    label="Failure Scope Hierarchy";
-    labelloc="t";
-    fontsize=12;
+title Failure Scope Hierarchy
 
-    node [shape=box, style="rounded,filled"];
+card "Process Failure\n• JVM crash\n• OOM kill\n• Application bug" as process #70AD47
+card "Node Failure\n• Hardware failure\n• OS crash\n• Power loss" as node_f #5B9BD5
+card "Rack Failure\n• Top-of-rack switch\n• Power distribution\n• Cooling failure" as rack #FFC000
+card "Datacenter Failure\n• Network isolation\n• Power grid\n• Natural disaster" as dc #C55A11
+card "Region Failure\n• Multiple DC outage\n• Wide-area network\n• Geographic event" as region #C00000
 
-    process [label="Process Failure\n• JVM crash\n• OOM kill\n• Application bug", fillcolor="#70AD47", fontcolor="white"];
-    node_f [label="Node Failure\n• Hardware failure\n• OS crash\n• Power loss", fillcolor="#5B9BD5", fontcolor="white"];
-    rack [label="Rack Failure\n• Top-of-rack switch\n• Power distribution\n• Cooling failure", fillcolor="#FFC000", fontcolor="black"];
-    dc [label="Datacenter Failure\n• Network isolation\n• Power grid\n• Natural disaster", fillcolor="#C55A11", fontcolor="white"];
-    region [label="Region Failure\n• Multiple DC outage\n• Wide-area network\n• Geographic event", fillcolor="#C00000", fontcolor="white"];
+process --> node_f : escalates
+node_f --> rack : correlates
+rack --> dc : correlates
+dc --> region : correlates
 
-    process -> node_f [label="escalates"];
-    node_f -> rack [label="correlates"];
-    rack -> dc [label="correlates"];
-    dc -> region [label="correlates"];
-}
+@enduml
 ```
 
 ### Failure Characteristics
@@ -121,55 +95,35 @@ digraph FailureHierarchy {
 
 The most common failure scenario. Cassandra continues operating if sufficient replicas remain:
 
-```graphviz dot single-node-failure.svg
-digraph SingleNodeFailure {
-    fontname="Helvetica";
-    node [fontname="Helvetica", fontsize=10];
-    edge [fontname="Helvetica", fontsize=9];
-    rankdir=LR;
+```plantuml
+@startuml
+skinparam backgroundColor #FEFEFE
 
-    label="Single Node Failure (RF=3, CL=QUORUM)";
-    labelloc="t";
-    fontsize=12;
+title Single Node Failure (RF=3, CL=QUORUM)
 
-    node [shape=box, style="rounded,filled"];
-
-    subgraph cluster_before {
-        label="Before Failure";
-        style="rounded,filled";
-        fillcolor="#E8F4E8";
-        color="#99CC99";
-
-        client1 [label="Client", fillcolor="#5B9BD5", fontcolor="white"];
-
-        n1 [label="Node 1\n(replica)", fillcolor="#70AD47", fontcolor="white"];
-        n2 [label="Node 2\n(replica)", fillcolor="#70AD47", fontcolor="white"];
-        n3 [label="Node 3\n(replica)", fillcolor="#70AD47", fontcolor="white"];
-
-        client1 -> n1;
-        client1 -> n2;
-        client1 -> n3;
-    }
-
-    subgraph cluster_after {
-        label="After Node 2 Fails";
-        style="rounded,filled";
-        fillcolor="#FFE8E8";
-        color="#CC9999";
-
-        client2 [label="Client", fillcolor="#5B9BD5", fontcolor="white"];
-
-        n1b [label="Node 1\n(replica)", fillcolor="#70AD47", fontcolor="white"];
-        n2b [label="Node 2\n(DOWN)", fillcolor="#C00000", fontcolor="white"];
-        n3b [label="Node 3\n(replica)", fillcolor="#70AD47", fontcolor="white"];
-
-        client2 -> n1b;
-        client2 -> n2b [style=dashed, color="red"];
-        client2 -> n3b;
-    }
-
-    n3 -> n1b [style=invis];
+rectangle "Before Failure" as before #E8F4E8 {
+    card "Client" as client1 #5B9BD5
+    card "Node 1\n(replica)" as n1 #70AD47
+    card "Node 2\n(replica)" as n2 #70AD47
+    card "Node 3\n(replica)" as n3 #70AD47
 }
+
+rectangle "After Node 2 Fails" as after #FFE8E8 {
+    card "Client" as client2 #5B9BD5
+    card "Node 1\n(replica)" as n1b #70AD47
+    card "Node 2\n(DOWN)" as n2b #C00000
+    card "Node 3\n(replica)" as n3b #70AD47
+}
+
+client1 --> n1
+client1 --> n2
+client1 --> n3
+
+client2 --> n1b
+client2 ..> n2b #red
+client2 --> n3b
+
+@enduml
 ```
 
 **Impact Analysis:**
@@ -185,30 +139,24 @@ digraph SingleNodeFailure {
 
 When a node fails, the server-side components respond:
 
-```graphviz dot server-side-response.svg
-digraph ServerSideResponse {
-    fontname="Helvetica";
-    node [fontname="Helvetica", fontsize=10];
-    edge [fontname="Helvetica", fontsize=9];
-    rankdir=TB;
+```plantuml
+@startuml
+skinparam backgroundColor #FEFEFE
 
-    label="Server-Side Failure Response";
-    labelloc="t";
-    fontsize=12;
+title Server-Side Failure Response
 
-    node [shape=box, style="rounded,filled"];
+card "Node Failure\nDetected" as failure #C00000
+card "1. Phi Accrual Detection\nφ exceeds threshold (~8-10s)" as phi #5B9BD5
+card "2. Gossip Propagation\nDOWN status spreads (~seconds)" as gossip #5B9BD5
+card "3. Hinted Handoff\nWrites stored for failed node" as hints #FFC000
+card "4. Request Rerouting\nExclude from replica selection" as reroute #70AD47
 
-    failure [label="Node Failure\nDetected", fillcolor="#C00000", fontcolor="white"];
+failure --> phi
+phi --> gossip
+gossip --> hints
+gossip --> reroute
 
-    phi [label="1. Phi Accrual Detection\nφ exceeds threshold (~8-10s)", fillcolor="#5B9BD5", fontcolor="white"];
-    gossip [label="2. Gossip Propagation\nDOWN status spreads (~seconds)", fillcolor="#5B9BD5", fontcolor="white"];
-    hints [label="3. Hinted Handoff\nWrites stored for failed node", fillcolor="#FFC000", fontcolor="black"];
-    reroute [label="4. Request Rerouting\nExclude from replica selection", fillcolor="#70AD47", fontcolor="white"];
-
-    failure -> phi -> gossip;
-    gossip -> hints;
-    gossip -> reroute;
-}
+@enduml
 ```
 
 **Timeline:**
@@ -226,61 +174,40 @@ digraph ServerSideResponse {
 
 The driver detects and responds to node failures:
 
-```graphviz dot client-side-response.svg
-digraph ClientSideResponse {
-    fontname="Helvetica";
-    node [fontname="Helvetica", fontsize=10];
-    edge [fontname="Helvetica", fontsize=9];
-    rankdir=TB;
+```plantuml
+@startuml
+skinparam backgroundColor #FEFEFE
 
-    label="Driver Failure Response";
-    labelloc="t";
-    fontsize=12;
+title Driver Failure Response
 
-    node [shape=box, style="rounded,filled"];
-
-    subgraph cluster_detection {
-        label="Detection";
-        style="rounded,filled";
-        fillcolor="#E8E8E8";
-        color="#999999";
-
-        timeout [label="Connection Timeout\nor Read Timeout", fillcolor="#FFC000", fontcolor="black"];
-        heartbeat [label="Connection Heartbeat\nFailure", fillcolor="#FFC000", fontcolor="black"];
-        event [label="Topology Event\n(STATUS_CHANGE)", fillcolor="#FFC000", fontcolor="black"];
-    }
-
-    subgraph cluster_response {
-        label="Response";
-        style="rounded,filled";
-        fillcolor="#E8F4E8";
-        color="#99CC99";
-
-        mark [label="Mark Node DOWN\nin connection pool", fillcolor="#5B9BD5", fontcolor="white"];
-        reconnect [label="Schedule Reconnection\n(exponential backoff)", fillcolor="#5B9BD5", fontcolor="white"];
-        reroute [label="Route Requests\nto other nodes", fillcolor="#70AD47", fontcolor="white"];
-    }
-
-    subgraph cluster_retry {
-        label="Request Handling";
-        style="rounded,filled";
-        fillcolor="#FFE8E8";
-        color="#CC9999";
-
-        retry_policy [label="Retry Policy\nEvaluates error", fillcolor="#C55A11", fontcolor="white"];
-        retry_next [label="Retry on\nNext Host", fillcolor="#C55A11", fontcolor="white"];
-        fail [label="Propagate Error\nto Application", fillcolor="#C00000", fontcolor="white"];
-    }
-
-    timeout -> mark;
-    heartbeat -> mark;
-    event -> mark;
-    mark -> reconnect;
-    mark -> reroute;
-    reroute -> retry_policy;
-    retry_policy -> retry_next [label="retryable"];
-    retry_policy -> fail [label="non-retryable"];
+rectangle "Detection" as detection #E8E8E8 {
+    card "Connection Timeout\nor Read Timeout" as timeout #FFC000
+    card "Connection Heartbeat\nFailure" as heartbeat #FFC000
+    card "Topology Event\n(STATUS_CHANGE)" as event #FFC000
 }
+
+rectangle "Response" as response #E8F4E8 {
+    card "Mark Node DOWN\nin connection pool" as mark #5B9BD5
+    card "Schedule Reconnection\n(exponential backoff)" as reconnect #5B9BD5
+    card "Route Requests\nto other nodes" as reroute #70AD47
+}
+
+rectangle "Request Handling" as request_handling #FFE8E8 {
+    card "Retry Policy\nEvaluates error" as retry_policy #C55A11
+    card "Retry on\nNext Host" as retry_next #C55A11
+    card "Propagate Error\nto Application" as fail #C00000
+}
+
+timeout --> mark
+heartbeat --> mark
+event --> mark
+mark --> reconnect
+mark --> reroute
+reroute --> retry_policy
+retry_policy --> retry_next : retryable
+retry_policy --> fail : non-retryable
+
+@enduml
 ```
 
 ---
@@ -291,106 +218,67 @@ digraph ClientSideResponse {
 
 With `NetworkTopologyStrategy` and rack-aware placement, Cassandra distributes replicas across racks:
 
-```graphviz dot rack-aware-placement.svg
-digraph RackAwarePlacement {
-    fontname="Helvetica";
-    node [fontname="Helvetica", fontsize=10];
-    edge [fontname="Helvetica", fontsize=9];
-    rankdir=TB;
+```plantuml
+@startuml
+skinparam backgroundColor #FEFEFE
 
-    label="Rack-Aware Replica Placement (RF=3)";
-    labelloc="t";
-    fontsize=12;
+title Rack-Aware Replica Placement (RF=3)
 
-    node [shape=box, style="rounded,filled"];
+card "Partition A" as partition #FFC000
 
-    subgraph cluster_dc1 {
-        label="Datacenter 1";
-        style="rounded,filled";
-        fillcolor="#E8E8E8";
-        color="#999999";
-
-        subgraph cluster_rack1 {
-            label="Rack 1";
-            style="rounded,filled";
-            fillcolor="#E8F4E8";
-            color="#99CC99";
-
-            r1n1 [label="Node 1\nReplica A", fillcolor="#5B9BD5", fontcolor="white"];
-            r1n2 [label="Node 2", fillcolor="#70AD47", fontcolor="white"];
-        }
-
-        subgraph cluster_rack2 {
-            label="Rack 2";
-            style="rounded,filled";
-            fillcolor="#FFE8E8";
-            color="#CC9999";
-
-            r2n1 [label="Node 3\nReplica A", fillcolor="#5B9BD5", fontcolor="white"];
-            r2n2 [label="Node 4", fillcolor="#70AD47", fontcolor="white"];
-        }
-
-        subgraph cluster_rack3 {
-            label="Rack 3";
-            style="rounded,filled";
-            fillcolor="#E8E8F4";
-            color="#9999CC";
-
-            r3n1 [label="Node 5\nReplica A", fillcolor="#5B9BD5", fontcolor="white"];
-            r3n2 [label="Node 6", fillcolor="#70AD47", fontcolor="white"];
-        }
+rectangle "Datacenter 1" as dc1 #E8E8E8 {
+    rectangle "Rack 1" as rack1 #E8F4E8 {
+        card "Node 1\nReplica A" as r1n1 #5B9BD5
+        card "Node 2" as r1n2 #70AD47
     }
 
-    partition [label="Partition A", fillcolor="#FFC000", fontcolor="black"];
-    partition -> r1n1;
-    partition -> r2n1;
-    partition -> r3n1;
+    rectangle "Rack 2" as rack2 #FFE8E8 {
+        card "Node 3\nReplica A" as r2n1 #5B9BD5
+        card "Node 4" as r2n2 #70AD47
+    }
+
+    rectangle "Rack 3" as rack3 #E8E8F4 {
+        card "Node 5\nReplica A" as r3n1 #5B9BD5
+        card "Node 6" as r3n2 #70AD47
+    }
 }
+
+partition --> r1n1
+partition --> r2n1
+partition --> r3n1
+
+@enduml
 ```
 
 ### Rack Failure Impact
 
-```graphviz dot rack-failure.svg
-digraph RackFailure {
-    fontname="Helvetica";
-    node [fontname="Helvetica", fontsize=10];
-    edge [fontname="Helvetica", fontsize=9];
-    rankdir=LR;
+```plantuml
+@startuml
+skinparam backgroundColor #FEFEFE
 
-    label="Rack Failure Scenario (RF=3, 3 Racks)";
-    labelloc="t";
-    fontsize=12;
+title Rack Failure Scenario (RF=3, 3 Racks)
 
-    node [shape=box, style="rounded,filled"];
-
-    subgraph cluster_healthy {
-        label="Healthy State";
-        style="rounded,filled";
-        fillcolor="#E8F4E8";
-        color="#99CC99";
-
-        rack1_h [label="Rack 1\n2 nodes\n1 replica", fillcolor="#70AD47", fontcolor="white"];
-        rack2_h [label="Rack 2\n2 nodes\n1 replica", fillcolor="#70AD47", fontcolor="white"];
-        rack3_h [label="Rack 3\n2 nodes\n1 replica", fillcolor="#70AD47", fontcolor="white"];
-    }
-
-    subgraph cluster_failed {
-        label="Rack 2 Failed";
-        style="rounded,filled";
-        fillcolor="#FFE8E8";
-        color="#CC9999";
-
-        rack1_f [label="Rack 1\n2 nodes\n1 replica", fillcolor="#70AD47", fontcolor="white"];
-        rack2_f [label="Rack 2\nDOWN", fillcolor="#C00000", fontcolor="white"];
-        rack3_f [label="Rack 3\n2 nodes\n1 replica", fillcolor="#70AD47", fontcolor="white"];
-    }
-
-    rack3_h -> rack1_f [style=invis];
-
-    result [label="Result:\n• 2 of 3 replicas available\n• QUORUM satisfied\n• ONE satisfied\n• ALL fails", shape=note, fillcolor="#FFC000", fontcolor="black"];
-
-    rack3_f -> result [style=invis];
+rectangle "Healthy State" as healthy #E8F4E8 {
+    card "Rack 1\n2 nodes\n1 replica" as rack1_h #70AD47
+    card "Rack 2\n2 nodes\n1 replica" as rack2_h #70AD47
+    card "Rack 3\n2 nodes\n1 replica" as rack3_h #70AD47
 }
+
+rectangle "Rack 2 Failed" as failed #FFE8E8 {
+    card "Rack 1\n2 nodes\n1 replica" as rack1_f #70AD47
+    card "Rack 2\nDOWN" as rack2_f #C00000
+    card "Rack 3\n2 nodes\n1 replica" as rack3_f #70AD47
+}
+
+note right of failed
+  Result:
+  • 2 of 3 replicas available
+  • QUORUM satisfied
+  • ONE satisfied
+  • ALL fails
+end note
+
+@enduml
 ```
 
 **Rack Failure Tolerance:**
@@ -408,100 +296,67 @@ digraph RackFailure {
 
 ### Multi-Datacenter Topology
 
-```graphviz dot multi-dc-topology.svg
-digraph MultiDCTopology {
-    fontname="Helvetica";
-    node [fontname="Helvetica", fontsize=10];
-    edge [fontname="Helvetica", fontsize=9];
-    rankdir=LR;
+```plantuml
+@startuml
+skinparam backgroundColor #FEFEFE
 
-    label="Multi-Datacenter Topology (RF=3 per DC)";
-    labelloc="t";
-    fontsize=12;
+title Multi-Datacenter Topology (RF=3 per DC)
 
-    node [shape=box, style="rounded,filled"];
-
-    subgraph cluster_dc1 {
-        label="DC1 (US-East)";
-        style="rounded,filled";
-        fillcolor="#E8F4E8";
-        color="#99CC99";
-
-        dc1_n1 [label="Node 1", fillcolor="#5B9BD5", fontcolor="white"];
-        dc1_n2 [label="Node 2", fillcolor="#5B9BD5", fontcolor="white"];
-        dc1_n3 [label="Node 3", fillcolor="#5B9BD5", fontcolor="white"];
-    }
-
-    subgraph cluster_dc2 {
-        label="DC2 (US-West)";
-        style="rounded,filled";
-        fillcolor="#FFE8E8";
-        color="#CC9999";
-
-        dc2_n1 [label="Node 4", fillcolor="#C55A11", fontcolor="white"];
-        dc2_n2 [label="Node 5", fillcolor="#C55A11", fontcolor="white"];
-        dc2_n3 [label="Node 6", fillcolor="#C55A11", fontcolor="white"];
-    }
-
-    subgraph cluster_dc3 {
-        label="DC3 (EU-West)";
-        style="rounded,filled";
-        fillcolor="#E8E8F4";
-        color="#9999CC";
-
-        dc3_n1 [label="Node 7", fillcolor="#70AD47", fontcolor="white"];
-        dc3_n2 [label="Node 8", fillcolor="#70AD47", fontcolor="white"];
-        dc3_n3 [label="Node 9", fillcolor="#70AD47", fontcolor="white"];
-    }
-
-    dc1_n1 -> dc2_n1 [style=dashed, label="async\nreplication"];
-    dc1_n1 -> dc3_n1 [style=dashed, label="async\nreplication"];
-    dc2_n1 -> dc3_n1 [style=dashed];
+rectangle "DC1 (US-East)" as dc1 #E8F4E8 {
+    card "Node 1" as dc1_n1 #5B9BD5
+    card "Node 2" as dc1_n2 #5B9BD5
+    card "Node 3" as dc1_n3 #5B9BD5
 }
+
+rectangle "DC2 (US-West)" as dc2 #FFE8E8 {
+    card "Node 4" as dc2_n1 #C55A11
+    card "Node 5" as dc2_n2 #C55A11
+    card "Node 6" as dc2_n3 #C55A11
+}
+
+rectangle "DC3 (EU-West)" as dc3 #E8E8F4 {
+    card "Node 7" as dc3_n1 #70AD47
+    card "Node 8" as dc3_n2 #70AD47
+    card "Node 9" as dc3_n3 #70AD47
+}
+
+dc1_n1 ..> dc2_n1 : async\nreplication
+dc1_n1 ..> dc3_n1 : async\nreplication
+dc2_n1 ..> dc3_n1
+
+@enduml
 ```
 
 ### DC Failure Response
 
-```graphviz dot dc-failure-response.svg
-digraph DCFailureResponse {
-    fontname="Helvetica";
-    node [fontname="Helvetica", fontsize=10];
-    edge [fontname="Helvetica", fontsize=9];
-    rankdir=TB;
+```plantuml
+@startuml
+skinparam backgroundColor #FEFEFE
 
-    label="Datacenter Failure Response";
-    labelloc="t";
-    fontsize=12;
+title Datacenter Failure Response
 
-    node [shape=box, style="rounded,filled"];
+card "DC1 Fails\n(network partition or outage)" as failure #C00000
 
-    failure [label="DC1 Fails\n(network partition or outage)", fillcolor="#C00000", fontcolor="white"];
-
-    subgraph cluster_server_response {
-        label="Server Response";
-        style="rounded,filled";
-        fillcolor="#E8E8E8";
-        color="#999999";
-
-        detect [label="All DC1 nodes\nmarked DOWN", fillcolor="#5B9BD5", fontcolor="white"];
-        hints_dc [label="Hints stored\nfor DC1 nodes", fillcolor="#5B9BD5", fontcolor="white"];
-        continue [label="DC2/DC3 continue\nserving requests", fillcolor="#70AD47", fontcolor="white"];
-    }
-
-    subgraph cluster_client_response {
-        label="Client Response (DC-Aware Policy)";
-        style="rounded,filled";
-        fillcolor="#FFE8E8";
-        color="#CC9999";
-
-        local_fail [label="Local DC\nunavailable", fillcolor="#FFC000", fontcolor="black"];
-        failover [label="Failover to\nremote DC", fillcolor="#C55A11", fontcolor="white"];
-        latency [label="Higher latency\n(cross-DC)", fillcolor="#C55A11", fontcolor="white"];
-    }
-
-    failure -> detect -> hints_dc -> continue;
-    failure -> local_fail -> failover -> latency;
+rectangle "Server Response" as server_response #E8E8E8 {
+    card "All DC1 nodes\nmarked DOWN" as detect #5B9BD5
+    card "Hints stored\nfor DC1 nodes" as hints_dc #5B9BD5
+    card "DC2/DC3 continue\nserving requests" as continue #70AD47
 }
+
+rectangle "Client Response (DC-Aware Policy)" as client_response #FFE8E8 {
+    card "Local DC\nunavailable" as local_fail #FFC000
+    card "Failover to\nremote DC" as failover #C55A11
+    card "Higher latency\n(cross-DC)" as latency #C55A11
+}
+
+failure --> detect
+detect --> hints_dc
+hints_dc --> continue
+failure --> local_fail
+local_fail --> failover
+failover --> latency
+
+@enduml
 ```
 
 ### Consistency Level Behavior During DC Failure
@@ -523,33 +378,26 @@ digraph DCFailureResponse {
 
 The load balancing policy determines how requests are routed, including during failures:
 
-```graphviz dot load-balancing-policy.svg
-digraph LoadBalancingPolicy {
-    fontname="Helvetica";
-    node [fontname="Helvetica", fontsize=10];
-    edge [fontname="Helvetica", fontsize=9];
-    rankdir=TB;
+```plantuml
+@startuml
+skinparam backgroundColor #FEFEFE
 
-    label="Load Balancing Policy Decision Flow";
-    labelloc="t";
-    fontsize=12;
+title Load Balancing Policy Decision Flow
 
-    node [shape=box, style="rounded,filled"];
+card "Client Request" as request #5B9BD5
+card "Token-Aware\nIdentify replica nodes\nfor partition key" as token #FFC000
+card "DC-Aware\nPrefer local DC\nFallback to remote" as dc_aware #FFC000
+card "Rack-Aware\n(Optional)\nDistribute across racks" as rack_aware #FFC000
+card "Latency-Aware\n(Optional)\nPrefer fastest nodes" as latency #FFC000
+card "Select Node\nfrom filtered set" as select #70AD47
 
-    request [label="Client Request", fillcolor="#5B9BD5", fontcolor="white"];
+request --> token
+token --> dc_aware
+dc_aware --> rack_aware
+rack_aware --> latency
+latency --> select
 
-    token [label="Token-Aware\nIdentify replica nodes\nfor partition key", fillcolor="#FFC000", fontcolor="black"];
-
-    dc_aware [label="DC-Aware\nPrefer local DC\nFallback to remote", fillcolor="#FFC000", fontcolor="black"];
-
-    rack_aware [label="Rack-Aware\n(Optional)\nDistribute across racks", fillcolor="#FFC000", fontcolor="black"];
-
-    latency [label="Latency-Aware\n(Optional)\nPrefer fastest nodes", fillcolor="#FFC000", fontcolor="black"];
-
-    select [label="Select Node\nfrom filtered set", fillcolor="#70AD47", fontcolor="white"];
-
-    request -> token -> dc_aware -> rack_aware -> latency -> select;
-}
+@enduml
 ```
 
 **Policy Configuration for Fault Tolerance:**
@@ -569,44 +417,41 @@ LoadBalancingPolicy policy = new TokenAwarePolicy(
 
 The retry policy determines whether and how to retry failed requests:
 
-```graphviz dot retry-policy-flow.svg
-digraph RetryPolicyFlow {
-    fontname="Helvetica";
-    node [fontname="Helvetica", fontsize=10];
-    edge [fontname="Helvetica", fontsize=9];
-    rankdir=TB;
+```plantuml
+@startuml
+skinparam backgroundColor #FEFEFE
 
-    label="Retry Policy Decision Flow";
-    labelloc="t";
-    fontsize=12;
+title Retry Policy Decision Flow
 
-    node [shape=box, style="rounded,filled"];
+start
+#C00000:Request Error;
 
-    error [label="Request Error", fillcolor="#C00000", fontcolor="white"];
+if (Error Type?) then (ReadTimeout)
+    #5B9BD5:Read Timeout\nData received?;
+    if (data received?) then (yes)
+        #70AD47:Retry\nSame Host;
+    else (no)
+        #70AD47:Retry\nNext Host;
+    endif
+elseif (WriteTimeout)
+    #5B9BD5:Write Timeout\nWrite type?;
+    if (idempotent?) then (yes)
+        #70AD47:Retry\nSame Host;
+    else (no)
+        #C00000:Rethrow\nto Application;
+    endif
+else (Unavailable)
+    #5B9BD5:Unavailable\nReplicas available?;
+    if (enough alive?) then (yes)
+        #70AD47:Retry\nNext Host;
+    else (no)
+        #C00000:Rethrow\nto Application;
+    endif
+endif
 
-    check_type [label="Error Type?", shape=diamond, fillcolor="#E8E8E8", fontcolor="black"];
+stop
 
-    read_timeout [label="Read Timeout\nData received?", fillcolor="#5B9BD5", fontcolor="white"];
-    write_timeout [label="Write Timeout\nWrite type?", fillcolor="#5B9BD5", fontcolor="white"];
-    unavailable [label="Unavailable\nReplicas available?", fillcolor="#5B9BD5", fontcolor="white"];
-
-    retry_same [label="Retry\nSame Host", fillcolor="#70AD47", fontcolor="white"];
-    retry_next [label="Retry\nNext Host", fillcolor="#70AD47", fontcolor="white"];
-    rethrow [label="Rethrow\nto Application", fillcolor="#C00000", fontcolor="white"];
-    ignore [label="Ignore\n(return empty)", fillcolor="#FFC000", fontcolor="black"];
-
-    error -> check_type;
-    check_type -> read_timeout [label="ReadTimeout"];
-    check_type -> write_timeout [label="WriteTimeout"];
-    check_type -> unavailable [label="Unavailable"];
-
-    read_timeout -> retry_same [label="data received"];
-    read_timeout -> retry_next [label="no data"];
-    write_timeout -> rethrow [label="non-idempotent"];
-    write_timeout -> retry_same [label="idempotent"];
-    unavailable -> retry_next [label="enough alive"];
-    unavailable -> rethrow [label="not enough"];
-}
+@enduml
 ```
 
 **Error Types and Retry Behavior:**
@@ -623,41 +468,30 @@ digraph RetryPolicyFlow {
 
 Speculative execution sends redundant requests to reduce tail latency:
 
-```graphviz dot speculative-execution.svg
-digraph SpeculativeExecution {
-    fontname="Helvetica";
-    node [fontname="Helvetica", fontsize=10];
-    edge [fontname="Helvetica", fontsize=9];
-    rankdir=LR;
+```plantuml
+@startuml
+skinparam backgroundColor #FEFEFE
 
-    label="Speculative Execution (delay=100ms)";
-    labelloc="t";
-    fontsize=12;
+title Speculative Execution (delay=100ms)
 
-    node [shape=box, style="rounded,filled"];
+card "Client" as client #5B9BD5
 
-    client [label="Client", fillcolor="#5B9BD5", fontcolor="white"];
-
-    subgraph cluster_timeline {
-        label="Timeline";
-        style="rounded,filled";
-        fillcolor="#E8E8E8";
-        color="#999999";
-
-        t0 [label="T+0ms\nSend to Node 1", fillcolor="#70AD47", fontcolor="white"];
-        t100 [label="T+100ms\nNo response\nSend to Node 2", fillcolor="#FFC000", fontcolor="black"];
-        t150 [label="T+150ms\nNode 2 responds\nCancel Node 1", fillcolor="#70AD47", fontcolor="white"];
-    }
-
-    node1 [label="Node 1\n(slow/failed)", fillcolor="#C00000", fontcolor="white"];
-    node2 [label="Node 2\n(fast)", fillcolor="#70AD47", fontcolor="white"];
-
-    client -> t0;
-    t0 -> node1 [style=dashed];
-    t0 -> t100 [label="timeout"];
-    t100 -> node2;
-    node2 -> t150;
+rectangle "Timeline" as timeline #E8E8E8 {
+    card "T+0ms\nSend to Node 1" as t0 #70AD47
+    card "T+100ms\nNo response\nSend to Node 2" as t100 #FFC000
+    card "T+150ms\nNode 2 responds\nCancel Node 1" as t150 #70AD47
 }
+
+card "Node 1\n(slow/failed)" as node1 #C00000
+card "Node 2\n(fast)" as node2 #70AD47
+
+client --> t0
+t0 ..> node1
+t0 --> t100 : timeout
+t100 --> node2
+node2 --> t150
+
+@enduml
 ```
 
 **Speculative Execution Configuration:**
@@ -685,33 +519,26 @@ SpeculativeExecutionPolicy percentilePolicy =
 
 ### Node Recovery After Failure
 
-```graphviz dot node-recovery.svg
-digraph NodeRecovery {
-    fontname="Helvetica";
-    node [fontname="Helvetica", fontsize=10];
-    edge [fontname="Helvetica", fontsize=9];
-    rankdir=TB;
+```plantuml
+@startuml
+skinparam backgroundColor #FEFEFE
 
-    label="Node Recovery Process";
-    labelloc="t";
-    fontsize=12;
+title Node Recovery Process
 
-    node [shape=box, style="rounded,filled"];
+card "Node Restarts" as restart #5B9BD5
+card "1. Gossip Rejoin\nContact seeds/peers\nSync cluster state" as gossip_rejoin #5B9BD5
+card "2. Hints Replay\nReceive buffered writes\nfrom coordinators" as hints_replay #FFC000
+card "3. Read Repair\nFix inconsistencies\non read path" as read_repair #FFC000
+card "4. Full Repair\n(if needed)\nAnti-entropy sync" as full_repair #C55A11
+card "Fully Synchronized" as normal #70AD47
 
-    restart [label="Node Restarts", fillcolor="#5B9BD5", fontcolor="white"];
+restart --> gossip_rejoin
+gossip_rejoin --> hints_replay
+hints_replay --> read_repair
+read_repair --> full_repair
+full_repair --> normal
 
-    gossip_rejoin [label="1. Gossip Rejoin\nContact seeds/peers\nSync cluster state", fillcolor="#5B9BD5", fontcolor="white"];
-
-    hints_replay [label="2. Hints Replay\nReceive buffered writes\nfrom coordinators", fillcolor="#FFC000", fontcolor="black"];
-
-    read_repair [label="3. Read Repair\nFix inconsistencies\non read path", fillcolor="#FFC000", fontcolor="black"];
-
-    full_repair [label="4. Full Repair\n(if needed)\nAnti-entropy sync", fillcolor="#C55A11", fontcolor="white"];
-
-    normal [label="Fully Synchronized", fillcolor="#70AD47", fontcolor="white"];
-
-    restart -> gossip_rejoin -> hints_replay -> read_repair -> full_repair -> normal;
-}
+@enduml
 ```
 
 **Recovery Timeline:**
@@ -736,47 +563,34 @@ Full repair should be run after recovery if:
 
 ### Datacenter Recovery
 
-```graphviz dot dc-recovery.svg
-digraph DCRecovery {
-    fontname="Helvetica";
-    node [fontname="Helvetica", fontsize=10];
-    edge [fontname="Helvetica", fontsize=9];
-    rankdir=TB;
+```plantuml
+@startuml
+skinparam backgroundColor #FEFEFE
 
-    label="Datacenter Recovery Process";
-    labelloc="t";
-    fontsize=12;
+title Datacenter Recovery Process
 
-    node [shape=box, style="rounded,filled"];
+card "DC Comes Online" as dc_online #5B9BD5
 
-    dc_online [label="DC Comes Online", fillcolor="#5B9BD5", fontcolor="white"];
-
-    subgraph cluster_immediate {
-        label="Immediate (Automatic)";
-        style="rounded,filled";
-        fillcolor="#E8F4E8";
-        color="#99CC99";
-
-        gossip_sync [label="Gossip Sync\nAll nodes rejoin cluster", fillcolor="#70AD47", fontcolor="white"];
-        hints [label="Hints Replay\nBuffered writes delivered", fillcolor="#70AD47", fontcolor="white"];
-        traffic [label="Resume Traffic\nClients reconnect", fillcolor="#70AD47", fontcolor="white"];
-    }
-
-    subgraph cluster_manual {
-        label="Manual (If Needed)";
-        style="rounded,filled";
-        fillcolor="#FFE8E8";
-        color="#CC9999";
-
-        assess [label="Assess Data Loss\nCheck hint delivery\nReview logs", fillcolor="#C55A11", fontcolor="white"];
-        repair_dc [label="Repair DC\nnodetool repair -dc <dc>", fillcolor="#C55A11", fontcolor="white"];
-        verify [label="Verify Consistency\nCompare cross-DC", fillcolor="#C55A11", fontcolor="white"];
-    }
-
-    dc_online -> gossip_sync -> hints -> traffic;
-    traffic -> assess [style=dashed, label="if prolonged outage"];
-    assess -> repair_dc -> verify;
+rectangle "Immediate (Automatic)" as immediate #E8F4E8 {
+    card "Gossip Sync\nAll nodes rejoin cluster" as gossip_sync #70AD47
+    card "Hints Replay\nBuffered writes delivered" as hints #70AD47
+    card "Resume Traffic\nClients reconnect" as traffic #70AD47
 }
+
+rectangle "Manual (If Needed)" as manual #FFE8E8 {
+    card "Assess Data Loss\nCheck hint delivery\nReview logs" as assess #C55A11
+    card "Repair DC\nnodetool repair -dc <dc>" as repair_dc #C55A11
+    card "Verify Consistency\nCompare cross-DC" as verify #C55A11
+}
+
+dc_online --> gossip_sync
+gossip_sync --> hints
+hints --> traffic
+traffic ..> assess : if prolonged outage
+assess --> repair_dc
+repair_dc --> verify
+
+@enduml
 ```
 
 ---
@@ -785,90 +599,58 @@ digraph DCRecovery {
 
 ### Active-Passive DC Failover
 
-```graphviz dot active-passive-failover.svg
-digraph ActivePassiveFailover {
-    fontname="Helvetica";
-    node [fontname="Helvetica", fontsize=10];
-    edge [fontname="Helvetica", fontsize=9];
-    rankdir=TB;
+```plantuml
+@startuml
+skinparam backgroundColor #FEFEFE
 
-    label="Active-Passive DC Failover";
-    labelloc="t";
-    fontsize=12;
+title Active-Passive DC Failover
 
-    node [shape=box, style="rounded,filled"];
-
-    subgraph cluster_normal {
-        label="Normal Operation";
-        style="rounded,filled";
-        fillcolor="#E8F4E8";
-        color="#99CC99";
-
-        app1 [label="Application", fillcolor="#5B9BD5", fontcolor="white"];
-        dc1_active [label="DC1 (Active)\nlocal_dc=dc1", fillcolor="#70AD47", fontcolor="white"];
-        dc2_standby [label="DC2 (Standby)\nreceives async replication", fillcolor="#FFC000", fontcolor="black"];
-
-        app1 -> dc1_active [label="all traffic"];
-        dc1_active -> dc2_standby [style=dashed, label="replication"];
-    }
-
-    subgraph cluster_failover {
-        label="During DC1 Failure";
-        style="rounded,filled";
-        fillcolor="#FFE8E8";
-        color="#CC9999";
-
-        app2 [label="Application", fillcolor="#5B9BD5", fontcolor="white"];
-        dc1_down [label="DC1 (DOWN)", fillcolor="#C00000", fontcolor="white"];
-        dc2_active [label="DC2 (Active)\nfailover triggered", fillcolor="#70AD47", fontcolor="white"];
-
-        app2 -> dc1_down [style=dashed, color="red"];
-        app2 -> dc2_active [label="failover traffic"];
-    }
+rectangle "Normal Operation" as normal #E8F4E8 {
+    card "Application" as app1 #5B9BD5
+    card "DC1 (Active)\nlocal_dc=dc1" as dc1_active #70AD47
+    card "DC2 (Standby)\nreceives async replication" as dc2_standby #FFC000
 }
+
+rectangle "During DC1 Failure" as failover #FFE8E8 {
+    card "Application" as app2 #5B9BD5
+    card "DC1 (DOWN)" as dc1_down #C00000
+    card "DC2 (Active)\nfailover triggered" as dc2_active #70AD47
+}
+
+app1 --> dc1_active : all traffic
+dc1_active ..> dc2_standby : replication
+
+app2 ..> dc1_down #red
+app2 --> dc2_active : failover traffic
+
+@enduml
 ```
 
 ### Active-Active DC Pattern
 
-```graphviz dot active-active.svg
-digraph ActiveActive {
-    fontname="Helvetica";
-    node [fontname="Helvetica", fontsize=10];
-    edge [fontname="Helvetica", fontsize=9];
-    rankdir=TB;
+```plantuml
+@startuml
+skinparam backgroundColor #FEFEFE
 
-    label="Active-Active Multi-DC Pattern";
-    labelloc="t";
-    fontsize=12;
+title Active-Active Multi-DC Pattern
 
-    node [shape=box, style="rounded,filled"];
-
-    subgraph cluster_apps {
-        label="Application Layer";
-        style="rounded,filled";
-        fillcolor="#E8E8E8";
-        color="#999999";
-
-        app_east [label="App (US-East)\nlocal_dc=dc1", fillcolor="#5B9BD5", fontcolor="white"];
-        app_west [label="App (US-West)\nlocal_dc=dc2", fillcolor="#5B9BD5", fontcolor="white"];
-    }
-
-    subgraph cluster_dcs {
-        label="Cassandra Cluster";
-        style="rounded,filled";
-        fillcolor="#E8F4E8";
-        color="#99CC99";
-
-        dc1 [label="DC1 (US-East)\nRF=3", fillcolor="#70AD47", fontcolor="white"];
-        dc2 [label="DC2 (US-West)\nRF=3", fillcolor="#70AD47", fontcolor="white"];
-    }
-
-    app_east -> dc1 [label="local"];
-    app_west -> dc2 [label="local"];
-    app_east -> dc2 [style=dashed, label="failover"];
-    app_west -> dc1 [style=dashed, label="failover"];
-    dc1 -> dc2 [dir=both, label="async replication"];
+rectangle "Application Layer" as apps #E8E8E8 {
+    card "App (US-East)\nlocal_dc=dc1" as app_east #5B9BD5
+    card "App (US-West)\nlocal_dc=dc2" as app_west #5B9BD5
 }
+
+rectangle "Cassandra Cluster" as cluster #E8F4E8 {
+    card "DC1 (US-East)\nRF=3" as dc1 #70AD47
+    card "DC2 (US-West)\nRF=3" as dc2 #70AD47
+}
+
+app_east --> dc1 : local
+app_west --> dc2 : local
+app_east ..> dc2 : failover
+app_west ..> dc1 : failover
+dc1 <--> dc2 : async replication
+
+@enduml
 ```
 
 **Active-Active Considerations:**

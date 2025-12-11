@@ -8,57 +8,36 @@ This section describes the mechanisms by which Cassandra nodes form, maintain, a
 
 Cassandra's cluster management is built upon several interconnected subsystems:
 
-```graphviz dot cluster-management-overview.svg
-digraph ClusterManagement {
-    fontname="Helvetica";
-    node [fontname="Helvetica", fontsize=10];
-    edge [fontname="Helvetica", fontsize=9];
-    rankdir=TB;
+```plantuml
+@startuml
+skinparam backgroundColor #FEFEFE
 
-    label="Cluster Management Subsystems";
-    labelloc="t";
-    fontsize=12;
+title Cluster Management Subsystems
 
-    node [shape=box, style="rounded,filled"];
-
-    subgraph cluster_core {
-        label="Core Coordination";
-        style="rounded,filled";
-        fillcolor="#E8F4E8";
-        color="#99CC99";
-
-        gossip [label="Gossip Protocol\n• State dissemination\n• Failure detection\n• Membership tracking", fillcolor="#5B9BD5", fontcolor="white"];
-        seeds [label="Seed Nodes\n• Bootstrap discovery\n• Partition recovery\n• Initial contact points", fillcolor="#5B9BD5", fontcolor="white"];
-    }
-
-    subgraph cluster_lifecycle {
-        label="Node Lifecycle";
-        style="rounded,filled";
-        fillcolor="#FFE8E8";
-        color="#CC9999";
-
-        join [label="Joining\n• Bootstrap\n• Token allocation\n• Data streaming", fillcolor="#70AD47", fontcolor="white"];
-        leave [label="Leaving\n• Decommission\n• Range transfer\n• Graceful exit", fillcolor="#FFC000", fontcolor="black"];
-        replace [label="Replacement\n• Dead node recovery\n• Token assumption\n• Data rebuild", fillcolor="#C55A11", fontcolor="white"];
-    }
-
-    subgraph cluster_ops {
-        label="Operational";
-        style="rounded,filled";
-        fillcolor="#E8E8F4";
-        color="#9999CC";
-
-        scale [label="Scaling\n• Horizontal expansion\n• Capacity planning\n• Rebalancing", fillcolor="#7F7F7F", fontcolor="white"];
-        topology [label="Topology\n• Datacenter/Rack\n• Snitch configuration\n• Network topology", fillcolor="#7F7F7F", fontcolor="white"];
-    }
-
-    gossip -> join [style=dashed];
-    gossip -> leave [style=dashed];
-    gossip -> replace [style=dashed];
-    seeds -> gossip;
-    join -> scale [style=dashed];
-    leave -> scale [style=dashed];
+rectangle "Core Coordination" as core #E8F4E8 {
+    card "Gossip Protocol\n• State dissemination\n• Failure detection\n• Membership tracking" as gossip #5B9BD5
+    card "Seed Nodes\n• Bootstrap discovery\n• Partition recovery\n• Initial contact points" as seeds #5B9BD5
 }
+
+rectangle "Node Lifecycle" as lifecycle #FFE8E8 {
+    card "Joining\n• Bootstrap\n• Token allocation\n• Data streaming" as join #70AD47
+    card "Leaving\n• Decommission\n• Range transfer\n• Graceful exit" as leave #FFC000
+    card "Replacement\n• Dead node recovery\n• Token assumption\n• Data rebuild" as replace #C55A11
+}
+
+rectangle "Operational" as ops #E8E8F4 {
+    card "Scaling\n• Horizontal expansion\n• Capacity planning\n• Rebalancing" as scale #7F7F7F
+    card "Topology\n• Datacenter/Rack\n• Snitch configuration\n• Network topology" as topology #7F7F7F
+}
+
+seeds --> gossip
+gossip ..> join
+gossip ..> leave
+gossip ..> replace
+join ..> scale
+leave ..> scale
+
+@enduml
 ```
 
 ### Design Principles

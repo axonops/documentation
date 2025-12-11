@@ -10,43 +10,27 @@ This section covers horizontal scaling procedures for Cassandra clusters, includ
 
 Cassandra is designed for horizontal scaling—adding more nodes rather than larger nodes:
 
-```graphviz dot scaling-model.svg
-digraph ScalingModel {
-    fontname="Helvetica";
-    node [fontname="Helvetica", fontsize=10];
-    edge [fontname="Helvetica", fontsize=9];
-    rankdir=LR;
+```plantuml
+@startuml
+skinparam backgroundColor white
 
-    label="Cassandra Scaling Model";
-    labelloc="t";
-    fontsize=12;
+title Cassandra Scaling Model
 
-    node [shape=box, style="rounded,filled"];
+package "Horizontal Scaling (Recommended)" #E8F4E8 {
+    rectangle "3 Nodes\n1TB each\n3TB total" as h_before #5B9BD5
+    rectangle "6 Nodes\n500GB each\n3TB total" as h_after #70AD47
 
-    subgraph cluster_horizontal {
-        label="Horizontal Scaling (Recommended)";
-        style="rounded,filled";
-        fillcolor="#E8F4E8";
-        color="#99CC99";
-
-        h_before [label="3 Nodes\n1TB each\n3TB total", fillcolor="#5B9BD5", fontcolor="white"];
-        h_after [label="6 Nodes\n500GB each\n3TB total", fillcolor="#70AD47", fontcolor="white"];
-
-        h_before -> h_after [label="Add 3 nodes\nData rebalances"];
-    }
-
-    subgraph cluster_vertical {
-        label="Vertical Scaling (Limited)";
-        style="rounded,filled";
-        fillcolor="#FFE8E8";
-        color="#CC9999";
-
-        v_before [label="3 Nodes\n1TB each\n3TB total", fillcolor="#5B9BD5", fontcolor="white"];
-        v_after [label="3 Nodes\n2TB each\n6TB total", fillcolor="#FFC000", fontcolor="black"];
-
-        v_before -> v_after [label="Upgrade hardware\nNo rebalance"];
-    }
+    h_before --> h_after : Add 3 nodes\nData rebalances
 }
+
+package "Vertical Scaling (Limited)" #FFE8E8 {
+    rectangle "3 Nodes\n1TB each\n3TB total" as v_before #5B9BD5
+    rectangle "3 Nodes\n2TB each\n6TB total" as v_after #FFC000
+
+    v_before --> v_after : Upgrade hardware\nNo rebalance
+}
+
+@enduml
 ```
 
 | Approach | Advantages | Disadvantages |
@@ -109,28 +93,34 @@ Example: Adding 3 nodes
 
 ### Planning Node Addition
 
-```graphviz dot add-nodes-planning.svg
-digraph AddNodesPlanning {
-    fontname="Helvetica";
-    node [fontname="Helvetica", fontsize=10];
-    edge [fontname="Helvetica", fontsize=9];
-    rankdir=TB;
+```plantuml
+@startuml
+skinparam backgroundColor white
 
-    label="Node Addition Planning";
-    labelloc="t";
-    fontsize=12;
+title Node Addition Planning
 
-    node [shape=box, style="rounded,filled"];
+start
+#5B9BD5:1. Assess Current State
+• Disk, CPU, latency metrics
+• Growth projections;
+#5B9BD5:2. Calculate Nodes Needed
+• Target capacity
+• Buffer for growth;
+#5B9BD5:3. Schedule Addition
+• Low-traffic window
+• Multiple nodes? Stagger;
+#FFC000:4. Provision Hardware
+• Same specs as existing
+• Network connectivity;
+#70AD47:5. Execute Addition
+• Bootstrap one at a time
+• Monitor progress;
+#70AD47:6. Verify Balance
+• Run repair
+• Monitor distribution;
+stop
 
-    assess [label="1. Assess Current State\n• Disk, CPU, latency metrics\n• Growth projections", fillcolor="#5B9BD5", fontcolor="white"];
-    calculate [label="2. Calculate Nodes Needed\n• Target capacity\n• Buffer for growth", fillcolor="#5B9BD5", fontcolor="white"];
-    schedule [label="3. Schedule Addition\n• Low-traffic window\n• Multiple nodes? Stagger", fillcolor="#5B9BD5", fontcolor="white"];
-    provision [label="4. Provision Hardware\n• Same specs as existing\n• Network connectivity", fillcolor="#FFC000", fontcolor="black"];
-    execute [label="5. Execute Addition\n• Bootstrap one at a time\n• Monitor progress", fillcolor="#70AD47", fontcolor="white"];
-    verify [label="6. Verify Balance\n• Run repair\n• Monitor distribution", fillcolor="#70AD47", fontcolor="white"];
-
-    assess -> calculate -> schedule -> provision -> execute -> verify;
-}
+@enduml
 ```
 
 ### Addition Best Practices
@@ -208,28 +198,34 @@ allocate_tokens_for_keyspace: my_keyspace
 
 ### Planning Node Removal
 
-```graphviz dot remove-nodes-planning.svg
-digraph RemoveNodesPlanning {
-    fontname="Helvetica";
-    node [fontname="Helvetica", fontsize=10];
-    edge [fontname="Helvetica", fontsize=9];
-    rankdir=TB;
+```plantuml
+@startuml
+skinparam backgroundColor white
 
-    label="Node Removal Planning";
-    labelloc="t";
-    fontsize=12;
+title Node Removal Planning
 
-    node [shape=box, style="rounded,filled"];
+start
+#5B9BD5:1. Verify Capacity
+• Remaining nodes can handle load
+• Disk space sufficient;
+#5B9BD5:2. Check RF Constraints
+• N ≥ RF after removal
+• Per-DC requirements;
+#5B9BD5:3. Schedule Removal
+• Low-traffic window
+• One at a time;
+#FFC000:4. Decommission
+• nodetool decommission
+• Monitor streaming;
+#70AD47:5. Verify Redistribution
+• Check data distribution
+• Monitor performance;
+#70AD47:6. Cleanup
+• Update seed list if needed
+• Decommission hardware;
+stop
 
-    assess [label="1. Verify Capacity\n• Remaining nodes can handle load\n• Disk space sufficient", fillcolor="#5B9BD5", fontcolor="white"];
-    check_rf [label="2. Check RF Constraints\n• N ≥ RF after removal\n• Per-DC requirements", fillcolor="#5B9BD5", fontcolor="white"];
-    schedule [label="3. Schedule Removal\n• Low-traffic window\n• One at a time", fillcolor="#5B9BD5", fontcolor="white"];
-    execute [label="4. Decommission\n• nodetool decommission\n• Monitor streaming", fillcolor="#FFC000", fontcolor="black"];
-    verify [label="5. Verify Redistribution\n• Check data distribution\n• Monitor performance", fillcolor="#70AD47", fontcolor="white"];
-    cleanup [label="6. Cleanup\n• Update seed list if needed\n• Decommission hardware", fillcolor="#70AD47", fontcolor="white"];
-
-    assess -> check_rf -> schedule -> execute -> verify -> cleanup;
-}
+@enduml
 ```
 
 ### Removal Constraints
@@ -341,42 +337,27 @@ New node load: May still be uneven with vnodes
 
 ### Multi-Region Scaling
 
-```graphviz dot multi-region-scaling.svg
-digraph MultiRegionScaling {
-    fontname="Helvetica";
-    node [fontname="Helvetica", fontsize=10];
-    edge [fontname="Helvetica", fontsize=9];
-    rankdir=LR;
+```plantuml
+@startuml
+skinparam backgroundColor white
 
-    label="Multi-Region Scaling (RF=3 per region)";
-    labelloc="t";
-    fontsize=12;
+title Multi-Region Scaling (RF=3 per region)
 
-    node [shape=box, style="rounded,filled"];
+package "US-EAST" #E8F4E8 {
+    rectangle "6 nodes\nRF=3" as us1 #5B9BD5
+    rectangle "Add 3\n= 9 nodes" as us2 #70AD47
 
-    subgraph cluster_region1 {
-        label="US-EAST";
-        style="rounded,filled";
-        fillcolor="#E8F4E8";
-        color="#99CC99";
-
-        us1 [label="6 nodes\nRF=3", fillcolor="#5B9BD5", fontcolor="white"];
-        us2 [label="Add 3\n= 9 nodes", fillcolor="#70AD47", fontcolor="white"];
-    }
-
-    subgraph cluster_region2 {
-        label="EU-WEST";
-        style="rounded,filled";
-        fillcolor="#FFE8E8";
-        color="#CC9999";
-
-        eu1 [label="6 nodes\nRF=3", fillcolor="#5B9BD5", fontcolor="white"];
-        eu2 [label="Add 3\n= 9 nodes", fillcolor="#70AD47", fontcolor="white"];
-    }
-
-    us1 -> us2;
-    eu1 -> eu2;
+    us1 --> us2
 }
+
+package "EU-WEST" #FFE8E8 {
+    rectangle "6 nodes\nRF=3" as eu1 #5B9BD5
+    rectangle "Add 3\n= 9 nodes" as eu2 #70AD47
+
+    eu1 --> eu2
+}
+
+@enduml
 ```
 
 **Guidelines:**

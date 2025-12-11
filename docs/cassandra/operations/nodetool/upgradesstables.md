@@ -1,6 +1,6 @@
 # nodetool upgradesstables
 
-Rewrites SSTables to the current version format.
+Rewrites SSTables to the SSTable format version supported by the running Cassandra instance.
 
 ---
 
@@ -12,7 +12,9 @@ nodetool [connection_options] upgradesstables [options] [--] [keyspace [table ..
 
 ## Description
 
-`nodetool upgradesstables` rewrites SSTables that were created by older Cassandra versions into the current SSTable format. This is required after upgrading Cassandra to ensure all SSTables use the new format's features and optimizations.
+`nodetool upgradesstables` rewrites SSTables that were created by older Cassandra versions into the SSTable format corresponding to the currently running Cassandra version. The target format is determined automatically by the Cassandra instance—each major Cassandra release introduces a new SSTable format version with improvements to encoding, compression, and metadata storage.
+
+This operation is recommended after upgrading Cassandra to ensure all SSTables benefit from the latest format's features and optimizations. SSTables already in the current format are skipped unless the `-a` flag is specified.
 
 ---
 

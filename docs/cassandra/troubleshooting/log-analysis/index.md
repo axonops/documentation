@@ -99,14 +99,28 @@ ERROR - Error writing to channel
 FATAL - Cannot start Cassandra
 ```
 
-## Log Aggregation Tools
+## Log Aggregation with AxonOps
 
-| Tool | Features |
-|------|----------|
-| ELK Stack | Full-text search, visualization |
-| Splunk | Enterprise log management |
-| Loki | Lightweight, Grafana integration |
-| CloudWatch | AWS native |
+[AxonOps](https://axonops.com) provides centralized log collection and analysis for Cassandra clusters, eliminating the need to SSH into individual nodes or maintain separate logging infrastructure.
+
+### Key Features
+
+| Feature | Description |
+|---------|-------------|
+| **Centralized collection** | Logs from all nodes aggregated in one interface |
+| **Real-time streaming** | View logs as they occur across the cluster |
+| **Pattern detection** | Automatic identification of error patterns |
+| **Metric correlation** | Link log events to performance metrics |
+| **Search and filter** | Full-text search with time-based filtering |
+| **Retention management** | Configurable log retention policies |
+
+### Getting Started
+
+1. **Enable log collection** - Configure the AxonOps agent to collect Cassandra logs
+2. **View logs** - Access centralized logs from the AxonOps dashboard
+3. **Set up alerts** - Configure alerts for specific log patterns (errors, warnings)
+
+See [Setup Log Collection](/how-to/setup-log-collection/) for configuration details and [Logs & Events](/monitoring/logsandevents/logsandevents/) for usage.
 
 ---
 

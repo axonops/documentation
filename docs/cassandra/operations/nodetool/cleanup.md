@@ -14,6 +14,29 @@ nodetool [connection_options] cleanup [options] [--] [keyspace [table ...]]
 
 `nodetool cleanup` scans SSTables and removes any data where the token is no longer owned by the local node. This is necessary after adding nodes to the cluster, as token ranges are redistributed and some data becomes redundant on existing nodes.
 
+### Why Cleanup is Needed
+
+When cluster topology changes occur (such as adding new nodes or decommissioning nodes), Cassandra streams data to ensure the replication factor is maintained on the appropriate nodes. However, **Cassandra does not automatically remove data that is no longer relevant to a node after a topology change**.
+
+Consider this scenario when adding a new node:
+
+1. Before: Node A owns token range 1-100
+2. After adding Node B: Node A now owns 1-50, Node B owns 51-100
+3. Cassandra streams data for range 51-100 to Node B
+4. **Node A still retains the data for range 51-100** even though it no longer owns those tokens
+
+This stale data:
+
+- Consumes disk space unnecessarily
+- Is not served to clients (queries route to the correct token owner)
+- Will eventually be removed during normal compaction, but this can take a long time
+- May cause confusion when analyzing disk usage
+
+The `cleanup` command explicitly scans all SSTables and removes partitions whose tokens are no longer owned by the local node, reclaiming disk space immediately rather than waiting for compaction to eventually remove the data.
+
+!!! info "Automatic vs Manual Cleanup"
+    While compaction will eventually remove data outside the node's token ranges, this process is not predictable and depends on compaction strategy and workload patterns. Running `cleanup` ensures immediate removal and predictable disk space recovery.
+
 ---
 
 ## Arguments

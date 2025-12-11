@@ -167,10 +167,10 @@ Secure your cluster:
 
 Essential Cassandra tools:
 
-- [nodetool](tools/nodetool/index.md) - Cluster management commands
+- [nodetool](operations/nodetool/index.md) - Cluster management commands
 - [cqlsh](tools/cqlsh/index.md) - CQL shell reference
 - [CQLAI](tools/cqlai/index.md) - Modern AI-powered CQL shell
-- [SSTable Tools](tools/sstable-tools/index.md) - SSTable utilities
+- [SSTable Tools](operations/sstable-management/index.md) - SSTable utilities
 - [cassandra-stress](tools/cassandra-stress/index.md) - Load testing
 
 ### Troubleshooting

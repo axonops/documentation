@@ -320,6 +320,9 @@ nav:
           - Failure Handling: cassandra/architecture/client-connections/failure-handling.md
       - Application Development:
         - Overview: cassandra/application-development/index.md
+        - Development Tools:
+          - AxonOps Workbench: cassandra/application-development/workbench.md
+          - CQLAI: cassandra/application-development/cqlai.md
         - CQL Reference:
           - Overview: cassandra/cql/index.md
           - Data Types: cassandra/cql/data-types/index.md
@@ -364,6 +367,168 @@ nav:
           - Best Practices: cassandra/application-development/drivers/best-practices.md
       - Operations:
         - Overview: cassandra/operations/index.md
+        - Nodetool Reference:
+          - Overview: cassandra/operations/nodetool/index.md
+          - Cluster Information:
+            - status: cassandra/operations/nodetool/status.md
+            - ring: cassandra/operations/nodetool/ring.md
+            - info: cassandra/operations/nodetool/info.md
+            - describecluster: cassandra/operations/nodetool/describecluster.md
+            - describering: cassandra/operations/nodetool/describering.md
+            - gossipinfo: cassandra/operations/nodetool/gossipinfo.md
+            - getendpoints: cassandra/operations/nodetool/getendpoints.md
+            - version: cassandra/operations/nodetool/version.md
+          - Data Management:
+            - flush: cassandra/operations/nodetool/flush.md
+            - compact: cassandra/operations/nodetool/compact.md
+            - cleanup: cassandra/operations/nodetool/cleanup.md
+            - scrub: cassandra/operations/nodetool/scrub.md
+            - verify: cassandra/operations/nodetool/verify.md
+            - upgradesstables: cassandra/operations/nodetool/upgradesstables.md
+            - garbagecollect: cassandra/operations/nodetool/garbagecollect.md
+            - import: cassandra/operations/nodetool/import.md
+            - refresh: cassandra/operations/nodetool/refresh.md
+          - Repair:
+            - repair: cassandra/operations/nodetool/repair.md
+            - repair_admin: cassandra/operations/nodetool/repair_admin.md
+          - Snapshots & Backup:
+            - snapshot: cassandra/operations/nodetool/snapshot.md
+            - clearsnapshot: cassandra/operations/nodetool/clearsnapshot.md
+            - listsnapshots: cassandra/operations/nodetool/listsnapshots.md
+            - enablebackup: cassandra/operations/nodetool/enablebackup.md
+            - disablebackup: cassandra/operations/nodetool/disablebackup.md
+            - statusbackup: cassandra/operations/nodetool/statusbackup.md
+          - Compaction:
+            - compactionstats: cassandra/operations/nodetool/compactionstats.md
+            - compactionhistory: cassandra/operations/nodetool/compactionhistory.md
+            - setcompactionthroughput: cassandra/operations/nodetool/setcompactionthroughput.md
+            - getcompactionthroughput: cassandra/operations/nodetool/getcompactionthroughput.md
+            - getcompactionthreshold: cassandra/operations/nodetool/getcompactionthreshold.md
+            - setcompactionthreshold: cassandra/operations/nodetool/setcompactionthreshold.md
+            - enableautocompaction: cassandra/operations/nodetool/enableautocompaction.md
+            - disableautocompaction: cassandra/operations/nodetool/disableautocompaction.md
+            - statusautocompaction: cassandra/operations/nodetool/statusautocompaction.md
+            - forcecompact: cassandra/operations/nodetool/forcecompact.md
+            - stop: cassandra/operations/nodetool/stop.md
+          - Streaming & Hints:
+            - netstats: cassandra/operations/nodetool/netstats.md
+            - setstreamthroughput: cassandra/operations/nodetool/setstreamthroughput.md
+            - getstreamthroughput: cassandra/operations/nodetool/getstreamthroughput.md
+            - setinterdcstreamthroughput: cassandra/operations/nodetool/setinterdcstreamthroughput.md
+            - getinterdcstreamthroughput: cassandra/operations/nodetool/getinterdcstreamthroughput.md
+            - truncatehints: cassandra/operations/nodetool/truncatehints.md
+            - enablehandoff: cassandra/operations/nodetool/enablehandoff.md
+            - disablehandoff: cassandra/operations/nodetool/disablehandoff.md
+            - statushandoff: cassandra/operations/nodetool/statushandoff.md
+            - pausehandoff: cassandra/operations/nodetool/pausehandoff.md
+            - resumehandoff: cassandra/operations/nodetool/resumehandoff.md
+            - enablehintsfordc: cassandra/operations/nodetool/enablehintsfordc.md
+            - disablehintsfordc: cassandra/operations/nodetool/disablehintsfordc.md
+            - listpendinghints: cassandra/operations/nodetool/listpendinghints.md
+            - sethintedhandoffthrottlekb: cassandra/operations/nodetool/sethintedhandoffthrottlekb.md
+            - getmaxhintwindow: cassandra/operations/nodetool/getmaxhintwindow.md
+            - setmaxhintwindow: cassandra/operations/nodetool/setmaxhintwindow.md
+          - Cluster Topology:
+            - decommission: cassandra/operations/nodetool/decommission.md
+            - removenode: cassandra/operations/nodetool/removenode.md
+            - assassinate: cassandra/operations/nodetool/assassinate.md
+            - rebuild: cassandra/operations/nodetool/rebuild.md
+            - drain: cassandra/operations/nodetool/drain.md
+            - stopdaemon: cassandra/operations/nodetool/stopdaemon.md
+            - bootstrap: cassandra/operations/nodetool/bootstrap.md
+            - join: cassandra/operations/nodetool/join.md
+            - move: cassandra/operations/nodetool/move.md
+            - failuredetector: cassandra/operations/nodetool/failuredetector.md
+            - checktokenmetadata: cassandra/operations/nodetool/checktokenmetadata.md
+          - Gossip & Binary:
+            - enablegossip: cassandra/operations/nodetool/enablegossip.md
+            - disablegossip: cassandra/operations/nodetool/disablegossip.md
+            - statusgossip: cassandra/operations/nodetool/statusgossip.md
+            - enablebinary: cassandra/operations/nodetool/enablebinary.md
+            - disablebinary: cassandra/operations/nodetool/disablebinary.md
+            - statusbinary: cassandra/operations/nodetool/statusbinary.md
+            - enableoldprotocolversions: cassandra/operations/nodetool/enableoldprotocolversions.md
+            - disableoldprotocolversions: cassandra/operations/nodetool/disableoldprotocolversions.md
+          - Diagnostics:
+            - tpstats: cassandra/operations/nodetool/tpstats.md
+            - tablestats: cassandra/operations/nodetool/tablestats.md
+            - tablehistograms: cassandra/operations/nodetool/tablehistograms.md
+            - proxyhistograms: cassandra/operations/nodetool/proxyhistograms.md
+            - toppartitions: cassandra/operations/nodetool/toppartitions.md
+            - gcstats: cassandra/operations/nodetool/gcstats.md
+            - clientstats: cassandra/operations/nodetool/clientstats.md
+            - profileload: cassandra/operations/nodetool/profileload.md
+            - sjk: cassandra/operations/nodetool/sjk.md
+            - datapaths: cassandra/operations/nodetool/datapaths.md
+            - rangekeysample: cassandra/operations/nodetool/rangekeysample.md
+            - viewbuildstatus: cassandra/operations/nodetool/viewbuildstatus.md
+            - help: cassandra/operations/nodetool/help.md
+          - Configuration:
+            - setlogginglevel: cassandra/operations/nodetool/setlogginglevel.md
+            - getlogginglevels: cassandra/operations/nodetool/getlogginglevels.md
+            - reloadssl: cassandra/operations/nodetool/reloadssl.md
+            - gettimeout: cassandra/operations/nodetool/gettimeout.md
+            - settimeout: cassandra/operations/nodetool/settimeout.md
+            - setcachecapacity: cassandra/operations/nodetool/setcachecapacity.md
+            - setcachekeystosave: cassandra/operations/nodetool/setcachekeystosave.md
+            - getconcurrentcompactors: cassandra/operations/nodetool/getconcurrentcompactors.md
+            - setconcurrentcompactors: cassandra/operations/nodetool/setconcurrentcompactors.md
+            - getconcurrentviewbuilders: cassandra/operations/nodetool/getconcurrentviewbuilders.md
+            - setconcurrentviewbuilders: cassandra/operations/nodetool/setconcurrentviewbuilders.md
+            - getconcurrency: cassandra/operations/nodetool/getconcurrency.md
+            - setconcurrency: cassandra/operations/nodetool/setconcurrency.md
+            - getdefaultrf: cassandra/operations/nodetool/getdefaultrf.md
+            - setdefaultrf: cassandra/operations/nodetool/setdefaultrf.md
+            - getsnapshotthrottle: cassandra/operations/nodetool/getsnapshotthrottle.md
+            - setsnapshotthrottle: cassandra/operations/nodetool/setsnapshotthrottle.md
+            - getcolumnindexsize: cassandra/operations/nodetool/getcolumnindexsize.md
+            - setcolumnindexsize: cassandra/operations/nodetool/setcolumnindexsize.md
+            - getseeds: cassandra/operations/nodetool/getseeds.md
+            - reloadseeds: cassandra/operations/nodetool/reloadseeds.md
+            - gettraceprobability: cassandra/operations/nodetool/gettraceprobability.md
+            - settraceprobability: cassandra/operations/nodetool/settraceprobability.md
+            - getbatchlogreplaythrottle: cassandra/operations/nodetool/getbatchlogreplaythrottle.md
+            - setbatchlogreplaythrottle: cassandra/operations/nodetool/setbatchlogreplaythrottle.md
+            - reloadtriggers: cassandra/operations/nodetool/reloadtriggers.md
+            - reloadlocalschema: cassandra/operations/nodetool/reloadlocalschema.md
+            - resetlocalschema: cassandra/operations/nodetool/resetlocalschema.md
+            - refreshsizeestimates: cassandra/operations/nodetool/refreshsizeestimates.md
+            - replaybatchlog: cassandra/operations/nodetool/replaybatchlog.md
+            - getauthcacheconfig: cassandra/operations/nodetool/getauthcacheconfig.md
+            - setauthcacheconfig: cassandra/operations/nodetool/setauthcacheconfig.md
+            - getguardrailsconfig: cassandra/operations/nodetool/getguardrailsconfig.md
+            - setguardrailsconfig: cassandra/operations/nodetool/setguardrailsconfig.md
+          - Cache Management:
+            - invalidatekeycache: cassandra/operations/nodetool/invalidatekeycache.md
+            - invalidaterowcache: cassandra/operations/nodetool/invalidaterowcache.md
+            - invalidatecountercache: cassandra/operations/nodetool/invalidatecountercache.md
+            - invalidatepermissionscache: cassandra/operations/nodetool/invalidatepermissionscache.md
+            - invalidatecredentialscache: cassandra/operations/nodetool/invalidatecredentialscache.md
+            - invalidaterolescache: cassandra/operations/nodetool/invalidaterolescache.md
+            - invalidatenetworkpermissionscache: cassandra/operations/nodetool/invalidatenetworkpermissionscache.md
+            - invalidatejmxpermissionscache: cassandra/operations/nodetool/invalidatejmxpermissionscache.md
+          - SSTable Management:
+            - getsstables: cassandra/operations/nodetool/getsstables.md
+            - relocatesstables: cassandra/operations/nodetool/relocatesstables.md
+            - recompress_sstables: cassandra/operations/nodetool/recompress_sstables.md
+            - rebuild_index: cassandra/operations/nodetool/rebuild_index.md
+          - CIDR Filtering:
+            - cidrfilteringstats: cassandra/operations/nodetool/cidrfilteringstats.md
+            - listcidrgroups: cassandra/operations/nodetool/listcidrgroups.md
+            - getcidrgroupsofip: cassandra/operations/nodetool/getcidrgroupsofip.md
+            - updatecidrgroup: cassandra/operations/nodetool/updatecidrgroup.md
+            - dropcidrgroup: cassandra/operations/nodetool/dropcidrgroup.md
+            - invalidatecidrpermissionscache: cassandra/operations/nodetool/invalidatecidrpermissionscache.md
+            - reloadcidrgroupscache: cassandra/operations/nodetool/reloadcidrgroupscache.md
+          - Audit Logging:
+            - enableauditlog: cassandra/operations/nodetool/enableauditlog.md
+            - disableauditlog: cassandra/operations/nodetool/disableauditlog.md
+            - getauditlog: cassandra/operations/nodetool/getauditlog.md
+          - Full Query Logging:
+            - enablefullquerylog: cassandra/operations/nodetool/enablefullquerylog.md
+            - disablefullquerylog: cassandra/operations/nodetool/disablefullquerylog.md
+            - getfullquerylog: cassandra/operations/nodetool/getfullquerylog.md
+            - resetfullquerylog: cassandra/operations/nodetool/resetfullquerylog.md
         - Cluster Management: cassandra/operations/cluster-management/index.md
         - Backup & Restore:
           - Overview: cassandra/operations/backup-restore/index.md
@@ -375,50 +540,6 @@ nav:
           - Options Reference: cassandra/operations/repair/options-reference.md
           - Strategies: cassandra/operations/repair/strategies.md
           - Scheduling: cassandra/operations/repair/scheduling.md
-        - Nodetool Reference:
-          - Overview: cassandra/operations/nodetool/index.md
-          - Cluster Information:
-            - status: cassandra/operations/nodetool/status.md
-            - ring: cassandra/operations/nodetool/ring.md
-            - info: cassandra/operations/nodetool/info.md
-            - describecluster: cassandra/operations/nodetool/describecluster.md
-            - gossipinfo: cassandra/operations/nodetool/gossipinfo.md
-            - version: cassandra/operations/nodetool/version.md
-          - Data Management:
-            - flush: cassandra/operations/nodetool/flush.md
-            - compact: cassandra/operations/nodetool/compact.md
-            - cleanup: cassandra/operations/nodetool/cleanup.md
-            - scrub: cassandra/operations/nodetool/scrub.md
-          - Repair:
-            - repair: cassandra/operations/nodetool/repair.md
-            - repair_admin: cassandra/operations/nodetool/repair_admin.md
-          - Snapshots:
-            - snapshot: cassandra/operations/nodetool/snapshot.md
-            - clearsnapshot: cassandra/operations/nodetool/clearsnapshot.md
-            - listsnapshots: cassandra/operations/nodetool/listsnapshots.md
-          - Compaction:
-            - compactionstats: cassandra/operations/nodetool/compactionstats.md
-            - setcompactionthroughput: cassandra/operations/nodetool/setcompactionthroughput.md
-            - getcompactionthroughput: cassandra/operations/nodetool/getcompactionthroughput.md
-          - Streaming:
-            - netstats: cassandra/operations/nodetool/netstats.md
-            - setstreamthroughput: cassandra/operations/nodetool/setstreamthroughput.md
-          - Cluster Topology:
-            - decommission: cassandra/operations/nodetool/decommission.md
-            - removenode: cassandra/operations/nodetool/removenode.md
-            - assassinate: cassandra/operations/nodetool/assassinate.md
-            - rebuild: cassandra/operations/nodetool/rebuild.md
-            - drain: cassandra/operations/nodetool/drain.md
-          - Gossip & Binary:
-            - enablegossip: cassandra/operations/nodetool/enablegossip.md
-            - disablegossip: cassandra/operations/nodetool/disablegossip.md
-            - enablebinary: cassandra/operations/nodetool/enablebinary.md
-            - disablebinary: cassandra/operations/nodetool/disablebinary.md
-          - Diagnostics:
-            - tpstats: cassandra/operations/nodetool/tpstats.md
-            - tablestats: cassandra/operations/nodetool/tablestats.md
-            - proxyhistograms: cassandra/operations/nodetool/proxyhistograms.md
-            - gcstats: cassandra/operations/nodetool/gcstats.md
         - Compaction Management: cassandra/operations/compaction-management/index.md
         - Maintenance: cassandra/operations/maintenance/index.md
         - Configuration:
@@ -426,6 +547,8 @@ nav:
           - cassandra.yaml: cassandra/operations/configuration/cassandra-yaml/index.md
           - JVM Options: cassandra/operations/configuration/jvm-options/index.md
           - Snitch Configuration: cassandra/operations/configuration/snitch-config/index.md
+          - Logging (logback.xml): cassandra/operations/configuration/logback.md
+          - Guardrails: cassandra/operations/configuration/guardrails.md
         - JMX Reference:
           - Overview: cassandra/operations/jmx-reference/index.md
           - MBeans: cassandra/operations/jmx-reference/mbeans/index.md
@@ -443,8 +566,26 @@ nav:
           - JVM Tuning: cassandra/operations/performance/jvm-tuning/index.md
           - OS Tuning: cassandra/operations/performance/os-tuning/index.md
           - Query Optimization: cassandra/operations/performance/query-optimization/index.md
-        - Performance Tuning: cassandra/operations/performance-tuning/index.md
         - Troubleshooting: cassandra/operations/troubleshooting/index.md
+        - SSTable Management:
+          - Overview: cassandra/operations/sstable-management/index.md
+          - Data Loading:
+            - sstableloader: cassandra/operations/sstable-management/sstableloader.md
+          - Repair & Recovery:
+            - sstablescrub: cassandra/operations/sstable-management/sstablescrub.md
+            - sstableverify: cassandra/operations/sstable-management/sstableverify.md
+          - Inspection:
+            - sstabledump: cassandra/operations/sstable-management/sstabledump.md
+            - sstablemetadata: cassandra/operations/sstable-management/sstablemetadata.md
+            - sstablepartitions: cassandra/operations/sstable-management/sstablepartitions.md
+            - sstableexpiredblockers: cassandra/operations/sstable-management/sstableexpiredblockers.md
+            - sstableutil: cassandra/operations/sstable-management/sstableutil.md
+          - Maintenance:
+            - sstableupgrade: cassandra/operations/sstable-management/sstableupgrade.md
+            - sstablesplit: cassandra/operations/sstable-management/sstablesplit.md
+            - sstablelevelreset: cassandra/operations/sstable-management/sstablelevelreset.md
+            - sstableofflinerelevel: cassandra/operations/sstable-management/sstableofflinerelevel.md
+            - sstablerepairedset: cassandra/operations/sstable-management/sstablerepairedset.md
       - Security:
         - Overview: cassandra/security/index.md
         - Authentication: cassandra/security/authentication/index.md
@@ -463,63 +604,6 @@ nav:
           - Enterprise Recommendations: cassandra/security/encryption/enterprise-recommendations.md
           - Troubleshooting: cassandra/security/encryption/troubleshooting.md
       - Tools:
-        - nodetool:
-          - Overview: cassandra/tools/nodetool/index.md
-          - Cluster Information:
-            - status: cassandra/tools/nodetool/commands/status.md
-            - info: cassandra/tools/nodetool/commands/info.md
-            - ring: cassandra/tools/nodetool/commands/ring.md
-            - describecluster: cassandra/tools/nodetool/commands/describecluster.md
-            - gossipinfo: cassandra/tools/nodetool/commands/gossipinfo.md
-            - version: cassandra/tools/nodetool/commands/version.md
-          - Performance:
-            - tpstats: cassandra/tools/nodetool/commands/tpstats.md
-            - tablestats: cassandra/tools/nodetool/commands/tablestats.md
-            - tablehistograms: cassandra/tools/nodetool/commands/tablehistograms.md
-            - proxyhistograms: cassandra/tools/nodetool/commands/proxyhistograms.md
-            - toppartitions: cassandra/tools/nodetool/commands/toppartitions.md
-            - gcstats: cassandra/tools/nodetool/commands/gcstats.md
-          - Maintenance:
-            - repair: cassandra/tools/nodetool/commands/repair.md
-            - repair_admin: cassandra/tools/nodetool/commands/repair_admin.md
-            - cleanup: cassandra/tools/nodetool/commands/cleanup.md
-            - compact: cassandra/tools/nodetool/commands/compact.md
-            - flush: cassandra/tools/nodetool/commands/flush.md
-            - drain: cassandra/tools/nodetool/commands/drain.md
-            - garbagecollect: cassandra/tools/nodetool/commands/garbagecollect.md
-            - scrub: cassandra/tools/nodetool/commands/scrub.md
-            - verify: cassandra/tools/nodetool/commands/verify.md
-          - Backup:
-            - snapshot: cassandra/tools/nodetool/commands/snapshot.md
-            - listsnapshots: cassandra/tools/nodetool/commands/listsnapshots.md
-            - clearsnapshot: cassandra/tools/nodetool/commands/clearsnapshot.md
-            - refresh: cassandra/tools/nodetool/commands/refresh.md
-          - Cluster Topology:
-            - decommission: cassandra/tools/nodetool/commands/decommission.md
-            - removenode: cassandra/tools/nodetool/commands/removenode.md
-            - assassinate: cassandra/tools/nodetool/commands/assassinate.md
-            - rebuild: cassandra/tools/nodetool/commands/rebuild.md
-            - move: cassandra/tools/nodetool/commands/move.md
-            - bootstrap: cassandra/tools/nodetool/commands/bootstrap.md
-          - Compaction:
-            - compactionstats: cassandra/tools/nodetool/commands/compactionstats.md
-            - setcompactionthroughput: cassandra/tools/nodetool/commands/setcompactionthroughput.md
-            - getcompactionthroughput: cassandra/tools/nodetool/commands/getcompactionthroughput.md
-            - enableautocompaction: cassandra/tools/nodetool/commands/enableautocompaction.md
-            - disableautocompaction: cassandra/tools/nodetool/commands/disableautocompaction.md
-            - stop: cassandra/tools/nodetool/commands/stop.md
-          - Streaming:
-            - netstats: cassandra/tools/nodetool/commands/netstats.md
-            - setstreamthroughput: cassandra/tools/nodetool/commands/setstreamthroughput.md
-            - getstreamthroughput: cassandra/tools/nodetool/commands/getstreamthroughput.md
-          - Configuration:
-            - setlogginglevel: cassandra/tools/nodetool/commands/setlogginglevel.md
-            - getlogginglevels: cassandra/tools/nodetool/commands/getlogginglevels.md
-            - settraceprobability: cassandra/tools/nodetool/commands/settraceprobability.md
-            - gettraceprobability: cassandra/tools/nodetool/commands/gettraceprobability.md
-            - reloadtriggers: cassandra/tools/nodetool/commands/reloadtriggers.md
-            - reloadlocalschema: cassandra/tools/nodetool/commands/reloadlocalschema.md
-            - resetlocalschema: cassandra/tools/nodetool/commands/resetlocalschema.md
         - cqlsh: cassandra/tools/cqlsh/index.md
         - CQLAI:
           - Overview: cassandra/tools/cqlai/index.md

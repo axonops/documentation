@@ -27,23 +27,39 @@ Different operations can be optimized differently within the same application.
 Every client request goes to a coordinator node, which manages the consistency guarantee:
 
 
-```mermaid
-flowchart TB
-    C[Client] -->|"INSERT with CL=QUORUM"| COORD
+```plantuml
+@startuml
 
-    subgraph COORD["Coordinator Node"]
-        P1["1. Parse request"]
-        P2["2. Calculate token"]
-        P3["3. Look up replicas"]
-        P4["4. Send to ALL replicas"]
-        P5["5. Wait for QUORUM"]
-        P6["6. Return success"]
-        P1 --> P2 --> P3 --> P4 --> P5 --> P6
-    end
+skinparam backgroundColor #FEFEFE
 
-    COORD -->|write| R1["Replica 1<br/>✓ ACK"]
-    COORD -->|write| R2["Replica 2<br/>✓ ACK"]
-    COORD -->|write| R3["Replica 3<br/>... writing"]
+title Coordinator Processing a Write Request
+
+boundary "Client" as C
+rectangle "Coordinator Node" as COORD {
+    card "1. Parse request" as P1
+    card "2. Calculate token" as P2
+    card "3. Look up replicas" as P3
+    card "4. Send to ALL replicas" as P4
+    card "5. Wait for QUORUM" as P5
+    card "6. Return success" as P6
+
+    P1 --> P2
+    P2 --> P3
+    P3 --> P4
+    P4 --> P5
+    P5 --> P6
+}
+
+database "Replica 1\nACK" as R1 #90EE90
+database "Replica 2\nACK" as R2 #90EE90
+database "Replica 3\n... writing" as R3 #f0f0f0
+
+C --> COORD : INSERT with CL=QUORUM
+COORD --> R1 : write
+COORD --> R2 : write
+COORD --> R3 : write
+
+@enduml
 ```
 
 ### What Acknowledgment Means
@@ -63,24 +79,30 @@ The data is not necessarily flushed to SSTable yet, but it is durable because of
 
 ### ANY: Maximum Availability
 
-```mermaid
-flowchart LR
-    subgraph Replicas["All Replicas Down"]
-        R1[N1 ✗]
-        R2[N2 ✗]
-        R3[N3 ✗]
-    end
+```plantuml
+@startuml
 
-    C[Coordinator] -->|write| R1
-    C -->|write| R2
-    C -->|write| R3
-    C -->|store hint| H[(Hint Storage)]
-    H -->|"later delivery"| Replicas
+skinparam backgroundColor #FEFEFE
 
-    style R1 fill:#ffcccc
-    style R2 fill:#ffcccc
-    style R3 fill:#ffcccc
-    style H fill:#ffffcc
+title ANY Consistency - Hinted Handoff
+
+rectangle "Coordinator" as C
+
+rectangle "All Replicas Down" as Replicas {
+    database "N1" as R1 #ffcccc
+    database "N2" as R2 #ffcccc
+    database "N3" as R3 #ffcccc
+}
+
+database "Hint Storage" as H #ffffcc
+
+C --> R1 : write (fails)
+C --> R2 : write (fails)
+C --> R3 : write (fails)
+C --> H : store hint
+H ..> Replicas : later delivery
+
+@enduml
 ```
 
 !!! danger "Data Loss Risk"
@@ -90,17 +112,27 @@ flowchart LR
 
 ### ONE: Single Replica
 
-```mermaid
-flowchart LR
-    C[Coordinator] -->|write| N1[N1 ✓]
-    C -.->|write| N2[N2 ...]
-    C -.->|write| N3[N3 ...]
-    N1 -->|ACK| C
-    C -->|SUCCESS| Client
+```plantuml
+@startuml
 
-    style N1 fill:#90EE90
-    style N2 fill:#f0f0f0
-    style N3 fill:#f0f0f0
+skinparam backgroundColor #FEFEFE
+
+title ONE Consistency - Single Replica ACK
+
+rectangle "Coordinator" as C
+boundary "Client" as Client
+
+database "N1" as N1 #90EE90
+database "N2" as N2 #f0f0f0
+database "N3" as N3 #f0f0f0
+
+C --> N1 : write
+C ..> N2 : write (async)
+C ..> N3 : write (async)
+N1 --> C : ACK
+C --> Client : SUCCESS
+
+@enduml
 ```
 
 RF = 3, ONE requires 1 ACK. Other replicas receive the write asynchronously.
@@ -121,55 +153,70 @@ RF = 3, ONE requires 1 ACK. Other replicas receive the write asynchronously.
 
 **Why majority matters**:
 
-```mermaid
-flowchart LR
-    subgraph Write["Write QUORUM"]
-        WA[A ✓]
-        WB[B ✓]
-        WC[C]
-    end
+```plantuml
+@startuml
 
-    subgraph Read["Read QUORUM"]
-        RA[A]
-        RB[B ✓]
-        RC[C ✓]
-    end
+skinparam backgroundColor #FEFEFE
 
-    WB -.->|OVERLAP| RB
+title QUORUM Overlap Guarantees Consistency
 
-    style WA fill:#90EE90
-    style WB fill:#90EE90,stroke:#ff0000,stroke-width:3px
-    style RB fill:#87CEEB,stroke:#ff0000,stroke-width:3px
-    style RC fill:#87CEEB
+rectangle "Write QUORUM" as Write {
+    card "A" as WA #90EE90
+    card "B" as WB #90EE90
+    card "C" as WC #f0f0f0
+}
+
+rectangle "Read QUORUM" as Read {
+    card "A" as RA #f0f0f0
+    card "B" as RB #87CEEB
+    card "C" as RC #87CEEB
+}
+
+WB -[#ff0000,bold]-> RB : OVERLAP
+
+note bottom of WB
+  Written to A, B
+end note
+
+note bottom of RB
+  Read from B, C
+  B has the write
+end note
+
+@enduml
 ```
 
 With RF=3, QUORUM=2: Write to {A, B}, Read from {B, C}. The overlap (B) guarantees the read sees the write.
 
 **Multi-datacenter QUORUM**:
 
-```mermaid
-flowchart TB
-    subgraph DC1["DC1 (RF=3)"]
-        A[A ✓]
-        B[B ✓]
-        C[C]
-    end
+```plantuml
+@startuml
 
-    subgraph DC2["DC2 (RF=3)"]
-        D[D ✓]
-        E[E ✓]
-        F[F]
-    end
+skinparam backgroundColor #FEFEFE
 
-    Coord[Coordinator] -->|write| A
-    Coord -->|write| B
-    Coord -->|"cross-DC"| D
-    Coord -->|"cross-DC"| E
+title Multi-DC QUORUM (Total RF=6, QUORUM=4)
 
-    style A fill:#90EE90
-    style B fill:#90EE90
-    style D fill:#90EE90
-    style E fill:#90EE90
+rectangle "Coordinator" as Coord
+
+rectangle "DC1 (RF=3)" as DC1 {
+    database "A" as A #90EE90
+    database "B" as B #90EE90
+    database "C" as C #f0f0f0
+}
+
+rectangle "DC2 (RF=3)" as DC2 {
+    database "D" as D #90EE90
+    database "E" as E #90EE90
+    database "F" as F #f0f0f0
+}
+
+Coord --> A : write
+Coord --> B : write
+Coord --> D : cross-DC
+Coord --> E : cross-DC
+
+@enduml
 ```
 
 Total RF = 6, QUORUM = 4. Must wait for cross-DC network round trip (50-200ms).
@@ -181,33 +228,38 @@ Total RF = 6, QUORUM = 4. Must wait for cross-DC network round trip (50-200ms).
 
 ### LOCAL_QUORUM: Majority in Local Datacenter
 
-```mermaid
-flowchart TB
-    subgraph DC1["DC1 - Coordinator Here"]
-        A[A ✓]
-        B[B ✓]
-        C[C]
-    end
+```plantuml
+@startuml
 
-    subgraph DC2["DC2 - Remote"]
-        D[D]
-        E[E]
-        F[F]
-    end
+skinparam backgroundColor #FEFEFE
 
-    Coord[Coordinator] -->|write + wait| A
-    Coord -->|write + wait| B
-    Coord -.->|"async (no wait)"| D
-    Coord -.->|"async (no wait)"| E
+title LOCAL_QUORUM - Only Wait for Local DC
 
-    A -->|ACK| Coord
-    B -->|ACK| Coord
-    Coord -->|SUCCESS| Client[Client]
+rectangle "Coordinator" as Coord
+boundary "Client" as Client
 
-    style A fill:#90EE90
-    style B fill:#90EE90
-    style DC1 fill:#e6ffe6
-    style DC2 fill:#f0f0f0
+rectangle "DC1 - Coordinator Here" as DC1 #e6ffe6 {
+    database "A" as A #90EE90
+    database "B" as B #90EE90
+    database "C" as C #f0f0f0
+}
+
+rectangle "DC2 - Remote" as DC2 #f0f0f0 {
+    database "D" as D #f0f0f0
+    database "E" as E #f0f0f0
+    database "F" as F #f0f0f0
+}
+
+Coord --> A : write + wait
+Coord --> B : write + wait
+Coord ..> D : async (no wait)
+Coord ..> E : async (no wait)
+
+A --> Coord : ACK
+B --> Coord : ACK
+Coord --> Client : SUCCESS
+
+@enduml
 ```
 
 2 ACKs from DC1 = SUCCESS. Data is still sent to DC2, but coordinator does not wait.
@@ -224,30 +276,39 @@ flowchart TB
 
 ### EACH_QUORUM: Quorum in Every Datacenter
 
-```mermaid
-flowchart TB
-    subgraph DC1["DC1"]
-        A[A ✓]
-        B[B ✓]
-        C[C]
-    end
+```plantuml
+@startuml
 
-    subgraph DC2["DC2"]
-        D[D ✓]
-        E[E ✓]
-        F[F]
-    end
+skinparam backgroundColor #FEFEFE
 
-    Coord[Coordinator] -->|"must get quorum"| DC1
-    Coord -->|"must get quorum"| DC2
-    DC1 -->|"2/3 ACK"| Coord
-    DC2 -->|"2/3 ACK"| Coord
-    Coord -->|SUCCESS| Client[Client]
+title EACH_QUORUM - Quorum Required in Every DC
 
-    style A fill:#90EE90
-    style B fill:#90EE90
-    style D fill:#90EE90
-    style E fill:#90EE90
+rectangle "Coordinator" as Coord
+boundary "Client" as Client
+
+rectangle "DC1" as DC1 {
+    database "A" as A #90EE90
+    database "B" as B #90EE90
+    database "C" as C #f0f0f0
+}
+
+rectangle "DC2" as DC2 {
+    database "D" as D #90EE90
+    database "E" as E #90EE90
+    database "F" as F #f0f0f0
+}
+
+Coord --> DC1 : must get quorum
+Coord --> DC2 : must get quorum
+DC1 --> Coord : 2/3 ACK
+DC2 --> Coord : 2/3 ACK
+Coord --> Client : SUCCESS
+
+note bottom of DC2
+  Must wait for slowest DC
+end note
+
+@enduml
 ```
 
 Must wait for the **slowest DC** to achieve quorum.
@@ -260,18 +321,27 @@ Must wait for the **slowest DC** to achieve quorum.
 
 ### ALL: Every Replica
 
-```mermaid
-flowchart LR
-    C[Coordinator] -->|write| N1[N1 ✓]
-    C -->|write| N2[N2 ✓]
-    C -->|write| N3[N3 ✓]
-    N1 -->|ACK| C
-    N2 -->|ACK| C
-    N3 -->|ACK| C
+```plantuml
+@startuml
 
-    style N1 fill:#90EE90
-    style N2 fill:#90EE90
-    style N3 fill:#90EE90
+skinparam backgroundColor #FEFEFE
+
+title ALL Consistency - Every Replica Must ACK
+
+rectangle "Coordinator" as C
+
+database "N1" as N1 #90EE90
+database "N2" as N2 #90EE90
+database "N3" as N3 #90EE90
+
+C --> N1 : write
+C --> N2 : write
+C --> N3 : write
+N1 --> C : ACK
+N2 --> C : ACK
+N3 --> C : ACK
+
+@enduml
 ```
 
 !!! warning "Availability Risk"
@@ -285,41 +355,60 @@ flowchart LR
 
 ### ONE: Fastest Reads
 
-```mermaid
-sequenceDiagram
-    participant Client
-    participant Coord as Coordinator
-    participant N1 as N1
-    participant N2 as N2
+```plantuml
+@startuml
 
-    Client->>Coord: Read request
-    Coord->>N1: Read
-    N1->>Coord: Data (possibly stale)
-    Coord->>Client: Return data
-    Note over Coord,N2: N2, N3 not contacted
+skinparam backgroundColor #FEFEFE
+
+title ONE Read - Fastest but Possibly Stale
+
+participant "Client" as Client
+participant "Coordinator" as Coord
+database "N1" as N1
+database "N2" as N2
+
+Client -> Coord : Read request
+Coord -> N1 : Read
+N1 -> Coord : Data (possibly stale)
+Coord -> Client : Return data
+
+note over N2 : N2, N3 not contacted
+
+@enduml
 ```
 
 If N1 has stale data, stale data is returned. Background read repair may fix inconsistency later.
 
 ### QUORUM: Strong Consistency Reads
 
-```mermaid
-sequenceDiagram
-    participant Client
-    participant Coord as Coordinator
-    participant N1 as N1
-    participant N2 as N2
+```plantuml
+@startuml
 
-    Client->>Coord: Read request (QUORUM)
-    par Contact replicas
-        Coord->>N1: Read
-        Coord->>N2: Read
-    end
-    N1->>Coord: Data (ts=1000)
-    N2->>Coord: Data (ts=2000)
-    Note over Coord: Compare timestamps<br/>Return newest (ts=2000)
-    Coord->>Client: Data (ts=2000)
-    Note over Coord,N1: Trigger read repair for N1
+skinparam backgroundColor #FEFEFE
+
+title QUORUM Read - Compare Timestamps
+
+participant "Client" as Client
+participant "Coordinator" as Coord
+database "N1" as N1
+database "N2" as N2
+
+Client -> Coord : Read request (QUORUM)
+Coord -> N1 : Read
+Coord -> N2 : Read
+N1 -> Coord : Data (ts=1000)
+N2 -> Coord : Data (ts=2000)
+
+note over Coord
+  Compare timestamps
+  Return newest (ts=2000)
+end note
+
+Coord -> Client : Data (ts=2000)
+
+note over Coord, N1 : Trigger read repair for N1
+
+@enduml
 ```
 
 Coordinator returns the **newest** data based on timestamp. If replicas disagree, coordinator triggers read repair.
@@ -335,24 +424,30 @@ Same logic as QUORUM, but only contacts local DC replicas. Provides strong consi
 
 ### ALL: Read From Every Replica
 
-```mermaid
-sequenceDiagram
-    participant Client
-    participant Coord as Coordinator
-    participant N1 as N1
-    participant N2 as N2
-    participant N3 as N3
+```plantuml
+@startuml
 
-    Client->>Coord: Read request (ALL)
-    par Contact all replicas
-        Coord->>N1: Read
-        Coord->>N2: Read
-        Coord->>N3: Read
-    end
-    N1->>Coord: Data
-    N2->>Coord: Data
-    N3--xCoord: Timeout/Down
-    Coord->>Client: TIMEOUT ERROR
+skinparam backgroundColor #FEFEFE
+
+title ALL Read - Any Failure Causes Timeout
+
+participant "Client" as Client
+participant "Coordinator" as Coord
+database "N1" as N1
+database "N2" as N2
+database "N3" as N3
+
+Client -> Coord : Read request (ALL)
+Coord -> N1 : Read
+Coord -> N2 : Read
+Coord -> N3 : Read
+N1 -> Coord : Data
+N2 -> Coord : Data
+N3 ->x Coord : Timeout/Down
+
+Coord -> Client : TIMEOUT ERROR
+
+@enduml
 ```
 
 !!! warning
@@ -426,17 +521,22 @@ For most applications, LOCAL_QUORUM is sufficient because cross-DC replication h
 
 ### Single Node Failure (RF=3)
 
-```mermaid
-flowchart LR
-    subgraph Cluster["RF=3, One Node Down"]
-        A[A ✓]
-        B[B ✓]
-        C[C ✗]
-    end
+```plantuml
+@startuml
 
-    style A fill:#90EE90
-    style B fill:#90EE90
-    style C fill:#ffcccc
+skinparam backgroundColor #FEFEFE
+
+title RF=3, One Node Down
+
+rectangle "Cluster" as Cluster {
+    database "A" as A #90EE90
+    database "B" as B #90EE90
+    database "C" as C #ffcccc
+}
+
+note right of C : Node down
+
+@enduml
 ```
 
 | CL | Works? | Reason |
@@ -447,17 +547,22 @@ flowchart LR
 
 ### Two Node Failure (RF=3)
 
-```mermaid
-flowchart LR
-    subgraph Cluster["RF=3, Two Nodes Down"]
-        A[A ✓]
-        B[B ✗]
-        C[C ✗]
-    end
+```plantuml
+@startuml
 
-    style A fill:#90EE90
-    style B fill:#ffcccc
-    style C fill:#ffcccc
+skinparam backgroundColor #FEFEFE
+
+title RF=3, Two Nodes Down
+
+rectangle "Cluster" as Cluster {
+    database "A" as A #90EE90
+    database "B" as B #ffcccc
+    database "C" as C #ffcccc
+}
+
+note right of B : Nodes down
+
+@enduml
 ```
 
 | CL | Works? | Reason |
@@ -468,28 +573,28 @@ flowchart LR
 
 ### Entire Datacenter Failure
 
-```mermaid
-flowchart LR
-    subgraph DC1["DC1 (UP)"]
-        A[A ✓]
-        B[B ✓]
-        C[C ✓]
-    end
+```plantuml
+@startuml
 
-    subgraph DC2["DC2 (DOWN)"]
-        D[D ✗]
-        E[E ✗]
-        F[F ✗]
-    end
+skinparam backgroundColor #FEFEFE
 
-    style A fill:#90EE90
-    style B fill:#90EE90
-    style C fill:#90EE90
-    style D fill:#ffcccc
-    style E fill:#ffcccc
-    style F fill:#ffcccc
-    style DC1 fill:#e6ffe6
-    style DC2 fill:#ffe6e6
+title Entire Datacenter Failure
+
+rectangle "DC1 (UP)" as DC1 #e6ffe6 {
+    database "A" as A #90EE90
+    database "B" as B #90EE90
+    database "C" as C #90EE90
+}
+
+rectangle "DC2 (DOWN)" as DC2 #ffe6e6 {
+    database "D" as D #ffcccc
+    database "E" as E #ffcccc
+    database "F" as F #ffcccc
+}
+
+note right of DC2 : Entire DC down
+
+@enduml
 ```
 
 | CL | Works? | Reason |
@@ -537,53 +642,57 @@ UPDATE account SET balance = 50 WHERE id = 1 IF balance = 100;
 
 LWT uses four Paxos phases, requiring 4 round trips compared to 1 for regular writes:
 
-```mermaid
-sequenceDiagram
-    participant Client
-    participant Coord as Coordinator
-    participant R1 as Replica 1
-    participant R2 as Replica 2
-    participant R3 as Replica 3
+```plantuml
+@startuml
 
-    Client->>Coord: UPDATE ... IF balance = 100
+skinparam backgroundColor #FEFEFE
 
-    Note over Coord,R3: Phase 1: PREPARE
-    par Send prepare
-        Coord->>R1: PREPARE(ballot=1)
-        Coord->>R2: PREPARE(ballot=1)
-        Coord->>R3: PREPARE(ballot=1)
-    end
-    R1->>Coord: PROMISE
-    R2->>Coord: PROMISE
-    R3->>Coord: PROMISE
+title Lightweight Transaction (Paxos) - 4 Phases
 
-    Note over Coord,R3: Phase 2: READ (check IF condition)
-    par Read current value
-        Coord->>R1: READ
-        Coord->>R2: READ
-    end
-    R1->>Coord: balance=100
-    R2->>Coord: balance=100
-    Note over Coord: IF condition passes
+participant "Client" as Client
+participant "Coordinator" as Coord
+database "Replica 1" as R1
+database "Replica 2" as R2
+database "Replica 3" as R3
 
-    Note over Coord,R3: Phase 3: PROPOSE
-    par Send proposal
-        Coord->>R1: PROPOSE(ballot=1, balance=50)
-        Coord->>R2: PROPOSE(ballot=1, balance=50)
-        Coord->>R3: PROPOSE(ballot=1, balance=50)
-    end
-    R1->>Coord: ACCEPT
-    R2->>Coord: ACCEPT
-    R3->>Coord: ACCEPT
+Client -> Coord : UPDATE ... IF balance = 100
 
-    Note over Coord,R3: Phase 4: COMMIT
-    par Commit value
-        Coord->>R1: COMMIT
-        Coord->>R2: COMMIT
-        Coord->>R3: COMMIT
-    end
+== Phase 1: PREPARE ==
 
-    Coord->>Client: [applied]=true
+Coord -> R1 : PREPARE(ballot=1)
+Coord -> R2 : PREPARE(ballot=1)
+Coord -> R3 : PREPARE(ballot=1)
+R1 -> Coord : PROMISE
+R2 -> Coord : PROMISE
+R3 -> Coord : PROMISE
+
+== Phase 2: READ (check IF condition) ==
+
+Coord -> R1 : READ
+Coord -> R2 : READ
+R1 -> Coord : balance=100
+R2 -> Coord : balance=100
+
+note over Coord : IF condition passes
+
+== Phase 3: PROPOSE ==
+
+Coord -> R1 : PROPOSE(ballot=1, balance=50)
+Coord -> R2 : PROPOSE(ballot=1, balance=50)
+Coord -> R3 : PROPOSE(ballot=1, balance=50)
+R1 -> Coord : ACCEPT
+R2 -> Coord : ACCEPT
+R3 -> Coord : ACCEPT
+
+== Phase 4: COMMIT ==
+
+Coord -> R1 : COMMIT
+Coord -> R2 : COMMIT
+Coord -> R3 : COMMIT
+
+Coord -> Client : [applied]=true
+
+@enduml
 ```
 
 | Aspect | Regular Write | LWT Write |
@@ -637,59 +746,79 @@ Speculative execution sends duplicate requests to reduce tail latency when one r
 
 When one replica is slow (e.g., due to GC pause), the client must wait for it:
 
-```mermaid
-sequenceDiagram
-    participant Client
-    participant Coord as Coordinator
-    participant N1 as N1 (fast)
-    participant N2 as N2 (slow)
+```plantuml
+@startuml
 
-    Note over Client: QUORUM read (need 2 of 3)
-    Client->>Coord: Read request
-    Note over Coord: T+0ms
-    par Send to replicas
-        Coord->>N1: Read
-        Coord->>N2: Read
-    end
-    Note over Coord: T+5ms
-    N1->>Coord: Response
-    Note over Coord: Have 1, need 2...waiting
-    Note over N2: GC pause
-    Note over Coord: T+500ms
-    N2->>Coord: Response (delayed)
-    Coord->>Client: Return result
-    Note over Client: Total latency: 500ms
+skinparam backgroundColor #FEFEFE
+
+title Without Speculative Execution
+
+participant "Client" as Client
+participant "Coordinator" as Coord
+database "N1 (fast)" as N1
+database "N2 (slow)" as N2
+
+note over Client : QUORUM read (need 2 of 3)
+Client -> Coord : Read request
+note over Coord : T+0ms
+
+Coord -> N1 : Read
+Coord -> N2 : Read
+
+note over Coord : T+5ms
+N1 -> Coord : Response
+note over Coord : Have 1, need 2...waiting
+
+note over N2 : GC pause
+
+note over Coord : T+500ms
+N2 -> Coord : Response (delayed)
+Coord -> Client : Return result
+note over Client : Total latency: 500ms
+
+@enduml
 ```
 
 ### With Speculative Execution
 
 When a replica exceeds the expected latency threshold, the coordinator sends a speculative request to another replica:
 
-```mermaid
-sequenceDiagram
-    participant Client
-    participant Coord as Coordinator
-    participant N1 as N1 (fast)
-    participant N2 as N2 (slow)
-    participant N3 as N3 (fast)
+```plantuml
+@startuml
 
-    Note over Client: QUORUM read (need 2 of 3)
-    Client->>Coord: Read request
-    Note over Coord: T+0ms
-    par Send to replicas
-        Coord->>N1: Read
-        Coord->>N2: Read
-    end
-    Note over Coord: T+5ms
-    N1->>Coord: Response
-    Note over Coord: T+10ms: N2 exceeds 99th percentile
-    Coord->>N3: Speculative read
-    Note over Coord: T+15ms
-    N3->>Coord: Response
-    Note over Coord: Have 2 responses (N1, N3)
-    Coord->>Client: Return result
-    Note over Client: Total latency: 15ms
-    Note over N2: Still processing...ignored
+skinparam backgroundColor #FEFEFE
+
+title With Speculative Execution
+
+participant "Client" as Client
+participant "Coordinator" as Coord
+database "N1 (fast)" as N1
+database "N2 (slow)" as N2
+database "N3 (fast)" as N3
+
+note over Client : QUORUM read (need 2 of 3)
+Client -> Coord : Read request
+note over Coord : T+0ms
+
+Coord -> N1 : Read
+Coord -> N2 : Read
+
+note over Coord : T+5ms
+N1 -> Coord : Response
+
+note over Coord : T+10ms: N2 exceeds 99th percentile
+Coord -> N3 : Speculative read
+
+note over Coord : T+15ms
+N3 -> Coord : Response
+
+note over Coord : Have 2 responses (N1, N3)
+Coord -> Client : Return result
+note over Client : Total latency: 15ms
+
+note over N2 : Still processing...ignored
+
+@enduml
 ```
 
 | Scenario | Latency |

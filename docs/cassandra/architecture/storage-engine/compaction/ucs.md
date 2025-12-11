@@ -349,6 +349,20 @@ Sharding adds some overhead:
 - Very small tables may not benefit
 - Configuration requires understanding data size
 
+### Major Compaction Behavior
+
+!!! warning "Major Compaction May Not Parallelize as Expected"
+    The official documentation states that major compaction under UCS results in `base_shard_count` concurrent compaction tasks, each containing SSTables from one shard. However, community testing has observed that `nodetool compact` may initiate a single compaction task containing all SSTables in the table, rather than parallel per-shard compactions.
+
+    This behavior has been observed with configurations such as:
+    ```
+    'base_shard_count': '4',
+    'class': 'org.apache.cassandra.db.compaction.UnifiedCompactionStrategy',
+    'scaling_parameters': 'T4'
+    ```
+
+    When planning maintenance windows that rely on parallel major compaction, verify actual behavior in the target environment before assuming parallel execution.
+
 ### Migration Considerations
 
 While migration is smooth, considerations exist:

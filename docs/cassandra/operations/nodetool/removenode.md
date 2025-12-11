@@ -14,6 +14,23 @@ nodetool [connection_options] removenode <status | force | <host-id>>
 
 `nodetool removenode` removes a node that cannot be decommissioned because it is dead or unreachable. Unlike decommission (which runs on the node being removed), removenode runs from any live node and reconstructs the dead node's data from other replicas.
 
+### What Removenode Does
+
+When `removenode` executes, Cassandra performs the following operations:
+
+1. **Removes token ownership** - The dead node's tokens are removed from the cluster's token ring. These tokens defined which partition ranges the node was responsible for.
+
+2. **Updates the ring topology** - The cluster recalculates token range assignments. The removed node's token ranges are redistributed to the remaining nodes based on the token allocation strategy (vnode or single-token).
+
+3. **Streams data from replicas** - For each partition range the dead node owned, data is streamed from surviving replicas to the nodes now responsible for those ranges. This ensures the cluster maintains the configured replication factor.
+
+4. **Updates system tables** - The node's entry is removed from `system.peers` and other system tables across all nodes in the cluster.
+
+5. **Propagates via gossip** - The removal is disseminated to all nodes via the gossip protocol, ensuring every node updates its local view of the cluster topology.
+
+!!! info "Data Reconstruction Requirement"
+    Since the dead node's data is unavailable, `removenode` relies entirely on replica nodes to reconstruct the data. If the replication factor is 1 (no replicas), or if all replicas for a partition range are unavailable, that data cannot be recovered and will be lost.
+
 ---
 
 ## Arguments

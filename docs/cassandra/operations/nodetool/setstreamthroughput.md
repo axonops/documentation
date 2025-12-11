@@ -22,6 +22,15 @@ nodetool [connection_options] setstreamthroughput <throughput_mb_per_sec>
 
 This setting affects outgoing streams from the node where the command is executed.
 
+!!! warning "Non-Persistent Setting"
+    This setting is applied at runtime only and does not persist across node restarts. After a restart, the value reverts to the `stream_throughput_outbound` setting in `cassandra.yaml` (default: 200 MB/s).
+
+    To make the change permanent, update `cassandra.yaml`:
+
+    ```yaml
+    stream_throughput_outbound: 200MiB/s
+    ```
+
 ---
 
 ## Arguments
@@ -281,44 +290,6 @@ Sending to: /192.168.1.102
 ```bash
 # Continuous monitoring
 watch -n 5 'nodetool netstats | grep -E "Receiving|Sending|MB/s"'
-```
-
----
-
-## Persistence
-
-### Runtime Changes
-
-Changes made with `setstreamthroughput` are **not persistent** and reset on node restart.
-
-### Permanent Configuration
-
-To persist the setting, edit `cassandra.yaml`:
-
-```yaml
-# Throttle inter-datacenter streaming in MB/s
-stream_throughput_outbound_megabits_per_sec: 200
-
-# Note: This setting is in Mb/s (megabits), not MB/s (megabytes)
-# 200 Mb/s ≈ 25 MB/s
-```
-
-!!! warning "Units Difference"
-    `cassandra.yaml` uses megabits per second (Mb/s), while `nodetool` uses megabytes per second (MB/s).
-
-    Conversion: `MB/s × 8 = Mb/s`
-
-### Applying Persistent Changes
-
-```bash
-# Edit cassandra.yaml
-vim /etc/cassandra/cassandra.yaml
-
-# Change takes effect after restart
-systemctl restart cassandra
-
-# Or apply at runtime (temporary)
-nodetool setstreamthroughput 200
 ```
 
 ---

@@ -243,7 +243,7 @@ done
 !!! note "Limitations"
     - **For cluster-wide view**: Use `nodetool status`
     - **For continuous monitoring**: Use metrics collection
-    - **For historical trends**: Use AxonOps or Prometheus/Grafana
+    - **For historical trends**: Use AxonOps
     - **For detailed table stats**: Use `nodetool tablestats`
 
 ---

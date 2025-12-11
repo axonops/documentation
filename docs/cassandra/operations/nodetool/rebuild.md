@@ -20,6 +20,20 @@ nodetool [connection_options] rebuild [options] [source_datacenter]
 
 Unlike bootstrap, rebuild does not require the node to be in JOINING state and can be run on a node that's already part of the ring.
 
+!!! warning "Rebuild Streams from One Replica Only"
+    The `rebuild` command streams data from a single replica for each token range, not from all replicas. This means:
+
+    - Data may be inconsistent if the source replica was not fully up-to-date
+    - Deleted data (tombstones) that only existed on other replicas will not be streamed
+    - The rebuilt node may have stale or missing data
+
+    **Always run `nodetool repair` after rebuild completes** to ensure full consistency with all replicas. The recommended workflow is:
+
+    1. Run `rebuild` to quickly populate the node with data
+    2. Run `repair` to synchronize with all replicas and resolve inconsistencies
+
+    This two-step approach is faster than repair alone for large datasets, as rebuild streams entire SSTables while repair performs merkle tree comparisons.
+
 ---
 
 ## Arguments

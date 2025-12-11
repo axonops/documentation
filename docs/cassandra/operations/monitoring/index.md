@@ -14,7 +14,7 @@ Effective Cassandra operations require continuous monitoring of cluster health, 
 ```plantuml
 @startuml
 skinparam backgroundColor transparent
-title Cassandra Monitoring Stack
+title Cassandra Monitoring with AxonOps
 
 skinparam rectangle {
     BackgroundColor #7B4B96
@@ -30,34 +30,36 @@ package "Cassandra Node" as Node #F9E5FF {
     rectangle "nodetool" as NT
 }
 
-package "Collection Layer" as Collect #F3DAFA {
-    rectangle "Metrics Exporter\n(Prometheus/StatsD)" as Exporter
-    rectangle "Log Shipper\n(Filebeat/Fluentd)" as LogShip
-    rectangle "Node Exporter" as NodeExp
+package "AxonOps Agent" as Agent #F3DAFA {
+    rectangle "Metrics Collection" as Metrics
+    rectangle "Log Collection" as LogCol
+    rectangle "System Metrics" as SysMet
 }
 
-package "Storage & Processing" as Store #EED0F5 {
-    rectangle "Time Series DB\n(Prometheus/InfluxDB)" as TSDB
-    rectangle "Log Aggregation\n(Elasticsearch)" as LogDB
+package "AxonOps Server" as Server #EED0F5 {
+    rectangle "Time Series Storage" as TSDB
+    rectangle "Log Aggregation" as LogDB
+    rectangle "Alert Engine" as AlertEng
 }
 
-package "Visualization & Alerting" as Viz #E8F5E9 {
-    rectangle "Dashboards\n(Grafana)" as Dash
-    rectangle "Alert Manager" as Alert
+package "AxonOps Dashboard" as Dash #E8F5E9 {
+    rectangle "Cluster Overview" as Overview
+    rectangle "Dashboards" as Dashboards
+    rectangle "Alerting" as Alert
 }
 
-JMX --> Exporter
-Logs --> LogShip
-OS --> NodeExp
-NT --> Exporter
+JMX --> Metrics
+Logs --> LogCol
+OS --> SysMet
+NT --> Metrics
 
-Exporter --> TSDB
-LogShip --> LogDB
-NodeExp --> TSDB
+Metrics --> TSDB
+LogCol --> LogDB
+SysMet --> TSDB
 
-TSDB --> Dash
-LogDB --> Dash
-TSDB --> Alert
+TSDB --> Overview
+LogDB --> Dashboards
+AlertEng --> Alert
 @enduml
 ```
 
@@ -289,63 +291,23 @@ slow_query_log_timeout_in_ms: 500
 
 **Critical Alerts (Page immediately):**
 
-```yaml
-# Prometheus alerting rules example
-groups:
-  - name: cassandra-critical
-    rules:
-      - alert: CassandraNodeDown
-        expr: up{job="cassandra"} == 0
-        for: 1m
-        labels:
-          severity: critical
-        annotations:
-          summary: "Cassandra node {{ $labels.instance }} is down"
-
-      - alert: CassandraDiskFull
-        expr: (node_filesystem_avail_bytes / node_filesystem_size_bytes) < 0.15
-        for: 5m
-        labels:
-          severity: critical
-        annotations:
-          summary: "Disk usage above 85% on {{ $labels.instance }}"
-
-      - alert: CassandraOOM
-        expr: increase(jvm_gc_collection_seconds_count{gc="G1 Old Generation"}[5m]) > 5
-        for: 5m
-        labels:
-          severity: critical
-        annotations:
-          summary: "Frequent full GCs indicating memory pressure"
-```
+| Alert | Condition | Response |
+|-------|-----------|----------|
+| Node Down | Any node unreachable | Investigate immediately, check network/process |
+| Disk Full | Disk usage >85% | Add capacity or clean up snapshots |
+| OOM/Frequent GC | Full GC >5 times in 5 min | Investigate heap usage, potential memory leak |
+| Schema Disagreement | Multiple schema versions >5 min | Check for stuck schema migrations |
 
 **Warning Alerts:**
 
-```yaml
-      - alert: CassandraHighReadLatency
-        expr: cassandra_clientrequest_latency{scope="Read",quantile="0.99"} > 100000
-        for: 10m
-        labels:
-          severity: warning
-        annotations:
-          summary: "P99 read latency above 100ms"
+| Alert | Condition | Response |
+|-------|-----------|----------|
+| High Read Latency | P99 >100ms sustained | Check compaction, tombstones, GC |
+| Compaction Backlog | Pending >100 for 30 min | Increase throughput or investigate blockers |
+| Dropped Messages | Any message drops | Check thread pools, network, timeouts |
+| Hints Growing | >1000 hints stored | Check target node health |
 
-      - alert: CassandraCompactionBacklog
-        expr: cassandra_compaction_pendingtasks > 100
-        for: 30m
-        labels:
-          severity: warning
-        annotations:
-          summary: "Compaction backlog growing"
-
-      - alert: CassandraDroppedMessages
-        expr: rate(cassandra_droppedmessage_dropped_total[5m]) > 0
-        for: 5m
-        labels:
-          severity: warning
-        annotations:
-          summary: "Messages being dropped"
-```
+AxonOps provides pre-configured alerts for these conditions. See [Setup Alert Rules](/how-to/setup-alert-rules/) for configuration details.
 
 ---
 
@@ -381,35 +343,17 @@ groups:
 - Tombstone ratios
 - Hint storage
 
-### Grafana Dashboard Example
+### AxonOps Dashboards
 
-```json
-{
-  "title": "Cassandra Cluster Overview",
-  "panels": [
-    {
-      "title": "Node Status",
-      "type": "stat",
-      "targets": [
-        {
-          "expr": "count(up{job='cassandra'} == 1)",
-          "legendFormat": "Nodes Up"
-        }
-      ]
-    },
-    {
-      "title": "Read Latency P99",
-      "type": "graph",
-      "targets": [
-        {
-          "expr": "cassandra_clientrequest_latency{scope='Read',quantile='0.99'}",
-          "legendFormat": "{{instance}}"
-        }
-      ]
-    }
-  ]
-}
-```
+AxonOps provides pre-built dashboards for Cassandra monitoring:
+
+- **Cluster Overview**: Node status, load distribution, request rates across all nodes
+- **Node Details**: Per-node metrics including heap, disk, CPU, and thread pools
+- **Table Metrics**: Per-table read/write latency, SSTable counts, partition sizes
+- **Compaction**: Pending tasks, throughput, history across the cluster
+- **Repair**: Repair coverage, progress, and scheduling status
+
+See [Metrics Dashboard](/monitoring/metricsdashboards/cassandra/) for dashboard usage and customization.
 
 ---
 
@@ -489,40 +433,36 @@ Track these for capacity planning:
 
 ---
 
-## AxonOps Monitoring
+## AxonOps Monitoring Platform
 
-Managing Cassandra monitoring infrastructure requires significant effort: deploying exporters, configuring alerting, maintaining dashboards, and correlating metrics across nodes. [AxonOps](https://axonops.com) provides a purpose-built monitoring solution for Cassandra.
+[AxonOps](https://axonops.com) provides purpose-built monitoring for Apache Cassandra, eliminating the complexity of assembling custom monitoring stacks.
 
-### Unified Metrics Collection
+### Key Capabilities
 
-AxonOps provides:
-
-- **Zero-configuration collection**: Agent automatically discovers and collects all relevant Cassandra metrics
-- **Pre-built dashboards**: Production-tested dashboards for cluster, node, and table views
-- **Historical analysis**: Long-term metric storage with efficient compression
-- **Cross-cluster visibility**: Monitor multiple clusters from a single interface
-
-### Intelligent Alerting
-
-- **Out-of-the-box alerts**: Pre-configured alerts for common issues
-- **Anomaly detection**: ML-based detection of unusual patterns
-- **Alert correlation**: Group related alerts to reduce noise
-- **Escalation policies**: Route alerts to appropriate teams
+| Capability | Description |
+|------------|-------------|
+| **Zero-configuration collection** | Agent automatically discovers and collects all relevant Cassandra metrics |
+| **Pre-built dashboards** | Production-tested dashboards for cluster, node, and table views |
+| **Historical analysis** | Long-term metric storage with efficient compression |
+| **Cross-cluster visibility** | Monitor multiple clusters from a single interface |
+| **Intelligent alerting** | Pre-configured alerts with anomaly detection |
+| **Centralized logging** | Aggregate and analyze logs from all nodes |
 
 ### Operational Integration
 
-- **Repair monitoring**: Track repair progress and coverage
-- **Backup monitoring**: Verify backup completion and health
+AxonOps extends beyond metrics collection:
+
+- **Repair monitoring**: Track repair progress and coverage across the cluster
+- **Backup monitoring**: Verify backup completion and health status
 - **Capacity forecasting**: Predict when resources will be exhausted
 - **Performance analysis**: Identify slow queries and hot partitions
 
-### Log Analysis
+### Getting Started
 
-- **Centralized logging**: Aggregate logs from all nodes
-- **Pattern detection**: Automatically identify error patterns
-- **Correlation**: Link log events to metrics
-
-See the [AxonOps Monitoring documentation](/monitoring/) for setup and configuration.
+- [AxonOps Cloud Setup](/get_started/cloud/) - Quick start with AxonOps Cloud
+- [Agent Installation](/get_started/agent_setup/) - Deploy the AxonOps agent
+- [Metrics Dashboards](/monitoring/metricsdashboards/cassandra/) - Using the monitoring dashboards
+- [Alert Configuration](/how-to/setup-alert-rules/) - Configure alerting rules
 
 ---
 

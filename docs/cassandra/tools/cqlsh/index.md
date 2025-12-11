@@ -535,5 +535,5 @@ SELECT * FROM users LIMIT 10;
 
 - **[CQLAI](../cqlai/index.md)** - Modern CQL shell with AI
 - **[CQL Reference](../../cql/index.md)** - CQL language guide
-- **[nodetool Reference](../nodetool/index.md)** - Administration tool
+- **[nodetool Reference](../../operations/nodetool/index.md)** - Administration tool
 - **[Data Modeling](../../data-modeling/index.md)** - Query design

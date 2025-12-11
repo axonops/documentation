@@ -281,6 +281,6 @@ sstableloader -d dest1,dest2 /staging/keyspace/table/
 
 ## Next Steps
 
-- **[nodetool](../nodetool/index.md)** - Node management commands
+- **[nodetool](../../operations/nodetool/index.md)** - Node management commands
 - **[Backup/Restore](../../operations/backup-restore/index.md)** - Backup procedures
 - **[Troubleshooting](../../troubleshooting/index.md)** - Problem diagnosis

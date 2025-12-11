@@ -8,39 +8,45 @@ This section describes the complete lifecycle of a Cassandra node from initial c
 
 Cassandra nodes progress through well-defined states during their lifecycle:
 
-```graphviz dot lifecycle-state-machine.svg
-digraph LifecycleStateMachine {
-    fontname="Helvetica";
-    node [fontname="Helvetica", fontsize=10];
-    edge [fontname="Helvetica", fontsize=9];
-    rankdir=LR;
-
-    label="Node Lifecycle State Machine";
-    labelloc="t";
-    fontsize=12;
-
-    node [shape=box, style="rounded,filled"];
-
-    new [label="NEW\n(unconfigured)", fillcolor="#E8E8E8", fontcolor="black"];
-    starting [label="STARTING", fillcolor="#FFC000", fontcolor="black"];
-    joining [label="JOINING\n(bootstrap)", fillcolor="#FFC000", fontcolor="black"];
-    normal [label="NORMAL\n(operational)", fillcolor="#70AD47", fontcolor="white"];
-    leaving [label="LEAVING\n(decommission)", fillcolor="#FFC000", fontcolor="black"];
-    moving [label="MOVING\n(rebalance)", fillcolor="#FFC000", fontcolor="black"];
-    left [label="LEFT\n(removed)", fillcolor="#7F7F7F", fontcolor="white"];
-    down [label="DOWN\n(failed)", fillcolor="#C00000", fontcolor="white"];
-
-    new -> starting [label="start"];
-    starting -> joining [label="contact seeds"];
-    joining -> normal [label="bootstrap complete"];
-    normal -> leaving [label="decommission"];
-    leaving -> left [label="streaming complete"];
-    normal -> moving [label="move token"];
-    moving -> normal [label="move complete"];
-    normal -> down [label="failure detected", style=dashed];
-    down -> normal [label="recovery", style=dashed];
-    down -> left [label="removenode"];
+```plantuml
+@startuml
+skinparam backgroundColor white
+skinparam state {
+    BackgroundColor<<new>> #E8E8E8
+    BackgroundColor<<transition>> #FFC000
+    BackgroundColor<<normal>> #70AD47
+    BackgroundColor<<removed>> #7F7F7F
+    BackgroundColor<<failed>> #C00000
+    FontColor<<normal>> white
+    FontColor<<removed>> white
+    FontColor<<failed>> white
 }
+
+title Node Lifecycle State Machine
+
+state "NEW\n(unconfigured)" as new <<new>>
+state "STARTING" as starting <<transition>>
+state "JOINING\n(bootstrap)" as joining <<transition>>
+state "NORMAL\n(operational)" as normal <<normal>>
+state "LEAVING\n(decommission)" as leaving <<transition>>
+state "MOVING\n(rebalance)" as moving <<transition>>
+state "LEFT\n(removed)" as left <<removed>>
+state "DOWN\n(failed)" as down <<failed>>
+
+[*] --> new
+new --> starting : start
+starting --> joining : contact seeds
+joining --> normal : bootstrap complete
+normal --> leaving : decommission
+leaving --> left : streaming complete
+normal --> moving : move token
+moving --> normal : move complete
+normal -[dashed]-> down : failure detected
+down -[dashed]-> normal : recovery
+down --> left : removenode
+left --> [*]
+
+@enduml
 ```
 
 ### State Definitions
@@ -63,64 +69,39 @@ digraph LifecycleStateMachine {
 
 Bootstrap is the process by which a new node joins an existing cluster and receives its share of data.
 
-```graphviz dot bootstrap-process.svg
-digraph BootstrapProcess {
-    fontname="Helvetica";
-    node [fontname="Helvetica", fontsize=10];
-    edge [fontname="Helvetica", fontsize=9];
-    rankdir=TB;
+```plantuml
+@startuml
+skinparam backgroundColor white
+skinparam activityBackgroundColor #5B9BD5
+skinparam activityFontColor white
 
-    label="Bootstrap Process";
-    labelloc="t";
-    fontsize=12;
+title Bootstrap Process
 
-    node [shape=box, style="rounded,filled"];
+|Phase 1: Discovery|
+#E8E8E8:Node Starts
+Reads cassandra.yaml;
+#5B9BD5:Contact Seeds
+Request cluster state;
+#5B9BD5:Receive Gossip State
+Learn all endpoints;
 
-    subgraph cluster_phase1 {
-        label="Phase 1: Discovery";
-        style="rounded,filled";
-        fillcolor="#E8E8E8";
-        color="#999999";
+|Phase 2: Token Allocation|
+#C55A11:Calculate Tokens
+(vnodes: automatic);
+#C55A11:Determine Ranges
+Identify data to receive;
 
-        start [label="Node Starts\nReads cassandra.yaml", fillcolor="#5B9BD5", fontcolor="white"];
-        seed [label="Contact Seeds\nRequest cluster state", fillcolor="#5B9BD5", fontcolor="white"];
-        state [label="Receive Gossip State\nLearn all endpoints", fillcolor="#5B9BD5", fontcolor="white"];
-    }
+|Phase 3: Streaming|
+#70AD47:Announce JOINING
+Gossip to cluster;
+#70AD47:Stream Data
+Receive SSTables;
 
-    subgraph cluster_phase2 {
-        label="Phase 2: Token Allocation";
-        style="rounded,filled";
-        fillcolor="#FFE8E8";
-        color="#CC9999";
+|Phase 4: Activation|
+#5B9BD5:Announce NORMAL
+Accept client traffic;
 
-        vnodes [label="Calculate Tokens\n(vnodes: automatic)", fillcolor="#C55A11", fontcolor="white"];
-        ranges [label="Determine Ranges\nIdentify data to receive", fillcolor="#C55A11", fontcolor="white"];
-    }
-
-    subgraph cluster_phase3 {
-        label="Phase 3: Streaming";
-        style="rounded,filled";
-        fillcolor="#E8F4E8";
-        color="#99CC99";
-
-        announce [label="Announce JOINING\nGossip to cluster", fillcolor="#70AD47", fontcolor="white"];
-        stream [label="Stream Data\nReceive SSTables", fillcolor="#70AD47", fontcolor="white"];
-    }
-
-    subgraph cluster_phase4 {
-        label="Phase 4: Activation";
-        style="rounded,filled";
-        fillcolor="#E8E8F4";
-        color="#9999CC";
-
-        ready [label="Announce NORMAL\nAccept client traffic", fillcolor="#5B9BD5", fontcolor="white"];
-    }
-
-    start -> seed -> state;
-    state -> vnodes -> ranges;
-    ranges -> announce -> stream;
-    stream -> ready;
-}
+@enduml
 ```
 
 ### Bootstrap Configuration
@@ -216,8 +197,8 @@ A node in NORMAL state:
 
 Each node owns ranges of the token ring:
 
-```graphviz dot token-ownership.svg
-digraph TokenOwnership {
+```graphviz circo token-ring.svg
+digraph TokenRing {
     fontname="Helvetica";
     node [fontname="Helvetica", fontsize=10];
     edge [fontname="Helvetica", fontsize=9];
@@ -226,9 +207,8 @@ digraph TokenOwnership {
     labelloc="t";
     fontsize=12;
 
-    node [shape=circle, style="filled", width=0.8];
+    node [shape=circle, style=filled, width=0.6, fixedsize=true];
 
-    // Ring representation
     t0 [label="0", fillcolor="#5B9BD5", fontcolor="white"];
     t25 [label="25", fillcolor="#70AD47", fontcolor="white"];
     t50 [label="50", fillcolor="#C55A11", fontcolor="white"];
@@ -238,11 +218,18 @@ digraph TokenOwnership {
 
     t0 -> t25 -> t50 -> t75 -> t100 -> t125 -> t0;
 
-    legend [shape=none, label=<<TABLE BORDER="0" CELLBORDER="1" CELLSPACING="0" CELLPADDING="4">
-        <TR><TD BGCOLOR="#5B9BD5"><FONT COLOR="white">Node A</FONT></TD></TR>
-        <TR><TD BGCOLOR="#70AD47"><FONT COLOR="white">Node B</FONT></TD></TR>
-        <TR><TD BGCOLOR="#C55A11"><FONT COLOR="white">Node C</FONT></TD></TR>
-    </TABLE>>];
+    subgraph cluster_legend {
+        label="Legend";
+        style="rounded";
+        fillcolor="#F8F8F8";
+
+        node [shape=box, width=0.8];
+        la [label="Node A", fillcolor="#5B9BD5", fontcolor="white"];
+        lb [label="Node B", fillcolor="#70AD47", fontcolor="white"];
+        lc [label="Node C", fillcolor="#C55A11", fontcolor="white"];
+
+        la -> lb -> lc [style=invis];
+    }
 }
 ```
 
@@ -263,28 +250,28 @@ digraph TokenOwnership {
 
 Decommission is the orderly removal of a node, ensuring all data is transferred to remaining nodes.
 
-```graphviz dot decommission-process.svg
-digraph DecommissionProcess {
-    fontname="Helvetica";
-    node [fontname="Helvetica", fontsize=10];
-    edge [fontname="Helvetica", fontsize=9];
-    rankdir=TB;
+```plantuml
+@startuml
+skinparam backgroundColor white
 
-    label="Decommission Process";
-    labelloc="t";
-    fontsize=12;
+title Decommission Process
 
-    node [shape=box, style="rounded,filled"];
+start
+#E8E8E8:1. Initiate Decommission
+nodetool decommission;
+#5B9BD5:2. Announce LEAVING
+Gossip to cluster;
+#5B9BD5:3. Calculate Targets
+Determine new owners;
+#FFC000:4. Stream Data
+Transfer to new owners;
+#70AD47:5. Announce LEFT
+Remove from ring;
+#7F7F7F:6. Shutdown
+Process terminates;
+stop
 
-    initiate [label="1. Initiate Decommission\nnodetool decommission", fillcolor="#E8E8E8", fontcolor="black"];
-    announce [label="2. Announce LEAVING\nGossip to cluster", fillcolor="#5B9BD5", fontcolor="white"];
-    calculate [label="3. Calculate Targets\nDetermine new owners", fillcolor="#5B9BD5", fontcolor="white"];
-    stream [label="4. Stream Data\nTransfer to new owners", fillcolor="#FFC000", fontcolor="black"];
-    complete [label="5. Announce LEFT\nRemove from ring", fillcolor="#70AD47", fontcolor="white"];
-    shutdown [label="6. Shutdown\nProcess terminates", fillcolor="#7F7F7F", fontcolor="white"];
-
-    initiate -> announce -> calculate -> stream -> complete -> shutdown;
-}
+@enduml
 ```
 
 ### Decommission Command
@@ -312,53 +299,38 @@ nodetool decommission
 
 During decommission, data transfers to new replica owners:
 
-```graphviz dot data-redistribution.svg
-digraph DataRedistribution {
-    fontname="Helvetica";
-    node [fontname="Helvetica", fontsize=10];
-    edge [fontname="Helvetica", fontsize=9];
-    rankdir=LR;
+```plantuml
+@startuml
+skinparam backgroundColor white
+skinparam packageBackgroundColor #E8E8E8
 
-    label="Data Redistribution During Decommission";
-    labelloc="t";
-    fontsize=12;
+title Data Redistribution During Decommission
 
-    node [shape=box, style="rounded,filled"];
+package "Before (RF=3)" #E8E8E8 {
+    rectangle "Range X" as range1 #FFC000
+    rectangle "Node A\n(leaving)" as a1 #C00000
+    rectangle "Node B" as b1 #5B9BD5
+    rectangle "Node C" as c1 #5B9BD5
 
-    subgraph cluster_before {
-        label="Before (RF=3)";
-        style="rounded,filled";
-        fillcolor="#E8E8E8";
-        color="#999999";
-
-        range [label="Range X", fillcolor="#FFC000", fontcolor="black"];
-        a1 [label="Node A\n(leaving)", fillcolor="#C00000", fontcolor="white"];
-        b1 [label="Node B", fillcolor="#5B9BD5", fontcolor="white"];
-        c1 [label="Node C", fillcolor="#5B9BD5", fontcolor="white"];
-
-        range -> a1 [label="replica 1"];
-        range -> b1 [label="replica 2"];
-        range -> c1 [label="replica 3"];
-    }
-
-    subgraph cluster_after {
-        label="After";
-        style="rounded,filled";
-        fillcolor="#E8F4E8";
-        color="#99CC99";
-
-        range2 [label="Range X", fillcolor="#FFC000", fontcolor="black"];
-        b2 [label="Node B", fillcolor="#5B9BD5", fontcolor="white"];
-        c2 [label="Node C", fillcolor="#5B9BD5", fontcolor="white"];
-        d2 [label="Node D\n(new replica)", fillcolor="#70AD47", fontcolor="white"];
-
-        range2 -> b2 [label="replica 1"];
-        range2 -> c2 [label="replica 2"];
-        range2 -> d2 [label="replica 3"];
-    }
-
-    a1 -> d2 [label="stream data", style=dashed, color="#70AD47"];
+    range1 --> a1 : replica 1
+    range1 --> b1 : replica 2
+    range1 --> c1 : replica 3
 }
+
+package "After" #E8F4E8 {
+    rectangle "Range X" as range2 #FFC000
+    rectangle "Node B" as b2 #5B9BD5
+    rectangle "Node C" as c2 #5B9BD5
+    rectangle "Node D\n(new replica)" as d2 #70AD47
+
+    range2 --> b2 : replica 1
+    range2 --> c2 : replica 2
+    range2 --> d2 : replica 3
+}
+
+a1 ..> d2 : <color:#70AD47>stream data</color>
+
+@enduml
 ```
 
 ### Monitoring Decommission
@@ -402,30 +374,33 @@ nodetool move <new_token>
 
 When a node fails, the cluster detects and responds:
 
-```graphviz dot failure-detection.svg
-digraph FailureDetection {
-    fontname="Helvetica";
-    node [fontname="Helvetica", fontsize=10];
-    edge [fontname="Helvetica", fontsize=9];
-    rankdir=TB;
+```plantuml
+@startuml
+skinparam backgroundColor white
 
-    label="Node Failure Detection and Response";
-    labelloc="t";
-    fontsize=12;
+title Node Failure Detection and Response
 
-    node [shape=box, style="rounded,filled"];
+start
+#C00000:Node Fails
+(crash, network, etc.);
+#FFC000:Phi Accrual Detection
+φ exceeds threshold;
+#5B9BD5:Shadow Round
+Verify with other nodes;
+#C00000:Mark as DOWN
+Local determination;
 
-    failure [label="Node Fails\n(crash, network, etc.)", fillcolor="#C00000", fontcolor="white"];
-    phi [label="Phi Accrual Detection\nφ exceeds threshold", fillcolor="#FFC000", fontcolor="black"];
-    shadow [label="Shadow Round\nVerify with other nodes", fillcolor="#5B9BD5", fontcolor="white"];
-    convict [label="Mark as DOWN\nLocal determination", fillcolor="#C00000", fontcolor="white"];
-    hints [label="Store Hints\nFor failed node", fillcolor="#5B9BD5", fontcolor="white"];
-    route [label="Route Around\nExclude from reads", fillcolor="#5B9BD5", fontcolor="white"];
+fork
+    #5B9BD5:Store Hints
+    For failed node;
+fork again
+    #5B9BD5:Route Around
+    Exclude from reads;
+end fork
 
-    failure -> phi -> shadow -> convict;
-    convict -> hints;
-    convict -> route;
-}
+stop
+
+@enduml
 ```
 
 ### Response to Node Failure

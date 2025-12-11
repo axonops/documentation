@@ -19,22 +19,57 @@ In UNIX filesystems, files consist of two parts:
 
 A hard link is an additional directory entry pointing to the same inode. Multiple filenames can reference the same underlying data:
 
-```
-Before snapshot:
-┌─────────────────┐     ┌─────────────┐     ┌──────────────────┐
-│ Directory Entry │     │   Inode     │     │   Data Blocks    │
-│ na-1-big-Data.db│────▶│ links: 1    │────▶│ [Actual SSTable  │
-└─────────────────┘     │ size: 100MB │     │  data on disk]   │
-                        └─────────────┘     └──────────────────┘
+```plantuml
+@startuml
+skinparam backgroundColor #FEFEFE
 
-After snapshot (hard link created):
-┌─────────────────────────────────┐
-│ data/ks/table/na-1-big-Data.db  │──┐
-└─────────────────────────────────┘  │     ┌─────────────┐     ┌──────────────────┐
-                                     ├────▶│   Inode     │────▶│   Data Blocks    │
-┌─────────────────────────────────┐  │     │ links: 2    │     │ [Same data -     │
-│ snapshots/backup/na-1-big-Data.db──┘     │ size: 100MB │     │  NOT duplicated] │
-└─────────────────────────────────┘        └─────────────┘     └──────────────────┘
+title Before Snapshot
+
+rectangle "Directory Entry" as dir #E8E8E8 {
+    card "na-1-big-Data.db" as entry #5B9BD5
+}
+
+rectangle "Inode" as inode #FFC000 {
+    card "links: 1\nsize: 100MB" as meta
+}
+
+rectangle "Data Blocks" as data #70AD47 {
+    card "Actual SSTable\ndata on disk" as blocks
+}
+
+entry --> meta
+meta --> blocks
+
+@enduml
+```
+
+```plantuml
+@startuml
+skinparam backgroundColor #FEFEFE
+
+title After Snapshot (Hard Link Created)
+
+rectangle "Original File" as orig #E8E8E8 {
+    card "data/ks/table/\nna-1-big-Data.db" as entry1 #5B9BD5
+}
+
+rectangle "Snapshot File" as snap #E8E8E8 {
+    card "snapshots/backup/\nna-1-big-Data.db" as entry2 #5B9BD5
+}
+
+rectangle "Inode" as inode #FFC000 {
+    card "links: 2\nsize: 100MB" as meta
+}
+
+rectangle "Data Blocks" as data #70AD47 {
+    card "Same data\nNOT duplicated" as blocks
+}
+
+entry1 --> meta
+entry2 --> meta
+meta --> blocks
+
+@enduml
 ```
 
 **Why hard links are efficient:**
@@ -51,30 +86,40 @@ A 1TB database can be snapshotted in milliseconds with zero additional disk spac
 
 Hard links share data blocks only while both links exist. When compaction deletes the original SSTable file, the snapshot's hard link becomes the sole owner of those data blocks:
 
-```
-Time T1: Snapshot created
-┌─────────────────────┐
-│ Original: na-1-big  │──┐
-└─────────────────────┘  ├──▶ [100MB data blocks] ← Shared, no extra space
-┌─────────────────────┐  │
-│ Snapshot: na-1-big  │──┘
-└─────────────────────┘
+```plantuml
+@startuml
+skinparam backgroundColor #FEFEFE
 
-Time T2: Compaction runs, deletes original
-┌─────────────────────┐
-│ Original: DELETED   │
-└─────────────────────┘
-┌─────────────────────┐
-│ Snapshot: na-1-big  │────▶ [100MB data blocks] ← Snapshot now owns this space
-└─────────────────────┘
+title Storage Accumulation Over Time
 
-Time T3: More compactions, more deletions
-┌─────────────────────┐
-│ Snapshot: na-1-big  │────▶ [100MB]  ┐
-│ Snapshot: na-2-big  │────▶ [150MB]  ├── Snapshot dir grows as originals deleted
-│ Snapshot: na-3-big  │────▶ [200MB]  │
-│ ...                 │────▶ [...]    ┘
-└─────────────────────┘
+rectangle "T1: Snapshot Created" as t1 #E8F4E8 {
+    card "Original: na-1-big" as orig1 #5B9BD5
+    card "Snapshot: na-1-big" as snap1 #5B9BD5
+    card "100MB data blocks\n(shared, no extra space)" as data1 #70AD47
+}
+
+rectangle "T2: Compaction Deletes Original" as t2 #FFE8E8 {
+    card "Original: DELETED" as orig2 #C00000
+    card "Snapshot: na-1-big" as snap2 #5B9BD5
+    card "100MB data blocks\n(snapshot now owns)" as data2 #FFC000
+}
+
+rectangle "T3: More Compactions" as t3 #FFE8E8 {
+    card "Snapshot files accumulate:\nna-1-big → 100MB\nna-2-big → 150MB\nna-3-big → 200MB\n..." as snaplist #FFC000
+    note right of snaplist
+      Snapshot directory grows
+      as originals are deleted
+    end note
+}
+
+orig1 --> data1
+snap1 --> data1
+snap2 --> data2
+
+t1 -[hidden]down-> t2
+t2 -[hidden]down-> t3
+
+@enduml
 ```
 
 **Consequence:** Snapshots that initially consumed zero space can grow to consume significant storage as compaction removes original files. A week-old snapshot may consume more disk space than the current live data.

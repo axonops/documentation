@@ -106,8 +106,58 @@ DELETE FROM ks.users WHERE user_id = ?;
 
 ---
 
+## Apache Cassandra Project Resources
+
+### Official Resources
+
+| Resource | URL |
+|----------|-----|
+| Project Website | [cassandra.apache.org](https://cassandra.apache.org/) |
+| Documentation | [cassandra.apache.org/doc/latest/](https://cassandra.apache.org/doc/latest/) |
+| Downloads | [cassandra.apache.org/download/](https://cassandra.apache.org/download/) |
+
+### Source Code and Development
+
+| Resource | URL |
+|----------|-----|
+| GitHub Repository | [github.com/apache/cassandra](https://github.com/apache/cassandra) |
+| GitHub Mirror (read-only) | [github.com/apache/cassandra](https://github.com/apache/cassandra) |
+| ASF GitBox | [gitbox.apache.org/repos/asf/cassandra.git](https://gitbox.apache.org/repos/asf/cassandra.git) |
+
+### Issue Tracking and Enhancement Proposals
+
+| Resource | URL |
+|----------|-----|
+| JIRA Issue Tracker | [issues.apache.org/jira/browse/CASSANDRA](https://issues.apache.org/jira/browse/CASSANDRA) |
+| CEP Wiki (Enhancement Proposals) | [cwiki.apache.org/confluence/display/CASSANDRA/CEP](https://cwiki.apache.org/confluence/pages/viewpage.action?pageId=95652201) |
+| Cassandra Wiki | [cwiki.apache.org/confluence/display/CASSANDRA](https://cwiki.apache.org/confluence/display/CASSANDRA) |
+
+### Community
+
+| Resource | URL |
+|----------|-----|
+| ASF Slack (#cassandra) | [s.apache.org/slack-invite](https://s.apache.org/slack-invite) (then join #cassandra) |
+| Stack Overflow | [stackoverflow.com/questions/tagged/cassandra](https://stackoverflow.com/questions/tagged/cassandra) |
+
+### Mailing Lists
+
+| List | Purpose | Subscribe |
+|------|---------|-----------|
+| user@cassandra.apache.org | User questions and discussions | [Subscribe](https://lists.apache.org/list.html?user@cassandra.apache.org) |
+| dev@cassandra.apache.org | Development discussions | [Subscribe](https://lists.apache.org/list.html?dev@cassandra.apache.org) |
+| commits@cassandra.apache.org | Commit notifications | [Subscribe](https://lists.apache.org/list.html?commits@cassandra.apache.org) |
+
+### Blogs and News
+
+| Resource | URL |
+|----------|-----|
+| Apache Cassandra Blog | [cassandra.apache.org/blog/](https://cassandra.apache.org/blog/) |
+| Planet Cassandra | [planetcassandra.org](https://planetcassandra.org/) |
+
+---
+
 ## Next Steps
 
 - **[CQL Reference](../cql/index.md)** - Full CQL guide
-- **[Configuration](../operations/configuration/index.md)** - Configuration details
-- **[nodetool](../tools/nodetool/index.md)** - Command reference
+- **[Configuration](../configuration/index.md)** - Configuration details
+- **[nodetool](../operations/nodetool/index.md)** - Command reference

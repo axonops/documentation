@@ -36,29 +36,28 @@ Seeds are often misunderstood. They do **not**:
 
 When a new node starts, it must discover the existing cluster:
 
-```graphviz dot bootstrap-discovery.svg
-digraph BootstrapDiscovery {
-    fontname="Helvetica";
-    node [fontname="Helvetica", fontsize=10];
-    edge [fontname="Helvetica", fontsize=9];
-    rankdir=TB;
+```plantuml
+@startuml
+skinparam backgroundColor #FEFEFE
 
-    label="Bootstrap Discovery Process";
-    labelloc="t";
-    fontsize=12;
+title Bootstrap Discovery Process
 
-    node [shape=box, style="rounded,filled"];
+card "1. New Node Starts\nReads cassandra.yaml" as start #E8E8E8
+card "2. Contact Seed Nodes\nFrom configured seed list" as seeds #5B9BD5
+card "3. Receive Gossip State\nLearn all cluster members" as gossip #5B9BD5
+card "4. Determine Token Ownership\nCalculate ranges to own" as tokens #70AD47
+card "5. Announce to Cluster\nGossip own endpoint state" as announce #70AD47
+card "6. Stream Data\nReceive owned ranges" as stream #FFC000
+card "7. Ready for Traffic\nSTATUS = NORMAL" as ready #70AD47
 
-    start [label="1. New Node Starts\nReads cassandra.yaml", fillcolor="#E8E8E8", fontcolor="black"];
-    seeds [label="2. Contact Seed Nodes\nFrom configured seed list", fillcolor="#5B9BD5", fontcolor="white"];
-    gossip [label="3. Receive Gossip State\nLearn all cluster members", fillcolor="#5B9BD5", fontcolor="white"];
-    tokens [label="4. Determine Token Ownership\nCalculate ranges to own", fillcolor="#70AD47", fontcolor="white"];
-    announce [label="5. Announce to Cluster\nGossip own endpoint state", fillcolor="#70AD47", fontcolor="white"];
-    stream [label="6. Stream Data\nReceive owned ranges", fillcolor="#FFC000", fontcolor="black"];
-    ready [label="7. Ready for Traffic\nSTATUS = NORMAL", fillcolor="#70AD47", fontcolor="white"];
+start --> seeds
+seeds --> gossip
+gossip --> tokens
+tokens --> announce
+announce --> stream
+stream --> ready
 
-    start -> seeds -> gossip -> tokens -> announce -> stream -> ready;
-}
+@enduml
 ```
 
 **Discovery sequence details:**
@@ -156,29 +155,23 @@ seed_provider:
 
 When choosing which nodes to designate as seeds:
 
-```graphviz dot seed-selection.svg
-digraph SeedSelection {
-    fontname="Helvetica";
-    node [fontname="Helvetica", fontsize=10];
-    edge [fontname="Helvetica", fontsize=9];
-    rankdir=LR;
+```plantuml
+@startuml
+skinparam backgroundColor #FEFEFE
 
-    label="Seed Selection Criteria";
-    labelloc="t";
-    fontsize=12;
+title Seed Selection Criteria
 
-    node [shape=box, style="rounded,filled"];
+card "Selection Criteria" as criteria #5B9BD5
 
-    criteria [label="Selection Criteria", fillcolor="#5B9BD5", fontcolor="white"];
+card "Stable Nodes\n• Rarely rebooted\n• Reliable hardware\n• Low failure rate" as stable #70AD47
+card "Distributed\n• Different racks\n• Different failure domains\n• Network diversity" as distributed #70AD47
+card "Reachable\n• Central network location\n• Low latency to others\n• Not behind firewalls" as reachable #70AD47
 
-    stable [label="Stable Nodes\n• Rarely rebooted\n• Reliable hardware\n• Low failure rate", fillcolor="#70AD47", fontcolor="white"];
-    distributed [label="Distributed\n• Different racks\n• Different failure domains\n• Network diversity", fillcolor="#70AD47", fontcolor="white"];
-    reachable [label="Reachable\n• Central network location\n• Low latency to others\n• Not behind firewalls", fillcolor="#70AD47", fontcolor="white"];
+criteria --> stable
+criteria --> distributed
+criteria --> reachable
 
-    criteria -> stable;
-    criteria -> distributed;
-    criteria -> reachable;
-}
+@enduml
 ```
 
 ---
@@ -312,45 +305,28 @@ If a seed node fails permanently:
 
 During network partitions, seeds help reconnect isolated cluster segments:
 
-```graphviz dot partition-recovery.svg
-digraph PartitionRecovery {
-    fontname="Helvetica";
-    node [fontname="Helvetica", fontsize=10];
-    edge [fontname="Helvetica", fontsize=9];
-    rankdir=TB;
+```plantuml
+@startuml
+skinparam backgroundColor #FEFEFE
 
-    label="Seed-Assisted Partition Recovery";
-    labelloc="t";
-    fontsize=12;
+title Seed-Assisted Partition Recovery
 
-    node [shape=box, style="rounded,filled"];
-
-    subgraph cluster_before {
-        label="During Partition";
-        style="rounded,filled";
-        fillcolor="#FFE8E8";
-        color="#CC9999";
-
-        seg1 [label="Segment A\nNodes 1,2,3\n(Seed: Node 1)", fillcolor="#5B9BD5", fontcolor="white"];
-        seg2 [label="Segment B\nNodes 4,5,6\n(Seed: Node 4)", fillcolor="#C55A11", fontcolor="white"];
-
-        seg1 -> seg2 [style=dashed, color="red", label="Network\nPartition"];
-    }
-
-    subgraph cluster_after {
-        label="After Partition Heals";
-        style="rounded,filled";
-        fillcolor="#E8F4E8";
-        color="#99CC99";
-
-        heal [label="Network Heals\nSeeds contact each other", fillcolor="#FFC000", fontcolor="black"];
-        merge [label="Gossip State Merged\nCluster reunified", fillcolor="#70AD47", fontcolor="white"];
-    }
-
-    seg1 -> heal [style=dashed];
-    seg2 -> heal [style=dashed];
-    heal -> merge;
+rectangle "During Partition" as before #FFE8E8 {
+    card "Segment A\nNodes 1,2,3\n(Seed: Node 1)" as seg1 #5B9BD5
+    card "Segment B\nNodes 4,5,6\n(Seed: Node 4)" as seg2 #C55A11
 }
+
+rectangle "After Partition Heals" as after #E8F4E8 {
+    card "Network Heals\nSeeds contact each other" as heal #FFC000
+    card "Gossip State Merged\nCluster reunified" as merge #70AD47
+}
+
+seg1 -[#red,dashed]-> seg2 : Network\nPartition
+seg1 ..> heal
+seg2 ..> heal
+heal --> merge
+
+@enduml
 ```
 
 **Recovery mechanism:**

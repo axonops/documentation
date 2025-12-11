@@ -350,35 +350,30 @@ nodetool netstats
 nodetool gossipinfo
 ```
 
-### Essential Metrics Dashboard
+### AxonOps Dashboard
 
-```
-┌─────────────────────────────────────────────────────────────┐
-│                    Cluster Health                           │
-│  Nodes: 6 UN / 0 DN    Schema: AGREE    Repair: OK         │
-└─────────────────────────────────────────────────────────────┘
+[AxonOps](https://axonops.com) provides purpose-built dashboards for Cassandra monitoring, displaying all key metrics in a unified interface without requiring manual dashboard configuration.
 
-┌──────────────────────────┐  ┌───────────────────────────┐
-│   Latency (p99)          │  │   Throughput              │
-│   Read:  ████░░░ 45ms    │  │   Reads:   12,450 ops/s   │
-│   Write: ██░░░░░  8ms    │  │   Writes:   8,230 ops/s   │
-└──────────────────────────┘  └───────────────────────────┘
+**Pre-built Cassandra dashboards include:**
 
-┌──────────────────────────┐  ┌───────────────────────────┐
-│   Errors (5m rate)       │  │   Resources               │
-│   Timeouts:     0        │  │   Heap:    62% ████████░░ │
-│   Unavailables: 0        │  │   CPU:     35% ████░░░░░░ │
-│   Dropped:      0        │  │   Disk:    55% ██████░░░░ │
-└──────────────────────────┘  └───────────────────────────┘
+- **Cluster Overview** — Node status, schema agreement, cluster health at a glance
+- **Latency & Throughput** — Read/write latency percentiles, request rates, error rates
+- **Resource Utilization** — Heap usage, CPU, disk I/O, network across all nodes
+- **Compaction & Storage** — Pending compactions, SSTable counts, disk usage trends
+- **Per-Table Metrics** — Table-level latency, partition sizes, tombstone counts
+- **Thread Pool Status** — Pending tasks, blocked threads, dropped messages
 
-┌─────────────────────────────────────────────────────────────┐
-│   Per-Node Status                                           │
-│   Node        Heap%   Disk%   Read p99   Pending Compact   │
-│   cass-1      62%     55%     42ms       5                 │
-│   cass-2      58%     53%     38ms       3                 │
-│   cass-3      65%     56%     48ms       8                 │
-└─────────────────────────────────────────────────────────────┘
-```
+**Key advantages over manual monitoring:**
+
+| Aspect | Manual (nodetool/JMX) | AxonOps |
+|--------|----------------------|---------|
+| Setup time | Hours to days | Minutes |
+| Historical data | Not retained | Full retention |
+| Cross-node correlation | Manual comparison | Automatic |
+| Alerting | Separate configuration | Integrated |
+| Query analysis | Not available | Slow query detection |
+
+See [AxonOps Monitoring](/monitoring/) for dashboard features and configuration.
 
 ---
 
@@ -433,7 +428,7 @@ alerts:
 
 ## Next Steps
 
-- **[Alerting Guide](../alerting/index.md)** - Set up alerts
-- **[Dashboards](../dashboards/grafana.md)** - Build dashboards
-- **[JMX Reference](../../jmx-reference/index.md)** - Complete metrics list
-- **[Troubleshooting](../../troubleshooting/index.md)** - Problem resolution
+- **[AxonOps Monitoring](/monitoring/)** — Purpose-built Cassandra dashboards and alerting
+- **[Alerting Guide](../alerting/index.md)** — Configure alert thresholds and notifications
+- **[JMX Reference](../../../jmx-reference/index.md)** — Complete JMX metrics reference
+- **[Troubleshooting](../../troubleshooting/index.md)** — Diagnose and resolve issues

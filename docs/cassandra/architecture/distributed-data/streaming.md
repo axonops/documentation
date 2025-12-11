@@ -196,31 +196,27 @@ During bootstrap, the new node must determine which token ranges it will own:
 skinparam backgroundColor transparent
 title Token Range Calculation During Bootstrap
 
-package "Before Bootstrap (4 nodes)" {
-    map "Token Ownership" as before {
-        0-25 => Node A
-        25-50 => Node B
-        50-75 => Node C
-        75-0 => Node D
-    }
+rectangle "Before Bootstrap (4 nodes)" as before_box {
+    card "Token 0 to 25: Node A" as a1
+    card "Token 25 to 50: Node B" as b1
+    card "Token 50 to 75: Node C" as c1
+    card "Token 75 to 0: Node D" as d1
 }
 
-package "After Bootstrap (5 nodes)" {
-    map "Token Ownership" as after {
-        0-25 => Node A
-        25-50 => Node B
-        50-62 => Node C
-        62-75 => **Node E (new)**
-        75-0 => Node D
-    }
+rectangle "After Bootstrap (5 nodes)" as after_box {
+    card "Token 0 to 25: Node A" as a2
+    card "Token 25 to 50: Node B" as b2
+    card "Token 50 to 62: Node C" as c2
+    card "Token 62 to 75: **Node E (new)**" as e2 #lightgreen
+    card "Token 75 to 0: Node D" as d2
 }
 
-package "Node E Must Receive" {
+rectangle "Node E Must Receive" as receive_box {
     card "Primary range: 62-75 from Node D\nReplica ranges based on RF=3 topology" as receive
 }
 
-before --> after : Node E joins\nat token 62
-after ..> receive
+before_box -right-> after_box : Node E joins\nat token 62
+after_box -down-> receive_box
 
 @enduml
 ```
@@ -467,17 +463,17 @@ Hints are stored locally on the coordinator node:
 skinparam backgroundColor transparent
 title Hint Record Structure
 
-map "Hint Record" as hint {
-    Target Host ID => uuid
-    Hint ID => timeuuid
-    Creation Time => timestamp
-    Mutation => serialized write
-    Message Version => protocol version
+rectangle "Hint Record" as hint {
+    card "Target Host ID: uuid" as h1
+    card "Hint ID: timeuuid" as h2
+    card "Creation Time: timestamp" as h3
+    card "Mutation: serialized write" as h4
+    card "Message Version: protocol version" as h5
 }
 
-map "Storage" as storage {
-    Location => $CASSANDRA_HOME/data/hints/
-    File Format => <host_id>-<timestamp>-<version>.hints
+rectangle "Storage" as storage {
+    card "Location: $CASSANDRA_HOME/data/hints/" as s1
+    card "File Format: <host_id>-<timestamp>-<version>.hints" as s2
 }
 
 hint -[hidden]down-> storage

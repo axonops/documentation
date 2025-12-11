@@ -32,6 +32,14 @@ This reference covers each configuration file and the settings that matter most.
 
 - **[Snitch Overview](snitch-config/index.md)** - Topology awareness
 
+### Guardrails
+
+- **[Guardrails Reference](guardrails.md)** - Configurable limits to protect cluster stability (Cassandra 4.0+)
+
+### Logging
+
+- **[Logging Configuration (logback.xml)](logback.md)** - Log levels, rotation, and output configuration
+
 ---
 
 ## cassandra.yaml Quick Reference

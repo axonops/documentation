@@ -16,6 +16,15 @@ nodetool [connection_options] disablebackup
 
 Incremental backup creates hard links to SSTables upon memtable flush, providing continuous backup capability. Disabling this feature stops the automatic link creation process.
 
+!!! warning "Non-Persistent Setting"
+    This setting is applied at runtime only and does not persist across node restarts. After a restart, incremental backup reverts to the `incremental_backups` setting in `cassandra.yaml` (default: `false`).
+
+    To make the change permanent, update `cassandra.yaml`:
+
+    ```yaml
+    incremental_backups: false
+    ```
+
 ---
 
 ## Behavior

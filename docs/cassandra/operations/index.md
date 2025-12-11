@@ -73,27 +73,21 @@ State letters:
 
 ### Red Flags to Watch For
 
-```
-┌─────────────────────────────────────────────────────────────────────────────┐
-│  CRITICAL: Take immediate action                                            │
-├─────────────────────────────────────────────────────────────────────────────┤
-│  • Any node showing DN (Down Normal) state                                  │
-│  • Schema disagreement in describecluster                                   │
-│  • Blocked thread pools in tpstats                                          │
-│  • Dropped messages > 0 in tpstats                                          │
-│  • Pending compactions > 100 (or growing continuously)                      │
-│  • Disk usage > 80% on any node                                             │
-│  • Heap usage consistently > 85%                                            │
-├─────────────────────────────────────────────────────────────────────────────┤
-│  WARNING: Investigate within 24 hours                                       │
-├─────────────────────────────────────────────────────────────────────────────┤
-│  • Uneven load distribution (> 20% variance between nodes)                  │
-│  • Pending compactions > 20                                                 │
-│  • Read latency p99 > 100ms                                                 │
-│  • Hints growing on any node                                                │
-│  • GC pause times > 500ms                                                   │
-└─────────────────────────────────────────────────────────────────────────────┘
-```
+!!! danger "Critical — Take Immediate Action"
+    - Any node showing DN (Down Normal) state
+    - Schema disagreement in `describecluster`
+    - Blocked thread pools in `tpstats`
+    - Dropped messages > 0 in `tpstats`
+    - Pending compactions > 100 (or growing continuously)
+    - Disk usage > 80% on any node
+    - Heap usage consistently > 85%
+
+!!! warning "Warning — Investigate Within 24 Hours"
+    - Uneven load distribution (> 20% variance between nodes)
+    - Pending compactions > 20
+    - Read latency p99 > 100ms
+    - Hints growing on any node
+    - GC pause times > 500ms
 
 ---
 
@@ -534,7 +528,7 @@ nodetool resetlocalschema
 - Alert configuration
 - Dashboard design
 
-### [Performance Tuning](performance-tuning/index.md)
+### [Performance](performance/index.md)
 - Read/write optimization
 - JVM and GC tuning
 - Compaction tuning
@@ -608,5 +602,5 @@ See the [AxonOps documentation](/operations/) for setup and configuration.
 - **[Repair](repair/index.md)** - Maintain consistency
 - **[Maintenance](maintenance/index.md)** - Day-to-day upkeep
 - **[Monitoring](monitoring/index.md)** - Observability setup
-- **[Performance Tuning](performance-tuning/index.md)** - Optimization procedures
+- **[Performance](performance/index.md)** - Optimization procedures
 - **[Troubleshooting](troubleshooting/index.md)** - Problem resolution

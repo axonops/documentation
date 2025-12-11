@@ -198,7 +198,7 @@ AxonOps provides automated repair scheduling with:
 
 **Operations:**
 
-- [nodetool repair](../../tools/nodetool/commands/repair.md) - Command reference
-- [nodetool repair_admin](../../tools/nodetool/commands/repair_admin.md) - Repair session management
+- [nodetool repair](../nodetool/repair.md) - Command reference
+- [nodetool repair_admin](../nodetool/repair_admin.md) - Repair session management
 - [Backup & Restore](../backup-restore/index.md) - Data protection procedures
 - [Troubleshooting](../../troubleshooting/index.md) - Problem resolution guides

@@ -14,6 +14,9 @@ nodetool [connection_options] setlogginglevel <class> <level>
 
 `nodetool setlogginglevel` dynamically changes the logging level for a specific Java class or package without restarting Cassandra. This is useful for debugging issues in production.
 
+!!! warning "Non-Persistent Setting"
+    This setting is applied at runtime only and does not persist across node restarts. After a restart, the logging levels revert to the configuration in `logback.xml`.
+
 ---
 
 ## Arguments
@@ -193,19 +196,6 @@ Check `logback.xml` for exact configuration.
 2. **Time-limited** - Enable only for debugging duration
 3. **Monitor disk** - Debug logs grow fast
 4. **Reset promptly** - Return to INFO when done
-
----
-
-## Persistence
-
-!!! info "Runtime Only"
-    Changes made with `setlogginglevel` are:
-
-    - Effective immediately
-    - NOT persisted across restarts
-    - Reset to defaults on node restart
-
-    For permanent changes, modify `logback.xml`.
 
 ---
 

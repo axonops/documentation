@@ -343,9 +343,8 @@ JVM_OPTS="$JVM_OPTS -Dcom.sun.management.jmxremote.authenticate=true"
 
 ### Recommended Monitoring Tools
 
-1. **[AxonOps](https://axonops.com)** - Purpose-built for Cassandra
-2. **Prometheus + Grafana** - With JMX exporter
-3. **DataStax MCAC** - Metrics Collector for Apache Cassandra
+**[AxonOps](https://axonops.com)** - Purpose-built for Cassandra
+
 
 ---
 

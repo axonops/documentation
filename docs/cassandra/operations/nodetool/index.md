@@ -53,6 +53,26 @@ Commands for viewing cluster state and metadata.
 | [gossipinfo](gossipinfo.md) | Display gossip information |
 | [version](version.md) | Display Cassandra version |
 | [getendpoints](getendpoints.md) | Display endpoints for a key |
+| [datapaths](datapaths.md) | Display data file locations |
+| [help](help.md) | Display help information |
+
+### Cluster Topology
+
+Commands for managing cluster membership.
+
+| Command | Description |
+|---------|-------------|
+| [decommission](decommission.md) | Remove node from cluster gracefully |
+| [removenode](removenode.md) | Remove a dead node from cluster |
+| [assassinate](assassinate.md) | Force remove an unresponsive node |
+| [rebuild](rebuild.md) | Rebuild data from other datacenters |
+| [drain](drain.md) | Drain the node before shutdown |
+| [stopdaemon](stopdaemon.md) | Stop Cassandra daemon |
+| [bootstrap](bootstrap.md) | Resume bootstrap operation |
+| [join](join.md) | Join the ring after bootstrap |
+| [move](move.md) | Move node to new token |
+| [failuredetector](failuredetector.md) | Display failure detector information |
+| [checktokenmetadata](checktokenmetadata.md) | Check token metadata for inconsistencies |
 
 ### Data Management
 
@@ -69,6 +89,17 @@ Commands for managing data and SSTables.
 | [garbagecollect](garbagecollect.md) | Remove deleted data from SSTables |
 | [import](import.md) | Import SSTables from directory |
 | [refresh](refresh.md) | Load newly placed SSTables |
+
+### SSTable Management
+
+Commands for advanced SSTable operations.
+
+| Command | Description |
+|---------|-------------|
+| [getsstables](getsstables.md) | List SSTables for a partition key |
+| [relocatesstables](relocatesstables.md) | Move SSTables to correct disk |
+| [recompress_sstables](recompress_sstables.md) | Recompress SSTables with new settings |
+| [rebuild_index](rebuild_index.md) | Rebuild secondary indexes |
 
 ### Repair
 
@@ -102,6 +133,12 @@ Commands for controlling compaction.
 | [compactionhistory](compactionhistory.md) | Display compaction history |
 | [setcompactionthroughput](setcompactionthroughput.md) | Set compaction throughput |
 | [getcompactionthroughput](getcompactionthroughput.md) | Get compaction throughput |
+| [getcompactionthreshold](getcompactionthreshold.md) | Get compaction thresholds |
+| [setcompactionthreshold](setcompactionthreshold.md) | Set compaction thresholds |
+| [enableautocompaction](enableautocompaction.md) | Enable automatic compaction |
+| [disableautocompaction](disableautocompaction.md) | Disable automatic compaction |
+| [statusautocompaction](statusautocompaction.md) | Check auto-compaction status |
+| [forcecompact](forcecompact.md) | Force user-defined compaction |
 | [stop](stop.md) | Stop compaction operations |
 
 ### Streaming and Hinted Handoff
@@ -112,40 +149,36 @@ Commands for data streaming and hints.
 |---------|-------------|
 | [netstats](netstats.md) | Display network statistics and streaming |
 | [setstreamthroughput](setstreamthroughput.md) | Set streaming throughput |
+| [getstreamthroughput](getstreamthroughput.md) | Get streaming throughput |
+| [setinterdcstreamthroughput](setinterdcstreamthroughput.md) | Set inter-DC streaming throughput |
+| [getinterdcstreamthroughput](getinterdcstreamthroughput.md) | Get inter-DC streaming throughput |
 | [truncatehints](truncatehints.md) | Truncate all hints |
+| [enablehandoff](enablehandoff.md) | Enable hinted handoff |
+| [disablehandoff](disablehandoff.md) | Disable hinted handoff |
+| [statushandoff](statushandoff.md) | Check hinted handoff status |
+| [pausehandoff](pausehandoff.md) | Pause hint delivery |
+| [resumehandoff](resumehandoff.md) | Resume hint delivery |
+| [enablehintsfordc](enablehintsfordc.md) | Enable hints for datacenter |
+| [disablehintsfordc](disablehintsfordc.md) | Disable hints for datacenter |
+| [listpendinghints](listpendinghints.md) | List pending hints |
+| [sethintedhandoffthrottlekb](sethintedhandoffthrottlekb.md) | Set hint delivery throttle |
+| [getmaxhintwindow](getmaxhintwindow.md) | Get maximum hint window |
+| [setmaxhintwindow](setmaxhintwindow.md) | Set maximum hint window |
 
-### Cluster Topology
+### Gossip and Binary Protocol
 
-Commands for managing cluster membership.
-
-| Command | Description |
-|---------|-------------|
-| [decommission](decommission.md) | Remove node from cluster |
-| [removenode](removenode.md) | Remove a dead node |
-| [assassinate](assassinate.md) | Force remove an unresponsive node |
-| [rebuild](rebuild.md) | Rebuild data from other DCs |
-| [drain](drain.md) | Drain the node |
-| [stopdaemon](stopdaemon.md) | Stop Cassandra daemon |
-
-### Gossip
-
-Commands for gossip protocol management.
+Commands for gossip and client protocol management.
 
 | Command | Description |
 |---------|-------------|
 | [enablegossip](enablegossip.md) | Enable gossip |
 | [disablegossip](disablegossip.md) | Disable gossip |
 | [statusgossip](statusgossip.md) | Check gossip status |
-
-### Client Connections
-
-Commands for managing client connections.
-
-| Command | Description |
-|---------|-------------|
 | [enablebinary](enablebinary.md) | Enable CQL native transport |
 | [disablebinary](disablebinary.md) | Disable CQL native transport |
 | [statusbinary](statusbinary.md) | Check native transport status |
+| [enableoldprotocolversions](enableoldprotocolversions.md) | Enable old protocol versions |
+| [disableoldprotocolversions](disableoldprotocolversions.md) | Disable old protocol versions |
 
 ### Diagnostics and Monitoring
 
@@ -159,6 +192,13 @@ Commands for diagnostics and performance analysis.
 | [tablestats](tablestats.md) | Display table statistics |
 | [toppartitions](toppartitions.md) | Sample top partitions |
 | [gcstats](gcstats.md) | Display garbage collection statistics |
+| [clientstats](clientstats.md) | Display client connection statistics |
+| [profileload](profileload.md) | Profile read/write operations |
+| [sjk](sjk.md) | Swiss Java Knife diagnostic tool |
+| [rangekeysample](rangekeysample.md) | Sample range keys |
+| [viewbuildstatus](viewbuildstatus.md) | Check materialized view build status |
+| [refreshsizeestimates](refreshsizeestimates.md) | Refresh size estimates |
+| [replaybatchlog](replaybatchlog.md) | Replay pending batches |
 
 ### Configuration
 
@@ -169,6 +209,85 @@ Commands for runtime configuration.
 | [setlogginglevel](setlogginglevel.md) | Set logging level |
 | [getlogginglevels](getlogginglevels.md) | Get logging levels |
 | [reloadssl](reloadssl.md) | Reload SSL certificates |
+| [gettimeout](gettimeout.md) | Get operation timeout |
+| [settimeout](settimeout.md) | Set operation timeout |
+| [setcachecapacity](setcachecapacity.md) | Set cache capacity |
+| [setcachekeystosave](setcachekeystosave.md) | Set cache keys to save |
+| [getconcurrentcompactors](getconcurrentcompactors.md) | Get concurrent compactors |
+| [setconcurrentcompactors](setconcurrentcompactors.md) | Set concurrent compactors |
+| [getconcurrentviewbuilders](getconcurrentviewbuilders.md) | Get concurrent view builders |
+| [setconcurrentviewbuilders](setconcurrentviewbuilders.md) | Set concurrent view builders |
+| [getconcurrency](getconcurrency.md) | Get thread concurrency |
+| [setconcurrency](setconcurrency.md) | Set thread concurrency |
+| [getdefaultrf](getdefaultrf.md) | Get default replication factor |
+| [setdefaultrf](setdefaultrf.md) | Set default replication factor |
+| [getsnapshotthrottle](getsnapshotthrottle.md) | Get snapshot throttle |
+| [setsnapshotthrottle](setsnapshotthrottle.md) | Set snapshot throttle |
+| [getcolumnindexsize](getcolumnindexsize.md) | Get column index size |
+| [setcolumnindexsize](setcolumnindexsize.md) | Set column index size |
+| [getseeds](getseeds.md) | Get seed nodes |
+| [reloadseeds](reloadseeds.md) | Reload seed nodes |
+| [gettraceprobability](gettraceprobability.md) | Get trace probability |
+| [settraceprobability](settraceprobability.md) | Set trace probability |
+| [getbatchlogreplaythrottle](getbatchlogreplaythrottle.md) | Get batch log replay throttle |
+| [setbatchlogreplaythrottle](setbatchlogreplaythrottle.md) | Set batch log replay throttle |
+| [reloadtriggers](reloadtriggers.md) | Reload triggers |
+| [reloadlocalschema](reloadlocalschema.md) | Reload local schema |
+| [resetlocalschema](resetlocalschema.md) | Reset local schema |
+| [getauthcacheconfig](getauthcacheconfig.md) | Get auth cache configuration |
+| [setauthcacheconfig](setauthcacheconfig.md) | Set auth cache configuration |
+| [getguardrailsconfig](getguardrailsconfig.md) | Get guardrails configuration |
+| [setguardrailsconfig](setguardrailsconfig.md) | Set guardrails configuration |
+
+### Cache Management
+
+Commands for cache invalidation.
+
+| Command | Description |
+|---------|-------------|
+| [invalidatekeycache](invalidatekeycache.md) | Invalidate key cache |
+| [invalidaterowcache](invalidaterowcache.md) | Invalidate row cache |
+| [invalidatecountercache](invalidatecountercache.md) | Invalidate counter cache |
+| [invalidatepermissionscache](invalidatepermissionscache.md) | Invalidate permissions cache |
+| [invalidatecredentialscache](invalidatecredentialscache.md) | Invalidate credentials cache |
+| [invalidaterolescache](invalidaterolescache.md) | Invalidate roles cache |
+| [invalidatenetworkpermissionscache](invalidatenetworkpermissionscache.md) | Invalidate network permissions cache |
+| [invalidatejmxpermissionscache](invalidatejmxpermissionscache.md) | Invalidate JMX permissions cache |
+
+### CIDR Filtering
+
+Commands for IP-based access control.
+
+| Command | Description |
+|---------|-------------|
+| [cidrfilteringstats](cidrfilteringstats.md) | Display CIDR filtering statistics |
+| [listcidrgroups](listcidrgroups.md) | List all CIDR groups |
+| [getcidrgroupsofip](getcidrgroupsofip.md) | Get CIDR groups for an IP |
+| [updatecidrgroup](updatecidrgroup.md) | Create or update CIDR group |
+| [dropcidrgroup](dropcidrgroup.md) | Remove CIDR group |
+| [invalidatecidrpermissionscache](invalidatecidrpermissionscache.md) | Invalidate CIDR permissions cache |
+| [reloadcidrgroupscache](reloadcidrgroupscache.md) | Reload CIDR groups cache |
+
+### Audit Logging
+
+Commands for audit log management.
+
+| Command | Description |
+|---------|-------------|
+| [enableauditlog](enableauditlog.md) | Enable audit logging |
+| [disableauditlog](disableauditlog.md) | Disable audit logging |
+| [getauditlog](getauditlog.md) | Get audit log configuration |
+
+### Full Query Logging
+
+Commands for full query log management.
+
+| Command | Description |
+|---------|-------------|
+| [enablefullquerylog](enablefullquerylog.md) | Enable full query logging |
+| [disablefullquerylog](disablefullquerylog.md) | Disable full query logging |
+| [getfullquerylog](getfullquerylog.md) | Get full query log configuration |
+| [resetfullquerylog](resetfullquerylog.md) | Reset full query log |
 
 ---
 
@@ -182,6 +301,7 @@ Commands for runtime configuration.
 | Monitor compactions | `nodetool compactionstats` |
 | Check thread pools | `nodetool tpstats` |
 | View table metrics | `nodetool tablestats <keyspace>` |
+| Check client connections | `nodetool clientstats` |
 
 ### Maintenance Tasks
 
@@ -191,6 +311,7 @@ Commands for runtime configuration.
 | Create snapshot | `nodetool snapshot -t <name>` |
 | Run repair | `nodetool repair -pr` |
 | Clean up after topology change | `nodetool cleanup` |
+| Rebuild secondary indexes | `nodetool rebuild_index <ks> <table> <index>` |
 
 ### Troubleshooting
 
@@ -200,6 +321,17 @@ Commands for runtime configuration.
 | View latencies | `nodetool proxyhistograms` |
 | Check gossip state | `nodetool gossipinfo` |
 | Find hot partitions | `nodetool toppartitions <ks> <table> 60000` |
+| Check pending hints | `nodetool listpendinghints` |
+| Verify SSTables | `nodetool verify <keyspace>` |
+
+### Security Operations
+
+| Task | Command |
+|------|---------|
+| Enable audit logging | `nodetool enableauditlog` |
+| Check CIDR filtering | `nodetool cidrfilteringstats` |
+| Invalidate auth cache | `nodetool invalidatepermissionscache` |
+| Reload SSL certificates | `nodetool reloadssl` |
 
 ---
 
@@ -217,3 +349,6 @@ Commands for runtime configuration.
     - Always `drain` before stopping Cassandra
     - Test commands in non-production first
     - Have rollback plans for topology changes
+
+!!! info "Runtime vs Persistent Settings"
+    Many `set*` commands modify settings at runtime only. These changes are lost on node restart. To make settings persistent, also update `cassandra.yaml`. Commands that modify persistent data (like CIDR groups) are noted in their documentation.

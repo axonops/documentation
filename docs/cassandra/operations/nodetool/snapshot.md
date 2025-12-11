@@ -14,6 +14,23 @@ nodetool [connection_options] snapshot [options] [--] [keyspace ...]
 
 `nodetool snapshot` creates a point-in-time copy of SSTable files using filesystem hard links. Snapshots are instantaneous, require minimal additional disk space initially, and serve as the foundation for Cassandra backups.
 
+### Why Snapshots Matter
+
+Cassandra continuously modifies data through compaction, which merges and deletes SSTable files. Without snapshots, there is no way to recover data from a specific point in time. Snapshots freeze a consistent view of the data that can be:
+
+- **Restored locally** if data is accidentally deleted or corrupted
+- **Copied off-node** for disaster recovery
+- **Used for cloning** to create test environments from production data
+
+### What Snapshots Capture
+
+| Captured | Not Captured |
+|----------|--------------|
+| All committed SSTable data | Uncommitted data in memtables (unless flushed first) |
+| Table schema definitions | Commit log files |
+| Secondary index data | Configuration files |
+| Materialized view data | System keyspace data (unless explicitly included) |
+
 ---
 
 ## Arguments
@@ -165,30 +182,66 @@ nodetool snapshot -t pre_upgrade_4.1
 
 ## How Snapshots Work
 
-### Hard Links
+### Understanding Hard Links
 
-Snapshots use filesystem hard links, not data copies:
+A **hard link** is a filesystem feature that allows multiple directory entries to point to the same physical data on disk. Unlike a copy, a hard link does not duplicate the data—it creates another reference to the existing data blocks.
 
-| Location | File | Description |
-|----------|------|-------------|
-| Data directory | `nb-1-big-Data.db` | Original SSTable file |
-| Snapshot directory | `snapshots/backup/nb-1-big-Data.db` | Hard link (same inode) |
+```
+┌─────────────────────────────────────────────────────────────────┐
+│                         DISK STORAGE                            │
+│  ┌─────────────────────────────────────────────────────────┐    │
+│  │              Actual Data Blocks (100 MB)                │    │
+│  │              [SSTable file contents]                    │    │
+│  └─────────────────────────────────────────────────────────┘    │
+│                    ▲                    ▲                       │
+│                    │                    │                       │
+│               Reference 1          Reference 2                  │
+│                    │                    │                       │
+│  ┌─────────────────┴───┐    ┌──────────┴─────────────────┐     │
+│  │ data/ks/tbl/        │    │ data/ks/tbl/snapshots/     │     │
+│  │   nb-1-big-Data.db  │    │   backup/nb-1-big-Data.db  │     │
+│  │ (original file)     │    │ (hard link - same data)    │     │
+│  └─────────────────────┘    └────────────────────────────┘     │
+└─────────────────────────────────────────────────────────────────┘
 
-!!! info "Hard Link Behavior"
-    - Both entries point to the same data blocks on disk
-    - Snapshot takes almost no additional space initially
-    - Space is consumed when the original SSTable is compacted/deleted
+Total disk usage: 100 MB (not 200 MB)
+```
+
+**Key properties of hard links:**
+
+| Property | Behavior |
+|----------|----------|
+| Creation speed | Instantaneous (just adds a directory entry) |
+| Initial space | Zero additional space (same data blocks) |
+| Data persistence | Data remains until ALL references are deleted |
+| Independence | Each link is equal; there is no "original" vs "copy" |
+
+This is why snapshots are fast and space-efficient: creating a snapshot of 500 GB of data takes seconds and uses no additional disk space at the moment of creation.
 
 ### Space Usage Over Time
 
-| Time | Event | Space Impact |
-|------|-------|--------------|
-| T=0 | Snapshot created | ~0 additional (hard links) |
-| T+1 | Compaction runs | Original files deleted |
-| T+2 | Hard links become only reference | Full data size consumed |
+The space efficiency of hard links has a time dimension. When compaction runs, Cassandra deletes the original SSTable files—but the snapshot's hard links keep the data alive:
+
+| Time | Event | Disk State | Space Impact |
+|------|-------|------------|--------------|
+| T=0 | Snapshot created | Both original and snapshot reference same blocks | +0 MB |
+| T+1 | Compaction merges SSTables | Original files deleted, snapshot links remain | +0 MB |
+| T+2 | Data blocks now only referenced by snapshot | Snapshot "owns" the data exclusively | Full size now attributed to snapshot |
+
+**Example timeline:**
+
+```
+Day 1: Take snapshot of 100 GB table
+       - Snapshot size shown: ~0 (hard links to active SSTables)
+
+Day 3: Compaction runs, creates new SSTables, deletes old ones
+       - Snapshot size shown: 100 GB (now holds exclusive references)
+       - Active table size: 95 GB (new compacted SSTables)
+       - Total disk usage: 195 GB
+```
 
 !!! warning "Snapshot Space Growth"
-    Old snapshots consume disk space as the underlying SSTables get compacted away. Monitor snapshot sizes and clean up regularly.
+    Old snapshots accumulate disk space as compaction removes the original SSTables they reference. A week-old snapshot may consume as much space as the original data. Monitor with `nodetool listsnapshots` and clean up regularly.
 
 ---
 
@@ -324,6 +377,37 @@ nodetool snapshot -t before_schema_change_users_20240115
 
 ---
 
+## Restoring from Snapshots
+
+Snapshots can be restored in two ways:
+
+### Local Restore (Same Node, Same Schema)
+
+Copy snapshot files back to the table's data directory and refresh:
+
+```bash
+# 1. Stop writes to the table (optional but recommended)
+# 2. Copy snapshot files to table directory
+cp /var/lib/cassandra/data/my_keyspace/users-*/snapshots/my_backup/*.db \
+   /var/lib/cassandra/data/my_keyspace/users-*/
+
+# 3. Refresh to load the restored files
+nodetool refresh my_keyspace users
+```
+
+### Cross-Node Restore (Different Topology)
+
+Use `sstableloader` to stream snapshot data to any cluster:
+
+```bash
+sstableloader -d node1,node2,node3 \
+  /backup/my_keyspace/users-*/snapshots/my_backup/
+```
+
+For complete restore procedures, see [Backup and Restore](../backup-restore/index.md).
+
+---
+
 ## Related Commands
 
 | Command | Relationship |
@@ -332,3 +416,9 @@ nodetool snapshot -t before_schema_change_users_20240115
 | [listsnapshots](listsnapshots.md) | List existing snapshots |
 | [flush](flush.md) | Flush memtables before snapshot |
 | [tablestats](tablestats.md) | Check snapshot space usage |
+| [refresh](refresh.md) | Load restored SSTable files |
+
+## Related Documentation
+
+- [Backup and Restore Overview](../backup-restore/index.md) - Complete backup strategies
+- [Restore Procedures](../backup-restore/restore.md) - Detailed restore scenarios

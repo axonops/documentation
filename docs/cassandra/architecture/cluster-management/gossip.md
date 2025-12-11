@@ -41,48 +41,37 @@ Cassandra's gossip implementation derives from epidemic protocols and failure de
 
 The internode messaging subsystem provides the transport layer for gossip and all other inter-node communication. Cassandra 4.0 introduced a non-blocking I/O (NIO) implementation using Netty, replacing the previous blocking socket implementation.
 
-```graphviz dot messaging-architecture.svg
-digraph MessagingArchitecture {
-    fontname="Helvetica";
-    node [fontname="Helvetica", fontsize=10];
-    edge [fontname="Helvetica", fontsize=9];
-    rankdir=TB;
+```plantuml
+@startuml
+skinparam backgroundColor #FEFEFE
 
-    label="Internode Messaging Architecture";
-    labelloc="t";
-    fontsize=12;
+title Internode Messaging Architecture
 
-    node [shape=box, style="rounded,filled"];
-
-    subgraph cluster_outbound {
-        label="Outbound Path";
-        style="rounded,filled";
-        fillcolor="#E8F4E8";
-        color="#99CC99";
-
-        app [label="Application\n(Gossip, Read, Write)", fillcolor="#5B9BD5", fontcolor="white"];
-        queue [label="Outbound Message Queue\n(per-endpoint)", fillcolor="#5B9BD5", fontcolor="white"];
-        conn [label="Connection Pool\n(urgent/small/large)", fillcolor="#5B9BD5", fontcolor="white"];
-        netty_out [label="Netty Channel\n(NIO)", fillcolor="#70AD47", fontcolor="white"];
-    }
-
-    subgraph cluster_inbound {
-        label="Inbound Path";
-        style="rounded,filled";
-        fillcolor="#FFE8E8";
-        color="#CC9999";
-
-        netty_in [label="Netty Channel\n(NIO)", fillcolor="#70AD47", fontcolor="white"];
-        decoder [label="Message Decoder\n(frame parsing)", fillcolor="#C55A11", fontcolor="white"];
-        dispatch [label="Message Dispatcher\n(verb routing)", fillcolor="#C55A11", fontcolor="white"];
-        handler [label="Verb Handler\n(gossip/read/write)", fillcolor="#C55A11", fontcolor="white"];
-    }
-
-    app -> queue -> conn -> netty_out;
-    netty_in -> decoder -> dispatch -> handler;
-
-    netty_out -> netty_in [label="TCP/TLS", style=dashed, constraint=false];
+rectangle "Outbound Path" as outbound #E8F4E8 {
+    card "Application\n(Gossip, Read, Write)" as app #5B9BD5
+    card "Outbound Message Queue\n(per-endpoint)" as queue #5B9BD5
+    card "Connection Pool\n(urgent/small/large)" as conn #5B9BD5
+    card "Netty Channel\n(NIO)" as netty_out #70AD47
 }
+
+rectangle "Inbound Path" as inbound #FFE8E8 {
+    card "Netty Channel\n(NIO)" as netty_in #70AD47
+    card "Message Decoder\n(frame parsing)" as decoder #C55A11
+    card "Message Dispatcher\n(verb routing)" as dispatch #C55A11
+    card "Verb Handler\n(gossip/read/write)" as handler #C55A11
+}
+
+app --> queue
+queue --> conn
+conn --> netty_out
+
+netty_in --> decoder
+decoder --> dispatch
+dispatch --> handler
+
+netty_out ..> netty_in : TCP/TLS
+
+@enduml
 ```
 
 ### Connection Types
@@ -99,40 +88,16 @@ Cassandra establishes three separate connection types between each pair of nodes
 
 Each internode message follows a binary frame format:
 
-```graphviz dot message-frame.svg
-digraph MessageFrame {
-    fontname="Helvetica";
-    node [fontname="Helvetica", fontsize=9];
-    edge [fontname="Helvetica", fontsize=8];
-    rankdir=LR;
+```
+Internode Message Frame Format
 
-    label="Internode Message Frame Format";
-    labelloc="t";
-    fontsize=11;
-
-    frame [label=<<TABLE BORDER="0" CELLBORDER="1" CELLSPACING="0" CELLPADDING="6">
-        <TR>
-            <TD BGCOLOR="#5B9BD5"><FONT COLOR="white">Protocol<BR/>Magic</FONT></TD>
-            <TD BGCOLOR="#5B9BD5"><FONT COLOR="white">Message<BR/>ID</FONT></TD>
-            <TD BGCOLOR="#5B9BD5"><FONT COLOR="white">Timestamp<BR/>(μs)</FONT></TD>
-            <TD BGCOLOR="#70AD47"><FONT COLOR="white">Verb</FONT></TD>
-            <TD BGCOLOR="#FFC000">Params<BR/>Size</TD>
-            <TD BGCOLOR="#FFC000">Params<BR/>Data</TD>
-            <TD BGCOLOR="#C55A11"><FONT COLOR="white">Payload<BR/>Size</FONT></TD>
-            <TD BGCOLOR="#C55A11"><FONT COLOR="white">Payload<BR/>Data</FONT></TD>
-        </TR>
-        <TR>
-            <TD>4 bytes</TD>
-            <TD>8 bytes</TD>
-            <TD>8 bytes</TD>
-            <TD>4 bytes</TD>
-            <TD>4 bytes</TD>
-            <TD>variable</TD>
-            <TD>4 bytes</TD>
-            <TD>variable</TD>
-        </TR>
-    </TABLE>>, shape=none];
-}
+┌──────────┬──────────┬──────────┬──────────┬──────────┬──────────┬──────────┬──────────┐
+│ Protocol │ Message  │Timestamp │   Verb   │  Params  │  Params  │ Payload  │ Payload  │
+│  Magic   │    ID    │   (μs)   │          │   Size   │   Data   │   Size   │   Data   │
+├──────────┼──────────┼──────────┼──────────┼──────────┼──────────┼──────────┼──────────┤
+│ 4 bytes  │ 8 bytes  │ 8 bytes  │ 4 bytes  │ 4 bytes  │ variable │ 4 bytes  │ variable │
+└──────────┴──────────┴──────────┴──────────┴──────────┴──────────┴──────────┴──────────┘
+│◄───────────────── Header ────────────────►│◄───── Params ──────►│◄───── Payload ─────►│
 ```
 
 | Field | Size | Description |
@@ -203,26 +168,22 @@ internode_application_receive_queue_capacity: 4MiB
 
 Each node executes a `GossipTask` every second (configurable). The task performs four operations in sequence:
 
-```graphviz dot gossip-task.svg
-digraph GossipTask {
-    fontname="Helvetica";
-    node [fontname="Helvetica", fontsize=10];
-    edge [fontname="Helvetica", fontsize=9];
-    rankdir=TB;
+```plantuml
+@startuml
+skinparam backgroundColor #FEFEFE
 
-    label="Gossip Task Execution (per second)";
-    labelloc="t";
-    fontsize=12;
+title Gossip Task Execution (per second)
 
-    node [shape=box, style="rounded,filled"];
+card "1. Update Local HeartBeatState\nIncrement version counter" as heartbeat #5B9BD5
+card "2. Select Random Live Peer\nSend GossipDigestSyn" as live #5B9BD5
+card "3. Maybe Contact Unreachable\nP = size(unreachable) / (size(live) + 1)" as unreachable #FFC000
+card "4. Maybe Contact Seed\nIf no seed in step 2" as seed #70AD47
 
-    heartbeat [label="1. Update Local HeartBeatState\nIncrement version counter", fillcolor="#5B9BD5", fontcolor="white"];
-    live [label="2. Select Random Live Peer\nSend GossipDigestSyn", fillcolor="#5B9BD5", fontcolor="white"];
-    unreachable [label="3. Maybe Contact Unreachable\nP = size(unreachable) / (size(live) + 1)", fillcolor="#FFC000", fontcolor="black"];
-    seed [label="4. Maybe Contact Seed\nIf no seed in step 2", fillcolor="#70AD47", fontcolor="white"];
+heartbeat --> live
+live --> unreachable
+unreachable --> seed
 
-    heartbeat -> live -> unreachable -> seed;
-}
+@enduml
 ```
 
 **Probabilistic peer selection:**
@@ -393,42 +354,28 @@ Cassandra employs the Phi Accrual Failure Detector algorithm ([Hayashibara et al
 
 Traditional heartbeat-based failure detectors suffer from a fundamental tension: fixed timeouts that detect failures quickly also generate false positives under variable network conditions.
 
-```graphviz dot phi-vs-fixed.svg
-digraph PhiVsFixed {
-    fontname="Helvetica";
-    node [fontname="Helvetica", fontsize=10];
-    edge [fontname="Helvetica", fontsize=9];
-    rankdir=LR;
+```plantuml
+@startuml
+skinparam backgroundColor #FEFEFE
 
-    label="Fixed Timeout vs Phi Accrual";
-    labelloc="t";
-    fontsize=12;
+title Fixed Timeout vs Phi Accrual
 
-    node [shape=box, style="rounded,filled"];
-
-    subgraph cluster_fixed {
-        label="Fixed Timeout (5s)";
-        style="rounded,filled";
-        fillcolor="#FFE8E8";
-        color="#CC9999";
-
-        fixed_input [label="Inter-arrival times:\n1s, 1s, 1s, 6s", fillcolor="#E8E8E8", fontcolor="black"];
-        fixed_output [label="Result: FALSE POSITIVE\nat t=5s (node still alive)", fillcolor="#C00000", fontcolor="white"];
-        fixed_input -> fixed_output;
-    }
-
-    subgraph cluster_phi {
-        label="Phi Accrual";
-        style="rounded,filled";
-        fillcolor="#E8F4E8";
-        color="#99CC99";
-
-        phi_input [label="Inter-arrival times:\n1s, 1s, 1s, 6s", fillcolor="#E8E8E8", fontcolor="black"];
-        phi_calc [label="φ(6s) = 3.2\n(below threshold 8)", fillcolor="#FFC000", fontcolor="black"];
-        phi_output [label="Result: CORRECT\nNo false positive", fillcolor="#70AD47", fontcolor="white"];
-        phi_input -> phi_calc -> phi_output;
-    }
+rectangle "Fixed Timeout (5s)" as fixed #FFE8E8 {
+    card "Inter-arrival times:\n1s, 1s, 1s, 6s" as fixed_input #E8E8E8
+    card "Result: FALSE POSITIVE\nat t=5s (node still alive)" as fixed_output #C00000
 }
+
+rectangle "Phi Accrual" as phi #E8F4E8 {
+    card "Inter-arrival times:\n1s, 1s, 1s, 6s" as phi_input #E8E8E8
+    card "φ(6s) = 3.2\n(below threshold 8)" as phi_calc #FFC000
+    card "Result: CORRECT\nNo false positive" as phi_output #70AD47
+}
+
+fixed_input --> fixed_output
+phi_input --> phi_calc
+phi_calc --> phi_output
+
+@enduml
 ```
 
 The Phi Accrual approach transforms the problem:
@@ -528,30 +475,30 @@ phi_convict_threshold: 8
 
 When a node's φ exceeds the threshold, Cassandra performs additional verification before conviction:
 
-```graphviz dot conviction-process.svg
-digraph ConvictionProcess {
-    fontname="Helvetica";
-    node [fontname="Helvetica", fontsize=10];
-    edge [fontname="Helvetica", fontsize=9];
-    rankdir=TB;
+```plantuml
+@startuml
+skinparam backgroundColor #FEFEFE
 
-    label="Node Conviction Process";
-    labelloc="t";
-    fontsize=12;
+title Node Conviction Process
 
-    node [shape=box, style="rounded,filled"];
+start
 
-    threshold [label="φ > threshold\nfor Node X", fillcolor="#FFC000", fontcolor="black"];
-    shadow [label="Shadow Round\nQuery other nodes about X", fillcolor="#5B9BD5", fontcolor="white"];
-    check [label="Did others recently\nhear from X?", shape=diamond, fillcolor="#E8E8E8", fontcolor="black"];
-    partition [label="Local partition detected\nDo NOT mark X as DOWN", fillcolor="#70AD47", fontcolor="white"];
-    convict [label="Consensus: X is DOWN\nMark as convicted", fillcolor="#C00000", fontcolor="white"];
+:φ > threshold for Node X;
 
-    threshold -> shadow;
-    shadow -> check;
-    check -> partition [label="Yes"];
-    check -> convict [label="No"];
-}
+:Shadow Round
+Query other nodes about X;
+
+if (Did others recently\nhear from X?) then (Yes)
+  :Local partition detected
+  Do NOT mark X as DOWN;
+else (No)
+  :Consensus: X is DOWN
+  Mark as convicted;
+endif
+
+stop
+
+@enduml
 ```
 
 **Shadow round purpose:**

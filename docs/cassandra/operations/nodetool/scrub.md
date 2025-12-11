@@ -23,6 +23,31 @@ Scrub operates locally and does not involve other nodes.
 
 ---
 
+## Causes of SSTable Corruption
+
+SSTable corruption is relatively rare but can occur due to several factors:
+
+| Cause | Description |
+|-------|-------------|
+| **Hardware failures** | Failing disks, bad sectors, faulty RAID controllers, or memory errors (bit flips) can corrupt data during writes or reads |
+| **Unexpected process termination** | If Cassandra is killed (SIGKILL) or crashes during SSTable writes or compaction, partially written files may be corrupted |
+| **Power loss** | Sudden power failure without proper shutdown can leave SSTables in an inconsistent state, particularly if disk write caches were not flushed |
+| **Filesystem issues** | Bugs in the filesystem, filesystem corruption, or running out of disk space during writes |
+| **Network storage problems** | When using network-attached storage (NAS/SAN), network interruptions during writes can cause corruption |
+| **Kernel or driver bugs** | Bugs in storage drivers, kernel I/O subsystems, or virtualization layers |
+| **Manual file manipulation** | Accidental deletion, modification, or truncation of SSTable files |
+| **Software bugs** | Rarely, bugs in Cassandra itself during compaction or SSTable generation |
+
+!!! tip "Prevention"
+    - Use ECC memory to prevent bit flips
+    - Configure disk write caching appropriately (battery-backed or disabled)
+    - Ensure proper shutdown procedures
+    - Monitor disk health with S.M.A.R.T.
+    - Use checksums (enabled by default in Cassandra)
+    - Maintain adequate free disk space
+
+---
+
 ## Arguments
 
 | Argument | Description |

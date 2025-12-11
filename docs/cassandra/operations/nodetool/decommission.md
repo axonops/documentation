@@ -12,14 +12,30 @@ nodetool [connection_options] decommission [-f, --force]
 
 ## Description
 
-`nodetool decommission` initiates a graceful removal of the current node from the cluster. The node:
-
-1. Stops accepting new writes
-2. Streams all its data to other nodes
-3. Removes itself from the ring
-4. Shuts down
+`nodetool decommission` initiates a graceful removal of the current node from the cluster. Unlike `removenode` (which operates on dead nodes from a remote node), decommission runs locally on the node being removed and leverages the node's own data to stream to new owners.
 
 This is the preferred method for removing healthy nodes from a cluster.
+
+### What Decommission Does
+
+When `decommission` executes, Cassandra performs the following operations:
+
+1. **Sets node state to LEAVING** - The node announces via gossip that it is leaving the cluster. Other nodes see status change from UN (Up/Normal) to UL (Up/Leaving).
+
+2. **Stops accepting coordinator requests** - The node stops accepting new client write requests as a coordinator, though it continues to accept replica writes from other coordinators during streaming.
+
+3. **Calculates token range transfers** - The node determines which other nodes should receive its token ranges based on the replication strategy and token allocation.
+
+4. **Streams data to new owners** - For each token range the node owns, data is streamed directly from this node's SSTables to the nodes that will assume ownership. This is more efficient than `removenode` because the data is read locally rather than reconstructed from replicas.
+
+5. **Relinquishes token ownership** - Once streaming completes, the node's tokens are removed from the ring and reassigned to the nodes that received the data.
+
+6. **Updates cluster topology** - The ring topology is updated across all nodes via gossip. The node's entry is removed from `system.peers` on other nodes.
+
+7. **Shuts down** - The Cassandra process exits. The node no longer appears in `nodetool status`.
+
+!!! info "Decommission vs Removenode"
+    The key difference from `removenode` is that decommission streams data directly from the departing node's local storage, while `removenode` must reconstruct data from other replicas. This makes decommission faster and more reliable when the node is healthy.
 
 ---
 

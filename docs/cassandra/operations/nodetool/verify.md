@@ -14,6 +14,93 @@ nodetool [connection_options] verify [options] [--] [keyspace [table ...]]
 
 `nodetool verify` performs a non-destructive check of SSTable integrity. Unlike `scrub`, verify only reads and validates—it never modifies data. Use verify to detect corruption before deciding whether to run scrub.
 
+### How Verification Works
+
+The verify command performs integrity checks by reading SSTable files and validating their internal consistency:
+
+1. **Checksum Validation** - Each SSTable has an associated digest file (`*-Digest.crc32`) containing a checksum of the entire Data.db file. Verify reads the data file, computes a fresh checksum, and compares it against the stored digest. A mismatch indicates data corruption from disk errors, incomplete writes, or bit rot.
+
+2. **Partition Key Ordering** - SSTables store partitions in sorted token order. Verify confirms that partition keys appear in strictly ascending token order. Out-of-order keys indicate structural corruption.
+
+3. **Clustering Column Ordering** - Within each partition, rows must be sorted by clustering columns. Verify validates this ordering to detect intra-partition corruption.
+
+4. **Index Consistency** - The SSTable index (`*-Index.db`) contains offsets to partition locations in the data file. Verify confirms that index entries point to valid partition boundaries and that all partitions are indexed.
+
+5. **Bloom Filter Validation** - Checks that the Bloom filter file (`*-Filter.db`) is readable and structurally valid.
+
+6. **Compression Metadata** - For compressed SSTables, validates the compression offset map (`*-CompressionInfo.db`) which maps logical offsets to compressed chunk locations.
+
+```plantuml
+@startuml
+skinparam backgroundColor white
+skinparam componentStyle rectangle
+
+title SSTable Verification Process
+
+start
+
+:Select SSTable files to verify;
+
+partition "File-Level Validation" {
+    :Read Data.db file;
+    :Compute checksum of entire file;
+    :Compare against Digest.crc32;
+
+    if (Checksum matches?) then (yes)
+        :File integrity confirmed;
+    else (no)
+        #pink:Log corruption error;
+    endif
+}
+
+partition "Structural Validation" {
+    :Parse partitions sequentially;
+
+    while (More partitions?) is (yes)
+        :Read partition key;
+        :Verify token > previous token;
+
+        if (Token order valid?) then (yes)
+            :Check clustering column order;
+        else (no)
+            #pink:Log ordering error;
+        endif
+    endwhile (no)
+}
+
+partition "Component Validation" {
+    :Validate Index.db\n(partition offsets);
+    :Validate Filter.db\n(Bloom filter structure);
+
+    if (SSTable compressed?) then (yes)
+        :Validate CompressionInfo.db\n(chunk offset map);
+    endif
+}
+
+if (Any errors detected?) then (yes)
+    #pink:Report corrupted SSTables;
+    :Exit with error code;
+    stop
+else (no)
+    #palegreen:Verification successful;
+    stop
+endif
+
+@enduml
+```
+
+### Checksum Architecture
+
+Cassandra uses different checksum mechanisms depending on whether SSTables are compressed:
+
+| SSTable Type | Checksum File | Checksum Scope | Read-Time Verification |
+|--------------|---------------|----------------|------------------------|
+| Uncompressed | `*-Digest.crc32` | Entire Data.db file | Per-file during verify |
+| Compressed | `*-Digest.crc32` + `*-CompressionInfo.db` | Entire file + per-chunk metadata | Per-chunk during reads |
+
+!!! info "Compression and Data Integrity"
+    Compressed SSTables (the default) provide per-chunk verification during normal reads, controlled by the `crc_check_chance` table option (default 1.0 = 100%). This is Cassandra's primary defense against bit rot. The `nodetool verify` command performs a complete scan regardless of this setting.
+
 ---
 
 ## Arguments

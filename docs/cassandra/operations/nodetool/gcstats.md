@@ -20,6 +20,18 @@ nodetool [connection_options] gcstats
 
 Monitoring GC is critical as excessive garbage collection can cause latency spikes and node instability.
 
+!!! info "JVM Metrics Source"
+    These statistics are retrieved from the JVM's garbage collection MXBeans via JMX (`java.lang:type=GarbageCollector`), not from Cassandra's internal metrics. The values represent what the JVM reports about its garbage collection activity.
+
+!!! warning "GC Elapsed Time vs Stop-the-World Pauses"
+    The elapsed time values reported by `gcstats` represent the total time the garbage collector was active, which **may not directly correspond to stop-the-world (STW) pause times**:
+
+    - **Concurrent collectors** (G1GC, ZGC, Shenandoah) perform much of their work concurrently with application threads. The elapsed time includes both concurrent phases and STW phases.
+    - **Parallel collectors** (ParallelGC) are fully STW, so elapsed time equals pause time.
+    - For accurate STW pause analysis, enable GC logging and use specialized GC analysis tools.
+
+    The metrics are still valuable for identifying GC pressure trends, but should not be interpreted as exact application pause durations when using concurrent collectors.
+
 ---
 
 ## Output Example

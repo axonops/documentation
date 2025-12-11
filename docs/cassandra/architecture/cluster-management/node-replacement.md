@@ -12,34 +12,28 @@ For operational procedures and step-by-step instructions, see **[Operations: Clu
 
 Node failures fall into distinct categories, each requiring different recovery approaches:
 
-```graphviz dot failure-types.svg
-digraph FailureTypes {
-    fontname="Helvetica";
-    node [fontname="Helvetica", fontsize=10];
-    edge [fontname="Helvetica", fontsize=9];
-    rankdir=TB;
+```plantuml
+@startuml
+skinparam backgroundColor white
 
-    label="Node Failure Classification";
-    labelloc="t";
-    fontsize=12;
+title Node Failure Classification
 
-    node [shape=box, style="rounded,filled"];
+rectangle "Node Failure" as failure #C00000
 
-    failure [label="Node Failure", fillcolor="#C00000", fontcolor="white"];
+rectangle "Transient Failure\n• Temporary outage\n• Restart recovers\n• Data intact" as transient #FFC000
+rectangle "Permanent Failure\n• Hardware failure\n• Data loss\n• Node unrecoverable" as permanent #C00000
 
-    transient [label="Transient Failure\n• Temporary outage\n• Restart recovers\n• Data intact", fillcolor="#FFC000", fontcolor="black"];
-    permanent [label="Permanent Failure\n• Hardware failure\n• Data loss\n• Node unrecoverable", fillcolor="#C00000", fontcolor="white"];
+rectangle "Recovery: Restart\nHints replay automatically" as restart #70AD47
+rectangle "Recovery: Replace\nNew node assumes identity" as replace #5B9BD5
+rectangle "Recovery: Remove\nReduce cluster size" as remove #7F7F7F
 
-    restart [label="Recovery: Restart\nHints replay automatically", fillcolor="#70AD47", fontcolor="white"];
-    replace [label="Recovery: Replace\nNew node assumes identity", fillcolor="#5B9BD5", fontcolor="white"];
-    remove [label="Recovery: Remove\nReduce cluster size", fillcolor="#7F7F7F", fontcolor="white"];
+failure --> transient
+failure --> permanent
+transient --> restart
+permanent --> replace
+permanent --> remove
 
-    failure -> transient;
-    failure -> permanent;
-    transient -> restart;
-    permanent -> replace;
-    permanent -> remove;
-}
+@enduml
 ```
 
 | Failure Type | Characteristics | Recovery Approach |
@@ -67,34 +61,33 @@ See **[Gossip Protocol](gossip.md)** for failure detection mechanics.
 
 When a node permanently fails, the architectural decision between replacement and removal affects cluster capacity, data distribution, and recovery time:
 
-```graphviz dot replace-vs-remove.svg
-digraph ReplaceVsRemove {
-    fontname="Helvetica";
-    node [fontname="Helvetica", fontsize=10];
-    edge [fontname="Helvetica", fontsize=9];
-    rankdir=TB;
+```plantuml
+@startuml
+skinparam backgroundColor white
 
-    label="Replace vs Remove Decision";
-    labelloc="t";
-    fontsize=12;
+title Replace vs Remove Decision
 
-    node [shape=box, style="rounded,filled"];
+start
+#C00000:Node Permanently Failed;
 
-    start [label="Node Permanently Failed", fillcolor="#C00000", fontcolor="white"];
+if (Need to maintain\ncluster capacity?) then (Yes)
+    if (Have replacement\nhardware available?) then (Yes)
+        #70AD47:REPLACE
+        New node assumes
+        failed node's tokens;
+    else (No\n(hardware pending))
+        #FFC000:REMOVE now
+        ADD new node later;
+    endif
+else (No\n(reducing capacity))
+    #5B9BD5:REMOVE
+    Redistribute data
+    to remaining nodes;
+endif
 
-    q1 [label="Need to maintain\ncluster capacity?", shape=diamond, fillcolor="#E8E8E8", fontcolor="black"];
-    q2 [label="Have replacement\nhardware available?", shape=diamond, fillcolor="#E8E8E8", fontcolor="black"];
+stop
 
-    replace [label="REPLACE\nNew node assumes\nfailed node's tokens", fillcolor="#70AD47", fontcolor="white"];
-    remove [label="REMOVE\nRedistribute data\nto remaining nodes", fillcolor="#5B9BD5", fontcolor="white"];
-    add_later [label="REMOVE now\nADD new node later", fillcolor="#FFC000", fontcolor="black"];
-
-    start -> q1;
-    q1 -> q2 [label="Yes"];
-    q1 -> remove [label="No\n(reducing capacity)"];
-    q2 -> replace [label="Yes"];
-    q2 -> add_later [label="No\n(hardware pending)"];
-}
+@enduml
 ```
 
 ### Comparison of Approaches
@@ -126,49 +119,28 @@ Before choosing an approach, verify capacity constraints:
 
 Node replacement operates on the principle of **token assumption**—the new node takes ownership of the failed node's token ranges without redistributing tokens across the cluster:
 
-```graphviz dot token-assumption.svg
-digraph TokenAssumption {
-    fontname="Helvetica";
-    node [fontname="Helvetica", fontsize=10];
-    edge [fontname="Helvetica", fontsize=9];
-    rankdir=LR;
+```plantuml
+@startuml
+skinparam backgroundColor white
 
-    label="Token Assumption During Replacement";
-    labelloc="t";
-    fontsize=12;
+title Token Assumption During Replacement
 
-    node [shape=box, style="rounded,filled"];
-
-    subgraph cluster_before {
-        label="Before Failure";
-        style="rounded,filled";
-        fillcolor="#E8E8E8";
-        color="#999999";
-
-        ring1 [label="Token Ring\n\nNode A: tokens 0-33\nNode B: tokens 34-66\nNode C: tokens 67-100", fillcolor="#5B9BD5", fontcolor="white"];
-    }
-
-    subgraph cluster_failed {
-        label="Node B Failed";
-        style="rounded,filled";
-        fillcolor="#FFE8E8";
-        color="#CC9999";
-
-        ring2 [label="Token Ring\n\nNode A: tokens 0-33\nNode B: DOWN\nNode C: tokens 67-100", fillcolor="#C00000", fontcolor="white"];
-    }
-
-    subgraph cluster_after {
-        label="After Replacement";
-        style="rounded,filled";
-        fillcolor="#E8F4E8";
-        color="#99CC99";
-
-        ring3 [label="Token Ring\n\nNode A: tokens 0-33\nNode D: tokens 34-66\nNode C: tokens 67-100", fillcolor="#70AD47", fontcolor="white"];
-    }
-
-    ring1 -> ring2 [label="failure"];
-    ring2 -> ring3 [label="replace"];
+package "Before Failure" #E8E8E8 {
+    rectangle "Token Ring\n\nNode A: tokens 0-33\nNode B: tokens 34-66\nNode C: tokens 67-100" as ring1 #5B9BD5
 }
+
+package "Node B Failed" #FFE8E8 {
+    rectangle "Token Ring\n\nNode A: tokens 0-33\nNode B: DOWN\nNode C: tokens 67-100" as ring2 #C00000
+}
+
+package "After Replacement" #E8F4E8 {
+    rectangle "Token Ring\n\nNode A: tokens 0-33\nNode D: tokens 34-66\nNode C: tokens 67-100" as ring3 #70AD47
+}
+
+ring1 --> ring2 : failure
+ring2 --> ring3 : replace
+
+@enduml
 ```
 
 **Advantages of token assumption:**
@@ -179,53 +151,35 @@ digraph TokenAssumption {
 
 ### Replacement Process Flow
 
-```graphviz dot replacement-process.svg
-digraph ReplacementProcess {
-    fontname="Helvetica";
-    node [fontname="Helvetica", fontsize=10];
-    edge [fontname="Helvetica", fontsize=9];
-    rankdir=TB;
+```plantuml
+@startuml
+skinparam backgroundColor white
 
-    label="Node Replacement Process";
-    labelloc="t";
-    fontsize=12;
+title Node Replacement Process
 
-    node [shape=box, style="rounded,filled"];
+|Preparation|
+#5B9BD5:Identify Dead Node
+Obtain IP and Host ID;
+#5B9BD5:Provision New Node
+Same Cassandra version;
+#5B9BD5:Configure Replacement
+Set replace_address_first_boot;
 
-    subgraph cluster_prep {
-        label="Preparation";
-        style="rounded,filled";
-        fillcolor="#E8E8E8";
-        color="#999999";
+|Execution|
+#C55A11:New Node Starts
+Contacts seeds;
+#C55A11:Token Assumption
+Claims dead node's ranges;
+#C55A11:Data Streaming
+Receives from replicas;
 
-        identify [label="Identify Dead Node\nObtain IP and Host ID", fillcolor="#5B9BD5", fontcolor="white"];
-        provision [label="Provision New Node\nSame Cassandra version", fillcolor="#5B9BD5", fontcolor="white"];
-        config [label="Configure Replacement\nSet replace_address_first_boot", fillcolor="#5B9BD5", fontcolor="white"];
-    }
+|Completion|
+#70AD47:NORMAL State
+Serves client traffic;
+#70AD47:Repair
+Ensures consistency;
 
-    subgraph cluster_exec {
-        label="Execution";
-        style="rounded,filled";
-        fillcolor="#FFE8E8";
-        color="#CC9999";
-
-        start [label="New Node Starts\nContacts seeds", fillcolor="#C55A11", fontcolor="white"];
-        assume [label="Token Assumption\nClaims dead node's ranges", fillcolor="#C55A11", fontcolor="white"];
-        stream [label="Data Streaming\nReceives from replicas", fillcolor="#C55A11", fontcolor="white"];
-    }
-
-    subgraph cluster_complete {
-        label="Completion";
-        style="rounded,filled";
-        fillcolor="#E8F4E8";
-        color="#99CC99";
-
-        normal [label="NORMAL State\nServes client traffic", fillcolor="#70AD47", fontcolor="white"];
-        repair [label="Repair\nEnsures consistency", fillcolor="#70AD47", fontcolor="white"];
-    }
-
-    identify -> provision -> config -> start -> assume -> stream -> normal -> repair;
-}
+@enduml
 ```
 
 ### Replace Address Mechanism
@@ -262,27 +216,26 @@ Both scenarios require the `replace_address_first_boot` option—the IP in the o
 
 Node removal triggers token redistribution—the dead node's token ranges are reassigned to remaining nodes:
 
-```graphviz dot removal-process.svg
-digraph RemovalProcess {
-    fontname="Helvetica";
-    node [fontname="Helvetica", fontsize=10];
-    edge [fontname="Helvetica", fontsize=9];
-    rankdir=TB;
+```plantuml
+@startuml
+skinparam backgroundColor white
 
-    label="Node Removal - Token Redistribution";
-    labelloc="t";
-    fontsize=12;
+title Node Removal - Token Redistribution
 
-    node [shape=box, style="rounded,filled"];
+start
+#5B9BD5:Dead Node Identified
+Host ID known;
+#5B9BD5:Removal Initiated
+From any live node;
+#FFC000:Token Recalculation
+Ranges redistributed;
+#C55A11:Data Streaming
+Between remaining nodes;
+#70AD47:Removal Complete
+Node purged from ring;
+stop
 
-    dead [label="Dead Node Identified\nHost ID known", fillcolor="#5B9BD5", fontcolor="white"];
-    initiate [label="Removal Initiated\nFrom any live node", fillcolor="#5B9BD5", fontcolor="white"];
-    recalc [label="Token Recalculation\nRanges redistributed", fillcolor="#FFC000", fontcolor="black"];
-    stream [label="Data Streaming\nBetween remaining nodes", fillcolor="#C55A11", fontcolor="white"];
-    complete [label="Removal Complete\nNode purged from ring", fillcolor="#70AD47", fontcolor="white"];
-
-    dead -> initiate -> recalc -> stream -> complete;
-}
+@enduml
 ```
 
 ### Removal vs Decommission
@@ -319,35 +272,31 @@ The `assassinate` operation forcibly removes a node from gossip state without da
 
 When multiple nodes fail, data availability depends on the relationship between failures and replication:
 
-```graphviz dot multiple-failures.svg
-digraph MultipleFailures {
-    fontname="Helvetica";
-    node [fontname="Helvetica", fontsize=10];
-    edge [fontname="Helvetica", fontsize=9];
-    rankdir=TB;
+```plantuml
+@startuml
+skinparam backgroundColor white
 
-    label="Multiple Failure Impact Analysis";
-    labelloc="t";
-    fontsize=12;
+title Multiple Failure Impact Analysis
 
-    node [shape=box, style="rounded,filled"];
+start
+#5B9BD5:Assess Failure Scope
+Count failed nodes per token range;
 
-    assess [label="Assess Failure Scope\nCount failed nodes per token range", fillcolor="#5B9BD5", fontcolor="white"];
+if (Surviving Replicas ≥ 1\nfor all ranges?) then (Yes)
+    #70AD47:Data Recoverable
+    Sequential replacement possible;
+    #70AD47:Replace One at a Time
+    Repair between each;
+else (No)
+    #C00000:Data At Risk
+    Backup restoration may be required;
+    #C00000:Restore from Backup
+    Then rebuild cluster;
+endif
 
-    check [label="Surviving Replicas ≥ 1\nfor all ranges?", shape=diamond, fillcolor="#E8E8E8", fontcolor="black"];
+stop
 
-    recoverable [label="Data Recoverable\nSequential replacement possible", fillcolor="#70AD47", fontcolor="white"];
-    critical [label="Data At Risk\nBackup restoration may be required", fillcolor="#C00000", fontcolor="white"];
-
-    sequential [label="Replace One at a Time\nRepair between each", fillcolor="#70AD47", fontcolor="white"];
-    restore [label="Restore from Backup\nThen rebuild cluster", fillcolor="#C00000", fontcolor="white"];
-
-    assess -> check;
-    check -> recoverable [label="Yes"];
-    check -> critical [label="No"];
-    recoverable -> sequential;
-    critical -> restore;
-}
+@enduml
 ```
 
 ### Quorum Impact Matrix

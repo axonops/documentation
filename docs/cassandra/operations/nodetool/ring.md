@@ -20,6 +20,43 @@ nodetool [connection_options] ring [keyspace]
 
 This command is useful for understanding data distribution and troubleshooting token-related issues.
 
+### Understanding Virtual Nodes (vnodes)
+
+In modern Cassandra deployments, each node owns multiple **virtual nodes (vnodes)** rather than a single token. The number of vnodes per node is configured in `cassandra.yaml`:
+
+```yaml
+num_tokens: 256    # Default in Cassandra 4.0+
+                   # Older versions defaulted to 256, some used 16
+```
+
+With vnodes enabled, `nodetool ring` output shows one row per token, meaning a 3-node cluster with `num_tokens: 256` displays 768 rows (256 × 3 nodes). Each row represents a token range boundary owned by a node.
+
+```bash
+# Count tokens per node
+nodetool ring | grep -c "192.168.1.101"
+# Output: 256 (if num_tokens: 256)
+```
+
+**Why vnodes matter:**
+
+| Aspect | Single Token (Legacy) | Virtual Nodes |
+|--------|----------------------|---------------|
+| Tokens per node | 1 | Typically 16-256 |
+| Data distribution | Can be uneven | More uniform |
+| Adding nodes | Large data movement | Smaller, distributed transfers |
+| Removing nodes | Large data movement | Smaller, distributed transfers |
+| Streaming impact | High (all data at once) | Lower (distributed) |
+| Hot spots | More likely | Less likely |
+
+!!! tip "Checking vnode Configuration"
+    ```bash
+    # Check num_tokens setting
+    grep num_tokens /etc/cassandra/cassandra.yaml
+
+    # Verify tokens per node in the cluster
+    nodetool ring | awk '{print $1}' | sort | uniq -c | sort -rn
+    ```
+
 ---
 
 ## Arguments

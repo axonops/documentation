@@ -109,6 +109,13 @@ When developing applications against Cassandra:
 
 ## Section Contents
 
+### Development Tools
+
+- **[AxonOps Workbench](workbench.md)** — Open-source GUI for schema management, query execution, and data exploration
+- **[CQLAI](cqlai.md)** — Modern AI-powered CQL shell with rich terminal interface
+
+### References
+
 - **[CQL Reference](../cql/index.md)** — Cassandra Query Language syntax and semantics
 - **[Data Modeling](../data-modeling/index.md)** — Principles for designing effective Cassandra data models
 - **[Drivers](drivers/index.md)** — Driver architecture, connection management, and policy configuration

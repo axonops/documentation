@@ -14,6 +14,31 @@ nodetool [connection_options] disablegossip
 
 `nodetool disablegossip` stops the node from participating in the gossip protocol. This effectively isolates the node from the rest of the cluster while keeping the Cassandra process running.
 
+### Gossip Port Configuration
+
+The gossip protocol uses the storage port for inter-node communication, configured in `cassandra.yaml`:
+
+```yaml
+storage_port: 7000        # Default inter-node communication port (unencrypted)
+ssl_storage_port: 7001    # Default inter-node communication port (encrypted)
+```
+
+To verify the gossip port is listening:
+
+```bash
+# Check if Cassandra is listening on the gossip port
+netstat -tlnp | grep 7000
+
+# Alternative using ss
+ss -tlnp | grep 7000
+
+# Check the configured ports in cassandra.yaml
+grep -E "storage_port|ssl_storage_port" /etc/cassandra/cassandra.yaml
+```
+
+!!! note "Port Remains Open"
+    Unlike `disablebinary`, the `disablegossip` command does not close the storage port. The port remains open, but the node stops actively participating in the gossip protocol (no heartbeats sent, no state updates processed).
+
 Gossip is responsible for:
 
 - **Cluster membership** - Tracking which nodes are in the cluster

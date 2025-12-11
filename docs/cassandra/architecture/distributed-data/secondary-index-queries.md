@@ -10,41 +10,31 @@ Secondary index queries in Cassandra employ distinct execution strategies compar
 
 Queries containing the complete partition key enable deterministic replica identification through token computation:
 
-```graphviz dot pk-query.svg
-digraph PKQuery {
-    fontname="Helvetica";
-    node [fontname="Helvetica", fontsize=10];
-    edge [fontname="Helvetica", fontsize=9];
+```plantuml
+@startuml
+skinparam backgroundColor #FEFEFE
 
-    label="Primary Key Query: Deterministic Replica Selection";
-    labelloc="t";
-    fontsize=12;
+title Primary Key Query: Deterministic Replica Selection
 
-    node [shape=box, style="rounded,filled"];
+rectangle "Client" as client #E8E8E8
+rectangle "Coordinator\n(any node)" as coord #FFE8CC
 
-    client [label="Client", fillcolor="#E8E8E8"];
-    coord [label="Coordinator\n(any node)", fillcolor="#FFE8CC"];
-
-    subgraph cluster_replicas {
-        label="Replica set for token(partition_key)\nDetermined via consistent hashing";
-        style="rounded,filled";
-        fillcolor="#E8F4E8";
-        color="#99CC99";
-
-        r1 [label="Node A\n(replica)", fillcolor="#7B4B96", fontcolor="white"];
-        r2 [label="Node D\n(replica)", fillcolor="#7B4B96", fontcolor="white"];
-        r3 [label="Node F\n(replica)", fillcolor="#7B4B96", fontcolor="white"];
-    }
-
-    other [label="Remaining nodes\n(excluded from query)", fillcolor="#CCCCCC", style="rounded,filled,dashed"];
-
-    client -> coord [label="1. query"];
-    coord -> r1 [label="2. read request"];
-    coord -> r2 [label="2. read request"];
-    r1 -> coord [label="3. response", style=dashed];
-    r2 -> coord [label="3. response", style=dashed];
-    coord -> client [label="4. result"];
+rectangle "Replica set for token(partition_key)\nDetermined via consistent hashing" as replicas #E8F4E8 {
+    database "Node A\n(replica)" as r1 #7B4B96
+    database "Node D\n(replica)" as r2 #7B4B96
+    database "Node F\n(replica)" as r3 #7B4B96
 }
+
+rectangle "Remaining nodes\n(excluded from query)" as other #CCCCCC
+
+client --> coord : 1. query
+coord --> r1 : 2. read request
+coord --> r2 : 2. read request
+r1 ..> coord : 3. response
+r2 ..> coord : 3. response
+coord --> client : 4. result
+
+@enduml
 ```
 
 **Execution characteristics:**
@@ -64,50 +54,40 @@ Queries lacking partition key constraints cannot leverage token-based routing. S
 
 Secondary Index (2i) and SASI implementations employ a scatter-gather execution pattern where the coordinator broadcasts queries to all relevant nodes and aggregates responses.
 
-```graphviz dot scatter-gather.svg
-digraph ScatterGather {
-    fontname="Helvetica";
-    node [fontname="Helvetica", fontsize=10];
-    edge [fontname="Helvetica", fontsize=9];
+```plantuml
+@startuml
+skinparam backgroundColor #FEFEFE
 
-    label="Scatter-Gather Pattern: Legacy Secondary Index (2i) and SASI";
-    labelloc="t";
-    fontsize=12;
+title Scatter-Gather Pattern: Legacy Secondary Index (2i) and SASI
 
-    node [shape=box, style="rounded,filled"];
+rectangle "Client" as client #E8E8E8
+rectangle "Coordinator" as coord #FFE8CC
 
-    client [label="Client", fillcolor="#E8E8E8"];
-    coord [label="Coordinator", fillcolor="#FFE8CC"];
-
-    subgraph cluster_all {
-        label="Broadcast to all token ranges\n(one replica per range)";
-        style="rounded,filled";
-        fillcolor="#FFE8E8";
-        color="#CC9999";
-
-        n1 [label="Node A\nlocal index scan", fillcolor="#7B4B96", fontcolor="white"];
-        n2 [label="Node B\nlocal index scan", fillcolor="#7B4B96", fontcolor="white"];
-        n3 [label="Node C\nlocal index scan", fillcolor="#7B4B96", fontcolor="white"];
-        n4 [label="Node D\nlocal index scan", fillcolor="#7B4B96", fontcolor="white"];
-        n5 [label="Node E\nlocal index scan", fillcolor="#7B4B96", fontcolor="white"];
-        n6 [label="Node F\nlocal index scan", fillcolor="#7B4B96", fontcolor="white"];
-    }
-
-    client -> coord [label="1. query"];
-    coord -> n1 [label="2. scatter"];
-    coord -> n2;
-    coord -> n3;
-    coord -> n4;
-    coord -> n5;
-    coord -> n6;
-    n1 -> coord [label="3. partial results", style=dashed];
-    n2 -> coord [style=dashed];
-    n3 -> coord [style=dashed];
-    n4 -> coord [style=dashed];
-    n5 -> coord [style=dashed];
-    n6 -> coord [style=dashed];
-    coord -> client [label="4. aggregated result"];
+rectangle "Broadcast to all token ranges\n(one replica per range)" as all #FFE8E8 {
+    database "Node A\nlocal index scan" as n1 #7B4B96
+    database "Node B\nlocal index scan" as n2 #7B4B96
+    database "Node C\nlocal index scan" as n3 #7B4B96
+    database "Node D\nlocal index scan" as n4 #7B4B96
+    database "Node E\nlocal index scan" as n5 #7B4B96
+    database "Node F\nlocal index scan" as n6 #7B4B96
 }
+
+client --> coord : 1. query
+coord --> n1 : 2. scatter
+coord --> n2
+coord --> n3
+coord --> n4
+coord --> n5
+coord --> n6
+n1 ..> coord : 3. partial results
+n2 ..> coord
+n3 ..> coord
+n4 ..> coord
+n5 ..> coord
+n6 ..> coord
+coord --> client : 4. aggregated result
+
+@enduml
 ```
 
 ### Scatter Phase
@@ -157,72 +137,52 @@ The SAI coordinator performs query analysis to optimize distributed execution:
 2. **Read command construction**: Embeds selected index metadata into the distributed range read command
 3. **Concurrency factor estimation**: Calculates initial parallel replica query count using local data statistics and query limit parameters
 
-```graphviz dot sai-coordinator.svg
-digraph SAICoordinator {
-    fontname="Helvetica";
-    node [fontname="Helvetica", fontsize=10];
-    edge [fontname="Helvetica", fontsize=9];
+```plantuml
+@startuml
+skinparam backgroundColor #FEFEFE
 
-    label="SAI Coordinator: Adaptive Range Reading";
-    labelloc="t";
-    fontsize=12;
+title SAI Coordinator: Adaptive Range Reading
 
-    node [shape=box, style="rounded,filled"];
+rectangle "Client" as client #E8E8E8
 
-    client [label="Client", fillcolor="#E8E8E8"];
-
-    subgraph cluster_coord {
-        label="Coordinator Processing";
-        style="rounded,filled";
-        fillcolor="#FFF8E8";
-        color="#CCCC99";
-
-        analyze [label="1. Analyze query\nIdentify most selective index", fillcolor="#FFE8CC"];
-        estimate [label="2. Estimate concurrency factor\nBased on local data + LIMIT", fillcolor="#FFE8CC"];
-        dispatch [label="3. Dispatch to token ranges\n(parallel, bounded)", fillcolor="#FFE8CC"];
-    }
-
-    subgraph cluster_round1 {
-        label="Round 1: Initial token ranges";
-        style="rounded,filled";
-        fillcolor="#E8F4E8";
-        color="#99CC99";
-
-        r1_1 [label="Range A", fillcolor="#7B4B96", fontcolor="white"];
-        r1_2 [label="Range B", fillcolor="#7B4B96", fontcolor="white"];
-        r1_3 [label="Range C", fillcolor="#7B4B96", fontcolor="white"];
-    }
-
-    adjust [label="4. Collect results\nRecompute concurrency factor", fillcolor="#E8E8FF"];
-
-    subgraph cluster_round2 {
-        label="Round N: Subsequent ranges (if needed)";
-        style="rounded,filled";
-        fillcolor="#F4E8F4";
-        color="#CC99CC";
-
-        r2_1 [label="Range D", fillcolor="#7B4B96", fontcolor="white"];
-        r2_2 [label="Range E", fillcolor="#7B4B96", fontcolor="white"];
-    }
-
-    result [label="5. Return when\nLIMIT satisfied", fillcolor="#E8E8E8"];
-
-    client -> analyze;
-    analyze -> estimate;
-    estimate -> dispatch;
-    dispatch -> r1_1;
-    dispatch -> r1_2;
-    dispatch -> r1_3;
-    r1_1 -> adjust [style=dashed];
-    r1_2 -> adjust [style=dashed];
-    r1_3 -> adjust [style=dashed];
-    adjust -> r2_1 [label="if more\nresults needed"];
-    adjust -> r2_2;
-    r2_1 -> result [style=dashed];
-    r2_2 -> result [style=dashed];
-    adjust -> result [label="LIMIT\nsatisfied", style=dashed];
-    result -> client;
+rectangle "Coordinator Processing" as coord_processing #FFF8E8 {
+    card "1. Analyze query\nIdentify most selective index" as analyze #FFE8CC
+    card "2. Estimate concurrency factor\nBased on local data + LIMIT" as estimate #FFE8CC
+    card "3. Dispatch to token ranges\n(parallel, bounded)" as dispatch #FFE8CC
 }
+
+rectangle "Round 1: Initial token ranges" as round1 #E8F4E8 {
+    database "Range A" as r1_1 #7B4B96
+    database "Range B" as r1_2 #7B4B96
+    database "Range C" as r1_3 #7B4B96
+}
+
+card "4. Collect results\nRecompute concurrency factor" as adjust #E8E8FF
+
+rectangle "Round N: Subsequent ranges (if needed)" as round2 #F4E8F4 {
+    database "Range D" as r2_1 #7B4B96
+    database "Range E" as r2_2 #7B4B96
+}
+
+rectangle "5. Return when\nLIMIT satisfied" as result #E8E8E8
+
+client --> analyze
+analyze --> estimate
+estimate --> dispatch
+dispatch --> r1_1
+dispatch --> r1_2
+dispatch --> r1_3
+r1_1 ..> adjust
+r1_2 ..> adjust
+r1_3 ..> adjust
+adjust --> r2_1 : if more\nresults needed
+adjust --> r2_2
+r2_1 ..> result
+r2_2 ..> result
+adjust ..> result : LIMIT\nsatisfied
+result --> client
+
+@enduml
 ```
 
 ### Multi-Round Execution
@@ -252,68 +212,47 @@ SAI nodes propagate local index status to peers via the gossip protocol. This me
 
 Upon receiving a token range request, replicas execute local index queries through the Query Plan interface:
 
-```graphviz dot sai-replica.svg
-digraph SAIReplica {
-    fontname="Helvetica";
-    node [fontname="Helvetica", fontsize=10];
-    edge [fontname="Helvetica", fontsize=9];
+```plantuml
+@startuml
+skinparam backgroundColor #FEFEFE
 
-    label="SAI Replica: Query Plan Execution";
-    labelloc="t";
-    fontsize=12;
+title SAI Replica: Query Plan Execution
 
-    rankdir=TB;
-    node [shape=box, style="rounded,filled"];
+rectangle "Token range request\nfrom coordinator" as request #E8E8E8
 
-    request [label="Token range request\nfrom coordinator", fillcolor="#E8E8E8"];
-
-    subgraph cluster_plan {
-        label="Query Plan Interface";
-        style="rounded,filled";
-        fillcolor="#FFF8E8";
-        color="#CCCC99";
-
-        analyze [label="1. Expression analysis\nMap predicates to indexes", fillcolor="#FFE8CC"];
-        acquire [label="2. Query Controller\nAcquire SSTable references", fillcolor="#FFE8CC"];
-        prevent [label="Prevents compaction\nuntil query completes", fillcolor="#FFFFCC", style="rounded,filled,dashed"];
-    }
-
-    subgraph cluster_flow {
-        label="Token Flow Framework";
-        style="rounded,filled";
-        fillcolor="#E8F4E8";
-        color="#99CC99";
-
-        memtable [label="Memtable index\niteration", fillcolor="#7B4B96", fontcolor="white"];
-        sstable [label="SSTable index\niteration", fillcolor="#7B4B96", fontcolor="white"];
-        merge [label="Async merge\nvia Token Flow", fillcolor="#4B964B", fontcolor="white"];
-    }
-
-    subgraph cluster_filter {
-        label="Post-Filtering";
-        style="rounded,filled";
-        fillcolor="#F4E8F4";
-        color="#CC99CC";
-
-        partition [label="Partition granularity\nfiltering", fillcolor="#964B96", fontcolor="white"];
-        tombstone [label="Tombstone\nelimination", fillcolor="#964B96", fontcolor="white"];
-        nonidx [label="Non-indexed\npredicate evaluation", fillcolor="#964B96", fontcolor="white"];
-    }
-
-    response [label="Filtered results\nto coordinator", fillcolor="#E8E8E8"];
-
-    request -> analyze;
-    analyze -> acquire;
-    acquire -> prevent [style=dashed];
-    acquire -> memtable;
-    acquire -> sstable;
-    memtable -> merge;
-    sstable -> merge;
-    merge -> partition;
-    partition -> tombstone;
-    tombstone -> nonidx;
-    nonidx -> response;
+rectangle "Query Plan Interface" as plan #FFF8E8 {
+    card "1. Expression analysis\nMap predicates to indexes" as analyze #FFE8CC
+    card "2. Query Controller\nAcquire SSTable references" as acquire #FFE8CC
+    card "Prevents compaction\nuntil query completes" as prevent #FFFFCC
 }
+
+rectangle "Token Flow Framework" as flow #E8F4E8 {
+    database "Memtable index\niteration" as memtable #7B4B96
+    database "SSTable index\niteration" as sstable #7B4B96
+    card "Async merge\nvia Token Flow" as merge #4B964B
+}
+
+rectangle "Post-Filtering" as filter #F4E8F4 {
+    card "Partition granularity\nfiltering" as partition #964B96
+    card "Tombstone\nelimination" as tombstone #964B96
+    card "Non-indexed\npredicate evaluation" as nonidx #964B96
+}
+
+rectangle "Filtered results\nto coordinator" as response #E8E8E8
+
+request --> analyze
+analyze --> acquire
+acquire ..> prevent
+acquire --> memtable
+acquire --> sstable
+memtable --> merge
+sstable --> merge
+merge --> partition
+partition --> tombstone
+tombstone --> nonidx
+nonidx --> response
+
+@enduml
 ```
 
 #### Query Plan Components
@@ -371,51 +310,36 @@ SELECT * FROM users WHERE user_id = ? AND city = 'NYC';
 SELECT * FROM events WHERE device_id = ? AND level = 'ERROR';
 ```
 
-```graphviz dot partition-restricted.svg
-digraph PartitionRestricted {
-    fontname="Helvetica";
-    node [fontname="Helvetica", fontsize=10];
-    edge [fontname="Helvetica", fontsize=9];
+```plantuml
+@startuml
+skinparam backgroundColor #FEFEFE
 
-    label="Partition-Restricted Query: Bounded Node Contact";
-    labelloc="t";
-    fontsize=12;
+title Partition-Restricted Query: Bounded Node Contact
 
-    node [shape=box, style="rounded,filled"];
+rectangle "Client" as client #E8E8E8
+rectangle "Coordinator" as coord #FFE8CC
 
-    client [label="Client", fillcolor="#E8E8E8"];
-    coord [label="Coordinator", fillcolor="#FFE8CC"];
-
-    subgraph cluster_replicas {
-        label="Partition replicas only (RF nodes)";
-        style="rounded,filled";
-        fillcolor="#E8F4E8";
-        color="#99CC99";
-
-        r1 [label="Node A\n(replica)", fillcolor="#7B4B96", fontcolor="white"];
-        r2 [label="Node D\n(replica)", fillcolor="#7B4B96", fontcolor="white"];
-        r3 [label="Node F\n(replica)", fillcolor="#7B4B96", fontcolor="white"];
-    }
-
-    subgraph cluster_other {
-        label="Excluded from query";
-        style="rounded,dashed";
-        fillcolor="#F8F8F8";
-        color="#CCCCCC";
-
-        o1 [label="Node B", fillcolor="#CCCCCC"];
-        o2 [label="Node C", fillcolor="#CCCCCC"];
-        o3 [label="Node E", fillcolor="#CCCCCC"];
-    }
-
-    client -> coord [label="1. query with\npartition key"];
-    coord -> r1 [label="2. read"];
-    coord -> r2;
-    coord -> r3;
-    r1 -> coord [label="3. filtered result", style=dashed];
-    r2 -> coord [style=dashed];
-    coord -> client [label="4. result"];
+rectangle "Partition replicas only (RF nodes)" as replicas #E8F4E8 {
+    database "Node A\n(replica)" as r1 #7B4B96
+    database "Node D\n(replica)" as r2 #7B4B96
+    database "Node F\n(replica)" as r3 #7B4B96
 }
+
+rectangle "Excluded from query" as other #F8F8F8 {
+    database "Node B" as o1 #CCCCCC
+    database "Node C" as o2 #CCCCCC
+    database "Node E" as o3 #CCCCCC
+}
+
+client --> coord : 1. query with\npartition key
+coord --> r1 : 2. read
+coord --> r2
+coord --> r3
+r1 ..> coord : 3. filtered result
+r2 ..> coord
+coord --> client : 4. result
+
+@enduml
 ```
 
 **Performance comparison:**

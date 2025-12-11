@@ -14,6 +14,15 @@ nodetool [connection_options] enablebackup
 
 `nodetool enablebackup` enables incremental backup mode. When enabled, Cassandra creates hard links to newly flushed SSTables in a `backups` subdirectory. This allows continuous backup of data as it's written.
 
+!!! warning "Non-Persistent Setting"
+    This setting is applied at runtime only and does not persist across node restarts. After a restart, incremental backup reverts to the `incremental_backups` setting in `cassandra.yaml` (default: `false`).
+
+    To make the change permanent, update `cassandra.yaml`:
+
+    ```yaml
+    incremental_backups: true
+    ```
+
 ---
 
 ## How Incremental Backup Works

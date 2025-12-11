@@ -174,27 +174,23 @@ org.apache.cassandra.metrics:type=ThreadPools,path=request,scope=ReadStage,name=
 
 ---
 
-## Tools Integration
+## AxonOps Integration
 
-### Prometheus + Grafana
+While JMX can be accessed directly via nodetool, jconsole, or custom tooling, [AxonOps](https://axonops.com) provides automated JMX metric collection with purpose-built Cassandra dashboards and alerting.
 
-Use the JMX Exporter for Prometheus:
+### Automated Metric Collection
 
-```yaml
-# jmx_exporter_config.yaml
-lowercaseOutputName: true
-lowercaseOutputLabelNames: true
-rules:
-  - pattern: org.apache.cassandra.metrics<type=(Table), keyspace=(\w+), scope=(\w+), name=(\w+)><>(Count|Value|Mean|99thPercentile)
-    name: cassandra_table_$4
-    labels:
-      keyspace: "$2"
-      table: "$3"
-```
+AxonOps eliminates the need to manually configure JMX exporters or build dashboards:
 
-### AxonOps
+| Manual JMX Approach | AxonOps |
+|---------------------|---------|
+| Configure JMX exporter YAML rules | Automatic—no configuration needed |
+| Build and maintain Grafana dashboards | Pre-built Cassandra dashboards |
+| Write custom alerting rules | Integrated alerting with Cassandra-aware thresholds |
+| Correlate metrics across nodes manually | Unified cluster view |
+| No historical retention by default | Full metric history with trends |
 
-AxonOps provides automated JMX metric collection with pre-built dashboards:
+### Agent Configuration
 
 ```yaml
 # axon-agent.yml
@@ -204,14 +200,18 @@ cassandra:
     port: 7199
 ```
 
-### DataStax MCAC
+### What AxonOps Collects
 
-Metrics Collector for Apache Cassandra:
+The AxonOps agent automatically collects all critical Cassandra JMX metrics:
 
-```bash
-# Install MCAC
-tar -xzf mcac.tar.gz -C /opt/cassandra/lib/
-```
+- **Request metrics** — Read/write latency percentiles, throughput, timeouts, unavailables
+- **Thread pool metrics** — Pending tasks, active threads, blocked threads per stage
+- **Storage metrics** — SSTable counts, disk usage, compaction pending/completed
+- **JVM metrics** — Heap usage, GC pause times, off-heap memory
+- **Table-level metrics** — Per-table latency, partition sizes, tombstone counts
+- **Streaming metrics** — Repair progress, bootstrap/decommission status
+
+See [AxonOps Installation](/installation/) for setup instructions and [AxonOps Monitoring](/monitoring/) for dashboard features.
 
 ---
 
@@ -254,4 +254,6 @@ List<String> liveNodes = (List<String>) mbsc.getAttribute(
 
 ## Next Steps
 
-- **[Monitoring Guide](../monitoring/index.md)** - End-to-end monitoring
+- **[AxonOps Monitoring](/monitoring/)** — Pre-built dashboards for all Cassandra JMX metrics
+- **[Key Metrics](../monitoring/key-metrics/index.md)** — Essential metrics and alert thresholds
+- **[Monitoring Guide](../monitoring/index.md)** — End-to-end monitoring setup
