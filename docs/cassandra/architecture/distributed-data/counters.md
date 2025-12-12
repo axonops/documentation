@@ -1,3 +1,10 @@
+---
+description: "Distributed counters in Cassandra. Counter columns, consistency, and anti-patterns to avoid."
+meta:
+  - name: keywords
+    content: "Cassandra counters, distributed counters, counter column, increment"
+---
+
 # Distributed Counters
 
 Counting is among the most deceptively simple operations in computing. On a single machine, incrementing a counter is trivial: read the current value, add one, write the result. This read-modify-write cycle executes atomically, and the counter maintains perfect accuracy regardless of how many clients perform concurrent increments.

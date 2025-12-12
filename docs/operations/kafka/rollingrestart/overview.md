@@ -1,3 +1,10 @@
+---
+description: "Rolling restart for Kafka with AxonOps. Zero-downtime broker restarts."
+meta:
+  - name: keywords
+    content: "rolling restart, Kafka restart, zero downtime, broker restart"
+---
+
 AxonOps provides a rolling restart functionality for Kafka.
 
 The feature is accessible via ***Operations > Rolling Restart***

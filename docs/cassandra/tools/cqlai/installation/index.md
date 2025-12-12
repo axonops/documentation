@@ -1,3 +1,10 @@
+---
+description: "CQLAI installation guide. Install on Linux, macOS, and Windows."
+meta:
+  - name: keywords
+    content: "CQLAI installation, install CQLAI, setup guide"
+---
+
 # Installing CQLAI
 
 CQLAI is distributed as a single static binary with no dependencies. Choose the installation method that works best for the target environment.

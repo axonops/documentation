@@ -1,3 +1,10 @@
+---
+description: "Deploy Cassandra on Google Cloud Platform. Compute Engine, persistent disks, and VPC setup."
+meta:
+  - name: keywords
+    content: "Cassandra GCP, Google Cloud, Compute Engine, persistent disks"
+---
+
 # Cassandra on Google Cloud Platform
 
 This guide covers deploying Apache Cassandra on Google Cloud Platform.

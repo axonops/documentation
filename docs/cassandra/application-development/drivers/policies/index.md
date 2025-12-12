@@ -1,3 +1,10 @@
+---
+description: "Cassandra driver policies overview. Load balancing, retry, reconnection, and speculative execution."
+meta:
+  - name: keywords
+    content: "Cassandra driver policies, load balancing policy, retry policy"
+---
+
 # Driver Policies
 
 Driver policies control how the application interacts with the Cassandra cluster during normal operation and failure scenarios. These policies are the primary mechanism through which developers configure failure handling behavior.

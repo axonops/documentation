@@ -1,3 +1,10 @@
+---
+description: "Cassandra production readiness checklist. Essential configurations before going live."
+meta:
+  - name: keywords
+    content: "Cassandra production checklist, production readiness, deployment checklist"
+---
+
 # Production Readiness Checklist
 
 This checklist covers everything needed to prepare a Cassandra cluster for production workloads. Use it as a guide before going live and as an ongoing reference.

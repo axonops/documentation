@@ -1,3 +1,10 @@
+---
+description: "CQLAI Parquet support. Import and export Parquet files with Cassandra."
+meta:
+  - name: keywords
+    content: "CQLAI Parquet, Parquet import, columnar data"
+---
+
 # CQLAI Parquet Support
 
 CQLAI provides comprehensive support for Apache Parquet format, enabling efficient data exchange between Cassandra and modern analytics ecosystems.

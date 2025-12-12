@@ -1,3 +1,10 @@
+---
+description: "Cassandra troubleshooting guide covering common errors, diagnosis techniques, and operational playbooks."
+meta:
+  - name: keywords
+    content: "Cassandra troubleshooting, diagnosis, common errors, debug, operational issues"
+---
+
 # Cassandra Troubleshooting Guide
 
 Most Cassandra problems have a small number of root causes. High read latency? Probably tombstones or large partitions—not CPU, despite what instincts might suggest. Out of memory? Usually a partition that grew too large for the heap to handle during compaction, not a sign that more RAM is needed. Timeouts? Check if compaction is falling behind.

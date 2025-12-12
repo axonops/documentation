@@ -1,3 +1,10 @@
+---
+description: "Disable old CQL protocol versions in Cassandra using nodetool disableoldprotocolversions."
+meta:
+  - name: keywords
+    content: "nodetool disableoldprotocolversions, CQL protocol, protocol versions, Cassandra"
+---
+
 # nodetool disableoldprotocolversions
 
 Disables support for older CQL native protocol versions, requiring clients to use modern protocol versions.

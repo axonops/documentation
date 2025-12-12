@@ -1,3 +1,10 @@
+---
+description: "Reset Leveled Compaction Strategy levels to zero using sstablelevelreset. Fix LCS metadata corruption."
+meta:
+  - name: keywords
+    content: "sstablelevelreset, LCS reset, leveled compaction, Cassandra compaction"
+---
+
 # sstablelevelreset
 
 Resets all SSTables to level 0 for tables using Leveled Compaction Strategy (LCS).

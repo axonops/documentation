@@ -1,3 +1,10 @@
+---
+description: "Set maximum hint window duration in Cassandra using nodetool setmaxhintwindow."
+meta:
+  - name: keywords
+    content: "nodetool setmaxhintwindow, hint window, hinted handoff, Cassandra"
+---
+
 # nodetool setmaxhintwindow
 
 Sets the maximum hint window in milliseconds.

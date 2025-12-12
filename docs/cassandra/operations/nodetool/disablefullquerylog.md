@@ -1,3 +1,10 @@
+---
+description: "Disable full query logging in Cassandra using nodetool disablefullquerylog command."
+meta:
+  - name: keywords
+    content: "nodetool disablefullquerylog, disable FQL, query logging, Cassandra"
+---
+
 # nodetool disablefullquerylog
 
 Disables full query logging (FQL) on the node.

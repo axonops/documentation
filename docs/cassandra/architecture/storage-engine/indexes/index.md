@@ -1,3 +1,10 @@
+---
+description: "Cassandra index architecture covering secondary indexes, SASI, and SAI implementation details."
+meta:
+  - name: keywords
+    content: "Cassandra indexes, secondary index architecture, SASI, SAI"
+---
+
 # Indexes
 
 Indexes in Cassandra provide efficient data access patterns beyond partition key lookups. Understanding the available index types, their implementation differences, and appropriate use cases is essential for query optimization.

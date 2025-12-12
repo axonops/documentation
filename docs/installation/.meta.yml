@@ -1,0 +1,6 @@
+# SEO Meta Tags - Installation Section
+description: Installation guides for AxonOps Server, Dashboard, and Agent on various platforms including Kubernetes deployments.
+
+meta:
+  - name: keywords
+    content: AxonOps installation, AxonOps setup, Kubernetes deployment, agent installation, server configuration

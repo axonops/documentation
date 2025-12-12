@@ -1,3 +1,10 @@
+---
+description: "Cassandra entropy dashboard metrics mapping. Repair and consistency metrics."
+meta:
+  - name: keywords
+    content: "entropy metrics, repair metrics, consistency, Cassandra"
+---
+
 # AxonOps Entropy Dashboard Metrics Mapping
 
 This document maps the metrics used in the AxonOps Entropy dashboard.

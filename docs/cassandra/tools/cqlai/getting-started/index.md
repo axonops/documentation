@@ -1,3 +1,10 @@
+---
+description: "Getting started with CQLAI. Quick setup and first queries."
+meta:
+  - name: keywords
+    content: "CQLAI getting started, quick start, first queries"
+---
+
 # Getting Started with CQLAI
 
 CQLAI is a modern, AI-powered CQL shell for Apache Cassandra that enhances productivity with intelligent query suggestions, data analysis, and seamless import/export capabilities.

@@ -1,0 +1,6 @@
+# SEO Meta Tags - AxonOps Operations
+description: AxonOps operations documentation for backup, restore, repair, rolling restarts, and cluster maintenance procedures.
+
+meta:
+  - name: keywords
+    content: Cassandra backup, Cassandra restore, cluster repair, rolling restart, point-in-time recovery, maintenance procedures

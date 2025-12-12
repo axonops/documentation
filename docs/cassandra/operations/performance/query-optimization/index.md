@@ -1,3 +1,10 @@
+---
+description: "Cassandra query optimization. Improve CQL query performance."
+meta:
+  - name: keywords
+    content: "Cassandra query optimization, CQL performance, slow queries"
+---
+
 # Query Optimization for Cassandra
 
 Optimize CQL queries for better performance.

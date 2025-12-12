@@ -1,3 +1,10 @@
+---
+description: "Run AxonOps with Docker. Quick development setup using Docker Compose."
+meta:
+  - name: keywords
+    content: "AxonOps Docker, Docker Compose, development setup, containers"
+---
+
 ## Docker-compose 3-Node Cassandra Desktop Install
 
 Install and start testing on a 3-node Cassandra cluster in minutes. No registration required just head to GitHub at: [*axonops-cassandra-dev-cluster*](https://github.com/axonops/axonops-cassandra-dev-cluster/)

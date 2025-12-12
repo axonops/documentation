@@ -1,3 +1,10 @@
+---
+description: "BATCH statement syntax in CQL. Execute multiple mutations atomically within a partition."
+meta:
+  - name: keywords
+    content: "CQL BATCH, atomic batch, logged batch, unlogged batch, Cassandra"
+---
+
 # BATCH
 
 The BATCH statement groups multiple INSERT, UPDATE, and DELETE statements into a single atomic operation. Batches ensure that all statements either complete or none do, providing atomicity guarantees. However, batches are frequently misused as a performance optimization—they are not.

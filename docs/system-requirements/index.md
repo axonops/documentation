@@ -1,3 +1,10 @@
+---
+description: "AxonOps system requirements. Hardware, software, and network prerequisites."
+meta:
+  - name: keywords
+    content: "system requirements, prerequisites, hardware requirements, AxonOps"
+---
+
 # System requirements
 
 Minimum system requirements for installing AxonOps Server and AxonOps Dashboard on a Self-Hosted Server to Monitor and Manage the 6 nodes that are part of the [Starter Tier](https://axonops.com/pricing/){target="_blank"}

@@ -1,3 +1,10 @@
+---
+description: "Local storage backup configuration for Cassandra. On-disk backup settings."
+meta:
+  - name: keywords
+    content: "local storage backup, disk backup, Cassandra"
+---
+
 ## What is Local Storage
 
 Local Storage in the context of AxonOps remote backups refers to any file system path that is accessible from the Cassandra nodes. This could be a locally attached disk, a network-attached storage (NAS) mount, a SAN volume, or any other file system that appears as a local path to the operating system. This option is useful when you have dedicated backup infrastructure that is mounted on your Cassandra nodes.

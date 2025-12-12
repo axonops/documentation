@@ -1,3 +1,10 @@
+---
+description: "Configure TLS encryption in Cassandra. cassandra.yaml SSL settings for clients and internode."
+meta:
+  - name: keywords
+    content: "TLS configuration, SSL settings, cassandra.yaml, encryption setup"
+---
+
 # Cassandra Encryption Configuration
 
 This section covers the complete encryption configuration options in cassandra.yaml for both internode and client-to-node encryption.

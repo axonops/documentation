@@ -1,3 +1,10 @@
+---
+description: "Configure Microsoft Teams notifications in AxonOps. Send alerts to Teams channels."
+meta:
+  - name: keywords
+    content: "Microsoft Teams, Teams integration, AxonOps alerts, chat notifications"
+---
+
 # Setup Microsoft Teams Integration
 
 ## Create Microsoft Teams Webhook

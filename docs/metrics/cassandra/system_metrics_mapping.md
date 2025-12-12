@@ -1,3 +1,10 @@
+---
+description: "Cassandra system dashboard metrics mapping. CPU, memory, and disk metrics."
+meta:
+  - name: keywords
+    content: "system metrics, CPU metrics, memory metrics, disk, Cassandra"
+---
+
 # AxonOps System Dashboard Metrics Mapping
 
 This document maps the metrics used in the AxonOps System dashboard to their corresponding sources.

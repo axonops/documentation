@@ -1,3 +1,10 @@
+---
+description: "Cassandra repair strategies. Full vs incremental, subrange repairs."
+meta:
+  - name: keywords
+    content: "Cassandra repair strategies, incremental repair, subrange repair"
+---
+
 # Repair Strategies
 
 This page presents real-world repair implementation strategies for different cluster sizes, workloads, and operational requirements. Each strategy includes detailed procedures, timing calculations, and automation examples.

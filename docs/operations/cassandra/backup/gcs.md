@@ -1,3 +1,10 @@
+---
+description: "Configure Google Cloud Storage backup for Cassandra with AxonOps."
+meta:
+  - name: keywords
+    content: "GCS backup, Google Cloud Storage, Cassandra backup, AxonOps"
+---
+
 ## What is Google Cloud Storage
 
 Google Cloud Storage (GCS) is a RESTful online file storage web service for storing and accessing data on Google Cloud Platform infrastructure. It provides unified object storage for developers and enterprises, from live data serving to data analytics/ML to data archiving. Read more at [Google Cloud Storage documentation](https://cloud.google.com/storage/docs)

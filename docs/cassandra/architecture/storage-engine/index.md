@@ -1,3 +1,10 @@
+---
+description: "Cassandra storage engine architecture including memtables, SSTables, commit log, and compaction."
+meta:
+  - name: keywords
+    content: "Cassandra storage engine, memtable, SSTable, commit log, compaction"
+---
+
 # Storage Engine
 
 This section describes the internal operations of a single Cassandra node. While Cassandra is a distributed database, each node operates an independent storage engine that manages local data persistence and retrieval. The distributed aspects—replication, consistency coordination, and cross-node communication—are covered in [Distributed Data](../distributed-data/index.md).

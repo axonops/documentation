@@ -1,3 +1,10 @@
+---
+description: "Cassandra dropped messages dashboard metrics mapping. Message drop statistics."
+meta:
+  - name: keywords
+    content: "dropped messages, message drops, Cassandra metrics"
+---
+
 # AxonOps Dropped Messages Dashboard Metrics Mapping
 
 This document maps the metrics used in the AxonOps Dropped Messages dashboard.

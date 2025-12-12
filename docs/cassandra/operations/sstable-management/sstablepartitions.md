@@ -1,3 +1,10 @@
+---
+description: "Find large partitions in Cassandra SSTables using sstablepartitions. Identify hot partitions and sizing issues."
+meta:
+  - name: keywords
+    content: "sstablepartitions, large partitions, hot partition, Cassandra sizing"
+---
+
 # sstablepartitions
 
 Analyzes SSTable files to identify large partitions that may cause performance issues.

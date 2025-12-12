@@ -1,3 +1,10 @@
+---
+description: "SSH/SFTP backup configuration for Cassandra. Secure remote backup setup."
+meta:
+  - name: keywords
+    content: "SSH backup, SFTP, secure backup, Cassandra"
+---
+
 ## What is SSH/SFTP
 
 SSH File Transfer Protocol (SFTP) is a network protocol that provides file access, file transfer, and file management over any reliable data stream. It is typically used with SSH protocol to provide secure file transfer capabilities. Read more at [SSH.com SFTP](https://www.ssh.com/academy/ssh/sftp)

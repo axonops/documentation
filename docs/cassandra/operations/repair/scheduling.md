@@ -1,3 +1,10 @@
+---
+description: "Cassandra repair scheduling. Automate repair with schedulers."
+meta:
+  - name: keywords
+    content: "Cassandra repair scheduling, automated repair, repair scheduler"
+---
+
 # Repair Scheduling Guide
 
 This page provides guidance on planning repair schedules to ensure completion within `gc_grace_seconds`, avoiding zombie data resurrection while minimizing operational impact.

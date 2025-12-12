@@ -1,3 +1,10 @@
+---
+description: "Cassandra log analysis guide. System.log, debug.log, and GC log interpretation."
+meta:
+  - name: keywords
+    content: "Cassandra logs, log analysis, system.log, debug.log, GC logs"
+---
+
 # Cassandra Log Analysis
 
 Guide to analyzing Cassandra logs for troubleshooting.

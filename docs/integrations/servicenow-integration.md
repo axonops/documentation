@@ -1,3 +1,10 @@
+---
+description: "Configure ServiceNow integration in AxonOps. Create tickets from alerts automatically."
+meta:
+  - name: keywords
+    content: "ServiceNow integration, ticket creation, ITSM, AxonOps"
+---
+
 # Setup ServiceNow Integration
 
 ## Login to ServiceNow

@@ -1,3 +1,10 @@
+---
+description: "Configure Kafka topics with AxonOps. Modify topic settings and partitions."
+meta:
+  - name: keywords
+    content: "configure Kafka topic, topic settings, partitions"
+---
+
 # Kafka Topics
 
 ## Topic Configuration

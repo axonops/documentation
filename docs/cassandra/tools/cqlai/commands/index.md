@@ -1,3 +1,10 @@
+---
+description: "CQLAI commands reference. All available shell commands and shortcuts."
+meta:
+  - name: keywords
+    content: "CQLAI commands, shell commands, command reference"
+---
+
 # CQLAI Commands Reference
 
 CQLAI supports all standard CQL commands plus additional meta-commands and AI features for enhanced functionality.

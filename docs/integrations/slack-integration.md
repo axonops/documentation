@@ -1,3 +1,10 @@
+---
+description: "Configure Slack notifications in AxonOps. Send alerts to Slack channels."
+meta:
+  - name: keywords
+    content: "Slack integration, Slack alerts, chat notifications, AxonOps"
+---
+
 # Setup Slack Integration
 
 ###  Create Slack Incoming Webhooks

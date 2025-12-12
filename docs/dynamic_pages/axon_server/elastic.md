@@ -1,3 +1,10 @@
+---
+description: "Elasticsearch requirements for AxonOps Server."
+meta:
+  - name: keywords
+    content: "Elasticsearch, AxonOps server, storage requirements"
+---
+
 
 ## Installation
 

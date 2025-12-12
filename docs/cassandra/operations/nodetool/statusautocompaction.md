@@ -1,3 +1,10 @@
+---
+description: "Check if auto compaction is enabled for tables using nodetool statusautocompaction."
+meta:
+  - name: keywords
+    content: "nodetool statusautocompaction, compaction status, auto compaction, Cassandra"
+---
+
 # nodetool statusautocompaction
 
 Displays the auto-compaction status for specified keyspaces and tables.

@@ -1,3 +1,10 @@
+---
+description: "Enable hinted handoff in Cassandra using nodetool enablehandoff command."
+meta:
+  - name: keywords
+    content: "nodetool enablehandoff, enable hints, hinted handoff, Cassandra"
+---
+
 # nodetool enablehandoff
 
 Re-enables hinted handoff on the node.

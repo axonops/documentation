@@ -1,3 +1,10 @@
+---
+description: "Cassandra repair with AxonOps. Automated repair scheduling and management."
+meta:
+  - name: keywords
+    content: "Cassandra repair, automated repair, AxonOps repair, anti-entropy"
+---
+
 Repairs must be completed regularly to maintain Cassandra nodes.
 
 AxonOps provides two mechanisms to ease management of repairs in Cassandra:

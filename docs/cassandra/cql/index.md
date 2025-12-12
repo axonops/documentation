@@ -1,3 +1,10 @@
+---
+description: "Complete CQL (Cassandra Query Language) reference guide covering DDL, DML, data types, functions, and indexing."
+meta:
+  - name: keywords
+    content: "CQL, Cassandra Query Language, SQL, query syntax, Cassandra database"
+---
+
 # CQL Reference
 
 Cassandra Query Language (CQL) is the interface for interacting with Apache Cassandra. This reference provides complete syntax documentation for all CQL statements.

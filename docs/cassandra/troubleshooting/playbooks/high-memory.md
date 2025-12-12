@@ -1,3 +1,10 @@
+---
+description: "High memory troubleshooting playbook. Debug memory pressure issues."
+meta:
+  - name: keywords
+    content: "high memory troubleshooting, memory issues, heap pressure"
+---
+
 # High Memory Usage
 
 High memory usage can lead to OOM kills, long GC pauses, and degraded performance. This playbook covers diagnosis and resolution of memory-related issues.

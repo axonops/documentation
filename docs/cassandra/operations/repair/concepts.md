@@ -1,3 +1,10 @@
+---
+description: "Cassandra repair concepts. Anti-entropy repair and consistency maintenance."
+meta:
+  - name: keywords
+    content: "Cassandra repair concepts, anti-entropy, Merkle trees"
+---
+
 # Repair Concepts
 
 This page explains the fundamental concepts behind Cassandra repair operations, including how the repair process works internally, what triggers the need for repair, and the mechanisms Cassandra uses to detect and resolve data inconsistencies.

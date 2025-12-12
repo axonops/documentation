@@ -1,3 +1,10 @@
+---
+description: "Restore single Cassandra node with different IP address. Node replacement scenario."
+meta:
+  - name: keywords
+    content: "restore node different IP, node replacement, single node restore"
+---
+
 # Replace a node from a remote backup
 
 *Follow this procedure to restore a single Cassandra node from a total loss of all data where the replacement node

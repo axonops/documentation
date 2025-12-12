@@ -1,3 +1,10 @@
+---
+description: "Upgrade SSTables to current Cassandra version format using nodetool upgradesstables."
+meta:
+  - name: keywords
+    content: "nodetool upgradesstables, upgrade SSTables, SSTable version, Cassandra upgrade"
+---
+
 # nodetool upgradesstables
 
 Rewrites SSTables to the SSTable format version supported by the running Cassandra instance.

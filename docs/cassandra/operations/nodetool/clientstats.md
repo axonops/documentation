@@ -1,3 +1,10 @@
+---
+description: "Display client connection statistics in Cassandra using nodetool clientstats command."
+meta:
+  - name: keywords
+    content: "nodetool clientstats, client connections, Cassandra statistics, connection info"
+---
+
 # nodetool clientstats
 
 Displays information about connected clients.

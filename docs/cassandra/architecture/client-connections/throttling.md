@@ -1,3 +1,10 @@
+---
+description: "Request throttling in Cassandra clients. Rate limiting, backpressure, and overload protection."
+meta:
+  - name: keywords
+    content: "request throttling, rate limiting, backpressure, Cassandra client"
+---
+
 # Query Throttling
 
 Query throttling controls the rate at which clients send requests to Cassandra, preventing overload conditions that degrade cluster performance. Throttling occurs at multiple levels: client-side rate limiting, driver backpressure, and server-side admission control.

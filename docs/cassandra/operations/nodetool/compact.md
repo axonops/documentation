@@ -1,3 +1,10 @@
+---
+description: "Force major compaction in Cassandra using nodetool compact. Merge SSTables and reclaim disk space."
+meta:
+  - name: keywords
+    content: "nodetool compact, major compaction, Cassandra compaction, merge SSTables"
+---
+
 # nodetool compact
 
 Forces a major compaction on one or more tables, merging all SSTables into a single SSTable.

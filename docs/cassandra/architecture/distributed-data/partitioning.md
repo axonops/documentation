@@ -1,3 +1,10 @@
+---
+description: "Data partitioning in Cassandra using consistent hashing. Partition keys, tokens, and data distribution."
+meta:
+  - name: keywords
+    content: "Cassandra partitioning, consistent hashing, partition key, token ring"
+---
+
 # Partitioning
 
 Partitioning determines how data is distributed across nodes in a Cassandra cluster. Each row is assigned to a node based on its partition key, which is hashed to produce a token value. The token determines which node owns the data.

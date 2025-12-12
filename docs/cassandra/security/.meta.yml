@@ -1,0 +1,6 @@
+# SEO Meta Tags - Cassandra Security
+description: Apache Cassandra security documentation covering authentication, authorization, encryption, TLS/SSL configuration, and audit logging.
+
+meta:
+  - name: keywords
+    content: Cassandra security, authentication, authorization, TLS, SSL, encryption, audit logging, role-based access control

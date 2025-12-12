@@ -1,3 +1,10 @@
+---
+description: "List all CIDR groups configured in Cassandra using nodetool listcidrgroups."
+meta:
+  - name: keywords
+    content: "nodetool listcidrgroups, CIDR groups, network security, Cassandra"
+---
+
 # nodetool listcidrgroups
 
 Lists all defined CIDR groups in the cluster.

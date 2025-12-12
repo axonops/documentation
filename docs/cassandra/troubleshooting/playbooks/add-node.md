@@ -1,3 +1,10 @@
+---
+description: "Add node troubleshooting playbook. Debug node bootstrap issues."
+meta:
+  - name: keywords
+    content: "add node troubleshooting, bootstrap issues, node problems"
+---
+
 # Add Node
 
 Adding a node (bootstrapping) expands cluster capacity by introducing a new node that receives a portion of the existing data.

@@ -1,3 +1,10 @@
+---
+description: "CQLAI features overview. All capabilities of the AI-powered CQL shell."
+meta:
+  - name: keywords
+    content: "CQLAI features, shell capabilities, feature overview"
+---
+
 # CQLAI Features
 
 Comprehensive guide to CQLAI's features and capabilities.

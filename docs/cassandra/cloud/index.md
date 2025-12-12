@@ -1,3 +1,10 @@
+---
+description: "Cassandra cloud deployment options. AWS, Azure, GCP, and Kubernetes deployments."
+meta:
+  - name: keywords
+    content: "Cassandra cloud, cloud deployment, AWS, Azure, GCP, Kubernetes"
+---
+
 # Cassandra Cloud Deployment Guide
 
 This guide covers deploying and operating Apache Cassandra in cloud environments.

@@ -1,3 +1,10 @@
+---
+description: "Configure S3-compatible storage backup for Cassandra. MinIO, Ceph, and other providers."
+meta:
+  - name: keywords
+    content: "S3 compatible backup, MinIO, Ceph, Cassandra backup"
+---
+
 ## What is Generic S3
 
 Generic S3 (S3 Compatible) storage refers to object storage services that implement the Amazon S3 API but are not provided by AWS. Many cloud providers and storage solutions offer S3-compatible APIs, including MinIO, Ceph, DigitalOcean Spaces, Wasabi, Backblaze B2, and many others. This allows you to use the same S3 protocol with different storage providers.

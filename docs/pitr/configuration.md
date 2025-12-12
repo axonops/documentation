@@ -1,3 +1,10 @@
+---
+description: "Configure point-in-time restore for Cassandra. Commitlog archiving setup."
+meta:
+  - name: keywords
+    content: "PITR configuration, commitlog archiving, point-in-time setup"
+---
+
 #### Prerequisites
 
 Backups are enabled and setup. For more on how to setup backups please follow the guide [here](../operations/cassandra/backup/overview.md).

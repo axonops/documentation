@@ -1,3 +1,10 @@
+---
+description: "Grafana dashboards for Cassandra. Pre-built dashboards for visualization."
+meta:
+  - name: keywords
+    content: "Cassandra Grafana, dashboards, metrics visualization"
+---
+
 # AxonOps Dashboard Configuration
 
 AxonOps provides pre-configured dashboards for Cassandra monitoring. This guide covers dashboard navigation, customization, and interpretation.

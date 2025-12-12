@@ -1,3 +1,10 @@
+---
+description: "Privileged access management in Cassandra. Superuser access, role hierarchy, and separation of duties."
+meta:
+  - name: keywords
+    content: "privileged access, superuser, Cassandra roles, access management"
+---
+
 # Privileged Access Management
 
 Privileged Access Management (PAM) systems provide centralized control over database credentials, enabling automatic rotation, audit logging, and integration with enterprise security policies. This guide covers integration patterns for HashiCorp Vault and CyberArk with Cassandra.

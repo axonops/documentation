@@ -1,3 +1,10 @@
+---
+description: "Kafka topics dashboard metrics mapping. Per-topic throughput and size."
+meta:
+  - name: keywords
+    content: "Kafka topics metrics, topic throughput, topic size"
+---
+
 # AxonOps Kafka Topics Dashboard Metrics Mapping
 
 ## Overview

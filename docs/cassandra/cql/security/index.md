@@ -1,3 +1,10 @@
+---
+description: "CQL security commands for authentication, authorization, and role management in Cassandra."
+meta:
+  - name: keywords
+    content: "CQL security, CREATE ROLE, GRANT, authentication, authorization, Cassandra"
+---
+
 # Security Commands
 
 Security commands manage authentication and authorization in Cassandra through roles and permissions. Roles can represent users (with login capability) or permission groups (for organizing access control).

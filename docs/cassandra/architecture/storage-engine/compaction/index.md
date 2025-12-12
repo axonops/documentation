@@ -1,3 +1,10 @@
+---
+description: "Cassandra compaction strategies overview. STCS, LCS, TWCS, and UCS comparison and selection guide."
+meta:
+  - name: keywords
+    content: "Cassandra compaction, compaction strategy, STCS, LCS, TWCS, UCS"
+---
+
 # Compaction
 
 Compaction is the process of merging SSTables to reduce read amplification, reclaim space from tombstones, and maintain manageable file counts. Selecting an appropriate strategy and configuration is critical for cluster performance.

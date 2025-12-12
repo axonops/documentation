@@ -1,3 +1,10 @@
+---
+description: "Cassandra JVM tuning guide. Garbage collection and memory optimization."
+meta:
+  - name: keywords
+    content: "Cassandra JVM tuning, GC tuning, memory optimization"
+---
+
 # JVM Tuning for Cassandra
 
 Optimize JVM settings for optimal Cassandra performance.

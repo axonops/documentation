@@ -1,3 +1,10 @@
+---
+description: "Configure email notifications in AxonOps. SMTP setup for alert delivery."
+meta:
+  - name: keywords
+    content: "email integration, SMTP, email alerts, AxonOps notifications"
+---
+
 # Setup SMTP / Email Notifications
 
 On the Axonops application menu, select `Settings -> Integrations` .

@@ -1,3 +1,10 @@
+---
+description: "Rolling restart for Cassandra with AxonOps. Zero-downtime cluster restarts."
+meta:
+  - name: keywords
+    content: "rolling restart, Cassandra restart, zero downtime, AxonOps"
+---
+
 AxonOps provides a rolling restart functionality for Cassandra.
 
 The feature is accessible via ***Operations > Rolling Restart***

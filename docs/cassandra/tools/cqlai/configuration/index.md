@@ -1,3 +1,10 @@
+---
+description: "CQLAI configuration guide. Set up connections and customize behavior."
+meta:
+  - name: keywords
+    content: "CQLAI configuration, setup, connection config"
+---
+
 # CQLAI Configuration
 
 CQLAI supports multiple configuration methods for maximum flexibility and compatibility with existing Cassandra setups.

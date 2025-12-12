@@ -1,3 +1,10 @@
+---
+description: "Set key cache and row cache capacity in Cassandra using nodetool setcachecapacity."
+meta:
+  - name: keywords
+    content: "nodetool setcachecapacity, cache capacity, key cache, row cache, Cassandra"
+---
+
 # nodetool setcachecapacity
 
 Sets the capacity of the key cache, row cache, and counter cache.

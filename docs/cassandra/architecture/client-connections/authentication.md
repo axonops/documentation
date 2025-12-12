@@ -1,3 +1,10 @@
+---
+description: "Client authentication in Cassandra. Password authenticator, LDAP, and custom authentication."
+meta:
+  - name: keywords
+    content: "Cassandra authentication, password authenticator, LDAP, client auth"
+---
+
 # Authentication Architecture
 
 Authentication in Cassandra verifies client identity before allowing connections. The protocol uses SASL (Simple Authentication and Security Layer) to provide a consistent handshake flow for the built-in PasswordAuthenticator.

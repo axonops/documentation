@@ -1,3 +1,10 @@
+---
+description: "Cassandra logging configuration with Logback. Configure log levels and appenders."
+meta:
+  - name: keywords
+    content: "Cassandra logback, logging configuration, log levels"
+---
+
 # Cassandra Logging Configuration (logback.xml)
 
 Cassandra uses Logback for logging, configured via `logback.xml`. This file controls log levels, output destinations, formats, and rotation policies.

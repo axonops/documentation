@@ -1,3 +1,10 @@
+---
+description: "Identify SSTables blocking tombstone removal in Cassandra using sstableexpiredblockers. Debug tombstone accumulation."
+meta:
+  - name: keywords
+    content: "sstableexpiredblockers, tombstone blockers, Cassandra tombstones, gc_grace_seconds"
+---
+
 # sstableexpiredblockers
 
 Identifies SSTables that prevent tombstone removal, causing tombstone accumulation issues.

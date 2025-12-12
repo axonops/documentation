@@ -1,3 +1,10 @@
+---
+description: "Time bucketing pattern for Cassandra. Manage time-series data with efficient partitions."
+meta:
+  - name: keywords
+    content: "time bucketing, Cassandra time-series, partition management"
+---
+
 # Time Bucketing Pattern
 
 Time bucketing prevents unbounded partition growth by adding a time component to the partition key. Without it, time-series tables (IoT sensors, event logs, metrics) create partitions that grow indefinitely, eventually causing timeouts and OOM errors.

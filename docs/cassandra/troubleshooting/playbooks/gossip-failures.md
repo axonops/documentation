@@ -1,3 +1,10 @@
+---
+description: "Gossip failures troubleshooting playbook. Debug cluster communication."
+meta:
+  - name: keywords
+    content: "gossip troubleshooting, gossip failures, cluster communication"
+---
+
 # Gossip Failures
 
 Gossip is Cassandra's peer-to-peer protocol for sharing cluster state. Gossip failures cause nodes to lose visibility of each other, leading to cluster partitions and availability issues.

@@ -1,3 +1,10 @@
+---
+description: "Enable full query logging in Cassandra using nodetool enablefullquerylog for debugging."
+meta:
+  - name: keywords
+    content: "nodetool enablefullquerylog, enable FQL, query logging, Cassandra debugging"
+---
+
 # nodetool enablefullquerylog
 
 Enables full query logging (FQL) on the node.

@@ -1,3 +1,10 @@
+---
+description: "Install AxonOps Server. Backend server installation and configuration guide."
+meta:
+  - name: keywords
+    content: "AxonOps Server install, backend installation, server setup"
+---
+
 # AxonOps Server Installation
 
 ## Installation

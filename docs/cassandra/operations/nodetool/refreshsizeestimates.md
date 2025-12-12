@@ -1,3 +1,10 @@
+---
+description: "Refresh size estimates for tables in Cassandra using nodetool refreshsizeestimates."
+meta:
+  - name: keywords
+    content: "nodetool refreshsizeestimates, size estimates, table statistics, Cassandra"
+---
+
 # nodetool refreshsizeestimates
 
 Refreshes the size estimates table.

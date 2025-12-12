@@ -1,3 +1,10 @@
+---
+description: "Configure JumpCloud SAML authentication for AxonOps Cloud. Step-by-step SSO integration guide."
+meta:
+  - name: keywords
+    content: "JumpCloud, SAML, SSO, AxonOps authentication, single sign-on"
+---
+
 Configuring SAML authentication with JumpCloud for AxonOps Cloud
 ================================================================
 

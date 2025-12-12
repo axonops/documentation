@@ -1,3 +1,10 @@
+---
+description: "Create backup snapshots of Cassandra tables using nodetool snapshot command."
+meta:
+  - name: keywords
+    content: "nodetool snapshot, Cassandra backup, create snapshot, table backup"
+---
+
 # nodetool snapshot
 
 Creates a snapshot (hard-link backup) of one or more tables.

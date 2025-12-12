@@ -1,3 +1,10 @@
+---
+description: "Display default replication factor for system keyspaces using nodetool getdefaultrf."
+meta:
+  - name: keywords
+    content: "nodetool getdefaultrf, replication factor, default RF, Cassandra replication"
+---
+
 # nodetool getdefaultrf
 
 Displays the default replication factor.

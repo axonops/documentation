@@ -1,3 +1,10 @@
+---
+description: "Display data file locations for Cassandra tables using nodetool datapaths command."
+meta:
+  - name: keywords
+    content: "nodetool datapaths, data directories, Cassandra paths, SSTable locations"
+---
+
 # nodetool datapaths
 
 Displays the data file directories for the node.

@@ -1,3 +1,10 @@
+---
+description: "Enable audit logging in Cassandra using nodetool enableauditlog for security compliance."
+meta:
+  - name: keywords
+    content: "nodetool enableauditlog, enable audit, Cassandra audit log, security compliance"
+---
+
 # nodetool enableauditlog
 
 Enables audit logging on the node.

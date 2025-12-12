@@ -1,3 +1,10 @@
+---
+description: "Clear row cache in Cassandra using nodetool invalidaterowcache command."
+meta:
+  - name: keywords
+    content: "nodetool invalidaterowcache, row cache, clear cache, Cassandra performance"
+---
+
 # nodetool invalidaterowcache
 
 Invalidates the row cache on the node.

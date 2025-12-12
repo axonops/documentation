@@ -1,3 +1,10 @@
+---
+description: "Full disk troubleshooting playbook. Handle disk space emergencies."
+meta:
+  - name: keywords
+    content: "full disk troubleshooting, disk space, storage emergency"
+---
+
 # Handle Full Disk
 
 A full disk is a critical emergency that can cause data loss, node failures, and cluster instability. Immediate action is required.

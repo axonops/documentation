@@ -1,3 +1,10 @@
+---
+description: "CQL DML (Data Manipulation Language) commands for SELECT, INSERT, UPDATE, DELETE, and BATCH operations."
+meta:
+  - name: keywords
+    content: "CQL DML, SELECT, INSERT, UPDATE, DELETE, BATCH, Cassandra queries"
+---
+
 # Data Manipulation Language (DML)
 
 Data Manipulation Language (DML) commands retrieve and modify data in Cassandra tables. Unlike traditional SQL databases, Cassandra's DML operations are designed for distributed, eventually consistent storage with specific semantics around timestamps, tombstones, and partition-aware queries.

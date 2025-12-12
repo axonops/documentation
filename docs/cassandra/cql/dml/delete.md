@@ -1,3 +1,10 @@
+---
+description: "DELETE statement syntax in CQL. Remove data, columns, or entire rows with tombstone creation."
+meta:
+  - name: keywords
+    content: "CQL DELETE, delete data, tombstone, Cassandra delete"
+---
+
 # DELETE
 
 The DELETE statement removes rows or column values from Cassandra tables. Unlike traditional databases that immediately remove data, Cassandra writes **tombstones**—markers indicating data has been deleted. Understanding tombstones is essential for maintaining cluster performance.

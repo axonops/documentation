@@ -1,3 +1,10 @@
+---
+description: "Configure Elasticsearch for AxonOps. Search backend setup and optimization."
+meta:
+  - name: keywords
+    content: "Elasticsearch setup, AxonOps Elasticsearch, search backend"
+---
+
 
 ### Configuration File Locations
 

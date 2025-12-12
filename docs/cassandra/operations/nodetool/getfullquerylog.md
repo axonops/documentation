@@ -1,3 +1,10 @@
+---
+description: "Display full query log configuration in Cassandra using nodetool getfullquerylog."
+meta:
+  - name: keywords
+    content: "nodetool getfullquerylog, FQL config, query logging, Cassandra"
+---
+
 # nodetool getfullquerylog
 
 Displays the current full query logging configuration.

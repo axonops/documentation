@@ -1,3 +1,10 @@
+---
+description: "Apache Cassandra documentation. Comprehensive guide for deployment, operations, and development."
+meta:
+  - name: keywords
+    content: "Apache Cassandra docs, Cassandra documentation, Cassandra guide"
+---
+
 # Apache Cassandra Documentation
 
 Apache Cassandra is a distributed NoSQL database designed for extreme scale, exceptional performance, and continuous availability. There is no master node—every node can handle reads and writes, so the failure of any single node (or even an entire datacenter) does not take down the database.

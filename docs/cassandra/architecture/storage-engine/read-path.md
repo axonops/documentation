@@ -1,3 +1,10 @@
+---
+description: "Cassandra read path explained. How queries traverse memtables, SSTables, and caches to retrieve data."
+meta:
+  - name: keywords
+    content: "Cassandra read path, bloom filter, partition index, read operation"
+---
+
 # Read Path
 
 In an LSM-tree storage engine, data for a single partition may exist in multiple locations: the active memtable, any flushing memtables, and numerous SSTables on disk. Unlike B-tree databases where a row exists in exactly one location, Cassandra must check all potential sources and merge results to reconstruct the current state of the data.

@@ -1,3 +1,10 @@
+---
+description: "What is Apache Cassandra. Distributed NoSQL database for high availability and scalability."
+meta:
+  - name: keywords
+    content: "what is Cassandra, Apache Cassandra introduction, NoSQL database"
+---
+
 # What is Apache Cassandra?
 
 Apache Cassandra is a distributed, wide-column NoSQL database designed for high availability and linear scalability. It handles massive amounts of data across commodity servers with no single point of failure, making it the database of choice for applications that cannot afford downtime.

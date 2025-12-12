@@ -1,3 +1,10 @@
+---
+description: "Display failure detector information for Cassandra cluster nodes using nodetool failuredetector."
+meta:
+  - name: keywords
+    content: "nodetool failuredetector, failure detection, Cassandra cluster, node status"
+---
+
 # nodetool failuredetector
 
 Displays the failure detector information for the cluster.

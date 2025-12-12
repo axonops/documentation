@@ -1,3 +1,10 @@
+---
+description: "Reuse host ID in AxonOps when replacing nodes. Maintain monitoring history across node replacements."
+meta:
+  - name: keywords
+    content: "reuse host ID, node replacement, monitoring history, AxonOps"
+---
+
 # Re-using an existing Host ID
 
 Each agent connected to the AxonOps server is assigned a unique host ID that is used internally to associate metrics and events with the node. If a Cassandra host dies and is replaced by another one with the same IP and token range then normally a new host ID will be generated and the replacement server will appear as a new machine in AxonOps. In this situation it is possible to re-use the same host ID so AxonOps sees the replacement server as the same as the original one.

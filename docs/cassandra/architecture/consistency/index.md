@@ -1,3 +1,10 @@
+---
+description: "Cassandra consistency levels explained. Configure read and write consistency for your workload."
+meta:
+  - name: keywords
+    content: "consistency levels, Cassandra consistency, QUORUM, LOCAL_QUORUM"
+---
+
 # Consistency
 
 For detailed information about consistency in Cassandra, see [Distributed Data - Consistency](../distributed-data/consistency.md).

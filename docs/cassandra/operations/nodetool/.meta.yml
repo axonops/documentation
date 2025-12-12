@@ -1,0 +1,6 @@
+# SEO Meta Tags - Nodetool Reference
+description: Complete nodetool command reference for Apache Cassandra including cluster management, repair, compaction, streaming, and diagnostics commands.
+
+meta:
+  - name: keywords
+    content: nodetool, Cassandra commands, nodetool status, nodetool repair, nodetool compact, nodetool flush, cluster management

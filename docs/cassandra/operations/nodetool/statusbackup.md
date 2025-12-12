@@ -1,3 +1,10 @@
+---
+description: "Check if incremental backup is enabled using nodetool statusbackup command."
+meta:
+  - name: keywords
+    content: "nodetool statusbackup, backup status, incremental backup, Cassandra"
+---
+
 # nodetool statusbackup
 
 Displays the current status of incremental backup on the node.

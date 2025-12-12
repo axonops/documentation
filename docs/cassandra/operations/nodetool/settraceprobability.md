@@ -1,3 +1,10 @@
+---
+description: "Set query tracing probability in Cassandra using nodetool settraceprobability."
+meta:
+  - name: keywords
+    content: "nodetool settraceprobability, query tracing, trace probability, Cassandra"
+---
+
 # nodetool settraceprobability
 
 Sets the probability of tracing a request.

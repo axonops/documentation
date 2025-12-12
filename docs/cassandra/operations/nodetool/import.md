@@ -1,3 +1,10 @@
+---
+description: "Import SSTables from a directory into Cassandra using nodetool import command."
+meta:
+  - name: keywords
+    content: "nodetool import, import SSTables, Cassandra data import, SSTable loading"
+---
+
 # nodetool import
 
 Imports SSTables from an external directory into a table.

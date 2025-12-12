@@ -1,3 +1,10 @@
+---
+description: "Monitor active compaction progress in Cassandra using nodetool compactionstats command."
+meta:
+  - name: keywords
+    content: "nodetool compactionstats, compaction progress, Cassandra monitoring, active compactions"
+---
+
 # nodetool compactionstats
 
 Displays statistics about currently running compactions and pending compaction tasks.

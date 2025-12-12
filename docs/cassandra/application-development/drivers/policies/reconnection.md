@@ -1,3 +1,10 @@
+---
+description: "Cassandra reconnection policies. Configure exponential backoff and constant delay strategies."
+meta:
+  - name: keywords
+    content: "Cassandra reconnection, exponential backoff, connection retry"
+---
+
 # Reconnection Policy
 
 The reconnection policy controls how the driver attempts to reconnect to nodes after connection failures. This policy affects recovery time after node failures and network partitions.

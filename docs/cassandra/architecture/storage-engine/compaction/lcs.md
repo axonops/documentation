@@ -1,3 +1,10 @@
+---
+description: "Leveled Compaction Strategy (LCS) in Cassandra. Level-based compaction for read-heavy workloads."
+meta:
+  - name: keywords
+    content: "LCS, Leveled Compaction, Cassandra compaction, read-heavy workloads"
+---
+
 # Leveled Compaction Strategy (LCS)
 
 LCS organizes SSTables into levels where each level is 10x larger than the previous. Within each level (except L0), SSTables have non-overlapping token ranges, providing predictable read performance at the cost of higher write amplification.

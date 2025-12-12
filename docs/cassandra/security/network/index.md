@@ -1,3 +1,10 @@
+---
+description: "Cassandra network security. Firewall rules, port configuration, and network isolation."
+meta:
+  - name: keywords
+    content: "network security, Cassandra firewall, port security, network isolation"
+---
+
 # Network Authorization
 
 Cassandra provides network-level authorization to restrict client access based on datacenter location or IP address ranges.

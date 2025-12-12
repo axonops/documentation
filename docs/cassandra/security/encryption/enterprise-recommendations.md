@@ -1,3 +1,10 @@
+---
+description: "Enterprise TLS recommendations for Cassandra. Production security best practices."
+meta:
+  - name: keywords
+    content: "enterprise TLS, production security, best practices, Cassandra"
+---
+
 # Enterprise Recommendations
 
 This section provides security hardening guidelines and certificate lifecycle management procedures for production Cassandra deployments.

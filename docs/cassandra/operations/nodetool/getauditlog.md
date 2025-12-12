@@ -1,3 +1,10 @@
+---
+description: "Display current audit log configuration in Cassandra using nodetool getauditlog."
+meta:
+  - name: keywords
+    content: "nodetool getauditlog, audit log config, Cassandra audit, security settings"
+---
+
 # nodetool getauditlog
 
 Displays the current audit logging configuration.

@@ -1,3 +1,10 @@
+---
+description: "Set snapshot throttle in Cassandra using nodetool setsnapshotthrottle command."
+meta:
+  - name: keywords
+    content: "nodetool setsnapshotthrottle, snapshot throttle, backup speed, Cassandra"
+---
+
 # nodetool setsnapshotthrottle
 
 Sets the snapshot link creation throttle.

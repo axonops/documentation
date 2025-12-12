@@ -1,3 +1,10 @@
+---
+description: "Cassandra reference documentation. Project resources, links, and official guides."
+meta:
+  - name: keywords
+    content: "Cassandra reference, documentation, project resources"
+---
+
 # Cassandra Reference
 
 Quick reference for Apache Cassandra.

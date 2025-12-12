@@ -1,3 +1,10 @@
+---
+description: "Reload schema from local storage in Cassandra using nodetool reloadlocalschema."
+meta:
+  - name: keywords
+    content: "nodetool reloadlocalschema, reload schema, local schema, Cassandra"
+---
+
 # nodetool reloadlocalschema
 
 Reloads the local schema from disk.

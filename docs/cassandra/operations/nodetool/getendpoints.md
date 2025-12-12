@@ -1,3 +1,10 @@
+---
+description: "Find which nodes own a specific partition key using nodetool getendpoints command."
+meta:
+  - name: keywords
+    content: "nodetool getendpoints, partition owner, replica nodes, Cassandra routing"
+---
+
 # nodetool getendpoints
 
 Displays the replica nodes for a specific partition key.

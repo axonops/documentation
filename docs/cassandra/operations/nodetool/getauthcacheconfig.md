@@ -1,3 +1,10 @@
+---
+description: "Display authentication cache configuration in Cassandra using nodetool getauthcacheconfig."
+meta:
+  - name: keywords
+    content: "nodetool getauthcacheconfig, auth cache, authentication cache, Cassandra security"
+---
+
 # nodetool getauthcacheconfig
 
 Displays authentication cache configuration settings.

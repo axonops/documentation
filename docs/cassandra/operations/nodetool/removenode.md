@@ -1,3 +1,10 @@
+---
+description: "Remove a dead node from Cassandra cluster using nodetool removenode command."
+meta:
+  - name: keywords
+    content: "nodetool removenode, remove node, dead node, Cassandra cluster"
+---
+
 # nodetool removenode
 
 Removes a dead or unreachable node from the cluster by streaming its data from remaining replicas.

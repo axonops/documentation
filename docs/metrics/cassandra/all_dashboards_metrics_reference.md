@@ -1,3 +1,10 @@
+---
+description: "Complete Cassandra metrics reference for AxonOps dashboards. All available metrics documented."
+meta:
+  - name: keywords
+    content: "Cassandra metrics reference, all metrics, dashboard metrics"
+---
+
 # AxonOps All Dashboards Metrics Reference
 
 This document provides a comprehensive reference of all metrics used across AxonOps dashboards, organized by metric prefix and category.

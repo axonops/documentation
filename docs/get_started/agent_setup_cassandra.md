@@ -1,3 +1,10 @@
+---
+description: "Set up AxonOps agent for Cassandra monitoring. Step-by-step installation guide."
+meta:
+  - name: keywords
+    content: "Cassandra agent setup, AxonOps installation, monitoring setup"
+---
+
 <h2>Install Cassandra Agent </h2>
 
 {!dynamic_pages/axon_agent/cassandra_agent.md!}

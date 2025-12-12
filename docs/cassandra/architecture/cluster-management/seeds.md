@@ -1,3 +1,10 @@
+---
+description: "Seed nodes in Cassandra for cluster discovery and gossip bootstrapping. Configuration best practices."
+meta:
+  - name: keywords
+    content: "seed nodes, Cassandra seeds, cluster discovery, gossip bootstrap"
+---
+
 # Seeds and Cluster Discovery
 
 Seed nodes are designated contact points that facilitate cluster discovery and gossip protocol initialization. While operationally identical to other nodes, seeds play a critical role in cluster formation, node bootstrapping, and partition recovery scenarios.

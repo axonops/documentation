@@ -1,3 +1,10 @@
+---
+description: "Cassandra cluster management covering gossip, seeds, node lifecycle, and topology changes."
+meta:
+  - name: keywords
+    content: "cluster management, Cassandra cluster, gossip, seeds, topology"
+---
+
 # Cluster Management
 
 This section describes the mechanisms by which Cassandra nodes form, maintain, and modify cluster membership. Unlike centralized database systems that rely on a coordinator or master node, Cassandra employs a fully decentralized peer-to-peer architecture where each node participates equally in cluster coordination.

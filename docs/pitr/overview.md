@@ -1,3 +1,10 @@
+---
+description: "Point-in-time restore overview for Cassandra. Recover to any point in time."
+meta:
+  - name: keywords
+    content: "PITR overview, point-in-time restore, Cassandra recovery"
+---
+
 # Point in Time Recovery
 
 The aim of the AxonOps Cassandra Commitlog Archiving(PITR) feature is to provide an easy to use graphical user interface instead of users having to configure it manually on every Cassandra node in a cluster.

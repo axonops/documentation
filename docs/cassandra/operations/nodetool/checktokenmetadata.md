@@ -1,3 +1,10 @@
+---
+description: "Verify token metadata consistency across the Cassandra cluster using nodetool checktokenmetadata."
+meta:
+  - name: keywords
+    content: "nodetool checktokenmetadata, token metadata, Cassandra tokens, cluster consistency"
+---
+
 # nodetool checktokenmetadata
 
 Checks the token metadata for inconsistencies.

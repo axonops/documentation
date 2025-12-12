@@ -1,3 +1,10 @@
+---
+description: "Configure guardrails limits in Cassandra using nodetool setguardrailsconfig."
+meta:
+  - name: keywords
+    content: "nodetool setguardrailsconfig, guardrails, Cassandra limits, configuration"
+---
+
 # nodetool setguardrailsconfig
 
 Modifies guardrail configuration settings at runtime.

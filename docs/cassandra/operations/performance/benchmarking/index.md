@@ -1,3 +1,10 @@
+---
+description: "Cassandra benchmarking guide. Test performance with cassandra-stress."
+meta:
+  - name: keywords
+    content: "Cassandra benchmarking, cassandra-stress, performance testing"
+---
+
 # Cassandra Benchmarking
 
 Measure and validate Cassandra cluster performance.

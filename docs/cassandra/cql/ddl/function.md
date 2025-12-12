@@ -1,3 +1,10 @@
+---
+description: "CREATE FUNCTION syntax for user-defined functions (UDF) in CQL. Extend Cassandra with custom logic."
+meta:
+  - name: keywords
+    content: "CREATE FUNCTION, UDF, user-defined function, CQL function, Cassandra"
+---
+
 # Function Commands
 
 User-Defined Functions (UDFs) extend CQL with custom scalar operations written in Java or JavaScript. UDFs can be used in SELECT clauses, WHERE conditions, and as building blocks for user-defined aggregates.

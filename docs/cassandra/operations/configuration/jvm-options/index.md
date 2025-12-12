@@ -1,3 +1,10 @@
+---
+description: "Cassandra JVM options configuration. Heap size, GC settings, and performance tuning."
+meta:
+  - name: keywords
+    content: "Cassandra JVM options, heap size, garbage collection, JVM tuning"
+---
+
 # Cassandra JVM Options
 
 Configure JVM settings for optimal Cassandra performance.

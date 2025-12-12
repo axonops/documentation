@@ -1,3 +1,10 @@
+---
+description: "CREATE TABLE syntax in CQL. Define partition keys, clustering columns, and table options."
+meta:
+  - name: keywords
+    content: "CREATE TABLE, CQL table, partition key, clustering column, Cassandra schema"
+---
+
 # Table Commands
 
 Tables are the primary data storage structures in Cassandra. Each table belongs to a keyspace and defines columns, a primary key for data distribution and access, and various storage options.

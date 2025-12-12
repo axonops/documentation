@@ -1,0 +1,6 @@
+# SEO Meta Tags - Cassandra Data Modeling
+description: Cassandra data modeling best practices covering partition key design, clustering columns, denormalization patterns, and anti-patterns to avoid.
+
+meta:
+  - name: keywords
+    content: Cassandra data modeling, partition key, clustering column, denormalization, query-driven design, anti-patterns

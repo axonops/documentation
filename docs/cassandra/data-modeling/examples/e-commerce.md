@@ -1,3 +1,10 @@
+---
+description: "E-commerce data model example for Cassandra. Product catalog, orders, and user profiles."
+meta:
+  - name: keywords
+    content: "Cassandra e-commerce model, product catalog, order management"
+---
+
 # E-Commerce Data Model Example
 
 E-commerce has all the interesting data modeling challenges: products that need to be queried multiple ways, shopping carts that get abandoned, orders that move through states, inventory that needs to stay consistent. It is a good exercise for thinking through Cassandra's query-first approach.

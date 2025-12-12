@@ -1,3 +1,10 @@
+---
+description: "AxonOps Workbench licensing. License types and activation."
+meta:
+  - name: keywords
+    content: "Workbench license, AxonOps licensing, activation"
+---
+
 These licenses apply to the AxonOps™ Workbench source code and product. 
 
 # End-User License Agreement (EULA) for AxonOps™ Workbench product

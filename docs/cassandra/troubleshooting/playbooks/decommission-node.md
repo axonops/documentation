@@ -1,3 +1,10 @@
+---
+description: "Decommission node troubleshooting playbook. Handle decommission failures."
+meta:
+  - name: keywords
+    content: "decommission troubleshooting, node removal, decommission issues"
+---
+
 # Decommission Node
 
 Decommissioning removes a node from the cluster by streaming its data to remaining nodes. This is the proper way to permanently remove a healthy node.

@@ -1,3 +1,10 @@
+---
+description: "Cassandra data modeling anti-patterns. Common mistakes and how to avoid them."
+meta:
+  - name: keywords
+    content: "Cassandra anti-patterns, data modeling mistakes, design pitfalls"
+---
+
 # Cassandra Anti-Patterns
 
 These patterns work fine in development and testing. They might even work in early production. Then data grows, traffic increases, and they fail—usually in ways that are not obvious without understanding Cassandra internals.

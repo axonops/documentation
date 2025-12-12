@@ -1,3 +1,10 @@
+---
+description: "Kafka ACL management in AxonOps. Overview of access control list features."
+meta:
+  - name: keywords
+    content: "Kafka ACL overview, access control, AxonOps Kafka"
+---
+
 # Topic Access Control List (ACL)
 
 ## What is an Access Control List

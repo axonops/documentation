@@ -1,3 +1,10 @@
+---
+description: "Display CIDR filtering statistics in Cassandra using nodetool cidrfilteringstats command."
+meta:
+  - name: keywords
+    content: "nodetool cidrfilteringstats, CIDR filtering, network security, Cassandra"
+---
+
 # nodetool cidrfilteringstats
 
 Displays CIDR filtering statistics for the node.

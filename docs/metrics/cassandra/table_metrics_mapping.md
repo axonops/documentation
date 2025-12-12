@@ -1,3 +1,10 @@
+---
+description: "Cassandra table dashboard metrics mapping. Per-table performance statistics."
+meta:
+  - name: keywords
+    content: "table metrics, per-table stats, Cassandra performance"
+---
+
 # AxonOps Table Dashboard Metrics Mapping
 
 This document maps the metrics used in the AxonOps Table dashboard.

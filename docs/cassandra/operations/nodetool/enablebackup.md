@@ -1,3 +1,10 @@
+---
+description: "Enable incremental backup in Cassandra using nodetool enablebackup command."
+meta:
+  - name: keywords
+    content: "nodetool enablebackup, enable backup, Cassandra backup, incremental backup"
+---
+
 # nodetool enablebackup
 
 Enables incremental backup.

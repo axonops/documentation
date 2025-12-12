@@ -1,3 +1,10 @@
+---
+description: "Service checks in AxonOps. Monitor service health and availability."
+meta:
+  - name: keywords
+    content: "service checks, health checks, availability monitoring"
+---
+
 ## Overview
 
 Service Checks in AxonOps allows you to configure custom checks using three types of checks:

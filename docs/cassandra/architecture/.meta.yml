@@ -1,0 +1,6 @@
+# SEO Meta Tags - Cassandra Architecture
+description: Apache Cassandra architecture documentation covering storage engine, distributed data, replication, consistency, compaction, and cluster management.
+
+meta:
+  - name: keywords
+    content: Cassandra architecture, storage engine, SSTable, memtable, compaction, replication, consistency levels, gossip protocol, partitioning

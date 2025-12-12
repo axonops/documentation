@@ -1,3 +1,10 @@
+---
+description: "Rebuild secondary indexes for a table using nodetool rebuild_index command."
+meta:
+  - name: keywords
+    content: "nodetool rebuild_index, rebuild index, secondary index, Cassandra"
+---
+
 # nodetool rebuild_index
 
 Rebuilds secondary indexes for a table.

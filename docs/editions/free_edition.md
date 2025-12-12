@@ -1,3 +1,10 @@
+---
+description: "AxonOps Free Edition features. Get started with Cassandra and Kafka monitoring at no cost."
+meta:
+  - name: keywords
+    content: "AxonOps Free, free tier, getting started, trial"
+---
+
 # Free Edition
 
 The Free Edition is available for AxonOps Cloud. The Free Edition is free up to 6 nodes.

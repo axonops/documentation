@@ -1,3 +1,10 @@
+---
+description: "Check if CQL native transport is enabled using nodetool statusbinary command."
+meta:
+  - name: keywords
+    content: "nodetool statusbinary, CQL status, native transport, Cassandra"
+---
+
 # nodetool statusbinary
 
 Displays the status of the CQL native transport (client protocol).

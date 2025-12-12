@@ -1,3 +1,10 @@
+---
+description: "Configure backup and restore notifications in AxonOps. Alert on backup status and failures."
+meta:
+  - name: keywords
+    content: "backup notifications, restore alerts, AxonOps notifications"
+---
+
 # Setup Backup - Restore Notifications
 
 On the AxonOps application menu, click `Operations -> Backups -> Setup` and select `Notifications` tab. 

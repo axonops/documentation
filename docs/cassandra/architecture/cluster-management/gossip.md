@@ -1,3 +1,10 @@
+---
+description: "Gossip protocol in Cassandra for cluster membership and failure detection. Phi accrual detector."
+meta:
+  - name: keywords
+    content: "gossip protocol, Cassandra gossip, failure detection, phi accrual"
+---
+
 # Gossip Protocol and Internode Messaging
 
 ## Overview

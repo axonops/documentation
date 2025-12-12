@@ -1,3 +1,10 @@
+---
+description: "Check if hinted handoff is enabled using nodetool statushandoff command."
+meta:
+  - name: keywords
+    content: "nodetool statushandoff, handoff status, hinted handoff, Cassandra"
+---
+
 # nodetool statushandoff
 
 Displays the current status of hinted handoff on the node.

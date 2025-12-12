@@ -1,3 +1,10 @@
+---
+description: "Upgrade SSTables to current Cassandra version format using sstableupgrade. Required after major version upgrades."
+meta:
+  - name: keywords
+    content: "sstableupgrade, SSTable upgrade, Cassandra upgrade, version migration"
+---
+
 # sstableupgrade
 
 Rewrites SSTables to the current Cassandra version format for compatibility after major version upgrades.

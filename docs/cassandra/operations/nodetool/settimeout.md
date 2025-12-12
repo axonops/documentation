@@ -1,3 +1,10 @@
+---
+description: "Set timeout for Cassandra operations using nodetool settimeout command."
+meta:
+  - name: keywords
+    content: "nodetool settimeout, timeout settings, operation timeout, Cassandra"
+---
+
 # nodetool settimeout
 
 Sets the timeout value for the specified type.

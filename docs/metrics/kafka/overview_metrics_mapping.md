@@ -1,3 +1,10 @@
+---
+description: "Kafka overview dashboard metrics mapping. Cluster health and throughput."
+meta:
+  - name: keywords
+    content: "Kafka overview metrics, cluster health, throughput"
+---
+
 # AxonOps Kafka Overview Dashboard Metrics Mapping
 
 This document maps the metrics used in the AxonOps Kafka Overview dashboard.

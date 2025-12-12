@@ -1,3 +1,10 @@
+---
+description: "Cassandra performance tuning guide. Optimize throughput and latency."
+meta:
+  - name: keywords
+    content: "Cassandra performance, tuning guide, optimization"
+---
+
 # Cassandra Performance Tuning Guide
 
 Out of the box, Cassandra is configured to not crash—not to perform well. The default heap is small, compaction is throttled, and the OS settings are whatever your distribution ships with. These defaults make sense for trying Cassandra on a laptop, not for production.

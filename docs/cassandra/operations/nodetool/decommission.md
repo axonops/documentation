@@ -1,3 +1,10 @@
+---
+description: "Gracefully remove a Cassandra node from the cluster using nodetool decommission. Streams data to remaining nodes."
+meta:
+  - name: keywords
+    content: "nodetool decommission, remove node, Cassandra cluster, data streaming"
+---
+
 # nodetool decommission
 
 Gracefully removes the local node from the cluster, streaming its data to remaining nodes.

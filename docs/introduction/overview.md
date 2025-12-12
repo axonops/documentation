@@ -1,3 +1,10 @@
+---
+description: "AxonOps overview. Unified monitoring, maintenance, and backup platform for Cassandra and Kafka."
+meta:
+  - name: keywords
+    content: "AxonOps overview, Cassandra monitoring, Kafka monitoring, database management"
+---
+
 # Introduction to AxonOps
 
 <style>

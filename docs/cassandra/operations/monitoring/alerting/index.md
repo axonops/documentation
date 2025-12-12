@@ -1,3 +1,10 @@
+---
+description: "Cassandra alerting configuration. Set up alerts for critical metrics."
+meta:
+  - name: keywords
+    content: "Cassandra alerting, monitoring alerts, metric thresholds"
+---
+
 # Cassandra Alerting Configuration
 
 Effective alerting enables proactive response to cluster issues before they impact application performance.

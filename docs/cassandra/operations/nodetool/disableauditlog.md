@@ -1,3 +1,10 @@
+---
+description: "Disable audit logging in Cassandra using nodetool disableauditlog command."
+meta:
+  - name: keywords
+    content: "nodetool disableauditlog, disable audit, Cassandra audit log, security"
+---
+
 # nodetool disableauditlog
 
 Disables audit logging on the node.

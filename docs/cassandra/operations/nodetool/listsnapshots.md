@@ -1,3 +1,10 @@
+---
+description: "List all snapshots on a Cassandra node using nodetool listsnapshots command."
+meta:
+  - name: keywords
+    content: "nodetool listsnapshots, list snapshots, Cassandra backup, snapshot info"
+---
+
 # nodetool listsnapshots
 
 Displays a list of all snapshots on the node with their sizes.

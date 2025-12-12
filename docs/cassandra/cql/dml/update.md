@@ -1,3 +1,10 @@
+---
+description: "UPDATE statement syntax in CQL. Modify existing data with conditional updates and collections."
+meta:
+  - name: keywords
+    content: "CQL UPDATE, update data, conditional update, Cassandra write"
+---
+
 # UPDATE
 
 The UPDATE statement modifies column values in Cassandra tables. Like INSERT, UPDATE performs an **upsert** operation—creating the row if it doesn't exist. UPDATE is particularly useful for collection modifications and counter operations.

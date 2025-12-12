@@ -1,3 +1,10 @@
+---
+description: "CQLAI - AI-powered CQL shell for Apache Cassandra. Natural language queries and intelligent assistance."
+meta:
+  - name: keywords
+    content: "CQLAI, AI CQL, Cassandra AI, natural language queries, intelligent shell"
+---
+
 # CQLAI
 
 CQLAI is a modern, AI-powered CQL shell built by AxonOps as an alternative to `cqlsh`. It provides a rich terminal interface, zero dependencies, and optional AI-powered query generation from natural language.

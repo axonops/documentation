@@ -1,3 +1,10 @@
+---
+description: "Cassandra ReadTimeout error. Causes and solutions for read timeouts."
+meta:
+  - name: keywords
+    content: "Cassandra ReadTimeout, read timeout error, timeout troubleshooting"
+---
+
 # ReadTimeoutException
 
 `ReadTimeoutException` occurs when a read operation cannot complete within the configured timeout period.

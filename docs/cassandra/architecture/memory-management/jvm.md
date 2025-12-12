@@ -1,3 +1,10 @@
+---
+description: "JVM configuration for Cassandra. Heap sizing, garbage collection tuning, and G1GC settings."
+meta:
+  - name: keywords
+    content: "Cassandra JVM, heap size, garbage collection, G1GC, JVM tuning"
+---
+
 # Java Virtual Machine (JVM)
 
 Cassandra is written in Java and runs on the Java Virtual Machine (JVM). The JVM provides automatic memory management through garbage collection (GC), which periodically reclaims memory from unused objects. Understanding JVM behavior is essential for operating Cassandra effectively.

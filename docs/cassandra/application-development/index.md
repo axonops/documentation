@@ -1,3 +1,10 @@
+---
+description: "Cassandra application development guide. Drivers, best practices, and data modeling."
+meta:
+  - name: keywords
+    content: "Cassandra development, application development, Cassandra drivers"
+---
+
 # Application Development
 
 This section covers developing applications against Apache Cassandra, including CQL syntax, data modeling principles, and driver configuration.

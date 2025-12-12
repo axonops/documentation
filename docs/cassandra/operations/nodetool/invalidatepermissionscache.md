@@ -1,3 +1,10 @@
+---
+description: "Clear permissions cache in Cassandra using nodetool invalidatepermissionscache command."
+meta:
+  - name: keywords
+    content: "nodetool invalidatepermissionscache, permissions cache, authorization, Cassandra"
+---
+
 # nodetool invalidatepermissionscache
 
 Invalidates the permissions cache on the node.

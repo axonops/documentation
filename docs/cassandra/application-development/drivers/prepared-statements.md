@@ -1,3 +1,10 @@
+---
+description: "Cassandra prepared statements guide. Optimize performance and prevent CQL injection."
+meta:
+  - name: keywords
+    content: "Cassandra prepared statements, CQL performance, query optimization"
+---
+
 # Prepared Statements
 
 Prepared statements are the recommended method for executing CQL queries in production applications. They provide performance benefits, security protection, and enable token-aware routing.

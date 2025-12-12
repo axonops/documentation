@@ -1,3 +1,10 @@
+---
+description: "Cassandra logging overview. Log analysis and troubleshooting with logs."
+meta:
+  - name: keywords
+    content: "Cassandra logging, log analysis, system.log"
+---
+
 # Cassandra Logging Configuration
 
 Configure and analyze Cassandra logs for monitoring and troubleshooting.

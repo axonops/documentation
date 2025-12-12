@@ -1,3 +1,10 @@
+---
+description: "Dynamic data masking in CQL for protecting sensitive data. Mask columns based on user permissions."
+meta:
+  - name: keywords
+    content: "data masking, dynamic masking, CQL security, sensitive data, Cassandra"
+---
+
 # Dynamic Data Masking
 
 Dynamic Data Masking (DDM) allows sensitive column data to be automatically obfuscated when read by users without specific permissions, while storing the original data intact. This enables fine-grained access control where different users see different representations of the same data based on their roles.

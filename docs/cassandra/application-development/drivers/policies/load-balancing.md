@@ -1,3 +1,10 @@
+---
+description: "Cassandra load balancing policies. Configure token-aware, data center-aware, and round-robin routing."
+meta:
+  - name: keywords
+    content: "Cassandra load balancing, token-aware, DC-aware, round-robin"
+---
+
 # Load Balancing Policy
 
 The load balancing policy determines which nodes receive requests. This policy directly affects latency, throughput, and cluster load distribution.

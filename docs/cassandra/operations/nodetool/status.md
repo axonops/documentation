@@ -1,3 +1,10 @@
+---
+description: "Display cluster status showing all nodes, their state, load, and ownership using nodetool status."
+meta:
+  - name: keywords
+    content: "nodetool status, cluster status, node status, Cassandra cluster health"
+---
+
 # nodetool status
 
 Displays the status of all nodes in the cluster, including their state, load, token ownership, and datacenter/rack placement.

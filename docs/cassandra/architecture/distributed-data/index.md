@@ -1,3 +1,10 @@
+---
+description: "Cassandra distributed data architecture covering partitioning, replication, consistency, and coordination."
+meta:
+  - name: keywords
+    content: "distributed data, Cassandra distribution, partitioning, replication"
+---
+
 # Distributed Data
 
 Cassandra distributes data across multiple nodes to achieve fault tolerance and horizontal scalability. This section covers the three interconnected mechanisms that govern how data is distributed, replicated, and accessed consistently across the cluster.

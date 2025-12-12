@@ -1,3 +1,10 @@
+---
+description: "Cassandra troubleshooting playbooks index. Runbooks for common issues."
+meta:
+  - name: keywords
+    content: "troubleshooting playbooks, runbooks, operational guides"
+---
+
 # Troubleshooting Playbooks
 
 Step-by-step guides for diagnosing and resolving specific Cassandra issues.

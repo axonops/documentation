@@ -1,3 +1,10 @@
+---
+description: "Move a Cassandra node to a new token position using nodetool move command."
+meta:
+  - name: keywords
+    content: "nodetool move, move token, Cassandra rebalance, token assignment"
+---
+
 # nodetool move
 
 Moves the node to a new token position in the ring.

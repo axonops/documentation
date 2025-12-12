@@ -1,3 +1,10 @@
+---
+description: "Cassandra client connections architecture. CQL protocol, connection pooling, and load balancing."
+meta:
+  - name: keywords
+    content: "client connections, CQL protocol, connection pool, Cassandra drivers"
+---
+
 # Client Connection Architecture
 
 Client applications communicate with Cassandra through the CQL Native Protocol, a binary protocol designed for high throughput and low latency. Understanding this architecture is essential for building performant applications and diagnosing connection-related issues.

@@ -1,3 +1,10 @@
+---
+description: "Reload CIDR groups cache from disk using nodetool reloadcidrgroupscache."
+meta:
+  - name: keywords
+    content: "nodetool reloadcidrgroupscache, CIDR cache, reload cache, Cassandra"
+---
+
 # nodetool reloadcidrgroupscache
 
 Reloads the CIDR groups cache from system tables.

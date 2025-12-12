@@ -1,3 +1,10 @@
+---
+description: "Connection failure handling in Cassandra drivers. Retry policies and reconnection strategies."
+meta:
+  - name: keywords
+    content: "failure handling, retry policy, reconnection, Cassandra resilience"
+---
+
 # Failure Handling Policies
 
 Cassandra drivers implement sophisticated failure handling to maintain availability despite node failures, network issues, and transient errors. This includes retry policies, speculative execution, and idempotency awareness.

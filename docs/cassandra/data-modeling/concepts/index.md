@@ -1,3 +1,10 @@
+---
+description: "Cassandra data modeling concepts. Partition keys, clustering columns, and denormalization."
+meta:
+  - name: keywords
+    content: "Cassandra data modeling, partition key, clustering column, denormalization"
+---
+
 # Data Modeling Concepts
 
 Data modeling in Cassandra works backwards from what might be expected. Instead of designing tables around entities and then writing queries, start with the queries and design tables to serve them. Need to look up users by email? That is a table. Need to look up users by ID? That is another table—possibly with the same data.

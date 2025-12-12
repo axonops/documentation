@@ -1,3 +1,10 @@
+---
+description: "Apache Cassandra security guide covering authentication, authorization, encryption, and audit logging."
+meta:
+  - name: keywords
+    content: "Cassandra security, authentication, authorization, encryption, audit logging"
+---
+
 # Cassandra Security Guide
 
 A fresh Cassandra install has no security. Anyone who can reach port 9042 can read and write any data. There is no authentication, no authorization, no encryption. This is convenient for development but dangerous for anything else.

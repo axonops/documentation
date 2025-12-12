@@ -1,3 +1,10 @@
+---
+description: "AxonOps Minikube installation. Local Kubernetes development setup."
+meta:
+  - name: keywords
+    content: "AxonOps Minikube, local Kubernetes, development environment"
+---
+
 # Cassandra with AxonOps on Kubernetes
 
 ## Introduction

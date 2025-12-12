@@ -1,3 +1,10 @@
+---
+description: "Display help information for nodetool commands in Cassandra using nodetool help."
+meta:
+  - name: keywords
+    content: "nodetool help, command help, Cassandra nodetool, documentation"
+---
+
 # nodetool help
 
 Displays help information for nodetool commands.

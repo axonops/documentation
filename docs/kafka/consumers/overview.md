@@ -1,3 +1,10 @@
+---
+description: "Kafka consumer group management in AxonOps. Monitor consumer lag and offsets."
+meta:
+  - name: keywords
+    content: "Kafka consumers, consumer groups, lag monitoring, AxonOps"
+---
+
 # Kafka Consumers
 
 ## What is a Consumer

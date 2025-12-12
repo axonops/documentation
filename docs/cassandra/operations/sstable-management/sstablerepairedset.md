@@ -1,3 +1,10 @@
+---
+description: "Mark SSTables as repaired or unrepaired using sstablerepairedset. Manage incremental repair status."
+meta:
+  - name: keywords
+    content: "sstablerepairedset, repair status, incremental repair, Cassandra repair"
+---
+
 # sstablerepairedset
 
 Marks SSTables as repaired or unrepaired, controlling their participation in incremental repair.

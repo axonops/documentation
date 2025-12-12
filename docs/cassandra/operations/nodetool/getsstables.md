@@ -1,3 +1,10 @@
+---
+description: "List SSTable files for a specific partition key using nodetool getsstables command."
+meta:
+  - name: keywords
+    content: "nodetool getsstables, SSTable files, partition data, Cassandra storage"
+---
+
 # nodetool getsstables
 
 Lists SSTables containing a partition key.

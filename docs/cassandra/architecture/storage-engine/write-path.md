@@ -1,3 +1,10 @@
+---
+description: "Cassandra write path explained. How data flows from client through commit log and memtables to SSTables."
+meta:
+  - name: keywords
+    content: "Cassandra write path, commit log, memtable flush, write operation"
+---
+
 # Write Path
 
 This document describes the write path within a single Cassandra node—how incoming mutations are persisted to durable storage. The focus is on the storage engine mechanics: commit log, memtable, and flush operations.

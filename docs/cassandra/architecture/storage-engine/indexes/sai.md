@@ -1,3 +1,10 @@
+---
+description: "SAI (Storage Attached Index) architecture in Cassandra 5.0. Modern indexing for diverse query patterns."
+meta:
+  - name: keywords
+    content: "SAI, Storage Attached Index, Cassandra 5.0, modern indexing"
+---
+
 # SAI (Storage Attached Index)
 
 SAI (Storage Attached Index) is Cassandra's modern indexing system introduced in Cassandra 5.0 (2023). It provides production-ready support for equality, range, and text queries with improved performance characteristics compared to legacy indexing approaches.

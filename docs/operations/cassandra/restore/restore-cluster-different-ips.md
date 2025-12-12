@@ -1,3 +1,10 @@
+---
+description: "Restore Cassandra cluster with different IP addresses. Migration and disaster recovery."
+meta:
+  - name: keywords
+    content: "restore different IPs, cluster migration, disaster recovery, Cassandra"
+---
+
 # Restore a whole cluster from a remote backup with different IP addresses
 
 *Follow this procedure when you have lost all nodes in a cluster and they have been recreated in the same topology

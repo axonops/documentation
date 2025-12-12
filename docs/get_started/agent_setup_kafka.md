@@ -1,3 +1,10 @@
+---
+description: "Set up AxonOps agent for Kafka monitoring. Step-by-step installation guide."
+meta:
+  - name: keywords
+    content: "Kafka agent setup, AxonOps installation, monitoring setup"
+---
+
 
 ## Install Kafka Agent
 

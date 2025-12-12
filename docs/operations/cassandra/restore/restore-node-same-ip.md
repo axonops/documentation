@@ -1,3 +1,10 @@
+---
+description: "Restore single Cassandra node with same IP address. Node recovery procedure."
+meta:
+  - name: keywords
+    content: "restore node same IP, node recovery, single node restore"
+---
+
 # Restore a single node from a remote backup
 
 *Follow this procedure to restore a single Cassandra node from a total loss of all data where the replacement node

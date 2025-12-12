@@ -1,3 +1,10 @@
+---
+description: "Getting started with AxonOps self-hosted deployment. Installation overview and requirements."
+meta:
+  - name: keywords
+    content: "AxonOps getting started, self-hosted, installation overview"
+---
+
 # Getting Started
 
 Installing AxonOps Unified Monitoring on your own premises as a self-managed cluster gives you full control over every aspect of your AxonOps deployment.

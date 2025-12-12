@@ -1,3 +1,10 @@
+---
+description: "CQLAI AI features overview. Natural language queries and intelligent suggestions."
+meta:
+  - name: keywords
+    content: "CQLAI AI features, natural language, intelligent suggestions"
+---
+
 # CQLAI AI Features
 
 CQLAI includes optional AI-powered query generation that converts natural language into CQL queries. This feature is completely optional - CQLAI works as a full-featured CQL shell without any AI configuration.

@@ -1,3 +1,10 @@
+---
+description: "Cassandra driver connection management. Configure connection pools, timeouts, and keep-alive settings."
+meta:
+  - name: keywords
+    content: "Cassandra connection management, connection pool, timeouts, keep-alive"
+---
+
 # Connection Management
 
 The driver manages connections to Cassandra nodes automatically, but understanding connection lifecycle and configuration is essential for production deployments.

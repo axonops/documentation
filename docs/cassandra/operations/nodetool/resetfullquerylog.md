@@ -1,3 +1,10 @@
+---
+description: "Reset full query log in Cassandra using nodetool resetfullquerylog command."
+meta:
+  - name: keywords
+    content: "nodetool resetfullquerylog, reset FQL, query logging, Cassandra"
+---
+
 # nodetool resetfullquerylog
 
 Resets the full query logging path to the configured value.

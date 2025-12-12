@@ -1,3 +1,10 @@
+---
+description: "Client-side load balancing in Cassandra drivers. Token-aware routing and datacenter awareness."
+meta:
+  - name: keywords
+    content: "load balancing, token-aware routing, datacenter aware, Cassandra driver"
+---
+
 # Load Balancing Policies
 
 Load balancing policies determine how drivers select coordinator nodes for each request. The choice of policy significantly impacts latency, throughput, and resource utilization across the cluster.

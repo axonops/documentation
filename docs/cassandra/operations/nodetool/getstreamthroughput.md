@@ -1,3 +1,10 @@
+---
+description: "Display streaming throughput limit in Cassandra using nodetool getstreamthroughput."
+meta:
+  - name: keywords
+    content: "nodetool getstreamthroughput, streaming throughput, data streaming, Cassandra"
+---
+
 # nodetool getstreamthroughput
 
 Displays the stream throughput limit in MB/s.

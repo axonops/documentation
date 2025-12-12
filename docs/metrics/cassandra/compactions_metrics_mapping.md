@@ -1,3 +1,10 @@
+---
+description: "Cassandra compaction dashboard metrics mapping. Compaction progress and throughput."
+meta:
+  - name: keywords
+    content: "compaction metrics, compaction progress, throughput, Cassandra"
+---
+
 # AxonOps Compactions Dashboard Metrics Mapping
 
 This document maps the metrics used in the AxonOps Compactions dashboard.

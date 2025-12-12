@@ -1,3 +1,10 @@
+---
+description: "Kafka topic management in AxonOps. Monitor and manage topics across clusters."
+meta:
+  - name: keywords
+    content: "Kafka topics, topic management, AxonOps Kafka"
+---
+
 # Kafka Topics
 
 ## What is a topic

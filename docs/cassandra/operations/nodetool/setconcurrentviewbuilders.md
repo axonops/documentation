@@ -1,3 +1,10 @@
+---
+description: "Set concurrent view builder threads using nodetool setconcurrentviewbuilders."
+meta:
+  - name: keywords
+    content: "nodetool setconcurrentviewbuilders, view builders, materialized views, Cassandra"
+---
+
 # nodetool setconcurrentviewbuilders
 
 Sets the number of concurrent threads used for building materialized views.

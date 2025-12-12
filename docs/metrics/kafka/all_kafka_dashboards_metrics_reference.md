@@ -1,3 +1,10 @@
+---
+description: "Complete Kafka metrics reference for AxonOps dashboards. All available metrics documented."
+meta:
+  - name: keywords
+    content: "Kafka metrics reference, all metrics, dashboard metrics"
+---
+
 # AxonOps All Kafka Dashboards Metrics Reference
 
 This document provides a comprehensive reference of all metrics used across AxonOps Kafka dashboards, organized by metric prefix and category.

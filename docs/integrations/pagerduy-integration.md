@@ -1,3 +1,10 @@
+---
+description: "Configure PagerDuty integration in AxonOps. Incident management and on-call alerting."
+meta:
+  - name: keywords
+    content: "PagerDuty integration, incident management, on-call alerts, AxonOps"
+---
+
 # Setup Pagerduty Integration
 
 ###  Create Pagerduty Routing Key

@@ -1,3 +1,10 @@
+---
+description: "Flush memtables to SSTables on disk in Cassandra using nodetool flush command."
+meta:
+  - name: keywords
+    content: "nodetool flush, flush memtables, Cassandra flush, write to disk"
+---
+
 # nodetool flush
 
 Flushes memtables from memory to SSTables on disk for one or more tables.

@@ -1,4 +1,6 @@
-site_name: docs
+site_name: AxonOps Documentation
+site_url: https://docs.axonops.com
+site_description: Official documentation for AxonOps - the unified platform for monitoring, maintenance, and backup of Apache Cassandra and Apache Kafka clusters.
 copyright: © 2025 AxonOps Limited. All rights reserved.
 dev_addr: '0.0.0.0:8000'
 
@@ -83,6 +85,10 @@ markdown_extensions:
 
 plugins:
   - search
+  # - social:  # Requires mkdocs-material[imaging] - cairosvg dependency
+  #     cards_layout_options:
+  #       background_color: "#7B4B96"
+  #       color: "#ffffff"
   - mkdocs-video:
       is_video: true
       video_muted: true

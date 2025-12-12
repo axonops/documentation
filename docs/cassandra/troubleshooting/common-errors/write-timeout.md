@@ -1,3 +1,10 @@
+---
+description: "Cassandra WriteTimeout error. Causes and solutions for write timeouts."
+meta:
+  - name: keywords
+    content: "Cassandra WriteTimeout, write timeout error, timeout troubleshooting"
+---
+
 # WriteTimeoutException Troubleshooting
 
 ## Symptoms

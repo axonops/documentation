@@ -1,3 +1,10 @@
+---
+description: "Run AxonOps agent in Docker containers. Container deployment guide."
+meta:
+  - name: keywords
+    content: "AxonOps agent Docker, container deployment, Docker agent"
+---
+
 # Installing axon-agent for Cassandra in Docker
 
 !!! info "Caveats"

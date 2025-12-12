@@ -1,3 +1,10 @@
+---
+description: "Cassandra indexing guide covering secondary indexes, SASI, and SAI. Choose the right index type."
+meta:
+  - name: keywords
+    content: "Cassandra indexing, secondary index, SASI, SAI, index types"
+---
+
 # CQL Indexing Reference
 
 Indexes in Cassandra do not work like relational indexes, and that surprises many. A relational index is a global structure—query it, and all matching rows are returned. A Cassandra secondary index is local to each node—query it without a partition key, and Cassandra has to ask every node in the cluster. That is an all-node scatter query, and it does not scale.

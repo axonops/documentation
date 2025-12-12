@@ -1,3 +1,10 @@
+---
+description: "AxonOps supported data platforms. Cassandra and Kafka monitoring overview."
+meta:
+  - name: keywords
+    content: "data platforms, AxonOps platforms, Cassandra, Kafka"
+---
+
 # Data Platforms Documentation
 
 This documentation provides comprehensive guides and references for distributed data platforms. Whether operating existing clusters or evaluating new deployments, these resources cover architecture, configuration, operations, and best practices.

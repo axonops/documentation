@@ -1,3 +1,10 @@
+---
+description: "CREATE AGGREGATE syntax for user-defined aggregates (UDA) in CQL. Build custom aggregation functions."
+meta:
+  - name: keywords
+    content: "CREATE AGGREGATE, UDA, user-defined aggregate, CQL aggregate, Cassandra"
+---
+
 # Aggregate Commands
 
 User-Defined Aggregates (UDAs) process multiple rows and produce a single result value. UDAs combine a state function, optional final function, and initial state to implement custom aggregation logic like weighted averages, custom statistics, or domain-specific calculations.

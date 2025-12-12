@@ -1,3 +1,10 @@
+---
+description: "Set number of concurrent compaction threads using nodetool setconcurrentcompactors."
+meta:
+  - name: keywords
+    content: "nodetool setconcurrentcompactors, compaction threads, concurrent compaction, Cassandra"
+---
+
 # nodetool setconcurrentcompactors
 
 Sets the number of concurrent compactor threads.

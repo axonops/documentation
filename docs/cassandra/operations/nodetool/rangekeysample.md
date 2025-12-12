@@ -1,3 +1,10 @@
+---
+description: "Sample partition keys from SSTables using nodetool rangekeysample command."
+meta:
+  - name: keywords
+    content: "nodetool rangekeysample, key sample, partition keys, Cassandra"
+---
+
 # nodetool rangekeysample
 
 Displays a sample of partition keys from each token range owned by the node.

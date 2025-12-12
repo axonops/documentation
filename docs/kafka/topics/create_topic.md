@@ -1,3 +1,10 @@
+---
+description: "Create Kafka topics with AxonOps. Set up new topics with partitions and replication."
+meta:
+  - name: keywords
+    content: "create Kafka topic, new topic, partitions, replication"
+---
+
 # Kafka Topics
 
 ## Create a Topic

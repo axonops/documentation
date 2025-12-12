@@ -1,3 +1,10 @@
+---
+description: "Show token ring information for a keyspace using nodetool describering command."
+meta:
+  - name: keywords
+    content: "nodetool describering, token ring, Cassandra ring, keyspace tokens"
+---
+
 # nodetool describering
 
 Displays detailed token range information for a keyspace.

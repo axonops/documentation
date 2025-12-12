@@ -1,3 +1,10 @@
+---
+description: "Cassandra cache dashboard metrics mapping. Key cache and row cache metrics."
+meta:
+  - name: keywords
+    content: "cache metrics, key cache, row cache, Cassandra caching"
+---
+
 # AxonOps Cache Dashboard Metrics Mapping
 
 This document maps the metrics used in the AxonOps Cache dashboard.

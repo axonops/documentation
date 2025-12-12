@@ -1,3 +1,10 @@
+---
+description: "Kafka broker management in AxonOps. Monitor and manage Kafka brokers."
+meta:
+  - name: keywords
+    content: "Kafka brokers, broker management, AxonOps Kafka"
+---
+
 # Kafka Brokers
 
 ## What is a Broker

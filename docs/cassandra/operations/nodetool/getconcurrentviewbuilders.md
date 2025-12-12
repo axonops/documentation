@@ -1,3 +1,10 @@
+---
+description: "Display concurrent view builder threads in Cassandra using nodetool getconcurrentviewbuilders."
+meta:
+  - name: keywords
+    content: "nodetool getconcurrentviewbuilders, view builders, materialized views, Cassandra"
+---
+
 # nodetool getconcurrentviewbuilders
 
 Displays the number of concurrent view builders.

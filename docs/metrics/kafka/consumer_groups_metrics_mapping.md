@@ -1,3 +1,10 @@
+---
+description: "Kafka consumer groups dashboard metrics mapping. Consumer lag and offset metrics."
+meta:
+  - name: keywords
+    content: "consumer groups metrics, consumer lag, offset metrics, Kafka"
+---
+
 # AxonOps Kafka Consumer Groups Dashboard Metrics Mapping
 
 ## Overview

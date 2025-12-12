@@ -1,3 +1,10 @@
+---
+description: "Cassandra guardrails configuration. Prevent dangerous operations and protect clusters."
+meta:
+  - name: keywords
+    content: "Cassandra guardrails, operation limits, cluster protection"
+---
+
 # Guardrails
 
 Guardrails are a set of configurable limits and controls introduced in Apache Cassandra to protect clusters from operations that could cause instability, performance degradation, or outages. They enforce best practices at the database level, preventing misuse before it impacts production systems.

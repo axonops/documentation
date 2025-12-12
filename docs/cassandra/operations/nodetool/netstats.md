@@ -1,3 +1,10 @@
+---
+description: "Display network statistics and streaming operations in Cassandra using nodetool netstats."
+meta:
+  - name: keywords
+    content: "nodetool netstats, network statistics, streaming status, Cassandra"
+---
+
 # nodetool netstats
 
 Displays network statistics including streaming operations, messaging activity, and connection states.

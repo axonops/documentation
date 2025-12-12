@@ -1,3 +1,10 @@
+---
+description: "Force replay of batch log entries in Cassandra using nodetool replaybatchlog."
+meta:
+  - name: keywords
+    content: "nodetool replaybatchlog, batch log, replay batches, Cassandra"
+---
+
 # nodetool replaybatchlog
 
 Forces immediate replay of pending batch mutations stored in the batchlog.

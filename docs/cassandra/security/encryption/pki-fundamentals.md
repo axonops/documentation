@@ -1,3 +1,10 @@
+---
+description: "PKI fundamentals for Cassandra TLS. Certificates, certificate authorities, and key management."
+meta:
+  - name: keywords
+    content: "PKI, certificates, CA, key management, Cassandra TLS"
+---
+
 # PKI Fundamentals
 
 Understanding Public Key Infrastructure (PKI) is essential for correctly implementing TLS in Cassandra. Misconfigured certificates are the primary cause of encryption-related deployment failures.

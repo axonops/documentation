@@ -1,3 +1,10 @@
+---
+description: "Check if gossip protocol is enabled using nodetool statusgossip command."
+meta:
+  - name: keywords
+    content: "nodetool statusgossip, gossip status, gossip protocol, Cassandra"
+---
+
 # nodetool statusgossip
 
 Displays the status of the gossip protocol.

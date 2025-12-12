@@ -1,3 +1,10 @@
+---
+description: "Linux OS tuning for Cassandra. Swappiness, zone_reclaim, transparent huge pages, and limits."
+meta:
+  - name: keywords
+    content: "Linux tuning, Cassandra OS config, swappiness, THP, vm.max_map_count"
+---
+
 # Linux Memory Configuration
 
 Linux kernel settings can impact Cassandra memory behavior. Most settings have sensible defaults, but a few adjustments are recommended for optimal performance.

@@ -1,3 +1,10 @@
+---
+description: "Complete nodetool command reference for Apache Cassandra cluster management and operations."
+meta:
+  - name: keywords
+    content: "nodetool commands, Cassandra nodetool, cluster management, operations reference"
+---
+
 # Nodetool Reference
 
 Nodetool is the primary command-line interface for managing and monitoring Apache Cassandra nodes. It communicates with the Cassandra process via JMX (Java Management Extensions) to perform administrative operations.

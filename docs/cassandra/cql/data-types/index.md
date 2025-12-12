@@ -1,3 +1,10 @@
+---
+description: "Cassandra CQL data types reference including text, int, UUID, timestamp, collections, and user-defined types."
+meta:
+  - name: keywords
+    content: "CQL data types, Cassandra types, UUID, timestamp, collections, UDT"
+---
+
 # CQL Data Types
 
 Choosing the right data type affects storage efficiency, query performance, and available operations. BIGINT vs INT might not matter for small datasets, but at scale the 4 bytes per row add up. TIMEUUID vs UUID determines whether time-range queries are possible. Frozen collections serialize as blobs; unfrozen ones allow partial updates.

@@ -1,3 +1,10 @@
+---
+description: "Cassandra-stress tool guide. Load testing and benchmarking Cassandra."
+meta:
+  - name: keywords
+    content: "cassandra-stress, load testing, benchmarking tool"
+---
+
 # cassandra-stress
 
 The official Cassandra benchmarking and load testing tool.

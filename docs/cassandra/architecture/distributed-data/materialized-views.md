@@ -1,3 +1,10 @@
+---
+description: "Distributed materialized views in Cassandra. Cross-partition view updates and consistency."
+meta:
+  - name: keywords
+    content: "distributed materialized view, view consistency, Cassandra views"
+---
+
 # Materialized Views: Distributed Coordination
 
 Materialized Views (MVs) attempt to automate denormalization across a distributed cluster. This page examines the distributed coordination mechanisms, their inherent challenges, and the consistency issues that have made MVs controversial in production environments.

@@ -1,3 +1,10 @@
+---
+description: "Reload SSL certificates without restart using nodetool reloadssl command."
+meta:
+  - name: keywords
+    content: "nodetool reloadssl, reload SSL, certificate reload, Cassandra security"
+---
+
 # nodetool reloadssl
 
 Reloads SSL certificates without restarting Cassandra.

@@ -1,3 +1,10 @@
+---
+description: "CREATE MATERIALIZED VIEW syntax in CQL. Build pre-computed query results for different access patterns."
+meta:
+  - name: keywords
+    content: "materialized view, CREATE MATERIALIZED VIEW, CQL view, Cassandra"
+---
+
 # Materialized View Commands
 
 Materialized views are server-maintained tables that automatically synchronize with a base table. They enable efficient queries on alternative primary key structures without manual denormalization.

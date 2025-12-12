@@ -1,3 +1,10 @@
+---
+description: "Configure AxonOps with proxy settings. HTTP proxy configuration for agents and server."
+meta:
+  - name: keywords
+    content: "AxonOps proxy, HTTP proxy, proxy configuration"
+---
+
 # AxonOps agent behind a proxy
 
 If your network does not have direct internet access and it requires a proxy to connect to the AxonOps Server, you will need to configure the AxonOps agent to use it.

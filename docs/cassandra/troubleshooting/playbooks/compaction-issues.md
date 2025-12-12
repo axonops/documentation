@@ -1,3 +1,10 @@
+---
+description: "Compaction issues troubleshooting playbook. Diagnose compaction problems."
+meta:
+  - name: keywords
+    content: "compaction troubleshooting, compaction issues, stuck compaction"
+---
+
 # Compaction Issues
 
 Compaction merges SSTables to maintain read performance and reclaim space. When compaction falls behind or behaves unexpectedly, read performance degrades and disk usage grows.

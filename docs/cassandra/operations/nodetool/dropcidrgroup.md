@@ -1,3 +1,10 @@
+---
+description: "Remove a CIDR group from Cassandra using nodetool dropcidrgroup command."
+meta:
+  - name: keywords
+    content: "nodetool dropcidrgroup, CIDR group, network security, Cassandra"
+---
+
 # nodetool dropcidrgroup
 
 Removes a CIDR group from the cluster.

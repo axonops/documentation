@@ -1,3 +1,10 @@
+---
+description: "Cassandra backup strategies. Snapshot-based and incremental backup methods."
+meta:
+  - name: keywords
+    content: "Cassandra backup, snapshot backup, incremental backup"
+---
+
 # Backup Procedures
 
 This page covers the mechanics of Cassandra backups: how snapshots work, incremental backups, and commit log archiving.

@@ -1,0 +1,6 @@
+# SEO Meta Tags - Point-in-Time Restore
+description: Point-in-time restore (PITR) documentation for Apache Cassandra backup and recovery with AxonOps.
+
+meta:
+  - name: keywords
+    content: point-in-time restore, PITR, Cassandra backup, commitlog archiving, disaster recovery

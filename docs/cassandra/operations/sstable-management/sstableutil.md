@@ -1,3 +1,10 @@
+---
+description: "List SSTable component files for a table using sstableutil. Find data file locations."
+meta:
+  - name: keywords
+    content: "sstableutil, list SSTables, SSTable files, Cassandra storage"
+---
+
 # sstableutil
 
 Lists SSTable files belonging to a table, including active, temporary, and obsolete files.

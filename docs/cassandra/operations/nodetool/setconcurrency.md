@@ -1,3 +1,10 @@
+---
+description: "Set read/write concurrency in Cassandra using nodetool setconcurrency command."
+meta:
+  - name: keywords
+    content: "nodetool setconcurrency, concurrency, thread pool, Cassandra performance"
+---
+
 # nodetool setconcurrency
 
 Sets the maximum concurrent operations for read, write, or counter write thread pools.

@@ -1,3 +1,10 @@
+---
+description: "Add nodes to Cassandra cluster. Scale out procedure and bootstrap process."
+meta:
+  - name: keywords
+    content: "add Cassandra node, cluster scaling, bootstrap node"
+---
+
 # Adding Nodes
 
 Adding nodes (bootstrapping) expands cluster capacity by introducing new nodes that automatically receive a portion of existing data.

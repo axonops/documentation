@@ -1,3 +1,10 @@
+---
+description: "AxonOps query syntax for Cassandra metrics. Build custom queries and dashboards."
+meta:
+  - name: keywords
+    content: "query syntax, Cassandra metrics, custom queries, AxonOps"
+---
+
 # AxonOps Query Language Documentation
 
 AxonOps uses a powerful query language for dashboarding performance metrics collected from the AxonOps agent. This language is largely based on the Prometheus query language, allowing users familiar with Prometheus to quickly adapt to AxonOps. For a comprehensive guide on the Prometheus query language, please refer to the [Prometheus Query Language documentation](https://prometheus.io/docs/prometheus/latest/querying/basics/){target="_blank"}

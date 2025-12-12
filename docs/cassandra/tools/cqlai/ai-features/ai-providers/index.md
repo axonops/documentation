@@ -1,3 +1,10 @@
+---
+description: "CQLAI AI providers configuration. Connect to OpenAI, Anthropic, and other models."
+meta:
+  - name: keywords
+    content: "CQLAI AI providers, OpenAI, Anthropic, LLM configuration"
+---
+
 # CQLAI AI Providers
 
 Configure AI providers for natural language query generation in CQLAI.

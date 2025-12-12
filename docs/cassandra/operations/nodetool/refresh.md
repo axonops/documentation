@@ -1,3 +1,10 @@
+---
+description: "Load newly added SSTables without restart using nodetool refresh command."
+meta:
+  - name: keywords
+    content: "nodetool refresh, load SSTables, hot loading, Cassandra"
+---
+
 # nodetool refresh
 
 Loads newly placed SSTables into a running node without restart.

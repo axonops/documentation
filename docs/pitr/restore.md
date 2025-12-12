@@ -1,3 +1,10 @@
+---
+description: "Perform point-in-time restore for Cassandra. Step-by-step recovery guide."
+meta:
+  - name: keywords
+    content: "PITR restore, point-in-time recovery, Cassandra restore"
+---
+
 #### Requirements
 
 - Make sure Cassandra service is stopped on every node in the Cluster/Data Center(DC)
