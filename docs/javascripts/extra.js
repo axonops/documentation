@@ -1,11 +1,43 @@
 !function () { var e, t, n; e = "16863fd582763a2", t = function () { Reo.init({ clientID: "16863fd582763a2" }) }, (n = document.createElement("script")).src = "https://static.reo.dev/" + e + "/reo.js", n.async = !0, n.onload = t, document.head.appendChild(n) }();
 
-function random() {
-  setTimeout('', 1000);
-  document.getElementById("myNumber").innerHTML = Math.floor(Math.random() * 10000000);
-  window.localStorage.removeItem("/.__announce");
+// Process CQL syntax blocks to convert *placeholder* to italics
+function processCqlSyntaxBlocks() {
+  // Process fenced code blocks
+  document.querySelectorAll('.highlight code').forEach(function(block) {
+    if (!block.dataset.processed && /\*[a-zA-Z_][a-zA-Z0-9_]*\*/.test(block.textContent)) {
+      block.innerHTML = block.innerHTML.replace(/\*([a-zA-Z_][a-zA-Z0-9_]*)\*/g, '<em>$1</em>');
+      block.dataset.processed = 'true';
+    }
+  });
+  // Process inline code in tables and paragraphs
+  document.querySelectorAll('.md-typeset code:not(.highlight code)').forEach(function(inline) {
+    if (!inline.dataset.processed && /\*[a-zA-Z_][a-zA-Z0-9_]*\*/.test(inline.textContent)) {
+      inline.innerHTML = inline.innerHTML.replace(/\*([a-zA-Z_][a-zA-Z0-9_]*)\*/g, '<em>$1</em>');
+      inline.dataset.processed = 'true';
+    }
+  });
 }
-window.addEventListener("load",random);
+
+// Run on initial page load
+document.addEventListener('DOMContentLoaded', processCqlSyntaxBlocks);
+
+// Run on MkDocs Material instant navigation
+if (typeof document$ !== 'undefined') {
+  document$.subscribe(processCqlSyntaxBlocks);
+} else {
+  // Fallback: use MutationObserver for content changes
+  var observer = new MutationObserver(function(mutations) {
+    processCqlSyntaxBlocks();
+  });
+  document.addEventListener('DOMContentLoaded', function() {
+    var content = document.querySelector('.md-content');
+    if (content) {
+      observer.observe(content, { childList: true, subtree: true });
+    }
+  });
+}
+
+// Removed: random() function was clearing the announce dismiss state on every page load
 // window.onload = random;
 
 // Select Opearting System
