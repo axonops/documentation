@@ -224,5 +224,4 @@ Configuration:
 ## Next Steps
 
 - **[GCP Deployment](../gcp/index.md)** - Google Cloud guide
-- **[Multi-DC Setup](../../multi-datacenter/index.md)** - Multi-region
 - **[Performance Tuning](../../operations/performance/index.md)** - Optimization

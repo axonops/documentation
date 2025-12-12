@@ -104,5 +104,4 @@ nodetool gossipinfo | grep -E "DC|RACK"
 ## Next Steps
 
 - **[cassandra.yaml](../cassandra-yaml/index.md)** - Main config
-- **[Multi-DC](../../../multi-datacenter/index.md)** - Multi-DC setup
 - **[Replication](../../../architecture/distributed-data/replication.md)** - Replication config

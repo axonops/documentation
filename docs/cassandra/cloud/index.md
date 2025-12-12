@@ -95,4 +95,3 @@ Region: US-EAST          Region: EU-WEST
 
 - **[AWS Deployment](aws/index.md)** - AWS-specific guide
 - **[Kubernetes](kubernetes/index.md)** - Container deployment
-- **[Multi-DC Guide](../multi-datacenter/index.md)** - Multi-region setup

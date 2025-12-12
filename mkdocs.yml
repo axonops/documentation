@@ -655,7 +655,6 @@ nav:
         - Overview: cassandra/troubleshooting/index.md
         - Diagnosis: cassandra/troubleshooting/diagnosis/index.md
         - Log Analysis: cassandra/troubleshooting/log-analysis/index.md
-      - Multi-Datacenter: cassandra/multi-datacenter/index.md
       - Cloud:
         - Overview: cassandra/cloud/index.md
         - AWS: cassandra/cloud/aws/index.md

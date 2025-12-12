@@ -716,7 +716,7 @@ Document these for your organization:
 ## Related Documentation
 
 - **[Monitoring](../monitoring/index.md)** - Metrics for diagnostics
-- **[Performance Tuning](../performance-tuning/index.md)** - Resolving performance issues
+- **[Performance Tuning](../performance/index.md)** - Resolving performance issues
 - **[Cluster Management](../cluster-management/index.md)** - Node operations
 - **[Repair Operations](../repair/index.md)** - Repair troubleshooting
 - **[Backup & Restore](../backup-restore/index.md)** - Recovery procedures

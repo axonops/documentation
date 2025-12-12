@@ -159,5 +159,5 @@ DELETE FROM ks.users WHERE user_id = ?;
 ## Next Steps
 
 - **[CQL Reference](../cql/index.md)** - Full CQL guide
-- **[Configuration](../configuration/index.md)** - Configuration details
+- **[Configuration](../operations/configuration/index.md)** - Configuration details
 - **[nodetool](../operations/nodetool/index.md)** - Command reference

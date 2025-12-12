@@ -181,12 +181,6 @@ Diagnose and fix issues:
 - [Diagnosis Procedures](troubleshooting/diagnosis/index.md) - Root cause analysis
 - [Log Analysis](troubleshooting/log-analysis/index.md) - Interpreting logs
 
-### Multi-Datacenter
-
-Deploy across datacenters:
-
-- [Multi-DC Guide](multi-datacenter/index.md) - Multi-datacenter architecture
-
 ### Reference
 
 Quick reference materials:

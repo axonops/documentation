@@ -144,4 +144,3 @@ Deploy across 3 zones:
 
 - **[Azure Deployment](../azure/index.md)** - Azure guide
 - **[Kubernetes](../kubernetes/index.md)** - GKE deployment
-- **[Multi-DC](../../multi-datacenter/index.md)** - Multi-region setup
