@@ -6,7 +6,11 @@
       <meta charset="utf-8">
       <meta name="viewport" content="width=device-width,initial-scale=1">
       
+        <meta name="description" content="Set up AxonOps agent for Kafka monitoring. Step-by-step installation guide.">
       
+      
+      
+        <link rel="canonical" href="https://docs.axonops.com/get_started/agent_setup_kafka/">
       
       
       
@@ -16,7 +20,7 @@
     
     
       
-        <title>Agent setup kafka - docs</title>
+        <title>Agent setup kafka - AxonOps Documentation</title>
       
     
     
@@ -59,6 +63,10 @@
   
 
     
+    
+      
+        <meta  name="keywords"  content="Kafka agent setup, AxonOps installation, monitoring setup" >
+      
     
     
    <link href="../../assets/stylesheets/glightbox.min.css" rel="stylesheet"/><style>
@@ -149,8 +157,8 @@
   <nav class="md-header__inner md-grid" aria-label="Header">
 
     <!-- Link to home -->
-    <a href="https://axonops.com" title="docs"
-      class="md-header__button md-logo" aria-label="docs" data-md-component="logo">
+    <a href="https://axonops.com" title="AxonOps Documentation"
+      class="md-header__button md-logo" aria-label="AxonOps Documentation" data-md-component="logo">
       <!--
   Copyright (c) 2016-2024 Martin Donath <martin.donath@squidfunk.com>
 
@@ -190,7 +198,7 @@
       <div class="md-header__ellipsis">
         <div class="md-header__topic">
           <span class="md-ellipsis">
-            docs
+            AxonOps Documentation
           </span>
         </div>
         <div class="md-header__topic" data-md-component="header-topic">
@@ -545,7 +553,7 @@ data-et-multi-view="{&quot;schema&quot;:{&quot;content&quot;:{&quot;desktop&quot
 
 <nav class="md-nav md-nav--primary md-nav--lifted" aria-label="Navigation" data-md-level="0">
   <label class="md-nav__title" for="__drawer">
-    <a href="https://axonops.com" title="docs" class="md-nav__button md-logo" aria-label="docs" data-md-component="logo">
+    <a href="https://axonops.com" title="AxonOps Documentation" class="md-nav__button md-logo" aria-label="AxonOps Documentation" data-md-component="logo">
       <!--
   Copyright (c) 2016-2024 Martin Donath <martin.donath@squidfunk.com>
 
@@ -573,7 +581,7 @@ data-et-multi-view="{&quot;schema&quot;:{&quot;content&quot;:{&quot;desktop&quot
   <img src="/img/axonops_logo.png" alt="logo" />
 
     </a>
-    docs
+    AxonOps Documentation
   </label>
   
   <ul class="md-nav__list" data-md-scrollfix>
@@ -13391,6 +13399,12 @@ data-et-multi-view="{&quot;schema&quot;:{&quot;content&quot;:{&quot;desktop&quot
   <h1>Agent setup kafka</h1>
 
 <div><h2 id="install-kafka-agent">Install Kafka Agent<a class="headerlink" href="#install-kafka-agent" title="Permanent link">¶</a></h2>
+<hr>
+<p>description: "AxonOps Kafka agent installation dynamic page."
+meta:
+  - name: keywords
+    content: "Kafka agent install, AxonOps agent"</p>
+<hr>
 <h3>Select the Kafka Version</h3>
 <p><label>
   <input type="radio" id="Kafka20" name="kafkaFamily" onchange="updateKafka()" checked>
@@ -13481,6 +13495,12 @@ and CPU utilization of the Kafka process.</p>
 </ul>
 <p><a class="glightbox" href="../agent_keys.png" data-type="image" data-width="100%" data-height="auto" data-desc-position="bottom"><img alt="Console Screenshot" src="../agent_keys.png"></a></p>
 <p>If there is a Dedicated NTP server in your Organization please uncomment and update the NTP section.</p>
+<hr>
+<p>description: "AxonOps Kafka agent configuration dynamic page."
+meta:
+  - name: keywords
+    content: "Kafka agent config, AxonOps agent"</p>
+<hr>
 <p><br>
 <br></p>
 <div class="w3-bar w3-light-grey">
@@ -13801,6 +13821,12 @@ Edit connect-distributed.sh, usually located in your Kafka install path such as:
 <p><code>/&lt;Kafka_Home&gt;/bin/connect-distributed.sh </code></p>
 </div>
 <!-- Load Dynamic Java section -->
+<hr>
+<p>description: "Java requirements for AxonOps Kafka agent."
+meta:
+  - name: keywords
+    content: "Java requirements, Kafka agent, JVM"</p>
+<hr>
 <p>Insert the line <code>. /usr/share/axonops/axonops-jvm.options</code> right before the final line in your config file. Look for the last line that starts with <code>exec</code>, as demonstrated in the example below.</p>
 <blockquote>
 <p><strong>NB.</strong> Please note the period(.) at the beginning of the config line.</p>
@@ -14002,6 +14028,9 @@ To load the AxonOps Java Agent and Kafka Connect config changes please either:
 
 
 
+
+  
+  
 
 
 

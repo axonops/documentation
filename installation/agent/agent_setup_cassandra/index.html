@@ -6,7 +6,11 @@
       <meta charset="utf-8">
       <meta name="viewport" content="width=device-width,initial-scale=1">
       
+        <meta name="description" content="Install AxonOps agent for Cassandra. Detailed installation steps for all platforms.">
       
+      
+      
+        <link rel="canonical" href="https://docs.axonops.com/installation/agent/agent_setup_cassandra/">
       
       
       
@@ -16,7 +20,7 @@
     
     
       
-        <title>Agent setup cassandra - docs</title>
+        <title>Agent setup cassandra - AxonOps Documentation</title>
       
     
     
@@ -59,6 +63,10 @@
   
 
     
+    
+      
+        <meta  name="keywords"  content="Cassandra agent install, AxonOps agent, installation guide" >
+      
     
     
    <link href="../../../assets/stylesheets/glightbox.min.css" rel="stylesheet"/><style>
@@ -149,8 +157,8 @@
   <nav class="md-header__inner md-grid" aria-label="Header">
 
     <!-- Link to home -->
-    <a href="https://axonops.com" title="docs"
-      class="md-header__button md-logo" aria-label="docs" data-md-component="logo">
+    <a href="https://axonops.com" title="AxonOps Documentation"
+      class="md-header__button md-logo" aria-label="AxonOps Documentation" data-md-component="logo">
       <!--
   Copyright (c) 2016-2024 Martin Donath <martin.donath@squidfunk.com>
 
@@ -190,7 +198,7 @@
       <div class="md-header__ellipsis">
         <div class="md-header__topic">
           <span class="md-ellipsis">
-            docs
+            AxonOps Documentation
           </span>
         </div>
         <div class="md-header__topic" data-md-component="header-topic">
@@ -545,7 +553,7 @@ data-et-multi-view="{&quot;schema&quot;:{&quot;content&quot;:{&quot;desktop&quot
 
 <nav class="md-nav md-nav--primary md-nav--lifted" aria-label="Navigation" data-md-level="0">
   <label class="md-nav__title" for="__drawer">
-    <a href="https://axonops.com" title="docs" class="md-nav__button md-logo" aria-label="docs" data-md-component="logo">
+    <a href="https://axonops.com" title="AxonOps Documentation" class="md-nav__button md-logo" aria-label="AxonOps Documentation" data-md-component="logo">
       <!--
   Copyright (c) 2016-2024 Martin Donath <martin.donath@squidfunk.com>
 
@@ -573,7 +581,7 @@ data-et-multi-view="{&quot;schema&quot;:{&quot;content&quot;:{&quot;desktop&quot
   <img src="/img/axonops_logo.png" alt="logo" />
 
     </a>
-    docs
+    AxonOps Documentation
   </label>
   
   <ul class="md-nav__list" data-md-scrollfix>
@@ -13466,6 +13474,12 @@ data-et-multi-view="{&quot;schema&quot;:{&quot;content&quot;:{&quot;desktop&quot
   <h1>Agent setup cassandra</h1>
 
 <div><h2 id="install-cassandra-agent">Install Cassandra Agent<a class="headerlink" href="#install-cassandra-agent" title="Permanent link">¶</a></h2>
+<hr>
+<p>description: "AxonOps Cassandra agent installation dynamic page."
+meta:
+  - name: keywords
+    content: "Cassandra agent install, AxonOps agent"</p>
+<hr>
 <h3 id="select-the-cassandra-version">Select the Cassandra Version<a class="headerlink" href="#select-the-cassandra-version" title="Permanent link">¶</a></h3>
 <p><label>
   <input type="radio" id="Cassandra30" name="casFamily" onchange="selectCas()" checked>
@@ -13618,6 +13632,12 @@ running the following commmand:</p>
 <div class="highlight"><pre><span></span><code>sudo<span class="w"> </span>chmod<span class="w"> </span><span class="m">0640</span><span class="w"> </span>/etc/axonops/axon-agent.yml
 </code></pre></div>
 <h2 id="configure-cassandra">Configure Cassandra<a class="headerlink" href="#configure-cassandra" title="Permanent link">¶</a></h2>
+<hr>
+<p>description: "Java requirements for AxonOps Cassandra agent."
+meta:
+  - name: keywords
+    content: "Java requirements, AxonOps agent, JVM"</p>
+<hr>
 <p>Add the following line at the end of <code>/etc/cassandra/cassandra-env.sh</code>:</p>
 <div id="Cassandra30Div" class="javacas">
   <div class="highlight"><pre><span></span><code>JVM_OPTS="$JVM_OPTS -javaagent:/usr/share/axonops/axon-cassandra3.0-agent.jar=/etc/axonops/axon-agent.yml"
@@ -13675,6 +13695,9 @@ restarted when updating the <code>axon-agent</code> package.</p>
 
 
 
+
+  
+  
 
 
 
