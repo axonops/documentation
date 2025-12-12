@@ -1,422 +1,57 @@
-!function () { var e, t, n; e = "16863fd582763a2", t = function () { Reo.init({ clientID: "16863fd582763a2" }) }, (n = document.createElement("script")).src = "https://static.reo.dev/" + e + "/reo.js", n.async = !0, n.onload = t, document.head.appendChild(n) }();
+// Defer Reo analytics until after page is interactive (reduces TBT)
+if(document.readyState==='complete')loadReo();else window.addEventListener('load',loadReo);
+function loadReo(){setTimeout(function(){var s=document.createElement('script');s.src='https://static.reo.dev/16863fd582763a2/reo.js';s.async=true;s.onload=function(){Reo.init({clientID:'16863fd582763a2'})};document.head.appendChild(s)},2000)}
 
 // Process CQL syntax blocks to convert *placeholder* to italics
-function processCqlSyntaxBlocks() {
-  // Process fenced code blocks
-  document.querySelectorAll('.highlight code').forEach(function(block) {
-    if (!block.dataset.processed && /\*[a-zA-Z_][a-zA-Z0-9_]*\*/.test(block.textContent)) {
-      block.innerHTML = block.innerHTML.replace(/\*([a-zA-Z_][a-zA-Z0-9_]*)\*/g, '<em>$1</em>');
-      block.dataset.processed = 'true';
-    }
-  });
-  // Process inline code in tables and paragraphs
-  document.querySelectorAll('.md-typeset code:not(.highlight code)').forEach(function(inline) {
-    if (!inline.dataset.processed && /\*[a-zA-Z_][a-zA-Z0-9_]*\*/.test(inline.textContent)) {
-      inline.innerHTML = inline.innerHTML.replace(/\*([a-zA-Z_][a-zA-Z0-9_]*)\*/g, '<em>$1</em>');
-      inline.dataset.processed = 'true';
-    }
-  });
-}
+function processCqlSyntaxBlocks(){
+  document.querySelectorAll('.highlight code').forEach(function(b){
+    if(!b.dataset.processed&&/\*[a-zA-Z_]\w*\*/.test(b.textContent)){
+      b.innerHTML=b.innerHTML.replace(/\*([a-zA-Z_]\w*)\*/g,'<em>$1</em>');b.dataset.processed='true'}});
+  document.querySelectorAll('.md-typeset code:not(.highlight code)').forEach(function(i){
+    if(!i.dataset.processed&&/\*[a-zA-Z_]\w*\*/.test(i.textContent)){
+      i.innerHTML=i.innerHTML.replace(/\*([a-zA-Z_]\w*)\*/g,'<em>$1</em>');i.dataset.processed='true'}})}
+document.addEventListener('DOMContentLoaded',processCqlSyntaxBlocks);
+if(typeof document$!=='undefined')document$.subscribe(processCqlSyntaxBlocks);
 
-// Run on initial page load
-document.addEventListener('DOMContentLoaded', processCqlSyntaxBlocks);
+// OS/Version selection
+function selectOS(){var e=document.getElementsByName('osFamily');for(var i=0;i<e.length;i++)if(e[i].checked){localStorage.setItem('OS_State',e[i].id);showHideOSPanel(e[i].id);updatePage()}}
+function showHideOSPanel(os){var x=document.getElementsByClassName('os');for(var i=0;i<x.length;i++)x[i].style.display='none';var d=document.getElementById(os+'Div');if(d)d.style.display='block'}
+function selectCas(){var e=document.getElementsByName('casFamily');for(var i=0;i<e.length;i++)if(e[i].checked){localStorage.setItem('CAS_State',e[i].id);updatePage()}}
+function showHideCASPanel(){if(!document.getElementsByClassName('cas').length)return;var x=document.getElementsByClassName('cas');for(var i=0;i<x.length;i++)x[i].style.display='none';var c=(localStorage.getItem('OS_State')||'')+(localStorage.getItem('CAS_State')||'')+(localStorage.getItem('JAVA_State')||'')+'Div';var el=document.getElementById(c);if(el)el.style.display='block'}
+function selectJava(){var e=document.getElementsByName('javaFamily');for(var i=0;i<e.length;i++)if(e[i].checked){localStorage.setItem('JAVA_State',e[i].id);updatePage()}}
+function openJAVACAS(){if(!document.getElementsByClassName('javacas').length)return;var x=document.getElementsByClassName('javacas');for(var i=0;i<x.length;i++)x[i].style.display='none';var c=(localStorage.getItem('CAS_State')||'')+'Div';var el=document.getElementById(c);if(el)el.style.display='block'}
 
-// Run on MkDocs Material instant navigation
-if (typeof document$ !== 'undefined') {
-  document$.subscribe(processCqlSyntaxBlocks);
-} else {
-  // Fallback: use MutationObserver for content changes
-  var observer = new MutationObserver(function(mutations) {
-    processCqlSyntaxBlocks();
-  });
-  document.addEventListener('DOMContentLoaded', function() {
-    var content = document.querySelector('.md-content');
-    if (content) {
-      observer.observe(content, { childList: true, subtree: true });
-    }
-  });
-}
+function updatePage(){
+  var d={osFamily:['OS_State','Debian'],casFamily:['CAS_State','Cassandra30'],javaFamily:['JAVA_State','Java8'],Service:['Service_State','Cassandra'],kafkaFamily:['KAFKA_State','Kafka20'],kjavaFamily:['KJAVA_State','Java']};
+  for(var n in d)if(document.getElementsByName(n)[0]&&!localStorage.getItem(d[n][0]))localStorage.setItem(d[n][0],d[n][1]);
+  hidePanels()}
 
-// Removed: random() function was clearing the announce dismiss state on every page load
-// window.onload = random;
+function hidePanels(){
+  var c=localStorage.getItem('CAS_State'),s=localStorage.getItem('Service_State'),j=localStorage.getItem('JAVA_State');
+  if(c&&s==='Cassandra'){
+    var cfg={Cassandra30:{s:['Java8img'],h:['Java11img','Java17img'],j:'Java8'},Cassandra311:{s:['Java8img'],h:['Java11img','Java17img'],j:'Java8'},Cassandra40:{s:['Java8img','Java11img'],h:['Java17img']},Cassandra41:{s:['Java8img','Java11img'],h:['Java17img']},Cassandra50:{s:['Java11img','Java17img'],h:['Java8img']}};
+    var cf=cfg[c];if(cf){
+      cf.s.forEach(function(id){var e=document.getElementById(id);if(e)e.style.display='inline'});
+      cf.h.forEach(function(id){var e=document.getElementById(id);if(e)e.style.display='none'});
+      if(cf.j)localStorage.setItem('JAVA_State',cf.j);
+      if(c==='Cassandra50'&&j==='Java8')localStorage.setItem('JAVA_State','Java11');
+      if((c==='Cassandra40'||c==='Cassandra41')&&j==='Java17')localStorage.setItem('JAVA_State','Java11');
+      var jf=document.getElementsByName('javaFamily'),js=localStorage.getItem('JAVA_State');
+      if(jf[0])jf[js==='Java8'?0:js==='Java11'?1:2].checked=true;
+      showHideCASPanel();openJAVACAS()}}
+  var k=localStorage.getItem('KAFKA_State');
+  if(k&&s==='Kafka'){var e=document.getElementById('KJavaimg');if(e)e.style.display='inline';
+    var kj=document.getElementsByName('kjavaFamily'),ks=localStorage.getItem('KJAVA_State');
+    if(kj[0])kj[ks==='Java'?0:1].checked=true;
+    showHideKAFKAPanel();openJAVAKAFKA()}}
 
-// Select Opearting System
-function selectOS() {
-  var ele = document.getElementsByName('osFamily');
-  for (i = 0; i < ele.length; i++) {
-    if (ele[i].checked) {
-      window.localStorage.setItem("OS_State", ele[i].id);
-      showHideOSPanel(ele[i].id);
-      updatePage();
-    }
-  }
-}
+function resetLocalStorage(){['OS_State','CAS_State','JAVA_State','Service_State','KAFKA_State','KJAVA_State','KAFKATYPE_State'].forEach(function(k){localStorage.removeItem(k)})}
+window.addEventListener('beforeunload',resetLocalStorage);
 
-function showHideOSPanel(os) {
-  var i;
-  var x = document.getElementsByClassName("os");
-  for (i = 0; i < x.length; i++) {
-    x[i].style.display = "none";
-  }
-  os += 'Div';
-  for (i = 0; i < x.length; i++) {
-    if(x[i].id == os)
-      x[i].style.display = "block"
-  }
-}
-
-// Select Cassandra Version
-function selectCas() {
-  var ele = document.getElementsByName('casFamily');
-  for (i = 0; i < ele.length; i++) {
-    if (ele[i].checked) {
-      window.localStorage.setItem("CAS_State", ele[i].id);
-      updatePage();
-    }
-  }
-}
-
-function showHideCASPanel() {
-  var i;
-  if(document.getElementsByClassName("cas").length == 0)
-    return;
-  var x = document.getElementsByClassName("cas");
-  for (i = 0; i < x.length; i++) {
-    x[i].style.display = "none";
-  }
-  let cas = "";
-  cas += window.localStorage.getItem("OS_State");
-  cas += window.localStorage.getItem("CAS_State");
-  cas += window.localStorage.getItem("JAVA_State");
-  cas += 'Div';
-  document.getElementById(cas).style.display = "block";
-}
-
-// Select Java Version
-function selectJava() {
-  var ele = document.getElementsByName('javaFamily');
-  for (i = 0; i < ele.length; i++) {
-    if (ele[i].checked) {
-      window.localStorage.setItem("JAVA_State", ele[i].id);
-      updatePage();
-    }
-  }
-}
-
-function openJAVACAS() {
-  var i;
-  if(document.getElementsByClassName("javacas").length == 0)
-    return;
-  var jx = document.getElementsByClassName("javacas");
-  for (i = 0; i < jx.length; i++) {
-    jx[i].style.display = "none";
-  }
-  let javacas = "";
-  javacas += window.localStorage.getItem("CAS_State");
-  // javacas += window.localStorage.getItem("JAVA_State");
-  javacas += 'Div';
-  document.getElementById(javacas).style.display = "block";
-}
-
-function updatePage() {
-  if (document.getElementsByName('osFamily')[0] != null && window.localStorage.getItem("OS_State") == null)
-    window.localStorage.setItem("OS_State", "Debian");
-  if (document.getElementsByName('casFamily')[0] != null && window.localStorage.getItem("CAS_State") == null)
-    window.localStorage.setItem("CAS_State", "Cassandra30");
-  if (document.getElementsByName('javaFamily')[0] != null && window.localStorage.getItem("JAVA_State") == null)
-    window.localStorage.setItem("JAVA_State", "Java8");
-  if (document.getElementsByName('Service')[0] != null && window.localStorage.getItem("Service_State") == null)
-    window.localStorage.setItem("Service_State", "Cassandra");
-  if (document.getElementsByName('kafkaFamily')[0] != null && window.localStorage.getItem("KAFKA_State") == null)
-    window.localStorage.setItem("KAFKA_State", "Kafka20");
-  if (document.getElementsByName('kjavaFamily')[0] != null && window.localStorage.getItem("KJAVA_State") == null)
-    window.localStorage.setItem("KJAVA_State", "Java");
-  hidePanels();
-}
-
-function hidePanels() {
-  if(window.localStorage.getItem("CAS_State") != null && window.localStorage.getItem("Service_State") == "Cassandra" ){
-    switch(window.localStorage.getItem("CAS_State")){
-      case "Cassandra30":
-        document.getElementById('Java8img').style.display = 'inline';  
-        document.getElementById('Java11img').style.display = 'none';
-        document.getElementById('Java17img').style.display = 'none';
-        window.localStorage.setItem("JAVA_State", "Java8");
-        document.getElementsByName('javaFamily')[0].checked = true
-        showHideCASPanel();
-        openJAVACAS();
-        break;
-      case "Cassandra311":
-        document.getElementById('Java8img').style.display = 'inline';
-        document.getElementById('Java11img').style.display = 'none';
-        document.getElementById('Java17img').style.display = 'none';
-        window.localStorage.setItem("JAVA_State", "Java8");
-        document.getElementsByName('javaFamily')[0].checked = true
-        showHideCASPanel();
-        openJAVACAS();
-        break;
-      case "Cassandra40":
-        document.getElementById('Java8img').style.display = 'inline';
-        document.getElementById('Java11img').style.display = 'inline';
-        document.getElementById('Java17img').style.display = 'none';
-        if(window.localStorage.getItem("JAVA_State") == "Java17")
-          window.localStorage.setItem("JAVA_State", "Java11")
-        if(window.localStorage.getItem("JAVA_State") == "Java8")
-          document.getElementsByName('javaFamily')[0].checked = true;
-        else
-          document.getElementsByName('javaFamily')[1].checked = true;
-        showHideCASPanel();
-        openJAVACAS();
-        break;
-      case "Cassandra41":
-        document.getElementById('Java8img').style.display = 'inline';
-        document.getElementById('Java11img').style.display = 'inline';
-        document.getElementById('Java17img').style.display = 'none';
-        // document.getElementsByName('javaFamily')[0].checked = true;
-        if(window.localStorage.getItem("JAVA_State") == "Java17")
-          window.localStorage.setItem("JAVA_State", "Java11")
-        if(window.localStorage.getItem("JAVA_State") == "Java8")
-          document.getElementsByName('javaFamily')[0].checked = true;
-        else
-          document.getElementsByName('javaFamily')[1].checked = true;
-        showHideCASPanel();
-        openJAVACAS();
-        break;
-      case "Cassandra50":
-        document.getElementById('Java8img').style.display = 'none';
-        document.getElementById('Java11img').style.display = 'inline';
-        document.getElementById('Java17img').style.display = 'inline';
-        if(window.localStorage.getItem("JAVA_State") == "Java8")
-          window.localStorage.setItem("JAVA_State", "Java11")
-        if(window.localStorage.getItem("JAVA_State") == "Java11")
-          document.getElementsByName('javaFamily')[1].checked = true;
-        else
-          document.getElementsByName('javaFamily')[2].checked = true;
-        showHideCASPanel();
-        openJAVACAS();
-        break;
-    }
-  }
-  if(window.localStorage.getItem("KAFKA_State") != null && window.localStorage.getItem("Service_State") == "Kafka"){
-    switch(window.localStorage.getItem("KAFKA_State")){
-      case "Kafka20":
-        document.getElementById('KJavaimg').style.display = 'inline';  
-        // document.getElementById('Java11img').style.display = 'none';
-        // document.getElementById('KJava17img').style.display = 'inline';
-        // window.localStorage.setItem("KJAVA_State", "Java");
-        if(window.localStorage.getItem("KJAVA_State") == "Java")
-          document.getElementsByName('kjavaFamily')[0].checked = true
-        else
-          document.getElementsByName('kjavaFamily')[1].checked = true
-        showHideKAFKAPanel();
-        openJAVAKAFKA();
-        break;
-      case "Kafka30":
-        document.getElementById('KJavaimg').style.display = 'inline';  
-        // document.getElementById('Java11img').style.display = 'none';
-        // document.getElementById('KJava17img').style.display = 'inline';
-        // window.localStorage.setItem("KJAVA_State", "Java");
-        if(window.localStorage.getItem("KJAVA_State") == "Java")
-          document.getElementsByName('kjavaFamily')[0].checked = true
-        else
-          document.getElementsByName('kjavaFamily')[1].checked = true
-        // document.getElementsByName('kjavaFamily')[0].checked = true
-        showHideKAFKAPanel();
-        openJAVAKAFKA();
-        break;
-    }
-  }
-}
-
-function resetLocalStorage(){
-  if(window.localStorage.getItem("OS_State") != null)
-    window.localStorage.removeItem("OS_State");
-  if(window.localStorage.getItem("CAS_State") != null)
-    window.localStorage.removeItem("CAS_State");
-  if(window.localStorage.getItem("JAVA_State") != null)
-    window.localStorage.removeItem("JAVA_State");
-  if(window.localStorage.getItem("Service_State") != null)
-    window.localStorage.removeItem("Service_State");
-  if(window.localStorage.getItem("KAFKA_State") != null)
-    window.localStorage.removeItem("KAFKA_State");
-  if(window.localStorage.getItem("KJAVA_State") != null)
-    window.localStorage.removeItem("KJAVA_State");
-  if(window.localStorage.getItem("KAFKATYPE_State") != null)
-    window.localStorage.removeItem("KAFKATYPE_State");
-}
-
-window.addEventListener("beforeunload",resetLocalStorage);
-// window.onbeforeunload = resetLocalStorage();
-
-// Show or Hide Page based on Kafka or Cassandra selected.
-function updateService() {
-  var ele = document.getElementsByName('Service');
-  for (i = 0; i < ele.length; i++) {
-    if (ele[i].checked) {
-      window.localStorage.setItem("Service_State", ele[i].id);
-      openService(ele[i].id);
-      updatePage();
-    }
-  }
-}
-
-function openService(service) {
-  var i;
-  var x = document.getElementsByName("service_div");
-  for (i = 0; i < x.length; i++) {
-    x[i].style.display = "none";
-  }
-  service += 'Div';
-  for (i = 0; i < x.length; i++) {
-    if(x[i].id == service)
-      x[i].style.display = "block"
-    // document.getElementById(os)[i].style.display = "block";
-  }
-}
-
-// Kafka Page Dynamic Loading
-function updateKafka() {
-  var ele = document.getElementsByName('kafkaFamily');
-  for (i = 0; i < ele.length; i++) {
-    if (ele[i].checked) {
-      window.localStorage.setItem("KAFKA_State", ele[i].id);
-      updatePage();
-    }
-  }
-}
-
-function updateKJava() {
-  var ele = document.getElementsByName('kjavaFamily');
-  for (i = 0; i < ele.length; i++) {
-    if (ele[i].checked) {
-      window.localStorage.setItem("KJAVA_State", ele[i].id);
-      updatePage();
-    }
-  }
-}
-
-function showHideKAFKAPanel() {
-  var i;
-  if(document.getElementsByClassName("kafka").length == 0)
-    return;
-  var x = document.getElementsByClassName("kafka");
-  for (i = 0; i < x.length; i++) {
-    x[i].style.display = "none";
-  }
-  let kafka = "";
-  kafka += window.localStorage.getItem("OS_State");
-  kafka += window.localStorage.getItem("KAFKA_State");
-  kafka += window.localStorage.getItem("KJAVA_State");
-  kafka += 'Div';
-  document.getElementById(kafka).style.display = "block";
-}
-
-function openJAVAKAFKA() {
-  var i;
-  if(document.getElementsByClassName("javakafka").length == 0)
-    return;
-  var jx = document.getElementsByClassName("javakafka");
-  for (i = 0; i < jx.length; i++) {
-    jx[i].style.display = "none";
-  }
-  let kjavacas = "";
-  kjavacas += window.localStorage.getItem("KAFKA_State");
-  kjavacas += window.localStorage.getItem("KJAVA_State");
-  kjavacas += 'Div';
-  document.getElementById(kjavacas).style.display = "block";
-  
-  if(window.localStorage.getItem("KAFKATYPE_State") != null){
-    selectKafkaType(null,window.localStorage.getItem("KAFKATYPE_State"));
-  }
-  else
-    window.localStorage.setItem("KAFKATYPE_State", "Broker");
-}
-
-function selectKafkaType(evt,kafkaType) {
-  // Store selection in localStorage
-  window.localStorage.setItem("KAFKATYPE_State", kafkaType);
-
-  // Array of class names to process
-  const classNames = [
-    "axon_kafka_dynamic_s1",
-    "axon_kafka_dynamic_s2",
-    "axon_kafka_dynamic_s3",
-    "axon_kafka_dynamic_s4",
-    "axon_kafka_dynamic_s5",
-    "axon_kafka_dynamic_s6",
-    "axon_kafka_dynamic_s7"
-  ];
-
-  // Hide/show sections based on kafkaType
-  classNames.forEach(className => {
-    const elements = document.getElementsByClassName(className);
-    for (let i = 0; i < elements.length; i++) {
-      elements[i].style.display = (elements[i].id === kafkaType) ? "block" : "none";
-    }
-  });
-
-  // Handle tab selection highlighting
-  const tablinks = document.getElementsByClassName("tabSelected");
-  for (let i = 0; i < tablinks.length; i++) {
-    tablinks[i].className = tablinks[i].className.replace(" w3-grey", "");
-    if (tablinks[i].id === kafkaType) {
-      tablinks[i].className += " w3-grey";
-    }
-  }
-
-  // var i, tablinks;
-  // window.localStorage.setItem("KAFKATYPE_State", kafkaType);
-
-  // var u = document.getElementsByClassName("axon_kafka_dynamic_s1");
-  // for (i = 0; i < u.length; i++) {
-  //   if (u[i].id != kafkaType)
-  //     u[i].style.display = "none";
-  //   else
-  //     u[i].style.display = "block";
-  // }
-
-  // var w = document.getElementsByClassName("axon_kafka_dynamic_s2");
-  // for (i = 0; i < w.length; i++) {
-  //   if (w[i].id != kafkaType)
-  //     w[i].style.display = "none";
-  //   else
-  //     w[i].style.display = "block";
-  // }
-
-  // var x = document.getElementsByClassName("axon_kafka_dynamic_s3");
-  // for (i = 0; i < x.length; i++) {
-  //   if (x[i].id != kafkaType)
-  //     x[i].style.display = "none";
-  //   else
-  //     x[i].style.display = "block";
-  // }
-
-  // var y = document.getElementsByClassName("axon_kafka_dynamic_s4");
-  // for (i = 0; i < y.length; i++) {
-  //   if (y[i].id != kafkaType)
-  //     y[i].style.display = "none";
-  //   else
-  //     y[i].style.display = "block";
-  // }
-
-  // var z = document.getElementsByClassName("axon_kafka_dynamic_s5");
-  // for (i = 0; i < z.length; i++) {
-  //   if (z[i].id != kafkaType)
-  //     z[i].style.display = "none";
-  //   else
-  //     z[i].style.display = "block";
-  // }
-  
-  // tablinks = document.getElementsByClassName("tabSelected");
-  // for (i = 0; i < x.length; i++) {
-  //   tablinks[i].className = tablinks[i].className.replace(" w3-grey", "");
-  //   if(tablinks[i].id == window.localStorage.getItem("KAFKATYPE_State"))
-  //   {
-  //     tablinks[i].className += " w3-grey";
-  //   }
-  // }
-
-  // if (evt != null){
-  //   evt.currentTarget.className += " w3-grey";
-  // }
-}
+function updateService(){var e=document.getElementsByName('Service');for(var i=0;i<e.length;i++)if(e[i].checked){localStorage.setItem('Service_State',e[i].id);openService(e[i].id);updatePage()}}
+function openService(s){var x=document.getElementsByName('service_div');for(var i=0;i<x.length;i++){x[i].style.display='none';if(x[i].id===s+'Div')x[i].style.display='block'}}
+function updateKafka(){var e=document.getElementsByName('kafkaFamily');for(var i=0;i<e.length;i++)if(e[i].checked){localStorage.setItem('KAFKA_State',e[i].id);updatePage()}}
+function updateKJava(){var e=document.getElementsByName('kjavaFamily');for(var i=0;i<e.length;i++)if(e[i].checked){localStorage.setItem('KJAVA_State',e[i].id);updatePage()}}
+function showHideKAFKAPanel(){if(!document.getElementsByClassName('kafka').length)return;var x=document.getElementsByClassName('kafka');for(var i=0;i<x.length;i++)x[i].style.display='none';var k=(localStorage.getItem('OS_State')||'')+(localStorage.getItem('KAFKA_State')||'')+(localStorage.getItem('KJAVA_State')||'')+'Div';var el=document.getElementById(k);if(el)el.style.display='block'}
+function openJAVAKAFKA(){if(!document.getElementsByClassName('javakafka').length)return;var x=document.getElementsByClassName('javakafka');for(var i=0;i<x.length;i++)x[i].style.display='none';var k=(localStorage.getItem('KAFKA_State')||'')+(localStorage.getItem('KJAVA_State')||'')+'Div';var el=document.getElementById(k);if(el)el.style.display='block';var kt=localStorage.getItem('KAFKATYPE_State');if(kt)selectKafkaType(null,kt);else localStorage.setItem('KAFKATYPE_State','Broker')}
+function selectKafkaType(e,t){localStorage.setItem('KAFKATYPE_State',t);['axon_kafka_dynamic_s1','axon_kafka_dynamic_s2','axon_kafka_dynamic_s3','axon_kafka_dynamic_s4','axon_kafka_dynamic_s5','axon_kafka_dynamic_s6','axon_kafka_dynamic_s7'].forEach(function(c){var x=document.getElementsByClassName(c);for(var i=0;i<x.length;i++)x[i].style.display=x[i].id===t?'block':'none'});var tb=document.getElementsByClassName('tabSelected');for(var i=0;i<tb.length;i++){tb[i].className=tb[i].className.replace(' w3-grey','');if(tb[i].id===t)tb[i].className+=' w3-grey'}}
