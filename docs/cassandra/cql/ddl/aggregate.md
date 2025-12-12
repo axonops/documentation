@@ -675,4 +675,4 @@ DROP FUNCTION IF EXISTS avg_state;
 
 - **[CREATE FUNCTION](function.md)** - User-defined functions for aggregates
 - **[Functions Reference](../functions/index.md)** - Built-in aggregate functions
-- **[SELECT](../dml/index.md#select)** - Using aggregates in queries
+- **[SELECT](../dml/select.md)** - Using aggregates in queries

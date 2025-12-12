@@ -376,6 +376,23 @@ Cache management and statistics.
 | `Datacenter` | Local datacenter |
 | `Rack` | Local rack |
 
+### FailureDetectorMBean
+
+**ObjectName**: `org.apache.cassandra.gms:type=FailureDetector`
+
+Monitors node availability using the Phi Accrual failure detector algorithm.
+
+| Attribute | Description |
+|-----------|-------------|
+| `AllEndpointStates` | State information for all known endpoints |
+| `SimpleStates` | Simplified UP/DOWN status for endpoints |
+| `PhiValues` | Current phi values for each endpoint |
+
+| Operation | Description |
+|-----------|-------------|
+| `getEndpointState(String)` | Get gossip state for specific endpoint |
+| `forceConviction(String)` | Force mark endpoint as down |
+
 ---
 
 ## Quick Navigation

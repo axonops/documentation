@@ -530,4 +530,4 @@ SELECT id, double_value(value) FROM test_table LIMIT 10;
 
 - **[CREATE AGGREGATE](aggregate.md)** - Building aggregates with UDFs
 - **[Functions Reference](../functions/index.md)** - Built-in functions
-- **[SELECT](../dml/index.md#select)** - Using functions in queries
+- **[SELECT](../dml/select.md)** - Using functions in queries
