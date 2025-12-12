@@ -101,8 +101,8 @@ All of this is underpinned by an efficient bi-directional protocol ensuring exce
 We offer flexible deployment options to match your needs:
 
 ### Cloud & Self-Hosted Solutions
-- **[Starter Edition](/editions/starter_edition/)** - Perfect for smaller deployments
-- **[Enterprise Edition](/editions/enterprise_edition/)** - Full-featured for production workloads
+- **[Free Edition](editions/free_edition.md)** - Perfect for smaller deployments
+- **[Enterprise Edition](editions/enterprise_edition.md)** - Full-featured for production workloads
 
 Both editions support Cassandra and Kafka with the same powerful feature set.
 
@@ -110,7 +110,7 @@ Both editions support Cassandra and Kafka with the same powerful feature set.
 
 Whether you're managing Cassandra databases, Kafka streaming platforms, or both, AxonOps provides the tools you need for operational excellence.
 
-Dive into the [Get Started](/get_started/cloud/) guide and set up your account to start monitoring, maintaining, and managing your distributed systems in minutes.
+Dive into the [Get Started](get_started/cloud.md) guide and set up your account to start monitoring, maintaining, and managing your distributed systems in minutes.
 
 If you would like to schedule time with our distributed systems experts to walk through the platform and discuss your specific Cassandra or Kafka requirements:
 

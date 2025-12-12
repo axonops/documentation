@@ -1,0 +1,1 @@
+echo y | /usr/share/elasticsearch/bin/elasticsearch-setup-passwords auto

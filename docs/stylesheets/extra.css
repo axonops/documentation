@@ -852,6 +852,7 @@ html .md-footer-meta.md-typeset a:hover {
 .t_nav ul {
   list-style: none;
   margin: 0;
+  margin-bottom: 5px;
   padding: 0;
 }
 
@@ -1197,3 +1198,12 @@ html .md-footer-meta.md-typeset a:hover {
   color: #60a5fa;
 }
 
+table th:nth-of-type(3) {
+    width: 25%;
+}
+
+.menu-icon{
+  color: #7cd825 !important;
+  align-items: center;
+  justify-content: center;
+}

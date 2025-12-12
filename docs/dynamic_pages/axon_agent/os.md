@@ -1,4 +1,5 @@
-### Select the OS Family. 
+Select the OS Family
+
 <label>
   <input type="radio" id="Debian" name="osFamily" onChange="selectOS()" checked=true />
   <img src="/get_started/debian.png" class="skip-lightbox" width="180px">
@@ -8,27 +9,20 @@
   <img src="/get_started/red_hat.png" class="skip-lightbox" width="180px">
 </label>
 
-Execute the following command to setup the AxonOps repository for your OS
+Execute the following commands to setup the AxonOps repository:
 
 <div id="DebianDiv" class="os">
-    ```bash
-    sudo apt-get update
-    sudo apt-get install -y curl gnupg ca-certificates
-    curl -L https://packages.axonops.com/apt/repo-signing-key.gpg | sudo gpg --dearmor -o /usr/share/keyrings/axonops.gpg
-    echo "deb [arch=arm64,amd64 signed-by=/usr/share/keyrings/axonops.gpg] https://packages.axonops.com/apt axonops-apt main" | sudo tee /etc/apt/sources.list.d/axonops-apt.list
-    sudo apt-get update
-    ```
+
+```bash
+{!installation/axon-agent/scripts/install-debian.sh!}
+```
+
 </div>
 
 <div id="RedHatDiv" class="os" style="display:none">
-    ```bash
-    sudo tee /etc/yum.repos.d/axonops-yum.repo << EOL
-    [axonops-yum]
-    name=axonops-yum
-    baseurl=https://packages.axonops.com/yum/
-    enabled=1
-    repo_gpgcheck=0
-    gpgcheck=0
-    EOL
-    ```
+
+```bash
+{!installation/axon-agent/scripts/install-redhat.sh!}
+```
+
 </div>
