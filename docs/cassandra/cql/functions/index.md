@@ -20,7 +20,10 @@ This reference covers scalar functions, aggregates, and user-defined functions (
 | Scalar | Transform single values | `toDate()`, `token()`, `cast()` |
 | Aggregate | Compute across rows | `COUNT()`, `SUM()`, `AVG()` |
 | Time/UUID | Generate temporal values | `now()`, `uuid()`, `toTimestamp()` |
-| Collection | Work with collections | `ttl()`, `writetime()` |
+| Cell Metadata | Query column metadata | `ttl()`, `writetime()` |
+| Collection | Operate on collections | `map_keys()`, `collection_count()` |
+| Data Masking | Protect sensitive data | `mask_default()`, `mask_inner()` |
+| Vector | Vector similarity search | `similarity_cosine()` |
 
 ---
 
@@ -124,14 +127,14 @@ SELECT blobAsVarint(blob_column) FROM data;
 ### Text Functions
 
 ```sql
--- Convert ASCII code to character
-SELECT blobastext(intasblob(65)); -- 'A'
+-- Convert blob to text
+SELECT blobastext(blob_column) FROM data;
 
--- Text length
-SELECT length(text_column) FROM data;
+-- Convert text to blob
+SELECT textasblob('hello');
 
--- Substring (Cassandra 4.0+)
--- Note: No built-in substring; use application layer
+-- Note: CQL has no built-in string manipulation functions
+-- (no length, substring, concat, etc.) - use application layer
 ```
 
 ### Math Functions (Cassandra 4.0+)
@@ -140,26 +143,15 @@ SELECT length(text_column) FROM data;
 -- Absolute value
 SELECT abs(numeric_column) FROM data;
 
--- Exponential
+-- Exponential (e raised to power)
 SELECT exp(numeric_column) FROM data;
 
--- Logarithm
+-- Logarithm (natural log)
 SELECT log(numeric_column) FROM data;
 SELECT log10(numeric_column) FROM data;
 
--- Power
-SELECT power(base, exponent) FROM data;
-
--- Round
+-- Round to nearest integer (HALF_UP mode)
 SELECT round(numeric_column) FROM data;
-SELECT round(numeric_column, 2) FROM data;  -- 2 decimal places
-
--- Floor/Ceiling
-SELECT floor(numeric_column) FROM data;
-SELECT ceil(numeric_column) FROM data;
-
--- Square root
-SELECT sqrt(numeric_column) FROM data;
 ```
 
 ---
@@ -293,11 +285,13 @@ WHERE user_id = ?
   AND event_id > minTimeuuid('2024-01-01 00:00:00+0000')
   AND event_id < maxTimeuuid('2024-01-31 23:59:59+0000');
 
--- Current time boundaries
+-- Query events up to current time
 SELECT * FROM events
 WHERE user_id = ?
-  AND event_id > minTimeuuid(toTimestamp(now()) - 1h)
   AND event_id <= now();
+
+-- Note: CQL has no timestamp arithmetic; calculate time bounds
+-- in application code and pass as prepared statement parameters
 ```
 
 ### Current Time Functions
@@ -318,7 +312,7 @@ SELECT currentTimeUUID() FROM system.local;
 
 ---
 
-## Collection Functions
+## Cell Metadata Functions
 
 ### TTL Function
 
@@ -340,19 +334,33 @@ SELECT WRITETIME(email) FROM users WHERE user_id = ?;
 SELECT username, WRITETIME(username), email, WRITETIME(email) FROM users;
 ```
 
-### Collection Element Access
+---
+
+## Collection Functions
+
+### Map Functions
 
 ```sql
--- List element by index
-SELECT phone_numbers[0] FROM users WHERE user_id = ?;
+-- Extract keys from map as a set
+SELECT map_keys(preferences) FROM users WHERE user_id = ?;
 
--- Map element by key
-SELECT preferences['theme'] FROM users WHERE user_id = ?;
+-- Extract values from map as a list
+SELECT map_values(preferences) FROM users WHERE user_id = ?;
+```
 
--- Frozen collection functions
-SELECT * FROM users WHERE tags CONTAINS 'premium';
-SELECT * FROM users WHERE preferences CONTAINS KEY 'theme';
-SELECT * FROM users WHERE preferences CONTAINS 'dark';
+### Collection Aggregates
+
+```sql
+-- Count elements in collection
+SELECT collection_count(tags) FROM users WHERE user_id = ?;
+
+-- Min/max element in set or list
+SELECT collection_min(scores) FROM users WHERE user_id = ?;
+SELECT collection_max(scores) FROM users WHERE user_id = ?;
+
+-- Sum/average of numeric collection
+SELECT collection_sum(scores) FROM users WHERE user_id = ?;
+SELECT collection_avg(scores) FROM users WHERE user_id = ?;
 ```
 
 ---
@@ -413,8 +421,7 @@ INSERT INTO users JSON '{"user_id": "...", "username": "john"}' DEFAULT NULL;
 
 ```sql
 -- Enable UDFs in cassandra.yaml first:
--- enable_user_defined_functions: true
--- enable_scripted_user_defined_functions: true
+-- user_defined_functions_enabled: true
 
 -- Create Java UDF
 CREATE FUNCTION my_keyspace.double_value(input int)
@@ -423,12 +430,12 @@ CREATE FUNCTION my_keyspace.double_value(input int)
     LANGUAGE java
     AS 'return input * 2;';
 
--- Create JavaScript UDF
-CREATE FUNCTION my_keyspace.concat_strings(a text, b text)
+-- Create UDF with null handling
+CREATE FUNCTION my_keyspace.safe_double(input int)
     RETURNS NULL ON NULL INPUT
-    RETURNS text
-    LANGUAGE javascript
-    AS 'a + " " + b';
+    RETURNS int
+    LANGUAGE java
+    AS 'return input * 2;';
 ```
 
 ### Using UDFs
@@ -437,8 +444,9 @@ CREATE FUNCTION my_keyspace.concat_strings(a text, b text)
 -- Use in SELECT
 SELECT user_id, double_value(score) FROM scores;
 
--- Use in WHERE (if deterministic)
-SELECT * FROM scores WHERE double_value(score) > 100;
+-- Use in INSERT/UPDATE
+INSERT INTO scores (user_id, adjusted_score)
+VALUES (?, double_value(?));
 ```
 
 ### Managing UDFs
@@ -501,6 +509,51 @@ SELECT user_id, custom_avg(score) FROM scores GROUP BY user_id;
 
 ---
 
+## Data Masking Functions (Cassandra 5.0+)
+
+Data masking functions protect sensitive data by replacing values with masked versions.
+
+```sql
+-- Return null for any value
+SELECT mask_null(email) FROM users;
+
+-- Return type-appropriate default (asterisks for text, zero for numbers)
+SELECT mask_default(email) FROM users;
+
+-- Replace with specific value
+SELECT mask_replace(email, '***@***.***') FROM users;
+
+-- Mask inner characters, expose prefix/suffix
+-- mask_inner(value, begin_unmasked, end_unmasked, [padding_char])
+SELECT mask_inner(phone, 3, 4) FROM users;  -- '+1-***-**-5678'
+
+-- Mask outer characters, expose middle
+-- mask_outer(value, begin_masked, end_masked, [padding_char])
+SELECT mask_outer(ssn, 3, 4) FROM users;  -- '***-45-****'
+
+-- Return SHA-256 hash as blob
+SELECT mask_hash(email) FROM users;
+```
+
+---
+
+## Vector Similarity Functions (Cassandra 5.0+)
+
+Vector similarity functions compare float vectors for similarity search operations.
+
+```sql
+-- Cosine similarity between vectors (range: -1 to 1)
+SELECT similarity_cosine(embedding, ?) FROM documents;
+
+-- Euclidean distance between vectors
+SELECT similarity_euclidean(embedding, ?) FROM documents;
+
+-- Dot product of vectors
+SELECT similarity_dot_product(embedding, ?) FROM documents;
+```
+
+---
+
 ## Function Reference Table
 
 ### Scalar Functions
@@ -510,26 +563,67 @@ SELECT user_id, custom_avg(score) FROM scores GROUP BY user_id;
 | `token()` | partition key | bigint | Murmur3 token value |
 | `uuid()` | none | uuid | Random UUID v4 |
 | `now()` | none | timeuuid | Current time UUID |
-| `toDate()` | timestamp/timeuuid | date | Extract date |
-| `toTimestamp()` | date/timeuuid | timestamp | Convert to timestamp |
-| `toUnixTimestamp()` | timestamp/timeuuid | bigint | Unix time (ms) |
-| `minTimeuuid()` | timestamp | timeuuid | Min UUID for time |
-| `maxTimeuuid()` | timestamp | timeuuid | Max UUID for time |
+| `to_date()` | timestamp/timeuuid | date | Extract date |
+| `to_timestamp()` | date/timeuuid | timestamp | Convert to timestamp |
+| `to_unix_timestamp()` | timestamp/timeuuid | bigint | Unix time (ms) |
+| `min_timeuuid()` | timestamp | timeuuid | Min UUID for time |
+| `max_timeuuid()` | timestamp | timeuuid | Max UUID for time |
 | `ttl()` | column | int | Remaining TTL (s) |
 | `writetime()` | column | bigint | Write timestamp (μs) |
 | `cast()` | value AS type | varies | Type conversion |
-| `toJson()` | value | text | Convert to JSON |
-| `fromJson()` | json text | varies | Parse JSON |
+| `to_json()` | value | text | Convert to JSON |
+| `from_json()` | json text | varies | Parse JSON |
+
+### Math Functions (4.0+)
+
+| Function | Parameters | Returns | Description |
+|----------|------------|---------|-------------|
+| `abs()` | numeric | same | Absolute value |
+| `exp()` | numeric | same | e raised to power |
+| `log()` | numeric | same | Natural logarithm |
+| `log10()` | numeric | same | Base-10 logarithm |
+| `round()` | numeric | same | Round (HALF_UP) |
 
 ### Aggregate Functions
 
 | Function | Parameters | Returns | Description |
 |----------|------------|---------|-------------|
-| `COUNT()` | * or column | bigint | Row/value count |
-| `SUM()` | numeric column | varies | Sum of values |
-| `AVG()` | numeric column | varies | Average value |
-| `MIN()` | column | varies | Minimum value |
-| `MAX()` | column | varies | Maximum value |
+| `count()` | * or column | bigint | Row/value count |
+| `sum()` | numeric column | varies | Sum of values |
+| `avg()` | numeric column | varies | Average value |
+| `min()` | column | varies | Minimum value |
+| `max()` | column | varies | Maximum value |
+
+### Collection Functions
+
+| Function | Parameters | Returns | Description |
+|----------|------------|---------|-------------|
+| `map_keys()` | map | set | Extract map keys |
+| `map_values()` | map | list | Extract map values |
+| `collection_count()` | collection | int | Element count |
+| `collection_min()` | set/list | element type | Minimum element |
+| `collection_max()` | set/list | element type | Maximum element |
+| `collection_sum()` | numeric set/list | numeric | Sum of elements |
+| `collection_avg()` | numeric set/list | numeric | Average of elements |
+
+### Data Masking Functions (5.0+)
+
+| Function | Parameters | Returns | Description |
+|----------|------------|---------|-------------|
+| `mask_null()` | value | null | Returns null |
+| `mask_default()` | value | same type | Type-appropriate mask |
+| `mask_replace()` | value, replacement | same type | Replace with value |
+| `mask_inner()` | value, begin, end, [pad] | same type | Mask inner chars |
+| `mask_outer()` | value, begin, end, [pad] | same type | Mask outer chars |
+| `mask_hash()` | value, [algorithm] | blob | SHA-256 hash |
+
+### Vector Functions (5.0+)
+
+| Function | Parameters | Returns | Description |
+|----------|------------|---------|-------------|
+| `similarity_cosine()` | vector, vector | float | Cosine similarity |
+| `similarity_euclidean()` | vector, vector | float | Euclidean distance |
+| `similarity_dot_product()` | vector, vector | float | Dot product |
 
 ---
 
