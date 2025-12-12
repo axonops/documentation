@@ -13,23 +13,31 @@ This guide covers what to tune, how to tune it, and how to measure whether it wo
 
 ### Performance Layers
 
-```
-┌─────────────────────────────────────────────────────────────┐
-│                    Application Layer                         │
-│  Query patterns, driver tuning, connection pools             │
-├─────────────────────────────────────────────────────────────┤
-│                    Cassandra Layer                           │
-│  Data model, compaction, caching, thread pools               │
-├─────────────────────────────────────────────────────────────┤
-│                       JVM Layer                              │
-│  Heap sizing, GC tuning, off-heap memory                     │
-├─────────────────────────────────────────────────────────────┤
-│                        OS Layer                              │
-│  Kernel tuning, filesystem, I/O scheduler                    │
-├─────────────────────────────────────────────────────────────┤
-│                    Hardware Layer                            │
-│  CPU, RAM, Storage, Network                                  │
-└─────────────────────────────────────────────────────────────┘
+```plantuml
+@startuml
+skinparam backgroundColor transparent
+
+skinparam rectangle {
+    BackgroundColor #7B4B96
+    FontColor white
+    BorderColor #5A3670
+    roundCorner 5
+}
+
+title Performance Tuning Layers
+
+rectangle "**Application Layer**\nQuery patterns, driver tuning, connection pools" as app
+rectangle "**Cassandra Layer**\nData model, compaction, caching, thread pools" as cass
+rectangle "**JVM Layer**\nHeap sizing, GC tuning, off-heap memory" as jvm
+rectangle "**OS Layer**\nKernel tuning, filesystem, I/O scheduler" as os
+rectangle "**Hardware Layer**\nCPU, RAM, Storage, Network" as hw
+
+app -[hidden]down- cass
+cass -[hidden]down- jvm
+jvm -[hidden]down- os
+os -[hidden]down- hw
+
+@enduml
 ```
 
 ### Key Performance Metrics

@@ -529,6 +529,25 @@ nav:
             - disablefullquerylog: cassandra/operations/nodetool/disablefullquerylog.md
             - getfullquerylog: cassandra/operations/nodetool/getfullquerylog.md
             - resetfullquerylog: cassandra/operations/nodetool/resetfullquerylog.md
+        - SSTable Management:
+          - Overview: cassandra/operations/sstable-management/index.md
+          - Data Loading:
+            - sstableloader: cassandra/operations/sstable-management/sstableloader.md
+          - Repair & Recovery:
+            - sstablescrub: cassandra/operations/sstable-management/sstablescrub.md
+            - sstableverify: cassandra/operations/sstable-management/sstableverify.md
+          - Inspection:
+            - sstabledump: cassandra/operations/sstable-management/sstabledump.md
+            - sstablemetadata: cassandra/operations/sstable-management/sstablemetadata.md
+            - sstablepartitions: cassandra/operations/sstable-management/sstablepartitions.md
+            - sstableexpiredblockers: cassandra/operations/sstable-management/sstableexpiredblockers.md
+            - sstableutil: cassandra/operations/sstable-management/sstableutil.md
+          - Maintenance:
+            - sstableupgrade: cassandra/operations/sstable-management/sstableupgrade.md
+            - sstablesplit: cassandra/operations/sstable-management/sstablesplit.md
+            - sstablelevelreset: cassandra/operations/sstable-management/sstablelevelreset.md
+            - sstableofflinerelevel: cassandra/operations/sstable-management/sstableofflinerelevel.md
+            - sstablerepairedset: cassandra/operations/sstable-management/sstablerepairedset.md
         - Cluster Management: cassandra/operations/cluster-management/index.md
         - Backup & Restore:
           - Overview: cassandra/operations/backup-restore/index.md
@@ -567,25 +586,6 @@ nav:
           - OS Tuning: cassandra/operations/performance/os-tuning/index.md
           - Query Optimization: cassandra/operations/performance/query-optimization/index.md
         - Troubleshooting: cassandra/operations/troubleshooting/index.md
-        - SSTable Management:
-          - Overview: cassandra/operations/sstable-management/index.md
-          - Data Loading:
-            - sstableloader: cassandra/operations/sstable-management/sstableloader.md
-          - Repair & Recovery:
-            - sstablescrub: cassandra/operations/sstable-management/sstablescrub.md
-            - sstableverify: cassandra/operations/sstable-management/sstableverify.md
-          - Inspection:
-            - sstabledump: cassandra/operations/sstable-management/sstabledump.md
-            - sstablemetadata: cassandra/operations/sstable-management/sstablemetadata.md
-            - sstablepartitions: cassandra/operations/sstable-management/sstablepartitions.md
-            - sstableexpiredblockers: cassandra/operations/sstable-management/sstableexpiredblockers.md
-            - sstableutil: cassandra/operations/sstable-management/sstableutil.md
-          - Maintenance:
-            - sstableupgrade: cassandra/operations/sstable-management/sstableupgrade.md
-            - sstablesplit: cassandra/operations/sstable-management/sstablesplit.md
-            - sstablelevelreset: cassandra/operations/sstable-management/sstablelevelreset.md
-            - sstableofflinerelevel: cassandra/operations/sstable-management/sstableofflinerelevel.md
-            - sstablerepairedset: cassandra/operations/sstable-management/sstablerepairedset.md
       - Security:
         - Overview: cassandra/security/index.md
         - Authentication: cassandra/security/authentication/index.md
@@ -617,7 +617,6 @@ nav:
           - Configuration: cassandra/tools/cqlai/configuration/index.md
           - Commands: cassandra/tools/cqlai/commands/index.md
           - Parquet: cassandra/tools/cqlai/parquet/index.md
-        - SSTable Tools: cassandra/tools/sstable-tools/index.md
         - cassandra-stress: cassandra/tools/cassandra-stress/index.md
       - Troubleshooting:
         - Overview: cassandra/troubleshooting/index.md

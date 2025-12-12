@@ -211,19 +211,31 @@ Runtime commands:
 
 ### How Incremental Backups Work
 
-```
-When incremental_backups is enabled:
+```plantuml
+@startuml
+skinparam backgroundColor #FEFEFE
 
-1. SSTable flushed from memtable
-   └── Hard-linked to: data/<ks>/<table>/backups/
+title Incremental Backup Process
 
-2. Compaction creates new SSTable
-   └── Hard-linked to: data/<ks>/<table>/backups/
+start
+#5B9BD5:SSTable created\n(flush or compaction);
 
-Unlike snapshots:
-- Happen automatically (no nodetool command needed)
-- Only include new SSTables since last clear
-- Must be combined with a base snapshot for full restore
+if (incremental_backups\nenabled?) then (yes)
+    #70AD47:Hard-link SSTable to\ndata/<ks>/<table>/backups/;
+else (no)
+    #E8E8E8:No backup created;
+endif
+
+stop
+
+note right
+  Unlike snapshots:
+  • Happen automatically
+  • Only new SSTables since last clear
+  • Must combine with base snapshot
+end note
+
+@enduml
 ```
 
 ### Incremental Backup Location

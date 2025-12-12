@@ -242,25 +242,34 @@ When restoring, all components of each SSTable must be present:
 
 When restoring a single table to a single node:
 
-```
-Before restore:
-┌─────────────────────────────────────────────────────────────┐
-│ Node 1 (Target)     │ Node 2 (Replica)   │ Node 3 (Replica) │
-│ Table: EMPTY/       │ Table: Current     │ Table: Current   │
-│        Corrupted    │        Data        │        Data      │
-└─────────────────────────────────────────────────────────────┘
+```plantuml
+@startuml
+skinparam backgroundColor #FEFEFE
 
-After restore + repair:
-┌─────────────────────────────────────────────────────────────┐
-│ Node 1 (Target)     │ Node 2 (Replica)   │ Node 3 (Replica) │
-│ Table: Backup +     │ Table: Current     │ Table: Current   │
-│        Repaired     │        Data        │        Data      │
-└─────────────────────────────────────────────────────────────┘
+title Single Table Restore Process
 
-Repair reconciles differences:
-- Data in backup but deleted after → stays deleted (tombstones from replicas)
-- Data written after backup → streams from replicas
-- Data in backup matching replicas → no action needed
+rectangle "Before Restore" as before #FFE8E8 {
+    card "Node 1 (Target)\nTable: EMPTY/Corrupted" as n1_before #C00000
+    card "Node 2 (Replica)\nTable: Current Data" as n2_before #70AD47
+    card "Node 3 (Replica)\nTable: Current Data" as n3_before #70AD47
+}
+
+rectangle "After Restore + Repair" as after #E8F4E8 {
+    card "Node 1 (Target)\nTable: Backup + Repaired" as n1_after #70AD47
+    card "Node 2 (Replica)\nTable: Current Data" as n2_after #70AD47
+    card "Node 3 (Replica)\nTable: Current Data" as n3_after #70AD47
+}
+
+before -[hidden]down-> after
+
+note bottom of after
+  Repair reconciles differences:
+  • Data in backup but deleted after → stays deleted (tombstones from replicas)
+  • Data written after backup → streams from replicas
+  • Data in backup matching replicas → no action needed
+end note
+
+@enduml
 ```
 
 #### If Table Was Truncated
@@ -751,38 +760,27 @@ See Scenario 7 for detailed sstableloader usage.
 
 #### How sstableloader Works
 
-```
-sstableloader process:
+```plantuml
+@startuml
+skinparam backgroundColor #FEFEFE
 
-┌──────────────────┐
-│ SSTable Files    │
-│ (from backup)    │
-└────────┬─────────┘
-         │
-         ▼
-┌──────────────────┐
-│ Read partitions  │
-│ from SSTables    │
-└────────┬─────────┘
-         │
-         ▼
-┌──────────────────┐     ┌─────────────────────┐
-│ Calculate token  │────▶│ Query target cluster │
-│ for each row     │     │ for token ownership  │
-└────────┬─────────┘     └─────────────────────┘
-         │
-         ▼
-┌──────────────────┐
-│ Stream rows to   │
-│ owning nodes     │
-└────────┬─────────┘
-         │
-         ▼
-┌──────────────────┐
-│ Target nodes     │
-│ write as normal  │
-│ inserts          │
-└──────────────────┘
+title sstableloader Process
+
+start
+#5B9BD5:SSTable Files\n(from backup);
+#5B9BD5:Read partitions\nfrom SSTables;
+#FFC000:Calculate token\nfor each row;
+
+fork
+    #E8E8E8:Query target cluster\nfor token ownership;
+fork again
+fork end
+
+#70AD47:Stream rows to\nowning nodes;
+#70AD47:Target nodes write\nas normal inserts;
+stop
+
+@enduml
 ```
 
 #### sstableloader Options
@@ -882,26 +880,55 @@ Cassandra uses tombstones (deletion markers) instead of immediately removing dat
 
 #### The Resurrection Problem
 
+```plantuml
+@startuml
+skinparam backgroundColor #FEFEFE
+
+title Data Resurrection Timeline
+
+rectangle "Timeline" as timeline #E8E8E8 {
+    card "Day 0\nBackup taken\n(contains Row X)" as day0 #5B9BD5
+    card "Day 3\nRow X deleted\n(tombstone created)" as day3 #FFC000
+    card "Day 11\ngc_grace expires\n(tombstone removable)" as day11 #FFC000
+    card "Day 12\nCompaction removes\ntombstone" as day12 #C00000
+    card "Day 15\nRestore backup\nto Node 1 only" as day15 #C00000
+}
+
+day0 -right-> day3
+day3 -right-> day11
+day11 -right-> day12
+day12 -right-> day15
+
+@enduml
 ```
-Timeline:
-Day 0:  Backup taken (contains Row X)
-Day 3:  Row X deleted (tombstone created on all replicas)
-Day 11: gc_grace_seconds expires (tombstone removable)
-Day 12: Compaction removes tombstone from all replicas
-Day 15: Restore Day 0 backup to Node 1 only
 
-State after restore:
-┌────────────────────────────────────────────────────┐
-│ Node 1          │ Node 2          │ Node 3         │
-│ Row X: EXISTS   │ Row X: (none)   │ Row X: (none)  │
-│ (from backup)   │ No tombstone    │ No tombstone   │
-└────────────────────────────────────────────────────┘
+```plantuml
+@startuml
+skinparam backgroundColor #FEFEFE
 
-During read or repair:
-- System sees Row X on Node 1
-- No tombstone on Nodes 2, 3 to indicate deletion
-- Row X streams to Nodes 2, 3 as "missing" data
-- Deleted data has resurrected
+title State After Restore (Resurrection Risk)
+
+rectangle "Node 1" as n1 #FFE8E8 {
+    card "Row X: EXISTS\n(from backup)" as r1 #C00000
+}
+
+rectangle "Node 2" as n2 #E8E8E8 {
+    card "Row X: (none)\nNo tombstone" as r2 #7F7F7F
+}
+
+rectangle "Node 3" as n3 #E8E8E8 {
+    card "Row X: (none)\nNo tombstone" as r3 #7F7F7F
+}
+
+note bottom
+  During read or repair:
+  • System sees Row X on Node 1
+  • No tombstone on Nodes 2, 3 to indicate deletion
+  • Row X streams to Nodes 2, 3 as "missing" data
+  • **Deleted data has resurrected**
+end note
+
+@enduml
 ```
 
 #### Safe Restore Practices

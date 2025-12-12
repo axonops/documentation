@@ -15,25 +15,39 @@ This guide covers the essential metrics to monitor for a healthy Cassandra clust
 
 ### Metric Categories
 
-```
-┌─────────────────────────────────────────────────────────────┐
-│                  Cassandra Metrics Hierarchy                │
-├─────────────────────────────────────────────────────────────┤
-│ Client Request Metrics                                      │
-│   └── Read/Write latency, throughput, errors                │
-├─────────────────────────────────────────────────────────────┤
-│ Thread Pool Metrics                                         │
-│   └── Active, Pending, Blocked, Completed                   │
-├─────────────────────────────────────────────────────────────┤
-│ Storage Metrics                                             │
-│   └── SSTable count, Disk usage, Compaction                 │
-├─────────────────────────────────────────────────────────────┤
-│ JVM Metrics                                                 │
-│   └── Heap usage, GC pauses, Off-heap                       │
-├─────────────────────────────────────────────────────────────┤
-│ System Metrics                                              │
-│   └── CPU, Memory, Disk I/O, Network                        │
-└─────────────────────────────────────────────────────────────┘
+```plantuml
+@startuml
+skinparam backgroundColor transparent
+
+skinparam rectangle {
+    BackgroundColor #7B4B96
+    FontColor white
+    BorderColor #5A3670
+    roundCorner 5
+}
+
+skinparam card {
+    BackgroundColor #F3DAFA
+    FontColor #333333
+    BorderColor #7B4B96
+}
+
+title Cassandra Metrics Hierarchy
+
+rectangle "**Cassandra Metrics Hierarchy**" as hierarchy {
+    card "**Client Request Metrics**\nRead/Write latency, throughput, errors" as client
+    card "**Thread Pool Metrics**\nActive, Pending, Blocked, Completed" as thread
+    card "**Storage Metrics**\nSSTable count, Disk usage, Compaction" as storage
+    card "**JVM Metrics**\nHeap usage, GC pauses, Off-heap" as jvm
+    card "**System Metrics**\nCPU, Memory, Disk I/O, Network" as system
+}
+
+client -[hidden]down- thread
+thread -[hidden]down- storage
+storage -[hidden]down- jvm
+jvm -[hidden]down- system
+
+@enduml
 ```
 
 ---
@@ -60,18 +74,14 @@ nodetool proxyhistograms
 | p99 | < 50ms | < 20ms |
 | p999 | < 200ms | < 100ms |
 
-**Alerts**:
-```yaml
-- alert: HighReadLatency
-  expr: cassandra_clientrequest_latency{scope="Read",quantile="0.99"} > 100000
-  for: 5m
-  severity: warning
+**Recommended Alerts**:
 
-- alert: CriticalReadLatency
-  expr: cassandra_clientrequest_latency{scope="Read",quantile="0.99"} > 500000
-  for: 5m
-  severity: critical
-```
+| Alert | Condition | Duration | Severity |
+|-------|-----------|----------|----------|
+| High Read Latency | p99 > 100ms | 5 min | Warning |
+| Critical Read Latency | p99 > 500ms | 5 min | Critical |
+| High Write Latency | p99 > 50ms | 5 min | Warning |
+| Critical Write Latency | p99 > 200ms | 5 min | Critical |
 
 ### 2. Request Throughput
 
@@ -249,12 +259,13 @@ org.apache.cassandra.metrics:type=ClientRequest,scope=Read,name=Timeouts
 org.apache.cassandra.metrics:type=ClientRequest,scope=Write,name=Timeouts
 ```
 
-**Alert**:
-```yaml
-- alert: ReadTimeouts
-  expr: rate(cassandra_clientrequest_timeouts{scope="Read"}[5m]) > 0.1
-  severity: warning
-```
+**Recommended Alerts**:
+
+| Alert | Condition | Severity |
+|-------|-----------|----------|
+| Read Timeouts | Any timeouts occurring | Warning |
+| Write Timeouts | Any timeouts occurring | Warning |
+| Sustained Timeouts | > 10 timeouts/min for 5 min | Critical |
 
 ### 11. Unavailables
 
@@ -264,12 +275,15 @@ org.apache.cassandra.metrics:type=ClientRequest,scope=Read,name=Unavailables
 org.apache.cassandra.metrics:type=ClientRequest,scope=Write,name=Unavailables
 ```
 
-**Alert**:
-```yaml
-- alert: ReadUnavailables
-  expr: rate(cassandra_clientrequest_unavailables{scope="Read"}[5m]) > 0
-  severity: critical
-```
+**Recommended Alerts**:
+
+| Alert | Condition | Severity |
+|-------|-----------|----------|
+| Read Unavailables | Any unavailable errors | Critical |
+| Write Unavailables | Any unavailable errors | Critical |
+
+!!! warning "Unavailables Indicate Serious Issues"
+    Unavailable errors mean insufficient replicas are accessible to satisfy the consistency level. This typically indicates multiple node failures or network partitions requiring immediate investigation.
 
 ### 12. Exceptions
 
@@ -381,48 +395,34 @@ See [AxonOps Monitoring](/monitoring/) for dashboard features and configuration.
 
 ### Critical Alerts (Page Immediately)
 
-```yaml
-alerts:
-  - name: CassandraNodeDown
-    condition: up{job="cassandra"} == 0
-    duration: 1m
-    severity: critical
-
-  - name: CassandraHeapCritical
-    condition: jvm_memory_heap_used / jvm_memory_heap_max > 0.85
-    duration: 5m
-    severity: critical
-
-  - name: CassandraDiskCritical
-    condition: disk_used_percent > 80
-    duration: 5m
-    severity: critical
-
-  - name: CassandraDroppedMessages
-    condition: rate(cassandra_droppedmessage_dropped_total[5m]) > 1
-    duration: 1m
-    severity: critical
-```
+| Alert | Condition | Duration | Response |
+|-------|-----------|----------|----------|
+| Node Down | Node unreachable | 1 min | Check process, network, hardware |
+| Heap Critical | Heap usage > 85% | 5 min | Investigate memory pressure, potential OOM |
+| Disk Critical | Disk usage > 80% | 5 min | Clear snapshots, add capacity |
+| Dropped Messages | Any messages dropped | 1 min | Check thread pools, timeouts, capacity |
+| Unavailable Errors | Any unavailables | Immediate | Check replica availability |
 
 ### Warning Alerts (Review Soon)
 
-```yaml
-alerts:
-  - name: CassandraHighLatency
-    condition: cassandra_clientrequest_latency{quantile="0.99"} > 100000
-    duration: 10m
-    severity: warning
+| Alert | Condition | Duration | Response |
+|-------|-----------|----------|----------|
+| High Latency | p99 read > 100ms | 10 min | Check compaction, GC, disk I/O |
+| Compaction Backlog | Pending > 30 | 15 min | Check throughput, consider tuning |
+| Heap Warning | Heap usage > 70% | 10 min | Monitor trend, prepare mitigation |
+| Hints Growing | Hints > 1000 | 10 min | Check target node health |
+| Schema Disagreement | Multiple versions | 5 min | Check for stuck migrations |
 
-  - name: CassandraCompactionBacklog
-    condition: cassandra_compaction_pendingtasks > 30
-    duration: 15m
-    severity: warning
+### AxonOps Alert Configuration
 
-  - name: CassandraHeapWarning
-    condition: jvm_memory_heap_used / jvm_memory_heap_max > 0.70
-    duration: 10m
-    severity: warning
-```
+AxonOps provides pre-configured alerts for all critical Cassandra metrics. Alerts can be customized through the AxonOps dashboard:
+
+- **Threshold adjustment** — Modify alert thresholds based on workload characteristics
+- **Notification routing** — Route alerts to Slack, PagerDuty, email, or webhooks
+- **Alert suppression** — Configure maintenance windows to suppress expected alerts
+- **Escalation policies** — Define escalation paths for unacknowledged alerts
+
+See [Setup Alert Rules](/how-to/setup-alert-rules/) for detailed configuration instructions.
 
 ---
 

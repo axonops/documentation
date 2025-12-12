@@ -4,16 +4,26 @@ Systematic approach to diagnosing Cassandra issues.
 
 ## Diagnosis Framework (SDRR)
 
-```
-┌─────────────────┐
-│    Symptoms     │ ← Identify what is wrong
-├─────────────────┤
-│   Diagnosis     │ ← Find root cause
-├─────────────────┤
-│   Resolution    │ ← Fix the problem
-├─────────────────┤
-│    Recovery     │ ← Verify fix, prevent recurrence
-└─────────────────┘
+```plantuml
+@startuml
+skinparam backgroundColor transparent
+
+skinparam rectangle {
+    roundCorner 5
+}
+
+title Diagnosis Framework (SDRR)
+
+rectangle "**Symptoms**\nIdentify what is wrong" as symptoms #cce5ff
+rectangle "**Diagnosis**\nFind root cause" as diagnosis #ffe6cc
+rectangle "**Resolution**\nFix the problem" as resolution #d4edda
+rectangle "**Recovery**\nVerify fix, prevent recurrence" as recovery #e2d5f1
+
+symptoms -down-> diagnosis
+diagnosis -down-> resolution
+resolution -down-> recovery
+
+@enduml
 ```
 
 ## Quick Diagnostic Commands

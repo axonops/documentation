@@ -97,34 +97,38 @@ Cassandra's workload characteristics make SSDs essential for production:
 
 Cassandra performs multiple I/O operations concurrently:
 
-```graphviz dot iops-operations.svg
-digraph IOPSOperations {
-    bgcolor="transparent"
-    graph [fontname="Helvetica", fontsize=11, rankdir=LR, nodesep=0.4, ranksep=0.5]
-    node [fontname="Helvetica", fontsize=10, shape=box, style="rounded,filled"]
-    edge [fontname="Helvetica", fontsize=9]
+```plantuml
+@startuml
+skinparam backgroundColor transparent
 
-    subgraph cluster_concurrent {
-        label="Concurrent I/O Operations"
-        labeljust="l"
-        style="rounded,filled"
-        bgcolor="#f5f5f5"
-
-        reads [label="Client Reads\n(random I/O)", fillcolor="#cce5ff"]
-        writes [label="Client Writes\n(sequential)", fillcolor="#cce5ff"]
-        compaction [label="Compaction\n(read + write)", fillcolor="#ffe6cc"]
-        repair [label="Repair/Streaming\n(bulk read/write)", fillcolor="#ffe6cc"]
-        hints [label="Hint Replay\n(sequential)", fillcolor="#d4edda"]
-    }
-
-    iops [label="Available\nIOPS", fillcolor="#fff3cd", shape=cylinder]
-
-    reads -> iops
-    writes -> iops
-    compaction -> iops
-    repair -> iops
-    hints -> iops
+skinparam rectangle {
+    roundCorner 5
 }
+
+skinparam database {
+    BackgroundColor #fff3cd
+    BorderColor #856404
+}
+
+title Concurrent I/O Operations
+
+package "Concurrent I/O Operations" #f5f5f5 {
+    rectangle "Client Reads\n(random I/O)" as reads #cce5ff
+    rectangle "Client Writes\n(sequential)" as writes #cce5ff
+    rectangle "Compaction\n(read + write)" as compaction #ffe6cc
+    rectangle "Repair/Streaming\n(bulk read/write)" as repair #ffe6cc
+    rectangle "Hint Replay\n(sequential)" as hints #d4edda
+}
+
+database "Available\nIOPS" as iops
+
+reads --> iops
+writes --> iops
+compaction --> iops
+repair --> iops
+hints --> iops
+
+@enduml
 ```
 
 | Operation | IOPS Consumption | Pattern |
