@@ -1,3 +1,10 @@
+---
+description: "Kafka controller dashboard metrics mapping. Controller election and partition metrics."
+meta:
+  - name: keywords
+    content: "Kafka controller metrics, controller election, partitions"
+---
+
 # AxonOps Kafka Controller Dashboard Metrics Mapping
 
 ## Overview

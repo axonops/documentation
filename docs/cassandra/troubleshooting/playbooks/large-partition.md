@@ -1,3 +1,10 @@
+---
+description: "Large partition troubleshooting playbook. Handle oversized partitions."
+meta:
+  - name: keywords
+    content: "large partition troubleshooting, partition size, hot partitions"
+---
+
 # Large Partition Issues
 
 Large partitions are a common cause of performance problems in Cassandra. They cause slow reads, OOM during compaction, and uneven data distribution.

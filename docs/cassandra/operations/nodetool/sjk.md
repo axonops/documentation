@@ -1,3 +1,10 @@
+---
+description: "Run Swiss Java Knife diagnostics on Cassandra JVM using nodetool sjk command."
+meta:
+  - name: keywords
+    content: "nodetool sjk, Swiss Java Knife, JVM diagnostics, Cassandra"
+---
+
 # nodetool sjk
 
 Invokes the Swiss Java Knife diagnostic tool.

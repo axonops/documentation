@@ -1,3 +1,10 @@
+---
+description: "Cassandra memory architecture. Heap vs off-heap memory, memtables, caches, and memory pools."
+meta:
+  - name: keywords
+    content: "Cassandra memory, heap memory, off-heap, memtable memory, caches"
+---
+
 # Memory Management
 
 Cassandra uses multiple memory regions: JVM heap, off-heap native memory, and OS page cache. Understanding how Cassandra allocates memory across these regions is essential for capacity planning and performance tuning.

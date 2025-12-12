@@ -1,3 +1,10 @@
+---
+description: "AxonOps Kafka agent installation dynamic page."
+meta:
+  - name: keywords
+    content: "Kafka agent install, AxonOps agent"
+---
+
 
 
 <h3>Select the Kafka Version</h3>

@@ -1,3 +1,10 @@
+---
+description: "Set logging level for Cassandra classes using nodetool setlogginglevel command."
+meta:
+  - name: keywords
+    content: "nodetool setlogginglevel, logging level, debug logging, Cassandra logs"
+---
+
 # nodetool setlogginglevel
 
 Changes the logging level for a class or package at runtime.

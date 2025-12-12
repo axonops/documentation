@@ -1,3 +1,10 @@
+---
+description: "Cassandra drivers overview. Official drivers for Java, Python, Node.js, Go, and other languages."
+meta:
+  - name: keywords
+    content: "Cassandra drivers, Java driver, Python driver, DataStax drivers"
+---
+
 # Cassandra Drivers
 
 Cassandra drivers provide the interface between applications and the Cassandra cluster. Unlike traditional database connectors, Cassandra drivers are topology-aware—they maintain knowledge of all nodes in the cluster and make intelligent decisions about request routing, connection management, and failure handling.

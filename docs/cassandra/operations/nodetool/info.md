@@ -1,3 +1,10 @@
+---
+description: "Display node information including uptime, load, and memory usage using nodetool info."
+meta:
+  - name: keywords
+    content: "nodetool info, node information, Cassandra node, uptime memory"
+---
+
 # nodetool info
 
 Displays detailed information about a single Cassandra node including memory usage, disk capacity, uptime, and operational statistics.

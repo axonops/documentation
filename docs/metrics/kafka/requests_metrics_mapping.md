@@ -1,3 +1,10 @@
+---
+description: "Kafka requests dashboard metrics mapping. Request rate and latency."
+meta:
+  - name: keywords
+    content: "Kafka requests metrics, request rate, request latency"
+---
+
 # AxonOps Kafka Requests Dashboard Metrics Mapping
 
 ## Overview

@@ -1,3 +1,10 @@
+---
+description: "Display read/write concurrency settings in Cassandra using nodetool getconcurrency."
+meta:
+  - name: keywords
+    content: "nodetool getconcurrency, concurrency settings, read write threads, Cassandra"
+---
+
 # nodetool getconcurrency
 
 Displays the concurrency settings.

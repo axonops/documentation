@@ -1,3 +1,10 @@
+---
+description: "Create alert rules in AxonOps. Configure thresholds and notifications for metrics."
+meta:
+  - name: keywords
+    content: "alert rules, AxonOps alerts, threshold configuration, notifications"
+---
+
 # Setup alert rules
 
 

@@ -1,3 +1,10 @@
+---
+description: "Enable hinted handoff for a specific datacenter using nodetool enablehintsfordc."
+meta:
+  - name: keywords
+    content: "nodetool enablehintsfordc, enable hints DC, hinted handoff, multi-datacenter"
+---
+
 # nodetool enablehintsfordc
 
 Enables hints for a specific datacenter.

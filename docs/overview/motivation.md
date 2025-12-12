@@ -1,3 +1,10 @@
+---
+description: "Why AxonOps was built. The motivation behind unified database operations platform."
+meta:
+  - name: keywords
+    content: "AxonOps motivation, why AxonOps, database operations"
+---
+
 # What is AxonOps?
 
 AxonOps is a One-Stop Operations Platform for Apache Cassandra&reg;

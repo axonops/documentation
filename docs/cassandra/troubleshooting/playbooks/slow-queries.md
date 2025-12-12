@@ -1,3 +1,10 @@
+---
+description: "Slow queries troubleshooting playbook. Diagnose query performance."
+meta:
+  - name: keywords
+    content: "slow queries troubleshooting, query performance, latency issues"
+---
+
 # Slow Queries
 
 Slow queries manifest as high latency, timeouts, or degraded application performance. This playbook helps identify and resolve query performance issues.

@@ -1,3 +1,10 @@
+---
+description: "Move SSTables to correct disk locations using nodetool relocatesstables command."
+meta:
+  - name: keywords
+    content: "nodetool relocatesstables, relocate SSTables, disk management, Cassandra"
+---
+
 # nodetool relocatesstables
 
 Relocates SSTables to the correct disk based on the configured disk allocation strategy.

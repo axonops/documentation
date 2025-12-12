@@ -1,3 +1,10 @@
+---
+description: "Scrub SSTables to fix corruption in Cassandra using nodetool scrub command."
+meta:
+  - name: keywords
+    content: "nodetool scrub, SSTable scrub, fix corruption, Cassandra recovery"
+---
+
 # nodetool scrub
 
 Rebuilds SSTables by rewriting them, validating data and optionally discarding corrupted partitions.

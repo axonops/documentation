@@ -1,0 +1,6 @@
+# SEO Meta Tags - Cassandra Operations
+description: Cassandra operations documentation covering nodetool commands, configuration, compaction, repair, backup, monitoring, and performance tuning.
+
+meta:
+  - name: keywords
+    content: Cassandra operations, nodetool, repair, compaction, backup, restore, monitoring, performance tuning, cluster management

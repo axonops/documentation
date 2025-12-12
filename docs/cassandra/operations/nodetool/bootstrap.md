@@ -1,3 +1,10 @@
+---
+description: "Check or resume bootstrap operations in Cassandra using nodetool bootstrap command."
+meta:
+  - name: keywords
+    content: "nodetool bootstrap, Cassandra bootstrap, node joining, resume bootstrap"
+---
+
 # nodetool bootstrap
 
 Manages the bootstrap process for a node joining the cluster.

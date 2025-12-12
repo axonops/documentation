@@ -1,3 +1,10 @@
+---
+description: "Replace failed Cassandra nodes with replace_address_first_boot. Dead node replacement procedure."
+meta:
+  - name: keywords
+    content: "node replacement, replace dead node, replace_address_first_boot, Cassandra"
+---
+
 # Node Replacement
 
 This section examines the architectural considerations for handling failed nodes in a Cassandra cluster. Understanding failure classification, recovery strategies, and the mechanics of node replacement is essential for designing resilient cluster topologies.

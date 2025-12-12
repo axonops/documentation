@@ -1,3 +1,10 @@
+---
+description: "Query secondary indexes in CQL. Use WHERE clauses on indexed columns in Cassandra."
+meta:
+  - name: keywords
+    content: "secondary index query, CQL index, WHERE clause, Cassandra indexing"
+---
+
 # Secondary Index Queries
 
 Secondary indexes enable queries on non-primary-key columns without requiring the partition key. This capability comes with significant trade-offs that application developers must understand to avoid performance degradation and operational incidents.

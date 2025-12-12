@@ -1,3 +1,10 @@
+---
+description: "Delete pending hints for a node in Cassandra using nodetool truncatehints."
+meta:
+  - name: keywords
+    content: "nodetool truncatehints, delete hints, hinted handoff, Cassandra"
+---
+
 # nodetool truncatehints
 
 Removes all pending hints from this node.

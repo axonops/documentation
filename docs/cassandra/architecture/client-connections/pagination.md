@@ -1,3 +1,10 @@
+---
+description: "Query pagination in Cassandra. Paging state, automatic paging, and large result set handling."
+meta:
+  - name: keywords
+    content: "Cassandra pagination, paging state, large queries, result paging"
+---
+
 # Query Pagination
 
 Cassandra implements server-side pagination to handle result sets that are too large to return in a single response. This mechanism protects both clients and servers from memory exhaustion while enabling efficient iteration through large datasets.

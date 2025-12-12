@@ -1,3 +1,10 @@
+---
+description: "Display timeout settings for various Cassandra operations using nodetool gettimeout."
+meta:
+  - name: keywords
+    content: "nodetool gettimeout, timeout settings, Cassandra timeouts, operation timeout"
+---
+
 # nodetool gettimeout
 
 Displays the timeout value for the specified type.

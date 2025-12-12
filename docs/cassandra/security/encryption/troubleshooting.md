@@ -1,3 +1,10 @@
+---
+description: "Troubleshoot Cassandra TLS issues. Common SSL errors and debugging techniques."
+meta:
+  - name: keywords
+    content: "TLS troubleshooting, SSL errors, certificate debugging, Cassandra"
+---
+
 # TLS Troubleshooting
 
 This section covers common TLS configuration issues and their resolution.

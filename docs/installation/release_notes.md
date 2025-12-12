@@ -1,3 +1,10 @@
+---
+description: "AxonOps release notes. Latest features, improvements, and bug fixes."
+meta:
+  - name: keywords
+    content: "release notes, AxonOps updates, changelog, new features"
+---
+
 ## Release 2025-08-29
 
 * axon-server: 2.0.10

@@ -1,3 +1,10 @@
+---
+description: "Display coordinator read/write latency histograms using nodetool proxyhistograms."
+meta:
+  - name: keywords
+    content: "nodetool proxyhistograms, latency histogram, coordinator latency, Cassandra"
+---
+
 # nodetool proxyhistograms
 
 Displays latency histograms for coordinator operations including reads, writes, and range queries.

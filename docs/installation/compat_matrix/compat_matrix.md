@@ -1,3 +1,10 @@
+---
+description: "AxonOps compatibility matrix. Supported versions of Cassandra, Kafka, and operating systems."
+meta:
+  - name: keywords
+    content: "compatibility matrix, supported versions, Cassandra versions, Kafka versions"
+---
+
 
 ## AxonOps Server
 | Operating Systems                                                           | Target Architecture |

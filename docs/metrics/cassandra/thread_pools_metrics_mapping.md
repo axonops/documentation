@@ -1,3 +1,10 @@
+---
+description: "Cassandra thread pools dashboard metrics mapping. SEDA stage statistics."
+meta:
+  - name: keywords
+    content: "thread pools metrics, SEDA stages, Cassandra threads"
+---
+
 # AxonOps Thread Pools Dashboard Metrics Mapping
 
 This document maps the metrics used in the AxonOps Thread Pools dashboard.

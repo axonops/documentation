@@ -1,3 +1,10 @@
+---
+description: "Delete Kafka ACLs with AxonOps. Remove access control entries."
+meta:
+  - name: keywords
+    content: "delete Kafka ACL, remove permissions, ACL management"
+---
+
 [Delete Kafka ACL with Axonops](https://app.guidde.com/playbooks/n8Agwkwy2tw9PjntKjbaQs)
 ========================================================================================
 

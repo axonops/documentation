@@ -1,3 +1,10 @@
+---
+description: "Data replication in Cassandra. Replication factor, strategies, and multi-datacenter configuration."
+meta:
+  - name: keywords
+    content: "Cassandra replication, replication factor, NetworkTopologyStrategy, replica"
+---
+
 # Replication
 
 Replication is fundamental to Cassandra's architecture. Every write is automatically copied to multiple nodes with no special configuration, no external tools, no application logic required. This built-in redundancy means nodes can fail, disks can die, and entire datacenters can go offline, yet the data remains available and intact.

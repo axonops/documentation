@@ -1,3 +1,10 @@
+---
+description: "Display query tracing probability in Cassandra using nodetool gettraceprobability."
+meta:
+  - name: keywords
+    content: "nodetool gettraceprobability, query tracing, trace probability, Cassandra debugging"
+---
+
 # nodetool gettraceprobability
 
 Displays the current probability of tracing CQL requests on the node.

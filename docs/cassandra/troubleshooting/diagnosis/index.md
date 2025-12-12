@@ -1,3 +1,10 @@
+---
+description: "Cassandra diagnosis techniques. Log analysis, metrics interpretation, and problem identification."
+meta:
+  - name: keywords
+    content: "Cassandra diagnosis, log analysis, metrics, problem identification"
+---
+
 # Cassandra Diagnosis Guide
 
 Systematic approach to diagnosing Cassandra issues.

@@ -1,3 +1,10 @@
+---
+description: "Enable gossip protocol on a Cassandra node using nodetool enablegossip after maintenance."
+meta:
+  - name: keywords
+    content: "nodetool enablegossip, enable gossip, Cassandra gossip, node maintenance"
+---
+
 # nodetool enablegossip
 
 Re-enables the gossip protocol on a node that has been isolated.

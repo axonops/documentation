@@ -1,3 +1,10 @@
+---
+description: "How secondary index queries work in distributed Cassandra. Coordinator scatter-gather pattern."
+meta:
+  - name: keywords
+    content: "secondary index query, distributed query, scatter-gather, Cassandra"
+---
+
 # Secondary Index Query Execution
 
 Secondary index queries in Cassandra employ distinct execution strategies compared to primary key queries. The distributed coordination model varies significantly between index implementations, with Storage Attached Index (SAI) introducing adaptive query routing mechanisms that differ fundamentally from the scatter-gather pattern used by legacy secondary indexes.

@@ -1,3 +1,10 @@
+---
+description: "AxonOps editions comparison. Choose the right plan for your Cassandra and Kafka monitoring needs."
+meta:
+  - name: keywords
+    content: "AxonOps editions, pricing, plans, comparison"
+---
+
 # Get ready for enjoying one-stop Cassandra operations from AxonOps.
 
 Soon you’ll be enjoying the only Cassandra management tool that combines:

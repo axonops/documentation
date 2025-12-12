@@ -1,3 +1,10 @@
+---
+description: "Set hinted handoff throttle in KB/s using nodetool sethintedhandoffthrottlekb."
+meta:
+  - name: keywords
+    content: "nodetool sethintedhandoffthrottlekb, hint throttle, hinted handoff, Cassandra"
+---
+
 # nodetool sethintedhandoffthrottlekb
 
 Sets the hinted handoff throttle rate in KB per second.

@@ -1,3 +1,10 @@
+---
+description: "Cassandra audit logging for compliance. Log authentication, queries, and schema changes."
+meta:
+  - name: keywords
+    content: "audit logging, Cassandra audit, compliance logging, query logging"
+---
+
 # Audit Logging
 
 Audit logging provides a detailed record of database activity for security monitoring, compliance, and forensic analysis. Introduced in Cassandra 4.0, the audit logging feature captures authentication attempts, authorization decisions, and CQL operations.

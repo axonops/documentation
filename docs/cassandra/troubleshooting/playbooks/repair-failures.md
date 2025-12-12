@@ -1,3 +1,10 @@
+---
+description: "Repair failures troubleshooting playbook. Debug failed repair operations."
+meta:
+  - name: keywords
+    content: "repair failures troubleshooting, failed repair, repair issues"
+---
+
 # Repair Failures
 
 Repairs synchronize data across replicas to ensure consistency. Repair failures leave data inconsistent and can lead to read inconsistencies.

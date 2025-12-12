@@ -1,3 +1,10 @@
+---
+description: "Data distribution in Cassandra. How partitioning and replication spread data across nodes."
+meta:
+  - name: keywords
+    content: "data distribution, Cassandra partitioning, data placement, ring"
+---
+
 # Data Distribution
 
 For detailed information about data distribution, see [Distributed Data](distributed-data/index.md).

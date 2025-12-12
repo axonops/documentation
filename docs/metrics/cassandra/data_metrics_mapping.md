@@ -1,3 +1,10 @@
+---
+description: "Cassandra data dashboard metrics mapping. Storage and SSTable metrics."
+meta:
+  - name: keywords
+    content: "data metrics, storage metrics, SSTable metrics, Cassandra"
+---
+
 # AxonOps Data Dashboard Metrics Mapping
 
 This document maps the metrics used in the AxonOps Data dashboard.

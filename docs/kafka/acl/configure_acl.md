@@ -1,3 +1,10 @@
+---
+description: "Configure Kafka ACLs with AxonOps. Manage access control list settings."
+meta:
+  - name: keywords
+    content: "Kafka ACL configure, access control, ACL settings"
+---
+
 # Topic Access Control List (ACL).
 
 ## Create an Access Control List (ACL).

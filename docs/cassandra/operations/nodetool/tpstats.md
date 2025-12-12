@@ -1,3 +1,10 @@
+---
+description: "Display thread pool statistics for Cassandra stages using nodetool tpstats command."
+meta:
+  - name: keywords
+    content: "nodetool tpstats, thread pool stats, Cassandra threads, SEDA stages"
+---
+
 # nodetool tpstats
 
 Displays statistics for thread pools and message queues, providing insight into Cassandra's internal task processing and potential bottlenecks.

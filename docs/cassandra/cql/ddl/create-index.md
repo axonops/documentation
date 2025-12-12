@@ -1,3 +1,10 @@
+---
+description: "CREATE INDEX syntax in CQL for secondary indexes and SAI indexes on Cassandra tables."
+meta:
+  - name: keywords
+    content: "CREATE INDEX, secondary index, SAI, Cassandra indexing"
+---
+
 # Index Commands
 
 Secondary indexes enable queries on columns that are not part of the primary key. Cassandra supports multiple index implementations, each with different performance characteristics and query capabilities.

@@ -1,3 +1,10 @@
+---
+description: "Kafka connections dashboard metrics mapping. Client connection statistics."
+meta:
+  - name: keywords
+    content: "Kafka connections, client connections, connection metrics"
+---
+
 # AxonOps Kafka Connections Dashboard Metrics Mapping
 
 ## Overview

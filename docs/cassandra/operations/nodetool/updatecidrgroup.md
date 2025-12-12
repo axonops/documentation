@@ -1,3 +1,10 @@
+---
+description: "Update CIDR group configuration in Cassandra using nodetool updatecidrgroup."
+meta:
+  - name: keywords
+    content: "nodetool updatecidrgroup, CIDR group, network security, Cassandra"
+---
+
 # nodetool updatecidrgroup
 
 Creates or updates a CIDR group with specified IP ranges.

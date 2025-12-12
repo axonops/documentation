@@ -1,3 +1,10 @@
+---
+description: "Configure LDAP authentication for AxonOps. Integrate with Active Directory or OpenLDAP."
+meta:
+  - name: keywords
+    content: "LDAP authentication, Active Directory, OpenLDAP, AxonOps login"
+---
+
 # LDAP Authentication
 
 To setup LDAP (Lightweight Directory Authentication Protocol) in AxonOps (On Premise Only) you will need to update the axon-server.yml configuration at the following location:

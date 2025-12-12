@@ -1,3 +1,10 @@
+---
+description: "Unified Compaction Strategy (UCS) in Cassandra 5.0. Next-generation adaptive compaction."
+meta:
+  - name: keywords
+    content: "UCS, Unified Compaction, Cassandra 5.0, adaptive compaction"
+---
+
 # Unified Compaction Strategy (UCS)
 
 UCS (Cassandra 5.0+) is an adaptive compaction strategy that combines concepts from STCS, LCS, and TWCS. It uses sharding and density-based triggering to provide flexible, efficient compaction across varying workloads.

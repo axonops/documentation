@@ -1,3 +1,10 @@
+---
+description: "Cassandra hardware recommendations. CPU, memory, storage, and network specs."
+meta:
+  - name: keywords
+    content: "Cassandra hardware, server specs, hardware requirements"
+---
+
 # Hardware Recommendations for Cassandra
 
 Select and configure hardware for optimal Cassandra performance.

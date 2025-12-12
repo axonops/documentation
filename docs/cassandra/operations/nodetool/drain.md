@@ -1,3 +1,10 @@
+---
+description: "Prepare Cassandra node for shutdown using nodetool drain. Flushes memtables and stops accepting writes."
+meta:
+  - name: keywords
+    content: "nodetool drain, Cassandra shutdown, flush memtables, graceful shutdown"
+---
+
 # nodetool drain
 
 Drains the node by flushing all memtables, stopping acceptance of writes, and preparing for shutdown.

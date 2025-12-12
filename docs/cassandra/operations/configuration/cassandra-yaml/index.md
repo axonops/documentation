@@ -1,3 +1,10 @@
+---
+description: "Cassandra.yaml configuration reference. All settings for Cassandra nodes."
+meta:
+  - name: keywords
+    content: "cassandra.yaml, Cassandra configuration, config reference"
+---
+
 # cassandra.yaml Complete Reference
 
 The `cassandra.yaml` file is the primary configuration for Apache Cassandra. This reference covers not just what each setting does, but *why* it might need changing, what can go wrong, and production-tested recommendations.

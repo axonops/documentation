@@ -1,3 +1,10 @@
+---
+description: "Display token ring information for Cassandra cluster using nodetool ring command."
+meta:
+  - name: keywords
+    content: "nodetool ring, token ring, Cassandra ring, cluster topology"
+---
+
 # nodetool ring
 
 Displays the token ring information showing token assignments for each node in the cluster.

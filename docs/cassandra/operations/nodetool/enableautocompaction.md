@@ -1,3 +1,10 @@
+---
+description: "Enable automatic compaction for Cassandra tables using nodetool enableautocompaction."
+meta:
+  - name: keywords
+    content: "nodetool enableautocompaction, enable compaction, Cassandra compaction, auto compaction"
+---
+
 # nodetool enableautocompaction
 
 Re-enables automatic compaction for specified keyspaces and tables.

@@ -1,0 +1,7 @@
+# SEO Meta Tags - Cassandra Section
+description: Complete Apache Cassandra documentation covering architecture, CQL, operations, performance tuning, security, and troubleshooting.
+
+# Keywords for Cassandra content
+meta:
+  - name: keywords
+    content: Apache Cassandra, NoSQL database, distributed database, CQL, Cassandra Query Language, data modeling, cluster management

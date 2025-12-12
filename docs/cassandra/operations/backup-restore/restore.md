@@ -1,3 +1,10 @@
+---
+description: "Cassandra restore procedures. Recover data from snapshots and backups."
+meta:
+  - name: keywords
+    content: "Cassandra restore, data recovery, snapshot restore"
+---
+
 # Restore Guide
 
 Restoring a Cassandra cluster requires understanding both the failure scenario and the appropriate recovery method. The correct approach depends on:

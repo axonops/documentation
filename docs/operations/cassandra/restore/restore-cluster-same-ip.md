@@ -1,3 +1,10 @@
+---
+description: "Restore Cassandra cluster with same IP addresses. In-place cluster recovery."
+meta:
+  - name: keywords
+    content: "restore same IP, cluster recovery, in-place restore, Cassandra"
+---
+
 # Restore a whole cluster from a remote backup
 
 *Follow this procedure when you have lost all nodes in a cluster but they have been recreated in the same cluster 

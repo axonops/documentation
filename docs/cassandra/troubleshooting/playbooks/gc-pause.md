@@ -1,3 +1,10 @@
+---
+description: "GC pause troubleshooting playbook. Diagnose garbage collection issues."
+meta:
+  - name: keywords
+    content: "GC pause troubleshooting, garbage collection, JVM GC issues"
+---
+
 # GC Pause Issues
 
 Long garbage collection pauses cause application stalls, timeouts, and can trigger node failures in extreme cases.

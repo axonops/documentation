@@ -1,3 +1,10 @@
+---
+description: "CQL native protocol specification. Binary protocol, request/response format, and protocol versions."
+meta:
+  - name: keywords
+    content: "CQL protocol, native protocol, binary protocol, Cassandra protocol"
+---
+
 # CQL Native Protocol Specification
 
 The CQL Native Protocol is a frame-based binary protocol that governs all client-server communication in Apache Cassandra. This specification documents the complete protocol including frame format, message types, data encoding, and version-specific features.

@@ -1,3 +1,10 @@
+---
+description: "Replica synchronization mechanisms in Cassandra including read repair, hints, and anti-entropy repair."
+meta:
+  - name: keywords
+    content: "replica sync, read repair, hinted handoff, anti-entropy repair"
+---
+
 # Replica Synchronization
 
 In distributed systems, replicas can diverge when they receive updates at different times—due to network partitions, node failures, or message ordering. Synchronization mechanisms detect these divergences and propagate missing information to restore convergence.

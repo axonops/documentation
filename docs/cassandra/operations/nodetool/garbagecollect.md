@@ -1,3 +1,10 @@
+---
+description: "Remove deleted data (tombstones) from Cassandra SSTables using nodetool garbagecollect."
+meta:
+  - name: keywords
+    content: "nodetool garbagecollect, remove tombstones, Cassandra garbage collection, disk space"
+---
+
 # nodetool garbagecollect
 
 Removes deleted data (tombstones) from SSTables without full compaction.

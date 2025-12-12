@@ -1,3 +1,10 @@
+---
+description: "Cassandra maintenance procedures. Routine tasks for healthy clusters."
+meta:
+  - name: keywords
+    content: "Cassandra maintenance, routine maintenance, cluster health"
+---
+
 # Cassandra Maintenance Guide
 
 All Cassandra maintenance happens online. Need to restart a node? Drain it first, and traffic routes to other replicas. Need to change configuration? Roll through nodes one at a time. Need to upgrade versions? Same approach—one node restarts while the others handle requests.

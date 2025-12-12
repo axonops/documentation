@@ -1,3 +1,10 @@
+---
+description: "Recompress SSTables with a new compression algorithm using nodetool recompress_sstables."
+meta:
+  - name: keywords
+    content: "nodetool recompress_sstables, recompress, SSTable compression, Cassandra"
+---
+
 # nodetool recompress_sstables
 
 Recompresses SSTables with current compression settings.

@@ -1,3 +1,10 @@
+---
+description: "Resume hinted handoff delivery in Cassandra using nodetool resumehandoff command."
+meta:
+  - name: keywords
+    content: "nodetool resumehandoff, resume hints, hinted handoff, Cassandra"
+---
+
 # nodetool resumehandoff
 
 Resumes the delivery of hints that was previously paused.

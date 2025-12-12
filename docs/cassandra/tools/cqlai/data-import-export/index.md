@@ -1,3 +1,10 @@
+---
+description: "CQLAI data import and export. Load and extract data with various formats."
+meta:
+  - name: keywords
+    content: "CQLAI import export, data loading, CSV, JSON"
+---
+
 # CQLAI Data Import/Export
 
 Import and export data using CQLAI with support for multiple formats.

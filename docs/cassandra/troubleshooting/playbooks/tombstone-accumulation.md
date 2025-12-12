@@ -1,3 +1,10 @@
+---
+description: "Tombstone accumulation troubleshooting playbook. Handle tombstone warnings."
+meta:
+  - name: keywords
+    content: "tombstone troubleshooting, tombstone accumulation, delete markers"
+---
+
 # Tombstone Accumulation
 
 Tombstones are markers for deleted data in Cassandra. Excessive tombstones degrade read performance and can cause `TombstoneOverwhelmingException`.

@@ -1,3 +1,10 @@
+---
+description: "Kafka management with AxonOps. Broker monitoring, topic management, and more."
+meta:
+  - name: keywords
+    content: "Kafka management, AxonOps Kafka, broker monitoring, topics"
+---
+
 # Apache Kafka Documentation
 
 Apache Kafka is a distributed event streaming platform used by thousands of companies for high-performance data pipelines, streaming analytics, data integration, and mission-critical applications.

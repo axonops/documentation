@@ -1,3 +1,10 @@
+---
+description: "Complete AxonOps SAML configuration with JumpCloud. Finalize SSO integration settings."
+meta:
+  - name: keywords
+    content: "AxonOps SAML, JumpCloud integration, SSO configuration, SAML settings"
+---
+
 # Configuring SAML authentication in AxonOps Cloud
 
 ### 1\. Go to "console.axonops.cloud"

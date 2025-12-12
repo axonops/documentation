@@ -1,3 +1,10 @@
+---
+description: "AxonOps architecture overview. Components and deployment topology."
+meta:
+  - name: keywords
+    content: "AxonOps architecture, components, deployment, topology"
+---
+
 # Architecture
 
 ## Before

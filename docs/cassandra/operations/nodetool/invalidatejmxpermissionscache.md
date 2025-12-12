@@ -1,3 +1,10 @@
+---
+description: "Clear JMX permissions cache in Cassandra using nodetool invalidatejmxpermissionscache."
+meta:
+  - name: keywords
+    content: "nodetool invalidatejmxpermissionscache, JMX cache, permissions, Cassandra"
+---
+
 # nodetool invalidatejmxpermissionscache
 
 Invalidates the JMX permissions cache on the node.

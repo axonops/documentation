@@ -1,3 +1,10 @@
+---
+description: "Cassandra coordinator dashboard metrics mapping. Request coordination metrics."
+meta:
+  - name: keywords
+    content: "coordinator metrics, request coordination, Cassandra"
+---
+
 # AxonOps Coordinator Dashboard Metrics Mapping
 
 This document maps the metrics used in the AxonOps Coordinator dashboard.

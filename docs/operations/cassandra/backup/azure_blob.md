@@ -1,3 +1,10 @@
+---
+description: "Configure Azure Blob Storage backup for Cassandra with AxonOps."
+meta:
+  - name: keywords
+    content: "Azure Blob backup, Cassandra backup, Azure storage, AxonOps"
+---
+
 ## What is Azure Blob Storage
 
 Azure Blob Storage is Microsoft's object storage solution for the cloud. Blob storage is optimized for storing massive amounts of unstructured data, such as text or binary data. Azure Blob Storage is ideal for serving images or documents, storing files for distributed access, streaming video and audio, storing data for backup and restore, disaster recovery, and archiving. Read more at [Azure Blob Storage documentation](https://docs.microsoft.com/en-us/azure/storage/blobs/)

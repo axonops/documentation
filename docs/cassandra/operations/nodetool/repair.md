@@ -1,3 +1,10 @@
+---
+description: "Run anti-entropy repair to synchronize data across Cassandra replicas. Essential for data consistency."
+meta:
+  - name: keywords
+    content: "nodetool repair, Cassandra repair, anti-entropy, data consistency, Merkle tree"
+---
+
 # nodetool repair
 
 Runs anti-entropy repair to synchronize data across replicas, ensuring consistency and preventing data resurrection from expired tombstones.

@@ -1,3 +1,10 @@
+---
+description: "Cassandra CQL dashboard metrics mapping. Query performance and prepared statements."
+meta:
+  - name: keywords
+    content: "CQL metrics, query performance, prepared statements"
+---
+
 # AxonOps CQL Dashboard Metrics Mapping
 
 This document maps the metrics used in the AxonOps CQL dashboard.

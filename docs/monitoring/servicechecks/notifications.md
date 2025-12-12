@@ -1,3 +1,10 @@
+---
+description: "Service check notifications in AxonOps. Configure alerts for service availability."
+meta:
+  - name: keywords
+    content: "service check notifications, availability alerts, AxonOps"
+---
+
 
 Service checks will notify with one of the three statuses:
 

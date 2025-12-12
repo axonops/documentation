@@ -1,3 +1,10 @@
+---
+description: "Cassandra monitoring overview. Tools, metrics, and best practices."
+meta:
+  - name: keywords
+    content: "Cassandra monitoring, cluster monitoring, observability"
+---
+
 # Monitoring Operations
 
 Effective Cassandra operations require continuous monitoring of cluster health, performance metrics, and resource utilization. This guide covers what to monitor, how to interpret metrics, and how to respond to alerts.

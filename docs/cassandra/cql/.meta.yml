@@ -1,0 +1,6 @@
+# SEO Meta Tags - CQL Reference
+description: Cassandra Query Language (CQL) reference documentation covering DDL, DML, data types, functions, indexing, and lightweight transactions.
+
+meta:
+  - name: keywords
+    content: CQL, Cassandra Query Language, SELECT, INSERT, UPDATE, DELETE, CREATE TABLE, CREATE KEYSPACE, secondary index, materialized view

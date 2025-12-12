@@ -1,3 +1,10 @@
+---
+description: "Display SSTable metadata and statistics using sstablemetadata. View compression, timestamps, and repair status."
+meta:
+  - name: keywords
+    content: "sstablemetadata, SSTable info, metadata display, Cassandra statistics"
+---
+
 # sstablemetadata
 
 Displays detailed metadata and statistics for SSTable files.

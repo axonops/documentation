@@ -1,3 +1,10 @@
+---
+description: "Display materialized view build progress using nodetool viewbuildstatus command."
+meta:
+  - name: keywords
+    content: "nodetool viewbuildstatus, view build status, materialized view, Cassandra"
+---
+
 # nodetool viewbuildstatus
 
 Displays the build status of materialized views.

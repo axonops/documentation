@@ -1,3 +1,10 @@
+---
+description: "Display column index size setting in Cassandra using nodetool getcolumnindexsize."
+meta:
+  - name: keywords
+    content: "nodetool getcolumnindexsize, column index, index size, Cassandra configuration"
+---
+
 # nodetool getcolumnindexsize
 
 Displays the current column index size threshold.

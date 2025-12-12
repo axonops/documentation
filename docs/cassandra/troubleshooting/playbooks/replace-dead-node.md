@@ -1,3 +1,10 @@
+---
+description: "Replace dead node troubleshooting playbook. Node replacement procedures."
+meta:
+  - name: keywords
+    content: "replace node troubleshooting, dead node, node replacement"
+---
+
 # Playbook: Replace a Dead Node
 
 This playbook provides step-by-step instructions for replacing a failed Cassandra node that cannot be recovered.

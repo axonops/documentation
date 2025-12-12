@@ -1,3 +1,10 @@
+---
+description: "Find CIDR groups containing an IP address using nodetool getcidrgroupsofip command."
+meta:
+  - name: keywords
+    content: "nodetool getcidrgroupsofip, CIDR groups, IP address, Cassandra network"
+---
+
 # nodetool getcidrgroupsofip
 
 Finds which CIDR groups contain a specific IP address.

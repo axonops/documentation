@@ -1,3 +1,10 @@
+---
+description: "Cassandra data modeling guide. Design patterns, best practices, and examples."
+meta:
+  - name: keywords
+    content: "Cassandra data modeling, schema design, data model patterns"
+---
+
 # Cassandra Data Modeling: The Complete Guide
 
 Data modeling in Cassandra is fundamentally different from relational databases—and getting it wrong is the primary cause of performance problems, operational nightmares, and failed Cassandra deployments. This guide teaches the query-driven paradigm that Cassandra requires.

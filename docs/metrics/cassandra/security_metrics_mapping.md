@@ -1,3 +1,10 @@
+---
+description: "Cassandra security dashboard metrics mapping. Authentication and authorization metrics."
+meta:
+  - name: keywords
+    content: "security metrics, authentication metrics, authorization, Cassandra"
+---
+
 # AxonOps Security Dashboard Metrics Mapping
 
 This document maps the metrics used in the AxonOps Security dashboard and event sources.

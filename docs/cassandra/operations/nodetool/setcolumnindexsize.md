@@ -1,3 +1,10 @@
+---
+description: "Set column index size threshold in Cassandra using nodetool setcolumnindexsize."
+meta:
+  - name: keywords
+    content: "nodetool setcolumnindexsize, column index, index size, Cassandra"
+---
+
 # nodetool setcolumnindexsize
 
 Sets the column index size threshold for SSTable partition index granularity.

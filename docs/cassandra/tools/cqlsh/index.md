@@ -1,3 +1,10 @@
+---
+description: "CQLSH command-line shell for Cassandra. Interactive CQL query interface."
+meta:
+  - name: keywords
+    content: "cqlsh, CQL shell, command line, interactive queries"
+---
+
 # cqlsh Reference Guide
 
 For those who have used `mysql` or `psql`, cqlsh will feel familiar—a command-line interface for running queries, exploring schemas, and managing data. It ships with Cassandra and has been the default way to interact with clusters since CQL replaced Thrift in 2011.

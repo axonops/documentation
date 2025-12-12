@@ -1,3 +1,10 @@
+---
+description: "Rebuild a Cassandra node by streaming data from other nodes using nodetool rebuild."
+meta:
+  - name: keywords
+    content: "nodetool rebuild, rebuild node, data streaming, Cassandra recovery"
+---
+
 # nodetool rebuild
 
 Rebuilds data on a node by streaming from other datacenters, used when adding nodes to a new datacenter.

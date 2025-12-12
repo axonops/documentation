@@ -1,0 +1,6 @@
+# SEO Meta Tags - Monitoring Section
+description: AxonOps monitoring documentation covering dashboards, alerting, logs, events, and service checks for Cassandra and Kafka clusters.
+
+meta:
+  - name: keywords
+    content: Cassandra monitoring, Kafka monitoring, metrics dashboards, alerting, log analysis, Grafana, service checks

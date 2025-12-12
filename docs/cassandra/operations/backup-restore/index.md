@@ -1,3 +1,10 @@
+---
+description: "Cassandra backup and restore overview. Strategies and tools for data protection."
+meta:
+  - name: keywords
+    content: "Cassandra backup restore, data protection, backup strategies"
+---
+
 # Backup and Restore Overview
 
 ## Why Backups Are Necessary

@@ -1,3 +1,10 @@
+---
+description: "Set compaction throughput limit in Cassandra using nodetool setcompactionthroughput."
+meta:
+  - name: keywords
+    content: "nodetool setcompactionthroughput, compaction throughput, throttle, Cassandra"
+---
+
 # nodetool setcompactionthroughput
 
 Sets the total compaction throughput limit across all compaction threads on a node.

@@ -1,3 +1,10 @@
+---
+description: "Display detailed statistics for Cassandra tables using nodetool tablestats command."
+meta:
+  - name: keywords
+    content: "nodetool tablestats, table statistics, Cassandra metrics, table info"
+---
+
 # nodetool tablestats
 
 Displays detailed statistics for tables including read/write latencies, SSTable counts, partition sizes, and space usage.

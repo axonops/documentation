@@ -1,3 +1,10 @@
+---
+description: "Scale Cassandra clusters by adding or removing nodes. Capacity planning and rebalancing strategies."
+meta:
+  - name: keywords
+    content: "Cassandra scaling, add nodes, remove nodes, capacity planning"
+---
+
 # Scaling Operations
 
 This section covers horizontal scaling procedures for Cassandra clusters, including capacity planning, node addition and removal strategies, and operational best practices for maintaining cluster balance during topology changes.

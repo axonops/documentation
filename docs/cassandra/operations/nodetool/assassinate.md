@@ -1,3 +1,10 @@
+---
+description: "Remove a dead node from the Cassandra cluster forcibly using nodetool assassinate. Use as last resort when removenode fails."
+meta:
+  - name: keywords
+    content: "nodetool assassinate, remove dead node, Cassandra cluster, force remove node"
+---
+
 # nodetool assassinate
 
 Forcibly removes a dead node from gossip when normal removal methods fail.

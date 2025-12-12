@@ -1,3 +1,10 @@
+---
+description: "Display inter-datacenter streaming throughput limit using nodetool getinterdcstreamthroughput."
+meta:
+  - name: keywords
+    content: "nodetool getinterdcstreamthroughput, inter-DC streaming, throughput, multi-datacenter"
+---
+
 # nodetool getinterdcstreamthroughput
 
 Displays the inter-datacenter stream throughput limit.

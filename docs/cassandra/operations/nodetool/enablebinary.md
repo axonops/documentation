@@ -1,3 +1,10 @@
+---
+description: "Enable CQL native transport (binary protocol) in Cassandra using nodetool enablebinary."
+meta:
+  - name: keywords
+    content: "nodetool enablebinary, enable CQL, native transport, Cassandra protocol"
+---
+
 # nodetool enablebinary
 
 Enables the CQL native transport, allowing client connections.

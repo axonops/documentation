@@ -1,3 +1,10 @@
+---
+description: "Complete SSTable tools reference for Apache Cassandra including sstableloader, sstabledump, sstablescrub, and other offline utilities."
+meta:
+  - name: keywords
+    content: "SSTable tools, Cassandra utilities, sstableloader, sstabledump, sstablescrub, offline tools"
+---
+
 # SSTable Tools
 
 Apache Cassandra provides a suite of command-line utilities for managing SSTables (Sorted String Tables) directly on disk. These tools operate at the storage layer, enabling administrators to inspect, repair, migrate, and manipulate SSTable files outside of normal Cassandra operations.

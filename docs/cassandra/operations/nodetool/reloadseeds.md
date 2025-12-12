@@ -1,3 +1,10 @@
+---
+description: "Reload seed node list from configuration using nodetool reloadseeds command."
+meta:
+  - name: keywords
+    content: "nodetool reloadseeds, reload seeds, seed nodes, Cassandra configuration"
+---
+
 # nodetool reloadseeds
 
 Reloads the seed node list from configuration.

@@ -1,3 +1,10 @@
+---
+description: "SELECT statement syntax in CQL. Query data with WHERE, ORDER BY, LIMIT, and ALLOW FILTERING."
+meta:
+  - name: keywords
+    content: "CQL SELECT, query data, WHERE clause, Cassandra query, ALLOW FILTERING"
+---
+
 # SELECT
 
 The SELECT statement retrieves rows and columns from Cassandra tables. Unlike SQL databases where queries are flexible, Cassandra requires queries to align with the table's primary key structure for efficient execution.

@@ -1,3 +1,10 @@
+---
+description: "Install AxonOps agent for DataStax Enterprise. DSE monitoring setup guide."
+meta:
+  - name: keywords
+    content: "DSE agent, DataStax Enterprise, AxonOps DSE, monitoring"
+---
+
 # axon-java-agent for DSE installation
 
 This agent will enable metrics collection from DSE and enable adaptive repairs and backups.

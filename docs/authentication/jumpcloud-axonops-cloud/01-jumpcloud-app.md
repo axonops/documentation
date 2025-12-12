@@ -1,3 +1,10 @@
+---
+description: "Create JumpCloud SAML application for AxonOps Cloud integration. Configure SSO connector."
+meta:
+  - name: keywords
+    content: "JumpCloud app, SAML application, AxonOps SSO, connector setup"
+---
+
 # JumpCloud SAML Configuration
 
 ### 1\. Login to JumpCloud as an administrator

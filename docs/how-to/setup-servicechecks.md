@@ -1,3 +1,10 @@
+---
+description: "Set up service checks in AxonOps. Monitor service availability and health."
+meta:
+  - name: keywords
+    content: "service checks, health monitoring, availability checks, AxonOps"
+---
+
 # Setup Service Checks
 
 

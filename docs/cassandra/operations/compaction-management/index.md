@@ -1,3 +1,10 @@
+---
+description: "Cassandra compaction management. Strategies, tuning, and monitoring compaction."
+meta:
+  - name: keywords
+    content: "Cassandra compaction, compaction strategies, STCS, LCS, TWCS"
+---
+
 # Compaction Management
 
 This document covers compaction configuration, tuning, strategy changes, and troubleshooting procedures.

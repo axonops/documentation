@@ -1,3 +1,10 @@
+---
+description: "Display batch log replay throttle setting in Cassandra using nodetool getbatchlogreplaythrottle."
+meta:
+  - name: keywords
+    content: "nodetool getbatchlogreplaythrottle, batch log, replay throttle, Cassandra"
+---
+
 # nodetool getbatchlogreplaythrottle
 
 Displays the batchlog replay throttle in KB/s.

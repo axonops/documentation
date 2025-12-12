@@ -1,3 +1,10 @@
+---
+description: "CREATE KEYSPACE syntax and options in CQL. Configure replication strategy and datacenter settings."
+meta:
+  - name: keywords
+    content: "CREATE KEYSPACE, CQL keyspace, replication strategy, NetworkTopologyStrategy"
+---
+
 # Keyspace Commands
 
 Keyspaces are the top-level namespace in Cassandra, analogous to databases in relational systems. Each keyspace defines replication strategy and options that apply to all tables within it.

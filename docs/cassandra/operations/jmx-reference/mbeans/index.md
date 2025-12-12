@@ -1,3 +1,10 @@
+---
+description: "Cassandra MBeans reference. All available management beans and operations."
+meta:
+  - name: keywords
+    content: "Cassandra MBeans, JMX management, MBean operations"
+---
+
 # Cassandra MBeans Reference
 
 This section provides detailed documentation for all major MBeans exposed by Apache Cassandra. Each MBean includes attributes, operations, and practical examples.

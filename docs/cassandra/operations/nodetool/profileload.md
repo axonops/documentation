@@ -1,3 +1,10 @@
+---
+description: "Profile read/write load for tables in Cassandra using nodetool profileload command."
+meta:
+  - name: keywords
+    content: "nodetool profileload, load profiling, table statistics, Cassandra performance"
+---
+
 # nodetool profileload
 
 Profiles read and write operations on a table for a specified duration to identify hot partitions and access patterns.

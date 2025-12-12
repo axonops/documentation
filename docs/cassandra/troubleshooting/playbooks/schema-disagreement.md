@@ -1,3 +1,10 @@
+---
+description: "Schema disagreement troubleshooting playbook. Resolve schema conflicts."
+meta:
+  - name: keywords
+    content: "schema disagreement, schema conflict, metadata issues"
+---
+
 # Schema Disagreement
 
 Schema disagreement occurs when nodes in a cluster have different versions of the schema. This can cause query failures, inconsistent behavior, and operational issues.

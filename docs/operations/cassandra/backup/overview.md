@@ -1,3 +1,10 @@
+---
+description: "Cassandra backup overview with AxonOps. Automated backup features and options."
+meta:
+  - name: keywords
+    content: "Cassandra backup overview, automated backup, AxonOps backup"
+---
+
 AxonOps provides scheduled backup funtionality for your Cassandra data to local and remote storage options.
 
 The Backup feature is accessible via ***Operations > Backups***.

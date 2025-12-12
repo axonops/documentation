@@ -1,3 +1,10 @@
+---
+description: "CQL quickstart guide. Learn basic Cassandra Query Language operations."
+meta:
+  - name: keywords
+    content: "CQL quickstart, Cassandra Query Language, CQL basics"
+---
+
 # CQL Quickstart Guide
 
 Learn Cassandra Query Language (CQL) fundamentals in this hands-on tutorial. CQL is similar to SQL but designed for Cassandra's distributed architecture.

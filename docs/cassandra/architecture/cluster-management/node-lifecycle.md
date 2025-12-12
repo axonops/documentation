@@ -1,3 +1,10 @@
+---
+description: "Cassandra node lifecycle states: joining, leaving, moving, and decommissioning operations."
+meta:
+  - name: keywords
+    content: "node lifecycle, Cassandra node states, joining, leaving, decommission"
+---
+
 # Node Lifecycle
 
 This section describes the complete lifecycle of a Cassandra node from initial cluster join through eventual removal. Understanding these state transitions is essential for operational management, troubleshooting, and capacity planning.

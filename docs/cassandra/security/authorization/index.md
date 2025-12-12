@@ -1,3 +1,10 @@
+---
+description: "Cassandra authorization and role-based access control. GRANT, REVOKE, and permission management."
+meta:
+  - name: keywords
+    content: "Cassandra authorization, RBAC, permissions, GRANT, REVOKE"
+---
+
 # Cassandra Authorization
 
 Role-based access control (RBAC) in Cassandra enables fine-grained permission management across clusters. This guide covers practical strategies for designing role hierarchies, implementing separation of duties, and integrating with external credential management systems.

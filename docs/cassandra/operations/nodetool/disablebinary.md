@@ -1,3 +1,10 @@
+---
+description: "Disable CQL native transport (binary protocol) in Cassandra using nodetool disablebinary."
+meta:
+  - name: keywords
+    content: "nodetool disablebinary, disable CQL, native transport, Cassandra protocol"
+---
+
 # nodetool disablebinary
 
 Disables the CQL native transport, stopping the node from accepting new client connections.

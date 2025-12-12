@@ -1,3 +1,10 @@
+---
+description: "Cassandra snitch configuration. Data center and rack awareness settings."
+meta:
+  - name: keywords
+    content: "Cassandra snitch, rack awareness, data center topology"
+---
+
 # Cassandra Snitch Configuration
 
 The snitch determines how Cassandra maps nodes to datacenters and racks.

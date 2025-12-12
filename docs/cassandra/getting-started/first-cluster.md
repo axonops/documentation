@@ -1,3 +1,10 @@
+---
+description: "Create your first Cassandra cluster. Step-by-step guide for beginners."
+meta:
+  - name: keywords
+    content: "first Cassandra cluster, cluster setup, beginner guide"
+---
+
 # Setting Up a Cassandra Cluster
 
 This guide walks through building a Cassandra cluster from scratch. It covers not just the "how" but the "why" behind each configuration choice, common mistakes that cause problems later, and how to verify the cluster is working correctly.

@@ -1,3 +1,10 @@
+---
+description: "Recalculate LCS levels for SSTables offline using sstableofflinerelevel. Optimize leveled compaction."
+meta:
+  - name: keywords
+    content: "sstableofflinerelevel, LCS relevel, leveled compaction, Cassandra optimization"
+---
+
 # sstableofflinerelevel
 
 Recalculates and reassigns optimal levels to SSTables for Leveled Compaction Strategy (LCS).

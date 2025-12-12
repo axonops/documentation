@@ -1,3 +1,10 @@
+---
+description: "AxonOps Workbench for Cassandra development. GUI tool for schema design and query building."
+meta:
+  - name: keywords
+    content: "AxonOps Workbench, Cassandra GUI, schema design, query builder"
+---
+
 # AxonOps Workbench
 
 AxonOps Workbench is an open-source desktop application for Apache Cassandra development. It provides a graphical interface for schema management, query execution, and data exploration without requiring command-line interaction.

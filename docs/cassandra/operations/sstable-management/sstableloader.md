@@ -1,3 +1,10 @@
+---
+description: "Bulk load SSTable data into Cassandra cluster using sstableloader. Stream data from backups or external sources."
+meta:
+  - name: keywords
+    content: "sstableloader, bulk load, Cassandra import, data streaming, SSTable loading"
+---
+
 # sstableloader
 
 Bulk loads SSTables from a directory into a live Cassandra cluster.

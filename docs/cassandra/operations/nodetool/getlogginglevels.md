@@ -1,3 +1,10 @@
+---
+description: "Display current logging levels in Cassandra using nodetool getlogginglevels command."
+meta:
+  - name: keywords
+    content: "nodetool getlogginglevels, logging levels, Cassandra logs, debug logging"
+---
+
 # nodetool getlogginglevels
 
 Displays the current logging levels for all loggers.

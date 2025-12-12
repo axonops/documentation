@@ -1,3 +1,10 @@
+---
+description: "Repair corrupted SSTables in Cassandra using sstablescrub. Remove invalid data and fix corruption."
+meta:
+  - name: keywords
+    content: "sstablescrub, SSTable repair, fix corruption, Cassandra recovery"
+---
+
 # sstablescrub
 
 Offline utility to repair corrupted SSTables by removing damaged data while preserving valid rows.

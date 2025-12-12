@@ -1,3 +1,10 @@
+---
+description: "INSERT statement syntax in CQL. Add data with TTL, timestamps, and IF NOT EXISTS conditions."
+meta:
+  - name: keywords
+    content: "CQL INSERT, insert data, TTL, timestamp, Cassandra write"
+---
+
 # INSERT
 
 The INSERT statement adds rows to Cassandra tables. Unlike SQL databases, Cassandra's INSERT performs an **upsert** operation—inserting a new row if the primary key doesn't exist, or updating the existing row if it does.

@@ -1,3 +1,10 @@
+---
+description: "Connect to Cassandra JMX. Remote JMX setup and authentication configuration."
+meta:
+  - name: keywords
+    content: "Cassandra JMX connection, remote JMX, JMX authentication"
+---
+
 # Connecting to Cassandra JMX
 
 Access Cassandra metrics and operations via JMX.

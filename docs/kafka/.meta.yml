@@ -1,0 +1,6 @@
+# SEO Meta Tags - Kafka Section
+description: Apache Kafka documentation for AxonOps including broker management, topic configuration, consumer groups, and ACL management.
+
+meta:
+  - name: keywords
+    content: Apache Kafka, message broker, streaming platform, Kafka topics, consumer groups, Kafka ACL, broker management

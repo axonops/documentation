@@ -1,3 +1,10 @@
+---
+description: "Cassandra cluster management. Scaling, topology changes, and node operations."
+meta:
+  - name: keywords
+    content: "Cassandra cluster management, cluster operations, node management"
+---
+
 # Cluster Management Operations
 
 This guide covers operational procedures for managing Cassandra cluster topology: adding capacity, removing nodes, replacing failed hardware, and maintaining cluster health.

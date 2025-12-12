@@ -1,3 +1,10 @@
+---
+description: "Materialized views architecture in Cassandra. How views are built and maintained automatically."
+meta:
+  - name: keywords
+    content: "materialized views, view architecture, Cassandra views, automatic updates"
+---
+
 # Materialized Views
 
 Materialized Views (MVs) provide automatic denormalization in Cassandra, maintaining synchronized copies of data with different primary keys. While offering query flexibility, MVs have significant operational considerations that require careful evaluation.

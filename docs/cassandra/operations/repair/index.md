@@ -1,3 +1,10 @@
+---
+description: "Cassandra repair overview. Keep data consistent across replicas."
+meta:
+  - name: keywords
+    content: "Cassandra repair, data consistency, repair operations"
+---
+
 # Repair Operations Guide
 
 This guide covers the operational aspects of running and managing Cassandra repair: command syntax, scheduling strategies, monitoring, and troubleshooting. For the theoretical foundations of how repair works—including Merkle trees, anti-entropy mechanisms, and replica synchronization—refer to the [Replica Synchronization](../../architecture/distributed-data/replica-synchronization.md) documentation in the Architecture section.

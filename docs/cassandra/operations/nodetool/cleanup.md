@@ -1,3 +1,10 @@
+---
+description: "Remove data that no longer belongs to a node after topology changes using nodetool cleanup. Run after adding nodes."
+meta:
+  - name: keywords
+    content: "nodetool cleanup, Cassandra cleanup, remove old data, topology change"
+---
+
 # nodetool cleanup
 
 Removes data that no longer belongs to this node after a topology change, such as adding new nodes to the cluster.

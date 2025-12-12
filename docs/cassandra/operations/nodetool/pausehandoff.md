@@ -1,3 +1,10 @@
+---
+description: "Pause hinted handoff delivery in Cassandra using nodetool pausehandoff command."
+meta:
+  - name: keywords
+    content: "nodetool pausehandoff, pause hints, hinted handoff, Cassandra"
+---
+
 # nodetool pausehandoff
 
 Pauses the delivery of hints to recovering nodes.

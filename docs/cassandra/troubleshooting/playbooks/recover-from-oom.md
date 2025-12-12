@@ -1,3 +1,10 @@
+---
+description: "OOM recovery troubleshooting playbook. Recover from out-of-memory crashes."
+meta:
+  - name: keywords
+    content: "OOM recovery, out of memory, crash recovery"
+---
+
 # Recover from OOM
 
 OutOfMemoryError (OOM) crashes occur when the JVM exhausts available heap memory. This playbook covers immediate recovery and prevention.

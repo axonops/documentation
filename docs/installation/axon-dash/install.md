@@ -1,3 +1,10 @@
+---
+description: "Install AxonOps Dashboard. Web interface installation for monitoring and management."
+meta:
+  - name: keywords
+    content: "AxonOps Dashboard install, web interface, installation"
+---
+
 # AxonOps Dashboard Installation
 
 The AxonOps Dashboard (`axon-dash`) is a GUI service that is installed as a separate service to AxonOps Server (`axon-server`).

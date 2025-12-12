@@ -1,3 +1,10 @@
+---
+description: "Cassandra troubleshooting guide. Diagnose and resolve common issues."
+meta:
+  - name: keywords
+    content: "Cassandra troubleshooting, diagnosis, problem resolution"
+---
+
 # Troubleshooting Guide
 
 This guide provides systematic approaches to diagnosing and resolving common Cassandra operational issues.

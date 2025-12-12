@@ -1,3 +1,10 @@
+---
+description: "Certificate management for Cassandra TLS. Generate, sign, and rotate certificates."
+meta:
+  - name: keywords
+    content: "Cassandra certificates, certificate generation, certificate rotation, TLS"
+---
+
 # Certificate Types and Generation
 
 This section covers the types of certificates used in Cassandra deployments and provides procedures for generating them.

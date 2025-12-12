@@ -1,3 +1,10 @@
+---
+description: "AxonOps Enterprise Edition features. Advanced monitoring, backup, and management for production clusters."
+meta:
+  - name: keywords
+    content: "AxonOps Enterprise, enterprise features, production monitoring"
+---
+
 # Enterprise Edition
 
 Scale-out Cassandra with Confidence!

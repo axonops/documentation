@@ -1,3 +1,10 @@
+---
+description: "Cassandra restore overview with AxonOps. Restore from backups to recover data."
+meta:
+  - name: keywords
+    content: "Cassandra restore, data recovery, AxonOps restore, backup restore"
+---
+
 AxonOps provides the ability to restore from local snapshots and remote backups.
 
 The Restore feature is accessible via ***Operations > Restore***

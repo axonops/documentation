@@ -1,3 +1,10 @@
+---
+description: "Hostname verification in Cassandra TLS. Server identity validation and SAN configuration."
+meta:
+  - name: keywords
+    content: "hostname verification, certificate verification, SAN, Cassandra TLS"
+---
+
 # Hostname Verification
 
 Hostname verification ensures that the certificate presented by a peer matches the expected identity. Without hostname verification, an attacker with any valid certificate signed by a trusted CA could impersonate any node.

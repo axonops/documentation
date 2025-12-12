@@ -1,3 +1,10 @@
+---
+description: "Set min/max compaction thresholds for a table using nodetool setcompactionthreshold."
+meta:
+  - name: keywords
+    content: "nodetool setcompactionthreshold, compaction threshold, Cassandra compaction"
+---
+
 # nodetool setcompactionthreshold
 
 Sets the minimum and maximum SSTable count thresholds that trigger compaction for a table using SizeTieredCompactionStrategy.

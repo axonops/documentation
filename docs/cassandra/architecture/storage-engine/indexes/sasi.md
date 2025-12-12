@@ -1,3 +1,10 @@
+---
+description: "SASI (SSTable Attached Secondary Index) architecture in Cassandra. Text search and range queries."
+meta:
+  - name: keywords
+    content: "SASI, SSTable Attached Secondary Index, text search, Cassandra"
+---
+
 # SASI (SSTable Attached Secondary Index)
 
 SASI (SSTable Attached Secondary Index) was introduced in Cassandra 3.4 (2016) as an experimental indexing system providing range queries and text search capabilities. While offering significant improvements over legacy secondary indexes, SASI remains experimental and has known limitations.

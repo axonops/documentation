@@ -1,3 +1,10 @@
+---
+description: "Display Cassandra version information using nodetool version command."
+meta:
+  - name: keywords
+    content: "nodetool version, Cassandra version, version info"
+---
+
 # nodetool version
 
 Displays the Cassandra version running on the node.

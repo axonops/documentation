@@ -1,3 +1,10 @@
+---
+description: "CQLAI quickstart guide. Get productive in minutes."
+meta:
+  - name: keywords
+    content: "CQLAI quickstart, quick start, getting productive"
+---
+
 # CQLAI Quickstart
 
 Get started with CQLAI in under 5 minutes.

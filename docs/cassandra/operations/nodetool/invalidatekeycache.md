@@ -1,3 +1,10 @@
+---
+description: "Clear key cache in Cassandra using nodetool invalidatekeycache command."
+meta:
+  - name: keywords
+    content: "nodetool invalidatekeycache, key cache, clear cache, Cassandra performance"
+---
+
 # nodetool invalidatekeycache
 
 Invalidates the key cache on the node.

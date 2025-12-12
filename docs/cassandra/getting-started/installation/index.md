@@ -1,3 +1,10 @@
+---
+description: "Cassandra installation guide. Install on Linux, macOS, and Windows."
+meta:
+  - name: keywords
+    content: "Cassandra installation, install Cassandra, setup guide"
+---
+
 # Installing Apache Cassandra
 
 This guide provides comprehensive installation instructions for Apache Cassandra, covering development setups through production deployments. It explains not just *how* to install, but *why* certain configurations matter and what problems occur when steps are skipped.

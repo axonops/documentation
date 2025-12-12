@@ -1,3 +1,10 @@
+---
+description: "Manage and monitor repair operations in Cassandra using nodetool repair_admin."
+meta:
+  - name: keywords
+    content: "nodetool repair_admin, repair management, repair status, Cassandra"
+---
+
 # nodetool repair_admin
 
 Manages and monitors repair sessions on the cluster.

@@ -1,3 +1,10 @@
+---
+description: "Common Cassandra errors reference. Error messages and resolutions."
+meta:
+  - name: keywords
+    content: "Cassandra errors, common errors, error messages"
+---
+
 # Common Cassandra Errors
 
 Reference guide for frequently encountered Cassandra errors, their causes, and solutions.

@@ -1,3 +1,10 @@
+---
+description: "Display guardrails configuration in Cassandra using nodetool getguardrailsconfig."
+meta:
+  - name: keywords
+    content: "nodetool getguardrailsconfig, guardrails, Cassandra limits, configuration"
+---
+
 # nodetool getguardrailsconfig
 
 Displays the current guardrails configuration.

@@ -1,3 +1,10 @@
+---
+description: "Cassandra speculative execution policy. Reduce tail latencies with parallel queries."
+meta:
+  - name: keywords
+    content: "speculative execution, Cassandra latency, parallel queries"
+---
+
 # Speculative Execution Policy
 
 Speculative execution reduces tail latency by sending redundant requests to multiple nodes. When one node is slow, another may respond faster, improving perceived latency without waiting for timeouts.

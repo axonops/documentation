@@ -1,3 +1,10 @@
+---
+description: "View compaction history in Cassandra using nodetool compactionhistory. Analyze past compaction operations."
+meta:
+  - name: keywords
+    content: "nodetool compactionhistory, compaction history, Cassandra compaction, SSTable history"
+---
+
 # nodetool compactionhistory
 
 Displays the history of completed compaction operations.

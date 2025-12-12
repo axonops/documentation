@@ -1,3 +1,10 @@
+---
+description: "Delete snapshot files from Cassandra nodes using nodetool clearsnapshot. Free disk space after backups."
+meta:
+  - name: keywords
+    content: "nodetool clearsnapshot, delete snapshots, Cassandra backup, disk space"
+---
+
 # nodetool clearsnapshot
 
 Removes one or more snapshots from the node to reclaim disk space.

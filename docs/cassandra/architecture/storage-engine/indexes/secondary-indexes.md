@@ -1,3 +1,10 @@
+---
+description: "Secondary index (2i) architecture in Cassandra. Local index implementation and query coordination."
+meta:
+  - name: keywords
+    content: "secondary index, 2i, local index, Cassandra indexing"
+---
+
 # Secondary Indexes (2i)
 
 Secondary Indexes, often called "2i" (secondary index), are Cassandra's original secondary indexing implementation introduced in version 0.7 (2011). While still supported, they have significant limitations that make them unsuitable for many production workloads.

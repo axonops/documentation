@@ -1,3 +1,10 @@
+---
+description: "AxonOps notification integrations overview. Connect to Slack, PagerDuty, Teams, and more."
+meta:
+  - name: keywords
+    content: "integrations overview, notifications, alerting channels, AxonOps"
+---
+
 AxonOps provide various integrations for the notifications.
 
 The functionality is accessible via ***Settings > Integrations***

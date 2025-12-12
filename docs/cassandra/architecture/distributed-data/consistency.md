@@ -1,3 +1,10 @@
+---
+description: "Consistency levels in Cassandra. ONE, QUORUM, ALL, LOCAL_QUORUM explained with trade-offs."
+meta:
+  - name: keywords
+    content: "consistency level, Cassandra consistency, QUORUM, eventual consistency"
+---
+
 # Consistency
 
 Consistency in Cassandra is tunable—the number of replicas that must acknowledge reads and writes is configurable per operation. This flexibility allows trading consistency for availability and latency.

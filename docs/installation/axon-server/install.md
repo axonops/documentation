@@ -1,3 +1,10 @@
+---
+description: "AxonOps Server installation overview. Requirements and deployment options."
+meta:
+  - name: keywords
+    content: "AxonOps Server, installation overview, deployment"
+---
+
 ## Step 3 - axon-server configurations
 
 

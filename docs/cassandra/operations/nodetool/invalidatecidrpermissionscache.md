@@ -1,3 +1,10 @@
+---
+description: "Clear CIDR permissions cache in Cassandra using nodetool invalidatecidrpermissionscache."
+meta:
+  - name: keywords
+    content: "nodetool invalidatecidrpermissionscache, CIDR cache, permissions cache, Cassandra"
+---
+
 # nodetool invalidatecidrpermissionscache
 
 Invalidates the CIDR permissions cache on the node.

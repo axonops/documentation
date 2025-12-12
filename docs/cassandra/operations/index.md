@@ -1,3 +1,10 @@
+---
+description: "Cassandra operations guide. Day-to-day management and maintenance procedures."
+meta:
+  - name: keywords
+    content: "Cassandra operations, cluster management, maintenance"
+---
+
 # Cassandra Operations Guide
 
 Cassandra does not need scheduled downtime. Nodes can be added, removed, upgraded, and reconfigured while the cluster serves traffic. But this flexibility comes with responsibility—Cassandra does not maintain itself.

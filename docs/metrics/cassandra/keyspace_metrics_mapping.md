@@ -1,3 +1,10 @@
+---
+description: "Cassandra keyspace dashboard metrics mapping. Per-keyspace statistics."
+meta:
+  - name: keywords
+    content: "keyspace metrics, per-keyspace stats, Cassandra"
+---
+
 # AxonOps Keyspace Dashboard Metrics Mapping
 
 This document maps the metrics used in the AxonOps Keyspace dashboard.

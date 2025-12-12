@@ -1,3 +1,10 @@
+---
+description: "Display JVM garbage collection statistics for Cassandra using nodetool gcstats command."
+meta:
+  - name: keywords
+    content: "nodetool gcstats, GC statistics, JVM garbage collection, Cassandra performance"
+---
+
 # nodetool gcstats
 
 Displays garbage collection statistics for the Cassandra JVM.

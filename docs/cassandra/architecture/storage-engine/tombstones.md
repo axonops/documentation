@@ -1,3 +1,10 @@
+---
+description: "Tombstones in Cassandra for delete operations. gc_grace_seconds, tombstone accumulation, and best practices."
+meta:
+  - name: keywords
+    content: "Cassandra tombstones, delete marker, gc_grace_seconds, tombstone accumulation"
+---
+
 # Tombstones
 
 Tombstones are deletion markers in Cassandra. Because SSTables are immutable, deleted data cannot be removed immediately—a tombstone is written to mark data as deleted, which is applied during reads and removed during compaction.

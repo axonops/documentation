@@ -1,3 +1,10 @@
+---
+description: "CQL built-in functions reference including aggregates, time functions, type conversions, and UUID generation."
+meta:
+  - name: keywords
+    content: "CQL functions, built-in functions, uuid(), now(), toTimestamp(), Cassandra"
+---
+
 # CQL Functions Reference
 
 CQL includes built-in functions for common operations: generating UUIDs, working with timestamps, computing aggregates. The most useful ones `now()` for time-based UUIDs, `token()` for understanding data distribution, `toTimestamp()` for converting between time formats show up constantly in production schemas.

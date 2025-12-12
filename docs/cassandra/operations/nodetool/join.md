@@ -1,3 +1,10 @@
+---
+description: "Complete node bootstrap and join the Cassandra ring using nodetool join command."
+meta:
+  - name: keywords
+    content: "nodetool join, join ring, Cassandra bootstrap, node joining"
+---
+
 # nodetool join
 
 Causes a node that was started with `join_ring: false` to join the cluster ring.

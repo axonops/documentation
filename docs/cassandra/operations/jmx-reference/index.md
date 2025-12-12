@@ -1,3 +1,10 @@
+---
+description: "Cassandra JMX reference. MBeans, metrics, and management operations."
+meta:
+  - name: keywords
+    content: "Cassandra JMX, MBeans reference, JMX metrics"
+---
+
 # Cassandra JMX Reference
 
 JMX is how to see inside Cassandra. Every metric the database tracks—request latencies, compaction progress, thread pool utilization, disk usage—is exposed through JMX. When `nodetool status` runs, it is querying JMX. When Prometheus scrapes metrics, it is reading JMX.

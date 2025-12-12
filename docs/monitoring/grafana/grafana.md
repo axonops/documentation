@@ -1,3 +1,10 @@
+---
+description: "View AxonOps metrics in Grafana. Export and visualize Cassandra and Kafka metrics."
+meta:
+  - name: keywords
+    content: "Grafana integration, AxonOps Grafana, metrics visualization"
+---
+
 # Accessing AxonOps Metrics with Grafana
 
 ## Generate API Token

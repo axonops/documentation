@@ -1,3 +1,10 @@
+---
+description: "Lightweight transactions (LWT) in CQL using IF conditions. Compare-and-set operations with Paxos."
+meta:
+  - name: keywords
+    content: "lightweight transactions, LWT, IF EXISTS, IF NOT EXISTS, Paxos, Cassandra"
+---
+
 # Lightweight Transactions
 
 Lightweight Transactions (LWT) provide linearizable consistency through compare-and-set operations. They use the Paxos consensus protocol to ensure that only one concurrent operation succeeds when multiple clients attempt to modify the same data.

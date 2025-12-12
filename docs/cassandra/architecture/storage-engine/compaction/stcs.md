@@ -1,3 +1,10 @@
+---
+description: "Size-Tiered Compaction Strategy (STCS) in Cassandra. How it works, pros, cons, and configuration."
+meta:
+  - name: keywords
+    content: "STCS, Size-Tiered Compaction, Cassandra compaction, write-heavy workloads"
+---
+
 # Size-Tiered Compaction Strategy (STCS)
 
 STCS is the default compaction strategy. It groups SSTables of similar size and compacts them together, optimizing for write throughput at the cost of read amplification.

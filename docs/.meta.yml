@@ -1,0 +1,21 @@
+# SEO Meta Tags - Root Level (inherited by all pages unless overridden)
+description: AxonOps documentation - comprehensive guides for monitoring, maintaining, and backing up Apache Cassandra and Apache Kafka clusters.
+
+# Open Graph / Social Media
+meta:
+  - property: og:type
+    content: website
+  - property: og:site_name
+    content: AxonOps Documentation
+  - property: og:locale
+    content: en_US
+  - name: twitter:card
+    content: summary_large_image
+  - name: twitter:site
+    content: "@AxonOpsSoftware"
+  - name: robots
+    content: index, follow
+  - name: author
+    content: AxonOps Limited
+  - name: publisher
+    content: AxonOps Limited

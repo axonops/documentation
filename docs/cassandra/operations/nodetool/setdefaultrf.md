@@ -1,3 +1,10 @@
+---
+description: "Set default replication factor for auto-created keyspaces using nodetool setdefaultrf."
+meta:
+  - name: keywords
+    content: "nodetool setdefaultrf, replication factor, default RF, Cassandra"
+---
+
 # nodetool setdefaultrf
 
 Sets the default replication factor used by NetworkTopologyStrategy auto-expansion.

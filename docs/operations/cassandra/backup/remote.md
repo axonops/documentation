@@ -1,3 +1,10 @@
+---
+description: "Remote backup destinations for Cassandra in AxonOps. Cloud storage options."
+meta:
+  - name: keywords
+    content: "remote backup, cloud backup, Cassandra backup destinations"
+---
+
 ###  Remote backups 
 
 > Note that **axonops** user will need read access on Cassandra data folders to be able to perform a remote backup.

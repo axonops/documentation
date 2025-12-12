@@ -1,3 +1,10 @@
+---
+description: "Cassandra repair options reference. All nodetool repair flags and settings."
+meta:
+  - name: keywords
+    content: "Cassandra repair options, nodetool repair flags, repair settings"
+---
+
 # Repair Options Reference
 
 This page provides detailed explanations of all repair command options, including visual diagrams showing how each option affects repair behavior.

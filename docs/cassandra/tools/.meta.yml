@@ -1,0 +1,6 @@
+# SEO Meta Tags - Cassandra Tools
+description: Apache Cassandra tools documentation including cqlsh, cassandra-stress, CQLAI, and SSTable utilities for development and operations.
+
+meta:
+  - name: keywords
+    content: cqlsh, cassandra-stress, CQLAI, SSTable tools, Cassandra utilities, stress testing

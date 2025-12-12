@@ -1,3 +1,10 @@
+---
+description: "Kafka replication dashboard metrics mapping. ISR and replica statistics."
+meta:
+  - name: keywords
+    content: "Kafka replication metrics, ISR, replica stats"
+---
+
 # AxonOps Kafka Replication Dashboard Metrics Mapping
 
 ## Overview

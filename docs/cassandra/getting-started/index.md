@@ -1,3 +1,10 @@
+---
+description: "Getting started with Apache Cassandra. Installation, first cluster, and quickstart guide."
+meta:
+  - name: keywords
+    content: "Cassandra getting started, installation, first cluster, quickstart"
+---
+
 # Getting Started with Apache Cassandra
 
 Getting Cassandra running takes about five minutes with Docker—the real learning curve is understanding how to use it effectively. Cassandra is not a drop-in replacement for PostgreSQL or MySQL; it requires a different mental model.

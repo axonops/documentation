@@ -1,3 +1,10 @@
+---
+description: "Fault tolerance in Cassandra through replication, hinted handoff, and repair mechanisms."
+meta:
+  - name: keywords
+    content: "fault tolerance, Cassandra reliability, high availability, replication"
+---
+
 # Fault Tolerance and Failure Scenarios
 
 This section examines Cassandra's fault tolerance architecture from both server-side and client-side perspectives. Understanding how failures propagate through the system—and how both the cluster and client drivers respond—is essential for designing resilient applications.

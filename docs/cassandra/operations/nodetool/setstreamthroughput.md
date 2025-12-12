@@ -1,3 +1,10 @@
+---
+description: "Set streaming throughput limit in Cassandra using nodetool setstreamthroughput."
+meta:
+  - name: keywords
+    content: "nodetool setstreamthroughput, streaming throughput, data streaming, Cassandra"
+---
+
 # nodetool setstreamthroughput
 
 Sets the streaming throughput limit for inter-node data transfers.

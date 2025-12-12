@@ -1,3 +1,10 @@
+---
+description: "CREATE TYPE syntax for user-defined types (UDT) in CQL. Define complex nested data structures."
+meta:
+  - name: keywords
+    content: "CREATE TYPE, UDT, user-defined type, CQL type, Cassandra"
+---
+
 # User-Defined Type Commands
 
 User-Defined Types (UDTs) allow grouping multiple fields into a single column value. UDTs are useful for representing complex data structures like addresses, coordinates, or any logical grouping of related fields.

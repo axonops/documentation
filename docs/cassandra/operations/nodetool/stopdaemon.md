@@ -1,3 +1,10 @@
+---
+description: "Stop Cassandra daemon process using nodetool stopdaemon command."
+meta:
+  - name: keywords
+    content: "nodetool stopdaemon, stop Cassandra, shutdown daemon, Cassandra"
+---
+
 # nodetool stopdaemon
 
 Stops the Cassandra daemon process.

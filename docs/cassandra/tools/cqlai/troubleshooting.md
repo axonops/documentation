@@ -1,3 +1,10 @@
+---
+description: "CQLAI troubleshooting guide. Common issues and solutions."
+meta:
+  - name: keywords
+    content: "CQLAI troubleshooting, common issues, problem solving"
+---
+
 # CQLAI Troubleshooting
 
 Common issues and solutions when using CQLAI.

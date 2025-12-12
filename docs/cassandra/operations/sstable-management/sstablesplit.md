@@ -1,3 +1,10 @@
+---
+description: "Split large SSTables into smaller files using sstablesplit. Manage disk space and compaction."
+meta:
+  - name: keywords
+    content: "sstablesplit, split SSTable, Cassandra disk space, large SSTable"
+---
+
 # sstablesplit
 
 Splits large SSTables into smaller files of a specified size.

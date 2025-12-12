@@ -1,0 +1,6 @@
+# SEO Meta Tags - Cassandra Troubleshooting
+description: Apache Cassandra troubleshooting guides covering diagnosis, log analysis, common errors, and operational playbooks for resolving cluster issues.
+
+meta:
+  - name: keywords
+    content: Cassandra troubleshooting, diagnosis, log analysis, common errors, GC pause, repair failures, tombstone issues

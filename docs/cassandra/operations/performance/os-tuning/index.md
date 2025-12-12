@@ -1,3 +1,10 @@
+---
+description: "Operating system tuning for Cassandra. Linux kernel and file system settings."
+meta:
+  - name: keywords
+    content: "Cassandra OS tuning, Linux tuning, kernel settings"
+---
+
 # Operating System Tuning for Cassandra
 
 Optimize your Linux operating system for Cassandra performance.

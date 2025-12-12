@@ -1,3 +1,10 @@
+---
+description: "Getting started with Cassandra drivers. Quick setup guides for popular languages."
+meta:
+  - name: keywords
+    content: "Cassandra drivers setup, quick start, language drivers"
+---
+
 # Cassandra Driver Guide
 
 This guide covers connecting applications to Apache Cassandra using official drivers, with setup and basic usage for popular programming languages.

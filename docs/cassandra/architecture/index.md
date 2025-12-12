@@ -1,3 +1,10 @@
+---
+description: "Apache Cassandra architecture overview covering storage engine, distributed data, cluster management, and fault tolerance."
+meta:
+  - name: keywords
+    content: "Cassandra architecture, distributed database, NoSQL architecture, cluster design"
+---
+
 # Cassandra Architecture
 
 Cassandra's architecture explains its behavior. The partition key determines which node stores data—get it wrong, and queries become slow or impossible. Deletes write tombstones instead of removing data immediately—ignore this, and deleted records can reappear. Nodes can disagree on data temporarily—skip repair, and that disagreement becomes permanent.

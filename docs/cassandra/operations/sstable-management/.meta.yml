@@ -1,0 +1,6 @@
+# SEO Meta Tags - SSTable Management
+description: SSTable management tools for Apache Cassandra including sstableloader, sstablescrub, sstabledump, sstableverify, and other offline utilities.
+
+meta:
+  - name: keywords
+    content: SSTable tools, sstableloader, sstablescrub, sstabledump, sstableverify, sstableupgrade, Cassandra utilities

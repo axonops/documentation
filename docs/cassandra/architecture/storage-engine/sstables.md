@@ -1,3 +1,10 @@
+---
+description: "SSTable file format in Cassandra. Data.db, Index.db, Filter.db components and structure."
+meta:
+  - name: keywords
+    content: "SSTable, Cassandra files, Data.db, Index.db, Filter.db, storage format"
+---
+
 # SSTable Reference
 
 SSTables (Sorted String Tables) are Cassandra's persistent storage files. All data ultimately resides in SSTables on disk—they are the database files. When a memtable flushes, it creates an SSTable. When compaction runs, it reads SSTables and writes new ones. When a node restarts, it reads SSTables to rebuild its state.

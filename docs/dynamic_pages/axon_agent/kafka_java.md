@@ -1,3 +1,10 @@
+---
+description: "Java requirements for AxonOps Kafka agent."
+meta:
+  - name: keywords
+    content: "Java requirements, Kafka agent, JVM"
+---
+
 <p>Insert the line <code>. /usr/share/axonops/axonops-jvm.options</code> right before the final line in your config file. Look for the last line that starts with <code>exec</code>, as demonstrated in the example below.</p>
 <blockquote>
 <p><strong>NB.</strong> Please note the period(.) at the beginning of the config line.</p>

@@ -1,3 +1,10 @@
+---
+description: "Cassandra reporting dashboard metrics mapping. Operational reporting metrics."
+meta:
+  - name: keywords
+    content: "reporting metrics, operational metrics, Cassandra"
+---
+
 # AxonOps Reporting Dashboard Metrics Mapping
 
 This document maps the metrics used in the AxonOps Reporting dashboard.

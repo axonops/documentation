@@ -1,3 +1,10 @@
+---
+description: "Configure metrics database for AxonOps Server. Cassandra as metrics storage backend."
+meta:
+  - name: keywords
+    content: "metrics database, Cassandra metrics store, AxonOps storage"
+---
+
 # Using Cassandra as a Metrics Store
 
 ## Prerequisites

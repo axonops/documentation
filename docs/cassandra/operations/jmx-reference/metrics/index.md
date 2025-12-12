@@ -1,3 +1,10 @@
+---
+description: "Cassandra JMX metrics reference. Key metrics for monitoring and alerting."
+meta:
+  - name: keywords
+    content: "Cassandra JMX metrics, monitoring metrics, performance metrics"
+---
+
 # Cassandra Metrics Reference
 
 Apache Cassandra exposes 500+ metrics via JMX using the Dropwizard Metrics library. This reference provides comprehensive documentation of all metrics with recommended thresholds.

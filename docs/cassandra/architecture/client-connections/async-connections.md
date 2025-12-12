@@ -1,3 +1,10 @@
+---
+description: "Asynchronous connections in Cassandra drivers. Non-blocking I/O and request pipelining."
+meta:
+  - name: keywords
+    content: "async connections, non-blocking, request pipelining, Cassandra driver"
+---
+
 # Asynchronous Connections
 
 Cassandra drivers use asynchronous, non-blocking I/O to achieve high throughput with minimal resources. This architecture enables thousands of concurrent requests using a small number of connections.

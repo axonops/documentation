@@ -1,3 +1,10 @@
+---
+description: "Display seed nodes for the Cassandra cluster using nodetool getseeds command."
+meta:
+  - name: keywords
+    content: "nodetool getseeds, seed nodes, Cassandra cluster, cluster discovery"
+---
+
 # nodetool getseeds
 
 Displays the seed node addresses.

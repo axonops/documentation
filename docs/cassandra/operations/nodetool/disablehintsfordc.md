@@ -1,3 +1,10 @@
+---
+description: "Disable hinted handoff for a specific datacenter using nodetool disablehintsfordc."
+meta:
+  - name: keywords
+    content: "nodetool disablehintsfordc, disable hints DC, hinted handoff, multi-datacenter"
+---
+
 # nodetool disablehintsfordc
 
 Disables hints for a specific datacenter.

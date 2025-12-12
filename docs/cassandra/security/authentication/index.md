@@ -1,3 +1,10 @@
+---
+description: "Cassandra authentication configuration. Password authenticator, LDAP integration, and custom providers."
+meta:
+  - name: keywords
+    content: "Cassandra authentication, password authenticator, LDAP, login security"
+---
+
 # Cassandra Authentication
 
 Configure authentication to control access to your Cassandra cluster.

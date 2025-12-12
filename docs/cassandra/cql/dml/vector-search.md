@@ -1,3 +1,10 @@
+---
+description: "Vector search in CQL for similarity queries. Use ANN (approximate nearest neighbor) in Cassandra 5.0+."
+meta:
+  - name: keywords
+    content: "vector search, CQL vector, ANN, similarity search, Cassandra 5.0"
+---
+
 # Vector Search
 
 Vector search enables similarity-based queries on high-dimensional numerical data, supporting use cases such as semantic search, recommendation systems, and image retrieval. Cassandra 5.0 introduced native vector support with the `VECTOR` data type and approximate nearest neighbor (ANN) queries via Storage-Attached Indexes (SAI).

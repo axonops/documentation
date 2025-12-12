@@ -1,3 +1,10 @@
+---
+description: "Display min/max compaction thresholds for a table using nodetool getcompactionthreshold."
+meta:
+  - name: keywords
+    content: "nodetool getcompactionthreshold, compaction threshold, Cassandra compaction, table settings"
+---
+
 # nodetool getcompactionthreshold
 
 Displays the compaction thresholds for a table.

@@ -1,3 +1,10 @@
+---
+description: "Cassandra retry policies. Handle read/write timeouts and unavailable exceptions."
+meta:
+  - name: keywords
+    content: "Cassandra retry policy, timeout handling, unavailable exception"
+---
+
 # Retry Policy
 
 The retry policy determines whether to retry a failed request and on which node. This policy is critical for application reliability but must be configured carefully to avoid unintended consequences.

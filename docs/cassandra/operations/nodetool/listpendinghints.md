@@ -1,3 +1,10 @@
+---
+description: "Display pending hints for nodes in Cassandra using nodetool listpendinghints."
+meta:
+  - name: keywords
+    content: "nodetool listpendinghints, pending hints, hinted handoff, Cassandra"
+---
+
 # nodetool listpendinghints
 
 Lists the pending hints for each node in the cluster.

@@ -1,3 +1,10 @@
+---
+description: "CQL DDL (Data Definition Language) commands for creating and managing keyspaces, tables, indexes, and views."
+meta:
+  - name: keywords
+    content: "CQL DDL, CREATE KEYSPACE, CREATE TABLE, Cassandra schema"
+---
+
 # DDL Commands
 
 Data Definition Language (DDL) commands manage schema objects in Apache Cassandra. This section provides comprehensive reference documentation for all DDL statements.

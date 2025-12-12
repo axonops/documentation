@@ -1,3 +1,10 @@
+---
+description: "Configure log file output in AxonOps. Write alerts to log files."
+meta:
+  - name: keywords
+    content: "log file integration, alert logging, file output"
+---
+
 # Send Notifications to Log Files
 
 Unlike the other integrations, the Log Files Integration is configured by adding the `alert_log` key to your `axon-server.yml`, typically located at `/etc/axonops/axon-server.yml`.

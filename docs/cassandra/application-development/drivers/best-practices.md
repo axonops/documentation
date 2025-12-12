@@ -1,3 +1,10 @@
+---
+description: "Best practices for Cassandra driver usage. Connection pooling, retry logic, and performance optimization."
+meta:
+  - name: keywords
+    content: "Cassandra driver best practices, connection pooling, retry logic, performance"
+---
+
 # Driver Best Practices
 
 This page consolidates production configuration recommendations for Cassandra drivers.

@@ -1,3 +1,10 @@
+---
+description: "Create Kafka ACLs with AxonOps. Set up access control for topics and groups."
+meta:
+  - name: keywords
+    content: "create Kafka ACL, access control, permissions"
+---
+
 # Topic Access Control List (ACL).
 
 ## Create an Access Control List (ACL).

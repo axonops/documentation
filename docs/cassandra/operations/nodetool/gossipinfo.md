@@ -1,3 +1,10 @@
+---
+description: "Display gossip information for all nodes in Cassandra cluster using nodetool gossipinfo."
+meta:
+  - name: keywords
+    content: "nodetool gossipinfo, gossip protocol, node information, Cassandra cluster"
+---
+
 # nodetool gossipinfo
 
 Displays the gossip information for all nodes in the cluster as seen by the local node.

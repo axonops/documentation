@@ -1,3 +1,10 @@
+---
+description: "Set number of cache keys to save on shutdown using nodetool setcachekeystosave."
+meta:
+  - name: keywords
+    content: "nodetool setcachekeystosave, cache persistence, key cache, Cassandra"
+---
+
 # nodetool setcachekeystosave
 
 Sets the number of cache keys to save to disk for faster restart warmup.

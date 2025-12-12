@@ -1,3 +1,10 @@
+---
+description: "Cassandra application dashboard metrics mapping. Client request and latency metrics."
+meta:
+  - name: keywords
+    content: "application metrics, client requests, latency metrics, Cassandra"
+---
+
 # AxonOps Application Dashboard Metrics Mapping
 
 This document maps the metrics used in the AxonOps Application dashboard to their corresponding sources.

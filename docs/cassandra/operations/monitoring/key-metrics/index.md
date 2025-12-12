@@ -1,3 +1,10 @@
+---
+description: "Key Cassandra metrics to monitor. Essential metrics for cluster health."
+meta:
+  - name: keywords
+    content: "Cassandra key metrics, essential metrics, monitoring priorities"
+---
+
 # Cassandra Key Metrics Reference
 
 This guide covers the essential metrics to monitor for a healthy Cassandra cluster.

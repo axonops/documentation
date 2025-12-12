@@ -1,3 +1,10 @@
+---
+description: "Java requirements for AxonOps Cassandra agent."
+meta:
+  - name: keywords
+    content: "Java requirements, AxonOps agent, JVM"
+---
+
 
 
 Add the following line at the end of `/etc/cassandra/cassandra-env.sh`:

@@ -1,3 +1,10 @@
+---
+description: "Prepared statements in Cassandra. Statement preparation, caching, and performance benefits."
+meta:
+  - name: keywords
+    content: "prepared statements, statement cache, query preparation, Cassandra performance"
+---
+
 # Prepared Statements Architecture
 
 Prepared statements optimize repeated query execution by separating query parsing from execution. The server parses and validates the query once, returning an identifier that clients use for subsequent executions with different parameter values.

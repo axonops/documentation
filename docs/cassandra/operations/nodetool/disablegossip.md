@@ -1,3 +1,10 @@
+---
+description: "Disable gossip protocol on a Cassandra node using nodetool disablegossip. Use before maintenance."
+meta:
+  - name: keywords
+    content: "nodetool disablegossip, disable gossip, Cassandra gossip, node maintenance"
+---
+
 # nodetool disablegossip
 
 Disables the gossip protocol, isolating the node from cluster communication.

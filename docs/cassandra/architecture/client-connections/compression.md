@@ -1,3 +1,10 @@
+---
+description: "Protocol compression in Cassandra connections. LZ4 and Snappy compression for network traffic."
+meta:
+  - name: keywords
+    content: "protocol compression, LZ4, Snappy, network compression, Cassandra"
+---
+
 # Protocol Compression
 
 The CQL protocol supports frame-level compression to reduce network bandwidth between clients and Cassandra nodes. Compression is particularly beneficial for large result sets, batch operations, and high-latency network connections.

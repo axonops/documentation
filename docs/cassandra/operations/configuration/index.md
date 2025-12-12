@@ -1,3 +1,10 @@
+---
+description: "Cassandra configuration overview. YAML files, JVM options, and runtime settings."
+meta:
+  - name: keywords
+    content: "Cassandra configuration, config files, settings overview"
+---
+
 # Cassandra Configuration Reference
 
 Cassandra configuration is spread across three places: `cassandra.yaml` for database settings, JVM options files for heap and garbage collection, and OS-level settings for limits and kernel parameters. Changes to some settings take effect immediately; others require a rolling restart.

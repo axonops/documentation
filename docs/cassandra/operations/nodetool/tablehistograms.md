@@ -1,3 +1,10 @@
+---
+description: "Display read/write latency histograms for a table using nodetool tablehistograms."
+meta:
+  - name: keywords
+    content: "nodetool tablehistograms, latency histogram, table statistics, Cassandra"
+---
+
 # nodetool tablehistograms
 
 Displays latency and size histograms for a specific table.

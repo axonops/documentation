@@ -1,3 +1,10 @@
+---
+description: "Cassandra encryption guide covering TLS/SSL for client and internode communication."
+meta:
+  - name: keywords
+    content: "Cassandra encryption, TLS, SSL, client encryption, internode encryption"
+---
+
 # Encryption
 
 Transport Layer Security (TLS) provides encryption for data in transit between Cassandra nodes and between clients and the cluster. This documentation covers the cryptographic concepts, implementation details, and enterprise configuration requirements for securing Cassandra communications.

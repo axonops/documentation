@@ -1,3 +1,10 @@
+---
+description: "Verify SSTable integrity and checksums in Cassandra using sstableverify. Detect data corruption."
+meta:
+  - name: keywords
+    content: "sstableverify, SSTable verification, checksum, Cassandra corruption"
+---
+
 # sstableverify
 
 Validates SSTable integrity by checking data structure and checksums without modifying files.

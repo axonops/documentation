@@ -1,3 +1,10 @@
+---
+description: "Display cluster information including schema versions and snitch using nodetool describecluster."
+meta:
+  - name: keywords
+    content: "nodetool describecluster, cluster info, schema version, Cassandra snitch"
+---
+
 # nodetool describecluster
 
 Displays basic cluster information including cluster name, snitch, and schema versions.

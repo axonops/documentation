@@ -1,3 +1,10 @@
+---
+description: "Configure JumpCloud roles for AxonOps Cloud access. Map user groups to AxonOps permissions."
+meta:
+  - name: keywords
+    content: "JumpCloud roles, user groups, AxonOps permissions, role mapping"
+---
+
 # Configuring AxonOps Roles in JumpCloud
 
 The permissions granted to each user are controlled by a custom group attribute named `axonopsroles`.
