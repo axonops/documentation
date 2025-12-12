@@ -8,14 +8,16 @@
 @font-face {
   font-family: "ETmodules";
   src: url("./ElegantIcons.ttf");
+  font-display: swap;
 }
 
 @font-face {
   font-family: "Inter";
   src: url("./Inter.ttf");
+  font-display: swap;
 }
 
-@import url('https://fonts.googleapis.com/css2?family=Roboto+Flex:wght@400;500;600;700&display=swap');
+/* Google Fonts moved to HTML head with preconnect for better LCP */
 
 /* ----------------------------------------------------------------------------
    CSS CUSTOM PROPERTIES (Design Tokens)
