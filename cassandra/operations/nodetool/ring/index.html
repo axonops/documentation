@@ -13993,13 +13993,13 @@ data-et-multi-view="{&quot;schema&quot;:{&quot;content&quot;:{&quot;desktop&quot
 <p>This command is useful for understanding data distribution and troubleshooting token-related issues.</p>
 <h3 id="understanding-virtual-nodes-vnodes">Understanding Virtual Nodes (vnodes)<a class="headerlink" href="#understanding-virtual-nodes-vnodes" title="Permanent link">¶</a></h3>
 <p>In modern Cassandra deployments, each node owns multiple <strong>virtual nodes (vnodes)</strong> rather than a single token. The number of vnodes per node is configured in <code>cassandra.yaml</code>:</p>
-<div class="highlight"><pre><span></span><code><span class="nt">num_tokens</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">256</span><span class="w">    </span><span class="c1"># Default in Cassandra 4.0+</span>
+<div class="highlight"><pre><span></span><code><span class="nt">num_tokens</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">16</span><span class="w">    </span><span class="c1"># Default in Cassandra 4.0+</span>
 <span class="w">                   </span><span class="c1"># Older versions defaulted to 256, some used 16</span>
 </code></pre></div>
 <p>With vnodes enabled, <code>nodetool ring</code> output shows one row per token, meaning a 3-node cluster with <code>num_tokens: 256</code> displays 768 rows (256 × 3 nodes). Each row represents a token range boundary owned by a node.</p>
 <div class="highlight"><pre><span></span><code><span class="c1"># Count tokens per node</span>
 nodetool<span class="w"> </span>ring<span class="w"> </span><span class="p">|</span><span class="w"> </span>grep<span class="w"> </span>-c<span class="w"> </span><span class="s2">"192.168.1.101"</span>
-<span class="c1"># Output: 256 (if num_tokens: 256)</span>
+<span class="c1"># Output: 16 (if num_tokens: 16)</span>
 </code></pre></div>
 <p><strong>Why vnodes matter:</strong></p>
 <table>
