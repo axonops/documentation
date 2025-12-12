@@ -32,7 +32,7 @@ This command is useful for understanding data distribution and troubleshooting t
 In modern Cassandra deployments, each node owns multiple **virtual nodes (vnodes)** rather than a single token. The number of vnodes per node is configured in `cassandra.yaml`:
 
 ```yaml
-num_tokens: 256    # Default in Cassandra 4.0+
+num_tokens: 16    # Default in Cassandra 4.0+
                    # Older versions defaulted to 256, some used 16
 ```
 
@@ -41,7 +41,7 @@ With vnodes enabled, `nodetool ring` output shows one row per token, meaning a 3
 ```bash
 # Count tokens per node
 nodetool ring | grep -c "192.168.1.101"
-# Output: 256 (if num_tokens: 256)
+# Output: 16 (if num_tokens: 16)
 ```
 
 **Why vnodes matter:**

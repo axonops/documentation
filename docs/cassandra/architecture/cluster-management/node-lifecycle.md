@@ -121,7 +121,7 @@ Accept client traffic;
 auto_bootstrap: true
 
 # Number of virtual nodes per physical node
-num_tokens: 256
+num_tokens: 16
 
 # Initial token (only if num_tokens = 1, not recommended)
 # initial_token:
