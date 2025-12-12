@@ -7,113 +7,31 @@ meta:
 
 # Restore a backup to a different cluster
 
-*Follow this procedure to restore an AxonOps backup from remote storage onto a different cluster*
-
-> NOTE: This facility is only available for backups created using AxonOps Agent version 1.0.60 or later
+Follow this procedure to restore an AxonOps backup from remote storage onto a different cluster.
 
 AxonOps Agent version 1.0.60 and later includes a command-line tool which can be used to restore a backup created by
 AxonOps from remote storage (e.g. S3, GCS). This tool connects directly to your remote storage and does not require an
 AxonOps server or an active AxonOps Cloud account in order to function.
 
-## Installing the Cassandra Restore Tool
+AxonOps Agent version 2.0.12 and later includes the ability to restore commit logs onto a different cluster.
 
-The AxonOps Cassandra Restore tool is included in the AxonOps Agent package.
+Follow the [setup and configuration guide](restore-tool-setup.md) to get started.
 
-#### Installing on Debian / Ubuntu
+## Listing available backups
 
-```bash
-sudo apt-get update
-sudo apt-get install -y curl gnupg ca-certificates
-curl -L https://packages.axonops.com/apt/repo-signing-key.gpg | sudo gpg --dearmor -o /usr/share/keyrings/axonops.gpg
-echo "deb [arch=arm64,amd64 signed-by=/usr/share/keyrings/axonops.gpg] https://packages.axonops.com/apt axonops-apt main" | sudo tee /etc/apt/sources.list.d/axonops-apt.list
-sudo apt-get update
-sudo apt-get install axon-agent
-```
+To list the backups available in the remote storage bucket, you can run `axon-cassandra-restore` with the `--list` option [after setting up](restore-tool-setup.md#storage-config-and-storage-config-file-options) your `--storage-config-file`.
 
-#### Installing on CentOS / RedHat
+For example, to list remote backups, you could use a command similar to the following:
 
 ```bash
-sudo tee /etc/yum.repos.d/axonops-yum.repo << EOL
-[axonops-yum]
-name=axonops-yum
-baseurl=https://packages.axonops.com/yum/
-enabled=1
-repo_gpgcheck=0
-gpgcheck=0
-EOL
-sudo yum install axon-agent
+/usr/share/axonops/axon-cassandra-restore \
+    --storage-config-file /path/to/remote_storage_config_file.json \
+    --org-id myaxonopsorg \
+    --list
 ```
 
-After the package has been installed you can find the Cassandra Restore Tool at `/usr/share/axonops/axon-cassandra-restore`.
+The restore tool will scan the specified S3 bucket for AxonOps backups and will display the date and backup ID for any backups it finds, for example:
 
-Run the tool with `--help` to see the available options:
-```
-~# /usr/share/axonops/axon-cassandra-restore --help
-Usage of /usr/share/axonops/axon-cassandra-restore:
-  -i, --backup-id string                UUID of the backup to restore
-      --cassandra-bin-dir string        Where the Cassandra binary files are stored (e.g. /opt/cassandra/bin)
-      --cqlsh-options string            Options to pass to cqlsh when restoring a table schema
-      --dest-table string               The name of the destination table for the restore in keyspace.table format. Requires --tables with a single source table. (Added in v1.0.61)
-  -h, --help                            Show command-line help
-  -l, --list                            List backups available in remote storage
-  -d, --local-sstable-dir string        A local directory in which to store sstables downloaded from backup storage
-      --org-id string                   ID of the AxonOps organisation from which the backup was created
-  -r, --restore                         Restore a backup from remote storage
-      --restore-schema                  Set this when using --use-sstable-loader to restore the CQL schema for each table. Keyspaces must already exist.
-  -e, --skip-existing-files             Don't download files that already exist in the local destination path (Added in v1.0.61)
-  -c, --source-cluster string           The name of the cluster from which to restore
-  -s, --source-hosts string             Comma-separated list containing host IDs for which to restore backups
-      --sstable-loader-options string   Options to pass to sstableloader when restoring a backup
-      --storage-config string           JSON-formatted remote storage configuration
-      --storage-config-file string      Path to a file containing JSON-formatted remote storage configuration (Added in v1.0.95)
-  -t, --tables string                   Comma-separated list of keyspace.table to restore. Defaults to all tables if omitted.
-      --use-sstable-loader              Use sstableloader to restore the backup. Requires --sstable-loader-options and --cassandra-bin-dir.
-  -v, --verbose                         Show verbose output when listing backups
-      --version                         Show version information and exit
-```
-
-## Storage Config and Storage Config File options
-
-> **The `--storage-config-file` option was added to v1.0.95 and later of AxonOps Agent**
-
-The `axonops-cassandra-restore` tool has two options when passing the remote storage configuration. The fist option is to pass a JSON formatted string to --storage-config or pre-populated JSON file to --storage-config-file
-
-> **NOTE:** You can only use one of the options when doing a restore. 
-
-For examples of both please see: 
-
-- [Storage Config Examples](#storage-config-examples)
-
-- [Storage Config File Examples](#storage-config-file-examples)
-
-## Listing the available backups
-
-> NOTE: The host IDs used in this tool are the ID given to each host by AxonOps and do not relate to the Cassandra
-> host ID. You can find the AxonOps host ID by selecting the node on the Cluster Overview page of the AxonOps dashboard
-> and looking at the Agent ID field.
-
-To list the backups available in the remote storage bucket you can run the tool with the `--list` option.
-For example to list the backups in an Amazon S3 bucket you could use a command similar to this:
-
-**`--storage-config`**
-
-```bash
-/usr/share/axonops/axon-cassandra-restore --list \
-  --org-id myaxonopsorg \
-  --storage-config '{"type":"s3","path":"/axonops-cassandra-backups","access_key_id":"MY_AWS_ACCESS_KEY","secret_access_key":"MY_AWS_SECRET_ACCESS_KEY","region":"eu-west-3"}'
-```
-
-**`--storage-config-file`**
-
-```bash
-/usr/share/axonops/axon-cassandra-restore --list \
-  --org-id myaxonopsorg \
-  --storage-config-file /full/path/to/remote_storage_config_file.json
-```
-
-
-The restore tool will then scan the specified S3 bucket for AxonOps backups and it will display the
-date and backup ID for any backups it finds:
 ```bash
 Org ID:    myaxonopsorg
 Cluster:   testcluster
@@ -124,8 +42,9 @@ Time                   Backup ID
 2023-09-17 14:31 UTC   f75f13d9-5314-11ee-b686-bed50b9335ec
 2023-09-18 14:30 UTC   5cffc1e6-5316-11ee-b686-bed50b9335ec
 ```
-If you pass the `--verbose` option when listing backups it will show the list of nodes and tables in each backup,
-for example:
+
+If you pass the `--verbose` option when listing backups, it will show a list of nodes and tables in each backup, for example:
+
 ```bash
 
 Org ID:    myaxonopsorg
@@ -143,146 +62,93 @@ Host:   94ed3811-12ce-487f-ac49-ae31299efa31
 Tables: system.peers_v2, system.view_builds_in_progress, system_auth.resource_role_permissons_index, system_auth.role_permissions, system_schema.aggregates, system_schema.indexes, test.test, system.available_ranges_v2, system_distributed.parent_repair_history, system_schema.keyspaces, system_traces.sessions, system_auth.role_members, system_auth.network_permissions, system_schema.dropped_columns, system_schema.types, system.repairs, system.size_estimates, system_auth.roles, system_schema.tables, system_schema.views, system.paxos, system.table_estimates, system.transferred_ranges, system.peers, system.prepared_statements, system.sstable_activity, system.peer_events_v2, system.batches, system.built_views, system.compaction_history, system_traces.events, system.IndexInfo, system.local, keyspace1.table2, system.peer_events, system.transferred_ranges_v2, system_distributed.repair_history, system_distributed.view_build_status, system_schema.columns, system_schema.functions, system.available_ranges, system_schema.triggers, keyspace1.table1
 ```
 
-Scanning for backups can take a long time depending on the storage type and the amount of data, so you can use
-command-line options to restrict the search. For example this will restrict the search to a specific backup, 
-cluster, hosts and tables:
+Scanning for backups can take a long time depending on the storage type and the amount of data. 
 
-**`--storage-config`**
-```bash
-/usr/share/axonops/axon-cassandra-restore --list \
-  --verbose \
-  --org-id myaxonopsorg \
-  --storage-config '{"type":"s3","path":"/axonops-cassandra-backups","access_key_id":"MY_AWS_ACCESS_KEY","secret_access_key":"MY_AWS_SECRET_ACCESS_KEY","region":"eu-west-3"}' \
-  --backup-id 2c1d9aca-5312-11ee-b686-bed50b9335ec \
-  --source-cluster testcluster \
-  --source-hosts 026346a0-dc89-4235-ae34-552fcd453b42,84759df0-8a19-497e-965f-200bdb4c1c9b
-  --tables keyspace1.table1,keyspace1.table2
-```
+You can use command-line options to restrict the search to a specific cluster, set of hosts, backup, and/or table(s):
 
-**`--storage-config-file`**
 ```bash
-/usr/share/axonops/axon-cassandra-restore --list \
-  --verbose \
+/usr/share/axonops/axon-cassandra-restore \
+  --storage-config-file /path/to/remote_storage_config_file.json \
   --org-id myaxonopsorg \
-  --storage-config-file /full/path/to/remote_storage_config_file.json \
-  --backup-id 2c1d9aca-5312-11ee-b686-bed50b9335ec \
   --source-cluster testcluster \
-  --source-hosts 026346a0-dc89-4235-ae34-552fcd453b42,84759df0-8a19-497e-965f-200bdb4c1c9b
-  --tables keyspace1.table1,keyspace1.table2
+  --source-hosts 026346a0-dc89-4235-ae34-552fcd453b42,84759df0-8a19-497e-965f-200bdb4c1c9b,94ed3811-12ce-487f-ac49-ae31299efa31 \
+  --backup-id 2c1d9aca-5312-11ee-b686-bed50b9335ec \
+  --tables keyspace1.table1,keyspace1.table2 \
+  --verbose \
+  --list
 ```
 
 ## Restoring a Backup
 
 The `axon-cassandra-restore` tool can perform the following operations to restore a backup from remote storage:
 
-1. Download the sstable files from the bucket
-2. Create table schemas in the target cluster.
-3. Import the downloaded sstable files into the target cluster using `sstableloader`
+1. [Download SSTables](#downloading-a-backup-to-a-local-directory) from remote storage.
+1. [Import](#download-and-import-a-backup-using-sstableloader) downloaded SSTables into a target cluster using `sstableloader`.
+1. [Create](#importing-cql-schemas-during-the-restore) table schemas in a target cluster.
+1. [Download commitlogs](#point-in-time-restore-onto-a-different-cluster) to enable command-line based point-in-time restores.
 
-The default behaviour is to only download the sstable files to a local directory.
+The default behaviour is to only download the SSTables to a local directory.
 
 ### Downloading a backup to a local directory
 
-This command will download the backup with ID `2c1d9aca-5312-11ee-b686-bed50b9335ec` for the 3 hosts listed in the
-`--list` output above into the local directory `/opt/cassandra/axonops-restore`
-
-**`--storage-config`**
+This command will download the backup with ID `2c1d9aca-5312-11ee-b686-bed50b9335ec` for the 3 hosts listed in the `--list` output above into the local directory `/opt/cassandra/axonops-restore`:
 
 ```bash
 /usr/share/axonops/axon-cassandra-restore \
-  --restore \
+  --storage-config-file /path/to/remote_storage_config_file.json \
   --org-id myaxonopsorg \
-  --storage-config '{"type":"s3","path":"/axonops-cassandra-backups","access_key_id":"MY_AWS_ACCESS_KEY","secret_access_key":"MY_AWS_SECRET_ACCESS_KEY","region":"eu-west-3"}' \
   --source-cluster testcluster \
-  --backup-id 2c1d9aca-5312-11ee-b686-bed50b9335ec \
   --source-hosts 026346a0-dc89-4235-ae34-552fcd453b42,84759df0-8a19-497e-965f-200bdb4c1c9b,94ed3811-12ce-487f-ac49-ae31299efa31 \
-  --local-sstable-dir /opt/cassandra/axonops-restore
+  --backup-id 2c1d9aca-5312-11ee-b686-bed50b9335ec \
+  --local-sstable-dir /opt/cassandra/axonops-restore \
+  --restore
 ```
 
-**`--storage-config-file`**
-
-```bash
-/usr/share/axonops/axon-cassandra-restore \
-  --restore \
-  --org-id myaxonopsorg \
-  --storage-config-file /full/path/to/remote_storage_config_file.json \
-  --source-cluster testcluster \
-  --backup-id 2c1d9aca-5312-11ee-b686-bed50b9335ec \
-  --source-hosts 026346a0-dc89-4235-ae34-552fcd453b42,84759df0-8a19-497e-965f-200bdb4c1c9b,94ed3811-12ce-487f-ac49-ae31299efa31 \
-  --local-sstable-dir /opt/cassandra/axonops-restore
-```
-
-The sstable files will be restored into directories named `{local-sstable-dir}/{host-id}/keyspace/table/` and from here
+The SSTables will be restored into directories named `{local-sstable-dir}/{host-id}/keyspace/table/` and from here
 you can copy/move the files to another location or import them into a cluster using `sstableloader`.
 
-> **_NOTE:_** At least the `keyspaces` must exist in the target cluster. If you did not create the tables remember to add
-the option `--restore-schema` to the command line. See [Importing CQL schemas during the restore](#importing-cql-schemas-during-the-restore)
+### Download and import a backup using SSTableLoader
 
-### Download and import a backup in a single operation
+The above example highlights how to download the backed up files into a local directory, but it does not import them into a new cluster. The `axon-cassandra-restore` tool can load the downloaded backup files into the new cluster by passing
+the `--use-sstable-loader`, `--cassandra-bin-dir`, and `--sstable-loader-options` command-line arguments.
 
-The above example shows how to download the backed up files into a local directory but it does not import them into
-a new cluster. You can make the `axon-cassandra-restore` tool do this for you after it downloads the files by passing
-the `--use-sstable-loader`, `--cassandra-bin-dir` and `--sstable-loader-options` command-line arguments.
+> NOTE: Keyspaces must exist in the target cluster. If you did not create the tables remember to add the option `--restore-schema` to the command line. See [Importing CQL schemas during the restore](#importing-cql-schemas-during-the-restore).
 
-For example this command will download the same backup files as the previous example but it will also run `sstableloader`
-to import the downloaded files into a new cluster with contact points 10.0.0.1, 10.0.0.2 and 10.0.0.3:
-
-**`--storage-config`**
+For example, this command will download the same backup files as the previous example but it will also run `sstableloader`
+to import the downloaded files into a new cluster with contact points 10.0.0.1, 10.0.0.2, and 10.0.0.3:
 
 ```bash
 /usr/share/axonops/axon-cassandra-restore \
-  --restore \
+  --storage-config-file /path/to/remote_storage_config_file.json \
   --org-id myaxonopsorg \
-  --storage-config '{"type":"s3","path":"/axonops-cassandra-backups","access_key_id":"MY_AWS_ACCESS_KEY","secret_access_key":"MY_AWS_SECRET_ACCESS_KEY","region":"eu-west-3"}' \
   --source-cluster testcluster \
-  --backup-id 2c1d9aca-5312-11ee-b686-bed50b9335ec \
   --source-hosts 026346a0-dc89-4235-ae34-552fcd453b42,84759df0-8a19-497e-965f-200bdb4c1c9b,94ed3811-12ce-487f-ac49-ae31299efa31 \
+  --backup-id 2c1d9aca-5312-11ee-b686-bed50b9335ec \
   --local-sstable-dir /opt/cassandra/axonops-restore \
+  --restore /
   --use-sstable-loader \
   --cassandra-bin-dir /opt/cassandra/bin \
   --sstable-loader-options "-d 10.0.0.1,10.0.0.2,10.0.0.3 -u cassandra -pw cassandra"
 ```
 
-**`--storage-config-file`**
+> NOTE: If you are using an Apache Cassandra version installed using either the Debian or RedHat package manager, use `--cassandra-bin-dir /usr/bin` when specifying the bin directory.
 
-```bash
-/usr/share/axonops/axon-cassandra-restore \
-  --restore \
-  --org-id myaxonopsorg \
-  --storage-config-file /full/path/to/remote_storage_config_file.json \
-  --source-cluster testcluster \
-  --backup-id 2c1d9aca-5312-11ee-b686-bed50b9335ec \
-  --source-hosts 026346a0-dc89-4235-ae34-552fcd453b42,84759df0-8a19-497e-965f-200bdb4c1c9b,94ed3811-12ce-487f-ac49-ae31299efa31 \
-  --local-sstable-dir /opt/cassandra/axonops-restore \
-  --use-sstable-loader \
-  --cassandra-bin-dir /opt/cassandra/bin \
-  --sstable-loader-options "-d 10.0.0.1,10.0.0.2,10.0.0.3 -u cassandra -pw cassandra"
-```
+### Importing CQL schemas during the restore
 
-> **_NOTE:_** if you are using an Apache Cassandra version installed using either the Debian or RedHat package manager use `--cassandra-bin-dir /usr/bin` when
-specifying the bin directory.
+When a backup is imported to a cluster using `sstableloader`, it assumes the destination tables already exist and will skip the import for any undefined tables. However, it is possible to create any missing table schemas as part of the restore operation since AxonOps stores the current table schema with each backup. This can be enabled with the `--restore-schema` and `--cqlsh-options` arguments to `axon-cassandra-restore`.
 
-#### Importing CQL schemas during the restore
-
-When a backup is imported to a cluster using `sstableloader` it assumes that the destination tables already exist and
-will skip the import for any that are missing. AxonOps stores the current table schema with each backup, so it is
-possible to create any missing tables as part of the restore operation. This can be enabled with the `--restore-schema`
-and `--cqlsh-options` arguments to `axon-cassandra-restore`.
-
-Building on the example above this command will download the files from the backup, create the schema for any missing
+Building on the example above, this command will download the files from the backup, create the schema for any missing
 tables, and import the downloaded data with `sstableloader`:
 
-**`--storage-config`**
-
 ```bash
 /usr/share/axonops/axon-cassandra-restore \
-  --restore \
+  --storage-config-file /path/to/remote_storage_config_file.json \
   --org-id myaxonopsorg \
-  --storage-config '{"type":"s3","path":"/axonops-cassandra-backups","access_key_id":"MY_AWS_ACCESS_KEY","secret_access_key":"MY_AWS_SECRET_ACCESS_KEY","region":"eu-west-3"}' \
   --source-cluster testcluster \
-  --backup-id 2c1d9aca-5312-11ee-b686-bed50b9335ec \
   --source-hosts 026346a0-dc89-4235-ae34-552fcd453b42,84759df0-8a19-497e-965f-200bdb4c1c9b,94ed3811-12ce-487f-ac49-ae31299efa31 \
+  --backup-id 2c1d9aca-5312-11ee-b686-bed50b9335ec \
   --local-sstable-dir /opt/cassandra/axonops-restore \
+  --restore /
   --use-sstable-loader \
   --cassandra-bin-dir /opt/cassandra/bin \
   --sstable-loader-options "-d 10.0.0.1,10.0.0.2,10.0.0.3 -u cassandra -pw cassandra" \
@@ -290,164 +156,93 @@ tables, and import the downloaded data with `sstableloader`:
   --cqlsh-options "-u cassandra -p cassandra 10.0.0.1"
 ```
 
-**`--storage-config-file`**
+> NOTE: This will not create missing keyspaces. You must ensure that the target keyspaces already exist in the destination cluster before running the restore command.
 
-```bash
-/usr/share/axonops/axon-cassandra-restore \
-  --restore \
-  --org-id myaxonopsorg \
-  --storage-config-file /full/path/to/remote_storage_config_file.json \
-  --source-cluster testcluster \
-  --backup-id 2c1d9aca-5312-11ee-b686-bed50b9335ec \
-  --source-hosts 026346a0-dc89-4235-ae34-552fcd453b42,84759df0-8a19-497e-965f-200bdb4c1c9b,94ed3811-12ce-487f-ac49-ae31299efa31 \
-  --local-sstable-dir /opt/cassandra/axonops-restore \
-  --use-sstable-loader \
-  --cassandra-bin-dir /opt/cassandra/bin \
-  --sstable-loader-options "-d 10.0.0.1,10.0.0.2,10.0.0.3 -u cassandra -pw cassandra" \
-  --restore-schema \
-  --cqlsh-options "-u cassandra -p cassandra 10.0.0.1"
-```
+#### Restore to a different table
 
-> **_NOTE:_** This will not create missing keyspaces. You must ensure that the target keyspaces already exist in the
-> destination cluster before running the restore command.
-
-## Storage Config Examples
-
-The AxonOps Cassandra restore tool can restore backups from any remote storage supported by AxonOps for backups. The
-`--storage-config` command-line option configures the type of remote storage and the credentials required for access.
-
-Here are some examples of the most common storage types:
-
-#### Local filesystem
-```bash
---storage-config '{"type":"local","path":"/backups/cassandra"}'
-```
-#### Amazon S3
-```bash
---storage-config '{"type":"s3","path":"/axonops-cassandra-backups","access_key_id":"MY_AWS_ACCESS_KEY","secret_access_key":"MY_AWS_SECRET_ACCESS_KEY","region":"eu-west-3"}'
-```
-#### Azure Blob Storage
-```bash
---storage-config '{"type":"azureblob","account":"MY_AZURE_ACCOUNT_NAME","key":"MY_AZURE_STORAGE_KEY"}'
-```
-#### Google Cloud Storage
-```bash
---storage-config '{"type":"googlecloudstorage","location":"us","service_account_credentials":"ESCAPED_JSON_PRIVATE_KEY"}'
-```
-#### SSH/SFTP
-```sh
---storage-config '{"type":"sftp","host":"<sftp_server_hostname>","port":"22","path":"/backup/path","user":"<sftp_username>","key_file":"~/private/key/file"}'
-```
-#### SSH/SFTP with password
-```sh
---storage-config '{"type":"sftp","host":"<sftp_server_hostname>","port":"22","path":"/backup/path","user":"<sftp_username>","pass":"<sftp_password>"}'
-```
-
-## Storage Config File Examples
-
-#### Local filesystem
-```json
-{
-  "type": "local",
-  "path": "/backups/cassandra"
-}
-```
-#### Amazon S3
-```json
-{
-  "type": "s3",
-  "path": "/axonops-cassandra-backups",
-  "access_key_id": "MY_AWS_ACCESS_KEY",
-  "secret_access_key": "MY_AWS_SECRET_ACCESS_KEY",
-  "region": "eu-west-3"
-}
-```
-#### Azure Blob Storage
-```json
-{
-  "type": "azureblob",
-  "account": "MY_AZURE_ACCOUNT_NAME",
-  "key": "MY_AZURE_STORAGE_KEY"
-}
-```
-#### Google Cloud Storage
-```json
-{
-  "type": "googlecloudstorage",
-  "location": "us",
-  "service_account_credentials": "ESCAPED_JSON_PRIVATE_KEY"
-}
-```
-#### SSH/SFTP
-```json
-{
-  "type": "sftp",
-  "host": "<sftp_server_hostname>",
-  "port": "22",
-  "path": "/backup/path",
-  "user": "<sftp_username>",
-  "key_file": "~/private/key/file"
-}
-```
-#### SSH/SFTP with password
-```json
-{
-  "type": "sftp",
-  "host": "<sftp_server_hostname>",
-  "port": "22",
-  "path": "/backup/path",
-  "user": "<sftp_username>",
-  "pass": "<sftp_password>"
-}
-```
-
-
-## Restore to a different table
 > This feature is available in AxonOps Agent v1.0.61 or later
 
-When restoring a single table from a backup it is possible to use the `--dest-table` option on the command-line to load
-the restored data into table with a different name and/or keyspace to the original table. If you also supply the 
-`--restore-schema` option then the new table will be created as part of the restore process.
+When restoring a single table from a backup, it is possible to use the `--dest-table` argument to load the restored data into table with a different name and/or keyspace to the original table. If you also supply the `--restore-schema` option, the new table will be created as part of the restore process.
+
+This example shows restoring the table `keyspace1.table1` into a table named `table1_restored` in keyspace `restoreks`:
+
+```bash
+/usr/share/axonops/axon-cassandra-restore \
+  --storage-config-file /path/to/remote_storage_config_file.json \
+  --org-id myaxonopsorg \
+  --source-cluster testcluster \
+  --source-hosts 026346a0-dc89-4235-ae34-552fcd453b42,84759df0-8a19-497e-965f-200bdb4c1c9b,94ed3811-12ce-487f-ac49-ae31299efa31 \
+  --backup-id 2c1d9aca-5312-11ee-b686-bed50b9335ec \
+  --local-sstable-dir /opt/cassandra/axonops-restore \
+  --restore /
+  --use-sstable-loader \
+  --cassandra-bin-dir /opt/cassandra/bin \
+  --sstable-loader-options "-d 10.0.0.1,10.0.0.2,10.0.0.3 -u cassandra -pw cassandra" \
+  --restore-schema \
+  --cqlsh-options "-u cassandra -p cassandra 10.0.0.1" \
+  --tables keyspace1.table1 \
+  --dest-table restoreks.table1_restored
+```
 
 > NOTE: The destination keyspace must already exist before running the restore command.
 
-This example shows restoring the table `keyspace1.table1` into a table named `table1_restored` in keysace `restoreks`:
+### Point-in-time restore onto a different cluster
 
-**`--storage-config`**
+In cases where a quick disaster recovery is needed, or a development/debug cluster with a copy of the most up-to-date production information is needed, we can use the following approach.
+
+To prepare the new cluster, we must first shutdown the Cassandra process on the new cluster and remove all of the on-disk data. Below is an example for shutting down a packaged-based installation of Cassandra using the default data directories:
 
 ```bash
-/usr/share/axonops/axon-cassandra-restore \
-  --restore \
-  --org-id myaxonopsorg \
-  --storage-config '{"type":"s3","path":"/axonops-cassandra-backups","access_key_id":"MY_AWS_ACCESS_KEY","secret_access_key":"MY_AWS_SECRET_ACCESS_KEY","region":"eu-west-3"}' \
-  --source-cluster testcluster \
-  --backup-id 2c1d9aca-5312-11ee-b686-bed50b9335ec \
-  --source-hosts 026346a0-dc89-4235-ae34-552fcd453b42,84759df0-8a19-497e-965f-200bdb4c1c9b,94ed3811-12ce-487f-ac49-ae31299efa31 \
-  --local-sstable-dir /opt/cassandra/axonops-restore \
-  --use-sstable-loader \
-  --cassandra-bin-dir /opt/cassandra/bin \
-  --sstable-loader-options "-d 10.0.0.1,10.0.0.2,10.0.0.3 -u cassandra -pw cassandra" \
-  --restore-schema \
-  --cqlsh-options "-u cassandra -p cassandra 10.0.0.1" \
-  --tables keyspace1.table1 \
-  --dest-table restoreks.table1_restored
+# safely shutdown Cassandra
+nodetool flush
+nodetool drain
+service cassandra stop
+
+# CAUTION: delete all Cassandra data on disk within the NEW cluster
+cd /var/lib/cassandra/
+rm -rf commitlog/* data/* hints/* saved_caches/*
 ```
 
-**`--storage-config-file`**
+On the new cluster, we must update the `cluster_name` within the `cassandra.yaml` to match the `cluster_name` within the backups. You can find the `cassandra.yaml` within `/etc/cassandra/cassandra.yaml` if using the default packaged-based installation path.
+
+> NOTE: Since the live cluster and restored cluster will have the same `cluster_name`, it is **highly** recommended that all nodes within the live cluster are firewalled away from all the nodes within the restoration cluster. While we do not restore the `peers` and `peers_v2` tables in an effort to prevent conflicts over token ownership across the two clusters, an isolated network setup is **highly** recommended.
+
+Building on the previous examples, we'll run a similar command that adds:
+
+* `--threads` to increase the number of parallel downloads
+* `--table-uuids` to append the UUID suffix to the table directory names
+* `--set-owner` to set the Linux file system owners of the restored data files and directories
+* `--no-host-dir` to remove the host UUID from the file path to more cleanly restore to a Cassandra cluster's data directories
+* `--local-sstable-dir` to restore the SSTables to Cassandra's data directory
+
+Additionally, we will restore the commit logs to support point-in-time restores through `axon-cassandra-restore` by using:
+
+* `--restore-commitlogs` to also restore any new commit logs since the target backup/snapshot
+* `--local-commitlog-dir` to restore the commit logs to Cassandra's commitlog directory
+
+Note that this command should use a single Source Host ID as [found within Cluster Overview within the AxonOps dashboard](restore-tool-setup.md/#finding-the-source-host-ids).
+
 ```bash
+AGENT_ID=026346a0-dc89-4235-ae34-552fcd453b42
+
 /usr/share/axonops/axon-cassandra-restore \
-  --restore \
+  --storage-config-file /restore-server \
   --org-id myaxonopsorg \
-  --storage-config-file /full/path/to/remote_storage_config_file.json \
   --source-cluster testcluster \
+  --source-hosts "${AGENT_ID}"  \
   --backup-id 2c1d9aca-5312-11ee-b686-bed50b9335ec \
-  --source-hosts 026346a0-dc89-4235-ae34-552fcd453b42,84759df0-8a19-497e-965f-200bdb4c1c9b,94ed3811-12ce-487f-ac49-ae31299efa31 \
-  --local-sstable-dir /opt/cassandra/axonops-restore \
-  --use-sstable-loader \
-  --cassandra-bin-dir /opt/cassandra/bin \
-  --sstable-loader-options "-d 10.0.0.1,10.0.0.2,10.0.0.3 -u cassandra -pw cassandra" \
-  --restore-schema \
-  --cqlsh-options "-u cassandra -p cassandra 10.0.0.1" \
-  --tables keyspace1.table1 \
-  --dest-table restoreks.table1_restored
+  --restore \
+  --threads 20 \
+  --table-uuids \
+  --set-owner cassandra \
+  --no-host-dir \
+  --local-sstable-dir /var/lib/cassandra/data \
+  --restore-commitlogs \
+  --local-commitlog-dir /var/lib/cassandra/commitlog
+```
+
+Once all nodes have been restored individually, we can start the new Cassandra cluster into a previous state:
+
+```bash
+service cassandra start
 ```
