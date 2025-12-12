@@ -40,7 +40,7 @@
   --bg-primary: #ffffff;
   --bg-secondary: #f8fafc;
   --bg-tertiary: #f1f5f9;
-  --bg-code: #1e293b;
+  --bg-code: #000000;
   --bg-code-light: #f6f8fa;
 
   /* Border Colors */
@@ -99,10 +99,53 @@
   --bg-primary: #0f172a;
   --bg-secondary: #1e293b;
   --bg-tertiary: #334155;
-  --bg-code: #0f172a;
+  --bg-code: #000000;
   --bg-code-light: #1e293b;
   --border-light: #334155;
   --border-medium: #475569;
+}
+
+/* ============================================================================
+   CODE SYNTAX HIGHLIGHTING OVERRIDES - VS Code Dark+ Theme
+   Must override MkDocs Material's default color scheme
+   ============================================================================ */
+
+/* Override for default (light) theme - these apply to code with black background */
+[data-md-color-scheme="default"] {
+  --md-code-bg-color: #000000;
+  --md-code-fg-color: #d4d4d4;
+  --md-code-hl-color: #d4d4d4;
+  --md-code-hl-comment-color: #6a9955;
+  --md-code-hl-keyword-color: #569cd6;
+  --md-code-hl-string-color: #ce9178;
+  --md-code-hl-number-color: #b5cea8;
+  --md-code-hl-function-color: #dcdcaa;
+  --md-code-hl-variable-color: #9cdcfe;
+  --md-code-hl-operator-color: #d4d4d4;
+  --md-code-hl-punctuation-color: #d4d4d4;
+  --md-code-hl-constant-color: #4fc1ff;
+  --md-code-hl-name-color: #9cdcfe;
+  --md-code-hl-special-color: #c586c0;
+  --md-code-hl-generic-color: #d4d4d4;
+}
+
+/* Override for slate (dark) theme */
+[data-md-color-scheme="slate"] {
+  --md-code-bg-color: #000000;
+  --md-code-fg-color: #d4d4d4;
+  --md-code-hl-color: #d4d4d4;
+  --md-code-hl-comment-color: #6a9955;
+  --md-code-hl-keyword-color: #569cd6;
+  --md-code-hl-string-color: #ce9178;
+  --md-code-hl-number-color: #b5cea8;
+  --md-code-hl-function-color: #dcdcaa;
+  --md-code-hl-variable-color: #9cdcfe;
+  --md-code-hl-operator-color: #d4d4d4;
+  --md-code-hl-punctuation-color: #d4d4d4;
+  --md-code-hl-constant-color: #4fc1ff;
+  --md-code-hl-name-color: #9cdcfe;
+  --md-code-hl-special-color: #c586c0;
+  --md-code-hl-generic-color: #d4d4d4;
 }
 
 /* ----------------------------------------------------------------------------
@@ -243,7 +286,21 @@ body {
   border: 1px solid var(--border-light);
 }
 
-/* Code blocks */
+/* Code blocks - force black background */
+.md-typeset pre,
+.md-typeset .highlight,
+.md-typeset .highlighttable,
+.md-typeset .highlight pre,
+.highlight,
+.codehilite,
+pre code,
+.md-typeset pre > code,
+.md-typeset code[class*="language-"],
+.md-typeset pre[class*="language-"] {
+  background: #000000 !important;
+  background-color: #000000 !important;
+}
+
 .md-typeset pre {
   position: relative;
   margin: var(--space-4) 0;
@@ -252,13 +309,14 @@ body {
   box-shadow: var(--shadow-md);
 }
 
-.md-typeset pre > code {
+.md-typeset pre > code,
+.md-typeset .highlight code {
   display: block;
   padding: var(--space-4);
-  font-size: 0.75rem;
+  font-size: 0.8125rem;
   line-height: 1.5;
-  background-color: var(--bg-code);
-  color: #e2e8f0;
+  background-color: #000000 !important;
+  color: #d4d4d4 !important;
   border: none;
   overflow-x: auto;
   -webkit-overflow-scrolling: touch;
@@ -266,19 +324,19 @@ body {
 
 /* Code block with title/filename */
 .md-typeset .highlight > .filename {
-  background-color: #334155;
+  background-color: #1a1a1a;
   color: #94a3b8;
   padding: var(--space-2) var(--space-4);
   font-size: var(--font-size-sm);
   font-family: 'JetBrains Mono', monospace;
-  border-bottom: 1px solid #475569;
+  border-bottom: 1px solid #333333;
 }
 
 /* Line numbers */
 .md-typeset .highlight .linenos {
-  color: #64748b;
+  color: #666666;
   padding-right: var(--space-4);
-  border-right: 1px solid #334155;
+  border-right: 1px solid #333333;
   margin-right: var(--space-4);
   user-select: none;
 }
@@ -307,38 +365,152 @@ body {
   border-color: #64748b;
 }
 
-/* SQL syntax highlighting enhancement */
+/* Plain text in code blocks (no syntax highlighting) */
+.md-typeset .highlight .text,
+.md-typeset .highlight .w,
+.md-typeset .highlight code > span:not([class]),
+.md-typeset .highlight .language-cqlsyntax,
+.md-typeset .highlight .language-text,
+.md-typeset .highlight .language-plaintext,
+.md-typeset .highlight .language-none {
+  color: #d4d4d4;
+}
+
+/* Fallback: any code block content without specific syntax classes */
+.md-typeset .highlight code,
+.md-typeset pre code {
+  color: #d4d4d4;
+}
+
+/* Ensure code text is visible when not highlighted */
+.md-typeset .highlight .err,
+.md-typeset .highlight .x,
+.md-typeset .highlight .g,
+.md-typeset .highlight .gd,
+.md-typeset .highlight .ge,
+.md-typeset .highlight .gh,
+.md-typeset .highlight .gi,
+.md-typeset .highlight .go,
+.md-typeset .highlight .gp,
+.md-typeset .highlight .gr,
+.md-typeset .highlight .gs,
+.md-typeset .highlight .gt,
+.md-typeset .highlight .gu {
+  color: #d4d4d4;
+}
+
+/* SQL/CQL Syntax Highlighting - VS Code Dark+ Theme */
+
+/* Keywords (SELECT, FROM, WHERE, CREATE, INSERT, etc.) */
 .md-typeset .highlight .k,
 .md-typeset .highlight .kd,
 .md-typeset .highlight .kn,
 .md-typeset .highlight .kp,
 .md-typeset .highlight .kr,
-.md-typeset .highlight .kt {
-  color: #c084fc;
+.md-typeset .highlight .kt,
+.md-typeset .highlight .kc {
+  color: #569cd6 !important;
   font-weight: 500;
 }
 
+/* Strings ('value', "text") */
 .md-typeset .highlight .s,
 .md-typeset .highlight .s1,
-.md-typeset .highlight .s2 {
-  color: #86efac;
+.md-typeset .highlight .s2,
+.md-typeset .highlight .sb,
+.md-typeset .highlight .sc,
+.md-typeset .highlight .sd,
+.md-typeset .highlight .se,
+.md-typeset .highlight .sh,
+.md-typeset .highlight .sx {
+  color: #ce9178 !important;
 }
 
+/* Comments (-- comment, /* comment */) - bright green for visibility on black */
+.c1, .c, .cm, .cp, .cs,
+span.c1, span.c, span.cm,
+.md-typeset .c1,
+.md-typeset .c,
+.md-typeset .cm,
 .md-typeset .highlight .c,
 .md-typeset .highlight .c1,
-.md-typeset .highlight .cm {
-  color: #64748b;
+.md-typeset .highlight .cm,
+.md-typeset .highlight .cp,
+.md-typeset .highlight .cs,
+.md-typeset .highlight span.c,
+.md-typeset .highlight span.c1,
+.md-typeset .highlight span.cm,
+.md-typeset .highlight code .c1,
+.md-typeset .highlight code .c,
+.md-typeset pre code .c,
+.md-typeset pre code .c1,
+.md-typeset pre code .cm,
+.highlight .c,
+.highlight .c1,
+.highlight .cm,
+.highlight code .c1,
+.highlight pre .c1 {
+  color: #87d37c !important;
+  font-style: italic !important;
+}
+
+/* Numbers (123, 45.67) */
+.md-typeset .highlight .mi,
+.md-typeset .highlight .mf,
+.md-typeset .highlight .mh,
+.md-typeset .highlight .mo,
+.md-typeset .highlight .il {
+  color: #b5cea8 !important;
+}
+
+/* Functions (uuid(), now(), count()) */
+.md-typeset .highlight .nf,
+.md-typeset .highlight .nb,
+.md-typeset .highlight .nc {
+  color: #dcdcaa !important;
+}
+
+/* Operators (=, >, <, AND, OR) */
+.md-typeset .highlight .o,
+.md-typeset .highlight .ow {
+  color: #d4d4d4 !important;
+}
+
+/* Names/Identifiers (table names, column names) */
+.md-typeset .highlight .n,
+.md-typeset .highlight .na,
+.md-typeset .highlight .ni,
+.md-typeset .highlight .nl,
+.md-typeset .highlight .nn {
+  color: #9cdcfe !important;
+}
+
+/* Variables and parameters */
+.md-typeset .highlight .nv,
+.md-typeset .highlight .vm,
+.md-typeset .highlight .vg,
+.md-typeset .highlight .vi {
+  color: #9cdcfe !important;
+}
+
+/* Types (TEXT, INT, UUID, etc.) */
+.md-typeset .highlight .nt,
+.md-typeset .highlight .bp {
+  color: #4ec9b0 !important;
+}
+
+/* Punctuation */
+.md-typeset .highlight .p {
+  color: #d4d4d4 !important;
+}
+
+/* Generic tokens */
+.md-typeset .highlight .ge {
   font-style: italic;
 }
 
-.md-typeset .highlight .mi,
-.md-typeset .highlight .mf {
-  color: #fbbf24;
-}
-
-.md-typeset .highlight .nf,
-.md-typeset .highlight .nb {
-  color: #7dd3fc;
+.md-typeset .highlight .gs {
+  font-weight: bold;
 }
 
 /* ----------------------------------------------------------------------------

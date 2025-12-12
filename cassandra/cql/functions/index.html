@@ -52,6 +52,10 @@
     
       <link rel="stylesheet" href="../../../stylesheets/extra.css">
     
+      <link rel="stylesheet" href="../../../assets/mkdocs_puml/puml.css">
+    
+      <link rel="stylesheet" href="../../../assets/mkdocs_puml/interaction.css">
+    
     <script>__md_scope=new URL("../../..",location),__md_hash=e=>[...e].reduce((e,_)=>(e<<5)-e+_.charCodeAt(0),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
     
       
@@ -6671,13 +6675,13 @@ data-et-multi-view="{&quot;schema&quot;:{&quot;content&quot;:{&quot;desktop&quot
 </li>
       
         <li class="md-nav__item">
-  <a href="#collection-functions" class="md-nav__link">
+  <a href="#cell-metadata-functions" class="md-nav__link">
     <span class="md-ellipsis">
-      Collection Functions
+      Cell Metadata Functions
     </span>
   </a>
   
-    <nav class="md-nav" aria-label="Collection Functions">
+    <nav class="md-nav" aria-label="Cell Metadata Functions">
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
@@ -6698,10 +6702,34 @@ data-et-multi-view="{&quot;schema&quot;:{&quot;content&quot;:{&quot;desktop&quot
   
 </li>
         
-          <li class="md-nav__item">
-  <a href="#collection-element-access" class="md-nav__link">
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#collection-functions" class="md-nav__link">
     <span class="md-ellipsis">
-      Collection Element Access
+      Collection Functions
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Collection Functions">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#map-functions" class="md-nav__link">
+    <span class="md-ellipsis">
+      Map Functions
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#collection-aggregates" class="md-nav__link">
+    <span class="md-ellipsis">
+      Collection Aggregates
     </span>
   </a>
   
@@ -6830,6 +6858,24 @@ data-et-multi-view="{&quot;schema&quot;:{&quot;content&quot;:{&quot;desktop&quot
 </li>
       
         <li class="md-nav__item">
+  <a href="#data-masking-functions-cassandra-50" class="md-nav__link">
+    <span class="md-ellipsis">
+      Data Masking Functions (Cassandra 5.0+)
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#vector-similarity-functions-cassandra-50" class="md-nav__link">
+    <span class="md-ellipsis">
+      Vector Similarity Functions (Cassandra 5.0+)
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#function-reference-table" class="md-nav__link">
     <span class="md-ellipsis">
       Function Reference Table
@@ -6849,9 +6895,45 @@ data-et-multi-view="{&quot;schema&quot;:{&quot;content&quot;:{&quot;desktop&quot
 </li>
         
           <li class="md-nav__item">
+  <a href="#math-functions-40" class="md-nav__link">
+    <span class="md-ellipsis">
+      Math Functions (4.0+)
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
   <a href="#aggregate-functions_1" class="md-nav__link">
     <span class="md-ellipsis">
       Aggregate Functions
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#collection-functions_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      Collection Functions
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#data-masking-functions-50" class="md-nav__link">
+    <span class="md-ellipsis">
+      Data Masking Functions (5.0+)
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#vector-functions-50" class="md-nav__link">
+    <span class="md-ellipsis">
+      Vector Functions (5.0+)
     </span>
   </a>
   
@@ -14012,13 +14094,13 @@ data-et-multi-view="{&quot;schema&quot;:{&quot;content&quot;:{&quot;desktop&quot
 </li>
       
         <li class="md-nav__item">
-  <a href="#collection-functions" class="md-nav__link">
+  <a href="#cell-metadata-functions" class="md-nav__link">
     <span class="md-ellipsis">
-      Collection Functions
+      Cell Metadata Functions
     </span>
   </a>
   
-    <nav class="md-nav" aria-label="Collection Functions">
+    <nav class="md-nav" aria-label="Cell Metadata Functions">
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
@@ -14039,10 +14121,34 @@ data-et-multi-view="{&quot;schema&quot;:{&quot;content&quot;:{&quot;desktop&quot
   
 </li>
         
-          <li class="md-nav__item">
-  <a href="#collection-element-access" class="md-nav__link">
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#collection-functions" class="md-nav__link">
     <span class="md-ellipsis">
-      Collection Element Access
+      Collection Functions
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Collection Functions">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#map-functions" class="md-nav__link">
+    <span class="md-ellipsis">
+      Map Functions
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#collection-aggregates" class="md-nav__link">
+    <span class="md-ellipsis">
+      Collection Aggregates
     </span>
   </a>
   
@@ -14171,6 +14277,24 @@ data-et-multi-view="{&quot;schema&quot;:{&quot;content&quot;:{&quot;desktop&quot
 </li>
       
         <li class="md-nav__item">
+  <a href="#data-masking-functions-cassandra-50" class="md-nav__link">
+    <span class="md-ellipsis">
+      Data Masking Functions (Cassandra 5.0+)
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#vector-similarity-functions-cassandra-50" class="md-nav__link">
+    <span class="md-ellipsis">
+      Vector Similarity Functions (Cassandra 5.0+)
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#function-reference-table" class="md-nav__link">
     <span class="md-ellipsis">
       Function Reference Table
@@ -14190,9 +14314,45 @@ data-et-multi-view="{&quot;schema&quot;:{&quot;content&quot;:{&quot;desktop&quot
 </li>
         
           <li class="md-nav__item">
+  <a href="#math-functions-40" class="md-nav__link">
+    <span class="md-ellipsis">
+      Math Functions (4.0+)
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
   <a href="#aggregate-functions_1" class="md-nav__link">
     <span class="md-ellipsis">
       Aggregate Functions
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#collection-functions_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      Collection Functions
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#data-masking-functions-50" class="md-nav__link">
+    <span class="md-ellipsis">
+      Data Masking Functions (5.0+)
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#vector-functions-50" class="md-nav__link">
+    <span class="md-ellipsis">
+      Vector Functions (5.0+)
     </span>
   </a>
   
@@ -14257,9 +14417,24 @@ data-et-multi-view="{&quot;schema&quot;:{&quot;content&quot;:{&quot;desktop&quot
 <td><code>now()</code>, <code>uuid()</code>, <code>toTimestamp()</code></td>
 </tr>
 <tr>
-<td>Collection</td>
-<td>Work with collections</td>
+<td>Cell Metadata</td>
+<td>Query column metadata</td>
 <td><code>ttl()</code>, <code>writetime()</code></td>
+</tr>
+<tr>
+<td>Collection</td>
+<td>Operate on collections</td>
+<td><code>map_keys()</code>, <code>collection_count()</code></td>
+</tr>
+<tr>
+<td>Data Masking</td>
+<td>Protect sensitive data</td>
+<td><code>mask_default()</code>, <code>mask_inner()</code></td>
+</tr>
+<tr>
+<td>Vector</td>
+<td>Vector similarity search</td>
+<td><code>similarity_cosine()</code></td>
 </tr>
 </tbody>
 </table>
@@ -14346,39 +14521,28 @@ data-et-multi-view="{&quot;schema&quot;:{&quot;content&quot;:{&quot;desktop&quot
 <span class="k">SELECT</span><span class="w"> </span><span class="n">blobAsVarint</span><span class="p">(</span><span class="n">blob_column</span><span class="p">)</span><span class="w"> </span><span class="k">FROM</span><span class="w"> </span><span class="k">data</span><span class="p">;</span>
 </code></pre></div>
 <h3 id="text-functions">Text Functions<a class="headerlink" href="#text-functions" title="Permanent link">¶</a></h3>
-<div class="highlight"><pre><span></span><code><span class="c1">-- Convert ASCII code to character</span>
-<span class="k">SELECT</span><span class="w"> </span><span class="n">blobastext</span><span class="p">(</span><span class="n">intasblob</span><span class="p">(</span><span class="mi">65</span><span class="p">));</span><span class="w"> </span><span class="c1">-- 'A'</span>
+<div class="highlight"><pre><span></span><code><span class="c1">-- Convert blob to text</span>
+<span class="k">SELECT</span><span class="w"> </span><span class="n">blobastext</span><span class="p">(</span><span class="n">blob_column</span><span class="p">)</span><span class="w"> </span><span class="k">FROM</span><span class="w"> </span><span class="k">data</span><span class="p">;</span>
 
-<span class="c1">-- Text length</span>
-<span class="k">SELECT</span><span class="w"> </span><span class="k">length</span><span class="p">(</span><span class="n">text_column</span><span class="p">)</span><span class="w"> </span><span class="k">FROM</span><span class="w"> </span><span class="k">data</span><span class="p">;</span>
+<span class="c1">-- Convert text to blob</span>
+<span class="k">SELECT</span><span class="w"> </span><span class="n">textasblob</span><span class="p">(</span><span class="s1">'hello'</span><span class="p">);</span>
 
-<span class="c1">-- Substring (Cassandra 4.0+)</span>
-<span class="c1">-- Note: No built-in substring; use application layer</span>
+<span class="c1">-- Note: CQL has no built-in string manipulation functions</span>
+<span class="c1">-- (no length, substring, concat, etc.) - use application layer</span>
 </code></pre></div>
 <h3 id="math-functions-cassandra-40">Math Functions (Cassandra 4.0+)<a class="headerlink" href="#math-functions-cassandra-40" title="Permanent link">¶</a></h3>
 <div class="highlight"><pre><span></span><code><span class="c1">-- Absolute value</span>
 <span class="k">SELECT</span><span class="w"> </span><span class="k">abs</span><span class="p">(</span><span class="n">numeric_column</span><span class="p">)</span><span class="w"> </span><span class="k">FROM</span><span class="w"> </span><span class="k">data</span><span class="p">;</span>
 
-<span class="c1">-- Exponential</span>
+<span class="c1">-- Exponential (e raised to power)</span>
 <span class="k">SELECT</span><span class="w"> </span><span class="n">exp</span><span class="p">(</span><span class="n">numeric_column</span><span class="p">)</span><span class="w"> </span><span class="k">FROM</span><span class="w"> </span><span class="k">data</span><span class="p">;</span>
 
-<span class="c1">-- Logarithm</span>
+<span class="c1">-- Logarithm (natural log)</span>
 <span class="k">SELECT</span><span class="w"> </span><span class="n">log</span><span class="p">(</span><span class="n">numeric_column</span><span class="p">)</span><span class="w"> </span><span class="k">FROM</span><span class="w"> </span><span class="k">data</span><span class="p">;</span>
 <span class="k">SELECT</span><span class="w"> </span><span class="n">log10</span><span class="p">(</span><span class="n">numeric_column</span><span class="p">)</span><span class="w"> </span><span class="k">FROM</span><span class="w"> </span><span class="k">data</span><span class="p">;</span>
 
-<span class="c1">-- Power</span>
-<span class="k">SELECT</span><span class="w"> </span><span class="n">power</span><span class="p">(</span><span class="n">base</span><span class="p">,</span><span class="w"> </span><span class="n">exponent</span><span class="p">)</span><span class="w"> </span><span class="k">FROM</span><span class="w"> </span><span class="k">data</span><span class="p">;</span>
-
-<span class="c1">-- Round</span>
+<span class="c1">-- Round to nearest integer (HALF_UP mode)</span>
 <span class="k">SELECT</span><span class="w"> </span><span class="n">round</span><span class="p">(</span><span class="n">numeric_column</span><span class="p">)</span><span class="w"> </span><span class="k">FROM</span><span class="w"> </span><span class="k">data</span><span class="p">;</span>
-<span class="k">SELECT</span><span class="w"> </span><span class="n">round</span><span class="p">(</span><span class="n">numeric_column</span><span class="p">,</span><span class="w"> </span><span class="mi">2</span><span class="p">)</span><span class="w"> </span><span class="k">FROM</span><span class="w"> </span><span class="k">data</span><span class="p">;</span><span class="w">  </span><span class="c1">-- 2 decimal places</span>
-
-<span class="c1">-- Floor/Ceiling</span>
-<span class="k">SELECT</span><span class="w"> </span><span class="n">floor</span><span class="p">(</span><span class="n">numeric_column</span><span class="p">)</span><span class="w"> </span><span class="k">FROM</span><span class="w"> </span><span class="k">data</span><span class="p">;</span>
-<span class="k">SELECT</span><span class="w"> </span><span class="n">ceil</span><span class="p">(</span><span class="n">numeric_column</span><span class="p">)</span><span class="w"> </span><span class="k">FROM</span><span class="w"> </span><span class="k">data</span><span class="p">;</span>
-
-<span class="c1">-- Square root</span>
-<span class="k">SELECT</span><span class="w"> </span><span class="n">sqrt</span><span class="p">(</span><span class="n">numeric_column</span><span class="p">)</span><span class="w"> </span><span class="k">FROM</span><span class="w"> </span><span class="k">data</span><span class="p">;</span>
 </code></pre></div>
 <hr>
 <h2 id="aggregate-functions">Aggregate Functions<a class="headerlink" href="#aggregate-functions" title="Permanent link">¶</a></h2>
@@ -14484,11 +14648,13 @@ data-et-multi-view="{&quot;schema&quot;:{&quot;content&quot;:{&quot;desktop&quot
 <span class="w">  </span><span class="k">AND</span><span class="w"> </span><span class="n">event_id</span><span class="w"> </span><span class="o">&gt;</span><span class="w"> </span><span class="n">minTimeuuid</span><span class="p">(</span><span class="s1">'2024-01-01 00:00:00+0000'</span><span class="p">)</span>
 <span class="w">  </span><span class="k">AND</span><span class="w"> </span><span class="n">event_id</span><span class="w"> </span><span class="o">&lt;</span><span class="w"> </span><span class="n">maxTimeuuid</span><span class="p">(</span><span class="s1">'2024-01-31 23:59:59+0000'</span><span class="p">);</span>
 
-<span class="c1">-- Current time boundaries</span>
+<span class="c1">-- Query events up to current time</span>
 <span class="k">SELECT</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="k">FROM</span><span class="w"> </span><span class="n">events</span>
 <span class="k">WHERE</span><span class="w"> </span><span class="n">user_id</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="o">?</span>
-<span class="w">  </span><span class="k">AND</span><span class="w"> </span><span class="n">event_id</span><span class="w"> </span><span class="o">&gt;</span><span class="w"> </span><span class="n">minTimeuuid</span><span class="p">(</span><span class="n">toTimestamp</span><span class="p">(</span><span class="n">now</span><span class="p">())</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="mi">1</span><span class="n">h</span><span class="p">)</span>
 <span class="w">  </span><span class="k">AND</span><span class="w"> </span><span class="n">event_id</span><span class="w"> </span><span class="o">&lt;=</span><span class="w"> </span><span class="n">now</span><span class="p">();</span>
+
+<span class="c1">-- Note: CQL has no timestamp arithmetic; calculate time bounds</span>
+<span class="c1">-- in application code and pass as prepared statement parameters</span>
 </code></pre></div>
 <h3 id="current-time-functions">Current Time Functions<a class="headerlink" href="#current-time-functions" title="Permanent link">¶</a></h3>
 <div class="highlight"><pre><span></span><code><span class="c1">-- Current timestamp (microseconds)</span>
@@ -14504,7 +14670,7 @@ data-et-multi-view="{&quot;schema&quot;:{&quot;content&quot;:{&quot;desktop&quot
 <span class="k">SELECT</span><span class="w"> </span><span class="n">currentTimeUUID</span><span class="p">()</span><span class="w"> </span><span class="k">FROM</span><span class="w"> </span><span class="k">system</span><span class="p">.</span><span class="k">local</span><span class="p">;</span>
 </code></pre></div>
 <hr>
-<h2 id="collection-functions">Collection Functions<a class="headerlink" href="#collection-functions" title="Permanent link">¶</a></h2>
+<h2 id="cell-metadata-functions">Cell Metadata Functions<a class="headerlink" href="#cell-metadata-functions" title="Permanent link">¶</a></h2>
 <h3 id="ttl-function">TTL Function<a class="headerlink" href="#ttl-function" title="Permanent link">¶</a></h3>
 <div class="highlight"><pre><span></span><code><span class="c1">-- Check remaining TTL (seconds)</span>
 <span class="k">SELECT</span><span class="w"> </span><span class="n">TTL</span><span class="p">(</span><span class="n">email</span><span class="p">)</span><span class="w"> </span><span class="k">FROM</span><span class="w"> </span><span class="n">users</span><span class="w"> </span><span class="k">WHERE</span><span class="w"> </span><span class="n">user_id</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="o">?</span><span class="p">;</span>
@@ -14519,17 +14685,26 @@ data-et-multi-view="{&quot;schema&quot;:{&quot;content&quot;:{&quot;desktop&quot
 <span class="c1">-- Compare write times</span>
 <span class="k">SELECT</span><span class="w"> </span><span class="n">username</span><span class="p">,</span><span class="w"> </span><span class="n">WRITETIME</span><span class="p">(</span><span class="n">username</span><span class="p">),</span><span class="w"> </span><span class="n">email</span><span class="p">,</span><span class="w"> </span><span class="n">WRITETIME</span><span class="p">(</span><span class="n">email</span><span class="p">)</span><span class="w"> </span><span class="k">FROM</span><span class="w"> </span><span class="n">users</span><span class="p">;</span>
 </code></pre></div>
-<h3 id="collection-element-access">Collection Element Access<a class="headerlink" href="#collection-element-access" title="Permanent link">¶</a></h3>
-<div class="highlight"><pre><span></span><code><span class="c1">-- List element by index</span>
-<span class="k">SELECT</span><span class="w"> </span><span class="n">phone_numbers</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="w"> </span><span class="k">FROM</span><span class="w"> </span><span class="n">users</span><span class="w"> </span><span class="k">WHERE</span><span class="w"> </span><span class="n">user_id</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="o">?</span><span class="p">;</span>
+<hr>
+<h2 id="collection-functions">Collection Functions<a class="headerlink" href="#collection-functions" title="Permanent link">¶</a></h2>
+<h3 id="map-functions">Map Functions<a class="headerlink" href="#map-functions" title="Permanent link">¶</a></h3>
+<div class="highlight"><pre><span></span><code><span class="c1">-- Extract keys from map as a set</span>
+<span class="k">SELECT</span><span class="w"> </span><span class="n">map_keys</span><span class="p">(</span><span class="n">preferences</span><span class="p">)</span><span class="w"> </span><span class="k">FROM</span><span class="w"> </span><span class="n">users</span><span class="w"> </span><span class="k">WHERE</span><span class="w"> </span><span class="n">user_id</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="o">?</span><span class="p">;</span>
 
-<span class="c1">-- Map element by key</span>
-<span class="k">SELECT</span><span class="w"> </span><span class="n">preferences</span><span class="p">[</span><span class="s1">'theme'</span><span class="p">]</span><span class="w"> </span><span class="k">FROM</span><span class="w"> </span><span class="n">users</span><span class="w"> </span><span class="k">WHERE</span><span class="w"> </span><span class="n">user_id</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="o">?</span><span class="p">;</span>
+<span class="c1">-- Extract values from map as a list</span>
+<span class="k">SELECT</span><span class="w"> </span><span class="n">map_values</span><span class="p">(</span><span class="n">preferences</span><span class="p">)</span><span class="w"> </span><span class="k">FROM</span><span class="w"> </span><span class="n">users</span><span class="w"> </span><span class="k">WHERE</span><span class="w"> </span><span class="n">user_id</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="o">?</span><span class="p">;</span>
+</code></pre></div>
+<h3 id="collection-aggregates">Collection Aggregates<a class="headerlink" href="#collection-aggregates" title="Permanent link">¶</a></h3>
+<div class="highlight"><pre><span></span><code><span class="c1">-- Count elements in collection</span>
+<span class="k">SELECT</span><span class="w"> </span><span class="n">collection_count</span><span class="p">(</span><span class="n">tags</span><span class="p">)</span><span class="w"> </span><span class="k">FROM</span><span class="w"> </span><span class="n">users</span><span class="w"> </span><span class="k">WHERE</span><span class="w"> </span><span class="n">user_id</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="o">?</span><span class="p">;</span>
 
-<span class="c1">-- Frozen collection functions</span>
-<span class="k">SELECT</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="k">FROM</span><span class="w"> </span><span class="n">users</span><span class="w"> </span><span class="k">WHERE</span><span class="w"> </span><span class="n">tags</span><span class="w"> </span><span class="k">CONTAINS</span><span class="w"> </span><span class="s1">'premium'</span><span class="p">;</span>
-<span class="k">SELECT</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="k">FROM</span><span class="w"> </span><span class="n">users</span><span class="w"> </span><span class="k">WHERE</span><span class="w"> </span><span class="n">preferences</span><span class="w"> </span><span class="k">CONTAINS</span><span class="w"> </span><span class="k">KEY</span><span class="w"> </span><span class="s1">'theme'</span><span class="p">;</span>
-<span class="k">SELECT</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="k">FROM</span><span class="w"> </span><span class="n">users</span><span class="w"> </span><span class="k">WHERE</span><span class="w"> </span><span class="n">preferences</span><span class="w"> </span><span class="k">CONTAINS</span><span class="w"> </span><span class="s1">'dark'</span><span class="p">;</span>
+<span class="c1">-- Min/max element in set or list</span>
+<span class="k">SELECT</span><span class="w"> </span><span class="n">collection_min</span><span class="p">(</span><span class="n">scores</span><span class="p">)</span><span class="w"> </span><span class="k">FROM</span><span class="w"> </span><span class="n">users</span><span class="w"> </span><span class="k">WHERE</span><span class="w"> </span><span class="n">user_id</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="o">?</span><span class="p">;</span>
+<span class="k">SELECT</span><span class="w"> </span><span class="n">collection_max</span><span class="p">(</span><span class="n">scores</span><span class="p">)</span><span class="w"> </span><span class="k">FROM</span><span class="w"> </span><span class="n">users</span><span class="w"> </span><span class="k">WHERE</span><span class="w"> </span><span class="n">user_id</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="o">?</span><span class="p">;</span>
+
+<span class="c1">-- Sum/average of numeric collection</span>
+<span class="k">SELECT</span><span class="w"> </span><span class="n">collection_sum</span><span class="p">(</span><span class="n">scores</span><span class="p">)</span><span class="w"> </span><span class="k">FROM</span><span class="w"> </span><span class="n">users</span><span class="w"> </span><span class="k">WHERE</span><span class="w"> </span><span class="n">user_id</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="o">?</span><span class="p">;</span>
+<span class="k">SELECT</span><span class="w"> </span><span class="n">collection_avg</span><span class="p">(</span><span class="n">scores</span><span class="p">)</span><span class="w"> </span><span class="k">FROM</span><span class="w"> </span><span class="n">users</span><span class="w"> </span><span class="k">WHERE</span><span class="w"> </span><span class="n">user_id</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="o">?</span><span class="p">;</span>
 </code></pre></div>
 <hr>
 <h2 id="json-functions">JSON Functions<a class="headerlink" href="#json-functions" title="Permanent link">¶</a></h2>
@@ -14574,8 +14749,7 @@ data-et-multi-view="{&quot;schema&quot;:{&quot;content&quot;:{&quot;desktop&quot
 <h2 id="user-defined-functions-udf">User-Defined Functions (UDF)<a class="headerlink" href="#user-defined-functions-udf" title="Permanent link">¶</a></h2>
 <h3 id="creating-udfs">Creating UDFs<a class="headerlink" href="#creating-udfs" title="Permanent link">¶</a></h3>
 <div class="highlight"><pre><span></span><code><span class="c1">-- Enable UDFs in cassandra.yaml first:</span>
-<span class="c1">-- enable_user_defined_functions: true</span>
-<span class="c1">-- enable_scripted_user_defined_functions: true</span>
+<span class="c1">-- user_defined_functions_enabled: true</span>
 
 <span class="c1">-- Create Java UDF</span>
 <span class="k">CREATE</span><span class="w"> </span><span class="k">FUNCTION</span><span class="w"> </span><span class="n">my_keyspace</span><span class="p">.</span><span class="n">double_value</span><span class="p">(</span><span class="k">input</span><span class="w"> </span><span class="nb">int</span><span class="p">)</span>
@@ -14584,19 +14758,20 @@ data-et-multi-view="{&quot;schema&quot;:{&quot;content&quot;:{&quot;desktop&quot
 <span class="w">    </span><span class="k">LANGUAGE</span><span class="w"> </span><span class="n">java</span>
 <span class="w">    </span><span class="k">AS</span><span class="w"> </span><span class="s1">'return input * 2;'</span><span class="p">;</span>
 
-<span class="c1">-- Create JavaScript UDF</span>
-<span class="k">CREATE</span><span class="w"> </span><span class="k">FUNCTION</span><span class="w"> </span><span class="n">my_keyspace</span><span class="p">.</span><span class="n">concat_strings</span><span class="p">(</span><span class="n">a</span><span class="w"> </span><span class="nb">text</span><span class="p">,</span><span class="w"> </span><span class="n">b</span><span class="w"> </span><span class="nb">text</span><span class="p">)</span>
+<span class="c1">-- Create UDF with null handling</span>
+<span class="k">CREATE</span><span class="w"> </span><span class="k">FUNCTION</span><span class="w"> </span><span class="n">my_keyspace</span><span class="p">.</span><span class="n">safe_double</span><span class="p">(</span><span class="k">input</span><span class="w"> </span><span class="nb">int</span><span class="p">)</span>
 <span class="w">    </span><span class="k">RETURNS</span><span class="w"> </span><span class="k">NULL</span><span class="w"> </span><span class="k">ON</span><span class="w"> </span><span class="k">NULL</span><span class="w"> </span><span class="k">INPUT</span>
-<span class="w">    </span><span class="k">RETURNS</span><span class="w"> </span><span class="nb">text</span>
-<span class="w">    </span><span class="k">LANGUAGE</span><span class="w"> </span><span class="n">javascript</span>
-<span class="w">    </span><span class="k">AS</span><span class="w"> </span><span class="s1">'a + " " + b'</span><span class="p">;</span>
+<span class="w">    </span><span class="k">RETURNS</span><span class="w"> </span><span class="nb">int</span>
+<span class="w">    </span><span class="k">LANGUAGE</span><span class="w"> </span><span class="n">java</span>
+<span class="w">    </span><span class="k">AS</span><span class="w"> </span><span class="s1">'return input * 2;'</span><span class="p">;</span>
 </code></pre></div>
 <h3 id="using-udfs">Using UDFs<a class="headerlink" href="#using-udfs" title="Permanent link">¶</a></h3>
 <div class="highlight"><pre><span></span><code><span class="c1">-- Use in SELECT</span>
 <span class="k">SELECT</span><span class="w"> </span><span class="n">user_id</span><span class="p">,</span><span class="w"> </span><span class="n">double_value</span><span class="p">(</span><span class="n">score</span><span class="p">)</span><span class="w"> </span><span class="k">FROM</span><span class="w"> </span><span class="n">scores</span><span class="p">;</span>
 
-<span class="c1">-- Use in WHERE (if deterministic)</span>
-<span class="k">SELECT</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="k">FROM</span><span class="w"> </span><span class="n">scores</span><span class="w"> </span><span class="k">WHERE</span><span class="w"> </span><span class="n">double_value</span><span class="p">(</span><span class="n">score</span><span class="p">)</span><span class="w"> </span><span class="o">&gt;</span><span class="w"> </span><span class="mi">100</span><span class="p">;</span>
+<span class="c1">-- Use in INSERT/UPDATE</span>
+<span class="k">INSERT</span><span class="w"> </span><span class="k">INTO</span><span class="w"> </span><span class="n">scores</span><span class="w"> </span><span class="p">(</span><span class="n">user_id</span><span class="p">,</span><span class="w"> </span><span class="n">adjusted_score</span><span class="p">)</span>
+<span class="k">VALUES</span><span class="w"> </span><span class="p">(</span><span class="o">?</span><span class="p">,</span><span class="w"> </span><span class="n">double_value</span><span class="p">(</span><span class="o">?</span><span class="p">));</span>
 </code></pre></div>
 <h3 id="managing-udfs">Managing UDFs<a class="headerlink" href="#managing-udfs" title="Permanent link">¶</a></h3>
 <div class="highlight"><pre><span></span><code><span class="c1">-- List functions</span>
@@ -14646,6 +14821,41 @@ data-et-multi-view="{&quot;schema&quot;:{&quot;content&quot;:{&quot;desktop&quot
 <span class="k">SELECT</span><span class="w"> </span><span class="n">user_id</span><span class="p">,</span><span class="w"> </span><span class="n">custom_avg</span><span class="p">(</span><span class="n">score</span><span class="p">)</span><span class="w"> </span><span class="k">FROM</span><span class="w"> </span><span class="n">scores</span><span class="w"> </span><span class="k">GROUP</span><span class="w"> </span><span class="k">BY</span><span class="w"> </span><span class="n">user_id</span><span class="p">;</span>
 </code></pre></div>
 <hr>
+<h2 id="data-masking-functions-cassandra-50">Data Masking Functions (Cassandra 5.0+)<a class="headerlink" href="#data-masking-functions-cassandra-50" title="Permanent link">¶</a></h2>
+<p>Data masking functions protect sensitive data by replacing values with masked versions.</p>
+<div class="highlight"><pre><span></span><code><span class="c1">-- Return null for any value</span>
+<span class="k">SELECT</span><span class="w"> </span><span class="n">mask_null</span><span class="p">(</span><span class="n">email</span><span class="p">)</span><span class="w"> </span><span class="k">FROM</span><span class="w"> </span><span class="n">users</span><span class="p">;</span>
+
+<span class="c1">-- Return type-appropriate default (asterisks for text, zero for numbers)</span>
+<span class="k">SELECT</span><span class="w"> </span><span class="n">mask_default</span><span class="p">(</span><span class="n">email</span><span class="p">)</span><span class="w"> </span><span class="k">FROM</span><span class="w"> </span><span class="n">users</span><span class="p">;</span>
+
+<span class="c1">-- Replace with specific value</span>
+<span class="k">SELECT</span><span class="w"> </span><span class="n">mask_replace</span><span class="p">(</span><span class="n">email</span><span class="p">,</span><span class="w"> </span><span class="s1">'***@***.***'</span><span class="p">)</span><span class="w"> </span><span class="k">FROM</span><span class="w"> </span><span class="n">users</span><span class="p">;</span>
+
+<span class="c1">-- Mask inner characters, expose prefix/suffix</span>
+<span class="c1">-- mask_inner(value, begin_unmasked, end_unmasked, [padding_char])</span>
+<span class="k">SELECT</span><span class="w"> </span><span class="n">mask_inner</span><span class="p">(</span><span class="n">phone</span><span class="p">,</span><span class="w"> </span><span class="mi">3</span><span class="p">,</span><span class="w"> </span><span class="mi">4</span><span class="p">)</span><span class="w"> </span><span class="k">FROM</span><span class="w"> </span><span class="n">users</span><span class="p">;</span><span class="w">  </span><span class="c1">-- '+1-***-**-5678'</span>
+
+<span class="c1">-- Mask outer characters, expose middle</span>
+<span class="c1">-- mask_outer(value, begin_masked, end_masked, [padding_char])</span>
+<span class="k">SELECT</span><span class="w"> </span><span class="n">mask_outer</span><span class="p">(</span><span class="n">ssn</span><span class="p">,</span><span class="w"> </span><span class="mi">3</span><span class="p">,</span><span class="w"> </span><span class="mi">4</span><span class="p">)</span><span class="w"> </span><span class="k">FROM</span><span class="w"> </span><span class="n">users</span><span class="p">;</span><span class="w">  </span><span class="c1">-- '***-45-****'</span>
+
+<span class="c1">-- Return SHA-256 hash as blob</span>
+<span class="k">SELECT</span><span class="w"> </span><span class="n">mask_hash</span><span class="p">(</span><span class="n">email</span><span class="p">)</span><span class="w"> </span><span class="k">FROM</span><span class="w"> </span><span class="n">users</span><span class="p">;</span>
+</code></pre></div>
+<hr>
+<h2 id="vector-similarity-functions-cassandra-50">Vector Similarity Functions (Cassandra 5.0+)<a class="headerlink" href="#vector-similarity-functions-cassandra-50" title="Permanent link">¶</a></h2>
+<p>Vector similarity functions compare float vectors for similarity search operations.</p>
+<div class="highlight"><pre><span></span><code><span class="c1">-- Cosine similarity between vectors (range: -1 to 1)</span>
+<span class="k">SELECT</span><span class="w"> </span><span class="n">similarity_cosine</span><span class="p">(</span><span class="n">embedding</span><span class="p">,</span><span class="w"> </span><span class="o">?</span><span class="p">)</span><span class="w"> </span><span class="k">FROM</span><span class="w"> </span><span class="n">documents</span><span class="p">;</span>
+
+<span class="c1">-- Euclidean distance between vectors</span>
+<span class="k">SELECT</span><span class="w"> </span><span class="n">similarity_euclidean</span><span class="p">(</span><span class="n">embedding</span><span class="p">,</span><span class="w"> </span><span class="o">?</span><span class="p">)</span><span class="w"> </span><span class="k">FROM</span><span class="w"> </span><span class="n">documents</span><span class="p">;</span>
+
+<span class="c1">-- Dot product of vectors</span>
+<span class="k">SELECT</span><span class="w"> </span><span class="n">similarity_dot_product</span><span class="p">(</span><span class="n">embedding</span><span class="p">,</span><span class="w"> </span><span class="o">?</span><span class="p">)</span><span class="w"> </span><span class="k">FROM</span><span class="w"> </span><span class="n">documents</span><span class="p">;</span>
+</code></pre></div>
+<hr>
 <h2 id="function-reference-table">Function Reference Table<a class="headerlink" href="#function-reference-table" title="Permanent link">¶</a></h2>
 <h3 id="scalar-functions_1">Scalar Functions<a class="headerlink" href="#scalar-functions_1" title="Permanent link">¶</a></h3>
 <table>
@@ -14677,31 +14887,31 @@ data-et-multi-view="{&quot;schema&quot;:{&quot;content&quot;:{&quot;desktop&quot
 <td>Current time UUID</td>
 </tr>
 <tr>
-<td><code>toDate()</code></td>
+<td><code>to_date()</code></td>
 <td>timestamp/timeuuid</td>
 <td>date</td>
 <td>Extract date</td>
 </tr>
 <tr>
-<td><code>toTimestamp()</code></td>
+<td><code>to_timestamp()</code></td>
 <td>date/timeuuid</td>
 <td>timestamp</td>
 <td>Convert to timestamp</td>
 </tr>
 <tr>
-<td><code>toUnixTimestamp()</code></td>
+<td><code>to_unix_timestamp()</code></td>
 <td>timestamp/timeuuid</td>
 <td>bigint</td>
 <td>Unix time (ms)</td>
 </tr>
 <tr>
-<td><code>minTimeuuid()</code></td>
+<td><code>min_timeuuid()</code></td>
 <td>timestamp</td>
 <td>timeuuid</td>
 <td>Min UUID for time</td>
 </tr>
 <tr>
-<td><code>maxTimeuuid()</code></td>
+<td><code>max_timeuuid()</code></td>
 <td>timestamp</td>
 <td>timeuuid</td>
 <td>Max UUID for time</td>
@@ -14725,16 +14935,59 @@ data-et-multi-view="{&quot;schema&quot;:{&quot;content&quot;:{&quot;desktop&quot
 <td>Type conversion</td>
 </tr>
 <tr>
-<td><code>toJson()</code></td>
+<td><code>to_json()</code></td>
 <td>value</td>
 <td>text</td>
 <td>Convert to JSON</td>
 </tr>
 <tr>
-<td><code>fromJson()</code></td>
+<td><code>from_json()</code></td>
 <td>json text</td>
 <td>varies</td>
 <td>Parse JSON</td>
+</tr>
+</tbody>
+</table>
+<h3 id="math-functions-40">Math Functions (4.0+)<a class="headerlink" href="#math-functions-40" title="Permanent link">¶</a></h3>
+<table>
+<thead>
+<tr>
+<th>Function</th>
+<th>Parameters</th>
+<th>Returns</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>abs()</code></td>
+<td>numeric</td>
+<td>same</td>
+<td>Absolute value</td>
+</tr>
+<tr>
+<td><code>exp()</code></td>
+<td>numeric</td>
+<td>same</td>
+<td>e raised to power</td>
+</tr>
+<tr>
+<td><code>log()</code></td>
+<td>numeric</td>
+<td>same</td>
+<td>Natural logarithm</td>
+</tr>
+<tr>
+<td><code>log10()</code></td>
+<td>numeric</td>
+<td>same</td>
+<td>Base-10 logarithm</td>
+</tr>
+<tr>
+<td><code>round()</code></td>
+<td>numeric</td>
+<td>same</td>
+<td>Round (HALF_UP)</td>
 </tr>
 </tbody>
 </table>
@@ -14750,34 +15003,169 @@ data-et-multi-view="{&quot;schema&quot;:{&quot;content&quot;:{&quot;desktop&quot
 </thead>
 <tbody>
 <tr>
-<td><code>COUNT()</code></td>
+<td><code>count()</code></td>
 <td>* or column</td>
 <td>bigint</td>
 <td>Row/value count</td>
 </tr>
 <tr>
-<td><code>SUM()</code></td>
+<td><code>sum()</code></td>
 <td>numeric column</td>
 <td>varies</td>
 <td>Sum of values</td>
 </tr>
 <tr>
-<td><code>AVG()</code></td>
+<td><code>avg()</code></td>
 <td>numeric column</td>
 <td>varies</td>
 <td>Average value</td>
 </tr>
 <tr>
-<td><code>MIN()</code></td>
+<td><code>min()</code></td>
 <td>column</td>
 <td>varies</td>
 <td>Minimum value</td>
 </tr>
 <tr>
-<td><code>MAX()</code></td>
+<td><code>max()</code></td>
 <td>column</td>
 <td>varies</td>
 <td>Maximum value</td>
+</tr>
+</tbody>
+</table>
+<h3 id="collection-functions_1">Collection Functions<a class="headerlink" href="#collection-functions_1" title="Permanent link">¶</a></h3>
+<table>
+<thead>
+<tr>
+<th>Function</th>
+<th>Parameters</th>
+<th>Returns</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>map_keys()</code></td>
+<td>map</td>
+<td>set</td>
+<td>Extract map keys</td>
+</tr>
+<tr>
+<td><code>map_values()</code></td>
+<td>map</td>
+<td>list</td>
+<td>Extract map values</td>
+</tr>
+<tr>
+<td><code>collection_count()</code></td>
+<td>collection</td>
+<td>int</td>
+<td>Element count</td>
+</tr>
+<tr>
+<td><code>collection_min()</code></td>
+<td>set/list</td>
+<td>element type</td>
+<td>Minimum element</td>
+</tr>
+<tr>
+<td><code>collection_max()</code></td>
+<td>set/list</td>
+<td>element type</td>
+<td>Maximum element</td>
+</tr>
+<tr>
+<td><code>collection_sum()</code></td>
+<td>numeric set/list</td>
+<td>numeric</td>
+<td>Sum of elements</td>
+</tr>
+<tr>
+<td><code>collection_avg()</code></td>
+<td>numeric set/list</td>
+<td>numeric</td>
+<td>Average of elements</td>
+</tr>
+</tbody>
+</table>
+<h3 id="data-masking-functions-50">Data Masking Functions (5.0+)<a class="headerlink" href="#data-masking-functions-50" title="Permanent link">¶</a></h3>
+<table>
+<thead>
+<tr>
+<th>Function</th>
+<th>Parameters</th>
+<th>Returns</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>mask_null()</code></td>
+<td>value</td>
+<td>null</td>
+<td>Returns null</td>
+</tr>
+<tr>
+<td><code>mask_default()</code></td>
+<td>value</td>
+<td>same type</td>
+<td>Type-appropriate mask</td>
+</tr>
+<tr>
+<td><code>mask_replace()</code></td>
+<td>value, replacement</td>
+<td>same type</td>
+<td>Replace with value</td>
+</tr>
+<tr>
+<td><code>mask_inner()</code></td>
+<td>value, begin, end, [pad]</td>
+<td>same type</td>
+<td>Mask inner chars</td>
+</tr>
+<tr>
+<td><code>mask_outer()</code></td>
+<td>value, begin, end, [pad]</td>
+<td>same type</td>
+<td>Mask outer chars</td>
+</tr>
+<tr>
+<td><code>mask_hash()</code></td>
+<td>value, [algorithm]</td>
+<td>blob</td>
+<td>SHA-256 hash</td>
+</tr>
+</tbody>
+</table>
+<h3 id="vector-functions-50">Vector Functions (5.0+)<a class="headerlink" href="#vector-functions-50" title="Permanent link">¶</a></h3>
+<table>
+<thead>
+<tr>
+<th>Function</th>
+<th>Parameters</th>
+<th>Returns</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>similarity_cosine()</code></td>
+<td>vector, vector</td>
+<td>float</td>
+<td>Cosine similarity</td>
+</tr>
+<tr>
+<td><code>similarity_euclidean()</code></td>
+<td>vector, vector</td>
+<td>float</td>
+<td>Euclidean distance</td>
+</tr>
+<tr>
+<td><code>similarity_dot_product()</code></td>
+<td>vector, vector</td>
+<td>float</td>
+<td>Dot product</td>
 </tr>
 </tbody>
 </table>
@@ -14991,6 +15379,12 @@ data-et-multi-view="{&quot;schema&quot;:{&quot;content&quot;:{&quot;desktop&quot
         <script src="../../../javascripts/mathjax.js"></script>
       
         <script src="../../../javascripts/mermaid-init.js"></script>
+      
+        <script src="../../../assets/mkdocs_puml/puml.js"></script>
+      
+        <script src="https://unpkg.com/@panzoom/panzoom@4.5.1/dist/panzoom.min.js"></script>
+      
+        <script src="../../../assets/mkdocs_puml/interaction.js"></script>
       
     
   <script id="init-glightbox">const lightbox = GLightbox({"touchNavigation": true, "loop": false, "zoomable": true, "draggable": true, "openEffect": "zoom", "closeEffect": "zoom", "slideEffect": "slide"});
