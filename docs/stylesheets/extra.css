@@ -750,21 +750,19 @@ html .md-footer-meta.md-typeset a:hover {
    BANNER
    ---------------------------------------------------------------------------- */
 .md-banner {
-  padding-top: 6px;
-  padding-bottom: 0px;
-  margin: 0;
   background-color: var(--axon-accent) !important;
-  height: 69px;
-  font-family: 'Roboto Flex', sans-serif;
-  font-weight: 400;
   color: var(--axon-dark);
-  text-align: center;
-  vertical-align: middle;
+  font-family: 'Roboto Flex', sans-serif;
+  font-size: 0.8rem;
 }
 
-.md-banner-child {
-  display: inline-block;
-  vertical-align: middle;
+.md-banner__inner {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 16px;
+  padding: 6px 16px !important;
+  margin: 0 auto;
 }
 
 /* ----------------------------------------------------------------------------

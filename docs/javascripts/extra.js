@@ -37,12 +37,7 @@ if (typeof document$ !== 'undefined') {
   });
 }
 
-function random() {
-  setTimeout('', 1000);
-  document.getElementById("myNumber").innerHTML = Math.floor(Math.random() * 10000000);
-  window.localStorage.removeItem("/.__announce");
-}
-window.addEventListener("load",random);
+// Removed: random() function was clearing the announce dismiss state on every page load
 // window.onload = random;
 
 // Select Opearting System
