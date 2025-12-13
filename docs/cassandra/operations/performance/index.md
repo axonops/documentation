@@ -814,7 +814,7 @@ AxonOps provides:
 - **Impact analysis**: Correlate configuration changes with performance
 - **Rollback guidance**: Quickly identify when changes caused issues
 
-See the [AxonOps documentation](/monitoring/) for performance management features.
+See the [AxonOps documentation](../../../monitoring/overview.md) for performance management features.
 
 ---
 

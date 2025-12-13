@@ -778,7 +778,7 @@ AxonOps provides:
 - **Compliance reporting**: Documentation for regulatory requirements
 - **SLA monitoring**: Track maintenance windows and availability
 
-See the [AxonOps documentation](/operations/) for maintenance automation features.
+See the [AxonOps documentation](../../../operations/cassandra/repair/index.md) for maintenance automation features.
 
 ---
 

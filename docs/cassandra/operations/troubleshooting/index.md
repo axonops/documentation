@@ -661,7 +661,7 @@ AxonOps provides:
 - **Timeline reconstruction**: Build sequence of events leading to issues
 - **Knowledge base**: Access to common issues and solutions
 
-See the [AxonOps documentation](/monitoring/) for troubleshooting features.
+See the [AxonOps documentation](../../../monitoring/overview.md) for troubleshooting features.
 
 ---
 

@@ -127,7 +127,7 @@ FATAL - Cannot start Cassandra
 2. **View logs** - Access centralized logs from the AxonOps dashboard
 3. **Set up alerts** - Configure alerts for specific log patterns (errors, warnings)
 
-See [Setup Log Collection](/how-to/setup-log-collection/) for configuration details and [Logs & Events](/monitoring/logsandevents/logsandevents/) for usage.
+See [Setup Log Collection](../../../how-to/setup-log-collection.md) for configuration details and [Logs & Events](../../../monitoring/logsandevents/logsandevents.md) for usage.
 
 ---
 

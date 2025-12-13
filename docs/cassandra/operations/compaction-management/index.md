@@ -552,7 +552,7 @@ AxonOps provides:
 - **Capacity warnings**: Proactive alerts when disk space will be exhausted
 - **Performance correlation**: Link compaction activity to latency changes
 
-See the [AxonOps documentation](/monitoring/) for compaction monitoring features.
+See the [AxonOps documentation](../../../monitoring/overview.md) for compaction monitoring features.
 
 ---
 

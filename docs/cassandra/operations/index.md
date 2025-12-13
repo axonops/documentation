@@ -598,7 +598,7 @@ AxonOps provides:
 - **Rollback support**: Quick recovery from failed operations
 - **Runbook integration**: Link alerts to resolution procedures
 
-See the [AxonOps documentation](/operations/) for setup and configuration.
+See the [AxonOps documentation](../../get_started/cloud.md) for setup and configuration.
 
 ---
 

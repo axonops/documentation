@@ -568,7 +568,7 @@ AxonOps provides:
 - **Coordinated operations**: Manage topology changes across datacenters
 - **Replication monitoring**: Verify data consistency across DCs
 
-See the [AxonOps documentation](/operations/) for detailed configuration and usage guides.
+See the [AxonOps documentation](../../../operations/cassandra/repair/index.md) for detailed configuration and usage guides.
 
 ---
 
