@@ -21,6 +21,9 @@ prep:
 serve: prep ## Serve locally the generated pages
 	${PIPENVCMD} mkdocs serve
 
+live: prep ## Serve locally the generated pages, with autoreload
+	${PIPENVCMD} mkdocs serve --livereload
+
 build: prep ## Build locally the generated pages
 	${PIPENVCMD} mkdocs build --clean
 
