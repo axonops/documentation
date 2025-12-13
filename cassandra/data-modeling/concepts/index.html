@@ -6161,6 +6161,27 @@ data-et-multi-view="{&quot;schema&quot;:{&quot;content&quot;:{&quot;desktop&quot
   
   
     <li class="md-nav__item">
+      <a href="../../cql/ddl/trigger/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Trigger
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
       <a href="../../cql/ddl/type/" class="md-nav__link">
         
   
@@ -6484,7 +6505,7 @@ data-et-multi-view="{&quot;schema&quot;:{&quot;content&quot;:{&quot;desktop&quot
             
   
   <span class="md-ellipsis">
-    Security Commands
+    Security
   </span>
   
 
@@ -6494,7 +6515,7 @@ data-et-multi-view="{&quot;schema&quot;:{&quot;content&quot;:{&quot;desktop&quot
         <nav class="md-nav" data-md-level="5" aria-labelledby="__nav_7_2_4_3_5_label" aria-expanded="false">
           <label class="md-nav__title" for="__nav_7_2_4_3_5">
             <span class="md-nav__icon md-icon"></span>
-            Security Commands
+            Security
           </label>
           <ul class="md-nav__list" data-md-scrollfix>
             
@@ -6510,6 +6531,27 @@ data-et-multi-view="{&quot;schema&quot;:{&quot;content&quot;:{&quot;desktop&quot
   
   <span class="md-ellipsis">
     Overview
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../cql/security/rbac/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Role-Based Access Control
   </span>
   
 
@@ -12888,6 +12930,27 @@ data-et-multi-view="{&quot;schema&quot;:{&quot;content&quot;:{&quot;desktop&quot
   
   
   
+    <li class="md-nav__item">
+      <a href="../../security/os-security/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    OS Security
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
     
     
     
@@ -12899,10 +12962,10 @@ data-et-multi-view="{&quot;schema&quot;:{&quot;content&quot;:{&quot;desktop&quot
       
         
         
-        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_7_2_6_7" >
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_7_2_6_8" >
         
           
-          <label class="md-nav__link" for="__nav_7_2_6_7" id="__nav_7_2_6_7_label" tabindex="0">
+          <label class="md-nav__link" for="__nav_7_2_6_8" id="__nav_7_2_6_8_label" tabindex="0">
             
   
   <span class="md-ellipsis">
@@ -12913,8 +12976,8 @@ data-et-multi-view="{&quot;schema&quot;:{&quot;content&quot;:{&quot;desktop&quot
             <span class="md-nav__icon md-icon"></span>
           </label>
         
-        <nav class="md-nav" data-md-level="4" aria-labelledby="__nav_7_2_6_7_label" aria-expanded="false">
-          <label class="md-nav__title" for="__nav_7_2_6_7">
+        <nav class="md-nav" data-md-level="4" aria-labelledby="__nav_7_2_6_8_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_7_2_6_8">
             <span class="md-nav__icon md-icon"></span>
             Encryption
           </label>
@@ -14291,13 +14354,33 @@ data-et-multi-view="{&quot;schema&quot;:{&quot;content&quot;:{&quot;desktop&quot
 <span class="k">VALUES</span><span class="w"> </span><span class="p">(</span><span class="mi">123</span><span class="n">e4567</span><span class="o">-</span><span class="n">e89b</span><span class="o">-</span><span class="mi">12</span><span class="n">d3</span><span class="o">-</span><span class="n">a456</span><span class="o">-</span><span class="mi">426614174000</span><span class="p">,</span><span class="w"> </span><span class="s1">'2024-01-15 10:30:00'</span><span class="p">,</span><span class="w"> </span><span class="s1">'click'</span><span class="p">,</span><span class="w"> </span><span class="s1">'{"page": "/home"}'</span><span class="p">);</span>
 </code></pre></div>
 <p>Cassandra stores it internally like this:</p>
-<div class="highlight"><pre><span></span><code>Partition Key: 123e4567-e89b-12d3-a456-426614174000
-┌─────────────────────────────────────────────────────────────────────────┐
-│ Cell: (2024-01-15 10:30:00, click) : data = '{"page": "/home"}'         │
-│ Cell: (2024-01-15 10:30:00, click) : event_type = 'click'               │
-│ Cell: (2024-01-15 10:30:00, click) : event_time = ...                   │
-└─────────────────────────────────────────────────────────────────────────┘
-</code></pre></div>
+<p><strong>Partition Key:</strong> <code>123e4567-e89b-12d3-a456-426614174000</code></p>
+<table>
+<thead>
+<tr>
+<th>Cell Key (clustering columns)</th>
+<th>Column</th>
+<th>Value</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>(2024-01-15 10:30:00, click)</td>
+<td>data</td>
+<td>'{"page": "/home"}'</td>
+</tr>
+<tr>
+<td>(2024-01-15 10:30:00, click)</td>
+<td>event_type</td>
+<td>'click'</td>
+</tr>
+<tr>
+<td>(2024-01-15 10:30:00, click)</td>
+<td>event_time</td>
+<td>...</td>
+</tr>
+</tbody>
+</table>
 <p>The clustering columns (event_time, event_type) become part of each cell's internal key. The partition key determines which node stores the data. All cells with the same partition key are stored together, sorted by clustering column.</p>
 <p>This is why Cassandra queries have strict rules:</p>
 <ul>
@@ -14406,15 +14489,49 @@ data-et-multi-view="{&quot;schema&quot;:{&quot;content&quot;:{&quot;desktop&quot
 <span class="w">    </span><span class="k">PRIMARY</span><span class="w"> </span><span class="k">KEY</span><span class="w"> </span><span class="p">((</span><span class="n">user_id</span><span class="p">),</span><span class="w"> </span><span class="n">event_time</span><span class="p">,</span><span class="w"> </span><span class="n">event_type</span><span class="p">)</span>
 <span class="p">)</span><span class="w"> </span><span class="k">WITH</span><span class="w"> </span><span class="n">CLUSTERING</span><span class="w"> </span><span class="k">ORDER</span><span class="w"> </span><span class="k">BY</span><span class="w"> </span><span class="p">(</span><span class="n">event_time</span><span class="w"> </span><span class="k">DESC</span><span class="p">,</span><span class="w"> </span><span class="n">event_type</span><span class="w"> </span><span class="k">ASC</span><span class="p">);</span>
 </code></pre></div>
-<div class="highlight"><pre><span></span><code>Partition: user_id = alice
-┌────────────────────────────────────────────────────────────────┐
-│  Row 1: event_time=2024-01-03 14:00, event_type=click, data=...│
-│  Row 2: event_time=2024-01-03 13:00, event_type=login, data=...│
-│  Row 3: event_time=2024-01-03 12:00, event_type=click, data=...│
-│  Row 4: event_time=2024-01-02 18:00, event_type=logout, data...│
-│  ... (sorted by event_time DESC, then event_type ASC)          │
-└────────────────────────────────────────────────────────────────┘
-</code></pre></div>
+<p><strong>Partition: user_id = alice</strong> (sorted by event_time DESC, then event_type ASC):</p>
+<table>
+<thead>
+<tr>
+<th>Row</th>
+<th>event_time</th>
+<th>event_type</th>
+<th>data</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>1</td>
+<td>2024-01-03 14:00</td>
+<td>click</td>
+<td>...</td>
+</tr>
+<tr>
+<td>2</td>
+<td>2024-01-03 13:00</td>
+<td>login</td>
+<td>...</td>
+</tr>
+<tr>
+<td>3</td>
+<td>2024-01-03 12:00</td>
+<td>click</td>
+<td>...</td>
+</tr>
+<tr>
+<td>4</td>
+<td>2024-01-02 18:00</td>
+<td>logout</td>
+<td>...</td>
+</tr>
+<tr>
+<td>...</td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+</tbody>
+</table>
 <p><strong>Clustering column rules:</strong>
 - Must be queried in order (cannot skip columns)
 - Range queries allowed on the last queried column
@@ -15068,15 +15185,54 @@ Partition<span class="w"> </span>Size<span class="w"> </span><span class="o">(</
 <span class="k">VALUES</span><span class="w"> </span><span class="p">(</span><span class="o">?</span><span class="p">,</span><span class="w"> </span><span class="o">?</span><span class="p">,</span><span class="w"> </span><span class="s1">'Bob'</span><span class="p">,</span><span class="w"> </span><span class="s1">'Designer'</span><span class="p">);</span>
 <span class="c1">-- team_name and team_budget already set for this partition</span>
 </code></pre></div>
-<div class="highlight"><pre><span></span><code>Partition: team_id = engineering-team
-┌──────────────────────────────────────────────────────────────────┐
-│  STATIC: team_name = 'Engineering', team_budget = 100000         │
-├──────────────────────────────────────────────────────────────────┤
-│  Row 1: member_id = alice, member_name = 'Alice', role = 'Dev'   │
-│  Row 2: member_id = bob, member_name = 'Bob', role = 'Designer'  │
-│  Row 3: member_id = carol, member_name = 'Carol', role = 'PM'    │
-└──────────────────────────────────────────────────────────────────┘
-</code></pre></div>
+<p><strong>Partition: team_id = engineering-team</strong></p>
+<table>
+<thead>
+<tr>
+<th>Column Type</th>
+<th>Column</th>
+<th>Value</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>STATIC</strong></td>
+<td>team_name</td>
+<td>'Engineering'</td>
+</tr>
+<tr>
+<td><strong>STATIC</strong></td>
+<td>team_budget</td>
+<td>100000</td>
+</tr>
+</tbody>
+</table>
+<table>
+<thead>
+<tr>
+<th>member_id</th>
+<th>member_name</th>
+<th>role</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>alice</td>
+<td>'Alice'</td>
+<td>'Dev'</td>
+</tr>
+<tr>
+<td>bob</td>
+<td>'Bob'</td>
+<td>'Designer'</td>
+</tr>
+<tr>
+<td>carol</td>
+<td>'Carol'</td>
+<td>'PM'</td>
+</tr>
+</tbody>
+</table>
 <p><strong>Use cases:</strong>
 - Partition metadata (team info, account settings)
 - Avoiding denormalization of partition-level data

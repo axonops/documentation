@@ -6161,6 +6161,27 @@ data-et-multi-view="{&quot;schema&quot;:{&quot;content&quot;:{&quot;desktop&quot
   
   
     <li class="md-nav__item">
+      <a href="../cql/ddl/trigger/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Trigger
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
       <a href="../cql/ddl/type/" class="md-nav__link">
         
   
@@ -6484,7 +6505,7 @@ data-et-multi-view="{&quot;schema&quot;:{&quot;content&quot;:{&quot;desktop&quot
             
   
   <span class="md-ellipsis">
-    Security Commands
+    Security
   </span>
   
 
@@ -6494,7 +6515,7 @@ data-et-multi-view="{&quot;schema&quot;:{&quot;content&quot;:{&quot;desktop&quot
         <nav class="md-nav" data-md-level="5" aria-labelledby="__nav_7_2_4_3_5_label" aria-expanded="false">
           <label class="md-nav__title" for="__nav_7_2_4_3_5">
             <span class="md-nav__icon md-icon"></span>
-            Security Commands
+            Security
           </label>
           <ul class="md-nav__list" data-md-scrollfix>
             
@@ -6510,6 +6531,27 @@ data-et-multi-view="{&quot;schema&quot;:{&quot;content&quot;:{&quot;desktop&quot
   
   <span class="md-ellipsis">
     Overview
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../cql/security/rbac/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Role-Based Access Control
   </span>
   
 
@@ -13032,6 +13074,27 @@ data-et-multi-view="{&quot;schema&quot;:{&quot;content&quot;:{&quot;desktop&quot
   
   
   
+    <li class="md-nav__item">
+      <a href="../security/os-security/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    OS Security
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
     
     
     
@@ -13043,10 +13106,10 @@ data-et-multi-view="{&quot;schema&quot;:{&quot;content&quot;:{&quot;desktop&quot
       
         
         
-        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_7_2_6_7" >
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_7_2_6_8" >
         
           
-          <label class="md-nav__link" for="__nav_7_2_6_7" id="__nav_7_2_6_7_label" tabindex="0">
+          <label class="md-nav__link" for="__nav_7_2_6_8" id="__nav_7_2_6_8_label" tabindex="0">
             
   
   <span class="md-ellipsis">
@@ -13057,8 +13120,8 @@ data-et-multi-view="{&quot;schema&quot;:{&quot;content&quot;:{&quot;desktop&quot
             <span class="md-nav__icon md-icon"></span>
           </label>
         
-        <nav class="md-nav" data-md-level="4" aria-labelledby="__nav_7_2_6_7_label" aria-expanded="false">
-          <label class="md-nav__title" for="__nav_7_2_6_7">
+        <nav class="md-nav" data-md-level="4" aria-labelledby="__nav_7_2_6_8_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_7_2_6_8">
             <span class="md-nav__icon md-icon"></span>
             Encryption
           </label>
@@ -14566,35 +14629,41 @@ data-et-multi-view="{&quot;schema&quot;:{&quot;content&quot;:{&quot;desktop&quot
 5. Wrong design = slow queries that cannot be fixed without migration
 </code></pre></div>
 <h3 id="what-goes-wrong-with-bad-data-models">What Goes Wrong With Bad Data Models<a class="headerlink" href="#what-goes-wrong-with-bad-data-models" title="Permanent link">¶</a></h3>
-<div class="highlight"><pre><span></span><code>┌─────────────────────────────────────────────────────────────────────┐
-│ BAD DATA MODEL SYMPTOMS                                              │
-│                                                                      │
-│ 1. HOT PARTITIONS                                                   │
-│    - One partition receives all traffic                             │
-│    - One node overloaded while others idle                          │
-│    - Timeouts, failed requests                                      │
-│                                                                      │
-│ 2. LARGE PARTITIONS                                                 │
-│    - Partition grows to GB+ size                                    │
-│    - Reads timeout (cannot load entire partition)                    │
-│    - Compaction stalls                                              │
-│    - Repairs take days                                              │
-│                                                                      │
-│ 3. TOMBSTONE ACCUMULATION                                           │
-│    - Deletes create tombstones                                      │
-│    - Tombstones pile up in wide partitions                          │
-│    - Reads slow down (scanning tombstones)                          │
-│    - Eventually: query failures                                     │
-│                                                                      │
-│ 4. SCATTER-GATHER QUERIES                                           │
-│    - Query hits many partitions                                     │
-│    - Coordinator must wait for all responses                        │
-│    - P99 latency determined by slowest partition                    │
-│    - Doesn't scale (more data = slower queries)                    │
-│                                                                      │
-│ All of these are DATA MODEL problems, not Cassandra problems.      │
-└─────────────────────────────────────────────────────────────────────┘
-</code></pre></div>
+<table>
+<thead>
+<tr>
+<th>Symptom</th>
+<th>Description</th>
+<th>Impact</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Hot Partitions</strong></td>
+<td>One partition receives all traffic</td>
+<td>One node overloaded while others idle; timeouts and failed requests</td>
+</tr>
+<tr>
+<td><strong>Large Partitions</strong></td>
+<td>Partition grows to GB+ size</td>
+<td>Reads timeout; compaction stalls; repairs take days</td>
+</tr>
+<tr>
+<td><strong>Tombstone Accumulation</strong></td>
+<td>Deletes create tombstones that pile up</td>
+<td>Reads slow down scanning tombstones; eventual query failures</td>
+</tr>
+<tr>
+<td><strong>Scatter-Gather Queries</strong></td>
+<td>Query hits many partitions</td>
+<td>Coordinator waits for all responses; P99 latency determined by slowest partition; does not scale</td>
+</tr>
+</tbody>
+</table>
+<div class="admonition danger">
+<p class="admonition-title">Root Cause</p>
+<p>All of these are <strong>data model problems</strong>, not Cassandra problems.</p>
+</div>
 <hr>
 <h2 id="the-query-first-methodology">The Query-First Methodology<a class="headerlink" href="#the-query-first-methodology" title="Permanent link">¶</a></h2>
 <h3 id="step-1-list-every-query-the-application-needs">Step 1: List Every Query the Application Needs<a class="headerlink" href="#step-1-list-every-query-the-application-needs" title="Permanent link">¶</a></h3>
@@ -14688,8 +14757,8 @@ Partition size: 100 products × 1KB = 100KB
 <p>The primary key is the most important decision in Cassandra data modeling.</p>
 <h3 id="anatomy-of-a-primary-key">Anatomy of a Primary Key<a class="headerlink" href="#anatomy-of-a-primary-key" title="Permanent link">¶</a></h3>
 <div class="highlight"><pre><span></span><code><span class="k">PRIMARY</span><span class="w"> </span><span class="k">KEY</span><span class="w"> </span><span class="p">((</span><span class="n">partition_key_col1</span><span class="p">,</span><span class="w"> </span><span class="n">partition_key_col2</span><span class="p">),</span><span class="w"> </span><span class="n">clustering_col1</span><span class="p">,</span><span class="w"> </span><span class="n">clustering_col2</span><span class="p">)</span>
-<span class="w">             </span><span class="err">└─────────────────────────────────────┘</span><span class="w">   </span><span class="err">└─────────────────────────────────┘</span>
-<span class="w">                         </span><span class="n">PARTITION</span><span class="w"> </span><span class="k">KEY</span><span class="w">                        </span><span class="n">CLUSTERING</span><span class="w"> </span><span class="n">COLUMNS</span>
+<span class="c1">--           |___________________________________|   |__________________________________|</span>
+<span class="c1">--                      PARTITION KEY                        CLUSTERING COLUMNS</span>
 </code></pre></div>
 <p><strong>Partition Key</strong>:
 - Determines which node stores the data
@@ -14720,16 +14789,38 @@ Partition size: 100 products × 1KB = 100KB
 <span class="w">    </span><span class="k">PRIMARY</span><span class="w"> </span><span class="k">KEY</span><span class="w"> </span><span class="p">((</span><span class="n">conversation_id</span><span class="p">),</span><span class="w"> </span><span class="n">sent_at</span><span class="p">,</span><span class="w"> </span><span class="n">message_id</span><span class="p">)</span>
 <span class="p">)</span><span class="w"> </span><span class="k">WITH</span><span class="w"> </span><span class="n">CLUSTERING</span><span class="w"> </span><span class="k">ORDER</span><span class="w"> </span><span class="k">BY</span><span class="w"> </span><span class="p">(</span><span class="n">sent_at</span><span class="w"> </span><span class="k">DESC</span><span class="p">,</span><span class="w"> </span><span class="n">message_id</span><span class="w"> </span><span class="k">DESC</span><span class="p">);</span>
 </code></pre></div>
-<div class="highlight"><pre><span></span><code>Partition for conversation_id = abc-123:
-┌─────────────────────────────────────────────────────────────────────┐
-│ Sorted by sent_at DESC, then message_id DESC                         │
-├─────────────────────────────────────────────────────────────────────┤
-│ sent_at: 2024-01-15 10:30:00 | message_id: 111 | content: "Hi"      │
-│ sent_at: 2024-01-15 10:29:00 | message_id: 110 | content: "Hello"   │
-│ sent_at: 2024-01-15 10:28:00 | message_id: 109 | content: "Hey"     │
-│ ...                                                                  │
-└─────────────────────────────────────────────────────────────────────┘
-</code></pre></div>
+<p><strong>Partition for conversation_id = abc-123</strong> (sorted by sent_at DESC, then message_id DESC):</p>
+<table>
+<thead>
+<tr>
+<th>sent_at</th>
+<th>message_id</th>
+<th>content</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>2024-01-15 10:30:00</td>
+<td>111</td>
+<td>"Hi"</td>
+</tr>
+<tr>
+<td>2024-01-15 10:29:00</td>
+<td>110</td>
+<td>"Hello"</td>
+</tr>
+<tr>
+<td>2024-01-15 10:28:00</td>
+<td>109</td>
+<td>"Hey"</td>
+</tr>
+<tr>
+<td>...</td>
+<td>...</td>
+<td>...</td>
+</tr>
+</tbody>
+</table>
 <h3 id="composite-partition-key">Composite Partition Key<a class="headerlink" href="#composite-partition-key" title="Permanent link">¶</a></h3>
 <div class="highlight"><pre><span></span><code><span class="k">CREATE</span><span class="w"> </span><span class="k">TABLE</span><span class="w"> </span><span class="n">events</span><span class="w"> </span><span class="p">(</span>
 <span class="w">    </span><span class="n">tenant_id</span><span class="w"> </span><span class="nb">TEXT</span><span class="p">,</span><span class="w">          </span><span class="c1">-- Part of partition key</span>
@@ -14753,24 +14844,66 @@ Benefits:
 <hr>
 <h2 id="partition-sizing-the-most-critical-constraint">Partition Sizing: The Most Critical Constraint<a class="headerlink" href="#partition-sizing-the-most-critical-constraint" title="Permanent link">¶</a></h2>
 <h3 id="the-numbers-that-matter">The Numbers That Matter<a class="headerlink" href="#the-numbers-that-matter" title="Permanent link">¶</a></h3>
-<div class="highlight"><pre><span></span><code>┌─────────────────────────────────────────────────────────────────────┐
-│ PARTITION SIZE GUIDELINES                                            │
-│                                                                      │
-│ IDEAL:     &lt; 10 MB         Fast reads, fast compaction              │
-│ ACCEPTABLE: 10-100 MB      Works fine, monitor growth               │
-│ WARNING:   100 MB - 1 GB   Noticeable latency, compaction slower   │
-│ CRITICAL:  &gt; 1 GB          Timeouts, repairs fail, must redesign   │
-│                                                                      │
-│ ROW COUNT GUIDELINES (depends on row size):                         │
-│ Small rows (100 bytes): &lt; 100,000 rows per partition                │
-│ Medium rows (1 KB):     &lt; 100,000 rows per partition                │
-│ Large rows (10 KB):     &lt; 10,000 rows per partition                │
-│                                                                      │
-│ HARD LIMITS:                                                         │
-│ Cells per partition: 2 billion (theoretical)                        │
-│ Practical limit: Stay under 100,000 rows                            │
-└─────────────────────────────────────────────────────────────────────┘
-</code></pre></div>
+<p><strong>Partition Size Guidelines:</strong></p>
+<table>
+<thead>
+<tr>
+<th>Size</th>
+<th>Status</th>
+<th>Impact</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>&lt; 10 MB</td>
+<td>Ideal</td>
+<td>Fast reads, fast compaction</td>
+</tr>
+<tr>
+<td>10-100 MB</td>
+<td>Acceptable</td>
+<td>Works fine, monitor growth</td>
+</tr>
+<tr>
+<td>100 MB - 1 GB</td>
+<td>Warning</td>
+<td>Noticeable latency, compaction slower</td>
+</tr>
+<tr>
+<td>&gt; 1 GB</td>
+<td>Critical</td>
+<td>Timeouts, repairs fail, must redesign</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Row Count Guidelines</strong> (depends on row size):</p>
+<table>
+<thead>
+<tr>
+<th>Row Size</th>
+<th>Maximum Rows per Partition</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Small (~100 bytes)</td>
+<td>&lt; 100,000 rows</td>
+</tr>
+<tr>
+<td>Medium (~1 KB)</td>
+<td>&lt; 100,000 rows</td>
+</tr>
+<tr>
+<td>Large (~10 KB)</td>
+<td>&lt; 10,000 rows</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Hard Limits:</strong></p>
+<ul>
+<li>Cells per partition: 2 billion (theoretical)</li>
+<li>Practical limit: Stay under 100,000 rows</li>
+</ul>
 <h3 id="calculating-partition-size">Calculating Partition Size<a class="headerlink" href="#calculating-partition-size" title="Permanent link">¶</a></h3>
 <div class="highlight"><pre><span></span><code>Partition Size = Number of Rows × Average Row Size
 
@@ -14870,21 +15003,44 @@ Partition size: 1,000,000 × 319 bytes = 319 MB ⚠️ WARNING
 <span class="w">    </span><span class="k">PRIMARY</span><span class="w"> </span><span class="k">KEY</span><span class="w"> </span><span class="p">((</span><span class="n">customer_id</span><span class="p">),</span><span class="w"> </span><span class="n">order_date</span><span class="p">,</span><span class="w"> </span><span class="n">order_id</span><span class="p">)</span>
 <span class="p">)</span><span class="w"> </span><span class="k">WITH</span><span class="w"> </span><span class="n">CLUSTERING</span><span class="w"> </span><span class="k">ORDER</span><span class="w"> </span><span class="k">BY</span><span class="w"> </span><span class="p">(</span><span class="n">order_date</span><span class="w"> </span><span class="k">DESC</span><span class="p">,</span><span class="w"> </span><span class="n">order_id</span><span class="w"> </span><span class="k">DESC</span><span class="p">);</span>
 </code></pre></div>
-<div class="highlight"><pre><span></span><code>Partition for customer_id = customer-123:
-
-┌────────────────────────────────────────────────────────────────────┐
-│ Storage order (determined by CLUSTERING ORDER BY):                  │
-├────────────────────────────────────────────────────────────────────┤
-│ order_date: 2024-01-15 | order_id: order-999 | total: 150.00       │
-│ order_date: 2024-01-15 | order_id: order-998 | total: 75.50        │
-│ order_date: 2024-01-14 | order_id: order-997 | total: 200.00       │
-│ order_date: 2024-01-10 | order_id: order-995 | total: 50.00        │
-│ ...older orders...                                                  │
-└────────────────────────────────────────────────────────────────────┘
-
-Reading "most recent orders" reads from the TOP of the partition.
-This is a SEQUENTIAL read, very fast.
-</code></pre></div>
+<p><strong>Partition for customer_id = customer-123</strong> (storage order determined by CLUSTERING ORDER BY):</p>
+<table>
+<thead>
+<tr>
+<th>order_date</th>
+<th>order_id</th>
+<th>total</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>2024-01-15</td>
+<td>order-999</td>
+<td>150.00</td>
+</tr>
+<tr>
+<td>2024-01-15</td>
+<td>order-998</td>
+<td>75.50</td>
+</tr>
+<tr>
+<td>2024-01-14</td>
+<td>order-997</td>
+<td>200.00</td>
+</tr>
+<tr>
+<td>2024-01-10</td>
+<td>order-995</td>
+<td>50.00</td>
+</tr>
+<tr>
+<td>...older orders...</td>
+<td></td>
+<td></td>
+</tr>
+</tbody>
+</table>
+<p>Reading "most recent orders" reads from the <strong>top</strong> of the partition—a sequential read, very fast.</p>
 <h3 id="range-queries-on-clustering-columns">Range Queries on Clustering Columns<a class="headerlink" href="#range-queries-on-clustering-columns" title="Permanent link">¶</a></h3>
 <div class="highlight"><pre><span></span><code><span class="c1">-- Get orders from January 2024</span>
 <span class="k">SELECT</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="k">FROM</span><span class="w"> </span><span class="n">orders</span>
@@ -14913,29 +15069,19 @@ This is a SEQUENTIAL read, very fast.
 <hr>
 <h2 id="denormalization-embracing-data-duplication">Denormalization: Embracing Data Duplication<a class="headerlink" href="#denormalization-embracing-data-duplication" title="Permanent link">¶</a></h2>
 <h3 id="why-cassandra-requires-denormalization">Why Cassandra Requires Denormalization<a class="headerlink" href="#why-cassandra-requires-denormalization" title="Permanent link">¶</a></h3>
-<div class="highlight"><pre><span></span><code>Relational approach:
-┌─────────────────────────────────────────────────────────────────────┐
-│ Query: "Get order with customer name and product details"           │
-│                                                                     │
-│ SELECT o.*, c.name, p.name, p.price                                │
-│ FROM orders o                                                       │
-│ JOIN customers c ON o.customer_id = c.customer_id                  │
-│ JOIN order_items oi ON o.order_id = oi.order_id                    │
-│ JOIN products p ON oi.product_id = p.product_id                    │
-│ WHERE o.order_id = 123                                             │
-│                                                                     │
-│ Database figures out how to JOIN these at runtime                  │
-└─────────────────────────────────────────────────────────────────────┘
-
-Cassandra approach:
-┌─────────────────────────────────────────────────────────────────────┐
-│ Query: "Get order with all details"                                 │
-│                                                                     │
-│ SELECT * FROM orders_with_details WHERE order_id = 123;            │
-│                                                                     │
-│ The table ALREADY CONTAINS customer name and product details       │
-│ Data was duplicated at write time                                  │
-└─────────────────────────────────────────────────────────────────────┘
+<p><strong>Relational approach:</strong> Query "Get order with customer name and product details"</p>
+<div class="highlight"><pre><span></span><code><span class="k">SELECT</span><span class="w"> </span><span class="n">o</span><span class="p">.</span><span class="o">*</span><span class="p">,</span><span class="w"> </span><span class="k">c</span><span class="p">.</span><span class="n">name</span><span class="p">,</span><span class="w"> </span><span class="n">p</span><span class="p">.</span><span class="n">name</span><span class="p">,</span><span class="w"> </span><span class="n">p</span><span class="p">.</span><span class="n">price</span>
+<span class="k">FROM</span><span class="w"> </span><span class="n">orders</span><span class="w"> </span><span class="n">o</span>
+<span class="k">JOIN</span><span class="w"> </span><span class="n">customers</span><span class="w"> </span><span class="k">c</span><span class="w"> </span><span class="k">ON</span><span class="w"> </span><span class="n">o</span><span class="p">.</span><span class="n">customer_id</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">c</span><span class="p">.</span><span class="n">customer_id</span>
+<span class="k">JOIN</span><span class="w"> </span><span class="n">order_items</span><span class="w"> </span><span class="n">oi</span><span class="w"> </span><span class="k">ON</span><span class="w"> </span><span class="n">o</span><span class="p">.</span><span class="n">order_id</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">oi</span><span class="p">.</span><span class="n">order_id</span>
+<span class="k">JOIN</span><span class="w"> </span><span class="n">products</span><span class="w"> </span><span class="n">p</span><span class="w"> </span><span class="k">ON</span><span class="w"> </span><span class="n">oi</span><span class="p">.</span><span class="n">product_id</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">p</span><span class="p">.</span><span class="n">product_id</span>
+<span class="k">WHERE</span><span class="w"> </span><span class="n">o</span><span class="p">.</span><span class="n">order_id</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">123</span><span class="p">;</span>
+<span class="c1">-- Database figures out how to JOIN these at runtime</span>
+</code></pre></div>
+<p><strong>Cassandra approach:</strong> Query "Get order with all details"</p>
+<div class="highlight"><pre><span></span><code><span class="k">SELECT</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="k">FROM</span><span class="w"> </span><span class="n">orders_with_details</span><span class="w"> </span><span class="k">WHERE</span><span class="w"> </span><span class="n">order_id</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">123</span><span class="p">;</span>
+<span class="c1">-- The table ALREADY CONTAINS customer name and product details</span>
+<span class="c1">-- Data was duplicated at write time</span>
 </code></pre></div>
 <h3 id="one-table-per-query-pattern">One Table Per Query Pattern<a class="headerlink" href="#one-table-per-query-pattern" title="Permanent link">¶</a></h3>
 <div class="highlight"><pre><span></span><code><span class="c1">-- Query 1: Orders by customer</span>
@@ -15015,28 +15161,31 @@ Cassandra approach:
 <span class="p">);</span>
 </code></pre></div>
 <h3 id="collection-limitations">Collection Limitations<a class="headerlink" href="#collection-limitations" title="Permanent link">¶</a></h3>
-<div class="highlight"><pre><span></span><code>┌─────────────────────────────────────────────────────────────────────┐
-│ COLLECTION GOTCHAS                                                   │
-│                                                                      │
-│ 1. SIZE LIMIT                                                       │
-│    Collections are loaded entirely into memory                      │
-│    Max ~64KB recommended (technically 2GB but do not)               │
-│    Large collections = slow queries + heap pressure                │
-│                                                                      │
-│ 2. READ-BEFORE-WRITE                                                │
-│    Updating one element reads the whole collection                  │
-│    Don't use for frequently updated data                           │
-│                                                                      │
-│ 3. NO QUERYING INSIDE COLLECTIONS                                   │
-│    Can't: WHERE preferences['theme'] = 'dark'                      │
-│    Can only: Return whole collection and filter in app             │
-│                                                                      │
-│ 4. FROZEN COLLECTIONS                                               │
-│    FROZEN&lt;LIST&lt;TEXT&gt;&gt; = immutable, stored as blob                  │
-│    Can't update individual elements                                │
-│    Required for nested collections or UDTs in collections          │
-└─────────────────────────────────────────────────────────────────────┘
-</code></pre></div>
+<div class="admonition warning">
+<p class="admonition-title">Collection Gotchas</p>
+<p><strong>1. Size Limit</strong></p>
+<ul>
+<li>Collections are loaded entirely into memory</li>
+<li>Max ~64KB recommended (technically 2GB but avoid)</li>
+<li>Large collections = slow queries + heap pressure</li>
+</ul>
+<p><strong>2. Read-Before-Write</strong></p>
+<ul>
+<li>Updating one element reads the whole collection</li>
+<li>Avoid for frequently updated data</li>
+</ul>
+<p><strong>3. No Querying Inside Collections</strong></p>
+<ul>
+<li>Cannot use: <code>WHERE preferences['theme'] = 'dark'</code></li>
+<li>Must return whole collection and filter in application</li>
+</ul>
+<p><strong>4. Frozen Collections</strong></p>
+<ul>
+<li><code>FROZEN&lt;LIST&lt;TEXT&gt;&gt;</code> = immutable, stored as blob</li>
+<li>Cannot update individual elements</li>
+<li>Required for nested collections or UDTs in collections</li>
+</ul>
+</div>
 <h3 id="when-to-use-collections">When to Use Collections<a class="headerlink" href="#when-to-use-collections" title="Permanent link">¶</a></h3>
 <p><strong>Good use cases</strong>:
 - Small lists of tags, categories
@@ -15059,17 +15208,55 @@ Cassandra approach:
 <span class="w">    </span><span class="k">PRIMARY</span><span class="w"> </span><span class="k">KEY</span><span class="w"> </span><span class="p">((</span><span class="n">customer_id</span><span class="p">),</span><span class="w"> </span><span class="n">order_date</span><span class="p">,</span><span class="w"> </span><span class="n">order_id</span><span class="p">)</span>
 <span class="p">);</span>
 </code></pre></div>
-<div class="highlight"><pre><span></span><code>Partition for customer_id = cust-123:
-┌─────────────────────────────────────────────────────────────────────┐
-│ STATIC: customer_name = "Alice", customer_email = "alice@mail.com" │
-├─────────────────────────────────────────────────────────────────────┤
-│ order_date: 2024-01-15 | order_id: ord-1 | total: 100.00           │
-│ order_date: 2024-01-10 | order_id: ord-2 | total: 50.00            │
-│ order_date: 2024-01-05 | order_id: ord-3 | total: 75.00            │
-└─────────────────────────────────────────────────────────────────────┘
-
-Static columns stored ONCE per partition, not per row.
-</code></pre></div>
+<p><strong>Partition for customer_id = cust-123:</strong></p>
+<table>
+<thead>
+<tr>
+<th>Column Type</th>
+<th>Column</th>
+<th>Value</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>STATIC</strong></td>
+<td>customer_name</td>
+<td>"Alice"</td>
+</tr>
+<tr>
+<td><strong>STATIC</strong></td>
+<td>customer_email</td>
+<td>"alice@mail.com"</td>
+</tr>
+</tbody>
+</table>
+<table>
+<thead>
+<tr>
+<th>order_date</th>
+<th>order_id</th>
+<th>total</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>2024-01-15</td>
+<td>ord-1</td>
+<td>100.00</td>
+</tr>
+<tr>
+<td>2024-01-10</td>
+<td>ord-2</td>
+<td>50.00</td>
+</tr>
+<tr>
+<td>2024-01-05</td>
+<td>ord-3</td>
+<td>75.00</td>
+</tr>
+</tbody>
+</table>
+<p>Static columns are stored <strong>once per partition</strong>, not per row.</p>
 <p><strong>Use cases</strong>:
 - Metadata about the partition (customer name for customer's orders)
 - Counters at partition level
@@ -15115,44 +15302,72 @@ Static columns stored ONCE per partition, not per row.
 <span class="c1">-- Now queries are possible:</span>
 <span class="k">SELECT</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="k">FROM</span><span class="w"> </span><span class="n">users</span><span class="w"> </span><span class="k">WHERE</span><span class="w"> </span><span class="n">email</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s1">'alice@example.com'</span><span class="p">;</span>
 </code></pre></div>
-<p><strong>How it works</strong>:
-</p><div class="highlight"><pre><span></span><code>Secondary index creates a hidden table:
-┌─────────────────────────────────────────┐
-│ email (partition key) | user_id         │
-├─────────────────────────────────────────┤
-│ alice@example.com     | user-123        │
-│ bob@example.com       | user-456        │
-└─────────────────────────────────────────┘
-
-Query on email → look up in index → get user_id → fetch from main table
-</code></pre></div>
+<p><strong>How it works:</strong> Secondary index creates a hidden table:</p>
+<table>
+<thead>
+<tr>
+<th>email (partition key)</th>
+<th>user_id</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>alice@example.com</td>
+<td>user-123</td>
+</tr>
+<tr>
+<td>bob@example.com</td>
+<td>user-456</td>
+</tr>
+</tbody>
+</table>
+<p>Query on email → look up in index → get user_id → fetch from main table.</p>
 <h3 id="when-secondary-indexes-are-ok">When Secondary Indexes Are OK<a class="headerlink" href="#when-secondary-indexes-are-ok" title="Permanent link">¶</a></h3>
-<div class="highlight"><pre><span></span><code>✓ Low cardinality columns (status, country)
-  - Few unique values
-  - Index partitions are manageable
-
-✓ Combined with partition key
-  SELECT * FROM orders WHERE customer_id = ? AND status = 'pending';
-  - Filters within a known partition
-
-✓ Infrequent queries
-  - Admin dashboards, analytics
-  - Not user-facing hot paths
-</code></pre></div>
+<table>
+<thead>
+<tr>
+<th>Use Case</th>
+<th>Reason</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Low cardinality columns (status, country)</td>
+<td>Few unique values; index partitions are manageable</td>
+</tr>
+<tr>
+<td>Combined with partition key</td>
+<td>Filters within a known partition (e.g., <code>WHERE customer_id = ? AND status = 'pending'</code>)</td>
+</tr>
+<tr>
+<td>Infrequent queries</td>
+<td>Admin dashboards, analytics—not user-facing hot paths</td>
+</tr>
+</tbody>
+</table>
 <h3 id="when-secondary-indexes-are-dangerous">When Secondary Indexes Are Dangerous<a class="headerlink" href="#when-secondary-indexes-are-dangerous" title="Permanent link">¶</a></h3>
-<div class="highlight"><pre><span></span><code>✗ High cardinality columns (email, user_id)
-  - Every value is its own partition
-  - Scatter-gather across entire cluster
-  - Worse than no index
-
-✗ Frequently updated columns
-  - Index updates are expensive
-  - Write amplification
-
-✗ User-facing queries at scale
-  - Unpredictable latency
-  - Doesn't scale with cluster size
-</code></pre></div>
+<table>
+<thead>
+<tr>
+<th>Anti-Pattern</th>
+<th>Problem</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>High cardinality columns (email, user_id)</td>
+<td>Every value is its own partition; scatter-gather across entire cluster; worse than no index</td>
+</tr>
+<tr>
+<td>Frequently updated columns</td>
+<td>Index updates are expensive; write amplification</td>
+</tr>
+<tr>
+<td>User-facing queries at scale</td>
+<td>Unpredictable latency; does not scale with cluster size</td>
+</tr>
+</tbody>
+</table>
 <h3 id="alternative-materialized-views-also-use-with-caution">Alternative: Materialized Views (Also Use With Caution)<a class="headerlink" href="#alternative-materialized-views-also-use-with-caution" title="Permanent link">¶</a></h3>
 <div class="highlight"><pre><span></span><code><span class="k">CREATE</span><span class="w"> </span><span class="n">MATERIALIZED</span><span class="w"> </span><span class="k">VIEW</span><span class="w"> </span><span class="n">users_by_email</span><span class="w"> </span><span class="k">AS</span>
 <span class="w">    </span><span class="k">SELECT</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="k">FROM</span><span class="w"> </span><span class="n">users</span>

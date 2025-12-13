@@ -6146,6 +6146,27 @@ data-et-multi-view="{&quot;schema&quot;:{&quot;content&quot;:{&quot;desktop&quot
   
   
     <li class="md-nav__item">
+      <a href="../../../cql/ddl/trigger/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Trigger
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
       <a href="../../../cql/ddl/type/" class="md-nav__link">
         
   
@@ -6469,7 +6490,7 @@ data-et-multi-view="{&quot;schema&quot;:{&quot;content&quot;:{&quot;desktop&quot
             
   
   <span class="md-ellipsis">
-    Security Commands
+    Security
   </span>
   
 
@@ -6479,7 +6500,7 @@ data-et-multi-view="{&quot;schema&quot;:{&quot;content&quot;:{&quot;desktop&quot
         <nav class="md-nav" data-md-level="5" aria-labelledby="__nav_7_2_4_3_5_label" aria-expanded="false">
           <label class="md-nav__title" for="__nav_7_2_4_3_5">
             <span class="md-nav__icon md-icon"></span>
-            Security Commands
+            Security
           </label>
           <ul class="md-nav__list" data-md-scrollfix>
             
@@ -6495,6 +6516,27 @@ data-et-multi-view="{&quot;schema&quot;:{&quot;content&quot;:{&quot;desktop&quot
   
   <span class="md-ellipsis">
     Overview
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../cql/security/rbac/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Role-Based Access Control
   </span>
   
 
@@ -12492,6 +12534,27 @@ data-et-multi-view="{&quot;schema&quot;:{&quot;content&quot;:{&quot;desktop&quot
   
   
   
+    <li class="md-nav__item">
+      <a href="../../../security/os-security/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    OS Security
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
     
     
     
@@ -12503,10 +12566,10 @@ data-et-multi-view="{&quot;schema&quot;:{&quot;content&quot;:{&quot;desktop&quot
       
         
         
-        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_7_2_6_7" >
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_7_2_6_8" >
         
           
-          <label class="md-nav__link" for="__nav_7_2_6_7" id="__nav_7_2_6_7_label" tabindex="0">
+          <label class="md-nav__link" for="__nav_7_2_6_8" id="__nav_7_2_6_8_label" tabindex="0">
             
   
   <span class="md-ellipsis">
@@ -12517,8 +12580,8 @@ data-et-multi-view="{&quot;schema&quot;:{&quot;content&quot;:{&quot;desktop&quot
             <span class="md-nav__icon md-icon"></span>
           </label>
         
-        <nav class="md-nav" data-md-level="4" aria-labelledby="__nav_7_2_6_7_label" aria-expanded="false">
-          <label class="md-nav__title" for="__nav_7_2_6_7">
+        <nav class="md-nav" data-md-level="4" aria-labelledby="__nav_7_2_6_8_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_7_2_6_8">
             <span class="md-nav__icon md-icon"></span>
             Encryption
           </label>
@@ -13930,30 +13993,37 @@ Year 5:   15.77 GB per sensor partition
 </code></pre></div>
 <h3 id="what-goes-wrong">What Goes Wrong<a class="headerlink" href="#what-goes-wrong" title="Permanent link">¶</a></h3>
 <p>When a partition grows this large, operations fail in spectacular ways:</p>
-<div class="highlight"><pre><span></span><code>┌─────────────────────────────────────────────────────────────────────┐
-│  PROBLEM 1: Read Timeouts                                           │
-│  ─────────────────────────────────────────────────────────────────  │
-│  Reading "last hour" requires finding rows in a 15GB partition.     │
-│  Even with efficient indexing, this scans gigabytes of SSTable      │
-│  data. Result: 30-second query, then timeout.                       │
-├─────────────────────────────────────────────────────────────────────┤
-│  PROBLEM 2: Memory Exhaustion                                       │
-│  ─────────────────────────────────────────────────────────────────  │
-│  Compaction must load partition into memory. A 15GB partition       │
-│  requires 15GB+ heap during compaction. Your 8GB heap OOMs.         │
-├─────────────────────────────────────────────────────────────────────┤
-│  PROBLEM 3: Repair Failures                                         │
-│  ─────────────────────────────────────────────────────────────────  │
-│  Repair streams entire partitions between nodes. A 15GB partition   │
-│  over a 1Gbps network takes 2+ minutes, during which the node       │
-│  appears unresponsive. Hints queue up, causing cascading issues.    │
-├─────────────────────────────────────────────────────────────────────┤
-│  PROBLEM 4: Hot Spots                                               │
-│  ─────────────────────────────────────────────────────────────────  │
-│  Current time queries always hit the same partition. One node       │
-│  serves 100% of writes for that sensor while others idle.           │
-└─────────────────────────────────────────────────────────────────────┘
-</code></pre></div>
+<table>
+<thead>
+<tr>
+<th>Problem</th>
+<th>Description</th>
+<th>Impact</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Read Timeouts</strong></td>
+<td>Reading "last hour" requires finding rows in a 15GB partition. Even with efficient indexing, this scans gigabytes of SSTable data.</td>
+<td>30-second query, then timeout</td>
+</tr>
+<tr>
+<td><strong>Memory Exhaustion</strong></td>
+<td>Compaction must load partition into memory. A 15GB partition requires 15GB+ heap during compaction.</td>
+<td>OOM with 8GB heap</td>
+</tr>
+<tr>
+<td><strong>Repair Failures</strong></td>
+<td>Repair streams entire partitions between nodes. A 15GB partition over a 1Gbps network takes 2+ minutes.</td>
+<td>Node appears unresponsive; hints queue up, causing cascading issues</td>
+</tr>
+<tr>
+<td><strong>Hot Spots</strong></td>
+<td>Current time queries always hit the same partition.</td>
+<td>One node serves 100% of writes while others idle</td>
+</tr>
+</tbody>
+</table>
 <hr>
 <h2 id="the-solution-time-buckets">The Solution: Time Buckets<a class="headerlink" href="#the-solution-time-buckets" title="Permanent link">¶</a></h2>
 <p>Add a time component to the partition key that limits each partition's time span:</p>
@@ -13967,21 +14037,56 @@ Year 5:   15.77 GB per sensor partition
 <span class="p">)</span><span class="w"> </span><span class="k">WITH</span><span class="w"> </span><span class="n">CLUSTERING</span><span class="w"> </span><span class="k">ORDER</span><span class="w"> </span><span class="k">BY</span><span class="w"> </span><span class="p">(</span><span class="n">reading_time</span><span class="w"> </span><span class="k">DESC</span><span class="p">);</span>
 </code></pre></div>
 <p>Now each sensor-day combination is a separate partition:</p>
-<div class="highlight"><pre><span></span><code>Partition: (sensor_id='temp-001', day='2024-01-15')
-┌──────────────────────────────────────────────────────────────────┐
-│  Row 1: reading_time=2024-01-15 23:59:59, temp=22.1, humidity=45 │
-│  Row 2: reading_time=2024-01-15 23:59:58, temp=22.0, humidity=45 │
-│  ...                                                              │
-│  Row 86400: reading_time=2024-01-15 00:00:00, temp=21.5, hum=47  │
-└──────────────────────────────────────────────────────────────────┘
-Size: 86,400 rows × ~100 bytes = 8.6 MB ✓
-
-Partition: (sensor_id='temp-001', day='2024-01-16')
-┌──────────────────────────────────────────────────────────────────┐
-│  ... another day's data ...                                       │
-└──────────────────────────────────────────────────────────────────┘
-Size: 8.6 MB ✓
-</code></pre></div>
+<p><strong>Partition: (sensor_id='temp-001', day='2024-01-15')</strong> — Size: 86,400 rows × ~100 bytes = 8.6 MB ✓</p>
+<table>
+<thead>
+<tr>
+<th>Row</th>
+<th>reading_time</th>
+<th>temp</th>
+<th>humidity</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>1</td>
+<td>2024-01-15 23:59:59</td>
+<td>22.1</td>
+<td>45</td>
+</tr>
+<tr>
+<td>2</td>
+<td>2024-01-15 23:59:58</td>
+<td>22.0</td>
+<td>45</td>
+</tr>
+<tr>
+<td>...</td>
+<td>...</td>
+<td>...</td>
+<td>...</td>
+</tr>
+<tr>
+<td>86400</td>
+<td>2024-01-15 00:00:00</td>
+<td>21.5</td>
+<td>47</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Partition: (sensor_id='temp-001', day='2024-01-16')</strong> — Size: 8.6 MB ✓</p>
+<table>
+<thead>
+<tr>
+<th>... another day's data ...</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td></td>
+</tr>
+</tbody>
+</table>
 <p>Five years of data now spans 1,825 partitions of 8.6MB each instead of one 15.77GB partition.</p>
 <hr>
 <h2 id="choosing-the-right-bucket-size">Choosing the Right Bucket Size<a class="headerlink" href="#choosing-the-right-bucket-size" title="Permanent link">¶</a></h2>
@@ -14350,16 +14455,28 @@ Size: 8.6 MB ✓
 </code></pre></div>
 <h3 id="ttl-and-bucket-alignment">TTL and Bucket Alignment<a class="headerlink" href="#ttl-and-bucket-alignment" title="Permanent link">¶</a></h3>
 <p>Align gc_grace_seconds with your repair schedule:</p>
-<div class="highlight"><pre><span></span><code>┌─────────────────────────────────────────────────────────────────────┐
-│  RULE: gc_grace_seconds must be longer than your repair interval    │
-│  ─────────────────────────────────────────────────────────────────  │
-│  If repair runs weekly: gc_grace_seconds &gt; 604800 (7 days)          │
-│  If repair runs daily:  gc_grace_seconds &gt; 86400 (1 day)            │
-│                                                                     │
-│  Why? Tombstones must exist on all replicas before being purged.    │
-│  If purged too early, deleted data can "resurrect" during repair.   │
-└─────────────────────────────────────────────────────────────────────┘
-</code></pre></div>
+<div class="admonition danger">
+<p class="admonition-title">Rule: gc_grace_seconds must be longer than repair interval</p>
+<table>
+<thead>
+<tr>
+<th>Repair Frequency</th>
+<th>Minimum gc_grace_seconds</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Weekly</td>
+<td>&gt; 604800 (7 days)</td>
+</tr>
+<tr>
+<td>Daily</td>
+<td>&gt; 86400 (1 day)</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Why?</strong> Tombstones must exist on all replicas before being purged. If purged too early, deleted data can "resurrect" during repair.</p>
+</div>
 <p><strong>Recommended settings:</strong></p>
 <table>
 <thead>

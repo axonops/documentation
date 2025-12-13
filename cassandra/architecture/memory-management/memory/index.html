@@ -4705,6 +4705,69 @@ data-et-multi-view="{&quot;schema&quot;:{&quot;content&quot;:{&quot;desktop&quot
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
+  <a href="#why-off-heap-memory-matters-for-databases" class="md-nav__link">
+    <span class="md-ellipsis">
+      Why Off-Heap Memory Matters for Databases
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#what-is-off-heap-memory" class="md-nav__link">
+    <span class="md-ellipsis">
+      What is Off-Heap Memory?
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#how-java-accesses-off-heap-memory" class="md-nav__link">
+    <span class="md-ellipsis">
+      How Java Accesses Off-Heap Memory
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#how-cassandra-uses-off-heap-memory" class="md-nav__link">
+    <span class="md-ellipsis">
+      How Cassandra Uses Off-Heap Memory
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#off-heap-trade-offs" class="md-nav__link">
+    <span class="md-ellipsis">
+      Off-Heap Trade-offs
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#monitoring-off-heap-usage" class="md-nav__link">
+    <span class="md-ellipsis">
+      Monitoring Off-Heap Usage
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#off-heap-components-in-detail" class="md-nav__link">
+    <span class="md-ellipsis">
+      Off-Heap Components in Detail
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
   <a href="#off-heap-memtables" class="md-nav__link">
     <span class="md-ellipsis">
       Off-Heap Memtables
@@ -6479,6 +6542,27 @@ data-et-multi-view="{&quot;schema&quot;:{&quot;content&quot;:{&quot;desktop&quot
   
   
     <li class="md-nav__item">
+      <a href="../../../cql/ddl/trigger/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Trigger
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
       <a href="../../../cql/ddl/type/" class="md-nav__link">
         
   
@@ -6802,7 +6886,7 @@ data-et-multi-view="{&quot;schema&quot;:{&quot;content&quot;:{&quot;desktop&quot
             
   
   <span class="md-ellipsis">
-    Security Commands
+    Security
   </span>
   
 
@@ -6812,7 +6896,7 @@ data-et-multi-view="{&quot;schema&quot;:{&quot;content&quot;:{&quot;desktop&quot
         <nav class="md-nav" data-md-level="5" aria-labelledby="__nav_7_2_4_3_5_label" aria-expanded="false">
           <label class="md-nav__title" for="__nav_7_2_4_3_5">
             <span class="md-nav__icon md-icon"></span>
-            Security Commands
+            Security
           </label>
           <ul class="md-nav__list" data-md-scrollfix>
             
@@ -6828,6 +6912,27 @@ data-et-multi-view="{&quot;schema&quot;:{&quot;content&quot;:{&quot;desktop&quot
   
   <span class="md-ellipsis">
     Overview
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../cql/security/rbac/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Role-Based Access Control
   </span>
   
 
@@ -12825,6 +12930,27 @@ data-et-multi-view="{&quot;schema&quot;:{&quot;content&quot;:{&quot;desktop&quot
   
   
   
+    <li class="md-nav__item">
+      <a href="../../../security/os-security/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    OS Security
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
     
     
     
@@ -12836,10 +12962,10 @@ data-et-multi-view="{&quot;schema&quot;:{&quot;content&quot;:{&quot;desktop&quot
       
         
         
-        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_7_2_6_7" >
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_7_2_6_8" >
         
           
-          <label class="md-nav__link" for="__nav_7_2_6_7" id="__nav_7_2_6_7_label" tabindex="0">
+          <label class="md-nav__link" for="__nav_7_2_6_8" id="__nav_7_2_6_8_label" tabindex="0">
             
   
   <span class="md-ellipsis">
@@ -12850,8 +12976,8 @@ data-et-multi-view="{&quot;schema&quot;:{&quot;content&quot;:{&quot;desktop&quot
             <span class="md-nav__icon md-icon"></span>
           </label>
         
-        <nav class="md-nav" data-md-level="4" aria-labelledby="__nav_7_2_6_7_label" aria-expanded="false">
-          <label class="md-nav__title" for="__nav_7_2_6_7">
+        <nav class="md-nav" data-md-level="4" aria-labelledby="__nav_7_2_6_8_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_7_2_6_8">
             <span class="md-nav__icon md-icon"></span>
             Encryption
           </label>
@@ -13903,6 +14029,69 @@ data-et-multi-view="{&quot;schema&quot;:{&quot;content&quot;:{&quot;desktop&quot
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
+  <a href="#why-off-heap-memory-matters-for-databases" class="md-nav__link">
+    <span class="md-ellipsis">
+      Why Off-Heap Memory Matters for Databases
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#what-is-off-heap-memory" class="md-nav__link">
+    <span class="md-ellipsis">
+      What is Off-Heap Memory?
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#how-java-accesses-off-heap-memory" class="md-nav__link">
+    <span class="md-ellipsis">
+      How Java Accesses Off-Heap Memory
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#how-cassandra-uses-off-heap-memory" class="md-nav__link">
+    <span class="md-ellipsis">
+      How Cassandra Uses Off-Heap Memory
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#off-heap-trade-offs" class="md-nav__link">
+    <span class="md-ellipsis">
+      Off-Heap Trade-offs
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#monitoring-off-heap-usage" class="md-nav__link">
+    <span class="md-ellipsis">
+      Monitoring Off-Heap Usage
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#off-heap-components-in-detail" class="md-nav__link">
+    <span class="md-ellipsis">
+      Off-Heap Components in Detail
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
   <a href="#off-heap-memtables" class="md-nav__link">
     <span class="md-ellipsis">
       Off-Heap Memtables
@@ -14215,7 +14404,176 @@ data-et-multi-view="{&quot;schema&quot;:{&quot;content&quot;:{&quot;desktop&quot
 </div>
 <hr>
 <h2 id="off-heap-memory">Off-Heap Memory<a class="headerlink" href="#off-heap-memory" title="Permanent link">¶</a></h2>
-<p>Off-heap memory is native memory outside the JVM heap. It is not subject to garbage collection, eliminating GC pauses for these structures.</p>
+<p>Off-heap memory is native memory allocated outside the JVM heap. It is not subject to garbage collection, eliminating GC pauses for these structures.</p>
+<h3 id="why-off-heap-memory-matters-for-databases">Why Off-Heap Memory Matters for Databases<a class="headerlink" href="#why-off-heap-memory-matters-for-databases" title="Permanent link">¶</a></h3>
+<p>Garbage collection is the primary source of latency variability in Java applications. For databases like Cassandra, GC pauses directly translate to:</p>
+<ul>
+<li><strong>Query latency spikes</strong>: A 500ms GC pause means 500ms added to every in-flight query</li>
+<li><strong>Coordinator timeouts</strong>: Other nodes may mark a pausing node as unresponsive</li>
+<li><strong>Cluster instability</strong>: Gossip failures during long pauses can trigger unnecessary node replacements</li>
+</ul>
+<p>The fundamental problem is that <strong>GC pause duration scales with heap size and object count</strong>. A database handling millions of partitions with gigabytes of cached data will have longer GC pauses than a simple web application.</p>
+<p>Off-heap memory solves this by removing large, long-lived data structures from GC's responsibility entirely. The GC only sees a small pointer to the off-heap region, not the gigabytes of data stored there.</p>
+<h3 id="what-is-off-heap-memory">What is Off-Heap Memory?<a class="headerlink" href="#what-is-off-heap-memory" title="Permanent link">¶</a></h3>
+<p>The JVM manages two distinct memory regions:</p>
+<ul>
+<li>
+<p><strong>Heap memory</strong>: Managed by the garbage collector. Objects are allocated here by default. When objects are no longer referenced, the GC reclaims the memory during collection cycles, which can cause application pauses.</p>
+</li>
+<li>
+<p><strong>Off-heap (native) memory</strong>: Allocated directly from the operating system, bypassing the JVM's garbage collector. The application is responsible for explicitly allocating and freeing this memory. No GC pauses occur for off-heap allocations.</p>
+</li>
+</ul>
+<p><a class="glightbox" href="data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0iVVRGLTgiIHN0YW5kYWxvbmU9Im5vIj8+PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHhtbG5zOnhsaW5rPSJodHRwOi8vd3d3LnczLm9yZy8xOTk5L3hsaW5rIiBjb250ZW50U2NyaXB0VHlwZT0iYXBwbGljYXRpb24vZWNtYXNjcmlwdCIgY29udGVudFN0eWxlVHlwZT0idGV4dC9jc3MiIGhlaWdodD0iMjQwcHgiIHByZXNlcnZlQXNwZWN0UmF0aW89Im5vbmUiIHN0eWxlPSJ3aWR0aDo3MjlweDtoZWlnaHQ6MjQwcHg7IiB2ZXJzaW9uPSIxLjEiIHZpZXdCb3g9IjAgMCA3MjkgMjQwIiB3aWR0aD0iNzI5cHgiIHpvb21BbmRQYW49Im1hZ25pZnkiPjxkZWZzPjxmaWx0ZXIgaGVpZ2h0PSIzMDAlIiBpZD0iZjFiandkNGV4YmdrYnciIHdpZHRoPSIzMDAlIiB4PSItMSIgeT0iLTEiPjxmZUdhdXNzaWFuQmx1ciByZXN1bHQ9ImJsdXJPdXQiIHN0ZERldmlhdGlvbj0iMi4wIi8+PGZlQ29sb3JNYXRyaXggaW49ImJsdXJPdXQiIHJlc3VsdD0iYmx1ck91dDIiIHR5cGU9Im1hdHJpeCIgdmFsdWVzPSIwIDAgMCAwIDAgMCAwIDAgMCAwIDAgMCAwIDAgMCAwIDAgMCAuNCAwIi8+PGZlT2Zmc2V0IGR4PSI0LjAiIGR5PSI0LjAiIGluPSJibHVyT3V0MiIgcmVzdWx0PSJibHVyT3V0MyIvPjxmZUJsZW5kIGluPSJTb3VyY2VHcmFwaGljIiBpbjI9ImJsdXJPdXQzIiBtb2RlPSJub3JtYWwiLz48L2ZpbHRlcj48L2RlZnM+PGc+PCEtLU1ENT1bODVhMmM2ZjBjMTJmZjEwNTA2ZjA2NmQwZTA5NDJmNGRdCmNsdXN0ZXIgUHJvY2VzcyBBZGRyZXNzIFNwYWNlLS0+PHJlY3QgZmlsbD0iI0ZGRkZGRiIgZmlsdGVyPSJ1cmwoI2YxYmp3ZDRleGJna2J3KSIgaGVpZ2h0PSIyMDUiIHN0eWxlPSJzdHJva2U6ICMwMDAwMDA7IHN0cm9rZS13aWR0aDogMS41OyIgd2lkdGg9IjY5NiIgeD0iMjIiIHk9IjI0Ii8+PHRleHQgZmlsbD0iIzAwMDAwMCIgZm9udC1mYW1pbHk9InNhbnMtc2VyaWYiIGZvbnQtc2l6ZT0iMTQiIGZvbnQtd2VpZ2h0PSJib2xkIiBsZW5ndGhBZGp1c3Q9InNwYWNpbmdBbmRHbHlwaHMiIHRleHRMZW5ndGg9IjE4OCIgeD0iMjc2IiB5PSIzOC45OTUxIj5Qcm9jZXNzIEFkZHJlc3MgU3BhY2U8L3RleHQ+PCEtLU1ENT1bMGEyM2ZlNGQ4ODlkZmE3OWE1YjNlZmJjMTA1NDJjZTNdCmNsdXN0ZXIgaGVhcC0tPjxyZWN0IGZpbGw9IiNGRkNDQ0MiIGZpbHRlcj0idXJsKCNmMWJqd2Q0ZXhiZ2tidykiIGhlaWdodD0iMTIyIiBzdHlsZT0ic3Ryb2tlOiAjMDAwMDAwOyBzdHJva2Utd2lkdGg6IDEuNTsiIHdpZHRoPSIyMzIiIHg9IjQ2MiIgeT0iNzUiLz48dGV4dCBmaWxsPSIjMDAwMDAwIiBmb250LWZhbWlseT0ic2Fucy1zZXJpZiIgZm9udC1zaXplPSIxNCIgZm9udC13ZWlnaHQ9ImJvbGQiIGxlbmd0aEFkanVzdD0ic3BhY2luZ0FuZEdseXBocyIgdGV4dExlbmd0aD0iNzMiIHg9IjU0MS41IiB5PSI4OS45OTUxIj5KVk0gSGVhcDwvdGV4dD48dGV4dCBmaWxsPSIjMDAwMDAwIiBmb250LWZhbWlseT0ic2Fucy1zZXJpZiIgZm9udC1zaXplPSIxNCIgZm9udC13ZWlnaHQ9ImJvbGQiIGxlbmd0aEFkanVzdD0ic3BhY2luZ0FuZEdseXBocyIgdGV4dExlbmd0aD0iMTEzIiB4PSI1MjEuNSIgeT0iMTA2LjI5MiI+KEdDLW1hbmFnZWQpPC90ZXh0PjwhLS1NRDU9W2ExODQ4YTJlNjQxNThmMTNkMjFlMzQ4ODkwNWU5YzgwXQpjbHVzdGVyIG9mZmhlYXAtLT48cmVjdCBmaWxsPSIjQ0NGRkNDIiBmaWx0ZXI9InVybCgjZjFiandkNGV4YmdrYncpIiBoZWlnaHQ9IjEzOCIgc3R5bGU9InN0cm9rZTogIzAwMDAwMDsgc3Ryb2tlLXdpZHRoOiAxLjU7IiB3aWR0aD0iMjE4IiB4PSIyMjAiIHk9IjY3Ii8+PHRleHQgZmlsbD0iIzAwMDAwMCIgZm9udC1mYW1pbHk9InNhbnMtc2VyaWYiIGZvbnQtc2l6ZT0iMTQiIGZvbnQtd2VpZ2h0PSJib2xkIiBsZW5ndGhBZGp1c3Q9InNwYWNpbmdBbmRHbHlwaHMiIHRleHRMZW5ndGg9IjIwMiIgeD0iMjI4IiB5PSI4MS45OTUxIj5PZmYtSGVhcCAvIE5hdGl2ZSBNZW1vcnk8L3RleHQ+PHRleHQgZmlsbD0iIzAwMDAwMCIgZm9udC1mYW1pbHk9InNhbnMtc2VyaWYiIGZvbnQtc2l6ZT0iMTQiIGZvbnQtd2VpZ2h0PSJib2xkIiBsZW5ndGhBZGp1c3Q9InNwYWNpbmdBbmRHbHlwaHMiIHRleHRMZW5ndGg9IjE0NSIgeD0iMjU2LjUiIHk9Ijk4LjI5MiI+KE5vdCBHQy1tYW5hZ2VkKTwvdGV4dD48IS0tTUQ1PVszNjIzZTM2NWM3YWY3NjFjZmIzZjhkNjlmOWFjNzhjMF0KY2x1c3RlciBqdm0tLT48cmVjdCBmaWxsPSIjRkZGRkNDIiBmaWx0ZXI9InVybCgjZjFiandkNGV4YmdrYncpIiBoZWlnaHQ9IjEwNiIgc3R5bGU9InN0cm9rZTogIzAwMDAwMDsgc3Ryb2tlLXdpZHRoOiAxLjU7IiB3aWR0aD0iMTUwIiB4PSI0NiIgeT0iOTEiLz48dGV4dCBmaWxsPSIjMDAwMDAwIiBmb250LWZhbWlseT0ic2Fucy1zZXJpZiIgZm9udC1zaXplPSIxNCIgZm9udC13ZWlnaHQ9ImJvbGQiIGxlbmd0aEFkanVzdD0ic3BhY2luZ0FuZEdseXBocyIgdGV4dExlbmd0aD0iMTAyIiB4PSI3MCIgeT0iMTA1Ljk5NTEiPkpWTSBJbnRlcm5hbHM8L3RleHQ+PCEtLU1ENT1bY2FkNjAyYjI1YzRlNjhmMTYyOTBmNGUyNTgyMzkzMGNdCmVudGl0eSBoZWFwX2Rlc2MtLT48cmVjdCBmaWxsPSIjRkVGRUNFIiBmaWx0ZXI9InVybCgjZjFiandkNGV4YmdrYncpIiBoZWlnaHQ9IjU0Ljg5MDYiIHN0eWxlPSJzdHJva2U6ICMwMDAwMDA7IHN0cm9rZS13aWR0aDogMS41OyIgd2lkdGg9IjIwMCIgeD0iNDc4IiB5PSIxMjYiLz48dGV4dCBmaWxsPSIjMDAwMDAwIiBmb250LWZhbWlseT0ic2Fucy1zZXJpZiIgZm9udC1zaXplPSIxNCIgbGVuZ3RoQWRqdXN0PSJzcGFjaW5nQW5kR2x5cGhzIiB0ZXh0TGVuZ3RoPSIxODAiIHg9IjQ4OCIgeT0iMTQxLjk5NTEiPk9iamVjdHMgYWxsb2NhdGVkIHZpYSAnbmV3JzwvdGV4dD48dGV4dCBmaWxsPSIjMDAwMDAwIiBmb250LWZhbWlseT0ic2Fucy1zZXJpZiIgZm9udC1zaXplPSIxNCIgbGVuZ3RoQWRqdXN0PSJzcGFjaW5nQW5kR2x5cGhzIiB0ZXh0TGVuZ3RoPSIxNTAiIHg9IjQ4OCIgeT0iMTU4LjI5MiI+U3ViamVjdCB0byBHQyBwYXVzZXM8L3RleHQ+PHRleHQgZmlsbD0iIzAwMDAwMCIgZm9udC1mYW1pbHk9InNhbnMtc2VyaWYiIGZvbnQtc2l6ZT0iMTQiIGxlbmd0aEFkanVzdD0ic3BhY2luZ0FuZEdseXBocyIgdGV4dExlbmd0aD0iMTA3IiB4PSI0ODgiIHk9IjE3NC41ODg5Ij5MaW1pdGVkIGJ5IC1YbXg8L3RleHQ+PCEtLU1ENT1bMDM2ZmE3OTI3N2U2MWRhNDhhOTFlOTE4NWU3NDk0NzBdCmVudGl0eSBvZmZoZWFwX2Rlc2MtLT48cmVjdCBmaWxsPSIjRkVGRUNFIiBmaWx0ZXI9InVybCgjZjFiandkNGV4YmdrYncpIiBoZWlnaHQ9IjcxLjE4NzUiIHN0eWxlPSJzdHJva2U6ICMwMDAwMDA7IHN0cm9rZS13aWR0aDogMS41OyIgd2lkdGg9IjE2OCIgeD0iMjQ1IiB5PSIxMTgiLz48dGV4dCBmaWxsPSIjMDAwMDAwIiBmb250LWZhbWlseT0ic2Fucy1zZXJpZiIgZm9udC1zaXplPSIxNCIgbGVuZ3RoQWRqdXN0PSJzcGFjaW5nQW5kR2x5cGhzIiB0ZXh0TGVuZ3RoPSIxMjUiIHg9IjI1NSIgeT0iMTMzLjk5NTEiPkRpcmVjdCBCeXRlQnVmZmVyczwvdGV4dD48dGV4dCBmaWxsPSIjMDAwMDAwIiBmb250LWZhbWlseT0ic2Fucy1zZXJpZiIgZm9udC1zaXplPSIxNCIgbGVuZ3RoQWRqdXN0PSJzcGFjaW5nQW5kR2x5cGhzIiB0ZXh0TGVuZ3RoPSIxMjUiIHg9IjI1NSIgeT0iMTUwLjI5MiI+VW5zYWZlIGFsbG9jYXRpb25zPC90ZXh0Pjx0ZXh0IGZpbGw9IiMwMDAwMDAiIGZvbnQtZmFtaWx5PSJzYW5zLXNlcmlmIiBmb250LXNpemU9IjE0IiBsZW5ndGhBZGp1c3Q9InNwYWNpbmdBbmRHbHlwaHMiIHRleHRMZW5ndGg9IjE0OCIgeD0iMjU1IiB5PSIxNjYuNTg4OSI+TWVtb3J5LW1hcHBlZCBmaWxlczwvdGV4dD48dGV4dCBmaWxsPSIjMDAwMDAwIiBmb250LWZhbWlseT0ic2Fucy1zZXJpZiIgZm9udC1zaXplPSIxNCIgbGVuZ3RoQWRqdXN0PSJzcGFjaW5nQW5kR2x5cGhzIiB0ZXh0TGVuZ3RoPSI5OSIgeD0iMjU1IiB5PSIxODIuODg1NyI+Tm8gR0MgcGF1c2VzPC90ZXh0PjwhLS1NRDU9WzVlZjM5YTU0OTMxNDcyMmFiZTVhZmE5NzJlNTM2N2ZlXQplbnRpdHkganZtX2Rlc2MtLT48cmVjdCBmaWxsPSIjRkVGRUNFIiBmaWx0ZXI9InVybCgjZjFiandkNGV4YmdrYncpIiBoZWlnaHQ9IjU0Ljg5MDYiIHN0eWxlPSJzdHJva2U6ICMwMDAwMDA7IHN0cm9rZS13aWR0aDogMS41OyIgd2lkdGg9IjExOCIgeD0iNjIiIHk9IjEyNiIvPjx0ZXh0IGZpbGw9IiMwMDAwMDAiIGZvbnQtZmFtaWx5PSJzYW5zLXNlcmlmIiBmb250LXNpemU9IjE0IiBsZW5ndGhBZGp1c3Q9InNwYWNpbmdBbmRHbHlwaHMiIHRleHRMZW5ndGg9IjgzIiB4PSI3MiIgeT0iMTQxLjk5NTEiPkNvZGUgY2FjaGU8L3RleHQ+PHRleHQgZmlsbD0iIzAwMDAwMCIgZm9udC1mYW1pbHk9InNhbnMtc2VyaWYiIGZvbnQtc2l6ZT0iMTQiIGxlbmd0aEFkanVzdD0ic3BhY2luZ0FuZEdseXBocyIgdGV4dExlbmd0aD0iNzYiIHg9IjcyIiB5PSIxNTguMjkyIj5NZXRhc3BhY2U8L3RleHQ+PHRleHQgZmlsbD0iIzAwMDAwMCIgZm9udC1mYW1pbHk9InNhbnMtc2VyaWYiIGZvbnQtc2l6ZT0iMTQiIGxlbmd0aEFkanVzdD0ic3BhY2luZ0FuZEdseXBocyIgdGV4dExlbmd0aD0iOTgiIHg9IjcyIiB5PSIxNzQuNTg4OSI+VGhyZWFkIHN0YWNrczwvdGV4dD48IS0tTUQ1PVs2Y2EwZGE4YTViNGNmM2ViODIxNTNjMDQ4MTk1ZjlmZl0KQHN0YXJ0dW1sDQpza2lucGFyYW0gYmFja2dyb3VuZENvbG9yIHRyYW5zcGFyZW50DQoNCnJlY3RhbmdsZSAiUHJvY2VzcyBBZGRyZXNzIFNwYWNlIiB7DQogICAgcmVjdGFuZ2xlICJKVk0gSGVhcFxuKEdDLW1hbmFnZWQpIiBhcyBoZWFwICNGRkNDQ0Mgew0KICAgICAgICBjYXJkICJPYmplY3RzIGFsbG9jYXRlZCB2aWEgJ25ldydcblN1YmplY3QgdG8gR0MgcGF1c2VzXG5MaW1pdGVkIGJ5IC1YbXgiIGFzIGhlYXBfZGVzYw0KICAgIH0NCg0KICAgIHJlY3RhbmdsZSAiT2ZmLUhlYXAgLyBOYXRpdmUgTWVtb3J5XG4oTm90IEdDLW1hbmFnZWQpIiBhcyBvZmZoZWFwICNDQ0ZGQ0Mgew0KICAgICAgICBjYXJkICJEaXJlY3QgQnl0ZUJ1ZmZlcnNcblVuc2FmZSBhbGxvY2F0aW9uc1xuTWVtb3J5LW1hcHBlZCBmaWxlc1xuTm8gR0MgcGF1c2VzIiBhcyBvZmZoZWFwX2Rlc2MNCiAgICB9DQoNCiAgICByZWN0YW5nbGUgIkpWTSBJbnRlcm5hbHMiIGFzIGp2bSAjRkZGRkNDIHsNCiAgICAgICAgY2FyZCAiQ29kZSBjYWNoZVxuTWV0YXNwYWNlXG5UaHJlYWQgc3RhY2tzIiBhcyBqdm1fZGVzYw0KICAgIH0NCn0NCkBlbmR1bWwNCgpQbGFudFVNTCB2ZXJzaW9uIDEuMjAyMC4wMihTdW4gTWFyIDAxIDEwOjIyOjA3IEdNVCAyMDIwKQooR1BMIHNvdXJjZSBkaXN0cmlidXRpb24pCkphdmEgUnVudGltZTogT3BlbkpESyBSdW50aW1lIEVudmlyb25tZW50CkpWTTogT3BlbkpESyA2NC1CaXQgU2VydmVyIFZNCkphdmEgVmVyc2lvbjogMTcuMC4xNSs2LUxUUwpPcGVyYXRpbmcgU3lzdGVtOiBMaW51eApEZWZhdWx0IEVuY29kaW5nOiBVVEYtOApMYW5ndWFnZTogZW4KQ291bnRyeTogbnVsbAotLT48L2c+PC9zdmc+" data-type="image" data-width="100%" data-height="auto" data-desc-position="bottom"><img src="data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0iVVRGLTgiIHN0YW5kYWxvbmU9Im5vIj8+PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHhtbG5zOnhsaW5rPSJodHRwOi8vd3d3LnczLm9yZy8xOTk5L3hsaW5rIiBjb250ZW50U2NyaXB0VHlwZT0iYXBwbGljYXRpb24vZWNtYXNjcmlwdCIgY29udGVudFN0eWxlVHlwZT0idGV4dC9jc3MiIGhlaWdodD0iMjQwcHgiIHByZXNlcnZlQXNwZWN0UmF0aW89Im5vbmUiIHN0eWxlPSJ3aWR0aDo3MjlweDtoZWlnaHQ6MjQwcHg7IiB2ZXJzaW9uPSIxLjEiIHZpZXdCb3g9IjAgMCA3MjkgMjQwIiB3aWR0aD0iNzI5cHgiIHpvb21BbmRQYW49Im1hZ25pZnkiPjxkZWZzPjxmaWx0ZXIgaGVpZ2h0PSIzMDAlIiBpZD0iZjFiandkNGV4YmdrYnciIHdpZHRoPSIzMDAlIiB4PSItMSIgeT0iLTEiPjxmZUdhdXNzaWFuQmx1ciByZXN1bHQ9ImJsdXJPdXQiIHN0ZERldmlhdGlvbj0iMi4wIi8+PGZlQ29sb3JNYXRyaXggaW49ImJsdXJPdXQiIHJlc3VsdD0iYmx1ck91dDIiIHR5cGU9Im1hdHJpeCIgdmFsdWVzPSIwIDAgMCAwIDAgMCAwIDAgMCAwIDAgMCAwIDAgMCAwIDAgMCAuNCAwIi8+PGZlT2Zmc2V0IGR4PSI0LjAiIGR5PSI0LjAiIGluPSJibHVyT3V0MiIgcmVzdWx0PSJibHVyT3V0MyIvPjxmZUJsZW5kIGluPSJTb3VyY2VHcmFwaGljIiBpbjI9ImJsdXJPdXQzIiBtb2RlPSJub3JtYWwiLz48L2ZpbHRlcj48L2RlZnM+PGc+PCEtLU1ENT1bODVhMmM2ZjBjMTJmZjEwNTA2ZjA2NmQwZTA5NDJmNGRdCmNsdXN0ZXIgUHJvY2VzcyBBZGRyZXNzIFNwYWNlLS0+PHJlY3QgZmlsbD0iI0ZGRkZGRiIgZmlsdGVyPSJ1cmwoI2YxYmp3ZDRleGJna2J3KSIgaGVpZ2h0PSIyMDUiIHN0eWxlPSJzdHJva2U6ICMwMDAwMDA7IHN0cm9rZS13aWR0aDogMS41OyIgd2lkdGg9IjY5NiIgeD0iMjIiIHk9IjI0Ii8+PHRleHQgZmlsbD0iIzAwMDAwMCIgZm9udC1mYW1pbHk9InNhbnMtc2VyaWYiIGZvbnQtc2l6ZT0iMTQiIGZvbnQtd2VpZ2h0PSJib2xkIiBsZW5ndGhBZGp1c3Q9InNwYWNpbmdBbmRHbHlwaHMiIHRleHRMZW5ndGg9IjE4OCIgeD0iMjc2IiB5PSIzOC45OTUxIj5Qcm9jZXNzIEFkZHJlc3MgU3BhY2U8L3RleHQ+PCEtLU1ENT1bMGEyM2ZlNGQ4ODlkZmE3OWE1YjNlZmJjMTA1NDJjZTNdCmNsdXN0ZXIgaGVhcC0tPjxyZWN0IGZpbGw9IiNGRkNDQ0MiIGZpbHRlcj0idXJsKCNmMWJqd2Q0ZXhiZ2tidykiIGhlaWdodD0iMTIyIiBzdHlsZT0ic3Ryb2tlOiAjMDAwMDAwOyBzdHJva2Utd2lkdGg6IDEuNTsiIHdpZHRoPSIyMzIiIHg9IjQ2MiIgeT0iNzUiLz48dGV4dCBmaWxsPSIjMDAwMDAwIiBmb250LWZhbWlseT0ic2Fucy1zZXJpZiIgZm9udC1zaXplPSIxNCIgZm9udC13ZWlnaHQ9ImJvbGQiIGxlbmd0aEFkanVzdD0ic3BhY2luZ0FuZEdseXBocyIgdGV4dExlbmd0aD0iNzMiIHg9IjU0MS41IiB5PSI4OS45OTUxIj5KVk0gSGVhcDwvdGV4dD48dGV4dCBmaWxsPSIjMDAwMDAwIiBmb250LWZhbWlseT0ic2Fucy1zZXJpZiIgZm9udC1zaXplPSIxNCIgZm9udC13ZWlnaHQ9ImJvbGQiIGxlbmd0aEFkanVzdD0ic3BhY2luZ0FuZEdseXBocyIgdGV4dExlbmd0aD0iMTEzIiB4PSI1MjEuNSIgeT0iMTA2LjI5MiI+KEdDLW1hbmFnZWQpPC90ZXh0PjwhLS1NRDU9W2ExODQ4YTJlNjQxNThmMTNkMjFlMzQ4ODkwNWU5YzgwXQpjbHVzdGVyIG9mZmhlYXAtLT48cmVjdCBmaWxsPSIjQ0NGRkNDIiBmaWx0ZXI9InVybCgjZjFiandkNGV4YmdrYncpIiBoZWlnaHQ9IjEzOCIgc3R5bGU9InN0cm9rZTogIzAwMDAwMDsgc3Ryb2tlLXdpZHRoOiAxLjU7IiB3aWR0aD0iMjE4IiB4PSIyMjAiIHk9IjY3Ii8+PHRleHQgZmlsbD0iIzAwMDAwMCIgZm9udC1mYW1pbHk9InNhbnMtc2VyaWYiIGZvbnQtc2l6ZT0iMTQiIGZvbnQtd2VpZ2h0PSJib2xkIiBsZW5ndGhBZGp1c3Q9InNwYWNpbmdBbmRHbHlwaHMiIHRleHRMZW5ndGg9IjIwMiIgeD0iMjI4IiB5PSI4MS45OTUxIj5PZmYtSGVhcCAvIE5hdGl2ZSBNZW1vcnk8L3RleHQ+PHRleHQgZmlsbD0iIzAwMDAwMCIgZm9udC1mYW1pbHk9InNhbnMtc2VyaWYiIGZvbnQtc2l6ZT0iMTQiIGZvbnQtd2VpZ2h0PSJib2xkIiBsZW5ndGhBZGp1c3Q9InNwYWNpbmdBbmRHbHlwaHMiIHRleHRMZW5ndGg9IjE0NSIgeD0iMjU2LjUiIHk9Ijk4LjI5MiI+KE5vdCBHQy1tYW5hZ2VkKTwvdGV4dD48IS0tTUQ1PVszNjIzZTM2NWM3YWY3NjFjZmIzZjhkNjlmOWFjNzhjMF0KY2x1c3RlciBqdm0tLT48cmVjdCBmaWxsPSIjRkZGRkNDIiBmaWx0ZXI9InVybCgjZjFiandkNGV4YmdrYncpIiBoZWlnaHQ9IjEwNiIgc3R5bGU9InN0cm9rZTogIzAwMDAwMDsgc3Ryb2tlLXdpZHRoOiAxLjU7IiB3aWR0aD0iMTUwIiB4PSI0NiIgeT0iOTEiLz48dGV4dCBmaWxsPSIjMDAwMDAwIiBmb250LWZhbWlseT0ic2Fucy1zZXJpZiIgZm9udC1zaXplPSIxNCIgZm9udC13ZWlnaHQ9ImJvbGQiIGxlbmd0aEFkanVzdD0ic3BhY2luZ0FuZEdseXBocyIgdGV4dExlbmd0aD0iMTAyIiB4PSI3MCIgeT0iMTA1Ljk5NTEiPkpWTSBJbnRlcm5hbHM8L3RleHQ+PCEtLU1ENT1bY2FkNjAyYjI1YzRlNjhmMTYyOTBmNGUyNTgyMzkzMGNdCmVudGl0eSBoZWFwX2Rlc2MtLT48cmVjdCBmaWxsPSIjRkVGRUNFIiBmaWx0ZXI9InVybCgjZjFiandkNGV4YmdrYncpIiBoZWlnaHQ9IjU0Ljg5MDYiIHN0eWxlPSJzdHJva2U6ICMwMDAwMDA7IHN0cm9rZS13aWR0aDogMS41OyIgd2lkdGg9IjIwMCIgeD0iNDc4IiB5PSIxMjYiLz48dGV4dCBmaWxsPSIjMDAwMDAwIiBmb250LWZhbWlseT0ic2Fucy1zZXJpZiIgZm9udC1zaXplPSIxNCIgbGVuZ3RoQWRqdXN0PSJzcGFjaW5nQW5kR2x5cGhzIiB0ZXh0TGVuZ3RoPSIxODAiIHg9IjQ4OCIgeT0iMTQxLjk5NTEiPk9iamVjdHMgYWxsb2NhdGVkIHZpYSAnbmV3JzwvdGV4dD48dGV4dCBmaWxsPSIjMDAwMDAwIiBmb250LWZhbWlseT0ic2Fucy1zZXJpZiIgZm9udC1zaXplPSIxNCIgbGVuZ3RoQWRqdXN0PSJzcGFjaW5nQW5kR2x5cGhzIiB0ZXh0TGVuZ3RoPSIxNTAiIHg9IjQ4OCIgeT0iMTU4LjI5MiI+U3ViamVjdCB0byBHQyBwYXVzZXM8L3RleHQ+PHRleHQgZmlsbD0iIzAwMDAwMCIgZm9udC1mYW1pbHk9InNhbnMtc2VyaWYiIGZvbnQtc2l6ZT0iMTQiIGxlbmd0aEFkanVzdD0ic3BhY2luZ0FuZEdseXBocyIgdGV4dExlbmd0aD0iMTA3IiB4PSI0ODgiIHk9IjE3NC41ODg5Ij5MaW1pdGVkIGJ5IC1YbXg8L3RleHQ+PCEtLU1ENT1bMDM2ZmE3OTI3N2U2MWRhNDhhOTFlOTE4NWU3NDk0NzBdCmVudGl0eSBvZmZoZWFwX2Rlc2MtLT48cmVjdCBmaWxsPSIjRkVGRUNFIiBmaWx0ZXI9InVybCgjZjFiandkNGV4YmdrYncpIiBoZWlnaHQ9IjcxLjE4NzUiIHN0eWxlPSJzdHJva2U6ICMwMDAwMDA7IHN0cm9rZS13aWR0aDogMS41OyIgd2lkdGg9IjE2OCIgeD0iMjQ1IiB5PSIxMTgiLz48dGV4dCBmaWxsPSIjMDAwMDAwIiBmb250LWZhbWlseT0ic2Fucy1zZXJpZiIgZm9udC1zaXplPSIxNCIgbGVuZ3RoQWRqdXN0PSJzcGFjaW5nQW5kR2x5cGhzIiB0ZXh0TGVuZ3RoPSIxMjUiIHg9IjI1NSIgeT0iMTMzLjk5NTEiPkRpcmVjdCBCeXRlQnVmZmVyczwvdGV4dD48dGV4dCBmaWxsPSIjMDAwMDAwIiBmb250LWZhbWlseT0ic2Fucy1zZXJpZiIgZm9udC1zaXplPSIxNCIgbGVuZ3RoQWRqdXN0PSJzcGFjaW5nQW5kR2x5cGhzIiB0ZXh0TGVuZ3RoPSIxMjUiIHg9IjI1NSIgeT0iMTUwLjI5MiI+VW5zYWZlIGFsbG9jYXRpb25zPC90ZXh0Pjx0ZXh0IGZpbGw9IiMwMDAwMDAiIGZvbnQtZmFtaWx5PSJzYW5zLXNlcmlmIiBmb250LXNpemU9IjE0IiBsZW5ndGhBZGp1c3Q9InNwYWNpbmdBbmRHbHlwaHMiIHRleHRMZW5ndGg9IjE0OCIgeD0iMjU1IiB5PSIxNjYuNTg4OSI+TWVtb3J5LW1hcHBlZCBmaWxlczwvdGV4dD48dGV4dCBmaWxsPSIjMDAwMDAwIiBmb250LWZhbWlseT0ic2Fucy1zZXJpZiIgZm9udC1zaXplPSIxNCIgbGVuZ3RoQWRqdXN0PSJzcGFjaW5nQW5kR2x5cGhzIiB0ZXh0TGVuZ3RoPSI5OSIgeD0iMjU1IiB5PSIxODIuODg1NyI+Tm8gR0MgcGF1c2VzPC90ZXh0PjwhLS1NRDU9WzVlZjM5YTU0OTMxNDcyMmFiZTVhZmE5NzJlNTM2N2ZlXQplbnRpdHkganZtX2Rlc2MtLT48cmVjdCBmaWxsPSIjRkVGRUNFIiBmaWx0ZXI9InVybCgjZjFiandkNGV4YmdrYncpIiBoZWlnaHQ9IjU0Ljg5MDYiIHN0eWxlPSJzdHJva2U6ICMwMDAwMDA7IHN0cm9rZS13aWR0aDogMS41OyIgd2lkdGg9IjExOCIgeD0iNjIiIHk9IjEyNiIvPjx0ZXh0IGZpbGw9IiMwMDAwMDAiIGZvbnQtZmFtaWx5PSJzYW5zLXNlcmlmIiBmb250LXNpemU9IjE0IiBsZW5ndGhBZGp1c3Q9InNwYWNpbmdBbmRHbHlwaHMiIHRleHRMZW5ndGg9IjgzIiB4PSI3MiIgeT0iMTQxLjk5NTEiPkNvZGUgY2FjaGU8L3RleHQ+PHRleHQgZmlsbD0iIzAwMDAwMCIgZm9udC1mYW1pbHk9InNhbnMtc2VyaWYiIGZvbnQtc2l6ZT0iMTQiIGxlbmd0aEFkanVzdD0ic3BhY2luZ0FuZEdseXBocyIgdGV4dExlbmd0aD0iNzYiIHg9IjcyIiB5PSIxNTguMjkyIj5NZXRhc3BhY2U8L3RleHQ+PHRleHQgZmlsbD0iIzAwMDAwMCIgZm9udC1mYW1pbHk9InNhbnMtc2VyaWYiIGZvbnQtc2l6ZT0iMTQiIGxlbmd0aEFkanVzdD0ic3BhY2luZ0FuZEdseXBocyIgdGV4dExlbmd0aD0iOTgiIHg9IjcyIiB5PSIxNzQuNTg4OSI+VGhyZWFkIHN0YWNrczwvdGV4dD48IS0tTUQ1PVs2Y2EwZGE4YTViNGNmM2ViODIxNTNjMDQ4MTk1ZjlmZl0KQHN0YXJ0dW1sDQpza2lucGFyYW0gYmFja2dyb3VuZENvbG9yIHRyYW5zcGFyZW50DQoNCnJlY3RhbmdsZSAiUHJvY2VzcyBBZGRyZXNzIFNwYWNlIiB7DQogICAgcmVjdGFuZ2xlICJKVk0gSGVhcFxuKEdDLW1hbmFnZWQpIiBhcyBoZWFwICNGRkNDQ0Mgew0KICAgICAgICBjYXJkICJPYmplY3RzIGFsbG9jYXRlZCB2aWEgJ25ldydcblN1YmplY3QgdG8gR0MgcGF1c2VzXG5MaW1pdGVkIGJ5IC1YbXgiIGFzIGhlYXBfZGVzYw0KICAgIH0NCg0KICAgIHJlY3RhbmdsZSAiT2ZmLUhlYXAgLyBOYXRpdmUgTWVtb3J5XG4oTm90IEdDLW1hbmFnZWQpIiBhcyBvZmZoZWFwICNDQ0ZGQ0Mgew0KICAgICAgICBjYXJkICJEaXJlY3QgQnl0ZUJ1ZmZlcnNcblVuc2FmZSBhbGxvY2F0aW9uc1xuTWVtb3J5LW1hcHBlZCBmaWxlc1xuTm8gR0MgcGF1c2VzIiBhcyBvZmZoZWFwX2Rlc2MNCiAgICB9DQoNCiAgICByZWN0YW5nbGUgIkpWTSBJbnRlcm5hbHMiIGFzIGp2bSAjRkZGRkNDIHsNCiAgICAgICAgY2FyZCAiQ29kZSBjYWNoZVxuTWV0YXNwYWNlXG5UaHJlYWQgc3RhY2tzIiBhcyBqdm1fZGVzYw0KICAgIH0NCn0NCkBlbmR1bWwNCgpQbGFudFVNTCB2ZXJzaW9uIDEuMjAyMC4wMihTdW4gTWFyIDAxIDEwOjIyOjA3IEdNVCAyMDIwKQooR1BMIHNvdXJjZSBkaXN0cmlidXRpb24pCkphdmEgUnVudGltZTogT3BlbkpESyBSdW50aW1lIEVudmlyb25tZW50CkpWTTogT3BlbkpESyA2NC1CaXQgU2VydmVyIFZNCkphdmEgVmVyc2lvbjogMTcuMC4xNSs2LUxUUwpPcGVyYXRpbmcgU3lzdGVtOiBMaW51eApEZWZhdWx0IEVuY29kaW5nOiBVVEYtOApMYW5ndWFnZTogZW4KQ291bnRyeTogbnVsbAotLT48L2c+PC9zdmc+" class="uml" alt="uml diagram" title=""></a></p>
+<h3 id="how-java-accesses-off-heap-memory">How Java Accesses Off-Heap Memory<a class="headerlink" href="#how-java-accesses-off-heap-memory" title="Permanent link">¶</a></h3>
+<p>Java provides several mechanisms for allocating and accessing memory outside the heap:</p>
+<p><strong>1. Direct ByteBuffers (<code>ByteBuffer.allocateDirect()</code>)</strong></p>
+<p>The standard Java API for off-heap memory allocation. Direct buffers allocate memory outside the heap and are commonly used for I/O operations.</p>
+<div class="highlight"><pre><span></span><code><span class="c1">// Allocate 1MB of off-heap memory</span>
+<span class="n">ByteBuffer</span><span class="w"> </span><span class="n">buffer</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">ByteBuffer</span><span class="p">.</span><span class="na">allocateDirect</span><span class="p">(</span><span class="mi">1024</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="mi">1024</span><span class="p">);</span>
+
+<span class="c1">// Write data</span>
+<span class="n">buffer</span><span class="p">.</span><span class="na">putInt</span><span class="p">(</span><span class="mi">42</span><span class="p">);</span>
+<span class="n">buffer</span><span class="p">.</span><span class="na">putLong</span><span class="p">(</span><span class="n">System</span><span class="p">.</span><span class="na">currentTimeMillis</span><span class="p">());</span>
+
+<span class="c1">// Read data</span>
+<span class="n">buffer</span><span class="p">.</span><span class="na">flip</span><span class="p">();</span>
+<span class="kt">int</span><span class="w"> </span><span class="n">value</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">buffer</span><span class="p">.</span><span class="na">getInt</span><span class="p">();</span>
+</code></pre></div>
+<ul>
+<li>Memory is allocated via <code>malloc()</code> in native code</li>
+<li>Buffer object on heap tracks the native memory address</li>
+<li>Memory is freed when the ByteBuffer is garbage collected (via a <code>Cleaner</code>)</li>
+<li>Can also be explicitly freed in Java 9+ via <code>sun.misc.Unsafe</code> or the Foreign Memory API</li>
+</ul>
+<p><strong>2. <code>sun.misc.Unsafe</code> (Internal API)</strong></p>
+<p>Provides low-level, direct memory access with no bounds checking. Used by high-performance libraries including Cassandra.</p>
+<div class="highlight"><pre><span></span><code><span class="c1">// Cassandra uses Unsafe for direct memory operations</span>
+<span class="n">Unsafe</span><span class="w"> </span><span class="n">unsafe</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">getUnsafe</span><span class="p">();</span>
+
+<span class="c1">// Allocate native memory</span>
+<span class="kt">long</span><span class="w"> </span><span class="n">address</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">unsafe</span><span class="p">.</span><span class="na">allocateMemory</span><span class="p">(</span><span class="mi">1024</span><span class="p">);</span>
+
+<span class="c1">// Write directly to memory address</span>
+<span class="n">unsafe</span><span class="p">.</span><span class="na">putInt</span><span class="p">(</span><span class="n">address</span><span class="p">,</span><span class="w"> </span><span class="mi">42</span><span class="p">);</span>
+<span class="n">unsafe</span><span class="p">.</span><span class="na">putLong</span><span class="p">(</span><span class="n">address</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="mi">4</span><span class="p">,</span><span class="w"> </span><span class="n">System</span><span class="p">.</span><span class="na">currentTimeMillis</span><span class="p">());</span>
+
+<span class="c1">// Read from memory address</span>
+<span class="kt">int</span><span class="w"> </span><span class="n">value</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">unsafe</span><span class="p">.</span><span class="na">getInt</span><span class="p">(</span><span class="n">address</span><span class="p">);</span>
+
+<span class="c1">// Must explicitly free</span>
+<span class="n">unsafe</span><span class="p">.</span><span class="na">freeMemory</span><span class="p">(</span><span class="n">address</span><span class="p">);</span>
+</code></pre></div>
+<ul>
+<li>Fastest possible memory access (no bounds checking)</li>
+<li>Application must manage allocation and deallocation</li>
+<li>Memory leaks occur if <code>freeMemory()</code> is not called</li>
+<li>Being replaced by the Foreign Function &amp; Memory API in newer Java versions</li>
+</ul>
+<p><strong>3. Memory-Mapped Files (<code>MappedByteBuffer</code>)</strong></p>
+<p>Maps a file directly into the process address space. The OS handles paging data between disk and RAM.</p>
+<div class="highlight"><pre><span></span><code><span class="c1">// Map a file into memory</span>
+<span class="n">FileChannel</span><span class="w"> </span><span class="n">channel</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">FileChannel</span><span class="p">.</span><span class="na">open</span><span class="p">(</span><span class="n">path</span><span class="p">,</span><span class="w"> </span><span class="n">READ</span><span class="p">,</span><span class="w"> </span><span class="n">WRITE</span><span class="p">);</span>
+<span class="n">MappedByteBuffer</span><span class="w"> </span><span class="n">mapped</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">channel</span><span class="p">.</span><span class="na">map</span><span class="p">(</span><span class="n">MapMode</span><span class="p">.</span><span class="na">READ_WRITE</span><span class="p">,</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w"> </span><span class="n">fileSize</span><span class="p">);</span>
+
+<span class="c1">// Access file contents as memory</span>
+<span class="kt">int</span><span class="w"> </span><span class="n">value</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">mapped</span><span class="p">.</span><span class="na">getInt</span><span class="p">(</span><span class="n">offset</span><span class="p">);</span>
+</code></pre></div>
+<ul>
+<li>OS manages which portions are in RAM (page cache)</li>
+<li>Efficient for large files that don't fit in memory</li>
+<li>Used by Cassandra for SSTable access in some configurations</li>
+</ul>
+<h3 id="how-cassandra-uses-off-heap-memory">How Cassandra Uses Off-Heap Memory<a class="headerlink" href="#how-cassandra-uses-off-heap-memory" title="Permanent link">¶</a></h3>
+<p>Cassandra strategically places different data structures on or off the heap based on their characteristics:</p>
+<table>
+<thead>
+<tr>
+<th>Component</th>
+<th>Why Off-Heap?</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Bloom filters</strong></td>
+<td>Bloom filters are large (10 bits per partition key × number of SSTables), long-lived (exist for SSTable lifetime), and accessed on every read. On-heap, they would consume gigabytes and be scanned by every GC cycle.</td>
+</tr>
+<tr>
+<td><strong>Partition index (trie)</strong></td>
+<td>The trie-based partition index (4.0+) grows with partition count. A table with 100 million partitions could have a multi-gigabyte index. Off-heap placement prevents this from bloating GC pause times.</td>
+</tr>
+<tr>
+<td><strong>Compression metadata</strong></td>
+<td>Stores byte offsets for each compressed chunk in an SSTable. Grows proportionally to data size and SSTable count. Rarely changes once written.</td>
+</tr>
+<tr>
+<td><strong>Off-heap memtables</strong></td>
+<td>Memtables have high object churn—data is constantly written and then flushed. This churn creates GC pressure. Off-heap memtables keep write-path allocations out of the heap.</td>
+</tr>
+<tr>
+<td><strong>Chunk cache</strong></td>
+<td>Caches decompressed SSTable blocks. Can grow to multiple gigabytes for read-heavy workloads. Off-heap prevents cache growth from impacting GC.</td>
+</tr>
+<tr>
+<td><strong>Networking buffers</strong></td>
+<td>Direct ByteBuffers enable zero-copy I/O between the network stack and Cassandra. Data can be sent/received without copying through the heap.</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Why Not Put Everything Off-Heap?</strong></p>
+<p>Off-heap memory requires manual lifecycle management. Cassandra keeps some structures on-heap because:</p>
+<ul>
+<li><strong>Short-lived objects</strong>: Request-scoped objects that are quickly discarded benefit from generational GC, which efficiently handles short-lived allocations</li>
+<li><strong>Complex object graphs</strong>: Data structures with many internal references are difficult to serialize to flat memory regions</li>
+<li><strong>Debugging</strong>: Heap dumps capture on-heap objects; off-heap memory is invisible to standard Java profiling tools</li>
+</ul>
+<p><strong>Cassandra's Memory Allocators</strong></p>
+<p>Cassandra implements custom memory allocators to manage off-heap memory efficiently:</p>
+<ul>
+<li><strong><code>BufferPool</code></strong>: Manages pools of direct ByteBuffers for networking and chunk cache, avoiding allocation overhead</li>
+<li><strong><code>NativeAllocator</code></strong>: Uses <code>Unsafe</code> for bloom filters and index structures with explicit lifecycle management</li>
+<li><strong>Slab allocation</strong>: Reduces fragmentation by allocating fixed-size chunks rather than variable-sized blocks</li>
+</ul>
+<h3 id="off-heap-trade-offs">Off-Heap Trade-offs<a class="headerlink" href="#off-heap-trade-offs" title="Permanent link">¶</a></h3>
+<table>
+<thead>
+<tr>
+<th>Advantage</th>
+<th>Disadvantage</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>No GC pauses</td>
+<td>Manual memory management required</td>
+</tr>
+<tr>
+<td>Can exceed heap size limits</td>
+<td>Memory leaks if not freed properly</td>
+</tr>
+<tr>
+<td>Better cache locality for large structures</td>
+<td>Slightly slower allocation than heap</td>
+</tr>
+<tr>
+<td>Reduced heap pressure</td>
+<td>Harder to debug (not visible in heap dumps)</td>
+</tr>
+<tr>
+<td>Enables larger working sets</td>
+<td>Must account for in capacity planning</td>
+</tr>
+</tbody>
+</table>
+<h3 id="monitoring-off-heap-usage">Monitoring Off-Heap Usage<a class="headerlink" href="#monitoring-off-heap-usage" title="Permanent link">¶</a></h3>
+<div class="highlight"><pre><span></span><code><span class="c1"># Total off-heap memory used by Cassandra</span>
+nodetool<span class="w"> </span>info<span class="w"> </span><span class="p">|</span><span class="w"> </span>grep<span class="w"> </span><span class="s2">"Off Heap"</span>
+
+<span class="c1"># Native memory tracking (JVM flag required)</span>
+<span class="c1"># Add to jvm-server.options: -XX:NativeMemoryTracking=summary</span>
+jcmd<span class="w"> </span>&lt;pid&gt;<span class="w"> </span>VM.native_memory<span class="w"> </span>summary
+</code></pre></div>
+<h3 id="off-heap-components-in-detail">Off-Heap Components in Detail<a class="headerlink" href="#off-heap-components-in-detail" title="Permanent link">¶</a></h3>
 <table>
 <thead>
 <tr>
@@ -14256,42 +14614,44 @@ data-et-multi-view="{&quot;schema&quot;:{&quot;content&quot;:{&quot;desktop&quot
 <p>Moving memtables off-heap reduces GC pressure significantly for write-heavy workloads.</p>
 <div class="highlight"><pre><span></span><code><span class="c1"># cassandra.yaml</span>
 
-<span class="c1"># Off-heap memtable allocation</span>
-<span class="nt">memtable_allocation_type</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">offheap_buffers</span>
+<span class="c1"># Off-heap memtable allocation (choose based on workload)</span>
+<span class="c1"># memtable_allocation_type: offheap_objects  # Write-heavy: lowest GC</span>
+<span class="c1"># memtable_allocation_type: offheap_buffers  # Read-heavy: minimal read impact</span>
+<span class="nt">memtable_allocation_type</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">offheap_objects</span>
 </code></pre></div>
 <table>
 <thead>
 <tr>
 <th>Type</th>
-<th>Heap Usage</th>
-<th>Off-Heap Usage</th>
-<th>GC Impact</th>
+<th>Description</th>
+<th>Best For</th>
 </tr>
 </thead>
 <tbody>
 <tr>
 <td><code>heap_buffers</code></td>
-<td>High</td>
-<td>None</td>
-<td>High</td>
-</tr>
-<tr>
-<td><code>offheap_objects</code></td>
-<td>Medium</td>
-<td>High</td>
-<td>Medium</td>
+<td>All memtable data on heap (default)</td>
+<td>Low-memory environments, simple deployments</td>
 </tr>
 <tr>
 <td><code>offheap_buffers</code></td>
-<td>Low</td>
-<td>High</td>
-<td>Low</td>
+<td>Cell names/values in DirectBuffers, metadata on heap</td>
+<td>Read-heavy workloads, large cell values (blobs, long strings)</td>
+</tr>
+<tr>
+<td><code>offheap_objects</code></td>
+<td>Entire cells off-heap, only pointers on heap</td>
+<td>Write-heavy workloads, small cell values (ints, UUIDs), lowest GC pressure</td>
 </tr>
 </tbody>
 </table>
 <div class="admonition tip">
-<p class="admonition-title">Recommended Setting</p>
-<p>Use <code>offheap_buffers</code> for production deployments with high write throughput.</p>
+<p class="admonition-title">Choosing a Memtable Allocation Type</p>
+<ul>
+<li><strong><code>offheap_objects</code></strong>: Recommended for write-heavy workloads. Provides lowest GC pressure but adds slight read overhead (data copied back to heap when read). Requires JNA library.</li>
+<li><strong><code>offheap_buffers</code></strong>: Recommended for read-heavy workloads with large values. Minimal read impact but less GC reduction than <code>offheap_objects</code>.</li>
+<li><strong><code>heap_buffers</code></strong>: Default. Use when off-heap complexity is not justified or JNA is unavailable.</li>
+</ul>
 </div>
 <h3 id="chunk-cache">Chunk Cache<a class="headerlink" href="#chunk-cache" title="Permanent link">¶</a></h3>
 <p>The chunk cache stores decompressed SSTable chunks, reducing CPU overhead for repeated reads.</p>
@@ -14435,16 +14795,17 @@ Example:
 <h3 id="workload-specific-settings">Workload-Specific Settings<a class="headerlink" href="#workload-specific-settings" title="Permanent link">¶</a></h3>
 <p><strong>Write-Heavy:</strong></p>
 <div class="highlight"><pre><span></span><code><span class="nt">memtable_heap_space_in_mb</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">4096</span>
-<span class="nt">memtable_allocation_type</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">offheap_buffers</span>
+<span class="nt">memtable_allocation_type</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">offheap_objects</span><span class="w">  </span><span class="c1"># Lowest GC pressure for high write rates</span>
 <span class="nt">memtable_flush_writers</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">4</span>
 </code></pre></div>
 <p><strong>Read-Heavy:</strong></p>
-<div class="highlight"><pre><span></span><code><span class="nt">key_cache_size_in_mb</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">200</span>
+<div class="highlight"><pre><span></span><code><span class="nt">memtable_allocation_type</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">offheap_buffers</span><span class="w">  </span><span class="c1"># Minimal read overhead</span>
+<span class="nt">key_cache_size_in_mb</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">200</span>
 <span class="c1"># Ensure sufficient page cache for working set</span>
 </code></pre></div>
 <p><strong>Mixed:</strong></p>
 <div class="highlight"><pre><span></span><code><span class="nt">memtable_heap_space_in_mb</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">2048</span>
-<span class="nt">memtable_allocation_type</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">offheap_buffers</span>
+<span class="nt">memtable_allocation_type</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">offheap_objects</span>
 <span class="nt">key_cache_size_in_mb</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">100</span>
 </code></pre></div>
 <hr>

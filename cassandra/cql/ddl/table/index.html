@@ -6847,6 +6847,27 @@ data-et-multi-view="{&quot;schema&quot;:{&quot;content&quot;:{&quot;desktop&quot
   
   
     <li class="md-nav__item">
+      <a href="../trigger/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Trigger
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
       <a href="../type/" class="md-nav__link">
         
   
@@ -7170,7 +7191,7 @@ data-et-multi-view="{&quot;schema&quot;:{&quot;content&quot;:{&quot;desktop&quot
             
   
   <span class="md-ellipsis">
-    Security Commands
+    Security
   </span>
   
 
@@ -7180,7 +7201,7 @@ data-et-multi-view="{&quot;schema&quot;:{&quot;content&quot;:{&quot;desktop&quot
         <nav class="md-nav" data-md-level="5" aria-labelledby="__nav_7_2_4_3_5_label" aria-expanded="false">
           <label class="md-nav__title" for="__nav_7_2_4_3_5">
             <span class="md-nav__icon md-icon"></span>
-            Security Commands
+            Security
           </label>
           <ul class="md-nav__list" data-md-scrollfix>
             
@@ -7196,6 +7217,27 @@ data-et-multi-view="{&quot;schema&quot;:{&quot;content&quot;:{&quot;desktop&quot
   
   <span class="md-ellipsis">
     Overview
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../security/rbac/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Role-Based Access Control
   </span>
   
 
@@ -13193,6 +13235,27 @@ data-et-multi-view="{&quot;schema&quot;:{&quot;content&quot;:{&quot;desktop&quot
   
   
   
+    <li class="md-nav__item">
+      <a href="../../../security/os-security/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    OS Security
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
     
     
     
@@ -13204,10 +13267,10 @@ data-et-multi-view="{&quot;schema&quot;:{&quot;content&quot;:{&quot;desktop&quot
       
         
         
-        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_7_2_6_7" >
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_7_2_6_8" >
         
           
-          <label class="md-nav__link" for="__nav_7_2_6_7" id="__nav_7_2_6_7_label" tabindex="0">
+          <label class="md-nav__link" for="__nav_7_2_6_8" id="__nav_7_2_6_8_label" tabindex="0">
             
   
   <span class="md-ellipsis">
@@ -13218,8 +13281,8 @@ data-et-multi-view="{&quot;schema&quot;:{&quot;content&quot;:{&quot;desktop&quot
             <span class="md-nav__icon md-icon"></span>
           </label>
         
-        <nav class="md-nav" data-md-level="4" aria-labelledby="__nav_7_2_6_7_label" aria-expanded="false">
-          <label class="md-nav__title" for="__nav_7_2_6_7">
+        <nav class="md-nav" data-md-level="4" aria-labelledby="__nav_7_2_6_8_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_7_2_6_8">
             <span class="md-nav__icon md-icon"></span>
             Encryption
           </label>
@@ -14912,7 +14975,60 @@ data-et-multi-view="{&quot;schema&quot;:{&quot;content&quot;:{&quot;desktop&quot
 </div>
 <h3 id="storage-model">Storage Model<a class="headerlink" href="#storage-model" title="Permanent link">¶</a></h3>
 <p>Cassandra stores data in a <strong>partition-oriented</strong> structure optimized for distributed access:</p>
-<p><span class="graphviz-light-dark" data-library-default="#789abc" data-default="#789abc" data-light="#000000" data-dark="#ffffff"></span><svg width="294pt" height="399pt" viewbox="0.00 0.00 294.00 399.00" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" class="graphviz dot"><g id="graph0" class="graph" transform="scale(1 1) rotate(0) translate(4 395)"><title>table_structure</title><polygon fill="transparent" stroke="transparent" points="-4,4 -4,-395 290,-395 290,4 -4,4"></polygon><text text-anchor="middle" x="143" y="-375.8" font-family="Helvetica Bold" font-size="14.00" fill="#789abc">Table: user_events</text><!-- partition_alice --><g id="node1" class="node"><title>partition_alice</title><polygon fill="#f8f9fa" stroke="transparent" points="18,-212 18,-364 268,-364 268,-212 18,-212"></polygon><polygon fill="#e3f2fd" stroke="transparent" points="19,-333 19,-363 267,-363 267,-333 19,-333"></polygon><polygon fill="none" stroke="#789abc" points="19,-333 19,-363 267,-363 267,-333 19,-333"></polygon><text text-anchor="start" x="64.5" y="-346.2" font-family="Helvetica,sans-Serif" font-weight="bold" font-size="11.00" fill="#789abc">Partition: user_id = 'alice'</text><polygon fill="#f5f5f5" stroke="transparent" points="19,-303 19,-333 134,-333 134,-303 19,-303"></polygon><polygon fill="none" stroke="#789abc" points="19,-303 19,-333 134,-333 134,-303 19,-303"></polygon><text text-anchor="start" x="42" y="-316.2" font-family="Helvetica,sans-Serif" font-weight="bold" font-size="11.00" fill="#789abc">event_time</text><polygon fill="#f5f5f5" stroke="transparent" points="134,-303 134,-333 221,-333 221,-303 134,-303"></polygon><polygon fill="none" stroke="#789abc" points="134,-303 134,-333 221,-333 221,-303 134,-303"></polygon><text text-anchor="start" x="143" y="-316.2" font-family="Helvetica,sans-Serif" font-weight="bold" font-size="11.00" fill="#789abc">event_type</text><polygon fill="#f5f5f5" stroke="transparent" points="221,-303 221,-333 267,-333 267,-303 221,-303"></polygon><polygon fill="none" stroke="#789abc" points="221,-303 221,-333 267,-333 267,-303 221,-303"></polygon><text text-anchor="start" x="230" y="-316.2" font-family="Helvetica,sans-Serif" font-weight="bold" font-size="11.00" fill="#789abc">data</text><polygon fill="none" stroke="#789abc" points="19,-273 19,-303 134,-303 134,-273 19,-273"></polygon><text text-anchor="start" x="28" y="-285.2" font-family="Helvetica,sans-Serif" font-size="11.00" fill="#789abc">2024-01-01 10:00</text><polygon fill="none" stroke="#789abc" points="134,-273 134,-303 221,-303 221,-273 134,-273"></polygon><text text-anchor="start" x="164" y="-285.2" font-family="Helvetica,sans-Serif" font-size="11.00" fill="#789abc">login</text><polygon fill="none" stroke="#789abc" points="221,-273 221,-303 267,-303 267,-273 221,-273"></polygon><text text-anchor="start" x="238" y="-285.2" font-family="Helvetica,sans-Serif" font-size="11.00" fill="#789abc">...</text><polygon fill="none" stroke="#789abc" points="19,-243 19,-273 134,-273 134,-243 19,-243"></polygon><text text-anchor="start" x="28" y="-255.2" font-family="Helvetica,sans-Serif" font-size="11.00" fill="#789abc">2024-01-01 10:05</text><polygon fill="none" stroke="#789abc" points="134,-243 134,-273 221,-273 221,-243 134,-243"></polygon><text text-anchor="start" x="165" y="-255.2" font-family="Helvetica,sans-Serif" font-size="11.00" fill="#789abc">click</text><polygon fill="none" stroke="#789abc" points="221,-243 221,-273 267,-273 267,-243 221,-243"></polygon><text text-anchor="start" x="238" y="-255.2" font-family="Helvetica,sans-Serif" font-size="11.00" fill="#789abc">...</text><polygon fill="none" stroke="#789abc" points="19,-213 19,-243 134,-243 134,-213 19,-213"></polygon><text text-anchor="start" x="28" y="-225.2" font-family="Helvetica,sans-Serif" font-size="11.00" fill="#789abc">2024-01-01 10:10</text><polygon fill="none" stroke="#789abc" points="134,-213 134,-243 221,-243 221,-213 134,-213"></polygon><text text-anchor="start" x="160" y="-225.2" font-family="Helvetica,sans-Serif" font-size="11.00" fill="#789abc">logout</text><polygon fill="none" stroke="#789abc" points="221,-213 221,-243 267,-243 267,-213 221,-213"></polygon><text text-anchor="start" x="238" y="-225.2" font-family="Helvetica,sans-Serif" font-size="11.00" fill="#789abc">...</text><polygon fill="none" stroke="#789abc" points="18,-212 18,-364 268,-364 268,-212 18,-212"></polygon></g><!-- partition_bob --><g id="node2" class="node"><title>partition_bob</title><polygon fill="#f8f9fa" stroke="transparent" points="18,-76 18,-168 268,-168 268,-76 18,-76"></polygon><polygon fill="#e3f2fd" stroke="transparent" points="19,-137 19,-167 267,-167 267,-137 19,-137"></polygon><polygon fill="none" stroke="#789abc" points="19,-137 19,-167 267,-167 267,-137 19,-137"></polygon><text text-anchor="start" x="67.5" y="-150.2" font-family="Helvetica,sans-Serif" font-weight="bold" font-size="11.00" fill="#789abc">Partition: user_id = 'bob'</text><polygon fill="#f5f5f5" stroke="transparent" points="19,-107 19,-137 134,-137 134,-107 19,-107"></polygon><polygon fill="none" stroke="#789abc" points="19,-107 19,-137 134,-137 134,-107 19,-107"></polygon><text text-anchor="start" x="42" y="-120.2" font-family="Helvetica,sans-Serif" font-weight="bold" font-size="11.00" fill="#789abc">event_time</text><polygon fill="#f5f5f5" stroke="transparent" points="134,-107 134,-137 221,-137 221,-107 134,-107"></polygon><polygon fill="none" stroke="#789abc" points="134,-107 134,-137 221,-137 221,-107 134,-107"></polygon><text text-anchor="start" x="143" y="-120.2" font-family="Helvetica,sans-Serif" font-weight="bold" font-size="11.00" fill="#789abc">event_type</text><polygon fill="#f5f5f5" stroke="transparent" points="221,-107 221,-137 267,-137 267,-107 221,-107"></polygon><polygon fill="none" stroke="#789abc" points="221,-107 221,-137 267,-137 267,-107 221,-107"></polygon><text text-anchor="start" x="230" y="-120.2" font-family="Helvetica,sans-Serif" font-weight="bold" font-size="11.00" fill="#789abc">data</text><polygon fill="none" stroke="#789abc" points="19,-77 19,-107 134,-107 134,-77 19,-77"></polygon><text text-anchor="start" x="28" y="-89.2" font-family="Helvetica,sans-Serif" font-size="11.00" fill="#789abc">2024-01-01 09:00</text><polygon fill="none" stroke="#789abc" points="134,-77 134,-107 221,-107 221,-77 134,-77"></polygon><text text-anchor="start" x="164" y="-89.2" font-family="Helvetica,sans-Serif" font-size="11.00" fill="#789abc">login</text><polygon fill="none" stroke="#789abc" points="221,-77 221,-107 267,-107 267,-77 221,-77"></polygon><text text-anchor="start" x="238" y="-89.2" font-family="Helvetica,sans-Serif" font-size="11.00" fill="#789abc">...</text><polygon fill="none" stroke="#789abc" points="18,-76 18,-168 268,-168 268,-76 18,-76"></polygon></g><!-- partition_alice&#45;&gt;partition_bob --><!-- note --><g id="node3" class="node"><title>note</title><text text-anchor="start" x="12" y="-16.2" font-family="Helvetica,sans-Serif" font-style="italic" font-size="11.00" fill="#666666">Rows sorted by clustering column (event_time)</text></g><!-- partition_bob&#45;&gt;note --></g></svg></p>
+<p><strong>Table: user_events</strong></p>
+<table>
+<thead>
+<tr>
+<th>Partition: user_id = 'alice'</th>
+<th></th>
+<th></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>event_time</strong> (clustering)</td>
+<td><strong>event_type</strong></td>
+<td><strong>data</strong></td>
+</tr>
+<tr>
+<td>2024-01-01 10:00</td>
+<td>login</td>
+<td>...</td>
+</tr>
+<tr>
+<td>2024-01-01 10:05</td>
+<td>click</td>
+<td>...</td>
+</tr>
+<tr>
+<td>2024-01-01 10:10</td>
+<td>logout</td>
+<td>...</td>
+</tr>
+</tbody>
+</table>
+<table>
+<thead>
+<tr>
+<th>Partition: user_id = 'bob'</th>
+<th></th>
+<th></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>event_time</strong> (clustering)</td>
+<td><strong>event_type</strong></td>
+<td><strong>data</strong></td>
+</tr>
+<tr>
+<td>2024-01-01 09:00</td>
+<td>login</td>
+<td>...</td>
+</tr>
+</tbody>
+</table>
+<p><em>Rows within each partition are sorted by clustering column (event_time)</em></p>
 <p><strong>Partitions</strong> are the fundamental unit of data distribution:</p>
 <ul>
 <li>Each partition is identified by a <strong>partition key</strong> (hashed to determine node placement)</li>

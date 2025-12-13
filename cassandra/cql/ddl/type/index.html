@@ -13,7 +13,7 @@
         <link rel="canonical" href="https://docs.axonops.com/cassandra/cql/ddl/type/">
       
       
-        <link rel="prev" href="../materialized-view/">
+        <link rel="prev" href="../trigger/">
       
       
         <link rel="next" href="../function/">
@@ -6162,6 +6162,27 @@ data-et-multi-view="{&quot;schema&quot;:{&quot;content&quot;:{&quot;desktop&quot
                 
   
   
+  
+  
+    <li class="md-nav__item">
+      <a href="../trigger/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Trigger
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
     
   
   
@@ -7113,7 +7134,7 @@ data-et-multi-view="{&quot;schema&quot;:{&quot;content&quot;:{&quot;desktop&quot
             
   
   <span class="md-ellipsis">
-    Security Commands
+    Security
   </span>
   
 
@@ -7123,7 +7144,7 @@ data-et-multi-view="{&quot;schema&quot;:{&quot;content&quot;:{&quot;desktop&quot
         <nav class="md-nav" data-md-level="5" aria-labelledby="__nav_7_2_4_3_5_label" aria-expanded="false">
           <label class="md-nav__title" for="__nav_7_2_4_3_5">
             <span class="md-nav__icon md-icon"></span>
-            Security Commands
+            Security
           </label>
           <ul class="md-nav__list" data-md-scrollfix>
             
@@ -7139,6 +7160,27 @@ data-et-multi-view="{&quot;schema&quot;:{&quot;content&quot;:{&quot;desktop&quot
   
   <span class="md-ellipsis">
     Overview
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../security/rbac/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Role-Based Access Control
   </span>
   
 
@@ -13136,6 +13178,27 @@ data-et-multi-view="{&quot;schema&quot;:{&quot;content&quot;:{&quot;desktop&quot
   
   
   
+    <li class="md-nav__item">
+      <a href="../../../security/os-security/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    OS Security
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
     
     
     
@@ -13147,10 +13210,10 @@ data-et-multi-view="{&quot;schema&quot;:{&quot;content&quot;:{&quot;desktop&quot
       
         
         
-        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_7_2_6_7" >
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_7_2_6_8" >
         
           
-          <label class="md-nav__link" for="__nav_7_2_6_7" id="__nav_7_2_6_7_label" tabindex="0">
+          <label class="md-nav__link" for="__nav_7_2_6_8" id="__nav_7_2_6_8_label" tabindex="0">
             
   
   <span class="md-ellipsis">
@@ -13161,8 +13224,8 @@ data-et-multi-view="{&quot;schema&quot;:{&quot;content&quot;:{&quot;desktop&quot
             <span class="md-nav__icon md-icon"></span>
           </label>
         
-        <nav class="md-nav" data-md-level="4" aria-labelledby="__nav_7_2_6_7_label" aria-expanded="false">
-          <label class="md-nav__title" for="__nav_7_2_6_7">
+        <nav class="md-nav" data-md-level="4" aria-labelledby="__nav_7_2_6_8_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_7_2_6_8">
             <span class="md-nav__icon md-icon"></span>
             Encryption
           </label>
@@ -14840,7 +14903,27 @@ data-et-multi-view="{&quot;schema&quot;:{&quot;content&quot;:{&quot;desktop&quot
 <h2 id="udt-architecture">UDT Architecture<a class="headerlink" href="#udt-architecture" title="Permanent link">¶</a></h2>
 <h3 id="storage-model">Storage Model<a class="headerlink" href="#storage-model" title="Permanent link">¶</a></h3>
 <p>UDTs can be stored in two ways depending on whether they are frozen:</p>
-<p><span class="graphviz-light-dark" data-library-default="#789abc" data-default="#789abc" data-light="#000000" data-dark="#ffffff"></span><svg width="430pt" height="265pt" viewbox="0.00 0.00 430.00 265.00" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" class="graphviz dot"><g id="graph0" class="graph" transform="scale(1 1) rotate(0) translate(4 261)"><title>udt_storage</title><polygon fill="transparent" stroke="transparent" points="-4,4 -4,-261 426,-261 426,4 -4,4"></polygon><text text-anchor="middle" x="211" y="-241.8" font-family="Helvetica Bold" font-size="14.00" fill="#789abc">UDT Storage: Frozen vs Non-Frozen</text><g id="clust1" class="cluster"><title>cluster_frozen</title><path fill="#e3f2fd" stroke="#789abc" d="M60,-125C60,-125 362,-125 362,-125 368,-125 374,-131 374,-137 374,-137 374,-214 374,-214 374,-220 368,-226 362,-226 362,-226 60,-226 60,-226 54,-226 48,-220 48,-214 48,-214 48,-137 48,-137 48,-131 54,-125 60,-125"></path><text text-anchor="middle" x="118" y="-210.8" font-family="Helvetica Bold" font-size="14.00" fill="#789abc">FROZEN&lt;address&gt;</text></g><g id="clust2" class="cluster"><title>cluster_nonfrozen</title><path fill="#fff3e0" stroke="#789abc" d="M20,-8C20,-8 402,-8 402,-8 408,-8 414,-14 414,-20 414,-20 414,-105 414,-105 414,-111 408,-117 402,-117 402,-117 20,-117 20,-117 14,-117 8,-111 8,-105 8,-105 8,-20 8,-20 8,-14 14,-8 20,-8"></path><text text-anchor="middle" x="82" y="-101.8" font-family="Helvetica Bold" font-size="14.00" fill="#789abc">Non-Frozen address</text></g><!-- frozen --><g id="node1" class="node"><title>frozen</title><polygon fill="white" stroke="transparent" points="64,-137 64,-191 358,-191 358,-137 64,-137"></polygon><polygon fill="#bbdefb" stroke="transparent" points="65,-164 65,-190 357,-190 357,-164 65,-164"></polygon><polygon fill="none" stroke="#789abc" points="65,-164 65,-190 357,-190 357,-164 65,-164"></polygon><text text-anchor="start" x="143.5" y="-175.2" font-family="Helvetica,sans-Serif" font-weight="bold" font-size="11.00" fill="#789abc">Single Serialized Blob</text><polygon fill="none" stroke="#789abc" points="65,-138 65,-164 134,-164 134,-138 65,-138"></polygon><text text-anchor="start" x="72" y="-148.2" font-family="Helvetica,sans-Serif" font-size="11.00" fill="#789abc">street_len</text><polygon fill="none" stroke="#789abc" points="134,-138 134,-164 218,-164 218,-138 134,-138"></polygon><text text-anchor="start" x="141" y="-148.2" font-family="Helvetica,sans-Serif" font-size="11.00" fill="#789abc">street_bytes</text><polygon fill="none" stroke="#789abc" points="218,-138 218,-164 275,-164 275,-138 218,-138"></polygon><text text-anchor="start" x="225" y="-148.2" font-family="Helvetica,sans-Serif" font-size="11.00" fill="#789abc">city_len</text><polygon fill="none" stroke="#789abc" points="275,-138 275,-164 357,-164 357,-138 275,-138"></polygon><text text-anchor="start" x="282" y="-148.2" font-family="Helvetica,sans-Serif" font-size="11.00" fill="#789abc">city_bytes...</text><polygon fill="none" stroke="#789abc" points="64,-137 64,-191 358,-191 358,-137 64,-137"></polygon></g><!-- nonfrozen --><g id="node2" class="node"><title>nonfrozen</title><polygon fill="white" stroke="transparent" points="24.5,-20 24.5,-82 397.5,-82 397.5,-20 24.5,-20"></polygon><polygon fill="#ffe0b2" stroke="transparent" points="26,-55 26,-81 397,-81 397,-55 26,-55"></polygon><polygon fill="none" stroke="#789abc" points="26,-55 26,-81 397,-81 397,-55 26,-55"></polygon><text text-anchor="start" x="137" y="-66.2" font-family="Helvetica,sans-Serif" font-weight="bold" font-size="11.00" fill="#789abc">Separate Cells Per Field</text><polygon fill="none" stroke="#789abc" points="26,-21 26,-55 121,-55 121,-21 26,-21"></polygon><text text-anchor="start" x="33" y="-40.2" font-family="Helvetica,sans-Serif" font-size="11.00" fill="#789abc">address.street</text><text text-anchor="start" x="34.5" y="-30.8" font-family="Helvetica,sans-Serif" font-size="9.00" fill="#789abc">cell + timestamp</text><polygon fill="none" stroke="#789abc" points="121,-21 121,-55 213,-55 213,-21 121,-21"></polygon><text text-anchor="start" x="133" y="-40.2" font-family="Helvetica,sans-Serif" font-size="11.00" fill="#789abc">address.city</text><text text-anchor="start" x="128" y="-30.8" font-family="Helvetica,sans-Serif" font-size="9.00" fill="#789abc">cell + timestamp</text><polygon fill="none" stroke="#789abc" points="213,-21 213,-55 305,-55 305,-21 213,-21"></polygon><text text-anchor="start" x="221" y="-40.2" font-family="Helvetica,sans-Serif" font-size="11.00" fill="#789abc">address.state</text><text text-anchor="start" x="220" y="-30.8" font-family="Helvetica,sans-Serif" font-size="9.00" fill="#789abc">cell + timestamp</text><polygon fill="none" stroke="#789abc" points="305,-21 305,-55 397,-55 397,-21 305,-21"></polygon><text text-anchor="start" x="319" y="-40.2" font-family="Helvetica,sans-Serif" font-size="11.00" fill="#789abc">address.zip</text><text text-anchor="start" x="312" y="-30.8" font-family="Helvetica,sans-Serif" font-size="9.00" fill="#789abc">cell + timestamp</text><polygon fill="none" stroke="#789abc" points="24.5,-20 24.5,-82 397.5,-82 397.5,-20 24.5,-20"></polygon></g><!-- frozen&#45;&gt;nonfrozen --></g></svg></p>
+<table>
+<thead>
+<tr>
+<th>Storage Type</th>
+<th>Structure</th>
+<th>Timestamps</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>FROZEN</strong></td>
+<td>Single serialized blob: <code>[street_len][street_bytes][city_len][city_bytes]...</code></td>
+<td>One timestamp for entire UDT</td>
+</tr>
+<tr>
+<td><strong>Non-Frozen</strong></td>
+<td>Separate cell per field: <code>address.street</code>, <code>address.city</code>, <code>address.state</code>, <code>address.zip</code></td>
+<td>Each field has independent timestamp</td>
+</tr>
+</tbody>
+</table>
 <h3 id="why-frozen-exists">Why FROZEN Exists<a class="headerlink" href="#why-frozen-exists" title="Permanent link">¶</a></h3>
 <p>The <code>FROZEN</code> modifier was introduced to solve a fundamental problem: <strong>how to store complex types in a distributed database with cell-level conflict resolution</strong>.</p>
 <p><strong>The Problem:</strong></p>
@@ -14858,7 +14941,33 @@ data-et-multi-view="{&quot;schema&quot;:{&quot;content&quot;:{&quot;desktop&quot
 <li>Can be used in primary keys and indexes</li>
 <li>Simpler conflict resolution (last write wins for entire UDT)</li>
 </ul>
-<p><span class="graphviz-light-dark" data-library-default="#789abc" data-default="#789abc" data-light="#000000" data-dark="#ffffff"></span><svg width="440pt" height="329pt" viewbox="0.00 0.00 440.00 329.00" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" class="graphviz dot"><g id="graph0" class="graph" transform="scale(1 1) rotate(0) translate(4 325)"><title>frozen_comparison</title><polygon fill="transparent" stroke="transparent" points="-4,4 -4,-325 436,-325 436,4 -4,4"></polygon><g id="clust1" class="cluster"><title>cluster_updates</title><polygon fill="transparent" stroke="#789abc" points="8,-8 8,-313 424,-313 424,-8 8,-8"></polygon><text text-anchor="middle" x="216" y="-297.8" font-family="Helvetica Bold" font-size="14.00" fill="#789abc">Concurrent Updates Example</text></g><g id="clust2" class="cluster"><title>cluster_nonfrozen_update</title><path fill="#fff3e0" stroke="#789abc" d="M28,-153C28,-153 390,-153 390,-153 396,-153 402,-159 402,-165 402,-165 402,-270 402,-270 402,-276 396,-282 390,-282 390,-282 28,-282 28,-282 22,-282 16,-276 16,-270 16,-270 16,-165 16,-165 16,-159 22,-153 28,-153"></path><text text-anchor="middle" x="209" y="-266.8" font-family="Helvetica Bold" font-size="14.00" fill="#789abc">Non-Frozen</text></g><g id="clust3" class="cluster"><title>cluster_frozen_update</title><path fill="#e3f2fd" stroke="#789abc" d="M28,-16C28,-16 404,-16 404,-16 410,-16 416,-22 416,-28 416,-28 416,-133 416,-133 416,-139 410,-145 404,-145 404,-145 28,-145 28,-145 22,-145 16,-139 16,-133 16,-133 16,-28 16,-28 16,-22 22,-16 28,-16"></path><text text-anchor="middle" x="216" y="-129.8" font-family="Helvetica Bold" font-size="14.00" fill="#789abc">Frozen</text></g><!-- nf_before --><g id="node1" class="node"><title>nf_before</title><polygon fill="none" stroke="#789abc" points="90,-219.5 24,-219.5 24,-178.5 90,-178.5 90,-219.5"></polygon><text text-anchor="middle" x="57" y="-207.5" font-family="Helvetica,sans-Serif" font-size="10.00" fill="#789abc">address:</text><text text-anchor="middle" x="57" y="-196.5" font-family="Helvetica,sans-Serif" font-size="10.00" fill="#789abc">street='A'</text><text text-anchor="middle" x="57" y="-185.5" font-family="Helvetica,sans-Serif" font-size="10.00" fill="#789abc">city='X'</text></g><!-- nf_update1 --><g id="node2" class="node"><title>nf_update1</title><polygon fill="#c8e6c9" stroke="#789abc" points="248.5,-197 182.5,-197 182.5,-161 248.5,-161 248.5,-197"></polygon><text text-anchor="middle" x="215.5" y="-182" font-family="Helvetica,sans-Serif" font-size="10.00" fill="#789abc">Update 1:</text><text text-anchor="middle" x="215.5" y="-171" font-family="Helvetica,sans-Serif" font-size="10.00" fill="#789abc">street='B'</text></g><!-- nf_before&#45;&gt;nf_update1 --><g id="edge1" class="edge"><title>nf_before-&gt;nf_update1</title><path fill="none" stroke="#789abc" d="M90.26,-194.4C96.16,-193.58 102.26,-192.75 108,-192 129.13,-189.23 152.65,-186.34 172.21,-183.99"></path><polygon fill="#789abc" stroke="#789abc" points="172.81,-187.44 182.32,-182.78 171.98,-180.49 172.81,-187.44"></polygon><text text-anchor="middle" x="122" y="-195.8" font-family="Times,serif" font-size="14.00" fill="#789abc">t=1</text></g><!-- nf_update2 --><g id="node3" class="node"><title>nf_update2</title><polygon fill="#c8e6c9" stroke="#789abc" points="247.5,-251 183.5,-251 183.5,-215 247.5,-215 247.5,-251"></polygon><text text-anchor="middle" x="215.5" y="-236" font-family="Helvetica,sans-Serif" font-size="10.00" fill="#789abc">Update 2:</text><text text-anchor="middle" x="215.5" y="-225" font-family="Helvetica,sans-Serif" font-size="10.00" fill="#789abc">city='Y'</text></g><!-- nf_before&#45;&gt;nf_update2 --><g id="edge2" class="edge"><title>nf_before-&gt;nf_update2</title><path fill="none" stroke="#789abc" d="M90.05,-205.96C114.13,-211.19 147.3,-218.4 173.34,-224.06"></path><polygon fill="#789abc" stroke="#789abc" points="172.78,-227.52 183.3,-226.22 174.27,-220.68 172.78,-227.52"></polygon><text text-anchor="middle" x="122" y="-217.8" font-family="Times,serif" font-size="14.00" fill="#789abc">t=2</text></g><!-- nf_result --><g id="node4" class="node"><title>nf_result</title><polygon fill="#a5d6a7" stroke="#789abc" points="394,-227.5 328,-227.5 328,-186.5 394,-186.5 394,-227.5"></polygon><text text-anchor="middle" x="361" y="-215.5" font-family="Helvetica,sans-Serif" font-size="10.00" fill="#789abc">Result:</text><text text-anchor="middle" x="361" y="-204.5" font-family="Helvetica,sans-Serif" font-size="10.00" fill="#789abc">street='B'</text><text text-anchor="middle" x="361" y="-193.5" font-family="Helvetica,sans-Serif" font-size="10.00" fill="#789abc">city='Y'</text></g><!-- nf_update1&#45;&gt;nf_result --><g id="edge3" class="edge"><title>nf_update1-&gt;nf_result</title><path fill="none" stroke="#789abc" d="M248.7,-185.28C269.11,-189.26 295.71,-194.46 317.79,-198.76"></path><polygon fill="#789abc" stroke="#789abc" points="317.42,-202.26 327.9,-200.74 318.76,-195.39 317.42,-202.26"></polygon></g><!-- nf_update2&#45;&gt;nf_result --><g id="edge4" class="edge"><title>nf_update2-&gt;nf_result</title><path fill="none" stroke="#789abc" d="M247.64,-227.36C268.22,-223.63 295.46,-218.69 317.97,-214.62"></path><polygon fill="#789abc" stroke="#789abc" points="318.71,-218.04 327.93,-212.81 317.47,-211.15 318.71,-218.04"></polygon></g><!-- f_before --><g id="node5" class="node"><title>f_before</title><polygon fill="none" stroke="#789abc" points="90,-82.5 24,-82.5 24,-41.5 90,-41.5 90,-82.5"></polygon><text text-anchor="middle" x="57" y="-70.5" font-family="Helvetica,sans-Serif" font-size="10.00" fill="#789abc">address:</text><text text-anchor="middle" x="57" y="-59.5" font-family="Helvetica,sans-Serif" font-size="10.00" fill="#789abc">street='A'</text><text text-anchor="middle" x="57" y="-48.5" font-family="Helvetica,sans-Serif" font-size="10.00" fill="#789abc">city='X'</text></g><!-- f_update1 --><g id="node6" class="node"><title>f_update1</title><polygon fill="#c8e6c9" stroke="#789abc" points="277,-60 154,-60 154,-24 277,-24 277,-60"></polygon><text text-anchor="middle" x="215.5" y="-45" font-family="Helvetica,sans-Serif" font-size="10.00" fill="#789abc">Update 1:</text><text text-anchor="middle" x="215.5" y="-34" font-family="Helvetica,sans-Serif" font-size="10.00" fill="#789abc">{street='B', city='X'}</text></g><!-- f_before&#45;&gt;f_update1 --><g id="edge5" class="edge"><title>f_before-&gt;f_update1</title><path fill="none" stroke="#789abc" d="M90.26,-57.4C96.16,-56.58 102.26,-55.75 108,-55 119.62,-53.48 131.95,-51.92 143.95,-50.43"></path><polygon fill="#789abc" stroke="#789abc" points="144.43,-53.9 153.93,-49.21 143.58,-46.95 144.43,-53.9"></polygon><text text-anchor="middle" x="122" y="-58.8" font-family="Times,serif" font-size="14.00" fill="#789abc">t=1</text></g><!-- f_update2 --><g id="node7" class="node"><title>f_update2</title><polygon fill="#ef9a9a" stroke="#789abc" points="276.5,-114 154.5,-114 154.5,-78 276.5,-78 276.5,-114"></polygon><text text-anchor="middle" x="215.5" y="-99" font-family="Helvetica,sans-Serif" font-size="10.00" fill="#789abc">Update 2:</text><text text-anchor="middle" x="215.5" y="-88" font-family="Helvetica,sans-Serif" font-size="10.00" fill="#789abc">{street='A', city='Y'}</text></g><!-- f_before&#45;&gt;f_update2 --><g id="edge6" class="edge"><title>f_before-&gt;f_update2</title><path fill="none" stroke="#789abc" d="M90.05,-68.96C105.81,-72.39 125.47,-76.66 144.48,-80.79"></path><polygon fill="#789abc" stroke="#789abc" points="143.82,-84.23 154.33,-82.93 145.3,-77.39 143.82,-84.23"></polygon><text text-anchor="middle" x="122" y="-81.8" font-family="Times,serif" font-size="14.00" fill="#789abc">t=2</text></g><!-- f_result --><g id="node8" class="node"><title>f_result</title><polygon fill="#ef9a9a" stroke="#789abc" points="408,-95 314,-95 314,-43 408,-43 408,-95"></polygon><text text-anchor="middle" x="361" y="-83" font-family="Helvetica,sans-Serif" font-size="10.00" fill="#789abc">Result:</text><text text-anchor="middle" x="361" y="-72" font-family="Helvetica,sans-Serif" font-size="10.00" fill="#789abc">street='A'</text><text text-anchor="middle" x="361" y="-61" font-family="Helvetica,sans-Serif" font-size="10.00" fill="#789abc">city='Y'</text><text text-anchor="middle" x="361" y="-50" font-family="Helvetica,sans-Serif" font-size="10.00" fill="#789abc">(Update 2 wins)</text></g><!-- f_update1&#45;&gt;f_result --><g id="edge7" class="edge"><title>f_update1-&gt;f_result</title><path fill="none" stroke="gray" stroke-dasharray="5,2" d="M277.36,-53.45C286.14,-55.1 295.15,-56.8 303.84,-58.43"></path><polygon fill="gray" stroke="gray" points="303.38,-61.91 313.86,-60.32 304.67,-55.03 303.38,-61.91"></polygon></g><!-- f_update2&#45;&gt;f_result --><g id="edge8" class="edge"><title>f_update2-&gt;f_result</title><path fill="none" stroke="#789abc" d="M276.53,-84.71C285.57,-83.01 294.86,-81.26 303.82,-79.57"></path><polygon fill="#789abc" stroke="#789abc" points="304.57,-82.99 313.75,-77.7 303.28,-76.11 304.57,-82.99"></polygon></g></g></svg></p>
+<p><strong>Concurrent Update Example:</strong></p>
+<p>Initial state: <code>street='A', city='X'</code></p>
+<table>
+<thead>
+<tr>
+<th>UDT Type</th>
+<th>Update 1 (t=1)</th>
+<th>Update 2 (t=2)</th>
+<th>Result</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Non-Frozen</strong></td>
+<td><code>SET street='B'</code></td>
+<td><code>SET city='Y'</code></td>
+<td><code>street='B', city='Y'</code> (merged)</td>
+</tr>
+<tr>
+<td><strong>Frozen</strong></td>
+<td><code>SET addr={street='B', city='X'}</code></td>
+<td><code>SET addr={street='A', city='Y'}</code></td>
+<td><code>street='A', city='Y'</code> (Update 2 wins)</td>
+</tr>
+</tbody>
+</table>
+<p>With non-frozen UDTs, concurrent updates to different fields are merged. With frozen UDTs, the entire value is replaced—last write wins.</p>
 <h3 id="frozen-vs-non-frozen">Frozen vs Non-Frozen<a class="headerlink" href="#frozen-vs-non-frozen" title="Permanent link">¶</a></h3>
 <table>
 <thead>
@@ -15351,7 +15460,7 @@ data-et-multi-view="{&quot;schema&quot;:{&quot;content&quot;:{&quot;desktop&quot
       <nav class="md-footer__inner md-grid" aria-label="Footer" >
         
           
-          <a href="../materialized-view/" class="md-footer__link md-footer__link--prev" aria-label="Previous: Materialized View">
+          <a href="../trigger/" class="md-footer__link md-footer__link--prev" aria-label="Previous: Trigger">
             <div class="md-footer__button md-icon">
               
               <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12Z"/></svg>
@@ -15361,7 +15470,7 @@ data-et-multi-view="{&quot;schema&quot;:{&quot;content&quot;:{&quot;desktop&quot
                 Previous
               </span>
               <div class="md-ellipsis">
-                Materialized View
+                Trigger
               </div>
             </div>
           </a>

@@ -4669,9 +4669,9 @@ data-et-multi-view="{&quot;schema&quot;:{&quot;content&quot;:{&quot;desktop&quot
 </li>
         
           <li class="md-nav__item">
-  <a href="#the-future-generational-mode-jdk-21" class="md-nav__link">
+  <a href="#the-future-generational-mode" class="md-nav__link">
     <span class="md-ellipsis">
-      The Future: Generational Mode (JDK 21)
+      The Future: Generational Mode
     </span>
   </a>
   
@@ -6557,6 +6557,27 @@ data-et-multi-view="{&quot;schema&quot;:{&quot;content&quot;:{&quot;desktop&quot
   
   
     <li class="md-nav__item">
+      <a href="../../../cql/ddl/trigger/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Trigger
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
       <a href="../../../cql/ddl/type/" class="md-nav__link">
         
   
@@ -6880,7 +6901,7 @@ data-et-multi-view="{&quot;schema&quot;:{&quot;content&quot;:{&quot;desktop&quot
             
   
   <span class="md-ellipsis">
-    Security Commands
+    Security
   </span>
   
 
@@ -6890,7 +6911,7 @@ data-et-multi-view="{&quot;schema&quot;:{&quot;content&quot;:{&quot;desktop&quot
         <nav class="md-nav" data-md-level="5" aria-labelledby="__nav_7_2_4_3_5_label" aria-expanded="false">
           <label class="md-nav__title" for="__nav_7_2_4_3_5">
             <span class="md-nav__icon md-icon"></span>
-            Security Commands
+            Security
           </label>
           <ul class="md-nav__list" data-md-scrollfix>
             
@@ -6906,6 +6927,27 @@ data-et-multi-view="{&quot;schema&quot;:{&quot;content&quot;:{&quot;desktop&quot
   
   <span class="md-ellipsis">
     Overview
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../cql/security/rbac/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Role-Based Access Control
   </span>
   
 
@@ -12903,6 +12945,27 @@ data-et-multi-view="{&quot;schema&quot;:{&quot;content&quot;:{&quot;desktop&quot
   
   
   
+    <li class="md-nav__item">
+      <a href="../../../security/os-security/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    OS Security
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
     
     
     
@@ -12914,10 +12977,10 @@ data-et-multi-view="{&quot;schema&quot;:{&quot;content&quot;:{&quot;desktop&quot
       
         
         
-        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_7_2_6_7" >
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_7_2_6_8" >
         
           
-          <label class="md-nav__link" for="__nav_7_2_6_7" id="__nav_7_2_6_7_label" tabindex="0">
+          <label class="md-nav__link" for="__nav_7_2_6_8" id="__nav_7_2_6_8_label" tabindex="0">
             
   
   <span class="md-ellipsis">
@@ -12928,8 +12991,8 @@ data-et-multi-view="{&quot;schema&quot;:{&quot;content&quot;:{&quot;desktop&quot
             <span class="md-nav__icon md-icon"></span>
           </label>
         
-        <nav class="md-nav" data-md-level="4" aria-labelledby="__nav_7_2_6_7_label" aria-expanded="false">
-          <label class="md-nav__title" for="__nav_7_2_6_7">
+        <nav class="md-nav" data-md-level="4" aria-labelledby="__nav_7_2_6_8_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_7_2_6_8">
             <span class="md-nav__icon md-icon"></span>
             Encryption
           </label>
@@ -13966,9 +14029,9 @@ data-et-multi-view="{&quot;schema&quot;:{&quot;content&quot;:{&quot;desktop&quot
 </li>
         
           <li class="md-nav__item">
-  <a href="#the-future-generational-mode-jdk-21" class="md-nav__link">
+  <a href="#the-future-generational-mode" class="md-nav__link">
     <span class="md-ellipsis">
-      The Future: Generational Mode (JDK 21)
+      The Future: Generational Mode
     </span>
   </a>
   
@@ -14343,25 +14406,27 @@ data-et-multi-view="{&quot;schema&quot;:{&quot;content&quot;:{&quot;desktop&quot
 <li>Designed for very large heaps (multi-terabyte)</li>
 <li>Production-ready in JDK 15+</li>
 </ul>
-<h3 id="the-future-generational-mode-jdk-21">The Future: Generational Mode (JDK 21)<a class="headerlink" href="#the-future-generational-mode-jdk-21" title="Permanent link">¶</a></h3>
-<p>JDK 21 (released September 2023) introduces <strong>Generational ZGC</strong> and <strong>Generational Shenandoah</strong>, combining the low-pause characteristics of these collectors with generational collection for improved throughput.</p>
-<p>Generational collection separates objects by age:</p>
+<h3 id="the-future-generational-mode">The Future: Generational Mode<a class="headerlink" href="#the-future-generational-mode" title="Permanent link">¶</a></h3>
+<p>Generational garbage collection separates objects by age:</p>
 <ul>
 <li><strong>Young generation</strong>: Newly allocated objects (most die quickly)</li>
 <li><strong>Old generation</strong>: Long-lived objects</li>
 </ul>
 <p>This allows the collector to focus on the young generation where most garbage is created, improving overall efficiency.</p>
+<p><strong>Generational ZGC</strong> (JDK 21+, production-ready)</p>
 <div class="highlight"><pre><span></span><code><span class="c1"># JDK 21+ Generational ZGC</span>
 -XX:+UseZGC
 -XX:+ZGenerational
-
-<span class="c1"># JDK 21+ Generational Shenandoah</span>
+</code></pre></div>
+<p><strong>Generational Shenandoah</strong> (JDK 25+, production-ready)</p>
+<p>Generational Shenandoah was experimental in JDK 21-24 and became a production feature in JDK 25 (September 2025).</p>
+<div class="highlight"><pre><span></span><code><span class="c1"># JDK 25+ Generational Shenandoah</span>
 -XX:+UseShenandoahGC
 -XX:ShenandoahGCMode<span class="o">=</span>generational
 </code></pre></div>
 <div class="admonition warning">
 <p class="admonition-title">Not Yet Available for Cassandra</p>
-<p>Cassandra does not yet support JDK 21. As of 2025, Cassandra supports JDK 11 and 17. JDK 21 support is tracked in <a href="https://issues.apache.org/jira/browse/CASSANDRA-18831">CASSANDRA-18831</a>. When JDK 21 support arrives, Generational ZGC and Generational Shenandoah will offer the best of both worlds: sub-millisecond pauses with improved throughput.</p>
+<p>Cassandra does not yet support JDK 21+. As of late 2025, Cassandra supports JDK 11 and 17. JDK 21 support is tracked in <a href="https://issues.apache.org/jira/browse/CASSANDRA-18831">CASSANDRA-18831</a>.</p>
 </div>
 <h3 id="timeline-summary">Timeline Summary<a class="headerlink" href="#timeline-summary" title="Permanent link">¶</a></h3>
 <table>
@@ -14400,7 +14465,13 @@ data-et-multi-view="{&quot;schema&quot;:{&quot;content&quot;:{&quot;desktop&quot
 </tr>
 <tr>
 <td>2023</td>
-<td>Generational ZGC/Shenandoah (JDK 21)</td>
+<td>Generational ZGC (JDK 21)</td>
+<td>&lt; 1ms</td>
+<td>Generational + concurrent compaction</td>
+</tr>
+<tr>
+<td>2025</td>
+<td>Generational Shenandoah (JDK 25)</td>
 <td>&lt; 1ms</td>
 <td>Generational + concurrent compaction</td>
 </tr>

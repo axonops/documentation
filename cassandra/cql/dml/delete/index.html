@@ -6163,6 +6163,27 @@ data-et-multi-view="{&quot;schema&quot;:{&quot;content&quot;:{&quot;desktop&quot
   
   
     <li class="md-nav__item">
+      <a href="../../ddl/trigger/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Trigger
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
       <a href="../../ddl/type/" class="md-nav__link">
         
   
@@ -7011,7 +7032,7 @@ data-et-multi-view="{&quot;schema&quot;:{&quot;content&quot;:{&quot;desktop&quot
             
   
   <span class="md-ellipsis">
-    Security Commands
+    Security
   </span>
   
 
@@ -7021,7 +7042,7 @@ data-et-multi-view="{&quot;schema&quot;:{&quot;content&quot;:{&quot;desktop&quot
         <nav class="md-nav" data-md-level="5" aria-labelledby="__nav_7_2_4_3_5_label" aria-expanded="false">
           <label class="md-nav__title" for="__nav_7_2_4_3_5">
             <span class="md-nav__icon md-icon"></span>
-            Security Commands
+            Security
           </label>
           <ul class="md-nav__list" data-md-scrollfix>
             
@@ -7037,6 +7058,27 @@ data-et-multi-view="{&quot;schema&quot;:{&quot;content&quot;:{&quot;desktop&quot
   
   <span class="md-ellipsis">
     Overview
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../security/rbac/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Role-Based Access Control
   </span>
   
 
@@ -13034,6 +13076,27 @@ data-et-multi-view="{&quot;schema&quot;:{&quot;content&quot;:{&quot;desktop&quot
   
   
   
+    <li class="md-nav__item">
+      <a href="../../../security/os-security/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    OS Security
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
     
     
     
@@ -13045,10 +13108,10 @@ data-et-multi-view="{&quot;schema&quot;:{&quot;content&quot;:{&quot;desktop&quot
       
         
         
-        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_7_2_6_7" >
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_7_2_6_8" >
         
           
-          <label class="md-nav__link" for="__nav_7_2_6_7" id="__nav_7_2_6_7_label" tabindex="0">
+          <label class="md-nav__link" for="__nav_7_2_6_8" id="__nav_7_2_6_8_label" tabindex="0">
             
   
   <span class="md-ellipsis">
@@ -13059,8 +13122,8 @@ data-et-multi-view="{&quot;schema&quot;:{&quot;content&quot;:{&quot;desktop&quot
             <span class="md-nav__icon md-icon"></span>
           </label>
         
-        <nav class="md-nav" data-md-level="4" aria-labelledby="__nav_7_2_6_7_label" aria-expanded="false">
-          <label class="md-nav__title" for="__nav_7_2_6_7">
+        <nav class="md-nav" data-md-level="4" aria-labelledby="__nav_7_2_6_8_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_7_2_6_8">
             <span class="md-nav__icon md-icon"></span>
             Encryption
           </label>
@@ -14554,7 +14617,43 @@ data-et-multi-view="{&quot;schema&quot;:{&quot;content&quot;:{&quot;desktop&quot
 <h2 id="overview">Overview<a class="headerlink" href="#overview" title="Permanent link">¶</a></h2>
 <h3 id="why-cassandra-uses-tombstones">Why Cassandra Uses Tombstones<a class="headerlink" href="#why-cassandra-uses-tombstones" title="Permanent link">¶</a></h3>
 <p>In a distributed system without central coordination, immediate deletion is impossible:</p>
-<p><span class="graphviz-light-dark" data-library-default="#789abc" data-default="#789abc" data-light="#000000" data-dark="#ffffff"></span><svg width="426pt" height="357pt" viewbox="0.00 0.00 426.00 357.00" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" class="graphviz dot"><g id="graph0" class="graph" transform="scale(1 1) rotate(0) translate(4 353)"><title>distributed_delete</title><polygon fill="transparent" stroke="transparent" points="-4,4 -4,-353 422,-353 422,4 -4,4"></polygon><g id="clust1" class="cluster"><title>cluster_problem</title><polygon fill="#f8f9fa" stroke="#789abc" points="8,-183 8,-341 296,-341 296,-183 8,-183"></polygon><text text-anchor="middle" x="152" y="-325.8" font-family="Times,serif" font-size="14.00" fill="#789abc">The Distributed Delete Problem</text></g><g id="clust2" class="cluster"><title>cluster_later</title><polygon fill="#fff3cd" stroke="#789abc" points="32,-8 32,-164 410,-164 410,-8 32,-8"></polygon><text text-anchor="middle" x="221" y="-148.8" font-family="Times,serif" font-size="14.00" fill="#789abc">Later: Node B Returns</text></g><!-- delete --><g id="node1" class="node"><title>delete</title><polygon fill="#f8d7da" stroke="#789abc" points="217.5,-310 86.5,-310 86.5,-274 217.5,-274 217.5,-310"></polygon><text text-anchor="middle" x="152" y="-295.2" font-family="Helvetica,sans-Serif" font-size="11.00" fill="#789abc">DELETE WHERE id=1</text><text text-anchor="middle" x="152" y="-283.2" font-family="Helvetica,sans-Serif" font-size="11.00" fill="#789abc">(Node A online)</text></g><!-- nodeA --><g id="node2" class="node"><title>nodeA</title><polygon fill="#d4edda" stroke="#789abc" points="104,-227 16,-227 16,-191 104,-191 104,-227"></polygon><text text-anchor="middle" x="60" y="-212.2" font-family="Helvetica,sans-Serif" font-size="11.00" fill="#789abc">Node A</text><text text-anchor="middle" x="60" y="-200.2" font-family="Helvetica,sans-Serif" font-size="11.00" fill="#789abc">Deletes id=1</text></g><!-- delete&#45;&gt;nodeA --><g id="edge1" class="edge"><title>delete-&gt;nodeA</title><path fill="none" stroke="#789abc" d="M132.49,-273.82C119.32,-262.22 101.75,-246.75 87.2,-233.95"></path><polygon fill="#789abc" stroke="#789abc" points="89.3,-231.13 79.48,-227.15 84.68,-236.39 89.3,-231.13"></polygon></g><!-- nodeB --><g id="node3" class="node"><title>nodeB</title><polygon fill="#e2e3e5" stroke="#789abc" points="181.5,-227 122.5,-227 122.5,-191 181.5,-191 181.5,-227"></polygon><text text-anchor="middle" x="152" y="-212.2" font-family="Helvetica,sans-Serif" font-size="11.00" fill="#789abc">Node B</text><text text-anchor="middle" x="152" y="-200.2" font-family="Helvetica,sans-Serif" font-size="11.00" fill="#789abc">(offline)</text></g><!-- delete&#45;&gt;nodeB --><g id="edge2" class="edge"><title>delete-&gt;nodeB</title><path fill="none" stroke="#789abc" stroke-dasharray="5,2" d="M152,-273.82C152,-263.19 152,-249.31 152,-237.2"></path><polygon fill="#789abc" stroke="#789abc" points="155.5,-237.15 152,-227.15 148.5,-237.15 155.5,-237.15"></polygon><text text-anchor="middle" x="182.5" y="-248" font-family="Helvetica,sans-Serif" font-size="10.00" fill="#789abc">unreachable</text></g><!-- nodeC --><g id="node4" class="node"><title>nodeC</title><polygon fill="#d4edda" stroke="#789abc" points="288,-227 200,-227 200,-191 288,-191 288,-227"></polygon><text text-anchor="middle" x="244" y="-212.2" font-family="Helvetica,sans-Serif" font-size="11.00" fill="#789abc">Node C</text><text text-anchor="middle" x="244" y="-200.2" font-family="Helvetica,sans-Serif" font-size="11.00" fill="#789abc">Deletes id=1</text></g><!-- delete&#45;&gt;nodeC --><g id="edge3" class="edge"><title>delete-&gt;nodeC</title><path fill="none" stroke="#789abc" d="M192.13,-273.83C200.96,-268.9 209.8,-262.94 217,-256 222.78,-250.43 227.73,-243.37 231.77,-236.45"></path><polygon fill="#789abc" stroke="#789abc" points="235.05,-237.74 236.68,-227.27 228.88,-234.44 235.05,-237.74"></polygon></g><!-- question --><g id="node5" class="node"><title>question</title><polygon fill="#f8d7da" stroke="#789abc" points="240,-133 64,-133 64,-97 240,-97 240,-133"></polygon><text text-anchor="middle" x="152" y="-118.2" font-family="Helvetica,sans-Serif" font-size="11.00" fill="#789abc">Node B still has id=1</text><text text-anchor="middle" x="152" y="-106.2" font-family="Helvetica,sans-Serif" font-size="11.00" fill="#789abc">What happens during repair?</text></g><!-- nodeB&#45;&gt;question --><g id="edge4" class="edge"><title>nodeB-&gt;question</title><path fill="none" stroke="#789abc" stroke-dasharray="5,2" d="M152,-190.7C152,-177.46 152,-158.95 152,-143.66"></path><polygon fill="#789abc" stroke="#789abc" points="155.5,-143.23 152,-133.23 148.5,-143.23 155.5,-143.23"></polygon></g><!-- without_tombstone --><g id="node6" class="node"><title>without_tombstone</title><polygon fill="#f8d7da" stroke="#789abc" points="216,-56 40,-56 40,-20 216,-20 216,-56"></polygon><text text-anchor="middle" x="128" y="-41.2" font-family="Helvetica,sans-Serif" font-size="11.00" fill="#789abc">Without tombstone:</text><text text-anchor="middle" x="128" y="-29.2" font-family="Helvetica,sans-Serif" font-size="11.00" fill="#789abc">id=1 'resurrects' on A and C!</text></g><!-- question&#45;&gt;without_tombstone --><g id="edge5" class="edge"><title>question-&gt;without_tombstone</title><path fill="none" stroke="#789abc" d="M146.55,-96.98C143.63,-87.84 139.95,-76.36 136.65,-66.03"></path><polygon fill="#789abc" stroke="#789abc" points="139.89,-64.67 133.51,-56.21 133.22,-66.8 139.89,-64.67"></polygon></g><!-- with_tombstone --><g id="node7" class="node"><title>with_tombstone</title><polygon fill="#d4edda" stroke="#789abc" points="402,-60 234,-60 234,-16 402,-16 402,-60"></polygon><text text-anchor="middle" x="318" y="-47.2" font-family="Helvetica,sans-Serif" font-size="11.00" fill="#789abc">With tombstone:</text><text text-anchor="middle" x="318" y="-35.2" font-family="Helvetica,sans-Serif" font-size="11.00" fill="#789abc">Tombstone propagates to B</text><text text-anchor="middle" x="318" y="-23.2" font-family="Helvetica,sans-Serif" font-size="11.00" fill="#789abc">Data stays deleted</text></g><!-- question&#45;&gt;with_tombstone --><g id="edge6" class="edge"><title>question-&gt;with_tombstone</title><path fill="none" stroke="#789abc" d="M189.67,-96.98C211.03,-87.33 238.18,-75.06 262,-64.3"></path><polygon fill="#789abc" stroke="#789abc" points="263.61,-67.41 271.29,-60.11 260.73,-61.03 263.61,-67.41"></polygon></g></g></svg></p>
+<p><strong>The Distributed Delete Problem:</strong></p>
+<table>
+<thead>
+<tr>
+<th>Phase</th>
+<th>Node A</th>
+<th>Node B (offline)</th>
+<th>Node C</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>DELETE id=1</td>
+<td>Deletes id=1</td>
+<td>Unreachable</td>
+<td>Deletes id=1</td>
+</tr>
+<tr>
+<td>Node B returns</td>
+<td>-</td>
+<td>Still has id=1</td>
+<td>-</td>
+</tr>
+<tr>
+<td><strong>Without tombstone</strong></td>
+<td>id=1 resurrects!</td>
+<td>Repair spreads data</td>
+<td>id=1 resurrects!</td>
+</tr>
+<tr>
+<td><strong>With tombstone</strong></td>
+<td>Tombstone propagates</td>
+<td>Receives tombstone</td>
+<td>Data stays deleted</td>
+</tr>
+</tbody>
+</table>
 <p><strong>Tombstones solve:</strong></p>
 <ol>
 <li><strong>Resurrection prevention</strong>: Deleted data doesn't reappear when offline nodes return</li>
@@ -14562,7 +14661,7 @@ data-et-multi-view="{&quot;schema&quot;:{&quot;content&quot;:{&quot;desktop&quot
 <li><strong>Timestamp-based resolution</strong>: Tombstone with higher timestamp wins</li>
 </ol>
 <h3 id="tombstone-lifecycle">Tombstone Lifecycle<a class="headerlink" href="#tombstone-lifecycle" title="Permanent link">¶</a></h3>
-<p><span class="graphviz-light-dark" data-library-default="#789abc" data-default="#789abc" data-light="#000000" data-dark="#ffffff"></span><svg width="621pt" height="52pt" viewbox="0.00 0.00 621.00 52.00" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" class="graphviz dot"><g id="graph0" class="graph" transform="scale(1 1) rotate(0) translate(4 48)"><title>tombstone_lifecycle</title><polygon fill="transparent" stroke="transparent" points="-4,4 -4,-48 617,-48 617,4 -4,4"></polygon><!-- delete --><g id="node1" class="node"><title>delete</title><polygon fill="#f8d7da" stroke="#789abc" points="67,-40 0,-40 0,-4 67,-4 67,-40"></polygon><text text-anchor="middle" x="33.5" y="-25.2" font-family="Helvetica,sans-Serif" font-size="11.00" fill="#789abc">DELETE</text><text text-anchor="middle" x="33.5" y="-13.2" font-family="Helvetica,sans-Serif" font-size="11.00" fill="#789abc">Executed</text></g><!-- write --><g id="node2" class="node"><title>write</title><polygon fill="#fff3cd" stroke="#789abc" points="215,-44 103,-44 103,0 215,0 215,-44"></polygon><text text-anchor="middle" x="159" y="-31.2" font-family="Helvetica,sans-Serif" font-size="11.00" fill="#789abc">Tombstone</text><text text-anchor="middle" x="159" y="-19.2" font-family="Helvetica,sans-Serif" font-size="11.00" fill="#789abc">Written</text><text text-anchor="middle" x="159" y="-7.2" font-family="Helvetica,sans-Serif" font-size="11.00" fill="#789abc">(with timestamp)</text></g><!-- delete&#45;&gt;write --><g id="edge1" class="edge"><title>delete-&gt;write</title><path fill="none" stroke="#789abc" d="M67.27,-22C75.08,-22 83.68,-22 92.39,-22"></path><polygon fill="#789abc" stroke="#789abc" points="92.62,-25.5 102.62,-22 92.62,-18.5 92.62,-25.5"></polygon></g><!-- replicate --><g id="node3" class="node"><title>replicate</title><polygon fill="#fff3cd" stroke="#789abc" points="327,-40 251,-40 251,-4 327,-4 327,-40"></polygon><text text-anchor="middle" x="289" y="-25.2" font-family="Helvetica,sans-Serif" font-size="11.00" fill="#789abc">Tombstone</text><text text-anchor="middle" x="289" y="-13.2" font-family="Helvetica,sans-Serif" font-size="11.00" fill="#789abc">Replicated</text></g><!-- write&#45;&gt;replicate --><g id="edge2" class="edge"><title>write-&gt;replicate</title><path fill="none" stroke="#789abc" d="M215.03,-22C223.51,-22 232.2,-22 240.5,-22"></path><polygon fill="#789abc" stroke="#789abc" points="240.75,-25.5 250.75,-22 240.75,-18.5 240.75,-25.5"></polygon></g><!-- grace --><g id="node4" class="node"><title>grace</title><polygon fill="#e2e3e5" stroke="#789abc" points="479,-44 363,-44 363,0 479,0 479,-44"></polygon><text text-anchor="middle" x="421" y="-31.2" font-family="Helvetica,sans-Serif" font-size="11.00" fill="#789abc">Wait for</text><text text-anchor="middle" x="421" y="-19.2" font-family="Helvetica,sans-Serif" font-size="11.00" fill="#789abc">gc_grace_seconds</text><text text-anchor="middle" x="421" y="-7.2" font-family="Helvetica,sans-Serif" font-size="11.00" fill="#789abc">(default: 10 days)</text></g><!-- replicate&#45;&gt;grace --><g id="edge3" class="edge"><title>replicate-&gt;grace</title><path fill="none" stroke="#789abc" d="M327.25,-22C335.23,-22 343.9,-22 352.63,-22"></path><polygon fill="#789abc" stroke="#789abc" points="352.86,-25.5 362.86,-22 352.86,-18.5 352.86,-25.5"></polygon></g><!-- compact --><g id="node5" class="node"><title>compact</title><polygon fill="#d4edda" stroke="#789abc" points="613,-40 515,-40 515,-4 613,-4 613,-40"></polygon><text text-anchor="middle" x="564" y="-25.2" font-family="Helvetica,sans-Serif" font-size="11.00" fill="#789abc">Compaction</text><text text-anchor="middle" x="564" y="-13.2" font-family="Helvetica,sans-Serif" font-size="11.00" fill="#789abc">Removes Data</text></g><!-- grace&#45;&gt;compact --><g id="edge4" class="edge"><title>grace-&gt;compact</title><path fill="none" stroke="#789abc" d="M479.35,-22C487.7,-22 496.3,-22 504.67,-22"></path><polygon fill="#789abc" stroke="#789abc" points="504.72,-25.5 514.72,-22 504.72,-18.5 504.72,-25.5"></polygon></g></g></svg></p>
+<p><a class="glightbox" href="data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0iVVRGLTgiIHN0YW5kYWxvbmU9Im5vIj8+PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHhtbG5zOnhsaW5rPSJodHRwOi8vd3d3LnczLm9yZy8xOTk5L3hsaW5rIiBjb250ZW50U2NyaXB0VHlwZT0iYXBwbGljYXRpb24vZWNtYXNjcmlwdCIgY29udGVudFN0eWxlVHlwZT0idGV4dC9jc3MiIGhlaWdodD0iNzFweCIgcHJlc2VydmVBc3BlY3RSYXRpbz0ibm9uZSIgc3R5bGU9IndpZHRoOjc0N3B4O2hlaWdodDo3MXB4OyIgdmVyc2lvbj0iMS4xIiB2aWV3Qm94PSIwIDAgNzQ3IDcxIiB3aWR0aD0iNzQ3cHgiIHpvb21BbmRQYW49Im1hZ25pZnkiPjxkZWZzPjxmaWx0ZXIgaGVpZ2h0PSIzMDAlIiBpZD0iZnM2cTJzcDFqcHpucCIgd2lkdGg9IjMwMCUiIHg9Ii0xIiB5PSItMSI+PGZlR2F1c3NpYW5CbHVyIHJlc3VsdD0iYmx1ck91dCIgc3RkRGV2aWF0aW9uPSIyLjAiLz48ZmVDb2xvck1hdHJpeCBpbj0iYmx1ck91dCIgcmVzdWx0PSJibHVyT3V0MiIgdHlwZT0ibWF0cml4IiB2YWx1ZXM9IjAgMCAwIDAgMCAwIDAgMCAwIDAgMCAwIDAgMCAwIDAgMCAwIC40IDAiLz48ZmVPZmZzZXQgZHg9IjQuMCIgZHk9IjQuMCIgaW49ImJsdXJPdXQyIiByZXN1bHQ9ImJsdXJPdXQzIi8+PGZlQmxlbmQgaW49IlNvdXJjZUdyYXBoaWMiIGluMj0iYmx1ck91dDMiIG1vZGU9Im5vcm1hbCIvPjwvZmlsdGVyPjwvZGVmcz48Zz48IS0tTUQ1PVsxMDYxZmM0ODk4MTcxYWM5MDRmODRhMTAxMmUwNDQ1Nl0KZW50aXR5IGRlbGV0ZS0tPjxyZWN0IGZpbGw9IiNGOEQ3REEiIGZpbHRlcj0idXJsKCNmczZxMnNwMWpwem5wKSIgaGVpZ2h0PSI1Mi41OTM4IiBzdHlsZT0ic3Ryb2tlOiAjMDAwMDAwOyBzdHJva2Utd2lkdGg6IDEuNTsiIHdpZHRoPSI4NSIgeD0iNiIgeT0iOCIvPjx0ZXh0IGZpbGw9IiMwMDAwMDAiIGZvbnQtZmFtaWx5PSJBcmlhbCIgZm9udC1zaXplPSIxNCIgbGVuZ3RoQWRqdXN0PSJzcGFjaW5nQW5kR2x5cGhzIiB0ZXh0TGVuZ3RoPSI1NCIgeD0iMTYiIHk9IjMwLjk5NTEiPkRFTEVURTwvdGV4dD48dGV4dCBmaWxsPSIjMDAwMDAwIiBmb250LWZhbWlseT0iQXJpYWwiIGZvbnQtc2l6ZT0iMTQiIGxlbmd0aEFkanVzdD0ic3BhY2luZ0FuZEdseXBocyIgdGV4dExlbmd0aD0iNjUiIHg9IjE2IiB5PSI0Ny4yOTIiPkV4ZWN1dGVkPC90ZXh0PjwhLS1NRDU9WzVmNjBmODJhYWZjNWFhNDFjZjU3NGYyYzY5M2UwM2QyXQplbnRpdHkgd3JpdGUtLT48cmVjdCBmaWxsPSIjRkZGM0NEIiBmaWx0ZXI9InVybCgjZnM2cTJzcDFqcHpucCkiIGhlaWdodD0iNTIuNTkzOCIgc3R5bGU9InN0cm9rZTogIzAwMDAwMDsgc3Ryb2tlLXdpZHRoOiAxLjU7IiB3aWR0aD0iMTAwIiB4PSIxMjYuNSIgeT0iOCIvPjx0ZXh0IGZpbGw9IiMwMDAwMDAiIGZvbnQtZmFtaWx5PSJBcmlhbCIgZm9udC1zaXplPSIxNCIgbGVuZ3RoQWRqdXN0PSJzcGFjaW5nQW5kR2x5cGhzIiB0ZXh0TGVuZ3RoPSI4MCIgeD0iMTM2LjUiIHk9IjMwLjk5NTEiPlRvbWJzdG9uZTwvdGV4dD48dGV4dCBmaWxsPSIjMDAwMDAwIiBmb250LWZhbWlseT0iQXJpYWwiIGZvbnQtc2l6ZT0iMTQiIGxlbmd0aEFkanVzdD0ic3BhY2luZ0FuZEdseXBocyIgdGV4dExlbmd0aD0iNDkiIHg9IjEzNi41IiB5PSI0Ny4yOTIiPldyaXR0ZW48L3RleHQ+PCEtLU1ENT1bNTg3NDMzZTk3OGJhYzc2NGU5NzIwMDU1OGZjNzU3MTZdCmVudGl0eSByZXBsaWNhdGUtLT48cmVjdCBmaWxsPSIjRkZGM0NEIiBmaWx0ZXI9InVybCgjZnM2cTJzcDFqcHpucCkiIGhlaWdodD0iNTIuNTkzOCIgc3R5bGU9InN0cm9rZTogIzAwMDAwMDsgc3Ryb2tlLXdpZHRoOiAxLjU7IiB3aWR0aD0iMTAwIiB4PSIyNjEuNSIgeT0iOCIvPjx0ZXh0IGZpbGw9IiMwMDAwMDAiIGZvbnQtZmFtaWx5PSJBcmlhbCIgZm9udC1zaXplPSIxNCIgbGVuZ3RoQWRqdXN0PSJzcGFjaW5nQW5kR2x5cGhzIiB0ZXh0TGVuZ3RoPSI4MCIgeD0iMjcxLjUiIHk9IjMwLjk5NTEiPlRvbWJzdG9uZTwvdGV4dD48dGV4dCBmaWxsPSIjMDAwMDAwIiBmb250LWZhbWlseT0iQXJpYWwiIGZvbnQtc2l6ZT0iMTQiIGxlbmd0aEFkanVzdD0ic3BhY2luZ0FuZEdseXBocyIgdGV4dExlbmd0aD0iNzMiIHg9IjI3MS41IiB5PSI0Ny4yOTIiPlJlcGxpY2F0ZWQ8L3RleHQ+PCEtLU1ENT1bNDUzMjA5YTBlOGJkNmIyY2FhMDM2MzVhOGRiNDNlMDRdCmVudGl0eSBncmFjZS0tPjxyZWN0IGZpbGw9IiNFMkUzRTUiIGZpbHRlcj0idXJsKCNmczZxMnNwMWpwem5wKSIgaGVpZ2h0PSI1Mi41OTM4IiBzdHlsZT0ic3Ryb2tlOiAjMDAwMDAwOyBzdHJva2Utd2lkdGg6IDEuNTsiIHdpZHRoPSIxODMiIHg9IjM5NyIgeT0iOCIvPjx0ZXh0IGZpbGw9IiMwMDAwMDAiIGZvbnQtZmFtaWx5PSJBcmlhbCIgZm9udC1zaXplPSIxNCIgbGVuZ3RoQWRqdXN0PSJzcGFjaW5nQW5kR2x5cGhzIiB0ZXh0TGVuZ3RoPSIxNjMiIHg9IjQwNyIgeT0iMzAuOTk1MSI+V2FpdCBnY19ncmFjZV9zZWNvbmRzPC90ZXh0Pjx0ZXh0IGZpbGw9IiMwMDAwMDAiIGZvbnQtZmFtaWx5PSJBcmlhbCIgZm9udC1zaXplPSIxNCIgbGVuZ3RoQWRqdXN0PSJzcGFjaW5nQW5kR2x5cGhzIiB0ZXh0TGVuZ3RoPSIxMjAiIHg9IjQwNyIgeT0iNDcuMjkyIj4oZGVmYXVsdDogMTAgZGF5cyk8L3RleHQ+PCEtLU1ENT1bMDQ0ZGY0OGVhYWQyYWEzZmE2N2E3ZTM5YmE2ZTIyZmFdCmVudGl0eSBjb21wYWN0LS0+PHJlY3QgZmlsbD0iI0Q0RUREQSIgZmlsdGVyPSJ1cmwoI2ZzNnEyc3AxanB6bnApIiBoZWlnaHQ9IjUyLjU5MzgiIHN0eWxlPSJzdHJva2U6ICMwMDAwMDA7IHN0cm9rZS13aWR0aDogMS41OyIgd2lkdGg9IjEyMSIgeD0iNjE1IiB5PSI4Ii8+PHRleHQgZmlsbD0iIzAwMDAwMCIgZm9udC1mYW1pbHk9IkFyaWFsIiBmb250LXNpemU9IjE0IiBsZW5ndGhBZGp1c3Q9InNwYWNpbmdBbmRHbHlwaHMiIHRleHRMZW5ndGg9IjgzIiB4PSI2MjUiIHk9IjMwLjk5NTEiPkNvbXBhY3Rpb248L3RleHQ+PHRleHQgZmlsbD0iIzAwMDAwMCIgZm9udC1mYW1pbHk9IkFyaWFsIiBmb250LXNpemU9IjE0IiBsZW5ndGhBZGp1c3Q9InNwYWNpbmdBbmRHbHlwaHMiIHRleHRMZW5ndGg9IjEwMSIgeD0iNjI1IiB5PSI0Ny4yOTIiPlJlbW92ZXMgRGF0YTwvdGV4dD48IS0tTUQ1PVtkYWVjMmQ3ODdmMDlmMWI2YzFhNTExMGZhOWE2NzExMl0KbGluayBkZWxldGUgdG8gd3JpdGUtLT48cGF0aCBkPSJNOTEuNSwzNC41IEMxMDEuNCwzNC41IDExMS4yOSwzNC41IDEyMS4xOSwzNC41ICIgZmlsbD0ibm9uZSIgaWQ9ImRlbGV0ZS0mZ3Q7d3JpdGUiIHN0eWxlPSJzdHJva2U6ICNBODAwMzY7IHN0cm9rZS13aWR0aDogMS4wOyIvPjxwb2x5Z29uIGZpbGw9IiNBODAwMzYiIHBvaW50cz0iMTI2LjM2LDM0LjUsMTE3LjM2LDMwLjUsMTIxLjM2LDM0LjUsMTE3LjM2LDM4LjUsMTI2LjM2LDM0LjUiIHN0eWxlPSJzdHJva2U6ICNBODAwMzY7IHN0cm9rZS13aWR0aDogMS4wOyIvPjwhLS1NRDU9WzA5ZTA0ODM0M2VhMzFlN2QyMDVlNmIyZWNiZTdlYTA4XQpsaW5rIHdyaXRlIHRvIHJlcGxpY2F0ZS0tPjxwYXRoIGQ9Ik0yMjYuNiwzNC41IEMyMzYuNDgsMzQuNSAyNDYuMzcsMzQuNSAyNTYuMjUsMzQuNSAiIGZpbGw9Im5vbmUiIGlkPSJ3cml0ZS0mZ3Q7cmVwbGljYXRlIiBzdHlsZT0ic3Ryb2tlOiAjQTgwMDM2OyBzdHJva2Utd2lkdGg6IDEuMDsiLz48cG9seWdvbiBmaWxsPSIjQTgwMDM2IiBwb2ludHM9IjI2MS40MiwzNC41LDI1Mi40MiwzMC41LDI1Ni40MiwzNC41LDI1Mi40MiwzOC41LDI2MS40MiwzNC41IiBzdHlsZT0ic3Ryb2tlOiAjQTgwMDM2OyBzdHJva2Utd2lkdGg6IDEuMDsiLz48IS0tTUQ1PVs1ZWZlOWRiOTM5YTQwMWQ3YmFkZjM2YjYzYTkwNGNmNV0KbGluayByZXBsaWNhdGUgdG8gZ3JhY2UtLT48cGF0aCBkPSJNMzYxLjYzLDM0LjUgQzM3MS42MiwzNC41IDM4MS42LDM0LjUgMzkxLjU5LDM0LjUgIiBmaWxsPSJub25lIiBpZD0icmVwbGljYXRlLSZndDtncmFjZSIgc3R5bGU9InN0cm9rZTogI0E4MDAzNjsgc3Ryb2tlLXdpZHRoOiAxLjA7Ii8+PHBvbHlnb24gZmlsbD0iI0E4MDAzNiIgcG9pbnRzPSIzOTYuODEsMzQuNSwzODcuODEsMzAuNSwzOTEuODEsMzQuNSwzODcuODEsMzguNSwzOTYuODEsMzQuNSIgc3R5bGU9InN0cm9rZTogI0E4MDAzNjsgc3Ryb2tlLXdpZHRoOiAxLjA7Ii8+PCEtLU1ENT1bNGY3MzEzNWE1MzQ1NTdhZjA1YjBmNmEyOWI2MjE5MTFdCmxpbmsgZ3JhY2UgdG8gY29tcGFjdC0tPjxwYXRoIGQ9Ik01ODAuMTcsMzQuNSBDNTkwLDM0LjUgNTk5LjgzLDM0LjUgNjA5LjY2LDM0LjUgIiBmaWxsPSJub25lIiBpZD0iZ3JhY2UtJmd0O2NvbXBhY3QiIHN0eWxlPSJzdHJva2U6ICNBODAwMzY7IHN0cm9rZS13aWR0aDogMS4wOyIvPjxwb2x5Z29uIGZpbGw9IiNBODAwMzYiIHBvaW50cz0iNjE0LjgsMzQuNSw2MDUuOCwzMC41LDYwOS44LDM0LjUsNjA1LjgsMzguNSw2MTQuOCwzNC41IiBzdHlsZT0ic3Ryb2tlOiAjQTgwMDM2OyBzdHJva2Utd2lkdGg6IDEuMDsiLz48IS0tTUQ1PVs5M2QxNDUyYWYzYjg2YTQ1NGE1NDdlZWYwYjk5NDI4YV0KQHN0YXJ0dW1sDQpza2lucGFyYW0gYmFja2dyb3VuZENvbG9yICNGRkZGRkYNCnNraW5wYXJhbSBkZWZhdWx0Rm9udE5hbWUgQXJpYWwNCg0KcmVjdGFuZ2xlICJERUxFVEVcbkV4ZWN1dGVkIiBhcyBkZWxldGUgI2Y4ZDdkYQ0KcmVjdGFuZ2xlICJUb21ic3RvbmVcbldyaXR0ZW4iIGFzIHdyaXRlICNmZmYzY2QNCnJlY3RhbmdsZSAiVG9tYnN0b25lXG5SZXBsaWNhdGVkIiBhcyByZXBsaWNhdGUgI2ZmZjNjZA0KcmVjdGFuZ2xlICJXYWl0IGdjX2dyYWNlX3NlY29uZHNcbihkZWZhdWx0OiAxMCBkYXlzKSIgYXMgZ3JhY2UgI2UyZTNlNQ0KcmVjdGFuZ2xlICJDb21wYWN0aW9uXG5SZW1vdmVzIERhdGEiIGFzIGNvbXBhY3QgI2Q0ZWRkYQ0KDQpkZWxldGUgLT4gd3JpdGUNCndyaXRlIC0+IHJlcGxpY2F0ZQ0KcmVwbGljYXRlIC0+IGdyYWNlDQpncmFjZSAtPiBjb21wYWN0DQoNCkBlbmR1bWwNCgpQbGFudFVNTCB2ZXJzaW9uIDEuMjAyMC4wMihTdW4gTWFyIDAxIDEwOjIyOjA3IEdNVCAyMDIwKQooR1BMIHNvdXJjZSBkaXN0cmlidXRpb24pCkphdmEgUnVudGltZTogT3BlbkpESyBSdW50aW1lIEVudmlyb25tZW50CkpWTTogT3BlbkpESyA2NC1CaXQgU2VydmVyIFZNCkphdmEgVmVyc2lvbjogMTcuMC4xNSs2LUxUUwpPcGVyYXRpbmcgU3lzdGVtOiBMaW51eApEZWZhdWx0IEVuY29kaW5nOiBVVEYtOApMYW5ndWFnZTogZW4KQ291bnRyeTogbnVsbAotLT48L2c+PC9zdmc+" data-type="image" data-width="100%" data-height="auto" data-desc-position="bottom"><img src="data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0iVVRGLTgiIHN0YW5kYWxvbmU9Im5vIj8+PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHhtbG5zOnhsaW5rPSJodHRwOi8vd3d3LnczLm9yZy8xOTk5L3hsaW5rIiBjb250ZW50U2NyaXB0VHlwZT0iYXBwbGljYXRpb24vZWNtYXNjcmlwdCIgY29udGVudFN0eWxlVHlwZT0idGV4dC9jc3MiIGhlaWdodD0iNzFweCIgcHJlc2VydmVBc3BlY3RSYXRpbz0ibm9uZSIgc3R5bGU9IndpZHRoOjc0N3B4O2hlaWdodDo3MXB4OyIgdmVyc2lvbj0iMS4xIiB2aWV3Qm94PSIwIDAgNzQ3IDcxIiB3aWR0aD0iNzQ3cHgiIHpvb21BbmRQYW49Im1hZ25pZnkiPjxkZWZzPjxmaWx0ZXIgaGVpZ2h0PSIzMDAlIiBpZD0iZnM2cTJzcDFqcHpucCIgd2lkdGg9IjMwMCUiIHg9Ii0xIiB5PSItMSI+PGZlR2F1c3NpYW5CbHVyIHJlc3VsdD0iYmx1ck91dCIgc3RkRGV2aWF0aW9uPSIyLjAiLz48ZmVDb2xvck1hdHJpeCBpbj0iYmx1ck91dCIgcmVzdWx0PSJibHVyT3V0MiIgdHlwZT0ibWF0cml4IiB2YWx1ZXM9IjAgMCAwIDAgMCAwIDAgMCAwIDAgMCAwIDAgMCAwIDAgMCAwIC40IDAiLz48ZmVPZmZzZXQgZHg9IjQuMCIgZHk9IjQuMCIgaW49ImJsdXJPdXQyIiByZXN1bHQ9ImJsdXJPdXQzIi8+PGZlQmxlbmQgaW49IlNvdXJjZUdyYXBoaWMiIGluMj0iYmx1ck91dDMiIG1vZGU9Im5vcm1hbCIvPjwvZmlsdGVyPjwvZGVmcz48Zz48IS0tTUQ1PVsxMDYxZmM0ODk4MTcxYWM5MDRmODRhMTAxMmUwNDQ1Nl0KZW50aXR5IGRlbGV0ZS0tPjxyZWN0IGZpbGw9IiNGOEQ3REEiIGZpbHRlcj0idXJsKCNmczZxMnNwMWpwem5wKSIgaGVpZ2h0PSI1Mi41OTM4IiBzdHlsZT0ic3Ryb2tlOiAjMDAwMDAwOyBzdHJva2Utd2lkdGg6IDEuNTsiIHdpZHRoPSI4NSIgeD0iNiIgeT0iOCIvPjx0ZXh0IGZpbGw9IiMwMDAwMDAiIGZvbnQtZmFtaWx5PSJBcmlhbCIgZm9udC1zaXplPSIxNCIgbGVuZ3RoQWRqdXN0PSJzcGFjaW5nQW5kR2x5cGhzIiB0ZXh0TGVuZ3RoPSI1NCIgeD0iMTYiIHk9IjMwLjk5NTEiPkRFTEVURTwvdGV4dD48dGV4dCBmaWxsPSIjMDAwMDAwIiBmb250LWZhbWlseT0iQXJpYWwiIGZvbnQtc2l6ZT0iMTQiIGxlbmd0aEFkanVzdD0ic3BhY2luZ0FuZEdseXBocyIgdGV4dExlbmd0aD0iNjUiIHg9IjE2IiB5PSI0Ny4yOTIiPkV4ZWN1dGVkPC90ZXh0PjwhLS1NRDU9WzVmNjBmODJhYWZjNWFhNDFjZjU3NGYyYzY5M2UwM2QyXQplbnRpdHkgd3JpdGUtLT48cmVjdCBmaWxsPSIjRkZGM0NEIiBmaWx0ZXI9InVybCgjZnM2cTJzcDFqcHpucCkiIGhlaWdodD0iNTIuNTkzOCIgc3R5bGU9InN0cm9rZTogIzAwMDAwMDsgc3Ryb2tlLXdpZHRoOiAxLjU7IiB3aWR0aD0iMTAwIiB4PSIxMjYuNSIgeT0iOCIvPjx0ZXh0IGZpbGw9IiMwMDAwMDAiIGZvbnQtZmFtaWx5PSJBcmlhbCIgZm9udC1zaXplPSIxNCIgbGVuZ3RoQWRqdXN0PSJzcGFjaW5nQW5kR2x5cGhzIiB0ZXh0TGVuZ3RoPSI4MCIgeD0iMTM2LjUiIHk9IjMwLjk5NTEiPlRvbWJzdG9uZTwvdGV4dD48dGV4dCBmaWxsPSIjMDAwMDAwIiBmb250LWZhbWlseT0iQXJpYWwiIGZvbnQtc2l6ZT0iMTQiIGxlbmd0aEFkanVzdD0ic3BhY2luZ0FuZEdseXBocyIgdGV4dExlbmd0aD0iNDkiIHg9IjEzNi41IiB5PSI0Ny4yOTIiPldyaXR0ZW48L3RleHQ+PCEtLU1ENT1bNTg3NDMzZTk3OGJhYzc2NGU5NzIwMDU1OGZjNzU3MTZdCmVudGl0eSByZXBsaWNhdGUtLT48cmVjdCBmaWxsPSIjRkZGM0NEIiBmaWx0ZXI9InVybCgjZnM2cTJzcDFqcHpucCkiIGhlaWdodD0iNTIuNTkzOCIgc3R5bGU9InN0cm9rZTogIzAwMDAwMDsgc3Ryb2tlLXdpZHRoOiAxLjU7IiB3aWR0aD0iMTAwIiB4PSIyNjEuNSIgeT0iOCIvPjx0ZXh0IGZpbGw9IiMwMDAwMDAiIGZvbnQtZmFtaWx5PSJBcmlhbCIgZm9udC1zaXplPSIxNCIgbGVuZ3RoQWRqdXN0PSJzcGFjaW5nQW5kR2x5cGhzIiB0ZXh0TGVuZ3RoPSI4MCIgeD0iMjcxLjUiIHk9IjMwLjk5NTEiPlRvbWJzdG9uZTwvdGV4dD48dGV4dCBmaWxsPSIjMDAwMDAwIiBmb250LWZhbWlseT0iQXJpYWwiIGZvbnQtc2l6ZT0iMTQiIGxlbmd0aEFkanVzdD0ic3BhY2luZ0FuZEdseXBocyIgdGV4dExlbmd0aD0iNzMiIHg9IjI3MS41IiB5PSI0Ny4yOTIiPlJlcGxpY2F0ZWQ8L3RleHQ+PCEtLU1ENT1bNDUzMjA5YTBlOGJkNmIyY2FhMDM2MzVhOGRiNDNlMDRdCmVudGl0eSBncmFjZS0tPjxyZWN0IGZpbGw9IiNFMkUzRTUiIGZpbHRlcj0idXJsKCNmczZxMnNwMWpwem5wKSIgaGVpZ2h0PSI1Mi41OTM4IiBzdHlsZT0ic3Ryb2tlOiAjMDAwMDAwOyBzdHJva2Utd2lkdGg6IDEuNTsiIHdpZHRoPSIxODMiIHg9IjM5NyIgeT0iOCIvPjx0ZXh0IGZpbGw9IiMwMDAwMDAiIGZvbnQtZmFtaWx5PSJBcmlhbCIgZm9udC1zaXplPSIxNCIgbGVuZ3RoQWRqdXN0PSJzcGFjaW5nQW5kR2x5cGhzIiB0ZXh0TGVuZ3RoPSIxNjMiIHg9IjQwNyIgeT0iMzAuOTk1MSI+V2FpdCBnY19ncmFjZV9zZWNvbmRzPC90ZXh0Pjx0ZXh0IGZpbGw9IiMwMDAwMDAiIGZvbnQtZmFtaWx5PSJBcmlhbCIgZm9udC1zaXplPSIxNCIgbGVuZ3RoQWRqdXN0PSJzcGFjaW5nQW5kR2x5cGhzIiB0ZXh0TGVuZ3RoPSIxMjAiIHg9IjQwNyIgeT0iNDcuMjkyIj4oZGVmYXVsdDogMTAgZGF5cyk8L3RleHQ+PCEtLU1ENT1bMDQ0ZGY0OGVhYWQyYWEzZmE2N2E3ZTM5YmE2ZTIyZmFdCmVudGl0eSBjb21wYWN0LS0+PHJlY3QgZmlsbD0iI0Q0RUREQSIgZmlsdGVyPSJ1cmwoI2ZzNnEyc3AxanB6bnApIiBoZWlnaHQ9IjUyLjU5MzgiIHN0eWxlPSJzdHJva2U6ICMwMDAwMDA7IHN0cm9rZS13aWR0aDogMS41OyIgd2lkdGg9IjEyMSIgeD0iNjE1IiB5PSI4Ii8+PHRleHQgZmlsbD0iIzAwMDAwMCIgZm9udC1mYW1pbHk9IkFyaWFsIiBmb250LXNpemU9IjE0IiBsZW5ndGhBZGp1c3Q9InNwYWNpbmdBbmRHbHlwaHMiIHRleHRMZW5ndGg9IjgzIiB4PSI2MjUiIHk9IjMwLjk5NTEiPkNvbXBhY3Rpb248L3RleHQ+PHRleHQgZmlsbD0iIzAwMDAwMCIgZm9udC1mYW1pbHk9IkFyaWFsIiBmb250LXNpemU9IjE0IiBsZW5ndGhBZGp1c3Q9InNwYWNpbmdBbmRHbHlwaHMiIHRleHRMZW5ndGg9IjEwMSIgeD0iNjI1IiB5PSI0Ny4yOTIiPlJlbW92ZXMgRGF0YTwvdGV4dD48IS0tTUQ1PVtkYWVjMmQ3ODdmMDlmMWI2YzFhNTExMGZhOWE2NzExMl0KbGluayBkZWxldGUgdG8gd3JpdGUtLT48cGF0aCBkPSJNOTEuNSwzNC41IEMxMDEuNCwzNC41IDExMS4yOSwzNC41IDEyMS4xOSwzNC41ICIgZmlsbD0ibm9uZSIgaWQ9ImRlbGV0ZS0mZ3Q7d3JpdGUiIHN0eWxlPSJzdHJva2U6ICNBODAwMzY7IHN0cm9rZS13aWR0aDogMS4wOyIvPjxwb2x5Z29uIGZpbGw9IiNBODAwMzYiIHBvaW50cz0iMTI2LjM2LDM0LjUsMTE3LjM2LDMwLjUsMTIxLjM2LDM0LjUsMTE3LjM2LDM4LjUsMTI2LjM2LDM0LjUiIHN0eWxlPSJzdHJva2U6ICNBODAwMzY7IHN0cm9rZS13aWR0aDogMS4wOyIvPjwhLS1NRDU9WzA5ZTA0ODM0M2VhMzFlN2QyMDVlNmIyZWNiZTdlYTA4XQpsaW5rIHdyaXRlIHRvIHJlcGxpY2F0ZS0tPjxwYXRoIGQ9Ik0yMjYuNiwzNC41IEMyMzYuNDgsMzQuNSAyNDYuMzcsMzQuNSAyNTYuMjUsMzQuNSAiIGZpbGw9Im5vbmUiIGlkPSJ3cml0ZS0mZ3Q7cmVwbGljYXRlIiBzdHlsZT0ic3Ryb2tlOiAjQTgwMDM2OyBzdHJva2Utd2lkdGg6IDEuMDsiLz48cG9seWdvbiBmaWxsPSIjQTgwMDM2IiBwb2ludHM9IjI2MS40MiwzNC41LDI1Mi40MiwzMC41LDI1Ni40MiwzNC41LDI1Mi40MiwzOC41LDI2MS40MiwzNC41IiBzdHlsZT0ic3Ryb2tlOiAjQTgwMDM2OyBzdHJva2Utd2lkdGg6IDEuMDsiLz48IS0tTUQ1PVs1ZWZlOWRiOTM5YTQwMWQ3YmFkZjM2YjYzYTkwNGNmNV0KbGluayByZXBsaWNhdGUgdG8gZ3JhY2UtLT48cGF0aCBkPSJNMzYxLjYzLDM0LjUgQzM3MS42MiwzNC41IDM4MS42LDM0LjUgMzkxLjU5LDM0LjUgIiBmaWxsPSJub25lIiBpZD0icmVwbGljYXRlLSZndDtncmFjZSIgc3R5bGU9InN0cm9rZTogI0E4MDAzNjsgc3Ryb2tlLXdpZHRoOiAxLjA7Ii8+PHBvbHlnb24gZmlsbD0iI0E4MDAzNiIgcG9pbnRzPSIzOTYuODEsMzQuNSwzODcuODEsMzAuNSwzOTEuODEsMzQuNSwzODcuODEsMzguNSwzOTYuODEsMzQuNSIgc3R5bGU9InN0cm9rZTogI0E4MDAzNjsgc3Ryb2tlLXdpZHRoOiAxLjA7Ii8+PCEtLU1ENT1bNGY3MzEzNWE1MzQ1NTdhZjA1YjBmNmEyOWI2MjE5MTFdCmxpbmsgZ3JhY2UgdG8gY29tcGFjdC0tPjxwYXRoIGQ9Ik01ODAuMTcsMzQuNSBDNTkwLDM0LjUgNTk5LjgzLDM0LjUgNjA5LjY2LDM0LjUgIiBmaWxsPSJub25lIiBpZD0iZ3JhY2UtJmd0O2NvbXBhY3QiIHN0eWxlPSJzdHJva2U6ICNBODAwMzY7IHN0cm9rZS13aWR0aDogMS4wOyIvPjxwb2x5Z29uIGZpbGw9IiNBODAwMzYiIHBvaW50cz0iNjE0LjgsMzQuNSw2MDUuOCwzMC41LDYwOS44LDM0LjUsNjA1LjgsMzguNSw2MTQuOCwzNC41IiBzdHlsZT0ic3Ryb2tlOiAjQTgwMDM2OyBzdHJva2Utd2lkdGg6IDEuMDsiLz48IS0tTUQ1PVs5M2QxNDUyYWYzYjg2YTQ1NGE1NDdlZWYwYjk5NDI4YV0KQHN0YXJ0dW1sDQpza2lucGFyYW0gYmFja2dyb3VuZENvbG9yICNGRkZGRkYNCnNraW5wYXJhbSBkZWZhdWx0Rm9udE5hbWUgQXJpYWwNCg0KcmVjdGFuZ2xlICJERUxFVEVcbkV4ZWN1dGVkIiBhcyBkZWxldGUgI2Y4ZDdkYQ0KcmVjdGFuZ2xlICJUb21ic3RvbmVcbldyaXR0ZW4iIGFzIHdyaXRlICNmZmYzY2QNCnJlY3RhbmdsZSAiVG9tYnN0b25lXG5SZXBsaWNhdGVkIiBhcyByZXBsaWNhdGUgI2ZmZjNjZA0KcmVjdGFuZ2xlICJXYWl0IGdjX2dyYWNlX3NlY29uZHNcbihkZWZhdWx0OiAxMCBkYXlzKSIgYXMgZ3JhY2UgI2UyZTNlNQ0KcmVjdGFuZ2xlICJDb21wYWN0aW9uXG5SZW1vdmVzIERhdGEiIGFzIGNvbXBhY3QgI2Q0ZWRkYQ0KDQpkZWxldGUgLT4gd3JpdGUNCndyaXRlIC0+IHJlcGxpY2F0ZQ0KcmVwbGljYXRlIC0+IGdyYWNlDQpncmFjZSAtPiBjb21wYWN0DQoNCkBlbmR1bWwNCgpQbGFudFVNTCB2ZXJzaW9uIDEuMjAyMC4wMihTdW4gTWFyIDAxIDEwOjIyOjA3IEdNVCAyMDIwKQooR1BMIHNvdXJjZSBkaXN0cmlidXRpb24pCkphdmEgUnVudGltZTogT3BlbkpESyBSdW50aW1lIEVudmlyb25tZW50CkpWTTogT3BlbkpESyA2NC1CaXQgU2VydmVyIFZNCkphdmEgVmVyc2lvbjogMTcuMC4xNSs2LUxUUwpPcGVyYXRpbmcgU3lzdGVtOiBMaW51eApEZWZhdWx0IEVuY29kaW5nOiBVVEYtOApMYW5ndWFnZTogZW4KQ291bnRyeTogbnVsbAotLT48L2c+PC9zdmc+" class="uml" alt="uml diagram" title=""></a></p>
 <hr>
 <h2 id="synopsis">Synopsis<a class="headerlink" href="#synopsis" title="Permanent link">¶</a></h2>
 <div class="highlight"><pre><span></span><code>DELETE [ *column_name* [ , *column_name* ... ] ]
@@ -14643,7 +14742,37 @@ data-et-multi-view="{&quot;schema&quot;:{&quot;content&quot;:{&quot;desktop&quot
 <hr>
 <h2 id="tombstone-types">Tombstone Types<a class="headerlink" href="#tombstone-types" title="Permanent link">¶</a></h2>
 <p>Different DELETE operations create different tombstone types:</p>
-<p><span class="graphviz-light-dark" data-library-default="#789abc" data-default="#789abc" data-light="#000000" data-dark="#ffffff"></span><svg width="734pt" height="179pt" viewbox="0.00 0.00 734.00 179.00" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" class="graphviz dot"><g id="graph0" class="graph" transform="scale(1 1) rotate(0) translate(4 175)"><title>tombstone_types</title><polygon fill="transparent" stroke="transparent" points="-4,4 -4,-175 730,-175 730,4 -4,4"></polygon><g id="clust1" class="cluster"><title>cluster_cell</title><polygon fill="#f8f9fa" stroke="#789abc" points="8,-8 8,-159 186,-159 186,-8 8,-8"></polygon><text text-anchor="middle" x="97" y="-143.8" font-family="Times,serif" font-size="14.00" fill="#789abc">Cell Tombstone</text></g><g id="clust2" class="cluster"><title>cluster_row</title><polygon fill="#f8f9fa" stroke="#789abc" points="194,-8 194,-159 338,-159 338,-8 194,-8"></polygon><text text-anchor="middle" x="266" y="-143.8" font-family="Times,serif" font-size="14.00" fill="#789abc">Row Tombstone</text></g><g id="clust3" class="cluster"><title>cluster_range</title><polygon fill="#f8f9fa" stroke="#789abc" points="346,-8 346,-163 530,-163 530,-8 346,-8"></polygon><text text-anchor="middle" x="438" y="-147.8" font-family="Times,serif" font-size="14.00" fill="#789abc">Range Tombstone</text></g><g id="clust4" class="cluster"><title>cluster_partition</title><polygon fill="#f8f9fa" stroke="#789abc" points="538,-8 538,-159 718,-159 718,-8 538,-8"></polygon><text text-anchor="middle" x="628" y="-143.8" font-family="Times,serif" font-size="14.00" fill="#789abc">Partition Tombstone</text></g><!-- cell_cmd --><g id="node1" class="node"><title>cell_cmd</title><polygon fill="#e8f4f8" stroke="#789abc" points="177.5,-128 16.5,-128 16.5,-92 177.5,-92 177.5,-128"></polygon><text text-anchor="middle" x="97" y="-113.2" font-family="Helvetica,sans-Serif" font-size="11.00" fill="#789abc">DELETE email FROM users</text><text text-anchor="middle" x="97" y="-101.2" font-family="Helvetica,sans-Serif" font-size="11.00" fill="#789abc">WHERE id = 1</text></g><!-- cell_result --><g id="node2" class="node"><title>cell_result</title><polygon fill="#fff3cd" stroke="#789abc" points="151,-52 43,-52 43,-16 151,-16 151,-52"></polygon><text text-anchor="middle" x="97" y="-37.2" font-family="Helvetica,sans-Serif" font-size="11.00" fill="#789abc">Marks single cell</text><text text-anchor="middle" x="97" y="-25.2" font-family="Helvetica,sans-Serif" font-size="11.00" fill="#789abc">as deleted</text></g><!-- cell_cmd&#45;&gt;cell_result --><g id="edge1" class="edge"><title>cell_cmd-&gt;cell_result</title><path fill="none" stroke="#789abc" d="M97,-91.84C97,-83.06 97,-72.16 97,-62.27"></path><polygon fill="#789abc" stroke="#789abc" points="100.5,-62.07 97,-52.07 93.5,-62.07 100.5,-62.07"></polygon></g><!-- row_cmd --><g id="node3" class="node"><title>row_cmd</title><polygon fill="#e8f4f8" stroke="#789abc" points="330,-128 202,-128 202,-92 330,-92 330,-128"></polygon><text text-anchor="middle" x="266" y="-113.2" font-family="Helvetica,sans-Serif" font-size="11.00" fill="#789abc">DELETE FROM users</text><text text-anchor="middle" x="266" y="-101.2" font-family="Helvetica,sans-Serif" font-size="11.00" fill="#789abc">WHERE id = 1</text></g><!-- row_result --><g id="node4" class="node"><title>row_result</title><polygon fill="#fff3cd" stroke="#789abc" points="321,-52 211,-52 211,-16 321,-16 321,-52"></polygon><text text-anchor="middle" x="266" y="-37.2" font-family="Helvetica,sans-Serif" font-size="11.00" fill="#789abc">Marks entire row</text><text text-anchor="middle" x="266" y="-25.2" font-family="Helvetica,sans-Serif" font-size="11.00" fill="#789abc">as deleted</text></g><!-- row_cmd&#45;&gt;row_result --><g id="edge2" class="edge"><title>row_cmd-&gt;row_result</title><path fill="none" stroke="#789abc" d="M266,-91.84C266,-83.06 266,-72.16 266,-62.27"></path><polygon fill="#789abc" stroke="#789abc" points="269.5,-62.07 266,-52.07 262.5,-62.07 269.5,-62.07"></polygon></g><!-- range_cmd --><g id="node5" class="node"><title>range_cmd</title><polygon fill="#e8f4f8" stroke="#789abc" points="522.5,-132 353.5,-132 353.5,-88 522.5,-88 522.5,-132"></polygon><text text-anchor="middle" x="438" y="-119.2" font-family="Helvetica,sans-Serif" font-size="11.00" fill="#789abc">DELETE FROM events</text><text text-anchor="middle" x="438" y="-107.2" font-family="Helvetica,sans-Serif" font-size="11.00" fill="#789abc">WHERE pk = 'x'</text><text text-anchor="middle" x="438" y="-95.2" font-family="Helvetica,sans-Serif" font-size="11.00" fill="#789abc">AND ck &gt;= 1 AND ck &lt; 100</text></g><!-- range_result --><g id="node6" class="node"><title>range_result</title><polygon fill="#d4edda" stroke="#789abc" points="504.5,-52 371.5,-52 371.5,-16 504.5,-16 504.5,-52"></polygon><text text-anchor="middle" x="438" y="-37.2" font-family="Helvetica,sans-Serif" font-size="11.00" fill="#789abc">Single marker covers</text><text text-anchor="middle" x="438" y="-25.2" font-family="Helvetica,sans-Serif" font-size="11.00" fill="#789abc">entire range</text></g><!-- range_cmd&#45;&gt;range_result --><g id="edge3" class="edge"><title>range_cmd-&gt;range_result</title><path fill="none" stroke="#789abc" d="M438,-87.99C438,-80.06 438,-70.91 438,-62.48"></path><polygon fill="#789abc" stroke="#789abc" points="441.5,-62.31 438,-52.31 434.5,-62.31 441.5,-62.31"></polygon></g><!-- part_cmd --><g id="node7" class="node"><title>part_cmd</title><polygon fill="#e8f4f8" stroke="#789abc" points="710,-128 546,-128 546,-92 710,-92 710,-128"></polygon><text text-anchor="middle" x="628" y="-113.2" font-family="Helvetica,sans-Serif" font-size="11.00" fill="#789abc">DELETE FROM user_events</text><text text-anchor="middle" x="628" y="-101.2" font-family="Helvetica,sans-Serif" font-size="11.00" fill="#789abc">WHERE user_id = 123</text></g><!-- part_result --><g id="node8" class="node"><title>part_result</title><polygon fill="#fff3cd" stroke="#789abc" points="696,-52 560,-52 560,-16 696,-16 696,-52"></polygon><text text-anchor="middle" x="628" y="-37.2" font-family="Helvetica,sans-Serif" font-size="11.00" fill="#789abc">Marks entire partition</text><text text-anchor="middle" x="628" y="-25.2" font-family="Helvetica,sans-Serif" font-size="11.00" fill="#789abc">as deleted</text></g><!-- part_cmd&#45;&gt;part_result --><g id="edge4" class="edge"><title>part_cmd-&gt;part_result</title><path fill="none" stroke="#789abc" d="M628,-91.84C628,-83.06 628,-72.16 628,-62.27"></path><polygon fill="#789abc" stroke="#789abc" points="631.5,-62.07 628,-52.07 624.5,-62.07 631.5,-62.07"></polygon></g></g></svg></p>
+<table>
+<thead>
+<tr>
+<th>Tombstone Type</th>
+<th>Example</th>
+<th>Effect</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Cell</strong></td>
+<td><code>DELETE email FROM users WHERE id = 1</code></td>
+<td>Marks single cell as deleted</td>
+</tr>
+<tr>
+<td><strong>Row</strong></td>
+<td><code>DELETE FROM users WHERE id = 1</code></td>
+<td>Marks entire row as deleted</td>
+</tr>
+<tr>
+<td><strong>Range</strong></td>
+<td><code>DELETE FROM events WHERE pk = 'x' AND ck &gt;= 1 AND ck &lt; 100</code></td>
+<td>Single marker covers entire range</td>
+</tr>
+<tr>
+<td><strong>Partition</strong></td>
+<td><code>DELETE FROM user_events WHERE user_id = 123</code></td>
+<td>Marks entire partition as deleted</td>
+</tr>
+</tbody>
+</table>
 <h3 id="cell-tombstone">Cell Tombstone<a class="headerlink" href="#cell-tombstone" title="Permanent link">¶</a></h3>
 <div class="highlight"><pre><span></span><code><span class="k">DELETE</span><span class="w"> </span><span class="n">email</span><span class="w"> </span><span class="k">FROM</span><span class="w"> </span><span class="n">users</span><span class="w"> </span><span class="k">WHERE</span><span class="w"> </span><span class="n">user_id</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">123</span><span class="p">;</span>
 </code></pre></div>
@@ -14694,7 +14823,43 @@ data-et-multi-view="{&quot;schema&quot;:{&quot;content&quot;:{&quot;desktop&quot
 <span class="k">ALTER</span><span class="w"> </span><span class="k">TABLE</span><span class="w"> </span><span class="n">events</span><span class="w"> </span><span class="k">WITH</span><span class="w"> </span><span class="n">gc_grace_seconds</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">86400</span><span class="p">;</span><span class="w">  </span><span class="c1">-- 1 day</span>
 </code></pre></div>
 <h3 id="why-gc_grace_seconds-matters">Why gc_grace_seconds Matters<a class="headerlink" href="#why-gc_grace_seconds-matters" title="Permanent link">¶</a></h3>
-<p><span class="graphviz-light-dark" data-library-default="#789abc" data-default="#789abc" data-light="#000000" data-dark="#ffffff"></span><svg width="581pt" height="351pt" viewbox="0.00 0.00 581.00 351.00" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" class="graphviz dot"><g id="graph0" class="graph" transform="scale(1 1) rotate(0) translate(4 347)"><title>gc_grace</title><polygon fill="transparent" stroke="transparent" points="-4,4 -4,-347 577,-347 577,4 -4,4"></polygon><g id="clust1" class="cluster"><title>cluster_safe</title><polygon fill="#d4edda" stroke="#789abc" points="8,-80 8,-299 277,-299 277,-80 8,-80"></polygon><text text-anchor="middle" x="142.5" y="-283.8" font-family="Times,serif" font-size="14.00" fill="#789abc">Safe: Node returns within gc_grace</text></g><g id="clust2" class="cluster"><title>cluster_danger</title><polygon fill="#f8d7da" stroke="#789abc" points="285,-8 285,-299 565,-299 565,-8 285,-8"></polygon><text text-anchor="middle" x="425" y="-283.8" font-family="Times,serif" font-size="14.00" fill="#789abc">Danger: Node returns after gc_grace</text></g><!-- scenario --><g id="node1" class="node"><title>scenario</title><polygon fill="#e8f4f8" stroke="#789abc" points="382,-343 202,-343 202,-307 382,-307 382,-343"></polygon><text text-anchor="middle" x="292" y="-322.2" font-family="Helvetica,sans-Serif" font-size="11.00" fill="#789abc">Scenario: gc_grace = 10 days</text></g><!-- safe_down --><g id="node2" class="node"><title>safe_down</title><polygon fill="none" stroke="#789abc" points="262.5,-268 173.5,-268 173.5,-232 262.5,-232 262.5,-268"></polygon><text text-anchor="middle" x="218" y="-253.2" font-family="Helvetica,sans-Serif" font-size="11.00" fill="#789abc">Node B down</text><text text-anchor="middle" x="218" y="-241.2" font-family="Helvetica,sans-Serif" font-size="11.00" fill="#789abc">(Day 0)</text></g><!-- scenario&#45;&gt;safe_down --><g id="edge6" class="edge"><title>scenario-&gt;safe_down</title><path fill="none" stroke="#789abc" d="M274.46,-306.7C264.97,-297.34 253.09,-285.62 242.68,-275.34"></path><polygon fill="#789abc" stroke="#789abc" points="244.99,-272.71 235.41,-268.18 240.07,-277.69 244.99,-272.71"></polygon></g><!-- danger_down --><g id="node5" class="node"><title>danger_down</title><polygon fill="none" stroke="#789abc" points="391.5,-268 302.5,-268 302.5,-232 391.5,-232 391.5,-268"></polygon><text text-anchor="middle" x="347" y="-253.2" font-family="Helvetica,sans-Serif" font-size="11.00" fill="#789abc">Node B down</text><text text-anchor="middle" x="347" y="-241.2" font-family="Helvetica,sans-Serif" font-size="11.00" fill="#789abc">(Day 0)</text></g><!-- scenario&#45;&gt;danger_down --><g id="edge7" class="edge"><title>scenario-&gt;danger_down</title><path fill="none" stroke="#789abc" d="M305.03,-306.7C311.88,-297.61 320.41,-286.3 327.98,-276.25"></path><polygon fill="#789abc" stroke="#789abc" points="330.84,-278.27 334.06,-268.18 325.25,-274.06 330.84,-278.27"></polygon></g><!-- safe_repair --><g id="node3" class="node"><title>safe_repair</title><polygon fill="none" stroke="#789abc" points="255,-196 155,-196 155,-160 255,-160 255,-196"></polygon><text text-anchor="middle" x="205" y="-181.2" font-family="Helvetica,sans-Serif" font-size="11.00" fill="#789abc">Node B returns</text><text text-anchor="middle" x="205" y="-169.2" font-family="Helvetica,sans-Serif" font-size="11.00" fill="#789abc">(Day 7)</text></g><!-- safe_down&#45;&gt;safe_repair --><g id="edge1" class="edge"><title>safe_down-&gt;safe_repair</title><path fill="none" stroke="#789abc" d="M214.79,-231.7C213.35,-223.98 211.63,-214.71 210.04,-206.11"></path><polygon fill="#789abc" stroke="#789abc" points="213.44,-205.3 208.18,-196.1 206.56,-206.58 213.44,-205.3"></polygon></g><!-- safe_result --><g id="node4" class="node"><title>safe_result</title><polygon fill="none" stroke="#789abc" points="269,-124 127,-124 127,-88 269,-88 269,-124"></polygon><text text-anchor="middle" x="198" y="-109.2" font-family="Helvetica,sans-Serif" font-size="11.00" fill="#789abc">Tombstone propagates</text><text text-anchor="middle" x="198" y="-97.2" font-family="Helvetica,sans-Serif" font-size="11.00" fill="#789abc">Data stays deleted ✓</text></g><!-- safe_repair&#45;&gt;safe_result --><g id="edge2" class="edge"><title>safe_repair-&gt;safe_result</title><path fill="none" stroke="#789abc" d="M203.27,-159.7C202.5,-151.98 201.57,-142.71 200.71,-134.11"></path><polygon fill="#789abc" stroke="#789abc" points="204.19,-133.71 199.71,-124.1 197.22,-134.4 204.19,-133.71"></polygon></g><!-- danger_compact --><g id="node6" class="node"><title>danger_compact</title><polygon fill="none" stroke="#789abc" points="421,-196 293,-196 293,-160 421,-160 421,-196"></polygon><text text-anchor="middle" x="357" y="-181.2" font-family="Helvetica,sans-Serif" font-size="11.00" fill="#789abc">Tombstone removed</text><text text-anchor="middle" x="357" y="-169.2" font-family="Helvetica,sans-Serif" font-size="11.00" fill="#789abc">(Day 11)</text></g><!-- danger_down&#45;&gt;danger_compact --><g id="edge3" class="edge"><title>danger_down-&gt;danger_compact</title><path fill="none" stroke="#789abc" d="M349.47,-231.7C350.57,-223.98 351.9,-214.71 353.13,-206.11"></path><polygon fill="#789abc" stroke="#789abc" points="356.61,-206.5 354.56,-196.1 349.68,-205.51 356.61,-206.5"></polygon></g><!-- danger_return --><g id="node7" class="node"><title>danger_return</title><polygon fill="none" stroke="#789abc" points="407,-124 307,-124 307,-88 407,-88 407,-124"></polygon><text text-anchor="middle" x="357" y="-109.2" font-family="Helvetica,sans-Serif" font-size="11.00" fill="#789abc">Node B returns</text><text text-anchor="middle" x="357" y="-97.2" font-family="Helvetica,sans-Serif" font-size="11.00" fill="#789abc">(Day 15)</text></g><!-- danger_compact&#45;&gt;danger_return --><g id="edge4" class="edge"><title>danger_compact-&gt;danger_return</title><path fill="none" stroke="#789abc" d="M357,-159.7C357,-151.98 357,-142.71 357,-134.11"></path><polygon fill="#789abc" stroke="#789abc" points="360.5,-134.1 357,-124.1 353.5,-134.1 360.5,-134.1"></polygon></g><!-- danger_result --><g id="node8" class="node"><title>danger_result</title><polygon fill="none" stroke="#789abc" points="421,-52 293,-52 293,-16 421,-16 421,-52"></polygon><text text-anchor="middle" x="357" y="-37.2" font-family="Helvetica,sans-Serif" font-size="11.00" fill="#789abc">Old data resurrects!</text><text text-anchor="middle" x="357" y="-25.2" font-family="Helvetica,sans-Serif" font-size="11.00" fill="#789abc">Inconsistency ✗</text></g><!-- danger_return&#45;&gt;danger_result --><g id="edge5" class="edge"><title>danger_return-&gt;danger_result</title><path fill="none" stroke="#789abc" d="M357,-87.7C357,-79.98 357,-70.71 357,-62.11"></path><polygon fill="#789abc" stroke="#789abc" points="360.5,-62.1 357,-52.1 353.5,-62.1 360.5,-62.1"></polygon></g></g></svg></p>
+<p><strong>Scenario: gc_grace = 10 days</strong></p>
+<table>
+<thead>
+<tr>
+<th>Timeline</th>
+<th>Safe Scenario</th>
+<th>Dangerous Scenario</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Day 0</td>
+<td>Node B goes down</td>
+<td>Node B goes down</td>
+</tr>
+<tr>
+<td>Day 7</td>
+<td>Node B returns</td>
+<td>-</td>
+</tr>
+<tr>
+<td>Day 11</td>
+<td>-</td>
+<td>Tombstone removed by compaction</td>
+</tr>
+<tr>
+<td>Day 15</td>
+<td>-</td>
+<td>Node B returns</td>
+</tr>
+<tr>
+<td><strong>Result</strong></td>
+<td>Tombstone propagates, data stays deleted ✓</td>
+<td>Old data resurrects! Inconsistency ✗</td>
+</tr>
+</tbody>
+</table>
 <h3 id="configuring-gc_grace_seconds">Configuring gc_grace_seconds<a class="headerlink" href="#configuring-gc_grace_seconds" title="Permanent link">¶</a></h3>
 <table>
 <thead>
@@ -14741,7 +14906,33 @@ data-et-multi-view="{&quot;schema&quot;:{&quot;content&quot;:{&quot;desktop&quot
 <h2 id="tombstone-performance-impact">Tombstone Performance Impact<a class="headerlink" href="#tombstone-performance-impact" title="Permanent link">¶</a></h2>
 <h3 id="read-performance">Read Performance<a class="headerlink" href="#read-performance" title="Permanent link">¶</a></h3>
 <p>Tombstones must be read and filtered during queries:</p>
-<p><span class="graphviz-light-dark" data-library-default="#789abc" data-default="#789abc" data-light="#000000" data-dark="#ffffff"></span><svg width="498pt" height="153pt" viewbox="0.00 0.00 498.00 153.00" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" class="graphviz dot"><g id="graph0" class="graph" transform="scale(1 1) rotate(0) translate(4 149)"><title>read_impact</title><polygon fill="transparent" stroke="transparent" points="-4,4 -4,-149 494,-149 494,4 -4,4"></polygon><g id="clust1" class="cluster"><title>cluster_sstables</title><polygon fill="#f8f9fa" stroke="#789abc" points="162,-8 162,-137 301,-137 301,-8 162,-8"></polygon><text text-anchor="middle" x="231.5" y="-121.8" font-family="Times,serif" font-size="14.00" fill="#789abc">SSTables on Disk</text></g><!-- query --><g id="node1" class="node"><title>query</title><polygon fill="#e8f4f8" stroke="#789abc" points="134,-79 0,-79 0,-43 134,-43 134,-79"></polygon><text text-anchor="middle" x="67" y="-64.2" font-family="Helvetica,sans-Serif" font-size="11.00" fill="#789abc">SELECT * FROM table</text><text text-anchor="middle" x="67" y="-52.2" font-family="Helvetica,sans-Serif" font-size="11.00" fill="#789abc">WHERE pk = 1</text></g><!-- data --><g id="node2" class="node"><title>data</title><polygon fill="#d4edda" stroke="#789abc" points="269,-106 193,-106 193,-70 269,-70 269,-106"></polygon><text text-anchor="middle" x="231" y="-91.2" font-family="Helvetica,sans-Serif" font-size="11.00" fill="#789abc">Live Data</text><text text-anchor="middle" x="231" y="-79.2" font-family="Helvetica,sans-Serif" font-size="11.00" fill="#789abc">(100 rows)</text></g><!-- query&#45;&gt;data --><g id="edge1" class="edge"><title>query-&gt;data</title><path fill="none" stroke="#789abc" d="M134.36,-72.06C150.55,-74.76 167.54,-77.59 182.64,-80.11"></path><polygon fill="#789abc" stroke="#789abc" points="182.32,-83.6 192.75,-81.79 183.47,-76.7 182.32,-83.6"></polygon></g><!-- tombstones --><g id="node3" class="node"><title>tombstones</title><polygon fill="#f8d7da" stroke="#789abc" points="272,-52 190,-52 190,-16 272,-16 272,-52"></polygon><text text-anchor="middle" x="231" y="-37.2" font-family="Helvetica,sans-Serif" font-size="11.00" fill="#789abc">Tombstones</text><text text-anchor="middle" x="231" y="-25.2" font-family="Helvetica,sans-Serif" font-size="11.00" fill="#789abc">(10,000)</text></g><!-- query&#45;&gt;tombstones --><g id="edge2" class="edge"><title>query-&gt;tombstones</title><path fill="none" stroke="#789abc" d="M134.36,-49.94C149.55,-47.41 165.44,-44.76 179.82,-42.36"></path><polygon fill="#789abc" stroke="#789abc" points="180.7,-45.77 189.99,-40.67 179.55,-38.86 180.7,-45.77"></polygon></g><!-- process --><g id="node4" class="node"><title>process</title><polygon fill="#fff3cd" stroke="#789abc" points="490,-79 329,-79 329,-43 490,-43 490,-79"></polygon><text text-anchor="middle" x="409.5" y="-64.2" font-family="Helvetica,sans-Serif" font-size="11.00" fill="#789abc">Must read all 10,100</text><text text-anchor="middle" x="409.5" y="-52.2" font-family="Helvetica,sans-Serif" font-size="11.00" fill="#789abc">entries to return 100 rows</text></g><!-- data&#45;&gt;process --><g id="edge3" class="edge"><title>data-&gt;process</title><path fill="none" stroke="#789abc" d="M269,-82.34C283.53,-80.12 300.91,-77.46 318.38,-74.79"></path><polygon fill="#789abc" stroke="#789abc" points="319.3,-78.19 328.65,-73.21 318.24,-71.27 319.3,-78.19"></polygon></g><!-- tombstones&#45;&gt;process --><g id="edge4" class="edge"><title>tombstones-&gt;process</title><path fill="none" stroke="#789abc" d="M272.05,-40.13C286.03,-42.27 302.34,-44.76 318.72,-47.27"></path><polygon fill="#789abc" stroke="#789abc" points="318.5,-50.77 328.91,-48.82 319.56,-43.85 318.5,-50.77"></polygon></g></g></svg></p>
+<p><strong>Query:</strong> <code>SELECT * FROM table WHERE pk = 1</code></p>
+<table>
+<thead>
+<tr>
+<th>Data Type</th>
+<th>Count</th>
+<th>Status</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Live Data</td>
+<td>100 rows</td>
+<td>Returned</td>
+</tr>
+<tr>
+<td>Tombstones</td>
+<td>10,000</td>
+<td>Must be read and filtered</td>
+</tr>
+<tr>
+<td><strong>Total Read</strong></td>
+<td>10,100 entries</td>
+<td>To return 100 rows</td>
+</tr>
+</tbody>
+</table>
 <p><strong>Performance implications:</strong></p>
 <ul>
 <li>All tombstones in query range must be read</li>

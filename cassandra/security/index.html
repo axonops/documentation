@@ -6159,6 +6159,27 @@ data-et-multi-view="{&quot;schema&quot;:{&quot;content&quot;:{&quot;desktop&quot
   
   
     <li class="md-nav__item">
+      <a href="../cql/ddl/trigger/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Trigger
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
       <a href="../cql/ddl/type/" class="md-nav__link">
         
   
@@ -6482,7 +6503,7 @@ data-et-multi-view="{&quot;schema&quot;:{&quot;content&quot;:{&quot;desktop&quot
             
   
   <span class="md-ellipsis">
-    Security Commands
+    Security
   </span>
   
 
@@ -6492,7 +6513,7 @@ data-et-multi-view="{&quot;schema&quot;:{&quot;content&quot;:{&quot;desktop&quot
         <nav class="md-nav" data-md-level="5" aria-labelledby="__nav_7_2_4_3_5_label" aria-expanded="false">
           <label class="md-nav__title" for="__nav_7_2_4_3_5">
             <span class="md-nav__icon md-icon"></span>
-            Security Commands
+            Security
           </label>
           <ul class="md-nav__list" data-md-scrollfix>
             
@@ -6508,6 +6529,27 @@ data-et-multi-view="{&quot;schema&quot;:{&quot;content&quot;:{&quot;desktop&quot
   
   <span class="md-ellipsis">
     Overview
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../cql/security/rbac/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Role-Based Access Control
   </span>
   
 
@@ -12901,6 +12943,27 @@ data-et-multi-view="{&quot;schema&quot;:{&quot;content&quot;:{&quot;desktop&quot
   
   
   
+    <li class="md-nav__item">
+      <a href="os-security/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    OS Security
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
     
     
     
@@ -12912,10 +12975,10 @@ data-et-multi-view="{&quot;schema&quot;:{&quot;content&quot;:{&quot;desktop&quot
       
         
         
-        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_7_2_6_7" >
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_7_2_6_8" >
         
           
-          <label class="md-nav__link" for="__nav_7_2_6_7" id="__nav_7_2_6_7_label" tabindex="0">
+          <label class="md-nav__link" for="__nav_7_2_6_8" id="__nav_7_2_6_8_label" tabindex="0">
             
   
   <span class="md-ellipsis">
@@ -12926,8 +12989,8 @@ data-et-multi-view="{&quot;schema&quot;:{&quot;content&quot;:{&quot;desktop&quot
             <span class="md-nav__icon md-icon"></span>
           </label>
         
-        <nav class="md-nav" data-md-level="4" aria-labelledby="__nav_7_2_6_7_label" aria-expanded="false">
-          <label class="md-nav__title" for="__nav_7_2_6_7">
+        <nav class="md-nav" data-md-level="4" aria-labelledby="__nav_7_2_6_8_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_7_2_6_8">
             <span class="md-nav__icon md-icon"></span>
             Encryption
           </label>
@@ -14292,7 +14355,32 @@ data-et-multi-view="{&quot;schema&quot;:{&quot;content&quot;:{&quot;desktop&quot
 <p>This guide covers enabling authentication, setting up roles and permissions, configuring encryption, and turning on audit logging.</p>
 <h2 id="security-overview">Security Overview<a class="headerlink" href="#security-overview" title="Permanent link">¶</a></h2>
 <h3 id="security-layers">Security Layers<a class="headerlink" href="#security-layers" title="Permanent link">¶</a></h3>
-<p><span class="graphviz-light-dark" data-library-default="#789abc" data-default="#789abc" data-light="#000000" data-dark="#ffffff"></span><svg width="328pt" height="260pt" viewbox="0.00 0.00 328.00 260.00" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" class="graphviz dot"><g id="graph0" class="graph" transform="scale(1 1) rotate(0) translate(4 256)"><title>security_layers</title><polygon fill="transparent" stroke="transparent" points="-4,4 -4,-256 324,-256 324,4 -4,4"></polygon><!-- app --><g id="node1" class="node"><title>app</title><polygon fill="#e8f4f8" stroke="#789abc" points="320,-252 0,-252 0,-216 320,-216 320,-252"></polygon><text text-anchor="middle" x="160" y="-237.2" font-family="Helvetica,sans-Serif" font-size="11.00" fill="#789abc">Application Security</text><text text-anchor="middle" x="160" y="-225.2" font-family="Helvetica,sans-Serif" font-size="11.00" fill="#789abc">Input validation, credential management, audit logging</text></g><!-- cassandra --><g id="node2" class="node"><title>cassandra</title><polygon fill="#d4edda" stroke="#789abc" points="304,-180 16,-180 16,-144 304,-144 304,-180"></polygon><text text-anchor="middle" x="160" y="-165.2" font-family="Helvetica,sans-Serif" font-size="11.00" fill="#789abc">Cassandra Security</text><text text-anchor="middle" x="160" y="-153.2" font-family="Helvetica,sans-Serif" font-size="11.00" fill="#789abc">Authentication, Authorization, Encryption</text></g><!-- app&#45;&gt;cassandra --><!-- network --><g id="node3" class="node"><title>network</title><polygon fill="#fff3cd" stroke="#789abc" points="304,-108 16,-108 16,-72 304,-72 304,-108"></polygon><text text-anchor="middle" x="160" y="-93.2" font-family="Helvetica,sans-Serif" font-size="11.00" fill="#789abc">Network Security</text><text text-anchor="middle" x="160" y="-81.2" font-family="Helvetica,sans-Serif" font-size="11.00" fill="#789abc">Firewalls, VPNs, network isolation</text></g><!-- cassandra&#45;&gt;network --><!-- infra --><g id="node4" class="node"><title>infra</title><polygon fill="#f8d7da" stroke="#789abc" points="304,-36 16,-36 16,0 304,0 304,-36"></polygon><text text-anchor="middle" x="160" y="-21.2" font-family="Helvetica,sans-Serif" font-size="11.00" fill="#789abc">Infrastructure Security</text><text text-anchor="middle" x="160" y="-9.2" font-family="Helvetica,sans-Serif" font-size="11.00" fill="#789abc">OS hardening, access controls, patching</text></g><!-- network&#45;&gt;infra --></g></svg></p>
+<table>
+<thead>
+<tr>
+<th>Layer</th>
+<th>Scope</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Application</td>
+<td>Input validation, credential management, audit logging</td>
+</tr>
+<tr>
+<td>Cassandra</td>
+<td>Authentication, authorization, encryption</td>
+</tr>
+<tr>
+<td>Network</td>
+<td>Firewalls, VPNs, network isolation</td>
+</tr>
+<tr>
+<td>Infrastructure</td>
+<td>OS hardening, access controls, patching</td>
+</tr>
+</tbody>
+</table>
 <h3 id="security-components">Security Components<a class="headerlink" href="#security-components" title="Permanent link">¶</a></h3>
 <table>
 <thead>

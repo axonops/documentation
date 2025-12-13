@@ -6159,6 +6159,27 @@ data-et-multi-view="{&quot;schema&quot;:{&quot;content&quot;:{&quot;desktop&quot
   
   
     <li class="md-nav__item">
+      <a href="../cql/ddl/trigger/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Trigger
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
       <a href="../cql/ddl/type/" class="md-nav__link">
         
   
@@ -6482,7 +6503,7 @@ data-et-multi-view="{&quot;schema&quot;:{&quot;content&quot;:{&quot;desktop&quot
             
   
   <span class="md-ellipsis">
-    Security Commands
+    Security
   </span>
   
 
@@ -6492,7 +6513,7 @@ data-et-multi-view="{&quot;schema&quot;:{&quot;content&quot;:{&quot;desktop&quot
         <nav class="md-nav" data-md-level="5" aria-labelledby="__nav_7_2_4_3_5_label" aria-expanded="false">
           <label class="md-nav__title" for="__nav_7_2_4_3_5">
             <span class="md-nav__icon md-icon"></span>
-            Security Commands
+            Security
           </label>
           <ul class="md-nav__list" data-md-scrollfix>
             
@@ -6508,6 +6529,27 @@ data-et-multi-view="{&quot;schema&quot;:{&quot;content&quot;:{&quot;desktop&quot
   
   <span class="md-ellipsis">
     Overview
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../cql/security/rbac/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Role-Based Access Control
   </span>
   
 
@@ -12979,6 +13021,27 @@ data-et-multi-view="{&quot;schema&quot;:{&quot;content&quot;:{&quot;desktop&quot
   
   
   
+    <li class="md-nav__item">
+      <a href="../security/os-security/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    OS Security
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
     
     
     
@@ -12990,10 +13053,10 @@ data-et-multi-view="{&quot;schema&quot;:{&quot;content&quot;:{&quot;desktop&quot
       
         
         
-        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_7_2_6_7" >
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_7_2_6_8" >
         
           
-          <label class="md-nav__link" for="__nav_7_2_6_7" id="__nav_7_2_6_7_label" tabindex="0">
+          <label class="md-nav__link" for="__nav_7_2_6_8" id="__nav_7_2_6_8_label" tabindex="0">
             
   
   <span class="md-ellipsis">
@@ -13004,8 +13067,8 @@ data-et-multi-view="{&quot;schema&quot;:{&quot;content&quot;:{&quot;desktop&quot
             <span class="md-nav__icon md-icon"></span>
           </label>
         
-        <nav class="md-nav" data-md-level="4" aria-labelledby="__nav_7_2_6_7_label" aria-expanded="false">
-          <label class="md-nav__title" for="__nav_7_2_6_7">
+        <nav class="md-nav" data-md-level="4" aria-labelledby="__nav_7_2_6_8_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_7_2_6_8">
             <span class="md-nav__icon md-icon"></span>
             Encryption
           </label>
@@ -14448,14 +14511,39 @@ data-et-multi-view="{&quot;schema&quot;:{&quot;content&quot;:{&quot;desktop&quot
 <p>This guide covers day-to-day operations, maintenance procedures, and emergency response.</p>
 <h2 id="operations-philosophy">Operations Philosophy<a class="headerlink" href="#operations-philosophy" title="Permanent link">¶</a></h2>
 <p>Cassandra is designed for continuous operation. The operational model prioritizes availability—the database should never go down for maintenance. This influences every procedure in this guide.</p>
-<div class="highlight"><pre><span></span><code>Cassandra Operational Principles:
-─────────────────────────────────────────────────────────────────────────────
-1. No single point of failure    → Any node can handle any request
-2. Continuous availability       → Rolling operations, no downtime windows
-3. Eventual consistency         → Background processes maintain correctness
-4. Self-healing                  → Repair and anti-entropy fix inconsistencies
-5. Horizontal scaling            → Add capacity by adding nodes
-</code></pre></div>
+<div class="admonition abstract">
+<p class="admonition-title">Cassandra Operational Principles</p>
+<table>
+<thead>
+<tr>
+<th>Principle</th>
+<th>Implication</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>No single point of failure</td>
+<td>Any node can handle any request</td>
+</tr>
+<tr>
+<td>Continuous availability</td>
+<td>Rolling operations, no downtime windows</td>
+</tr>
+<tr>
+<td>Eventual consistency</td>
+<td>Background processes maintain correctness</td>
+</tr>
+<tr>
+<td>Self-healing</td>
+<td>Repair and anti-entropy fix inconsistencies</td>
+</tr>
+<tr>
+<td>Horizontal scaling</td>
+<td>Add capacity by adding nodes</td>
+</tr>
+</tbody>
+</table>
+</div>
 <h3 id="the-three-critical-operations">The Three Critical Operations<a class="headerlink" href="#the-three-critical-operations" title="Permanent link">¶</a></h3>
 <p>These three operations must be performed regularly. Neglecting any of them leads to production failures:</p>
 <table>

@@ -6,7 +6,7 @@
       <meta charset="utf-8">
       <meta name="viewport" content="width=device-width,initial-scale=1">
       
-        <meta name="description" content="CQL security commands for authentication, authorization, and role management in Cassandra.">
+        <meta name="description" content="CQL security features: role-based access control (RBAC) and dynamic data masking (DDM).">
       
       
       
@@ -16,7 +16,7 @@
         <link rel="prev" href="../dml/lightweight-transactions/">
       
       
-        <link rel="next" href="dynamic-data-masking/">
+        <link rel="next" href="rbac/">
       
       
       <link rel="icon" href="/img/favicon.ico">
@@ -69,7 +69,7 @@
     
     
       
-        <meta  name="keywords"  content="CQL security, CREATE ROLE, GRANT, authentication, authorization, Cassandra" >
+        <meta  name="keywords"  content="CQL security, RBAC, data masking, Cassandra permissions, access control" >
       
     
     
@@ -132,7 +132,7 @@ body{font-family:'Roboto Flex',-apple-system,BlinkMacSystemFont,'Segoe UI',Robot
     <div data-md-component="skip">
       
         
-        <a href="#security-commands" class="md-skip">
+        <a href="#cql-security" class="md-skip">
           Skip to content
         </a>
       
@@ -6163,6 +6163,27 @@ data-et-multi-view="{&quot;schema&quot;:{&quot;content&quot;:{&quot;desktop&quot
   
   
     <li class="md-nav__item">
+      <a href="../ddl/trigger/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Trigger
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
       <a href="../ddl/type/" class="md-nav__link">
         
   
@@ -6488,7 +6509,7 @@ data-et-multi-view="{&quot;schema&quot;:{&quot;content&quot;:{&quot;desktop&quot
             
   
   <span class="md-ellipsis">
-    Security Commands
+    Security
   </span>
   
 
@@ -6498,7 +6519,7 @@ data-et-multi-view="{&quot;schema&quot;:{&quot;content&quot;:{&quot;desktop&quot
         <nav class="md-nav" data-md-level="5" aria-labelledby="__nav_7_2_4_3_5_label" aria-expanded="true">
           <label class="md-nav__title" for="__nav_7_2_4_3_5">
             <span class="md-nav__icon md-icon"></span>
-            Security Commands
+            Security
           </label>
           <ul class="md-nav__list" data-md-scrollfix>
             
@@ -6555,37 +6576,37 @@ data-et-multi-view="{&quot;schema&quot;:{&quot;content&quot;:{&quot;desktop&quot
     <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
       
         <li class="md-nav__item">
-  <a href="#security-architecture" class="md-nav__link">
+  <a href="#history-and-evolution" class="md-nav__link">
     <span class="md-ellipsis">
-      Security Architecture
+      History and Evolution
     </span>
   </a>
   
-    <nav class="md-nav" aria-label="Security Architecture">
+    <nav class="md-nav" aria-label="History and Evolution">
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
-  <a href="#authentication-and-authorization" class="md-nav__link">
+  <a href="#timeline" class="md-nav__link">
     <span class="md-ellipsis">
-      Authentication and Authorization
+      Timeline
     </span>
   </a>
   
 </li>
         
           <li class="md-nav__item">
-  <a href="#enabling-security" class="md-nav__link">
+  <a href="#architecture-evolution" class="md-nav__link">
     <span class="md-ellipsis">
-      Enabling Security
+      Architecture Evolution
     </span>
   </a>
   
 </li>
         
           <li class="md-nav__item">
-  <a href="#role-hierarchy" class="md-nav__link">
+  <a href="#key-design-decisions" class="md-nav__link">
     <span class="md-ellipsis">
-      Role Hierarchy
+      Key Design Decisions
     </span>
   </a>
   
@@ -6597,810 +6618,66 @@ data-et-multi-view="{&quot;schema&quot;:{&quot;content&quot;:{&quot;desktop&quot
 </li>
       
         <li class="md-nav__item">
-  <a href="#create-role" class="md-nav__link">
+  <a href="#features-overview" class="md-nav__link">
     <span class="md-ellipsis">
-      CREATE ROLE
+      Features Overview
     </span>
   </a>
-  
-    <nav class="md-nav" aria-label="CREATE ROLE">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#synopsis" class="md-nav__link">
-    <span class="md-ellipsis">
-      Synopsis
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#description" class="md-nav__link">
-    <span class="md-ellipsis">
-      Description
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#parameters" class="md-nav__link">
-    <span class="md-ellipsis">
-      Parameters
-    </span>
-  </a>
-  
-    <nav class="md-nav" aria-label="Parameters">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#role_name" class="md-nav__link">
-    <span class="md-ellipsis">
-      role_name
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#if-not-exists" class="md-nav__link">
-    <span class="md-ellipsis">
-      IF NOT EXISTS
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#password" class="md-nav__link">
-    <span class="md-ellipsis">
-      PASSWORD
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#login" class="md-nav__link">
-    <span class="md-ellipsis">
-      LOGIN
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#superuser" class="md-nav__link">
-    <span class="md-ellipsis">
-      SUPERUSER
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#options" class="md-nav__link">
-    <span class="md-ellipsis">
-      OPTIONS
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#hashed-password" class="md-nav__link">
-    <span class="md-ellipsis">
-      HASHED PASSWORD
-    </span>
-  </a>
-  
-</li>
-        
-      </ul>
-    </nav>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#examples" class="md-nav__link">
-    <span class="md-ellipsis">
-      Examples
-    </span>
-  </a>
-  
-    <nav class="md-nav" aria-label="Examples">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#application-user" class="md-nav__link">
-    <span class="md-ellipsis">
-      Application User
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#administrator" class="md-nav__link">
-    <span class="md-ellipsis">
-      Administrator
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#permission-groups" class="md-nav__link">
-    <span class="md-ellipsis">
-      Permission Groups
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#developer-with-group-membership" class="md-nav__link">
-    <span class="md-ellipsis">
-      Developer with Group Membership
-    </span>
-  </a>
-  
-</li>
-        
-      </ul>
-    </nav>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#restrictions" class="md-nav__link">
-    <span class="md-ellipsis">
-      Restrictions
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#notes" class="md-nav__link">
-    <span class="md-ellipsis">
-      Notes
-    </span>
-  </a>
-  
-</li>
-        
-      </ul>
-    </nav>
   
 </li>
       
         <li class="md-nav__item">
-  <a href="#alter-role" class="md-nav__link">
+  <a href="#role-based-access-control-rbac" class="md-nav__link">
     <span class="md-ellipsis">
-      ALTER ROLE
+      Role-Based Access Control (RBAC)
     </span>
   </a>
-  
-    <nav class="md-nav" aria-label="ALTER ROLE">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#synopsis_1" class="md-nav__link">
-    <span class="md-ellipsis">
-      Synopsis
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#description_1" class="md-nav__link">
-    <span class="md-ellipsis">
-      Description
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#parameters_1" class="md-nav__link">
-    <span class="md-ellipsis">
-      Parameters
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#examples_1" class="md-nav__link">
-    <span class="md-ellipsis">
-      Examples
-    </span>
-  </a>
-  
-    <nav class="md-nav" aria-label="Examples">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#change-password" class="md-nav__link">
-    <span class="md-ellipsis">
-      Change Password
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#disable-login" class="md-nav__link">
-    <span class="md-ellipsis">
-      Disable Login
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#promote-to-superuser" class="md-nav__link">
-    <span class="md-ellipsis">
-      Promote to Superuser
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#demote-from-superuser" class="md-nav__link">
-    <span class="md-ellipsis">
-      Demote from Superuser
-    </span>
-  </a>
-  
-</li>
-        
-      </ul>
-    </nav>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#restrictions_1" class="md-nav__link">
-    <span class="md-ellipsis">
-      Restrictions
-    </span>
-  </a>
-  
-</li>
-        
-      </ul>
-    </nav>
   
 </li>
       
         <li class="md-nav__item">
-  <a href="#drop-role" class="md-nav__link">
+  <a href="#dynamic-data-masking-ddm" class="md-nav__link">
     <span class="md-ellipsis">
-      DROP ROLE
+      Dynamic Data Masking (DDM)
     </span>
   </a>
-  
-    <nav class="md-nav" aria-label="DROP ROLE">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#synopsis_2" class="md-nav__link">
-    <span class="md-ellipsis">
-      Synopsis
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#description_2" class="md-nav__link">
-    <span class="md-ellipsis">
-      Description
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#examples_2" class="md-nav__link">
-    <span class="md-ellipsis">
-      Examples
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#restrictions_2" class="md-nav__link">
-    <span class="md-ellipsis">
-      Restrictions
-    </span>
-  </a>
-  
-</li>
-        
-      </ul>
-    </nav>
   
 </li>
       
         <li class="md-nav__item">
-  <a href="#grant" class="md-nav__link">
+  <a href="#configuration" class="md-nav__link">
     <span class="md-ellipsis">
-      GRANT
+      Configuration
     </span>
   </a>
-  
-    <nav class="md-nav" aria-label="GRANT">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#synopsis_3" class="md-nav__link">
-    <span class="md-ellipsis">
-      Synopsis
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#description_3" class="md-nav__link">
-    <span class="md-ellipsis">
-      Description
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#permission-types" class="md-nav__link">
-    <span class="md-ellipsis">
-      Permission Types
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#resource-scopes" class="md-nav__link">
-    <span class="md-ellipsis">
-      Resource Scopes
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#examples_3" class="md-nav__link">
-    <span class="md-ellipsis">
-      Examples
-    </span>
-  </a>
-  
-    <nav class="md-nav" aria-label="Examples">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#read-only-access" class="md-nav__link">
-    <span class="md-ellipsis">
-      Read-Only Access
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#application-service-account" class="md-nav__link">
-    <span class="md-ellipsis">
-      Application Service Account
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#schema-administrator" class="md-nav__link">
-    <span class="md-ellipsis">
-      Schema Administrator
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#full-access-to-keyspace" class="md-nav__link">
-    <span class="md-ellipsis">
-      Full Access to Keyspace
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#role-hierarchy_1" class="md-nav__link">
-    <span class="md-ellipsis">
-      Role Hierarchy
-    </span>
-  </a>
-  
-</li>
-        
-      </ul>
-    </nav>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#restrictions_3" class="md-nav__link">
-    <span class="md-ellipsis">
-      Restrictions
-    </span>
-  </a>
-  
-</li>
-        
-      </ul>
-    </nav>
   
 </li>
       
         <li class="md-nav__item">
-  <a href="#revoke" class="md-nav__link">
+  <a href="#references" class="md-nav__link">
     <span class="md-ellipsis">
-      REVOKE
+      References
     </span>
   </a>
   
-    <nav class="md-nav" aria-label="REVOKE">
+    <nav class="md-nav" aria-label="References">
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
-  <a href="#synopsis_4" class="md-nav__link">
+  <a href="#jira-tickets" class="md-nav__link">
     <span class="md-ellipsis">
-      Synopsis
+      JIRA Tickets
     </span>
   </a>
   
 </li>
         
           <li class="md-nav__item">
-  <a href="#description_4" class="md-nav__link">
+  <a href="#ceps" class="md-nav__link">
     <span class="md-ellipsis">
-      Description
+      CEPs
     </span>
   </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#examples_4" class="md-nav__link">
-    <span class="md-ellipsis">
-      Examples
-    </span>
-  </a>
-  
-    <nav class="md-nav" aria-label="Examples">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#revoke-permission" class="md-nav__link">
-    <span class="md-ellipsis">
-      Revoke Permission
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#revoke-all-permissions" class="md-nav__link">
-    <span class="md-ellipsis">
-      Revoke All Permissions
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#revoke-role-membership" class="md-nav__link">
-    <span class="md-ellipsis">
-      Revoke Role Membership
-    </span>
-  </a>
-  
-</li>
-        
-      </ul>
-    </nav>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#restrictions_4" class="md-nav__link">
-    <span class="md-ellipsis">
-      Restrictions
-    </span>
-  </a>
-  
-</li>
-        
-      </ul>
-    </nav>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#list-permissions" class="md-nav__link">
-    <span class="md-ellipsis">
-      LIST PERMISSIONS
-    </span>
-  </a>
-  
-    <nav class="md-nav" aria-label="LIST PERMISSIONS">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#synopsis_5" class="md-nav__link">
-    <span class="md-ellipsis">
-      Synopsis
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#description_5" class="md-nav__link">
-    <span class="md-ellipsis">
-      Description
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#parameters_2" class="md-nav__link">
-    <span class="md-ellipsis">
-      Parameters
-    </span>
-  </a>
-  
-    <nav class="md-nav" aria-label="Parameters">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#norecursive" class="md-nav__link">
-    <span class="md-ellipsis">
-      NORECURSIVE
-    </span>
-  </a>
-  
-</li>
-        
-      </ul>
-    </nav>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#examples_5" class="md-nav__link">
-    <span class="md-ellipsis">
-      Examples
-    </span>
-  </a>
-  
-    <nav class="md-nav" aria-label="Examples">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#all-permissions" class="md-nav__link">
-    <span class="md-ellipsis">
-      All Permissions
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#permissions-for-role" class="md-nav__link">
-    <span class="md-ellipsis">
-      Permissions for Role
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#specific-permission-type" class="md-nav__link">
-    <span class="md-ellipsis">
-      Specific Permission Type
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#permissions-on-resource" class="md-nav__link">
-    <span class="md-ellipsis">
-      Permissions on Resource
-    </span>
-  </a>
-  
-</li>
-        
-      </ul>
-    </nav>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#output-format" class="md-nav__link">
-    <span class="md-ellipsis">
-      Output Format
-    </span>
-  </a>
-  
-</li>
-        
-      </ul>
-    </nav>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#list-roles" class="md-nav__link">
-    <span class="md-ellipsis">
-      LIST ROLES
-    </span>
-  </a>
-  
-    <nav class="md-nav" aria-label="LIST ROLES">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#synopsis_6" class="md-nav__link">
-    <span class="md-ellipsis">
-      Synopsis
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#description_6" class="md-nav__link">
-    <span class="md-ellipsis">
-      Description
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#examples_6" class="md-nav__link">
-    <span class="md-ellipsis">
-      Examples
-    </span>
-  </a>
-  
-    <nav class="md-nav" aria-label="Examples">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#all-roles" class="md-nav__link">
-    <span class="md-ellipsis">
-      All Roles
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#roles-granted-to-role" class="md-nav__link">
-    <span class="md-ellipsis">
-      Roles Granted to Role
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#direct-grants-only" class="md-nav__link">
-    <span class="md-ellipsis">
-      Direct Grants Only
-    </span>
-  </a>
-  
-</li>
-        
-      </ul>
-    </nav>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#output-format_1" class="md-nav__link">
-    <span class="md-ellipsis">
-      Output Format
-    </span>
-  </a>
-  
-</li>
-        
-      </ul>
-    </nav>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#best-practices" class="md-nav__link">
-    <span class="md-ellipsis">
-      Best Practices
-    </span>
-  </a>
-  
-    <nav class="md-nav" aria-label="Best Practices">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#role-design" class="md-nav__link">
-    <span class="md-ellipsis">
-      Role Design
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#security-hardening" class="md-nav__link">
-    <span class="md-ellipsis">
-      Security Hardening
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#common-patterns" class="md-nav__link">
-    <span class="md-ellipsis">
-      Common Patterns
-    </span>
-  </a>
-  
-    <nav class="md-nav" aria-label="Common Patterns">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#application-service-account_1" class="md-nav__link">
-    <span class="md-ellipsis">
-      Application Service Account
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#read-only-analytics-access" class="md-nav__link">
-    <span class="md-ellipsis">
-      Read-Only Analytics Access
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#schema-only-administrator" class="md-nav__link">
-    <span class="md-ellipsis">
-      Schema-Only Administrator
-    </span>
-  </a>
-  
-</li>
-        
-      </ul>
-    </nav>
   
 </li>
         
@@ -7422,6 +6699,27 @@ data-et-multi-view="{&quot;schema&quot;:{&quot;content&quot;:{&quot;desktop&quot
   
 </nav>
       
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="rbac/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Role-Based Access Control
+  </span>
+  
+
+      </a>
     </li>
   
 
@@ -13415,6 +12713,27 @@ data-et-multi-view="{&quot;schema&quot;:{&quot;content&quot;:{&quot;desktop&quot
   
   
   
+    <li class="md-nav__item">
+      <a href="../../security/os-security/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    OS Security
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
     
     
     
@@ -13426,10 +12745,10 @@ data-et-multi-view="{&quot;schema&quot;:{&quot;content&quot;:{&quot;desktop&quot
       
         
         
-        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_7_2_6_7" >
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_7_2_6_8" >
         
           
-          <label class="md-nav__link" for="__nav_7_2_6_7" id="__nav_7_2_6_7_label" tabindex="0">
+          <label class="md-nav__link" for="__nav_7_2_6_8" id="__nav_7_2_6_8_label" tabindex="0">
             
   
   <span class="md-ellipsis">
@@ -13440,8 +12759,8 @@ data-et-multi-view="{&quot;schema&quot;:{&quot;content&quot;:{&quot;desktop&quot
             <span class="md-nav__icon md-icon"></span>
           </label>
         
-        <nav class="md-nav" data-md-level="4" aria-labelledby="__nav_7_2_6_7_label" aria-expanded="false">
-          <label class="md-nav__title" for="__nav_7_2_6_7">
+        <nav class="md-nav" data-md-level="4" aria-labelledby="__nav_7_2_6_8_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_7_2_6_8">
             <span class="md-nav__icon md-icon"></span>
             Encryption
           </label>
@@ -14432,37 +13751,37 @@ data-et-multi-view="{&quot;schema&quot;:{&quot;content&quot;:{&quot;desktop&quot
     <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
       
         <li class="md-nav__item">
-  <a href="#security-architecture" class="md-nav__link">
+  <a href="#history-and-evolution" class="md-nav__link">
     <span class="md-ellipsis">
-      Security Architecture
+      History and Evolution
     </span>
   </a>
   
-    <nav class="md-nav" aria-label="Security Architecture">
+    <nav class="md-nav" aria-label="History and Evolution">
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
-  <a href="#authentication-and-authorization" class="md-nav__link">
+  <a href="#timeline" class="md-nav__link">
     <span class="md-ellipsis">
-      Authentication and Authorization
+      Timeline
     </span>
   </a>
   
 </li>
         
           <li class="md-nav__item">
-  <a href="#enabling-security" class="md-nav__link">
+  <a href="#architecture-evolution" class="md-nav__link">
     <span class="md-ellipsis">
-      Enabling Security
+      Architecture Evolution
     </span>
   </a>
   
 </li>
         
           <li class="md-nav__item">
-  <a href="#role-hierarchy" class="md-nav__link">
+  <a href="#key-design-decisions" class="md-nav__link">
     <span class="md-ellipsis">
-      Role Hierarchy
+      Key Design Decisions
     </span>
   </a>
   
@@ -14474,810 +13793,66 @@ data-et-multi-view="{&quot;schema&quot;:{&quot;content&quot;:{&quot;desktop&quot
 </li>
       
         <li class="md-nav__item">
-  <a href="#create-role" class="md-nav__link">
+  <a href="#features-overview" class="md-nav__link">
     <span class="md-ellipsis">
-      CREATE ROLE
+      Features Overview
     </span>
   </a>
-  
-    <nav class="md-nav" aria-label="CREATE ROLE">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#synopsis" class="md-nav__link">
-    <span class="md-ellipsis">
-      Synopsis
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#description" class="md-nav__link">
-    <span class="md-ellipsis">
-      Description
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#parameters" class="md-nav__link">
-    <span class="md-ellipsis">
-      Parameters
-    </span>
-  </a>
-  
-    <nav class="md-nav" aria-label="Parameters">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#role_name" class="md-nav__link">
-    <span class="md-ellipsis">
-      role_name
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#if-not-exists" class="md-nav__link">
-    <span class="md-ellipsis">
-      IF NOT EXISTS
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#password" class="md-nav__link">
-    <span class="md-ellipsis">
-      PASSWORD
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#login" class="md-nav__link">
-    <span class="md-ellipsis">
-      LOGIN
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#superuser" class="md-nav__link">
-    <span class="md-ellipsis">
-      SUPERUSER
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#options" class="md-nav__link">
-    <span class="md-ellipsis">
-      OPTIONS
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#hashed-password" class="md-nav__link">
-    <span class="md-ellipsis">
-      HASHED PASSWORD
-    </span>
-  </a>
-  
-</li>
-        
-      </ul>
-    </nav>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#examples" class="md-nav__link">
-    <span class="md-ellipsis">
-      Examples
-    </span>
-  </a>
-  
-    <nav class="md-nav" aria-label="Examples">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#application-user" class="md-nav__link">
-    <span class="md-ellipsis">
-      Application User
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#administrator" class="md-nav__link">
-    <span class="md-ellipsis">
-      Administrator
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#permission-groups" class="md-nav__link">
-    <span class="md-ellipsis">
-      Permission Groups
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#developer-with-group-membership" class="md-nav__link">
-    <span class="md-ellipsis">
-      Developer with Group Membership
-    </span>
-  </a>
-  
-</li>
-        
-      </ul>
-    </nav>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#restrictions" class="md-nav__link">
-    <span class="md-ellipsis">
-      Restrictions
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#notes" class="md-nav__link">
-    <span class="md-ellipsis">
-      Notes
-    </span>
-  </a>
-  
-</li>
-        
-      </ul>
-    </nav>
   
 </li>
       
         <li class="md-nav__item">
-  <a href="#alter-role" class="md-nav__link">
+  <a href="#role-based-access-control-rbac" class="md-nav__link">
     <span class="md-ellipsis">
-      ALTER ROLE
+      Role-Based Access Control (RBAC)
     </span>
   </a>
-  
-    <nav class="md-nav" aria-label="ALTER ROLE">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#synopsis_1" class="md-nav__link">
-    <span class="md-ellipsis">
-      Synopsis
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#description_1" class="md-nav__link">
-    <span class="md-ellipsis">
-      Description
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#parameters_1" class="md-nav__link">
-    <span class="md-ellipsis">
-      Parameters
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#examples_1" class="md-nav__link">
-    <span class="md-ellipsis">
-      Examples
-    </span>
-  </a>
-  
-    <nav class="md-nav" aria-label="Examples">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#change-password" class="md-nav__link">
-    <span class="md-ellipsis">
-      Change Password
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#disable-login" class="md-nav__link">
-    <span class="md-ellipsis">
-      Disable Login
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#promote-to-superuser" class="md-nav__link">
-    <span class="md-ellipsis">
-      Promote to Superuser
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#demote-from-superuser" class="md-nav__link">
-    <span class="md-ellipsis">
-      Demote from Superuser
-    </span>
-  </a>
-  
-</li>
-        
-      </ul>
-    </nav>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#restrictions_1" class="md-nav__link">
-    <span class="md-ellipsis">
-      Restrictions
-    </span>
-  </a>
-  
-</li>
-        
-      </ul>
-    </nav>
   
 </li>
       
         <li class="md-nav__item">
-  <a href="#drop-role" class="md-nav__link">
+  <a href="#dynamic-data-masking-ddm" class="md-nav__link">
     <span class="md-ellipsis">
-      DROP ROLE
+      Dynamic Data Masking (DDM)
     </span>
   </a>
-  
-    <nav class="md-nav" aria-label="DROP ROLE">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#synopsis_2" class="md-nav__link">
-    <span class="md-ellipsis">
-      Synopsis
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#description_2" class="md-nav__link">
-    <span class="md-ellipsis">
-      Description
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#examples_2" class="md-nav__link">
-    <span class="md-ellipsis">
-      Examples
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#restrictions_2" class="md-nav__link">
-    <span class="md-ellipsis">
-      Restrictions
-    </span>
-  </a>
-  
-</li>
-        
-      </ul>
-    </nav>
   
 </li>
       
         <li class="md-nav__item">
-  <a href="#grant" class="md-nav__link">
+  <a href="#configuration" class="md-nav__link">
     <span class="md-ellipsis">
-      GRANT
+      Configuration
     </span>
   </a>
-  
-    <nav class="md-nav" aria-label="GRANT">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#synopsis_3" class="md-nav__link">
-    <span class="md-ellipsis">
-      Synopsis
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#description_3" class="md-nav__link">
-    <span class="md-ellipsis">
-      Description
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#permission-types" class="md-nav__link">
-    <span class="md-ellipsis">
-      Permission Types
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#resource-scopes" class="md-nav__link">
-    <span class="md-ellipsis">
-      Resource Scopes
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#examples_3" class="md-nav__link">
-    <span class="md-ellipsis">
-      Examples
-    </span>
-  </a>
-  
-    <nav class="md-nav" aria-label="Examples">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#read-only-access" class="md-nav__link">
-    <span class="md-ellipsis">
-      Read-Only Access
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#application-service-account" class="md-nav__link">
-    <span class="md-ellipsis">
-      Application Service Account
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#schema-administrator" class="md-nav__link">
-    <span class="md-ellipsis">
-      Schema Administrator
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#full-access-to-keyspace" class="md-nav__link">
-    <span class="md-ellipsis">
-      Full Access to Keyspace
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#role-hierarchy_1" class="md-nav__link">
-    <span class="md-ellipsis">
-      Role Hierarchy
-    </span>
-  </a>
-  
-</li>
-        
-      </ul>
-    </nav>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#restrictions_3" class="md-nav__link">
-    <span class="md-ellipsis">
-      Restrictions
-    </span>
-  </a>
-  
-</li>
-        
-      </ul>
-    </nav>
   
 </li>
       
         <li class="md-nav__item">
-  <a href="#revoke" class="md-nav__link">
+  <a href="#references" class="md-nav__link">
     <span class="md-ellipsis">
-      REVOKE
+      References
     </span>
   </a>
   
-    <nav class="md-nav" aria-label="REVOKE">
+    <nav class="md-nav" aria-label="References">
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
-  <a href="#synopsis_4" class="md-nav__link">
+  <a href="#jira-tickets" class="md-nav__link">
     <span class="md-ellipsis">
-      Synopsis
+      JIRA Tickets
     </span>
   </a>
   
 </li>
         
           <li class="md-nav__item">
-  <a href="#description_4" class="md-nav__link">
+  <a href="#ceps" class="md-nav__link">
     <span class="md-ellipsis">
-      Description
+      CEPs
     </span>
   </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#examples_4" class="md-nav__link">
-    <span class="md-ellipsis">
-      Examples
-    </span>
-  </a>
-  
-    <nav class="md-nav" aria-label="Examples">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#revoke-permission" class="md-nav__link">
-    <span class="md-ellipsis">
-      Revoke Permission
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#revoke-all-permissions" class="md-nav__link">
-    <span class="md-ellipsis">
-      Revoke All Permissions
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#revoke-role-membership" class="md-nav__link">
-    <span class="md-ellipsis">
-      Revoke Role Membership
-    </span>
-  </a>
-  
-</li>
-        
-      </ul>
-    </nav>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#restrictions_4" class="md-nav__link">
-    <span class="md-ellipsis">
-      Restrictions
-    </span>
-  </a>
-  
-</li>
-        
-      </ul>
-    </nav>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#list-permissions" class="md-nav__link">
-    <span class="md-ellipsis">
-      LIST PERMISSIONS
-    </span>
-  </a>
-  
-    <nav class="md-nav" aria-label="LIST PERMISSIONS">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#synopsis_5" class="md-nav__link">
-    <span class="md-ellipsis">
-      Synopsis
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#description_5" class="md-nav__link">
-    <span class="md-ellipsis">
-      Description
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#parameters_2" class="md-nav__link">
-    <span class="md-ellipsis">
-      Parameters
-    </span>
-  </a>
-  
-    <nav class="md-nav" aria-label="Parameters">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#norecursive" class="md-nav__link">
-    <span class="md-ellipsis">
-      NORECURSIVE
-    </span>
-  </a>
-  
-</li>
-        
-      </ul>
-    </nav>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#examples_5" class="md-nav__link">
-    <span class="md-ellipsis">
-      Examples
-    </span>
-  </a>
-  
-    <nav class="md-nav" aria-label="Examples">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#all-permissions" class="md-nav__link">
-    <span class="md-ellipsis">
-      All Permissions
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#permissions-for-role" class="md-nav__link">
-    <span class="md-ellipsis">
-      Permissions for Role
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#specific-permission-type" class="md-nav__link">
-    <span class="md-ellipsis">
-      Specific Permission Type
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#permissions-on-resource" class="md-nav__link">
-    <span class="md-ellipsis">
-      Permissions on Resource
-    </span>
-  </a>
-  
-</li>
-        
-      </ul>
-    </nav>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#output-format" class="md-nav__link">
-    <span class="md-ellipsis">
-      Output Format
-    </span>
-  </a>
-  
-</li>
-        
-      </ul>
-    </nav>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#list-roles" class="md-nav__link">
-    <span class="md-ellipsis">
-      LIST ROLES
-    </span>
-  </a>
-  
-    <nav class="md-nav" aria-label="LIST ROLES">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#synopsis_6" class="md-nav__link">
-    <span class="md-ellipsis">
-      Synopsis
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#description_6" class="md-nav__link">
-    <span class="md-ellipsis">
-      Description
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#examples_6" class="md-nav__link">
-    <span class="md-ellipsis">
-      Examples
-    </span>
-  </a>
-  
-    <nav class="md-nav" aria-label="Examples">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#all-roles" class="md-nav__link">
-    <span class="md-ellipsis">
-      All Roles
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#roles-granted-to-role" class="md-nav__link">
-    <span class="md-ellipsis">
-      Roles Granted to Role
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#direct-grants-only" class="md-nav__link">
-    <span class="md-ellipsis">
-      Direct Grants Only
-    </span>
-  </a>
-  
-</li>
-        
-      </ul>
-    </nav>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#output-format_1" class="md-nav__link">
-    <span class="md-ellipsis">
-      Output Format
-    </span>
-  </a>
-  
-</li>
-        
-      </ul>
-    </nav>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#best-practices" class="md-nav__link">
-    <span class="md-ellipsis">
-      Best Practices
-    </span>
-  </a>
-  
-    <nav class="md-nav" aria-label="Best Practices">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#role-design" class="md-nav__link">
-    <span class="md-ellipsis">
-      Role Design
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#security-hardening" class="md-nav__link">
-    <span class="md-ellipsis">
-      Security Hardening
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#common-patterns" class="md-nav__link">
-    <span class="md-ellipsis">
-      Common Patterns
-    </span>
-  </a>
-  
-    <nav class="md-nav" aria-label="Common Patterns">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#application-service-account_1" class="md-nav__link">
-    <span class="md-ellipsis">
-      Application Service Account
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#read-only-analytics-access" class="md-nav__link">
-    <span class="md-ellipsis">
-      Read-Only Analytics Access
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#schema-only-administrator" class="md-nav__link">
-    <span class="md-ellipsis">
-      Schema-Only Administrator
-    </span>
-  </a>
-  
-</li>
-        
-      </ul>
-    </nav>
   
 </li>
         
@@ -15310,612 +13885,328 @@ data-et-multi-view="{&quot;schema&quot;:{&quot;content&quot;:{&quot;desktop&quot
                   
 
 
-<div><h1 id="security-commands">Security Commands<a class="headerlink" href="#security-commands" title="Permanent link">¶</a></h1>
-<p>Security commands manage authentication and authorization in Cassandra through roles and permissions. Roles can represent users (with login capability) or permission groups (for organizing access control).</p>
+<div><h1 id="cql-security">CQL Security<a class="headerlink" href="#cql-security" title="Permanent link">¶</a></h1>
+<p>CQL provides two categories of security features for controlling access to data:</p>
 <hr>
-<h2 id="security-architecture">Security Architecture<a class="headerlink" href="#security-architecture" title="Permanent link">¶</a></h2>
-<h3 id="authentication-and-authorization">Authentication and Authorization<a class="headerlink" href="#authentication-and-authorization" title="Permanent link">¶</a></h3>
-<p>Cassandra security consists of two components:</p>
+<h2 id="history-and-evolution">History and Evolution<a class="headerlink" href="#history-and-evolution" title="Permanent link">¶</a></h2>
+<p>Cassandra's security model has evolved significantly since its early releases, progressing from basic pluggable authentication to a comprehensive role-based system with fine-grained data protection.</p>
+<h3 id="timeline">Timeline<a class="headerlink" href="#timeline" title="Permanent link">¶</a></h3>
 <table>
 <thead>
 <tr>
-<th>Component</th>
-<th>Purpose</th>
-<th>Configuration</th>
+<th>Version</th>
+<th>Year</th>
+<th>Feature</th>
+<th>Reference</th>
 </tr>
 </thead>
 <tbody>
 <tr>
-<td><strong>Authentication</strong></td>
-<td>Verify identity (who are you?)</td>
-<td><code>authenticator</code> in cassandra.yaml</td>
+<td>0.6</td>
+<td>2010</td>
+<td>Pluggable authentication framework (<code>IAuthenticator</code>)</td>
+<td><a href="https://issues.apache.org/jira/browse/CASSANDRA-547">CASSANDRA-547</a></td>
 </tr>
 <tr>
-<td><strong>Authorization</strong></td>
-<td>Verify access rights (what can you do?)</td>
-<td><code>authorizer</code> in cassandra.yaml</td>
+<td>1.2</td>
+<td>2012</td>
+<td>CQL-based authentication (<code>CREATE USER</code>, <code>GRANT</code>), <code>system_auth</code> keyspace</td>
+<td>-</td>
+</tr>
+<tr>
+<td>2.2</td>
+<td>2015</td>
+<td>Role-based access control (RBAC), <code>CREATE ROLE</code> replaces <code>CREATE USER</code></td>
+<td><a href="https://issues.apache.org/jira/browse/CASSANDRA-7653">CASSANDRA-7653</a></td>
+</tr>
+<tr>
+<td>2.2</td>
+<td>2015</td>
+<td>Auth subsystem rework (SASL, caching, UDF permissions)</td>
+<td><a href="https://issues.apache.org/jira/browse/CASSANDRA-8394">CASSANDRA-8394</a></td>
+</tr>
+<tr>
+<td>4.1</td>
+<td>2022</td>
+<td>CQLSH authentication plugin support</td>
+<td><a href="https://cwiki.apache.org/confluence/display/CASSANDRA/CEP-16%3A+Auth+Plugin+Support+for+CQLSH">CEP-16</a></td>
+</tr>
+<tr>
+<td>5.0</td>
+<td>2024</td>
+<td>Dynamic Data Masking (DDM)</td>
+<td><a href="https://cwiki.apache.org/confluence/display/CASSANDRA/CEP-20%3A+Dynamic+Data+Masking">CEP-20</a>, <a href="https://issues.apache.org/jira/browse/CASSANDRA-17940">CASSANDRA-17940</a></td>
+</tr>
+<tr>
+<td>5.0</td>
+<td>2024</td>
+<td>Mutual TLS authentication (<code>MutualTlsAuthenticator</code>)</td>
+<td><a href="https://cwiki.apache.org/confluence/display/CASSANDRA/CEP-34%3A+mTLS+based+client+and+internode+authenticators">CEP-34</a>, <a href="https://issues.apache.org/jira/browse/CASSANDRA-18554">CASSANDRA-18554</a></td>
 </tr>
 </tbody>
 </table>
-<h3 id="enabling-security">Enabling Security<a class="headerlink" href="#enabling-security" title="Permanent link">¶</a></h3>
-<p>Security must be enabled in <code>cassandra.yaml</code>:</p>
-<div class="highlight"><pre><span></span><code><span class="c1"># Authentication (default: AllowAllAuthenticator = no auth)</span>
+<h3 id="architecture-evolution">Architecture Evolution<a class="headerlink" href="#architecture-evolution" title="Permanent link">¶</a></h3>
+<table>
+<thead>
+<tr>
+<th>Era</th>
+<th>Versions</th>
+<th>Model</th>
+<th>Key Components</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Thrift</td>
+<td>0.6 – 1.1</td>
+<td>File-based</td>
+<td><code>SimpleAuthenticator</code>, properties files</td>
+</tr>
+<tr>
+<td>CQL Users</td>
+<td>1.2 – 2.1</td>
+<td>User-based</td>
+<td><code>PasswordAuthenticator</code>, <code>CassandraAuthorizer</code>, <code>system_auth</code> keyspace, <code>CREATE USER</code></td>
+</tr>
+<tr>
+<td>RBAC</td>
+<td>2.2 – 4.x</td>
+<td>Role-based</td>
+<td><code>CREATE ROLE</code>, role inheritance, UDF permissions, SASL</td>
+</tr>
+<tr>
+<td>Enhanced</td>
+<td>5.0+</td>
+<td>Role + masking</td>
+<td>Dynamic Data Masking, mTLS, SPIFFE identities, <code>ADD IDENTITY</code></td>
+</tr>
+</tbody>
+</table>
+<h3 id="key-design-decisions">Key Design Decisions<a class="headerlink" href="#key-design-decisions" title="Permanent link">¶</a></h3>
+<p>The evolution reflects several architectural principles:</p>
+<ol>
+<li><strong>Pluggability</strong> - All components (authenticator, authorizer, role manager) are pluggable interfaces</li>
+<li><strong>CQL Integration</strong> - Security management through CQL statements rather than configuration files</li>
+<li><strong>Role Unification</strong> - Cassandra 2.2 unified users and groups into a single "role" concept</li>
+<li><strong>Backward Compatibility</strong> - <code>CREATE USER</code> syntax remains functional, internally creating roles</li>
+<li><strong>Permission Granularity</strong> - Progressive addition of resource types (keyspaces, tables, functions, MBeans)</li>
+</ol>
+<hr>
+<h2 id="features-overview">Features Overview<a class="headerlink" href="#features-overview" title="Permanent link">¶</a></h2>
+<table>
+<thead>
+<tr>
+<th>Feature</th>
+<th>Description</th>
+<th>Version</th>
+<th>Reference</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><a href="rbac/">Role-Based Access Control</a></td>
+<td>Roles, permissions, and grants</td>
+<td>2.2+</td>
+<td><a href="https://issues.apache.org/jira/browse/CASSANDRA-7653">CASSANDRA-7653</a></td>
+</tr>
+<tr>
+<td><a href="dynamic-data-masking/">Dynamic Data Masking</a></td>
+<td>Column-level data obfuscation</td>
+<td>5.0+</td>
+<td><a href="https://cwiki.apache.org/confluence/display/CASSANDRA/CEP-20%3A+Dynamic+Data+Masking">CEP-20</a></td>
+</tr>
+</tbody>
+</table>
+<hr>
+<h2 id="role-based-access-control-rbac">Role-Based Access Control (RBAC)<a class="headerlink" href="#role-based-access-control-rbac" title="Permanent link">¶</a></h2>
+<p>RBAC controls who can access what resources through roles and permissions.</p>
+<p><strong>Key concepts:</strong></p>
+<ul>
+<li><strong>Roles</strong> - Represent users (with login) or permission groups (without login)</li>
+<li><strong>Permissions</strong> - Actions allowed on resources (SELECT, MODIFY, CREATE, etc.)</li>
+<li><strong>Grants</strong> - Associate permissions with roles, or roles with other roles</li>
+</ul>
+<p><strong>Commands:</strong></p>
+<table>
+<thead>
+<tr>
+<th>Command</th>
+<th>Purpose</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>CREATE ROLE</code></td>
+<td>Create user or permission group</td>
+</tr>
+<tr>
+<td><code>ALTER ROLE</code></td>
+<td>Modify role properties</td>
+</tr>
+<tr>
+<td><code>DROP ROLE</code></td>
+<td>Remove a role</td>
+</tr>
+<tr>
+<td><code>GRANT</code></td>
+<td>Assign permissions or role membership</td>
+</tr>
+<tr>
+<td><code>REVOKE</code></td>
+<td>Remove permissions or role membership</td>
+</tr>
+<tr>
+<td><code>LIST ROLES</code></td>
+<td>Display roles</td>
+</tr>
+<tr>
+<td><code>LIST PERMISSIONS</code></td>
+<td>Display permission grants</td>
+</tr>
+</tbody>
+</table>
+<p>See <a href="rbac/">Role-Based Access Control</a> for syntax and examples.</p>
+<hr>
+<h2 id="dynamic-data-masking-ddm">Dynamic Data Masking (DDM)<a class="headerlink" href="#dynamic-data-masking-ddm" title="Permanent link">¶</a></h2>
+<p>DDM automatically obfuscates sensitive column data at read time based on user permissions.</p>
+<p><strong>Key concepts:</strong></p>
+<ul>
+<li><strong>Masking functions</strong> - Transform column values (mask_inner, mask_hash, etc.)</li>
+<li><strong>UNMASK permission</strong> - Allows viewing original unmasked data</li>
+<li><strong>SELECT_MASKED permission</strong> - Allows querying tables with masked columns</li>
+</ul>
+<p><strong>Built-in masking functions:</strong></p>
+<table>
+<thead>
+<tr>
+<th>Function</th>
+<th>Effect</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>mask_null()</code></td>
+<td>Replace with null</td>
+</tr>
+<tr>
+<td><code>mask_default()</code></td>
+<td>Replace with type default</td>
+</tr>
+<tr>
+<td><code>mask_replace(value)</code></td>
+<td>Replace with constant</td>
+</tr>
+<tr>
+<td><code>mask_inner(prefix, suffix)</code></td>
+<td>Mask inner characters</td>
+</tr>
+<tr>
+<td><code>mask_outer(prefix, suffix)</code></td>
+<td>Mask outer characters</td>
+</tr>
+<tr>
+<td><code>mask_hash([algorithm])</code></td>
+<td>Replace with hash</td>
+</tr>
+</tbody>
+</table>
+<p>See <a href="dynamic-data-masking/">Dynamic Data Masking</a> for syntax and examples.</p>
+<hr>
+<h2 id="configuration">Configuration<a class="headerlink" href="#configuration" title="Permanent link">¶</a></h2>
+<p>Both RBAC and DDM require configuration in <code>cassandra.yaml</code>:</p>
+<div class="highlight"><pre><span></span><code><span class="c1"># RBAC (required for role-based security)</span>
 <span class="nt">authenticator</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">PasswordAuthenticator</span>
-
-<span class="c1"># Authorization (default: AllowAllAuthorizer = no permissions)</span>
 <span class="nt">authorizer</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">CassandraAuthorizer</span>
-
-<span class="c1"># Role management</span>
 <span class="nt">role_manager</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">CassandraRoleManager</span>
-</code></pre></div>
-<div class="admonition danger">
-<p class="admonition-title">Default Credentials</p>
-<p>When enabling authentication, Cassandra creates a default superuser:</p>
-<ul>
-<li>Username: <code>cassandra</code></li>
-<li>Password: <code>cassandra</code></li>
-</ul>
-<p><strong>Immediately change this password or create a new superuser and disable the default.</strong></p>
-</div>
-<h3 id="role-hierarchy">Role Hierarchy<a class="headerlink" href="#role-hierarchy" title="Permanent link">¶</a></h3>
-<p>Roles can be granted to other roles, creating hierarchical permission structures:</p>
-<div class="highlight"><pre><span></span><code>                    superuser
-                        │
-          ┌─────────────┼─────────────┐
-          ▼             ▼             ▼
-       admin        developer      analyst
-          │             │             │
-          │        ┌────┴────┐        │
-          │        ▼         ▼        │
-          │    dev_read   dev_write   │
-          │        │         │        │
-          └────────┴─────────┴────────┘
-                       │
-                       ▼
-                 app_service_account
-</code></pre></div>
-<p>Permissions are inherited through role grants.</p>
-<hr>
-<h2 id="create-role">CREATE ROLE<a class="headerlink" href="#create-role" title="Permanent link">¶</a></h2>
-<p>Create a role for authentication and/or authorization.</p>
-<h3 id="synopsis">Synopsis<a class="headerlink" href="#synopsis" title="Permanent link">¶</a></h3>
-<div class="highlight"><pre><span></span><code>CREATE ROLE [ IF NOT EXISTS ] *role_name*
-    [ WITH *role_option* [ AND *role_option* ... ] ]
-</code></pre></div>
-<p><strong>role_option</strong>:</p>
-<div class="highlight"><pre><span></span><code>PASSWORD = '*password*'
-| LOGIN = { true | false }
-| SUPERUSER = { true | false }
-| OPTIONS = { *option_map* }
-| HASHED PASSWORD = '*hashed_value*'
-</code></pre></div>
-<h3 id="description">Description<a class="headerlink" href="#description" title="Permanent link">¶</a></h3>
-<p><code>CREATE ROLE</code> defines a new role for authentication (if <code>LOGIN = true</code>) and/or authorization (permission grouping). Roles can be granted permissions and can be granted to other roles.</p>
-<h3 id="parameters">Parameters<a class="headerlink" href="#parameters" title="Permanent link">¶</a></h3>
-<h4 id="role_name"><em>role_name</em><a class="headerlink" href="#role_name" title="Permanent link">¶</a></h4>
-<p>Identifier for the role. Role names are case-sensitive when quoted.</p>
-<div class="highlight"><pre><span></span><code><span class="c1">-- Case-insensitive (stored lowercase)</span>
-<span class="k">CREATE</span><span class="w"> </span><span class="k">ROLE</span><span class="w"> </span><span class="n">app_user</span><span class="w"> </span><span class="p">...</span>
 
-<span class="c1">-- Case-sensitive</span>
-<span class="k">CREATE</span><span class="w"> </span><span class="k">ROLE</span><span class="w"> </span><span class="ss">"AppUser"</span><span class="w"> </span><span class="p">...</span>
+<span class="c1"># DDM (optional, Cassandra 5.0+)</span>
+<span class="nt">dynamic_data_masking_enabled</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">true</span>
 </code></pre></div>
-<h4 id="if-not-exists">IF NOT EXISTS<a class="headerlink" href="#if-not-exists" title="Permanent link">¶</a></h4>
-<p>Prevent error if role already exists.</p>
-<h4 id="password">PASSWORD<a class="headerlink" href="#password" title="Permanent link">¶</a></h4>
-<p>Password for authentication. Required if <code>LOGIN = true</code>.</p>
-<div class="highlight"><pre><span></span><code><span class="k">CREATE</span><span class="w"> </span><span class="k">ROLE</span><span class="w"> </span><span class="n">app_user</span>
-<span class="w">    </span><span class="k">WITH</span><span class="w"> </span><span class="n">PASSWORD</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s1">'secure_password123'</span>
-<span class="w">    </span><span class="k">AND</span><span class="w"> </span><span class="n">LOGIN</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">true</span><span class="p">;</span>
-</code></pre></div>
-<div class="admonition warning">
-<p class="admonition-title">Password Security</p>
-<ul>
-<li>Passwords are stored hashed (bcrypt by default)</li>
-<li>Use strong passwords (12+ characters, mixed case, numbers, symbols)</li>
-<li>Avoid passwords in CQL scripts (use secure credential management)</li>
-<li>Passwords in CQL are visible in logs unless logging is configured to mask them</li>
-</ul>
-</div>
-<h4 id="login">LOGIN<a class="headerlink" href="#login" title="Permanent link">¶</a></h4>
-<p>Whether the role can authenticate to the cluster:</p>
+<p>For detailed configuration guidance, see <a href="../../security/">Security Configuration</a>.</p>
+<hr>
+<h2 id="references">References<a class="headerlink" href="#references" title="Permanent link">¶</a></h2>
+<h3 id="jira-tickets">JIRA Tickets<a class="headerlink" href="#jira-tickets" title="Permanent link">¶</a></h3>
 <table>
 <thead>
 <tr>
-<th>Value</th>
-<th>Purpose</th>
+<th>Ticket</th>
+<th>Description</th>
 </tr>
 </thead>
 <tbody>
 <tr>
-<td><code>true</code></td>
-<td>Role can log in (user account)</td>
+<td><a href="https://issues.apache.org/jira/browse/CASSANDRA-547">CASSANDRA-547</a></td>
+<td>Original pluggable authentication framework (0.6)</td>
 </tr>
 <tr>
-<td><code>false</code> (default)</td>
-<td>Role cannot log in (permission group)</td>
+<td><a href="https://issues.apache.org/jira/browse/CASSANDRA-7653">CASSANDRA-7653</a></td>
+<td>Role-based access control (2.2)</td>
+</tr>
+<tr>
+<td><a href="https://issues.apache.org/jira/browse/CASSANDRA-8394">CASSANDRA-8394</a></td>
+<td>Auth subsystem rework (2.2/3.0)</td>
+</tr>
+<tr>
+<td><a href="https://issues.apache.org/jira/browse/CASSANDRA-17940">CASSANDRA-17940</a></td>
+<td>Dynamic Data Masking (5.0)</td>
+</tr>
+<tr>
+<td><a href="https://issues.apache.org/jira/browse/CASSANDRA-18554">CASSANDRA-18554</a></td>
+<td>mTLS authenticators (5.0)</td>
 </tr>
 </tbody>
 </table>
-<div class="highlight"><pre><span></span><code><span class="c1">-- User account</span>
-<span class="k">CREATE</span><span class="w"> </span><span class="k">ROLE</span><span class="w"> </span><span class="n">developer</span><span class="w"> </span><span class="k">WITH</span><span class="w"> </span><span class="n">PASSWORD</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s1">'secret'</span><span class="w"> </span><span class="k">AND</span><span class="w"> </span><span class="n">LOGIN</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">true</span><span class="p">;</span>
-
-<span class="c1">-- Permission group (no login)</span>
-<span class="k">CREATE</span><span class="w"> </span><span class="k">ROLE</span><span class="w"> </span><span class="n">read_only</span><span class="p">;</span>
-</code></pre></div>
-<h4 id="superuser">SUPERUSER<a class="headerlink" href="#superuser" title="Permanent link">¶</a></h4>
-<p>Whether the role has superuser privileges:</p>
+<h3 id="ceps">CEPs<a class="headerlink" href="#ceps" title="Permanent link">¶</a></h3>
 <table>
 <thead>
 <tr>
-<th>Value</th>
-<th>Capabilities</th>
+<th>CEP</th>
+<th>Description</th>
 </tr>
 </thead>
 <tbody>
 <tr>
-<td><code>true</code></td>
-<td>All permissions on all resources, can manage other superusers</td>
+<td><a href="https://cwiki.apache.org/confluence/display/CASSANDRA/CEP-16%3A+Auth+Plugin+Support+for+CQLSH">CEP-16</a></td>
+<td>CQLSH authentication plugin support</td>
 </tr>
 <tr>
-<td><code>false</code> (default)</td>
-<td>Only explicitly granted permissions</td>
+<td><a href="https://cwiki.apache.org/confluence/display/CASSANDRA/CEP-20%3A+Dynamic+Data+Masking">CEP-20</a></td>
+<td>Dynamic Data Masking</td>
+</tr>
+<tr>
+<td><a href="https://cwiki.apache.org/confluence/display/CASSANDRA/CEP-34%3A+mTLS+based+client+and+internode+authenticators">CEP-34</a></td>
+<td>mTLS authenticators</td>
+</tr>
+<tr>
+<td><a href="https://cwiki.apache.org/confluence/display/CASSANDRA/CEP-50:+Authentication+Negotiation">CEP-50</a></td>
+<td>Authentication negotiation (in progress)</td>
 </tr>
 </tbody>
 </table>
-<div class="highlight"><pre><span></span><code><span class="k">CREATE</span><span class="w"> </span><span class="k">ROLE</span><span class="w"> </span><span class="n">dba</span>
-<span class="w">    </span><span class="k">WITH</span><span class="w"> </span><span class="n">PASSWORD</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s1">'admin_pwd'</span>
-<span class="w">    </span><span class="k">AND</span><span class="w"> </span><span class="n">LOGIN</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">true</span>
-<span class="w">    </span><span class="k">AND</span><span class="w"> </span><span class="n">SUPERUSER</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">true</span><span class="p">;</span>
-</code></pre></div>
-<div class="admonition danger">
-<p class="admonition-title">Superuser Security</p>
-<ul>
-<li>Superusers bypass all permission checks</li>
-<li>Limit superuser accounts to essential operations</li>
-<li>Use regular roles for application access</li>
-<li>Audit superuser usage</li>
-</ul>
-</div>
-<h4 id="options">OPTIONS<a class="headerlink" href="#options" title="Permanent link">¶</a></h4>
-<p>Authentication plugin-specific options:</p>
-<div class="highlight"><pre><span></span><code><span class="k">CREATE</span><span class="w"> </span><span class="k">ROLE</span><span class="w"> </span><span class="n">ldap_user</span>
-<span class="w">    </span><span class="k">WITH</span><span class="w"> </span><span class="k">OPTIONS</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="err">{</span><span class="s1">'ldap_dn'</span><span class="p">:</span><span class="w"> </span><span class="s1">'cn=user,dc=example,dc=com'</span><span class="err">}</span><span class="p">;</span>
-</code></pre></div>
-<h4 id="hashed-password">HASHED PASSWORD<a class="headerlink" href="#hashed-password" title="Permanent link">¶</a></h4>
-<p>Pre-hashed password value (for migration or automation):</p>
-<div class="highlight"><pre><span></span><code><span class="k">CREATE</span><span class="w"> </span><span class="k">ROLE</span><span class="w"> </span><span class="n">migrated_user</span>
-<span class="w">    </span><span class="k">WITH</span><span class="w"> </span><span class="n">HASHED</span><span class="w"> </span><span class="n">PASSWORD</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s1">'$2a$10$abc...'</span>
-<span class="w">    </span><span class="k">AND</span><span class="w"> </span><span class="n">LOGIN</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">true</span><span class="p">;</span>
-</code></pre></div>
-<h3 id="examples">Examples<a class="headerlink" href="#examples" title="Permanent link">¶</a></h3>
-<h4 id="application-user">Application User<a class="headerlink" href="#application-user" title="Permanent link">¶</a></h4>
-<div class="highlight"><pre><span></span><code><span class="k">CREATE</span><span class="w"> </span><span class="k">ROLE</span><span class="w"> </span><span class="n">app_service</span>
-<span class="w">    </span><span class="k">WITH</span><span class="w"> </span><span class="n">PASSWORD</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s1">'app_secret_123'</span>
-<span class="w">    </span><span class="k">AND</span><span class="w"> </span><span class="n">LOGIN</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">true</span><span class="p">;</span>
-</code></pre></div>
-<h4 id="administrator">Administrator<a class="headerlink" href="#administrator" title="Permanent link">¶</a></h4>
-<div class="highlight"><pre><span></span><code><span class="k">CREATE</span><span class="w"> </span><span class="k">ROLE</span><span class="w"> </span><span class="k">admin</span>
-<span class="w">    </span><span class="k">WITH</span><span class="w"> </span><span class="n">PASSWORD</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s1">'admin_secret'</span>
-<span class="w">    </span><span class="k">AND</span><span class="w"> </span><span class="n">LOGIN</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">true</span>
-<span class="w">    </span><span class="k">AND</span><span class="w"> </span><span class="n">SUPERUSER</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">true</span><span class="p">;</span>
-</code></pre></div>
-<h4 id="permission-groups">Permission Groups<a class="headerlink" href="#permission-groups" title="Permanent link">¶</a></h4>
-<div class="highlight"><pre><span></span><code><span class="c1">-- Read-only access group</span>
-<span class="k">CREATE</span><span class="w"> </span><span class="k">ROLE</span><span class="w"> </span><span class="n">readers</span><span class="p">;</span>
-
-<span class="c1">-- Read-write access group</span>
-<span class="k">CREATE</span><span class="w"> </span><span class="k">ROLE</span><span class="w"> </span><span class="n">writers</span><span class="p">;</span>
-
-<span class="c1">-- Full access group</span>
-<span class="k">CREATE</span><span class="w"> </span><span class="k">ROLE</span><span class="w"> </span><span class="n">admins</span><span class="p">;</span>
-</code></pre></div>
-<h4 id="developer-with-group-membership">Developer with Group Membership<a class="headerlink" href="#developer-with-group-membership" title="Permanent link">¶</a></h4>
-<div class="highlight"><pre><span></span><code><span class="c1">-- Create permission groups</span>
-<span class="k">CREATE</span><span class="w"> </span><span class="k">ROLE</span><span class="w"> </span><span class="n">dev_read</span><span class="p">;</span>
-<span class="k">CREATE</span><span class="w"> </span><span class="k">ROLE</span><span class="w"> </span><span class="n">dev_write</span><span class="p">;</span>
-
-<span class="c1">-- Create developer role</span>
-<span class="k">CREATE</span><span class="w"> </span><span class="k">ROLE</span><span class="w"> </span><span class="n">developer</span>
-<span class="w">    </span><span class="k">WITH</span><span class="w"> </span><span class="n">PASSWORD</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s1">'dev_pwd'</span>
-<span class="w">    </span><span class="k">AND</span><span class="w"> </span><span class="n">LOGIN</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">true</span><span class="p">;</span>
-
-<span class="c1">-- Grant groups to developer (separate GRANT statements)</span>
-<span class="k">GRANT</span><span class="w"> </span><span class="n">dev_read</span><span class="w"> </span><span class="k">TO</span><span class="w"> </span><span class="n">developer</span><span class="p">;</span>
-<span class="k">GRANT</span><span class="w"> </span><span class="n">dev_write</span><span class="w"> </span><span class="k">TO</span><span class="w"> </span><span class="n">developer</span><span class="p">;</span>
-</code></pre></div>
-<h3 id="restrictions">Restrictions<a class="headerlink" href="#restrictions" title="Permanent link">¶</a></h3>
-<div class="admonition warning">
-<p class="admonition-title">Restrictions</p>
-<ul>
-<li>Role names must be unique</li>
-<li>Cannot create roles with reserved names (<code>cassandra</code> if default superuser)</li>
-<li>Requires CREATE permission on ALL ROLES (or superuser)</li>
-<li>Password required if LOGIN = true</li>
-</ul>
-</div>
-<h3 id="notes">Notes<a class="headerlink" href="#notes" title="Permanent link">¶</a></h3>
-<ul>
-<li>Roles are stored in <code>system_auth.roles</code></li>
-<li>Role creation propagates via gossip</li>
-<li>New roles have no permissions by default</li>
-<li>Use <code>DESCRIBE ROLE</code> to view role details</li>
-</ul>
-<hr>
-<h2 id="alter-role">ALTER ROLE<a class="headerlink" href="#alter-role" title="Permanent link">¶</a></h2>
-<p>Modify role properties.</p>
-<h3 id="synopsis_1">Synopsis<a class="headerlink" href="#synopsis_1" title="Permanent link">¶</a></h3>
-<div class="highlight"><pre><span></span><code>ALTER ROLE *role_name*
-    WITH *role_option* [ AND *role_option* ... ]
-</code></pre></div>
-<h3 id="description_1">Description<a class="headerlink" href="#description_1" title="Permanent link">¶</a></h3>
-<p><code>ALTER ROLE</code> changes role properties such as password, login capability, or superuser status.</p>
-<h3 id="parameters_1">Parameters<a class="headerlink" href="#parameters_1" title="Permanent link">¶</a></h3>
-<p>Same options as <code>CREATE ROLE</code>:</p>
-<ul>
-<li><code>PASSWORD</code> - New password</li>
-<li><code>LOGIN</code> - Enable/disable login</li>
-<li><code>SUPERUSER</code> - Grant/revoke superuser</li>
-<li><code>OPTIONS</code> - Plugin-specific options</li>
-</ul>
-<h3 id="examples_1">Examples<a class="headerlink" href="#examples_1" title="Permanent link">¶</a></h3>
-<h4 id="change-password">Change Password<a class="headerlink" href="#change-password" title="Permanent link">¶</a></h4>
-<div class="highlight"><pre><span></span><code><span class="k">ALTER</span><span class="w"> </span><span class="k">ROLE</span><span class="w"> </span><span class="n">app_user</span><span class="w"> </span><span class="k">WITH</span><span class="w"> </span><span class="n">PASSWORD</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s1">'new_password_456'</span><span class="p">;</span>
-</code></pre></div>
-<h4 id="disable-login">Disable Login<a class="headerlink" href="#disable-login" title="Permanent link">¶</a></h4>
-<div class="highlight"><pre><span></span><code><span class="k">ALTER</span><span class="w"> </span><span class="k">ROLE</span><span class="w"> </span><span class="n">compromised_account</span><span class="w"> </span><span class="k">WITH</span><span class="w"> </span><span class="n">LOGIN</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">false</span><span class="p">;</span>
-</code></pre></div>
-<h4 id="promote-to-superuser">Promote to Superuser<a class="headerlink" href="#promote-to-superuser" title="Permanent link">¶</a></h4>
-<div class="highlight"><pre><span></span><code><span class="k">ALTER</span><span class="w"> </span><span class="k">ROLE</span><span class="w"> </span><span class="n">senior_dba</span><span class="w"> </span><span class="k">WITH</span><span class="w"> </span><span class="n">SUPERUSER</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">true</span><span class="p">;</span>
-</code></pre></div>
-<h4 id="demote-from-superuser">Demote from Superuser<a class="headerlink" href="#demote-from-superuser" title="Permanent link">¶</a></h4>
-<div class="highlight"><pre><span></span><code><span class="k">ALTER</span><span class="w"> </span><span class="k">ROLE</span><span class="w"> </span><span class="n">former_admin</span><span class="w"> </span><span class="k">WITH</span><span class="w"> </span><span class="n">SUPERUSER</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">false</span><span class="p">;</span>
-</code></pre></div>
-<h3 id="restrictions_1">Restrictions<a class="headerlink" href="#restrictions_1" title="Permanent link">¶</a></h3>
-<div class="admonition warning">
-<p class="admonition-title">Restrictions</p>
-<ul>
-<li>Cannot alter non-existent roles</li>
-<li>Non-superusers can only alter their own password</li>
-<li>Cannot demote the last superuser</li>
-<li>Requires ALTER permission on the role (or superuser)</li>
-</ul>
-</div>
-<hr>
-<h2 id="drop-role">DROP ROLE<a class="headerlink" href="#drop-role" title="Permanent link">¶</a></h2>
-<p>Remove a role.</p>
-<h3 id="synopsis_2">Synopsis<a class="headerlink" href="#synopsis_2" title="Permanent link">¶</a></h3>
-<div class="highlight"><pre><span></span><code>DROP ROLE [ IF EXISTS ] *role_name*
-</code></pre></div>
-<h3 id="description_2">Description<a class="headerlink" href="#description_2" title="Permanent link">¶</a></h3>
-<p><code>DROP ROLE</code> removes a role and revokes all its permissions. Roles granted to other roles are also revoked.</p>
-<h3 id="examples_2">Examples<a class="headerlink" href="#examples_2" title="Permanent link">¶</a></h3>
-<div class="highlight"><pre><span></span><code><span class="k">DROP</span><span class="w"> </span><span class="k">ROLE</span><span class="w"> </span><span class="n">former_employee</span><span class="p">;</span>
-<span class="k">DROP</span><span class="w"> </span><span class="k">ROLE</span><span class="w"> </span><span class="k">IF</span><span class="w"> </span><span class="k">EXISTS</span><span class="w"> </span><span class="n">temp_user</span><span class="p">;</span>
-</code></pre></div>
-<h3 id="restrictions_2">Restrictions<a class="headerlink" href="#restrictions_2" title="Permanent link">¶</a></h3>
-<div class="admonition danger">
-<p class="admonition-title">Restrictions</p>
-<ul>
-<li>Cannot drop role with active sessions (sessions continue but re-auth fails)</li>
-<li>Cannot drop the last superuser</li>
-<li>Requires DROP permission on the role (or superuser)</li>
-</ul>
-</div>
-<hr>
-<h2 id="grant">GRANT<a class="headerlink" href="#grant" title="Permanent link">¶</a></h2>
-<p>Grant permissions or roles.</p>
-<h3 id="synopsis_3">Synopsis<a class="headerlink" href="#synopsis_3" title="Permanent link">¶</a></h3>
-<p><strong>Grant permission:</strong></p>
-<div class="highlight"><pre><span></span><code>GRANT *permission* ON *resource* TO *role_name*
-</code></pre></div>
-<p><strong>Grant role to role:</strong></p>
-<div class="highlight"><pre><span></span><code>GRANT *role_name* TO *role_name*
-</code></pre></div>
-<p><strong>permission</strong>:</p>
-<div class="highlight"><pre><span></span><code>ALL [ PERMISSIONS ]
-| ALTER
-| AUTHORIZE
-| CREATE
-| DESCRIBE
-| DROP
-| EXECUTE
-| MODIFY
-| SELECT
-| UNMASK
-| SELECT_MASKED
-</code></pre></div>
-<p><strong>resource</strong>:</p>
-<div class="highlight"><pre><span></span><code>ALL KEYSPACES
-| KEYSPACE *keyspace_name*
-| [ TABLE ] [ *keyspace_name*. ] *table_name*
-| ALL FUNCTIONS [ IN KEYSPACE *keyspace_name* ]
-| FUNCTION [ *keyspace_name*. ] *function_name* ( [ *arg_type* [, ... ] ] )
-| ALL ROLES
-| ROLE *role_name*
-| ALL MBEANS
-| MBEAN *mbean_name*
-| MBEANS *mbean_pattern*
-</code></pre></div>
-<h3 id="description_3">Description<a class="headerlink" href="#description_3" title="Permanent link">¶</a></h3>
-<p><code>GRANT</code> assigns permissions to roles or creates role membership relationships.</p>
-<h3 id="permission-types">Permission Types<a class="headerlink" href="#permission-types" title="Permanent link">¶</a></h3>
-<table>
-<thead>
-<tr>
-<th>Permission</th>
-<th>Applicable Resources</th>
-<th>Allows</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td><code>ALL</code></td>
-<td>Any</td>
-<td>All applicable permissions</td>
-</tr>
-<tr>
-<td><code>ALTER</code></td>
-<td>Keyspace, Table, Role</td>
-<td>Schema modification</td>
-</tr>
-<tr>
-<td><code>AUTHORIZE</code></td>
-<td>Any</td>
-<td>Grant/revoke permissions</td>
-</tr>
-<tr>
-<td><code>CREATE</code></td>
-<td>Keyspace, Table, Function, Role</td>
-<td>Create new objects</td>
-</tr>
-<tr>
-<td><code>DESCRIBE</code></td>
-<td>Role</td>
-<td>View role details</td>
-</tr>
-<tr>
-<td><code>DROP</code></td>
-<td>Keyspace, Table, Function, Role</td>
-<td>Delete objects</td>
-</tr>
-<tr>
-<td><code>EXECUTE</code></td>
-<td>Function</td>
-<td>Execute functions</td>
-</tr>
-<tr>
-<td><code>MODIFY</code></td>
-<td>Keyspace, Table</td>
-<td>INSERT, UPDATE, DELETE</td>
-</tr>
-<tr>
-<td><code>SELECT</code></td>
-<td>Keyspace, Table</td>
-<td>Read data</td>
-</tr>
-<tr>
-<td><code>UNMASK</code></td>
-<td>Keyspace, Table</td>
-<td>View unmasked data (dynamic data masking)</td>
-</tr>
-<tr>
-<td><code>SELECT_MASKED</code></td>
-<td>Keyspace, Table</td>
-<td>View masked data</td>
-</tr>
-</tbody>
-</table>
-<h3 id="resource-scopes">Resource Scopes<a class="headerlink" href="#resource-scopes" title="Permanent link">¶</a></h3>
-<div class="highlight"><pre><span></span><code><span class="c1">-- All keyspaces</span>
-<span class="k">GRANT</span><span class="w"> </span><span class="k">SELECT</span><span class="w"> </span><span class="k">ON</span><span class="w"> </span><span class="k">ALL</span><span class="w"> </span><span class="n">KEYSPACES</span><span class="w"> </span><span class="k">TO</span><span class="w"> </span><span class="n">analyst</span><span class="p">;</span>
-
-<span class="c1">-- Specific keyspace (all tables)</span>
-<span class="k">GRANT</span><span class="w"> </span><span class="k">SELECT</span><span class="w"> </span><span class="k">ON</span><span class="w"> </span><span class="n">KEYSPACE</span><span class="w"> </span><span class="n">production</span><span class="w"> </span><span class="k">TO</span><span class="w"> </span><span class="n">app_reader</span><span class="p">;</span>
-
-<span class="c1">-- Specific table</span>
-<span class="k">GRANT</span><span class="w"> </span><span class="k">MODIFY</span><span class="w"> </span><span class="k">ON</span><span class="w"> </span><span class="n">production</span><span class="p">.</span><span class="n">orders</span><span class="w"> </span><span class="k">TO</span><span class="w"> </span><span class="n">order_service</span><span class="p">;</span>
-
-<span class="c1">-- All functions</span>
-<span class="k">GRANT</span><span class="w"> </span><span class="k">EXECUTE</span><span class="w"> </span><span class="k">ON</span><span class="w"> </span><span class="k">ALL</span><span class="w"> </span><span class="n">FUNCTIONS</span><span class="w"> </span><span class="k">TO</span><span class="w"> </span><span class="n">developer</span><span class="p">;</span>
-
-<span class="c1">-- Specific function</span>
-<span class="k">GRANT</span><span class="w"> </span><span class="k">EXECUTE</span><span class="w"> </span><span class="k">ON</span><span class="w"> </span><span class="k">FUNCTION</span><span class="w"> </span><span class="n">my_ks</span><span class="p">.</span><span class="n">my_func</span><span class="p">(</span><span class="nb">INT</span><span class="p">)</span><span class="w"> </span><span class="k">TO</span><span class="w"> </span><span class="n">app_user</span><span class="p">;</span>
-
-<span class="c1">-- Role management</span>
-<span class="k">GRANT</span><span class="w"> </span><span class="k">ALTER</span><span class="w"> </span><span class="k">ON</span><span class="w"> </span><span class="k">ROLE</span><span class="w"> </span><span class="n">app_user</span><span class="w"> </span><span class="k">TO</span><span class="w"> </span><span class="n">team_lead</span><span class="p">;</span>
-<span class="k">GRANT</span><span class="w"> </span><span class="n">AUTHORIZE</span><span class="w"> </span><span class="k">ON</span><span class="w"> </span><span class="k">ALL</span><span class="w"> </span><span class="n">ROLES</span><span class="w"> </span><span class="k">TO</span><span class="w"> </span><span class="n">security_admin</span><span class="p">;</span>
-</code></pre></div>
-<h3 id="examples_3">Examples<a class="headerlink" href="#examples_3" title="Permanent link">¶</a></h3>
-<h4 id="read-only-access">Read-Only Access<a class="headerlink" href="#read-only-access" title="Permanent link">¶</a></h4>
-<div class="highlight"><pre><span></span><code><span class="c1">-- Read access to specific keyspace</span>
-<span class="k">GRANT</span><span class="w"> </span><span class="k">SELECT</span><span class="w"> </span><span class="k">ON</span><span class="w"> </span><span class="n">KEYSPACE</span><span class="w"> </span><span class="n">analytics</span><span class="w"> </span><span class="k">TO</span><span class="w"> </span><span class="n">analyst</span><span class="p">;</span>
-</code></pre></div>
-<h4 id="application-service-account">Application Service Account<a class="headerlink" href="#application-service-account" title="Permanent link">¶</a></h4>
-<div class="highlight"><pre><span></span><code><span class="c1">-- Read/write to application tables</span>
-<span class="k">GRANT</span><span class="w"> </span><span class="k">SELECT</span><span class="w"> </span><span class="k">ON</span><span class="w"> </span><span class="n">KEYSPACE</span><span class="w"> </span><span class="n">app_data</span><span class="w"> </span><span class="k">TO</span><span class="w"> </span><span class="n">app_service</span><span class="p">;</span>
-<span class="k">GRANT</span><span class="w"> </span><span class="k">MODIFY</span><span class="w"> </span><span class="k">ON</span><span class="w"> </span><span class="n">KEYSPACE</span><span class="w"> </span><span class="n">app_data</span><span class="w"> </span><span class="k">TO</span><span class="w"> </span><span class="n">app_service</span><span class="p">;</span>
-</code></pre></div>
-<h4 id="schema-administrator">Schema Administrator<a class="headerlink" href="#schema-administrator" title="Permanent link">¶</a></h4>
-<div class="highlight"><pre><span></span><code><span class="c1">-- Schema management without data access</span>
-<span class="k">GRANT</span><span class="w"> </span><span class="k">CREATE</span><span class="w"> </span><span class="k">ON</span><span class="w"> </span><span class="n">KEYSPACE</span><span class="w"> </span><span class="n">dev_ks</span><span class="w"> </span><span class="k">TO</span><span class="w"> </span><span class="n">schema_admin</span><span class="p">;</span>
-<span class="k">GRANT</span><span class="w"> </span><span class="k">ALTER</span><span class="w"> </span><span class="k">ON</span><span class="w"> </span><span class="n">KEYSPACE</span><span class="w"> </span><span class="n">dev_ks</span><span class="w"> </span><span class="k">TO</span><span class="w"> </span><span class="n">schema_admin</span><span class="p">;</span>
-<span class="k">GRANT</span><span class="w"> </span><span class="k">DROP</span><span class="w"> </span><span class="k">ON</span><span class="w"> </span><span class="n">KEYSPACE</span><span class="w"> </span><span class="n">dev_ks</span><span class="w"> </span><span class="k">TO</span><span class="w"> </span><span class="n">schema_admin</span><span class="p">;</span>
-</code></pre></div>
-<h4 id="full-access-to-keyspace">Full Access to Keyspace<a class="headerlink" href="#full-access-to-keyspace" title="Permanent link">¶</a></h4>
-<div class="highlight"><pre><span></span><code><span class="k">GRANT</span><span class="w"> </span><span class="k">ALL</span><span class="w"> </span><span class="n">PERMISSIONS</span><span class="w"> </span><span class="k">ON</span><span class="w"> </span><span class="n">KEYSPACE</span><span class="w"> </span><span class="n">production</span><span class="w"> </span><span class="k">TO</span><span class="w"> </span><span class="k">admin</span><span class="p">;</span>
-</code></pre></div>
-<h4 id="role-hierarchy_1">Role Hierarchy<a class="headerlink" href="#role-hierarchy_1" title="Permanent link">¶</a></h4>
-<div class="highlight"><pre><span></span><code><span class="c1">-- Create permission groups</span>
-<span class="k">CREATE</span><span class="w"> </span><span class="k">ROLE</span><span class="w"> </span><span class="n">prod_read</span><span class="p">;</span>
-<span class="k">CREATE</span><span class="w"> </span><span class="k">ROLE</span><span class="w"> </span><span class="n">prod_write</span><span class="p">;</span>
-<span class="k">CREATE</span><span class="w"> </span><span class="k">ROLE</span><span class="w"> </span><span class="n">prod_admin</span><span class="p">;</span>
-
-<span class="c1">-- Grant permissions to groups</span>
-<span class="k">GRANT</span><span class="w"> </span><span class="k">SELECT</span><span class="w"> </span><span class="k">ON</span><span class="w"> </span><span class="n">KEYSPACE</span><span class="w"> </span><span class="n">production</span><span class="w"> </span><span class="k">TO</span><span class="w"> </span><span class="n">prod_read</span><span class="p">;</span>
-<span class="k">GRANT</span><span class="w"> </span><span class="k">MODIFY</span><span class="w"> </span><span class="k">ON</span><span class="w"> </span><span class="n">KEYSPACE</span><span class="w"> </span><span class="n">production</span><span class="w"> </span><span class="k">TO</span><span class="w"> </span><span class="n">prod_write</span><span class="p">;</span>
-<span class="k">GRANT</span><span class="w"> </span><span class="k">ALL</span><span class="w"> </span><span class="n">PERMISSIONS</span><span class="w"> </span><span class="k">ON</span><span class="w"> </span><span class="n">KEYSPACE</span><span class="w"> </span><span class="n">production</span><span class="w"> </span><span class="k">TO</span><span class="w"> </span><span class="n">prod_admin</span><span class="p">;</span>
-
-<span class="c1">-- Create roles with group membership</span>
-<span class="k">CREATE</span><span class="w"> </span><span class="k">ROLE</span><span class="w"> </span><span class="n">app_service</span><span class="w"> </span><span class="k">WITH</span><span class="w"> </span><span class="n">PASSWORD</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s1">'secret'</span><span class="w"> </span><span class="k">AND</span><span class="w"> </span><span class="n">LOGIN</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">true</span><span class="p">;</span>
-<span class="k">GRANT</span><span class="w"> </span><span class="n">prod_read</span><span class="w"> </span><span class="k">TO</span><span class="w"> </span><span class="n">app_service</span><span class="p">;</span>
-<span class="k">GRANT</span><span class="w"> </span><span class="n">prod_write</span><span class="w"> </span><span class="k">TO</span><span class="w"> </span><span class="n">app_service</span><span class="p">;</span>
-
-<span class="k">CREATE</span><span class="w"> </span><span class="k">ROLE</span><span class="w"> </span><span class="n">dba</span><span class="w"> </span><span class="k">WITH</span><span class="w"> </span><span class="n">PASSWORD</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s1">'secret'</span><span class="w"> </span><span class="k">AND</span><span class="w"> </span><span class="n">LOGIN</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">true</span><span class="p">;</span>
-<span class="k">GRANT</span><span class="w"> </span><span class="n">prod_admin</span><span class="w"> </span><span class="k">TO</span><span class="w"> </span><span class="n">dba</span><span class="p">;</span>
-</code></pre></div>
-<h3 id="restrictions_3">Restrictions<a class="headerlink" href="#restrictions_3" title="Permanent link">¶</a></h3>
-<div class="admonition warning">
-<p class="admonition-title">Restrictions</p>
-<ul>
-<li>Requires AUTHORIZE permission on the resource</li>
-<li>Cannot grant permissions on non-existent resources</li>
-<li>Circular role grants not allowed</li>
-<li>Superuser can grant any permission</li>
-</ul>
-</div>
-<hr>
-<h2 id="revoke">REVOKE<a class="headerlink" href="#revoke" title="Permanent link">¶</a></h2>
-<p>Remove permissions or role membership.</p>
-<h3 id="synopsis_4">Synopsis<a class="headerlink" href="#synopsis_4" title="Permanent link">¶</a></h3>
-<p><strong>Revoke permission:</strong></p>
-<div class="highlight"><pre><span></span><code>REVOKE *permission* ON *resource* FROM *role_name*
-</code></pre></div>
-<p><strong>Revoke role from role:</strong></p>
-<div class="highlight"><pre><span></span><code>REVOKE *role_name* FROM *role_name*
-</code></pre></div>
-<h3 id="description_4">Description<a class="headerlink" href="#description_4" title="Permanent link">¶</a></h3>
-<p><code>REVOKE</code> removes permissions from roles or removes role membership.</p>
-<h3 id="examples_4">Examples<a class="headerlink" href="#examples_4" title="Permanent link">¶</a></h3>
-<h4 id="revoke-permission">Revoke Permission<a class="headerlink" href="#revoke-permission" title="Permanent link">¶</a></h4>
-<div class="highlight"><pre><span></span><code><span class="k">REVOKE</span><span class="w"> </span><span class="k">MODIFY</span><span class="w"> </span><span class="k">ON</span><span class="w"> </span><span class="n">KEYSPACE</span><span class="w"> </span><span class="n">production</span><span class="w"> </span><span class="k">FROM</span><span class="w"> </span><span class="n">app_service</span><span class="p">;</span>
-</code></pre></div>
-<h4 id="revoke-all-permissions">Revoke All Permissions<a class="headerlink" href="#revoke-all-permissions" title="Permanent link">¶</a></h4>
-<div class="highlight"><pre><span></span><code><span class="k">REVOKE</span><span class="w"> </span><span class="k">ALL</span><span class="w"> </span><span class="n">PERMISSIONS</span><span class="w"> </span><span class="k">ON</span><span class="w"> </span><span class="n">KEYSPACE</span><span class="w"> </span><span class="n">sensitive_data</span><span class="w"> </span><span class="k">FROM</span><span class="w"> </span><span class="n">former_employee</span><span class="p">;</span>
-</code></pre></div>
-<h4 id="revoke-role-membership">Revoke Role Membership<a class="headerlink" href="#revoke-role-membership" title="Permanent link">¶</a></h4>
-<div class="highlight"><pre><span></span><code><span class="k">REVOKE</span><span class="w"> </span><span class="n">prod_write</span><span class="w"> </span><span class="k">FROM</span><span class="w"> </span><span class="n">restricted_user</span><span class="p">;</span>
-</code></pre></div>
-<h3 id="restrictions_4">Restrictions<a class="headerlink" href="#restrictions_4" title="Permanent link">¶</a></h3>
-<div class="admonition warning">
-<p class="admonition-title">Restrictions</p>
-<ul>
-<li>Requires AUTHORIZE permission on the resource</li>
-<li>Revoking non-existent permission succeeds silently</li>
-<li>Cannot revoke from non-existent roles (error)</li>
-</ul>
-</div>
-<hr>
-<h2 id="list-permissions">LIST PERMISSIONS<a class="headerlink" href="#list-permissions" title="Permanent link">¶</a></h2>
-<p>Display granted permissions.</p>
-<h3 id="synopsis_5">Synopsis<a class="headerlink" href="#synopsis_5" title="Permanent link">¶</a></h3>
-<div class="highlight"><pre><span></span><code>LIST *permission* [ ON *resource* ] [ OF *role_name* ] [ NORECURSIVE ]
-</code></pre></div>
-<h3 id="description_5">Description<a class="headerlink" href="#description_5" title="Permanent link">¶</a></h3>
-<p><code>LIST PERMISSIONS</code> displays permission grants matching specified criteria.</p>
-<h3 id="parameters_2">Parameters<a class="headerlink" href="#parameters_2" title="Permanent link">¶</a></h3>
-<h4 id="norecursive">NORECURSIVE<a class="headerlink" href="#norecursive" title="Permanent link">¶</a></h4>
-<p>Show only directly granted permissions, not inherited through role membership:</p>
-<div class="highlight"><pre><span></span><code><span class="c1">-- All permissions including inherited</span>
-<span class="n">LIST</span><span class="w"> </span><span class="k">ALL</span><span class="w"> </span><span class="n">PERMISSIONS</span><span class="w"> </span><span class="k">OF</span><span class="w"> </span><span class="n">app_user</span><span class="p">;</span>
-
-<span class="c1">-- Only directly granted permissions</span>
-<span class="n">LIST</span><span class="w"> </span><span class="k">ALL</span><span class="w"> </span><span class="n">PERMISSIONS</span><span class="w"> </span><span class="k">OF</span><span class="w"> </span><span class="n">app_user</span><span class="w"> </span><span class="n">NORECURSIVE</span><span class="p">;</span>
-</code></pre></div>
-<h3 id="examples_5">Examples<a class="headerlink" href="#examples_5" title="Permanent link">¶</a></h3>
-<h4 id="all-permissions">All Permissions<a class="headerlink" href="#all-permissions" title="Permanent link">¶</a></h4>
-<div class="highlight"><pre><span></span><code><span class="n">LIST</span><span class="w"> </span><span class="k">ALL</span><span class="w"> </span><span class="n">PERMISSIONS</span><span class="p">;</span>
-</code></pre></div>
-<h4 id="permissions-for-role">Permissions for Role<a class="headerlink" href="#permissions-for-role" title="Permanent link">¶</a></h4>
-<div class="highlight"><pre><span></span><code><span class="n">LIST</span><span class="w"> </span><span class="k">ALL</span><span class="w"> </span><span class="n">PERMISSIONS</span><span class="w"> </span><span class="k">OF</span><span class="w"> </span><span class="n">app_service</span><span class="p">;</span>
-</code></pre></div>
-<h4 id="specific-permission-type">Specific Permission Type<a class="headerlink" href="#specific-permission-type" title="Permanent link">¶</a></h4>
-<div class="highlight"><pre><span></span><code><span class="n">LIST</span><span class="w"> </span><span class="k">SELECT</span><span class="w"> </span><span class="k">ON</span><span class="w"> </span><span class="n">KEYSPACE</span><span class="w"> </span><span class="n">production</span><span class="p">;</span>
-</code></pre></div>
-<h4 id="permissions-on-resource">Permissions on Resource<a class="headerlink" href="#permissions-on-resource" title="Permanent link">¶</a></h4>
-<div class="highlight"><pre><span></span><code><span class="n">LIST</span><span class="w"> </span><span class="k">ALL</span><span class="w"> </span><span class="n">PERMISSIONS</span><span class="w"> </span><span class="k">ON</span><span class="w"> </span><span class="k">TABLE</span><span class="w"> </span><span class="n">production</span><span class="p">.</span><span class="n">orders</span><span class="p">;</span>
-</code></pre></div>
-<h3 id="output-format">Output Format<a class="headerlink" href="#output-format" title="Permanent link">¶</a></h3>
-<div class="highlight"><pre><span></span><code> role      | username   | resource              | permission
------------+------------+-----------------------+------------
- app_user  | app_user   | &lt;keyspace production&gt; | SELECT
- app_user  | app_user   | &lt;keyspace production&gt; | MODIFY
-</code></pre></div>
-<hr>
-<h2 id="list-roles">LIST ROLES<a class="headerlink" href="#list-roles" title="Permanent link">¶</a></h2>
-<p>Display roles.</p>
-<h3 id="synopsis_6">Synopsis<a class="headerlink" href="#synopsis_6" title="Permanent link">¶</a></h3>
-<div class="highlight"><pre><span></span><code>LIST ROLES [ OF *role_name* ] [ NORECURSIVE ]
-</code></pre></div>
-<h3 id="description_6">Description<a class="headerlink" href="#description_6" title="Permanent link">¶</a></h3>
-<p><code>LIST ROLES</code> displays roles and their properties.</p>
-<h3 id="examples_6">Examples<a class="headerlink" href="#examples_6" title="Permanent link">¶</a></h3>
-<h4 id="all-roles">All Roles<a class="headerlink" href="#all-roles" title="Permanent link">¶</a></h4>
-<div class="highlight"><pre><span></span><code><span class="n">LIST</span><span class="w"> </span><span class="n">ROLES</span><span class="p">;</span>
-</code></pre></div>
-<h4 id="roles-granted-to-role">Roles Granted to Role<a class="headerlink" href="#roles-granted-to-role" title="Permanent link">¶</a></h4>
-<div class="highlight"><pre><span></span><code><span class="n">LIST</span><span class="w"> </span><span class="n">ROLES</span><span class="w"> </span><span class="k">OF</span><span class="w"> </span><span class="n">developer</span><span class="p">;</span>
-</code></pre></div>
-<h4 id="direct-grants-only">Direct Grants Only<a class="headerlink" href="#direct-grants-only" title="Permanent link">¶</a></h4>
-<div class="highlight"><pre><span></span><code><span class="n">LIST</span><span class="w"> </span><span class="n">ROLES</span><span class="w"> </span><span class="k">OF</span><span class="w"> </span><span class="n">app_user</span><span class="w"> </span><span class="n">NORECURSIVE</span><span class="p">;</span>
-</code></pre></div>
-<h3 id="output-format_1">Output Format<a class="headerlink" href="#output-format_1" title="Permanent link">¶</a></h3>
-<div class="highlight"><pre><span></span><code> role       | super | login | options
-------------+-------+-------+---------
- cassandra  | True  | True  | {}
- admin      | True  | True  | {}
- app_user   | False | True  | {}
- readers    | False | False | {}
-</code></pre></div>
-<hr>
-<h2 id="best-practices">Best Practices<a class="headerlink" href="#best-practices" title="Permanent link">¶</a></h2>
-<h3 id="role-design">Role Design<a class="headerlink" href="#role-design" title="Permanent link">¶</a></h3>
-<div class="admonition tip">
-<p class="admonition-title">Design Guidelines</p>
-<ol>
-<li><strong>Principle of least privilege</strong> - Grant minimum required permissions</li>
-<li><strong>Use role hierarchy</strong> - Create permission groups, assign to users</li>
-<li><strong>Separate concerns</strong> - Different roles for different functions</li>
-<li><strong>Avoid direct table grants</strong> - Use keyspace-level grants when possible</li>
-<li><strong>Regular audits</strong> - Review permissions periodically</li>
-</ol>
-</div>
-<h3 id="security-hardening">Security Hardening<a class="headerlink" href="#security-hardening" title="Permanent link">¶</a></h3>
-<div class="admonition warning">
-<p class="admonition-title">Production Security</p>
-<ol>
-<li><strong>Change default superuser</strong> - Create new admin, disable <code>cassandra</code> role</li>
-<li><strong>Use strong passwords</strong> - Enforce complexity requirements</li>
-<li><strong>Limit superusers</strong> - Minimize accounts with full access</li>
-<li><strong>Enable audit logging</strong> - Track authentication and authorization events</li>
-<li><strong>Network security</strong> - Use SSL/TLS for client connections</li>
-</ol>
-</div>
-<h3 id="common-patterns">Common Patterns<a class="headerlink" href="#common-patterns" title="Permanent link">¶</a></h3>
-<h4 id="application-service-account_1">Application Service Account<a class="headerlink" href="#application-service-account_1" title="Permanent link">¶</a></h4>
-<div class="highlight"><pre><span></span><code><span class="c1">-- Minimal permissions for application</span>
-<span class="k">CREATE</span><span class="w"> </span><span class="k">ROLE</span><span class="w"> </span><span class="n">app_service</span><span class="w"> </span><span class="k">WITH</span><span class="w"> </span><span class="n">PASSWORD</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s1">'secret'</span><span class="w"> </span><span class="k">AND</span><span class="w"> </span><span class="n">LOGIN</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">true</span><span class="p">;</span>
-<span class="k">GRANT</span><span class="w"> </span><span class="k">SELECT</span><span class="w"> </span><span class="k">ON</span><span class="w"> </span><span class="n">KEYSPACE</span><span class="w"> </span><span class="n">app_data</span><span class="w"> </span><span class="k">TO</span><span class="w"> </span><span class="n">app_service</span><span class="p">;</span>
-<span class="k">GRANT</span><span class="w"> </span><span class="k">MODIFY</span><span class="w"> </span><span class="k">ON</span><span class="w"> </span><span class="n">app_data</span><span class="p">.</span><span class="n">user_events</span><span class="w"> </span><span class="k">TO</span><span class="w"> </span><span class="n">app_service</span><span class="p">;</span>
-</code></pre></div>
-<h4 id="read-only-analytics-access">Read-Only Analytics Access<a class="headerlink" href="#read-only-analytics-access" title="Permanent link">¶</a></h4>
-<div class="highlight"><pre><span></span><code><span class="k">CREATE</span><span class="w"> </span><span class="k">ROLE</span><span class="w"> </span><span class="n">analyst</span><span class="w"> </span><span class="k">WITH</span><span class="w"> </span><span class="n">PASSWORD</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s1">'secret'</span><span class="w"> </span><span class="k">AND</span><span class="w"> </span><span class="n">LOGIN</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">true</span><span class="p">;</span>
-<span class="k">GRANT</span><span class="w"> </span><span class="k">SELECT</span><span class="w"> </span><span class="k">ON</span><span class="w"> </span><span class="n">KEYSPACE</span><span class="w"> </span><span class="n">production</span><span class="w"> </span><span class="k">TO</span><span class="w"> </span><span class="n">analyst</span><span class="p">;</span>
-<span class="k">GRANT</span><span class="w"> </span><span class="k">SELECT</span><span class="w"> </span><span class="k">ON</span><span class="w"> </span><span class="n">KEYSPACE</span><span class="w"> </span><span class="n">analytics</span><span class="w"> </span><span class="k">TO</span><span class="w"> </span><span class="n">analyst</span><span class="p">;</span>
-</code></pre></div>
-<h4 id="schema-only-administrator">Schema-Only Administrator<a class="headerlink" href="#schema-only-administrator" title="Permanent link">¶</a></h4>
-<div class="highlight"><pre><span></span><code><span class="k">CREATE</span><span class="w"> </span><span class="k">ROLE</span><span class="w"> </span><span class="n">schema_admin</span><span class="w"> </span><span class="k">WITH</span><span class="w"> </span><span class="n">PASSWORD</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s1">'secret'</span><span class="w"> </span><span class="k">AND</span><span class="w"> </span><span class="n">LOGIN</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">true</span><span class="p">;</span>
-<span class="k">GRANT</span><span class="w"> </span><span class="k">CREATE</span><span class="w"> </span><span class="k">ON</span><span class="w"> </span><span class="k">ALL</span><span class="w"> </span><span class="n">KEYSPACES</span><span class="w"> </span><span class="k">TO</span><span class="w"> </span><span class="n">schema_admin</span><span class="p">;</span>
-<span class="k">GRANT</span><span class="w"> </span><span class="k">ALTER</span><span class="w"> </span><span class="k">ON</span><span class="w"> </span><span class="k">ALL</span><span class="w"> </span><span class="n">KEYSPACES</span><span class="w"> </span><span class="k">TO</span><span class="w"> </span><span class="n">schema_admin</span><span class="p">;</span>
-<span class="c1">-- No SELECT/MODIFY = no data access</span>
-</code></pre></div>
 <hr>
 <h2 id="related-documentation">Related Documentation<a class="headerlink" href="#related-documentation" title="Permanent link">¶</a></h2>
-<ul>
-<li><strong><a href="dynamic-data-masking/">Dynamic Data Masking</a></strong> - Automatic data obfuscation for sensitive columns</li>
-<li><strong><a href="../ddl/">DDL Commands</a></strong> - Schema management commands</li>
-<li><strong><a href="../dml/">DML Commands</a></strong> - Data manipulation commands</li>
-</ul></div>
+<table>
+<thead>
+<tr>
+<th>Topic</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><a href="../../security/">Security Overview</a></td>
+<td>Security architecture and configuration</td>
+</tr>
+<tr>
+<td><a href="../../security/authentication/">Authentication</a></td>
+<td>Authenticator setup</td>
+</tr>
+<tr>
+<td><a href="../../security/authorization/">Authorization</a></td>
+<td>Authorizer setup and RBAC patterns</td>
+</tr>
+</tbody>
+</table></div>
 
 
 
@@ -15973,13 +14264,13 @@ data-et-multi-view="{&quot;schema&quot;:{&quot;content&quot;:{&quot;desktop&quot
         
         
           
-          <a href="dynamic-data-masking/" class="md-footer__link md-footer__link--next" aria-label="Next: Dynamic Data Masking">
+          <a href="rbac/" class="md-footer__link md-footer__link--next" aria-label="Next: Role-Based Access Control">
             <div class="md-footer__title">
               <span class="md-footer__direction">
                 Next
               </span>
               <div class="md-ellipsis">
-                Dynamic Data Masking
+                Role-Based Access Control
               </div>
             </div>
             <div class="md-footer__button md-icon">

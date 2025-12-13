@@ -6146,6 +6146,27 @@ data-et-multi-view="{&quot;schema&quot;:{&quot;content&quot;:{&quot;desktop&quot
   
   
     <li class="md-nav__item">
+      <a href="../../../cql/ddl/trigger/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Trigger
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
       <a href="../../../cql/ddl/type/" class="md-nav__link">
         
   
@@ -6469,7 +6490,7 @@ data-et-multi-view="{&quot;schema&quot;:{&quot;content&quot;:{&quot;desktop&quot
             
   
   <span class="md-ellipsis">
-    Security Commands
+    Security
   </span>
   
 
@@ -6479,7 +6500,7 @@ data-et-multi-view="{&quot;schema&quot;:{&quot;content&quot;:{&quot;desktop&quot
         <nav class="md-nav" data-md-level="5" aria-labelledby="__nav_7_2_4_3_5_label" aria-expanded="false">
           <label class="md-nav__title" for="__nav_7_2_4_3_5">
             <span class="md-nav__icon md-icon"></span>
-            Security Commands
+            Security
           </label>
           <ul class="md-nav__list" data-md-scrollfix>
             
@@ -6495,6 +6516,27 @@ data-et-multi-view="{&quot;schema&quot;:{&quot;content&quot;:{&quot;desktop&quot
   
   <span class="md-ellipsis">
     Overview
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../cql/security/rbac/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Role-Based Access Control
   </span>
   
 
@@ -12492,6 +12534,27 @@ data-et-multi-view="{&quot;schema&quot;:{&quot;content&quot;:{&quot;desktop&quot
   
   
   
+    <li class="md-nav__item">
+      <a href="../../../security/os-security/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    OS Security
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
     
     
     
@@ -12503,10 +12566,10 @@ data-et-multi-view="{&quot;schema&quot;:{&quot;content&quot;:{&quot;desktop&quot
       
         
         
-        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_7_2_6_7" >
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_7_2_6_8" >
         
           
-          <label class="md-nav__link" for="__nav_7_2_6_7" id="__nav_7_2_6_7_label" tabindex="0">
+          <label class="md-nav__link" for="__nav_7_2_6_8" id="__nav_7_2_6_8_label" tabindex="0">
             
   
   <span class="md-ellipsis">
@@ -12517,8 +12580,8 @@ data-et-multi-view="{&quot;schema&quot;:{&quot;content&quot;:{&quot;desktop&quot
             <span class="md-nav__icon md-icon"></span>
           </label>
         
-        <nav class="md-nav" data-md-level="4" aria-labelledby="__nav_7_2_6_7_label" aria-expanded="false">
-          <label class="md-nav__title" for="__nav_7_2_6_7">
+        <nav class="md-nav" data-md-level="4" aria-labelledby="__nav_7_2_6_8_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_7_2_6_8">
             <span class="md-nav__icon md-icon"></span>
             Encryption
           </label>
@@ -13924,43 +13987,148 @@ data-et-multi-view="{&quot;schema&quot;:{&quot;content&quot;:{&quot;desktop&quot
 </ul>
 <h3 id="query-requirements">Query Requirements<a class="headerlink" href="#query-requirements" title="Permanent link">¶</a></h3>
 <p>Before designing tables, list every query the application needs:</p>
-<div class="highlight"><pre><span></span><code>Product Queries:
-─────────────────────────────────────────────────────────────────
-Q1:  Get product details by product_id
-Q2:  List products in a category (paginated, sortable)
-Q3:  Search products by name prefix
-Q4:  Get featured/popular products for homepage
-Q5:  Get related products
-
-User Queries:
-─────────────────────────────────────────────────────────────────
-Q6:  Get user profile by user_id
-Q7:  Authenticate user by email (login)
-Q8:  Get user's saved addresses
-
-Shopping Cart Queries:
-─────────────────────────────────────────────────────────────────
-Q9:  Get all items in user's cart
-Q10: Check if specific product is in cart
-
-Order Queries:
-─────────────────────────────────────────────────────────────────
-Q11: Get user's order history (recent first)
-Q12: Get order details by order_id
-Q13: Get items in a specific order
-Q14: Get order status history
-Q15: Get orders by status (for admin dashboard)
-
-Inventory Queries:
-─────────────────────────────────────────────────────────────────
-Q16: Check product inventory across warehouses
-Q17: Reserve inventory (with consistency guarantee)
-
-Analytics Queries:
-─────────────────────────────────────────────────────────────────
-Q18: Get daily sales by category
-Q19: Get top products by views
-</code></pre></div>
+<p><strong>Product Queries:</strong></p>
+<table>
+<thead>
+<tr>
+<th>ID</th>
+<th>Query</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Q1</td>
+<td>Get product details by product_id</td>
+</tr>
+<tr>
+<td>Q2</td>
+<td>List products in a category (paginated, sortable)</td>
+</tr>
+<tr>
+<td>Q3</td>
+<td>Search products by name prefix</td>
+</tr>
+<tr>
+<td>Q4</td>
+<td>Get featured/popular products for homepage</td>
+</tr>
+<tr>
+<td>Q5</td>
+<td>Get related products</td>
+</tr>
+</tbody>
+</table>
+<p><strong>User Queries:</strong></p>
+<table>
+<thead>
+<tr>
+<th>ID</th>
+<th>Query</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Q6</td>
+<td>Get user profile by user_id</td>
+</tr>
+<tr>
+<td>Q7</td>
+<td>Authenticate user by email (login)</td>
+</tr>
+<tr>
+<td>Q8</td>
+<td>Get user's saved addresses</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Shopping Cart Queries:</strong></p>
+<table>
+<thead>
+<tr>
+<th>ID</th>
+<th>Query</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Q9</td>
+<td>Get all items in user's cart</td>
+</tr>
+<tr>
+<td>Q10</td>
+<td>Check if specific product is in cart</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Order Queries:</strong></p>
+<table>
+<thead>
+<tr>
+<th>ID</th>
+<th>Query</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Q11</td>
+<td>Get user's order history (recent first)</td>
+</tr>
+<tr>
+<td>Q12</td>
+<td>Get order details by order_id</td>
+</tr>
+<tr>
+<td>Q13</td>
+<td>Get items in a specific order</td>
+</tr>
+<tr>
+<td>Q14</td>
+<td>Get order status history</td>
+</tr>
+<tr>
+<td>Q15</td>
+<td>Get orders by status (for admin dashboard)</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Inventory Queries:</strong></p>
+<table>
+<thead>
+<tr>
+<th>ID</th>
+<th>Query</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Q16</td>
+<td>Check product inventory across warehouses</td>
+</tr>
+<tr>
+<td>Q17</td>
+<td>Reserve inventory (with consistency guarantee)</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Analytics Queries:</strong></p>
+<table>
+<thead>
+<tr>
+<th>ID</th>
+<th>Query</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Q18</td>
+<td>Get daily sales by category</td>
+</tr>
+<tr>
+<td>Q19</td>
+<td>Get top products by views</td>
+</tr>
+</tbody>
+</table>
 <hr>
 <h2 id="schema-design">Schema Design<a class="headerlink" href="#schema-design" title="Permanent link">¶</a></h2>
 <h3 id="user-defined-types">User-Defined Types<a class="headerlink" href="#user-defined-types" title="Permanent link">¶</a></h3>

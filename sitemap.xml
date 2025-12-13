@@ -406,6 +406,11 @@
          <changefreq>daily</changefreq>
     </url>
     <url>
+         <loc>https://docs.axonops.com/cassandra/cql/ddl/trigger/</loc>
+         <lastmod>2025-12-13</lastmod>
+         <changefreq>daily</changefreq>
+    </url>
+    <url>
          <loc>https://docs.axonops.com/cassandra/cql/ddl/type/</loc>
          <lastmod>2025-12-13</lastmod>
          <changefreq>daily</changefreq>
@@ -472,6 +477,11 @@
     </url>
     <url>
          <loc>https://docs.axonops.com/cassandra/cql/security/dynamic-data-masking/</loc>
+         <lastmod>2025-12-13</lastmod>
+         <changefreq>daily</changefreq>
+    </url>
+    <url>
+         <loc>https://docs.axonops.com/cassandra/cql/security/rbac/</loc>
          <lastmod>2025-12-13</lastmod>
          <changefreq>daily</changefreq>
     </url>
@@ -1582,6 +1592,11 @@
     </url>
     <url>
          <loc>https://docs.axonops.com/cassandra/security/network/</loc>
+         <lastmod>2025-12-13</lastmod>
+         <changefreq>daily</changefreq>
+    </url>
+    <url>
+         <loc>https://docs.axonops.com/cassandra/security/os-security/</loc>
          <lastmod>2025-12-13</lastmod>
          <changefreq>daily</changefreq>
     </url>
