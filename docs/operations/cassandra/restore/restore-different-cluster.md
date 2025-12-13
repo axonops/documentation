@@ -190,6 +190,12 @@ This example shows restoring the table `keyspace1.table1` into a table named `ta
 
 In cases where a quick disaster recovery is needed, or a development/debug cluster with a copy of the most up-to-date production information is needed, we can use the following approach.
 
+In order for this feature, which was added with AxonOps Agent version 2.0.12, to work properly:
+
+* A Backup must be performed on the live cluster after all nodes have upgraded to AxonOps Agent 2.0.12, or later.
+* The Backups must contain all system tables, as well as any target keyspace/tables.
+* Due to a current limitation of a single `path` parameter within the [storage configuration options](restore-tool-setup.md#storage-config-and-storage-config-file-options), the Base Remote Path setting for both the Backup and Commitlog Archiving should be identical.
+
 To prepare the new cluster, we must first shutdown the Cassandra process on the new cluster and remove all of the on-disk data. Below is an example for shutting down a packaged-based installation of Cassandra using the default data directories:
 
 ```bash
