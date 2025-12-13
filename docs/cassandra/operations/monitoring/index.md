@@ -314,7 +314,7 @@ slow_query_log_timeout_in_ms: 500
 | Dropped Messages | Any message drops | Check thread pools, network, timeouts |
 | Hints Growing | >1000 hints stored | Check target node health |
 
-AxonOps provides pre-configured alerts for these conditions. See [Setup Alert Rules](/how-to/setup-alert-rules/) for configuration details.
+AxonOps provides pre-configured alerts for these conditions. See [Setup Alert Rules](../../../how-to/setup-alert-rules.md) for configuration details.
 
 ---
 
@@ -360,7 +360,7 @@ AxonOps provides pre-built dashboards for Cassandra monitoring:
 - **Compaction**: Pending tasks, throughput, history across the cluster
 - **Repair**: Repair coverage, progress, and scheduling status
 
-See [Metrics Dashboard](/monitoring/metricsdashboards/cassandra/) for dashboard usage and customization.
+See [Metrics Dashboard](../../../monitoring/metricsdashboards/cassandra.md) for dashboard usage and customization.
 
 ---
 
@@ -466,10 +466,10 @@ AxonOps extends beyond metrics collection:
 
 ### Getting Started
 
-- [AxonOps Cloud Setup](/get_started/cloud/) - Quick start with AxonOps Cloud
-- [Agent Installation](/get_started/agent_setup/) - Deploy the AxonOps agent
-- [Metrics Dashboards](/monitoring/metricsdashboards/cassandra/) - Using the monitoring dashboards
-- [Alert Configuration](/how-to/setup-alert-rules/) - Configure alerting rules
+- [AxonOps Cloud Setup](../../../get_started/cloud.md) - Quick start with AxonOps Cloud
+- [Agent Installation](../../../get_started/agent_setup.md) - Deploy the AxonOps agent
+- [Metrics Dashboards](../../../monitoring/metricsdashboards/cassandra.md) - Using the monitoring dashboards
+- [Alert Configuration](../../../how-to/setup-alert-rules.md) - Configure alerting rules
 
 ---
 

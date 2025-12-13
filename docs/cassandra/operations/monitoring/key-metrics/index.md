@@ -394,7 +394,7 @@ nodetool gossipinfo
 | Alerting | Separate configuration | Integrated |
 | Query analysis | Not available | Slow query detection |
 
-See [AxonOps Monitoring](/monitoring/) for dashboard features and configuration.
+See [AxonOps Monitoring](../../../../monitoring/overview.md) for dashboard features and configuration.
 
 ---
 
@@ -429,13 +429,13 @@ AxonOps provides pre-configured alerts for all critical Cassandra metrics. Alert
 - **Alert suppression** — Configure maintenance windows to suppress expected alerts
 - **Escalation policies** — Define escalation paths for unacknowledged alerts
 
-See [Setup Alert Rules](/how-to/setup-alert-rules/) for detailed configuration instructions.
+See [Setup Alert Rules](../../../../how-to/setup-alert-rules.md) for detailed configuration instructions.
 
 ---
 
 ## Next Steps
 
-- **[AxonOps Monitoring](/monitoring/)** — Purpose-built Cassandra dashboards and alerting
+- **[AxonOps Monitoring](../../../../monitoring/overview.md)** — Purpose-built Cassandra dashboards and alerting
 - **[Alerting Guide](../alerting/index.md)** — Configure alert thresholds and notifications
 - **[JMX Reference](../../jmx-reference/index.md)** — Complete JMX metrics reference
 - **[Troubleshooting](../../troubleshooting/index.md)** — Diagnose and resolve issues

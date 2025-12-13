@@ -218,7 +218,7 @@ The AxonOps agent automatically collects all critical Cassandra JMX metrics:
 - **Table-level metrics** — Per-table latency, partition sizes, tombstone counts
 - **Streaming metrics** — Repair progress, bootstrap/decommission status
 
-See [AxonOps Installation](/installation/) for setup instructions and [AxonOps Monitoring](/monitoring/) for dashboard features.
+See [AxonOps Installation](../../../get_started/cloud.md) for setup instructions and [AxonOps Monitoring](../../../monitoring/overview.md) for dashboard features.
 
 ---
 
@@ -261,6 +261,6 @@ List<String> liveNodes = (List<String>) mbsc.getAttribute(
 
 ## Next Steps
 
-- **[AxonOps Monitoring](/monitoring/)** — Pre-built dashboards for all Cassandra JMX metrics
+- **[AxonOps Monitoring](../../../monitoring/overview.md)** — Pre-built dashboards for all Cassandra JMX metrics
 - **[Key Metrics](../monitoring/key-metrics/index.md)** — Essential metrics and alert thresholds
 - **[Monitoring Guide](../monitoring/index.md)** — End-to-end monitoring setup

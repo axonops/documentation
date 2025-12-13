@@ -451,7 +451,7 @@ AxonOps provides a fully managed backup solution:
 - **One-click restore** through the dashboard
 - **Compliance reporting** for audit requirements
 
-See **[AxonOps Backup](/operations/backup/)** for configuration and usage.
+See **[AxonOps Backup](../../../operations/cassandra/backup/overview.md)** for configuration and usage.
 
 ---
 
