@@ -238,39 +238,30 @@ WHERE customer_id = ?        -- partition key
   AND status = 'pending';    -- indexed column
 ```
 
-```graphviz dot partition-restricted-query.svg
-digraph PartitionRestricted {
-    fontname="Helvetica";
-    node [fontname="Helvetica", fontsize=10];
-    edge [fontname="Helvetica", fontsize=9];
+```plantuml
+@startuml
+skinparam backgroundColor #FFFFFF
+skinparam defaultFontName Arial
 
-    label="Partition-Restricted Index Query";
-    labelloc="t";
-    fontsize=12;
+title Partition-Restricted Index Query
 
-    node [shape=box, style="rounded,filled"];
+participant "Application" as client #E8E8E8
+participant "Coordinator" as coord #FFE8CC
+participant "Node A\n(Replica)" as r1 #7B4B96
+participant "Node D\n(Replica)" as r2 #7B4B96
 
-    client [label="Application", fillcolor="#E8E8E8"];
-    coord [label="Coordinator", fillcolor="#FFE8CC"];
+client -> coord : Query
+coord -> r1 : Request
+coord -> r2 : Request
+note over r1 : 1. Local index lookup\n2. Filter results
+note over r2 : 1. Local index lookup\n2. Filter results
+r1 --> coord : Results
+r2 --> coord : Results
+coord --> client : Result
 
-    subgraph cluster_replicas {
-        label="Partition replicas (RF=3)";
-        style="rounded,filled";
-        fillcolor="#E8F4E8";
-        color="#99CC99";
+note over r1, r2 : Partition replicas (RF=3)
 
-        r1 [label="Node A\n1. Local index lookup\n2. Filter results", fillcolor="#7B4B96", fontcolor="white"];
-        r2 [label="Node D\n1. Local index lookup\n2. Filter results", fillcolor="#7B4B96", fontcolor="white"];
-        r3 [label="Node F\n1. Local index lookup\n2. Filter results", fillcolor="#7B4B96", fontcolor="white"];
-    }
-
-    client -> coord [label="Query"];
-    coord -> r1;
-    coord -> r2;
-    r1 -> coord [style=dashed];
-    r2 -> coord [style=dashed];
-    coord -> client [label="Result"];
-}
+@enduml
 ```
 
 **Performance characteristics:**
@@ -288,50 +279,34 @@ Without partition key, the coordinator must contact nodes across all token range
 SELECT * FROM orders WHERE status = 'pending';
 ```
 
-```graphviz dot global-query.svg
-digraph GlobalQuery {
-    fontname="Helvetica";
-    node [fontname="Helvetica", fontsize=10];
-    edge [fontname="Helvetica", fontsize=9];
+```plantuml
+@startuml
+skinparam backgroundColor #FFFFFF
+skinparam defaultFontName Arial
 
-    label="Global Index Query (No Partition Key)";
-    labelloc="t";
-    fontsize=12;
+title Global Index Query (No Partition Key)
 
-    node [shape=box, style="rounded,filled"];
+participant "Application" as client #E8E8E8
+participant "Coordinator" as coord #FFE8CC
+participant "Node A" as n1 #7B4B96
+participant "Node B" as n2 #7B4B96
+participant "Node C" as n3 #7B4B96
+participant "..." as n4 #7B4B96
 
-    client [label="Application", fillcolor="#E8E8E8"];
-    coord [label="Coordinator", fillcolor="#FFE8CC"];
+client -> coord : Query
+coord -> n1 : Request
+coord -> n2 : Request
+coord -> n3 : Request
+coord -> n4 : Request
+n1 --> coord : Local results
+n2 --> coord : Local results
+n3 --> coord : Local results
+n4 --> coord : Local results
+coord --> client : Merged result
 
-    subgraph cluster_all {
-        label="All token ranges contacted";
-        style="rounded,filled";
-        fillcolor="#FFE8E8";
-        color="#CC9999";
+note over n1, n4 : All token ranges contacted
 
-        n1 [label="Node A", fillcolor="#7B4B96", fontcolor="white"];
-        n2 [label="Node B", fillcolor="#7B4B96", fontcolor="white"];
-        n3 [label="Node C", fillcolor="#7B4B96", fontcolor="white"];
-        n4 [label="Node D", fillcolor="#7B4B96", fontcolor="white"];
-        n5 [label="Node E", fillcolor="#7B4B96", fontcolor="white"];
-        n6 [label="Node F", fillcolor="#7B4B96", fontcolor="white"];
-    }
-
-    client -> coord [label="Query"];
-    coord -> n1;
-    coord -> n2;
-    coord -> n3;
-    coord -> n4;
-    coord -> n5;
-    coord -> n6;
-    n1 -> coord [style=dashed];
-    n2 -> coord [style=dashed];
-    n3 -> coord [style=dashed];
-    n4 -> coord [style=dashed];
-    n5 -> coord [style=dashed];
-    n6 -> coord [style=dashed];
-    coord -> client [label="Merged result"];
-}
+@enduml
 ```
 
 **Performance characteristics:**
@@ -612,48 +587,54 @@ SELECT * FROM system_schema.indexes WHERE keyspace_name = 'my_keyspace';
 
 Use this framework to determine whether a secondary index is appropriate:
 
-```graphviz dot index-decision.svg
-digraph IndexDecision {
-    fontname="Helvetica";
-    node [fontname="Helvetica", fontsize=10];
-    edge [fontname="Helvetica", fontsize=9];
+```plantuml
+@startuml
+skinparam backgroundColor #FFFFFF
+skinparam defaultFontName Arial
 
-    label="Secondary Index Decision Framework";
-    labelloc="t";
-    fontsize=12;
+title Secondary Index Decision Framework
 
-    node [shape=diamond, style="filled", fillcolor="#FFF8E8"];
+start
 
-    q1 [label="Query always\nincludes partition key?"];
-    q2 [label="Column cardinality\nmedium (100-10000)?"];
-    q3 [label="Result sets\ntypically < 1000 rows?"];
-    q4 [label="Column rarely\nupdated?"];
-    q5 [label="Latency tolerance\n> 10ms acceptable?"];
+if (Query always includes partition key?) then (Yes)
+    #D4EDDA:Secondary index appropriate;
+    stop
+else (No)
+endif
 
-    node [shape=box, style="rounded,filled"];
+if (Column cardinality medium (100-10000)?) then (Yes)
+else (Too high)
+    #FFF3CD:Create denormalized lookup table;
+    stop
+endif
 
-    yes_index [label="Secondary index\nappropriate", fillcolor="#D4EDDA"];
-    pk_design [label="Design partition key\nto include this column", fillcolor="#FFF3CD"];
-    lookup_table [label="Create denormalized\nlookup table", fillcolor="#FFF3CD"];
-    reconsider [label="Reconsider data model\nor use analytics tools", fillcolor="#F8D7DA"];
-    maybe [label="Evaluate with\nproduction-like testing", fillcolor="#E8E8FF"];
+if (cardinality too low?) then (Too low)
+    #FFF3CD:Design partition key to include this column;
+    stop
+else (OK)
+endif
 
-    q1 -> yes_index [label="Yes"];
-    q1 -> q2 [label="No"];
+if (Result sets typically < 1000 rows?) then (Yes)
+else (No)
+    #F8D7DA:Reconsider data model or use analytics tools;
+    stop
+endif
 
-    q2 -> q3 [label="Yes"];
-    q2 -> lookup_table [label="Too high"];
-    q2 -> pk_design [label="Too low"];
+if (Column rarely updated?) then (Yes)
+else (No - frequent updates)
+    #FFF3CD:Create denormalized lookup table;
+    stop
+endif
 
-    q3 -> q4 [label="Yes"];
-    q3 -> reconsider [label="No"];
+if (Latency tolerance > 10ms acceptable?) then (Yes)
+    #E8E8FF:Evaluate with production-like testing;
+    stop
+else (No - low latency required)
+    #FFF3CD:Design partition key to include this column;
+    stop
+endif
 
-    q4 -> q5 [label="Yes"];
-    q4 -> lookup_table [label="No\n(frequent updates)"];
-
-    q5 -> maybe [label="Yes"];
-    q5 -> pk_design [label="No\n(low latency required)"];
-}
+@enduml
 ```
 
 ---

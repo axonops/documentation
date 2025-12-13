@@ -22,40 +22,13 @@ This guide covers the essential metrics to monitor for a healthy Cassandra clust
 
 ### Metric Categories
 
-```plantuml
-@startuml
-skinparam backgroundColor transparent
-
-skinparam rectangle {
-    BackgroundColor #7B4B96
-    FontColor white
-    BorderColor #5A3670
-    roundCorner 5
-}
-
-skinparam card {
-    BackgroundColor #F3DAFA
-    FontColor #333333
-    BorderColor #7B4B96
-}
-
-title Cassandra Metrics Hierarchy
-
-rectangle "**Cassandra Metrics Hierarchy**" as hierarchy {
-    card "**Client Request Metrics**\nRead/Write latency, throughput, errors" as client
-    card "**Thread Pool Metrics**\nActive, Pending, Blocked, Completed" as thread
-    card "**Storage Metrics**\nSSTable count, Disk usage, Compaction" as storage
-    card "**JVM Metrics**\nHeap usage, GC pauses, Off-heap" as jvm
-    card "**System Metrics**\nCPU, Memory, Disk I/O, Network" as system
-}
-
-client -[hidden]down- thread
-thread -[hidden]down- storage
-storage -[hidden]down- jvm
-jvm -[hidden]down- system
-
-@enduml
-```
+| Category | Description |
+|----------|-------------|
+| **Client Request Metrics** | Read/Write latency, throughput, errors |
+| **Thread Pool Metrics** | Active, Pending, Blocked, Completed |
+| **Storage Metrics** | SSTable count, Disk usage, Compaction |
+| **JVM Metrics** | Heap usage, GC pauses, Off-heap |
+| **System Metrics** | CPU, Memory, Disk I/O, Network |
 
 ---
 

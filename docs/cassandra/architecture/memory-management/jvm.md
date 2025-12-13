@@ -74,29 +74,35 @@ The latest generation of garbage collectors achieves pause times in the low sing
 - Designed for very large heaps (multi-terabyte)
 - Production-ready in JDK 15+
 
-### The Future: Generational Mode (JDK 21)
+### The Future: Generational Mode
 
-JDK 21 (released September 2023) introduces **Generational ZGC** and **Generational Shenandoah**, combining the low-pause characteristics of these collectors with generational collection for improved throughput.
-
-Generational collection separates objects by age:
+Generational garbage collection separates objects by age:
 
 - **Young generation**: Newly allocated objects (most die quickly)
 - **Old generation**: Long-lived objects
 
 This allows the collector to focus on the young generation where most garbage is created, improving overall efficiency.
 
+**Generational ZGC** (JDK 21+, production-ready)
+
 ```bash
 # JDK 21+ Generational ZGC
 -XX:+UseZGC
 -XX:+ZGenerational
+```
 
-# JDK 21+ Generational Shenandoah
+**Generational Shenandoah** (JDK 25+, production-ready)
+
+Generational Shenandoah was experimental in JDK 21-24 and became a production feature in JDK 25 (September 2025).
+
+```bash
+# JDK 25+ Generational Shenandoah
 -XX:+UseShenandoahGC
 -XX:ShenandoahGCMode=generational
 ```
 
 !!! warning "Not Yet Available for Cassandra"
-    Cassandra does not yet support JDK 21. As of 2025, Cassandra supports JDK 11 and 17. JDK 21 support is tracked in [CASSANDRA-18831](https://issues.apache.org/jira/browse/CASSANDRA-18831). When JDK 21 support arrives, Generational ZGC and Generational Shenandoah will offer the best of both worlds: sub-millisecond pauses with improved throughput.
+    Cassandra does not yet support JDK 21+. As of late 2025, Cassandra supports JDK 11 and 17. JDK 21 support is tracked in [CASSANDRA-18831](https://issues.apache.org/jira/browse/CASSANDRA-18831).
 
 ### Timeline Summary
 
@@ -106,7 +112,8 @@ This allows the collector to focus on the young generation where most garbage is
 | 2011 | G1 | 50-500ms | Region-based, predictable pauses |
 | 2017 | Shenandoah | 1-5ms | Concurrent compaction |
 | 2018 | ZGC | < 1ms | Colored pointers, load barriers |
-| 2023 | Generational ZGC/Shenandoah (JDK 21) | < 1ms | Generational + concurrent compaction |
+| 2023 | Generational ZGC (JDK 21) | < 1ms | Generational + concurrent compaction |
+| 2025 | Generational Shenandoah (JDK 25) | < 1ms | Generational + concurrent compaction |
 
 *Note: Timeline shows JDK release years. Availability for Cassandra depends on Cassandra's JDK support.*
 

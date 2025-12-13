@@ -141,27 +141,41 @@ D --> App: Session ready
 
 After bootstrap, the driver maintains persistent connections to cluster nodes:
 
-```
-Cluster: 9 nodes across 3 datacenters
+```plantuml
+@startuml
+skinparam backgroundColor transparent
+title Driver Connection State (9 nodes across 3 datacenters)
 
-Driver Connection State:
-┌─────────────────────────────────────────────────────────────┐
-│ DC1 (local)           DC2 (remote)        DC3 (remote)      │
-│ ┌─────┐ ┌─────┐       ┌─────┐ ┌─────┐     ┌─────┐ ┌─────┐   │
-│ │Node1│ │Node2│       │Node4│ │Node5│     │Node7│ │Node8│   │
-│ │ 8   │ │ 8   │       │ 2   │ │ 2   │     │ 0   │ │ 0   │   │
-│ │conn │ │conn │       │conn │ │conn │     │conn │ │conn │   │
-│ └─────┘ └─────┘       └─────┘ └─────┘     └─────┘ └─────┘   │
-│ ┌─────┐               ┌─────┐             ┌─────┐           │
-│ │Node3│               │Node6│             │Node9│           │
-│ │ 8   │               │ 2   │             │ 0   │           │
-│ │conn │               │conn │             │conn │           │
-│ └─────┘               └─────┘             └─────┘           │
-│                                                              │
-│ LOCAL: 8 connections/node (24 total)                        │
-│ REMOTE: 2 connections/node (12 total)                       │
-│ IGNORED: 0 connections (DC3 not used)                       │
-└─────────────────────────────────────────────────────────────┘
+package "DC1 (LOCAL)" #E8F5E9 {
+    database "Node1\n8 conn" as N1
+    database "Node2\n8 conn" as N2
+    database "Node3\n8 conn" as N3
+}
+
+package "DC2 (REMOTE)" #FFF3E0 {
+    database "Node4\n2 conn" as N4
+    database "Node5\n2 conn" as N5
+    database "Node6\n2 conn" as N6
+}
+
+package "DC3 (IGNORED)" #FFEBEE {
+    database "Node7\n0 conn" as N7
+    database "Node8\n0 conn" as N8
+    database "Node9\n0 conn" as N9
+}
+
+note bottom of N1
+  LOCAL: 8 connections/node (24 total)
+end note
+
+note bottom of N4
+  REMOTE: 2 connections/node (12 total)
+end note
+
+note bottom of N7
+  IGNORED: 0 connections
+end note
+@enduml
 ```
 
 **Benefits of Direct Connections:**
@@ -325,9 +339,23 @@ B --> D: Success
 
 Distributes requests evenly across all nodes:
 
-```
-Query Plan: [A, B, C, D, A, B, C, D, ...]
-             ↑ Current position advances each query
+```plantuml
+@startuml
+skinparam backgroundColor transparent
+
+rectangle "Round Robin Query Plans" {
+    card "Query 1: [**A**, B, C, D]" as Q1
+    card "Query 2: [**B**, C, D, A]" as Q2
+    card "Query 3: [**C**, D, A, B]" as Q3
+    card "Query 4: [**D**, A, B, C]" as Q4
+}
+
+Q1 -[hidden]down-> Q2
+Q2 -[hidden]down-> Q3
+Q3 -[hidden]down-> Q4
+
+note right of Q1 : Position advances\neach query
+@enduml
 ```
 
 **Characteristics:**
@@ -359,11 +387,33 @@ class RoundRobinPolicy:
 
 Prioritizes nodes in the local datacenter:
 
-```
-Local DC: dc1
-Hosts: dc1:[A,B,C], dc2:[D,E,F]
+```plantuml
+@startuml
+skinparam backgroundColor transparent
 
-Query Plan: [A, B, C, D, E, F]  (local first)
+package "dc1 (local)" #E8F5E9 {
+    card "A" as A
+    card "B" as B
+    card "C" as C
+}
+
+package "dc2 (remote)" #FFF3E0 {
+    card "D" as D
+    card "E" as E
+    card "F" as F
+}
+
+card "Query Plan: [A, B, C, D, E, F]" as plan #E3F2FD
+
+A -down-> plan
+B -down-> plan
+C -down-> plan
+D -down-> plan
+E -down-> plan
+F -down-> plan
+
+note bottom of plan : Local DC nodes first,\nthen remote DC nodes
+@enduml
 ```
 
 **Configuration:**
@@ -448,13 +498,24 @@ note right: Direct to data owner
 
 Prefers nodes with lower observed latency:
 
-```
-Latency Tracking:
-  Node A: avg 2ms
-  Node B: avg 5ms
-  Node C: avg 3ms
+```plantuml
+@startuml
+skinparam backgroundColor transparent
 
-Query Plan: [A, C, B] (ordered by latency)
+rectangle "Latency Tracking" {
+    card "Node A\navg 2ms" as A #C8E6C9
+    card "Node C\navg 3ms" as C #FFF9C4
+    card "Node B\navg 5ms" as B #FFCDD2
+}
+
+card "Query Plan: [A, C, B]" as plan #E3F2FD
+
+A -down-> plan : 1st
+C -down-> plan : 2nd
+B -down-> plan : 3rd
+
+note bottom of plan : Ordered by observed latency\n(fastest first)
+@enduml
 ```
 
 **Characteristics:**
@@ -478,14 +539,19 @@ Query Plan: [A, C, B] (ordered by latency)
 
 Policies can wrap other policies to add behavior:
 
-```
-TokenAwarePolicy(
-    DCAwareRoundRobinPolicy(local_dc="dc1")
-)
+```plantuml
+@startuml
+skinparam backgroundColor transparent
 
-Behavior:
+rectangle "TokenAwarePolicy" #E8F5E9 {
+    rectangle "DCAwareRoundRobinPolicy\n(local_dc=\"dc1\")" #FFF3E0
+}
+
+note right of "TokenAwarePolicy"
   1. TokenAwarePolicy adds replicas first
   2. DCAwareRoundRobinPolicy orders remaining by DC
+end note
+@enduml
 ```
 
 ### Common Compositions
@@ -604,27 +670,55 @@ U --> D : Connection errors
 
 When a node goes down:
 
-```
-1. Mark node DOWN
-2. Remove from active query plans
-3. Schedule reconnection attempts
-4. Exponential backoff: 1s, 2s, 4s, ..., 60s max
-5. On success, mark UP and include in plans
+```plantuml
+@startuml
+skinparam backgroundColor transparent
+
+start
+:Node failure detected;
+:Mark node DOWN;
+:Remove from query plans;
+
+repeat
+  :Wait (exponential backoff:\n1s, 2s, 4s, ... 60s max);
+  :Attempt reconnection;
+repeat while (Connection failed?) is (yes)
+->no;
+
+:Mark node UP;
+:Include in query plans;
+stop
+@enduml
 ```
 
 ### Speculative Awareness
 
 Load balancing interacts with speculative execution:
 
-```
-Primary plan: [A, B, C]
-Speculative: After 50ms with no response
+```plantuml
+@startuml
+skinparam backgroundColor transparent
 
-Timeline:
-  0ms:   Send to A
-  50ms:  No response, speculatively send to B
-  70ms:  A responds (use this)
-  80ms:  B responds (ignore)
+concise "Node A" as A
+concise "Node B" as B
+concise "Client" as C
+
+@0
+C is "Send to A"
+A is "Processing"
+
+@50
+C is "Spec. send to B"
+B is "Processing"
+
+@70
+A is "Response"
+C is "Use A's response"
+
+@80
+B is "Response (ignored)"
+
+@enduml
 ```
 
 ---
@@ -650,17 +744,29 @@ def calculate_token(partition_key, partitioner):
 
 Token awareness requires current metadata:
 
-```
-Metadata includes:
-- Token → host mapping
-- Keyspace → replication strategy
-- Table → partition key definition
+```plantuml
+@startuml
+skinparam backgroundColor transparent
 
-Refresh triggers:
-- Topology change event
-- Schema change event
-- Periodic refresh (optional)
-- Manual refresh
+rectangle "Driver Metadata" #E3F2FD {
+    card "Token → Host mapping" as t
+    card "Keyspace → Replication strategy" as k
+    card "Table → Partition key definition" as p
+}
+
+rectangle "Refresh Triggers" #FFF3E0 {
+    card "Topology change event" as e1
+    card "Schema change event" as e2
+    card "Periodic refresh (optional)" as e3
+    card "Manual refresh" as e4
+}
+
+e1 --> t
+e2 --> k
+e2 --> p
+e3 --> t
+e4 --> t
+@enduml
 ```
 
 ### Prepared Statement Optimization

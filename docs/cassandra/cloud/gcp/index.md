@@ -132,17 +132,28 @@ spec:
 
 ## Multi-Zone Deployment
 
-```
-Deploy across 3 zones:
+```plantuml
+@startuml
+skinparam backgroundColor #FFFFFF
+skinparam rectangle {
+    BackgroundColor #F5F5F5
+    BorderColor #333333
+}
 
-┌──────────────────────────────────────────────┐
-│           Region: us-central1                 │
-├──────────────┬──────────────┬────────────────┤
-│  Zone: 1-a   │  Zone: 1-b   │   Zone: 1-c    │
-│  ┌────────┐  │  ┌────────┐  │  ┌────────┐    │
-│  │ Node 1 │  │  │ Node 2 │  │  │ Node 3 │    │
-│  └────────┘  │  └────────┘  │  └────────┘    │
-└──────────────┴──────────────┴────────────────┘
+title GCP Multi-Zone Deployment (us-central1)
+
+rectangle "Region: us-central1" {
+    rectangle "Zone: 1-a" as za {
+        node "Node 1" as n1
+    }
+    rectangle "Zone: 1-b" as zb {
+        node "Node 2" as n2
+    }
+    rectangle "Zone: 1-c" as zc {
+        node "Node 3" as n3
+    }
+}
+@enduml
 ```
 
 ---

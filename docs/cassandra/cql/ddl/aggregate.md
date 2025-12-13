@@ -80,52 +80,35 @@ user_defined_function_fail_timeout: 10000ms
 
 Aggregates process rows through a state accumulation pattern:
 
-```graphviz dot uda-execution-flow.svg
-digraph uda_flow {
-    rankdir=TB
-    node [fontname="Helvetica" fontsize=11]
-    edge [fontname="Helvetica" fontsize=10]
+```plantuml
+@startuml
+skinparam backgroundColor #FFFFFF
+skinparam defaultFontName Arial
+skinparam activityBackgroundColor #f5f5f5
 
-    subgraph cluster_main {
-        label="UDA Execution Flow"
-        labelloc="t"
-        fontname="Helvetica Bold"
-        fontsize=14
-        style="rounded"
-        bgcolor="#f5f5f5"
+title UDA Execution Flow
 
-        init [label="INITCOND\n(Initial State)" shape=box style="rounded,filled" fillcolor="#e3f2fd"]
+start
+:INITCOND\n(Initial State);
+note right: state = initial value\n(or null if not specified)
 
-        loop [label=<
-            <TABLE BORDER="0" CELLBORDER="1" CELLSPACING="0" CELLPADDING="8">
-                <TR><TD BGCOLOR="#fff3e0"><B>For each row:</B></TD></TR>
-                <TR><TD BGCOLOR="white">state = SFUNC(state, row_values)</TD></TR>
-            </TABLE>
-        > shape=none]
+repeat
+  :SFUNC(state, row_values);
+  note right: state function\ncalled for each row
+repeat while (more rows?) is (yes)
+->no;
 
-        final_state [label="Final State" shape=box style="rounded,filled" fillcolor="#f5f5f5"]
+:Final State;
 
-        finalfunc [label="FINALFUNC(state)\n(optional)" shape=box style="rounded,filled" fillcolor="#e8f5e9"]
+if (FINALFUNC defined?) then (yes)
+  :FINALFUNC(state);
+  note right: optional final\ntransformation
+endif
 
-        result [label="Result" shape=box style="rounded,filled" fillcolor="#c8e6c9"]
+:Result;
+stop
 
-        init -> loop [label="initialize"]
-        loop -> loop [label="repeat" style=dashed]
-        loop -> final_state [label="all rows\nprocessed"]
-        final_state -> finalfunc
-        finalfunc -> result
-    }
-
-    legend [shape=none label=<
-        <TABLE BORDER="0" CELLBORDER="0" CELLSPACING="4" CELLPADDING="4">
-            <TR><TD ALIGN="LEFT"><B>Components:</B></TD></TR>
-            <TR><TD ALIGN="LEFT">• SFUNC: State function (required)</TD></TR>
-            <TR><TD ALIGN="LEFT">• STYPE: State data type (required)</TD></TR>
-            <TR><TD ALIGN="LEFT">• FINALFUNC: Final transformation (optional)</TD></TR>
-            <TR><TD ALIGN="LEFT">• INITCOND: Initial state value (optional)</TD></TR>
-        </TABLE>
-    >]
-}
+@enduml
 ```
 
 ### Components
@@ -151,33 +134,26 @@ digraph uda_flow {
 
 UDAs execute entirely on the **coordinator node**:
 
-```graphviz dot uda-coordinator.svg
-digraph coordinator {
-    rankdir=LR
-    node [fontname="Helvetica" fontsize=10 shape=box style="rounded"]
+```plantuml
+@startuml
+skinparam backgroundColor #FFFFFF
+skinparam defaultFontName Arial
 
-    client [label="Client" fillcolor="#e3f2fd" style="rounded,filled"]
+participant "Client" as client
+box "Coordinator Node" #fff3e0
+    participant "Query Parser" as query
+    participant "UDA Executor" as aggregate
+end box
+participant "Replica Nodes" as replicas
 
-    subgraph cluster_coordinator {
-        label="Coordinator Node"
-        style="rounded"
-        bgcolor="#fff3e0"
+client -> query : Query with UDA
+query -> replicas : Fetch rows
+replicas --> query : Data
+query -> aggregate : Execute SFUNC\n(per row)
+aggregate -> aggregate : FINALFUNC
+aggregate --> client : Result
 
-        query [label="Parse Query"]
-        fetch [label="Fetch Rows\nfrom Replicas"]
-        aggregate [label="Execute UDA\n(SFUNC per row)"]
-        finalize [label="FINALFUNC"]
-    }
-
-    replicas [label="Replica\nNodes" fillcolor="#f5f5f5" style="rounded,filled"]
-
-    client -> query
-    query -> fetch
-    fetch -> replicas [dir=both label="data"]
-    fetch -> aggregate
-    aggregate -> finalize
-    finalize -> client [label="result"]
-}
+@enduml
 ```
 
 !!! warning "Performance Implications"

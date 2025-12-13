@@ -11,6 +11,23 @@ Apache Cassandra is a distributed NoSQL database designed for extreme scale, exc
 
 Cassandra excels at write-heavy workloads, time-series data, and applications requiring geographic distribution. Cassandra is less suited for complex queries, ad-hoc analytics, or workloads requiring strong consistency with frequent cross-partition transactions.
 
+---
+
+## About This Documentation
+
+This documentation serves as a comprehensive reference for Apache Cassandra, covering architecture, configuration, operations, data modeling, CQL, and troubleshooting. The goal is to provide complete, accurate, and practical guidance for developers, operators, and architects working with Cassandra in production environments.
+
+| Principle | Description |
+|-----------|-------------|
+| **Source Code Verified** | Configuration options, default values, and behavior are cross-referenced against the Cassandra source code to ensure accuracy |
+| **CEP Aligned** | New features reference their corresponding [Cassandra Enhancement Proposals](https://cwiki.apache.org/confluence/display/CASSANDRA/CEP) (CEPs) for design rationale and implementation details |
+| **Version Aware** | Documentation notes version-specific differences between Cassandra 4.x and 5.x releases |
+| **Operationally Focused** | Content prioritizes practical operational guidance derived from production experience |
+
+Topics are organized for both learning and reference. New users can follow the Getting Started guides sequentially, while experienced operators can use the detailed reference sections for specific configuration options, JMX metrics, and operational procedures.
+
+---
+
 ## What is Apache Cassandra?
 
 Cassandra's design draws from two foundational distributed systems papers: Google's BigTable (2006) provided the storage model—SSTables, memtables, and the LSM-tree architecture. Amazon's Dynamo (2007) provided the distribution model—consistent hashing, gossip-based cluster membership, and tunable consistency levels.
@@ -234,11 +251,7 @@ Quick reference materials:
 
 ---
 
-## About This Documentation
-
-This documentation is maintained by [AxonOps](https://axonops.com), the monitoring, maintenance, and backup platform for Apache Cassandra.
-
-### Cassandra Versions
+## Cassandra Versions
 
 This documentation covers:
 
@@ -247,11 +260,15 @@ This documentation covers:
 
 Version-specific differences are noted where applicable.
 
-### Contributing
+---
 
-Found an error or want to contribute? Visit our [GitHub repository](https://github.com/axonops/documentation).
+## Contributing
 
-### Related Resources
+This documentation is maintained by [AxonOps](https://axonops.com). Found an error or want to contribute? Visit the [GitHub repository](https://github.com/axonops/documentation).
+
+---
+
+## Related Resources
 
 - [Apache Cassandra Official Site](https://cassandra.apache.org/)
 - [AxonOps Platform](https://axonops.com)

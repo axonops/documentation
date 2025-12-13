@@ -66,52 +66,31 @@ This design allows a single connection to handle thousands of concurrent request
 
 The driver maintains a live view of cluster topology:
 
-```dot
-digraph ClusterMetadata {
-    rankdir=TB
-    node [shape=box, fontname="Helvetica", fontsize=10]
-    edge [fontname="Helvetica", fontsize=9]
+```plantuml
+@startuml
+skinparam backgroundColor #FFFFFF
+skinparam defaultFontName Arial
 
-    subgraph cluster_metadata {
-        label="Driver Cluster Metadata"
-        style=rounded
-        bgcolor="#f5f5f5"
-        fontname="Helvetica-Bold"
+title Driver Cluster Metadata
 
-        subgraph cluster_nodes {
-            label="Nodes"
-            style=dashed
-            bgcolor="#ffffff"
-
-            n1 [label="10.0.1.1\ndc1/rack1 | UP", shape=record, fillcolor="#90EE90", style=filled]
-            n2 [label="10.0.1.2\ndc1/rack2 | UP", shape=record, fillcolor="#90EE90", style=filled]
-            n3 [label="10.0.1.3\ndc1/rack3 | UP", shape=record, fillcolor="#90EE90", style=filled]
-            n4 [label="10.0.2.1\ndc2/rack1 | DOWN", shape=record, fillcolor="#FFB6C1", style=filled]
-        }
-
-        subgraph cluster_keyspaces {
-            label="Keyspaces"
-            style=dashed
-            bgcolor="#ffffff"
-
-            ks1 [label="system\nRF=1", shape=record, fillcolor="#E6E6FA", style=filled]
-            ks2 [label="my_app\nNTS: dc1=3, dc2=3", shape=record, fillcolor="#E6E6FA", style=filled]
-            ks3 [label="analytics\nNTS: dc1=2", shape=record, fillcolor="#E6E6FA", style=filled]
-        }
-
-        subgraph cluster_tokenmap {
-            label="Token Map"
-            style=dashed
-            bgcolor="#ffffff"
-
-            tm [label="partition_key → token → replicas", shape=record, fillcolor="#FFFACD", style=filled]
-        }
-    }
-
-    // Invisible edges for layout
-    n1 -> n2 -> n3 -> n4 [style=invis]
-    ks1 -> ks2 -> ks3 [style=invis]
+package "Nodes" #F5F5F5 {
+    rectangle "10.0.1.1\ndc1/rack1 | UP" as n1 #90EE90
+    rectangle "10.0.1.2\ndc1/rack2 | UP" as n2 #90EE90
+    rectangle "10.0.1.3\ndc1/rack3 | UP" as n3 #90EE90
+    rectangle "10.0.2.1\ndc2/rack1 | DOWN" as n4 #FFB6C1
 }
+
+package "Keyspaces" #F5F5F5 {
+    rectangle "system\nRF=1" as ks1 #E6E6FA
+    rectangle "my_app\nNTS: dc1=3, dc2=3" as ks2 #E6E6FA
+    rectangle "analytics\nNTS: dc1=2" as ks3 #E6E6FA
+}
+
+package "Token Map" #F5F5F5 {
+    rectangle "partition_key → token → replicas" as tm #FFFACD
+}
+
+@enduml
 ```
 
 The driver discovers this information through:
@@ -126,37 +105,29 @@ This metadata enables token-aware routing (sending requests directly to replica 
 
 Each driver maintains connection pools to cluster nodes:
 
-```dot
-digraph ConnectionPool {
-    rankdir=TB
-    node [shape=box, fontname="Helvetica", fontsize=10]
-    compound=true
+```plantuml
+@startuml
+skinparam backgroundColor #FFFFFF
+skinparam defaultFontName Arial
 
-    app [label="Application", fillcolor="#E8E8E8", style=filled]
+title Driver Session
 
-    subgraph cluster_session {
-        label="Driver Session"
-        style=rounded
-        bgcolor="#f5f5f5"
-        fontname="Helvetica-Bold"
+rectangle "Application" as app #E8E8E8
 
-        control [label="Control Connection\n(metadata, events)", fillcolor="#FFE4B5", style=filled]
+package "Driver Session" #F5F5F5 {
+    rectangle "Control Connection\n(metadata, events)" as control #FFE4B5
 
-        subgraph cluster_pools {
-            label="Connection Pools"
-            style=dashed
-            bgcolor="#ffffff"
-
-            node1 [label="Node 1: [conn, conn]", fillcolor="#90EE90", style=filled]
-            node2 [label="Node 2: [conn, conn]", fillcolor="#90EE90", style=filled]
-            node3 [label="Node 3: [conn, conn]", fillcolor="#90EE90", style=filled]
-            node4 [label="Node 4: (DOWN)", fillcolor="#FFB6C1", style=filled]
-        }
+    package "Connection Pools" #FFFFFF {
+        rectangle "Node 1: [conn, conn]" as node1 #90EE90
+        rectangle "Node 2: [conn, conn]" as node2 #90EE90
+        rectangle "Node 3: [conn, conn]" as node3 #90EE90
+        rectangle "Node 4: (DOWN)" as node4 #FFB6C1
     }
-
-    app -> control [lhead=cluster_session]
-    control -> node1 [style=invis]
 }
+
+app --> control
+
+@enduml
 ```
 
 Pool configuration parameters:

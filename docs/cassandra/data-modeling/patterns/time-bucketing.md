@@ -47,31 +47,12 @@ Year 5:   15.77 GB per sensor partition
 
 When a partition grows this large, operations fail in spectacular ways:
 
-```
-┌─────────────────────────────────────────────────────────────────────┐
-│  PROBLEM 1: Read Timeouts                                           │
-│  ─────────────────────────────────────────────────────────────────  │
-│  Reading "last hour" requires finding rows in a 15GB partition.     │
-│  Even with efficient indexing, this scans gigabytes of SSTable      │
-│  data. Result: 30-second query, then timeout.                       │
-├─────────────────────────────────────────────────────────────────────┤
-│  PROBLEM 2: Memory Exhaustion                                       │
-│  ─────────────────────────────────────────────────────────────────  │
-│  Compaction must load partition into memory. A 15GB partition       │
-│  requires 15GB+ heap during compaction. Your 8GB heap OOMs.         │
-├─────────────────────────────────────────────────────────────────────┤
-│  PROBLEM 3: Repair Failures                                         │
-│  ─────────────────────────────────────────────────────────────────  │
-│  Repair streams entire partitions between nodes. A 15GB partition   │
-│  over a 1Gbps network takes 2+ minutes, during which the node       │
-│  appears unresponsive. Hints queue up, causing cascading issues.    │
-├─────────────────────────────────────────────────────────────────────┤
-│  PROBLEM 4: Hot Spots                                               │
-│  ─────────────────────────────────────────────────────────────────  │
-│  Current time queries always hit the same partition. One node       │
-│  serves 100% of writes for that sensor while others idle.           │
-└─────────────────────────────────────────────────────────────────────┘
-```
+| Problem | Description | Impact |
+|---------|-------------|--------|
+| **Read Timeouts** | Reading "last hour" requires finding rows in a 15GB partition. Even with efficient indexing, this scans gigabytes of SSTable data. | 30-second query, then timeout |
+| **Memory Exhaustion** | Compaction must load partition into memory. A 15GB partition requires 15GB+ heap during compaction. | OOM with 8GB heap |
+| **Repair Failures** | Repair streams entire partitions between nodes. A 15GB partition over a 1Gbps network takes 2+ minutes. | Node appears unresponsive; hints queue up, causing cascading issues |
+| **Hot Spots** | Current time queries always hit the same partition. | One node serves 100% of writes while others idle |
 
 ---
 
@@ -92,22 +73,19 @@ CREATE TABLE sensor_readings (
 
 Now each sensor-day combination is a separate partition:
 
-```
-Partition: (sensor_id='temp-001', day='2024-01-15')
-┌──────────────────────────────────────────────────────────────────┐
-│  Row 1: reading_time=2024-01-15 23:59:59, temp=22.1, humidity=45 │
-│  Row 2: reading_time=2024-01-15 23:59:58, temp=22.0, humidity=45 │
-│  ...                                                              │
-│  Row 86400: reading_time=2024-01-15 00:00:00, temp=21.5, hum=47  │
-└──────────────────────────────────────────────────────────────────┘
-Size: 86,400 rows × ~100 bytes = 8.6 MB ✓
+**Partition: (sensor_id='temp-001', day='2024-01-15')** — Size: 86,400 rows × ~100 bytes = 8.6 MB ✓
 
-Partition: (sensor_id='temp-001', day='2024-01-16')
-┌──────────────────────────────────────────────────────────────────┐
-│  ... another day's data ...                                       │
-└──────────────────────────────────────────────────────────────────┘
-Size: 8.6 MB ✓
-```
+| Row | reading_time | temp | humidity |
+|-----|--------------|------|----------|
+| 1 | 2024-01-15 23:59:59 | 22.1 | 45 |
+| 2 | 2024-01-15 23:59:58 | 22.0 | 45 |
+| ... | ... | ... | ... |
+| 86400 | 2024-01-15 00:00:00 | 21.5 | 47 |
+
+**Partition: (sensor_id='temp-001', day='2024-01-16')** — Size: 8.6 MB ✓
+
+| ... another day's data ... |
+|----------------------------|
 
 Five years of data now spans 1,825 partitions of 8.6MB each instead of one 15.77GB partition.
 
@@ -483,17 +461,14 @@ CREATE TABLE metrics (
 
 Align gc_grace_seconds with your repair schedule:
 
-```
-┌─────────────────────────────────────────────────────────────────────┐
-│  RULE: gc_grace_seconds must be longer than your repair interval    │
-│  ─────────────────────────────────────────────────────────────────  │
-│  If repair runs weekly: gc_grace_seconds > 604800 (7 days)          │
-│  If repair runs daily:  gc_grace_seconds > 86400 (1 day)            │
-│                                                                     │
-│  Why? Tombstones must exist on all replicas before being purged.    │
-│  If purged too early, deleted data can "resurrect" during repair.   │
-└─────────────────────────────────────────────────────────────────────┘
-```
+!!! danger "Rule: gc_grace_seconds must be longer than repair interval"
+
+    | Repair Frequency | Minimum gc_grace_seconds |
+    |------------------|-------------------------|
+    | Weekly | > 604800 (7 days) |
+    | Daily | > 86400 (1 day) |
+
+    **Why?** Tombstones must exist on all replicas before being purged. If purged too early, deleted data can "resurrect" during repair.
 
 **Recommended settings:**
 

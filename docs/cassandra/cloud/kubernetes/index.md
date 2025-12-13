@@ -158,6 +158,60 @@ helm repo update
 helm install k8ssandra-operator k8ssandra/k8ssandra-operator -n k8ssandra-operator --create-namespace
 ```
 
+## AxonOps K8ssandra Integration
+
+AxonOps provides production-ready container images that combine Apache Cassandra with K8ssandra Management API and AxonOps monitoring, optimized for Kubernetes deployments.
+
+### Components
+
+| Component | Description |
+|-----------|-------------|
+| Apache Cassandra 5.0.x | Database engine (versions 5.0.1 – 5.0.6) |
+| K8ssandra Management API | Operational control interface |
+| AxonOps Agent | Monitoring and management integration |
+| cqlai | Modern CQL shell |
+| jemalloc | Optimized memory allocator |
+
+### Image Versioning
+
+Images use a three-component versioning scheme for full immutability:
+
+```
+{CASSANDRA}-v{K8SSANDRA_API}-{AXONOPS}
+```
+
+Example: `5.0.6-v0.1.110-1.0.0`
+
+!!! warning "Production Deployments"
+    Pin to specific immutable versions rather than floating `latest` tags. Digest-based references provide cryptographic guarantees against supply chain attacks.
+
+### Required Configuration
+
+| Variable | Description |
+|----------|-------------|
+| `AXON_AGENT_KEY` | AxonOps API authentication key |
+| `AXON_AGENT_ORG` | Organization identifier |
+| `AXON_AGENT_HOST` | Server endpoint (default: `agents.axonops.cloud`) |
+
+### Quick Start
+
+1. Install K8ssandra Operator using the provided script
+2. Configure AxonOps credentials as environment variables
+3. Deploy using the example cluster configuration
+
+### Documentation and Examples
+
+For detailed deployment instructions, configuration options, and production best practices:
+
+**Repository**: [github.com/axonops/axonops-containers/tree/development/k8ssandra](https://github.com/axonops/axonops-containers/tree/development/k8ssandra)
+
+The repository includes:
+
+- Installation scripts for K8ssandra Operator
+- Example cluster configurations
+- CI/CD workflows for building custom images
+- Security scanning and verification procedures
+
 ### K8ssandraCluster Resource
 
 ```yaml

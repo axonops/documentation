@@ -17,37 +17,10 @@ The BATCH statement groups multiple INSERT, UPDATE, and DELETE statements into a
 
 BATCH provides **atomicity**, not performance:
 
-```graphviz dot batch-purpose.svg
-digraph batch_purpose {
-    rankdir=TB;
-    node [fontname="Helvetica", fontsize=11];
-    edge [fontname="Helvetica", fontsize=10];
-
-    subgraph cluster_correct {
-        label="Correct Use: Atomicity";
-        style=filled;
-        fillcolor="#d4edda";
-
-        correct [label="Denormalized data\nmust stay consistent", shape=box];
-        example1 [label="INSERT INTO users ...\nINSERT INTO users_by_email ...", shape=box, style=filled, fillcolor="#e8f4f8"];
-        result1 [label="Both succeed or\nboth fail", shape=box];
-
-        correct -> example1 -> result1;
-    }
-
-    subgraph cluster_wrong {
-        label="Wrong Use: 'Performance'";
-        style=filled;
-        fillcolor="#f8d7da";
-
-        wrong [label="Batch unrelated writes\nfor 'efficiency'", shape=box];
-        example2 [label="INSERT INTO table_a ...\nINSERT INTO table_b ...\nINSERT INTO table_c ...", shape=box, style=filled, fillcolor="#e8f4f8"];
-        result2 [label="Slower than\nindividual inserts!", shape=box];
-
-        wrong -> example2 -> result2;
-    }
-}
-```
+| Use Case | Example | Result |
+|----------|---------|--------|
+| **Correct: Atomicity** | `INSERT INTO users ...`<br>`INSERT INTO users_by_email ...` | Both succeed or both fail ✓ |
+| **Wrong: 'Performance'** | `INSERT INTO table_a ...`<br>`INSERT INTO table_b ...`<br>`INSERT INTO table_c ...` | Slower than individual inserts! ✗ |
 
 ### Historical Context
 
@@ -94,54 +67,34 @@ APPLY BATCH;
 
 **Execution:**
 
-```graphviz dot batch-logged-execution.svg
-digraph logged_batch {
-    rankdir=TB;
-    node [fontname="Helvetica", fontsize=11];
-    edge [fontname="Helvetica", fontsize=10];
+```plantuml
+@startuml
+skinparam backgroundColor #FFFFFF
+skinparam defaultFontName Arial
 
-    client [label="Client sends\nLOGGED BATCH", shape=box, style=filled, fillcolor="#e8f4f8"];
-    coord [label="Coordinator", shape=box, style=filled, fillcolor="#fff3cd"];
+participant "Client" as client
+participant "Coordinator" as coord
+database "Batch Log\nEndpoint 1" as bl1
+database "Batch Log\nEndpoint 2" as bl2
+participant "Replica A" as r1
+participant "Replica B" as r2
 
-    subgraph cluster_batchlog {
-        label="1. Write Batch Log (before mutations)";
-        style=filled;
-        fillcolor="#f8f9fa";
+client -> coord : LOGGED BATCH
+coord -> bl1 : 1. Write batch log
+coord -> bl2 : 1. Write batch log
+bl1 --> coord : Ack
+bl2 --> coord : Ack
+coord -> r1 : 2. Execute mutation
+coord -> r2 : 2. Execute mutation
+r1 --> coord : Ack
+r2 --> coord : Ack
+coord -> bl1 : 3. Remove batch log
+coord -> bl2 : 3. Remove batch log
+coord --> client : Success
 
-        batchlog1 [label="Batch Log\nEndpoint 1", shape=cylinder, style=filled, fillcolor="#d4edda"];
-        batchlog2 [label="Batch Log\nEndpoint 2", shape=cylinder, style=filled, fillcolor="#d4edda"];
-    }
+note over bl1, bl2 : If coordinator fails after step 1,\nbatch log endpoints replay mutations
 
-    subgraph cluster_mutations {
-        label="2. Execute Mutations";
-        style=filled;
-        fillcolor="#f8f9fa";
-
-        replica1 [label="Replica\n(partition A)", shape=box, style=filled, fillcolor="#e8f4f8"];
-        replica2 [label="Replica\n(partition B)", shape=box, style=filled, fillcolor="#e8f4f8"];
-    }
-
-    cleanup [label="3. Remove Batch Log\nfrom endpoints", shape=box, style=filled, fillcolor="#fff3cd"];
-
-    subgraph cluster_recovery {
-        label="If Coordinator Fails After Step 1";
-        style=filled;
-        fillcolor="#f0f0f0";
-
-        recover [label="Batch log endpoint\nreplays mutations", shape=box, style=filled, fillcolor="#d4edda"];
-    }
-
-    client -> coord;
-    coord -> batchlog1;
-    coord -> batchlog2;
-    batchlog1 -> replica1 [style=dashed];
-    batchlog2 -> replica2 [style=dashed];
-    coord -> replica1;
-    coord -> replica2;
-    replica1 -> cleanup;
-    replica2 -> cleanup;
-    batchlog1 -> recover [style=dotted, label="coordinator\nfails"];
-}
+@enduml
 ```
 
 ### Batch Log Architecture
@@ -295,30 +248,27 @@ BEGIN BATCH
 APPLY BATCH;
 ```
 
-```graphviz dot batch-multi-partition.svg
-digraph multi_partition {
-    rankdir=TB;
-    node [fontname="Helvetica", fontsize=11];
-    edge [fontname="Helvetica", fontsize=10];
+```plantuml
+@startuml
+skinparam backgroundColor #FFFFFF
+skinparam defaultFontName Arial
 
-    client [label="Multi-Partition\nBATCH", shape=box, style=filled, fillcolor="#e8f4f8"];
-    coord [label="Coordinator", shape=box, style=filled, fillcolor="#fff3cd"];
+participant "Client" as client
+participant "Coordinator" as coord
+participant "Node A\n(partition 1)" as nodeA
+participant "Node B\n(partition 2)" as nodeB
+participant "Node C\n(partition 3)" as nodeC
 
-    subgraph cluster_targets {
-        label="Different Partition Owners";
-        style=filled;
-        fillcolor="#f8f9fa";
+client -> coord : Multi-Partition BATCH
+coord -> nodeA : Mutation 1
+coord -> nodeB : Mutation 2
+coord -> nodeC : Mutation 3
+nodeA --> coord : Ack
+nodeB --> coord : Ack
+nodeC --> coord : Ack
+coord --> client : Success
 
-        nodeA [label="Node A\n(partition 1)", shape=box, style=filled, fillcolor="#d4edda"];
-        nodeB [label="Node B\n(partition 2)", shape=box, style=filled, fillcolor="#d4edda"];
-        nodeC [label="Node C\n(partition 3)", shape=box, style=filled, fillcolor="#d4edda"];
-    }
-
-    client -> coord;
-    coord -> nodeA;
-    coord -> nodeB;
-    coord -> nodeC;
-}
+@enduml
 ```
 
 **Costs:**
@@ -414,24 +364,25 @@ APPLY BATCH;
 
 **Important:** When ANY statement has an IF condition, ALL statements use Paxos:
 
-```graphviz dot batch-lwt.svg
-digraph lwt_batch {
-    rankdir=TB;
-    node [fontname="Helvetica", fontsize=11];
-    edge [fontname="Helvetica", fontsize=10];
+```plantuml
+@startuml
+skinparam backgroundColor #FFFFFF
+skinparam defaultFontName Arial
 
-    batch [label="BATCH with\nIF condition", shape=box, style=filled, fillcolor="#e8f4f8"];
-    paxos [label="Paxos Consensus\n(4 round trips)", shape=box, style=filled, fillcolor="#f8d7da"];
-    check [label="Evaluate ALL\nconditions", shape=box, style=filled, fillcolor="#fff3cd"];
+start
+:BATCH with IF condition;
+:Paxos Consensus\n(4 round trips);
+:Evaluate ALL conditions;
 
-    allpass [label="All conditions pass?\nExecute all statements", shape=diamond, style=filled, fillcolor="#fff3cd"];
-    fail [label="[applied] = false\nNo statements execute", shape=box, style=filled, fillcolor="#f8d7da"];
-    success [label="[applied] = true\nAll statements execute", shape=box, style=filled, fillcolor="#d4edda"];
+if (All conditions pass?) then (yes)
+  #d4edda:[applied] = true\nAll statements execute;
+else (any false)
+  #f8d7da:[applied] = false\nNo statements execute;
+endif
 
-    batch -> paxos -> check -> allpass;
-    allpass -> fail [label="Any false"];
-    allpass -> success [label="All true"];
-}
+stop
+
+@enduml
 ```
 
 **Key points:**

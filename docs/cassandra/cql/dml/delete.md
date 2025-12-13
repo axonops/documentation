@@ -17,42 +17,14 @@ The DELETE statement removes rows or column values from Cassandra tables. Unlike
 
 In a distributed system without central coordination, immediate deletion is impossible:
 
-```graphviz dot delete-distributed-problem.svg
-digraph distributed_delete {
-    rankdir=TB;
-    node [fontname="Helvetica", fontsize=11];
-    edge [fontname="Helvetica", fontsize=10];
+**The Distributed Delete Problem:**
 
-    subgraph cluster_problem {
-        label="The Distributed Delete Problem";
-        style=filled;
-        fillcolor="#f8f9fa";
-
-        delete [label="DELETE WHERE id=1\n(Node A online)", shape=box, style=filled, fillcolor="#f8d7da"];
-        nodeA [label="Node A\nDeletes id=1", shape=box, style=filled, fillcolor="#d4edda"];
-        nodeB [label="Node B\n(offline)", shape=box, style=filled, fillcolor="#e2e3e5"];
-        nodeC [label="Node C\nDeletes id=1", shape=box, style=filled, fillcolor="#d4edda"];
-
-        delete -> nodeA;
-        delete -> nodeB [style=dashed, label="unreachable"];
-        delete -> nodeC;
-    }
-
-    subgraph cluster_later {
-        label="Later: Node B Returns";
-        style=filled;
-        fillcolor="#fff3cd";
-
-        question [label="Node B still has id=1\nWhat happens during repair?", shape=box, style=filled, fillcolor="#f8d7da"];
-        without_tombstone [label="Without tombstone:\nid=1 'resurrects' on A and C!", shape=box, style=filled, fillcolor="#f8d7da"];
-        with_tombstone [label="With tombstone:\nTombstone propagates to B\nData stays deleted", shape=box, style=filled, fillcolor="#d4edda"];
-    }
-
-    nodeB -> question [style=dashed];
-    question -> without_tombstone;
-    question -> with_tombstone;
-}
-```
+| Phase | Node A | Node B (offline) | Node C |
+|-------|--------|------------------|--------|
+| DELETE id=1 | Deletes id=1 | Unreachable | Deletes id=1 |
+| Node B returns | - | Still has id=1 | - |
+| **Without tombstone** | id=1 resurrects! | Repair spreads data | id=1 resurrects! |
+| **With tombstone** | Tombstone propagates | Receives tombstone | Data stays deleted |
 
 **Tombstones solve:**
 
@@ -62,23 +34,23 @@ digraph distributed_delete {
 
 ### Tombstone Lifecycle
 
-```graphviz dot delete-tombstone-lifecycle.svg
-digraph tombstone_lifecycle {
-    rankdir=LR;
-    node [fontname="Helvetica", fontsize=11];
-    edge [fontname="Helvetica", fontsize=10];
+```plantuml
+@startuml
+skinparam backgroundColor #FFFFFF
+skinparam defaultFontName Arial
 
-    delete [label="DELETE\nExecuted", shape=box, style=filled, fillcolor="#f8d7da"];
-    write [label="Tombstone\nWritten\n(with timestamp)", shape=box, style=filled, fillcolor="#fff3cd"];
-    replicate [label="Tombstone\nReplicated", shape=box, style=filled, fillcolor="#fff3cd"];
-    grace [label="Wait for\ngc_grace_seconds\n(default: 10 days)", shape=box, style=filled, fillcolor="#e2e3e5"];
-    compact [label="Compaction\nRemoves Data", shape=box, style=filled, fillcolor="#d4edda"];
+rectangle "DELETE\nExecuted" as delete #f8d7da
+rectangle "Tombstone\nWritten" as write #fff3cd
+rectangle "Tombstone\nReplicated" as replicate #fff3cd
+rectangle "Wait gc_grace_seconds\n(default: 10 days)" as grace #e2e3e5
+rectangle "Compaction\nRemoves Data" as compact #d4edda
 
-    delete -> write;
-    write -> replicate;
-    replicate -> grace;
-    grace -> compact;
-}
+delete -> write
+write -> replicate
+replicate -> grace
+grace -> compact
+
+@enduml
 ```
 
 ---
@@ -208,53 +180,12 @@ IF status = 'inactive' AND last_login < '2023-01-01';
 
 Different DELETE operations create different tombstone types:
 
-```graphviz dot delete-tombstone-types.svg
-digraph tombstone_types {
-    rankdir=TB;
-    node [fontname="Helvetica", fontsize=11];
-    edge [fontname="Helvetica", fontsize=10];
-
-    subgraph cluster_cell {
-        label="Cell Tombstone";
-        style=filled;
-        fillcolor="#f8f9fa";
-
-        cell_cmd [label="DELETE email FROM users\nWHERE id = 1", shape=box, style=filled, fillcolor="#e8f4f8"];
-        cell_result [label="Marks single cell\nas deleted", shape=box, style=filled, fillcolor="#fff3cd"];
-        cell_cmd -> cell_result;
-    }
-
-    subgraph cluster_row {
-        label="Row Tombstone";
-        style=filled;
-        fillcolor="#f8f9fa";
-
-        row_cmd [label="DELETE FROM users\nWHERE id = 1", shape=box, style=filled, fillcolor="#e8f4f8"];
-        row_result [label="Marks entire row\nas deleted", shape=box, style=filled, fillcolor="#fff3cd"];
-        row_cmd -> row_result;
-    }
-
-    subgraph cluster_range {
-        label="Range Tombstone";
-        style=filled;
-        fillcolor="#f8f9fa";
-
-        range_cmd [label="DELETE FROM events\nWHERE pk = 'x'\nAND ck >= 1 AND ck < 100", shape=box, style=filled, fillcolor="#e8f4f8"];
-        range_result [label="Single marker covers\nentire range", shape=box, style=filled, fillcolor="#d4edda"];
-        range_cmd -> range_result;
-    }
-
-    subgraph cluster_partition {
-        label="Partition Tombstone";
-        style=filled;
-        fillcolor="#f8f9fa";
-
-        part_cmd [label="DELETE FROM user_events\nWHERE user_id = 123", shape=box, style=filled, fillcolor="#e8f4f8"];
-        part_result [label="Marks entire partition\nas deleted", shape=box, style=filled, fillcolor="#fff3cd"];
-        part_cmd -> part_result;
-    }
-}
-```
+| Tombstone Type | Example | Effect |
+|----------------|---------|--------|
+| **Cell** | `DELETE email FROM users WHERE id = 1` | Marks single cell as deleted |
+| **Row** | `DELETE FROM users WHERE id = 1` | Marks entire row as deleted |
+| **Range** | `DELETE FROM events WHERE pk = 'x' AND ck >= 1 AND ck < 100` | Single marker covers entire range |
+| **Partition** | `DELETE FROM user_events WHERE user_id = 123` | Marks entire partition as deleted |
 
 ### Cell Tombstone
 
@@ -324,43 +255,15 @@ ALTER TABLE events WITH gc_grace_seconds = 86400;  -- 1 day
 
 ### Why gc_grace_seconds Matters
 
-```graphviz dot delete-gc-grace.svg
-digraph gc_grace {
-    rankdir=TB;
-    node [fontname="Helvetica", fontsize=11];
-    edge [fontname="Helvetica", fontsize=10];
+**Scenario: gc_grace = 10 days**
 
-    scenario [label="Scenario: gc_grace = 10 days", shape=box, style=filled, fillcolor="#e8f4f8"];
-
-    subgraph cluster_safe {
-        label="Safe: Node returns within gc_grace";
-        style=filled;
-        fillcolor="#d4edda";
-
-        safe_down [label="Node B down\n(Day 0)", shape=box];
-        safe_repair [label="Node B returns\n(Day 7)", shape=box];
-        safe_result [label="Tombstone propagates\nData stays deleted ✓", shape=box];
-
-        safe_down -> safe_repair -> safe_result;
-    }
-
-    subgraph cluster_danger {
-        label="Danger: Node returns after gc_grace";
-        style=filled;
-        fillcolor="#f8d7da";
-
-        danger_down [label="Node B down\n(Day 0)", shape=box];
-        danger_compact [label="Tombstone removed\n(Day 11)", shape=box];
-        danger_return [label="Node B returns\n(Day 15)", shape=box];
-        danger_result [label="Old data resurrects!\nInconsistency ✗", shape=box];
-
-        danger_down -> danger_compact -> danger_return -> danger_result;
-    }
-
-    scenario -> safe_down;
-    scenario -> danger_down;
-}
-```
+| Timeline | Safe Scenario | Dangerous Scenario |
+|----------|---------------|-------------------|
+| Day 0 | Node B goes down | Node B goes down |
+| Day 7 | Node B returns | - |
+| Day 11 | - | Tombstone removed by compaction |
+| Day 15 | - | Node B returns |
+| **Result** | Tombstone propagates, data stays deleted ✓ | Old data resurrects! Inconsistency ✗ |
 
 ### Configuring gc_grace_seconds
 
@@ -387,31 +290,13 @@ digraph gc_grace {
 
 Tombstones must be read and filtered during queries:
 
-```graphviz dot delete-tombstone-read-impact.svg
-digraph read_impact {
-    rankdir=LR;
-    node [fontname="Helvetica", fontsize=11];
-    edge [fontname="Helvetica", fontsize=10];
+**Query:** `SELECT * FROM table WHERE pk = 1`
 
-    query [label="SELECT * FROM table\nWHERE pk = 1", shape=box, style=filled, fillcolor="#e8f4f8"];
-
-    subgraph cluster_sstables {
-        label="SSTables on Disk";
-        style=filled;
-        fillcolor="#f8f9fa";
-
-        data [label="Live Data\n(100 rows)", shape=box, style=filled, fillcolor="#d4edda"];
-        tombstones [label="Tombstones\n(10,000)", shape=box, style=filled, fillcolor="#f8d7da"];
-    }
-
-    process [label="Must read all 10,100\nentries to return 100 rows", shape=box, style=filled, fillcolor="#fff3cd"];
-
-    query -> data;
-    query -> tombstones;
-    data -> process;
-    tombstones -> process;
-}
-```
+| Data Type | Count | Status |
+|-----------|-------|--------|
+| Live Data | 100 rows | Returned |
+| Tombstones | 10,000 | Must be read and filtered |
+| **Total Read** | 10,100 entries | To return 100 rows |
 
 **Performance implications:**
 

@@ -1,719 +1,158 @@
 ---
-description: "CQL security commands for authentication, authorization, and role management in Cassandra."
+description: "CQL security features: role-based access control (RBAC) and dynamic data masking (DDM)."
 meta:
   - name: keywords
-    content: "CQL security, CREATE ROLE, GRANT, authentication, authorization, Cassandra"
+    content: "CQL security, RBAC, data masking, Cassandra permissions, access control"
 ---
 
-# Security Commands
+# CQL Security
 
-Security commands manage authentication and authorization in Cassandra through roles and permissions. Roles can represent users (with login capability) or permission groups (for organizing access control).
+CQL provides two categories of security features for controlling access to data:
 
 ---
 
-## Security Architecture
+## History and Evolution
 
-### Authentication and Authorization
+Cassandra's security model has evolved significantly since its early releases, progressing from basic pluggable authentication to a comprehensive role-based system with fine-grained data protection.
 
-Cassandra security consists of two components:
+### Timeline
 
-| Component | Purpose | Configuration |
-|-----------|---------|---------------|
-| **Authentication** | Verify identity (who are you?) | `authenticator` in cassandra.yaml |
-| **Authorization** | Verify access rights (what can you do?) | `authorizer` in cassandra.yaml |
+| Version | Year | Feature | Reference |
+|---------|------|---------|-----------|
+| 0.6 | 2010 | Pluggable authentication framework (`IAuthenticator`) | [CASSANDRA-547](https://issues.apache.org/jira/browse/CASSANDRA-547) |
+| 1.2 | 2012 | CQL-based authentication (`CREATE USER`, `GRANT`), `system_auth` keyspace | - |
+| 2.2 | 2015 | Role-based access control (RBAC), `CREATE ROLE` replaces `CREATE USER` | [CASSANDRA-7653](https://issues.apache.org/jira/browse/CASSANDRA-7653) |
+| 2.2 | 2015 | Auth subsystem rework (SASL, caching, UDF permissions) | [CASSANDRA-8394](https://issues.apache.org/jira/browse/CASSANDRA-8394) |
+| 4.1 | 2022 | CQLSH authentication plugin support | [CEP-16](https://cwiki.apache.org/confluence/display/CASSANDRA/CEP-16%3A+Auth+Plugin+Support+for+CQLSH) |
+| 5.0 | 2024 | Dynamic Data Masking (DDM) | [CEP-20](https://cwiki.apache.org/confluence/display/CASSANDRA/CEP-20%3A+Dynamic+Data+Masking), [CASSANDRA-17940](https://issues.apache.org/jira/browse/CASSANDRA-17940) |
+| 5.0 | 2024 | Mutual TLS authentication (`MutualTlsAuthenticator`) | [CEP-34](https://cwiki.apache.org/confluence/display/CASSANDRA/CEP-34%3A+mTLS+based+client+and+internode+authenticators), [CASSANDRA-18554](https://issues.apache.org/jira/browse/CASSANDRA-18554) |
 
-### Enabling Security
+### Architecture Evolution
 
-Security must be enabled in `cassandra.yaml`:
+| Era | Versions | Model | Key Components |
+|-----|----------|-------|----------------|
+| Thrift | 0.6 – 1.1 | File-based | `SimpleAuthenticator`, properties files |
+| CQL Users | 1.2 – 2.1 | User-based | `PasswordAuthenticator`, `CassandraAuthorizer`, `system_auth` keyspace, `CREATE USER` |
+| RBAC | 2.2 – 4.x | Role-based | `CREATE ROLE`, role inheritance, UDF permissions, SASL |
+| Enhanced | 5.0+ | Role + masking | Dynamic Data Masking, mTLS, SPIFFE identities, `ADD IDENTITY` |
+
+### Key Design Decisions
+
+The evolution reflects several architectural principles:
+
+1. **Pluggability** - All components (authenticator, authorizer, role manager) are pluggable interfaces
+2. **CQL Integration** - Security management through CQL statements rather than configuration files
+3. **Role Unification** - Cassandra 2.2 unified users and groups into a single "role" concept
+4. **Backward Compatibility** - `CREATE USER` syntax remains functional, internally creating roles
+5. **Permission Granularity** - Progressive addition of resource types (keyspaces, tables, functions, MBeans)
+
+---
+
+## Features Overview
+
+| Feature | Description | Version | Reference |
+|---------|-------------|---------|-----------|
+| [Role-Based Access Control](rbac.md) | Roles, permissions, and grants | 2.2+ | [CASSANDRA-7653](https://issues.apache.org/jira/browse/CASSANDRA-7653) |
+| [Dynamic Data Masking](dynamic-data-masking.md) | Column-level data obfuscation | 5.0+ | [CEP-20](https://cwiki.apache.org/confluence/display/CASSANDRA/CEP-20%3A+Dynamic+Data+Masking) |
+
+---
+
+## Role-Based Access Control (RBAC)
+
+RBAC controls who can access what resources through roles and permissions.
+
+**Key concepts:**
+
+- **Roles** - Represent users (with login) or permission groups (without login)
+- **Permissions** - Actions allowed on resources (SELECT, MODIFY, CREATE, etc.)
+- **Grants** - Associate permissions with roles, or roles with other roles
+
+**Commands:**
+
+| Command | Purpose |
+|---------|---------|
+| `CREATE ROLE` | Create user or permission group |
+| `ALTER ROLE` | Modify role properties |
+| `DROP ROLE` | Remove a role |
+| `GRANT` | Assign permissions or role membership |
+| `REVOKE` | Remove permissions or role membership |
+| `LIST ROLES` | Display roles |
+| `LIST PERMISSIONS` | Display permission grants |
+
+See [Role-Based Access Control](rbac.md) for syntax and examples.
+
+---
+
+## Dynamic Data Masking (DDM)
+
+DDM automatically obfuscates sensitive column data at read time based on user permissions.
+
+**Key concepts:**
+
+- **Masking functions** - Transform column values (mask_inner, mask_hash, etc.)
+- **UNMASK permission** - Allows viewing original unmasked data
+- **SELECT_MASKED permission** - Allows querying tables with masked columns
+
+**Built-in masking functions:**
+
+| Function | Effect |
+|----------|--------|
+| `mask_null()` | Replace with null |
+| `mask_default()` | Replace with type default |
+| `mask_replace(value)` | Replace with constant |
+| `mask_inner(prefix, suffix)` | Mask inner characters |
+| `mask_outer(prefix, suffix)` | Mask outer characters |
+| `mask_hash([algorithm])` | Replace with hash |
+
+See [Dynamic Data Masking](dynamic-data-masking.md) for syntax and examples.
+
+---
+
+## Configuration
+
+Both RBAC and DDM require configuration in `cassandra.yaml`:
 
 ```yaml
-# Authentication (default: AllowAllAuthenticator = no auth)
+# RBAC (required for role-based security)
 authenticator: PasswordAuthenticator
-
-# Authorization (default: AllowAllAuthorizer = no permissions)
 authorizer: CassandraAuthorizer
-
-# Role management
 role_manager: CassandraRoleManager
+
+# DDM (optional, Cassandra 5.0+)
+dynamic_data_masking_enabled: true
 ```
 
-!!! danger "Default Credentials"
-    When enabling authentication, Cassandra creates a default superuser:
-
-    - Username: `cassandra`
-    - Password: `cassandra`
-
-    **Immediately change this password or create a new superuser and disable the default.**
-
-### Role Hierarchy
-
-Roles can be granted to other roles, creating hierarchical permission structures:
-
-```
-                    superuser
-                        │
-          ┌─────────────┼─────────────┐
-          ▼             ▼             ▼
-       admin        developer      analyst
-          │             │             │
-          │        ┌────┴────┐        │
-          │        ▼         ▼        │
-          │    dev_read   dev_write   │
-          │        │         │        │
-          └────────┴─────────┴────────┘
-                       │
-                       ▼
-                 app_service_account
-```
-
-Permissions are inherited through role grants.
+For detailed configuration guidance, see [Security Configuration](../../security/index.md).
 
 ---
 
-## CREATE ROLE
-
-Create a role for authentication and/or authorization.
-
-### Synopsis
-
-```cqlsyntax
-CREATE ROLE [ IF NOT EXISTS ] *role_name*
-    [ WITH *role_option* [ AND *role_option* ... ] ]
-```
-
-**role_option**:
-
-```cqlsyntax
-PASSWORD = '*password*'
-| LOGIN = { true | false }
-| SUPERUSER = { true | false }
-| OPTIONS = { *option_map* }
-| HASHED PASSWORD = '*hashed_value*'
-```
-
-### Description
-
-`CREATE ROLE` defines a new role for authentication (if `LOGIN = true`) and/or authorization (permission grouping). Roles can be granted permissions and can be granted to other roles.
-
-### Parameters
-
-#### *role_name*
-
-Identifier for the role. Role names are case-sensitive when quoted.
-
-```sql
--- Case-insensitive (stored lowercase)
-CREATE ROLE app_user ...
-
--- Case-sensitive
-CREATE ROLE "AppUser" ...
-```
-
-#### IF NOT EXISTS
-
-Prevent error if role already exists.
-
-#### PASSWORD
-
-Password for authentication. Required if `LOGIN = true`.
-
-```sql
-CREATE ROLE app_user
-    WITH PASSWORD = 'secure_password123'
-    AND LOGIN = true;
-```
-
-!!! warning "Password Security"
-    - Passwords are stored hashed (bcrypt by default)
-    - Use strong passwords (12+ characters, mixed case, numbers, symbols)
-    - Avoid passwords in CQL scripts (use secure credential management)
-    - Passwords in CQL are visible in logs unless logging is configured to mask them
-
-#### LOGIN
-
-Whether the role can authenticate to the cluster:
-
-| Value | Purpose |
-|-------|---------|
-| `true` | Role can log in (user account) |
-| `false` (default) | Role cannot log in (permission group) |
-
-```sql
--- User account
-CREATE ROLE developer WITH PASSWORD = 'secret' AND LOGIN = true;
-
--- Permission group (no login)
-CREATE ROLE read_only;
-```
-
-#### SUPERUSER
-
-Whether the role has superuser privileges:
-
-| Value | Capabilities |
-|-------|--------------|
-| `true` | All permissions on all resources, can manage other superusers |
-| `false` (default) | Only explicitly granted permissions |
-
-```sql
-CREATE ROLE dba
-    WITH PASSWORD = 'admin_pwd'
-    AND LOGIN = true
-    AND SUPERUSER = true;
-```
-
-!!! danger "Superuser Security"
-    - Superusers bypass all permission checks
-    - Limit superuser accounts to essential operations
-    - Use regular roles for application access
-    - Audit superuser usage
-
-#### OPTIONS
-
-Authentication plugin-specific options:
-
-```sql
-CREATE ROLE ldap_user
-    WITH OPTIONS = {'ldap_dn': 'cn=user,dc=example,dc=com'};
-```
-
-#### HASHED PASSWORD
-
-Pre-hashed password value (for migration or automation):
-
-```sql
-CREATE ROLE migrated_user
-    WITH HASHED PASSWORD = '$2a$10$abc...'
-    AND LOGIN = true;
-```
-
-### Examples
-
-#### Application User
-
-```sql
-CREATE ROLE app_service
-    WITH PASSWORD = 'app_secret_123'
-    AND LOGIN = true;
-```
-
-#### Administrator
-
-```sql
-CREATE ROLE admin
-    WITH PASSWORD = 'admin_secret'
-    AND LOGIN = true
-    AND SUPERUSER = true;
-```
-
-#### Permission Groups
-
-```sql
--- Read-only access group
-CREATE ROLE readers;
-
--- Read-write access group
-CREATE ROLE writers;
-
--- Full access group
-CREATE ROLE admins;
-```
-
-#### Developer with Group Membership
-
-```sql
--- Create permission groups
-CREATE ROLE dev_read;
-CREATE ROLE dev_write;
-
--- Create developer role
-CREATE ROLE developer
-    WITH PASSWORD = 'dev_pwd'
-    AND LOGIN = true;
-
--- Grant groups to developer (separate GRANT statements)
-GRANT dev_read TO developer;
-GRANT dev_write TO developer;
-```
-
-### Restrictions
-
-!!! warning "Restrictions"
-    - Role names must be unique
-    - Cannot create roles with reserved names (`cassandra` if default superuser)
-    - Requires CREATE permission on ALL ROLES (or superuser)
-    - Password required if LOGIN = true
-
-### Notes
-
-- Roles are stored in `system_auth.roles`
-- Role creation propagates via gossip
-- New roles have no permissions by default
-- Use `DESCRIBE ROLE` to view role details
-
----
-
-## ALTER ROLE
-
-Modify role properties.
-
-### Synopsis
-
-```cqlsyntax
-ALTER ROLE *role_name*
-    WITH *role_option* [ AND *role_option* ... ]
-```
-
-### Description
-
-`ALTER ROLE` changes role properties such as password, login capability, or superuser status.
-
-### Parameters
-
-Same options as `CREATE ROLE`:
-
-- `PASSWORD` - New password
-- `LOGIN` - Enable/disable login
-- `SUPERUSER` - Grant/revoke superuser
-- `OPTIONS` - Plugin-specific options
-
-### Examples
-
-#### Change Password
-
-```sql
-ALTER ROLE app_user WITH PASSWORD = 'new_password_456';
-```
-
-#### Disable Login
-
-```sql
-ALTER ROLE compromised_account WITH LOGIN = false;
-```
-
-#### Promote to Superuser
-
-```sql
-ALTER ROLE senior_dba WITH SUPERUSER = true;
-```
-
-#### Demote from Superuser
-
-```sql
-ALTER ROLE former_admin WITH SUPERUSER = false;
-```
-
-### Restrictions
-
-!!! warning "Restrictions"
-    - Cannot alter non-existent roles
-    - Non-superusers can only alter their own password
-    - Cannot demote the last superuser
-    - Requires ALTER permission on the role (or superuser)
-
----
-
-## DROP ROLE
-
-Remove a role.
-
-### Synopsis
-
-```cqlsyntax
-DROP ROLE [ IF EXISTS ] *role_name*
-```
-
-### Description
-
-`DROP ROLE` removes a role and revokes all its permissions. Roles granted to other roles are also revoked.
-
-### Examples
-
-```sql
-DROP ROLE former_employee;
-DROP ROLE IF EXISTS temp_user;
-```
-
-### Restrictions
-
-!!! danger "Restrictions"
-    - Cannot drop role with active sessions (sessions continue but re-auth fails)
-    - Cannot drop the last superuser
-    - Requires DROP permission on the role (or superuser)
-
----
-
-## GRANT
-
-Grant permissions or roles.
-
-### Synopsis
-
-**Grant permission:**
-
-```cqlsyntax
-GRANT *permission* ON *resource* TO *role_name*
-```
-
-**Grant role to role:**
-
-```cqlsyntax
-GRANT *role_name* TO *role_name*
-```
-
-**permission**:
-
-```cqlsyntax
-ALL [ PERMISSIONS ]
-| ALTER
-| AUTHORIZE
-| CREATE
-| DESCRIBE
-| DROP
-| EXECUTE
-| MODIFY
-| SELECT
-| UNMASK
-| SELECT_MASKED
-```
-
-**resource**:
-
-```cqlsyntax
-ALL KEYSPACES
-| KEYSPACE *keyspace_name*
-| [ TABLE ] [ *keyspace_name*. ] *table_name*
-| ALL FUNCTIONS [ IN KEYSPACE *keyspace_name* ]
-| FUNCTION [ *keyspace_name*. ] *function_name* ( [ *arg_type* [, ... ] ] )
-| ALL ROLES
-| ROLE *role_name*
-| ALL MBEANS
-| MBEAN *mbean_name*
-| MBEANS *mbean_pattern*
-```
-
-### Description
-
-`GRANT` assigns permissions to roles or creates role membership relationships.
-
-### Permission Types
-
-| Permission | Applicable Resources | Allows |
-|------------|---------------------|--------|
-| `ALL` | Any | All applicable permissions |
-| `ALTER` | Keyspace, Table, Role | Schema modification |
-| `AUTHORIZE` | Any | Grant/revoke permissions |
-| `CREATE` | Keyspace, Table, Function, Role | Create new objects |
-| `DESCRIBE` | Role | View role details |
-| `DROP` | Keyspace, Table, Function, Role | Delete objects |
-| `EXECUTE` | Function | Execute functions |
-| `MODIFY` | Keyspace, Table | INSERT, UPDATE, DELETE |
-| `SELECT` | Keyspace, Table | Read data |
-| `UNMASK` | Keyspace, Table | View unmasked data (dynamic data masking) |
-| `SELECT_MASKED` | Keyspace, Table | View masked data |
-
-### Resource Scopes
-
-```sql
--- All keyspaces
-GRANT SELECT ON ALL KEYSPACES TO analyst;
-
--- Specific keyspace (all tables)
-GRANT SELECT ON KEYSPACE production TO app_reader;
-
--- Specific table
-GRANT MODIFY ON production.orders TO order_service;
-
--- All functions
-GRANT EXECUTE ON ALL FUNCTIONS TO developer;
-
--- Specific function
-GRANT EXECUTE ON FUNCTION my_ks.my_func(INT) TO app_user;
-
--- Role management
-GRANT ALTER ON ROLE app_user TO team_lead;
-GRANT AUTHORIZE ON ALL ROLES TO security_admin;
-```
-
-### Examples
-
-#### Read-Only Access
-
-```sql
--- Read access to specific keyspace
-GRANT SELECT ON KEYSPACE analytics TO analyst;
-```
-
-#### Application Service Account
-
-```sql
--- Read/write to application tables
-GRANT SELECT ON KEYSPACE app_data TO app_service;
-GRANT MODIFY ON KEYSPACE app_data TO app_service;
-```
-
-#### Schema Administrator
-
-```sql
--- Schema management without data access
-GRANT CREATE ON KEYSPACE dev_ks TO schema_admin;
-GRANT ALTER ON KEYSPACE dev_ks TO schema_admin;
-GRANT DROP ON KEYSPACE dev_ks TO schema_admin;
-```
-
-#### Full Access to Keyspace
-
-```sql
-GRANT ALL PERMISSIONS ON KEYSPACE production TO admin;
-```
-
-#### Role Hierarchy
-
-```sql
--- Create permission groups
-CREATE ROLE prod_read;
-CREATE ROLE prod_write;
-CREATE ROLE prod_admin;
-
--- Grant permissions to groups
-GRANT SELECT ON KEYSPACE production TO prod_read;
-GRANT MODIFY ON KEYSPACE production TO prod_write;
-GRANT ALL PERMISSIONS ON KEYSPACE production TO prod_admin;
-
--- Create roles with group membership
-CREATE ROLE app_service WITH PASSWORD = 'secret' AND LOGIN = true;
-GRANT prod_read TO app_service;
-GRANT prod_write TO app_service;
-
-CREATE ROLE dba WITH PASSWORD = 'secret' AND LOGIN = true;
-GRANT prod_admin TO dba;
-```
-
-### Restrictions
-
-!!! warning "Restrictions"
-    - Requires AUTHORIZE permission on the resource
-    - Cannot grant permissions on non-existent resources
-    - Circular role grants not allowed
-    - Superuser can grant any permission
-
----
-
-## REVOKE
-
-Remove permissions or role membership.
-
-### Synopsis
-
-**Revoke permission:**
-
-```cqlsyntax
-REVOKE *permission* ON *resource* FROM *role_name*
-```
-
-**Revoke role from role:**
-
-```cqlsyntax
-REVOKE *role_name* FROM *role_name*
-```
-
-### Description
-
-`REVOKE` removes permissions from roles or removes role membership.
-
-### Examples
-
-#### Revoke Permission
-
-```sql
-REVOKE MODIFY ON KEYSPACE production FROM app_service;
-```
-
-#### Revoke All Permissions
-
-```sql
-REVOKE ALL PERMISSIONS ON KEYSPACE sensitive_data FROM former_employee;
-```
-
-#### Revoke Role Membership
-
-```sql
-REVOKE prod_write FROM restricted_user;
-```
-
-### Restrictions
-
-!!! warning "Restrictions"
-    - Requires AUTHORIZE permission on the resource
-    - Revoking non-existent permission succeeds silently
-    - Cannot revoke from non-existent roles (error)
-
----
-
-## LIST PERMISSIONS
-
-Display granted permissions.
-
-### Synopsis
-
-```cqlsyntax
-LIST *permission* [ ON *resource* ] [ OF *role_name* ] [ NORECURSIVE ]
-```
-
-### Description
-
-`LIST PERMISSIONS` displays permission grants matching specified criteria.
-
-### Parameters
-
-#### NORECURSIVE
-
-Show only directly granted permissions, not inherited through role membership:
-
-```sql
--- All permissions including inherited
-LIST ALL PERMISSIONS OF app_user;
-
--- Only directly granted permissions
-LIST ALL PERMISSIONS OF app_user NORECURSIVE;
-```
-
-### Examples
-
-#### All Permissions
-
-```sql
-LIST ALL PERMISSIONS;
-```
-
-#### Permissions for Role
-
-```sql
-LIST ALL PERMISSIONS OF app_service;
-```
-
-#### Specific Permission Type
-
-```sql
-LIST SELECT ON KEYSPACE production;
-```
-
-#### Permissions on Resource
-
-```sql
-LIST ALL PERMISSIONS ON TABLE production.orders;
-```
-
-### Output Format
-
-```
- role      | username   | resource              | permission
------------+------------+-----------------------+------------
- app_user  | app_user   | <keyspace production> | SELECT
- app_user  | app_user   | <keyspace production> | MODIFY
-```
-
----
-
-## LIST ROLES
-
-Display roles.
-
-### Synopsis
-
-```cqlsyntax
-LIST ROLES [ OF *role_name* ] [ NORECURSIVE ]
-```
-
-### Description
-
-`LIST ROLES` displays roles and their properties.
-
-### Examples
-
-#### All Roles
-
-```sql
-LIST ROLES;
-```
-
-#### Roles Granted to Role
-
-```sql
-LIST ROLES OF developer;
-```
-
-#### Direct Grants Only
-
-```sql
-LIST ROLES OF app_user NORECURSIVE;
-```
-
-### Output Format
-
-```
- role       | super | login | options
-------------+-------+-------+---------
- cassandra  | True  | True  | {}
- admin      | True  | True  | {}
- app_user   | False | True  | {}
- readers    | False | False | {}
-```
-
----
-
-## Best Practices
-
-### Role Design
-
-!!! tip "Design Guidelines"
-    1. **Principle of least privilege** - Grant minimum required permissions
-    2. **Use role hierarchy** - Create permission groups, assign to users
-    3. **Separate concerns** - Different roles for different functions
-    4. **Avoid direct table grants** - Use keyspace-level grants when possible
-    5. **Regular audits** - Review permissions periodically
-
-### Security Hardening
-
-!!! warning "Production Security"
-    1. **Change default superuser** - Create new admin, disable `cassandra` role
-    2. **Use strong passwords** - Enforce complexity requirements
-    3. **Limit superusers** - Minimize accounts with full access
-    4. **Enable audit logging** - Track authentication and authorization events
-    5. **Network security** - Use SSL/TLS for client connections
-
-### Common Patterns
-
-#### Application Service Account
-
-```sql
--- Minimal permissions for application
-CREATE ROLE app_service WITH PASSWORD = 'secret' AND LOGIN = true;
-GRANT SELECT ON KEYSPACE app_data TO app_service;
-GRANT MODIFY ON app_data.user_events TO app_service;
-```
-
-#### Read-Only Analytics Access
-
-```sql
-CREATE ROLE analyst WITH PASSWORD = 'secret' AND LOGIN = true;
-GRANT SELECT ON KEYSPACE production TO analyst;
-GRANT SELECT ON KEYSPACE analytics TO analyst;
-```
-
-#### Schema-Only Administrator
-
-```sql
-CREATE ROLE schema_admin WITH PASSWORD = 'secret' AND LOGIN = true;
-GRANT CREATE ON ALL KEYSPACES TO schema_admin;
-GRANT ALTER ON ALL KEYSPACES TO schema_admin;
--- No SELECT/MODIFY = no data access
-```
+## References
+
+### JIRA Tickets
+
+| Ticket | Description |
+|--------|-------------|
+| [CASSANDRA-547](https://issues.apache.org/jira/browse/CASSANDRA-547) | Original pluggable authentication framework (0.6) |
+| [CASSANDRA-7653](https://issues.apache.org/jira/browse/CASSANDRA-7653) | Role-based access control (2.2) |
+| [CASSANDRA-8394](https://issues.apache.org/jira/browse/CASSANDRA-8394) | Auth subsystem rework (2.2/3.0) |
+| [CASSANDRA-17940](https://issues.apache.org/jira/browse/CASSANDRA-17940) | Dynamic Data Masking (5.0) |
+| [CASSANDRA-18554](https://issues.apache.org/jira/browse/CASSANDRA-18554) | mTLS authenticators (5.0) |
+
+### CEPs
+
+| CEP | Description |
+|-----|-------------|
+| [CEP-16](https://cwiki.apache.org/confluence/display/CASSANDRA/CEP-16%3A+Auth+Plugin+Support+for+CQLSH) | CQLSH authentication plugin support |
+| [CEP-20](https://cwiki.apache.org/confluence/display/CASSANDRA/CEP-20%3A+Dynamic+Data+Masking) | Dynamic Data Masking |
+| [CEP-34](https://cwiki.apache.org/confluence/display/CASSANDRA/CEP-34%3A+mTLS+based+client+and+internode+authenticators) | mTLS authenticators |
+| [CEP-50](https://cwiki.apache.org/confluence/display/CASSANDRA/CEP-50:+Authentication+Negotiation) | Authentication negotiation (in progress) |
 
 ---
 
 ## Related Documentation
 
-- **[Dynamic Data Masking](dynamic-data-masking.md)** - Automatic data obfuscation for sensitive columns
-- **[DDL Commands](../ddl/index.md)** - Schema management commands
-- **[DML Commands](../dml/index.md)** - Data manipulation commands
+| Topic | Description |
+|-------|-------------|
+| [Security Overview](../../security/index.md) | Security architecture and configuration |
+| [Authentication](../../security/authentication/index.md) | Authenticator setup |
+| [Authorization](../../security/authorization/index.md) | Authorizer setup and RBAC patterns |

@@ -39,41 +39,31 @@ Audit logging can capture:
 
 ### Audit Flow Architecture
 
-```graphviz dot audit-logging-architecture.svg
-digraph audit_architecture {
-    rankdir=LR;
-    node [fontname="Helvetica", fontsize=11];
-    edge [fontname="Helvetica", fontsize=10];
+```plantuml
+@startuml
+skinparam backgroundColor #FFFFFF
 
-    client [label="Client", shape=ellipse, style=filled, fillcolor="#e8f4f8"];
+component "Client" as client
 
-    subgraph cluster_cassandra {
-        label="Cassandra Node";
-        style=filled;
-        fillcolor="#f8f9fa";
-
-        cql [label="CQL Handler", shape=box, style=filled, fillcolor="#fff3cd"];
-        audit [label="Audit Logger", shape=box, style=filled, fillcolor="#fff3cd"];
-        filter [label="Include/Exclude\nFilters", shape=diamond, style=filled, fillcolor="#fff3cd"];
-    }
-
-    subgraph cluster_output {
-        label="Audit Destinations";
-        style=filled;
-        fillcolor="#f0f0f0";
-
-        log [label="Log File\n(BinAuditLogger)", shape=note, style=filled, fillcolor="#d4edda"];
-        syslog [label="Syslog\n(remote collection)", shape=note, style=filled, fillcolor="#d4edda"];
-        custom [label="Custom Logger\n(pluggable)", shape=note, style=filled, fillcolor="#d4edda"];
-    }
-
-    client -> cql [label="CQL query"];
-    cql -> audit [label="Log event"];
-    audit -> filter;
-    filter -> log;
-    filter -> syslog;
-    filter -> custom;
+rectangle "Cassandra Node" {
+    rectangle "CQL Handler" as cql
+    rectangle "Audit Logger" as audit
+    rectangle "Include/Exclude\nFilters" as filter
 }
+
+rectangle "Audit Destinations" {
+    rectangle "Log File\n(BinAuditLogger)" as log
+    rectangle "Syslog\n(remote)" as syslog
+    rectangle "Custom Logger" as custom
+}
+
+client --> cql : CQL query
+cql --> audit : Log event
+audit --> filter
+filter --> log
+filter --> syslog
+filter --> custom
+@enduml
 ```
 
 ---

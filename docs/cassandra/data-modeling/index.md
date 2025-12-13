@@ -36,36 +36,15 @@ In Cassandra, this approach **will fail spectacularly**:
 
 ### What Goes Wrong With Bad Data Models
 
-```
-┌─────────────────────────────────────────────────────────────────────┐
-│ BAD DATA MODEL SYMPTOMS                                              │
-│                                                                      │
-│ 1. HOT PARTITIONS                                                   │
-│    - One partition receives all traffic                             │
-│    - One node overloaded while others idle                          │
-│    - Timeouts, failed requests                                      │
-│                                                                      │
-│ 2. LARGE PARTITIONS                                                 │
-│    - Partition grows to GB+ size                                    │
-│    - Reads timeout (cannot load entire partition)                    │
-│    - Compaction stalls                                              │
-│    - Repairs take days                                              │
-│                                                                      │
-│ 3. TOMBSTONE ACCUMULATION                                           │
-│    - Deletes create tombstones                                      │
-│    - Tombstones pile up in wide partitions                          │
-│    - Reads slow down (scanning tombstones)                          │
-│    - Eventually: query failures                                     │
-│                                                                      │
-│ 4. SCATTER-GATHER QUERIES                                           │
-│    - Query hits many partitions                                     │
-│    - Coordinator must wait for all responses                        │
-│    - P99 latency determined by slowest partition                    │
-│    - Doesn't scale (more data = slower queries)                    │
-│                                                                      │
-│ All of these are DATA MODEL problems, not Cassandra problems.      │
-└─────────────────────────────────────────────────────────────────────┘
-```
+| Symptom | Description | Impact |
+|---------|-------------|--------|
+| **Hot Partitions** | One partition receives all traffic | One node overloaded while others idle; timeouts and failed requests |
+| **Large Partitions** | Partition grows to GB+ size | Reads timeout; compaction stalls; repairs take days |
+| **Tombstone Accumulation** | Deletes create tombstones that pile up | Reads slow down scanning tombstones; eventual query failures |
+| **Scatter-Gather Queries** | Query hits many partitions | Coordinator waits for all responses; P99 latency determined by slowest partition; does not scale |
+
+!!! danger "Root Cause"
+    All of these are **data model problems**, not Cassandra problems.
 
 ---
 
@@ -185,8 +164,8 @@ The primary key is the most important decision in Cassandra data modeling.
 
 ```sql
 PRIMARY KEY ((partition_key_col1, partition_key_col2), clustering_col1, clustering_col2)
-             └─────────────────────────────────────┘   └─────────────────────────────────┘
-                         PARTITION KEY                        CLUSTERING COLUMNS
+--           |___________________________________|   |__________________________________|
+--                      PARTITION KEY                        CLUSTERING COLUMNS
 ```
 
 **Partition Key**:
@@ -226,17 +205,14 @@ CREATE TABLE messages (
 ) WITH CLUSTERING ORDER BY (sent_at DESC, message_id DESC);
 ```
 
-```
-Partition for conversation_id = abc-123:
-┌─────────────────────────────────────────────────────────────────────┐
-│ Sorted by sent_at DESC, then message_id DESC                         │
-├─────────────────────────────────────────────────────────────────────┤
-│ sent_at: 2024-01-15 10:30:00 | message_id: 111 | content: "Hi"      │
-│ sent_at: 2024-01-15 10:29:00 | message_id: 110 | content: "Hello"   │
-│ sent_at: 2024-01-15 10:28:00 | message_id: 109 | content: "Hey"     │
-│ ...                                                                  │
-└─────────────────────────────────────────────────────────────────────┘
-```
+**Partition for conversation_id = abc-123** (sorted by sent_at DESC, then message_id DESC):
+
+| sent_at | message_id | content |
+|---------|------------|---------|
+| 2024-01-15 10:30:00 | 111 | "Hi" |
+| 2024-01-15 10:29:00 | 110 | "Hello" |
+| 2024-01-15 10:28:00 | 109 | "Hey" |
+| ... | ... | ... |
 
 ### Composite Partition Key
 
@@ -269,25 +245,27 @@ Benefits:
 
 ### The Numbers That Matter
 
-```
-┌─────────────────────────────────────────────────────────────────────┐
-│ PARTITION SIZE GUIDELINES                                            │
-│                                                                      │
-│ IDEAL:     < 10 MB         Fast reads, fast compaction              │
-│ ACCEPTABLE: 10-100 MB      Works fine, monitor growth               │
-│ WARNING:   100 MB - 1 GB   Noticeable latency, compaction slower   │
-│ CRITICAL:  > 1 GB          Timeouts, repairs fail, must redesign   │
-│                                                                      │
-│ ROW COUNT GUIDELINES (depends on row size):                         │
-│ Small rows (100 bytes): < 100,000 rows per partition                │
-│ Medium rows (1 KB):     < 100,000 rows per partition                │
-│ Large rows (10 KB):     < 10,000 rows per partition                │
-│                                                                      │
-│ HARD LIMITS:                                                         │
-│ Cells per partition: 2 billion (theoretical)                        │
-│ Practical limit: Stay under 100,000 rows                            │
-└─────────────────────────────────────────────────────────────────────┘
-```
+**Partition Size Guidelines:**
+
+| Size | Status | Impact |
+|------|--------|--------|
+| < 10 MB | Ideal | Fast reads, fast compaction |
+| 10-100 MB | Acceptable | Works fine, monitor growth |
+| 100 MB - 1 GB | Warning | Noticeable latency, compaction slower |
+| > 1 GB | Critical | Timeouts, repairs fail, must redesign |
+
+**Row Count Guidelines** (depends on row size):
+
+| Row Size | Maximum Rows per Partition |
+|----------|---------------------------|
+| Small (~100 bytes) | < 100,000 rows |
+| Medium (~1 KB) | < 100,000 rows |
+| Large (~10 KB) | < 10,000 rows |
+
+**Hard Limits:**
+
+- Cells per partition: 2 billion (theoretical)
+- Practical limit: Stay under 100,000 rows
 
 ### Calculating Partition Size
 
@@ -368,22 +346,17 @@ CREATE TABLE orders (
 ) WITH CLUSTERING ORDER BY (order_date DESC, order_id DESC);
 ```
 
-```
-Partition for customer_id = customer-123:
+**Partition for customer_id = customer-123** (storage order determined by CLUSTERING ORDER BY):
 
-┌────────────────────────────────────────────────────────────────────┐
-│ Storage order (determined by CLUSTERING ORDER BY):                  │
-├────────────────────────────────────────────────────────────────────┤
-│ order_date: 2024-01-15 | order_id: order-999 | total: 150.00       │
-│ order_date: 2024-01-15 | order_id: order-998 | total: 75.50        │
-│ order_date: 2024-01-14 | order_id: order-997 | total: 200.00       │
-│ order_date: 2024-01-10 | order_id: order-995 | total: 50.00        │
-│ ...older orders...                                                  │
-└────────────────────────────────────────────────────────────────────┘
+| order_date | order_id | total |
+|------------|----------|-------|
+| 2024-01-15 | order-999 | 150.00 |
+| 2024-01-15 | order-998 | 75.50 |
+| 2024-01-14 | order-997 | 200.00 |
+| 2024-01-10 | order-995 | 50.00 |
+| ...older orders... | | |
 
-Reading "most recent orders" reads from the TOP of the partition.
-This is a SEQUENTIAL read, very fast.
-```
+Reading "most recent orders" reads from the **top** of the partition—a sequential read, very fast.
 
 ### Range Queries on Clustering Columns
 
@@ -422,30 +395,24 @@ SELECT * FROM orders WHERE customer_id = ? AND order_id = ?;
 
 ### Why Cassandra Requires Denormalization
 
-```
-Relational approach:
-┌─────────────────────────────────────────────────────────────────────┐
-│ Query: "Get order with customer name and product details"           │
-│                                                                     │
-│ SELECT o.*, c.name, p.name, p.price                                │
-│ FROM orders o                                                       │
-│ JOIN customers c ON o.customer_id = c.customer_id                  │
-│ JOIN order_items oi ON o.order_id = oi.order_id                    │
-│ JOIN products p ON oi.product_id = p.product_id                    │
-│ WHERE o.order_id = 123                                             │
-│                                                                     │
-│ Database figures out how to JOIN these at runtime                  │
-└─────────────────────────────────────────────────────────────────────┘
+**Relational approach:** Query "Get order with customer name and product details"
 
-Cassandra approach:
-┌─────────────────────────────────────────────────────────────────────┐
-│ Query: "Get order with all details"                                 │
-│                                                                     │
-│ SELECT * FROM orders_with_details WHERE order_id = 123;            │
-│                                                                     │
-│ The table ALREADY CONTAINS customer name and product details       │
-│ Data was duplicated at write time                                  │
-└─────────────────────────────────────────────────────────────────────┘
+```sql
+SELECT o.*, c.name, p.name, p.price
+FROM orders o
+JOIN customers c ON o.customer_id = c.customer_id
+JOIN order_items oi ON o.order_id = oi.order_id
+JOIN products p ON oi.product_id = p.product_id
+WHERE o.order_id = 123;
+-- Database figures out how to JOIN these at runtime
+```
+
+**Cassandra approach:** Query "Get order with all details"
+
+```sql
+SELECT * FROM orders_with_details WHERE order_id = 123;
+-- The table ALREADY CONTAINS customer name and product details
+-- Data was duplicated at write time
 ```
 
 ### One Table Per Query Pattern
@@ -543,29 +510,29 @@ VALUES (
 
 ### Collection Limitations
 
-```
-┌─────────────────────────────────────────────────────────────────────┐
-│ COLLECTION GOTCHAS                                                   │
-│                                                                      │
-│ 1. SIZE LIMIT                                                       │
-│    Collections are loaded entirely into memory                      │
-│    Max ~64KB recommended (technically 2GB but do not)               │
-│    Large collections = slow queries + heap pressure                │
-│                                                                      │
-│ 2. READ-BEFORE-WRITE                                                │
-│    Updating one element reads the whole collection                  │
-│    Don't use for frequently updated data                           │
-│                                                                      │
-│ 3. NO QUERYING INSIDE COLLECTIONS                                   │
-│    Can't: WHERE preferences['theme'] = 'dark'                      │
-│    Can only: Return whole collection and filter in app             │
-│                                                                      │
-│ 4. FROZEN COLLECTIONS                                               │
-│    FROZEN<LIST<TEXT>> = immutable, stored as blob                  │
-│    Can't update individual elements                                │
-│    Required for nested collections or UDTs in collections          │
-└─────────────────────────────────────────────────────────────────────┘
-```
+!!! warning "Collection Gotchas"
+
+    **1. Size Limit**
+
+    - Collections are loaded entirely into memory
+    - Max ~64KB recommended (technically 2GB but avoid)
+    - Large collections = slow queries + heap pressure
+
+    **2. Read-Before-Write**
+
+    - Updating one element reads the whole collection
+    - Avoid for frequently updated data
+
+    **3. No Querying Inside Collections**
+
+    - Cannot use: `WHERE preferences['theme'] = 'dark'`
+    - Must return whole collection and filter in application
+
+    **4. Frozen Collections**
+
+    - `FROZEN<LIST<TEXT>>` = immutable, stored as blob
+    - Cannot update individual elements
+    - Required for nested collections or UDTs in collections
 
 ### When to Use Collections
 
@@ -597,18 +564,20 @@ CREATE TABLE orders (
 );
 ```
 
-```
-Partition for customer_id = cust-123:
-┌─────────────────────────────────────────────────────────────────────┐
-│ STATIC: customer_name = "Alice", customer_email = "alice@mail.com" │
-├─────────────────────────────────────────────────────────────────────┤
-│ order_date: 2024-01-15 | order_id: ord-1 | total: 100.00           │
-│ order_date: 2024-01-10 | order_id: ord-2 | total: 50.00            │
-│ order_date: 2024-01-05 | order_id: ord-3 | total: 75.00            │
-└─────────────────────────────────────────────────────────────────────┘
+**Partition for customer_id = cust-123:**
 
-Static columns stored ONCE per partition, not per row.
-```
+| Column Type | Column | Value |
+|-------------|--------|-------|
+| **STATIC** | customer_name | "Alice" |
+| **STATIC** | customer_email | "alice@mail.com" |
+
+| order_date | order_id | total |
+|------------|----------|-------|
+| 2024-01-15 | ord-1 | 100.00 |
+| 2024-01-10 | ord-2 | 50.00 |
+| 2024-01-05 | ord-3 | 75.00 |
+
+Static columns are stored **once per partition**, not per row.
 
 **Use cases**:
 - Metadata about the partition (customer name for customer's orders)
@@ -667,51 +636,30 @@ CREATE INDEX ON users (email);
 SELECT * FROM users WHERE email = 'alice@example.com';
 ```
 
-**How it works**:
-```
-Secondary index creates a hidden table:
-┌─────────────────────────────────────────┐
-│ email (partition key) | user_id         │
-├─────────────────────────────────────────┤
-│ alice@example.com     | user-123        │
-│ bob@example.com       | user-456        │
-└─────────────────────────────────────────┘
+**How it works:** Secondary index creates a hidden table:
 
-Query on email → look up in index → get user_id → fetch from main table
-```
+| email (partition key) | user_id |
+|-----------------------|---------|
+| alice@example.com | user-123 |
+| bob@example.com | user-456 |
+
+Query on email → look up in index → get user_id → fetch from main table.
 
 ### When Secondary Indexes Are OK
 
-```
-✓ Low cardinality columns (status, country)
-  - Few unique values
-  - Index partitions are manageable
-
-✓ Combined with partition key
-  SELECT * FROM orders WHERE customer_id = ? AND status = 'pending';
-  - Filters within a known partition
-
-✓ Infrequent queries
-  - Admin dashboards, analytics
-  - Not user-facing hot paths
-```
+| Use Case | Reason |
+|----------|--------|
+| Low cardinality columns (status, country) | Few unique values; index partitions are manageable |
+| Combined with partition key | Filters within a known partition (e.g., `WHERE customer_id = ? AND status = 'pending'`) |
+| Infrequent queries | Admin dashboards, analytics—not user-facing hot paths |
 
 ### When Secondary Indexes Are Dangerous
 
-```
-✗ High cardinality columns (email, user_id)
-  - Every value is its own partition
-  - Scatter-gather across entire cluster
-  - Worse than no index
-
-✗ Frequently updated columns
-  - Index updates are expensive
-  - Write amplification
-
-✗ User-facing queries at scale
-  - Unpredictable latency
-  - Doesn't scale with cluster size
-```
+| Anti-Pattern | Problem |
+|--------------|---------|
+| High cardinality columns (email, user_id) | Every value is its own partition; scatter-gather across entire cluster; worse than no index |
+| Frequently updated columns | Index updates are expensive; write amplification |
+| User-facing queries at scale | Unpredictable latency; does not scale with cluster size |
 
 ### Alternative: Materialized Views (Also Use With Caution)
 

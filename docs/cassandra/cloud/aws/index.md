@@ -180,22 +180,36 @@ Resources:
 
 ## Multi-AZ Best Practices
 
-```
-Deployment across 3 AZs:
+```plantuml
+@startuml
+skinparam backgroundColor #FFFFFF
+skinparam rectangle {
+    BackgroundColor #F5F5F5
+    BorderColor #333333
+}
 
-┌─────────────────────────────────────────────┐
-│                 Region: us-east-1            │
-├─────────────┬─────────────┬─────────────────┤
-│   AZ: 1a    │   AZ: 1b    │     AZ: 1c      │
-│  ┌───────┐  │  ┌───────┐  │   ┌───────┐     │
-│  │Node 1 │  │  │Node 2 │  │   │Node 3 │     │
-│  │Node 4 │  │  │Node 5 │  │   │Node 6 │     │
-│  └───────┘  │  └───────┘  │   └───────┘     │
-└─────────────┴─────────────┴─────────────────┘
+title AWS Multi-AZ Deployment (us-east-1)
 
-Configuration:
-- RF = 3 (one replica per AZ)
-- rack = AZ name in cassandra-rackdc.properties
+rectangle "Region: us-east-1" {
+    rectangle "AZ: 1a" as az_a {
+        node "Node 1" as n1
+        node "Node 4" as n4
+    }
+    rectangle "AZ: 1b" as az_b {
+        node "Node 2" as n2
+        node "Node 5" as n5
+    }
+    rectangle "AZ: 1c" as az_c {
+        node "Node 3" as n3
+        node "Node 6" as n6
+    }
+}
+
+note bottom
+  RF = 3 (one replica per AZ)
+  rack = AZ name in cassandra-rackdc.properties
+end note
+@enduml
 ```
 
 ## Monitoring with CloudWatch

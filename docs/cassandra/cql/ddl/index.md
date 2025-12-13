@@ -157,7 +157,8 @@ Cluster
     │   ├── Column definitions
     │   ├── Primary key structure
     │   ├── Indexes
-    │   └── Materialized views
+    │   ├── Materialized views
+    │   └── Triggers
     ├── User-Defined Types
     ├── Functions
     └── Aggregates
@@ -392,6 +393,15 @@ Materialized views maintain denormalized copies of base table data.
 | [CREATE MATERIALIZED VIEW](materialized-view.md#create-materialized-view) | Create an auto-maintained view |
 | [ALTER MATERIALIZED VIEW](materialized-view.md#alter-materialized-view) | Modify view options |
 | [DROP MATERIALIZED VIEW](materialized-view.md#drop-materialized-view) | Remove a materialized view |
+
+### Trigger Commands
+
+Triggers execute custom server-side Java code on data mutations.
+
+| Command | Description |
+|---------|-------------|
+| [CREATE TRIGGER](trigger.md#create-trigger) | Attach a trigger to a table |
+| [DROP TRIGGER](trigger.md#drop-trigger) | Remove a trigger from a table |
 
 ### User-Defined Type Commands
 

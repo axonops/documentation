@@ -17,40 +17,27 @@ User-Defined Functions (UDFs) extend CQL with custom scalar operations written i
 
 UDFs execute on the coordinator node during query processing:
 
-```graphviz dot udf-execution-flow.svg
-digraph udf_execution {
-    rankdir=TB;
-    node [fontname="Helvetica", fontsize=11];
-    edge [fontname="Helvetica", fontsize=10];
+```plantuml
+@startuml
+skinparam backgroundColor #FFFFFF
+skinparam defaultFontName Arial
 
-    // Nodes
-    client [label="Client", shape=ellipse, style=filled, fillcolor="#e8f4f8"];
-    query [label="Query with UDF\nSELECT my_func(col)\nFROM table", shape=box, style=filled, fillcolor="#fff3cd"];
+participant "Client" as client
+box "Coordinator Node" #f8f9fa
+    participant "Query Parser" as parse
+    participant "UDF Executor" as execute
+end box
+participant "Replica Nodes" as replicas
 
-    subgraph cluster_coordinator {
-        label="Coordinator Node";
-        style=filled;
-        fillcolor="#f8f9fa";
-        fontname="Helvetica bold";
+client -> parse : SELECT my_func(col)\nFROM table
+parse -> parse : 1. Parse query
+parse -> execute : 2. Load UDF bytecode\nfrom system_schema.functions
+execute -> replicas : fetch data
+replicas --> execute : rows
+execute -> execute : 3. Execute function\n(per row in result set)
+execute --> client : 4. Return transformed results
 
-        parse [label="1. Parse Query", shape=box, style=filled, fillcolor="#d4edda"];
-        load [label="2. Load UDF Bytecode\nfrom system_schema.functions", shape=box, style=filled, fillcolor="#d4edda"];
-        execute [label="3. Execute Function\n(per row in result set)", shape=box, style=filled, fillcolor="#d4edda"];
-        result [label="4. Return Results", shape=box, style=filled, fillcolor="#d4edda"];
-    }
-
-    replicas [label="Replica Nodes\n(data only)", shape=box, style=filled, fillcolor="#e2e3e5"];
-
-    // Edges
-    client -> query [label="sends"];
-    query -> parse;
-    parse -> load;
-    load -> execute;
-    execute -> replicas [label="fetch data", style=dashed];
-    replicas -> execute [label="rows", style=dashed];
-    execute -> result;
-    result -> client [label="transformed\nresults"];
-}
+@enduml
 ```
 
 UDFs are:

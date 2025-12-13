@@ -115,17 +115,28 @@ rack=zone1
 
 ## Availability Zones
 
-```
-Deploy across 3 Availability Zones:
+```plantuml
+@startuml
+skinparam backgroundColor #FFFFFF
+skinparam rectangle {
+    BackgroundColor #F5F5F5
+    BorderColor #333333
+}
 
-┌───────────────────────────────────────────────┐
-│             Region: East US                    │
-├─────────────┬─────────────┬───────────────────┤
-│   Zone 1    │   Zone 2    │      Zone 3       │
-│  ┌───────┐  │  ┌───────┐  │    ┌───────┐      │
-│  │Node 1 │  │  │Node 2 │  │    │Node 3 │      │
-│  └───────┘  │  └───────┘  │    └───────┘      │
-└─────────────┴─────────────┴───────────────────┘
+title Azure Availability Zone Deployment (East US)
+
+rectangle "Region: East US" {
+    rectangle "Zone 1" as z1 {
+        node "Node 1" as n1
+    }
+    rectangle "Zone 2" as z2 {
+        node "Node 2" as n2
+    }
+    rectangle "Zone 3" as z3 {
+        node "Node 3" as n3
+    }
+}
+@enduml
 ```
 
 ---

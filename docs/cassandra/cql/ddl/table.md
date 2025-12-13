@@ -43,53 +43,21 @@ With the introduction of **CQL (Cassandra Query Language)** in version 0.8 and i
 
 Cassandra stores data in a **partition-oriented** structure optimized for distributed access:
 
-```graphviz dot table-partition-structure.svg
-digraph table_structure {
-    rankdir=TB
-    node [shape=none fontname="Helvetica" fontsize=11]
-    edge [arrowhead=none]
+**Table: user_events**
 
-    label="Table: user_events"
-    labelloc="t"
-    fontname="Helvetica Bold"
-    fontsize=14
+| Partition: user_id = 'alice' |||
+|---------------|------------|------|
+| **event_time** (clustering) | **event_type** | **data** |
+| 2024-01-01 10:00 | login | ... |
+| 2024-01-01 10:05 | click | ... |
+| 2024-01-01 10:10 | logout | ... |
 
-    partition_alice [label=<
-        <TABLE BORDER="1" CELLBORDER="1" CELLSPACING="0" CELLPADDING="8" BGCOLOR="#f8f9fa">
-            <TR><TD COLSPAN="3" BGCOLOR="#e3f2fd"><B>Partition: user_id = 'alice'</B></TD></TR>
-            <TR>
-                <TD BGCOLOR="#f5f5f5"><B>event_time</B></TD>
-                <TD BGCOLOR="#f5f5f5"><B>event_type</B></TD>
-                <TD BGCOLOR="#f5f5f5"><B>data</B></TD>
-            </TR>
-            <TR><TD>2024-01-01 10:00</TD><TD>login</TD><TD>...</TD></TR>
-            <TR><TD>2024-01-01 10:05</TD><TD>click</TD><TD>...</TD></TR>
-            <TR><TD>2024-01-01 10:10</TD><TD>logout</TD><TD>...</TD></TR>
-        </TABLE>
-    >]
+| Partition: user_id = 'bob' |||
+|---------------|------------|------|
+| **event_time** (clustering) | **event_type** | **data** |
+| 2024-01-01 09:00 | login | ... |
 
-    partition_bob [label=<
-        <TABLE BORDER="1" CELLBORDER="1" CELLSPACING="0" CELLPADDING="8" BGCOLOR="#f8f9fa">
-            <TR><TD COLSPAN="3" BGCOLOR="#e3f2fd"><B>Partition: user_id = 'bob'</B></TD></TR>
-            <TR>
-                <TD BGCOLOR="#f5f5f5"><B>event_time</B></TD>
-                <TD BGCOLOR="#f5f5f5"><B>event_type</B></TD>
-                <TD BGCOLOR="#f5f5f5"><B>data</B></TD>
-            </TR>
-            <TR><TD>2024-01-01 09:00</TD><TD>login</TD><TD>...</TD></TR>
-        </TABLE>
-    >]
-
-    note [label=<
-        <TABLE BORDER="0" CELLBORDER="0" CELLSPACING="0" CELLPADDING="4">
-            <TR><TD ALIGN="LEFT"><I>Rows sorted by clustering column (event_time)</I></TD></TR>
-        </TABLE>
-    > fontcolor="#666666"]
-
-    partition_alice -> partition_bob [style=invis]
-    partition_bob -> note [style=invis]
-}
-```
+*Rows within each partition are sorted by clustering column (event_time)*
 
 **Partitions** are the fundamental unit of data distribution:
 

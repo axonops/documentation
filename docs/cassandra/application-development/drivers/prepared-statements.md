@@ -251,49 +251,16 @@ bound.setString("middle_name", null);
 
 Drivers maintain a cache of prepared statements:
 
-```graphviz dot prepared-statement-cache.svg
-digraph PreparedStatementCache {
-    fontname="Helvetica";
-    node [fontname="Helvetica", fontsize=10];
-    rankdir=TB;
+**Driver Prepared Statement Cache**
 
-    label="Driver Prepared Statement Cache";
-    labelloc="t";
-    fontsize=12;
+| Query String | Prepared ID | Metadata |
+|--------------|-------------|----------|
+| `SELECT * FROM users WHERE id=?` | `0x8a3f...` | [id, name, email] |
+| `INSERT INTO events (...) VALUES` | `0x2b7c...` | [partition_id, event_id] |
+| `UPDATE users SET name=? WHERE` | `0x9d1e...` | [name, id] |
 
-    cache [shape=none, label=<
-        <TABLE BORDER="1" CELLBORDER="1" CELLSPACING="0" CELLPADDING="6" BGCOLOR="#f8f9fa">
-            <TR>
-                <TD COLSPAN="3" BGCOLOR="#7B4B96"><FONT COLOR="white"><B>Prepared Statement Cache</B></FONT></TD>
-            </TR>
-            <TR>
-                <TD BGCOLOR="#e8e8e8"><B>Query String</B></TD>
-                <TD BGCOLOR="#e8e8e8"><B>Prepared ID</B></TD>
-                <TD BGCOLOR="#e8e8e8"><B>Metadata</B></TD>
-            </TR>
-            <TR>
-                <TD ALIGN="LEFT">SELECT * FROM users WHERE id=?</TD>
-                <TD><FONT FACE="monospace">0x8a3f...</FONT></TD>
-                <TD>[id, name, email]</TD>
-            </TR>
-            <TR>
-                <TD ALIGN="LEFT">INSERT INTO events (...) VALUES</TD>
-                <TD><FONT FACE="monospace">0x2b7c...</FONT></TD>
-                <TD>[partition_id, event_id]</TD>
-            </TR>
-            <TR>
-                <TD ALIGN="LEFT">UPDATE users SET name=? WHERE</TD>
-                <TD><FONT FACE="monospace">0x9d1e...</FONT></TD>
-                <TD>[name, id]</TD>
-            </TR>
-        </TABLE>
-    >];
-
-    lookup [shape=box, style="rounded,filled", fillcolor="#E8F4E8", label="Cache lookup: O(1)\nby query string hash"];
-
-    cache -> lookup [style=invis];
-}
-```
+!!! info "Cache Lookup"
+    Cache lookup: O(1) by query string hash
 
 ### Application-Level Caching
 

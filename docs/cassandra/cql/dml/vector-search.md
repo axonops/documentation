@@ -240,40 +240,28 @@ LIMIT 10;
 
 ### Query Execution Flow
 
-```graphviz dot vector-query-flow.svg
-digraph VectorQuery {
-    fontname="Helvetica";
-    node [fontname="Helvetica", fontsize=10];
-    edge [fontname="Helvetica", fontsize=9];
+```plantuml
+@startuml
+skinparam backgroundColor #FFFFFF
+skinparam defaultFontName Arial
 
-    label="Vector ANN Query Execution";
-    labelloc="t";
-    fontsize=12;
+title Vector ANN Query Execution
 
-    node [shape=box, style="rounded,filled"];
+participant "Application" as app #E8E8E8
+participant "Coordinator" as coord #FFE8CC
+participant "SAI Vector Index\n(Each Replica)" as index #7B4B96
 
-    app [label="Application\n1. Encode query text\n2. Send query vector", fillcolor="#E8E8E8"];
-    coord [label="Coordinator\nRoute to replicas", fillcolor="#FFE8CC"];
+app -> coord : 1. Encode query text\n2. Send query vector
+coord -> index : Route to replicas
 
-    subgraph cluster_replica {
-        label="Each Replica";
-        style="rounded,filled";
-        fillcolor="#E8F4E8";
+note over index : Graph traversal (HNSW)
+index -> index : Find Top-K candidates\nper SSTable
 
-        index [label="SAI Vector Index\nGraph traversal (HNSW)", fillcolor="#7B4B96", fontcolor="white"];
-        candidates [label="Top-K candidates\nper SSTable", fillcolor="#7B4B96", fontcolor="white"];
-    }
+index --> coord : Candidate results
+note over coord : Merge & Re-rank\nGlobal top-K
+coord --> app : Return ordered results
 
-    merge [label="Merge & Re-rank\nGlobal top-K", fillcolor="#FFE8CC"];
-    result [label="Return ordered\nresults", fillcolor="#E8E8E8"];
-
-    app -> coord [label="Query vector"];
-    coord -> index;
-    index -> candidates;
-    candidates -> merge;
-    merge -> result;
-    result -> app;
-}
+@enduml
 ```
 
 ### Similarity Score Functions

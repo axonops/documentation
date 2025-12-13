@@ -17,15 +17,14 @@ This guide covers day-to-day operations, maintenance procedures, and emergency r
 
 Cassandra is designed for continuous operation. The operational model prioritizes availability—the database should never go down for maintenance. This influences every procedure in this guide.
 
-```
-Cassandra Operational Principles:
-─────────────────────────────────────────────────────────────────────────────
-1. No single point of failure    → Any node can handle any request
-2. Continuous availability       → Rolling operations, no downtime windows
-3. Eventual consistency         → Background processes maintain correctness
-4. Self-healing                  → Repair and anti-entropy fix inconsistencies
-5. Horizontal scaling            → Add capacity by adding nodes
-```
+!!! abstract "Cassandra Operational Principles"
+    | Principle | Implication |
+    |-----------|-------------|
+    | No single point of failure | Any node can handle any request |
+    | Continuous availability | Rolling operations, no downtime windows |
+    | Eventual consistency | Background processes maintain correctness |
+    | Self-healing | Repair and anti-entropy fix inconsistencies |
+    | Horizontal scaling | Add capacity by adding nodes |
 
 ### The Three Critical Operations
 

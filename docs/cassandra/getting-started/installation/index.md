@@ -32,6 +32,8 @@ Before running any installation commands, certain decisions must be made that ar
 !!! tip "Recommendation"
    Apache Cassandra 5.0 is GA and suitable for production when running a recent 5.0.x release. Use it for new clusters, and upgrade existing ones after normal staging validation.
 
+---
+
 ### 2. Hardware Requirements by Use Case
 
 #### Development/Testing

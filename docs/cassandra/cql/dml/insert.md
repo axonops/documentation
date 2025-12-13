@@ -17,20 +17,21 @@ The INSERT statement adds rows to Cassandra tables. Unlike SQL databases, Cassan
 
 Cassandra does not distinguish between INSERT and UPDATE at the storage layer. Both operations write cells (column values) with timestamps:
 
-```graphviz dot insert-upsert-semantics.svg
-digraph upsert {
-    rankdir=TB;
-    node [fontname="Helvetica", fontsize=11];
-    edge [fontname="Helvetica", fontsize=10];
+```plantuml
+@startuml
+skinparam backgroundColor #FFFFFF
+skinparam defaultFontName Arial
 
-    insert1 [label="INSERT INTO users (id, name)\nVALUES (1, 'Alice')\nTimestamp: 1000", shape=box, style=filled, fillcolor="#d4edda"];
-    insert2 [label="INSERT INTO users (id, name)\nVALUES (1, 'Bob')\nTimestamp: 2000", shape=box, style=filled, fillcolor="#d4edda"];
+rectangle "INSERT INTO users (id, name)\nVALUES (1, 'Alice')\nTimestamp: 1000" as insert1 #d4edda
 
-    storage [label="Storage\nid=1, name='Bob' (ts:2000)\n\nHigher timestamp wins", shape=box, style=filled, fillcolor="#fff3cd"];
+rectangle "INSERT INTO users (id, name)\nVALUES (1, 'Bob')\nTimestamp: 2000" as insert2 #d4edda
 
-    insert1 -> storage [label="Write"];
-    insert2 -> storage [label="Overwrites\n(higher ts)"];
-}
+rectangle "**Storage**\nid=1, name='Bob' (ts:2000)\n\n//Higher timestamp wins//" as storage #fff3cd
+
+insert1 --> storage : Write
+insert2 --> storage : Overwrites\n(higher ts)
+
+@enduml
 ```
 
 **Key implications:**
@@ -143,21 +144,21 @@ VALUES (uuid(), 123, 'abc123')
 USING TTL 86400;
 ```
 
-```graphviz dot insert-ttl-lifecycle.svg
-digraph ttl_lifecycle {
-    rankdir=LR;
-    node [fontname="Helvetica", fontsize=11];
-    edge [fontname="Helvetica", fontsize=10];
+```plantuml
+@startuml
+skinparam backgroundColor #FFFFFF
+skinparam defaultFontName Arial
 
-    insert [label="INSERT\nUSING TTL 3600", shape=box, style=filled, fillcolor="#d4edda"];
-    live [label="Data Visible\n(0-3600 seconds)", shape=box, style=filled, fillcolor="#fff3cd"];
-    expire [label="TTL Expires\nTombstone Created", shape=box, style=filled, fillcolor="#f8d7da"];
-    gc [label="After gc_grace\nData Removed", shape=box, style=filled, fillcolor="#e2e3e5"];
+rectangle "INSERT\nUSING TTL 3600" as insert #d4edda
+rectangle "Data Visible\n(0-3600 seconds)" as live #fff3cd
+rectangle "TTL Expires\nTombstone Created" as expire #f8d7da
+rectangle "After gc_grace\nData Removed" as gc #e2e3e5
 
-    insert -> live;
-    live -> expire [label="3600s"];
-    expire -> gc [label="gc_grace_seconds"];
-}
+insert -> live
+live -> expire : 3600s
+expire -> gc : gc_grace_seconds
+
+@enduml
 ```
 
 **TTL behavior:**

@@ -57,14 +57,13 @@ VALUES (123e4567-e89b-12d3-a456-426614174000, '2024-01-15 10:30:00', 'click', '{
 
 Cassandra stores it internally like this:
 
-```
-Partition Key: 123e4567-e89b-12d3-a456-426614174000
-┌─────────────────────────────────────────────────────────────────────────┐
-│ Cell: (2024-01-15 10:30:00, click) : data = '{"page": "/home"}'         │
-│ Cell: (2024-01-15 10:30:00, click) : event_type = 'click'               │
-│ Cell: (2024-01-15 10:30:00, click) : event_time = ...                   │
-└─────────────────────────────────────────────────────────────────────────┘
-```
+**Partition Key:** `123e4567-e89b-12d3-a456-426614174000`
+
+| Cell Key (clustering columns) | Column | Value |
+|-------------------------------|--------|-------|
+| (2024-01-15 10:30:00, click) | data | '{"page": "/home"}' |
+| (2024-01-15 10:30:00, click) | event_type | 'click' |
+| (2024-01-15 10:30:00, click) | event_time | ... |
 
 The clustering columns (event_time, event_type) become part of each cell's internal key. The partition key determines which node stores the data. All cells with the same partition key are stored together, sorted by clustering column.
 
@@ -210,16 +209,15 @@ CREATE TABLE user_events (
 ) WITH CLUSTERING ORDER BY (event_time DESC, event_type ASC);
 ```
 
-```
-Partition: user_id = alice
-┌────────────────────────────────────────────────────────────────┐
-│  Row 1: event_time=2024-01-03 14:00, event_type=click, data=...│
-│  Row 2: event_time=2024-01-03 13:00, event_type=login, data=...│
-│  Row 3: event_time=2024-01-03 12:00, event_type=click, data=...│
-│  Row 4: event_time=2024-01-02 18:00, event_type=logout, data...│
-│  ... (sorted by event_time DESC, then event_type ASC)          │
-└────────────────────────────────────────────────────────────────┘
-```
+**Partition: user_id = alice** (sorted by event_time DESC, then event_type ASC):
+
+| Row | event_time | event_type | data |
+|-----|------------|------------|------|
+| 1 | 2024-01-03 14:00 | click | ... |
+| 2 | 2024-01-03 13:00 | login | ... |
+| 3 | 2024-01-03 12:00 | click | ... |
+| 4 | 2024-01-02 18:00 | logout | ... |
+| ... | | | |
 
 **Clustering column rules:**
 - Must be queried in order (cannot skip columns)
@@ -746,16 +744,18 @@ VALUES (?, ?, 'Bob', 'Designer');
 -- team_name and team_budget already set for this partition
 ```
 
-```
-Partition: team_id = engineering-team
-┌──────────────────────────────────────────────────────────────────┐
-│  STATIC: team_name = 'Engineering', team_budget = 100000         │
-├──────────────────────────────────────────────────────────────────┤
-│  Row 1: member_id = alice, member_name = 'Alice', role = 'Dev'   │
-│  Row 2: member_id = bob, member_name = 'Bob', role = 'Designer'  │
-│  Row 3: member_id = carol, member_name = 'Carol', role = 'PM'    │
-└──────────────────────────────────────────────────────────────────┘
-```
+**Partition: team_id = engineering-team**
+
+| Column Type | Column | Value |
+|-------------|--------|-------|
+| **STATIC** | team_name | 'Engineering' |
+| **STATIC** | team_budget | 100000 |
+
+| member_id | member_name | role |
+|-----------|-------------|------|
+| alice | 'Alice' | 'Dev' |
+| bob | 'Bob' | 'Designer' |
+| carol | 'Carol' | 'PM' |
 
 **Use cases:**
 - Partition metadata (team info, account settings)

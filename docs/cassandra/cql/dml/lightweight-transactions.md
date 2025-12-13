@@ -17,70 +17,46 @@ Lightweight Transactions (LWT) provide linearizable consistency through compare-
 
 Standard Cassandra writes use last-write-wins semantics—concurrent writes to the same row can overwrite each other unpredictably:
 
-```graphviz dot lwt-race-condition.svg
-digraph race_condition {
-    rankdir=TB;
-    node [fontname="Helvetica", fontsize=11];
-    edge [fontname="Helvetica", fontsize=10];
+**Problem: Last-Write-Wins Race Condition**
 
-    subgraph cluster_problem {
-        label="Problem: Last-Write-Wins Race Condition";
-        style=filled;
-        fillcolor="#f8d7da";
+| Step | Client A | Client B |
+|------|----------|----------|
+| Initial | `quantity = 1` | `quantity = 1` |
+| Read | Reads quantity = 1 | Reads quantity = 1 |
+| Write | `UPDATE SET quantity = 0` | `UPDATE SET quantity = 0` |
+| **Result** | quantity = 0 | quantity = 0 |
 
-        initial [label="inventory.quantity = 1", shape=box, style=filled, fillcolor="#e8f4f8"];
-
-        clientA [label="Client A\nReads quantity = 1\nWants to decrement", shape=box, style=filled, fillcolor="#fff3cd"];
-        clientB [label="Client B\nReads quantity = 1\nWants to decrement", shape=box, style=filled, fillcolor="#fff3cd"];
-
-        writeA [label="UPDATE SET quantity = 0", shape=box, style=filled, fillcolor="#d4edda"];
-        writeB [label="UPDATE SET quantity = 0", shape=box, style=filled, fillcolor="#d4edda"];
-
-        result [label="Final: quantity = 0\nBut TWO items were 'sold'!\n(inventory went negative)", shape=box, style=filled, fillcolor="#f8d7da"];
-
-        initial -> clientA;
-        initial -> clientB;
-        clientA -> writeA;
-        clientB -> writeB;
-        writeA -> result;
-        writeB -> result;
-    }
-}
-```
+**Problem:** Two items were "sold" but inventory only decremented by 1!
 
 ### How LWT Solves It
 
 LWT ensures read-modify-write is atomic:
 
-```graphviz dot lwt-solution.svg
-digraph lwt_solution {
-    rankdir=TB;
-    node [fontname="Helvetica", fontsize=11];
-    edge [fontname="Helvetica", fontsize=10];
+```plantuml
+@startuml
+skinparam backgroundColor #FFFFFF
+skinparam defaultFontName Arial
 
-    subgraph cluster_solution {
-        label="Solution: Lightweight Transaction";
-        style=filled;
-        fillcolor="#d4edda";
+title Solution: Lightweight Transaction
 
-        initial [label="inventory.quantity = 1", shape=box, style=filled, fillcolor="#e8f4f8"];
+rectangle "inventory.quantity = 1" as initial #e8f4f8
 
-        clientA [label="Client A\nUPDATE ... IF quantity = 1", shape=box, style=filled, fillcolor="#fff3cd"];
-        clientB [label="Client B\nUPDATE ... IF quantity = 1", shape=box, style=filled, fillcolor="#fff3cd"];
+rectangle "Client A\nUPDATE ... IF quantity = 1" as clientA #fff3cd
+rectangle "Client B\nUPDATE ... IF quantity = 1" as clientB #fff3cd
 
-        paxos [label="Paxos Consensus\n(serializes operations)", shape=box, style=filled, fillcolor="#fff3cd"];
+rectangle "Paxos Consensus\n(serializes operations)" as paxos #fff3cd
 
-        resultA [label="Client A: [applied] = true\nquantity = 0", shape=box, style=filled, fillcolor="#d4edda"];
-        resultB [label="Client B: [applied] = false\nquantity = 0 returned", shape=box, style=filled, fillcolor="#f8d7da"];
+rectangle "Client A: [applied] = true\nquantity = 0" as resultA #d4edda
+rectangle "Client B: [applied] = false\nquantity = 0 returned" as resultB #f8d7da
 
-        initial -> clientA;
-        initial -> clientB;
-        clientA -> paxos;
-        clientB -> paxos;
-        paxos -> resultA [label="First"];
-        paxos -> resultB [label="Second"];
-    }
-}
+initial --> clientA
+initial --> clientB
+clientA --> paxos
+clientB --> paxos
+paxos --> resultA : First
+paxos --> resultB : Second
+
+@enduml
 ```
 
 ### Historical Context
@@ -103,36 +79,45 @@ Paxos is a distributed consensus algorithm that ensures agreement among nodes ev
 
 ### Paxos Phases
 
-```graphviz dot lwt-paxos-phases.svg
-digraph paxos {
-    rankdir=TB;
-    node [fontname="Helvetica", fontsize=11];
-    edge [fontname="Helvetica", fontsize=10];
+```plantuml
+@startuml
+skinparam backgroundColor #FFFFFF
+skinparam defaultFontName Arial
 
-    client [label="Client\nUPDATE ... IF ...", shape=box, style=filled, fillcolor="#e8f4f8"];
+participant "Client" as client
+participant "Coordinator" as coord
+database "Replica 1" as r1
+database "Replica 2" as r2
+database "Replica 3" as r3
 
-    subgraph cluster_phases {
-        label="Paxos Consensus (4 Round Trips)";
-        style=filled;
-        fillcolor="#f8f9fa";
+client -> coord : UPDATE ... IF ...
 
-        prepare [label="1. PREPARE\nCoordinator → Replicas\n'I want to propose ballot N'", shape=box, style=filled, fillcolor="#fff3cd"];
-        promise [label="2. PROMISE\nReplicas → Coordinator\n'I promise to accept ballot ≥ N'", shape=box, style=filled, fillcolor="#fff3cd"];
-        read [label="3. READ\nGet current value to\nevaluate IF condition", shape=box, style=filled, fillcolor="#fff3cd"];
-        propose [label="4. PROPOSE\nCoordinator → Replicas\n'Commit this value'", shape=box, style=filled, fillcolor="#fff3cd"];
-        accept [label="5. ACCEPT\nReplicas → Coordinator\n'Value committed'", shape=box, style=filled, fillcolor="#d4edda"];
-    }
+group Paxos Consensus (4 Round Trips)
+    coord -> r1 : 1. PREPARE (ballot N)
+    coord -> r2 : 1. PREPARE (ballot N)
+    coord -> r3 : 1. PREPARE (ballot N)
+    r1 --> coord : 2. PROMISE (accept ballot ≥ N)
+    r2 --> coord : 2. PROMISE
+    r3 --> coord : 2. PROMISE
 
-    result [label="Return [applied] = true/false", shape=box, style=filled, fillcolor="#e8f4f8"];
+    coord -> r1 : 3. READ current value
+    coord -> r2 : 3. READ current value
+    r1 --> coord : Current value
+    r2 --> coord : Current value
 
-    client -> prepare;
-    prepare -> promise;
-    promise -> read;
-    read -> propose;
-    propose -> accept;
-    accept -> result;
-    result -> client;
-}
+    note over coord : Evaluate IF condition
+
+    coord -> r1 : 4. PROPOSE (commit value)
+    coord -> r2 : 4. PROPOSE (commit value)
+    coord -> r3 : 4. PROPOSE (commit value)
+    r1 --> coord : 5. ACCEPT
+    r2 --> coord : 5. ACCEPT
+    r3 --> coord : 5. ACCEPT
+end
+
+coord --> client : [applied] = true/false
+
+@enduml
 ```
 
 ### Why LWT Is Slow
@@ -365,25 +350,27 @@ UPDATE accounts SET balance = 100 WHERE id = ? IF balance = 50;
 
 When multiple clients try LWT on the same partition:
 
-```graphviz dot lwt-contention.svg
-digraph contention {
-    rankdir=TB;
-    node [fontname="Helvetica", fontsize=11];
-    edge [fontname="Helvetica", fontsize=10];
+```plantuml
+@startuml
+skinparam backgroundColor #FFFFFF
+skinparam defaultFontName Arial
 
-    clientA [label="Client A\nBallot 100", shape=box, style=filled, fillcolor="#d4edda"];
-    clientB [label="Client B\nBallot 101", shape=box, style=filled, fillcolor="#f8d7da"];
+participant "Client A\n(Ballot 100)" as clientA #d4edda
+participant "Paxos" as paxos #fff3cd
+participant "Client B\n(Ballot 101)" as clientB #f8d7da
 
-    paxos [label="Paxos\nPrefers higher ballot", shape=box, style=filled, fillcolor="#fff3cd"];
+clientA -> paxos : PREPARE ballot 100
+clientB -> paxos : PREPARE ballot 101
 
-    winA [label="Client A\nMust retry with\nhigher ballot", shape=box, style=filled, fillcolor="#f8d7da"];
-    winB [label="Client B\nProceeds", shape=box, style=filled, fillcolor="#d4edda"];
+note over paxos : Higher ballot wins\n(101 > 100)
 
-    clientA -> paxos;
-    clientB -> paxos;
-    paxos -> winA [label="loses"];
-    paxos -> winB [label="wins"];
-}
+paxos --> clientA : NACK (higher ballot seen)
+paxos --> clientB : PROMISE
+
+note over clientA #f8d7da : Must retry with\nhigher ballot
+note over clientB #d4edda : Proceeds with\nPROPOSE phase
+
+@enduml
 ```
 
 ### Client-Side Retry Logic

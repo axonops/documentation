@@ -21,31 +21,24 @@ Cassandra's query model follows a fundamental principle: **queries must specify 
 - **Linear scalability**: Response time independent of cluster size
 - **Partition locality**: Data retrieved from minimal nodes
 
-```graphviz dot select-query-routing.svg
-digraph query_routing {
-    rankdir=LR;
-    node [fontname="Helvetica", fontsize=11];
-    edge [fontname="Helvetica", fontsize=10];
+```plantuml
+@startuml
+skinparam backgroundColor #FFFFFF
+skinparam defaultFontName Arial
 
-    client [label="Client\nSELECT * FROM users\nWHERE user_id = 123", shape=box, style=filled, fillcolor="#e8f4f8"];
+participant "Client" as client
+participant "Coordinator" as coord
+participant "Node A\n(Tokens: 0-100)" as node1
+participant "Node B\n(Tokens: 101-200)" as node2 #d4edda
+participant "Node C\n(Tokens: 201-300)" as node3
 
-    coordinator [label="Coordinator\nHash(123) → Token", shape=box, style=filled, fillcolor="#fff3cd"];
+client -> coord : SELECT * FROM users\nWHERE user_id = 123
+coord -> coord : Hash(123) → Token 150
+coord -> node2 : Token 150 belongs here
+node2 --> coord : Result
+coord --> client : Response
 
-    subgraph cluster_ring {
-        label="Token Ring";
-        style=filled;
-        fillcolor="#f8f9fa";
-
-        node1 [label="Node A\nTokens: 0-100", shape=box, style=filled, fillcolor="#e2e3e5"];
-        node2 [label="Node B\nTokens: 101-200\n(owns token 150)", shape=box, style=filled, fillcolor="#d4edda"];
-        node3 [label="Node C\nTokens: 201-300", shape=box, style=filled, fillcolor="#e2e3e5"];
-    }
-
-    client -> coordinator;
-    coordinator -> node2 [label="Token 150\nbelongs here"];
-    node2 -> coordinator [label="Result"];
-    coordinator -> client;
-}
+@enduml
 ```
 
 ### Evolution of SELECT
@@ -140,36 +133,31 @@ The `IN` clause queries multiple partitions in a single request:
 SELECT * FROM users WHERE user_id IN (123, 456, 789);
 ```
 
-```graphviz dot select-multi-partition.svg
-digraph multi_partition {
-    rankdir=TB;
-    node [fontname="Helvetica", fontsize=11];
-    edge [fontname="Helvetica", fontsize=10];
+```plantuml
+@startuml
+skinparam backgroundColor #FFFFFF
+skinparam defaultFontName Arial
 
-    client [label="SELECT * FROM users\nWHERE user_id IN (1,2,3)", shape=box, style=filled, fillcolor="#e8f4f8"];
-    coord [label="Coordinator", shape=box, style=filled, fillcolor="#fff3cd"];
+participant "Client" as client
+participant "Coordinator" as coord
+participant "Node A\n(user_id=1)" as node1
+participant "Node B\n(user_id=2)" as node2
+participant "Node C\n(user_id=3)" as node3
 
-    subgraph cluster_nodes {
-        label="Parallel Requests";
-        style=filled;
-        fillcolor="#f8f9fa";
+client -> coord : SELECT * FROM users\nWHERE user_id IN (1,2,3)
 
-        node1 [label="Node A\n(user_id=1)", shape=box, style=filled, fillcolor="#d4edda"];
-        node2 [label="Node B\n(user_id=2)", shape=box, style=filled, fillcolor="#d4edda"];
-        node3 [label="Node C\n(user_id=3)", shape=box, style=filled, fillcolor="#d4edda"];
-    }
+coord -> node1 : Query partition 1
+coord -> node2 : Query partition 2
+coord -> node3 : Query partition 3
 
-    merge [label="Merge Results", shape=box, style=filled, fillcolor="#fff3cd"];
+node1 --> coord : Result
+node2 --> coord : Result
+node3 --> coord : Result
 
-    client -> coord;
-    coord -> node1;
-    coord -> node2;
-    coord -> node3;
-    node1 -> merge;
-    node2 -> merge;
-    node3 -> merge;
-    merge -> client;
-}
+coord -> coord : Merge results
+coord --> client : Combined response
+
+@enduml
 ```
 
 !!! warning "IN Clause Limitations"
@@ -553,28 +541,25 @@ ALLOW FILTERING;
 
 ### What ALLOW FILTERING Actually Does
 
-```graphviz dot select-allow-filtering.svg
-digraph allow_filtering {
-    rankdir=TB;
-    node [fontname="Helvetica", fontsize=11];
-    edge [fontname="Helvetica", fontsize=10];
+```plantuml
+@startuml
+skinparam backgroundColor #FFFFFF
+skinparam defaultFontName Arial
 
-    query [label="SELECT * FROM users\nWHERE status = 'active'\nALLOW FILTERING", shape=box, style=filled, fillcolor="#f8d7da"];
+start
+#f8d7da:SELECT * FROM users
+WHERE status = 'active'
+ALLOW FILTERING;
 
-    subgraph cluster_execution {
-        label="Execution (for each partition)";
-        style=filled;
-        fillcolor="#f8f9fa";
-
-        read [label="1. Read ALL rows\nfrom partition", shape=box, style=filled, fillcolor="#fff3cd"];
-        filter [label="2. Filter in memory\nkeep status='active'", shape=box, style=filled, fillcolor="#fff3cd"];
-        return [label="3. Return matching\nrows only", shape=box, style=filled, fillcolor="#d4edda"];
-    }
-
-    query -> read;
-    read -> filter;
-    filter -> return;
+partition "For each partition" {
+    :1. Read ALL rows\nfrom partition;
+    :2. Filter in memory\nkeep status='active';
+    :3. Return matching\nrows only;
 }
+
+stop
+
+@enduml
 ```
 
 !!! danger "ALLOW FILTERING Dangers"

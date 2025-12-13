@@ -30,44 +30,54 @@ An e-commerce platform requires:
 
 Before designing tables, list every query the application needs:
 
-```
-Product Queries:
-─────────────────────────────────────────────────────────────────
-Q1:  Get product details by product_id
-Q2:  List products in a category (paginated, sortable)
-Q3:  Search products by name prefix
-Q4:  Get featured/popular products for homepage
-Q5:  Get related products
+**Product Queries:**
 
-User Queries:
-─────────────────────────────────────────────────────────────────
-Q6:  Get user profile by user_id
-Q7:  Authenticate user by email (login)
-Q8:  Get user's saved addresses
+| ID | Query |
+|----|-------|
+| Q1 | Get product details by product_id |
+| Q2 | List products in a category (paginated, sortable) |
+| Q3 | Search products by name prefix |
+| Q4 | Get featured/popular products for homepage |
+| Q5 | Get related products |
 
-Shopping Cart Queries:
-─────────────────────────────────────────────────────────────────
-Q9:  Get all items in user's cart
-Q10: Check if specific product is in cart
+**User Queries:**
 
-Order Queries:
-─────────────────────────────────────────────────────────────────
-Q11: Get user's order history (recent first)
-Q12: Get order details by order_id
-Q13: Get items in a specific order
-Q14: Get order status history
-Q15: Get orders by status (for admin dashboard)
+| ID | Query |
+|----|-------|
+| Q6 | Get user profile by user_id |
+| Q7 | Authenticate user by email (login) |
+| Q8 | Get user's saved addresses |
 
-Inventory Queries:
-─────────────────────────────────────────────────────────────────
-Q16: Check product inventory across warehouses
-Q17: Reserve inventory (with consistency guarantee)
+**Shopping Cart Queries:**
 
-Analytics Queries:
-─────────────────────────────────────────────────────────────────
-Q18: Get daily sales by category
-Q19: Get top products by views
-```
+| ID | Query |
+|----|-------|
+| Q9 | Get all items in user's cart |
+| Q10 | Check if specific product is in cart |
+
+**Order Queries:**
+
+| ID | Query |
+|----|-------|
+| Q11 | Get user's order history (recent first) |
+| Q12 | Get order details by order_id |
+| Q13 | Get items in a specific order |
+| Q14 | Get order status history |
+| Q15 | Get orders by status (for admin dashboard) |
+
+**Inventory Queries:**
+
+| ID | Query |
+|----|-------|
+| Q16 | Check product inventory across warehouses |
+| Q17 | Reserve inventory (with consistency guarantee) |
+
+**Analytics Queries:**
+
+| ID | Query |
+|----|-------|
+| Q18 | Get daily sales by category |
+| Q19 | Get top products by views |
 
 ---
 

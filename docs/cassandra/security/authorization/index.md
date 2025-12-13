@@ -17,40 +17,33 @@ For CQL syntax reference, see **[Security Commands](../../cql/security/index.md)
 
 Cassandra's authorization system consists of three components:
 
-```graphviz dot authorization-architecture.svg
-digraph auth_architecture {
-    rankdir=TB;
-    node [fontname="Helvetica", fontsize=11];
-    edge [fontname="Helvetica", fontsize=10];
+```plantuml
+@startuml authorization-architecture
+skinparam defaultFontName Helvetica
+skinparam defaultFontSize 11
+skinparam packageBackgroundColor #f8f9fa
+skinparam databaseBackgroundColor #d4edda
 
-    subgraph cluster_components {
-        label="Authorization Components";
-        style=filled;
-        fillcolor="#f8f9fa";
-
-        authenticator [label="Authenticator\nVerifies identity", shape=box, style=filled, fillcolor="#e8f4f8"];
-        role_manager [label="Role Manager\nManages roles & membership", shape=box, style=filled, fillcolor="#e8f4f8"];
-        authorizer [label="Authorizer\nEnforces permissions", shape=box, style=filled, fillcolor="#e8f4f8"];
-    }
-
-    subgraph cluster_storage {
-        label="System Tables";
-        style=filled;
-        fillcolor="#f0f0f0";
-
-        roles [label="system_auth.roles", shape=cylinder, style=filled, fillcolor="#d4edda"];
-        role_members [label="system_auth.role_members", shape=cylinder, style=filled, fillcolor="#d4edda"];
-        role_permissions [label="system_auth.role_permissions", shape=cylinder, style=filled, fillcolor="#d4edda"];
-        identity_to_role [label="system_auth.identity_to_role\n(Cassandra 5.0+)", shape=cylinder, style=filled, fillcolor="#d4edda"];
-    }
-
-    authenticator -> role_manager;
-    role_manager -> authorizer;
-    role_manager -> roles;
-    role_manager -> role_members;
-    role_manager -> identity_to_role;
-    authorizer -> role_permissions;
+package "Authorization Components" {
+    rectangle "Authenticator\nVerifies identity" as authenticator #e8f4f8
+    rectangle "Role Manager\nManages roles & membership" as role_manager #e8f4f8
+    rectangle "Authorizer\nEnforces permissions" as authorizer #e8f4f8
 }
+
+package "System Tables" #f0f0f0 {
+    database "system_auth.roles" as roles
+    database "system_auth.role_members" as role_members
+    database "system_auth.role_permissions" as role_permissions
+    database "system_auth.identity_to_role\n(Cassandra 5.0+)" as identity_to_role
+}
+
+authenticator --> role_manager
+role_manager --> authorizer
+role_manager --> roles
+role_manager --> role_members
+role_manager --> identity_to_role
+authorizer --> role_permissions
+@enduml
 ```
 
 ### Enabling Authorization
@@ -251,47 +244,34 @@ Identity management requires `MutualTlsAuthenticator` to be configured. See **[M
 
 A well-designed role hierarchy separates concerns:
 
-```graphviz dot role-separation.svg
-digraph role_separation {
-    rankdir=TB;
-    node [fontname="Helvetica", fontsize=11];
-    edge [fontname="Helvetica", fontsize=10];
+```plantuml
+@startuml role-separation
+skinparam defaultFontName Helvetica
+skinparam defaultFontSize 11
 
-    subgraph cluster_admin {
-        label="Administrative Roles";
-        style=filled;
-        fillcolor="#f8d7da";
-
-        superuser [label="superuser\n(emergency only)", shape=box, style=filled, fillcolor="#f5c6cb"];
-        security_admin [label="security_admin\nManages roles/permissions", shape=box, style=filled, fillcolor="#f5c6cb"];
-        schema_admin [label="schema_admin\nManages DDL", shape=box, style=filled, fillcolor="#f5c6cb"];
-    }
-
-    subgraph cluster_service {
-        label="Service Roles";
-        style=filled;
-        fillcolor="#fff3cd";
-
-        app_readwrite [label="app_readwrite\nApplication DML", shape=box, style=filled, fillcolor="#ffeeba"];
-        app_readonly [label="app_readonly\nRead-only access", shape=box, style=filled, fillcolor="#ffeeba"];
-        etl_role [label="etl_role\nData pipeline access", shape=box, style=filled, fillcolor="#ffeeba"];
-    }
-
-    subgraph cluster_users {
-        label="Individual Users";
-        style=filled;
-        fillcolor="#d4edda";
-
-        dba_alice [label="dba_alice", shape=ellipse, style=filled, fillcolor="#c3e6cb"];
-        dev_bob [label="dev_bob", shape=ellipse, style=filled, fillcolor="#c3e6cb"];
-        analyst_carol [label="analyst_carol", shape=ellipse, style=filled, fillcolor="#c3e6cb"];
-    }
-
-    security_admin -> dba_alice [style=dashed];
-    schema_admin -> dba_alice [style=dashed];
-    schema_admin -> dev_bob [style=dashed];
-    app_readonly -> analyst_carol [style=dashed];
+package "Administrative Roles" #f8d7da {
+    rectangle "superuser\n(emergency only)" as superuser #f5c6cb
+    rectangle "security_admin\nManages roles/permissions" as security_admin #f5c6cb
+    rectangle "schema_admin\nManages DDL" as schema_admin #f5c6cb
 }
+
+package "Service Roles" #fff3cd {
+    rectangle "app_readwrite\nApplication DML" as app_readwrite #ffeeba
+    rectangle "app_readonly\nRead-only access" as app_readonly #ffeeba
+    rectangle "etl_role\nData pipeline access" as etl_role #ffeeba
+}
+
+package "Individual Users" #d4edda {
+    actor "dba_alice" as dba_alice #c3e6cb
+    actor "dev_bob" as dev_bob #c3e6cb
+    actor "analyst_carol" as analyst_carol #c3e6cb
+}
+
+security_admin ..> dba_alice
+schema_admin ..> dba_alice
+schema_admin ..> dev_bob
+app_readonly ..> analyst_carol
+@enduml
 ```
 
 ### Principle of Least Privilege
@@ -529,44 +509,32 @@ GRANT analyst_base TO analyst_diana;
 
 ### Multi-Environment Role Strategy
 
-```graphviz dot environment-separation.svg
-digraph env_separation {
-    rankdir=LR;
-    node [fontname="Helvetica", fontsize=11];
-    edge [fontname="Helvetica", fontsize=10];
+```plantuml
+@startuml environment-separation
+skinparam defaultFontName Helvetica
+skinparam defaultFontSize 11
+left to right direction
 
-    subgraph cluster_dev {
-        label="Development";
-        style=filled;
-        fillcolor="#d4edda";
-
-        dev_ks [label="development\nkeyspace", shape=cylinder];
-        dev_role [label="dev_full_access", shape=box];
-        dev_role -> dev_ks [label="ALL"];
-    }
-
-    subgraph cluster_staging {
-        label="Staging";
-        style=filled;
-        fillcolor="#fff3cd";
-
-        stg_ks [label="staging\nkeyspace", shape=cylinder];
-        stg_role [label="staging_readonly", shape=box];
-        stg_role -> stg_ks [label="SELECT"];
-    }
-
-    subgraph cluster_prod {
-        label="Production";
-        style=filled;
-        fillcolor="#f8d7da";
-
-        prod_ks [label="production\nkeyspace", shape=cylinder];
-        prod_app [label="app_service", shape=box];
-        prod_ro [label="prod_readonly", shape=box];
-        prod_app -> prod_ks [label="SELECT,\nMODIFY"];
-        prod_ro -> prod_ks [label="SELECT"];
-    }
+package "Development" #d4edda {
+    database "development\nkeyspace" as dev_ks
+    rectangle "dev_full_access" as dev_role
+    dev_role --> dev_ks : ALL
 }
+
+package "Staging" #fff3cd {
+    database "staging\nkeyspace" as stg_ks
+    rectangle "staging_readonly" as stg_role
+    stg_role --> stg_ks : SELECT
+}
+
+package "Production" #f8d7da {
+    database "production\nkeyspace" as prod_ks
+    rectangle "app_service" as prod_app
+    rectangle "prod_readonly" as prod_ro
+    prod_app --> prod_ks : SELECT,\nMODIFY
+    prod_ro --> prod_ks : SELECT
+}
+@enduml
 ```
 
 ```sql

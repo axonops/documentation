@@ -47,47 +47,26 @@ CQL (Cassandra Query Language) was introduced in Cassandra 0.8 (2011) as a SQL-l
 
 Understanding how writes flow through Cassandra is essential for effective DML usage.
 
-```graphviz dot dml-write-path.svg
-digraph write_path {
-    rankdir=LR;
-    node [fontname="Helvetica", fontsize=11];
-    edge [fontname="Helvetica", fontsize=10];
+```plantuml
+@startuml
+skinparam backgroundColor #FFFFFF
+skinparam defaultFontName Arial
 
-    client [label="Client", shape=ellipse, style=filled, fillcolor="#e8f4f8"];
+participant "Client" as client
+participant "Coordinator\n(Parser)" as parse
+participant "Replica\n(Storage)" as storage
+database "SSTable" as sstable
 
-    subgraph cluster_coordinator {
-        label="Coordinator Node";
-        style=filled;
-        fillcolor="#f8f9fa";
-        fontname="Helvetica bold";
+client -> parse : Write request
+parse -> parse : 1. Parse statement
+parse -> parse : 2. Calculate partition token
+parse -> storage : 3. Route to replicas
+storage -> storage : 4. Write to commit log
+storage -> storage : 5. Write to memtable
+storage --> client : 6. Acknowledge\n(based on consistency level)
+storage -[#gray,dashed]-> sstable : Async flush\n(when memtable full)
 
-        parse [label="1. Parse\nStatement", shape=box, style=filled, fillcolor="#fff3cd"];
-        partition [label="2. Calculate\nPartition Token", shape=box, style=filled, fillcolor="#fff3cd"];
-        route [label="3. Route to\nReplicas", shape=box, style=filled, fillcolor="#fff3cd"];
-    }
-
-    subgraph cluster_replica {
-        label="Replica Node";
-        style=filled;
-        fillcolor="#f0f0f0";
-        fontname="Helvetica bold";
-
-        commitlog [label="4. Write to\nCommit Log", shape=box, style=filled, fillcolor="#d4edda"];
-        memtable [label="5. Write to\nMemtable", shape=box, style=filled, fillcolor="#d4edda"];
-        ack [label="6. Acknowledge", shape=box, style=filled, fillcolor="#d4edda"];
-    }
-
-    sstable [label="SSTable\n(async flush)", shape=cylinder, style=filled, fillcolor="#e2e3e5"];
-
-    client -> parse;
-    parse -> partition;
-    partition -> route;
-    route -> commitlog;
-    commitlog -> memtable;
-    memtable -> ack;
-    ack -> client [label="based on\nconsistency level"];
-    memtable -> sstable [style=dashed, label="when full"];
-}
+@enduml
 ```
 
 ### Write Path Steps
@@ -132,42 +111,25 @@ Timestamps serve critical functions:
 
 Reads in Cassandra follow a different path optimized for distributed data retrieval.
 
-```graphviz dot dml-read-path.svg
-digraph read_path {
-    rankdir=LR;
-    node [fontname="Helvetica", fontsize=11];
-    edge [fontname="Helvetica", fontsize=10];
+```plantuml
+@startuml
+skinparam backgroundColor #FFFFFF
+skinparam defaultFontName Arial
 
-    client [label="Client", shape=ellipse, style=filled, fillcolor="#e8f4f8"];
+participant "Client" as client
+participant "Coordinator\n(Query Router)" as coord
+participant "Replica\n(Storage Engine)" as replica
 
-    subgraph cluster_coordinator {
-        label="Coordinator Node";
-        style=filled;
-        fillcolor="#f8f9fa";
-        fontname="Helvetica bold";
+client -> coord : SELECT query
+coord -> coord : 1. Parse query\nextract partition key
+coord -> replica : 2. Route to replicas
+replica -> replica : 3. Check bloom filter
+replica -> replica : 4. Read memtable + SSTables
+replica --> coord : Row data
+coord -> coord : 5. Merge results\n(resolve by timestamp)
+coord --> client : Result set
 
-        parse [label="1. Parse Query\nExtract Partition Key", shape=box, style=filled, fillcolor="#fff3cd"];
-        route [label="2. Route to\nReplicas", shape=box, style=filled, fillcolor="#fff3cd"];
-        merge [label="5. Merge\nResults", shape=box, style=filled, fillcolor="#fff3cd"];
-    }
-
-    subgraph cluster_replica {
-        label="Replica Node(s)";
-        style=filled;
-        fillcolor="#f0f0f0";
-        fontname="Helvetica bold";
-
-        bloom [label="3. Check\nBloom Filter", shape=box, style=filled, fillcolor="#d4edda"];
-        read [label="4. Read from\nMemtable + SSTables", shape=box, style=filled, fillcolor="#d4edda"];
-    }
-
-    client -> parse;
-    parse -> route;
-    route -> bloom;
-    bloom -> read;
-    read -> merge;
-    merge -> client;
-}
+@enduml
 ```
 
 ### Read Path Steps
@@ -260,26 +222,25 @@ Common patterns:
 
 Cassandra does not immediately delete data. Instead, it writes tombstones—markers indicating data should be considered deleted.
 
-```graphviz dot dml-tombstone-lifecycle.svg
-digraph tombstone_lifecycle {
-    rankdir=TB;
-    node [fontname="Helvetica", fontsize=11];
-    edge [fontname="Helvetica", fontsize=10];
+```plantuml
+@startuml
+skinparam backgroundColor #FFFFFF
+skinparam defaultFontName Arial
 
-    delete [label="DELETE\nStatement", shape=box, style=filled, fillcolor="#f8d7da"];
-    tombstone [label="Tombstone Written\n(timestamp recorded)", shape=box, style=filled, fillcolor="#fff3cd"];
-    propagate [label="Tombstone Replicated\nto All Replicas", shape=box, style=filled, fillcolor="#fff3cd"];
-    gc_grace [label="gc_grace_seconds\n(default: 10 days)", shape=diamond, style=filled, fillcolor="#e2e3e5"];
-    compact [label="Compaction\nRemoves Data", shape=box, style=filled, fillcolor="#d4edda"];
+start
+:DELETE statement;
+:Tombstone written\n(timestamp recorded);
+:Tombstone replicated\nto all replicas;
 
-    warning [label="If replica missed tombstone\nand rejoins after gc_grace:\ndeleted data reappears!", shape=box, style=filled, fillcolor="#f8d7da"];
+if (gc_grace_seconds elapsed?\n(default: 10 days)) then (yes)
+  :Compaction\nremoves data;
+  stop
+else (replica down too long)
+  #f8d7da:Data resurrection!\nDeleted data reappears;
+  stop
+endif
 
-    delete -> tombstone;
-    tombstone -> propagate;
-    propagate -> gc_grace;
-    gc_grace -> compact [label="elapsed"];
-    gc_grace -> warning [label="replica down\ntoo long", style=dashed];
-}
+@enduml
 ```
 
 ### Why Tombstones Exist

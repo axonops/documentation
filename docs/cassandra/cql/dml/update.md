@@ -17,27 +17,26 @@ The UPDATE statement modifies column values in Cassandra tables. Like INSERT, UP
 
 UPDATE does not require the row to exist:
 
-```graphviz dot update-upsert.svg
-digraph upsert {
-    rankdir=TB;
-    node [fontname="Helvetica", fontsize=11];
-    edge [fontname="Helvetica", fontsize=10];
+```plantuml
+@startuml
+skinparam backgroundColor #FFFFFF
+skinparam defaultFontName Arial
 
-    update [label="UPDATE users\nSET name = 'Alice'\nWHERE id = 1", shape=box, style=filled, fillcolor="#d4edda"];
+start
+:UPDATE users
+SET name = 'Alice'
+WHERE id = 1;
 
-    check [label="Row exists?", shape=diamond, style=filled, fillcolor="#fff3cd"];
+if (Row exists?) then (yes)
+  :Update existing\ncell value;
+else (no)
+  :Create row with\nspecified columns;
+endif
 
-    exists [label="Update existing\ncell value", shape=box, style=filled, fillcolor="#e8f4f8"];
-    notexists [label="Create row with\nspecified columns", shape=box, style=filled, fillcolor="#e8f4f8"];
+:Storage Layer\n(identical result);
+stop
 
-    storage [label="Storage Layer\n(identical result)", shape=cylinder, style=filled, fillcolor="#e2e3e5"];
-
-    update -> check;
-    check -> exists [label="Yes"];
-    check -> notexists [label="No"];
-    exists -> storage;
-    notexists -> storage;
-}
+@enduml
 ```
 
 **Key implications:**
@@ -216,25 +215,14 @@ Collections support in-place modifications without reading the entire collection
 
 ### List Operations
 
-```graphviz dot update-list-operations.svg
-digraph list_ops {
-    rankdir=TB;
-    node [fontname="Helvetica", fontsize=11];
-    edge [fontname="Helvetica", fontsize=10];
+**Original List:** `['a', 'b', 'c']`
 
-    original [label="Original List\n['a', 'b', 'c']", shape=box, style=filled, fillcolor="#e8f4f8"];
-
-    append [label="list + ['d']\n['a', 'b', 'c', 'd']", shape=box, style=filled, fillcolor="#d4edda"];
-    prepend [label="['z'] + list\n['z', 'a', 'b', 'c']", shape=box, style=filled, fillcolor="#d4edda"];
-    remove [label="list - ['b']\n['a', 'c']", shape=box, style=filled, fillcolor="#fff3cd"];
-    index [label="list[0] = 'x'\n['x', 'b', 'c']", shape=box, style=filled, fillcolor="#f8d7da"];
-
-    original -> append [label="Append"];
-    original -> prepend [label="Prepend"];
-    original -> remove [label="Remove"];
-    original -> index [label="Index\n(dangerous)"];
-}
-```
+| Operation | Syntax | Result | Notes |
+|-----------|--------|--------|-------|
+| Append | `list + ['d']` | `['a', 'b', 'c', 'd']` | Safe |
+| Prepend | `['z'] + list` | `['z', 'a', 'b', 'c']` | Safe |
+| Remove | `list - ['b']` | `['a', 'c']` | Safe |
+| Index | `list[0] = 'x'` | `['x', 'b', 'c']` | **Dangerous** |
 
 #### Append Elements
 
@@ -471,26 +459,28 @@ WHERE tenant_id = 'acme'
 
 Lightweight transactions ensure atomic read-modify-write:
 
-```graphviz dot update-lwt-flow.svg
-digraph lwt {
-    rankdir=TB;
-    node [fontname="Helvetica", fontsize=11];
-    edge [fontname="Helvetica", fontsize=10];
+```plantuml
+@startuml
+skinparam backgroundColor #FFFFFF
+skinparam defaultFontName Arial
 
-    client [label="UPDATE inventory\nSET quantity = 95\nWHERE id = 'SKU-1'\nIF quantity = 100", shape=box, style=filled, fillcolor="#e8f4f8"];
+start
+:UPDATE inventory
+SET quantity = 95
+WHERE id = 'SKU-1'
+IF quantity = 100;
 
-    paxos [label="Paxos Consensus\n(4 round trips)", shape=box, style=filled, fillcolor="#fff3cd"];
+:Paxos Consensus\n(4 round trips);
 
-    check [label="quantity = 100?", shape=diamond, style=filled, fillcolor="#fff3cd"];
+if (quantity = 100?) then (yes)
+  #d4edda:Apply Update\nquantity = 95;
+else (no)
+  #f8d7da:Return [applied] = false\nwith current values;
+endif
 
-    apply [label="Apply Update\nquantity = 95", shape=box, style=filled, fillcolor="#d4edda"];
-    reject [label="Return [applied] = false\nwith current values", shape=box, style=filled, fillcolor="#f8d7da"];
+stop
 
-    client -> paxos;
-    paxos -> check;
-    check -> apply [label="Yes"];
-    check -> reject [label="No"];
-}
+@enduml
 ```
 
 ### IF EXISTS

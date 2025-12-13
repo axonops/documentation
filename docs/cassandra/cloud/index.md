@@ -58,19 +58,42 @@ Outbound:
 
 ## Multi-Region Deployment
 
-```
-Architecture for global deployment:
+```plantuml
+@startuml
+skinparam backgroundColor #FFFFFF
+skinparam rectangle {
+    BackgroundColor #F5F5F5
+    BorderColor #333333
+}
 
-Region: US-EAST          Region: EU-WEST
-┌─────────────────┐      ┌─────────────────┐
-│  AZ-a   AZ-b    │      │  AZ-a   AZ-b    │
-│  ┌───┐  ┌───┐   │      │  ┌───┐  ┌───┐   │
-│  │N1 │  │N2 │   │◄────►│  │N4 │  │N5 │   │
-│  └───┘  └───┘   │      │  └───┘  └───┘   │
-│        ┌───┐    │      │        ┌───┐    │
-│   AZ-c │N3 │    │      │   AZ-c │N6 │    │
-│        └───┘    │      │        └───┘    │
-└─────────────────┘      └─────────────────┘
+title Multi-Region Cassandra Deployment
+
+rectangle "Region: US-EAST" as useast {
+    rectangle "AZ-a" as us_a {
+        node "N1" as n1
+    }
+    rectangle "AZ-b" as us_b {
+        node "N2" as n2
+    }
+    rectangle "AZ-c" as us_c {
+        node "N3" as n3
+    }
+}
+
+rectangle "Region: EU-WEST" as euwest {
+    rectangle "AZ-a" as eu_a {
+        node "N4" as n4
+    }
+    rectangle "AZ-b" as eu_b {
+        node "N5" as n5
+    }
+    rectangle "AZ-c" as eu_c {
+        node "N6" as n6
+    }
+}
+
+useast <--> euwest : Cross-region\nreplication
+@enduml
 ```
 
 ## Best Practices

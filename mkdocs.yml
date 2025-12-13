@@ -358,6 +358,7 @@ nav:
             - Table: cassandra/cql/ddl/table.md
             - Index: cassandra/cql/ddl/create-index.md
             - Materialized View: cassandra/cql/ddl/materialized-view.md
+            - Trigger: cassandra/cql/ddl/trigger.md
             - User-Defined Type: cassandra/cql/ddl/type.md
             - Function: cassandra/cql/ddl/function.md
             - Aggregate: cassandra/cql/ddl/aggregate.md
@@ -371,8 +372,9 @@ nav:
             - Secondary Index Queries: cassandra/cql/dml/secondary-index-queries.md
             - Vector Search: cassandra/cql/dml/vector-search.md
             - Lightweight Transactions: cassandra/cql/dml/lightweight-transactions.md
-          - Security Commands:
+          - Security:
             - Overview: cassandra/cql/security/index.md
+            - Role-Based Access Control: cassandra/cql/security/rbac.md
             - Dynamic Data Masking: cassandra/cql/security/dynamic-data-masking.md
           - Indexing: cassandra/cql/indexing/index.md
           - Functions: cassandra/cql/functions/index.md
@@ -619,6 +621,7 @@ nav:
         - Privileged Access Management: cassandra/security/privileged-access-management/index.md
         - Audit Logging: cassandra/security/audit-logging/index.md
         - Network Security: cassandra/security/network/index.md
+        - OS Security: cassandra/security/os-security/index.md
         - Encryption:
           - Overview: cassandra/security/encryption/index.md
           - PKI Fundamentals: cassandra/security/encryption/pki-fundamentals.md

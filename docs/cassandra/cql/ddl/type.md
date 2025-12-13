@@ -81,57 +81,10 @@ UDTs were introduced in Cassandra 2.1 to address several data modeling challenge
 
 UDTs can be stored in two ways depending on whether they are frozen:
 
-```graphviz dot udt-storage-model.svg
-digraph udt_storage {
-    rankdir=TB
-    node [shape=none fontname="Helvetica" fontsize=11]
-
-    label="UDT Storage: Frozen vs Non-Frozen"
-    labelloc="t"
-    fontname="Helvetica Bold"
-    fontsize=14
-
-    subgraph cluster_frozen {
-        label="FROZEN<address>"
-        labeljust="l"
-        style="rounded"
-        bgcolor="#e3f2fd"
-
-        frozen [label=<
-            <TABLE BORDER="1" CELLBORDER="1" CELLSPACING="0" CELLPADDING="6" BGCOLOR="white">
-                <TR><TD COLSPAN="4" BGCOLOR="#bbdefb"><B>Single Serialized Blob</B></TD></TR>
-                <TR>
-                    <TD>street_len</TD>
-                    <TD>street_bytes</TD>
-                    <TD>city_len</TD>
-                    <TD>city_bytes...</TD>
-                </TR>
-            </TABLE>
-        >]
-    }
-
-    subgraph cluster_nonfrozen {
-        label="Non-Frozen address"
-        labeljust="l"
-        style="rounded"
-        bgcolor="#fff3e0"
-
-        nonfrozen [label=<
-            <TABLE BORDER="1" CELLBORDER="1" CELLSPACING="0" CELLPADDING="6" BGCOLOR="white">
-                <TR><TD COLSPAN="4" BGCOLOR="#ffe0b2"><B>Separate Cells Per Field</B></TD></TR>
-                <TR>
-                    <TD>address.street<BR/><FONT POINT-SIZE="9">cell + timestamp</FONT></TD>
-                    <TD>address.city<BR/><FONT POINT-SIZE="9">cell + timestamp</FONT></TD>
-                    <TD>address.state<BR/><FONT POINT-SIZE="9">cell + timestamp</FONT></TD>
-                    <TD>address.zip<BR/><FONT POINT-SIZE="9">cell + timestamp</FONT></TD>
-                </TR>
-            </TABLE>
-        >]
-    }
-
-    frozen -> nonfrozen [style=invis]
-}
-```
+| Storage Type | Structure | Timestamps |
+|--------------|-----------|------------|
+| **FROZEN** | Single serialized blob: `[street_len][street_bytes][city_len][city_bytes]...` | One timestamp for entire UDT |
+| **Non-Frozen** | Separate cell per field: `address.street`, `address.city`, `address.state`, `address.zip` | Each field has independent timestamp |
 
 ### Why FROZEN Exists
 
@@ -154,50 +107,16 @@ Cassandra uses timestamps for conflict resolution at the cell level. Without fre
 - Can be used in primary keys and indexes
 - Simpler conflict resolution (last write wins for entire UDT)
 
-```graphviz dot frozen-comparison.svg
-digraph frozen_comparison {
-    rankdir=LR
-    node [shape=box fontname="Helvetica" fontsize=10]
+**Concurrent Update Example:**
 
-    subgraph cluster_updates {
-        label="Concurrent Updates Example"
-        labelloc="t"
-        fontname="Helvetica Bold"
+Initial state: `street='A', city='X'`
 
-        subgraph cluster_nonfrozen_update {
-            label="Non-Frozen"
-            style="rounded"
-            bgcolor="#fff3e0"
+| UDT Type | Update 1 (t=1) | Update 2 (t=2) | Result |
+|----------|----------------|----------------|--------|
+| **Non-Frozen** | `SET street='B'` | `SET city='Y'` | `street='B', city='Y'` (merged) |
+| **Frozen** | `SET addr={street='B', city='X'}` | `SET addr={street='A', city='Y'}` | `street='A', city='Y'` (Update 2 wins) |
 
-            nf_before [label="address:\nstreet='A'\ncity='X'" shape=box]
-            nf_update1 [label="Update 1:\nstreet='B'" shape=box style=filled fillcolor="#c8e6c9"]
-            nf_update2 [label="Update 2:\ncity='Y'" shape=box style=filled fillcolor="#c8e6c9"]
-            nf_result [label="Result:\nstreet='B'\ncity='Y'" shape=box style=filled fillcolor="#a5d6a7"]
-
-            nf_before -> nf_update1 [label="t=1"]
-            nf_before -> nf_update2 [label="t=2"]
-            nf_update1 -> nf_result
-            nf_update2 -> nf_result
-        }
-
-        subgraph cluster_frozen_update {
-            label="Frozen"
-            style="rounded"
-            bgcolor="#e3f2fd"
-
-            f_before [label="address:\nstreet='A'\ncity='X'" shape=box]
-            f_update1 [label="Update 1:\n{street='B', city='X'}" shape=box style=filled fillcolor="#c8e6c9"]
-            f_update2 [label="Update 2:\n{street='A', city='Y'}" shape=box style=filled fillcolor="#ef9a9a"]
-            f_result [label="Result:\nstreet='A'\ncity='Y'\n(Update 2 wins)" shape=box style=filled fillcolor="#ef9a9a"]
-
-            f_before -> f_update1 [label="t=1"]
-            f_before -> f_update2 [label="t=2"]
-            f_update1 -> f_result [style=dashed color=gray]
-            f_update2 -> f_result
-        }
-    }
-}
-```
+With non-frozen UDTs, concurrent updates to different fields are merged. With frozen UDTs, the entire value is replaced—last write wins.
 
 ### Frozen vs Non-Frozen
 

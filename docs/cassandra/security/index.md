@@ -17,20 +17,12 @@ This guide covers enabling authentication, setting up roles and permissions, con
 
 ### Security Layers
 
-```graphviz dot security-layers.svg
-digraph security_layers {
-    rankdir=TB;
-    node [fontname="Helvetica", fontsize=11, shape=box, style=filled, width=4];
-    edge [style=invis];
-
-    app [label="Application Security\nInput validation, credential management, audit logging", fillcolor="#e8f4f8"];
-    cassandra [label="Cassandra Security\nAuthentication, Authorization, Encryption", fillcolor="#d4edda"];
-    network [label="Network Security\nFirewalls, VPNs, network isolation", fillcolor="#fff3cd"];
-    infra [label="Infrastructure Security\nOS hardening, access controls, patching", fillcolor="#f8d7da"];
-
-    app -> cassandra -> network -> infra;
-}
-```
+| Layer | Scope |
+|-------|-------|
+| Application | Input validation, credential management, audit logging |
+| Cassandra | Authentication, authorization, encryption |
+| Network | Firewalls, VPNs, network isolation |
+| Infrastructure | OS hardening, access controls, patching |
 
 ### Security Components
 

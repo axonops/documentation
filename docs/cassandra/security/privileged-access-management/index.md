@@ -24,22 +24,22 @@ Traditional static credentials present several challenges:
 
 PAM solutions address these issues:
 
-```graphviz dot pam-flow.svg
-digraph pam_flow {
-    rankdir=LR;
-    node [fontname="Helvetica", fontsize=11];
-    edge [fontname="Helvetica", fontsize=10];
+```plantuml
+@startuml pam-flow
+skinparam defaultFontName Helvetica
+skinparam defaultFontSize 11
+left to right direction
 
-    app [label="Application", shape=box, style=filled, fillcolor="#e8f4f8"];
-    pam [label="PAM System\n(Vault/CyberArk)", shape=box, style=filled, fillcolor="#fff3cd"];
-    cassandra [label="Cassandra\nCluster", shape=cylinder, style=filled, fillcolor="#d4edda"];
+rectangle "Application" as app #e8f4f8
+rectangle "PAM System\n(Vault/CyberArk)" as pam #fff3cd
+database "Cassandra\nCluster" as cassandra #d4edda
 
-    app -> pam [label="1. Request credentials\n(authenticated)"];
-    pam -> cassandra [label="2. Create dynamic\nrole (optional)"];
-    pam -> app [label="3. Return credentials\n(time-limited)"];
-    app -> cassandra [label="4. Connect"];
-    pam -> cassandra [label="5. Revoke on expiry", style=dashed];
-}
+app --> pam : 1. Request credentials\n(authenticated)
+pam --> cassandra : 2. Create dynamic\nrole (optional)
+pam --> app : 3. Return credentials\n(time-limited)
+app --> cassandra : 4. Connect
+pam ..> cassandra : 5. Revoke on expiry
+@enduml
 ```
 
 ### PAM Approaches
@@ -63,51 +63,38 @@ HashiCorp Vault provides dynamic secret management for Cassandra through its dat
 
 ### Architecture
 
-```graphviz dot vault-architecture.svg
-digraph vault_arch {
-    rankdir=TB;
-    node [fontname="Helvetica", fontsize=11];
-    edge [fontname="Helvetica", fontsize=10];
+```plantuml
+@startuml vault-architecture
+skinparam defaultFontName Helvetica
+skinparam defaultFontSize 11
 
-    subgraph cluster_vault {
-        label="HashiCorp Vault";
-        style=filled;
-        fillcolor="#f8f9fa";
-
-        auth [label="Auth Methods\n(AppRole, K8s, etc.)", shape=box, style=filled, fillcolor="#e8f4f8"];
-        db_engine [label="Database Secrets\nEngine", shape=box, style=filled, fillcolor="#e8f4f8"];
-        audit [label="Audit Log", shape=cylinder, style=filled, fillcolor="#d4edda"];
-    }
-
-    subgraph cluster_apps {
-        label="Applications";
-        style=filled;
-        fillcolor="#f0f0f0";
-
-        app1 [label="Service A", shape=box];
-        app2 [label="Service B", shape=box];
-        app3 [label="ETL Pipeline", shape=box];
-    }
-
-    subgraph cluster_cassandra {
-        label="Cassandra Cluster";
-        style=filled;
-        fillcolor="#f0f0f0";
-
-        node1 [label="Node 1", shape=cylinder];
-        node2 [label="Node 2", shape=cylinder];
-        node3 [label="Node 3", shape=cylinder];
-    }
-
-    app1 -> auth;
-    app2 -> auth;
-    app3 -> auth;
-    auth -> db_engine [label="Authorized"];
-    db_engine -> node1;
-    db_engine -> node2;
-    db_engine -> node3;
-    db_engine -> audit [style=dashed];
+package "HashiCorp Vault" #f8f9fa {
+    rectangle "Auth Methods\n(AppRole, K8s, etc.)" as auth #e8f4f8
+    rectangle "Database Secrets\nEngine" as db_engine #e8f4f8
+    database "Audit Log" as audit #d4edda
 }
+
+package "Applications" #f0f0f0 {
+    rectangle "Service A" as app1
+    rectangle "Service B" as app2
+    rectangle "ETL Pipeline" as app3
+}
+
+package "Cassandra Cluster" #f0f0f0 {
+    database "Node 1" as node1
+    database "Node 2" as node2
+    database "Node 3" as node3
+}
+
+app1 --> auth
+app2 --> auth
+app3 --> auth
+auth --> db_engine : Authorized
+db_engine --> node1
+db_engine --> node2
+db_engine --> node3
+db_engine ..> audit
+@enduml
 ```
 
 ### Prerequisites
@@ -318,44 +305,35 @@ CyberArk Privileged Access Manager (PAM) provides enterprise credential manageme
 
 ### Architecture
 
-```graphviz dot cyberark-architecture.svg
-digraph cyberark_arch {
-    rankdir=TB;
-    node [fontname="Helvetica", fontsize=11];
-    edge [fontname="Helvetica", fontsize=10];
+```plantuml
+@startuml cyberark-architecture
+skinparam defaultFontName Helvetica
+skinparam defaultFontSize 11
 
-    subgraph cluster_cyberark {
-        label="CyberArk PAM";
-        style=filled;
-        fillcolor="#f8f9fa";
-
-        vault_ca [label="Digital Vault", shape=cylinder, style=filled, fillcolor="#d4edda"];
-        cpm [label="Central Policy\nManager (CPM)", shape=box, style=filled, fillcolor="#e8f4f8"];
-        pvwa [label="Password Vault\nWeb Access", shape=box, style=filled, fillcolor="#e8f4f8"];
-        ccp [label="Central Credential\nProvider (CCP)", shape=box, style=filled, fillcolor="#fff3cd"];
-        aap [label="Application Access\nManager (AAM)", shape=box, style=filled, fillcolor="#fff3cd"];
-    }
-
-    subgraph cluster_apps {
-        label="Applications";
-        style=filled;
-        fillcolor="#f0f0f0";
-
-        app1 [label="Service A", shape=box];
-        app2 [label="Service B", shape=box];
-    }
-
-    cassandra [label="Cassandra\nCluster", shape=cylinder, style=filled, fillcolor="#d4edda"];
-
-    cpm -> vault_ca [label="Store/Rotate"];
-    cpm -> cassandra [label="Password\nRotation"];
-    app1 -> ccp [label="REST API"];
-    app2 -> aap [label="SDK"];
-    ccp -> vault_ca [label="Retrieve"];
-    aap -> vault_ca [label="Retrieve"];
-    app1 -> cassandra [style=dashed];
-    app2 -> cassandra [style=dashed];
+package "CyberArk PAM" #f8f9fa {
+    database "Digital Vault" as vault_ca #d4edda
+    rectangle "Central Policy\nManager (CPM)" as cpm #e8f4f8
+    rectangle "Password Vault\nWeb Access" as pvwa #e8f4f8
+    rectangle "Central Credential\nProvider (CCP)" as ccp #fff3cd
+    rectangle "Application Access\nManager (AAM)" as aap #fff3cd
 }
+
+package "Applications" #f0f0f0 {
+    rectangle "Service A" as app1
+    rectangle "Service B" as app2
+}
+
+database "Cassandra\nCluster" as cassandra #d4edda
+
+cpm --> vault_ca : Store/Rotate
+cpm --> cassandra : Password\nRotation
+app1 --> ccp : REST API
+app2 --> aap : SDK
+ccp --> vault_ca : Retrieve
+aap --> vault_ca : Retrieve
+app1 ..> cassandra
+app2 ..> cassandra
+@enduml
 ```
 
 ### CyberArk Components
@@ -542,46 +520,33 @@ CyberArk Credential Providers support local caching to reduce vault queries:
 
 ### Security Hardening
 
-```graphviz dot security-layers.svg
-digraph security_layers {
-    rankdir=TB;
-    node [fontname="Helvetica", fontsize=11];
-    edge [fontname="Helvetica", fontsize=10];
+```plantuml
+@startuml security-layers
+skinparam defaultFontName Helvetica
+skinparam defaultFontSize 11
 
-    subgraph cluster_network {
-        label="Network Security";
-        style=filled;
-        fillcolor="#f8d7da";
-
-        firewall [label="Firewall rules\nVault/CyberArk <-> Cassandra", shape=box];
-        tls [label="TLS everywhere", shape=box];
-    }
-
-    subgraph cluster_auth {
-        label="Authentication";
-        style=filled;
-        fillcolor="#fff3cd";
-
-        app_auth [label="Application auth\nto credential manager", shape=box];
-        mutual_tls [label="Mutual TLS\nfor service accounts", shape=box];
-    }
-
-    subgraph cluster_secrets {
-        label="Secret Management";
-        style=filled;
-        fillcolor="#d4edda";
-
-        short_ttl [label="Short TTLs\n(1-4 hours)", shape=box];
-        rotation [label="Automated rotation", shape=box];
-        audit [label="Comprehensive auditing", shape=box];
-    }
-
-    firewall -> app_auth;
-    tls -> mutual_tls;
-    app_auth -> short_ttl;
-    mutual_tls -> rotation;
-    short_ttl -> audit;
+package "Network Security" #f8d7da {
+    rectangle "Firewall rules\nVault/CyberArk <-> Cassandra" as firewall
+    rectangle "TLS everywhere" as tls
 }
+
+package "Authentication" #fff3cd {
+    rectangle "Application auth\nto credential manager" as app_auth
+    rectangle "Mutual TLS\nfor service accounts" as mutual_tls
+}
+
+package "Secret Management" #d4edda {
+    rectangle "Short TTLs\n(1-4 hours)" as short_ttl
+    rectangle "Automated rotation" as rotation
+    rectangle "Comprehensive auditing" as audit
+}
+
+firewall --> app_auth
+tls --> mutual_tls
+app_auth --> short_ttl
+mutual_tls --> rotation
+short_ttl --> audit
+@enduml
 ```
 
 ### Operational Recommendations
