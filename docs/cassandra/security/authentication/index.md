@@ -74,6 +74,106 @@ credentials_update_interval_in_ms: 2000
 credentials_cache_max_entries: 1000
 ```
 
+## Mutual TLS Authentication
+
+!!! note "Cassandra 5.0+"
+    MutualTlsAuthenticator is available in Apache Cassandra 5.0 and later.
+
+MutualTlsAuthenticator performs certificate-based authentication for client connections by extracting identities from client certificates and verifying them against authorized identities in the `system_auth.identity_to_role` table.
+
+### Prerequisites
+
+Mutual TLS authentication requires client encryption with mandatory client certificate verification:
+
+```yaml
+# cassandra.yaml
+client_encryption_options:
+    enabled: true
+    require_client_auth: true
+    keystore: /path/to/keystore.jks
+    keystore_password: keystorepass
+    truststore: /path/to/truststore.jks
+    truststore_password: truststorepass
+```
+
+### Configuration
+
+```yaml
+# cassandra.yaml
+authenticator:
+  class_name: org.apache.cassandra.auth.MutualTlsAuthenticator
+  parameters:
+    validator_class_name: org.apache.cassandra.auth.SpiffeCertificateValidator
+```
+
+The `validator_class_name` parameter specifies the certificate validator implementation. Cassandra includes `SpiffeCertificateValidator` for SPIFFE-based identity extraction.
+
+### SPIFFE Certificate Validator
+
+The `SpiffeCertificateValidator` extracts SPIFFE identities from the Subject Alternative Name (SAN) extension of client certificates. SPIFFE identities are URIs in the format `spiffe://trust-domain/path`.
+
+The validator:
+
+- Examines the SAN extension of the client certificate
+- Searches for URI entries beginning with `spiffe://`
+- Returns the SPIFFE URI as the client identity
+
+### Identity Management
+
+Identities extracted from certificates must be mapped to roles using the `ADD IDENTITY` statement:
+
+```sql
+-- Create role for the application
+CREATE ROLE app_service WITH LOGIN = true;
+
+-- Map certificate identity to role
+ADD IDENTITY 'spiffe://testdomain.com/testIdentifier/testValue' TO ROLE 'app_service';
+
+-- Use IF NOT EXISTS to avoid errors when identity already exists
+ADD IDENTITY IF NOT EXISTS 'spiffe://testdomain.com/testIdentifier/testValue' TO ROLE 'app_service';
+
+-- Grant permissions to the role
+GRANT SELECT ON KEYSPACE myapp TO app_service;
+```
+
+To remove an identity mapping:
+
+```sql
+DROP IDENTITY 'spiffe://testdomain.com/testIdentifier/testValue';
+
+-- Use IF EXISTS to avoid errors if identity does not exist
+DROP IDENTITY IF EXISTS 'spiffe://testdomain.com/testIdentifier/testValue';
+```
+
+!!! note
+    Only superusers or users with appropriate role management privileges can add or drop identities.
+
+### Password Fallback Authenticator
+
+For gradual migration from password-based to certificate-based authentication, use `MutualTlsWithPasswordFallbackAuthenticator`:
+
+```yaml
+# cassandra.yaml
+authenticator:
+  class_name: org.apache.cassandra.auth.MutualTlsWithPasswordFallbackAuthenticator
+  parameters:
+    validator_class_name: org.apache.cassandra.auth.SpiffeCertificateValidator
+```
+
+This authenticator accepts both certificate-based and username/password authentication, allowing clients to migrate incrementally.
+
+### Custom Certificate Validators
+
+Custom validators can be implemented by creating a class that implements the `MutualTlsCertificateValidator` interface:
+
+```java
+public interface MutualTlsCertificateValidator {
+    void init(Map<String, String> parameters);
+    String identity(Certificate[] certificateChain) throws CertificateException;
+    boolean isValidCertificate(Certificate[] certificateChain);
+}
+```
+
 ## Client Configuration
 
 ### cqlsh

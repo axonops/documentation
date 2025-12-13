@@ -285,8 +285,12 @@ nav:
       - Overview: cassandra/index.md
       - Getting Started:
         - Overview: cassandra/getting-started/index.md
+        - What is Cassandra?: cassandra/getting-started/what-is-cassandra.md
         - Installation: cassandra/getting-started/installation/index.md
+        - First Cluster: cassandra/getting-started/first-cluster.md
+        - CQL Quickstart: cassandra/getting-started/quickstart-cql.md
         - Drivers: cassandra/getting-started/drivers/index.md
+        - Production Checklist: cassandra/getting-started/production-checklist.md
       - Architecture:
         - Overview: cassandra/architecture/index.md
         - Memory Management:

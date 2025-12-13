@@ -17,7 +17,7 @@ Before running any installation commands, certain decisions must be made that ar
 
 | Version | Java Required | Status | When to Use |
 |---------|---------------|--------|-------------|
-| **5.0.x** | JDK 11 or 17 | Latest stable | New deployments, want latest features (SAI, Vector Search, Trie indexes) |
+| **5.0.x** | JDK 11 or 17 (Recommended) | Latest stable | New deployments, want latest features (SAI, Vector Search, Trie indexes) |
 | **4.1.x** | JDK 11 | LTS | Production systems needing stability, most tested version |
 | **4.0.x** | JDK 11 | Maintenance | Existing clusters, conservative environments |
 | **3.11.x** | JDK 8 | Legacy | Only for existing clusters that cannot upgrade |
@@ -30,7 +30,7 @@ Before running any installation commands, certain decisions must be made that ar
 - **3.11**: Still runs Java 8, no audit logging, missing modern features
 
 !!! tip "Recommendation"
-    Use Cassandra 4.1 for production unless 5.0 features are specifically required. It has the best balance of stability and features.
+   Apache Cassandra 5.0 is GA and suitable for production when running a recent 5.0.x release. Use it for new clusters, and upgrade existing ones after normal staging validation.
 
 ### 2. Hardware Requirements by Use Case
 

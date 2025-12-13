@@ -113,6 +113,37 @@ server_encryption_options:
 
 Perform rolling restart.
 
+### Internode Authentication with Mutual TLS (Cassandra 5.0+)
+
+The `MutualTlsInternodeAuthenticator` provides certificate-based authentication for internode connections by extracting identities from certificates and verifying them against a list of authorized peers.
+
+```yaml
+# cassandra.yaml
+internode_authenticator:
+  class_name: org.apache.cassandra.auth.MutualTlsInternodeAuthenticator
+  parameters:
+    validator_class_name: org.apache.cassandra.auth.SpiffeCertificateValidator
+    # Optional: restrict to specific peer identities
+    trusted_peer_identities: "spiffe://testdomain.com/cassandra/node1,spiffe://testdomain.com/cassandra/node2"
+    # Optional: validate outbound keystore identity
+    node_identity: "spiffe://testdomain.com/cassandra/this-node"
+```
+
+| Parameter | Required | Description |
+|-----------|----------|-------------|
+| `validator_class_name` | Yes | Certificate validator implementation class |
+| `trusted_peer_identities` | No | Comma-separated list of authorized peer identities |
+| `node_identity` | No | Expected identity from outbound keystore for validation |
+
+**Prerequisites:**
+
+- `server_encryption_options.internode_encryption` must be set to `all`
+- `server_encryption_options.require_client_auth` must be `true`
+
+When `trusted_peer_identities` is configured, only nodes presenting certificates with matching identities can establish internode connections. When omitted, any certificate signed by a trusted CA is accepted.
+
+The `node_identity` parameter validates the local node's keystore identity at startup, catching configuration errors early.
+
 ---
 
 ## Client Encryption

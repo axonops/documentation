@@ -41,12 +41,14 @@ digraph auth_architecture {
         roles [label="system_auth.roles", shape=cylinder, style=filled, fillcolor="#d4edda"];
         role_members [label="system_auth.role_members", shape=cylinder, style=filled, fillcolor="#d4edda"];
         role_permissions [label="system_auth.role_permissions", shape=cylinder, style=filled, fillcolor="#d4edda"];
+        identity_to_role [label="system_auth.identity_to_role\n(Cassandra 5.0+)", shape=cylinder, style=filled, fillcolor="#d4edda"];
     }
 
     authenticator -> role_manager;
     role_manager -> authorizer;
     role_manager -> roles;
     role_manager -> role_members;
+    role_manager -> identity_to_role;
     authorizer -> role_permissions;
 }
 ```
@@ -106,6 +108,140 @@ ALL FUNCTIONS IN KEYSPACE my_keyspace
 ALL MBEANS
     └── MBEAN 'org.apache.cassandra.db:*'
 ```
+
+---
+
+## Identity Management (Cassandra 5.0+)
+
+Identity management enables certificate-based authentication by mapping certificate identities to Cassandra roles. When using `MutualTlsAuthenticator`, the identity extracted from a client certificate must be associated with a role before authentication succeeds.
+
+### Concepts
+
+**Identity**: A unique string extracted from a client certificate by a certificate validator. The identity format depends on the validator implementation:
+
+- **SpiffeCertificateValidator** (built-in): Extracts SPIFFE URIs from the Subject Alternative Name (SAN) extension
+- **Custom validators**: Can extract identity from CN, organization, or any certificate fields by implementing the `MutualTlsCertificateValidator` interface
+
+**Identity-to-Role Mapping**: A relationship stored in the `system_auth.identity_to_role` table that associates a certificate identity with a Cassandra role.
+
+**Authentication Flow**:
+
+1. Client presents certificate during TLS handshake
+2. Certificate validator extracts identity from certificate
+3. Cassandra looks up the identity in `system_auth.identity_to_role`
+4. If a matching role exists and has `LOGIN = true`, authentication succeeds
+5. The authenticated session operates with that role's permissions
+
+### ADD IDENTITY
+
+Associates a certificate identity with an existing role.
+
+**Syntax:**
+
+```
+ADD IDENTITY [ IF NOT EXISTS ] '<identity>' TO ROLE '<role_name>'
+```
+
+**Examples:**
+
+```sql
+-- Create role for the service
+CREATE ROLE payment_service WITH LOGIN = true;
+
+-- Map certificate identity to role
+ADD IDENTITY 'spiffe://testdomain.com/service/payment' TO ROLE 'payment_service';
+
+-- Use IF NOT EXISTS to avoid errors when identity already exists
+ADD IDENTITY IF NOT EXISTS 'spiffe://testdomain.com/service/payment' TO ROLE 'payment_service';
+```
+
+**Requirements:**
+
+- The target role must exist
+- The identity must not already be mapped to another role (unless using `IF NOT EXISTS`)
+- The executing user must have privileges to manage roles
+
+**Behavior:**
+
+- Without `IF NOT EXISTS`, adding an identity that already exists raises an error
+- With `IF NOT EXISTS`, the statement succeeds silently if the identity exists
+- Each identity can map to only one role
+
+### DROP IDENTITY
+
+Removes an identity-to-role mapping.
+
+**Syntax:**
+
+```
+DROP IDENTITY [ IF EXISTS ] '<identity>'
+```
+
+**Examples:**
+
+```sql
+-- Remove identity mapping
+DROP IDENTITY 'spiffe://testdomain.com/service/payment';
+
+-- Use IF EXISTS to avoid errors when identity does not exist
+DROP IDENTITY IF EXISTS 'spiffe://testdomain.com/service/payment';
+```
+
+**Behavior:**
+
+- Without `IF EXISTS`, dropping a non-existent identity raises an error
+- With `IF EXISTS`, the statement succeeds silently if the identity does not exist
+- Dropping an identity does not affect the associated role
+
+### Querying Identities
+
+```sql
+-- View all identity mappings
+SELECT * FROM system_auth.identity_to_role;
+
+-- Find role for a specific identity
+SELECT role FROM system_auth.identity_to_role
+WHERE identity = 'spiffe://testdomain.com/service/payment';
+```
+
+### Multiple Identities per Role
+
+A single role can have multiple identities mapped to it, enabling certificate rotation or allowing multiple services to share permissions:
+
+```sql
+-- Create shared service role
+CREATE ROLE order_processing WITH LOGIN = true;
+GRANT SELECT, MODIFY ON KEYSPACE orders TO order_processing;
+
+-- Map multiple service identities to same role
+ADD IDENTITY 'spiffe://testdomain.com/service/order-api' TO ROLE 'order_processing';
+ADD IDENTITY 'spiffe://testdomain.com/service/order-worker' TO ROLE 'order_processing';
+```
+
+### Certificate Rotation
+
+Identity mappings enable zero-downtime certificate rotation:
+
+```sql
+-- Add new certificate identity before rotation
+ADD IDENTITY 'spiffe://testdomain.com/service/payment-2025' TO ROLE 'payment_service';
+
+-- After rotation is complete, remove old identity
+DROP IDENTITY 'spiffe://testdomain.com/service/payment-2024';
+```
+
+### Role Deletion
+
+When a role is dropped, all associated identity mappings are automatically removed:
+
+```sql
+-- This removes the role AND all identity mappings to it
+DROP ROLE payment_service;
+```
+
+### Related Configuration
+
+Identity management requires `MutualTlsAuthenticator` to be configured. See **[Mutual TLS Authentication](../authentication/index.md#mutual-tls-authentication)** for setup details.
 
 ---
 

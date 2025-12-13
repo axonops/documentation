@@ -112,3 +112,4 @@ For production deployments, review the [Enterprise Recommendations](enterprise-r
 | Hot reloading of certificates | 4.0+ |
 | Hostname verification option | 4.0+ |
 | TLS 1.3 support | 4.0+ (requires Java 11+) |
+| MutualTlsInternodeAuthenticator | 5.0+ |
