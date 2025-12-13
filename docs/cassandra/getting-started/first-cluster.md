@@ -21,32 +21,30 @@ A Cassandra cluster is a collection of nodes that:
 - **Communicate via gossip** - Nodes constantly share state with each other
 - **Own portions of the token ring** - Each node is responsible for specific data
 
-```
-                    Token Ring Visualization
+```plantuml
+@startuml
+skinparam backgroundColor transparent
 
-                         0 (max token)
-                            │
-                    ┌───────┴───────┐
-                    │               │
-              ┌─────┴─────┐   ┌─────┴─────┐
-              │   Node A   │   │   Node B   │
-              │  owns:     │   │  owns:     │
-              │  0 to 33%  │   │ 33% to 66% │
-              └─────┬─────┘   └─────┬─────┘
-                    │               │
-                    └───────┬───────┘
-                            │
-                     ┌──────┴──────┐
-                     │   Node C    │
-                     │  owns:      │
-                     │ 66% to 100% │
-                     └─────────────┘
+title Token Ring Visualization
+
+circle "0\n(max token)" as top
+
+database "Node A\nowns:\n0 to 33%" as nodeA #d4edda
+database "Node B\nowns:\n33% to 66%" as nodeB #d4edda
+database "Node C\nowns:\n66% to 100%" as nodeC #d4edda
+
+top -down- nodeA
+top -down- nodeB
+nodeA -down- nodeC
+nodeB -down- nodeC
+@enduml
+```
 
 When data is INSERTed:
-1. Partition key is hashed → produces token (e.g., 45%)
-2. Token falls in Node B's range → Node B is "primary" replica
-3. Data copied to other nodes based on replication factor
-```
+
+1. Partition key is hashed to produce a token (e.g., 45%)
+2. Token falls in Node B's range so Node B is the "primary" replica
+3. Data is copied to other nodes based on replication factor
 
 ### The Seed Node Misconception
 
@@ -229,14 +227,13 @@ timedatectl status
 
 For this example:
 
-```
-Datacenter: dc1
-├── Node 1: 10.0.0.1 (seed)
-├── Node 2: 10.0.0.2 (seed)
-└── Node 3: 10.0.0.3
+| Node | IP Address | Role | Rack |
+|------|------------|------|------|
+| Node 1 | 10.0.0.1 | seed | rack1 |
+| Node 2 | 10.0.0.2 | seed | rack1 |
+| Node 3 | 10.0.0.3 | - | rack1 |
 
-All nodes in same rack: rack1
-```
+All nodes are in datacenter `dc1`.
 
 ### Step 1: Configure Node 1 (First Seed)
 
@@ -552,23 +549,33 @@ For geographic distribution, disaster recovery, or workload isolation.
 
 ### Architecture
 
-```
-                      US-EAST (dc1)                    EU-WEST (dc2)
-                 ┌───────────────────┐             ┌───────────────────┐
-                 │                   │             │                   │
-                 │  ┌─────┐ ┌─────┐  │             │  ┌─────┐ ┌─────┐  │
-       User ────►│  │ N1  │ │ N2  │  │◄──────────►│  │ N4  │ │ N5  │  │◄──── User
-       (US)      │  │seed │ │     │  │   Async    │  │seed │ │     │  │      (EU)
-                 │  └─────┘ └─────┘  │   Repl     │  └─────┘ └─────┘  │
-                 │       ┌─────┐     │             │       ┌─────┐     │
-                 │       │ N3  │     │             │       │ N6  │     │
-                 │       └─────┘     │             │       └─────┘     │
-                 │                   │             │                   │
-                 └───────────────────┘             └───────────────────┘
+```plantuml
+@startuml
+skinparam backgroundColor transparent
 
-Replication: LOCAL_QUORUM reads/writes stay in local DC
-Cross-DC replication is asynchronous
+actor "User\n(US)" as userUS
+actor "User\n(EU)" as userEU
+
+package "US-EAST (dc1)" as dc1 #e8f4f8 {
+    database "N1\n(seed)" as n1
+    database "N2" as n2
+    database "N3" as n3
+}
+
+package "EU-WEST (dc2)" as dc2 #e8f4f8 {
+    database "N4\n(seed)" as n4
+    database "N5" as n5
+    database "N6" as n6
+}
+
+userUS --> dc1
+userEU --> dc2
+dc1 <--> dc2 : Replication
+@enduml
 ```
+
+- LOCAL_QUORUM reads/writes stay in local DC
+- Cross-DC consistency is tunable per query
 
 ### Network Requirements
 

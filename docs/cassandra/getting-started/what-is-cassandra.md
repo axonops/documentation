@@ -32,14 +32,14 @@ At some point, a wall is hit. The biggest server money can buy is not enough. Da
 
 Even with an infinitely large server, it would still be a **single point of failure**. When that server goes down - and it will - the entire application is offline.
 
-Traditional solutions (master-slave replication, clustering) help but introduce complexity and failure modes:
+Traditional solutions (primary-replica replication, clustering) help but introduce complexity and failure modes:
 
 ```
-Master-Slave Problems:
-- Master fails → manual failover required (downtime)
-- Replication lag → stale reads from slaves
-- Split brain → both think they're master (data corruption)
-- Write scalability → still limited to single master
+Primary-Replica Problems:
+- Primary fails → manual failover required (downtime)
+- Replication lag → stale reads from replicas
+- Split brain → both think they're primary (data corruption)
+- Write scalability → still limited to single primary
 ```
 
 ### The Geographic Distribution Problem
@@ -69,19 +69,32 @@ This works because:
 
 ### 2. No Single Point of Failure
 
-Every node in a Cassandra cluster is identical. There is no master, no leader, no special node:
+Every node in a Cassandra cluster is identical. There is no primary, no leader, no special node:
 
-```
-Traditional:                    Cassandra:
+```plantuml
+@startuml
+skinparam backgroundColor transparent
+left to right direction
 
-    Master ← SPOF               Node ─── Node
-      │                           │       │
-   ┌──┴──┐                        │       │
-Slave  Slave                    Node ─── Node
+package "Traditional" {
+    database "Primary\n(SPOF)" as primary #f8d7da
+    database "Replica" as r1 #d4edda
+    database "Replica" as r2 #d4edda
+    primary -down-> r1
+    primary -down-> r2
+}
 
-If master dies,                 If any node dies,
-system degrades or              cluster continues
-goes offline                    with no impact
+package "Cassandra" {
+    database "Node" as c1 #d4edda
+    database "Node" as c2 #d4edda
+    database "Node" as c3 #d4edda
+    database "Node" as c4 #d4edda
+    c1 -right- c2
+    c2 -down- c4
+    c4 -left- c3
+    c3 -up- c1
+}
+@enduml
 ```
 
 Data is replicated to multiple nodes. When a node fails:
@@ -93,20 +106,34 @@ Data is replicated to multiple nodes. When a node fails:
 
 Cassandra was built for geographic distribution:
 
+```plantuml
+@startuml
+skinparam backgroundColor transparent
+
+actor "User\n(US)" as userUS
+actor "User\n(EU)" as userEU
+
+package "US-EAST" as useast #e8f4f8 {
+    database "Node" as us1
+    database "Node" as us2
+    database "Node" as us3
+}
+
+package "EU-WEST" as euwest #e8f4f8 {
+    database "Node" as eu1
+    database "Node" as eu2
+    database "Node" as eu3
+}
+
+userUS --> useast : Low latency
+userEU --> euwest : Low latency
+useast <--> euwest : Replication
+@enduml
 ```
-                 US-EAST                    EU-WEST
-            ┌──────────────┐           ┌──────────────┐
-            │  ┌───┐ ┌───┐ │           │  ┌───┐ ┌───┐ │
-User ──────►│  │ N │ │ N │ │◄─────────►│  │ N │ │ N │ │◄────── User
-  US        │  └───┘ └───┘ │  Async    │  └───┘ └───┘ │         EU
-            │  ┌───┐ ┌───┐ │  Repl.    │  ┌───┐ ┌───┐ │
-            │  │ N │ │ N │ │           │  │ N │ │ N │ │
-            └──────────────┘           └──────────────┘
 
 - Each region has local replicas for low latency
-- Writes replicate asynchronously between regions
-- Each region can operate independently if network partitions
-```
+- Cross-datacenter consistency is tunable per query
+- Each region can operate independently during network partitions
 
 ## Origin Story
 
@@ -166,21 +193,34 @@ The CAP theorem states that a distributed system can only guarantee two of three
 - **A**vailability: Every request receives a response
 - **P**artition tolerance: System continues despite network failures
 
-```
-        Consistency
-             /\
-            /  \
-           /    \
-          /      \
-         /   CA   \      ← Traditional databases (give up P)
-        /──────────\
-       /            \
-      /      CP      \   ← Systems like ZooKeeper
-     /________________\
-    /                  \
-   /        AP          \  ← Cassandra default
-  /______________________ \
-Availability         Partition Tolerance
+```plantuml
+@startuml
+skinparam backgroundColor transparent
+skinparam defaultFontName Helvetica
+
+package "CAP Theorem" {
+    card "Consistency" as C #fff3cd
+    card "Availability" as A #d4edda
+    card "Partition Tolerance" as P #e8f4f8
+
+    card "CA\n(Traditional DBs)" as CA #f5f5f5
+    card "CP\n(ZooKeeper)" as CP #f5f5f5
+    card "AP\n(Cassandra default)" as AP #d4edda
+
+    C -down- CA
+    A -down- CA
+
+    C -down- CP
+    P -down- CP
+
+    A -down- AP
+    P -down- AP
+}
+
+note right of CA : Give up P\n(not viable for\ndistributed systems)
+note right of CP : Give up A\n(may refuse requests\nduring partition)
+note right of AP : Give up C\n(may return stale data\nduring partition)
+@enduml
 ```
 
 ### Cassandra's Choice: AP (with Tunable C)
@@ -214,29 +254,38 @@ SELECT * FROM users WHERE user_id = ?;
 
 When data is written to Cassandra:
 
-```
-Client                     Cassandra Node (Coordinator)
-   │                                │
-   │ INSERT INTO users...           │
-   ├───────────────────────────────►│
-   │                                │
-   │                       ┌────────┴────────┐
-   │                       │                 │
-   │                       ▼                 │
-   │               1. Write to              │
-   │                  Commit Log            │ (Sequential disk write)
-   │                       │                 │
-   │                       ▼                 │
-   │               2. Write to              │
-   │                  Memtable              │ (Memory)
-   │                       │                 │
-   │                       ▼                 │
-   │               3. Replicate to          │
-   │                  other nodes  ─────────┼────► Node 2, Node 3
-   │                       │                 │
-   │                       ▼                 │
-   │               4. Return ACK            │
-   │◄──────────────────────┘                 │
+```plantuml
+@startuml
+skinparam backgroundColor transparent
+skinparam defaultFontName Helvetica
+
+participant "Client" as client
+participant "Coordinator\nNode" as coord
+participant "Commit Log" as cl
+participant "Memtable" as mem
+participant "Replica\nNodes" as replicas
+
+client -> coord : INSERT INTO users...
+activate coord
+
+coord -> cl : 1. Write to Commit Log\n(sequential disk write)
+activate cl
+cl --> coord
+deactivate cl
+
+coord -> mem : 2. Write to Memtable\n(memory)
+activate mem
+mem --> coord
+deactivate mem
+
+coord -> replicas : 3. Replicate to other nodes
+activate replicas
+replicas --> coord
+deactivate replicas
+
+coord --> client : 4. Return ACK
+deactivate coord
+@enduml
 ```
 
 **Why writes are fast:**
@@ -250,36 +299,36 @@ Client                     Cassandra Node (Coordinator)
 
 When data is read:
 
-```
-Client                     Cassandra Node (Coordinator)
-   │                                │
-   │ SELECT * FROM users...         │
-   ├───────────────────────────────►│
-   │                                │
-   │                       ┌────────┴────────┐
-   │                       ▼                 │
-   │               1. Check Memtable        │
-   │                  (in memory)           │
-   │                       │                 │
-   │                  Not found?            │
-   │                       ▼                 │
-   │               2. Check Bloom           │
-   │                  Filters               │
-   │                       │                 │
-   │                  Might exist?          │
-   │                       ▼                 │
-   │               3. Check Key             │
-   │                  Cache                 │
-   │                       │                 │
-   │                  Not cached?           │
-   │                       ▼                 │
-   │               4. Read SSTable          │
-   │                  from disk             │
-   │                       │                 │
-   │                       ▼                 │
-   │               5. Merge results         │
-   │                       │                 │
-   │◄──────────────────────┘                 │
+```plantuml
+@startuml
+skinparam backgroundColor transparent
+skinparam defaultFontName Helvetica
+
+participant "Client" as client
+participant "Coordinator\nNode" as coord
+
+client -> coord : SELECT * FROM users...
+activate coord
+
+coord -> coord : 1. Check Memtable\n(in memory)
+
+alt Not found in Memtable
+    coord -> coord : 2. Check Bloom Filters
+
+    alt Might exist
+        coord -> coord : 3. Check Key Cache
+
+        alt Not cached
+            coord -> coord : 4. Read SSTable\nfrom disk
+        end
+    end
+end
+
+coord -> coord : 5. Merge results
+
+coord --> client : Return data
+deactivate coord
+@enduml
 ```
 
 **Why reads can be slower:**
@@ -295,21 +344,25 @@ Client                     Cassandra Node (Coordinator)
 
 Over time, writes create many SSTables. Compaction merges them:
 
-```
-Before Compaction:                After Compaction:
-┌─────────────┐                   ┌─────────────┐
-│ SSTable 1   │                   │             │
-│ user:1 → v1 │                   │             │
-└─────────────┘                   │  Merged     │
-┌─────────────┐   Compaction      │  SSTable    │
-│ SSTable 2   │  ───────────►     │             │
-│ user:1 → v2 │                   │ user:1 → v3 │
-└─────────────┘                   │ user:2 → v1 │
-┌─────────────┐                   │             │
-│ SSTable 3   │                   │             │
-│ user:1 → v3 │                   └─────────────┘
-│ user:2 → v1 │
-└─────────────┘                   Fewer files = faster reads
+```plantuml
+@startuml
+skinparam backgroundColor transparent
+skinparam defaultFontName Helvetica
+
+package "Before Compaction" as before {
+    card "SSTable 1\nuser:1 = v1" as ss1 #fff3cd
+    card "SSTable 2\nuser:1 = v2" as ss2 #fff3cd
+    card "SSTable 3\nuser:1 = v3\nuser:2 = v1" as ss3 #fff3cd
+}
+
+package "After Compaction" as after {
+    card "Merged SSTable\nuser:1 = v3\nuser:2 = v1" as merged #d4edda
+}
+
+before -right-> after : Compaction
+
+note bottom of after : Fewer files = faster reads
+@enduml
 ```
 
 Compaction strategies (each optimized for different workloads):
