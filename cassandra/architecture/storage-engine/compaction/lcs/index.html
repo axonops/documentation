@@ -4977,6 +4977,84 @@ data-et-multi-view="{&quot;schema&quot;:{&quot;content&quot;:{&quot;desktop&quot
     </span>
   </a>
   
+    <nav class="md-nav" aria-label="Compaction Mechanics">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#level-score-and-compaction-triggering" class="md-nav__link">
+    <span class="md-ellipsis">
+      Level Score and Compaction Triggering
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#l0-l1-compaction" class="md-nav__link">
+    <span class="md-ellipsis">
+      L0 → L1 Compaction
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#l0-stcs-fallback" class="md-nav__link">
+    <span class="md-ellipsis">
+      L0 STCS Fallback
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#ln-ln1-compaction" class="md-nav__link">
+    <span class="md-ellipsis">
+      L(n) → L(n+1) Compaction
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#starvation-prevention" class="md-nav__link">
+    <span class="md-ellipsis">
+      Starvation Prevention
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#single-sstable-uplevel" class="md-nav__link">
+    <span class="md-ellipsis">
+      Single SSTable Uplevel
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#partial-compactions" class="md-nav__link">
+    <span class="md-ellipsis">
+      Partial Compactions
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#disk-space-management" class="md-nav__link">
+    <span class="md-ellipsis">
+      Disk Space Management
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
 </li>
         
           <li class="md-nav__item">
@@ -5141,15 +5219,6 @@ data-et-multi-view="{&quot;schema&quot;:{&quot;content&quot;:{&quot;desktop&quot
   
 </li>
         
-          <li class="md-nav__item">
-  <a href="#non-overlapping-token-ranges" class="md-nav__link">
-    <span class="md-ellipsis">
-      Non-Overlapping Token Ranges
-    </span>
-  </a>
-  
-</li>
-        
       </ul>
     </nav>
   
@@ -5169,6 +5238,39 @@ data-et-multi-view="{&quot;schema&quot;:{&quot;content&quot;:{&quot;desktop&quot
   <a href="#configuration-parameters" class="md-nav__link">
     <span class="md-ellipsis">
       Configuration Parameters
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Configuration Parameters">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#lcs-specific-options" class="md-nav__link">
+    <span class="md-ellipsis">
+      LCS-Specific Options
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#common-compaction-options" class="md-nav__link">
+    <span class="md-ellipsis">
+      Common Compaction Options
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#startup-options" class="md-nav__link">
+    <span class="md-ellipsis">
+      Startup Options
     </span>
   </a>
   
@@ -5198,52 +5300,19 @@ data-et-multi-view="{&quot;schema&quot;:{&quot;content&quot;:{&quot;desktop&quot
 </li>
       
         <li class="md-nav__item">
-  <a href="#read-amplification-advantage" class="md-nav__link">
+  <a href="#read-path-analysis" class="md-nav__link">
     <span class="md-ellipsis">
-      Read Amplification Advantage
+      Read Path Analysis
     </span>
   </a>
   
-    <nav class="md-nav" aria-label="Read Amplification Advantage">
+    <nav class="md-nav" aria-label="Read Path Analysis">
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
-  <a href="#read-latency-calculation" class="md-nav__link">
+  <a href="#read-latency-example" class="md-nav__link">
     <span class="md-ellipsis">
-      Read Latency Calculation
-    </span>
-  </a>
-  
-</li>
-        
-      </ul>
-    </nav>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#when-to-use-lcs_1" class="md-nav__link">
-    <span class="md-ellipsis">
-      When to Use LCS
-    </span>
-  </a>
-  
-    <nav class="md-nav" aria-label="When to Use LCS">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#recommended-for" class="md-nav__link">
-    <span class="md-ellipsis">
-      Recommended For
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#avoid-when" class="md-nav__link">
-    <span class="md-ellipsis">
-      Avoid When
+      Read Latency Example
     </span>
   </a>
   
@@ -5370,6 +5439,75 @@ data-et-multi-view="{&quot;schema&quot;:{&quot;content&quot;:{&quot;desktop&quot
   <a href="#jmx-metrics" class="md-nav__link">
     <span class="md-ellipsis">
       JMX Metrics
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#level-health-check" class="md-nav__link">
+    <span class="md-ellipsis">
+      Level Health Check
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#implementation-internals" class="md-nav__link">
+    <span class="md-ellipsis">
+      Implementation Internals
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Implementation Internals">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#sstable-level-assignment" class="md-nav__link">
+    <span class="md-ellipsis">
+      SSTable Level Assignment
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#internal-data-structures" class="md-nav__link">
+    <span class="md-ellipsis">
+      Internal Data Structures
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#compaction-writer-selection" class="md-nav__link">
+    <span class="md-ellipsis">
+      Compaction Writer Selection
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#anti-compaction-behavior" class="md-nav__link">
+    <span class="md-ellipsis">
+      Anti-Compaction Behavior
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#constants-reference" class="md-nav__link">
+    <span class="md-ellipsis">
+      Constants Reference
     </span>
   </a>
   
@@ -14160,6 +14298,84 @@ data-et-multi-view="{&quot;schema&quot;:{&quot;content&quot;:{&quot;desktop&quot
     </span>
   </a>
   
+    <nav class="md-nav" aria-label="Compaction Mechanics">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#level-score-and-compaction-triggering" class="md-nav__link">
+    <span class="md-ellipsis">
+      Level Score and Compaction Triggering
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#l0-l1-compaction" class="md-nav__link">
+    <span class="md-ellipsis">
+      L0 → L1 Compaction
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#l0-stcs-fallback" class="md-nav__link">
+    <span class="md-ellipsis">
+      L0 STCS Fallback
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#ln-ln1-compaction" class="md-nav__link">
+    <span class="md-ellipsis">
+      L(n) → L(n+1) Compaction
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#starvation-prevention" class="md-nav__link">
+    <span class="md-ellipsis">
+      Starvation Prevention
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#single-sstable-uplevel" class="md-nav__link">
+    <span class="md-ellipsis">
+      Single SSTable Uplevel
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#partial-compactions" class="md-nav__link">
+    <span class="md-ellipsis">
+      Partial Compactions
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#disk-space-management" class="md-nav__link">
+    <span class="md-ellipsis">
+      Disk Space Management
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
 </li>
         
           <li class="md-nav__item">
@@ -14324,15 +14540,6 @@ data-et-multi-view="{&quot;schema&quot;:{&quot;content&quot;:{&quot;desktop&quot
   
 </li>
         
-          <li class="md-nav__item">
-  <a href="#non-overlapping-token-ranges" class="md-nav__link">
-    <span class="md-ellipsis">
-      Non-Overlapping Token Ranges
-    </span>
-  </a>
-  
-</li>
-        
       </ul>
     </nav>
   
@@ -14352,6 +14559,39 @@ data-et-multi-view="{&quot;schema&quot;:{&quot;content&quot;:{&quot;desktop&quot
   <a href="#configuration-parameters" class="md-nav__link">
     <span class="md-ellipsis">
       Configuration Parameters
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Configuration Parameters">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#lcs-specific-options" class="md-nav__link">
+    <span class="md-ellipsis">
+      LCS-Specific Options
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#common-compaction-options" class="md-nav__link">
+    <span class="md-ellipsis">
+      Common Compaction Options
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#startup-options" class="md-nav__link">
+    <span class="md-ellipsis">
+      Startup Options
     </span>
   </a>
   
@@ -14381,52 +14621,19 @@ data-et-multi-view="{&quot;schema&quot;:{&quot;content&quot;:{&quot;desktop&quot
 </li>
       
         <li class="md-nav__item">
-  <a href="#read-amplification-advantage" class="md-nav__link">
+  <a href="#read-path-analysis" class="md-nav__link">
     <span class="md-ellipsis">
-      Read Amplification Advantage
+      Read Path Analysis
     </span>
   </a>
   
-    <nav class="md-nav" aria-label="Read Amplification Advantage">
+    <nav class="md-nav" aria-label="Read Path Analysis">
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
-  <a href="#read-latency-calculation" class="md-nav__link">
+  <a href="#read-latency-example" class="md-nav__link">
     <span class="md-ellipsis">
-      Read Latency Calculation
-    </span>
-  </a>
-  
-</li>
-        
-      </ul>
-    </nav>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#when-to-use-lcs_1" class="md-nav__link">
-    <span class="md-ellipsis">
-      When to Use LCS
-    </span>
-  </a>
-  
-    <nav class="md-nav" aria-label="When to Use LCS">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#recommended-for" class="md-nav__link">
-    <span class="md-ellipsis">
-      Recommended For
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#avoid-when" class="md-nav__link">
-    <span class="md-ellipsis">
-      Avoid When
+      Read Latency Example
     </span>
   </a>
   
@@ -14558,6 +14765,75 @@ data-et-multi-view="{&quot;schema&quot;:{&quot;content&quot;:{&quot;desktop&quot
   
 </li>
         
+          <li class="md-nav__item">
+  <a href="#level-health-check" class="md-nav__link">
+    <span class="md-ellipsis">
+      Level Health Check
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#implementation-internals" class="md-nav__link">
+    <span class="md-ellipsis">
+      Implementation Internals
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Implementation Internals">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#sstable-level-assignment" class="md-nav__link">
+    <span class="md-ellipsis">
+      SSTable Level Assignment
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#internal-data-structures" class="md-nav__link">
+    <span class="md-ellipsis">
+      Internal Data Structures
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#compaction-writer-selection" class="md-nav__link">
+    <span class="md-ellipsis">
+      Compaction Writer Selection
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#anti-compaction-behavior" class="md-nav__link">
+    <span class="md-ellipsis">
+      Anti-Compaction Behavior
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#constants-reference" class="md-nav__link">
+    <span class="md-ellipsis">
+      Constants Reference
+    </span>
+  </a>
+  
+</li>
+        
       </ul>
     </nav>
   
@@ -14588,6 +14864,10 @@ data-et-multi-view="{&quot;schema&quot;:{&quot;content&quot;:{&quot;desktop&quot
 
 
 <div><h1 id="leveled-compaction-strategy-lcs">Leveled Compaction Strategy (LCS)<a class="headerlink" href="#leveled-compaction-strategy-lcs" title="Permanent link">¶</a></h1>
+<div class="admonition note">
+<p class="admonition-title">Cassandra 5.0+</p>
+<p>Starting with Cassandra 5.0, <a href="../ucs/">Unified Compaction Strategy (UCS)</a> is the recommended compaction strategy for most workloads, including read-heavy patterns traditionally suited to LCS. UCS provides similar read amplification benefits with more adaptive behavior. LCS remains fully supported and is a proven choice for production deployments on earlier versions.</p>
+</div>
 <p>LCS organizes SSTables into levels where each level is 10x larger than the previous. Within each level (except L0), SSTables have non-overlapping token ranges, providing predictable read performance at the cost of higher write amplification.</p>
 <hr>
 <h2 id="background-and-history">Background and History<a class="headerlink" href="#background-and-history" title="Permanent link">¶</a></h2>
@@ -14636,60 +14916,159 @@ data-et-multi-view="{&quot;schema&quot;:{&quot;content&quot;:{&quot;desktop&quot
 <hr>
 <h2 id="how-lcs-works-in-theory">How LCS Works in Theory<a class="headerlink" href="#how-lcs-works-in-theory" title="Permanent link">¶</a></h2>
 <h3 id="level-structure">Level Structure<a class="headerlink" href="#level-structure" title="Permanent link">¶</a></h3>
-<p>LCS organizes SSTables into numbered levels (L0, L1, L2, ...) with specific properties:</p>
+<p>LCS organizes SSTables into numbered levels (L0 through L8) with specific properties. The maximum level count is 9 (<code>MAX_LEVEL_COUNT = 9</code> in the source code).</p>
 <p><strong>Level 0 (L0):</strong></p>
 <ul>
 <li>Receives memtable flushes directly</li>
 <li>SSTables may have overlapping key ranges</li>
-<li>Maximum 4 SSTables before triggering compaction to L1</li>
+<li>Target size: 4 × <code>sstable_size_in_mb</code> (default: 640MB)</li>
+<li>Stored in a HashSet (unordered by token range)</li>
 <li>Acts as a buffer between memory and the leveled structure</li>
 </ul>
-<p><strong>Level 1+ (L1, L2, L3, ...):</strong></p>
+<p><strong>Level 1+ (L1, L2, L3, ... L8):</strong></p>
 <ul>
 <li>SSTables have non-overlapping, contiguous key ranges</li>
-<li>Each level has a target total size: L(n) = L(n-1) × fanout_size</li>
-<li>Default fanout is 10, so L2 is 10× L1, L3 is 10× L2, etc.</li>
+<li>Stored in TreeSets sorted by first token (with SSTable ID as tiebreaker)</li>
+<li>Each level has a target total size calculated as: <code>fanout_size^level × sstable_size_in_mb</code></li>
 <li>Individual SSTable size is fixed (default 160MB)</li>
 </ul>
+<p><strong>Level Size Targets (with defaults):</strong></p>
+<table>
+<thead>
+<tr>
+<th>Level</th>
+<th>Target Size Formula</th>
+<th>Default Size</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>L0</td>
+<td>4 × sstable_size</td>
+<td>640 MB</td>
+</tr>
+<tr>
+<td>L1</td>
+<td>fanout × sstable_size</td>
+<td>1.6 GB</td>
+</tr>
+<tr>
+<td>L2</td>
+<td>fanout² × sstable_size</td>
+<td>16 GB</td>
+</tr>
+<tr>
+<td>L3</td>
+<td>fanout³ × sstable_size</td>
+<td>160 GB</td>
+</tr>
+<tr>
+<td>L4</td>
+<td>fanout⁴ × sstable_size</td>
+<td>1.6 TB</td>
+</tr>
+<tr>
+<td>L5</td>
+<td>fanout⁵ × sstable_size</td>
+<td>16 TB</td>
+</tr>
+<tr>
+<td>L6</td>
+<td>fanout⁶ × sstable_size</td>
+<td>160 TB</td>
+</tr>
+<tr>
+<td>L7</td>
+<td>fanout⁷ × sstable_size</td>
+<td>1.6 PB</td>
+</tr>
+<tr>
+<td>L8</td>
+<td>fanout⁸ × sstable_size</td>
+<td>16 PB</td>
+</tr>
+</tbody>
+</table>
 <p><a class="glightbox" href="data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0iVVRGLTgiIHN0YW5kYWxvbmU9Im5vIj8+PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHhtbG5zOnhsaW5rPSJodHRwOi8vd3d3LnczLm9yZy8xOTk5L3hsaW5rIiBjb250ZW50U2NyaXB0VHlwZT0iYXBwbGljYXRpb24vZWNtYXNjcmlwdCIgY29udGVudFN0eWxlVHlwZT0idGV4dC9jc3MiIGhlaWdodD0iNDgwcHgiIHByZXNlcnZlQXNwZWN0UmF0aW89Im5vbmUiIHN0eWxlPSJ3aWR0aDo4MzJweDtoZWlnaHQ6NDgwcHg7IiB2ZXJzaW9uPSIxLjEiIHZpZXdCb3g9IjAgMCA4MzIgNDgwIiB3aWR0aD0iODMycHgiIHpvb21BbmRQYW49Im1hZ25pZnkiPjxkZWZzPjxmaWx0ZXIgaGVpZ2h0PSIzMDAlIiBpZD0iZnJjOGgzYW03MWJrNiIgd2lkdGg9IjMwMCUiIHg9Ii0xIiB5PSItMSI+PGZlR2F1c3NpYW5CbHVyIHJlc3VsdD0iYmx1ck91dCIgc3RkRGV2aWF0aW9uPSIyLjAiLz48ZmVDb2xvck1hdHJpeCBpbj0iYmx1ck91dCIgcmVzdWx0PSJibHVyT3V0MiIgdHlwZT0ibWF0cml4IiB2YWx1ZXM9IjAgMCAwIDAgMCAwIDAgMCAwIDAgMCAwIDAgMCAwIDAgMCAwIC40IDAiLz48ZmVPZmZzZXQgZHg9IjQuMCIgZHk9IjQuMCIgaW49ImJsdXJPdXQyIiByZXN1bHQ9ImJsdXJPdXQzIi8+PGZlQmxlbmQgaW49IlNvdXJjZUdyYXBoaWMiIGluMj0iYmx1ck91dDMiIG1vZGU9Im5vcm1hbCIvPjwvZmlsdGVyPjwvZGVmcz48Zz48dGV4dCBmaWxsPSIjMDAwMDAwIiBmb250LWZhbWlseT0ic2Fucy1zZXJpZiIgZm9udC1zaXplPSIxOCIgbGVuZ3RoQWRqdXN0PSJzcGFjaW5nQW5kR2x5cGhzIiB0ZXh0TGVuZ3RoPSIzMTciIHg9IjI2MSIgeT0iMTYuNzA4Ij5MZXZlbGVkIENvbXBhY3Rpb24gU3RyYXRlZ3kgKExDUyk8L3RleHQ+PCEtLU1ENT1bOTlmNWVmMWRiZjE0NTg5YzMzNTMyNWMwYzM5YzNiNWFdCmNsdXN0ZXIgTGV2ZWwgMCAoTDApIC0gbWFueSBzbWFsbCwgb3ZlcmxhcHBpbmcgU1NUYWJsZXMtLT48cG9seWdvbiBmaWxsPSIjRjlFNUZGIiBmaWx0ZXI9InVybCgjZnJjOGgzYW03MWJrNikiIHBvaW50cz0iMjIsNDQuOTUzMSw0MDQsNDQuOTUzMSw0MTEsNjcuMjUsNjg1LDY3LjI1LDY4NSwxMzEuOTUzMSwyMiwxMzEuOTUzMSwyMiw0NC45NTMxIiBzdHlsZT0ic3Ryb2tlOiAjMDAwMDAwOyBzdHJva2Utd2lkdGg6IDEuNTsiLz48bGluZSBzdHlsZT0ic3Ryb2tlOiAjMDAwMDAwOyBzdHJva2Utd2lkdGg6IDEuNTsiIHgxPSIyMiIgeDI9IjQxMSIgeTE9IjY3LjI1IiB5Mj0iNjcuMjUiLz48dGV4dCBmaWxsPSIjMDAwMDAwIiBmb250LWZhbWlseT0ic2Fucy1zZXJpZiIgZm9udC1zaXplPSIxNCIgZm9udC13ZWlnaHQ9ImJvbGQiIGxlbmd0aEFkanVzdD0ic3BhY2luZ0FuZEdseXBocyIgdGV4dExlbmd0aD0iMzc2IiB4PSIyNiIgeT0iNTkuOTQ4MiI+TGV2ZWwgMCAoTDApIC0gbWFueSBzbWFsbCwgb3ZlcmxhcHBpbmcgU1NUYWJsZXM8L3RleHQ+PCEtLU1ENT1bYWIyMWY2ZWMzZjU4NmE1MjdiOTUzNWVhZmFiY2QzYTRdCmNsdXN0ZXIgTGV2ZWwgMSAoTDEpIC0gbm9uLW92ZXJsYXBwaW5nIGJ5IGtleSByYW5nZS0tPjxwb2x5Z29uIGZpbGw9IiNGNURDRjkiIGZpbHRlcj0idXJsKCNmcmM4aDNhbTcxYms2KSIgcG9pbnRzPSIxODMsMTk1Ljk1MzEsNTM1LDE5NS45NTMxLDU0MiwyMTguMjUsNTQ1LDIxOC4yNSw1NDUsMjk5Ljk1MzEsMTgzLDI5OS45NTMxLDE4MywxOTUuOTUzMSIgc3R5bGU9InN0cm9rZTogIzAwMDAwMDsgc3Ryb2tlLXdpZHRoOiAxLjU7Ii8+PGxpbmUgc3R5bGU9InN0cm9rZTogIzAwMDAwMDsgc3Ryb2tlLXdpZHRoOiAxLjU7IiB4MT0iMTgzIiB4Mj0iNTQyIiB5MT0iMjE4LjI1IiB5Mj0iMjE4LjI1Ii8+PHRleHQgZmlsbD0iIzAwMDAwMCIgZm9udC1mYW1pbHk9InNhbnMtc2VyaWYiIGZvbnQtc2l6ZT0iMTQiIGZvbnQtd2VpZ2h0PSJib2xkIiBsZW5ndGhBZGp1c3Q9InNwYWNpbmdBbmRHbHlwaHMiIHRleHRMZW5ndGg9IjM0NiIgeD0iMTg3IiB5PSIyMTAuOTQ4MiI+TGV2ZWwgMSAoTDEpIC0gbm9uLW92ZXJsYXBwaW5nIGJ5IGtleSByYW5nZTwvdGV4dD48IS0tTUQ1PVs0NzUzNzc2YmE3YTI0ZjI2N2VjMTVhZjhiMTFmMTJmMF0KY2x1c3RlciBMZXZlbCAyIChMMikgLSAxMHggc2l6ZSBvZiBMMSwgZGlzam9pbnQgcmFuZ2VzLS0+PHBvbHlnb24gZmlsbD0iI0YyRDNGNSIgZmlsdGVyPSJ1cmwoI2ZyYzhoM2FtNzFiazYpIiBwb2ludHM9IjE3OSwzNjMuOTUzMSw1MzIsMzYzLjk1MzEsNTM5LDM4Ni4yNSw1NDIsMzg2LjI1LDU0Miw0NjcuOTUzMSwxNzksNDY3Ljk1MzEsMTc5LDM2My45NTMxIiBzdHlsZT0ic3Ryb2tlOiAjMDAwMDAwOyBzdHJva2Utd2lkdGg6IDEuNTsiLz48bGluZSBzdHlsZT0ic3Ryb2tlOiAjMDAwMDAwOyBzdHJva2Utd2lkdGg6IDEuNTsiIHgxPSIxNzkiIHgyPSI1MzkiIHkxPSIzODYuMjUiIHkyPSIzODYuMjUiLz48dGV4dCBmaWxsPSIjMDAwMDAwIiBmb250LWZhbWlseT0ic2Fucy1zZXJpZiIgZm9udC1zaXplPSIxNCIgZm9udC13ZWlnaHQ9ImJvbGQiIGxlbmd0aEFkanVzdD0ic3BhY2luZ0FuZEdseXBocyIgdGV4dExlbmd0aD0iMzQ3IiB4PSIxODMiIHk9IjM3OC45NDgyIj5MZXZlbCAyIChMMikgLSAxMHggc2l6ZSBvZiBMMSwgZGlzam9pbnQgcmFuZ2VzPC90ZXh0PjwhLS1NRDU9W2JhZTJlZGFhOGExZTkyMTJkYWQ1OGY0NjQxZjA4MTQ0XQplbnRpdHkgTDBfMS0tPjxyZWN0IGZpbGw9IiM3QjRCOTYiIGZpbHRlcj0idXJsKCNmcmM4aDNhbTcxYms2KSIgaGVpZ2h0PSIzNi4yOTY5IiBzdHlsZT0ic3Ryb2tlOiAjMDAwMDAwOyBzdHJva2Utd2lkdGg6IDEuNTsiIHdpZHRoPSI3NiIgeD0iMzgiIHk9Ijc5Ljk1MzEiLz48dGV4dCBmaWxsPSIjMDAwMDAwIiBmb250LWZhbWlseT0ic2Fucy1zZXJpZiIgZm9udC1zaXplPSIxNCIgbGVuZ3RoQWRqdXN0PSJzcGFjaW5nQW5kR2x5cGhzIiB0ZXh0TGVuZ3RoPSI1NiIgeD0iNDgiIHk9IjEwMi45NDgyIj5TU1RhYmxlPC90ZXh0PjwhLS1NRDU9W2FjMDgxMGViODQ5MjE3MjA4MjY5YmJjNDJlZWYyYTYxXQplbnRpdHkgTDBfMi0tPjxyZWN0IGZpbGw9IiM3QjRCOTYiIGZpbHRlcj0idXJsKCNmcmM4aDNhbTcxYms2KSIgaGVpZ2h0PSIzNi4yOTY5IiBzdHlsZT0ic3Ryb2tlOiAjMDAwMDAwOyBzdHJva2Utd2lkdGg6IDEuNTsiIHdpZHRoPSI3NiIgeD0iMTQ5IiB5PSI3OS45NTMxIi8+PHRleHQgZmlsbD0iIzAwMDAwMCIgZm9udC1mYW1pbHk9InNhbnMtc2VyaWYiIGZvbnQtc2l6ZT0iMTQiIGxlbmd0aEFkanVzdD0ic3BhY2luZ0FuZEdseXBocyIgdGV4dExlbmd0aD0iNTYiIHg9IjE1OSIgeT0iMTAyLjk0ODIiPlNTVGFibGU8L3RleHQ+PCEtLU1ENT1bNGUwMDdiYzQ4YmMyMjUwMWNhOWFmZDBiODNhODY4NjddCmVudGl0eSBMMF8zLS0+PHJlY3QgZmlsbD0iIzdCNEI5NiIgZmlsdGVyPSJ1cmwoI2ZyYzhoM2FtNzFiazYpIiBoZWlnaHQ9IjM2LjI5NjkiIHN0eWxlPSJzdHJva2U6ICMwMDAwMDA7IHN0cm9rZS13aWR0aDogMS41OyIgd2lkdGg9Ijc2IiB4PSIyNjAiIHk9Ijc5Ljk1MzEiLz48dGV4dCBmaWxsPSIjMDAwMDAwIiBmb250LWZhbWlseT0ic2Fucy1zZXJpZiIgZm9udC1zaXplPSIxNCIgbGVuZ3RoQWRqdXN0PSJzcGFjaW5nQW5kR2x5cGhzIiB0ZXh0TGVuZ3RoPSI1NiIgeD0iMjcwIiB5PSIxMDIuOTQ4MiI+U1NUYWJsZTwvdGV4dD48IS0tTUQ1PVszYWQ4NmJlNmNiYzUzMjQxNDQ2NWIzNTQ5N2M4MDdiMV0KZW50aXR5IEwwXzQtLT48cmVjdCBmaWxsPSIjN0I0Qjk2IiBmaWx0ZXI9InVybCgjZnJjOGgzYW03MWJrNikiIGhlaWdodD0iMzYuMjk2OSIgc3R5bGU9InN0cm9rZTogIzAwMDAwMDsgc3Ryb2tlLXdpZHRoOiAxLjU7IiB3aWR0aD0iNzYiIHg9IjM3MSIgeT0iNzkuOTUzMSIvPjx0ZXh0IGZpbGw9IiMwMDAwMDAiIGZvbnQtZmFtaWx5PSJzYW5zLXNlcmlmIiBmb250LXNpemU9IjE0IiBsZW5ndGhBZGp1c3Q9InNwYWNpbmdBbmRHbHlwaHMiIHRleHRMZW5ndGg9IjU2IiB4PSIzODEiIHk9IjEwMi45NDgyIj5TU1RhYmxlPC90ZXh0PjwhLS1NRDU9WzMxZjFkYzliZjQ2YzQxZDNhMDVhMmZjYzQyMjZhZGViXQplbnRpdHkgTDBfNS0tPjxyZWN0IGZpbGw9IiM3QjRCOTYiIGZpbHRlcj0idXJsKCNmcmM4aDNhbTcxYms2KSIgaGVpZ2h0PSIzNi4yOTY5IiBzdHlsZT0ic3Ryb2tlOiAjMDAwMDAwOyBzdHJva2Utd2lkdGg6IDEuNTsiIHdpZHRoPSI3NiIgeD0iNDgyIiB5PSI3OS45NTMxIi8+PHRleHQgZmlsbD0iIzAwMDAwMCIgZm9udC1mYW1pbHk9InNhbnMtc2VyaWYiIGZvbnQtc2l6ZT0iMTQiIGxlbmd0aEFkanVzdD0ic3BhY2luZ0FuZEdseXBocyIgdGV4dExlbmd0aD0iNTYiIHg9IjQ5MiIgeT0iMTAyLjk0ODIiPlNTVGFibGU8L3RleHQ+PCEtLU1ENT1bYjU5MzU0ZDZlMjhhM2U2ZWViYjFlYmFmYzVhMjcyODddCmVudGl0eSBMMF82LS0+PHJlY3QgZmlsbD0iIzdCNEI5NiIgZmlsdGVyPSJ1cmwoI2ZyYzhoM2FtNzFiazYpIiBoZWlnaHQ9IjM2LjI5NjkiIHN0eWxlPSJzdHJva2U6ICMwMDAwMDA7IHN0cm9rZS13aWR0aDogMS41OyIgd2lkdGg9Ijc2IiB4PSI1OTMiIHk9Ijc5Ljk1MzEiLz48dGV4dCBmaWxsPSIjMDAwMDAwIiBmb250LWZhbWlseT0ic2Fucy1zZXJpZiIgZm9udC1zaXplPSIxNCIgbGVuZ3RoQWRqdXN0PSJzcGFjaW5nQW5kR2x5cGhzIiB0ZXh0TGVuZ3RoPSI1NiIgeD0iNjAzIiB5PSIxMDIuOTQ4MiI+U1NUYWJsZTwvdGV4dD48IS0tTUQ1PVtmZjRkZGQ5ZDZlODllN2Y3MzljZTYxM2QxZmE2MjBkOV0KZW50aXR5IEwxXzEtLT48cmVjdCBmaWxsPSIjN0I0Qjk2IiBmaWx0ZXI9InVybCgjZnJjOGgzYW03MWJrNikiIGhlaWdodD0iNTIuNTkzOCIgc3R5bGU9InN0cm9rZTogIzAwMDAwMDsgc3Ryb2tlLXdpZHRoOiAxLjU7IiB3aWR0aD0iODQiIHg9IjIwNCIgeT0iMjMwLjk1MzEiLz48dGV4dCBmaWxsPSIjMDAwMDAwIiBmb250LWZhbWlseT0ic2Fucy1zZXJpZiIgZm9udC1zaXplPSIxNCIgbGVuZ3RoQWRqdXN0PSJzcGFjaW5nQW5kR2x5cGhzIiB0ZXh0TGVuZ3RoPSI1NiIgeD0iMjE0IiB5PSIyNTMuOTQ4MiI+U1NUYWJsZTwvdGV4dD48dGV4dCBmaWxsPSIjMDAwMDAwIiBmb250LWZhbWlseT0ic2Fucy1zZXJpZiIgZm9udC1zaXplPSIxNCIgbGVuZ3RoQWRqdXN0PSJzcGFjaW5nQW5kR2x5cGhzIiB0ZXh0TGVuZ3RoPSI2NCIgeD0iMjE0IiB5PSIyNzAuMjQ1MSI+W2tleSBBLU1dPC90ZXh0PjwhLS1NRDU9W2ZlOTNlZGEzMjg5MTVmNGRlNjdiZDYzYTBkY2Y4M2I4XQplbnRpdHkgTDFfMi0tPjxyZWN0IGZpbGw9IiM3QjRCOTYiIGZpbHRlcj0idXJsKCNmcmM4aDNhbTcxYms2KSIgaGVpZ2h0PSI1Mi41OTM4IiBzdHlsZT0ic3Ryb2tlOiAjMDAwMDAwOyBzdHJva2Utd2lkdGg6IDEuNTsiIHdpZHRoPSI4MiIgeD0iMzIzIiB5PSIyMzAuOTUzMSIvPjx0ZXh0IGZpbGw9IiMwMDAwMDAiIGZvbnQtZmFtaWx5PSJzYW5zLXNlcmlmIiBmb250LXNpemU9IjE0IiBsZW5ndGhBZGp1c3Q9InNwYWNpbmdBbmRHbHlwaHMiIHRleHRMZW5ndGg9IjU2IiB4PSIzMzMiIHk9IjI1My45NDgyIj5TU1RhYmxlPC90ZXh0Pjx0ZXh0IGZpbGw9IiMwMDAwMDAiIGZvbnQtZmFtaWx5PSJzYW5zLXNlcmlmIiBmb250LXNpemU9IjE0IiBsZW5ndGhBZGp1c3Q9InNwYWNpbmdBbmRHbHlwaHMiIHRleHRMZW5ndGg9IjYyIiB4PSIzMzMiIHk9IjI3MC4yNDUxIj5ba2V5IE4tVF08L3RleHQ+PCEtLU1ENT1bODY0NzZlN2JkZGMzYjNhMWM2YzkyMTNjOTc0YzBmNjddCmVudGl0eSBMMV8zLS0+PHJlY3QgZmlsbD0iIzdCNEI5NiIgZmlsdGVyPSJ1cmwoI2ZyYzhoM2FtNzFiazYpIiBoZWlnaHQ9IjUyLjU5MzgiIHN0eWxlPSJzdHJva2U6ICMwMDAwMDA7IHN0cm9rZS13aWR0aDogMS41OyIgd2lkdGg9IjgzIiB4PSI0NDAuNSIgeT0iMjMwLjk1MzEiLz48dGV4dCBmaWxsPSIjMDAwMDAwIiBmb250LWZhbWlseT0ic2Fucy1zZXJpZiIgZm9udC1zaXplPSIxNCIgbGVuZ3RoQWRqdXN0PSJzcGFjaW5nQW5kR2x5cGhzIiB0ZXh0TGVuZ3RoPSI1NiIgeD0iNDUwLjUiIHk9IjI1My45NDgyIj5TU1RhYmxlPC90ZXh0Pjx0ZXh0IGZpbGw9IiMwMDAwMDAiIGZvbnQtZmFtaWx5PSJzYW5zLXNlcmlmIiBmb250LXNpemU9IjE0IiBsZW5ndGhBZGp1c3Q9InNwYWNpbmdBbmRHbHlwaHMiIHRleHRMZW5ndGg9IjYzIiB4PSI0NTAuNSIgeT0iMjcwLjI0NTEiPltrZXkgVS1aXTwvdGV4dD48IS0tTUQ1PVtmOGY5NDZjMjNhNmVjMzMwOTM2ZTc0NjNjZTAyMGVhZl0KZW50aXR5IEwyXzEtLT48cmVjdCBmaWxsPSIjN0I0Qjk2IiBmaWx0ZXI9InVybCgjZnJjOGgzYW03MWJrNikiIGhlaWdodD0iNTIuNTkzOCIgc3R5bGU9InN0cm9rZTogIzAwMDAwMDsgc3Ryb2tlLXdpZHRoOiAxLjU7IiB3aWR0aD0iNzkiIHg9IjMyNS41IiB5PSIzOTguOTUzMSIvPjx0ZXh0IGZpbGw9IiMwMDAwMDAiIGZvbnQtZmFtaWx5PSJzYW5zLXNlcmlmIiBmb250LXNpemU9IjE0IiBsZW5ndGhBZGp1c3Q9InNwYWNpbmdBbmRHbHlwaHMiIHRleHRMZW5ndGg9IjU2IiB4PSIzMzUuNSIgeT0iNDIxLjk0ODIiPlNTVGFibGU8L3RleHQ+PHRleHQgZmlsbD0iIzAwMDAwMCIgZm9udC1mYW1pbHk9InNhbnMtc2VyaWYiIGZvbnQtc2l6ZT0iMTQiIGxlbmd0aEFkanVzdD0ic3BhY2luZ0FuZEdseXBocyIgdGV4dExlbmd0aD0iNTkiIHg9IjMzNS41IiB5PSI0MzguMjQ1MSI+W2tleSBBLUxdPC90ZXh0PjwhLS1NRDU9W2U2N2JkNWM3OWY1ODUxMjBhNTQ1NjI5YWUxMjg0OWE3XQplbnRpdHkgTDJfMi0tPjxyZWN0IGZpbGw9IiM3QjRCOTYiIGZpbHRlcj0idXJsKCNmcmM4aDNhbTcxYms2KSIgaGVpZ2h0PSI1Mi41OTM4IiBzdHlsZT0ic3Ryb2tlOiAjMDAwMDAwOyBzdHJva2Utd2lkdGg6IDEuNTsiIHdpZHRoPSI4NSIgeD0iNDM5LjUiIHk9IjM5OC45NTMxIi8+PHRleHQgZmlsbD0iIzAwMDAwMCIgZm9udC1mYW1pbHk9InNhbnMtc2VyaWYiIGZvbnQtc2l6ZT0iMTQiIGxlbmd0aEFkanVzdD0ic3BhY2luZ0FuZEdseXBocyIgdGV4dExlbmd0aD0iNTYiIHg9IjQ0OS41IiB5PSI0MjEuOTQ4MiI+U1NUYWJsZTwvdGV4dD48dGV4dCBmaWxsPSIjMDAwMDAwIiBmb250LWZhbWlseT0ic2Fucy1zZXJpZiIgZm9udC1zaXplPSIxNCIgbGVuZ3RoQWRqdXN0PSJzcGFjaW5nQW5kR2x5cGhzIiB0ZXh0TGVuZ3RoPSI2NSIgeD0iNDQ5LjUiIHk9IjQzOC4yNDUxIj5ba2V5IE0tWl08L3RleHQ+PHBhdGggZD0iTTU1OS41LDM4Mi40NTMxIEw1NTkuNSw0MjEuNDUzMSBMNTI0LjY2LDQyNS40NTMxIEw1NTkuNSw0MjkuNDUzMSBMNTU5LjUsNDY4LjExNzIgQTAsMCAwIDAgMCA1NTkuNSw0NjguMTE3MiBMODIwLjUsNDY4LjExNzIgQTAsMCAwIDAgMCA4MjAuNSw0NjguMTE3MiBMODIwLjUsMzkyLjQ1MzEgTDgxMC41LDM4Mi40NTMxIEw1NTkuNSwzODIuNDUzMSBBMCwwIDAgMCAwIDU1OS41LDM4Mi40NTMxICIgZmlsbD0iI0ZCRkI3NyIgZmlsdGVyPSJ1cmwoI2ZyYzhoM2FtNzFiazYpIiBzdHlsZT0ic3Ryb2tlOiAjQTgwMDM2OyBzdHJva2Utd2lkdGg6IDEuMDsiLz48cGF0aCBkPSJNODEwLjUsMzgyLjQ1MzEgTDgxMC41LDM5Mi40NTMxIEw4MjAuNSwzOTIuNDUzMSBMODEwLjUsMzgyLjQ1MzEgIiBmaWxsPSIjRkJGQjc3IiBzdHlsZT0ic3Ryb2tlOiAjQTgwMDM2OyBzdHJva2Utd2lkdGg6IDEuMDsiLz48dGV4dCBmaWxsPSIjMDAwMDAwIiBmb250LWZhbWlseT0ic2Fucy1zZXJpZiIgZm9udC1zaXplPSIxMyIgbGVuZ3RoQWRqdXN0PSJzcGFjaW5nQW5kR2x5cGhzIiB0ZXh0TGVuZ3RoPSI5OCIgeD0iNTY1LjUiIHk9IjM5OS41MiI+TENTIHByb3BlcnRpZXM6PC90ZXh0PjxlbGxpcHNlIGN4PSI1NzEiIGN5PSI0MTAuMjE4OCIgZmlsbD0iIzAwMDAwMCIgcng9IjIuNSIgcnk9IjIuNSIgc3R5bGU9InN0cm9rZTogIzAwMDAwMDsgc3Ryb2tlLXdpZHRoOiAwLjA7Ii8+PHRleHQgZmlsbD0iIzAwMDAwMCIgZm9udC1mYW1pbHk9InNhbnMtc2VyaWYiIGZvbnQtc2l6ZT0iMTMiIGxlbmd0aEFkanVzdD0ic3BhY2luZ0FuZEdseXBocyIgdGV4dExlbmd0aD0iMjE1IiB4PSI1NzYuNSIgeT0iNDE0LjY1MjgiPk9ubHkgTDAgaGFzIG92ZXJsYXBwaW5nIFNTVGFibGVzPC90ZXh0PjxlbGxpcHNlIGN4PSI1NzEiIGN5PSI0MjUuMzUxNiIgZmlsbD0iIzAwMDAwMCIgcng9IjIuNSIgcnk9IjIuNSIgc3R5bGU9InN0cm9rZTogIzAwMDAwMDsgc3Ryb2tlLXdpZHRoOiAwLjA7Ii8+PHRleHQgZmlsbD0iIzAwMDAwMCIgZm9udC1mYW1pbHk9InNhbnMtc2VyaWYiIGZvbnQtc2l6ZT0iMTMiIGxlbmd0aEFkanVzdD0ic3BhY2luZ0FuZEdseXBocyIgdGV4dExlbmd0aD0iMTc1IiB4PSI1NzYuNSIgeT0iNDI5Ljc4NTYiPkVhY2ggbGV2ZWwgaGFzIGEgdGFyZ2V0IHNpemU8L3RleHQ+PGVsbGlwc2UgY3g9IjU3MSIgY3k9IjQ0MC40ODQ0IiBmaWxsPSIjMDAwMDAwIiByeD0iMi41IiByeT0iMi41IiBzdHlsZT0ic3Ryb2tlOiAjMDAwMDAwOyBzdHJva2Utd2lkdGg6IDAuMDsiLz48dGV4dCBmaWxsPSIjMDAwMDAwIiBmb250LWZhbWlseT0ic2Fucy1zZXJpZiIgZm9udC1zaXplPSIxMyIgbGVuZ3RoQWRqdXN0PSJzcGFjaW5nQW5kR2x5cGhzIiB0ZXh0TGVuZ3RoPSIyMjkiIHg9IjU3Ni41IiB5PSI0NDQuOTE4NSI+SGlnaGVyIGxldmVscyBoYXZlIGxhcmdlciwgZmV3ZXIgZmlsZXM8L3RleHQ+PHRleHQgZmlsbD0iIzAwMDAwMCIgZm9udC1mYW1pbHk9InNhbnMtc2VyaWYiIGZvbnQtc2l6ZT0iMTMiIGxlbmd0aEFkanVzdD0ic3BhY2luZ0FuZEdseXBocyIgdGV4dExlbmd0aD0iMTQ4IiB4PSI1NzMuNSIgeT0iNDYwLjA1MTMiPndpdGggZGlzam9pbnQga2V5IHJhbmdlczwvdGV4dD48IS0tTUQ1PVsyOTdjMjNkNDY4MjdjMTI3YzViMzgwYmE1MWY4NjU3ZF0KbGluayBMMF8xIHRvIEwxXzEtLT48cGF0aCBkPSJNNzIuODUsMTE2LjExMzEgQzcwLjU5LDEzMy43NDMxIDY5LjkyLDE2MS4yMDMxIDgzLDE3OS45NTMxIEMxMDkuNzksMjE4LjM1MzEgMTYxLjAyLDIzOC4wMDMxIDE5OC45MywyNDcuNzAzMSAiIGZpbGw9Im5vbmUiIGlkPSJMMF8xLSZndDtMMV8xIiBzdHlsZT0ic3Ryb2tlOiAjQTgwMDM2OyBzdHJva2Utd2lkdGg6IDEuMDsiLz48cG9seWdvbiBmaWxsPSIjQTgwMDM2IiBwb2ludHM9IjIwMy45NSwyNDguOTUzMSwxOTYuMTcyMSwyNDIuOTExMywxOTkuMDk1OSwyNDcuNzUzOSwxOTQuMjUzMywyNTAuNjc3NywyMDMuOTUsMjQ4Ljk1MzEiIHN0eWxlPSJzdHJva2U6ICNBODAwMzY7IHN0cm9rZS13aWR0aDogMS4wOyIvPjx0ZXh0IGZpbGw9IiMwMDAwMDAiIGZvbnQtZmFtaWx5PSJzYW5zLXNlcmlmIiBmb250LXNpemU9IjEzIiBsZW5ndGhBZGp1c3Q9InNwYWNpbmdBbmRHbHlwaHMiIHRleHRMZW5ndGg9Ijc1IiB4PSIxMTEuNSIgeT0iMTYxLjAyIj5jb21wYWN0aW9uPC90ZXh0Pjx0ZXh0IGZpbGw9IiMwMDAwMDAiIGZvbnQtZmFtaWx5PSJzYW5zLXNlcmlmIiBmb250LXNpemU9IjEzIiBsZW5ndGhBZGp1c3Q9InNwYWNpbmdBbmRHbHlwaHMiIHRleHRMZW5ndGg9IjEzMCIgeD0iODQiIHk9IjE3Ni4xNTI4Ij4obWVyZ2Ugb3ZlcmxhcHBpbmcpPC90ZXh0PjwhLS1NRDU9W2Y1YTBhODA1NjRjZmZjODcwODRkZjUxYmMwMzFhNmExXQpsaW5rIEwwXzIgdG8gTDFfMS0tPjxwYXRoIGQ9Ik0yMDIuMywxMTUuOTYzMSBDMjA5LjU5LDEyNC45MDMxIDIxNy44MiwxMzYuMzkzMSAyMjMsMTQ3Ljk1MzEgQzIzNC4xNSwxNzIuODQzMSAyNDAuMDEsMjAzLjQwMzEgMjQzLjAxLDIyNS43NDMxICIgZmlsbD0ibm9uZSIgaWQ9IkwwXzItJmd0O0wxXzEiIHN0eWxlPSJzdHJva2U6ICNBODAwMzY7IHN0cm9rZS13aWR0aDogMS4wOyIvPjxwb2x5Z29uIGZpbGw9IiNBODAwMzYiIHBvaW50cz0iMjQzLjY4LDIzMC45NTMxLDI0Ni41MTk1LDIyMS41MjI1LDI0My4wNTI4LDIyNS45OTI2LDIzOC41ODI3LDIyMi41MjYsMjQzLjY4LDIzMC45NTMxIiBzdHlsZT0ic3Ryb2tlOiAjQTgwMDM2OyBzdHJva2Utd2lkdGg6IDEuMDsiLz48IS0tTUQ1PVtiZTAyOTAzZTlhNWZlYjkxZTY3ZmMxMTBmNTliZDQ1Nl0KbGluayBMMF8zIHRvIEwxXzItLT48cGF0aCBkPSJNMzA1LjE5LDExNi4xMTMxIEMzMTYuMjQsMTQyLjQ3MzEgMzM3LjU1LDE5My4zNDMxIDM1MS4yNiwyMjYuMDUzMSAiIGZpbGw9Im5vbmUiIGlkPSJMMF8zLSZndDtMMV8yIiBzdHlsZT0ic3Ryb2tlOiAjQTgwMDM2OyBzdHJva2Utd2lkdGg6IDEuMDsiLz48cG9seWdvbiBmaWxsPSIjQTgwMDM2IiBwb2ludHM9IjM1My4yMywyMzAuNzQzMSwzNTMuNDUsMjIwLjg5NjcsMzUxLjMwMTksMjI2LjEyOTksMzQ2LjA2ODcsMjIzLjk4MTgsMzUzLjIzLDIzMC43NDMxIiBzdHlsZT0ic3Ryb2tlOiAjQTgwMDM2OyBzdHJva2Utd2lkdGg6IDEuMDsiLz48IS0tTUQ1PVsyZGY5Mzc2YTk1MjkxNDQ1ZWRhMWE2M2RlNDI5ZGFiYl0KbGluayBMMF80IHRvIEwxXzItLT48cGF0aCBkPSJNNDA0LjEsMTE2LjExMzEgQzM5Ni42LDE0Mi4zNzMxIDM4Mi4xNSwxOTIuOTIzMSAzNzIuOCwyMjUuNjQzMSAiIGZpbGw9Im5vbmUiIGlkPSJMMF80LSZndDtMMV8yIiBzdHlsZT0ic3Ryb2tlOiAjQTgwMDM2OyBzdHJva2Utd2lkdGg6IDEuMDsiLz48cG9seWdvbiBmaWxsPSIjQTgwMDM2IiBwb2ludHM9IjM3MS4zNSwyMzAuNzQzMSwzNzcuNjY4NiwyMjMuMTg4MywzNzIuNzIzNiwyMjUuOTM1NSwzNjkuOTc2NCwyMjAuOTkwNSwzNzEuMzUsMjMwLjc0MzEiIHN0eWxlPSJzdHJva2U6ICNBODAwMzY7IHN0cm9rZS13aWR0aDogMS4wOyIvPjwhLS1NRDU9Wzg5NTI2YmVlZDgxYThiYjBkZmY1NmFkZjc3YmIxMjRhXQpsaW5rIEwwXzUgdG8gTDFfMy0tPjxwYXRoIGQ9Ik01MTUuODYsMTE2LjExMzEgQzUwOS41MywxNDIuMzczMSA0OTcuMzMsMTkyLjkyMzEgNDg5LjQzLDIyNS42NDMxICIgZmlsbD0ibm9uZSIgaWQ9IkwwXzUtJmd0O0wxXzMiIHN0eWxlPSJzdHJva2U6ICNBODAwMzY7IHN0cm9rZS13aWR0aDogMS4wOyIvPjxwb2x5Z29uIGZpbGw9IiNBODAwMzYiIHBvaW50cz0iNDg4LjIsMjMwLjc0MzEsNDk0LjE5ODYsMjIyLjkzMTgsNDg5LjM3MjMsMjI1Ljg4MjUsNDg2LjQyMTYsMjIxLjA1NjIsNDg4LjIsMjMwLjc0MzEiIHN0eWxlPSJzdHJva2U6ICNBODAwMzY7IHN0cm9rZS13aWR0aDogMS4wOyIvPjwhLS1NRDU9Wzg2MjRhYzFhNGVkYTE4NTEwOWJkZWRjNWJmYTY4ZmVlXQpsaW5rIEwwXzYgdG8gTDFfMy0tPjxwYXRoIGQ9Ik02MTQuNzcsMTE2LjExMzEgQzU4OS42MiwxNDIuNjkzMSA1NDAuOTIsMTk0LjE3MzEgNTEwLDIyNi44NTMxICIgZmlsbD0ibm9uZSIgaWQ9IkwwXzYtJmd0O0wxXzMiIHN0eWxlPSJzdHJva2U6ICNBODAwMzY7IHN0cm9rZS13aWR0aDogMS4wOyIvPjxwb2x5Z29uIGZpbGw9IiNBODAwMzYiIHBvaW50cz0iNTA2LjMyLDIzMC43NDMxLDUxNS40MTY0LDIyNi45Njc1LDUwOS43NjE1LDIyNy4xMTYsNTA5LjYxMywyMjEuNDYxMSw1MDYuMzIsMjMwLjc0MzEiIHN0eWxlPSJzdHJva2U6ICNBODAwMzY7IHN0cm9rZS13aWR0aDogMS4wOyIvPjwhLS1NRDU9WzJkMzQxYmNlMWQzNWZhZDc3MGNkNzkzYmQzMmNiNmJmXQpsaW5rIEwxXzEgdG8gTDJfMS0tPjxwYXRoIGQ9Ik0yMzQuNTMsMjg0LjAxMzEgQzIyNy44OSwzMDIuODYzMSAyMjIuODQsMzI4LjUxMzEgMjM0LDM0Ny45NTMxIEMyNTIuNDgsMzgwLjE1MzEgMjkwLjMzLDQwMC4wODMxIDMyMC42MSw0MTEuNDkzMSAiIGZpbGw9Im5vbmUiIGlkPSJMMV8xLSZndDtMMl8xIiBzdHlsZT0ic3Ryb2tlOiAjQTgwMDM2OyBzdHJva2Utd2lkdGg6IDEuMDsiLz48cG9seWdvbiBmaWxsPSIjQTgwMDM2IiBwb2ludHM9IjMyNS40LDQxMy4yNTMxLDMxOC4zNDA2LDQwNi4zODU0LDMyMC43MDksNDExLjUyMjYsMzE1LjU3MTgsNDEzLjg5MSwzMjUuNCw0MTMuMjUzMSIgc3R5bGU9InN0cm9rZTogI0E4MDAzNjsgc3Ryb2tlLXdpZHRoOiAxLjA7Ii8+PHRleHQgZmlsbD0iIzAwMDAwMCIgZm9udC1mYW1pbHk9InNhbnMtc2VyaWYiIGZvbnQtc2l6ZT0iMTMiIGxlbmd0aEFkanVzdD0ic3BhY2luZ0FuZEdseXBocyIgdGV4dExlbmd0aD0iNzUiIHg9IjI1Ny41IiB5PSIzMjkuMDIiPmNvbXBhY3Rpb248L3RleHQ+PHRleHQgZmlsbD0iIzAwMDAwMCIgZm9udC1mYW1pbHk9InNhbnMtc2VyaWYiIGZvbnQtc2l6ZT0iMTMiIGxlbmd0aEFkanVzdD0ic3BhY2luZ0FuZEdseXBocyIgdGV4dExlbmd0aD0iMTIwIiB4PSIyMzUiIHk9IjM0NC4xNTI4Ij4od2hlbiBMMSAmZ3Q7IHRhcmdldCk8L3RleHQ+PCEtLU1ENT1bNTk1ODVmNzQ1MDVlNTg5MGExNzUyYWU0MTdhYWI1MzBdCmxpbmsgTDFfMiB0byBMMl8xLS0+PHBhdGggZD0iTTM2NC4xNSwyODQuMDIzMSBDMzY0LjMzLDMxMy41MTMxIDM2NC42MiwzNjEuOTczMSAzNjQuODEsMzkzLjU0MzEgIiBmaWxsPSJub25lIiBpZD0iTDFfMi0mZ3Q7TDJfMSIgc3R5bGU9InN0cm9rZTogI0E4MDAzNjsgc3Ryb2tlLXdpZHRoOiAxLjA7Ii8+PHBvbHlnb24gZmlsbD0iI0E4MDAzNiIgcG9pbnRzPSIzNjQuODUsMzk4Ljg1MzEsMzY4Ljc5ODUsMzg5LjgzMDQsMzY0LjgyMTQsMzkzLjg1MzIsMzYwLjc5ODYsMzg5Ljg3NjEsMzY0Ljg1LDM5OC44NTMxIiBzdHlsZT0ic3Ryb2tlOiAjQTgwMDM2OyBzdHJva2Utd2lkdGg6IDEuMDsiLz48IS0tTUQ1PVtjN2Y2ZWFlYzk4ZDc3NWIzNzU3YTQ3ZGZjMTczMjE2ZV0KbGluayBMMV8zIHRvIEwyXzItLT48cGF0aCBkPSJNNDgyLDI4NC4wMjMxIEM0ODIsMzEzLjUxMzEgNDgyLDM2MS45NzMxIDQ4MiwzOTMuNTQzMSAiIGZpbGw9Im5vbmUiIGlkPSJMMV8zLSZndDtMMl8yIiBzdHlsZT0ic3Ryb2tlOiAjQTgwMDM2OyBzdHJva2Utd2lkdGg6IDEuMDsiLz48cG9seWdvbiBmaWxsPSIjQTgwMDM2IiBwb2ludHM9IjQ4MiwzOTguODUzMSw0ODYsMzg5Ljg1MzEsNDgyLDM5My44NTMxLDQ3OCwzODkuODUzMSw0ODIsMzk4Ljg1MzEiIHN0eWxlPSJzdHJva2U6ICNBODAwMzY7IHN0cm9rZS13aWR0aDogMS4wOyIvPjwhLS1NRDU9Wzk5N2U3YzNhNjFjYTQyNTI0ODA1NmE4MTc1NWRkYmNmXQpAc3RhcnR1bWwNCnNraW5wYXJhbSBiYWNrZ3JvdW5kQ29sb3IgdHJhbnNwYXJlbnQNCnRpdGxlIExldmVsZWQgQ29tcGFjdGlvbiBTdHJhdGVneSAoTENTKQ0KDQpwYWNrYWdlICJMZXZlbCAwIChMMCkgLSBtYW55IHNtYWxsLCBvdmVybGFwcGluZyBTU1RhYmxlcyIgI0Y5RTVGRiB7DQogICAgcmVjdGFuZ2xlICJTU1RhYmxlIiBhcyBMMF8xICM3QjRCOTYNCiAgICByZWN0YW5nbGUgIlNTVGFibGUiIGFzIEwwXzIgIzdCNEI5Ng0KICAgIHJlY3RhbmdsZSAiU1NUYWJsZSIgYXMgTDBfMyAjN0I0Qjk2DQogICAgcmVjdGFuZ2xlICJTU1RhYmxlIiBhcyBMMF80ICM3QjRCOTYNCiAgICByZWN0YW5nbGUgIlNTVGFibGUiIGFzIEwwXzUgIzdCNEI5Ng0KICAgIHJlY3RhbmdsZSAiU1NUYWJsZSIgYXMgTDBfNiAjN0I0Qjk2DQp9DQoNCnBhY2thZ2UgIkxldmVsIDEgKEwxKSAtIG5vbi1vdmVybGFwcGluZyBieSBrZXkgcmFuZ2UiICNGNURDRjkgew0KICAgIHJlY3RhbmdsZSAiU1NUYWJsZVxuW2tleSBBLU1dIiBhcyBMMV8xICM3QjRCOTYNCiAgICByZWN0YW5nbGUgIlNTVGFibGVcbltrZXkgTi1UXSIgYXMgTDFfMiAjN0I0Qjk2DQogICAgcmVjdGFuZ2xlICJTU1RhYmxlXG5ba2V5IFUtWl0iIGFzIEwxXzMgIzdCNEI5Ng0KfQ0KDQpwYWNrYWdlICJMZXZlbCAyIChMMikgLSAxMHggc2l6ZSBvZiBMMSwgZGlzam9pbnQgcmFuZ2VzIiAjRjJEM0Y1IHsNCiAgICByZWN0YW5nbGUgIlNTVGFibGVcbltrZXkgQS1MXSIgYXMgTDJfMSAjN0I0Qjk2DQogICAgcmVjdGFuZ2xlICJTU1RhYmxlXG5ba2V5IE0tWl0iIGFzIEwyXzIgIzdCNEI5Ng0KfQ0KDQpMMF8xIC0gLT4gTDFfMSA6IGNvbXBhY3Rpb25cbihtZXJnZSBvdmVybGFwcGluZykNCkwwXzIgLSAtPiBMMV8xDQpMMF8zIC0gLT4gTDFfMg0KTDBfNCAtIC0+IEwxXzINCkwwXzUgLSAtPiBMMV8zDQpMMF82IC0gLT4gTDFfMw0KDQpMMV8xIC0gLT4gTDJfMSA6IGNvbXBhY3Rpb25cbih3aGVuIEwxID4gdGFyZ2V0KQ0KTDFfMiAtIC0+IEwyXzENCkwxXzMgLSAtPiBMMl8yDQoNCm5vdGUgcmlnaHQgb2YgTDJfMg0KICAgIExDUyBwcm9wZXJ0aWVzOg0KICAgICogT25seSBMMCBoYXMgb3ZlcmxhcHBpbmcgU1NUYWJsZXMNCiAgICAqIEVhY2ggbGV2ZWwgaGFzIGEgdGFyZ2V0IHNpemUNCiAgICAqIEhpZ2hlciBsZXZlbHMgaGF2ZSBsYXJnZXIsIGZld2VyIGZpbGVzDQogICAgICB3aXRoIGRpc2pvaW50IGtleSByYW5nZXMNCmVuZCBub3RlDQoNCkBlbmR1bWwNCgpQbGFudFVNTCB2ZXJzaW9uIDEuMjAyMC4wMihTdW4gTWFyIDAxIDEwOjIyOjA3IEdNVCAyMDIwKQooR1BMIHNvdXJjZSBkaXN0cmlidXRpb24pCkphdmEgUnVudGltZTogT3BlbkpESyBSdW50aW1lIEVudmlyb25tZW50CkpWTTogT3BlbkpESyA2NC1CaXQgU2VydmVyIFZNCkphdmEgVmVyc2lvbjogMTcuMC4xNSs2LUxUUwpPcGVyYXRpbmcgU3lzdGVtOiBMaW51eApEZWZhdWx0IEVuY29kaW5nOiBVVEYtOApMYW5ndWFnZTogZW4KQ291bnRyeTogbnVsbAotLT48L2c+PC9zdmc+" data-type="image" data-width="100%" data-height="auto" data-desc-position="bottom"><img src="data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0iVVRGLTgiIHN0YW5kYWxvbmU9Im5vIj8+PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHhtbG5zOnhsaW5rPSJodHRwOi8vd3d3LnczLm9yZy8xOTk5L3hsaW5rIiBjb250ZW50U2NyaXB0VHlwZT0iYXBwbGljYXRpb24vZWNtYXNjcmlwdCIgY29udGVudFN0eWxlVHlwZT0idGV4dC9jc3MiIGhlaWdodD0iNDgwcHgiIHByZXNlcnZlQXNwZWN0UmF0aW89Im5vbmUiIHN0eWxlPSJ3aWR0aDo4MzJweDtoZWlnaHQ6NDgwcHg7IiB2ZXJzaW9uPSIxLjEiIHZpZXdCb3g9IjAgMCA4MzIgNDgwIiB3aWR0aD0iODMycHgiIHpvb21BbmRQYW49Im1hZ25pZnkiPjxkZWZzPjxmaWx0ZXIgaGVpZ2h0PSIzMDAlIiBpZD0iZnJjOGgzYW03MWJrNiIgd2lkdGg9IjMwMCUiIHg9Ii0xIiB5PSItMSI+PGZlR2F1c3NpYW5CbHVyIHJlc3VsdD0iYmx1ck91dCIgc3RkRGV2aWF0aW9uPSIyLjAiLz48ZmVDb2xvck1hdHJpeCBpbj0iYmx1ck91dCIgcmVzdWx0PSJibHVyT3V0MiIgdHlwZT0ibWF0cml4IiB2YWx1ZXM9IjAgMCAwIDAgMCAwIDAgMCAwIDAgMCAwIDAgMCAwIDAgMCAwIC40IDAiLz48ZmVPZmZzZXQgZHg9IjQuMCIgZHk9IjQuMCIgaW49ImJsdXJPdXQyIiByZXN1bHQ9ImJsdXJPdXQzIi8+PGZlQmxlbmQgaW49IlNvdXJjZUdyYXBoaWMiIGluMj0iYmx1ck91dDMiIG1vZGU9Im5vcm1hbCIvPjwvZmlsdGVyPjwvZGVmcz48Zz48dGV4dCBmaWxsPSIjMDAwMDAwIiBmb250LWZhbWlseT0ic2Fucy1zZXJpZiIgZm9udC1zaXplPSIxOCIgbGVuZ3RoQWRqdXN0PSJzcGFjaW5nQW5kR2x5cGhzIiB0ZXh0TGVuZ3RoPSIzMTciIHg9IjI2MSIgeT0iMTYuNzA4Ij5MZXZlbGVkIENvbXBhY3Rpb24gU3RyYXRlZ3kgKExDUyk8L3RleHQ+PCEtLU1ENT1bOTlmNWVmMWRiZjE0NTg5YzMzNTMyNWMwYzM5YzNiNWFdCmNsdXN0ZXIgTGV2ZWwgMCAoTDApIC0gbWFueSBzbWFsbCwgb3ZlcmxhcHBpbmcgU1NUYWJsZXMtLT48cG9seWdvbiBmaWxsPSIjRjlFNUZGIiBmaWx0ZXI9InVybCgjZnJjOGgzYW03MWJrNikiIHBvaW50cz0iMjIsNDQuOTUzMSw0MDQsNDQuOTUzMSw0MTEsNjcuMjUsNjg1LDY3LjI1LDY4NSwxMzEuOTUzMSwyMiwxMzEuOTUzMSwyMiw0NC45NTMxIiBzdHlsZT0ic3Ryb2tlOiAjMDAwMDAwOyBzdHJva2Utd2lkdGg6IDEuNTsiLz48bGluZSBzdHlsZT0ic3Ryb2tlOiAjMDAwMDAwOyBzdHJva2Utd2lkdGg6IDEuNTsiIHgxPSIyMiIgeDI9IjQxMSIgeTE9IjY3LjI1IiB5Mj0iNjcuMjUiLz48dGV4dCBmaWxsPSIjMDAwMDAwIiBmb250LWZhbWlseT0ic2Fucy1zZXJpZiIgZm9udC1zaXplPSIxNCIgZm9udC13ZWlnaHQ9ImJvbGQiIGxlbmd0aEFkanVzdD0ic3BhY2luZ0FuZEdseXBocyIgdGV4dExlbmd0aD0iMzc2IiB4PSIyNiIgeT0iNTkuOTQ4MiI+TGV2ZWwgMCAoTDApIC0gbWFueSBzbWFsbCwgb3ZlcmxhcHBpbmcgU1NUYWJsZXM8L3RleHQ+PCEtLU1ENT1bYWIyMWY2ZWMzZjU4NmE1MjdiOTUzNWVhZmFiY2QzYTRdCmNsdXN0ZXIgTGV2ZWwgMSAoTDEpIC0gbm9uLW92ZXJsYXBwaW5nIGJ5IGtleSByYW5nZS0tPjxwb2x5Z29uIGZpbGw9IiNGNURDRjkiIGZpbHRlcj0idXJsKCNmcmM4aDNhbTcxYms2KSIgcG9pbnRzPSIxODMsMTk1Ljk1MzEsNTM1LDE5NS45NTMxLDU0MiwyMTguMjUsNTQ1LDIxOC4yNSw1NDUsMjk5Ljk1MzEsMTgzLDI5OS45NTMxLDE4MywxOTUuOTUzMSIgc3R5bGU9InN0cm9rZTogIzAwMDAwMDsgc3Ryb2tlLXdpZHRoOiAxLjU7Ii8+PGxpbmUgc3R5bGU9InN0cm9rZTogIzAwMDAwMDsgc3Ryb2tlLXdpZHRoOiAxLjU7IiB4MT0iMTgzIiB4Mj0iNTQyIiB5MT0iMjE4LjI1IiB5Mj0iMjE4LjI1Ii8+PHRleHQgZmlsbD0iIzAwMDAwMCIgZm9udC1mYW1pbHk9InNhbnMtc2VyaWYiIGZvbnQtc2l6ZT0iMTQiIGZvbnQtd2VpZ2h0PSJib2xkIiBsZW5ndGhBZGp1c3Q9InNwYWNpbmdBbmRHbHlwaHMiIHRleHRMZW5ndGg9IjM0NiIgeD0iMTg3IiB5PSIyMTAuOTQ4MiI+TGV2ZWwgMSAoTDEpIC0gbm9uLW92ZXJsYXBwaW5nIGJ5IGtleSByYW5nZTwvdGV4dD48IS0tTUQ1PVs0NzUzNzc2YmE3YTI0ZjI2N2VjMTVhZjhiMTFmMTJmMF0KY2x1c3RlciBMZXZlbCAyIChMMikgLSAxMHggc2l6ZSBvZiBMMSwgZGlzam9pbnQgcmFuZ2VzLS0+PHBvbHlnb24gZmlsbD0iI0YyRDNGNSIgZmlsdGVyPSJ1cmwoI2ZyYzhoM2FtNzFiazYpIiBwb2ludHM9IjE3OSwzNjMuOTUzMSw1MzIsMzYzLjk1MzEsNTM5LDM4Ni4yNSw1NDIsMzg2LjI1LDU0Miw0NjcuOTUzMSwxNzksNDY3Ljk1MzEsMTc5LDM2My45NTMxIiBzdHlsZT0ic3Ryb2tlOiAjMDAwMDAwOyBzdHJva2Utd2lkdGg6IDEuNTsiLz48bGluZSBzdHlsZT0ic3Ryb2tlOiAjMDAwMDAwOyBzdHJva2Utd2lkdGg6IDEuNTsiIHgxPSIxNzkiIHgyPSI1MzkiIHkxPSIzODYuMjUiIHkyPSIzODYuMjUiLz48dGV4dCBmaWxsPSIjMDAwMDAwIiBmb250LWZhbWlseT0ic2Fucy1zZXJpZiIgZm9udC1zaXplPSIxNCIgZm9udC13ZWlnaHQ9ImJvbGQiIGxlbmd0aEFkanVzdD0ic3BhY2luZ0FuZEdseXBocyIgdGV4dExlbmd0aD0iMzQ3IiB4PSIxODMiIHk9IjM3OC45NDgyIj5MZXZlbCAyIChMMikgLSAxMHggc2l6ZSBvZiBMMSwgZGlzam9pbnQgcmFuZ2VzPC90ZXh0PjwhLS1NRDU9W2JhZTJlZGFhOGExZTkyMTJkYWQ1OGY0NjQxZjA4MTQ0XQplbnRpdHkgTDBfMS0tPjxyZWN0IGZpbGw9IiM3QjRCOTYiIGZpbHRlcj0idXJsKCNmcmM4aDNhbTcxYms2KSIgaGVpZ2h0PSIzNi4yOTY5IiBzdHlsZT0ic3Ryb2tlOiAjMDAwMDAwOyBzdHJva2Utd2lkdGg6IDEuNTsiIHdpZHRoPSI3NiIgeD0iMzgiIHk9Ijc5Ljk1MzEiLz48dGV4dCBmaWxsPSIjMDAwMDAwIiBmb250LWZhbWlseT0ic2Fucy1zZXJpZiIgZm9udC1zaXplPSIxNCIgbGVuZ3RoQWRqdXN0PSJzcGFjaW5nQW5kR2x5cGhzIiB0ZXh0TGVuZ3RoPSI1NiIgeD0iNDgiIHk9IjEwMi45NDgyIj5TU1RhYmxlPC90ZXh0PjwhLS1NRDU9W2FjMDgxMGViODQ5MjE3MjA4MjY5YmJjNDJlZWYyYTYxXQplbnRpdHkgTDBfMi0tPjxyZWN0IGZpbGw9IiM3QjRCOTYiIGZpbHRlcj0idXJsKCNmcmM4aDNhbTcxYms2KSIgaGVpZ2h0PSIzNi4yOTY5IiBzdHlsZT0ic3Ryb2tlOiAjMDAwMDAwOyBzdHJva2Utd2lkdGg6IDEuNTsiIHdpZHRoPSI3NiIgeD0iMTQ5IiB5PSI3OS45NTMxIi8+PHRleHQgZmlsbD0iIzAwMDAwMCIgZm9udC1mYW1pbHk9InNhbnMtc2VyaWYiIGZvbnQtc2l6ZT0iMTQiIGxlbmd0aEFkanVzdD0ic3BhY2luZ0FuZEdseXBocyIgdGV4dExlbmd0aD0iNTYiIHg9IjE1OSIgeT0iMTAyLjk0ODIiPlNTVGFibGU8L3RleHQ+PCEtLU1ENT1bNGUwMDdiYzQ4YmMyMjUwMWNhOWFmZDBiODNhODY4NjddCmVudGl0eSBMMF8zLS0+PHJlY3QgZmlsbD0iIzdCNEI5NiIgZmlsdGVyPSJ1cmwoI2ZyYzhoM2FtNzFiazYpIiBoZWlnaHQ9IjM2LjI5NjkiIHN0eWxlPSJzdHJva2U6ICMwMDAwMDA7IHN0cm9rZS13aWR0aDogMS41OyIgd2lkdGg9Ijc2IiB4PSIyNjAiIHk9Ijc5Ljk1MzEiLz48dGV4dCBmaWxsPSIjMDAwMDAwIiBmb250LWZhbWlseT0ic2Fucy1zZXJpZiIgZm9udC1zaXplPSIxNCIgbGVuZ3RoQWRqdXN0PSJzcGFjaW5nQW5kR2x5cGhzIiB0ZXh0TGVuZ3RoPSI1NiIgeD0iMjcwIiB5PSIxMDIuOTQ4MiI+U1NUYWJsZTwvdGV4dD48IS0tTUQ1PVszYWQ4NmJlNmNiYzUzMjQxNDQ2NWIzNTQ5N2M4MDdiMV0KZW50aXR5IEwwXzQtLT48cmVjdCBmaWxsPSIjN0I0Qjk2IiBmaWx0ZXI9InVybCgjZnJjOGgzYW03MWJrNikiIGhlaWdodD0iMzYuMjk2OSIgc3R5bGU9InN0cm9rZTogIzAwMDAwMDsgc3Ryb2tlLXdpZHRoOiAxLjU7IiB3aWR0aD0iNzYiIHg9IjM3MSIgeT0iNzkuOTUzMSIvPjx0ZXh0IGZpbGw9IiMwMDAwMDAiIGZvbnQtZmFtaWx5PSJzYW5zLXNlcmlmIiBmb250LXNpemU9IjE0IiBsZW5ndGhBZGp1c3Q9InNwYWNpbmdBbmRHbHlwaHMiIHRleHRMZW5ndGg9IjU2IiB4PSIzODEiIHk9IjEwMi45NDgyIj5TU1RhYmxlPC90ZXh0PjwhLS1NRDU9WzMxZjFkYzliZjQ2YzQxZDNhMDVhMmZjYzQyMjZhZGViXQplbnRpdHkgTDBfNS0tPjxyZWN0IGZpbGw9IiM3QjRCOTYiIGZpbHRlcj0idXJsKCNmcmM4aDNhbTcxYms2KSIgaGVpZ2h0PSIzNi4yOTY5IiBzdHlsZT0ic3Ryb2tlOiAjMDAwMDAwOyBzdHJva2Utd2lkdGg6IDEuNTsiIHdpZHRoPSI3NiIgeD0iNDgyIiB5PSI3OS45NTMxIi8+PHRleHQgZmlsbD0iIzAwMDAwMCIgZm9udC1mYW1pbHk9InNhbnMtc2VyaWYiIGZvbnQtc2l6ZT0iMTQiIGxlbmd0aEFkanVzdD0ic3BhY2luZ0FuZEdseXBocyIgdGV4dExlbmd0aD0iNTYiIHg9IjQ5MiIgeT0iMTAyLjk0ODIiPlNTVGFibGU8L3RleHQ+PCEtLU1ENT1bYjU5MzU0ZDZlMjhhM2U2ZWViYjFlYmFmYzVhMjcyODddCmVudGl0eSBMMF82LS0+PHJlY3QgZmlsbD0iIzdCNEI5NiIgZmlsdGVyPSJ1cmwoI2ZyYzhoM2FtNzFiazYpIiBoZWlnaHQ9IjM2LjI5NjkiIHN0eWxlPSJzdHJva2U6ICMwMDAwMDA7IHN0cm9rZS13aWR0aDogMS41OyIgd2lkdGg9Ijc2IiB4PSI1OTMiIHk9Ijc5Ljk1MzEiLz48dGV4dCBmaWxsPSIjMDAwMDAwIiBmb250LWZhbWlseT0ic2Fucy1zZXJpZiIgZm9udC1zaXplPSIxNCIgbGVuZ3RoQWRqdXN0PSJzcGFjaW5nQW5kR2x5cGhzIiB0ZXh0TGVuZ3RoPSI1NiIgeD0iNjAzIiB5PSIxMDIuOTQ4MiI+U1NUYWJsZTwvdGV4dD48IS0tTUQ1PVtmZjRkZGQ5ZDZlODllN2Y3MzljZTYxM2QxZmE2MjBkOV0KZW50aXR5IEwxXzEtLT48cmVjdCBmaWxsPSIjN0I0Qjk2IiBmaWx0ZXI9InVybCgjZnJjOGgzYW03MWJrNikiIGhlaWdodD0iNTIuNTkzOCIgc3R5bGU9InN0cm9rZTogIzAwMDAwMDsgc3Ryb2tlLXdpZHRoOiAxLjU7IiB3aWR0aD0iODQiIHg9IjIwNCIgeT0iMjMwLjk1MzEiLz48dGV4dCBmaWxsPSIjMDAwMDAwIiBmb250LWZhbWlseT0ic2Fucy1zZXJpZiIgZm9udC1zaXplPSIxNCIgbGVuZ3RoQWRqdXN0PSJzcGFjaW5nQW5kR2x5cGhzIiB0ZXh0TGVuZ3RoPSI1NiIgeD0iMjE0IiB5PSIyNTMuOTQ4MiI+U1NUYWJsZTwvdGV4dD48dGV4dCBmaWxsPSIjMDAwMDAwIiBmb250LWZhbWlseT0ic2Fucy1zZXJpZiIgZm9udC1zaXplPSIxNCIgbGVuZ3RoQWRqdXN0PSJzcGFjaW5nQW5kR2x5cGhzIiB0ZXh0TGVuZ3RoPSI2NCIgeD0iMjE0IiB5PSIyNzAuMjQ1MSI+W2tleSBBLU1dPC90ZXh0PjwhLS1NRDU9W2ZlOTNlZGEzMjg5MTVmNGRlNjdiZDYzYTBkY2Y4M2I4XQplbnRpdHkgTDFfMi0tPjxyZWN0IGZpbGw9IiM3QjRCOTYiIGZpbHRlcj0idXJsKCNmcmM4aDNhbTcxYms2KSIgaGVpZ2h0PSI1Mi41OTM4IiBzdHlsZT0ic3Ryb2tlOiAjMDAwMDAwOyBzdHJva2Utd2lkdGg6IDEuNTsiIHdpZHRoPSI4MiIgeD0iMzIzIiB5PSIyMzAuOTUzMSIvPjx0ZXh0IGZpbGw9IiMwMDAwMDAiIGZvbnQtZmFtaWx5PSJzYW5zLXNlcmlmIiBmb250LXNpemU9IjE0IiBsZW5ndGhBZGp1c3Q9InNwYWNpbmdBbmRHbHlwaHMiIHRleHRMZW5ndGg9IjU2IiB4PSIzMzMiIHk9IjI1My45NDgyIj5TU1RhYmxlPC90ZXh0Pjx0ZXh0IGZpbGw9IiMwMDAwMDAiIGZvbnQtZmFtaWx5PSJzYW5zLXNlcmlmIiBmb250LXNpemU9IjE0IiBsZW5ndGhBZGp1c3Q9InNwYWNpbmdBbmRHbHlwaHMiIHRleHRMZW5ndGg9IjYyIiB4PSIzMzMiIHk9IjI3MC4yNDUxIj5ba2V5IE4tVF08L3RleHQ+PCEtLU1ENT1bODY0NzZlN2JkZGMzYjNhMWM2YzkyMTNjOTc0YzBmNjddCmVudGl0eSBMMV8zLS0+PHJlY3QgZmlsbD0iIzdCNEI5NiIgZmlsdGVyPSJ1cmwoI2ZyYzhoM2FtNzFiazYpIiBoZWlnaHQ9IjUyLjU5MzgiIHN0eWxlPSJzdHJva2U6ICMwMDAwMDA7IHN0cm9rZS13aWR0aDogMS41OyIgd2lkdGg9IjgzIiB4PSI0NDAuNSIgeT0iMjMwLjk1MzEiLz48dGV4dCBmaWxsPSIjMDAwMDAwIiBmb250LWZhbWlseT0ic2Fucy1zZXJpZiIgZm9udC1zaXplPSIxNCIgbGVuZ3RoQWRqdXN0PSJzcGFjaW5nQW5kR2x5cGhzIiB0ZXh0TGVuZ3RoPSI1NiIgeD0iNDUwLjUiIHk9IjI1My45NDgyIj5TU1RhYmxlPC90ZXh0Pjx0ZXh0IGZpbGw9IiMwMDAwMDAiIGZvbnQtZmFtaWx5PSJzYW5zLXNlcmlmIiBmb250LXNpemU9IjE0IiBsZW5ndGhBZGp1c3Q9InNwYWNpbmdBbmRHbHlwaHMiIHRleHRMZW5ndGg9IjYzIiB4PSI0NTAuNSIgeT0iMjcwLjI0NTEiPltrZXkgVS1aXTwvdGV4dD48IS0tTUQ1PVtmOGY5NDZjMjNhNmVjMzMwOTM2ZTc0NjNjZTAyMGVhZl0KZW50aXR5IEwyXzEtLT48cmVjdCBmaWxsPSIjN0I0Qjk2IiBmaWx0ZXI9InVybCgjZnJjOGgzYW03MWJrNikiIGhlaWdodD0iNTIuNTkzOCIgc3R5bGU9InN0cm9rZTogIzAwMDAwMDsgc3Ryb2tlLXdpZHRoOiAxLjU7IiB3aWR0aD0iNzkiIHg9IjMyNS41IiB5PSIzOTguOTUzMSIvPjx0ZXh0IGZpbGw9IiMwMDAwMDAiIGZvbnQtZmFtaWx5PSJzYW5zLXNlcmlmIiBmb250LXNpemU9IjE0IiBsZW5ndGhBZGp1c3Q9InNwYWNpbmdBbmRHbHlwaHMiIHRleHRMZW5ndGg9IjU2IiB4PSIzMzUuNSIgeT0iNDIxLjk0ODIiPlNTVGFibGU8L3RleHQ+PHRleHQgZmlsbD0iIzAwMDAwMCIgZm9udC1mYW1pbHk9InNhbnMtc2VyaWYiIGZvbnQtc2l6ZT0iMTQiIGxlbmd0aEFkanVzdD0ic3BhY2luZ0FuZEdseXBocyIgdGV4dExlbmd0aD0iNTkiIHg9IjMzNS41IiB5PSI0MzguMjQ1MSI+W2tleSBBLUxdPC90ZXh0PjwhLS1NRDU9W2U2N2JkNWM3OWY1ODUxMjBhNTQ1NjI5YWUxMjg0OWE3XQplbnRpdHkgTDJfMi0tPjxyZWN0IGZpbGw9IiM3QjRCOTYiIGZpbHRlcj0idXJsKCNmcmM4aDNhbTcxYms2KSIgaGVpZ2h0PSI1Mi41OTM4IiBzdHlsZT0ic3Ryb2tlOiAjMDAwMDAwOyBzdHJva2Utd2lkdGg6IDEuNTsiIHdpZHRoPSI4NSIgeD0iNDM5LjUiIHk9IjM5OC45NTMxIi8+PHRleHQgZmlsbD0iIzAwMDAwMCIgZm9udC1mYW1pbHk9InNhbnMtc2VyaWYiIGZvbnQtc2l6ZT0iMTQiIGxlbmd0aEFkanVzdD0ic3BhY2luZ0FuZEdseXBocyIgdGV4dExlbmd0aD0iNTYiIHg9IjQ0OS41IiB5PSI0MjEuOTQ4MiI+U1NUYWJsZTwvdGV4dD48dGV4dCBmaWxsPSIjMDAwMDAwIiBmb250LWZhbWlseT0ic2Fucy1zZXJpZiIgZm9udC1zaXplPSIxNCIgbGVuZ3RoQWRqdXN0PSJzcGFjaW5nQW5kR2x5cGhzIiB0ZXh0TGVuZ3RoPSI2NSIgeD0iNDQ5LjUiIHk9IjQzOC4yNDUxIj5ba2V5IE0tWl08L3RleHQ+PHBhdGggZD0iTTU1OS41LDM4Mi40NTMxIEw1NTkuNSw0MjEuNDUzMSBMNTI0LjY2LDQyNS40NTMxIEw1NTkuNSw0MjkuNDUzMSBMNTU5LjUsNDY4LjExNzIgQTAsMCAwIDAgMCA1NTkuNSw0NjguMTE3MiBMODIwLjUsNDY4LjExNzIgQTAsMCAwIDAgMCA4MjAuNSw0NjguMTE3MiBMODIwLjUsMzkyLjQ1MzEgTDgxMC41LDM4Mi40NTMxIEw1NTkuNSwzODIuNDUzMSBBMCwwIDAgMCAwIDU1OS41LDM4Mi40NTMxICIgZmlsbD0iI0ZCRkI3NyIgZmlsdGVyPSJ1cmwoI2ZyYzhoM2FtNzFiazYpIiBzdHlsZT0ic3Ryb2tlOiAjQTgwMDM2OyBzdHJva2Utd2lkdGg6IDEuMDsiLz48cGF0aCBkPSJNODEwLjUsMzgyLjQ1MzEgTDgxMC41LDM5Mi40NTMxIEw4MjAuNSwzOTIuNDUzMSBMODEwLjUsMzgyLjQ1MzEgIiBmaWxsPSIjRkJGQjc3IiBzdHlsZT0ic3Ryb2tlOiAjQTgwMDM2OyBzdHJva2Utd2lkdGg6IDEuMDsiLz48dGV4dCBmaWxsPSIjMDAwMDAwIiBmb250LWZhbWlseT0ic2Fucy1zZXJpZiIgZm9udC1zaXplPSIxMyIgbGVuZ3RoQWRqdXN0PSJzcGFjaW5nQW5kR2x5cGhzIiB0ZXh0TGVuZ3RoPSI5OCIgeD0iNTY1LjUiIHk9IjM5OS41MiI+TENTIHByb3BlcnRpZXM6PC90ZXh0PjxlbGxpcHNlIGN4PSI1NzEiIGN5PSI0MTAuMjE4OCIgZmlsbD0iIzAwMDAwMCIgcng9IjIuNSIgcnk9IjIuNSIgc3R5bGU9InN0cm9rZTogIzAwMDAwMDsgc3Ryb2tlLXdpZHRoOiAwLjA7Ii8+PHRleHQgZmlsbD0iIzAwMDAwMCIgZm9udC1mYW1pbHk9InNhbnMtc2VyaWYiIGZvbnQtc2l6ZT0iMTMiIGxlbmd0aEFkanVzdD0ic3BhY2luZ0FuZEdseXBocyIgdGV4dExlbmd0aD0iMjE1IiB4PSI1NzYuNSIgeT0iNDE0LjY1MjgiPk9ubHkgTDAgaGFzIG92ZXJsYXBwaW5nIFNTVGFibGVzPC90ZXh0PjxlbGxpcHNlIGN4PSI1NzEiIGN5PSI0MjUuMzUxNiIgZmlsbD0iIzAwMDAwMCIgcng9IjIuNSIgcnk9IjIuNSIgc3R5bGU9InN0cm9rZTogIzAwMDAwMDsgc3Ryb2tlLXdpZHRoOiAwLjA7Ii8+PHRleHQgZmlsbD0iIzAwMDAwMCIgZm9udC1mYW1pbHk9InNhbnMtc2VyaWYiIGZvbnQtc2l6ZT0iMTMiIGxlbmd0aEFkanVzdD0ic3BhY2luZ0FuZEdseXBocyIgdGV4dExlbmd0aD0iMTc1IiB4PSI1NzYuNSIgeT0iNDI5Ljc4NTYiPkVhY2ggbGV2ZWwgaGFzIGEgdGFyZ2V0IHNpemU8L3RleHQ+PGVsbGlwc2UgY3g9IjU3MSIgY3k9IjQ0MC40ODQ0IiBmaWxsPSIjMDAwMDAwIiByeD0iMi41IiByeT0iMi41IiBzdHlsZT0ic3Ryb2tlOiAjMDAwMDAwOyBzdHJva2Utd2lkdGg6IDAuMDsiLz48dGV4dCBmaWxsPSIjMDAwMDAwIiBmb250LWZhbWlseT0ic2Fucy1zZXJpZiIgZm9udC1zaXplPSIxMyIgbGVuZ3RoQWRqdXN0PSJzcGFjaW5nQW5kR2x5cGhzIiB0ZXh0TGVuZ3RoPSIyMjkiIHg9IjU3Ni41IiB5PSI0NDQuOTE4NSI+SGlnaGVyIGxldmVscyBoYXZlIGxhcmdlciwgZmV3ZXIgZmlsZXM8L3RleHQ+PHRleHQgZmlsbD0iIzAwMDAwMCIgZm9udC1mYW1pbHk9InNhbnMtc2VyaWYiIGZvbnQtc2l6ZT0iMTMiIGxlbmd0aEFkanVzdD0ic3BhY2luZ0FuZEdseXBocyIgdGV4dExlbmd0aD0iMTQ4IiB4PSI1NzMuNSIgeT0iNDYwLjA1MTMiPndpdGggZGlzam9pbnQga2V5IHJhbmdlczwvdGV4dD48IS0tTUQ1PVsyOTdjMjNkNDY4MjdjMTI3YzViMzgwYmE1MWY4NjU3ZF0KbGluayBMMF8xIHRvIEwxXzEtLT48cGF0aCBkPSJNNzIuODUsMTE2LjExMzEgQzcwLjU5LDEzMy43NDMxIDY5LjkyLDE2MS4yMDMxIDgzLDE3OS45NTMxIEMxMDkuNzksMjE4LjM1MzEgMTYxLjAyLDIzOC4wMDMxIDE5OC45MywyNDcuNzAzMSAiIGZpbGw9Im5vbmUiIGlkPSJMMF8xLSZndDtMMV8xIiBzdHlsZT0ic3Ryb2tlOiAjQTgwMDM2OyBzdHJva2Utd2lkdGg6IDEuMDsiLz48cG9seWdvbiBmaWxsPSIjQTgwMDM2IiBwb2ludHM9IjIwMy45NSwyNDguOTUzMSwxOTYuMTcyMSwyNDIuOTExMywxOTkuMDk1OSwyNDcuNzUzOSwxOTQuMjUzMywyNTAuNjc3NywyMDMuOTUsMjQ4Ljk1MzEiIHN0eWxlPSJzdHJva2U6ICNBODAwMzY7IHN0cm9rZS13aWR0aDogMS4wOyIvPjx0ZXh0IGZpbGw9IiMwMDAwMDAiIGZvbnQtZmFtaWx5PSJzYW5zLXNlcmlmIiBmb250LXNpemU9IjEzIiBsZW5ndGhBZGp1c3Q9InNwYWNpbmdBbmRHbHlwaHMiIHRleHRMZW5ndGg9Ijc1IiB4PSIxMTEuNSIgeT0iMTYxLjAyIj5jb21wYWN0aW9uPC90ZXh0Pjx0ZXh0IGZpbGw9IiMwMDAwMDAiIGZvbnQtZmFtaWx5PSJzYW5zLXNlcmlmIiBmb250LXNpemU9IjEzIiBsZW5ndGhBZGp1c3Q9InNwYWNpbmdBbmRHbHlwaHMiIHRleHRMZW5ndGg9IjEzMCIgeD0iODQiIHk9IjE3Ni4xNTI4Ij4obWVyZ2Ugb3ZlcmxhcHBpbmcpPC90ZXh0PjwhLS1NRDU9W2Y1YTBhODA1NjRjZmZjODcwODRkZjUxYmMwMzFhNmExXQpsaW5rIEwwXzIgdG8gTDFfMS0tPjxwYXRoIGQ9Ik0yMDIuMywxMTUuOTYzMSBDMjA5LjU5LDEyNC45MDMxIDIxNy44MiwxMzYuMzkzMSAyMjMsMTQ3Ljk1MzEgQzIzNC4xNSwxNzIuODQzMSAyNDAuMDEsMjAzLjQwMzEgMjQzLjAxLDIyNS43NDMxICIgZmlsbD0ibm9uZSIgaWQ9IkwwXzItJmd0O0wxXzEiIHN0eWxlPSJzdHJva2U6ICNBODAwMzY7IHN0cm9rZS13aWR0aDogMS4wOyIvPjxwb2x5Z29uIGZpbGw9IiNBODAwMzYiIHBvaW50cz0iMjQzLjY4LDIzMC45NTMxLDI0Ni41MTk1LDIyMS41MjI1LDI0My4wNTI4LDIyNS45OTI2LDIzOC41ODI3LDIyMi41MjYsMjQzLjY4LDIzMC45NTMxIiBzdHlsZT0ic3Ryb2tlOiAjQTgwMDM2OyBzdHJva2Utd2lkdGg6IDEuMDsiLz48IS0tTUQ1PVtiZTAyOTAzZTlhNWZlYjkxZTY3ZmMxMTBmNTliZDQ1Nl0KbGluayBMMF8zIHRvIEwxXzItLT48cGF0aCBkPSJNMzA1LjE5LDExNi4xMTMxIEMzMTYuMjQsMTQyLjQ3MzEgMzM3LjU1LDE5My4zNDMxIDM1MS4yNiwyMjYuMDUzMSAiIGZpbGw9Im5vbmUiIGlkPSJMMF8zLSZndDtMMV8yIiBzdHlsZT0ic3Ryb2tlOiAjQTgwMDM2OyBzdHJva2Utd2lkdGg6IDEuMDsiLz48cG9seWdvbiBmaWxsPSIjQTgwMDM2IiBwb2ludHM9IjM1My4yMywyMzAuNzQzMSwzNTMuNDUsMjIwLjg5NjcsMzUxLjMwMTksMjI2LjEyOTksMzQ2LjA2ODcsMjIzLjk4MTgsMzUzLjIzLDIzMC43NDMxIiBzdHlsZT0ic3Ryb2tlOiAjQTgwMDM2OyBzdHJva2Utd2lkdGg6IDEuMDsiLz48IS0tTUQ1PVsyZGY5Mzc2YTk1MjkxNDQ1ZWRhMWE2M2RlNDI5ZGFiYl0KbGluayBMMF80IHRvIEwxXzItLT48cGF0aCBkPSJNNDA0LjEsMTE2LjExMzEgQzM5Ni42LDE0Mi4zNzMxIDM4Mi4xNSwxOTIuOTIzMSAzNzIuOCwyMjUuNjQzMSAiIGZpbGw9Im5vbmUiIGlkPSJMMF80LSZndDtMMV8yIiBzdHlsZT0ic3Ryb2tlOiAjQTgwMDM2OyBzdHJva2Utd2lkdGg6IDEuMDsiLz48cG9seWdvbiBmaWxsPSIjQTgwMDM2IiBwb2ludHM9IjM3MS4zNSwyMzAuNzQzMSwzNzcuNjY4NiwyMjMuMTg4MywzNzIuNzIzNiwyMjUuOTM1NSwzNjkuOTc2NCwyMjAuOTkwNSwzNzEuMzUsMjMwLjc0MzEiIHN0eWxlPSJzdHJva2U6ICNBODAwMzY7IHN0cm9rZS13aWR0aDogMS4wOyIvPjwhLS1NRDU9Wzg5NTI2YmVlZDgxYThiYjBkZmY1NmFkZjc3YmIxMjRhXQpsaW5rIEwwXzUgdG8gTDFfMy0tPjxwYXRoIGQ9Ik01MTUuODYsMTE2LjExMzEgQzUwOS41MywxNDIuMzczMSA0OTcuMzMsMTkyLjkyMzEgNDg5LjQzLDIyNS42NDMxICIgZmlsbD0ibm9uZSIgaWQ9IkwwXzUtJmd0O0wxXzMiIHN0eWxlPSJzdHJva2U6ICNBODAwMzY7IHN0cm9rZS13aWR0aDogMS4wOyIvPjxwb2x5Z29uIGZpbGw9IiNBODAwMzYiIHBvaW50cz0iNDg4LjIsMjMwLjc0MzEsNDk0LjE5ODYsMjIyLjkzMTgsNDg5LjM3MjMsMjI1Ljg4MjUsNDg2LjQyMTYsMjIxLjA1NjIsNDg4LjIsMjMwLjc0MzEiIHN0eWxlPSJzdHJva2U6ICNBODAwMzY7IHN0cm9rZS13aWR0aDogMS4wOyIvPjwhLS1NRDU9Wzg2MjRhYzFhNGVkYTE4NTEwOWJkZWRjNWJmYTY4ZmVlXQpsaW5rIEwwXzYgdG8gTDFfMy0tPjxwYXRoIGQ9Ik02MTQuNzcsMTE2LjExMzEgQzU4OS42MiwxNDIuNjkzMSA1NDAuOTIsMTk0LjE3MzEgNTEwLDIyNi44NTMxICIgZmlsbD0ibm9uZSIgaWQ9IkwwXzYtJmd0O0wxXzMiIHN0eWxlPSJzdHJva2U6ICNBODAwMzY7IHN0cm9rZS13aWR0aDogMS4wOyIvPjxwb2x5Z29uIGZpbGw9IiNBODAwMzYiIHBvaW50cz0iNTA2LjMyLDIzMC43NDMxLDUxNS40MTY0LDIyNi45Njc1LDUwOS43NjE1LDIyNy4xMTYsNTA5LjYxMywyMjEuNDYxMSw1MDYuMzIsMjMwLjc0MzEiIHN0eWxlPSJzdHJva2U6ICNBODAwMzY7IHN0cm9rZS13aWR0aDogMS4wOyIvPjwhLS1NRDU9WzJkMzQxYmNlMWQzNWZhZDc3MGNkNzkzYmQzMmNiNmJmXQpsaW5rIEwxXzEgdG8gTDJfMS0tPjxwYXRoIGQ9Ik0yMzQuNTMsMjg0LjAxMzEgQzIyNy44OSwzMDIuODYzMSAyMjIuODQsMzI4LjUxMzEgMjM0LDM0Ny45NTMxIEMyNTIuNDgsMzgwLjE1MzEgMjkwLjMzLDQwMC4wODMxIDMyMC42MSw0MTEuNDkzMSAiIGZpbGw9Im5vbmUiIGlkPSJMMV8xLSZndDtMMl8xIiBzdHlsZT0ic3Ryb2tlOiAjQTgwMDM2OyBzdHJva2Utd2lkdGg6IDEuMDsiLz48cG9seWdvbiBmaWxsPSIjQTgwMDM2IiBwb2ludHM9IjMyNS40LDQxMy4yNTMxLDMxOC4zNDA2LDQwNi4zODU0LDMyMC43MDksNDExLjUyMjYsMzE1LjU3MTgsNDEzLjg5MSwzMjUuNCw0MTMuMjUzMSIgc3R5bGU9InN0cm9rZTogI0E4MDAzNjsgc3Ryb2tlLXdpZHRoOiAxLjA7Ii8+PHRleHQgZmlsbD0iIzAwMDAwMCIgZm9udC1mYW1pbHk9InNhbnMtc2VyaWYiIGZvbnQtc2l6ZT0iMTMiIGxlbmd0aEFkanVzdD0ic3BhY2luZ0FuZEdseXBocyIgdGV4dExlbmd0aD0iNzUiIHg9IjI1Ny41IiB5PSIzMjkuMDIiPmNvbXBhY3Rpb248L3RleHQ+PHRleHQgZmlsbD0iIzAwMDAwMCIgZm9udC1mYW1pbHk9InNhbnMtc2VyaWYiIGZvbnQtc2l6ZT0iMTMiIGxlbmd0aEFkanVzdD0ic3BhY2luZ0FuZEdseXBocyIgdGV4dExlbmd0aD0iMTIwIiB4PSIyMzUiIHk9IjM0NC4xNTI4Ij4od2hlbiBMMSAmZ3Q7IHRhcmdldCk8L3RleHQ+PCEtLU1ENT1bNTk1ODVmNzQ1MDVlNTg5MGExNzUyYWU0MTdhYWI1MzBdCmxpbmsgTDFfMiB0byBMMl8xLS0+PHBhdGggZD0iTTM2NC4xNSwyODQuMDIzMSBDMzY0LjMzLDMxMy41MTMxIDM2NC42MiwzNjEuOTczMSAzNjQuODEsMzkzLjU0MzEgIiBmaWxsPSJub25lIiBpZD0iTDFfMi0mZ3Q7TDJfMSIgc3R5bGU9InN0cm9rZTogI0E4MDAzNjsgc3Ryb2tlLXdpZHRoOiAxLjA7Ii8+PHBvbHlnb24gZmlsbD0iI0E4MDAzNiIgcG9pbnRzPSIzNjQuODUsMzk4Ljg1MzEsMzY4Ljc5ODUsMzg5LjgzMDQsMzY0LjgyMTQsMzkzLjg1MzIsMzYwLjc5ODYsMzg5Ljg3NjEsMzY0Ljg1LDM5OC44NTMxIiBzdHlsZT0ic3Ryb2tlOiAjQTgwMDM2OyBzdHJva2Utd2lkdGg6IDEuMDsiLz48IS0tTUQ1PVtjN2Y2ZWFlYzk4ZDc3NWIzNzU3YTQ3ZGZjMTczMjE2ZV0KbGluayBMMV8zIHRvIEwyXzItLT48cGF0aCBkPSJNNDgyLDI4NC4wMjMxIEM0ODIsMzEzLjUxMzEgNDgyLDM2MS45NzMxIDQ4MiwzOTMuNTQzMSAiIGZpbGw9Im5vbmUiIGlkPSJMMV8zLSZndDtMMl8yIiBzdHlsZT0ic3Ryb2tlOiAjQTgwMDM2OyBzdHJva2Utd2lkdGg6IDEuMDsiLz48cG9seWdvbiBmaWxsPSIjQTgwMDM2IiBwb2ludHM9IjQ4MiwzOTguODUzMSw0ODYsMzg5Ljg1MzEsNDgyLDM5My44NTMxLDQ3OCwzODkuODUzMSw0ODIsMzk4Ljg1MzEiIHN0eWxlPSJzdHJva2U6ICNBODAwMzY7IHN0cm9rZS13aWR0aDogMS4wOyIvPjwhLS1NRDU9Wzk5N2U3YzNhNjFjYTQyNTI0ODA1NmE4MTc1NWRkYmNmXQpAc3RhcnR1bWwNCnNraW5wYXJhbSBiYWNrZ3JvdW5kQ29sb3IgdHJhbnNwYXJlbnQNCnRpdGxlIExldmVsZWQgQ29tcGFjdGlvbiBTdHJhdGVneSAoTENTKQ0KDQpwYWNrYWdlICJMZXZlbCAwIChMMCkgLSBtYW55IHNtYWxsLCBvdmVybGFwcGluZyBTU1RhYmxlcyIgI0Y5RTVGRiB7DQogICAgcmVjdGFuZ2xlICJTU1RhYmxlIiBhcyBMMF8xICM3QjRCOTYNCiAgICByZWN0YW5nbGUgIlNTVGFibGUiIGFzIEwwXzIgIzdCNEI5Ng0KICAgIHJlY3RhbmdsZSAiU1NUYWJsZSIgYXMgTDBfMyAjN0I0Qjk2DQogICAgcmVjdGFuZ2xlICJTU1RhYmxlIiBhcyBMMF80ICM3QjRCOTYNCiAgICByZWN0YW5nbGUgIlNTVGFibGUiIGFzIEwwXzUgIzdCNEI5Ng0KICAgIHJlY3RhbmdsZSAiU1NUYWJsZSIgYXMgTDBfNiAjN0I0Qjk2DQp9DQoNCnBhY2thZ2UgIkxldmVsIDEgKEwxKSAtIG5vbi1vdmVybGFwcGluZyBieSBrZXkgcmFuZ2UiICNGNURDRjkgew0KICAgIHJlY3RhbmdsZSAiU1NUYWJsZVxuW2tleSBBLU1dIiBhcyBMMV8xICM3QjRCOTYNCiAgICByZWN0YW5nbGUgIlNTVGFibGVcbltrZXkgTi1UXSIgYXMgTDFfMiAjN0I0Qjk2DQogICAgcmVjdGFuZ2xlICJTU1RhYmxlXG5ba2V5IFUtWl0iIGFzIEwxXzMgIzdCNEI5Ng0KfQ0KDQpwYWNrYWdlICJMZXZlbCAyIChMMikgLSAxMHggc2l6ZSBvZiBMMSwgZGlzam9pbnQgcmFuZ2VzIiAjRjJEM0Y1IHsNCiAgICByZWN0YW5nbGUgIlNTVGFibGVcbltrZXkgQS1MXSIgYXMgTDJfMSAjN0I0Qjk2DQogICAgcmVjdGFuZ2xlICJTU1RhYmxlXG5ba2V5IE0tWl0iIGFzIEwyXzIgIzdCNEI5Ng0KfQ0KDQpMMF8xIC0gLT4gTDFfMSA6IGNvbXBhY3Rpb25cbihtZXJnZSBvdmVybGFwcGluZykNCkwwXzIgLSAtPiBMMV8xDQpMMF8zIC0gLT4gTDFfMg0KTDBfNCAtIC0+IEwxXzINCkwwXzUgLSAtPiBMMV8zDQpMMF82IC0gLT4gTDFfMw0KDQpMMV8xIC0gLT4gTDJfMSA6IGNvbXBhY3Rpb25cbih3aGVuIEwxID4gdGFyZ2V0KQ0KTDFfMiAtIC0+IEwyXzENCkwxXzMgLSAtPiBMMl8yDQoNCm5vdGUgcmlnaHQgb2YgTDJfMg0KICAgIExDUyBwcm9wZXJ0aWVzOg0KICAgICogT25seSBMMCBoYXMgb3ZlcmxhcHBpbmcgU1NUYWJsZXMNCiAgICAqIEVhY2ggbGV2ZWwgaGFzIGEgdGFyZ2V0IHNpemUNCiAgICAqIEhpZ2hlciBsZXZlbHMgaGF2ZSBsYXJnZXIsIGZld2VyIGZpbGVzDQogICAgICB3aXRoIGRpc2pvaW50IGtleSByYW5nZXMNCmVuZCBub3RlDQoNCkBlbmR1bWwNCgpQbGFudFVNTCB2ZXJzaW9uIDEuMjAyMC4wMihTdW4gTWFyIDAxIDEwOjIyOjA3IEdNVCAyMDIwKQooR1BMIHNvdXJjZSBkaXN0cmlidXRpb24pCkphdmEgUnVudGltZTogT3BlbkpESyBSdW50aW1lIEVudmlyb25tZW50CkpWTTogT3BlbkpESyA2NC1CaXQgU2VydmVyIFZNCkphdmEgVmVyc2lvbjogMTcuMC4xNSs2LUxUUwpPcGVyYXRpbmcgU3lzdGVtOiBMaW51eApEZWZhdWx0IEVuY29kaW5nOiBVVEYtOApMYW5ndWFnZTogZW4KQ291bnRyeTogbnVsbAotLT48L2c+PC9zdmc+" class="uml" alt="uml diagram" title=""></a></p>
 <h3 id="compaction-mechanics">Compaction Mechanics<a class="headerlink" href="#compaction-mechanics" title="Permanent link">¶</a></h3>
-<p><strong>L0 → L1 Compaction:</strong></p>
-<p>When L0 accumulates 4 SSTables, compaction selects all L0 files plus all L1 files whose key ranges overlap with any L0 file. These are merged, and the output is written as new L1 SSTables with non-overlapping ranges.</p>
-<p><strong>L(n) → L(n+1) Compaction:</strong></p>
-<p>When a level exceeds its size target, the compaction process:</p>
+<p><a class="glightbox" href="data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0iVVRGLTgiIHN0YW5kYWxvbmU9Im5vIj8+PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHhtbG5zOnhsaW5rPSJodHRwOi8vd3d3LnczLm9yZy8xOTk5L3hsaW5rIiBjb250ZW50U2NyaXB0VHlwZT0iYXBwbGljYXRpb24vZWNtYXNjcmlwdCIgY29udGVudFN0eWxlVHlwZT0idGV4dC9jc3MiIGhlaWdodD0iNzQ1cHgiIHByZXNlcnZlQXNwZWN0UmF0aW89Im5vbmUiIHN0eWxlPSJ3aWR0aDoxMTEzcHg7aGVpZ2h0Ojc0NXB4OyIgdmVyc2lvbj0iMS4xIiB2aWV3Qm94PSIwIDAgMTExMyA3NDUiIHdpZHRoPSIxMTEzcHgiIHpvb21BbmRQYW49Im1hZ25pZnkiPjxkZWZzPjxmaWx0ZXIgaGVpZ2h0PSIzMDAlIiBpZD0iZmV4YXBjZXU3ODhldSIgd2lkdGg9IjMwMCUiIHg9Ii0xIiB5PSItMSI+PGZlR2F1c3NpYW5CbHVyIHJlc3VsdD0iYmx1ck91dCIgc3RkRGV2aWF0aW9uPSIyLjAiLz48ZmVDb2xvck1hdHJpeCBpbj0iYmx1ck91dCIgcmVzdWx0PSJibHVyT3V0MiIgdHlwZT0ibWF0cml4IiB2YWx1ZXM9IjAgMCAwIDAgMCAwIDAgMCAwIDAgMCAwIDAgMCAwIDAgMCAwIC40IDAiLz48ZmVPZmZzZXQgZHg9IjQuMCIgZHk9IjQuMCIgaW49ImJsdXJPdXQyIiByZXN1bHQ9ImJsdXJPdXQzIi8+PGZlQmxlbmQgaW49IlNvdXJjZUdyYXBoaWMiIGluMj0iYmx1ck91dDMiIG1vZGU9Im5vcm1hbCIvPjwvZmlsdGVyPjwvZGVmcz48Zz48dGV4dCBmaWxsPSIjMDAwMDAwIiBmb250LWZhbWlseT0ic2Fucy1zZXJpZiIgZm9udC1zaXplPSIxOCIgbGVuZ3RoQWRqdXN0PSJzcGFjaW5nQW5kR2x5cGhzIiB0ZXh0TGVuZ3RoPSIyNzMiIHg9IjQxOS4yNSIgeT0iMjYuNzA4Ij5MQ1MgQ29tcGFjdGlvbiBEZWNpc2lvbiBGbG93PC90ZXh0PjxlbGxpcHNlIGN4PSI2MjQuMDYyNSIgY3k9IjQwLjk1MzEiIGZpbGw9IiMwMDAwMDAiIGZpbHRlcj0idXJsKCNmZXhhcGNldTc4OGV1KSIgcng9IjEwIiByeT0iMTAiIHN0eWxlPSJzdHJva2U6IG5vbmU7IHN0cm9rZS13aWR0aDogMS4wOyIvPjxyZWN0IGZpbGw9IiNGOUU1RkYiIGZpbHRlcj0idXJsKCNmZXhhcGNldTc4OGV1KSIgaGVpZ2h0PSI0Ny45Mzc1IiByeD0iMTIuNSIgcnk9IjEyLjUiIHN0eWxlPSJzdHJva2U6ICM3QjRCOTY7IHN0cm9rZS13aWR0aDogMS41OyIgd2lkdGg9IjEzNyIgeD0iNTU1LjU2MjUiIHk9IjcwLjk1MzEiLz48dGV4dCBmaWxsPSIjMDAwMDAwIiBmb250LWZhbWlseT0ic2Fucy1zZXJpZiIgZm9udC1zaXplPSIxMiIgbGVuZ3RoQWRqdXN0PSJzcGFjaW5nQW5kR2x5cGhzIiB0ZXh0TGVuZ3RoPSIxMTYiIHg9IjU2NS41NjI1IiB5PSI5Mi4wOTE4Ij5DaGVjayBsZXZlbCBzY29yZXM8L3RleHQ+PHRleHQgZmlsbD0iIzAwMDAwMCIgZm9udC1mYW1pbHk9InNhbnMtc2VyaWYiIGZvbnQtc2l6ZT0iMTIiIGxlbmd0aEFkanVzdD0ic3BhY2luZ0FuZEdseXBocyIgdGV4dExlbmd0aD0iMTE3IiB4PSI1NjUuNTYyNSIgeT0iMTA2LjA2MDUiPihoaWdoZXN0IGxldmVsIGZpcnN0KTwvdGV4dD48cG9seWdvbiBmaWxsPSIjRThGNUU5IiBmaWx0ZXI9InVybCgjZmV4YXBjZXU3ODhldSkiIHBvaW50cz0iNTUzLjU2MjUsMTM4Ljg5MDYsNjk0LjU2MjUsMTM4Ljg5MDYsNzA2LjU2MjUsMTUwLjg5MDYsNjk0LjU2MjUsMTYyLjg5MDYsNTUzLjU2MjUsMTYyLjg5MDYsNTQxLjU2MjUsMTUwLjg5MDYsNTUzLjU2MjUsMTM4Ljg5MDYiIHN0eWxlPSJzdHJva2U6ICM0Q0FGNTA7IHN0cm9rZS13aWR0aDogMS41OyIvPjx0ZXh0IGZpbGw9IiMwMDAwMDAiIGZvbnQtZmFtaWx5PSJzYW5zLXNlcmlmIiBmb250LXNpemU9IjExIiBsZW5ndGhBZGp1c3Q9InNwYWNpbmdBbmRHbHlwaHMiIHRleHRMZW5ndGg9IjE0MSIgeD0iNTUzLjU2MjUiIHk9IjE1NC42OTg3Ij5BbnkgbGV2ZWwgc2NvcmUgJmd0OyAxLjAwMT88L3RleHQ+PHRleHQgZmlsbD0iIzAwMDAwMCIgZm9udC1mYW1pbHk9InNhbnMtc2VyaWYiIGZvbnQtc2l6ZT0iMTEiIGxlbmd0aEFkanVzdD0ic3BhY2luZ0FuZEdseXBocyIgdGV4dExlbmd0aD0iMjAiIHg9IjUyMS41NjI1IiB5PSIxNDguMjk2NCI+eWVzPC90ZXh0Pjx0ZXh0IGZpbGw9IiMwMDAwMDAiIGZvbnQtZmFtaWx5PSJzYW5zLXNlcmlmIiBmb250LXNpemU9IjExIiBsZW5ndGhBZGp1c3Q9InNwYWNpbmdBbmRHbHlwaHMiIHRleHRMZW5ndGg9IjE0IiB4PSI3MDYuNTYyNSIgeT0iMTQ4LjI5NjQiPm5vPC90ZXh0PjxyZWN0IGZpbGw9IiNGOUU1RkYiIGZpbHRlcj0idXJsKCNmZXhhcGNldTc4OGV1KSIgaGVpZ2h0PSIzMy45Njg4IiByeD0iMTIuNSIgcnk9IjEyLjUiIHN0eWxlPSJzdHJva2U6ICM3QjRCOTY7IHN0cm9rZS13aWR0aDogMS41OyIgd2lkdGg9IjIxMCIgeD0iMjM4LjEyNSIgeT0iMTcyLjg5MDYiLz48dGV4dCBmaWxsPSIjMDAwMDAwIiBmb250LWZhbWlseT0ic2Fucy1zZXJpZiIgZm9udC1zaXplPSIxMiIgbGVuZ3RoQWRqdXN0PSJzcGFjaW5nQW5kR2x5cGhzIiB0ZXh0TGVuZ3RoPSIxOTAiIHg9IjI0OC4xMjUiIHk9IjE5NC4wMjkzIj5TZWxlY3QgbGV2ZWwgd2l0aCBoaWdoZXN0IHNjb3JlPC90ZXh0Pjxwb2x5Z29uIGZpbGw9IiNFOEY1RTkiIGZpbHRlcj0idXJsKCNmZXhhcGNldTc4OGV1KSIgcG9pbnRzPSIzMDYuMTI1LDI0MS44NTk0LDM4MC4xMjUsMjQxLjg1OTQsMzkyLjEyNSwyNTMuODU5NCwzODAuMTI1LDI2NS44NTk0LDMwNi4xMjUsMjY1Ljg1OTQsMjk0LjEyNSwyNTMuODU5NCwzMDYuMTI1LDI0MS44NTk0IiBzdHlsZT0ic3Ryb2tlOiAjNENBRjUwOyBzdHJva2Utd2lkdGg6IDEuNTsiLz48dGV4dCBmaWxsPSIjMDAwMDAwIiBmb250LWZhbWlseT0ic2Fucy1zZXJpZiIgZm9udC1zaXplPSIxMSIgbGVuZ3RoQWRqdXN0PSJzcGFjaW5nQW5kR2x5cGhzIiB0ZXh0TGVuZ3RoPSI3NCIgeD0iMzA2LjEyNSIgeT0iMjU3LjY2NzUiPkxldmVsID09IEwwPzwvdGV4dD48dGV4dCBmaWxsPSIjMDAwMDAwIiBmb250LWZhbWlseT0ic2Fucy1zZXJpZiIgZm9udC1zaXplPSIxMSIgbGVuZ3RoQWRqdXN0PSJzcGFjaW5nQW5kR2x5cGhzIiB0ZXh0TGVuZ3RoPSIyMCIgeD0iMjc0LjEyNSIgeT0iMjUxLjI2NTEiPnllczwvdGV4dD48dGV4dCBmaWxsPSIjMDAwMDAwIiBmb250LWZhbWlseT0ic2Fucy1zZXJpZiIgZm9udC1zaXplPSIxMSIgbGVuZ3RoQWRqdXN0PSJzcGFjaW5nQW5kR2x5cGhzIiB0ZXh0TGVuZ3RoPSIxNCIgeD0iMzkyLjEyNSIgeT0iMjUxLjI2NTEiPm5vPC90ZXh0Pjxwb2x5Z29uIGZpbGw9IiNFOEY1RTkiIGZpbHRlcj0idXJsKCNmZXhhcGNldTc4OGV1KSIgcG9pbnRzPSIxMzAuMjUsMjc1Ljg1OTQsMjE1LjI1LDI3NS44NTk0LDIyNy4yNSwyODcuODU5NCwyMTUuMjUsMjk5Ljg1OTQsMTMwLjI1LDI5OS44NTk0LDExOC4yNSwyODcuODU5NCwxMzAuMjUsMjc1Ljg1OTQiIHN0eWxlPSJzdHJva2U6ICM0Q0FGNTA7IHN0cm9rZS13aWR0aDogMS41OyIvPjx0ZXh0IGZpbGw9IiMwMDAwMDAiIGZvbnQtZmFtaWx5PSJzYW5zLXNlcmlmIiBmb250LXNpemU9IjExIiBsZW5ndGhBZGp1c3Q9InNwYWNpbmdBbmRHbHlwaHMiIHRleHRMZW5ndGg9Ijg1IiB4PSIxMzAuMjUiIHk9IjI5MS42Njc1Ij5MMCBjb3VudCAmZ3Q7IDMyPzwvdGV4dD48dGV4dCBmaWxsPSIjMDAwMDAwIiBmb250LWZhbWlseT0ic2Fucy1zZXJpZiIgZm9udC1zaXplPSIxMSIgbGVuZ3RoQWRqdXN0PSJzcGFjaW5nQW5kR2x5cGhzIiB0ZXh0TGVuZ3RoPSIyMCIgeD0iOTguMjUiIHk9IjI4NS4yNjUxIj55ZXM8L3RleHQ+PHRleHQgZmlsbD0iIzAwMDAwMCIgZm9udC1mYW1pbHk9InNhbnMtc2VyaWYiIGZvbnQtc2l6ZT0iMTEiIGxlbmd0aEFkanVzdD0ic3BhY2luZ0FuZEdseXBocyIgdGV4dExlbmd0aD0iMTQiIHg9IjIyNy4yNSIgeT0iMjg1LjI2NTEiPm5vPC90ZXh0PjxyZWN0IGZpbGw9IiNGRkUwRTAiIGZpbHRlcj0idXJsKCNmZXhhcGNldTc4OGV1KSIgaGVpZ2h0PSI0Ny45Mzc1IiByeD0iMTIuNSIgcnk9IjEyLjUiIHN0eWxlPSJzdHJva2U6ICM3QjRCOTY7IHN0cm9rZS13aWR0aDogMS41OyIgd2lkdGg9IjEzNyIgeD0iMTAiIHk9IjMwOS44NTk0Ii8+PHRleHQgZmlsbD0iIzAwMDAwMCIgZm9udC1mYW1pbHk9InNhbnMtc2VyaWYiIGZvbnQtc2l6ZT0iMTIiIGxlbmd0aEFkanVzdD0ic3BhY2luZ0FuZEdseXBocyIgdGV4dExlbmd0aD0iMTE3IiB4PSIyMCIgeT0iMzMwLjk5OCI+UnVuIFNUQ1Mgd2l0aGluIEwwPC90ZXh0Pjx0ZXh0IGZpbGw9IiMwMDAwMDAiIGZvbnQtZmFtaWx5PSJzYW5zLXNlcmlmIiBmb250LXNpemU9IjEyIiBsZW5ndGhBZGp1c3Q9InNwYWNpbmdBbmRHbHlwaHMiIHRleHRMZW5ndGg9Ijk3IiB4PSIyMCIgeT0iMzQ0Ljk2NjgiPihmYWxsYmFjayBtb2RlKTwvdGV4dD48cmVjdCBmaWxsPSIjRjlFNUZGIiBmaWx0ZXI9InVybCgjZmV4YXBjZXU3ODhldSkiIGhlaWdodD0iNDcuOTM3NSIgcng9IjEyLjUiIHJ5PSIxMi41IiBzdHlsZT0ic3Ryb2tlOiAjN0I0Qjk2OyBzdHJva2Utd2lkdGg6IDEuNTsiIHdpZHRoPSIxODEiIHg9IjE3Ni41IiB5PSIzMDkuODU5NCIvPjx0ZXh0IGZpbGw9IiMwMDAwMDAiIGZvbnQtZmFtaWx5PSJzYW5zLXNlcmlmIiBmb250LXNpemU9IjEyIiBsZW5ndGhBZGp1c3Q9InNwYWNpbmdBbmRHbHlwaHMiIHRleHRMZW5ndGg9IjE2MSIgeD0iMTg2LjUiIHk9IjMzMC45OTgiPlNlbGVjdCBvbGRlc3QgTDAgU1NUYWJsZXM8L3RleHQ+PHRleHQgZmlsbD0iIzAwMDAwMCIgZm9udC1mYW1pbHk9InNhbnMtc2VyaWYiIGZvbnQtc2l6ZT0iMTIiIGxlbmd0aEFkanVzdD0ic3BhY2luZ0FuZEdseXBocyIgdGV4dExlbmd0aD0iMTU1IiB4PSIxODYuNSIgeT0iMzQ0Ljk2NjgiPih1cCB0byBzc3RhYmxlX3NpemUgdG90YWwpPC90ZXh0PjxyZWN0IGZpbGw9IiNGOUU1RkYiIGZpbHRlcj0idXJsKCNmZXhhcGNldTc4OGV1KSIgaGVpZ2h0PSIzMy45Njg4IiByeD0iMTIuNSIgcnk9IjEyLjUiIHN0eWxlPSJzdHJva2U6ICM3QjRCOTY7IHN0cm9rZS13aWR0aDogMS41OyIgd2lkdGg9IjIwMCIgeD0iMTY3IiB5PSIzOTIuNzk2OSIvPjx0ZXh0IGZpbGw9IiMwMDAwMDAiIGZvbnQtZmFtaWx5PSJzYW5zLXNlcmlmIiBmb250LXNpemU9IjEyIiBsZW5ndGhBZGp1c3Q9InNwYWNpbmdBbmRHbHlwaHMiIHRleHRMZW5ndGg9IjE4MCIgeD0iMTc3IiB5PSI0MTMuOTM1NSI+QWRkIG92ZXJsYXBwaW5nIEwwIFNTVGFibGVzPC90ZXh0PjxyZWN0IGZpbGw9IiNGOUU1RkYiIGZpbHRlcj0idXJsKCNmZXhhcGNldTc4OGV1KSIgaGVpZ2h0PSI0Ny45Mzc1IiByeD0iMTIuNSIgcnk9IjEyLjUiIHN0eWxlPSJzdHJva2U6ICM3QjRCOTY7IHN0cm9rZS13aWR0aDogMS41OyIgd2lkdGg9IjIwMCIgeD0iMTY3IiB5PSI0NDYuNzY1NiIvPjx0ZXh0IGZpbGw9IiMwMDAwMDAiIGZvbnQtZmFtaWx5PSJzYW5zLXNlcmlmIiBmb250LXNpemU9IjEyIiBsZW5ndGhBZGp1c3Q9InNwYWNpbmdBbmRHbHlwaHMiIHRleHRMZW5ndGg9IjE4MCIgeD0iMTc3IiB5PSI0NjcuOTA0MyI+QWRkIG92ZXJsYXBwaW5nIEwxIFNTVGFibGVzPC90ZXh0Pjx0ZXh0IGZpbGw9IiMwMDAwMDAiIGZvbnQtZmFtaWx5PSJzYW5zLXNlcmlmIiBmb250LXNpemU9IjEyIiBsZW5ndGhBZGp1c3Q9InNwYWNpbmdBbmRHbHlwaHMiIHRleHRMZW5ndGg9IjEzNyIgeD0iMTc3IiB5PSI0ODEuODczIj4oaWYgc2l6ZSAmZ3Q7IHNzdGFibGVfc2l6ZSk8L3RleHQ+PHBvbHlnb24gZmlsbD0iI0U4RjVFOSIgZmlsdGVyPSJ1cmwoI2ZleGFwY2V1Nzg4ZXUpIiBwb2ludHM9IjE3Mi43NSw1MDAuNzAzMSwxODQuNzUsNTEyLjcwMzEsMTcyLjc1LDUyNC43MDMxLDE2MC43NSw1MTIuNzAzMSwxNzIuNzUsNTAwLjcwMzEiIHN0eWxlPSJzdHJva2U6ICM0Q0FGNTA7IHN0cm9rZS13aWR0aDogMS41OyIvPjxyZWN0IGZpbGw9IiNGOUU1RkYiIGZpbHRlcj0idXJsKCNmZXhhcGNldTc4OGV1KSIgaGVpZ2h0PSI0Ny45Mzc1IiByeD0iMTIuNSIgcnk9IjEyLjUiIHN0eWxlPSJzdHJva2U6ICM3QjRCOTY7IHN0cm9rZS13aWR0aDogMS41OyIgd2lkdGg9IjIzMyIgeD0iMzk3IiB5PSIyNzUuODU5NCIvPjx0ZXh0IGZpbGw9IiMwMDAwMDAiIGZvbnQtZmFtaWx5PSJzYW5zLXNlcmlmIiBmb250LXNpemU9IjEyIiBsZW5ndGhBZGp1c3Q9InNwYWNpbmdBbmRHbHlwaHMiIHRleHRMZW5ndGg9IjEyNCIgeD0iNDA3IiB5PSIyOTYuOTk4Ij5TZWxlY3QgbmV4dCBTU1RhYmxlPC90ZXh0Pjx0ZXh0IGZpbGw9IiMwMDAwMDAiIGZvbnQtZmFtaWx5PSJzYW5zLXNlcmlmIiBmb250LXNpemU9IjEyIiBsZW5ndGhBZGp1c3Q9InNwYWNpbmdBbmRHbHlwaHMiIHRleHRMZW5ndGg9IjIxMyIgeD0iNDA3IiB5PSIzMTAuOTY2OCI+KHJvdW5kLXJvYmluIGZyb20gbGFzdENvbXBhY3RlZCk8L3RleHQ+PHJlY3QgZmlsbD0iI0Y5RTVGRiIgZmlsdGVyPSJ1cmwoI2ZleGFwY2V1Nzg4ZXUpIiBoZWlnaHQ9IjMzLjk2ODgiIHJ4PSIxMi41IiByeT0iMTIuNSIgc3R5bGU9InN0cm9rZTogIzdCNEI5Njsgc3Ryb2tlLXdpZHRoOiAxLjU7IiB3aWR0aD0iMjMwIiB4PSIzOTguNSIgeT0iMzU4Ljc5NjkiLz48dGV4dCBmaWxsPSIjMDAwMDAwIiBmb250LWZhbWlseT0ic2Fucy1zZXJpZiIgZm9udC1zaXplPSIxMiIgbGVuZ3RoQWRqdXN0PSJzcGFjaW5nQW5kR2x5cGhzIiB0ZXh0TGVuZ3RoPSIyMTAiIHg9IjQwOC41IiB5PSIzNzkuOTM1NSI+RmluZCBvdmVybGFwcGluZyBMKG4rMSkgU1NUYWJsZXM8L3RleHQ+PHBvbHlnb24gZmlsbD0iI0U4RjVFOSIgZmlsdGVyPSJ1cmwoI2ZleGFwY2V1Nzg4ZXUpIiBwb2ludHM9IjM0My4xMjUsNTMwLjcwMzEsMzU1LjEyNSw1NDIuNzAzMSwzNDMuMTI1LDU1NC43MDMxLDMzMS4xMjUsNTQyLjcwMzEsMzQzLjEyNSw1MzAuNzAzMSIgc3R5bGU9InN0cm9rZTogIzRDQUY1MDsgc3Ryb2tlLXdpZHRoOiAxLjU7Ii8+PHJlY3QgZmlsbD0iI0Y5RTVGRiIgZmlsdGVyPSJ1cmwoI2ZleGFwY2V1Nzg4ZXUpIiBoZWlnaHQ9IjMzLjk2ODgiIHJ4PSIxMi41IiByeT0iMTIuNSIgc3R5bGU9InN0cm9rZTogIzdCNEI5Njsgc3Ryb2tlLXdpZHRoOiAxLjU7IiB3aWR0aD0iMTQ3IiB4PSIyNjkuNjI1IiB5PSI1NzQuNzAzMSIvPjx0ZXh0IGZpbGw9IiMwMDAwMDAiIGZvbnQtZmFtaWx5PSJzYW5zLXNlcmlmIiBmb250LXNpemU9IjEyIiBsZW5ndGhBZGp1c3Q9InNwYWNpbmdBbmRHbHlwaHMiIHRleHRMZW5ndGg9IjEyNyIgeD0iMjc5LjYyNSIgeT0iNTk1Ljg0MTgiPkV4ZWN1dGUgY29tcGFjdGlvbjwvdGV4dD48cmVjdCBmaWxsPSIjRjlFNUZGIiBmaWx0ZXI9InVybCgjZmV4YXBjZXU3ODhldSkiIGhlaWdodD0iMzMuOTY4OCIgcng9IjEyLjUiIHJ5PSIxMi41IiBzdHlsZT0ic3Ryb2tlOiAjN0I0Qjk2OyBzdHJva2Utd2lkdGg6IDEuNTsiIHdpZHRoPSIyMjEiIHg9IjIzMi42MjUiIHk9IjYyOC42NzE5Ii8+PHRleHQgZmlsbD0iIzAwMDAwMCIgZm9udC1mYW1pbHk9InNhbnMtc2VyaWYiIGZvbnQtc2l6ZT0iMTIiIGxlbmd0aEFkanVzdD0ic3BhY2luZ0FuZEdseXBocyIgdGV4dExlbmd0aD0iMjAxIiB4PSIyNDIuNjI1IiB5PSI2NDkuODEwNSI+VXBkYXRlIGxhc3RDb21wYWN0ZWRTU1RhYmxlczwvdGV4dD48cG9seWdvbiBmaWxsPSIjRThGNUU5IiBmaWx0ZXI9InVybCgjZmV4YXBjZXU3ODhldSkiIHBvaW50cz0iODEyLjUsMTcyLjg5MDYsOTk3LjUsMTcyLjg5MDYsMTAwOS41LDE4NC44OTA2LDk5Ny41LDE5Ni44OTA2LDgxMi41LDE5Ni44OTA2LDgwMC41LDE4NC44OTA2LDgxMi41LDE3Mi44OTA2IiBzdHlsZT0ic3Ryb2tlOiAjNENBRjUwOyBzdHJva2Utd2lkdGg6IDEuNTsiLz48dGV4dCBmaWxsPSIjMDAwMDAwIiBmb250LWZhbWlseT0ic2Fucy1zZXJpZiIgZm9udC1zaXplPSIxMSIgbGVuZ3RoQWRqdXN0PSJzcGFjaW5nQW5kR2x5cGhzIiB0ZXh0TGVuZ3RoPSIxODUiIHg9IjgxMi41IiB5PSIxODguNjk4NyI+VG9tYnN0b25lIGNvbXBhY3Rpb24gbmVlZGVkPzwvdGV4dD48dGV4dCBmaWxsPSIjMDAwMDAwIiBmb250LWZhbWlseT0ic2Fucy1zZXJpZiIgZm9udC1zaXplPSIxMSIgbGVuZ3RoQWRqdXN0PSJzcGFjaW5nQW5kR2x5cGhzIiB0ZXh0TGVuZ3RoPSIyMCIgeD0iNzgwLjUiIHk9IjE4Mi4yOTY0Ij55ZXM8L3RleHQ+PHRleHQgZmlsbD0iIzAwMDAwMCIgZm9udC1mYW1pbHk9InNhbnMtc2VyaWYiIGZvbnQtc2l6ZT0iMTEiIGxlbmd0aEFkanVzdD0ic3BhY2luZ0FuZEdseXBocyIgdGV4dExlbmd0aD0iMTQiIHg9IjEwMDkuNSIgeT0iMTgyLjI5NjQiPm5vPC90ZXh0PjxyZWN0IGZpbGw9IiNGOUU1RkYiIGZpbHRlcj0idXJsKCNmZXhhcGNldTc4OGV1KSIgaGVpZ2h0PSI0Ny45Mzc1IiByeD0iMTIuNSIgcnk9IjEyLjUiIHN0eWxlPSJzdHJva2U6ICM3QjRCOTY7IHN0cm9rZS13aWR0aDogMS41OyIgd2lkdGg9IjI0MSIgeD0iNjcwIiB5PSIyMDYuODkwNiIvPjx0ZXh0IGZpbGw9IiMwMDAwMDAiIGZvbnQtZmFtaWx5PSJzYW5zLXNlcmlmIiBmb250LXNpemU9IjEyIiBsZW5ndGhBZGp1c3Q9InNwYWNpbmdBbmRHbHlwaHMiIHRleHRMZW5ndGg9IjEwOSIgeD0iNjgwIiB5PSIyMjguMDI5MyI+RmluZCBTU1RhYmxlIHdpdGg8L3RleHQ+PHRleHQgZmlsbD0iIzAwMDAwMCIgZm9udC1mYW1pbHk9InNhbnMtc2VyaWYiIGZvbnQtc2l6ZT0iMTIiIGxlbmd0aEFkanVzdD0ic3BhY2luZ0FuZEdseXBocyIgdGV4dExlbmd0aD0iMjIxIiB4PSI2ODAiIHk9IjI0MS45OTgiPmRyb3BwYWJsZSB0b21ic3RvbmVzICZndDsgdGhyZXNob2xkPC90ZXh0PjxyZWN0IGZpbGw9IiNGOUU1RkYiIGZpbHRlcj0idXJsKCNmZXhhcGNldTc4OGV1KSIgaGVpZ2h0PSIzMy45Njg4IiByeD0iMTIuNSIgcnk9IjEyLjUiIHN0eWxlPSJzdHJva2U6ICM3QjRCOTY7IHN0cm9rZS13aWR0aDogMS41OyIgd2lkdGg9IjIxNiIgeD0iNjgyLjUiIHk9IjI4OS44MjgxIi8+PHRleHQgZmlsbD0iIzAwMDAwMCIgZm9udC1mYW1pbHk9InNhbnMtc2VyaWYiIGZvbnQtc2l6ZT0iMTIiIGxlbmd0aEFkanVzdD0ic3BhY2luZ0FuZEdseXBocyIgdGV4dExlbmd0aD0iMTk2IiB4PSI2OTIuNSIgeT0iMzEwLjk2NjgiPlJ1biBzaW5nbGUtU1NUYWJsZSBjb21wYWN0aW9uPC90ZXh0PjxyZWN0IGZpbGw9IiNGOUU1RkYiIGZpbHRlcj0idXJsKCNmZXhhcGNldTc4OGV1KSIgaGVpZ2h0PSIzMy45Njg4IiByeD0iMTIuNSIgcnk9IjEyLjUiIHN0eWxlPSJzdHJva2U6ICM3QjRCOTY7IHN0cm9rZS13aWR0aDogMS41OyIgd2lkdGg9IjE2NiIgeD0iOTM2LjUiIHk9IjIwNi44OTA2Ii8+PHRleHQgZmlsbD0iIzAwMDAwMCIgZm9udC1mYW1pbHk9InNhbnMtc2VyaWYiIGZvbnQtc2l6ZT0iMTIiIGxlbmd0aEFkanVzdD0ic3BhY2luZ0FuZEdseXBocyIgdGV4dExlbmd0aD0iMTQ2IiB4PSI5NDYuNSIgeT0iMjI4LjAyOTMiPk5vIGNvbXBhY3Rpb24gbmVlZGVkPC90ZXh0Pjxwb2x5Z29uIGZpbGw9IiNFOEY1RTkiIGZpbHRlcj0idXJsKCNmZXhhcGNldTc4OGV1KSIgcG9pbnRzPSI5MDUsMzI5Ljc5NjksOTE3LDM0MS43OTY5LDkwNSwzNTMuNzk2OSw4OTMsMzQxLjc5NjksOTA1LDMyOS43OTY5IiBzdHlsZT0ic3Ryb2tlOiAjNENBRjUwOyBzdHJva2Utd2lkdGg6IDEuNTsiLz48cG9seWdvbiBmaWxsPSIjRThGNUU5IiBmaWx0ZXI9InVybCgjZmV4YXBjZXU3ODhldSkiIHBvaW50cz0iNjI0LjA2MjUsNjY4LjY0MDYsNjM2LjA2MjUsNjgwLjY0MDYsNjI0LjA2MjUsNjkyLjY0MDYsNjEyLjA2MjUsNjgwLjY0MDYsNjI0LjA2MjUsNjY4LjY0MDYiIHN0eWxlPSJzdHJva2U6ICM0Q0FGNTA7IHN0cm9rZS13aWR0aDogMS41OyIvPjxlbGxpcHNlIGN4PSI2MjQuMDYyNSIgY3k9IjcyMy42NDA2IiBmaWxsPSIjRkZGRkZGIiBmaWx0ZXI9InVybCgjZmV4YXBjZXU3ODhldSkiIHJ4PSIxMSIgcnk9IjExIiBzdHlsZT0ic3Ryb2tlOiAjMDAwMDAwOyBzdHJva2Utd2lkdGg6IDEuMDsiLz48ZWxsaXBzZSBjeD0iNjI0LjA2MjUiIGN5PSI3MjMuNjQwNiIgZmlsbD0iIzAwMDAwMCIgcng9IjYiIHJ5PSI2IiBzdHlsZT0ic3Ryb2tlOiAjN0Y3RjdGOyBzdHJva2Utd2lkdGg6IDEuMDsiLz48bGluZSBzdHlsZT0ic3Ryb2tlOiAjQTgwMDM2OyBzdHJva2Utd2lkdGg6IDEuNTsiIHgxPSI2MjQuMDYyNSIgeDI9IjYyNC4wNjI1IiB5MT0iNTAuOTUzMSIgeTI9IjcwLjk1MzEiLz48cG9seWdvbiBmaWxsPSIjQTgwMDM2IiBwb2ludHM9IjYyMC4wNjI1LDYwLjk1MzEsNjI0LjA2MjUsNzAuOTUzMSw2MjguMDYyNSw2MC45NTMxLDYyNC4wNjI1LDY0Ljk1MzEiIHN0eWxlPSJzdHJva2U6ICNBODAwMzY7IHN0cm9rZS13aWR0aDogMS4wOyIvPjxsaW5lIHN0eWxlPSJzdHJva2U6ICNBODAwMzY7IHN0cm9rZS13aWR0aDogMS41OyIgeDE9IjI2NyIgeDI9IjI2NyIgeTE9IjM1Ny43OTY5IiB5Mj0iMzkyLjc5NjkiLz48cG9seWdvbiBmaWxsPSIjQTgwMDM2IiBwb2ludHM9IjI2MywzODIuNzk2OSwyNjcsMzkyLjc5NjksMjcxLDM4Mi43OTY5LDI2NywzODYuNzk2OSIgc3R5bGU9InN0cm9rZTogI0E4MDAzNjsgc3Ryb2tlLXdpZHRoOiAxLjA7Ii8+PGxpbmUgc3R5bGU9InN0cm9rZTogI0E4MDAzNjsgc3Ryb2tlLXdpZHRoOiAxLjU7IiB4MT0iMjY3IiB4Mj0iMjY3IiB5MT0iNDI2Ljc2NTYiIHkyPSI0NDYuNzY1NiIvPjxwb2x5Z29uIGZpbGw9IiNBODAwMzYiIHBvaW50cz0iMjYzLDQzNi43NjU2LDI2Nyw0NDYuNzY1NiwyNzEsNDM2Ljc2NTYsMjY3LDQ0MC43NjU2IiBzdHlsZT0ic3Ryb2tlOiAjQTgwMDM2OyBzdHJva2Utd2lkdGg6IDEuMDsiLz48bGluZSBzdHlsZT0ic3Ryb2tlOiAjQTgwMDM2OyBzdHJva2Utd2lkdGg6IDEuNTsiIHgxPSIxMTguMjUiIHgyPSI3OC41IiB5MT0iMjg3Ljg1OTQiIHkyPSIyODcuODU5NCIvPjxsaW5lIHN0eWxlPSJzdHJva2U6ICNBODAwMzY7IHN0cm9rZS13aWR0aDogMS41OyIgeDE9Ijc4LjUiIHgyPSI3OC41IiB5MT0iMjg3Ljg1OTQiIHkyPSIzMDkuODU5NCIvPjxwb2x5Z29uIGZpbGw9IiNBODAwMzYiIHBvaW50cz0iNzQuNSwyOTkuODU5NCw3OC41LDMwOS44NTk0LDgyLjUsMjk5Ljg1OTQsNzguNSwzMDMuODU5NCIgc3R5bGU9InN0cm9rZTogI0E4MDAzNjsgc3Ryb2tlLXdpZHRoOiAxLjA7Ii8+PGxpbmUgc3R5bGU9InN0cm9rZTogI0E4MDAzNjsgc3Ryb2tlLXdpZHRoOiAxLjU7IiB4MT0iMjI3LjI1IiB4Mj0iMjY3IiB5MT0iMjg3Ljg1OTQiIHkyPSIyODcuODU5NCIvPjxsaW5lIHN0eWxlPSJzdHJva2U6ICNBODAwMzY7IHN0cm9rZS13aWR0aDogMS41OyIgeDE9IjI2NyIgeDI9IjI2NyIgeTE9IjI4Ny44NTk0IiB5Mj0iMzA5Ljg1OTQiLz48cG9seWdvbiBmaWxsPSIjQTgwMDM2IiBwb2ludHM9IjI2MywyOTkuODU5NCwyNjcsMzA5Ljg1OTQsMjcxLDI5OS44NTk0LDI2NywzMDMuODU5NCIgc3R5bGU9InN0cm9rZTogI0E4MDAzNjsgc3Ryb2tlLXdpZHRoOiAxLjA7Ii8+PGxpbmUgc3R5bGU9InN0cm9rZTogI0E4MDAzNjsgc3Ryb2tlLXdpZHRoOiAxLjU7IiB4MT0iNzguNSIgeDI9Ijc4LjUiIHkxPSIzNTcuNzk2OSIgeTI9IjUxMi43MDMxIi8+PGxpbmUgc3R5bGU9InN0cm9rZTogI0E4MDAzNjsgc3Ryb2tlLXdpZHRoOiAxLjU7IiB4MT0iNzguNSIgeDI9IjE2MC43NSIgeTE9IjUxMi43MDMxIiB5Mj0iNTEyLjcwMzEiLz48cG9seWdvbiBmaWxsPSIjQTgwMDM2IiBwb2ludHM9IjE1MC43NSw1MDguNzAzMSwxNjAuNzUsNTEyLjcwMzEsMTUwLjc1LDUxNi43MDMxLDE1NC43NSw1MTIuNzAzMSIgc3R5bGU9InN0cm9rZTogI0E4MDAzNjsgc3Ryb2tlLXdpZHRoOiAxLjA7Ii8+PGxpbmUgc3R5bGU9InN0cm9rZTogI0E4MDAzNjsgc3Ryb2tlLXdpZHRoOiAxLjU7IiB4MT0iMjY3IiB4Mj0iMjY3IiB5MT0iNDk0LjcwMzEiIHkyPSI1MTIuNzAzMSIvPjxsaW5lIHN0eWxlPSJzdHJva2U6ICNBODAwMzY7IHN0cm9rZS13aWR0aDogMS41OyIgeDE9IjI2NyIgeDI9IjE4NC43NSIgeTE9IjUxMi43MDMxIiB5Mj0iNTEyLjcwMzEiLz48cG9seWdvbiBmaWxsPSIjQTgwMDM2IiBwb2ludHM9IjE5NC43NSw1MDguNzAzMSwxODQuNzUsNTEyLjcwMzEsMTk0Ljc1LDUxNi43MDMxLDE5MC43NSw1MTIuNzAzMSIgc3R5bGU9InN0cm9rZTogI0E4MDAzNjsgc3Ryb2tlLXdpZHRoOiAxLjA7Ii8+PGxpbmUgc3R5bGU9InN0cm9rZTogI0E4MDAzNjsgc3Ryb2tlLXdpZHRoOiAxLjU7IiB4MT0iNTEzLjUiIHgyPSI1MTMuNSIgeTE9IjMyMy43OTY5IiB5Mj0iMzU4Ljc5NjkiLz48cG9seWdvbiBmaWxsPSIjQTgwMDM2IiBwb2ludHM9IjUwOS41LDM0OC43OTY5LDUxMy41LDM1OC43OTY5LDUxNy41LDM0OC43OTY5LDUxMy41LDM1Mi43OTY5IiBzdHlsZT0ic3Ryb2tlOiAjQTgwMDM2OyBzdHJva2Utd2lkdGg6IDEuMDsiLz48bGluZSBzdHlsZT0ic3Ryb2tlOiAjQTgwMDM2OyBzdHJva2Utd2lkdGg6IDEuNTsiIHgxPSIyOTQuMTI1IiB4Mj0iMTcyLjc1IiB5MT0iMjUzLjg1OTQiIHkyPSIyNTMuODU5NCIvPjxsaW5lIHN0eWxlPSJzdHJva2U6ICNBODAwMzY7IHN0cm9rZS13aWR0aDogMS41OyIgeDE9IjE3Mi43NSIgeDI9IjE3Mi43NSIgeTE9IjI1My44NTk0IiB5Mj0iMjc1Ljg1OTQiLz48cG9seWdvbiBmaWxsPSIjQTgwMDM2IiBwb2ludHM9IjE2OC43NSwyNjUuODU5NCwxNzIuNzUsMjc1Ljg1OTQsMTc2Ljc1LDI2NS44NTk0LDE3Mi43NSwyNjkuODU5NCIgc3R5bGU9InN0cm9rZTogI0E4MDAzNjsgc3Ryb2tlLXdpZHRoOiAxLjA7Ii8+PGxpbmUgc3R5bGU9InN0cm9rZTogI0E4MDAzNjsgc3Ryb2tlLXdpZHRoOiAxLjU7IiB4MT0iMzkyLjEyNSIgeDI9IjUxMy41IiB5MT0iMjUzLjg1OTQiIHkyPSIyNTMuODU5NCIvPjxsaW5lIHN0eWxlPSJzdHJva2U6ICNBODAwMzY7IHN0cm9rZS13aWR0aDogMS41OyIgeDE9IjUxMy41IiB4Mj0iNTEzLjUiIHkxPSIyNTMuODU5NCIgeTI9IjI3NS44NTk0Ii8+PHBvbHlnb24gZmlsbD0iI0E4MDAzNiIgcG9pbnRzPSI1MDkuNSwyNjUuODU5NCw1MTMuNSwyNzUuODU5NCw1MTcuNSwyNjUuODU5NCw1MTMuNSwyNjkuODU5NCIgc3R5bGU9InN0cm9rZTogI0E4MDAzNjsgc3Ryb2tlLXdpZHRoOiAxLjA7Ii8+PGxpbmUgc3R5bGU9InN0cm9rZTogI0E4MDAzNjsgc3Ryb2tlLXdpZHRoOiAxLjU7IiB4MT0iMTcyLjc1IiB4Mj0iMTcyLjc1IiB5MT0iNTI0LjcwMzEiIHkyPSI1NDIuNzAzMSIvPjxsaW5lIHN0eWxlPSJzdHJva2U6ICNBODAwMzY7IHN0cm9rZS13aWR0aDogMS41OyIgeDE9IjE3Mi43NSIgeDI9IjMzMS4xMjUiIHkxPSI1NDIuNzAzMSIgeTI9IjU0Mi43MDMxIi8+PHBvbHlnb24gZmlsbD0iI0E4MDAzNiIgcG9pbnRzPSIzMjEuMTI1LDUzOC43MDMxLDMzMS4xMjUsNTQyLjcwMzEsMzIxLjEyNSw1NDYuNzAzMSwzMjUuMTI1LDU0Mi43MDMxIiBzdHlsZT0ic3Ryb2tlOiAjQTgwMDM2OyBzdHJva2Utd2lkdGg6IDEuMDsiLz48bGluZSBzdHlsZT0ic3Ryb2tlOiAjQTgwMDM2OyBzdHJva2Utd2lkdGg6IDEuNTsiIHgxPSI1MTMuNSIgeDI9IjUxMy41IiB5MT0iMzkyLjc2NTYiIHkyPSI1NDIuNzAzMSIvPjxsaW5lIHN0eWxlPSJzdHJva2U6ICNBODAwMzY7IHN0cm9rZS13aWR0aDogMS41OyIgeDE9IjUxMy41IiB4Mj0iMzU1LjEyNSIgeTE9IjU0Mi43MDMxIiB5Mj0iNTQyLjcwMzEiLz48cG9seWdvbiBmaWxsPSIjQTgwMDM2IiBwb2ludHM9IjM2NS4xMjUsNTM4LjcwMzEsMzU1LjEyNSw1NDIuNzAzMSwzNjUuMTI1LDU0Ni43MDMxLDM2MS4xMjUsNTQyLjcwMzEiIHN0eWxlPSJzdHJva2U6ICNBODAwMzY7IHN0cm9rZS13aWR0aDogMS4wOyIvPjxsaW5lIHN0eWxlPSJzdHJva2U6ICNBODAwMzY7IHN0cm9rZS13aWR0aDogMS41OyIgeDE9IjM0My4xMjUiIHgyPSIzNDMuMTI1IiB5MT0iMjA2Ljg1OTQiIHkyPSIyNDEuODU5NCIvPjxwb2x5Z29uIGZpbGw9IiNBODAwMzYiIHBvaW50cz0iMzM5LjEyNSwyMzEuODU5NCwzNDMuMTI1LDI0MS44NTk0LDM0Ny4xMjUsMjMxLjg1OTQsMzQzLjEyNSwyMzUuODU5NCIgc3R5bGU9InN0cm9rZTogI0E4MDAzNjsgc3Ryb2tlLXdpZHRoOiAxLjA7Ii8+PGxpbmUgc3R5bGU9InN0cm9rZTogI0E4MDAzNjsgc3Ryb2tlLXdpZHRoOiAxLjU7IiB4MT0iMzQzLjEyNSIgeDI9IjM0My4xMjUiIHkxPSI1NTQuNzAzMSIgeTI9IjU3NC43MDMxIi8+PHBvbHlnb24gZmlsbD0iI0E4MDAzNiIgcG9pbnRzPSIzMzkuMTI1LDU2NC43MDMxLDM0My4xMjUsNTc0LjcwMzEsMzQ3LjEyNSw1NjQuNzAzMSwzNDMuMTI1LDU2OC43MDMxIiBzdHlsZT0ic3Ryb2tlOiAjQTgwMDM2OyBzdHJva2Utd2lkdGg6IDEuMDsiLz48bGluZSBzdHlsZT0ic3Ryb2tlOiAjQTgwMDM2OyBzdHJva2Utd2lkdGg6IDEuNTsiIHgxPSIzNDMuMTI1IiB4Mj0iMzQzLjEyNSIgeTE9IjYwOC42NzE5IiB5Mj0iNjI4LjY3MTkiLz48cG9seWdvbiBmaWxsPSIjQTgwMDM2IiBwb2ludHM9IjMzOS4xMjUsNjE4LjY3MTksMzQzLjEyNSw2MjguNjcxOSwzNDcuMTI1LDYxOC42NzE5LDM0My4xMjUsNjIyLjY3MTkiIHN0eWxlPSJzdHJva2U6ICNBODAwMzY7IHN0cm9rZS13aWR0aDogMS4wOyIvPjxsaW5lIHN0eWxlPSJzdHJva2U6ICNBODAwMzY7IHN0cm9rZS13aWR0aDogMS41OyIgeDE9Ijc5MC41IiB4Mj0iNzkwLjUiIHkxPSIyNTQuODI4MSIgeTI9IjI4OS44MjgxIi8+PHBvbHlnb24gZmlsbD0iI0E4MDAzNiIgcG9pbnRzPSI3ODYuNSwyNzkuODI4MSw3OTAuNSwyODkuODI4MSw3OTQuNSwyNzkuODI4MSw3OTAuNSwyODMuODI4MSIgc3R5bGU9InN0cm9rZTogI0E4MDAzNjsgc3Ryb2tlLXdpZHRoOiAxLjA7Ii8+PGxpbmUgc3R5bGU9InN0cm9rZTogI0E4MDAzNjsgc3Ryb2tlLXdpZHRoOiAxLjU7IiB4MT0iODAwLjUiIHgyPSI3OTAuNSIgeTE9IjE4NC44OTA2IiB5Mj0iMTg0Ljg5MDYiLz48bGluZSBzdHlsZT0ic3Ryb2tlOiAjQTgwMDM2OyBzdHJva2Utd2lkdGg6IDEuNTsiIHgxPSI3OTAuNSIgeDI9Ijc5MC41IiB5MT0iMTg0Ljg5MDYiIHkyPSIyMDYuODkwNiIvPjxwb2x5Z29uIGZpbGw9IiNBODAwMzYiIHBvaW50cz0iNzg2LjUsMTk2Ljg5MDYsNzkwLjUsMjA2Ljg5MDYsNzk0LjUsMTk2Ljg5MDYsNzkwLjUsMjAwLjg5MDYiIHN0eWxlPSJzdHJva2U6ICNBODAwMzY7IHN0cm9rZS13aWR0aDogMS4wOyIvPjxsaW5lIHN0eWxlPSJzdHJva2U6ICNBODAwMzY7IHN0cm9rZS13aWR0aDogMS41OyIgeDE9IjEwMDkuNSIgeDI9IjEwMTkuNSIgeTE9IjE4NC44OTA2IiB5Mj0iMTg0Ljg5MDYiLz48bGluZSBzdHlsZT0ic3Ryb2tlOiAjQTgwMDM2OyBzdHJva2Utd2lkdGg6IDEuNTsiIHgxPSIxMDE5LjUiIHgyPSIxMDE5LjUiIHkxPSIxODQuODkwNiIgeTI9IjIwNi44OTA2Ii8+PHBvbHlnb24gZmlsbD0iI0E4MDAzNiIgcG9pbnRzPSIxMDE1LjUsMTk2Ljg5MDYsMTAxOS41LDIwNi44OTA2LDEwMjMuNSwxOTYuODkwNiwxMDE5LjUsMjAwLjg5MDYiIHN0eWxlPSJzdHJva2U6ICNBODAwMzY7IHN0cm9rZS13aWR0aDogMS4wOyIvPjxsaW5lIHN0eWxlPSJzdHJva2U6ICNBODAwMzY7IHN0cm9rZS13aWR0aDogMS41OyIgeDE9Ijc5MC41IiB4Mj0iNzkwLjUiIHkxPSIzMjMuNzk2OSIgeTI9IjM0MS43OTY5Ii8+PGxpbmUgc3R5bGU9InN0cm9rZTogI0E4MDAzNjsgc3Ryb2tlLXdpZHRoOiAxLjU7IiB4MT0iNzkwLjUiIHgyPSI4OTMiIHkxPSIzNDEuNzk2OSIgeTI9IjM0MS43OTY5Ii8+PHBvbHlnb24gZmlsbD0iI0E4MDAzNiIgcG9pbnRzPSI4ODMsMzM3Ljc5NjksODkzLDM0MS43OTY5LDg4MywzNDUuNzk2OSw4ODcsMzQxLjc5NjkiIHN0eWxlPSJzdHJva2U6ICNBODAwMzY7IHN0cm9rZS13aWR0aDogMS4wOyIvPjxsaW5lIHN0eWxlPSJzdHJva2U6ICNBODAwMzY7IHN0cm9rZS13aWR0aDogMS41OyIgeDE9IjEwMTkuNSIgeDI9IjEwMTkuNSIgeTE9IjI0MC44NTk0IiB5Mj0iMzQxLjc5NjkiLz48bGluZSBzdHlsZT0ic3Ryb2tlOiAjQTgwMDM2OyBzdHJva2Utd2lkdGg6IDEuNTsiIHgxPSIxMDE5LjUiIHgyPSI5MTciIHkxPSIzNDEuNzk2OSIgeTI9IjM0MS43OTY5Ii8+PHBvbHlnb24gZmlsbD0iI0E4MDAzNiIgcG9pbnRzPSI5MjcsMzM3Ljc5NjksOTE3LDM0MS43OTY5LDkyNywzNDUuNzk2OSw5MjMsMzQxLjc5NjkiIHN0eWxlPSJzdHJva2U6ICNBODAwMzY7IHN0cm9rZS13aWR0aDogMS4wOyIvPjxsaW5lIHN0eWxlPSJzdHJva2U6ICNBODAwMzY7IHN0cm9rZS13aWR0aDogMS41OyIgeDE9IjU0MS41NjI1IiB4Mj0iMzQzLjEyNSIgeTE9IjE1MC44OTA2IiB5Mj0iMTUwLjg5MDYiLz48bGluZSBzdHlsZT0ic3Ryb2tlOiAjQTgwMDM2OyBzdHJva2Utd2lkdGg6IDEuNTsiIHgxPSIzNDMuMTI1IiB4Mj0iMzQzLjEyNSIgeTE9IjE1MC44OTA2IiB5Mj0iMTcyLjg5MDYiLz48cG9seWdvbiBmaWxsPSIjQTgwMDM2IiBwb2ludHM9IjMzOS4xMjUsMTYyLjg5MDYsMzQzLjEyNSwxNzIuODkwNiwzNDcuMTI1LDE2Mi44OTA2LDM0My4xMjUsMTY2Ljg5MDYiIHN0eWxlPSJzdHJva2U6ICNBODAwMzY7IHN0cm9rZS13aWR0aDogMS4wOyIvPjxsaW5lIHN0eWxlPSJzdHJva2U6ICNBODAwMzY7IHN0cm9rZS13aWR0aDogMS41OyIgeDE9IjcwNi41NjI1IiB4Mj0iOTA1IiB5MT0iMTUwLjg5MDYiIHkyPSIxNTAuODkwNiIvPjxsaW5lIHN0eWxlPSJzdHJva2U6ICNBODAwMzY7IHN0cm9rZS13aWR0aDogMS41OyIgeDE9IjkwNSIgeDI9IjkwNSIgeTE9IjE1MC44OTA2IiB5Mj0iMTcyLjg5MDYiLz48cG9seWdvbiBmaWxsPSIjQTgwMDM2IiBwb2ludHM9IjkwMSwxNjIuODkwNiw5MDUsMTcyLjg5MDYsOTA5LDE2Mi44OTA2LDkwNSwxNjYuODkwNiIgc3R5bGU9InN0cm9rZTogI0E4MDAzNjsgc3Ryb2tlLXdpZHRoOiAxLjA7Ii8+PGxpbmUgc3R5bGU9InN0cm9rZTogI0E4MDAzNjsgc3Ryb2tlLXdpZHRoOiAxLjU7IiB4MT0iMzQzLjEyNSIgeDI9IjM0My4xMjUiIHkxPSI2NjIuNjQwNiIgeTI9IjY4MC42NDA2Ii8+PGxpbmUgc3R5bGU9InN0cm9rZTogI0E4MDAzNjsgc3Ryb2tlLXdpZHRoOiAxLjU7IiB4MT0iMzQzLjEyNSIgeDI9IjYxMi4wNjI1IiB5MT0iNjgwLjY0MDYiIHkyPSI2ODAuNjQwNiIvPjxwb2x5Z29uIGZpbGw9IiNBODAwMzYiIHBvaW50cz0iNjAyLjA2MjUsNjc2LjY0MDYsNjEyLjA2MjUsNjgwLjY0MDYsNjAyLjA2MjUsNjg0LjY0MDYsNjA2LjA2MjUsNjgwLjY0MDYiIHN0eWxlPSJzdHJva2U6ICNBODAwMzY7IHN0cm9rZS13aWR0aDogMS4wOyIvPjxsaW5lIHN0eWxlPSJzdHJva2U6ICNBODAwMzY7IHN0cm9rZS13aWR0aDogMS41OyIgeDE9IjkwNSIgeDI9IjkwNSIgeTE9IjM1My43OTY5IiB5Mj0iNjgwLjY0MDYiLz48bGluZSBzdHlsZT0ic3Ryb2tlOiAjQTgwMDM2OyBzdHJva2Utd2lkdGg6IDEuNTsiIHgxPSI5MDUiIHgyPSI2MzYuMDYyNSIgeTE9IjY4MC42NDA2IiB5Mj0iNjgwLjY0MDYiLz48cG9seWdvbiBmaWxsPSIjQTgwMDM2IiBwb2ludHM9IjY0Ni4wNjI1LDY3Ni42NDA2LDYzNi4wNjI1LDY4MC42NDA2LDY0Ni4wNjI1LDY4NC42NDA2LDY0Mi4wNjI1LDY4MC42NDA2IiBzdHlsZT0ic3Ryb2tlOiAjQTgwMDM2OyBzdHJva2Utd2lkdGg6IDEuMDsiLz48bGluZSBzdHlsZT0ic3Ryb2tlOiAjQTgwMDM2OyBzdHJva2Utd2lkdGg6IDEuNTsiIHgxPSI2MjQuMDYyNSIgeDI9IjYyNC4wNjI1IiB5MT0iMTE4Ljg5MDYiIHkyPSIxMzguODkwNiIvPjxwb2x5Z29uIGZpbGw9IiNBODAwMzYiIHBvaW50cz0iNjIwLjA2MjUsMTI4Ljg5MDYsNjI0LjA2MjUsMTM4Ljg5MDYsNjI4LjA2MjUsMTI4Ljg5MDYsNjI0LjA2MjUsMTMyLjg5MDYiIHN0eWxlPSJzdHJva2U6ICNBODAwMzY7IHN0cm9rZS13aWR0aDogMS4wOyIvPjxsaW5lIHN0eWxlPSJzdHJva2U6ICNBODAwMzY7IHN0cm9rZS13aWR0aDogMS41OyIgeDE9IjYyNC4wNjI1IiB4Mj0iNjI0LjA2MjUiIHkxPSI2OTIuNjQwNiIgeTI9IjcxMi42NDA2Ii8+PHBvbHlnb24gZmlsbD0iI0E4MDAzNiIgcG9pbnRzPSI2MjAuMDYyNSw3MDIuNjQwNiw2MjQuMDYyNSw3MTIuNjQwNiw2MjguMDYyNSw3MDIuNjQwNiw2MjQuMDYyNSw3MDYuNjQwNiIgc3R5bGU9InN0cm9rZTogI0E4MDAzNjsgc3Ryb2tlLXdpZHRoOiAxLjA7Ii8+PCEtLU1ENT1bZjhlOTk4MGUwYjJkNTE2MTg1ODUxMzFiODYxNDdjYTddCkBzdGFydHVtbA0Kc2tpbnBhcmFtIGJhY2tncm91bmRDb2xvciB0cmFuc3BhcmVudA0Kc2tpbnBhcmFtIEFjdGl2aXR5QmFja2dyb3VuZENvbG9yICNGOUU1RkYNCnNraW5wYXJhbSBBY3Rpdml0eUJvcmRlckNvbG9yICM3QjRCOTYNCnNraW5wYXJhbSBBY3Rpdml0eURpYW1vbmRCYWNrZ3JvdW5kQ29sb3IgI0U4RjVFOQ0Kc2tpbnBhcmFtIEFjdGl2aXR5RGlhbW9uZEJvcmRlckNvbG9yICM0Q0FGNTANCg0KdGl0bGUgTENTIENvbXBhY3Rpb24gRGVjaXNpb24gRmxvdw0KDQpzdGFydA0KDQo6Q2hlY2sgbGV2ZWwgc2NvcmVzXG4oaGlnaGVzdCBsZXZlbCBmaXJzdCk7DQoNCmlmIChBbnkgbGV2ZWwgc2NvcmUgPiAxLjAwMT8pIHRoZW4gKHllcykNCiAgICA6U2VsZWN0IGxldmVsIHdpdGggaGlnaGVzdCBzY29yZTsNCg0KICAgIGlmIChMZXZlbCA9PSBMMD8pIHRoZW4gKHllcykNCiAgICAgICAgaWYgKEwwIGNvdW50ID4gMzI/KSB0aGVuICh5ZXMpDQogICAgICAgICAgICAjRkZFMEUwOlJ1biBTVENTIHdpdGhpbiBMMFxuKGZhbGxiYWNrIG1vZGUpOw0KICAgICAgICBlbHNlIChubykNCiAgICAgICAgICAgIDpTZWxlY3Qgb2xkZXN0IEwwIFNTVGFibGVzXG4odXAgdG8gc3N0YWJsZV9zaXplIHRvdGFsKTsNCiAgICAgICAgICAgIDpBZGQgb3ZlcmxhcHBpbmcgTDAgU1NUYWJsZXM7DQogICAgICAgICAgICA6QWRkIG92ZXJsYXBwaW5nIEwxIFNTVGFibGVzXG4oaWYgc2l6ZSA+IHNzdGFibGVfc2l6ZSk7DQogICAgICAgIGVuZGlmDQogICAgZWxzZSAobm8pDQogICAgICAgIDpTZWxlY3QgbmV4dCBTU1RhYmxlXG4ocm91bmQtcm9iaW4gZnJvbSBsYXN0Q29tcGFjdGVkKTsNCiAgICAgICAgOkZpbmQgb3ZlcmxhcHBpbmcgTChuKzEpIFNTVGFibGVzOw0KICAgIGVuZGlmDQoNCiAgICA6RXhlY3V0ZSBjb21wYWN0aW9uOw0KICAgIDpVcGRhdGUgbGFzdENvbXBhY3RlZFNTVGFibGVzOw0KDQplbHNlIChubykNCiAgICBpZiAoVG9tYnN0b25lIGNvbXBhY3Rpb24gbmVlZGVkPykgdGhlbiAoeWVzKQ0KICAgICAgICA6RmluZCBTU1RhYmxlIHdpdGhcbmRyb3BwYWJsZSB0b21ic3RvbmVzID4gdGhyZXNob2xkOw0KICAgICAgICA6UnVuIHNpbmdsZS1TU1RhYmxlIGNvbXBhY3Rpb247DQogICAgZWxzZSAobm8pDQogICAgICAgIDpObyBjb21wYWN0aW9uIG5lZWRlZDsNCiAgICBlbmRpZg0KZW5kaWYNCg0Kc3RvcA0KQGVuZHVtbA0KClBsYW50VU1MIHZlcnNpb24gMS4yMDIwLjAyKFN1biBNYXIgMDEgMTA6MjI6MDcgR01UIDIwMjApCihHUEwgc291cmNlIGRpc3RyaWJ1dGlvbikKSmF2YSBSdW50aW1lOiBPcGVuSkRLIFJ1bnRpbWUgRW52aXJvbm1lbnQKSlZNOiBPcGVuSkRLIDY0LUJpdCBTZXJ2ZXIgVk0KSmF2YSBWZXJzaW9uOiAxNy4wLjE1KzYtTFRTCk9wZXJhdGluZyBTeXN0ZW06IExpbnV4CkRlZmF1bHQgRW5jb2Rpbmc6IFVURi04Ckxhbmd1YWdlOiBlbgpDb3VudHJ5OiBudWxsCi0tPjwvZz48L3N2Zz4=" data-type="image" data-width="100%" data-height="auto" data-desc-position="bottom"><img src="data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0iVVRGLTgiIHN0YW5kYWxvbmU9Im5vIj8+PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHhtbG5zOnhsaW5rPSJodHRwOi8vd3d3LnczLm9yZy8xOTk5L3hsaW5rIiBjb250ZW50U2NyaXB0VHlwZT0iYXBwbGljYXRpb24vZWNtYXNjcmlwdCIgY29udGVudFN0eWxlVHlwZT0idGV4dC9jc3MiIGhlaWdodD0iNzQ1cHgiIHByZXNlcnZlQXNwZWN0UmF0aW89Im5vbmUiIHN0eWxlPSJ3aWR0aDoxMTEzcHg7aGVpZ2h0Ojc0NXB4OyIgdmVyc2lvbj0iMS4xIiB2aWV3Qm94PSIwIDAgMTExMyA3NDUiIHdpZHRoPSIxMTEzcHgiIHpvb21BbmRQYW49Im1hZ25pZnkiPjxkZWZzPjxmaWx0ZXIgaGVpZ2h0PSIzMDAlIiBpZD0iZmV4YXBjZXU3ODhldSIgd2lkdGg9IjMwMCUiIHg9Ii0xIiB5PSItMSI+PGZlR2F1c3NpYW5CbHVyIHJlc3VsdD0iYmx1ck91dCIgc3RkRGV2aWF0aW9uPSIyLjAiLz48ZmVDb2xvck1hdHJpeCBpbj0iYmx1ck91dCIgcmVzdWx0PSJibHVyT3V0MiIgdHlwZT0ibWF0cml4IiB2YWx1ZXM9IjAgMCAwIDAgMCAwIDAgMCAwIDAgMCAwIDAgMCAwIDAgMCAwIC40IDAiLz48ZmVPZmZzZXQgZHg9IjQuMCIgZHk9IjQuMCIgaW49ImJsdXJPdXQyIiByZXN1bHQ9ImJsdXJPdXQzIi8+PGZlQmxlbmQgaW49IlNvdXJjZUdyYXBoaWMiIGluMj0iYmx1ck91dDMiIG1vZGU9Im5vcm1hbCIvPjwvZmlsdGVyPjwvZGVmcz48Zz48dGV4dCBmaWxsPSIjMDAwMDAwIiBmb250LWZhbWlseT0ic2Fucy1zZXJpZiIgZm9udC1zaXplPSIxOCIgbGVuZ3RoQWRqdXN0PSJzcGFjaW5nQW5kR2x5cGhzIiB0ZXh0TGVuZ3RoPSIyNzMiIHg9IjQxOS4yNSIgeT0iMjYuNzA4Ij5MQ1MgQ29tcGFjdGlvbiBEZWNpc2lvbiBGbG93PC90ZXh0PjxlbGxpcHNlIGN4PSI2MjQuMDYyNSIgY3k9IjQwLjk1MzEiIGZpbGw9IiMwMDAwMDAiIGZpbHRlcj0idXJsKCNmZXhhcGNldTc4OGV1KSIgcng9IjEwIiByeT0iMTAiIHN0eWxlPSJzdHJva2U6IG5vbmU7IHN0cm9rZS13aWR0aDogMS4wOyIvPjxyZWN0IGZpbGw9IiNGOUU1RkYiIGZpbHRlcj0idXJsKCNmZXhhcGNldTc4OGV1KSIgaGVpZ2h0PSI0Ny45Mzc1IiByeD0iMTIuNSIgcnk9IjEyLjUiIHN0eWxlPSJzdHJva2U6ICM3QjRCOTY7IHN0cm9rZS13aWR0aDogMS41OyIgd2lkdGg9IjEzNyIgeD0iNTU1LjU2MjUiIHk9IjcwLjk1MzEiLz48dGV4dCBmaWxsPSIjMDAwMDAwIiBmb250LWZhbWlseT0ic2Fucy1zZXJpZiIgZm9udC1zaXplPSIxMiIgbGVuZ3RoQWRqdXN0PSJzcGFjaW5nQW5kR2x5cGhzIiB0ZXh0TGVuZ3RoPSIxMTYiIHg9IjU2NS41NjI1IiB5PSI5Mi4wOTE4Ij5DaGVjayBsZXZlbCBzY29yZXM8L3RleHQ+PHRleHQgZmlsbD0iIzAwMDAwMCIgZm9udC1mYW1pbHk9InNhbnMtc2VyaWYiIGZvbnQtc2l6ZT0iMTIiIGxlbmd0aEFkanVzdD0ic3BhY2luZ0FuZEdseXBocyIgdGV4dExlbmd0aD0iMTE3IiB4PSI1NjUuNTYyNSIgeT0iMTA2LjA2MDUiPihoaWdoZXN0IGxldmVsIGZpcnN0KTwvdGV4dD48cG9seWdvbiBmaWxsPSIjRThGNUU5IiBmaWx0ZXI9InVybCgjZmV4YXBjZXU3ODhldSkiIHBvaW50cz0iNTUzLjU2MjUsMTM4Ljg5MDYsNjk0LjU2MjUsMTM4Ljg5MDYsNzA2LjU2MjUsMTUwLjg5MDYsNjk0LjU2MjUsMTYyLjg5MDYsNTUzLjU2MjUsMTYyLjg5MDYsNTQxLjU2MjUsMTUwLjg5MDYsNTUzLjU2MjUsMTM4Ljg5MDYiIHN0eWxlPSJzdHJva2U6ICM0Q0FGNTA7IHN0cm9rZS13aWR0aDogMS41OyIvPjx0ZXh0IGZpbGw9IiMwMDAwMDAiIGZvbnQtZmFtaWx5PSJzYW5zLXNlcmlmIiBmb250LXNpemU9IjExIiBsZW5ndGhBZGp1c3Q9InNwYWNpbmdBbmRHbHlwaHMiIHRleHRMZW5ndGg9IjE0MSIgeD0iNTUzLjU2MjUiIHk9IjE1NC42OTg3Ij5BbnkgbGV2ZWwgc2NvcmUgJmd0OyAxLjAwMT88L3RleHQ+PHRleHQgZmlsbD0iIzAwMDAwMCIgZm9udC1mYW1pbHk9InNhbnMtc2VyaWYiIGZvbnQtc2l6ZT0iMTEiIGxlbmd0aEFkanVzdD0ic3BhY2luZ0FuZEdseXBocyIgdGV4dExlbmd0aD0iMjAiIHg9IjUyMS41NjI1IiB5PSIxNDguMjk2NCI+eWVzPC90ZXh0Pjx0ZXh0IGZpbGw9IiMwMDAwMDAiIGZvbnQtZmFtaWx5PSJzYW5zLXNlcmlmIiBmb250LXNpemU9IjExIiBsZW5ndGhBZGp1c3Q9InNwYWNpbmdBbmRHbHlwaHMiIHRleHRMZW5ndGg9IjE0IiB4PSI3MDYuNTYyNSIgeT0iMTQ4LjI5NjQiPm5vPC90ZXh0PjxyZWN0IGZpbGw9IiNGOUU1RkYiIGZpbHRlcj0idXJsKCNmZXhhcGNldTc4OGV1KSIgaGVpZ2h0PSIzMy45Njg4IiByeD0iMTIuNSIgcnk9IjEyLjUiIHN0eWxlPSJzdHJva2U6ICM3QjRCOTY7IHN0cm9rZS13aWR0aDogMS41OyIgd2lkdGg9IjIxMCIgeD0iMjM4LjEyNSIgeT0iMTcyLjg5MDYiLz48dGV4dCBmaWxsPSIjMDAwMDAwIiBmb250LWZhbWlseT0ic2Fucy1zZXJpZiIgZm9udC1zaXplPSIxMiIgbGVuZ3RoQWRqdXN0PSJzcGFjaW5nQW5kR2x5cGhzIiB0ZXh0TGVuZ3RoPSIxOTAiIHg9IjI0OC4xMjUiIHk9IjE5NC4wMjkzIj5TZWxlY3QgbGV2ZWwgd2l0aCBoaWdoZXN0IHNjb3JlPC90ZXh0Pjxwb2x5Z29uIGZpbGw9IiNFOEY1RTkiIGZpbHRlcj0idXJsKCNmZXhhcGNldTc4OGV1KSIgcG9pbnRzPSIzMDYuMTI1LDI0MS44NTk0LDM4MC4xMjUsMjQxLjg1OTQsMzkyLjEyNSwyNTMuODU5NCwzODAuMTI1LDI2NS44NTk0LDMwNi4xMjUsMjY1Ljg1OTQsMjk0LjEyNSwyNTMuODU5NCwzMDYuMTI1LDI0MS44NTk0IiBzdHlsZT0ic3Ryb2tlOiAjNENBRjUwOyBzdHJva2Utd2lkdGg6IDEuNTsiLz48dGV4dCBmaWxsPSIjMDAwMDAwIiBmb250LWZhbWlseT0ic2Fucy1zZXJpZiIgZm9udC1zaXplPSIxMSIgbGVuZ3RoQWRqdXN0PSJzcGFjaW5nQW5kR2x5cGhzIiB0ZXh0TGVuZ3RoPSI3NCIgeD0iMzA2LjEyNSIgeT0iMjU3LjY2NzUiPkxldmVsID09IEwwPzwvdGV4dD48dGV4dCBmaWxsPSIjMDAwMDAwIiBmb250LWZhbWlseT0ic2Fucy1zZXJpZiIgZm9udC1zaXplPSIxMSIgbGVuZ3RoQWRqdXN0PSJzcGFjaW5nQW5kR2x5cGhzIiB0ZXh0TGVuZ3RoPSIyMCIgeD0iMjc0LjEyNSIgeT0iMjUxLjI2NTEiPnllczwvdGV4dD48dGV4dCBmaWxsPSIjMDAwMDAwIiBmb250LWZhbWlseT0ic2Fucy1zZXJpZiIgZm9udC1zaXplPSIxMSIgbGVuZ3RoQWRqdXN0PSJzcGFjaW5nQW5kR2x5cGhzIiB0ZXh0TGVuZ3RoPSIxNCIgeD0iMzkyLjEyNSIgeT0iMjUxLjI2NTEiPm5vPC90ZXh0Pjxwb2x5Z29uIGZpbGw9IiNFOEY1RTkiIGZpbHRlcj0idXJsKCNmZXhhcGNldTc4OGV1KSIgcG9pbnRzPSIxMzAuMjUsMjc1Ljg1OTQsMjE1LjI1LDI3NS44NTk0LDIyNy4yNSwyODcuODU5NCwyMTUuMjUsMjk5Ljg1OTQsMTMwLjI1LDI5OS44NTk0LDExOC4yNSwyODcuODU5NCwxMzAuMjUsMjc1Ljg1OTQiIHN0eWxlPSJzdHJva2U6ICM0Q0FGNTA7IHN0cm9rZS13aWR0aDogMS41OyIvPjx0ZXh0IGZpbGw9IiMwMDAwMDAiIGZvbnQtZmFtaWx5PSJzYW5zLXNlcmlmIiBmb250LXNpemU9IjExIiBsZW5ndGhBZGp1c3Q9InNwYWNpbmdBbmRHbHlwaHMiIHRleHRMZW5ndGg9Ijg1IiB4PSIxMzAuMjUiIHk9IjI5MS42Njc1Ij5MMCBjb3VudCAmZ3Q7IDMyPzwvdGV4dD48dGV4dCBmaWxsPSIjMDAwMDAwIiBmb250LWZhbWlseT0ic2Fucy1zZXJpZiIgZm9udC1zaXplPSIxMSIgbGVuZ3RoQWRqdXN0PSJzcGFjaW5nQW5kR2x5cGhzIiB0ZXh0TGVuZ3RoPSIyMCIgeD0iOTguMjUiIHk9IjI4NS4yNjUxIj55ZXM8L3RleHQ+PHRleHQgZmlsbD0iIzAwMDAwMCIgZm9udC1mYW1pbHk9InNhbnMtc2VyaWYiIGZvbnQtc2l6ZT0iMTEiIGxlbmd0aEFkanVzdD0ic3BhY2luZ0FuZEdseXBocyIgdGV4dExlbmd0aD0iMTQiIHg9IjIyNy4yNSIgeT0iMjg1LjI2NTEiPm5vPC90ZXh0PjxyZWN0IGZpbGw9IiNGRkUwRTAiIGZpbHRlcj0idXJsKCNmZXhhcGNldTc4OGV1KSIgaGVpZ2h0PSI0Ny45Mzc1IiByeD0iMTIuNSIgcnk9IjEyLjUiIHN0eWxlPSJzdHJva2U6ICM3QjRCOTY7IHN0cm9rZS13aWR0aDogMS41OyIgd2lkdGg9IjEzNyIgeD0iMTAiIHk9IjMwOS44NTk0Ii8+PHRleHQgZmlsbD0iIzAwMDAwMCIgZm9udC1mYW1pbHk9InNhbnMtc2VyaWYiIGZvbnQtc2l6ZT0iMTIiIGxlbmd0aEFkanVzdD0ic3BhY2luZ0FuZEdseXBocyIgdGV4dExlbmd0aD0iMTE3IiB4PSIyMCIgeT0iMzMwLjk5OCI+UnVuIFNUQ1Mgd2l0aGluIEwwPC90ZXh0Pjx0ZXh0IGZpbGw9IiMwMDAwMDAiIGZvbnQtZmFtaWx5PSJzYW5zLXNlcmlmIiBmb250LXNpemU9IjEyIiBsZW5ndGhBZGp1c3Q9InNwYWNpbmdBbmRHbHlwaHMiIHRleHRMZW5ndGg9Ijk3IiB4PSIyMCIgeT0iMzQ0Ljk2NjgiPihmYWxsYmFjayBtb2RlKTwvdGV4dD48cmVjdCBmaWxsPSIjRjlFNUZGIiBmaWx0ZXI9InVybCgjZmV4YXBjZXU3ODhldSkiIGhlaWdodD0iNDcuOTM3NSIgcng9IjEyLjUiIHJ5PSIxMi41IiBzdHlsZT0ic3Ryb2tlOiAjN0I0Qjk2OyBzdHJva2Utd2lkdGg6IDEuNTsiIHdpZHRoPSIxODEiIHg9IjE3Ni41IiB5PSIzMDkuODU5NCIvPjx0ZXh0IGZpbGw9IiMwMDAwMDAiIGZvbnQtZmFtaWx5PSJzYW5zLXNlcmlmIiBmb250LXNpemU9IjEyIiBsZW5ndGhBZGp1c3Q9InNwYWNpbmdBbmRHbHlwaHMiIHRleHRMZW5ndGg9IjE2MSIgeD0iMTg2LjUiIHk9IjMzMC45OTgiPlNlbGVjdCBvbGRlc3QgTDAgU1NUYWJsZXM8L3RleHQ+PHRleHQgZmlsbD0iIzAwMDAwMCIgZm9udC1mYW1pbHk9InNhbnMtc2VyaWYiIGZvbnQtc2l6ZT0iMTIiIGxlbmd0aEFkanVzdD0ic3BhY2luZ0FuZEdseXBocyIgdGV4dExlbmd0aD0iMTU1IiB4PSIxODYuNSIgeT0iMzQ0Ljk2NjgiPih1cCB0byBzc3RhYmxlX3NpemUgdG90YWwpPC90ZXh0PjxyZWN0IGZpbGw9IiNGOUU1RkYiIGZpbHRlcj0idXJsKCNmZXhhcGNldTc4OGV1KSIgaGVpZ2h0PSIzMy45Njg4IiByeD0iMTIuNSIgcnk9IjEyLjUiIHN0eWxlPSJzdHJva2U6ICM3QjRCOTY7IHN0cm9rZS13aWR0aDogMS41OyIgd2lkdGg9IjIwMCIgeD0iMTY3IiB5PSIzOTIuNzk2OSIvPjx0ZXh0IGZpbGw9IiMwMDAwMDAiIGZvbnQtZmFtaWx5PSJzYW5zLXNlcmlmIiBmb250LXNpemU9IjEyIiBsZW5ndGhBZGp1c3Q9InNwYWNpbmdBbmRHbHlwaHMiIHRleHRMZW5ndGg9IjE4MCIgeD0iMTc3IiB5PSI0MTMuOTM1NSI+QWRkIG92ZXJsYXBwaW5nIEwwIFNTVGFibGVzPC90ZXh0PjxyZWN0IGZpbGw9IiNGOUU1RkYiIGZpbHRlcj0idXJsKCNmZXhhcGNldTc4OGV1KSIgaGVpZ2h0PSI0Ny45Mzc1IiByeD0iMTIuNSIgcnk9IjEyLjUiIHN0eWxlPSJzdHJva2U6ICM3QjRCOTY7IHN0cm9rZS13aWR0aDogMS41OyIgd2lkdGg9IjIwMCIgeD0iMTY3IiB5PSI0NDYuNzY1NiIvPjx0ZXh0IGZpbGw9IiMwMDAwMDAiIGZvbnQtZmFtaWx5PSJzYW5zLXNlcmlmIiBmb250LXNpemU9IjEyIiBsZW5ndGhBZGp1c3Q9InNwYWNpbmdBbmRHbHlwaHMiIHRleHRMZW5ndGg9IjE4MCIgeD0iMTc3IiB5PSI0NjcuOTA0MyI+QWRkIG92ZXJsYXBwaW5nIEwxIFNTVGFibGVzPC90ZXh0Pjx0ZXh0IGZpbGw9IiMwMDAwMDAiIGZvbnQtZmFtaWx5PSJzYW5zLXNlcmlmIiBmb250LXNpemU9IjEyIiBsZW5ndGhBZGp1c3Q9InNwYWNpbmdBbmRHbHlwaHMiIHRleHRMZW5ndGg9IjEzNyIgeD0iMTc3IiB5PSI0ODEuODczIj4oaWYgc2l6ZSAmZ3Q7IHNzdGFibGVfc2l6ZSk8L3RleHQ+PHBvbHlnb24gZmlsbD0iI0U4RjVFOSIgZmlsdGVyPSJ1cmwoI2ZleGFwY2V1Nzg4ZXUpIiBwb2ludHM9IjE3Mi43NSw1MDAuNzAzMSwxODQuNzUsNTEyLjcwMzEsMTcyLjc1LDUyNC43MDMxLDE2MC43NSw1MTIuNzAzMSwxNzIuNzUsNTAwLjcwMzEiIHN0eWxlPSJzdHJva2U6ICM0Q0FGNTA7IHN0cm9rZS13aWR0aDogMS41OyIvPjxyZWN0IGZpbGw9IiNGOUU1RkYiIGZpbHRlcj0idXJsKCNmZXhhcGNldTc4OGV1KSIgaGVpZ2h0PSI0Ny45Mzc1IiByeD0iMTIuNSIgcnk9IjEyLjUiIHN0eWxlPSJzdHJva2U6ICM3QjRCOTY7IHN0cm9rZS13aWR0aDogMS41OyIgd2lkdGg9IjIzMyIgeD0iMzk3IiB5PSIyNzUuODU5NCIvPjx0ZXh0IGZpbGw9IiMwMDAwMDAiIGZvbnQtZmFtaWx5PSJzYW5zLXNlcmlmIiBmb250LXNpemU9IjEyIiBsZW5ndGhBZGp1c3Q9InNwYWNpbmdBbmRHbHlwaHMiIHRleHRMZW5ndGg9IjEyNCIgeD0iNDA3IiB5PSIyOTYuOTk4Ij5TZWxlY3QgbmV4dCBTU1RhYmxlPC90ZXh0Pjx0ZXh0IGZpbGw9IiMwMDAwMDAiIGZvbnQtZmFtaWx5PSJzYW5zLXNlcmlmIiBmb250LXNpemU9IjEyIiBsZW5ndGhBZGp1c3Q9InNwYWNpbmdBbmRHbHlwaHMiIHRleHRMZW5ndGg9IjIxMyIgeD0iNDA3IiB5PSIzMTAuOTY2OCI+KHJvdW5kLXJvYmluIGZyb20gbGFzdENvbXBhY3RlZCk8L3RleHQ+PHJlY3QgZmlsbD0iI0Y5RTVGRiIgZmlsdGVyPSJ1cmwoI2ZleGFwY2V1Nzg4ZXUpIiBoZWlnaHQ9IjMzLjk2ODgiIHJ4PSIxMi41IiByeT0iMTIuNSIgc3R5bGU9InN0cm9rZTogIzdCNEI5Njsgc3Ryb2tlLXdpZHRoOiAxLjU7IiB3aWR0aD0iMjMwIiB4PSIzOTguNSIgeT0iMzU4Ljc5NjkiLz48dGV4dCBmaWxsPSIjMDAwMDAwIiBmb250LWZhbWlseT0ic2Fucy1zZXJpZiIgZm9udC1zaXplPSIxMiIgbGVuZ3RoQWRqdXN0PSJzcGFjaW5nQW5kR2x5cGhzIiB0ZXh0TGVuZ3RoPSIyMTAiIHg9IjQwOC41IiB5PSIzNzkuOTM1NSI+RmluZCBvdmVybGFwcGluZyBMKG4rMSkgU1NUYWJsZXM8L3RleHQ+PHBvbHlnb24gZmlsbD0iI0U4RjVFOSIgZmlsdGVyPSJ1cmwoI2ZleGFwY2V1Nzg4ZXUpIiBwb2ludHM9IjM0My4xMjUsNTMwLjcwMzEsMzU1LjEyNSw1NDIuNzAzMSwzNDMuMTI1LDU1NC43MDMxLDMzMS4xMjUsNTQyLjcwMzEsMzQzLjEyNSw1MzAuNzAzMSIgc3R5bGU9InN0cm9rZTogIzRDQUY1MDsgc3Ryb2tlLXdpZHRoOiAxLjU7Ii8+PHJlY3QgZmlsbD0iI0Y5RTVGRiIgZmlsdGVyPSJ1cmwoI2ZleGFwY2V1Nzg4ZXUpIiBoZWlnaHQ9IjMzLjk2ODgiIHJ4PSIxMi41IiByeT0iMTIuNSIgc3R5bGU9InN0cm9rZTogIzdCNEI5Njsgc3Ryb2tlLXdpZHRoOiAxLjU7IiB3aWR0aD0iMTQ3IiB4PSIyNjkuNjI1IiB5PSI1NzQuNzAzMSIvPjx0ZXh0IGZpbGw9IiMwMDAwMDAiIGZvbnQtZmFtaWx5PSJzYW5zLXNlcmlmIiBmb250LXNpemU9IjEyIiBsZW5ndGhBZGp1c3Q9InNwYWNpbmdBbmRHbHlwaHMiIHRleHRMZW5ndGg9IjEyNyIgeD0iMjc5LjYyNSIgeT0iNTk1Ljg0MTgiPkV4ZWN1dGUgY29tcGFjdGlvbjwvdGV4dD48cmVjdCBmaWxsPSIjRjlFNUZGIiBmaWx0ZXI9InVybCgjZmV4YXBjZXU3ODhldSkiIGhlaWdodD0iMzMuOTY4OCIgcng9IjEyLjUiIHJ5PSIxMi41IiBzdHlsZT0ic3Ryb2tlOiAjN0I0Qjk2OyBzdHJva2Utd2lkdGg6IDEuNTsiIHdpZHRoPSIyMjEiIHg9IjIzMi42MjUiIHk9IjYyOC42NzE5Ii8+PHRleHQgZmlsbD0iIzAwMDAwMCIgZm9udC1mYW1pbHk9InNhbnMtc2VyaWYiIGZvbnQtc2l6ZT0iMTIiIGxlbmd0aEFkanVzdD0ic3BhY2luZ0FuZEdseXBocyIgdGV4dExlbmd0aD0iMjAxIiB4PSIyNDIuNjI1IiB5PSI2NDkuODEwNSI+VXBkYXRlIGxhc3RDb21wYWN0ZWRTU1RhYmxlczwvdGV4dD48cG9seWdvbiBmaWxsPSIjRThGNUU5IiBmaWx0ZXI9InVybCgjZmV4YXBjZXU3ODhldSkiIHBvaW50cz0iODEyLjUsMTcyLjg5MDYsOTk3LjUsMTcyLjg5MDYsMTAwOS41LDE4NC44OTA2LDk5Ny41LDE5Ni44OTA2LDgxMi41LDE5Ni44OTA2LDgwMC41LDE4NC44OTA2LDgxMi41LDE3Mi44OTA2IiBzdHlsZT0ic3Ryb2tlOiAjNENBRjUwOyBzdHJva2Utd2lkdGg6IDEuNTsiLz48dGV4dCBmaWxsPSIjMDAwMDAwIiBmb250LWZhbWlseT0ic2Fucy1zZXJpZiIgZm9udC1zaXplPSIxMSIgbGVuZ3RoQWRqdXN0PSJzcGFjaW5nQW5kR2x5cGhzIiB0ZXh0TGVuZ3RoPSIxODUiIHg9IjgxMi41IiB5PSIxODguNjk4NyI+VG9tYnN0b25lIGNvbXBhY3Rpb24gbmVlZGVkPzwvdGV4dD48dGV4dCBmaWxsPSIjMDAwMDAwIiBmb250LWZhbWlseT0ic2Fucy1zZXJpZiIgZm9udC1zaXplPSIxMSIgbGVuZ3RoQWRqdXN0PSJzcGFjaW5nQW5kR2x5cGhzIiB0ZXh0TGVuZ3RoPSIyMCIgeD0iNzgwLjUiIHk9IjE4Mi4yOTY0Ij55ZXM8L3RleHQ+PHRleHQgZmlsbD0iIzAwMDAwMCIgZm9udC1mYW1pbHk9InNhbnMtc2VyaWYiIGZvbnQtc2l6ZT0iMTEiIGxlbmd0aEFkanVzdD0ic3BhY2luZ0FuZEdseXBocyIgdGV4dExlbmd0aD0iMTQiIHg9IjEwMDkuNSIgeT0iMTgyLjI5NjQiPm5vPC90ZXh0PjxyZWN0IGZpbGw9IiNGOUU1RkYiIGZpbHRlcj0idXJsKCNmZXhhcGNldTc4OGV1KSIgaGVpZ2h0PSI0Ny45Mzc1IiByeD0iMTIuNSIgcnk9IjEyLjUiIHN0eWxlPSJzdHJva2U6ICM3QjRCOTY7IHN0cm9rZS13aWR0aDogMS41OyIgd2lkdGg9IjI0MSIgeD0iNjcwIiB5PSIyMDYuODkwNiIvPjx0ZXh0IGZpbGw9IiMwMDAwMDAiIGZvbnQtZmFtaWx5PSJzYW5zLXNlcmlmIiBmb250LXNpemU9IjEyIiBsZW5ndGhBZGp1c3Q9InNwYWNpbmdBbmRHbHlwaHMiIHRleHRMZW5ndGg9IjEwOSIgeD0iNjgwIiB5PSIyMjguMDI5MyI+RmluZCBTU1RhYmxlIHdpdGg8L3RleHQ+PHRleHQgZmlsbD0iIzAwMDAwMCIgZm9udC1mYW1pbHk9InNhbnMtc2VyaWYiIGZvbnQtc2l6ZT0iMTIiIGxlbmd0aEFkanVzdD0ic3BhY2luZ0FuZEdseXBocyIgdGV4dExlbmd0aD0iMjIxIiB4PSI2ODAiIHk9IjI0MS45OTgiPmRyb3BwYWJsZSB0b21ic3RvbmVzICZndDsgdGhyZXNob2xkPC90ZXh0PjxyZWN0IGZpbGw9IiNGOUU1RkYiIGZpbHRlcj0idXJsKCNmZXhhcGNldTc4OGV1KSIgaGVpZ2h0PSIzMy45Njg4IiByeD0iMTIuNSIgcnk9IjEyLjUiIHN0eWxlPSJzdHJva2U6ICM3QjRCOTY7IHN0cm9rZS13aWR0aDogMS41OyIgd2lkdGg9IjIxNiIgeD0iNjgyLjUiIHk9IjI4OS44MjgxIi8+PHRleHQgZmlsbD0iIzAwMDAwMCIgZm9udC1mYW1pbHk9InNhbnMtc2VyaWYiIGZvbnQtc2l6ZT0iMTIiIGxlbmd0aEFkanVzdD0ic3BhY2luZ0FuZEdseXBocyIgdGV4dExlbmd0aD0iMTk2IiB4PSI2OTIuNSIgeT0iMzEwLjk2NjgiPlJ1biBzaW5nbGUtU1NUYWJsZSBjb21wYWN0aW9uPC90ZXh0PjxyZWN0IGZpbGw9IiNGOUU1RkYiIGZpbHRlcj0idXJsKCNmZXhhcGNldTc4OGV1KSIgaGVpZ2h0PSIzMy45Njg4IiByeD0iMTIuNSIgcnk9IjEyLjUiIHN0eWxlPSJzdHJva2U6ICM3QjRCOTY7IHN0cm9rZS13aWR0aDogMS41OyIgd2lkdGg9IjE2NiIgeD0iOTM2LjUiIHk9IjIwNi44OTA2Ii8+PHRleHQgZmlsbD0iIzAwMDAwMCIgZm9udC1mYW1pbHk9InNhbnMtc2VyaWYiIGZvbnQtc2l6ZT0iMTIiIGxlbmd0aEFkanVzdD0ic3BhY2luZ0FuZEdseXBocyIgdGV4dExlbmd0aD0iMTQ2IiB4PSI5NDYuNSIgeT0iMjI4LjAyOTMiPk5vIGNvbXBhY3Rpb24gbmVlZGVkPC90ZXh0Pjxwb2x5Z29uIGZpbGw9IiNFOEY1RTkiIGZpbHRlcj0idXJsKCNmZXhhcGNldTc4OGV1KSIgcG9pbnRzPSI5MDUsMzI5Ljc5NjksOTE3LDM0MS43OTY5LDkwNSwzNTMuNzk2OSw4OTMsMzQxLjc5NjksOTA1LDMyOS43OTY5IiBzdHlsZT0ic3Ryb2tlOiAjNENBRjUwOyBzdHJva2Utd2lkdGg6IDEuNTsiLz48cG9seWdvbiBmaWxsPSIjRThGNUU5IiBmaWx0ZXI9InVybCgjZmV4YXBjZXU3ODhldSkiIHBvaW50cz0iNjI0LjA2MjUsNjY4LjY0MDYsNjM2LjA2MjUsNjgwLjY0MDYsNjI0LjA2MjUsNjkyLjY0MDYsNjEyLjA2MjUsNjgwLjY0MDYsNjI0LjA2MjUsNjY4LjY0MDYiIHN0eWxlPSJzdHJva2U6ICM0Q0FGNTA7IHN0cm9rZS13aWR0aDogMS41OyIvPjxlbGxpcHNlIGN4PSI2MjQuMDYyNSIgY3k9IjcyMy42NDA2IiBmaWxsPSIjRkZGRkZGIiBmaWx0ZXI9InVybCgjZmV4YXBjZXU3ODhldSkiIHJ4PSIxMSIgcnk9IjExIiBzdHlsZT0ic3Ryb2tlOiAjMDAwMDAwOyBzdHJva2Utd2lkdGg6IDEuMDsiLz48ZWxsaXBzZSBjeD0iNjI0LjA2MjUiIGN5PSI3MjMuNjQwNiIgZmlsbD0iIzAwMDAwMCIgcng9IjYiIHJ5PSI2IiBzdHlsZT0ic3Ryb2tlOiAjN0Y3RjdGOyBzdHJva2Utd2lkdGg6IDEuMDsiLz48bGluZSBzdHlsZT0ic3Ryb2tlOiAjQTgwMDM2OyBzdHJva2Utd2lkdGg6IDEuNTsiIHgxPSI2MjQuMDYyNSIgeDI9IjYyNC4wNjI1IiB5MT0iNTAuOTUzMSIgeTI9IjcwLjk1MzEiLz48cG9seWdvbiBmaWxsPSIjQTgwMDM2IiBwb2ludHM9IjYyMC4wNjI1LDYwLjk1MzEsNjI0LjA2MjUsNzAuOTUzMSw2MjguMDYyNSw2MC45NTMxLDYyNC4wNjI1LDY0Ljk1MzEiIHN0eWxlPSJzdHJva2U6ICNBODAwMzY7IHN0cm9rZS13aWR0aDogMS4wOyIvPjxsaW5lIHN0eWxlPSJzdHJva2U6ICNBODAwMzY7IHN0cm9rZS13aWR0aDogMS41OyIgeDE9IjI2NyIgeDI9IjI2NyIgeTE9IjM1Ny43OTY5IiB5Mj0iMzkyLjc5NjkiLz48cG9seWdvbiBmaWxsPSIjQTgwMDM2IiBwb2ludHM9IjI2MywzODIuNzk2OSwyNjcsMzkyLjc5NjksMjcxLDM4Mi43OTY5LDI2NywzODYuNzk2OSIgc3R5bGU9InN0cm9rZTogI0E4MDAzNjsgc3Ryb2tlLXdpZHRoOiAxLjA7Ii8+PGxpbmUgc3R5bGU9InN0cm9rZTogI0E4MDAzNjsgc3Ryb2tlLXdpZHRoOiAxLjU7IiB4MT0iMjY3IiB4Mj0iMjY3IiB5MT0iNDI2Ljc2NTYiIHkyPSI0NDYuNzY1NiIvPjxwb2x5Z29uIGZpbGw9IiNBODAwMzYiIHBvaW50cz0iMjYzLDQzNi43NjU2LDI2Nyw0NDYuNzY1NiwyNzEsNDM2Ljc2NTYsMjY3LDQ0MC43NjU2IiBzdHlsZT0ic3Ryb2tlOiAjQTgwMDM2OyBzdHJva2Utd2lkdGg6IDEuMDsiLz48bGluZSBzdHlsZT0ic3Ryb2tlOiAjQTgwMDM2OyBzdHJva2Utd2lkdGg6IDEuNTsiIHgxPSIxMTguMjUiIHgyPSI3OC41IiB5MT0iMjg3Ljg1OTQiIHkyPSIyODcuODU5NCIvPjxsaW5lIHN0eWxlPSJzdHJva2U6ICNBODAwMzY7IHN0cm9rZS13aWR0aDogMS41OyIgeDE9Ijc4LjUiIHgyPSI3OC41IiB5MT0iMjg3Ljg1OTQiIHkyPSIzMDkuODU5NCIvPjxwb2x5Z29uIGZpbGw9IiNBODAwMzYiIHBvaW50cz0iNzQuNSwyOTkuODU5NCw3OC41LDMwOS44NTk0LDgyLjUsMjk5Ljg1OTQsNzguNSwzMDMuODU5NCIgc3R5bGU9InN0cm9rZTogI0E4MDAzNjsgc3Ryb2tlLXdpZHRoOiAxLjA7Ii8+PGxpbmUgc3R5bGU9InN0cm9rZTogI0E4MDAzNjsgc3Ryb2tlLXdpZHRoOiAxLjU7IiB4MT0iMjI3LjI1IiB4Mj0iMjY3IiB5MT0iMjg3Ljg1OTQiIHkyPSIyODcuODU5NCIvPjxsaW5lIHN0eWxlPSJzdHJva2U6ICNBODAwMzY7IHN0cm9rZS13aWR0aDogMS41OyIgeDE9IjI2NyIgeDI9IjI2NyIgeTE9IjI4Ny44NTk0IiB5Mj0iMzA5Ljg1OTQiLz48cG9seWdvbiBmaWxsPSIjQTgwMDM2IiBwb2ludHM9IjI2MywyOTkuODU5NCwyNjcsMzA5Ljg1OTQsMjcxLDI5OS44NTk0LDI2NywzMDMuODU5NCIgc3R5bGU9InN0cm9rZTogI0E4MDAzNjsgc3Ryb2tlLXdpZHRoOiAxLjA7Ii8+PGxpbmUgc3R5bGU9InN0cm9rZTogI0E4MDAzNjsgc3Ryb2tlLXdpZHRoOiAxLjU7IiB4MT0iNzguNSIgeDI9Ijc4LjUiIHkxPSIzNTcuNzk2OSIgeTI9IjUxMi43MDMxIi8+PGxpbmUgc3R5bGU9InN0cm9rZTogI0E4MDAzNjsgc3Ryb2tlLXdpZHRoOiAxLjU7IiB4MT0iNzguNSIgeDI9IjE2MC43NSIgeTE9IjUxMi43MDMxIiB5Mj0iNTEyLjcwMzEiLz48cG9seWdvbiBmaWxsPSIjQTgwMDM2IiBwb2ludHM9IjE1MC43NSw1MDguNzAzMSwxNjAuNzUsNTEyLjcwMzEsMTUwLjc1LDUxNi43MDMxLDE1NC43NSw1MTIuNzAzMSIgc3R5bGU9InN0cm9rZTogI0E4MDAzNjsgc3Ryb2tlLXdpZHRoOiAxLjA7Ii8+PGxpbmUgc3R5bGU9InN0cm9rZTogI0E4MDAzNjsgc3Ryb2tlLXdpZHRoOiAxLjU7IiB4MT0iMjY3IiB4Mj0iMjY3IiB5MT0iNDk0LjcwMzEiIHkyPSI1MTIuNzAzMSIvPjxsaW5lIHN0eWxlPSJzdHJva2U6ICNBODAwMzY7IHN0cm9rZS13aWR0aDogMS41OyIgeDE9IjI2NyIgeDI9IjE4NC43NSIgeTE9IjUxMi43MDMxIiB5Mj0iNTEyLjcwMzEiLz48cG9seWdvbiBmaWxsPSIjQTgwMDM2IiBwb2ludHM9IjE5NC43NSw1MDguNzAzMSwxODQuNzUsNTEyLjcwMzEsMTk0Ljc1LDUxNi43MDMxLDE5MC43NSw1MTIuNzAzMSIgc3R5bGU9InN0cm9rZTogI0E4MDAzNjsgc3Ryb2tlLXdpZHRoOiAxLjA7Ii8+PGxpbmUgc3R5bGU9InN0cm9rZTogI0E4MDAzNjsgc3Ryb2tlLXdpZHRoOiAxLjU7IiB4MT0iNTEzLjUiIHgyPSI1MTMuNSIgeTE9IjMyMy43OTY5IiB5Mj0iMzU4Ljc5NjkiLz48cG9seWdvbiBmaWxsPSIjQTgwMDM2IiBwb2ludHM9IjUwOS41LDM0OC43OTY5LDUxMy41LDM1OC43OTY5LDUxNy41LDM0OC43OTY5LDUxMy41LDM1Mi43OTY5IiBzdHlsZT0ic3Ryb2tlOiAjQTgwMDM2OyBzdHJva2Utd2lkdGg6IDEuMDsiLz48bGluZSBzdHlsZT0ic3Ryb2tlOiAjQTgwMDM2OyBzdHJva2Utd2lkdGg6IDEuNTsiIHgxPSIyOTQuMTI1IiB4Mj0iMTcyLjc1IiB5MT0iMjUzLjg1OTQiIHkyPSIyNTMuODU5NCIvPjxsaW5lIHN0eWxlPSJzdHJva2U6ICNBODAwMzY7IHN0cm9rZS13aWR0aDogMS41OyIgeDE9IjE3Mi43NSIgeDI9IjE3Mi43NSIgeTE9IjI1My44NTk0IiB5Mj0iMjc1Ljg1OTQiLz48cG9seWdvbiBmaWxsPSIjQTgwMDM2IiBwb2ludHM9IjE2OC43NSwyNjUuODU5NCwxNzIuNzUsMjc1Ljg1OTQsMTc2Ljc1LDI2NS44NTk0LDE3Mi43NSwyNjkuODU5NCIgc3R5bGU9InN0cm9rZTogI0E4MDAzNjsgc3Ryb2tlLXdpZHRoOiAxLjA7Ii8+PGxpbmUgc3R5bGU9InN0cm9rZTogI0E4MDAzNjsgc3Ryb2tlLXdpZHRoOiAxLjU7IiB4MT0iMzkyLjEyNSIgeDI9IjUxMy41IiB5MT0iMjUzLjg1OTQiIHkyPSIyNTMuODU5NCIvPjxsaW5lIHN0eWxlPSJzdHJva2U6ICNBODAwMzY7IHN0cm9rZS13aWR0aDogMS41OyIgeDE9IjUxMy41IiB4Mj0iNTEzLjUiIHkxPSIyNTMuODU5NCIgeTI9IjI3NS44NTk0Ii8+PHBvbHlnb24gZmlsbD0iI0E4MDAzNiIgcG9pbnRzPSI1MDkuNSwyNjUuODU5NCw1MTMuNSwyNzUuODU5NCw1MTcuNSwyNjUuODU5NCw1MTMuNSwyNjkuODU5NCIgc3R5bGU9InN0cm9rZTogI0E4MDAzNjsgc3Ryb2tlLXdpZHRoOiAxLjA7Ii8+PGxpbmUgc3R5bGU9InN0cm9rZTogI0E4MDAzNjsgc3Ryb2tlLXdpZHRoOiAxLjU7IiB4MT0iMTcyLjc1IiB4Mj0iMTcyLjc1IiB5MT0iNTI0LjcwMzEiIHkyPSI1NDIuNzAzMSIvPjxsaW5lIHN0eWxlPSJzdHJva2U6ICNBODAwMzY7IHN0cm9rZS13aWR0aDogMS41OyIgeDE9IjE3Mi43NSIgeDI9IjMzMS4xMjUiIHkxPSI1NDIuNzAzMSIgeTI9IjU0Mi43MDMxIi8+PHBvbHlnb24gZmlsbD0iI0E4MDAzNiIgcG9pbnRzPSIzMjEuMTI1LDUzOC43MDMxLDMzMS4xMjUsNTQyLjcwMzEsMzIxLjEyNSw1NDYuNzAzMSwzMjUuMTI1LDU0Mi43MDMxIiBzdHlsZT0ic3Ryb2tlOiAjQTgwMDM2OyBzdHJva2Utd2lkdGg6IDEuMDsiLz48bGluZSBzdHlsZT0ic3Ryb2tlOiAjQTgwMDM2OyBzdHJva2Utd2lkdGg6IDEuNTsiIHgxPSI1MTMuNSIgeDI9IjUxMy41IiB5MT0iMzkyLjc2NTYiIHkyPSI1NDIuNzAzMSIvPjxsaW5lIHN0eWxlPSJzdHJva2U6ICNBODAwMzY7IHN0cm9rZS13aWR0aDogMS41OyIgeDE9IjUxMy41IiB4Mj0iMzU1LjEyNSIgeTE9IjU0Mi43MDMxIiB5Mj0iNTQyLjcwMzEiLz48cG9seWdvbiBmaWxsPSIjQTgwMDM2IiBwb2ludHM9IjM2NS4xMjUsNTM4LjcwMzEsMzU1LjEyNSw1NDIuNzAzMSwzNjUuMTI1LDU0Ni43MDMxLDM2MS4xMjUsNTQyLjcwMzEiIHN0eWxlPSJzdHJva2U6ICNBODAwMzY7IHN0cm9rZS13aWR0aDogMS4wOyIvPjxsaW5lIHN0eWxlPSJzdHJva2U6ICNBODAwMzY7IHN0cm9rZS13aWR0aDogMS41OyIgeDE9IjM0My4xMjUiIHgyPSIzNDMuMTI1IiB5MT0iMjA2Ljg1OTQiIHkyPSIyNDEuODU5NCIvPjxwb2x5Z29uIGZpbGw9IiNBODAwMzYiIHBvaW50cz0iMzM5LjEyNSwyMzEuODU5NCwzNDMuMTI1LDI0MS44NTk0LDM0Ny4xMjUsMjMxLjg1OTQsMzQzLjEyNSwyMzUuODU5NCIgc3R5bGU9InN0cm9rZTogI0E4MDAzNjsgc3Ryb2tlLXdpZHRoOiAxLjA7Ii8+PGxpbmUgc3R5bGU9InN0cm9rZTogI0E4MDAzNjsgc3Ryb2tlLXdpZHRoOiAxLjU7IiB4MT0iMzQzLjEyNSIgeDI9IjM0My4xMjUiIHkxPSI1NTQuNzAzMSIgeTI9IjU3NC43MDMxIi8+PHBvbHlnb24gZmlsbD0iI0E4MDAzNiIgcG9pbnRzPSIzMzkuMTI1LDU2NC43MDMxLDM0My4xMjUsNTc0LjcwMzEsMzQ3LjEyNSw1NjQuNzAzMSwzNDMuMTI1LDU2OC43MDMxIiBzdHlsZT0ic3Ryb2tlOiAjQTgwMDM2OyBzdHJva2Utd2lkdGg6IDEuMDsiLz48bGluZSBzdHlsZT0ic3Ryb2tlOiAjQTgwMDM2OyBzdHJva2Utd2lkdGg6IDEuNTsiIHgxPSIzNDMuMTI1IiB4Mj0iMzQzLjEyNSIgeTE9IjYwOC42NzE5IiB5Mj0iNjI4LjY3MTkiLz48cG9seWdvbiBmaWxsPSIjQTgwMDM2IiBwb2ludHM9IjMzOS4xMjUsNjE4LjY3MTksMzQzLjEyNSw2MjguNjcxOSwzNDcuMTI1LDYxOC42NzE5LDM0My4xMjUsNjIyLjY3MTkiIHN0eWxlPSJzdHJva2U6ICNBODAwMzY7IHN0cm9rZS13aWR0aDogMS4wOyIvPjxsaW5lIHN0eWxlPSJzdHJva2U6ICNBODAwMzY7IHN0cm9rZS13aWR0aDogMS41OyIgeDE9Ijc5MC41IiB4Mj0iNzkwLjUiIHkxPSIyNTQuODI4MSIgeTI9IjI4OS44MjgxIi8+PHBvbHlnb24gZmlsbD0iI0E4MDAzNiIgcG9pbnRzPSI3ODYuNSwyNzkuODI4MSw3OTAuNSwyODkuODI4MSw3OTQuNSwyNzkuODI4MSw3OTAuNSwyODMuODI4MSIgc3R5bGU9InN0cm9rZTogI0E4MDAzNjsgc3Ryb2tlLXdpZHRoOiAxLjA7Ii8+PGxpbmUgc3R5bGU9InN0cm9rZTogI0E4MDAzNjsgc3Ryb2tlLXdpZHRoOiAxLjU7IiB4MT0iODAwLjUiIHgyPSI3OTAuNSIgeTE9IjE4NC44OTA2IiB5Mj0iMTg0Ljg5MDYiLz48bGluZSBzdHlsZT0ic3Ryb2tlOiAjQTgwMDM2OyBzdHJva2Utd2lkdGg6IDEuNTsiIHgxPSI3OTAuNSIgeDI9Ijc5MC41IiB5MT0iMTg0Ljg5MDYiIHkyPSIyMDYuODkwNiIvPjxwb2x5Z29uIGZpbGw9IiNBODAwMzYiIHBvaW50cz0iNzg2LjUsMTk2Ljg5MDYsNzkwLjUsMjA2Ljg5MDYsNzk0LjUsMTk2Ljg5MDYsNzkwLjUsMjAwLjg5MDYiIHN0eWxlPSJzdHJva2U6ICNBODAwMzY7IHN0cm9rZS13aWR0aDogMS4wOyIvPjxsaW5lIHN0eWxlPSJzdHJva2U6ICNBODAwMzY7IHN0cm9rZS13aWR0aDogMS41OyIgeDE9IjEwMDkuNSIgeDI9IjEwMTkuNSIgeTE9IjE4NC44OTA2IiB5Mj0iMTg0Ljg5MDYiLz48bGluZSBzdHlsZT0ic3Ryb2tlOiAjQTgwMDM2OyBzdHJva2Utd2lkdGg6IDEuNTsiIHgxPSIxMDE5LjUiIHgyPSIxMDE5LjUiIHkxPSIxODQuODkwNiIgeTI9IjIwNi44OTA2Ii8+PHBvbHlnb24gZmlsbD0iI0E4MDAzNiIgcG9pbnRzPSIxMDE1LjUsMTk2Ljg5MDYsMTAxOS41LDIwNi44OTA2LDEwMjMuNSwxOTYuODkwNiwxMDE5LjUsMjAwLjg5MDYiIHN0eWxlPSJzdHJva2U6ICNBODAwMzY7IHN0cm9rZS13aWR0aDogMS4wOyIvPjxsaW5lIHN0eWxlPSJzdHJva2U6ICNBODAwMzY7IHN0cm9rZS13aWR0aDogMS41OyIgeDE9Ijc5MC41IiB4Mj0iNzkwLjUiIHkxPSIzMjMuNzk2OSIgeTI9IjM0MS43OTY5Ii8+PGxpbmUgc3R5bGU9InN0cm9rZTogI0E4MDAzNjsgc3Ryb2tlLXdpZHRoOiAxLjU7IiB4MT0iNzkwLjUiIHgyPSI4OTMiIHkxPSIzNDEuNzk2OSIgeTI9IjM0MS43OTY5Ii8+PHBvbHlnb24gZmlsbD0iI0E4MDAzNiIgcG9pbnRzPSI4ODMsMzM3Ljc5NjksODkzLDM0MS43OTY5LDg4MywzNDUuNzk2OSw4ODcsMzQxLjc5NjkiIHN0eWxlPSJzdHJva2U6ICNBODAwMzY7IHN0cm9rZS13aWR0aDogMS4wOyIvPjxsaW5lIHN0eWxlPSJzdHJva2U6ICNBODAwMzY7IHN0cm9rZS13aWR0aDogMS41OyIgeDE9IjEwMTkuNSIgeDI9IjEwMTkuNSIgeTE9IjI0MC44NTk0IiB5Mj0iMzQxLjc5NjkiLz48bGluZSBzdHlsZT0ic3Ryb2tlOiAjQTgwMDM2OyBzdHJva2Utd2lkdGg6IDEuNTsiIHgxPSIxMDE5LjUiIHgyPSI5MTciIHkxPSIzNDEuNzk2OSIgeTI9IjM0MS43OTY5Ii8+PHBvbHlnb24gZmlsbD0iI0E4MDAzNiIgcG9pbnRzPSI5MjcsMzM3Ljc5NjksOTE3LDM0MS43OTY5LDkyNywzNDUuNzk2OSw5MjMsMzQxLjc5NjkiIHN0eWxlPSJzdHJva2U6ICNBODAwMzY7IHN0cm9rZS13aWR0aDogMS4wOyIvPjxsaW5lIHN0eWxlPSJzdHJva2U6ICNBODAwMzY7IHN0cm9rZS13aWR0aDogMS41OyIgeDE9IjU0MS41NjI1IiB4Mj0iMzQzLjEyNSIgeTE9IjE1MC44OTA2IiB5Mj0iMTUwLjg5MDYiLz48bGluZSBzdHlsZT0ic3Ryb2tlOiAjQTgwMDM2OyBzdHJva2Utd2lkdGg6IDEuNTsiIHgxPSIzNDMuMTI1IiB4Mj0iMzQzLjEyNSIgeTE9IjE1MC44OTA2IiB5Mj0iMTcyLjg5MDYiLz48cG9seWdvbiBmaWxsPSIjQTgwMDM2IiBwb2ludHM9IjMzOS4xMjUsMTYyLjg5MDYsMzQzLjEyNSwxNzIuODkwNiwzNDcuMTI1LDE2Mi44OTA2LDM0My4xMjUsMTY2Ljg5MDYiIHN0eWxlPSJzdHJva2U6ICNBODAwMzY7IHN0cm9rZS13aWR0aDogMS4wOyIvPjxsaW5lIHN0eWxlPSJzdHJva2U6ICNBODAwMzY7IHN0cm9rZS13aWR0aDogMS41OyIgeDE9IjcwNi41NjI1IiB4Mj0iOTA1IiB5MT0iMTUwLjg5MDYiIHkyPSIxNTAuODkwNiIvPjxsaW5lIHN0eWxlPSJzdHJva2U6ICNBODAwMzY7IHN0cm9rZS13aWR0aDogMS41OyIgeDE9IjkwNSIgeDI9IjkwNSIgeTE9IjE1MC44OTA2IiB5Mj0iMTcyLjg5MDYiLz48cG9seWdvbiBmaWxsPSIjQTgwMDM2IiBwb2ludHM9IjkwMSwxNjIuODkwNiw5MDUsMTcyLjg5MDYsOTA5LDE2Mi44OTA2LDkwNSwxNjYuODkwNiIgc3R5bGU9InN0cm9rZTogI0E4MDAzNjsgc3Ryb2tlLXdpZHRoOiAxLjA7Ii8+PGxpbmUgc3R5bGU9InN0cm9rZTogI0E4MDAzNjsgc3Ryb2tlLXdpZHRoOiAxLjU7IiB4MT0iMzQzLjEyNSIgeDI9IjM0My4xMjUiIHkxPSI2NjIuNjQwNiIgeTI9IjY4MC42NDA2Ii8+PGxpbmUgc3R5bGU9InN0cm9rZTogI0E4MDAzNjsgc3Ryb2tlLXdpZHRoOiAxLjU7IiB4MT0iMzQzLjEyNSIgeDI9IjYxMi4wNjI1IiB5MT0iNjgwLjY0MDYiIHkyPSI2ODAuNjQwNiIvPjxwb2x5Z29uIGZpbGw9IiNBODAwMzYiIHBvaW50cz0iNjAyLjA2MjUsNjc2LjY0MDYsNjEyLjA2MjUsNjgwLjY0MDYsNjAyLjA2MjUsNjg0LjY0MDYsNjA2LjA2MjUsNjgwLjY0MDYiIHN0eWxlPSJzdHJva2U6ICNBODAwMzY7IHN0cm9rZS13aWR0aDogMS4wOyIvPjxsaW5lIHN0eWxlPSJzdHJva2U6ICNBODAwMzY7IHN0cm9rZS13aWR0aDogMS41OyIgeDE9IjkwNSIgeDI9IjkwNSIgeTE9IjM1My43OTY5IiB5Mj0iNjgwLjY0MDYiLz48bGluZSBzdHlsZT0ic3Ryb2tlOiAjQTgwMDM2OyBzdHJva2Utd2lkdGg6IDEuNTsiIHgxPSI5MDUiIHgyPSI2MzYuMDYyNSIgeTE9IjY4MC42NDA2IiB5Mj0iNjgwLjY0MDYiLz48cG9seWdvbiBmaWxsPSIjQTgwMDM2IiBwb2ludHM9IjY0Ni4wNjI1LDY3Ni42NDA2LDYzNi4wNjI1LDY4MC42NDA2LDY0Ni4wNjI1LDY4NC42NDA2LDY0Mi4wNjI1LDY4MC42NDA2IiBzdHlsZT0ic3Ryb2tlOiAjQTgwMDM2OyBzdHJva2Utd2lkdGg6IDEuMDsiLz48bGluZSBzdHlsZT0ic3Ryb2tlOiAjQTgwMDM2OyBzdHJva2Utd2lkdGg6IDEuNTsiIHgxPSI2MjQuMDYyNSIgeDI9IjYyNC4wNjI1IiB5MT0iMTE4Ljg5MDYiIHkyPSIxMzguODkwNiIvPjxwb2x5Z29uIGZpbGw9IiNBODAwMzYiIHBvaW50cz0iNjIwLjA2MjUsMTI4Ljg5MDYsNjI0LjA2MjUsMTM4Ljg5MDYsNjI4LjA2MjUsMTI4Ljg5MDYsNjI0LjA2MjUsMTMyLjg5MDYiIHN0eWxlPSJzdHJva2U6ICNBODAwMzY7IHN0cm9rZS13aWR0aDogMS4wOyIvPjxsaW5lIHN0eWxlPSJzdHJva2U6ICNBODAwMzY7IHN0cm9rZS13aWR0aDogMS41OyIgeDE9IjYyNC4wNjI1IiB4Mj0iNjI0LjA2MjUiIHkxPSI2OTIuNjQwNiIgeTI9IjcxMi42NDA2Ii8+PHBvbHlnb24gZmlsbD0iI0E4MDAzNiIgcG9pbnRzPSI2MjAuMDYyNSw3MDIuNjQwNiw2MjQuMDYyNSw3MTIuNjQwNiw2MjguMDYyNSw3MDIuNjQwNiw2MjQuMDYyNSw3MDYuNjQwNiIgc3R5bGU9InN0cm9rZTogI0E4MDAzNjsgc3Ryb2tlLXdpZHRoOiAxLjA7Ii8+PCEtLU1ENT1bZjhlOTk4MGUwYjJkNTE2MTg1ODUxMzFiODYxNDdjYTddCkBzdGFydHVtbA0Kc2tpbnBhcmFtIGJhY2tncm91bmRDb2xvciB0cmFuc3BhcmVudA0Kc2tpbnBhcmFtIEFjdGl2aXR5QmFja2dyb3VuZENvbG9yICNGOUU1RkYNCnNraW5wYXJhbSBBY3Rpdml0eUJvcmRlckNvbG9yICM3QjRCOTYNCnNraW5wYXJhbSBBY3Rpdml0eURpYW1vbmRCYWNrZ3JvdW5kQ29sb3IgI0U4RjVFOQ0Kc2tpbnBhcmFtIEFjdGl2aXR5RGlhbW9uZEJvcmRlckNvbG9yICM0Q0FGNTANCg0KdGl0bGUgTENTIENvbXBhY3Rpb24gRGVjaXNpb24gRmxvdw0KDQpzdGFydA0KDQo6Q2hlY2sgbGV2ZWwgc2NvcmVzXG4oaGlnaGVzdCBsZXZlbCBmaXJzdCk7DQoNCmlmIChBbnkgbGV2ZWwgc2NvcmUgPiAxLjAwMT8pIHRoZW4gKHllcykNCiAgICA6U2VsZWN0IGxldmVsIHdpdGggaGlnaGVzdCBzY29yZTsNCg0KICAgIGlmIChMZXZlbCA9PSBMMD8pIHRoZW4gKHllcykNCiAgICAgICAgaWYgKEwwIGNvdW50ID4gMzI/KSB0aGVuICh5ZXMpDQogICAgICAgICAgICAjRkZFMEUwOlJ1biBTVENTIHdpdGhpbiBMMFxuKGZhbGxiYWNrIG1vZGUpOw0KICAgICAgICBlbHNlIChubykNCiAgICAgICAgICAgIDpTZWxlY3Qgb2xkZXN0IEwwIFNTVGFibGVzXG4odXAgdG8gc3N0YWJsZV9zaXplIHRvdGFsKTsNCiAgICAgICAgICAgIDpBZGQgb3ZlcmxhcHBpbmcgTDAgU1NUYWJsZXM7DQogICAgICAgICAgICA6QWRkIG92ZXJsYXBwaW5nIEwxIFNTVGFibGVzXG4oaWYgc2l6ZSA+IHNzdGFibGVfc2l6ZSk7DQogICAgICAgIGVuZGlmDQogICAgZWxzZSAobm8pDQogICAgICAgIDpTZWxlY3QgbmV4dCBTU1RhYmxlXG4ocm91bmQtcm9iaW4gZnJvbSBsYXN0Q29tcGFjdGVkKTsNCiAgICAgICAgOkZpbmQgb3ZlcmxhcHBpbmcgTChuKzEpIFNTVGFibGVzOw0KICAgIGVuZGlmDQoNCiAgICA6RXhlY3V0ZSBjb21wYWN0aW9uOw0KICAgIDpVcGRhdGUgbGFzdENvbXBhY3RlZFNTVGFibGVzOw0KDQplbHNlIChubykNCiAgICBpZiAoVG9tYnN0b25lIGNvbXBhY3Rpb24gbmVlZGVkPykgdGhlbiAoeWVzKQ0KICAgICAgICA6RmluZCBTU1RhYmxlIHdpdGhcbmRyb3BwYWJsZSB0b21ic3RvbmVzID4gdGhyZXNob2xkOw0KICAgICAgICA6UnVuIHNpbmdsZS1TU1RhYmxlIGNvbXBhY3Rpb247DQogICAgZWxzZSAobm8pDQogICAgICAgIDpObyBjb21wYWN0aW9uIG5lZWRlZDsNCiAgICBlbmRpZg0KZW5kaWYNCg0Kc3RvcA0KQGVuZHVtbA0KClBsYW50VU1MIHZlcnNpb24gMS4yMDIwLjAyKFN1biBNYXIgMDEgMTA6MjI6MDcgR01UIDIwMjApCihHUEwgc291cmNlIGRpc3RyaWJ1dGlvbikKSmF2YSBSdW50aW1lOiBPcGVuSkRLIFJ1bnRpbWUgRW52aXJvbm1lbnQKSlZNOiBPcGVuSkRLIDY0LUJpdCBTZXJ2ZXIgVk0KSmF2YSBWZXJzaW9uOiAxNy4wLjE1KzYtTFRTCk9wZXJhdGluZyBTeXN0ZW06IExpbnV4CkRlZmF1bHQgRW5jb2Rpbmc6IFVURi04Ckxhbmd1YWdlOiBlbgpDb3VudHJ5OiBudWxsCi0tPjwvZz48L3N2Zz4=" class="uml" alt="uml diagram" title=""></a></p>
+<h4 id="level-score-and-compaction-triggering">Level Score and Compaction Triggering<a class="headerlink" href="#level-score-and-compaction-triggering" title="Permanent link">¶</a></h4>
+<p>Compaction priority is determined by calculating a score for each level:</p>
+<div class="arithmatex">\[\text{score} = \frac{\text{current\_bytes\_in\_level}}{\text{max\_bytes\_for\_level}}\]</div>
+<p>Compaction is triggered when <span class="arithmatex">\(\text{score} &gt; 1.001\)</span>. The compaction scheduler evaluates levels from highest (L8) to lowest (L0), prioritizing higher levels to maintain the leveled structure's invariants.</p>
+<h4 id="l0-l1-compaction">L0 → L1 Compaction<a class="headerlink" href="#l0-l1-compaction" title="Permanent link">¶</a></h4>
+<p>When L0 exceeds its size target (4 × <code>sstable_size_in_mb</code>), the candidate selection algorithm:</p>
 <ol>
-<li>Selects one SSTable from L(n)</li>
-<li>Finds all overlapping SSTables in L(n+1)</li>
-<li>Merges and rewrites to L(n+1)</li>
-<li>Deletes source SSTables</li>
+<li>Sorts L0 SSTables by creation time (oldest first)</li>
+<li>Adds SSTables until reaching <code>sstable_size_in_mb</code> total size</li>
+<li>Includes any additional L0 SSTables that overlap with already-selected candidates</li>
+<li>Limits selection to <code>max_threshold</code> SSTables (default: 32)</li>
+<li>Includes overlapping L1 SSTables only if total candidate size exceeds <code>sstable_size_in_mb</code></li>
+<li>Requires minimum 2 SSTables to proceed with compaction</li>
 </ol>
-<p>This "promote one, merge with overlapping" approach ensures that each compaction is bounded in scope while maintaining the non-overlapping invariant.</p>
+<p>All selected SSTables are merged, and output is written as new L1 SSTables with non-overlapping ranges.</p>
+<h4 id="l0-stcs-fallback">L0 STCS Fallback<a class="headerlink" href="#l0-stcs-fallback" title="Permanent link">¶</a></h4>
+<p>When L0 accumulates more than 32 SSTables (<code>MAX_COMPACTING_L0 = 32</code>), indicating that L0→L1 compaction cannot keep pace with write rate, Cassandra activates STCS-style compaction within L0. This compacts up to <code>max_threshold</code> similarly-sized L0 SSTables together, reducing SSTable count more quickly than waiting for L1 capacity. This behavior can be disabled with <code>-Dcassandra.disable_stcs_in_l0=true</code>.</p>
+<h4 id="ln-ln1-compaction">L(n) → L(n+1) Compaction<a class="headerlink" href="#ln-ln1-compaction" title="Permanent link">¶</a></h4>
+<p>When a level exceeds its size target (score &gt; 1.001), the compaction process:</p>
+<ol>
+<li>Selects the next SSTable in round-robin order from <code>lastCompactedSSTables[level]</code> position</li>
+<li>Skips SSTables that are currently compacting or marked as suspect</li>
+<li>Identifies all overlapping SSTables in L(n+1)</li>
+<li>Merges and rewrites all selected SSTables to L(n+1)</li>
+<li>Updates <code>lastCompactedSSTables[level]</code> to track position for next round</li>
+</ol>
+<p>This round-robin approach ensures fair distribution of compaction work across the token range.</p>
+<h4 id="starvation-prevention">Starvation Prevention<a class="headerlink" href="#starvation-prevention" title="Permanent link">¶</a></h4>
+<p>The manifest tracks rounds without high-level compaction using <code>NO_COMPACTION_LIMIT = 25</code>. If 25 consecutive compaction rounds occur without selecting SSTables from higher levels, starved SSTables may be pulled into lower-level compactions to ensure data eventually progresses through levels.</p>
+<h4 id="single-sstable-uplevel">Single SSTable Uplevel<a class="headerlink" href="#single-sstable-uplevel" title="Permanent link">¶</a></h4>
+<p>When <code>single_sstable_uplevel</code> is enabled (default: true), an SSTable from level L can be promoted directly to level L+1 without rewriting if it does not overlap with any existing L+1 SSTables. This optimization reduces unnecessary I/O for workloads with good key distribution.</p>
+<h4 id="partial-compactions">Partial Compactions<a class="headerlink" href="#partial-compactions" title="Permanent link">¶</a></h4>
+<p>Partial compactions (where not all selected candidates complete) are only permitted at L0. Higher levels require complete compaction to maintain the non-overlapping invariant.</p>
+<h4 id="disk-space-management">Disk Space Management<a class="headerlink" href="#disk-space-management" title="Permanent link">¶</a></h4>
+<p>When insufficient disk space is available for L0→L(n) compactions, the <code>reduceScopeForLimitedSpace</code> method removes the largest L0 SSTable from the compaction set (if multiple L0 files exist). This allows compaction to proceed with reduced scope rather than failing entirely.</p>
 <h3 id="write-amplification-calculation">Write Amplification Calculation<a class="headerlink" href="#write-amplification-calculation" title="Permanent link">¶</a></h3>
 <p>Write amplification in LCS is determined by how many times data is rewritten as it moves through levels:</p>
-<div class="highlight"><pre><span></span><code>Write path for one piece of data:
-1. Written to memtable (memory)
-2. Flushed to L0 (1 write)
-3. Compacted L0 → L1 (1 write)
-4. Compacted L1 → L2 (potentially 10 writes, merging with ~10 L2 files)
-5. Compacted L2 → L3 (potentially 10 writes)
-...
-
-Worst case: 1 + fanout × number_of_levels
-With fanout=10 and 5 levels: ~50× write amplification
-</code></pre></div>
+<p><strong>Write path for one piece of data:</strong></p>
+<ol>
+<li>Written to memtable (memory)</li>
+<li>Flushed to L0 (1 write)</li>
+<li>Compacted L0 → L1 (1 write)</li>
+<li>Compacted L1 → L2 (potentially 10 writes, merging with ~10 L2 files)</li>
+<li>Compacted L2 → L3 (potentially 10 writes)</li>
+<li>Continue through higher levels...</li>
+</ol>
+<div class="arithmatex">\[\text{Worst case WA} = 1 + f \times L\]</div>
+<p>Where <span class="arithmatex">\(f\)</span> = fanout (default 10) and <span class="arithmatex">\(L\)</span> = number of levels. With fanout=10 and 5 levels: ~50× write amplification.</p>
 <h3 id="read-amplification-guarantee">Read Amplification Guarantee<a class="headerlink" href="#read-amplification-guarantee" title="Permanent link">¶</a></h3>
 <p>The leveled structure provides bounded read amplification:</p>
-<div class="highlight"><pre><span></span><code>Point query for partition key K:
-1. Check all L0 SSTables (max 4)
-2. Check exactly 1 SSTable in L1 (non-overlapping ranges)
-3. Check exactly 1 SSTable in L2
-4. Check exactly 1 SSTable in L3
-...
-
-Total: 4 + number_of_levels
-With 5 levels: max 9 SSTables per read
-</code></pre></div>
-<p>This is dramatically better than STCS, which may require checking 50+ SSTables.</p>
+<p><strong>Point query for partition key K:</strong></p>
+<ol>
+<li>Check all L0 SSTables (variable count, but typically low under normal operation)</li>
+<li>Check exactly 1 SSTable in L1 (non-overlapping ranges)</li>
+<li>Check exactly 1 SSTable in L2</li>
+<li>Check exactly 1 SSTable in L3</li>
+<li>Continue through L4-L8 (exactly 1 SSTable per level)</li>
+</ol>
+<table>
+<thead>
+<tr>
+<th>Case</th>
+<th>Read Amplification</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Best case</td>
+<td><span class="arithmatex">\(\text{L0 count} + 1\)</span> (data only in one level)</td>
+</tr>
+<tr>
+<td>Worst case</td>
+<td><span class="arithmatex">\(\text{L0 count} + 8\)</span> (data spread across all levels)</td>
+</tr>
+</tbody>
+</table>
+<p>Under healthy conditions with timely compaction, L0 typically contains only a few SSTables. The bounded nature of L1-L8 (exactly one SSTable per level per query) provides the predictable read latency that distinguishes LCS from STCS. With STCS, a single partition query may need to check 50+ SSTables.</p>
 <hr>
 <h2 id="benefits">Benefits<a class="headerlink" href="#benefits" title="Permanent link">¶</a></h2>
 <h3 id="predictable-read-latency">Predictable Read Latency<a class="headerlink" href="#predictable-read-latency" title="Permanent link">¶</a></h3>
@@ -14822,16 +15201,6 @@ With 5 levels: max 9 SSTables per read
 </tbody>
 </table>
 <hr>
-<h3 id="non-overlapping-token-ranges">Non-Overlapping Token Ranges<a class="headerlink" href="#non-overlapping-token-ranges" title="Permanent link">¶</a></h3>
-<p>The key property of LCS is that within each level (L1+), SSTables own exclusive token ranges:</p>
-<div class="highlight"><pre><span></span><code>L1:  [tokens 0-1000] [tokens 1001-2000] [tokens 2001-3000]
-                ↑
-     This SSTable contains ALL data for tokens 0-1000
-
-Result: Read for token 500 checks only ONE L1 SSTable
-</code></pre></div>
-<p>This contrasts with STCS where all SSTables might contain any token.</p>
-<hr>
 <h2 id="configuration">Configuration<a class="headerlink" href="#configuration" title="Permanent link">¶</a></h2>
 <div class="highlight"><pre><span></span><code><span class="k">CREATE</span><span class="w"> </span><span class="k">TABLE</span><span class="w"> </span><span class="n">my_table</span><span class="w"> </span><span class="p">(</span>
 <span class="w">    </span><span class="n">id</span><span class="w"> </span><span class="n">uuid</span><span class="w"> </span><span class="k">PRIMARY</span><span class="w"> </span><span class="k">KEY</span><span class="p">,</span>
@@ -14850,6 +15219,7 @@ Result: Read for token 500 checks only ONE L1 SSTable
 <span class="err">}</span><span class="p">;</span>
 </code></pre></div>
 <h3 id="configuration-parameters">Configuration Parameters<a class="headerlink" href="#configuration-parameters" title="Permanent link">¶</a></h3>
+<h4 id="lcs-specific-options">LCS-Specific Options<a class="headerlink" href="#lcs-specific-options" title="Permanent link">¶</a></h4>
 <table>
 <thead>
 <tr>
@@ -14862,160 +15232,306 @@ Result: Read for token 500 checks only ONE L1 SSTable
 <tr>
 <td><code>sstable_size_in_mb</code></td>
 <td>160</td>
-<td>Target size for each SSTable</td>
+<td>Target size for individual SSTables in megabytes. Smaller values increase SSTable count and compaction frequency; larger values reduce compaction overhead but increase individual compaction duration.</td>
 </tr>
 <tr>
 <td><code>fanout_size</code></td>
 <td>10</td>
-<td>Size multiplier between levels</td>
+<td>Size multiplier between adjacent levels. Level L(n+1) has a target capacity of fanout_size × L(n). Higher values reduce the number of levels but increase write amplification per level transition.</td>
+</tr>
+<tr>
+<td><code>single_sstable_uplevel</code></td>
+<td>true</td>
+<td>When enabled, allows a single SSTable from level L to be promoted directly to level L+1 without rewriting, provided it does not overlap with any SSTables in L+1. Reduces unnecessary I/O for non-overlapping data.</td>
+</tr>
+</tbody>
+</table>
+<h4 id="common-compaction-options">Common Compaction Options<a class="headerlink" href="#common-compaction-options" title="Permanent link">¶</a></h4>
+<p>These options apply to all compaction strategies:</p>
+<table>
+<thead>
+<tr>
+<th>Parameter</th>
+<th>Default</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>enabled</code></td>
+<td>true</td>
+<td>Enables background compaction. When set to false, automatic compaction is disabled but the strategy configuration is retained.</td>
+</tr>
+<tr>
+<td><code>tombstone_threshold</code></td>
+<td>0.2</td>
+<td>Ratio of garbage-collectable tombstones to total columns that triggers single-SSTable compaction. A value of 0.2 means compaction is triggered when 20% of the SSTable consists of droppable tombstones.</td>
+</tr>
+<tr>
+<td><code>tombstone_compaction_interval</code></td>
+<td>86400</td>
+<td>Minimum time in seconds between tombstone compaction attempts for the same SSTable. Prevents continuous recompaction of SSTables that cannot yet drop tombstones.</td>
+</tr>
+<tr>
+<td><code>unchecked_tombstone_compaction</code></td>
+<td>false</td>
+<td>When true, bypasses pre-checking for tombstone compaction eligibility. Tombstones are still only dropped when safe to do so.</td>
+</tr>
+<tr>
+<td><code>only_purge_repaired_tombstones</code></td>
+<td>false</td>
+<td>When true, tombstones are only purged from SSTables that have been marked as repaired. Useful for preventing data resurrection in clusters with inconsistent repair schedules.</td>
+</tr>
+<tr>
+<td><code>log_all</code></td>
+<td>false</td>
+<td>Enables detailed compaction logging to a separate log file in the log directory. Useful for debugging compaction behavior.</td>
+</tr>
+</tbody>
+</table>
+<h3 id="startup-options">Startup Options<a class="headerlink" href="#startup-options" title="Permanent link">¶</a></h3>
+<p>The following JVM option affects LCS behavior:</p>
+<table>
+<thead>
+<tr>
+<th>Option</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>-Dcassandra.disable_stcs_in_l0=true</code></td>
+<td>Disables STCS-style compaction in L0. By default, when L0 accumulates more than 32 SSTables, Cassandra performs STCS compaction within L0 to reduce the SSTable count more quickly. This option disables that behavior.</td>
 </tr>
 </tbody>
 </table>
 <h3 id="level-size-calculation">Level Size Calculation<a class="headerlink" href="#level-size-calculation" title="Permanent link">¶</a></h3>
-<div class="highlight"><pre><span></span><code>With sstable_size_in_mb = 160 and fanout_size = 10:
-
-L0: Variable (memtable flushes, max 4 before compaction)
-L1: 160MB × 1 = 160MB total capacity
-L2: 160MB × 10 = 1.6GB total capacity
-L3: 160MB × 100 = 16GB total capacity
-L4: 160MB × 1000 = 160GB total capacity
-L5: 160MB × 10000 = 1.6TB total capacity
-
-Maximum data per level = sstable_size × fanout^level
-</code></pre></div>
+<p>The target size for each level is calculated using the formula:</p>
+<div class="arithmatex">\[\text{maxBytesForLevel}(L) = f^L \times s\]</div>
+<p>Where:</p>
+<ul>
+<li><span class="arithmatex">\(L\)</span> = level number (1-8)</li>
+<li><span class="arithmatex">\(f\)</span> = <code>fanout_size</code> (default: 10)</li>
+<li><span class="arithmatex">\(s\)</span> = <code>sstable_size_in_mb</code> (default: 160 MB)</li>
+</ul>
+<p><strong>Special case for L0:</strong></p>
+<div class="arithmatex">\[\text{maxBytesForLevel}(0) = 4 \times s\]</div>
+<p><strong>With default values (<span class="arithmatex">\(s = 160\text{MB}\)</span>, <span class="arithmatex">\(f = 10\)</span>):</strong></p>
+<table>
+<thead>
+<tr>
+<th>Level</th>
+<th>Formula</th>
+<th>Target Size</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>L0</td>
+<td><span class="arithmatex">\(4 \times 160\text{MB}\)</span></td>
+<td>640 MB</td>
+</tr>
+<tr>
+<td>L1</td>
+<td><span class="arithmatex">\(10^1 \times 160\text{MB}\)</span></td>
+<td>1.6 GB</td>
+</tr>
+<tr>
+<td>L2</td>
+<td><span class="arithmatex">\(10^2 \times 160\text{MB}\)</span></td>
+<td>16 GB</td>
+</tr>
+<tr>
+<td>L3</td>
+<td><span class="arithmatex">\(10^3 \times 160\text{MB}\)</span></td>
+<td>160 GB</td>
+</tr>
+<tr>
+<td>L4</td>
+<td><span class="arithmatex">\(10^4 \times 160\text{MB}\)</span></td>
+<td>1.6 TB</td>
+</tr>
+<tr>
+<td>L5</td>
+<td><span class="arithmatex">\(10^5 \times 160\text{MB}\)</span></td>
+<td>16 TB</td>
+</tr>
+<tr>
+<td>L6</td>
+<td><span class="arithmatex">\(10^6 \times 160\text{MB}\)</span></td>
+<td>160 TB</td>
+</tr>
+<tr>
+<td>L7</td>
+<td><span class="arithmatex">\(10^7 \times 160\text{MB}\)</span></td>
+<td>1.6 PB</td>
+</tr>
+<tr>
+<td>L8</td>
+<td><span class="arithmatex">\(10^8 \times 160\text{MB}\)</span></td>
+<td>16 PB</td>
+</tr>
+</tbody>
+</table>
+<p>The maximum dataset size per table with default settings is theoretically 16+ PB, though practical limits are reached well before this due to compaction throughput constraints.</p>
 <hr>
 <h2 id="write-amplification-analysis">Write Amplification Analysis<a class="headerlink" href="#write-amplification-analysis" title="Permanent link">¶</a></h2>
 <p>LCS has high write amplification due to the promotion process:</p>
-<div class="highlight"><pre><span></span><code>When L0 compacts to L1:
-- L0 SSTable overlaps with potentially ALL L1 SSTables
-- Must rewrite all overlapping L1 SSTables
-- Write amplification at this step: ~10x
-
-When L1 promotes to L2:
-- Same process, must rewrite overlapping L2 SSTables
-- Write amplification: ~10x
-
-Total write amplification for data reaching deepest level:
-~10 × number_of_levels
-
-Example: 100GB dataset with 5 levels
-Write amplification: ~10 × 5 = 50x
-</code></pre></div>
+<p><strong>Per-level amplification:</strong></p>
+<ul>
+<li>L0 → L1: SSTable overlaps with potentially all L1 SSTables → <span class="arithmatex">\(\sim 10\times\)</span></li>
+<li>L1 → L2: Same process with L2 overlaps → <span class="arithmatex">\(\sim 10\times\)</span></li>
+<li>Each subsequent level: <span class="arithmatex">\(\sim f\times\)</span> where <span class="arithmatex">\(f\)</span> = fanout</li>
+</ul>
+<p><strong>Total write amplification:</strong></p>
+<div class="arithmatex">\[W_{\text{total}} \approx f \times L\]</div>
+<p>Where:</p>
+<ul>
+<li><span class="arithmatex">\(f\)</span> = fanout (default: 10)</li>
+<li><span class="arithmatex">\(L\)</span> = number of levels data traverses</li>
+</ul>
+<p><strong>Example:</strong> 100GB dataset with 5 levels:</p>
+<div class="arithmatex">\[W = 10 \times 5 = 50\times\]</div>
 <p>This high write amplification makes LCS unsuitable for write-heavy workloads.</p>
 <hr>
-<h2 id="read-amplification-advantage">Read Amplification Advantage<a class="headerlink" href="#read-amplification-advantage" title="Permanent link">¶</a></h2>
-<p>LCS provides predictable, low read amplification:</p>
-<div class="highlight"><pre><span></span><code>For a single partition read:
-
-1. Check L0 (max 4 SSTables, overlapping) → 4 checks
-2. Check L1 (non-overlapping) → 1 SSTable
-3. Check L2 (non-overlapping) → 1 SSTable
-4. Check L3 (non-overlapping) → 1 SSTable
-5. Check L4 (non-overlapping) → 1 SSTable
-
-Total: 4 + number_of_levels ≈ 9 SSTables maximum
-
-Compare to STCS: Potentially 50+ SSTables
-</code></pre></div>
-<h3 id="read-latency-calculation">Read Latency Calculation<a class="headerlink" href="#read-latency-calculation" title="Permanent link">¶</a></h3>
-<div class="highlight"><pre><span></span><code>LCS read path (5 levels):
-- L0 bloom checks: 4 × 0.1ms = 0.4ms
-- L1-L4 bloom checks: 4 × 0.1ms = 0.4ms
-- Index lookups (assume 3 hits): 3 × 0.5ms = 1.5ms
-- Data reads: 3 × 1ms = 3ms
-- Total: ~5.3ms
-
-STCS with 30 SSTables:
-- Bloom checks: 30 × 0.1ms = 3ms
-- Index lookups (assume 10 hits): 10 × 0.5ms = 5ms
-- Data reads: 10 × 1ms = 10ms
-- Total: ~18ms
-</code></pre></div>
-<hr>
-<h2 id="when-to-use-lcs_1">When to Use LCS<a class="headerlink" href="#when-to-use-lcs_1" title="Permanent link">¶</a></h2>
-<h3 id="recommended-for">Recommended For<a class="headerlink" href="#recommended-for" title="Permanent link">¶</a></h3>
+<h2 id="read-path-analysis">Read Path Analysis<a class="headerlink" href="#read-path-analysis" title="Permanent link">¶</a></h2>
+<p>LCS provides predictable, low read amplification through its non-overlapping level structure:</p>
+<p><strong>For a single partition read:</strong></p>
+<ol>
+<li>Check L0 SSTables (overlapping, count varies with write rate)</li>
+<li>Check at most 1 SSTable per level L1-L8 (non-overlapping)</li>
+</ol>
+<p><strong>Read amplification bounds:</strong></p>
+<div class="arithmatex">\[R_{\text{best}} = n_{L0} + 1$$
+$$R_{\text{worst}} = n_{L0} + L_{\text{max}}\]</div>
+<p>Where:</p>
+<ul>
+<li><span class="arithmatex">\(n_{L0}\)</span> = number of L0 SSTables (typically 2-4 when healthy)</li>
+<li><span class="arithmatex">\(L_{\text{max}}\)</span> = deepest level containing data (up to 8)</li>
+</ul>
+<p><strong>Comparison:</strong></p>
 <table>
 <thead>
 <tr>
-<th>Use Case</th>
-<th>Rationale</th>
+<th>Scenario</th>
+<th>LCS</th>
+<th>STCS</th>
 </tr>
 </thead>
 <tbody>
 <tr>
-<td>Read-heavy workloads (&gt;70% reads)</td>
-<td>Low read amplification</td>
+<td>Healthy system</td>
+<td><span class="arithmatex">\(\sim 4 + 8 = 12\)</span> SSTables max</td>
+<td>50+ SSTables</td>
 </tr>
 <tr>
-<td>Frequently updated data</td>
-<td>Consolidates versions quickly</td>
-</tr>
-<tr>
-<td>Read latency consistency required</td>
-<td>Predictable SSTable count</td>
-</tr>
-<tr>
-<td>SSD storage</td>
-<td>Handles write amplification efficiently</td>
-</tr>
-<tr>
-<td>Small to medium datasets</td>
-<td>Compaction keeps pace with writes</td>
+<td>Backlogged</td>
+<td><span class="arithmatex">\(20+ n_{L0}\)</span> (STCS fallback at 32)</td>
+<td>100+ SSTables</td>
 </tr>
 </tbody>
 </table>
-<h3 id="avoid-when">Avoid When<a class="headerlink" href="#avoid-when" title="Permanent link">¶</a></h3>
+<h3 id="read-latency-example">Read Latency Example<a class="headerlink" href="#read-latency-example" title="Permanent link">¶</a></h3>
+<p><strong>LCS read path</strong> (healthy, 3 L0 SSTables, data in L3):</p>
 <table>
 <thead>
 <tr>
-<th>Use Case</th>
-<th>Rationale</th>
+<th>Operation</th>
+<th>Calculation</th>
+<th>Time</th>
 </tr>
 </thead>
 <tbody>
 <tr>
-<td>Write-heavy workloads</td>
-<td>Write amplification degrades throughput</td>
+<td>L0 bloom checks</td>
+<td><span class="arithmatex">\(3 \times 0.1\text{ms}\)</span></td>
+<td>0.3 ms</td>
 </tr>
 <tr>
-<td>HDD storage</td>
-<td>Random I/O from compaction</td>
+<td>L1-L3 bloom checks</td>
+<td><span class="arithmatex">\(3 \times 0.1\text{ms}\)</span></td>
+<td>0.3 ms</td>
 </tr>
 <tr>
-<td>Time-series data</td>
-<td>TWCS is more efficient</td>
+<td>Index lookups (2 hits)</td>
+<td><span class="arithmatex">\(2 \times 0.5\text{ms}\)</span></td>
+<td>1.0 ms</td>
 </tr>
 <tr>
-<td>Very large datasets</td>
-<td>Compaction may not keep pace</td>
+<td>Data reads</td>
+<td><span class="arithmatex">\(2 \times 1\text{ms}\)</span></td>
+<td>2.0 ms</td>
+</tr>
+<tr>
+<td><strong>Total</strong></td>
+<td></td>
+<td><strong>~3.6 ms</strong></td>
 </tr>
 </tbody>
 </table>
+<p><strong>STCS with 30 SSTables:</strong></p>
+<table>
+<thead>
+<tr>
+<th>Operation</th>
+<th>Calculation</th>
+<th>Time</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Bloom checks</td>
+<td><span class="arithmatex">\(30 \times 0.1\text{ms}\)</span></td>
+<td>3.0 ms</td>
+</tr>
+<tr>
+<td>Index lookups (10 hits)</td>
+<td><span class="arithmatex">\(10 \times 0.5\text{ms}\)</span></td>
+<td>5.0 ms</td>
+</tr>
+<tr>
+<td>Data reads</td>
+<td><span class="arithmatex">\(10 \times 1\text{ms}\)</span></td>
+<td>10.0 ms</td>
+</tr>
+<tr>
+<td><strong>Total</strong></td>
+<td></td>
+<td><strong>~18 ms</strong></td>
+</tr>
+</tbody>
+</table>
+<p>The key advantage is predictability: LCS read latency remains stable as the dataset grows, while STCS latency increases with SSTable accumulation.</p>
 <hr>
 <h2 id="production-issues">Production Issues<a class="headerlink" href="#production-issues" title="Permanent link">¶</a></h2>
 <h3 id="issue-1-l0-compaction-backlog">Issue 1: L0 Compaction Backlog<a class="headerlink" href="#issue-1-l0-compaction-backlog" title="Permanent link">¶</a></h3>
 <p><strong>Symptoms:</strong></p>
 <ul>
-<li>L0 SSTable count growing beyond 4</li>
-<li>Read latency increasing</li>
+<li>L0 SSTable count growing (warning at 5+, critical at 32+)</li>
+<li>Read latency increasing proportionally to L0 count</li>
 <li>Compaction pending tasks growing</li>
+<li>At 32+ L0 SSTables, STCS fallback activates automatically</li>
 </ul>
 <p><strong>Diagnosis:</strong></p>
 <div class="highlight"><pre><span></span><code>nodetool<span class="w"> </span>tablestats<span class="w"> </span>keyspace.table<span class="w"> </span><span class="p">|</span><span class="w"> </span>grep<span class="w"> </span><span class="s2">"SSTables in each level"</span>
 <span class="c1"># Output: [15, 10, 100, 1000, ...]</span>
-<span class="c1"># 15 L0 SSTables indicates backlog</span>
+<span class="c1"># 15 L0 SSTables indicates moderate backlog</span>
+
+<span class="c1"># Check if L0 size exceeds target (4 × sstable_size = 640MB default)</span>
+nodetool<span class="w"> </span>tablestats<span class="w"> </span>keyspace.table<span class="w"> </span><span class="p">|</span><span class="w"> </span>grep<span class="w"> </span>-E<span class="w"> </span><span class="s2">"Space used|SSTable"</span>
 </code></pre></div>
 <p><strong>Causes:</strong></p>
 <ul>
 <li>Write rate exceeds L0→L1 compaction throughput</li>
 <li>Insufficient compaction threads</li>
 <li>Disk I/O bottleneck</li>
+<li>Large L1 causing extensive overlap during L0→L1 compaction</li>
 </ul>
 <p><strong>Solutions:</strong></p>
 <ol>
 <li>
 <p>Increase compaction throughput:
-   </p><div class="highlight"><pre><span></span><code>nodetool<span class="w"> </span>setcompactionthroughput<span class="w"> </span><span class="m">128</span>
+   </p><div class="highlight"><pre><span></span><code>nodetool<span class="w"> </span>setcompactionthroughput<span class="w"> </span><span class="m">128</span><span class="w">  </span><span class="c1"># MB/s</span>
 </code></pre></div>
 </li>
 <li>
@@ -15028,6 +15544,9 @@ STCS with 30 SSTables:
 </li>
 <li>
 <p>Consider switching to STCS if write-heavy</p>
+</li>
+<li>
+<p>If L0 exceeds 32 SSTables, STCS fallback is automatic (disable with <code>-Dcassandra.disable_stcs_in_l0=true</code> only if necessary)</p>
 </li>
 </ol>
 <h3 id="issue-2-large-partitions-stalling-compaction">Issue 2: Large Partitions Stalling Compaction<a class="headerlink" href="#issue-2-large-partitions-stalling-compaction" title="Permanent link">¶</a></h3>
@@ -15121,29 +15640,40 @@ nodetool<span class="w"> </span>compactionstats
 <tr>
 <th>Metric</th>
 <th>Healthy</th>
-<th>Investigate</th>
+<th>Warning</th>
+<th>Critical</th>
 </tr>
 </thead>
 <tbody>
 <tr>
 <td>L0 SSTable count</td>
 <td>≤4</td>
-<td>&gt;8</td>
+<td>5-15</td>
+<td>&gt;32 (STCS fallback triggers)</td>
 </tr>
 <tr>
 <td>Pending compactions</td>
 <td>&lt;20</td>
+<td>20-50</td>
 <td>&gt;50</td>
 </tr>
 <tr>
 <td>Level distribution</td>
 <td>Pyramid shape</td>
 <td>L0 growing</td>
+<td>L0 &gt;&gt; L1</td>
 </tr>
 <tr>
 <td>Write latency</td>
 <td>Stable</td>
 <td>Increasing</td>
+<td>Spiking</td>
+</tr>
+<tr>
+<td>Level score (any level)</td>
+<td>&lt;1.0</td>
+<td>1.0-1.5</td>
+<td>&gt;1.5</td>
 </tr>
 </tbody>
 </table>
@@ -15152,11 +15682,20 @@ nodetool<span class="w"> </span>compactionstats
 nodetool<span class="w"> </span>tablestats<span class="w"> </span>keyspace.table<span class="w"> </span><span class="p">|</span><span class="w"> </span>grep<span class="w"> </span><span class="s2">"SSTables in each level"</span>
 
 <span class="c1"># Expected output for healthy LCS:</span>
-<span class="c1"># SSTables in each level: [2, 10, 100, 500, 0, 0, 0]</span>
-<span class="c1">#                          L0  L1  L2   L3  L4 L5 L6</span>
+<span class="c1"># SSTables in each level: [2, 10, 100, 500, 0, 0, 0, 0, 0]</span>
+<span class="c1">#                          L0  L1  L2   L3  L4 L5 L6 L7 L8</span>
 
-<span class="c1"># Unhealthy (L0 backlog):</span>
-<span class="c1"># SSTables in each level: [25, 10, 100, 500, 0, 0, 0]</span>
+<span class="c1"># Warning (L0 building up):</span>
+<span class="c1"># SSTables in each level: [12, 10, 100, 500, 0, 0, 0, 0, 0]</span>
+
+<span class="c1"># Critical (L0 backlog, STCS will kick in):</span>
+<span class="c1"># SSTables in each level: [45, 10, 100, 500, 0, 0, 0, 0, 0]</span>
+
+<span class="c1"># Check compaction pending tasks</span>
+nodetool<span class="w"> </span>compactionstats
+
+<span class="c1"># View detailed level information</span>
+nodetool<span class="w"> </span>cfstats<span class="w"> </span>keyspace.table
 </code></pre></div>
 <h3 id="jmx-metrics">JMX Metrics<a class="headerlink" href="#jmx-metrics" title="Permanent link">¶</a></h3>
 <div class="highlight"><pre><span></span><code># Per-level SSTable counts
@@ -15164,12 +15703,123 @@ org.apache.cassandra.metrics:type=Table,keyspace=*,scope=*,name=SSTablesPerLevel
 
 # Compaction bytes written
 org.apache.cassandra.metrics:type=Table,keyspace=*,scope=*,name=BytesCompacted
+
+# Pending compaction bytes estimate
+org.apache.cassandra.metrics:type=Table,keyspace=*,scope=*,name=PendingCompactions
+
+# Compaction throughput
+org.apache.cassandra.metrics:type=Compaction,name=BytesCompacted
 </code></pre></div>
+<h3 id="level-health-check">Level Health Check<a class="headerlink" href="#level-health-check" title="Permanent link">¶</a></h3>
+<p>A healthy LCS table should show:</p>
+<ol>
+<li><strong>L0</strong>: Small count (typically 0-4 SSTables)</li>
+<li><strong>L1</strong>: Approximately <code>fanout_size</code> SSTables (≈10 with defaults)</li>
+<li><strong>Higher levels</strong>: Each level ~10× more SSTables than the previous</li>
+<li><strong>Pyramid shape</strong>: SSTable counts increase geometrically with level depth</li>
+</ol>
+<hr>
+<h2 id="implementation-internals">Implementation Internals<a class="headerlink" href="#implementation-internals" title="Permanent link">¶</a></h2>
+<p>This section documents implementation details from the Cassandra source code that affect operational behavior.</p>
+<h3 id="sstable-level-assignment">SSTable Level Assignment<a class="headerlink" href="#sstable-level-assignment" title="Permanent link">¶</a></h3>
+<p>When an SSTable is added to the manifest (e.g., after streaming or compaction), the level assignment follows these rules:</p>
+<ol>
+<li><strong>Recorded level check</strong>: Each SSTable stores its intended level in metadata via <code>getSSTableLevel()</code></li>
+<li><strong>Overlap verification for L1+</strong>: Before placing an SSTable in L1 or higher, the manifest checks for overlaps with existing SSTables in that level</li>
+<li><strong>Demotion to L0</strong>: If overlap is detected (<code>before.last &gt;= newsstable.first</code> or <code>after.first &lt;= newsstable.last</code>), the SSTable is demoted to L0 regardless of its recorded level</li>
+</ol>
+<p>This behavior ensures the non-overlapping invariant is maintained even when SSTables arrive from external sources (streaming, sstableloader).</p>
+<h3 id="internal-data-structures">Internal Data Structures<a class="headerlink" href="#internal-data-structures" title="Permanent link">¶</a></h3>
+<div class="highlight"><pre><span></span><code>LeveledGenerations:
+├── L0: HashSet&lt;SSTableReader&gt;        // Unordered, overlapping allowed
+└── levels[0-7]: TreeSet&lt;SSTableReader&gt;  // L1-L8, sorted by first token
+    └── Comparator: firstKey, then SSTableId (tiebreaker)
+
+LeveledManifest:
+├── generations: LeveledGenerations
+├── lastCompactedSSTables[]: SSTableReader  // Round-robin tracking per level
+├── compactionCounter: int                  // For starvation prevention
+└── levelFanoutSize: int                    // Default: 10
+</code></pre></div>
+<h3 id="compaction-writer-selection">Compaction Writer Selection<a class="headerlink" href="#compaction-writer-selection" title="Permanent link">¶</a></h3>
+<p>The compaction task selects its writer based on the operation type:</p>
+<table>
+<thead>
+<tr>
+<th>Condition</th>
+<th>Writer</th>
+<th>Behavior</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Major compaction</td>
+<td><code>MajorLeveledCompactionWriter</code></td>
+<td>Full reorganization, respects level structure</td>
+</tr>
+<tr>
+<td>Standard compaction</td>
+<td><code>MaxSSTableSizeWriter</code></td>
+<td>Outputs SSTables at target size, assigned to destination level</td>
+</tr>
+</tbody>
+</table>
+<h3 id="anti-compaction-behavior">Anti-Compaction Behavior<a class="headerlink" href="#anti-compaction-behavior" title="Permanent link">¶</a></h3>
+<p>During streaming operations that require anti-compaction (splitting SSTables by token range), LCS groups SSTables in batches of 2 per level to maintain level-specific guarantees while processing.</p>
+<h3 id="constants-reference">Constants Reference<a class="headerlink" href="#constants-reference" title="Permanent link">¶</a></h3>
+<table>
+<thead>
+<tr>
+<th>Constant</th>
+<th>Value</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>MAX_LEVEL_COUNT</code></td>
+<td>9</td>
+<td>L0 through L8</td>
+</tr>
+<tr>
+<td><code>MAX_COMPACTING_L0</code></td>
+<td>32</td>
+<td>Threshold for L0 STCS fallback</td>
+</tr>
+<tr>
+<td><code>NO_COMPACTION_LIMIT</code></td>
+<td>25</td>
+<td>Rounds before starvation prevention</td>
+</tr>
+<tr>
+<td>Minimum SSTable size</td>
+<td>1 MiB</td>
+<td>Validation constraint</td>
+</tr>
+<tr>
+<td>Minimum fanout size</td>
+<td>1</td>
+<td>Validation constraint</td>
+</tr>
+<tr>
+<td>Default fanout</td>
+<td>10</td>
+<td>Level size multiplier</td>
+</tr>
+<tr>
+<td>Default SSTable size</td>
+<td>160 MiB</td>
+<td>Target per-SSTable size</td>
+</tr>
+</tbody>
+</table>
 <hr>
 <h2 id="related-documentation">Related Documentation<a class="headerlink" href="#related-documentation" title="Permanent link">¶</a></h2>
 <ul>
 <li><strong><a href="../">Compaction Overview</a></strong> - Concepts and strategy selection</li>
 <li><strong><a href="../stcs/">Size-Tiered Compaction (STCS)</a></strong> - Alternative for write-heavy workloads</li>
+<li><strong><a href="../twcs/">Time-Window Compaction (TWCS)</a></strong> - Optimized for time-series data with TTL</li>
+<li><strong><a href="../ucs/">Unified Compaction (UCS)</a></strong> - Recommended strategy for Cassandra 5.0+</li>
 <li><strong><a href="../../../../operations/compaction-management/">Compaction Management</a></strong> - Tuning and troubleshooting</li>
 </ul></div>
 
