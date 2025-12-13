@@ -248,26 +248,61 @@ The number after `L` specifies the size ratio between levels. L10 means each lev
 
 Unlike traditional strategies that trigger on SSTable count, UCS uses density:
 
-```
-Density = Data size / Token range covered
+$$d = \frac{s}{v}$$
 
-Traditional (count-based):
-  Trigger when: SSTable_count >= min_threshold
-  Problem: Doesn't account for SSTable sizes or overlap
+Where:
 
-UCS (density-based):
-  Trigger when: Density exceeds threshold for shard
-  Advantage: Considers actual data distribution
+- $d$ = density
+- $s$ = SSTable size
+- $v$ = fraction of token space covered by the SSTable
 
-Example:
-  Shard covers 25% of token range
-  Shard contains 10GB of data
-  Density = 10GB / 0.25 = 40GB effective
+**Traditional (count-based):** Trigger when $\text{SSTable\_count} \geq \text{min\_threshold}$
 
-  If target density is 32GB, compaction triggers
-```
+- Problem: Doesn't account for SSTable sizes or overlap
+
+**UCS (density-based):** Trigger when density exceeds threshold for shard
+
+- Advantage: Considers actual data distribution
+
+**Example:**
+
+- Shard covers 25% of token range ($v = 0.25$)
+- Shard contains 10GB of data ($s = 10\text{GB}$)
+- Density $d = \frac{10\text{GB}}{0.25} = 40\text{GB}$ effective
+- If target density is 32GB, compaction triggers
 
 This approach prevents the "large SSTable accumulation" problem of STCS while avoiding unnecessary compaction of sparse data.
+
+### Level Assignment
+
+SSTables are assigned to levels based on their size relative to the memtable flush size:
+
+$$L = \begin{cases} \left\lfloor \log_f \frac{s}{m} \right\rfloor & \text{if } s \geq m \\ 0 & \text{otherwise} \end{cases}$$
+
+Where:
+
+- $L$ = level number
+- $f$ = fanout (derived from scaling parameter)
+- $s$ = SSTable size (or density in sharded mode)
+- $m$ = memtable flush size (observed or overridden via `flush_size_override`)
+
+This creates exponentially-growing size ranges per level. Level 0 contains SSTables up to size $m$, level 1 contains up to $m \times f$, level 2 up to $m \times f^2$, etc.
+
+**Example with $f=4$ and $m=100\text{MB}$:**
+
+| SSTable Size | Calculation | Level |
+|--------------|-------------|-------|
+| 50 MB | $s < m$ | 0 |
+| 100 MB | $\lfloor \log_4(1) \rfloor$ | 0 |
+| 400 MB | $\lfloor \log_4(4) \rfloor$ | 1 |
+| 1.6 GB | $\lfloor \log_4(16) \rfloor$ | 2 |
+| 6.4 GB | $\lfloor \log_4(64) \rfloor$ | 3 |
+
+**Total levels for a dataset:**
+
+$$\text{Number of levels} = \begin{cases} \left\lfloor \log_f \frac{D}{m} \right\rfloor & \text{if } D \geq m \\ 0 & \text{otherwise} \end{cases}$$
+
+Where $D$ = total dataset density.
 
 ---
 
@@ -416,13 +451,70 @@ UCS divides the token range into shards, enabling:
 Token range: -2^63 to 2^63
 With 4 base shards:
 
-Shard 1: tokens -2^63 to -2^61
-Shard 2: tokens -2^61 to 0
-Shard 3: tokens 0 to 2^61
-Shard 4: tokens 2^61 to 2^63
+Shard 0: tokens -2^63 to -2^61
+Shard 1: tokens -2^61 to 0
+Shard 2: tokens 0 to 2^61
+Shard 3: tokens 2^61 to 2^63
 
 Each shard compacts independently with its own SSTable hierarchy
 ```
+
+### Shard Count Calculation
+
+The number of shards scales dynamically with data density using a four-case formula:
+
+$$S = \begin{cases} 1 & \text{if } d < m \\ \min\left(2^{\lfloor \log_2 \frac{d}{m} \rfloor}, b\right) & \text{if } d < m \cdot b \\ b & \text{if } d < t \cdot b \\ 2^{\lfloor (1-\lambda) \cdot \log_2 (\frac{d}{t} \cdot \frac{1}{b}) \rfloor} \cdot b & \text{otherwise} \end{cases}$$
+
+Where:
+
+- $S$ = number of shards
+- $d$ = density (data size / token fraction)
+- $m$ = `min_sstable_size` (default: 100 MiB)
+- $b$ = `base_shard_count` (default: 4)
+- $t$ = `target_sstable_size` (default: 1 GiB)
+- $\lambda$ = `sstable_growth` (default: 0.333)
+
+**Case breakdown:**
+
+1. **Very small data** ($d < m$): Single shard, no splitting
+2. **Small data** ($d < m \cdot b$): Shard count grows up to base count
+3. **Medium data** ($d < t \cdot b$): Fixed at base shard count
+4. **Large data**: Shard count doubles as density increases, modulated by growth factor $\lambda$
+
+This ensures power-of-two boundaries for efficient token range splitting while preventing over-sharding of small datasets.
+
+### Growth Component ($\lambda$) Effects
+
+The `sstable_growth` parameter ($\lambda$) controls the trade-off between increasing shard count vs. increasing SSTable size:
+
+| $\lambda$ Value | Shard Growth | SSTable Size | Use Case |
+|---------|--------------|--------------|----------|
+| 0 | Grows with density | Fixed at target | Many small SSTables, maximum parallelism |
+| 0.333 (default) | Cubic-root growth | Square-root growth | Balanced: both grow moderately |
+| 0.5 | Square-root growth | Square-root growth | Equal growth for both |
+| 1 | Fixed at base count | Grows with density | Fewer large SSTables, less parallelism |
+
+**Detailed effects:**
+
+- **$\lambda = 0$**: Shard count grows proportionally with density; SSTable size stays fixed at `target_sstable_size`
+- **$\lambda = 0.333$**: When density quadruples, SSTable size grows by $\sqrt[3]{4} \approx 1.6\times$ and shard count grows by $4/1.6 \approx 2.5\times$
+- **$\lambda = 0.5$**: When density quadruples, both SSTable size and shard count double
+- **$\lambda = 1$**: Shard count fixed at `base_shard_count`; SSTable size grows linearly with density
+
+### Output SSTable Sizing
+
+Compaction output SSTables target sizes between:
+
+$$\frac{s_t}{\sqrt{2}} \leq \text{output\_size} \leq s_t \times \sqrt{2}$$
+
+Where $s_t$ = `target_sstable_size`.
+
+With default 1 GiB target:
+
+- Minimum: $\frac{1024}{\sqrt{2}} \approx 724$ MiB
+- Maximum: $1024 \times \sqrt{2} \approx 1448$ MiB
+
+SSTables are split at predefined power-of-two shard boundaries, ensuring consistent boundaries across all density levels.
 
 ---
 
@@ -454,20 +546,53 @@ CREATE TABLE my_table (
 
 ### Configuration Parameters
 
+#### UCS-Specific Options
+
 | Parameter | Default | Description |
 |-----------|---------|-------------|
-| `scaling_parameters` | T4 | Strategy behavior: T (tiered), L (leveled), N (none) with fanout |
-| `target_sstable_size` | 1GiB | Target size for output SSTables |
-| `base_shard_count` | 4 | Number of token range shards |
-| `min_sstable_size` | 100MiB | Minimum size before sharding applies |
-| `max_sstables_to_compact` | 32 | Maximum SSTables per compaction |
-| `expired_sstable_check_frequency_seconds` | 600 | TTL expiration check interval |
+| `scaling_parameters` | T4 | Strategy behavior: T (tiered), L (leveled), N (balanced) with fanout. Controls the read/write trade-off. Multiple comma-separated values can specify different behavior per level. |
+| `target_sstable_size` | 1 GiB | Target size for output SSTables. Actual sizes may vary between √0.5 and √2 times this value based on sharding calculations. |
+| `base_shard_count` | 4 | Base number of token range shards. Actual shard count scales with data density using the `sstable_growth` modifier. Must be a power of 2. |
+| `min_sstable_size` | 100 MiB | Minimum SSTable size before sharding applies. Data below this threshold is not split into shards. |
+| `sstable_growth` | 0.333 | Controls how shard count grows with data density. Range 0-1. Value of 0 maintains fixed target size; 1 prevents splitting beyond base count; default 0.333 creates cubic-root growth. |
+| `flush_size_override` | 0 | Override for expected flush size. When 0, derived automatically from observed flush operations (rounded to whole MB). |
+| `max_sstables_to_compact` | 0 | Maximum SSTables per compaction. Value of 0 defaults to Integer.MAX_VALUE (effectively unlimited). |
+| `expired_sstable_check_frequency_seconds` | 600 | How often to check for fully expired SSTables that can be dropped. |
+| `unsafe_aggressive_sstable_expiration` | false | Drop SSTables without tombstone checking. Same semantics as TWCS. |
+| `overlap_inclusion_method` | TRANSITIVE | How to identify overlapping SSTables. TRANSITIVE uses transitive closure; alternatives available for specific use cases. |
+| `parallelize_output_shards` | true | Enable parallel output shard writing during compaction. Improves throughput on multi-core systems. |
+| `survival_factor` | 1 | Multiplier for calculating space overhead during compaction. Higher values provide more headroom for concurrent compactions. |
+
+#### Common Compaction Options
+
+| Parameter | Default | Description |
+|-----------|---------|-------------|
+| `enabled` | true | Enables background compaction. |
+| `tombstone_threshold` | 0.2 | Ratio of droppable tombstones that triggers single-SSTable compaction. |
+| `tombstone_compaction_interval` | 86400 | Minimum seconds between tombstone compaction attempts. |
+| `unchecked_tombstone_compaction` | false | Bypasses tombstone compaction eligibility pre-checking. |
+| `only_purge_repaired_tombstones` | false | Only purge tombstones from repaired SSTables. |
+| `log_all` | false | Enables detailed compaction logging. |
+
+#### Validation Rules
+
+The following constraints are enforced during configuration:
+
+| Parameter | Constraint |
+|-----------|------------|
+| `target_sstable_size` | Minimum 1 MiB |
+| `min_sstable_size` | Must be < `target_sstable_size × √0.5` (approximately 70% of target) |
+| `base_shard_count` | Must be positive integer |
+| `sstable_growth` | Must be between 0.0 and 1.0 (inclusive) |
+| `flush_size_override` | If specified, minimum 1 MiB |
+| `expired_sstable_check_frequency_seconds` | Must be positive |
+| `scaling_parameters` | Must match format: N, L[2+], T[2+], or signed integer |
 
 ---
 
 ## Scaling Parameters
 
-The `scaling_parameters` option controls compaction behavior:
+The `scaling_parameters` option controls compaction behavior through an internal scaling factor `W`.
 
 ### Format
 
@@ -476,20 +601,45 @@ The `scaling_parameters` option controls compaction behavior:
 
 T = Tiered (STCS-like behavior)
 L = Leveled (LCS-like behavior)
-N = None (disable compaction)
+N = Balanced (neutral, neither tiered nor leveled)
 
-number = fanout/threshold
+number = threshold/fanout (must be ≥ 2 for L and T)
 ```
+
+### Internal Calculation
+
+The scaling parameter is converted to an internal value $W$:
+
+$$W = \begin{cases} n - 2 & \text{for } T_n \text{ (e.g., } T_4 \rightarrow W = 2\text{)} \\ 2 - n & \text{for } L_n \text{ (e.g., } L_{10} \rightarrow W = -8\text{)} \\ 0 & \text{for } N \text{ (balanced)} \end{cases}$$
+
+From $W$, the fanout ($f$) and threshold ($t$) are calculated:
+
+$$f = \begin{cases} 2 - W & \text{if } W < 0 \\ 2 + W & \text{otherwise} \end{cases}$$
+
+$$t = \begin{cases} 2 & \text{if } W \leq 0 \\ 2 + W & \text{otherwise} \end{cases}$$
 
 ### Examples
 
-| Parameter | Behavior | Use Case |
-|-----------|----------|----------|
-| `T4` | Tiered with 4 SSTables per tier | Write-heavy (like STCS min_threshold=4) |
-| `T8` | Tiered with 8 SSTables per tier | Very write-heavy |
-| `L4` | Leveled with 4x size between levels | Read-heavy, lower write amp than L10 |
-| `L10` | Leveled with 10x size between levels | Read-heavy (like classic LCS) |
-| `N` | No compaction | Special cases only |
+| Parameter | $W$ | $f$ | $t$ | Behavior |
+|-----------|-----|-----|-----|----------|
+| `T4` | 2 | 4 | 4 | Tiered: 4 SSTables trigger compaction, $4\times$ size growth |
+| `T8` | 6 | 8 | 8 | Very tiered: higher threshold, more write-optimized |
+| `N` | 0 | 2 | 2 | Balanced: minimal fanout and threshold |
+| `L4` | -2 | 4 | 2 | Leveled: low threshold, more read-optimized |
+| `L10` | -8 | 10 | 2 | Very leveled: $10\times$ fanout, aggressive compaction |
+
+### Per-Level Configuration
+
+Multiple values can be specified for different levels:
+
+```sql
+'scaling_parameters': 'T4, T4, L10'
+-- Level 0: T4 behavior
+-- Level 1: T4 behavior
+-- Level 2+: L10 behavior (last value repeats)
+```
+
+This enables hybrid strategies where upper levels are tiered (write-optimized) and lower levels are leveled (read-optimized).
 
 
 
@@ -642,9 +792,156 @@ org.apache.cassandra.metrics:type=Table,keyspace=*,scope=*,name=LiveSSTableCount
 
 ---
 
+## Overlap Inclusion Methods
+
+The `overlap_inclusion_method` parameter controls how UCS extends the set of SSTables selected for compaction:
+
+### TRANSITIVE (Recommended)
+
+When an SSTable is selected for compaction, all transitively overlapping SSTables are included:
+
+```
+If A overlaps B and B overlaps C:
+  → A, B, and C are all included in the same compaction
+  (even if A and C don't directly overlap)
+
+Algorithm: O(n log n) time complexity
+Forms minimal disjoint lists where overlapping SSTables belong together
+```
+
+This is the default and recommended setting. It ensures compaction fully resolves overlaps, reducing future read amplification.
+
+### SINGLE (Experimental)
+
+!!! warning "Experimental"
+    SINGLE is implemented for experimentation purposes only and is not recommended for production use with UCS sharding.
+
+Extension occurs only once from the initially selected SSTables:
+
+```
+If A is selected and overlaps B and C:
+  → A, B, and C are included
+But if B also overlaps D:
+  → D is NOT included (no transitive extension)
+```
+
+Use this when compaction scope needs to be limited, at the cost of potentially leaving some overlaps unresolved.
+
+### NONE (Experimental)
+
+!!! warning "Experimental"
+    NONE is implemented for experimentation purposes only and is not recommended for production use with UCS sharding.
+
+No overlap extension occurs. Only directly selected SSTables are compacted:
+
+```
+Only the initially selected bucket is compacted
+Overlapping SSTables in other buckets are not included
+```
+
+**Not recommended** for most use cases as it may leave significant overlaps, degrading read performance.
+
+---
+
+## Implementation Internals
+
+This section documents implementation details from the Cassandra source code.
+
+### Level Structure
+
+UCS supports up to 32 levels (`MAX_LEVELS = 32`), sufficient for petabytes of data. This accommodates 2^32 SSTables at minimum 1MB each.
+
+### Shard Management
+
+The `ShardManager` organizes compaction across token ranges:
+
+1. **Boundary calculation**: Token range divided into `base_shard_count` segments
+2. **Density tracking**: Each shard tracks data density for triggering decisions
+3. **Dynamic scaling**: Shard count grows based on `sstable_growth` modifier
+4. **Output sharding**: Compaction output can be parallelized via `ShardTracker`
+
+### Compaction Candidate Selection
+
+The selection algorithm prioritizes efficiency and coverage:
+
+```
+Selection process:
+1. Filter unsuitable SSTables (suspect, early-open)
+2. Exclude currently compacting SSTables
+3. Organize remaining SSTables by density into levels (up to 32)
+4. Form buckets by overlap relationships within each level
+5. Find buckets with highest overlap count
+6. Among equal candidates:
+   - Prioritize LOWEST levels (cover larger token fraction for same work)
+   - Random uniform selection within same level (reservoir sampling)
+7. Extend selection using overlap_inclusion_method
+```
+
+**Level prioritization rationale**: Lower levels cover a larger fraction of the token space for the same amount of compaction work, making them more efficient targets.
+
+### Major Compaction Behavior
+
+When major compaction is triggered:
+
+1. Compacts all SSTables that have transitive overlap
+2. Produces `base_shard_count` concurrent compaction tasks
+3. Each task handles SSTables from one shard
+4. Output is split at shard boundaries appropriate for resulting density
+
+### Output Sharding
+
+When `parallelize_output_shards` is enabled:
+
+- Compaction tasks can write to multiple output shards simultaneously
+- Output SSTables are split at power-of-two shard boundaries
+- Task IDs use sequences 1+ for parallelized operations (sequence 0 for non-parallelized)
+- Improves throughput on multi-core systems
+
+### Overlap Set Formation
+
+The overlap detection algorithm forms a minimal list of overlap sets satisfying three properties:
+
+1. **Non-overlapping SSTables never share a set**
+2. **Overlapping SSTables exist together in at least one set**
+3. **SSTables occupy consecutive positions within sets**
+
+```
+Algorithm:
+1. Sort SSTables by first token
+2. Iterate through sorted list
+3. Extend current set while SSTables overlap
+4. Close set and start new when gap found
+5. Result: minimal lists where all overlapping SSTables are grouped
+
+Time complexity: O(n log n)
+```
+
+**Example:** If SSTables A, B, C, D cover tokens 0-3, 2-7, 6-9, 1-8 respectively:
+- Overlap sets computed: {A, B, D} and {B, C, D}
+- A and C don't overlap, so they're in separate sets
+- A, B, D overlap at token 2 → must be in at least one set together
+- B, C, D overlap at token 7 → must be in at least one set together
+
+The overlap sets determine read amplification: any key lookup touches at most one SSTable per non-overlapping set.
+
+### Constants Reference
+
+| Constant | Value | Description |
+|----------|-------|-------------|
+| `MAX_LEVELS` | 32 | Maximum hierarchy depth |
+| Default scaling_parameters | T4 | Tiered with fanout/threshold of 4 |
+| Default target_sstable_size | 1 GiB | Target output SSTable size |
+| Default base_shard_count | 4 | Initial token range divisions |
+| Default sstable_growth | 0.333 | Cubic-root density/shard growth |
+| Default expired check | 600 seconds | TTL expiration check frequency |
+| Output size range | s_t/√2 to s_t×√2 | Actual output SSTable size bounds |
+
+---
+
 ## Related Documentation
 
 - **[Compaction Overview](index.md)** - Concepts and strategy selection
 - **[Size-Tiered Compaction (STCS)](stcs.md)** - Traditional write-heavy strategy
 - **[Leveled Compaction (LCS)](lcs.md)** - Traditional read-heavy strategy
+- **[Time-Window Compaction (TWCS)](twcs.md)** - Optimized for time-series with TTL
 - **[Compaction Management](../../../operations/compaction-management/index.md)** - Tuning and troubleshooting

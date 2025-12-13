@@ -9,6 +9,9 @@ meta:
 
 Compaction is the process of merging SSTables to reduce read amplification, reclaim space from tombstones, and maintain manageable file counts. Selecting an appropriate strategy and configuration is critical for cluster performance.
 
+!!! tip "Cassandra 5.0+ Recommendation"
+    For new deployments on Cassandra 5.0+, [Unified Compaction Strategy (UCS)](ucs.md) is the recommended default. UCS provides a single, configurable strategy that can emulate STCS, LCS, or hybrid behaviors through its `scaling_parameters` option. Existing clusters can continue using their current strategies or migrate to UCS with a simple ALTER TABLE.
+
 ---
 
 ## SSTable Accumulation
@@ -138,33 +141,32 @@ Every compaction strategy involves trade-offs between three types of amplificati
 
 How many times data is written to disk over its lifetime.
 
-```
-Write Amplification = Total Bytes Written to Disk / Bytes Received from Client
+$$\text{Write Amplification} = \frac{\text{Total Bytes Written to Disk}}{\text{Bytes Received from Client}}$$
 
-Example:
+**Example:**
+
 - Client writes 1GB of data
 - Data is written once to commit log
 - Data is written once to SSTable (memtable flush)
-- Data is rewritten 3x during compaction
-- Write amplification = (1 + 1 + 3) / 1 = 5x
-```
+- Data is rewritten 3× during compaction
+- Write amplification = $\frac{1 + 1 + 3}{1} = 5\times$
 
 **Impact:**
 
 - Higher write amplification increases disk I/O
 - SSD lifetime is measured in total bytes written
-- Write amplification of 10x means SSD wears 10x faster
+- Write amplification of 10× means SSD wears 10× faster
 
 ### Read Amplification
 
 How many SSTables must be checked per read.
 
-```
-Read Amplification = Number of SSTables Touched per Read
+$$\text{Read Amplification} = \text{Number of SSTables Touched per Read}$$
 
-Ideal: 1 SSTable per read (data is fully consolidated)
-Worst: N SSTables (one per flush, no compaction)
-```
+| Case | Read Amplification |
+|------|-------------------|
+| Ideal (fully consolidated) | $1$ |
+| Worst (no compaction) | $N$ (one per flush) |
 
 **Impact:**
 
@@ -177,20 +179,19 @@ Worst: N SSTables (one per flush, no compaction)
 
 How much extra disk space is needed beyond raw data size.
 
-```
-Space Amplification = Disk Space Used / Actual Data Size
+$$\text{Space Amplification} = \frac{\text{Disk Space Used}}{\text{Actual Data Size}}$$
 
-Example:
+**Example:**
+
 - Raw data: 100GB
 - Tombstones pending cleanup: 10GB
 - Old SSTable versions during compaction: 100GB (temporary)
-- Space amplification = 210GB / 100GB = 2.1x
-```
+- Space amplification = $\frac{210\text{GB}}{100\text{GB}} = 2.1\times$
 
 **Impact:**
 
 - Determines required disk headroom
-- Some strategies need 2x space temporarily during compaction
+- Some strategies need 2× space temporarily during compaction
 - Running out of disk during compaction causes failures
 
 ---
@@ -211,8 +212,18 @@ Example:
 ```plantuml
 @startuml
 skinparam backgroundColor transparent
+skinparam ActivityBackgroundColor #F9E5FF
+skinparam ActivityBorderColor #7B4B96
+skinparam ActivityDiamondBackgroundColor #E8F5E9
+skinparam ActivityDiamondBorderColor #4CAF50
 
 start
+
+if (Cassandra 5.0+?) then (YES)
+    #E8F5E9:UCS (recommended)\nConfigure scaling_parameters\nbased on workload;
+    stop
+else (NO)
+endif
 
 if (Is the data time-series with TTL?) then (YES)
     :TWCS;
@@ -233,24 +244,19 @@ else (NO)
     stop
 endif
 
-note right
-  Using Cassandra 5.0+?
-  Consider UCS for new deployments
-end note
-
 @enduml
 ```
 
 ### Strategy by Workload Pattern
 
-| Workload | Recommended | Rationale |
-|----------|-------------|-----------|
-| Write-heavy (>90% writes) | STCS | Low write amplification |
-| Read-heavy (>70% reads) | LCS | Low read amplification |
-| Time-series with TTL | TWCS | Efficient TTL expiration |
-| Mixed workload | STCS or UCS | Balance of trade-offs |
-| Frequently updated data | LCS | Consolidates versions quickly |
-| Append-only logs | STCS or TWCS | Minimal rewrites |
+| Workload | Cassandra 5.0+ | Pre-5.0 | Rationale |
+|----------|----------------|---------|-----------|
+| Write-heavy (>90% writes) | UCS (T8) | STCS | Low write amplification |
+| Read-heavy (>70% reads) | UCS (L10) | LCS | Low read amplification |
+| Time-series with TTL | TWCS or UCS | TWCS | Efficient TTL expiration |
+| Mixed workload | UCS (T4) | STCS | Balanced trade-offs |
+| Frequently updated data | UCS (L4) | LCS | Consolidates versions quickly |
+| Append-only logs | UCS (T4) or TWCS | STCS or TWCS | Minimal rewrites |
 
 ---
 

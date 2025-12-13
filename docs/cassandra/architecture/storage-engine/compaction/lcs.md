@@ -7,6 +7,9 @@ meta:
 
 # Leveled Compaction Strategy (LCS)
 
+!!! note "Cassandra 5.0+"
+    Starting with Cassandra 5.0, [Unified Compaction Strategy (UCS)](ucs.md) is the recommended compaction strategy for most workloads, including read-heavy patterns traditionally suited to LCS. UCS provides similar read amplification benefits with more adaptive behavior. LCS remains fully supported and is a proven choice for production deployments on earlier versions.
+
 LCS organizes SSTables into levels where each level is 10x larger than the previous. Within each level (except L0), SSTables have non-overlapping token ranges, providing predictable read performance at the cost of higher write amplification.
 
 ---
@@ -39,21 +42,36 @@ LCS inverts this trade-off. By ensuring that SSTables within each level (except 
 
 ### Level Structure
 
-LCS organizes SSTables into numbered levels (L0, L1, L2, ...) with specific properties:
+LCS organizes SSTables into numbered levels (L0 through L8) with specific properties. The maximum level count is 9 (`MAX_LEVEL_COUNT = 9` in the source code).
 
 **Level 0 (L0):**
 
 - Receives memtable flushes directly
 - SSTables may have overlapping key ranges
-- Maximum 4 SSTables before triggering compaction to L1
+- Target size: 4 × `sstable_size_in_mb` (default: 640MB)
+- Stored in a HashSet (unordered by token range)
 - Acts as a buffer between memory and the leveled structure
 
-**Level 1+ (L1, L2, L3, ...):**
+**Level 1+ (L1, L2, L3, ... L8):**
 
 - SSTables have non-overlapping, contiguous key ranges
-- Each level has a target total size: L(n) = L(n-1) × fanout_size
-- Default fanout is 10, so L2 is 10× L1, L3 is 10× L2, etc.
+- Stored in TreeSets sorted by first token (with SSTable ID as tiebreaker)
+- Each level has a target total size calculated as: `fanout_size^level × sstable_size_in_mb`
 - Individual SSTable size is fixed (default 160MB)
+
+**Level Size Targets (with defaults):**
+
+| Level | Target Size Formula | Default Size |
+|-------|---------------------|--------------|
+| L0 | 4 × sstable_size | 640 MB |
+| L1 | fanout × sstable_size | 1.6 GB |
+| L2 | fanout² × sstable_size | 16 GB |
+| L3 | fanout³ × sstable_size | 160 GB |
+| L4 | fanout⁴ × sstable_size | 1.6 TB |
+| L5 | fanout⁵ × sstable_size | 16 TB |
+| L6 | fanout⁶ × sstable_size | 160 TB |
+| L7 | fanout⁷ × sstable_size | 1.6 PB |
+| L8 | fanout⁸ × sstable_size | 16 PB |
 
 ```plantuml
 @startuml
@@ -104,55 +122,140 @@ end note
 
 ### Compaction Mechanics
 
-**L0 → L1 Compaction:**
+```plantuml
+@startuml
+skinparam backgroundColor transparent
+skinparam ActivityBackgroundColor #F9E5FF
+skinparam ActivityBorderColor #7B4B96
+skinparam ActivityDiamondBackgroundColor #E8F5E9
+skinparam ActivityDiamondBorderColor #4CAF50
 
-When L0 accumulates 4 SSTables, compaction selects all L0 files plus all L1 files whose key ranges overlap with any L0 file. These are merged, and the output is written as new L1 SSTables with non-overlapping ranges.
+title LCS Compaction Decision Flow
 
-**L(n) → L(n+1) Compaction:**
+start
 
-When a level exceeds its size target, the compaction process:
+:Check level scores\n(highest level first);
 
-1. Selects one SSTable from L(n)
-2. Finds all overlapping SSTables in L(n+1)
-3. Merges and rewrites to L(n+1)
-4. Deletes source SSTables
+if (Any level score > 1.001?) then (yes)
+    :Select level with highest score;
 
-This "promote one, merge with overlapping" approach ensures that each compaction is bounded in scope while maintaining the non-overlapping invariant.
+    if (Level == L0?) then (yes)
+        if (L0 count > 32?) then (yes)
+            #FFE0E0:Run STCS within L0\n(fallback mode);
+        else (no)
+            :Select oldest L0 SSTables\n(up to sstable_size total);
+            :Add overlapping L0 SSTables;
+            :Add overlapping L1 SSTables\n(if size > sstable_size);
+        endif
+    else (no)
+        :Select next SSTable\n(round-robin from lastCompacted);
+        :Find overlapping L(n+1) SSTables;
+    endif
+
+    :Execute compaction;
+    :Update lastCompactedSSTables;
+
+else (no)
+    if (Tombstone compaction needed?) then (yes)
+        :Find SSTable with\ndroppable tombstones > threshold;
+        :Run single-SSTable compaction;
+    else (no)
+        :No compaction needed;
+    endif
+endif
+
+stop
+@enduml
+```
+
+#### Level Score and Compaction Triggering
+
+Compaction priority is determined by calculating a score for each level:
+
+$$\text{score} = \frac{\text{current\_bytes\_in\_level}}{\text{max\_bytes\_for\_level}}$$
+
+Compaction is triggered when $\text{score} > 1.001$. The compaction scheduler evaluates levels from highest (L8) to lowest (L0), prioritizing higher levels to maintain the leveled structure's invariants.
+
+#### L0 → L1 Compaction
+
+When L0 exceeds its size target (4 × `sstable_size_in_mb`), the candidate selection algorithm:
+
+1. Sorts L0 SSTables by creation time (oldest first)
+2. Adds SSTables until reaching `sstable_size_in_mb` total size
+3. Includes any additional L0 SSTables that overlap with already-selected candidates
+4. Limits selection to `max_threshold` SSTables (default: 32)
+5. Includes overlapping L1 SSTables only if total candidate size exceeds `sstable_size_in_mb`
+6. Requires minimum 2 SSTables to proceed with compaction
+
+All selected SSTables are merged, and output is written as new L1 SSTables with non-overlapping ranges.
+
+#### L0 STCS Fallback
+
+When L0 accumulates more than 32 SSTables (`MAX_COMPACTING_L0 = 32`), indicating that L0→L1 compaction cannot keep pace with write rate, Cassandra activates STCS-style compaction within L0. This compacts up to `max_threshold` similarly-sized L0 SSTables together, reducing SSTable count more quickly than waiting for L1 capacity. This behavior can be disabled with `-Dcassandra.disable_stcs_in_l0=true`.
+
+#### L(n) → L(n+1) Compaction
+
+When a level exceeds its size target (score > 1.001), the compaction process:
+
+1. Selects the next SSTable in round-robin order from `lastCompactedSSTables[level]` position
+2. Skips SSTables that are currently compacting or marked as suspect
+3. Identifies all overlapping SSTables in L(n+1)
+4. Merges and rewrites all selected SSTables to L(n+1)
+5. Updates `lastCompactedSSTables[level]` to track position for next round
+
+This round-robin approach ensures fair distribution of compaction work across the token range.
+
+#### Starvation Prevention
+
+The manifest tracks rounds without high-level compaction using `NO_COMPACTION_LIMIT = 25`. If 25 consecutive compaction rounds occur without selecting SSTables from higher levels, starved SSTables may be pulled into lower-level compactions to ensure data eventually progresses through levels.
+
+#### Single SSTable Uplevel
+
+When `single_sstable_uplevel` is enabled (default: true), an SSTable from level L can be promoted directly to level L+1 without rewriting if it does not overlap with any existing L+1 SSTables. This optimization reduces unnecessary I/O for workloads with good key distribution.
+
+#### Partial Compactions
+
+Partial compactions (where not all selected candidates complete) are only permitted at L0. Higher levels require complete compaction to maintain the non-overlapping invariant.
+
+#### Disk Space Management
+
+When insufficient disk space is available for L0→L(n) compactions, the `reduceScopeForLimitedSpace` method removes the largest L0 SSTable from the compaction set (if multiple L0 files exist). This allows compaction to proceed with reduced scope rather than failing entirely.
 
 ### Write Amplification Calculation
 
 Write amplification in LCS is determined by how many times data is rewritten as it moves through levels:
 
-```
-Write path for one piece of data:
+**Write path for one piece of data:**
+
 1. Written to memtable (memory)
 2. Flushed to L0 (1 write)
 3. Compacted L0 → L1 (1 write)
 4. Compacted L1 → L2 (potentially 10 writes, merging with ~10 L2 files)
 5. Compacted L2 → L3 (potentially 10 writes)
-...
+6. Continue through higher levels...
 
-Worst case: 1 + fanout × number_of_levels
-With fanout=10 and 5 levels: ~50× write amplification
-```
+$$\text{Worst case WA} = 1 + f \times L$$
+
+Where $f$ = fanout (default 10) and $L$ = number of levels. With fanout=10 and 5 levels: ~50× write amplification.
 
 ### Read Amplification Guarantee
 
 The leveled structure provides bounded read amplification:
 
-```
-Point query for partition key K:
-1. Check all L0 SSTables (max 4)
+**Point query for partition key K:**
+
+1. Check all L0 SSTables (variable count, but typically low under normal operation)
 2. Check exactly 1 SSTable in L1 (non-overlapping ranges)
 3. Check exactly 1 SSTable in L2
 4. Check exactly 1 SSTable in L3
-...
+5. Continue through L4-L8 (exactly 1 SSTable per level)
 
-Total: 4 + number_of_levels
-With 5 levels: max 9 SSTables per read
-```
+| Case | Read Amplification |
+|------|-------------------|
+| Best case | $\text{L0 count} + 1$ (data only in one level) |
+| Worst case | $\text{L0 count} + 8$ (data spread across all levels) |
 
-This is dramatically better than STCS, which may require checking 50+ SSTables.
+Under healthy conditions with timely compaction, L0 typically contains only a few SSTables. The bounded nature of L1-L8 (exactly one SSTable per level per query) provides the predictable read latency that distinguishes LCS from STCS. With STCS, a single partition query may need to check 50+ SSTables.
 
 ---
 
@@ -260,22 +363,6 @@ Partitions exceeding `sstable_size_in_mb` create "oversized" SSTables:
 
 ---
 
-### Non-Overlapping Token Ranges
-
-The key property of LCS is that within each level (L1+), SSTables own exclusive token ranges:
-
-```
-L1:  [tokens 0-1000] [tokens 1001-2000] [tokens 2001-3000]
-                ↑
-     This SSTable contains ALL data for tokens 0-1000
-
-Result: Read for token 500 checks only ONE L1 SSTable
-```
-
-This contrasts with STCS where all SSTables might contain any token.
-
----
-
 ## Configuration
 
 ```sql
@@ -298,25 +385,66 @@ CREATE TABLE my_table (
 
 ### Configuration Parameters
 
+#### LCS-Specific Options
+
 | Parameter | Default | Description |
 |-----------|---------|-------------|
-| `sstable_size_in_mb` | 160 | Target size for each SSTable |
-| `fanout_size` | 10 | Size multiplier between levels |
+| `sstable_size_in_mb` | 160 | Target size for individual SSTables in megabytes. Smaller values increase SSTable count and compaction frequency; larger values reduce compaction overhead but increase individual compaction duration. |
+| `fanout_size` | 10 | Size multiplier between adjacent levels. Level L(n+1) has a target capacity of fanout_size × L(n). Higher values reduce the number of levels but increase write amplification per level transition. |
+| `single_sstable_uplevel` | true | When enabled, allows a single SSTable from level L to be promoted directly to level L+1 without rewriting, provided it does not overlap with any SSTables in L+1. Reduces unnecessary I/O for non-overlapping data. |
+
+#### Common Compaction Options
+
+These options apply to all compaction strategies:
+
+| Parameter | Default | Description |
+|-----------|---------|-------------|
+| `enabled` | true | Enables background compaction. When set to false, automatic compaction is disabled but the strategy configuration is retained. |
+| `tombstone_threshold` | 0.2 | Ratio of garbage-collectable tombstones to total columns that triggers single-SSTable compaction. A value of 0.2 means compaction is triggered when 20% of the SSTable consists of droppable tombstones. |
+| `tombstone_compaction_interval` | 86400 | Minimum time in seconds between tombstone compaction attempts for the same SSTable. Prevents continuous recompaction of SSTables that cannot yet drop tombstones. |
+| `unchecked_tombstone_compaction` | false | When true, bypasses pre-checking for tombstone compaction eligibility. Tombstones are still only dropped when safe to do so. |
+| `only_purge_repaired_tombstones` | false | When true, tombstones are only purged from SSTables that have been marked as repaired. Useful for preventing data resurrection in clusters with inconsistent repair schedules. |
+| `log_all` | false | Enables detailed compaction logging to a separate log file in the log directory. Useful for debugging compaction behavior. |
+
+### Startup Options
+
+The following JVM option affects LCS behavior:
+
+| Option | Description |
+|--------|-------------|
+| `-Dcassandra.disable_stcs_in_l0=true` | Disables STCS-style compaction in L0. By default, when L0 accumulates more than 32 SSTables, Cassandra performs STCS compaction within L0 to reduce the SSTable count more quickly. This option disables that behavior. |
 
 ### Level Size Calculation
 
-```
-With sstable_size_in_mb = 160 and fanout_size = 10:
+The target size for each level is calculated using the formula:
 
-L0: Variable (memtable flushes, max 4 before compaction)
-L1: 160MB × 1 = 160MB total capacity
-L2: 160MB × 10 = 1.6GB total capacity
-L3: 160MB × 100 = 16GB total capacity
-L4: 160MB × 1000 = 160GB total capacity
-L5: 160MB × 10000 = 1.6TB total capacity
+$$\text{maxBytesForLevel}(L) = f^L \times s$$
 
-Maximum data per level = sstable_size × fanout^level
-```
+Where:
+
+- $L$ = level number (1-8)
+- $f$ = `fanout_size` (default: 10)
+- $s$ = `sstable_size_in_mb` (default: 160 MB)
+
+**Special case for L0:**
+
+$$\text{maxBytesForLevel}(0) = 4 \times s$$
+
+**With default values ($s = 160\text{MB}$, $f = 10$):**
+
+| Level | Formula | Target Size |
+|-------|---------|-------------|
+| L0 | $4 \times 160\text{MB}$ | 640 MB |
+| L1 | $10^1 \times 160\text{MB}$ | 1.6 GB |
+| L2 | $10^2 \times 160\text{MB}$ | 16 GB |
+| L3 | $10^3 \times 160\text{MB}$ | 160 GB |
+| L4 | $10^4 \times 160\text{MB}$ | 1.6 TB |
+| L5 | $10^5 \times 160\text{MB}$ | 16 TB |
+| L6 | $10^6 \times 160\text{MB}$ | 160 TB |
+| L7 | $10^7 \times 160\text{MB}$ | 1.6 PB |
+| L8 | $10^8 \times 160\text{MB}$ | 16 PB |
+
+The maximum dataset size per table with default settings is theoretically 16+ PB, though practical limits are reached well before this due to compaction throughput constraints.
 
 ---
 
@@ -324,84 +452,77 @@ Maximum data per level = sstable_size × fanout^level
 
 LCS has high write amplification due to the promotion process:
 
-```
-When L0 compacts to L1:
-- L0 SSTable overlaps with potentially ALL L1 SSTables
-- Must rewrite all overlapping L1 SSTables
-- Write amplification at this step: ~10x
+**Per-level amplification:**
 
-When L1 promotes to L2:
-- Same process, must rewrite overlapping L2 SSTables
-- Write amplification: ~10x
+- L0 → L1: SSTable overlaps with potentially all L1 SSTables → $\sim 10\times$
+- L1 → L2: Same process with L2 overlaps → $\sim 10\times$
+- Each subsequent level: $\sim f\times$ where $f$ = fanout
 
-Total write amplification for data reaching deepest level:
-~10 × number_of_levels
+**Total write amplification:**
 
-Example: 100GB dataset with 5 levels
-Write amplification: ~10 × 5 = 50x
-```
+$$W_{\text{total}} \approx f \times L$$
+
+Where:
+
+- $f$ = fanout (default: 10)
+- $L$ = number of levels data traverses
+
+**Example:** 100GB dataset with 5 levels:
+
+$$W = 10 \times 5 = 50\times$$
 
 This high write amplification makes LCS unsuitable for write-heavy workloads.
 
 ---
 
-## Read Amplification Advantage
+## Read Path Analysis
 
-LCS provides predictable, low read amplification:
+LCS provides predictable, low read amplification through its non-overlapping level structure:
 
-```
-For a single partition read:
+**For a single partition read:**
 
-1. Check L0 (max 4 SSTables, overlapping) → 4 checks
-2. Check L1 (non-overlapping) → 1 SSTable
-3. Check L2 (non-overlapping) → 1 SSTable
-4. Check L3 (non-overlapping) → 1 SSTable
-5. Check L4 (non-overlapping) → 1 SSTable
+1. Check L0 SSTables (overlapping, count varies with write rate)
+2. Check at most 1 SSTable per level L1-L8 (non-overlapping)
 
-Total: 4 + number_of_levels ≈ 9 SSTables maximum
+**Read amplification bounds:**
 
-Compare to STCS: Potentially 50+ SSTables
-```
+$$R_{\text{best}} = n_{L0} + 1$$
+$$R_{\text{worst}} = n_{L0} + L_{\text{max}}$$
 
-### Read Latency Calculation
+Where:
 
-```
-LCS read path (5 levels):
-- L0 bloom checks: 4 × 0.1ms = 0.4ms
-- L1-L4 bloom checks: 4 × 0.1ms = 0.4ms
-- Index lookups (assume 3 hits): 3 × 0.5ms = 1.5ms
-- Data reads: 3 × 1ms = 3ms
-- Total: ~5.3ms
+- $n_{L0}$ = number of L0 SSTables (typically 2-4 when healthy)
+- $L_{\text{max}}$ = deepest level containing data (up to 8)
 
-STCS with 30 SSTables:
-- Bloom checks: 30 × 0.1ms = 3ms
-- Index lookups (assume 10 hits): 10 × 0.5ms = 5ms
-- Data reads: 10 × 1ms = 10ms
-- Total: ~18ms
-```
+**Comparison:**
 
----
+| Scenario | LCS | STCS |
+|----------|-----|------|
+| Healthy system | $\sim 4 + 8 = 12$ SSTables max | 50+ SSTables |
+| Backlogged | $20+ n_{L0}$ (STCS fallback at 32) | 100+ SSTables |
 
-## When to Use LCS
+### Read Latency Example
 
-### Recommended For
+**LCS read path** (healthy, 3 L0 SSTables, data in L3):
 
-| Use Case | Rationale |
-|----------|-----------|
-| Read-heavy workloads (>70% reads) | Low read amplification |
-| Frequently updated data | Consolidates versions quickly |
-| Read latency consistency required | Predictable SSTable count |
-| SSD storage | Handles write amplification efficiently |
-| Small to medium datasets | Compaction keeps pace with writes |
+| Operation | Calculation | Time |
+|-----------|-------------|------|
+| L0 bloom checks | $3 \times 0.1\text{ms}$ | 0.3 ms |
+| L1-L3 bloom checks | $3 \times 0.1\text{ms}$ | 0.3 ms |
+| Index lookups (2 hits) | $2 \times 0.5\text{ms}$ | 1.0 ms |
+| Data reads | $2 \times 1\text{ms}$ | 2.0 ms |
+| **Total** | | **~3.6 ms** |
 
-### Avoid When
+**STCS with 30 SSTables:**
 
-| Use Case | Rationale |
-|----------|-----------|
-| Write-heavy workloads | Write amplification degrades throughput |
-| HDD storage | Random I/O from compaction |
-| Time-series data | TWCS is more efficient |
-| Very large datasets | Compaction may not keep pace |
+| Operation | Calculation | Time |
+|-----------|-------------|------|
+| Bloom checks | $30 \times 0.1\text{ms}$ | 3.0 ms |
+| Index lookups (10 hits) | $10 \times 0.5\text{ms}$ | 5.0 ms |
+| Data reads | $10 \times 1\text{ms}$ | 10.0 ms |
+| **Total** | | **~18 ms** |
+
+The key advantage is predictability: LCS read latency remains stable as the dataset grows, while STCS latency increases with SSTable accumulation.
 
 ---
 
@@ -411,16 +532,20 @@ STCS with 30 SSTables:
 
 **Symptoms:**
 
-- L0 SSTable count growing beyond 4
-- Read latency increasing
+- L0 SSTable count growing (warning at 5+, critical at 32+)
+- Read latency increasing proportionally to L0 count
 - Compaction pending tasks growing
+- At 32+ L0 SSTables, STCS fallback activates automatically
 
 **Diagnosis:**
 
 ```bash
 nodetool tablestats keyspace.table | grep "SSTables in each level"
 # Output: [15, 10, 100, 1000, ...]
-# 15 L0 SSTables indicates backlog
+# 15 L0 SSTables indicates moderate backlog
+
+# Check if L0 size exceeds target (4 × sstable_size = 640MB default)
+nodetool tablestats keyspace.table | grep -E "Space used|SSTable"
 ```
 
 **Causes:**
@@ -428,12 +553,13 @@ nodetool tablestats keyspace.table | grep "SSTables in each level"
 - Write rate exceeds L0→L1 compaction throughput
 - Insufficient compaction threads
 - Disk I/O bottleneck
+- Large L1 causing extensive overlap during L0→L1 compaction
 
 **Solutions:**
 
 1. Increase compaction throughput:
    ```bash
-   nodetool setcompactionthroughput 128
+   nodetool setcompactionthroughput 128  # MB/s
    ```
 
 2. Add concurrent compactors:
@@ -444,6 +570,8 @@ nodetool tablestats keyspace.table | grep "SSTables in each level"
 3. Reduce write rate temporarily
 
 4. Consider switching to STCS if write-heavy
+
+5. If L0 exceeds 32 SSTables, STCS fallback is automatic (disable with `-Dcassandra.disable_stcs_in_l0=true` only if necessary)
 
 ### Issue 2: Large Partitions Stalling Compaction
 
@@ -552,12 +680,13 @@ ALTER TABLE keyspace.table WITH compaction = {
 
 ### Key Indicators
 
-| Metric | Healthy | Investigate |
-|--------|---------|-------------|
-| L0 SSTable count | ≤4 | >8 |
-| Pending compactions | <20 | >50 |
-| Level distribution | Pyramid shape | L0 growing |
-| Write latency | Stable | Increasing |
+| Metric | Healthy | Warning | Critical |
+|--------|---------|---------|----------|
+| L0 SSTable count | ≤4 | 5-15 | >32 (STCS fallback triggers) |
+| Pending compactions | <20 | 20-50 | >50 |
+| Level distribution | Pyramid shape | L0 growing | L0 >> L1 |
+| Write latency | Stable | Increasing | Spiking |
+| Level score (any level) | <1.0 | 1.0-1.5 | >1.5 |
 
 ### Commands
 
@@ -566,11 +695,20 @@ ALTER TABLE keyspace.table WITH compaction = {
 nodetool tablestats keyspace.table | grep "SSTables in each level"
 
 # Expected output for healthy LCS:
-# SSTables in each level: [2, 10, 100, 500, 0, 0, 0]
-#                          L0  L1  L2   L3  L4 L5 L6
+# SSTables in each level: [2, 10, 100, 500, 0, 0, 0, 0, 0]
+#                          L0  L1  L2   L3  L4 L5 L6 L7 L8
 
-# Unhealthy (L0 backlog):
-# SSTables in each level: [25, 10, 100, 500, 0, 0, 0]
+# Warning (L0 building up):
+# SSTables in each level: [12, 10, 100, 500, 0, 0, 0, 0, 0]
+
+# Critical (L0 backlog, STCS will kick in):
+# SSTables in each level: [45, 10, 100, 500, 0, 0, 0, 0, 0]
+
+# Check compaction pending tasks
+nodetool compactionstats
+
+# View detailed level information
+nodetool cfstats keyspace.table
 ```
 
 ### JMX Metrics
@@ -581,7 +719,78 @@ org.apache.cassandra.metrics:type=Table,keyspace=*,scope=*,name=SSTablesPerLevel
 
 # Compaction bytes written
 org.apache.cassandra.metrics:type=Table,keyspace=*,scope=*,name=BytesCompacted
+
+# Pending compaction bytes estimate
+org.apache.cassandra.metrics:type=Table,keyspace=*,scope=*,name=PendingCompactions
+
+# Compaction throughput
+org.apache.cassandra.metrics:type=Compaction,name=BytesCompacted
 ```
+
+### Level Health Check
+
+A healthy LCS table should show:
+
+1. **L0**: Small count (typically 0-4 SSTables)
+2. **L1**: Approximately `fanout_size` SSTables (≈10 with defaults)
+3. **Higher levels**: Each level ~10× more SSTables than the previous
+4. **Pyramid shape**: SSTable counts increase geometrically with level depth
+
+---
+
+## Implementation Internals
+
+This section documents implementation details from the Cassandra source code that affect operational behavior.
+
+### SSTable Level Assignment
+
+When an SSTable is added to the manifest (e.g., after streaming or compaction), the level assignment follows these rules:
+
+1. **Recorded level check**: Each SSTable stores its intended level in metadata via `getSSTableLevel()`
+2. **Overlap verification for L1+**: Before placing an SSTable in L1 or higher, the manifest checks for overlaps with existing SSTables in that level
+3. **Demotion to L0**: If overlap is detected (`before.last >= newsstable.first` or `after.first <= newsstable.last`), the SSTable is demoted to L0 regardless of its recorded level
+
+This behavior ensures the non-overlapping invariant is maintained even when SSTables arrive from external sources (streaming, sstableloader).
+
+### Internal Data Structures
+
+```
+LeveledGenerations:
+├── L0: HashSet<SSTableReader>        // Unordered, overlapping allowed
+└── levels[0-7]: TreeSet<SSTableReader>  // L1-L8, sorted by first token
+    └── Comparator: firstKey, then SSTableId (tiebreaker)
+
+LeveledManifest:
+├── generations: LeveledGenerations
+├── lastCompactedSSTables[]: SSTableReader  // Round-robin tracking per level
+├── compactionCounter: int                  // For starvation prevention
+└── levelFanoutSize: int                    // Default: 10
+```
+
+### Compaction Writer Selection
+
+The compaction task selects its writer based on the operation type:
+
+| Condition | Writer | Behavior |
+|-----------|--------|----------|
+| Major compaction | `MajorLeveledCompactionWriter` | Full reorganization, respects level structure |
+| Standard compaction | `MaxSSTableSizeWriter` | Outputs SSTables at target size, assigned to destination level |
+
+### Anti-Compaction Behavior
+
+During streaming operations that require anti-compaction (splitting SSTables by token range), LCS groups SSTables in batches of 2 per level to maintain level-specific guarantees while processing.
+
+### Constants Reference
+
+| Constant | Value | Description |
+|----------|-------|-------------|
+| `MAX_LEVEL_COUNT` | 9 | L0 through L8 |
+| `MAX_COMPACTING_L0` | 32 | Threshold for L0 STCS fallback |
+| `NO_COMPACTION_LIMIT` | 25 | Rounds before starvation prevention |
+| Minimum SSTable size | 1 MiB | Validation constraint |
+| Minimum fanout size | 1 | Validation constraint |
+| Default fanout | 10 | Level size multiplier |
+| Default SSTable size | 160 MiB | Target per-SSTable size |
 
 ---
 
@@ -589,4 +798,6 @@ org.apache.cassandra.metrics:type=Table,keyspace=*,scope=*,name=BytesCompacted
 
 - **[Compaction Overview](index.md)** - Concepts and strategy selection
 - **[Size-Tiered Compaction (STCS)](stcs.md)** - Alternative for write-heavy workloads
+- **[Time-Window Compaction (TWCS)](twcs.md)** - Optimized for time-series data with TTL
+- **[Unified Compaction (UCS)](ucs.md)** - Recommended strategy for Cassandra 5.0+
 - **[Compaction Management](../../../operations/compaction-management/index.md)** - Tuning and troubleshooting

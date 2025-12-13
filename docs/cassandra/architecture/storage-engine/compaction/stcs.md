@@ -7,7 +7,10 @@ meta:
 
 # Size-Tiered Compaction Strategy (STCS)
 
-STCS is the default compaction strategy. It groups SSTables of similar size and compacts them together, optimizing for write throughput at the cost of read amplification.
+!!! note "Cassandra 5.0+"
+    Starting with Cassandra 5.0, [Unified Compaction Strategy (UCS)](ucs.md) is the recommended compaction strategy for most workloads. UCS provides adaptive behavior that can emulate STCS characteristics when appropriate. STCS remains fully supported and is still the default for tables in earlier versions.
+
+STCS is Cassandra's original and default compaction strategy. It groups SSTables of similar size and compacts them together, optimizing for write throughput at the cost of read amplification.
 
 ---
 
@@ -106,52 +109,78 @@ end note
 
 SSTables are assigned to buckets based on size similarity:
 
-```
-Bucket membership formula:
-  average_size × bucket_low ≤ sstable_size ≤ average_size × bucket_high
+$$\bar{s} \times b_{\text{low}} \leq s \leq \bar{s} \times b_{\text{high}}$$
 
-Default values:
-  bucket_low = 0.5
-  bucket_high = 1.5
+Where:
 
-Example bucket with average 10MB:
-  5MB ≤ sstable_size ≤ 15MB
-```
+- $s$ = SSTable size
+- $\bar{s}$ = average size of SSTables in the bucket
+- $b_{\text{low}}$ = `bucket_low` (default: 0.5)
+- $b_{\text{high}}$ = `bucket_high` (default: 1.5)
+
+**Example:** Bucket with $\bar{s} = 10\text{MB}$:
+
+$$5\text{MB} \leq s \leq 15\text{MB}$$
 
 SSTables outside this range form separate buckets. The `min_sstable_size` parameter (default 50MB) groups all smaller SSTables together, preventing proliferation of tiny SSTable buckets.
 
-### Compaction Trigger
+### Compaction Trigger and Bucket Selection
 
 Compaction occurs when:
 
 1. A bucket reaches `min_threshold` SSTables (default: 4)
-2. The bucket is selected by the compaction scheduler
+2. The bucket is selected by the compaction scheduler based on "hotness"
 3. Up to `max_threshold` SSTables (default: 32) are included
 
-The scheduler prioritizes buckets with more SSTables and considers the ratio of droppable tombstones.
+#### Hotness-Based Bucket Prioritization
+
+When multiple buckets are eligible for compaction, STCS selects the "hottest" bucket using a read-intensity metric:
+
+$$\text{hotness} = \frac{\text{readMeter.twoHourRate()}}{\text{estimatedKeys()}}$$
+
+This formula measures recent read activity (two-hour rate) divided by the number of keys in the SSTable. The bucket with the highest aggregate hotness is selected first, ensuring that frequently-read data is compacted and consolidated sooner.
+
+**Tie-breaking:** When buckets have equal hotness, STCS prioritizes buckets with smaller average file size to reduce compaction I/O.
+
+#### Tombstone Compaction Fallback
+
+If no standard compaction candidates exist (no bucket meets `min_threshold`), STCS falls back to single-SSTable tombstone compaction:
+
+1. Scans SSTables for droppable tombstone ratio exceeding `tombstone_threshold` (default: 0.2)
+2. Selects the largest eligible SSTable
+3. Rewrites it to purge tombstones
+
+This ensures tombstones are eventually reclaimed even when SSTables lack compaction partners.
 
 ### Write Amplification Calculation
 
 STCS achieves logarithmic write amplification:
 
-```
-With min_threshold = 4:
+**Data progression with $t = 4$ (min_threshold):**
 
-Data progression:
-  1MB × 4 → 4MB    (rewrite #1)
-  4MB × 4 → 16MB   (rewrite #2)
-  16MB × 4 → 64MB  (rewrite #3)
-  64MB × 4 → 256MB (rewrite #4)
-  ...
+| Step | Input | Output |
+|------|-------|--------|
+| 1 | $4 \times 1\text{MB}$ | 4 MB |
+| 2 | $4 \times 4\text{MB}$ | 16 MB |
+| 3 | $4 \times 16\text{MB}$ | 64 MB |
+| 4 | $4 \times 64\text{MB}$ | 256 MB |
 
-For N bytes of data:
-  Write amplification ≈ log₄(N / flush_size)
+**Write amplification formula:**
 
-Example: 1GB dataset with 1MB flushes
-  log₄(1024) ≈ 5× write amplification
-```
+$$W \approx \log_t \left( \frac{N}{s_f} \right)$$
 
-This is significantly lower than LCS's 10× per level amplification.
+Where:
+
+- $W$ = write amplification
+- $t$ = `min_threshold` (default: 4)
+- $N$ = total data size
+- $s_f$ = flush size
+
+**Example:** 1GB dataset with 1MB flushes:
+
+$$W = \log_4(1024) \approx 5\times$$
+
+This is significantly lower than LCS's $10\times$ per level amplification.
 
 ### Read Amplification Problem
 
@@ -340,38 +369,64 @@ CREATE TABLE my_table (
 
 ### Configuration Parameters
 
+#### STCS-Specific Options
+
 | Parameter | Default | Description |
 |-----------|---------|-------------|
-| `min_threshold` | 4 | Minimum SSTables in a bucket to trigger compaction |
-| `max_threshold` | 32 | Maximum SSTables to compact at once |
-| `bucket_high` | 1.5 | Upper bound multiplier for bucket membership |
-| `bucket_low` | 0.5 | Lower bound multiplier for bucket membership |
-| `min_sstable_size` | 50MB | SSTables below this size are bucketed together |
+| `min_threshold` | 4 | Minimum SSTables in a bucket to trigger compaction. Lower values reduce SSTable count but increase compaction frequency. |
+| `max_threshold` | 32 | Maximum SSTables to compact at once. Limits peak I/O and memory usage during compaction. |
+| `bucket_high` | 1.5 | Upper bound multiplier for bucket membership. An SSTable joins a bucket if its size ≤ average × bucket_high. Must be > bucket_low. |
+| `bucket_low` | 0.5 | Lower bound multiplier for bucket membership. An SSTable joins a bucket if its size ≥ average × bucket_low. |
+| `min_sstable_size` | 50 MB | SSTables below this size are grouped together regardless of the bucket_low/bucket_high ratio. Prevents proliferation of tiny-SSTable buckets. |
+
+#### Common Compaction Options
+
+These options apply to all compaction strategies:
+
+| Parameter | Default | Description |
+|-----------|---------|-------------|
+| `enabled` | true | Enables background compaction. When false, automatic compaction is disabled but configuration is retained. |
+| `tombstone_threshold` | 0.2 | Ratio of droppable tombstones that triggers single-SSTable compaction. Value of 0.2 means 20% tombstones. |
+| `tombstone_compaction_interval` | 86400 | Minimum seconds between tombstone compaction attempts for the same SSTable. |
+| `unchecked_tombstone_compaction` | false | Bypasses pre-checking for tombstone compaction eligibility. Tombstones are still only dropped when safe. |
+| `only_purge_repaired_tombstones` | false | Only purge tombstones from repaired SSTables. Prevents data resurrection in clusters with inconsistent repair. |
+| `log_all` | false | Enables detailed compaction logging to a separate log file. |
+
+#### Validation Constraints
+
+The following constraints are enforced during configuration:
+
+- `bucket_high` must be strictly greater than `bucket_low`
+- `min_sstable_size` must be non-negative
+- `min_threshold` must be ≥ 2
+- `max_threshold` must be ≥ `min_threshold`
 
 ---
 
 ## Write Amplification Analysis
 
-```
-With min_threshold = 4 and tiered growth:
+**Tiered growth with $t = 4$ (min_threshold):**
 
-Level 0: 4 × 1MB SSTables → compact → 4MB
-Level 1: 4 × 4MB SSTables → compact → 16MB
-Level 2: 4 × 16MB SSTables → compact → 64MB
-Level 3: 4 × 64MB SSTables → compact → 256MB
-...
+| Tier | Input | Output |
+|------|-------|--------|
+| 0 | $4 \times 1\text{MB}$ | 4 MB |
+| 1 | $4 \times 4\text{MB}$ | 16 MB |
+| 2 | $4 \times 16\text{MB}$ | 64 MB |
+| 3 | $4 \times 64\text{MB}$ | 256 MB |
 
-For 1GB of data to reach final state:
-- Write to memtable (1x)
-- Flush to 1MB SSTables (1x)
-- Compact to 4MB (2x)
-- Compact to 16MB (3x)
-- Compact to 64MB (4x)
-- Compact to 256MB (5x)
-- Compact to 1GB (6x)
+**For 1GB of data to reach final state:**
 
-Total write amplification: ~6x (logarithmic in data size)
-```
+| Step | Operation | Cumulative Writes |
+|------|-----------|-------------------|
+| 1 | Write to memtable | $1\times$ |
+| 2 | Flush to 1MB SSTables | $1\times$ |
+| 3 | Compact to 4MB | $2\times$ |
+| 4 | Compact to 16MB | $3\times$ |
+| 5 | Compact to 64MB | $4\times$ |
+| 6 | Compact to 256MB | $5\times$ |
+| 7 | Compact to 1GB | $6\times$ |
+
+**Total:** $W \approx 6\times$ (logarithmic in data size)
 
 This logarithmic write amplification is significantly lower than LCS, making STCS suitable for write-heavy workloads.
 
@@ -381,57 +436,33 @@ This logarithmic write amplification is significantly lower than LCS, making STC
 
 The primary weakness of STCS is read amplification from large SSTable accumulation:
 
-```
-The "big SSTable problem":
+**The "big SSTable problem":**
 
-After extended operation:
-[1MB] [4MB] [16MB] [64MB] [256MB] [1GB] [4GB] [16GB]
+After extended operation, SSTables of various sizes accumulate:
+
+$$\{1\text{MB}, 4\text{MB}, 16\text{MB}, 64\text{MB}, 256\text{MB}, 1\text{GB}, 4\text{GB}, 16\text{GB}\}$$
 
 Every read must check ALL these SSTables.
 
-Why large SSTables do not compact:
-- 4 × 16GB SSTables needed to trigger compaction
+**Why large SSTables do not compact:**
+
+- $4 \times 16\text{GB}$ SSTables needed to trigger compaction
 - That requires 64GB of SSTables at similar size
 - Until then, they remain, degrading read performance
-```
 
 ### Read Path Impact
 
-```
-Single partition read with 8 SSTables:
+**Single partition read with 8 SSTables:**
 
-1. Bloom filter checks: 8 × ~0.1ms = 0.8ms
-2. Index lookups for positive blooms: ~4 × 0.5ms = 2ms
-3. Data reads: ~4 × 1ms = 4ms
-4. Merge results
+| Operation | Calculation | Time |
+|-----------|-------------|------|
+| Bloom filter checks | $8 \times 0.1\text{ms}$ | 0.8 ms |
+| Index lookups (4 positive) | $4 \times 0.5\text{ms}$ | 2.0 ms |
+| Data reads | $4 \times 1\text{ms}$ | 4.0 ms |
+| Merge results | — | — |
+| **Total** | | **~7 ms** |
 
-Total: ~7ms for a single partition
-
-Compare to LCS with ~9 SSTable maximum: More predictable latency
-```
-
----
-
-## When to Use STCS
-
-### Recommended For
-
-| Use Case | Rationale |
-|----------|-----------|
-| Write-heavy workloads (>90% writes) | Low write amplification |
-| Append-only data (logs, events) | Data rarely updated or read |
-| Batch ingestion followed by reads | Compaction catches up during read phase |
-| HDD storage | Sequential I/O friendly |
-| Write latency priority | Minimal write path overhead |
-
-### Avoid When
-
-| Use Case | Rationale |
-|----------|-----------|
-| Read-heavy workloads | High read amplification |
-| Frequently updated data | Multiple versions accumulate |
-| Consistent read latency required | SSTable count varies widely |
-| SSD storage with read focus | LCS better utilizes SSD characteristics |
+Compare to LCS with $\sim 9$ SSTable maximum: More predictable latency.
 
 ---
 
@@ -588,8 +619,58 @@ ls -lh /var/lib/cassandra/data/keyspace/table-*/*-Data.db | \
 
 ---
 
+## Implementation Internals
+
+This section documents implementation details from the Cassandra source code.
+
+### Bucket Formation Algorithm
+
+The bucket formation algorithm processes SSTables in a specific order:
+
+1. **Sort SSTables** by on-disk size in ascending order (for deterministic results)
+2. **For each SSTable**, attempt to match to an existing bucket:
+   - Match if: `bucket_avg × bucket_low ≤ sstable_size ≤ bucket_avg × bucket_high`
+   - OR if both SSTable and bucket average are below `min_sstable_size`
+3. **Recalculate bucket average** when adding new SSTables
+4. **Create new bucket** for unmatched SSTables
+
+### Task Estimation
+
+The estimated number of pending compaction tasks is calculated as:
+
+```
+For each bucket meeting min_threshold:
+    tasks += ceil(bucket.size() / max_threshold)
+```
+
+### Hotness Calculation Details
+
+SSTable hotness is computed using read meter statistics:
+
+```java
+hotness = (readMeter != null)
+    ? readMeter.twoHourRate() / estimatedKeys()
+    : 0.0
+```
+
+SSTables without read meters (e.g., newly flushed) have zero hotness, causing them to be deprioritized unless they form the only eligible bucket.
+
+### Constants Reference
+
+| Constant | Value | Description |
+|----------|-------|-------------|
+| Default min_threshold | 4 | Minimum SSTables per bucket |
+| Default max_threshold | 32 | Maximum SSTables per compaction |
+| Default bucket_low | 0.5 | Lower size ratio bound |
+| Default bucket_high | 1.5 | Upper size ratio bound |
+| Default min_sstable_size | 50 MiB | Small SSTable grouping threshold |
+
+---
+
 ## Related Documentation
 
 - **[Compaction Overview](index.md)** - Concepts and strategy selection
 - **[Leveled Compaction (LCS)](lcs.md)** - Alternative for read-heavy workloads
+- **[Time-Window Compaction (TWCS)](twcs.md)** - Optimized for time-series data with TTL
+- **[Unified Compaction (UCS)](ucs.md)** - Recommended strategy for Cassandra 5.0+
 - **[Compaction Management](../../../operations/compaction-management/index.md)** - Tuning and troubleshooting
