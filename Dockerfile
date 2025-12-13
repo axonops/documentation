@@ -15,4 +15,4 @@ RUN pipenv install
 
 COPY . /AxonOps.Docs/
 EXPOSE 8000
-CMD ["pipenv", "run", "mkdocs", "serve"]
+CMD ["pipenv", "run", "mkdocs", "serve", "--livereload"]
