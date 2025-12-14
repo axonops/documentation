@@ -6,7 +6,7 @@
       <meta charset="utf-8">
       <meta name="viewport" content="width=device-width,initial-scale=1">
       
-        <meta name="description" content="Complete CQL (Cassandra Query Language) reference guide covering DDL, DML, data types, functions, and indexing.">
+        <meta name="description" content="Complete CQL (Cassandra Query Language) reference documentation with behavioral contracts, failure semantics, and production guidance for Apache Cassandra.">
       
       
       
@@ -69,10 +69,64 @@
     
     
       
-        <meta  name="keywords"  content="CQL, Cassandra Query Language, SQL, query syntax, Cassandra database" >
+        <meta  name="keywords"  content="CQL, Cassandra Query Language, CQL reference, CQL syntax, CQL tutorial, Apache Cassandra query" >
       
     
     
+<!-- Schema.org Structured Data for Documentation -->
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "TechArticle",
+  "headline": "Overview - Apache Cassandra Documentation",
+  "description": "Official documentation for AxonOps - the unified platform for monitoring, maintenance, and backup of Apache Cassandra and Apache Kafka clusters.",
+  "about": {
+    "@type": "SoftwareApplication",
+    "name": "Apache Cassandra",
+    "applicationCategory": "Database",
+    "operatingSystem": "Linux, macOS, Windows"
+  },
+  "author": {
+    "@type": "Organization",
+    "name": "AxonOps",
+    "url": "https://axonops.com"
+  },
+  "publisher": {
+    "@type": "Organization",
+    "name": "AxonOps",
+    "url": "https://axonops.com",
+    "logo": {
+      "@type": "ImageObject",
+      "url": "https://docs.axonops.com/img/axonops_logo.png"
+    }
+  },
+  "mainEntityOfPage": {
+    "@type": "WebPage",
+    "@id": "https://docs.axonops.com/cassandra/cql/"
+  },
+  "inLanguage": "en",
+  "isAccessibleForFree": true,
+  "license": "https://docs.axonops.com/LICENSE"
+}
+</script>
+
+<!-- Organization Schema -->
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "Organization",
+  "name": "AxonOps",
+  "url": "https://axonops.com",
+  "logo": "https://docs.axonops.com/img/axonops_logo.png",
+  "description": "AxonOps provides production-grade reference documentation and operational tooling for Apache Cassandra and Apache Kafka.",
+  "sameAs": [
+    "https://www.linkedin.com/company/axonops/",
+    "https://twitter.com/AxonOpsSoftware",
+    "https://github.com/axonops"
+  ]
+}
+</script>
+
 <!-- Preconnect to external domains for faster resource loading -->
 <link rel="preconnect" href="https://fonts.googleapis.com" crossorigin>
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -6022,6 +6076,15 @@ data-et-multi-view="{&quot;schema&quot;:{&quot;content&quot;:{&quot;desktop&quot
       Table of contents
     </label>
     <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#about-this-reference" class="md-nav__link">
+    <span class="md-ellipsis">
+      About This Reference
+    </span>
+  </a>
+  
+</li>
       
         <li class="md-nav__item">
   <a href="#documentation" class="md-nav__link">
@@ -13854,6 +13917,15 @@ data-et-multi-view="{&quot;schema&quot;:{&quot;content&quot;:{&quot;desktop&quot
     <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
       
         <li class="md-nav__item">
+  <a href="#about-this-reference" class="md-nav__link">
+    <span class="md-ellipsis">
+      About This Reference
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#documentation" class="md-nav__link">
     <span class="md-ellipsis">
       Documentation
@@ -14094,7 +14166,42 @@ data-et-multi-view="{&quot;schema&quot;:{&quot;content&quot;:{&quot;desktop&quot
 
 
 <div><h1 id="cql-reference">CQL Reference<a class="headerlink" href="#cql-reference" title="Permanent link">¶</a></h1>
-<p>Cassandra Query Language (CQL) is the interface for interacting with Apache Cassandra. This reference provides complete syntax documentation for all CQL statements.</p>
+<p>This documentation provides production-grade CQL (Cassandra Query Language) reference for Apache Cassandra, covering statement syntax, behavioral contracts, failure semantics, and version-specific differences. Each statement includes guaranteed behaviors, undefined behaviors, and error handling guidance derived from source code analysis and production experience.</p>
+<p>Cassandra Query Language (CQL) is the interface for interacting with Apache Cassandra. CQL syntax resembles SQL but operates under different semantics due to Cassandra's distributed architecture.</p>
+<hr>
+<h2 id="about-this-reference">About This Reference<a class="headerlink" href="#about-this-reference" title="Permanent link">¶</a></h2>
+<p>This CQL reference complements the <a href="https://cassandra.apache.org/doc/latest/cassandra/developing/cql/index.html">Apache Cassandra official documentation</a> by providing:</p>
+<table>
+<thead>
+<tr>
+<th>Aspect</th>
+<th>Coverage</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Behavioral Contracts</strong></td>
+<td>What each statement guarantees vs. what is undefined behavior</td>
+</tr>
+<tr>
+<td><strong>Failure Semantics</strong></td>
+<td>Error types, recovery strategies, and retry guidance</td>
+</tr>
+<tr>
+<td><strong>Version Differences</strong></td>
+<td>Behavior changes between Cassandra 4.x and 5.x</td>
+</tr>
+<tr>
+<td><strong>Operational Context</strong></td>
+<td>Production implications and performance considerations</td>
+</tr>
+<tr>
+<td><strong>Source References</strong></td>
+<td>JIRA tickets and CEPs for implementation details</td>
+</tr>
+</tbody>
+</table>
+<p>For exact grammar definitions and exhaustive syntax variants, refer to the Apache documentation.</p>
 <hr>
 <h2 id="documentation">Documentation<a class="headerlink" href="#documentation" title="Permanent link">¶</a></h2>
 <table>
