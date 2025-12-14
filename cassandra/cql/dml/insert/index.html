@@ -6383,6 +6383,57 @@ data-et-multi-view="{&quot;schema&quot;:{&quot;content&quot;:{&quot;desktop&quot
     <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
       
         <li class="md-nav__item">
+  <a href="#behavioral-guarantees" class="md-nav__link">
+    <span class="md-ellipsis">
+      Behavioral Guarantees
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Behavioral Guarantees">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#what-insert-guarantees" class="md-nav__link">
+    <span class="md-ellipsis">
+      What INSERT Guarantees
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#what-insert-does-not-guarantee" class="md-nav__link">
+    <span class="md-ellipsis">
+      What INSERT Does NOT Guarantee
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#failure-semantics" class="md-nav__link">
+    <span class="md-ellipsis">
+      Failure Semantics
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#version-specific-behavior" class="md-nav__link">
+    <span class="md-ellipsis">
+      Version-Specific Behavior
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#overview" class="md-nav__link">
     <span class="md-ellipsis">
       Overview
@@ -13988,6 +14039,57 @@ data-et-multi-view="{&quot;schema&quot;:{&quot;content&quot;:{&quot;desktop&quot
     <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
       
         <li class="md-nav__item">
+  <a href="#behavioral-guarantees" class="md-nav__link">
+    <span class="md-ellipsis">
+      Behavioral Guarantees
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Behavioral Guarantees">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#what-insert-guarantees" class="md-nav__link">
+    <span class="md-ellipsis">
+      What INSERT Guarantees
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#what-insert-does-not-guarantee" class="md-nav__link">
+    <span class="md-ellipsis">
+      What INSERT Does NOT Guarantee
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#failure-semantics" class="md-nav__link">
+    <span class="md-ellipsis">
+      Failure Semantics
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#version-specific-behavior" class="md-nav__link">
+    <span class="md-ellipsis">
+      Version-Specific Behavior
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#overview" class="md-nav__link">
     <span class="md-ellipsis">
       Overview
@@ -14361,6 +14463,77 @@ data-et-multi-view="{&quot;schema&quot;:{&quot;content&quot;:{&quot;desktop&quot
 
 <div><h1 id="insert">INSERT<a class="headerlink" href="#insert" title="Permanent link">¶</a></h1>
 <p>The INSERT statement adds rows to Cassandra tables. Unlike SQL databases, Cassandra's INSERT performs an <strong>upsert</strong> operation—inserting a new row if the primary key doesn't exist, or updating the existing row if it does.</p>
+<hr>
+<h2 id="behavioral-guarantees">Behavioral Guarantees<a class="headerlink" href="#behavioral-guarantees" title="Permanent link">¶</a></h2>
+<h3 id="what-insert-guarantees">What INSERT Guarantees<a class="headerlink" href="#what-insert-guarantees" title="Permanent link">¶</a></h3>
+<ul>
+<li>INSERT performs an upsert—no "duplicate key" errors occur</li>
+<li>Each column value is written atomically</li>
+<li>Higher timestamps win in conflict resolution</li>
+<li>Data with TTL becomes invisible after the specified duration</li>
+<li>Write is acknowledged by the specified number of replicas</li>
+</ul>
+<h3 id="what-insert-does-not-guarantee">What INSERT Does NOT Guarantee<a class="headerlink" href="#what-insert-does-not-guarantee" title="Permanent link">¶</a></h3>
+<div class="admonition warning">
+<p class="admonition-title">Undefined Behavior</p>
+<p>The following behaviors are undefined and must not be relied upon:</p>
+<ul>
+<li><strong>Write visibility timing</strong>: After INSERT returns, the data may not immediately be visible to reads at lower consistency levels</li>
+<li><strong>Cross-column atomicity</strong>: Columns in a single INSERT are written as separate cells; partial visibility is possible during read</li>
+<li><strong>Order of concurrent writes</strong>: Two INSERTs with the same timestamp have undefined conflict resolution (implementation-dependent tie-breaker)</li>
+<li><strong>Exactly-once without LWT</strong>: Without IF NOT EXISTS, the same INSERT may be applied multiple times (idempotent, but no uniqueness)</li>
+</ul>
+</div>
+<h3 id="failure-semantics">Failure Semantics<a class="headerlink" href="#failure-semantics" title="Permanent link">¶</a></h3>
+<table>
+<thead>
+<tr>
+<th>Failure Mode</th>
+<th>Outcome</th>
+<th>Client Action</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>WriteTimeoutException</code></td>
+<td>Undefined - may or may not have been applied</td>
+<td>Query to verify, retry if needed</td>
+</tr>
+<tr>
+<td><code>UnavailableException</code></td>
+<td>Not applied</td>
+<td>Safe to retry</td>
+</tr>
+<tr>
+<td><code>WriteFailureException</code></td>
+<td>Partially applied to some replicas</td>
+<td>Data may be inconsistent; repair may be needed</td>
+</tr>
+</tbody>
+</table>
+<h3 id="version-specific-behavior">Version-Specific Behavior<a class="headerlink" href="#version-specific-behavior" title="Permanent link">¶</a></h3>
+<table>
+<thead>
+<tr>
+<th>Version</th>
+<th>Behavior</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>2.0+</td>
+<td>IF NOT EXISTS (LWT) supported (CASSANDRA-5062)</td>
+</tr>
+<tr>
+<td>2.1+</td>
+<td>JSON INSERT syntax supported (CASSANDRA-7970)</td>
+</tr>
+<tr>
+<td>3.0+</td>
+<td>DEFAULT UNSET for JSON inserts (CASSANDRA-9651)</td>
+</tr>
+</tbody>
+</table>
 <hr>
 <h2 id="overview">Overview<a class="headerlink" href="#overview" title="Permanent link">¶</a></h2>
 <h3 id="upsert-semantics">Upsert Semantics<a class="headerlink" href="#upsert-semantics" title="Permanent link">¶</a></h3>

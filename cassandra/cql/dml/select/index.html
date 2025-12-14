@@ -6362,6 +6362,57 @@ data-et-multi-view="{&quot;schema&quot;:{&quot;content&quot;:{&quot;desktop&quot
     <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
       
         <li class="md-nav__item">
+  <a href="#behavioral-guarantees" class="md-nav__link">
+    <span class="md-ellipsis">
+      Behavioral Guarantees
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Behavioral Guarantees">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#what-select-guarantees" class="md-nav__link">
+    <span class="md-ellipsis">
+      What SELECT Guarantees
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#what-select-does-not-guarantee" class="md-nav__link">
+    <span class="md-ellipsis">
+      What SELECT Does NOT Guarantee
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#consistency-level-contracts" class="md-nav__link">
+    <span class="md-ellipsis">
+      Consistency Level Contracts
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#version-specific-behavior" class="md-nav__link">
+    <span class="md-ellipsis">
+      Version-Specific Behavior
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#overview" class="md-nav__link">
     <span class="md-ellipsis">
       Overview
@@ -14321,6 +14372,57 @@ data-et-multi-view="{&quot;schema&quot;:{&quot;content&quot;:{&quot;desktop&quot
     <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
       
         <li class="md-nav__item">
+  <a href="#behavioral-guarantees" class="md-nav__link">
+    <span class="md-ellipsis">
+      Behavioral Guarantees
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Behavioral Guarantees">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#what-select-guarantees" class="md-nav__link">
+    <span class="md-ellipsis">
+      What SELECT Guarantees
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#what-select-does-not-guarantee" class="md-nav__link">
+    <span class="md-ellipsis">
+      What SELECT Does NOT Guarantee
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#consistency-level-contracts" class="md-nav__link">
+    <span class="md-ellipsis">
+      Consistency Level Contracts
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#version-specific-behavior" class="md-nav__link">
+    <span class="md-ellipsis">
+      Version-Specific Behavior
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#overview" class="md-nav__link">
     <span class="md-ellipsis">
       Overview
@@ -15027,6 +15129,93 @@ data-et-multi-view="{&quot;schema&quot;:{&quot;content&quot;:{&quot;desktop&quot
 
 <div><h1 id="select">SELECT<a class="headerlink" href="#select" title="Permanent link">¶</a></h1>
 <p>The SELECT statement retrieves rows and columns from Cassandra tables. Unlike SQL databases where queries are flexible, Cassandra requires queries to align with the table's primary key structure for efficient execution.</p>
+<hr>
+<h2 id="behavioral-guarantees">Behavioral Guarantees<a class="headerlink" href="#behavioral-guarantees" title="Permanent link">¶</a></h2>
+<h3 id="what-select-guarantees">What SELECT Guarantees<a class="headerlink" href="#what-select-guarantees" title="Permanent link">¶</a></h3>
+<ul>
+<li>The query must contact the number of replicas specified by the consistency level</li>
+<li>Results from a single partition must reflect a consistent snapshot (no partial rows)</li>
+<li>Rows within a partition must be returned in clustering column order (or reverse if specified)</li>
+<li>Individual column values must be atomic (no partial cell reads)</li>
+</ul>
+<h3 id="what-select-does-not-guarantee">What SELECT Does NOT Guarantee<a class="headerlink" href="#what-select-does-not-guarantee" title="Permanent link">¶</a></h3>
+<div class="admonition warning">
+<p class="admonition-title">Undefined Behavior</p>
+<p>The following behaviors are undefined and must not be relied upon:</p>
+<ul>
+<li><strong>Cross-partition ordering</strong>: Without ORDER BY, the order of rows from different partitions is undefined and may vary between queries, replicas, or Cassandra versions</li>
+<li><strong>Read-your-writes without QUORUM</strong>: A write at CL=ONE followed by a read at CL=ONE may not return the written data</li>
+<li><strong>Consistent snapshots across partitions</strong>: A SELECT touching multiple partitions may see different points in time for each partition</li>
+<li><strong>Result stability during compaction</strong>: The same query may return rows in different order as SSTables are compacted</li>
+<li><strong>Deterministic tie-breaking</strong>: When timestamps are equal, the "winner" is undefined</li>
+</ul>
+</div>
+<h3 id="consistency-level-contracts">Consistency Level Contracts<a class="headerlink" href="#consistency-level-contracts" title="Permanent link">¶</a></h3>
+<table>
+<thead>
+<tr>
+<th>Consistency Level</th>
+<th>Guarantee</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>ONE</code></td>
+<td>At least one replica responds; data may be stale</td>
+</tr>
+<tr>
+<td><code>QUORUM</code></td>
+<td>Majority of replicas respond; read-repair may occur</td>
+</tr>
+<tr>
+<td><code>ALL</code></td>
+<td>All replicas respond; highest consistency, lowest availability</td>
+</tr>
+<tr>
+<td><code>LOCAL_ONE</code></td>
+<td>At least one replica in local DC responds</td>
+</tr>
+<tr>
+<td><code>LOCAL_QUORUM</code></td>
+<td>Majority in local DC responds</td>
+</tr>
+<tr>
+<td><code>SERIAL</code></td>
+<td>Linearizable read (Paxos); sees all committed LWT operations</td>
+</tr>
+<tr>
+<td><code>LOCAL_SERIAL</code></td>
+<td>Linearizable read within local DC only</td>
+</tr>
+</tbody>
+</table>
+<h3 id="version-specific-behavior">Version-Specific Behavior<a class="headerlink" href="#version-specific-behavior" title="Permanent link">¶</a></h3>
+<table>
+<thead>
+<tr>
+<th>Version</th>
+<th>Behavior</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>3.0+</td>
+<td>PER PARTITION LIMIT supported (CASSANDRA-7017)</td>
+</tr>
+<tr>
+<td>4.0+</td>
+<td>Virtual tables queryable, improved paging (CASSANDRA-7622)</td>
+</tr>
+<tr>
+<td>4.0+</td>
+<td>GROUP BY supports aggregate functions (CASSANDRA-10707)</td>
+</tr>
+<tr>
+<td>5.0+</td>
+<td>Vector search with ORDER BY ... ANN OF (CEP-30)</td>
+</tr>
+</tbody>
+</table>
 <hr>
 <h2 id="overview">Overview<a class="headerlink" href="#overview" title="Permanent link">¶</a></h2>
 <h3 id="query-model-philosophy">Query Model Philosophy<a class="headerlink" href="#query-model-philosophy" title="Permanent link">¶</a></h3>

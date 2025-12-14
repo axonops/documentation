@@ -6446,6 +6446,66 @@ data-et-multi-view="{&quot;schema&quot;:{&quot;content&quot;:{&quot;desktop&quot
     <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
       
         <li class="md-nav__item">
+  <a href="#behavioral-guarantees" class="md-nav__link">
+    <span class="md-ellipsis">
+      Behavioral Guarantees
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Behavioral Guarantees">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#what-batch-guarantees" class="md-nav__link">
+    <span class="md-ellipsis">
+      What BATCH Guarantees
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#what-batch-does-not-guarantee" class="md-nav__link">
+    <span class="md-ellipsis">
+      What BATCH Does NOT Guarantee
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#logged-vs-unlogged-contracts" class="md-nav__link">
+    <span class="md-ellipsis">
+      Logged vs Unlogged Contracts
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#failure-semantics" class="md-nav__link">
+    <span class="md-ellipsis">
+      Failure Semantics
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#version-specific-behavior" class="md-nav__link">
+    <span class="md-ellipsis">
+      Version-Specific Behavior
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#overview" class="md-nav__link">
     <span class="md-ellipsis">
       Overview
@@ -14045,6 +14105,66 @@ data-et-multi-view="{&quot;schema&quot;:{&quot;content&quot;:{&quot;desktop&quot
     <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
       
         <li class="md-nav__item">
+  <a href="#behavioral-guarantees" class="md-nav__link">
+    <span class="md-ellipsis">
+      Behavioral Guarantees
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Behavioral Guarantees">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#what-batch-guarantees" class="md-nav__link">
+    <span class="md-ellipsis">
+      What BATCH Guarantees
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#what-batch-does-not-guarantee" class="md-nav__link">
+    <span class="md-ellipsis">
+      What BATCH Does NOT Guarantee
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#logged-vs-unlogged-contracts" class="md-nav__link">
+    <span class="md-ellipsis">
+      Logged vs Unlogged Contracts
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#failure-semantics" class="md-nav__link">
+    <span class="md-ellipsis">
+      Failure Semantics
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#version-specific-behavior" class="md-nav__link">
+    <span class="md-ellipsis">
+      Version-Specific Behavior
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#overview" class="md-nav__link">
     <span class="md-ellipsis">
       Overview
@@ -14475,6 +14595,123 @@ data-et-multi-view="{&quot;schema&quot;:{&quot;content&quot;:{&quot;desktop&quot
 
 <div><h1 id="batch">BATCH<a class="headerlink" href="#batch" title="Permanent link">¶</a></h1>
 <p>The BATCH statement groups multiple INSERT, UPDATE, and DELETE statements into a single atomic operation. Batches ensure that all statements either complete or none do, providing atomicity guarantees. However, batches are frequently misused as a performance optimization—they are not.</p>
+<hr>
+<h2 id="behavioral-guarantees">Behavioral Guarantees<a class="headerlink" href="#behavioral-guarantees" title="Permanent link">¶</a></h2>
+<h3 id="what-batch-guarantees">What BATCH Guarantees<a class="headerlink" href="#what-batch-guarantees" title="Permanent link">¶</a></h3>
+<ul>
+<li>All statements in a logged batch eventually execute or none execute</li>
+<li>Statements to the same partition are atomic at the storage layer</li>
+<li>Logged batches write to batch log before executing mutations</li>
+<li>USING TIMESTAMP applies the same timestamp to all statements</li>
+<li>If any IF condition fails, no statements in the batch execute</li>
+</ul>
+<h3 id="what-batch-does-not-guarantee">What BATCH Does NOT Guarantee<a class="headerlink" href="#what-batch-does-not-guarantee" title="Permanent link">¶</a></h3>
+<div class="admonition warning">
+<p class="admonition-title">Undefined Behavior</p>
+<p>The following behaviors are undefined and must not be relied upon:</p>
+<ul>
+<li><strong>Isolation</strong>: Other reads may see partial batch results before completion</li>
+<li><strong>Performance improvement</strong>: Batches do not improve throughput over parallel writes</li>
+<li><strong>Cross-datacenter atomicity</strong>: Logged batches provide atomicity within a datacenter, not globally</li>
+<li><strong>Unlogged batch atomicity</strong>: UNLOGGED batches have no atomicity guarantee on coordinator failure</li>
+<li><strong>Order of execution</strong>: Statements within a batch may execute in any order</li>
+</ul>
+</div>
+<h3 id="logged-vs-unlogged-contracts">Logged vs Unlogged Contracts<a class="headerlink" href="#logged-vs-unlogged-contracts" title="Permanent link">¶</a></h3>
+<table>
+<thead>
+<tr>
+<th>Aspect</th>
+<th>Logged Batch</th>
+<th>Unlogged Batch</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Coordinator failure</td>
+<td>Recovers via batch log</td>
+<td>Undefined - partial execution possible</td>
+</tr>
+<tr>
+<td>Multi-partition</td>
+<td>Atomic (via batch log)</td>
+<td>Not atomic</td>
+</tr>
+<tr>
+<td>Same-partition</td>
+<td>Atomic</td>
+<td>Atomic (storage layer)</td>
+</tr>
+<tr>
+<td>Performance</td>
+<td>Higher latency (batch log overhead)</td>
+<td>Lower latency</td>
+</tr>
+</tbody>
+</table>
+<h3 id="failure-semantics">Failure Semantics<a class="headerlink" href="#failure-semantics" title="Permanent link">¶</a></h3>
+<table>
+<thead>
+<tr>
+<th>Failure Mode</th>
+<th>Logged Batch</th>
+<th>Unlogged Batch</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Coordinator fails after batch log write</td>
+<td>Batch log replays mutations</td>
+<td>Partial execution possible</td>
+</tr>
+<tr>
+<td>Coordinator fails before batch log write</td>
+<td>Not applied</td>
+<td>Not applied</td>
+</tr>
+<tr>
+<td><code>WriteTimeoutException</code></td>
+<td>May have been logged for replay</td>
+<td>Undefined</td>
+</tr>
+<tr>
+<td><code>UnavailableException</code></td>
+<td>Not applied</td>
+<td>Not applied</td>
+</tr>
+</tbody>
+</table>
+<h3 id="version-specific-behavior">Version-Specific Behavior<a class="headerlink" href="#version-specific-behavior" title="Permanent link">¶</a></h3>
+<table>
+<thead>
+<tr>
+<th>Version</th>
+<th>Behavior</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>1.2+</td>
+<td>Basic BATCH support</td>
+</tr>
+<tr>
+<td>2.0+</td>
+<td>UNLOGGED BATCH, improved batch log (CASSANDRA-4542)</td>
+</tr>
+<tr>
+<td>2.1+</td>
+<td>COUNTER BATCH separated from regular batches</td>
+</tr>
+<tr>
+<td>3.0+</td>
+<td>Improved batch log performance (CASSANDRA-9673)</td>
+</tr>
+<tr>
+<td>4.0+</td>
+<td>Enhanced multi-partition batch handling</td>
+</tr>
+</tbody>
+</table>
 <hr>
 <h2 id="overview">Overview<a class="headerlink" href="#overview" title="Permanent link">¶</a></h2>
 <h3 id="what-batch-is-for">What BATCH Is For<a class="headerlink" href="#what-batch-is-for" title="Permanent link">¶</a></h3>

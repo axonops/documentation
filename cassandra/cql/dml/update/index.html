@@ -6404,6 +6404,57 @@ data-et-multi-view="{&quot;schema&quot;:{&quot;content&quot;:{&quot;desktop&quot
     <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
       
         <li class="md-nav__item">
+  <a href="#behavioral-guarantees" class="md-nav__link">
+    <span class="md-ellipsis">
+      Behavioral Guarantees
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Behavioral Guarantees">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#what-update-guarantees" class="md-nav__link">
+    <span class="md-ellipsis">
+      What UPDATE Guarantees
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#what-update-does-not-guarantee" class="md-nav__link">
+    <span class="md-ellipsis">
+      What UPDATE Does NOT Guarantee
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#failure-semantics" class="md-nav__link">
+    <span class="md-ellipsis">
+      Failure Semantics
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#version-specific-behavior" class="md-nav__link">
+    <span class="md-ellipsis">
+      Version-Specific Behavior
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#overview" class="md-nav__link">
     <span class="md-ellipsis">
       Overview
@@ -14099,6 +14150,57 @@ data-et-multi-view="{&quot;schema&quot;:{&quot;content&quot;:{&quot;desktop&quot
     <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
       
         <li class="md-nav__item">
+  <a href="#behavioral-guarantees" class="md-nav__link">
+    <span class="md-ellipsis">
+      Behavioral Guarantees
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Behavioral Guarantees">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#what-update-guarantees" class="md-nav__link">
+    <span class="md-ellipsis">
+      What UPDATE Guarantees
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#what-update-does-not-guarantee" class="md-nav__link">
+    <span class="md-ellipsis">
+      What UPDATE Does NOT Guarantee
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#failure-semantics" class="md-nav__link">
+    <span class="md-ellipsis">
+      Failure Semantics
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#version-specific-behavior" class="md-nav__link">
+    <span class="md-ellipsis">
+      Version-Specific Behavior
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#overview" class="md-nav__link">
     <span class="md-ellipsis">
       Overview
@@ -14583,6 +14685,78 @@ data-et-multi-view="{&quot;schema&quot;:{&quot;content&quot;:{&quot;desktop&quot
 
 <div><h1 id="update">UPDATE<a class="headerlink" href="#update" title="Permanent link">¶</a></h1>
 <p>The UPDATE statement modifies column values in Cassandra tables. Like INSERT, UPDATE performs an <strong>upsert</strong> operation—creating the row if it doesn't exist. UPDATE is particularly useful for collection modifications and counter operations.</p>
+<hr>
+<h2 id="behavioral-guarantees">Behavioral Guarantees<a class="headerlink" href="#behavioral-guarantees" title="Permanent link">¶</a></h2>
+<h3 id="what-update-guarantees">What UPDATE Guarantees<a class="headerlink" href="#what-update-guarantees" title="Permanent link">¶</a></h3>
+<ul>
+<li>UPDATE creates the row if it does not exist (upsert semantics)</li>
+<li>Each column value is written atomically</li>
+<li>Higher timestamps win in conflict resolution</li>
+<li>Collection add/remove operations are applied atomically per element</li>
+<li>Counter increment/decrement operations are applied correctly (though not idempotent)</li>
+</ul>
+<h3 id="what-update-does-not-guarantee">What UPDATE Does NOT Guarantee<a class="headerlink" href="#what-update-does-not-guarantee" title="Permanent link">¶</a></h3>
+<div class="admonition warning">
+<p class="admonition-title">Undefined Behavior</p>
+<p>The following behaviors are undefined and must not be relied upon:</p>
+<ul>
+<li><strong>Row existence check</strong>: UPDATE does not verify row existence (use IF EXISTS for that)</li>
+<li><strong>Read-your-writes without QUORUM</strong>: An UPDATE followed by SELECT at CL=ONE may not reflect the change</li>
+<li><strong>List index stability</strong>: Index-based list operations may produce unexpected results under concurrent modification</li>
+<li><strong>Counter idempotency</strong>: Counter increments are not idempotent; retries may over-count</li>
+<li><strong>Collection size limits</strong>: Behavior when exceeding collection size limits is implementation-dependent</li>
+</ul>
+</div>
+<h3 id="failure-semantics">Failure Semantics<a class="headerlink" href="#failure-semantics" title="Permanent link">¶</a></h3>
+<table>
+<thead>
+<tr>
+<th>Failure Mode</th>
+<th>Outcome</th>
+<th>Client Action</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>WriteTimeoutException</code></td>
+<td>Undefined - may or may not have been applied</td>
+<td>Query to verify, retry if idempotent</td>
+</tr>
+<tr>
+<td><code>UnavailableException</code></td>
+<td>Not applied</td>
+<td>Safe to retry</td>
+</tr>
+<tr>
+<td><code>WriteFailureException</code></td>
+<td>Partially applied to some replicas</td>
+<td>Data may be inconsistent</td>
+</tr>
+</tbody>
+</table>
+<h3 id="version-specific-behavior">Version-Specific Behavior<a class="headerlink" href="#version-specific-behavior" title="Permanent link">¶</a></h3>
+<table>
+<thead>
+<tr>
+<th>Version</th>
+<th>Behavior</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>2.0+</td>
+<td>IF EXISTS and IF condition (LWT) supported (CASSANDRA-5062)</td>
+</tr>
+<tr>
+<td>2.1+</td>
+<td>Non-frozen UDT field updates (CASSANDRA-7423)</td>
+</tr>
+<tr>
+<td>3.0+</td>
+<td>Range updates with clustering column ranges</td>
+</tr>
+</tbody>
+</table>
 <hr>
 <h2 id="overview">Overview<a class="headerlink" href="#overview" title="Permanent link">¶</a></h2>
 <h3 id="update-as-upsert">UPDATE as Upsert<a class="headerlink" href="#update-as-upsert" title="Permanent link">¶</a></h3>

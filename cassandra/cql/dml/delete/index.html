@@ -6425,6 +6425,66 @@ data-et-multi-view="{&quot;schema&quot;:{&quot;content&quot;:{&quot;desktop&quot
     <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
       
         <li class="md-nav__item">
+  <a href="#behavioral-guarantees" class="md-nav__link">
+    <span class="md-ellipsis">
+      Behavioral Guarantees
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Behavioral Guarantees">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#what-delete-guarantees" class="md-nav__link">
+    <span class="md-ellipsis">
+      What DELETE Guarantees
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#what-delete-does-not-guarantee" class="md-nav__link">
+    <span class="md-ellipsis">
+      What DELETE Does NOT Guarantee
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#tombstone-persistence-contract" class="md-nav__link">
+    <span class="md-ellipsis">
+      Tombstone Persistence Contract
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#failure-semantics" class="md-nav__link">
+    <span class="md-ellipsis">
+      Failure Semantics
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#version-specific-behavior" class="md-nav__link">
+    <span class="md-ellipsis">
+      Version-Specific Behavior
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#overview" class="md-nav__link">
     <span class="md-ellipsis">
       Overview
@@ -14114,6 +14174,66 @@ data-et-multi-view="{&quot;schema&quot;:{&quot;content&quot;:{&quot;desktop&quot
     <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
       
         <li class="md-nav__item">
+  <a href="#behavioral-guarantees" class="md-nav__link">
+    <span class="md-ellipsis">
+      Behavioral Guarantees
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Behavioral Guarantees">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#what-delete-guarantees" class="md-nav__link">
+    <span class="md-ellipsis">
+      What DELETE Guarantees
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#what-delete-does-not-guarantee" class="md-nav__link">
+    <span class="md-ellipsis">
+      What DELETE Does NOT Guarantee
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#tombstone-persistence-contract" class="md-nav__link">
+    <span class="md-ellipsis">
+      Tombstone Persistence Contract
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#failure-semantics" class="md-nav__link">
+    <span class="md-ellipsis">
+      Failure Semantics
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#version-specific-behavior" class="md-nav__link">
+    <span class="md-ellipsis">
+      Version-Specific Behavior
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#overview" class="md-nav__link">
     <span class="md-ellipsis">
       Overview
@@ -14613,6 +14733,87 @@ data-et-multi-view="{&quot;schema&quot;:{&quot;content&quot;:{&quot;desktop&quot
 
 <div><h1 id="delete">DELETE<a class="headerlink" href="#delete" title="Permanent link">¶</a></h1>
 <p>The DELETE statement removes rows or column values from Cassandra tables. Unlike traditional databases that immediately remove data, Cassandra writes <strong>tombstones</strong>—markers indicating data has been deleted. Understanding tombstones is essential for maintaining cluster performance.</p>
+<hr>
+<h2 id="behavioral-guarantees">Behavioral Guarantees<a class="headerlink" href="#behavioral-guarantees" title="Permanent link">¶</a></h2>
+<h3 id="what-delete-guarantees">What DELETE Guarantees<a class="headerlink" href="#what-delete-guarantees" title="Permanent link">¶</a></h3>
+<ul>
+<li>DELETE creates a tombstone marker for deleted data</li>
+<li>DELETE with higher timestamp supersedes earlier writes</li>
+<li>Tombstones are replicated like regular data</li>
+<li>Tombstones are not removed before gc_grace_seconds has elapsed</li>
+<li>Range DELETE creates a single range tombstone (Cassandra 3.0+)</li>
+</ul>
+<h3 id="what-delete-does-not-guarantee">What DELETE Does NOT Guarantee<a class="headerlink" href="#what-delete-does-not-guarantee" title="Permanent link">¶</a></h3>
+<div class="admonition warning">
+<p class="admonition-title">Undefined Behavior</p>
+<p>The following behaviors are undefined and must not be relied upon:</p>
+<ul>
+<li><strong>Immediate space reclamation</strong>: Disk space is only reclaimed after compaction removes tombstones</li>
+<li><strong>Tombstone-free reads</strong>: Reads may encounter tombstones even after gc_grace_seconds if compaction hasn't run</li>
+<li><strong>Delete confirmation</strong>: DELETE returning success does not guarantee read invisibility at lower consistency levels</li>
+<li><strong>Resurrection prevention without repair</strong>: If repair doesn't run within gc_grace_seconds, deleted data may reappear</li>
+</ul>
+</div>
+<h3 id="tombstone-persistence-contract">Tombstone Persistence Contract<a class="headerlink" href="#tombstone-persistence-contract" title="Permanent link">¶</a></h3>
+<div class="admonition danger">
+<p class="admonition-title">Critical: gc_grace_seconds Contract</p>
+<p>Tombstones must persist for at least <code>gc_grace_seconds</code> to prevent data resurrection:</p>
+<ul>
+<li>If a node is down longer than gc_grace_seconds, and compaction runs on other nodes, the tombstone may be removed</li>
+<li>When the node returns, its old data will propagate as "new" data, causing resurrection</li>
+<li>Repair must run more frequently than gc_grace_seconds on all nodes</li>
+</ul>
+</div>
+<h3 id="failure-semantics">Failure Semantics<a class="headerlink" href="#failure-semantics" title="Permanent link">¶</a></h3>
+<table>
+<thead>
+<tr>
+<th>Failure Mode</th>
+<th>Outcome</th>
+<th>Client Action</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>WriteTimeoutException</code></td>
+<td>Undefined - tombstone may or may not have been written</td>
+<td>Query to verify, retry if needed</td>
+</tr>
+<tr>
+<td><code>UnavailableException</code></td>
+<td>Not applied</td>
+<td>Safe to retry</td>
+</tr>
+<tr>
+<td><code>WriteFailureException</code></td>
+<td>Partially applied</td>
+<td>Some replicas may have tombstone, others may not</td>
+</tr>
+</tbody>
+</table>
+<h3 id="version-specific-behavior">Version-Specific Behavior<a class="headerlink" href="#version-specific-behavior" title="Permanent link">¶</a></h3>
+<table>
+<thead>
+<tr>
+<th>Version</th>
+<th>Behavior</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>2.0+</td>
+<td>IF EXISTS and IF condition for DELETE (CASSANDRA-5062)</td>
+</tr>
+<tr>
+<td>3.0+</td>
+<td>Range tombstones for efficient bulk deletes (CASSANDRA-6237)</td>
+</tr>
+<tr>
+<td>4.0+</td>
+<td>Improved tombstone handling in reads (CASSANDRA-14227)</td>
+</tr>
+</tbody>
+</table>
 <hr>
 <h2 id="overview">Overview<a class="headerlink" href="#overview" title="Permanent link">¶</a></h2>
 <h3 id="why-cassandra-uses-tombstones">Why Cassandra Uses Tombstones<a class="headerlink" href="#why-cassandra-uses-tombstones" title="Permanent link">¶</a></h3>

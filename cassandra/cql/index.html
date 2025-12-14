@@ -6093,6 +6093,75 @@ data-et-multi-view="{&quot;schema&quot;:{&quot;content&quot;:{&quot;desktop&quot
 </li>
       
         <li class="md-nav__item">
+  <a href="#operator-precedence" class="md-nav__link">
+    <span class="md-ellipsis">
+      Operator Precedence
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#error-classification" class="md-nav__link">
+    <span class="md-ellipsis">
+      Error Classification
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Error Classification">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#syntax-errors" class="md-nav__link">
+    <span class="md-ellipsis">
+      Syntax Errors
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#semantic-errors" class="md-nav__link">
+    <span class="md-ellipsis">
+      Semantic Errors
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#runtime-errors" class="md-nav__link">
+    <span class="md-ellipsis">
+      Runtime Errors
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#constraint-errors" class="md-nav__link">
+    <span class="md-ellipsis">
+      Constraint Errors
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#type-coercion-rules" class="md-nav__link">
+    <span class="md-ellipsis">
+      Type Coercion Rules
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#cql-vs-sql" class="md-nav__link">
     <span class="md-ellipsis">
       CQL vs SQL
@@ -13854,6 +13923,75 @@ data-et-multi-view="{&quot;schema&quot;:{&quot;content&quot;:{&quot;desktop&quot
 </li>
       
         <li class="md-nav__item">
+  <a href="#operator-precedence" class="md-nav__link">
+    <span class="md-ellipsis">
+      Operator Precedence
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#error-classification" class="md-nav__link">
+    <span class="md-ellipsis">
+      Error Classification
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Error Classification">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#syntax-errors" class="md-nav__link">
+    <span class="md-ellipsis">
+      Syntax Errors
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#semantic-errors" class="md-nav__link">
+    <span class="md-ellipsis">
+      Semantic Errors
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#runtime-errors" class="md-nav__link">
+    <span class="md-ellipsis">
+      Runtime Errors
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#constraint-errors" class="md-nav__link">
+    <span class="md-ellipsis">
+      Constraint Errors
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#type-coercion-rules" class="md-nav__link">
+    <span class="md-ellipsis">
+      Type Coercion Rules
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#cql-vs-sql" class="md-nav__link">
     <span class="md-ellipsis">
       CQL vs SQL
@@ -14116,6 +14254,261 @@ data-et-multi-view="{&quot;schema&quot;:{&quot;content&quot;:{&quot;desktop&quot
 <td>CQL 3.4.7</td>
 <td>5.0+</td>
 <td>Vectors, SAI, unified compaction</td>
+</tr>
+</tbody>
+</table>
+<hr>
+<h2 id="operator-precedence">Operator Precedence<a class="headerlink" href="#operator-precedence" title="Permanent link">¶</a></h2>
+<p>CQL operators are evaluated in the following precedence order (highest to lowest):</p>
+<table>
+<thead>
+<tr>
+<th>Precedence</th>
+<th>Operator</th>
+<th>Description</th>
+<th>Associativity</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>1</td>
+<td><code>()</code></td>
+<td>Parentheses</td>
+<td>-</td>
+</tr>
+<tr>
+<td>2</td>
+<td><code>.</code></td>
+<td>Field access (UDT)</td>
+<td>Left-to-right</td>
+</tr>
+<tr>
+<td>3</td>
+<td><code>[]</code></td>
+<td>Index/key access (collections)</td>
+<td>Left-to-right</td>
+</tr>
+<tr>
+<td>4</td>
+<td><code>-</code> (unary)</td>
+<td>Negation</td>
+<td>Right-to-left</td>
+</tr>
+<tr>
+<td>5</td>
+<td><code>*</code>, <code>/</code>, <code>%</code></td>
+<td>Multiplication, division, modulo</td>
+<td>Left-to-right</td>
+</tr>
+<tr>
+<td>6</td>
+<td><code>+</code>, <code>-</code></td>
+<td>Addition, subtraction</td>
+<td>Left-to-right</td>
+</tr>
+<tr>
+<td>7</td>
+<td><code>=</code>, <code>!=</code>, <code>&lt;</code>, <code>&gt;</code>, <code>&lt;=</code>, <code>&gt;=</code></td>
+<td>Comparison</td>
+<td>Left-to-right</td>
+</tr>
+<tr>
+<td>8</td>
+<td><code>IN</code>, <code>CONTAINS</code>, <code>CONTAINS KEY</code></td>
+<td>Membership</td>
+<td>-</td>
+</tr>
+<tr>
+<td>9</td>
+<td><code>AND</code></td>
+<td>Logical AND</td>
+<td>Left-to-right</td>
+</tr>
+</tbody>
+</table>
+<div class="admonition note">
+<p class="admonition-title">No OR Operator</p>
+<p>CQL does not support the <code>OR</code> operator. All WHERE conditions are implicitly ANDed. To achieve OR semantics, execute multiple queries and union results in the application.</p>
+</div>
+<hr>
+<h2 id="error-classification">Error Classification<a class="headerlink" href="#error-classification" title="Permanent link">¶</a></h2>
+<p>CQL errors fall into distinct categories that indicate when and why an error occurred:</p>
+<h3 id="syntax-errors">Syntax Errors<a class="headerlink" href="#syntax-errors" title="Permanent link">¶</a></h3>
+<p>Detected during parsing. The statement is malformed.</p>
+<table>
+<thead>
+<tr>
+<th>Error Code</th>
+<th>Description</th>
+<th>Example</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>SyntaxException</code></td>
+<td>Invalid CQL syntax</td>
+<td><code>SELEC * FROM users</code></td>
+</tr>
+</tbody>
+</table>
+<p><strong>Characteristics:</strong></p>
+<ul>
+<li>Detected before execution</li>
+<li>No side effects</li>
+<li>Statement never reaches coordinator</li>
+</ul>
+<h3 id="semantic-errors">Semantic Errors<a class="headerlink" href="#semantic-errors" title="Permanent link">¶</a></h3>
+<p>Detected after parsing but before execution. The statement is syntactically valid but meaningless.</p>
+<table>
+<thead>
+<tr>
+<th>Error Code</th>
+<th>Description</th>
+<th>Example</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>InvalidRequestException</code></td>
+<td>Invalid query semantics</td>
+<td><code>SELECT * FROM nonexistent_table</code></td>
+</tr>
+<tr>
+<td><code>UnauthorizedException</code></td>
+<td>Permission denied</td>
+<td>User lacks SELECT permission</td>
+</tr>
+<tr>
+<td><code>ConfigurationException</code></td>
+<td>Invalid configuration</td>
+<td>Invalid replication factor</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Characteristics:</strong></p>
+<ul>
+<li>Detected before execution</li>
+<li>No data modifications</li>
+<li>Schema validation failures</li>
+</ul>
+<h3 id="runtime-errors">Runtime Errors<a class="headerlink" href="#runtime-errors" title="Permanent link">¶</a></h3>
+<p>Detected during execution. The statement is valid but cannot complete.</p>
+<table>
+<thead>
+<tr>
+<th>Error Code</th>
+<th>Description</th>
+<th>Recovery</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>UnavailableException</code></td>
+<td>Insufficient replicas available</td>
+<td>Retry or reduce CL</td>
+</tr>
+<tr>
+<td><code>WriteTimeoutException</code></td>
+<td>Write did not complete in time</td>
+<td>Verify and retry</td>
+</tr>
+<tr>
+<td><code>ReadTimeoutException</code></td>
+<td>Read did not complete in time</td>
+<td>Retry</td>
+</tr>
+<tr>
+<td><code>ReadFailureException</code></td>
+<td>Read failed on replica(s)</td>
+<td>Check replica health</td>
+</tr>
+<tr>
+<td><code>WriteFailureException</code></td>
+<td>Write failed on replica(s)</td>
+<td>Check replica health</td>
+</tr>
+<tr>
+<td><code>TruncateException</code></td>
+<td>Truncate operation failed</td>
+<td>Retry</td>
+</tr>
+<tr>
+<td><code>FunctionFailureException</code></td>
+<td>UDF execution failed</td>
+<td>Fix function</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Characteristics:</strong></p>
+<ul>
+<li>Partial execution may have occurred</li>
+<li>State may be undefined (especially for timeouts)</li>
+<li>Retry may succeed or cause duplicates</li>
+</ul>
+<h3 id="constraint-errors">Constraint Errors<a class="headerlink" href="#constraint-errors" title="Permanent link">¶</a></h3>
+<p>Detected during execution. Data violates constraints.</p>
+<table>
+<thead>
+<tr>
+<th>Error Code</th>
+<th>Description</th>
+<th>Example</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>CASWriteUnknownResultException</code></td>
+<td>LWT result unknown</td>
+<td>Timeout during Paxos</td>
+</tr>
+</tbody>
+</table>
+<hr>
+<h2 id="type-coercion-rules">Type Coercion Rules<a class="headerlink" href="#type-coercion-rules" title="Permanent link">¶</a></h2>
+<p>CQL performs implicit type coercion in specific cases:</p>
+<table>
+<thead>
+<tr>
+<th>Source Type</th>
+<th>Target Type</th>
+<th>Allowed</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>int</code></td>
+<td><code>bigint</code></td>
+<td>✅ Widening</td>
+</tr>
+<tr>
+<td><code>bigint</code></td>
+<td><code>int</code></td>
+<td>❌ Narrowing (explicit cast required)</td>
+</tr>
+<tr>
+<td><code>float</code></td>
+<td><code>double</code></td>
+<td>✅ Widening</td>
+</tr>
+<tr>
+<td><code>text</code></td>
+<td><code>varchar</code></td>
+<td>✅ Equivalent</td>
+</tr>
+<tr>
+<td><code>ascii</code></td>
+<td><code>text</code></td>
+<td>✅ Widening</td>
+</tr>
+<tr>
+<td><code>timestamp</code></td>
+<td><code>bigint</code></td>
+<td>❌ Use <code>toUnixTimestamp()</code></td>
+</tr>
+<tr>
+<td><code>uuid</code></td>
+<td><code>text</code></td>
+<td>❌ Use <code>toString()</code></td>
 </tr>
 </tbody>
 </table>
