@@ -6500,6 +6500,84 @@ data-et-multi-view="{&quot;schema&quot;:{&quot;content&quot;:{&quot;desktop&quot
 </li>
       
         <li class="md-nav__item">
+  <a href="#behavioral-guarantees" class="md-nav__link">
+    <span class="md-ellipsis">
+      Behavioral Guarantees
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Behavioral Guarantees">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#what-secondary-index-queries-guarantee" class="md-nav__link">
+    <span class="md-ellipsis">
+      What Secondary Index Queries Guarantee
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#what-secondary-index-queries-do-not-guarantee" class="md-nav__link">
+    <span class="md-ellipsis">
+      What Secondary Index Queries Do NOT Guarantee
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#query-execution-contract" class="md-nav__link">
+    <span class="md-ellipsis">
+      Query Execution Contract
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#consistency-level-contract" class="md-nav__link">
+    <span class="md-ellipsis">
+      Consistency Level Contract
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#result-completeness-contract" class="md-nav__link">
+    <span class="md-ellipsis">
+      Result Completeness Contract
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#failure-semantics" class="md-nav__link">
+    <span class="md-ellipsis">
+      Failure Semantics
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#version-specific-behavior" class="md-nav__link">
+    <span class="md-ellipsis">
+      Version-Specific Behavior
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#index-types-and-query-capabilities" class="md-nav__link">
     <span class="md-ellipsis">
       Index Types and Query Capabilities
@@ -14033,6 +14111,84 @@ data-et-multi-view="{&quot;schema&quot;:{&quot;content&quot;:{&quot;desktop&quot
 </li>
       
         <li class="md-nav__item">
+  <a href="#behavioral-guarantees" class="md-nav__link">
+    <span class="md-ellipsis">
+      Behavioral Guarantees
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Behavioral Guarantees">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#what-secondary-index-queries-guarantee" class="md-nav__link">
+    <span class="md-ellipsis">
+      What Secondary Index Queries Guarantee
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#what-secondary-index-queries-do-not-guarantee" class="md-nav__link">
+    <span class="md-ellipsis">
+      What Secondary Index Queries Do NOT Guarantee
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#query-execution-contract" class="md-nav__link">
+    <span class="md-ellipsis">
+      Query Execution Contract
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#consistency-level-contract" class="md-nav__link">
+    <span class="md-ellipsis">
+      Consistency Level Contract
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#result-completeness-contract" class="md-nav__link">
+    <span class="md-ellipsis">
+      Result Completeness Contract
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#failure-semantics" class="md-nav__link">
+    <span class="md-ellipsis">
+      Failure Semantics
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#version-specific-behavior" class="md-nav__link">
+    <span class="md-ellipsis">
+      Version-Specific Behavior
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#index-types-and-query-capabilities" class="md-nav__link">
     <span class="md-ellipsis">
       Index Types and Query Capabilities
@@ -14441,6 +14597,166 @@ Secondary Index Query: Client → Coordinator → Token Range Coverage → Respo
 <li>Large result sets are expected</li>
 <li>Low, predictable latency is required</li>
 </ul>
+<hr>
+<h2 id="behavioral-guarantees">Behavioral Guarantees<a class="headerlink" href="#behavioral-guarantees" title="Permanent link">¶</a></h2>
+<h3 id="what-secondary-index-queries-guarantee">What Secondary Index Queries Guarantee<a class="headerlink" href="#what-secondary-index-queries-guarantee" title="Permanent link">¶</a></h3>
+<ul>
+<li>Queries with partition key constraint contact only replicas for that partition</li>
+<li>Results are returned in clustering order within each partition</li>
+<li>Index queries respect the specified consistency level</li>
+<li>All matching rows visible to the consistency level are returned</li>
+<li>Multiple indexed predicates (AND) are evaluated correctly</li>
+</ul>
+<h3 id="what-secondary-index-queries-do-not-guarantee">What Secondary Index Queries Do NOT Guarantee<a class="headerlink" href="#what-secondary-index-queries-do-not-guarantee" title="Permanent link">¶</a></h3>
+<div class="admonition warning">
+<p class="admonition-title">Undefined Behavior</p>
+<p>The following behaviors are undefined and must not be relied upon:</p>
+<ul>
+<li><strong>Global result ordering</strong>: Without partition key, results across partitions have undefined order</li>
+<li><strong>Latency bounds</strong>: Index queries without partition key have unbounded latency proportional to cluster size</li>
+<li><strong>Complete results during topology changes</strong>: Adding/removing nodes may cause temporary result inconsistencies</li>
+<li><strong>Memory usage</strong>: Large result sets may exhaust coordinator memory</li>
+<li><strong>Timeout behavior</strong>: Partial results may be returned on timeout (implementation-dependent)</li>
+<li><strong>Performance consistency</strong>: Query times vary significantly based on data distribution and cluster load</li>
+</ul>
+</div>
+<h3 id="query-execution-contract">Query Execution Contract<a class="headerlink" href="#query-execution-contract" title="Permanent link">¶</a></h3>
+<table>
+<thead>
+<tr>
+<th>Query Pattern</th>
+<th>Execution Model</th>
+<th>Node Contact</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>WHERE pk = ? AND indexed_col = ?</code></td>
+<td>Single partition scan</td>
+<td>RF replicas</td>
+</tr>
+<tr>
+<td><code>WHERE indexed_col = ?</code></td>
+<td>Scatter-gather</td>
+<td>All nodes (token range coverage)</td>
+</tr>
+<tr>
+<td><code>WHERE indexed_col = ? LIMIT n</code></td>
+<td>Scatter-gather with limit</td>
+<td>All nodes, stops when limit reached</td>
+</tr>
+<tr>
+<td><code>WHERE indexed_col &gt; ? AND indexed_col &lt; ?</code></td>
+<td>Range scan (SAI/SASI)</td>
+<td>All nodes</td>
+</tr>
+</tbody>
+</table>
+<h3 id="consistency-level-contract">Consistency Level Contract<a class="headerlink" href="#consistency-level-contract" title="Permanent link">¶</a></h3>
+<table>
+<thead>
+<tr>
+<th>Consistency Level</th>
+<th>Behavior on Index Query</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>ONE/LOCAL_ONE</td>
+<td>Each node returns from local index; coordinator merges</td>
+</tr>
+<tr>
+<td>QUORUM/LOCAL_QUORUM</td>
+<td>Each shard uses QUORUM; coordinator merges</td>
+</tr>
+<tr>
+<td>ALL</td>
+<td>All replicas for each shard must respond</td>
+</tr>
+</tbody>
+</table>
+<h3 id="result-completeness-contract">Result Completeness Contract<a class="headerlink" href="#result-completeness-contract" title="Permanent link">¶</a></h3>
+<table>
+<thead>
+<tr>
+<th>Scenario</th>
+<th>Completeness</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>All nodes healthy</td>
+<td>Complete results (within consistency level)</td>
+</tr>
+<tr>
+<td>Some nodes down</td>
+<td>Results from available nodes only</td>
+</tr>
+<tr>
+<td>Index building on some nodes</td>
+<td>Partial results from those nodes</td>
+</tr>
+<tr>
+<td>Coordinator timeout</td>
+<td>Partial results possible</td>
+</tr>
+</tbody>
+</table>
+<h3 id="failure-semantics">Failure Semantics<a class="headerlink" href="#failure-semantics" title="Permanent link">¶</a></h3>
+<table>
+<thead>
+<tr>
+<th>Failure Mode</th>
+<th>Outcome</th>
+<th>Client Action</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Some nodes unavailable</td>
+<td>Partial results (if CL can be met)</td>
+<td>Retry or accept partial data</td>
+</tr>
+<tr>
+<td>Coordinator timeout</td>
+<td>Partial results or timeout exception</td>
+<td>Add partition key or reduce scope</td>
+</tr>
+<tr>
+<td>Index not found</td>
+<td>Query fails</td>
+<td>Create index or use ALLOW FILTERING</td>
+</tr>
+<tr>
+<td>Memory exhaustion</td>
+<td>Query fails</td>
+<td>Add LIMIT or partition constraints</td>
+</tr>
+</tbody>
+</table>
+<h3 id="version-specific-behavior">Version-Specific Behavior<a class="headerlink" href="#version-specific-behavior" title="Permanent link">¶</a></h3>
+<table>
+<thead>
+<tr>
+<th>Version</th>
+<th>Behavior</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>All</td>
+<td>Legacy secondary indexes (2i)</td>
+</tr>
+<tr>
+<td>3.4+</td>
+<td>SASI indexes (experimental, not recommended for production)</td>
+</tr>
+<tr>
+<td>5.0+</td>
+<td>Storage-Attached Indexes (SAI), recommended for new deployments</td>
+</tr>
+</tbody>
+</table>
 <hr>
 <h2 id="index-types-and-query-capabilities">Index Types and Query Capabilities<a class="headerlink" href="#index-types-and-query-capabilities" title="Permanent link">¶</a></h2>
 <p>Cassandra provides three secondary index implementations, each with different query capabilities:</p>

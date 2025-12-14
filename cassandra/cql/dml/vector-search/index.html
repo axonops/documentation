@@ -6521,6 +6521,84 @@ data-et-multi-view="{&quot;schema&quot;:{&quot;content&quot;:{&quot;desktop&quot
 </li>
       
         <li class="md-nav__item">
+  <a href="#behavioral-guarantees" class="md-nav__link">
+    <span class="md-ellipsis">
+      Behavioral Guarantees
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Behavioral Guarantees">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#what-vector-search-guarantees" class="md-nav__link">
+    <span class="md-ellipsis">
+      What Vector Search Guarantees
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#what-vector-search-does-not-guarantee" class="md-nav__link">
+    <span class="md-ellipsis">
+      What Vector Search Does NOT Guarantee
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#ann-query-contract" class="md-nav__link">
+    <span class="md-ellipsis">
+      ANN Query Contract
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#similarity-function-contract" class="md-nav__link">
+    <span class="md-ellipsis">
+      Similarity Function Contract
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#index-build-contract" class="md-nav__link">
+    <span class="md-ellipsis">
+      Index Build Contract
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#failure-semantics" class="md-nav__link">
+    <span class="md-ellipsis">
+      Failure Semantics
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#version-specific-behavior" class="md-nav__link">
+    <span class="md-ellipsis">
+      Version-Specific Behavior
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#vector-data-type" class="md-nav__link">
     <span class="md-ellipsis">
       Vector Data Type
@@ -14042,6 +14120,84 @@ data-et-multi-view="{&quot;schema&quot;:{&quot;content&quot;:{&quot;desktop&quot
 </li>
       
         <li class="md-nav__item">
+  <a href="#behavioral-guarantees" class="md-nav__link">
+    <span class="md-ellipsis">
+      Behavioral Guarantees
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Behavioral Guarantees">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#what-vector-search-guarantees" class="md-nav__link">
+    <span class="md-ellipsis">
+      What Vector Search Guarantees
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#what-vector-search-does-not-guarantee" class="md-nav__link">
+    <span class="md-ellipsis">
+      What Vector Search Does NOT Guarantee
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#ann-query-contract" class="md-nav__link">
+    <span class="md-ellipsis">
+      ANN Query Contract
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#similarity-function-contract" class="md-nav__link">
+    <span class="md-ellipsis">
+      Similarity Function Contract
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#index-build-contract" class="md-nav__link">
+    <span class="md-ellipsis">
+      Index Build Contract
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#failure-semantics" class="md-nav__link">
+    <span class="md-ellipsis">
+      Failure Semantics
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#version-specific-behavior" class="md-nav__link">
+    <span class="md-ellipsis">
+      Version-Specific Behavior
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#vector-data-type" class="md-nav__link">
     <span class="md-ellipsis">
       Vector Data Type
@@ -14447,6 +14603,161 @@ Vector Query:       ORDER BY embedding ANN OF ? → Similarity ranked
 <p class="admonition-title">Embedding Generation</p>
 <p>Cassandra stores and queries vectors but does not generate embeddings. Applications must use external ML models or embedding APIs to convert source data into vectors before insertion.</p>
 </div>
+<hr>
+<h2 id="behavioral-guarantees">Behavioral Guarantees<a class="headerlink" href="#behavioral-guarantees" title="Permanent link">¶</a></h2>
+<h3 id="what-vector-search-guarantees">What Vector Search Guarantees<a class="headerlink" href="#what-vector-search-guarantees" title="Permanent link">¶</a></h3>
+<ul>
+<li>Vector columns store fixed-dimension floating-point arrays</li>
+<li>SAI vector indexes support approximate nearest neighbor (ANN) queries</li>
+<li><code>ORDER BY ... ANN OF</code> returns results ordered by similarity to the query vector</li>
+<li><code>LIMIT</code> controls the maximum number of results returned</li>
+<li>Similarity functions (<code>similarity_cosine</code>, <code>similarity_euclidean</code>, <code>similarity_dot_product</code>) compute distances consistently</li>
+</ul>
+<h3 id="what-vector-search-does-not-guarantee">What Vector Search Does NOT Guarantee<a class="headerlink" href="#what-vector-search-does-not-guarantee" title="Permanent link">¶</a></h3>
+<div class="admonition warning">
+<p class="admonition-title">Undefined Behavior</p>
+<p>The following behaviors are undefined and must not be relied upon:</p>
+<ul>
+<li><strong>Exact nearest neighbors</strong>: ANN queries return approximate results; the true k-nearest neighbors may not be included</li>
+<li><strong>Result stability</strong>: Identical queries may return slightly different results due to ANN approximation</li>
+<li><strong>Cross-partition ordering</strong>: When querying multiple partitions, global ordering is approximate</li>
+<li><strong>Recall guarantees</strong>: The percentage of true nearest neighbors found varies by index configuration and data distribution</li>
+<li><strong>Performance with filters</strong>: Combining ANN with WHERE clauses may significantly impact performance</li>
+<li><strong>Dimension mismatch handling</strong>: Query vectors with wrong dimensions cause errors; no automatic padding or truncation</li>
+</ul>
+</div>
+<h3 id="ann-query-contract">ANN Query Contract<a class="headerlink" href="#ann-query-contract" title="Permanent link">¶</a></h3>
+<table>
+<thead>
+<tr>
+<th>Aspect</th>
+<th>Guarantee</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Result ordering</td>
+<td>Approximate similarity order (best matches first)</td>
+</tr>
+<tr>
+<td>Result count</td>
+<td>At most LIMIT rows returned</td>
+</tr>
+<tr>
+<td>Index requirement</td>
+<td>SAI index with <code>'similarity_function'</code> option required</td>
+</tr>
+<tr>
+<td>Query vector dimension</td>
+<td>Must match column dimension exactly</td>
+</tr>
+</tbody>
+</table>
+<h3 id="similarity-function-contract">Similarity Function Contract<a class="headerlink" href="#similarity-function-contract" title="Permanent link">¶</a></h3>
+<table>
+<thead>
+<tr>
+<th>Function</th>
+<th>Range</th>
+<th>Best Match</th>
+<th>Use Case</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>similarity_cosine</code></td>
+<td>-1 to 1</td>
+<td>1 (identical direction)</td>
+<td>Normalized embeddings, text similarity</td>
+</tr>
+<tr>
+<td><code>similarity_euclidean</code></td>
+<td>0 to ∞</td>
+<td>0 (identical)</td>
+<td>Spatial data, unnormalized vectors</td>
+</tr>
+<tr>
+<td><code>similarity_dot_product</code></td>
+<td>-∞ to ∞</td>
+<td>Higher is more similar</td>
+<td>Pre-normalized vectors, performance</td>
+</tr>
+</tbody>
+</table>
+<h3 id="index-build-contract">Index Build Contract<a class="headerlink" href="#index-build-contract" title="Permanent link">¶</a></h3>
+<table>
+<thead>
+<tr>
+<th>State</th>
+<th>Query Behavior</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Building</td>
+<td>ANN queries may fail or return incomplete results</td>
+</tr>
+<tr>
+<td>Built</td>
+<td>ANN queries return approximate results from all indexed data</td>
+</tr>
+<tr>
+<td>Missing</td>
+<td>ANN queries fail with error</td>
+</tr>
+</tbody>
+</table>
+<h3 id="failure-semantics">Failure Semantics<a class="headerlink" href="#failure-semantics" title="Permanent link">¶</a></h3>
+<table>
+<thead>
+<tr>
+<th>Failure Mode</th>
+<th>Outcome</th>
+<th>Client Action</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Dimension mismatch</td>
+<td>Query rejected</td>
+<td>Ensure query vector matches column dimension</td>
+</tr>
+<tr>
+<td>Missing ANN index</td>
+<td>Query fails</td>
+<td>Create SAI index with similarity function</td>
+</tr>
+<tr>
+<td>Index building</td>
+<td>Partial or no results</td>
+<td>Wait for index build completion</td>
+</tr>
+<tr>
+<td>Query timeout</td>
+<td>Partial results possible</td>
+<td>Reduce LIMIT or add partition constraints</td>
+</tr>
+</tbody>
+</table>
+<h3 id="version-specific-behavior">Version-Specific Behavior<a class="headerlink" href="#version-specific-behavior" title="Permanent link">¶</a></h3>
+<table>
+<thead>
+<tr>
+<th>Version</th>
+<th>Behavior</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>5.0+</td>
+<td>VECTOR type and ANN queries introduced (CEP-30)</td>
+</tr>
+<tr>
+<td>5.0+</td>
+<td>SAI vector indexes with similarity functions</td>
+</tr>
+</tbody>
+</table>
 <hr>
 <h2 id="vector-data-type">Vector Data Type<a class="headerlink" href="#vector-data-type" title="Permanent link">¶</a></h2>
 <h3 id="syntax">Syntax<a class="headerlink" href="#syntax" title="Permanent link">¶</a></h3>

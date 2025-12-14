@@ -6232,6 +6232,66 @@ data-et-multi-view="{&quot;schema&quot;:{&quot;content&quot;:{&quot;desktop&quot
 </li>
       
         <li class="md-nav__item">
+  <a href="#behavioral-guarantees" class="md-nav__link">
+    <span class="md-ellipsis">
+      Behavioral Guarantees
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Behavioral Guarantees">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#what-materialized-views-guarantee" class="md-nav__link">
+    <span class="md-ellipsis">
+      What Materialized Views Guarantee
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#what-materialized-views-do-not-guarantee" class="md-nav__link">
+    <span class="md-ellipsis">
+      What Materialized Views Do NOT Guarantee
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#consistency-contract" class="md-nav__link">
+    <span class="md-ellipsis">
+      Consistency Contract
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#failure-semantics" class="md-nav__link">
+    <span class="md-ellipsis">
+      Failure Semantics
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#version-specific-behavior" class="md-nav__link">
+    <span class="md-ellipsis">
+      Version-Specific Behavior
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#materialized-view-architecture" class="md-nav__link">
     <span class="md-ellipsis">
       Materialized View Architecture
@@ -14213,6 +14273,66 @@ data-et-multi-view="{&quot;schema&quot;:{&quot;content&quot;:{&quot;desktop&quot
 </li>
       
         <li class="md-nav__item">
+  <a href="#behavioral-guarantees" class="md-nav__link">
+    <span class="md-ellipsis">
+      Behavioral Guarantees
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Behavioral Guarantees">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#what-materialized-views-guarantee" class="md-nav__link">
+    <span class="md-ellipsis">
+      What Materialized Views Guarantee
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#what-materialized-views-do-not-guarantee" class="md-nav__link">
+    <span class="md-ellipsis">
+      What Materialized Views Do NOT Guarantee
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#consistency-contract" class="md-nav__link">
+    <span class="md-ellipsis">
+      Consistency Contract
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#failure-semantics" class="md-nav__link">
+    <span class="md-ellipsis">
+      Failure Semantics
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#version-specific-behavior" class="md-nav__link">
+    <span class="md-ellipsis">
+      Version-Specific Behavior
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#materialized-view-architecture" class="md-nav__link">
     <span class="md-ellipsis">
       Materialized View Architecture
@@ -14823,6 +14943,124 @@ data-et-multi-view="{&quot;schema&quot;:{&quot;content&quot;:{&quot;desktop&quot
 <td><strong>Secondary indexes (SAI)</strong></td>
 <td>Simple, no data duplication</td>
 <td>Query limitations, performance varies</td>
+</tr>
+</tbody>
+</table>
+<hr>
+<h2 id="behavioral-guarantees">Behavioral Guarantees<a class="headerlink" href="#behavioral-guarantees" title="Permanent link">¶</a></h2>
+<h3 id="what-materialized-views-guarantee">What Materialized Views Guarantee<a class="headerlink" href="#what-materialized-views-guarantee" title="Permanent link">¶</a></h3>
+<ul>
+<li>View updates are initiated synchronously during the base table write path</li>
+<li>Each view is stored as a separate table with its own primary key structure</li>
+<li>View primary key must include all base table primary key columns</li>
+<li>Rows with null values in view primary key columns are excluded from the view</li>
+<li>View inherits the keyspace's replication settings</li>
+</ul>
+<h3 id="what-materialized-views-do-not-guarantee">What Materialized Views Do NOT Guarantee<a class="headerlink" href="#what-materialized-views-do-not-guarantee" title="Permanent link">¶</a></h3>
+<div class="admonition warning">
+<p class="admonition-title">Undefined Behavior</p>
+<p>The following behaviors are undefined and must not be relied upon:</p>
+<ul>
+<li><strong>Strong consistency with base table</strong>: Views provide eventual consistency only; reads from view may not reflect recent base table writes</li>
+<li><strong>Atomic base-to-view updates</strong>: Base table and view updates are not transactionally linked</li>
+<li><strong>Consistency after failures</strong>: Node failures, network partitions, or missed hints can cause permanent inconsistencies without repair</li>
+<li><strong>Repair propagation</strong>: Standard repair on base table does not automatically repair view inconsistencies</li>
+<li><strong>Write success guarantees</strong>: A successful base table write does not guarantee successful view update</li>
+</ul>
+</div>
+<h3 id="consistency-contract">Consistency Contract<a class="headerlink" href="#consistency-contract" title="Permanent link">¶</a></h3>
+<table>
+<thead>
+<tr>
+<th>Scenario</th>
+<th>Base Table</th>
+<th>Materialized View</th>
+<th>Consistency</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Normal operation</td>
+<td>Updated</td>
+<td>Updated (same coordinator)</td>
+<td>Eventually consistent</td>
+</tr>
+<tr>
+<td>View replica down</td>
+<td>Updated</td>
+<td>Hinted handoff queued</td>
+<td>Consistent after hint delivery</td>
+</tr>
+<tr>
+<td>Hint window exceeded</td>
+<td>Updated</td>
+<td>Update lost</td>
+<td>Inconsistent until repair</td>
+</tr>
+<tr>
+<td>Node failure mid-write</td>
+<td>Undefined</td>
+<td>Undefined</td>
+<td>May be inconsistent</td>
+</tr>
+</tbody>
+</table>
+<h3 id="failure-semantics">Failure Semantics<a class="headerlink" href="#failure-semantics" title="Permanent link">¶</a></h3>
+<table>
+<thead>
+<tr>
+<th>Failure Mode</th>
+<th>Outcome</th>
+<th>Client Action</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>WriteTimeoutException</code> on base</td>
+<td>Undefined for both base and view</td>
+<td>Verify state, repair if needed</td>
+</tr>
+<tr>
+<td>View replica unavailable</td>
+<td>Write may succeed (hints queued)</td>
+<td>Monitor hint delivery</td>
+</tr>
+<tr>
+<td>Coordinator failure</td>
+<td>Partial updates possible</td>
+<td>Run repair</td>
+</tr>
+<tr>
+<td>Schema disagreement</td>
+<td>View build may fail</td>
+<td>Wait for schema agreement</td>
+</tr>
+</tbody>
+</table>
+<h3 id="version-specific-behavior">Version-Specific Behavior<a class="headerlink" href="#version-specific-behavior" title="Permanent link">¶</a></h3>
+<table>
+<thead>
+<tr>
+<th>Version</th>
+<th>Behavior</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>3.0+</td>
+<td>Materialized views introduced (CASSANDRA-6477)</td>
+</tr>
+<tr>
+<td>4.0+</td>
+<td>Multiple bug fixes (CASSANDRA-13883, CASSANDRA-14092)</td>
+</tr>
+<tr>
+<td>4.1+</td>
+<td>Race condition fixes (CASSANDRA-13911)</td>
+</tr>
+<tr>
+<td>5.0+</td>
+<td>Improved view repair handling</td>
 </tr>
 </tbody>
 </table>

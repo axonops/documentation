@@ -6325,6 +6325,75 @@ data-et-multi-view="{&quot;schema&quot;:{&quot;content&quot;:{&quot;desktop&quot
 </li>
       
         <li class="md-nav__item">
+  <a href="#behavioral-guarantees" class="md-nav__link">
+    <span class="md-ellipsis">
+      Behavioral Guarantees
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Behavioral Guarantees">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#what-uda-operations-guarantee" class="md-nav__link">
+    <span class="md-ellipsis">
+      What UDA Operations Guarantee
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#what-uda-operations-do-not-guarantee" class="md-nav__link">
+    <span class="md-ellipsis">
+      What UDA Operations Do NOT Guarantee
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#execution-contract" class="md-nav__link">
+    <span class="md-ellipsis">
+      Execution Contract
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#aggregation-order-contract" class="md-nav__link">
+    <span class="md-ellipsis">
+      Aggregation Order Contract
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#failure-semantics" class="md-nav__link">
+    <span class="md-ellipsis">
+      Failure Semantics
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#version-specific-behavior" class="md-nav__link">
+    <span class="md-ellipsis">
+      Version-Specific Behavior
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#aggregate-architecture" class="md-nav__link">
     <span class="md-ellipsis">
       Aggregate Architecture
@@ -14153,6 +14222,75 @@ data-et-multi-view="{&quot;schema&quot;:{&quot;content&quot;:{&quot;desktop&quot
 </li>
       
         <li class="md-nav__item">
+  <a href="#behavioral-guarantees" class="md-nav__link">
+    <span class="md-ellipsis">
+      Behavioral Guarantees
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Behavioral Guarantees">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#what-uda-operations-guarantee" class="md-nav__link">
+    <span class="md-ellipsis">
+      What UDA Operations Guarantee
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#what-uda-operations-do-not-guarantee" class="md-nav__link">
+    <span class="md-ellipsis">
+      What UDA Operations Do NOT Guarantee
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#execution-contract" class="md-nav__link">
+    <span class="md-ellipsis">
+      Execution Contract
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#aggregation-order-contract" class="md-nav__link">
+    <span class="md-ellipsis">
+      Aggregation Order Contract
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#failure-semantics" class="md-nav__link">
+    <span class="md-ellipsis">
+      Failure Semantics
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#version-specific-behavior" class="md-nav__link">
+    <span class="md-ellipsis">
+      Version-Specific Behavior
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#aggregate-architecture" class="md-nav__link">
     <span class="md-ellipsis">
       Aggregate Architecture
@@ -14699,6 +14837,138 @@ data-et-multi-view="{&quot;schema&quot;:{&quot;content&quot;:{&quot;desktop&quot
 <li>Domain-specific statistics are required</li>
 </ul>
 </div>
+<hr>
+<h2 id="behavioral-guarantees">Behavioral Guarantees<a class="headerlink" href="#behavioral-guarantees" title="Permanent link">¶</a></h2>
+<h3 id="what-uda-operations-guarantee">What UDA Operations Guarantee<a class="headerlink" href="#what-uda-operations-guarantee" title="Permanent link">¶</a></h3>
+<ul>
+<li>CREATE AGGREGATE creates schema metadata that propagates to all nodes via gossip</li>
+<li>Aggregate state function is called once per row in the result set</li>
+<li>Final function (if specified) is called once after all rows are processed</li>
+<li>INITCOND provides the initial state value for the aggregation</li>
+<li>OR REPLACE atomically updates an existing aggregate definition</li>
+<li>IF NOT EXISTS provides idempotent aggregate creation</li>
+</ul>
+<h3 id="what-uda-operations-do-not-guarantee">What UDA Operations Do NOT Guarantee<a class="headerlink" href="#what-uda-operations-do-not-guarantee" title="Permanent link">¶</a></h3>
+<div class="admonition warning">
+<p class="admonition-title">Undefined Behavior</p>
+<p>The following behaviors are undefined and must not be relied upon:</p>
+<ul>
+<li><strong>Execution order</strong>: The order in which rows are processed is not guaranteed (unless ORDER BY is used)</li>
+<li><strong>Partial aggregation</strong>: Aggregation is not distributed; all matching rows are sent to coordinator</li>
+<li><strong>State persistence</strong>: Aggregate state is not persisted between queries</li>
+<li><strong>Memory limits</strong>: Large result sets may cause coordinator memory exhaustion</li>
+<li><strong>Timeout during aggregation</strong>: Partial state is discarded on timeout</li>
+</ul>
+</div>
+<h3 id="execution-contract">Execution Contract<a class="headerlink" href="#execution-contract" title="Permanent link">¶</a></h3>
+<table>
+<thead>
+<tr>
+<th>Property</th>
+<th>Guarantee</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Execution location</td>
+<td>Coordinator node only</td>
+</tr>
+<tr>
+<td>State function calls</td>
+<td>Once per row in result set</td>
+</tr>
+<tr>
+<td>Final function calls</td>
+<td>Once after all rows processed</td>
+</tr>
+<tr>
+<td>Initial state</td>
+<td>INITCOND value or type default if null</td>
+</tr>
+<tr>
+<td>Null row handling</td>
+<td>Controlled by underlying state function's null handling</td>
+</tr>
+</tbody>
+</table>
+<h3 id="aggregation-order-contract">Aggregation Order Contract<a class="headerlink" href="#aggregation-order-contract" title="Permanent link">¶</a></h3>
+<table>
+<thead>
+<tr>
+<th>Query</th>
+<th>Row Processing Order</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Without ORDER BY</td>
+<td>Undefined (implementation-dependent)</td>
+</tr>
+<tr>
+<td>With ORDER BY</td>
+<td>Specified order</td>
+</tr>
+<tr>
+<td>Multiple partitions</td>
+<td>Undefined between partitions</td>
+</tr>
+</tbody>
+</table>
+<h3 id="failure-semantics">Failure Semantics<a class="headerlink" href="#failure-semantics" title="Permanent link">¶</a></h3>
+<table>
+<thead>
+<tr>
+<th>Failure Mode</th>
+<th>Outcome</th>
+<th>Client Action</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>State function throws exception</td>
+<td>Query fails, partial state discarded</td>
+<td>Fix state function</td>
+</tr>
+<tr>
+<td>Final function throws exception</td>
+<td>Query fails, aggregation result lost</td>
+<td>Fix final function</td>
+</tr>
+<tr>
+<td>Timeout during aggregation</td>
+<td>Query fails, partial state discarded</td>
+<td>Reduce result set or increase timeout</td>
+</tr>
+<tr>
+<td>Referenced function dropped</td>
+<td>Query fails with <code>InvalidRequestException</code></td>
+<td>Recreate function or aggregate</td>
+</tr>
+</tbody>
+</table>
+<h3 id="version-specific-behavior">Version-Specific Behavior<a class="headerlink" href="#version-specific-behavior" title="Permanent link">¶</a></h3>
+<table>
+<thead>
+<tr>
+<th>Version</th>
+<th>Behavior</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>2.2+</td>
+<td>User-defined aggregates introduced (CASSANDRA-6890)</td>
+</tr>
+<tr>
+<td>3.0+</td>
+<td>OR REPLACE syntax, improved null handling</td>
+</tr>
+<tr>
+<td>4.0+</td>
+<td>Better timeout handling during aggregation</td>
+</tr>
+</tbody>
+</table>
 <hr>
 <h2 id="aggregate-architecture">Aggregate Architecture<a class="headerlink" href="#aggregate-architecture" title="Permanent link">¶</a></h2>
 <h3 id="how-udas-work">How UDAs Work<a class="headerlink" href="#how-udas-work" title="Permanent link">¶</a></h3>

@@ -6645,6 +6645,84 @@ data-et-multi-view="{&quot;schema&quot;:{&quot;content&quot;:{&quot;desktop&quot
     <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
       
         <li class="md-nav__item">
+  <a href="#behavioral-guarantees" class="md-nav__link">
+    <span class="md-ellipsis">
+      Behavioral Guarantees
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Behavioral Guarantees">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#what-indexes-guarantee" class="md-nav__link">
+    <span class="md-ellipsis">
+      What Indexes Guarantee
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#what-indexes-do-not-guarantee" class="md-nav__link">
+    <span class="md-ellipsis">
+      What Indexes Do NOT Guarantee
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#index-type-comparison-contract" class="md-nav__link">
+    <span class="md-ellipsis">
+      Index Type Comparison Contract
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#query-execution-contract" class="md-nav__link">
+    <span class="md-ellipsis">
+      Query Execution Contract
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#index-selection-contract" class="md-nav__link">
+    <span class="md-ellipsis">
+      Index Selection Contract
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#failure-semantics" class="md-nav__link">
+    <span class="md-ellipsis">
+      Failure Semantics
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#version-specific-behavior" class="md-nav__link">
+    <span class="md-ellipsis">
+      Version-Specific Behavior
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#index-types-overview" class="md-nav__link">
     <span class="md-ellipsis">
       Index Types Overview
@@ -13944,6 +14022,84 @@ data-et-multi-view="{&quot;schema&quot;:{&quot;content&quot;:{&quot;desktop&quot
     <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
       
         <li class="md-nav__item">
+  <a href="#behavioral-guarantees" class="md-nav__link">
+    <span class="md-ellipsis">
+      Behavioral Guarantees
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Behavioral Guarantees">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#what-indexes-guarantee" class="md-nav__link">
+    <span class="md-ellipsis">
+      What Indexes Guarantee
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#what-indexes-do-not-guarantee" class="md-nav__link">
+    <span class="md-ellipsis">
+      What Indexes Do NOT Guarantee
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#index-type-comparison-contract" class="md-nav__link">
+    <span class="md-ellipsis">
+      Index Type Comparison Contract
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#query-execution-contract" class="md-nav__link">
+    <span class="md-ellipsis">
+      Query Execution Contract
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#index-selection-contract" class="md-nav__link">
+    <span class="md-ellipsis">
+      Index Selection Contract
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#failure-semantics" class="md-nav__link">
+    <span class="md-ellipsis">
+      Failure Semantics
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#version-specific-behavior" class="md-nav__link">
+    <span class="md-ellipsis">
+      Version-Specific Behavior
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#index-types-overview" class="md-nav__link">
     <span class="md-ellipsis">
       Index Types Overview
@@ -14278,6 +14434,189 @@ data-et-multi-view="{&quot;schema&quot;:{&quot;content&quot;:{&quot;desktop&quot
 <p>This makes secondary indexes useful only in specific situations: low-cardinality columns (status fields, categories) or queries that always include the partition key. For high-cardinality lookups like email addresses, a separate denormalized table is usually more appropriate.</p>
 <p>Cassandra 5.0 introduced SAI (Storage-Attached Indexes), which handle more use cases efficiently. Materialized views offer another option—automated denormalization at the cost of write amplification.</p>
 <p>This guide covers when each approach makes sense.</p>
+<hr>
+<h2 id="behavioral-guarantees">Behavioral Guarantees<a class="headerlink" href="#behavioral-guarantees" title="Permanent link">¶</a></h2>
+<h3 id="what-indexes-guarantee">What Indexes Guarantee<a class="headerlink" href="#what-indexes-guarantee" title="Permanent link">¶</a></h3>
+<ul>
+<li>Index updates are applied synchronously as part of the write path</li>
+<li>Indexes are local to each node (each node indexes only its own data)</li>
+<li>Queries with partition key plus indexed column contact only partition replicas</li>
+<li>Index build is asynchronous; queries may return partial results during build</li>
+<li>DROP INDEX removes the index immediately from schema</li>
+</ul>
+<h3 id="what-indexes-do-not-guarantee">What Indexes Do NOT Guarantee<a class="headerlink" href="#what-indexes-do-not-guarantee" title="Permanent link">¶</a></h3>
+<div class="admonition warning">
+<p class="admonition-title">Undefined Behavior</p>
+<p>The following behaviors are undefined and must not be relied upon:</p>
+<ul>
+<li><strong>Global ordering</strong>: Index queries without partition key return results in undefined order</li>
+<li><strong>Latency bounds</strong>: Scatter-gather queries have unbounded latency proportional to cluster size</li>
+<li><strong>Memory usage</strong>: Large result sets from index queries may exhaust coordinator memory</li>
+<li><strong>Build time</strong>: Index build duration depends on data volume; no progress or completion guarantee</li>
+<li><strong>Result completeness during build</strong>: Queries may miss data on nodes still building the index</li>
+<li><strong>Performance consistency</strong>: Query performance varies significantly based on data distribution</li>
+</ul>
+</div>
+<h3 id="index-type-comparison-contract">Index Type Comparison Contract<a class="headerlink" href="#index-type-comparison-contract" title="Permanent link">¶</a></h3>
+<table>
+<thead>
+<tr>
+<th>Index Type</th>
+<th>Query Types</th>
+<th>Cardinality</th>
+<th>Production Status</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Legacy (2i)</td>
+<td>Equality only</td>
+<td>Low</td>
+<td>Supported</td>
+</tr>
+<tr>
+<td>SASI</td>
+<td>Equality, range, LIKE</td>
+<td>Medium</td>
+<td>Deprecated</td>
+</tr>
+<tr>
+<td>SAI</td>
+<td>Equality, range, LIKE, ANN</td>
+<td>Any</td>
+<td>Recommended (5.0+)</td>
+</tr>
+</tbody>
+</table>
+<h3 id="query-execution-contract">Query Execution Contract<a class="headerlink" href="#query-execution-contract" title="Permanent link">¶</a></h3>
+<table>
+<thead>
+<tr>
+<th>Query Pattern</th>
+<th>Nodes Contacted</th>
+<th>Performance</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>pk = ? AND indexed = ?</code></td>
+<td>RF replicas</td>
+<td>Fast</td>
+</tr>
+<tr>
+<td><code>indexed = ?</code></td>
+<td>All nodes</td>
+<td>Slow (scatter-gather)</td>
+</tr>
+<tr>
+<td><code>indexed = ? LIMIT n</code></td>
+<td>All nodes (early termination)</td>
+<td>Variable</td>
+</tr>
+<tr>
+<td><code>indexed &gt; ? AND indexed &lt; ?</code></td>
+<td>All nodes (SAI/SASI only)</td>
+<td>Variable</td>
+</tr>
+</tbody>
+</table>
+<h3 id="index-selection-contract">Index Selection Contract<a class="headerlink" href="#index-selection-contract" title="Permanent link">¶</a></h3>
+<table>
+<thead>
+<tr>
+<th>Scenario</th>
+<th>Recommended Index</th>
+<th>Alternative</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Low cardinality + partition key</td>
+<td>Legacy 2i or SAI</td>
+<td>None needed</td>
+</tr>
+<tr>
+<td>High cardinality lookup</td>
+<td>SAI</td>
+<td>Denormalized table</td>
+</tr>
+<tr>
+<td>Text search (prefix/suffix)</td>
+<td>SAI</td>
+<td>Application-side filtering</td>
+</tr>
+<tr>
+<td>Vector similarity</td>
+<td>SAI with ANN</td>
+<td>External vector database</td>
+</tr>
+<tr>
+<td>Frequent alternative access pattern</td>
+<td>Materialized view</td>
+<td>Application-managed table</td>
+</tr>
+</tbody>
+</table>
+<h3 id="failure-semantics">Failure Semantics<a class="headerlink" href="#failure-semantics" title="Permanent link">¶</a></h3>
+<table>
+<thead>
+<tr>
+<th>Failure Mode</th>
+<th>Outcome</th>
+<th>Client Action</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Index build incomplete</td>
+<td>Partial results</td>
+<td>Wait for build or query specific partitions</td>
+</tr>
+<tr>
+<td>Node unavailable</td>
+<td>Results from available nodes only</td>
+<td>Retry or accept partial results</td>
+</tr>
+<tr>
+<td>Query timeout</td>
+<td>Partial results or exception</td>
+<td>Add partition key or reduce scope</td>
+</tr>
+<tr>
+<td>Index not found</td>
+<td>Query fails</td>
+<td>Create index or use ALLOW FILTERING</td>
+</tr>
+</tbody>
+</table>
+<h3 id="version-specific-behavior">Version-Specific Behavior<a class="headerlink" href="#version-specific-behavior" title="Permanent link">¶</a></h3>
+<table>
+<thead>
+<tr>
+<th>Version</th>
+<th>Behavior</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>All</td>
+<td>Legacy secondary indexes (2i)</td>
+</tr>
+<tr>
+<td>3.4+</td>
+<td>SASI indexes (experimental)</td>
+</tr>
+<tr>
+<td>4.0+</td>
+<td>SASI officially not recommended for production</td>
+</tr>
+<tr>
+<td>5.0+</td>
+<td>SAI (Storage-Attached Indexes) as recommended default (CEP-7)</td>
+</tr>
+</tbody>
+</table>
+<hr>
 <h2 id="index-types-overview">Index Types Overview<a class="headerlink" href="#index-types-overview" title="Permanent link">¶</a></h2>
 <table>
 <thead>

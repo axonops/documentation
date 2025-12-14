@@ -6253,6 +6253,75 @@ data-et-multi-view="{&quot;schema&quot;:{&quot;content&quot;:{&quot;desktop&quot
     <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
       
         <li class="md-nav__item">
+  <a href="#behavioral-guarantees" class="md-nav__link">
+    <span class="md-ellipsis">
+      Behavioral Guarantees
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Behavioral Guarantees">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#what-udf-operations-guarantee" class="md-nav__link">
+    <span class="md-ellipsis">
+      What UDF Operations Guarantee
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#what-udf-operations-do-not-guarantee" class="md-nav__link">
+    <span class="md-ellipsis">
+      What UDF Operations Do NOT Guarantee
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#execution-contract" class="md-nav__link">
+    <span class="md-ellipsis">
+      Execution Contract
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#language-support-contract" class="md-nav__link">
+    <span class="md-ellipsis">
+      Language Support Contract
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#failure-semantics" class="md-nav__link">
+    <span class="md-ellipsis">
+      Failure Semantics
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#version-specific-behavior" class="md-nav__link">
+    <span class="md-ellipsis">
+      Version-Specific Behavior
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#udf-architecture" class="md-nav__link">
     <span class="md-ellipsis">
       UDF Architecture
@@ -14132,6 +14201,75 @@ data-et-multi-view="{&quot;schema&quot;:{&quot;content&quot;:{&quot;desktop&quot
     <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
       
         <li class="md-nav__item">
+  <a href="#behavioral-guarantees" class="md-nav__link">
+    <span class="md-ellipsis">
+      Behavioral Guarantees
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Behavioral Guarantees">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#what-udf-operations-guarantee" class="md-nav__link">
+    <span class="md-ellipsis">
+      What UDF Operations Guarantee
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#what-udf-operations-do-not-guarantee" class="md-nav__link">
+    <span class="md-ellipsis">
+      What UDF Operations Do NOT Guarantee
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#execution-contract" class="md-nav__link">
+    <span class="md-ellipsis">
+      Execution Contract
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#language-support-contract" class="md-nav__link">
+    <span class="md-ellipsis">
+      Language Support Contract
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#failure-semantics" class="md-nav__link">
+    <span class="md-ellipsis">
+      Failure Semantics
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#version-specific-behavior" class="md-nav__link">
+    <span class="md-ellipsis">
+      Version-Specific Behavior
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#udf-architecture" class="md-nav__link">
     <span class="md-ellipsis">
       UDF Architecture
@@ -14649,6 +14787,145 @@ data-et-multi-view="{&quot;schema&quot;:{&quot;content&quot;:{&quot;desktop&quot
 
 <div><h1 id="function-commands">Function Commands<a class="headerlink" href="#function-commands" title="Permanent link">¶</a></h1>
 <p>User-Defined Functions (UDFs) extend CQL with custom scalar operations written in Java or JavaScript. UDFs can be used in SELECT clauses, WHERE conditions, and as building blocks for user-defined aggregates.</p>
+<hr>
+<h2 id="behavioral-guarantees">Behavioral Guarantees<a class="headerlink" href="#behavioral-guarantees" title="Permanent link">¶</a></h2>
+<h3 id="what-udf-operations-guarantee">What UDF Operations Guarantee<a class="headerlink" href="#what-udf-operations-guarantee" title="Permanent link">¶</a></h3>
+<ul>
+<li>CREATE FUNCTION creates schema metadata that propagates to all nodes via gossip</li>
+<li>UDF bytecode is stored in <code>system_schema.functions</code> and loaded on demand</li>
+<li>Functions execute in a sandboxed environment with resource limits</li>
+<li>OR REPLACE atomically updates an existing function definition</li>
+<li>IF NOT EXISTS provides idempotent function creation</li>
+<li>Functions are deterministic by default (same input produces same output)</li>
+</ul>
+<h3 id="what-udf-operations-do-not-guarantee">What UDF Operations Do NOT Guarantee<a class="headerlink" href="#what-udf-operations-do-not-guarantee" title="Permanent link">¶</a></h3>
+<div class="admonition warning">
+<p class="admonition-title">Undefined Behavior</p>
+<p>The following behaviors are undefined and must not be relied upon:</p>
+<ul>
+<li><strong>Execution locality</strong>: UDFs execute on the coordinator, not on replica nodes; data locality is not preserved</li>
+<li><strong>Timeout behavior</strong>: Functions exceeding <code>user_defined_function_fail_timeout</code> are terminated; partial results may exist</li>
+<li><strong>Memory limits</strong>: Functions exceeding heap limits are terminated; cluster stability may be impacted</li>
+<li><strong>Concurrent execution</strong>: Functions may execute concurrently for different rows; shared state is not supported</li>
+<li><strong>Side effects</strong>: Functions with side effects (logging, external calls) have undefined behavior</li>
+</ul>
+</div>
+<h3 id="execution-contract">Execution Contract<a class="headerlink" href="#execution-contract" title="Permanent link">¶</a></h3>
+<table>
+<thead>
+<tr>
+<th>Property</th>
+<th>Guarantee</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Execution location</td>
+<td>Coordinator node only</td>
+</tr>
+<tr>
+<td>Execution count</td>
+<td>Once per row in result set</td>
+</tr>
+<tr>
+<td>Null handling</td>
+<td>Controlled by <code>CALLED ON NULL INPUT</code> or <code>RETURNS NULL ON NULL INPUT</code></td>
+</tr>
+<tr>
+<td>Timeout enforcement</td>
+<td>Function terminated after <code>user_defined_function_fail_timeout</code></td>
+</tr>
+<tr>
+<td>Resource isolation</td>
+<td>Sandboxed with configurable heap and CPU limits</td>
+</tr>
+</tbody>
+</table>
+<h3 id="language-support-contract">Language Support Contract<a class="headerlink" href="#language-support-contract" title="Permanent link">¶</a></h3>
+<table>
+<thead>
+<tr>
+<th>Language</th>
+<th>Availability</th>
+<th>Security</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Java</td>
+<td>Always (when UDFs enabled)</td>
+<td>Bytecode-level sandboxing</td>
+</tr>
+<tr>
+<td>JavaScript</td>
+<td><code>enable_scripted_user_defined_functions: true</code></td>
+<td>Nashorn sandbox (deprecated in Java 11+)</td>
+</tr>
+</tbody>
+</table>
+<h3 id="failure-semantics">Failure Semantics<a class="headerlink" href="#failure-semantics" title="Permanent link">¶</a></h3>
+<table>
+<thead>
+<tr>
+<th>Failure Mode</th>
+<th>Outcome</th>
+<th>Client Action</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Function throws exception</td>
+<td>Query fails with <code>FunctionExecutionException</code></td>
+<td>Fix function or handle exception</td>
+</tr>
+<tr>
+<td>Function exceeds timeout</td>
+<td>Query fails, function terminated</td>
+<td>Optimize function or increase timeout</td>
+</tr>
+<tr>
+<td>Function exceeds heap</td>
+<td>Query fails, function terminated</td>
+<td>Reduce memory usage or increase limit</td>
+</tr>
+<tr>
+<td>Schema disagreement</td>
+<td>Function may not be available on all nodes</td>
+<td>Wait for schema agreement</td>
+</tr>
+</tbody>
+</table>
+<h3 id="version-specific-behavior">Version-Specific Behavior<a class="headerlink" href="#version-specific-behavior" title="Permanent link">¶</a></h3>
+<table>
+<thead>
+<tr>
+<th>Version</th>
+<th>Behavior</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>2.2+</td>
+<td>Java UDFs introduced (CASSANDRA-7395)</td>
+</tr>
+<tr>
+<td>2.2+</td>
+<td>JavaScript UDFs via Nashorn</td>
+</tr>
+<tr>
+<td>3.0+</td>
+<td>Improved UDF sandboxing</td>
+</tr>
+<tr>
+<td>4.0+</td>
+<td>UDF heap tracking, JavaScript deprecated</td>
+</tr>
+<tr>
+<td>5.0+</td>
+<td>WASM UDFs under consideration</td>
+</tr>
+</tbody>
+</table>
 <hr>
 <h2 id="udf-architecture">UDF Architecture<a class="headerlink" href="#udf-architecture" title="Permanent link">¶</a></h2>
 <h3 id="how-udfs-work">How UDFs Work<a class="headerlink" href="#how-udfs-work" title="Permanent link">¶</a></h3>

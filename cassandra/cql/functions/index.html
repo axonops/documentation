@@ -6666,6 +6666,75 @@ data-et-multi-view="{&quot;schema&quot;:{&quot;content&quot;:{&quot;desktop&quot
     <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
       
         <li class="md-nav__item">
+  <a href="#behavioral-guarantees" class="md-nav__link">
+    <span class="md-ellipsis">
+      Behavioral Guarantees
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Behavioral Guarantees">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#what-functions-guarantee" class="md-nav__link">
+    <span class="md-ellipsis">
+      What Functions Guarantee
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#what-functions-do-not-guarantee" class="md-nav__link">
+    <span class="md-ellipsis">
+      What Functions Do NOT Guarantee
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#function-evaluation-contract" class="md-nav__link">
+    <span class="md-ellipsis">
+      Function Evaluation Contract
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#time-function-contract" class="md-nav__link">
+    <span class="md-ellipsis">
+      Time Function Contract
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#aggregate-performance-contract" class="md-nav__link">
+    <span class="md-ellipsis">
+      Aggregate Performance Contract
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#version-specific-behavior" class="md-nav__link">
+    <span class="md-ellipsis">
+      Version-Specific Behavior
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#function-categories" class="md-nav__link">
     <span class="md-ellipsis">
       Function Categories
@@ -14106,6 +14175,75 @@ data-et-multi-view="{&quot;schema&quot;:{&quot;content&quot;:{&quot;desktop&quot
     <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
       
         <li class="md-nav__item">
+  <a href="#behavioral-guarantees" class="md-nav__link">
+    <span class="md-ellipsis">
+      Behavioral Guarantees
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Behavioral Guarantees">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#what-functions-guarantee" class="md-nav__link">
+    <span class="md-ellipsis">
+      What Functions Guarantee
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#what-functions-do-not-guarantee" class="md-nav__link">
+    <span class="md-ellipsis">
+      What Functions Do NOT Guarantee
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#function-evaluation-contract" class="md-nav__link">
+    <span class="md-ellipsis">
+      Function Evaluation Contract
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#time-function-contract" class="md-nav__link">
+    <span class="md-ellipsis">
+      Time Function Contract
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#aggregate-performance-contract" class="md-nav__link">
+    <span class="md-ellipsis">
+      Aggregate Performance Contract
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#version-specific-behavior" class="md-nav__link">
+    <span class="md-ellipsis">
+      Version-Specific Behavior
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#function-categories" class="md-nav__link">
     <span class="md-ellipsis">
       Function Categories
@@ -14601,6 +14739,175 @@ data-et-multi-view="{&quot;schema&quot;:{&quot;content&quot;:{&quot;desktop&quot
 <p>CQL includes built-in functions for common operations: generating UUIDs, working with timestamps, computing aggregates. The most useful ones <code>now()</code> for time-based UUIDs, <code>token()</code> for understanding data distribution, <code>toTimestamp()</code> for converting between time formats show up constantly in production schemas.</p>
 <p>Aggregates deserve a warning: <code>SELECT COUNT(*) FROM users</code> looks innocent, but without a partition key it scans the entire cluster. That is fine for a thousand rows; it will timeout with a billion. Aggregates work efficiently when scoped to a partition.</p>
 <p>This reference covers scalar functions, aggregates, and user-defined functions (available since Cassandra 4.0).</p>
+<hr>
+<h2 id="behavioral-guarantees">Behavioral Guarantees<a class="headerlink" href="#behavioral-guarantees" title="Permanent link">¶</a></h2>
+<h3 id="what-functions-guarantee">What Functions Guarantee<a class="headerlink" href="#what-functions-guarantee" title="Permanent link">¶</a></h3>
+<ul>
+<li>Scalar functions are evaluated on the coordinator for each result row</li>
+<li><code>uuid()</code> generates a unique random UUID (version 4) per invocation</li>
+<li><code>now()</code> generates a unique time-based UUID (version 1) per invocation within a statement</li>
+<li><code>token()</code> returns the partition token for the given partition key columns</li>
+<li>Aggregate functions are evaluated on the coordinator after collecting all matching rows</li>
+<li>Type conversion functions fail predictably on incompatible input</li>
+</ul>
+<h3 id="what-functions-do-not-guarantee">What Functions Do NOT Guarantee<a class="headerlink" href="#what-functions-do-not-guarantee" title="Permanent link">¶</a></h3>
+<div class="admonition warning">
+<p class="admonition-title">Undefined Behavior</p>
+<p>The following behaviors are undefined and must not be relied upon:</p>
+<ul>
+<li><strong><code>now()</code> monotonicity</strong>: Multiple <code>now()</code> calls in a statement return the same value; across statements, clock skew may cause non-monotonic values</li>
+<li><strong>Aggregate performance</strong>: Aggregates without partition key constraints scan the entire cluster with unbounded latency</li>
+<li><strong><code>uuid()</code> ordering</strong>: Random UUIDs have no ordering relationship</li>
+<li><strong>Cross-node time consistency</strong>: Time functions reflect coordinator node's clock; clock skew between nodes affects results</li>
+<li><strong>Null propagation</strong>: Some functions return null on null input; others may fail</li>
+</ul>
+</div>
+<h3 id="function-evaluation-contract">Function Evaluation Contract<a class="headerlink" href="#function-evaluation-contract" title="Permanent link">¶</a></h3>
+<table>
+<thead>
+<tr>
+<th>Function Type</th>
+<th style="text-align: right;">Evaluation Location</th>
+<th style="text-align: center;">Per-Row</th>
+<th>Notes</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Scalar</td>
+<td style="text-align: right;">Coordinator</td>
+<td style="text-align: center;">✅ Yes</td>
+<td>Evaluated for each result row</td>
+</tr>
+<tr>
+<td>Aggregate</td>
+<td style="text-align: right;">Coordinator</td>
+<td style="text-align: center;">❌ No</td>
+<td>Evaluated once after collecting rows</td>
+</tr>
+<tr>
+<td><code>now()</code></td>
+<td style="text-align: right;">Coordinator</td>
+<td style="text-align: center;">❌ No</td>
+<td>Same value within statement</td>
+</tr>
+<tr>
+<td><code>uuid()</code></td>
+<td style="text-align: right;">Coordinator</td>
+<td style="text-align: center;">✅ Yes</td>
+<td>Different value per invocation</td>
+</tr>
+<tr>
+<td><code>token()</code></td>
+<td style="text-align: right;">Coordinator</td>
+<td style="text-align: center;">✅ Yes</td>
+<td>Computed from partition key</td>
+</tr>
+</tbody>
+</table>
+<h3 id="time-function-contract">Time Function Contract<a class="headerlink" href="#time-function-contract" title="Permanent link">¶</a></h3>
+<table>
+<thead>
+<tr>
+<th>Function</th>
+<th>Return Type</th>
+<th>Uniqueness</th>
+<th>Monotonicity</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>now()</code></td>
+<td><code>timeuuid</code></td>
+<td>Unique per statement</td>
+<td>Within node only</td>
+</tr>
+<tr>
+<td><code>currentTimestamp()</code></td>
+<td><code>timestamp</code></td>
+<td>Not unique</td>
+<td>Within node only</td>
+</tr>
+<tr>
+<td><code>currentTimeUUID()</code></td>
+<td><code>timeuuid</code></td>
+<td>Unique per invocation</td>
+<td>Within node only</td>
+</tr>
+<tr>
+<td><code>currentDate()</code></td>
+<td><code>date</code></td>
+<td>Not unique</td>
+<td>Within node only</td>
+</tr>
+<tr>
+<td><code>currentTime()</code></td>
+<td><code>time</code></td>
+<td>Not unique</td>
+<td>Within node only</td>
+</tr>
+</tbody>
+</table>
+<h3 id="aggregate-performance-contract">Aggregate Performance Contract<a class="headerlink" href="#aggregate-performance-contract" title="Permanent link">¶</a></h3>
+<table>
+<thead>
+<tr>
+<th>Query Pattern</th>
+<th>Performance</th>
+<th>Notes</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>SELECT COUNT(*) FROM t WHERE pk = ?</code></td>
+<td>Fast</td>
+<td>Single partition</td>
+</tr>
+<tr>
+<td><code>SELECT COUNT(*) FROM t</code></td>
+<td>Slow/Timeout</td>
+<td>Full cluster scan</td>
+</tr>
+<tr>
+<td><code>SELECT SUM(x) FROM t WHERE pk = ?</code></td>
+<td>Fast</td>
+<td>Single partition</td>
+</tr>
+<tr>
+<td><code>SELECT AVG(x) FROM t</code></td>
+<td>Slow/Timeout</td>
+<td>Full cluster scan</td>
+</tr>
+</tbody>
+</table>
+<h3 id="version-specific-behavior">Version-Specific Behavior<a class="headerlink" href="#version-specific-behavior" title="Permanent link">¶</a></h3>
+<table>
+<thead>
+<tr>
+<th>Version</th>
+<th>Behavior</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>2.2+</td>
+<td>User-defined functions (UDFs)</td>
+</tr>
+<tr>
+<td>3.0+</td>
+<td><code>toDate()</code>, <code>toTimestamp()</code> conversion functions</td>
+</tr>
+<tr>
+<td>4.0+</td>
+<td>Improved function execution, <code>currentTimestamp()</code></td>
+</tr>
+<tr>
+<td>5.0+</td>
+<td>Vector similarity functions, masking functions</td>
+</tr>
+</tbody>
+</table>
+<hr>
 <h2 id="function-categories">Function Categories<a class="headerlink" href="#function-categories" title="Permanent link">¶</a></h2>
 <table>
 <thead>

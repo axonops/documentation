@@ -6283,6 +6283,75 @@ data-et-multi-view="{&quot;schema&quot;:{&quot;content&quot;:{&quot;desktop&quot
 </li>
       
         <li class="md-nav__item">
+  <a href="#behavioral-guarantees" class="md-nav__link">
+    <span class="md-ellipsis">
+      Behavioral Guarantees
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Behavioral Guarantees">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#what-udt-operations-guarantee" class="md-nav__link">
+    <span class="md-ellipsis">
+      What UDT Operations Guarantee
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#what-udt-operations-do-not-guarantee" class="md-nav__link">
+    <span class="md-ellipsis">
+      What UDT Operations Do NOT Guarantee
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#frozen-vs-non-frozen-contract" class="md-nav__link">
+    <span class="md-ellipsis">
+      Frozen vs Non-Frozen Contract
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#schema-evolution-contract" class="md-nav__link">
+    <span class="md-ellipsis">
+      Schema Evolution Contract
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#failure-semantics" class="md-nav__link">
+    <span class="md-ellipsis">
+      Failure Semantics
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#version-specific-behavior" class="md-nav__link">
+    <span class="md-ellipsis">
+      Version-Specific Behavior
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#udt-architecture" class="md-nav__link">
     <span class="md-ellipsis">
       UDT Architecture
@@ -14267,6 +14336,75 @@ data-et-multi-view="{&quot;schema&quot;:{&quot;content&quot;:{&quot;desktop&quot
 </li>
       
         <li class="md-nav__item">
+  <a href="#behavioral-guarantees" class="md-nav__link">
+    <span class="md-ellipsis">
+      Behavioral Guarantees
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Behavioral Guarantees">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#what-udt-operations-guarantee" class="md-nav__link">
+    <span class="md-ellipsis">
+      What UDT Operations Guarantee
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#what-udt-operations-do-not-guarantee" class="md-nav__link">
+    <span class="md-ellipsis">
+      What UDT Operations Do NOT Guarantee
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#frozen-vs-non-frozen-contract" class="md-nav__link">
+    <span class="md-ellipsis">
+      Frozen vs Non-Frozen Contract
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#schema-evolution-contract" class="md-nav__link">
+    <span class="md-ellipsis">
+      Schema Evolution Contract
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#failure-semantics" class="md-nav__link">
+    <span class="md-ellipsis">
+      Failure Semantics
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#version-specific-behavior" class="md-nav__link">
+    <span class="md-ellipsis">
+      Version-Specific Behavior
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#udt-architecture" class="md-nav__link">
     <span class="md-ellipsis">
       UDT Architecture
@@ -14899,6 +15037,167 @@ data-et-multi-view="{&quot;schema&quot;:{&quot;content&quot;:{&quot;desktop&quot
 <li><strong>Index limitations</strong>: Can only index entire frozen UDT, not individual fields</li>
 </ul>
 </div>
+<hr>
+<h2 id="behavioral-guarantees">Behavioral Guarantees<a class="headerlink" href="#behavioral-guarantees" title="Permanent link">¶</a></h2>
+<h3 id="what-udt-operations-guarantee">What UDT Operations Guarantee<a class="headerlink" href="#what-udt-operations-guarantee" title="Permanent link">¶</a></h3>
+<ul>
+<li>CREATE TYPE creates schema metadata that propagates to all nodes via gossip</li>
+<li>UDT field names and types are validated at compile time for CQL statements</li>
+<li>ALTER TYPE can add new fields to the end of the type definition</li>
+<li>ALTER TYPE can rename existing fields</li>
+<li>Non-frozen UDT columns allow individual field updates (Cassandra 3.0+)</li>
+<li>Frozen UDT values are compared by their serialized byte representation</li>
+</ul>
+<h3 id="what-udt-operations-do-not-guarantee">What UDT Operations Do NOT Guarantee<a class="headerlink" href="#what-udt-operations-do-not-guarantee" title="Permanent link">¶</a></h3>
+<div class="admonition warning">
+<p class="admonition-title">Undefined Behavior</p>
+<p>The following behaviors are undefined and must not be relied upon:</p>
+<ul>
+<li><strong>Field removal</strong>: Fields cannot be removed from a UDT; data for removed fields would become orphaned</li>
+<li><strong>Field reordering</strong>: The order of fields in a UDT cannot be changed after creation</li>
+<li><strong>Partial queries</strong>: Individual UDT fields cannot be queried with WHERE clauses</li>
+<li><strong>Cross-keyspace usage</strong>: UDTs are scoped to their keyspace and cannot be referenced from other keyspaces</li>
+<li><strong>Null field handling</strong>: Null fields in non-frozen UDTs may create tombstones; behavior varies by version</li>
+</ul>
+</div>
+<h3 id="frozen-vs-non-frozen-contract">Frozen vs Non-Frozen Contract<a class="headerlink" href="#frozen-vs-non-frozen-contract" title="Permanent link">¶</a></h3>
+<table>
+<thead>
+<tr>
+<th>Aspect</th>
+<th>Frozen UDT</th>
+<th>Non-Frozen UDT</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Update granularity</td>
+<td>Entire value replaced</td>
+<td>Individual fields updatable</td>
+</tr>
+<tr>
+<td>Storage</td>
+<td>Serialized as single blob</td>
+<td>Each field stored as separate cell</td>
+</tr>
+<tr>
+<td>Null handling</td>
+<td>Nulls not stored explicitly</td>
+<td>Null fields may create tombstones</td>
+</tr>
+<tr>
+<td>Collection usage</td>
+<td>Required (frozen only)</td>
+<td>Not allowed in collections</td>
+</tr>
+<tr>
+<td>Primary key usage</td>
+<td>Allowed</td>
+<td>Not allowed</td>
+</tr>
+<tr>
+<td>Comparison</td>
+<td>Byte-level comparison</td>
+<td>Not directly comparable</td>
+</tr>
+</tbody>
+</table>
+<h3 id="schema-evolution-contract">Schema Evolution Contract<a class="headerlink" href="#schema-evolution-contract" title="Permanent link">¶</a></h3>
+<table>
+<thead>
+<tr>
+<th>Operation</th>
+<th>Supported</th>
+<th>Notes</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Add field at end</td>
+<td>✅ Yes</td>
+<td>New field reads as null for existing data</td>
+</tr>
+<tr>
+<td>Remove field</td>
+<td>❌ No</td>
+<td>Would orphan existing data</td>
+</tr>
+<tr>
+<td>Rename field</td>
+<td>✅ Yes</td>
+<td>Metadata change only</td>
+</tr>
+<tr>
+<td>Change field type</td>
+<td>❌ No</td>
+<td>Would corrupt existing data</td>
+</tr>
+<tr>
+<td>Reorder fields</td>
+<td>❌ No</td>
+<td>Would corrupt serialization</td>
+</tr>
+</tbody>
+</table>
+<h3 id="failure-semantics">Failure Semantics<a class="headerlink" href="#failure-semantics" title="Permanent link">¶</a></h3>
+<table>
+<thead>
+<tr>
+<th>Failure Mode</th>
+<th>Outcome</th>
+<th>Client Action</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Timeout during CREATE/ALTER</td>
+<td>Undefined - schema may or may not have propagated</td>
+<td>Check schema agreement</td>
+</tr>
+<tr>
+<td>Type in use on DROP</td>
+<td>Operation rejected</td>
+<td>Remove table references first</td>
+</tr>
+<tr>
+<td>Invalid field type</td>
+<td>Operation rejected</td>
+<td>Use valid CQL types</td>
+</tr>
+<tr>
+<td>Circular reference</td>
+<td>Operation rejected</td>
+<td>Redesign type structure</td>
+</tr>
+</tbody>
+</table>
+<h3 id="version-specific-behavior">Version-Specific Behavior<a class="headerlink" href="#version-specific-behavior" title="Permanent link">¶</a></h3>
+<table>
+<thead>
+<tr>
+<th>Version</th>
+<th>Behavior</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>2.1+</td>
+<td>UDTs introduced (CASSANDRA-5590)</td>
+</tr>
+<tr>
+<td>3.0+</td>
+<td>Non-frozen UDTs with field-level updates (CASSANDRA-7423)</td>
+</tr>
+<tr>
+<td>3.6+</td>
+<td>ALTER TYPE RENAME support (CASSANDRA-8178)</td>
+</tr>
+<tr>
+<td>4.0+</td>
+<td>Improved UDT validation and error messages</td>
+</tr>
+</tbody>
+</table>
 <hr>
 <h2 id="udt-architecture">UDT Architecture<a class="headerlink" href="#udt-architecture" title="Permanent link">¶</a></h2>
 <h3 id="storage-model">Storage Model<a class="headerlink" href="#storage-model" title="Permanent link">¶</a></h3>

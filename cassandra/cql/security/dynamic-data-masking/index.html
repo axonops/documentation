@@ -6651,6 +6651,75 @@ data-et-multi-view="{&quot;schema&quot;:{&quot;content&quot;:{&quot;desktop&quot
 </li>
       
         <li class="md-nav__item">
+  <a href="#behavioral-guarantees" class="md-nav__link">
+    <span class="md-ellipsis">
+      Behavioral Guarantees
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Behavioral Guarantees">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#what-ddm-operations-guarantee" class="md-nav__link">
+    <span class="md-ellipsis">
+      What DDM Operations Guarantee
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#what-ddm-operations-do-not-guarantee" class="md-nav__link">
+    <span class="md-ellipsis">
+      What DDM Operations Do NOT Guarantee
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#permission-resolution-contract" class="md-nav__link">
+    <span class="md-ellipsis">
+      Permission Resolution Contract
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#masking-function-contract" class="md-nav__link">
+    <span class="md-ellipsis">
+      Masking Function Contract
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#failure-semantics" class="md-nav__link">
+    <span class="md-ellipsis">
+      Failure Semantics
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#version-specific-behavior" class="md-nav__link">
+    <span class="md-ellipsis">
+      Version-Specific Behavior
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#history-and-development" class="md-nav__link">
     <span class="md-ellipsis">
       History and Development
@@ -14213,6 +14282,75 @@ data-et-multi-view="{&quot;schema&quot;:{&quot;content&quot;:{&quot;desktop&quot
 </li>
       
         <li class="md-nav__item">
+  <a href="#behavioral-guarantees" class="md-nav__link">
+    <span class="md-ellipsis">
+      Behavioral Guarantees
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Behavioral Guarantees">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#what-ddm-operations-guarantee" class="md-nav__link">
+    <span class="md-ellipsis">
+      What DDM Operations Guarantee
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#what-ddm-operations-do-not-guarantee" class="md-nav__link">
+    <span class="md-ellipsis">
+      What DDM Operations Do NOT Guarantee
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#permission-resolution-contract" class="md-nav__link">
+    <span class="md-ellipsis">
+      Permission Resolution Contract
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#masking-function-contract" class="md-nav__link">
+    <span class="md-ellipsis">
+      Masking Function Contract
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#failure-semantics" class="md-nav__link">
+    <span class="md-ellipsis">
+      Failure Semantics
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#version-specific-behavior" class="md-nav__link">
+    <span class="md-ellipsis">
+      Version-Specific Behavior
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#history-and-development" class="md-nav__link">
     <span class="md-ellipsis">
       History and Development
@@ -14804,6 +14942,168 @@ data-et-multi-view="{&quot;schema&quot;:{&quot;content&quot;:{&quot;desktop&quot
 <tr>
 <td>Original data preserved</td>
 <td>Full access available to authorized users</td>
+</tr>
+</tbody>
+</table>
+<hr>
+<h2 id="behavioral-guarantees">Behavioral Guarantees<a class="headerlink" href="#behavioral-guarantees" title="Permanent link">¶</a></h2>
+<h3 id="what-ddm-operations-guarantee">What DDM Operations Guarantee<a class="headerlink" href="#what-ddm-operations-guarantee" title="Permanent link">¶</a></h3>
+<ul>
+<li>Masking functions are applied at read time on the coordinator node</li>
+<li>Original data is never modified; masking is purely a read transformation</li>
+<li>Users with UNMASK permission see original unmasked values</li>
+<li>Users with SELECT_MASKED permission see masked values</li>
+<li>Masking is applied before results are returned to the client</li>
+<li>ALTER TABLE can add or remove masking from existing columns</li>
+</ul>
+<h3 id="what-ddm-operations-do-not-guarantee">What DDM Operations Do NOT Guarantee<a class="headerlink" href="#what-ddm-operations-do-not-guarantee" title="Permanent link">¶</a></h3>
+<div class="admonition warning">
+<p class="admonition-title">Undefined Behavior</p>
+<p>The following behaviors are undefined and must not be relied upon:</p>
+<ul>
+<li><strong>Materialized view masking</strong>: Views may expose unmasked data depending on permissions at view creation</li>
+<li><strong>Index leakage</strong>: Secondary indexes may allow inference of masked values through query patterns</li>
+<li><strong>UDF security</strong>: User-defined masking functions may have implementation vulnerabilities</li>
+<li><strong>Prepared statement caching</strong>: Cached statements may retain permission state from preparation time</li>
+<li><strong>CDC and backup exposure</strong>: Change Data Capture and backup files contain unmasked data</li>
+</ul>
+</div>
+<h3 id="permission-resolution-contract">Permission Resolution Contract<a class="headerlink" href="#permission-resolution-contract" title="Permanent link">¶</a></h3>
+<table>
+<thead>
+<tr>
+<th>Permission</th>
+<th>Can SELECT</th>
+<th>Sees Masked</th>
+<th>Sees Unmasked</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Neither</td>
+<td>❌ No</td>
+<td>-</td>
+<td>-</td>
+</tr>
+<tr>
+<td>SELECT only</td>
+<td>❌ No</td>
+<td>-</td>
+<td>-</td>
+</tr>
+<tr>
+<td>SELECT_MASKED</td>
+<td>✅ Yes</td>
+<td>✅ Yes</td>
+<td>❌ No</td>
+</tr>
+<tr>
+<td>UNMASK</td>
+<td>✅ Yes</td>
+<td>-</td>
+<td>✅ Yes</td>
+</tr>
+<tr>
+<td>Both</td>
+<td>✅ Yes</td>
+<td>-</td>
+<td>✅ Yes</td>
+</tr>
+</tbody>
+</table>
+<h3 id="masking-function-contract">Masking Function Contract<a class="headerlink" href="#masking-function-contract" title="Permanent link">¶</a></h3>
+<table>
+<thead>
+<tr>
+<th>Function</th>
+<th>Input</th>
+<th>Output</th>
+<th>Notes</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>mask_default</code></td>
+<td>Any</td>
+<td>Type-specific mask</td>
+<td>Returns <code>****</code> for text, <code>0</code> for numbers</td>
+</tr>
+<tr>
+<td><code>mask_null</code></td>
+<td>Any</td>
+<td><code>null</code></td>
+<td>Always returns null</td>
+</tr>
+<tr>
+<td><code>mask_replace</code></td>
+<td>Text</td>
+<td>Replacement</td>
+<td>Replaces with specified character</td>
+</tr>
+<tr>
+<td><code>mask_inner</code></td>
+<td>Text</td>
+<td>Partial mask</td>
+<td>Masks middle characters</td>
+</tr>
+<tr>
+<td><code>mask_outer</code></td>
+<td>Text</td>
+<td>Partial mask</td>
+<td>Masks outer characters</td>
+</tr>
+<tr>
+<td>Custom UDF</td>
+<td>Any</td>
+<td>Any</td>
+<td>User-defined transformation</td>
+</tr>
+</tbody>
+</table>
+<h3 id="failure-semantics">Failure Semantics<a class="headerlink" href="#failure-semantics" title="Permanent link">¶</a></h3>
+<table>
+<thead>
+<tr>
+<th>Failure Mode</th>
+<th>Outcome</th>
+<th>Client Action</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Missing SELECT_MASKED or UNMASK</td>
+<td>Query denied</td>
+<td>Request appropriate permission</td>
+</tr>
+<tr>
+<td>Masking function fails</td>
+<td>Query fails</td>
+<td>Fix masking function</td>
+</tr>
+<tr>
+<td>Custom UDF throws exception</td>
+<td>Query fails with masked column error</td>
+<td>Fix UDF implementation</td>
+</tr>
+<tr>
+<td>Column type mismatch</td>
+<td>Query may fail or return unexpected results</td>
+<td>Ensure function matches column type</td>
+</tr>
+</tbody>
+</table>
+<h3 id="version-specific-behavior">Version-Specific Behavior<a class="headerlink" href="#version-specific-behavior" title="Permanent link">¶</a></h3>
+<table>
+<thead>
+<tr>
+<th>Version</th>
+<th>Behavior</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>5.0+</td>
+<td>Dynamic Data Masking introduced (CEP-20, CASSANDRA-17940)</td>
 </tr>
 </tbody>
 </table>

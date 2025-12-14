@@ -6597,6 +6597,84 @@ data-et-multi-view="{&quot;schema&quot;:{&quot;content&quot;:{&quot;desktop&quot
     <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
       
         <li class="md-nav__item">
+  <a href="#behavioral-guarantees" class="md-nav__link">
+    <span class="md-ellipsis">
+      Behavioral Guarantees
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Behavioral Guarantees">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#what-rbac-operations-guarantee" class="md-nav__link">
+    <span class="md-ellipsis">
+      What RBAC Operations Guarantee
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#what-rbac-operations-do-not-guarantee" class="md-nav__link">
+    <span class="md-ellipsis">
+      What RBAC Operations Do NOT Guarantee
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#permission-enforcement-contract" class="md-nav__link">
+    <span class="md-ellipsis">
+      Permission Enforcement Contract
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#role-hierarchy-contract" class="md-nav__link">
+    <span class="md-ellipsis">
+      Role Hierarchy Contract
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#cache-configuration" class="md-nav__link">
+    <span class="md-ellipsis">
+      Cache Configuration
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#failure-semantics" class="md-nav__link">
+    <span class="md-ellipsis">
+      Failure Semantics
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#version-specific-behavior" class="md-nav__link">
+    <span class="md-ellipsis">
+      Version-Specific Behavior
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#history-and-development" class="md-nav__link">
     <span class="md-ellipsis">
       History and Development
@@ -14237,6 +14315,84 @@ data-et-multi-view="{&quot;schema&quot;:{&quot;content&quot;:{&quot;desktop&quot
     <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
       
         <li class="md-nav__item">
+  <a href="#behavioral-guarantees" class="md-nav__link">
+    <span class="md-ellipsis">
+      Behavioral Guarantees
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Behavioral Guarantees">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#what-rbac-operations-guarantee" class="md-nav__link">
+    <span class="md-ellipsis">
+      What RBAC Operations Guarantee
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#what-rbac-operations-do-not-guarantee" class="md-nav__link">
+    <span class="md-ellipsis">
+      What RBAC Operations Do NOT Guarantee
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#permission-enforcement-contract" class="md-nav__link">
+    <span class="md-ellipsis">
+      Permission Enforcement Contract
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#role-hierarchy-contract" class="md-nav__link">
+    <span class="md-ellipsis">
+      Role Hierarchy Contract
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#cache-configuration" class="md-nav__link">
+    <span class="md-ellipsis">
+      Cache Configuration
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#failure-semantics" class="md-nav__link">
+    <span class="md-ellipsis">
+      Failure Semantics
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#version-specific-behavior" class="md-nav__link">
+    <span class="md-ellipsis">
+      Version-Specific Behavior
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#history-and-development" class="md-nav__link">
     <span class="md-ellipsis">
       History and Development
@@ -14859,6 +15015,148 @@ data-et-multi-view="{&quot;schema&quot;:{&quot;content&quot;:{&quot;desktop&quot
 
 <div><h1 id="role-based-access-control">Role-Based Access Control<a class="headerlink" href="#role-based-access-control" title="Permanent link">¶</a></h1>
 <p>Role-Based Access Control (RBAC) manages authentication and authorization through roles and permissions.</p>
+<hr>
+<h2 id="behavioral-guarantees">Behavioral Guarantees<a class="headerlink" href="#behavioral-guarantees" title="Permanent link">¶</a></h2>
+<h3 id="what-rbac-operations-guarantee">What RBAC Operations Guarantee<a class="headerlink" href="#what-rbac-operations-guarantee" title="Permanent link">¶</a></h3>
+<ul>
+<li>CREATE ROLE creates a role definition stored in <code>system_auth.roles</code></li>
+<li>GRANT permission immediately takes effect for new operations</li>
+<li>REVOKE permission immediately takes effect for new operations</li>
+<li>Role inheritance is resolved at authorization time (transitive permissions)</li>
+<li>DROP ROLE removes the role and cascades to revoke all grants</li>
+<li>Superuser roles bypass all permission checks</li>
+</ul>
+<h3 id="what-rbac-operations-do-not-guarantee">What RBAC Operations Do NOT Guarantee<a class="headerlink" href="#what-rbac-operations-do-not-guarantee" title="Permanent link">¶</a></h3>
+<div class="admonition warning">
+<p class="admonition-title">Undefined Behavior</p>
+<p>The following behaviors are undefined and must not be relied upon:</p>
+<ul>
+<li><strong>Immediate enforcement across all nodes</strong>: Permission changes propagate asynchronously; brief windows of inconsistent enforcement may occur</li>
+<li><strong>Existing connection state</strong>: Permission changes may not affect already-authenticated connections immediately</li>
+<li><strong>Cache invalidation timing</strong>: Permission cache (<code>roles_validity_in_ms</code>) may delay enforcement</li>
+<li><strong>Concurrent modification safety</strong>: Simultaneous role modifications may produce unexpected results</li>
+<li><strong>Recovery of dropped roles</strong>: Dropped roles and their permissions are not recoverable</li>
+</ul>
+</div>
+<h3 id="permission-enforcement-contract">Permission Enforcement Contract<a class="headerlink" href="#permission-enforcement-contract" title="Permanent link">¶</a></h3>
+<table>
+<thead>
+<tr>
+<th>Operation</th>
+<th>Check Location</th>
+<th>Caching</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Authentication</td>
+<td>Any node</td>
+<td><code>credentials_validity_in_ms</code></td>
+</tr>
+<tr>
+<td>Authorization</td>
+<td>Coordinator</td>
+<td><code>roles_validity_in_ms</code></td>
+</tr>
+<tr>
+<td>Permission resolution</td>
+<td>Coordinator</td>
+<td><code>permissions_validity_in_ms</code></td>
+</tr>
+</tbody>
+</table>
+<h3 id="role-hierarchy-contract">Role Hierarchy Contract<a class="headerlink" href="#role-hierarchy-contract" title="Permanent link">¶</a></h3>
+<table>
+<thead>
+<tr>
+<th>Scenario</th>
+<th>Permission Resolution</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Direct grant</td>
+<td>Permission applies</td>
+</tr>
+<tr>
+<td>Inherited via GRANT role</td>
+<td>Permission applies (transitive)</td>
+</tr>
+<tr>
+<td>Multiple inheritance paths</td>
+<td>Permission applies if any path grants it</td>
+</tr>
+<tr>
+<td>Revoked from parent</td>
+<td>Permission revoked unless granted via another path</td>
+</tr>
+</tbody>
+</table>
+<h3 id="cache-configuration">Cache Configuration<a class="headerlink" href="#cache-configuration" title="Permanent link">¶</a></h3>
+<div class="highlight"><pre><span></span><code><span class="c1"># cassandra.yaml</span>
+<span class="nt">roles_validity_in_ms</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">2000</span><span class="w">      </span><span class="c1"># Role information cache</span>
+<span class="nt">permissions_validity_in_ms</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">2000</span><span class="w"> </span><span class="c1"># Permission cache</span>
+<span class="nt">credentials_validity_in_ms</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">2000</span><span class="w"> </span><span class="c1"># Authentication cache</span>
+</code></pre></div>
+<h3 id="failure-semantics">Failure Semantics<a class="headerlink" href="#failure-semantics" title="Permanent link">¶</a></h3>
+<table>
+<thead>
+<tr>
+<th>Failure Mode</th>
+<th>Outcome</th>
+<th>Client Action</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>UnauthorizedException</code></td>
+<td>Operation denied</td>
+<td>Request appropriate permissions</td>
+</tr>
+<tr>
+<td><code>InvalidRequestException</code></td>
+<td>Invalid role or permission</td>
+<td>Fix request syntax</td>
+</tr>
+<tr>
+<td>Role not found</td>
+<td>Operation fails</td>
+<td>Create role or fix name</td>
+</tr>
+<tr>
+<td>Circular grant attempt</td>
+<td>Operation rejected</td>
+<td>Redesign role hierarchy</td>
+</tr>
+</tbody>
+</table>
+<h3 id="version-specific-behavior">Version-Specific Behavior<a class="headerlink" href="#version-specific-behavior" title="Permanent link">¶</a></h3>
+<table>
+<thead>
+<tr>
+<th>Version</th>
+<th>Behavior</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>2.2+</td>
+<td>RBAC introduced (CASSANDRA-7653), replaces per-user model</td>
+</tr>
+<tr>
+<td>3.0+</td>
+<td>Network authorization, improved role management</td>
+</tr>
+<tr>
+<td>4.0+</td>
+<td>Data masking permissions (UNMASK, SELECT_MASKED)</td>
+</tr>
+<tr>
+<td>5.0+</td>
+<td>Enhanced CIDR-based authorization</td>
+</tr>
+</tbody>
+</table>
 <hr>
 <h2 id="history-and-development">History and Development<a class="headerlink" href="#history-and-development" title="Permanent link">¶</a></h2>
 <h3 id="background">Background<a class="headerlink" href="#background" title="Permanent link">¶</a></h3>

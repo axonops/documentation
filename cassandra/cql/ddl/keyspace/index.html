@@ -6127,6 +6127,66 @@ data-et-multi-view="{&quot;schema&quot;:{&quot;content&quot;:{&quot;desktop&quot
     <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
       
         <li class="md-nav__item">
+  <a href="#behavioral-guarantees" class="md-nav__link">
+    <span class="md-ellipsis">
+      Behavioral Guarantees
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Behavioral Guarantees">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#what-keyspace-operations-guarantee" class="md-nav__link">
+    <span class="md-ellipsis">
+      What Keyspace Operations Guarantee
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#what-keyspace-operations-do-not-guarantee" class="md-nav__link">
+    <span class="md-ellipsis">
+      What Keyspace Operations Do NOT Guarantee
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#schema-agreement-contract" class="md-nav__link">
+    <span class="md-ellipsis">
+      Schema Agreement Contract
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#failure-semantics" class="md-nav__link">
+    <span class="md-ellipsis">
+      Failure Semantics
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#version-specific-behavior" class="md-nav__link">
+    <span class="md-ellipsis">
+      Version-Specific Behavior
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#create-keyspace" class="md-nav__link">
     <span class="md-ellipsis">
       CREATE KEYSPACE
@@ -14204,6 +14264,66 @@ data-et-multi-view="{&quot;schema&quot;:{&quot;content&quot;:{&quot;desktop&quot
     <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
       
         <li class="md-nav__item">
+  <a href="#behavioral-guarantees" class="md-nav__link">
+    <span class="md-ellipsis">
+      Behavioral Guarantees
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Behavioral Guarantees">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#what-keyspace-operations-guarantee" class="md-nav__link">
+    <span class="md-ellipsis">
+      What Keyspace Operations Guarantee
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#what-keyspace-operations-do-not-guarantee" class="md-nav__link">
+    <span class="md-ellipsis">
+      What Keyspace Operations Do NOT Guarantee
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#schema-agreement-contract" class="md-nav__link">
+    <span class="md-ellipsis">
+      Schema Agreement Contract
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#failure-semantics" class="md-nav__link">
+    <span class="md-ellipsis">
+      Failure Semantics
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#version-specific-behavior" class="md-nav__link">
+    <span class="md-ellipsis">
+      Version-Specific Behavior
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#create-keyspace" class="md-nav__link">
     <span class="md-ellipsis">
       CREATE KEYSPACE
@@ -14793,6 +14913,108 @@ data-et-multi-view="{&quot;schema&quot;:{&quot;content&quot;:{&quot;desktop&quot
 
 <div><h1 id="keyspace-commands">Keyspace Commands<a class="headerlink" href="#keyspace-commands" title="Permanent link">¶</a></h1>
 <p>Keyspaces are the top-level namespace in Cassandra, analogous to databases in relational systems. Each keyspace defines replication strategy and options that apply to all tables within it.</p>
+<hr>
+<h2 id="behavioral-guarantees">Behavioral Guarantees<a class="headerlink" href="#behavioral-guarantees" title="Permanent link">¶</a></h2>
+<h3 id="what-keyspace-operations-guarantee">What Keyspace Operations Guarantee<a class="headerlink" href="#what-keyspace-operations-guarantee" title="Permanent link">¶</a></h3>
+<ul>
+<li>CREATE KEYSPACE creates metadata that propagates to all nodes via gossip</li>
+<li>Schema changes are atomic at the coordinator level</li>
+<li>IF NOT EXISTS and IF EXISTS clauses provide idempotent operations</li>
+<li>Replication settings take effect immediately for new writes after schema agreement</li>
+<li>DROP KEYSPACE triggers automatic snapshot creation when <code>auto_snapshot: true</code> (default)</li>
+</ul>
+<h3 id="what-keyspace-operations-do-not-guarantee">What Keyspace Operations Do NOT Guarantee<a class="headerlink" href="#what-keyspace-operations-do-not-guarantee" title="Permanent link">¶</a></h3>
+<div class="admonition warning">
+<p class="admonition-title">Undefined Behavior</p>
+<p>The following behaviors are undefined and must not be relied upon:</p>
+<ul>
+<li><strong>Immediate schema visibility</strong>: Other nodes may not see schema changes until gossip propagates (typically milliseconds, but can be longer under load)</li>
+<li><strong>Data movement on ALTER</strong>: Changing replication settings does not automatically move data; repair or rebuild is required</li>
+<li><strong>Atomic multi-node updates</strong>: Schema propagation is eventually consistent, not transactional</li>
+<li><strong>Immediate replica deletion</strong>: Reducing replication factor does not immediately delete excess replicas</li>
+</ul>
+</div>
+<h3 id="schema-agreement-contract">Schema Agreement Contract<a class="headerlink" href="#schema-agreement-contract" title="Permanent link">¶</a></h3>
+<p>Schema changes require agreement across the cluster:</p>
+<table>
+<thead>
+<tr>
+<th>State</th>
+<th>Description</th>
+<th>Client Impact</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Schema agreed</td>
+<td>All nodes have same schema version</td>
+<td>Safe to proceed</td>
+</tr>
+<tr>
+<td>Schema disagreement</td>
+<td>Nodes have different schema versions</td>
+<td>Operations may fail or behave unexpectedly</td>
+</tr>
+</tbody>
+</table>
+<p>Monitor schema agreement with:
+</p><div class="highlight"><pre><span></span><code>nodetool<span class="w"> </span>describecluster
+</code></pre></div>
+<h3 id="failure-semantics">Failure Semantics<a class="headerlink" href="#failure-semantics" title="Permanent link">¶</a></h3>
+<table>
+<thead>
+<tr>
+<th>Failure Mode</th>
+<th>Outcome</th>
+<th>Client Action</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Timeout during CREATE/ALTER</td>
+<td>Undefined - schema may or may not have propagated</td>
+<td>Check schema agreement, retry if needed</td>
+</tr>
+<tr>
+<td>Node down during schema change</td>
+<td>Schema propagates when node returns</td>
+<td>Monitor schema agreement</td>
+</tr>
+<tr>
+<td><code>InvalidRequest</code></td>
+<td>Operation rejected, no change</td>
+<td>Fix request and retry</td>
+</tr>
+<tr>
+<td><code>Unauthorized</code></td>
+<td>Permission denied, no change</td>
+<td>Request appropriate permissions</td>
+</tr>
+</tbody>
+</table>
+<h3 id="version-specific-behavior">Version-Specific Behavior<a class="headerlink" href="#version-specific-behavior" title="Permanent link">¶</a></h3>
+<table>
+<thead>
+<tr>
+<th>Version</th>
+<th>Behavior</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>3.0+</td>
+<td>Improved schema propagation via <code>system_schema</code> keyspace</td>
+</tr>
+<tr>
+<td>4.0+</td>
+<td>Schema pull on gossip (CASSANDRA-13426), faster agreement</td>
+</tr>
+<tr>
+<td>5.0+</td>
+<td>Transactional metadata (CEP-21) for atomic schema changes</td>
+</tr>
+</tbody>
+</table>
 <hr>
 <h2 id="create-keyspace">CREATE KEYSPACE<a class="headerlink" href="#create-keyspace" title="Permanent link">¶</a></h2>
 <p>Create a new keyspace with specified replication configuration.</p>

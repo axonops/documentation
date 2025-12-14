@@ -6148,6 +6148,75 @@ data-et-multi-view="{&quot;schema&quot;:{&quot;content&quot;:{&quot;desktop&quot
     <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
       
         <li class="md-nav__item">
+  <a href="#behavioral-guarantees" class="md-nav__link">
+    <span class="md-ellipsis">
+      Behavioral Guarantees
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Behavioral Guarantees">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#what-table-operations-guarantee" class="md-nav__link">
+    <span class="md-ellipsis">
+      What Table Operations Guarantee
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#what-table-operations-do-not-guarantee" class="md-nav__link">
+    <span class="md-ellipsis">
+      What Table Operations Do NOT Guarantee
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#primary-key-contract" class="md-nav__link">
+    <span class="md-ellipsis">
+      Primary Key Contract
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#storage-guarantees" class="md-nav__link">
+    <span class="md-ellipsis">
+      Storage Guarantees
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#failure-semantics" class="md-nav__link">
+    <span class="md-ellipsis">
+      Failure Semantics
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#version-specific-behavior" class="md-nav__link">
+    <span class="md-ellipsis">
+      Version-Specific Behavior
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#overview" class="md-nav__link">
     <span class="md-ellipsis">
       Overview
@@ -14273,6 +14342,75 @@ data-et-multi-view="{&quot;schema&quot;:{&quot;content&quot;:{&quot;desktop&quot
     <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
       
         <li class="md-nav__item">
+  <a href="#behavioral-guarantees" class="md-nav__link">
+    <span class="md-ellipsis">
+      Behavioral Guarantees
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Behavioral Guarantees">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#what-table-operations-guarantee" class="md-nav__link">
+    <span class="md-ellipsis">
+      What Table Operations Guarantee
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#what-table-operations-do-not-guarantee" class="md-nav__link">
+    <span class="md-ellipsis">
+      What Table Operations Do NOT Guarantee
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#primary-key-contract" class="md-nav__link">
+    <span class="md-ellipsis">
+      Primary Key Contract
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#storage-guarantees" class="md-nav__link">
+    <span class="md-ellipsis">
+      Storage Guarantees
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#failure-semantics" class="md-nav__link">
+    <span class="md-ellipsis">
+      Failure Semantics
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#version-specific-behavior" class="md-nav__link">
+    <span class="md-ellipsis">
+      Version-Specific Behavior
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#overview" class="md-nav__link">
     <span class="md-ellipsis">
       Overview
@@ -14931,6 +15069,140 @@ data-et-multi-view="{&quot;schema&quot;:{&quot;content&quot;:{&quot;desktop&quot
 
 <div><h1 id="table-commands">Table Commands<a class="headerlink" href="#table-commands" title="Permanent link">¶</a></h1>
 <p>Tables are the primary data storage structures in Cassandra. Each table belongs to a keyspace and defines columns, a primary key for data distribution and access, and various storage options.</p>
+<hr>
+<h2 id="behavioral-guarantees">Behavioral Guarantees<a class="headerlink" href="#behavioral-guarantees" title="Permanent link">¶</a></h2>
+<h3 id="what-table-operations-guarantee">What Table Operations Guarantee<a class="headerlink" href="#what-table-operations-guarantee" title="Permanent link">¶</a></h3>
+<ul>
+<li>CREATE TABLE creates schema metadata that propagates to all nodes via gossip</li>
+<li>Primary key uniquely identifies each row; duplicate primary keys result in upsert (overwrite)</li>
+<li>Rows within a partition are stored sorted by clustering columns in the specified order</li>
+<li>Static columns share a single value per partition across all rows</li>
+<li>ALTER TABLE for adding columns is a metadata-only operation (no data rewrite)</li>
+<li>DROP TABLE with <code>auto_snapshot: true</code> creates a snapshot before deletion (default behavior)</li>
+</ul>
+<h3 id="what-table-operations-do-not-guarantee">What Table Operations Do NOT Guarantee<a class="headerlink" href="#what-table-operations-do-not-guarantee" title="Permanent link">¶</a></h3>
+<div class="admonition warning">
+<p class="admonition-title">Undefined Behavior</p>
+<p>The following behaviors are undefined and must not be relied upon:</p>
+<ul>
+<li><strong>Column order in SELECT *</strong>: The order of columns in <code>SELECT *</code> results is not guaranteed to match definition order</li>
+<li><strong>Immediate schema propagation</strong>: Schema changes may not be visible on all nodes immediately after the statement returns</li>
+<li><strong>Null storage</strong>: Setting a column to null creates a tombstone, not absence of data</li>
+<li><strong>Empty string vs null</strong>: These are distinct values with different storage implications</li>
+<li><strong>Collection ordering across versions</strong>: Internal collection ordering may vary between Cassandra versions</li>
+<li><strong>Partition size warnings</strong>: Exceeding recommended partition sizes does not raise errors but degrades performance</li>
+</ul>
+</div>
+<h3 id="primary-key-contract">Primary Key Contract<a class="headerlink" href="#primary-key-contract" title="Permanent link">¶</a></h3>
+<p>The primary key defines immutable constraints:</p>
+<table>
+<thead>
+<tr>
+<th>Component</th>
+<th>Contract</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Partition key</td>
+<td>Determines node placement via consistent hashing; cannot be changed</td>
+</tr>
+<tr>
+<td>Clustering columns</td>
+<td>Determine sort order within partition; cannot be added, removed, or reordered</td>
+</tr>
+<tr>
+<td>Primary key columns</td>
+<td>Cannot be updated; must be specified on INSERT</td>
+</tr>
+</tbody>
+</table>
+<h3 id="storage-guarantees">Storage Guarantees<a class="headerlink" href="#storage-guarantees" title="Permanent link">¶</a></h3>
+<table>
+<thead>
+<tr>
+<th>Guarantee</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Partition locality</td>
+<td>All rows with the same partition key are stored on the same replica set</td>
+</tr>
+<tr>
+<td>Clustering order</td>
+<td>Rows within a partition are always sorted by clustering columns</td>
+</tr>
+<tr>
+<td>Atomic row writes</td>
+<td>All columns in a single row write are applied atomically</td>
+</tr>
+<tr>
+<td>Sparse storage</td>
+<td>Null values do not consume storage space (except as tombstones when explicitly set)</td>
+</tr>
+</tbody>
+</table>
+<h3 id="failure-semantics">Failure Semantics<a class="headerlink" href="#failure-semantics" title="Permanent link">¶</a></h3>
+<table>
+<thead>
+<tr>
+<th>Failure Mode</th>
+<th>Outcome</th>
+<th>Client Action</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Timeout during CREATE/ALTER/DROP</td>
+<td>Undefined - schema change may or may not have propagated</td>
+<td>Check schema agreement</td>
+</tr>
+<tr>
+<td><code>AlreadyExistsException</code></td>
+<td>Table exists (without IF NOT EXISTS)</td>
+<td>Use IF NOT EXISTS or verify existing schema</td>
+</tr>
+<tr>
+<td><code>InvalidRequest</code></td>
+<td>Invalid schema definition</td>
+<td>Fix definition and retry</td>
+</tr>
+<tr>
+<td><code>ConfigurationException</code></td>
+<td>Invalid table options</td>
+<td>Correct options and retry</td>
+</tr>
+</tbody>
+</table>
+<h3 id="version-specific-behavior">Version-Specific Behavior<a class="headerlink" href="#version-specific-behavior" title="Permanent link">¶</a></h3>
+<table>
+<thead>
+<tr>
+<th>Version</th>
+<th>Behavior</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>2.1+</td>
+<td>User-defined types in columns (CASSANDRA-5590)</td>
+</tr>
+<tr>
+<td>3.0+</td>
+<td>Materialized views (CASSANDRA-6477), non-frozen collections</td>
+</tr>
+<tr>
+<td>4.0+</td>
+<td>Virtual tables, improved schema handling (CASSANDRA-13426)</td>
+</tr>
+<tr>
+<td>5.0+</td>
+<td>VECTOR type (CEP-30), storage-attached indexes default</td>
+</tr>
+</tbody>
+</table>
 <hr>
 <h2 id="overview">Overview<a class="headerlink" href="#overview" title="Permanent link">¶</a></h2>
 <h3 id="what-is-a-table">What is a Table?<a class="headerlink" href="#what-is-a-table" title="Permanent link">¶</a></h3>

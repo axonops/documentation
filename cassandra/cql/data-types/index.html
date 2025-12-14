@@ -6045,6 +6045,75 @@ data-et-multi-view="{&quot;schema&quot;:{&quot;content&quot;:{&quot;desktop&quot
     <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
       
         <li class="md-nav__item">
+  <a href="#behavioral-guarantees" class="md-nav__link">
+    <span class="md-ellipsis">
+      Behavioral Guarantees
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Behavioral Guarantees">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#what-data-types-guarantee" class="md-nav__link">
+    <span class="md-ellipsis">
+      What Data Types Guarantee
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#what-data-types-do-not-guarantee" class="md-nav__link">
+    <span class="md-ellipsis">
+      What Data Types Do NOT Guarantee
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#type-comparison-contract" class="md-nav__link">
+    <span class="md-ellipsis">
+      Type Comparison Contract
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#null-handling-contract" class="md-nav__link">
+    <span class="md-ellipsis">
+      Null Handling Contract
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#storage-size-contract" class="md-nav__link">
+    <span class="md-ellipsis">
+      Storage Size Contract
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#version-specific-behavior" class="md-nav__link">
+    <span class="md-ellipsis">
+      Version-Specific Behavior
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#type-categories" class="md-nav__link">
     <span class="md-ellipsis">
       Type Categories
@@ -14019,6 +14088,75 @@ data-et-multi-view="{&quot;schema&quot;:{&quot;content&quot;:{&quot;desktop&quot
     <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
       
         <li class="md-nav__item">
+  <a href="#behavioral-guarantees" class="md-nav__link">
+    <span class="md-ellipsis">
+      Behavioral Guarantees
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Behavioral Guarantees">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#what-data-types-guarantee" class="md-nav__link">
+    <span class="md-ellipsis">
+      What Data Types Guarantee
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#what-data-types-do-not-guarantee" class="md-nav__link">
+    <span class="md-ellipsis">
+      What Data Types Do NOT Guarantee
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#type-comparison-contract" class="md-nav__link">
+    <span class="md-ellipsis">
+      Type Comparison Contract
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#null-handling-contract" class="md-nav__link">
+    <span class="md-ellipsis">
+      Null Handling Contract
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#storage-size-contract" class="md-nav__link">
+    <span class="md-ellipsis">
+      Storage Size Contract
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#version-specific-behavior" class="md-nav__link">
+    <span class="md-ellipsis">
+      Version-Specific Behavior
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#type-categories" class="md-nav__link">
     <span class="md-ellipsis">
       Type Categories
@@ -14427,6 +14565,205 @@ data-et-multi-view="{&quot;schema&quot;:{&quot;content&quot;:{&quot;desktop&quot
 <p>Choosing the right data type affects storage efficiency, query performance, and available operations. BIGINT vs INT might not matter for small datasets, but at scale the 4 bytes per row add up. TIMEUUID vs UUID determines whether time-range queries are possible. Frozen collections serialize as blobs; unfrozen ones allow partial updates.</p>
 <p>CQL's type system covers the basics (integers, text, timestamps), identifiers (UUID, TIMEUUID for time-ordered unique IDs), collections (lists, sets, maps), and complex types (user-defined types, tuples). Cassandra 5.0 added VECTOR for embedding storage.</p>
 <p>This reference covers each type, when to use it, and the trade-offs involved.</p>
+<hr>
+<h2 id="behavioral-guarantees">Behavioral Guarantees<a class="headerlink" href="#behavioral-guarantees" title="Permanent link">¶</a></h2>
+<h3 id="what-data-types-guarantee">What Data Types Guarantee<a class="headerlink" href="#what-data-types-guarantee" title="Permanent link">¶</a></h3>
+<ul>
+<li>Values are validated against type constraints at write time</li>
+<li>Type conversion failures are reported immediately (no silent truncation)</li>
+<li>Integer overflow causes write rejection (not wrap-around)</li>
+<li>TEXT stores UTF-8 encoded data; invalid UTF-8 is rejected</li>
+<li>TIMEUUID values contain embedded timestamps extractable via <code>toTimestamp()</code></li>
+<li>FROZEN collections are serialized atomically and compared byte-for-byte</li>
+</ul>
+<h3 id="what-data-types-do-not-guarantee">What Data Types Do NOT Guarantee<a class="headerlink" href="#what-data-types-do-not-guarantee" title="Permanent link">¶</a></h3>
+<div class="admonition warning">
+<p class="admonition-title">Undefined Behavior</p>
+<p>The following behaviors are undefined and must not be relied upon:</p>
+<ul>
+<li><strong>Floating point precision</strong>: FLOAT and DOUBLE are approximate; exact equality comparisons may fail</li>
+<li><strong>Collection ordering across versions</strong>: Internal sort order for sets and map keys may vary between Cassandra versions</li>
+<li><strong>VARINT/DECIMAL performance</strong>: Arbitrary precision types have higher computation and storage costs</li>
+<li><strong>Empty vs null</strong>: Empty string ('') and empty collections are distinct from null, but behavior may vary</li>
+<li><strong>Large value handling</strong>: Very large text or blob values (approaching 2GB) may cause memory pressure</li>
+</ul>
+</div>
+<h3 id="type-comparison-contract">Type Comparison Contract<a class="headerlink" href="#type-comparison-contract" title="Permanent link">¶</a></h3>
+<table>
+<thead>
+<tr>
+<th>Type</th>
+<th>Comparison Semantics</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Numeric (int, bigint, etc.)</td>
+<td>Numerical ordering</td>
+</tr>
+<tr>
+<td>TEXT, VARCHAR</td>
+<td>UTF-8 byte ordering</td>
+</tr>
+<tr>
+<td>ASCII</td>
+<td>ASCII byte ordering</td>
+</tr>
+<tr>
+<td>TIMESTAMP</td>
+<td>Chronological ordering (milliseconds since epoch)</td>
+</tr>
+<tr>
+<td>TIMEUUID</td>
+<td>Chronological ordering (time component)</td>
+</tr>
+<tr>
+<td>UUID</td>
+<td>Lexicographical ordering</td>
+</tr>
+<tr>
+<td>BLOB</td>
+<td>Byte ordering</td>
+</tr>
+<tr>
+<td>BOOLEAN</td>
+<td>false &lt; true</td>
+</tr>
+<tr>
+<td>Collections (frozen)</td>
+<td>Element-by-element comparison</td>
+</tr>
+</tbody>
+</table>
+<h3 id="null-handling-contract">Null Handling Contract<a class="headerlink" href="#null-handling-contract" title="Permanent link">¶</a></h3>
+<table>
+<thead>
+<tr>
+<th>Operation</th>
+<th>Behavior</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>INSERT with null</td>
+<td>Creates tombstone for column</td>
+</tr>
+<tr>
+<td>NULL in primary key</td>
+<td>Rejected (invalid)</td>
+</tr>
+<tr>
+<td>NULL in clustering column</td>
+<td>Rejected (invalid)</td>
+</tr>
+<tr>
+<td>NULL in collection element</td>
+<td>Behavior varies by collection type</td>
+</tr>
+<tr>
+<td>Comparison with NULL</td>
+<td>NULL is not equal to NULL</td>
+</tr>
+</tbody>
+</table>
+<h3 id="storage-size-contract">Storage Size Contract<a class="headerlink" href="#storage-size-contract" title="Permanent link">¶</a></h3>
+<table>
+<thead>
+<tr>
+<th>Type</th>
+<th>Fixed/Variable</th>
+<th>Size</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>TINYINT</td>
+<td>Fixed</td>
+<td>1 byte</td>
+</tr>
+<tr>
+<td>SMALLINT</td>
+<td>Fixed</td>
+<td>2 bytes</td>
+</tr>
+<tr>
+<td>INT</td>
+<td>Fixed</td>
+<td>4 bytes</td>
+</tr>
+<tr>
+<td>BIGINT</td>
+<td>Fixed</td>
+<td>8 bytes</td>
+</tr>
+<tr>
+<td>FLOAT</td>
+<td>Fixed</td>
+<td>4 bytes</td>
+</tr>
+<tr>
+<td>DOUBLE</td>
+<td>Fixed</td>
+<td>8 bytes</td>
+</tr>
+<tr>
+<td>UUID/TIMEUUID</td>
+<td>Fixed</td>
+<td>16 bytes</td>
+</tr>
+<tr>
+<td>TEXT, BLOB</td>
+<td>Variable</td>
+<td>Length prefix + data</td>
+</tr>
+<tr>
+<td>VARINT, DECIMAL</td>
+<td>Variable</td>
+<td>Value-dependent</td>
+</tr>
+<tr>
+<td>Collections</td>
+<td>Variable</td>
+<td>Element count + elements</td>
+</tr>
+</tbody>
+</table>
+<h3 id="version-specific-behavior">Version-Specific Behavior<a class="headerlink" href="#version-specific-behavior" title="Permanent link">¶</a></h3>
+<table>
+<thead>
+<tr>
+<th>Version</th>
+<th>Behavior</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>2.0+</td>
+<td>Collections (list, set, map)</td>
+</tr>
+<tr>
+<td>2.1+</td>
+<td>User-defined types (UDTs), tuple type</td>
+</tr>
+<tr>
+<td>2.2+</td>
+<td>TINYINT, SMALLINT, DATE, TIME types</td>
+</tr>
+<tr>
+<td>3.0+</td>
+<td>Non-frozen UDTs and collections</td>
+</tr>
+<tr>
+<td>4.0+</td>
+<td>DURATION type</td>
+</tr>
+<tr>
+<td>5.0+</td>
+<td>VECTOR type for ML embeddings (CEP-30)</td>
+</tr>
+</tbody>
+</table>
+<hr>
 <h2 id="type-categories">Type Categories<a class="headerlink" href="#type-categories" title="Permanent link">¶</a></h2>
 <table>
 <thead>
