@@ -223,10 +223,135 @@ aggregate --> client : Result
 
 ### Null Handling
 
-!!! note "Null Handling"
-    If `INITCOND` is not specified and the first row has null input, the state remains null. Subsequent rows with non-null values may then fail if the state function doesn't handle null state.
+Understanding null behavior is critical for correct UDA implementation:
 
-    **Best practice**: Always specify `INITCOND` and make `SFUNC` null-safe with `CALLED ON NULL INPUT`.
+| Scenario | Behavior |
+|----------|----------|
+| Input value is NULL | State function is **not called**; state remains unchanged |
+| State function returns NULL | State becomes NULL for remainder of aggregation |
+| INITCOND is NULL or unspecified | First SFUNC call receives NULL as initial state |
+| All input values are NULL | Result is FINALFUNC(INITCOND) or INITCOND if no FINALFUNC |
+
+!!! warning "Null Propagation"
+    If the state function returns NULL at any point, the state remains NULL for all subsequent rows. This is particularly dangerous with arithmetic operations:
+
+    ```java
+    // Dangerous: returns null if state is ever null
+    return state + val;  // null + anything = null
+
+    // Safe: handle null state explicitly
+    if (state == null) return (long) val;
+    return state + val;
+    ```
+
+!!! tip "Best Practices for Null Safety"
+    - Always specify `INITCOND` to avoid null initial state
+    - Use `CALLED ON NULL INPUT` for state functions
+    - Explicitly check for null state AND null input values in SFUNC
+    - Test aggregation with datasets containing NULL values
+
+### Non-Deterministic Functions
+
+!!! danger "Avoid Non-Deterministic Functions in UDAs"
+    UDAs can reference UDFs that use non-deterministic operations like `now()` or `uuid()`. This leads to unpredictable results because:
+
+    - Aggregation assumes deterministic behavior for consistency
+    - The same input data may produce different results on each execution
+    - Replayed queries (e.g., during repair or retry) may yield inconsistent values
+
+    **Recommendation**: Use only deterministic functions in SFUNC and FINALFUNC. If timestamps or UUIDs are needed, pass them as input parameters rather than generating them inside the function.
+
+### Type Constraints
+
+Strict type matching is enforced between aggregate components:
+
+| Constraint | Requirement | Error if Violated |
+|------------|-------------|-------------------|
+| SFUNC return type | Must exactly match STYPE | `InvalidRequestException` at creation |
+| SFUNC first parameter | Must exactly match STYPE | `InvalidRequestException` at creation |
+| FINALFUNC input type | Must exactly match STYPE | `InvalidRequestException` at creation |
+| INITCOND type | Must be literal of STYPE | Compile-time error |
+
+**INITCOND Parsing Rules:**
+
+```sql
+-- Scalar types: use literal values
+INITCOND 0           -- for INT, BIGINT
+INITCOND 0.0         -- for DOUBLE, FLOAT
+INITCOND ''          -- for TEXT
+
+-- Tuple types: use parentheses
+INITCOND (0, 0)      -- for TUPLE<BIGINT, BIGINT>
+INITCOND (0, 0.0, '') -- for TUPLE<INT, DOUBLE, TEXT>
+
+-- Collection types: use brackets/braces
+INITCOND []          -- for LIST
+INITCOND {}          -- for SET or empty MAP
+INITCOND {'key': 0}  -- for MAP<TEXT, INT>
+
+-- UDT types: use named fields
+INITCOND {field1: 0, field2: ''}
+```
+
+### Sandbox Restrictions
+
+UDFs (and therefore UDAs) execute in a sandboxed JVM environment with significant restrictions:
+
+| Restriction | Description |
+|-------------|-------------|
+| No file system access | Cannot read or write files |
+| No network access | Cannot open sockets or make HTTP calls |
+| Limited Java classes | Only whitelisted JDK classes available |
+| No reflection | `java.lang.reflect` package blocked |
+| No threading | Cannot create threads or use concurrency utilities |
+| Memory limits | Bounded by `user_function_timeout` settings |
+
+!!! note "Allowed Classes"
+    The sandbox permits basic Java classes: primitives, `String`, `Math`, collections (`List`, `Set`, `Map`), and Cassandra driver types (`TupleValue`, `UDTValue`). Attempting to use restricted classes throws `SecurityException`.
+
+### Distributed Consistency
+
+UDA execution has implications for distributed consistency:
+
+| Aspect | Behavior |
+|--------|----------|
+| Aggregation location | Coordinator collects all rows, then aggregates |
+| Partition ordering | Rows from different partitions have undefined order |
+| Global ordering | Not guaranteed unless single partition with ORDER BY |
+| Result merging | No distributed reduce phase; all data flows to coordinator |
+
+!!! warning "No Global Ordering Guarantees"
+    If a UDA relies on processing rows in a specific global order or expects uniqueness across partitions, results may differ from expectations. Cassandra does not guarantee ordering between partitions.
+
+    ```sql
+    -- Order guaranteed within partition
+    SELECT my_agg(value) FROM table WHERE partition_key = ?
+        ORDER BY clustering_col;
+
+    -- Order NOT guaranteed across partitions
+    SELECT my_agg(value) FROM table;  -- undefined row order
+    ```
+
+### Error Handling
+
+UDA error behavior follows fail-fast semantics:
+
+| Error Source | Behavior | Recovery |
+|--------------|----------|----------|
+| SFUNC throws exception | Query fails immediately | No partial results returned |
+| FINALFUNC throws exception | Query fails after aggregation | Aggregated state is lost |
+| Timeout during SFUNC | Query fails | Partial state discarded |
+| Type conversion error | Query fails | Fix function or input data |
+
+!!! danger "No Partial Aggregation Recovery"
+    When any error occurs during UDA execution:
+
+    - The entire query fails
+    - No partial aggregation results are returned
+    - All accumulated state is discarded
+    - The error propagates to the client
+
+    **Mitigation**: Implement defensive programming in SFUNC/FINALFUNC with try-catch blocks that return safe default values rather than throwing exceptions.
 
 ---
 
@@ -679,21 +804,68 @@ DESCRIBE AGGREGATE my_keyspace.my_sum;
 ### Design Guidelines
 
 1. **Choose appropriate state type**
-   - Simple types for simple aggregations
-   - Tuples for multi-value accumulation
-   - Avoid unbounded collections
+      - Simple types for simple aggregations
+      - Tuples for multi-value accumulation
+      - Avoid unbounded collections
 
 2. **Handle null state correctly**
-   - Use INITCOND when possible
-   - Make SFUNC null-safe
+      - Use INITCOND when possible
+      - Make SFUNC null-safe
 
 3. **Test with realistic volumes**
-   - Profile memory usage
-   - Test with expected result set sizes
+      - Profile memory usage
+      - Test with expected result set sizes
 
 4. **Consider pre-aggregation**
-   - Maintain aggregated tables for common queries
-   - Update aggregates via application logic
+      - Maintain aggregated tables for common queries
+      - Update aggregates via application logic
+
+### Performance and Safety
+
+UDAs have significant performance implications that must be considered:
+
+| Concern | Impact | Mitigation |
+|---------|--------|------------|
+| Coordinator memory | All rows streamed to single node | Limit result sets with WHERE clauses |
+| State size | Large state consumes heap | Keep state minimal; avoid unbounded collections |
+| SFUNC complexity | Called once per row | Keep operations O(1); avoid heavy computation |
+| FINALFUNC complexity | Called once at end | Acceptable to be more complex than SFUNC |
+| Network transfer | All data flows to coordinator | Pre-filter data; consider materialized views |
+
+!!! warning "Performance Best Practices"
+    **Keep state small:**
+
+    - Prefer primitive types over collections
+    - Use fixed-size tuples instead of growing lists
+    - Accumulate only what's necessary for final computation
+
+    **Keep operations lightweight:**
+
+    - Avoid object allocation in SFUNC when possible
+    - No I/O operations (blocked by sandbox anyway)
+    - No complex string manipulation per row
+    - Pre-compute values that don't change
+
+    **Example - Efficient vs Inefficient:**
+
+    ```java
+    // INEFFICIENT: Creates new ArrayList every call
+    List<Integer> result = new ArrayList<>(state);
+    result.add(val);
+    return result;
+
+    // EFFICIENT: Accumulate only sum and count
+    return state + val;  // For simple sum
+    ```
+
+!!! tip "Capacity Planning"
+    Estimate coordinator memory requirements:
+
+    ```
+    Memory ≈ (rows × state_size) + (rows × row_size_during_transfer)
+    ```
+
+    For 1 million rows with 100-byte state: ~100MB minimum coordinator heap required.
 
 ### Cleanup: Dropping Aggregate and Functions
 

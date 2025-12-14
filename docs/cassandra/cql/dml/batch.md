@@ -528,9 +528,10 @@ SELECT * FROM system.batches;
     **Counter Batches:**
 
     - Must use COUNTER keyword
-    - Cannot mix counter and non-counter statements
-    - No TTL allowed
-    - No IF conditions allowed
+    - Cannot mix counter and non-counter statements in same batch
+    - No TTL allowed on counter updates
+    - No IF conditions allowed with counters
+    - Counter batches are always unlogged internally
 
     **Conditional Batches:**
 
@@ -543,6 +544,66 @@ SELECT * FROM system.batches;
     - Maximum batch size enforced by configuration
     - Batch log adds overhead to logged batches
     - Multi-partition batches not atomic if using UNLOGGED
+
+### Atomicity Scope
+
+!!! warning "Batch Atomicity is Partition-Scoped"
+    A critical misconception: batches are **only atomic within a single partition** at the storage layer.
+
+    | Batch Type | Single Partition | Multi-Partition |
+    |------------|------------------|-----------------|
+    | LOGGED | Atomic | Eventual atomicity via batch log |
+    | UNLOGGED | Atomic | **Not atomic** - partial execution possible |
+    | COUNTER | Atomic | **Not atomic** |
+
+    **Multi-partition "atomicity" via logged batches:**
+
+    - Batch log ensures eventual delivery, not instant atomicity
+    - Other reads may see partial results during batch execution
+    - If batch log replay fails repeatedly, mutations may be lost
+
+    ```sql
+    -- This is NOT instantly atomic across partitions
+    BEGIN BATCH
+        INSERT INTO users (user_id, ...) VALUES ('user1', ...);    -- Partition 1
+        INSERT INTO users (user_id, ...) VALUES ('user2', ...);    -- Partition 2
+    APPLY BATCH;
+    -- A concurrent read might see user1 but not user2
+    ```
+
+### Large Batch Performance Degradation
+
+!!! danger "Large Batches Cause Performance Problems"
+    Batches are NOT a performance optimization. Large batches cause severe issues:
+
+    | Issue | Impact |
+    |-------|--------|
+    | Coordinator memory | Entire batch held in memory until complete |
+    | GC pressure | Large batches trigger garbage collection |
+    | Batch log pressure | Logged batches write to batch log first |
+    | Timeout risk | Large batches more likely to timeout |
+    | Replay storms | Failed large batches cause replay overhead |
+
+    **Configuration limits:**
+
+    ```yaml
+    # cassandra.yaml
+    batch_size_warn_threshold_in_kb: 5     # Warn above 5KB
+    batch_size_fail_threshold_in_kb: 50    # Fail above 50KB
+    ```
+
+    **Warning signs in logs:**
+
+    ```
+    WARN  Batch for [table] is of size 52KB, exceeding specified threshold of 5KB
+    ```
+
+    **Best practices:**
+
+    - Keep batches small (< 5KB, ideally < 20 statements)
+    - Use batches for atomicity, not throughput
+    - For bulk loading, use parallel individual writes or SSTable loader
+    - Monitor `BatchMetrics` in JMX for batch sizes
 
 ---
 

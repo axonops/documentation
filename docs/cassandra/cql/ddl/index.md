@@ -64,10 +64,76 @@ Before returning success for a DDL operation, Cassandra waits for schema agreeme
 -- Check current schema versions across the cluster
 SELECT schema_version FROM system.local;
 SELECT peer, schema_version FROM system.peers;
+
+-- Using nodetool
+-- nodetool describecluster | grep -A 10 "Schema versions"
 ```
 
 !!! warning "Schema Disagreement"
     If schema agreement cannot be reached within the timeout (default 10 seconds), the DDL statement returns a warning but the change may still propagate. Operations during schema disagreement may produce unpredictable results. Monitor `nodetool describecluster` for schema version mismatches.
+
+### Schema Disagreement Consequences
+
+!!! danger "Queries May Fail or Return Inconsistent Results"
+    When nodes have different schema versions, queries can behave unpredictably:
+
+    | Scenario | Potential Outcome |
+    |----------|-------------------|
+    | Query column not yet on all nodes | `InvalidRequestException` on some nodes |
+    | Query new table before propagation | `TableNotFoundException` on some nodes |
+    | Query with different column types | Data corruption or read failures |
+    | Concurrent DDL operations | Conflicting schemas across cluster |
+
+    **Real-world failure scenarios:**
+
+    ```
+    # DDL executed but not propagated
+    CREATE TABLE new_table (...);
+
+    # Immediate query may fail
+    SELECT * FROM new_table;
+    -- Node A: Success
+    -- Node B: UnconfiguredTableException: new_table
+    ```
+
+### Waiting for Schema Agreement
+
+After DDL operations, ensure schema agreement before executing DML:
+
+```sql
+-- Configuration in cassandra.yaml
+max_schema_agreement_wait_seconds: 10  -- Default wait time
+
+-- Programmatic check (driver)
+-- Most drivers provide schema agreement wait methods
+```
+
+**Best practices:**
+
+1. **Wait for agreement**: Use driver's schema agreement API after DDL
+2. **Avoid concurrent DDL**: Execute schema changes sequentially
+3. **Monitor disagreement**: Alert on prolonged schema version mismatches
+4. **Rolling restarts**: Wait for schema agreement between node restarts
+5. **Repair after issues**: Run `nodetool repair -pr` on nodes with stale schema
+
+```bash
+# Check for schema disagreement
+nodetool describecluster
+
+# Output showing disagreement:
+# Schema versions:
+#     a1b2c3d4-... : [10.0.0.1, 10.0.0.2, 10.0.0.3]
+#     e5f6g7h8-... : [10.0.0.4]  # This node has different schema!
+```
+
+### Handling Schema Timeouts
+
+| Timeout Scenario | Client Action |
+|------------------|---------------|
+| DDL returns timeout warning | Check schema versions, retry if needed |
+| DDL fails completely | Verify schema state, rerun DDL |
+| Prolonged disagreement (> 30s) | Investigate node health, repair or restart |
+| Permanent disagreement | Restart affected nodes with correct schema |
 
 ### System Schema Tables
 

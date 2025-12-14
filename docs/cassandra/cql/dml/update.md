@@ -163,6 +163,29 @@ WHERE user_id = ?;
 !!! note "TTL Scope"
     TTL applies only to columns in the SET clause, not the entire row. Different columns can have different TTLs.
 
+!!! warning "Updates Reset TTL Unless Explicitly Set"
+    When updating a column that has an existing TTL, the **TTL is NOT preserved**:
+
+    | Scenario | Result |
+    |----------|--------|
+    | `UPDATE ... SET col = val` | Column loses TTL (lives forever) |
+    | `UPDATE USING TTL 3600 SET col = val` | Column gets new 3600s TTL |
+    | `UPDATE USING TTL 0 SET col = val` | Explicitly removes TTL |
+
+    ```sql
+    -- Original: column has TTL 3600
+    INSERT INTO cache (key, value) VALUES ('k', 'v') USING TTL 3600;
+
+    -- DANGER: This removes the TTL!
+    UPDATE cache SET value = 'new_v' WHERE key = 'k';
+    -- value now lives forever
+
+    -- CORRECT: Preserve TTL behavior by setting it explicitly
+    UPDATE cache USING TTL 3600 SET value = 'new_v' WHERE key = 'k';
+    ```
+
+    **Best practice**: Always use `USING TTL` when updating columns that should expire, or query the current TTL first with `SELECT TTL(column)`.
+
 ### USING TIMESTAMP
 
 Specifies write timestamp for conflict resolution:

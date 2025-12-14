@@ -611,6 +611,58 @@ stop
     3. **Memory pressure**: Rows held in memory during filtering
     4. **No scaling benefit**: More nodes means more data to scan
 
+### Full Table Scan Risk
+
+`ALLOW FILTERING` causes a full table scan when no partition key is specified:
+
+| Data Size | Nodes | Approximate Scan Time | Memory Risk |
+|-----------|-------|----------------------|-------------|
+| 10 MB | 3 | < 1 second | Low |
+| 1 GB | 10 | 10-60 seconds | Medium |
+| 100 GB | 20 | Minutes to hours | High |
+| 1 TB+ | 50+ | Query may never complete | Critical |
+
+```sql
+-- DANGER: Scans entire cluster
+SELECT * FROM events WHERE event_type = 'login' ALLOW FILTERING;
+
+-- Query coordinator must:
+-- 1. Contact ALL nodes in cluster
+-- 2. Each node scans ALL its partitions
+-- 3. Filter results in memory
+-- 4. Aggregate and return
+```
+
+### Unpredictable Performance in Large Datasets
+
+!!! danger "Performance Cannot Be Predicted"
+    `ALLOW FILTERING` queries have **no performance bounds**:
+
+    - A query returning 10 rows may scan 10 million rows
+    - Query time varies based on total data volume, not result size
+    - Same query may take 100ms with little data, timeout with more data
+    - No way to estimate query cost before execution
+
+    **Real-world failure scenario:**
+
+    ```sql
+    -- Development: Works fine (1,000 users)
+    SELECT * FROM users WHERE country = 'US' ALLOW FILTERING;
+    -- Result: 50ms, 100 rows
+
+    -- Production: Disaster (10 million users)
+    SELECT * FROM users WHERE country = 'US' ALLOW FILTERING;
+    -- Result: Timeout after 30s, coordinator OOM, cascading failures
+    ```
+
+    **Impact cascade:**
+
+    1. Query consumes coordinator memory
+    2. GC pauses affect other queries
+    3. Client timeouts trigger retries
+    4. More ALLOW FILTERING queries pile up
+    5. Cluster becomes unresponsive
+
 ### When ALLOW FILTERING Is Acceptable
 
 | Scenario | Acceptable? | Reason |
@@ -619,6 +671,18 @@ stop
 | Development/debugging | Yes | Convenience over performance |
 | One-time analytics | Sometimes | If Spark unavailable |
 | Production application queries | **Never** | Unpredictable, doesn't scale |
+| Queries with partition key | Sometimes | Limits scan to single partition |
+
+**Safe usage pattern** (with partition key):
+
+```sql
+-- Acceptable: Filters within a single partition
+SELECT * FROM user_events
+WHERE user_id = 123
+  AND event_type = 'login'
+ALLOW FILTERING;
+-- Only scans one user's events, not entire table
+```
 
 ---
 

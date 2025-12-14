@@ -42,6 +42,26 @@ Topics are organized for both learning and reference. New users can follow the G
 
 ## What is Apache Cassandra?
 
+### History and Origins
+
+Cassandra was created at Facebook in 2007 by Avinash Lakshman and Prashant Malik to power Facebook's Inbox Search feature—a system requiring high write throughput across hundreds of millions of users with strict latency requirements. Lakshman, a co-author of Amazon's Dynamo paper, brought distributed systems expertise that shaped Cassandra's architecture.
+
+| Year | Milestone |
+|------|-----------|
+| 2007 | Development begins at Facebook |
+| 2008 | Open sourced under Apache License 2.0 (July) |
+| 2009 | Enters Apache Incubator (March) |
+| 2010 | Graduates to Apache Top-Level Project (February) |
+| 2011 | Cassandra 1.0 released |
+| 2014 | Cassandra 2.0 introduces lightweight transactions |
+| 2016 | Cassandra 3.0 brings materialized views and SASI |
+| 2021 | Cassandra 4.0 after extensive testing focus |
+| 2024 | Cassandra 5.0 introduces vectors, SAI, and UCS |
+
+The project is licensed under the [Apache License 2.0](https://www.apache.org/licenses/LICENSE-2.0), permitting commercial use, modification, and distribution.
+
+### Design Influences
+
 Cassandra's design draws from two foundational distributed systems papers: Google's BigTable (2006) provided the storage model—SSTables, memtables, and the LSM-tree architecture. Amazon's Dynamo (2007) provided the distribution model—consistent hashing, gossip-based cluster membership, and tunable consistency levels.
 
 ### Performance Characteristics

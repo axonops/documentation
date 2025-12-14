@@ -393,6 +393,40 @@ CREATE MATERIALIZED VIEW high_value_orders AS
     - Views cannot store rows where any primary key column is null
     - Collection columns cannot be part of view primary key
 
+### Base Table Schema Changes
+
+!!! danger "Dropping Base Table Columns Breaks Views"
+    Altering the base table schema can permanently break materialized views:
+
+    | Base Table Change | Impact on View |
+    |-------------------|----------------|
+    | `DROP COLUMN` used by view | View becomes unusable; must be dropped and recreated |
+    | `ADD COLUMN` | New column not included in existing views |
+    | `ALTER COLUMN TYPE` | May cause view inconsistencies |
+    | `DROP TABLE` | All views on table are dropped |
+
+    ```sql
+    -- This WILL BREAK the view if 'email' is in the view
+    ALTER TABLE users DROP email;
+
+    -- View queries will fail with:
+    -- InvalidRequestException: Unknown column 'email'
+    ```
+
+    **Prevention:**
+
+    - Document all views dependent on each table
+    - Check `system_schema.views` before schema changes
+    - Drop views explicitly before modifying base table columns they use
+
+    ```sql
+    -- Check views on a table before modifying
+    SELECT view_name, base_table_name
+    FROM system_schema.views
+    WHERE keyspace_name = 'my_keyspace'
+      AND base_table_name = 'users';
+    ```
+
 ### Notes
 
 - View build for existing data is asynchronous; monitor with `nodetool viewbuildstatus`

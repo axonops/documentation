@@ -169,6 +169,65 @@ SELECT * FROM users WHERE status = 'active' AND country = 'US';
 -- Slow even if both indexed
 ```
 
+### Collection Index Behavior
+
+Secondary indexes on collections have special query semantics:
+
+| Collection Type | Index Type | Query Operator | Example |
+|-----------------|------------|----------------|---------|
+| SET/LIST | Values | `CONTAINS` | `WHERE tags CONTAINS 'premium'` |
+| MAP | `KEYS()` | `CONTAINS KEY` | `WHERE preferences CONTAINS KEY 'theme'` |
+| MAP | `VALUES()` | `CONTAINS` | `WHERE preferences CONTAINS 'dark'` |
+| MAP | `ENTRIES()` | `[]` accessor | `WHERE preferences['theme'] = 'dark'` |
+| FROZEN | `FULL()` | `=` (full match) | `WHERE address = {street: '...', city: '...'}` |
+
+!!! warning "Collection Index Restrictions"
+    - `CONTAINS` and `CONTAINS KEY` only work with indexed collections
+    - Cannot combine multiple `CONTAINS` on same collection in one query
+    - Each element in collection is indexed separately (storage overhead)
+    - `FULL()` index requires exact match of entire frozen collection
+    - Collection indexes still result in scatter-gather without partition key
+
+    ```sql
+    -- ERROR: Cannot use multiple CONTAINS on same column
+    SELECT * FROM users
+    WHERE tags CONTAINS 'premium' AND tags CONTAINS 'verified';
+
+    -- WORKAROUND: Filter in application or use intersection
+    ```
+
+### High-Cardinality Performance Pitfalls
+
+!!! danger "Avoid Secondary Indexes on High-Cardinality Columns"
+    Secondary indexes on high-cardinality columns (many unique values) cause severe performance problems:
+
+    | Issue | Impact |
+    |-------|--------|
+    | Index size | Approaches table size; one entry per unique value |
+    | Read amplification | Must check index on every node |
+    | Hotspots | Popular values create uneven load |
+    | Tombstone buildup | Deleted values leave tombstones in index |
+    | Memory pressure | Large indexes consume heap on each node |
+
+    **Example of problematic indexing:**
+
+    ```sql
+    -- BAD: High cardinality
+    CREATE INDEX ON users (email);        -- Unique per user
+    CREATE INDEX ON orders (order_id);    -- Unique per order
+    CREATE INDEX ON events (timestamp);   -- High cardinality
+
+    -- BETTER: Low cardinality
+    CREATE INDEX ON users (account_type); -- Few values: 'free', 'premium', 'enterprise'
+    CREATE INDEX ON orders (status);      -- Few values: 'pending', 'shipped', 'delivered'
+    ```
+
+    **For high-cardinality lookups, use:**
+
+    - Denormalized tables with the lookup column as partition key
+    - SAI indexes (Cassandra 5.0+) which handle cardinality better
+    - Application-side caching for frequently accessed values
+
 ---
 
 ## Storage-Attached Indexes (SAI)
