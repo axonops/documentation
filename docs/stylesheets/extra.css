@@ -868,10 +868,10 @@ html .md-footer-meta.md-typeset a:hover {
   color: var(--axon-dark-secondary) !important;
   border-width: 0px !important;
   border-radius: 50px;
-  font-size: 12px;
+  font-size: 13px;
   font-weight: 700 !important;
   background-color: var(--axon-accent);
-  padding: 18px 35px !important;
+  padding: 8px 20px !important;
   transition: transform var(--transition-fast), box-shadow var(--transition-fast);
 }
 

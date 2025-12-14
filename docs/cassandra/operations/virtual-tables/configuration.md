@@ -320,4 +320,4 @@ Filter in application for entries within the last 5 minutes.
 - **[Virtual Tables Overview](index.md)** - Introduction to virtual tables
 - **[Thread Pools](thread-pools.md)** - Thread pool configuration and metrics
 - **[Caches](caches.md)** - Cache configuration and hit ratios
-- **[Cassandra Configuration](../../configuration/cassandra-yaml/index.md)** - Full configuration reference
+- **[Cassandra Configuration](../configuration/cassandra-yaml/index.md)** - Full configuration reference
