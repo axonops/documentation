@@ -1,15 +1,55 @@
 ---
-description: "Cassandra authentication configuration. Password authenticator"
+description: "Cassandra authentication configuration. AllowAllAuthenticator, PasswordAuthenticator, MutualTlsAuthenticator"
 meta:
   - name: keywords
-    content: "Cassandra authentication, password authenticator, login security"
+    content: "Cassandra authentication, AllowAllAuthenticator, PasswordAuthenticator, login security"
 ---
 
 # Cassandra Authentication
 
-Configure authentication to control access to your Cassandra cluster.
+Authentication controls which clients can connect to the cluster. By default, Cassandra allows all connections without credentials.
 
-## Enabling Authentication
+---
+
+## Built-in Authenticators
+
+Cassandra provides the following authenticator implementations:
+
+| Authenticator | Description | Use Case |
+|---------------|-------------|----------|
+| `AllowAllAuthenticator` | No authentication (default) | Development, testing |
+| `PasswordAuthenticator` | Username/password authentication | Production environments |
+| `MutualTlsAuthenticator` | Certificate-based authentication (5.0+) | Zero-trust environments |
+| `MutualTlsWithPasswordFallbackAuthenticator` | Certificates with password fallback (5.0+) | Migration to mTLS |
+
+### AllowAllAuthenticator (Default)
+
+The default configuration performs no authentication. Any client can connect without credentials.
+
+```yaml
+# cassandra.yaml (default)
+authenticator: AllowAllAuthenticator
+```
+
+!!! danger "Production Warning"
+    `AllowAllAuthenticator` must not be used in production. Any client with network access can read, modify, or delete all data.
+
+### PasswordAuthenticator
+
+Requires username and password credentials. Credentials are stored in the `system_auth.roles` table.
+
+```yaml
+# cassandra.yaml
+authenticator: PasswordAuthenticator
+```
+
+### MutualTlsAuthenticator (Cassandra 5.0+)
+
+Authenticates clients using X.509 certificates. Requires client encryption with mandatory certificate verification. See [Mutual TLS Authentication](#mutual-tls-authentication) for configuration details.
+
+---
+
+## Enabling Password Authentication
 
 ```yaml
 # cassandra.yaml
@@ -75,9 +115,6 @@ credentials_cache_max_entries: 1000
 ```
 
 ## Mutual TLS Authentication
-
-!!! note "Cassandra 5.0+"
-    MutualTlsAuthenticator is available in Apache Cassandra 5.0 and later.
 
 MutualTlsAuthenticator performs certificate-based authentication for client connections by extracting identities from client certificates and verifying them against authorized identities in the `system_auth.identity_to_role` table.
 
