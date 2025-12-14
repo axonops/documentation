@@ -1,5 +1,5 @@
 ---
-description: "CREATE AGGREGATE syntax for user-defined aggregates (UDA) in CQL. Build custom aggregation functions."
+description: "Cassandra CREATE AGGREGATE syntax for user-defined aggregates (UDA) in CQL. Build custom aggregation functions."
 meta:
   - name: keywords
     content: "CREATE AGGREGATE, UDA, user-defined aggregate, CQL aggregate, Cassandra"

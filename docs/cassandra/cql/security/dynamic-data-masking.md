@@ -1,5 +1,5 @@
 ---
-description: "Dynamic data masking in CQL for protecting sensitive data. Mask columns based on user permissions."
+description: "Cassandra dynamic data masking in CQL for protecting sensitive data. Mask columns based on user permissions."
 meta:
   - name: keywords
     content: "data masking, dynamic masking, CQL security, sensitive data, Cassandra"

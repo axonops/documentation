@@ -1,5 +1,5 @@
 ---
-description: "UPDATE statement syntax in CQL. Modify existing data with conditional updates and collections."
+description: "Cassandra UPDATE statement syntax in CQL. Modify existing data with conditional updates and collections."
 meta:
   - name: keywords
     content: "CQL UPDATE, update data, conditional update, Cassandra write"

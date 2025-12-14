@@ -1,5 +1,5 @@
 ---
-description: "CREATE TABLE syntax in CQL. Define partition keys, clustering columns, and table options."
+description: "Cassandra CREATE TABLE syntax in CQL. Define partition keys, clustering columns, and table options."
 meta:
   - name: keywords
     content: "CREATE TABLE, CQL table, partition key, clustering column, Cassandra schema"

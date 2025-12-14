@@ -1,5 +1,5 @@
 ---
-description: "CREATE KEYSPACE syntax and options in CQL. Configure replication strategy and datacenter settings."
+description: "Cassandra CREATE KEYSPACE syntax and options in CQL. Configure replication strategy and datacenter settings."
 meta:
   - name: keywords
     content: "CREATE KEYSPACE, CQL keyspace, replication strategy, NetworkTopologyStrategy"

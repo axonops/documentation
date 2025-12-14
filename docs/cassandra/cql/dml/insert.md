@@ -1,5 +1,5 @@
 ---
-description: "INSERT statement syntax in CQL. Add data with TTL, timestamps, and IF NOT EXISTS conditions."
+description: "Cassandra INSERT statement syntax in CQL. Add data with TTL, timestamps, and IF NOT EXISTS conditions."
 meta:
   - name: keywords
     content: "CQL INSERT, insert data, TTL, timestamp, Cassandra write"

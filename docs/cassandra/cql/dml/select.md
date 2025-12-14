@@ -1,5 +1,5 @@
 ---
-description: "SELECT statement syntax in CQL. Query data with WHERE, ORDER BY, LIMIT, and ALLOW FILTERING."
+description: "Cassandra SELECT statement syntax in CQL. Query data with WHERE, ORDER BY, LIMIT, and ALLOW FILTERING."
 meta:
   - name: keywords
     content: "CQL SELECT, query data, WHERE clause, Cassandra query, ALLOW FILTERING"

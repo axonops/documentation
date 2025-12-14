@@ -1,13 +1,31 @@
 ---
-description: "Complete CQL (Cassandra Query Language) reference guide covering DDL, DML, data types, functions, and indexing."
+description: "Complete CQL (Cassandra Query Language) reference documentation with behavioral contracts, failure semantics, and production guidance for Apache Cassandra."
 meta:
   - name: keywords
-    content: "CQL, Cassandra Query Language, SQL, query syntax, Cassandra database"
+    content: "CQL, Cassandra Query Language, CQL reference, CQL syntax, CQL tutorial, Apache Cassandra query"
 ---
 
 # CQL Reference
 
-Cassandra Query Language (CQL) is the interface for interacting with Apache Cassandra. This reference provides complete syntax documentation for all CQL statements.
+This documentation provides production-grade CQL (Cassandra Query Language) reference for Apache Cassandra, covering statement syntax, behavioral contracts, failure semantics, and version-specific differences. Each statement includes guaranteed behaviors, undefined behaviors, and error handling guidance derived from source code analysis and production experience.
+
+Cassandra Query Language (CQL) is the interface for interacting with Apache Cassandra. CQL syntax resembles SQL but operates under different semantics due to Cassandra's distributed architecture.
+
+---
+
+## About This Reference
+
+This CQL reference complements the [Apache Cassandra official documentation](https://cassandra.apache.org/doc/latest/cassandra/developing/cql/index.html) by providing:
+
+| Aspect | Coverage |
+|--------|----------|
+| **Behavioral Contracts** | What each statement guarantees vs. what is undefined behavior |
+| **Failure Semantics** | Error types, recovery strategies, and retry guidance |
+| **Version Differences** | Behavior changes between Cassandra 4.x and 5.x |
+| **Operational Context** | Production implications and performance considerations |
+| **Source References** | JIRA tickets and CEPs for implementation details |
+
+For exact grammar definitions and exhaustive syntax variants, refer to the Apache documentation.
 
 ---
 

@@ -1,11 +1,23 @@
 ---
-description: "Apache Cassandra documentation. Comprehensive guide for deployment, operations, and development."
+description: "Complete Apache Cassandra documentation and reference guide. Production-grade coverage of architecture, CQL, operations, and troubleshooting."
 meta:
   - name: keywords
-    content: "Apache Cassandra docs, Cassandra documentation, Cassandra guide"
+    content: "Apache Cassandra documentation, Cassandra reference, Cassandra guide, CQL reference, Cassandra operations"
 ---
 
 # Apache Cassandra Documentation
+
+Production-grade reference for architecture, CQL, and operations.
+
+---
+
+Apache Cassandra is a widely adopted distributed database, but much of its operational and architectural knowledge has historically lived in mailing lists, conference talks, and tribal knowledge rather than formal documentation.
+
+This documentation provides a comprehensive, production-focused reference for Apache Cassandra, covering storage engine internals, compaction strategies, indexing, CQL semantics, data modeling, and operational tooling. Content is designed for developers, operators, and architects building and maintaining Cassandra deployments at scale.
+
+This documentation complements the [Official Apache Cassandra Documentation](https://cassandra.apache.org/doc/latest/), providing deeper explanations of behavioral contracts, failure semantics, and practical guidance for real-world deployments.
+
+---
 
 Apache Cassandra is a distributed NoSQL database designed for extreme scale, exceptional performance, and continuous availability. There is no master node—every node can handle reads and writes, so the failure of any single node (or even an entire datacenter) does not take down the database.
 

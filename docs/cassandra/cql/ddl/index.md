@@ -1,5 +1,5 @@
 ---
-description: "CQL DDL (Data Definition Language) commands for creating and managing keyspaces, tables, indexes, and views."
+description: "Cassandra CQL DDL (Data Definition Language) commands for creating and managing keyspaces, tables, indexes, and views."
 meta:
   - name: keywords
     content: "CQL DDL, CREATE KEYSPACE, CREATE TABLE, Cassandra schema"

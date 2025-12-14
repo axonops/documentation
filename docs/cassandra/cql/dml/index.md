@@ -1,5 +1,5 @@
 ---
-description: "CQL DML (Data Manipulation Language) commands for SELECT, INSERT, UPDATE, DELETE, and BATCH operations."
+description: "Cassandra CQL DML (Data Manipulation Language) commands for SELECT, INSERT, UPDATE, DELETE, and BATCH operations."
 meta:
   - name: keywords
     content: "CQL DML, SELECT, INSERT, UPDATE, DELETE, BATCH, Cassandra queries"

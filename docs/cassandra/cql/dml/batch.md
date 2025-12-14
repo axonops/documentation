@@ -1,5 +1,5 @@
 ---
-description: "BATCH statement syntax in CQL. Execute multiple mutations atomically within a partition."
+description: "Cassandra BATCH statement syntax in CQL. Execute multiple mutations atomically within a partition."
 meta:
   - name: keywords
     content: "CQL BATCH, atomic batch, logged batch, unlogged batch, Cassandra"

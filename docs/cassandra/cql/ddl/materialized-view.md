@@ -1,5 +1,5 @@
 ---
-description: "CREATE MATERIALIZED VIEW syntax in CQL. Build pre-computed query results for different access patterns."
+description: "Cassandra CREATE MATERIALIZED VIEW syntax in CQL. Build pre-computed query results for different access patterns."
 meta:
   - name: keywords
     content: "materialized view, CREATE MATERIALIZED VIEW, CQL view, Cassandra"

@@ -1,5 +1,5 @@
 ---
-description: "CQL built-in functions reference including aggregates, time functions, type conversions, and UUID generation."
+description: "Cassandra CQL built-in functions reference including aggregates, time functions, type conversions, and UUID generation."
 meta:
   - name: keywords
     content: "CQL functions, built-in functions, uuid(), now(), toTimestamp(), Cassandra"

@@ -1,5 +1,5 @@
 ---
-description: "Lightweight transactions (LWT) in CQL using IF conditions. Compare-and-set operations with Paxos."
+description: "Cassandra lightweight transactions (LWT) in CQL using IF conditions. Compare-and-set operations with Paxos."
 meta:
   - name: keywords
     content: "lightweight transactions, LWT, IF EXISTS, IF NOT EXISTS, Paxos, Cassandra"

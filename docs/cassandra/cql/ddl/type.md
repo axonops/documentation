@@ -1,5 +1,5 @@
 ---
-description: "CREATE TYPE syntax for user-defined types (UDT) in CQL. Define complex nested data structures."
+description: "Cassandra CREATE TYPE syntax for user-defined types (UDT) in CQL. Define complex nested data structures."
 meta:
   - name: keywords
     content: "CREATE TYPE, UDT, user-defined type, CQL type, Cassandra"
