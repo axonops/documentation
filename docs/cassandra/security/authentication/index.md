@@ -1,8 +1,8 @@
 ---
-description: "Cassandra authentication configuration. Password authenticator, LDAP integration, and custom providers."
+description: "Cassandra authentication configuration. Password authenticator"
 meta:
   - name: keywords
-    content: "Cassandra authentication, password authenticator, LDAP, login security"
+    content: "Cassandra authentication, password authenticator, login security"
 ---
 
 # Cassandra Authentication

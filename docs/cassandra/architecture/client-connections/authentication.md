@@ -1,8 +1,8 @@
 ---
-description: "Client authentication in Cassandra. Password authenticator, LDAP, and custom authentication."
+description: "Client authentication in Cassandra. Password authenticator, and custom authentication."
 meta:
   - name: keywords
-    content: "Cassandra authentication, password authenticator, LDAP, client auth"
+    content: "Cassandra authentication, password authenticator, client auth"
 ---
 
 # Authentication Architecture
