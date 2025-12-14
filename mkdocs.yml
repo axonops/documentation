@@ -601,6 +601,19 @@ nav:
           - MBeans: cassandra/operations/jmx-reference/mbeans/index.md
           - Metrics: cassandra/operations/jmx-reference/metrics/index.md
           - Connecting: cassandra/operations/jmx-reference/connecting/index.md
+        - Virtual Tables:
+          - Overview: cassandra/operations/virtual-tables/index.md
+          - Schema Discovery: cassandra/operations/virtual-tables/system-virtual-schema.md
+          - Metrics: cassandra/operations/virtual-tables/metrics.md
+          - Thread Pools: cassandra/operations/virtual-tables/thread-pools.md
+          - Caches: cassandra/operations/virtual-tables/caches.md
+          - Clients: cassandra/operations/virtual-tables/clients.md
+          - Cluster State: cassandra/operations/virtual-tables/cluster-state.md
+          - Storage: cassandra/operations/virtual-tables/storage.md
+          - Repair: cassandra/operations/virtual-tables/repair.md
+          - SAI Indexes: cassandra/operations/virtual-tables/sai.md
+          - Streaming: cassandra/operations/virtual-tables/streaming.md
+          - Configuration: cassandra/operations/virtual-tables/configuration.md
         - Monitoring:
           - Overview: cassandra/operations/monitoring/index.md
           - Key Metrics: cassandra/operations/monitoring/key-metrics/index.md

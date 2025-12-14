@@ -672,6 +672,25 @@ SELECT * FROM events WHERE event_type = 'login' ALLOW FILTERING;
 | One-time analytics | Sometimes | If Spark unavailable |
 | Production application queries | **Never** | Unpredictable, doesn't scale |
 | Queries with partition key | Sometimes | Limits scan to single partition |
+| **Virtual tables** | **Always safe** | Small, local-only datasets |
+
+### Virtual Table Exception
+
+[Virtual tables](../../operations/virtual-tables/index.md) (`system_views`, `system_virtual_schema`) are exempt from ALLOW FILTERING performance concerns:
+
+```sql
+-- Safe: Virtual tables are small and local-only
+SELECT * FROM system_views.thread_pools WHERE pending_tasks > 0;
+SELECT * FROM system_views.clients WHERE ssl_enabled = false;
+SELECT name, value FROM system_views.settings WHERE name LIKE 'compaction%';
+```
+
+Virtual tables do not require ALLOW FILTERING because:
+
+- Data is generated dynamically from local node state
+- Result sets are inherently small (tens to hundreds of rows)
+- No disk I/O or cross-node coordination
+- No consistency level processing
 
 **Safe usage pattern** (with partition key):
 

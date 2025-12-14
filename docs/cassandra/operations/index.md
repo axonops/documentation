@@ -51,6 +51,15 @@ nodetool compactionstats  # Pending compactions
 nodetool gossipinfo       # Inter-node communication
 ```
 
+!!! tip "Virtual Tables Alternative (Cassandra 4.0+)"
+    Many nodetool commands have CQL equivalents via [virtual tables](virtual-tables/index.md):
+    ```sql
+    SELECT * FROM system_views.gossip_info;         -- gossipinfo
+    SELECT * FROM system_views.thread_pools;        -- tpstats
+    SELECT * FROM system_views.sstable_tasks;       -- compactionstats
+    SELECT * FROM system_views.clients;             -- clientstats
+    ```
+
 ### Understanding Node States
 
 ```
@@ -534,6 +543,12 @@ nodetool resetlocalschema
 - Alert configuration
 - Dashboard design
 
+### [Virtual Tables](virtual-tables/index.md)
+- Query internal state via CQL
+- Metrics, caches, and thread pools
+- Repair tracking
+- Client connections and cluster state
+
 ### [Performance](performance/index.md)
 - Read/write optimization
 - JVM and GC tuning
@@ -552,14 +567,16 @@ nodetool resetlocalschema
 
 | Metric | Warning | Critical | Source |
 |--------|---------|----------|--------|
-| Node state | Any DN | Multiple DN | `nodetool status` |
+| Node state | Any DN | Multiple DN | `nodetool status`, `system_views.gossip_info` |
 | Heap usage | >75% | >85% | JMX/metrics |
-| Disk usage | >60% | >80% | `df -h` |
-| Pending compactions | >20 | >50 | `nodetool compactionstats` |
-| Dropped messages | Any | Growing | `nodetool tpstats` |
-| Read latency p99 | >50ms | >100ms | JMX/metrics |
-| Write latency p99 | >20ms | >50ms | JMX/metrics |
+| Disk usage | >60% | >80% | `df -h`, `system_views.disk_usage` |
+| Pending compactions | >20 | >50 | `nodetool compactionstats`, `system_views.sstable_tasks` |
+| Dropped messages | Any | Growing | `nodetool tpstats`, `system_views.thread_pools` |
+| Read latency p99 | >50ms | >100ms | JMX/metrics, `system_views.coordinator_read_latency` |
+| Write latency p99 | >20ms | >50ms | JMX/metrics, `system_views.coordinator_write_latency` |
 | GC pause time | >500ms | >1s | GC logs |
+| Tombstones per read | >100 p99 | >1000 p99 | `system_views.tombstones_per_read` |
+| Cache hit ratio | <80% | <60% | `system_views.caches` |
 
 ---
 
