@@ -1521,6 +1521,66 @@
          <changefreq>daily</changefreq>
     </url>
     <url>
+         <loc>https://docs.axonops.com/cassandra/operations/virtual-tables/</loc>
+         <lastmod>2025-12-14</lastmod>
+         <changefreq>daily</changefreq>
+    </url>
+    <url>
+         <loc>https://docs.axonops.com/cassandra/operations/virtual-tables/caches/</loc>
+         <lastmod>2025-12-14</lastmod>
+         <changefreq>daily</changefreq>
+    </url>
+    <url>
+         <loc>https://docs.axonops.com/cassandra/operations/virtual-tables/clients/</loc>
+         <lastmod>2025-12-14</lastmod>
+         <changefreq>daily</changefreq>
+    </url>
+    <url>
+         <loc>https://docs.axonops.com/cassandra/operations/virtual-tables/cluster-state/</loc>
+         <lastmod>2025-12-14</lastmod>
+         <changefreq>daily</changefreq>
+    </url>
+    <url>
+         <loc>https://docs.axonops.com/cassandra/operations/virtual-tables/configuration/</loc>
+         <lastmod>2025-12-14</lastmod>
+         <changefreq>daily</changefreq>
+    </url>
+    <url>
+         <loc>https://docs.axonops.com/cassandra/operations/virtual-tables/metrics/</loc>
+         <lastmod>2025-12-14</lastmod>
+         <changefreq>daily</changefreq>
+    </url>
+    <url>
+         <loc>https://docs.axonops.com/cassandra/operations/virtual-tables/repair/</loc>
+         <lastmod>2025-12-14</lastmod>
+         <changefreq>daily</changefreq>
+    </url>
+    <url>
+         <loc>https://docs.axonops.com/cassandra/operations/virtual-tables/sai/</loc>
+         <lastmod>2025-12-14</lastmod>
+         <changefreq>daily</changefreq>
+    </url>
+    <url>
+         <loc>https://docs.axonops.com/cassandra/operations/virtual-tables/storage/</loc>
+         <lastmod>2025-12-14</lastmod>
+         <changefreq>daily</changefreq>
+    </url>
+    <url>
+         <loc>https://docs.axonops.com/cassandra/operations/virtual-tables/streaming/</loc>
+         <lastmod>2025-12-14</lastmod>
+         <changefreq>daily</changefreq>
+    </url>
+    <url>
+         <loc>https://docs.axonops.com/cassandra/operations/virtual-tables/system-virtual-schema/</loc>
+         <lastmod>2025-12-14</lastmod>
+         <changefreq>daily</changefreq>
+    </url>
+    <url>
+         <loc>https://docs.axonops.com/cassandra/operations/virtual-tables/thread-pools/</loc>
+         <lastmod>2025-12-14</lastmod>
+         <changefreq>daily</changefreq>
+    </url>
+    <url>
          <loc>https://docs.axonops.com/cassandra/reference/</loc>
          <lastmod>2025-12-14</lastmod>
          <changefreq>daily</changefreq>
