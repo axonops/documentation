@@ -144,17 +144,17 @@
 <!-- Critical CSS inline to reduce chain depth and enable faster FCP -->
 <style>
 /* Critical above-the-fold styles - inlined to avoid render blocking */
-:root{--axon-primary:#0080FF;--axon-dark:#030737;--axon-accent:#7CD825;--text-primary:#1a1a2e;--text-secondary:#4a4a68;--bg-primary:#fff;--bg-secondary:#f8fafc;--border-light:#e2e8f0}
+:root{--axon-primary:#0080FF;--axon-dark:#030737;--axon-accent:#7CD825;--text-primary:#0f0f0f;--text-secondary:#1f2937;--bg-primary:#fff;--bg-secondary:#f8fafc;--border-light:#e2e8f0}
 [data-md-color-scheme=slate]{--text-primary:#f1f5f9;--text-secondary:#cbd5e1;--bg-primary:#0f172a;--bg-secondary:#1e293b;--border-light:#334155}
 html{font-size:16px!important}
 body{font-family:'Roboto Flex',-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;font-size:1rem!important;line-height:1.6;color:var(--text-primary);margin:0;-webkit-font-smoothing:antialiased}
 .md-header{background-color:var(--axon-dark);box-shadow:0 4px 6px -1px rgb(0 0 0/.1)}
 .md-tabs{background-color:var(--axon-dark)}
-.md-typeset{font-family:'Roboto Flex',-apple-system,BlinkMacSystemFont,sans-serif;font-size:.875rem;line-height:1.7;color:var(--text-primary)}
+.md-typeset{font-family:'Roboto Flex',-apple-system,BlinkMacSystemFont,sans-serif;font-size:.9375rem;line-height:1.7;color:var(--text-primary)}
 .md-typeset h1{font-size:1.6rem;font-weight:700;margin-top:0;border-bottom:2px solid var(--border-light)}
 .md-typeset h2{font-size:1.25rem;font-weight:600;border-bottom:1px solid var(--border-light)}
 .md-content{max-width:900px}
-.md-nav__link{font-size:.875rem;color:var(--text-secondary)}
+.md-nav__link{font-size:.9375rem;color:var(--text-secondary)}
 .md-banner{background-color:var(--axon-accent)!important;color:var(--axon-dark)}
 </style>
 
@@ -6502,6 +6502,51 @@ data-et-multi-view="{&quot;schema&quot;:{&quot;content&quot;:{&quot;desktop&quot
   
 </li>
         
+          <li class="md-nav__item">
+  <a href="#non-deterministic-functions" class="md-nav__link">
+    <span class="md-ellipsis">
+      Non-Deterministic Functions
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#type-constraints" class="md-nav__link">
+    <span class="md-ellipsis">
+      Type Constraints
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#sandbox-restrictions" class="md-nav__link">
+    <span class="md-ellipsis">
+      Sandbox Restrictions
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#distributed-consistency" class="md-nav__link">
+    <span class="md-ellipsis">
+      Distributed Consistency
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#error-handling" class="md-nav__link">
+    <span class="md-ellipsis">
+      Error Handling
+    </span>
+  </a>
+  
+</li>
+        
       </ul>
     </nav>
   
@@ -6839,6 +6884,15 @@ data-et-multi-view="{&quot;schema&quot;:{&quot;content&quot;:{&quot;desktop&quot
   <a href="#design-guidelines" class="md-nav__link">
     <span class="md-ellipsis">
       Design Guidelines
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#performance-and-safety" class="md-nav__link">
+    <span class="md-ellipsis">
+      Performance and Safety
     </span>
   </a>
   
@@ -14399,6 +14453,51 @@ data-et-multi-view="{&quot;schema&quot;:{&quot;content&quot;:{&quot;desktop&quot
   
 </li>
         
+          <li class="md-nav__item">
+  <a href="#non-deterministic-functions" class="md-nav__link">
+    <span class="md-ellipsis">
+      Non-Deterministic Functions
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#type-constraints" class="md-nav__link">
+    <span class="md-ellipsis">
+      Type Constraints
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#sandbox-restrictions" class="md-nav__link">
+    <span class="md-ellipsis">
+      Sandbox Restrictions
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#distributed-consistency" class="md-nav__link">
+    <span class="md-ellipsis">
+      Distributed Consistency
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#error-handling" class="md-nav__link">
+    <span class="md-ellipsis">
+      Error Handling
+    </span>
+  </a>
+  
+</li>
+        
       </ul>
     </nav>
   
@@ -14736,6 +14835,15 @@ data-et-multi-view="{&quot;schema&quot;:{&quot;content&quot;:{&quot;desktop&quot
   <a href="#design-guidelines" class="md-nav__link">
     <span class="md-ellipsis">
       Design Guidelines
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#performance-and-safety" class="md-nav__link">
+    <span class="md-ellipsis">
+      Performance and Safety
     </span>
   </a>
   
@@ -15092,10 +15200,237 @@ data-et-multi-view="{&quot;schema&quot;:{&quot;content&quot;:{&quot;desktop&quot
 </ul>
 </div>
 <h3 id="null-handling">Null Handling<a class="headerlink" href="#null-handling" title="Permanent link">¶</a></h3>
+<p>Understanding null behavior is critical for correct UDA implementation:</p>
+<table>
+<thead>
+<tr>
+<th>Scenario</th>
+<th>Behavior</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Input value is NULL</td>
+<td>State function is <strong>not called</strong>; state remains unchanged</td>
+</tr>
+<tr>
+<td>State function returns NULL</td>
+<td>State becomes NULL for remainder of aggregation</td>
+</tr>
+<tr>
+<td>INITCOND is NULL or unspecified</td>
+<td>First SFUNC call receives NULL as initial state</td>
+</tr>
+<tr>
+<td>All input values are NULL</td>
+<td>Result is FINALFUNC(INITCOND) or INITCOND if no FINALFUNC</td>
+</tr>
+</tbody>
+</table>
+<div class="admonition warning">
+<p class="admonition-title">Null Propagation</p>
+<p>If the state function returns NULL at any point, the state remains NULL for all subsequent rows. This is particularly dangerous with arithmetic operations:</p>
+<div class="highlight"><pre><span></span><code><span class="c1">// Dangerous: returns null if state is ever null</span>
+<span class="k">return</span><span class="w"> </span><span class="n">state</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">val</span><span class="p">;</span><span class="w">  </span><span class="c1">// null + anything = null</span>
+
+<span class="c1">// Safe: handle null state explicitly</span>
+<span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">state</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="kc">null</span><span class="p">)</span><span class="w"> </span><span class="k">return</span><span class="w"> </span><span class="p">(</span><span class="kt">long</span><span class="p">)</span><span class="w"> </span><span class="n">val</span><span class="p">;</span>
+<span class="k">return</span><span class="w"> </span><span class="n">state</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">val</span><span class="p">;</span>
+</code></pre></div>
+</div>
+<div class="admonition tip">
+<p class="admonition-title">Best Practices for Null Safety</p>
+<ul>
+<li>Always specify <code>INITCOND</code> to avoid null initial state</li>
+<li>Use <code>CALLED ON NULL INPUT</code> for state functions</li>
+<li>Explicitly check for null state AND null input values in SFUNC</li>
+<li>Test aggregation with datasets containing NULL values</li>
+</ul>
+</div>
+<h3 id="non-deterministic-functions">Non-Deterministic Functions<a class="headerlink" href="#non-deterministic-functions" title="Permanent link">¶</a></h3>
+<div class="admonition danger">
+<p class="admonition-title">Avoid Non-Deterministic Functions in UDAs</p>
+<p>UDAs can reference UDFs that use non-deterministic operations like <code>now()</code> or <code>uuid()</code>. This leads to unpredictable results because:</p>
+<ul>
+<li>Aggregation assumes deterministic behavior for consistency</li>
+<li>The same input data may produce different results on each execution</li>
+<li>Replayed queries (e.g., during repair or retry) may yield inconsistent values</li>
+</ul>
+<p><strong>Recommendation</strong>: Use only deterministic functions in SFUNC and FINALFUNC. If timestamps or UUIDs are needed, pass them as input parameters rather than generating them inside the function.</p>
+</div>
+<h3 id="type-constraints">Type Constraints<a class="headerlink" href="#type-constraints" title="Permanent link">¶</a></h3>
+<p>Strict type matching is enforced between aggregate components:</p>
+<table>
+<thead>
+<tr>
+<th>Constraint</th>
+<th>Requirement</th>
+<th>Error if Violated</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>SFUNC return type</td>
+<td>Must exactly match STYPE</td>
+<td><code>InvalidRequestException</code> at creation</td>
+</tr>
+<tr>
+<td>SFUNC first parameter</td>
+<td>Must exactly match STYPE</td>
+<td><code>InvalidRequestException</code> at creation</td>
+</tr>
+<tr>
+<td>FINALFUNC input type</td>
+<td>Must exactly match STYPE</td>
+<td><code>InvalidRequestException</code> at creation</td>
+</tr>
+<tr>
+<td>INITCOND type</td>
+<td>Must be literal of STYPE</td>
+<td>Compile-time error</td>
+</tr>
+</tbody>
+</table>
+<p><strong>INITCOND Parsing Rules:</strong></p>
+<div class="highlight"><pre><span></span><code><span class="c1">-- Scalar types: use literal values</span>
+<span class="n">INITCOND</span><span class="w"> </span><span class="mi">0</span><span class="w">           </span><span class="c1">-- for INT, BIGINT</span>
+<span class="n">INITCOND</span><span class="w"> </span><span class="mi">0</span><span class="p">.</span><span class="mi">0</span><span class="w">         </span><span class="c1">-- for DOUBLE, FLOAT</span>
+<span class="n">INITCOND</span><span class="w"> </span><span class="s1">''</span><span class="w">          </span><span class="c1">-- for TEXT</span>
+
+<span class="c1">-- Tuple types: use parentheses</span>
+<span class="n">INITCOND</span><span class="w"> </span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="w"> </span><span class="mi">0</span><span class="p">)</span><span class="w">      </span><span class="c1">-- for TUPLE&lt;BIGINT, BIGINT&gt;</span>
+<span class="n">INITCOND</span><span class="w"> </span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="w"> </span><span class="mi">0</span><span class="p">.</span><span class="mi">0</span><span class="p">,</span><span class="w"> </span><span class="s1">''</span><span class="p">)</span><span class="w"> </span><span class="c1">-- for TUPLE&lt;INT, DOUBLE, TEXT&gt;</span>
+
+<span class="c1">-- Collection types: use brackets/braces</span>
+<span class="n">INITCOND</span><span class="w"> </span><span class="p">[]</span><span class="w">          </span><span class="c1">-- for LIST</span>
+<span class="n">INITCOND</span><span class="w"> </span><span class="err">{}</span><span class="w">          </span><span class="c1">-- for SET or empty MAP</span>
+<span class="n">INITCOND</span><span class="w"> </span><span class="err">{</span><span class="s1">'key'</span><span class="p">:</span><span class="w"> </span><span class="mi">0</span><span class="err">}</span><span class="w">  </span><span class="c1">-- for MAP&lt;TEXT, INT&gt;</span>
+
+<span class="c1">-- UDT types: use named fields</span>
+<span class="n">INITCOND</span><span class="w"> </span><span class="err">{</span><span class="n">field1</span><span class="p">:</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w"> </span><span class="n">field2</span><span class="p">:</span><span class="w"> </span><span class="s1">''</span><span class="err">}</span>
+</code></pre></div>
+<h3 id="sandbox-restrictions">Sandbox Restrictions<a class="headerlink" href="#sandbox-restrictions" title="Permanent link">¶</a></h3>
+<p>UDFs (and therefore UDAs) execute in a sandboxed JVM environment with significant restrictions:</p>
+<table>
+<thead>
+<tr>
+<th>Restriction</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>No file system access</td>
+<td>Cannot read or write files</td>
+</tr>
+<tr>
+<td>No network access</td>
+<td>Cannot open sockets or make HTTP calls</td>
+</tr>
+<tr>
+<td>Limited Java classes</td>
+<td>Only whitelisted JDK classes available</td>
+</tr>
+<tr>
+<td>No reflection</td>
+<td><code>java.lang.reflect</code> package blocked</td>
+</tr>
+<tr>
+<td>No threading</td>
+<td>Cannot create threads or use concurrency utilities</td>
+</tr>
+<tr>
+<td>Memory limits</td>
+<td>Bounded by <code>user_function_timeout</code> settings</td>
+</tr>
+</tbody>
+</table>
 <div class="admonition note">
-<p class="admonition-title">Null Handling</p>
-<p>If <code>INITCOND</code> is not specified and the first row has null input, the state remains null. Subsequent rows with non-null values may then fail if the state function doesn't handle null state.</p>
-<p><strong>Best practice</strong>: Always specify <code>INITCOND</code> and make <code>SFUNC</code> null-safe with <code>CALLED ON NULL INPUT</code>.</p>
+<p class="admonition-title">Allowed Classes</p>
+<p>The sandbox permits basic Java classes: primitives, <code>String</code>, <code>Math</code>, collections (<code>List</code>, <code>Set</code>, <code>Map</code>), and Cassandra driver types (<code>TupleValue</code>, <code>UDTValue</code>). Attempting to use restricted classes throws <code>SecurityException</code>.</p>
+</div>
+<h3 id="distributed-consistency">Distributed Consistency<a class="headerlink" href="#distributed-consistency" title="Permanent link">¶</a></h3>
+<p>UDA execution has implications for distributed consistency:</p>
+<table>
+<thead>
+<tr>
+<th>Aspect</th>
+<th>Behavior</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Aggregation location</td>
+<td>Coordinator collects all rows, then aggregates</td>
+</tr>
+<tr>
+<td>Partition ordering</td>
+<td>Rows from different partitions have undefined order</td>
+</tr>
+<tr>
+<td>Global ordering</td>
+<td>Not guaranteed unless single partition with ORDER BY</td>
+</tr>
+<tr>
+<td>Result merging</td>
+<td>No distributed reduce phase; all data flows to coordinator</td>
+</tr>
+</tbody>
+</table>
+<div class="admonition warning">
+<p class="admonition-title">No Global Ordering Guarantees</p>
+<p>If a UDA relies on processing rows in a specific global order or expects uniqueness across partitions, results may differ from expectations. Cassandra does not guarantee ordering between partitions.</p>
+<div class="highlight"><pre><span></span><code><span class="c1">-- Order guaranteed within partition</span>
+<span class="k">SELECT</span><span class="w"> </span><span class="n">my_agg</span><span class="p">(</span><span class="n">value</span><span class="p">)</span><span class="w"> </span><span class="k">FROM</span><span class="w"> </span><span class="k">table</span><span class="w"> </span><span class="k">WHERE</span><span class="w"> </span><span class="n">partition_key</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="o">?</span>
+<span class="w">    </span><span class="k">ORDER</span><span class="w"> </span><span class="k">BY</span><span class="w"> </span><span class="n">clustering_col</span><span class="p">;</span>
+
+<span class="c1">-- Order NOT guaranteed across partitions</span>
+<span class="k">SELECT</span><span class="w"> </span><span class="n">my_agg</span><span class="p">(</span><span class="n">value</span><span class="p">)</span><span class="w"> </span><span class="k">FROM</span><span class="w"> </span><span class="k">table</span><span class="p">;</span><span class="w">  </span><span class="c1">-- undefined row order</span>
+</code></pre></div>
+</div>
+<h3 id="error-handling">Error Handling<a class="headerlink" href="#error-handling" title="Permanent link">¶</a></h3>
+<p>UDA error behavior follows fail-fast semantics:</p>
+<table>
+<thead>
+<tr>
+<th>Error Source</th>
+<th>Behavior</th>
+<th>Recovery</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>SFUNC throws exception</td>
+<td>Query fails immediately</td>
+<td>No partial results returned</td>
+</tr>
+<tr>
+<td>FINALFUNC throws exception</td>
+<td>Query fails after aggregation</td>
+<td>Aggregated state is lost</td>
+</tr>
+<tr>
+<td>Timeout during SFUNC</td>
+<td>Query fails</td>
+<td>Partial state discarded</td>
+</tr>
+<tr>
+<td>Type conversion error</td>
+<td>Query fails</td>
+<td>Fix function or input data</td>
+</tr>
+</tbody>
+</table>
+<div class="admonition danger">
+<p class="admonition-title">No Partial Aggregation Recovery</p>
+<p>When any error occurs during UDA execution:</p>
+<ul>
+<li>The entire query fails</li>
+<li>No partial aggregation results are returned</li>
+<li>All accumulated state is discarded</li>
+<li>The error propagates to the client</li>
+</ul>
+<p><strong>Mitigation</strong>: Implement defensive programming in SFUNC/FINALFUNC with try-catch blocks that return safe default values rather than throwing exceptions.</p>
 </div>
 <hr>
 <h2 id="create-aggregate">CREATE AGGREGATE<a class="headerlink" href="#create-aggregate" title="Permanent link">¶</a></h2>
@@ -15482,32 +15817,106 @@ data-et-multi-view="{&quot;schema&quot;:{&quot;content&quot;:{&quot;desktop&quot
 </div>
 <h3 id="design-guidelines">Design Guidelines<a class="headerlink" href="#design-guidelines" title="Permanent link">¶</a></h3>
 <ol>
-<li><strong>Choose appropriate state type</strong></li>
+<li>
+<p><strong>Choose appropriate state type</strong></p>
+<ul>
 <li>Simple types for simple aggregations</li>
 <li>Tuples for multi-value accumulation</li>
-<li>
-<p>Avoid unbounded collections</p>
+<li>Avoid unbounded collections</li>
+</ul>
 </li>
 <li>
 <p><strong>Handle null state correctly</strong></p>
-</li>
+<ul>
 <li>Use INITCOND when possible</li>
-<li>
-<p>Make SFUNC null-safe</p>
+<li>Make SFUNC null-safe</li>
+</ul>
 </li>
 <li>
 <p><strong>Test with realistic volumes</strong></p>
-</li>
+<ul>
 <li>Profile memory usage</li>
-<li>
-<p>Test with expected result set sizes</p>
+<li>Test with expected result set sizes</li>
+</ul>
 </li>
 <li>
 <p><strong>Consider pre-aggregation</strong></p>
-</li>
+<ul>
 <li>Maintain aggregated tables for common queries</li>
 <li>Update aggregates via application logic</li>
+</ul>
+</li>
 </ol>
+<h3 id="performance-and-safety">Performance and Safety<a class="headerlink" href="#performance-and-safety" title="Permanent link">¶</a></h3>
+<p>UDAs have significant performance implications that must be considered:</p>
+<table>
+<thead>
+<tr>
+<th>Concern</th>
+<th>Impact</th>
+<th>Mitigation</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Coordinator memory</td>
+<td>All rows streamed to single node</td>
+<td>Limit result sets with WHERE clauses</td>
+</tr>
+<tr>
+<td>State size</td>
+<td>Large state consumes heap</td>
+<td>Keep state minimal; avoid unbounded collections</td>
+</tr>
+<tr>
+<td>SFUNC complexity</td>
+<td>Called once per row</td>
+<td>Keep operations O(1); avoid heavy computation</td>
+</tr>
+<tr>
+<td>FINALFUNC complexity</td>
+<td>Called once at end</td>
+<td>Acceptable to be more complex than SFUNC</td>
+</tr>
+<tr>
+<td>Network transfer</td>
+<td>All data flows to coordinator</td>
+<td>Pre-filter data; consider materialized views</td>
+</tr>
+</tbody>
+</table>
+<div class="admonition warning">
+<p class="admonition-title">Performance Best Practices</p>
+<p><strong>Keep state small:</strong></p>
+<ul>
+<li>Prefer primitive types over collections</li>
+<li>Use fixed-size tuples instead of growing lists</li>
+<li>Accumulate only what's necessary for final computation</li>
+</ul>
+<p><strong>Keep operations lightweight:</strong></p>
+<ul>
+<li>Avoid object allocation in SFUNC when possible</li>
+<li>No I/O operations (blocked by sandbox anyway)</li>
+<li>No complex string manipulation per row</li>
+<li>Pre-compute values that don't change</li>
+</ul>
+<p><strong>Example - Efficient vs Inefficient:</strong></p>
+<div class="highlight"><pre><span></span><code><span class="c1">// INEFFICIENT: Creates new ArrayList every call</span>
+<span class="n">List</span><span class="o">&lt;</span><span class="n">Integer</span><span class="o">&gt;</span><span class="w"> </span><span class="n">result</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="n">ArrayList</span><span class="o">&lt;&gt;</span><span class="p">(</span><span class="n">state</span><span class="p">);</span>
+<span class="n">result</span><span class="p">.</span><span class="na">add</span><span class="p">(</span><span class="n">val</span><span class="p">);</span>
+<span class="k">return</span><span class="w"> </span><span class="n">result</span><span class="p">;</span>
+
+<span class="c1">// EFFICIENT: Accumulate only sum and count</span>
+<span class="k">return</span><span class="w"> </span><span class="n">state</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">val</span><span class="p">;</span><span class="w">  </span><span class="c1">// For simple sum</span>
+</code></pre></div>
+</div>
+<div class="admonition tip">
+<p class="admonition-title">Capacity Planning</p>
+<p>Estimate coordinator memory requirements:</p>
+<div class="highlight"><pre><span></span><code>Memory ≈ (rows × state_size) + (rows × row_size_during_transfer)
+</code></pre></div>
+<p>For 1 million rows with 100-byte state: ~100MB minimum coordinator heap required.</p>
+</div>
 <h3 id="cleanup-dropping-aggregate-and-functions">Cleanup: Dropping Aggregate and Functions<a class="headerlink" href="#cleanup-dropping-aggregate-and-functions" title="Permanent link">¶</a></h3>
 <div class="highlight"><pre><span></span><code><span class="c1">-- Order matters: drop aggregate before its functions</span>
 <span class="k">DROP</span><span class="w"> </span><span class="k">AGGREGATE</span><span class="w"> </span><span class="k">IF</span><span class="w"> </span><span class="k">EXISTS</span><span class="w"> </span><span class="n">my_avg</span><span class="p">;</span>

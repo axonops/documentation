@@ -144,17 +144,17 @@
 <!-- Critical CSS inline to reduce chain depth and enable faster FCP -->
 <style>
 /* Critical above-the-fold styles - inlined to avoid render blocking */
-:root{--axon-primary:#0080FF;--axon-dark:#030737;--axon-accent:#7CD825;--text-primary:#1a1a2e;--text-secondary:#4a4a68;--bg-primary:#fff;--bg-secondary:#f8fafc;--border-light:#e2e8f0}
+:root{--axon-primary:#0080FF;--axon-dark:#030737;--axon-accent:#7CD825;--text-primary:#0f0f0f;--text-secondary:#1f2937;--bg-primary:#fff;--bg-secondary:#f8fafc;--border-light:#e2e8f0}
 [data-md-color-scheme=slate]{--text-primary:#f1f5f9;--text-secondary:#cbd5e1;--bg-primary:#0f172a;--bg-secondary:#1e293b;--border-light:#334155}
 html{font-size:16px!important}
 body{font-family:'Roboto Flex',-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;font-size:1rem!important;line-height:1.6;color:var(--text-primary);margin:0;-webkit-font-smoothing:antialiased}
 .md-header{background-color:var(--axon-dark);box-shadow:0 4px 6px -1px rgb(0 0 0/.1)}
 .md-tabs{background-color:var(--axon-dark)}
-.md-typeset{font-family:'Roboto Flex',-apple-system,BlinkMacSystemFont,sans-serif;font-size:.875rem;line-height:1.7;color:var(--text-primary)}
+.md-typeset{font-family:'Roboto Flex',-apple-system,BlinkMacSystemFont,sans-serif;font-size:.9375rem;line-height:1.7;color:var(--text-primary)}
 .md-typeset h1{font-size:1.6rem;font-weight:700;margin-top:0;border-bottom:2px solid var(--border-light)}
 .md-typeset h2{font-size:1.25rem;font-weight:600;border-bottom:1px solid var(--border-light)}
 .md-content{max-width:900px}
-.md-nav__link{font-size:.875rem;color:var(--text-secondary)}
+.md-nav__link{font-size:.9375rem;color:var(--text-secondary)}
 .md-banner{background-color:var(--axon-accent)!important;color:var(--axon-dark)}
 </style>
 
@@ -4379,6 +4379,24 @@ data-et-multi-view="{&quot;schema&quot;:{&quot;content&quot;:{&quot;desktop&quot
   
     <nav class="md-nav" aria-label="What is Apache Cassandra?">
       <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#history-and-origins" class="md-nav__link">
+    <span class="md-ellipsis">
+      History and Origins
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#design-influences" class="md-nav__link">
+    <span class="md-ellipsis">
+      Design Influences
+    </span>
+  </a>
+  
+</li>
         
           <li class="md-nav__item">
   <a href="#performance-characteristics" class="md-nav__link">
@@ -13950,6 +13968,24 @@ data-et-multi-view="{&quot;schema&quot;:{&quot;content&quot;:{&quot;desktop&quot
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
+  <a href="#history-and-origins" class="md-nav__link">
+    <span class="md-ellipsis">
+      History and Origins
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#design-influences" class="md-nav__link">
+    <span class="md-ellipsis">
+      Design Influences
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
   <a href="#performance-characteristics" class="md-nav__link">
     <span class="md-ellipsis">
       Performance Characteristics
@@ -14238,6 +14274,56 @@ data-et-multi-view="{&quot;schema&quot;:{&quot;content&quot;:{&quot;desktop&quot
 <p>Topics are organized for both learning and reference. New users can follow the Getting Started guides sequentially, while experienced operators can use the detailed reference sections for specific configuration options, JMX metrics, and operational procedures.</p>
 <hr>
 <h2 id="what-is-apache-cassandra">What is Apache Cassandra?<a class="headerlink" href="#what-is-apache-cassandra" title="Permanent link">¶</a></h2>
+<h3 id="history-and-origins">History and Origins<a class="headerlink" href="#history-and-origins" title="Permanent link">¶</a></h3>
+<p>Cassandra was created at Facebook in 2007 by Avinash Lakshman and Prashant Malik to power Facebook's Inbox Search feature—a system requiring high write throughput across hundreds of millions of users with strict latency requirements. Lakshman, a co-author of Amazon's Dynamo paper, brought distributed systems expertise that shaped Cassandra's architecture.</p>
+<table>
+<thead>
+<tr>
+<th>Year</th>
+<th>Milestone</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>2007</td>
+<td>Development begins at Facebook</td>
+</tr>
+<tr>
+<td>2008</td>
+<td>Open sourced under Apache License 2.0 (July)</td>
+</tr>
+<tr>
+<td>2009</td>
+<td>Enters Apache Incubator (March)</td>
+</tr>
+<tr>
+<td>2010</td>
+<td>Graduates to Apache Top-Level Project (February)</td>
+</tr>
+<tr>
+<td>2011</td>
+<td>Cassandra 1.0 released</td>
+</tr>
+<tr>
+<td>2014</td>
+<td>Cassandra 2.0 introduces lightweight transactions</td>
+</tr>
+<tr>
+<td>2016</td>
+<td>Cassandra 3.0 brings materialized views and SASI</td>
+</tr>
+<tr>
+<td>2021</td>
+<td>Cassandra 4.0 after extensive testing focus</td>
+</tr>
+<tr>
+<td>2024</td>
+<td>Cassandra 5.0 introduces vectors, SAI, and UCS</td>
+</tr>
+</tbody>
+</table>
+<p>The project is licensed under the <a href="https://www.apache.org/licenses/LICENSE-2.0">Apache License 2.0</a>, permitting commercial use, modification, and distribution.</p>
+<h3 id="design-influences">Design Influences<a class="headerlink" href="#design-influences" title="Permanent link">¶</a></h3>
 <p>Cassandra's design draws from two foundational distributed systems papers: Google's BigTable (2006) provided the storage model—SSTables, memtables, and the LSM-tree architecture. Amazon's Dynamo (2007) provided the distribution model—consistent hashing, gossip-based cluster membership, and tunable consistency levels.</p>
 <h3 id="performance-characteristics">Performance Characteristics<a class="headerlink" href="#performance-characteristics" title="Permanent link">¶</a></h3>
 <p>Cassandra delivers exceptional performance at scale:</p>

@@ -144,17 +144,17 @@
 <!-- Critical CSS inline to reduce chain depth and enable faster FCP -->
 <style>
 /* Critical above-the-fold styles - inlined to avoid render blocking */
-:root{--axon-primary:#0080FF;--axon-dark:#030737;--axon-accent:#7CD825;--text-primary:#1a1a2e;--text-secondary:#4a4a68;--bg-primary:#fff;--bg-secondary:#f8fafc;--border-light:#e2e8f0}
+:root{--axon-primary:#0080FF;--axon-dark:#030737;--axon-accent:#7CD825;--text-primary:#0f0f0f;--text-secondary:#1f2937;--bg-primary:#fff;--bg-secondary:#f8fafc;--border-light:#e2e8f0}
 [data-md-color-scheme=slate]{--text-primary:#f1f5f9;--text-secondary:#cbd5e1;--bg-primary:#0f172a;--bg-secondary:#1e293b;--border-light:#334155}
 html{font-size:16px!important}
 body{font-family:'Roboto Flex',-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;font-size:1rem!important;line-height:1.6;color:var(--text-primary);margin:0;-webkit-font-smoothing:antialiased}
 .md-header{background-color:var(--axon-dark);box-shadow:0 4px 6px -1px rgb(0 0 0/.1)}
 .md-tabs{background-color:var(--axon-dark)}
-.md-typeset{font-family:'Roboto Flex',-apple-system,BlinkMacSystemFont,sans-serif;font-size:.875rem;line-height:1.7;color:var(--text-primary)}
+.md-typeset{font-family:'Roboto Flex',-apple-system,BlinkMacSystemFont,sans-serif;font-size:.9375rem;line-height:1.7;color:var(--text-primary)}
 .md-typeset h1{font-size:1.6rem;font-weight:700;margin-top:0;border-bottom:2px solid var(--border-light)}
 .md-typeset h2{font-size:1.25rem;font-weight:600;border-bottom:1px solid var(--border-light)}
 .md-content{max-width:900px}
-.md-nav__link{font-size:.875rem;color:var(--text-secondary)}
+.md-nav__link{font-size:.9375rem;color:var(--text-secondary)}
 .md-banner{background-color:var(--axon-accent)!important;color:var(--axon-dark)}
 </style>
 
@@ -6901,6 +6901,30 @@ data-et-multi-view="{&quot;schema&quot;:{&quot;content&quot;:{&quot;desktop&quot
       Restrictions
     </span>
   </a>
+  
+    <nav class="md-nav" aria-label="Restrictions">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#atomicity-scope" class="md-nav__link">
+    <span class="md-ellipsis">
+      Atomicity Scope
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#large-batch-performance-degradation" class="md-nav__link">
+    <span class="md-ellipsis">
+      Large Batch Performance Degradation
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
   
 </li>
       
@@ -14561,6 +14585,30 @@ data-et-multi-view="{&quot;schema&quot;:{&quot;content&quot;:{&quot;desktop&quot
     </span>
   </a>
   
+    <nav class="md-nav" aria-label="Restrictions">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#atomicity-scope" class="md-nav__link">
+    <span class="md-ellipsis">
+      Atomicity Scope
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#large-batch-performance-degradation" class="md-nav__link">
+    <span class="md-ellipsis">
+      Large Batch Performance Degradation
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
 </li>
       
         <li class="md-nav__item">
@@ -15153,9 +15201,10 @@ mutation_size ≈ key_size + sum(column_sizes) + metadata
 <p><strong>Counter Batches:</strong></p>
 <ul>
 <li>Must use COUNTER keyword</li>
-<li>Cannot mix counter and non-counter statements</li>
-<li>No TTL allowed</li>
-<li>No IF conditions allowed</li>
+<li>Cannot mix counter and non-counter statements in same batch</li>
+<li>No TTL allowed on counter updates</li>
+<li>No IF conditions allowed with counters</li>
+<li>Counter batches are always unlogged internally</li>
 </ul>
 <p><strong>Conditional Batches:</strong></p>
 <ul>
@@ -15168,6 +15217,100 @@ mutation_size ≈ key_size + sum(column_sizes) + metadata
 <li>Maximum batch size enforced by configuration</li>
 <li>Batch log adds overhead to logged batches</li>
 <li>Multi-partition batches not atomic if using UNLOGGED</li>
+</ul>
+</div>
+<h3 id="atomicity-scope">Atomicity Scope<a class="headerlink" href="#atomicity-scope" title="Permanent link">¶</a></h3>
+<div class="admonition warning">
+<p class="admonition-title">Batch Atomicity is Partition-Scoped</p>
+<p>A critical misconception: batches are <strong>only atomic within a single partition</strong> at the storage layer.</p>
+<table>
+<thead>
+<tr>
+<th>Batch Type</th>
+<th>Single Partition</th>
+<th>Multi-Partition</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>LOGGED</td>
+<td>Atomic</td>
+<td>Eventual atomicity via batch log</td>
+</tr>
+<tr>
+<td>UNLOGGED</td>
+<td>Atomic</td>
+<td><strong>Not atomic</strong> - partial execution possible</td>
+</tr>
+<tr>
+<td>COUNTER</td>
+<td>Atomic</td>
+<td><strong>Not atomic</strong></td>
+</tr>
+</tbody>
+</table>
+<p><strong>Multi-partition "atomicity" via logged batches:</strong></p>
+<ul>
+<li>Batch log ensures eventual delivery, not instant atomicity</li>
+<li>Other reads may see partial results during batch execution</li>
+<li>If batch log replay fails repeatedly, mutations may be lost</li>
+</ul>
+<div class="highlight"><pre><span></span><code><span class="c1">-- This is NOT instantly atomic across partitions</span>
+<span class="k">BEGIN</span><span class="w"> </span><span class="n">BATCH</span>
+<span class="w">    </span><span class="k">INSERT</span><span class="w"> </span><span class="k">INTO</span><span class="w"> </span><span class="n">users</span><span class="w"> </span><span class="p">(</span><span class="n">user_id</span><span class="p">,</span><span class="w"> </span><span class="p">...)</span><span class="w"> </span><span class="k">VALUES</span><span class="w"> </span><span class="p">(</span><span class="s1">'user1'</span><span class="p">,</span><span class="w"> </span><span class="p">...);</span><span class="w">    </span><span class="c1">-- Partition 1</span>
+<span class="w">    </span><span class="k">INSERT</span><span class="w"> </span><span class="k">INTO</span><span class="w"> </span><span class="n">users</span><span class="w"> </span><span class="p">(</span><span class="n">user_id</span><span class="p">,</span><span class="w"> </span><span class="p">...)</span><span class="w"> </span><span class="k">VALUES</span><span class="w"> </span><span class="p">(</span><span class="s1">'user2'</span><span class="p">,</span><span class="w"> </span><span class="p">...);</span><span class="w">    </span><span class="c1">-- Partition 2</span>
+<span class="n">APPLY</span><span class="w"> </span><span class="n">BATCH</span><span class="p">;</span>
+<span class="c1">-- A concurrent read might see user1 but not user2</span>
+</code></pre></div>
+</div>
+<h3 id="large-batch-performance-degradation">Large Batch Performance Degradation<a class="headerlink" href="#large-batch-performance-degradation" title="Permanent link">¶</a></h3>
+<div class="admonition danger">
+<p class="admonition-title">Large Batches Cause Performance Problems</p>
+<p>Batches are NOT a performance optimization. Large batches cause severe issues:</p>
+<table>
+<thead>
+<tr>
+<th>Issue</th>
+<th>Impact</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Coordinator memory</td>
+<td>Entire batch held in memory until complete</td>
+</tr>
+<tr>
+<td>GC pressure</td>
+<td>Large batches trigger garbage collection</td>
+</tr>
+<tr>
+<td>Batch log pressure</td>
+<td>Logged batches write to batch log first</td>
+</tr>
+<tr>
+<td>Timeout risk</td>
+<td>Large batches more likely to timeout</td>
+</tr>
+<tr>
+<td>Replay storms</td>
+<td>Failed large batches cause replay overhead</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Configuration limits:</strong></p>
+<div class="highlight"><pre><span></span><code><span class="c1"># cassandra.yaml</span>
+<span class="nt">batch_size_warn_threshold_in_kb</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">5</span><span class="w">     </span><span class="c1"># Warn above 5KB</span>
+<span class="nt">batch_size_fail_threshold_in_kb</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">50</span><span class="w">    </span><span class="c1"># Fail above 50KB</span>
+</code></pre></div>
+<p><strong>Warning signs in logs:</strong></p>
+<div class="highlight"><pre><span></span><code>WARN  Batch for [table] is of size 52KB, exceeding specified threshold of 5KB
+</code></pre></div>
+<p><strong>Best practices:</strong></p>
+<ul>
+<li>Keep batches small (&lt; 5KB, ideally &lt; 20 statements)</li>
+<li>Use batches for atomicity, not throughput</li>
+<li>For bulk loading, use parallel individual writes or SSTable loader</li>
+<li>Monitor <code>BatchMetrics</code> in JMX for batch sizes</li>
 </ul>
 </div>
 <hr>

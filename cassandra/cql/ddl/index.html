@@ -144,17 +144,17 @@
 <!-- Critical CSS inline to reduce chain depth and enable faster FCP -->
 <style>
 /* Critical above-the-fold styles - inlined to avoid render blocking */
-:root{--axon-primary:#0080FF;--axon-dark:#030737;--axon-accent:#7CD825;--text-primary:#1a1a2e;--text-secondary:#4a4a68;--bg-primary:#fff;--bg-secondary:#f8fafc;--border-light:#e2e8f0}
+:root{--axon-primary:#0080FF;--axon-dark:#030737;--axon-accent:#7CD825;--text-primary:#0f0f0f;--text-secondary:#1f2937;--bg-primary:#fff;--bg-secondary:#f8fafc;--border-light:#e2e8f0}
 [data-md-color-scheme=slate]{--text-primary:#f1f5f9;--text-secondary:#cbd5e1;--bg-primary:#0f172a;--bg-secondary:#1e293b;--border-light:#334155}
 html{font-size:16px!important}
 body{font-family:'Roboto Flex',-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;font-size:1rem!important;line-height:1.6;color:var(--text-primary);margin:0;-webkit-font-smoothing:antialiased}
 .md-header{background-color:var(--axon-dark);box-shadow:0 4px 6px -1px rgb(0 0 0/.1)}
 .md-tabs{background-color:var(--axon-dark)}
-.md-typeset{font-family:'Roboto Flex',-apple-system,BlinkMacSystemFont,sans-serif;font-size:.875rem;line-height:1.7;color:var(--text-primary)}
+.md-typeset{font-family:'Roboto Flex',-apple-system,BlinkMacSystemFont,sans-serif;font-size:.9375rem;line-height:1.7;color:var(--text-primary)}
 .md-typeset h1{font-size:1.6rem;font-weight:700;margin-top:0;border-bottom:2px solid var(--border-light)}
 .md-typeset h2{font-size:1.25rem;font-weight:600;border-bottom:1px solid var(--border-light)}
 .md-content{max-width:900px}
-.md-nav__link{font-size:.875rem;color:var(--text-secondary)}
+.md-nav__link{font-size:.9375rem;color:var(--text-secondary)}
 .md-banner{background-color:var(--axon-accent)!important;color:var(--axon-dark)}
 </style>
 
@@ -6191,6 +6191,33 @@ data-et-multi-view="{&quot;schema&quot;:{&quot;content&quot;:{&quot;desktop&quot
   <a href="#schema-agreement" class="md-nav__link">
     <span class="md-ellipsis">
       Schema Agreement
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#schema-disagreement-consequences" class="md-nav__link">
+    <span class="md-ellipsis">
+      Schema Disagreement Consequences
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#waiting-for-schema-agreement" class="md-nav__link">
+    <span class="md-ellipsis">
+      Waiting for Schema Agreement
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#handling-schema-timeouts" class="md-nav__link">
+    <span class="md-ellipsis">
+      Handling Schema Timeouts
     </span>
   </a>
   
@@ -14091,6 +14118,33 @@ data-et-multi-view="{&quot;schema&quot;:{&quot;content&quot;:{&quot;desktop&quot
 </li>
         
           <li class="md-nav__item">
+  <a href="#schema-disagreement-consequences" class="md-nav__link">
+    <span class="md-ellipsis">
+      Schema Disagreement Consequences
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#waiting-for-schema-agreement" class="md-nav__link">
+    <span class="md-ellipsis">
+      Waiting for Schema Agreement
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#handling-schema-timeouts" class="md-nav__link">
+    <span class="md-ellipsis">
+      Handling Schema Timeouts
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
   <a href="#system-schema-tables" class="md-nav__link">
     <span class="md-ellipsis">
       System Schema Tables
@@ -14480,11 +14534,105 @@ data-et-multi-view="{&quot;schema&quot;:{&quot;content&quot;:{&quot;desktop&quot
 <div class="highlight"><pre><span></span><code><span class="c1">-- Check current schema versions across the cluster</span>
 <span class="k">SELECT</span><span class="w"> </span><span class="n">schema_version</span><span class="w"> </span><span class="k">FROM</span><span class="w"> </span><span class="k">system</span><span class="p">.</span><span class="k">local</span><span class="p">;</span>
 <span class="k">SELECT</span><span class="w"> </span><span class="n">peer</span><span class="p">,</span><span class="w"> </span><span class="n">schema_version</span><span class="w"> </span><span class="k">FROM</span><span class="w"> </span><span class="k">system</span><span class="p">.</span><span class="n">peers</span><span class="p">;</span>
+
+<span class="c1">-- Using nodetool</span>
+<span class="c1">-- nodetool describecluster | grep -A 10 "Schema versions"</span>
 </code></pre></div>
 <div class="admonition warning">
 <p class="admonition-title">Schema Disagreement</p>
 <p>If schema agreement cannot be reached within the timeout (default 10 seconds), the DDL statement returns a warning but the change may still propagate. Operations during schema disagreement may produce unpredictable results. Monitor <code>nodetool describecluster</code> for schema version mismatches.</p>
 </div>
+<h3 id="schema-disagreement-consequences">Schema Disagreement Consequences<a class="headerlink" href="#schema-disagreement-consequences" title="Permanent link">¶</a></h3>
+<div class="admonition danger">
+<p class="admonition-title">Queries May Fail or Return Inconsistent Results</p>
+<p>When nodes have different schema versions, queries can behave unpredictably:</p>
+<table>
+<thead>
+<tr>
+<th>Scenario</th>
+<th>Potential Outcome</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Query column not yet on all nodes</td>
+<td><code>InvalidRequestException</code> on some nodes</td>
+</tr>
+<tr>
+<td>Query new table before propagation</td>
+<td><code>TableNotFoundException</code> on some nodes</td>
+</tr>
+<tr>
+<td>Query with different column types</td>
+<td>Data corruption or read failures</td>
+</tr>
+<tr>
+<td>Concurrent DDL operations</td>
+<td>Conflicting schemas across cluster</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Real-world failure scenarios:</strong></p>
+<div class="highlight"><pre><span></span><code># DDL executed but not propagated
+CREATE TABLE new_table (...);
+
+# Immediate query may fail
+SELECT * FROM new_table;
+-- Node A: Success
+-- Node B: UnconfiguredTableException: new_table
+</code></pre></div>
+</div>
+<h3 id="waiting-for-schema-agreement">Waiting for Schema Agreement<a class="headerlink" href="#waiting-for-schema-agreement" title="Permanent link">¶</a></h3>
+<p>After DDL operations, ensure schema agreement before executing DML:</p>
+<div class="highlight"><pre><span></span><code><span class="c1">-- Configuration in cassandra.yaml</span>
+<span class="n">max_schema_agreement_wait_seconds</span><span class="p">:</span><span class="w"> </span><span class="mi">10</span><span class="w">  </span><span class="c1">-- Default wait time</span>
+
+<span class="c1">-- Programmatic check (driver)</span>
+<span class="c1">-- Most drivers provide schema agreement wait methods</span>
+</code></pre></div>
+<p><strong>Best practices:</strong></p>
+<ol>
+<li><strong>Wait for agreement</strong>: Use driver's schema agreement API after DDL</li>
+<li><strong>Avoid concurrent DDL</strong>: Execute schema changes sequentially</li>
+<li><strong>Monitor disagreement</strong>: Alert on prolonged schema version mismatches</li>
+<li><strong>Rolling restarts</strong>: Wait for schema agreement between node restarts</li>
+<li><strong>Repair after issues</strong>: Run <code>nodetool repair -pr</code> on nodes with stale schema</li>
+</ol>
+<div class="highlight"><pre><span></span><code><span class="c1"># Check for schema disagreement</span>
+nodetool<span class="w"> </span>describecluster
+
+<span class="c1"># Output showing disagreement:</span>
+<span class="c1"># Schema versions:</span>
+<span class="c1">#     a1b2c3d4-... : [10.0.0.1, 10.0.0.2, 10.0.0.3]</span>
+<span class="c1">#     e5f6g7h8-... : [10.0.0.4]  # This node has different schema!</span>
+</code></pre></div>
+<h3 id="handling-schema-timeouts">Handling Schema Timeouts<a class="headerlink" href="#handling-schema-timeouts" title="Permanent link">¶</a></h3>
+<table>
+<thead>
+<tr>
+<th>Timeout Scenario</th>
+<th>Client Action</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>DDL returns timeout warning</td>
+<td>Check schema versions, retry if needed</td>
+</tr>
+<tr>
+<td>DDL fails completely</td>
+<td>Verify schema state, rerun DDL</td>
+</tr>
+<tr>
+<td>Prolonged disagreement (&gt; 30s)</td>
+<td>Investigate node health, repair or restart</td>
+</tr>
+<tr>
+<td>Permanent disagreement</td>
+<td>Restart affected nodes with correct schema</td>
+</tr>
+</tbody>
+</table>
 <h3 id="system-schema-tables">System Schema Tables<a class="headerlink" href="#system-schema-tables" title="Permanent link">¶</a></h3>
 <p>Schema metadata is stored in the <code>system_schema</code> keyspace:</p>
 <table>

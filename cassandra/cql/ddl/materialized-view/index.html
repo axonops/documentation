@@ -144,17 +144,17 @@
 <!-- Critical CSS inline to reduce chain depth and enable faster FCP -->
 <style>
 /* Critical above-the-fold styles - inlined to avoid render blocking */
-:root{--axon-primary:#0080FF;--axon-dark:#030737;--axon-accent:#7CD825;--text-primary:#1a1a2e;--text-secondary:#4a4a68;--bg-primary:#fff;--bg-secondary:#f8fafc;--border-light:#e2e8f0}
+:root{--axon-primary:#0080FF;--axon-dark:#030737;--axon-accent:#7CD825;--text-primary:#0f0f0f;--text-secondary:#1f2937;--bg-primary:#fff;--bg-secondary:#f8fafc;--border-light:#e2e8f0}
 [data-md-color-scheme=slate]{--text-primary:#f1f5f9;--text-secondary:#cbd5e1;--bg-primary:#0f172a;--bg-secondary:#1e293b;--border-light:#334155}
 html{font-size:16px!important}
 body{font-family:'Roboto Flex',-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;font-size:1rem!important;line-height:1.6;color:var(--text-primary);margin:0;-webkit-font-smoothing:antialiased}
 .md-header{background-color:var(--axon-dark);box-shadow:0 4px 6px -1px rgb(0 0 0/.1)}
 .md-tabs{background-color:var(--axon-dark)}
-.md-typeset{font-family:'Roboto Flex',-apple-system,BlinkMacSystemFont,sans-serif;font-size:.875rem;line-height:1.7;color:var(--text-primary)}
+.md-typeset{font-family:'Roboto Flex',-apple-system,BlinkMacSystemFont,sans-serif;font-size:.9375rem;line-height:1.7;color:var(--text-primary)}
 .md-typeset h1{font-size:1.6rem;font-weight:700;margin-top:0;border-bottom:2px solid var(--border-light)}
 .md-typeset h2{font-size:1.25rem;font-weight:600;border-bottom:1px solid var(--border-light)}
 .md-content{max-width:900px}
-.md-nav__link{font-size:.875rem;color:var(--text-secondary)}
+.md-nav__link{font-size:.9375rem;color:var(--text-secondary)}
 .md-banner{background-color:var(--axon-accent)!important;color:var(--axon-dark)}
 </style>
 
@@ -6563,6 +6563,15 @@ data-et-multi-view="{&quot;schema&quot;:{&quot;content&quot;:{&quot;desktop&quot
   <a href="#restrictions" class="md-nav__link">
     <span class="md-ellipsis">
       Restrictions
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#base-table-schema-changes" class="md-nav__link">
+    <span class="md-ellipsis">
+      Base Table Schema Changes
     </span>
   </a>
   
@@ -14610,6 +14619,15 @@ data-et-multi-view="{&quot;schema&quot;:{&quot;content&quot;:{&quot;desktop&quot
 </li>
         
           <li class="md-nav__item">
+  <a href="#base-table-schema-changes" class="md-nav__link">
+    <span class="md-ellipsis">
+      Base Table Schema Changes
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
   <a href="#notes" class="md-nav__link">
     <span class="md-ellipsis">
       Notes
@@ -15403,6 +15421,55 @@ data-et-multi-view="{&quot;schema&quot;:{&quot;content&quot;:{&quot;desktop&quot
 <li>Views cannot store rows where any primary key column is null</li>
 <li>Collection columns cannot be part of view primary key</li>
 </ul>
+</div>
+<h3 id="base-table-schema-changes">Base Table Schema Changes<a class="headerlink" href="#base-table-schema-changes" title="Permanent link">¶</a></h3>
+<div class="admonition danger">
+<p class="admonition-title">Dropping Base Table Columns Breaks Views</p>
+<p>Altering the base table schema can permanently break materialized views:</p>
+<table>
+<thead>
+<tr>
+<th>Base Table Change</th>
+<th>Impact on View</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>DROP COLUMN</code> used by view</td>
+<td>View becomes unusable; must be dropped and recreated</td>
+</tr>
+<tr>
+<td><code>ADD COLUMN</code></td>
+<td>New column not included in existing views</td>
+</tr>
+<tr>
+<td><code>ALTER COLUMN TYPE</code></td>
+<td>May cause view inconsistencies</td>
+</tr>
+<tr>
+<td><code>DROP TABLE</code></td>
+<td>All views on table are dropped</td>
+</tr>
+</tbody>
+</table>
+<div class="highlight"><pre><span></span><code><span class="c1">-- This WILL BREAK the view if 'email' is in the view</span>
+<span class="k">ALTER</span><span class="w"> </span><span class="k">TABLE</span><span class="w"> </span><span class="n">users</span><span class="w"> </span><span class="k">DROP</span><span class="w"> </span><span class="n">email</span><span class="p">;</span>
+
+<span class="c1">-- View queries will fail with:</span>
+<span class="c1">-- InvalidRequestException: Unknown column 'email'</span>
+</code></pre></div>
+<p><strong>Prevention:</strong></p>
+<ul>
+<li>Document all views dependent on each table</li>
+<li>Check <code>system_schema.views</code> before schema changes</li>
+<li>Drop views explicitly before modifying base table columns they use</li>
+</ul>
+<div class="highlight"><pre><span></span><code><span class="c1">-- Check views on a table before modifying</span>
+<span class="k">SELECT</span><span class="w"> </span><span class="n">view_name</span><span class="p">,</span><span class="w"> </span><span class="n">base_table_name</span>
+<span class="k">FROM</span><span class="w"> </span><span class="n">system_schema</span><span class="p">.</span><span class="n">views</span>
+<span class="k">WHERE</span><span class="w"> </span><span class="n">keyspace_name</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s1">'my_keyspace'</span>
+<span class="w">  </span><span class="k">AND</span><span class="w"> </span><span class="n">base_table_name</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s1">'users'</span><span class="p">;</span>
+</code></pre></div>
 </div>
 <h3 id="notes">Notes<a class="headerlink" href="#notes" title="Permanent link">¶</a></h3>
 <ul>

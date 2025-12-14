@@ -144,17 +144,17 @@
 <!-- Critical CSS inline to reduce chain depth and enable faster FCP -->
 <style>
 /* Critical above-the-fold styles - inlined to avoid render blocking */
-:root{--axon-primary:#0080FF;--axon-dark:#030737;--axon-accent:#7CD825;--text-primary:#1a1a2e;--text-secondary:#4a4a68;--bg-primary:#fff;--bg-secondary:#f8fafc;--border-light:#e2e8f0}
+:root{--axon-primary:#0080FF;--axon-dark:#030737;--axon-accent:#7CD825;--text-primary:#0f0f0f;--text-secondary:#1f2937;--bg-primary:#fff;--bg-secondary:#f8fafc;--border-light:#e2e8f0}
 [data-md-color-scheme=slate]{--text-primary:#f1f5f9;--text-secondary:#cbd5e1;--bg-primary:#0f172a;--bg-secondary:#1e293b;--border-light:#334155}
 html{font-size:16px!important}
 body{font-family:'Roboto Flex',-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;font-size:1rem!important;line-height:1.6;color:var(--text-primary);margin:0;-webkit-font-smoothing:antialiased}
 .md-header{background-color:var(--axon-dark);box-shadow:0 4px 6px -1px rgb(0 0 0/.1)}
 .md-tabs{background-color:var(--axon-dark)}
-.md-typeset{font-family:'Roboto Flex',-apple-system,BlinkMacSystemFont,sans-serif;font-size:.875rem;line-height:1.7;color:var(--text-primary)}
+.md-typeset{font-family:'Roboto Flex',-apple-system,BlinkMacSystemFont,sans-serif;font-size:.9375rem;line-height:1.7;color:var(--text-primary)}
 .md-typeset h1{font-size:1.6rem;font-weight:700;margin-top:0;border-bottom:2px solid var(--border-light)}
 .md-typeset h2{font-size:1.25rem;font-weight:600;border-bottom:1px solid var(--border-light)}
 .md-content{max-width:900px}
-.md-nav__link{font-size:.875rem;color:var(--text-secondary)}
+.md-nav__link{font-size:.9375rem;color:var(--text-secondary)}
 .md-banner{background-color:var(--axon-accent)!important;color:var(--axon-dark)}
 </style>
 
@@ -6826,6 +6826,24 @@ data-et-multi-view="{&quot;schema&quot;:{&quot;content&quot;:{&quot;desktop&quot
   <a href="#secondary-index-limitations" class="md-nav__link">
     <span class="md-ellipsis">
       Secondary Index Limitations
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#collection-index-behavior" class="md-nav__link">
+    <span class="md-ellipsis">
+      Collection Index Behavior
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#high-cardinality-performance-pitfalls" class="md-nav__link">
+    <span class="md-ellipsis">
+      High-Cardinality Performance Pitfalls
     </span>
   </a>
   
@@ -14208,6 +14226,24 @@ data-et-multi-view="{&quot;schema&quot;:{&quot;content&quot;:{&quot;desktop&quot
   
 </li>
         
+          <li class="md-nav__item">
+  <a href="#collection-index-behavior" class="md-nav__link">
+    <span class="md-ellipsis">
+      Collection Index Behavior
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#high-cardinality-performance-pitfalls" class="md-nav__link">
+    <span class="md-ellipsis">
+      High-Cardinality Performance Pitfalls
+    </span>
+  </a>
+  
+</li>
+        
       </ul>
     </nav>
   
@@ -14763,6 +14799,117 @@ data-et-multi-view="{&quot;schema&quot;:{&quot;content&quot;:{&quot;desktop&quot
 <span class="k">SELECT</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="k">FROM</span><span class="w"> </span><span class="n">users</span><span class="w"> </span><span class="k">WHERE</span><span class="w"> </span><span class="n">status</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s1">'active'</span><span class="w"> </span><span class="k">AND</span><span class="w"> </span><span class="n">country</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s1">'US'</span><span class="p">;</span>
 <span class="c1">-- Slow even if both indexed</span>
 </code></pre></div>
+<h3 id="collection-index-behavior">Collection Index Behavior<a class="headerlink" href="#collection-index-behavior" title="Permanent link">¶</a></h3>
+<p>Secondary indexes on collections have special query semantics:</p>
+<table>
+<thead>
+<tr>
+<th>Collection Type</th>
+<th>Index Type</th>
+<th>Query Operator</th>
+<th>Example</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>SET/LIST</td>
+<td>Values</td>
+<td><code>CONTAINS</code></td>
+<td><code>WHERE tags CONTAINS 'premium'</code></td>
+</tr>
+<tr>
+<td>MAP</td>
+<td><code>KEYS()</code></td>
+<td><code>CONTAINS KEY</code></td>
+<td><code>WHERE preferences CONTAINS KEY 'theme'</code></td>
+</tr>
+<tr>
+<td>MAP</td>
+<td><code>VALUES()</code></td>
+<td><code>CONTAINS</code></td>
+<td><code>WHERE preferences CONTAINS 'dark'</code></td>
+</tr>
+<tr>
+<td>MAP</td>
+<td><code>ENTRIES()</code></td>
+<td><code>[]</code> accessor</td>
+<td><code>WHERE preferences['theme'] = 'dark'</code></td>
+</tr>
+<tr>
+<td>FROZEN</td>
+<td><code>FULL()</code></td>
+<td><code>=</code> (full match)</td>
+<td><code>WHERE address = {street: '...', city: '...'}</code></td>
+</tr>
+</tbody>
+</table>
+<div class="admonition warning">
+<p class="admonition-title">Collection Index Restrictions</p>
+<ul>
+<li><code>CONTAINS</code> and <code>CONTAINS KEY</code> only work with indexed collections</li>
+<li>Cannot combine multiple <code>CONTAINS</code> on same collection in one query</li>
+<li>Each element in collection is indexed separately (storage overhead)</li>
+<li><code>FULL()</code> index requires exact match of entire frozen collection</li>
+<li>Collection indexes still result in scatter-gather without partition key</li>
+</ul>
+<div class="highlight"><pre><span></span><code><span class="c1">-- ERROR: Cannot use multiple CONTAINS on same column</span>
+<span class="k">SELECT</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="k">FROM</span><span class="w"> </span><span class="n">users</span>
+<span class="k">WHERE</span><span class="w"> </span><span class="n">tags</span><span class="w"> </span><span class="k">CONTAINS</span><span class="w"> </span><span class="s1">'premium'</span><span class="w"> </span><span class="k">AND</span><span class="w"> </span><span class="n">tags</span><span class="w"> </span><span class="k">CONTAINS</span><span class="w"> </span><span class="s1">'verified'</span><span class="p">;</span>
+
+<span class="c1">-- WORKAROUND: Filter in application or use intersection</span>
+</code></pre></div>
+</div>
+<h3 id="high-cardinality-performance-pitfalls">High-Cardinality Performance Pitfalls<a class="headerlink" href="#high-cardinality-performance-pitfalls" title="Permanent link">¶</a></h3>
+<div class="admonition danger">
+<p class="admonition-title">Avoid Secondary Indexes on High-Cardinality Columns</p>
+<p>Secondary indexes on high-cardinality columns (many unique values) cause severe performance problems:</p>
+<table>
+<thead>
+<tr>
+<th>Issue</th>
+<th>Impact</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Index size</td>
+<td>Approaches table size; one entry per unique value</td>
+</tr>
+<tr>
+<td>Read amplification</td>
+<td>Must check index on every node</td>
+</tr>
+<tr>
+<td>Hotspots</td>
+<td>Popular values create uneven load</td>
+</tr>
+<tr>
+<td>Tombstone buildup</td>
+<td>Deleted values leave tombstones in index</td>
+</tr>
+<tr>
+<td>Memory pressure</td>
+<td>Large indexes consume heap on each node</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Example of problematic indexing:</strong></p>
+<div class="highlight"><pre><span></span><code><span class="c1">-- BAD: High cardinality</span>
+<span class="k">CREATE</span><span class="w"> </span><span class="k">INDEX</span><span class="w"> </span><span class="k">ON</span><span class="w"> </span><span class="n">users</span><span class="w"> </span><span class="p">(</span><span class="n">email</span><span class="p">);</span><span class="w">        </span><span class="c1">-- Unique per user</span>
+<span class="k">CREATE</span><span class="w"> </span><span class="k">INDEX</span><span class="w"> </span><span class="k">ON</span><span class="w"> </span><span class="n">orders</span><span class="w"> </span><span class="p">(</span><span class="n">order_id</span><span class="p">);</span><span class="w">    </span><span class="c1">-- Unique per order</span>
+<span class="k">CREATE</span><span class="w"> </span><span class="k">INDEX</span><span class="w"> </span><span class="k">ON</span><span class="w"> </span><span class="n">events</span><span class="w"> </span><span class="p">(</span><span class="k">timestamp</span><span class="p">);</span><span class="w">   </span><span class="c1">-- High cardinality</span>
+
+<span class="c1">-- BETTER: Low cardinality</span>
+<span class="k">CREATE</span><span class="w"> </span><span class="k">INDEX</span><span class="w"> </span><span class="k">ON</span><span class="w"> </span><span class="n">users</span><span class="w"> </span><span class="p">(</span><span class="n">account_type</span><span class="p">);</span><span class="w"> </span><span class="c1">-- Few values: 'free', 'premium', 'enterprise'</span>
+<span class="k">CREATE</span><span class="w"> </span><span class="k">INDEX</span><span class="w"> </span><span class="k">ON</span><span class="w"> </span><span class="n">orders</span><span class="w"> </span><span class="p">(</span><span class="n">status</span><span class="p">);</span><span class="w">      </span><span class="c1">-- Few values: 'pending', 'shipped', 'delivered'</span>
+</code></pre></div>
+<p><strong>For high-cardinality lookups, use:</strong></p>
+<ul>
+<li>Denormalized tables with the lookup column as partition key</li>
+<li>SAI indexes (Cassandra 5.0+) which handle cardinality better</li>
+<li>Application-side caching for frequently accessed values</li>
+</ul>
+</div>
 <hr>
 <h2 id="storage-attached-indexes-sai">Storage-Attached Indexes (SAI)<a class="headerlink" href="#storage-attached-indexes-sai" title="Permanent link">¶</a></h2>
 <p>SAI is the next-generation indexing in Cassandra 5.0+, offering better performance and more capabilities than secondary indexes.</p>

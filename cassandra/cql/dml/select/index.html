@@ -144,17 +144,17 @@
 <!-- Critical CSS inline to reduce chain depth and enable faster FCP -->
 <style>
 /* Critical above-the-fold styles - inlined to avoid render blocking */
-:root{--axon-primary:#0080FF;--axon-dark:#030737;--axon-accent:#7CD825;--text-primary:#1a1a2e;--text-secondary:#4a4a68;--bg-primary:#fff;--bg-secondary:#f8fafc;--border-light:#e2e8f0}
+:root{--axon-primary:#0080FF;--axon-dark:#030737;--axon-accent:#7CD825;--text-primary:#0f0f0f;--text-secondary:#1f2937;--bg-primary:#fff;--bg-secondary:#f8fafc;--border-light:#e2e8f0}
 [data-md-color-scheme=slate]{--text-primary:#f1f5f9;--text-secondary:#cbd5e1;--bg-primary:#0f172a;--bg-secondary:#1e293b;--border-light:#334155}
 html{font-size:16px!important}
 body{font-family:'Roboto Flex',-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;font-size:1rem!important;line-height:1.6;color:var(--text-primary);margin:0;-webkit-font-smoothing:antialiased}
 .md-header{background-color:var(--axon-dark);box-shadow:0 4px 6px -1px rgb(0 0 0/.1)}
 .md-tabs{background-color:var(--axon-dark)}
-.md-typeset{font-family:'Roboto Flex',-apple-system,BlinkMacSystemFont,sans-serif;font-size:.875rem;line-height:1.7;color:var(--text-primary)}
+.md-typeset{font-family:'Roboto Flex',-apple-system,BlinkMacSystemFont,sans-serif;font-size:.9375rem;line-height:1.7;color:var(--text-primary)}
 .md-typeset h1{font-size:1.6rem;font-weight:700;margin-top:0;border-bottom:2px solid var(--border-light)}
 .md-typeset h2{font-size:1.25rem;font-weight:600;border-bottom:1px solid var(--border-light)}
 .md-content{max-width:900px}
-.md-nav__link{font-size:.875rem;color:var(--text-secondary)}
+.md-nav__link{font-size:.9375rem;color:var(--text-secondary)}
 .md-banner{background-color:var(--axon-accent)!important;color:var(--axon-dark)}
 </style>
 
@@ -6855,6 +6855,24 @@ data-et-multi-view="{&quot;schema&quot;:{&quot;content&quot;:{&quot;desktop&quot
   <a href="#what-allow-filtering-actually-does" class="md-nav__link">
     <span class="md-ellipsis">
       What ALLOW FILTERING Actually Does
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#full-table-scan-risk" class="md-nav__link">
+    <span class="md-ellipsis">
+      Full Table Scan Risk
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#unpredictable-performance-in-large-datasets" class="md-nav__link">
+    <span class="md-ellipsis">
+      Unpredictable Performance in Large Datasets
     </span>
   </a>
   
@@ -14871,6 +14889,24 @@ data-et-multi-view="{&quot;schema&quot;:{&quot;content&quot;:{&quot;desktop&quot
 </li>
         
           <li class="md-nav__item">
+  <a href="#full-table-scan-risk" class="md-nav__link">
+    <span class="md-ellipsis">
+      Full Table Scan Risk
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#unpredictable-performance-in-large-datasets" class="md-nav__link">
+    <span class="md-ellipsis">
+      Unpredictable Performance in Large Datasets
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
   <a href="#when-allow-filtering-is-acceptable" class="md-nav__link">
     <span class="md-ellipsis">
       When ALLOW FILTERING Is Acceptable
@@ -15726,6 +15762,81 @@ data-et-multi-view="{&quot;schema&quot;:{&quot;content&quot;:{&quot;desktop&quot
 <li><strong>No scaling benefit</strong>: More nodes means more data to scan</li>
 </ol>
 </div>
+<h3 id="full-table-scan-risk">Full Table Scan Risk<a class="headerlink" href="#full-table-scan-risk" title="Permanent link">¶</a></h3>
+<p><code>ALLOW FILTERING</code> causes a full table scan when no partition key is specified:</p>
+<table>
+<thead>
+<tr>
+<th>Data Size</th>
+<th>Nodes</th>
+<th>Approximate Scan Time</th>
+<th>Memory Risk</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>10 MB</td>
+<td>3</td>
+<td>&lt; 1 second</td>
+<td>Low</td>
+</tr>
+<tr>
+<td>1 GB</td>
+<td>10</td>
+<td>10-60 seconds</td>
+<td>Medium</td>
+</tr>
+<tr>
+<td>100 GB</td>
+<td>20</td>
+<td>Minutes to hours</td>
+<td>High</td>
+</tr>
+<tr>
+<td>1 TB+</td>
+<td>50+</td>
+<td>Query may never complete</td>
+<td>Critical</td>
+</tr>
+</tbody>
+</table>
+<div class="highlight"><pre><span></span><code><span class="c1">-- DANGER: Scans entire cluster</span>
+<span class="k">SELECT</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="k">FROM</span><span class="w"> </span><span class="n">events</span><span class="w"> </span><span class="k">WHERE</span><span class="w"> </span><span class="n">event_type</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s1">'login'</span><span class="w"> </span><span class="n">ALLOW</span><span class="w"> </span><span class="n">FILTERING</span><span class="p">;</span>
+
+<span class="c1">-- Query coordinator must:</span>
+<span class="c1">-- 1. Contact ALL nodes in cluster</span>
+<span class="c1">-- 2. Each node scans ALL its partitions</span>
+<span class="c1">-- 3. Filter results in memory</span>
+<span class="c1">-- 4. Aggregate and return</span>
+</code></pre></div>
+<h3 id="unpredictable-performance-in-large-datasets">Unpredictable Performance in Large Datasets<a class="headerlink" href="#unpredictable-performance-in-large-datasets" title="Permanent link">¶</a></h3>
+<div class="admonition danger">
+<p class="admonition-title">Performance Cannot Be Predicted</p>
+<p><code>ALLOW FILTERING</code> queries have <strong>no performance bounds</strong>:</p>
+<ul>
+<li>A query returning 10 rows may scan 10 million rows</li>
+<li>Query time varies based on total data volume, not result size</li>
+<li>Same query may take 100ms with little data, timeout with more data</li>
+<li>No way to estimate query cost before execution</li>
+</ul>
+<p><strong>Real-world failure scenario:</strong></p>
+<div class="highlight"><pre><span></span><code><span class="c1">-- Development: Works fine (1,000 users)</span>
+<span class="k">SELECT</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="k">FROM</span><span class="w"> </span><span class="n">users</span><span class="w"> </span><span class="k">WHERE</span><span class="w"> </span><span class="n">country</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s1">'US'</span><span class="w"> </span><span class="n">ALLOW</span><span class="w"> </span><span class="n">FILTERING</span><span class="p">;</span>
+<span class="c1">-- Result: 50ms, 100 rows</span>
+
+<span class="c1">-- Production: Disaster (10 million users)</span>
+<span class="k">SELECT</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="k">FROM</span><span class="w"> </span><span class="n">users</span><span class="w"> </span><span class="k">WHERE</span><span class="w"> </span><span class="n">country</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s1">'US'</span><span class="w"> </span><span class="n">ALLOW</span><span class="w"> </span><span class="n">FILTERING</span><span class="p">;</span>
+<span class="c1">-- Result: Timeout after 30s, coordinator OOM, cascading failures</span>
+</code></pre></div>
+<p><strong>Impact cascade:</strong></p>
+<ol>
+<li>Query consumes coordinator memory</li>
+<li>GC pauses affect other queries</li>
+<li>Client timeouts trigger retries</li>
+<li>More ALLOW FILTERING queries pile up</li>
+<li>Cluster becomes unresponsive</li>
+</ol>
+</div>
 <h3 id="when-allow-filtering-is-acceptable">When ALLOW FILTERING Is Acceptable<a class="headerlink" href="#when-allow-filtering-is-acceptable" title="Permanent link">¶</a></h3>
 <table>
 <thead>
@@ -15756,8 +15867,21 @@ data-et-multi-view="{&quot;schema&quot;:{&quot;content&quot;:{&quot;desktop&quot
 <td><strong>Never</strong></td>
 <td>Unpredictable, doesn't scale</td>
 </tr>
+<tr>
+<td>Queries with partition key</td>
+<td>Sometimes</td>
+<td>Limits scan to single partition</td>
+</tr>
 </tbody>
 </table>
+<p><strong>Safe usage pattern</strong> (with partition key):</p>
+<div class="highlight"><pre><span></span><code><span class="c1">-- Acceptable: Filters within a single partition</span>
+<span class="k">SELECT</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="k">FROM</span><span class="w"> </span><span class="n">user_events</span>
+<span class="k">WHERE</span><span class="w"> </span><span class="n">user_id</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">123</span>
+<span class="w">  </span><span class="k">AND</span><span class="w"> </span><span class="n">event_type</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s1">'login'</span>
+<span class="n">ALLOW</span><span class="w"> </span><span class="n">FILTERING</span><span class="p">;</span>
+<span class="c1">-- Only scans one user's events, not entire table</span>
+</code></pre></div>
 <hr>
 <h2 id="result-ordering">Result Ordering<a class="headerlink" href="#result-ordering" title="Permanent link">¶</a></h2>
 <h3 id="order-by">ORDER BY<a class="headerlink" href="#order-by" title="Permanent link">¶</a></h3>
