@@ -15,6 +15,77 @@ Cassandra 5.0 introduced SAI (Storage-Attached Indexes), which handle more use c
 
 This guide covers when each approach makes sense.
 
+---
+
+## Behavioral Guarantees
+
+### What Indexes Guarantee
+
+- Index updates are applied synchronously as part of the write path
+- Indexes are local to each node (each node indexes only its own data)
+- Queries with partition key plus indexed column contact only partition replicas
+- Index build is asynchronous; queries may return partial results during build
+- DROP INDEX removes the index immediately from schema
+
+### What Indexes Do NOT Guarantee
+
+!!! warning "Undefined Behavior"
+    The following behaviors are undefined and must not be relied upon:
+
+    - **Global ordering**: Index queries without partition key return results in undefined order
+    - **Latency bounds**: Scatter-gather queries have unbounded latency proportional to cluster size
+    - **Memory usage**: Large result sets from index queries may exhaust coordinator memory
+    - **Build time**: Index build duration depends on data volume; no progress or completion guarantee
+    - **Result completeness during build**: Queries may miss data on nodes still building the index
+    - **Performance consistency**: Query performance varies significantly based on data distribution
+
+### Index Type Comparison Contract
+
+| Index Type | Query Types | Cardinality | Production Status |
+|------------|-------------|-------------|-------------------|
+| Legacy (2i) | Equality only | Low | Supported |
+| SASI | Equality, range, LIKE | Medium | Deprecated |
+| SAI | Equality, range, LIKE, ANN | Any | Recommended (5.0+) |
+
+### Query Execution Contract
+
+| Query Pattern | Nodes Contacted | Performance |
+|---------------|-----------------|-------------|
+| `pk = ? AND indexed = ?` | RF replicas | Fast |
+| `indexed = ?` | All nodes | Slow (scatter-gather) |
+| `indexed = ? LIMIT n` | All nodes (early termination) | Variable |
+| `indexed > ? AND indexed < ?` | All nodes (SAI/SASI only) | Variable |
+
+### Index Selection Contract
+
+| Scenario | Recommended Index | Alternative |
+|----------|-------------------|-------------|
+| Low cardinality + partition key | Legacy 2i or SAI | None needed |
+| High cardinality lookup | SAI | Denormalized table |
+| Text search (prefix/suffix) | SAI | Application-side filtering |
+| Vector similarity | SAI with ANN | External vector database |
+| Frequent alternative access pattern | Materialized view | Application-managed table |
+
+### Failure Semantics
+
+| Failure Mode | Outcome | Client Action |
+|--------------|---------|---------------|
+| Index build incomplete | Partial results | Wait for build or query specific partitions |
+| Node unavailable | Results from available nodes only | Retry or accept partial results |
+| Query timeout | Partial results or exception | Add partition key or reduce scope |
+| Index not found | Query fails | Create index or use ALLOW FILTERING |
+
+### Version-Specific Behavior
+
+| Version | Behavior |
+|---------|----------|
+| All | Legacy secondary indexes (2i) |
+| 3.4+ | SASI indexes (experimental) |
+| 4.0+ | SASI officially not recommended for production |
+| 5.0+ | SAI (Storage-Attached Indexes) as recommended default (CEP-7) |
+
+---
+
 ## Index Types Overview
 
 | Type | Best For | Limitations |

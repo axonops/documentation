@@ -11,6 +11,68 @@ Tables are the primary data storage structures in Cassandra. Each table belongs 
 
 ---
 
+## Behavioral Guarantees
+
+### What Table Operations Guarantee
+
+- CREATE TABLE creates schema metadata that propagates to all nodes via gossip
+- Primary key uniquely identifies each row; duplicate primary keys result in upsert (overwrite)
+- Rows within a partition are stored sorted by clustering columns in the specified order
+- Static columns share a single value per partition across all rows
+- ALTER TABLE for adding columns is a metadata-only operation (no data rewrite)
+- DROP TABLE with `auto_snapshot: true` creates a snapshot before deletion (default behavior)
+
+### What Table Operations Do NOT Guarantee
+
+!!! warning "Undefined Behavior"
+    The following behaviors are undefined and must not be relied upon:
+
+    - **Column order in SELECT ***: The order of columns in `SELECT *` results is not guaranteed to match definition order
+    - **Immediate schema propagation**: Schema changes may not be visible on all nodes immediately after the statement returns
+    - **Null storage**: Setting a column to null creates a tombstone, not absence of data
+    - **Empty string vs null**: These are distinct values with different storage implications
+    - **Collection ordering across versions**: Internal collection ordering may vary between Cassandra versions
+    - **Partition size warnings**: Exceeding recommended partition sizes does not raise errors but degrades performance
+
+### Primary Key Contract
+
+The primary key defines immutable constraints:
+
+| Component | Contract |
+|-----------|----------|
+| Partition key | Determines node placement via consistent hashing; cannot be changed |
+| Clustering columns | Determine sort order within partition; cannot be added, removed, or reordered |
+| Primary key columns | Cannot be updated; must be specified on INSERT |
+
+### Storage Guarantees
+
+| Guarantee | Description |
+|-----------|-------------|
+| Partition locality | All rows with the same partition key are stored on the same replica set |
+| Clustering order | Rows within a partition are always sorted by clustering columns |
+| Atomic row writes | All columns in a single row write are applied atomically |
+| Sparse storage | Null values do not consume storage space (except as tombstones when explicitly set) |
+
+### Failure Semantics
+
+| Failure Mode | Outcome | Client Action |
+|--------------|---------|---------------|
+| Timeout during CREATE/ALTER/DROP | Undefined - schema change may or may not have propagated | Check schema agreement |
+| `AlreadyExistsException` | Table exists (without IF NOT EXISTS) | Use IF NOT EXISTS or verify existing schema |
+| `InvalidRequest` | Invalid schema definition | Fix definition and retry |
+| `ConfigurationException` | Invalid table options | Correct options and retry |
+
+### Version-Specific Behavior
+
+| Version | Behavior |
+|---------|----------|
+| 2.1+ | User-defined types in columns (CASSANDRA-5590) |
+| 3.0+ | Materialized views (CASSANDRA-6477), non-frozen collections |
+| 4.0+ | Virtual tables, improved schema handling (CASSANDRA-13426) |
+| 5.0+ | VECTOR type (CEP-30), storage-attached indexes default |
+
+---
+
 ## Overview
 
 ### What is a Table?

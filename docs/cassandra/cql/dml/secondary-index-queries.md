@@ -50,6 +50,73 @@ Secondary indexes are inappropriate when:
 
 ---
 
+## Behavioral Guarantees
+
+### What Secondary Index Queries Guarantee
+
+- Queries with partition key constraint contact only replicas for that partition
+- Results are returned in clustering order within each partition
+- Index queries respect the specified consistency level
+- All matching rows visible to the consistency level are returned
+- Multiple indexed predicates (AND) are evaluated correctly
+
+### What Secondary Index Queries Do NOT Guarantee
+
+!!! warning "Undefined Behavior"
+    The following behaviors are undefined and must not be relied upon:
+
+    - **Global result ordering**: Without partition key, results across partitions have undefined order
+    - **Latency bounds**: Index queries without partition key have unbounded latency proportional to cluster size
+    - **Complete results during topology changes**: Adding/removing nodes may cause temporary result inconsistencies
+    - **Memory usage**: Large result sets may exhaust coordinator memory
+    - **Timeout behavior**: Partial results may be returned on timeout (implementation-dependent)
+    - **Performance consistency**: Query times vary significantly based on data distribution and cluster load
+
+### Query Execution Contract
+
+| Query Pattern | Execution Model | Node Contact |
+|---------------|-----------------|--------------|
+| `WHERE pk = ? AND indexed_col = ?` | Single partition scan | RF replicas |
+| `WHERE indexed_col = ?` | Scatter-gather | All nodes (token range coverage) |
+| `WHERE indexed_col = ? LIMIT n` | Scatter-gather with limit | All nodes, stops when limit reached |
+| `WHERE indexed_col > ? AND indexed_col < ?` | Range scan (SAI/SASI) | All nodes |
+
+### Consistency Level Contract
+
+| Consistency Level | Behavior on Index Query |
+|-------------------|------------------------|
+| ONE/LOCAL_ONE | Each node returns from local index; coordinator merges |
+| QUORUM/LOCAL_QUORUM | Each shard uses QUORUM; coordinator merges |
+| ALL | All replicas for each shard must respond |
+
+### Result Completeness Contract
+
+| Scenario | Completeness |
+|----------|--------------|
+| All nodes healthy | Complete results (within consistency level) |
+| Some nodes down | Results from available nodes only |
+| Index building on some nodes | Partial results from those nodes |
+| Coordinator timeout | Partial results possible |
+
+### Failure Semantics
+
+| Failure Mode | Outcome | Client Action |
+|--------------|---------|---------------|
+| Some nodes unavailable | Partial results (if CL can be met) | Retry or accept partial data |
+| Coordinator timeout | Partial results or timeout exception | Add partition key or reduce scope |
+| Index not found | Query fails | Create index or use ALLOW FILTERING |
+| Memory exhaustion | Query fails | Add LIMIT or partition constraints |
+
+### Version-Specific Behavior
+
+| Version | Behavior |
+|---------|----------|
+| All | Legacy secondary indexes (2i) |
+| 3.4+ | SASI indexes (experimental, not recommended for production) |
+| 5.0+ | Storage-Attached Indexes (SAI), recommended for new deployments |
+
+---
+
 ## Index Types and Query Capabilities
 
 Cassandra provides three secondary index implementations, each with different query capabilities:

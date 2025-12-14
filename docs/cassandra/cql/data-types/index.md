@@ -13,6 +13,82 @@ CQL's type system covers the basics (integers, text, timestamps), identifiers (U
 
 This reference covers each type, when to use it, and the trade-offs involved.
 
+---
+
+## Behavioral Guarantees
+
+### What Data Types Guarantee
+
+- Values are validated against type constraints at write time
+- Type conversion failures are reported immediately (no silent truncation)
+- Integer overflow causes write rejection (not wrap-around)
+- TEXT stores UTF-8 encoded data; invalid UTF-8 is rejected
+- TIMEUUID values contain embedded timestamps extractable via `toTimestamp()`
+- FROZEN collections are serialized atomically and compared byte-for-byte
+
+### What Data Types Do NOT Guarantee
+
+!!! warning "Undefined Behavior"
+    The following behaviors are undefined and must not be relied upon:
+
+    - **Floating point precision**: FLOAT and DOUBLE are approximate; exact equality comparisons may fail
+    - **Collection ordering across versions**: Internal sort order for sets and map keys may vary between Cassandra versions
+    - **VARINT/DECIMAL performance**: Arbitrary precision types have higher computation and storage costs
+    - **Empty vs null**: Empty string ('') and empty collections are distinct from null, but behavior may vary
+    - **Large value handling**: Very large text or blob values (approaching 2GB) may cause memory pressure
+
+### Type Comparison Contract
+
+| Type | Comparison Semantics |
+|------|---------------------|
+| Numeric (int, bigint, etc.) | Numerical ordering |
+| TEXT, VARCHAR | UTF-8 byte ordering |
+| ASCII | ASCII byte ordering |
+| TIMESTAMP | Chronological ordering (milliseconds since epoch) |
+| TIMEUUID | Chronological ordering (time component) |
+| UUID | Lexicographical ordering |
+| BLOB | Byte ordering |
+| BOOLEAN | false < true |
+| Collections (frozen) | Element-by-element comparison |
+
+### Null Handling Contract
+
+| Operation | Behavior |
+|-----------|----------|
+| INSERT with null | Creates tombstone for column |
+| NULL in primary key | Rejected (invalid) |
+| NULL in clustering column | Rejected (invalid) |
+| NULL in collection element | Behavior varies by collection type |
+| Comparison with NULL | NULL is not equal to NULL |
+
+### Storage Size Contract
+
+| Type | Fixed/Variable | Size |
+|------|----------------|------|
+| TINYINT | Fixed | 1 byte |
+| SMALLINT | Fixed | 2 bytes |
+| INT | Fixed | 4 bytes |
+| BIGINT | Fixed | 8 bytes |
+| FLOAT | Fixed | 4 bytes |
+| DOUBLE | Fixed | 8 bytes |
+| UUID/TIMEUUID | Fixed | 16 bytes |
+| TEXT, BLOB | Variable | Length prefix + data |
+| VARINT, DECIMAL | Variable | Value-dependent |
+| Collections | Variable | Element count + elements |
+
+### Version-Specific Behavior
+
+| Version | Behavior |
+|---------|----------|
+| 2.0+ | Collections (list, set, map) |
+| 2.1+ | User-defined types (UDTs), tuple type |
+| 2.2+ | TINYINT, SMALLINT, DATE, TIME types |
+| 3.0+ | Non-frozen UDTs and collections |
+| 4.0+ | DURATION type |
+| 5.0+ | VECTOR type for ML embeddings (CEP-30) |
+
+---
+
 ## Type Categories
 
 | Category | Types | Use Case |

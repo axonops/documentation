@@ -11,6 +11,62 @@ Secondary indexes enable queries on columns that are not part of the primary key
 
 ---
 
+## Behavioral Guarantees
+
+### What Index Operations Guarantee
+
+- CREATE INDEX initiates asynchronous index building; the command returns before indexing completes
+- Index updates are applied synchronously as part of the write path once the index is built
+- IF NOT EXISTS provides idempotent index creation
+- DROP INDEX removes the index immediately; the command returns after schema propagation
+- Each index is local to each node (node indexes only its own data)
+
+### What Index Operations Do NOT Guarantee
+
+!!! warning "Undefined Behavior"
+    The following behaviors are undefined and must not be relied upon:
+
+    - **Query availability during build**: Queries using the index may fail or return partial results until build completes on all nodes
+    - **Build completion time**: Index build duration depends on data volume and cluster load; no timeout or progress guarantee
+    - **Query performance**: Scatter-gather queries (without partition key) have unbounded latency depending on cluster size and data distribution
+    - **Result completeness during failures**: If nodes are unavailable, indexed queries may return incomplete results
+    - **Index-only scans**: All index queries require reading the base table; index does not store complete row data
+
+### Index Build Contract
+
+| State | Query Behavior | How to Check |
+|-------|---------------|--------------|
+| Building | Queries may fail or return partial results | `nodetool indexbuildstatus` |
+| Built | Queries return complete results from available nodes | `SELECT * FROM system_schema.indexes` |
+| Failed | Index unusable; must drop and recreate | Check logs for build errors |
+
+### Query Execution Contract
+
+| Query Type | Nodes Contacted | Performance |
+|------------|-----------------|-------------|
+| Index query with partition key | Replicas for that partition | Fast (single partition) |
+| Index query without partition key | All nodes in cluster | Slow (scatter-gather) |
+| Index query with token range | Nodes owning that range | Variable |
+
+### Failure Semantics
+
+| Failure Mode | Outcome | Client Action |
+|--------------|---------|---------------|
+| Timeout during CREATE INDEX | Schema may have propagated; build may be in progress | Check index status |
+| Node failure during build | Build continues on other nodes; failed node rebuilds on restart | Monitor build status |
+| Query timeout on indexed column | Partial results possible | Retry or add partition key constraint |
+| `IndexNotAvailableException` | Index build incomplete | Wait for build to complete |
+
+### Version-Specific Behavior
+
+| Version | Behavior |
+|---------|----------|
+| 3.4+ | SASI indexes available (CASSANDRA-10661) |
+| 4.0+ | Improved index build handling |
+| 5.0+ | SAI as default index implementation (CEP-7), SASI deprecated |
+
+---
+
 ## Index Architecture
 
 ### How Secondary Indexes Work

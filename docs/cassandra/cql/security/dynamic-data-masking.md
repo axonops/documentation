@@ -65,6 +65,66 @@ end note
 
 ---
 
+## Behavioral Guarantees
+
+### What DDM Operations Guarantee
+
+- Masking functions are applied at read time on the coordinator node
+- Original data is never modified; masking is purely a read transformation
+- Users with UNMASK permission see original unmasked values
+- Users with SELECT_MASKED permission see masked values
+- Masking is applied before results are returned to the client
+- ALTER TABLE can add or remove masking from existing columns
+
+### What DDM Operations Do NOT Guarantee
+
+!!! warning "Undefined Behavior"
+    The following behaviors are undefined and must not be relied upon:
+
+    - **Materialized view masking**: Views may expose unmasked data depending on permissions at view creation
+    - **Index leakage**: Secondary indexes may allow inference of masked values through query patterns
+    - **UDF security**: User-defined masking functions may have implementation vulnerabilities
+    - **Prepared statement caching**: Cached statements may retain permission state from preparation time
+    - **CDC and backup exposure**: Change Data Capture and backup files contain unmasked data
+
+### Permission Resolution Contract
+
+| Permission | Can SELECT | Sees Masked | Sees Unmasked |
+|------------|------------|-------------|---------------|
+| Neither | ❌ No | - | - |
+| SELECT only | ❌ No | - | - |
+| SELECT_MASKED | ✅ Yes | ✅ Yes | ❌ No |
+| UNMASK | ✅ Yes | - | ✅ Yes |
+| Both | ✅ Yes | - | ✅ Yes |
+
+### Masking Function Contract
+
+| Function | Input | Output | Notes |
+|----------|-------|--------|-------|
+| `mask_default` | Any | Type-specific mask | Returns `****` for text, `0` for numbers |
+| `mask_null` | Any | `null` | Always returns null |
+| `mask_replace` | Text | Replacement | Replaces with specified character |
+| `mask_inner` | Text | Partial mask | Masks middle characters |
+| `mask_outer` | Text | Partial mask | Masks outer characters |
+| Custom UDF | Any | Any | User-defined transformation |
+
+### Failure Semantics
+
+| Failure Mode | Outcome | Client Action |
+|--------------|---------|---------------|
+| Missing SELECT_MASKED or UNMASK | Query denied | Request appropriate permission |
+| Masking function fails | Query fails | Fix masking function |
+| Custom UDF throws exception | Query fails with masked column error | Fix UDF implementation |
+| Column type mismatch | Query may fail or return unexpected results | Ensure function matches column type |
+
+### Version-Specific Behavior
+
+| Version | Behavior |
+|---------|----------|
+| 5.0+ | Dynamic Data Masking introduced (CEP-20, CASSANDRA-17940) |
+
+---
+
 ## History and Development
 
 ### Design Background

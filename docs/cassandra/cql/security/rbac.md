@@ -11,6 +11,74 @@ Role-Based Access Control (RBAC) manages authentication and authorization throug
 
 ---
 
+## Behavioral Guarantees
+
+### What RBAC Operations Guarantee
+
+- CREATE ROLE creates a role definition stored in `system_auth.roles`
+- GRANT permission immediately takes effect for new operations
+- REVOKE permission immediately takes effect for new operations
+- Role inheritance is resolved at authorization time (transitive permissions)
+- DROP ROLE removes the role and cascades to revoke all grants
+- Superuser roles bypass all permission checks
+
+### What RBAC Operations Do NOT Guarantee
+
+!!! warning "Undefined Behavior"
+    The following behaviors are undefined and must not be relied upon:
+
+    - **Immediate enforcement across all nodes**: Permission changes propagate asynchronously; brief windows of inconsistent enforcement may occur
+    - **Existing connection state**: Permission changes may not affect already-authenticated connections immediately
+    - **Cache invalidation timing**: Permission cache (`roles_validity_in_ms`) may delay enforcement
+    - **Concurrent modification safety**: Simultaneous role modifications may produce unexpected results
+    - **Recovery of dropped roles**: Dropped roles and their permissions are not recoverable
+
+### Permission Enforcement Contract
+
+| Operation | Check Location | Caching |
+|-----------|----------------|---------|
+| Authentication | Any node | `credentials_validity_in_ms` |
+| Authorization | Coordinator | `roles_validity_in_ms` |
+| Permission resolution | Coordinator | `permissions_validity_in_ms` |
+
+### Role Hierarchy Contract
+
+| Scenario | Permission Resolution |
+|----------|----------------------|
+| Direct grant | Permission applies |
+| Inherited via GRANT role | Permission applies (transitive) |
+| Multiple inheritance paths | Permission applies if any path grants it |
+| Revoked from parent | Permission revoked unless granted via another path |
+
+### Cache Configuration
+
+```yaml
+# cassandra.yaml
+roles_validity_in_ms: 2000      # Role information cache
+permissions_validity_in_ms: 2000 # Permission cache
+credentials_validity_in_ms: 2000 # Authentication cache
+```
+
+### Failure Semantics
+
+| Failure Mode | Outcome | Client Action |
+|--------------|---------|---------------|
+| `UnauthorizedException` | Operation denied | Request appropriate permissions |
+| `InvalidRequestException` | Invalid role or permission | Fix request syntax |
+| Role not found | Operation fails | Create role or fix name |
+| Circular grant attempt | Operation rejected | Redesign role hierarchy |
+
+### Version-Specific Behavior
+
+| Version | Behavior |
+|---------|----------|
+| 2.2+ | RBAC introduced (CASSANDRA-7653), replaces per-user model |
+| 3.0+ | Network authorization, improved role management |
+| 4.0+ | Data masking permissions (UNMASK, SELECT_MASKED) |
+| 5.0+ | Enhanced CIDR-based authorization |
+
+---
+
 ## History and Development
 
 ### Background

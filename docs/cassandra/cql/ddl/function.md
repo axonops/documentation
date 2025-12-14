@@ -11,6 +11,66 @@ User-Defined Functions (UDFs) extend CQL with custom scalar operations written i
 
 ---
 
+## Behavioral Guarantees
+
+### What UDF Operations Guarantee
+
+- CREATE FUNCTION creates schema metadata that propagates to all nodes via gossip
+- UDF bytecode is stored in `system_schema.functions` and loaded on demand
+- Functions execute in a sandboxed environment with resource limits
+- OR REPLACE atomically updates an existing function definition
+- IF NOT EXISTS provides idempotent function creation
+- Functions are deterministic by default (same input produces same output)
+
+### What UDF Operations Do NOT Guarantee
+
+!!! warning "Undefined Behavior"
+    The following behaviors are undefined and must not be relied upon:
+
+    - **Execution locality**: UDFs execute on the coordinator, not on replica nodes; data locality is not preserved
+    - **Timeout behavior**: Functions exceeding `user_defined_function_fail_timeout` are terminated; partial results may exist
+    - **Memory limits**: Functions exceeding heap limits are terminated; cluster stability may be impacted
+    - **Concurrent execution**: Functions may execute concurrently for different rows; shared state is not supported
+    - **Side effects**: Functions with side effects (logging, external calls) have undefined behavior
+
+### Execution Contract
+
+| Property | Guarantee |
+|----------|-----------|
+| Execution location | Coordinator node only |
+| Execution count | Once per row in result set |
+| Null handling | Controlled by `CALLED ON NULL INPUT` or `RETURNS NULL ON NULL INPUT` |
+| Timeout enforcement | Function terminated after `user_defined_function_fail_timeout` |
+| Resource isolation | Sandboxed with configurable heap and CPU limits |
+
+### Language Support Contract
+
+| Language | Availability | Security |
+|----------|--------------|----------|
+| Java | Always (when UDFs enabled) | Bytecode-level sandboxing |
+| JavaScript | `enable_scripted_user_defined_functions: true` | Nashorn sandbox (deprecated in Java 11+) |
+
+### Failure Semantics
+
+| Failure Mode | Outcome | Client Action |
+|--------------|---------|---------------|
+| Function throws exception | Query fails with `FunctionExecutionException` | Fix function or handle exception |
+| Function exceeds timeout | Query fails, function terminated | Optimize function or increase timeout |
+| Function exceeds heap | Query fails, function terminated | Reduce memory usage or increase limit |
+| Schema disagreement | Function may not be available on all nodes | Wait for schema agreement |
+
+### Version-Specific Behavior
+
+| Version | Behavior |
+|---------|----------|
+| 2.2+ | Java UDFs introduced (CASSANDRA-7395) |
+| 2.2+ | JavaScript UDFs via Nashorn |
+| 3.0+ | Improved UDF sandboxing |
+| 4.0+ | UDF heap tracking, JavaScript deprecated |
+| 5.0+ | WASM UDFs under consideration |
+
+---
+
 ## UDF Architecture
 
 ### How UDFs Work

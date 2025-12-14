@@ -38,6 +38,71 @@ Machine learning models transform unstructured data (text, images, audio) into f
 
 ---
 
+## Behavioral Guarantees
+
+### What Vector Search Guarantees
+
+- Vector columns store fixed-dimension floating-point arrays
+- SAI vector indexes support approximate nearest neighbor (ANN) queries
+- `ORDER BY ... ANN OF` returns results ordered by similarity to the query vector
+- `LIMIT` controls the maximum number of results returned
+- Similarity functions (`similarity_cosine`, `similarity_euclidean`, `similarity_dot_product`) compute distances consistently
+
+### What Vector Search Does NOT Guarantee
+
+!!! warning "Undefined Behavior"
+    The following behaviors are undefined and must not be relied upon:
+
+    - **Exact nearest neighbors**: ANN queries return approximate results; the true k-nearest neighbors may not be included
+    - **Result stability**: Identical queries may return slightly different results due to ANN approximation
+    - **Cross-partition ordering**: When querying multiple partitions, global ordering is approximate
+    - **Recall guarantees**: The percentage of true nearest neighbors found varies by index configuration and data distribution
+    - **Performance with filters**: Combining ANN with WHERE clauses may significantly impact performance
+    - **Dimension mismatch handling**: Query vectors with wrong dimensions cause errors; no automatic padding or truncation
+
+### ANN Query Contract
+
+| Aspect | Guarantee |
+|--------|-----------|
+| Result ordering | Approximate similarity order (best matches first) |
+| Result count | At most LIMIT rows returned |
+| Index requirement | SAI index with `'similarity_function'` option required |
+| Query vector dimension | Must match column dimension exactly |
+
+### Similarity Function Contract
+
+| Function | Range | Best Match | Use Case |
+|----------|-------|------------|----------|
+| `similarity_cosine` | -1 to 1 | 1 (identical direction) | Normalized embeddings, text similarity |
+| `similarity_euclidean` | 0 to ∞ | 0 (identical) | Spatial data, unnormalized vectors |
+| `similarity_dot_product` | -∞ to ∞ | Higher is more similar | Pre-normalized vectors, performance |
+
+### Index Build Contract
+
+| State | Query Behavior |
+|-------|---------------|
+| Building | ANN queries may fail or return incomplete results |
+| Built | ANN queries return approximate results from all indexed data |
+| Missing | ANN queries fail with error |
+
+### Failure Semantics
+
+| Failure Mode | Outcome | Client Action |
+|--------------|---------|---------------|
+| Dimension mismatch | Query rejected | Ensure query vector matches column dimension |
+| Missing ANN index | Query fails | Create SAI index with similarity function |
+| Index building | Partial or no results | Wait for index build completion |
+| Query timeout | Partial results possible | Reduce LIMIT or add partition constraints |
+
+### Version-Specific Behavior
+
+| Version | Behavior |
+|---------|----------|
+| 5.0+ | VECTOR type and ANN queries introduced (CEP-30) |
+| 5.0+ | SAI vector indexes with similarity functions |
+
+---
+
 ## Vector Data Type
 
 ### Syntax

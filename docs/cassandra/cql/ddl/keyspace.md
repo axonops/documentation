@@ -11,6 +11,59 @@ Keyspaces are the top-level namespace in Cassandra, analogous to databases in re
 
 ---
 
+## Behavioral Guarantees
+
+### What Keyspace Operations Guarantee
+
+- CREATE KEYSPACE creates metadata that propagates to all nodes via gossip
+- Schema changes are atomic at the coordinator level
+- IF NOT EXISTS and IF EXISTS clauses provide idempotent operations
+- Replication settings take effect immediately for new writes after schema agreement
+- DROP KEYSPACE triggers automatic snapshot creation when `auto_snapshot: true` (default)
+
+### What Keyspace Operations Do NOT Guarantee
+
+!!! warning "Undefined Behavior"
+    The following behaviors are undefined and must not be relied upon:
+
+    - **Immediate schema visibility**: Other nodes may not see schema changes until gossip propagates (typically milliseconds, but can be longer under load)
+    - **Data movement on ALTER**: Changing replication settings does not automatically move data; repair or rebuild is required
+    - **Atomic multi-node updates**: Schema propagation is eventually consistent, not transactional
+    - **Immediate replica deletion**: Reducing replication factor does not immediately delete excess replicas
+
+### Schema Agreement Contract
+
+Schema changes require agreement across the cluster:
+
+| State | Description | Client Impact |
+|-------|-------------|---------------|
+| Schema agreed | All nodes have same schema version | Safe to proceed |
+| Schema disagreement | Nodes have different schema versions | Operations may fail or behave unexpectedly |
+
+Monitor schema agreement with:
+```bash
+nodetool describecluster
+```
+
+### Failure Semantics
+
+| Failure Mode | Outcome | Client Action |
+|--------------|---------|---------------|
+| Timeout during CREATE/ALTER | Undefined - schema may or may not have propagated | Check schema agreement, retry if needed |
+| Node down during schema change | Schema propagates when node returns | Monitor schema agreement |
+| `InvalidRequest` | Operation rejected, no change | Fix request and retry |
+| `Unauthorized` | Permission denied, no change | Request appropriate permissions |
+
+### Version-Specific Behavior
+
+| Version | Behavior |
+|---------|----------|
+| 3.0+ | Improved schema propagation via `system_schema` keyspace |
+| 4.0+ | Schema pull on gossip (CASSANDRA-13426), faster agreement |
+| 5.0+ | Transactional metadata (CEP-21) for atomic schema changes |
+
+---
+
 ## CREATE KEYSPACE
 
 Create a new keyspace with specified replication configuration.

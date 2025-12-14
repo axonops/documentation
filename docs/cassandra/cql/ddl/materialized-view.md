@@ -53,6 +53,56 @@ The following JIRA tickets document significant issues with materialized views:
 
 ---
 
+## Behavioral Guarantees
+
+### What Materialized Views Guarantee
+
+- View updates are initiated synchronously during the base table write path
+- Each view is stored as a separate table with its own primary key structure
+- View primary key must include all base table primary key columns
+- Rows with null values in view primary key columns are excluded from the view
+- View inherits the keyspace's replication settings
+
+### What Materialized Views Do NOT Guarantee
+
+!!! warning "Undefined Behavior"
+    The following behaviors are undefined and must not be relied upon:
+
+    - **Strong consistency with base table**: Views provide eventual consistency only; reads from view may not reflect recent base table writes
+    - **Atomic base-to-view updates**: Base table and view updates are not transactionally linked
+    - **Consistency after failures**: Node failures, network partitions, or missed hints can cause permanent inconsistencies without repair
+    - **Repair propagation**: Standard repair on base table does not automatically repair view inconsistencies
+    - **Write success guarantees**: A successful base table write does not guarantee successful view update
+
+### Consistency Contract
+
+| Scenario | Base Table | Materialized View | Consistency |
+|----------|------------|-------------------|-------------|
+| Normal operation | Updated | Updated (same coordinator) | Eventually consistent |
+| View replica down | Updated | Hinted handoff queued | Consistent after hint delivery |
+| Hint window exceeded | Updated | Update lost | Inconsistent until repair |
+| Node failure mid-write | Undefined | Undefined | May be inconsistent |
+
+### Failure Semantics
+
+| Failure Mode | Outcome | Client Action |
+|--------------|---------|---------------|
+| `WriteTimeoutException` on base | Undefined for both base and view | Verify state, repair if needed |
+| View replica unavailable | Write may succeed (hints queued) | Monitor hint delivery |
+| Coordinator failure | Partial updates possible | Run repair |
+| Schema disagreement | View build may fail | Wait for schema agreement |
+
+### Version-Specific Behavior
+
+| Version | Behavior |
+|---------|----------|
+| 3.0+ | Materialized views introduced (CASSANDRA-6477) |
+| 4.0+ | Multiple bug fixes (CASSANDRA-13883, CASSANDRA-14092) |
+| 4.1+ | Race condition fixes (CASSANDRA-13911) |
+| 5.0+ | Improved view repair handling |
+
+---
+
 ## Materialized View Architecture
 
 ### How Materialized Views Work

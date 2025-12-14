@@ -13,6 +13,70 @@ Aggregates deserve a warning: `SELECT COUNT(*) FROM users` looks innocent, but w
 
 This reference covers scalar functions, aggregates, and user-defined functions (available since Cassandra 4.0).
 
+---
+
+## Behavioral Guarantees
+
+### What Functions Guarantee
+
+- Scalar functions are evaluated on the coordinator for each result row
+- `uuid()` generates a unique random UUID (version 4) per invocation
+- `now()` generates a unique time-based UUID (version 1) per invocation within a statement
+- `token()` returns the partition token for the given partition key columns
+- Aggregate functions are evaluated on the coordinator after collecting all matching rows
+- Type conversion functions fail predictably on incompatible input
+
+### What Functions Do NOT Guarantee
+
+!!! warning "Undefined Behavior"
+    The following behaviors are undefined and must not be relied upon:
+
+    - **`now()` monotonicity**: Multiple `now()` calls in a statement return the same value; across statements, clock skew may cause non-monotonic values
+    - **Aggregate performance**: Aggregates without partition key constraints scan the entire cluster with unbounded latency
+    - **`uuid()` ordering**: Random UUIDs have no ordering relationship
+    - **Cross-node time consistency**: Time functions reflect coordinator node's clock; clock skew between nodes affects results
+    - **Null propagation**: Some functions return null on null input; others may fail
+
+### Function Evaluation Contract
+
+| Function Type | Evaluation Location | Per-Row | Notes |
+|---------------|--------------------:|:-------:|-------|
+| Scalar | Coordinator | ✅ Yes | Evaluated for each result row |
+| Aggregate | Coordinator | ❌ No | Evaluated once after collecting rows |
+| `now()` | Coordinator | ❌ No | Same value within statement |
+| `uuid()` | Coordinator | ✅ Yes | Different value per invocation |
+| `token()` | Coordinator | ✅ Yes | Computed from partition key |
+
+### Time Function Contract
+
+| Function | Return Type | Uniqueness | Monotonicity |
+|----------|-------------|------------|--------------|
+| `now()` | `timeuuid` | Unique per statement | Within node only |
+| `currentTimestamp()` | `timestamp` | Not unique | Within node only |
+| `currentTimeUUID()` | `timeuuid` | Unique per invocation | Within node only |
+| `currentDate()` | `date` | Not unique | Within node only |
+| `currentTime()` | `time` | Not unique | Within node only |
+
+### Aggregate Performance Contract
+
+| Query Pattern | Performance | Notes |
+|---------------|-------------|-------|
+| `SELECT COUNT(*) FROM t WHERE pk = ?` | Fast | Single partition |
+| `SELECT COUNT(*) FROM t` | Slow/Timeout | Full cluster scan |
+| `SELECT SUM(x) FROM t WHERE pk = ?` | Fast | Single partition |
+| `SELECT AVG(x) FROM t` | Slow/Timeout | Full cluster scan |
+
+### Version-Specific Behavior
+
+| Version | Behavior |
+|---------|----------|
+| 2.2+ | User-defined functions (UDFs) |
+| 3.0+ | `toDate()`, `toTimestamp()` conversion functions |
+| 4.0+ | Improved function execution, `currentTimestamp()` |
+| 5.0+ | Vector similarity functions, masking functions |
+
+---
+
 ## Function Categories
 
 | Category | Purpose | Examples |

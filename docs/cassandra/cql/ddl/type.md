@@ -75,6 +75,69 @@ UDTs were introduced in Cassandra 2.1 to address several data modeling challenge
 
 ---
 
+## Behavioral Guarantees
+
+### What UDT Operations Guarantee
+
+- CREATE TYPE creates schema metadata that propagates to all nodes via gossip
+- UDT field names and types are validated at compile time for CQL statements
+- ALTER TYPE can add new fields to the end of the type definition
+- ALTER TYPE can rename existing fields
+- Non-frozen UDT columns allow individual field updates (Cassandra 3.0+)
+- Frozen UDT values are compared by their serialized byte representation
+
+### What UDT Operations Do NOT Guarantee
+
+!!! warning "Undefined Behavior"
+    The following behaviors are undefined and must not be relied upon:
+
+    - **Field removal**: Fields cannot be removed from a UDT; data for removed fields would become orphaned
+    - **Field reordering**: The order of fields in a UDT cannot be changed after creation
+    - **Partial queries**: Individual UDT fields cannot be queried with WHERE clauses
+    - **Cross-keyspace usage**: UDTs are scoped to their keyspace and cannot be referenced from other keyspaces
+    - **Null field handling**: Null fields in non-frozen UDTs may create tombstones; behavior varies by version
+
+### Frozen vs Non-Frozen Contract
+
+| Aspect | Frozen UDT | Non-Frozen UDT |
+|--------|------------|----------------|
+| Update granularity | Entire value replaced | Individual fields updatable |
+| Storage | Serialized as single blob | Each field stored as separate cell |
+| Null handling | Nulls not stored explicitly | Null fields may create tombstones |
+| Collection usage | Required (frozen only) | Not allowed in collections |
+| Primary key usage | Allowed | Not allowed |
+| Comparison | Byte-level comparison | Not directly comparable |
+
+### Schema Evolution Contract
+
+| Operation | Supported | Notes |
+|-----------|-----------|-------|
+| Add field at end | ✅ Yes | New field reads as null for existing data |
+| Remove field | ❌ No | Would orphan existing data |
+| Rename field | ✅ Yes | Metadata change only |
+| Change field type | ❌ No | Would corrupt existing data |
+| Reorder fields | ❌ No | Would corrupt serialization |
+
+### Failure Semantics
+
+| Failure Mode | Outcome | Client Action |
+|--------------|---------|---------------|
+| Timeout during CREATE/ALTER | Undefined - schema may or may not have propagated | Check schema agreement |
+| Type in use on DROP | Operation rejected | Remove table references first |
+| Invalid field type | Operation rejected | Use valid CQL types |
+| Circular reference | Operation rejected | Redesign type structure |
+
+### Version-Specific Behavior
+
+| Version | Behavior |
+|---------|----------|
+| 2.1+ | UDTs introduced (CASSANDRA-5590) |
+| 3.0+ | Non-frozen UDTs with field-level updates (CASSANDRA-7423) |
+| 3.6+ | ALTER TYPE RENAME support (CASSANDRA-8178) |
+| 4.0+ | Improved UDT validation and error messages |
+
+---
+
 ## UDT Architecture
 
 ### Storage Model

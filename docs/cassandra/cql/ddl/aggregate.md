@@ -74,6 +74,65 @@ user_defined_function_fail_timeout: 10000ms
 
 ---
 
+## Behavioral Guarantees
+
+### What UDA Operations Guarantee
+
+- CREATE AGGREGATE creates schema metadata that propagates to all nodes via gossip
+- Aggregate state function is called once per row in the result set
+- Final function (if specified) is called once after all rows are processed
+- INITCOND provides the initial state value for the aggregation
+- OR REPLACE atomically updates an existing aggregate definition
+- IF NOT EXISTS provides idempotent aggregate creation
+
+### What UDA Operations Do NOT Guarantee
+
+!!! warning "Undefined Behavior"
+    The following behaviors are undefined and must not be relied upon:
+
+    - **Execution order**: The order in which rows are processed is not guaranteed (unless ORDER BY is used)
+    - **Partial aggregation**: Aggregation is not distributed; all matching rows are sent to coordinator
+    - **State persistence**: Aggregate state is not persisted between queries
+    - **Memory limits**: Large result sets may cause coordinator memory exhaustion
+    - **Timeout during aggregation**: Partial state is discarded on timeout
+
+### Execution Contract
+
+| Property | Guarantee |
+|----------|-----------|
+| Execution location | Coordinator node only |
+| State function calls | Once per row in result set |
+| Final function calls | Once after all rows processed |
+| Initial state | INITCOND value or type default if null |
+| Null row handling | Controlled by underlying state function's null handling |
+
+### Aggregation Order Contract
+
+| Query | Row Processing Order |
+|-------|---------------------|
+| Without ORDER BY | Undefined (implementation-dependent) |
+| With ORDER BY | Specified order |
+| Multiple partitions | Undefined between partitions |
+
+### Failure Semantics
+
+| Failure Mode | Outcome | Client Action |
+|--------------|---------|---------------|
+| State function throws exception | Query fails, partial state discarded | Fix state function |
+| Final function throws exception | Query fails, aggregation result lost | Fix final function |
+| Timeout during aggregation | Query fails, partial state discarded | Reduce result set or increase timeout |
+| Referenced function dropped | Query fails with `InvalidRequestException` | Recreate function or aggregate |
+
+### Version-Specific Behavior
+
+| Version | Behavior |
+|---------|----------|
+| 2.2+ | User-defined aggregates introduced (CASSANDRA-6890) |
+| 3.0+ | OR REPLACE syntax, improved null handling |
+| 4.0+ | Better timeout handling during aggregation |
+
+---
+
 ## Aggregate Architecture
 
 ### How UDAs Work
