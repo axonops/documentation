@@ -6,7 +6,7 @@
       <meta charset="utf-8">
       <meta name="viewport" content="width=device-width,initial-scale=1">
       
-        <meta name="description" content="Cassandra authentication configuration. Password authenticator">
+        <meta name="description" content="Cassandra authentication configuration. AllowAllAuthenticator, PasswordAuthenticator, MutualTlsAuthenticator">
       
       
       
@@ -69,7 +69,7 @@
     
     
       
-        <meta  name="keywords"  content="Cassandra authentication, password authenticator, login security" >
+        <meta  name="keywords"  content="Cassandra authentication, AllowAllAuthenticator, PasswordAuthenticator, login security" >
       
     
     
@@ -12843,9 +12843,51 @@ data-et-multi-view="{&quot;schema&quot;:{&quot;content&quot;:{&quot;desktop&quot
     <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
       
         <li class="md-nav__item">
-  <a href="#enabling-authentication" class="md-nav__link">
+  <a href="#built-in-authenticators" class="md-nav__link">
     <span class="md-ellipsis">
-      Enabling Authentication
+      Built-in Authenticators
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Built-in Authenticators">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#allowallauthenticator-default" class="md-nav__link">
+    <span class="md-ellipsis">
+      AllowAllAuthenticator (Default)
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#passwordauthenticator" class="md-nav__link">
+    <span class="md-ellipsis">
+      PasswordAuthenticator
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#mutualtlsauthenticator-cassandra-50" class="md-nav__link">
+    <span class="md-ellipsis">
+      MutualTlsAuthenticator (Cassandra 5.0+)
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#enabling-password-authentication" class="md-nav__link">
+    <span class="md-ellipsis">
+      Enabling Password Authentication
     </span>
   </a>
   
@@ -14144,9 +14186,51 @@ data-et-multi-view="{&quot;schema&quot;:{&quot;content&quot;:{&quot;desktop&quot
     <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
       
         <li class="md-nav__item">
-  <a href="#enabling-authentication" class="md-nav__link">
+  <a href="#built-in-authenticators" class="md-nav__link">
     <span class="md-ellipsis">
-      Enabling Authentication
+      Built-in Authenticators
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Built-in Authenticators">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#allowallauthenticator-default" class="md-nav__link">
+    <span class="md-ellipsis">
+      AllowAllAuthenticator (Default)
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#passwordauthenticator" class="md-nav__link">
+    <span class="md-ellipsis">
+      PasswordAuthenticator
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#mutualtlsauthenticator-cassandra-50" class="md-nav__link">
+    <span class="md-ellipsis">
+      MutualTlsAuthenticator (Cassandra 5.0+)
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#enabling-password-authentication" class="md-nav__link">
+    <span class="md-ellipsis">
+      Enabling Password Authentication
     </span>
   </a>
   
@@ -14324,8 +14408,59 @@ data-et-multi-view="{&quot;schema&quot;:{&quot;content&quot;:{&quot;desktop&quot
 
 
 <div><h1 id="cassandra-authentication">Cassandra Authentication<a class="headerlink" href="#cassandra-authentication" title="Permanent link">¶</a></h1>
-<p>Configure authentication to control access to your Cassandra cluster.</p>
-<h2 id="enabling-authentication">Enabling Authentication<a class="headerlink" href="#enabling-authentication" title="Permanent link">¶</a></h2>
+<p>Authentication controls which clients can connect to the cluster. By default, Cassandra allows all connections without credentials.</p>
+<hr>
+<h2 id="built-in-authenticators">Built-in Authenticators<a class="headerlink" href="#built-in-authenticators" title="Permanent link">¶</a></h2>
+<p>Cassandra provides the following authenticator implementations:</p>
+<table>
+<thead>
+<tr>
+<th>Authenticator</th>
+<th>Description</th>
+<th>Use Case</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>AllowAllAuthenticator</code></td>
+<td>No authentication (default)</td>
+<td>Development, testing</td>
+</tr>
+<tr>
+<td><code>PasswordAuthenticator</code></td>
+<td>Username/password authentication</td>
+<td>Production environments</td>
+</tr>
+<tr>
+<td><code>MutualTlsAuthenticator</code></td>
+<td>Certificate-based authentication (5.0+)</td>
+<td>Zero-trust environments</td>
+</tr>
+<tr>
+<td><code>MutualTlsWithPasswordFallbackAuthenticator</code></td>
+<td>Certificates with password fallback (5.0+)</td>
+<td>Migration to mTLS</td>
+</tr>
+</tbody>
+</table>
+<h3 id="allowallauthenticator-default">AllowAllAuthenticator (Default)<a class="headerlink" href="#allowallauthenticator-default" title="Permanent link">¶</a></h3>
+<p>The default configuration performs no authentication. Any client can connect without credentials.</p>
+<div class="highlight"><pre><span></span><code><span class="c1"># cassandra.yaml (default)</span>
+<span class="nt">authenticator</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">AllowAllAuthenticator</span>
+</code></pre></div>
+<div class="admonition danger">
+<p class="admonition-title">Production Warning</p>
+<p><code>AllowAllAuthenticator</code> must not be used in production. Any client with network access can read, modify, or delete all data.</p>
+</div>
+<h3 id="passwordauthenticator">PasswordAuthenticator<a class="headerlink" href="#passwordauthenticator" title="Permanent link">¶</a></h3>
+<p>Requires username and password credentials. Credentials are stored in the <code>system_auth.roles</code> table.</p>
+<div class="highlight"><pre><span></span><code><span class="c1"># cassandra.yaml</span>
+<span class="nt">authenticator</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">PasswordAuthenticator</span>
+</code></pre></div>
+<h3 id="mutualtlsauthenticator-cassandra-50">MutualTlsAuthenticator (Cassandra 5.0+)<a class="headerlink" href="#mutualtlsauthenticator-cassandra-50" title="Permanent link">¶</a></h3>
+<p>Authenticates clients using X.509 certificates. Requires client encryption with mandatory certificate verification. See <a href="#mutual-tls-authentication">Mutual TLS Authentication</a> for configuration details.</p>
+<hr>
+<h2 id="enabling-password-authentication">Enabling Password Authentication<a class="headerlink" href="#enabling-password-authentication" title="Permanent link">¶</a></h2>
 <div class="highlight"><pre><span></span><code><span class="c1"># cassandra.yaml</span>
 <span class="nt">authenticator</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">PasswordAuthenticator</span>
 </code></pre></div>
@@ -14374,10 +14509,6 @@ Password: cassandra
 <span class="nt">credentials_cache_max_entries</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">1000</span>
 </code></pre></div>
 <h2 id="mutual-tls-authentication">Mutual TLS Authentication<a class="headerlink" href="#mutual-tls-authentication" title="Permanent link">¶</a></h2>
-<div class="admonition note">
-<p class="admonition-title">Cassandra 5.0+</p>
-<p>MutualTlsAuthenticator is available in Apache Cassandra 5.0 and later.</p>
-</div>
 <p>MutualTlsAuthenticator performs certificate-based authentication for client connections by extracting identities from client certificates and verifying them against authorized identities in the <code>system_auth.identity_to_role</code> table.</p>
 <h3 id="prerequisites">Prerequisites<a class="headerlink" href="#prerequisites" title="Permanent link">¶</a></h3>
 <p>Mutual TLS authentication requires client encryption with mandatory client certificate verification:</p>
