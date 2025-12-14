@@ -62,6 +62,27 @@ Cassandra has developed multiple secondary index implementations over time:
 
 Each generation addressed limitations of its predecessors while introducing new capabilities and trade-offs.
 
+### Feature Availability by Version
+
+| Feature | Cassandra 3.x | Cassandra 4.x | Cassandra 5.0+ |
+|---------|:-------------:|:-------------:|:--------------:|
+| Secondary Index (2i) | ✅ | ✅ | ✅ |
+| SASI (experimental) | ✅ 3.4+ | ✅ | ✅ |
+| SAI | ❌ | ❌ | ✅ |
+| Vector search | ❌ | ❌ | ✅ |
+| Equality queries | ✅ | ✅ | ✅ |
+| Range queries | SASI only | SASI only | SAI/SASI |
+| LIKE prefix | SASI only | SASI only | SAI/SASI |
+| LIKE contains | SASI only | SASI only | SAI/SASI |
+| Collection indexing | 2i only | 2i only | 2i/SAI |
+| ANN (vector) | ❌ | ❌ | SAI only |
+
+!!! tip "Version Recommendation"
+    - **Cassandra 5.0+**: Use SAI for all new indexes
+    - **Cassandra 4.x**: Use 2i for equality, SASI for range (with caution)
+    - **Cassandra 3.x**: Use 2i for equality, SASI for range (with caution)
+    - **Upgrading**: Plan migration from SASI to SAI when moving to 5.0
+
 ---
 
 ## Index Architecture Comparison
@@ -143,6 +164,53 @@ package "SAI - SSTable-Attached" {
 | **Write Overhead** | Medium | Medium | Low |
 | **Cardinality Handling** | Poor at extremes | Better | Best |
 | **Production Ready** | Yes (with caveats) | No | Yes |
+
+---
+
+## Operator Support Matrix
+
+This table shows exactly which CQL operators are supported by each index type.
+
+| Operator | Secondary Index (2i) | SASI | SAI | Notes |
+|----------|:-------------------:|:----:|:---:|-------|
+| `=` (equality) | ✅ | ✅ | ✅ | All index types |
+| `>` | ❌ | ✅ | ✅ | Requires SPARSE mode for SASI |
+| `>=` | ❌ | ✅ | ✅ | Requires SPARSE mode for SASI |
+| `<` | ❌ | ✅ | ✅ | Requires SPARSE mode for SASI |
+| `<=` | ❌ | ✅ | ✅ | Requires SPARSE mode for SASI |
+| `LIKE 'prefix%'` | ❌ | ✅ | ✅ | PREFIX mode default for SASI |
+| `LIKE '%substring%'` | ❌ | ✅ | ⚠️ | SASI: CONTAINS mode; SAI: requires analyzer |
+| `LIKE '%suffix'` | ❌ | ❌ | ❌ | Not supported by any index |
+| `IN` | ✅ | ✅ | ✅ | Multiple equality values |
+| `CONTAINS` (collection) | ✅ | ❌ | ✅ | Collection element search |
+| `CONTAINS KEY` (map) | ✅ | ❌ | ✅ | Map key search |
+| `!=` (not equal) | ❌ | ❌ | ❌ | Not supported by any index |
+| `OR` (cross-column) | ❌ | ❌ | ❌ | Application-level union required |
+
+**Legend:** ✅ Supported | ⚠️ Partial/Conditional | ❌ Not Supported
+
+### Data Type Support
+
+| Data Type | Secondary Index (2i) | SASI | SAI |
+|-----------|:-------------------:|:----:|:---:|
+| `text` / `varchar` | ✅ | ✅ | ✅ |
+| `int` / `bigint` | ✅ | ✅ | ✅ |
+| `float` / `double` | ✅ | ✅ | ✅ |
+| `decimal` | ✅ | ✅ | ✅ |
+| `timestamp` | ✅ | ✅ | ✅ |
+| `date` / `time` | ✅ | ✅ | ✅ |
+| `uuid` / `timeuuid` | ✅ | ✅ | ✅ |
+| `boolean` | ✅ | ⚠️ | ✅ |
+| `inet` | ✅ | ✅ | ✅ |
+| `blob` | ✅ | ⚠️ | ✅ |
+| `list<T>` | ✅ | ❌ | ✅ |
+| `set<T>` | ✅ | ❌ | ✅ |
+| `map<K,V>` | ✅ | ❌ | ✅ |
+| `vector<float, N>` | ❌ | ❌ | ✅ |
+| `frozen<T>` | ✅ | ⚠️ | ✅ |
+
+!!! warning "SASI Collection Support"
+    SASI does not support indexing collections. Use SAI or denormalized tables for collection queries.
 
 ### Choosing an Index Type
 
@@ -238,12 +306,83 @@ All secondary indexes add overhead to the write path:
 
 ### Anti-Patterns
 
-Avoid secondary indexes when:
+!!! danger "Do Not Index These Columns"
+    The following patterns will cause performance problems or outright failures. These are not recommendations—they are hard constraints.
 
-1. **Very high cardinality** (e.g., UUIDs, timestamps): Index becomes as large as data
-2. **Very low cardinality** (e.g., boolean, status with 2-3 values): Each index entry points to many partitions
-3. **Frequently updated columns**: Each update requires index maintenance
-4. **Large partitions with few matching rows**: Must read entire partition for few results
+#### High Cardinality Columns
+
+!!! danger "Never Index UUIDs, Timestamps, or Unique Identifiers"
+    **Problem:** Index size equals or exceeds base table size. Every query contacts all nodes to find one row.
+
+    **Symptoms:** Query latency worse than full table scan, excessive disk usage, coordinator timeouts.
+
+    **Instead:** Include the column in the partition key or create a denormalized lookup table.
+
+    ```sql
+    -- DO NOT DO THIS
+    CREATE INDEX ON events (event_id);  -- event_id is UUID
+
+    -- INSTEAD: Make it the partition key
+    CREATE TABLE events_by_id (
+        event_id uuid PRIMARY KEY,
+        ...
+    );
+    ```
+
+#### Low Cardinality Columns
+
+!!! danger "Never Index Boolean or Low-Enum Columns Without Partition Key"
+    **Problem:** Each index entry points to millions of rows. Single query returns unbounded results.
+
+    **Symptoms:** Memory exhaustion, GC storms, query timeouts, coordinator OOM.
+
+    **Instead:** Partition by the low-cardinality value, or always combine with partition key restriction.
+
+    ```sql
+    -- DO NOT DO THIS
+    CREATE INDEX ON users (is_active);  -- Returns 50% of all rows
+
+    -- INSTEAD: Partition by status
+    CREATE TABLE users_by_status (
+        is_active boolean,
+        user_id uuid,
+        PRIMARY KEY (is_active, user_id)
+    );
+    ```
+
+#### Frequently Updated Columns
+
+!!! warning "Avoid Indexing Columns That Change Often"
+    **Problem:** Every update requires index delete + insert. Tombstones accumulate rapidly.
+
+    **Symptoms:** Growing read latency, tombstone warnings, compaction pressure.
+
+    **Instead:** Store mutable state separately or accept query trade-offs.
+
+    ```sql
+    -- PROBLEMATIC
+    CREATE INDEX ON sessions (last_activity);  -- Updated every request
+
+    -- Every update creates a tombstone in the index
+    -- After 1M updates: 1M tombstones to scan
+    ```
+
+#### Global Queries Without Partition Restriction
+
+!!! warning "Avoid Index-Only Queries in Large Clusters"
+    **Problem:** Query contacts ALL nodes, latency = slowest node, no locality benefit.
+
+    **Acceptable:** Combined with partition key (restricts to one node).
+
+    **Problematic:** Global queries in large clusters with high throughput requirements.
+
+    ```sql
+    -- SLOW: Contacts all nodes
+    SELECT * FROM users WHERE city = 'NYC';
+
+    -- FAST: Restricted to one partition
+    SELECT * FROM users WHERE region = 'us-east' AND city = 'NYC';
+    ```
 
 ---
 

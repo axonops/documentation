@@ -457,6 +457,115 @@ SELECT * FROM users WHERE attributes CONTAINS KEY 'verified';
 SELECT * FROM users WHERE attributes['status'] = 'active';
 ```
 
+---
+
+## Vector Search (ANN)
+
+!!! warning "Vector Search is Fundamentally Different"
+    Vector search uses SAI infrastructure but operates completely differently from scalar indexes. It is **not** "just another column type"—it introduces approximate results, different query semantics, and significant storage overhead.
+
+### What Vector Search Is
+
+Vector search enables Approximate Nearest Neighbor (ANN) queries on high-dimensional embedding vectors. This supports semantic similarity search for AI/ML applications like:
+
+- Document similarity
+- Image search
+- Recommendation systems
+- RAG (Retrieval-Augmented Generation) pipelines
+
+### What Vector Search Is NOT
+
+| Expectation | Reality |
+|------------|---------|
+| Exact results | **Approximate** - may miss true nearest neighbors |
+| Fast like scalar indexes | **Slower** - graph traversal, not B-tree lookup |
+| Low storage overhead | **100-200%** overhead vs indexed column |
+| Works with all predicates | **Only** `ORDER BY ... ANN OF` syntax |
+| Scales linearly | **Sub-linear** but memory-intensive |
+
+### Creating Vector Indexes
+
+```sql
+-- Create table with vector column (Cassandra 5.0+)
+CREATE TABLE documents (
+    doc_id uuid PRIMARY KEY,
+    title text,
+    content text,
+    embedding vector<float, 1536>  -- OpenAI ada-002 dimension
+);
+
+-- Create SAI index on vector column
+CREATE INDEX ON documents (embedding) USING 'sai';
+```
+
+### Vector Query Syntax
+
+!!! danger "Vector Queries Use Different Syntax"
+    Vector queries use `ORDER BY ... ANN OF`, not `WHERE`. The query returns approximate nearest neighbors, not exact matches.
+
+```sql
+-- Find 10 most similar documents to query vector
+SELECT doc_id, title, similarity_cosine(embedding, [0.1, 0.2, ...]) AS score
+FROM documents
+ORDER BY embedding ANN OF [0.1, 0.2, ...]
+LIMIT 10;
+```
+
+### Vector Search Operators
+
+| Operator | Syntax | Description |
+|----------|--------|-------------|
+| ANN search | `ORDER BY col ANN OF [...]` | Approximate nearest neighbor |
+| Cosine similarity | `similarity_cosine(col, [...])` | Returns similarity score (0-1) |
+| Euclidean distance | `similarity_euclidean(col, [...])` | Returns distance score |
+| Dot product | `similarity_dot_product(col, [...])` | Returns dot product score |
+
+### Vector Index Limitations
+
+!!! danger "Hard Constraints"
+    - **No filtering before ANN**: Cannot use `WHERE` with vector queries (except partition key)
+    - **No exact search**: ANN is always approximate
+    - **Fixed dimensions**: Vector dimension set at table creation, cannot change
+    - **No nulls**: Vector columns cannot contain null values
+    - **Memory intensive**: HNSW graph loaded during queries
+
+### Vector Search Configuration
+
+```sql
+CREATE INDEX ON documents (embedding) USING 'sai'
+WITH OPTIONS = {
+    'similarity_function': 'cosine'  -- cosine, euclidean, dot_product
+};
+```
+
+| Option | Values | Default | Description |
+|--------|--------|---------|-------------|
+| `similarity_function` | cosine, euclidean, dot_product | cosine | Distance metric for ANN |
+
+### Storage Overhead
+
+Vector indexes create specialized graph structures that significantly increase storage:
+
+| Component | Description | Size Impact |
+|-----------|-------------|-------------|
+| HNSW Graph | Navigable small world graph for ANN | 50-100% of vector data |
+| Product Quantization | Compressed vector representations | 20-50% of vector data |
+| Postings | Row ID mappings | 10-20% overhead |
+
+**Total overhead: 100-200%** of the vector column size.
+
+For a table with 1M rows and 1536-dimension float vectors (~6KB per row):
+- Vector data: ~6GB
+- Vector index: ~6-12GB additional
+
+### Vector Search Anti-Patterns
+
+!!! danger "Do Not Use Vector Search For"
+    - **Exact matching**: Use equality index instead
+    - **Small datasets** (<10K rows): Full scan may be faster
+    - **Frequently updated vectors**: Index rebuild overhead
+    - **High-throughput queries**: ANN is computationally expensive
+
 ### Combined Queries
 
 ```sql
@@ -544,58 +653,99 @@ SELECT * FROM users WHERE city = 'NYC';
 
 ---
 
-## Limitations
+## Limitations and Anti-Patterns
+
+!!! danger "SAI Is Not a Silver Bullet"
+    While SAI is significantly better than legacy indexes, it still has fundamental limitations. These are not soft recommendations—violating them will cause problems.
+
+### Unsupported Query Patterns
+
+| Query Pattern | Supported | Alternative |
+|--------------|:---------:|-------------|
+| `=` (equality) | ✅ | - |
+| `>`, `>=`, `<`, `<=` | ✅ | - |
+| `LIKE 'prefix%'` | ✅ | - |
+| `IN (...)` | ✅ | - |
+| `CONTAINS` | ✅ | - |
+| `LIKE '%suffix'` | ❌ | Reverse the string in a separate column |
+| `LIKE '%substring%'` | ⚠️ | Requires analyzer; consider external search |
+| `!=` (not equal) | ❌ | Application-level filtering |
+| `OR` across columns | ❌ | Union multiple queries in application |
+| `NOT` predicates | ❌ | Application-level filtering |
 
 ### No Full-Text Search
 
-SAI text analysis is simpler than dedicated search engines:
+!!! warning "SAI Is Not Elasticsearch"
+    SAI provides basic text analysis, not full-text search. For advanced search, use a dedicated search engine.
 
-```
-SAI text capabilities:
-- Tokenization (whitespace, standard)
-- Case normalization
-- Prefix matching
+| Feature | SAI | Elasticsearch/Solr |
+|---------|:---:|:------------------:|
+| Tokenization | ✅ | ✅ |
+| Case normalization | ✅ | ✅ |
+| Prefix matching | ✅ | ✅ |
+| Fuzzy matching | ❌ | ✅ |
+| Phonetic search | ❌ | ✅ |
+| Synonyms | ❌ | ✅ |
+| Relevance scoring | ❌ | ✅ |
+| Faceted search | ❌ | ✅ |
+| Highlighting | ❌ | ✅ |
 
-NOT supported:
-- Fuzzy matching
-- Phonetic search
-- Synonyms
-- Relevance scoring
-- Faceted search
+### Anti-Pattern: High Cardinality Columns
 
-For advanced text search: Consider Elasticsearch or Solr integration
-```
+!!! danger "Do Not Index UUIDs or Unique Identifiers"
+    **Problem:** Index size equals data size. Query must contact all nodes to find one row.
 
-### Query Restrictions
+    **Symptoms:** Query latency exceeds full table scan, disk usage doubles.
 
-Some query patterns are not supported:
+    ```sql
+    -- DO NOT DO THIS
+    CREATE INDEX ON events (event_id) USING 'sai';
 
-```sql
--- NOT supported: OR predicates on different columns
-SELECT * FROM users WHERE city = 'NYC' OR age > 25;
+    -- INSTEAD: Make it the partition key
+    CREATE TABLE events (event_id uuid PRIMARY KEY, ...);
+    ```
 
--- NOT supported: NOT predicates
-SELECT * FROM users WHERE city != 'NYC';
+### Anti-Pattern: Low Cardinality Without Partition Key
 
--- NOT supported: Suffix matching
-SELECT * FROM users WHERE email LIKE '%@gmail.com';
-```
+!!! danger "Do Not Query Low-Cardinality Indexes Globally"
+    **Problem:** Query returns unbounded results, potentially millions of rows.
 
-### Cardinality Considerations
+    **Safe:** Combined with partition key restriction.
 
-While better than legacy indexes, extreme cardinality still impacts performance:
+    **Dangerous:** Global query on boolean/enum column.
 
-```
-Very high cardinality (UUIDs, timestamps):
-- Index size approaches data size
-- Range queries may return large results
-- Consider partition key design instead
+    ```sql
+    -- DANGEROUS: Returns 50% of all rows across all nodes
+    SELECT * FROM users WHERE is_active = true;
 
-Very low cardinality (boolean, enum):
-- Each value matches many rows
-- Large result sets
-- May still be acceptable with SAI
-```
+    -- SAFE: Restricted to one partition
+    SELECT * FROM users WHERE region = 'us-east' AND is_active = true;
+    ```
+
+### Anti-Pattern: Frequently Updated Columns
+
+!!! warning "Avoid Indexing Volatile Columns"
+    Every update creates index maintenance. For columns updated frequently (e.g., `last_seen`, `session_count`), the index overhead may exceed benefits.
+
+    ```sql
+    -- PROBLEMATIC: Updated on every request
+    CREATE INDEX ON sessions (last_activity) USING 'sai';
+
+    -- CONSIDER: Store in separate table without index, or accept staleness
+    ```
+
+### Anti-Pattern: Expecting Index-Only Reads
+
+!!! info "SAI Always Reads Base Table"
+    Unlike some databases, SAI cannot return results from index alone. Every match requires a base table read.
+
+    ```sql
+    -- WRONG expectation: "Index-only scan"
+    SELECT city FROM users WHERE city = 'NYC';
+    -- Reality: Reads full row from base table, returns city column
+
+    -- This is fine for filtering, but not for avoiding base table reads
+    ```
 
 ### Global Queries
 
@@ -608,6 +758,12 @@ SELECT * FROM users WHERE city = 'NYC';
 -- Partition-restricted: contacts specific replicas
 SELECT * FROM users WHERE user_id = ? AND city = 'NYC';
 ```
+
+!!! warning "Global Query Impact"
+    - Latency = slowest responding node
+    - Load distributed across entire cluster
+    - Acceptable for low-frequency queries
+    - Problematic for high-throughput workloads
 
 ---
 
