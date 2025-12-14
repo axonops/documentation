@@ -11,6 +11,45 @@ The UPDATE statement modifies column values in Cassandra tables. Like INSERT, UP
 
 ---
 
+## Behavioral Guarantees
+
+### What UPDATE Guarantees
+
+- UPDATE creates the row if it does not exist (upsert semantics)
+- Each column value is written atomically
+- Higher timestamps win in conflict resolution
+- Collection add/remove operations are applied atomically per element
+- Counter increment/decrement operations are applied correctly (though not idempotent)
+
+### What UPDATE Does NOT Guarantee
+
+!!! warning "Undefined Behavior"
+    The following behaviors are undefined and must not be relied upon:
+
+    - **Row existence check**: UPDATE does not verify row existence (use IF EXISTS for that)
+    - **Read-your-writes without QUORUM**: An UPDATE followed by SELECT at CL=ONE may not reflect the change
+    - **List index stability**: Index-based list operations may produce unexpected results under concurrent modification
+    - **Counter idempotency**: Counter increments are not idempotent; retries may over-count
+    - **Collection size limits**: Behavior when exceeding collection size limits is implementation-dependent
+
+### Failure Semantics
+
+| Failure Mode | Outcome | Client Action |
+|--------------|---------|---------------|
+| `WriteTimeoutException` | Undefined - may or may not have been applied | Query to verify, retry if idempotent |
+| `UnavailableException` | Not applied | Safe to retry |
+| `WriteFailureException` | Partially applied to some replicas | Data may be inconsistent |
+
+### Version-Specific Behavior
+
+| Version | Behavior |
+|---------|----------|
+| 2.0+ | IF EXISTS and IF condition (LWT) supported (CASSANDRA-5062) |
+| 2.1+ | Non-frozen UDT field updates (CASSANDRA-7423) |
+| 3.0+ | Range updates with clustering column ranges |
+
+---
+
 ## Overview
 
 ### UPDATE as Upsert

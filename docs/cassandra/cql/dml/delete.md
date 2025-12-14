@@ -11,6 +11,53 @@ The DELETE statement removes rows or column values from Cassandra tables. Unlike
 
 ---
 
+## Behavioral Guarantees
+
+### What DELETE Guarantees
+
+- DELETE creates a tombstone marker for deleted data
+- DELETE with higher timestamp supersedes earlier writes
+- Tombstones are replicated like regular data
+- Tombstones are not removed before gc_grace_seconds has elapsed
+- Range DELETE creates a single range tombstone (Cassandra 3.0+)
+
+### What DELETE Does NOT Guarantee
+
+!!! warning "Undefined Behavior"
+    The following behaviors are undefined and must not be relied upon:
+
+    - **Immediate space reclamation**: Disk space is only reclaimed after compaction removes tombstones
+    - **Tombstone-free reads**: Reads may encounter tombstones even after gc_grace_seconds if compaction hasn't run
+    - **Delete confirmation**: DELETE returning success does not guarantee read invisibility at lower consistency levels
+    - **Resurrection prevention without repair**: If repair doesn't run within gc_grace_seconds, deleted data may reappear
+
+### Tombstone Persistence Contract
+
+!!! danger "Critical: gc_grace_seconds Contract"
+    Tombstones must persist for at least `gc_grace_seconds` to prevent data resurrection:
+
+    - If a node is down longer than gc_grace_seconds, and compaction runs on other nodes, the tombstone may be removed
+    - When the node returns, its old data will propagate as "new" data, causing resurrection
+    - Repair must run more frequently than gc_grace_seconds on all nodes
+
+### Failure Semantics
+
+| Failure Mode | Outcome | Client Action |
+|--------------|---------|---------------|
+| `WriteTimeoutException` | Undefined - tombstone may or may not have been written | Query to verify, retry if needed |
+| `UnavailableException` | Not applied | Safe to retry |
+| `WriteFailureException` | Partially applied | Some replicas may have tombstone, others may not |
+
+### Version-Specific Behavior
+
+| Version | Behavior |
+|---------|----------|
+| 2.0+ | IF EXISTS and IF condition for DELETE (CASSANDRA-5062) |
+| 3.0+ | Range tombstones for efficient bulk deletes (CASSANDRA-6237) |
+| 4.0+ | Improved tombstone handling in reads (CASSANDRA-14227) |
+
+---
+
 ## Overview
 
 ### Why Cassandra Uses Tombstones

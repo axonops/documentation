@@ -11,6 +11,57 @@ The BATCH statement groups multiple INSERT, UPDATE, and DELETE statements into a
 
 ---
 
+## Behavioral Guarantees
+
+### What BATCH Guarantees
+
+- All statements in a logged batch eventually execute or none execute
+- Statements to the same partition are atomic at the storage layer
+- Logged batches write to batch log before executing mutations
+- USING TIMESTAMP applies the same timestamp to all statements
+- If any IF condition fails, no statements in the batch execute
+
+### What BATCH Does NOT Guarantee
+
+!!! warning "Undefined Behavior"
+    The following behaviors are undefined and must not be relied upon:
+
+    - **Isolation**: Other reads may see partial batch results before completion
+    - **Performance improvement**: Batches do not improve throughput over parallel writes
+    - **Cross-datacenter atomicity**: Logged batches provide atomicity within a datacenter, not globally
+    - **Unlogged batch atomicity**: UNLOGGED batches have no atomicity guarantee on coordinator failure
+    - **Order of execution**: Statements within a batch may execute in any order
+
+### Logged vs Unlogged Contracts
+
+| Aspect | Logged Batch | Unlogged Batch |
+|--------|--------------|----------------|
+| Coordinator failure | Recovers via batch log | Undefined - partial execution possible |
+| Multi-partition | Atomic (via batch log) | Not atomic |
+| Same-partition | Atomic | Atomic (storage layer) |
+| Performance | Higher latency (batch log overhead) | Lower latency |
+
+### Failure Semantics
+
+| Failure Mode | Logged Batch | Unlogged Batch |
+|--------------|--------------|----------------|
+| Coordinator fails after batch log write | Batch log replays mutations | Partial execution possible |
+| Coordinator fails before batch log write | Not applied | Not applied |
+| `WriteTimeoutException` | May have been logged for replay | Undefined |
+| `UnavailableException` | Not applied | Not applied |
+
+### Version-Specific Behavior
+
+| Version | Behavior |
+|---------|----------|
+| 1.2+ | Basic BATCH support |
+| 2.0+ | UNLOGGED BATCH, improved batch log (CASSANDRA-4542) |
+| 2.1+ | COUNTER BATCH separated from regular batches |
+| 3.0+ | Improved batch log performance (CASSANDRA-9673) |
+| 4.0+ | Enhanced multi-partition batch handling |
+
+---
+
 ## Overview
 
 ### What BATCH Is For

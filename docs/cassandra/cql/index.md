@@ -87,6 +87,107 @@ Placeholder terms follow SQL grammar conventions from the ISO/IEC 9075 standard:
 
 ---
 
+## Operator Precedence
+
+CQL operators are evaluated in the following precedence order (highest to lowest):
+
+| Precedence | Operator | Description | Associativity |
+|------------|----------|-------------|---------------|
+| 1 | `()` | Parentheses | - |
+| 2 | `.` | Field access (UDT) | Left-to-right |
+| 3 | `[]` | Index/key access (collections) | Left-to-right |
+| 4 | `-` (unary) | Negation | Right-to-left |
+| 5 | `*`, `/`, `%` | Multiplication, division, modulo | Left-to-right |
+| 6 | `+`, `-` | Addition, subtraction | Left-to-right |
+| 7 | `=`, `!=`, `<`, `>`, `<=`, `>=` | Comparison | Left-to-right |
+| 8 | `IN`, `CONTAINS`, `CONTAINS KEY` | Membership | - |
+| 9 | `AND` | Logical AND | Left-to-right |
+
+!!! note "No OR Operator"
+    CQL does not support the `OR` operator. All WHERE conditions are implicitly ANDed. To achieve OR semantics, execute multiple queries and union results in the application.
+
+---
+
+## Error Classification
+
+CQL errors fall into distinct categories that indicate when and why an error occurred:
+
+### Syntax Errors
+
+Detected during parsing. The statement is malformed.
+
+| Error Code | Description | Example |
+|------------|-------------|---------|
+| `SyntaxException` | Invalid CQL syntax | `SELEC * FROM users` |
+
+**Characteristics:**
+
+- Detected before execution
+- No side effects
+- Statement never reaches coordinator
+
+### Semantic Errors
+
+Detected after parsing but before execution. The statement is syntactically valid but meaningless.
+
+| Error Code | Description | Example |
+|------------|-------------|---------|
+| `InvalidRequestException` | Invalid query semantics | `SELECT * FROM nonexistent_table` |
+| `UnauthorizedException` | Permission denied | User lacks SELECT permission |
+| `ConfigurationException` | Invalid configuration | Invalid replication factor |
+
+**Characteristics:**
+
+- Detected before execution
+- No data modifications
+- Schema validation failures
+
+### Runtime Errors
+
+Detected during execution. The statement is valid but cannot complete.
+
+| Error Code | Description | Recovery |
+|------------|-------------|----------|
+| `UnavailableException` | Insufficient replicas available | Retry or reduce CL |
+| `WriteTimeoutException` | Write did not complete in time | Verify and retry |
+| `ReadTimeoutException` | Read did not complete in time | Retry |
+| `ReadFailureException` | Read failed on replica(s) | Check replica health |
+| `WriteFailureException` | Write failed on replica(s) | Check replica health |
+| `TruncateException` | Truncate operation failed | Retry |
+| `FunctionFailureException` | UDF execution failed | Fix function |
+
+**Characteristics:**
+
+- Partial execution may have occurred
+- State may be undefined (especially for timeouts)
+- Retry may succeed or cause duplicates
+
+### Constraint Errors
+
+Detected during execution. Data violates constraints.
+
+| Error Code | Description | Example |
+|------------|-------------|---------|
+| `CASWriteUnknownResultException` | LWT result unknown | Timeout during Paxos |
+
+---
+
+## Type Coercion Rules
+
+CQL performs implicit type coercion in specific cases:
+
+| Source Type | Target Type | Allowed |
+|-------------|-------------|---------|
+| `int` | `bigint` | ✅ Widening |
+| `bigint` | `int` | ❌ Narrowing (explicit cast required) |
+| `float` | `double` | ✅ Widening |
+| `text` | `varchar` | ✅ Equivalent |
+| `ascii` | `text` | ✅ Widening |
+| `timestamp` | `bigint` | ❌ Use `toUnixTimestamp()` |
+| `uuid` | `text` | ❌ Use `toString()` |
+
+---
+
 ## CQL vs SQL
 
 CQL syntax resembles SQL but operates differently due to Cassandra's distributed architecture.

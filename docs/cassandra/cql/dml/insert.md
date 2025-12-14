@@ -11,6 +11,44 @@ The INSERT statement adds rows to Cassandra tables. Unlike SQL databases, Cassan
 
 ---
 
+## Behavioral Guarantees
+
+### What INSERT Guarantees
+
+- INSERT performs an upsert—no "duplicate key" errors occur
+- Each column value is written atomically
+- Higher timestamps win in conflict resolution
+- Data with TTL becomes invisible after the specified duration
+- Write is acknowledged by the specified number of replicas
+
+### What INSERT Does NOT Guarantee
+
+!!! warning "Undefined Behavior"
+    The following behaviors are undefined and must not be relied upon:
+
+    - **Write visibility timing**: After INSERT returns, the data may not immediately be visible to reads at lower consistency levels
+    - **Cross-column atomicity**: Columns in a single INSERT are written as separate cells; partial visibility is possible during read
+    - **Order of concurrent writes**: Two INSERTs with the same timestamp have undefined conflict resolution (implementation-dependent tie-breaker)
+    - **Exactly-once without LWT**: Without IF NOT EXISTS, the same INSERT may be applied multiple times (idempotent, but no uniqueness)
+
+### Failure Semantics
+
+| Failure Mode | Outcome | Client Action |
+|--------------|---------|---------------|
+| `WriteTimeoutException` | Undefined - may or may not have been applied | Query to verify, retry if needed |
+| `UnavailableException` | Not applied | Safe to retry |
+| `WriteFailureException` | Partially applied to some replicas | Data may be inconsistent; repair may be needed |
+
+### Version-Specific Behavior
+
+| Version | Behavior |
+|---------|----------|
+| 2.0+ | IF NOT EXISTS (LWT) supported (CASSANDRA-5062) |
+| 2.1+ | JSON INSERT syntax supported (CASSANDRA-7970) |
+| 3.0+ | DEFAULT UNSET for JSON inserts (CASSANDRA-9651) |
+
+---
+
 ## Overview
 
 ### Upsert Semantics

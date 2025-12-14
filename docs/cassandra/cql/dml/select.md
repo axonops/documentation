@@ -11,6 +11,49 @@ The SELECT statement retrieves rows and columns from Cassandra tables. Unlike SQ
 
 ---
 
+## Behavioral Guarantees
+
+### What SELECT Guarantees
+
+- The query must contact the number of replicas specified by the consistency level
+- Results from a single partition must reflect a consistent snapshot (no partial rows)
+- Rows within a partition must be returned in clustering column order (or reverse if specified)
+- Individual column values must be atomic (no partial cell reads)
+
+### What SELECT Does NOT Guarantee
+
+!!! warning "Undefined Behavior"
+    The following behaviors are undefined and must not be relied upon:
+
+    - **Cross-partition ordering**: Without ORDER BY, the order of rows from different partitions is undefined and may vary between queries, replicas, or Cassandra versions
+    - **Read-your-writes without QUORUM**: A write at CL=ONE followed by a read at CL=ONE may not return the written data
+    - **Consistent snapshots across partitions**: A SELECT touching multiple partitions may see different points in time for each partition
+    - **Result stability during compaction**: The same query may return rows in different order as SSTables are compacted
+    - **Deterministic tie-breaking**: When timestamps are equal, the "winner" is undefined
+
+### Consistency Level Contracts
+
+| Consistency Level | Guarantee |
+|-------------------|-----------|
+| `ONE` | At least one replica responds; data may be stale |
+| `QUORUM` | Majority of replicas respond; read-repair may occur |
+| `ALL` | All replicas respond; highest consistency, lowest availability |
+| `LOCAL_ONE` | At least one replica in local DC responds |
+| `LOCAL_QUORUM` | Majority in local DC responds |
+| `SERIAL` | Linearizable read (Paxos); sees all committed LWT operations |
+| `LOCAL_SERIAL` | Linearizable read within local DC only |
+
+### Version-Specific Behavior
+
+| Version | Behavior |
+|---------|----------|
+| 3.0+ | PER PARTITION LIMIT supported (CASSANDRA-7017) |
+| 4.0+ | Virtual tables queryable, improved paging (CASSANDRA-7622) |
+| 4.0+ | GROUP BY supports aggregate functions (CASSANDRA-10707) |
+| 5.0+ | Vector search with ORDER BY ... ANN OF (CEP-30) |
+
+---
+
 ## Overview
 
 ### Query Model Philosophy

@@ -9,6 +9,40 @@ meta:
 
 Lightweight Transactions (LWT) provide linearizable consistency through compare-and-set operations. They use the Paxos consensus protocol to ensure that only one concurrent operation succeeds when multiple clients attempt to modify the same data.
 
+!!! info "Implementation Reference"
+    LWT was introduced in Cassandra 2.0 (CASSANDRA-5062). The Paxos implementation is defined in `StorageProxy.cas()` and `PaxosState.java`.
+
+---
+
+## Behavioral Guarantees
+
+### What LWT Guarantees
+
+- Operations on the same partition appear to execute in some total order consistent with real-time (linearizability)
+- The IF condition evaluation and subsequent mutation are atomic
+- LWT guarantees apply only within a single partition
+- With SERIAL consistency, all datacenters participate in consensus
+- With LOCAL_SERIAL, only the local datacenter participates
+
+### What LWT Does NOT Guarantee
+
+!!! warning "Undefined Behavior"
+    The following behaviors are undefined and must not be relied upon:
+
+    - **Cross-partition atomicity**: LWT provides no guarantees across different partitions. Multi-partition batches with LWT may leave partitions in inconsistent states on partial failure.
+    - **Ordering across partitions**: Two LWT operations on different partitions have no defined ordering relationship.
+    - **Timeout outcomes**: If an LWT times out, the operation may or may not have been applied. The outcome is undefined.
+    - **Retry safety without idempotency**: Retrying a failed LWT without checking the result may cause duplicate application.
+
+### Version-Specific Behavior
+
+| Version | Behavior |
+|---------|----------|
+| 2.0 - 2.1 | Initial Paxos implementation. Contention handling less efficient. |
+| 3.0+ | Improved Paxos state management (CASSANDRA-9143) |
+| 4.0+ | Paxos state auto-cleanup, configurable timeouts (CASSANDRA-12126) |
+| 5.0+ | Accord transaction protocol available as alternative (CEP-15) |
+
 ---
 
 ## Overview
@@ -483,29 +517,99 @@ APPLY BATCH;
 
 ---
 
+## Failure Semantics
+
+Understanding failure behavior is critical for correct LWT usage.
+
+### Failure Modes and Outcomes
+
+| Failure Mode | Outcome | Client Action |
+|--------------|---------|---------------|
+| `[applied] = true` | Operation succeeded | None required |
+| `[applied] = false` | Condition not met, operation rejected | Read returned values, retry with updated condition if appropriate |
+| `WriteTimeoutException` | Undefined - may or may not have been applied | Read to determine current state, retry if needed |
+| `UnavailableException` | Operation not applied | Safe to retry |
+| `ReadTimeoutException` during CAS | Undefined - Paxos read phase failed | Read to determine current state |
+
+### Timeout Handling Contract
+
+!!! danger "Timeout Does Not Mean Failure"
+    When an LWT operation times out:
+
+    - The operation may have been successfully applied
+    - The operation may have partially executed (Paxos PREPARE succeeded, PROPOSE failed)
+    - The outcome is undefined and must be verified by reading current state
+
+    ```java
+    // CORRECT: Verify state after timeout
+    try {
+        session.execute(lwtStatement);
+    } catch (WriteTimeoutException e) {
+        // Must read to determine actual state
+        Row current = session.execute(readStatement).one();
+        // Decide based on current state
+    }
+
+    // INCORRECT: Assume failure and retry blindly
+    try {
+        session.execute(lwtStatement);
+    } catch (WriteTimeoutException e) {
+        session.execute(lwtStatement);  // May cause duplicate application
+    }
+    ```
+
+### Idempotency Requirements
+
+LWT operations should be designed for safe retry:
+
+| Pattern | Idempotent | Notes |
+|---------|------------|-------|
+| `INSERT ... IF NOT EXISTS` | ✅ Yes | Safe to retry - second attempt returns `[applied]=false` |
+| `UPDATE ... IF column = X SET column = Y` | ✅ Yes | Safe to retry - condition fails after first success |
+| `UPDATE ... SET counter = counter + 1 IF ...` | ❌ No | Counter operations not supported with LWT |
+| `DELETE ... IF EXISTS` | ✅ Yes | Safe to retry - second attempt returns `[applied]=false` |
+
+### Consistency During Failure
+
+**Preserved guarantees:**
+
+- Linearizability is maintained even during failures
+- No partial application visible to other transactions
+- Paxos ballots ensure exactly-one-winner semantics
+
+**Not guaranteed:**
+
+- Client notification of success (timeout may occur after commit)
+- Bounded latency under contention
+- Progress under continuous contention (livelock possible)
+
+---
+
 ## Restrictions
 
-!!! danger "Restrictions"
+!!! danger "Hard Constraints"
+    The following restrictions are enforced by Cassandra and will result in errors:
+
     **Timestamps:**
 
-    - Cannot use `USING TIMESTAMP` with IF conditions
-    - Paxos manages timestamps internally
+    - `USING TIMESTAMP` must not be used with IF conditions—Paxos manages timestamps internally
+    - Attempting to specify timestamp results in `InvalidRequest`
 
     **Counters:**
 
-    - Counter columns do not support IF conditions
-    - Use regular counter increment/decrement
+    - Counter columns must not be used with IF conditions
+    - Use regular counter increment/decrement instead
 
     **Scope:**
 
-    - LWT is per-partition only
-    - Cannot coordinate across partitions without batch
+    - LWT operates on single partition only
+    - Cross-partition coordination requires batch (with significant limitations)
     - No cross-table LWT
 
     **Conditions:**
 
-    - Conditions can only reference non-primary-key columns
-    - Cannot reference columns in SET clause (no self-reference)
+    - Conditions must only reference non-primary-key columns
+    - Conditions must not reference columns in SET clause (no self-reference)
     - Collection element conditions require proper syntax
 
 ---
