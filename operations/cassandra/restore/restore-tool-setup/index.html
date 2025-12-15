@@ -6,7 +6,7 @@
       <meta charset="utf-8">
       <meta name="viewport" content="width=device-width,initial-scale=1">
       
-        <meta name="description" content="Official documentation for AxonOps - the unified platform for monitoring, maintenance, and backup of Apache Cassandra and Apache Kafka clusters.">
+        <meta name="description" content="Install and configure the AxonOps Cassandra Restore Tool for backup recovery.">
       
       
       
@@ -24,7 +24,7 @@
     
     
       
-        <title>Setup - AxonOps Documentation</title>
+        <title>Installing the Cassandra Restore Tool - AxonOps Documentation</title>
       
     
     
@@ -67,6 +67,10 @@
   
 
     
+    
+      
+        <meta  name="keywords"  content="Cassandra restore tool, AxonOps backup recovery, axon-cassandra-restore" >
+      
     
     
 <!-- Schema.org Structured Data for Documentation -->
@@ -211,28 +215,7 @@ body{font-family:'Roboto Flex',-apple-system,BlinkMacSystemFont,'Segoe UI',Robot
     </div>
     
     
-      <!--
-  Copyright (c) 2016-2024 Martin Donath <martin.donath@squidfunk.com>
-
-  Permission is hereby granted, free of charge, to any person obtaining a copy
-  of this software and associated documentation files (the "Software"), to
-  deal in the Software without restriction, including without limitation the
-  rights to use, copy, modify, merge, publish, distribute, sublicense, and/or
-  sell copies of the Software, and to permit persons to whom the Software is
-  furnished to do so, subject to the following conditions:
-
-  The above copyright notice and this permission notice shall be included in
-  all copies or substantial portions of the Software.
-
-  THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
-  IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-  FITNESS FOR A PARTICULAR PURPOSE AND NON-INFRINGEMENT. IN NO EVENT SHALL THE
-  AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
-  LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING
-  FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS
-  IN THE SOFTWARE.
--->
-
+      
 <!-- Determine classes -->
 
 
@@ -244,28 +227,7 @@ body{font-family:'Roboto Flex',-apple-system,BlinkMacSystemFont,'Segoe UI',Robot
     <!-- Link to home -->
     <a href="https://axonops.com" title="AxonOps Documentation"
       class="md-header__button md-logo" aria-label="AxonOps Documentation" data-md-component="logo">
-      <!--
-  Copyright (c) 2016-2024 Martin Donath <martin.donath@squidfunk.com>
-
-  Permission is hereby granted, free of charge, to any person obtaining a copy
-  of this software and associated documentation files (the "Software"), to
-  deal in the Software without restriction, including without limitation the
-  rights to use, copy, modify, merge, publish, distribute, sublicense, and/or
-  sell copies of the Software, and to permit persons to whom the Software is
-  furnished to do so, subject to the following conditions:
-
-  The above copyright notice and this permission notice shall be included in
-  all copies or substantial portions of the Software.
-
-  THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
-  IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-  FITNESS FOR A PARTICULAR PURPOSE AND NON-INFRINGEMENT. IN NO EVENT SHALL THE
-  AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
-  LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING
-  FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS
-  IN THE SOFTWARE.
--->
-
+      
 <!-- Logo -->
 
   <img src="/img/axonops_logo.png" alt="logo" />
@@ -289,7 +251,7 @@ body{font-family:'Roboto Flex',-apple-system,BlinkMacSystemFont,'Segoe UI',Robot
         <div class="md-header__topic" data-md-component="header-topic">
           <span class="md-ellipsis">
             
-            Setup
+            Installing the Cassandra Restore Tool
             
           </span>
         </div>
@@ -643,28 +605,7 @@ data-et-multi-view="{&quot;schema&quot;:{&quot;content&quot;:{&quot;desktop&quot
 <nav class="md-nav md-nav--primary md-nav--lifted" aria-label="Navigation" data-md-level="0">
   <label class="md-nav__title" for="__drawer">
     <a href="https://axonops.com" title="AxonOps Documentation" class="md-nav__button md-logo" aria-label="AxonOps Documentation" data-md-component="logo">
-      <!--
-  Copyright (c) 2016-2024 Martin Donath <martin.donath@squidfunk.com>
-
-  Permission is hereby granted, free of charge, to any person obtaining a copy
-  of this software and associated documentation files (the "Software"), to
-  deal in the Software without restriction, including without limitation the
-  rights to use, copy, modify, merge, publish, distribute, sublicense, and/or
-  sell copies of the Software, and to permit persons to whom the Software is
-  furnished to do so, subject to the following conditions:
-
-  The above copyright notice and this permission notice shall be included in
-  all copies or substantial portions of the Software.
-
-  THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
-  IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-  FITNESS FOR A PARTICULAR PURPOSE AND NON-INFRINGEMENT. IN NO EVENT SHALL THE
-  AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
-  LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING
-  FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS
-  IN THE SOFTWARE.
--->
-
+      
 <!-- Logo -->
 
   <img src="/img/axonops_logo.png" alt="logo" />
@@ -2920,6 +2861,8 @@ data-et-multi-view="{&quot;schema&quot;:{&quot;content&quot;:{&quot;desktop&quot
       <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
       
       
+        
+      
       
         <label class="md-nav__link md-nav__link--active" for="__toc">
           
@@ -2948,6 +2891,8 @@ data-et-multi-view="{&quot;schema&quot;:{&quot;content&quot;:{&quot;desktop&quot
   
   
   
+    
+  
   
     <label class="md-nav__title" for="__toc">
       <span class="md-nav__icon md-icon"></span>
@@ -2956,16 +2901,6 @@ data-et-multi-view="{&quot;schema&quot;:{&quot;content&quot;:{&quot;desktop&quot
     <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
       
         <li class="md-nav__item">
-  <a href="#installing-the-cassandra-restore-tool" class="md-nav__link">
-    <span class="md-ellipsis">
-      Installing the Cassandra Restore Tool
-    </span>
-  </a>
-  
-    <nav class="md-nav" aria-label="Installing the Cassandra Restore Tool">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
   <a href="#installing-on-debian-ubuntu" class="md-nav__link">
     <span class="md-ellipsis">
       Installing on Debian / Ubuntu
@@ -2973,18 +2908,13 @@ data-et-multi-view="{&quot;schema&quot;:{&quot;content&quot;:{&quot;desktop&quot
   </a>
   
 </li>
-        
-          <li class="md-nav__item">
+      
+        <li class="md-nav__item">
   <a href="#installing-on-centos-redhat" class="md-nav__link">
     <span class="md-ellipsis">
       Installing on CentOS / RedHat
     </span>
   </a>
-  
-</li>
-        
-      </ul>
-    </nav>
   
 </li>
       
@@ -14158,6 +14088,8 @@ data-et-multi-view="{&quot;schema&quot;:{&quot;content&quot;:{&quot;desktop&quot
   
   
   
+    
+  
   
     <label class="md-nav__title" for="__toc">
       <span class="md-nav__icon md-icon"></span>
@@ -14166,16 +14098,6 @@ data-et-multi-view="{&quot;schema&quot;:{&quot;content&quot;:{&quot;desktop&quot
     <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
       
         <li class="md-nav__item">
-  <a href="#installing-the-cassandra-restore-tool" class="md-nav__link">
-    <span class="md-ellipsis">
-      Installing the Cassandra Restore Tool
-    </span>
-  </a>
-  
-    <nav class="md-nav" aria-label="Installing the Cassandra Restore Tool">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
   <a href="#installing-on-debian-ubuntu" class="md-nav__link">
     <span class="md-ellipsis">
       Installing on Debian / Ubuntu
@@ -14183,18 +14105,13 @@ data-et-multi-view="{&quot;schema&quot;:{&quot;content&quot;:{&quot;desktop&quot
   </a>
   
 </li>
-        
-          <li class="md-nav__item">
+      
+        <li class="md-nav__item">
   <a href="#installing-on-centos-redhat" class="md-nav__link">
     <span class="md-ellipsis">
       Installing on CentOS / RedHat
     </span>
   </a>
-  
-</li>
-        
-      </ul>
-    </nav>
   
 </li>
       
@@ -14375,9 +14292,7 @@ data-et-multi-view="{&quot;schema&quot;:{&quot;content&quot;:{&quot;desktop&quot
                   
 
 
-  <h1>Setup</h1>
-
-<div><h2 id="installing-the-cassandra-restore-tool">Installing the Cassandra Restore Tool<a class="headerlink" href="#installing-the-cassandra-restore-tool" title="Permanent link">¶</a></h2>
+<div><h1 id="installing-the-cassandra-restore-tool">Installing the Cassandra Restore Tool<a class="headerlink" href="#installing-the-cassandra-restore-tool" title="Permanent link">¶</a></h1>
 <p>The AxonOps Cassandra Restore tool is included in the AxonOps Agent package.</p>
 <h4 id="installing-on-debian-ubuntu">Installing on Debian / Ubuntu<a class="headerlink" href="#installing-on-debian-ubuntu" title="Permanent link">¶</a></h4>
 <div class="highlight"><pre><span></span><code>sudo<span class="w"> </span>apt-get<span class="w"> </span>update
@@ -14532,6 +14447,9 @@ Usage of /usr/share/axonops/axon-cassandra-restore:
 
 
 
+
+  
+  
 
 
 
