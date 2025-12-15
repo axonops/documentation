@@ -22,7 +22,7 @@ Apache Cassandra is a distributed NoSQL database designed for scalability and hi
 - Multi-datacenter replication built in
 - Optimized for write-heavy workloads
 
-[View Apache Cassandra Documentation](../cassandra/index.md)
+[View Apache Cassandra Documentation](cassandra/index.md)
 
 ---
 
@@ -38,7 +38,7 @@ Apache Kafka is a distributed event streaming platform capable of handling trill
 - Stream processing capabilities
 - Horizontal scalability through partitioning
 
-[View Apache Kafka Documentation](../kafka/index.md)
+[View Apache Kafka Documentation](kafka/index.md)
 
 ---
 
