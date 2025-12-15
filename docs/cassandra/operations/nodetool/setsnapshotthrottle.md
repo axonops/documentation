@@ -1,4 +1,5 @@
 ---
+title: "nodetool setsnapshotthrottle"
 description: "Set snapshot throttle in Cassandra using nodetool setsnapshotthrottle command."
 meta:
   - name: keywords

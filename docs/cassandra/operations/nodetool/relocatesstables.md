@@ -1,4 +1,5 @@
 ---
+title: "nodetool relocatesstables"
 description: "Move SSTables to correct disk locations using nodetool relocatesstables command."
 meta:
   - name: keywords

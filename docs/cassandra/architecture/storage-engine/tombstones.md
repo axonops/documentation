@@ -1,4 +1,5 @@
 ---
+title: "Cassandra Tombstones"
 description: "Tombstones in Cassandra for delete operations. gc_grace_seconds, tombstone accumulation, and best practices."
 meta:
   - name: keywords

@@ -1,4 +1,5 @@
 ---
+title: "nodetool forcecompact"
 description: "Force compaction on specific SSTables in Cassandra using nodetool forcecompact command."
 meta:
   - name: keywords

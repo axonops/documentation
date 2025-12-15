@@ -1,4 +1,5 @@
 ---
+title: "Get ready for enjoying one-stop Cassandra operations from AxonOps."
 description: "AxonOps editions comparison. Choose the right plan for your Cassandra and Kafka monitoring needs."
 meta:
   - name: keywords

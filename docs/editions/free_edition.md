@@ -1,4 +1,5 @@
 ---
+title: "Free Edition"
 description: "AxonOps Free Edition features. Get started with Cassandra and Kafka monitoring at no cost."
 meta:
   - name: keywords

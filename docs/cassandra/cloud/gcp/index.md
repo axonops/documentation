@@ -1,4 +1,5 @@
 ---
+title: "Cassandra on Google Cloud Platform"
 description: "Deploy Cassandra on Google Cloud Platform. Compute Engine, persistent disks, and VPC setup."
 meta:
   - name: keywords

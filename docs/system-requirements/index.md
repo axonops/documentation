@@ -1,4 +1,5 @@
 ---
+title: "System requirements"
 description: "AxonOps system requirements. Hardware, software, and network prerequisites."
 meta:
   - name: keywords

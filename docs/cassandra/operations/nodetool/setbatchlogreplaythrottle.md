@@ -1,4 +1,5 @@
 ---
+title: "nodetool setbatchlogreplaythrottle"
 description: "Set batch log replay throttle in Cassandra using nodetool setbatchlogreplaythrottle."
 meta:
   - name: keywords

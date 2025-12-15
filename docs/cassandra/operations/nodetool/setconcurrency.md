@@ -1,4 +1,5 @@
 ---
+title: "nodetool setconcurrency"
 description: "Set read/write concurrency in Cassandra using nodetool setconcurrency command."
 meta:
   - name: keywords

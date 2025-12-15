@@ -1,4 +1,5 @@
 ---
+title: "Cassandra Data Indexes"
 description: "Cassandra index architecture covering secondary indexes, SASI, and SAI implementation details."
 meta:
   - name: keywords

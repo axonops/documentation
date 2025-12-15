@@ -1,4 +1,5 @@
 ---
+title: "nodetool statusgossip"
 description: "Check if gossip protocol is enabled using nodetool statusgossip command."
 meta:
   - name: keywords

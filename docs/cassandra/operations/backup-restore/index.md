@@ -1,4 +1,5 @@
 ---
+title: "Cassandra Backup and Restore Overview"
 description: "Cassandra backup and restore overview. Strategies and tools for data protection."
 meta:
   - name: keywords

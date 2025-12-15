@@ -1,4 +1,5 @@
 ---
+title: "nodetool failuredetector"
 description: "Display failure detector information for Cassandra cluster nodes using nodetool failuredetector."
 meta:
   - name: keywords

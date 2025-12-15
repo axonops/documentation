@@ -1,4 +1,5 @@
 ---
+title: "Cassandra Cluster Management Operations"
 description: "Cassandra cluster management. Scaling, topology changes, and node operations."
 meta:
   - name: keywords

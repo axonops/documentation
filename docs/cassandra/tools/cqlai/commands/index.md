@@ -1,4 +1,5 @@
 ---
+title: "CQLAI Commands Reference"
 description: "CQLAI commands reference. All available shell commands and shortcuts."
 meta:
   - name: keywords

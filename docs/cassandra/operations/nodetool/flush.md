@@ -1,4 +1,5 @@
 ---
+title: "nodetool flush"
 description: "Flush memtables to SSTables on disk in Cassandra using nodetool flush command."
 meta:
   - name: keywords

@@ -1,4 +1,5 @@
 ---
+title: "Configuration"
 description: "Cassandra configuration virtual tables. Query runtime settings, system properties, and system logs via CQL."
 meta:
   - name: keywords

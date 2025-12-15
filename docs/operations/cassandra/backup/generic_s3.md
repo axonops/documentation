@@ -1,4 +1,5 @@
 ---
+title: "What is Generic S3"
 description: "Configure S3-compatible storage backup for Cassandra. MinIO, Ceph, and other providers."
 meta:
   - name: keywords

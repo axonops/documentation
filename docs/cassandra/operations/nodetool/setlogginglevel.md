@@ -1,4 +1,5 @@
 ---
+title: "nodetool setlogginglevel"
 description: "Set logging level for Cassandra classes using nodetool setlogginglevel command."
 meta:
   - name: keywords

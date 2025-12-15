@@ -1,4 +1,5 @@
 ---
+title: "nodetool verify"
 description: "Verify SSTable integrity and checksums in Cassandra using nodetool verify command."
 meta:
   - name: keywords

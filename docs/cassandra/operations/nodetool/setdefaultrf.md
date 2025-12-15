@@ -1,4 +1,5 @@
 ---
+title: "nodetool setdefaultrf"
 description: "Set default replication factor for auto-created keyspaces using nodetool setdefaultrf."
 meta:
   - name: keywords

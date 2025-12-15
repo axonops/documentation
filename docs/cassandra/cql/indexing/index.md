@@ -1,4 +1,5 @@
 ---
+title: "Cassandra CQL Indexing Reference"
 description: "Cassandra indexing guide covering secondary indexes, SASI, and SAI. Choose the right index type."
 meta:
   - name: keywords

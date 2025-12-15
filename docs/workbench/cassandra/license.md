@@ -1,4 +1,5 @@
 ---
+title: "End-User License Agreement (EULA) for AxonOps™ Workbench product"
 description: "AxonOps Workbench licensing. License types and activation."
 meta:
   - name: keywords

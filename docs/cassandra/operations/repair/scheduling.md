@@ -1,4 +1,5 @@
 ---
+title: "Cassandra Repair Scheduling Guide"
 description: "Cassandra repair scheduling. Automate repair with schedulers."
 meta:
   - name: keywords

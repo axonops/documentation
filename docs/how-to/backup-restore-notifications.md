@@ -1,4 +1,5 @@
 ---
+title: "Setup Backup - Restore Notifications"
 description: "Configure backup and restore notifications in AxonOps. Alert on backup status and failures."
 meta:
   - name: keywords

@@ -1,4 +1,5 @@
 ---
+title: "nodetool netstats"
 description: "Display network statistics and streaming operations in Cassandra using nodetool netstats."
 meta:
   - name: keywords

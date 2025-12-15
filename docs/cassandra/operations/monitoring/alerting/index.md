@@ -1,4 +1,5 @@
 ---
+title: "Cassandra Alerting Configuration"
 description: "Cassandra alerting configuration. Set up alerts for critical metrics."
 meta:
   - name: keywords

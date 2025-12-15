@@ -1,4 +1,5 @@
 ---
+title: "Cassandra Cluster Management"
 description: "Cassandra cluster management covering gossip, seeds, node lifecycle, and topology changes."
 meta:
   - name: keywords

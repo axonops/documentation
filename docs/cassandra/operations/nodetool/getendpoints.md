@@ -1,4 +1,5 @@
 ---
+title: "nodetool getendpoints"
 description: "Find which nodes own a specific partition key using nodetool getendpoints command."
 meta:
   - name: keywords

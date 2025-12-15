@@ -1,4 +1,5 @@
 ---
+title: "AxonOps Kafka Connect Workers Dashboard Metrics Mapping"
 description: "Kafka Connect workers dashboard metrics mapping. Worker node statistics."
 meta:
   - name: keywords

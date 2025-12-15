@@ -1,4 +1,5 @@
 ---
+title: "Cassandra Reference"
 description: "Cassandra reference documentation. Project resources, links, and official guides."
 meta:
   - name: keywords

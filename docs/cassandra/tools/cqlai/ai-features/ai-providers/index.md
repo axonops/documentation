@@ -1,4 +1,5 @@
 ---
+title: "CQLAI AI Providers"
 description: "CQLAI AI providers configuration. Connect to OpenAI, Anthropic, and other models."
 meta:
   - name: keywords

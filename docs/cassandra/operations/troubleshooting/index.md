@@ -1,4 +1,5 @@
 ---
+title: "Cassandra Troubleshooting Guide"
 description: "Cassandra troubleshooting guide. Diagnose and resolve common issues."
 meta:
   - name: keywords

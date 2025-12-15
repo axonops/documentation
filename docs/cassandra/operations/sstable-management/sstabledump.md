@@ -1,4 +1,5 @@
 ---
+title: "sstabledump"
 description: "Export Cassandra SSTable data to JSON format using sstabledump. Inspect partition contents and debug data issues."
 meta:
   - name: keywords

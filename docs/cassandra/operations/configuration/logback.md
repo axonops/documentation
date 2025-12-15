@@ -1,4 +1,5 @@
 ---
+title: "Cassandra Logging Configuration (logback.xml)"
 description: "Cassandra logging configuration with Logback. Configure log levels and appenders."
 meta:
   - name: keywords

@@ -1,4 +1,5 @@
 ---
+title: "Kafka Topics"
 description: "Kafka topic management in AxonOps. Monitor and manage topics across clusters."
 meta:
   - name: keywords

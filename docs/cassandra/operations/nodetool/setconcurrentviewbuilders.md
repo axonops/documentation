@@ -1,4 +1,5 @@
 ---
+title: "nodetool setconcurrentviewbuilders"
 description: "Set concurrent view builder threads using nodetool setconcurrentviewbuilders."
 meta:
   - name: keywords

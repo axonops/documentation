@@ -1,4 +1,5 @@
 ---
+title: "AxonOps Thread Pools Dashboard Metrics Mapping"
 description: "Cassandra thread pools dashboard metrics mapping. SEDA stage statistics."
 meta:
   - name: keywords

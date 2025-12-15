@@ -1,4 +1,5 @@
 ---
+title: "Cassandra Data Write Path"
 description: "Cassandra write path explained. How data flows from client through commit log and memtables to SSTables."
 meta:
   - name: keywords

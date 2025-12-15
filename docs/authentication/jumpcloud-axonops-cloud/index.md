@@ -1,4 +1,5 @@
 ---
+title: "Prerequisites and notes"
 description: "Configure JumpCloud SAML authentication for AxonOps Cloud. Step-by-step SSO integration guide."
 meta:
   - name: keywords

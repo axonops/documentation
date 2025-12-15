@@ -1,4 +1,5 @@
 ---
+title: "Getting Started with Apache Cassandra"
 description: "Getting started with Apache Cassandra. Installation, first cluster, and quickstart guide."
 meta:
   - name: keywords

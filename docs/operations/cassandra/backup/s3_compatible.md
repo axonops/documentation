@@ -1,4 +1,5 @@
 ---
+title: "S3 Compatible Storage"
 description: "S3-compatible storage backup for Cassandra. Configure alternative S3 providers."
 meta:
   - name: keywords

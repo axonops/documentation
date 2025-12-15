@@ -1,4 +1,5 @@
 ---
+title: "Cassandra SSTable Tools"
 description: "Complete SSTable tools reference for Apache Cassandra including sstableloader, sstabledump, sstablescrub, and other offline utilities."
 meta:
   - name: keywords

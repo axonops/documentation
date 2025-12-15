@@ -1,4 +1,5 @@
 ---
+title: "Cassandra SSTable Reference"
 description: "SSTable file format in Cassandra. Data.db, Index.db, Filter.db components and structure."
 meta:
   - name: keywords

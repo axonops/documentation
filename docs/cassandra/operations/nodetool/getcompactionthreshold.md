@@ -1,4 +1,5 @@
 ---
+title: "nodetool getcompactionthreshold"
 description: "Display min/max compaction thresholds for a table using nodetool getcompactionthreshold."
 meta:
   - name: keywords

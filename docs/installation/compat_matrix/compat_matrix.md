@@ -1,4 +1,5 @@
 ---
+title: "AxonOps Server"
 description: "AxonOps compatibility matrix. Supported versions of Cassandra, Kafka, and operating systems."
 meta:
   - name: keywords

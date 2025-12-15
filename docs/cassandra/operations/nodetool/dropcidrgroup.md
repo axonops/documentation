@@ -1,4 +1,5 @@
 ---
+title: "nodetool dropcidrgroup"
 description: "Remove a CIDR group from Cassandra using nodetool dropcidrgroup command."
 meta:
   - name: keywords

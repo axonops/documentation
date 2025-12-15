@@ -1,4 +1,5 @@
 ---
+title: "AxonOps agent behind a proxy"
 description: "Configure AxonOps with proxy settings. HTTP proxy configuration for agents and server."
 meta:
   - name: keywords

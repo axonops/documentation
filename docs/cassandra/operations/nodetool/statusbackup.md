@@ -1,4 +1,5 @@
 ---
+title: "nodetool statusbackup"
 description: "Check if incremental backup is enabled using nodetool statusbackup command."
 meta:
   - name: keywords

@@ -1,4 +1,5 @@
 ---
+title: "Setup Slack Integration"
 description: "Configure Slack notifications in AxonOps. Send alerts to Slack channels."
 meta:
   - name: keywords

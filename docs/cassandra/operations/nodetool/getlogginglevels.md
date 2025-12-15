@@ -1,4 +1,5 @@
 ---
+title: "nodetool getlogginglevels"
 description: "Display current logging levels in Cassandra using nodetool getlogginglevels command."
 meta:
   - name: keywords

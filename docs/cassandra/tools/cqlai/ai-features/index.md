@@ -1,4 +1,5 @@
 ---
+title: "CQLAI AI Features"
 description: "CQLAI AI features overview. Natural language queries and intelligent suggestions."
 meta:
   - name: keywords

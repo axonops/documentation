@@ -1,4 +1,5 @@
 ---
+title: "Warning"
 description: "Service check notifications in AxonOps. Configure alerts for service availability."
 meta:
   - name: keywords

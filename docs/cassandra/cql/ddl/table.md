@@ -1,4 +1,5 @@
 ---
+title: "Cassandra CQL Table Commands"
 description: "Cassandra CREATE TABLE syntax in CQL. Define partition keys, clustering columns, and table options."
 meta:
   - name: keywords

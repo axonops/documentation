@@ -1,4 +1,5 @@
 ---
+title: "nodetool setcachekeystosave"
 description: "Set number of cache keys to save on shutdown using nodetool setcachekeystosave."
 meta:
   - name: keywords

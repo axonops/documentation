@@ -1,4 +1,5 @@
 ---
+title: "Cassandra Network Authorization"
 description: "Cassandra network security. Firewall rules, port configuration, and network isolation."
 meta:
   - name: keywords

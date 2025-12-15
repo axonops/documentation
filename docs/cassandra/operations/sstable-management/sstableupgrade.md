@@ -1,4 +1,5 @@
 ---
+title: "sstableupgrade"
 description: "Upgrade SSTables to current Cassandra version format using sstableupgrade. Required after major version upgrades."
 meta:
   - name: keywords

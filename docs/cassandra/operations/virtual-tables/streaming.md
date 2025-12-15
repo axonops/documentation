@@ -1,4 +1,5 @@
 ---
+title: "Streaming"
 description: "Cassandra streaming virtual table. Monitor data streaming operations for repair, bootstrap, and decommission."
 meta:
   - name: keywords

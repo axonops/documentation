@@ -1,4 +1,5 @@
 ---
+title: "Cassandra CQL Secondary Index Queries"
 description: "Query secondary indexes in CQL. Use WHERE clauses on indexed columns in Cassandra."
 meta:
   - name: keywords

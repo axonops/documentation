@@ -1,4 +1,5 @@
 ---
+title: "Operating System Tuning for Cassandra"
 description: "Operating system tuning for Cassandra. Linux kernel and file system settings."
 meta:
   - name: keywords

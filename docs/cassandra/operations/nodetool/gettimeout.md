@@ -1,4 +1,5 @@
 ---
+title: "nodetool gettimeout"
 description: "Display timeout settings for various Cassandra operations using nodetool gettimeout."
 meta:
   - name: keywords

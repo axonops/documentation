@@ -1,4 +1,5 @@
 ---
+title: "Kafka Consumers"
 description: "Kafka consumer group management in AxonOps. Monitor consumer lag and offsets."
 meta:
   - name: keywords

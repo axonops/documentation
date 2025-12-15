@@ -1,4 +1,5 @@
 ---
+title: "Cassandra Driver Load Balancing Policy"
 description: "Cassandra load balancing policies. Configure token-aware, data center-aware, and round-robin routing."
 meta:
   - name: keywords

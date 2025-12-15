@@ -1,4 +1,5 @@
 ---
+title: "Cassandra Logging Configuration"
 description: "Cassandra logging overview. Log analysis and troubleshooting with logs."
 meta:
   - name: keywords

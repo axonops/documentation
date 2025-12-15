@@ -1,4 +1,5 @@
 ---
+title: "sstableexpiredblockers"
 description: "Identify SSTables blocking tombstone removal in Cassandra using sstableexpiredblockers. Debug tombstone accumulation."
 meta:
   - name: keywords

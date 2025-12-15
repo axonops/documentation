@@ -1,4 +1,5 @@
 ---
+title: "nodetool sethintedhandoffthrottlekb"
 description: "Set hinted handoff throttle in KB/s using nodetool sethintedhandoffthrottlekb."
 meta:
   - name: keywords

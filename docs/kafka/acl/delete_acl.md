@@ -1,4 +1,5 @@
 ---
+title: "[![Quick guidde](https://storage.app.guidde.com/v0/b/guidde-production.appspot.com/o/gif%2Fn8Agwkwy2tw9PjntKjbaQs.gif?alt=media&token=c16e84b0-37f0-4ee9-9169-3d81578e3b20)](https://app.guidde.com/share/playbooks/n8Agwkwy2tw9PjntKjbaQs)"
 description: "Delete Kafka ACLs with AxonOps. Remove access control entries."
 meta:
   - name: keywords

@@ -1,4 +1,5 @@
 ---
+title: "Setup Log Collection"
 description: "Configure log collection in AxonOps. Aggregate and search Cassandra and Kafka logs."
 meta:
   - name: keywords

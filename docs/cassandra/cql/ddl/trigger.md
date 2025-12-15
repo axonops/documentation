@@ -1,4 +1,5 @@
 ---
+title: "Cassandra CQL Triggers"
 description: "Cassandra CQL triggers: server-side code execution on data mutations. CREATE TRIGGER and DROP TRIGGER syntax."
 meta:
   - name: keywords

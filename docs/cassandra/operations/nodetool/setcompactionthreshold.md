@@ -1,4 +1,5 @@
 ---
+title: "nodetool setcompactionthreshold"
 description: "Set min/max compaction thresholds for a table using nodetool setcompactionthreshold."
 meta:
   - name: keywords

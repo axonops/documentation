@@ -1,4 +1,5 @@
 ---
+title: "nodetool rebuild_index"
 description: "Rebuild secondary indexes for a table using nodetool rebuild_index command."
 meta:
   - name: keywords

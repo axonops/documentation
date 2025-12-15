@@ -1,4 +1,5 @@
 ---
+title: "nodetool disablebackup"
 description: "Disable incremental backup in Cassandra using nodetool disablebackup command."
 meta:
   - name: keywords

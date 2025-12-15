@@ -1,4 +1,5 @@
 ---
+title: "Release 2025-08-29"
 description: "AxonOps release notes. Latest features, improvements, and bug fixes."
 meta:
   - name: keywords

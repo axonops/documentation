@@ -1,4 +1,5 @@
 ---
+title: "AxonOps Query Language Documentation"
 description: "AxonOps query syntax for Kafka metrics. Build custom queries and dashboards."
 meta:
   - name: keywords

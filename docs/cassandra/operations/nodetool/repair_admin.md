@@ -1,4 +1,5 @@
 ---
+title: "nodetool repair_admin"
 description: "Manage and monitor repair operations in Cassandra using nodetool repair_admin."
 meta:
   - name: keywords

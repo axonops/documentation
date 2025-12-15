@@ -1,4 +1,5 @@
 ---
+title: "Cassandra CQL Role-Based Access Control"
 description: "Cassandra CQL role-based access control: CREATE ROLE, GRANT, REVOKE, and permission management."
 meta:
   - name: keywords

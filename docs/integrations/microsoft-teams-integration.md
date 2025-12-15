@@ -1,4 +1,5 @@
 ---
+title: "Setup Microsoft Teams Integration"
 description: "Configure Microsoft Teams notifications in AxonOps. Send alerts to Teams channels."
 meta:
   - name: keywords

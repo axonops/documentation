@@ -1,4 +1,5 @@
 ---
+title: "Cassandra Data Modeling Time Bucketing Pattern"
 description: "Time bucketing pattern for Cassandra. Manage time-series data with efficient partitions."
 meta:
   - name: keywords

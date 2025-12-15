@@ -1,4 +1,5 @@
 ---
+title: "nodetool getcolumnindexsize"
 description: "Display column index size setting in Cassandra using nodetool getcolumnindexsize."
 meta:
   - name: keywords

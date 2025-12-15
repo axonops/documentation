@@ -1,4 +1,5 @@
 ---
+title: "nodetool profileload"
 description: "Profile read/write load for tables in Cassandra using nodetool profileload command."
 meta:
   - name: keywords

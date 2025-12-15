@@ -1,4 +1,5 @@
 ---
+title: "Cassandra MBeans Reference"
 description: "Cassandra MBeans reference. All available management beans and operations."
 meta:
   - name: keywords

@@ -1,4 +1,5 @@
 ---
+title: "Installing CQLAI"
 description: "CQLAI installation guide. Install on Linux, macOS, and Windows."
 meta:
   - name: keywords

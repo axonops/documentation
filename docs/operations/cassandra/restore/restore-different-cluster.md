@@ -1,4 +1,5 @@
 ---
+title: "Restore a backup to a different cluster"
 description: "Restore Cassandra data to a different cluster. Cross-cluster data migration."
 meta:
   - name: keywords

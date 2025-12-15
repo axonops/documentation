@@ -1,4 +1,5 @@
 ---
+title: "nodetool compactionstats"
 description: "Monitor active compaction progress in Cassandra using nodetool compactionstats command."
 meta:
   - name: keywords

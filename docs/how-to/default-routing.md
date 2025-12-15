@@ -1,4 +1,5 @@
 ---
+title: "Setup Default Routing"
 description: "Set up default routing for AxonOps alerts. Configure notification channels and escalation."
 meta:
   - name: keywords

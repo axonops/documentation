@@ -1,4 +1,5 @@
 ---
+title: "Cassandra Repair Strategies"
 description: "Cassandra repair strategies. Full vs incremental, subrange repairs."
 meta:
   - name: keywords

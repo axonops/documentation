@@ -1,4 +1,5 @@
 ---
+title: "Cassandra Large Partition Issues"
 description: "Large partition troubleshooting playbook. Handle oversized partitions."
 meta:
   - name: keywords

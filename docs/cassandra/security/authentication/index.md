@@ -1,4 +1,5 @@
 ---
+title: "Cassandra Authentication"
 description: "Cassandra authentication configuration. AllowAllAuthenticator, PasswordAuthenticator, MutualTlsAuthenticator"
 meta:
   - name: keywords

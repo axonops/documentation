@@ -1,4 +1,5 @@
 ---
+title: "Replace a node from a remote backup"
 description: "Restore single Cassandra node with different IP address. Node replacement scenario."
 meta:
   - name: keywords

@@ -1,4 +1,5 @@
 ---
+title: "Cassandra Compaction Issues"
 description: "Compaction issues troubleshooting playbook. Diagnose compaction problems."
 meta:
   - name: keywords

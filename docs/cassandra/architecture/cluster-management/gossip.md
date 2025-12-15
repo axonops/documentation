@@ -1,4 +1,5 @@
 ---
+title: "Cassandra Gossip Protocol and Internode Messaging"
 description: "Gossip protocol in Cassandra for cluster membership and failure detection. Phi accrual detector."
 meta:
   - name: keywords

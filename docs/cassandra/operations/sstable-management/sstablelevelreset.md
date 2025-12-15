@@ -1,4 +1,5 @@
 ---
+title: "sstablelevelreset"
 description: "Reset Leveled Compaction Strategy levels to zero using sstablelevelreset. Fix LCS metadata corruption."
 meta:
   - name: keywords

@@ -1,4 +1,5 @@
 ---
+title: "nodetool listcidrgroups"
 description: "List all CIDR groups configured in Cassandra using nodetool listcidrgroups."
 meta:
   - name: keywords

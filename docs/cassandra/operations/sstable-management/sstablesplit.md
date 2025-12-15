@@ -1,4 +1,5 @@
 ---
+title: "sstablesplit"
 description: "Split large SSTables into smaller files using sstablesplit. Manage disk space and compaction."
 meta:
   - name: keywords

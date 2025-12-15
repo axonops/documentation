@@ -1,4 +1,5 @@
 ---
+title: "Cassandra High Memory Usage"
 description: "High memory troubleshooting playbook. Debug memory pressure issues."
 meta:
   - name: keywords

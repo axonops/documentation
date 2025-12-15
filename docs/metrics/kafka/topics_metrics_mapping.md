@@ -1,4 +1,5 @@
 ---
+title: "AxonOps Kafka Topics Dashboard Metrics Mapping"
 description: "Kafka topics dashboard metrics mapping. Per-topic throughput and size."
 meta:
   - name: keywords

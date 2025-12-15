@@ -1,4 +1,5 @@
 ---
+title: "nodetool getstreamthroughput"
 description: "Display streaming throughput limit in Cassandra using nodetool getstreamthroughput."
 meta:
   - name: keywords

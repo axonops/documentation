@@ -1,4 +1,5 @@
 ---
+title: "Cassandra Size-Tiered Compaction Strategy (STCS)"
 description: "Size-Tiered Compaction Strategy (STCS) in Cassandra. How it works, pros, cons, and configuration."
 meta:
   - name: keywords

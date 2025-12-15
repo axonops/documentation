@@ -1,4 +1,5 @@
 ---
+title: "Cassandra Driver Connection Management"
 description: "Cassandra driver connection management. Configure connection pools, timeouts, and keep-alive settings."
 meta:
   - name: keywords

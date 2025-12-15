@@ -1,4 +1,5 @@
 ---
+title: "Cassandra CQL DDL Commands"
 description: "Cassandra CQL DDL (Data Definition Language) commands for creating and managing keyspaces, tables, indexes, and views."
 meta:
   - name: keywords

@@ -1,4 +1,5 @@
 ---
+title: "AxonOps Cloud"
 description: "AxonOps Cloud overview. Managed monitoring service for Cassandra and Kafka."
 meta:
   - name: keywords

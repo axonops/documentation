@@ -1,4 +1,5 @@
 ---
+title: "Cassandra Distributed Counters"
 description: "Distributed counters in Cassandra. Counter columns, consistency, and anti-patterns to avoid."
 meta:
   - name: keywords

@@ -1,4 +1,5 @@
 ---
+title: "Cluster Overview"
 description: "AxonOps cluster overview dashboard. Monitor Cassandra and Kafka cluster health at a glance."
 meta:
   - name: keywords

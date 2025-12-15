@@ -1,4 +1,5 @@
 ---
+title: "What is Google Cloud Storage"
 description: "Configure Google Cloud Storage backup for Cassandra with AxonOps."
 meta:
   - name: keywords

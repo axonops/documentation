@@ -1,4 +1,5 @@
 ---
+title: "Cassandra Materialized Views Architecture"
 description: "Materialized views architecture in Cassandra. How views are built and maintained automatically."
 meta:
   - name: keywords

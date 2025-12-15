@@ -1,4 +1,5 @@
 ---
+title: "nodetool describecluster"
 description: "Display cluster information including schema versions and snitch using nodetool describecluster."
 meta:
   - name: keywords

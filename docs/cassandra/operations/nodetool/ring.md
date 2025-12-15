@@ -1,4 +1,5 @@
 ---
+title: "nodetool ring"
 description: "Display token ring information for Cassandra cluster using nodetool ring command."
 meta:
   - name: keywords

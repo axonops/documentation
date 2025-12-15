@@ -1,4 +1,5 @@
 ---
+title: "nodetool listpendinghints"
 description: "Display pending hints for nodes in Cassandra using nodetool listpendinghints."
 meta:
   - name: keywords

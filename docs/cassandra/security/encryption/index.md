@@ -1,4 +1,5 @@
 ---
+title: "Cassandra Network Encryption"
 description: "Cassandra encryption guide covering TLS/SSL for client and internode communication."
 meta:
   - name: keywords

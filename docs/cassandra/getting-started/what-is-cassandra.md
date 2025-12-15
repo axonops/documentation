@@ -1,4 +1,5 @@
 ---
+title: "What is Apache Cassandra?"
 description: "What is Apache Cassandra. Distributed NoSQL database for high availability and scalability."
 meta:
   - name: keywords

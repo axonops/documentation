@@ -1,4 +1,5 @@
 ---
+title: "Setup SMTP / Email Notifications"
 description: "Configure email notifications in AxonOps. SMTP setup for alert delivery."
 meta:
   - name: keywords

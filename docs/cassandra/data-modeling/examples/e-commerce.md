@@ -1,4 +1,5 @@
 ---
+title: "Cassandra E-Commerce Data Model Example"
 description: "E-commerce data model example for Cassandra. Product catalog, orders, and user profiles."
 meta:
   - name: keywords

@@ -1,4 +1,5 @@
 ---
+title: "nodetool getconcurrentviewbuilders"
 description: "Display concurrent view builder threads in Cassandra using nodetool getconcurrentviewbuilders."
 meta:
   - name: keywords

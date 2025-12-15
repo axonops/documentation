@@ -1,4 +1,5 @@
 ---
+title: "nodetool sjk"
 description: "Run Swiss Java Knife diagnostics on Cassandra JVM using nodetool sjk command."
 meta:
   - name: keywords

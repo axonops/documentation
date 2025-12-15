@@ -1,4 +1,12 @@
-## Installing the Cassandra Restore Tool
+---
+title: "Installing the Cassandra Restore Tool"
+description: "Install and configure the AxonOps Cassandra Restore Tool for backup recovery."
+meta:
+  - name: keywords
+    content: "Cassandra restore tool, AxonOps backup recovery, axon-cassandra-restore"
+---
+
+# Installing the Cassandra Restore Tool
 
 The AxonOps Cassandra Restore tool is included in the AxonOps Agent package.
 

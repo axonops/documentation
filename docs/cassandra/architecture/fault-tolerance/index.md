@@ -1,4 +1,5 @@
 ---
+title: "Cassandra Fault Tolerance and Failure Scenarios"
 description: "Fault tolerance in Cassandra through replication, hinted handoff, and repair mechanisms."
 meta:
   - name: keywords

@@ -1,4 +1,5 @@
 ---
+title: "nodetool invalidatejmxpermissionscache"
 description: "Clear JMX permissions cache in Cassandra using nodetool invalidatejmxpermissionscache."
 meta:
   - name: keywords

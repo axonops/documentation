@@ -1,4 +1,5 @@
 ---
+title: "Cassandra Handle Full Disk"
 description: "Full disk troubleshooting playbook. Handle disk space emergencies."
 meta:
   - name: keywords

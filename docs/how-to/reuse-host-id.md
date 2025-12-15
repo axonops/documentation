@@ -1,4 +1,5 @@
 ---
+title: "Re-using an existing Host ID"
 description: "Reuse host ID in AxonOps when replacing nodes. Maintain monitoring history across node replacements."
 meta:
   - name: keywords

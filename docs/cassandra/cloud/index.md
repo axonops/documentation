@@ -1,4 +1,5 @@
 ---
+title: "Cassandra Cloud Deployment Guide"
 description: "Cassandra cloud deployment options. AWS, Azure, GCP, and Kubernetes deployments."
 meta:
   - name: keywords

@@ -1,4 +1,5 @@
 ---
+title: "Cassandra Playbook: Replace a Dead Node"
 description: "Replace dead node troubleshooting playbook. Node replacement procedures."
 meta:
   - name: keywords

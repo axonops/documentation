@@ -1,4 +1,5 @@
 ---
+title: "nodetool help"
 description: "Display help information for nodetool commands in Cassandra using nodetool help."
 meta:
   - name: keywords

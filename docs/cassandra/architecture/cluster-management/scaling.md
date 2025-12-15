@@ -1,4 +1,5 @@
 ---
+title: "Cassandra Scaling Operations"
 description: "Scale Cassandra clusters by adding or removing nodes. Capacity planning and rebalancing strategies."
 meta:
   - name: keywords

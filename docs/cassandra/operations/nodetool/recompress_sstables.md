@@ -1,4 +1,5 @@
 ---
+title: "nodetool recompress_sstables"
 description: "Recompress SSTables with a new compression algorithm using nodetool recompress_sstables."
 meta:
   - name: keywords

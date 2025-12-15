@@ -1,4 +1,5 @@
 ---
+title: "Cassandra High CPU Usage Playbook"
 description: "High CPU troubleshooting playbook. Diagnose CPU-bound issues."
 meta:
   - name: keywords

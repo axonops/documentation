@@ -1,4 +1,5 @@
 ---
+title: "nodetool invalidatenetworkpermissionscache"
 description: "Clear network permissions cache in Cassandra using nodetool invalidatenetworkpermissionscache."
 meta:
   - name: keywords

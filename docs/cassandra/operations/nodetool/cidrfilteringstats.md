@@ -1,4 +1,5 @@
 ---
+title: "nodetool cidrfilteringstats"
 description: "Display CIDR filtering statistics in Cassandra using nodetool cidrfilteringstats command."
 meta:
   - name: keywords

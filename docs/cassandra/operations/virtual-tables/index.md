@@ -1,4 +1,5 @@
 ---
+title: "Virtual Tables"
 description: "Cassandra virtual tables provide real-time cluster insights via CQL. Query metrics, configuration, and operational state without JMX."
 meta:
   - name: keywords

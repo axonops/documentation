@@ -1,4 +1,5 @@
 ---
+title: "nodetool enablehintsfordc"
 description: "Enable hinted handoff for a specific datacenter using nodetool enablehintsfordc."
 meta:
   - name: keywords

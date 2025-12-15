@@ -1,4 +1,5 @@
 ---
+title: "nodetool disablefullquerylog"
 description: "Disable full query logging in Cassandra using nodetool disablefullquerylog command."
 meta:
   - name: keywords

@@ -1,4 +1,5 @@
 ---
+title: "Cassandra Seeds and Cluster Discovery"
 description: "Seed nodes in Cassandra for cluster discovery and gossip bootstrapping. Configuration best practices."
 meta:
   - name: keywords

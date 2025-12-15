@@ -1,4 +1,5 @@
 ---
+title: "nodetool checktokenmetadata"
 description: "Verify token metadata consistency across the Cassandra cluster using nodetool checktokenmetadata."
 meta:
   - name: keywords

@@ -1,4 +1,5 @@
 ---
+title: "nodetool bootstrap"
 description: "Check or resume bootstrap operations in Cassandra using nodetool bootstrap command."
 meta:
   - name: keywords

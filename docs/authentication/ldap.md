@@ -1,4 +1,5 @@
 ---
+title: "LDAP Authentication"
 description: "Configure LDAP authentication for AxonOps. Integrate with Active Directory or OpenLDAP."
 meta:
   - name: keywords

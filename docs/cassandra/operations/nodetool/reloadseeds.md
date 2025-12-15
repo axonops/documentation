@@ -1,4 +1,5 @@
 ---
+title: "nodetool reloadseeds"
 description: "Reload seed node list from configuration using nodetool reloadseeds command."
 meta:
   - name: keywords

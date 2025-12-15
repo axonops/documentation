@@ -1,4 +1,5 @@
 ---
+title: "Cassandra Secondary Indexes (2i)"
 description: "Secondary index (2i) architecture in Cassandra. Local index implementation and query coordination."
 meta:
   - name: keywords

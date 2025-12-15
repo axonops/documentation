@@ -1,4 +1,5 @@
 ---
+title: "Cassandra Data Compaction"
 description: "Cassandra compaction strategies overview. STCS, LCS, TWCS, and UCS comparison and selection guide."
 meta:
   - name: keywords

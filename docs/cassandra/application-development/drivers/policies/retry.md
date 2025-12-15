@@ -1,4 +1,5 @@
 ---
+title: "Cassandra Driver Retry Policy"
 description: "Cassandra retry policies. Handle read/write timeouts and unavailable exceptions."
 meta:
   - name: keywords

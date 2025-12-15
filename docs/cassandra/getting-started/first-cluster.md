@@ -1,4 +1,5 @@
 ---
+title: "Setting Up a Cassandra Cluster"
 description: "Create your first Cassandra cluster. Step-by-step guide for beginners."
 meta:
   - name: keywords

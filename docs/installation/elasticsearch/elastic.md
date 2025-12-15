@@ -1,4 +1,5 @@
 ---
+title: "-Xms4g"
 description: "Configure Elasticsearch for AxonOps. Search backend setup and optimization."
 meta:
   - name: keywords

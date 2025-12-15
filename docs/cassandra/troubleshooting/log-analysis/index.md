@@ -1,4 +1,5 @@
 ---
+title: "Cassandra Log Analysis"
 description: "Cassandra log analysis guide. System.log, debug.log, and GC log interpretation."
 meta:
   - name: keywords

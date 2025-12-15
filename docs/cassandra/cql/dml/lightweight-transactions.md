@@ -1,4 +1,5 @@
 ---
+title: "Cassandra CQL Lightweight Transactions"
 description: "Cassandra lightweight transactions (LWT) in CQL using IF conditions. Compare-and-set operations with Paxos."
 meta:
   - name: keywords

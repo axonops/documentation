@@ -1,4 +1,5 @@
 ---
+title: "Kafka Topics"
 description: "Create Kafka topics with AxonOps. Set up new topics with partitions and replication."
 meta:
   - name: keywords

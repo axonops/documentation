@@ -1,4 +1,5 @@
 ---
+title: "nodetool truncatehints"
 description: "Delete pending hints for a node in Cassandra using nodetool truncatehints."
 meta:
   - name: keywords

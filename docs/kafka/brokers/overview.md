@@ -1,4 +1,5 @@
 ---
+title: "Kafka Brokers"
 description: "Kafka broker management in AxonOps. Monitor and manage Kafka brokers."
 meta:
   - name: keywords

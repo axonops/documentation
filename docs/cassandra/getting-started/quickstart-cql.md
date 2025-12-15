@@ -1,4 +1,5 @@
 ---
+title: "Cassandra CQL Quickstart Guide"
 description: "CQL quickstart guide. Learn basic Cassandra Query Language operations."
 meta:
   - name: keywords

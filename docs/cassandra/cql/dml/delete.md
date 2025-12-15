@@ -1,4 +1,5 @@
 ---
+title: "Cassandra CQL DELETE"
 description: "Cassandra DELETE statement syntax in CQL. Remove data, columns, or entire rows with tombstone creation."
 meta:
   - name: keywords

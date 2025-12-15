@@ -1,4 +1,5 @@
 ---
+title: "nodetool tablehistograms"
 description: "Display read/write latency histograms for a table using nodetool tablehistograms."
 meta:
   - name: keywords

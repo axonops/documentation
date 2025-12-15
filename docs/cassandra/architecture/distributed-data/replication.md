@@ -1,4 +1,5 @@
 ---
+title: "Cassandra Replication"
 description: "Data replication in Cassandra. Replication factor, strategies, and multi-datacenter configuration."
 meta:
   - name: keywords

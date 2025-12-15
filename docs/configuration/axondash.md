@@ -1,4 +1,5 @@
 ---
+title: "Configuring AxonOps Agent"
 description: "AxonOps Dashboard configuration. Configure web interface settings and authentication."
 meta:
   - name: keywords

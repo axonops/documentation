@@ -1,4 +1,5 @@
 ---
+title: "Restore a single node from a remote backup"
 description: "Restore single Cassandra node with same IP address. Node recovery procedure."
 meta:
   - name: keywords

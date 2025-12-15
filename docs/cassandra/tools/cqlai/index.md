@@ -1,4 +1,5 @@
 ---
+title: "CQLAI - Modern AI-Powered CQL Shell"
 description: "CQLAI documentation. AI-powered CQL shell for Apache Cassandra."
 meta:
   - name: keywords

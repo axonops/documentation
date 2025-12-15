@@ -1,4 +1,5 @@
 ---
+title: "nodetool refreshsizeestimates"
 description: "Refresh size estimates for tables in Cassandra using nodetool refreshsizeestimates."
 meta:
   - name: keywords

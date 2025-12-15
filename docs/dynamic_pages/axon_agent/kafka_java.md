@@ -1,4 +1,5 @@
 ---
+title: "Kafka Java"
 description: "Java requirements for AxonOps Kafka agent."
 meta:
   - name: keywords

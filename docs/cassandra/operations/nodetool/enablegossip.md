@@ -1,4 +1,5 @@
 ---
+title: "nodetool enablegossip"
 description: "Enable gossip protocol on a Cassandra node using nodetool enablegossip after maintenance."
 meta:
   - name: keywords

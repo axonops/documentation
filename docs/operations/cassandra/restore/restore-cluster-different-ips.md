@@ -1,4 +1,5 @@
 ---
+title: "Restore a whole cluster from a remote backup with different IP addresses"
 description: "Restore Cassandra cluster with different IP addresses. Migration and disaster recovery."
 meta:
   - name: keywords

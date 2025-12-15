@@ -1,4 +1,5 @@
 ---
+title: "Cassandra Slow Queries"
 description: "Slow queries troubleshooting playbook. Diagnose query performance."
 meta:
   - name: keywords

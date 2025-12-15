@@ -1,4 +1,5 @@
 ---
+title: "Cassandra Failure Handling Policies"
 description: "Connection failure handling in Cassandra drivers. Retry policies and reconnection strategies."
 meta:
   - name: keywords

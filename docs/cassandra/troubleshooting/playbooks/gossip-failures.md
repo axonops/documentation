@@ -1,4 +1,5 @@
 ---
+title: "Cassandra Gossip Failures"
 description: "Gossip failures troubleshooting playbook. Debug cluster communication."
 meta:
   - name: keywords

@@ -1,4 +1,5 @@
 ---
+title: "Cassandra Data Modeling Concepts"
 description: "Cassandra data modeling concepts. Partition keys, clustering columns, and denormalization."
 meta:
   - name: keywords

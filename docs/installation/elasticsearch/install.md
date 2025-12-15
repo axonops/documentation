@@ -1,4 +1,5 @@
 ---
+title: "Install Elasticsearch"
 description: "Install Elasticsearch for AxonOps. Log storage and search engine installation."
 meta:
   - name: keywords

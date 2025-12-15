@@ -1,4 +1,5 @@
 ---
+title: "sstablepartitions"
 description: "Find large partitions in Cassandra SSTables using sstablepartitions. Identify hot partitions and sizing issues."
 meta:
   - name: keywords

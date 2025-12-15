@@ -1,4 +1,5 @@
 ---
+title: "Storage"
 description: "Cassandra storage virtual tables. Monitor disk usage, partition sizes, snapshots, and SSTable tasks."
 meta:
   - name: keywords

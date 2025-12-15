@@ -1,4 +1,5 @@
 ---
+title: "Connecting to Cassandra JMX"
 description: "Connect to Cassandra JMX. Remote JMX setup and authentication configuration."
 meta:
   - name: keywords

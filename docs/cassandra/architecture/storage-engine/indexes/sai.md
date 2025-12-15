@@ -1,4 +1,5 @@
 ---
+title: "Cassandra SAI (Storage Attached Index)"
 description: "SAI (Storage Attached Index) architecture in Cassandra 5.0. Modern indexing for diverse query patterns."
 meta:
   - name: keywords

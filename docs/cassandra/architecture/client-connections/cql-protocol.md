@@ -1,5 +1,6 @@
 ---
-description: "CQL native protocol specification. Binary protocol, request/response format, and protocol versions."
+title: "Cassandra CQL Native Protocol Specification"
+description: "Cassandra CQL native protocol specification. Binary protocol, request/response format, and protocol versions."
 meta:
   - name: keywords
     content: "CQL protocol, native protocol, binary protocol, Cassandra protocol"

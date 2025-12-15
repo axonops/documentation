@@ -1,4 +1,5 @@
 ---
+title: "Agent Setup Cassandra"
 description: "Set up AxonOps agent for Cassandra monitoring. Step-by-step installation guide."
 meta:
   - name: keywords

@@ -1,4 +1,5 @@
 ---
+title: "nodetool upgradesstables"
 description: "Upgrade SSTables to current Cassandra version format using nodetool upgradesstables."
 meta:
   - name: keywords

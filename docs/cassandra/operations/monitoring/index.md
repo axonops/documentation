@@ -1,4 +1,5 @@
 ---
+title: "Monitoring Operations"
 description: "Cassandra monitoring overview. Tools, metrics, and best practices."
 meta:
   - name: keywords

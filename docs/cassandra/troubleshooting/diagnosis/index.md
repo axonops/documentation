@@ -1,4 +1,5 @@
 ---
+title: "Cassandra Diagnosis Guide"
 description: "Cassandra diagnosis techniques. Log analysis, metrics interpretation, and problem identification."
 meta:
   - name: keywords

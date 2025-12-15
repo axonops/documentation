@@ -1,4 +1,5 @@
 ---
+title: "Cassandra Metrics Reference"
 description: "Cassandra JMX metrics reference. Key metrics for monitoring and alerting."
 meta:
   - name: keywords

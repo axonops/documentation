@@ -1,4 +1,5 @@
 ---
+title: "Cassandra Data Modeling: The Complete Guide"
 description: "Cassandra data modeling guide. Design patterns, best practices, and examples."
 meta:
   - name: keywords

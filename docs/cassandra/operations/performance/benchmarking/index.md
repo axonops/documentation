@@ -1,4 +1,5 @@
 ---
+title: "Cassandra Performance Benchmarking"
 description: "Cassandra benchmarking guide. Test performance with cassandra-stress."
 meta:
   - name: keywords

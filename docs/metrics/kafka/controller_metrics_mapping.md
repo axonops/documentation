@@ -1,4 +1,5 @@
 ---
+title: "AxonOps Kafka Controller Dashboard Metrics Mapping"
 description: "Kafka controller dashboard metrics mapping. Controller election and partition metrics."
 meta:
   - name: keywords

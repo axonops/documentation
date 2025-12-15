@@ -1,4 +1,5 @@
 ---
+title: "Reconnection Policy"
 description: "Cassandra reconnection policies. Configure exponential backoff and constant delay strategies."
 meta:
   - name: keywords

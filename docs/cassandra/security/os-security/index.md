@@ -1,4 +1,5 @@
 ---
+title: "Cassandra Operating System Security"
 description: "Linux operating system security for Cassandra deployments. Patching, user management, filesystem permissions, and kernel hardening."
 meta:
   - name: keywords

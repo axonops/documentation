@@ -1,4 +1,5 @@
 ---
+title: "nodetool describering"
 description: "Show token ring information for a keyspace using nodetool describering command."
 meta:
   - name: keywords

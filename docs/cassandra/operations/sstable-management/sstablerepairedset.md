@@ -1,4 +1,5 @@
 ---
+title: "sstablerepairedset"
 description: "Mark SSTables as repaired or unrepaired using sstablerepairedset. Manage incremental repair status."
 meta:
   - name: keywords

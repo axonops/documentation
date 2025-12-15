@@ -1,4 +1,5 @@
 ---
+title: "Cassandra CQL User-Defined Type Commands"
 description: "Cassandra CREATE TYPE syntax for user-defined types (UDT) in CQL. Define complex nested data structures."
 meta:
   - name: keywords

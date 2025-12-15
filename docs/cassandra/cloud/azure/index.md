@@ -1,4 +1,5 @@
 ---
+title: "Cassandra on Microsoft Azure"
 description: "Deploy Cassandra on Microsoft Azure. Virtual machines, managed disks, and networking."
 meta:
   - name: keywords

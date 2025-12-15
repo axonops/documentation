@@ -1,4 +1,5 @@
 ---
+title: "Point in Time Recovery"
 description: "Point-in-time restore overview for Cassandra. Recover to any point in time."
 meta:
   - name: keywords

@@ -1,4 +1,5 @@
 ---
+title: "Cassandra Restore Guide"
 description: "Cassandra restore procedures. Recover data from snapshots and backups."
 meta:
   - name: keywords

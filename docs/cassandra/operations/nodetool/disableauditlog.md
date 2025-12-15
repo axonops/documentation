@@ -1,4 +1,5 @@
 ---
+title: "nodetool disableauditlog"
 description: "Disable audit logging in Cassandra using nodetool disableauditlog command."
 meta:
   - name: keywords

@@ -1,4 +1,5 @@
 ---
+title: "Cassandra Configuration cassandra.yaml Complete Reference"
 description: "Cassandra.yaml configuration reference. All settings for Cassandra nodes."
 meta:
   - name: keywords

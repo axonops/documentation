@@ -1,4 +1,5 @@
 ---
+title: "Cassandra CQL Aggregate Commands"
 description: "Cassandra CREATE AGGREGATE syntax for user-defined aggregates (UDA) in CQL. Build custom aggregation functions."
 meta:
   - name: keywords

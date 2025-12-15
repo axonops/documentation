@@ -1,4 +1,5 @@
 ---
+title: "Cassandra Recover from OOM"
 description: "OOM recovery troubleshooting playbook. Recover from out-of-memory crashes."
 meta:
   - name: keywords

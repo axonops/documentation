@@ -1,4 +1,5 @@
 ---
+title: "Cassandra Privileged Access Management"
 description: "Privileged access management in Cassandra. Superuser access, role hierarchy, and separation of duties."
 meta:
   - name: keywords

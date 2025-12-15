@@ -1,4 +1,5 @@
 ---
+title: "nodetool disableautocompaction"
 description: "Disable automatic compaction for Cassandra tables using nodetool disableautocompaction."
 meta:
   - name: keywords

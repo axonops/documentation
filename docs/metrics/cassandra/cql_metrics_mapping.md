@@ -1,4 +1,5 @@
 ---
+title: "AxonOps CQL Dashboard Metrics Mapping"
 description: "Cassandra CQL dashboard metrics mapping. Query performance and prepared statements."
 meta:
   - name: keywords

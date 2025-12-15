@@ -1,4 +1,5 @@
 ---
+title: "nodetool settimeout"
 description: "Set timeout for Cassandra operations using nodetool settimeout command."
 meta:
   - name: keywords

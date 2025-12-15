@@ -1,4 +1,5 @@
 ---
+title: "Cassandra Client Connection Architecture"
 description: "Cassandra client connections architecture. CQL protocol, connection pooling, and load balancing."
 meta:
   - name: keywords

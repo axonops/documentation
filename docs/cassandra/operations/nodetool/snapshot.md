@@ -1,4 +1,5 @@
 ---
+title: "nodetool snapshot"
 description: "Create backup snapshots of Cassandra tables using nodetool snapshot command."
 meta:
   - name: keywords

@@ -1,4 +1,5 @@
 ---
+title: "nodetool getfullquerylog"
 description: "Display full query log configuration in Cassandra using nodetool getfullquerylog."
 meta:
   - name: keywords

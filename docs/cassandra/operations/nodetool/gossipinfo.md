@@ -1,4 +1,5 @@
 ---
+title: "nodetool gossipinfo"
 description: "Display gossip information for all nodes in Cassandra cluster using nodetool gossipinfo."
 meta:
   - name: keywords

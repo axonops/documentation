@@ -1,4 +1,5 @@
 ---
+title: "AxonOps Kafka Overview Dashboard Metrics Mapping"
 description: "Kafka overview dashboard metrics mapping. Cluster health and throughput."
 meta:
   - name: keywords

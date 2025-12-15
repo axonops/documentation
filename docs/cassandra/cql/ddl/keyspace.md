@@ -1,4 +1,5 @@
 ---
+title: "Cassandra CQL Keyspace Commands"
 description: "Cassandra CREATE KEYSPACE syntax and options in CQL. Configure replication strategy and datacenter settings."
 meta:
   - name: keywords

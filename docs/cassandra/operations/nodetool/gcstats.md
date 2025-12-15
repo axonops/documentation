@@ -1,4 +1,5 @@
 ---
+title: "nodetool gcstats"
 description: "Display JVM garbage collection statistics for Cassandra using nodetool gcstats command."
 meta:
   - name: keywords

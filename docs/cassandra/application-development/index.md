@@ -1,4 +1,5 @@
 ---
+title: "Application Development"
 description: "Cassandra application development guide. Drivers, best practices, and data modeling."
 meta:
   - name: keywords

@@ -1,4 +1,5 @@
 ---
+title: "Setup Service Checks"
 description: "Set up service checks in AxonOps. Monitor service availability and health."
 meta:
   - name: keywords

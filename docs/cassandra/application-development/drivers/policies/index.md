@@ -1,4 +1,5 @@
 ---
+title: "Cassandra Driver Policies"
 description: "Cassandra driver policies overview. Load balancing, retry, reconnection, and speculative execution."
 meta:
   - name: keywords

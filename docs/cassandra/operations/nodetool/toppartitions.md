@@ -1,4 +1,5 @@
 ---
+title: "nodetool toppartitions"
 description: "Sample and display top partitions by reads/writes using nodetool toppartitions."
 meta:
   - name: keywords

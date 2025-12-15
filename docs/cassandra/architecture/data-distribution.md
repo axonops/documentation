@@ -1,4 +1,5 @@
 ---
+title: "Cassandra Data Distribution"
 description: "Data distribution in Cassandra. How partitioning and replication spread data across nodes."
 meta:
   - name: keywords

@@ -1,4 +1,5 @@
 ---
+title: "nodetool datapaths"
 description: "Display data file locations for Cassandra tables using nodetool datapaths command."
 meta:
   - name: keywords

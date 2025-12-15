@@ -1,4 +1,5 @@
 ---
+title: "nodetool setmaxhintwindow"
 description: "Set maximum hint window duration in Cassandra using nodetool setmaxhintwindow."
 meta:
   - name: keywords

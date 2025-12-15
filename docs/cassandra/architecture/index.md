@@ -1,4 +1,5 @@
 ---
+title: "Cassandra Architecture"
 description: "Apache Cassandra architecture overview covering storage engine, distributed data, cluster management, and fault tolerance."
 meta:
   - name: keywords

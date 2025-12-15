@@ -1,4 +1,5 @@
 ---
+title: "Cassandra and Java Virtual Machine (JVM)"
 description: "JVM configuration for Cassandra. Heap sizing, garbage collection tuning, and G1GC settings."
 meta:
   - name: keywords

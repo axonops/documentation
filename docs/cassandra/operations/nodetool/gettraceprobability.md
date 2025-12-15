@@ -1,4 +1,5 @@
 ---
+title: "nodetool gettraceprobability"
 description: "Display query tracing probability in Cassandra using nodetool gettraceprobability."
 meta:
   - name: keywords

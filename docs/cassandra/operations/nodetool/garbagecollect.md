@@ -1,4 +1,5 @@
 ---
+title: "nodetool garbagecollect"
 description: "Remove deleted data (tombstones) from Cassandra SSTables using nodetool garbagecollect."
 meta:
   - name: keywords

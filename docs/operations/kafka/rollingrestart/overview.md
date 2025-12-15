@@ -1,4 +1,5 @@
 ---
+title: "Overview"
 description: "Rolling restart for Kafka with AxonOps. Zero-downtime broker restarts."
 meta:
   - name: keywords

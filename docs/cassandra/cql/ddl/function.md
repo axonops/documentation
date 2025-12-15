@@ -1,4 +1,5 @@
 ---
+title: "Cassandra CQL Function Commands"
 description: "CREATE FUNCTION syntax for user-defined functions (UDF) in CQL. Extend Cassandra with custom logic."
 meta:
   - name: keywords

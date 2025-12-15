@@ -1,4 +1,5 @@
 ---
+title: "Configure Cassandra user group"
 description: "Java requirements for AxonOps Cassandra agent."
 meta:
   - name: keywords

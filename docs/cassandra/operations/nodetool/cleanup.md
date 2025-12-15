@@ -1,4 +1,5 @@
 ---
+title: "nodetool cleanup"
 description: "Remove data that no longer belongs to a node after topology changes using nodetool cleanup. Run after adding nodes."
 meta:
   - name: keywords

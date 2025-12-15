@@ -1,4 +1,5 @@
 ---
+title: "Cassandra Driver Speculative Execution Policy"
 description: "Cassandra speculative execution policy. Reduce tail latencies with parallel queries."
 meta:
   - name: keywords

@@ -1,4 +1,5 @@
 ---
+title: "nodetool setconcurrentcompactors"
 description: "Set number of concurrent compaction threads using nodetool setconcurrentcompactors."
 meta:
   - name: keywords

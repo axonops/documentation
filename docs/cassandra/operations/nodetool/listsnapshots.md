@@ -1,4 +1,5 @@
 ---
+title: "nodetool listsnapshots"
 description: "List all snapshots on a Cassandra node using nodetool listsnapshots command."
 meta:
   - name: keywords

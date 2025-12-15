@@ -1,4 +1,5 @@
 ---
+title: "Metrics Tables"
 description: "Cassandra virtual tables for latency metrics, read statistics, and CQL performance monitoring."
 meta:
   - name: keywords

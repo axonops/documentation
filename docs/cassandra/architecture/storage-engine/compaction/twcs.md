@@ -1,4 +1,5 @@
 ---
+title: "Cassandra Time-Window Compaction Strategy (TWCS)"
 description: "Time-Window Compaction Strategy (TWCS) in Cassandra. Optimal for time-series data with TTL."
 meta:
   - name: keywords

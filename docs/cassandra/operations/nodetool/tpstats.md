@@ -1,4 +1,5 @@
 ---
+title: "nodetool tpstats"
 description: "Display thread pool statistics for Cassandra stages using nodetool tpstats command."
 meta:
   - name: keywords

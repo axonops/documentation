@@ -1,4 +1,5 @@
 ---
+title: "nodetool resumehandoff"
 description: "Resume hinted handoff delivery in Cassandra using nodetool resumehandoff command."
 meta:
   - name: keywords

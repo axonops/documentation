@@ -1,4 +1,5 @@
 ---
+title: "Cassandra cqlsh Reference Guide"
 description: "CQLSH command-line shell for Cassandra. Interactive CQL query interface."
 meta:
   - name: keywords

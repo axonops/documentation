@@ -1,11 +1,12 @@
 ---
+title: "Cassandra Inter-Node Data Streaming"
 description: "Data streaming in Cassandra for bootstrap, rebuild, and repair operations. Stream throughput tuning."
 meta:
   - name: keywords
     content: "Cassandra streaming, data streaming, bootstrap, rebuild, stream throughput"
 ---
 
-# Data Streaming
+# Inter-Node Data Streaming
 
 Data streaming is the mechanism by which Cassandra nodes transfer SSTable data directly between each other. This inter-node data transfer occurs during cluster topology changes, repair operations, and failure recovery scenarios. Understanding the streaming subsystem is essential for capacity planning, operational troubleshooting, and performance optimization.
 

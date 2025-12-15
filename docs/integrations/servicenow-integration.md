@@ -1,4 +1,5 @@
 ---
+title: "Setup ServiceNow Integration"
 description: "Configure ServiceNow integration in AxonOps. Create tickets from alerts automatically."
 meta:
   - name: keywords

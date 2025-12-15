@@ -1,4 +1,5 @@
 ---
+title: "nodetool updatecidrgroup"
 description: "Update CIDR group configuration in Cassandra using nodetool updatecidrgroup."
 meta:
   - name: keywords

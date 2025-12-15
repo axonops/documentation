@@ -1,4 +1,5 @@
 ---
+title: "nodetool getseeds"
 description: "Display seed nodes for the Cassandra cluster using nodetool getseeds command."
 meta:
   - name: keywords

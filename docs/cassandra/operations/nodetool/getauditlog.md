@@ -1,4 +1,5 @@
 ---
+title: "nodetool getauditlog"
 description: "Display current audit log configuration in Cassandra using nodetool getauditlog."
 meta:
   - name: keywords

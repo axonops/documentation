@@ -1,8 +1,9 @@
 ---
+title: "Cassandra Driver Query Throttling"
 description: "Request throttling in Cassandra clients. Rate limiting, backpressure, and overload protection."
 meta:
   - name: keywords
-    content: "request throttling, rate limiting, backpressure, Cassandra client"
+    content: "Cassandra request throttling, rate limiting, backpressure, Cassandra client"
 ---
 
 # Query Throttling

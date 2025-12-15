@@ -1,4 +1,5 @@
 ---
+title: "Cassandra Partitioning"
 description: "Data partitioning in Cassandra using consistent hashing. Partition keys, tokens, and data distribution."
 meta:
   - name: keywords

@@ -1,4 +1,5 @@
 ---
+title: "Logs and Events"
 description: "Logs and events in AxonOps. View and search Cassandra and Kafka log entries."
 meta:
   - name: keywords

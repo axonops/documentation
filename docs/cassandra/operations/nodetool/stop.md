@@ -1,4 +1,5 @@
 ---
+title: "nodetool stop"
 description: "Stop compaction operations in Cassandra using nodetool stop command."
 meta:
   - name: keywords

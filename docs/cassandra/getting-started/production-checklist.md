@@ -1,4 +1,5 @@
 ---
+title: "Cassandra Production Readiness Checklist"
 description: "Cassandra production readiness checklist. Essential configurations before going live."
 meta:
   - name: keywords

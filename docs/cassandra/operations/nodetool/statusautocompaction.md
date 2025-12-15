@@ -1,4 +1,5 @@
 ---
+title: "nodetool statusautocompaction"
 description: "Check if auto compaction is enabled for tables using nodetool statusautocompaction."
 meta:
   - name: keywords

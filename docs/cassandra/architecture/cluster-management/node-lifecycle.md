@@ -1,4 +1,5 @@
 ---
+title: "Cassandra Node Lifecycle"
 description: "Cassandra node lifecycle states: joining, leaving, moving, and decommissioning operations."
 meta:
   - name: keywords

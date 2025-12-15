@@ -1,4 +1,5 @@
 ---
+title: "Cassandra Query Consistency Levels"
 description: "Consistency levels in Cassandra. ONE, QUORUM, ALL, LOCAL_QUORUM explained with trade-offs."
 meta:
   - name: keywords

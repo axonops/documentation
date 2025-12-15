@@ -1,4 +1,5 @@
 ---
+title: "AxonOps Table Dashboard Metrics Mapping"
 description: "Cassandra table dashboard metrics mapping. Per-table performance statistics."
 meta:
   - name: keywords

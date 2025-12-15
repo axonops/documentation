@@ -1,4 +1,5 @@
 ---
+title: "nodetool rangekeysample"
 description: "Sample partition keys from SSTables using nodetool rangekeysample command."
 meta:
   - name: keywords

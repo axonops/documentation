@@ -1,4 +1,5 @@
 ---
+title: "Configuring AxonOps Server"
 description: "AxonOps Server configuration reference. Configure backend server settings and storage."
 meta:
   - name: keywords

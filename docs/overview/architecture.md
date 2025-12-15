@@ -1,4 +1,5 @@
 ---
+title: "Architecture"
 description: "AxonOps architecture overview. Components and deployment topology."
 meta:
   - name: keywords

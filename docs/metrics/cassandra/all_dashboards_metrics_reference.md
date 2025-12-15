@@ -1,4 +1,5 @@
 ---
+title: "AxonOps All Dashboards Metrics Reference"
 description: "Complete Cassandra metrics reference for AxonOps dashboards. All available metrics documented."
 meta:
   - name: keywords

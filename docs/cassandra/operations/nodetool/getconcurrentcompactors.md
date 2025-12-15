@@ -1,4 +1,5 @@
 ---
+title: "nodetool getconcurrentcompactors"
 description: "Display number of concurrent compaction threads in Cassandra using nodetool getconcurrentcompactors."
 meta:
   - name: keywords

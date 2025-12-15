@@ -1,4 +1,5 @@
 ---
+title: "Topic Access Control List (ACL)."
 description: "Configure Kafka ACLs with AxonOps. Manage access control list settings."
 meta:
   - name: keywords

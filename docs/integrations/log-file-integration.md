@@ -1,4 +1,5 @@
 ---
+title: "Send Notifications to Log Files"
 description: "Configure log file output in AxonOps. Write alerts to log files."
 meta:
   - name: keywords

@@ -1,4 +1,5 @@
 ---
+title: "Cassandra Driver Prepared Statements"
 description: "Cassandra prepared statements guide. Optimize performance and prevent CQL injection."
 meta:
   - name: keywords

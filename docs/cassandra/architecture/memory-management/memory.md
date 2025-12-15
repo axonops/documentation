@@ -1,4 +1,5 @@
 ---
+title: "Cassandra Memory Management"
 description: "Cassandra memory architecture. Heap vs off-heap memory, memtables, caches, and memory pools."
 meta:
   - name: keywords

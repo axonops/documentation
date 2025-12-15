@@ -1,4 +1,5 @@
 ---
+title: "PKI Fundamentals"
 description: "PKI fundamentals for Cassandra TLS. Certificates, certificate authorities, and key management."
 meta:
   - name: keywords

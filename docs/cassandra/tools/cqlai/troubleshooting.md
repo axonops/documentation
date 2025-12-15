@@ -1,4 +1,5 @@
 ---
+title: "CQLAI Troubleshooting"
 description: "CQLAI troubleshooting guide. Common issues and solutions."
 meta:
   - name: keywords

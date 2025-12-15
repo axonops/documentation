@@ -1,4 +1,5 @@
 ---
+title: "Cassandra CQL Security"
 description: "Cassandra CQL security features: role-based access control (RBAC) and dynamic data masking (DDM)."
 meta:
   - name: keywords

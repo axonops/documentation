@@ -1,4 +1,5 @@
 ---
+title: "nodetool version"
 description: "Display Cassandra version information using nodetool version command."
 meta:
   - name: keywords

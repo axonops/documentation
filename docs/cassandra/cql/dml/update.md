@@ -1,4 +1,5 @@
 ---
+title: "Cassandra CQL UPDATE"
 description: "Cassandra UPDATE statement syntax in CQL. Modify existing data with conditional updates and collections."
 meta:
   - name: keywords

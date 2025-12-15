@@ -1,4 +1,5 @@
 ---
+title: "Configuring AxonOps Agent"
 description: "AxonOps agent configuration reference. Configure monitoring agents for Cassandra and Kafka."
 meta:
   - name: keywords

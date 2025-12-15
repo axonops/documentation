@@ -1,4 +1,5 @@
 ---
+title: "SSL/TLS config for Elasticsearch"
 description: "AxonOps Server installation overview. Requirements and deployment options."
 meta:
   - name: keywords

@@ -1,4 +1,5 @@
 ---
+title: "Cassandra Troubleshooting Guide"
 description: "Cassandra troubleshooting guide covering common errors, diagnosis techniques, and operational playbooks."
 meta:
   - name: keywords

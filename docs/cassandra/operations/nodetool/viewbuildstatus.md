@@ -1,4 +1,5 @@
 ---
+title: "nodetool viewbuildstatus"
 description: "Display materialized view build progress using nodetool viewbuildstatus command."
 meta:
   - name: keywords

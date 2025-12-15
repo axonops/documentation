@@ -1,4 +1,5 @@
 ---
+title: "AxonOps Kafka Performance Dashboard Metrics Mapping"
 description: "Kafka performance dashboard metrics mapping. Latency and throughput statistics."
 meta:
   - name: keywords

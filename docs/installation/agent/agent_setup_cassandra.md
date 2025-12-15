@@ -1,4 +1,5 @@
 ---
+title: "Install Cassandra Agent"
 description: "Install AxonOps agent for Cassandra. Detailed installation steps for all platforms."
 meta:
   - name: keywords

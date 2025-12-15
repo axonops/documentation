@@ -1,4 +1,5 @@
 ---
+title: "Cassandra"
 description: "AxonOps Cassandra agent dynamic configuration page."
 meta:
   - name: keywords

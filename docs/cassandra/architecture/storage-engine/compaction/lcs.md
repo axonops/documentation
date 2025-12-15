@@ -1,4 +1,5 @@
 ---
+title: "Cassandra Leveled Compaction Strategy (LCS)"
 description: "Leveled Compaction Strategy (LCS) in Cassandra. Level-based compaction for read-heavy workloads."
 meta:
   - name: keywords

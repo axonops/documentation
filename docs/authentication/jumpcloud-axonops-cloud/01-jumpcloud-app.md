@@ -1,4 +1,5 @@
 ---
+title: "JumpCloud SAML Configuration"
 description: "Create JumpCloud SAML application for AxonOps Cloud integration. Configure SSO connector."
 meta:
   - name: keywords

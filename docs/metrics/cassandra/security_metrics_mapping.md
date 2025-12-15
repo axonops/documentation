@@ -1,4 +1,5 @@
 ---
+title: "AxonOps Security Dashboard Metrics Mapping"
 description: "Cassandra security dashboard metrics mapping. Authentication and authorization metrics."
 meta:
   - name: keywords

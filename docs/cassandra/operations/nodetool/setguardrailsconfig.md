@@ -1,4 +1,5 @@
 ---
+title: "nodetool setguardrailsconfig"
 description: "Configure guardrails limits in Cassandra using nodetool setguardrailsconfig."
 meta:
   - name: keywords

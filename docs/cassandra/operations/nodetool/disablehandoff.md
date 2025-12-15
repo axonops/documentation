@@ -1,4 +1,5 @@
 ---
+title: "nodetool disablehandoff"
 description: "Disable hinted handoff in Cassandra using nodetool disablehandoff command."
 meta:
   - name: keywords

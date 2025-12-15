@@ -1,4 +1,5 @@
 ---
+title: "system_virtual_schema"
 description: "system_virtual_schema keyspace reference. Query virtual table metadata in Cassandra."
 meta:
   - name: keywords

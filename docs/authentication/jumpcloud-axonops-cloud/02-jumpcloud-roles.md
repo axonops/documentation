@@ -1,4 +1,5 @@
 ---
+title: "Configuring AxonOps Roles in JumpCloud"
 description: "Configure JumpCloud roles for AxonOps Cloud access. Map user groups to AxonOps permissions."
 meta:
   - name: keywords

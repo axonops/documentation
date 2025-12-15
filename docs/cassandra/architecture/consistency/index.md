@@ -1,4 +1,5 @@
 ---
+title: "Cassandra Data Consistency"
 description: "Cassandra consistency levels explained. Configure read and write consistency for your workload."
 meta:
   - name: keywords

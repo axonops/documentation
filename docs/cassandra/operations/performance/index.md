@@ -1,4 +1,5 @@
 ---
+title: "Cassandra Performance Tuning Guide"
 description: "Cassandra performance tuning guide. Optimize throughput and latency."
 meta:
   - name: keywords

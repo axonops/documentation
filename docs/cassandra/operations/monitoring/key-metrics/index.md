@@ -1,4 +1,5 @@
 ---
+title: "Cassandra Key Metrics Reference"
 description: "Key Cassandra metrics to monitor. Essential metrics for cluster health."
 meta:
   - name: keywords

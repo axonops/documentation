@@ -1,4 +1,5 @@
 ---
+title: "AxonOps Kafka Connections Dashboard Metrics Mapping"
 description: "Kafka connections dashboard metrics mapping. Client connection statistics."
 meta:
   - name: keywords

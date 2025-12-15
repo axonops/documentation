@@ -1,4 +1,5 @@
 ---
+title: "Cassandra Troubleshooting Playbooks"
 description: "Cassandra troubleshooting playbooks index. Runbooks for common issues."
 meta:
   - name: keywords

@@ -1,4 +1,5 @@
 ---
+title: "Configuring SAML authentication in AxonOps Cloud"
 description: "Complete AxonOps SAML configuration with JumpCloud. Finalize SSO integration settings."
 meta:
   - name: keywords

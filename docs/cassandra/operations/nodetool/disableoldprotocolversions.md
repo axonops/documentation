@@ -1,4 +1,5 @@
 ---
+title: "nodetool disableoldprotocolversions"
 description: "Disable old CQL protocol versions in Cassandra using nodetool disableoldprotocolversions."
 meta:
   - name: keywords

@@ -1,4 +1,5 @@
 ---
+title: "Cassandra CQL Data Types"
 description: "Cassandra CQL data types reference including text, int, UUID, timestamp, collections, and user-defined types."
 meta:
   - name: keywords

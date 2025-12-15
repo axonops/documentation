@@ -1,4 +1,5 @@
 ---
+title: "nodetool scrub"
 description: "Scrub SSTables to fix corruption in Cassandra using nodetool scrub command."
 meta:
   - name: keywords

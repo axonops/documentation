@@ -1,4 +1,5 @@
 ---
+title: "Data Manipulation Language (DML)"
 description: "Cassandra CQL DML (Data Manipulation Language) commands for SELECT, INSERT, UPDATE, DELETE, and BATCH operations."
 meta:
   - name: keywords

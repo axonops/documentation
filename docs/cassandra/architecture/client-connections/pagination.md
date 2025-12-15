@@ -1,8 +1,9 @@
 ---
-description: "Query pagination in Cassandra. Paging state, automatic paging, and large result set handling."
+title: "Cassandra CQL Query Pagination"
+description: "CQL Query pagination in Cassandra. Paging state, automatic paging, and large result set handling."
 meta:
   - name: keywords
-    content: "Cassandra pagination, paging state, large queries, result paging"
+    content: "Cassandra CQL pagination, paging state, large queries, result paging"
 ---
 
 # Query Pagination

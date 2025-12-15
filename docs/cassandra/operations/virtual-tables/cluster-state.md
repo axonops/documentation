@@ -1,4 +1,5 @@
 ---
+title: "Cluster State"
 description: "Cassandra cluster state virtual tables. Monitor gossip, pending hints, and internode communication."
 meta:
   - name: keywords

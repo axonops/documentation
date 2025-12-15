@@ -1,4 +1,5 @@
 ---
+title: "Cassandra"
 description: "Cassandra metrics dashboards in AxonOps. Pre-built dashboards for monitoring."
 meta:
   - name: keywords

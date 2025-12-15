@@ -1,4 +1,5 @@
 ---
+title: "Cassandra Repair Failures"
 description: "Repair failures troubleshooting playbook. Debug failed repair operations."
 meta:
   - name: keywords

@@ -1,4 +1,5 @@
 ---
+title: "AxonOps Compactions Dashboard Metrics Mapping"
 description: "Cassandra compaction dashboard metrics mapping. Compaction progress and throughput."
 meta:
   - name: keywords

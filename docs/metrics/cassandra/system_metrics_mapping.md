@@ -1,4 +1,5 @@
 ---
+title: "AxonOps System Dashboard Metrics Mapping"
 description: "Cassandra system dashboard metrics mapping. CPU, memory, and disk metrics."
 meta:
   - name: keywords

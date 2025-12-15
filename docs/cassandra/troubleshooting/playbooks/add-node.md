@@ -1,4 +1,5 @@
 ---
+title: "Cassandra Add Node"
 description: "Add node troubleshooting playbook. Debug node bootstrap issues."
 meta:
   - name: keywords

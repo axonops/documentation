@@ -1,4 +1,5 @@
 ---
+title: "Running AxonOps on Kubernetes"
 description: "AxonOps Kubernetes installation. Deploy monitoring in K8s clusters."
 meta:
   - name: keywords

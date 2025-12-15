@@ -1,4 +1,5 @@
 ---
+title: "Cassandra ReadTimeoutException"
 description: "Cassandra ReadTimeout error. Causes and solutions for read timeouts."
 meta:
   - name: keywords

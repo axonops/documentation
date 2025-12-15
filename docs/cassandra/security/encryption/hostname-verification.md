@@ -1,4 +1,5 @@
 ---
+title: "Hostname Verification"
 description: "Hostname verification in Cassandra TLS. Server identity validation and SAN configuration."
 meta:
   - name: keywords

@@ -1,4 +1,5 @@
 ---
+title: "Cassandra Driver Guide"
 description: "Getting started with Cassandra drivers. Quick setup guides for popular languages."
 meta:
   - name: keywords

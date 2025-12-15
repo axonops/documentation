@@ -1,4 +1,5 @@
 ---
+title: "nodetool replaybatchlog"
 description: "Force replay of batch log entries in Cassandra using nodetool replaybatchlog."
 meta:
   - name: keywords

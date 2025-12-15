@@ -1,4 +1,5 @@
 ---
+title: "nodetool setauthcacheconfig"
 description: "Configure authentication cache settings in Cassandra using nodetool setauthcacheconfig."
 meta:
   - name: keywords

@@ -1,4 +1,5 @@
 ---
+title: "Cassandra Configuration Reference"
 description: "Cassandra configuration overview. YAML files, JVM options, and runtime settings."
 meta:
   - name: keywords

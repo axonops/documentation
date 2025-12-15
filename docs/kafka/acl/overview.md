@@ -1,4 +1,5 @@
 ---
+title: "Topic Access Control List (ACL)"
 description: "Kafka ACL management in AxonOps. Overview of access control list features."
 meta:
   - name: keywords

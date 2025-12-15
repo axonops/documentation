@@ -1,4 +1,5 @@
 ---
+title: "Installing Apache Cassandra"
 description: "Cassandra installation guide. Install on Linux, macOS, and Windows."
 meta:
   - name: keywords

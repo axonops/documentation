@@ -1,4 +1,5 @@
 ---
+title: "nodetool compactionhistory"
 description: "View compaction history in Cassandra using nodetool compactionhistory. Analyze past compaction operations."
 meta:
   - name: keywords

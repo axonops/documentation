@@ -1,4 +1,5 @@
 ---
+title: "Scheduled Backups"
 description: "Cassandra backup overview with AxonOps. Automated backup features and options."
 meta:
   - name: keywords

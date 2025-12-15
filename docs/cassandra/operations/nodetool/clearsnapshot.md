@@ -1,4 +1,5 @@
 ---
+title: "nodetool clearsnapshot"
 description: "Delete snapshot files from Cassandra nodes using nodetool clearsnapshot. Free disk space after backups."
 meta:
   - name: keywords

@@ -1,4 +1,5 @@
 ---
+title: "sstablemetadata"
 description: "Display SSTable metadata and statistics using sstablemetadata. View compression, timestamps, and repair status."
 meta:
   - name: keywords

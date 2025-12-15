@@ -1,4 +1,5 @@
 ---
+title: "nodetool join"
 description: "Complete node bootstrap and join the Cassandra ring using nodetool join command."
 meta:
   - name: keywords

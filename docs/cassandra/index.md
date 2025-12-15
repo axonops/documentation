@@ -1,4 +1,5 @@
 ---
+title: "Apache Cassandra Documentation"
 description: "Complete Apache Cassandra documentation and reference guide. Production-grade coverage of architecture, CQL, operations, and troubleshooting."
 meta:
   - name: keywords

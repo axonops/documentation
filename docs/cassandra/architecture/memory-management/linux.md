@@ -1,4 +1,5 @@
 ---
+title: "Cassandra Linux Memory Configuration"
 description: "Linux OS tuning for Cassandra. Swappiness, zone_reclaim, transparent huge pages, and limits."
 meta:
   - name: keywords

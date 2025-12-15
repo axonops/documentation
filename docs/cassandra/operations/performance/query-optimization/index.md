@@ -1,4 +1,5 @@
 ---
+title: "Query Optimization for Cassandra"
 description: "Cassandra query optimization. Improve CQL query performance."
 meta:
   - name: keywords

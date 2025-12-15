@@ -1,4 +1,5 @@
 ---
+title: "Install Kafka Agent"
 description: "Set up AxonOps agent for Kafka monitoring. Step-by-step installation guide."
 meta:
   - name: keywords

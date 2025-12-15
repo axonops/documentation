@@ -1,4 +1,5 @@
 ---
+title: "Cassandra Encryption Configuration"
 description: "Configure TLS encryption in Cassandra. cassandra.yaml SSL settings for clients and internode."
 meta:
   - name: keywords

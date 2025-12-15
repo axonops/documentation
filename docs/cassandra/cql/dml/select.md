@@ -1,4 +1,5 @@
 ---
+title: "Cassandra CQL SELECT"
 description: "Cassandra SELECT statement syntax in CQL. Query data with WHERE, ORDER BY, LIMIT, and ALLOW FILTERING."
 meta:
   - name: keywords

@@ -1,4 +1,5 @@
 ---
+title: "nodetool removenode"
 description: "Remove a dead node from Cassandra cluster using nodetool removenode command."
 meta:
   - name: keywords

@@ -1,4 +1,5 @@
 ---
+title: "AxonOps Kafka System Dashboard Metrics Mapping"
 description: "Kafka system dashboard metrics mapping. CPU, memory, and disk metrics."
 meta:
   - name: keywords

@@ -1,4 +1,5 @@
 ---
+title: "Cassandra Data Modeling Anti-Patterns"
 description: "Cassandra data modeling anti-patterns. Common mistakes and how to avoid them."
 meta:
   - name: keywords

@@ -1,4 +1,5 @@
 ---
+title: "Cassandra Gossip Protocol"
 description: "Gossip protocol in Cassandra for cluster communication and failure detection."
 meta:
   - name: keywords

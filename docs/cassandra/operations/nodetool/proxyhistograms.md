@@ -1,4 +1,5 @@
 ---
+title: "nodetool proxyhistograms"
 description: "Display coordinator read/write latency histograms using nodetool proxyhistograms."
 meta:
   - name: keywords

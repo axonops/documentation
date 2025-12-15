@@ -1,4 +1,5 @@
 ---
+title: "Remote backups"
 description: "Remote backup destinations for Cassandra in AxonOps. Cloud storage options."
 meta:
   - name: keywords

@@ -1,4 +1,5 @@
 ---
+title: "Cassandra Replica Synchronization"
 description: "Replica synchronization mechanisms in Cassandra including read repair, hints, and anti-entropy repair."
 meta:
   - name: keywords

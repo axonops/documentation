@@ -1,4 +1,5 @@
 ---
+title: "Cassandra Node Replacement"
 description: "Replace failed Cassandra nodes with replace_address_first_boot. Dead node replacement procedure."
 meta:
   - name: keywords

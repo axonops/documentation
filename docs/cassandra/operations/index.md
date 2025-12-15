@@ -1,4 +1,5 @@
 ---
+title: "Cassandra Operations Guide"
 description: "Cassandra operations guide. Day-to-day management and maintenance procedures."
 meta:
   - name: keywords

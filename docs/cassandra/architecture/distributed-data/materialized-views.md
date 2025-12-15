@@ -1,4 +1,5 @@
 ---
+title: "Cassandra Materialized Views: Distributed Coordination"
 description: "Distributed materialized views in Cassandra. Cross-partition view updates and consistency."
 meta:
   - name: keywords

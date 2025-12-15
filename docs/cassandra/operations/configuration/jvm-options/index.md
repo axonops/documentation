@@ -1,4 +1,5 @@
 ---
+title: "Cassandra JVM Options"
 description: "Cassandra JVM options configuration. Heap size, GC settings, and performance tuning."
 meta:
   - name: keywords

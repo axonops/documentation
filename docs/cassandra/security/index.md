@@ -1,4 +1,5 @@
 ---
+title: "Cassandra Security Guide"
 description: "Apache Cassandra security guide covering authentication, authorization, encryption, and audit logging."
 meta:
   - name: keywords

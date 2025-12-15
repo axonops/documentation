@@ -1,4 +1,5 @@
 ---
+title: "Client TLS Configuration"
 description: "Configure TLS in Cassandra clients. Driver SSL settings and truststore configuration."
 meta:
   - name: keywords

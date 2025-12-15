@@ -1,4 +1,5 @@
 ---
+title: "Check current permissions"
 description: "Local storage backup configuration for Cassandra. On-disk backup settings."
 meta:
   - name: keywords

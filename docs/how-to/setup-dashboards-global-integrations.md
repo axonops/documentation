@@ -1,4 +1,5 @@
 ---
+title: "Setup Dashboards Global Integrations"
 description: "Set up global dashboard integrations in AxonOps. Configure organization-wide settings."
 meta:
   - name: keywords

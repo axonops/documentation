@@ -1,4 +1,5 @@
 ---
+title: "Cassandra WriteTimeoutException Troubleshooting"
 description: "Cassandra WriteTimeout error. Causes and solutions for write timeouts."
 meta:
   - name: keywords

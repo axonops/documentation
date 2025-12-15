@@ -1,4 +1,5 @@
 ---
+title: "nodetool clientstats"
 description: "Display client connection statistics in Cassandra using nodetool clientstats command."
 meta:
   - name: keywords

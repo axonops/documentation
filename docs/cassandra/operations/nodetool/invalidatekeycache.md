@@ -1,4 +1,5 @@
 ---
+title: "nodetool invalidatekeycache"
 description: "Clear key cache in Cassandra using nodetool invalidatekeycache command."
 meta:
   - name: keywords

@@ -1,4 +1,5 @@
 ---
+title: "Prerequisites"
 description: "Configure point-in-time restore for Cassandra. Commitlog archiving setup."
 meta:
   - name: keywords

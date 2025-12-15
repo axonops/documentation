@@ -1,4 +1,5 @@
 ---
+title: "Enterprise Recommendations"
 description: "Enterprise TLS recommendations for Cassandra. Production security best practices."
 meta:
   - name: keywords

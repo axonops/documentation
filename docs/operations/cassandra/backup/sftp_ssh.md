@@ -1,4 +1,5 @@
 ---
+title: "SFTP/SSH Storage"
 description: "Configure SFTP/SSH backup for Cassandra with AxonOps. Remote server backup."
 meta:
   - name: keywords

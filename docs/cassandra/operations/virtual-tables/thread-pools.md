@@ -1,4 +1,5 @@
 ---
+title: "Thread Pools"
 description: "Cassandra thread_pools virtual table reference. Monitor thread pool utilization and backpressure."
 meta:
   - name: keywords

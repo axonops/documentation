@@ -1,4 +1,5 @@
 ---
+title: "Adaptive Repair Service"
 description: "Cassandra repair with AxonOps. Automated repair scheduling and management."
 meta:
   - name: keywords

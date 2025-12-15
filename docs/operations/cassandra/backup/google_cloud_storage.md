@@ -1,4 +1,5 @@
 ---
+title: "Google Cloud Storage"
 description: "Google Cloud Storage backup configuration for Cassandra. Detailed setup guide."
 meta:
   - name: keywords

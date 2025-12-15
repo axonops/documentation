@@ -1,4 +1,5 @@
 ---
+title: "Cassandra Adding Nodes"
 description: "Add nodes to Cassandra cluster. Scale out procedure and bootstrap process."
 meta:
   - name: keywords

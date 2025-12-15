@@ -1,4 +1,5 @@
 ---
+title: "nodetool resetlocalschema"
 description: "Reset local schema to match cluster using nodetool resetlocalschema command."
 meta:
   - name: keywords

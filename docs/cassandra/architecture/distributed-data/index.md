@@ -1,4 +1,5 @@
 ---
+title: "Cassandra Distributed Data"
 description: "Cassandra distributed data architecture covering partitioning, replication, consistency, and coordination."
 meta:
   - name: keywords

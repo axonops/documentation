@@ -1,4 +1,5 @@
 ---
+title: "AxonOps Keyspace Dashboard Metrics Mapping"
 description: "Cassandra keyspace dashboard metrics mapping. Per-keyspace statistics."
 meta:
   - name: keywords

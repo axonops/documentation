@@ -1,4 +1,5 @@
 ---
+title: "nodetool getsstables"
 description: "List SSTable files for a specific partition key using nodetool getsstables command."
 meta:
   - name: keywords

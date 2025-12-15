@@ -1,4 +1,5 @@
 ---
+title: "AxonOps Monitoring"
 description: "AxonOps monitoring overview. Features for Cassandra and Kafka cluster monitoring."
 meta:
   - name: keywords

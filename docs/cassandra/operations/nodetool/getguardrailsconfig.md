@@ -1,4 +1,5 @@
 ---
+title: "nodetool getguardrailsconfig"
 description: "Display guardrails configuration in Cassandra using nodetool getguardrailsconfig."
 meta:
   - name: keywords

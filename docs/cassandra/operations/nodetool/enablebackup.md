@@ -1,4 +1,5 @@
 ---
+title: "nodetool enablebackup"
 description: "Enable incremental backup in Cassandra using nodetool enablebackup command."
 meta:
   - name: keywords

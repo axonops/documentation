@@ -1,8 +1,9 @@
 ---
-description: "Prepared statements in Cassandra. Statement preparation, caching, and performance benefits."
+title: "Cassandra CQL Prepared Statements Architecture"
+description: "CQL Prepared statements in Cassandra. Statement preparation, caching, and performance benefits."
 meta:
   - name: keywords
-    content: "prepared statements, statement cache, query preparation, Cassandra performance"
+    content: "CQL prepared statements, statement cache, query preparation, Cassandra performance"
 ---
 
 # Prepared Statements Architecture

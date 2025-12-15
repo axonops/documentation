@@ -1,4 +1,5 @@
 ---
+title: "Accessing AxonOps Metrics with Grafana"
 description: "View AxonOps metrics in Grafana. Export and visualize Cassandra and Kafka metrics."
 meta:
   - name: keywords

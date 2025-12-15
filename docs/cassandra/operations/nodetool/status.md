@@ -1,4 +1,5 @@
 ---
+title: "nodetool status"
 description: "Display cluster status showing all nodes, their state, load, and ownership using nodetool status."
 meta:
   - name: keywords

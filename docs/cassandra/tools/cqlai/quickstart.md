@@ -1,4 +1,5 @@
 ---
+title: "CQLAI Quickstart"
 description: "CQLAI quickstart guide. Get productive in minutes."
 meta:
   - name: keywords

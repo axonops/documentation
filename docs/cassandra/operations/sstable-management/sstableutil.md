@@ -1,4 +1,5 @@
 ---
+title: "sstableutil"
 description: "List SSTable component files for a table using sstableutil. Find data file locations."
 meta:
   - name: keywords

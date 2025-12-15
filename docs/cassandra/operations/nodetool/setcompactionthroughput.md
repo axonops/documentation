@@ -1,4 +1,5 @@
 ---
+title: "nodetool setcompactionthroughput"
 description: "Set compaction throughput limit in Cassandra using nodetool setcompactionthroughput."
 meta:
   - name: keywords

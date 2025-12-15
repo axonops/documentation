@@ -1,4 +1,5 @@
 ---
+title: "nodetool invalidaterolescache"
 description: "Clear roles cache in Cassandra using nodetool invalidaterolescache command."
 meta:
   - name: keywords

@@ -1,4 +1,5 @@
 ---
+title: "Cassandra Workbench"
 description: "AxonOps Workbench for Cassandra. Desktop application for database management."
 meta:
   - name: keywords

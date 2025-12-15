@@ -1,4 +1,5 @@
 ---
+title: "nodetool assassinate"
 description: "Remove a dead node from the Cassandra cluster forcibly using nodetool assassinate. Use as last resort when removenode fails."
 meta:
   - name: keywords

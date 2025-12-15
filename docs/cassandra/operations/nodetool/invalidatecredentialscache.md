@@ -1,4 +1,5 @@
 ---
+title: "nodetool invalidatecredentialscache"
 description: "Clear credentials cache in Cassandra using nodetool invalidatecredentialscache."
 meta:
   - name: keywords

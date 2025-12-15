@@ -1,4 +1,5 @@
 ---
+title: "nodetool getcompactionthroughput"
 description: "Display compaction throughput limit in Cassandra using nodetool getcompactionthroughput."
 meta:
   - name: keywords

@@ -1,4 +1,5 @@
 ---
+title: "nodetool reloadtriggers"
 description: "Reload trigger classes in Cassandra using nodetool reloadtriggers command."
 meta:
   - name: keywords

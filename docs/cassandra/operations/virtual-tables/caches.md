@@ -1,4 +1,5 @@
 ---
+title: "Caches"
 description: "Cassandra caches virtual table reference. Monitor key cache, row cache, and counter cache performance."
 meta:
   - name: keywords

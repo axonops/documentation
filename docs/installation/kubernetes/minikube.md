@@ -1,4 +1,5 @@
 ---
+title: "Cassandra with AxonOps on Kubernetes"
 description: "AxonOps Minikube installation. Local Kubernetes development setup."
 meta:
   - name: keywords

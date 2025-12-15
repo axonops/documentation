@@ -1,4 +1,5 @@
 ---
+title: "Cassandra CQL Reference"
 description: "Complete CQL (Cassandra Query Language) reference documentation with behavioral contracts, failure semantics, and production guidance for Apache Cassandra."
 meta:
   - name: keywords

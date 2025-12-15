@@ -1,4 +1,5 @@
 ---
+title: "nodetool compact"
 description: "Force major compaction in Cassandra using nodetool compact. Merge SSTables and reclaim disk space."
 meta:
   - name: keywords

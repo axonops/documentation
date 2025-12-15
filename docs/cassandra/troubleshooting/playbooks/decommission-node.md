@@ -1,4 +1,5 @@
 ---
+title: "Cassandra Decommission Node"
 description: "Decommission node troubleshooting playbook. Handle decommission failures."
 meta:
   - name: keywords

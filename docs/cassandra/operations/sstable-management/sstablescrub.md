@@ -1,4 +1,5 @@
 ---
+title: "sstablescrub"
 description: "Repair corrupted SSTables in Cassandra using sstablescrub. Remove invalid data and fix corruption."
 meta:
   - name: keywords

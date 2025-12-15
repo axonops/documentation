@@ -1,4 +1,5 @@
 ---
+title: "TLS Versions and Cipher Suites"
 description: "TLS version configuration for Cassandra. TLS 1.2, TLS 1.3, and cipher suite selection."
 meta:
   - name: keywords

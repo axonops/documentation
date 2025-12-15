@@ -1,4 +1,5 @@
 ---
+title: "nodetool setcachecapacity"
 description: "Set key cache and row cache capacity in Cassandra using nodetool setcachecapacity."
 meta:
   - name: keywords

@@ -1,4 +1,5 @@
 ---
+title: "Cassandra CQL INSERT"
 description: "Cassandra INSERT statement syntax in CQL. Add data with TTL, timestamps, and IF NOT EXISTS conditions."
 meta:
   - name: keywords

@@ -1,4 +1,5 @@
 ---
+title: "CQLAI Features"
 description: "CQLAI features overview. All capabilities of the AI-powered CQL shell."
 meta:
   - name: keywords

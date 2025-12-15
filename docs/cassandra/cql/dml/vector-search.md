@@ -1,4 +1,5 @@
 ---
+title: "Cassandra CQL Vector Search"
 description: "Vector search in CQL for similarity queries. Use ANN (approximate nearest neighbor) in Cassandra 5.0+."
 meta:
   - name: keywords

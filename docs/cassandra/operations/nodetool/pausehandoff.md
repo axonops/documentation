@@ -1,4 +1,5 @@
 ---
+title: "nodetool pausehandoff"
 description: "Pause hinted handoff delivery in Cassandra using nodetool pausehandoff command."
 meta:
   - name: keywords

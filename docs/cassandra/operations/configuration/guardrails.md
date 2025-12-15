@@ -1,4 +1,5 @@
 ---
+title: "Cassandra Guardrails"
 description: "Cassandra guardrails configuration. Prevent dangerous operations and protect clusters."
 meta:
   - name: keywords

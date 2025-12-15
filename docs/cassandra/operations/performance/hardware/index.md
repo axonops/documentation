@@ -1,4 +1,5 @@
 ---
+title: "Hardware Recommendations for Cassandra"
 description: "Cassandra hardware recommendations. CPU, memory, storage, and network specs."
 meta:
   - name: keywords

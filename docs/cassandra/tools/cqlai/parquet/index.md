@@ -1,4 +1,5 @@
 ---
+title: "CQLAI Parquet Support"
 description: "CQLAI Parquet support. Import and export Parquet files with Cassandra."
 meta:
   - name: keywords

@@ -1,4 +1,5 @@
 ---
+title: "Cassandra TLS Troubleshooting"
 description: "Troubleshoot Cassandra TLS issues. Common SSL errors and debugging techniques."
 meta:
   - name: keywords

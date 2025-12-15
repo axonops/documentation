@@ -1,4 +1,5 @@
 ---
+title: "Cassandra Repair Operations Guide"
 description: "Cassandra repair overview. Keep data consistent across replicas."
 meta:
   - name: keywords

@@ -1,4 +1,5 @@
 ---
+title: "AxonOps Dashboard Installation"
 description: "Install AxonOps Dashboard. Web interface installation for monitoring and management."
 meta:
   - name: keywords

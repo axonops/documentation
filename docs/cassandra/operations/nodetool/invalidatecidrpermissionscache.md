@@ -1,4 +1,5 @@
 ---
+title: "nodetool invalidatecidrpermissionscache"
 description: "Clear CIDR permissions cache in Cassandra using nodetool invalidatecidrpermissionscache."
 meta:
   - name: keywords

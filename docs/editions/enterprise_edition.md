@@ -1,4 +1,5 @@
 ---
+title: "Enterprise Edition"
 description: "AxonOps Enterprise Edition features. Advanced monitoring, backup, and management for production clusters."
 meta:
   - name: keywords

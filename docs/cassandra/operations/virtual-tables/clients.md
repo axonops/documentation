@@ -1,4 +1,5 @@
 ---
+title: "Clients"
 description: "Cassandra clients and queries virtual tables. Monitor connected clients, drivers, and active queries."
 meta:
   - name: keywords

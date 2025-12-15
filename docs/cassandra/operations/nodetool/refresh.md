@@ -1,4 +1,5 @@
 ---
+title: "nodetool refresh"
 description: "Load newly added SSTables without restart using nodetool refresh command."
 meta:
   - name: keywords

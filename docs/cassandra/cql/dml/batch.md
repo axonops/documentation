@@ -1,4 +1,5 @@
 ---
+title: "Cassandra CQL BATCH"
 description: "Cassandra BATCH statement syntax in CQL. Execute multiple mutations atomically within a partition."
 meta:
   - name: keywords

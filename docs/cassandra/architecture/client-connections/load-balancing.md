@@ -1,4 +1,5 @@
 ---
+title: "Cassandra Load Balancing Policies"
 description: "Client-side load balancing in Cassandra drivers. Token-aware routing and datacenter awareness."
 meta:
   - name: keywords

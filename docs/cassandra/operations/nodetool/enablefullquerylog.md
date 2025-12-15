@@ -1,4 +1,5 @@
 ---
+title: "nodetool enablefullquerylog"
 description: "Enable full query logging in Cassandra using nodetool enablefullquerylog for debugging."
 meta:
   - name: keywords

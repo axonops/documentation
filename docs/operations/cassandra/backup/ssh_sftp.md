@@ -1,4 +1,5 @@
 ---
+title: "What is SSH/SFTP"
 description: "SSH/SFTP backup configuration for Cassandra. Secure remote backup setup."
 meta:
   - name: keywords

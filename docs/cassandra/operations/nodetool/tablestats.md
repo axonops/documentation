@@ -1,4 +1,5 @@
 ---
+title: "nodetool tablestats"
 description: "Display detailed statistics for Cassandra tables using nodetool tablestats command."
 meta:
   - name: keywords

@@ -1,4 +1,5 @@
 ---
+title: "nodetool getdefaultrf"
 description: "Display default replication factor for system keyspaces using nodetool getdefaultrf."
 meta:
   - name: keywords

@@ -1,4 +1,5 @@
 ---
+title: "Certificate Types and Generation"
 description: "Certificate management for Cassandra TLS. Generate, sign, and rotate certificates."
 meta:
   - name: keywords

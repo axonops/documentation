@@ -1,4 +1,5 @@
 ---
+title: "Cassandra CQL Index Commands"
 description: "CREATE INDEX syntax in CQL for secondary indexes and SAI indexes on Cassandra tables."
 meta:
   - name: keywords

@@ -1,4 +1,5 @@
 ---
+title: "Welcome to AxonOps"
 hide:
   - navigation
   - toc

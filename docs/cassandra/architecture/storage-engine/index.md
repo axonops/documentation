@@ -1,4 +1,5 @@
 ---
+title: "Cassandra Storage Engine Architecture"
 description: "Cassandra storage engine architecture including memtables, SSTables, commit log, and compaction."
 meta:
   - name: keywords

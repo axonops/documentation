@@ -1,4 +1,5 @@
 ---
+title: "AxonOps Entropy Dashboard Metrics Mapping"
 description: "Cassandra entropy dashboard metrics mapping. Repair and consistency metrics."
 meta:
   - name: keywords

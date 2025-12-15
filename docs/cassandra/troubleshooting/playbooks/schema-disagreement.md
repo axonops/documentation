@@ -1,4 +1,5 @@
 ---
+title: "Cassandra Schema Disagreement"
 description: "Schema disagreement troubleshooting playbook. Resolve schema conflicts."
 meta:
   - name: keywords

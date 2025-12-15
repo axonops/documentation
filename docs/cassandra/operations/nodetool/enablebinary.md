@@ -1,4 +1,5 @@
 ---
+title: "nodetool enablebinary"
 description: "Enable CQL native transport (binary protocol) in Cassandra using nodetool enablebinary."
 meta:
   - name: keywords

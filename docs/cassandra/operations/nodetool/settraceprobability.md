@@ -1,4 +1,5 @@
 ---
+title: "nodetool settraceprobability"
 description: "Set query tracing probability in Cassandra using nodetool settraceprobability."
 meta:
   - name: keywords

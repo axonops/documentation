@@ -1,4 +1,5 @@
 ---
+title: "nodetool move"
 description: "Move a Cassandra node to a new token position using nodetool move command."
 meta:
   - name: keywords

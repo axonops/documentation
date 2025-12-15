@@ -1,4 +1,5 @@
 ---
+title: "AxonOps All Kafka Dashboards Metrics Reference"
 description: "Complete Kafka metrics reference for AxonOps dashboards. All available metrics documented."
 meta:
   - name: keywords

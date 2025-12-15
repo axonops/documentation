@@ -1,4 +1,5 @@
 ---
+title: "Kafka"
 description: "Kafka metrics dashboards in AxonOps. Pre-built dashboards for monitoring."
 meta:
   - name: keywords

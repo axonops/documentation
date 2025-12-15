@@ -1,4 +1,5 @@
 ---
+title: "Repair"
 description: "Cassandra repair virtual tables. Track repair operations, sessions, jobs, and validations."
 meta:
   - name: keywords

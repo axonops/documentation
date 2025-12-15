@@ -1,4 +1,5 @@
 ---
+title: "Getting Started with CQLAI"
 description: "Getting started with CQLAI. Quick setup and first queries."
 meta:
   - name: keywords

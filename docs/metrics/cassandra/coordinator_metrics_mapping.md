@@ -1,4 +1,5 @@
 ---
+title: "AxonOps Coordinator Dashboard Metrics Mapping"
 description: "Cassandra coordinator dashboard metrics mapping. Request coordination metrics."
 meta:
   - name: keywords

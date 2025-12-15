@@ -1,4 +1,5 @@
 ---
+title: "JVM Tuning for Cassandra"
 description: "Cassandra JVM tuning guide. Garbage collection and memory optimization."
 meta:
   - name: keywords

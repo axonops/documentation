@@ -1,4 +1,5 @@
 ---
+title: "Cassandra CQL Protocol Compression"
 description: "Protocol compression in Cassandra connections. LZ4 and Snappy compression for network traffic."
 meta:
   - name: keywords

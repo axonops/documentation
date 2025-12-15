@@ -1,4 +1,5 @@
 ---
+title: "Cassandra Authentication Architecture"
 description: "Client authentication in Cassandra. Password authenticator, and custom authentication."
 meta:
   - name: keywords

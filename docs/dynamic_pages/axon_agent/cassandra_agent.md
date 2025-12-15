@@ -1,4 +1,5 @@
 ---
+title: "Select the Cassandra Version"
 description: "AxonOps Cassandra agent installation dynamic page."
 meta:
   - name: keywords

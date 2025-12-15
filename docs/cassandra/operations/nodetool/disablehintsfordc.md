@@ -1,4 +1,5 @@
 ---
+title: "nodetool disablehintsfordc"
 description: "Disable hinted handoff for a specific datacenter using nodetool disablehintsfordc."
 meta:
   - name: keywords

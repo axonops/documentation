@@ -1,4 +1,5 @@
 ---
+title: "AxonOps Server Installation"
 description: "Install AxonOps Server. Backend server installation and configuration guide."
 meta:
   - name: keywords

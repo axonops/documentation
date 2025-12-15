@@ -1,4 +1,5 @@
 ---
+title: "Docker-compose 3-Node Cassandra Desktop Install"
 description: "Run AxonOps with Docker. Quick development setup using Docker Compose."
 meta:
   - name: keywords

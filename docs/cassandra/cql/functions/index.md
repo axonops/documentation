@@ -1,4 +1,5 @@
 ---
+title: "Cassandra CQL Functions Reference"
 description: "Cassandra CQL built-in functions reference including aggregates, time functions, type conversions, and UUID generation."
 meta:
   - name: keywords

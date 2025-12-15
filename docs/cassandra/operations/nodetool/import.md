@@ -1,4 +1,5 @@
 ---
+title: "nodetool import"
 description: "Import SSTables from a directory into Cassandra using nodetool import command."
 meta:
   - name: keywords

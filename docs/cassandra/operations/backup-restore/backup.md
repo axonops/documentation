@@ -1,4 +1,5 @@
 ---
+title: "Cassandra Backup Procedures"
 description: "Cassandra backup strategies. Snapshot-based and incremental backup methods."
 meta:
   - name: keywords

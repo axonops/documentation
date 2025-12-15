@@ -1,4 +1,5 @@
 ---
+title: "Common Cassandra Errors"
 description: "Common Cassandra errors reference. Error messages and resolutions."
 meta:
   - name: keywords

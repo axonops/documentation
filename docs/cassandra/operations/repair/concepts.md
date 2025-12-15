@@ -1,4 +1,5 @@
 ---
+title: "Cassandra Repair Concepts"
 description: "Cassandra repair concepts. Anti-entropy repair and consistency maintenance."
 meta:
   - name: keywords

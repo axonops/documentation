@@ -1,4 +1,5 @@
 ---
+title: "nodetool enableauditlog"
 description: "Enable audit logging in Cassandra using nodetool enableauditlog for security compliance."
 meta:
   - name: keywords

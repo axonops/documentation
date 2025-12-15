@@ -1,4 +1,5 @@
 ---
+title: "nodetool statushandoff"
 description: "Check if hinted handoff is enabled using nodetool statushandoff command."
 meta:
   - name: keywords

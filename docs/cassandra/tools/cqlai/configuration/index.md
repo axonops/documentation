@@ -1,4 +1,5 @@
 ---
+title: "CQLAI Configuration"
 description: "CQLAI configuration guide. Set up connections and customize behavior."
 meta:
   - name: keywords

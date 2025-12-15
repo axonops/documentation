@@ -1,4 +1,5 @@
 ---
+title: "Cassandra GC Pause Issues"
 description: "GC pause troubleshooting playbook. Diagnose garbage collection issues."
 meta:
   - name: keywords

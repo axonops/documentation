@@ -1,4 +1,5 @@
 ---
+title: "cassandra-stress"
 description: "Cassandra-stress tool guide. Load testing and benchmarking Cassandra."
 meta:
   - name: keywords

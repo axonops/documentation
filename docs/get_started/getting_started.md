@@ -1,4 +1,5 @@
 ---
+title: "Getting Started"
 description: "Getting started with AxonOps self-hosted deployment. Installation overview and requirements."
 meta:
   - name: keywords

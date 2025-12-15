@@ -1,4 +1,5 @@
 ---
+title: "nodetool setinterdcstreamthroughput"
 description: "Set inter-datacenter streaming throughput limit using nodetool setinterdcstreamthroughput."
 meta:
   - name: keywords

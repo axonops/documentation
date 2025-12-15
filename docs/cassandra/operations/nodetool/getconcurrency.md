@@ -1,4 +1,5 @@
 ---
+title: "nodetool getconcurrency"
 description: "Display read/write concurrency settings in Cassandra using nodetool getconcurrency."
 meta:
   - name: keywords

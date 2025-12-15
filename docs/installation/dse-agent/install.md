@@ -1,4 +1,5 @@
 ---
+title: "axon-java-agent for DSE installation"
 description: "Install AxonOps agent for DataStax Enterprise. DSE monitoring setup guide."
 meta:
   - name: keywords

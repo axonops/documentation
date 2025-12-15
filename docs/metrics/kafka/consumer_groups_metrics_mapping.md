@@ -1,4 +1,5 @@
 ---
+title: "AxonOps Kafka Consumer Groups Dashboard Metrics Mapping"
 description: "Kafka consumer groups dashboard metrics mapping. Consumer lag and offset metrics."
 meta:
   - name: keywords

@@ -1,4 +1,5 @@
 ---
+title: "Cassandra Audit Logging"
 description: "Cassandra audit logging for compliance. Log authentication, queries, and schema changes."
 meta:
   - name: keywords

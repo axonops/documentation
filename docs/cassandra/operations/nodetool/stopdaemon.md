@@ -1,4 +1,5 @@
 ---
+title: "nodetool stopdaemon"
 description: "Stop Cassandra daemon process using nodetool stopdaemon command."
 meta:
   - name: keywords

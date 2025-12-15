@@ -1,4 +1,5 @@
 ---
+title: "nodetool info"
 description: "Display node information including uptime, load, and memory usage using nodetool info."
 meta:
   - name: keywords

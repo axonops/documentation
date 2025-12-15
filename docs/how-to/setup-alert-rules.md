@@ -1,4 +1,5 @@
 ---
+title: "Setup alert rules"
 description: "Create alert rules in AxonOps. Configure thresholds and notifications for metrics."
 meta:
   - name: keywords

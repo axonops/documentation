@@ -1,4 +1,5 @@
 ---
+title: "Incident Management Integration"
 description: "AxonOps notification integrations overview. Connect to Slack, PagerDuty, Teams, and more."
 meta:
   - name: keywords

@@ -1,4 +1,5 @@
 ---
+title: "Cassandra Data Read Path"
 description: "Cassandra read path explained. How queries traverse memtables, SSTables, and caches to retrieve data."
 meta:
   - name: keywords

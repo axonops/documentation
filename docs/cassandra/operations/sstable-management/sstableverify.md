@@ -1,4 +1,5 @@
 ---
+title: "sstableverify"
 description: "Verify SSTable integrity and checksums in Cassandra using sstableverify. Detect data corruption."
 meta:
   - name: keywords

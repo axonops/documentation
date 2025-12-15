@@ -1,4 +1,5 @@
 ---
+title: "nodetool decommission"
 description: "Gracefully remove a Cassandra node from the cluster using nodetool decommission. Streams data to remaining nodes."
 meta:
   - name: keywords

@@ -1,4 +1,5 @@
 ---
+title: "Apache Kafka Documentation"
 description: "Kafka management with AxonOps. Broker monitoring, topic management, and more."
 meta:
   - name: keywords

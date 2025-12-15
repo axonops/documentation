@@ -1,4 +1,5 @@
 ---
+title: "nodetool getcidrgroupsofip"
 description: "Find CIDR groups containing an IP address using nodetool getcidrgroupsofip command."
 meta:
   - name: keywords

@@ -1,4 +1,5 @@
 ---
+title: "Cassandra Snitch Configuration"
 description: "Cassandra snitch configuration. Data center and rack awareness settings."
 meta:
   - name: keywords

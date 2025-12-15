@@ -1,4 +1,5 @@
 ---
+title: "nodetool getinterdcstreamthroughput"
 description: "Display inter-datacenter streaming throughput limit using nodetool getinterdcstreamthroughput."
 meta:
   - name: keywords

@@ -1,4 +1,5 @@
 ---
+title: "What is Azure Blob Storage"
 description: "Configure Azure Blob Storage backup for Cassandra with AxonOps."
 meta:
   - name: keywords

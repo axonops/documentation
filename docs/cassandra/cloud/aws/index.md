@@ -1,4 +1,5 @@
 ---
+title: "Cassandra on AWS"
 description: "Deploy Cassandra on AWS. EC2 instances, EBS storage, and networking best practices."
 meta:
   - name: keywords

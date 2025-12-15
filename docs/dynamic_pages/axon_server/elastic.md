@@ -1,4 +1,5 @@
 ---
+title: "Installation"
 description: "Elasticsearch requirements for AxonOps Server."
 meta:
   - name: keywords

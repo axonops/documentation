@@ -1,4 +1,5 @@
 ---
+title: "Cassandra CQL Materialized View Commands"
 description: "Cassandra CREATE MATERIALIZED VIEW syntax in CQL. Build pre-computed query results for different access patterns."
 meta:
   - name: keywords

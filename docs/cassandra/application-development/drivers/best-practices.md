@@ -1,4 +1,5 @@
 ---
+title: "Cassandra Driver Best Practices"
 description: "Best practices for Cassandra driver usage. Connection pooling, retry logic, and performance optimization."
 meta:
   - name: keywords

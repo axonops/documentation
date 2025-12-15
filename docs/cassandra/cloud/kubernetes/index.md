@@ -1,4 +1,5 @@
 ---
+title: "Cassandra on Kubernetes"
 description: "Deploy Cassandra on Kubernetes. Operators, StatefulSets, and container orchestration."
 meta:
   - name: keywords

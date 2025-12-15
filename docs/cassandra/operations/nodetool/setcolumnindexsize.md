@@ -1,4 +1,5 @@
 ---
+title: "nodetool setcolumnindexsize"
 description: "Set column index size threshold in Cassandra using nodetool setcolumnindexsize."
 meta:
   - name: keywords

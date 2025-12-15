@@ -1,4 +1,5 @@
 ---
+title: "Installing axon-agent for Cassandra in Docker"
 description: "Run AxonOps agent in Docker containers. Container deployment guide."
 meta:
   - name: keywords

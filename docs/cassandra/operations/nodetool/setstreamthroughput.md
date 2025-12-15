@@ -1,4 +1,5 @@
 ---
+title: "nodetool setstreamthroughput"
 description: "Set streaming throughput limit in Cassandra using nodetool setstreamthroughput."
 meta:
   - name: keywords

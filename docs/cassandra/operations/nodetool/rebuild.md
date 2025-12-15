@@ -1,4 +1,5 @@
 ---
+title: "nodetool rebuild"
 description: "Rebuild a Cassandra node by streaming data from other nodes using nodetool rebuild."
 meta:
   - name: keywords

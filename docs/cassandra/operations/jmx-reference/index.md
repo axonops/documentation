@@ -1,4 +1,5 @@
 ---
+title: "Cassandra JMX Reference"
 description: "Cassandra JMX reference. MBeans, metrics, and management operations."
 meta:
   - name: keywords

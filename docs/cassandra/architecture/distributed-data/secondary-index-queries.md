@@ -1,4 +1,5 @@
 ---
+title: "Cassandra Secondary Index Query Execution"
 description: "How secondary index queries work in distributed Cassandra. Coordinator scatter-gather pattern."
 meta:
   - name: keywords

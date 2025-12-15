@@ -1,4 +1,5 @@
 ---
+title: "Cassandra Tombstone Accumulation"
 description: "Tombstone accumulation troubleshooting playbook. Handle tombstone warnings."
 meta:
   - name: keywords

@@ -1,4 +1,5 @@
 ---
+title: "Data Platforms Documentation"
 description: "AxonOps supported data platforms. Cassandra and Kafka monitoring overview."
 meta:
   - name: keywords

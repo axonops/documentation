@@ -1,4 +1,5 @@
 ---
+title: "nodetool statusbinary"
 description: "Check if CQL native transport is enabled using nodetool statusbinary command."
 meta:
   - name: keywords

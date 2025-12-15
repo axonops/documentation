@@ -1,4 +1,5 @@
 ---
+title: "Cassandra Compaction Management"
 description: "Cassandra compaction management. Strategies, tuning, and monitoring compaction."
 meta:
   - name: keywords

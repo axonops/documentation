@@ -1,4 +1,5 @@
 ---
+title: "nodetool invalidatecountercache"
 description: "Clear counter cache in Cassandra using nodetool invalidatecountercache command."
 meta:
   - name: keywords

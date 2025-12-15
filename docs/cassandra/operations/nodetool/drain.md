@@ -1,4 +1,5 @@
 ---
+title: "nodetool drain"
 description: "Prepare Cassandra node for shutdown using nodetool drain. Flushes memtables and stops accepting writes."
 meta:
   - name: keywords

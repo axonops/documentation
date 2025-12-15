@@ -1,4 +1,5 @@
 ---
+title: "Cassandra Authorization"
 description: "Cassandra authorization and role-based access control. GRANT, REVOKE, and permission management."
 meta:
   - name: keywords

@@ -1,4 +1,5 @@
 ---
+title: "nodetool resetfullquerylog"
 description: "Reset full query log in Cassandra using nodetool resetfullquerylog command."
 meta:
   - name: keywords

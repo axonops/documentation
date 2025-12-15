@@ -1,4 +1,5 @@
 ---
+title: "nodetool repair"
 description: "Run anti-entropy repair to synchronize data across Cassandra replicas. Essential for data consistency."
 meta:
   - name: keywords

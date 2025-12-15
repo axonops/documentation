@@ -1,4 +1,5 @@
 ---
+title: "SAI Index Tables"
 description: "Cassandra SAI (Storage-Attached Index) virtual tables. Monitor index state, build progress, and SSTable segments."
 meta:
   - name: keywords

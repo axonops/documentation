@@ -1,4 +1,5 @@
 ---
+title: "Cassandra Maintenance Guide"
 description: "Cassandra maintenance procedures. Routine tasks for healthy clusters."
 meta:
   - name: keywords
