@@ -9,7 +9,57 @@ Streaming Kafka data to cloud storage enables data lake architectures, long-term
 
 ---
 
-## Why Cloud Storage?
+## The Rise of Object Storage
+
+Object storage services—Amazon S3, Google Cloud Storage, Azure Blob Storage—have become the foundation of modern analytics platforms. Understanding why requires context on how data architecture has evolved.
+
+### Traditional vs Modern Data Architecture
+
+| Era | Storage | Compute | Characteristics |
+|-----|---------|---------|-----------------|
+| **Traditional (pre-2010)** | SAN/NAS attached to servers | Tied to storage | Expensive, limited scale, vendor lock-in |
+| **Hadoop era (2010s)** | HDFS distributed across nodes | Co-located with data | Better scale, but compute/storage coupled |
+| **Cloud-native (2020s)** | Object storage (S3, GCS) | Separate query engines | Independent scaling, pay-per-use, open formats |
+
+### Why Object Storage Won
+
+Object storage became the analytics standard because it solved fundamental problems:
+
+| Problem | Object Storage Solution |
+|---------|------------------------|
+| **Cost** | 10-100x cheaper than block storage; pay only for what's stored |
+| **Scale** | Effectively unlimited capacity; no cluster sizing decisions |
+| **Durability** | 99.999999999% (11 nines); automatic replication across zones |
+| **Decoupled compute** | Query with any engine (Spark, Presto, Athena, Snowflake) without moving data |
+| **Open formats** | Parquet, Avro, ORC readable by any tool; no vendor lock-in |
+| **Separation of concerns** | Storage team manages buckets; analytics teams query independently |
+
+### The Data Lake Pattern
+
+A data lake is a central repository storing raw data in its native format until needed for analysis:
+
+```
+┌─────────────────────────────────────────────────────────────┐
+│                     Object Storage (S3/GCS)                  │
+├─────────────────────────────────────────────────────────────┤
+│  Raw Zone          │  Curated Zone       │  Consumption Zone │
+│  (as received)     │  (cleaned, typed)   │  (aggregated)     │
+│                    │                     │                   │
+│  - JSON logs       │  - Parquet tables   │  - BI datasets    │
+│  - CSV exports     │  - Schema enforced  │  - ML features    │
+│  - Event streams   │  - Partitioned      │  - API caches     │
+└─────────────────────────────────────────────────────────────┘
+         ▲                    ▲                    ▲
+         │                    │                    │
+    Kafka Connect         Spark/Flink          Analysts
+    (streaming)           (batch ETL)          (queries)
+```
+
+Kafka's role is feeding real-time data into this architecture—streaming events directly to the raw zone as they occur.
+
+---
+
+## Why Stream Kafka to Cloud Storage?
 
 ```plantuml
 @startuml

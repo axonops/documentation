@@ -12,6 +12,92 @@ Kafka Connect is the integration layer of the Kafka ecosystem, providing a stand
 
 ---
 
+## Configuration-Driven Integration
+
+Kafka Connect enables enterprise data integration without writing code. Instead of developing custom producers and consumers for each system, organizations deploy integrations through JSON configuration.
+
+### From Code to Configuration
+
+**Traditional approach** (custom code for each integration):
+
+```java
+// Hundreds of lines per integration
+KafkaProducer<String, byte[]> producer = new KafkaProducer<>(props);
+S3Client s3 = S3Client.builder().region(Region.US_EAST_1).build();
+
+while (true) {
+    ConsumerRecords<String, byte[]> records = consumer.poll(Duration.ofMillis(100));
+    // Batching logic
+    // Parquet conversion
+    // S3 multipart upload
+    // Offset management
+    // Error handling
+    // Retry logic
+    // Monitoring
+}
+```
+
+**Kafka Connect approach** (configuration only):
+
+```json
+{
+  "name": "s3-sink",
+  "config": {
+    "connector.class": "io.confluent.connect.s3.S3SinkConnector",
+    "topics": "events",
+    "s3.bucket.name": "data-lake",
+    "s3.region": "us-east-1",
+    "format.class": "io.confluent.connect.s3.format.parquet.ParquetFormat",
+    "flush.size": "10000"
+  }
+}
+```
+
+Deploy via REST API:
+
+```bash
+curl -X POST -H "Content-Type: application/json" \
+  --data @s3-sink.json \
+  http://connect:8083/connectors
+```
+
+### Why This Matters for Enterprises
+
+| Aspect | Custom Code | Kafka Connect |
+|--------|-------------|---------------|
+| **Time to deploy** | Weeks to months | Hours to days |
+| **Skills required** | Kafka expertise + target system expertise | Configuration knowledge |
+| **Maintenance burden** | Full ownership of code | Connector upgrades only |
+| **Consistency** | Varies by developer | Standardized across all integrations |
+| **Risk** | Untested code in production | Battle-tested connectors |
+| **Scaling** | Code changes may be needed | Configuration change (`tasks.max`) |
+
+For organizations with dozens of integration requirements, the configuration-driven approach transforms data integration from a development problem into an operations problem—dramatically reducing time-to-value and ongoing maintenance costs.
+
+### Modify Integrations Without Deployments
+
+Connector behavior can be modified at runtime via REST API:
+
+```bash
+# Update configuration (no restart required for some changes)
+curl -X PUT -H "Content-Type: application/json" \
+  --data '{"connector.class": "...", "flush.size": "50000"}' \
+  http://connect:8083/connectors/s3-sink/config
+
+# Pause connector
+curl -X PUT http://connect:8083/connectors/s3-sink/pause
+
+# Resume connector
+curl -X PUT http://connect:8083/connectors/s3-sink/resume
+
+# Check status
+curl http://connect:8083/connectors/s3-sink/status
+```
+
+No code deployments. No container rebuilds. No CI/CD pipelines for configuration changes.
+
+---
+
 ## The Integration Challenge
 
 Modern enterprises operate dozens to hundreds of data systems: relational databases, NoSQL stores, search engines, cloud storage, data warehouses, SaaS applications, and legacy systems. Without a standardized integration approach, each connection requires custom code.

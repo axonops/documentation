@@ -682,10 +682,19 @@ nav:
         - Overview: data-platforms/kafka/concepts/index.md
         - Topics: data-platforms/kafka/concepts/topics/index.md
         - Architecture Patterns: data-platforms/kafka/concepts/architecture-patterns/index.md
-        - Delivery Semantics: data-platforms/kafka/concepts/delivery-semantics/index.md
+        - Delivery Semantics:
+          - Overview: data-platforms/kafka/concepts/delivery-semantics/index.md
+          - At-Most-Once: data-platforms/kafka/concepts/delivery-semantics/at-most-once.md
+          - At-Least-Once: data-platforms/kafka/concepts/delivery-semantics/at-least-once.md
+          - Exactly-Once: data-platforms/kafka/concepts/delivery-semantics/exactly-once.md
+          - Choosing Semantics: data-platforms/kafka/concepts/delivery-semantics/choosing-semantics.md
         - Data Integration: data-platforms/kafka/concepts/data-integration/index.md
         - Multi-Datacenter: data-platforms/kafka/concepts/multi-datacenter/index.md
-        - Kafka Connect Concepts: data-platforms/kafka/concepts/kafka-connect/index.md
+        - Kafka Connect Concepts:
+          - Overview: data-platforms/kafka/concepts/kafka-connect/index.md
+          - Connector Ecosystem: data-platforms/kafka/concepts/kafka-connect/connector-ecosystem.md
+          - Cloud Storage: data-platforms/kafka/concepts/kafka-connect/cloud-storage.md
+          - Build vs Buy: data-platforms/kafka/concepts/kafka-connect/build-vs-buy.md
       - Architecture:
         - Overview: data-platforms/kafka/architecture/index.md
         - Brokers: data-platforms/kafka/architecture/brokers/index.md

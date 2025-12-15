@@ -5,11 +5,121 @@ description: "Kafka Connect connector ecosystem. Available connectors for databa
 
 # Connector Ecosystem
 
-The Kafka Connect ecosystem includes hundreds of connectors for integrating Kafka with external systems.
+The Kafka Connect ecosystem includes hundreds of connectors for integrating Kafka with external systems. Understanding this ecosystem—who builds connectors, where to find them, and how to evaluate them—is essential for making integration decisions.
 
 ---
 
-## Overview
+## What is a Connector?
+
+A connector is a plugin that enables Kafka Connect to read from or write to an external system. Connectors handle the system-specific logic while the Connect framework manages common concerns like offset tracking, fault tolerance, and scaling.
+
+| Connector Type | Direction | Examples |
+|----------------|-----------|----------|
+| **Source Connector** | External system → Kafka | Database CDC, API polling, message queue bridge |
+| **Sink Connector** | Kafka → External system | Data lake writes, search indexing, database inserts |
+
+### Connector vs Custom Code
+
+Writing integration code from scratch requires implementing:
+
+- Connection management and authentication
+- Data serialization and schema handling
+- Offset tracking for exactly-once semantics
+- Error handling and retry logic
+- Scaling across partitions
+- Monitoring and metrics
+
+A connector encapsulates this complexity. Using an existing connector can replace weeks of development with hours of configuration.
+
+---
+
+## How the Ecosystem Developed
+
+The Kafka Connect ecosystem grew through multiple channels:
+
+| Era | Development Pattern |
+|-----|---------------------|
+| **Early (2016-2018)** | Confluent built core connectors (JDBC, HDFS, S3, Elasticsearch) |
+| **Vendor adoption (2018-2020)** | Database vendors (MongoDB, DataStax) built first-party connectors |
+| **Community growth (2019+)** | Open source projects (Debezium) gained traction |
+| **Cloud expansion (2020+)** | Cloud providers (AWS, Azure, GCP) contributed connectors |
+| **Maturity (2022+)** | Ecosystem stabilized with 200+ production-grade connectors |
+
+Today, connectors come from three main sources:
+
+1. **Vendor-maintained**: Built by the system vendor (MongoDB, DataStax, Snowflake)
+2. **Confluent-maintained**: Built by Confluent for common integrations
+3. **Community-maintained**: Open source projects on GitHub
+
+---
+
+## Where to Find Connectors
+
+### Confluent Hub
+
+The primary marketplace for Kafka Connect connectors. Provides:
+
+- Curated, tested connectors
+- Version management
+- Installation tooling
+- Documentation links
+
+**URL**: https://www.confluent.io/hub/
+
+```bash
+# Install from Confluent Hub
+confluent-hub install confluentinc/kafka-connect-s3:latest
+```
+
+### GitHub
+
+Many connectors are open source projects:
+
+| Project | Focus | URL |
+|---------|-------|-----|
+| **Debezium** | Change Data Capture | github.com/debezium |
+| **Lenses Stream Reactor** | Various sinks | github.com/lensesio/stream-reactor |
+| **Aiven** | Open source connectors | github.com/aiven |
+
+### Vendor Documentation
+
+System vendors often maintain their own connectors:
+
+| Vendor | Connector |
+|--------|-----------|
+| **DataStax** | Cassandra Sink Connector |
+| **MongoDB** | MongoDB Kafka Connector |
+| **Snowflake** | Snowflake Kafka Connector |
+| **Elastic** | Elasticsearch Sink Connector |
+
+---
+
+## Understanding Licensing
+
+Connector licensing affects how and where connectors can be used:
+
+| License | What It Means | Examples |
+|---------|---------------|----------|
+| **Apache 2.0** | Free for any use, including commercial; can modify and redistribute | Debezium, most community connectors |
+| **Confluent Community License** | Free for self-managed deployments; cannot offer as SaaS | Many Confluent connectors |
+| **Confluent Enterprise License** | Requires Confluent Platform subscription | Advanced Confluent connectors |
+| **Vendor Commercial** | Requires license from connector vendor | Some vendor connectors |
+
+### License Implications
+
+| Deployment Model | Apache 2.0 | Confluent Community | Commercial |
+|------------------|:----------:|:-------------------:|:----------:|
+| Self-managed (on-prem) | ✅ | ✅ | License required |
+| Self-managed (cloud VMs) | ✅ | ✅ | License required |
+| Managed Kafka service | ✅ | ❌ (usually) | Depends on vendor |
+| Building a SaaS product | ✅ | ❌ | License required |
+
+!!! warning "License Verification"
+    Always verify the license of a connector before production deployment. Licenses can change between versions, and some connectors have different licenses for different features.
+
+---
+
+## Connector Categories
 
 ```plantuml
 @startuml

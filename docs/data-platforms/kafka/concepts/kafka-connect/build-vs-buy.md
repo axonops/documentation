@@ -5,11 +5,67 @@ description: "Decision framework for Kafka Connect vs custom integration code. W
 
 # Build vs Buy Decision Framework
 
-Guidance for choosing between Kafka Connect connectors and custom integration code.
+When integrating external systems with Kafka, organizations face a fundamental choice: use Kafka Connect with pre-built connectors, or write custom integration code using the Producer and Consumer APIs.
 
 ---
 
-## Decision Overview
+## The Integration Challenge
+
+Every Kafka deployment requires moving data between Kafka and external systems—databases, cloud storage, APIs, legacy applications. This integration code must handle:
+
+| Concern | Description |
+|---------|-------------|
+| **Connectivity** | Establishing and maintaining connections to external systems |
+| **Serialization** | Converting between external formats and Kafka records |
+| **Error handling** | Retries, dead letter queues, failure recovery |
+| **Offset management** | Tracking position to enable resume after failures |
+| **Scaling** | Parallelizing work across partitions and workers |
+| **Monitoring** | Metrics, logging, alerting on integration health |
+| **Exactly-once** | Ensuring records are neither lost nor duplicated |
+
+Building this infrastructure from scratch for each integration requires significant engineering effort. Kafka Connect exists to provide this infrastructure as a reusable framework.
+
+---
+
+## The Two Approaches
+
+### Kafka Connect (Buy)
+
+Use the Kafka Connect framework with pre-built or custom connectors:
+
+- **Connectors** handle system-specific logic (database queries, API calls, file operations)
+- **Framework** handles common concerns (offset management, fault tolerance, scaling)
+- **Configuration-driven**—deploy integrations without writing code
+- **Ecosystem** of 200+ existing connectors
+
+### Custom Code (Build)
+
+Write application code using the Producer/Consumer APIs directly:
+
+- **Full control** over behavior and performance characteristics
+- **No framework overhead**—direct API access
+- **Application-specific logic** integrated with business code
+- **Responsibility** for all infrastructure concerns
+
+---
+
+## When This Decision Matters
+
+The build vs buy decision has long-term implications:
+
+| Factor | Impact |
+|--------|--------|
+| **Initial velocity** | Connect deploys in hours; custom takes weeks |
+| **Maintenance burden** | Connect offloads to maintainers; custom requires ongoing ownership |
+| **Flexibility** | Custom can do anything; Connect has framework constraints |
+| **Team expertise** | Connect needs configuration skills; custom needs Kafka development expertise |
+| **Operational model** | Connect standardizes operations; custom varies per integration |
+
+Neither approach is universally better—the right choice depends on specific requirements, team capabilities, and organizational context.
+
+---
+
+## Decision Framework
 
 ```plantuml
 @startuml
