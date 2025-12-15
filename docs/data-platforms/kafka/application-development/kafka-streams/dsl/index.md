@@ -382,5 +382,5 @@ stream.process(
 ## Related Documentation
 
 - [Kafka Streams Overview](../index.md) - Concepts and architecture
-- [Delivery Semantics](../../concepts/delivery-semantics/index.md) - Processing guarantees
-- [Architecture Patterns](../../concepts/architecture-patterns/index.md) - Design patterns
+- [Delivery Semantics](../../../concepts/delivery-semantics/index.md) - Processing guarantees
+- [Architecture Patterns](../../../concepts/architecture-patterns/index.md) - Design patterns

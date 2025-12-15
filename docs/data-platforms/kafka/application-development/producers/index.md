@@ -355,7 +355,7 @@ end note
 | **High throughput** | 65536+ | 10-100 | Fill larger batches for efficiency |
 | **Balanced** | 32768 | 5-20 | Good throughput with acceptable latency |
 
-→ [Batching Guide](../architecture/client-connections/batching.md)
+→ [Batching Guide](../../architecture/client-connections/batching.md)
 
 ---
 
@@ -417,7 +417,7 @@ end note
 | Balanced | `zstd` | Good ratio with reasonable CPU |
 | Latency-sensitive | `lz4` | Fastest compression/decompression |
 
-→ [Compression Guide](../architecture/client-connections/compression.md)
+→ [Compression Guide](../../architecture/client-connections/compression.md)
 
 ---
 
@@ -631,8 +631,8 @@ producer.send(record, (metadata, exception) -> {
 
 - [Configuration Reference](configuration.md) - All producer configurations
 - [Partitioning](partitioning.md) - Partition strategies
-- [Batching](../architecture/client-connections/batching.md) - Batching mechanics
-- [Compression](../architecture/client-connections/compression.md) - Compression options
+- [Batching](../../architecture/client-connections/batching.md) - Batching mechanics
+- [Compression](../../architecture/client-connections/compression.md) - Compression options
 - [Idempotence](idempotence.md) - Idempotent producers
 - [Transactions](transactions.md) - Transactional producers
 - [Error Handling](error-handling.md) - Handling failures

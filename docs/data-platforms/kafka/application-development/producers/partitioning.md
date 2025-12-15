@@ -507,5 +507,5 @@ partitioner.availability.timeout.ms=0  # 0 = don't wait
 
 - [Producer Guide](index.md) - Producer overview
 - [Configuration](configuration.md) - Producer configuration
-- [Batching](../architecture/client-connections/batching.md) - Batching mechanics
-- [Topics](../concepts/topics/index.md) - Topic configuration
+- [Batching](../../architecture/client-connections/batching.md) - Batching mechanics
+- [Topics](../../concepts/topics/index.md) - Topic configuration

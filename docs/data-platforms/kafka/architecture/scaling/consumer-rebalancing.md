@@ -30,28 +30,26 @@ Consumer group rebalancing redistributes partition assignments among group membe
 
 skinparam backgroundColor transparent
 
-concise "Consumer 1" as C1
-concise "Consumer 2" as C2
-concise "Consumer 3" as C3
-concise "Processing" as Proc
+participant "Consumer 1" as C1
+participant "Consumer 2" as C2
+participant "Consumer 3" as C3
 
-@0
-C1 is "Active [P0,P1]"
-C2 is "Active [P2,P3]"
-C3 is "(joining)"
-Proc is "Normal"
+note over C1: P0, P1
+note over C2: P2, P3
+note over C3: (joining)
 
-@1
-C1 is "Rebalancing"
-C2 is "Rebalancing"
-C3 is "Rebalancing"
-Proc is "PAUSED"
+== Rebalance Triggered ==
 
-@2
-C1 is "Active [P0]"
-C2 is "Active [P1,P2]"
-C3 is "Active [P3]"
-Proc is "Normal"
+C1 -> C1: Revoke all
+C2 -> C2: Revoke all
+note over C1, C3 #orange: Processing PAUSED
+
+== Rebalance Complete ==
+
+note over C1: P0
+note over C2: P1, P2
+note over C3: P3
+note over C1, C3 #lightgreen: Processing Resumed
 
 @enduml
 ```

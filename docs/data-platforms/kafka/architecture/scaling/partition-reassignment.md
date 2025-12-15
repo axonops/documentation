@@ -109,34 +109,37 @@ end note
 
 skinparam backgroundColor transparent
 
-concise "Replica Set" as RS
-concise "ISR" as ISR
-concise "Leader" as Leader
+participant "Replica Set" as RS
+participant "ISR" as ISR
+participant "Leader" as Leader
 
-@0
-RS is "[1,2,3]"
-ISR is "[1,2,3]"
-Leader is "1"
+note over RS: [1,2,3]
+note over ISR: [1,2,3]
+note over Leader: Broker 1
 
-@1
-RS is "[1,2,3,4,5,6]"
-ISR is "[1,2,3]"
-Leader is "1"
+== Add Target Replicas ==
 
-@2
-RS is "[1,2,3,4,5,6]"
-ISR is "[1,2,3,4]"
-Leader is "1"
+note over RS: [1,2,3,4,5,6]
+note over ISR: [1,2,3]
+note over Leader: Broker 1
 
-@3
-RS is "[1,2,3,4,5,6]"
-ISR is "[1,2,3,4,5,6]"
-Leader is "1"
+== Targets Catching Up ==
 
-@4
-RS is "[4,5,6]"
-ISR is "[4,5,6]"
-Leader is "4"
+note over RS: [1,2,3,4,5,6]
+note over ISR: [1,2,3,4]
+note over Leader: Broker 1
+
+== All Targets in ISR ==
+
+note over RS: [1,2,3,4,5,6]
+note over ISR: [1,2,3,4,5,6]
+note over Leader: Broker 1
+
+== Remove Old Replicas ==
+
+note over RS: [4,5,6]
+note over ISR: [4,5,6]
+note over Leader #lightgreen: Broker 4
 
 @enduml
 ```

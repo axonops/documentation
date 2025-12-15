@@ -14,34 +14,12 @@ Routine maintenance procedures for Apache Kafka clusters.
 
 ## Maintenance Overview
 
-```plantuml
-@startuml
-
-
-rectangle "Routine Maintenance" {
-  rectangle "Daily" as daily {
-    card "Health checks" as health
-    card "Log monitoring" as logs
-  }
-
-  rectangle "Weekly" as weekly {
-    card "Disk usage review" as disk
-    card "Consumer lag review" as lag
-  }
-
-  rectangle "Monthly" as monthly {
-    card "Partition balancing" as balance
-    card "Configuration review" as config
-  }
-
-  rectangle "Quarterly" as quarterly {
-    card "Capacity planning" as capacity
-    card "Security audit" as security
-  }
-}
-
-@enduml
-```
+| Frequency | Tasks |
+|-----------|-------|
+| **Daily** | Health checks, log monitoring |
+| **Weekly** | Disk usage review, consumer lag review |
+| **Monthly** | Partition balancing, configuration review |
+| **Quarterly** | Capacity planning, security audit |
 
 ---
 

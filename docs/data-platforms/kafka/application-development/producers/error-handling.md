@@ -190,4 +190,4 @@ public void sendWithDLQ(ProducerRecord<String, String> record) {
 
 - [Producer Guide](index.md) - Producer overview
 - [Configuration](configuration.md) - Timeout settings
-- [Protocol Errors](../architecture/client-connections/protocol-errors.md) - Error code reference
+- [Protocol Errors](../../architecture/client-connections/protocol-errors.md) - Error code reference

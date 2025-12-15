@@ -21,12 +21,15 @@ rectangle "Transform Chain" {
     rectangle "Transform 1" as t1
     rectangle "Transform 2" as t2
     rectangle "Transform 3" as t3
-    rectangle "Final\nRecord" as final
+    rectangle "Final\nRecord" as dest
 
-    src --> t1 --> t2 --> t3 --> final
+    src --> t1
+    t1 --> t2
+    t2 --> t3
+    t3 --> dest
 }
 
-note bottom of final
+note bottom of dest
   Transforms execute in order
   Each receives output of previous
 end note

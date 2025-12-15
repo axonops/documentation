@@ -711,6 +711,6 @@ order-processors orders  2          1500            1600            100
 ## Related Resources
 
 - [Producer Guide](../producers/index.md) - Message production
-- [Delivery Semantics](../concepts/delivery-semantics/index.md) - Processing guarantees
+- [Delivery Semantics](../../concepts/delivery-semantics/index.md) - Processing guarantees
 - [Kafka Streams](../kafka-streams/index.md) - Stream processing
-- [Operations](../operations/index.md) - Consumer monitoring and management
+- [Operations](../../operations/index.md) - Consumer monitoring and management

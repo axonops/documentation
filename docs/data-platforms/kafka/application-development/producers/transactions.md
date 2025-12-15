@@ -178,5 +178,5 @@ Batch multiple records per transaction to amortize overhead.
 
 - [Producer Guide](index.md) - Producer overview
 - [Idempotence](idempotence.md) - Idempotent producer
-- [Exactly-Once Semantics](../concepts/delivery-semantics/exactly-once.md) - EOS deep dive
-- [Transaction APIs](../architecture/client-connections/protocol-apis-transaction.md) - Protocol details
+- [Exactly-Once Semantics](../../concepts/delivery-semantics/exactly-once.md) - EOS deep dive
+- [Transaction APIs](../../architecture/client-connections/protocol-apis-transaction.md) - Protocol details

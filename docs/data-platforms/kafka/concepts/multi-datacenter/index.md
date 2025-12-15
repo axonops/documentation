@@ -111,7 +111,7 @@ kafka-consumer-groups.sh --bootstrap-server kafka-secondary:9092 \
 
 ## Active-Active with MirrorMaker 2
 
-Both datacenters handle traffic. Bidirectional replication with conflict avoidance.
+Both datacenters handle traffic. Bidirectional replication requires careful handling of data provenance to prevent infinite replication loops and enable correct data aggregation.
 
 ```plantuml
 @startuml
@@ -146,6 +146,135 @@ note bottom of mm2
 end note
 
 @enduml
+```
+
+### The Provenance Problem
+
+In active-active replication, the system must track where each record originated. Without provenance tracking, records would replicate infinitely:
+
+```
+1. Producer writes to east.orders in DC East
+2. MirrorMaker replicates to DC West as east.orders
+3. Without provenance: MirrorMaker replicates back to DC East
+4. Infinite loop of replication
+```
+
+MirrorMaker 2 solves this through topic prefixing—each replicated topic carries its origin datacenter in the name.
+
+### How Provenance Works
+
+```plantuml
+@startuml
+
+skinparam backgroundColor transparent
+
+rectangle "DC East Cluster" as east {
+  queue "orders\n(local)" as orders_east
+  queue "west.orders\n(replicated from west)" as west_orders_east
+}
+
+rectangle "DC West Cluster" as west {
+  queue "orders\n(local)" as orders_west
+  queue "east.orders\n(replicated from east)" as east_orders_west
+}
+
+orders_east -right-> east_orders_west : MirrorMaker 2\nadds "east." prefix
+orders_west -left-> west_orders_east : MirrorMaker 2\nadds "west." prefix
+
+note bottom of east
+  Consumers in DC East see:
+  - orders (local writes)
+  - west.orders (from DC West)
+end note
+
+note bottom of west
+  Consumers in DC West see:
+  - orders (local writes)
+  - east.orders (from DC East)
+end note
+
+@enduml
+```
+
+| Topic in DC East | Origin | Description |
+|------------------|--------|-------------|
+| `orders` | DC East | Locally produced records |
+| `west.orders` | DC West | Replicated from DC West |
+
+| Topic in DC West | Origin | Description |
+|------------------|--------|-------------|
+| `orders` | DC West | Locally produced records |
+| `east.orders` | DC East | Replicated from DC East |
+
+MirrorMaker 2 never replicates prefixed topics, preventing loops:
+
+- `east.orders` in DC West is not replicated back to DC East
+- `west.orders` in DC East is not replicated back to DC West
+
+### Consuming from Multiple Origins
+
+Consumers that need a global view must subscribe to both local and replicated topics:
+
+```java
+// Consumer in DC East wanting all orders globally
+consumer.subscribe(Arrays.asList(
+    "orders",        // Local DC East orders
+    "west.orders"    // Replicated DC West orders
+));
+
+// Process records with origin awareness
+while (true) {
+    ConsumerRecords<String, Order> records = consumer.poll(Duration.ofMillis(100));
+    for (ConsumerRecord<String, Order> record : records) {
+        String origin = record.topic().startsWith("west.") ? "west" : "east";
+        processOrder(record.value(), origin);
+    }
+}
+```
+
+### Provenance in Record Headers
+
+For more granular provenance tracking, producers can add origin metadata to record headers:
+
+```java
+// Producer adds provenance headers
+ProducerRecord<String, Order> record = new ProducerRecord<>("orders", order.getId(), order);
+record.headers()
+    .add("origin-dc", "east".getBytes())
+    .add("origin-timestamp", Long.toString(System.currentTimeMillis()).getBytes())
+    .add("origin-producer", producerId.getBytes());
+
+producer.send(record);
+```
+
+Consumers can then extract provenance regardless of topic name:
+
+```java
+Header originHeader = record.headers().lastHeader("origin-dc");
+String originDc = new String(originHeader.value());
+```
+
+### Aggregation Patterns
+
+| Pattern | Implementation | Use Case |
+|---------|----------------|----------|
+| **Union** | Subscribe to `orders` + `west.orders` | Global view of all orders |
+| **Local-first** | Subscribe to `orders` only | DC-local processing |
+| **Kafka Streams** | Merge streams with origin tracking | Complex aggregations |
+
+**Kafka Streams aggregation example:**
+
+```java
+// Merge streams from both origins
+KStream<String, Order> localOrders = builder.stream("orders");
+KStream<String, Order> remoteOrders = builder.stream("west.orders");
+
+KStream<String, Order> allOrders = localOrders.merge(remoteOrders);
+
+// Process with origin awareness using headers
+allOrders.foreach((key, order) -> {
+    // Origin available in record headers
+});
 ```
 
 ### Bidirectional Configuration

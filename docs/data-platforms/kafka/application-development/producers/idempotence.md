@@ -109,5 +109,5 @@ try (KafkaProducer<String, String> producer = new KafkaProducer<>(props)) {
 
 - [Producer Guide](index.md) - Producer overview
 - [Transactions](transactions.md) - Transactional producer
-- [Delivery Semantics](../concepts/delivery-semantics/exactly-once.md) - EOS details
-- [Protocol APIs](../architecture/client-connections/protocol-apis-transaction.md) - Protocol internals
+- [Delivery Semantics](../../concepts/delivery-semantics/exactly-once.md) - EOS details
+- [Protocol APIs](../../architecture/client-connections/protocol-apis-transaction.md) - Protocol internals

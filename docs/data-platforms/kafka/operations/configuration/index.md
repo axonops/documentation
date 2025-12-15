@@ -1,402 +1,268 @@
 ---
 title: "Kafka Configuration"
-description: "Apache Kafka configuration reference. Broker, producer, consumer, and topic configurations."
-meta:
-  - name: keywords
-    content: "Kafka configuration, server.properties, broker config, Kafka settings"
+description: "Apache Kafka configuration reference. Broker, topic, ACL, quotas, tiered storage, and client configuration."
 ---
 
 # Kafka Configuration
 
-Comprehensive configuration reference for Apache Kafka.
+This section provides comprehensive configuration reference for Apache Kafka deployments, covering server-side settings, topic configuration, security, and operational parameters.
 
 ---
 
-## Configuration Levels
+## Configuration Overview
 
-| Level | Scope | Persistence | Priority |
-|-------|-------|-------------|----------|
-| **Static** | Broker | server.properties | Lowest |
-| **Cluster-wide dynamic** | All brokers | Metadata | Medium |
-| **Per-broker dynamic** | Single broker | Metadata | High |
-| **Per-topic** | Single topic | Metadata | Highest |
+Kafka configuration operates at multiple levels, each with different scopes and modification methods:
+
+```plantuml
+@startuml
+
+skinparam backgroundColor transparent
+
+rectangle "Configuration Levels" {
+  rectangle "Static Configuration\n(server.properties)" as static
+  rectangle "Dynamic Broker Config\n(kafka-configs.sh)" as dynamic
+  rectangle "Topic Configuration\n(per-topic overrides)" as topic
+  rectangle "Client Configuration\n(producer/consumer)" as client
+}
+
+static -down-> dynamic : some settings\ncan be dynamic
+dynamic -down-> topic : defaults for\nnew topics
+topic -down-> client : affects\nclient behavior
+
+note right of static : Requires restart
+note right of dynamic : No restart needed
+note right of topic : Immediate effect
+note right of client : Per-connection
+
+@enduml
+```
+
+| Level | Scope | Persistence | Modification |
+|-------|-------|-------------|--------------|
+| **Static** | Broker | `server.properties` | Requires restart |
+| **Dynamic Broker** | Broker/Cluster | Metadata | No restart |
+| **Topic** | Single topic | Metadata | Immediate |
+| **Client** | Connection | Client config | Per-connection |
 
 ---
 
-## Broker Configuration
+## Configuration Sections
 
-### Essential Settings
+### [Broker Configuration](broker.md)
+
+Server-side configuration for Kafka brokers:
+
+- Node identity and KRaft/ZooKeeper settings
+- Listeners and network configuration
+- Storage and retention settings
+- Replication and ISR management
+- Threading and performance tuning
+- Dynamic configuration updates
+
+### [Topic Configuration](topic.md)
+
+Per-topic settings that override broker defaults:
+
+- Retention policies (time and size)
+- Cleanup policies (delete and compact)
+- Compression settings
+- Replication and ISR requirements
+- Segment configuration
+- Message size limits
+
+### [ACL Configuration](acl.md)
+
+Access Control List management for authorization:
+
+- Enabling authorization
+- Resource types and operations
+- Managing ACLs with kafka-acls.sh
+- Common ACL patterns for producers, consumers, and streams
+- Wildcard and prefix patterns
+- Host-based restrictions
+
+### [Quotas](quotas.md)
+
+Client resource quotas for rate limiting:
+
+- Producer and consumer byte rate quotas
+- Request percentage quotas
+- User, client ID, and combined quotas
+- Quota resolution and precedence
+- Multi-tenant quota patterns
+- Monitoring throttling
+
+### [Tiered Storage](tiered-storage.md)
+
+Remote storage configuration for long-term retention:
+
+- Enabling tiered storage
+- S3, GCS, and Azure Blob backends
+- Local vs remote retention settings
+- Performance tuning
+- Monitoring and troubleshooting
+
+### [System Properties](system-properties.md)
+
+JVM and environment configuration:
+
+- JAAS and security properties
+- SSL/TLS debugging
+- JVM memory and GC settings
+- JMX configuration
+- Logging configuration
+- Environment variables
+
+### [Configuration Providers](configuration-providers.md)
+
+External secret management integration:
+
+- Built-in providers (file, environment, directory)
+- HashiCorp Vault integration
+- AWS Secrets Manager
+- Azure Key Vault
+- GCP Secret Manager
+- Custom provider implementation
+
+---
+
+## Configuration Methods
+
+### Static Configuration
+
+Edit `server.properties` and restart the broker:
 
 ```properties
 # server.properties
-
-# Node identity
-node.id=1
 broker.id=1
-
-# KRaft controller configuration
-process.roles=broker,controller
-controller.quorum.voters=1@localhost:9093
-
-# Listeners
-listeners=PLAINTEXT://0.0.0.0:9092,CONTROLLER://0.0.0.0:9093
-advertised.listeners=PLAINTEXT://broker1:9092
-controller.listener.names=CONTROLLER
-inter.broker.listener.name=PLAINTEXT
-
-# Log storage
 log.dirs=/var/kafka-logs
 num.partitions=3
-default.replication.factor=3
-min.insync.replicas=2
-
-# Log retention
-log.retention.hours=168
-log.retention.bytes=-1
-log.segment.bytes=1073741824
-
-# Network
-num.network.threads=3
-num.io.threads=8
-socket.send.buffer.bytes=102400
-socket.receive.buffer.bytes=102400
-socket.request.max.bytes=104857600
-
-# Replication
-num.replica.fetchers=1
-replica.fetch.max.bytes=1048576
-replica.fetch.wait.max.ms=500
 ```
 
-### Performance Settings
+### Dynamic Configuration
 
-```properties
-# Threading
-num.network.threads=8
-num.io.threads=16
-num.replica.fetchers=4
-num.recovery.threads.per.data.dir=4
-
-# Request handling
-queued.max.requests=500
-request.timeout.ms=30000
-
-# Network buffers
-socket.send.buffer.bytes=1048576
-socket.receive.buffer.bytes=1048576
-
-# Batching (for replication)
-replica.fetch.max.bytes=10485760
-replica.fetch.min.bytes=1
-replica.fetch.wait.max.ms=500
-```
-
-### Security Settings
-
-```properties
-# TLS
-ssl.keystore.location=/etc/kafka/ssl/kafka.keystore.jks
-ssl.keystore.password=password
-ssl.key.password=password
-ssl.truststore.location=/etc/kafka/ssl/kafka.truststore.jks
-ssl.truststore.password=password
-ssl.client.auth=required
-
-# SASL
-sasl.enabled.mechanisms=SCRAM-SHA-512
-sasl.mechanism.inter.broker.protocol=SCRAM-SHA-512
-
-# Authorization
-authorizer.class.name=org.apache.kafka.metadata.authorizer.StandardAuthorizer
-super.users=User:admin
-allow.everyone.if.no.acl.found=false
-```
-
----
-
-## Topic Configuration
-
-### Common Settings
-
-| Configuration | Default | Description |
-|---------------|---------|-------------|
-| `cleanup.policy` | delete | delete or compact |
-| `compression.type` | producer | none, gzip, snappy, lz4, zstd |
-| `retention.ms` | 604800000 (7 days) | Retention time |
-| `retention.bytes` | -1 (unlimited) | Retention size per partition |
-| `segment.bytes` | 1073741824 (1GB) | Segment file size |
-| `min.insync.replicas` | 1 | Minimum ISR for writes |
-| `max.message.bytes` | 1048588 | Maximum message size |
-
-### Creating Topics with Configuration
+Use `kafka-configs.sh` for runtime changes:
 
 ```bash
-kafka-topics.sh --bootstrap-server kafka:9092 \
-  --create \
-  --topic events \
-  --partitions 12 \
-  --replication-factor 3 \
-  --config retention.ms=86400000 \
-  --config cleanup.policy=delete \
-  --config compression.type=lz4 \
-  --config min.insync.replicas=2
-```
-
-### Modifying Topic Configuration
-
-```bash
-# Add or update
-kafka-configs.sh --bootstrap-server kafka:9092 \
-  --entity-type topics \
-  --entity-name events \
-  --alter \
-  --add-config retention.ms=172800000,max.message.bytes=10485760
-
-# Remove (revert to default)
-kafka-configs.sh --bootstrap-server kafka:9092 \
-  --entity-type topics \
-  --entity-name events \
-  --alter \
-  --delete-config retention.ms
-
-# View configuration
-kafka-configs.sh --bootstrap-server kafka:9092 \
-  --entity-type topics \
-  --entity-name events \
-  --describe
-```
-
----
-
-## Producer Configuration
-
-### Essential Settings
-
-```properties
-# Connection
-bootstrap.servers=kafka1:9092,kafka2:9092,kafka3:9092
-client.id=my-producer
-
-# Reliability
-acks=all
-retries=2147483647
-delivery.timeout.ms=120000
-enable.idempotence=true
-
-# Batching
-batch.size=65536
-linger.ms=5
-buffer.memory=33554432
-
-# Compression
-compression.type=lz4
-
-# Serialization
-key.serializer=org.apache.kafka.common.serialization.StringSerializer
-value.serializer=org.apache.kafka.common.serialization.StringSerializer
-```
-
-### Performance Tuning
-
-| Setting | Low Latency | High Throughput |
-|---------|-------------|-----------------|
-| `acks` | 1 | all |
-| `batch.size` | 16384 | 131072 |
-| `linger.ms` | 0 | 10-50 |
-| `compression.type` | none | lz4 |
-| `buffer.memory` | 33554432 | 67108864 |
-
-### Idempotent Producer
-
-```properties
-# Required for exactly-once
-enable.idempotence=true
-acks=all
-retries=2147483647
-max.in.flight.requests.per.connection=5
-```
-
-### Transactional Producer
-
-```properties
-enable.idempotence=true
-transactional.id=my-transactional-producer
-transaction.timeout.ms=60000
-```
-
----
-
-## Consumer Configuration
-
-### Essential Settings
-
-```properties
-# Connection
-bootstrap.servers=kafka1:9092,kafka2:9092,kafka3:9092
-client.id=my-consumer
-
-# Group
-group.id=my-consumer-group
-group.instance.id=consumer-1
-
-# Offset management
-auto.offset.reset=earliest
-enable.auto.commit=false
-
-# Fetching
-fetch.min.bytes=1
-fetch.max.bytes=52428800
-fetch.max.wait.ms=500
-max.poll.records=500
-max.partition.fetch.bytes=1048576
-
-# Session
-session.timeout.ms=45000
-heartbeat.interval.ms=3000
-max.poll.interval.ms=300000
-
-# Deserialization
-key.deserializer=org.apache.kafka.common.serialization.StringDeserializer
-value.deserializer=org.apache.kafka.common.serialization.StringDeserializer
-```
-
-### Performance Tuning
-
-| Setting | Low Latency | High Throughput |
-|---------|-------------|-----------------|
-| `fetch.min.bytes` | 1 | 65536 |
-| `fetch.max.wait.ms` | 100 | 500 |
-| `max.poll.records` | 100 | 1000 |
-| `max.partition.fetch.bytes` | 262144 | 1048576 |
-
-### Static Membership
-
-```properties
-# Reduce rebalancing
-group.instance.id=consumer-host-1
-session.timeout.ms=300000
-```
-
-### Cooperative Rebalancing
-
-```properties
-partition.assignment.strategy=org.apache.kafka.clients.consumer.CooperativeStickyAssignor
-```
-
----
-
-## Dynamic Configuration
-
-### Broker-Level
-
-```bash
-# Update single broker
+# Broker-level dynamic config
 kafka-configs.sh --bootstrap-server kafka:9092 \
   --entity-type brokers \
   --entity-name 1 \
   --alter \
-  --add-config log.cleaner.threads=4
+  --add-config log.retention.ms=86400000
 
-# Update all brokers (cluster-wide default)
+# Cluster-wide default
 kafka-configs.sh --bootstrap-server kafka:9092 \
   --entity-type brokers \
   --entity-default \
   --alter \
-  --add-config log.cleaner.threads=4
+  --add-config log.retention.ms=86400000
+
+# Topic-level config
+kafka-configs.sh --bootstrap-server kafka:9092 \
+  --entity-type topics \
+  --entity-name events \
+  --alter \
+  --add-config retention.ms=172800000
 ```
 
-### Dynamically Configurable Broker Settings
-
-| Setting | Description |
-|---------|-------------|
-| `log.cleaner.threads` | Log cleaner threads |
-| `log.cleaner.io.buffer.size` | Cleaner buffer size |
-| `log.cleaner.dedupe.buffer.size` | Dedup buffer size |
-| `log.cleaner.io.max.bytes.per.second` | Cleaner I/O rate |
-| `log.retention.ms` | Default retention |
-| `log.retention.bytes` | Default retention bytes |
-| `message.max.bytes` | Maximum message size |
-| `num.io.threads` | I/O threads |
-| `num.network.threads` | Network threads |
-| `num.replica.fetchers` | Replica fetchers |
-
----
-
-## Client Quotas
-
-### User Quotas
+### Viewing Configuration
 
 ```bash
-# Producer quota (bytes/sec)
+# View broker configuration
 kafka-configs.sh --bootstrap-server kafka:9092 \
-  --entity-type users \
-  --entity-name producer-user \
-  --alter \
-  --add-config producer_byte_rate=10485760
+  --entity-type brokers \
+  --entity-name 1 \
+  --describe
 
-# Consumer quota (bytes/sec)
+# View topic configuration
 kafka-configs.sh --bootstrap-server kafka:9092 \
-  --entity-type users \
-  --entity-name consumer-user \
-  --alter \
-  --add-config consumer_byte_rate=20971520
+  --entity-type topics \
+  --entity-name events \
+  --describe
 
-# Request rate quota (percentage)
+# View all dynamic configs
 kafka-configs.sh --bootstrap-server kafka:9092 \
-  --entity-type users \
-  --entity-name any-user \
-  --alter \
-  --add-config request_percentage=50
-```
-
-### Client ID Quotas
-
-```bash
-kafka-configs.sh --bootstrap-server kafka:9092 \
-  --entity-type clients \
-  --entity-name my-client-id \
-  --alter \
-  --add-config producer_byte_rate=5242880
-```
-
-### Combined Quotas
-
-```bash
-kafka-configs.sh --bootstrap-server kafka:9092 \
-  --entity-type users \
-  --entity-name producer-user \
-  --entity-type clients \
-  --entity-name producer-client \
-  --alter \
-  --add-config producer_byte_rate=10485760
+  --entity-type brokers \
+  --describe --all
 ```
 
 ---
 
-## Configuration Best Practices
+## Configuration Files
 
-### Production Checklist
+### Standard File Locations
 
-**Broker:**
-- [ ] `min.insync.replicas=2` (with RF=3)
-- [ ] `unclean.leader.election.enable=false`
-- [ ] `auto.create.topics.enable=false`
-- [ ] `default.replication.factor=3`
+| File | Purpose |
+|------|---------|
+| `server.properties` | Broker configuration |
+| `jvm.options` | JVM settings |
+| `log4j.properties` | Logging configuration |
+| `jaas.conf` | JAAS security configuration |
+| `connect-distributed.properties` | Kafka Connect workers |
 
-**Producer:**
-- [ ] `acks=all`
-- [ ] `enable.idempotence=true`
-- [ ] `retries=MAX_INT`
+### Environment-Specific Configuration
 
-**Consumer:**
-- [ ] `enable.auto.commit=false` (manual commits)
-- [ ] `auto.offset.reset=earliest` or `latest` as appropriate
+```
+/etc/kafka/
+├── server.properties           # Core broker config
+├── jvm.options                  # JVM settings
+├── log4j.properties            # Logging
+├── jaas.conf                   # JAAS config
+├── ssl/
+│   ├── kafka.keystore.jks     # Broker keystore
+│   └── kafka.truststore.jks   # Trust store
+└── secrets/
+    └── credentials             # Sensitive values
+```
+
+---
+
+## Production Configuration Checklist
+
+### Reliability
+
+| Setting | Location | Recommended |
+|---------|----------|-------------|
+| `min.insync.replicas` | Broker/Topic | 2 (with RF=3) |
+| `default.replication.factor` | Broker | 3 |
+| `unclean.leader.election.enable` | Broker/Topic | false |
+| `acks` | Producer | all |
+| `enable.idempotence` | Producer | true |
+
+### Security
+
+| Setting | Location | Recommended |
+|---------|----------|-------------|
+| `auto.create.topics.enable` | Broker | false |
+| `allow.everyone.if.no.acl.found` | Broker | false |
+| `ssl.client.auth` | Broker | required |
+| Security protocol | Listeners | SASL_SSL |
+
+### Performance
+
+| Setting | Location | Recommended |
+|---------|----------|-------------|
+| `num.io.threads` | Broker | 2× CPU cores |
+| `num.network.threads` | Broker | 2-3 per listener |
+| `compression.type` | Producer/Topic | lz4 or zstd |
+| `batch.size` | Producer | 65536-131072 |
+
+### Operations
+
+| Setting | Location | Recommended |
+|---------|----------|-------------|
+| `log.retention.hours` | Broker/Topic | Based on requirements |
+| JMX enabled | JVM options | Yes |
+| GC logging | JVM options | Enabled |
+| Quotas | Dynamic config | Set for tenants |
 
 ---
 
 ## Related Documentation
 
 - [Operations Overview](../index.md) - Operations guide
+- [CLI Tools](../cli-tools/index.md) - Command-line tools
 - [Monitoring](../monitoring/index.md) - Metrics and alerting
-- [Security](../../security/index.md) - Security configuration
+- [Security](../../security/index.md) - Security architecture
 - [Performance](../performance/index.md) - Performance tuning

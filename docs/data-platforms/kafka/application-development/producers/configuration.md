@@ -381,7 +381,7 @@ try {
 ## Related Documentation
 
 - [Producer Guide](index.md) - Producer overview
-- [Batching](../architecture/client-connections/batching.md) - Batching details
-- [Compression](../architecture/client-connections/compression.md) - Compression options
+- [Batching](../../architecture/client-connections/batching.md) - Batching details
+- [Compression](../../architecture/client-connections/compression.md) - Compression options
 - [Idempotence](idempotence.md) - Idempotent producer
 - [Transactions](transactions.md) - Transactional producer

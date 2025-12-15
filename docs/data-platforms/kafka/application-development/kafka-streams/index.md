@@ -517,6 +517,6 @@ ERROR --> PENDING_SHUTDOWN : close()
 ## Related Documentation
 
 - [DSL Reference](dsl/index.md) - Complete DSL operations
-- [Delivery Semantics](../concepts/delivery-semantics/index.md) - Processing guarantees
-- [Architecture Patterns](../concepts/architecture-patterns/index.md) - Stream processing patterns
-- [Schema Registry](../schema-registry/index.md) - Schema management
+- [Delivery Semantics](../../concepts/delivery-semantics/index.md) - Processing guarantees
+- [Architecture Patterns](../../concepts/architecture-patterns/index.md) - Stream processing patterns
+- [Schema Registry](../../schema-registry/index.md) - Schema management

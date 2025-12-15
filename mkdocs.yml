@@ -729,17 +729,34 @@ nav:
           - Consumer Rebalancing: data-platforms/kafka/architecture/scaling/consumer-rebalancing.md
         - Memory Management: data-platforms/kafka/architecture/memory-management/index.md
         - Performance Internals: data-platforms/kafka/architecture/performance-internals/index.md
-      - Producers:
-        - Overview: data-platforms/kafka/producers/index.md
-      - Consumers:
-        - Overview: data-platforms/kafka/consumers/index.md
+      - Application Development:
+        - Overview: data-platforms/kafka/application-development/index.md
+        - Producers:
+          - Overview: data-platforms/kafka/application-development/producers/index.md
+          - Configuration: data-platforms/kafka/application-development/producers/configuration.md
+          - Partitioning: data-platforms/kafka/application-development/producers/partitioning.md
+          - Idempotence: data-platforms/kafka/application-development/producers/idempotence.md
+          - Transactions: data-platforms/kafka/application-development/producers/transactions.md
+          - Error Handling: data-platforms/kafka/application-development/producers/error-handling.md
+        - Consumers:
+          - Overview: data-platforms/kafka/application-development/consumers/index.md
+        - Kafka Streams:
+          - Overview: data-platforms/kafka/application-development/kafka-streams/index.md
+          - DSL Reference: data-platforms/kafka/application-development/kafka-streams/dsl/index.md
       - Kafka Connect:
         - Overview: data-platforms/kafka/kafka-connect/index.md
-        - Connectors: data-platforms/kafka/kafka-connect/connectors/index.md
-        - Cassandra Sink: data-platforms/kafka/kafka-connect/connectors/cassandra.md
-      - Kafka Streams:
-        - Overview: data-platforms/kafka/kafka-streams/index.md
-        - DSL Reference: data-platforms/kafka/kafka-streams/dsl/index.md
+        - Connectors:
+          - Overview: data-platforms/kafka/kafka-connect/connectors/index.md
+          - Cassandra Sink: data-platforms/kafka/kafka-connect/connectors/cassandra.md
+          - S3 Sink: data-platforms/kafka/kafka-connect/connectors/s3.md
+          - Elasticsearch Sink: data-platforms/kafka/kafka-connect/connectors/elasticsearch.md
+          - HTTP Source: data-platforms/kafka/kafka-connect/connectors/http-source.md
+          - File Source: data-platforms/kafka/kafka-connect/connectors/file-source.md
+        - Converters: data-platforms/kafka/kafka-connect/converters.md
+        - Transforms: data-platforms/kafka/kafka-connect/transforms.md
+        - Error Handling: data-platforms/kafka/kafka-connect/error-handling.md
+        - Exactly-Once: data-platforms/kafka/kafka-connect/exactly-once.md
+        - Operations: data-platforms/kafka/kafka-connect/operations.md
       - Schema Registry:
         - Overview: data-platforms/kafka/schema-registry/index.md
         - Why Schemas: data-platforms/kafka/schema-registry/why-schemas.md
@@ -750,10 +767,19 @@ nav:
       - Operations:
         - Overview: data-platforms/kafka/operations/index.md
         - CLI Tools: data-platforms/kafka/operations/cli-tools/index.md
-        - Configuration: data-platforms/kafka/operations/configuration/index.md
+        - Configuration:
+          - Overview: data-platforms/kafka/operations/configuration/index.md
+          - Broker: data-platforms/kafka/operations/configuration/broker.md
+          - Topic: data-platforms/kafka/operations/configuration/topic.md
+          - ACL: data-platforms/kafka/operations/configuration/acl.md
+          - Quotas: data-platforms/kafka/operations/configuration/quotas.md
+          - Tiered Storage: data-platforms/kafka/operations/configuration/tiered-storage.md
+          - System Properties: data-platforms/kafka/operations/configuration/system-properties.md
+          - Configuration Providers: data-platforms/kafka/operations/configuration/configuration-providers.md
         - Monitoring: data-platforms/kafka/operations/monitoring/index.md
         - Backup & Restore: data-platforms/kafka/operations/backup-restore/index.md
         - Cluster Management: data-platforms/kafka/operations/cluster-management/index.md
+        - MirrorMaker 2: data-platforms/kafka/operations/mirrormaker2/index.md
         - Maintenance: data-platforms/kafka/operations/maintenance/index.md
         - Performance:
           - Overview: data-platforms/kafka/operations/performance/index.md
