@@ -733,8 +733,11 @@ nav:
         - DSL Reference: data-platforms/kafka/kafka-streams/dsl/index.md
       - Schema Registry:
         - Overview: data-platforms/kafka/schema-registry/index.md
+        - Why Schemas: data-platforms/kafka/schema-registry/why-schemas.md
         - Schema Formats: data-platforms/kafka/schema-registry/schema-formats/index.md
         - Compatibility: data-platforms/kafka/schema-registry/compatibility/index.md
+        - Schema Evolution: data-platforms/kafka/schema-registry/schema-evolution.md
+        - Operations: data-platforms/kafka/schema-registry/operations.md
       - Operations:
         - Overview: data-platforms/kafka/operations/index.md
         - CLI Tools: data-platforms/kafka/operations/cli-tools/index.md

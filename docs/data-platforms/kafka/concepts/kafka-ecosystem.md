@@ -1,9 +1,9 @@
 ---
 title: "Kafka Ecosystem"
-description: "Apache Kafka ecosystem components: Kafka Brokers, Kafka Connect, Schema Registry, Kafka Streams, and ksqlDB explained."
+description: "Apache Kafka ecosystem components: Kafka Brokers, Kafka Connect, Schema Registry, and Kafka Streams explained."
 meta:
   - name: keywords
-    content: "Kafka ecosystem, Kafka Connect, Schema Registry, Kafka Streams, ksqlDB, Kafka components"
+    content: "Kafka ecosystem, Kafka Connect, Schema Registry, Kafka Streams, Kafka components"
 ---
 
 # Kafka Ecosystem
@@ -25,7 +25,6 @@ package "Kafka Platform" {
   [Schema Registry] as sr
   [Kafka Connect] as connect
   [Kafka Streams] as streams
-  [ksqlDB] as ksql
 }
 
 package "Data Sources" {
@@ -57,7 +56,6 @@ brokers --> consumers : consume
 
 connect <--> brokers : source/sink
 streams <--> brokers : read/write
-ksql <--> brokers : read/write
 
 brokers <--> sr : schema validation
 
@@ -75,7 +73,6 @@ consumers --> downstream
 | **Schema Registry** | Schema management and compatibility enforcement | Separate service |
 | **Kafka Connect** | Data integration framework with 200+ connectors | Distributed workers |
 | **Kafka Streams** | Stream processing library | Embedded in applications |
-| **ksqlDB** | SQL interface for stream processing | Separate cluster |
 
 ---
 
@@ -374,57 +371,6 @@ end note
 
 ---
 
-## ksqlDB
-
-ksqlDB provides a SQL interface for stream processing, enabling users to create stream processing applications without writing code.
-
-### ksqlDB Capabilities
-
-| Capability | Description |
-|------------|-------------|
-| **Stream/table abstraction** | SQL over Kafka topics as streams or tables |
-| **Continuous queries** | Queries that run continuously, emitting results |
-| **Pull queries** | Point-in-time lookups against materialized views |
-| **Push queries** | Subscribe to query results as they update |
-| **Connectors** | Built-in connector management |
-
-### ksqlDB Example
-
-```sql
--- Create a stream from a topic
-CREATE STREAM orders (
-  order_id VARCHAR KEY,
-  customer_id VARCHAR,
-  amount DECIMAL(10,2),
-  timestamp TIMESTAMP
-) WITH (
-  KAFKA_TOPIC='orders',
-  VALUE_FORMAT='AVRO'
-);
-
--- Continuous aggregation
-CREATE TABLE orders_by_customer AS
-  SELECT customer_id,
-         COUNT(*) AS order_count,
-         SUM(amount) AS total_amount
-  FROM orders
-  WINDOW TUMBLING (SIZE 1 HOUR)
-  GROUP BY customer_id
-  EMIT CHANGES;
-```
-
-### ksqlDB vs Kafka Streams
-
-| Aspect | ksqlDB | Kafka Streams |
-|--------|--------|---------------|
-| **Interface** | SQL | Java/Scala DSL |
-| **Deployment** | Separate ksqlDB cluster | Embedded in application |
-| **Use case** | Analytics, monitoring, simple transformations | Complex business logic |
-| **Flexibility** | SQL expressiveness | Full programming model |
-| **Learning curve** | Lower (SQL familiarity) | Higher (requires coding) |
-
----
-
 ## Component Selection Guide
 
 | Requirement | Recommended Component |
@@ -432,10 +378,9 @@ CREATE TABLE orders_by_customer AS
 | Stream events from APIs to Kafka | Kafka Connect + HTTP/MQTT Source |
 | Move data from Kafka to data lake | Kafka Connect + S3/GCS connector |
 | Transform and enrich events | Kafka Streams |
-| SQL-based stream analytics | ksqlDB |
 | Custom application logic | Kafka Streams or custom consumer |
 | Schema enforcement | Schema Registry |
-| Real-time dashboards | ksqlDB or Kafka Streams + external visualization |
+| Real-time dashboards | Kafka Streams + external visualization |
 
 ### Typical Production Architecture
 

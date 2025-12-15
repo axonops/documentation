@@ -12,6 +12,52 @@ Schema Registry provides centralized schema management for Apache Kafka, ensurin
 
 ---
 
+## What is a Schema?
+
+A schema is a formal definition of data structure—it specifies the fields, their types, and constraints that data must conform to.
+
+| Aspect | Description |
+|--------|-------------|
+| **Fields** | Named elements that make up the data (e.g., `id`, `name`, `timestamp`) |
+| **Types** | Data type of each field (e.g., string, integer, boolean, array) |
+| **Constraints** | Rules fields must follow (e.g., required, nullable, valid range) |
+| **Relationships** | How nested structures and references work |
+
+### Schema vs Schemaless
+
+| Approach | Characteristics |
+|----------|-----------------|
+| **Schema-based** | Structure defined upfront; validated at write time; compatible evolution enforced |
+| **Schemaless** | Flexible structure; validated at read time (if at all); evolution is implicit |
+
+Kafka itself is schemaless—brokers store bytes without understanding their structure. Schema Registry adds schema enforcement on top of Kafka.
+
+### Example: User Record Schema
+
+```json
+{
+  "type": "record",
+  "name": "User",
+  "fields": [
+    {"name": "id", "type": "long"},
+    {"name": "name", "type": "string"},
+    {"name": "email", "type": ["null", "string"], "default": null},
+    {"name": "created_at", "type": {"type": "long", "logicalType": "timestamp-millis"}}
+  ]
+}
+```
+
+This Avro schema specifies:
+
+- `id` must be a 64-bit integer
+- `name` must be a string
+- `email` is optional (nullable with null default)
+- `created_at` is a timestamp represented as milliseconds
+
+Any data that does not conform to this structure is rejected at serialization time.
+
+---
+
 ## Why Schema Management Matters
 
 Kafka topics are schema-agnostic—the broker stores bytes without understanding their structure. This flexibility becomes problematic when multiple applications produce and consume the same topics.

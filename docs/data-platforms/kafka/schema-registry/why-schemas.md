@@ -18,37 +18,35 @@ Kafka brokers treat messages as opaque byte arrays. This design provides flexibi
 
 skinparam backgroundColor transparent
 
-rectangle "Team A Producer\n(Python)" as team_a {
-  note right
-    {"user_id": 123, "event": "login"}
-  end note
-}
-
-rectangle "Team B Producer\n(Java)" as team_b {
-  note right
-    {"userId": "123", "type": "LOGIN"}
-  end note
-}
-
-rectangle "Team C Producer\n(Node.js)" as team_c {
-  note right
-    {"id": 123, "action": "login", "ts": 1705312800}
-  end note
-}
+rectangle "Team A Producer\n(Python)" as team_a
+rectangle "Team B Producer\n(Java)" as team_b
+rectangle "Team C Producer\n(Node.js)" as team_c
 
 queue "user-events" as topic
 
-rectangle "Consumer" as consumer {
-  note right
-    Receives three different formats
-    for the same logical event
-  end note
-}
+rectangle "Consumer" as consumer
 
 team_a --> topic
 team_b --> topic
 team_c --> topic
 topic --> consumer
+
+note right of team_a
+  {"user_id": 123, "event": "login"}
+end note
+
+note right of team_b
+  {"userId": "123", "type": "LOGIN"}
+end note
+
+note right of team_c
+  {"id": 123, "action": "login", "ts": 1705312800}
+end note
+
+note right of consumer
+  Receives three different formats
+  for the same logical event
+end note
 
 @enduml
 ```
@@ -122,27 +120,23 @@ Schemas define explicit contracts between producers and consumers:
 
 skinparam backgroundColor transparent
 
-rectangle "Schema Registry" as sr {
-  file "User Schema v2" as schema
-}
-
 rectangle "Producer" as prod
+rectangle "Schema Registry" as sr
 rectangle "Consumer" as cons
 
-prod --> sr : Register schema
-sr --> prod : Validate & assign ID
+prod -right-> sr : 1. Register
+sr -left-> prod : 2. Schema ID
 
-cons --> sr : Fetch schema
-sr --> cons : Return schema
+prod -down-> cons : 3. Data + ID
 
-prod --> cons : Messages\n(with schema ID)
+cons -right-> sr : 4. Lookup
+sr -left-> cons : 5. Schema
 
-note bottom of sr
+note bottom of cons
   Schema defines:
   - Field names and types
   - Required vs optional
   - Default values
-  - Documentation
 end note
 
 @enduml

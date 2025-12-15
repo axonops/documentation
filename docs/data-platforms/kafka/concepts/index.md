@@ -308,7 +308,7 @@ Event streaming with Kafka is well-suited for:
 | **Real-time data pipelines** | High throughput, exactly-once delivery, connector ecosystem |
 | **Event-driven microservices** | Decoupling, replay capability, event sourcing support |
 | **Event persistence** | Log compaction, exactly-once semantics, Cassandra Sink |
-| **Stream processing** | Kafka Streams, ksqlDB for stateful processing |
+| **Stream processing** | Kafka Streams for stateful processing |
 | **Data integration** | Kafka Connect with 200+ connectors |
 | **Audit logging** | Immutable log, long retention, compliance |
 

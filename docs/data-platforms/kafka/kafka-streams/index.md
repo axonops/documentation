@@ -8,11 +8,178 @@ meta:
 
 # Kafka Streams
 
-Kafka Streams is a client library for building stream processing applications that consume from and produce to Kafka topics.
+Kafka Streams is a client library for building stream processing applications that transform, aggregate, and analyze data stored in Kafka topics.
 
 ---
 
-## Overview
+## What is Stream Processing?
+
+Stream processing is the continuous processing of data as it arrives, rather than collecting data into batches for periodic processing.
+
+| Aspect | Batch Processing | Stream Processing |
+|--------|------------------|-------------------|
+| **Data model** | Finite dataset processed as a whole | Unbounded sequence of events processed incrementally |
+| **Latency** | Minutes to hours (wait for batch to complete) | Milliseconds to seconds (process on arrival) |
+| **Processing trigger** | Schedule (hourly, daily) or manual | Each record arrival or micro-batch |
+| **State** | Recomputed from scratch each run | Maintained incrementally across records |
+| **Results** | Complete after batch finishes | Continuously updated |
+
+### Why Stream Processing Matters
+
+Traditional batch architectures introduce inherent latency—data must accumulate before processing begins, and results are only available after the batch completes. For many applications, this delay is unacceptable:
+
+| Domain | Stream Processing Application |
+|--------|-------------------------------|
+| **Fraud detection** | Score transactions in real-time before authorization |
+| **Monitoring** | Detect anomalies and alert within seconds of occurrence |
+| **Personalization** | Update recommendations based on current session behavior |
+| **IoT** | React to sensor readings as they arrive |
+| **Financial markets** | Process market data with minimal latency |
+
+Stream processing enables applications to react to events as they happen rather than discovering them hours or days later.
+
+### Stream Processing Challenges
+
+Processing unbounded data streams introduces challenges that batch systems avoid:
+
+| Challenge | Description |
+|-----------|-------------|
+| **Unbounded data** | No defined end; must process incrementally |
+| **Out-of-order events** | Network delays cause events to arrive out of sequence |
+| **Late arrivals** | Events may arrive after their time window has closed |
+| **State management** | Aggregations require persistent, fault-tolerant state |
+| **Exactly-once semantics** | Failures must not cause duplicates or data loss |
+| **Backpressure** | Must handle bursts without losing data |
+
+Kafka Streams addresses these challenges with built-in primitives for windowing, state management, and exactly-once processing.
+
+---
+
+## Why Kafka Streams Exists
+
+Raw Kafka consumers and producers provide low-level access to topics but require manual implementation of common stream processing concerns:
+
+| Concern | Raw Consumer/Producer | Kafka Streams |
+|---------|----------------------|---------------|
+| **Stateful processing** | Manual state management, external storage | Built-in state stores with automatic persistence |
+| **Fault tolerance** | Application must handle failures, replay | Automatic state recovery from changelog topics |
+| **Exactly-once semantics** | Complex transaction coordination | Single configuration option |
+| **Windowed aggregations** | Manual time tracking, expiration logic | Declarative window definitions |
+| **Stream-table joins** | Custom implementation, consistency challenges | Native join operations with co-partitioning |
+| **Scaling** | Manual partition assignment coordination | Automatic partition rebalancing |
+
+Kafka Streams solves these problems by providing a high-level abstraction over the consumer/producer APIs while maintaining Kafka's scalability and fault-tolerance guarantees.
+
+---
+
+## Design Philosophy
+
+Kafka Streams is designed around several core principles that distinguish it from other stream processing systems:
+
+### Library, Not Framework
+
+Kafka Streams is a library that runs within a standard Java application—not a framework requiring a dedicated cluster.
+
+| Aspect | Cluster-Based Systems | Kafka Streams |
+|--------|----------------------|---------------|
+| **Deployment** | Dedicated cluster (YARN, Kubernetes, Mesos) | Standard application deployment |
+| **Resource management** | Cluster manager allocates resources | Application controls its own resources |
+| **Operational complexity** | Separate system to monitor and maintain | Same as any JVM application |
+| **Scaling** | Cluster-level configuration | Add/remove application instances |
+| **Dependencies** | Requires cluster infrastructure | Requires only Kafka brokers |
+
+This design means Kafka Streams applications can be packaged as microservices, deployed in containers, or embedded within existing applications without infrastructure changes.
+
+### Kafka as the Only Dependency
+
+Kafka Streams requires no external systems beyond Kafka itself:
+
+- **State storage**: Uses RocksDB locally, backed by Kafka changelog topics
+- **Coordination**: Uses Kafka consumer group protocol for partition assignment
+- **Checkpointing**: Commits offsets to Kafka's `__consumer_offsets` topic
+- **Fault tolerance**: Replays from Kafka topics to recover state
+
+This architecture eliminates the operational burden of managing separate storage or coordination systems (ZooKeeper, HDFS, external databases) that other stream processors require.
+
+### Elastic Scaling via Partitions
+
+Kafka Streams parallelism is determined by input topic partitions:
+
+```
+max_parallelism = max(partitions across all input topics)
+```
+
+Each stream task processes one partition from each input topic. Scaling works by:
+
+1. Adding application instances—partitions automatically rebalance
+2. Removing instances—remaining instances absorb partitions
+3. No manual partition assignment required
+
+| Input Partitions | Application Instances | Tasks per Instance |
+|:----------------:|:---------------------:|:------------------:|
+| 6 | 1 | 6 |
+| 6 | 2 | 3 |
+| 6 | 3 | 2 |
+| 6 | 6 | 1 |
+| 6 | 12 | 0-1 (6 idle) |
+
+!!! warning "Partition Count Limit"
+    Running more instances than input partitions results in idle instances. The partition count must be chosen to accommodate expected maximum parallelism.
+
+---
+
+## When to Use Kafka Streams
+
+### Appropriate Use Cases
+
+| Use Case | Why Kafka Streams |
+|----------|-------------------|
+| **Event enrichment** | Join streams with reference data tables |
+| **Real-time aggregations** | Windowed counts, sums, averages with exactly-once |
+| **Stream-table joins** | Enrich events with current entity state |
+| **Microservice event processing** | Embedded library, no external cluster |
+| **Stateful transformations** | Deduplication, sessionization, pattern detection |
+| **CDC processing** | Process database change streams |
+
+### When Alternatives May Be Better
+
+| Scenario | Consideration |
+|----------|---------------|
+| **Sub-millisecond latency** | Kafka Streams adds overhead; consider direct consumer |
+| **Non-JVM languages** | Limited to Java/Scala; use native consumers or alternative systems |
+| **Complex event processing (CEP)** | Pattern matching across streams may require specialized CEP engines |
+| **Batch processing** | Kafka Streams is designed for continuous streaming, not batch windows |
+| **Multi-cluster topologies** | Kafka Streams operates within a single cluster |
+
+---
+
+## Processing Guarantees
+
+Kafka Streams provides configurable processing semantics:
+
+| Guarantee | Configuration | Behavior |
+|-----------|---------------|----------|
+| **At-least-once** | `AT_LEAST_ONCE` | Records may be reprocessed on failure; duplicates possible |
+| **Exactly-once** | `EXACTLY_ONCE_V2` | Each record processed exactly once; no duplicates |
+
+Exactly-once processing (Kafka 2.5+) coordinates:
+
+- Consumer offset commits
+- State store updates
+- Producer writes to output topics
+
+All three operations succeed or fail atomically via Kafka transactions.
+
+!!! note "Exactly-Once Requirements"
+    Exactly-once semantics require:
+
+    - All input and output topics on the same Kafka cluster
+    - Kafka broker version 2.5+ for `EXACTLY_ONCE_V2`
+    - `processing.guarantee` set to `EXACTLY_ONCE_V2`
+
+---
+
+## Architecture Overview
 
 ```plantuml
 @startuml
@@ -269,21 +436,6 @@ ReadOnlyKeyValueStore<String, Long> store =
 
 Long value = store.get("key");
 ```
-
----
-
-## Exactly-Once Processing
-
-```java
-Properties props = new Properties();
-props.put(StreamsConfig.PROCESSING_GUARANTEE_CONFIG,
-    StreamsConfig.EXACTLY_ONCE_V2);
-```
-
-| Guarantee | Description |
-|-----------|-------------|
-| `AT_LEAST_ONCE` | May produce duplicates on failure |
-| `EXACTLY_ONCE_V2` | No duplicates (Kafka 2.5+) |
 
 ---
 
