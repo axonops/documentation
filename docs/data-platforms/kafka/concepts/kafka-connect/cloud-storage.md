@@ -38,21 +38,43 @@ Object storage became the analytics standard because it solved fundamental probl
 
 A data lake is a central repository storing raw data in its native format until needed for analysis:
 
-```
-┌─────────────────────────────────────────────────────────────┐
-│                     Object Storage (S3/GCS)                  │
-├─────────────────────────────────────────────────────────────┤
-│  Raw Zone          │  Curated Zone       │  Consumption Zone │
-│  (as received)     │  (cleaned, typed)   │  (aggregated)     │
-│                    │                     │                   │
-│  - JSON logs       │  - Parquet tables   │  - BI datasets    │
-│  - CSV exports     │  - Schema enforced  │  - ML features    │
-│  - Event streams   │  - Partitioned      │  - API caches     │
-└─────────────────────────────────────────────────────────────┘
-         ▲                    ▲                    ▲
-         │                    │                    │
-    Kafka Connect         Spark/Flink          Analysts
-    (streaming)           (batch ETL)          (queries)
+```plantuml
+@startuml
+
+skinparam backgroundColor transparent
+
+rectangle "Object Storage (S3/GCS)" as storage {
+  rectangle "Raw Zone\n(as received)" as raw {
+    card "JSON logs"
+    card "CSV exports"
+    card "Event streams"
+  }
+
+  rectangle "Curated Zone\n(cleaned, typed)" as curated {
+    card "Parquet tables"
+    card "Schema enforced"
+    card "Partitioned"
+  }
+
+  rectangle "Consumption Zone\n(aggregated)" as consumption {
+    card "BI datasets"
+    card "ML features"
+    card "API caches"
+  }
+}
+
+rectangle "Kafka Connect\n(streaming)" as connect
+rectangle "Spark/Flink\n(batch ETL)" as batch
+rectangle "Analysts\n(queries)" as analysts
+
+connect -up-> raw
+batch -up-> curated
+analysts -up-> consumption
+
+raw -right-> curated : ETL
+curated -right-> consumption : aggregate
+
+@enduml
 ```
 
 Kafka's role is feeding real-time data into this architecture—streaming events directly to the raw zone as they occur.
