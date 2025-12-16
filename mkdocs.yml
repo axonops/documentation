@@ -60,6 +60,7 @@ extra_css:
 markdown_extensions:
   - admonition
   - attr_list
+  - md_in_html
   - markdown_include.include:
       base_path: docs
   - codehilite:

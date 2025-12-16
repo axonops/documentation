@@ -12,16 +12,55 @@ Apache Kafka is a distributed event streaming platform designed for high-through
 
 ## Documentation Scope
 
-This reference documentation covers Apache Kafka versions 2.8 through 3.7+, with particular emphasis on KRaft-mode deployments introduced in Kafka 3.0 and production-ready in Kafka 3.3+.
+This reference documentation covers Apache Kafka versions 2.8 through 4.1.x, with particular emphasis on KRaft-mode deployments. **Kafka 4.0 (March 2025) removed ZooKeeper entirely**—KRaft is now the only supported metadata management mode.
 
 | Version Range | ZooKeeper Mode | KRaft Mode | Documentation Status |
 |--------------|:--------------:|:----------:|---------------------|
-| 2.8.x        | ✅            | ⚠️ Early Access | Supported |
-| 3.0.x - 3.2.x | ✅           | ⚠️ Preview | Supported |
-| 3.3.x - 3.5.x | ✅           | ✅         | Fully Documented |
-| 3.6.x+       | ⚠️ Deprecated | ✅         | Fully Documented |
+| 2.8.x        | ✅            | ⚠️ Early Access | Legacy reference |
+| 3.0.x - 3.2.x | ✅           | ⚠️ Preview | Legacy reference |
+| 3.3.x - 3.5.x | ✅           | ✅         | Supported |
+| 3.6.x - 3.9.x | ⚠️ Deprecated | ✅         | Fully Documented |
+| 4.0.x        | ❌ Removed    | ✅         | Fully Documented |
+| 4.1.x        | ❌ Removed    | ✅         | **Current (4.1.1)** |
 
-Legend: ✅ Production Ready | ⚠️ Limited/Preview | ❌ Not Supported
+Legend: ✅ Production Ready | ⚠️ Limited/Deprecated | ❌ Not Supported
+
+---
+
+## What's New
+
+### Kafka 4.1 (September 2025) - Current Release
+
+Latest: **4.1.1** (November 2025)
+
+- **Streams Rebalance Protocol** (KIP-1071) - Early access for improved Kafka Streams rebalancing
+- **Enhanced metrics registration** (KIP-877) - Better metrics for plugins and connectors across brokers, producers, and consumers
+- Various bug fixes and stability improvements in 4.1.1
+
+### Kafka 4.0 (March 2025) - Major Release
+
+- **ZooKeeper removed** - KRaft is now the only metadata management mode
+- **New Consumer Group Protocol GA** (KIP-848) - Dramatically faster rebalances
+- **Queues for Kafka** (KIP-932) - Early access for traditional queue semantics
+- **Java 17 required** for brokers, Connect, and tools (Java 11 for clients)
+- **Log4j2** replaces Log4j 1.x
+- **MirrorMaker 1 removed** - Use MirrorMaker 2
+
+### Kafka 3.9 (November 2024)
+
+- **Dynamic KRaft quorum** (KIP-853) - Add/remove controllers without downtime
+- Final 3.x release before ZooKeeper removal
+
+### Kafka 3.8 (July 2024)
+
+- **Compression level configuration** (KIP-390)
+- Tiered storage JBOD compatibility (early access)
+
+### Kafka 3.7 (February 2024)
+
+- **JBOD in KRaft** (KIP-858) - Early access
+- **Client metrics** (KIP-714)
+- **Next-gen consumer rebalance** (KIP-848) - Early access
 
 ---
 
@@ -401,13 +440,24 @@ This documentation follows Apache Kafka's semantic versioning. Behavioral differ
 
 ### KRaft Migration Timeline
 
-| Milestone | Version | Status |
-|-----------|---------|--------|
-| KRaft Early Access | 2.8.0 | Development only |
-| KRaft Preview | 3.0.0 - 3.2.x | Testing environments |
-| KRaft Production Ready | 3.3.0 | General availability |
-| ZooKeeper Deprecated | 3.6.0 | Migration recommended |
-| ZooKeeper Removal | 4.0.0 (planned) | KRaft required |
+| Milestone | Version | Date | Status |
+|-----------|---------|------|--------|
+| KRaft Early Access | 2.8.0 | April 2021 | Development only |
+| KRaft Preview | 3.0.0 - 3.2.x | Sept 2021 - May 2022 | Testing environments |
+| KRaft Production Ready | 3.3.0 | October 2022 | General availability |
+| ZooKeeper Deprecated | 3.6.0 | October 2023 | Migration recommended |
+| Dynamic KRaft Quorum | 3.9.0 | November 2024 | Add/remove controllers |
+| **ZooKeeper Removed** | **4.0.0** | **March 2025** | **KRaft required** |
+| Current Release | 4.1.1 | November 2025 | Latest stable |
+
+!!! warning "Kafka 4.0+ Migration Path"
+    Kafka 4.0 does not support ZooKeeper mode. To upgrade:
+
+    1. If on Kafka < 3.3: Upgrade to 3.9.x first
+    2. Migrate from ZooKeeper to KRaft mode
+    3. Then upgrade to Kafka 4.0+
+
+    Direct upgrade from ZooKeeper mode to 4.0 is not possible.
 
 !!! note "Documentation Conventions"
     This documentation uses RFC 2119 terminology (must, should, may) to indicate requirement levels. Version-specific behaviors are explicitly noted with the applicable Kafka version range.
