@@ -649,4 +649,4 @@ Empty --> Dead : Group expires
 - [Scaling Overview](index.md) - Cluster scaling concepts
 - [Partition Reassignment](partition-reassignment.md) - Partition movement
 - [Consumer APIs](../client-connections/protocol-apis-consumer.md) - Protocol details
-- [Consumers](../../consumers/index.md) - Consumer configuration
+- [Consumers](../../application-development/consumers/index.md) - Consumer configuration

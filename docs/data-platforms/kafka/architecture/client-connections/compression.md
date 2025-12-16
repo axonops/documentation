@@ -564,4 +564,4 @@ linger.ms=0
 - [Kafka Protocol](kafka-protocol.md) - Compression in wire protocol
 - [Batching](batching.md) - Batch configuration
 - [Performance Internals](../performance-internals/index.md) - Throughput optimization
-- [Producers](../../producers/index.md) - Producer configuration
+- [Producers](../../application-development/producers/index.md) - Producer configuration

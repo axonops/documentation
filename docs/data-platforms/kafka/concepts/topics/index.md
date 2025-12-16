@@ -294,7 +294,7 @@ When a partition leader fails:
 ## Related Documentation
 
 - [Concepts Overview](../index.md) - Kafka fundamentals
-- [Producers](../../producers/index.md) - Writing to topics
-- [Consumers](../../consumers/index.md) - Reading from topics
+- [Producers](../../application-development/producers/index.md) - Writing to topics
+- [Consumers](../../application-development/consumers/index.md) - Reading from topics
 - [Replication](../../architecture/replication/index.md) - Replication architecture
 - [Operations](../../operations/index.md) - Topic operations

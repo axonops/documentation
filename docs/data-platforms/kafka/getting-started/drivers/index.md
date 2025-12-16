@@ -370,6 +370,6 @@ consume().catch(console.error);
 ## Related Documentation
 
 - [Getting Started](../index.md) - Quick start guide
-- [Producer Guide](../../producers/index.md) - Producer patterns
-- [Consumer Guide](../../consumers/index.md) - Consumer patterns
+- [Producer Guide](../../application-development/producers/index.md) - Producer patterns
+- [Consumer Guide](../../application-development/consumers/index.md) - Consumer patterns
 - [Schema Registry](../../schema-registry/index.md) - Schema management

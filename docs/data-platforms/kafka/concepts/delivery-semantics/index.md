@@ -545,5 +545,5 @@ The weakest link determines the overall guarantee.
 - [At-Least-Once](at-least-once.md) - Retry with idempotent consumers
 - [Exactly-Once](exactly-once.md) - Transactions and EOS deep-dive
 - [Choosing Semantics](choosing-semantics.md) - Decision guide
-- [Producer Guide](../../producers/index.md) - Producer configuration
-- [Consumer Guide](../../consumers/index.md) - Consumer patterns
+- [Producer Guide](../../application-development/producers/index.md) - Producer configuration
+- [Consumer Guide](../../application-development/consumers/index.md) - Consumer patterns

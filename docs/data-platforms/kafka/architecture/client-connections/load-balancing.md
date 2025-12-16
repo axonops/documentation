@@ -619,6 +619,6 @@ kafka-run-class.sh kafka.tools.JmxTool \
 ## Related Documentation
 
 - [Metadata Management](metadata-management.md) - Partition leader discovery
-- [Consumer Guide](../../consumers/index.md) - Consumer group details
-- [Producer Guide](../../producers/index.md) - Producer configuration
+- [Consumer Guide](../../application-development/consumers/index.md) - Consumer group details
+- [Producer Guide](../../application-development/producers/index.md) - Producer configuration
 - [Replication](../replication/index.md) - Leader election

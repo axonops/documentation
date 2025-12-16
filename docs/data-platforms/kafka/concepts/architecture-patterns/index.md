@@ -366,6 +366,6 @@ end note
 ## Related Documentation
 
 - [Event Streaming Concepts](../index.md) - Kafka fundamentals
-- [Kafka Streams](../../kafka-streams/index.md) - Stream processing
+- [Kafka Streams](../../application-development/kafka-streams/index.md) - Stream processing
 - [Delivery Semantics](../delivery-semantics/index.md) - Consistency guarantees
 - [Data Integration](../data-integration/index.md) - Integration patterns
