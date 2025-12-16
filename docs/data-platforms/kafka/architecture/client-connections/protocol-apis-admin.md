@@ -47,6 +47,13 @@ This document specifies the Kafka protocol APIs used for cluster administration,
 | 46 | ListPartitionReassignments | Query reassignment status |
 | 60 | DescribeCluster | Describe cluster metadata |
 
+### KRaft Voter Management
+
+| API Key | Name | Purpose |
+|:-------:|------|---------|
+| 80 | AddRaftVoter | Add voter to KRaft quorum |
+| 81 | RemoveRaftVoter | Remove voter from KRaft quorum |
+
 ---
 
 ## CreateTopics API (Key 19)

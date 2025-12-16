@@ -713,6 +713,7 @@ nav:
             - Error Codes: data-platforms/kafka/architecture/client-connections/protocol-errors.md
             - Core APIs: data-platforms/kafka/architecture/client-connections/protocol-apis-core.md
             - Consumer APIs: data-platforms/kafka/architecture/client-connections/protocol-apis-consumer.md
+            - Share Group APIs: data-platforms/kafka/architecture/client-connections/protocol-apis-share-group.md
             - Admin APIs: data-platforms/kafka/architecture/client-connections/protocol-apis-admin.md
             - Transaction APIs: data-platforms/kafka/architecture/client-connections/protocol-apis-transaction.md
           - Connection Pooling: data-platforms/kafka/architecture/client-connections/connection-pooling.md
@@ -731,6 +732,14 @@ nav:
         - Performance Internals: data-platforms/kafka/architecture/performance-internals/index.md
       - Application Development:
         - Overview: data-platforms/kafka/application-development/index.md
+        - Client Drivers:
+          - Overview: data-platforms/kafka/application-development/drivers/index.md
+          - Java: data-platforms/kafka/application-development/drivers/java.md
+          - Python: data-platforms/kafka/application-development/drivers/python.md
+          - Go: data-platforms/kafka/application-development/drivers/go.md
+          - Node.js: data-platforms/kafka/application-development/drivers/nodejs.md
+          - .NET: data-platforms/kafka/application-development/drivers/dotnet.md
+          - Rust: data-platforms/kafka/application-development/drivers/rust.md
         - Producers:
           - Overview: data-platforms/kafka/application-development/producers/index.md
           - Configuration: data-platforms/kafka/application-development/producers/configuration.md
@@ -740,9 +749,28 @@ nav:
           - Error Handling: data-platforms/kafka/application-development/producers/error-handling.md
         - Consumers:
           - Overview: data-platforms/kafka/application-development/consumers/index.md
+          - Configuration: data-platforms/kafka/application-development/consumers/configuration.md
+          - Consumer Groups: data-platforms/kafka/application-development/consumers/consumer-groups.md
+          - Offset Management: data-platforms/kafka/application-development/consumers/offset-management.md
+          - Rebalancing: data-platforms/kafka/application-development/consumers/rebalancing.md
+          - Error Handling: data-platforms/kafka/application-development/consumers/error-handling.md
         - Kafka Streams:
           - Overview: data-platforms/kafka/application-development/kafka-streams/index.md
           - DSL Reference: data-platforms/kafka/application-development/kafka-streams/dsl/index.md
+          - State Stores: data-platforms/kafka/application-development/kafka-streams/state-stores.md
+          - Windowing: data-platforms/kafka/application-development/kafka-streams/windowing.md
+          - Error Handling: data-platforms/kafka/application-development/kafka-streams/error-handling.md
+        - Design Patterns:
+          - Overview: data-platforms/kafka/application-development/patterns/index.md
+          - Event Sourcing: data-platforms/kafka/application-development/patterns/event-sourcing.md
+          - CQRS: data-platforms/kafka/application-development/patterns/cqrs.md
+          - Saga: data-platforms/kafka/application-development/patterns/saga.md
+          - Outbox: data-platforms/kafka/application-development/patterns/outbox.md
+          - Event Collaboration: data-platforms/kafka/application-development/patterns/event-collaboration.md
+        - Anti-Patterns: data-platforms/kafka/application-development/anti-patterns/index.md
+        - Serialization: data-platforms/kafka/application-development/serialization/index.md
+        - Testing: data-platforms/kafka/application-development/testing/index.md
+        - Performance Tuning: data-platforms/kafka/application-development/performance/index.md
       - Kafka Connect:
         - Overview: data-platforms/kafka/kafka-connect/index.md
         - Connectors:

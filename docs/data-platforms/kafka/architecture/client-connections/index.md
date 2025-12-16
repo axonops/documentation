@@ -251,9 +251,27 @@ Maximum throughput depends on:
 
 ## Documentation Structure
 
-### Protocol Details
+### Protocol Overview
 
 - **[Kafka Protocol](kafka-protocol.md)** - Wire protocol, frame format, API keys, versioning
+
+### Wire Protocol Reference
+
+- **[Protocol Primitives](protocol-primitives.md)** - Basic data types (INT8, INT32, STRING, ARRAY, etc.)
+- **[Protocol Messages](protocol-messages.md)** - Request/response frame structure, headers
+- **[Protocol Records](protocol-records.md)** - Record batch format, compression, headers
+
+### Protocol APIs
+
+- **[Core APIs](protocol-apis-core.md)** - Produce, Fetch, Metadata, ApiVersions
+- **[Consumer APIs](protocol-apis-consumer.md)** - JoinGroup, SyncGroup, Heartbeat, OffsetFetch/Commit
+- **[Share Group APIs](protocol-apis-share-group.md)** - ShareFetch, ShareAcknowledge, ShareGroupHeartbeat (Kafka 4.0+)
+- **[Admin APIs](protocol-apis-admin.md)** - CreateTopics, DeleteTopics, DescribeConfigs, AlterConfigs
+- **[Transaction APIs](protocol-apis-transaction.md)** - InitProducerId, AddPartitionsToTxn, EndTxn
+
+### Protocol Errors
+
+- **[Error Codes](protocol-errors.md)** - Error code reference, retriable vs non-retriable errors
 
 ### Connection Management
 

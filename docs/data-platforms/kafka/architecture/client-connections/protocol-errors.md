@@ -254,7 +254,7 @@ stop
 
 ---
 
-### Recent Errors (101-133+)
+### Recent Errors (101-120)
 
 | Code | Name | Retriable | Description | Recovery |
 |:----:|------|:---------:|-------------|----------|
@@ -278,6 +278,26 @@ stop
 | 118 | TELEMETRY_TOO_LARGE | ❌ | Telemetry data too large | Reduce telemetry size |
 | 119 | INVALID_REGISTRATION | ❌ | Invalid broker registration | KRaft internal |
 | 120 | TRANSACTION_ABORTABLE | ❌ | Transaction must abort | Abort transaction |
+
+---
+
+### Share Group Errors (121-133)
+
+| Code | Name | Retriable | Description | Recovery |
+|:----:|------|:---------:|-------------|----------|
+| 121 | INVALID_RECORD_STATE | ❌ | Record state invalid for acknowledgment | Check record state |
+| 122 | SHARE_SESSION_NOT_FOUND | ✅ | Share session expired or not found | Start new session |
+| 123 | INVALID_SHARE_SESSION_EPOCH | ✅ | Share session epoch invalid | Start new session |
+| 124 | FENCED_STATE_EPOCH | ❌ | Share group state epoch mismatch | Coordinator internal |
+| 125 | INVALID_VOTER_KEY | ❌ | Voter key mismatch | KRaft internal |
+| 126 | DUPLICATE_VOTER | ❌ | Voter already in quorum | Skip add voter |
+| 127 | VOTER_NOT_FOUND | ❌ | Voter not in quorum | Check voter set |
+| 128 | INVALID_REGULAR_EXPRESSION | ❌ | Regex pattern invalid | Fix regex syntax |
+| 129 | REBOOTSTRAP_REQUIRED | ❌ | Client metadata stale | Rebootstrap client |
+| 130 | STREAMS_INVALID_TOPOLOGY | ❌ | Kafka Streams topology invalid | Fix topology |
+| 131 | STREAMS_INVALID_TOPOLOGY_EPOCH | ❌ | Topology epoch invalid | Update topology |
+| 132 | STREAMS_TOPOLOGY_FENCED | ❌ | Topology epoch outdated | Update topology |
+| 133 | SHARE_SESSION_LIMIT_REACHED | ✅ | Too many share sessions | Wait, retry later |
 
 ---
 
@@ -452,7 +472,8 @@ When `throttle_time_ms > 0`:
 | 41 to 57 | 0.11.0 |
 | 58 to 75 | 1.0.0 - 2.4.0 |
 | 76 to 100 | 2.4.0 - 3.0.0 |
-| 101 to 120+ | 3.0.0+ |
+| 101 to 120 | 3.0.0 - 3.9.0 |
+| 121 to 133 | 4.0.0+ (Share Groups, KRaft voter management) |
 
 ### Handling Unknown Errors
 
