@@ -60,6 +60,7 @@ extra_css:
 markdown_extensions:
   - admonition
   - attr_list
+  - md_in_html
   - markdown_include.include:
       base_path: docs
   - codehilite:
@@ -283,397 +284,554 @@ nav:
   - Data Platforms:
     - Overview: data-platforms/index.md
     - Apache Cassandra:
-      - Overview: cassandra/index.md
+      - Overview: data-platforms/cassandra/index.md
       - Getting Started:
-        - Overview: cassandra/getting-started/index.md
-        - What is Cassandra?: cassandra/getting-started/what-is-cassandra.md
-        - Installation: cassandra/getting-started/installation/index.md
-        - First Cluster: cassandra/getting-started/first-cluster.md
-        - CQL Quickstart: cassandra/getting-started/quickstart-cql.md
-        - Drivers: cassandra/getting-started/drivers/index.md
-        - Production Checklist: cassandra/getting-started/production-checklist.md
+        - Overview: data-platforms/cassandra/getting-started/index.md
+        - What is Cassandra?: data-platforms/cassandra/getting-started/what-is-cassandra.md
+        - Installation: data-platforms/cassandra/getting-started/installation/index.md
+        - First Cluster: data-platforms/cassandra/getting-started/first-cluster.md
+        - CQL Quickstart: data-platforms/cassandra/getting-started/quickstart-cql.md
+        - Drivers: data-platforms/cassandra/getting-started/drivers/index.md
+        - Production Checklist: data-platforms/cassandra/getting-started/production-checklist.md
       - Architecture:
-        - Overview: cassandra/architecture/index.md
+        - Overview: data-platforms/cassandra/architecture/index.md
         - Memory Management:
-          - JVM: cassandra/architecture/memory-management/jvm.md
-          - Cassandra Memory: cassandra/architecture/memory-management/memory.md
-          - Linux: cassandra/architecture/memory-management/linux.md
+          - JVM: data-platforms/cassandra/architecture/memory-management/jvm.md
+          - Cassandra Memory: data-platforms/cassandra/architecture/memory-management/memory.md
+          - Linux: data-platforms/cassandra/architecture/memory-management/linux.md
         - Storage Engine:
-          - Overview: cassandra/architecture/storage-engine/index.md
-          - Write Path: cassandra/architecture/storage-engine/write-path.md
-          - Read Path: cassandra/architecture/storage-engine/read-path.md
-          - SSTable Reference: cassandra/architecture/storage-engine/sstables.md
-          - Tombstones: cassandra/architecture/storage-engine/tombstones.md
+          - Overview: data-platforms/cassandra/architecture/storage-engine/index.md
+          - Write Path: data-platforms/cassandra/architecture/storage-engine/write-path.md
+          - Read Path: data-platforms/cassandra/architecture/storage-engine/read-path.md
+          - SSTable Reference: data-platforms/cassandra/architecture/storage-engine/sstables.md
+          - Tombstones: data-platforms/cassandra/architecture/storage-engine/tombstones.md
           - Compaction:
-            - Overview: cassandra/architecture/storage-engine/compaction/index.md
-            - Size-Tiered (STCS): cassandra/architecture/storage-engine/compaction/stcs.md
-            - Leveled (LCS): cassandra/architecture/storage-engine/compaction/lcs.md
-            - Time-Window (TWCS): cassandra/architecture/storage-engine/compaction/twcs.md
-            - Unified (UCS): cassandra/architecture/storage-engine/compaction/ucs.md
+            - Overview: data-platforms/cassandra/architecture/storage-engine/compaction/index.md
+            - Size-Tiered (STCS): data-platforms/cassandra/architecture/storage-engine/compaction/stcs.md
+            - Leveled (LCS): data-platforms/cassandra/architecture/storage-engine/compaction/lcs.md
+            - Time-Window (TWCS): data-platforms/cassandra/architecture/storage-engine/compaction/twcs.md
+            - Unified (UCS): data-platforms/cassandra/architecture/storage-engine/compaction/ucs.md
           - Indexes:
-            - Overview: cassandra/architecture/storage-engine/indexes/index.md
-            - Secondary Indexes (2i): cassandra/architecture/storage-engine/indexes/secondary-indexes.md
-            - SASI: cassandra/architecture/storage-engine/indexes/sasi.md
-            - SAI: cassandra/architecture/storage-engine/indexes/sai.md
-          - Materialized Views: cassandra/architecture/storage-engine/materialized-views.md
+            - Overview: data-platforms/cassandra/architecture/storage-engine/indexes/index.md
+            - Secondary Indexes (2i): data-platforms/cassandra/architecture/storage-engine/indexes/secondary-indexes.md
+            - SASI: data-platforms/cassandra/architecture/storage-engine/indexes/sasi.md
+            - SAI: data-platforms/cassandra/architecture/storage-engine/indexes/sai.md
+          - Materialized Views: data-platforms/cassandra/architecture/storage-engine/materialized-views.md
         - Distributed Data:
-          - Overview: cassandra/architecture/distributed-data/index.md
-          - Partitioning: cassandra/architecture/distributed-data/partitioning.md
-          - Replication: cassandra/architecture/distributed-data/replication.md
-          - Consistency: cassandra/architecture/distributed-data/consistency.md
-          - Replica Synchronization: cassandra/architecture/distributed-data/replica-synchronization.md
-          - Secondary Index Queries: cassandra/architecture/distributed-data/secondary-index-queries.md
-          - Materialized Views: cassandra/architecture/distributed-data/materialized-views.md
-          - Data Streaming: cassandra/architecture/distributed-data/streaming.md
-          - Counters: cassandra/architecture/distributed-data/counters.md
+          - Overview: data-platforms/cassandra/architecture/distributed-data/index.md
+          - Partitioning: data-platforms/cassandra/architecture/distributed-data/partitioning.md
+          - Replication: data-platforms/cassandra/architecture/distributed-data/replication.md
+          - Consistency: data-platforms/cassandra/architecture/distributed-data/consistency.md
+          - Replica Synchronization: data-platforms/cassandra/architecture/distributed-data/replica-synchronization.md
+          - Secondary Index Queries: data-platforms/cassandra/architecture/distributed-data/secondary-index-queries.md
+          - Materialized Views: data-platforms/cassandra/architecture/distributed-data/materialized-views.md
+          - Data Streaming: data-platforms/cassandra/architecture/distributed-data/streaming.md
+          - Counters: data-platforms/cassandra/architecture/distributed-data/counters.md
         - Cluster Management:
-          - Overview: cassandra/architecture/cluster-management/index.md
-          - Gossip Protocol: cassandra/architecture/cluster-management/gossip.md
-          - Seeds and Discovery: cassandra/architecture/cluster-management/seeds.md
-          - Node Lifecycle: cassandra/architecture/cluster-management/node-lifecycle.md
-          - Node Replacement: cassandra/architecture/cluster-management/node-replacement.md
-          - Scaling Operations: cassandra/architecture/cluster-management/scaling.md
-        - Fault Tolerance: cassandra/architecture/fault-tolerance/index.md
+          - Overview: data-platforms/cassandra/architecture/cluster-management/index.md
+          - Gossip Protocol: data-platforms/cassandra/architecture/cluster-management/gossip.md
+          - Seeds and Discovery: data-platforms/cassandra/architecture/cluster-management/seeds.md
+          - Node Lifecycle: data-platforms/cassandra/architecture/cluster-management/node-lifecycle.md
+          - Node Replacement: data-platforms/cassandra/architecture/cluster-management/node-replacement.md
+          - Scaling Operations: data-platforms/cassandra/architecture/cluster-management/scaling.md
+        - Fault Tolerance: data-platforms/cassandra/architecture/fault-tolerance/index.md
         - Client Connections:
-          - Overview: cassandra/architecture/client-connections/index.md
-          - CQL Protocol: cassandra/architecture/client-connections/cql-protocol.md
-          - Async Connections: cassandra/architecture/client-connections/async-connections.md
-          - Authentication: cassandra/architecture/client-connections/authentication.md
-          - Pagination: cassandra/architecture/client-connections/pagination.md
-          - Throttling: cassandra/architecture/client-connections/throttling.md
-          - Load Balancing: cassandra/architecture/client-connections/load-balancing.md
-          - Compression: cassandra/architecture/client-connections/compression.md
-          - Prepared Statements: cassandra/architecture/client-connections/prepared-statements.md
-          - Failure Handling: cassandra/architecture/client-connections/failure-handling.md
+          - Overview: data-platforms/cassandra/architecture/client-connections/index.md
+          - CQL Protocol: data-platforms/cassandra/architecture/client-connections/cql-protocol.md
+          - Async Connections: data-platforms/cassandra/architecture/client-connections/async-connections.md
+          - Authentication: data-platforms/cassandra/architecture/client-connections/authentication.md
+          - Pagination: data-platforms/cassandra/architecture/client-connections/pagination.md
+          - Throttling: data-platforms/cassandra/architecture/client-connections/throttling.md
+          - Load Balancing: data-platforms/cassandra/architecture/client-connections/load-balancing.md
+          - Compression: data-platforms/cassandra/architecture/client-connections/compression.md
+          - Prepared Statements: data-platforms/cassandra/architecture/client-connections/prepared-statements.md
+          - Failure Handling: data-platforms/cassandra/architecture/client-connections/failure-handling.md
       - Application Development:
-        - Overview: cassandra/application-development/index.md
+        - Overview: data-platforms/cassandra/application-development/index.md
         - Development Tools:
-          - AxonOps Workbench: cassandra/application-development/workbench.md
-          - CQLAI: cassandra/application-development/cqlai.md
+          - AxonOps Workbench: data-platforms/cassandra/application-development/workbench.md
+          - CQLAI: data-platforms/cassandra/application-development/cqlai.md
         - CQL Reference:
-          - Overview: cassandra/cql/index.md
-          - Data Types: cassandra/cql/data-types/index.md
+          - Overview: data-platforms/cassandra/cql/index.md
+          - Data Types: data-platforms/cassandra/cql/data-types/index.md
           - DDL Commands:
-            - Overview: cassandra/cql/ddl/index.md
-            - Keyspace: cassandra/cql/ddl/keyspace.md
-            - Table: cassandra/cql/ddl/table.md
-            - Index: cassandra/cql/ddl/create-index.md
-            - Materialized View: cassandra/cql/ddl/materialized-view.md
-            - Trigger: cassandra/cql/ddl/trigger.md
-            - User-Defined Type: cassandra/cql/ddl/type.md
-            - Function: cassandra/cql/ddl/function.md
-            - Aggregate: cassandra/cql/ddl/aggregate.md
+            - Overview: data-platforms/cassandra/cql/ddl/index.md
+            - Keyspace: data-platforms/cassandra/cql/ddl/keyspace.md
+            - Table: data-platforms/cassandra/cql/ddl/table.md
+            - Index: data-platforms/cassandra/cql/ddl/create-index.md
+            - Materialized View: data-platforms/cassandra/cql/ddl/materialized-view.md
+            - Trigger: data-platforms/cassandra/cql/ddl/trigger.md
+            - User-Defined Type: data-platforms/cassandra/cql/ddl/type.md
+            - Function: data-platforms/cassandra/cql/ddl/function.md
+            - Aggregate: data-platforms/cassandra/cql/ddl/aggregate.md
           - DML Commands:
-            - Overview: cassandra/cql/dml/index.md
-            - SELECT: cassandra/cql/dml/select.md
-            - INSERT: cassandra/cql/dml/insert.md
-            - UPDATE: cassandra/cql/dml/update.md
-            - DELETE: cassandra/cql/dml/delete.md
-            - BATCH: cassandra/cql/dml/batch.md
-            - Secondary Index Queries: cassandra/cql/dml/secondary-index-queries.md
-            - Vector Search: cassandra/cql/dml/vector-search.md
-            - Lightweight Transactions: cassandra/cql/dml/lightweight-transactions.md
+            - Overview: data-platforms/cassandra/cql/dml/index.md
+            - SELECT: data-platforms/cassandra/cql/dml/select.md
+            - INSERT: data-platforms/cassandra/cql/dml/insert.md
+            - UPDATE: data-platforms/cassandra/cql/dml/update.md
+            - DELETE: data-platforms/cassandra/cql/dml/delete.md
+            - BATCH: data-platforms/cassandra/cql/dml/batch.md
+            - Secondary Index Queries: data-platforms/cassandra/cql/dml/secondary-index-queries.md
+            - Vector Search: data-platforms/cassandra/cql/dml/vector-search.md
+            - Lightweight Transactions: data-platforms/cassandra/cql/dml/lightweight-transactions.md
           - Security:
-            - Overview: cassandra/cql/security/index.md
-            - Role-Based Access Control: cassandra/cql/security/rbac.md
-            - Dynamic Data Masking: cassandra/cql/security/dynamic-data-masking.md
-          - Indexing: cassandra/cql/indexing/index.md
-          - Functions: cassandra/cql/functions/index.md
+            - Overview: data-platforms/cassandra/cql/security/index.md
+            - Role-Based Access Control: data-platforms/cassandra/cql/security/rbac.md
+            - Dynamic Data Masking: data-platforms/cassandra/cql/security/dynamic-data-masking.md
+          - Indexing: data-platforms/cassandra/cql/indexing/index.md
+          - Functions: data-platforms/cassandra/cql/functions/index.md
         - Data Modeling:
-          - Overview: cassandra/data-modeling/index.md
-          - Concepts: cassandra/data-modeling/concepts/index.md
-          - Anti-Patterns: cassandra/data-modeling/anti-patterns/index.md
+          - Overview: data-platforms/cassandra/data-modeling/index.md
+          - Concepts: data-platforms/cassandra/data-modeling/concepts/index.md
+          - Anti-Patterns: data-platforms/cassandra/data-modeling/anti-patterns/index.md
         - Drivers:
-          - Overview: cassandra/application-development/drivers/index.md
-          - Connection Management: cassandra/application-development/drivers/connection-management.md
+          - Overview: data-platforms/cassandra/application-development/drivers/index.md
+          - Connection Management: data-platforms/cassandra/application-development/drivers/connection-management.md
           - Policies:
-            - Overview: cassandra/application-development/drivers/policies/index.md
-            - Load Balancing: cassandra/application-development/drivers/policies/load-balancing.md
-            - Retry: cassandra/application-development/drivers/policies/retry.md
-            - Reconnection: cassandra/application-development/drivers/policies/reconnection.md
-            - Speculative Execution: cassandra/application-development/drivers/policies/speculative-execution.md
-          - Prepared Statements: cassandra/application-development/drivers/prepared-statements.md
-          - Best Practices: cassandra/application-development/drivers/best-practices.md
+            - Overview: data-platforms/cassandra/application-development/drivers/policies/index.md
+            - Load Balancing: data-platforms/cassandra/application-development/drivers/policies/load-balancing.md
+            - Retry: data-platforms/cassandra/application-development/drivers/policies/retry.md
+            - Reconnection: data-platforms/cassandra/application-development/drivers/policies/reconnection.md
+            - Speculative Execution: data-platforms/cassandra/application-development/drivers/policies/speculative-execution.md
+          - Prepared Statements: data-platforms/cassandra/application-development/drivers/prepared-statements.md
+          - Best Practices: data-platforms/cassandra/application-development/drivers/best-practices.md
       - Operations:
-        - Overview: cassandra/operations/index.md
+        - Overview: data-platforms/cassandra/operations/index.md
         - Nodetool Reference:
-          - Overview: cassandra/operations/nodetool/index.md
+          - Overview: data-platforms/cassandra/operations/nodetool/index.md
           - Cluster Information:
-            - status: cassandra/operations/nodetool/status.md
-            - ring: cassandra/operations/nodetool/ring.md
-            - info: cassandra/operations/nodetool/info.md
-            - describecluster: cassandra/operations/nodetool/describecluster.md
-            - describering: cassandra/operations/nodetool/describering.md
-            - gossipinfo: cassandra/operations/nodetool/gossipinfo.md
-            - getendpoints: cassandra/operations/nodetool/getendpoints.md
-            - version: cassandra/operations/nodetool/version.md
+            - status: data-platforms/cassandra/operations/nodetool/status.md
+            - ring: data-platforms/cassandra/operations/nodetool/ring.md
+            - info: data-platforms/cassandra/operations/nodetool/info.md
+            - describecluster: data-platforms/cassandra/operations/nodetool/describecluster.md
+            - describering: data-platforms/cassandra/operations/nodetool/describering.md
+            - gossipinfo: data-platforms/cassandra/operations/nodetool/gossipinfo.md
+            - getendpoints: data-platforms/cassandra/operations/nodetool/getendpoints.md
+            - version: data-platforms/cassandra/operations/nodetool/version.md
           - Data Management:
-            - flush: cassandra/operations/nodetool/flush.md
-            - compact: cassandra/operations/nodetool/compact.md
-            - cleanup: cassandra/operations/nodetool/cleanup.md
-            - scrub: cassandra/operations/nodetool/scrub.md
-            - verify: cassandra/operations/nodetool/verify.md
-            - upgradesstables: cassandra/operations/nodetool/upgradesstables.md
-            - garbagecollect: cassandra/operations/nodetool/garbagecollect.md
-            - import: cassandra/operations/nodetool/import.md
-            - refresh: cassandra/operations/nodetool/refresh.md
+            - flush: data-platforms/cassandra/operations/nodetool/flush.md
+            - compact: data-platforms/cassandra/operations/nodetool/compact.md
+            - cleanup: data-platforms/cassandra/operations/nodetool/cleanup.md
+            - scrub: data-platforms/cassandra/operations/nodetool/scrub.md
+            - verify: data-platforms/cassandra/operations/nodetool/verify.md
+            - upgradesstables: data-platforms/cassandra/operations/nodetool/upgradesstables.md
+            - garbagecollect: data-platforms/cassandra/operations/nodetool/garbagecollect.md
+            - import: data-platforms/cassandra/operations/nodetool/import.md
+            - refresh: data-platforms/cassandra/operations/nodetool/refresh.md
           - Repair:
-            - repair: cassandra/operations/nodetool/repair.md
-            - repair_admin: cassandra/operations/nodetool/repair_admin.md
+            - repair: data-platforms/cassandra/operations/nodetool/repair.md
+            - repair_admin: data-platforms/cassandra/operations/nodetool/repair_admin.md
           - Snapshots & Backup:
-            - snapshot: cassandra/operations/nodetool/snapshot.md
-            - clearsnapshot: cassandra/operations/nodetool/clearsnapshot.md
-            - listsnapshots: cassandra/operations/nodetool/listsnapshots.md
-            - enablebackup: cassandra/operations/nodetool/enablebackup.md
-            - disablebackup: cassandra/operations/nodetool/disablebackup.md
-            - statusbackup: cassandra/operations/nodetool/statusbackup.md
+            - snapshot: data-platforms/cassandra/operations/nodetool/snapshot.md
+            - clearsnapshot: data-platforms/cassandra/operations/nodetool/clearsnapshot.md
+            - listsnapshots: data-platforms/cassandra/operations/nodetool/listsnapshots.md
+            - enablebackup: data-platforms/cassandra/operations/nodetool/enablebackup.md
+            - disablebackup: data-platforms/cassandra/operations/nodetool/disablebackup.md
+            - statusbackup: data-platforms/cassandra/operations/nodetool/statusbackup.md
           - Compaction:
-            - compactionstats: cassandra/operations/nodetool/compactionstats.md
-            - compactionhistory: cassandra/operations/nodetool/compactionhistory.md
-            - setcompactionthroughput: cassandra/operations/nodetool/setcompactionthroughput.md
-            - getcompactionthroughput: cassandra/operations/nodetool/getcompactionthroughput.md
-            - getcompactionthreshold: cassandra/operations/nodetool/getcompactionthreshold.md
-            - setcompactionthreshold: cassandra/operations/nodetool/setcompactionthreshold.md
-            - enableautocompaction: cassandra/operations/nodetool/enableautocompaction.md
-            - disableautocompaction: cassandra/operations/nodetool/disableautocompaction.md
-            - statusautocompaction: cassandra/operations/nodetool/statusautocompaction.md
-            - forcecompact: cassandra/operations/nodetool/forcecompact.md
-            - stop: cassandra/operations/nodetool/stop.md
+            - compactionstats: data-platforms/cassandra/operations/nodetool/compactionstats.md
+            - compactionhistory: data-platforms/cassandra/operations/nodetool/compactionhistory.md
+            - setcompactionthroughput: data-platforms/cassandra/operations/nodetool/setcompactionthroughput.md
+            - getcompactionthroughput: data-platforms/cassandra/operations/nodetool/getcompactionthroughput.md
+            - getcompactionthreshold: data-platforms/cassandra/operations/nodetool/getcompactionthreshold.md
+            - setcompactionthreshold: data-platforms/cassandra/operations/nodetool/setcompactionthreshold.md
+            - enableautocompaction: data-platforms/cassandra/operations/nodetool/enableautocompaction.md
+            - disableautocompaction: data-platforms/cassandra/operations/nodetool/disableautocompaction.md
+            - statusautocompaction: data-platforms/cassandra/operations/nodetool/statusautocompaction.md
+            - forcecompact: data-platforms/cassandra/operations/nodetool/forcecompact.md
+            - stop: data-platforms/cassandra/operations/nodetool/stop.md
           - Streaming & Hints:
-            - netstats: cassandra/operations/nodetool/netstats.md
-            - setstreamthroughput: cassandra/operations/nodetool/setstreamthroughput.md
-            - getstreamthroughput: cassandra/operations/nodetool/getstreamthroughput.md
-            - setinterdcstreamthroughput: cassandra/operations/nodetool/setinterdcstreamthroughput.md
-            - getinterdcstreamthroughput: cassandra/operations/nodetool/getinterdcstreamthroughput.md
-            - truncatehints: cassandra/operations/nodetool/truncatehints.md
-            - enablehandoff: cassandra/operations/nodetool/enablehandoff.md
-            - disablehandoff: cassandra/operations/nodetool/disablehandoff.md
-            - statushandoff: cassandra/operations/nodetool/statushandoff.md
-            - pausehandoff: cassandra/operations/nodetool/pausehandoff.md
-            - resumehandoff: cassandra/operations/nodetool/resumehandoff.md
-            - enablehintsfordc: cassandra/operations/nodetool/enablehintsfordc.md
-            - disablehintsfordc: cassandra/operations/nodetool/disablehintsfordc.md
-            - listpendinghints: cassandra/operations/nodetool/listpendinghints.md
-            - sethintedhandoffthrottlekb: cassandra/operations/nodetool/sethintedhandoffthrottlekb.md
-            - getmaxhintwindow: cassandra/operations/nodetool/getmaxhintwindow.md
-            - setmaxhintwindow: cassandra/operations/nodetool/setmaxhintwindow.md
+            - netstats: data-platforms/cassandra/operations/nodetool/netstats.md
+            - setstreamthroughput: data-platforms/cassandra/operations/nodetool/setstreamthroughput.md
+            - getstreamthroughput: data-platforms/cassandra/operations/nodetool/getstreamthroughput.md
+            - setinterdcstreamthroughput: data-platforms/cassandra/operations/nodetool/setinterdcstreamthroughput.md
+            - getinterdcstreamthroughput: data-platforms/cassandra/operations/nodetool/getinterdcstreamthroughput.md
+            - truncatehints: data-platforms/cassandra/operations/nodetool/truncatehints.md
+            - enablehandoff: data-platforms/cassandra/operations/nodetool/enablehandoff.md
+            - disablehandoff: data-platforms/cassandra/operations/nodetool/disablehandoff.md
+            - statushandoff: data-platforms/cassandra/operations/nodetool/statushandoff.md
+            - pausehandoff: data-platforms/cassandra/operations/nodetool/pausehandoff.md
+            - resumehandoff: data-platforms/cassandra/operations/nodetool/resumehandoff.md
+            - enablehintsfordc: data-platforms/cassandra/operations/nodetool/enablehintsfordc.md
+            - disablehintsfordc: data-platforms/cassandra/operations/nodetool/disablehintsfordc.md
+            - listpendinghints: data-platforms/cassandra/operations/nodetool/listpendinghints.md
+            - sethintedhandoffthrottlekb: data-platforms/cassandra/operations/nodetool/sethintedhandoffthrottlekb.md
+            - getmaxhintwindow: data-platforms/cassandra/operations/nodetool/getmaxhintwindow.md
+            - setmaxhintwindow: data-platforms/cassandra/operations/nodetool/setmaxhintwindow.md
           - Cluster Topology:
-            - decommission: cassandra/operations/nodetool/decommission.md
-            - removenode: cassandra/operations/nodetool/removenode.md
-            - assassinate: cassandra/operations/nodetool/assassinate.md
-            - rebuild: cassandra/operations/nodetool/rebuild.md
-            - drain: cassandra/operations/nodetool/drain.md
-            - stopdaemon: cassandra/operations/nodetool/stopdaemon.md
-            - bootstrap: cassandra/operations/nodetool/bootstrap.md
-            - join: cassandra/operations/nodetool/join.md
-            - move: cassandra/operations/nodetool/move.md
-            - failuredetector: cassandra/operations/nodetool/failuredetector.md
-            - checktokenmetadata: cassandra/operations/nodetool/checktokenmetadata.md
+            - decommission: data-platforms/cassandra/operations/nodetool/decommission.md
+            - removenode: data-platforms/cassandra/operations/nodetool/removenode.md
+            - assassinate: data-platforms/cassandra/operations/nodetool/assassinate.md
+            - rebuild: data-platforms/cassandra/operations/nodetool/rebuild.md
+            - drain: data-platforms/cassandra/operations/nodetool/drain.md
+            - stopdaemon: data-platforms/cassandra/operations/nodetool/stopdaemon.md
+            - bootstrap: data-platforms/cassandra/operations/nodetool/bootstrap.md
+            - join: data-platforms/cassandra/operations/nodetool/join.md
+            - move: data-platforms/cassandra/operations/nodetool/move.md
+            - failuredetector: data-platforms/cassandra/operations/nodetool/failuredetector.md
+            - checktokenmetadata: data-platforms/cassandra/operations/nodetool/checktokenmetadata.md
           - Gossip & Binary:
-            - enablegossip: cassandra/operations/nodetool/enablegossip.md
-            - disablegossip: cassandra/operations/nodetool/disablegossip.md
-            - statusgossip: cassandra/operations/nodetool/statusgossip.md
-            - enablebinary: cassandra/operations/nodetool/enablebinary.md
-            - disablebinary: cassandra/operations/nodetool/disablebinary.md
-            - statusbinary: cassandra/operations/nodetool/statusbinary.md
-            - enableoldprotocolversions: cassandra/operations/nodetool/enableoldprotocolversions.md
-            - disableoldprotocolversions: cassandra/operations/nodetool/disableoldprotocolversions.md
+            - enablegossip: data-platforms/cassandra/operations/nodetool/enablegossip.md
+            - disablegossip: data-platforms/cassandra/operations/nodetool/disablegossip.md
+            - statusgossip: data-platforms/cassandra/operations/nodetool/statusgossip.md
+            - enablebinary: data-platforms/cassandra/operations/nodetool/enablebinary.md
+            - disablebinary: data-platforms/cassandra/operations/nodetool/disablebinary.md
+            - statusbinary: data-platforms/cassandra/operations/nodetool/statusbinary.md
+            - enableoldprotocolversions: data-platforms/cassandra/operations/nodetool/enableoldprotocolversions.md
+            - disableoldprotocolversions: data-platforms/cassandra/operations/nodetool/disableoldprotocolversions.md
           - Diagnostics:
-            - tpstats: cassandra/operations/nodetool/tpstats.md
-            - tablestats: cassandra/operations/nodetool/tablestats.md
-            - tablehistograms: cassandra/operations/nodetool/tablehistograms.md
-            - proxyhistograms: cassandra/operations/nodetool/proxyhistograms.md
-            - toppartitions: cassandra/operations/nodetool/toppartitions.md
-            - gcstats: cassandra/operations/nodetool/gcstats.md
-            - clientstats: cassandra/operations/nodetool/clientstats.md
-            - profileload: cassandra/operations/nodetool/profileload.md
-            - sjk: cassandra/operations/nodetool/sjk.md
-            - datapaths: cassandra/operations/nodetool/datapaths.md
-            - rangekeysample: cassandra/operations/nodetool/rangekeysample.md
-            - viewbuildstatus: cassandra/operations/nodetool/viewbuildstatus.md
-            - help: cassandra/operations/nodetool/help.md
+            - tpstats: data-platforms/cassandra/operations/nodetool/tpstats.md
+            - tablestats: data-platforms/cassandra/operations/nodetool/tablestats.md
+            - tablehistograms: data-platforms/cassandra/operations/nodetool/tablehistograms.md
+            - proxyhistograms: data-platforms/cassandra/operations/nodetool/proxyhistograms.md
+            - toppartitions: data-platforms/cassandra/operations/nodetool/toppartitions.md
+            - gcstats: data-platforms/cassandra/operations/nodetool/gcstats.md
+            - clientstats: data-platforms/cassandra/operations/nodetool/clientstats.md
+            - profileload: data-platforms/cassandra/operations/nodetool/profileload.md
+            - sjk: data-platforms/cassandra/operations/nodetool/sjk.md
+            - datapaths: data-platforms/cassandra/operations/nodetool/datapaths.md
+            - rangekeysample: data-platforms/cassandra/operations/nodetool/rangekeysample.md
+            - viewbuildstatus: data-platforms/cassandra/operations/nodetool/viewbuildstatus.md
+            - help: data-platforms/cassandra/operations/nodetool/help.md
           - Configuration:
-            - setlogginglevel: cassandra/operations/nodetool/setlogginglevel.md
-            - getlogginglevels: cassandra/operations/nodetool/getlogginglevels.md
-            - reloadssl: cassandra/operations/nodetool/reloadssl.md
-            - gettimeout: cassandra/operations/nodetool/gettimeout.md
-            - settimeout: cassandra/operations/nodetool/settimeout.md
-            - setcachecapacity: cassandra/operations/nodetool/setcachecapacity.md
-            - setcachekeystosave: cassandra/operations/nodetool/setcachekeystosave.md
-            - getconcurrentcompactors: cassandra/operations/nodetool/getconcurrentcompactors.md
-            - setconcurrentcompactors: cassandra/operations/nodetool/setconcurrentcompactors.md
-            - getconcurrentviewbuilders: cassandra/operations/nodetool/getconcurrentviewbuilders.md
-            - setconcurrentviewbuilders: cassandra/operations/nodetool/setconcurrentviewbuilders.md
-            - getconcurrency: cassandra/operations/nodetool/getconcurrency.md
-            - setconcurrency: cassandra/operations/nodetool/setconcurrency.md
-            - getdefaultrf: cassandra/operations/nodetool/getdefaultrf.md
-            - setdefaultrf: cassandra/operations/nodetool/setdefaultrf.md
-            - getsnapshotthrottle: cassandra/operations/nodetool/getsnapshotthrottle.md
-            - setsnapshotthrottle: cassandra/operations/nodetool/setsnapshotthrottle.md
-            - getcolumnindexsize: cassandra/operations/nodetool/getcolumnindexsize.md
-            - setcolumnindexsize: cassandra/operations/nodetool/setcolumnindexsize.md
-            - getseeds: cassandra/operations/nodetool/getseeds.md
-            - reloadseeds: cassandra/operations/nodetool/reloadseeds.md
-            - gettraceprobability: cassandra/operations/nodetool/gettraceprobability.md
-            - settraceprobability: cassandra/operations/nodetool/settraceprobability.md
-            - getbatchlogreplaythrottle: cassandra/operations/nodetool/getbatchlogreplaythrottle.md
-            - setbatchlogreplaythrottle: cassandra/operations/nodetool/setbatchlogreplaythrottle.md
-            - reloadtriggers: cassandra/operations/nodetool/reloadtriggers.md
-            - reloadlocalschema: cassandra/operations/nodetool/reloadlocalschema.md
-            - resetlocalschema: cassandra/operations/nodetool/resetlocalschema.md
-            - refreshsizeestimates: cassandra/operations/nodetool/refreshsizeestimates.md
-            - replaybatchlog: cassandra/operations/nodetool/replaybatchlog.md
-            - getauthcacheconfig: cassandra/operations/nodetool/getauthcacheconfig.md
-            - setauthcacheconfig: cassandra/operations/nodetool/setauthcacheconfig.md
-            - getguardrailsconfig: cassandra/operations/nodetool/getguardrailsconfig.md
-            - setguardrailsconfig: cassandra/operations/nodetool/setguardrailsconfig.md
+            - setlogginglevel: data-platforms/cassandra/operations/nodetool/setlogginglevel.md
+            - getlogginglevels: data-platforms/cassandra/operations/nodetool/getlogginglevels.md
+            - reloadssl: data-platforms/cassandra/operations/nodetool/reloadssl.md
+            - gettimeout: data-platforms/cassandra/operations/nodetool/gettimeout.md
+            - settimeout: data-platforms/cassandra/operations/nodetool/settimeout.md
+            - setcachecapacity: data-platforms/cassandra/operations/nodetool/setcachecapacity.md
+            - setcachekeystosave: data-platforms/cassandra/operations/nodetool/setcachekeystosave.md
+            - getconcurrentcompactors: data-platforms/cassandra/operations/nodetool/getconcurrentcompactors.md
+            - setconcurrentcompactors: data-platforms/cassandra/operations/nodetool/setconcurrentcompactors.md
+            - getconcurrentviewbuilders: data-platforms/cassandra/operations/nodetool/getconcurrentviewbuilders.md
+            - setconcurrentviewbuilders: data-platforms/cassandra/operations/nodetool/setconcurrentviewbuilders.md
+            - getconcurrency: data-platforms/cassandra/operations/nodetool/getconcurrency.md
+            - setconcurrency: data-platforms/cassandra/operations/nodetool/setconcurrency.md
+            - getdefaultrf: data-platforms/cassandra/operations/nodetool/getdefaultrf.md
+            - setdefaultrf: data-platforms/cassandra/operations/nodetool/setdefaultrf.md
+            - getsnapshotthrottle: data-platforms/cassandra/operations/nodetool/getsnapshotthrottle.md
+            - setsnapshotthrottle: data-platforms/cassandra/operations/nodetool/setsnapshotthrottle.md
+            - getcolumnindexsize: data-platforms/cassandra/operations/nodetool/getcolumnindexsize.md
+            - setcolumnindexsize: data-platforms/cassandra/operations/nodetool/setcolumnindexsize.md
+            - getseeds: data-platforms/cassandra/operations/nodetool/getseeds.md
+            - reloadseeds: data-platforms/cassandra/operations/nodetool/reloadseeds.md
+            - gettraceprobability: data-platforms/cassandra/operations/nodetool/gettraceprobability.md
+            - settraceprobability: data-platforms/cassandra/operations/nodetool/settraceprobability.md
+            - getbatchlogreplaythrottle: data-platforms/cassandra/operations/nodetool/getbatchlogreplaythrottle.md
+            - setbatchlogreplaythrottle: data-platforms/cassandra/operations/nodetool/setbatchlogreplaythrottle.md
+            - reloadtriggers: data-platforms/cassandra/operations/nodetool/reloadtriggers.md
+            - reloadlocalschema: data-platforms/cassandra/operations/nodetool/reloadlocalschema.md
+            - resetlocalschema: data-platforms/cassandra/operations/nodetool/resetlocalschema.md
+            - refreshsizeestimates: data-platforms/cassandra/operations/nodetool/refreshsizeestimates.md
+            - replaybatchlog: data-platforms/cassandra/operations/nodetool/replaybatchlog.md
+            - getauthcacheconfig: data-platforms/cassandra/operations/nodetool/getauthcacheconfig.md
+            - setauthcacheconfig: data-platforms/cassandra/operations/nodetool/setauthcacheconfig.md
+            - getguardrailsconfig: data-platforms/cassandra/operations/nodetool/getguardrailsconfig.md
+            - setguardrailsconfig: data-platforms/cassandra/operations/nodetool/setguardrailsconfig.md
           - Cache Management:
-            - invalidatekeycache: cassandra/operations/nodetool/invalidatekeycache.md
-            - invalidaterowcache: cassandra/operations/nodetool/invalidaterowcache.md
-            - invalidatecountercache: cassandra/operations/nodetool/invalidatecountercache.md
-            - invalidatepermissionscache: cassandra/operations/nodetool/invalidatepermissionscache.md
-            - invalidatecredentialscache: cassandra/operations/nodetool/invalidatecredentialscache.md
-            - invalidaterolescache: cassandra/operations/nodetool/invalidaterolescache.md
-            - invalidatenetworkpermissionscache: cassandra/operations/nodetool/invalidatenetworkpermissionscache.md
-            - invalidatejmxpermissionscache: cassandra/operations/nodetool/invalidatejmxpermissionscache.md
+            - invalidatekeycache: data-platforms/cassandra/operations/nodetool/invalidatekeycache.md
+            - invalidaterowcache: data-platforms/cassandra/operations/nodetool/invalidaterowcache.md
+            - invalidatecountercache: data-platforms/cassandra/operations/nodetool/invalidatecountercache.md
+            - invalidatepermissionscache: data-platforms/cassandra/operations/nodetool/invalidatepermissionscache.md
+            - invalidatecredentialscache: data-platforms/cassandra/operations/nodetool/invalidatecredentialscache.md
+            - invalidaterolescache: data-platforms/cassandra/operations/nodetool/invalidaterolescache.md
+            - invalidatenetworkpermissionscache: data-platforms/cassandra/operations/nodetool/invalidatenetworkpermissionscache.md
+            - invalidatejmxpermissionscache: data-platforms/cassandra/operations/nodetool/invalidatejmxpermissionscache.md
           - SSTable Management:
-            - getsstables: cassandra/operations/nodetool/getsstables.md
-            - relocatesstables: cassandra/operations/nodetool/relocatesstables.md
-            - recompress_sstables: cassandra/operations/nodetool/recompress_sstables.md
-            - rebuild_index: cassandra/operations/nodetool/rebuild_index.md
+            - getsstables: data-platforms/cassandra/operations/nodetool/getsstables.md
+            - relocatesstables: data-platforms/cassandra/operations/nodetool/relocatesstables.md
+            - recompress_sstables: data-platforms/cassandra/operations/nodetool/recompress_sstables.md
+            - rebuild_index: data-platforms/cassandra/operations/nodetool/rebuild_index.md
           - CIDR Filtering:
-            - cidrfilteringstats: cassandra/operations/nodetool/cidrfilteringstats.md
-            - listcidrgroups: cassandra/operations/nodetool/listcidrgroups.md
-            - getcidrgroupsofip: cassandra/operations/nodetool/getcidrgroupsofip.md
-            - updatecidrgroup: cassandra/operations/nodetool/updatecidrgroup.md
-            - dropcidrgroup: cassandra/operations/nodetool/dropcidrgroup.md
-            - invalidatecidrpermissionscache: cassandra/operations/nodetool/invalidatecidrpermissionscache.md
-            - reloadcidrgroupscache: cassandra/operations/nodetool/reloadcidrgroupscache.md
+            - cidrfilteringstats: data-platforms/cassandra/operations/nodetool/cidrfilteringstats.md
+            - listcidrgroups: data-platforms/cassandra/operations/nodetool/listcidrgroups.md
+            - getcidrgroupsofip: data-platforms/cassandra/operations/nodetool/getcidrgroupsofip.md
+            - updatecidrgroup: data-platforms/cassandra/operations/nodetool/updatecidrgroup.md
+            - dropcidrgroup: data-platforms/cassandra/operations/nodetool/dropcidrgroup.md
+            - invalidatecidrpermissionscache: data-platforms/cassandra/operations/nodetool/invalidatecidrpermissionscache.md
+            - reloadcidrgroupscache: data-platforms/cassandra/operations/nodetool/reloadcidrgroupscache.md
           - Audit Logging:
-            - enableauditlog: cassandra/operations/nodetool/enableauditlog.md
-            - disableauditlog: cassandra/operations/nodetool/disableauditlog.md
-            - getauditlog: cassandra/operations/nodetool/getauditlog.md
+            - enableauditlog: data-platforms/cassandra/operations/nodetool/enableauditlog.md
+            - disableauditlog: data-platforms/cassandra/operations/nodetool/disableauditlog.md
+            - getauditlog: data-platforms/cassandra/operations/nodetool/getauditlog.md
           - Full Query Logging:
-            - enablefullquerylog: cassandra/operations/nodetool/enablefullquerylog.md
-            - disablefullquerylog: cassandra/operations/nodetool/disablefullquerylog.md
-            - getfullquerylog: cassandra/operations/nodetool/getfullquerylog.md
-            - resetfullquerylog: cassandra/operations/nodetool/resetfullquerylog.md
+            - enablefullquerylog: data-platforms/cassandra/operations/nodetool/enablefullquerylog.md
+            - disablefullquerylog: data-platforms/cassandra/operations/nodetool/disablefullquerylog.md
+            - getfullquerylog: data-platforms/cassandra/operations/nodetool/getfullquerylog.md
+            - resetfullquerylog: data-platforms/cassandra/operations/nodetool/resetfullquerylog.md
         - SSTable Management:
-          - Overview: cassandra/operations/sstable-management/index.md
+          - Overview: data-platforms/cassandra/operations/sstable-management/index.md
           - Data Loading:
-            - sstableloader: cassandra/operations/sstable-management/sstableloader.md
+            - sstableloader: data-platforms/cassandra/operations/sstable-management/sstableloader.md
           - Repair & Recovery:
-            - sstablescrub: cassandra/operations/sstable-management/sstablescrub.md
-            - sstableverify: cassandra/operations/sstable-management/sstableverify.md
+            - sstablescrub: data-platforms/cassandra/operations/sstable-management/sstablescrub.md
+            - sstableverify: data-platforms/cassandra/operations/sstable-management/sstableverify.md
           - Inspection:
-            - sstabledump: cassandra/operations/sstable-management/sstabledump.md
-            - sstablemetadata: cassandra/operations/sstable-management/sstablemetadata.md
-            - sstablepartitions: cassandra/operations/sstable-management/sstablepartitions.md
-            - sstableexpiredblockers: cassandra/operations/sstable-management/sstableexpiredblockers.md
-            - sstableutil: cassandra/operations/sstable-management/sstableutil.md
+            - sstabledump: data-platforms/cassandra/operations/sstable-management/sstabledump.md
+            - sstablemetadata: data-platforms/cassandra/operations/sstable-management/sstablemetadata.md
+            - sstablepartitions: data-platforms/cassandra/operations/sstable-management/sstablepartitions.md
+            - sstableexpiredblockers: data-platforms/cassandra/operations/sstable-management/sstableexpiredblockers.md
+            - sstableutil: data-platforms/cassandra/operations/sstable-management/sstableutil.md
           - Maintenance:
-            - sstableupgrade: cassandra/operations/sstable-management/sstableupgrade.md
-            - sstablesplit: cassandra/operations/sstable-management/sstablesplit.md
-            - sstablelevelreset: cassandra/operations/sstable-management/sstablelevelreset.md
-            - sstableofflinerelevel: cassandra/operations/sstable-management/sstableofflinerelevel.md
-            - sstablerepairedset: cassandra/operations/sstable-management/sstablerepairedset.md
-        - Cluster Management: cassandra/operations/cluster-management/index.md
+            - sstableupgrade: data-platforms/cassandra/operations/sstable-management/sstableupgrade.md
+            - sstablesplit: data-platforms/cassandra/operations/sstable-management/sstablesplit.md
+            - sstablelevelreset: data-platforms/cassandra/operations/sstable-management/sstablelevelreset.md
+            - sstableofflinerelevel: data-platforms/cassandra/operations/sstable-management/sstableofflinerelevel.md
+            - sstablerepairedset: data-platforms/cassandra/operations/sstable-management/sstablerepairedset.md
+        - Cluster Management: data-platforms/cassandra/operations/cluster-management/index.md
         - Backup & Restore:
-          - Overview: cassandra/operations/backup-restore/index.md
-          - Backup Procedures: cassandra/operations/backup-restore/backup.md
-          - Restore Guide: cassandra/operations/backup-restore/restore.md
+          - Overview: data-platforms/cassandra/operations/backup-restore/index.md
+          - Backup Procedures: data-platforms/cassandra/operations/backup-restore/backup.md
+          - Restore Guide: data-platforms/cassandra/operations/backup-restore/restore.md
         - Repair:
-          - Overview: cassandra/operations/repair/index.md
-          - Concepts: cassandra/operations/repair/concepts.md
-          - Options Reference: cassandra/operations/repair/options-reference.md
-          - Strategies: cassandra/operations/repair/strategies.md
-          - Scheduling: cassandra/operations/repair/scheduling.md
-        - Compaction Management: cassandra/operations/compaction-management/index.md
-        - Maintenance: cassandra/operations/maintenance/index.md
+          - Overview: data-platforms/cassandra/operations/repair/index.md
+          - Concepts: data-platforms/cassandra/operations/repair/concepts.md
+          - Options Reference: data-platforms/cassandra/operations/repair/options-reference.md
+          - Strategies: data-platforms/cassandra/operations/repair/strategies.md
+          - Scheduling: data-platforms/cassandra/operations/repair/scheduling.md
+        - Compaction Management: data-platforms/cassandra/operations/compaction-management/index.md
+        - Maintenance: data-platforms/cassandra/operations/maintenance/index.md
         - Configuration:
-          - Overview: cassandra/operations/configuration/index.md
-          - cassandra.yaml: cassandra/operations/configuration/cassandra-yaml/index.md
-          - JVM Options: cassandra/operations/configuration/jvm-options/index.md
-          - Snitch Configuration: cassandra/operations/configuration/snitch-config/index.md
-          - Logging (logback.xml): cassandra/operations/configuration/logback.md
-          - Guardrails: cassandra/operations/configuration/guardrails.md
+          - Overview: data-platforms/cassandra/operations/configuration/index.md
+          - cassandra.yaml: data-platforms/cassandra/operations/configuration/cassandra-yaml/index.md
+          - JVM Options: data-platforms/cassandra/operations/configuration/jvm-options/index.md
+          - Snitch Configuration: data-platforms/cassandra/operations/configuration/snitch-config/index.md
+          - Logging (logback.xml): data-platforms/cassandra/operations/configuration/logback.md
+          - Guardrails: data-platforms/cassandra/operations/configuration/guardrails.md
         - JMX Reference:
-          - Overview: cassandra/operations/jmx-reference/index.md
-          - MBeans: cassandra/operations/jmx-reference/mbeans/index.md
-          - Metrics: cassandra/operations/jmx-reference/metrics/index.md
-          - Connecting: cassandra/operations/jmx-reference/connecting/index.md
+          - Overview: data-platforms/cassandra/operations/jmx-reference/index.md
+          - MBeans: data-platforms/cassandra/operations/jmx-reference/mbeans/index.md
+          - Metrics: data-platforms/cassandra/operations/jmx-reference/metrics/index.md
+          - Connecting: data-platforms/cassandra/operations/jmx-reference/connecting/index.md
         - Virtual Tables:
-          - Overview: cassandra/operations/virtual-tables/index.md
-          - Schema Discovery: cassandra/operations/virtual-tables/system-virtual-schema.md
-          - Metrics: cassandra/operations/virtual-tables/metrics.md
-          - Thread Pools: cassandra/operations/virtual-tables/thread-pools.md
-          - Caches: cassandra/operations/virtual-tables/caches.md
-          - Clients: cassandra/operations/virtual-tables/clients.md
-          - Cluster State: cassandra/operations/virtual-tables/cluster-state.md
-          - Storage: cassandra/operations/virtual-tables/storage.md
-          - Repair: cassandra/operations/virtual-tables/repair.md
-          - SAI Indexes: cassandra/operations/virtual-tables/sai.md
-          - Streaming: cassandra/operations/virtual-tables/streaming.md
-          - Configuration: cassandra/operations/virtual-tables/configuration.md
+          - Overview: data-platforms/cassandra/operations/virtual-tables/index.md
+          - Schema Discovery: data-platforms/cassandra/operations/virtual-tables/system-virtual-schema.md
+          - Metrics: data-platforms/cassandra/operations/virtual-tables/metrics.md
+          - Thread Pools: data-platforms/cassandra/operations/virtual-tables/thread-pools.md
+          - Caches: data-platforms/cassandra/operations/virtual-tables/caches.md
+          - Clients: data-platforms/cassandra/operations/virtual-tables/clients.md
+          - Cluster State: data-platforms/cassandra/operations/virtual-tables/cluster-state.md
+          - Storage: data-platforms/cassandra/operations/virtual-tables/storage.md
+          - Repair: data-platforms/cassandra/operations/virtual-tables/repair.md
+          - SAI Indexes: data-platforms/cassandra/operations/virtual-tables/sai.md
+          - Streaming: data-platforms/cassandra/operations/virtual-tables/streaming.md
+          - Configuration: data-platforms/cassandra/operations/virtual-tables/configuration.md
         - Monitoring:
-          - Overview: cassandra/operations/monitoring/index.md
-          - Key Metrics: cassandra/operations/monitoring/key-metrics/index.md
-          - Alerting: cassandra/operations/monitoring/alerting/index.md
-          - Logging: cassandra/operations/monitoring/logging/index.md
+          - Overview: data-platforms/cassandra/operations/monitoring/index.md
+          - Key Metrics: data-platforms/cassandra/operations/monitoring/key-metrics/index.md
+          - Alerting: data-platforms/cassandra/operations/monitoring/alerting/index.md
+          - Logging: data-platforms/cassandra/operations/monitoring/logging/index.md
         - Performance:
-          - Overview: cassandra/operations/performance/index.md
-          - Benchmarking: cassandra/operations/performance/benchmarking/index.md
-          - Hardware: cassandra/operations/performance/hardware/index.md
-          - JVM Tuning: cassandra/operations/performance/jvm-tuning/index.md
-          - OS Tuning: cassandra/operations/performance/os-tuning/index.md
-          - Query Optimization: cassandra/operations/performance/query-optimization/index.md
-        - Troubleshooting: cassandra/operations/troubleshooting/index.md
+          - Overview: data-platforms/cassandra/operations/performance/index.md
+          - Benchmarking: data-platforms/cassandra/operations/performance/benchmarking/index.md
+          - Hardware: data-platforms/cassandra/operations/performance/hardware/index.md
+          - JVM Tuning: data-platforms/cassandra/operations/performance/jvm-tuning/index.md
+          - OS Tuning: data-platforms/cassandra/operations/performance/os-tuning/index.md
+          - Query Optimization: data-platforms/cassandra/operations/performance/query-optimization/index.md
+        - Troubleshooting: data-platforms/cassandra/operations/troubleshooting/index.md
       - Security:
-        - Overview: cassandra/security/index.md
-        - Authentication: cassandra/security/authentication/index.md
-        - Authorization: cassandra/security/authorization/index.md
-        - Privileged Access Management: cassandra/security/privileged-access-management/index.md
-        - Audit Logging: cassandra/security/audit-logging/index.md
-        - Network Security: cassandra/security/network/index.md
-        - OS Security: cassandra/security/os-security/index.md
+        - Overview: data-platforms/cassandra/security/index.md
+        - Authentication: data-platforms/cassandra/security/authentication/index.md
+        - Authorization: data-platforms/cassandra/security/authorization/index.md
+        - Privileged Access Management: data-platforms/cassandra/security/privileged-access-management/index.md
+        - Audit Logging: data-platforms/cassandra/security/audit-logging/index.md
+        - Network Security: data-platforms/cassandra/security/network/index.md
+        - OS Security: data-platforms/cassandra/security/os-security/index.md
         - Encryption:
-          - Overview: cassandra/security/encryption/index.md
-          - PKI Fundamentals: cassandra/security/encryption/pki-fundamentals.md
-          - TLS Versions: cassandra/security/encryption/tls-versions.md
-          - Certificates: cassandra/security/encryption/certificates.md
-          - Hostname Verification: cassandra/security/encryption/hostname-verification.md
-          - Cassandra Configuration: cassandra/security/encryption/configuration.md
-          - Client Configuration: cassandra/security/encryption/client-configuration.md
-          - Enterprise Recommendations: cassandra/security/encryption/enterprise-recommendations.md
-          - Troubleshooting: cassandra/security/encryption/troubleshooting.md
+          - Overview: data-platforms/cassandra/security/encryption/index.md
+          - PKI Fundamentals: data-platforms/cassandra/security/encryption/pki-fundamentals.md
+          - TLS Versions: data-platforms/cassandra/security/encryption/tls-versions.md
+          - Certificates: data-platforms/cassandra/security/encryption/certificates.md
+          - Hostname Verification: data-platforms/cassandra/security/encryption/hostname-verification.md
+          - Cassandra Configuration: data-platforms/cassandra/security/encryption/configuration.md
+          - Client Configuration: data-platforms/cassandra/security/encryption/client-configuration.md
+          - Enterprise Recommendations: data-platforms/cassandra/security/encryption/enterprise-recommendations.md
+          - Troubleshooting: data-platforms/cassandra/security/encryption/troubleshooting.md
       - Tools:
-        - cqlsh: cassandra/tools/cqlsh/index.md
+        - cqlsh: data-platforms/cassandra/tools/cqlsh/index.md
         - CQLAI:
-          - Overview: cassandra/tools/cqlai/index.md
-          - Installation: cassandra/tools/cqlai/installation/index.md
-          - Getting Started: cassandra/tools/cqlai/getting-started/index.md
-          - Features: cassandra/tools/cqlai/features/index.md
+          - Overview: data-platforms/cassandra/tools/cqlai/index.md
+          - Installation: data-platforms/cassandra/tools/cqlai/installation/index.md
+          - Getting Started: data-platforms/cassandra/tools/cqlai/getting-started/index.md
+          - Features: data-platforms/cassandra/tools/cqlai/features/index.md
           - AI Features:
-            - Overview: cassandra/tools/cqlai/ai-features/index.md
-            - AI Providers: cassandra/tools/cqlai/ai-features/ai-providers/index.md
-          - Data Import/Export: cassandra/tools/cqlai/data-import-export/index.md
-          - Configuration: cassandra/tools/cqlai/configuration/index.md
-          - Commands: cassandra/tools/cqlai/commands/index.md
-          - Parquet: cassandra/tools/cqlai/parquet/index.md
-        - cassandra-stress: cassandra/tools/cassandra-stress/index.md
+            - Overview: data-platforms/cassandra/tools/cqlai/ai-features/index.md
+            - AI Providers: data-platforms/cassandra/tools/cqlai/ai-features/ai-providers/index.md
+          - Data Import/Export: data-platforms/cassandra/tools/cqlai/data-import-export/index.md
+          - Configuration: data-platforms/cassandra/tools/cqlai/configuration/index.md
+          - Commands: data-platforms/cassandra/tools/cqlai/commands/index.md
+          - Parquet: data-platforms/cassandra/tools/cqlai/parquet/index.md
+        - cassandra-stress: data-platforms/cassandra/tools/cassandra-stress/index.md
       - Troubleshooting:
-        - Overview: cassandra/troubleshooting/index.md
-        - Diagnosis: cassandra/troubleshooting/diagnosis/index.md
-        - Log Analysis: cassandra/troubleshooting/log-analysis/index.md
+        - Overview: data-platforms/cassandra/troubleshooting/index.md
+        - Diagnosis: data-platforms/cassandra/troubleshooting/diagnosis/index.md
+        - Log Analysis: data-platforms/cassandra/troubleshooting/log-analysis/index.md
       - Cloud:
-        - Overview: cassandra/cloud/index.md
-        - AWS: cassandra/cloud/aws/index.md
-        - Azure: cassandra/cloud/azure/index.md
-        - GCP: cassandra/cloud/gcp/index.md
-        - Kubernetes: cassandra/cloud/kubernetes/index.md
-      - Reference: cassandra/reference/index.md
+        - Overview: data-platforms/cassandra/cloud/index.md
+        - AWS: data-platforms/cassandra/cloud/aws/index.md
+        - Azure: data-platforms/cassandra/cloud/azure/index.md
+        - GCP: data-platforms/cassandra/cloud/gcp/index.md
+        - Kubernetes: data-platforms/cassandra/cloud/kubernetes/index.md
+      - Reference: data-platforms/cassandra/reference/index.md
     - Apache Kafka:
-      - Overview: kafka/index.md
+      - Overview: data-platforms/kafka/index.md
+      - Getting Started:
+        - Overview: data-platforms/kafka/getting-started/index.md
+        - Installation: data-platforms/kafka/getting-started/installation/index.md
+        - Client Drivers: data-platforms/kafka/getting-started/drivers/index.md
+      - Concepts:
+        - Overview: data-platforms/kafka/concepts/index.md
+        - Topics: data-platforms/kafka/concepts/topics/index.md
+        - Architecture Patterns: data-platforms/kafka/concepts/architecture-patterns/index.md
+        - Delivery Semantics:
+          - Overview: data-platforms/kafka/concepts/delivery-semantics/index.md
+          - At-Most-Once: data-platforms/kafka/concepts/delivery-semantics/at-most-once.md
+          - At-Least-Once: data-platforms/kafka/concepts/delivery-semantics/at-least-once.md
+          - Exactly-Once: data-platforms/kafka/concepts/delivery-semantics/exactly-once.md
+          - Choosing Semantics: data-platforms/kafka/concepts/delivery-semantics/choosing-semantics.md
+        - Data Integration: data-platforms/kafka/concepts/data-integration/index.md
+        - Multi-Datacenter: data-platforms/kafka/concepts/multi-datacenter/index.md
+        - Kafka Connect Concepts:
+          - Overview: data-platforms/kafka/concepts/kafka-connect/index.md
+          - Connector Ecosystem: data-platforms/kafka/concepts/kafka-connect/connector-ecosystem.md
+          - Cloud Storage: data-platforms/kafka/concepts/kafka-connect/cloud-storage.md
+          - Build vs Buy: data-platforms/kafka/concepts/kafka-connect/build-vs-buy.md
+      - Architecture:
+        - Overview: data-platforms/kafka/architecture/index.md
+        - Brokers: data-platforms/kafka/architecture/brokers/index.md
+        - Topology: data-platforms/kafka/architecture/topology/index.md
+        - Storage Engine: data-platforms/kafka/architecture/storage-engine/index.md
+        - Replication: data-platforms/kafka/architecture/replication/index.md
+        - Fault Tolerance: data-platforms/kafka/architecture/fault-tolerance/index.md
+        - Cluster Management: data-platforms/kafka/architecture/cluster-management/index.md
+        - Client Connections:
+          - Overview: data-platforms/kafka/architecture/client-connections/index.md
+          - Wire Protocol:
+            - Protocol Overview: data-platforms/kafka/architecture/client-connections/kafka-protocol.md
+            - Primitive Types: data-platforms/kafka/architecture/client-connections/protocol-primitives.md
+            - Message Format: data-platforms/kafka/architecture/client-connections/protocol-messages.md
+            - Record Batches: data-platforms/kafka/architecture/client-connections/protocol-records.md
+            - Error Codes: data-platforms/kafka/architecture/client-connections/protocol-errors.md
+            - Core APIs: data-platforms/kafka/architecture/client-connections/protocol-apis-core.md
+            - Consumer APIs: data-platforms/kafka/architecture/client-connections/protocol-apis-consumer.md
+            - Share Group APIs: data-platforms/kafka/architecture/client-connections/protocol-apis-share-group.md
+            - Admin APIs: data-platforms/kafka/architecture/client-connections/protocol-apis-admin.md
+            - Transaction APIs: data-platforms/kafka/architecture/client-connections/protocol-apis-transaction.md
+          - Connection Pooling: data-platforms/kafka/architecture/client-connections/connection-pooling.md
+          - Metadata Management: data-platforms/kafka/architecture/client-connections/metadata-management.md
+          - Load Balancing: data-platforms/kafka/architecture/client-connections/load-balancing.md
+          - Batching: data-platforms/kafka/architecture/client-connections/batching.md
+          - Compression: data-platforms/kafka/architecture/client-connections/compression.md
+          - Authentication: data-platforms/kafka/architecture/client-connections/authentication.md
+          - Failure Handling: data-platforms/kafka/architecture/client-connections/failure-handling.md
+          - Throttling: data-platforms/kafka/architecture/client-connections/throttling.md
+        - Scaling and Rebalancing:
+          - Overview: data-platforms/kafka/architecture/scaling/index.md
+          - Partition Reassignment: data-platforms/kafka/architecture/scaling/partition-reassignment.md
+          - Consumer Rebalancing: data-platforms/kafka/architecture/scaling/consumer-rebalancing.md
+        - Memory Management: data-platforms/kafka/architecture/memory-management/index.md
+        - Performance Internals: data-platforms/kafka/architecture/performance-internals/index.md
+      - Application Development:
+        - Overview: data-platforms/kafka/application-development/index.md
+        - Client Drivers:
+          - Overview: data-platforms/kafka/application-development/drivers/index.md
+          - Java: data-platforms/kafka/application-development/drivers/java.md
+          - Python: data-platforms/kafka/application-development/drivers/python.md
+          - Go: data-platforms/kafka/application-development/drivers/go.md
+          - Node.js: data-platforms/kafka/application-development/drivers/nodejs.md
+          - .NET: data-platforms/kafka/application-development/drivers/dotnet.md
+          - Rust: data-platforms/kafka/application-development/drivers/rust.md
+        - Producers:
+          - Overview: data-platforms/kafka/application-development/producers/index.md
+          - Configuration: data-platforms/kafka/application-development/producers/configuration.md
+          - Partitioning: data-platforms/kafka/application-development/producers/partitioning.md
+          - Idempotence: data-platforms/kafka/application-development/producers/idempotence.md
+          - Transactions: data-platforms/kafka/application-development/producers/transactions.md
+          - Error Handling: data-platforms/kafka/application-development/producers/error-handling.md
+        - Consumers:
+          - Overview: data-platforms/kafka/application-development/consumers/index.md
+          - Configuration: data-platforms/kafka/application-development/consumers/configuration.md
+          - Consumer Groups: data-platforms/kafka/application-development/consumers/consumer-groups.md
+          - Offset Management: data-platforms/kafka/application-development/consumers/offset-management.md
+          - Rebalancing: data-platforms/kafka/application-development/consumers/rebalancing.md
+          - Error Handling: data-platforms/kafka/application-development/consumers/error-handling.md
+        - Kafka Streams:
+          - Overview: data-platforms/kafka/application-development/kafka-streams/index.md
+          - DSL Reference: data-platforms/kafka/application-development/kafka-streams/dsl/index.md
+          - State Stores: data-platforms/kafka/application-development/kafka-streams/state-stores.md
+          - Windowing: data-platforms/kafka/application-development/kafka-streams/windowing.md
+          - Error Handling: data-platforms/kafka/application-development/kafka-streams/error-handling.md
+        - Design Patterns:
+          - Overview: data-platforms/kafka/application-development/patterns/index.md
+          - Event Sourcing: data-platforms/kafka/application-development/patterns/event-sourcing.md
+          - CQRS: data-platforms/kafka/application-development/patterns/cqrs.md
+          - Saga: data-platforms/kafka/application-development/patterns/saga.md
+          - Outbox: data-platforms/kafka/application-development/patterns/outbox.md
+          - Event Collaboration: data-platforms/kafka/application-development/patterns/event-collaboration.md
+        - Anti-Patterns: data-platforms/kafka/application-development/anti-patterns/index.md
+        - Serialization: data-platforms/kafka/application-development/serialization/index.md
+        - Testing: data-platforms/kafka/application-development/testing/index.md
+        - Performance Tuning: data-platforms/kafka/application-development/performance/index.md
+      - Kafka Connect:
+        - Overview: data-platforms/kafka/kafka-connect/index.md
+        - Connectors:
+          - Overview: data-platforms/kafka/kafka-connect/connectors/index.md
+          - Cassandra Sink: data-platforms/kafka/kafka-connect/connectors/cassandra.md
+          - S3 Sink: data-platforms/kafka/kafka-connect/connectors/s3.md
+          - Elasticsearch Sink: data-platforms/kafka/kafka-connect/connectors/elasticsearch.md
+          - HTTP Source: data-platforms/kafka/kafka-connect/connectors/http-source.md
+          - File Source: data-platforms/kafka/kafka-connect/connectors/file-source.md
+        - Converters: data-platforms/kafka/kafka-connect/converters.md
+        - Transforms: data-platforms/kafka/kafka-connect/transforms.md
+        - Error Handling: data-platforms/kafka/kafka-connect/error-handling.md
+        - Exactly-Once: data-platforms/kafka/kafka-connect/exactly-once.md
+        - Operations: data-platforms/kafka/kafka-connect/operations.md
+      - Schema Registry:
+        - Overview: data-platforms/kafka/schema-registry/index.md
+        - Why Schemas: data-platforms/kafka/schema-registry/why-schemas.md
+        - Schema Formats: data-platforms/kafka/schema-registry/schema-formats/index.md
+        - Compatibility: data-platforms/kafka/schema-registry/compatibility/index.md
+        - Schema Evolution: data-platforms/kafka/schema-registry/schema-evolution.md
+        - Operations: data-platforms/kafka/schema-registry/operations.md
+      - Operations:
+        - Overview: data-platforms/kafka/operations/index.md
+        - CLI Tools: data-platforms/kafka/operations/cli-tools/index.md
+        - Configuration:
+          - Overview: data-platforms/kafka/operations/configuration/index.md
+          - Broker: data-platforms/kafka/operations/configuration/broker.md
+          - Topic: data-platforms/kafka/operations/configuration/topic.md
+          - ACL: data-platforms/kafka/operations/configuration/acl.md
+          - Quotas: data-platforms/kafka/operations/configuration/quotas.md
+          - Tiered Storage: data-platforms/kafka/operations/configuration/tiered-storage.md
+          - System Properties: data-platforms/kafka/operations/configuration/system-properties.md
+          - Configuration Providers: data-platforms/kafka/operations/configuration/configuration-providers.md
+        - Monitoring: data-platforms/kafka/operations/monitoring/index.md
+        - Backup & Restore: data-platforms/kafka/operations/backup-restore/index.md
+        - Cluster Management: data-platforms/kafka/operations/cluster-management/index.md
+        - MirrorMaker 2: data-platforms/kafka/operations/mirrormaker2/index.md
+        - Maintenance: data-platforms/kafka/operations/maintenance/index.md
+        - Performance:
+          - Overview: data-platforms/kafka/operations/performance/index.md
+          - Capacity Planning: data-platforms/kafka/operations/performance/capacity-planning/index.md
+        - Troubleshooting: data-platforms/kafka/operations/troubleshooting/index.md
+      - Security:
+        - Overview: data-platforms/kafka/security/index.md
+        - Authentication: data-platforms/kafka/security/authentication/index.md
+        - Authorization: data-platforms/kafka/security/authorization/index.md
+        - Encryption: data-platforms/kafka/security/encryption/index.md
+      - Cloud:
+        - Overview: data-platforms/kafka/cloud/index.md
+        - AWS: data-platforms/kafka/cloud/aws/index.md
+        - Azure: data-platforms/kafka/cloud/azure/index.md
+        - GCP: data-platforms/kafka/cloud/gcp/index.md
+        - Kubernetes: data-platforms/kafka/cloud/kubernetes/index.md
+      - Troubleshooting:
+        - Overview: data-platforms/kafka/troubleshooting/index.md
+        - Common Errors: data-platforms/kafka/troubleshooting/common-errors/index.md
+        - Diagnosis: data-platforms/kafka/troubleshooting/diagnosis/index.md
+        - Log Analysis: data-platforms/kafka/troubleshooting/log-analysis/index.md
+      - Reference: data-platforms/kafka/reference/index.md
+      - Migration: data-platforms/kafka/migration/index.md
 
   # - Release Notes:
   #   - Release notes: 'release_notes/releases.md'
