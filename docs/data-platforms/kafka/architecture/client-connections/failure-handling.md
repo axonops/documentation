@@ -642,5 +642,5 @@ DLQConsumer --> Retry
 
 - [Kafka Protocol](kafka-protocol.md) - Error codes
 - [Delivery Semantics](../../concepts/delivery-semantics/index.md) - Guarantees
-- [Producer Guide](../../producers/index.md) - Producer configuration
-- [Consumer Guide](../../consumers/index.md) - Consumer configuration
+- [Producer Guide](../../application-development/producers/index.md) - Producer configuration
+- [Consumer Guide](../../application-development/consumers/index.md) - Consumer configuration

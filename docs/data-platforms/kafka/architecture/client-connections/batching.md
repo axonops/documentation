@@ -616,5 +616,5 @@ producer.close();
 
 - [Kafka Protocol](kafka-protocol.md) - Wire protocol and record format
 - [Compression](compression.md) - Batch compression
-- [Producer Guide](../../producers/index.md) - Full producer configuration
+- [Producer Guide](../../application-development/producers/index.md) - Full producer configuration
 - [Performance Internals](../performance-internals/index.md) - Throughput optimization

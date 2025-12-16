@@ -733,4 +733,4 @@ consumer.commitAsync();  // May silently fail
 - [At-Most-Once](at-most-once.md) - Fire and forget patterns
 - [Exactly-Once](exactly-once.md) - Transactional processing
 - [Choosing Semantics](choosing-semantics.md) - Decision guide
-- [Producer Configuration](../../producers/index.md) - Producer settings
+- [Producer Configuration](../../application-development/producers/index.md) - Producer settings

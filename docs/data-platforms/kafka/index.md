@@ -194,7 +194,7 @@ Configuration and best practices for Kafka clients.
 
     Producer configuration, batching, compression, and delivery guarantees.
 
-    [:octicons-arrow-right-24: Producer Guide](producers/index.md)
+    [:octicons-arrow-right-24: Producer Guide](application-development/producers/index.md)
 
 -   :material-download:{ .lg .middle } **Consumers**
 
@@ -202,7 +202,7 @@ Configuration and best practices for Kafka clients.
 
     Consumer groups, offset management, and rebalancing strategies.
 
-    [:octicons-arrow-right-24: Consumer Guide](concepts/kafka-connect/index.md)
+    [:octicons-arrow-right-24: Consumer Guide](application-development/consumers/index.md)
 
 </div>
 
@@ -228,7 +228,7 @@ Build real-time stream processing applications.
 
     Stream processing DSL for stateful transformations.
 
-    [:octicons-arrow-right-24: Kafka Streams](kafka-streams/dsl/index.md)
+    [:octicons-arrow-right-24: Kafka Streams](application-development/kafka-streams/dsl/index.md)
 
 -   :material-file-document-check:{ .lg .middle } **Schema Registry**
 

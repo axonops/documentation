@@ -156,8 +156,8 @@ bin/kafka-metadata.sh --snapshot /tmp/kraft-combined-logs/__cluster_metadata-0/0
 | Goal | Documentation |
 |------|---------------|
 | Understand Kafka concepts | [Event Streaming Concepts](../concepts/index.md) |
-| Build a producer application | [Producer Guide](../producers/index.md) |
-| Build a consumer application | [Consumer Guide](../consumers/index.md) |
+| Build a producer application | [Producer Guide](../application-development/producers/index.md) |
+| Build a consumer application | [Consumer Guide](../application-development/consumers/index.md) |
 | Set up Kafka Connect | [Kafka Connect Guide](../kafka-connect/index.md) |
 | Configure for production | [Operations Guide](../operations/index.md) |
 

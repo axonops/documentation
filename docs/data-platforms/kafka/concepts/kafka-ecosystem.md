@@ -367,7 +367,7 @@ end note
 @enduml
 ```
 
-→ [Kafka Streams Guide](../kafka-streams/index.md)
+→ [Kafka Streams Guide](../application-development/kafka-streams/index.md)
 
 ---
 
@@ -443,4 +443,4 @@ streams --> analytics
 - [Kafka Connect](kafka-connect/index.md) - Data integration deep-dive
 - [Delivery Semantics](delivery-semantics/index.md) - Message delivery guarantees
 - [Schema Registry](../schema-registry/index.md) - Schema management guide
-- [Kafka Streams](../kafka-streams/index.md) - Stream processing library
+- [Kafka Streams](../application-development/kafka-streams/index.md) - Stream processing library

@@ -581,4 +581,4 @@ consumer.commitSync();  // Then commit
 - [Delivery Semantics Overview](index.md) - Semantic comparison
 - [At-Least-Once](at-least-once.md) - Retry-based delivery
 - [Exactly-Once](exactly-once.md) - Transactional processing
-- [Producer Configuration](../../producers/index.md) - Producer settings
+- [Producer Configuration](../../application-development/producers/index.md) - Producer settings
