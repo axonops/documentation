@@ -1,6 +1,9 @@
 ---
 title: "At-Most-Once Delivery"
 description: "Kafka at-most-once delivery semantics. Fire and forget patterns, performance optimization, and use cases where message loss is acceptable."
+meta:
+  - name: keywords
+    content: "Kafka at-most-once, fire and forget, acks=0, best effort delivery"
 ---
 
 # At-Most-Once Delivery

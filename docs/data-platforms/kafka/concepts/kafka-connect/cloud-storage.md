@@ -1,6 +1,9 @@
 ---
 title: "Cloud Storage Integration"
 description: "Kafka to cloud storage integration patterns. S3, GCS, Azure Blob storage for data lakes and analytics."
+meta:
+  - name: keywords
+    content: "Kafka Connect cloud storage, S3 connector, GCS connector, Azure Blob connector"
 ---
 
 # Cloud Storage Integration

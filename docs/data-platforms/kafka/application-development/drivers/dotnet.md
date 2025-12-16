@@ -1,6 +1,9 @@
 ---
 title: "Kafka .NET Client"
 description: "Apache Kafka .NET client guide using confluent-kafka-dotnet. Producer, consumer, and admin client usage with configuration, error handling, and best practices."
+meta:
+  - name: keywords
+    content: "Kafka .NET, Confluent.Kafka, C# Kafka, .NET Kafka producer, NuGet Kafka, Kafka ASP.NET"
 ---
 
 # Kafka .NET Client

@@ -1,6 +1,9 @@
 ---
 title: "Kafka Design Patterns"
 description: "Design patterns for Apache Kafka applications. Event sourcing, CQRS, saga, outbox, and other architectural patterns for event-driven systems."
+meta:
+  - name: keywords
+    content: "Kafka design patterns, event-driven architecture, messaging patterns, Kafka integration patterns"
 ---
 
 # Kafka Design Patterns

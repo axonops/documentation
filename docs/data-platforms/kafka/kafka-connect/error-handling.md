@@ -1,6 +1,9 @@
 ---
 title: "Kafka Connect Error Handling"
 description: "Kafka Connect error handling. Error tolerance, dead letter queues, and logging configuration."
+meta:
+  - name: keywords
+    content: "Kafka Connect error handling, dead letter queue, error tolerance, connector failures"
 ---
 
 # Kafka Connect Error Handling

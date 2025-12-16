@@ -1,6 +1,9 @@
 ---
 title: "File Source Connector"
 description: "Kafka Connect File Source connector. Log file streaming, file watching, and line parsing."
+meta:
+  - name: keywords
+    content: "Kafka file source connector, FileStreamSource, file ingestion, log file connector"
 ---
 
 # File Source Connector

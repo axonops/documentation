@@ -1,6 +1,9 @@
 ---
 title: "Event Collaboration Pattern"
 description: "Event collaboration pattern with Apache Kafka for service choreography. Loosely coupled microservices communicating through domain events."
+meta:
+  - name: keywords
+    content: "event collaboration, choreography, event-driven services, service coordination, Kafka events"
 ---
 
 # Event Collaboration Pattern

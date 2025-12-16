@@ -1,6 +1,9 @@
 ---
 title: "Kafka Consumer Configuration"
 description: "Complete Apache Kafka consumer configuration reference. Session management, fetch tuning, offset handling, and security settings."
+meta:
+  - name: keywords
+    content: "Kafka consumer configuration, consumer settings, fetch.max.bytes, max.poll.records, consumer tuning"
 ---
 
 # Consumer Configuration

@@ -1,6 +1,9 @@
 ---
 title: "Kafka Core Protocol APIs"
 description: "Apache Kafka core protocol APIs. Produce, Fetch, ListOffsets, Metadata, and ApiVersions request/response specifications."
+meta:
+  - name: keywords
+    content: "Kafka core API, Produce API, Metadata API, Kafka request types"
 ---
 
 # Kafka Core Protocol APIs

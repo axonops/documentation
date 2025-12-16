@@ -1,6 +1,9 @@
 ---
 title: "Kafka Node.js Driver"
 description: "Kafka Node.js client. Installation, configuration, producer and consumer examples with KafkaJS."
+meta:
+  - name: keywords
+    content: "Kafka Node.js quickstart, JavaScript Kafka tutorial, KafkaJS getting started, Node producer consumer"
 ---
 
 # Kafka Node.js Driver

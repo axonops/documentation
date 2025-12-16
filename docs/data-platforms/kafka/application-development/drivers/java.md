@@ -1,6 +1,9 @@
 ---
 title: "Kafka Java Client"
 description: "Apache Kafka Java client guide. Producer, consumer, and admin client usage with configuration, error handling, and best practices."
+meta:
+  - name: keywords
+    content: "Kafka Java client, kafka-clients, KafkaProducer, KafkaConsumer, Kafka Java API, Maven Kafka"
 ---
 
 # Kafka Java Client

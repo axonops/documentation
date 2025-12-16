@@ -1,6 +1,9 @@
 ---
 title: "Kafka Consumer Group Protocol APIs"
 description: "Apache Kafka consumer group protocol APIs. FindCoordinator, JoinGroup, SyncGroup, Heartbeat, OffsetCommit, and OffsetFetch specifications."
+meta:
+  - name: keywords
+    content: "Kafka consumer API, Fetch API, consumer protocol, offset fetch, consumer requests"
 ---
 
 # Kafka Consumer Group Protocol APIs

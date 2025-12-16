@@ -1,6 +1,9 @@
 ---
 title: "Kafka Producer Partitioning"
 description: "Kafka producer partitioning strategies. Default partitioner, custom partitioners, key-based routing, and partition selection algorithms."
+meta:
+  - name: keywords
+    content: "Kafka partitioning, partition key, custom partitioner, message routing, partition strategy"
 ---
 
 # Kafka Producer Partitioning

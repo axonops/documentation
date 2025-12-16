@@ -1,6 +1,9 @@
 ---
 title: "Kafka Producer Error Handling"
 description: "Kafka producer error handling. Retriable vs fatal errors, timeout configuration, and failure recovery patterns."
+meta:
+  - name: keywords
+    content: "Kafka producer error handling, delivery callback, retry, producer exception, send failure"
 ---
 
 # Kafka Producer Error Handling

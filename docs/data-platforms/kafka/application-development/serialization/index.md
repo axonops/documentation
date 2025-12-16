@@ -1,6 +1,9 @@
 ---
 title: "Kafka Serialization Guide"
 description: "Apache Kafka serialization and deserialization. JSON, Avro, Protobuf serializers with schema evolution and Schema Registry integration."
+meta:
+  - name: keywords
+    content: "Kafka serialization, Avro, Protobuf, JSON Schema, SerDe, message format"
 ---
 
 # Kafka Serialization

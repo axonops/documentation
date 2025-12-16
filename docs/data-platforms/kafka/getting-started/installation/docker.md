@@ -1,6 +1,9 @@
 ---
 title: "Kafka Docker Installation"
 description: "Apache Kafka Docker installation. Single node, multi-broker clusters, and Docker Compose configurations."
+meta:
+  - name: keywords
+    content: "Kafka Docker, Docker Compose Kafka, containerized Kafka, Kafka container setup"
 ---
 
 # Kafka Docker Installation

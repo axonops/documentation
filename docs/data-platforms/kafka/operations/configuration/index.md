@@ -1,6 +1,9 @@
 ---
 title: "Kafka Configuration"
 description: "Apache Kafka configuration reference. Broker, topic, ACL, quotas, tiered storage, and client configuration."
+meta:
+  - name: keywords
+    content: "Kafka configuration, broker configuration, topic configuration, client configuration"
 ---
 
 # Kafka Configuration

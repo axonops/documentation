@@ -1,6 +1,9 @@
 ---
 title: "Kafka Wire Protocol Specification"
 description: "Canonical Apache Kafka binary wire protocol specification. Protocol overview, design principles, and documentation index."
+meta:
+  - name: keywords
+    content: "Kafka protocol, wire protocol, binary protocol, Kafka API, protocol specification"
 ---
 
 # Kafka Wire Protocol Specification

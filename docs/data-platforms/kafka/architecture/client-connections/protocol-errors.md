@@ -1,6 +1,9 @@
 ---
 title: "Kafka Protocol Error Codes"
 description: "Complete Apache Kafka protocol error code reference. All error codes with retriability, causes, and recovery actions."
+meta:
+  - name: keywords
+    content: "Kafka protocol errors, error codes, retriable errors, Kafka exceptions"
 ---
 
 # Kafka Protocol Error Codes

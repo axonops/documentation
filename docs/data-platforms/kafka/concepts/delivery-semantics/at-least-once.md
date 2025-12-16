@@ -1,6 +1,9 @@
 ---
 title: "At-Least-Once Delivery"
 description: "Kafka at-least-once delivery semantics. Retry patterns, idempotent consumers, deduplication strategies, and production configurations."
+meta:
+  - name: keywords
+    content: "Kafka at-least-once, message delivery, acks=all, guaranteed delivery"
 ---
 
 # At-Least-Once Delivery

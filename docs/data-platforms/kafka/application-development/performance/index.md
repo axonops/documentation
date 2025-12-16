@@ -1,6 +1,9 @@
 ---
 title: "Kafka Performance Tuning"
 description: "Apache Kafka performance tuning guide. Producer throughput, consumer optimization, batching, compression, and monitoring."
+meta:
+  - name: keywords
+    content: "Kafka performance tuning, producer throughput, consumer optimization, Kafka benchmarking, latency tuning"
 ---
 
 # Performance Tuning

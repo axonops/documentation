@@ -1,6 +1,9 @@
 ---
 title: "Kafka Connect Transforms"
 description: "Kafka Connect Single Message Transforms (SMTs). Built-in transforms, chaining, and configuration."
+meta:
+  - name: keywords
+    content: "Kafka Connect SMT, single message transforms, field transformation, message routing"
 ---
 
 # Kafka Connect Transforms

@@ -1,6 +1,9 @@
 ---
 title: "Elasticsearch Sink Connector"
 description: "Kafka Connect Elasticsearch Sink connector. Configuration, index mapping, and search integration."
+meta:
+  - name: keywords
+    content: "Kafka Elasticsearch connector, Elasticsearch sink, search indexing, Kafka to Elasticsearch"
 ---
 
 # Elasticsearch Sink Connector

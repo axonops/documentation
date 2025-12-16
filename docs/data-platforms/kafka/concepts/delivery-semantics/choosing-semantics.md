@@ -1,6 +1,9 @@
 ---
 title: "Choosing Delivery Semantics"
 description: "Guide to selecting appropriate Kafka delivery semantics. Decision framework, use case analysis, and migration strategies."
+meta:
+  - name: keywords
+    content: "Kafka delivery semantics, choosing semantics, reliability vs performance"
 ---
 
 # Choosing Delivery Semantics

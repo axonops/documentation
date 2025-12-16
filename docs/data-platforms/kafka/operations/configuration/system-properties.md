@@ -1,6 +1,9 @@
 ---
 title: "Kafka System Properties"
 description: "Apache Kafka JVM system properties and environment variables. Runtime configuration for JVM, logging, security, and debugging."
+meta:
+  - name: keywords
+    content: "Kafka system properties, JVM settings, environment variables, Kafka startup"
 ---
 
 # System Properties

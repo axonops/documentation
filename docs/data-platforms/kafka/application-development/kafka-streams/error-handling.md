@@ -1,6 +1,9 @@
 ---
 title: "Kafka Streams Error Handling"
 description: "Kafka Streams error handling patterns. Deserialization errors, production exceptions, uncaught exceptions, and recovery strategies."
+meta:
+  - name: keywords
+    content: "Kafka Streams error handling, deserialization exception, production exception, dead letter queue, stream recovery"
 ---
 
 # Error Handling

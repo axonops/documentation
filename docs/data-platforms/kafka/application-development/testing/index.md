@@ -1,6 +1,9 @@
 ---
 title: "Kafka Testing Guide"
 description: "Testing Apache Kafka applications. Unit testing with mocks, integration testing with Testcontainers, and end-to-end testing strategies."
+meta:
+  - name: keywords
+    content: "Kafka testing, MockProducer, MockConsumer, Testcontainers, integration testing, unit testing Kafka"
 ---
 
 # Kafka Testing Guide

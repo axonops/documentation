@@ -1,6 +1,9 @@
 ---
 title: "Kafka Cluster Scaling"
 description: "Apache Kafka cluster scaling architecture. Horizontal scaling, partition reassignment, and cluster expansion strategies."
+meta:
+  - name: keywords
+    content: "Kafka scaling, horizontal scaling, partition scaling, cluster expansion"
 ---
 
 # Kafka Cluster Scaling

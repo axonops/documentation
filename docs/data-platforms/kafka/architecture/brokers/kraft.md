@@ -1,6 +1,9 @@
 ---
 title: "Kafka KRaft Mode"
 description: "Apache Kafka KRaft architecture. Raft consensus, controller quorum, metadata log, and migration from ZooKeeper."
+meta:
+  - name: keywords
+    content: "KRaft, Kafka Raft, Kafka without ZooKeeper, KRaft controller, Kafka metadata quorum"
 ---
 
 # Kafka KRaft Mode

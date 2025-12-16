@@ -1,6 +1,9 @@
 ---
 title: "Kafka Consumer Rebalancing"
 description: "Apache Kafka consumer rebalancing deep dive. Rebalance triggers, protocols, cooperative rebalancing, and minimizing disruption."
+meta:
+  - name: keywords
+    content: "Kafka rebalancing, consumer rebalance, partition reassignment, cooperative rebalancing, rebalance listener"
 ---
 
 # Consumer Rebalancing

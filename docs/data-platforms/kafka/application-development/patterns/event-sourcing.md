@@ -1,6 +1,9 @@
 ---
 title: "Event Sourcing with Kafka"
 description: "Event sourcing pattern implementation with Apache Kafka. Store application state as immutable event sequences with replay, temporal queries, and audit capabilities."
+meta:
+  - name: keywords
+    content: "event sourcing Kafka, event store, event replay, aggregate events, event-driven architecture"
 ---
 
 # Event Sourcing with Kafka

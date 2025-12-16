@@ -1,6 +1,9 @@
 ---
 title: "Kafka Client Throttling"
 description: "Apache Kafka client throttling. Quotas, rate limiting, backpressure, and flow control mechanisms."
+meta:
+  - name: keywords
+    content: "Kafka throttling, client quotas, rate limiting, quota enforcement"
 ---
 
 # Kafka Client Throttling

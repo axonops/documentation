@@ -1,6 +1,9 @@
 ---
 title: "Kafka Consumer Group Rebalancing"
 description: "Apache Kafka consumer group rebalancing internals. Rebalance protocol, assignment strategies, cooperative rebalancing, and static membership."
+meta:
+  - name: keywords
+    content: "Kafka consumer rebalancing, partition assignment, rebalance protocol, incremental rebalancing"
 ---
 
 # Kafka Consumer Group Rebalancing

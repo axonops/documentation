@@ -1,6 +1,9 @@
 ---
 title: "Kafka Topics"
 description: "Apache Kafka topics - partitions, replication, ordering guarantees, retention policies, and behavioral contracts."
+meta:
+  - name: keywords
+    content: "Kafka topics, topic configuration, partitions, replication factor, topic management"
 ---
 
 # Kafka Topics

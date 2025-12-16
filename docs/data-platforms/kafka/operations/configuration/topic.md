@@ -1,6 +1,9 @@
 ---
 title: "Kafka Topic Configuration"
 description: "Apache Kafka topic configuration reference. Retention, compaction, compression, partitioning, and topic-level overrides."
+meta:
+  - name: keywords
+    content: "Kafka topic configuration, retention, compaction, topic settings, partition config"
 ---
 
 # Topic Configuration

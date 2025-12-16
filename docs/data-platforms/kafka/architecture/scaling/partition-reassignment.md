@@ -1,6 +1,9 @@
 ---
 title: "Kafka Partition Reassignment"
 description: "Apache Kafka partition reassignment internals. Replica movement, throttling, reassignment process, and data migration."
+meta:
+  - name: keywords
+    content: "Kafka partition reassignment, replica movement, kafka-reassign-partitions, data migration"
 ---
 
 # Kafka Partition Reassignment

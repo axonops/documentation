@@ -1,6 +1,9 @@
 ---
 title: "Kafka Python Driver"
 description: "Kafka Python client. Installation, configuration, producer and consumer examples with confluent-kafka."
+meta:
+  - name: keywords
+    content: "Kafka Python quickstart, Python Kafka tutorial, confluent-kafka getting started, Python producer consumer"
 ---
 
 # Kafka Python Driver

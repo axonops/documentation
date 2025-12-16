@@ -1,6 +1,9 @@
 ---
 title: "Kafka Consumer Guide"
 description: "Comprehensive guide to Apache Kafka consumers including consumer groups, offset management, rebalancing, and consumption patterns."
+meta:
+  - name: keywords
+    content: "Kafka consumer, consumer group, Kafka subscription, message consumption, Kafka poll, consumer API"
 ---
 
 # Kafka Consumer Guide

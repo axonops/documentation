@@ -1,6 +1,9 @@
 ---
 title: "Kafka Transaction Protocol APIs"
 description: "Apache Kafka transaction protocol APIs. InitProducerId, AddPartitionsToTxn, AddOffsetsToTxn, EndTxn, and exactly-once semantics specifications."
+meta:
+  - name: keywords
+    content: "Kafka transaction API, InitProducerId, AddPartitionsToTxn, EndTxn, transaction protocol"
 ---
 
 # Kafka Transaction Protocol APIs

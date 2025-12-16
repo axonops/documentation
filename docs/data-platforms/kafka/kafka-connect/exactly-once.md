@@ -1,6 +1,9 @@
 ---
 title: "Kafka Connect Exactly-Once"
 description: "Kafka Connect exactly-once semantics. Source connector transactions, sink idempotence, and EOS configuration."
+meta:
+  - name: keywords
+    content: "Kafka Connect exactly-once, EOS connectors, transactional sink, exactly-once sink"
 ---
 
 # Kafka Connect Exactly-Once

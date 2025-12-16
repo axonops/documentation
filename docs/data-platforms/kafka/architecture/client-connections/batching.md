@@ -1,6 +1,9 @@
 ---
 title: "Kafka Producer Batching"
 description: "Apache Kafka producer batching. Record accumulator, batch configuration, linger.ms, and throughput optimization."
+meta:
+  - name: keywords
+    content: "Kafka batching, batch.size, linger.ms, producer batching, batch optimization"
 ---
 
 # Kafka Producer Batching

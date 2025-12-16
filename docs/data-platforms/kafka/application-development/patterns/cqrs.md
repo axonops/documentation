@@ -1,6 +1,9 @@
 ---
 title: "CQRS with Kafka"
 description: "Command Query Responsibility Segregation pattern with Apache Kafka. Separate read and write models for scalable event-driven architectures."
+meta:
+  - name: keywords
+    content: "CQRS Kafka, command query separation, read model, write model, event-driven CQRS"
 ---
 
 # CQRS with Kafka

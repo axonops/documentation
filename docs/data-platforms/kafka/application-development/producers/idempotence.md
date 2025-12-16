@@ -1,6 +1,9 @@
 ---
 title: "Kafka Idempotent Producer"
 description: "Kafka idempotent producer internals. Producer ID, sequence numbers, epoch, and duplicate detection."
+meta:
+  - name: keywords
+    content: "Kafka idempotent producer, exactly-once producer, enable.idempotence, duplicate prevention, producer ID"
 ---
 
 # Kafka Idempotent Producer

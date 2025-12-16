@@ -1,6 +1,9 @@
 ---
 title: "Kafka Client Authentication"
 description: "Apache Kafka client authentication mechanisms. SASL/SCRAM, SASL/PLAIN, SASL/GSSAPI (Kerberos), SASL/OAUTHBEARER, and mTLS authentication."
+meta:
+  - name: keywords
+    content: "Kafka authentication, SASL, SSL/TLS, client authentication, Kafka security"
 ---
 
 # Kafka Client Authentication

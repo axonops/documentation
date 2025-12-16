@@ -1,6 +1,9 @@
 ---
 title: "Kafka Connect Operations"
 description: "Kafka Connect operations. Monitoring, scaling, troubleshooting, and management."
+meta:
+  - name: keywords
+    content: "Kafka Connect operations, connector management, REST API, Connect cluster operations"
 ---
 
 # Kafka Connect Operations

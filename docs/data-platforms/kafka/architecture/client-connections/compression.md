@@ -1,6 +1,9 @@
 ---
 title: "Kafka Message Compression"
 description: "Apache Kafka message compression. Compression codecs (GZIP, Snappy, LZ4, ZSTD), batch compression, and performance optimization."
+meta:
+  - name: keywords
+    content: "Kafka compression, lz4, snappy, zstd, gzip, message compression"
 ---
 
 # Kafka Message Compression

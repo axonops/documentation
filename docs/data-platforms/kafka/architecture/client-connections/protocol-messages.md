@@ -1,6 +1,9 @@
 ---
 title: "Kafka Protocol Message Format"
 description: "Apache Kafka wire protocol message framing. Request and response headers, correlation IDs, version negotiation, and message structure."
+meta:
+  - name: keywords
+    content: "Kafka protocol messages, request header, response header, message format"
 ---
 
 # Kafka Protocol Message Format

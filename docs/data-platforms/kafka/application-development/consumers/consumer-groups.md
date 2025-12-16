@@ -1,6 +1,9 @@
 ---
 title: "Kafka Consumer Groups"
 description: "Apache Kafka consumer groups deep dive. Group coordination, partition assignment, static membership, and consumer group management."
+meta:
+  - name: keywords
+    content: "Kafka consumer group, group coordinator, group.id, consumer membership, partition assignment"
 ---
 
 # Consumer Groups

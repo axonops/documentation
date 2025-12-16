@@ -1,6 +1,9 @@
 ---
 title: "Kafka Tiered Storage Configuration"
 description: "Apache Kafka tiered storage configuration. Remote storage for cost-effective long-term retention with S3, GCS, and Azure Blob Storage."
+meta:
+  - name: keywords
+    content: "Kafka tiered storage, remote storage, cloud storage tier, infinite retention"
 ---
 
 # Tiered Storage Configuration

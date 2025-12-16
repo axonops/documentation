@@ -1,6 +1,9 @@
 ---
 title: "Managed Kafka Services"
 description: "Managed Apache Kafka services. Cloud provider offerings and selection criteria."
+meta:
+  - name: keywords
+    content: "Managed Kafka, Confluent Cloud, Amazon MSK, Azure Event Hubs, Kafka as a service"
 ---
 
 # Managed Kafka Services

@@ -1,6 +1,9 @@
 ---
 title: "Saga Pattern with Kafka"
 description: "Saga pattern for distributed transactions with Apache Kafka. Choreography and orchestration approaches for coordinating multi-service business processes."
+meta:
+  - name: keywords
+    content: "saga pattern Kafka, distributed transactions, choreography saga, orchestration saga, compensation"
 ---
 
 # Saga Pattern with Kafka

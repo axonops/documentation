@@ -1,6 +1,9 @@
 ---
 title: "Kafka Connect Converters"
 description: "Kafka Connect converters. JSON, Avro, Protobuf, and String converters for data serialization."
+meta:
+  - name: keywords
+    content: "Kafka Connect converters, Avro converter, JSON converter, Protobuf converter, schema handling"
 ---
 
 # Kafka Connect Converters

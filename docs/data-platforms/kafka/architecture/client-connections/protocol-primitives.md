@@ -1,6 +1,9 @@
 ---
 title: "Kafka Protocol Primitive Types"
 description: "Apache Kafka wire protocol primitive data types. Integer encoding, variable-length integers, strings, bytes, arrays, and tagged fields."
+meta:
+  - name: keywords
+    content: "Kafka protocol primitives, data types, varint, compact arrays, tagged fields"
 ---
 
 # Kafka Protocol Primitive Types

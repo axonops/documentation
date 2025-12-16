@@ -1,6 +1,9 @@
 ---
 title: "Schema Registry Operations"
 description: "Schema Registry operations. Deployment, monitoring, backup, and troubleshooting procedures."
+meta:
+  - name: keywords
+    content: "Schema Registry operations, schema management, REST API, schema deployment"
 ---
 
 # Schema Registry Operations

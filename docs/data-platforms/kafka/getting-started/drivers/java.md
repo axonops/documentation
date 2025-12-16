@@ -1,6 +1,9 @@
 ---
 title: "Kafka Java Driver"
 description: "Apache Kafka Java client. Installation, configuration, producer and consumer examples."
+meta:
+  - name: keywords
+    content: "Kafka Java quickstart, Java Kafka tutorial, Java producer consumer, kafka-clients getting started"
 ---
 
 # Kafka Java Driver

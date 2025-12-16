@@ -1,6 +1,9 @@
 ---
 title: "Kafka Offset Management"
 description: "Apache Kafka consumer offset management. Commit strategies, offset storage, reset behavior, and exactly-once semantics."
+meta:
+  - name: keywords
+    content: "Kafka offset, offset commit, consumer offset, auto.offset.reset, offset tracking, committed offset"
 ---
 
 # Offset Management

@@ -1,6 +1,9 @@
 ---
 title: "Kafka Client Failure Handling"
 description: "Apache Kafka client failure handling. Retry policies, idempotent producers, transactions, error recovery, and delivery guarantees."
+meta:
+  - name: keywords
+    content: "Kafka failure handling, connection retry, broker failure, client resilience"
 ---
 
 # Kafka Client Failure Handling

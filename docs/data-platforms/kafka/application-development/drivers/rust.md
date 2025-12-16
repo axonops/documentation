@@ -1,6 +1,9 @@
 ---
 title: "Kafka Rust Client"
 description: "Apache Kafka Rust client guide using rdkafka. Producer, consumer, and admin client usage with async support, configuration, and best practices."
+meta:
+  - name: keywords
+    content: "Kafka Rust, rdkafka, Rust Kafka client, Tokio Kafka, async Kafka, Cargo kafka"
 ---
 
 # Kafka Rust Client

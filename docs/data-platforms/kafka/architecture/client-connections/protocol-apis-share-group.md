@@ -1,6 +1,9 @@
 ---
 title: "Kafka Share Group Protocol APIs"
 description: "Apache Kafka Share Group protocol APIs. ShareGroupHeartbeat, ShareFetch, ShareAcknowledge, and state management specifications."
+meta:
+  - name: keywords
+    content: "Kafka share groups, KIP-932, shared consumption, queue semantics"
 ---
 
 # Kafka Share Group Protocol APIs

@@ -1,6 +1,9 @@
 ---
 title: "Kafka Configuration Providers"
 description: "Apache Kafka configuration providers for external secret management. HashiCorp Vault, AWS Secrets Manager, Azure Key Vault, and file-based configuration."
+meta:
+  - name: keywords
+    content: "Kafka configuration providers, secret management, external configuration, dynamic secrets"
 ---
 
 # Configuration Providers

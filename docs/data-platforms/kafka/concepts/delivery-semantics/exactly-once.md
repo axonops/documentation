@@ -1,6 +1,9 @@
 ---
 title: "Exactly-Once Semantics"
 description: "Kafka exactly-once semantics (EOS). Idempotent producers, transactions, read-process-write patterns, and Kafka Streams EOS."
+meta:
+  - name: keywords
+    content: "Kafka exactly-once, EOS, idempotent producer, transactional messaging"
 ---
 
 # Exactly-Once Semantics

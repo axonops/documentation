@@ -1,6 +1,9 @@
 ---
 title: "Kafka Producer Configuration"
 description: "Complete Apache Kafka producer configuration reference. All settings for reliability, performance, batching, and security."
+meta:
+  - name: keywords
+    content: "Kafka producer configuration, producer settings, acks, batch.size, linger.ms, producer tuning"
 ---
 
 # Kafka Producer Configuration

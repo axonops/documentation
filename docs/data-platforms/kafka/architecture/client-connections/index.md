@@ -1,6 +1,9 @@
 ---
 title: "Kafka Client Connection Architecture"
 description: "Apache Kafka client connections architecture. Connection pooling, protocol, metadata management, and load balancing."
+meta:
+  - name: keywords
+    content: "Kafka client connections, Kafka protocol, broker connection, client networking, connection management"
 ---
 
 # Client Connection Architecture

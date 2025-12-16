@@ -1,6 +1,9 @@
 ---
 title: "Kafka Streams Windowing"
 description: "Kafka Streams windowing for time-based processing. Tumbling, hopping, sliding, and session windows with late arrival handling."
+meta:
+  - name: keywords
+    content: "Kafka Streams windowing, tumbling window, hopping window, session window, time-based aggregation"
 ---
 
 # Windowing

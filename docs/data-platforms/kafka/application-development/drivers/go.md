@@ -1,6 +1,9 @@
 ---
 title: "Kafka Go Client"
 description: "Apache Kafka Go client guide using confluent-kafka-go. Producer, consumer, and admin client usage with configuration, error handling, and best practices."
+meta:
+  - name: keywords
+    content: "Kafka Go, confluent-kafka-go, franz-go, segmentio kafka-go, Golang Kafka, Go Kafka producer"
 ---
 
 # Kafka Go Client

@@ -1,6 +1,9 @@
 ---
 title: "Kafka Application Development"
 description: "Developing applications with Apache Kafka. Producer and consumer patterns, client configuration, error handling, and best practices."
+meta:
+  - name: keywords
+    content: "Kafka development, Kafka producer, Kafka consumer, Kafka Streams, Kafka client, application development"
 ---
 
 # Kafka Application Development

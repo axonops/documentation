@@ -1,6 +1,9 @@
 ---
 title: "Outbox Pattern with Kafka"
 description: "Transactional outbox pattern with Apache Kafka. Reliable event publishing with database transactions using polling or CDC approaches."
+meta:
+  - name: keywords
+    content: "outbox pattern, transactional outbox, Kafka CDC, database outbox, reliable messaging"
 ---
 
 # Outbox Pattern with Kafka

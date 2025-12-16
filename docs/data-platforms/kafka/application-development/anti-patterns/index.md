@@ -1,6 +1,9 @@
 ---
 title: "Kafka Anti-Patterns"
 description: "Common Apache Kafka mistakes and anti-patterns to avoid. Producer, consumer, topic design, and operational pitfalls with solutions."
+meta:
+  - name: keywords
+    content: "Kafka anti-patterns, Kafka mistakes, Kafka best practices, common Kafka errors, Kafka pitfalls"
 ---
 
 # Kafka Anti-Patterns

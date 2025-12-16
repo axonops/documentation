@@ -1,6 +1,9 @@
 ---
 title: "Kafka Consumer Error Handling"
 description: "Apache Kafka consumer error handling patterns. Poison pills, dead letter queues, retry strategies, and deserialization errors."
+meta:
+  - name: keywords
+    content: "Kafka consumer error handling, dead letter queue, retry topic, consumer exception, error recovery"
 ---
 
 # Consumer Error Handling

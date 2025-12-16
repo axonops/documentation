@@ -1,6 +1,9 @@
 ---
 title: "Kafka Quotas Configuration"
 description: "Apache Kafka client quotas for rate limiting. Producer, consumer, and request quotas for bandwidth and request rate management."
+meta:
+  - name: keywords
+    content: "Kafka quotas, client quotas, producer quotas, consumer quotas, rate limiting"
 ---
 
 # Quotas Configuration

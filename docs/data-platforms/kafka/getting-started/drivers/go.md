@@ -1,6 +1,9 @@
 ---
 title: "Kafka Go Driver"
 description: "Kafka Go client. Installation, configuration, producer and consumer examples with confluent-kafka-go."
+meta:
+  - name: keywords
+    content: "Kafka Go quickstart, Golang Kafka tutorial, Go producer consumer, confluent-kafka-go getting started"
 ---
 
 # Kafka Go Driver

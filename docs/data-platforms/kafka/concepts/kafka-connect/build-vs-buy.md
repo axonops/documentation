@@ -1,6 +1,9 @@
 ---
 title: "Build vs Buy - Kafka Integration"
 description: "Decision framework for Kafka Connect vs custom integration code. When to use connectors and when to build custom solutions."
+meta:
+  - name: keywords
+    content: "Kafka Connect build vs buy, custom connector, connector development"
 ---
 
 # Build vs Buy Decision Framework

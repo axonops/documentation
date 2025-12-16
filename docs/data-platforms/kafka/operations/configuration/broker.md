@@ -1,6 +1,9 @@
 ---
 title: "Kafka Broker Configuration"
 description: "Apache Kafka broker configuration reference. server.properties settings for KRaft, networking, storage, replication, and performance tuning."
+meta:
+  - name: keywords
+    content: "Kafka broker configuration, server.properties, broker settings, cluster configuration"
 ---
 
 # Broker Configuration

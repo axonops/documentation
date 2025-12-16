@@ -1,6 +1,9 @@
 ---
 title: "Why Schema Management Matters"
 description: "Schema management importance for Kafka. Data contracts, compatibility, and the cost of schemaless messaging."
+meta:
+  - name: keywords
+    content: "Kafka schemas, schema benefits, data contracts, schema enforcement, data governance"
 ---
 
 # Why Schema Management Matters

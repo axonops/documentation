@@ -1,6 +1,9 @@
 ---
 title: "Kafka Record Batch Format"
 description: "Apache Kafka record batch format specification. Message format versions, record structure, compression, timestamps, and transactional records."
+meta:
+  - name: keywords
+    content: "Kafka record batch, message format, record headers, record compression"
 ---
 
 # Kafka Record Batch Format

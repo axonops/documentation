@@ -1,6 +1,9 @@
 ---
 title: "Kafka Python Client"
 description: "Apache Kafka Python client guide using confluent-kafka-python. Producer, consumer, and admin client usage with configuration and best practices."
+meta:
+  - name: keywords
+    content: "Kafka Python, confluent-kafka, kafka-python, Python Kafka producer, Python Kafka consumer, pip kafka"
 ---
 
 # Kafka Python Client

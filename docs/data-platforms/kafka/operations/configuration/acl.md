@@ -1,6 +1,9 @@
 ---
 title: "Kafka ACL Configuration"
 description: "Apache Kafka Access Control List (ACL) configuration. Authorization, resource types, operations, and ACL management."
+meta:
+  - name: keywords
+    content: "Kafka ACL, access control list, authorization, Kafka permissions, security rules"
 ---
 
 # ACL Configuration

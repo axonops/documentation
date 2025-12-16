@@ -1,6 +1,9 @@
 ---
 title: "Kafka Streams State Stores"
 description: "Kafka Streams state stores for stateful processing. RocksDB, in-memory stores, custom stores, and state management patterns."
+meta:
+  - name: keywords
+    content: "Kafka Streams state store, RocksDB, state management, persistent store, changelog topic"
 ---
 
 # State Stores

@@ -1,6 +1,9 @@
 ---
 title: "Schema Evolution"
 description: "Safe schema evolution practices for Kafka. Adding fields, removing fields, and managing schema versions."
+meta:
+  - name: keywords
+    content: "Kafka schema evolution, backward compatibility, forward compatibility, schema versioning"
 ---
 
 # Schema Evolution

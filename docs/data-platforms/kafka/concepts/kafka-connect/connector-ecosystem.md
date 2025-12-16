@@ -1,6 +1,9 @@
 ---
 title: "Kafka Connect Connector Ecosystem"
 description: "Kafka Connect connector ecosystem. Available connectors for databases, cloud storage, search engines, and messaging systems."
+meta:
+  - name: keywords
+    content: "Kafka Connect ecosystem, Confluent Hub, connector catalog, source sink connectors"
 ---
 
 # Connector Ecosystem

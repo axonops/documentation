@@ -1,6 +1,9 @@
 ---
 title: "Kafka Client Load Balancing"
 description: "Apache Kafka client-side load balancing. Partition assignment, producer partitioning, consumer load distribution, and rack awareness."
+meta:
+  - name: keywords
+    content: "Kafka load balancing, partition distribution, consumer load balancing, broker selection"
 ---
 
 # Kafka Client Load Balancing

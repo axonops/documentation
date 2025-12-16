@@ -1,6 +1,9 @@
 ---
 title: "MirrorMaker 2 Reference"
 description: "Apache Kafka MirrorMaker 2 complete reference. Configuration, deployment, monitoring, and operational procedures for cross-cluster replication."
+meta:
+  - name: keywords
+    content: "Kafka MirrorMaker 2, MM2, cluster replication, geo-replication, disaster recovery"
 ---
 
 # MirrorMaker 2

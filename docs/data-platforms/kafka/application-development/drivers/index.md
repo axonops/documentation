@@ -1,6 +1,9 @@
 ---
 title: "Kafka Client Drivers"
 description: "Apache Kafka client drivers for all major programming languages. Installation, configuration, and usage guides for Java, Python, Go, Node.js, .NET, and Rust."
+meta:
+  - name: keywords
+    content: "Kafka client, Kafka driver, librdkafka, confluent-kafka, KafkaJS, kafka-python, franz-go"
 ---
 
 # Kafka Client Drivers

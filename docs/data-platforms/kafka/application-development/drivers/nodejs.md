@@ -1,6 +1,9 @@
 ---
 title: "Kafka Node.js Client"
 description: "Apache Kafka Node.js client guide using KafkaJS. Producer, consumer, and admin client usage with configuration, error handling, and best practices."
+meta:
+  - name: keywords
+    content: "Kafka Node.js, KafkaJS, node-rdkafka, JavaScript Kafka, npm kafka, Kafka TypeScript"
 ---
 
 # Kafka Node.js Client

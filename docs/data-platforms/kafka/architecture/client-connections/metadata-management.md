@@ -1,6 +1,9 @@
 ---
 title: "Kafka Metadata Management"
 description: "Apache Kafka metadata management. Cluster discovery, topic metadata, partition leadership, and metadata caching."
+meta:
+  - name: keywords
+    content: "Kafka metadata, topic metadata, partition metadata, metadata refresh, metadata cache"
 ---
 
 # Kafka Metadata Management

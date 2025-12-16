@@ -1,6 +1,9 @@
 ---
 title: "Kafka Administrative Protocol APIs"
 description: "Apache Kafka administrative protocol APIs. CreateTopics, DeleteTopics, CreatePartitions, ACLs, Configs, and cluster management specifications."
+meta:
+  - name: keywords
+    content: "Kafka admin API, AdminClient, topic management, broker admin, cluster administration"
 ---
 
 # Kafka Administrative Protocol APIs

@@ -1,6 +1,9 @@
 ---
 title: "Apache Kafka Reference Documentation"
 description: "Comprehensive Apache Kafka documentation covering architecture, operations, security, and best practices for production deployments."
+meta:
+  - name: keywords
+    content: "Apache Kafka, Kafka documentation, event streaming, distributed messaging, Kafka architecture, Kafka operations"
 ---
 
 # Apache Kafka Reference Documentation

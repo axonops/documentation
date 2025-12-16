@@ -1,6 +1,9 @@
 ---
 title: "Kafka .NET Driver"
 description: "Kafka .NET client. Installation, configuration, producer and consumer examples with Confluent.Kafka."
+meta:
+  - name: keywords
+    content: "Kafka .NET quickstart, C# Kafka tutorial, .NET producer consumer, Confluent.Kafka getting started"
 ---
 
 # Kafka .NET Driver

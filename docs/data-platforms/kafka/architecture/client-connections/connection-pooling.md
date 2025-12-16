@@ -1,6 +1,9 @@
 ---
 title: "Kafka Connection Pooling"
 description: "Apache Kafka connection pooling architecture. NetworkClient, Selector, connection management, and multiplexing."
+meta:
+  - name: keywords
+    content: "Kafka connection pooling, connection management, max.connections, connection reuse"
 ---
 
 # Kafka Connection Pooling

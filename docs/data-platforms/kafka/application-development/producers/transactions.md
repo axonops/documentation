@@ -1,6 +1,9 @@
 ---
 title: "Kafka Transactional Producer"
 description: "Kafka transactional producer. Atomic writes, exactly-once semantics, read-process-write pattern, and transaction API."
+meta:
+  - name: keywords
+    content: "Kafka transactions, transactional producer, exactly-once semantics, transaction API, atomic writes"
 ---
 
 # Kafka Transactional Producer
