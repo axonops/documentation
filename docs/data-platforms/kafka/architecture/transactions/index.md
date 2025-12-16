@@ -12,6 +12,204 @@ The transaction coordinator enables atomic writes across multiple partitions and
 
 ---
 
+## Why Transactions Exist
+
+Kafka was originally designed for high-throughput streaming with at-least-once delivery. However, certain use cases require stronger guarantees:
+
+### The Problems Transactions Solve
+
+| Problem | Without Transactions | With Transactions |
+|---------|---------------------|-------------------|
+| **Duplicate writes on retry** | Producer retries may create duplicates | Idempotent writes prevent duplicates |
+| **Partial failures** | Writing to 3 topics may succeed for 2, fail for 1 | All-or-nothing atomicity |
+| **Read-process-write consistency** | Consumer offset committed separately from output | Offset and output committed atomically |
+| **Zombie producers** | Crashed producer restarts, old instance still writing | Epoch fencing blocks old instances |
+
+### The Fundamental Challenge
+
+Consider a stream processing application that reads from an input topic, processes records, and writes to an output topic:
+
+```plantuml
+@startuml
+
+skinparam backgroundColor transparent
+
+rectangle "Without Transactions" as without {
+    rectangle "1. Read from input" as r1
+    rectangle "2. Process" as p1
+    rectangle "3. Write to output" as w1
+    rectangle "4. Commit offset" as c1
+
+    r1 --> p1
+    p1 --> w1
+    w1 --> c1
+
+    note bottom of w1
+      If crash here:
+      Output written
+      Offset NOT committed
+      → Duplicate processing on restart
+    end note
+}
+
+rectangle "With Transactions" as with {
+    rectangle "1. Read from input" as r2
+    rectangle "2. Process" as p2
+    rectangle "3. Write to output\n+ commit offset" as w2
+    card "ATOMIC" as atomic #lightgreen
+
+    r2 --> p2
+    p2 --> w2
+    w2 .. atomic
+
+    note bottom of w2
+      Output + offset committed atomically
+      No duplicates possible
+    end note
+}
+
+without -[hidden]right-> with
+
+@enduml
+```
+
+---
+
+## Use Cases
+
+### When to Use Transactions
+
+| Use Case | Why Transactions Help |
+|----------|----------------------|
+| **Financial data processing** | Cannot tolerate duplicates or partial updates |
+| **Exactly-once stream processing** | Kafka Streams with `exactly_once_v2` uses transactions internally |
+| **Multi-topic atomic writes** | Order service writes to `orders`, `inventory`, `notifications` atomically |
+| **Read-process-write pipelines** | ETL jobs that must not reprocess or skip records |
+| **Event sourcing with projections** | Event and projection updates must be atomic |
+| **Cross-partition aggregations** | Aggregation results written atomically with source offsets |
+
+### Concrete Examples
+
+**Example 1: Order Processing**
+
+An order service must update multiple topics atomically:
+
+```
+Transaction {
+    write("orders", order_created_event)
+    write("inventory", reserve_stock_event)
+    write("payments", payment_request_event)
+    write("notifications", order_confirmation_event)
+}
+```
+
+If any write fails, all are rolled back. No partial orders.
+
+**Example 2: Stream Aggregation**
+
+A real-time dashboard aggregates sales by region:
+
+```
+Transaction {
+    // Read sales events from input
+    // Aggregate by region
+    write("sales-by-region", aggregated_results)
+    commit_offsets("sales-events", consumer_group)
+}
+```
+
+If the application crashes after writing results but before committing offsets, restart would not reprocess—the transaction ensures both happen or neither.
+
+**Example 3: Change Data Capture (CDC)**
+
+Database changes replicated to Kafka must maintain consistency:
+
+```
+Transaction {
+    write("users", user_updated)
+    write("user-search-index", search_document)
+    write("user-cache-invalidation", cache_key)
+}
+```
+
+All downstream systems see the change atomically or not at all.
+
+---
+
+## When NOT to Use Transactions
+
+Transactions add overhead and complexity. They are not always the right choice.
+
+### Anti-Patterns
+
+| Scenario | Why Transactions Are Wrong | Better Approach |
+|----------|---------------------------|-----------------|
+| **High-throughput logging** | Overhead reduces throughput 30-50% | Idempotent producer (no transactions) |
+| **Fire-and-forget metrics** | Occasional duplicates acceptable | `acks=1` or `acks=0` |
+| **Single-partition writes** | No cross-partition atomicity needed | Idempotent producer only |
+| **Latency-critical paths** | Transaction commit adds latency | At-least-once with idempotent consumers |
+| **Independent events** | Events don't need atomic grouping | Separate non-transactional writes |
+
+### Performance Impact
+
+| Metric | Non-Transactional | Transactional | Impact |
+|--------|-------------------|---------------|--------|
+| **Throughput** | 100% baseline | 50-70% | 30-50% reduction |
+| **Latency (p50)** | ~5ms | ~15-25ms | 3-5x increase |
+| **Latency (p99)** | ~20ms | ~50-100ms | 2.5-5x increase |
+| **Broker CPU** | Baseline | Higher | Coordinator overhead |
+
+### Decision Guide
+
+```plantuml
+@startuml
+
+skinparam backgroundColor transparent
+
+start
+
+:Do you need atomic writes\nacross multiple partitions/topics?;
+
+if (Yes) then (yes)
+    :Do you need exactly-once\nread-process-write?;
+    if (Yes) then (yes)
+        #lightgreen:Use Transactions;
+        stop
+    else (no)
+        :Can you tolerate\noccasional duplicates?;
+        if (No) then (no)
+            #lightgreen:Use Transactions;
+            stop
+        else (yes)
+            #lightyellow:Use Idempotent Producer;
+            stop
+        endif
+    endif
+else (no)
+    :Do you need deduplication\non producer retries?;
+    if (Yes) then (yes)
+        #lightyellow:Use Idempotent Producer;
+        stop
+    else (no)
+        #lightblue:Standard Producer\n(acks=all for durability);
+        stop
+    endif
+endif
+
+@enduml
+```
+
+### Alternatives to Transactions
+
+| Alternative | When to Use | Trade-off |
+|-------------|-------------|-----------|
+| **Idempotent producer** | Single-partition deduplication | No cross-partition atomicity |
+| **Idempotent consumer** | Consumer handles duplicates | Application complexity |
+| **Outbox pattern** | Database + Kafka consistency | Requires CDC or polling |
+| **Saga pattern** | Long-running distributed workflows | Compensation logic needed |
+
+---
+
 ## Transaction Architecture Overview
 
 Kafka transactions provide atomicity—a set of writes either all succeed or all fail. The transaction coordinator is a broker-side component that manages transaction state and coordinates commits.
