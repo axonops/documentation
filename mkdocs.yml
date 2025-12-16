@@ -10,6 +10,7 @@ theme:
   logo: '/img/axonops_logo.png'
   language: 'en'
   custom_dir: overrides
+  font: false
   palette: 
     # Palette toggle for light mode
     - scheme: default
@@ -55,6 +56,7 @@ extra:
       name: Youtube - AxonOps
 
 extra_css:
+  - 'stylesheets/fonts.css'
   - 'stylesheets/extra.css'
 
 markdown_extensions:
