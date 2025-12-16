@@ -138,6 +138,14 @@ Deep dive into Kafka's internal architecture and distributed systems design.
 
 <div class="grid cards" markdown>
 
+-   :material-file-tree:{ .lg .middle } **Topics & Partitions**
+
+    ---
+
+    Topics, partitions, partition leaders, ISR, and leader election.
+
+    [:octicons-arrow-right-24: Topics & Partitions](architecture/topics/index.md)
+
 -   :material-server:{ .lg .middle } **Brokers**
 
     ---
@@ -177,6 +185,14 @@ Deep dive into Kafka's internal architecture and distributed systems design.
     Failure detection, recovery mechanisms, and high availability.
 
     [:octicons-arrow-right-24: Fault Tolerance](architecture/fault-tolerance/index.md)
+
+-   :material-atom:{ .lg .middle } **Transaction Coordinator**
+
+    ---
+
+    Exactly-once semantics, producer IDs, and two-phase commit.
+
+    [:octicons-arrow-right-24: Transactions](architecture/transactions/index.md)
 
 </div>
 

@@ -547,6 +547,8 @@ Kafka survives failures at multiple levels:
 
 ## Related Documentation
 
+- [Topics and Partitions](topics/index.md) - Partitions, leaders, ISR, replication
+- [Transaction Coordinator](transactions/index.md) - Exactly-once semantics, two-phase commit
 - [Brokers](brokers/index.md) - Broker architecture and configuration
 - [KRaft](brokers/kraft.md) - KRaft consensus mode
 - [Replication](replication/index.md) - ISR, leader election, durability

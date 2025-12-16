@@ -126,126 +126,405 @@ Understanding what Cassandra is *not* helps set appropriate expectations.
 | **"Cassandra loses data"** | Data loss occurs from misconfiguration (improper `gc_grace_seconds`, skipped repairs) or hardware failures beyond the replication factor—not from Cassandra itself. With proper operations, Cassandra provides strong durability guarantees. |
 | **"Cassandra is an in-memory database"** | Cassandra is a persistent, disk-based database. While memtables buffer recent writes in memory, all data is durably written to the commit log immediately and flushed to SSTables on disk. Memory caches improve read performance but are not the primary storage. |
 
-## Documentation Sections
+## Getting Started
 
-### Getting Started
+New to Cassandra? Begin with installation and initial configuration.
 
-New to Cassandra? Start here:
+<div class="grid cards" markdown>
 
-- [What is Cassandra?](getting-started/what-is-cassandra.md) - Introduction and core concepts
-- [Installation Guide](getting-started/installation/index.md) - Install on Linux, Docker, or Kubernetes
-- [First Cluster](getting-started/first-cluster.md) - Create and configure a first cluster
-- [CQL Quickstart](getting-started/quickstart-cql.md) - Learn Cassandra Query Language basics
-- [Driver Setup](getting-started/drivers/index.md) - Connect your application
+-   :material-download:{ .lg .middle } **Installation**
 
-### Architecture
+    ---
 
-Understand how Cassandra works:
+    Install Cassandra on Linux, Docker, or Kubernetes environments.
 
-- [Architecture Overview](architecture/index.md) - Distributed architecture fundamentals
-- [Data Distribution](architecture/distributed-data/index.md) - Partitioning and token rings
-- [Replication](architecture/distributed-data/replication.md) - How data is replicated for fault tolerance
-- [Consistency Levels](architecture/distributed-data/consistency.md) - Tunable consistency explained
-- [Compaction Strategies](architecture/storage-engine/compaction/index.md) - STCS, LCS, TWCS, and UCS
-- [Storage Engine](architecture/storage-engine/index.md) - Memtables, SSTables, and commit log
+    [:octicons-arrow-right-24: Installation Guide](getting-started/installation/index.md)
 
-### CQL Reference
+-   :material-rocket-launch:{ .lg .middle } **First Cluster**
 
-Complete Cassandra Query Language documentation:
+    ---
 
-- [CQL Overview](cql/index.md) - CQL language reference
-- [Data Types](cql/data-types/index.md) - Native, collection, and user-defined types
-- [DDL Commands](cql/ddl/index.md) - CREATE, ALTER, DROP statements
-- [DML Commands](cql/dml/index.md) - SELECT, INSERT, UPDATE, DELETE
-- [Indexing](cql/indexing/index.md) - Secondary indexes and SAI
-- [Functions](cql/functions/index.md) - Built-in and user-defined functions
+    Create and configure a first Cassandra cluster step by step.
 
-### Data Modeling
+    [:octicons-arrow-right-24: First Cluster](getting-started/first-cluster.md)
 
-Design effective Cassandra data models:
+-   :material-language-java:{ .lg .middle } **Client Drivers**
 
-- [Data Modeling Guide](data-modeling/index.md) - Query-first design methodology
-- [Key Concepts](data-modeling/concepts/index.md) - Partition keys, clustering columns
-- [Anti-Patterns](data-modeling/anti-patterns/index.md) - Common mistakes to avoid
+    ---
 
-### Operations
+    Connect applications using Java, Python, Go, and other drivers.
 
-Run Cassandra in production:
+    [:octicons-arrow-right-24: Driver Setup](getting-started/drivers/index.md)
 
-- [Operations Guide](operations/index.md) - Day-to-day operations
-- [Cluster Management](operations/cluster-management/index.md) - Add, remove, replace nodes
-- [Backup & Restore](operations/backup-restore/index.md) - Snapshots and recovery
-- [Repair](operations/repair/index.md) - Maintain data consistency
-- [Maintenance](operations/maintenance/index.md) - Routine maintenance tasks
+-   :material-console:{ .lg .middle } **CQL Quickstart**
 
-### Configuration
+    ---
 
-Configure Cassandra for your workload:
+    Learn Cassandra Query Language basics with hands-on examples.
 
-- [Configuration Reference](operations/configuration/index.md) - All configuration files
-- [cassandra.yaml](operations/configuration/cassandra-yaml/index.md) - Main configuration file
-- [JVM Options](operations/configuration/jvm-options/index.md) - Heap and GC settings
-- [Snitch Configuration](operations/configuration/snitch-config/index.md) - Topology awareness
+    [:octicons-arrow-right-24: CQL Quickstart](getting-started/quickstart-cql.md)
 
-### JMX Reference
+</div>
 
-Monitor and manage via JMX:
+---
 
-- [JMX Overview](operations/jmx-reference/index.md) - Connecting and using JMX
-- [MBeans Reference](operations/jmx-reference/mbeans/index.md) - All 30 MBeans documented
-- [Metrics Reference](operations/jmx-reference/metrics/index.md) - 500+ metrics with thresholds
+## Architecture
 
-### Monitoring
+Understand Cassandra's distributed architecture and storage engine.
 
-Monitor your Cassandra cluster:
+<div class="grid cards" markdown>
 
-- [Monitoring Guide](operations/monitoring/index.md) - What and how to monitor
-- [Key Metrics](operations/monitoring/key-metrics/index.md) - Essential metrics to track
-- [Alerting](operations/monitoring/alerting/index.md) - Alert thresholds and setup
-- [Logging](operations/monitoring/logging/index.md) - Log analysis and configuration
+-   :material-sitemap:{ .lg .middle } **Architecture Overview**
 
-### Performance
+    ---
 
-Optimize Cassandra performance:
+    Distributed architecture fundamentals, gossip protocol, and cluster topology.
 
-- [Performance Tuning](operations/performance/index.md) - Optimization strategies
-- [Hardware Sizing](operations/performance/hardware/index.md) - CPU, memory, disk recommendations
-- [JVM Tuning](operations/performance/jvm-tuning/index.md) - GC and heap optimization
-- [OS Tuning](operations/performance/os-tuning/index.md) - Linux kernel parameters
-- [Query Optimization](operations/performance/query-optimization/index.md) - Efficient queries
+    [:octicons-arrow-right-24: Architecture Overview](architecture/index.md)
 
-### Security
+-   :material-share-variant:{ .lg .middle } **Data Distribution**
 
-Secure your cluster:
+    ---
 
-- [Security Guide](security/index.md) - Security overview
-- [Authentication](security/authentication/index.md) - User authentication
-- [Authorization](security/authorization/index.md) - Role-based access control
-- [Encryption](security/encryption/index.md) - TLS and encryption at rest
+    Partitioning, token rings, and virtual nodes (vnodes) explained.
 
-### Tools
+    [:octicons-arrow-right-24: Data Distribution](architecture/distributed-data/index.md)
 
-Essential Cassandra tools:
+-   :material-content-copy:{ .lg .middle } **Replication**
 
-- [nodetool](operations/nodetool/index.md) - Cluster management commands
-- [cqlsh](tools/cqlsh/index.md) - CQL shell reference
-- [CQLAI](tools/cqlai/index.md) - Modern AI-powered CQL shell
-- [SSTable Tools](operations/sstable-management/index.md) - SSTable utilities
-- [cassandra-stress](tools/cassandra-stress/index.md) - Load testing
+    ---
 
-### Troubleshooting
+    Replication strategies, consistency levels, and fault tolerance.
 
-Diagnose and fix issues:
+    [:octicons-arrow-right-24: Replication](architecture/distributed-data/replication.md)
 
-- [Troubleshooting Guide](troubleshooting/index.md) - Problem-solving methodology
-- [Diagnosis Procedures](troubleshooting/diagnosis/index.md) - Root cause analysis
-- [Log Analysis](troubleshooting/log-analysis/index.md) - Interpreting logs
+-   :material-harddisk:{ .lg .middle } **Storage Engine**
 
-### Reference
+    ---
 
-Quick reference materials:
+    Memtables, SSTables, commit log, and write path internals.
 
-- [Reference](reference/index.md) - Quick reference
+    [:octicons-arrow-right-24: Storage Engine](architecture/storage-engine/index.md)
+
+-   :material-folder-zip:{ .lg .middle } **Compaction**
+
+    ---
+
+    STCS, LCS, TWCS, and UCS compaction strategies explained.
+
+    [:octicons-arrow-right-24: Compaction Strategies](architecture/storage-engine/compaction/index.md)
+
+</div>
+
+---
+
+## CQL Reference
+
+Complete Cassandra Query Language documentation.
+
+<div class="grid cards" markdown>
+
+-   :material-database:{ .lg .middle } **CQL Overview**
+
+    ---
+
+    CQL language reference and query syntax fundamentals.
+
+    [:octicons-arrow-right-24: CQL Overview](cql/index.md)
+
+-   :material-format-list-bulleted-type:{ .lg .middle } **Data Types**
+
+    ---
+
+    Native, collection, and user-defined types reference.
+
+    [:octicons-arrow-right-24: Data Types](cql/data-types/index.md)
+
+-   :material-table-plus:{ .lg .middle } **DDL Commands**
+
+    ---
+
+    CREATE, ALTER, DROP statements for schema management.
+
+    [:octicons-arrow-right-24: DDL Commands](cql/ddl/index.md)
+
+-   :material-table-edit:{ .lg .middle } **DML Commands**
+
+    ---
+
+    SELECT, INSERT, UPDATE, DELETE for data manipulation.
+
+    [:octicons-arrow-right-24: DML Commands](cql/dml/index.md)
+
+-   :material-magnify:{ .lg .middle } **Indexing**
+
+    ---
+
+    Secondary indexes, SASI, and Storage-Attached Indexing (SAI).
+
+    [:octicons-arrow-right-24: Indexing](cql/indexing/index.md)
+
+-   :material-function:{ .lg .middle } **Functions**
+
+    ---
+
+    Built-in and user-defined functions reference.
+
+    [:octicons-arrow-right-24: Functions](cql/functions/index.md)
+
+</div>
+
+---
+
+## Data Modeling
+
+Design effective Cassandra data models.
+
+<div class="grid cards" markdown>
+
+-   :material-drawing:{ .lg .middle } **Data Modeling Guide**
+
+    ---
+
+    Query-first design methodology and denormalization patterns.
+
+    [:octicons-arrow-right-24: Data Modeling Guide](data-modeling/index.md)
+
+-   :material-key:{ .lg .middle } **Key Concepts**
+
+    ---
+
+    Partition keys, clustering columns, and primary key design.
+
+    [:octicons-arrow-right-24: Key Concepts](data-modeling/concepts/index.md)
+
+-   :material-alert-octagon:{ .lg .middle } **Anti-Patterns**
+
+    ---
+
+    Common data modeling mistakes and how to avoid them.
+
+    [:octicons-arrow-right-24: Anti-Patterns](data-modeling/anti-patterns/index.md)
+
+</div>
+
+---
+
+## Operations
+
+Production deployment, monitoring, and maintenance procedures.
+
+<div class="grid cards" markdown>
+
+-   :material-server-network:{ .lg .middle } **Cluster Management**
+
+    ---
+
+    Add, remove, replace, and decommission nodes safely.
+
+    [:octicons-arrow-right-24: Cluster Management](operations/cluster-management/index.md)
+
+-   :material-backup-restore:{ .lg .middle } **Backup & Restore**
+
+    ---
+
+    Snapshots, incremental backups, and disaster recovery.
+
+    [:octicons-arrow-right-24: Backup & Restore](operations/backup-restore/index.md)
+
+-   :material-wrench:{ .lg .middle } **Repair**
+
+    ---
+
+    Anti-entropy repair to maintain data consistency.
+
+    [:octicons-arrow-right-24: Repair](operations/repair/index.md)
+
+-   :material-cog:{ .lg .middle } **Configuration**
+
+    ---
+
+    cassandra.yaml, JVM options, and snitch configuration.
+
+    [:octicons-arrow-right-24: Configuration](operations/configuration/index.md)
+
+-   :material-tools:{ .lg .middle } **Maintenance**
+
+    ---
+
+    Routine maintenance tasks and operational procedures.
+
+    [:octicons-arrow-right-24: Maintenance](operations/maintenance/index.md)
+
+</div>
+
+---
+
+## Monitoring & Performance
+
+Monitor clusters and optimize performance.
+
+<div class="grid cards" markdown>
+
+-   :material-chart-line:{ .lg .middle } **Monitoring**
+
+    ---
+
+    JMX metrics, key metrics to track, and alerting strategies.
+
+    [:octicons-arrow-right-24: Monitoring Guide](operations/monitoring/index.md)
+
+-   :material-gauge:{ .lg .middle } **JMX Reference**
+
+    ---
+
+    500+ metrics with thresholds and 30 MBeans documented.
+
+    [:octicons-arrow-right-24: JMX Reference](operations/jmx-reference/index.md)
+
+-   :material-speedometer:{ .lg .middle } **Performance Tuning**
+
+    ---
+
+    Hardware sizing, JVM tuning, and OS optimization.
+
+    [:octicons-arrow-right-24: Performance Guide](operations/performance/index.md)
+
+-   :material-flash:{ .lg .middle } **Query Optimization**
+
+    ---
+
+    Write efficient queries and avoid performance pitfalls.
+
+    [:octicons-arrow-right-24: Query Optimization](operations/performance/query-optimization/index.md)
+
+</div>
+
+---
+
+## Security
+
+Authentication, authorization, and encryption for Cassandra deployments.
+
+<div class="grid cards" markdown>
+
+-   :material-account-key:{ .lg .middle } **Authentication**
+
+    ---
+
+    Internal authentication, LDAP integration, and Kerberos.
+
+    [:octicons-arrow-right-24: Authentication](security/authentication/index.md)
+
+-   :material-shield-lock:{ .lg .middle } **Authorization**
+
+    ---
+
+    Role-based access control and permission management.
+
+    [:octicons-arrow-right-24: Authorization](security/authorization/index.md)
+
+-   :material-lock:{ .lg .middle } **Encryption**
+
+    ---
+
+    TLS for client and internode encryption, encryption at rest.
+
+    [:octicons-arrow-right-24: Encryption](security/encryption/index.md)
+
+</div>
+
+---
+
+## Tools
+
+Essential Cassandra command-line and administration tools.
+
+<div class="grid cards" markdown>
+
+-   :material-console-line:{ .lg .middle } **nodetool**
+
+    ---
+
+    Cluster management commands for operations and diagnostics.
+
+    [:octicons-arrow-right-24: nodetool Reference](operations/nodetool/index.md)
+
+-   :material-code-greater-than:{ .lg .middle } **cqlsh**
+
+    ---
+
+    Interactive CQL shell for queries and schema management.
+
+    [:octicons-arrow-right-24: cqlsh Reference](tools/cqlsh/index.md)
+
+-   :material-robot:{ .lg .middle } **CQLAI**
+
+    ---
+
+    Modern AI-powered CQL shell with intelligent assistance.
+
+    [:octicons-arrow-right-24: CQLAI](tools/cqlai/index.md)
+
+-   :material-test-tube:{ .lg .middle } **cassandra-stress**
+
+    ---
+
+    Load testing and benchmarking tool for Cassandra.
+
+    [:octicons-arrow-right-24: cassandra-stress](tools/cassandra-stress/index.md)
+
+</div>
+
+---
+
+## Troubleshooting
+
+Diagnostic procedures and solutions for common issues.
+
+<div class="grid cards" markdown>
+
+-   :material-stethoscope:{ .lg .middle } **Diagnosis**
+
+    ---
+
+    Root cause analysis procedures and diagnostic workflows.
+
+    [:octicons-arrow-right-24: Diagnosis Guide](troubleshooting/diagnosis/index.md)
+
+-   :material-file-search:{ .lg .middle } **Log Analysis**
+
+    ---
+
+    Interpreting logs, log patterns, and log configuration.
+
+    [:octicons-arrow-right-24: Log Analysis](troubleshooting/log-analysis/index.md)
+
+-   :material-alert-circle:{ .lg .middle } **Common Errors**
+
+    ---
+
+    ReadTimeout, WriteTimeout, and other common errors explained.
+
+    [:octicons-arrow-right-24: Troubleshooting Guide](troubleshooting/index.md)
+
+</div>
+
+---
+
+## Quick Reference
+
+<div class="grid cards" markdown>
+
+-   :material-book-open-variant:{ .lg .middle } **Reference**
+
+    ---
+
+    Quick reference for configuration, metrics, and commands.
+
+    [:octicons-arrow-right-24: Reference](reference/index.md)
+
+</div>
 
 ---
 

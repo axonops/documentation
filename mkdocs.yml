@@ -698,6 +698,8 @@ nav:
           - Build vs Buy: data-platforms/kafka/concepts/kafka-connect/build-vs-buy.md
       - Architecture:
         - Overview: data-platforms/kafka/architecture/index.md
+        - Topics & Partitions: data-platforms/kafka/architecture/topics/index.md
+        - Transaction Coordinator: data-platforms/kafka/architecture/transactions/index.md
         - Brokers: data-platforms/kafka/architecture/brokers/index.md
         - Topology: data-platforms/kafka/architecture/topology/index.md
         - Storage Engine: data-platforms/kafka/architecture/storage-engine/index.md
