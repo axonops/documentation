@@ -244,6 +244,212 @@ watch 'nodetool tablestats keyspace.table | grep "SSTables in each level"'
 - Only new data gets proper windowing
 - May need time for full benefit
 
+### Forcing Compaction After Configuration Changes
+
+When compaction strategy or parameters change, existing SSTables are **not** automatically rewritten. The new settings apply only to future compactions. To apply changes immediately:
+
+#### When to Force Compaction
+
+| Scenario | Force Compaction? | Reason |
+|----------|:-----------------:|--------|
+| Strategy change (e.g., STCS → LCS) | Optional | Old SSTables migrate gradually through normal compaction |
+| Parameter tuning (e.g., `sstable_size_in_mb`) | Optional | New size applies to newly written SSTables |
+| Enabling compression | **Recommended** | Existing SSTables remain uncompressed until rewritten |
+| Changing compression algorithm | **Recommended** | Existing SSTables use old algorithm |
+| Reducing `gc_grace_seconds` | **Required** | Tombstones won't purge until SSTables rewrite |
+| Changing `bloom_filter_fp_chance` | **Recommended** | Existing bloom filters retain old false-positive rate |
+| UCS `scaling_parameters` change | Optional | New tiered/leveled behavior applies to future compactions |
+| UCS `base_shard_count` change | **Not recommended** | Shard boundaries change; use `upgradesstables` if needed |
+
+#### Forcing Compaction Procedures
+
+**Option 1: Major Compaction (Full Rewrite)**
+
+Rewrites all SSTables into a single SSTable per table. Applies all new settings.
+
+```bash
+# Single table
+nodetool compact keyspace table
+
+# All tables in keyspace
+nodetool compact keyspace
+```
+
+!!! warning "Major Compaction Considerations"
+    - Requires significant disk space (up to 2x table size for STCS)
+    - Creates I/O pressure—execute during maintenance windows
+    - For LCS, results in large L0 SSTable that must level down
+    - Not recommended for TWCS (breaks time windows)
+
+**Option 2: Upgradesstables (Rewrite Without Merging)**
+
+Rewrites SSTables to apply new settings without merging data. Preserves SSTable boundaries.
+
+```bash
+# Rewrite SSTables to apply new settings
+nodetool upgradesstables --include-all-sstables keyspace table
+```
+
+The `--include-all-sstables` flag is required to rewrite SSTables that are already at the current format version.
+
+**Option 3: Scrub (Rewrite with Validation)**
+
+Rewrites SSTables while validating data. Use when data corruption is suspected.
+
+```bash
+nodetool scrub keyspace table
+```
+
+#### Post-Change Procedure
+
+```bash
+# 1. Verify configuration change applied
+cqlsh -e "SELECT compaction FROM system_schema.tables
+          WHERE keyspace_name='keyspace' AND table_name='table';"
+
+# 2. Check disk space (compaction needs temporary space)
+df -h /var/lib/cassandra/data
+
+# 3. Optional: Force compaction to apply immediately
+nodetool compact keyspace table
+
+# 4. Monitor progress
+watch 'nodetool compactionstats'
+
+# 5. Verify completion
+nodetool tablestats keyspace table | grep -E "SSTable|Space"
+```
+
+#### TWCS: Special Considerations
+
+For TimeWindowCompactionStrategy, forcing major compaction destroys time window boundaries:
+
+```bash
+# DO NOT run major compaction on TWCS tables
+# nodetool compact keyspace twcs_table  # WRONG
+
+# Instead, let TWCS naturally recompact within windows
+# Or use upgradesstables if you must rewrite
+nodetool upgradesstables --include-all-sstables keyspace twcs_table
+```
+
+#### UCS Parameter Changes (Cassandra 5.0+)
+
+UCS has unique behavior when parameters change. The table below summarizes when forcing compaction is needed:
+
+| Parameter Change | Force Compaction? | Reason |
+|-----------------|:-----------------:|--------|
+| `scaling_parameters` (e.g., T4 → L10) | Optional | New behavior applies to future compactions; existing SSTables reorganize gradually |
+| `target_sstable_size` | Optional | New size applies to future compaction outputs |
+| `base_shard_count` | **Not recommended** | Shard boundaries change; existing SSTables may not align with new shards |
+| `min_sstable_size` | Optional | Affects sharding threshold only |
+| `sstable_growth` | Optional | Changes shard scaling behavior for future compactions |
+
+**Changing `scaling_parameters`:**
+
+```sql
+-- Switch from tiered to leveled behavior
+ALTER TABLE keyspace.table WITH compaction = {
+    'class': 'UnifiedCompactionStrategy',
+    'scaling_parameters': 'L10'  -- was T4
+};
+
+-- Optional: Force compaction to apply new behavior faster
+nodetool compact keyspace table
+```
+
+The change takes effect immediately for new compactions. Existing SSTables will be reorganized according to the new scaling parameters as they participate in future compactions.
+
+**Changing `target_sstable_size`:**
+
+```sql
+-- Increase target SSTable size
+ALTER TABLE keyspace.table WITH compaction = {
+    'class': 'UnifiedCompactionStrategy',
+    'scaling_parameters': 'T4',
+    'target_sstable_size': '2GiB'  -- was 1GiB
+};
+```
+
+Existing SSTables retain their original sizes until they participate in compaction. Forcing compaction will rewrite all SSTables to the new target size.
+
+**Changing `base_shard_count`:**
+
+!!! warning "Shard Count Changes"
+    Changing `base_shard_count` alters token range boundaries. Existing SSTables were written with different shard boundaries and may not align optimally with the new configuration.
+
+    - Increasing shard count: Old SSTables span multiple new shards
+    - Decreasing shard count: Multiple old SSTables may belong to same new shard
+
+    UCS handles this gracefully, but compaction efficiency may be reduced until all SSTables are rewritten.
+
+```sql
+-- Increase parallelism
+ALTER TABLE keyspace.table WITH compaction = {
+    'class': 'UnifiedCompactionStrategy',
+    'scaling_parameters': 'T4',
+    'base_shard_count': 8  -- was 4
+};
+
+-- Consider upgradesstables to realign shard boundaries
+nodetool upgradesstables --include-all-sstables keyspace table
+```
+
+**UCS Major Compaction Behavior:**
+
+!!! note "Parallelization Caveat"
+    While UCS documentation states that major compaction creates `base_shard_count` parallel tasks, observed behavior may vary. In some configurations, `nodetool compact` initiates a single compaction task containing all SSTables rather than parallel per-shard compactions.
+
+    Verify actual behavior in the target environment before relying on parallel major compaction for maintenance windows.
+
+```bash
+# Monitor major compaction parallelism
+nodetool compactionstats
+
+# Expected (per documentation): multiple concurrent tasks
+# Observed (in some cases): single task with all SSTables
+```
+
+**Post-UCS-Change Verification:**
+
+```bash
+# 1. Verify configuration applied
+cqlsh -e "SELECT compaction FROM system_schema.tables
+          WHERE keyspace_name='keyspace' AND table_name='table';"
+
+# 2. Monitor compaction behavior
+watch 'nodetool compactionstats'
+
+# 3. Check SSTable distribution
+nodetool tablestats keyspace.table | grep -E "SSTable|Compaction"
+
+# 4. For sharding changes, monitor shard alignment over time
+# (UCS handles misaligned SSTables but may be less efficient initially)
+```
+
+#### Rolling vs Parallel Execution
+
+For multi-node clusters:
+
+```bash
+# Sequential (safer, less cluster impact)
+for host in node1 node2 node3; do
+    echo "Compacting on $host"
+    nodetool -h $host compact keyspace table
+    # Wait for completion before next node
+    while nodetool -h $host compactionstats | grep -q "pending tasks: [1-9]"; do
+        sleep 30
+    done
+done
+
+# Parallel (faster, higher cluster load)
+# Only if sufficient disk space and I/O capacity on all nodes
+nodetool -h node1 compact keyspace table &
+nodetool -h node2 compact keyspace table &
+nodetool -h node3 compact keyspace table &
+wait
+```
+
 ### Migration Best Practices
 
 1. **Test in non-production first**
