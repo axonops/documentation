@@ -11907,6 +11907,75 @@ data-et-multi-view="{&quot;schema&quot;:{&quot;content&quot;:{&quot;desktop&quot
 </li>
         
           <li class="md-nav__item">
+  <a href="#forcing-compaction-after-configuration-changes" class="md-nav__link">
+    <span class="md-ellipsis">
+      Forcing Compaction After Configuration Changes
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Forcing Compaction After Configuration Changes">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#when-to-force-compaction" class="md-nav__link">
+    <span class="md-ellipsis">
+      When to Force Compaction
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#forcing-compaction-procedures" class="md-nav__link">
+    <span class="md-ellipsis">
+      Forcing Compaction Procedures
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#post-change-procedure" class="md-nav__link">
+    <span class="md-ellipsis">
+      Post-Change Procedure
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#twcs-special-considerations" class="md-nav__link">
+    <span class="md-ellipsis">
+      TWCS: Special Considerations
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#ucs-parameter-changes-cassandra-50" class="md-nav__link">
+    <span class="md-ellipsis">
+      UCS Parameter Changes (Cassandra 5.0+)
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#rolling-vs-parallel-execution" class="md-nav__link">
+    <span class="md-ellipsis">
+      Rolling vs Parallel Execution
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
   <a href="#migration-best-practices" class="md-nav__link">
     <span class="md-ellipsis">
       Migration Best Practices
@@ -18328,6 +18397,75 @@ data-et-multi-view="{&quot;schema&quot;:{&quot;content&quot;:{&quot;desktop&quot
 </li>
         
           <li class="md-nav__item">
+  <a href="#forcing-compaction-after-configuration-changes" class="md-nav__link">
+    <span class="md-ellipsis">
+      Forcing Compaction After Configuration Changes
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Forcing Compaction After Configuration Changes">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#when-to-force-compaction" class="md-nav__link">
+    <span class="md-ellipsis">
+      When to Force Compaction
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#forcing-compaction-procedures" class="md-nav__link">
+    <span class="md-ellipsis">
+      Forcing Compaction Procedures
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#post-change-procedure" class="md-nav__link">
+    <span class="md-ellipsis">
+      Post-Change Procedure
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#twcs-special-considerations" class="md-nav__link">
+    <span class="md-ellipsis">
+      TWCS: Special Considerations
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#ucs-parameter-changes-cassandra-50" class="md-nav__link">
+    <span class="md-ellipsis">
+      UCS Parameter Changes (Cassandra 5.0+)
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#rolling-vs-parallel-execution" class="md-nav__link">
+    <span class="md-ellipsis">
+      Rolling vs Parallel Execution
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
   <a href="#migration-best-practices" class="md-nav__link">
     <span class="md-ellipsis">
       Migration Best Practices
@@ -18735,6 +18873,237 @@ nodetool<span class="w"> </span>tablestats<span class="w"> </span>keyspace.table
 <li>Only new data gets proper windowing</li>
 <li>May need time for full benefit</li>
 </ul>
+<h3 id="forcing-compaction-after-configuration-changes">Forcing Compaction After Configuration Changes<a class="headerlink" href="#forcing-compaction-after-configuration-changes" title="Permanent link">¶</a></h3>
+<p>When compaction strategy or parameters change, existing SSTables are <strong>not</strong> automatically rewritten. The new settings apply only to future compactions. To apply changes immediately:</p>
+<h4 id="when-to-force-compaction">When to Force Compaction<a class="headerlink" href="#when-to-force-compaction" title="Permanent link">¶</a></h4>
+<table>
+<thead>
+<tr>
+<th>Scenario</th>
+<th style="text-align: center;">Force Compaction?</th>
+<th>Reason</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Strategy change (e.g., STCS → LCS)</td>
+<td style="text-align: center;">Optional</td>
+<td>Old SSTables migrate gradually through normal compaction</td>
+</tr>
+<tr>
+<td>Parameter tuning (e.g., <code>sstable_size_in_mb</code>)</td>
+<td style="text-align: center;">Optional</td>
+<td>New size applies to newly written SSTables</td>
+</tr>
+<tr>
+<td>Enabling compression</td>
+<td style="text-align: center;"><strong>Recommended</strong></td>
+<td>Existing SSTables remain uncompressed until rewritten</td>
+</tr>
+<tr>
+<td>Changing compression algorithm</td>
+<td style="text-align: center;"><strong>Recommended</strong></td>
+<td>Existing SSTables use old algorithm</td>
+</tr>
+<tr>
+<td>Reducing <code>gc_grace_seconds</code></td>
+<td style="text-align: center;"><strong>Required</strong></td>
+<td>Tombstones won't purge until SSTables rewrite</td>
+</tr>
+<tr>
+<td>Changing <code>bloom_filter_fp_chance</code></td>
+<td style="text-align: center;"><strong>Recommended</strong></td>
+<td>Existing bloom filters retain old false-positive rate</td>
+</tr>
+<tr>
+<td>UCS <code>scaling_parameters</code> change</td>
+<td style="text-align: center;">Optional</td>
+<td>New tiered/leveled behavior applies to future compactions</td>
+</tr>
+<tr>
+<td>UCS <code>base_shard_count</code> change</td>
+<td style="text-align: center;"><strong>Not recommended</strong></td>
+<td>Shard boundaries change; use <code>upgradesstables</code> if needed</td>
+</tr>
+</tbody>
+</table>
+<h4 id="forcing-compaction-procedures">Forcing Compaction Procedures<a class="headerlink" href="#forcing-compaction-procedures" title="Permanent link">¶</a></h4>
+<p><strong>Option 1: Major Compaction (Full Rewrite)</strong></p>
+<p>Rewrites all SSTables into a single SSTable per table. Applies all new settings.</p>
+<div class="highlight"><pre><span></span><code><span class="c1"># Single table</span>
+nodetool<span class="w"> </span>compact<span class="w"> </span>keyspace<span class="w"> </span>table
+
+<span class="c1"># All tables in keyspace</span>
+nodetool<span class="w"> </span>compact<span class="w"> </span>keyspace
+</code></pre></div>
+<div class="admonition warning">
+<p class="admonition-title">Major Compaction Considerations</p>
+<ul>
+<li>Requires significant disk space (up to 2x table size for STCS)</li>
+<li>Creates I/O pressure—execute during maintenance windows</li>
+<li>For LCS, results in large L0 SSTable that must level down</li>
+<li>Not recommended for TWCS (breaks time windows)</li>
+</ul>
+</div>
+<p><strong>Option 2: Upgradesstables (Rewrite Without Merging)</strong></p>
+<p>Rewrites SSTables to apply new settings without merging data. Preserves SSTable boundaries.</p>
+<div class="highlight"><pre><span></span><code><span class="c1"># Rewrite SSTables to apply new settings</span>
+nodetool<span class="w"> </span>upgradesstables<span class="w"> </span>--include-all-sstables<span class="w"> </span>keyspace<span class="w"> </span>table
+</code></pre></div>
+<p>The <code>--include-all-sstables</code> flag is required to rewrite SSTables that are already at the current format version.</p>
+<p><strong>Option 3: Scrub (Rewrite with Validation)</strong></p>
+<p>Rewrites SSTables while validating data. Use when data corruption is suspected.</p>
+<div class="highlight"><pre><span></span><code>nodetool<span class="w"> </span>scrub<span class="w"> </span>keyspace<span class="w"> </span>table
+</code></pre></div>
+<h4 id="post-change-procedure">Post-Change Procedure<a class="headerlink" href="#post-change-procedure" title="Permanent link">¶</a></h4>
+<div class="highlight"><pre><span></span><code><span class="c1"># 1. Verify configuration change applied</span>
+cqlsh<span class="w"> </span>-e<span class="w"> </span><span class="s2">"SELECT compaction FROM system_schema.tables</span>
+<span class="s2">          WHERE keyspace_name='keyspace' AND table_name='table';"</span>
+
+<span class="c1"># 2. Check disk space (compaction needs temporary space)</span>
+df<span class="w"> </span>-h<span class="w"> </span>/var/lib/cassandra/data
+
+<span class="c1"># 3. Optional: Force compaction to apply immediately</span>
+nodetool<span class="w"> </span>compact<span class="w"> </span>keyspace<span class="w"> </span>table
+
+<span class="c1"># 4. Monitor progress</span>
+watch<span class="w"> </span><span class="s1">'nodetool compactionstats'</span>
+
+<span class="c1"># 5. Verify completion</span>
+nodetool<span class="w"> </span>tablestats<span class="w"> </span>keyspace<span class="w"> </span>table<span class="w"> </span><span class="p">|</span><span class="w"> </span>grep<span class="w"> </span>-E<span class="w"> </span><span class="s2">"SSTable|Space"</span>
+</code></pre></div>
+<h4 id="twcs-special-considerations">TWCS: Special Considerations<a class="headerlink" href="#twcs-special-considerations" title="Permanent link">¶</a></h4>
+<p>For TimeWindowCompactionStrategy, forcing major compaction destroys time window boundaries:</p>
+<div class="highlight"><pre><span></span><code><span class="c1"># DO NOT run major compaction on TWCS tables</span>
+<span class="c1"># nodetool compact keyspace twcs_table  # WRONG</span>
+
+<span class="c1"># Instead, let TWCS naturally recompact within windows</span>
+<span class="c1"># Or use upgradesstables if you must rewrite</span>
+nodetool<span class="w"> </span>upgradesstables<span class="w"> </span>--include-all-sstables<span class="w"> </span>keyspace<span class="w"> </span>twcs_table
+</code></pre></div>
+<h4 id="ucs-parameter-changes-cassandra-50">UCS Parameter Changes (Cassandra 5.0+)<a class="headerlink" href="#ucs-parameter-changes-cassandra-50" title="Permanent link">¶</a></h4>
+<p>UCS has unique behavior when parameters change. The table below summarizes when forcing compaction is needed:</p>
+<table>
+<thead>
+<tr>
+<th>Parameter Change</th>
+<th style="text-align: center;">Force Compaction?</th>
+<th>Reason</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>scaling_parameters</code> (e.g., T4 → L10)</td>
+<td style="text-align: center;">Optional</td>
+<td>New behavior applies to future compactions; existing SSTables reorganize gradually</td>
+</tr>
+<tr>
+<td><code>target_sstable_size</code></td>
+<td style="text-align: center;">Optional</td>
+<td>New size applies to future compaction outputs</td>
+</tr>
+<tr>
+<td><code>base_shard_count</code></td>
+<td style="text-align: center;"><strong>Not recommended</strong></td>
+<td>Shard boundaries change; existing SSTables may not align with new shards</td>
+</tr>
+<tr>
+<td><code>min_sstable_size</code></td>
+<td style="text-align: center;">Optional</td>
+<td>Affects sharding threshold only</td>
+</tr>
+<tr>
+<td><code>sstable_growth</code></td>
+<td style="text-align: center;">Optional</td>
+<td>Changes shard scaling behavior for future compactions</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Changing <code>scaling_parameters</code>:</strong></p>
+<div class="highlight"><pre><span></span><code><span class="c1">-- Switch from tiered to leveled behavior</span>
+<span class="k">ALTER</span><span class="w"> </span><span class="k">TABLE</span><span class="w"> </span><span class="n">keyspace</span><span class="p">.</span><span class="k">table</span><span class="w"> </span><span class="k">WITH</span><span class="w"> </span><span class="n">compaction</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="err">{</span>
+<span class="w">    </span><span class="s1">'class'</span><span class="p">:</span><span class="w"> </span><span class="s1">'UnifiedCompactionStrategy'</span><span class="p">,</span>
+<span class="w">    </span><span class="s1">'scaling_parameters'</span><span class="p">:</span><span class="w"> </span><span class="s1">'L10'</span><span class="w">  </span><span class="c1">-- was T4</span>
+<span class="err">}</span><span class="p">;</span>
+
+<span class="c1">-- Optional: Force compaction to apply new behavior faster</span>
+<span class="n">nodetool</span><span class="w"> </span><span class="n">compact</span><span class="w"> </span><span class="n">keyspace</span><span class="w"> </span><span class="k">table</span>
+</code></pre></div>
+<p>The change takes effect immediately for new compactions. Existing SSTables will be reorganized according to the new scaling parameters as they participate in future compactions.</p>
+<p><strong>Changing <code>target_sstable_size</code>:</strong></p>
+<div class="highlight"><pre><span></span><code><span class="c1">-- Increase target SSTable size</span>
+<span class="k">ALTER</span><span class="w"> </span><span class="k">TABLE</span><span class="w"> </span><span class="n">keyspace</span><span class="p">.</span><span class="k">table</span><span class="w"> </span><span class="k">WITH</span><span class="w"> </span><span class="n">compaction</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="err">{</span>
+<span class="w">    </span><span class="s1">'class'</span><span class="p">:</span><span class="w"> </span><span class="s1">'UnifiedCompactionStrategy'</span><span class="p">,</span>
+<span class="w">    </span><span class="s1">'scaling_parameters'</span><span class="p">:</span><span class="w"> </span><span class="s1">'T4'</span><span class="p">,</span>
+<span class="w">    </span><span class="s1">'target_sstable_size'</span><span class="p">:</span><span class="w"> </span><span class="s1">'2GiB'</span><span class="w">  </span><span class="c1">-- was 1GiB</span>
+<span class="err">}</span><span class="p">;</span>
+</code></pre></div>
+<p>Existing SSTables retain their original sizes until they participate in compaction. Forcing compaction will rewrite all SSTables to the new target size.</p>
+<p><strong>Changing <code>base_shard_count</code>:</strong></p>
+<div class="admonition warning">
+<p class="admonition-title">Shard Count Changes</p>
+<p>Changing <code>base_shard_count</code> alters token range boundaries. Existing SSTables were written with different shard boundaries and may not align optimally with the new configuration.</p>
+<ul>
+<li>Increasing shard count: Old SSTables span multiple new shards</li>
+<li>Decreasing shard count: Multiple old SSTables may belong to same new shard</li>
+</ul>
+<p>UCS handles this gracefully, but compaction efficiency may be reduced until all SSTables are rewritten.</p>
+</div>
+<div class="highlight"><pre><span></span><code><span class="c1">-- Increase parallelism</span>
+<span class="k">ALTER</span><span class="w"> </span><span class="k">TABLE</span><span class="w"> </span><span class="n">keyspace</span><span class="p">.</span><span class="k">table</span><span class="w"> </span><span class="k">WITH</span><span class="w"> </span><span class="n">compaction</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="err">{</span>
+<span class="w">    </span><span class="s1">'class'</span><span class="p">:</span><span class="w"> </span><span class="s1">'UnifiedCompactionStrategy'</span><span class="p">,</span>
+<span class="w">    </span><span class="s1">'scaling_parameters'</span><span class="p">:</span><span class="w"> </span><span class="s1">'T4'</span><span class="p">,</span>
+<span class="w">    </span><span class="s1">'base_shard_count'</span><span class="p">:</span><span class="w"> </span><span class="mi">8</span><span class="w">  </span><span class="c1">-- was 4</span>
+<span class="err">}</span><span class="p">;</span>
+
+<span class="c1">-- Consider upgradesstables to realign shard boundaries</span>
+<span class="n">nodetool</span><span class="w"> </span><span class="n">upgradesstables</span><span class="w"> </span><span class="c1">--include-all-sstables keyspace table</span>
+</code></pre></div>
+<p><strong>UCS Major Compaction Behavior:</strong></p>
+<div class="admonition note">
+<p class="admonition-title">Parallelization Caveat</p>
+<p>While UCS documentation states that major compaction creates <code>base_shard_count</code> parallel tasks, observed behavior may vary. In some configurations, <code>nodetool compact</code> initiates a single compaction task containing all SSTables rather than parallel per-shard compactions.</p>
+<p>Verify actual behavior in the target environment before relying on parallel major compaction for maintenance windows.</p>
+</div>
+<div class="highlight"><pre><span></span><code><span class="c1"># Monitor major compaction parallelism</span>
+nodetool<span class="w"> </span>compactionstats
+
+<span class="c1"># Expected (per documentation): multiple concurrent tasks</span>
+<span class="c1"># Observed (in some cases): single task with all SSTables</span>
+</code></pre></div>
+<p><strong>Post-UCS-Change Verification:</strong></p>
+<div class="highlight"><pre><span></span><code><span class="c1"># 1. Verify configuration applied</span>
+cqlsh<span class="w"> </span>-e<span class="w"> </span><span class="s2">"SELECT compaction FROM system_schema.tables</span>
+<span class="s2">          WHERE keyspace_name='keyspace' AND table_name='table';"</span>
+
+<span class="c1"># 2. Monitor compaction behavior</span>
+watch<span class="w"> </span><span class="s1">'nodetool compactionstats'</span>
+
+<span class="c1"># 3. Check SSTable distribution</span>
+nodetool<span class="w"> </span>tablestats<span class="w"> </span>keyspace.table<span class="w"> </span><span class="p">|</span><span class="w"> </span>grep<span class="w"> </span>-E<span class="w"> </span><span class="s2">"SSTable|Compaction"</span>
+
+<span class="c1"># 4. For sharding changes, monitor shard alignment over time</span>
+<span class="c1"># (UCS handles misaligned SSTables but may be less efficient initially)</span>
+</code></pre></div>
+<h4 id="rolling-vs-parallel-execution">Rolling vs Parallel Execution<a class="headerlink" href="#rolling-vs-parallel-execution" title="Permanent link">¶</a></h4>
+<p>For multi-node clusters:</p>
+<div class="highlight"><pre><span></span><code><span class="c1"># Sequential (safer, less cluster impact)</span>
+<span class="k">for</span><span class="w"> </span>host<span class="w"> </span><span class="k">in</span><span class="w"> </span>node1<span class="w"> </span>node2<span class="w"> </span>node3<span class="p">;</span><span class="w"> </span><span class="k">do</span>
+<span class="w">    </span><span class="nb">echo</span><span class="w"> </span><span class="s2">"Compacting on </span><span class="nv">$host</span><span class="s2">"</span>
+<span class="w">    </span>nodetool<span class="w"> </span>-h<span class="w"> </span><span class="nv">$host</span><span class="w"> </span>compact<span class="w"> </span>keyspace<span class="w"> </span>table
+<span class="w">    </span><span class="c1"># Wait for completion before next node</span>
+<span class="w">    </span><span class="k">while</span><span class="w"> </span>nodetool<span class="w"> </span>-h<span class="w"> </span><span class="nv">$host</span><span class="w"> </span>compactionstats<span class="w"> </span><span class="p">|</span><span class="w"> </span>grep<span class="w"> </span>-q<span class="w"> </span><span class="s2">"pending tasks: [1-9]"</span><span class="p">;</span><span class="w"> </span><span class="k">do</span>
+<span class="w">        </span>sleep<span class="w"> </span><span class="m">30</span>
+<span class="w">    </span><span class="k">done</span>
+<span class="k">done</span>
+
+<span class="c1"># Parallel (faster, higher cluster load)</span>
+<span class="c1"># Only if sufficient disk space and I/O capacity on all nodes</span>
+nodetool<span class="w"> </span>-h<span class="w"> </span>node1<span class="w"> </span>compact<span class="w"> </span>keyspace<span class="w"> </span>table<span class="w"> </span><span class="p">&amp;</span>
+nodetool<span class="w"> </span>-h<span class="w"> </span>node2<span class="w"> </span>compact<span class="w"> </span>keyspace<span class="w"> </span>table<span class="w"> </span><span class="p">&amp;</span>
+nodetool<span class="w"> </span>-h<span class="w"> </span>node3<span class="w"> </span>compact<span class="w"> </span>keyspace<span class="w"> </span>table<span class="w"> </span><span class="p">&amp;</span>
+<span class="nb">wait</span>
+</code></pre></div>
 <h3 id="migration-best-practices">Migration Best Practices<a class="headerlink" href="#migration-best-practices" title="Permanent link">¶</a></h3>
 <ol>
 <li><strong>Test in non-production first</strong></li>
