@@ -2201,7 +2201,17 @@
          <changefreq>daily</changefreq>
     </url>
     <url>
+         <loc>https://docs.axonops.com/data-platforms/kafka/architecture/topics/</loc>
+         <lastmod>2025-12-16</lastmod>
+         <changefreq>daily</changefreq>
+    </url>
+    <url>
          <loc>https://docs.axonops.com/data-platforms/kafka/architecture/topology/</loc>
+         <lastmod>2025-12-16</lastmod>
+         <changefreq>daily</changefreq>
+    </url>
+    <url>
+         <loc>https://docs.axonops.com/data-platforms/kafka/architecture/transactions/</loc>
          <lastmod>2025-12-16</lastmod>
          <changefreq>daily</changefreq>
     </url>
