@@ -688,7 +688,7 @@ Paxos repairs maintain LWT **linearizability** and correctness, especially acros
 
 Paxos repairs are only relevant for **keyspaces that use LWTs**. For keyspaces that never use LWTs, Paxos state does not affect correctness, and operators **MAY** safely skip Paxos repairs for those keyspaces.
 
-In Cassandra 4.1+ and 5.x, Paxos repairs are integrated with the broader repair system and **MAY** run automatically depending on configuration. Operators **SHOULD** ensure Paxos repairs run regularly on clusters where LWTs are in use.
+In Cassandra 4.1+ and 5.x, Paxos repairs are integrated with the broader repair system and **MAY** run automatically depending on configuration. Operators **SHOULD** ensure Paxos repairs run regularly on clusters where LWTs are in use. See [Paxos Repairs](strategies.md#paxos-repairs) in the Repair Strategies guide for operational details.
 
 ### Paxos Repairs and Topology Changes
 
