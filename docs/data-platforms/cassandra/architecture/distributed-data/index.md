@@ -588,6 +588,7 @@ Cassandra's tunable consistency allows choosing different PACELC positions for d
 | [Partitioning](partitioning.md) | Consistent hashing, token ring, partitioners |
 | [Replication](replication.md) | Strategies, snitches, replication factor |
 | [Consistency](consistency.md) | Consistency levels, guarantees, LWT |
+| [Consensus and Paxos](paxos.md) | Consensus algorithms and Paxos for lightweight transactions |
 | [Replica Synchronization](replica-synchronization.md) | Hinted handoff, read reconciliation, Merkle trees |
 | [Secondary Index Queries](secondary-index-queries.md) | Distributed query execution with indexes |
 | [Materialized Views](materialized-views.md) | Distributed MV coordination and consistency challenges |

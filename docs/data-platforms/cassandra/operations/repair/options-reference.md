@@ -610,14 +610,16 @@ nodetool repair --ignore-unreplicated-keyspaces
 
 ### Options Compatibility Matrix
 
-| Option | -pr | -full | -seq | --parallel | -j | -dc |
-|--------|-----|-------|------|------------|-----|-----|
-| -pr | - | ✓ | ✓ | ✓ | ✓ | ✓ |
-| -full | ✓ | - | ✓ | ✓ | ✓ | ✓ |
-| -seq | ✓ | ✓ | - | ✗ | ✓ | ✓ |
-| --parallel | ✓ | ✓ | ✗ | - | ✓ | ✓ |
-| -j | ✓ | ✓ | ✓ | ✓ | - | ✓ |
-| -dc | ✓ | ✓ | ✓ | ✓ | ✓ | - |
+| Option | -pr | -full | -seq | --parallel | -j | -dc | --paxos-only | --skip-paxos |
+|--------|-----|-------|------|------------|-----|-----|--------------|--------------|
+| -pr | - | ✓ | ✓ | ✓ | ✓ | ✓ | ✗ | ✓ |
+| -full | ✓ | - | ✓ | ✓ | ✓ | ✓ | ✗ | ✓ |
+| -seq | ✓ | ✓ | - | ✗ | ✓ | ✓ | ✗ | ✓ |
+| --parallel | ✓ | ✓ | ✗ | - | ✓ | ✓ | ✗ | ✓ |
+| -j | ✓ | ✓ | ✓ | ✓ | - | ✓ | ✗ | ✓ |
+| -dc | ✓ | ✓ | ✓ | ✓ | ✓ | - | ✗ | ✓ |
+| --paxos-only | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | - | ✗ |
+| --skip-paxos | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✗ | - |
 
 ---
 
@@ -660,6 +662,41 @@ In Cassandra 4.1 and later, Paxos repairs run automatically every 5 minutes by d
 - Paxos repairs are lightweight compared to full data repairs and complete quickly
 
 For more details on Paxos repair strategy and configuration, see [Paxos Repairs](strategies.md#paxos-repairs) in the Repair Strategies guide.
+
+### --skip-paxos
+
+Skips the Paxos repair step during regular repairs, allowing data repair to proceed without checking Paxos state consistency.
+
+```bash
+# Skip Paxos repair, repair table data only
+nodetool repair --skip-paxos my_keyspace
+```
+
+**How it relates to `--paxos-only`:**
+
+| Option | Table Data | Paxos State |
+|--------|------------|-------------|
+| (no flag) | ✓ Repaired | ✓ Repaired |
+| `--paxos-only` | ✗ Skipped | ✓ Repaired |
+| `--skip-paxos` | ✓ Repaired | ✗ Skipped |
+
+**When to use:**
+
+- **Emergency topology changes**: When Paxos cleanup is failing (timing out, `CANCELLED`) during bootstrap/decommission, you **MAY** skip Paxos repair temporarily to allow the topology change to proceed
+- **Pre-4.1 clusters with manual Paxos repair**: If running separate `--paxos-only` repairs on a schedule, you **MAY** skip Paxos during regular data repairs to avoid redundant work
+- **Troubleshooting**: To isolate whether issues are data-related or Paxos-related
+
+**Important caveat:**
+
+If you use `--skip-paxos`, Paxos state **MUST** be reconciled separately via `--paxos-only` repairs. Skipping Paxos repair without a replacement schedule **WILL** lead to LWT inconsistencies.
+
+```bash
+# Data repair only, skip Paxos (use when Paxos repairs are failing)
+nodetool repair --skip-paxos my_keyspace
+
+# Then run Paxos repairs separately once cluster is healthy
+nodetool repair --paxos-only my_keyspace
+```
 
 ## Next Steps
 
