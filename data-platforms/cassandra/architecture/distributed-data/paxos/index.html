@@ -13,6 +13,10 @@
         <link rel="canonical" href="https://docs.axonops.com/data-platforms/cassandra/architecture/distributed-data/paxos/">
       
       
+        <link rel="prev" href="../counters/">
+      
+      
+        <link rel="next" href="../../cluster-management/">
       
       
       <link rel="icon" href="/img/favicon.ico">
@@ -70,7 +74,7 @@
 {
   "@context": "https://schema.org",
   "@type": "TechArticle",
-  "headline": "Consensus Algorithms and Paxos in Cassandra - Apache Cassandra Documentation",
+  "headline": "Lightweight Transactions - Apache Cassandra Documentation",
   "description": "Official documentation for AxonOps - the unified platform for monitoring, maintenance, and backup of Apache Cassandra and Apache Kafka clusters.",
   "about": {
     "@type": "SoftwareApplication",
@@ -178,7 +182,7 @@ body{font-family:'Roboto Flex',-apple-system,BlinkMacSystemFont,'Segoe UI',Robot
     <div data-md-component="skip">
       
         
-        <a href="#consensus-algorithms-and-paxos" class="md-skip">
+        <a href="#lightweight-transactions-lwt-consensus-algorithms-and-paxos" class="md-skip">
           Skip to content
         </a>
       
@@ -555,10 +559,12 @@ data-et-multi-view="{&quot;schema&quot;:{&quot;content&quot;:{&quot;desktop&quot
         
   
   
+    
+  
   
     
     
-      <li class="md-tabs__item">
+      <li class="md-tabs__item md-tabs__item--active">
         <a href="../../../../" class="md-tabs__link">
           
   
@@ -4136,23 +4142,28 @@ data-et-multi-view="{&quot;schema&quot;:{&quot;content&quot;:{&quot;desktop&quot
       
   
   
+    
   
   
+  
     
     
     
-      
-      
-    
-    
-    <li class="md-nav__item md-nav__item--nested">
       
         
         
-        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_7" >
+      
+      
+    
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_7" checked>
         
           
-          <label class="md-nav__link" for="__nav_7" id="__nav_7_label" tabindex="0">
+          <label class="md-nav__link" for="__nav_7" id="__nav_7_label" tabindex="">
             
   
   <span class="md-ellipsis">
@@ -4163,7 +4174,7 @@ data-et-multi-view="{&quot;schema&quot;:{&quot;content&quot;:{&quot;desktop&quot
             <span class="md-nav__icon md-icon"></span>
           </label>
         
-        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_7_label" aria-expanded="false">
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_7_label" aria-expanded="true">
           <label class="md-nav__title" for="__nav_7">
             <span class="md-nav__icon md-icon"></span>
             Data Platforms
@@ -4195,6 +4206,8 @@ data-et-multi-view="{&quot;schema&quot;:{&quot;content&quot;:{&quot;desktop&quot
                 
   
   
+    
+  
   
   
     
@@ -4204,11 +4217,11 @@ data-et-multi-view="{&quot;schema&quot;:{&quot;content&quot;:{&quot;desktop&quot
       
     
     
-    <li class="md-nav__item md-nav__item--nested">
+    <li class="md-nav__item md-nav__item--active md-nav__item--nested">
       
         
         
-        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_7_2" >
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_7_2" checked>
         
           
           <label class="md-nav__link" for="__nav_7_2" id="__nav_7_2_label" tabindex="0">
@@ -4222,7 +4235,7 @@ data-et-multi-view="{&quot;schema&quot;:{&quot;content&quot;:{&quot;desktop&quot
             <span class="md-nav__icon md-icon"></span>
           </label>
         
-        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_7_2_label" aria-expanded="false">
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_7_2_label" aria-expanded="true">
           <label class="md-nav__title" for="__nav_7_2">
             <span class="md-nav__icon md-icon"></span>
             Apache Cassandra
@@ -4447,6 +4460,8 @@ data-et-multi-view="{&quot;schema&quot;:{&quot;content&quot;:{&quot;desktop&quot
                 
   
   
+    
+  
   
   
     
@@ -4456,11 +4471,11 @@ data-et-multi-view="{&quot;schema&quot;:{&quot;content&quot;:{&quot;desktop&quot
       
     
     
-    <li class="md-nav__item md-nav__item--nested">
+    <li class="md-nav__item md-nav__item--active md-nav__item--nested">
       
         
         
-        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_7_2_3" >
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_7_2_3" checked>
         
           
           <label class="md-nav__link" for="__nav_7_2_3" id="__nav_7_2_3_label" tabindex="0">
@@ -4474,7 +4489,7 @@ data-et-multi-view="{&quot;schema&quot;:{&quot;content&quot;:{&quot;desktop&quot
             <span class="md-nav__icon md-icon"></span>
           </label>
         
-        <nav class="md-nav" data-md-level="3" aria-labelledby="__nav_7_2_3_label" aria-expanded="false">
+        <nav class="md-nav" data-md-level="3" aria-labelledby="__nav_7_2_3_label" aria-expanded="true">
           <label class="md-nav__title" for="__nav_7_2_3">
             <span class="md-nav__icon md-icon"></span>
             Architecture
@@ -5068,6 +5083,8 @@ data-et-multi-view="{&quot;schema&quot;:{&quot;content&quot;:{&quot;desktop&quot
                 
   
   
+    
+  
   
   
     
@@ -5077,11 +5094,11 @@ data-et-multi-view="{&quot;schema&quot;:{&quot;content&quot;:{&quot;desktop&quot
       
     
     
-    <li class="md-nav__item md-nav__item--nested">
+    <li class="md-nav__item md-nav__item--active md-nav__item--nested">
       
         
         
-        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_7_2_3_4" >
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_7_2_3_4" checked>
         
           
           <label class="md-nav__link" for="__nav_7_2_3_4" id="__nav_7_2_3_4_label" tabindex="0">
@@ -5095,7 +5112,7 @@ data-et-multi-view="{&quot;schema&quot;:{&quot;content&quot;:{&quot;desktop&quot
             <span class="md-nav__icon md-icon"></span>
           </label>
         
-        <nav class="md-nav" data-md-level="4" aria-labelledby="__nav_7_2_3_4_label" aria-expanded="false">
+        <nav class="md-nav" data-md-level="4" aria-labelledby="__nav_7_2_3_4_label" aria-expanded="true">
           <label class="md-nav__title" for="__nav_7_2_3_4">
             <span class="md-nav__icon md-icon"></span>
             Distributed Data
@@ -5286,6 +5303,430 @@ data-et-multi-view="{&quot;schema&quot;:{&quot;content&quot;:{&quot;desktop&quot
   
 
       </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+    
+  
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  <span class="md-ellipsis">
+    Lightweight Transactions
+  </span>
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
+        
+  
+  <span class="md-ellipsis">
+    Lightweight Transactions
+  </span>
+  
+
+      </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#why-consensus-matters" class="md-nav__link">
+    <span class="md-ellipsis">
+      Why Consensus Matters
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Why Consensus Matters">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#the-problem" class="md-nav__link">
+    <span class="md-ellipsis">
+      The Problem
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#the-solution" class="md-nav__link">
+    <span class="md-ellipsis">
+      The Solution
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#where-consensus-is-needed" class="md-nav__link">
+    <span class="md-ellipsis">
+      Where Consensus is Needed
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#consensus-algorithm-landscape" class="md-nav__link">
+    <span class="md-ellipsis">
+      Consensus Algorithm Landscape
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Consensus Algorithm Landscape">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#raft" class="md-nav__link">
+    <span class="md-ellipsis">
+      Raft
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#zab-zookeeper-atomic-broadcast" class="md-nav__link">
+    <span class="md-ellipsis">
+      Zab (ZooKeeper Atomic Broadcast)
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#byzantine-fault-tolerance-bft" class="md-nav__link">
+    <span class="md-ellipsis">
+      Byzantine Fault Tolerance (BFT)
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#algorithm-comparison" class="md-nav__link">
+    <span class="md-ellipsis">
+      Algorithm Comparison
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#paxos-the-algorithm" class="md-nav__link">
+    <span class="md-ellipsis">
+      Paxos: The Algorithm
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Paxos: The Algorithm">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#why-paxos-for-cassandra" class="md-nav__link">
+    <span class="md-ellipsis">
+      Why Paxos for Cassandra
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#core-concepts" class="md-nav__link">
+    <span class="md-ellipsis">
+      Core Concepts
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#the-protocol" class="md-nav__link">
+    <span class="md-ellipsis">
+      The Protocol
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#paxos-in-cassandra-lightweight-transactions" class="md-nav__link">
+    <span class="md-ellipsis">
+      Paxos in Cassandra: Lightweight Transactions
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Paxos in Cassandra: Lightweight Transactions">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#how-lwts-work" class="md-nav__link">
+    <span class="md-ellipsis">
+      How LWTs Work
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#lwt-syntax" class="md-nav__link">
+    <span class="md-ellipsis">
+      LWT Syntax
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#performance-cost" class="md-nav__link">
+    <span class="md-ellipsis">
+      Performance Cost
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#when-to-use-lwts" class="md-nav__link">
+    <span class="md-ellipsis">
+      When to Use LWTs
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#paxos-v1-vs-paxos-v2" class="md-nav__link">
+    <span class="md-ellipsis">
+      Paxos v1 vs Paxos v2
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Paxos v1 vs Paxos v2">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#improvements-in-paxos-v2" class="md-nav__link">
+    <span class="md-ellipsis">
+      Improvements in Paxos v2
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#configuration" class="md-nav__link">
+    <span class="md-ellipsis">
+      Configuration
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#upgrade-considerations" class="md-nav__link">
+    <span class="md-ellipsis">
+      Upgrade Considerations
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#terminology-reference" class="md-nav__link">
+    <span class="md-ellipsis">
+      Terminology Reference
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#limitations" class="md-nav__link">
+    <span class="md-ellipsis">
+      Limitations
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Limitations">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#performance-limitations" class="md-nav__link">
+    <span class="md-ellipsis">
+      Performance Limitations
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#fault-model" class="md-nav__link">
+    <span class="md-ellipsis">
+      Fault Model
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#operational-requirements" class="md-nav__link">
+    <span class="md-ellipsis">
+      Operational Requirements
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#the-future-accord" class="md-nav__link">
+    <span class="md-ellipsis">
+      The Future: Accord
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="The Future: Accord">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#current-lwt-limitations" class="md-nav__link">
+    <span class="md-ellipsis">
+      Current LWT Limitations
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#the-accord-protocol" class="md-nav__link">
+    <span class="md-ellipsis">
+      The Accord Protocol
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#cep-15" class="md-nav__link">
+    <span class="md-ellipsis">
+      CEP-15
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#learn-more" class="md-nav__link">
+    <span class="md-ellipsis">
+      Learn More
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#references" class="md-nav__link">
+    <span class="md-ellipsis">
+      References
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="References">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#academic-papers" class="md-nav__link">
+    <span class="md-ellipsis">
+      Academic Papers
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#related-documentation" class="md-nav__link">
+    <span class="md-ellipsis">
+      Related Documentation
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
     </li>
   
 
@@ -18148,7 +18589,7 @@ data-et-multi-view="{&quot;schema&quot;:{&quot;content&quot;:{&quot;desktop&quot
                   
 
 
-<div><h1 id="consensus-algorithms-and-paxos">Consensus Algorithms and Paxos<a class="headerlink" href="#consensus-algorithms-and-paxos" title="Permanent link">¶</a></h1>
+<div><h1 id="lightweight-transactions-lwt-consensus-algorithms-and-paxos">Lightweight Transactions (LWT) - Consensus Algorithms and Paxos<a class="headerlink" href="#lightweight-transactions-lwt-consensus-algorithms-and-paxos" title="Permanent link">¶</a></h1>
 <p>Cassandra's default consistency model—eventual consistency with last-write-wins—handles most workloads efficiently. But some operations demand stronger guarantees: inserting a user only if the username doesn't exist, updating a balance only if it hasn't changed, acquiring a distributed lock. These operations require <strong>consensus</strong>—agreement among replicas before committing a change.</p>
 <p>Cassandra implements consensus through <strong>Paxos</strong>, a proven algorithm that provides linearizable consistency for lightweight transactions (LWTs) without sacrificing Cassandra's masterless architecture.</p>
 <hr>
@@ -18665,6 +19106,44 @@ Result: balance = 120 (Client A's update lost!)
       
         <footer class="md-footer">
   
+    
+      
+      <nav class="md-footer__inner md-grid" aria-label="Footer" >
+        
+          
+          <a href="../counters/" class="md-footer__link md-footer__link--prev" aria-label="Previous: Counters">
+            <div class="md-footer__button md-icon">
+              
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12Z"/></svg>
+            </div>
+            <div class="md-footer__title">
+              <span class="md-footer__direction">
+                Previous
+              </span>
+              <div class="md-ellipsis">
+                Counters
+              </div>
+            </div>
+          </a>
+        
+        
+          
+          <a href="../../cluster-management/" class="md-footer__link md-footer__link--next" aria-label="Next: Overview">
+            <div class="md-footer__title">
+              <span class="md-footer__direction">
+                Next
+              </span>
+              <div class="md-ellipsis">
+                Overview
+              </div>
+            </div>
+            <div class="md-footer__button md-icon">
+              
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M4 11v2h12l-5.5 5.5 1.42 1.42L19.84 12l-7.92-7.92L10.5 5.5 16 11H4Z"/></svg>
+            </div>
+          </a>
+        
+      </nav>
     
   
   <div class="md-footer-meta md-typeset">
