@@ -830,7 +830,7 @@ Specifies keyspaces to exclude from Paxos repair during topology changes.
 
 **Accepted formats:**
 
-1. **YAML list (RECOMMENDED)**:
+1. **YAML list**:
    ```yaml
    skip_paxos_repair_on_topology_change_keyspaces:
      - analytics_ks
@@ -843,7 +843,7 @@ Specifies keyspaces to exclude from Paxos repair during topology changes.
    skip_paxos_repair_on_topology_change_keyspaces: analytics_ks, batch_ks, timeseries_ks
    ```
 
-The YAML list format is **RECOMMENDED** as it is more readable and works better with version control.
+Both formats are equivalent.
 
 **Operational guidance:**
 
