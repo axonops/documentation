@@ -21,42 +21,49 @@ A topic is a named, append-only log that organizes related records. Unlike tradi
 
 skinparam backgroundColor transparent
 
-rectangle "Topic: orders" {
-    rectangle "Partition 0" as p0 {
-        card "0" as p0_0
-        card "1" as p0_1
-        card "2" as p0_2
-        card "3" as p0_3
-        p0_0 -right-> p0_1
-        p0_1 -right-> p0_2
-        p0_2 -right-> p0_3
+rectangle "Topic: orders" as topic {
+    rectangle "Broker 1 (host-1)" as b1 {
+        rectangle "Partition 0 (Leader)" as p0 {
+            card "0" as p0_0
+            card "1" as p0_1
+            card "2" as p0_2
+            card "3" as p0_3
+            p0_0 -right-> p0_1
+            p0_1 -right-> p0_2
+            p0_2 -right-> p0_3
+        }
     }
 
-    rectangle "Partition 1" as p1 {
-        card "0" as p1_0
-        card "1" as p1_1
-        card "2" as p1_2
-        p1_0 -right-> p1_1
-        p1_1 -right-> p1_2
+    rectangle "Broker 2 (host-2)" as b2 {
+        rectangle "Partition 1 (Leader)" as p1 {
+            card "0" as p1_0
+            card "1" as p1_1
+            card "2" as p1_2
+            p1_0 -right-> p1_1
+            p1_1 -right-> p1_2
+        }
     }
 
-    rectangle "Partition 2" as p2 {
-        card "0" as p2_0
-        card "1" as p2_1
-        card "2" as p2_2
-        card "3" as p2_3
-        card "4" as p2_4
-        p2_0 -right-> p2_1
-        p2_1 -right-> p2_2
-        p2_2 -right-> p2_3
-        p2_3 -right-> p2_4
+    rectangle "Broker 3 (host-3)" as b3 {
+        rectangle "Partition 2 (Leader)" as p2 {
+            card "0" as p2_0
+            card "1" as p2_1
+            card "2" as p2_2
+            card "3" as p2_3
+            card "4" as p2_4
+            p2_0 -right-> p2_1
+            p2_1 -right-> p2_2
+            p2_2 -right-> p2_3
+            p2_3 -right-> p2_4
+        }
     }
 }
 
 note bottom
-  Each partition is an independent ordered log
+  Each partition leader resides on a different broker
   Offsets are partition-local (start at 0)
   No ordering guarantees across partitions
+  Replicas (not shown) exist on other brokers
 end note
 
 @enduml
@@ -90,20 +97,152 @@ end note
 
 ---
 
-## Partitions
+## Why Partitions Exist
 
-Partitions are the unit of parallelism and distribution in Kafka. Each partition is an ordered, immutable sequence of records stored on a single broker (with replicas on other brokers).
+Partitions exist because a single machine has fundamental physical limitations. Understanding these limitations explains why distributed systems like Kafka partition data across multiple nodes.
 
-### Why Partitions Exist
+### The Single-Broker Bottleneck
 
-| Problem | How Partitions Solve It |
-|---------|-------------------------|
-| Single broker throughput limit | Distribute writes across multiple brokers |
-| Single consumer throughput limit | Enable parallel consumption within consumer groups |
-| Storage capacity limit | Spread data across cluster storage |
-| Single point of failure | Replicas on different brokers provide redundancy |
+A Kafka broker running on a single server faces hard limits imposed by hardware:
 
-### Partition Structure
+**Disk I/O Throughput**
+
+Kafka writes are sequential (append-only), which is optimal for disk performance. However, even sequential I/O has limits:
+
+| Storage Type | Sequential Write | Sequential Read | Notes |
+|--------------|------------------|-----------------|-------|
+| HDD (7200 RPM) | 80-160 MB/s | 80-160 MB/s | Seek time negligible for sequential; still limited by rotational speed |
+| SATA SSD | 400-550 MB/s | 500-550 MB/s | Limited by SATA interface (6 Gbps theoretical max) |
+| NVMe SSD | 2,000-7,000 MB/s | 3,000-7,000 MB/s | PCIe bandwidth limited; enterprise drives sustain higher throughput |
+| NVMe (RAID 0) | 10,000+ MB/s | 15,000+ MB/s | Multiple drives; reliability trade-offs |
+
+With a replication factor of 3, each produced record must be written to three brokers. The leader writes to its own disk and the followers each write to theirs. Disk I/O on followers can become a bottleneck for ISR advancement.
+
+**Network Bandwidth**
+
+Network interfaces impose hard ceilings on data transfer:
+
+| Interface | Theoretical Max | Practical Throughput | Notes |
+|-----------|-----------------|----------------------|-------|
+| 1 GbE | 125 MB/s | 100-110 MB/s | Common in older deployments; often the bottleneck |
+| 10 GbE | 1,250 MB/s | 1,000-1,100 MB/s | Standard for modern Kafka deployments |
+| 25 GbE | 3,125 MB/s | 2,500-2,800 MB/s | High-performance deployments |
+| 100 GbE | 12,500 MB/s | 10,000-11,000 MB/s | Large-scale deployments; requires matching infrastructure |
+
+With replication factor 3, producing 100 MB/s to a topic generates approximately:
+
+- **100 MB/s inbound** to the leader (producer writes)
+- **200 MB/s outbound** from the leader (two followers fetching)
+- **100 MB/s inbound** to each follower
+- **Consumer fetch traffic** on top of replication
+
+A single 10 GbE interface can become saturated with moderate production rates when accounting for replication overhead and consumer traffic.
+
+**CPU Processing**
+
+CPU becomes a bottleneck primarily in these scenarios:
+
+| Operation | CPU Cost | When It Matters |
+|-----------|----------|-----------------|
+| **Compression** | High | Producer-side compression (LZ4, Snappy, Zstd) reduces network/disk but costs CPU |
+| **Decompression** | Medium-High | Broker decompresses for validation (if message format conversion needed) or timestamping |
+| **TLS encryption** | High | TLS 1.3 handshakes and bulk encryption; 20-40% throughput reduction typical |
+| **CRC32 checksums** | Low | Every record batch verified; hardware-accelerated on modern CPUs |
+| **Zero-copy disabled** | High | TLS prevents zero-copy (`transferTo`); data copied through userspace |
+
+!!! info "TLS Performance Impact"
+    TLS encryption typically reduces Kafka throughput by 20-40% compared to plaintext. However, **raw encryption speed is not the bottleneck** on modern hardware.
+
+    Modern CPUs with AES-NI achieve 4-7 GB/s AES-256-GCM throughput per core—far exceeding typical Kafka broker throughput. The actual overhead comes from architectural changes required for encryption:
+
+    - **Zero-copy bypass**: Without TLS, Kafka uses Linux `sendfile()` to transfer data directly from page cache to NIC without copying through userspace. TLS requires data to be copied to userspace for encryption, then back to kernel space for transmission. This adds 2-3 memory copies per request.
+    - **Memory bandwidth pressure**: The extra copies consume memory bandwidth that would otherwise be available for actual data transfer.
+    - **Syscall overhead**: More context switches between kernel and userspace for each data transfer.
+    - **Handshake overhead**: TLS session establishment for new connections (mitigated by connection pooling and session resumption).
+
+    The solution is not faster CPUs but reducing the copy overhead. Kernel TLS (kTLS, Linux 4.13+) can offload TLS to the kernel, restoring partial zero-copy capability. For latency-sensitive workloads, evaluate network-layer encryption (IPsec, WireGuard, encrypted overlay networks) which preserves application-layer zero-copy.
+
+**Memory Constraints**
+
+Each partition consumes broker memory for:
+
+| Resource | Per-Partition Cost | Notes |
+|----------|-------------------|-------|
+| Page cache utilization | Variable | OS caches recent segments; partitions compete for cache space |
+| Index files (mmap) | ~10 MB typical | `.index` and `.timeindex` mapped into memory |
+| Log segment overhead | ~1-2 MB | Buffers, file handles, metadata structures |
+| Replica fetcher threads | Shared | Each source broker requires a fetcher thread |
+
+With thousands of partitions per broker, memory overhead becomes significant. Kafka's recommendation is to limit partitions to approximately 4,000 per broker (though this varies with hardware).
+
+### The Single-Consumer Bottleneck
+
+Within a consumer group, Kafka assigns each partition to exactly one consumer. This design provides ordering guarantees but creates a parallelism ceiling:
+
+```plantuml
+@startuml
+
+skinparam backgroundColor transparent
+
+rectangle "Topic: events (6 partitions)" {
+    card "P0" as p0
+    card "P1" as p1
+    card "P2" as p2
+    card "P3" as p3
+    card "P4" as p4
+    card "P5" as p5
+}
+
+rectangle "Consumer Group: processors" {
+    rectangle "Consumer 1" as c1
+    rectangle "Consumer 2" as c2
+    rectangle "Consumer 3" as c3
+    rectangle "Consumer 4 (idle)" as c4 #lightgray
+}
+
+p0 --> c1
+p1 --> c1
+p2 --> c2
+p3 --> c2
+p4 --> c3
+p5 --> c3
+
+note bottom
+  6 partitions, 4 consumers
+  Consumer 4 is idle (no partitions to assign)
+  Maximum parallelism = partition count
+end note
+
+@enduml
+```
+
+**Consumer throughput limits:**
+
+| Bottleneck | Typical Limit | Mitigation |
+|------------|---------------|------------|
+| Processing logic | Varies | Optimize code; async I/O; batch processing |
+| Network fetch | 100+ MB/s | Increase `fetch.max.bytes`; tune `max.partition.fetch.bytes` |
+| Deserialization | Varies | Use efficient formats (Avro, Protobuf); avoid JSON for high throughput |
+| Downstream writes | Often the limit | Database insertion, API calls often slower than Kafka reads |
+| Commit overhead | Minor | Async commits; less frequent commits for higher throughput |
+
+If a single consumer can process 50 MB/s but the topic receives 200 MB/s, four partitions (and four consumers) are needed to keep up. The partition count sets the maximum consumer parallelism.
+
+### How Partitions Solve These Problems
+
+| Physical Limitation | How Partitions Help |
+|---------------------|---------------------|
+| **Disk I/O ceiling** | Each partition can be on a different broker with its own disks; total throughput = sum of all brokers |
+| **Network bandwidth ceiling** | Traffic distributed across brokers; no single NIC handles all data |
+| **CPU ceiling** | Compression, TLS, and CRC work distributed across brokers |
+| **Memory ceiling** | Partition working sets distributed; page cache pressure spread |
+| **Consumer processing ceiling** | More partitions = more consumers in parallel |
+| **Storage capacity** | Each broker contributes its disk capacity to the cluster |
+| **Single point of failure** | Replicas on different brokers; partition remains available if one broker fails |
+
+---
+
+## Partition Structure
 
 Each partition is stored as a directory containing log segments:
 
@@ -254,78 +393,13 @@ Offline --> Follower : broker recovers
 
 The ISR is the set of replicas that are fully caught up with the leader. Only ISR members are eligible to become leader if the current leader fails.
 
-### ISR Membership Criteria
+| Concept | Description |
+|---------|-------------|
+| **ISR membership** | Replicas within `replica.lag.time.max.ms` of the leader |
+| **min.insync.replicas** | Minimum ISR size required for `acks=all` produces |
+| **ISR shrinkage** | Slow replicas removed; affects write availability |
 
-A replica remains in the ISR if it meets **both** conditions:
-
-| Condition | Configuration | Default |
-|-----------|---------------|---------|
-| Caught up to leader's LEO | `replica.lag.time.max.ms` | 30000 (30s) |
-| Heartbeat received | `replica.socket.timeout.ms` | 30000 (30s) |
-
-!!! note "Lag Time vs Lag Messages"
-    Prior to Kafka 0.9, ISR membership was based on message lag (`replica.lag.max.messages`). This was removed because burst writes would cause unnecessary ISR shrinkage. The current time-based approach is more stable.
-
-### ISR Dynamics
-
-```plantuml
-@startuml
-
-skinparam backgroundColor transparent
-
-participant "Leader" as L
-participant "Follower A" as FA
-participant "Follower B" as FB
-
-note over L, FB: ISR = {Leader, A, B}
-
-L -> L : receive produce (offset 100)
-L -> FA : replicate
-L -> FB : replicate
-
-FA -> L : fetch (caught up to 100)
-note right: A remains in ISR
-
-FB -> FB : slow disk I/O
-note over FB: Falls behind
-
-... 30 seconds pass ...
-
-L -> L : check replica lag
-note over L: B exceeded replica.lag.time.max.ms
-
-L -> L : shrink ISR
-note over L, FB: ISR = {Leader, A}
-
-... B catches up ...
-
-FB -> L : fetch (caught up to 100)
-L -> L : expand ISR
-note over L, FB: ISR = {Leader, A, B}
-
-@enduml
-```
-
-### ISR Configuration
-
-| Configuration | Default | Description |
-|---------------|---------|-------------|
-| `replica.lag.time.max.ms` | 30000 | Max time follower can lag before removal from ISR |
-| `min.insync.replicas` | 1 | Minimum ISR size for `acks=all` produces |
-| `unclean.leader.election.enable` | false | Allow non-ISR replicas to become leader |
-
-### Min In-Sync Replicas
-
-The `min.insync.replicas` setting determines the minimum number of replicas (including leader) that must acknowledge a write for `acks=all`:
-
-| RF | min.insync.replicas | Behavior |
-|:--:|:-------------------:|----------|
-| 3 | 1 | Write succeeds if leader alone persists (weak durability) |
-| 3 | 2 | Write requires leader + 1 follower (recommended) |
-| 3 | 3 | Write requires all replicas (highest durability, lower availability) |
-
-!!! warning "ISR Shrinkage Impact"
-    If ISR size falls below `min.insync.replicas`, producers with `acks=all` receive `NotEnoughReplicasException`. The partition becomes read-only until ISR recovers.
+For detailed ISR mechanics, membership criteria, and configuration, see [Replication: In-Sync Replicas](../replication/index.md#in-sync-replicas-isr).
 
 ---
 
@@ -333,122 +407,30 @@ The `min.insync.replicas` setting determines the minimum number of replicas (inc
 
 When a partition leader fails, Kafka elects a new leader from the ISR. The controller (or KRaft quorum) coordinates this process.
 
-### Election Process
+| Election Type | Description |
+|---------------|-------------|
+| **Clean election** | New leader chosen from ISR; no data loss |
+| **Unclean election** | Out-of-sync replica becomes leader; potential data loss |
+| **Preferred election** | Leadership rebalanced to preferred replica |
 
-```plantuml
-@startuml
-
-skinparam backgroundColor transparent
-
-participant "Controller" as C
-participant "Broker 1\n(old leader)" as B1
-participant "Broker 2\n(ISR)" as B2
-participant "Broker 3\n(ISR)" as B3
-
-note over B1: Broker 1 fails
-
-C -> C : detect failure\n(ZK session / heartbeat timeout)
-
-C -> C : select new leader from ISR\n(prefer in-sync, same rack)
-
-C -> B2 : LeaderAndIsr(leader=B2, epoch=2)
-C -> B3 : LeaderAndIsr(leader=B2, epoch=2)
-
-B2 -> B2 : become leader
-B3 -> B3 : follow B2
-
-C -> C : update metadata
-
-note over B2, B3
-  New leader: Broker 2
-  ISR: {B2, B3}
-  Leader epoch: 2
-end note
-
-@enduml
-```
-
-### Leader Epoch
-
-The leader epoch is a monotonically increasing number that identifies the leader's term. It prevents stale leaders from causing inconsistencies:
-
-| Scenario | How Epoch Helps |
-|----------|-----------------|
-| Network partition | Old leader's writes rejected (stale epoch) |
-| Split brain | Only current epoch accepted by followers |
-| Log truncation | Followers truncate to epoch boundary on recovery |
-
-### Preferred Leader Election
-
-Kafka can automatically rebalance leadership to the "preferred" replica (first in the replica list):
-
-| Configuration | Default | Description |
-|---------------|---------|-------------|
-| `auto.leader.rebalance.enable` | true | Automatically elect preferred leaders |
-| `leader.imbalance.check.interval.seconds` | 300 | How often to check for imbalance |
-| `leader.imbalance.per.broker.percentage` | 10 | Imbalance threshold to trigger rebalance |
-
-### Unclean Leader Election
-
-When all ISR members are unavailable, Kafka must choose between availability and consistency:
-
-| `unclean.leader.election.enable` | Behavior |
-|:--------------------------------:|----------|
-| `false` (default) | Partition remains offline until ISR member recovers |
-| `true` | Out-of-sync replica can become leader (potential data loss) |
-
-!!! danger "Data Loss Risk"
-    Enabling unclean leader election can cause data loss. Records written to the old leader but not replicated will be lost when an out-of-sync replica becomes leader.
+For the complete leader election protocol, leader epochs, and configuration, see [Replication: Leader Election](../replication/index.md#leader-election).
 
 ---
 
-## High Watermark and Log Consistency
+## High Watermark
 
 The high watermark (HW) is the offset up to which all ISR replicas have replicated. Consumers can only read records up to the HW.
 
-### HW Advancement
-
-```plantuml
-@startuml
-
-skinparam backgroundColor transparent
-
-participant "Producer" as P
-participant "Leader\n(LEO=100)" as L
-participant "Follower A\n(LEO=98)" as FA
-participant "Follower B\n(LEO=99)" as FB
-
-note over L: HW = min(LEO of all ISR) = 98
-
-P -> L : produce record
-L -> L : append (LEO=101)
-
-FA -> L : fetch(offset=98)
-L -> FA : records 98-100
-FA -> FA : append (LEO=101)
-
-FB -> L : fetch(offset=99)
-L -> FB : records 99-100
-FB -> FB : append (LEO=101)
-
-note over L: All ISR at LEO=101
-L -> L : advance HW to 101
-
-L -> FA : HW=101 (in fetch response)
-L -> FB : HW=101 (in fetch response)
-
-@enduml
-```
-
-### Consumer Visibility
-
-| Offset Range | Consumer Visibility |
-|--------------|---------------------|
-| `0` to `HW-1` | Visible to consumers |
-| `HW` to `LEO-1` | Not visible (not yet replicated to all ISR) |
+| Concept | Description |
+|---------|-------------|
+| **High Watermark (HW)** | Last offset replicated to all ISR members |
+| **Log End Offset (LEO)** | Next offset to be written (leader's latest) |
+| **Consumer visibility** | Consumers read only up to HW |
 
 !!! note "Read-Your-Writes"
-    A producer may not immediately read its own writes if consuming from the same topic. The record becomes visible only after HW advances (all ISR have replicated).
+    A producer may not immediately read its own writes. The record becomes visible only after HW advances (all ISR have replicated).
+
+For high watermark advancement mechanics and the replication protocol, see [Replication: High Watermark](../replication/index.md#high-watermark).
 
 ---
 
@@ -523,31 +505,84 @@ end note
 
 ## Partition Count Selection
 
-Choosing the right partition count involves trade-offs:
+Choosing the right partition count requires understanding workload requirements and system constraints.
 
-### Factors to Consider
+### Calculating Required Partitions
+
+**For throughput requirements:**
+
+```
+Partitions needed = Target throughput / Per-partition throughput
+```
+
+Per-partition throughput depends on the bottleneck:
+
+| Component | Typical Per-Partition Limit | Determining Factors |
+|-----------|----------------------------|---------------------|
+| Producer to single partition | 10-50 MB/s | Batch size, linger.ms, compression, network RTT |
+| Consumer from single partition | 50-100+ MB/s | Consumer processing speed, fetch size, downstream latency |
+| Broker disk I/O | Shared across partitions | Total broker throughput / partition count |
+
+**Example calculation:**
+
+- Target throughput: 500 MB/s production
+- Single producer batch throughput to one partition: ~30 MB/s (with compression, acks=all)
+- Minimum partitions for throughput: 500 / 30 ≈ 17 partitions
+
+However, consumer parallelism may require more:
+
+- Consumer processing rate: 25 MB/s per consumer
+- Consumers needed: 500 / 25 = 20 consumers
+- Partitions needed: at least 20 (one per consumer)
+
+**For ordering requirements:**
+
+Records with the same key are routed to the same partition. If strict ordering across a key space is required:
+
+| Ordering Scope | Partition Strategy |
+|----------------|-------------------|
+| Per-entity ordering (e.g., per user) | Use entity ID as key; Kafka guarantees order within partition |
+| Global ordering (all records) | Single partition only; limits throughput to single-partition maximum |
+| No ordering requirement | Partition for throughput; use round-robin or random keys |
+
+### Trade-offs of Partition Count
 
 | Factor | More Partitions | Fewer Partitions |
 |--------|-----------------|------------------|
-| **Consumer parallelism** | Higher (1 consumer per partition max) | Lower |
-| **Throughput** | Higher (parallel I/O) | Lower |
-| **Ordering scope** | Narrower (per-partition only) | Broader |
-| **Broker memory** | Higher (~1-2 MB per partition) | Lower |
-| **Leader election time** | Longer | Shorter |
-| **End-to-end latency** | Can be higher (batching) | Can be lower |
-| **Rebalance time** | Longer | Shorter |
+| **Maximum throughput** | Higher (parallel I/O, more consumers) | Lower (single-broker ceiling) |
+| **Consumer parallelism** | Higher (one consumer per partition max) | Lower |
+| **Ordering granularity** | Finer (per-partition ordering) | Coarser (broader ordering scope) |
+| **End-to-end latency** | Can increase (more batching coordination) | Can decrease (simpler path) |
+| **Broker memory** | Higher (~1-2 MB per partition-replica) | Lower |
+| **File handles** | Higher (3 file handles per segment per partition) | Lower |
+| **Controller overhead** | Higher (more metadata, slower elections) | Lower |
+| **Rebalance time** | Longer (more partition movements) | Shorter |
+| **Recovery time** | Longer (more partitions to recover) | Shorter |
+| **Availability during failures** | Higher (smaller blast radius per partition) | Lower (more data affected per partition) |
 
-### Guidelines
+### Guidelines by Workload
 
-| Workload | Partition Count Guidance |
-|----------|--------------------------|
-| Low throughput (<10 MB/s) | 3-6 partitions |
-| Medium throughput (10-100 MB/s) | 6-30 partitions |
-| High throughput (100+ MB/s) | 30-100+ partitions |
-| Ordering required across keys | 1 partition (limits throughput) |
+| Workload Characteristics | Suggested Approach |
+|--------------------------|-------------------|
+| **Low throughput (<10 MB/s), ordering important** | 3-6 partitions; focus on key distribution |
+| **Medium throughput (10-100 MB/s)** | 6-30 partitions; balance throughput and operational overhead |
+| **High throughput (100-500 MB/s)** | 30-100 partitions; ensure sufficient consumers |
+| **Very high throughput (500+ MB/s)** | 100+ partitions; may require multiple clusters for extreme scale |
+| **Strict global ordering** | 1 partition; accept throughput ceiling |
+| **Unknown future growth** | Start with more partitions (can't reduce); 12-30 is often reasonable |
 
 !!! warning "Partition Count Cannot Be Decreased"
-    Once a topic is created, the partition count can only be increased, not decreased. Increasing partitions also breaks key-based ordering guarantees for existing keys.
+    Once a topic is created, the partition count can only be increased, not decreased. Increasing partitions also breaks key-based ordering guarantees for existing keys (keys may hash to different partitions).
+
+!!! info "Partition Count Upper Bounds"
+    Kafka recommends limiting partitions per broker to approximately 4,000 and partitions per cluster to approximately 200,000 (as of Kafka 3.x). These limits relate to:
+
+    - Controller metadata management overhead
+    - ZooKeeper/KRaft watch overhead
+    - Leader election time during broker failures
+    - Memory consumption for indexes and buffers
+
+    See [KIP-578](https://cwiki.apache.org/confluence/display/KAFKA/KIP-578%3A+Add+configuration+to+limit+number+of+partitions) for partition limit configuration.
 
 ---
 
@@ -574,6 +609,41 @@ Kafka maintains metadata about topics and partitions in the controller. Clients 
 | `NOT_LEADER_OR_FOLLOWER` error | Immediate refresh |
 | `UNKNOWN_TOPIC_OR_PARTITION` error | Immediate refresh |
 | New producer/consumer | Initial fetch |
+
+---
+
+## Performance Benchmarks
+
+Actual throughput varies significantly based on hardware, configuration, and workload. The following provides reference points from common deployment scenarios:
+
+### Single-Broker Throughput (Reference)
+
+| Configuration | Production Throughput | Notes |
+|---------------|----------------------|-------|
+| HDD, 1 GbE, no TLS | 50-80 MB/s | Network often the bottleneck |
+| SSD, 10 GbE, no TLS | 200-400 MB/s | Disk and CPU become factors |
+| NVMe, 10 GbE, no TLS | 300-500 MB/s | CPU and network limits |
+| NVMe, 25 GbE, no TLS | 500-800 MB/s | High-end configuration |
+| Any config + TLS | 20-40% reduction | TLS overhead; varies with hardware AES support |
+| Any config + compression | CPU-dependent | LZ4/Snappy: minor overhead; Zstd: higher CPU, better ratio |
+
+These figures assume:
+
+- Replication factor 3 with `acks=all`
+- Reasonable batch sizes (16-64 KB)
+- Modern server-class hardware
+- No other significant workloads on the brokers
+
+### Factors That Reduce Throughput
+
+| Factor | Impact | Mitigation |
+|--------|--------|------------|
+| Small messages (<100 bytes) | Overhead dominates; lower MB/s | Batch more aggressively; consider message aggregation |
+| High partition count | More memory, more file handles | Stay within broker limits; balance across cluster |
+| `acks=all` with slow followers | Latency increases; throughput may drop | Ensure followers on fast storage; monitor ISR |
+| TLS without AES-NI | Severe CPU bottleneck | Use hardware with AES-NI support |
+| Page cache pressure | More disk reads | Add RAM; reduce partition count per broker |
+| Cross-datacenter replication | RTT affects `acks=all` latency | Use async replication (MirrorMaker 2) for cross-DC |
 
 ---
 
@@ -617,8 +687,7 @@ Kafka maintains metadata about topics and partitions in the controller. Clients 
 
 ## Related Documentation
 
+- [Replication](../replication/index.md) - ISR mechanics, leader election protocol, high watermark, and acknowledgment levels
 - [Storage Engine](../storage-engine/index.md) - Log segments and compaction
-- [Replication](../replication/index.md) - Replication protocol details
 - [Fault Tolerance](../fault-tolerance/index.md) - Failure scenarios
-- [Topics Concepts](../../concepts/topics/index.md) - Conceptual overview
-- [Transaction Coordinator](../transactions/index.md) - Transactional writes
+- [Brokers](../brokers/index.md) - Broker architecture and configuration
