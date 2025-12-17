@@ -714,13 +714,11 @@ For clusters or specific keyspaces that **never** use LWTs:
 
 Before disabling Paxos repairs for any keyspace, operators **MUST** confirm with application teams that no applications are using LWTs on those keyspaces. Disabling Paxos repairs on keyspaces where LWTs are in use **CAN** lead to data consistency violations.
 
----
-
-## Paxos-Related cassandra.yaml Configuration
+### Paxos-Related cassandra.yaml Configuration
 
 This section documents the main Paxos and Paxos-repair-related settings in `cassandra.yaml`. These settings control LWT behavior, Paxos state management, and repair integration.
 
-### paxos_variant
+#### paxos_variant
 
 Controls which Paxos implementation is used for lightweight transactions.
 
@@ -743,7 +741,7 @@ Controls which Paxos implementation is used for lightweight transactions.
 paxos_variant: v2
 ```
 
-### paxos_state_purging
+#### paxos_state_purging
 
 Controls how old Paxos state is purged from the system tables.
 
@@ -765,7 +763,7 @@ Controls how old Paxos state is purged from the system tables.
 paxos_state_purging: repaired
 ```
 
-### paxos_repair_enabled
+#### paxos_repair_enabled
 
 Global enable/disable switch for automatic Paxos repairs.
 
@@ -788,7 +786,7 @@ Global enable/disable switch for automatic Paxos repairs.
 paxos_repair_enabled: true
 ```
 
-### skip_paxos_repair_on_topology_change
+#### skip_paxos_repair_on_topology_change
 
 Controls whether the Paxos repair gate is enforced during topology changes.
 
@@ -821,7 +819,7 @@ nodetool setconfig skip_paxos_repair_on_topology_change true
 skip_paxos_repair_on_topology_change: false
 ```
 
-### skip_paxos_repair_on_topology_change_keyspaces
+#### skip_paxos_repair_on_topology_change_keyspaces
 
 Specifies keyspaces to exclude from Paxos repair during topology changes.
 
@@ -842,7 +840,7 @@ Specifies keyspaces to exclude from Paxos repair during topology changes.
 skip_paxos_repair_on_topology_change_keyspaces: analytics_ks, batch_ks, timeseries_ks
 ```
 
-### paxos_repair_parallelism
+#### paxos_repair_parallelism
 
 Controls the parallelism level for Paxos repair operations.
 
@@ -862,7 +860,7 @@ Controls the parallelism level for Paxos repair operations.
 paxos_repair_parallelism: parallel
 ```
 
-### Configuration Summary Table
+#### Configuration Summary Table
 
 | Setting | Default | LWT Clusters | Non-LWT Clusters |
 |---------|---------|--------------|------------------|
