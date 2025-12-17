@@ -630,7 +630,7 @@ rectangle "Segmented Strategy" as segm {
 
 ## Paxos Repairs
 
-Paxos repairs reconcile the Paxos state used by lightweight transactions (LWTs). For clusters that use LWTs, Paxos repairs are essential to maintain linearizability guarantees, especially during topology changes.
+Paxos repairs reconcile the Paxos state used by [lightweight transactions (LWTs)](../../cql/dml/lightweight-transactions.md). For clusters that use LWTs, Paxos repairs are essential to maintain linearizability guarantees, especially during topology changes.
 
 For conceptual background on Paxos repairs, see [Paxos Repairs](concepts.md#paxos-repairs) in the Repair Concepts guide.
 

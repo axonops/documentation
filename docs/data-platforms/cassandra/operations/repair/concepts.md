@@ -680,7 +680,7 @@ Anti-compaction ensures clean separation between repaired and unrepaired data, e
 
 ## Paxos Repairs
 
-While standard repairs reconcile user table data across replicas, **Paxos repairs** specifically reconcile the **Paxos state** used by **lightweight transactions (LWTs)**. LWTs are statements that include `IF` conditions (such as `INSERT ... IF NOT EXISTS` or `UPDATE ... IF column = value`), which provide linearizable consistency guarantees.
+While standard repairs reconcile user table data across replicas, **Paxos repairs** specifically reconcile the **Paxos state** used by **[lightweight transactions (LWTs)](../../cql/dml/lightweight-transactions.md)**. LWTs are statements that include `IF` conditions (such as `INSERT ... IF NOT EXISTS` or `UPDATE ... IF column = value`), which provide linearizable consistency guarantees.
 
 Paxos repairs maintain LWT **linearizability** and correctness, especially across **topology changes** such as bootstrap, decommission, replace, and move operations.
 
