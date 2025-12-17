@@ -10,7 +10,7 @@ meta:
 
 This documentation provides comprehensive guides and references for distributed data platforms. Whether operating existing clusters or evaluating new deployments, these resources cover architecture, configuration, operations, and best practices.
 
-## Apache Cassandra
+## Apache Cassandra®
 
 Apache Cassandra is a distributed NoSQL database designed for scalability and high availability. It handles large volumes of data across commodity hardware while providing continuous availability with no single point of failure.
 
@@ -26,7 +26,7 @@ Apache Cassandra is a distributed NoSQL database designed for scalability and hi
 
 ---
 
-## Apache Kafka
+## Apache Kafka®
 
 Apache Kafka is a distributed event streaming platform capable of handling trillions of events per day. It provides high-throughput, fault-tolerant messaging with strong ordering guarantees.
 

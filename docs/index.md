@@ -6,7 +6,7 @@ hide:
 ---
 
 # Welcome to AxonOps
-AxonOps is the comprehensive operations platform for Apache Cassandra and Apache Kafka. Built by distributed systems experts, AxonOps provides all the capabilities required to effectively monitor, maintain, and manage your Cassandra databases and Kafka streaming infrastructure. Accessed through a single intuitive UI and driven by a highly efficient bi-directional protocol ensuring unprecedented functionality and exceptional performance.
+AxonOps is the comprehensive operations platform for Apache Cassandra® and Apache Kafka®. Built by distributed systems experts, AxonOps provides all the capabilities required to effectively monitor, maintain, and manage Cassandra databases and Kafka streaming infrastructure. Accessed through a single intuitive UI and driven by a highly efficient bi-directional protocol ensuring unprecedented functionality and exceptional performance.
 
 ## Unified Platform for Cassandra & Kafka
 

@@ -6,7 +6,7 @@ meta:
     content: "Apache Cassandra documentation, Cassandra reference, Cassandra guide, CQL reference, Cassandra operations"
 ---
 
-# Apache Cassandra Documentation
+# Apache Cassandra® Documentation
 
 Production-grade reference for architecture, CQL, and operations.
 
