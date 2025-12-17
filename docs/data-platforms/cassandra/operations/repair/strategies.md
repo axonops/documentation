@@ -826,7 +826,24 @@ Specifies keyspaces to exclude from Paxos repair during topology changes.
 | Value | Description |
 |-------|-------------|
 | (empty) | All keyspaces are included in Paxos repair during topology changes (default) |
-| Comma-separated list | Listed keyspaces are excluded from Paxos repair during topology changes |
+| List of keyspaces | Listed keyspaces are excluded from Paxos repair during topology changes |
+
+**Accepted formats:**
+
+1. **YAML list (RECOMMENDED)**:
+   ```yaml
+   skip_paxos_repair_on_topology_change_keyspaces:
+     - analytics_ks
+     - batch_ks
+     - timeseries_ks
+   ```
+
+2. **Comma-separated string**:
+   ```yaml
+   skip_paxos_repair_on_topology_change_keyspaces: analytics_ks, batch_ks, timeseries_ks
+   ```
+
+The YAML list format is **RECOMMENDED** as it is more readable and works better with version control.
 
 **Operational guidance:**
 
@@ -834,11 +851,6 @@ Specifies keyspaces to exclude from Paxos repair during topology changes.
 - Operators **MUST NOT** add keyspaces that use LWTs to this list, as doing so **MAY** violate LWT correctness
 - This setting is useful for mixed workloads where some keyspaces use LWTs and others do not
 - When a keyspace is listed here, Paxos cleanup for that keyspace is skipped during topology changes, reducing the risk of cleanup timeout failures
-
-```yaml
-# cassandra.yaml - exclude non-LWT keyspaces from topology-change Paxos repair
-skip_paxos_repair_on_topology_change_keyspaces: analytics_ks, batch_ks, timeseries_ks
-```
 
 #### paxos_repair_parallelism
 
