@@ -658,15 +658,6 @@ In Cassandra 4.1 and later, Paxos repairs run automatically every 5 minutes by d
 
 - Running without a keyspace argument repairs Paxos state for **all keyspaces**. This is often **RECOMMENDED** because operators frequently do not know which keyspaces developers are using for LWTs.
 - Paxos repairs are lightweight compared to full data repairs and complete quickly
-- The `--paxos-only` flag can be combined with other scope options:
-
-```bash
-# Paxos repair for primary range only
-nodetool repair --paxos-only -pr my_keyspace
-
-# Paxos repair for a specific datacenter
-nodetool repair --paxos-only -dc dc1 my_keyspace
-```
 
 For more details on Paxos repair strategy and configuration, see [Paxos Repairs](strategies.md#paxos-repairs) in the Repair Strategies guide.
 
