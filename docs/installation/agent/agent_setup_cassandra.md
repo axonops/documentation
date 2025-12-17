@@ -1,12 +1,3 @@
----
-title: "Install Cassandra Agent"
-description: "Install AxonOps agent for Cassandra. Detailed installation steps for all platforms."
-meta:
-  - name: keywords
-    content: "Cassandra agent install, AxonOps agent, installation guide"
----
-
-
 ## Install Cassandra Agent
 
 {!dynamic_pages/axon_agent/cassandra_agent.md!}

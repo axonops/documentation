@@ -10,6 +10,67 @@ meta:
 
 Production-grade reference for architecture, CQL, and operations.
 
+## Documentation Scope
+
+This reference documentation covers Apache Cassandra versions 4.0 through 5.x, with emphasis on production deployments. **Cassandra 5.0 (September 2024) introduced major features** including Storage-Attached Indexes (SAI), Vector Search, and Unified Compaction Strategy (UCS).
+
+| Version Range | Java Requirement | Documentation Status |
+|--------------|:----------------:|---------------------|
+| 3.11.x       | Java 8           | Legacy reference |
+| 4.0.x        | Java 8/11        | Supported |
+| 4.1.x        | Java 8/11        | Fully Documented |
+| 5.0.x        | Java 11/17       | **Current (5.0.6)** |
+
+Legend: ✅ Production Ready | ⚠️ Limited/Deprecated | ❌ Not Supported
+
+---
+
+## What's New
+
+### Cassandra 5.0.6 (October 2025) - Current Release
+
+- Bug fixes and stability improvements
+
+### Cassandra 5.0.0 (September 2024) - Major Release
+
+- **Storage-Attached Indexes (SAI)** (CEP-7) - Efficient secondary indexing within storage layer
+- **Vector data type and search** (CEP-30) - Approximate nearest neighbor searching via SAI
+- **Unified Compaction Strategy (UCS)** (CEP-26) - Adaptive compaction replacing multiple strategies
+- **Trie memtables** (CEP-19) - Trie-based in-memory data structures
+- **Trie SSTables** (CEP-25) - Trie-indexed SSTable format
+- **Dynamic Data Masking** (CEP-20) - Selective redaction of sensitive data at query time
+- **Java 17 support** - recommended for Cassandra 5.0
+- **TTL and writetime on collections/UDTs** - Extended metadata for complex types
+- **CIDR-based authorizer** (CEP-33) - Network-based access control
+- **New math functions**: `abs`, `exp`, `log`, `log10`, `round`
+
+### Cassandra 4.1.10 (September 2025)
+
+- Bug fixes and stability improvements
+
+### Cassandra 4.1.0 (December 2022)
+
+- **Paxos v2** - Enhanced lightweight transaction protocol
+- **Guardrails** - Operational safety boundaries and limits
+- **Partition denylist** - Block access to problematic partitions
+- **Top partition tracking** - Per-table monitoring of hot partitions
+- **Native transport rate limiting** - Request throughput controls
+- **Client-side password hashing** - Enhanced authentication security
+- **Pluggable memtables** - Custom memtable implementations
+
+### Cassandra 4.0.19 (October 2025)
+
+- Bug fixes and stability improvements
+
+### Cassandra 4.0.0 (July 2021)
+
+- **Virtual tables** - System information via CQL queries
+- **Audit logging** - Comprehensive query audit trail
+- **Full query logging** - Capture all queries for replay
+- **Incremental repair improvements** - More efficient anti-entropy
+- **Zero-copy streaming** - Faster data transfer between nodes
+- **Java 11 support** - Modern JVM compatibility
+
 ---
 
 Apache Cassandra is a widely adopted distributed database, but much of its operational and architectural knowledge has historically lived in mailing lists, conference talks, and tribal knowledge rather than formal documentation.
@@ -17,9 +78,6 @@ Apache Cassandra is a widely adopted distributed database, but much of its opera
 This documentation provides a comprehensive, production-focused reference for Apache Cassandra, covering storage engine internals, compaction strategies, indexing, CQL semantics, data modeling, and operational tooling. Content is designed for developers, operators, and architects building and maintaining Cassandra deployments at scale.
 
 This documentation complements the [Official Apache Cassandra Documentation](https://cassandra.apache.org/doc/latest/), providing deeper explanations of behavioral contracts, failure semantics, and practical guidance for real-world deployments.
-
-!!! info "Version Coverage"
-    This documentation covers **Apache Cassandra 4.x** (4.0, 4.1) and **5.x** (5.0). Version-specific differences are noted where applicable.
 
 ---
 
@@ -566,14 +624,26 @@ Diagnostic procedures and solutions for common issues.
 
 ---
 
-## Cassandra Versions
+## Version Compatibility
 
-This documentation covers:
+### Supported Versions
 
-- **Apache Cassandra 4.x** (4.0, 4.1)
-- **Apache Cassandra 5.x** (5.0)
+| Version | Release Date | End of Support | Status |
+|---------|--------------|----------------|--------|
+| 5.0.x | September 2024 | Until 5.3.0 release | **Current** |
+| 4.1.x | December 2022 | Until 5.2.0 release | Supported |
+| 4.0.x | July 2021 | Until 5.1.0 release | Supported |
+| 3.11.x | June 2017 | Unmaintained | Legacy |
 
-Version-specific differences are noted where applicable.
+!!! warning "Upgrade Path"
+    Direct upgrades skipping major versions are not supported. To upgrade from 3.11.x to 5.0.x:
+
+    1. Upgrade 3.11.x → 4.0.x
+    2. Upgrade 4.0.x → 4.1.x
+    3. Upgrade 4.1.x → 5.0.x
+
+!!! note "Documentation Conventions"
+    This documentation uses RFC 2119 terminology (must, should, may) to indicate requirement levels. Version-specific behaviors are explicitly noted with the applicable Cassandra version range.
 
 ---
 

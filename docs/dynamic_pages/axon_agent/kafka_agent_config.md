@@ -1,11 +1,3 @@
----
-title: "Specify the NTP server IP addresses or hostnames configured for your hosts"
-description: "AxonOps Kafka agent configuration dynamic page."
-meta:
-  - name: keywords
-    content: "Kafka agent config, AxonOps agent"
----
-
 <br/>
 <br/>
 

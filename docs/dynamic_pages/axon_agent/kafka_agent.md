@@ -1,13 +1,3 @@
----
-title: "Configuration File Locations"
-description: "AxonOps Kafka agent installation dynamic page."
-meta:
-  - name: keywords
-    content: "Kafka agent install, AxonOps agent"
----
-
-
-
 <h3>Select the Kafka Version</h3>
 <label>
   <input type="radio" id="Kafka20" name="kafkaFamily" onChange="updateKafka()" checked=true />

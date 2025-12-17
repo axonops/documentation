@@ -1,11 +1,3 @@
----
-title: "Os"
-description: "Operating system requirements for AxonOps agent."
-meta:
-  - name: keywords
-    content: "OS requirements, AxonOps agent, Linux"
----
-
 Select the OS Family
 
 <label>
