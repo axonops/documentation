@@ -678,6 +678,81 @@ end note
 
 Anti-compaction ensures clean separation between repaired and unrepaired data, enabling efficient future incremental repairs.
 
+## Paxos Repairs
+
+While standard repairs reconcile user table data across replicas, **Paxos repairs** specifically reconcile the **Paxos state** used by **lightweight transactions (LWTs)**. LWTs are statements that include `IF` conditions (such as `INSERT ... IF NOT EXISTS` or `UPDATE ... IF column = value`), which provide linearizable consistency guarantees.
+
+Paxos repairs maintain LWT **linearizability** and correctness, especially across **topology changes** such as bootstrap, decommission, replace, and move operations.
+
+### When Paxos Repairs Are Required
+
+Paxos repairs are only relevant for **keyspaces that use LWTs**. For keyspaces that never use LWTs, Paxos state does not affect correctness, and operators **MAY** safely skip Paxos repairs for those keyspaces.
+
+In Cassandra 4.1+ and 5.x, Paxos repairs are integrated with the broader repair system and **MAY** run automatically depending on configuration. Operators **SHOULD** ensure Paxos repairs run regularly on clusters where LWTs are in use.
+
+### Paxos Repairs and Topology Changes
+
+In Cassandra 4.1 and later, a **Paxos repair gate** runs before certain topology changes complete (for example, node bootstrap). This gate ensures that Paxos state is consistent across all replicas for the affected token ranges before the topology change finalizes.
+
+If Paxos repair cannot complete for the affected ranges and keyspaces—for example, because nodes are overloaded, have very large partitions, or some replicas are unavailable—the topology change **MUST** fail to avoid violating LWT correctness guarantees.
+
+Operators **MAY** encounter errors such as `PaxosCleanupException` with message `CANCELLED` when overloaded replicas cannot finish Paxos cleanup within the allowed time. This typically indicates that the cluster is under too much load or that specific partitions are too large for Paxos cleanup to complete successfully.
+
+```plantuml
+@startuml
+skinparam backgroundColor #FFFFFF
+skinparam defaultFontName Arial
+
+title Paxos Repair Gate During Topology Change
+
+participant "Joining Node" as JN
+participant "Coordinator" as C
+participant "Existing Replicas" as ER
+
+JN -> C : Request bootstrap
+C -> C : Identify affected\ntoken ranges
+
+== Paxos Repair Gate ==
+C -> ER : Initiate Paxos cleanup\nfor affected ranges
+note right of ER
+  Each replica must complete
+  Paxos cleanup for LWT keyspaces
+end note
+
+alt All replicas complete cleanup
+    ER --> C : Cleanup complete
+    C -> JN : Proceed with bootstrap
+    JN -> ER : Stream data
+    JN -> C : Bootstrap complete
+else Cleanup fails (timeout, overload, etc.)
+    ER --> C : PaxosCleanupException\n(CANCELLED)
+    C -> JN : Bootstrap FAILED
+    note over JN,ER #FFAAAA
+      Topology change blocked
+      to preserve LWT correctness
+    end note
+end
+
+@enduml
+```
+
+### Paxos v2
+
+Cassandra 4.1+ introduces **Paxos v2**, an updated Paxos implementation for lightweight transactions. Paxos v2 provides several improvements:
+
+- **Reduced network round-trips** for LWT reads and writes
+- **Improved behavior under contention** when multiple clients compete for the same partition
+- **Works in conjunction with regular Paxos repairs** and Paxos state purging
+
+Paxos v2 is selected via the `paxos_variant` setting in `cassandra.yaml` (values: `v1` or `v2`).
+
+To safely take full advantage of Paxos v2, operators **MUST** ensure:
+
+1. **Regular Paxos repairs** are running on all nodes
+2. **Paxos state purging** is configured appropriately (see [Paxos-related cassandra.yaml configuration](strategies.md#paxos-related-cassandrayaml-configuration) in the Repair Strategies guide)
+
+Detailed configuration options and upgrade guidance are covered in the [Repair Strategies](strategies.md) documentation.
+
 ## Next Steps
 
 - **[Options Reference](options-reference.md)** - Detailed explanation of all repair options

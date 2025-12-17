@@ -626,6 +626,246 @@ rectangle "Segmented Strategy" as segm {
 | `nodetool tablestats my_keyspace` | Check percent repaired per table |
 | `nodetool repair_admin list` | Verify no stuck repair sessions |
 
+---
+
+## Strategy 6: Paxos Repair Strategy
+
+Paxos repairs reconcile the Paxos state used by lightweight transactions (LWTs). For clusters that use LWTs, Paxos repairs are essential to maintain linearizability guarantees, especially during topology changes.
+
+For conceptual background on Paxos repairs, see [Paxos Repairs](concepts.md#paxos-repairs) in the Repair Concepts guide.
+
+### Regular Paxos-Only Repairs
+
+For clusters using LWTs, operators **SHOULD** run **Paxos-only repairs** regularly. This can be accomplished via:
+
+- **Automated repair scheduler** (Cassandra 4.1+) with Paxos repair enabled
+- **Scheduled `nodetool repair --paxos-only`** runs
+
+In Cassandra 4.1 and later, Paxos repairs run automatically by the built-in repair scheduler every **5 minutes by default** as part of the cluster's background maintenance (similar to compaction). This automatic scheduling is part of CEP-37 and requires no manual configuration when `paxos_repair_enabled` is `true` (the default).
+
+For Cassandra versions prior to 4.1, operators **MUST** schedule `nodetool repair --paxos-only` manually via cron or external scheduling tools, typically running at least hourly:
+
+```bash
+# Run Paxos-only repair on a keyspace (manual scheduling for pre-4.1 clusters)
+nodetool repair --paxos-only my_lwt_keyspace
+```
+
+Paxos repairs are relatively lightweight compared to full data repairs. On clusters running Cassandra 4.1+, the automatic 5-minute interval keeps Paxos state compact and consistent without operator intervention.
+
+Disabling Paxos repairs for extended periods **MAY** lead to stale or inconsistent LWT state, especially around topology changes. If Paxos state grows large, topology operations such as bootstrap **MAY** fail due to Paxos cleanup timeouts.
+
+### Topology Change Scenarios
+
+During topology changes (bootstrap, decommission, replace, move), Cassandra 4.1 and later runs a **Paxos repair gate** that **MUST** complete before the topology change finalizes. This gate ensures LWT correctness is preserved.
+
+In clusters with very large partitions (tens of gigabytes) or overloaded replicas, Paxos cleanup **MAY** fail during topology changes, causing errors such as:
+
+```
+PaxosCleanupException: CANCELLED
+```
+
+When this occurs, operators have two options:
+
+#### Option A: Fix the Underlying Load Problem (RECOMMENDED)
+
+This approach preserves LWT guarantees and **SHOULD** be preferred whenever time allows:
+
+1. **Throttle or stop traffic** to affected keyspaces to reduce load on replicas
+2. **Run `nodetool repair --paxos-only`** on all nodes to clean up Paxos state:
+   ```bash
+   # Run on each node
+   nodetool repair --paxos-only <keyspace>
+   ```
+3. **Identify and address large partitions** that may be causing cleanup timeouts
+4. **Retry the topology change** once the cluster is healthy and Paxos state is compact
+
+#### Option B: Temporarily Skip Paxos Repair for Topology Change (LAST RESORT)
+
+Cassandra provides configuration and JMX flags to skip Paxos repair during topology changes. This option **MUST** be treated as a **last-resort workaround**:
+
+> **Warning:** Skipping the Paxos repair gate **CAN** violate LWT correctness guarantees. Data consistency for lightweight transactions **MAY** be compromised.
+
+If used:
+
+1. Enable the skip flag (see [skip_paxos_repair_on_topology_change](#skip_paxos_repair_on_topology_change) below)
+2. Complete the topology change
+3. **Immediately** run `nodetool repair --paxos-only` on **all nodes** for all LWT keyspaces
+4. **Revert** the skip setting to its default (`false`)
+
+This option **MAY** be acceptable only when:
+
+- The topology change is urgent and cannot wait for cluster health to improve
+- The operator fully understands the risk to LWT consistency
+- A full Paxos repair is scheduled immediately after the topology change
+
+### Clusters Not Using LWTs
+
+For clusters or specific keyspaces that **never** use LWTs:
+
+- Operators **MAY** reduce or omit Paxos repairs for those non-LWT keyspaces to save resources
+- Operators **MAY** configure those keyspaces to be skipped during topology-change Paxos cleanup (see [skip_paxos_repair_on_topology_change_keyspaces](#skip_paxos_repair_on_topology_change_keyspaces))
+
+Operators **MUST** ensure they do not disable Paxos repair in a way that affects keyspaces where LWTs are still in use.
+
+---
+
+## Paxos-Related cassandra.yaml Configuration
+
+This section documents the main Paxos and Paxos-repair-related settings in `cassandra.yaml`. These settings control LWT behavior, Paxos state management, and repair integration.
+
+### paxos_variant
+
+Controls which Paxos implementation is used for lightweight transactions.
+
+| Value | Description |
+|-------|-------------|
+| `v1` | Original Paxos implementation (default in Cassandra < 4.1) |
+| `v2` | Improved implementation with fewer round-trips and better contention handling (available from Cassandra 4.1+) |
+
+**Operational guidance:**
+
+- On clusters that heavily use LWTs, enabling Paxos v2 **SHOULD** be considered for improved performance
+- To enable Paxos v2 cluster-wide, operators **MUST**:
+  - Set `paxos_variant: v2` consistently across **all nodes**
+  - Ensure Paxos repairs are running regularly before and after the change
+- Changes to `paxos_variant` **SHOULD** be done during a controlled maintenance window
+- Mixed `v1`/`v2` configurations within a cluster are **NOT RECOMMENDED** and **MAY** cause undefined behavior
+
+```yaml
+# cassandra.yaml
+paxos_variant: v2
+```
+
+### paxos_state_purging
+
+Controls how old Paxos state is purged from the system tables.
+
+| Value | Description |
+|-------|-------------|
+| `legacy` | Original behavior; Paxos state retained until explicit cleanup |
+| `gc_grace` | Purge Paxos state based on `gc_grace_seconds` of the table |
+| `repaired` | Purge Paxos state only after it has been repaired (requires regular Paxos repairs) |
+
+**Operational guidance:**
+
+- For Paxos v2, `paxos_state_purging: repaired` is typically **RECOMMENDED**, but **only** when Paxos repairs run regularly
+- Once `repaired` is enabled, operators generally **MUST NOT** switch back to `legacy` without careful consideration
+- If purging needs to be relaxed, switching to `gc_grace` **MAY** be appropriate but requires more conservative consistency levels
+- This setting **SHOULD** be changed consistently across all nodes in the cluster
+
+```yaml
+# cassandra.yaml - recommended for Paxos v2 with regular repairs
+paxos_state_purging: repaired
+```
+
+### paxos_repair_enabled
+
+Global enable/disable switch for the Paxos repair mechanism.
+
+| Value | Description |
+|-------|-------------|
+| `true` | Paxos repairs are enabled (default) |
+| `false` | Paxos repairs are disabled |
+
+**Operational guidance:**
+
+- When enabled (default), Paxos repairs run automatically on a **5-minute interval** in Cassandra 4.1+, and also run automatically before topology changes (bootstrap, decommission, replace, move).
+- When `false`, automatic Paxos repairs do not run, and `nodetool repair --paxos-only` has no effect
+- Operators **SHOULD NOT** disable Paxos repairs on clusters using LWTs
+- Disabling Paxos repairs **MAY** be appropriate only for clusters that do not use LWTs at all
+- If disabled on a cluster that later adds LWT workloads, operators **MUST** re-enable this setting
+
+```yaml
+# cassandra.yaml - default, keep enabled for LWT clusters
+paxos_repair_enabled: true
+```
+
+### skip_paxos_repair_on_topology_change
+
+Controls whether the Paxos repair gate is enforced during topology changes.
+
+| Value | Description |
+|-------|-------------|
+| `false` | Paxos repair gate is enforced; topology changes fail if Paxos cleanup cannot complete (default) |
+| `true` | Paxos repair gate is skipped; topology changes proceed without Paxos cleanup |
+
+**Operational guidance:**
+
+- This setting **SHOULD** remain `false` (default) for clusters using LWTs
+- Setting to `true` **MAY** allow topology changes to proceed when they would otherwise fail due to Paxos cleanup timeouts
+- **Warning:** When `true`, LWT correctness guarantees **MAY** be violated during and after the topology change
+- If set to `true` to complete an urgent topology change, operators **MUST**:
+  - Run `nodetool repair --paxos-only` on all nodes immediately after the topology change
+  - Revert this setting to `false` as soon as possible
+
+This setting can also be changed at runtime via JMX:
+
+```bash
+# Check current value
+nodetool getconfig skip_paxos_repair_on_topology_change
+
+# Change at runtime (use with extreme caution)
+nodetool setconfig skip_paxos_repair_on_topology_change true
+```
+
+```yaml
+# cassandra.yaml - default, do not change unless absolutely necessary
+skip_paxos_repair_on_topology_change: false
+```
+
+### skip_paxos_repair_on_topology_change_keyspaces
+
+Specifies keyspaces to exclude from Paxos repair during topology changes.
+
+| Value | Description |
+|-------|-------------|
+| (empty) | All keyspaces are included in Paxos repair during topology changes (default) |
+| Comma-separated list | Listed keyspaces are excluded from Paxos repair during topology changes |
+
+**Operational guidance:**
+
+- This setting **MAY** be used to exclude keyspaces that do not use LWTs from the Paxos repair gate
+- Operators **MUST NOT** add keyspaces that use LWTs to this list, as doing so **MAY** violate LWT correctness
+- This setting is useful for mixed workloads where some keyspaces use LWTs and others do not
+- When a keyspace is listed here, Paxos cleanup for that keyspace is skipped during topology changes, reducing the risk of cleanup timeout failures
+
+```yaml
+# cassandra.yaml - exclude non-LWT keyspaces from topology-change Paxos repair
+skip_paxos_repair_on_topology_change_keyspaces: analytics_ks, batch_ks, timeseries_ks
+```
+
+### paxos_repair_parallelism
+
+Controls the parallelism level for Paxos repair operations.
+
+| Value | Description |
+|-------|-------------|
+| `sequential` | Paxos repairs run one range at a time |
+| `parallel` | Paxos repairs run multiple ranges in parallel |
+
+**Operational guidance:**
+
+- `parallel` **MAY** reduce total Paxos repair time but increases resource consumption
+- On clusters with limited resources or high load, `sequential` **MAY** be more appropriate
+- The optimal setting depends on cluster size, load, and available resources
+
+```yaml
+# cassandra.yaml
+paxos_repair_parallelism: parallel
+```
+
+### Configuration Summary Table
+
+| Setting | Default | LWT Clusters | Non-LWT Clusters |
+|---------|---------|--------------|------------------|
+| `paxos_variant` | `v1` (< 4.1), `v2` (4.1+) | `v2` **RECOMMENDED** | Either |
+| `paxos_state_purging` | `legacy` | `repaired` **RECOMMENDED** | `legacy` or `gc_grace` |
+| `paxos_repair_enabled` | `true` | **MUST** be `true` | **MAY** be `false` |
+| `skip_paxos_repair_on_topology_change` | `false` | **SHOULD** be `false` | **MAY** be `true` |
+| `skip_paxos_repair_on_topology_change_keyspaces` | (empty) | Non-LWT keyspaces only | Any |
+
+---
+
 ## Next Steps
 
 - **[Repair Concepts](concepts.md)** - Understanding repair fundamentals
