@@ -619,6 +619,48 @@ nodetool repair --ignore-unreplicated-keyspaces
 | -j | ✓ | ✓ | ✓ | ✓ | - | ✓ |
 | -dc | ✓ | ✓ | ✓ | ✓ | ✓ | - |
 
+---
+
+## Paxos Repair Options
+
+### --paxos-only
+
+Repairs only the Paxos state used by [lightweight transactions (LWTs)](../../cql/dml/lightweight-transactions.md), without repairing user table data.
+
+```bash
+# Repair Paxos state for all keyspaces
+nodetool repair --paxos-only
+
+# Repair Paxos state for a specific keyspace
+nodetool repair --paxos-only my_keyspace
+```
+
+**How it works:**
+
+Paxos repairs synchronize the Paxos commit log entries stored in `system.paxos` across replicas. This ensures that all nodes agree on the outcome of previous LWT operations, which is essential for maintaining linearizability guarantees.
+
+**When to use:**
+
+- **Pre-4.1 clusters**: Operators **MUST** schedule `--paxos-only` repairs manually (typically hourly) since automatic Paxos repairs are not available
+- **Before topology changes**: Run on all nodes before bootstrap, decommission, replace, or move operations to reduce the risk of Paxos cleanup timeouts
+- **After disabling automatic Paxos repairs**: If `paxos_repair_enabled` is set to `false`, manual Paxos repairs **MUST** be scheduled regularly for clusters using LWTs
+- **Troubleshooting LWT issues**: When LWTs are timing out or behaving unexpectedly
+
+**Automatic Paxos repairs (Cassandra 4.1+):**
+
+In Cassandra 4.1 and later, Paxos repairs run automatically every 5 minutes by default when `paxos_repair_enabled` is `true`. Manual `--paxos-only` repairs are typically only needed for:
+
+- Pre-4.1 clusters
+- Clusters where automatic Paxos repairs have been disabled
+- Proactive cleanup before topology changes
+
+**Operational guidance:**
+
+- Running without a keyspace argument repairs Paxos state for **all keyspaces**. This is often **RECOMMENDED** because operators frequently do not know which keyspaces developers are using for LWTs.
+- Paxos repairs are lightweight compared to full data repairs and complete quickly
+
+For more details on Paxos repair strategy and configuration, see [Paxos Repairs](strategies.md#paxos-repairs) in the Repair Strategies guide.
+
 ## Next Steps
 
 - **[Repair Concepts](concepts.md)** - Understanding how repair works
