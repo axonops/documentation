@@ -852,26 +852,6 @@ Both formats are equivalent.
 - This setting is useful for mixed workloads where some keyspaces use LWTs and others do not
 - When a keyspace is listed here, Paxos cleanup for that keyspace is skipped during topology changes, reducing the risk of cleanup timeout failures
 
-#### paxos_repair_parallelism
-
-Controls the parallelism level for Paxos repair operations.
-
-| Value | Description |
-|-------|-------------|
-| `sequential` | Paxos repairs run one range at a time |
-| `parallel` | Paxos repairs run multiple ranges in parallel |
-
-**Operational guidance:**
-
-- `parallel` **MAY** reduce total Paxos repair time but increases resource consumption
-- On clusters with limited resources or high load, `sequential` **MAY** be more appropriate
-- The optimal setting depends on cluster size, load, and available resources
-
-```yaml
-# cassandra.yaml
-paxos_repair_parallelism: parallel
-```
-
 #### Configuration Summary Table
 
 | Setting | Default | LWT Clusters | Non-LWT Clusters |
