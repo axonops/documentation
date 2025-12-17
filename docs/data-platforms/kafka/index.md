@@ -29,34 +29,63 @@ Legend: ✅ Production Ready | ⚠️ Limited/Deprecated | ❌ Not Supported
 
 ## What's New
 
-### Kafka 4.1 (September 2025) - Current Release
+### Kafka 4.1.1 (November 2025) - Current Release
 
-Latest: **4.1.1** (November 2025)
+- Bug fixes and stability improvements
 
-- **Streams Rebalance Protocol** (KIP-1071) - Early access for improved Kafka Streams rebalancing
-- **Enhanced metrics registration** (KIP-877) - Better metrics for plugins and connectors across brokers, producers, and consumers
-- Various bug fixes and stability improvements in 4.1.1
+### Kafka 4.1.0 (September 2025)
 
-### Kafka 4.0 (March 2025) - Major Release
+- **Queues for Kafka preview** (KIP-932) - Promoted from early access to preview (4.0 early-access clusters cannot upgrade directly)
+- **Streams Rebalance Protocol** (KIP-1071) - Early access broker-coordinated rebalancing for Kafka Streams
+- **OAuth jwt-bearer grant** (KIP-1139) - New grant type avoiding secrets in configuration
+- **Plugin metrics** (KIP-877) - Plugins and connectors can register metrics via Monitorable interface
+- **Connector versioning** - Install and run multiple versions of same connector plugins
+- **Transaction filtering** (KIP-1152) - Transactional ID pattern filter in ListTransactions API
+- **Consumer close options** - New `Consumer.close(CloseOptions)` method controlling group leave behavior
+- **Rack-aware assignment** - Memory efficiency improvements for large consumer groups
+- **KRaft voter upgrade** (KIP-853) - Upgrade voters from static to dynamic configuration
+- **High-watermark fix** (KIP-1166) - Fixes pending fetch requests blocking high-watermark progression
+
+### Kafka 4.0.1 (October 2025)
+
+- Fixes 49 issues since 4.0.0 release
+
+### Kafka 4.0.0 (March 2025) - Major Release
 
 - **ZooKeeper removed** - KRaft is now the only metadata management mode
 - **New Consumer Group Protocol GA** (KIP-848) - Dramatically faster rebalances
-- **Queues for Kafka** (KIP-932) - Early access for traditional queue semantics
+- **Queues for Kafka early access** (KIP-932) - Traditional queue semantics (promoted to preview in 4.1)
 - **Java 17 required** for brokers, Connect, and tools (Java 11 for clients)
 - **Log4j2** replaces Log4j 1.x
 - **MirrorMaker 1 removed** - Use MirrorMaker 2
 
-### Kafka 3.9 (November 2024)
+### Kafka 3.9.1 (May 2025)
+
+- Fixes 66 issues since 3.9.0 release
+
+### Kafka 3.9.0 (November 2024)
 
 - **Dynamic KRaft quorum** (KIP-853) - Add/remove controllers without downtime
 - Final 3.x release before ZooKeeper removal
 
-### Kafka 3.8 (July 2024)
+### Kafka 3.8.1 (October 2024)
+
+- Fixes 17 issues since 3.8.0 release
+
+### Kafka 3.8.0 (July 2024)
 
 - **Compression level configuration** (KIP-390)
 - Tiered storage JBOD compatibility (early access)
 
-### Kafka 3.7 (February 2024)
+### Kafka 3.7.2 (December 2024)
+
+- Fixes 22 issues since 3.7.1 release
+
+### Kafka 3.7.1 (June 2024)
+
+- Bug fixes and stability improvements
+
+### Kafka 3.7.0 (February 2024)
 
 - **JBOD in KRaft** (KIP-858) - Early access
 - **Client metrics** (KIP-714)
