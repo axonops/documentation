@@ -23,10 +23,10 @@
       <meta name="generator" content="mkdocs-1.6.0, mkdocs-material-9.5.31">
     
     
-      
-        <title>Axon Agent Setup - AxonOps Documentation</title>
-      
-    
+
+  <title>Axon Agent Setup</title>
+
+
     
       <link rel="stylesheet" href="../../assets/stylesheets/main.3cba04c6.min.css">
       
@@ -18617,13 +18617,6 @@ https://agents.axonops.cloud/ips-v6
 <p>You should expect the following response:</p>
 <p><em>AxonOps Agent Test Page</em></p>
 <h2 id="setup-the-axonops-repository-and-install-axonops-agent">Setup the AxonOps repository and install AxonOps Agent<a class="headerlink" href="#setup-the-axonops-repository-and-install-axonops-agent" title="Permanent link">¶</a></h2>
-<hr>
-<p>title: "Os"
-description: "Operating system requirements for AxonOps agent."
-meta:
-  - name: keywords
-    content: "OS requirements, AxonOps agent, Linux"</p>
-<hr>
 <p>Select the OS Family</p>
 <p><label>
   <input type="radio" id="Debian" name="osFamily" onchange="selectOS()" checked>
@@ -18682,13 +18675,6 @@ meta:
     content: "Cassandra agent setup, AxonOps installation, monitoring setup"</p>
 <hr>
 <h2 id="install-cassandra-agent">Install Cassandra Agent <a class="headerlink" href="#install-cassandra-agent" title="Permanent link">¶</a></h2>
-<hr>
-<p>title: "Select the Cassandra Version"
-description: "AxonOps Cassandra agent installation dynamic page."
-meta:
-  - name: keywords
-    content: "Cassandra agent install, AxonOps agent"</p>
-<hr>
 <h3 id="select-the-cassandra-version">Select the Cassandra Version<a class="headerlink" href="#select-the-cassandra-version" title="Permanent link">¶</a></h3>
 <p><label>
   <input type="radio" id="Cassandra30" name="casFamily" onchange="selectCas()" checked>
@@ -18845,13 +18831,6 @@ and CPU utilization of the Cassandra process.</p>
 <div class="highlight"><pre><span></span><code>sudo chmod 0640 /etc/axonops/axon-agent.yml
 </code></pre></div>
 <h2 id="configure-cassandra">Configure Cassandra<a class="headerlink" href="#configure-cassandra" title="Permanent link">¶</a></h2>
-<hr>
-<p>title: "Configure Cassandra user group"
-description: "Java requirements for AxonOps Cassandra agent."
-meta:
-  - name: keywords
-    content: "Java requirements, AxonOps agent, JVM"</p>
-<hr>
 <p>Add the following line at the end of <code>/etc/cassandra/cassandra-env.sh</code>:</p>
 <div class="javacas" id="Cassandra30Div">
   <div class="highlight"><pre><span></span><code>JVM_OPTS="$JVM_OPTS -javaagent:/usr/share/axonops/axon-cassandra3.0-agent.jar=/etc/axonops/axon-agent.yml"
@@ -18914,13 +18893,6 @@ meta:
     content: "Kafka agent setup, AxonOps installation, monitoring setup"</p>
 <hr>
 <h2 id="install-kafka-agent">Install Kafka Agent<a class="headerlink" href="#install-kafka-agent" title="Permanent link">¶</a></h2>
-<hr>
-<p>title: "Configuration File Locations"
-description: "AxonOps Kafka agent installation dynamic page."
-meta:
-  - name: keywords
-    content: "Kafka agent install, AxonOps agent"</p>
-<hr>
 <h3 id="select-the-kafka-version">Select the Kafka Version<a class="headerlink" href="#select-the-kafka-version" title="Permanent link">¶</a></h3>
 <p><label>
   <input type="radio" id="Kafka20" name="kafkaFamily" onchange="updateKafka()" checked>
@@ -19009,13 +18981,6 @@ and CPU utilization of the Kafka process.</p>
 </ul>
 <p><a class="glightbox" href="../agent_keys.png" data-type="image" data-width="100%" data-height="auto" data-desc-position="bottom"><img alt="Console Screenshot" src="../agent_keys.png"></a></p>
 <p>If there is a Dedicated NTP server in your Organization please uncomment and update the NTP section.</p>
-<hr>
-<p>title: "Specify the NTP server IP addresses or hostnames configured for your hosts"
-description: "AxonOps Kafka agent configuration dynamic page."
-meta:
-  - name: keywords
-    content: "Kafka agent config, AxonOps agent"</p>
-<hr>
 <p><br>
 <br></p>
 <div class="w3-bar w3-light-grey">
@@ -19327,13 +19292,6 @@ Edit connect-distributed.sh, usually located in your Kafka install path such as:
 <p><code>/&lt;Kafka_Home&gt;/bin/connect-distributed.sh </code></p>
 </div>
 <!-- Load Dynamic Java section -->
-<hr>
-<p>title: "Kafka Java"
-description: "Java requirements for AxonOps Kafka agent."
-meta:
-  - name: keywords
-    content: "Java requirements, Kafka agent, JVM"</p>
-<hr>
 <p>Insert the line <code>. /usr/share/axonops/axonops-jvm.options</code> right before the final line in your config file. Look for the last line that starts with <code>exec</code>, as demonstrated in the example below.</p>
 <blockquote>
 <p><strong>NB.</strong> Please note the period(.) at the beginning of the config line.</p>

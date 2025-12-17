@@ -6,7 +6,7 @@
       <meta charset="utf-8">
       <meta name="viewport" content="width=device-width,initial-scale=1">
       
-        <meta name="description" content="AxonOps Kafka agent configuration dynamic page.">
+        <meta name="description" content="Official documentation for AxonOps - the unified platform for monitoring, maintenance, and backup of Apache Cassandra and Apache Kafka clusters.">
       
       
       
@@ -19,10 +19,10 @@
       <meta name="generator" content="mkdocs-1.6.0, mkdocs-material-9.5.31">
     
     
-      
-        <title>Specify the NTP server IP addresses or hostnames configured for your hosts - AxonOps Documentation</title>
-      
-    
+
+  <title>Kafka agent config | AxonOps Documentation</title>
+
+
     
       <link rel="stylesheet" href="../../../assets/stylesheets/main.3cba04c6.min.css">
       
@@ -60,17 +60,13 @@
 
     
     
-      
-        <meta  name="keywords"  content="Kafka agent config, AxonOps agent" >
-      
-    
     
 <!-- Schema.org Structured Data for Documentation -->
 <script type="application/ld+json">
 {
   "@context": "https://schema.org",
   "@type": "TechArticle",
-  "headline": "Specify the NTP server IP addresses or hostnames configured for your hosts - Apache Cassandra Documentation",
+  "headline": "Kafka agent config - Apache Cassandra Documentation",
   "description": "Official documentation for AxonOps - the unified platform for monitoring, maintenance, and backup of Apache Cassandra and Apache Kafka clusters.",
   "about": {
     "@type": "SoftwareApplication",
@@ -238,7 +234,7 @@ body{font-family:'Roboto Flex',-apple-system,BlinkMacSystemFont,'Segoe UI',Robot
         <div class="md-header__topic" data-md-component="header-topic">
           <span class="md-ellipsis">
             
-            Specify the NTP server IP addresses or hostnames configured for your hosts
+            Kafka agent config
             
           </span>
         </div>
@@ -17770,7 +17766,7 @@ data-et-multi-view="{&quot;schema&quot;:{&quot;content&quot;:{&quot;desktop&quot
                   
 
 
-  <h1>Specify the NTP server IP addresses or hostnames configured for your hosts</h1>
+  <h1>Kafka agent config</h1>
 
 <div><p><br>
 <br></p>
@@ -18092,13 +18088,6 @@ Edit connect-distributed.sh, usually located in your Kafka install path such as:
 <p><code>/&lt;Kafka_Home&gt;/bin/connect-distributed.sh </code></p>
 </div>
 <!-- Load Dynamic Java section -->
-<hr>
-<p>title: "Kafka Java"
-description: "Java requirements for AxonOps Kafka agent."
-meta:
-  - name: keywords
-    content: "Java requirements, Kafka agent, JVM"</p>
-<hr>
 <p>Insert the line <code>. /usr/share/axonops/axonops-jvm.options</code> right before the final line in your config file. Look for the last line that starts with <code>exec</code>, as demonstrated in the example below.</p>
 <blockquote>
 <p><strong>NB.</strong> Please note the period(.) at the beginning of the config line.</p>
@@ -18300,9 +18289,6 @@ To load the AxonOps Java Agent and Kafka Connect config changes please either:
 
 
 
-
-  
-  
 
 
 

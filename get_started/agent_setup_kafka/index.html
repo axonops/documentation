@@ -19,10 +19,10 @@
       <meta name="generator" content="mkdocs-1.6.0, mkdocs-material-9.5.31">
     
     
-      
-        <title>Install Kafka Agent - AxonOps Documentation</title>
-      
-    
+
+  <title>Install Kafka Agent</title>
+
+
     
       <link rel="stylesheet" href="../../assets/stylesheets/main.3cba04c6.min.css">
       
@@ -17843,13 +17843,6 @@ data-et-multi-view="{&quot;schema&quot;:{&quot;content&quot;:{&quot;desktop&quot
   <h1>Install Kafka Agent</h1>
 
 <div><h2 id="install-kafka-agent">Install Kafka Agent<a class="headerlink" href="#install-kafka-agent" title="Permanent link">¶</a></h2>
-<hr>
-<p>title: "Configuration File Locations"
-description: "AxonOps Kafka agent installation dynamic page."
-meta:
-  - name: keywords
-    content: "Kafka agent install, AxonOps agent"</p>
-<hr>
 <h3>Select the Kafka Version</h3>
 <p><label>
   <input type="radio" id="Kafka20" name="kafkaFamily" onchange="updateKafka()" checked>
@@ -17940,13 +17933,6 @@ and CPU utilization of the Kafka process.</p>
 </ul>
 <p><a class="glightbox" href="../agent_keys.png" data-type="image" data-width="100%" data-height="auto" data-desc-position="bottom"><img alt="Console Screenshot" src="../agent_keys.png"></a></p>
 <p>If there is a Dedicated NTP server in your Organization please uncomment and update the NTP section.</p>
-<hr>
-<p>title: "Specify the NTP server IP addresses or hostnames configured for your hosts"
-description: "AxonOps Kafka agent configuration dynamic page."
-meta:
-  - name: keywords
-    content: "Kafka agent config, AxonOps agent"</p>
-<hr>
 <p><br>
 <br></p>
 <div class="w3-bar w3-light-grey">
@@ -18267,13 +18253,6 @@ Edit connect-distributed.sh, usually located in your Kafka install path such as:
 <p><code>/&lt;Kafka_Home&gt;/bin/connect-distributed.sh </code></p>
 </div>
 <!-- Load Dynamic Java section -->
-<hr>
-<p>title: "Kafka Java"
-description: "Java requirements for AxonOps Kafka agent."
-meta:
-  - name: keywords
-    content: "Java requirements, Kafka agent, JVM"</p>
-<hr>
 <p>Insert the line <code>. /usr/share/axonops/axonops-jvm.options</code> right before the final line in your config file. Look for the last line that starts with <code>exec</code>, as demonstrated in the example below.</p>
 <blockquote>
 <p><strong>NB.</strong> Please note the period(.) at the beginning of the config line.</p>

@@ -6,7 +6,7 @@
       <meta charset="utf-8">
       <meta name="viewport" content="width=device-width,initial-scale=1">
       
-        <meta name="description" content="Install AxonOps agent for Kafka. Detailed installation steps for all platforms.">
+        <meta name="description" content="Official documentation for AxonOps - the unified platform for monitoring, maintenance, and backup of Apache Cassandra and Apache Kafka clusters.">
       
       
       
@@ -19,10 +19,10 @@
       <meta name="generator" content="mkdocs-1.6.0, mkdocs-material-9.5.31">
     
     
-      
-        <title>Install Kafka Agent - AxonOps Documentation</title>
-      
-    
+
+  <title>Agent setup kafka | AxonOps Documentation</title>
+
+
     
       <link rel="stylesheet" href="../../../assets/stylesheets/main.3cba04c6.min.css">
       
@@ -60,17 +60,13 @@
 
     
     
-      
-        <meta  name="keywords"  content="Kafka agent install, AxonOps agent, installation guide" >
-      
-    
     
 <!-- Schema.org Structured Data for Documentation -->
 <script type="application/ld+json">
 {
   "@context": "https://schema.org",
   "@type": "TechArticle",
-  "headline": "Install Kafka Agent - Apache Cassandra Documentation",
+  "headline": "Agent setup kafka - Apache Cassandra Documentation",
   "description": "Official documentation for AxonOps - the unified platform for monitoring, maintenance, and backup of Apache Cassandra and Apache Kafka clusters.",
   "about": {
     "@type": "SoftwareApplication",
@@ -243,7 +239,7 @@ body{font-family:'Roboto Flex',-apple-system,BlinkMacSystemFont,'Segoe UI',Robot
         <div class="md-header__topic" data-md-component="header-topic">
           <span class="md-ellipsis">
             
-            Install Kafka Agent
+            Agent setup kafka
             
           </span>
         </div>
@@ -17840,16 +17836,9 @@ data-et-multi-view="{&quot;schema&quot;:{&quot;content&quot;:{&quot;desktop&quot
                   
 
 
-  <h1>Install Kafka Agent</h1>
+  <h1>Agent setup kafka</h1>
 
 <div><h2 id="install-kafka-agent">Install Kafka Agent<a class="headerlink" href="#install-kafka-agent" title="Permanent link">¶</a></h2>
-<hr>
-<p>title: "Configuration File Locations"
-description: "AxonOps Kafka agent installation dynamic page."
-meta:
-  - name: keywords
-    content: "Kafka agent install, AxonOps agent"</p>
-<hr>
 <h3>Select the Kafka Version</h3>
 <p><label>
   <input type="radio" id="Kafka20" name="kafkaFamily" onchange="updateKafka()" checked>
@@ -17932,13 +17921,6 @@ and CPU utilization of the Kafka process.</p>
 <h2 id="agent-configuration">Agent Configuration<a class="headerlink" href="#agent-configuration" title="Permanent link">¶</a></h2>
 <p>Update the highlighted lines in <code>/etc/axonops/axon-agent.yml</code>.</p>
 <p>These need to match the config that you have in your <code>axon-server.yml</code> setup.</p>
-<hr>
-<p>title: "Specify the NTP server IP addresses or hostnames configured for your hosts"
-description: "AxonOps Kafka agent configuration dynamic page."
-meta:
-  - name: keywords
-    content: "Kafka agent config, AxonOps agent"</p>
-<hr>
 <p><br>
 <br></p>
 <div class="w3-bar w3-light-grey">
@@ -18259,13 +18241,6 @@ Edit connect-distributed.sh, usually located in your Kafka install path such as:
 <p><code>/&lt;Kafka_Home&gt;/bin/connect-distributed.sh </code></p>
 </div>
 <!-- Load Dynamic Java section -->
-<hr>
-<p>title: "Kafka Java"
-description: "Java requirements for AxonOps Kafka agent."
-meta:
-  - name: keywords
-    content: "Java requirements, Kafka agent, JVM"</p>
-<hr>
 <p>Insert the line <code>. /usr/share/axonops/axonops-jvm.options</code> right before the final line in your config file. Look for the last line that starts with <code>exec</code>, as demonstrated in the example below.</p>
 <blockquote>
 <p><strong>NB.</strong> Please note the period(.) at the beginning of the config line.</p>
@@ -18467,9 +18442,6 @@ To load the AxonOps Java Agent and Kafka Connect config changes please either:
 
 
 
-
-  
-  
 
 
 

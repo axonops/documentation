@@ -23,10 +23,10 @@
       <meta name="generator" content="mkdocs-1.6.0, mkdocs-material-9.5.31">
     
     
-      
-        <title>AxonOps Agent Installation - AxonOps Documentation</title>
-      
-    
+
+  <title>AxonOps Agent Installation</title>
+
+
     
       <link rel="stylesheet" href="../../../assets/stylesheets/main.3cba04c6.min.css">
       
@@ -18683,13 +18683,6 @@ data-et-multi-view="{&quot;schema&quot;:{&quot;content&quot;:{&quot;desktop&quot
 <li>Apache Kafa 3.x</li>
 </ul>
 <h2 id="setup-the-package-repository">Setup the Package Repository<a class="headerlink" href="#setup-the-package-repository" title="Permanent link">¶</a></h2>
-<hr>
-<p>title: "Os"
-description: "Operating system requirements for AxonOps agent."
-meta:
-  - name: keywords
-    content: "OS requirements, AxonOps agent, Linux"</p>
-<hr>
 <p>Select the OS Family</p>
 <p><label>
   <input type="radio" id="Debian" name="osFamily" onchange="selectOS()" checked>
@@ -18740,21 +18733,7 @@ sudo<span class="w"> </span>apt-get<span class="w"> </span>update
   <img src="/get_started/kafka.png" class="skip-lightbox" width="180px" height="180px">
 </label></p>
 <div id="CassandraDiv" name="service_div">
-<hr>
-<p>title: "Install Cassandra Agent"
-description: "Install AxonOps agent for Cassandra. Detailed installation steps for all platforms."
-meta:
-  - name: keywords
-    content: "Cassandra agent install, AxonOps agent, installation guide"</p>
-<hr>
 <h2 id="install-cassandra-agent">Install Cassandra Agent<a class="headerlink" href="#install-cassandra-agent" title="Permanent link">¶</a></h2>
-<hr>
-<p>title: "Select the Cassandra Version"
-description: "AxonOps Cassandra agent installation dynamic page."
-meta:
-  - name: keywords
-    content: "Cassandra agent install, AxonOps agent"</p>
-<hr>
 <h3 id="select-the-cassandra-version">Select the Cassandra Version<a class="headerlink" href="#select-the-cassandra-version" title="Permanent link">¶</a></h3>
 <p><label>
   <input type="radio" id="Cassandra30" name="casFamily" onchange="selectCas()" checked>
@@ -18906,13 +18885,6 @@ running the following commmand:</p>
 <div class="highlight"><pre><span></span><code>sudo<span class="w"> </span>chmod<span class="w"> </span><span class="m">0640</span><span class="w"> </span>/etc/axonops/axon-agent.yml
 </code></pre></div>
 <h2 id="configure-cassandra">Configure Cassandra<a class="headerlink" href="#configure-cassandra" title="Permanent link">¶</a></h2>
-<hr>
-<p>title: "Configure Cassandra user group"
-description: "Java requirements for AxonOps Cassandra agent."
-meta:
-  - name: keywords
-    content: "Java requirements, AxonOps agent, JVM"</p>
-<hr>
 <p>Add the following line at the end of <code>/etc/cassandra/cassandra-env.sh</code>:</p>
 <div class="javacas" id="Cassandra30Div">
   <div class="highlight"><pre><span></span><code>JVM_OPTS="$JVM_OPTS -javaagent:/usr/share/axonops/axon-cassandra3.0-agent.jar=/etc/axonops/axon-agent.yml"
@@ -18965,21 +18937,7 @@ restarted when updating the <code>axon-agent</code> package.</p>
 </code></pre></div>
 </div>
 <div id="KafkaDiv" name="service_div" style="display:none">
-<hr>
-<p>title: "Install Kafka Agent"
-description: "Install AxonOps agent for Kafka. Detailed installation steps for all platforms."
-meta:
-  - name: keywords
-    content: "Kafka agent install, AxonOps agent, installation guide"</p>
-<hr>
 <h2 id="install-kafka-agent">Install Kafka Agent<a class="headerlink" href="#install-kafka-agent" title="Permanent link">¶</a></h2>
-<hr>
-<p>title: "Configuration File Locations"
-description: "AxonOps Kafka agent installation dynamic page."
-meta:
-  - name: keywords
-    content: "Kafka agent install, AxonOps agent"</p>
-<hr>
 <h3 id="select-the-kafka-version">Select the Kafka Version<a class="headerlink" href="#select-the-kafka-version" title="Permanent link">¶</a></h3>
 <p><label>
   <input type="radio" id="Kafka20" name="kafkaFamily" onchange="updateKafka()" checked>
@@ -19060,13 +19018,6 @@ and CPU utilization of the Kafka process.</p>
 <h2 id="agent-configuration_1">Agent Configuration<a class="headerlink" href="#agent-configuration_1" title="Permanent link">¶</a></h2>
 <p>Update the highlighted lines in <code>/etc/axonops/axon-agent.yml</code>.</p>
 <p>These need to match the config that you have in your <code>axon-server.yml</code> setup.</p>
-<hr>
-<p>title: "Specify the NTP server IP addresses or hostnames configured for your hosts"
-description: "AxonOps Kafka agent configuration dynamic page."
-meta:
-  - name: keywords
-    content: "Kafka agent config, AxonOps agent"</p>
-<hr>
 <p><br>
 <br></p>
 <div class="w3-bar w3-light-grey">
@@ -19378,13 +19329,6 @@ Edit connect-distributed.sh, usually located in your Kafka install path such as:
 <p><code>/&lt;Kafka_Home&gt;/bin/connect-distributed.sh </code></p>
 </div>
 <!-- Load Dynamic Java section -->
-<hr>
-<p>title: "Kafka Java"
-description: "Java requirements for AxonOps Kafka agent."
-meta:
-  - name: keywords
-    content: "Java requirements, Kafka agent, JVM"</p>
-<hr>
 <p>Insert the line <code>. /usr/share/axonops/axonops-jvm.options</code> right before the final line in your config file. Look for the last line that starts with <code>exec</code>, as demonstrated in the example below.</p>
 <blockquote>
 <p><strong>NB.</strong> Please note the period(.) at the beginning of the config line.</p>
