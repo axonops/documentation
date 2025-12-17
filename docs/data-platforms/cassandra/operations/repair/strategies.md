@@ -643,7 +643,7 @@ For clusters using LWTs, operators **SHOULD** run **Paxos-only repairs** regular
 
 In Cassandra 4.1 and later, Paxos repairs run automatically every **5 minutes by default** as part of the cluster's background maintenance (similar to compaction). This requires no manual configuration when `paxos_repair_enabled` is `true` (the default).
 
-> **Important:** The `paxos_repair_enabled` setting only controls automatic Paxos repairs. It does **NOT** affect manual `nodetool repair --paxos-only` operations. If you disable automatic Paxos repairs, you **MUST** implement a manual schedule.
+> **Important:** The `paxos_repair_enabled` setting only controls automatic Paxos repairs. It does **NOT** affect manual `nodetool repair --paxos-only` operations. If you disable automatic Paxos repairs and are using LWTs, you **MUST** implement a manual schedule.
 
 For Cassandra versions prior to 4.1, operators **MUST** schedule `nodetool repair --paxos-only` manually via cron or external scheduling tools, typically running at least hourly:
 
