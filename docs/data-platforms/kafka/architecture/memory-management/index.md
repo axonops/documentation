@@ -103,7 +103,7 @@ Kafka relies heavily on the OS page cache for performance. The page cache stores
 
 
 rectangle "Read Path" {
-  actor "Consumer" as cons
+  rectangle "Consumer" as cons
   rectangle "Broker" as broker
   rectangle "Page Cache" as cache
   database "Disk" as disk

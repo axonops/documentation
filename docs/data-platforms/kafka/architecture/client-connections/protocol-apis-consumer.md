@@ -845,7 +845,7 @@ Result =>
 
 skinparam backgroundColor transparent
 
-actor "Application" as App
+rectangle "Application" as App
 participant "Consumer" as C
 participant "Any Broker" as AB
 participant "Coordinator" as Coord

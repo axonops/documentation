@@ -82,8 +82,8 @@ rectangle "Range Assignor" {
     collections "Topic A\nP0, P1, P2" as TA1
     collections "Topic B\nP0, P1, P2" as TB1
 
-    actor "C1" as C1a
-    actor "C2" as C2a
+    rectangle "C1" as C1a
+    rectangle "C2" as C2a
 
     TA1 --> C1a : "P0, P1"
     TA1 --> C2a : "P2"
@@ -95,8 +95,8 @@ rectangle "RoundRobin Assignor" {
     collections "Topic A\nP0, P1, P2" as TA2
     collections "Topic B\nP0, P1, P2" as TB2
 
-    actor "C1" as C1b
-    actor "C2" as C2b
+    rectangle "C1" as C1b
+    rectangle "C2" as C2b
 
     note bottom of C1b
       A-P0, A-P2, B-P1

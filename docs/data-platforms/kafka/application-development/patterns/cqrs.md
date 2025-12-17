@@ -64,7 +64,7 @@ rectangle "CQRS Architecture" {
 
 skinparam backgroundColor transparent
 
-actor "Client" as client
+rectangle "Client" as client
 
 rectangle "Command Side" {
     rectangle "Command API" as cmdapi

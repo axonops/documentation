@@ -133,9 +133,9 @@ rectangle "Range Assignment" {
         card "P5" as B5
     }
 
-    actor "Consumer 1" as C1
-    actor "Consumer 2" as C2
-    actor "Consumer 3" as C3
+    rectangle "Consumer 1" as C1
+    rectangle "Consumer 2" as C2
+    rectangle "Consumer 3" as C3
 
     A0 --> C1
     A1 --> C1
@@ -195,16 +195,16 @@ Minimizes partition movement during rebalances.
 skinparam backgroundColor transparent
 
 rectangle "Before Rebalance" {
-    actor "C1: P0, P1" as C1a
-    actor "C2: P2, P3" as C2a
-    actor "C3: P4, P5" as C3a
+    rectangle "C1: P0, P1" as C1a
+    rectangle "C2: P2, P3" as C2a
+    rectangle "C3: P4, P5" as C3a
 }
 
 note right of C3a: C3 leaves group
 
 rectangle "After Rebalance (Sticky)" {
-    actor "C1: P0, P1, P4" as C1b
-    actor "C2: P2, P3, P5" as C2b
+    rectangle "C1: P0, P1, P4" as C1b
+    rectangle "C2: P2, P3, P5" as C2b
 }
 
 note right of C2b
