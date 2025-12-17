@@ -6,7 +6,7 @@ meta:
     content: "Paxos, consensus algorithms, lightweight transactions, LWT, distributed consensus, Cassandra consistency"
 ---
 
-# Consensus Algorithms and Paxos
+# Lightweight Transactions (LWT) - Consensus Algorithms and Paxos
 
 Cassandra's default consistency model—eventual consistency with last-write-wins—handles most workloads efficiently. But some operations demand stronger guarantees: inserting a user only if the username doesn't exist, updating a balance only if it hasn't changed, acquiring a distributed lock. These operations require **consensus**—agreement among replicas before committing a change.
 

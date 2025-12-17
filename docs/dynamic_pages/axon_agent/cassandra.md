@@ -1,13 +1,3 @@
----
-title: "Cassandra"
-description: "AxonOps Cassandra agent dynamic configuration page."
-meta:
-  - name: keywords
-    content: "AxonOps agent, Cassandra agent, dynamic config"
----
-
-
-
 <h3>Select the Cassandra Version</h3>
 <label>
   <input type="radio" id="Cassandra30" name="casFamily" onChange="selectCas()" checked=true />

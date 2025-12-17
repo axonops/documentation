@@ -329,6 +329,7 @@ nav:
           - Materialized Views: data-platforms/cassandra/architecture/distributed-data/materialized-views.md
           - Data Streaming: data-platforms/cassandra/architecture/distributed-data/streaming.md
           - Counters: data-platforms/cassandra/architecture/distributed-data/counters.md
+          - Lightweight Transactions: data-platforms/cassandra/architecture/distributed-data/paxos.md
         - Cluster Management:
           - Overview: data-platforms/cassandra/architecture/cluster-management/index.md
           - Gossip Protocol: data-platforms/cassandra/architecture/cluster-management/gossip.md
