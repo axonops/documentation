@@ -1,11 +1,3 @@
----
-title: "Os"
-description: "Operating system requirements for AxonOps Server."
-meta:
-  - name: keywords
-    content: "OS requirements, AxonOps server, Linux"
----
-
 Select the OS Family
 
 <label>

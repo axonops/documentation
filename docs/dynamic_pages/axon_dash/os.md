@@ -1,11 +1,3 @@
----
-title: "Os"
-description: "Operating system requirements for AxonOps Dashboard."
-meta:
-  - name: keywords
-    content: "OS requirements, AxonOps dashboard, Linux"
----
-
 Select the OS Family
 
 <label>
