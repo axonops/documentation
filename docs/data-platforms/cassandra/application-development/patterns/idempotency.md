@@ -684,4 +684,4 @@ Every operation that modifies state should be analyzed for idempotency. If it is
 
 - [Transactional Outbox](outbox.md) - Reliable message publishing
 - [Event Sourcing](event-sourcing.md) - Events as source of truth
-- [Lightweight Transactions](../../../cql/dml/lightweight-transactions.md) - Conditional writes
+- [Lightweight Transactions](../../cql/dml/lightweight-transactions.md) - Conditional writes
