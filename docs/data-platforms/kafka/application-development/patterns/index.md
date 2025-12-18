@@ -22,6 +22,7 @@ This section covers architectural patterns commonly implemented with Kafka for b
 | **[Outbox](outbox.md)** | Reliable event publishing | Medium | Database + event consistency |
 | **[Event Collaboration](event-collaboration.md)** | Service choreography | Low | Loosely coupled services |
 | **[Microservices](microservices.md)** | Kafka architecture for microservices | Medium | Topic ownership, tracing, deployment |
+| **[Shock Absorber](shock-absorber.md)** | Load leveling and buffering | Low | Traffic spikes, legacy protection |
 
 ---
 
@@ -180,6 +181,7 @@ Each pattern has specific error handling requirements:
 - **[Outbox](outbox.md)** - Reliable event publishing with transactional outbox
 - **[Event Collaboration](event-collaboration.md)** - Service choreography through events
 - **[Microservices](microservices.md)** - Kafka architecture patterns for microservices
+- **[Shock Absorber](shock-absorber.md)** - Load leveling and traffic spike absorption
 
 ---
 
