@@ -67,7 +67,7 @@ Systems where delayed updates are acceptable:
 
 ### Mechanical: Spring and Damper
 
-A car's suspension system provides the perfect analogy. When the wheel hits a pothole (traffic spike), the spring compresses (Kafka buffers messages) and the damper controls the release rate (consumer processes at steady pace). The car body (backend system) experiences a smooth ride regardless of road conditions.
+A car's suspension system provides the perfect analogy. When the wheel hits a speedbump (traffic spike), the spring compresses (Kafka buffers messages) and the damper controls the release rate (consumer processes at steady pace). The car body (backend system) experiences a smooth ride regardless of road conditions.
 
 ```plantuml
 @startuml
