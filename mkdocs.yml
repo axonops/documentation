@@ -330,6 +330,7 @@ nav:
           - Data Streaming: data-platforms/cassandra/architecture/distributed-data/streaming.md
           - Counters: data-platforms/cassandra/architecture/distributed-data/counters.md
           - Lightweight Transactions: data-platforms/cassandra/architecture/distributed-data/paxos.md
+          - Multi-Datacenter: data-platforms/cassandra/architecture/distributed-data/multi-datacenter.md
         - Cluster Management:
           - Overview: data-platforms/cassandra/architecture/cluster-management/index.md
           - Gossip Protocol: data-platforms/cassandra/architecture/cluster-management/gossip.md
@@ -398,6 +399,21 @@ nav:
             - Speculative Execution: data-platforms/cassandra/application-development/drivers/policies/speculative-execution.md
           - Prepared Statements: data-platforms/cassandra/application-development/drivers/prepared-statements.md
           - Best Practices: data-platforms/cassandra/application-development/drivers/best-practices.md
+        - Patterns:
+          - Overview: data-platforms/cassandra/application-development/patterns/index.md
+          - CQRS: data-platforms/cassandra/application-development/patterns/cqrs.md
+          - Event Sourcing: data-platforms/cassandra/application-development/patterns/event-sourcing.md
+          - Transactional Outbox: data-platforms/cassandra/application-development/patterns/outbox.md
+          - Idempotency: data-platforms/cassandra/application-development/patterns/idempotency.md
+          - Time-Series Data: data-platforms/cassandra/application-development/patterns/time-series.md
+          - Ledger (Finance): data-platforms/cassandra/application-development/patterns/ledger.md
+          - Saga: data-platforms/cassandra/application-development/patterns/saga.md
+          - Digital Twin (IoT): data-platforms/cassandra/application-development/patterns/digital-twin.md
+          - Telemetry at Scale: data-platforms/cassandra/application-development/patterns/telemetry-at-scale.md
+          - Audit & Compliance: data-platforms/cassandra/application-development/patterns/audit-compliance.md
+          - Multi-Tenant Isolation: data-platforms/cassandra/application-development/patterns/multi-tenant.md
+          - Speed Layer: data-platforms/cassandra/application-development/patterns/speed-layer.md
+          - Digital Currency: data-platforms/cassandra/application-development/patterns/digital-currency.md
       - Operations:
         - Overview: data-platforms/cassandra/operations/index.md
         - Nodetool Reference:
