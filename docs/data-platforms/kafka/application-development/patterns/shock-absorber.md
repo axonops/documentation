@@ -9,6 +9,60 @@ The shock absorber pattern uses Kafka as a buffer between systems with different
 
 ---
 
+## Key Benefit: Right-Sized Infrastructure
+
+**Backend systems—databases, mainframes, third-party APIs—do not need to be provisioned for peak capacity.** They only need to handle the average throughput, with Kafka absorbing the difference during spikes.
+
+| Component | Without Kafka | With Kafka |
+|-----------|---------------|------------|
+| **Database** | Provisioned for peak load | Provisioned for average load |
+| **Application servers** | Auto-scale to handle spikes | Fixed pool at steady capacity |
+| **Downstream APIs** | Rate limiting / request rejection | Steady, predictable load |
+
+This translates directly to:
+
+- **Lower infrastructure costs** — Smaller database instances, fewer application servers
+- **Predictable performance** — No degradation during traffic spikes
+- **Simplified capacity planning** — Plan for average, not peak
+- **Reduced operational complexity** — No auto-scaling policies to tune
+
+## Trade-offs and Suitability
+
+The shock absorber pattern introduces latency between when data is produced and when it reaches the backend system. During traffic spikes, this delay can grow significantly as the buffer fills.
+
+### Spike Duration Matters
+
+The pattern works best for **short-lived spikes** where the buffer can drain during quieter periods:
+
+| Spike Pattern | Suitability | Reason |
+|---------------|-------------|--------|
+| Flash sales (minutes to hours) | Excellent | Buffer drains overnight |
+| Daily peaks (predictable hours) | Excellent | Off-peak hours allow catch-up |
+| Sustained high load (days/weeks) | Poor | Buffer never drains, lag grows indefinitely |
+| Gradual permanent increase | Poor | Requires capacity increase, not buffering |
+
+Before adopting this pattern, assess whether traffic spikes are temporary or represent a sustained increase in load. If the latter, the solution is to scale the backend, not buffer indefinitely.
+
+### Suitable Use Cases
+
+Systems where delayed updates are acceptable:
+
+- Analytics and reporting pipelines
+- Search index updates
+- Data warehouse loading
+- Notification delivery
+- Audit log processing
+- Cache warming
+
+### Not Suitable For
+
+- Real-time transaction processing requiring immediate confirmation
+- Systems where users expect instant visibility of changes
+- Low-latency trading or bidding systems
+- Sustained load increases (requires actual scaling)
+
+---
+
 ## The Analogy
 
 ### Mechanical: Spring and Damper
@@ -92,22 +146,15 @@ legend right
 @endchart
 ```
 
-**Interpreting the chart:**
+| Time | Producer Rate | Consumer Rate | Lag Trend | Backend Load |
+|------|---------------|---------------|-----------|--------------|
+| 00:00 | 1,000/s | 1,000/s | — | 1,000/s |
+| 06:00 | 2,000/s | 2,000/s | — | 2,000/s |
+| **12:00** | **12,000/s** | 2,000/s | ↑↑ Peak | 2,000/s |
+| 18:00 | 3,000/s | 2,000/s | ↓ Draining | 2,000/s |
+| 24:00 | 1,000/s | 1,000/s | — Empty | 1,000/s |
 
-- The **red line** (Producer) shows variable input traffic with a spike at 12:00
-- The **green line** (Consumer) shows steady output limited to 2,000 msg/s
-- The **area between curves** represents consumer lag (buffered messages)
-- During the spike, lag accumulates; during quiet periods, lag drains
-
-| Time | Producer Rate | Consumer Rate | Lag (Buffer) | Backend Load |
-|------|---------------|---------------|--------------|--------------|
-| 06:00 | 1,500/s | 1,500/s | 0 | 1,500/s |
-| 12:00 | 10,000/s | 2,000/s | Growing | 2,000/s |
-| 14:00 | 12,000/s | 2,000/s | Peak | 2,000/s |
-| 18:00 | 1,000/s | 2,000/s | Draining | 2,000/s |
-| 00:00 | 500/s | 500/s | 0 | 500/s |
-
-The backend database experiences a constant, manageable load while Kafka absorbs the variability.
+**Key insight:** The area between producer and consumer rates represents buffered messages (consumer lag). This lag grows during spikes and drains during quiet periods. The backend database experiences a constant, manageable load while Kafka absorbs all variability.
 
 ---
 
@@ -682,67 +729,6 @@ kafka --> instances
 
 ---
 
-## Monitoring Dashboard
-
-Key metrics for shock absorber deployments:
-
-```sql
--- Grafana dashboard queries
-
--- Panel 1: Buffer utilization (lag as % of retention)
-kafka_consumer_group_lag
-/
-(kafka_log_retention_bytes / avg_message_size)
-* 100
-
--- Panel 2: Drain time estimate
-kafka_consumer_group_lag
-/
-rate(kafka_consumer_fetch_total[5m])
-
--- Panel 3: Producer vs Consumer rate
-rate(kafka_producer_record_send_total[5m])
-vs
-rate(kafka_consumer_records_consumed_total[5m])
-
--- Panel 4: Time to buffer exhaustion
-(kafka_log_retention_bytes - kafka_log_size_bytes)
-/
-rate(kafka_producer_byte_rate[5m])
-```
-
-### Dashboard Layout
-
-```
-┌─────────────────────────────────────────────────────────────┐
-│                    SHOCK ABSORBER STATUS                    │
-├─────────────────────┬─────────────────────┬─────────────────┤
-│  Buffer Utilization │    Drain Time       │   Rate Delta    │
-│        45%          │     2h 30m          │   +500 msg/s    │
-│   ████████░░░░░░░   │                     │   (filling)     │
-├─────────────────────┴─────────────────────┴─────────────────┤
-│                    Producer vs Consumer Rate                │
-│  ┌──────────────────────────────────────────────────────┐  │
-│  │    ╱╲      Producer                                  │  │
-│  │   ╱  ╲     ─────────                                 │  │
-│  │  ╱    ╲                                              │  │
-│  │ ╱      ╲──────────────────  Consumer                 │  │
-│  │         ─ ─ ─ ─ ─ ─ ─ ─ ─   ─ ─ ─ ─ ─                │  │
-│  └──────────────────────────────────────────────────────┘  │
-├─────────────────────────────────────────────────────────────┤
-│                      Consumer Lag Trend                     │
-│  ┌──────────────────────────────────────────────────────┐  │
-│  │           ╱╲                                          │  │
-│  │          ╱  ╲                                         │  │
-│  │    ╱╲   ╱    ╲                                        │  │
-│  │   ╱  ╲ ╱      ╲____                                   │  │
-│  │──╱                   ╲______                          │  │
-│  └──────────────────────────────────────────────────────┘  │
-│         ↑ spike          ↑ spike      ↑ drained            │
-└─────────────────────────────────────────────────────────────┘
-```
-
----
 
 ## Anti-Patterns
 
@@ -859,4 +845,4 @@ The shock absorber pattern transforms unpredictable traffic into predictable pro
 - [Microservices](microservices.md) - Consumer group strategies
 - [Producer Development](../producers/index.md) - Batching and throughput
 - [Consumer Development](../consumers/index.md) - Offset management
-- [Operations](../../../operations/index.md) - Retention configuration
+- [Operations](../../operations/index.md) - Retention configuration
