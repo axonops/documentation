@@ -789,6 +789,7 @@ nav:
           - Saga: data-platforms/kafka/application-development/patterns/saga.md
           - Outbox: data-platforms/kafka/application-development/patterns/outbox.md
           - Event Collaboration: data-platforms/kafka/application-development/patterns/event-collaboration.md
+          - Microservices: data-platforms/kafka/application-development/patterns/microservices.md
         - Anti-Patterns: data-platforms/kafka/application-development/anti-patterns/index.md
         - Serialization: data-platforms/kafka/application-development/serialization/index.md
         - Testing: data-platforms/kafka/application-development/testing/index.md
