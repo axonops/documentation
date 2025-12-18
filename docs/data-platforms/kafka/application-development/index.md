@@ -34,29 +34,23 @@ start
 
 :Application requirement;
 
-if (Moving data between\nsystems?) then (yes)
+if (Moving data between systems?) then (yes)
   :Use Kafka Connect;
-  note right: No code required
   stop
 else (no)
+  if (Complex stream processing?) then (yes)
+    :Use Kafka Streams;
+    stop
+  else (no)
+    if (Simple produce or consume?) then (yes)
+      :Use Producer/Consumer API;
+      stop
+    else (no)
+      :Evaluate hybrid approach;
+      stop
+    endif
+  endif
 endif
-
-if (Complex stream\nprocessing?) then (yes)
-  :Use Kafka Streams;
-  note right: Stateful processing,\njoins, windowing
-  stop
-else (no)
-endif
-
-if (Simple produce\nor consume?) then (yes)
-  :Use Producer/Consumer API;
-  note right: Direct control,\nflexible integration
-  stop
-else (no)
-endif
-
-:Evaluate hybrid approach;
-stop
 
 @enduml
 ```

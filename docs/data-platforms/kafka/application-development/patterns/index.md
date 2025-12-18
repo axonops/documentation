@@ -82,26 +82,9 @@ These patterns are often used together:
 skinparam backgroundColor transparent
 
 rectangle "Common Combinations" {
-    rectangle "Event Sourcing + CQRS" as combo1 {
-        note bottom
-            Events are the write model
-            Projections are the read model
-        end note
-    }
-
-    rectangle "Saga + Outbox" as combo2 {
-        note bottom
-            Saga commands via outbox
-            Reliable step coordination
-        end note
-    }
-
-    rectangle "CQRS + Outbox" as combo3 {
-        note bottom
-            Write to database + outbox
-            Project to read models
-        end note
-    }
+    rectangle "Event Sourcing + CQRS\n\n//Events are the write model//\n//Projections are the read model//" as combo1
+    rectangle "Saga + Outbox\n\n//Saga commands via outbox//\n//Reliable step coordination//" as combo2
+    rectangle "CQRS + Outbox\n\n//Write to database + outbox//\n//Project to read models//" as combo3
 }
 
 @enduml

@@ -399,7 +399,7 @@ nav:
             - Speculative Execution: data-platforms/cassandra/application-development/drivers/policies/speculative-execution.md
           - Prepared Statements: data-platforms/cassandra/application-development/drivers/prepared-statements.md
           - Best Practices: data-platforms/cassandra/application-development/drivers/best-practices.md
-        - Patterns:
+        - Design Patterns:
           - Overview: data-platforms/cassandra/application-development/patterns/index.md
           - CQRS: data-platforms/cassandra/application-development/patterns/cqrs.md
           - Event Sourcing: data-platforms/cassandra/application-development/patterns/event-sourcing.md
