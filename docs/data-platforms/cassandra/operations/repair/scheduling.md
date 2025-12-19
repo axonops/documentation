@@ -45,7 +45,7 @@ end note
 @enduml
 ```
 
-### Why This Matters
+### Operational Impact
 
 ```plantuml
 @startuml

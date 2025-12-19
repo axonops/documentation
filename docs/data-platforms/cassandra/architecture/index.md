@@ -171,7 +171,7 @@ CREATE KEYSPACE my_app WITH replication = {
 
 ### Compaction
 
-- **[Compaction Overview](storage-engine/compaction/index.md)** - Why compaction matters
+- **[Compaction Overview](storage-engine/compaction/index.md)** - Compaction overview
 - **[STCS](storage-engine/compaction/stcs.md)** - Size-Tiered Compaction Strategy
 - **[LCS](storage-engine/compaction/lcs.md)** - Leveled Compaction Strategy
 - **[TWCS](storage-engine/compaction/twcs.md)** - Time-Window Compaction Strategy

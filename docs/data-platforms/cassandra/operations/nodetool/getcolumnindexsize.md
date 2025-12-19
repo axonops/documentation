@@ -25,7 +25,7 @@ nodetool [connection_options] getcolumnindexsize
 `nodetool getcolumnindexsize` displays the current column index size threshold in kilobytes. This threshold controls how frequently Cassandra creates index entries within partitions when writing SSTables. The column index (more accurately called the partition index) enables efficient row lookups within large partitions.
 
 !!! info "Understanding the Column Index"
-    Despite the name "column index," this setting controls **partition index granularity**—how Cassandra navigates within partitions to find specific rows. See [setcolumnindexsize](setcolumnindexsize.md) for detailed explanation of what this index does and why it matters.
+    Despite the name "column index," this setting controls **partition index granularity**—how Cassandra navigates within partitions to find specific rows. See [setcolumnindexsize](setcolumnindexsize.md) for detailed explanation of what this index does and its significance.
 
 ---
 

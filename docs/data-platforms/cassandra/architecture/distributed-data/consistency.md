@@ -159,7 +159,7 @@ RF = 3, ONE requires 1 ACK. Other replicas receive the write asynchronously.
 | 5 | 3 | floor(5/2) + 1 |
 | 7 | 4 | floor(7/2) + 1 |
 
-**Why majority matters**:
+**Majority significance**:
 
 ```plantuml
 @startuml

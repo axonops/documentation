@@ -57,7 +57,7 @@ end note
 
 ---
 
-## Why Batching Matters
+## Batching Benefits
 
 ### Efficiency Gains
 

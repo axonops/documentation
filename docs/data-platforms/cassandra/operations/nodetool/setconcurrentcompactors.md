@@ -120,7 +120,7 @@ queue2 -down-> active2
 @enduml
 ```
 
-### Why This Matters
+### Operational Impact
 
 | Scenario | With Few Compactors | With More Compactors |
 |----------|---------------------|----------------------|

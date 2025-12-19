@@ -53,7 +53,7 @@ end note
 @enduml
 ```
 
-### Why Partitioning Matters
+### Partitioning Impact
 
 | Aspect | Impact |
 |--------|--------|

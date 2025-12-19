@@ -570,7 +570,7 @@ Speculative execution and retries are different:
 
 ## Idempotency
 
-### Why Idempotency Matters
+### Idempotency Requirements
 
 Non-idempotent operations may cause problems when retried:
 

@@ -301,7 +301,7 @@ CREATE TABLE events (
 ALTER TABLE events WITH gc_grace_seconds = 86400;  -- 1 day
 ```
 
-### Why gc_grace_seconds Matters
+### gc_grace_seconds Implications
 
 **Scenario: gc_grace = 10 days**
 

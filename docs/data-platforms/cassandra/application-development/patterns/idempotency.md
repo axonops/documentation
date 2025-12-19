@@ -12,7 +12,7 @@ Idempotency (the property that an operation can be applied multiple times withou
 
 ---
 
-## Why Idempotency Matters
+## Idempotency in Distributed Systems
 
 Consider a payment processing system where a client submits a payment request. The server processes the payment and begins sending the response, but the connection drops. The client, receiving no response, retries. Without idempotency, the customer is charged twice.
 

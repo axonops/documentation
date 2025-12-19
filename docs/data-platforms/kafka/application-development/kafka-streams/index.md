@@ -24,7 +24,7 @@ Stream processing is the continuous processing of data as it arrives, rather tha
 | **State** | Recomputed from scratch each run | Maintained incrementally across records |
 | **Results** | Complete after batch finishes | Continuously updated |
 
-### Why Stream Processing Matters
+### Stream Processing Benefits
 
 Traditional batch architectures introduce inherent latency—data must accumulate before processing begins, and results are only available after the batch completes. For many applications, this delay is unacceptable:
 

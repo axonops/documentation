@@ -63,7 +63,7 @@ Each table directory follows the pattern:
 
 The UUID is assigned when the table is created and is stored in `system_schema.tables`. This UUID is critical for restore operations.
 
-### Why the UUID Matters
+### UUID Requirements
 
 The table UUID links the physical files to the schema definition:
 

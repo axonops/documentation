@@ -14,7 +14,7 @@ Cassandra implements consensus through **Paxos**, a proven algorithm that provid
 
 ---
 
-## Why Consensus Matters
+## Consensus in Distributed Systems
 
 In distributed systems, **consensus** is the process by which multiple nodes agree on a single value, even when some nodes fail or messages are delayed.
 

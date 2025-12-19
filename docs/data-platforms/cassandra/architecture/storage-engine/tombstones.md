@@ -121,7 +121,7 @@ SELECT gc_grace_seconds FROM system_schema.tables
 WHERE keyspace_name = 'ks' AND table_name = 'table';
 ```
 
-### Why GC Grace Matters
+### GC Grace Period Implications
 
 ```
 Scenario: Node C is down during a DELETE (RF=3)

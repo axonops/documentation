@@ -22,7 +22,7 @@ nodetool [connection_options] setcachekeystosave <key_cache_keys> <row_cache_key
 
 `nodetool setcachekeystosave` controls how many keys from each cache type are persisted to disk. These saved cache entries are loaded on node startup, allowing Cassandra to "warm" its caches without waiting for production traffic to populate them.
 
-### Why Cache Persistence Matters
+### Cache Persistence Benefits
 
 When a Cassandra node restarts, all in-memory caches are empty. Without saved caches, the node experiences a "cold start" period where:
 

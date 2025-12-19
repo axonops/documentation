@@ -306,7 +306,7 @@ sudo sed -i '/swap/d' /etc/fstab
 echo 'vm.swappiness = 1' | sudo tee -a /etc/sysctl.conf
 sudo sysctl -p
 
-# WHY THIS MATTERS:
+# IMPORTANT:
 # - Cassandra manages its own memory via JVM heap
 # - If Cassandra swaps, latency goes from milliseconds to seconds
 # - OOM killer is preferable to swap-induced latency spirals

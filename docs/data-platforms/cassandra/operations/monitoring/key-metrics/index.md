@@ -14,7 +14,7 @@ This guide covers the essential metrics to monitor for a healthy Cassandra clust
 
 ### The Four Golden Signals
 
-| Signal | Cassandra Metrics | Why It Matters |
+| Signal | Cassandra Metrics | Significance |
 |--------|-------------------|----------------|
 | **Latency** | Read/Write p99 | User experience |
 | **Traffic** | Requests/second | Capacity planning |

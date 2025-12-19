@@ -76,7 +76,7 @@ Total            | $100   | $100    ← Must balance
 
 This constraint provides a built-in error detection mechanism. If debits and credits don't balance, something is wrong. The error is detectable even without knowing what the correct values should be.
 
-### Why Double-Entry Matters for Databases
+### Double-Entry Accounting in Databases
 
 Double-entry bookkeeping translates to database design as follows:
 

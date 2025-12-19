@@ -110,7 +110,7 @@ row_cache_save_period: 0
 
 Off-heap memory is native memory allocated outside the JVM heap. It is not subject to garbage collection, eliminating GC pauses for these structures.
 
-### Why Off-Heap Memory Matters for Databases
+### Off-Heap Memory Benefits
 
 Garbage collection is the primary source of latency variability in Java applications. For databases like Cassandra, GC pauses directly translate to:
 

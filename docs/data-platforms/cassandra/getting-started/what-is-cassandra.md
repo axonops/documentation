@@ -170,7 +170,7 @@ Facebook engineers Avinash Lakshman and Prashant Malik combined:
 
 The result was Cassandra - open-sourced in 2008, became Apache top-level project in 2010.
 
-### Why the History Matters
+### Historical Context
 
 Understanding Cassandra's heritage explains its behavior:
 
