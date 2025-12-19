@@ -1,20 +1,22 @@
 ---
 title: "Speed Layer Pattern"
-description: "Implementing high-performance data access layers with Apache Cassandra. Covers user account data, session management, hot data caching, and low-latency query patterns for real-time applications."
+description: "Implementing high-performance data access layers with Apache Cassandra. Covers bank account transactions, session management, hot data caching, and low-latency query patterns for real-time applications."
 meta:
   - name: keywords
-    content: "Cassandra speed layer, user account data, low-latency, hot data, session management, Lambda architecture"
+    content: "Cassandra speed layer, bank account data, low-latency, hot data, mobile banking, Lambda architecture"
 ---
 
 # Speed Layer Pattern
 
-The speed layer provides low-latency access to frequently-accessed data: user accounts, sessions, preferences, and real-time state. While Cassandra serves as both the speed layer and the system of record, optimal performance requires understanding which data is "hot" and designing schemas and access patterns accordingly.
+The speed layer provides low-latency access to frequently-accessed data: account balances, recent transactions, sessions, and real-time state. While Cassandra serves as both the speed layer and the system of record, optimal performance requires understanding which data is "hot" and designing schemas and access patterns accordingly.
 
 ---
 
 ## Speed Layer Architecture
 
-In enterprise environments, Cassandra commonly serves as a speed layer in front of legacy systems. The mainframe or relational database remains the system of record, while Cassandra provides low-latency reads for applications. CDC (Change Data Capture) keeps the speed layer synchronized.
+Mobile banking has fundamentally changed how customers interact with their accounts. Where customers once checked balances monthly via statements, they now check multiple times daily via mobile apps. This shift has increased read throughput requirements by orders of magnitude—volumes that mainframe systems were never designed to handle.
+
+In enterprise banking environments, Cassandra commonly serves as a speed layer in front of core banking systems. The mainframe remains the system of record for transactions and regulatory compliance, while Cassandra provides low-latency reads for mobile and web applications. CDC (Change Data Capture) keeps the speed layer synchronized.
 
 ```plantuml
 @startuml
@@ -32,25 +34,25 @@ skinparam queue {
     BorderColor #1976D2
 }
 
-title Speed Layer with Legacy Backend
+title Banking Speed Layer Architecture
 
-rectangle "Application" as app
+rectangle "Mobile/Web Apps" as app
 database "Cassandra\n(Speed Layer)" as cass
-database "Mainframe /\nOracle / DB2\n(System of Record)" as legacy
+database "Core Banking\n(Mainframe)\n(System of Record)" as legacy
 queue "CDC Stream\n(Kafka/Debezium)" as cdc
 
-app --> cass : Fast reads\n(sub-ms latency)
-app --> legacy : Writes\n(when needed)
-legacy --> cdc : Change events
+app --> cass : Balance checks,\nrecent transactions\n(sub-ms latency)
+app --> legacy : Transfers,\npayments
+legacy --> cdc : Transaction events
 cdc --> cass : Replicate changes
 
 note bottom of cass
-Benefits:
-- Mainframe remains system of record
-- CDC captures changes in near real-time
-- Cassandra provides low-latency reads
-- Applications avoid mainframe bottleneck
-- Read traffic offloaded from legacy system
+Mobile banking reality:
+- Millions of balance checks per minute
+- Mainframe handles 100s of TPS, not 100,000s
+- CDC captures transactions in near real-time
+- Cassandra serves read-heavy mobile traffic
+- Core banking handles writes and compliance
 end note
 @enduml
 ```
@@ -59,7 +61,7 @@ end note
 
 ## CDC Pipeline
 
-When the system of record is a mainframe, Oracle database, or other legacy system, Cassandra provides a high-performance read layer while CDC keeps data synchronized.
+When the core banking system is a mainframe, Cassandra provides a high-performance read layer for account balances and transaction history while CDC keeps data synchronized after each transaction.
 
 ```plantuml
 @startuml
@@ -71,33 +73,37 @@ skinparam sequence {
     ParticipantBorderColor #333333
 }
 
-title CDC Pipeline: Legacy to Speed Layer
+title CDC Pipeline: Core Banking to Speed Layer
 
-participant "Mainframe\n(CICS/DB2)" as mf
+participant "Core Banking\n(CICS/DB2)" as mf
 participant "CDC Agent\n(Connect CDC,\nDebezium)" as cdc
 queue "Kafka" as kafka
 participant "Stream\nProcessor" as proc
 database "Cassandra\n(Speed Layer)" as cass
-participant "Application" as app
+participant "Mobile App" as app
 
-== Change Capture ==
-mf -> mf : Transaction\n(UPDATE account)
+== Transaction Processing ==
+mf -> mf : Debit/Credit\n(UPDATE balance)
 mf -> cdc : Transaction log
-cdc -> kafka : Change event\n{before, after, op}
+cdc -> kafka : Change event\n{account, amount,\nnew_balance, txn_id}
 
 == Transformation & Load ==
 kafka -> proc : Consume changes
 proc -> proc : Transform to\nCassandra schema
-proc -> cass : Upsert/Delete
+proc -> cass : Update balance,\nappend transaction
 
-== Application Reads ==
-app -> cass : Query account\n(sub-ms latency)
-cass --> app : Account data
+== Mobile App Reads ==
+app -> cass : GET /accounts/{id}/balance\n(sub-ms latency)
+cass --> app : Current balance
+
+app -> cass : GET /accounts/{id}/transactions\n(recent 30 days)
+cass --> app : Transaction list
 
 note over mf, cass
 Latency: typically 100ms-2s end-to-end
-Mainframe sees no additional load from reads
-Applications never query mainframe directly
+Customer sees updated balance within seconds of transaction
+Mainframe handles ~500 TPS for transactions
+Cassandra handles ~500,000 TPS for balance checks
 end note
 @enduml
 ```
@@ -105,61 +111,75 @@ end note
 ### CDC Consumer Implementation
 
 ```java
-@KafkaListener(topics = "mainframe.accounts")
-public class AccountCDCConsumer {
+@KafkaListener(topics = "corebanking.transactions")
+public class TransactionCDCConsumer {
 
     private final CqlSession session;
-    private final PreparedStatement upsertAccount;
-    private final PreparedStatement deleteAccount;
 
-    public void handleChange(CDCEvent event) {
-        switch (event.getOperation()) {
-            case INSERT, UPDATE -> upsertAccount(event.getAfter());
-            case DELETE -> deleteAccount(event.getBefore().getAccountId());
-        }
-    }
+    // Single INSERT updates static columns (balance) AND adds transaction row
+    private final PreparedStatement insertTransaction = session.prepare(
+        """
+        INSERT INTO account_transactions (
+            account_id, transaction_date, transaction_id,
+            current_balance, available_balance, last_updated,
+            transaction_time, transaction_type, amount,
+            balance_after, description, merchant_name, category
+        ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+        """
+    );
 
-    private void upsertAccount(AccountRecord record) {
-        session.execute(upsertAccount.bind(
-            record.getAccountId(),
-            record.getCustomerId(),
-            record.getAccountType(),
-            record.getBalance(),
-            record.getStatus(),
-            record.getLastUpdated()
+    public void handleTransaction(TransactionEvent event) {
+        // Single write: updates static balance + inserts transaction row
+        session.execute(insertTransaction.bind(
+            event.getAccountId(),
+            event.getTransactionDate(),
+            event.getTransactionId(),
+            // Static columns (balance) - updated with each insert
+            event.getNewBalance(),
+            event.getAvailableBalance(),
+            event.getTimestamp(),
+            // Transaction row columns
+            event.getTimestamp(),
+            event.getTransactionType(),
+            event.getAmount(),
+            event.getNewBalance(),
+            event.getDescription(),
+            event.getMerchantName(),
+            event.getCategory()
         ));
-    }
-
-    private void deleteAccount(String accountId) {
-        session.execute(deleteAccount.bind(accountId));
     }
 }
 ```
 
 ### Handling CDC Lag
 
-CDC introduces latency between the source system and speed layer. Applications must handle potential staleness:
+CDC introduces latency between the core banking system and speed layer. For most balance checks, sub-second staleness is acceptable. For operations like initiating a transfer, the application may need to verify against the source.
 
 ```java
 public class AccountSpeedLayer {
 
     private final CqlSession cassandraSession;
-    private final LegacyClient mainframeClient;
+    private final CoreBankingClient coreBankingClient;
 
-    public Account getAccount(String accountId, StalenessPolicy policy) {
-        // Read from speed layer
-        Account cached = readFromCassandra(accountId);
+    public AccountBalance getBalance(String accountId, BalanceCheckContext context) {
+        // Read from speed layer (handles 99.9% of requests)
+        AccountBalance cached = readFromCassandra(accountId);
 
         if (cached == null) {
-            // Not yet replicated - fall back to source
-            return readFromMainframe(accountId);
+            // New account not yet replicated - fall back to source
+            return readFromCoreBanking(accountId);
         }
 
-        if (policy == StalenessPolicy.STRICT) {
-            // For critical operations, verify against source
+        // For display purposes (balance check), cached is fine
+        if (context.isPureRead()) {
+            return cached;
+        }
+
+        // For transfers/payments, verify against source if stale
+        if (context.isTransactionInitiation()) {
             Instant sourceTimestamp = getSourceTimestamp(accountId);
             if (cached.getLastUpdated().isBefore(sourceTimestamp)) {
-                return readFromMainframe(accountId);
+                return readFromCoreBanking(accountId);
             }
         }
 
@@ -168,22 +188,29 @@ public class AccountSpeedLayer {
 }
 ```
 
-### Write-Through to Legacy
+### Write-Through to Core Banking
 
-For applications that need to write data:
+Transactions (transfers, payments) always go through the core banking system. The speed layer is read-only for balance and transaction history:
 
 ```java
-public class AccountService {
+public class TransferService {
 
-    public void updateBalance(String accountId, BigDecimal newBalance) {
-        // Write to system of record (mainframe)
-        mainframeClient.updateBalance(accountId, newBalance);
+    public TransferResult initiateTransfer(TransferRequest request) {
+        // Transactions MUST go through core banking for:
+        // - Regulatory compliance (audit trail)
+        // - Fraud detection
+        // - Overdraft protection
+        // - Inter-bank settlement
+        TransferResult result = coreBankingClient.executeTransfer(
+            request.getFromAccount(),
+            request.getToAccount(),
+            request.getAmount()
+        );
 
-        // CDC will propagate change to Cassandra
-        // Optionally, write-through for immediate consistency:
-        cassandraSession.execute(updateAccountBalance.bind(
-            newBalance, Instant.now(), accountId
-        ));
+        // CDC will propagate the balance change to Cassandra
+        // within 1-2 seconds. No direct write to speed layer.
+
+        return result;
     }
 }
 ```
@@ -192,12 +219,12 @@ public class AccountService {
 
 ## The Hot Data Problem
 
-Not all data is accessed equally. In a typical application:
+Not all banking data is accessed equally. In a typical mobile banking application:
 
-- **User profile**: Accessed on every authenticated request
+- **Current balance**: Checked on every app open, often multiple times per day
+- **Recent transactions**: Last 7-30 days, accessed frequently
 - **Session data**: Read/written multiple times per second during active sessions
-- **Preferences**: Loaded once per session, rarely modified
-- **Historical data**: Accessed occasionally for reporting
+- **Historical transactions**: Older than 90 days, accessed occasionally for statements
 
 Treating all data identically leads to either over-provisioning (expensive) or under-serving hot data (slow). The speed layer pattern optimizes for the hot path while maintaining access to the full dataset.
 
@@ -209,24 +236,24 @@ skinparam rectangle {
     BorderColor #333333
 }
 
-title Hot Data Access Pattern
+title Banking Hot Data Access Pattern
 
-rectangle "Application Requests" as app
+rectangle "Mobile App Requests" as app
 
 rectangle "Hot Data (~5% of dataset)" as hot #FFCDD2 {
+    rectangle "Current Balances" as bal #EF9A9A
+    rectangle "Last 7 Days Transactions" as recent #EF9A9A
     rectangle "Active Sessions" as sess #EF9A9A
-    rectangle "Current User Profiles" as prof #EF9A9A
-    rectangle "Recent Activity" as act #EF9A9A
 }
 
 rectangle "Warm Data (~15%)" as warm #FFF9C4 {
-    rectangle "Recent Orders" as ord #FFF59D
-    rectangle "Preferences" as pref #FFF59D
+    rectangle "30-90 Day Transactions" as trans #FFF59D
+    rectangle "Pending Payments" as pend #FFF59D
 }
 
 rectangle "Cold Data (~80%)" as cold #E3F2FD {
-    rectangle "Historical Records" as hist #90CAF9
-    rectangle "Archived Data" as arch #90CAF9
+    rectangle "Historical Transactions" as hist #90CAF9
+    rectangle "Closed Accounts" as arch #90CAF9
 }
 
 app --> hot : **95% of reads**\n(sub-ms latency required)
@@ -235,68 +262,63 @@ app --> cold : 1% of reads
 
 note bottom of hot
 Speed layer optimizes for this tier:
-- In-memory caching
-- LOCAL_ONE consistency
-- Denormalized schemas
+- Current balance always cached
+- Recent transactions denormalized
+- LOCAL_ONE consistency for reads
 end note
 @enduml
 ```
 
 ---
 
-## User Account Data Architecture
+## Bank Account Data Architecture
 
-User account data is the canonical speed layer use case: accessed constantly, latency-sensitive, and critical to application function.
+Bank account data is the canonical speed layer use case: accessed constantly, latency-sensitive, and critical to application function. The schema separates current balances (hot) from transaction history (warm/cold).
 
 ### Schema Design
 
 ```sql
--- Primary user record (optimized for lookup by ID)
-CREATE TABLE users (
-    user_id UUID,
-    email TEXT,
-    username TEXT,
-    password_hash TEXT,
-    status TEXT,
-    created_at TIMESTAMP,
-    last_login_at TIMESTAMP,
-    profile FROZEN<user_profile>,
-    preferences MAP<TEXT, TEXT>,
-    roles SET<TEXT>,
-    PRIMARY KEY (user_id)
-);
+-- Account with transactions (static columns for account-level data)
+CREATE TABLE account_transactions (
+    account_id TEXT,
+    transaction_date DATE,
+    transaction_id TEXT,
+    -- Static columns: shared across all rows in partition (the account)
+    customer_id TEXT STATIC,
+    account_type TEXT STATIC,       -- CHECKING, SAVINGS, CREDIT
+    currency TEXT STATIC,
+    current_balance DECIMAL STATIC,
+    available_balance DECIMAL STATIC,
+    last_updated TIMESTAMP STATIC,
+    -- Per-transaction columns
+    transaction_time TIMESTAMP,
+    transaction_type TEXT,          -- DEBIT, CREDIT, TRANSFER, FEE
+    amount DECIMAL,
+    balance_after DECIMAL,
+    description TEXT,
+    merchant_name TEXT,
+    category TEXT,
+    PRIMARY KEY ((account_id), transaction_date, transaction_id)
+) WITH CLUSTERING ORDER BY (transaction_date DESC, transaction_id DESC)
+  AND default_time_to_live = 7776000;  -- 90-day TTL on transactions
 
--- Lookup by email (for login)
-CREATE TABLE users_by_email (
-    email TEXT,
-    user_id UUID,
-    password_hash TEXT,
-    status TEXT,
-    PRIMARY KEY (email)
-);
-
--- Lookup by username (for @mentions, profile URLs)
-CREATE TABLE users_by_username (
-    username TEXT,
-    user_id UUID,
-    PRIMARY KEY (username)
-);
-
-CREATE TYPE user_profile (
-    display_name TEXT,
-    avatar_url TEXT,
-    bio TEXT,
-    location TEXT,
-    website TEXT
+-- Customer's accounts (for account list view)
+CREATE TABLE accounts_by_customer (
+    customer_id TEXT,
+    account_id TEXT,
+    account_type TEXT,
+    account_name TEXT,              -- "Main Checking", "Savings"
+    current_balance DECIMAL,
+    PRIMARY KEY ((customer_id), account_type, account_id)
 );
 ```
 
 **Design rationale**:
 
-- **Denormalized lookups**: Each access pattern has its own table, so no secondary indexes are required
-- **Frozen UDT for profile**: Atomic read/write of profile data
-- **Map for preferences**: Flexible key-value storage without schema changes
-- **Minimal joins**: All data for common operations in single partition
+- **Static columns for balance**: Current balance stored once per partition, returned with every transaction query—single read gets balance + transactions
+- **TTL on transactions only**: Static columns (balance) are not affected by row TTL; only transaction rows expire
+- **Date-clustered transactions**: Partition per account, clustered by date DESC for recent-first queries
+- **Denormalized balance in accounts_by_customer**: Dashboard view gets all accounts in one query
 
 ```plantuml
 @startuml
@@ -306,33 +328,29 @@ skinparam database {
     BorderColor #666666
 }
 
-title Denormalized Lookup Tables
+title Banking Speed Layer Tables
 
-rectangle "Application" as app {
-    rectangle "Login Request\n(email)" as login
-    rectangle "Profile Request\n(user_id)" as profile
-    rectangle "@Mention Lookup\n(username)" as mention
+rectangle "Mobile App" as app {
+    rectangle "Dashboard\n(all accounts)" as dash
+    rectangle "Account Detail\n(balance + txns)" as detail
+    rectangle "Transaction Search\n(by date range)" as search
 }
 
-database "users_by_email" as tbl1 {
+database "accounts_by_customer" as tbl1 {
 }
-database "users" as tbl2 {
-}
-database "users_by_username" as tbl3 {
+database "account_transactions\n(static: balance, account_type)\n(rows: transactions)" as tbl2 {
 }
 
-login --> tbl1 : O(1) lookup
-tbl1 --> tbl2 : user_id
+dash --> tbl1 : O(1) lookup\n(all accounts + balances)
 
-profile --> tbl2 : O(1) lookup
-
-mention --> tbl3 : O(1) lookup
-tbl3 --> tbl2 : user_id
+detail --> tbl2 : Single query returns:\n- Static cols (balance)\n- Recent transaction rows
+search --> tbl2 : Range query\n(date range within partition)
 
 note bottom of tbl2
-Each access pattern has its own table.
-No secondary indexes required.
-All lookups are partition key queries.
+Static columns (balance) stored once per partition.
+Transaction rows clustered by date DESC.
+Single read returns balance + transactions.
+90-day TTL expires transactions, not balance.
 end note
 @enduml
 ```
@@ -340,53 +358,64 @@ end note
 ### Optimized Read Path
 
 ```java
-public class UserSpeedLayer {
+public class AccountSpeedLayer {
 
     private final CqlSession session;
-    private final LoadingCache<UUID, User> userCache;
-    private final LoadingCache<String, UUID> emailIndex;
+    private final LoadingCache<String, AccountBalance> balanceCache;
+    private final LoadingCache<String, List<AccountSummary>> customerAccountsCache;
 
-    public UserSpeedLayer(CqlSession session) {
+    // Single query gets static columns (balance) + transaction rows
+    private final PreparedStatement selectAccountWithTransactions = session.prepare(
+        "SELECT * FROM account_transactions WHERE account_id = ? LIMIT ?"
+    );
+
+    public AccountSpeedLayer(CqlSession session) {
         this.session = session;
 
-        // In-memory cache for hottest data
-        this.userCache = Caffeine.newBuilder()
-            .maximumSize(100_000)              // Top 100K users
-            .expireAfterWrite(Duration.ofMinutes(5))
-            .refreshAfterWrite(Duration.ofMinutes(1))
-            .buildAsync(this::loadUser);
+        // Balance cache - very aggressive caching for hot data
+        this.balanceCache = Caffeine.newBuilder()
+            .maximumSize(1_000_000)            // 1M accounts
+            .expireAfterWrite(Duration.ofSeconds(30))
+            .refreshAfterWrite(Duration.ofSeconds(5))
+            .buildAsync(this::loadBalance);
 
-        this.emailIndex = Caffeine.newBuilder()
-            .maximumSize(100_000)
-            .expireAfterWrite(Duration.ofMinutes(5))
-            .build(this::lookupUserIdByEmail);
+        // Customer accounts cache - for dashboard view
+        this.customerAccountsCache = Caffeine.newBuilder()
+            .maximumSize(500_000)              // 500K customers
+            .expireAfterWrite(Duration.ofMinutes(1))
+            .buildAsync(this::loadCustomerAccounts);
     }
 
-    public CompletableFuture<User> getUser(UUID userId) {
-        return userCache.get(userId);
-    }
-
-    public CompletableFuture<User> getUserByEmail(String email) {
-        return emailIndex.get(email)
-            .thenCompose(this::getUser);
-    }
-
-    private User loadUser(UUID userId) {
-        Row row = session.execute(
-            selectUser.bind(userId)
+    public AccountWithTransactions getAccountDetail(String accountId, int txnLimit) {
+        // Single query returns static cols (balance) + transaction rows
+        List<Row> rows = session.execute(
+            selectAccountWithTransactions.bind(accountId, txnLimit)
                 .setConsistencyLevel(ConsistencyLevel.LOCAL_ONE)
-        ).one();
+        ).all();
 
-        return row != null ? mapToUser(row) : null;
+        if (rows.isEmpty()) {
+            return null;
+        }
+
+        // Static columns are the same on every row
+        Row first = rows.get(0);
+        AccountBalance balance = new AccountBalance(
+            first.getBigDecimal("current_balance"),
+            first.getBigDecimal("available_balance"),
+            first.getInstant("last_updated")
+        );
+
+        // Map transaction rows
+        List<Transaction> transactions = rows.stream()
+            .filter(row -> row.getString("transaction_id") != null)
+            .map(this::mapToTransaction)
+            .toList();
+
+        return new AccountWithTransactions(balance, transactions);
     }
 
-    private UUID lookupUserIdByEmail(String email) {
-        Row row = session.execute(
-            selectUserByEmail.bind(email)
-                .setConsistencyLevel(ConsistencyLevel.LOCAL_ONE)
-        ).one();
-
-        return row != null ? row.getUuid("user_id") : null;
+    public CompletableFuture<AccountBalance> getBalance(String accountId) {
+        return balanceCache.get(accountId);
     }
 }
 ```
@@ -401,67 +430,51 @@ skinparam sequence {
     ParticipantBorderColor #333333
 }
 
-title Cache Hierarchy: Read Path
+title Balance Check: Read Path
 
-participant "Application" as app
+participant "Mobile App" as app
 participant "In-Memory Cache\n(Caffeine)" as cache
 database "Cassandra\n(Speed Layer)" as cass
 
 == Cache Hit (Common Case) ==
-app -> cache : getUser(userId)
-cache --> app : User (< 1ms)
+app -> cache : getBalance(accountId)
+cache --> app : Balance (< 1ms)
 
 == Cache Miss ==
-app -> cache : getUser(userId)
+app -> cache : getBalance(accountId)
 cache -> cache : miss
-cache -> cass : SELECT * FROM users\nWHERE user_id = ?
+cache -> cass : SELECT * FROM account_balances\nWHERE account_id = ?
 cass --> cache : Row
 cache -> cache : populate cache
-cache --> app : User (~2-5ms)
+cache --> app : Balance (~2-5ms)
 
 note over cache
 Cache configuration:
-- 100K entries max
-- 5 min TTL
-- 1 min refresh interval
+- 1M accounts cached
+- 30 sec TTL (balances change frequently)
+- 5 sec refresh interval
 - Async refresh (stale-while-revalidate)
 end note
 @enduml
 ```
 
-### Write-Through Updates
+### CDC-Driven Cache Invalidation
 
-Maintain cache consistency on writes:
+Unlike traditional write-through, the speed layer is updated via CDC from core banking. Cache invalidation is event-driven:
 
 ```java
-public class UserService {
+@KafkaListener(topics = "corebanking.transactions")
+public class BalanceCacheInvalidator {
 
-    private final UserSpeedLayer speedLayer;
-    private final CqlSession session;
+    private final AccountSpeedLayer speedLayer;
 
-    public void updateUser(UUID userId, UserUpdate update) {
-        // Update Cassandra
-        BatchStatement batch = BatchStatement.newInstance(BatchType.LOGGED);
+    public void onTransaction(TransactionEvent event) {
+        // Invalidate cached balance when transaction occurs
+        speedLayer.invalidateBalance(event.getAccountId());
 
-        batch = batch.add(updateUsers.bind(
-            update.getProfile(), update.getPreferences(), userId));
-
-        // Update lookup tables if relevant fields changed
-        if (update.getEmailChanged()) {
-            batch = batch.add(deleteUsersByEmail.bind(update.getOldEmail()));
-            batch = batch.add(insertUsersByEmail.bind(
-                update.getNewEmail(), userId, /* ... */));
-        }
-
-        session.execute(batch.setConsistencyLevel(ConsistencyLevel.LOCAL_QUORUM));
-
-        // Invalidate cache
-        speedLayer.invalidate(userId);
-
-        // Invalidate email index if changed
-        if (update.getEmailChanged()) {
-            speedLayer.invalidateEmail(update.getOldEmail());
-        }
+        // Also invalidate customer accounts cache
+        // (balances shown in account list)
+        speedLayer.invalidateCustomerAccounts(event.getCustomerId());
     }
 }
 ```
@@ -476,31 +489,31 @@ skinparam sequence {
     ParticipantBorderColor #333333
 }
 
-title Write-Through Cache Pattern
+title CDC-Driven Cache Invalidation
 
-participant "Application" as app
+participant "Core Banking" as core
+queue "Kafka" as kafka
+participant "CDC Consumer" as cdc
 participant "In-Memory Cache" as cache
 database "Cassandra" as cass
 
-== Write Path ==
-app -> cass : UPDATE users SET...\n(LOGGED BATCH)
-cass --> app : Success
-app -> cache : invalidate(userId)
+== Transaction Occurs ==
+core -> kafka : TransactionEvent\n{accountId, newBalance}
+kafka -> cdc : Consume event
+
+== Update Speed Layer ==
+cdc -> cass : UPDATE account_balances\nSET current_balance = ?
+cdc -> cache : invalidate(accountId)
 cache -> cache : remove entry
 
-== Subsequent Read ==
-app -> cache : getUser(userId)
-cache -> cache : miss (was invalidated)
-cache -> cass : SELECT * FROM users
-cass --> cache : Fresh data
-cache --> app : User
-
-note over app, cass
-Write-through ensures:
-1. Database is always authoritative
-2. Cache never serves stale data after write
-3. Next read reloads fresh data
+== Next Balance Check ==
+note over cache
+Next getBalance() will:
+1. Miss cache
+2. Load fresh data from Cassandra
+3. Return updated balance
 end note
+
 @enduml
 ```
 
@@ -1207,16 +1220,16 @@ public class SpeedLayerHealthIndicator implements HealthIndicator {
 
 ## Summary
 
-The speed layer pattern optimizes access to hot data through:
+The speed layer pattern enables mobile banking at scale by separating read-heavy workloads from transaction processing:
 
-1. **Schema design for access patterns** - Denormalized tables for each lookup path
-2. **In-memory caching** - Caffeine or similar for sub-millisecond access
-3. **Appropriate consistency levels** - LOCAL_ONE for reads where stale data is acceptable
-4. **Write-through updates** - Maintain cache consistency on mutations
-5. **Pre-computed views** - Background computation of expensive aggregates
-6. **TTL-based lifecycle** - Automatic expiration of transient data
+1. **Core banking remains system of record** - All transactions processed by mainframe for compliance, fraud detection, and settlement
+2. **CDC synchronization** - Transaction events flow to Cassandra within seconds via Kafka
+3. **Schema design for access patterns** - Balances (hot) separated from transactions (warm), denormalized for each query pattern
+4. **Aggressive caching** - In-memory cache serves balance checks in sub-millisecond
+5. **Appropriate consistency levels** - LOCAL_ONE for reads; staleness is acceptable for display
+6. **TTL-based lifecycle** - Older transactions expire from speed layer, served from archival storage
 
-Cassandra provides the durable backing store while in-memory caches serve the hottest data. The combination achieves both the reliability of a distributed database and the performance of in-memory access.
+This architecture allows a mainframe handling hundreds of TPS for transactions to support millions of mobile balance checks per minute through the Cassandra speed layer.
 
 ---
 
