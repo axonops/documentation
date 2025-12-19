@@ -727,6 +727,7 @@ nav:
           - Choosing Semantics: data-platforms/kafka/concepts/delivery-semantics/choosing-semantics.md
         - Data Integration: data-platforms/kafka/concepts/data-integration/index.md
         - Multi-Datacenter: data-platforms/kafka/concepts/multi-datacenter/index.md
+        - Dead Letter Queues: data-platforms/kafka/concepts/dead-letter-queues/index.md
         - Kafka Connect Concepts:
           - Overview: data-platforms/kafka/concepts/kafka-connect/index.md
           - Connector Ecosystem: data-platforms/kafka/concepts/kafka-connect/connector-ecosystem.md
@@ -810,6 +811,8 @@ nav:
           - Microservices: data-platforms/kafka/application-development/patterns/microservices.md
           - Shock Absorber: data-platforms/kafka/application-development/patterns/shock-absorber.md
         - Anti-Patterns: data-platforms/kafka/application-development/anti-patterns/index.md
+        - Error Handling:
+          - Dead Letter Queues: data-platforms/kafka/application-development/error-handling/dead-letter-queues.md
         - Serialization: data-platforms/kafka/application-development/serialization/index.md
         - Testing: data-platforms/kafka/application-development/testing/index.md
         - Performance Tuning: data-platforms/kafka/application-development/performance/index.md
@@ -854,7 +857,9 @@ nav:
         - Performance:
           - Overview: data-platforms/kafka/operations/performance/index.md
           - Capacity Planning: data-platforms/kafka/operations/performance/capacity-planning/index.md
-        - Troubleshooting: data-platforms/kafka/operations/troubleshooting/index.md
+        - Troubleshooting:
+          - Overview: data-platforms/kafka/operations/troubleshooting/index.md
+          - Dead Letter Queues: data-platforms/kafka/operations/troubleshooting/dead-letter-queues.md
       - Security:
         - Overview: data-platforms/kafka/security/index.md
         - Authentication: data-platforms/kafka/security/authentication/index.md
