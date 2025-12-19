@@ -9964,9 +9964,9 @@ data-et-multi-view="{&quot;schema&quot;:{&quot;content&quot;:{&quot;desktop&quot
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
-  <a href="#why-cache-persistence-matters" class="md-nav__link">
+  <a href="#cache-persistence-benefits" class="md-nav__link">
     <span class="md-ellipsis">
-      Why Cache Persistence Matters
+      Cache Persistence Benefits
     </span>
   </a>
   
@@ -18931,9 +18931,9 @@ data-et-multi-view="{&quot;schema&quot;:{&quot;content&quot;:{&quot;desktop&quot
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
-  <a href="#why-cache-persistence-matters" class="md-nav__link">
+  <a href="#cache-persistence-benefits" class="md-nav__link">
     <span class="md-ellipsis">
-      Why Cache Persistence Matters
+      Cache Persistence Benefits
     </span>
   </a>
   
@@ -19189,7 +19189,7 @@ data-et-multi-view="{&quot;schema&quot;:{&quot;content&quot;:{&quot;desktop&quot
 </code></pre></div>
 <h2 id="description">Description<a class="headerlink" href="#description" title="Permanent link">¶</a></h2>
 <p><code>nodetool setcachekeystosave</code> controls how many keys from each cache type are persisted to disk. These saved cache entries are loaded on node startup, allowing Cassandra to "warm" its caches without waiting for production traffic to populate them.</p>
-<h3 id="why-cache-persistence-matters">Why Cache Persistence Matters<a class="headerlink" href="#why-cache-persistence-matters" title="Permanent link">¶</a></h3>
+<h3 id="cache-persistence-benefits">Cache Persistence Benefits<a class="headerlink" href="#cache-persistence-benefits" title="Permanent link">¶</a></h3>
 <p>When a Cassandra node restarts, all in-memory caches are empty. Without saved caches, the node experiences a "cold start" period where:</p>
 <ul>
 <li>Every read requires disk I/O to locate partition keys (no key cache)</li>

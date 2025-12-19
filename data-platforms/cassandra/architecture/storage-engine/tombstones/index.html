@@ -4891,9 +4891,9 @@ data-et-multi-view="{&quot;schema&quot;:{&quot;content&quot;:{&quot;desktop&quot
 </li>
         
           <li class="md-nav__item">
-  <a href="#why-gc-grace-matters" class="md-nav__link">
+  <a href="#gc-grace-period-implications" class="md-nav__link">
     <span class="md-ellipsis">
-      Why GC Grace Matters
+      GC Grace Period Implications
     </span>
   </a>
   
@@ -19055,9 +19055,9 @@ data-et-multi-view="{&quot;schema&quot;:{&quot;content&quot;:{&quot;desktop&quot
 </li>
         
           <li class="md-nav__item">
-  <a href="#why-gc-grace-matters" class="md-nav__link">
+  <a href="#gc-grace-period-implications" class="md-nav__link">
     <span class="md-ellipsis">
-      Why GC Grace Matters
+      GC Grace Period Implications
     </span>
   </a>
   
@@ -19335,7 +19335,7 @@ data-et-multi-view="{&quot;schema&quot;:{&quot;content&quot;:{&quot;desktop&quot
 <span class="k">SELECT</span><span class="w"> </span><span class="n">gc_grace_seconds</span><span class="w"> </span><span class="k">FROM</span><span class="w"> </span><span class="n">system_schema</span><span class="p">.</span><span class="n">tables</span>
 <span class="k">WHERE</span><span class="w"> </span><span class="n">keyspace_name</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s1">'ks'</span><span class="w"> </span><span class="k">AND</span><span class="w"> </span><span class="k">table_name</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s1">'table'</span><span class="p">;</span>
 </code></pre></div>
-<h3 id="why-gc-grace-matters">Why GC Grace Matters<a class="headerlink" href="#why-gc-grace-matters" title="Permanent link">¶</a></h3>
+<h3 id="gc-grace-period-implications">GC Grace Period Implications<a class="headerlink" href="#gc-grace-period-implications" title="Permanent link">¶</a></h3>
 <div class="highlight"><pre><span></span><code>Scenario: Node C is down during a DELETE (RF=3)
 
 Before DELETE:

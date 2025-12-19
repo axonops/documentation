@@ -5361,13 +5361,13 @@ data-et-multi-view="{&quot;schema&quot;:{&quot;content&quot;:{&quot;desktop&quot
     <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
       
         <li class="md-nav__item">
-  <a href="#why-consensus-matters" class="md-nav__link">
+  <a href="#consensus-in-distributed-systems" class="md-nav__link">
     <span class="md-ellipsis">
-      Why Consensus Matters
+      Consensus in Distributed Systems
     </span>
   </a>
   
-    <nav class="md-nav" aria-label="Why Consensus Matters">
+    <nav class="md-nav" aria-label="Consensus in Distributed Systems">
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
@@ -19018,13 +19018,13 @@ data-et-multi-view="{&quot;schema&quot;:{&quot;content&quot;:{&quot;desktop&quot
     <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
       
         <li class="md-nav__item">
-  <a href="#why-consensus-matters" class="md-nav__link">
+  <a href="#consensus-in-distributed-systems" class="md-nav__link">
     <span class="md-ellipsis">
-      Why Consensus Matters
+      Consensus in Distributed Systems
     </span>
   </a>
   
-    <nav class="md-nav" aria-label="Why Consensus Matters">
+    <nav class="md-nav" aria-label="Consensus in Distributed Systems">
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
@@ -19399,7 +19399,7 @@ data-et-multi-view="{&quot;schema&quot;:{&quot;content&quot;:{&quot;desktop&quot
 <p>Cassandra's default consistency model—eventual consistency with last-write-wins—handles most workloads efficiently. But some operations demand stronger guarantees: inserting a user only if the username doesn't exist, updating a balance only if it hasn't changed, acquiring a distributed lock. These operations require <strong>consensus</strong>—agreement among replicas before committing a change.</p>
 <p>Cassandra implements consensus through <strong>Paxos</strong>, a proven algorithm that provides linearizable consistency for lightweight transactions (LWTs) without sacrificing Cassandra's masterless architecture.</p>
 <hr>
-<h2 id="why-consensus-matters">Why Consensus Matters<a class="headerlink" href="#why-consensus-matters" title="Permanent link">¶</a></h2>
+<h2 id="consensus-in-distributed-systems">Consensus in Distributed Systems<a class="headerlink" href="#consensus-in-distributed-systems" title="Permanent link">¶</a></h2>
 <p>In distributed systems, <strong>consensus</strong> is the process by which multiple nodes agree on a single value, even when some nodes fail or messages are delayed.</p>
 <h3 id="the-problem">The Problem<a class="headerlink" href="#the-problem" title="Permanent link">¶</a></h3>
 <p>Without consensus, concurrent operations can silently corrupt data:</p>

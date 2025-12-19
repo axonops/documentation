@@ -20093,7 +20093,7 @@ sudo<span class="w"> </span>sed<span class="w"> </span>-i<span class="w"> </span
 <span class="nb">echo</span><span class="w"> </span><span class="s1">'vm.swappiness = 1'</span><span class="w"> </span><span class="p">|</span><span class="w"> </span>sudo<span class="w"> </span>tee<span class="w"> </span>-a<span class="w"> </span>/etc/sysctl.conf
 sudo<span class="w"> </span>sysctl<span class="w"> </span>-p
 
-<span class="c1"># WHY THIS MATTERS:</span>
+<span class="c1"># IMPORTANT:</span>
 <span class="c1"># - Cassandra manages its own memory via JVM heap</span>
 <span class="c1"># - If Cassandra swaps, latency goes from milliseconds to seconds</span>
 <span class="c1"># - OOM killer is preferable to swap-induced latency spirals</span>

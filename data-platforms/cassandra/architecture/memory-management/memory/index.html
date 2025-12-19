@@ -4692,9 +4692,9 @@ data-et-multi-view="{&quot;schema&quot;:{&quot;content&quot;:{&quot;desktop&quot
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
-  <a href="#why-off-heap-memory-matters-for-databases" class="md-nav__link">
+  <a href="#off-heap-memory-benefits" class="md-nav__link">
     <span class="md-ellipsis">
-      Why Off-Heap Memory Matters for Databases
+      Off-Heap Memory Benefits
     </span>
   </a>
   
@@ -19055,9 +19055,9 @@ data-et-multi-view="{&quot;schema&quot;:{&quot;content&quot;:{&quot;desktop&quot
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
-  <a href="#why-off-heap-memory-matters-for-databases" class="md-nav__link">
+  <a href="#off-heap-memory-benefits" class="md-nav__link">
     <span class="md-ellipsis">
-      Why Off-Heap Memory Matters for Databases
+      Off-Heap Memory Benefits
     </span>
   </a>
   
@@ -19431,7 +19431,7 @@ data-et-multi-view="{&quot;schema&quot;:{&quot;content&quot;:{&quot;desktop&quot
 <hr>
 <h2 id="off-heap-memory">Off-Heap Memory<a class="headerlink" href="#off-heap-memory" title="Permanent link">¶</a></h2>
 <p>Off-heap memory is native memory allocated outside the JVM heap. It is not subject to garbage collection, eliminating GC pauses for these structures.</p>
-<h3 id="why-off-heap-memory-matters-for-databases">Why Off-Heap Memory Matters for Databases<a class="headerlink" href="#why-off-heap-memory-matters-for-databases" title="Permanent link">¶</a></h3>
+<h3 id="off-heap-memory-benefits">Off-Heap Memory Benefits<a class="headerlink" href="#off-heap-memory-benefits" title="Permanent link">¶</a></h3>
 <p>Garbage collection is the primary source of latency variability in Java applications. For databases like Cassandra, GC pauses directly translate to:</p>
 <ul>
 <li><strong>Query latency spikes</strong>: A 500ms GC pause means 500ms added to every in-flight query</li>
