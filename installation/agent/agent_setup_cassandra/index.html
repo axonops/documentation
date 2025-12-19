@@ -6,7 +6,7 @@
       <meta charset="utf-8">
       <meta name="viewport" content="width=device-width,initial-scale=1">
       
-        <meta name="description" content="Official documentation for AxonOps - the unified platform for monitoring, maintenance, and backup of Apache Cassandra and Apache Kafka clusters.">
+        <meta name="description" content="Install AxonOps agent for Cassandra. Detailed installation steps for all platforms.">
       
       
       
@@ -19,10 +19,10 @@
       <meta name="generator" content="mkdocs-1.6.0, mkdocs-material-9.5.31">
     
     
-
-  <title>Agent setup cassandra | AxonOps Documentation</title>
-
-
+      
+        <title>Install Cassandra Agent - AxonOps Documentation</title>
+      
+    
     
       <link rel="stylesheet" href="../../../assets/stylesheets/main.3cba04c6.min.css">
       
@@ -38,9 +38,13 @@
     
     
       
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+      
     
-    
-      <link rel="stylesheet" href="../../../stylesheets/fonts.css">
     
       <link rel="stylesheet" href="../../../stylesheets/extra.css">
     
@@ -60,13 +64,17 @@
 
     
     
+      
+        <meta  name="keywords"  content="Cassandra agent install, AxonOps agent, installation guide" >
+      
+    
     
 <!-- Schema.org Structured Data for Documentation -->
 <script type="application/ld+json">
 {
   "@context": "https://schema.org",
   "@type": "TechArticle",
-  "headline": "Agent setup cassandra - Apache Cassandra Documentation",
+  "headline": "Install Cassandra Agent - Apache Cassandra Documentation",
   "description": "Official documentation for AxonOps - the unified platform for monitoring, maintenance, and backup of Apache Cassandra and Apache Kafka clusters.",
   "about": {
     "@type": "SoftwareApplication",
@@ -239,7 +247,7 @@ body{font-family:'Roboto Flex',-apple-system,BlinkMacSystemFont,'Segoe UI',Robot
         <div class="md-header__topic" data-md-component="header-topic">
           <span class="md-ellipsis">
             
-            Agent setup cassandra
+            Install Cassandra Agent
             
           </span>
         </div>
@@ -5287,48 +5295,6 @@ data-et-multi-view="{&quot;schema&quot;:{&quot;content&quot;:{&quot;desktop&quot
 
               
             
-              
-                
-  
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="../../../data-platforms/cassandra/architecture/distributed-data/paxos/" class="md-nav__link">
-        
-  
-  <span class="md-ellipsis">
-    Lightweight Transactions
-  </span>
-  
-
-      </a>
-    </li>
-  
-
-              
-            
-              
-                
-  
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="../../../data-platforms/cassandra/architecture/distributed-data/multi-datacenter/" class="md-nav__link">
-        
-  
-  <span class="md-ellipsis">
-    Multi-Datacenter
-  </span>
-  
-
-      </a>
-    </li>
-  
-
-              
-            
           </ul>
         </nav>
       
@@ -7023,346 +6989,6 @@ data-et-multi-view="{&quot;schema&quot;:{&quot;content&quot;:{&quot;desktop&quot
   
   <span class="md-ellipsis">
     Best Practices
-  </span>
-  
-
-      </a>
-    </li>
-  
-
-              
-            
-          </ul>
-        </nav>
-      
-    </li>
-  
-
-              
-            
-              
-                
-  
-  
-  
-  
-    
-    
-    
-      
-      
-    
-    
-    <li class="md-nav__item md-nav__item--nested">
-      
-        
-        
-        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_7_2_4_6" >
-        
-          
-          <label class="md-nav__link" for="__nav_7_2_4_6" id="__nav_7_2_4_6_label" tabindex="0">
-            
-  
-  <span class="md-ellipsis">
-    Design Patterns
-  </span>
-  
-
-            <span class="md-nav__icon md-icon"></span>
-          </label>
-        
-        <nav class="md-nav" data-md-level="4" aria-labelledby="__nav_7_2_4_6_label" aria-expanded="false">
-          <label class="md-nav__title" for="__nav_7_2_4_6">
-            <span class="md-nav__icon md-icon"></span>
-            Design Patterns
-          </label>
-          <ul class="md-nav__list" data-md-scrollfix>
-            
-              
-                
-  
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="../../../data-platforms/cassandra/application-development/patterns/" class="md-nav__link">
-        
-  
-  <span class="md-ellipsis">
-    Overview
-  </span>
-  
-
-      </a>
-    </li>
-  
-
-              
-            
-              
-                
-  
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="../../../data-platforms/cassandra/application-development/patterns/cqrs/" class="md-nav__link">
-        
-  
-  <span class="md-ellipsis">
-    CQRS
-  </span>
-  
-
-      </a>
-    </li>
-  
-
-              
-            
-              
-                
-  
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="../../../data-platforms/cassandra/application-development/patterns/event-sourcing/" class="md-nav__link">
-        
-  
-  <span class="md-ellipsis">
-    Event Sourcing
-  </span>
-  
-
-      </a>
-    </li>
-  
-
-              
-            
-              
-                
-  
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="../../../data-platforms/cassandra/application-development/patterns/outbox/" class="md-nav__link">
-        
-  
-  <span class="md-ellipsis">
-    Transactional Outbox
-  </span>
-  
-
-      </a>
-    </li>
-  
-
-              
-            
-              
-                
-  
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="../../../data-platforms/cassandra/application-development/patterns/idempotency/" class="md-nav__link">
-        
-  
-  <span class="md-ellipsis">
-    Idempotency
-  </span>
-  
-
-      </a>
-    </li>
-  
-
-              
-            
-              
-                
-  
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="../../../data-platforms/cassandra/application-development/patterns/time-series/" class="md-nav__link">
-        
-  
-  <span class="md-ellipsis">
-    Time-Series Data
-  </span>
-  
-
-      </a>
-    </li>
-  
-
-              
-            
-              
-                
-  
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="../../../data-platforms/cassandra/application-development/patterns/ledger/" class="md-nav__link">
-        
-  
-  <span class="md-ellipsis">
-    Ledger (Finance)
-  </span>
-  
-
-      </a>
-    </li>
-  
-
-              
-            
-              
-                
-  
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="../../../data-platforms/cassandra/application-development/patterns/saga/" class="md-nav__link">
-        
-  
-  <span class="md-ellipsis">
-    Saga
-  </span>
-  
-
-      </a>
-    </li>
-  
-
-              
-            
-              
-                
-  
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="../../../data-platforms/cassandra/application-development/patterns/digital-twin/" class="md-nav__link">
-        
-  
-  <span class="md-ellipsis">
-    Digital Twin (IoT)
-  </span>
-  
-
-      </a>
-    </li>
-  
-
-              
-            
-              
-                
-  
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="../../../data-platforms/cassandra/application-development/patterns/telemetry-at-scale/" class="md-nav__link">
-        
-  
-  <span class="md-ellipsis">
-    Telemetry at Scale
-  </span>
-  
-
-      </a>
-    </li>
-  
-
-              
-            
-              
-                
-  
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="../../../data-platforms/cassandra/application-development/patterns/audit-compliance/" class="md-nav__link">
-        
-  
-  <span class="md-ellipsis">
-    Audit & Compliance
-  </span>
-  
-
-      </a>
-    </li>
-  
-
-              
-            
-              
-                
-  
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="../../../data-platforms/cassandra/application-development/patterns/multi-tenant/" class="md-nav__link">
-        
-  
-  <span class="md-ellipsis">
-    Multi-Tenant Isolation
-  </span>
-  
-
-      </a>
-    </li>
-  
-
-              
-            
-              
-                
-  
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="../../../data-platforms/cassandra/application-development/patterns/speed-layer/" class="md-nav__link">
-        
-  
-  <span class="md-ellipsis">
-    Speed Layer
-  </span>
-  
-
-      </a>
-    </li>
-  
-
-              
-            
-              
-                
-  
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="../../../data-platforms/cassandra/application-development/patterns/digital-currency/" class="md-nav__link">
-        
-  
-  <span class="md-ellipsis">
-    Digital Currency
   </span>
   
 
@@ -14800,48 +14426,6 @@ data-et-multi-view="{&quot;schema&quot;:{&quot;content&quot;:{&quot;desktop&quot
   
   
     <li class="md-nav__item">
-      <a href="../../../data-platforms/kafka/architecture/topics/" class="md-nav__link">
-        
-  
-  <span class="md-ellipsis">
-    Topics & Partitions
-  </span>
-  
-
-      </a>
-    </li>
-  
-
-              
-            
-              
-                
-  
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="../../../data-platforms/kafka/architecture/transactions/" class="md-nav__link">
-        
-  
-  <span class="md-ellipsis">
-    Transaction Coordinator
-  </span>
-  
-
-      </a>
-    </li>
-  
-
-              
-            
-              
-                
-  
-  
-  
-  
-    <li class="md-nav__item">
       <a href="../../../data-platforms/kafka/architecture/brokers/" class="md-nav__link">
         
   
@@ -14967,6 +14551,27 @@ data-et-multi-view="{&quot;schema&quot;:{&quot;content&quot;:{&quot;desktop&quot
   
   
   
+    <li class="md-nav__item">
+      <a href="../../../data-platforms/kafka/architecture/kraft/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    KRaft Consensus
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
     
     
     
@@ -14978,10 +14583,10 @@ data-et-multi-view="{&quot;schema&quot;:{&quot;content&quot;:{&quot;desktop&quot
       
         
         
-        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_7_3_4_10" >
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_7_3_4_9" >
         
           
-          <label class="md-nav__link" for="__nav_7_3_4_10" id="__nav_7_3_4_10_label" tabindex="0">
+          <label class="md-nav__link" for="__nav_7_3_4_9" id="__nav_7_3_4_9_label" tabindex="0">
             
   
   <span class="md-ellipsis">
@@ -14992,8 +14597,8 @@ data-et-multi-view="{&quot;schema&quot;:{&quot;content&quot;:{&quot;desktop&quot
             <span class="md-nav__icon md-icon"></span>
           </label>
         
-        <nav class="md-nav" data-md-level="4" aria-labelledby="__nav_7_3_4_10_label" aria-expanded="false">
-          <label class="md-nav__title" for="__nav_7_3_4_10">
+        <nav class="md-nav" data-md-level="4" aria-labelledby="__nav_7_3_4_9_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_7_3_4_9">
             <span class="md-nav__icon md-icon"></span>
             Client Connections
           </label>
@@ -15037,10 +14642,10 @@ data-et-multi-view="{&quot;schema&quot;:{&quot;content&quot;:{&quot;desktop&quot
       
         
         
-        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_7_3_4_10_2" >
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_7_3_4_9_2" >
         
           
-          <label class="md-nav__link" for="__nav_7_3_4_10_2" id="__nav_7_3_4_10_2_label" tabindex="0">
+          <label class="md-nav__link" for="__nav_7_3_4_9_2" id="__nav_7_3_4_9_2_label" tabindex="0">
             
   
   <span class="md-ellipsis">
@@ -15051,8 +14656,8 @@ data-et-multi-view="{&quot;schema&quot;:{&quot;content&quot;:{&quot;desktop&quot
             <span class="md-nav__icon md-icon"></span>
           </label>
         
-        <nav class="md-nav" data-md-level="5" aria-labelledby="__nav_7_3_4_10_2_label" aria-expanded="false">
-          <label class="md-nav__title" for="__nav_7_3_4_10_2">
+        <nav class="md-nav" data-md-level="5" aria-labelledby="__nav_7_3_4_9_2_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_7_3_4_9_2">
             <span class="md-nav__icon md-icon"></span>
             Wire Protocol
           </label>
@@ -15469,10 +15074,10 @@ data-et-multi-view="{&quot;schema&quot;:{&quot;content&quot;:{&quot;desktop&quot
       
         
         
-        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_7_3_4_11" >
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_7_3_4_10" >
         
           
-          <label class="md-nav__link" for="__nav_7_3_4_11" id="__nav_7_3_4_11_label" tabindex="0">
+          <label class="md-nav__link" for="__nav_7_3_4_10" id="__nav_7_3_4_10_label" tabindex="0">
             
   
   <span class="md-ellipsis">
@@ -15483,8 +15088,8 @@ data-et-multi-view="{&quot;schema&quot;:{&quot;content&quot;:{&quot;desktop&quot
             <span class="md-nav__icon md-icon"></span>
           </label>
         
-        <nav class="md-nav" data-md-level="4" aria-labelledby="__nav_7_3_4_11_label" aria-expanded="false">
-          <label class="md-nav__title" for="__nav_7_3_4_11">
+        <nav class="md-nav" data-md-level="4" aria-labelledby="__nav_7_3_4_10_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_7_3_4_10">
             <span class="md-nav__icon md-icon"></span>
             Scaling and Rebalancing
           </label>
@@ -16513,48 +16118,6 @@ data-et-multi-view="{&quot;schema&quot;:{&quot;content&quot;:{&quot;desktop&quot
   
   <span class="md-ellipsis">
     Event Collaboration
-  </span>
-  
-
-      </a>
-    </li>
-  
-
-              
-            
-              
-                
-  
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="../../../data-platforms/kafka/application-development/patterns/microservices/" class="md-nav__link">
-        
-  
-  <span class="md-ellipsis">
-    Microservices
-  </span>
-  
-
-      </a>
-    </li>
-  
-
-              
-            
-              
-                
-  
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="../../../data-platforms/kafka/application-development/patterns/shock-absorber/" class="md-nav__link">
-        
-  
-  <span class="md-ellipsis">
-    Shock Absorber
   </span>
   
 
@@ -18335,9 +17898,16 @@ data-et-multi-view="{&quot;schema&quot;:{&quot;content&quot;:{&quot;desktop&quot
                   
 
 
-  <h1>Agent setup cassandra</h1>
+  <h1>Install Cassandra Agent</h1>
 
 <div><h2 id="install-cassandra-agent">Install Cassandra Agent<a class="headerlink" href="#install-cassandra-agent" title="Permanent link">¶</a></h2>
+<hr>
+<p>title: "Select the Cassandra Version"
+description: "AxonOps Cassandra agent installation dynamic page."
+meta:
+  - name: keywords
+    content: "Cassandra agent install, AxonOps agent"</p>
+<hr>
 <h3 id="select-the-cassandra-version">Select the Cassandra Version<a class="headerlink" href="#select-the-cassandra-version" title="Permanent link">¶</a></h3>
 <p><label>
   <input type="radio" id="Cassandra30" name="casFamily" onchange="selectCas()" checked>
@@ -18490,6 +18060,13 @@ running the following commmand:</p>
 <div class="highlight"><pre><span></span><code>sudo<span class="w"> </span>chmod<span class="w"> </span><span class="m">0640</span><span class="w"> </span>/etc/axonops/axon-agent.yml
 </code></pre></div>
 <h2 id="configure-cassandra">Configure Cassandra<a class="headerlink" href="#configure-cassandra" title="Permanent link">¶</a></h2>
+<hr>
+<p>title: "Configure Cassandra user group"
+description: "Java requirements for AxonOps Cassandra agent."
+meta:
+  - name: keywords
+    content: "Java requirements, AxonOps agent, JVM"</p>
+<hr>
 <p>Add the following line at the end of <code>/etc/cassandra/cassandra-env.sh</code>:</p>
 <div id="Cassandra30Div" class="javacas">
   <div class="highlight"><pre><span></span><code>JVM_OPTS="$JVM_OPTS -javaagent:/usr/share/axonops/axon-cassandra3.0-agent.jar=/etc/axonops/axon-agent.yml"
@@ -18547,6 +18124,9 @@ restarted when updating the <code>axon-agent</code> package.</p>
 
 
 
+
+  
+  
 
 
 
