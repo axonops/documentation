@@ -878,4 +878,3 @@ class DLQConsumerTest {
 - [Dead Letter Queue Concepts](../../concepts/dead-letter-queues/index.md) - Conceptual overview
 - [DLQ Operations](../../operations/troubleshooting/dead-letter-queues.md) - Monitoring and reprocessing
 - [Consumer Development](../consumers/index.md) - Consumer patterns
-- [Error Handling Overview](index.md) - General error handling
