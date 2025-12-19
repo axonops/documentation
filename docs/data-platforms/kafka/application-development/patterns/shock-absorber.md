@@ -80,7 +80,7 @@ skinparam rectangle {
 title Spring and Damper Analogy
 
 rectangle "Road Surface\n(Input Traffic)" as road {
-    rectangle "Potholes = Traffic Spikes" as pothole #FFCDD2
+    rectangle "Speedbump  = Traffic Spikes" as speedbump #FFCDD2
 }
 
 rectangle "Suspension System\n(Kafka)" as suspension #E3F2FD {
