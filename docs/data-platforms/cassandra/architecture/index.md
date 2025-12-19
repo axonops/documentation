@@ -168,6 +168,7 @@ CREATE KEYSPACE my_app WITH replication = {
 - **[Read Path](storage-engine/read-path.md)** - How reads are served
 - **[SSTables](storage-engine/sstables.md)** - On-disk storage format
 - **[Tombstones](storage-engine/tombstones.md)** - How deletes work
+- **[Change Data Capture](storage-engine/cdc.md)** - Capturing row-level changes
 
 ### Compaction
 

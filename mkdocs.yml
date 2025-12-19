@@ -307,6 +307,7 @@ nav:
           - Read Path: data-platforms/cassandra/architecture/storage-engine/read-path.md
           - SSTable Reference: data-platforms/cassandra/architecture/storage-engine/sstables.md
           - Tombstones: data-platforms/cassandra/architecture/storage-engine/tombstones.md
+          - Change Data Capture (CDC): data-platforms/cassandra/architecture/storage-engine/cdc.md
           - Compaction:
             - Overview: data-platforms/cassandra/architecture/storage-engine/compaction/index.md
             - Size-Tiered (STCS): data-platforms/cassandra/architecture/storage-engine/compaction/stcs.md
