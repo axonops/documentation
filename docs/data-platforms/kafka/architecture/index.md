@@ -229,7 +229,7 @@ zk_mode -[hidden]right- kraft_mode
 | **Operational complexity** | Two systems to manage | Single system |
 | **Version** | All versions | Kafka 3.3+ (production ready) |
 
-→ [KRaft Guide](brokers/kraft.md)
+→ [KRaft Deep Dive](kraft/index.md)
 
 ---
 
@@ -323,6 +323,8 @@ end note
 
 ### Replication Concepts
 
+For complete ISR mechanics, leader election protocol, and acknowledgment configuration, see [Replication](replication/index.md).
+
 | Concept | Description |
 |---------|-------------|
 | **Leader** | Replica that handles all reads and writes for a partition |
@@ -348,7 +350,7 @@ The replication factor determines how many copies of each partition exist:
 
 ## Storage Engine
 
-Kafka stores data in log segments on disk. The storage design prioritizes sequential I/O for maximum throughput.
+Kafka stores data in log segments on disk. The storage design prioritizes sequential I/O for maximum throughput. For complete storage internals including indexes, compaction, and retention policies, see [Storage Engine](storage-engine/index.md).
 
 ```plantuml
 @startuml
@@ -405,7 +407,7 @@ end note
 
 ## Performance Architecture
 
-Kafka achieves high throughput through several design choices:
+Kafka achieves high throughput through several design choices. For detailed performance tuning, benchmarking, and optimization techniques, see [Performance Internals](performance-internals/index.md).
 
 ### Sequential I/O
 
@@ -523,7 +525,7 @@ Kafka relies on the OS page cache rather than managing its own cache:
 
 ## Fault Tolerance
 
-Kafka survives failures at multiple levels:
+Kafka survives failures at multiple levels. For complete failure scenarios, recovery procedures, and monitoring strategies, see [Fault Tolerance](fault-tolerance/index.md).
 
 | Failure | Kafka Response |
 |---------|----------------|
@@ -548,7 +550,7 @@ Kafka survives failures at multiple levels:
 ## Related Documentation
 
 - [Brokers](brokers/index.md) - Broker architecture and configuration
-- [KRaft](brokers/kraft.md) - KRaft consensus mode
+- [KRaft](kraft/index.md) - KRaft consensus mode
 - [Replication](replication/index.md) - ISR, leader election, durability
 - [Storage Engine](storage-engine/index.md) - Log segments, indexes, compaction
 - [Performance Internals](performance-internals/index.md) - Zero-copy, batching, tuning

@@ -90,6 +90,8 @@ during -down-> after : B1 recovers
 
 ## Controller Failover
 
+For complete Raft consensus mechanics, election protocols, and metadata recovery, see [KRaft Deep Dive](../kraft/index.md#failover-behavior).
+
 ### KRaft Controller Quorum
 
 ```plantuml
@@ -125,7 +127,7 @@ end note
 
 ## Rack Awareness
 
-Distribute replicas across failure domains to survive rack/zone failures.
+Distribute replicas across failure domains to survive rack/zone failures. For complete topology design including network architecture and multi-datacenter layouts, see [Topology](../topology/index.md#rack-awareness).
 
 ```plantuml
 @startuml
@@ -167,6 +169,8 @@ replica.selector.class=org.apache.kafka.common.replica.RackAwareReplicaSelector
 ---
 
 ## Data Durability Settings
+
+For detailed ISR mechanics, acknowledgment levels, and min.insync.replicas behavior, see [Replication](../replication/index.md#acknowledgment-levels).
 
 ### Producer Configuration
 

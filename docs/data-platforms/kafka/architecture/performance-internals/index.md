@@ -45,6 +45,8 @@ end note
 
 ## Sequential I/O
 
+For complete log segment structure, indexes, and retention policies, see [Storage Engine](../storage-engine/index.md).
+
 ### Write Path
 
 Kafka appends all writes to the end of log segments, achieving sequential disk access.
