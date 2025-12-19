@@ -26,8 +26,8 @@ sudo usermod -aG "$KAFKA_GROUP" axonops
 sudo usermod -aG axonops "$KAFKA_USER"
 
 # restart Kafka to load the agent
-vi "$KAFKA_HOME/bin/kafka-server-stop.sh"
-vi "$KAFKA_HOME/bin/kafka-server-start.sh"
+"$KAFKA_HOME/bin/kafka-server-stop.sh"
+"$KAFKA_HOME/bin/kafka-server-start.sh"
 
 ## FOR BOTH
 
