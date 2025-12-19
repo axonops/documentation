@@ -211,6 +211,8 @@ broker.rack=us-central1-a
 
 ## Controller Topology
 
+For complete KRaft internals including Raft consensus, failover behavior, and metadata management, see [KRaft Deep Dive](../kraft/index.md).
+
 ### KRaft Controller Quorum
 
 The controller quorum should be deployed across failure domains.
@@ -351,6 +353,8 @@ end note
 ---
 
 ## Partition Distribution
+
+For leader election mechanics and preferred replica election, see [Replication](../replication/index.md#preferred-replica-election).
 
 ### Leader Distribution
 

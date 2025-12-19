@@ -244,7 +244,7 @@ If a single consumer can process 50 MB/s but the topic receives 200 MB/s, four p
 
 ## Partition Structure
 
-Each partition is stored as a directory containing log segments:
+Each partition is stored as a directory containing log segments. For complete storage internals including indexes, compaction, and retention, see [Storage Engine](../storage-engine/index.md).
 
 ```plantuml
 @startuml
@@ -436,7 +436,7 @@ For high watermark advancement mechanics and the replication protocol, see [Repl
 
 ## Partition Assignment
 
-When topics are created or partitions are added, the controller assigns partitions to brokers.
+When topics are created or partitions are added, the controller assigns partitions to brokers. For partition reassignment procedures, see [Cluster Management](../cluster-management/index.md#partition-assignment).
 
 ### Assignment Goals
 

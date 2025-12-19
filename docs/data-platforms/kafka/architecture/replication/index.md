@@ -296,7 +296,7 @@ The `min.insync.replicas` setting establishes a **durability floor**—the minim
 
 ## Leader Election
 
-When a partition leader fails, Kafka elects a new leader to restore availability. The election process determines which replica becomes the new leader and the fate of uncommitted data.
+When a partition leader fails, Kafka elects a new leader to restore availability. The election process determines which replica becomes the new leader and the fate of uncommitted data. For controller-side election coordination, see [Cluster Management](../cluster-management/index.md#leader-election).
 
 ### Election Benefits
 
@@ -683,7 +683,7 @@ kafka-leader-election.sh --bootstrap-server kafka:9092 \
 
 ## Monitoring Replication
 
-Replication health is critical. Under-replicated partitions indicate problems that may become failures.
+Replication health is critical. Under-replicated partitions indicate problems that may become failures. For complete failure handling and recovery procedures, see [Fault Tolerance](../fault-tolerance/index.md).
 
 ### Key Metrics
 

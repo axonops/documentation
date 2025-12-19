@@ -294,6 +294,8 @@ Tombstones are retained for `log.cleaner.delete.retention.ms` before removal.
 
 ## Performance Optimizations
 
+For complete performance tuning including batching, compression selection, and thread model optimization, see [Performance Internals](../performance-internals/index.md).
+
 ### Zero-Copy
 
 Kafka uses `sendfile()` to transfer data directly from page cache to network socket.

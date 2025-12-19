@@ -47,7 +47,7 @@ b3 --> cons : fetch
 
 ## KRaft Mode
 
-KRaft (Kafka Raft) eliminates the ZooKeeper dependency by using an internal Raft-based consensus protocol.
+KRaft (Kafka Raft) eliminates the ZooKeeper dependency by using an internal Raft-based consensus protocol. For complete KRaft internals including Raft consensus mechanics, metadata log structure, and ZooKeeper migration, see [KRaft Deep Dive](../kraft/index.md).
 
 ### Controller Quorum
 
@@ -150,6 +150,8 @@ num.replica.fetchers=4
 
 ## Metadata Management
 
+For complete metadata management including record types, broker registration, and leader election coordination, see [Cluster Management](../cluster-management/index.md).
+
 ### Cluster Metadata Topic
 
 KRaft stores all cluster metadata in `__cluster_metadata`, a single-partition internal topic.
@@ -246,6 +248,8 @@ During controlled shutdown:
 ---
 
 ## High Availability
+
+For complete failure scenarios, recovery procedures, and monitoring strategies, see [Fault Tolerance](../fault-tolerance/index.md).
 
 ### Broker Failure Handling
 

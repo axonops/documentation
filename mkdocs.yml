@@ -725,6 +725,7 @@ nav:
         - Replication: data-platforms/kafka/architecture/replication/index.md
         - Fault Tolerance: data-platforms/kafka/architecture/fault-tolerance/index.md
         - Cluster Management: data-platforms/kafka/architecture/cluster-management/index.md
+        - KRaft Consensus: data-platforms/kafka/architecture/kraft/index.md
         - Client Connections:
           - Overview: data-platforms/kafka/architecture/client-connections/index.md
           - Wire Protocol:

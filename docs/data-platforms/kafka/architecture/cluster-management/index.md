@@ -14,6 +14,8 @@ Internal mechanisms for cluster coordination, metadata management, and administr
 
 ## Controller Architecture
 
+For detailed Raft consensus mechanics, controller failover, and ZooKeeper migration, see [KRaft Deep Dive](../kraft/index.md).
+
 ```plantuml
 @startuml
 
@@ -185,6 +187,8 @@ broker.session.timeout.ms=18000
 ---
 
 ## Leader Election
+
+For detailed leader election protocol, ISR mechanics, and leader epochs, see [Replication](../replication/index.md#leader-election).
 
 ### Election Triggers
 
