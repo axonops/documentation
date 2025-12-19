@@ -121,6 +121,76 @@
          <changefreq>daily</changefreq>
     </url>
     <url>
+         <loc>https://docs.axonops.com/data-platforms/cassandra/application-development/patterns/</loc>
+         <lastmod>2025-12-19</lastmod>
+         <changefreq>daily</changefreq>
+    </url>
+    <url>
+         <loc>https://docs.axonops.com/data-platforms/cassandra/application-development/patterns/audit-compliance/</loc>
+         <lastmod>2025-12-19</lastmod>
+         <changefreq>daily</changefreq>
+    </url>
+    <url>
+         <loc>https://docs.axonops.com/data-platforms/cassandra/application-development/patterns/cqrs/</loc>
+         <lastmod>2025-12-19</lastmod>
+         <changefreq>daily</changefreq>
+    </url>
+    <url>
+         <loc>https://docs.axonops.com/data-platforms/cassandra/application-development/patterns/digital-currency/</loc>
+         <lastmod>2025-12-19</lastmod>
+         <changefreq>daily</changefreq>
+    </url>
+    <url>
+         <loc>https://docs.axonops.com/data-platforms/cassandra/application-development/patterns/digital-twin/</loc>
+         <lastmod>2025-12-19</lastmod>
+         <changefreq>daily</changefreq>
+    </url>
+    <url>
+         <loc>https://docs.axonops.com/data-platforms/cassandra/application-development/patterns/event-sourcing/</loc>
+         <lastmod>2025-12-19</lastmod>
+         <changefreq>daily</changefreq>
+    </url>
+    <url>
+         <loc>https://docs.axonops.com/data-platforms/cassandra/application-development/patterns/idempotency/</loc>
+         <lastmod>2025-12-19</lastmod>
+         <changefreq>daily</changefreq>
+    </url>
+    <url>
+         <loc>https://docs.axonops.com/data-platforms/cassandra/application-development/patterns/ledger/</loc>
+         <lastmod>2025-12-19</lastmod>
+         <changefreq>daily</changefreq>
+    </url>
+    <url>
+         <loc>https://docs.axonops.com/data-platforms/cassandra/application-development/patterns/multi-tenant/</loc>
+         <lastmod>2025-12-19</lastmod>
+         <changefreq>daily</changefreq>
+    </url>
+    <url>
+         <loc>https://docs.axonops.com/data-platforms/cassandra/application-development/patterns/outbox/</loc>
+         <lastmod>2025-12-19</lastmod>
+         <changefreq>daily</changefreq>
+    </url>
+    <url>
+         <loc>https://docs.axonops.com/data-platforms/cassandra/application-development/patterns/saga/</loc>
+         <lastmod>2025-12-19</lastmod>
+         <changefreq>daily</changefreq>
+    </url>
+    <url>
+         <loc>https://docs.axonops.com/data-platforms/cassandra/application-development/patterns/speed-layer/</loc>
+         <lastmod>2025-12-19</lastmod>
+         <changefreq>daily</changefreq>
+    </url>
+    <url>
+         <loc>https://docs.axonops.com/data-platforms/cassandra/application-development/patterns/telemetry-at-scale/</loc>
+         <lastmod>2025-12-19</lastmod>
+         <changefreq>daily</changefreq>
+    </url>
+    <url>
+         <loc>https://docs.axonops.com/data-platforms/cassandra/application-development/patterns/time-series/</loc>
+         <lastmod>2025-12-19</lastmod>
+         <changefreq>daily</changefreq>
+    </url>
+    <url>
          <loc>https://docs.axonops.com/data-platforms/cassandra/architecture/</loc>
          <lastmod>2025-12-19</lastmod>
          <changefreq>daily</changefreq>
@@ -241,7 +311,17 @@
          <changefreq>daily</changefreq>
     </url>
     <url>
+         <loc>https://docs.axonops.com/data-platforms/cassandra/architecture/distributed-data/multi-datacenter/</loc>
+         <lastmod>2025-12-19</lastmod>
+         <changefreq>daily</changefreq>
+    </url>
+    <url>
          <loc>https://docs.axonops.com/data-platforms/cassandra/architecture/distributed-data/partitioning/</loc>
+         <lastmod>2025-12-19</lastmod>
+         <changefreq>daily</changefreq>
+    </url>
+    <url>
+         <loc>https://docs.axonops.com/data-platforms/cassandra/architecture/distributed-data/paxos/</loc>
          <lastmod>2025-12-19</lastmod>
          <changefreq>daily</changefreq>
     </url>
@@ -1991,12 +2071,22 @@
          <changefreq>daily</changefreq>
     </url>
     <url>
+         <loc>https://docs.axonops.com/data-platforms/kafka/application-development/patterns/microservices/</loc>
+         <lastmod>2025-12-19</lastmod>
+         <changefreq>daily</changefreq>
+    </url>
+    <url>
          <loc>https://docs.axonops.com/data-platforms/kafka/application-development/patterns/outbox/</loc>
          <lastmod>2025-12-19</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://docs.axonops.com/data-platforms/kafka/application-development/patterns/saga/</loc>
+         <lastmod>2025-12-19</lastmod>
+         <changefreq>daily</changefreq>
+    </url>
+    <url>
+         <loc>https://docs.axonops.com/data-platforms/kafka/application-development/patterns/shock-absorber/</loc>
          <lastmod>2025-12-19</lastmod>
          <changefreq>daily</changefreq>
     </url>
@@ -2212,6 +2302,11 @@
     </url>
     <url>
          <loc>https://docs.axonops.com/data-platforms/kafka/architecture/topology/</loc>
+         <lastmod>2025-12-19</lastmod>
+         <changefreq>daily</changefreq>
+    </url>
+    <url>
+         <loc>https://docs.axonops.com/data-platforms/kafka/architecture/transactions/</loc>
          <lastmod>2025-12-19</lastmod>
          <changefreq>daily</changefreq>
     </url>
@@ -2857,11 +2952,6 @@
     </url>
     <url>
          <loc>https://docs.axonops.com/introduction/overview/</loc>
-         <lastmod>2025-12-19</lastmod>
-         <changefreq>daily</changefreq>
-    </url>
-    <url>
-         <loc>https://docs.axonops.com/kafka/</loc>
          <lastmod>2025-12-19</lastmod>
          <changefreq>daily</changefreq>
     </url>

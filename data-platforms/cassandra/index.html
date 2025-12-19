@@ -23,10 +23,10 @@
       <meta name="generator" content="mkdocs-1.6.0, mkdocs-material-9.5.31">
     
     
-      
-        <title>Apache Cassandra Documentation - AxonOps Documentation</title>
-      
-    
+
+  <title>Apache Cassandra Documentation</title>
+
+
     
       <link rel="stylesheet" href="../../assets/stylesheets/main.3cba04c6.min.css">
       
@@ -42,13 +42,9 @@
     
     
       
-        
-        
-        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&display=fallback">
-        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
-      
     
+    
+      <link rel="stylesheet" href="../../stylesheets/fonts.css">
     
       <link rel="stylesheet" href="../../stylesheets/extra.css">
     
@@ -4299,6 +4295,84 @@ data-et-multi-view="{&quot;schema&quot;:{&quot;content&quot;:{&quot;desktop&quot
     <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
       
         <li class="md-nav__item">
+  <a href="#documentation-scope" class="md-nav__link">
+    <span class="md-ellipsis">
+      Documentation Scope
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#whats-new" class="md-nav__link">
+    <span class="md-ellipsis">
+      What's New
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="What's New">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#cassandra-506-october-2025-current-release" class="md-nav__link">
+    <span class="md-ellipsis">
+      Cassandra 5.0.6 (October 2025) - Current Release
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#cassandra-500-september-2024-major-release" class="md-nav__link">
+    <span class="md-ellipsis">
+      Cassandra 5.0.0 (September 2024) - Major Release
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#cassandra-4110-september-2025" class="md-nav__link">
+    <span class="md-ellipsis">
+      Cassandra 4.1.10 (September 2025)
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#cassandra-410-december-2022" class="md-nav__link">
+    <span class="md-ellipsis">
+      Cassandra 4.1.0 (December 2022)
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#cassandra-4019-october-2025" class="md-nav__link">
+    <span class="md-ellipsis">
+      Cassandra 4.0.19 (October 2025)
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#cassandra-400-july-2021" class="md-nav__link">
+    <span class="md-ellipsis">
+      Cassandra 4.0.0 (July 2021)
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#about-this-documentation" class="md-nav__link">
     <span class="md-ellipsis">
       About This Documentation
@@ -4377,16 +4451,6 @@ data-et-multi-view="{&quot;schema&quot;:{&quot;content&quot;:{&quot;desktop&quot
 </li>
       
         <li class="md-nav__item">
-  <a href="#documentation-sections" class="md-nav__link">
-    <span class="md-ellipsis">
-      Documentation Sections
-    </span>
-  </a>
-  
-    <nav class="md-nav" aria-label="Documentation Sections">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
   <a href="#getting-started" class="md-nav__link">
     <span class="md-ellipsis">
       Getting Started
@@ -4394,8 +4458,8 @@ data-et-multi-view="{&quot;schema&quot;:{&quot;content&quot;:{&quot;desktop&quot
   </a>
   
 </li>
-        
-          <li class="md-nav__item">
+      
+        <li class="md-nav__item">
   <a href="#architecture" class="md-nav__link">
     <span class="md-ellipsis">
       Architecture
@@ -4403,8 +4467,8 @@ data-et-multi-view="{&quot;schema&quot;:{&quot;content&quot;:{&quot;desktop&quot
   </a>
   
 </li>
-        
-          <li class="md-nav__item">
+      
+        <li class="md-nav__item">
   <a href="#cql-reference" class="md-nav__link">
     <span class="md-ellipsis">
       CQL Reference
@@ -4412,8 +4476,8 @@ data-et-multi-view="{&quot;schema&quot;:{&quot;content&quot;:{&quot;desktop&quot
   </a>
   
 </li>
-        
-          <li class="md-nav__item">
+      
+        <li class="md-nav__item">
   <a href="#data-modeling" class="md-nav__link">
     <span class="md-ellipsis">
       Data Modeling
@@ -4421,8 +4485,8 @@ data-et-multi-view="{&quot;schema&quot;:{&quot;content&quot;:{&quot;desktop&quot
   </a>
   
 </li>
-        
-          <li class="md-nav__item">
+      
+        <li class="md-nav__item">
   <a href="#operations" class="md-nav__link">
     <span class="md-ellipsis">
       Operations
@@ -4430,44 +4494,17 @@ data-et-multi-view="{&quot;schema&quot;:{&quot;content&quot;:{&quot;desktop&quot
   </a>
   
 </li>
-        
-          <li class="md-nav__item">
-  <a href="#configuration" class="md-nav__link">
+      
+        <li class="md-nav__item">
+  <a href="#monitoring-performance" class="md-nav__link">
     <span class="md-ellipsis">
-      Configuration
+      Monitoring &amp; Performance
     </span>
   </a>
   
 </li>
-        
-          <li class="md-nav__item">
-  <a href="#jmx-reference" class="md-nav__link">
-    <span class="md-ellipsis">
-      JMX Reference
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#monitoring" class="md-nav__link">
-    <span class="md-ellipsis">
-      Monitoring
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#performance" class="md-nav__link">
-    <span class="md-ellipsis">
-      Performance
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
+      
+        <li class="md-nav__item">
   <a href="#security" class="md-nav__link">
     <span class="md-ellipsis">
       Security
@@ -4475,8 +4512,8 @@ data-et-multi-view="{&quot;schema&quot;:{&quot;content&quot;:{&quot;desktop&quot
   </a>
   
 </li>
-        
-          <li class="md-nav__item">
+      
+        <li class="md-nav__item">
   <a href="#tools" class="md-nav__link">
     <span class="md-ellipsis">
       Tools
@@ -4484,8 +4521,8 @@ data-et-multi-view="{&quot;schema&quot;:{&quot;content&quot;:{&quot;desktop&quot
   </a>
   
 </li>
-        
-          <li class="md-nav__item">
+      
+        <li class="md-nav__item">
   <a href="#troubleshooting" class="md-nav__link">
     <span class="md-ellipsis">
       Troubleshooting
@@ -4493,18 +4530,13 @@ data-et-multi-view="{&quot;schema&quot;:{&quot;content&quot;:{&quot;desktop&quot
   </a>
   
 </li>
-        
-          <li class="md-nav__item">
-  <a href="#reference" class="md-nav__link">
+      
+        <li class="md-nav__item">
+  <a href="#quick-reference" class="md-nav__link">
     <span class="md-ellipsis">
-      Reference
+      Quick Reference
     </span>
   </a>
-  
-</li>
-        
-      </ul>
-    </nav>
   
 </li>
       
@@ -4542,11 +4574,26 @@ data-et-multi-view="{&quot;schema&quot;:{&quot;content&quot;:{&quot;desktop&quot
 </li>
       
         <li class="md-nav__item">
-  <a href="#cassandra-versions" class="md-nav__link">
+  <a href="#version-compatibility" class="md-nav__link">
     <span class="md-ellipsis">
-      Cassandra Versions
+      Version Compatibility
     </span>
   </a>
+  
+    <nav class="md-nav" aria-label="Version Compatibility">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#supported-versions" class="md-nav__link">
+    <span class="md-ellipsis">
+      Supported Versions
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
   
 </li>
       
@@ -5609,6 +5656,48 @@ data-et-multi-view="{&quot;schema&quot;:{&quot;content&quot;:{&quot;desktop&quot
   
   <span class="md-ellipsis">
     Counters
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="architecture/distributed-data/paxos/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Lightweight Transactions
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="architecture/distributed-data/multi-datacenter/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Multi-Datacenter
   </span>
   
 
@@ -7312,6 +7401,346 @@ data-et-multi-view="{&quot;schema&quot;:{&quot;content&quot;:{&quot;desktop&quot
   
   <span class="md-ellipsis">
     Best Practices
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+    
+      
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_7_2_4_6" >
+        
+          
+          <label class="md-nav__link" for="__nav_7_2_4_6" id="__nav_7_2_4_6_label" tabindex="0">
+            
+  
+  <span class="md-ellipsis">
+    Design Patterns
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="4" aria-labelledby="__nav_7_2_4_6_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_7_2_4_6">
+            <span class="md-nav__icon md-icon"></span>
+            Design Patterns
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="application-development/patterns/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Overview
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="application-development/patterns/cqrs/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    CQRS
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="application-development/patterns/event-sourcing/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Event Sourcing
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="application-development/patterns/outbox/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Transactional Outbox
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="application-development/patterns/idempotency/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Idempotency
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="application-development/patterns/time-series/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Time-Series Data
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="application-development/patterns/ledger/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Ledger (Finance)
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="application-development/patterns/saga/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Saga
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="application-development/patterns/digital-twin/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Digital Twin (IoT)
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="application-development/patterns/telemetry-at-scale/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Telemetry at Scale
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="application-development/patterns/audit-compliance/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Audit & Compliance
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="application-development/patterns/multi-tenant/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Multi-Tenant Isolation
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="application-development/patterns/speed-layer/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Speed Layer
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="application-development/patterns/digital-currency/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Digital Currency
   </span>
   
 
@@ -13895,6 +14324,388 @@ data-et-multi-view="{&quot;schema&quot;:{&quot;content&quot;:{&quot;desktop&quot
 
               
             
+              
+                
+  
+  
+  
+  
+    
+    
+    
+      
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_7_2_8_4" >
+        
+          
+          <label class="md-nav__link" for="__nav_7_2_8_4" id="__nav_7_2_8_4_label" tabindex="0">
+            
+  
+  <span class="md-ellipsis">
+    Playbooks
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="4" aria-labelledby="__nav_7_2_8_4_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_7_2_8_4">
+            <span class="md-nav__icon md-icon"></span>
+            Playbooks
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="troubleshooting/playbooks/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Overview
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="troubleshooting/playbooks/add-node/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Add Node
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="troubleshooting/playbooks/compaction-issues/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Compaction Issues
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="troubleshooting/playbooks/decommission-node/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Decommission Node
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="troubleshooting/playbooks/handle-full-disk/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Full Disk
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="troubleshooting/playbooks/gc-pause/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    GC Pauses
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="troubleshooting/playbooks/gossip-failures/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Gossip Failures
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="troubleshooting/playbooks/high-cpu/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    High CPU
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="troubleshooting/playbooks/high-memory/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    High Memory
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="troubleshooting/playbooks/large-partition/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Large Partitions
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="troubleshooting/playbooks/recover-from-oom/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    OOM Recovery
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="troubleshooting/playbooks/repair-failures/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Repair Failures
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="troubleshooting/playbooks/replace-dead-node/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Replace Dead Node
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="troubleshooting/playbooks/schema-disagreement/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Schema Disagreement
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="troubleshooting/playbooks/slow-queries/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Slow Queries
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="troubleshooting/playbooks/tombstone-accumulation/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Tombstone Accumulation
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
           </ul>
         </nav>
       
@@ -14749,6 +15560,48 @@ data-et-multi-view="{&quot;schema&quot;:{&quot;content&quot;:{&quot;desktop&quot
   
   
     <li class="md-nav__item">
+      <a href="../kafka/architecture/topics/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Topics & Partitions
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../kafka/architecture/transactions/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Transaction Coordinator
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
       <a href="../kafka/architecture/brokers/" class="md-nav__link">
         
   
@@ -14906,10 +15759,10 @@ data-et-multi-view="{&quot;schema&quot;:{&quot;content&quot;:{&quot;desktop&quot
       
         
         
-        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_7_3_4_9" >
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_7_3_4_11" >
         
           
-          <label class="md-nav__link" for="__nav_7_3_4_9" id="__nav_7_3_4_9_label" tabindex="0">
+          <label class="md-nav__link" for="__nav_7_3_4_11" id="__nav_7_3_4_11_label" tabindex="0">
             
   
   <span class="md-ellipsis">
@@ -14920,8 +15773,8 @@ data-et-multi-view="{&quot;schema&quot;:{&quot;content&quot;:{&quot;desktop&quot
             <span class="md-nav__icon md-icon"></span>
           </label>
         
-        <nav class="md-nav" data-md-level="4" aria-labelledby="__nav_7_3_4_9_label" aria-expanded="false">
-          <label class="md-nav__title" for="__nav_7_3_4_9">
+        <nav class="md-nav" data-md-level="4" aria-labelledby="__nav_7_3_4_11_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_7_3_4_11">
             <span class="md-nav__icon md-icon"></span>
             Client Connections
           </label>
@@ -14965,10 +15818,10 @@ data-et-multi-view="{&quot;schema&quot;:{&quot;content&quot;:{&quot;desktop&quot
       
         
         
-        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_7_3_4_9_2" >
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_7_3_4_11_2" >
         
           
-          <label class="md-nav__link" for="__nav_7_3_4_9_2" id="__nav_7_3_4_9_2_label" tabindex="0">
+          <label class="md-nav__link" for="__nav_7_3_4_11_2" id="__nav_7_3_4_11_2_label" tabindex="0">
             
   
   <span class="md-ellipsis">
@@ -14979,8 +15832,8 @@ data-et-multi-view="{&quot;schema&quot;:{&quot;content&quot;:{&quot;desktop&quot
             <span class="md-nav__icon md-icon"></span>
           </label>
         
-        <nav class="md-nav" data-md-level="5" aria-labelledby="__nav_7_3_4_9_2_label" aria-expanded="false">
-          <label class="md-nav__title" for="__nav_7_3_4_9_2">
+        <nav class="md-nav" data-md-level="5" aria-labelledby="__nav_7_3_4_11_2_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_7_3_4_11_2">
             <span class="md-nav__icon md-icon"></span>
             Wire Protocol
           </label>
@@ -15397,10 +16250,10 @@ data-et-multi-view="{&quot;schema&quot;:{&quot;content&quot;:{&quot;desktop&quot
       
         
         
-        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_7_3_4_10" >
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_7_3_4_12" >
         
           
-          <label class="md-nav__link" for="__nav_7_3_4_10" id="__nav_7_3_4_10_label" tabindex="0">
+          <label class="md-nav__link" for="__nav_7_3_4_12" id="__nav_7_3_4_12_label" tabindex="0">
             
   
   <span class="md-ellipsis">
@@ -15411,8 +16264,8 @@ data-et-multi-view="{&quot;schema&quot;:{&quot;content&quot;:{&quot;desktop&quot
             <span class="md-nav__icon md-icon"></span>
           </label>
         
-        <nav class="md-nav" data-md-level="4" aria-labelledby="__nav_7_3_4_10_label" aria-expanded="false">
-          <label class="md-nav__title" for="__nav_7_3_4_10">
+        <nav class="md-nav" data-md-level="4" aria-labelledby="__nav_7_3_4_12_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_7_3_4_12">
             <span class="md-nav__icon md-icon"></span>
             Scaling and Rebalancing
           </label>
@@ -16441,6 +17294,48 @@ data-et-multi-view="{&quot;schema&quot;:{&quot;content&quot;:{&quot;desktop&quot
   
   <span class="md-ellipsis">
     Event Collaboration
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../kafka/application-development/patterns/microservices/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Microservices
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../kafka/application-development/patterns/shock-absorber/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Shock Absorber
   </span>
   
 
@@ -18077,6 +18972,84 @@ data-et-multi-view="{&quot;schema&quot;:{&quot;content&quot;:{&quot;desktop&quot
     <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
       
         <li class="md-nav__item">
+  <a href="#documentation-scope" class="md-nav__link">
+    <span class="md-ellipsis">
+      Documentation Scope
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#whats-new" class="md-nav__link">
+    <span class="md-ellipsis">
+      What's New
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="What's New">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#cassandra-506-october-2025-current-release" class="md-nav__link">
+    <span class="md-ellipsis">
+      Cassandra 5.0.6 (October 2025) - Current Release
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#cassandra-500-september-2024-major-release" class="md-nav__link">
+    <span class="md-ellipsis">
+      Cassandra 5.0.0 (September 2024) - Major Release
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#cassandra-4110-september-2025" class="md-nav__link">
+    <span class="md-ellipsis">
+      Cassandra 4.1.10 (September 2025)
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#cassandra-410-december-2022" class="md-nav__link">
+    <span class="md-ellipsis">
+      Cassandra 4.1.0 (December 2022)
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#cassandra-4019-october-2025" class="md-nav__link">
+    <span class="md-ellipsis">
+      Cassandra 4.0.19 (October 2025)
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#cassandra-400-july-2021" class="md-nav__link">
+    <span class="md-ellipsis">
+      Cassandra 4.0.0 (July 2021)
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#about-this-documentation" class="md-nav__link">
     <span class="md-ellipsis">
       About This Documentation
@@ -18155,16 +19128,6 @@ data-et-multi-view="{&quot;schema&quot;:{&quot;content&quot;:{&quot;desktop&quot
 </li>
       
         <li class="md-nav__item">
-  <a href="#documentation-sections" class="md-nav__link">
-    <span class="md-ellipsis">
-      Documentation Sections
-    </span>
-  </a>
-  
-    <nav class="md-nav" aria-label="Documentation Sections">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
   <a href="#getting-started" class="md-nav__link">
     <span class="md-ellipsis">
       Getting Started
@@ -18172,8 +19135,8 @@ data-et-multi-view="{&quot;schema&quot;:{&quot;content&quot;:{&quot;desktop&quot
   </a>
   
 </li>
-        
-          <li class="md-nav__item">
+      
+        <li class="md-nav__item">
   <a href="#architecture" class="md-nav__link">
     <span class="md-ellipsis">
       Architecture
@@ -18181,8 +19144,8 @@ data-et-multi-view="{&quot;schema&quot;:{&quot;content&quot;:{&quot;desktop&quot
   </a>
   
 </li>
-        
-          <li class="md-nav__item">
+      
+        <li class="md-nav__item">
   <a href="#cql-reference" class="md-nav__link">
     <span class="md-ellipsis">
       CQL Reference
@@ -18190,8 +19153,8 @@ data-et-multi-view="{&quot;schema&quot;:{&quot;content&quot;:{&quot;desktop&quot
   </a>
   
 </li>
-        
-          <li class="md-nav__item">
+      
+        <li class="md-nav__item">
   <a href="#data-modeling" class="md-nav__link">
     <span class="md-ellipsis">
       Data Modeling
@@ -18199,8 +19162,8 @@ data-et-multi-view="{&quot;schema&quot;:{&quot;content&quot;:{&quot;desktop&quot
   </a>
   
 </li>
-        
-          <li class="md-nav__item">
+      
+        <li class="md-nav__item">
   <a href="#operations" class="md-nav__link">
     <span class="md-ellipsis">
       Operations
@@ -18208,44 +19171,17 @@ data-et-multi-view="{&quot;schema&quot;:{&quot;content&quot;:{&quot;desktop&quot
   </a>
   
 </li>
-        
-          <li class="md-nav__item">
-  <a href="#configuration" class="md-nav__link">
+      
+        <li class="md-nav__item">
+  <a href="#monitoring-performance" class="md-nav__link">
     <span class="md-ellipsis">
-      Configuration
+      Monitoring &amp; Performance
     </span>
   </a>
   
 </li>
-        
-          <li class="md-nav__item">
-  <a href="#jmx-reference" class="md-nav__link">
-    <span class="md-ellipsis">
-      JMX Reference
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#monitoring" class="md-nav__link">
-    <span class="md-ellipsis">
-      Monitoring
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#performance" class="md-nav__link">
-    <span class="md-ellipsis">
-      Performance
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
+      
+        <li class="md-nav__item">
   <a href="#security" class="md-nav__link">
     <span class="md-ellipsis">
       Security
@@ -18253,8 +19189,8 @@ data-et-multi-view="{&quot;schema&quot;:{&quot;content&quot;:{&quot;desktop&quot
   </a>
   
 </li>
-        
-          <li class="md-nav__item">
+      
+        <li class="md-nav__item">
   <a href="#tools" class="md-nav__link">
     <span class="md-ellipsis">
       Tools
@@ -18262,8 +19198,8 @@ data-et-multi-view="{&quot;schema&quot;:{&quot;content&quot;:{&quot;desktop&quot
   </a>
   
 </li>
-        
-          <li class="md-nav__item">
+      
+        <li class="md-nav__item">
   <a href="#troubleshooting" class="md-nav__link">
     <span class="md-ellipsis">
       Troubleshooting
@@ -18271,18 +19207,13 @@ data-et-multi-view="{&quot;schema&quot;:{&quot;content&quot;:{&quot;desktop&quot
   </a>
   
 </li>
-        
-          <li class="md-nav__item">
-  <a href="#reference" class="md-nav__link">
+      
+        <li class="md-nav__item">
+  <a href="#quick-reference" class="md-nav__link">
     <span class="md-ellipsis">
-      Reference
+      Quick Reference
     </span>
   </a>
-  
-</li>
-        
-      </ul>
-    </nav>
   
 </li>
       
@@ -18320,11 +19251,26 @@ data-et-multi-view="{&quot;schema&quot;:{&quot;content&quot;:{&quot;desktop&quot
 </li>
       
         <li class="md-nav__item">
-  <a href="#cassandra-versions" class="md-nav__link">
+  <a href="#version-compatibility" class="md-nav__link">
     <span class="md-ellipsis">
-      Cassandra Versions
+      Version Compatibility
     </span>
   </a>
+  
+    <nav class="md-nav" aria-label="Version Compatibility">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#supported-versions" class="md-nav__link">
+    <span class="md-ellipsis">
+      Supported Versions
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
   
 </li>
       
@@ -18361,16 +19307,92 @@ data-et-multi-view="{&quot;schema&quot;:{&quot;content&quot;:{&quot;desktop&quot
                   
 
 
-<div><h1 id="apache-cassandra-documentation">Apache Cassandra Documentation<a class="headerlink" href="#apache-cassandra-documentation" title="Permanent link">¶</a></h1>
+<div><h1 id="apache-cassandra-documentation">Apache Cassandra® Documentation<a class="headerlink" href="#apache-cassandra-documentation" title="Permanent link">¶</a></h1>
 <p>Production-grade reference for architecture, CQL, and operations.</p>
+<h2 id="documentation-scope">Documentation Scope<a class="headerlink" href="#documentation-scope" title="Permanent link">¶</a></h2>
+<p>This reference documentation covers Apache Cassandra versions 4.0 through 5.x, with emphasis on production deployments. <strong>Cassandra 5.0 (September 2024) introduced major features</strong> including Storage-Attached Indexes (SAI), Vector Search, and Unified Compaction Strategy (UCS).</p>
+<table>
+<thead>
+<tr>
+<th>Version Range</th>
+<th style="text-align: center;">Java Requirement</th>
+<th>Documentation Status</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>3.11.x</td>
+<td style="text-align: center;">Java 8</td>
+<td>Legacy reference</td>
+</tr>
+<tr>
+<td>4.0.x</td>
+<td style="text-align: center;">Java 8/11</td>
+<td>Supported</td>
+</tr>
+<tr>
+<td>4.1.x</td>
+<td style="text-align: center;">Java 8/11</td>
+<td>Fully Documented</td>
+</tr>
+<tr>
+<td>5.0.x</td>
+<td style="text-align: center;">Java 11/17</td>
+<td><strong>Current (5.0.6)</strong></td>
+</tr>
+</tbody>
+</table>
+<p>Legend: ✅ Production Ready | ⚠️ Limited/Deprecated | ❌ Not Supported</p>
+<hr>
+<h2 id="whats-new">What's New<a class="headerlink" href="#whats-new" title="Permanent link">¶</a></h2>
+<h3 id="cassandra-506-october-2025-current-release">Cassandra 5.0.6 (October 2025) - Current Release<a class="headerlink" href="#cassandra-506-october-2025-current-release" title="Permanent link">¶</a></h3>
+<ul>
+<li>Bug fixes and stability improvements</li>
+</ul>
+<h3 id="cassandra-500-september-2024-major-release">Cassandra 5.0.0 (September 2024) - Major Release<a class="headerlink" href="#cassandra-500-september-2024-major-release" title="Permanent link">¶</a></h3>
+<ul>
+<li><strong>Storage-Attached Indexes (SAI)</strong> (CEP-7) - Efficient secondary indexing within storage layer</li>
+<li><strong>Vector data type and search</strong> (CEP-30) - Approximate nearest neighbor searching via SAI</li>
+<li><strong>Unified Compaction Strategy (UCS)</strong> (CEP-26) - Adaptive compaction replacing multiple strategies</li>
+<li><strong>Trie memtables</strong> (CEP-19) - Trie-based in-memory data structures</li>
+<li><strong>Trie SSTables</strong> (CEP-25) - Trie-indexed SSTable format</li>
+<li><strong>Dynamic Data Masking</strong> (CEP-20) - Selective redaction of sensitive data at query time</li>
+<li><strong>Java 17 support</strong> - recommended for Cassandra 5.0</li>
+<li><strong>TTL and writetime on collections/UDTs</strong> - Extended metadata for complex types</li>
+<li><strong>CIDR-based authorizer</strong> (CEP-33) - Network-based access control</li>
+<li><strong>New math functions</strong>: <code>abs</code>, <code>exp</code>, <code>log</code>, <code>log10</code>, <code>round</code></li>
+</ul>
+<h3 id="cassandra-4110-september-2025">Cassandra 4.1.10 (September 2025)<a class="headerlink" href="#cassandra-4110-september-2025" title="Permanent link">¶</a></h3>
+<ul>
+<li>Bug fixes and stability improvements</li>
+</ul>
+<h3 id="cassandra-410-december-2022">Cassandra 4.1.0 (December 2022)<a class="headerlink" href="#cassandra-410-december-2022" title="Permanent link">¶</a></h3>
+<ul>
+<li><strong>Paxos v2</strong> - Enhanced lightweight transaction protocol</li>
+<li><strong>Guardrails</strong> - Operational safety boundaries and limits</li>
+<li><strong>Partition denylist</strong> - Block access to problematic partitions</li>
+<li><strong>Top partition tracking</strong> - Per-table monitoring of hot partitions</li>
+<li><strong>Native transport rate limiting</strong> - Request throughput controls</li>
+<li><strong>Client-side password hashing</strong> - Enhanced authentication security</li>
+<li><strong>Pluggable memtables</strong> - Custom memtable implementations</li>
+</ul>
+<h3 id="cassandra-4019-october-2025">Cassandra 4.0.19 (October 2025)<a class="headerlink" href="#cassandra-4019-october-2025" title="Permanent link">¶</a></h3>
+<ul>
+<li>Bug fixes and stability improvements</li>
+</ul>
+<h3 id="cassandra-400-july-2021">Cassandra 4.0.0 (July 2021)<a class="headerlink" href="#cassandra-400-july-2021" title="Permanent link">¶</a></h3>
+<ul>
+<li><strong>Virtual tables</strong> - System information via CQL queries</li>
+<li><strong>Audit logging</strong> - Comprehensive query audit trail</li>
+<li><strong>Full query logging</strong> - Capture all queries for replay</li>
+<li><strong>Incremental repair improvements</strong> - More efficient anti-entropy</li>
+<li><strong>Zero-copy streaming</strong> - Faster data transfer between nodes</li>
+<li><strong>Java 11 support</strong> - Modern JVM compatibility</li>
+</ul>
 <hr>
 <p>Apache Cassandra is a widely adopted distributed database, but much of its operational and architectural knowledge has historically lived in mailing lists, conference talks, and tribal knowledge rather than formal documentation.</p>
 <p>This documentation provides a comprehensive, production-focused reference for Apache Cassandra, covering storage engine internals, compaction strategies, indexing, CQL semantics, data modeling, and operational tooling. Content is designed for developers, operators, and architects building and maintaining Cassandra deployments at scale.</p>
 <p>This documentation complements the <a href="https://cassandra.apache.org/doc/latest/">Official Apache Cassandra Documentation</a>, providing deeper explanations of behavioral contracts, failure semantics, and practical guidance for real-world deployments.</p>
-<div class="admonition info">
-<p class="admonition-title">Version Coverage</p>
-<p>This documentation covers <strong>Apache Cassandra 4.x</strong> (4.0, 4.1) and <strong>5.x</strong> (5.0). Version-specific differences are noted where applicable.</p>
-</div>
 <hr>
 <p>Apache Cassandra is a distributed NoSQL database designed for extreme scale, exceptional performance, and continuous availability. There is no master node—every node can handle reads and writes, so the failure of any single node (or even an entire datacenter) does not take down the database.</p>
 <p>Cassandra excels at write-heavy workloads, time-series data, and applications requiring geographic distribution. Cassandra is less suited for complex queries, ad-hoc analytics, or workloads requiring strong consistency with frequent cross-partition transactions.</p>
@@ -18609,113 +19631,302 @@ data-et-multi-view="{&quot;schema&quot;:{&quot;content&quot;:{&quot;desktop&quot
 </tr>
 </tbody>
 </table>
-<h2 id="documentation-sections">Documentation Sections<a class="headerlink" href="#documentation-sections" title="Permanent link">¶</a></h2>
-<h3 id="getting-started">Getting Started<a class="headerlink" href="#getting-started" title="Permanent link">¶</a></h3>
-<p>New to Cassandra? Start here:</p>
+<h2 id="getting-started">Getting Started<a class="headerlink" href="#getting-started" title="Permanent link">¶</a></h2>
+<p>New to Cassandra? Begin with installation and initial configuration.</p>
+<div class="grid cards">
 <ul>
-<li><a href="getting-started/what-is-cassandra/">What is Cassandra?</a> - Introduction and core concepts</li>
-<li><a href="getting-started/installation/">Installation Guide</a> - Install on Linux, Docker, or Kubernetes</li>
-<li><a href="getting-started/first-cluster/">First Cluster</a> - Create and configure a first cluster</li>
-<li><a href="getting-started/quickstart-cql/">CQL Quickstart</a> - Learn Cassandra Query Language basics</li>
-<li><a href="getting-started/drivers/">Driver Setup</a> - Connect your application</li>
+<li>
+<p><span class="twemoji lg middle"><svg xmlns="http://www.w3.org/2000/svg" viewbox="0 0 24 24"><path d="M5 20h14v-2H5m14-9h-4V3H9v6H5l7 7 7-7Z"></path></svg></span> <strong>Installation</strong></p>
+<hr>
+<p>Install Cassandra on Linux, Docker, or Kubernetes environments.</p>
+<p><a href="getting-started/installation/"><span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewbox="0 0 24 24"><path d="M13.22 19.03a.75.75 0 0 1 0-1.06L18.19 13H3.75a.75.75 0 0 1 0-1.5h14.44l-4.97-4.97a.749.749 0 0 1 .326-1.275.749.749 0 0 1 .734.215l6.25 6.25a.75.75 0 0 1 0 1.06l-6.25 6.25a.75.75 0 0 1-1.06 0Z"></path></svg></span> Installation Guide</a></p>
+</li>
+<li>
+<p><span class="twemoji lg middle"><svg xmlns="http://www.w3.org/2000/svg" viewbox="0 0 24 24"><path d="m13.13 22.19-1.63-3.83c1.57-.58 3.04-1.36 4.4-2.27l-2.77 6.1M5.64 12.5l-3.83-1.63 6.1-2.77C7 9.46 6.22 10.93 5.64 12.5M21.61 2.39S16.66.269 11 5.93c-2.19 2.19-3.5 4.6-4.35 6.71-.28.75-.09 1.57.46 2.13l2.13 2.12c.55.56 1.37.74 2.12.46A19.1 19.1 0 0 0 18.07 13c5.66-5.66 3.54-10.61 3.54-10.61m-7.07 7.07c-.78-.78-.78-2.05 0-2.83s2.05-.78 2.83 0c.77.78.78 2.05 0 2.83-.78.78-2.05.78-2.83 0m-5.66 7.07-1.41-1.41 1.41 1.41M6.24 22l3.64-3.64c-.34-.09-.67-.24-.97-.45L4.83 22h1.41M2 22h1.41l4.77-4.76-1.42-1.41L2 20.59V22m0-2.83 4.09-4.08c-.21-.3-.36-.62-.45-.97L2 17.76v1.41Z"></path></svg></span> <strong>First Cluster</strong></p>
+<hr>
+<p>Create and configure a first Cassandra cluster step by step.</p>
+<p><a href="getting-started/first-cluster/"><span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewbox="0 0 24 24"><path d="M13.22 19.03a.75.75 0 0 1 0-1.06L18.19 13H3.75a.75.75 0 0 1 0-1.5h14.44l-4.97-4.97a.749.749 0 0 1 .326-1.275.749.749 0 0 1 .734.215l6.25 6.25a.75.75 0 0 1 0 1.06l-6.25 6.25a.75.75 0 0 1-1.06 0Z"></path></svg></span> First Cluster</a></p>
+</li>
+<li>
+<p><span class="twemoji lg middle"><svg xmlns="http://www.w3.org/2000/svg" viewbox="0 0 24 24"><path d="M16.5 6.08s-6.84 1.71-3.56 5.48c.97 1.11-.25 2.11-.25 2.11s2.45-1.25 1.31-2.85c-1.06-1.47-1.86-2.2 2.5-4.74m-4.47 1.2C16.08 4.08 14 2 14 2c.84 3.3-2.96 4.3-4.33 6.36-.94 1.4.46 2.91 2.33 4.64-.71-1.7-3.22-3.16.03-5.72M9.37 17.47c-3.08.86 1.88 2.63 5.79.96-.38-.15-.75-.33-1.1-.54-1.36.31-2.76.37-4.14.18-1.31-.16-.55-.6-.55-.6m5.32-1.68c-1.75.38-3.56.47-5.34.26-1.31-.13-.45-.77-.45-.77-3.4 1.13 1.88 2.4 6.6 1.02-.29-.11-.57-.3-.81-.51m3.42 3.3s.57.47-.61.83c-2.28.68-9.43.89-11.41.03-.71-.31.63-.74 1.05-.83.23-.06.46-.08.69-.08-.79-.54-5.13 1.1-2.19 1.56 7.97 1.3 14.54-.6 12.47-1.51m-2.74-4.86c.29-.19.6-.35.92-.49 0 0-1.51.26-3.02.4-1.6.16-3.21.18-4.81.06-2.35-.31 1.29-1.2 1.29-1.2-1.1 0-2.18.26-3.16.75-2.05 1 5.1 1.45 8.78.48m.9 2.42c-.02.04-.04.07-.08.1 5.01-1.31 3.17-4.64.77-3.81-.13.06-.24.14-.31.25.14-.05.28-.09.43-.12 1.2-.24 2.92 1.63-.81 3.58m.13 4.61c-3.01.52-6.09.56-9.12.14 0 0 .46.38 2.81.53 3.6.23 9.13-.13 9.26-1.83.03.01-.23.65-2.95 1.16Z"></path></svg></span> <strong>Client Drivers</strong></p>
+<hr>
+<p>Connect applications using Java, Python, Go, and other drivers.</p>
+<p><a href="getting-started/drivers/"><span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewbox="0 0 24 24"><path d="M13.22 19.03a.75.75 0 0 1 0-1.06L18.19 13H3.75a.75.75 0 0 1 0-1.5h14.44l-4.97-4.97a.749.749 0 0 1 .326-1.275.749.749 0 0 1 .734.215l6.25 6.25a.75.75 0 0 1 0 1.06l-6.25 6.25a.75.75 0 0 1-1.06 0Z"></path></svg></span> Driver Setup</a></p>
+</li>
+<li>
+<p><span class="twemoji lg middle"><svg xmlns="http://www.w3.org/2000/svg" viewbox="0 0 24 24"><path d="M20 19V7H4v12h16m0-16a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h16m-7 14v-2h5v2h-5m-3.42-4L5.57 9H8.4l3.3 3.3c.39.39.39 1.03 0 1.42L8.42 17H5.59l3.99-4Z"></path></svg></span> <strong>CQL Quickstart</strong></p>
+<hr>
+<p>Learn Cassandra Query Language basics with hands-on examples.</p>
+<p><a href="getting-started/quickstart-cql/"><span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewbox="0 0 24 24"><path d="M13.22 19.03a.75.75 0 0 1 0-1.06L18.19 13H3.75a.75.75 0 0 1 0-1.5h14.44l-4.97-4.97a.749.749 0 0 1 .326-1.275.749.749 0 0 1 .734.215l6.25 6.25a.75.75 0 0 1 0 1.06l-6.25 6.25a.75.75 0 0 1-1.06 0Z"></path></svg></span> CQL Quickstart</a></p>
+</li>
 </ul>
-<h3 id="architecture">Architecture<a class="headerlink" href="#architecture" title="Permanent link">¶</a></h3>
-<p>Understand how Cassandra works:</p>
+</div>
+<hr>
+<h2 id="architecture">Architecture<a class="headerlink" href="#architecture" title="Permanent link">¶</a></h2>
+<p>Understand Cassandra's distributed architecture and storage engine.</p>
+<div class="grid cards">
 <ul>
-<li><a href="architecture/">Architecture Overview</a> - Distributed architecture fundamentals</li>
-<li><a href="architecture/distributed-data/">Data Distribution</a> - Partitioning and token rings</li>
-<li><a href="architecture/distributed-data/replication/">Replication</a> - How data is replicated for fault tolerance</li>
-<li><a href="architecture/distributed-data/consistency/">Consistency Levels</a> - Tunable consistency explained</li>
-<li><a href="architecture/storage-engine/compaction/">Compaction Strategies</a> - STCS, LCS, TWCS, and UCS</li>
-<li><a href="architecture/storage-engine/">Storage Engine</a> - Memtables, SSTables, and commit log</li>
+<li>
+<p><span class="twemoji lg middle"><svg xmlns="http://www.w3.org/2000/svg" viewbox="0 0 24 24"><path d="M9 2v6h2v3H5c-1.11 0-2 .89-2 2v3H1v6h6v-6H5v-3h6v3H9v6h6v-6h-2v-3h6v3h-2v6h6v-6h-2v-3c0-1.11-.89-2-2-2h-6V8h2V2H9Z"></path></svg></span> <strong>Architecture Overview</strong></p>
+<hr>
+<p>Distributed architecture fundamentals, gossip protocol, and cluster topology.</p>
+<p><a href="architecture/"><span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewbox="0 0 24 24"><path d="M13.22 19.03a.75.75 0 0 1 0-1.06L18.19 13H3.75a.75.75 0 0 1 0-1.5h14.44l-4.97-4.97a.749.749 0 0 1 .326-1.275.749.749 0 0 1 .734.215l6.25 6.25a.75.75 0 0 1 0 1.06l-6.25 6.25a.75.75 0 0 1-1.06 0Z"></path></svg></span> Architecture Overview</a></p>
+</li>
+<li>
+<p><span class="twemoji lg middle"><svg xmlns="http://www.w3.org/2000/svg" viewbox="0 0 24 24"><path d="M18 16.08c-.76 0-1.44.3-1.96.77L8.91 12.7c.05-.23.09-.46.09-.7 0-.24-.04-.47-.09-.7l7.05-4.11c.54.5 1.25.81 2.04.81a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3c0 .24.04.47.09.7L8.04 9.81C7.5 9.31 6.79 9 6 9a3 3 0 0 0-3 3 3 3 0 0 0 3 3c.79 0 1.5-.31 2.04-.81l7.12 4.15c-.05.21-.08.43-.08.66 0 1.61 1.31 2.91 2.92 2.91 1.61 0 2.92-1.3 2.92-2.91A2.92 2.92 0 0 0 18 16.08Z"></path></svg></span> <strong>Data Distribution</strong></p>
+<hr>
+<p>Partitioning, token rings, and virtual nodes (vnodes) explained.</p>
+<p><a href="architecture/distributed-data/"><span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewbox="0 0 24 24"><path d="M13.22 19.03a.75.75 0 0 1 0-1.06L18.19 13H3.75a.75.75 0 0 1 0-1.5h14.44l-4.97-4.97a.749.749 0 0 1 .326-1.275.749.749 0 0 1 .734.215l6.25 6.25a.75.75 0 0 1 0 1.06l-6.25 6.25a.75.75 0 0 1-1.06 0Z"></path></svg></span> Data Distribution</a></p>
+</li>
+<li>
+<p><span class="twemoji lg middle"><svg xmlns="http://www.w3.org/2000/svg" viewbox="0 0 24 24"><path d="M19 21H8V7h11m0-2H8a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h11a2 2 0 0 0 2-2V7a2 2 0 0 0-2-2m-3-4H4a2 2 0 0 0-2 2v14h2V3h12V1Z"></path></svg></span> <strong>Replication</strong></p>
+<hr>
+<p>Replication strategies, consistency levels, and fault tolerance.</p>
+<p><a href="architecture/distributed-data/replication/"><span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewbox="0 0 24 24"><path d="M13.22 19.03a.75.75 0 0 1 0-1.06L18.19 13H3.75a.75.75 0 0 1 0-1.5h14.44l-4.97-4.97a.749.749 0 0 1 .326-1.275.749.749 0 0 1 .734.215l6.25 6.25a.75.75 0 0 1 0 1.06l-6.25 6.25a.75.75 0 0 1-1.06 0Z"></path></svg></span> Replication</a></p>
+</li>
+<li>
+<p><span class="twemoji lg middle"><svg xmlns="http://www.w3.org/2000/svg" viewbox="0 0 24 24"><path d="M6 2h12a2 2 0 0 1 2 2v16a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2m6 2a6 6 0 0 0-6 6c0 3.31 2.69 6 6.1 6l-.88-2.23a1.01 1.01 0 0 1 .37-1.37l.86-.5a1.01 1.01 0 0 1 1.37.37l1.92 2.42A5.977 5.977 0 0 0 18 10a6 6 0 0 0-6-6m0 5a1 1 0 0 1 1 1 1 1 0 0 1-1 1 1 1 0 0 1-1-1 1 1 0 0 1 1-1m-5 9a1 1 0 0 0-1 1 1 1 0 0 0 1 1 1 1 0 0 0 1-1 1 1 0 0 0-1-1m5.09-4.73 2.49 6.31 2.59-1.5-4.22-5.31-.86.5Z"></path></svg></span> <strong>Storage Engine</strong></p>
+<hr>
+<p>Memtables, SSTables, commit log, and write path internals.</p>
+<p><a href="architecture/storage-engine/"><span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewbox="0 0 24 24"><path d="M13.22 19.03a.75.75 0 0 1 0-1.06L18.19 13H3.75a.75.75 0 0 1 0-1.5h14.44l-4.97-4.97a.749.749 0 0 1 .326-1.275.749.749 0 0 1 .734.215l6.25 6.25a.75.75 0 0 1 0 1.06l-6.25 6.25a.75.75 0 0 1-1.06 0Z"></path></svg></span> Storage Engine</a></p>
+</li>
+<li>
+<p><span class="twemoji lg middle"><svg xmlns="http://www.w3.org/2000/svg" viewbox="0 0 24 24"><path d="M20 6h-8l-2-2H4c-1.1 0-2 .9-2 2v12c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V8c0-1.1-.9-2-2-2m-2 6h-2v2h2v2h-2v2h-2v-2h2v-2h-2v-2h2v-2h-2V8h2v2h2v2Z"></path></svg></span> <strong>Compaction</strong></p>
+<hr>
+<p>STCS, LCS, TWCS, and UCS compaction strategies explained.</p>
+<p><a href="architecture/storage-engine/compaction/"><span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewbox="0 0 24 24"><path d="M13.22 19.03a.75.75 0 0 1 0-1.06L18.19 13H3.75a.75.75 0 0 1 0-1.5h14.44l-4.97-4.97a.749.749 0 0 1 .326-1.275.749.749 0 0 1 .734.215l6.25 6.25a.75.75 0 0 1 0 1.06l-6.25 6.25a.75.75 0 0 1-1.06 0Z"></path></svg></span> Compaction Strategies</a></p>
+</li>
 </ul>
-<h3 id="cql-reference">CQL Reference<a class="headerlink" href="#cql-reference" title="Permanent link">¶</a></h3>
-<p>Complete Cassandra Query Language documentation:</p>
+</div>
+<hr>
+<h2 id="cql-reference">CQL Reference<a class="headerlink" href="#cql-reference" title="Permanent link">¶</a></h2>
+<p>Complete Cassandra Query Language documentation.</p>
+<div class="grid cards">
 <ul>
-<li><a href="cql/">CQL Overview</a> - CQL language reference</li>
-<li><a href="cql/data-types/">Data Types</a> - Native, collection, and user-defined types</li>
-<li><a href="cql/ddl/">DDL Commands</a> - CREATE, ALTER, DROP statements</li>
-<li><a href="cql/dml/">DML Commands</a> - SELECT, INSERT, UPDATE, DELETE</li>
-<li><a href="cql/indexing/">Indexing</a> - Secondary indexes and SAI</li>
-<li><a href="cql/functions/">Functions</a> - Built-in and user-defined functions</li>
+<li>
+<p><span class="twemoji lg middle"><svg xmlns="http://www.w3.org/2000/svg" viewbox="0 0 24 24"><path d="M12 3C7.58 3 4 4.79 4 7s3.58 4 8 4 8-1.79 8-4-3.58-4-8-4M4 9v3c0 2.21 3.58 4 8 4s8-1.79 8-4V9c0 2.21-3.58 4-8 4s-8-1.79-8-4m0 5v3c0 2.21 3.58 4 8 4s8-1.79 8-4v-3c0 2.21-3.58 4-8 4s-8-1.79-8-4Z"></path></svg></span> <strong>CQL Overview</strong></p>
+<hr>
+<p>CQL language reference and query syntax fundamentals.</p>
+<p><a href="cql/"><span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewbox="0 0 24 24"><path d="M13.22 19.03a.75.75 0 0 1 0-1.06L18.19 13H3.75a.75.75 0 0 1 0-1.5h14.44l-4.97-4.97a.749.749 0 0 1 .326-1.275.749.749 0 0 1 .734.215l6.25 6.25a.75.75 0 0 1 0 1.06l-6.25 6.25a.75.75 0 0 1-1.06 0Z"></path></svg></span> CQL Overview</a></p>
+</li>
+<li>
+<p><span class="twemoji lg middle"><svg xmlns="http://www.w3.org/2000/svg" viewbox="0 0 24 24"><path d="M5 9.5 7.5 14h-5L5 9.5M3 4h4v4H3V4m2 16a2 2 0 0 0 2-2 2 2 0 0 0-2-2 2 2 0 0 0-2 2 2 2 0 0 0 2 2M9 5v2h12V5H9m0 14h12v-2H9v2m0-6h12v-2H9v2Z"></path></svg></span> <strong>Data Types</strong></p>
+<hr>
+<p>Native, collection, and user-defined types reference.</p>
+<p><a href="cql/data-types/"><span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewbox="0 0 24 24"><path d="M13.22 19.03a.75.75 0 0 1 0-1.06L18.19 13H3.75a.75.75 0 0 1 0-1.5h14.44l-4.97-4.97a.749.749 0 0 1 .326-1.275.749.749 0 0 1 .734.215l6.25 6.25a.75.75 0 0 1 0 1.06l-6.25 6.25a.75.75 0 0 1-1.06 0Z"></path></svg></span> Data Types</a></p>
+</li>
+<li>
+<p><span class="twemoji lg middle"><svg xmlns="http://www.w3.org/2000/svg" viewbox="0 0 24 24"><path d="M18 14h2v3h3v2h-3v3h-2v-3h-3v-2h3v-3M4 3h14a2 2 0 0 1 2 2v7.08a6.01 6.01 0 0 0-4.32.92H12v4h1.08c-.11.68-.11 1.35 0 2H4a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2m0 4v4h6V7H4m8 0v4h6V7h-6m-8 6v4h6v-4H4Z"></path></svg></span> <strong>DDL Commands</strong></p>
+<hr>
+<p>CREATE, ALTER, DROP statements for schema management.</p>
+<p><a href="cql/ddl/"><span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewbox="0 0 24 24"><path d="M13.22 19.03a.75.75 0 0 1 0-1.06L18.19 13H3.75a.75.75 0 0 1 0-1.5h14.44l-4.97-4.97a.749.749 0 0 1 .326-1.275.749.749 0 0 1 .734.215l6.25 6.25a.75.75 0 0 1 0 1.06l-6.25 6.25a.75.75 0 0 1-1.06 0Z"></path></svg></span> DDL Commands</a></p>
+</li>
+<li>
+<p><span class="twemoji lg middle"><svg xmlns="http://www.w3.org/2000/svg" viewbox="0 0 24 24"><path d="m21.7 13.35-1 1-2.05-2.05 1-1c.21-.22.56-.22.77 0l1.28 1.28c.22.21.22.56 0 .77M12 18.94l6.07-6.06 2.05 2.05L14.06 21H12v-2.06M4 2h14a2 2 0 0 1 2 2v4.17L16.17 12H12v4.17L10.17 18H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2m0 4v4h6V6H4m8 0v4h6V6h-6m-8 6v4h6v-4H4Z"></path></svg></span> <strong>DML Commands</strong></p>
+<hr>
+<p>SELECT, INSERT, UPDATE, DELETE for data manipulation.</p>
+<p><a href="cql/dml/"><span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewbox="0 0 24 24"><path d="M13.22 19.03a.75.75 0 0 1 0-1.06L18.19 13H3.75a.75.75 0 0 1 0-1.5h14.44l-4.97-4.97a.749.749 0 0 1 .326-1.275.749.749 0 0 1 .734.215l6.25 6.25a.75.75 0 0 1 0 1.06l-6.25 6.25a.75.75 0 0 1-1.06 0Z"></path></svg></span> DML Commands</a></p>
+</li>
+<li>
+<p><span class="twemoji lg middle"><svg xmlns="http://www.w3.org/2000/svg" viewbox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.516 6.516 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5Z"></path></svg></span> <strong>Indexing</strong></p>
+<hr>
+<p>Secondary indexes, SASI, and Storage-Attached Indexing (SAI).</p>
+<p><a href="cql/indexing/"><span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewbox="0 0 24 24"><path d="M13.22 19.03a.75.75 0 0 1 0-1.06L18.19 13H3.75a.75.75 0 0 1 0-1.5h14.44l-4.97-4.97a.749.749 0 0 1 .326-1.275.749.749 0 0 1 .734.215l6.25 6.25a.75.75 0 0 1 0 1.06l-6.25 6.25a.75.75 0 0 1-1.06 0Z"></path></svg></span> Indexing</a></p>
+</li>
+<li>
+<p><span class="twemoji lg middle"><svg xmlns="http://www.w3.org/2000/svg" viewbox="0 0 24 24"><path d="M15.6 5.29c-1.1-.1-2.07.71-2.17 1.82L13.18 10H16v2h-3l-.44 5.07a3.986 3.986 0 0 1-4.33 3.63 4.007 4.007 0 0 1-3.06-1.87l1.5-1.5c.24.74.9 1.31 1.73 1.38 1.1.1 2.07-.71 2.17-1.82L11 12H8v-2h3.17l.27-3.07c.19-2.2 2.13-3.83 4.33-3.63 1.31.11 2.41.84 3.06 1.87l-1.5 1.5c-.24-.74-.9-1.31-1.73-1.38Z"></path></svg></span> <strong>Functions</strong></p>
+<hr>
+<p>Built-in and user-defined functions reference.</p>
+<p><a href="cql/functions/"><span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewbox="0 0 24 24"><path d="M13.22 19.03a.75.75 0 0 1 0-1.06L18.19 13H3.75a.75.75 0 0 1 0-1.5h14.44l-4.97-4.97a.749.749 0 0 1 .326-1.275.749.749 0 0 1 .734.215l6.25 6.25a.75.75 0 0 1 0 1.06l-6.25 6.25a.75.75 0 0 1-1.06 0Z"></path></svg></span> Functions</a></p>
+</li>
 </ul>
-<h3 id="data-modeling">Data Modeling<a class="headerlink" href="#data-modeling" title="Permanent link">¶</a></h3>
-<p>Design effective Cassandra data models:</p>
+</div>
+<hr>
+<h2 id="data-modeling">Data Modeling<a class="headerlink" href="#data-modeling" title="Permanent link">¶</a></h2>
+<p>Design effective Cassandra data models.</p>
+<div class="grid cards">
 <ul>
-<li><a href="data-modeling/">Data Modeling Guide</a> - Query-first design methodology</li>
-<li><a href="data-modeling/concepts/">Key Concepts</a> - Partition keys, clustering columns</li>
-<li><a href="data-modeling/anti-patterns/">Anti-Patterns</a> - Common mistakes to avoid</li>
+<li>
+<p><span class="twemoji lg middle"><svg xmlns="http://www.w3.org/2000/svg" viewbox="0 0 24 24"><path d="M8.5 3A5.5 5.5 0 0 1 14 8.5c0 1.33-.47 2.55-1.26 3.5H21v9h-9v-8.26c-.95.79-2.17 1.26-3.5 1.26A5.5 5.5 0 0 1 3 8.5 5.5 5.5 0 0 1 8.5 3Z"></path></svg></span> <strong>Data Modeling Guide</strong></p>
+<hr>
+<p>Query-first design methodology and denormalization patterns.</p>
+<p><a href="data-modeling/"><span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewbox="0 0 24 24"><path d="M13.22 19.03a.75.75 0 0 1 0-1.06L18.19 13H3.75a.75.75 0 0 1 0-1.5h14.44l-4.97-4.97a.749.749 0 0 1 .326-1.275.749.749 0 0 1 .734.215l6.25 6.25a.75.75 0 0 1 0 1.06l-6.25 6.25a.75.75 0 0 1-1.06 0Z"></path></svg></span> Data Modeling Guide</a></p>
+</li>
+<li>
+<p><span class="twemoji lg middle"><svg xmlns="http://www.w3.org/2000/svg" viewbox="0 0 24 24"><path d="M7 14c-1.1 0-2-.9-2-2s.9-2 2-2 2 .9 2 2-.9 2-2 2m5.6-4c-.8-2.3-3-4-5.6-4-3.3 0-6 2.7-6 6s2.7 6 6 6c2.6 0 4.8-1.7 5.6-4H16v4h4v-4h3v-4H12.6Z"></path></svg></span> <strong>Key Concepts</strong></p>
+<hr>
+<p>Partition keys, clustering columns, and primary key design.</p>
+<p><a href="data-modeling/concepts/"><span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewbox="0 0 24 24"><path d="M13.22 19.03a.75.75 0 0 1 0-1.06L18.19 13H3.75a.75.75 0 0 1 0-1.5h14.44l-4.97-4.97a.749.749 0 0 1 .326-1.275.749.749 0 0 1 .734.215l6.25 6.25a.75.75 0 0 1 0 1.06l-6.25 6.25a.75.75 0 0 1-1.06 0Z"></path></svg></span> Key Concepts</a></p>
+</li>
+<li>
+<p><span class="twemoji lg middle"><svg xmlns="http://www.w3.org/2000/svg" viewbox="0 0 24 24"><path d="M13 13h-2V7h2m-2 8h2v2h-2m4.73-14H8.27L3 8.27v7.46L8.27 21h7.46L21 15.73V8.27L15.73 3Z"></path></svg></span> <strong>Anti-Patterns</strong></p>
+<hr>
+<p>Common data modeling mistakes and how to avoid them.</p>
+<p><a href="data-modeling/anti-patterns/"><span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewbox="0 0 24 24"><path d="M13.22 19.03a.75.75 0 0 1 0-1.06L18.19 13H3.75a.75.75 0 0 1 0-1.5h14.44l-4.97-4.97a.749.749 0 0 1 .326-1.275.749.749 0 0 1 .734.215l6.25 6.25a.75.75 0 0 1 0 1.06l-6.25 6.25a.75.75 0 0 1-1.06 0Z"></path></svg></span> Anti-Patterns</a></p>
+</li>
 </ul>
-<h3 id="operations">Operations<a class="headerlink" href="#operations" title="Permanent link">¶</a></h3>
-<p>Run Cassandra in production:</p>
+</div>
+<hr>
+<h2 id="operations">Operations<a class="headerlink" href="#operations" title="Permanent link">¶</a></h2>
+<p>Production deployment, monitoring, and maintenance procedures.</p>
+<div class="grid cards">
 <ul>
-<li><a href="operations/">Operations Guide</a> - Day-to-day operations</li>
-<li><a href="operations/cluster-management/">Cluster Management</a> - Add, remove, replace nodes</li>
-<li><a href="operations/backup-restore/">Backup &amp; Restore</a> - Snapshots and recovery</li>
-<li><a href="operations/repair/">Repair</a> - Maintain data consistency</li>
-<li><a href="operations/maintenance/">Maintenance</a> - Routine maintenance tasks</li>
+<li>
+<p><span class="twemoji lg middle"><svg xmlns="http://www.w3.org/2000/svg" viewbox="0 0 24 24"><path d="M13 19h1a1 1 0 0 1 1 1h7v2h-7a1 1 0 0 1-1 1h-4a1 1 0 0 1-1-1H2v-2h7a1 1 0 0 1 1-1h1v-2H4a1 1 0 0 1-1-1v-4a1 1 0 0 1 1-1h16a1 1 0 0 1 1 1v4a1 1 0 0 1-1 1h-7v2M4 3h16a1 1 0 0 1 1 1v4a1 1 0 0 1-1 1H4a1 1 0 0 1-1-1V4a1 1 0 0 1 1-1m5 4h1V5H9v2m0 8h1v-2H9v2M5 5v2h2V5H5m0 8v2h2v-2H5Z"></path></svg></span> <strong>Cluster Management</strong></p>
+<hr>
+<p>Add, remove, replace, and decommission nodes safely.</p>
+<p><a href="operations/cluster-management/"><span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewbox="0 0 24 24"><path d="M13.22 19.03a.75.75 0 0 1 0-1.06L18.19 13H3.75a.75.75 0 0 1 0-1.5h14.44l-4.97-4.97a.749.749 0 0 1 .326-1.275.749.749 0 0 1 .734.215l6.25 6.25a.75.75 0 0 1 0 1.06l-6.25 6.25a.75.75 0 0 1-1.06 0Z"></path></svg></span> Cluster Management</a></p>
+</li>
+<li>
+<p><span class="twemoji lg middle"><svg xmlns="http://www.w3.org/2000/svg" viewbox="0 0 24 24"><path d="M12 3a9 9 0 0 0-9 9H0l4 4 4-4H5a7 7 0 0 1 7-7 7 7 0 0 1 7 7 7 7 0 0 1-7 7c-1.5 0-2.91-.5-4.06-1.3L6.5 19.14A9.115 9.115 0 0 0 12 21a9 9 0 0 0 9-9 9 9 0 0 0-9-9m2 9a2 2 0 0 0-2-2 2 2 0 0 0-2 2 2 2 0 0 0 2 2 2 2 0 0 0 2-2Z"></path></svg></span> <strong>Backup &amp; Restore</strong></p>
+<hr>
+<p>Snapshots, incremental backups, and disaster recovery.</p>
+<p><a href="operations/backup-restore/"><span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewbox="0 0 24 24"><path d="M13.22 19.03a.75.75 0 0 1 0-1.06L18.19 13H3.75a.75.75 0 0 1 0-1.5h14.44l-4.97-4.97a.749.749 0 0 1 .326-1.275.749.749 0 0 1 .734.215l6.25 6.25a.75.75 0 0 1 0 1.06l-6.25 6.25a.75.75 0 0 1-1.06 0Z"></path></svg></span> Backup &amp; Restore</a></p>
+</li>
+<li>
+<p><span class="twemoji lg middle"><svg xmlns="http://www.w3.org/2000/svg" viewbox="0 0 24 24"><path d="m22.7 19-9.1-9.1c.9-2.3.4-5-1.5-6.9-2-2-5-2.4-7.4-1.3L9 6 6 9 1.6 4.7C.4 7.1.9 10.1 2.9 12.1c1.9 1.9 4.6 2.4 6.9 1.5l9.1 9.1c.4.4 1 .4 1.4 0l2.3-2.3c.5-.4.5-1.1.1-1.4Z"></path></svg></span> <strong>Repair</strong></p>
+<hr>
+<p>Anti-entropy repair to maintain data consistency.</p>
+<p><a href="operations/repair/"><span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewbox="0 0 24 24"><path d="M13.22 19.03a.75.75 0 0 1 0-1.06L18.19 13H3.75a.75.75 0 0 1 0-1.5h14.44l-4.97-4.97a.749.749 0 0 1 .326-1.275.749.749 0 0 1 .734.215l6.25 6.25a.75.75 0 0 1 0 1.06l-6.25 6.25a.75.75 0 0 1-1.06 0Z"></path></svg></span> Repair</a></p>
+</li>
+<li>
+<p><span class="twemoji lg middle"><svg xmlns="http://www.w3.org/2000/svg" viewbox="0 0 24 24"><path d="M12 15.5A3.5 3.5 0 0 1 8.5 12 3.5 3.5 0 0 1 12 8.5a3.5 3.5 0 0 1 3.5 3.5 3.5 3.5 0 0 1-3.5 3.5m7.43-2.53c.04-.32.07-.64.07-.97 0-.33-.03-.66-.07-1l2.11-1.63c.19-.15.24-.42.12-.64l-2-3.46c-.12-.22-.39-.31-.61-.22l-2.49 1c-.52-.39-1.06-.73-1.69-.98l-.37-2.65A.506.506 0 0 0 14 2h-4c-.25 0-.46.18-.5.42l-.37 2.65c-.63.25-1.17.59-1.69.98l-2.49-1c-.22-.09-.49 0-.61.22l-2 3.46c-.13.22-.07.49.12.64L4.57 11c-.04.34-.07.67-.07 1 0 .33.03.65.07.97l-2.11 1.66c-.19.15-.25.42-.12.64l2 3.46c.12.22.39.3.61.22l2.49-1.01c.52.4 1.06.74 1.69.99l.37 2.65c.04.24.25.42.5.42h4c.25 0 .46-.18.5-.42l.37-2.65c.63-.26 1.17-.59 1.69-.99l2.49 1.01c.22.08.49 0 .61-.22l2-3.46c.12-.22.07-.49-.12-.64l-2.11-1.66Z"></path></svg></span> <strong>Configuration</strong></p>
+<hr>
+<p>cassandra.yaml, JVM options, and snitch configuration.</p>
+<p><a href="operations/configuration/"><span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewbox="0 0 24 24"><path d="M13.22 19.03a.75.75 0 0 1 0-1.06L18.19 13H3.75a.75.75 0 0 1 0-1.5h14.44l-4.97-4.97a.749.749 0 0 1 .326-1.275.749.749 0 0 1 .734.215l6.25 6.25a.75.75 0 0 1 0 1.06l-6.25 6.25a.75.75 0 0 1-1.06 0Z"></path></svg></span> Configuration</a></p>
+</li>
+<li>
+<p><span class="twemoji lg middle"><svg xmlns="http://www.w3.org/2000/svg" viewbox="0 0 24 24"><path d="m21.71 20.29-1.42 1.42a1 1 0 0 1-1.41 0L7 9.85A3.81 3.81 0 0 1 6 10a4 4 0 0 1-3.78-5.3l2.54 2.54.53-.53 1.42-1.42.53-.53L4.7 2.22A4 4 0 0 1 10 6a3.81 3.81 0 0 1-.15 1l11.86 11.88a1 1 0 0 1 0 1.41M2.29 18.88a1 1 0 0 0 0 1.41l1.42 1.42a1 1 0 0 0 1.41 0l5.47-5.46-2.83-2.83M20 2l-4 2v2l-2.17 2.17 2 2L18 8h2l2-4Z"></path></svg></span> <strong>Maintenance</strong></p>
+<hr>
+<p>Routine maintenance tasks and operational procedures.</p>
+<p><a href="operations/maintenance/"><span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewbox="0 0 24 24"><path d="M13.22 19.03a.75.75 0 0 1 0-1.06L18.19 13H3.75a.75.75 0 0 1 0-1.5h14.44l-4.97-4.97a.749.749 0 0 1 .326-1.275.749.749 0 0 1 .734.215l6.25 6.25a.75.75 0 0 1 0 1.06l-6.25 6.25a.75.75 0 0 1-1.06 0Z"></path></svg></span> Maintenance</a></p>
+</li>
 </ul>
-<h3 id="configuration">Configuration<a class="headerlink" href="#configuration" title="Permanent link">¶</a></h3>
-<p>Configure Cassandra for your workload:</p>
+</div>
+<hr>
+<h2 id="monitoring-performance">Monitoring &amp; Performance<a class="headerlink" href="#monitoring-performance" title="Permanent link">¶</a></h2>
+<p>Monitor clusters and optimize performance.</p>
+<div class="grid cards">
 <ul>
-<li><a href="operations/configuration/">Configuration Reference</a> - All configuration files</li>
-<li><a href="operations/configuration/cassandra-yaml/">cassandra.yaml</a> - Main configuration file</li>
-<li><a href="operations/configuration/jvm-options/">JVM Options</a> - Heap and GC settings</li>
-<li><a href="operations/configuration/snitch-config/">Snitch Configuration</a> - Topology awareness</li>
+<li>
+<p><span class="twemoji lg middle"><svg xmlns="http://www.w3.org/2000/svg" viewbox="0 0 24 24"><path d="m16 11.78 4.24-7.33 1.73 1-5.23 9.05-6.51-3.75L5.46 19H22v2H2V3h2v14.54L9.5 8l6.5 3.78Z"></path></svg></span> <strong>Monitoring</strong></p>
+<hr>
+<p>JMX metrics, key metrics to track, and alerting strategies.</p>
+<p><a href="operations/monitoring/"><span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewbox="0 0 24 24"><path d="M13.22 19.03a.75.75 0 0 1 0-1.06L18.19 13H3.75a.75.75 0 0 1 0-1.5h14.44l-4.97-4.97a.749.749 0 0 1 .326-1.275.749.749 0 0 1 .734.215l6.25 6.25a.75.75 0 0 1 0 1.06l-6.25 6.25a.75.75 0 0 1-1.06 0Z"></path></svg></span> Monitoring Guide</a></p>
+</li>
+<li>
+<p><span class="twemoji lg middle"><svg xmlns="http://www.w3.org/2000/svg" viewbox="0 0 24 24"><path d="M12 2A10 10 0 0 0 2 12a10 10 0 0 0 10 10 10 10 0 0 0 10-10A10 10 0 0 0 12 2m0 2a8 8 0 0 1 8 8c0 2.4-1 4.5-2.7 6-1.4-1.3-3.3-2-5.3-2s-3.8.7-5.3 2C5 16.5 4 14.4 4 12a8 8 0 0 1 8-8m2 1.89c-.38.01-.74.26-.9.65l-1.29 3.23-.1.23c-.71.13-1.3.6-1.57 1.26-.41 1.03.09 2.19 1.12 2.6 1.03.41 2.19-.09 2.6-1.12.26-.66.14-1.42-.29-1.98l.1-.26 1.29-3.21.01-.03c.2-.51-.05-1.09-.56-1.3-.13-.05-.26-.07-.41-.07M10 6a1 1 0 0 0-1 1 1 1 0 0 0 1 1 1 1 0 0 0 1-1 1 1 0 0 0-1-1M7 9a1 1 0 0 0-1 1 1 1 0 0 0 1 1 1 1 0 0 0 1-1 1 1 0 0 0-1-1m10 0a1 1 0 0 0-1 1 1 1 0 0 0 1 1 1 1 0 0 0 1-1 1 1 0 0 0-1-1Z"></path></svg></span> <strong>JMX Reference</strong></p>
+<hr>
+<p>500+ metrics with thresholds and 30 MBeans documented.</p>
+<p><a href="operations/jmx-reference/"><span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewbox="0 0 24 24"><path d="M13.22 19.03a.75.75 0 0 1 0-1.06L18.19 13H3.75a.75.75 0 0 1 0-1.5h14.44l-4.97-4.97a.749.749 0 0 1 .326-1.275.749.749 0 0 1 .734.215l6.25 6.25a.75.75 0 0 1 0 1.06l-6.25 6.25a.75.75 0 0 1-1.06 0Z"></path></svg></span> JMX Reference</a></p>
+</li>
+<li>
+<p><span class="twemoji lg middle"><svg xmlns="http://www.w3.org/2000/svg" viewbox="0 0 24 24"><path d="M12 16a3 3 0 0 1-3-3c0-1.12.61-2.1 1.5-2.61l9.71-5.62-5.53 9.58c-.5.98-1.51 1.65-2.68 1.65m0-13c1.81 0 3.5.5 4.97 1.32l-2.1 1.21C14 5.19 13 5 12 5a8 8 0 0 0-8 8c0 2.21.89 4.21 2.34 5.65h.01c.39.39.39 1.02 0 1.41-.39.39-1.03.39-1.42.01A9.969 9.969 0 0 1 2 13 10 10 0 0 1 12 3m10 10c0 2.76-1.12 5.26-2.93 7.07-.39.38-1.02.38-1.41-.01a.996.996 0 0 1 0-1.41A7.95 7.95 0 0 0 20 13c0-1-.19-2-.54-2.9L20.67 8C21.5 9.5 22 11.18 22 13Z"></path></svg></span> <strong>Performance Tuning</strong></p>
+<hr>
+<p>Hardware sizing, JVM tuning, and OS optimization.</p>
+<p><a href="operations/performance/"><span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewbox="0 0 24 24"><path d="M13.22 19.03a.75.75 0 0 1 0-1.06L18.19 13H3.75a.75.75 0 0 1 0-1.5h14.44l-4.97-4.97a.749.749 0 0 1 .326-1.275.749.749 0 0 1 .734.215l6.25 6.25a.75.75 0 0 1 0 1.06l-6.25 6.25a.75.75 0 0 1-1.06 0Z"></path></svg></span> Performance Guide</a></p>
+</li>
+<li>
+<p><span class="twemoji lg middle"><svg xmlns="http://www.w3.org/2000/svg" viewbox="0 0 24 24"><path d="M7 2v11h3v9l7-12h-4l4-8H7Z"></path></svg></span> <strong>Query Optimization</strong></p>
+<hr>
+<p>Write efficient queries and avoid performance pitfalls.</p>
+<p><a href="operations/performance/query-optimization/"><span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewbox="0 0 24 24"><path d="M13.22 19.03a.75.75 0 0 1 0-1.06L18.19 13H3.75a.75.75 0 0 1 0-1.5h14.44l-4.97-4.97a.749.749 0 0 1 .326-1.275.749.749 0 0 1 .734.215l6.25 6.25a.75.75 0 0 1 0 1.06l-6.25 6.25a.75.75 0 0 1-1.06 0Z"></path></svg></span> Query Optimization</a></p>
+</li>
 </ul>
-<h3 id="jmx-reference">JMX Reference<a class="headerlink" href="#jmx-reference" title="Permanent link">¶</a></h3>
-<p>Monitor and manage via JMX:</p>
+</div>
+<hr>
+<h2 id="security">Security<a class="headerlink" href="#security" title="Permanent link">¶</a></h2>
+<p>Authentication, authorization, and encryption for Cassandra deployments.</p>
+<div class="grid cards">
 <ul>
-<li><a href="operations/jmx-reference/">JMX Overview</a> - Connecting and using JMX</li>
-<li><a href="operations/jmx-reference/mbeans/">MBeans Reference</a> - All 30 MBeans documented</li>
-<li><a href="operations/jmx-reference/metrics/">Metrics Reference</a> - 500+ metrics with thresholds</li>
+<li>
+<p><span class="twemoji lg middle"><svg xmlns="http://www.w3.org/2000/svg" viewbox="0 0 24 24"><path d="M11 10v2H9v2H7v-2H5.8c-.4 1.2-1.5 2-2.8 2-1.7 0-3-1.3-3-3s1.3-3 3-3c1.3 0 2.4.8 2.8 2H11m-8 0c-.6 0-1 .4-1 1s.4 1 1 1 1-.4 1-1-.4-1-1-1m13 4c2.7 0 8 1.3 8 4v2H8v-2c0-2.7 5.3-4 8-4m0-2c-2.2 0-4-1.8-4-4s1.8-4 4-4 4 1.8 4 4-1.8 4-4 4Z"></path></svg></span> <strong>Authentication</strong></p>
+<hr>
+<p>Internal authentication, LDAP integration, and Kerberos.</p>
+<p><a href="security/authentication/"><span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewbox="0 0 24 24"><path d="M13.22 19.03a.75.75 0 0 1 0-1.06L18.19 13H3.75a.75.75 0 0 1 0-1.5h14.44l-4.97-4.97a.749.749 0 0 1 .326-1.275.749.749 0 0 1 .734.215l6.25 6.25a.75.75 0 0 1 0 1.06l-6.25 6.25a.75.75 0 0 1-1.06 0Z"></path></svg></span> Authentication</a></p>
+</li>
+<li>
+<p><span class="twemoji lg middle"><svg xmlns="http://www.w3.org/2000/svg" viewbox="0 0 24 24"><path d="M12 1 3 5v6c0 5.55 3.84 10.74 9 12 5.16-1.26 9-6.45 9-12V5l-9-4m0 6c1.4 0 2.8 1.1 2.8 2.5V11c.6 0 1.2.6 1.2 1.3v3.5c0 .6-.6 1.2-1.3 1.2H9.2c-.6 0-1.2-.6-1.2-1.3v-3.5c0-.6.6-1.2 1.2-1.2V9.5C9.2 8.1 10.6 7 12 7m0 1.2c-.8 0-1.5.5-1.5 1.3V11h3V9.5c0-.8-.7-1.3-1.5-1.3Z"></path></svg></span> <strong>Authorization</strong></p>
+<hr>
+<p>Role-based access control and permission management.</p>
+<p><a href="security/authorization/"><span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewbox="0 0 24 24"><path d="M13.22 19.03a.75.75 0 0 1 0-1.06L18.19 13H3.75a.75.75 0 0 1 0-1.5h14.44l-4.97-4.97a.749.749 0 0 1 .326-1.275.749.749 0 0 1 .734.215l6.25 6.25a.75.75 0 0 1 0 1.06l-6.25 6.25a.75.75 0 0 1-1.06 0Z"></path></svg></span> Authorization</a></p>
+</li>
+<li>
+<p><span class="twemoji lg middle"><svg xmlns="http://www.w3.org/2000/svg" viewbox="0 0 24 24"><path d="M12 17a2 2 0 0 0 2-2 2 2 0 0 0-2-2 2 2 0 0 0-2 2 2 2 0 0 0 2 2m6-9a2 2 0 0 1 2 2v10a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V10a2 2 0 0 1 2-2h1V6a5 5 0 0 1 5-5 5 5 0 0 1 5 5v2h1m-6-5a3 3 0 0 0-3 3v2h6V6a3 3 0 0 0-3-3Z"></path></svg></span> <strong>Encryption</strong></p>
+<hr>
+<p>TLS for client and internode encryption, encryption at rest.</p>
+<p><a href="security/encryption/"><span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewbox="0 0 24 24"><path d="M13.22 19.03a.75.75 0 0 1 0-1.06L18.19 13H3.75a.75.75 0 0 1 0-1.5h14.44l-4.97-4.97a.749.749 0 0 1 .326-1.275.749.749 0 0 1 .734.215l6.25 6.25a.75.75 0 0 1 0 1.06l-6.25 6.25a.75.75 0 0 1-1.06 0Z"></path></svg></span> Encryption</a></p>
+</li>
 </ul>
-<h3 id="monitoring">Monitoring<a class="headerlink" href="#monitoring" title="Permanent link">¶</a></h3>
-<p>Monitor your Cassandra cluster:</p>
+</div>
+<hr>
+<h2 id="tools">Tools<a class="headerlink" href="#tools" title="Permanent link">¶</a></h2>
+<p>Essential Cassandra command-line and administration tools.</p>
+<div class="grid cards">
 <ul>
-<li><a href="operations/monitoring/">Monitoring Guide</a> - What and how to monitor</li>
-<li><a href="operations/monitoring/key-metrics/">Key Metrics</a> - Essential metrics to track</li>
-<li><a href="operations/monitoring/alerting/">Alerting</a> - Alert thresholds and setup</li>
-<li><a href="operations/monitoring/logging/">Logging</a> - Log analysis and configuration</li>
+<li>
+<p><span class="twemoji lg middle"><svg xmlns="http://www.w3.org/2000/svg" viewbox="0 0 24 24"><path d="M13 19v-3h8v3h-8m-4.5-6L2.47 7h4.24l4.96 4.95c.58.59.58 1.55 0 2.12L6.74 19H2.5l6-6Z"></path></svg></span> <strong>nodetool</strong></p>
+<hr>
+<p>Cluster management commands for operations and diagnostics.</p>
+<p><a href="operations/nodetool/"><span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewbox="0 0 24 24"><path d="M13.22 19.03a.75.75 0 0 1 0-1.06L18.19 13H3.75a.75.75 0 0 1 0-1.5h14.44l-4.97-4.97a.749.749 0 0 1 .326-1.275.749.749 0 0 1 .734.215l6.25 6.25a.75.75 0 0 1 0 1.06l-6.25 6.25a.75.75 0 0 1-1.06 0Z"></path></svg></span> nodetool Reference</a></p>
+</li>
+<li>
+<p><span class="twemoji lg middle"><svg xmlns="http://www.w3.org/2000/svg" viewbox="0 0 24 24"><path d="M10.41 7.41 15 12l-4.59 4.6L9 15.18 12.18 12 9 8.82M5 3a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V5a2 2 0 0 0-2-2H5Z"></path></svg></span> <strong>cqlsh</strong></p>
+<hr>
+<p>Interactive CQL shell for queries and schema management.</p>
+<p><a href="tools/cqlsh/"><span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewbox="0 0 24 24"><path d="M13.22 19.03a.75.75 0 0 1 0-1.06L18.19 13H3.75a.75.75 0 0 1 0-1.5h14.44l-4.97-4.97a.749.749 0 0 1 .326-1.275.749.749 0 0 1 .734.215l6.25 6.25a.75.75 0 0 1 0 1.06l-6.25 6.25a.75.75 0 0 1-1.06 0Z"></path></svg></span> cqlsh Reference</a></p>
+</li>
+<li>
+<p><span class="twemoji lg middle"><svg xmlns="http://www.w3.org/2000/svg" viewbox="0 0 24 24"><path d="M12 2a2 2 0 0 1 2 2c0 .74-.4 1.39-1 1.73V7h1a7 7 0 0 1 7 7h1a1 1 0 0 1 1 1v3a1 1 0 0 1-1 1h-1v1a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-1H2a1 1 0 0 1-1-1v-3a1 1 0 0 1 1-1h1a7 7 0 0 1 7-7h1V5.73c-.6-.34-1-.99-1-1.73a2 2 0 0 1 2-2M7.5 13A2.5 2.5 0 0 0 5 15.5 2.5 2.5 0 0 0 7.5 18a2.5 2.5 0 0 0 2.5-2.5A2.5 2.5 0 0 0 7.5 13m9 0a2.5 2.5 0 0 0-2.5 2.5 2.5 2.5 0 0 0 2.5 2.5 2.5 2.5 0 0 0 2.5-2.5 2.5 2.5 0 0 0-2.5-2.5Z"></path></svg></span> <strong>CQLAI</strong></p>
+<hr>
+<p>Modern AI-powered CQL shell with intelligent assistance.</p>
+<p><a href="tools/cqlai/"><span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewbox="0 0 24 24"><path d="M13.22 19.03a.75.75 0 0 1 0-1.06L18.19 13H3.75a.75.75 0 0 1 0-1.5h14.44l-4.97-4.97a.749.749 0 0 1 .326-1.275.749.749 0 0 1 .734.215l6.25 6.25a.75.75 0 0 1 0 1.06l-6.25 6.25a.75.75 0 0 1-1.06 0Z"></path></svg></span> CQLAI</a></p>
+</li>
+<li>
+<p><span class="twemoji lg middle"><svg xmlns="http://www.w3.org/2000/svg" viewbox="0 0 24 24"><path d="M7 2v2h1v14a4 4 0 0 0 4 4 4 4 0 0 0 4-4V4h1V2H7m4 14c-.6 0-1-.4-1-1s.4-1 1-1 1 .4 1 1-.4 1-1 1m2-4c-.6 0-1-.4-1-1s.4-1 1-1 1 .4 1 1-.4 1-1 1m1-5h-4V4h4v3Z"></path></svg></span> <strong>cassandra-stress</strong></p>
+<hr>
+<p>Load testing and benchmarking tool for Cassandra.</p>
+<p><a href="tools/cassandra-stress/"><span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewbox="0 0 24 24"><path d="M13.22 19.03a.75.75 0 0 1 0-1.06L18.19 13H3.75a.75.75 0 0 1 0-1.5h14.44l-4.97-4.97a.749.749 0 0 1 .326-1.275.749.749 0 0 1 .734.215l6.25 6.25a.75.75 0 0 1 0 1.06l-6.25 6.25a.75.75 0 0 1-1.06 0Z"></path></svg></span> cassandra-stress</a></p>
+</li>
 </ul>
-<h3 id="performance">Performance<a class="headerlink" href="#performance" title="Permanent link">¶</a></h3>
-<p>Optimize Cassandra performance:</p>
+</div>
+<hr>
+<h2 id="troubleshooting">Troubleshooting<a class="headerlink" href="#troubleshooting" title="Permanent link">¶</a></h2>
+<p>Diagnostic procedures and solutions for common issues.</p>
+<div class="grid cards">
 <ul>
-<li><a href="operations/performance/">Performance Tuning</a> - Optimization strategies</li>
-<li><a href="operations/performance/hardware/">Hardware Sizing</a> - CPU, memory, disk recommendations</li>
-<li><a href="operations/performance/jvm-tuning/">JVM Tuning</a> - GC and heap optimization</li>
-<li><a href="operations/performance/os-tuning/">OS Tuning</a> - Linux kernel parameters</li>
-<li><a href="operations/performance/query-optimization/">Query Optimization</a> - Efficient queries</li>
+<li>
+<p><span class="twemoji lg middle"><svg xmlns="http://www.w3.org/2000/svg" viewbox="0 0 24 24"><path d="M19 8c.56 0 1 .43 1 1a1 1 0 0 1-1 1c-.57 0-1-.45-1-1 0-.57.43-1 1-1M2 2v9c0 2.96 2.19 5.5 5.14 5.91.62 3.01 3.28 5.09 6.36 5.09a6.5 6.5 0 0 0 6.5-6.5v-3.69c1.16-.42 2-1.52 2-2.81a3 3 0 0 0-3-3 3 3 0 0 0-3 3c0 1.29.84 2.4 2 2.81v3.6c0 2.5-2 4.5-4.5 4.5-2 0-3.68-1.21-4.28-3.01C12 16.3 14 13.8 14 11V2h-4v3h2v6a4 4 0 0 1-4 4 4 4 0 0 1-4-4V5h2V2H2Z"></path></svg></span> <strong>Diagnosis</strong></p>
+<hr>
+<p>Root cause analysis procedures and diagnostic workflows.</p>
+<p><a href="troubleshooting/diagnosis/"><span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewbox="0 0 24 24"><path d="M13.22 19.03a.75.75 0 0 1 0-1.06L18.19 13H3.75a.75.75 0 0 1 0-1.5h14.44l-4.97-4.97a.749.749 0 0 1 .326-1.275.749.749 0 0 1 .734.215l6.25 6.25a.75.75 0 0 1 0 1.06l-6.25 6.25a.75.75 0 0 1-1.06 0Z"></path></svg></span> Diagnosis Guide</a></p>
+</li>
+<li>
+<p><span class="twemoji lg middle"><svg xmlns="http://www.w3.org/2000/svg" viewbox="0 0 24 24"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h7c-.41-.25-.8-.56-1.14-.9a6.478 6.478 0 0 1-.36-9.18C13.69 9.5 17.33 9.13 20 11V8l-6-6m-1 7V3.5L18.5 9H13m7.31 9.9c1.33-2.11.69-4.9-1.4-6.22-2.11-1.33-4.91-.68-6.22 1.4-1.34 2.11-.69 4.89 1.4 6.22 1.46.93 3.32.93 4.79.02L22 23.39 23.39 22l-3.08-3.1m-3.81.1a2.5 2.5 0 0 1-2.5-2.5 2.5 2.5 0 0 1 2.5-2.5 2.5 2.5 0 0 1 2.5 2.5 2.5 2.5 0 0 1-2.5 2.5Z"></path></svg></span> <strong>Log Analysis</strong></p>
+<hr>
+<p>Interpreting logs, log patterns, and log configuration.</p>
+<p><a href="troubleshooting/log-analysis/"><span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewbox="0 0 24 24"><path d="M13.22 19.03a.75.75 0 0 1 0-1.06L18.19 13H3.75a.75.75 0 0 1 0-1.5h14.44l-4.97-4.97a.749.749 0 0 1 .326-1.275.749.749 0 0 1 .734.215l6.25 6.25a.75.75 0 0 1 0 1.06l-6.25 6.25a.75.75 0 0 1-1.06 0Z"></path></svg></span> Log Analysis</a></p>
+</li>
+<li>
+<p><span class="twemoji lg middle"><svg xmlns="http://www.w3.org/2000/svg" viewbox="0 0 24 24"><path d="M13 13h-2V7h2m0 10h-2v-2h2M12 2A10 10 0 0 0 2 12a10 10 0 0 0 10 10 10 10 0 0 0 10-10A10 10 0 0 0 12 2Z"></path></svg></span> <strong>Common Errors</strong></p>
+<hr>
+<p>ReadTimeout, WriteTimeout, and other common errors explained.</p>
+<p><a href="troubleshooting/"><span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewbox="0 0 24 24"><path d="M13.22 19.03a.75.75 0 0 1 0-1.06L18.19 13H3.75a.75.75 0 0 1 0-1.5h14.44l-4.97-4.97a.749.749 0 0 1 .326-1.275.749.749 0 0 1 .734.215l6.25 6.25a.75.75 0 0 1 0 1.06l-6.25 6.25a.75.75 0 0 1-1.06 0Z"></path></svg></span> Troubleshooting Guide</a></p>
+</li>
 </ul>
-<h3 id="security">Security<a class="headerlink" href="#security" title="Permanent link">¶</a></h3>
-<p>Secure your cluster:</p>
+</div>
+<hr>
+<h2 id="quick-reference">Quick Reference<a class="headerlink" href="#quick-reference" title="Permanent link">¶</a></h2>
+<div class="grid cards">
 <ul>
-<li><a href="security/">Security Guide</a> - Security overview</li>
-<li><a href="security/authentication/">Authentication</a> - User authentication</li>
-<li><a href="security/authorization/">Authorization</a> - Role-based access control</li>
-<li><a href="security/encryption/">Encryption</a> - TLS and encryption at rest</li>
+<li>
+<p><span class="twemoji lg middle"><svg xmlns="http://www.w3.org/2000/svg" viewbox="0 0 24 24"><path d="M12 21.5c-1.35-.85-3.8-1.5-5.5-1.5-1.65 0-3.35.3-4.75 1.05-.1.05-.15.05-.25.05-.25 0-.5-.25-.5-.5V6c.6-.45 1.25-.75 2-1 1.11-.35 2.33-.5 3.5-.5 1.95 0 4.05.4 5.5 1.5 1.45-1.1 3.55-1.5 5.5-1.5 1.17 0 2.39.15 3.5.5.75.25 1.4.55 2 1v14.6c0 .25-.25.5-.5.5-.1 0-.15 0-.25-.05-1.4-.75-3.1-1.05-4.75-1.05-1.7 0-4.15.65-5.5 1.5M12 8v11.5c1.35-.85 3.8-1.5 5.5-1.5 1.2 0 2.4.15 3.5.5V7c-1.1-.35-2.3-.5-3.5-.5-1.7 0-4.15.65-5.5 1.5m1 3.5c1.11-.68 2.6-1 4.5-1 .91 0 1.76.09 2.5.28V9.23c-.87-.15-1.71-.23-2.5-.23-1.77 0-3.27.28-4.5.84v1.66m4.5.17c-1.71 0-3.21.26-4.5.79v1.69c1.11-.65 2.6-.99 4.5-.99 1.04 0 1.88.08 2.5.24v-1.5c-.87-.16-1.71-.23-2.5-.23m2.5 2.9c-.87-.16-1.71-.24-2.5-.24-1.83 0-3.33.27-4.5.8v1.69c1.11-.66 2.6-.99 4.5-.99 1.04 0 1.88.08 2.5.24v-1.5Z"></path></svg></span> <strong>Reference</strong></p>
+<hr>
+<p>Quick reference for configuration, metrics, and commands.</p>
+<p><a href="reference/"><span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewbox="0 0 24 24"><path d="M13.22 19.03a.75.75 0 0 1 0-1.06L18.19 13H3.75a.75.75 0 0 1 0-1.5h14.44l-4.97-4.97a.749.749 0 0 1 .326-1.275.749.749 0 0 1 .734.215l6.25 6.25a.75.75 0 0 1 0 1.06l-6.25 6.25a.75.75 0 0 1-1.06 0Z"></path></svg></span> Reference</a></p>
+</li>
 </ul>
-<h3 id="tools">Tools<a class="headerlink" href="#tools" title="Permanent link">¶</a></h3>
-<p>Essential Cassandra tools:</p>
-<ul>
-<li><a href="operations/nodetool/">nodetool</a> - Cluster management commands</li>
-<li><a href="tools/cqlsh/">cqlsh</a> - CQL shell reference</li>
-<li><a href="tools/cqlai/">CQLAI</a> - Modern AI-powered CQL shell</li>
-<li><a href="operations/sstable-management/">SSTable Tools</a> - SSTable utilities</li>
-<li><a href="tools/cassandra-stress/">cassandra-stress</a> - Load testing</li>
-</ul>
-<h3 id="troubleshooting">Troubleshooting<a class="headerlink" href="#troubleshooting" title="Permanent link">¶</a></h3>
-<p>Diagnose and fix issues:</p>
-<ul>
-<li><a href="troubleshooting/">Troubleshooting Guide</a> - Problem-solving methodology</li>
-<li><a href="troubleshooting/diagnosis/">Diagnosis Procedures</a> - Root cause analysis</li>
-<li><a href="troubleshooting/log-analysis/">Log Analysis</a> - Interpreting logs</li>
-</ul>
-<h3 id="reference">Reference<a class="headerlink" href="#reference" title="Permanent link">¶</a></h3>
-<p>Quick reference materials:</p>
-<ul>
-<li><a href="reference/">Reference</a> - Quick reference</li>
-</ul>
+</div>
 <hr>
 <h2 id="quick-links">Quick Links<a class="headerlink" href="#quick-links" title="Permanent link">¶</a></h2>
 <h3 id="by-experience-level">By Experience Level<a class="headerlink" href="#by-experience-level" title="Permanent link">¶</a></h3>
@@ -18775,13 +19986,57 @@ data-et-multi-view="{&quot;schema&quot;:{&quot;content&quot;:{&quot;desktop&quot
 </tbody>
 </table>
 <hr>
-<h2 id="cassandra-versions">Cassandra Versions<a class="headerlink" href="#cassandra-versions" title="Permanent link">¶</a></h2>
-<p>This documentation covers:</p>
-<ul>
-<li><strong>Apache Cassandra 4.x</strong> (4.0, 4.1)</li>
-<li><strong>Apache Cassandra 5.x</strong> (5.0)</li>
-</ul>
-<p>Version-specific differences are noted where applicable.</p>
+<h2 id="version-compatibility">Version Compatibility<a class="headerlink" href="#version-compatibility" title="Permanent link">¶</a></h2>
+<h3 id="supported-versions">Supported Versions<a class="headerlink" href="#supported-versions" title="Permanent link">¶</a></h3>
+<table>
+<thead>
+<tr>
+<th>Version</th>
+<th>Release Date</th>
+<th>End of Support</th>
+<th>Status</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>5.0.x</td>
+<td>September 2024</td>
+<td>Until 5.3.0 release</td>
+<td><strong>Current</strong></td>
+</tr>
+<tr>
+<td>4.1.x</td>
+<td>December 2022</td>
+<td>Until 5.2.0 release</td>
+<td>Supported</td>
+</tr>
+<tr>
+<td>4.0.x</td>
+<td>July 2021</td>
+<td>Until 5.1.0 release</td>
+<td>Supported</td>
+</tr>
+<tr>
+<td>3.11.x</td>
+<td>June 2017</td>
+<td>Unmaintained</td>
+<td>Legacy</td>
+</tr>
+</tbody>
+</table>
+<div class="admonition warning">
+<p class="admonition-title">Upgrade Path</p>
+<p>Direct upgrades skipping major versions are not supported. To upgrade from 3.11.x to 5.0.x:</p>
+<ol>
+<li>Upgrade 3.11.x → 4.0.x</li>
+<li>Upgrade 4.0.x → 4.1.x</li>
+<li>Upgrade 4.1.x → 5.0.x</li>
+</ol>
+</div>
+<div class="admonition note">
+<p class="admonition-title">Documentation Conventions</p>
+<p>This documentation uses RFC 2119 terminology (must, should, may) to indicate requirement levels. Version-specific behaviors are explicitly noted with the applicable Cassandra version range.</p>
+</div>
 <hr>
 <h2 id="contributing">Contributing<a class="headerlink" href="#contributing" title="Permanent link">¶</a></h2>
 <p>This documentation is maintained by <a href="https://axonops.com">AxonOps</a>. Found an error or want to contribute? Visit the <a href="https://github.com/axonops/documentation">GitHub repository</a>.</p>
