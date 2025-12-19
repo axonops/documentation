@@ -2026,6 +2026,11 @@
          <changefreq>daily</changefreq>
     </url>
     <url>
+         <loc>https://docs.axonops.com/data-platforms/kafka/application-development/error-handling/dead-letter-queues/</loc>
+         <lastmod>2025-12-19</lastmod>
+         <changefreq>daily</changefreq>
+    </url>
+    <url>
          <loc>https://docs.axonops.com/data-platforms/kafka/application-development/kafka-streams/</loc>
          <lastmod>2025-12-19</lastmod>
          <changefreq>daily</changefreq>
@@ -2361,6 +2366,11 @@
          <changefreq>daily</changefreq>
     </url>
     <url>
+         <loc>https://docs.axonops.com/data-platforms/kafka/concepts/dead-letter-queues/</loc>
+         <lastmod>2025-12-19</lastmod>
+         <changefreq>daily</changefreq>
+    </url>
+    <url>
          <loc>https://docs.axonops.com/data-platforms/kafka/concepts/delivery-semantics/</loc>
          <lastmod>2025-12-19</lastmod>
          <changefreq>daily</changefreq>
@@ -2617,6 +2627,11 @@
     </url>
     <url>
          <loc>https://docs.axonops.com/data-platforms/kafka/operations/troubleshooting/</loc>
+         <lastmod>2025-12-19</lastmod>
+         <changefreq>daily</changefreq>
+    </url>
+    <url>
+         <loc>https://docs.axonops.com/data-platforms/kafka/operations/troubleshooting/dead-letter-queues/</loc>
          <lastmod>2025-12-19</lastmod>
          <changefreq>daily</changefreq>
     </url>
