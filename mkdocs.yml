@@ -867,6 +867,7 @@ nav:
         - Encryption: data-platforms/kafka/security/encryption/index.md
       - Cloud:
         - Overview: data-platforms/kafka/cloud/index.md
+        - Region Strategy: data-platforms/kafka/cloud/region-strategy/index.md
         - AWS: data-platforms/kafka/cloud/aws/index.md
         - Azure: data-platforms/kafka/cloud/azure/index.md
         - GCP: data-platforms/kafka/cloud/gcp/index.md

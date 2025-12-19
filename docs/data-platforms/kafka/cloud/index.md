@@ -116,6 +116,18 @@ end note
 
 ---
 
+## Region Strategy
+
+Choosing between single-region and multi-region deployments is a critical architectural decision. See [Single Region vs Multi-Region](region-strategy/index.md) for:
+
+- Cloud region failure statistics and historical incidents
+- RTO/RPO analysis for different architectures
+- Industry-specific recommendations (finance, healthcare, e-commerce)
+- Cost analysis and decision framework
+- Implementation checklists
+
+---
+
 ## Cloud-Specific Guides
 
 ### [AWS Deployment](aws/index.md)
@@ -203,7 +215,8 @@ end note
 
 ## Related Documentation
 
+- [Region Strategy](region-strategy/index.md) - Single vs multi-region decision guide
+- [Multi-Datacenter](../concepts/multi-datacenter/index.md) - DR strategies and MirrorMaker 2
 - [Architecture](../architecture/index.md) - System architecture
 - [Operations](../operations/index.md) - Operational procedures
 - [Security](../security/index.md) - Security configuration
-- [Multi-Datacenter](../concepts/multi-datacenter/index.md) - DR strategies
