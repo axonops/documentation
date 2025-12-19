@@ -105,29 +105,33 @@ Schema Registry is a separate service that stores schemas in a Kafka topic (`_sc
 
 ```plantuml
 @startuml
+skinparam backgroundColor transparent
 
-rectangle "Producer" as prod
-rectangle "Schema Registry" as sr
-database "_schemas topic" as schemas
-rectangle "Kafka Broker" as broker
-rectangle "Consumer" as cons
+participant "Producer" as prod
+participant "Schema Registry" as sr
+database "_schemas" as schemas
+participant "Kafka Broker" as broker
+participant "Consumer" as cons
 
-prod -> sr : 1. Register/lookup schema
-sr -> schemas : Store schemas
-sr -> prod : 2. Return schema ID
+== Producer Registration ==
+prod -> sr : 1. Register schema
+sr -> schemas : Store schema
+sr --> prod : 2. Return schema ID
 
-prod -> broker : 3. Send data with schema ID
+== Message Production ==
+prod -> broker : 3. Send [schema_id + payload]
 
-broker -> cons : 4. Fetch data with schema ID
+== Message Consumption ==
+broker -> cons : 4. Deliver [schema_id + payload]
 cons -> sr : 5. Lookup schema by ID
-sr -> cons : 6. Return schema
+sr --> cons : 6. Return schema
 cons -> cons : 7. Deserialize with schema
 
-note right of sr
+note over sr
   Registry provides:
   - Schema storage
   - Compatibility checking
-  - Schema versioning
+  - Version management
   - ID assignment
 end note
 
@@ -249,36 +253,41 @@ Schema Registry enforces compatibility rules when schemas evolve. Compatibility 
 
 ```plantuml
 @startuml
+skinparam backgroundColor transparent
 
-rectangle "Backward Compatible" as back {
-  rectangle "Schema v1" as v1_back
-  rectangle "Schema v2" as v2_back
-  rectangle "Consumer\n(v2 schema)" as cons_back
-
-  v1_back --> cons_back : ✅ can read
-  v2_back --> cons_back : ✅ can read
-
-  note bottom of back
-    New consumers can read old data
-    (safe to upgrade consumers first)
-  end note
+together {
+  rectangle "**Backward Compatible**" as back {
+    card "Data written\nwith v1" as d1_back
+    card "Data written\nwith v2" as d2_back
+    rectangle "Consumer\nusing v2 schema" as cons_back #lightgreen
+  }
 }
 
-rectangle "Forward Compatible" as fwd {
-  rectangle "Schema v1" as v1_fwd
-  rectangle "Schema v2" as v2_fwd
-  rectangle "Consumer\n(v1 schema)" as cons_fwd
-
-  v1_fwd --> cons_fwd : ✅ can read
-  v2_fwd --> cons_fwd : ✅ can read
-
-  note bottom of fwd
-    Old consumers can read new data
-    (safe to upgrade producers first)
-  end note
+together {
+  rectangle "**Forward Compatible**" as fwd {
+    card "Data written\nwith v1" as d1_fwd
+    card "Data written\nwith v2" as d2_fwd
+    rectangle "Consumer\nusing v1 schema" as cons_fwd #lightblue
+  }
 }
+
+d1_back -down-> cons_back : ✓
+d2_back -down-> cons_back : ✓
+
+d1_fwd -down-> cons_fwd : ✓
+d2_fwd -down-> cons_fwd : ✓
 
 back -[hidden]right- fwd
+
+note bottom of back
+New schema reads old data
+Upgrade consumers first
+end note
+
+note bottom of fwd
+Old schema reads new data
+Upgrade producers first
+end note
 
 @enduml
 ```
