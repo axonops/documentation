@@ -685,6 +685,23 @@ nav:
         - Overview: data-platforms/cassandra/troubleshooting/index.md
         - Diagnosis: data-platforms/cassandra/troubleshooting/diagnosis/index.md
         - Log Analysis: data-platforms/cassandra/troubleshooting/log-analysis/index.md
+        - Playbooks:
+          - Overview: data-platforms/cassandra/troubleshooting/playbooks/index.md
+          - Add Node: data-platforms/cassandra/troubleshooting/playbooks/add-node.md
+          - Compaction Issues: data-platforms/cassandra/troubleshooting/playbooks/compaction-issues.md
+          - Decommission Node: data-platforms/cassandra/troubleshooting/playbooks/decommission-node.md
+          - Full Disk: data-platforms/cassandra/troubleshooting/playbooks/handle-full-disk.md
+          - GC Pauses: data-platforms/cassandra/troubleshooting/playbooks/gc-pause.md
+          - Gossip Failures: data-platforms/cassandra/troubleshooting/playbooks/gossip-failures.md
+          - High CPU: data-platforms/cassandra/troubleshooting/playbooks/high-cpu.md
+          - High Memory: data-platforms/cassandra/troubleshooting/playbooks/high-memory.md
+          - Large Partitions: data-platforms/cassandra/troubleshooting/playbooks/large-partition.md
+          - OOM Recovery: data-platforms/cassandra/troubleshooting/playbooks/recover-from-oom.md
+          - Repair Failures: data-platforms/cassandra/troubleshooting/playbooks/repair-failures.md
+          - Replace Dead Node: data-platforms/cassandra/troubleshooting/playbooks/replace-dead-node.md
+          - Schema Disagreement: data-platforms/cassandra/troubleshooting/playbooks/schema-disagreement.md
+          - Slow Queries: data-platforms/cassandra/troubleshooting/playbooks/slow-queries.md
+          - Tombstone Accumulation: data-platforms/cassandra/troubleshooting/playbooks/tombstone-accumulation.md
       - Cloud:
         - Overview: data-platforms/cassandra/cloud/index.md
         - AWS: data-platforms/cassandra/cloud/aws/index.md
