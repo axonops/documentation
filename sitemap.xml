@@ -2171,6 +2171,11 @@
          <changefreq>daily</changefreq>
     </url>
     <url>
+         <loc>https://docs.axonops.com/data-platforms/kafka/architecture/brokers/internals/</loc>
+         <lastmod>2025-12-20</lastmod>
+         <changefreq>daily</changefreq>
+    </url>
+    <url>
          <loc>https://docs.axonops.com/data-platforms/kafka/architecture/brokers/kraft/</loc>
          <lastmod>2025-12-20</lastmod>
          <changefreq>daily</changefreq>
