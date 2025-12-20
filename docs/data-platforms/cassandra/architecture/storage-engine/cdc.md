@@ -455,5 +455,5 @@ For high-scale environments (tens of thousands of events per second), dedicated 
 
 - [Write Path](write-path.md) - Commit log and memtable operations
 - [Commit Log Configuration](../../operations/configuration/cassandra-yaml/index.md) - cassandra.yaml settings
-- [Monitoring](../../monitoring/index.md) - Metrics and alerting
+- [Monitoring](../../operations/monitoring/index.md) - Metrics and alerting
 - [Outbox Pattern](../../application-development/patterns/outbox.md) - Alternative pattern for event publishing
