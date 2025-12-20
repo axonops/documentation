@@ -304,6 +304,7 @@ nav:
         - Storage Engine:
           - Overview: data-platforms/cassandra/architecture/storage-engine/index.md
           - Write Path: data-platforms/cassandra/architecture/storage-engine/write-path.md
+          - Commit Log: data-platforms/cassandra/architecture/storage-engine/commitlog.md
           - Read Path: data-platforms/cassandra/architecture/storage-engine/read-path.md
           - SSTable Reference: data-platforms/cassandra/architecture/storage-engine/sstables.md
           - Tombstones: data-platforms/cassandra/architecture/storage-engine/tombstones.md
@@ -340,6 +341,7 @@ nav:
           - Node Replacement: data-platforms/cassandra/architecture/cluster-management/node-replacement.md
           - Scaling Operations: data-platforms/cassandra/architecture/cluster-management/scaling.md
         - Fault Tolerance: data-platforms/cassandra/architecture/fault-tolerance/index.md
+        - SEDA Architecture: data-platforms/cassandra/architecture/seda.md
         - Client Connections:
           - Overview: data-platforms/cassandra/architecture/client-connections/index.md
           - CQL Protocol: data-platforms/cassandra/architecture/client-connections/cql-protocol.md
@@ -415,6 +417,7 @@ nav:
           - Multi-Tenant Isolation: data-platforms/cassandra/application-development/patterns/multi-tenant.md
           - Speed Layer: data-platforms/cassandra/application-development/patterns/speed-layer.md
           - Digital Currency: data-platforms/cassandra/application-development/patterns/digital-currency.md
+          - Anti-Patterns: data-platforms/cassandra/application-development/anti-patterns.md
       - Operations:
         - Overview: data-platforms/cassandra/operations/index.md
         - Nodetool Reference:

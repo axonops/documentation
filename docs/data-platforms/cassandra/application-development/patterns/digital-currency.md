@@ -249,7 +249,10 @@ note right: Client A's update\napplies first
 W --> TS : Applied (v→2)
 
 TS -> W : UPDATE balance=50\nWHERE version=1
-note right #FFCDD2: Client B's update\nfails: version mismatch
+note right #FFCDD2
+Client B's update
+fails: version mismatch
+end note
 W --> TS : NOT Applied
 
 TS --> A : Success\n(balance: 20)
@@ -258,7 +261,7 @@ deactivate TS
 TS --> B : **ConcurrentModificationException**\n(retry required)
 deactivate TS
 
-note bottom of W
+note over W
 Version check prevents double-spend:
 - Both clients saw balance=100
 - Only one update succeeds

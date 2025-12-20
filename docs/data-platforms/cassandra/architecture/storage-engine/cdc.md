@@ -211,21 +211,34 @@ stop
 
 ### Monitoring CDC Space
 
-Monitor the following metrics to avoid write rejection:
+Cassandra does not expose dedicated JMX metrics for CDC space usage. The CDC size tracking is internal to `CommitLogSegmentManagerCDC`. Monitor CDC space through filesystem monitoring:
 
-| Metric | Description |
-|--------|-------------|
-| `CommitLog.CDCTotalSpace` | Total CDC space configured |
-| `CommitLog.CDCUsedSpace` | Current CDC space usage |
-| `StorageService.CDCRawDirectorySize` | Size of cdc_raw_directory |
+```bash
+# Check cdc_raw directory size
+du -sh /var/lib/cassandra/cdc_raw/
+
+# Count pending CDC segments
+ls -1 /var/lib/cassandra/cdc_raw/*.log 2>/dev/null | wc -l
+
+# Check for completed segments (ready for processing)
+grep -l "COMPLETED" /var/lib/cassandra/cdc_raw/*_cdc.idx 2>/dev/null | wc -l
+```
+
+| Monitoring Approach | Description |
+|---------------------|-------------|
+| Filesystem monitoring | Track `cdc_raw_directory` size with node_exporter or similar |
+| Segment count | Count `.log` files in CDC directory |
+| Completion rate | Track ratio of segments with "COMPLETED" in `.idx` files |
+| Log monitoring | Watch for "CDC is full" rejection messages |
 
 ### Alerting Recommendations
 
-| Threshold | Action |
+| Condition | Action |
 |-----------|--------|
-| CDC usage > 50% | Warning: Consumer may be falling behind |
-| CDC usage > 75% | Critical: Consumer is falling behind |
-| CDC usage > 90% | Emergency: Write rejection imminent |
+| `cdc_raw` size > 50% of `cdc_total_space_in_mb` | Warning: Consumer may be falling behind |
+| `cdc_raw` size > 75% of `cdc_total_space_in_mb` | Critical: Consumer is falling behind |
+| `cdc_raw` size > 90% of `cdc_total_space_in_mb` | Emergency: Write rejection imminent |
+| "CDC is full" in logs | Writes to CDC-enabled tables are being rejected |
 
 ---
 

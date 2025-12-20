@@ -117,6 +117,11 @@ When developing applications against Cassandra:
 
 ## Section Contents
 
+### Anti-Patterns
+
+- **[Application Anti-Patterns](anti-patterns.md)** — Driver misuse, error handling mistakes, and common production failures
+- **[Data Modeling Anti-Patterns](../data-modeling/anti-patterns/index.md)** — Schema design mistakes (unbounded partitions, tombstones, ALLOW FILTERING)
+
 ### Development Tools
 
 - **[AxonOps Workbench](workbench.md)** — Open-source GUI for schema management, query execution, and data exploration
@@ -127,4 +132,5 @@ When developing applications against Cassandra:
 - **[CQL Reference](../cql/index.md)** — Cassandra Query Language syntax and semantics
 - **[Data Modeling](../data-modeling/index.md)** — Principles for designing effective Cassandra data models
 - **[Drivers](drivers/index.md)** — Driver architecture, connection management, and policy configuration
+- **[Design Patterns](patterns/index.md)** — Battle-tested patterns for common use cases
 

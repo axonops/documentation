@@ -80,17 +80,19 @@ The write is considered durable once it reaches the commit log. The memtable upd
 
 The commit log is a write-ahead log providing durability. Its sole purpose is crash recovery—if a node fails before memtables flush, the commit log is replayed on restart.
 
+For a deep dive into commit log internals—segment file format, sync block structure, replay algorithm, compression, and encryption—see the dedicated [Commit Log](commitlog.md) reference.
+
 ### Commit Log Structure
 
 ```
 commitlog_directory/
-├── CommitLog-7-1234567890.log    (segment 1 - archived)
-├── CommitLog-7-1234567891.log    (segment 2 - archived)
-├── CommitLog-7-1234567892.log    (segment 3 - active)
-└── CommitLog-7-1234567893.log    (segment 4 - current)
+├── CommitLog-7-1234567890.log    (active - awaiting flush)
+├── CommitLog-7-1234567891.log    (active - awaiting flush)
+├── CommitLog-7-1234567892.log    (active - awaiting flush)
+└── CommitLog-7-1234567893.log    (current - receiving writes)
 ```
 
-Each segment is a fixed-size file. Segments are recycled after all referenced memtables have flushed.
+Segments grow up to `commitlog_segment_size_in_mb` (default 32MB). Once all referenced memtables flush, the segment is deleted. See [Commit Log: Segment Architecture](commitlog.md#segment-architecture) for the full lifecycle.
 
 ### File Naming Convention
 
@@ -182,6 +184,8 @@ commitlog_total_space_in_mb: 8192
 ```
 
 ### Sync Mode Comparison
+
+Cassandra supports three sync modes: periodic, batch, and group. See [Commit Log: Sync Modes](commitlog.md#sync-modes) for detailed diagrams and trade-offs.
 
 | Mode | Configuration | Latency | Data Loss Window |
 |------|---------------|---------|------------------|
@@ -635,6 +639,8 @@ nodetool tpstats | grep -i flush
 - Separate commit log and data directories
 - Increase `memtable_flush_writers`
 
+See [Commit Log: Operational Considerations](commitlog.md#operational-considerations) for monitoring metrics and recommendations.
+
 ### High Memtable Memory
 
 **Symptoms:** High heap usage, GC pressure
@@ -660,6 +666,8 @@ nodetool tablestats | grep -i memtable
 ## Related Documentation
 
 - **[Storage Engine Overview](index.md)** - Architecture overview
+- **[Commit Log](commitlog.md)** - Commit log internals, file format, replay
 - **[Read Path](read-path.md)** - How reads work
 - **[SSTable Reference](sstables.md)** - SSTable file format
+- **[Change Data Capture](cdc.md)** - Exposing commit log for external consumption
 - **[Memory Management](../memory-management/memory.md)** - Memory configuration

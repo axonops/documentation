@@ -165,6 +165,7 @@ CREATE KEYSPACE my_app WITH replication = {
 
 - **[Storage Engine Overview](storage-engine/index.md)** - How Cassandra stores data
 - **[Write Path](storage-engine/write-path.md)** - Memtables and commit log
+- **[Commit Log](storage-engine/commitlog.md)** - Write-ahead log internals
 - **[Read Path](storage-engine/read-path.md)** - How reads are served
 - **[SSTables](storage-engine/sstables.md)** - On-disk storage format
 - **[Tombstones](storage-engine/tombstones.md)** - How deletes work

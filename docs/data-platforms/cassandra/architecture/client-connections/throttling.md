@@ -210,6 +210,44 @@ native_transport_max_concurrent_connections: -1  # unlimited
 native_transport_max_concurrent_connections_per_ip: -1
 ```
 
+### Memory-Based Backpressure (Cassandra 4.0+)
+
+Cassandra 4.0 introduced memory-based backpressure for the native transport (CASSANDRA-15013). This prevents unbounded memory growth from in-flight requests.
+
+```yaml
+# cassandra.yaml
+
+# Maximum bytes of in-flight requests (node-wide)
+# 0 = unlimited (default, not recommended for production)
+native_transport_max_concurrent_requests_in_bytes: 0
+
+# Maximum bytes per client IP
+# 0 = unlimited
+native_transport_max_concurrent_requests_in_bytes_per_ip: 0
+
+# Behavior when limits exceeded
+# false (default): Apply TCP backpressure (stop reading from socket)
+# true: Return OverloadedException immediately
+native_transport_throw_on_overload: false
+```
+
+| Setting | Recommended Value | Description |
+|---------|-------------------|-------------|
+| `native_transport_max_concurrent_requests_in_bytes` | 1/4 of heap | Total in-flight request bytes |
+| `native_transport_max_concurrent_requests_in_bytes_per_ip` | 1/40 of heap | Per-client limit prevents one client from monopolizing |
+| `native_transport_throw_on_overload` | `false` | TCP backpressure is gentler than exceptions |
+
+**How TCP backpressure works:**
+
+1. In-flight bytes exceed limit
+2. Cassandra stops reading from client sockets (sets autoread=false)
+3. Kernel socket buffers fill
+4. Client's `write()` calls block
+5. Client naturally slows down
+6. As requests complete, reading resumes
+
+This approach is preferred because it automatically throttles clients without requiring exception handling logic.
+
 ### Request Queuing
 
 The native transport queues requests when threads are busy:

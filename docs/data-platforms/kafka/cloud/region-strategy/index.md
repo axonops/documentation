@@ -21,7 +21,6 @@ For technical implementation details, see [Multi-Datacenter Deployments](../../c
 | **Infrastructure cost** | Baseline | 2-3x baseline |
 | **Operational complexity** | Low | High |
 | **Data consistency** | Simple | Requires careful design |
-| **Latency** | Lowest possible | Cross-region penalty |
 | **Region failure impact** | Full outage | Failover with RTO/RPO |
 | **Regulatory compliance** | May not meet requirements | Supports data residency |
 
