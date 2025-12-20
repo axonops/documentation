@@ -14,7 +14,7 @@ This document describes the internal architecture of a Kafka broker—the thread
 
 ## Architecture Overview
 
-A Kafka broker is a multi-threaded server built around three core subsystems:
+A Kafka broker is a multi-threaded server with layered architecture for network handling, security, and request processing:
 
 ```plantuml
 @startuml
@@ -26,6 +26,11 @@ skinparam rectangle {
 rectangle "**Network Layer**" as net #BBDEFB {
     rectangle "Acceptor" as acc
     rectangle "Processors" as proc
+}
+
+rectangle "**Security Layer**" as sec #E1BEE7 {
+    rectangle "Authentication\n(SASL/SSL)" as authn
+    rectangle "Authorization\n(ACLs)" as authz
 }
 
 rectangle "**Request Handler Pool**" as handler #C8E6C9
@@ -44,7 +49,9 @@ rectangle "**Storage**" as storage #FFE0B2 {
 }
 
 acc -down-> proc : connections
-proc -down-> handler : requests
+proc -down-> authn : authenticate
+authn -down-> authz : authorize
+authz -down-> handler : requests
 handler -down-> core
 core -down-> storage
 
@@ -53,7 +60,9 @@ core -down-> storage
 
 | Subsystem | Responsibility |
 |-----------|----------------|
-| **Network Layer** | Accept connections, read requests, write responses |
+| **Network Layer** | Accept connections, TLS termination, read/write requests |
+| **Authentication** | Verify client identity (SASL, mTLS) |
+| **Authorization** | Check ACLs for resource access |
 | **Request Handler Pool** | Execute request logic (produce, fetch, metadata) |
 | **Log Manager** | Manage topic partitions, segments, retention |
 | **Replica Manager** | Leader/follower replication, ISR management |
@@ -185,6 +194,95 @@ end note
 
 @enduml
 ```
+
+---
+
+## Security Layer
+
+The security layer handles authentication and authorization for all client connections. It sits between the network layer and request handlers.
+
+### Authentication
+
+Authentication occurs during connection establishment, before any Kafka protocol requests are processed:
+
+```plantuml
+@startuml
+skinparam backgroundColor transparent
+
+participant "Client" as c
+participant "Broker" as b
+
+c -> b : TCP Connect
+
+alt SSL/SASL_SSL
+    c <-> b : TLS Handshake
+end
+
+alt SASL enabled
+    c -> b : SaslHandshakeRequest
+    b --> c : SaslHandshakeResponse(mechanisms)
+    c -> b : SaslAuthenticateRequest
+    b --> c : SaslAuthenticateResponse
+end
+
+c -> b : ApiVersionsRequest
+note over c,b : Connection authenticated
+
+@enduml
+```
+
+| Protocol | Encryption | Authentication |
+|----------|------------|----------------|
+| `PLAINTEXT` | None | None |
+| `SSL` | TLS | Optional mTLS |
+| `SASL_PLAINTEXT` | None | SASL |
+| `SASL_SSL` | TLS | SASL |
+
+After authentication, a **principal** is established (e.g., `User:alice`) that is used for authorization decisions.
+
+For complete authentication configuration, see **[Authentication](../../security/authentication/index.md)**.
+
+### Authorization
+
+Every request is checked against Access Control Lists (ACLs) before processing:
+
+```plantuml
+@startuml
+skinparam backgroundColor transparent
+
+start
+:Extract principal;
+:Identify resource + operation;
+
+if (DENY ACL matches?) then (yes)
+  #FFCDD2:Reject;
+  stop
+endif
+
+if (ALLOW ACL matches?) then (yes)
+  #C8E6C9:Allow;
+  stop
+endif
+
+if (Super user?) then (yes)
+  #C8E6C9:Allow;
+  stop
+endif
+
+#FFCDD2:Deny (default);
+stop
+
+@enduml
+```
+
+| Resource | Example Operations |
+|----------|-------------------|
+| **Topic** | Read, Write, Describe, Create, Delete |
+| **Group** | Read, Describe, Delete |
+| **Cluster** | Create, Alter, ClusterAction |
+| **TransactionalId** | Write, Describe |
+
+For complete authorization configuration and ACL management, see **[Authorization](../../security/authorization/index.md)**.
 
 ---
 
