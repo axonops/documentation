@@ -1,82 +1,153 @@
 ---
 title: "Kafka Brokers"
-description: "Apache Kafka broker architecture. KRaft mode, controller quorum, broker roles, and cluster coordination."
+description: "Apache Kafka broker architecture. What a broker does, how it stores data, serves clients, and coordinates with the cluster."
 meta:
   - name: keywords
-    content: "Kafka broker, KRaft, controller, Kafka cluster, broker architecture"
+    content: "Kafka broker, Kafka server, broker architecture, KRaft, partition leader"
 ---
 
 # Kafka Brokers
 
-Broker architecture, roles, and cluster coordination in Apache Kafka.
+A Kafka broker is a server process that stores messages and serves client requests. Each broker in a cluster handles a portion of the data, enabling horizontal scaling and fault tolerance.
 
 ---
 
-## Broker Overview
-
-A Kafka broker is a server that stores data and serves client requests. Brokers form a cluster that provides fault tolerance and scalability.
+## What a Broker Does
 
 ```plantuml
 @startuml
-
-rectangle "Kafka Cluster" as cluster {
-  rectangle "Broker 1\n(Controller)" as b1
-  rectangle "Broker 2" as b2
-  rectangle "Broker 3" as b3
-
-  b1 <--> b2 : replication
-  b2 <--> b3 : replication
-  b1 <--> b3 : replication
+skinparam backgroundColor transparent
+skinparam rectangle {
+    RoundCorner 5
 }
 
-rectangle "Producers" as prod
-rectangle "Consumers" as cons
+rectangle "**Kafka Broker**" as broker #E3F2FD {
+    rectangle "Receive produce requests" as recv #C8E6C9
+    rectangle "Store to disk (commit log)" as store #C8E6C9
+    rectangle "Replicate to followers" as repl #C8E6C9
+    rectangle "Serve fetch requests" as serve #C8E6C9
+}
 
-prod --> b1 : produce
-prod --> b2 : produce
-prod --> b3 : produce
+rectangle "Producer" as prod
+rectangle "Consumer" as cons
+rectangle "Other Brokers" as other
 
-b1 --> cons : fetch
-b2 --> cons : fetch
-b3 --> cons : fetch
+prod -down-> recv
+store -down-> repl
+repl -down-> other
+serve -right-> cons
+
+recv -[hidden]down-> store
+store -[hidden]down-> serve
 
 @enduml
 ```
 
+| Responsibility | Description |
+|----------------|-------------|
+| **Store messages** | Persist records to disk as log segments |
+| **Serve producers** | Accept writes, acknowledge based on `acks` setting |
+| **Serve consumers** | Return records from requested offsets |
+| **Replicate data** | Send records to follower replicas |
+| **Receive replicas** | Accept records from leader replicas |
+| **Report metadata** | Register with controller, report partition state |
+
 ---
 
-## KRaft Mode
+## Broker Identity
 
-KRaft (Kafka Raft) eliminates the ZooKeeper dependency by using an internal Raft-based consensus protocol. For complete KRaft internals including Raft consensus mechanics, metadata log structure, and ZooKeeper migration, see [KRaft Deep Dive](../kraft/index.md).
+Each broker has a unique identity within the cluster:
 
-### Controller Quorum
+```properties
+# Unique broker ID (must be unique across cluster)
+node.id=1
+
+# Listeners for client and inter-broker communication
+listeners=PLAINTEXT://:9092,CONTROLLER://:9093
+advertised.listeners=PLAINTEXT://broker1.example.com:9092
+
+# Data directory
+log.dirs=/var/kafka-logs
+```
+
+Clients discover brokers through the bootstrap servers, then connect directly to the broker hosting each partition's leader.
+
+---
+
+## Partitions and Leadership
+
+Brokers don't own topics—they own **partition replicas**. Each partition has one leader and zero or more followers:
 
 ```plantuml
 @startuml
+skinparam backgroundColor transparent
 
-rectangle "KRaft Controller Quorum" as quorum {
-  rectangle "Controller 1\n(Leader)" as c1
-  rectangle "Controller 2\n(Follower)" as c2
-  rectangle "Controller 3\n(Follower)" as c3
+rectangle "Topic: orders (3 partitions, RF=3)" as topic {
 
-  c1 --> c2 : replicate metadata
-  c1 --> c3 : replicate metadata
+    rectangle "Broker 1" as b1 {
+        rectangle "P0 Leader" as p0l #C8E6C9
+        rectangle "P1 Follower" as p1f #FFF9C4
+        rectangle "P2 Follower" as p2f #FFF9C4
+    }
+
+    rectangle "Broker 2" as b2 {
+        rectangle "P0 Follower" as p0f1 #FFF9C4
+        rectangle "P1 Leader" as p1l #C8E6C9
+        rectangle "P2 Follower" as p2f2 #FFF9C4
+    }
+
+    rectangle "Broker 3" as b3 {
+        rectangle "P0 Follower" as p0f2 #FFF9C4
+        rectangle "P1 Follower" as p1f2 #FFF9C4
+        rectangle "P2 Leader" as p2l #C8E6C9
+    }
 }
 
-rectangle "Brokers" as brokers {
-  rectangle "Broker 1" as b1
-  rectangle "Broker 2" as b2
-  rectangle "Broker 3" as b3
+note bottom of topic
+  Leaders (green) handle all reads/writes
+  Followers (yellow) replicate from leaders
+end note
+
+@enduml
+```
+
+| Role | Responsibilities |
+|------|------------------|
+| **Leader** | Handle all produce and fetch requests for the partition |
+| **Follower** | Fetch records from leader, ready to become leader if needed |
+
+A single broker typically hosts hundreds or thousands of partition replicas, some as leader, others as follower.
+
+---
+
+## KRaft Mode (Kafka 3.3+)
+
+Modern Kafka clusters use KRaft (Kafka Raft) for metadata management, eliminating the ZooKeeper dependency.
+
+```plantuml
+@startuml
+skinparam backgroundColor transparent
+
+rectangle "Controller Quorum" as cq #E8F5E9 {
+    rectangle "Controller 1\n(Leader)" as c1 #C8E6C9
+    rectangle "Controller 2" as c2 #FFF9C4
+    rectangle "Controller 3" as c3 #FFF9C4
 }
 
-c1 --> b1 : metadata updates
-c1 --> b2 : metadata updates
-c1 --> b3 : metadata updates
+rectangle "Broker 1" as b1 #BBDEFB
+rectangle "Broker 2" as b2 #BBDEFB
+rectangle "Broker 3" as b3 #BBDEFB
 
-note bottom of quorum
-  Controllers store metadata
-  in __cluster_metadata topic
-  using Raft consensus
+c1 --> c2 : Raft replication
+c1 --> c3 : Raft replication
+
+c1 --> b1 : metadata push
+c1 --> b2 : metadata push
+c1 --> b3 : metadata push
+
+note right of cq
+  Stores cluster metadata in
+  __cluster_metadata topic
 end note
 
 @enduml
@@ -84,130 +155,51 @@ end note
 
 ### Process Roles
 
-| Role | Description | Configuration |
-|------|-------------|---------------|
-| **broker** | Handles produce/consume requests | `process.roles=broker` |
-| **controller** | Manages cluster metadata | `process.roles=controller` |
-| **combined** | Both broker and controller | `process.roles=broker,controller` |
+| Role | Configuration | Description |
+|------|---------------|-------------|
+| **broker** | `process.roles=broker` | Handles client requests only |
+| **controller** | `process.roles=controller` | Manages metadata only |
+| **combined** | `process.roles=broker,controller` | Both roles in one process |
 
-### Combined vs Dedicated Controllers
-
-| Deployment | Use Case | Pros | Cons |
-|------------|----------|------|------|
-| **Combined** | Small clusters (< 10 brokers) | Simpler deployment | Resource contention |
-| **Dedicated** | Large clusters | Isolation, stability | More servers |
-
----
-
-## Broker Configuration
-
-### Essential Settings
-
-```properties
-# Broker identity
-node.id=1
-process.roles=broker,controller
-
-# Controller quorum
-controller.quorum.voters=1@broker1:9093,2@broker2:9093,3@broker3:9093
-
-# Listeners
-listeners=PLAINTEXT://:9092,CONTROLLER://:9093
-advertised.listeners=PLAINTEXT://broker1:9092
-controller.listener.names=CONTROLLER
-inter.broker.listener.name=PLAINTEXT
-
-# Storage
-log.dirs=/var/kafka-logs
-num.partitions=3
-default.replication.factor=3
-min.insync.replicas=2
-
-# Log retention
-log.retention.hours=168
-log.segment.bytes=1073741824
-log.retention.check.interval.ms=300000
-```
-
-### Performance Settings
-
-```properties
-# Network threads
-num.network.threads=8
-num.io.threads=16
-
-# Socket buffers
-socket.send.buffer.bytes=102400
-socket.receive.buffer.bytes=102400
-socket.request.max.bytes=104857600
-
-# Request handling
-queued.max.requests=500
-num.replica.fetchers=4
-```
-
----
-
-## Metadata Management
-
-For complete metadata management including record types, broker registration, and leader election coordination, see [Cluster Management](../cluster-management/index.md).
-
-### Cluster Metadata Topic
-
-KRaft stores all cluster metadata in `__cluster_metadata`, a single-partition internal topic.
-
-| Metadata Type | Description |
-|---------------|-------------|
-| **Topics** | Topic configurations, partitions |
-| **Partitions** | Replica assignments, ISR |
-| **Brokers** | Broker registrations, endpoints |
-| **Configs** | Dynamic broker/topic configs |
-| **ACLs** | Access control lists |
-| **Features** | Cluster feature flags |
-
-### Metadata Log
-
-```bash
-# Inspect metadata log
-kafka-metadata.sh --snapshot /var/kafka-logs/__cluster_metadata-0/00000000000000000000.log \
-  --command "describe"
-
-# List brokers
-kafka-metadata.sh --snapshot /var/kafka-logs/__cluster_metadata-0/00000000000000000000.log \
-  --command "brokers"
-
-# Show topic details
-kafka-metadata.sh --snapshot /var/kafka-logs/__cluster_metadata-0/00000000000000000000.log \
-  --command "topic" --topic-name my-topic
-```
+| Deployment | Best For | Trade-off |
+|------------|----------|-----------|
+| **Combined** | Small clusters (≤10 brokers) | Simpler, but resource contention |
+| **Dedicated** | Large clusters | More servers, but better isolation |
 
 ---
 
 ## Broker Lifecycle
 
-### Startup
-
 ```plantuml
 @startuml
+skinparam backgroundColor transparent
 
-[*] --> Starting : start broker
+[*] --> Starting
 
-Starting --> Registering : load config
-Registering --> Active : register with controller
-Active --> Active : serve requests
+Starting --> LogRecovery : load configuration
+LogRecovery --> Registering : recover partitions
+Registering --> CatchingUp : register with controller
+CatchingUp --> Active : replicas in sync
 
-Active --> ShuttingDown : shutdown signal
-ShuttingDown --> [*] : graceful shutdown
+Active --> Active : serving requests
 
-note right of Registering
-  Broker sends registration
-  to active controller
+Active --> ControlledShutdown : SIGTERM
+ControlledShutdown --> [*] : leadership transferred
+
+Active --> Crashed : process killed
+Crashed --> Starting : restart
+
+note right of LogRecovery
+  May take minutes if
+  many partitions or
+  unclean shutdown
 end note
 
-note right of ShuttingDown
-  - Complete in-flight requests
-  - Transfer leadership
-  - Deregister
+note right of ControlledShutdown
+  1. Stop accepting new connections
+  2. Transfer partition leadership
+  3. Complete in-flight requests
+  4. Deregister from controller
 end note
 
 @enduml
@@ -215,83 +207,121 @@ end note
 
 ### Controlled Shutdown
 
+A controlled shutdown ensures no data loss and minimal disruption:
+
+```bash
+# Graceful shutdown (recommended)
+kafka-server-stop.sh
+
+# Or send SIGTERM
+kill <broker-pid>
+```
+
+The broker will:
+
+1. Notify the controller
+2. Transfer leadership of all partitions to other brokers
+3. Wait for in-flight requests to complete
+4. Deregister and exit
+
+!!! warning "Avoid kill -9"
+    `kill -9` causes unclean shutdown, requiring full log recovery on restart and potentially causing under-replication.
+
+---
+
+## Key Metrics
+
+| Metric | What It Tells You |
+|--------|-------------------|
+| `UnderReplicatedPartitions` | Partitions with fewer replicas than expected (should be 0) |
+| `OfflinePartitionsCount` | Partitions without a leader (should be 0) |
+| `ActiveControllerCount` | Whether this broker is the controller (1 or 0) |
+| `MessagesInPerSec` | Throughput of incoming messages |
+| `BytesInPerSec` / `BytesOutPerSec` | Network throughput |
+| `RequestHandlerAvgIdlePercent` | Handler thread utilization (low = overloaded) |
+| `NetworkProcessorAvgIdlePercent` | Network thread utilization |
+
+```bash
+# Quick health check via JMX
+kafka-run-class.sh kafka.tools.JmxTool \
+  --object-name 'kafka.server:type=ReplicaManager,name=UnderReplicatedPartitions' \
+  --jmx-url service:jmx:rmi:///jndi/rmi://localhost:9999/jmxrmi
+```
+
+---
+
+## Failure Scenarios
+
+| Scenario | Impact | Recovery |
+|----------|--------|----------|
+| **Single broker failure** | Partitions fail over to other brokers | Automatic leader election |
+| **Minority of brokers down** | Cluster continues with reduced capacity | Restart failed brokers |
+| **Majority of brokers down** | Some partitions unavailable | Restart brokers, may need manual intervention |
+| **Controller failure** | New controller elected | Automatic (KRaft quorum) |
+| **Disk failure** | Partitions on that disk unavailable | Replace disk, broker recovers from replicas |
+
+### High Availability Settings
+
 ```properties
-# Enable controlled shutdown
-controlled.shutdown.enable=true
-controlled.shutdown.max.retries=3
-controlled.shutdown.retry.backoff.ms=5000
+# Survive 2 broker failures
+default.replication.factor=3
+
+# Require 2 replicas to acknowledge writes
+min.insync.replicas=2
+
+# Never elect out-of-sync replica as leader
+unclean.leader.election.enable=false
 ```
 
-During controlled shutdown:
-
-1. Broker notifies controller of shutdown
-2. Controller moves partition leaders to other brokers
-3. Broker waits for leadership transfers
-4. Broker completes shutdown
-
 ---
 
-## Broker Metrics
+## Configuration Quick Reference
 
-### Key JMX Metrics
+### Identity and Networking
 
-| Metric | Description | Alert Threshold |
-|--------|-------------|-----------------|
-| `kafka.server:type=BrokerTopicMetrics,name=MessagesInPerSec` | Message rate | Baseline deviation |
-| `kafka.server:type=BrokerTopicMetrics,name=BytesInPerSec` | Bytes in rate | Capacity |
-| `kafka.server:type=BrokerTopicMetrics,name=BytesOutPerSec` | Bytes out rate | Capacity |
-| `kafka.server:type=ReplicaManager,name=UnderReplicatedPartitions` | Under-replicated | > 0 |
-| `kafka.controller:type=KafkaController,name=ActiveControllerCount` | Active controller | ≠ 1 |
-| `kafka.server:type=ReplicaManager,name=PartitionCount` | Partitions on broker | Balance |
-| `kafka.network:type=RequestMetrics,name=TotalTimeMs,request=Produce` | Produce latency | P99 threshold |
-
----
-
-## High Availability
-
-For complete failure scenarios, recovery procedures, and monitoring strategies, see [Fault Tolerance](../fault-tolerance/index.md).
-
-### Broker Failure Handling
-
-```plantuml
-@startuml
-
-rectangle "Before Failure" as before {
-  rectangle "Broker 1\n(Leader P0)" as b1_before
-  rectangle "Broker 2\n(Follower P0)" as b2_before
-  rectangle "Broker 3\n(Follower P0)" as b3_before
-}
-
-rectangle "After Broker 1 Failure" as after {
-  rectangle "Broker 1\n(OFFLINE)" as b1_after #red
-  rectangle "Broker 2\n(Leader P0)" as b2_after #green
-  rectangle "Broker 3\n(Follower P0)" as b3_after
-}
-
-before -[hidden]down-> after
-
-note bottom of after
-  Controller detects failure
-  and elects new leader
-  from ISR
-end note
-
-@enduml
+```properties
+node.id=1
+listeners=PLAINTEXT://:9092
+advertised.listeners=PLAINTEXT://broker1.example.com:9092
 ```
 
-### Recommended Settings for HA
+### Storage
 
-| Setting | Value | Rationale |
-|---------|-------|-----------|
-| `default.replication.factor` | 3 | Survive 2 broker failures |
-| `min.insync.replicas` | 2 | Ensure durability |
-| `unclean.leader.election.enable` | false | Prevent data loss |
+```properties
+log.dirs=/var/kafka-logs
+log.retention.hours=168
+log.segment.bytes=1073741824
+```
+
+### Threading
+
+```properties
+num.network.threads=3
+num.io.threads=8
+num.replica.fetchers=1
+```
+
+### Replication
+
+```properties
+default.replication.factor=3
+min.insync.replicas=2
+replica.lag.time.max.ms=30000
+```
+
+For complete configuration reference, see [Broker Configuration](../../operations/configuration/index.md).
 
 ---
 
-## Related Documentation
+## Section Contents
 
-- [Architecture Overview](../index.md) - Kafka architecture
-- [Replication](../replication/index.md) - Replication protocol
-- [Fault Tolerance](../fault-tolerance/index.md) - Failure handling
-- [Configuration](../../operations/configuration/index.md) - Configuration reference
+### Deep Dives
+
+- **[Broker Internals](internals.md)** - Network layer, request processing, log subsystem, replica manager, purgatory, group coordinator, startup and recovery
+
+### Related Topics
+
+- **[Replication](../replication/index.md)** - How data is replicated between brokers
+- **[Fault Tolerance](../fault-tolerance/index.md)** - Failure detection and recovery
+- **[KRaft](../kraft/index.md)** - KRaft consensus protocol internals
+- **[Cluster Management](../cluster-management/index.md)** - Metadata management and coordination

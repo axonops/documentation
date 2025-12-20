@@ -741,7 +741,9 @@ nav:
         - Overview: data-platforms/kafka/architecture/index.md
         - Topics & Partitions: data-platforms/kafka/architecture/topics/index.md
         - Transaction Coordinator: data-platforms/kafka/architecture/transactions/index.md
-        - Brokers: data-platforms/kafka/architecture/brokers/index.md
+        - Brokers:
+          - Overview: data-platforms/kafka/architecture/brokers/index.md
+          - Internals: data-platforms/kafka/architecture/brokers/internals.md
         - Topology: data-platforms/kafka/architecture/topology/index.md
         - Storage Engine: data-platforms/kafka/architecture/storage-engine/index.md
         - Replication: data-platforms/kafka/architecture/replication/index.md
