@@ -597,7 +597,7 @@ When the publisher fails or falls behind:
 
 **Synchronous messaging acceptable**: If blocking on message broker availability is acceptable, direct publishing may suffice with retry logic.
 
-**Change Data Capture available**: CDC can capture database changes directly without an outbox table.
+**Change Data Capture available**: CDC can capture database changes directly without an outbox table. See [Sidecar CDC Outbox](sidecar-cdc-outbox.md) for the official Apache solution with built-in deduplication.
 
 **Event sourcing in use**: The event store itself serves as the outbox, so no separate table is needed.
 
@@ -621,6 +621,7 @@ Cassandra's constraints (lack of cross-partition transactions) require adapting 
 
 ## Related Documentation
 
+- [Sidecar CDC Outbox](sidecar-cdc-outbox.md) - Official Apache CDC-to-Kafka with built-in deduplication
 - [Idempotency Patterns](idempotency.md) - Ensuring operations are safe to retry
 - [Event Sourcing](event-sourcing.md) - Events as the source of truth
 - [CQRS Pattern](cqrs.md) - Separating read and write models

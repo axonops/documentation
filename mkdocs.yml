@@ -407,6 +407,7 @@ nav:
           - CQRS: data-platforms/cassandra/application-development/patterns/cqrs.md
           - Event Sourcing: data-platforms/cassandra/application-development/patterns/event-sourcing.md
           - Transactional Outbox: data-platforms/cassandra/application-development/patterns/outbox.md
+          - Sidecar CDC Outbox: data-platforms/cassandra/application-development/patterns/sidecar-cdc-outbox.md
           - Idempotency: data-platforms/cassandra/application-development/patterns/idempotency.md
           - Time-Series Data: data-platforms/cassandra/application-development/patterns/time-series.md
           - Ledger (Finance): data-platforms/cassandra/application-development/patterns/ledger.md
