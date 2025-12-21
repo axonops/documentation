@@ -16,7 +16,7 @@
         <link rel="prev" href="../event-sourcing/">
       
       
-        <link rel="next" href="../idempotency/">
+        <link rel="next" href="../sidecar-cdc-outbox/">
       
       
       <link rel="icon" href="/img/favicon.ico">
@@ -7599,6 +7599,27 @@ data-et-multi-view="{&quot;schema&quot;:{&quot;content&quot;:{&quot;desktop&quot
   
 </nav>
       
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../sidecar-cdc-outbox/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Sidecar CDC Outbox
+  </span>
+  
+
+      </a>
     </li>
   
 
@@ -19964,7 +19985,7 @@ data-et-multi-view="{&quot;schema&quot;:{&quot;content&quot;:{&quot;desktop&quot
 <p><strong>Audit trails</strong>: Ensuring audit events are never lost even during failures.</p>
 <h3 id="consider-alternatives-when">Consider Alternatives When<a class="headerlink" href="#consider-alternatives-when" title="Permanent link">¶</a></h3>
 <p><strong>Synchronous messaging acceptable</strong>: If blocking on message broker availability is acceptable, direct publishing may suffice with retry logic.</p>
-<p><strong>Change Data Capture available</strong>: CDC can capture database changes directly without an outbox table.</p>
+<p><strong>Change Data Capture available</strong>: CDC can capture database changes directly without an outbox table. See <a href="../sidecar-cdc-outbox/">Sidecar CDC Outbox</a> for the official Apache solution with built-in deduplication.</p>
 <p><strong>Event sourcing in use</strong>: The event store itself serves as the outbox, so no separate table is needed.</p>
 <p><strong>Messages are optional</strong>: If missing occasional messages is acceptable, simpler approaches may suffice.</p>
 <hr>
@@ -19981,6 +20002,7 @@ data-et-multi-view="{&quot;schema&quot;:{&quot;content&quot;:{&quot;desktop&quot
 <hr>
 <h2 id="related-documentation">Related Documentation<a class="headerlink" href="#related-documentation" title="Permanent link">¶</a></h2>
 <ul>
+<li><a href="../sidecar-cdc-outbox/">Sidecar CDC Outbox</a> - Official Apache CDC-to-Kafka with built-in deduplication</li>
 <li><a href="../idempotency/">Idempotency Patterns</a> - Ensuring operations are safe to retry</li>
 <li><a href="../event-sourcing/">Event Sourcing</a> - Events as the source of truth</li>
 <li><a href="../cqrs/">CQRS Pattern</a> - Separating read and write models</li>
@@ -20042,13 +20064,13 @@ data-et-multi-view="{&quot;schema&quot;:{&quot;content&quot;:{&quot;desktop&quot
         
         
           
-          <a href="../idempotency/" class="md-footer__link md-footer__link--next" aria-label="Next: Idempotency">
+          <a href="../sidecar-cdc-outbox/" class="md-footer__link md-footer__link--next" aria-label="Next: Sidecar CDC Outbox">
             <div class="md-footer__title">
               <span class="md-footer__direction">
                 Next
               </span>
               <div class="md-ellipsis">
-                Idempotency
+                Sidecar CDC Outbox
               </div>
             </div>
             <div class="md-footer__button md-icon">

@@ -181,6 +181,11 @@
          <changefreq>daily</changefreq>
     </url>
     <url>
+         <loc>https://docs.axonops.com/data-platforms/cassandra/application-development/patterns/sidecar-cdc-outbox/</loc>
+         <lastmod>2025-12-21</lastmod>
+         <changefreq>daily</changefreq>
+    </url>
+    <url>
          <loc>https://docs.axonops.com/data-platforms/cassandra/application-development/patterns/speed-layer/</loc>
          <lastmod>2025-12-21</lastmod>
          <changefreq>daily</changefreq>
