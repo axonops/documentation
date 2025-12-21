@@ -10,6 +10,148 @@ meta:
 
 Schema Registry provides centralized schema management for Apache Kafka, ensuring data compatibility between producers and consumers.
 
+!!! info "Schema Registry is a Separate Service"
+    Schema Registry is **not part of Apache Kafka**. It is a standalone service that runs separately from Kafka brokers and must be deployed, operated, and scaled independently.
+
+---
+
+## What is Schema Registry?
+
+Schema Registry is an external service that stores and manages schemas for Kafka messages. Producers and consumers communicate with Schema Registry via REST API to register, retrieve, and validate schemas, while continuing to read and write data through Kafka brokers.
+
+```plantuml
+@startuml
+skinparam backgroundColor transparent
+
+rectangle "Kafka Cluster" as kafka #E3F2FD {
+    rectangle "Broker 1" as b1
+    rectangle "Broker 2" as b2
+    rectangle "Broker 3" as b3
+}
+
+rectangle "Schema Registry" as sr #C8E6C9 {
+    rectangle "REST API" as api
+    database "_schemas topic" as schemas
+}
+
+rectangle "Producer" as prod
+rectangle "Consumer" as cons
+
+prod --> kafka : messages
+kafka --> cons : messages
+
+prod --> sr : register/lookup schema
+cons --> sr : lookup schema
+
+note bottom of sr
+  Separate deployment
+  Own scaling requirements
+  Independent operations
+end note
+
+@enduml
+```
+
+### Why a Separate Service?
+
+Apache Kafka is designed to be a high-performance, schema-agnostic message broker. Kafka brokers store and deliver bytes without understanding the structure of message content.
+
+| Design Decision | Rationale |
+|-----------------|-----------|
+| **Broker simplicity** | Brokers focus on storage and delivery, not data validation |
+| **Performance** | No parsing or validation overhead in the critical path |
+| **Flexibility** | Applications choose their own serialization formats |
+| **Independent scaling** | Schema operations scale separately from message throughput |
+
+Schema enforcement happens at the client level—producers serialize with a schema, consumers deserialize with a schema—while the broker remains unaware of message structure. Schema Registry provides the coordination layer that makes this work across distributed applications.
+
+---
+
+## Schema Registry Products
+
+Multiple Schema Registry implementations exist, each with different licensing, features, and deployment models.
+
+### Confluent Schema Registry
+
+The original Schema Registry, created by Confluent (the company founded by Apache Kafka's creators). First released as part of Confluent Platform around 2015.
+
+| Aspect | Details |
+|--------|---------|
+| **License** | Confluent Community License (source-available, not open source) |
+| **Formats** | Avro, Protobuf, JSON Schema |
+| **Storage** | Kafka topic (`_schemas`) |
+| **Deployment** | Self-managed or Confluent Cloud |
+| **Ecosystem** | Largest ecosystem of client libraries, connectors, tools |
+
+Confluent Schema Registry is the de facto standard—most documentation, tutorials, and client libraries assume this implementation.
+
+### Apicurio Registry
+
+Open source registry developed by Red Hat, supporting multiple artifact types beyond Kafka schemas.
+
+| Aspect | Details |
+|--------|---------|
+| **License** | Apache 2.0 (fully open source) |
+| **Formats** | Avro, Protobuf, JSON Schema, OpenAPI, AsyncAPI, GraphQL, WSDL |
+| **Storage** | Kafka, PostgreSQL, or SQL Server |
+| **Deployment** | Self-managed or Red Hat OpenShift |
+| **Ecosystem** | Confluent SerDe compatible mode available |
+
+Apicurio is the choice for organizations requiring open source licensing or needing to manage API specifications alongside Kafka schemas.
+
+### Karapace
+
+Open source drop-in replacement for Confluent Schema Registry, developed by Aiven.
+
+| Aspect | Details |
+|--------|---------|
+| **License** | Apache 2.0 (fully open source) |
+| **Formats** | Avro, Protobuf, JSON Schema |
+| **Storage** | Kafka topic |
+| **Deployment** | Self-managed or Aiven Cloud |
+| **Ecosystem** | API-compatible with Confluent Schema Registry |
+
+Karapace aims for 1:1 compatibility with Confluent Schema Registry API, enabling migration without client changes.
+
+### AWS Glue Schema Registry
+
+Fully managed schema registry integrated with AWS services.
+
+| Aspect | Details |
+|--------|---------|
+| **License** | Proprietary (AWS managed service) |
+| **Formats** | Avro, JSON Schema, Protobuf |
+| **Storage** | AWS managed |
+| **Deployment** | AWS only (serverless) |
+| **Ecosystem** | Integrates with MSK, Kinesis, Lambda, Glue ETL |
+
+AWS Glue Schema Registry is appropriate for AWS-centric architectures using Amazon MSK.
+
+### Azure Schema Registry
+
+Schema registry for Azure Event Hubs, supporting Kafka protocol.
+
+| Aspect | Details |
+|--------|---------|
+| **License** | Proprietary (Azure managed service) |
+| **Formats** | Avro, JSON |
+| **Storage** | Azure managed |
+| **Deployment** | Azure only |
+| **Ecosystem** | Integrates with Event Hubs, Azure Functions |
+
+### Comparison Summary
+
+| Registry | License | Cloud Option | Confluent API Compatible |
+|----------|---------|--------------|-------------------------|
+| **Confluent** | Community License | Confluent Cloud | ✅ (reference implementation) |
+| **Apicurio** | Apache 2.0 | Red Hat OpenShift | ✅ (compatibility mode) |
+| **Karapace** | Apache 2.0 | Aiven Cloud | ✅ (drop-in replacement) |
+| **AWS Glue** | Proprietary | AWS only | ❌ (AWS SDK required) |
+| **Azure** | Proprietary | Azure only | ❌ (Azure SDK required) |
+
+!!! tip "Migration Considerations"
+    Karapace and Apicurio offer Confluent API compatibility, enabling migration from Confluent Schema Registry without changing client code. AWS Glue and Azure Schema Registry require AWS/Azure-specific client libraries.
+
 ---
 
 ## What is a Schema?
