@@ -739,15 +739,16 @@ nav:
           - Build vs Buy: data-platforms/kafka/concepts/kafka-connect/build-vs-buy.md
       - Architecture:
         - Overview: data-platforms/kafka/architecture/index.md
-        - Topics & Partitions: data-platforms/kafka/architecture/topics/index.md
-        - Transaction Coordinator: data-platforms/kafka/architecture/transactions/index.md
         - Brokers: data-platforms/kafka/architecture/brokers/index.md
-        - Topology: data-platforms/kafka/architecture/topology/index.md
+        - Memory Management: data-platforms/kafka/architecture/memory-management/index.md
         - Storage Engine: data-platforms/kafka/architecture/storage-engine/index.md
+        - Topics & Partitions: data-platforms/kafka/architecture/topics/index.md
         - Replication: data-platforms/kafka/architecture/replication/index.md
+        - KRaft Consensus: data-platforms/kafka/architecture/kraft/index.md
+        - Transaction Coordinator: data-platforms/kafka/architecture/transactions/index.md
+        - Topology: data-platforms/kafka/architecture/topology/index.md
         - Fault Tolerance: data-platforms/kafka/architecture/fault-tolerance/index.md
         - Cluster Management: data-platforms/kafka/architecture/cluster-management/index.md
-        - KRaft Consensus: data-platforms/kafka/architecture/kraft/index.md
         - Client Connections:
           - Overview: data-platforms/kafka/architecture/client-connections/index.md
           - Wire Protocol:
@@ -773,7 +774,6 @@ nav:
           - Overview: data-platforms/kafka/architecture/scaling/index.md
           - Partition Reassignment: data-platforms/kafka/architecture/scaling/partition-reassignment.md
           - Consumer Rebalancing: data-platforms/kafka/architecture/scaling/consumer-rebalancing.md
-        - Memory Management: data-platforms/kafka/architecture/memory-management/index.md
         - Performance Internals: data-platforms/kafka/architecture/performance-internals/index.md
       - Application Development:
         - Overview: data-platforms/kafka/application-development/index.md

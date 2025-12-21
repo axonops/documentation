@@ -23,34 +23,34 @@ Schema Registry is an external service that stores and manages schemas for Kafka
 @startuml
 skinparam backgroundColor transparent
 
-rectangle "Kafka Cluster" as kafka #E3F2FD {
-    rectangle "Broker 1" as b1
-    rectangle "Broker 2" as b2
-    rectangle "Broker 3" as b3
+package "Schema Registry (separate service)" #E8F5E9 {
+    package "Order" as order_subject {
+        card "v1: id=101" as s1
+        card "v2: id=273" as s2
+    }
+    package "User" {
+        card "v1: id=83" as s3
+    }
 }
 
-rectangle "Schema Registry" as sr #C8E6C9 {
-    rectangle "REST API" as api
-    database "_schemas topic" as schemas
+together {
+    rectangle "Producer" as prod
+    rectangle "Consumer" as cons
 }
 
-rectangle "Producer" as prod
-rectangle "Consumer" as cons
+package "Kafka Cluster" {
+    queue "Topic: orders" as topic
+}
 
-prod --> kafka : messages
-kafka --> cons : messages
+prod -up-> s2 : serialize - lookup id=273
+cons -up-> s2 : lookup id=273
 
-prod --> sr : register/lookup schema
-cons --> sr : lookup schema
-
-note bottom of sr
-  Separate deployment
-  Own scaling requirements
-  Independent operations
-end note
+prod -down-> topic : produce [id=273|payload]
+topic -down-> cons : consume [id=273|payload]
 
 @enduml
 ```
+
 
 ### Why a Separate Service?
 
@@ -71,7 +71,7 @@ Schema enforcement happens at the client level—producers serialize with a sche
 
 Multiple Schema Registry implementations exist, each with different licensing, features, and deployment models.
 
-### Confluent Schema Registry
+### [Confluent Schema Registry](https://docs.confluent.io/platform/current/schema-registry/index.html)
 
 The original Schema Registry, created by Confluent (the company founded by Apache Kafka's creators). First released as part of Confluent Platform around 2015.
 
@@ -85,7 +85,7 @@ The original Schema Registry, created by Confluent (the company founded by Apach
 
 Confluent Schema Registry is the de facto standard—most documentation, tutorials, and client libraries assume this implementation.
 
-### Apicurio Registry
+### [Apicurio Registry](https://www.apicur.io/registry/)
 
 Open source registry developed by Red Hat, supporting multiple artifact types beyond Kafka schemas.
 
@@ -99,7 +99,7 @@ Open source registry developed by Red Hat, supporting multiple artifact types be
 
 Apicurio is the choice for organizations requiring open source licensing or needing to manage API specifications alongside Kafka schemas.
 
-### Karapace
+### [Karapace](https://github.com/Aiven-Open/karapace)
 
 Open source drop-in replacement for Confluent Schema Registry, developed by Aiven.
 
@@ -113,7 +113,7 @@ Open source drop-in replacement for Confluent Schema Registry, developed by Aive
 
 Karapace aims for 1:1 compatibility with Confluent Schema Registry API, enabling migration without client changes.
 
-### AWS Glue Schema Registry
+### [AWS Glue Schema Registry](https://docs.aws.amazon.com/glue/latest/dg/schema-registry.html)
 
 Fully managed schema registry integrated with AWS services.
 
@@ -127,7 +127,7 @@ Fully managed schema registry integrated with AWS services.
 
 AWS Glue Schema Registry is appropriate for AWS-centric architectures using Amazon MSK.
 
-### Azure Schema Registry
+### [Azure Schema Registry](https://learn.microsoft.com/en-us/azure/event-hubs/schema-registry-overview)
 
 Schema registry for Azure Event Hubs, supporting Kafka protocol.
 
