@@ -1,14 +1,16 @@
 ---
-title: "Kafka Brokers"
-description: "Apache Kafka broker architecture. What a broker does, how it stores data, serves clients, and coordinates with the cluster."
+title: "Kafka Broker Architecture"
+description: "Apache Kafka broker internal architecture. Threading, request processing, coordinators, storage, and recovery."
 meta:
   - name: keywords
-    content: "Kafka broker, Kafka server, broker architecture, KRaft, partition leader"
+    content: "Kafka broker, Kafka server, broker architecture, KRaft, partition leader, broker internals"
 ---
 
-# Kafka Brokers
+# Kafka Broker Architecture
 
-A Kafka broker is a server process that stores messages and serves client requests. Each broker in a cluster handles a portion of the data, enabling horizontal scaling and fault tolerance.
+This section covers the internal architecture of a Kafka broker—the server process that stores messages and serves client requests. Understanding broker internals is essential for capacity planning, performance tuning, and troubleshooting.
+
+A Kafka broker handles a portion of the cluster's data, enabling horizontal scaling and fault tolerance.
 
 ---
 
@@ -118,11 +120,13 @@ end note
 
 A single broker typically hosts hundreds or thousands of partition replicas, some as leader, others as follower.
 
+For replication protocol details, ISR management, and leader election, see [Replication](../replication/index.md).
+
 ---
 
-## KRaft Mode (Kafka 3.3+)
+## KRaft Mode
 
-Modern Kafka clusters use KRaft (Kafka Raft) for metadata management, eliminating the ZooKeeper dependency.
+Modern Kafka clusters (3.3+) use KRaft (Kafka Raft) for metadata management, eliminating the ZooKeeper dependency.
 
 ```plantuml
 @startuml
@@ -166,48 +170,277 @@ end note
 | **Combined** | Small clusters (≤10 brokers) | Simpler, but resource contention |
 | **Dedicated** | Large clusters | More servers, but better isolation |
 
+For complete KRaft documentation, see [KRaft: Kafka Raft Consensus](../kraft/index.md).
+
 ---
 
-## Broker Lifecycle
+## Network Layer
+
+The network layer handles all client and inter-broker communication using a reactor pattern with distinct thread pools.
+
+### Threading Model
 
 ```plantuml
 @startuml
 skinparam backgroundColor transparent
 
-[*] --> Starting
+rectangle "**Acceptor Thread**\n(1 per listener)" as acceptor #E3F2FD
+rectangle "**Network Processors**\n(num.network.threads)" as processors #BBDEFB
+rectangle "**Request Queue**" as reqq #FFF9C4
+rectangle "**Request Handlers**\n(num.io.threads)" as handlers #C8E6C9
+rectangle "**Response Queue**\n(per processor)" as respq #FFF9C4
 
-Starting --> LogRecovery : load configuration
-LogRecovery --> Registering : recover partitions
-Registering --> CatchingUp : register with controller
-CatchingUp --> Active : replicas in sync
+acceptor -right-> processors : new connections
+processors -down-> reqq : requests
+reqq -right-> handlers : dequeue
+handlers -down-> respq : responses
+respq -up-> processors : send
 
-Active --> Active : serving requests
+@enduml
+```
 
-Active --> ControlledShutdown : SIGTERM
-ControlledShutdown --> [*] : leadership transferred
+| Thread Pool | Default | Configuration | Role |
+|-------------|---------|---------------|------|
+| **Acceptor** | 1 per listener | Fixed | Accept new TCP connections |
+| **Network Processors** | 3 | `num.network.threads` | Read requests, write responses (NIO) |
+| **Request Handlers** | 8 | `num.io.threads` | Execute request logic |
 
-Active --> Crashed : process killed
-Crashed --> Starting : restart
+### Request Flow
 
-note right of LogRecovery
-  May take minutes if
-  many partitions or
-  unclean shutdown
-end note
+1. **Accept** - Acceptor thread accepts TCP connection
+2. **Assign** - Connection assigned to network processor (round-robin)
+3. **Read** - Network processor reads request from socket
+4. **Queue** - Request placed in shared request queue
+5. **Handle** - Request handler dequeues and executes
+6. **Response** - Response queued for network processor
+7. **Send** - Network processor writes response to socket
 
-note right of ControlledShutdown
-  1. Stop accepting new connections
-  2. Transfer partition leadership
-  3. Complete in-flight requests
-  4. Deregister from controller
-end note
+### Thread Pool Sizing
+
+| Cluster Size | `num.network.threads` | `num.io.threads` |
+|--------------|----------------------|------------------|
+| Small (< 10 brokers) | 3 | 8 |
+| Medium (10-50 brokers) | 4-6 | 8-16 |
+| Large (50+ brokers) | 8+ | 16-32 |
+
+For security configuration, see [Authentication](../../security/authentication/index.md) and [Authorization](../../security/authorization/index.md).
+
+---
+
+## Request Purgatory
+
+The purgatory holds delayed requests waiting for conditions to be satisfied, enabling efficient handling without blocking handler threads.
+
+### Delayed Operations
+
+| Operation | Completion Condition | Timeout |
+|-----------|---------------------|---------|
+| **DelayedProduce** | All ISR replicas acknowledged | `request.timeout.ms` |
+| **DelayedFetch** | `min.bytes` data available | `fetch.max.wait.ms` |
+| **DelayedJoin** | All group members joined | `rebalance.timeout.ms` |
+| **DelayedHeartbeat** | Session timeout check | `session.timeout.ms` |
+
+### Purgatory Architecture
+
+```plantuml
+@startuml
+skinparam backgroundColor transparent
+
+rectangle "Request Handler" as handler
+rectangle "Purgatory" as purg #FFF9C4 {
+    rectangle "Delayed\nOperations" as delayed
+    rectangle "Timer Wheel" as timer
+    rectangle "Watch Keys" as watch
+}
+rectangle "Watcher" as watcher
+
+handler --> purg : add delayed op
+timer --> delayed : timeout check
+watch --> watcher : condition check
+watcher --> delayed : complete
+delayed --> handler : response
+
+@enduml
+```
+
+### Produce with acks=all
+
+```plantuml
+@startuml
+skinparam backgroundColor transparent
+
+participant "Producer" as p
+participant "Leader" as l
+participant "Purgatory" as purg
+participant "Follower" as f
+
+p -> l : ProduceRequest(acks=all)
+l -> l : Append to local log
+l -> purg : Create DelayedProduce
+
+f -> l : FetchRequest
+l --> f : FetchResponse
+f -> f : Append to log
+
+l -> l : All ISR caught up
+purg --> l : Complete DelayedProduce
+l --> p : ProduceResponse(success)
+
+@enduml
+```
+
+### Timer Wheel
+
+Kafka uses a hierarchical timing wheel for O(1) timeout management:
+
+```plantuml
+@startuml
+skinparam backgroundColor transparent
+
+rectangle "Level 0 (1ms slots)" as l0 {
+    rectangle "1" as s1 #C8E6C9
+    rectangle "7" as s7 #C8E6C9
+    rectangle "16" as s16 #FFF9C4
+}
+
+rectangle "Level 1 (20ms slots)" as l1 {
+    rectangle "2" as l1s2 #BBDEFB
+    rectangle "5" as l1s5 #BBDEFB
+}
+
+note bottom of s16: Current tick
+note bottom of l1: Overflow wheel
+
+@enduml
+```
+
+---
+
+## Coordinators
+
+Brokers host two coordinator components based on internal topic partition assignment.
+
+### Group Coordinator
+
+Manages consumer group membership, partition assignment, and offset storage.
+
+```
+coordinator_partition = hash(group.id) % 50
+coordinator_broker = leader of __consumer_offsets partition
+```
+
+| Function | Description |
+|----------|-------------|
+| **Membership management** | Track group members via heartbeats |
+| **Rebalance coordination** | Orchestrate JoinGroup/SyncGroup protocol |
+| **Offset storage** | Persist committed offsets to `__consumer_offsets` |
+
+For consumer group protocol and operations, see [Consumer Groups](../../application-development/consumers/consumer-groups.md).
+
+### Transaction Coordinator
+
+Manages exactly-once semantics for transactional producers.
+
+```
+coordinator = hash(transactional.id) % 50
+coordinator_broker = leader of __transaction_state partition
+```
+
+| Function | Description |
+|----------|-------------|
+| **PID assignment** | Assign producer IDs and epochs |
+| **State persistence** | Store transaction state in `__transaction_state` |
+| **Commit coordination** | Write transaction markers to partition leaders |
+
+For transaction semantics and protocol, see [Transactions](../transactions/index.md).
+
+### Internal Topics
+
+| Topic | Partitions | Purpose |
+|-------|------------|---------|
+| `__consumer_offsets` | 50 | Consumer group offsets |
+| `__transaction_state` | 50 | Transaction coordinator state |
+| `__cluster_metadata` | 1 | KRaft metadata log |
+
+---
+
+## Startup and Recovery
+
+When a broker starts—especially after a crash—it must recover state before serving requests.
+
+### Startup Sequence
+
+```plantuml
+@startuml
+skinparam backgroundColor transparent
+
+[*] --> LoadConfig : broker starts
+
+LoadConfig --> LogRecovery : load server.properties
+LogRecovery --> IndexCheck : scan log directories
+IndexCheck --> RegisterWithController : verify/rebuild indexes
+RegisterWithController --> CatchUp : register with controller
+CatchUp --> Active : replicas catch up
+
+Active --> [*] : serving requests
+
+note right of LogRecovery: Slowest phase
+
+@enduml
+```
+
+### Clean vs Unclean Shutdown
+
+| Shutdown Type | Detection | Recovery Behavior |
+|---------------|-----------|-------------------|
+| **Clean** | `.kafka_cleanshutdown` marker | Skip log scanning, fast startup |
+| **Unclean** | No marker (crash, kill -9) | Full log recovery, validate segments |
+
+### Log Recovery
+
+On unclean shutdown, each partition's log is validated:
+
+1. Scan log directory for segment files
+2. Validate segment CRC checksums
+3. Truncate at corruption point if found
+4. Rebuild indexes if invalid
+5. Truncate incomplete records at end of active segment
+
+### Index Rebuild Cost
+
+| Partition Size | Rebuild Time |
+|----------------|--------------|
+| 1 GB | 5-15 seconds |
+| 10 GB | 30-90 seconds |
+| 100 GB | 5-15 minutes |
+
+!!! warning "Many Partitions = Slow Startup"
+    A broker with 1000 partitions requiring index rebuild can take 30+ minutes to start.
+
+### Log Truncation
+
+After leader failure, followers may need to truncate divergent entries:
+
+```plantuml
+@startuml
+skinparam backgroundColor transparent
+
+participant "Follower" as f
+participant "New Leader" as l
+
+f -> l : OffsetsForLeaderEpoch(epoch=5)
+l --> f : endOffset=1000
+
+f -> f : Local log has offset 1050 (divergent)
+f -> f : Truncate to offset 1000
+
+f -> l : Fetch(offset=1000)
+l --> f : Records from 1000
 
 @enduml
 ```
 
 ### Controlled Shutdown
-
-A controlled shutdown ensures no data loss and minimal disruption:
 
 ```bash
 # Graceful shutdown (recommended)
@@ -220,47 +453,16 @@ kill <broker-pid>
 The broker will:
 
 1. Notify the controller
-2. Transfer leadership of all partitions to other brokers
-3. Wait for in-flight requests to complete
-4. Deregister and exit
+2. Transfer leadership to other ISR members
+3. Complete in-flight requests
+4. Write clean shutdown marker
 
 !!! warning "Avoid kill -9"
-    `kill -9` causes unclean shutdown, requiring full log recovery on restart and potentially causing under-replication.
+    `kill -9` causes unclean shutdown, requiring full log recovery.
 
 ---
 
-## Key Metrics
-
-| Metric | What It Tells You |
-|--------|-------------------|
-| `UnderReplicatedPartitions` | Partitions with fewer replicas than expected (should be 0) |
-| `OfflinePartitionsCount` | Partitions without a leader (should be 0) |
-| `ActiveControllerCount` | Whether this broker is the controller (1 or 0) |
-| `MessagesInPerSec` | Throughput of incoming messages |
-| `BytesInPerSec` / `BytesOutPerSec` | Network throughput |
-| `RequestHandlerAvgIdlePercent` | Handler thread utilization (low = overloaded) |
-| `NetworkProcessorAvgIdlePercent` | Network thread utilization |
-
-```bash
-# Quick health check via JMX
-kafka-run-class.sh kafka.tools.JmxTool \
-  --object-name 'kafka.server:type=ReplicaManager,name=UnderReplicatedPartitions' \
-  --jmx-url service:jmx:rmi:///jndi/rmi://localhost:9999/jmxrmi
-```
-
----
-
-## Failure Scenarios
-
-| Scenario | Impact | Recovery |
-|----------|--------|----------|
-| **Single broker failure** | Partitions fail over to other brokers | Automatic leader election |
-| **Minority of brokers down** | Cluster continues with reduced capacity | Restart failed brokers |
-| **Majority of brokers down** | Some partitions unavailable | Restart brokers, may need manual intervention |
-| **Controller failure** | New controller elected | Automatic (KRaft quorum) |
-| **Disk failure** | Partitions on that disk unavailable | Replace disk, broker recovers from replicas |
-
-### High Availability Settings
+## High Availability Settings
 
 ```properties
 # Survive 2 broker failures
@@ -272,6 +474,8 @@ min.insync.replicas=2
 # Never elect out-of-sync replica as leader
 unclean.leader.election.enable=false
 ```
+
+For failure scenarios and recovery procedures, see [Fault Tolerance](../fault-tolerance/index.md).
 
 ---
 
@@ -293,12 +497,22 @@ log.retention.hours=168
 log.segment.bytes=1073741824
 ```
 
+For log segment internals, indexes, and compaction, see [Storage Engine](../storage-engine/index.md).
+
 ### Threading
 
 ```properties
 num.network.threads=3
 num.io.threads=8
 num.replica.fetchers=1
+
+# Request queue
+queued.max.requests=500
+
+# Socket settings
+socket.send.buffer.bytes=102400
+socket.receive.buffer.bytes=102400
+socket.request.max.bytes=104857600
 ```
 
 ### Replication
@@ -309,19 +523,38 @@ min.insync.replicas=2
 replica.lag.time.max.ms=30000
 ```
 
+### Recovery
+
+```properties
+# Recovery threads (increase for faster recovery)
+num.recovery.threads.per.data.dir=1
+
+# Unclean leader election (data loss risk)
+unclean.leader.election.enable=false
+```
+
 For complete configuration reference, see [Broker Configuration](../../operations/configuration/index.md).
 
 ---
 
-## Section Contents
+## Key Metrics
 
-### Deep Dives
+| Metric | Alert Threshold |
+|--------|-----------------|
+| `kafka.network:type=RequestChannel,name=RequestQueueSize` | > 100 sustained |
+| `kafka.network:type=SocketServer,name=NetworkProcessorAvgIdlePercent` | < 30% |
+| `kafka.server:type=KafkaRequestHandlerPool,name=RequestHandlerAvgIdlePercent` | < 30% |
+| `kafka.server:type=DelayedOperationPurgatory,name=PurgatorySize,delayedOperation=Produce` | > 1000 |
 
-- **[Broker Internals](internals.md)** - Network layer, request processing, log subsystem, replica manager, purgatory, group coordinator, startup and recovery
+---
 
-### Related Topics
+## Related Architecture Topics
 
-- **[Replication](../replication/index.md)** - How data is replicated between brokers
-- **[Fault Tolerance](../fault-tolerance/index.md)** - Failure detection and recovery
-- **[KRaft](../kraft/index.md)** - KRaft consensus protocol internals
-- **[Cluster Management](../cluster-management/index.md)** - Metadata management and coordination
+| Topic | Description |
+|-------|-------------|
+| **[Storage Engine](../storage-engine/index.md)** | Log segments, indexes, compaction, retention |
+| **[Replication](../replication/index.md)** | ISR, leader election, high watermark |
+| **[Memory Management](../memory-management/index.md)** | JVM heap, page cache, zero-copy |
+| **[KRaft](../kraft/index.md)** | Raft consensus, controller quorum, migration |
+| **[Fault Tolerance](../fault-tolerance/index.md)** | Failure detection and recovery |
+| **[Cluster Management](../cluster-management/index.md)** | Metadata management and coordination |
