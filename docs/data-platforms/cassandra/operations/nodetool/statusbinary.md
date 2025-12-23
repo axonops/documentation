@@ -42,51 +42,66 @@ nodetool [connection_options] statusbinary
 
 When the native transport is running:
 
-```
-┌─────────────────────────────────────────────────────────────┐
-│                     Cassandra Node                          │
-│                                                             │
-│   ┌─────────────────────────────────────────────────────┐   │
-│   │           Native Transport (Port 9042)              │   │
-│   │                    STATUS: RUNNING                  │   │
-│   └─────────────────────────────────────────────────────┘   │
-│              ▲           ▲           ▲                      │
-│              │           │           │                      │
-│         ┌────┴───┐  ┌────┴───┐  ┌────┴───┐                  │
-│         │ Client │  │ Client │  │ cqlsh  │                  │
-│         │ Driver │  │ Driver │  │        │                  │
-│         └────────┘  └────────┘  └────────┘                  │
-└─────────────────────────────────────────────────────────────┘
+```plantuml
+@startuml
+skinparam backgroundColor #FEFEFE
+skinparam rectangleBorderColor #333333
+skinparam componentBorderColor #333333
 
-Node can:
-✓ Accept new CQL connections
-✓ Serve as coordinator for queries
-✓ Return query results to clients
-✓ Send schema/topology change events
+rectangle "Cassandra Node" as node {
+    rectangle "Native Transport (Port 9042)\n**STATUS: RUNNING**" as transport #90EE90
+}
+
+rectangle "Client\nDriver" as client1
+rectangle "Client\nDriver" as client2
+rectangle "cqlsh" as cqlsh
+
+client1 -up-> transport : CQL
+client2 -up-> transport : CQL
+cqlsh -up-> transport : CQL
+
+note bottom of node
+  Node can:
+  ✓ Accept new CQL connections
+  ✓ Serve as coordinator for queries
+  ✓ Return query results to clients
+  ✓ Send schema/topology change events
+end note
+@enduml
 ```
 
 ### What "Not Running" Means
 
 When the native transport is not running:
 
-```
-┌─────────────────────────────────────────────────────────────┐
-│                     Cassandra Node                          │
-│                                                             │
-│   ┌─────────────────────────────────────────────────────┐   │
-│   │           Native Transport (Port 9042)              │   │
-│   │                  STATUS: NOT RUNNING                │   │
-│   │                     ╳ CLOSED ╳                      │   │
-│   └─────────────────────────────────────────────────────┘   │
-│                                                             │
-│         ╳ Clients cannot connect ╳                          │
-│                                                             │
-│   But node still:                                           │
-│   ✓ Participates in gossip                                  │
-│   ✓ Receives replicated writes                              │
-│   ✓ Serves as replica for reads from other coordinators     │
-│   ✓ Shows as UP in nodetool status                          │
-└─────────────────────────────────────────────────────────────┘
+```plantuml
+@startuml
+skinparam backgroundColor #FEFEFE
+skinparam rectangleBorderColor #333333
+skinparam componentBorderColor #333333
+
+rectangle "Cassandra Node" as node {
+    rectangle "Native Transport (Port 9042)\n**STATUS: NOT RUNNING**\n✗ CLOSED ✗" as transport #FF6B6B
+}
+
+rectangle "Client\nDriver" as client1 #CCCCCC
+rectangle "Client\nDriver" as client2 #CCCCCC
+rectangle "cqlsh" as cqlsh #CCCCCC
+
+client1 -up-x transport #FF0000 : blocked
+client2 -up-x transport #FF0000 : blocked
+cqlsh -up-x transport #FF0000 : blocked
+
+note bottom of node
+  ✗ Clients cannot connect
+
+  But node still:
+  ✓ Participates in gossip
+  ✓ Receives replicated writes
+  ✓ Serves as replica for reads from other coordinators
+  ✓ Shows as UP in nodetool status
+end note
+@enduml
 ```
 
 ---
