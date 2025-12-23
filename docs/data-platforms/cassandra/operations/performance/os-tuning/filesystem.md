@@ -877,10 +877,13 @@ For data directories, XFS generally provides advantages:
 | Use Case | Recommended | Alternative | Avoid |
 |----------|-------------|-------------|-------|
 | **Data directories** | XFS | ext4 | ZFS (write amplification) |
-| **Commit logs (uncompressed)** | ext4 | XFS + compression | ZFS |
+| **Commit logs (uncompressed)** | ext4 | XFS (with commitlog compression enabled) | ZFS |
 | **Commit logs (compressed)** | XFS or ext4 | - | ZFS |
-| **Mixed (single mount)** | XFS + compression | ext4 | ZFS |
+| **Mixed (single mount)** | XFS (with commitlog compression) | ext4 | ZFS |
 | **Dev/test with snapshots** | ZFS | XFS/ext4 + LVM | - |
+
+!!! note "Commitlog Compression"
+    "Commitlog compression" refers to Cassandra's built-in compression configured in `cassandra.yaml`, not filesystem-level compression. XFS does not support filesystem compression. Enabling commitlog compression switches Cassandra from `MappedByteBuffer` to `FileChannel` I/O, which performs equally well on both ext4 and XFS.
 
 ### Production Recommendations
 
@@ -919,9 +922,9 @@ commitlog_compression:
 
 | Distribution | Data Directory | Commit Log |
 |--------------|----------------|------------|
-| **RHEL/CentOS/Rocky** | XFS | ext4 (or XFS + compression) |
+| **RHEL/CentOS/Rocky** | XFS | ext4, or XFS with commitlog compression |
 | **Ubuntu/Debian** | XFS | Either (minimal difference) |
-| **Amazon Linux** | XFS | ext4 (or XFS + compression) |
+| **Amazon Linux** | XFS | ext4, or XFS with commitlog compression |
 
 ---
 
@@ -1038,7 +1041,7 @@ filefrag /var/lib/cassandra/data/keyspace/table-*/nb-*-big-Data.db
 | Use ext4 for commit logs OR enable compression | ext4 has better MappedByteBuffer handling |
 | Avoid ZFS for production | Write amplification and memory contention impact performance |
 | Always use `noatime` | Eliminates unnecessary write overhead |
-| Enable commit log compression on XFS | Neutralizes filesystem performance difference |
+| Enable Cassandra commitlog compression if using XFS | Neutralizes MappedByteBuffer performance difference |
 | Match filesystem choice to distribution | RHEL-based systems show larger ext4/XFS gaps |
 | If ZFS required, limit ARC and tune recordsize | Minimize performance impact with proper configuration |
 
