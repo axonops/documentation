@@ -12996,16 +12996,83 @@ data-et-multi-view="{&quot;schema&quot;:{&quot;content&quot;:{&quot;desktop&quot
   
   
   
-    <li class="md-nav__item">
-      <a href="../../../cassandra/operations/performance/os-tuning/" class="md-nav__link">
+    
+    
+    
+      
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
         
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_7_2_5_13_5" >
+        
+          
+          <label class="md-nav__link" for="__nav_7_2_5_13_5" id="__nav_7_2_5_13_5_label" tabindex="0">
+            
   
   <span class="md-ellipsis">
     OS Tuning
   </span>
   
 
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="5" aria-labelledby="__nav_7_2_5_13_5_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_7_2_5_13_5">
+            <span class="md-nav__icon md-icon"></span>
+            OS Tuning
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../cassandra/operations/performance/os-tuning/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Overview
+  </span>
+  
+
       </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../cassandra/operations/performance/os-tuning/filesystem/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Filesystem Selection
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
     </li>
   
 
@@ -18589,6 +18656,27 @@ data-et-multi-view="{&quot;schema&quot;:{&quot;content&quot;:{&quot;desktop&quot
 
               
             
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="filesystem/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Filesystem Selection
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
           </ul>
         </nav>
       
@@ -19796,15 +19884,40 @@ kafka<span class="w"> </span>soft<span class="w"> </span>nproc<span class="w"> <
 kafka<span class="w"> </span>hard<span class="w"> </span>nproc<span class="w"> </span><span class="m">128000</span>
 </code></pre></div>
 <h3 id="disk-configuration">Disk Configuration<a class="headerlink" href="#disk-configuration" title="Permanent link">¶</a></h3>
-<div class="highlight"><pre><span></span><code><span class="c1"># Mount options for Kafka data</span>
-/dev/sdb<span class="w"> </span>/kafka<span class="w"> </span>xfs<span class="w"> </span>noatime,nodiratime,nobarrier<span class="w"> </span><span class="m">0</span><span class="w"> </span><span class="m">2</span>
+<p>Filesystem selection significantly impacts Kafka throughput. XFS is recommended for all log directories.</p>
+<table>
+<thead>
+<tr>
+<th>Filesystem</th>
+<th>Recommendation</th>
+<th>Notes</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>XFS</strong></td>
+<td>Recommended</td>
+<td>Best sequential write performance, allocation group parallelism</td>
+</tr>
+<tr>
+<td><strong>ext4</strong></td>
+<td>Acceptable</td>
+<td>Suitable for smaller deployments</td>
+</tr>
+<tr>
+<td><strong>ZFS</strong></td>
+<td>Not recommended</td>
+<td>CoW overhead, ARC competes with page cache</td>
+</tr>
+</tbody>
+</table>
+<div class="highlight"><pre><span></span><code><span class="c1"># Mount options for Kafka data (XFS)</span>
+/dev/nvme0n1<span class="w"> </span>/kafka/data<span class="w"> </span>xfs<span class="w"> </span>noatime,nodiratime<span class="w"> </span><span class="m">0</span><span class="w"> </span><span class="m">2</span>
 
-<span class="c1"># I/O scheduler (for SSDs)</span>
-<span class="nb">echo</span><span class="w"> </span>none<span class="w"> </span>&gt;<span class="w"> </span>/sys/block/sdb/queue/scheduler
-
-<span class="c1"># Read-ahead (for HDDs)</span>
-blockdev<span class="w"> </span>--setra<span class="w"> </span><span class="m">4096</span><span class="w"> </span>/dev/sdb
+<span class="c1"># I/O scheduler (for NVMe/SSDs)</span>
+<span class="nb">echo</span><span class="w"> </span>none<span class="w"> </span>&gt;<span class="w"> </span>/sys/block/nvme0n1/queue/scheduler
 </code></pre></div>
+<p>→ <a href="filesystem/">Filesystem Selection Guide</a> - Complete filesystem architecture comparison, page cache tuning, and configuration</p>
 <hr>
 <h2 id="jvm-tuning">JVM Tuning<a class="headerlink" href="#jvm-tuning" title="Permanent link">¶</a></h2>
 <h3 id="heap-configuration">Heap Configuration<a class="headerlink" href="#heap-configuration" title="Permanent link">¶</a></h3>
@@ -19930,6 +20043,7 @@ kafka-consumer-perf-test.sh<span class="w"> </span><span class="se">\</span>
 <hr>
 <h2 id="related-documentation">Related Documentation<a class="headerlink" href="#related-documentation" title="Permanent link">¶</a></h2>
 <ul>
+<li><a href="filesystem/">Filesystem Selection</a> - Filesystem recommendations and page cache tuning</li>
 <li><a href="../">Operations Overview</a> - Operations guide</li>
 <li><a href="capacity-planning/">Capacity Planning</a> - Sizing guide</li>
 <li><a href="../configuration/">Configuration</a> - Configuration reference</li>

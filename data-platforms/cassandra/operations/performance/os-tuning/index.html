@@ -16,7 +16,7 @@
         <link rel="prev" href="../jvm-tuning/">
       
       
-        <link rel="next" href="../query-optimization/">
+        <link rel="next" href="filesystem/">
       
       
       <link rel="icon" href="/img/favicon.ico">
@@ -74,7 +74,7 @@
 {
   "@context": "https://schema.org",
   "@type": "HowTo",
-  "headline": "OS Tuning - Apache Cassandra Documentation",
+  "headline": "Overview - Apache Cassandra Documentation",
   "description": "Official documentation for AxonOps - the unified platform for monitoring, maintenance, and backup of Apache Cassandra and Apache Kafka clusters.",
   "about": {
     "@type": "SoftwareApplication",
@@ -13004,6 +13004,46 @@ data-et-multi-view="{&quot;schema&quot;:{&quot;content&quot;:{&quot;desktop&quot
   
   
   
+    
+    
+    
+      
+      
+    
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_7_2_5_13_5" checked>
+        
+          
+          <label class="md-nav__link" for="__nav_7_2_5_13_5" id="__nav_7_2_5_13_5_label" tabindex="0">
+            
+  
+  <span class="md-ellipsis">
+    OS Tuning
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="5" aria-labelledby="__nav_7_2_5_13_5_label" aria-expanded="true">
+          <label class="md-nav__title" for="__nav_7_2_5_13_5">
+            <span class="md-nav__icon md-icon"></span>
+            OS Tuning
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+    
+  
+  
+  
     <li class="md-nav__item md-nav__item--active">
       
       <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
@@ -13016,7 +13056,7 @@ data-et-multi-view="{&quot;schema&quot;:{&quot;content&quot;:{&quot;desktop&quot
           
   
   <span class="md-ellipsis">
-    OS Tuning
+    Overview
   </span>
   
 
@@ -13027,7 +13067,7 @@ data-et-multi-view="{&quot;schema&quot;:{&quot;content&quot;:{&quot;desktop&quot
         
   
   <span class="md-ellipsis">
-    OS Tuning
+    Overview
   </span>
   
 
@@ -13262,30 +13302,6 @@ data-et-multi-view="{&quot;schema&quot;:{&quot;content&quot;:{&quot;desktop&quot
     </span>
   </a>
   
-    <nav class="md-nav" aria-label="Filesystem">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#xfs-recommended" class="md-nav__link">
-    <span class="md-ellipsis">
-      XFS (Recommended)
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#ext4" class="md-nav__link">
-    <span class="md-ellipsis">
-      ext4
-    </span>
-  </a>
-  
-</li>
-        
-      </ul>
-    </nav>
-  
 </li>
       
         <li class="md-nav__item">
@@ -13309,6 +13325,35 @@ data-et-multi-view="{&quot;schema&quot;:{&quot;content&quot;:{&quot;desktop&quot
     </ul>
   
 </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="filesystem/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Filesystem Selection
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
       
     </li>
   
@@ -18496,6 +18541,27 @@ data-et-multi-view="{&quot;schema&quot;:{&quot;content&quot;:{&quot;desktop&quot
 
               
             
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../kafka/operations/performance/filesystem/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Filesystem Selection
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
           </ul>
         </nav>
       
@@ -19329,30 +19395,6 @@ data-et-multi-view="{&quot;schema&quot;:{&quot;content&quot;:{&quot;desktop&quot
     </span>
   </a>
   
-    <nav class="md-nav" aria-label="Filesystem">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#xfs-recommended" class="md-nav__link">
-    <span class="md-ellipsis">
-      XFS (Recommended)
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#ext4" class="md-nav__link">
-    <span class="md-ellipsis">
-      ext4
-    </span>
-  </a>
-  
-</li>
-        
-      </ul>
-    </nav>
-  
 </li>
       
         <li class="md-nav__item">
@@ -19517,13 +19559,36 @@ numactl<span class="w"> </span>--hardware
 numactl<span class="w"> </span>--interleave<span class="o">=</span>all<span class="w"> </span>cassandra
 </code></pre></div>
 <h2 id="filesystem">Filesystem<a class="headerlink" href="#filesystem" title="Permanent link">¶</a></h2>
-<h3 id="xfs-recommended">XFS (Recommended)<a class="headerlink" href="#xfs-recommended" title="Permanent link">¶</a></h3>
-<div class="highlight"><pre><span></span><code><span class="c1"># Mount options</span>
-/dev/sdb1<span class="w"> </span>/var/lib/cassandra<span class="w"> </span>xfs<span class="w"> </span>defaults,noatime,nodiratime<span class="w"> </span><span class="m">0</span><span class="w"> </span><span class="m">2</span>
-</code></pre></div>
-<h3 id="ext4">ext4<a class="headerlink" href="#ext4" title="Permanent link">¶</a></h3>
-<div class="highlight"><pre><span></span><code><span class="c1"># Mount options</span>
-/dev/sdb1<span class="w"> </span>/var/lib/cassandra<span class="w"> </span>ext4<span class="w"> </span>defaults,noatime,nodiratime,data<span class="o">=</span>writeback,barrier<span class="o">=</span><span class="m">0</span>,nobh<span class="w"> </span><span class="m">0</span><span class="w"> </span><span class="m">2</span>
+<p>Filesystem selection significantly impacts Cassandra performance, particularly for commit log operations. The choice between XFS and ext4 depends on workload characteristics and Linux distribution.</p>
+<p><strong>Quick recommendations:</strong></p>
+<table>
+<thead>
+<tr>
+<th>Use Case</th>
+<th>Filesystem</th>
+<th>Notes</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Data directories</strong></td>
+<td>XFS</td>
+<td>Optimized for large files and parallel I/O</td>
+</tr>
+<tr>
+<td><strong>Commit logs</strong></td>
+<td>ext4 or XFS + compression</td>
+<td>ext4 has better memory-mapped I/O performance</td>
+</tr>
+</tbody>
+</table>
+<p>→ <a href="filesystem/">Filesystem Selection Guide</a> - Complete architecture comparison, benchmarks, and configuration</p>
+<p><strong>Basic mount options:</strong></p>
+<div class="highlight"><pre><span></span><code><span class="c1"># XFS for data</span>
+/dev/sdb1<span class="w"> </span>/var/lib/cassandra/data<span class="w"> </span>xfs<span class="w"> </span>defaults,noatime,nodiratime<span class="w"> </span><span class="m">0</span><span class="w"> </span><span class="m">2</span>
+
+<span class="c1"># ext4 for commit logs</span>
+/dev/sdc1<span class="w"> </span>/var/lib/cassandra/commitlog<span class="w"> </span>ext4<span class="w"> </span>defaults,noatime,nodiratime<span class="w"> </span><span class="m">0</span><span class="w"> </span><span class="m">2</span>
 </code></pre></div>
 <h2 id="complete-configuration-script">Complete Configuration Script<a class="headerlink" href="#complete-configuration-script" title="Permanent link">¶</a></h2>
 <div class="highlight"><pre><span></span><code><span class="ch">#!/bin/bash</span>
@@ -19550,6 +19615,7 @@ sysctl<span class="w"> </span>-p
 <hr>
 <h2 id="next-steps">Next Steps<a class="headerlink" href="#next-steps" title="Permanent link">¶</a></h2>
 <ul>
+<li><strong><a href="filesystem/">Filesystem Selection</a></strong> - XFS vs ext4 architecture and recommendations</li>
 <li><strong><a href="../jvm-tuning/">JVM Tuning</a></strong> - JVM optimization</li>
 <li><strong><a href="../hardware/">Hardware</a></strong> - Hardware sizing</li>
 <li><strong><a href="../">Performance Overview</a></strong> - Performance guide</li>
@@ -19611,13 +19677,13 @@ sysctl<span class="w"> </span>-p
         
         
           
-          <a href="../query-optimization/" class="md-footer__link md-footer__link--next" aria-label="Next: Query Optimization">
+          <a href="filesystem/" class="md-footer__link md-footer__link--next" aria-label="Next: Filesystem Selection">
             <div class="md-footer__title">
               <span class="md-footer__direction">
                 Next
               </span>
               <div class="md-ellipsis">
-                Query Optimization
+                Filesystem Selection
               </div>
             </div>
             <div class="md-footer__button md-icon">
