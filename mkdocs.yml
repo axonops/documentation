@@ -650,7 +650,9 @@ nav:
           - Benchmarking: data-platforms/cassandra/operations/performance/benchmarking/index.md
           - Hardware: data-platforms/cassandra/operations/performance/hardware/index.md
           - JVM Tuning: data-platforms/cassandra/operations/performance/jvm-tuning/index.md
-          - OS Tuning: data-platforms/cassandra/operations/performance/os-tuning/index.md
+          - OS Tuning:
+            - Overview: data-platforms/cassandra/operations/performance/os-tuning/index.md
+            - Filesystem Selection: data-platforms/cassandra/operations/performance/os-tuning/filesystem.md
           - Query Optimization: data-platforms/cassandra/operations/performance/query-optimization/index.md
         - Troubleshooting: data-platforms/cassandra/operations/troubleshooting/index.md
       - Security:

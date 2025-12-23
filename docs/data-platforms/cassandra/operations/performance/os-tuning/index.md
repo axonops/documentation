@@ -186,18 +186,25 @@ numactl --interleave=all cassandra
 
 ## Filesystem
 
-### XFS (Recommended)
+Filesystem selection significantly impacts Cassandra performance, particularly for commit log operations. The choice between XFS and ext4 depends on workload characteristics and Linux distribution.
+
+**Quick recommendations:**
+
+| Use Case | Filesystem | Notes |
+|----------|------------|-------|
+| **Data directories** | XFS | Optimized for large files and parallel I/O |
+| **Commit logs** | ext4 or XFS + compression | ext4 has better memory-mapped I/O performance |
+
+→ [Filesystem Selection Guide](filesystem.md) - Complete architecture comparison, benchmarks, and configuration
+
+**Basic mount options:**
 
 ```bash
-# Mount options
-/dev/sdb1 /var/lib/cassandra xfs defaults,noatime,nodiratime 0 2
-```
+# XFS for data
+/dev/sdb1 /var/lib/cassandra/data xfs defaults,noatime,nodiratime 0 2
 
-### ext4
-
-```bash
-# Mount options
-/dev/sdb1 /var/lib/cassandra ext4 defaults,noatime,nodiratime,data=writeback,barrier=0,nobh 0 2
+# ext4 for commit logs
+/dev/sdc1 /var/lib/cassandra/commitlog ext4 defaults,noatime,nodiratime 0 2
 ```
 
 ## Complete Configuration Script
@@ -229,6 +236,7 @@ echo "OS tuning applied"
 
 ## Next Steps
 
+- **[Filesystem Selection](filesystem.md)** - XFS vs ext4 architecture and recommendations
 - **[JVM Tuning](../jvm-tuning/index.md)** - JVM optimization
 - **[Hardware](../hardware/index.md)** - Hardware sizing
 - **[Performance Overview](../index.md)** - Performance guide
