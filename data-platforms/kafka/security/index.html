@@ -13,7 +13,7 @@
         <link rel="canonical" href="https://docs.axonops.com/data-platforms/kafka/security/">
       
       
-        <link rel="prev" href="../operations/troubleshooting/dead-letter-queues/">
+        <link rel="prev" href="../operations/migration/">
       
       
         <link rel="next" href="authentication/">
@@ -212,31 +212,20 @@ body{font-family:'Roboto Flex',-apple-system,BlinkMacSystemFont,'Segoe UI',Robot
     
     
       
-<!-- Determine classes -->
 
-
-
-<!-- Header -->
 <header class="md-header" data-md-component="header">
   <nav class="md-header__inner md-grid" aria-label="Header">
-
-    <!-- Link to home -->
-    <a href="https://axonops.com" title="AxonOps Documentation"
-      class="md-header__button md-logo" aria-label="AxonOps Documentation" data-md-component="logo">
+    <a href="https://axonops.com" title="AxonOps Documentation" class="md-header__button md-logo" aria-label="AxonOps Documentation" data-md-component="logo">
       
 <!-- Logo -->
 
   <img src="/img/axonops_logo.png" alt="logo" />
 
     </a>
-
-    <!-- Button to open drawer -->
     <label class="md-header__button md-icon" for="__drawer">
       
       <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3V6m0 5h18v2H3v-2m0 5h18v2H3v-2Z"/></svg>
     </label>
-
-    <!-- Header title -->
     <div class="md-header__title" data-md-component="header-title">
       <div class="md-header__ellipsis">
         <div class="md-header__topic">
@@ -247,76 +236,15 @@ body{font-family:'Roboto Flex',-apple-system,BlinkMacSystemFont,'Segoe UI',Robot
         <div class="md-header__topic" data-md-component="header-topic">
           <span class="md-ellipsis">
             
-            Kafka Security
+              Kafka Security
             
           </span>
         </div>
       </div>
     </div>
-    <div>
-      <nav class="t_nav">
-        <ul>
-          <!-- <li>
-            <a href="https://axonops.com/">Axonops</a>
-          </li> -->
-          <!-- <li>
-            <a href="https://axonops.com/">Platform<span class="top_li">3</span></a>
-            <ul>
-              <li><a href="/cassandra-monitoring/">Monitoring</a></li>
-              <li><a
-                  href="/cassandra-maintenance/">Maintenance</a></li>
-              <li><a
-                  href="/cassandra-backup-and-restore/">Backup</a></li>
-              <li>
-                <a href="/#features" aria-current="page">Features</a></li>
-              <li>
-                <a href="/#integrations" aria-current="page">Integrations</a></li>
-              <li><a
-                  href="https://axonops.com/apache-cassandra-support/">Cassandra Support</a></li>
-              <li><a
-                  href="https://axonops.com/demo-sandbox/"><span style="color: #7CD826;">Demo Sandbox</span></a></li>
-              <li><a
-                  href="https://axonops.com/aws-cloud-provisioning-technical-preview-for-apache-cassandra/"><span
-                    style="color: #7CD826;">Cloud Provisioning Preview</span></a></li>
-            </ul>
-          </li> 
-          <li><a
-              href="https://axonops.com/pricing/">Pricing</a></li>
-          <li><a
-              href="#">Resources</a>
-            <ul>
-              <li><a
-                  href="https://axonops.com/blog/">Blog</a></li>
-              <li><a target="_blank"
-                  rel="noopener" href="https://docs.axonops.com">Documentation</a></li>
-              <li><a
-                  href="https://axonops.com/events/">Events</a></li>
-            </ul>
-          </li>
-          <li><a
-              href="#">About</a>
-            <ul>
-              <li><a
-                  href="https://axonops.com/company/">Company</a></li>
-              <li><a
-                  href="https://axonops.com/contact/">Contact Us</a></li>
-            </ul>
-          </li> -->
-          <li><a target="_blank"
-              rel="noopener" href="https://axonops.com/signin">
-              <svg class="menu-icon entered lazyloaded" width="25" height="25" style="vertical-align: bottom;" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" aria-hidden="true" role="img" class="iconify iconify--bx" preserveAspectRatio="xMidYMid meet" viewBox="0 0 24 24">
-                <path d="M12 2C6.579 2 2 6.579 2 12s4.579 10 10 10s10-4.579 10-10S17.421 2 12 2zm0 5c1.727 0 3 1.272 3 3s-1.273 3-3 3c-1.726 0-3-1.272-3-3s1.274-3 3-3zm-5.106 9.772c.897-1.32 2.393-2.2 4.106-2.2h2c1.714 0 3.209.88 4.106 2.2C15.828 18.14 14.015 19 12 19s-3.828-.86-5.106-2.228z" fill="currentColor">  
-                </path></svg>
-              </noscript>Login</a></li>
-          <li><a target="_blank" href="https://axonops.com/free"><span class="sign-up-button">Free Sign Up</span></a></li>
-        </ul>
-      </nav>
-    </div>
-
-    <!-- Color palette toggle -->
     
-    
-    <form class="md-header__option" data-md-component="palette">
+      
+        <form class="md-header__option" data-md-component="palette">
   
     
     
@@ -339,26 +267,20 @@ body{font-family:'Roboto Flex',-apple-system,BlinkMacSystemFont,'Segoe UI',Robot
     
   
 </form>
-    
-    
-
-    <!-- User preference: color palette -->
-    
-    <script>var media,input,key,value,palette=__md_get("__palette");if(palette&&palette.color){"(prefers-color-scheme)"===palette.color.media&&(media=matchMedia("(prefers-color-scheme: light)"),input=document.querySelector(media.matches?"[data-md-color-media='(prefers-color-scheme: light)']":"[data-md-color-media='(prefers-color-scheme: dark)']"),palette.color.media=input.getAttribute("data-md-color-media"),palette.color.scheme=input.getAttribute("data-md-color-scheme"),palette.color.primary=input.getAttribute("data-md-color-primary"),palette.color.accent=input.getAttribute("data-md-color-accent"));for([key,value]of Object.entries(palette.color))document.body.setAttribute("data-md-color-"+key,value)}</script>
-    
-
-    <!-- Site language selector -->
-    
-
-    <!-- Button to open search modal -->
-    
-    <label class="md-header__button md-icon" for="__search">
       
-      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.516 6.516 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5Z"/></svg>
-    </label>
-
-    <!-- Search interface -->
-    <div class="md-search" data-md-component="search" role="dialog">
+    
+    
+      <script>var media,input,key,value,palette=__md_get("__palette");if(palette&&palette.color){"(prefers-color-scheme)"===palette.color.media&&(media=matchMedia("(prefers-color-scheme: light)"),input=document.querySelector(media.matches?"[data-md-color-media='(prefers-color-scheme: light)']":"[data-md-color-media='(prefers-color-scheme: dark)']"),palette.color.media=input.getAttribute("data-md-color-media"),palette.color.scheme=input.getAttribute("data-md-color-scheme"),palette.color.primary=input.getAttribute("data-md-color-primary"),palette.color.accent=input.getAttribute("data-md-color-accent"));for([key,value]of Object.entries(palette.color))document.body.setAttribute("data-md-color-"+key,value)}</script>
+    
+    
+    
+      
+      
+        <label class="md-header__button md-icon" for="__search">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.516 6.516 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5Z"/></svg>
+        </label>
+        <div class="md-search" data-md-component="search" role="dialog">
   <label class="md-search__overlay" for="__search"></label>
   <div class="md-search__inner" role="search">
     <form class="md-search__form" name="search">
@@ -390,15 +312,15 @@ body{font-family:'Roboto Flex',-apple-system,BlinkMacSystemFont,'Segoe UI',Robot
     </div>
   </div>
 </div>
+      
     
-
-    <!-- Repository information -->
     
   </nav>
-
-  <!-- Navigation tabs (sticky) -->
   
 </header>
+<div class="axon-attribution" style="background: linear-gradient(90deg, #030737 0%, #0a0f4a 100%); color: rgba(255,255,255,0.85); font-size: 0.72rem; text-align: center; padding: 6px 0; border-bottom: 1px solid rgba(124,216,37,0.3);">
+  Maintained by <a href="https://axonops.com" style="color: #7CD825; text-decoration: none; font-weight: 500;">AxonOps</a> — production-grade documentation from engineers who operate distributed databases at scale
+</div>
     
     <div class="md-container" data-md-component="container">
       
@@ -18368,6 +18290,27 @@ data-et-multi-view="{&quot;schema&quot;:{&quot;content&quot;:{&quot;desktop&quot
 
               
             
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../operations/migration/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Migration
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
           </ul>
         </nav>
       
@@ -18713,6 +18656,75 @@ data-et-multi-view="{&quot;schema&quot;:{&quot;content&quot;:{&quot;desktop&quot
   <a href="#internal-vs-external-listeners" class="md-nav__link">
     <span class="md-ellipsis">
       Internal vs External Listeners
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#enabling-security-on-a-running-cluster" class="md-nav__link">
+    <span class="md-ellipsis">
+      Enabling Security on a Running Cluster
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Enabling Security on a Running Cluster">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#migration-phases" class="md-nav__link">
+    <span class="md-ellipsis">
+      Migration Phases
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#phase-1-open-secured-ports" class="md-nav__link">
+    <span class="md-ellipsis">
+      Phase 1: Open Secured Ports
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#phase-2-migrate-clients" class="md-nav__link">
+    <span class="md-ellipsis">
+      Phase 2: Migrate Clients
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#phase-3-enable-inter-broker-security" class="md-nav__link">
+    <span class="md-ellipsis">
+      Phase 3: Enable Inter-Broker Security
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#phase-4-close-plaintext-port" class="md-nav__link">
+    <span class="md-ellipsis">
+      Phase 4: Close PLAINTEXT Port
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#adding-sasl-to-ssl" class="md-nav__link">
+    <span class="md-ellipsis">
+      Adding SASL to SSL
     </span>
   </a>
   
@@ -19135,27 +19147,6 @@ data-et-multi-view="{&quot;schema&quot;:{&quot;content&quot;:{&quot;desktop&quot
 
               
             
-              
-                
-  
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="../migration/" class="md-nav__link">
-        
-  
-  <span class="md-ellipsis">
-    Migration
-  </span>
-  
-
-      </a>
-    </li>
-  
-
-              
-            
           </ul>
         </nav>
       
@@ -19442,6 +19433,75 @@ data-et-multi-view="{&quot;schema&quot;:{&quot;content&quot;:{&quot;desktop&quot
   <a href="#internal-vs-external-listeners" class="md-nav__link">
     <span class="md-ellipsis">
       Internal vs External Listeners
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#enabling-security-on-a-running-cluster" class="md-nav__link">
+    <span class="md-ellipsis">
+      Enabling Security on a Running Cluster
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Enabling Security on a Running Cluster">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#migration-phases" class="md-nav__link">
+    <span class="md-ellipsis">
+      Migration Phases
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#phase-1-open-secured-ports" class="md-nav__link">
+    <span class="md-ellipsis">
+      Phase 1: Open Secured Ports
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#phase-2-migrate-clients" class="md-nav__link">
+    <span class="md-ellipsis">
+      Phase 2: Migrate Clients
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#phase-3-enable-inter-broker-security" class="md-nav__link">
+    <span class="md-ellipsis">
+      Phase 3: Enable Inter-Broker Security
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#phase-4-close-plaintext-port" class="md-nav__link">
+    <span class="md-ellipsis">
+      Phase 4: Close PLAINTEXT Port
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#adding-sasl-to-ssl" class="md-nav__link">
+    <span class="md-ellipsis">
+      Adding SASL to SSL
     </span>
   </a>
   
@@ -19997,6 +20057,63 @@ keytool<span class="w"> </span>-keystore<span class="w"> </span>kafka.truststore
 <span class="na">inter.broker.listener.name</span><span class="o">=</span><span class="s">INTERNAL</span>
 </code></pre></div>
 <hr>
+<h2 id="enabling-security-on-a-running-cluster">Enabling Security on a Running Cluster<a class="headerlink" href="#enabling-security-on-a-running-cluster" title="Permanent link">¶</a></h2>
+<p>Security can be incrementally enabled on an existing cluster without downtime through a phased rolling restart approach.</p>
+<h3 id="migration-phases">Migration Phases<a class="headerlink" href="#migration-phases" title="Permanent link">¶</a></h3>
+<p><a class="glightbox" href="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHhtbG5zOnhsaW5rPSJodHRwOi8vd3d3LnczLm9yZy8xOTk5L3hsaW5rIiBjb250ZW50U3R5bGVUeXBlPSJ0ZXh0L2NzcyIgZGF0YS1kaWFncmFtLXR5cGU9IkRFU0NSSVBUSU9OIiBoZWlnaHQ9IjQwMHB4IiBwcmVzZXJ2ZUFzcGVjdFJhdGlvPSJub25lIiBzdHlsZT0id2lkdGg6NTQxcHg7aGVpZ2h0OjQwMHB4OyIgdmVyc2lvbj0iMS4xIiB2aWV3Qm94PSIwIDAgNTQxIDQwMCIgd2lkdGg9IjU0MXB4IiB6b29tQW5kUGFuPSJtYWduaWZ5Ij48ZGVmcy8+PGc+PCEtLWVudGl0eSBwMS0tPjxnIGNsYXNzPSJlbnRpdHkiIGRhdGEtcXVhbGlmaWVkLW5hbWU9InAxIiBkYXRhLXNvdXJjZS1saW5lPSI0IiBpZD0iZW50MDAwMiI+PHJlY3QgZmlsbD0iI0YxRjFGMSIgaGVpZ2h0PSIzNi4yOTY5IiByeD0iMi41IiByeT0iMi41IiBzdHlsZT0ic3Ryb2tlOiMxODE4MTg7c3Ryb2tlLXdpZHRoOjAuNTsiIHdpZHRoPSIyMjMuNDkyMiIgeD0iNyIgeT0iOCIvPjx0ZXh0IGZpbGw9IiMwMDAwMDAiIGZvbnQtZmFtaWx5PSJzYW5zLXNlcmlmIiBmb250LXNpemU9IjE0IiBsZW5ndGhBZGp1c3Q9InNwYWNpbmciIHRleHRMZW5ndGg9IjIwMy40OTIyIiB4PSIxNyIgeT0iMzAuOTk1MSI+UGhhc2UgMTogT3BlbiBTZWN1cmVkIFBvcnRzPC90ZXh0PjwvZz48IS0tZW50aXR5IHAyLS0+PGcgY2xhc3M9ImVudGl0eSIgZGF0YS1xdWFsaWZpZWQtbmFtZT0icDIiIGRhdGEtc291cmNlLWxpbmU9IjUiIGlkPSJlbnQwMDAzIj48cmVjdCBmaWxsPSIjRjFGMUYxIiBoZWlnaHQ9IjM2LjI5NjkiIHJ4PSIyLjUiIHJ5PSIyLjUiIHN0eWxlPSJzdHJva2U6IzE4MTgxODtzdHJva2Utd2lkdGg6MC41OyIgd2lkdGg9IjE4OS44OTM2IiB4PSIyMy41IiB5PSIxMjMiLz48dGV4dCBmaWxsPSIjMDAwMDAwIiBmb250LWZhbWlseT0ic2Fucy1zZXJpZiIgZm9udC1zaXplPSIxNCIgbGVuZ3RoQWRqdXN0PSJzcGFjaW5nIiB0ZXh0TGVuZ3RoPSIxNjkuODkzNiIgeD0iMzMuNSIgeT0iMTQ1Ljk5NTEiPlBoYXNlIDI6IE1pZ3JhdGUgQ2xpZW50czwvdGV4dD48L2c+PCEtLWVudGl0eSBwMy0tPjxnIGNsYXNzPSJlbnRpdHkiIGRhdGEtcXVhbGlmaWVkLW5hbWU9InAzIiBkYXRhLXNvdXJjZS1saW5lPSI2IiBpZD0iZW50MDAwNCI+PHJlY3QgZmlsbD0iI0YxRjFGMSIgaGVpZ2h0PSIzNi4yOTY5IiByeD0iMi41IiByeT0iMi41IiBzdHlsZT0ic3Ryb2tlOiMxODE4MTg7c3Ryb2tlLXdpZHRoOjAuNTsiIHdpZHRoPSIyMjEuNTMwMyIgeD0iNy41IiB5PSIyMzgiLz48dGV4dCBmaWxsPSIjMDAwMDAwIiBmb250LWZhbWlseT0ic2Fucy1zZXJpZiIgZm9udC1zaXplPSIxNCIgbGVuZ3RoQWRqdXN0PSJzcGFjaW5nIiB0ZXh0TGVuZ3RoPSIyMDEuNTMwMyIgeD0iMTcuNSIgeT0iMjYwLjk5NTEiPlBoYXNlIDM6IFNlY3VyZSBJbnRlci1Ccm9rZXI8L3RleHQ+PC9nPjwhLS1lbnRpdHkgcDQtLT48ZyBjbGFzcz0iZW50aXR5IiBkYXRhLXF1YWxpZmllZC1uYW1lPSJwNCIgZGF0YS1zb3VyY2UtbGluZT0iNyIgaWQ9ImVudDAwMDUiPjxyZWN0IGZpbGw9IiNGMUYxRjEiIGhlaWdodD0iMzYuMjk2OSIgcng9IjIuNSIgcnk9IjIuNSIgc3R5bGU9InN0cm9rZTojMTgxODE4O3N0cm9rZS13aWR0aDowLjU7IiB3aWR0aD0iMjAyLjg3NSIgeD0iMTciIHk9IjM1NSIvPjx0ZXh0IGZpbGw9IiMwMDAwMDAiIGZvbnQtZmFtaWx5PSJzYW5zLXNlcmlmIiBmb250LXNpemU9IjE0IiBsZW5ndGhBZGp1c3Q9InNwYWNpbmciIHRleHRMZW5ndGg9IjE4Mi44NzUiIHg9IjI3IiB5PSIzNzcuOTk1MSI+UGhhc2UgNDogQ2xvc2UgUExBSU5URVhUPC90ZXh0PjwvZz48ZyBjbGFzcz0iZW50aXR5IiBkYXRhLXF1YWxpZmllZC1uYW1lPSJHTU45IiBkYXRhLXNvdXJjZS1saW5lPSIxNCIgaWQ9ImVudDAwMTAiPjxwYXRoIGQ9Ik0yNjUsNiBMMjY1LDIyIEwyMzAuMTksMjYgTDI2NSwzMCBMMjY1LDQ2LjI2NTYgQTAsMCAwIDAgMCAyNjUsNDYuMjY1NiBMNTM0LjQ0MDksNDYuMjY1NiBBMCwwIDAgMCAwIDUzNC40NDA5LDQ2LjI2NTYgTDUzNC40NDA5LDE2IEw1MjQuNDQwOSw2IEwyNjUsNiBBMCwwIDAgMCAwIDI2NSw2IiBmaWxsPSIjRkVGRkREIiBzdHlsZT0ic3Ryb2tlOiMxODE4MTg7c3Ryb2tlLXdpZHRoOjAuNTsiLz48cGF0aCBkPSJNNTI0LjQ0MDksNiBMNTI0LjQ0MDksMTYgTDUzNC40NDA5LDE2IEw1MjQuNDQwOSw2IiBmaWxsPSIjRkVGRkREIiBzdHlsZT0ic3Ryb2tlOiMxODE4MTg7c3Ryb2tlLXdpZHRoOjAuNTsiLz48dGV4dCBmaWxsPSIjMDAwMDAwIiBmb250LWZhbWlseT0ic2Fucy1zZXJpZiIgZm9udC1zaXplPSIxMyIgbGVuZ3RoQWRqdXN0PSJzcGFjaW5nIiB0ZXh0TGVuZ3RoPSIxNDEuMjU0NCIgeD0iMjcxIiB5PSIyMy4wNjY5Ij5saXN0ZW5lcnM9UExBSU5URVhUOjwvdGV4dD48dGV4dCBmaWxsPSIjMDAwMDAwIiBmb250LWZhbWlseT0ic2Fucy1zZXJpZiIgZm9udC1zaXplPSIxMyIgZm9udC1zdHlsZT0iaXRhbGljIiBsZW5ndGhBZGp1c3Q9InNwYWNpbmciIHRleHRMZW5ndGg9IjY5LjcyMjciIHg9IjQxMi4yNTQ0IiB5PSIyMy4wNjY5Ij46OTA5MSxTU0w6PC90ZXh0Pjx0ZXh0IGZpbGw9IiMwMDAwMDAiIGZvbnQtZmFtaWx5PSJzYW5zLXNlcmlmIiBmb250LXNpemU9IjEzIiBsZW5ndGhBZGp1c3Q9InNwYWNpbmciIHRleHRMZW5ndGg9IjM3LjQ2MzkiIHg9IjQ4MS45NzcxIiB5PSIyMy4wNjY5Ij46OTA5MjwvdGV4dD48dGV4dCBmaWxsPSIjMDAwMDAwIiBmb250LWZhbWlseT0ic2Fucy1zZXJpZiIgZm9udC1zaXplPSIxMyIgbGVuZ3RoQWRqdXN0PSJzcGFjaW5nIiB0ZXh0TGVuZ3RoPSIxNjMuODM5NCIgeD0iMjcxIiB5PSIzOC4xOTk3Ij5QTEFJTlRFWFQgcmVtYWlucyBvcGVuPC90ZXh0PjwvZz48ZyBjbGFzcz0iZW50aXR5IiBkYXRhLXF1YWxpZmllZC1uYW1lPSJHTU4xMiIgZGF0YS1zb3VyY2UtbGluZT0iMTkiIGlkPSJlbnQwMDEzIj48cGF0aCBkPSJNMjY0LjUsMjM2IEwyNjQuNSwyNTIgTDIyOS42MiwyNTYgTDI2NC41LDI2MCBMMjY0LjUsMjc2LjI2NTYgQTAsMCAwIDAgMCAyNjQuNSwyNzYuMjY1NiBMNTEwLjQ2NzMsMjc2LjI2NTYgQTAsMCAwIDAgMCA1MTAuNDY3MywyNzYuMjY1NiBMNTEwLjQ2NzMsMjQ2IEw1MDAuNDY3MywyMzYgTDI2NC41LDIzNiBBMCwwIDAgMCAwIDI2NC41LDIzNiIgZmlsbD0iI0ZFRkZERCIgc3R5bGU9InN0cm9rZTojMTgxODE4O3N0cm9rZS13aWR0aDowLjU7Ii8+PHBhdGggZD0iTTUwMC40NjczLDIzNiBMNTAwLjQ2NzMsMjQ2IEw1MTAuNDY3MywyNDYgTDUwMC40NjczLDIzNiIgZmlsbD0iI0ZFRkZERCIgc3R5bGU9InN0cm9rZTojMTgxODE4O3N0cm9rZS13aWR0aDowLjU7Ii8+PHRleHQgZmlsbD0iIzAwMDAwMCIgZm9udC1mYW1pbHk9InNhbnMtc2VyaWYiIGZvbnQtc2l6ZT0iMTMiIGxlbmd0aEFkanVzdD0ic3BhY2luZyIgdGV4dExlbmd0aD0iMjI0Ljk2NzMiIHg9IjI3MC41IiB5PSIyNTMuMDY2OSI+c2VjdXJpdHkuaW50ZXIuYnJva2VyLnByb3RvY29sPVNTTDwvdGV4dD48dGV4dCBmaWxsPSIjMDAwMDAwIiBmb250LWZhbWlseT0ic2Fucy1zZXJpZiIgZm9udC1zaXplPSIxMyIgbGVuZ3RoQWRqdXN0PSJzcGFjaW5nIiB0ZXh0TGVuZ3RoPSIyMDEuNjU4NyIgeD0iMjcwLjUiIHk9IjI2OC4xOTk3Ij5Ccm9rZXJzIGNvbW11bmljYXRlIHNlY3VyZWx5PC90ZXh0PjwvZz48ZyBjbGFzcz0iZW50aXR5IiBkYXRhLXF1YWxpZmllZC1uYW1lPSJHTU4xNSIgZGF0YS1zb3VyY2UtbGluZT0iMjQiIGlkPSJlbnQwMDE2Ij48cGF0aCBkPSJNMjU1LjUsMzUzIEwyNTUuNSwzNjkgTDIyMC4yNiwzNzMgTDI1NS41LDM3NyBMMjU1LjUsMzkzLjI2NTYgQTAsMCAwIDAgMCAyNTUuNSwzOTMuMjY1NiBMNDE3LjE4OTUsMzkzLjI2NTYgQTAsMCAwIDAgMCA0MTcuMTg5NSwzOTMuMjY1NiBMNDE3LjE4OTUsMzYzIEw0MDcuMTg5NSwzNTMgTDI1NS41LDM1MyBBMCwwIDAgMCAwIDI1NS41LDM1MyIgZmlsbD0iI0ZFRkZERCIgc3R5bGU9InN0cm9rZTojMTgxODE4O3N0cm9rZS13aWR0aDowLjU7Ii8+PHBhdGggZD0iTTQwNy4xODk1LDM1MyBMNDA3LjE4OTUsMzYzIEw0MTcuMTg5NSwzNjMgTDQwNy4xODk1LDM1MyIgZmlsbD0iI0ZFRkZERCIgc3R5bGU9InN0cm9rZTojMTgxODE4O3N0cm9rZS13aWR0aDowLjU7Ii8+PHRleHQgZmlsbD0iIzAwMDAwMCIgZm9udC1mYW1pbHk9InNhbnMtc2VyaWYiIGZvbnQtc2l6ZT0iMTMiIGxlbmd0aEFkanVzdD0ic3BhY2luZyIgdGV4dExlbmd0aD0iMTQwLjY4OTUiIHg9IjI2MS41IiB5PSIzNzAuMDY2OSI+bGlzdGVuZXJzPVNTTDovLzo5MDkyPC90ZXh0Pjx0ZXh0IGZpbGw9IiMwMDAwMDAiIGZvbnQtZmFtaWx5PSJzYW5zLXNlcmlmIiBmb250LXNpemU9IjEzIiBsZW5ndGhBZGp1c3Q9InNwYWNpbmciIHRleHRMZW5ndGg9IjEzMi41NzA4IiB4PSIyNjEuNSIgeT0iMzg1LjE5OTciPlBMQUlOVEVYVCByZW1vdmVkPC90ZXh0PjwvZz48IS0tbGluayBwMSB0byBwMi0tPjxnIGNsYXNzPSJsaW5rIiBkYXRhLWVudGl0eS0xPSJlbnQwMDAyIiBkYXRhLWVudGl0eS0yPSJlbnQwMDAzIiBkYXRhLWxpbmstdHlwZT0iZGVwZW5kZW5jeSIgZGF0YS1zb3VyY2UtbGluZT0iOSIgaWQ9ImxuazYiPjxwYXRoIGQ9Ik0xMTguNSw0NC4xNiBDMTE4LjUsNjUuNCAxMTguNSw5NS4zNiAxMTguNSwxMTYuNjgiIGZpbGw9Im5vbmUiIGlkPSJwMS10by1wMiIgc3R5bGU9InN0cm9rZTojMTgxODE4O3N0cm9rZS13aWR0aDoxOyIvPjxwb2x5Z29uIGZpbGw9IiMxODE4MTgiIHBvaW50cz0iMTE4LjUsMTIyLjY4LDEyMi41LDExMy42OCwxMTguNSwxMTcuNjgsMTE0LjUsMTEzLjY4LDExOC41LDEyMi42OCIgc3R5bGU9InN0cm9rZTojMTgxODE4O3N0cm9rZS13aWR0aDoxOyIvPjx0ZXh0IGZpbGw9IiMwMDAwMDAiIGZvbnQtZmFtaWx5PSJzYW5zLXNlcmlmIiBmb250LXNpemU9IjEzIiBsZW5ndGhBZGp1c3Q9InNwYWNpbmciIHRleHRMZW5ndGg9IjkyLjA2NjQiIHg9IjExOS41IiB5PSI4OS4wNjY5Ij5Sb2xsaW5nIHJlc3RhcnQ8L3RleHQ+PC9nPjwhLS1saW5rIHAyIHRvIHAzLS0+PGcgY2xhc3M9ImxpbmsiIGRhdGEtZW50aXR5LTE9ImVudDAwMDMiIGRhdGEtZW50aXR5LTI9ImVudDAwMDQiIGRhdGEtbGluay10eXBlPSJkZXBlbmRlbmN5IiBkYXRhLXNvdXJjZS1saW5lPSIxMCIgaWQ9ImxuazciPjxwYXRoIGQ9Ik0xMTguNSwxNTkuMTYgQzExOC41LDE4MC40IDExOC41LDIxMC4zNiAxMTguNSwyMzEuNjgiIGZpbGw9Im5vbmUiIGlkPSJwMi10by1wMyIgc3R5bGU9InN0cm9rZTojMTgxODE4O3N0cm9rZS13aWR0aDoxOyIvPjxwb2x5Z29uIGZpbGw9IiMxODE4MTgiIHBvaW50cz0iMTE4LjUsMjM3LjY4LDEyMi41LDIyOC42OCwxMTguNSwyMzIuNjgsMTE0LjUsMjI4LjY4LDExOC41LDIzNy42OCIgc3R5bGU9InN0cm9rZTojMTgxODE4O3N0cm9rZS13aWR0aDoxOyIvPjx0ZXh0IGZpbGw9IiMwMDAwMDAiIGZvbnQtZmFtaWx5PSJzYW5zLXNlcmlmIiBmb250LXNpemU9IjEzIiBsZW5ndGhBZGp1c3Q9InNwYWNpbmciIHRleHRMZW5ndGg9IjEwNC41MDc4IiB4PSIxMTkuNSIgeT0iMjAyLjA2NjkiPkNsaWVudCBtaWdyYXRpb248L3RleHQ+PC9nPjwhLS1saW5rIHAzIHRvIHA0LS0+PGcgY2xhc3M9ImxpbmsiIGRhdGEtZW50aXR5LTE9ImVudDAwMDQiIGRhdGEtZW50aXR5LTI9ImVudDAwMDUiIGRhdGEtbGluay10eXBlPSJkZXBlbmRlbmN5IiBkYXRhLXNvdXJjZS1saW5lPSIxMSIgaWQ9ImxuazgiPjxwYXRoIGQ9Ik0xMTguNSwyNzQuNDcgQzExOC41LDI5Ni4yMSAxMTguNSwzMjcuMTEgMTE4LjUsMzQ4Ljc1IiBmaWxsPSJub25lIiBpZD0icDMtdG8tcDQiIHN0eWxlPSJzdHJva2U6IzE4MTgxODtzdHJva2Utd2lkdGg6MTsiLz48cG9seWdvbiBmaWxsPSIjMTgxODE4IiBwb2ludHM9IjExOC41LDM1NC43NSwxMjIuNSwzNDUuNzUsMTE4LjUsMzQ5Ljc1LDExNC41LDM0NS43NSwxMTguNSwzNTQuNzUiIHN0eWxlPSJzdHJva2U6IzE4MTgxODtzdHJva2Utd2lkdGg6MTsiLz48dGV4dCBmaWxsPSIjMDAwMDAwIiBmb250LWZhbWlseT0ic2Fucy1zZXJpZiIgZm9udC1zaXplPSIxMyIgbGVuZ3RoQWRqdXN0PSJzcGFjaW5nIiB0ZXh0TGVuZ3RoPSI5Mi4wNjY0IiB4PSIxMTkuNSIgeT0iMzE5LjA2NjkiPlJvbGxpbmcgcmVzdGFydDwvdGV4dD48L2c+PCEtLVNSQz1bVlAxMUptOTEzOE5seW9pUXBXOGtrblNjbUtJOTFuOUs4WG95WmhqcmNKM1JSWmczMlZfVXhoQjE2REhScXR2elZOdG51QWJydVhmdVQtTVg1WnZJalVKMDBhYVNISHFYOU1DNG8tSWUzV1lacFR2NVhDcDJJdWk0TW9vRldYTGlNNThTV09sR1BqVnFwQ0FKaHlLYlg2Tm1nWllXaXNpcWp1Q2NoMllYWjEtNDNvWGRGQl82MndrQWhDTGNWUnp3dFpzLXhTdmVPS29SbU5YeWZxVjBtWWs3dUFhNm1QWVM5QUZEVmZRMzdIbjFxbmxxSjRReF9SM3VQVDRHd25GWXd0cTJfa1lVMUdXLTlZSUtrQllPaURFZmRUX0VpdmxqVFp0S0NvS2xTekxoZEFTOGgyNFFmMGV3dElsck43VFlidVBGZnVkbHlmWXl6dGJDTWs3NDlPVTU3YjNlZDVBNGFmbGNJQnhpYWt1TkNQcC1iWXotY0ZfN0Fkell6SXRwMUcwMF0tLT48L2c+PC9zdmc+" data-type="image" data-width="100%" data-height="auto" data-desc-position="bottom"><img src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHhtbG5zOnhsaW5rPSJodHRwOi8vd3d3LnczLm9yZy8xOTk5L3hsaW5rIiBjb250ZW50U3R5bGVUeXBlPSJ0ZXh0L2NzcyIgZGF0YS1kaWFncmFtLXR5cGU9IkRFU0NSSVBUSU9OIiBoZWlnaHQ9IjQwMHB4IiBwcmVzZXJ2ZUFzcGVjdFJhdGlvPSJub25lIiBzdHlsZT0id2lkdGg6NTQxcHg7aGVpZ2h0OjQwMHB4OyIgdmVyc2lvbj0iMS4xIiB2aWV3Qm94PSIwIDAgNTQxIDQwMCIgd2lkdGg9IjU0MXB4IiB6b29tQW5kUGFuPSJtYWduaWZ5Ij48ZGVmcy8+PGc+PCEtLWVudGl0eSBwMS0tPjxnIGNsYXNzPSJlbnRpdHkiIGRhdGEtcXVhbGlmaWVkLW5hbWU9InAxIiBkYXRhLXNvdXJjZS1saW5lPSI0IiBpZD0iZW50MDAwMiI+PHJlY3QgZmlsbD0iI0YxRjFGMSIgaGVpZ2h0PSIzNi4yOTY5IiByeD0iMi41IiByeT0iMi41IiBzdHlsZT0ic3Ryb2tlOiMxODE4MTg7c3Ryb2tlLXdpZHRoOjAuNTsiIHdpZHRoPSIyMjMuNDkyMiIgeD0iNyIgeT0iOCIvPjx0ZXh0IGZpbGw9IiMwMDAwMDAiIGZvbnQtZmFtaWx5PSJzYW5zLXNlcmlmIiBmb250LXNpemU9IjE0IiBsZW5ndGhBZGp1c3Q9InNwYWNpbmciIHRleHRMZW5ndGg9IjIwMy40OTIyIiB4PSIxNyIgeT0iMzAuOTk1MSI+UGhhc2UgMTogT3BlbiBTZWN1cmVkIFBvcnRzPC90ZXh0PjwvZz48IS0tZW50aXR5IHAyLS0+PGcgY2xhc3M9ImVudGl0eSIgZGF0YS1xdWFsaWZpZWQtbmFtZT0icDIiIGRhdGEtc291cmNlLWxpbmU9IjUiIGlkPSJlbnQwMDAzIj48cmVjdCBmaWxsPSIjRjFGMUYxIiBoZWlnaHQ9IjM2LjI5NjkiIHJ4PSIyLjUiIHJ5PSIyLjUiIHN0eWxlPSJzdHJva2U6IzE4MTgxODtzdHJva2Utd2lkdGg6MC41OyIgd2lkdGg9IjE4OS44OTM2IiB4PSIyMy41IiB5PSIxMjMiLz48dGV4dCBmaWxsPSIjMDAwMDAwIiBmb250LWZhbWlseT0ic2Fucy1zZXJpZiIgZm9udC1zaXplPSIxNCIgbGVuZ3RoQWRqdXN0PSJzcGFjaW5nIiB0ZXh0TGVuZ3RoPSIxNjkuODkzNiIgeD0iMzMuNSIgeT0iMTQ1Ljk5NTEiPlBoYXNlIDI6IE1pZ3JhdGUgQ2xpZW50czwvdGV4dD48L2c+PCEtLWVudGl0eSBwMy0tPjxnIGNsYXNzPSJlbnRpdHkiIGRhdGEtcXVhbGlmaWVkLW5hbWU9InAzIiBkYXRhLXNvdXJjZS1saW5lPSI2IiBpZD0iZW50MDAwNCI+PHJlY3QgZmlsbD0iI0YxRjFGMSIgaGVpZ2h0PSIzNi4yOTY5IiByeD0iMi41IiByeT0iMi41IiBzdHlsZT0ic3Ryb2tlOiMxODE4MTg7c3Ryb2tlLXdpZHRoOjAuNTsiIHdpZHRoPSIyMjEuNTMwMyIgeD0iNy41IiB5PSIyMzgiLz48dGV4dCBmaWxsPSIjMDAwMDAwIiBmb250LWZhbWlseT0ic2Fucy1zZXJpZiIgZm9udC1zaXplPSIxNCIgbGVuZ3RoQWRqdXN0PSJzcGFjaW5nIiB0ZXh0TGVuZ3RoPSIyMDEuNTMwMyIgeD0iMTcuNSIgeT0iMjYwLjk5NTEiPlBoYXNlIDM6IFNlY3VyZSBJbnRlci1Ccm9rZXI8L3RleHQ+PC9nPjwhLS1lbnRpdHkgcDQtLT48ZyBjbGFzcz0iZW50aXR5IiBkYXRhLXF1YWxpZmllZC1uYW1lPSJwNCIgZGF0YS1zb3VyY2UtbGluZT0iNyIgaWQ9ImVudDAwMDUiPjxyZWN0IGZpbGw9IiNGMUYxRjEiIGhlaWdodD0iMzYuMjk2OSIgcng9IjIuNSIgcnk9IjIuNSIgc3R5bGU9InN0cm9rZTojMTgxODE4O3N0cm9rZS13aWR0aDowLjU7IiB3aWR0aD0iMjAyLjg3NSIgeD0iMTciIHk9IjM1NSIvPjx0ZXh0IGZpbGw9IiMwMDAwMDAiIGZvbnQtZmFtaWx5PSJzYW5zLXNlcmlmIiBmb250LXNpemU9IjE0IiBsZW5ndGhBZGp1c3Q9InNwYWNpbmciIHRleHRMZW5ndGg9IjE4Mi44NzUiIHg9IjI3IiB5PSIzNzcuOTk1MSI+UGhhc2UgNDogQ2xvc2UgUExBSU5URVhUPC90ZXh0PjwvZz48ZyBjbGFzcz0iZW50aXR5IiBkYXRhLXF1YWxpZmllZC1uYW1lPSJHTU45IiBkYXRhLXNvdXJjZS1saW5lPSIxNCIgaWQ9ImVudDAwMTAiPjxwYXRoIGQ9Ik0yNjUsNiBMMjY1LDIyIEwyMzAuMTksMjYgTDI2NSwzMCBMMjY1LDQ2LjI2NTYgQTAsMCAwIDAgMCAyNjUsNDYuMjY1NiBMNTM0LjQ0MDksNDYuMjY1NiBBMCwwIDAgMCAwIDUzNC40NDA5LDQ2LjI2NTYgTDUzNC40NDA5LDE2IEw1MjQuNDQwOSw2IEwyNjUsNiBBMCwwIDAgMCAwIDI2NSw2IiBmaWxsPSIjRkVGRkREIiBzdHlsZT0ic3Ryb2tlOiMxODE4MTg7c3Ryb2tlLXdpZHRoOjAuNTsiLz48cGF0aCBkPSJNNTI0LjQ0MDksNiBMNTI0LjQ0MDksMTYgTDUzNC40NDA5LDE2IEw1MjQuNDQwOSw2IiBmaWxsPSIjRkVGRkREIiBzdHlsZT0ic3Ryb2tlOiMxODE4MTg7c3Ryb2tlLXdpZHRoOjAuNTsiLz48dGV4dCBmaWxsPSIjMDAwMDAwIiBmb250LWZhbWlseT0ic2Fucy1zZXJpZiIgZm9udC1zaXplPSIxMyIgbGVuZ3RoQWRqdXN0PSJzcGFjaW5nIiB0ZXh0TGVuZ3RoPSIxNDEuMjU0NCIgeD0iMjcxIiB5PSIyMy4wNjY5Ij5saXN0ZW5lcnM9UExBSU5URVhUOjwvdGV4dD48dGV4dCBmaWxsPSIjMDAwMDAwIiBmb250LWZhbWlseT0ic2Fucy1zZXJpZiIgZm9udC1zaXplPSIxMyIgZm9udC1zdHlsZT0iaXRhbGljIiBsZW5ndGhBZGp1c3Q9InNwYWNpbmciIHRleHRMZW5ndGg9IjY5LjcyMjciIHg9IjQxMi4yNTQ0IiB5PSIyMy4wNjY5Ij46OTA5MSxTU0w6PC90ZXh0Pjx0ZXh0IGZpbGw9IiMwMDAwMDAiIGZvbnQtZmFtaWx5PSJzYW5zLXNlcmlmIiBmb250LXNpemU9IjEzIiBsZW5ndGhBZGp1c3Q9InNwYWNpbmciIHRleHRMZW5ndGg9IjM3LjQ2MzkiIHg9IjQ4MS45NzcxIiB5PSIyMy4wNjY5Ij46OTA5MjwvdGV4dD48dGV4dCBmaWxsPSIjMDAwMDAwIiBmb250LWZhbWlseT0ic2Fucy1zZXJpZiIgZm9udC1zaXplPSIxMyIgbGVuZ3RoQWRqdXN0PSJzcGFjaW5nIiB0ZXh0TGVuZ3RoPSIxNjMuODM5NCIgeD0iMjcxIiB5PSIzOC4xOTk3Ij5QTEFJTlRFWFQgcmVtYWlucyBvcGVuPC90ZXh0PjwvZz48ZyBjbGFzcz0iZW50aXR5IiBkYXRhLXF1YWxpZmllZC1uYW1lPSJHTU4xMiIgZGF0YS1zb3VyY2UtbGluZT0iMTkiIGlkPSJlbnQwMDEzIj48cGF0aCBkPSJNMjY0LjUsMjM2IEwyNjQuNSwyNTIgTDIyOS42MiwyNTYgTDI2NC41LDI2MCBMMjY0LjUsMjc2LjI2NTYgQTAsMCAwIDAgMCAyNjQuNSwyNzYuMjY1NiBMNTEwLjQ2NzMsMjc2LjI2NTYgQTAsMCAwIDAgMCA1MTAuNDY3MywyNzYuMjY1NiBMNTEwLjQ2NzMsMjQ2IEw1MDAuNDY3MywyMzYgTDI2NC41LDIzNiBBMCwwIDAgMCAwIDI2NC41LDIzNiIgZmlsbD0iI0ZFRkZERCIgc3R5bGU9InN0cm9rZTojMTgxODE4O3N0cm9rZS13aWR0aDowLjU7Ii8+PHBhdGggZD0iTTUwMC40NjczLDIzNiBMNTAwLjQ2NzMsMjQ2IEw1MTAuNDY3MywyNDYgTDUwMC40NjczLDIzNiIgZmlsbD0iI0ZFRkZERCIgc3R5bGU9InN0cm9rZTojMTgxODE4O3N0cm9rZS13aWR0aDowLjU7Ii8+PHRleHQgZmlsbD0iIzAwMDAwMCIgZm9udC1mYW1pbHk9InNhbnMtc2VyaWYiIGZvbnQtc2l6ZT0iMTMiIGxlbmd0aEFkanVzdD0ic3BhY2luZyIgdGV4dExlbmd0aD0iMjI0Ljk2NzMiIHg9IjI3MC41IiB5PSIyNTMuMDY2OSI+c2VjdXJpdHkuaW50ZXIuYnJva2VyLnByb3RvY29sPVNTTDwvdGV4dD48dGV4dCBmaWxsPSIjMDAwMDAwIiBmb250LWZhbWlseT0ic2Fucy1zZXJpZiIgZm9udC1zaXplPSIxMyIgbGVuZ3RoQWRqdXN0PSJzcGFjaW5nIiB0ZXh0TGVuZ3RoPSIyMDEuNjU4NyIgeD0iMjcwLjUiIHk9IjI2OC4xOTk3Ij5Ccm9rZXJzIGNvbW11bmljYXRlIHNlY3VyZWx5PC90ZXh0PjwvZz48ZyBjbGFzcz0iZW50aXR5IiBkYXRhLXF1YWxpZmllZC1uYW1lPSJHTU4xNSIgZGF0YS1zb3VyY2UtbGluZT0iMjQiIGlkPSJlbnQwMDE2Ij48cGF0aCBkPSJNMjU1LjUsMzUzIEwyNTUuNSwzNjkgTDIyMC4yNiwzNzMgTDI1NS41LDM3NyBMMjU1LjUsMzkzLjI2NTYgQTAsMCAwIDAgMCAyNTUuNSwzOTMuMjY1NiBMNDE3LjE4OTUsMzkzLjI2NTYgQTAsMCAwIDAgMCA0MTcuMTg5NSwzOTMuMjY1NiBMNDE3LjE4OTUsMzYzIEw0MDcuMTg5NSwzNTMgTDI1NS41LDM1MyBBMCwwIDAgMCAwIDI1NS41LDM1MyIgZmlsbD0iI0ZFRkZERCIgc3R5bGU9InN0cm9rZTojMTgxODE4O3N0cm9rZS13aWR0aDowLjU7Ii8+PHBhdGggZD0iTTQwNy4xODk1LDM1MyBMNDA3LjE4OTUsMzYzIEw0MTcuMTg5NSwzNjMgTDQwNy4xODk1LDM1MyIgZmlsbD0iI0ZFRkZERCIgc3R5bGU9InN0cm9rZTojMTgxODE4O3N0cm9rZS13aWR0aDowLjU7Ii8+PHRleHQgZmlsbD0iIzAwMDAwMCIgZm9udC1mYW1pbHk9InNhbnMtc2VyaWYiIGZvbnQtc2l6ZT0iMTMiIGxlbmd0aEFkanVzdD0ic3BhY2luZyIgdGV4dExlbmd0aD0iMTQwLjY4OTUiIHg9IjI2MS41IiB5PSIzNzAuMDY2OSI+bGlzdGVuZXJzPVNTTDovLzo5MDkyPC90ZXh0Pjx0ZXh0IGZpbGw9IiMwMDAwMDAiIGZvbnQtZmFtaWx5PSJzYW5zLXNlcmlmIiBmb250LXNpemU9IjEzIiBsZW5ndGhBZGp1c3Q9InNwYWNpbmciIHRleHRMZW5ndGg9IjEzMi41NzA4IiB4PSIyNjEuNSIgeT0iMzg1LjE5OTciPlBMQUlOVEVYVCByZW1vdmVkPC90ZXh0PjwvZz48IS0tbGluayBwMSB0byBwMi0tPjxnIGNsYXNzPSJsaW5rIiBkYXRhLWVudGl0eS0xPSJlbnQwMDAyIiBkYXRhLWVudGl0eS0yPSJlbnQwMDAzIiBkYXRhLWxpbmstdHlwZT0iZGVwZW5kZW5jeSIgZGF0YS1zb3VyY2UtbGluZT0iOSIgaWQ9ImxuazYiPjxwYXRoIGQ9Ik0xMTguNSw0NC4xNiBDMTE4LjUsNjUuNCAxMTguNSw5NS4zNiAxMTguNSwxMTYuNjgiIGZpbGw9Im5vbmUiIGlkPSJwMS10by1wMiIgc3R5bGU9InN0cm9rZTojMTgxODE4O3N0cm9rZS13aWR0aDoxOyIvPjxwb2x5Z29uIGZpbGw9IiMxODE4MTgiIHBvaW50cz0iMTE4LjUsMTIyLjY4LDEyMi41LDExMy42OCwxMTguNSwxMTcuNjgsMTE0LjUsMTEzLjY4LDExOC41LDEyMi42OCIgc3R5bGU9InN0cm9rZTojMTgxODE4O3N0cm9rZS13aWR0aDoxOyIvPjx0ZXh0IGZpbGw9IiMwMDAwMDAiIGZvbnQtZmFtaWx5PSJzYW5zLXNlcmlmIiBmb250LXNpemU9IjEzIiBsZW5ndGhBZGp1c3Q9InNwYWNpbmciIHRleHRMZW5ndGg9IjkyLjA2NjQiIHg9IjExOS41IiB5PSI4OS4wNjY5Ij5Sb2xsaW5nIHJlc3RhcnQ8L3RleHQ+PC9nPjwhLS1saW5rIHAyIHRvIHAzLS0+PGcgY2xhc3M9ImxpbmsiIGRhdGEtZW50aXR5LTE9ImVudDAwMDMiIGRhdGEtZW50aXR5LTI9ImVudDAwMDQiIGRhdGEtbGluay10eXBlPSJkZXBlbmRlbmN5IiBkYXRhLXNvdXJjZS1saW5lPSIxMCIgaWQ9ImxuazciPjxwYXRoIGQ9Ik0xMTguNSwxNTkuMTYgQzExOC41LDE4MC40IDExOC41LDIxMC4zNiAxMTguNSwyMzEuNjgiIGZpbGw9Im5vbmUiIGlkPSJwMi10by1wMyIgc3R5bGU9InN0cm9rZTojMTgxODE4O3N0cm9rZS13aWR0aDoxOyIvPjxwb2x5Z29uIGZpbGw9IiMxODE4MTgiIHBvaW50cz0iMTE4LjUsMjM3LjY4LDEyMi41LDIyOC42OCwxMTguNSwyMzIuNjgsMTE0LjUsMjI4LjY4LDExOC41LDIzNy42OCIgc3R5bGU9InN0cm9rZTojMTgxODE4O3N0cm9rZS13aWR0aDoxOyIvPjx0ZXh0IGZpbGw9IiMwMDAwMDAiIGZvbnQtZmFtaWx5PSJzYW5zLXNlcmlmIiBmb250LXNpemU9IjEzIiBsZW5ndGhBZGp1c3Q9InNwYWNpbmciIHRleHRMZW5ndGg9IjEwNC41MDc4IiB4PSIxMTkuNSIgeT0iMjAyLjA2NjkiPkNsaWVudCBtaWdyYXRpb248L3RleHQ+PC9nPjwhLS1saW5rIHAzIHRvIHA0LS0+PGcgY2xhc3M9ImxpbmsiIGRhdGEtZW50aXR5LTE9ImVudDAwMDQiIGRhdGEtZW50aXR5LTI9ImVudDAwMDUiIGRhdGEtbGluay10eXBlPSJkZXBlbmRlbmN5IiBkYXRhLXNvdXJjZS1saW5lPSIxMSIgaWQ9ImxuazgiPjxwYXRoIGQ9Ik0xMTguNSwyNzQuNDcgQzExOC41LDI5Ni4yMSAxMTguNSwzMjcuMTEgMTE4LjUsMzQ4Ljc1IiBmaWxsPSJub25lIiBpZD0icDMtdG8tcDQiIHN0eWxlPSJzdHJva2U6IzE4MTgxODtzdHJva2Utd2lkdGg6MTsiLz48cG9seWdvbiBmaWxsPSIjMTgxODE4IiBwb2ludHM9IjExOC41LDM1NC43NSwxMjIuNSwzNDUuNzUsMTE4LjUsMzQ5Ljc1LDExNC41LDM0NS43NSwxMTguNSwzNTQuNzUiIHN0eWxlPSJzdHJva2U6IzE4MTgxODtzdHJva2Utd2lkdGg6MTsiLz48dGV4dCBmaWxsPSIjMDAwMDAwIiBmb250LWZhbWlseT0ic2Fucy1zZXJpZiIgZm9udC1zaXplPSIxMyIgbGVuZ3RoQWRqdXN0PSJzcGFjaW5nIiB0ZXh0TGVuZ3RoPSI5Mi4wNjY0IiB4PSIxMTkuNSIgeT0iMzE5LjA2NjkiPlJvbGxpbmcgcmVzdGFydDwvdGV4dD48L2c+PCEtLVNSQz1bVlAxMUptOTEzOE5seW9pUXBXOGtrblNjbUtJOTFuOUs4WG95WmhqcmNKM1JSWmczMlZfVXhoQjE2REhScXR2elZOdG51QWJydVhmdVQtTVg1WnZJalVKMDBhYVNISHFYOU1DNG8tSWUzV1lacFR2NVhDcDJJdWk0TW9vRldYTGlNNThTV09sR1BqVnFwQ0FKaHlLYlg2Tm1nWllXaXNpcWp1Q2NoMllYWjEtNDNvWGRGQl82MndrQWhDTGNWUnp3dFpzLXhTdmVPS29SbU5YeWZxVjBtWWs3dUFhNm1QWVM5QUZEVmZRMzdIbjFxbmxxSjRReF9SM3VQVDRHd25GWXd0cTJfa1lVMUdXLTlZSUtrQllPaURFZmRUX0VpdmxqVFp0S0NvS2xTekxoZEFTOGgyNFFmMGV3dElsck43VFlidVBGZnVkbHlmWXl6dGJDTWs3NDlPVTU3YjNlZDVBNGFmbGNJQnhpYWt1TkNQcC1iWXotY0ZfN0Fkell6SXRwMUcwMF0tLT48L2c+PC9zdmc+" class="uml" alt="uml diagram" title=""></a></p>
+<h3 id="phase-1-open-secured-ports">Phase 1: Open Secured Ports<a class="headerlink" href="#phase-1-open-secured-ports" title="Permanent link">¶</a></h3>
+<p>Add secured listener while keeping PLAINTEXT open:</p>
+<div class="highlight"><pre><span></span><code><span class="c1"># server.properties - Phase 1</span>
+<span class="na">listeners</span><span class="o">=</span><span class="s">PLAINTEXT://0.0.0.0:9091,SSL://0.0.0.0:9092</span>
+</code></pre></div>
+<p>Perform rolling restart of all brokers.</p>
+<h3 id="phase-2-migrate-clients">Phase 2: Migrate Clients<a class="headerlink" href="#phase-2-migrate-clients" title="Permanent link">¶</a></h3>
+<p>Update client configurations to use the secured port:</p>
+<div class="highlight"><pre><span></span><code><span class="c1"># client.properties</span>
+<span class="na">bootstrap.servers</span><span class="o">=</span><span class="s">kafka1:9092,kafka2:9092,kafka3:9092</span>
+<span class="na">security.protocol</span><span class="o">=</span><span class="s">SSL</span>
+<span class="na">ssl.truststore.location</span><span class="o">=</span><span class="s">/etc/kafka/ssl/client.truststore.jks</span>
+<span class="na">ssl.truststore.password</span><span class="o">=</span><span class="s">truststore-password</span>
+</code></pre></div>
+<p>Restart clients to pick up new configuration.</p>
+<h3 id="phase-3-enable-inter-broker-security">Phase 3: Enable Inter-Broker Security<a class="headerlink" href="#phase-3-enable-inter-broker-security" title="Permanent link">¶</a></h3>
+<p>Configure brokers to use SSL for inter-broker communication:</p>
+<div class="highlight"><pre><span></span><code><span class="c1"># server.properties - Phase 3</span>
+<span class="na">listeners</span><span class="o">=</span><span class="s">PLAINTEXT://0.0.0.0:9091,SSL://0.0.0.0:9092</span>
+<span class="na">security.inter.broker.protocol</span><span class="o">=</span><span class="s">SSL</span>
+</code></pre></div>
+<p>Perform rolling restart of all brokers.</p>
+<h3 id="phase-4-close-plaintext-port">Phase 4: Close PLAINTEXT Port<a class="headerlink" href="#phase-4-close-plaintext-port" title="Permanent link">¶</a></h3>
+<p>Remove the insecure listener:</p>
+<div class="highlight"><pre><span></span><code><span class="c1"># server.properties - Phase 4</span>
+<span class="na">listeners</span><span class="o">=</span><span class="s">SSL://0.0.0.0:9092</span>
+<span class="na">security.inter.broker.protocol</span><span class="o">=</span><span class="s">SSL</span>
+</code></pre></div>
+<p>Perform final rolling restart.</p>
+<h3 id="adding-sasl-to-ssl">Adding SASL to SSL<a class="headerlink" href="#adding-sasl-to-ssl" title="Permanent link">¶</a></h3>
+<p>To add SASL authentication on top of SSL encryption, open an additional <code>SASL_SSL</code> port:</p>
+<p><strong>Phase 1:</strong>
+</p><div class="highlight"><pre><span></span><code><span class="na">listeners</span><span class="o">=</span><span class="s">PLAINTEXT://0.0.0.0:9091,SSL://0.0.0.0:9092,SASL_SSL://0.0.0.0:9093</span>
+</code></pre></div>
+<p><strong>Phase 2:</strong> Migrate clients to SASL_SSL port (9093)</p>
+<p><strong>Phase 3:</strong>
+</p><div class="highlight"><pre><span></span><code><span class="na">listeners</span><span class="o">=</span><span class="s">PLAINTEXT://0.0.0.0:9091,SSL://0.0.0.0:9092,SASL_SSL://0.0.0.0:9093</span>
+<span class="na">security.inter.broker.protocol</span><span class="o">=</span><span class="s">SSL</span>
+</code></pre></div>
+<p><strong>Phase 4:</strong>
+</p><div class="highlight"><pre><span></span><code><span class="na">listeners</span><span class="o">=</span><span class="s">SSL://0.0.0.0:9092,SASL_SSL://0.0.0.0:9093</span>
+<span class="na">security.inter.broker.protocol</span><span class="o">=</span><span class="s">SSL</span>
+</code></pre></div>
+<div class="admonition tip">
+<p class="admonition-title">Rolling Restart Best Practices</p>
+<ul>
+<li>Stop brokers gracefully using SIGTERM</li>
+<li>Wait for restarted broker to rejoin ISR before proceeding to next broker</li>
+<li>Monitor under-replicated partitions during the process</li>
+<li>Keep PLAINTEXT listener open until all clients have migrated</li>
+</ul>
+</div>
+<hr>
 <h2 id="related-documentation">Related Documentation<a class="headerlink" href="#related-documentation" title="Permanent link">¶</a></h2>
 <ul>
 <li><a href="authentication/">Authentication</a> - Authentication mechanisms</li>
@@ -20044,7 +20161,7 @@ keytool<span class="w"> </span>-keystore<span class="w"> </span>kafka.truststore
       <nav class="md-footer__inner md-grid" aria-label="Footer" >
         
           
-          <a href="../operations/troubleshooting/dead-letter-queues/" class="md-footer__link md-footer__link--prev" aria-label="Previous: Dead Letter Queues">
+          <a href="../operations/migration/" class="md-footer__link md-footer__link--prev" aria-label="Previous: Migration">
             <div class="md-footer__button md-icon">
               
               <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12Z"/></svg>
@@ -20054,7 +20171,7 @@ keytool<span class="w"> </span>-keystore<span class="w"> </span>kafka.truststore
                 Previous
               </span>
               <div class="md-ellipsis">
-                Dead Letter Queues
+                Migration
               </div>
             </div>
           </a>
