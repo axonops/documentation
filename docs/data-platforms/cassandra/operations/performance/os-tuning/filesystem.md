@@ -383,13 +383,14 @@ end note
 **Log configuration impact:**
 
 ```bash
-# Create XFS with larger log for write-heavy workloads
-mkfs.xfs -l size=256m,lazy-count=1 /dev/sdb1
+# Standard formatting (recommended - uses optimal defaults)
+mkfs.xfs -f /dev/sdb1
 
-# Log options:
-# - size: Larger log reduces log wrapping frequency
-# - lazy-count: Reduces superblock updates
+# Verify filesystem parameters
+xfs_info /dev/sdb1
 ```
+
+XFS automatically calculates optimal log size based on filesystem size. Manual tuning is rarely necessary for modern storage.
 
 ### ZFS Architecture
 
@@ -939,13 +940,6 @@ commitlog_compression:
 | `nodiratime` | Disable directory access time updates |
 | `allocsize=512m` | Larger allocation size for streaming writes (optional) |
 
-**XFS-specific tuning:**
-
-```bash
-# Increase log buffer size for write-heavy workloads
-mkfs.xfs -l size=256m /dev/sdb1
-```
-
 ### ext4 Mount Options
 
 ```bash
@@ -986,12 +980,14 @@ tune2fs -l /dev/sdc1 | grep -E "features|Default mount"
 ### XFS Formatting
 
 ```bash
-# Standard formatting
+# Standard formatting (recommended - uses optimal defaults)
 mkfs.xfs -f /dev/sdb1
 
-# Optimized for Cassandra (larger log, allocation groups based on CPU count)
-mkfs.xfs -f -l size=256m -d agcount=16 /dev/sdb1
+# Verify filesystem parameters
+xfs_info /dev/sdb1
 ```
+
+XFS automatically calculates optimal allocation group count and log size based on device characteristics. Manual tuning is rarely necessary for modern NVMe/SSD storage.
 
 ### ext4 Formatting
 
