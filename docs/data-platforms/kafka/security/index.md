@@ -468,6 +468,124 @@ inter.broker.listener.name=INTERNAL
 
 ---
 
+## Enabling Security on a Running Cluster
+
+Security can be incrementally enabled on an existing cluster without downtime through a phased rolling restart approach.
+
+### Migration Phases
+
+```plantuml
+@startuml
+
+skinparam backgroundColor transparent
+
+rectangle "Phase 1: Open Secured Ports" as p1
+rectangle "Phase 2: Migrate Clients" as p2
+rectangle "Phase 3: Secure Inter-Broker" as p3
+rectangle "Phase 4: Close PLAINTEXT" as p4
+
+p1 --> p2 : Rolling restart
+p2 --> p3 : Client migration
+p3 --> p4 : Rolling restart
+
+note right of p1
+  listeners=PLAINTEXT://:9091,SSL://:9092
+  PLAINTEXT remains open
+end note
+
+note right of p3
+  security.inter.broker.protocol=SSL
+  Brokers communicate securely
+end note
+
+note right of p4
+  listeners=SSL://:9092
+  PLAINTEXT removed
+end note
+
+@enduml
+```
+
+### Phase 1: Open Secured Ports
+
+Add secured listener while keeping PLAINTEXT open:
+
+```properties
+# server.properties - Phase 1
+listeners=PLAINTEXT://0.0.0.0:9091,SSL://0.0.0.0:9092
+```
+
+Perform rolling restart of all brokers.
+
+### Phase 2: Migrate Clients
+
+Update client configurations to use the secured port:
+
+```properties
+# client.properties
+bootstrap.servers=kafka1:9092,kafka2:9092,kafka3:9092
+security.protocol=SSL
+ssl.truststore.location=/etc/kafka/ssl/client.truststore.jks
+ssl.truststore.password=truststore-password
+```
+
+Restart clients to pick up new configuration.
+
+### Phase 3: Enable Inter-Broker Security
+
+Configure brokers to use SSL for inter-broker communication:
+
+```properties
+# server.properties - Phase 3
+listeners=PLAINTEXT://0.0.0.0:9091,SSL://0.0.0.0:9092
+security.inter.broker.protocol=SSL
+```
+
+Perform rolling restart of all brokers.
+
+### Phase 4: Close PLAINTEXT Port
+
+Remove the insecure listener:
+
+```properties
+# server.properties - Phase 4
+listeners=SSL://0.0.0.0:9092
+security.inter.broker.protocol=SSL
+```
+
+Perform final rolling restart.
+
+### Adding SASL to SSL
+
+To add SASL authentication on top of SSL encryption, open an additional `SASL_SSL` port:
+
+**Phase 1:**
+```properties
+listeners=PLAINTEXT://0.0.0.0:9091,SSL://0.0.0.0:9092,SASL_SSL://0.0.0.0:9093
+```
+
+**Phase 2:** Migrate clients to SASL_SSL port (9093)
+
+**Phase 3:**
+```properties
+listeners=PLAINTEXT://0.0.0.0:9091,SSL://0.0.0.0:9092,SASL_SSL://0.0.0.0:9093
+security.inter.broker.protocol=SSL
+```
+
+**Phase 4:**
+```properties
+listeners=SSL://0.0.0.0:9092,SASL_SSL://0.0.0.0:9093
+security.inter.broker.protocol=SSL
+```
+
+!!! tip "Rolling Restart Best Practices"
+    - Stop brokers gracefully using SIGTERM
+    - Wait for restarted broker to rejoin ISR before proceeding to next broker
+    - Monitor under-replicated partitions during the process
+    - Keep PLAINTEXT listener open until all clients have migrated
+
+---
+
 ## Related Documentation
 
 - [Authentication](authentication/index.md) - Authentication mechanisms

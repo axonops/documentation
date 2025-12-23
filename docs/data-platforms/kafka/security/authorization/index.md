@@ -373,6 +373,147 @@ log4j.logger.kafka.authorizer.logger=DEBUG
 
 ---
 
+## Principal Mapping
+
+### SSL Principal Mapping
+
+By default, SSL user names follow the full DN format:
+
+```
+CN=writeuser,OU=Unknown,O=Unknown,L=Unknown,ST=Unknown,C=Unknown
+```
+
+Configure `ssl.principal.mapping.rules` to extract short names:
+
+```properties
+# server.properties
+ssl.principal.mapping.rules=\
+  RULE:^CN=(.*?),OU=ServiceUsers.*$/$1/, \
+  RULE:^CN=(.*?),OU=(.*?),O=(.*?),L=(.*?),ST=(.*?),C=(.*?)$/$1@$2/L, \
+  DEFAULT
+```
+
+**Rule syntax:**
+
+| Format | Description |
+|--------|-------------|
+| `RULE:pattern/replacement/` | Basic replacement |
+| `RULE:pattern/replacement/L` | Lowercase result |
+| `RULE:pattern/replacement/U` | Uppercase result |
+| `DEFAULT` | Use full DN |
+
+**Examples:**
+
+| Input DN | Rule | Result |
+|----------|------|--------|
+| `CN=serviceuser,OU=ServiceUsers,O=Corp` | `RULE:^CN=(.*?),OU=ServiceUsers.*$/$1/` | `serviceuser` |
+| `CN=AdminUser,OU=Admin,O=Corp` | `RULE:^CN=(.*?),OU=(.*?).*$/$1@$2/L` | `adminuser@admin` |
+
+### SASL Kerberos Principal Mapping
+
+Configure `sasl.kerberos.principal.to.local.rules` for Kerberos principals:
+
+```properties
+# server.properties
+sasl.kerberos.principal.to.local.rules=\
+  RULE:[1:$1@$0](.*@MYDOMAIN.COM)s/@.*//,\
+  DEFAULT
+```
+
+**Rule syntax:**
+
+| Format | Description |
+|--------|-------------|
+| `RULE:[n:string](regexp)s/pattern/replacement/` | Standard replacement |
+| `RULE:[n:string](regexp)s/pattern/replacement/g` | Global replacement |
+| `RULE:[n:string](regexp)s/pattern/replacement//L` | Lowercase result |
+| `RULE:[n:string](regexp)s/pattern/replacement//U` | Uppercase result |
+
+---
+
+## Protocol ACL Requirements
+
+Each Kafka protocol request requires specific ACL permissions:
+
+### Produce and Consume
+
+| Protocol | Operation | Resource | Notes |
+|----------|-----------|----------|-------|
+| PRODUCE | Write | Topic | Normal produce |
+| PRODUCE | IdempotentWrite | Cluster | Idempotent producer |
+| PRODUCE | Write | TransactionalId | Transactional producer |
+| FETCH | Read | Topic | Consumer fetch |
+| FETCH | ClusterAction | Cluster | Follower replication |
+
+### Consumer Group Operations
+
+| Protocol | Operation | Resource | Notes |
+|----------|-----------|----------|-------|
+| JOIN_GROUP | Read | Group | Join consumer group |
+| SYNC_GROUP | Read | Group | Synchronize assignments |
+| HEARTBEAT | Read | Group | Maintain membership |
+| LEAVE_GROUP | Read | Group | Leave group |
+| OFFSET_COMMIT | Read | Group, Topic | Commit offsets |
+| OFFSET_FETCH | Describe | Group, Topic | Fetch committed offsets |
+| FIND_COORDINATOR | Describe | Group | Find group coordinator |
+
+### Topic Operations
+
+| Protocol | Operation | Resource | Notes |
+|----------|-----------|----------|-------|
+| METADATA | Describe | Topic | Get topic metadata |
+| METADATA | Create | Cluster or Topic | Auto-create topics |
+| LIST_OFFSETS | Describe | Topic | Get partition offsets |
+| CREATE_TOPICS | Create | Cluster | Create topics |
+| DELETE_TOPICS | Delete | Topic | Delete topics |
+| ALTER_CONFIGS | AlterConfigs | Topic | Modify topic config |
+| DESCRIBE_CONFIGS | DescribeConfigs | Topic | Read topic config |
+
+### Transaction Operations
+
+| Protocol | Operation | Resource | Notes |
+|----------|-----------|----------|-------|
+| FIND_COORDINATOR | Describe | TransactionalId | Find txn coordinator |
+| INIT_PRODUCER_ID | Write | TransactionalId | Initialize producer |
+| ADD_PARTITIONS_TO_TXN | Write | TransactionalId, Topic | Add partitions |
+| ADD_OFFSETS_TO_TXN | Write | TransactionalId, Group | Add offsets |
+| END_TXN | Write | TransactionalId | Commit/abort txn |
+| TXN_OFFSET_COMMIT | Read | Group, Topic | Commit txn offsets |
+| WRITE_TXN_MARKERS | ClusterAction | Cluster | Inter-broker |
+
+### Admin Operations
+
+| Protocol | Operation | Resource | Notes |
+|----------|-----------|----------|-------|
+| CREATE_PARTITIONS | Alter | Topic | Add partitions |
+| DELETE_RECORDS | Delete | Topic | Delete records |
+| ELECT_LEADERS | ClusterAction | Cluster | Leader election |
+| DESCRIBE_LOG_DIRS | Describe | Cluster | Log directory info |
+| ALTER_REPLICA_LOG_DIRS | Alter | Cluster | Move replicas |
+| CREATE_ACLS | Alter | Cluster | Manage ACLs |
+| DESCRIBE_ACLS | Describe | Cluster | List ACLs |
+| DELETE_ACLS | Alter | Cluster | Remove ACLs |
+
+---
+
+## KRaft Principal Forwarding
+
+In KRaft mode, admin requests flow through brokers to controllers:
+
+1. Client sends request to broker
+2. Broker wraps request in `Envelope` with client principal
+3. Controller authorizes broker (Envelope request)
+4. Controller authorizes original request using forwarded principal
+
+For custom principals to work with KRaft, the principal builder must implement `KafkaPrincipalSerde`:
+
+```properties
+# server.properties
+principal.builder.class=com.example.CustomPrincipalBuilder
+```
+
+---
+
 ## Related Documentation
 
 - [Security Overview](../index.md) - Security concepts

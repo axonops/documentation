@@ -865,6 +865,7 @@ nav:
         - Troubleshooting:
           - Overview: data-platforms/kafka/operations/troubleshooting/index.md
           - Dead Letter Queues: data-platforms/kafka/operations/troubleshooting/dead-letter-queues.md
+        - Migration: data-platforms/kafka/operations/migration/index.md
       - Security:
         - Overview: data-platforms/kafka/security/index.md
         - Authentication: data-platforms/kafka/security/authentication/index.md
@@ -883,7 +884,6 @@ nav:
         - Diagnosis: data-platforms/kafka/troubleshooting/diagnosis/index.md
         - Log Analysis: data-platforms/kafka/troubleshooting/log-analysis/index.md
       - Reference: data-platforms/kafka/reference/index.md
-      - Migration: data-platforms/kafka/migration/index.md
 
   # - Release Notes:
   #   - Release notes: 'release_notes/releases.md'

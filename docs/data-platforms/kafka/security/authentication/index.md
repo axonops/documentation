@@ -295,6 +295,232 @@ inter.broker.listener.name=INTERNAL
 
 ---
 
+## SASL/GSSAPI (Kerberos)
+
+Enterprise authentication using Kerberos Key Distribution Center (KDC).
+
+### Prerequisites
+
+1. Access to Kerberos KDC (Active Directory or MIT Kerberos)
+2. Principal for each broker: `kafka/{hostname}@{REALM}`
+3. Principal for each client application
+4. Keytab files for service accounts
+
+### Create Kerberos Principals
+
+```bash
+# Create broker principal
+sudo /usr/sbin/kadmin.local -q 'addprinc -randkey kafka/kafka1.example.com@EXAMPLE.COM'
+
+# Export to keytab
+sudo /usr/sbin/kadmin.local -q "ktadd -k /etc/security/keytabs/kafka.keytab kafka/kafka1.example.com@EXAMPLE.COM"
+```
+
+### Broker Configuration
+
+```properties
+# server.properties
+listeners=SASL_SSL://0.0.0.0:9093
+security.inter.broker.protocol=SASL_SSL
+sasl.mechanism.inter.broker.protocol=GSSAPI
+sasl.enabled.mechanisms=GSSAPI
+sasl.kerberos.service.name=kafka
+```
+
+**JAAS configuration (kafka_server_jaas.conf):**
+
+```
+KafkaServer {
+    com.sun.security.auth.module.Krb5LoginModule required
+    useKeyTab=true
+    storeKey=true
+    keyTab="/etc/security/keytabs/kafka.keytab"
+    principal="kafka/kafka1.example.com@EXAMPLE.COM";
+};
+```
+
+**JVM parameters:**
+
+```bash
+-Djava.security.krb5.conf=/etc/kafka/krb5.conf
+-Djava.security.auth.login.config=/etc/kafka/kafka_server_jaas.conf
+```
+
+### Client Configuration
+
+```properties
+security.protocol=SASL_SSL
+sasl.mechanism=GSSAPI
+sasl.kerberos.service.name=kafka
+sasl.jaas.config=com.sun.security.auth.module.Krb5LoginModule required \
+  useKeyTab=true \
+  storeKey=true \
+  keyTab="/etc/security/keytabs/client.keytab" \
+  principal="kafka-client@EXAMPLE.COM";
+```
+
+For interactive use with kinit:
+
+```properties
+sasl.jaas.config=com.sun.security.auth.module.Krb5LoginModule required \
+  useTicketCache=true;
+```
+
+---
+
+## JAAS Configuration
+
+### Configuration Precedence
+
+JAAS configuration can be specified at multiple levels. The order of precedence:
+
+1. Broker property: `listener.name.{listenerName}.{mechanism}.sasl.jaas.config`
+2. Static JAAS file section: `{listenerName}.KafkaServer`
+3. Static JAAS file section: `KafkaServer`
+
+**Example with multiple mechanisms:**
+
+```properties
+# server.properties
+listener.name.sasl_ssl.scram-sha-512.sasl.jaas.config=\
+  org.apache.kafka.common.security.scram.ScramLoginModule required \
+  username="admin" password="admin-secret";
+
+listener.name.sasl_ssl.plain.sasl.jaas.config=\
+  org.apache.kafka.common.security.plain.PlainLoginModule required \
+  username="admin" password="admin-secret" \
+  user_admin="admin-secret" user_alice="alice-secret";
+```
+
+### Static JAAS File
+
+For clients using static JAAS configuration:
+
+**kafka_client_jaas.conf:**
+
+```
+KafkaClient {
+    org.apache.kafka.common.security.scram.ScramLoginModule required
+    username="my-application"
+    password="app-password";
+};
+```
+
+**JVM parameter:**
+
+```bash
+-Djava.security.auth.login.config=/etc/kafka/kafka_client_jaas.conf
+```
+
+---
+
+## SCRAM Credential Management
+
+### Initial Credentials (KRaft)
+
+For KRaft clusters, create initial credentials during storage formatting:
+
+```bash
+# Format storage with initial SCRAM credentials
+kafka-storage.sh format \
+  -t $(kafka-storage.sh random-uuid) \
+  -c config/kraft/server.properties \
+  --add-scram 'SCRAM-SHA-512=[name="admin",password="admin-secret"]'
+```
+
+### Runtime Credential Management
+
+```bash
+# Create user with custom iteration count
+kafka-configs.sh --bootstrap-server kafka:9092 \
+  --alter \
+  --add-config 'SCRAM-SHA-512=[iterations=8192,password=user-password]' \
+  --entity-type users \
+  --entity-name my-user
+
+# List user credentials (shows hash, not password)
+kafka-configs.sh --bootstrap-server kafka:9092 \
+  --describe \
+  --entity-type users \
+  --entity-name my-user
+
+# Delete user credentials
+kafka-configs.sh --bootstrap-server kafka:9092 \
+  --alter \
+  --delete-config 'SCRAM-SHA-512' \
+  --entity-type users \
+  --entity-name my-user
+```
+
+### Security Considerations
+
+| Consideration | Recommendation |
+|---------------|----------------|
+| **Storage** | SCRAM credentials stored in metadata log (KRaft) |
+| **Hash functions** | Only SHA-256 and SHA-512 supported |
+| **Iterations** | Minimum 4096 (default); increase for stronger protection |
+| **Transport** | Always use with TLS (SASL_SSL) |
+| **Controller security** | Ensure KRaft controllers on secure, private network |
+
+---
+
+## Delegation Tokens
+
+Delegation tokens provide lightweight authentication for short-lived operations without exposing primary credentials.
+
+### Enable Delegation Tokens
+
+```properties
+# server.properties
+delegation.token.secret.key=<base64-encoded-secret>
+delegation.token.max.lifetime.ms=604800000  # 7 days
+delegation.token.expiry.time.ms=86400000    # 1 day
+delegation.token.expiry.check.interval.ms=3600000  # 1 hour
+```
+
+### Create Delegation Token
+
+```bash
+kafka-delegation-tokens.sh --bootstrap-server kafka:9092 \
+  --command-config admin.properties \
+  --create \
+  --max-life-time-period 86400000 \
+  --owner-principal User:my-user
+```
+
+### Use Delegation Token
+
+```properties
+security.protocol=SASL_SSL
+sasl.mechanism=SCRAM-SHA-512
+sasl.jaas.config=org.apache.kafka.common.security.scram.ScramLoginModule required \
+  username="my-user" \
+  password="<delegation-token-value>" \
+  tokenauth=true;
+```
+
+---
+
+## Connection Performance
+
+!!! note "DNS Lookup Performance"
+    Clients perform reverse DNS lookups during SASL handshake. Use fully qualified domain names (FQDNs) in both `bootstrap.servers` and broker `advertised.listeners` to avoid slow handshakes.
+
+---
+
+## Re-authentication
+
+Enable periodic re-authentication for long-running connections:
+
+```properties
+# Broker configuration
+connections.max.reauth.ms=3600000  # Re-authenticate every hour
+```
+
+Client connections are re-authenticated transparently without disconnection when credentials or tokens are refreshed.
+
+---
+
 ## Related Documentation
 
 - [Security Overview](../index.md) - Security concepts

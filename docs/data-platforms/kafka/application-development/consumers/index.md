@@ -697,6 +697,119 @@ order-processors orders  2          1500            1600            100
 
 ---
 
+## Share Groups (KIP-932)
+
+Share groups provide an alternative consumption model where multiple consumers cooperatively consume records from partitions, with finer-grained acknowledgment.
+
+### Consumer Groups vs Share Groups
+
+| Aspect | Consumer Groups | Share Groups |
+|--------|-----------------|--------------|
+| **Partition assignment** | Each partition assigned to one consumer | Partitions shared among consumers |
+| **Consumer count** | Limited by partition count | Can exceed partition count |
+| **Acknowledgment** | Offset-based (batch) | Per-record acknowledgment |
+| **Ordering** | Strict ordering per partition | No ordering guarantee |
+| **Delivery tracking** | Consumer-managed offsets | Broker-tracked delivery attempts |
+| **Use case** | Ordered event processing | Queue-like workloads |
+
+### Share Consumer Lifecycle
+
+```plantuml
+@startuml
+
+skinparam backgroundColor transparent
+
+participant "Share Consumer A" as CA
+participant "Share Consumer B" as CB
+participant "Group Coordinator" as GC
+database "Topic Partition" as TP
+
+note over TP : Records: [r1, r2, r3, r4, r5]
+
+CA -> GC : Fetch
+GC -> CA : r1, r2 (acquired, 30s lock)
+
+CB -> GC : Fetch
+GC -> CB : r3, r4 (acquired, 30s lock)
+
+CA -> GC : Acknowledge r1
+CA -> GC : Release r2 (retry)
+
+note over GC : r2 available again
+
+CB -> GC : Fetch
+GC -> CB : r2 (redelivered)
+
+@enduml
+```
+
+### Record States in Share Groups
+
+| State | Description |
+|-------|-------------|
+| **Available** | Ready for delivery to any consumer |
+| **Acquired** | Locked by a consumer (time-limited) |
+| **Acknowledged** | Successfully processed, will not be redelivered |
+| **Rejected** | Marked unprocessable, will not be retried |
+
+### Share Consumer Configuration
+
+```properties
+# Share group configuration
+group.id=order-share-group
+group.type=share
+
+# Lock duration (default 30s)
+share.record.lock.duration.ms=30000
+```
+
+### Share Consumer API
+
+```java
+// Create share consumer
+Properties props = new Properties();
+props.put("bootstrap.servers", "kafka:9092");
+props.put("group.id", "order-share-group");
+props.put("key.deserializer", StringDeserializer.class.getName());
+props.put("value.deserializer", StringDeserializer.class.getName());
+
+try (KafkaShareConsumer<String, String> consumer = new KafkaShareConsumer<>(props)) {
+    consumer.subscribe(Arrays.asList("orders"));
+
+    while (running) {
+        ConsumerRecords<String, String> records = consumer.poll(Duration.ofMillis(100));
+
+        for (ConsumerRecord<String, String> record : records) {
+            try {
+                processRecord(record);
+                // Acknowledge successful processing
+                consumer.acknowledge(record);
+            } catch (RetriableException e) {
+                // Release for redelivery to another consumer
+                consumer.release(record);
+            } catch (Exception e) {
+                // Reject - will not be retried
+                consumer.reject(record);
+            }
+        }
+    }
+}
+```
+
+### Share Group Use Cases
+
+| Use Case | Why Share Groups |
+|----------|------------------|
+| **Task queues** | Work items can be processed by any worker |
+| **Load balancing** | Distribute load across many workers without partition constraints |
+| **Retry scenarios** | Built-in redelivery without consumer logic |
+| **Bursty workloads** | Scale consumers beyond partition count |
+
+!!! note "Version Requirement"
+    Share groups require Kafka 4.0+ and are designed for workloads where ordering is not required. For ordered processing, continue using consumer groups.
+
+---
+
 ## Version Compatibility
 
 | Feature | Minimum Version |
@@ -708,6 +821,7 @@ order-processors orders  2          1500            1600            100
 | Static Group Membership | 2.3.0 |
 | Cooperative Rebalancing | 2.4.0 |
 | Consumer Group Protocol (KIP-848) | 3.7.0 (Preview) |
+| Share Groups (KIP-932) | 4.0.0 |
 
 ---
 

@@ -438,6 +438,316 @@ kafka-console-consumer.sh --bootstrap-server kafka:9092 \
 
 ---
 
+## kafka-share-groups.sh
+
+Share groups (KIP-932) allow multiple consumers to share partition consumption.
+
+### List Share Groups
+
+```bash
+kafka-share-groups.sh --bootstrap-server kafka:9092 --list
+```
+
+### Describe Share Group
+
+```bash
+# Show current state
+kafka-share-groups.sh --bootstrap-server kafka:9092 \
+  --describe --group my-share-group
+
+# Show members
+kafka-share-groups.sh --bootstrap-server kafka:9092 \
+  --describe --group my-share-group --members
+
+# Show state summary
+kafka-share-groups.sh --bootstrap-server kafka:9092 \
+  --describe --group my-share-group --state
+```
+
+### Reset Share Group Offsets
+
+```bash
+# Reset to latest (dry run)
+kafka-share-groups.sh --bootstrap-server kafka:9092 \
+  --reset-offsets --group my-share-group \
+  --topic my-topic --to-latest --dry-run
+
+# Reset to latest (execute)
+kafka-share-groups.sh --bootstrap-server kafka:9092 \
+  --reset-offsets --group my-share-group \
+  --topic my-topic --to-latest --execute
+```
+
+### Delete Share Group
+
+```bash
+kafka-share-groups.sh --bootstrap-server kafka:9092 \
+  --delete --group my-share-group
+```
+
+---
+
+## kafka-groups.sh
+
+List all group types (consumer, share, streams).
+
+```bash
+# List all groups with type
+kafka-groups.sh --bootstrap-server kafka:9092 --list
+
+# Output shows group type
+# GROUP                    TYPE                     PROTOCOL
+# my-consumer-group        Consumer                 consumer
+# my-share-group           Share                    share
+```
+
+---
+
+## Partition Reassignment with Throttling
+
+Limit bandwidth during data migration to reduce impact on production traffic.
+
+### Execute with Throttle
+
+```bash
+# Throttle inter-broker replication to 50 MB/s
+kafka-reassign-partitions.sh --bootstrap-server kafka:9092 \
+  --reassignment-json-file reassignment.json \
+  --throttle 50000000 \
+  --execute
+
+# Also throttle disk-to-disk moves
+kafka-reassign-partitions.sh --bootstrap-server kafka:9092 \
+  --reassignment-json-file reassignment.json \
+  --throttle 50000000 \
+  --replica-alter-log-dirs-throttle 100000000 \
+  --execute
+```
+
+### Adjust Throttle During Migration
+
+```bash
+# Increase throttle if migration is too slow
+kafka-reassign-partitions.sh --bootstrap-server kafka:9092 \
+  --reassignment-json-file reassignment.json \
+  --throttle 100000000 \
+  --additional \
+  --execute
+```
+
+### Verify and Remove Throttle
+
+```bash
+# Verify completion - this also removes throttle
+kafka-reassign-partitions.sh --bootstrap-server kafka:9092 \
+  --reassignment-json-file reassignment.json \
+  --verify
+```
+
+!!! warning "Throttle Removal"
+    Always run `--verify` after reassignment completes. Failing to remove the throttle can limit normal replication traffic.
+
+### View Current Throttle Settings
+
+```bash
+# View broker throttle
+kafka-configs.sh --bootstrap-server kafka:9092 \
+  --entity-type brokers --describe
+
+# View topic throttle
+kafka-configs.sh --bootstrap-server kafka:9092 \
+  --entity-type topics --entity-name my-topic --describe
+```
+
+---
+
+## Increasing Replication Factor
+
+### Create Reassignment Plan
+
+```bash
+cat > increase-rf.json << 'EOF'
+{
+  "version": 1,
+  "partitions": [
+    {"topic": "my-topic", "partition": 0, "replicas": [1, 2, 3]}
+  ]
+}
+EOF
+```
+
+### Execute and Verify
+
+```bash
+# Execute
+kafka-reassign-partitions.sh --bootstrap-server kafka:9092 \
+  --reassignment-json-file increase-rf.json \
+  --execute
+
+# Verify
+kafka-reassign-partitions.sh --bootstrap-server kafka:9092 \
+  --reassignment-json-file increase-rf.json \
+  --verify
+
+# Confirm new replication factor
+kafka-topics.sh --bootstrap-server kafka:9092 \
+  --topic my-topic --describe
+```
+
+---
+
+## Quota Management
+
+### Set User Quotas
+
+```bash
+# Set producer and consumer byte rate for user
+kafka-configs.sh --bootstrap-server kafka:9092 \
+  --entity-type users --entity-name my-user \
+  --alter --add-config 'producer_byte_rate=1048576,consumer_byte_rate=2097152'
+
+# Set request rate quota (percentage of broker capacity)
+kafka-configs.sh --bootstrap-server kafka:9092 \
+  --entity-type users --entity-name my-user \
+  --alter --add-config 'request_percentage=50'
+```
+
+### Set Client-ID Quotas
+
+```bash
+kafka-configs.sh --bootstrap-server kafka:9092 \
+  --entity-type clients --entity-name my-client \
+  --alter --add-config 'producer_byte_rate=1048576,consumer_byte_rate=2097152'
+```
+
+### Set Combined User+Client Quotas
+
+```bash
+kafka-configs.sh --bootstrap-server kafka:9092 \
+  --entity-type users --entity-name my-user \
+  --entity-type clients --entity-name my-client \
+  --alter --add-config 'producer_byte_rate=1048576'
+```
+
+### Set Default Quotas
+
+```bash
+# Default for all users
+kafka-configs.sh --bootstrap-server kafka:9092 \
+  --entity-type users --entity-default \
+  --alter --add-config 'producer_byte_rate=1048576'
+
+# Default for all clients
+kafka-configs.sh --bootstrap-server kafka:9092 \
+  --entity-type clients --entity-default \
+  --alter --add-config 'producer_byte_rate=1048576'
+```
+
+### Describe Quotas
+
+```bash
+# Describe user quota
+kafka-configs.sh --bootstrap-server kafka:9092 \
+  --entity-type users --entity-name my-user --describe
+
+# Describe all user quotas
+kafka-configs.sh --bootstrap-server kafka:9092 \
+  --entity-type users --describe
+
+# Describe combined user+client quotas
+kafka-configs.sh --bootstrap-server kafka:9092 \
+  --entity-type users --entity-type clients --describe
+```
+
+---
+
+## Cluster Operations
+
+### Graceful Shutdown
+
+Enable controlled shutdown for graceful broker restarts:
+
+```properties
+# server.properties
+controlled.shutdown.enable=true
+```
+
+With controlled shutdown enabled, the broker:
+
+1. Syncs all logs to disk (avoiding recovery on restart)
+2. Migrates leadership to other replicas before stopping
+3. Minimizes partition unavailability to milliseconds
+
+### Preferred Leader Election
+
+```bash
+# Trigger preferred leader election for all partitions
+kafka-leader-election.sh --bootstrap-server kafka:9092 \
+  --election-type preferred \
+  --all-topic-partitions
+
+# Auto-rebalance can also be enabled in broker config
+# auto.leader.rebalance.enable=true
+```
+
+### Rack Awareness
+
+Configure brokers for rack-aware replica placement:
+
+```properties
+# server.properties on each broker
+broker.rack=rack-1
+```
+
+When rack awareness is configured:
+
+- Replicas of each partition spread across different racks
+- Partition spans `min(#racks, replication-factor)` racks
+- Survives rack-level failures
+
+---
+
+## Broker API Versions
+
+Check supported API versions for compatibility:
+
+```bash
+kafka-broker-api-versions.sh --bootstrap-server kafka:9092
+```
+
+---
+
+## Log Verification
+
+### Verify Log Integrity
+
+```bash
+# Verify indexes
+kafka-dump-log.sh --files /var/kafka-logs/my-topic-0/00000000000000000000.log \
+  --index-sanity-check
+
+# Dump transaction state
+kafka-dump-log.sh --files /var/kafka-logs/__transaction_state-0/00000000000000000000.log \
+  --print-data-log
+```
+
+### Offset Explorer
+
+```bash
+# Get offsets for all partitions
+kafka-get-offsets.sh --bootstrap-server kafka:9092 \
+  --topic my-topic
+
+# Get earliest and latest offsets
+kafka-get-offsets.sh --bootstrap-server kafka:9092 \
+  --topic my-topic --time -2  # earliest
+
+kafka-get-offsets.sh --bootstrap-server kafka:9092 \
+  --topic my-topic --time -1  # latest
+```
+
+---
+
 ## Related Documentation
 
 - [Operations](../index.md) - Operations guide

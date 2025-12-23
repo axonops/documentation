@@ -322,6 +322,7 @@ FAILED --> [*] : delete
 | `/connectors/{name}/restart` | POST | Restart connector |
 | `/connectors/{name}/pause` | PUT | Pause connector |
 | `/connectors/{name}/resume` | PUT | Resume connector |
+| `/connectors/{name}/stop` | PUT | Stop connector (deallocate resources) |
 
 ### Task Management
 
@@ -331,6 +332,47 @@ FAILED --> [*] : delete
 | `/connectors/{name}/tasks/{id}/status` | GET | Get task status |
 | `/connectors/{name}/tasks/{id}/restart` | POST | Restart task |
 
+### Offset Management
+
+Manage connector offsets (connector must be stopped):
+
+| Endpoint | Method | Description |
+|----------|--------|-------------|
+| `/connectors/{name}/offsets` | GET | Get current offsets |
+| `/connectors/{name}/offsets` | DELETE | Reset offsets |
+| `/connectors/{name}/offsets` | PATCH | Alter offsets |
+
+**Alter source connector offsets:**
+
+```bash
+# Stop connector first
+curl -X PUT http://connect:8083/connectors/my-connector/stop
+
+# Alter offsets
+curl -X PATCH http://connect:8083/connectors/my-connector/offsets \
+  -H "Content-Type: application/json" \
+  -d '{
+    "offsets": [
+      {
+        "partition": {"filename": "test.txt"},
+        "offset": {"position": 30}
+      }
+    ]
+  }'
+
+# Resume connector
+curl -X PUT http://connect:8083/connectors/my-connector/resume
+```
+
+**Reset sink connector offsets:**
+
+```bash
+# Stop and reset to re-consume from beginning
+curl -X PUT http://connect:8083/connectors/my-sink/stop
+curl -X DELETE http://connect:8083/connectors/my-sink/offsets
+curl -X PUT http://connect:8083/connectors/my-sink/resume
+```
+
 ### Cluster Information
 
 | Endpoint | Method | Description |
@@ -338,6 +380,23 @@ FAILED --> [*] : delete
 | `/` | GET | Cluster info |
 | `/connector-plugins` | GET | List installed plugins |
 | `/connector-plugins/{plugin}/config/validate` | PUT | Validate config |
+
+### Admin Logging
+
+Dynamically adjust log levels:
+
+| Endpoint | Method | Description |
+|----------|--------|-------------|
+| `/admin/loggers` | GET | List loggers with explicit levels |
+| `/admin/loggers/{name}` | GET | Get logger level |
+| `/admin/loggers/{name}` | PUT | Set logger level |
+
+```bash
+# Enable debug logging for connector
+curl -X PUT http://connect:8083/admin/loggers/org.apache.kafka.connect \
+  -H "Content-Type: application/json" \
+  -d '{"level": "DEBUG"}'
+```
 
 ---
 
@@ -452,6 +511,51 @@ end note
 
 @enduml
 ```
+
+### Predicates
+
+Apply transforms conditionally based on message properties:
+
+**Built-in Predicates:**
+
+| Predicate | Description |
+|-----------|-------------|
+| `TopicNameMatches` | Match records where topic name matches regex |
+| `HasHeaderKey` | Match records with specific header key |
+| `RecordIsTombstone` | Match tombstone records (null value) |
+
+**Predicate Configuration:**
+
+```json
+{
+  "name": "my-connector",
+  "config": {
+    "connector.class": "...",
+    "transforms": "FilterFoo,ExtractBar",
+
+    "transforms.FilterFoo.type": "org.apache.kafka.connect.transforms.Filter",
+    "transforms.FilterFoo.predicate": "IsFoo",
+
+    "transforms.ExtractBar.type": "org.apache.kafka.connect.transforms.ExtractField$Key",
+    "transforms.ExtractBar.field": "other_field",
+    "transforms.ExtractBar.predicate": "IsBar",
+    "transforms.ExtractBar.negate": "true",
+
+    "predicates": "IsFoo,IsBar",
+
+    "predicates.IsFoo.type": "org.apache.kafka.connect.transforms.predicates.TopicNameMatches",
+    "predicates.IsFoo.pattern": "foo",
+
+    "predicates.IsBar.type": "org.apache.kafka.connect.transforms.predicates.TopicNameMatches",
+    "predicates.IsBar.pattern": "bar"
+  }
+}
+```
+
+| Property | Description |
+|----------|-------------|
+| `predicate` | Associate predicate alias with transform |
+| `negate` | Invert predicate match (apply when NOT matched) |
 
 → [Transforms Guide](transforms.md)
 
@@ -641,6 +745,190 @@ Increase `tasks.max` for connectors that support parallelism:
 | **File Source** | One task per file or directory |
 | **S3 Sink** | Tasks share topic partitions |
 | **Cassandra Sink** | Tasks share topic partitions |
+
+---
+
+## Connector Development
+
+Building custom connectors to integrate Kafka with proprietary or unsupported systems.
+
+### Connector Components
+
+| Component | Interface | Purpose |
+|-----------|-----------|---------|
+| **SourceConnector** | `SourceConnector` | Configuration and task distribution for imports |
+| **SourceTask** | `SourceTask` | Read data from external system |
+| **SinkConnector** | `SinkConnector` | Configuration and task distribution for exports |
+| **SinkTask** | `SinkTask` | Write data to external system |
+
+### Source Connector Structure
+
+```java
+public class MySourceConnector extends SourceConnector {
+    private Map<String, String> configProps;
+
+    @Override
+    public void start(Map<String, String> props) {
+        this.configProps = props;
+    }
+
+    @Override
+    public Class<? extends Task> taskClass() {
+        return MySourceTask.class;
+    }
+
+    @Override
+    public List<Map<String, String>> taskConfigs(int maxTasks) {
+        // Distribute work across tasks
+        List<Map<String, String>> configs = new ArrayList<>();
+        for (int i = 0; i < maxTasks; i++) {
+            Map<String, String> taskConfig = new HashMap<>(configProps);
+            taskConfig.put("task.id", String.valueOf(i));
+            configs.add(taskConfig);
+        }
+        return configs;
+    }
+
+    @Override
+    public void stop() {
+        // Clean up resources
+    }
+
+    @Override
+    public ConfigDef config() {
+        return new ConfigDef()
+            .define("connection.url", Type.STRING, Importance.HIGH, "Connection URL");
+    }
+
+    @Override
+    public String version() {
+        return "1.0.0";
+    }
+}
+```
+
+### Source Task Implementation
+
+```java
+public class MySourceTask extends SourceTask {
+    private String connectionUrl;
+
+    @Override
+    public void start(Map<String, String> props) {
+        connectionUrl = props.get("connection.url");
+        // Initialize connection
+    }
+
+    @Override
+    public List<SourceRecord> poll() throws InterruptedException {
+        List<SourceRecord> records = new ArrayList<>();
+
+        // Read from external system
+        List<DataItem> items = fetchData();
+
+        for (DataItem item : items) {
+            Map<String, ?> sourcePartition = Collections.singletonMap("source", connectionUrl);
+            Map<String, ?> sourceOffset = Collections.singletonMap("position", item.getOffset());
+
+            records.add(new SourceRecord(
+                sourcePartition,
+                sourceOffset,
+                "target-topic",
+                Schema.STRING_SCHEMA,
+                item.getKey(),
+                Schema.STRING_SCHEMA,
+                item.getValue()
+            ));
+        }
+        return records;
+    }
+
+    @Override
+    public void stop() {
+        // Close connections
+    }
+
+    @Override
+    public String version() {
+        return "1.0.0";
+    }
+}
+```
+
+### Sink Task Implementation
+
+```java
+public class MySinkTask extends SinkTask {
+    private ErrantRecordReporter reporter;
+
+    @Override
+    public void start(Map<String, String> props) {
+        // Initialize connection
+        try {
+            reporter = context.errantRecordReporter();
+        } catch (NoSuchMethodError e) {
+            reporter = null; // Older Connect runtime
+        }
+    }
+
+    @Override
+    public void put(Collection<SinkRecord> records) {
+        for (SinkRecord record : records) {
+            try {
+                writeToDestination(record);
+            } catch (Exception e) {
+                if (reporter != null) {
+                    reporter.report(record, e);  // Send to DLQ
+                } else {
+                    throw new ConnectException("Write failed", e);
+                }
+            }
+        }
+    }
+
+    @Override
+    public void flush(Map<TopicPartition, OffsetAndMetadata> offsets) {
+        // Ensure all data is persisted before offset commit
+    }
+
+    @Override
+    public void stop() {
+        // Close connections
+    }
+
+    @Override
+    public String version() {
+        return "1.0.0";
+    }
+}
+```
+
+### Plugin Discovery
+
+Register connector class in `META-INF/services/`:
+
+```
+# META-INF/services/org.apache.kafka.connect.source.SourceConnector
+com.example.MySourceConnector
+
+# META-INF/services/org.apache.kafka.connect.sink.SinkConnector
+com.example.MySinkConnector
+```
+
+### Resume from Offset
+
+```java
+@Override
+public void start(Map<String, String> props) {
+    Map<String, Object> partition = Collections.singletonMap("source", connectionUrl);
+    Map<String, Object> offset = context.offsetStorageReader().offset(partition);
+
+    if (offset != null) {
+        Long lastPosition = (Long) offset.get("position");
+        seekToPosition(lastPosition);
+    }
+}
+```
 
 ---
 

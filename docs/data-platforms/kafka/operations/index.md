@@ -526,6 +526,125 @@ kafka-metadata.sh --snapshot /var/kafka-logs/__cluster_metadata-0/00000000000000
 
 ---
 
+## Multi-Tenancy
+
+Operating Kafka as a shared platform for multiple teams or applications requires isolation mechanisms.
+
+### Tenant Isolation Strategies
+
+| Strategy | Mechanism | Isolation Level |
+|----------|-----------|-----------------|
+| **Topic naming** | Hierarchical prefixes | Logical |
+| **Prefix ACLs** | `--resource-pattern-type prefixed` | Access control |
+| **Quotas** | Per-user/client-id limits | Resource |
+| **Separate clusters** | Physical separation | Complete |
+
+### Topic Naming Convention
+
+Establish hierarchical topic names for tenant isolation:
+
+```
+<organization>.<team>.<dataset>.<event-name>
+```
+
+Examples:
+- `acme.payments.transactions.completed`
+- `acme.inventory.stock.updated`
+
+### Enforcing Naming Conventions
+
+| Method | Implementation |
+|--------|----------------|
+| **Prefix ACLs** | Grant produce/consume only to prefixed topics |
+| **CreateTopicPolicy** | Custom policy class to validate topic names |
+| **Disable auto-create** | `auto.create.topics.enable=false` |
+| **External provisioning** | Topics created only via automation |
+
+```bash
+# Grant user access only to their prefix
+kafka-acls.sh --bootstrap-server kafka:9092 \
+  --add --allow-principal User:team-payments \
+  --producer --consumer \
+  --resource-pattern-type prefixed \
+  --topic acme.payments. \
+  --group acme.payments.
+```
+
+### Quota Configuration for Tenants
+
+```bash
+# Set bandwidth quota for tenant
+kafka-configs.sh --bootstrap-server kafka:9092 \
+  --entity-type users --entity-name team-payments \
+  --alter --add-config 'producer_byte_rate=10485760,consumer_byte_rate=20971520'
+
+# Set request rate quota (% of broker capacity)
+kafka-configs.sh --bootstrap-server kafka:9092 \
+  --entity-type users --entity-name team-payments \
+  --alter --add-config 'request_percentage=10'
+
+# Set controller mutation rate (topic operations/sec)
+kafka-configs.sh --bootstrap-server kafka:9092 \
+  --entity-type users --entity-name team-payments \
+  --alter --add-config 'controller_mutation_rate=5'
+```
+
+### Multi-Tenant Monitoring
+
+| Metric | Purpose |
+|--------|---------|
+| `kafka.server:type=Produce,user=X` | Per-user produce throttling |
+| `kafka.server:type=Fetch,user=X` | Per-user fetch throttling |
+| `kafka.log:type=Log,name=Size,topic=X` | Per-topic storage usage |
+| `kafka.server:type=BrokerTopicMetrics,topic=X` | Per-topic throughput |
+
+---
+
+## Java Version Requirements
+
+### Supported Java Versions
+
+| Java Version | Support Level |
+|--------------|---------------|
+| **Java 21** | Recommended (current LTS) |
+| **Java 17** | Fully supported |
+| **Java 11** | Clients and Streams only |
+
+!!! tip "Recommendation"
+    Run Kafka with the most recent LTS release for performance, security patches, and support.
+
+### JVM Configuration
+
+Recommended JVM arguments for production brokers:
+
+```bash
+-Xmx6g -Xms6g
+-XX:MetaspaceSize=96m
+-XX:+UseG1GC
+-XX:MaxGCPauseMillis=20
+-XX:InitiatingHeapOccupancyPercent=35
+-XX:G1HeapRegionSize=16M
+-XX:MinMetaspaceFreeRatio=50
+-XX:MaxMetaspaceFreeRatio=80
+-XX:+ExplicitGCInvokesConcurrent
+```
+
+### Reference Benchmark
+
+Production cluster performance with above settings:
+
+| Metric | Value |
+|--------|-------|
+| Brokers | 60 |
+| Partitions | 50,000 (RF=2) |
+| Messages/sec | 800,000 |
+| Inbound | 300 MB/s |
+| Outbound | 1+ GB/s |
+| GC pause (p90) | ~21ms |
+| Young GC frequency | < 1/sec |
+
+---
+
 ## Related Documentation
 
 - [CLI Tools](cli-tools/index.md) - Command reference

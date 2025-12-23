@@ -473,7 +473,7 @@ Diagnostic procedures and solutions for common issues.
 
     ZooKeeper to KRaft migration and version upgrade guides.
 
-    [:octicons-arrow-right-24: Migration Guide](migration/index.md)
+    [:octicons-arrow-right-24: Migration Guide](operations/migration/index.md)
 
 </div>
 

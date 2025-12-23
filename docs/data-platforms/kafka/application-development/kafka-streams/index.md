@@ -514,6 +514,323 @@ ERROR --> PENDING_SHUTDOWN : close()
 
 ---
 
+## Out-of-Order Data Handling
+
+Out-of-order records are common in distributed systems due to network delays, partition lag, or event-time vs ingestion-time differences.
+
+### Causes of Out-of-Order Data
+
+| Cause | Description |
+|-------|-------------|
+| **Within partition** | Records with larger timestamps may have smaller offsets |
+| **Across partitions** | Different partitions have different processing progress |
+| **Late arrivals** | Records arrive after their time window has passed |
+
+### Handling by Operation Type
+
+| Operation | Out-of-Order Handling |
+|-----------|----------------------|
+| **Stateless** | No impact—each record processed independently |
+| **Windowed aggregations** | Configure grace period to wait for late arrivals |
+| **Stream-Stream joins** | All types (inner, outer, left) handle correctly |
+| **Stream-Table joins** | Default: not handled; With versioned stores: timestamp-based lookup |
+| **Table-Table joins** | Default: not handled; With versioned stores: timestamp-based semantics |
+
+### Grace Period Configuration
+
+Control how long to wait for out-of-order records:
+
+```java
+// Tumbling window with 5-minute grace period
+TimeWindows.ofSizeAndGrace(
+    Duration.ofMinutes(10),  // window size
+    Duration.ofMinutes(5)    // grace period
+)
+
+// Session window with grace period
+SessionWindows.ofInactivityGapAndGrace(
+    Duration.ofMinutes(30),  // inactivity gap
+    Duration.ofMinutes(5)    // grace period
+)
+```
+
+Records arriving after the grace period are discarded.
+
+### Versioned State Stores
+
+For handling out-of-order data in joins, use versioned state stores (Kafka Streams 3.5+):
+
+```java
+// Create versioned store
+StoreBuilder<VersionedKeyValueStore<String, String>> storeBuilder =
+    Stores.versionedKeyValueStoreBuilder(
+        Stores.persistentVersionedKeyValueStore("my-store", Duration.ofDays(1)),
+        Serdes.String(),
+        Serdes.String()
+    );
+```
+
+Versioned stores enable timestamp-based lookups instead of offset-based, properly handling out-of-order data in stream-table and table-table joins.
+
+---
+
+## Timestamp Assignment
+
+### Output Record Timestamps
+
+| Context | Timestamp Assignment |
+|---------|---------------------|
+| **Processing input record** | Inherits input record timestamp |
+| **Punctuator callback** | Current stream time of the task |
+| **Aggregations** | Maximum timestamp of contributing records |
+| **Joins (stream-stream, table-table)** | `max(left.ts, right.ts)` |
+| **Stream-table joins** | Stream record timestamp |
+| **Stateless operations (map, filter)** | Input record timestamp passed through |
+| **flatMap and siblings** | All output records inherit input timestamp |
+
+### Custom Timestamp Extraction
+
+Implement `TimestampExtractor` for custom timestamp logic:
+
+```java
+public class EventTimeExtractor implements TimestampExtractor {
+    @Override
+    public long extract(ConsumerRecord<Object, Object> record, long partitionTime) {
+        // Extract timestamp from record value
+        Event event = (Event) record.value();
+        return event.getTimestamp();
+    }
+}
+
+// Use in configuration
+props.put(StreamsConfig.DEFAULT_TIMESTAMP_EXTRACTOR_CLASS_CONFIG,
+    EventTimeExtractor.class);
+```
+
+---
+
+## Graceful Shutdown
+
+### Shutdown Hook
+
+```java
+KafkaStreams streams = new KafkaStreams(topology, props);
+
+// Register shutdown hook
+Runtime.getRuntime().addShutdownHook(new Thread(() -> {
+    streams.close(Duration.ofSeconds(30));
+}));
+
+streams.start();
+```
+
+### State Listener
+
+Monitor application state transitions:
+
+```java
+streams.setStateListener((newState, oldState) -> {
+    if (newState == KafkaStreams.State.ERROR) {
+        // Handle error state
+        log.error("Streams entered ERROR state");
+    }
+});
+```
+
+### Uncaught Exception Handler
+
+Handle unrecoverable errors:
+
+```java
+streams.setUncaughtExceptionHandler(exception -> {
+    log.error("Uncaught exception in streams", exception);
+    // Return action: SHUTDOWN_CLIENT, REPLACE_THREAD, or SHUTDOWN_APPLICATION
+    return StreamsUncaughtExceptionHandler.StreamThreadExceptionResponse.SHUTDOWN_CLIENT;
+});
+```
+
+---
+
+## Processor API
+
+The Processor API provides low-level control for custom stream processing logic.
+
+### Define a Processor
+
+```java
+public class WordCountProcessor implements Processor<String, String, String, Long> {
+    private KeyValueStore<String, Long> kvStore;
+    private ProcessorContext<String, Long> context;
+
+    @Override
+    public void init(ProcessorContext<String, Long> context) {
+        this.context = context;
+        this.kvStore = context.getStateStore("counts");
+
+        // Schedule punctuation (periodic callback)
+        context.schedule(
+            Duration.ofSeconds(10),
+            PunctuationType.STREAM_TIME,
+            this::forwardCounts
+        );
+    }
+
+    @Override
+    public void process(Record<String, String> record) {
+        String[] words = record.value().toLowerCase().split("\\W+");
+        for (String word : words) {
+            Long count = kvStore.get(word);
+            kvStore.put(word, (count == null) ? 1L : count + 1);
+        }
+    }
+
+    private void forwardCounts(long timestamp) {
+        try (KeyValueIterator<String, Long> iter = kvStore.all()) {
+            while (iter.hasNext()) {
+                KeyValue<String, Long> entry = iter.next();
+                context.forward(new Record<>(entry.key, entry.value, timestamp));
+            }
+        }
+    }
+
+    @Override
+    public void close() {
+        // Clean up resources (but not state stores)
+    }
+}
+```
+
+### Punctuation Types
+
+| Type | Trigger | Use Case |
+|------|---------|----------|
+| `STREAM_TIME` | Event timestamps advance | Emit results based on event progress |
+| `WALL_CLOCK_TIME` | Real clock time | Periodic actions regardless of data flow |
+
+### Build Topology with Processor API
+
+```java
+Topology topology = new Topology();
+
+topology.addSource("source", "input-topic");
+topology.addProcessor("processor", WordCountProcessor::new, "source");
+
+StoreBuilder<KeyValueStore<String, Long>> storeBuilder =
+    Stores.keyValueStoreBuilder(
+        Stores.persistentKeyValueStore("counts"),
+        Serdes.String(),
+        Serdes.Long()
+    );
+topology.addStateStore(storeBuilder, "processor");
+topology.addSink("sink", "output-topic", "processor");
+```
+
+### Combine DSL and Processor API
+
+```java
+StreamsBuilder builder = new StreamsBuilder();
+KStream<String, String> stream = builder.stream("input");
+
+// Inject custom processor into DSL topology
+stream.process(WordCountProcessor::new, Named.as("word-count"), "counts-store");
+```
+
+---
+
+## SerDes Reference
+
+Kafka Streams requires serializers/deserializers (SerDes) for keys and values.
+
+### Built-in SerDes
+
+| Data Type | SerDe |
+|-----------|-------|
+| `byte[]` | `Serdes.ByteArray()` |
+| `ByteBuffer` | `Serdes.ByteBuffer()` |
+| `String` | `Serdes.String()` |
+| `Integer` | `Serdes.Integer()` |
+| `Long` | `Serdes.Long()` |
+| `Double` | `Serdes.Double()` |
+| `Boolean` | `Serdes.Boolean()` |
+| `UUID` | `Serdes.UUID()` |
+| `Void` | `Serdes.Void()` |
+| `List<T>` | `Serdes.ListSerde()` |
+
+### Override SerDes Per Operation
+
+```java
+// Explicit SerDes for to()
+stream.to("output", Produced.with(Serdes.String(), Serdes.Long()));
+
+// Explicit SerDes for groupBy
+stream.groupBy(
+    (key, value) -> value.getCategory(),
+    Grouped.with(Serdes.String(), orderSerde)
+);
+```
+
+### Window SerDes
+
+```java
+// Time-windowed SerDe
+WindowedSerdes.TimeWindowedSerde<String> timeWindowedSerde =
+    new WindowedSerdes.TimeWindowedSerde<>(Serdes.String());
+
+// Session-windowed SerDe
+WindowedSerdes.SessionWindowedSerde<String> sessionWindowedSerde =
+    new WindowedSerdes.SessionWindowedSerde<>(Serdes.String());
+```
+
+---
+
+## Topology Naming
+
+Explicit naming prevents topology incompatibilities during application upgrades.
+
+### Why Naming Matters
+
+Without explicit names, changes to the topology can generate different internal names for:
+- Repartition topics
+- Changelog topics
+- State stores
+- Processor nodes
+
+This causes incompatible state stores, new repartition topics, and potential data loss during upgrades.
+
+### Name Operations Explicitly
+
+```java
+StreamsBuilder builder = new StreamsBuilder();
+
+// Name the source
+KStream<String, String> stream = builder.stream(
+    "input",
+    Consumed.as("input-source")
+);
+
+// Name transformations
+KStream<String, String> filtered = stream.filter(
+    (k, v) -> v != null,
+    Named.as("null-filter")
+);
+
+// Name repartition
+KStream<String, Long> repartitioned = stream.selectKey(
+    (k, v) -> v.getUserId(),
+    Named.as("rekey-by-user")
+).repartition(Repartitioned.as("user-repartition"));
+
+// Name aggregation (state store)
+KTable<String, Long> counts = stream
+    .groupByKey(Grouped.as("group-by-key"))
+    .count(Named.as("count-op"), Materialized.as("counts-store"));
+
+// Name output
+counts.toStream().to("output", Produced.as("output-sink"));
+```
+
+---
+
 ## Related Documentation
 
 - [DSL Reference](dsl/index.md) - Complete DSL operations

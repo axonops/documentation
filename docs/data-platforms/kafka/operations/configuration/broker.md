@@ -333,6 +333,23 @@ min.insync.replicas=2
 
 Certain broker settings can be modified without restart.
 
+### Configuration Precedence
+
+When a config is defined at multiple levels, precedence order:
+
+1. Dynamic per-broker config stored in metadata log
+2. Dynamic cluster-wide default config stored in metadata log
+3. Static broker config from `server.properties`
+4. Kafka default value
+
+### Update Modes
+
+| Mode | Description | Scope |
+|------|-------------|-------|
+| `read-only` | Requires broker restart | Static only |
+| `per-broker` | Updated dynamically per broker | Individual broker |
+| `cluster-wide` | Updated as cluster-wide default | All brokers |
+
 ### Applying Dynamic Configuration
 
 ```bash
@@ -355,7 +372,29 @@ kafka-configs.sh --bootstrap-server kafka:9092 \
   --entity-type brokers \
   --entity-name 1 \
   --describe
+
+# Delete dynamic config (revert to static/default)
+kafka-configs.sh --bootstrap-server kafka:9092 \
+  --entity-type brokers \
+  --entity-name 1 \
+  --alter \
+  --delete-config num.io.threads
+
+# Update log level dynamically
+kafka-configs.sh --bootstrap-server kafka:9092 \
+  --broker-logger 1 \
+  --alter \
+  --add-config org.apache.kafka.server.quota=DEBUG
 ```
+
+### Thread Pool Update Restrictions
+
+Thread pool sizes can only be updated within a restricted range to ensure graceful handling:
+
+- **Minimum**: currentSize / 2
+- **Maximum**: currentSize × 2
+
+This applies to: `num.network.threads`, `num.io.threads`, `num.replica.fetchers`, `num.recovery.threads.per.data.dir`, `log.cleaner.threads`, `background.threads`
 
 ### Dynamically Configurable Settings
 
@@ -372,6 +411,40 @@ kafka-configs.sh --bootstrap-server kafka:9092 \
 | `num.replica.fetchers` | Broker | Replica fetcher count |
 | `ssl.keystore.location` | Broker | SSL keystore path |
 | `ssl.keystore.password` | Broker | SSL keystore password |
+
+### Dynamic SSL Keystore Update
+
+SSL keystores can be updated without restart for certificate rotation:
+
+```bash
+# Update keystore for specific listener
+kafka-configs.sh --bootstrap-server kafka:9092 \
+  --entity-type brokers \
+  --entity-name 1 \
+  --alter \
+  --add-config 'listener.name.sasl_ssl.ssl.keystore.location=/path/to/new.keystore.jks,listener.name.sasl_ssl.ssl.keystore.password=newpassword'
+```
+
+**Requirements:**
+- New certificate must be signed by the same CA as the old certificate
+- For inter-broker listener, new keystore must be trusted by existing truststore
+- Config name must be prefixed with `listener.name.{listenerName}.`
+
+### Dynamic Listener Management
+
+Listeners can be added or removed without restart:
+
+```bash
+# Add new listener
+kafka-configs.sh --bootstrap-server kafka:9092 \
+  --entity-type brokers \
+  --entity-name 1 \
+  --alter \
+  --add-config 'listeners=PLAINTEXT://0.0.0.0:9092,EXTERNAL://0.0.0.0:9094,advertised.listeners=PLAINTEXT://broker1:9092,EXTERNAL://external.example.com:9094'
+```
+
+!!! note "Inter-Broker Listener"
+    The inter-broker listener cannot be changed dynamically. Changing `inter.broker.listener.name` requires a rolling restart.
 
 ---
 
