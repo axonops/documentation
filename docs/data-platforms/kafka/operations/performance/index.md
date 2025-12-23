@@ -229,16 +229,23 @@ kafka hard nproc 128000
 
 ### Disk Configuration
 
+Filesystem selection significantly impacts Kafka throughput. XFS is recommended for all log directories.
+
+| Filesystem | Recommendation | Notes |
+|------------|----------------|-------|
+| **XFS** | Recommended | Best sequential write performance, allocation group parallelism |
+| **ext4** | Acceptable | Suitable for smaller deployments |
+| **ZFS** | Not recommended | CoW overhead, ARC competes with page cache |
+
 ```bash
-# Mount options for Kafka data
-/dev/sdb /kafka xfs noatime,nodiratime,nobarrier 0 2
+# Mount options for Kafka data (XFS)
+/dev/nvme0n1 /kafka/data xfs noatime,nodiratime 0 2
 
-# I/O scheduler (for SSDs)
-echo none > /sys/block/sdb/queue/scheduler
-
-# Read-ahead (for HDDs)
-blockdev --setra 4096 /dev/sdb
+# I/O scheduler (for NVMe/SSDs)
+echo none > /sys/block/nvme0n1/queue/scheduler
 ```
+
+→ [Filesystem Selection Guide](filesystem.md) - Complete filesystem architecture comparison, page cache tuning, and configuration
 
 ---
 
@@ -333,6 +340,7 @@ kafka-run-class.sh kafka.tools.EndToEndLatency \
 
 ## Related Documentation
 
+- [Filesystem Selection](filesystem.md) - Filesystem recommendations and page cache tuning
 - [Operations Overview](../index.md) - Operations guide
 - [Capacity Planning](capacity-planning/index.md) - Sizing guide
 - [Configuration](../configuration/index.md) - Configuration reference

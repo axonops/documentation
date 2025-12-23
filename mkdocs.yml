@@ -864,6 +864,7 @@ nav:
         - Performance:
           - Overview: data-platforms/kafka/operations/performance/index.md
           - Capacity Planning: data-platforms/kafka/operations/performance/capacity-planning/index.md
+          - Filesystem Selection: data-platforms/kafka/operations/performance/filesystem.md
         - Troubleshooting:
           - Overview: data-platforms/kafka/operations/troubleshooting/index.md
           - Dead Letter Queues: data-platforms/kafka/operations/troubleshooting/dead-letter-queues.md
