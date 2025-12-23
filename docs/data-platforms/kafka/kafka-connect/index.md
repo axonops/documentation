@@ -247,6 +247,405 @@ rest.port=8083
 
 ---
 
+## Deployment Architectures
+
+### Standalone Architecture
+
+Single worker process for development and simple integrations.
+
+```plantuml
+@startuml
+
+rectangle "Single Host" {
+  rectangle "Connect Worker\n(Standalone)" as worker {
+    rectangle "Connector A" as conn_a
+    rectangle "Task 1" as task1
+  }
+  file "Offset File\n(/tmp/connect.offsets)" as offset_file
+}
+
+rectangle "Kafka Cluster" as kafka {
+  queue "Topics" as topics
+}
+
+database "External\nSystem" as ext
+
+worker --> offset_file : persist offsets
+task1 <--> topics : produce/consume
+task1 <--> ext : read/write
+
+note bottom of worker
+  - No fault tolerance
+  - No scaling
+  - Dev/test only
+end note
+
+@enduml
+```
+
+### Distributed Architecture
+
+Multi-worker cluster for production deployments.
+
+```plantuml
+@startuml
+
+rectangle "Connect Cluster" as cluster {
+  rectangle "Worker 1" as w1 {
+    rectangle "Connector A\nTask 1" as t1
+    rectangle "Connector B\nTask 1" as t2
+  }
+  rectangle "Worker 2" as w2 {
+    rectangle "Connector A\nTask 2" as t3
+    rectangle "Connector C\nTask 1" as t4
+  }
+  rectangle "Worker 3" as w3 {
+    rectangle "Connector A\nTask 3" as t5
+    rectangle "Connector B\nTask 2" as t6
+  }
+}
+
+rectangle "Kafka Cluster" as kafka {
+  queue "Data Topics" as data
+  queue "connect-offsets" as offsets
+  queue "connect-configs" as configs
+  queue "connect-status" as status
+}
+
+rectangle "Load Balancer\n(:8083)" as lb
+
+lb --> w1 : REST API
+lb --> w2 : REST API
+lb --> w3 : REST API
+
+w1 <--> data
+w2 <--> data
+w3 <--> data
+
+w1 <--> offsets
+w1 <--> configs
+w1 <--> status
+
+note bottom of kafka
+  Internal topics provide:
+  - Distributed offset storage
+  - Configuration sync
+  - Status coordination
+end note
+
+@enduml
+```
+
+### Co-located Deployment
+
+Connect workers on Kafka broker nodes—suitable for smaller clusters.
+
+```plantuml
+@startuml
+
+rectangle "Node 1" as n1 {
+  rectangle "Kafka Broker" as b1
+  rectangle "Connect Worker" as c1
+}
+
+rectangle "Node 2" as n2 {
+  rectangle "Kafka Broker" as b2
+  rectangle "Connect Worker" as c2
+}
+
+rectangle "Node 3" as n3 {
+  rectangle "Kafka Broker" as b3
+  rectangle "Connect Worker" as c3
+}
+
+c1 --> b1 : localhost
+c2 --> b2 : localhost
+c3 --> b3 : localhost
+
+b1 <--> b2 : replication
+b2 <--> b3 : replication
+b3 <--> b1 : replication
+
+note bottom
+  Pros:
+  - Lower latency (localhost)
+  - Fewer nodes to manage
+
+  Cons:
+  - Resource contention
+  - Failure affects both services
+  - Harder to scale independently
+end note
+
+@enduml
+```
+
+### Dedicated Connect Cluster
+
+Separate Connect cluster—recommended for production.
+
+```plantuml
+@startuml
+
+rectangle "Connect Cluster" as connect {
+  rectangle "Connect\nWorker 1" as c1
+  rectangle "Connect\nWorker 2" as c2
+  rectangle "Connect\nWorker 3" as c3
+}
+
+rectangle "Kafka Cluster" as kafka {
+  rectangle "Broker 1" as b1
+  rectangle "Broker 2" as b2
+  rectangle "Broker 3" as b3
+}
+
+rectangle "External Systems" as ext {
+  database "Databases" as db
+  storage "Object Storage" as s3
+  cloud "APIs" as api
+}
+
+c1 --> b1
+c1 --> b2
+c2 --> b2
+c2 --> b3
+c3 --> b1
+c3 --> b3
+
+c1 <--> db
+c2 <--> s3
+c3 <--> api
+
+note bottom of connect
+  Pros:
+  - Independent scaling
+  - Isolated failures
+  - Dedicated resources
+  - Easier capacity planning
+end note
+
+@enduml
+```
+
+### Sidecar Pattern
+
+Connect worker per application—useful for application-specific integrations.
+
+```plantuml
+@startuml
+
+rectangle "Application Pod 1" as pod1 {
+  rectangle "Application" as app1
+  rectangle "Connect\nWorker" as c1
+}
+
+rectangle "Application Pod 2" as pod2 {
+  rectangle "Application" as app2
+  rectangle "Connect\nWorker" as c2
+}
+
+rectangle "Application Pod 3" as pod3 {
+  rectangle "Application" as app3
+  rectangle "Connect\nWorker" as c3
+}
+
+rectangle "Kafka Cluster" as kafka {
+  queue "Topics" as topics
+}
+
+app1 --> c1 : local config
+app2 --> c2 : local config
+app3 --> c3 : local config
+
+c1 --> topics
+c2 --> topics
+c3 --> topics
+
+note bottom
+  Use cases:
+  - Application-owned connectors
+  - Isolation requirements
+  - Local file ingestion
+
+  Note: Each can be standalone
+  or join distributed cluster
+end note
+
+@enduml
+```
+
+### Kubernetes Deployment
+
+Connect cluster on Kubernetes with horizontal scaling.
+
+```plantuml
+@startuml
+
+rectangle "Kubernetes Cluster" {
+  rectangle "Connect Deployment" as deploy {
+    rectangle "Pod 1\nConnect Worker" as p1
+    rectangle "Pod 2\nConnect Worker" as p2
+    rectangle "Pod 3\nConnect Worker" as p3
+  }
+
+  rectangle "Service\nconnect-svc:8083" as svc
+  rectangle "Ingress" as ingress
+
+  rectangle "ConfigMap\nconnect-config" as cm
+  rectangle "Secret\nconnect-secrets" as secret
+}
+
+rectangle "Kafka\n(internal or external)" as kafka
+
+ingress --> svc
+svc --> p1
+svc --> p2
+svc --> p3
+
+cm --> deploy : mount
+secret --> deploy : mount
+
+p1 --> kafka
+p2 --> kafka
+p3 --> kafka
+
+note right of deploy
+  HPA can scale workers
+  based on CPU/memory
+  or custom metrics
+end note
+
+@enduml
+```
+
+**Kubernetes manifest example:**
+
+```yaml
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: kafka-connect
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      app: kafka-connect
+  template:
+    metadata:
+      labels:
+        app: kafka-connect
+    spec:
+      containers:
+      - name: connect
+        image: confluentinc/cp-kafka-connect:7.5.0
+        ports:
+        - containerPort: 8083
+        env:
+        - name: CONNECT_BOOTSTRAP_SERVERS
+          value: "kafka:9092"
+        - name: CONNECT_GROUP_ID
+          value: "connect-cluster"
+        - name: CONNECT_REST_ADVERTISED_HOST_NAME
+          valueFrom:
+            fieldRef:
+              fieldPath: status.podIP
+        resources:
+          requests:
+            memory: "2Gi"
+            cpu: "1"
+          limits:
+            memory: "4Gi"
+            cpu: "2"
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: kafka-connect
+spec:
+  ports:
+  - port: 8083
+  selector:
+    app: kafka-connect
+```
+
+### Multi-Region Deployment
+
+Separate Connect clusters per region for geo-distributed workloads.
+
+```plantuml
+@startuml
+
+rectangle "Region A (US-East)" as region_a {
+  rectangle "Connect Cluster A" as connect_a {
+    rectangle "Worker" as w_a1
+    rectangle "Worker" as w_a2
+  }
+  rectangle "Kafka Cluster A" as kafka_a
+  database "Local Systems" as local_a
+}
+
+rectangle "Region B (EU-West)" as region_b {
+  rectangle "Connect Cluster B" as connect_b {
+    rectangle "Worker" as w_b1
+    rectangle "Worker" as w_b2
+  }
+  rectangle "Kafka Cluster B" as kafka_b
+  database "Local Systems" as local_b
+}
+
+w_a1 --> kafka_a
+w_a2 --> kafka_a
+w_a1 --> local_a
+w_a2 --> local_a
+
+w_b1 --> kafka_b
+w_b2 --> kafka_b
+w_b1 --> local_b
+w_b2 --> local_b
+
+kafka_a <--> kafka_b : MirrorMaker 2\n(cross-region)
+
+note bottom
+  Each region has independent:
+  - Connect cluster
+  - Kafka cluster
+  - Local integrations
+
+  Cross-region via MM2
+end note
+
+@enduml
+```
+
+### Deployment Comparison
+
+| Pattern | Scaling | Fault Tolerance | Resource Isolation | Use Case |
+|---------|---------|-----------------|-------------------|----------|
+| **Standalone** | None | None | N/A | Development |
+| **Co-located** | With brokers | Shared | Poor | Small clusters |
+| **Dedicated cluster** | Independent | Independent | Good | Production |
+| **Sidecar** | Per application | Per application | Excellent | App-specific |
+| **Kubernetes** | HPA/VPA | Pod replacement | Good | Cloud-native |
+| **Multi-region** | Per region | Regional | Excellent | Global deployments |
+
+### Sizing Guidelines
+
+| Workload | Workers | Memory per Worker | CPU per Worker |
+|----------|---------|-------------------|----------------|
+| **Light** (< 10 connectors) | 2-3 | 2-4 GB | 1-2 cores |
+| **Medium** (10-50 connectors) | 3-5 | 4-8 GB | 2-4 cores |
+| **Heavy** (50+ connectors) | 5-10+ | 8-16 GB | 4-8 cores |
+
+!!! note "Worker Sizing"
+    Worker memory depends on:
+
+    - Number of tasks per worker
+    - Message size and throughput
+    - Converter complexity (Avro/Protobuf vs JSON)
+    - Transform chain depth
+
+---
+
 ## Connector Configuration
 
 ### Creating Connectors via REST API
