@@ -16,10 +16,93 @@ This guide covers Kafka installation, client setup, and basic operations to begi
 
 | Requirement | Minimum | Recommended |
 |-------------|---------|-------------|
-| **Java** | JDK 11 | JDK 17 or 21 |
+| **Java** | JDK 11 (3.x) / JDK 17 (4.0) | JDK 17 or 21 |
 | **Memory** | 4 GB | 8+ GB |
 | **Disk** | 10 GB | SSD recommended |
 | **OS** | Linux, macOS, Windows | Linux for production |
+
+---
+
+## Version Compatibility
+
+### JDK Compatibility
+
+Kafka components have different JDK support levels. Kafka 4.0 introduced significant changes to Java version requirements.
+
+**Kafka 4.0:**
+
+| Component | Java 11 | Java 17 | Java 21 | Java 23 |
+|-----------|:-------:|:-------:|:-------:|:-------:|
+| **Kafka Clients** | ✅ | ✅ | ✅ | ✅ |
+| **Kafka Streams** | ✅ | ✅ | ✅ | ✅ |
+| **Kafka Connect** | ❌ | ✅ | ✅ | ✅ |
+| **Kafka Server** | ❌ | ✅ | ✅ | ✅ |
+
+Legend: ✅ Supported | ❌ Not Supported
+
+!!! warning "Java 8 and 11 Changes in Kafka 4.0"
+    - Java 8 support is completely removed in Kafka 4.0
+    - Java 11 is no longer supported for Connect and Server components
+    - Clients and Streams still support Java 11 for backward compatibility
+
+**Kafka 3.x:**
+
+| Component | Java 8 | Java 11 | Java 17 | Java 21 |
+|-----------|:------:|:-------:|:-------:|:-------:|
+| **All Components** | ✅ | ✅ | ✅ | ✅ |
+
+### Client-Broker Compatibility
+
+Kafka maintains bidirectional compatibility between clients and brokers within certain version ranges.
+
+**Client/Broker forward compatibility with Kafka 4.0:**
+
+| Client Version | Module | 4.0 Compatibility | Notes |
+|---------------|--------|:-----------------:|-------|
+| **0.x, 1.x, 2.0** | All | ❌ | Pre-0.10.x protocols removed ([KIP-896](https://cwiki.apache.org/confluence/x/K5sODg)) |
+| **2.1 - 2.8** | Client | ⚠️ Partial | Some consumer/producer changes |
+| **2.1 - 2.8** | Streams | ⚠️ Limited | API changes may affect applications |
+| **2.1 - 2.8** | Connect | ⚠️ Limited | Connector compatibility varies |
+| **3.x** | All | ✅ Full | Fully compatible |
+
+Legend: ✅ Full | ⚠️ Partial | ❌ Not Compatible
+
+!!! warning "Kafka 4.0 Protocol Changes"
+    - Pre-0.10.x protocol versions are fully removed in Kafka 4.0 ([KIP-896](https://cwiki.apache.org/confluence/x/K5sODg))
+    - The `--zookeeper` option in AdminClient commands has been removed; use `--bootstrap-server` instead
+    - Clients older than 2.1 must be upgraded before connecting to Kafka 4.0 brokers
+
+**General compatibility guarantees:**
+
+- Clients can communicate with brokers of the same or adjacent major versions
+- Protocol versioning allows automatic feature negotiation
+- Older clients may not access features introduced in newer broker versions
+
+### KRaft Version Compatibility
+
+KRaft clusters have specific version requirements for controllers and brokers.
+
+**Server compatibility with Kafka 4.0:**
+
+| KRaft Cluster Version | 4.0 Dynamic Voter | 4.0 Static Voter |
+|----------------------|:-----------------:|:----------------:|
+| **Before 3.2.x** | ❌ | ❌ |
+| **3.3.x - 3.8.x** | ❌ | ✅ |
+| **3.9.x** | ✅ | ✅ |
+| **4.0.x** | ✅ | ✅ |
+
+!!! warning "Static to Dynamic Voter Migration"
+    Upgrading a cluster from static voter to dynamic voter configuration is not supported. See [KAFKA-16538](https://issues.apache.org/jira/browse/KAFKA-16538) for details.
+
+### Feature Version Requirements
+
+| Feature | Minimum Version | Notes |
+|---------|-----------------|-------|
+| **KRaft (production)** | 3.3 | ZooKeeper still required for some features until 3.5 |
+| **KRaft (full feature parity)** | 3.5 | All features available without ZooKeeper |
+| **Tiered Storage** | 3.6 | Early access |
+| **Share Groups** | 4.0 | KIP-932 |
+| **ZooKeeper removal** | 4.0 | ZooKeeper mode deprecated |
 
 ---
 
