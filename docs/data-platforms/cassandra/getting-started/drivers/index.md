@@ -10,6 +10,96 @@ meta:
 
 This guide covers connecting applications to Apache Cassandra using official drivers, with setup and basic usage for popular programming languages.
 
+## How Cassandra Drivers Differ from Traditional Database Drivers
+
+Cassandra's native protocol works fundamentally differently from traditional database drivers (JDBC, ODBC, etc.). Understanding these differences is essential for building efficient applications.
+
+### Multiplexed Connections, Not Connection Pools
+
+Traditional database drivers use a **connection-per-query** model:
+
+- Each query requires an exclusive connection
+- Connection pools manage a fixed set of connections (e.g., 10-100)
+- Under load, queries queue waiting for an available connection
+- Each connection = one in-flight request
+
+Cassandra drivers use a **multiplexed connection** model:
+
+- A single TCP connection handles **thousands of concurrent requests** (up to 32,768 with protocol v3+)
+- Requests are tagged with unique stream IDs and multiplexed over the connection
+- Responses are matched to requests by stream ID, arriving in any order
+- No query queuing at the connection level - all requests are immediately in-flight
+
+```
+Traditional (MySQL, PostgreSQL):
+  Connection 1: [Query A waiting...] → [Response A]
+  Connection 2: [Query B waiting...] → [Response B]
+  Connection 3: [Query C waiting...] → [Response C]
+  (3 connections for 3 concurrent queries)
+
+Cassandra (multiplexed):
+  Connection 1: [Query A id=1] [Query B id=2] [Query C id=3] → [Response B] [Response A] [Response C]
+  (1 connection for thousands of concurrent queries)
+```
+
+This means you **don't need large connection pools**. A single connection per host is often sufficient, and the driver manages this automatically.
+
+### Persistent Connections with Cluster Awareness
+
+Unlike traditional drivers that simply execute queries, Cassandra drivers maintain an **ongoing relationship** with the cluster:
+
+**At connection time:**
+
+1. Driver connects to one of the provided contact points
+2. Queries system tables to discover all nodes, their tokens, and datacenter/rack topology
+3. Establishes connections to nodes based on the load balancing policy
+4. Subscribes to cluster event notifications
+
+**During operation:**
+
+The driver continuously receives **push notifications** from the cluster about:
+
+- **Topology changes** - nodes added, removed, or moving tokens
+- **Status changes** - nodes going up or down (immediate notification, not polling)
+- **Schema changes** - tables created, altered, or dropped
+
+This makes the driver **highly available and self-healing**:
+
+- If a node goes down, the driver is notified immediately and routes around it
+- New nodes are automatically discovered and added to the connection pool
+- Schema changes are detected and prepared statements are automatically re-prepared
+
+### Dynamic Connection Management
+
+The driver automatically adjusts connections based on load and cluster changes:
+
+- Connections are established lazily to nodes as needed
+- Failed connections are automatically retried with configurable backoff
+- Connections are distributed based on load balancing policy (not all nodes need connections)
+- The driver maintains heartbeats to detect stale connections
+
+### Request Routing Intelligence
+
+Unlike traditional drivers that send all queries to a single endpoint (or load balancer), Cassandra drivers include **token-aware routing**:
+
+- The driver knows which nodes own which data (via token ranges)
+- Queries are sent directly to a node that has the data locally
+- This eliminates an extra network hop that a coordinator would add
+- The routing table is continuously updated as topology changes
+
+### Implications for Application Design
+
+| Traditional Driver Pattern | Cassandra Driver Pattern |
+|---------------------------|-------------------------|
+| Configure connection pool size carefully | Minimal configuration needed - driver auto-manages |
+| Monitor pool exhaustion | Monitor per-host request queues |
+| Scale connections with load | Scale with more application instances |
+| Health checks via test queries | Health managed via protocol events |
+| Retry logic in application | Retry policies built into driver |
+| Manual failover configuration | Automatic failover via cluster awareness |
+
+---
+
 ## Available Drivers
 
 | Language | Driver | Status | Repository |
