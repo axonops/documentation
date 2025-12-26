@@ -871,24 +871,24 @@ Retry policies determine how drivers handle transient failures such as timeouts,
 
 ```python
 from cassandra.cluster import Cluster
-from cassandra.policies import RetryPolicy
-from cassandra.query import SimpleStatement
 
 cluster = Cluster(['127.0.0.1'])
 session = cluster.connect('my_keyspace')
 
-# Mark individual query as idempotent to enable retries
-stmt = SimpleStatement(
-    "SELECT * FROM users WHERE id = %s",
-    is_idempotent=True
-)
-result = session.execute(stmt, [user_id])
+# Prepared statement for idempotent read
+select_stmt = session.prepare("SELECT * FROM users WHERE id = ?")
+select_stmt.is_idempotent = True  # SELECTs are safe to retry
+result = session.execute(select_stmt, [user_id])
 
-# Prepared statements - set idempotent on the bound statement
-prepared = session.prepare("UPDATE users SET name = ? WHERE id = ?")
-bound = prepared.bind(['John', user_id])
-bound.is_idempotent = True
+# Prepared statement for idempotent write (absolute value update)
+update_stmt = session.prepare("UPDATE users SET name = ? WHERE id = ?")
+bound = update_stmt.bind(['John', user_id])
+bound.is_idempotent = True  # Setting absolute value is safe to retry
 session.execute(bound)
+
+# Prepared statement for non-idempotent write - do NOT mark
+counter_stmt = session.prepare("UPDATE counters SET views = views + 1 WHERE page_id = ?")
+session.execute(counter_stmt, [page_id])  # Counter increment must not retry
 ```
 
 ### Python (async driver)
@@ -898,7 +898,6 @@ The async driver includes `AsyncRetryPolicy` with configurable retry attempts. R
 ```python
 from async_cassandra import AsyncCluster
 from async_cassandra.retry_policy import AsyncRetryPolicy
-from cassandra.query import SimpleStatement
 
 # Configure retry policy with max retries
 cluster = AsyncCluster(
@@ -907,21 +906,18 @@ cluster = AsyncCluster(
 )
 session = await cluster.connect('my_keyspace')
 
-# SELECTs are automatically retried - no marking needed
-result = await session.execute("SELECT * FROM users WHERE id = ?", [user_id])
+# Prepared statement for read - automatically retried
+select_stmt = await session.prepare("SELECT * FROM users WHERE id = ?")
+result = await session.execute(select_stmt, [user_id])
 
-# Idempotent writes - mark to enable retries
-stmt = SimpleStatement(
-    "INSERT INTO users (id, email) VALUES (?, ?) IF NOT EXISTS",
-    is_idempotent=True
-)
-await session.execute(stmt, [user_id, 'john@example.com'])
+# Prepared statement for idempotent write
+insert_stmt = await session.prepare("INSERT INTO users (id, email) VALUES (?, ?) IF NOT EXISTS")
+insert_stmt.is_idempotent = True  # LWT is safe to retry
+await session.execute(insert_stmt, [user_id, 'john@example.com'])
 
-# Non-idempotent writes - do NOT mark (prevents duplicate increments)
-await session.execute(
-    "UPDATE counters SET views = views + 1 WHERE page_id = ?",
-    [page_id]
-)
+# Prepared statement for non-idempotent write - do NOT mark
+counter_stmt = await session.prepare("UPDATE counters SET views = views + 1 WHERE page_id = ?")
+await session.execute(counter_stmt, [page_id])  # Counter increment must not retry
 ```
 
 ### Java
