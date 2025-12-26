@@ -266,8 +266,20 @@ All drivers require these settings:
 
 ### Authentication
 
+**Java**:
+
+```java
+CqlSession session = CqlSession.builder()
+    .addContactPoint(new InetSocketAddress("127.0.0.1", 9042))
+    .withLocalDatacenter("dc1")
+    .withAuthCredentials("app_user", "app_password")
+    .build();
+```
+
+**Python**:
+
 ```python
-# Python example with authentication
+from cassandra.cluster import Cluster
 from cassandra.auth import PlainTextAuthProvider
 
 auth_provider = PlainTextAuthProvider(
@@ -283,8 +295,31 @@ cluster = Cluster(
 
 ### SSL/TLS
 
+**Java** (application.conf):
+
+```hocon
+datastax-java-driver {
+  advanced.ssl-engine-factory {
+    class = DefaultSslEngineFactory
+    truststore-path = /path/to/truststore.jks
+    truststore-password = truststorepass
+    keystore-path = /path/to/keystore.jks
+    keystore-password = keystorepass
+  }
+}
+```
+
+```java
+// SSL is automatically enabled when ssl-engine-factory is configured
+CqlSession session = CqlSession.builder()
+    .addContactPoint(new InetSocketAddress("127.0.0.1", 9042))
+    .withLocalDatacenter("dc1")
+    .build();
+```
+
+**Python**:
+
 ```python
-# Python example with SSL
 from cassandra.cluster import Cluster
 import ssl
 
@@ -300,6 +335,127 @@ cluster = Cluster(
     ssl_context=ssl_context
 )
 ```
+
+### Java Driver Configuration System
+
+The Java driver uses a unique configuration approach based on the [Typesafe Config](https://github.com/lightbend/config) library. This is different from other drivers which typically use only programmatic configuration.
+
+#### How It Works
+
+The driver ships with a `reference.conf` file containing sensible defaults for all options. You create an `application.conf` file to override specific settings - you only need to specify what you want to change, not the entire configuration.
+
+Configuration files use **HOCON** (Human-Optimized Config Object Notation), an improved JSON superset that supports comments, substitutions, and includes.
+
+**application.conf** (place in your classpath):
+
+```hocon
+datastax-java-driver {
+  basic {
+    contact-points = ["10.0.0.1:9042", "10.0.0.2:9042"]
+    load-balancing-policy.local-datacenter = "dc1"
+    request.timeout = 5 seconds
+  }
+
+  advanced {
+    connection {
+      pool.local.size = 4
+      pool.remote.size = 2
+    }
+    retry-policy.class = DefaultRetryPolicy
+  }
+}
+```
+
+```java
+// Driver automatically loads application.conf from classpath
+CqlSession session = CqlSession.builder().build();
+```
+
+#### Configuration Loading Order
+
+The driver checks these locations in order (later sources override earlier ones):
+
+1. `reference.conf` (built-in driver defaults)
+2. `application.properties` (classpath)
+3. `application.json` (classpath)
+4. `application.conf` (classpath)
+5. System properties
+
+#### Execution Profiles
+
+Profiles allow different configuration sets for different query types without changing code:
+
+```hocon
+datastax-java-driver {
+  basic.request.timeout = 2 seconds
+
+  profiles {
+    oltp {
+      basic.request.timeout = 100 milliseconds
+      basic.request.consistency = LOCAL_QUORUM
+    }
+    olap {
+      basic.request.timeout = 30 seconds
+      basic.request.consistency = LOCAL_ONE
+    }
+  }
+}
+```
+
+```java
+// Use profiles per-query
+PreparedStatement stmt = session.prepare("SELECT * FROM large_table");
+session.execute(stmt.bind().setExecutionProfileName("olap"));
+```
+
+#### Programmatic Configuration
+
+For frameworks with their own configuration mechanisms (Spring Boot, Quarkus), you can build configuration programmatically:
+
+```java
+DriverConfigLoader loader = DriverConfigLoader.programmaticBuilder()
+    .withDuration(DefaultDriverOption.REQUEST_TIMEOUT, Duration.ofSeconds(5))
+    .withString(DefaultDriverOption.LOAD_BALANCING_LOCAL_DATACENTER, "dc1")
+    .startProfile("slow")
+        .withDuration(DefaultDriverOption.REQUEST_TIMEOUT, Duration.ofSeconds(30))
+    .endProfile()
+    .build();
+
+CqlSession session = CqlSession.builder()
+    .withConfigLoader(loader)
+    .build();
+```
+
+#### Loading from External Files
+
+Load configuration from files outside the classpath:
+
+```java
+// From filesystem
+DriverConfigLoader loader = DriverConfigLoader.fromFile(
+    new File("/etc/myapp/cassandra.conf"));
+
+// From URL
+DriverConfigLoader loader = DriverConfigLoader.fromUrl(
+    new URL("http://config-server/cassandra.conf"));
+
+CqlSession session = CqlSession.builder()
+    .withConfigLoader(loader)
+    .build();
+```
+
+#### Configuration Reloading
+
+By default, configuration files are reloaded periodically and the driver adjusts settings dynamically:
+
+```hocon
+datastax-java-driver {
+  basic.config-reload-interval = 5 minutes
+}
+```
+
+!!! note "Java Driver Only"
+    This file-based configuration system is unique to the Java driver. Python, Node.js, Go, and other drivers use programmatic configuration only. For comprehensive details, see the [Java Driver Configuration Reference](https://github.com/apache/cassandra-java-driver/tree/4.x/manual/core/configuration).
 
 ---
 
@@ -326,15 +482,38 @@ After bootstrap, the driver **continuously receives updates** about:
 
 This means even if all your contact points go down after initial connection, the driver remains connected and aware of the cluster state through its existing connections. The contact points are only needed again if the driver completely disconnects and needs to re-bootstrap.
 
+**Java**:
+
+```java
+// Contact points are ONLY used for initial bootstrap - not ongoing connections
+// Local DC MUST be set - the driver uses this to prefer nodes in your DC
+// and to ensure queries with LOCAL_* consistency levels work correctly
+CqlSession session = CqlSession.builder()
+    .addContactPoint(new InetSocketAddress("node1.dc1.example.com", 9042))
+    .addContactPoint(new InetSocketAddress("node1.dc2.example.com", 9042))  // DC2 - bootstrap fallback
+    .withLocalDatacenter("dc1")  // Required - queries prefer this DC
+    .build();
+```
+
+**Python**:
+
 ```python
-# These are ONLY used for initial bootstrap - not ongoing connections
+from cassandra.cluster import Cluster
+from cassandra.policies import DCAwareRoundRobinPolicy
+
+# Contact points are ONLY used for initial bootstrap - not ongoing connections
 cluster = Cluster(['node1.dc1.example.com', 'node2.dc1.example.com'])
 
 # Best practice: include nodes from multiple DCs for bootstrap reliability
-cluster = Cluster([
-    'node1.dc1.example.com',  # DC1
-    'node1.dc2.example.com',  # DC2 - in case DC1 is unreachable at startup
-])
+# Local DC MUST be set - the driver uses this to prefer nodes in your DC
+# and to ensure queries with LOCAL_* consistency levels work correctly
+cluster = Cluster(
+    contact_points=[
+        'node1.dc1.example.com',  # DC1
+        'node1.dc2.example.com',  # DC2 - in case DC1 is unreachable at startup
+    ],
+    load_balancing_policy=DCAwareRoundRobinPolicy(local_dc='dc1')
+)
 ```
 
 ### Why Load Balancing Matters
@@ -575,6 +754,31 @@ await session.execute(insert_stmt, [user_id, 'john_doe', 'john@example.com'])
 
 #### ❌ Preparing the Same Statement Repeatedly
 
+**Java**:
+
+```java
+// WRONG - Prepares on every call, wasting resources
+public void insertUser(CqlSession session, UUID userId, String username, String email) {
+    PreparedStatement stmt = session.prepare(
+        "INSERT INTO users (user_id, username, email) VALUES (?, ?, ?)");
+    session.execute(stmt.bind(userId, username, email));
+}
+
+// RIGHT - Prepare once at startup, reuse
+private final PreparedStatement insertStmt;
+
+public UserRepository(CqlSession session) {
+    this.insertStmt = session.prepare(
+        "INSERT INTO users (user_id, username, email) VALUES (?, ?, ?)");
+}
+
+public void insertUser(UUID userId, String username, String email) {
+    session.execute(insertStmt.bind(userId, username, email));
+}
+```
+
+**Python**:
+
 ```python
 # WRONG - Prepares on every call, wasting resources
 def insert_user(session, user_id, username, email):
@@ -591,6 +795,23 @@ def insert_user(session, user_id, username, email):
 Each `prepare()` call sends a request to the server. Preparing the same statement repeatedly wastes network round-trips and server CPU.
 
 #### ❌ Embedding Values in the Query String
+
+**Java**:
+
+```java
+// WRONG - Values in query string (CQL injection risk, no caching benefit)
+String username = "john_doe";
+session.execute("SELECT * FROM users WHERE username = '" + username + "'");
+
+// WRONG - Still wrong, even with prepare
+session.prepare("SELECT * FROM users WHERE username = '" + username + "'");
+
+// RIGHT - Use bind parameters
+PreparedStatement stmt = session.prepare("SELECT * FROM users WHERE username = ?");
+session.execute(stmt.bind(username));
+```
+
+**Python**:
 
 ```python
 # WRONG - Values in query string (CQL injection risk, no caching benefit)
@@ -611,6 +832,26 @@ Embedding values in the query string:
 - Prevents token-aware routing
 
 #### ❌ Dynamic Table or Column Names
+
+**Java**:
+
+```java
+// WRONG - Cannot use bind parameters for table/column names
+String table = "users";
+PreparedStatement stmt = session.prepare(
+    "SELECT * FROM " + table + " WHERE id = ?");  // Creates new prepared stmt per table
+
+// Acceptable only if limited set of tables - prepare each once at startup
+private final PreparedStatement userStmt;
+private final PreparedStatement orderStmt;
+
+public Repository(CqlSession session) {
+    this.userStmt = session.prepare("SELECT * FROM users WHERE id = ?");
+    this.orderStmt = session.prepare("SELECT * FROM orders WHERE id = ?");
+}
+```
+
+**Python**:
 
 ```python
 # WRONG - Cannot use bind parameters for table/column names
@@ -982,7 +1223,29 @@ Common exceptions to handle:
 | `Unavailable` | Not enough replicas | Check cluster health |
 | `InvalidQuery` | CQL syntax error | Fix query |
 
-### Example
+### Examples
+
+**Java**:
+
+```java
+import com.datastax.oss.driver.api.core.servererrors.*;
+import com.datastax.oss.driver.api.core.AllNodesFailedException;
+
+try {
+    session.execute("SELECT * FROM users");
+} catch (ReadTimeoutException e) {
+    System.out.println("Query timed out - consider adjusting timeout or data model");
+} catch (UnavailableException e) {
+    System.out.printf("Not enough replicas: required=%d, alive=%d%n",
+        e.getRequired(), e.getAlive());
+} catch (WriteTimeoutException e) {
+    System.out.println("Write timed out - check cluster health");
+} catch (AllNodesFailedException e) {
+    System.out.println("Cannot connect to any host: " + e.getAllErrors());
+}
+```
+
+**Python**:
 
 ```python
 from cassandra import ReadTimeout, Unavailable, NoHostAvailable
