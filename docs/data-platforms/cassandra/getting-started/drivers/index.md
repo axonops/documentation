@@ -725,26 +725,35 @@ cluster = Cluster(
 
 ### Python (async driver)
 
+The async driver includes `AsyncRetryPolicy` with configurable retry attempts. Read operations (SELECTs) are automatically retried without needing to mark them as idempotent.
+
 ```python
 from async_cassandra import AsyncCluster
-from cassandra.policies import RetryPolicy
+from async_cassandra.retry_policy import AsyncRetryPolicy
 from cassandra.query import SimpleStatement
 
-cluster = AsyncCluster(['127.0.0.1'])
+# Configure retry policy with max retries
+cluster = AsyncCluster(
+    ['127.0.0.1'],
+    retry_policy=AsyncRetryPolicy(max_retries=5)
+)
 session = await cluster.connect('my_keyspace')
 
-# Mark query as idempotent
+# SELECTs are automatically retried - no marking needed
+result = await session.execute("SELECT * FROM users WHERE id = ?", [user_id])
+
+# Idempotent writes - mark to enable retries
 stmt = SimpleStatement(
-    "SELECT * FROM users WHERE id = ?",
+    "INSERT INTO users (id, email) VALUES (?, ?) IF NOT EXISTS",
     is_idempotent=True
 )
-result = await session.execute(stmt, [user_id])
+await session.execute(stmt, [user_id, 'john@example.com'])
 
-# With prepared statements
-prepared = await session.prepare("UPDATE users SET email = ? WHERE id = ?")
-bound = prepared.bind(['john@example.com', user_id])
-bound.is_idempotent = True
-await session.execute(bound)
+# Non-idempotent writes - do NOT mark (prevents duplicate increments)
+await session.execute(
+    "UPDATE counters SET views = views + 1 WHERE page_id = ?",
+    [page_id]
+)
 ```
 
 ### Java
