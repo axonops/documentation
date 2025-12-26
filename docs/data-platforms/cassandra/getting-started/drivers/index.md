@@ -641,9 +641,6 @@ Cassandra caches prepared statements on each node. You can monitor this cache to
 ```bash
 # View prepared statement cache stats
 nodetool info | grep -i prepared
-
-# View detailed table stats including prepared statement metrics
-nodetool tablestats system.prepared_statements
 ```
 
 **Cassandra configuration (cassandra.yaml):**
