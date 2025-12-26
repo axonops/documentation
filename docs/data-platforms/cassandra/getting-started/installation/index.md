@@ -135,7 +135,7 @@ java -version
 
 | Method | Complexity | Update Path | Best For |
 |--------|------------|-------------|----------|
-| **Package Manager** | Low | `apt upgrade` | Single-node or learning |
+| **Package Manager** | Low | `apt upgrade` | Production Linux servers, manual management |
 | **Tarball** | Medium | Manual | Custom configurations, multiple versions |
 | **Docker** | Low | Pull new image | Development, CI/CD |
 | **Kubernetes** | High | Operator-managed | Cloud-native, auto-scaling |
