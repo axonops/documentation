@@ -111,7 +111,7 @@ Unlike traditional drivers that send all queries to a single endpoint (or load b
 | **Node.js** | DataStax Node.js Driver | Production | [GitHub](https://github.com/datastax/nodejs-driver) |
 | **Go** | GoCQL | Production | [GitHub](https://github.com/gocql/gocql) |
 | **C#/.NET** | DataStax C# Driver | Production | [GitHub](https://github.com/datastax/csharp-driver) |
-| **C/C++** | DataStax C++ Driver | Production | [GitHub](https://github.com/datastax/cpp-driver) |
+| **C/C++** | Apache Cassandra C++ Driver | Production | [GitHub](https://github.com/apache/cassandra-cpp-driver) |
 | **Ruby** | DataStax Ruby Driver | Maintenance | [GitHub](https://github.com/datastax/ruby-driver) |
 | **PHP** | DataStax PHP Driver | Maintenance | [GitHub](https://github.com/datastax/php-driver) |
 
@@ -1296,7 +1296,7 @@ For detailed driver documentation, refer to the official repositories:
 - **[Node.js Driver](https://github.com/datastax/nodejs-driver)** - DataStax Node.js Driver
 - **[Go Driver](https://github.com/gocql/gocql)** - GoCQL
 - **[C# Driver](https://github.com/datastax/csharp-driver)** - DataStax C# Driver
-- **[C++ Driver](https://github.com/datastax/cpp-driver)** - DataStax C++ Driver
+- **[C++ Driver](https://github.com/apache/cassandra-cpp-driver)** - Apache Cassandra C++ Driver
 - **[Ruby Driver](https://github.com/datastax/ruby-driver)** - DataStax Ruby Driver (maintenance mode)
 - **[PHP Driver](https://github.com/datastax/php-driver)** - DataStax PHP Driver (maintenance mode)
 
