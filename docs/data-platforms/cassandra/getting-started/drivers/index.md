@@ -509,43 +509,152 @@ datastax-java-driver {
 
 ## Prepared Statements
 
-Always use prepared statements for:
-- Better performance (parsed once)
-- Protection against CQL injection
-- Type safety
+Prepared statements are the correct way to execute parameterized queries in Cassandra. They provide significant benefits over simple string-based queries.
 
-### Example
+### Why Use Prepared Statements?
+
+**Performance**: When you prepare a statement, Cassandra parses the CQL, validates it against the schema, and creates an execution plan. This happens **once**. Subsequent executions skip all parsing and planning - only the bound values are sent to the server. For queries executed thousands of times, this dramatically reduces CPU usage on both client and server.
+
+**Security**: Prepared statements prevent CQL injection attacks. Values are bound as typed parameters, not concatenated into the query string, so malicious input cannot alter the query structure.
+
+**Type Safety**: The driver validates that bound values match the expected types before sending to the server, catching type errors early rather than at execution time.
+
+**Token-Aware Routing**: Prepared statements include partition key metadata, enabling the driver to route queries directly to the node that owns the data - impossible with unparsed query strings.
+
+### Correct Usage Pattern
+
+Prepare statements **once** at application startup or first use, then reuse the prepared statement for all executions:
 
 ```python
-# Python
+# Python - Prepare once, execute many times
 from cassandra.cluster import Cluster
 
 cluster = Cluster(['127.0.0.1'])
 session = cluster.connect('my_keyspace')
 
-# Prepare once
+# Prepare once (typically at startup or in an initialization block)
 insert_stmt = session.prepare("""
     INSERT INTO users (user_id, username, email)
     VALUES (?, ?, ?)
 """)
 
-# Execute many times
+# Execute many times with different values
 import uuid
 session.execute(insert_stmt, [uuid.uuid4(), 'john_doe', 'john@example.com'])
 session.execute(insert_stmt, [uuid.uuid4(), 'jane_doe', 'jane@example.com'])
 ```
 
 ```java
-// Java
-PreparedStatement prepared = session.prepare(
+// Java - Prepare once, execute many times
+PreparedStatement insertStmt = session.prepare(
     "INSERT INTO users (user_id, username, email) VALUES (?, ?, ?)"
 );
 
-BoundStatement bound = prepared.bind(
-    UUID.randomUUID(), "john_doe", "john@example.com"
-);
+// Execute many times
+BoundStatement bound = insertStmt.bind(UUID.randomUUID(), "john_doe", "john@example.com");
 session.execute(bound);
 ```
+
+```python
+# Python (async) - Prepare once, execute many times
+from async_cassandra import AsyncCluster
+
+cluster = AsyncCluster(['127.0.0.1'])
+session = await cluster.connect('my_keyspace')
+
+# Prepare once
+insert_stmt = await session.prepare(
+    "INSERT INTO users (user_id, username, email) VALUES (?, ?, ?)"
+)
+
+# Execute many times
+await session.execute(insert_stmt, [user_id, 'john_doe', 'john@example.com'])
+```
+
+### Anti-Patterns to Avoid
+
+#### ❌ Preparing the Same Statement Repeatedly
+
+```python
+# WRONG - Prepares on every call, wasting resources
+def insert_user(session, user_id, username, email):
+    stmt = session.prepare("INSERT INTO users (user_id, username, email) VALUES (?, ?, ?)")
+    session.execute(stmt, [user_id, username, email])
+
+# RIGHT - Prepare once, reuse
+insert_stmt = session.prepare("INSERT INTO users (user_id, username, email) VALUES (?, ?, ?)")
+
+def insert_user(session, user_id, username, email):
+    session.execute(insert_stmt, [user_id, username, email])
+```
+
+Each `prepare()` call sends a request to the server. Preparing the same statement repeatedly wastes network round-trips and server CPU.
+
+#### ❌ Embedding Values in the Query String
+
+```python
+# WRONG - Values in query string (CQL injection risk, no caching benefit)
+username = "john_doe"
+session.execute(f"SELECT * FROM users WHERE username = '{username}'")
+
+# WRONG - Still wrong, even with prepare
+session.prepare(f"SELECT * FROM users WHERE username = '{username}'")
+
+# RIGHT - Use bind parameters
+stmt = session.prepare("SELECT * FROM users WHERE username = ?")
+session.execute(stmt, [username])
+```
+
+Embedding values in the query string:
+- Creates a unique query for each value, defeating caching
+- Opens CQL injection vulnerabilities
+- Prevents token-aware routing
+
+#### ❌ Dynamic Table or Column Names
+
+```python
+# WRONG - Cannot use bind parameters for table/column names
+table = "users"
+stmt = session.prepare(f"SELECT * FROM {table} WHERE id = ?")  # Creates new prepared stmt per table
+
+# Acceptable only if limited set of tables - prepare each once at startup
+user_stmt = session.prepare("SELECT * FROM users WHERE id = ?")
+order_stmt = session.prepare("SELECT * FROM orders WHERE id = ?")
+```
+
+Bind parameters (`?`) can only be used for **values**, not for table names, column names, or other CQL syntax. If you need dynamic table access, prepare all variants at startup.
+
+### Server-Side Prepared Statement Cache
+
+Cassandra caches prepared statements on each node. You can monitor this cache to detect issues:
+
+**Key metrics to monitor:**
+
+| Metric | Description | Warning Sign |
+|--------|-------------|--------------|
+| `PreparedStatementsCount` | Number of cached prepared statements | Continuously growing = prepare leak |
+| `PreparedStatementsEvicted` | Statements evicted from cache | High rate = cache too small or over-preparing |
+| `PreparedStatementsExecuted` | Execution count | Should be >> PreparedStatementsCount |
+
+**Using nodetool:**
+
+```bash
+# View prepared statement cache stats
+nodetool info | grep -i prepared
+
+# View detailed table stats including prepared statement metrics
+nodetool tablestats system.prepared_statements
+```
+
+**Cassandra configuration (cassandra.yaml):**
+
+```yaml
+# Maximum number of prepared statements to cache (default: 10000)
+prepared_statements_cache_size_mb: 100
+```
+
+!!! warning "Prepared Statement Leak"
+    If `PreparedStatementsCount` grows continuously without bound, you likely have a prepare leak - code that prepares statements with dynamic values embedded in the query string. Each unique query string creates a new cache entry until the cache fills and evictions begin, degrading performance.
 
 ---
 
