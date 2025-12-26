@@ -89,10 +89,16 @@ import asyncio
 from async_cassandra import AsyncCluster
 
 async def main():
-    async with AsyncCluster(['127.0.0.1']) as cluster:
-        async with await cluster.connect() as session:
-            result = await session.execute("SELECT release_version FROM system.local")
-            print(f"Cassandra version: {result.one().release_version}")
+    # Create long-lived cluster and session
+    cluster = AsyncCluster(['127.0.0.1'])
+    session = await cluster.connect()
+
+    result = await session.execute("SELECT release_version FROM system.local")
+    print(f"Cassandra version: {result.one().release_version}")
+
+    # Only close when application shuts down
+    await session.close()
+    await cluster.shutdown()
 
 asyncio.run(main())
 ```
@@ -340,20 +346,40 @@ import asyncio
 import uuid
 from async_cassandra import AsyncCluster
 
-async def main():
-    async with AsyncCluster(['127.0.0.1']) as cluster:
-        async with await cluster.connect('my_keyspace') as session:
-            # Prepare statement once
-            insert_stmt = await session.prepare(
-                "INSERT INTO users (user_id, username, email) VALUES (?, ?, ?)"
-            )
+# Long-lived cluster and session (create once, reuse for all requests)
+cluster = None
+session = None
 
-            # Run multiple inserts concurrently
-            tasks = [
-                session.execute(insert_stmt, [uuid.uuid4(), f'user{i}', f'user{i}@example.com'])
-                for i in range(100)
-            ]
-            await asyncio.gather(*tasks)
+async def startup():
+    global cluster, session
+    cluster = AsyncCluster(['127.0.0.1'])
+    session = await cluster.connect('my_keyspace')
+
+async def shutdown():
+    if session:
+        await session.close()
+    if cluster:
+        await cluster.shutdown()
+
+async def insert_users():
+    # Prepare statement once, execute many times
+    insert_stmt = await session.prepare(
+        "INSERT INTO users (user_id, username, email) VALUES (?, ?, ?)"
+    )
+
+    # Run multiple inserts concurrently
+    tasks = [
+        session.execute(insert_stmt, [uuid.uuid4(), f'user{i}', f'user{i}@example.com'])
+        for i in range(100)
+    ]
+    await asyncio.gather(*tasks)
+
+async def main():
+    await startup()
+    try:
+        await insert_users()
+    finally:
+        await shutdown()
 
 asyncio.run(main())
 ```
@@ -365,6 +391,7 @@ from async_cassandra.streaming import StreamConfig
 
 config = StreamConfig(fetch_size=1000)
 
+# Context manager ensures streaming resources are cleaned up
 async with await session.execute_stream(
     "SELECT * FROM large_table",
     stream_config=config
@@ -376,27 +403,47 @@ async with await session.execute_stream(
 **FastAPI integration example:**
 
 ```python
+import os
+import uuid
 from contextlib import asynccontextmanager
-from fastapi import FastAPI
+from fastapi import FastAPI, HTTPException
 from async_cassandra import AsyncCluster
 
+cluster = None
 session = None
 user_stmt = None
 
 @asynccontextmanager
 async def lifespan(app: FastAPI):
-    global session, user_stmt
-    async with AsyncCluster(['127.0.0.1']) as cluster:
-        async with await cluster.connect('my_keyspace') as session:
-            user_stmt = await session.prepare("SELECT * FROM users WHERE id = ?")
-            yield
+    global cluster, session, user_stmt
+
+    # Startup: create long-lived connections
+    cluster = AsyncCluster(
+        contact_points=os.getenv("CASSANDRA_HOSTS", "127.0.0.1").split(","),
+        connect_timeout=10.0,
+    )
+    session = await cluster.connect('my_keyspace')
+    user_stmt = await session.prepare("SELECT * FROM users WHERE id = ?")
+
+    yield
+
+    # Shutdown: clean up connections
+    if session:
+        await session.close()
+    if cluster:
+        await cluster.shutdown()
 
 app = FastAPI(lifespan=lifespan)
 
 @app.get("/users/{user_id}")
 async def get_user(user_id: str):
+    if session is None:
+        raise HTTPException(status_code=503, detail="Database not connected")
     result = await session.execute(user_stmt, [uuid.UUID(user_id)])
-    return {"user": result.one()._asdict()}
+    user = result.one()
+    if not user:
+        raise HTTPException(status_code=404, detail="User not found")
+    return {"id": str(user.id), "name": user.name, "email": user.email}
 ```
 
 ### Java (CompletionStage)
