@@ -76,6 +76,31 @@ print(f"Cassandra version: {row.release_version}")
 cluster.shutdown()
 ```
 
+### Python (Async)
+
+For async frameworks like FastAPI and aiohttp:
+
+```bash
+pip install async-cassandra
+```
+
+```python
+import asyncio
+from async_cassandra import AsyncCluster
+
+async def main():
+    cluster = AsyncCluster(['127.0.0.1'])
+    session = await cluster.connect()
+
+    result = await session.execute("SELECT release_version FROM system.local")
+    print(f"Cassandra version: {result.one().release_version}")
+
+    await session.close()
+    await cluster.shutdown()
+
+asyncio.run(main())
+```
+
 ### Node.js
 
 ```bash
