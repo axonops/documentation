@@ -353,7 +353,7 @@ datastax-java-driver {
   basic {
     contact-points = ["10.0.0.1:9042", "10.0.0.2:9042"]
 
-    # REQUIRED - queries are routed to this DC, LOCAL_* consistency levels use this DC
+    # Explicit local DC - if omitted, driver uses the DC of the first contact point that responds
     load-balancing-policy.local-datacenter = "dc1"
 
     request.timeout = 5 seconds
@@ -371,7 +371,6 @@ datastax-java-driver {
 
 ```java
 // Driver automatically loads application.conf from classpath
-// No need to set local DC in code - it's read from the config file
 CqlSession session = CqlSession.builder().build();
 ```
 
@@ -490,12 +489,11 @@ This means even if all your contact points go down after initial connection, the
 
 ```java
 // Contact points are ONLY used for initial bootstrap - not ongoing connections
-// Local DC MUST be set - the driver uses this to prefer nodes in your DC
-// and to ensure queries with LOCAL_* consistency levels work correctly
+// When using multi-DC contact points, set local DC explicitly to ensure deterministic routing
 CqlSession session = CqlSession.builder()
     .addContactPoint(new InetSocketAddress("node1.dc1.example.com", 9042))
     .addContactPoint(new InetSocketAddress("node1.dc2.example.com", 9042))  // DC2 - bootstrap fallback
-    .withLocalDatacenter("dc1")  // Required - queries prefer this DC
+    .withLocalDatacenter("dc1")  // Explicit DC; if omitted, uses DC of first responding contact point
     .build();
 ```
 
@@ -506,11 +504,10 @@ from cassandra.cluster import Cluster
 from cassandra.policies import DCAwareRoundRobinPolicy
 
 # Contact points are ONLY used for initial bootstrap - not ongoing connections
+# If all contact points are in the same DC, the driver auto-detects local DC
 cluster = Cluster(['node1.dc1.example.com', 'node2.dc1.example.com'])
 
-# Best practice: include nodes from multiple DCs for bootstrap reliability
-# Local DC MUST be set - the driver uses this to prefer nodes in your DC
-# and to ensure queries with LOCAL_* consistency levels work correctly
+# When using multi-DC contact points, set local DC explicitly to ensure deterministic routing
 cluster = Cluster(
     contact_points=[
         'node1.dc1.example.com',  # DC1
@@ -556,7 +553,7 @@ With Token-Aware:
 // Token-aware + DC-aware is the default behavior
 CqlSession session = CqlSession.builder()
     .addContactPoint(new InetSocketAddress("127.0.0.1", 9042))
-    .withLocalDatacenter("dc1")  // Required - queries prefer this DC
+    .withLocalDatacenter("dc1")  // Explicit DC; if omitted, uses DC of first responding contact point
     .build();
 ```
 
@@ -636,12 +633,12 @@ cluster = Cluster(
 ```javascript
 const client = new cassandra.Client({
   contactPoints: ['127.0.0.1'],
-  localDataCenter: 'dc1',  // Required - queries prefer this DC
+  localDataCenter: 'dc1',  // Explicit DC; if omitted, uses DC of first responding contact point
 });
 ```
 
-!!! warning "Always Set Local Datacenter"
-    Failing to set the local datacenter can cause queries to be sent to remote DCs, resulting in high latency and potential availability issues if the remote DC is unreachable.
+!!! info "Automatic Local Datacenter Detection"
+    If you don't explicitly set the local datacenter, the driver uses the datacenter of the **first contact point that responds**. This means you can control the local DC implicitly by only providing contact points from a single DC. However, if your contact points span multiple DCs, the driver's local DC becomes non-deterministic - whichever node responds first determines routing for the lifetime of the session.
 
 ### Configuring Failover to Remote DCs
 
@@ -683,9 +680,9 @@ datastax-java-driver {
 
 | Mistake | Problem | Solution |
 |---------|---------|----------|
-| Not setting local DC | Queries may go to remote DC | Always configure `local_dc` or `localDataCenter` |
+| Multi-DC contact points without explicit local DC | Non-deterministic DC selection based on first responder | Set explicit `local_dc` or use contact points from single DC only |
 | Using Round Robin | Ignores data locality, higher latency | Use Token-Aware + DC-Aware |
-| Hardcoding contact points from one DC | If that DC is down, can't bootstrap | Include contact points from multiple DCs |
+| Hardcoding contact points from one DC | If that DC is down, can't bootstrap | Include contact points from multiple DCs (with explicit local DC) |
 | Allowing remote DC for LOCAL_* consistency | Violates consistency guarantees | Set `allow-for-local-consistency-levels = false` |
 
 ---
