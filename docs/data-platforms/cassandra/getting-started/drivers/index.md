@@ -352,7 +352,10 @@ Configuration files use **HOCON** (Human-Optimized Config Object Notation), an i
 datastax-java-driver {
   basic {
     contact-points = ["10.0.0.1:9042", "10.0.0.2:9042"]
+
+    # REQUIRED - queries are routed to this DC, LOCAL_* consistency levels use this DC
     load-balancing-policy.local-datacenter = "dc1"
+
     request.timeout = 5 seconds
   }
 
@@ -368,6 +371,7 @@ datastax-java-driver {
 
 ```java
 // Driver automatically loads application.conf from classpath
+// No need to set local DC in code - it's read from the config file
 CqlSession session = CqlSession.builder().build();
 ```
 
