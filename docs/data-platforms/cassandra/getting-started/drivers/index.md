@@ -366,13 +366,13 @@ async def main():
 asyncio.run(main())
 ```
 
-For async paging over large result sets:
+For async paging over large result sets, use `execute_stream()`:
 
 ```python
-async def fetch_all_users():
-    result = await session.execute("SELECT * FROM users")
-    async for row in result:
-        print(row.username)
+# ✅ Truly async - other requests keep flowing while paging
+result = await session.execute_stream("SELECT * FROM large_table")
+async for row in result:
+    await process_row(row)  # Non-blocking iteration
 ```
 
 ### Java (CompletionStage)
