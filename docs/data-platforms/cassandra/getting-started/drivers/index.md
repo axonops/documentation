@@ -46,7 +46,7 @@ This means you **don't need large connection pools**. A single connection per ho
 
 ### Persistent Connections with Cluster Awareness
 
-Unlike traditional drivers that simply execute queries, Cassandra drivers maintain an **ongoing relationship** with the cluster:
+Unlike traditional drivers that simply execute queries, Cassandra drivers maintain an **ongoing relationship** with the cluster. This is why `Cluster` and `Session` instances are designed to be **long-lived** - you create them once at application startup and reuse them for the entire application lifecycle. Creating multiple instances is unnecessary and wasteful; a single `Session` can handle all your application's queries concurrently.
 
 **At connection time:**
 
