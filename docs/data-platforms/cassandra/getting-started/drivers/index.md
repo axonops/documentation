@@ -487,24 +487,150 @@ datastax-java-driver {
 
 ## Retry Policies
 
-Handle transient failures:
+Retry policies determine how drivers handle transient failures such as timeouts, temporary node unavailability, or network issues. When a query fails, the retry policy decides whether to:
+
+- **Retry** the query on the same or a different node
+- **Rethrow** the exception to the application
+- **Ignore** the failure (for writes where partial success is acceptable)
+
+### Idempotency: Critical for Safe Retries
+
+**Drivers only retry queries that are marked as idempotent.** A query is idempotent if executing it multiple times produces the same result as executing it once. This is essential because when a timeout occurs, the driver cannot know whether the query actually succeeded on the server.
+
+| Query Type | Idempotent? | Reason |
+|------------|-------------|--------|
+| `SELECT * FROM users WHERE id = ?` | ✅ Yes | Same data returned each time |
+| `UPDATE users SET name = 'John' WHERE id = ?` | ✅ Yes | Setting to absolute value is repeatable |
+| `DELETE FROM users WHERE id = ?` | ✅ Yes | Deleting twice has same effect |
+| `INSERT INTO users (id, name) VALUES (?, ?) IF NOT EXISTS` | ✅ Yes | LWT ensures exactly-once semantics |
+| `SELECT now() FROM system.local` | ❌ No | Returns different timestamp each call |
+| `UPDATE users SET counter = counter + 1 WHERE id = ?` | ❌ No | Increment applied multiple times |
+| `INSERT INTO logs (id, ts) VALUES (uuid(), ?)` | ❌ No | Generates different UUID each time |
+
+!!! warning "Default: Queries are NOT idempotent"
+    By default, drivers assume queries are **not** idempotent and will not retry them on timeout. You MUST explicitly mark queries as idempotent to enable retries.
+
+### Python (sync driver)
 
 ```python
-# Python
-from cassandra.policies import RetryPolicy
 from cassandra.cluster import Cluster
+from cassandra.policies import RetryPolicy
+from cassandra.query import SimpleStatement
 
-class CustomRetryPolicy(RetryPolicy):
+cluster = Cluster(['127.0.0.1'])
+session = cluster.connect('my_keyspace')
+
+# Mark individual query as idempotent to enable retries
+stmt = SimpleStatement(
+    "SELECT * FROM users WHERE id = %s",
+    is_idempotent=True
+)
+result = session.execute(stmt, [user_id])
+
+# Prepared statements - set idempotent on the bound statement
+prepared = session.prepare("UPDATE users SET name = ? WHERE id = ?")
+bound = prepared.bind(['John', user_id])
+bound.is_idempotent = True
+session.execute(bound)
+```
+
+**Custom retry policy:**
+
+```python
+from cassandra.policies import RetryPolicy
+
+class ConservativeRetryPolicy(RetryPolicy):
     def on_read_timeout(self, query, consistency, required, received, data_retrieved, retry_num):
-        if retry_num < 3:
+        # Only retry once, and only if we received some data
+        if retry_num == 0 and received >= required:
             return self.RETRY, consistency
+        return self.RETHROW, None
+
+    def on_write_timeout(self, query, consistency, write_type, required, received, retry_num):
+        # Never retry writes automatically - let application decide
+        return self.RETHROW, None
+
+    def on_unavailable(self, query, consistency, required, alive, retry_num):
+        # Retry once on a different host
+        if retry_num == 0:
+            return self.RETRY_NEXT_HOST, consistency
         return self.RETHROW, None
 
 cluster = Cluster(
     ['127.0.0.1'],
-    default_retry_policy=CustomRetryPolicy()
+    default_retry_policy=ConservativeRetryPolicy()
 )
 ```
+
+### Python (async driver)
+
+```python
+from async_cassandra import AsyncCluster
+from cassandra.policies import RetryPolicy
+from cassandra.query import SimpleStatement
+
+cluster = AsyncCluster(['127.0.0.1'])
+session = await cluster.connect('my_keyspace')
+
+# Mark query as idempotent
+stmt = SimpleStatement(
+    "SELECT * FROM users WHERE id = ?",
+    is_idempotent=True
+)
+result = await session.execute(stmt, [user_id])
+
+# With prepared statements
+prepared = await session.prepare("UPDATE users SET email = ? WHERE id = ?")
+bound = prepared.bind(['john@example.com', user_id])
+bound.is_idempotent = True
+await session.execute(bound)
+```
+
+### Java
+
+```java
+import com.datastax.oss.driver.api.core.CqlSession;
+import com.datastax.oss.driver.api.core.cql.*;
+
+CqlSession session = CqlSession.builder()
+    .addContactPoint(new InetSocketAddress("127.0.0.1", 9042))
+    .withLocalDatacenter("dc1")
+    .build();
+
+// Mark simple statement as idempotent
+SimpleStatement stmt = SimpleStatement.newInstance(
+    "SELECT * FROM users WHERE id = ?", userId)
+    .setIdempotent(true);
+session.execute(stmt);
+
+// Prepared statements - set on bound statement
+PreparedStatement prepared = session.prepare(
+    "UPDATE users SET name = ? WHERE id = ?");
+BoundStatement bound = prepared.bind("John", userId)
+    .setIdempotent(true);
+session.execute(bound);
+```
+
+**Configure retry policy in application.conf:**
+
+```hocon
+datastax-java-driver {
+  advanced.retry-policy {
+    class = DefaultRetryPolicy
+  }
+
+  # Or use a custom policy
+  # class = com.example.MyRetryPolicy
+}
+```
+
+### Built-in Retry Policies
+
+| Policy | Behavior |
+|--------|----------|
+| **DefaultRetryPolicy** | Retries reads once if enough replicas responded; never retries writes |
+| **FallthroughRetryPolicy** | Never retries - always rethrows to application |
+| **DowngradingConsistencyRetryPolicy** | Retries at lower consistency level (use with caution) |
 
 ---
 
