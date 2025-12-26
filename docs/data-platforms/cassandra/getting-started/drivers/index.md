@@ -891,34 +891,6 @@ bound.is_idempotent = True
 session.execute(bound)
 ```
 
-**Custom retry policy:**
-
-```python
-from cassandra.policies import RetryPolicy
-
-class ConservativeRetryPolicy(RetryPolicy):
-    def on_read_timeout(self, query, consistency, required, received, data_retrieved, retry_num):
-        # Only retry once, and only if we received some data
-        if retry_num == 0 and received >= required:
-            return self.RETRY, consistency
-        return self.RETHROW, None
-
-    def on_write_timeout(self, query, consistency, write_type, required, received, retry_num):
-        # Never retry writes automatically - let application decide
-        return self.RETHROW, None
-
-    def on_unavailable(self, query, consistency, required, alive, retry_num):
-        # Retry once on a different host
-        if retry_num == 0:
-            return self.RETRY_NEXT_HOST, consistency
-        return self.RETHROW, None
-
-cluster = Cluster(
-    ['127.0.0.1'],
-    default_retry_policy=ConservativeRetryPolicy()
-)
-```
-
 ### Python (async driver)
 
 The async driver includes `AsyncRetryPolicy` with configurable retry attempts. Read operations (SELECTs) are automatically retried without needing to mark them as idempotent.
