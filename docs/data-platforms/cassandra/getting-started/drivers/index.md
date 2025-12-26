@@ -215,22 +215,55 @@ cluster = Cluster(
 
 ## Load Balancing Policies
 
-### Token-Aware (Recommended)
+Load balancing policies determine which Cassandra node receives each query. The right policy reduces latency, distributes load evenly, and ensures queries stay within the correct datacenter for multi-DC deployments.
 
-Routes queries to the node that owns the data:
+### Why Load Balancing Matters
+
+In a Cassandra cluster, data is distributed across nodes using consistent hashing. Each partition key hashes to a specific token, and that token determines which nodes store the data (based on replication factor). A good load balancing policy:
+
+- **Reduces latency** by sending queries directly to nodes that own the data
+- **Avoids cross-DC traffic** by preferring local nodes in multi-DC deployments
+- **Distributes load** evenly to prevent hotspots
+- **Handles failures** gracefully by trying other nodes when one is unavailable
+
+### Policy Types
+
+| Policy | Description | Use Case |
+|--------|-------------|----------|
+| **Token-Aware** | Routes to the node owning the partition | Default choice - lowest latency |
+| **DC-Aware Round Robin** | Prefers nodes in the local DC, round-robins among them | Multi-DC deployments |
+| **Round Robin** | Distributes evenly across all nodes | Rarely used - ignores data locality |
+| **Whitelist/Allowlist** | Restricts to specific nodes | Testing, maintenance |
+
+### Token-Aware Policy (Recommended)
+
+Token-aware routing sends queries directly to a node that owns the requested partition, eliminating an extra network hop. Without token-awareness, a coordinator node must forward the query to the replica nodes, adding latency.
+
+```
+Without Token-Aware:
+  Client → Coordinator → Replica (owns data) → Coordinator → Client
+
+With Token-Aware:
+  Client → Replica (owns data) → Client
+```
+
+**Java** (token-aware is default in driver v4+):
 
 ```java
-// Java - Token-aware is default in v4+
+// Token-aware + DC-aware is the default behavior
 CqlSession session = CqlSession.builder()
     .addContactPoint(new InetSocketAddress("127.0.0.1", 9042))
-    .withLocalDatacenter("dc1")
+    .withLocalDatacenter("dc1")  // Required - queries prefer this DC
     .build();
 ```
 
+**Python (sync driver)**:
+
 ```python
-# Python
+from cassandra.cluster import Cluster
 from cassandra.policies import TokenAwarePolicy, DCAwareRoundRobinPolicy
 
+# Wrap DC-aware policy with token-aware for best performance
 cluster = Cluster(
     ['127.0.0.1'],
     load_balancing_policy=TokenAwarePolicy(
@@ -239,20 +272,97 @@ cluster = Cluster(
 )
 ```
 
-### DC-Aware Round Robin
+**Python (async driver)**:
 
-Prefers nodes in the local datacenter:
+```python
+from async_cassandra import AsyncCluster
+from cassandra.policies import TokenAwarePolicy, DCAwareRoundRobinPolicy
+
+cluster = AsyncCluster(
+    ['127.0.0.1'],
+    load_balancing_policy=TokenAwarePolicy(
+        DCAwareRoundRobinPolicy(local_dc='dc1')
+    )
+)
+session = await cluster.connect('my_keyspace')
+```
+
+**Node.js**:
 
 ```javascript
-// Node.js
+const cassandra = require('cassandra-driver');
+
 const client = new cassandra.Client({
   contactPoints: ['127.0.0.1'],
   localDataCenter: 'dc1',
-  policies: {
-    loadBalancing: new cassandra.policies.loadBalancing.DCAwareRoundRobinPolicy('dc1')
-  }
+  // Token-aware is enabled by default in Node.js driver
 });
 ```
+
+### DC-Aware Round Robin
+
+In multi-datacenter deployments, DC-aware routing ensures queries go to nodes in the local datacenter, avoiding cross-DC latency (which can be 10-100x higher than local).
+
+```python
+from cassandra.cluster import Cluster
+from cassandra.policies import DCAwareRoundRobinPolicy
+
+cluster = Cluster(
+    ['127.0.0.1'],
+    load_balancing_policy=DCAwareRoundRobinPolicy(
+        local_dc='dc1',
+        used_hosts_per_remote_dc=0  # Never use remote DC nodes (default)
+    )
+)
+```
+
+!!! warning "Always Set Local Datacenter"
+    Failing to set the local datacenter can cause queries to be sent to remote DCs, resulting in high latency and potential availability issues if the remote DC is unreachable.
+
+### Configuring Failover to Remote DCs
+
+By default, drivers only use local DC nodes. To allow failover to remote DCs when all local nodes are down:
+
+**Python**:
+
+```python
+from cassandra.policies import DCAwareRoundRobinPolicy, TokenAwarePolicy
+
+cluster = Cluster(
+    ['127.0.0.1'],
+    load_balancing_policy=TokenAwarePolicy(
+        DCAwareRoundRobinPolicy(
+            local_dc='dc1',
+            used_hosts_per_remote_dc=2  # Use up to 2 nodes per remote DC as fallback
+        )
+    )
+)
+```
+
+**Java** (application.conf):
+
+```hocon
+datastax-java-driver {
+  basic.load-balancing-policy {
+    local-datacenter = "dc1"
+  }
+  advanced.load-balancing-policy {
+    dc-failover {
+      max-nodes-per-remote-dc = 2
+      allow-for-local-consistency-levels = false
+    }
+  }
+}
+```
+
+### Avoiding Common Mistakes
+
+| Mistake | Problem | Solution |
+|---------|---------|----------|
+| Not setting local DC | Queries may go to remote DC | Always configure `local_dc` or `localDataCenter` |
+| Using Round Robin | Ignores data locality, higher latency | Use Token-Aware + DC-Aware |
+| Hardcoding contact points from one DC | If that DC is down, can't bootstrap | Include contact points from multiple DCs |
+| Allowing remote DC for LOCAL_* consistency | Violates consistency guarantees | Set `allow-for-local-consistency-levels = false` |
 
 ---
 
