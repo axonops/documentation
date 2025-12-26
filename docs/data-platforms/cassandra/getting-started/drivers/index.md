@@ -78,7 +78,7 @@ cluster.shutdown()
 
 ### Python (Async)
 
-For async frameworks like FastAPI and aiohttp:
+For async frameworks like FastAPI and aiohttp. Requires Python 3.12+ and Cassandra 4.0+:
 
 ```bash
 pip install async-cassandra
@@ -89,14 +89,10 @@ import asyncio
 from async_cassandra import AsyncCluster
 
 async def main():
-    cluster = AsyncCluster(['127.0.0.1'])
-    session = await cluster.connect()
-
-    result = await session.execute("SELECT release_version FROM system.local")
-    print(f"Cassandra version: {result.one().release_version}")
-
-    await session.close()
-    await cluster.shutdown()
+    async with AsyncCluster(['127.0.0.1']) as cluster:
+        async with await cluster.connect() as session:
+            result = await session.execute("SELECT release_version FROM system.local")
+            print(f"Cassandra version: {result.one().release_version}")
 
 asyncio.run(main())
 ```
@@ -345,34 +341,62 @@ import uuid
 from async_cassandra import AsyncCluster
 
 async def main():
-    cluster = AsyncCluster(['127.0.0.1'])
-    session = await cluster.connect('my_keyspace')
+    async with AsyncCluster(['127.0.0.1']) as cluster:
+        async with await cluster.connect('my_keyspace') as session:
+            # Prepare statement once
+            insert_stmt = await session.prepare(
+                "INSERT INTO users (user_id, username, email) VALUES (?, ?, ?)"
+            )
 
-    # Prepare statement once
-    insert_stmt = await session.prepare(
-        "INSERT INTO users (user_id, username, email) VALUES (?, ?, ?)"
-    )
-
-    # Run multiple inserts concurrently
-    tasks = [
-        session.execute(insert_stmt, [uuid.uuid4(), f'user{i}', f'user{i}@example.com'])
-        for i in range(100)
-    ]
-    await asyncio.gather(*tasks)
-
-    await session.close()
-    await cluster.shutdown()
+            # Run multiple inserts concurrently
+            tasks = [
+                session.execute(insert_stmt, [uuid.uuid4(), f'user{i}', f'user{i}@example.com'])
+                for i in range(100)
+            ]
+            await asyncio.gather(*tasks)
 
 asyncio.run(main())
 ```
 
-For async paging over large result sets, use `execute_stream()`:
+For streaming large result sets without memory exhaustion, use `execute_stream()` with a context manager:
 
 ```python
-# ✅ Truly async - other requests keep flowing while paging
-result = await session.execute_stream("SELECT * FROM large_table")
-async for row in result:
-    await process_row(row)  # Non-blocking iteration
+from async_cassandra.streaming import StreamConfig
+
+config = StreamConfig(fetch_size=1000)
+
+async with await session.execute_stream(
+    "SELECT * FROM large_table",
+    stream_config=config
+) as result:
+    async for row in result:
+        await process_row(row)  # Non-blocking, other requests keep flowing
+```
+
+**FastAPI integration example:**
+
+```python
+from contextlib import asynccontextmanager
+from fastapi import FastAPI
+from async_cassandra import AsyncCluster
+
+session = None
+user_stmt = None
+
+@asynccontextmanager
+async def lifespan(app: FastAPI):
+    global session, user_stmt
+    async with AsyncCluster(['127.0.0.1']) as cluster:
+        async with await cluster.connect('my_keyspace') as session:
+            user_stmt = await session.prepare("SELECT * FROM users WHERE id = ?")
+            yield
+
+app = FastAPI(lifespan=lifespan)
+
+@app.get("/users/{user_id}")
+async def get_user(user_id: str):
+    result = await session.execute(user_stmt, [uuid.UUID(user_id)])
+    return {"user": result.one()._asdict()}
 ```
 
 ### Java (CompletionStage)
