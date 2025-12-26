@@ -400,52 +400,6 @@ async with await session.execute_stream(
         await process_row(row)  # Non-blocking, other requests keep flowing
 ```
 
-**FastAPI integration example:**
-
-```python
-import os
-import uuid
-from contextlib import asynccontextmanager
-from fastapi import FastAPI, HTTPException
-from async_cassandra import AsyncCluster
-
-cluster = None
-session = None
-user_stmt = None
-
-@asynccontextmanager
-async def lifespan(app: FastAPI):
-    global cluster, session, user_stmt
-
-    # Startup: create long-lived connections
-    cluster = AsyncCluster(
-        contact_points=os.getenv("CASSANDRA_HOSTS", "127.0.0.1").split(","),
-        connect_timeout=10.0,
-    )
-    session = await cluster.connect('my_keyspace')
-    user_stmt = await session.prepare("SELECT * FROM users WHERE id = ?")
-
-    yield
-
-    # Shutdown: clean up connections
-    if session:
-        await session.close()
-    if cluster:
-        await cluster.shutdown()
-
-app = FastAPI(lifespan=lifespan)
-
-@app.get("/users/{user_id}")
-async def get_user(user_id: str):
-    if session is None:
-        raise HTTPException(status_code=503, detail="Database not connected")
-    result = await session.execute(user_stmt, [uuid.UUID(user_id)])
-    user = result.one()
-    if not user:
-        raise HTTPException(status_code=404, detail="User not found")
-    return {"id": str(user.id), "name": user.name, "email": user.email}
-```
-
 ### Java (CompletionStage)
 
 ```java
