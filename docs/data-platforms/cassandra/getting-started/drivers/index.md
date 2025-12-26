@@ -440,7 +440,7 @@ const results = await Promise.all(queries);
 
 Drivers maintain connection pools automatically. Key settings:
 
-### Python
+### Python (sync driver)
 
 ```python
 from cassandra.cluster import Cluster
@@ -448,9 +448,25 @@ from cassandra.policies import HostDistance
 
 cluster = Cluster(['127.0.0.1'])
 
-# Set pool size per host
+# Set pool size per host (only works with protocol v1/v2)
 cluster.set_core_connections_per_host(HostDistance.LOCAL, 4)
 cluster.set_max_connections_per_host(HostDistance.LOCAL, 10)
+```
+
+### Python (async driver)
+
+With protocol v3+ (required by async-cassandra), the Python driver uses a **single connection per host** that supports up to 32,768 concurrent requests. This is more efficient than multiple connections due to reduced lock contention and overhead.
+
+```python
+from async_cassandra import AsyncCluster
+
+cluster = AsyncCluster(
+    ['127.0.0.1'],
+    executor_threads=4,          # Thread pool for callbacks (default: 2)
+    idle_heartbeat_interval=30,  # Keep-alive interval in seconds
+    connect_timeout=10,          # Connection timeout (default: 5)
+    request_timeout=10,          # Per-request timeout (default: 10)
+)
 ```
 
 ### Java
