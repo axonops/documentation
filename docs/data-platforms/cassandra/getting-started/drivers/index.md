@@ -966,6 +966,8 @@ datastax-java-driver {
 | **FallthroughRetryPolicy** | Never retries - always rethrows to application |
 | **DowngradingConsistencyRetryPolicy** | Retries at lower consistency level (use with caution) |
 
+Consult your driver's documentation for the complete list of available retry policies and guidance on implementing custom policies for your specific requirements.
+
 ---
 
 ## Error Handling
