@@ -16,6 +16,7 @@ This guide covers connecting applications to Apache Cassandra using official dri
 |----------|--------|--------|------------|
 | **Java** | Apache Cassandra Java Driver | Production | [GitHub](https://github.com/apache/cassandra-java-driver) |
 | **Python** | Apache Cassandra Python Driver | Production | [GitHub](https://github.com/apache/cassandra-python-driver) |
+| **Python** | Async Python Cassandra Client | Early Release | [GitHub](https://github.com/axonops/async-python-cassandra-client) |
 | **Node.js** | DataStax Node.js Driver | Production | [GitHub](https://github.com/datastax/nodejs-driver) |
 | **Go** | GoCQL | Production | [GitHub](https://github.com/gocql/gocql) |
 | **C#/.NET** | Apache Cassandra C# Driver | Production | [GitHub](https://github.com/apache/cassandra-csharp-driver) |
@@ -310,6 +311,9 @@ session.execute(
 For high-throughput applications:
 
 ### Python (asyncio)
+
+!!! tip "Async Frameworks (FastAPI, aiohttp)"
+    For true async/await support with frameworks like FastAPI, consider the [Async Python Cassandra Client](https://github.com/axonops/async-python-cassandra-client). It wraps the standard driver to prevent blocking the event loop and supports async paging with `async for` loops.
 
 ```python
 from cassandra.cluster import Cluster
