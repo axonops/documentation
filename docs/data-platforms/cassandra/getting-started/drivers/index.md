@@ -105,6 +105,7 @@ Unlike traditional drivers that send all queries to a single endpoint (or load b
 | Language | Driver | Status | Repository |
 |----------|--------|--------|------------|
 | **Java** | Apache Cassandra Java Driver | Production | [GitHub](https://github.com/apache/cassandra-java-driver) |
+| **Scala/Java** | Apache Spark Cassandra Connector | Production | [GitHub](https://github.com/datastax/spark-cassandra-connector) |
 | **Python** | Apache Cassandra Python Driver | Production | [GitHub](https://github.com/apache/cassandra-python-driver) |
 | **Python** | Async Python Cassandra Client | Early Release | [GitHub](https://github.com/axonops/async-python-cassandra-client) |
 | **Node.js** | DataStax Node.js Driver | Production | [GitHub](https://github.com/datastax/nodejs-driver) |
@@ -1289,12 +1290,13 @@ except NoHostAvailable as e:
 For detailed driver documentation, refer to the official repositories:
 
 - **[Java Driver](https://github.com/apache/cassandra-java-driver)** - Apache Cassandra Java Driver
+- **[Spark Cassandra Connector](https://github.com/datastax/spark-cassandra-connector)** - Apache Spark integration for Cassandra
 - **[Python Driver](https://github.com/apache/cassandra-python-driver)** - Apache Cassandra Python Driver
 - **[Async Python Client](https://github.com/axonops/async-python-cassandra-client)** - Async Python Cassandra Client
 - **[Node.js Driver](https://github.com/datastax/nodejs-driver)** - DataStax Node.js Driver
 - **[Go Driver](https://github.com/gocql/gocql)** - GoCQL
 - **[C# Driver](https://github.com/datastax/csharp-driver)** - DataStax C# Driver
-- **[C++ Driver](https://github.com/apache/cassandra-cpp-driver)** - Apache Cassandra C++ Driver
+- **[C++ Driver](https://github.com/datastax/cpp-driver)** - DataStax C++ Driver
 - **[Ruby Driver](https://github.com/datastax/ruby-driver)** - DataStax Ruby Driver (maintenance mode)
 - **[PHP Driver](https://github.com/datastax/php-driver)** - DataStax PHP Driver (maintenance mode)
 
