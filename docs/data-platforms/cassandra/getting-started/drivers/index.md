@@ -337,32 +337,42 @@ For high-throughput applications:
 
 ### Python (asyncio)
 
-!!! tip "Async Frameworks (FastAPI, aiohttp)"
-    For true async/await support with frameworks like FastAPI, consider the [Async Python Cassandra Client](https://github.com/axonops/async-python-cassandra-client). It wraps the standard driver to prevent blocking the event loop and supports async paging with `async for` loops.
+Use the [Async Python Cassandra Client](https://github.com/axonops/async-python-cassandra-client) for true async/await support with frameworks like FastAPI and aiohttp:
 
 ```python
-from cassandra.cluster import Cluster
 import asyncio
+import uuid
+from async_cassandra import AsyncCluster
 
-cluster = Cluster(['127.0.0.1'])
-session = cluster.connect('my_keyspace')
-
-async def insert_user(user_id, username, email):
-    future = session.execute_async(
-        "INSERT INTO users (user_id, username, email) VALUES (%s, %s, %s)",
-        [user_id, username, email]
-    )
-    return future.result()
-
-# Run multiple inserts concurrently
 async def main():
+    cluster = AsyncCluster(['127.0.0.1'])
+    session = await cluster.connect('my_keyspace')
+
+    # Prepare statement once
+    insert_stmt = await session.prepare(
+        "INSERT INTO users (user_id, username, email) VALUES (?, ?, ?)"
+    )
+
+    # Run multiple inserts concurrently
     tasks = [
-        insert_user(uuid.uuid4(), f'user{i}', f'user{i}@example.com')
+        session.execute(insert_stmt, [uuid.uuid4(), f'user{i}', f'user{i}@example.com'])
         for i in range(100)
     ]
     await asyncio.gather(*tasks)
 
+    await session.close()
+    await cluster.shutdown()
+
 asyncio.run(main())
+```
+
+For async paging over large result sets:
+
+```python
+async def fetch_all_users():
+    result = await session.execute("SELECT * FROM users")
+    async for row in result:
+        print(row.username)
 ```
 
 ### Java (CompletionStage)
