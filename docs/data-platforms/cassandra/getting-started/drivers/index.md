@@ -1026,8 +1026,13 @@ For detailed driver documentation, refer to the official repositories:
 
 - **[Java Driver](https://github.com/apache/cassandra-java-driver)** - Apache Cassandra Java Driver
 - **[Python Driver](https://github.com/apache/cassandra-python-driver)** - Apache Cassandra Python Driver
+- **[Async Python Client](https://github.com/axonops/async-python-cassandra-client)** - Async Python Cassandra Client
 - **[Node.js Driver](https://github.com/datastax/nodejs-driver)** - DataStax Node.js Driver
 - **[Go Driver](https://github.com/gocql/gocql)** - GoCQL
+- **[C# Driver](https://github.com/apache/cassandra-csharp-driver)** - Apache Cassandra C# Driver
+- **[C++ Driver](https://github.com/apache/cassandra-cpp-driver)** - Apache Cassandra C++ Driver
+- **[Ruby Driver](https://github.com/apache/cassandra-ruby-driver)** - Apache Cassandra Ruby Driver
+- **[PHP Driver](https://github.com/apache/cassandra-php-driver)** - Apache Cassandra PHP Driver
 
 ---
 
