@@ -217,6 +217,36 @@ cluster = Cluster(
 
 Load balancing policies determine which Cassandra node receives each query. The right policy reduces latency, distributes load evenly, and ensures queries stay within the correct datacenter for multi-DC deployments.
 
+### Understanding Contact Points
+
+The contact points you provide when creating a cluster connection are **not** a list of nodes for failover - they are **bootstrap points** used only for initial cluster discovery.
+
+When the driver connects:
+
+1. It connects to one of the contact points
+2. It queries the system tables to discover **all** nodes in the cluster
+3. It establishes connections to other nodes based on the load balancing policy
+4. It subscribes to **cluster events** via the native protocol
+
+After bootstrap, the driver **continuously receives updates** about:
+
+- **Topology changes** - nodes joining, leaving, or moving tokens
+- **Node status** - nodes going up or down
+- **Schema changes** - new tables, altered columns, dropped keyspaces
+
+This means even if all your contact points go down after initial connection, the driver remains connected and aware of the cluster state through its existing connections. The contact points are only needed again if the driver completely disconnects and needs to re-bootstrap.
+
+```python
+# These are ONLY used for initial bootstrap - not ongoing connections
+cluster = Cluster(['node1.dc1.example.com', 'node2.dc1.example.com'])
+
+# Best practice: include nodes from multiple DCs for bootstrap reliability
+cluster = Cluster([
+    'node1.dc1.example.com',  # DC1
+    'node1.dc2.example.com',  # DC2 - in case DC1 is unreachable at startup
+])
+```
+
 ### Why Load Balancing Matters
 
 In a Cassandra cluster, data is distributed across nodes using consistent hashing. Each partition key hashes to a specific token, and that token determines which nodes store the data (based on replication factor). A good load balancing policy:
@@ -303,6 +333,18 @@ const client = new cassandra.Client({
 
 In multi-datacenter deployments, DC-aware routing ensures queries go to nodes in the local datacenter, avoiding cross-DC latency (which can be 10-100x higher than local).
 
+**Java**:
+
+```java
+// Local DC is required in Java driver v4+
+CqlSession session = CqlSession.builder()
+    .addContactPoint(new InetSocketAddress("127.0.0.1", 9042))
+    .withLocalDatacenter("dc1")  // Queries only go to dc1 nodes
+    .build();
+```
+
+**Python**:
+
 ```python
 from cassandra.cluster import Cluster
 from cassandra.policies import DCAwareRoundRobinPolicy
@@ -314,6 +356,15 @@ cluster = Cluster(
         used_hosts_per_remote_dc=0  # Never use remote DC nodes (default)
     )
 )
+```
+
+**Node.js**:
+
+```javascript
+const client = new cassandra.Client({
+  contactPoints: ['127.0.0.1'],
+  localDataCenter: 'dc1',  // Required - queries prefer this DC
+});
 ```
 
 !!! warning "Always Set Local Datacenter"
