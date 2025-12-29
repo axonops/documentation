@@ -35,25 +35,25 @@ AxonOps is the comprehensive operations platform for Apache Cassandra® and Apac
 
 ## Core Capabilities
 
-### [Monitoring](https://axonops.com/monitoring/)
+### Monitoring
 - **Unified Dashboards**: Visualize metrics & logs for both Cassandra and Kafka clusters
 - **Proactive Service Checks**: Never miss an issue across your entire data infrastructure
 - **Comprehensive Alerting**: Enterprise-wide integration for both platforms
 - **Real-time Insights**: Monitor brokers, topics, consumer groups, nodes, and tables
 
-### [Maintenance & Operations](https://axonops.com/cassandra-maintenance/)
+### Maintenance & Operations
 - **Cassandra**: Adaptive repairs, rolling restarts, and maintenance scheduling
 - **Kafka**: Topic management, ACL administration, and configuration control
 - **Unified Job Scheduler**: Automate key tasks across both platforms
 - **Configuration Management**: Detailed views and controls for both systems
 
-### [Data Protection](https://axonops.com/backup/)
+### Data Protection
 - **Cassandra Backup**: Scheduled backups with point-in-time recovery
 - **Visual Management**: Monitor and manage all backup operations
 - **Reliable Restore**: Restore data with confidence and minimal downtime
 - **Cloud Storage Integration**: S3, Azure Blob, and GCS support
 
-### [Enterprise Integrations](https://axonops.com/#integrations)
+### Enterprise Integrations
 AxonOps provides extensive integrations for notifications and operations:
 
 <div class="row">
