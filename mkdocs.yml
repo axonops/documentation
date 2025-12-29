@@ -711,6 +711,7 @@ nav:
           - Tombstone Accumulation: data-platforms/cassandra/troubleshooting/playbooks/tombstone-accumulation.md
       - Cloud:
         - Overview: data-platforms/cassandra/cloud/index.md
+        - Storage Strategy: data-platforms/cassandra/cloud/storage-strategy.md
         - AWS: data-platforms/cassandra/cloud/aws/index.md
         - Azure: data-platforms/cassandra/cloud/azure/index.md
         - GCP: data-platforms/cassandra/cloud/gcp/index.md

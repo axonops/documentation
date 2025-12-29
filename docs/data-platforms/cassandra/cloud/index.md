@@ -10,6 +10,21 @@ meta:
 
 This guide covers deploying and operating Apache Cassandra in cloud environments.
 
+---
+
+## Storage Strategy
+
+Before selecting cloud platforms and instance types, understand the fundamental storage decision:
+
+| Storage Type | Cost | Performance | Durability | Operations |
+|-------------|------|-------------|------------|------------|
+| **[Ephemeral](storage-strategy.md#ephemeral-storage-instancelocal)** | Included | Lowest latency | Requires RF=3+ backup | Immutable infrastructure |
+| **[Persistent](storage-strategy.md#persistent-storage-network-attached)** | Additional | Good | Native snapshots | In-place patching |
+
+→ **[Storage Strategy Guide](storage-strategy.md)** - Complete analysis of ephemeral vs persistent storage, cost models, patching strategies, and backup solutions
+
+---
+
 ## Cloud Platforms
 
 | Platform | Guide | Key Features |
