@@ -806,8 +806,12 @@ This section documents implementation details from the Cassandra source code.
 
 Window boundaries are calculated using floor division based on the configured unit:
 
-$$L = t - (t \mod (u \times w))$$
-$$U = L + (u \times w) - 1$$
+$$
+\begin{aligned}
+L &= t - (t \mod (u \times w)) \\
+U &= L + (u \times w) - 1
+\end{aligned}
+$$
 
 Where:
 
