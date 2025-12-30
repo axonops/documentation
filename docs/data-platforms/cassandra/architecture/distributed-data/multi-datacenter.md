@@ -168,7 +168,7 @@ app --> driver : query
 driver --> lbp : select node
 lbp --> pool : route to local DC
 pool --> local : execute
-local ..> remote : async replicate
+local ..> remote : cross-DC\nreplication
 
 note right of lbp
   DCAwareRoundRobinPolicy
