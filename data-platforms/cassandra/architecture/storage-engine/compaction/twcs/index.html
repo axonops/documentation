@@ -20727,8 +20727,12 @@ watch<span class="w"> </span><span class="s1">'nodetool tablestats keyspace.tabl
 <p>This section documents implementation details from the Cassandra source code.</p>
 <h3 id="window-boundary-calculation">Window Boundary Calculation<a class="headerlink" href="#window-boundary-calculation" title="Permanent link">¶</a></h3>
 <p>Window boundaries are calculated using floor division based on the configured unit:</p>
-<div class="arithmatex">\[L = t - (t \mod (u \times w))$$
-$$U = L + (u \times w) - 1\]</div>
+<div class="arithmatex">\[
+\begin{aligned}
+L &amp;= t - (t \mod (u \times w)) \\
+U &amp;= L + (u \times w) - 1
+\end{aligned}
+\]</div>
 <p>Where:</p>
 <ul>
 <li><span class="arithmatex">\(L\)</span> = lower bound (window start)</li>
