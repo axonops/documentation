@@ -379,18 +379,29 @@ Compaction strategies (each optimized for different workloads):
 
 ### Cassandra Excels At
 
-**1. High Write Throughput**
+**1. High Throughput at Scale**
 
-For applications that write more than they read, Cassandra's LSM-tree architecture is ideal:
+Cassandra handles both high write AND read throughput when data is modeled correctly:
 
 ```
-Use Case Examples:
+Write-heavy examples:
 - IoT sensor data (millions of devices writing continuously)
 - Clickstream/event tracking
 - Log aggregation
 - Time-series metrics
-- Messaging systems
+
+Read-heavy examples:
+- User profile lookups (billions of reads/day)
+- Product catalogs
+- Session stores
+- Recommendation serving
+
+Mixed workloads:
+- Messaging systems (write messages, read conversations)
+- Social feeds (write posts, read timelines)
 ```
+
+With proper data modeling and caching (key cache, row cache), Cassandra serves reads with single-digit millisecond latency at massive scale.
 
 **2. High Availability Requirements**
 
