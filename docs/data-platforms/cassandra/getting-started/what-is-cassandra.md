@@ -441,22 +441,9 @@ Use Case Examples:
 
 ### When NOT to Use Cassandra
 
-Cassandra is not a general-purpose database. It has specific tradeoffs that make it wrong for certain use cases.
+Cassandra is not a general-purpose database. It has specific tradeoffs that make it wrong for certain use cases—though several traditional limitations are being addressed in recent releases.
 
-**1. ACID Transactions Across Multiple Rows**
-
-```sql
--- THIS DOESN'T WORK IN CASSANDRA:
-BEGIN TRANSACTION;
-  UPDATE accounts SET balance = balance - 100 WHERE id = 'sender';
-  UPDATE accounts SET balance = balance + 100 WHERE id = 'receiver';
-COMMIT;
-
--- Cassandra only supports lightweight transactions on single partitions
--- Use: PostgreSQL, MySQL, CockroachDB for this
-```
-
-**2. Complex Joins and Aggregations**
+**1. Complex Joins and Aggregations**
 
 ```sql
 -- CASSANDRA CANNOT DO THIS:
@@ -467,48 +454,89 @@ GROUP BY u.name
 HAVING SUM(o.total) > 1000;
 
 -- Data must be denormalized or use Spark for analytics
--- Use: PostgreSQL, ClickHouse, Snowflake for this
+-- Use: PostgreSQL, ClickHouse, Snowflake for analytical queries
 ```
 
-**3. Ad-hoc Queries**
+This is a fundamental architectural choice—Cassandra optimizes for distributed writes, not relational queries.
+
+**2. Small Datasets Without Availability Requirements**
+
+If data fits on one server AND availability is not critical, simpler options exist:
+
+```
+Consider simpler alternatives when:
+- Downtime during maintenance is acceptable
+- Single-region deployment is sufficient
+- Team lacks distributed systems expertise
+
+If availability IS critical: Cassandra is appropriate regardless of dataset size
+```
+
+Many organizations run Cassandra for small datasets specifically because they cannot tolerate downtime.
+
+**3. Rapidly Evolving Query Patterns**
+
+If query patterns change frequently and unpredictably:
+
+```
+Cassandra data modeling principle:
+- Design tables around queries (query-first design)
+- Adding new query patterns may require new tables
+- Schema changes at scale require careful planning
+
+For exploratory/evolving queries: PostgreSQL, Elasticsearch
+```
+
+### Limitations That Are Changing
+
+The following traditional limitations are being addressed in Cassandra 5.x:
+
+**Ad-hoc Queries (Improved in 5.0)**
+
+Storage Attached Indexes (SAI) in Cassandra 5.0 significantly improve secondary index performance:
 
 ```sql
--- CASSANDRA REQUIRES PARTITION KEY:
--- This is SLOW or IMPOSSIBLE:
+-- BEFORE 5.0: Secondary indexes were expensive and limited
+-- WITH SAI (5.0+): Much more practical for non-partition-key queries
+
+CREATE INDEX ON users (email) USING 'sai';
 SELECT * FROM users WHERE email = 'user@example.com';
--- (unless email is the partition key or has a secondary index)
 
--- This is EFFICIENT:
-SELECT * FROM users WHERE user_id = 'uuid-here';
-
--- For flexible queries: PostgreSQL, Elasticsearch
+-- SAI provides ~40% better throughput and ~230% better latency
+-- than legacy secondary indexes
 ```
 
-**4. Small Datasets**
+SAI does not make Cassandra equivalent to a relational database for ad-hoc queries, but it substantially expands what is practical.
 
-If data fits on one server (< 100GB), Cassandra adds complexity without benefit:
+**Multi-Partition ACID Transactions (Coming in 5.1+)**
 
+The Accord protocol (CEP-15) brings general-purpose ACID transactions to Cassandra:
+
+```sql
+-- COMING WITH ACCORD (5.1+):
+BEGIN TRANSACTION
+  UPDATE accounts SET balance = balance - 100 WHERE id = 'sender';
+  UPDATE accounts SET balance = balance + 100 WHERE id = 'receiver';
+COMMIT;
 ```
-Small dataset considerations:
-- Minimum viable cluster: 3 nodes (for replication)
-- Operational overhead: repairs, compaction tuning, monitoring
-- Team expertise required
 
-For small datasets: SQLite, PostgreSQL, MySQL
-```
+Accord is a leaderless consensus protocol that enables:
 
-**5. Strong Consistency is Non-Negotiable**
+- Multi-partition transactions across any set of keys
+- Strict serializable isolation
+- Single wide-area round-trip for cross-region transactions
+- No single point of failure (unlike leader-based approaches)
 
-If eventual consistency is absolutely unacceptable:
+!!! note "Current Status"
+    Accord is under active development. For applications requiring multi-partition transactions today, consider PostgreSQL, CockroachDB, or implement application-level saga patterns.
 
-```
-Banking example:
-- Balance must never be wrong, even momentarily
-- Cassandra CAN be strongly consistent, but at cost of availability
-- If partition occurs, strongly consistent read might fail
+**Strong Consistency Trade-offs**
 
-Better options: CockroachDB, Spanner, TiDB
-```
+Cassandra has always supported strong consistency via QUORUM and LWT, but at the cost of availability during partitions. With Accord:
+
+- Strict serializability without sacrificing Cassandra's distributed architecture
+- Better performance than Paxos-based LWT for complex operations
+- Maintains Cassandra's peer-to-peer, no-single-point-of-failure design
 
 ## Cassandra vs Other Databases
 
@@ -569,15 +597,22 @@ Better options: CockroachDB, Spanner, TiDB
 | Aspect | Cassandra | ScyllaDB |
 |--------|-----------|----------|
 | **Language** | Java | C++ |
-| **Performance** | Good | 3-10x faster (often) |
-| **Resource Usage** | Higher | More efficient |
+| **Performance** | Good (gap narrowing with 5.0+) | Faster (historically 3-10x, now closer) |
+| **Resource Usage** | Improved with modern GCs | More efficient |
 | **Compatibility** | Original | CQL compatible |
 | **Community** | Large, mature | Growing |
-| **Features** | All features | Most features |
+| **Features** | All features (Accord, SAI, Vector) | Most features |
 | **Support** | Apache, vendors | ScyllaDB Inc |
+| **JDK Options** | JDK 17+ with Shenandoah/ZGC | N/A |
 
-**Choose Cassandra when:** Need specific Java features, larger community
-**Choose ScyllaDB when:** Performance is critical, want Cassandra compatibility
+The performance gap has narrowed significantly:
+
+- Cassandra 5.0 includes substantial performance improvements
+- JDK 17+ with Shenandoah or ZGC dramatically reduces GC pause times
+- Modern Cassandra deployments see much smaller performance differences than historical benchmarks suggest
+
+**Choose Cassandra when:** Need latest features (Accord, SAI), larger ecosystem, JVM expertise
+**Choose ScyllaDB when:** Maximum single-node throughput, want to avoid JVM tuning
 
 ## Essential Terminology
 
