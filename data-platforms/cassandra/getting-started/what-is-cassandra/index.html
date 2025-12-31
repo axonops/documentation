@@ -4536,6 +4536,15 @@ data-et-multi-view="{&quot;schema&quot;:{&quot;content&quot;:{&quot;desktop&quot
   
 </li>
         
+          <li class="md-nav__item">
+  <a href="#limitations-that-are-changing" class="md-nav__link">
+    <span class="md-ellipsis">
+      Limitations That Are Changing
+    </span>
+  </a>
+  
+</li>
+        
       </ul>
     </nav>
   
@@ -19613,6 +19622,15 @@ data-et-multi-view="{&quot;schema&quot;:{&quot;content&quot;:{&quot;desktop&quot
   
 </li>
         
+          <li class="md-nav__item">
+  <a href="#limitations-that-are-changing" class="md-nav__link">
+    <span class="md-ellipsis">
+      Limitations That Are Changing
+    </span>
+  </a>
+  
+</li>
+        
       </ul>
     </nav>
   
@@ -20005,15 +20023,25 @@ No architectural limit. Companies run 1000+ node clusters.
 </table>
 <h2 id="when-to-use-cassandra">When to Use Cassandra<a class="headerlink" href="#when-to-use-cassandra" title="Permanent link">¶</a></h2>
 <h3 id="cassandra-excels-at">Cassandra Excels At<a class="headerlink" href="#cassandra-excels-at" title="Permanent link">¶</a></h3>
-<p><strong>1. High Write Throughput</strong></p>
-<p>For applications that write more than they read, Cassandra's LSM-tree architecture is ideal:</p>
-<div class="highlight"><pre><span></span><code>Use Case Examples:
+<p><strong>1. High Throughput at Scale</strong></p>
+<p>Cassandra handles both high write AND read throughput when data is modeled correctly:</p>
+<div class="highlight"><pre><span></span><code>Write-heavy examples:
 - IoT sensor data (millions of devices writing continuously)
 - Clickstream/event tracking
 - Log aggregation
 - Time-series metrics
-- Messaging systems
+
+Read-heavy examples:
+- User profile lookups (billions of reads/day)
+- Product catalogs
+- Session stores
+- Recommendation serving
+
+Mixed workloads:
+- Messaging systems (write messages, read conversations)
+- Social feeds (write posts, read timelines)
 </code></pre></div>
+<p>With proper data modeling and caching (key cache, row cache), Cassandra serves reads with single-digit millisecond latency at massive scale.</p>
 <p><strong>2. High Availability Requirements</strong></p>
 <p>If downtime costs money or reputation:</p>
 <div class="highlight"><pre><span></span><code>Use Case Examples:
@@ -20081,18 +20109,8 @@ No architectural limit. Companies run 1000+ node clusters.
 </tbody>
 </table>
 <h3 id="when-not-to-use-cassandra">When NOT to Use Cassandra<a class="headerlink" href="#when-not-to-use-cassandra" title="Permanent link">¶</a></h3>
-<p>Cassandra is not a general-purpose database. It has specific tradeoffs that make it wrong for certain use cases.</p>
-<p><strong>1. ACID Transactions Across Multiple Rows</strong></p>
-<div class="highlight"><pre><span></span><code><span class="c1">-- THIS DOESN'T WORK IN CASSANDRA:</span>
-<span class="k">BEGIN</span><span class="w"> </span><span class="k">TRANSACTION</span><span class="p">;</span>
-<span class="w">  </span><span class="k">UPDATE</span><span class="w"> </span><span class="n">accounts</span><span class="w"> </span><span class="k">SET</span><span class="w"> </span><span class="n">balance</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">balance</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="mi">100</span><span class="w"> </span><span class="k">WHERE</span><span class="w"> </span><span class="n">id</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s1">'sender'</span><span class="p">;</span>
-<span class="w">  </span><span class="k">UPDATE</span><span class="w"> </span><span class="n">accounts</span><span class="w"> </span><span class="k">SET</span><span class="w"> </span><span class="n">balance</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">balance</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="mi">100</span><span class="w"> </span><span class="k">WHERE</span><span class="w"> </span><span class="n">id</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s1">'receiver'</span><span class="p">;</span>
-<span class="k">COMMIT</span><span class="p">;</span>
-
-<span class="c1">-- Cassandra only supports lightweight transactions on single partitions</span>
-<span class="c1">-- Use: PostgreSQL, MySQL, CockroachDB for this</span>
-</code></pre></div>
-<p><strong>2. Complex Joins and Aggregations</strong></p>
+<p>Cassandra is not a general-purpose database. It has specific tradeoffs that make it wrong for certain use cases—though several traditional limitations are being addressed in recent releases.</p>
+<p><strong>1. Complex Joins and Aggregations</strong></p>
 <div class="highlight"><pre><span></span><code><span class="c1">-- CASSANDRA CANNOT DO THIS:</span>
 <span class="k">SELECT</span><span class="w"> </span><span class="n">u</span><span class="p">.</span><span class="n">name</span><span class="p">,</span><span class="w"> </span><span class="k">COUNT</span><span class="p">(</span><span class="n">o</span><span class="p">.</span><span class="n">id</span><span class="p">),</span><span class="w"> </span><span class="k">SUM</span><span class="p">(</span><span class="n">o</span><span class="p">.</span><span class="n">total</span><span class="p">)</span>
 <span class="k">FROM</span><span class="w"> </span><span class="n">users</span><span class="w"> </span><span class="n">u</span>
@@ -20101,37 +20119,68 @@ No architectural limit. Companies run 1000+ node clusters.
 <span class="k">HAVING</span><span class="w"> </span><span class="k">SUM</span><span class="p">(</span><span class="n">o</span><span class="p">.</span><span class="n">total</span><span class="p">)</span><span class="w"> </span><span class="o">&gt;</span><span class="w"> </span><span class="mi">1000</span><span class="p">;</span>
 
 <span class="c1">-- Data must be denormalized or use Spark for analytics</span>
-<span class="c1">-- Use: PostgreSQL, ClickHouse, Snowflake for this</span>
+<span class="c1">-- Use: PostgreSQL, ClickHouse, Snowflake for analytical queries</span>
 </code></pre></div>
-<p><strong>3. Ad-hoc Queries</strong></p>
-<div class="highlight"><pre><span></span><code><span class="c1">-- CASSANDRA REQUIRES PARTITION KEY:</span>
-<span class="c1">-- This is SLOW or IMPOSSIBLE:</span>
+<p>This is a fundamental architectural choice—Cassandra optimizes for distributed writes, not relational queries.</p>
+<p><strong>2. Small Datasets Without Availability Requirements</strong></p>
+<p>If data fits on one server AND availability is not critical, simpler options exist:</p>
+<div class="highlight"><pre><span></span><code>Consider simpler alternatives when:
+- Downtime during maintenance is acceptable
+- Single-region deployment is sufficient
+- Team lacks distributed systems expertise
+
+If availability IS critical: Cassandra is appropriate regardless of dataset size
+</code></pre></div>
+<p>Many organizations run Cassandra for small datasets specifically because they cannot tolerate downtime.</p>
+<p><strong>3. Rapidly Evolving Query Patterns</strong></p>
+<p>If query patterns change frequently and unpredictably:</p>
+<div class="highlight"><pre><span></span><code>Cassandra data modeling principle:
+- Design tables around queries (query-first design)
+- Adding new query patterns may require new tables
+- Schema changes at scale require careful planning
+
+For exploratory/evolving queries: PostgreSQL, Elasticsearch
+</code></pre></div>
+<h3 id="limitations-that-are-changing">Limitations That Are Changing<a class="headerlink" href="#limitations-that-are-changing" title="Permanent link">¶</a></h3>
+<p>The following traditional limitations are being addressed in Cassandra 5.x:</p>
+<p><strong>Ad-hoc Queries (Improved in 5.0)</strong></p>
+<p>Storage Attached Indexes (SAI) in Cassandra 5.0 significantly improve secondary index performance:</p>
+<div class="highlight"><pre><span></span><code><span class="c1">-- BEFORE 5.0: Secondary indexes were expensive and limited</span>
+<span class="c1">-- WITH SAI (5.0+): Much more practical for non-partition-key queries</span>
+
+<span class="k">CREATE</span><span class="w"> </span><span class="k">INDEX</span><span class="w"> </span><span class="k">ON</span><span class="w"> </span><span class="n">users</span><span class="w"> </span><span class="p">(</span><span class="n">email</span><span class="p">)</span><span class="w"> </span><span class="k">USING</span><span class="w"> </span><span class="s1">'sai'</span><span class="p">;</span>
 <span class="k">SELECT</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="k">FROM</span><span class="w"> </span><span class="n">users</span><span class="w"> </span><span class="k">WHERE</span><span class="w"> </span><span class="n">email</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s1">'user@example.com'</span><span class="p">;</span>
-<span class="c1">-- (unless email is the partition key or has a secondary index)</span>
 
-<span class="c1">-- This is EFFICIENT:</span>
-<span class="k">SELECT</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="k">FROM</span><span class="w"> </span><span class="n">users</span><span class="w"> </span><span class="k">WHERE</span><span class="w"> </span><span class="n">user_id</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s1">'uuid-here'</span><span class="p">;</span>
-
-<span class="c1">-- For flexible queries: PostgreSQL, Elasticsearch</span>
+<span class="c1">-- SAI provides ~40% better throughput and ~230% better latency</span>
+<span class="c1">-- than legacy secondary indexes</span>
 </code></pre></div>
-<p><strong>4. Small Datasets</strong></p>
-<p>If data fits on one server (&lt; 100GB), Cassandra adds complexity without benefit:</p>
-<div class="highlight"><pre><span></span><code>Small dataset considerations:
-- Minimum viable cluster: 3 nodes (for replication)
-- Operational overhead: repairs, compaction tuning, monitoring
-- Team expertise required
-
-For small datasets: SQLite, PostgreSQL, MySQL
+<p>SAI does not make Cassandra equivalent to a relational database for ad-hoc queries, but it substantially expands what is practical.</p>
+<p><strong>Multi-Partition ACID Transactions (Coming in 5.1+)</strong></p>
+<p>The Accord protocol (CEP-15) brings general-purpose ACID transactions to Cassandra:</p>
+<div class="highlight"><pre><span></span><code><span class="c1">-- COMING WITH ACCORD (5.1+):</span>
+<span class="k">BEGIN</span><span class="w"> </span><span class="k">TRANSACTION</span>
+<span class="w">  </span><span class="k">UPDATE</span><span class="w"> </span><span class="n">accounts</span><span class="w"> </span><span class="k">SET</span><span class="w"> </span><span class="n">balance</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">balance</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="mi">100</span><span class="w"> </span><span class="k">WHERE</span><span class="w"> </span><span class="n">id</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s1">'sender'</span><span class="p">;</span>
+<span class="w">  </span><span class="k">UPDATE</span><span class="w"> </span><span class="n">accounts</span><span class="w"> </span><span class="k">SET</span><span class="w"> </span><span class="n">balance</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">balance</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="mi">100</span><span class="w"> </span><span class="k">WHERE</span><span class="w"> </span><span class="n">id</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s1">'receiver'</span><span class="p">;</span>
+<span class="k">COMMIT</span><span class="p">;</span>
 </code></pre></div>
-<p><strong>5. Strong Consistency is Non-Negotiable</strong></p>
-<p>If eventual consistency is absolutely unacceptable:</p>
-<div class="highlight"><pre><span></span><code>Banking example:
-- Balance must never be wrong, even momentarily
-- Cassandra CAN be strongly consistent, but at cost of availability
-- If partition occurs, strongly consistent read might fail
-
-Better options: CockroachDB, Spanner, TiDB
-</code></pre></div>
+<p>Accord is a leaderless consensus protocol that enables:</p>
+<ul>
+<li>Multi-partition transactions across any set of keys</li>
+<li>Strict serializable isolation</li>
+<li>Single wide-area round-trip for cross-region transactions</li>
+<li>No single point of failure (unlike leader-based approaches)</li>
+</ul>
+<div class="admonition note">
+<p class="admonition-title">Current Status</p>
+<p>Accord is under active development. For applications requiring multi-partition transactions today, consider PostgreSQL, CockroachDB, or implement application-level saga patterns.</p>
+</div>
+<p><strong>Strong Consistency Trade-offs</strong></p>
+<p>Cassandra has always supported strong consistency via QUORUM and LWT, but at the cost of availability during partitions. With Accord:</p>
+<ul>
+<li>Strict serializability without sacrificing Cassandra's distributed architecture</li>
+<li>Better performance than Paxos-based LWT for complex operations</li>
+<li>Maintains Cassandra's peer-to-peer, no-single-point-of-failure design</li>
+</ul>
 <h2 id="cassandra-vs-other-databases">Cassandra vs Other Databases<a class="headerlink" href="#cassandra-vs-other-databases" title="Permanent link">¶</a></h2>
 <h3 id="cassandra-vs-mongodb">Cassandra vs MongoDB<a class="headerlink" href="#cassandra-vs-mongodb" title="Permanent link">¶</a></h3>
 <table>
@@ -20332,12 +20381,12 @@ Better options: CockroachDB, Spanner, TiDB
 </tr>
 <tr>
 <td><strong>Performance</strong></td>
-<td>Good</td>
-<td>3-10x faster (often)</td>
+<td>Good (gap narrowing with 5.0+)</td>
+<td>Faster (historically 3-10x, now closer)</td>
 </tr>
 <tr>
 <td><strong>Resource Usage</strong></td>
-<td>Higher</td>
+<td>Improved with modern GCs</td>
 <td>More efficient</td>
 </tr>
 <tr>
@@ -20352,7 +20401,7 @@ Better options: CockroachDB, Spanner, TiDB
 </tr>
 <tr>
 <td><strong>Features</strong></td>
-<td>All features</td>
+<td>All features (Accord, SAI, Vector)</td>
 <td>Most features</td>
 </tr>
 <tr>
@@ -20360,10 +20409,21 @@ Better options: CockroachDB, Spanner, TiDB
 <td>Apache, vendors</td>
 <td>ScyllaDB Inc</td>
 </tr>
+<tr>
+<td><strong>JDK Options</strong></td>
+<td>JDK 17+ with Shenandoah/ZGC</td>
+<td>N/A</td>
+</tr>
 </tbody>
 </table>
-<p><strong>Choose Cassandra when:</strong> Need specific Java features, larger community
-<strong>Choose ScyllaDB when:</strong> Performance is critical, want Cassandra compatibility</p>
+<p>The performance gap has narrowed significantly:</p>
+<ul>
+<li>Cassandra 5.0 includes substantial performance improvements</li>
+<li>JDK 17+ with Shenandoah or ZGC dramatically reduces GC pause times</li>
+<li>Modern Cassandra deployments see much smaller performance differences than historical benchmarks suggest</li>
+</ul>
+<p><strong>Choose Cassandra when:</strong> Need latest features (Accord, SAI), larger ecosystem, JVM expertise
+<strong>Choose ScyllaDB when:</strong> Maximum single-node throughput, want to avoid JVM tuning</p>
 <h2 id="essential-terminology">Essential Terminology<a class="headerlink" href="#essential-terminology" title="Permanent link">¶</a></h2>
 <h3 id="cluster-topology">Cluster Topology<a class="headerlink" href="#cluster-topology" title="Permanent link">¶</a></h3>
 <table>
