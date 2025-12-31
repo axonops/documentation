@@ -198,6 +198,8 @@ With RF=3, QUORUM=2: Write to {A, B}, Read from {B, C}. The overlap (B) guarante
 
 **Multi-datacenter QUORUM**:
 
+QUORUM is calculated across the **total replication factor** of all datacenters combined. This has significant implications for multi-DC deployments.
+
 ```plantuml
 @startuml
 
@@ -210,29 +212,35 @@ rectangle "Coordinator" as Coord
 rectangle "DC1 (RF=3)" as DC1 {
     database "A" as A #90EE90
     database "B" as B #90EE90
-    database "C" as C #f0f0f0
+    database "C" as C #90EE90
 }
 
 rectangle "DC2 (RF=3)" as DC2 {
     database "D" as D #90EE90
-    database "E" as E #90EE90
+    database "E" as E #f0f0f0
     database "F" as F #f0f0f0
 }
 
-Coord --> A : write
-Coord --> B : write
-Coord --> D : cross-DC
-Coord --> E : cross-DC
+Coord --> A : ACK
+Coord --> B : ACK
+Coord --> C : ACK
+Coord --> D : ACK (cross-DC)
+
+note bottom of DC1
+  4 ACKs from any replicas
+  (3 from DC1 + 1 from DC2)
+end note
 
 @enduml
 ```
 
-Total RF = 6, QUORUM = 4. Must wait for cross-DC network round trip (50-200ms).
+With 2 DCs and RF=3 per DC: Total RF = 6, QUORUM = 4. Unlike EACH_QUORUM, QUORUM can be satisfied with any 4 replicas regardless of DC distribution (e.g., 3 from DC1 + 1 from DC2).
 
 **When to use**:
 
-- Single datacenter deployments
-- When global consistency across all DCs is required
+- Global strong consistency is a hard requirement
+- Can tolerate cross-DC latency on every operation
+- Regulatory or compliance requirements for synchronous cross-DC writes
 
 ### LOCAL_QUORUM: Majority in Local Datacenter
 
