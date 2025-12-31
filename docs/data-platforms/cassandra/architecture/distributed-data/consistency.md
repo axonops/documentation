@@ -627,24 +627,7 @@ note right of DC2 : Entire DC down
 
 ## Lightweight Transactions (LWT)
 
-### When Regular Consistency Is Not Enough
-
-Regular QUORUM consistency does not provide linearizability for compare-and-set operations:
-
-```
-Problem scenario (race condition):
-
-Time 0: Both Client A and Client B read balance = 100
-Time 1: Client A: UPDATE SET balance = 100 - 50
-Time 2: Client B: UPDATE SET balance = 100 - 30
-
-Result: balance = 70 (should be 20!)
-Both clients read 100, both subtracted from 100.
-```
-
-### LWT Solves This With Paxos
-
-Lightweight transactions use the Paxos consensus algorithm ([Lamport, L., 1998, "The Part-Time Parliament"](https://lamport.azurewebsites.net/pubs/lamport-paxos.pdf)) to achieve linearizable consistency for compare-and-set operations.
+For operations requiring linearizable consistency (compare-and-set semantics), Cassandra provides **Lightweight Transactions** using the Paxos consensus algorithm.
 
 ```sql
 -- Compare-and-set with IF clause triggers LWT
@@ -654,103 +637,15 @@ UPDATE account SET balance = 50 WHERE id = 1 IF balance = 100;
 -- Returns [applied] = false if balance was different
 ```
 
-### How LWT Works
+| Serial CL | Scope | Use Case |
+|-----------|-------|----------|
+| SERIAL | All DCs | Global uniqueness |
+| LOCAL_SERIAL | Local DC | DC-local uniqueness |
 
-LWT uses four Paxos phases, requiring 4 round trips compared to 1 for regular writes:
+!!! warning "Performance Impact"
+    LWTs require 4 round trips (vs 1 for regular writes), resulting in 4-10x higher latency. Use only when compare-and-set semantics are required.
 
-```plantuml
-@startuml
-
-skinparam backgroundColor #FEFEFE
-
-title Lightweight Transaction (Paxos) - 4 Phases
-
-participant "Client" as Client
-participant "Coordinator" as Coord
-database "Replica 1" as R1
-database "Replica 2" as R2
-database "Replica 3" as R3
-
-Client -> Coord : UPDATE ... IF balance = 100
-
-== Phase 1: PREPARE ==
-
-Coord -> R1 : PREPARE(ballot=1)
-Coord -> R2 : PREPARE(ballot=1)
-Coord -> R3 : PREPARE(ballot=1)
-R1 -> Coord : PROMISE
-R2 -> Coord : PROMISE
-R3 -> Coord : PROMISE
-
-== Phase 2: READ (check IF condition) ==
-
-Coord -> R1 : READ
-Coord -> R2 : READ
-R1 -> Coord : balance=100
-R2 -> Coord : balance=100
-
-note over Coord : IF condition passes
-
-== Phase 3: PROPOSE ==
-
-Coord -> R1 : PROPOSE(ballot=1, balance=50)
-Coord -> R2 : PROPOSE(ballot=1, balance=50)
-Coord -> R3 : PROPOSE(ballot=1, balance=50)
-R1 -> Coord : ACCEPT
-R2 -> Coord : ACCEPT
-R3 -> Coord : ACCEPT
-
-== Phase 4: COMMIT ==
-
-Coord -> R1 : COMMIT
-Coord -> R2 : COMMIT
-Coord -> R3 : COMMIT
-
-Coord -> Client : [applied]=true
-
-@enduml
-```
-
-| Aspect | Regular Write | LWT Write |
-|--------|---------------|-----------|
-| Round trips | 1 | 4 |
-| Latency | ~1-5ms | ~4-20ms |
-| Throughput | High | Low |
-
-### Serial Consistency Levels
-
-```sql
--- SERIAL: Paxos across ALL datacenters
-SERIAL CONSISTENCY SERIAL;
-INSERT INTO unique_emails (email, user_id)
-VALUES ('a@b.com', 123) IF NOT EXISTS;
-
--- LOCAL_SERIAL: Paxos within local datacenter only
-SERIAL CONSISTENCY LOCAL_SERIAL;
-INSERT INTO user_sessions (session_id, user_id)
-VALUES (uuid(), 123) IF NOT EXISTS;
-```
-
-| Serial CL | Scope | Latency | Use Case |
-|-----------|-------|---------|----------|
-| SERIAL | All DCs | High (cross-DC) | Global uniqueness |
-| LOCAL_SERIAL | Local DC | Lower | DC-local uniqueness |
-
-### LWT Best Practices
-
-1. **Use sparingly**: LWT is 4x slower than regular writes
-2. **Batch related LWTs**: Multiple LWT in same partition can share Paxos
-3. **Consider alternatives**: Often application-level locking or redesign is better
-4. **Monitor contention**: High LWT contention causes performance collapse
-
-```sql
--- Good: Single LWT for compare-and-set
-UPDATE inventory SET qty = qty - 1 WHERE product_id = ? IF qty > 0;
-
--- Bad: Using LWT unnecessarily
-INSERT INTO events (id, data) VALUES (uuid(), ?) IF NOT EXISTS;
--- UUID is always unique, LWT is not needed
-```
+→ **[Consensus and Paxos](paxos.md)** for detailed coverage of LWT internals, Paxos v1 vs v2, best practices, and the upcoming Accord protocol.
 
 ---
 
