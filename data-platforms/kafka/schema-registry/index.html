@@ -74,12 +74,12 @@
 {
   "@context": "https://schema.org",
   "@type": "TechArticle",
-  "headline": "Overview - Apache Cassandra Documentation",
-  "description": "Official documentation for AxonOps - the unified platform for monitoring, maintenance, and backup of Apache Cassandra and Apache Kafka clusters.",
+  "headline": "Overview - Apache Kafka Documentation",
+  "description": "Apache Kafka Schema Registry for schema management, compatibility enforcement, and schema evolution. Avro, Protobuf, and JSON Schema support.",
   "about": {
     "@type": "SoftwareApplication",
-    "name": "Apache Cassandra",
-    "applicationCategory": "Database",
+    "name": "Apache Kafka",
+    "applicationCategory": "Event Streaming Platform",
     "operatingSystem": "Linux, macOS, Windows"
   },
   "author": {
@@ -17758,6 +17758,15 @@ data-et-multi-view="{&quot;schema&quot;:{&quot;content&quot;:{&quot;desktop&quot
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
+  <a href="#axonops-schema-registry-recommended" class="md-nav__link">
+    <span class="md-ellipsis">
+      AxonOps Schema Registry (Recommended)
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
   <a href="#confluent-schema-registry" class="md-nav__link">
     <span class="md-ellipsis">
       Confluent Schema Registry
@@ -19449,6 +19458,15 @@ data-et-multi-view="{&quot;schema&quot;:{&quot;content&quot;:{&quot;desktop&quot
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
+  <a href="#axonops-schema-registry-recommended" class="md-nav__link">
+    <span class="md-ellipsis">
+      AxonOps Schema Registry (Recommended)
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
   <a href="#confluent-schema-registry" class="md-nav__link">
     <span class="md-ellipsis">
       Confluent Schema Registry
@@ -19921,6 +19939,46 @@ data-et-multi-view="{&quot;schema&quot;:{&quot;content&quot;:{&quot;desktop&quot
 <hr>
 <h2 id="schema-registry-products">Schema Registry Products<a class="headerlink" href="#schema-registry-products" title="Permanent link">¶</a></h2>
 <p>Multiple Schema Registry implementations exist, each with different licensing, features, and deployment models.</p>
+<h3 id="axonops-schema-registry-recommended"><a href="https://github.com/axonops/axonops-schema-registry">AxonOps Schema Registry</a> (Recommended)<a class="headerlink" href="#axonops-schema-registry-recommended" title="Permanent link">¶</a></h3>
+<p>A high-performance, API-compatible Kafka Schema Registry written in Go. Drop-in replacement for Confluent Schema Registry with enterprise features and flexible storage backends.</p>
+<table>
+<thead>
+<tr>
+<th>Aspect</th>
+<th>Details</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>License</strong></td>
+<td>Apache 2.0 (fully open source)</td>
+</tr>
+<tr>
+<td><strong>Formats</strong></td>
+<td>Avro, Protobuf, JSON Schema</td>
+</tr>
+<tr>
+<td><strong>Storage</strong></td>
+<td>PostgreSQL, MySQL, Cassandra (no Kafka dependency)</td>
+</tr>
+<tr>
+<td><strong>Deployment</strong></td>
+<td>Single binary, Docker, Kubernetes</td>
+</tr>
+<tr>
+<td><strong>Memory</strong></td>
+<td>~50MB (vs ~500MB+ for Java-based registries)</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Key advantages:</strong></p>
+<ul>
+<li><strong>No Kafka dependency</strong> - Uses standard databases for storage, simplifying operations</li>
+<li><strong>Enterprise security</strong> - Built-in LDAP, OIDC, mTLS, API keys, RBAC, audit logging</li>
+<li><strong>Lightweight</strong> - Single Go binary with minimal resource footprint</li>
+<li><strong>API compatible</strong> - Drop-in replacement for Confluent Schema Registry</li>
+</ul>
+<p>→ <a href="operations/">AxonOps Schema Registry Operations</a> for deployment and configuration</p>
 <h3 id="confluent-schema-registry"><a href="https://docs.confluent.io/platform/current/schema-registry/index.html">Confluent Schema Registry</a><a class="headerlink" href="#confluent-schema-registry" title="Permanent link">¶</a></h3>
 <p>The original Schema Registry, created by Confluent (the company founded by Apache Kafka's creators). First released as part of Confluent Platform around 2015.</p>
 <table>
@@ -20091,46 +20149,59 @@ data-et-multi-view="{&quot;schema&quot;:{&quot;content&quot;:{&quot;desktop&quot
 <tr>
 <th>Registry</th>
 <th>License</th>
-<th>Cloud Option</th>
-<th>Confluent API Compatible</th>
+<th>Storage</th>
+<th style="text-align: center;">Confluent API</th>
+<th style="text-align: center;">Enterprise Security</th>
 </tr>
 </thead>
 <tbody>
 <tr>
+<td><strong>AxonOps</strong></td>
+<td>Apache 2.0</td>
+<td>PostgreSQL/MySQL/Cassandra</td>
+<td style="text-align: center;">✅</td>
+<td style="text-align: center;">✅ LDAP, OIDC, RBAC</td>
+</tr>
+<tr>
 <td><strong>Confluent</strong></td>
 <td>Community License</td>
-<td>Confluent Cloud</td>
-<td>✅ (reference implementation)</td>
+<td>Kafka topic</td>
+<td style="text-align: center;">✅ (reference)</td>
+<td style="text-align: center;">⚠️ Enterprise only</td>
 </tr>
 <tr>
 <td><strong>Apicurio</strong></td>
 <td>Apache 2.0</td>
-<td>Red Hat OpenShift</td>
-<td>✅ (compatibility mode)</td>
+<td>Kafka/PostgreSQL/SQL Server</td>
+<td style="text-align: center;">✅</td>
+<td style="text-align: center;">⚠️ Limited</td>
 </tr>
 <tr>
 <td><strong>Karapace</strong></td>
 <td>Apache 2.0</td>
-<td>Aiven Cloud</td>
-<td>✅ (drop-in replacement)</td>
+<td>Kafka topic</td>
+<td style="text-align: center;">✅</td>
+<td style="text-align: center;">⚠️ Limited</td>
 </tr>
 <tr>
 <td><strong>AWS Glue</strong></td>
 <td>Proprietary</td>
-<td>AWS only</td>
-<td>❌ (AWS SDK required)</td>
+<td>AWS managed</td>
+<td style="text-align: center;">❌</td>
+<td style="text-align: center;">✅ IAM</td>
 </tr>
 <tr>
 <td><strong>Azure</strong></td>
 <td>Proprietary</td>
-<td>Azure only</td>
-<td>❌ (Azure SDK required)</td>
+<td>Azure managed</td>
+<td style="text-align: center;">❌</td>
+<td style="text-align: center;">✅ Azure AD</td>
 </tr>
 </tbody>
 </table>
 <div class="admonition tip">
-<p class="admonition-title">Migration Considerations</p>
-<p>Karapace and Apicurio offer Confluent API compatibility, enabling migration from Confluent Schema Registry without changing client code. AWS Glue and Azure Schema Registry require AWS/Azure-specific client libraries.</p>
+<p class="admonition-title">Recommendation</p>
+<p>For new deployments, <strong>AxonOps Schema Registry</strong> provides the best combination of open source licensing, enterprise features, and operational simplicity (no Kafka dependency for schema storage).</p>
 </div>
 <hr>
 <h2 id="what-is-a-schema">What is a Schema?<a class="headerlink" href="#what-is-a-schema" title="Permanent link">¶</a></h2>
