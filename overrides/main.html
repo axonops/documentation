@@ -16,12 +16,12 @@
 {
   "@context": "https://schema.org",
   "@type": "{% if 'nodetool' in page.url or 'cqlsh' in page.url or 'operations' in page.url %}HowTo{% elif 'cql' in page.url or 'data-types' in page.url or 'ddl' in page.url or 'dml' in page.url %}TechArticle{% else %}TechArticle{% endif %}",
-  "headline": "{{ page.title | e }} - Apache Cassandra Documentation",
-  "description": "{{ config.site_description | e }}",
+  "headline": "{{ page.title | e }} - {% if 'data-platforms/kafka/' in page.url %}Apache Kafka{% elif 'data-platforms/cassandra/' in page.url %}Apache Cassandra{% else %}AxonOps{% endif %} Documentation",
+  "description": "{% if page.meta and page.meta.description %}{{ page.meta.description | e }}{% else %}{{ config.site_description | e }}{% endif %}",
   "about": {
     "@type": "SoftwareApplication",
-    "name": "Apache Cassandra",
-    "applicationCategory": "Database",
+    "name": "{% if 'data-platforms/kafka/' in page.url %}Apache Kafka{% elif 'data-platforms/cassandra/' in page.url %}Apache Cassandra{% else %}AxonOps{% endif %}",
+    "applicationCategory": "{% if 'data-platforms/kafka/' in page.url %}Event Streaming Platform{% elif 'data-platforms/cassandra/' in page.url %}Database{% else %}Monitoring Platform{% endif %}",
     "operatingSystem": "Linux, macOS, Windows"
   },
   "author": {

@@ -3,7 +3,7 @@ title: "Apache Kafka Reference Documentation"
 description: "Apache Kafka is a distributed event streaming platform built on topics, partitions, brokers, producers and consumers. Learn Kafka architecture and production patterns."
 meta:
   - name: keywords
-    content: "Apache Kafka, Kafka documentation, Apache Kafka documentation, kafka docs, event streaming, distributed messaging, Kafka architecture, Kafka operations"
+    content: "Apache Kafka, Kafka documentation, Apache Kafka documentation, Kafka docs, event streaming, distributed messaging, Kafka architecture, Kafka operations"
 ---
 
 # Apache Kafka® Documentation

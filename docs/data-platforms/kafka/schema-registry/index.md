@@ -71,6 +71,27 @@ Schema enforcement happens at the client level—producers serialize with a sche
 
 Multiple Schema Registry implementations exist, each with different licensing, features, and deployment models.
 
+### [AxonOps Schema Registry](https://github.com/axonops/axonops-schema-registry) (Recommended)
+
+A high-performance, API-compatible Kafka Schema Registry written in Go. Drop-in replacement for Confluent Schema Registry with enterprise features and flexible storage backends.
+
+| Aspect | Details |
+|--------|---------|
+| **License** | Apache 2.0 (fully open source) |
+| **Formats** | Avro, Protobuf, JSON Schema |
+| **Storage** | PostgreSQL, MySQL, Cassandra (no Kafka dependency) |
+| **Deployment** | Single binary, Docker, Kubernetes |
+| **Memory** | ~50MB (vs ~500MB+ for Java-based registries) |
+
+**Key advantages:**
+
+- **No Kafka dependency** - Uses standard databases for storage, simplifying operations
+- **Enterprise security** - Built-in LDAP, OIDC, mTLS, API keys, RBAC, audit logging
+- **Lightweight** - Single Go binary with minimal resource footprint
+- **API compatible** - Drop-in replacement for Confluent Schema Registry
+
+→ [AxonOps Schema Registry Operations](operations.md) for deployment and configuration
+
 ### [Confluent Schema Registry](https://docs.confluent.io/platform/current/schema-registry/index.html)
 
 The original Schema Registry, created by Confluent (the company founded by Apache Kafka's creators). First released as part of Confluent Platform around 2015.
@@ -141,16 +162,17 @@ Schema registry for Azure Event Hubs, supporting Kafka protocol.
 
 ### Comparison Summary
 
-| Registry | License | Cloud Option | Confluent API Compatible |
-|----------|---------|--------------|-------------------------|
-| **Confluent** | Community License | Confluent Cloud | ✅ (reference implementation) |
-| **Apicurio** | Apache 2.0 | Red Hat OpenShift | ✅ (compatibility mode) |
-| **Karapace** | Apache 2.0 | Aiven Cloud | ✅ (drop-in replacement) |
-| **AWS Glue** | Proprietary | AWS only | ❌ (AWS SDK required) |
-| **Azure** | Proprietary | Azure only | ❌ (Azure SDK required) |
+| Registry | License | Storage | Confluent API | Enterprise Security |
+|----------|---------|---------|:-------------:|:-------------------:|
+| **AxonOps** | Apache 2.0 | PostgreSQL/MySQL/Cassandra | ✅ | ✅ LDAP, OIDC, RBAC |
+| **Confluent** | Community License | Kafka topic | ✅ (reference) | ⚠️ Enterprise only |
+| **Apicurio** | Apache 2.0 | Kafka/PostgreSQL/SQL Server | ✅ | ⚠️ Limited |
+| **Karapace** | Apache 2.0 | Kafka topic | ✅ | ⚠️ Limited |
+| **AWS Glue** | Proprietary | AWS managed | ❌ | ✅ IAM |
+| **Azure** | Proprietary | Azure managed | ❌ | ✅ Azure AD |
 
-!!! tip "Migration Considerations"
-    Karapace and Apicurio offer Confluent API compatibility, enabling migration from Confluent Schema Registry without changing client code. AWS Glue and Azure Schema Registry require AWS/Azure-specific client libraries.
+!!! tip "Recommendation"
+    For new deployments, **AxonOps Schema Registry** provides the best combination of open source licensing, enterprise features, and operational simplicity (no Kafka dependency for schema storage).
 
 ---
 
