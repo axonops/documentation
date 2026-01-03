@@ -56,6 +56,16 @@ Security-related errors.
 | `AuthenticationException` | Invalid credentials | Verify username/password |
 | `UnauthorizedException` | Insufficient permissions | Grant required permissions |
 
+### Lightweight Transaction Errors
+
+Errors related to LWT (Paxos-based compare-and-set operations).
+
+| Error | Cause | Solution |
+|-------|-------|----------|
+| `CasWriteTimeoutException` | Paxos consensus timeout | Check for contention, increase timeout |
+| LWT/non-LWT mixing issues | Mixed clock domains | Use LWT consistently for all operations on same data |
+| Silent operation failures | Paxos clock vs regular timestamp conflict | See [LWT Troubleshooting](lightweight-transactions.md) |
+
 ---
 
 ## Quick Diagnosis
@@ -140,6 +150,10 @@ Error Occurs
 
 - **[ReadTimeoutException](read-timeout.md)** - Read operations timing out
 - **[WriteTimeoutException](write-timeout.md)** - Write operations timing out
+
+### Lightweight Transaction Errors
+
+- **[LWT Troubleshooting](lightweight-transactions.md)** - Paxos contention, LWT/non-LWT mixing, timeout handling
 
 ### Playbooks for Complex Issues
 

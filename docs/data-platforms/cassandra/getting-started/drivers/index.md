@@ -42,7 +42,7 @@ Cassandra (multiplexed):
   (1 connection for thousands of concurrent queries)
 ```
 
-This means you **don't need large connection pools**. A single connection per host is often sufficient, and the driver manages this automatically.
+This means you **do not need large connection pools**. A single connection per host is often sufficient, and the driver manages this automatically.
 
 ### Persistent Connections with Cluster Awareness
 
@@ -683,7 +683,7 @@ datastax-java-driver {
 |---------|---------|----------|
 | Multi-DC contact points without explicit local DC | Non-deterministic DC selection based on first responder | Set explicit `local_dc` or use contact points from single DC only |
 | Using Round Robin | Ignores data locality, higher latency | Use Token-Aware + DC-Aware |
-| Hardcoding contact points from one DC | If that DC is down, can't bootstrap | Include contact points from multiple DCs (with explicit local DC) |
+| Hardcoding contact points from one DC | If that DC is down, cannot bootstrap | Include contact points from multiple DCs (with explicit local DC) |
 | Allowing remote DC for LOCAL_* consistency | Violates consistency guarantees | Set `allow-for-local-consistency-levels = false` |
 
 ---
@@ -941,7 +941,7 @@ Asynchronous database operations are essential for building high-throughput, res
 
 **Python and the GIL**: Python's Global Interpreter Lock (GIL) means only one thread can execute Python bytecode at a time. In synchronous code, when your application waits for a Cassandra query to return, that thread is blocked and cannot process other requests. With async/await, the event loop can handle thousands of concurrent requests on a single thread by switching between tasks during I/O waits. This is particularly critical for web frameworks like FastAPI and aiohttp where blocking the event loop freezes your entire application.
 
-**Java and Thread Efficiency**: While Java doesn't have a GIL, creating threads is expensive (typically 1MB of stack memory each). Synchronous drivers require one thread per concurrent query, limiting scalability. Async operations with `CompletionStage` allow a small thread pool to handle many concurrent requests, reducing memory overhead and context-switching costs. This is especially valuable in reactive frameworks like Spring WebFlux and Vert.x.
+**Java and Thread Efficiency**: While Java does not have a GIL, creating threads is expensive (typically 1MB of stack memory each). Synchronous drivers require one thread per concurrent query, limiting scalability. Async operations with `CompletionStage` allow a small thread pool to handle many concurrent requests, reducing memory overhead and context-switching costs. This is especially valuable in reactive frameworks like Spring WebFlux and Vert.x.
 
 **Node.js**: Being single-threaded and event-driven by design, Node.js naturally benefits from async operations. The driver's Promise-based API integrates seamlessly with the event loop.
 
