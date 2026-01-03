@@ -1,7 +1,3 @@
-// Defer Reo analytics until after page is interactive (reduces TBT)
-if(document.readyState==='complete')loadReo();else window.addEventListener('load',loadReo);
-function loadReo(){setTimeout(function(){var s=document.createElement('script');s.src='https://static.reo.dev/16863fd582763a2/reo.js';s.async=true;s.onload=function(){Reo.init({clientID:'16863fd582763a2'})};document.head.appendChild(s)},2000)}
-
 // Process CQL syntax blocks to convert *placeholder* to italics
 function processCqlSyntaxBlocks(){
   document.querySelectorAll('.highlight code').forEach(function(b){
