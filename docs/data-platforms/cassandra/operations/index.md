@@ -1,6 +1,6 @@
 ---
 title: "Cassandra Operations Guide"
-description: "Cassandra operations guide. Day-to-day management and maintenance procedures."
+description: "Apache Cassandra operations guide covering repair, compaction, monitoring, backup, configuration, and maintenance procedures for production cluster management."
 meta:
   - name: keywords
     content: "Cassandra operations, cluster management, maintenance"

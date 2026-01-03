@@ -1,6 +1,6 @@
 ---
 title: "cassandra-stress"
-description: "Cassandra-stress tool guide. Load testing and benchmarking Cassandra."
+description: "Cassandra-stress benchmarking tool for load testing, capacity planning, and performance regression testing. Configure workloads, measure throughput and latency."
 meta:
   - name: keywords
     content: "cassandra-stress, load testing, benchmarking tool"

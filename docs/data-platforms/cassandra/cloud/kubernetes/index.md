@@ -1,6 +1,6 @@
 ---
 title: "Cassandra on Kubernetes"
-description: "Deploy Cassandra on Kubernetes. Operators, StatefulSets, and container orchestration."
+description: "Deploy Apache Cassandra on Kubernetes using StatefulSets and operators. Container configuration, persistent volumes, scaling, and production best practices."
 meta:
   - name: keywords
     content: "Cassandra Kubernetes, K8s deployment, StatefulSet, operators"

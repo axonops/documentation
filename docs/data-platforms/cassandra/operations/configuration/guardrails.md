@@ -1,6 +1,6 @@
 ---
 title: "Cassandra Guardrails"
-description: "Cassandra guardrails configuration. Prevent dangerous operations and protect clusters."
+description: "Cassandra guardrails configuration to protect clusters. Set limits on queries, partitions, collections, and dangerous operations to prevent instability."
 meta:
   - name: keywords
     content: "Cassandra guardrails, operation limits, cluster protection"

@@ -1,6 +1,6 @@
 ---
 title: "Cassandra on AWS"
-description: "Deploy Cassandra on AWS. EC2 instances, EBS storage, and networking best practices."
+description: "Deploy Apache Cassandra on AWS. EC2 instance selection, EBS vs instance storage, VPC networking, security groups, and AWS-specific performance optimizations."
 meta:
   - name: keywords
     content: "Cassandra AWS, EC2 deployment, EBS storage, AWS best practices"

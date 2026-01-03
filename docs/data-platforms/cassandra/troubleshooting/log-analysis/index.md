@@ -1,6 +1,6 @@
 ---
 title: "Cassandra Log Analysis"
-description: "Cassandra log analysis guide. System.log, debug.log, and GC log interpretation."
+description: "Cassandra log analysis guide for troubleshooting. Interpret system.log, debug.log, and GC logs to diagnose performance issues, errors, and cluster problems."
 meta:
   - name: keywords
     content: "Cassandra logs, log analysis, system.log, debug.log, GC logs"

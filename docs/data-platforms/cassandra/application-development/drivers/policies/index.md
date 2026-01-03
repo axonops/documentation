@@ -1,6 +1,6 @@
 ---
 title: "Cassandra Driver Policies"
-description: "Cassandra driver policies overview. Load balancing, retry, reconnection, and speculative execution."
+description: "Cassandra driver policies for load balancing, retry logic, reconnection, and speculative execution. Configure failure handling and optimize client performance."
 meta:
   - name: keywords
     content: "Cassandra driver policies, load balancing policy, retry policy"

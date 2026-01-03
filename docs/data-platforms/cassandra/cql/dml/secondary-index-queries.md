@@ -1,6 +1,6 @@
 ---
 title: "Cassandra CQL Secondary Index Queries"
-description: "Query secondary indexes in CQL. Use WHERE clauses on indexed columns in Cassandra."
+description: "CQL secondary index queries in Cassandra. Use WHERE clauses on indexed columns, understand performance trade-offs, and learn when to use SAI vs SASI indexes."
 meta:
   - name: keywords
     content: "secondary index query, CQL index, WHERE clause, Cassandra indexing"

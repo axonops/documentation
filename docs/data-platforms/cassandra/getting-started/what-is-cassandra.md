@@ -1,6 +1,6 @@
 ---
 title: "What is Apache Cassandra?"
-description: "What is Apache Cassandra. Distributed NoSQL database for high availability and scalability."
+description: "Introduction to Apache Cassandra, a distributed NoSQL database designed for high availability, linear scalability, and fault tolerance across data centers."
 meta:
   - name: keywords
     content: "what is Cassandra, Apache Cassandra introduction, NoSQL database"

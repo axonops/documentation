@@ -1,6 +1,6 @@
 ---
 title: "Cassandra on Microsoft Azure"
-description: "Deploy Cassandra on Microsoft Azure. Virtual machines, managed disks, and networking."
+description: "Deploy Apache Cassandra on Microsoft Azure. VM size selection, managed disks vs premium SSD, virtual networks, and Azure-specific configuration best practices."
 meta:
   - name: keywords
     content: "Cassandra Azure, Azure deployment, managed disks, Azure VMs"

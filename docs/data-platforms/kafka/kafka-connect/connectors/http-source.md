@@ -1,6 +1,6 @@
 ---
 title: "HTTP Source Connector"
-description: "Kafka Connect HTTP Source connector. REST API polling, pagination, and authentication."
+description: "Kafka Connect HTTP Source connector for polling REST APIs. Configure endpoints, authentication, pagination, rate limiting, and stream responses to Kafka."
 meta:
   - name: keywords
     content: "Kafka HTTP source connector, REST API source, webhook connector, HTTP polling"

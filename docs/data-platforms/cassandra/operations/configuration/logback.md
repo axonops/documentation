@@ -1,6 +1,6 @@
 ---
 title: "Cassandra Logging Configuration (logback.xml)"
-description: "Cassandra logging configuration with Logback. Configure log levels and appenders."
+description: "Cassandra logback.xml configuration guide. Configure log levels, appenders, rotation policies, and output formats for system.log, debug.log, and audit logs."
 meta:
   - name: keywords
     content: "Cassandra logback, logging configuration, log levels"

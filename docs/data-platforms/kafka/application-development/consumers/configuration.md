@@ -72,38 +72,33 @@ Session management controls consumer liveness detection and rebalance behavior.
 
 ```plantuml
 @startuml
-
 skinparam backgroundColor transparent
+skinparam defaultFontSize 12
+skinparam rectangle {
+    RoundCorner 10
+}
 
-concise "Heartbeat" as HB
-concise "Session" as Sess
-concise "Poll Interval" as Poll
+rectangle "**heartbeat.interval.ms**\n3s (default)" as HB #LightGreen
+rectangle "**session.timeout.ms**\n45s (default)" as ST #LightBlue
+rectangle "**max.poll.interval.ms**\n300s (default)" as MP #LightYellow
 
-@0
-HB is "Beat"
-Sess is "Active"
-Poll is "Polling"
+HB -right-> ST : < 1/3 of
+ST -right-> MP : <
 
-@3
-HB is "Beat"
+note bottom of HB
+  Heartbeat frequency
+  to coordinator
+end note
 
-@6
-HB is "Beat"
+note bottom of ST
+  Time before consumer
+  considered dead
+end note
 
-@9
-HB is "Beat"
-
-@12
-HB is "Beat"
-
-@15
-HB is {-}
-Sess is {-}
-note bottom of Sess: session.timeout.ms (45s) >> heartbeat.interval.ms (3s)
-
-@300
-Poll is {-}
-note bottom of Poll: max.poll.interval.ms (300s)
+note bottom of MP
+  Max time between
+  poll() calls
+end note
 
 @enduml
 ```

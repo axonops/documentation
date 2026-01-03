@@ -1,6 +1,6 @@
 ---
 title: "Kafka Performance Internals"
-description: "Apache Kafka performance architecture. Zero-copy, batching, compression, and I/O optimization."
+description: "Kafka performance internals explaining zero-copy transfers, batching, compression, sequential I/O, and page cache optimization for high-throughput streaming."
 meta:
   - name: keywords
     content: "Kafka performance, zero-copy, batching, compression, I/O optimization"

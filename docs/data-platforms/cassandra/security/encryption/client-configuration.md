@@ -1,6 +1,6 @@
 ---
 title: "Client TLS Configuration"
-description: "Configure TLS in Cassandra clients. Driver SSL settings and truststore configuration."
+description: "Configure TLS encryption for Cassandra clients. SSL settings for cqlsh, Java driver, Python driver, truststore setup, and certificate-based authentication."
 meta:
   - name: keywords
     content: "client TLS, driver SSL, truststore, client encryption"

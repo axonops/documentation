@@ -1,6 +1,6 @@
 ---
 title: "TLS Versions and Cipher Suites"
-description: "TLS version configuration for Cassandra. TLS 1.2, TLS 1.3, and cipher suite selection."
+description: "Cassandra TLS version and cipher suite configuration. Compare TLS 1.2 vs TLS 1.3, select secure ciphers, and configure protocol settings for encryption."
 meta:
   - name: keywords
     content: "TLS versions, TLS 1.2, TLS 1.3, cipher suites, Cassandra"

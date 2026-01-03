@@ -1,6 +1,6 @@
 ---
 title: "Cassandra cqlsh Reference Guide"
-description: "CQLSH command-line shell for Cassandra. Interactive CQL query interface."
+description: "CQLSH command-line shell reference for Apache Cassandra. Execute CQL queries, explore schemas, manage data, and configure connections with this interactive CLI."
 meta:
   - name: keywords
     content: "cqlsh, CQL shell, command line, interactive queries"

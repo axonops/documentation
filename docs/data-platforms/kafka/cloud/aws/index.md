@@ -1,6 +1,6 @@
 ---
 title: "Kafka on AWS"
-description: "Deploying Apache Kafka on AWS. EC2 instances, EBS storage, networking, and production architecture."
+description: "Deploy Apache Kafka on AWS with EC2 instances, EBS storage, VPC networking, and production-ready architecture. Instance selection, security groups, and scaling."
 meta:
   - name: keywords
     content: "Kafka AWS, Kafka EC2, Kafka EBS, AWS deployment, Kafka cloud"

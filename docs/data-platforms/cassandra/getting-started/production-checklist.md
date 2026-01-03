@@ -1,6 +1,6 @@
 ---
 title: "Cassandra Production Readiness Checklist"
-description: "Cassandra production readiness checklist. Essential configurations before going live."
+description: "Cassandra production readiness checklist. Hardware, configuration, security, monitoring, backup, and operational procedures before deploying to production."
 meta:
   - name: keywords
     content: "Cassandra production checklist, production readiness, deployment checklist"
