@@ -692,6 +692,11 @@ nav:
         - Overview: data-platforms/cassandra/troubleshooting/index.md
         - Diagnosis: data-platforms/cassandra/troubleshooting/diagnosis/index.md
         - Log Analysis: data-platforms/cassandra/troubleshooting/log-analysis/index.md
+        - Common Errors:
+          - Overview: data-platforms/cassandra/troubleshooting/common-errors/index.md
+          - Read Timeout: data-platforms/cassandra/troubleshooting/common-errors/read-timeout.md
+          - Write Timeout: data-platforms/cassandra/troubleshooting/common-errors/write-timeout.md
+          - Lightweight Transactions: data-platforms/cassandra/troubleshooting/common-errors/lightweight-transactions.md
         - Playbooks:
           - Overview: data-platforms/cassandra/troubleshooting/playbooks/index.md
           - Add Node: data-platforms/cassandra/troubleshooting/playbooks/add-node.md

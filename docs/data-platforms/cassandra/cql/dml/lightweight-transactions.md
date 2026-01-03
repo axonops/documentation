@@ -35,6 +35,45 @@ Lightweight Transactions (LWT) provide linearizable consistency through compare-
     - **Timeout outcomes**: If an LWT times out, the operation may or may not have been applied. The outcome is undefined.
     - **Retry safety without idempotency**: Retrying a failed LWT without checking the result may cause duplicate application.
 
+### Mixing LWT and Non-LWT Operations
+
+!!! danger "Mixing LWT with Non-LWT Is Unsafe"
+    Mixing lightweight transactions with standard (non-LWT) operations on the same data is **inherently unsafe** and SHOULD be avoided.
+
+    **Why this is dangerous:**
+
+    Paxos uses its own **hybrid-logical clock** to ensure linearizability within LWT operations. This clock is separate from the regular Cassandra timestamp mechanism used by non-LWT writes. When you mix the two:
+
+    - The clocks are never perfectly synchronized between LWT and non-LWT requests
+    - A non-LWT operation executed immediately after an LWT may appear to succeed but have no effect
+    - The Paxos consensus may not have fully propagated when the non-LWT operation executes
+
+    **Example of the problem:**
+
+    ```sql
+    -- Step 1: Insert with LWT (uses Paxos clock)
+    INSERT INTO users (user_id, username) VALUES (123, 'alice') IF NOT EXISTS;
+    -- Returns [applied] = true
+
+    -- Step 2: Immediately delete without LWT (uses regular timestamp)
+    DELETE FROM users WHERE user_id = 123;
+    -- Returns success, but row may still exist!
+
+    -- Step 3: Verify
+    SELECT * FROM users WHERE user_id = 123;
+    -- Row still exists despite "successful" delete
+    ```
+
+    **If you MUST mix LWT and non-LWT operations:**
+
+    1. **Use LWT consistently**: If you use `INSERT ... IF NOT EXISTS`, also use `DELETE ... IF EXISTS` for the same data
+    2. **Add delays** (not recommended for production): Waiting between operations may allow Paxos to complete, but this is fragile and timing-dependent
+    3. **Understand the risk**: Even with precautions, edge cases may cause unexpected behavior
+
+    **Best practice:** Design your data model so that LWT operations are self-contained. If a piece of data is managed with LWT, ALL operations on that data SHOULD use LWT conditions.
+
+    See [Troubleshooting: LWT and Non-LWT Mixing Issues](../../troubleshooting/common-errors/lightweight-transactions.md) for diagnosis and resolution steps.
+
 ### Version-Specific Behavior
 
 | Version | Behavior |

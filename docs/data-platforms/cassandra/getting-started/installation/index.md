@@ -135,14 +135,18 @@ java -version
 
 | Method | Complexity | Update Path | Best For |
 |--------|------------|-------------|----------|
-| **Package Manager** | Low | `apt upgrade` | Production Linux servers |
+| **Package Manager** | Low | `apt upgrade` | Production Linux servers, manual management |
 | **Tarball** | Medium | Manual | Custom configurations, multiple versions |
 | **Docker** | Low | Pull new image | Development, CI/CD |
 | **Kubernetes** | High | Operator-managed | Cloud-native, auto-scaling |
+| **Ansible** | Low | Re-run playbook | Production clusters, repeatable deployments |
+
+!!! success "Recommendation for Production Deployments"
+    For production clusters, we recommend **[Method 5: Ansible Automation](#method-5-ansible-automation-recommended-for-production)** using the [AxonOps Ansible Collection](https://github.com/axonops/axonops-ansible-collection). It automates all OS tuning, security hardening, and Cassandra best practices, and works as a standalone Cassandra installer even without AxonOps monitoring.
 
 ---
 
-## Method 1: Package Manager Installation (Recommended for Production)
+## Method 1: Package Manager Installation
 
 ### Ubuntu/Debian Installation
 
@@ -1118,6 +1122,562 @@ spec:
       max_heap_size: 4G
 EOF
 ```
+
+---
+
+## Method 5: Ansible Automation (Recommended for Production)
+
+For automated, repeatable deployments across multiple environments, the [AxonOps Ansible Collection](https://github.com/axonops/axonops-ansible-collection) provides production-grade installation of Apache Cassandra with optional AxonOps monitoring integration.
+
+!!! tip "Standalone Cassandra Installation"
+    The Cassandra role in this collection is **fully standalone**. You can deploy a production-ready Apache Cassandra cluster without using AxonOps. The collection handles all the complex configuration, OS tuning, and best practices automatically.
+
+!!! example "Ready-to-Use Reference Implementation"
+    For a complete, production-grade example you can clone and adapt, see the **[AxonOps Cassandra Lab](https://github.com/axonops/ansible-cassandra-lab)**. This project demonstrates a multi-datacenter Cassandra 5.0 deployment with Terraform infrastructure provisioning and complete Ansible configuration, including SSL/TLS, authentication, audit logging, and AxonOps monitoring.
+
+### Why Use Ansible for Cassandra?
+
+| Benefit | Description |
+|---------|-------------|
+| **Production-Ready** | Implements all OS tuning, limits, THP disabling, and Cassandra best practices automatically |
+| **Repeatable** | Same playbook deploys identical clusters across dev, staging, and production |
+| **Multi-Version** | Supports Cassandra 3.11, 4.x, and 5.x with version-specific configurations |
+| **Tarball-Based** | Default tar installation simplifies upgrades and downgrades vs package managers |
+| **Optional Monitoring** | Add AxonOps agent for monitoring (SaaS or self-hosted) only if needed |
+| **Idempotent** | Run playbooks repeatedly without breaking existing installations |
+| **Multi-Environment** | Hierarchical configuration supports dev, staging, and production from one codebase |
+
+### Prerequisites
+
+- Ansible 2.9+ installed on control machine
+- SSH access to target nodes (key-based authentication recommended)
+- Target nodes running supported Linux (RHEL/CentOS 7+, Ubuntu 18.04+, Debian 10+)
+- Python 3.x on target nodes
+- (Optional) Pipenv for isolated Python environments
+
+### Quick Start: Install the Collection
+
+```bash
+# Download the latest release
+curl -L -o axonops-ansible.tar.gz \
+  https://github.com/axonops/axonops-ansible-collection/releases/latest/download/axonops-axonops-latest.tar.gz
+
+# Install the collection
+ansible-galaxy collection install axonops-ansible.tar.gz
+
+# Verify installation
+ansible-galaxy collection list | grep axonops
+```
+
+### Available Roles
+
+The collection provides roles for complete infrastructure deployment:
+
+| Role | Purpose |
+|------|---------|
+| `axonops.axonops.preflight` | Pre-installation system checks and validation |
+| `axonops.axonops.java` | Install Java (OpenJDK or Azul Zulu) |
+| `axonops.axonops.cassandra` | Install and configure Apache Cassandra |
+| `axonops.axonops.agent` | Install AxonOps monitoring agent |
+| `axonops.axonops.server` | Install AxonOps Server (self-hosted) |
+| `axonops.axonops.dash` | Install AxonOps Dashboard (self-hosted) |
+| `axonops.axonops.elastic` | Install Elasticsearch for AxonOps |
+| `axonops.axonops.configurations` | Configure alerts, integrations, backups |
+
+### Option A: Simple Deployment (Single Environment)
+
+For a straightforward deployment without multi-environment complexity:
+
+**inventory.yml:**
+
+```yaml
+all:
+  children:
+    cassandra:
+      hosts:
+        cass-node1:
+          ansible_host: 192.168.1.10
+          cassandra_rack: rack1
+        cass-node2:
+          ansible_host: 192.168.1.11
+          cassandra_rack: rack2
+        cass-node3:
+          ansible_host: 192.168.1.12
+          cassandra_rack: rack3
+      vars:
+        # Cassandra configuration
+        cassandra_cluster_name: "ProductionCluster"
+        cassandra_version: "5.0.5"
+        cassandra_dc: "dc1"
+
+        # Installation method (tar recommended)
+        cassandra_install_format: tar
+
+        # Java configuration
+        java_pkg: "java-17-openjdk-headless"
+
+        # Seed nodes (first 2-3 nodes)
+        cassandra_seeds:
+          - 192.168.1.10
+          - 192.168.1.11
+
+        # Security settings
+        cassandra_authenticator: PasswordAuthenticator
+        cassandra_authorizer: CassandraAuthorizer
+```
+
+**cassandra.yml playbook:**
+
+```yaml
+---
+- name: Deploy Apache Cassandra Cluster
+  hosts: cassandra
+  become: true
+
+  roles:
+    - role: axonops.axonops.preflight
+    - role: axonops.axonops.java
+    - role: axonops.axonops.cassandra
+```
+
+**Deploy:**
+
+```bash
+ansible-playbook -i inventory.yml cassandra.yml
+```
+
+### Option B: Production Multi-Environment Structure
+
+For production deployments, use hierarchical configuration with `group_vars` for environment-specific overrides. This structure is demonstrated in the [full example](https://github.com/axonops/axonops-ansible-collection/tree/main/examples/full-example).
+
+**Recommended project structure:**
+
+```
+my-cassandra-deployment/
+├── ansible.cfg
+├── Makefile
+├── requirements.yml
+│
+├── inventories/
+│   ├── dev/hosts.ini
+│   ├── stg/hosts.ini
+│   └── prd/hosts.ini
+│
+├── group_vars/
+│   ├── all/                    # Global defaults
+│   │   ├── cassandra.yml       # Cassandra defaults
+│   │   ├── java.yml            # Java configuration
+│   │   └── common.yml          # OS settings
+│   ├── dev/                    # Development overrides
+│   │   ├── cassandra.yml
+│   │   └── vault.yml           # Encrypted secrets
+│   ├── stg/                    # Staging overrides
+│   │   ├── cassandra.yml
+│   │   └── vault.yml
+│   └── prd/                    # Production overrides
+│       ├── cassandra.yml
+│       └── vault.yml
+│
+├── files/
+│   ├── dev/ssl/                # Dev certificates
+│   ├── stg/ssl/                # Staging certificates
+│   └── prd/ssl/                # Production certificates
+│
+├── alerts-config/              # AxonOps monitoring (optional)
+│   └── my-org/
+│       ├── alert_endpoints.yml
+│       ├── metric_alert_rules.yml
+│       └── prd/                # Cluster-specific overrides
+│           └── alert_routes.yml
+│
+├── cassandra.yml               # Main playbook
+├── common.yml                  # OS hardening playbook
+└── rolling-restart.yml         # Safe restart playbook
+```
+
+**Example inventories/prd/hosts.ini:**
+
+```ini
+[cassandra]
+cass-prd-1 ansible_host=10.0.1.10 cassandra_rack=rack1
+cass-prd-2 ansible_host=10.0.1.11 cassandra_rack=rack2
+cass-prd-3 ansible_host=10.0.1.12 cassandra_rack=rack3
+cass-prd-4 ansible_host=10.0.2.10 cassandra_rack=rack1 cassandra_dc=dc2
+cass-prd-5 ansible_host=10.0.2.11 cassandra_rack=rack2 cassandra_dc=dc2
+cass-prd-6 ansible_host=10.0.2.12 cassandra_rack=rack3 cassandra_dc=dc2
+
+[cassandra:vars]
+cassandra_dc=dc1
+```
+
+**Example group_vars/all/cassandra.yml (global defaults):**
+
+```yaml
+# Cassandra version and installation
+cassandra_version: "5.0.5"
+cassandra_install_format: tar
+
+# Cluster defaults
+cassandra_num_tokens: 16
+cassandra_endpoint_snitch: GossipingPropertyFileSnitch
+
+# Performance tuning
+cassandra_concurrent_reads: 32
+cassandra_concurrent_writes: 32
+cassandra_concurrent_counter_writes: 32
+cassandra_memtable_flush_writers: 2
+
+# Security defaults
+cassandra_authenticator: PasswordAuthenticator
+cassandra_authorizer: CassandraAuthorizer
+cassandra_role_manager: CassandraRoleManager
+
+# Audit logging
+cassandra_audit_logging_enabled: true
+cassandra_audit_logging_included_categories: DDL,DCL,AUTH,ERROR
+```
+
+**Example group_vars/prd/cassandra.yml (production overrides):**
+
+```yaml
+# Production cluster name
+cassandra_cluster_name: "Production-Cassandra"
+
+# Production seeds
+cassandra_seeds:
+  - 10.0.1.10
+  - 10.0.1.11
+  - 10.0.2.10
+
+# Production performance tuning
+cassandra_concurrent_reads: 64
+cassandra_concurrent_writes: 64
+
+# Enable SSL in production
+cassandra_ssl_enable: true
+cassandra_ssl_internode: true
+cassandra_ssl_client: true
+```
+
+### Secrets Management with Ansible Vault
+
+Encrypt sensitive configuration using Ansible Vault:
+
+```bash
+# Create vault password file (do not commit to Git)
+echo "your-secure-password" > ~/.ansible_vault_pass
+chmod 600 ~/.ansible_vault_pass
+
+# Create encrypted secrets file
+ansible-vault create group_vars/prd/vault.yml
+```
+
+**Example vault.yml content:**
+
+```yaml
+# Cassandra credentials
+vault_cassandra_admin_password: "SecurePassword123!"
+vault_cassandra_jmx_password: "JmxSecurePass456!"
+
+# SSL keystore passwords
+vault_cassandra_ssl_keystore_pass: "keystorepass"
+vault_cassandra_ssl_truststore_pass: "truststorepass"
+
+# AxonOps credentials (if using)
+vault_axon_agent_key: "your-agent-key-from-axonops"
+vault_axon_agent_customer_name: "your-org-name"
+```
+
+**Reference vault variables in playbooks:**
+
+```yaml
+# In group_vars/prd/cassandra.yml
+cassandra_admin_password: "{{ vault_cassandra_admin_password }}"
+cassandra_ssl_keystore_password: "{{ vault_cassandra_ssl_keystore_pass }}"
+```
+
+### Makefile Workflow
+
+Use a Makefile for consistent deployment commands:
+
+```makefile
+ENVIRONMENT ?= dev
+ANSIBLE_USER ?= root
+ANSIBLE_VAULT_PASSWORD_FILE ?= ~/.ansible_vault_pass
+EXTRA ?=
+
+.PHONY: prep common cassandra alerts rolling-restart
+
+prep:
+	ansible-galaxy collection install -r requirements.yml
+
+common:
+	ansible-playbook -i inventories/$(ENVIRONMENT)/hosts.ini \
+		-u $(ANSIBLE_USER) \
+		--vault-password-file $(ANSIBLE_VAULT_PASSWORD_FILE) \
+		common.yml $(EXTRA)
+
+cassandra:
+	ansible-playbook -i inventories/$(ENVIRONMENT)/hosts.ini \
+		-u $(ANSIBLE_USER) \
+		--vault-password-file $(ANSIBLE_VAULT_PASSWORD_FILE) \
+		cassandra.yml $(EXTRA)
+
+alerts:
+	ansible-playbook -i inventories/$(ENVIRONMENT)/hosts.ini \
+		-u $(ANSIBLE_USER) \
+		--vault-password-file $(ANSIBLE_VAULT_PASSWORD_FILE) \
+		alerts.yml $(EXTRA)
+
+rolling-restart:
+	ansible-playbook -i inventories/$(ENVIRONMENT)/hosts.ini \
+		-u $(ANSIBLE_USER) \
+		--vault-password-file $(ANSIBLE_VAULT_PASSWORD_FILE) \
+		rolling-restart.yml $(EXTRA)
+```
+
+**Deploy to different environments:**
+
+```bash
+# Deploy to development
+make cassandra ENVIRONMENT=dev
+
+# Deploy to production
+make cassandra ENVIRONMENT=prd
+
+# Dry-run to production (no changes)
+make cassandra ENVIRONMENT=prd EXTRA="--check --diff"
+
+# Update configuration only (no reinstall)
+make cassandra ENVIRONMENT=prd EXTRA="--tags config"
+```
+
+### SSL/TLS Configuration
+
+**Development (auto-generated self-signed certificates):**
+
+```yaml
+# group_vars/dev/cassandra.yml
+cassandra_ssl_enable: true
+cassandra_ssl_create: true  # Auto-generate certificates
+```
+
+Certificates are stored in `files/dev/ssl/` and SHOULD be committed to Git for development consistency.
+
+**Production (organization-managed certificates):**
+
+```yaml
+# group_vars/prd/cassandra.yml
+cassandra_ssl_enable: true
+cassandra_ssl_create: false  # Use provided certificates
+cassandra_ssl_keystore_password: "{{ vault_cassandra_ssl_keystore_pass }}"
+cassandra_ssl_truststore_password: "{{ vault_cassandra_ssl_truststore_pass }}"
+```
+
+Place CA-signed certificates in `files/prd/ssl/` (encrypted or via external secrets management).
+
+### Adding AxonOps Monitoring
+
+Add the AxonOps agent role to enable monitoring:
+
+**cassandra.yml playbook with monitoring:**
+
+```yaml
+---
+- name: Deploy Apache Cassandra with AxonOps Monitoring
+  hosts: cassandra
+  become: true
+
+  roles:
+    - role: axonops.axonops.preflight
+    - role: axonops.axonops.java
+    - role: axonops.axonops.cassandra
+    - role: axonops.axonops.agent
+```
+
+**group_vars/prd/axonops.yml:**
+
+```yaml
+# AxonOps Cloud
+axon_agent_server_host: "agents.axonops.cloud"
+axon_agent_customer_name: "{{ vault_axon_agent_customer_name }}"
+axon_agent_key: "{{ vault_axon_agent_key }}"
+axon_java_agent: "axon-cassandra5.0-agent"
+
+# Or for self-hosted AxonOps:
+# axon_agent_server_host: "axonops.internal.example.com"
+```
+
+### AxonOps Configuration as Code
+
+Configure monitoring, alerts, and backups via YAML files in `alerts-config/`:
+
+```
+alerts-config/
+└── my-org/                           # Organization name
+    ├── alert_endpoints.yml           # Slack, PagerDuty, email
+    ├── metric_alert_rules.yml        # Default metric alerts
+    ├── log_alert_rules.yml           # Log-based alerts
+    ├── service_checks.yml            # Health checks
+    └── prd/                           # Cluster-specific overrides
+        ├── alert_routes.yml          # Route alerts to endpoints
+        ├── backups.yml               # Backup schedules
+        └── dashboards.yml            # Custom dashboards
+```
+
+**Example alert_endpoints.yml:**
+
+```yaml
+endpoints:
+  - name: slack-ops
+    type: slack
+    webhook_url: "{{ vault_slack_webhook_url }}"
+    channel: "#cassandra-alerts"
+
+  - name: pagerduty-critical
+    type: pagerduty
+    routing_key: "{{ vault_pagerduty_routing_key }}"
+```
+
+Apply monitoring configuration:
+
+```bash
+make alerts ENVIRONMENT=prd
+```
+
+### Key Configuration Variables
+
+| Variable | Default | Description |
+|----------|---------|-------------|
+| `cassandra_version` | Latest | Cassandra version (e.g., `5.0.5`, `4.1.6`) |
+| `cassandra_install_format` | `tar` | Installation method: `tar` (recommended) or `pkg` |
+| `cassandra_cluster_name` | `Test Cluster` | Cluster name (MUST match all nodes) |
+| `cassandra_dc` | `dc1` | Datacenter name |
+| `cassandra_rack` | `rack1` | Rack name |
+| `cassandra_seeds` | `[]` | Seed node IPs |
+| `cassandra_num_tokens` | `16` | Number of virtual nodes |
+| `cassandra_authenticator` | `AllowAllAuthenticator` | Authentication class |
+| `cassandra_authorizer` | `AllowAllAuthorizer` | Authorization class |
+| `cassandra_ssl_enable` | `false` | Enable SSL/TLS |
+| `cassandra_ssl_create` | `false` | Auto-generate certificates |
+| `cassandra_audit_logging_enabled` | `false` | Enable audit logging |
+| `java_pkg` | `java-11-openjdk-headless` | Java package |
+| `axon_java_agent` | - | AxonOps agent version |
+| `axon_agent_server_host` | - | AxonOps server address |
+
+### What the Cassandra Role Configures
+
+The role automatically handles all production requirements:
+
+- **OS Configuration**: File descriptor limits (100,000+), nproc limits, memory locking
+- **Transparent Huge Pages**: Disabled automatically
+- **Swap Configuration**: Configured for Cassandra workloads
+- **Directory Structure**: Creates data, commitlog, hints, saved_caches with correct permissions
+- **cassandra.yaml**: Complete configuration including cluster settings, networking, snitch, tokens
+- **JVM Options**: Heap sizing (auto-calculated or manual), GC settings, JMX configuration
+- **Security**: Authentication, authorization, SSL/TLS, audit logging
+- **Systemd Service**: Creates and enables the Cassandra service
+- **Firewall Rules**: Opens required ports if firewalld is active
+
+### Common Operations
+
+**Rolling restart (zero-downtime):**
+
+```bash
+make rolling-restart ENVIRONMENT=prd
+```
+
+The rolling restart playbook:
+
+1. Checks cluster health before starting
+2. Drains each node before restart
+3. Waits for node to rejoin cluster
+4. Verifies cluster health before proceeding to next node
+
+**Configuration update (no reinstall):**
+
+```bash
+# Edit configuration
+vim group_vars/prd/cassandra.yml
+
+# Apply config changes only
+make cassandra ENVIRONMENT=prd EXTRA="--tags config"
+
+# Restart to apply
+make rolling-restart ENVIRONMENT=prd
+```
+
+**Upgrade Cassandra version:**
+
+```yaml
+# Update version in group_vars
+cassandra_version: "5.0.6"
+```
+
+```bash
+# Apply upgrade
+make cassandra ENVIRONMENT=prd -e "cassandra_upgrade=true"
+
+# Rolling restart to complete upgrade
+make rolling-restart ENVIRONMENT=prd
+```
+
+### Troubleshooting
+
+```bash
+# Test connectivity to all nodes
+ansible -i inventories/prd/hosts.ini cassandra -m ping
+
+# Run with verbose output
+make cassandra ENVIRONMENT=prd EXTRA="-vvv"
+
+# Run only preflight checks
+make cassandra ENVIRONMENT=prd EXTRA="--tags preflight"
+
+# Check cluster status across all nodes
+ansible -i inventories/prd/hosts.ini cassandra -a "nodetool status"
+
+# View Cassandra logs
+ansible -i inventories/prd/hosts.ini cassandra -a "tail -50 /var/log/cassandra/system.log"
+
+# Check AxonOps agent status
+ansible -i inventories/prd/hosts.ini cassandra -a "systemctl status axon-agent"
+```
+
+### Reference Implementation: AxonOps Cassandra Lab
+
+For a complete, working example that you can clone and adapt, see the **[AxonOps Cassandra Lab](https://github.com/axonops/ansible-cassandra-lab)**:
+
+- **Multi-datacenter**: 12 nodes across 2 DCs with 3 racks each
+- **Infrastructure as Code**: Terraform for Hetzner Cloud (adaptable to other providers)
+- **Complete security**: SSL/TLS, authentication, authorization, audit logging
+- **AxonOps integration**: Full monitoring, alerting, and backup configuration
+- **Web terminal**: Wetty-based browser access to cluster
+- **Workbench integration**: AxonOps Workbench configuration included
+
+```bash
+# Clone the lab project
+git clone https://github.com/axonops/ansible-cassandra-lab.git
+cd ansible-cassandra-lab
+
+# Review and adapt configuration
+cat ansible/group_vars/all/cassandra.yml
+
+# Deploy (after configuring infrastructure)
+cd ansible
+make cassandra ENVIRONMENT=lab
+```
+
+### Additional Resources
+
+- **Ansible Collection**: [axonops/axonops-ansible-collection](https://github.com/axonops/axonops-ansible-collection)
+- **Full Example**: [examples/full-example](https://github.com/axonops/axonops-ansible-collection/tree/main/examples/full-example)
+- **Cassandra Lab**: [axonops/ansible-cassandra-lab](https://github.com/axonops/ansible-cassandra-lab)
+- **AxonOps Cloud Setup**: [Getting Started with AxonOps Cloud](../../../../get_started/cloud.md)
+- **AxonOps Self-Hosted**: [Installing AxonOps Server](../../../../installation/axon-server/axonserver_install.md)
+
+!!! note "Prefer Chef?"
+    If your organization uses Chef instead of Ansible, see the [AxonOps Chef Cookbook](https://github.com/axonops/axonops-chef) for similar functionality.
 
 ---
 
