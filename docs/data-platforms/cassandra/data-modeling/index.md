@@ -826,7 +826,7 @@ Before deploying the schema:
 ## Next Steps
 
 - **[Primary Keys Deep Dive](concepts/index.md)** - Advanced partition key strategies
-- **[Time Bucketing Pattern](patterns/time-bucketing.md)** - Handling time-series data
+- **[Time Bucketing Pattern](../application-development/patterns/time-bucketing.md)** - Handling time-series data
 - **[Anti-Patterns Guide](anti-patterns/index.md)** - What to avoid
 - **[E-Commerce Example](examples/e-commerce.md)** - Complete worked example
 - **[CQL Reference](../cql/index.md)** - Query language details

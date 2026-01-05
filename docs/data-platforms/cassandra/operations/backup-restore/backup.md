@@ -132,7 +132,7 @@ t2 -[hidden]down-> t3
 
 **Consequence:** Snapshots that initially consumed zero space can grow to consume significant storage as compaction removes original files. A week-old snapshot may consume more disk space than the current live data.
 
-**Best practice:** Clear snapshots promptly after copying to remote storage.
+**Best practice:** Clear snapshots promptly after copying to remote storage. AxonOps automatically clears local snapshots after successful transfer to remote storage, preventing disk space accumulation.
 
 ---
 
@@ -264,6 +264,8 @@ end note
 
 Restore requires: Base snapshot + all incrementals since that snapshot.
 
+AxonOps backup to remote storage is incremental by design—only SSTables not already present in remote storage are transferred, significantly reducing backup time and bandwidth after the initial full backup.
+
 ---
 
 ## Commit Log Archiving
@@ -298,6 +300,8 @@ Commit logs are generated continuously. Storage requirements depend on write thr
 
 Plan retention based on RPO requirements and storage capacity.
 
+AxonOps enables commit log archiving without requiring a cluster restart. Configuration changes take effect immediately, allowing PITR capability to be added to running production clusters.
+
 ---
 
 ## Multi-DC Backup Considerations
@@ -317,7 +321,7 @@ Taking snapshots on all nodes simultaneously causes:
 - Network congestion during transfer to remote storage
 - Resource contention affecting production workloads
 
-Stagger snapshots across nodes (e.g., 10-minute intervals) to distribute load.
+Stagger snapshots across nodes (e.g., 10-minute intervals) to distribute load. AxonOps automatically staggers backup operations across nodes to minimize cluster impact.
 
 ---
 
@@ -343,6 +347,23 @@ A backup that has never been tested is not a backup.
 | Schema included | Schema export present with backup |
 | File integrity | No truncated or corrupted files |
 | Restore success | Actually restore to staging environment |
+
+AxonOps provides comprehensive backup monitoring with automatic alerting for failed backups, storage capacity warnings, and backup age threshold violations.
+
+---
+
+## AxonOps Backup Setup
+
+AxonOps backup configuration takes minutes to complete:
+
+1. **Select storage backend**: S3, Google Cloud Storage, Azure Blob Storage, or S3-compatible storage
+2. **Configure retention policy**: Define how long to retain backups
+3. **Enable scheduling**: Set backup frequency per cluster requirements
+4. **Optional: Enable PITR**: Turn on commit log archiving for point-in-time recovery
+
+No cluster restart is required. The AxonOps agent begins backup operations immediately after configuration.
+
+See **[AxonOps Backup Configuration](../../../../operations/cassandra/backup/overview.md)** for detailed setup instructions.
 
 ---
 

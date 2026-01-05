@@ -329,6 +329,8 @@ After `nodetool refresh` loads the SSTables:
 
 **Recommendation:** Run `nodetool repair` on the restored table to ensure full consistency with replicas.
 
+AxonOps provides a guided restore interface for single-table recovery, automatically handling file placement, ownership, and refresh operations.
+
 ---
 
 ### Scenario 2: Single Node Failure
@@ -448,6 +450,8 @@ Hybrid (Restore + Repair):
 ```
 
 The hybrid approach gets the node serving reads faster, though initially with potentially stale data.
+
+AxonOps simplifies node restore through its dashboard interface—select the node and backup point, and AxonOps handles file transfer, placement, and Cassandra restart coordination.
 
 ---
 
@@ -633,6 +637,8 @@ Consider:
 | Target timestamp | Desired recovery point | Administrator-specified |
 
 **Commit log archiving must be configured before the incident.** PITR is not possible without archived commit logs.
+
+AxonOps PITR provides a visual timeline interface for selecting the exact recovery point. The restore process is guided through the UI, with automatic handling of snapshot selection and commit log replay configuration.
 
 #### How Commit Log Replay Works
 
@@ -869,6 +875,8 @@ Quick reference for choosing a restore approach:
 | Migration (same topo) | N/A | N/A | Direct copy if tokens match |
 | Migration (diff topo) | N/A | N/A | sstableloader required |
 
+AxonOps guides operators through restore scenario selection, automatically recommending the appropriate approach based on cluster state and backup availability.
+
 ---
 
 ## The gc_grace_seconds Constraint
@@ -1085,6 +1093,35 @@ If restoring a backup older than gc_grace_seconds:
 | Application health checks | End-to-end functionality |
 | Integration tests | Full application flow |
 | User acceptance | Business validation |
+
+---
+
+## AxonOps Restore
+
+AxonOps provides guided restore operations through its dashboard:
+
+**Snapshot Restore:**
+
+- Browse available backups by date and time
+- Select individual tables, keyspaces, or full node restore
+- Automatic file placement and ownership handling
+- Progress tracking with detailed status updates
+
+**Point-in-Time Recovery:**
+
+- Visual timeline for selecting exact recovery point
+- Automatic base snapshot selection
+- Managed commit log replay configuration
+- Validation of target timestamp feasibility
+
+**Restore Validation:**
+
+- Automatic integrity verification of restored data
+- Schema compatibility checking before restore
+- Post-restore health verification
+- Repair recommendations based on restore scope
+
+See **[AxonOps Restore Operations](../../../../operations/cassandra/restore/overview.md)** for detailed procedures.
 
 ---
 

@@ -10,6 +10,9 @@ meta:
 
 Consistency in Cassandra is tunable—the number of replicas that must acknowledge reads and writes is configurable per operation. This flexibility allows trading consistency for availability and latency.
 
+!!! tip "Quick Reference"
+    For a quick lookup of all consistency levels, quorum calculations, and decision tables, see [Consistency Levels Reference](consistency-levels.md).
+
 ---
 
 ## Consistency Is Per-Request
@@ -833,6 +836,7 @@ org.apache.cassandra.metrics:type=ClientRequest,scope=CASWrite,name=ContentionHi
 
 ## Related Documentation
 
+- **[Consistency Levels Reference](consistency-levels.md)** - Quick lookup tables for all consistency levels
 - **[Distributed Data Overview](index.md)** - How partitioning, replication, and consistency work together
 - **[Replication](replication.md)** - How replicas are placed
 - **[Replica Synchronization](replica-synchronization.md)** - How replicas converge

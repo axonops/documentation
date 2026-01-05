@@ -10,8 +10,8 @@ meta:
 
 Lightweight Transactions (LWT) provide linearizable consistency through compare-and-set operations. They use the Paxos consensus protocol to ensure that only one concurrent operation succeeds when multiple clients attempt to modify the same data.
 
-!!! info "Implementation Reference"
-    LWT was introduced in Cassandra 2.0 (CASSANDRA-5062). The Paxos implementation is defined in `StorageProxy.cas()` and `PaxosState.java`.
+!!! info "Architecture Reference"
+    For details on the Paxos consensus algorithm and how it works internally, see [Consensus Algorithms and Paxos](../../architecture/distributed-data/paxos.md).
 
 ---
 
@@ -82,131 +82,6 @@ Lightweight Transactions (LWT) provide linearizable consistency through compare-
 | 3.0+ | Improved Paxos state management (CASSANDRA-9143) |
 | 4.0+ | Paxos state auto-cleanup, configurable timeouts (CASSANDRA-12126) |
 | 5.0+ | Accord transaction protocol available as alternative (CEP-15) |
-
----
-
-## Overview
-
-### The Problem LWT Solves
-
-Standard Cassandra writes use last-write-wins semantics—concurrent writes to the same row can overwrite each other unpredictably:
-
-**Problem: Last-Write-Wins Race Condition**
-
-| Step | Client A | Client B |
-|------|----------|----------|
-| Initial | `quantity = 1` | `quantity = 1` |
-| Read | Reads quantity = 1 | Reads quantity = 1 |
-| Write | `UPDATE SET quantity = 0` | `UPDATE SET quantity = 0` |
-| **Result** | quantity = 0 | quantity = 0 |
-
-**Problem:** Two items were "sold" but inventory only decremented by 1!
-
-### How LWT Solves It
-
-LWT ensures read-modify-write is atomic:
-
-```plantuml
-@startuml
-skinparam backgroundColor #FFFFFF
-skinparam defaultFontName Arial
-
-title Solution: Lightweight Transaction
-
-rectangle "inventory.quantity = 1" as initial #e8f4f8
-
-rectangle "Client A\nUPDATE ... IF quantity = 1" as clientA #fff3cd
-rectangle "Client B\nUPDATE ... IF quantity = 1" as clientB #fff3cd
-
-rectangle "Paxos Consensus\n(serializes operations)" as paxos #fff3cd
-
-rectangle "Client A: [applied] = true\nquantity = 0" as resultA #d4edda
-rectangle "Client B: [applied] = false\nquantity = 0 returned" as resultB #f8d7da
-
-initial --> clientA
-initial --> clientB
-clientA --> paxos
-clientB --> paxos
-paxos --> resultA : First
-paxos --> resultB : Second
-
-@enduml
-```
-
-### Historical Context
-
-| Version | LWT Feature |
-|---------|-------------|
-| 2.0 | Initial LWT implementation (Paxos) |
-| 2.1 | Performance improvements |
-| 3.0 | Batch LWT support improvements |
-| 4.0 | Paxos state cleanup, better timeouts |
-| 5.0 | Accord transaction protocol (future) |
-
----
-
-## Paxos Consensus
-
-### What Is Paxos?
-
-Paxos is a distributed consensus algorithm that ensures agreement among nodes even when some nodes fail. Cassandra implements a variant called "single-decree Paxos" for LWT.
-
-### Paxos Phases
-
-```plantuml
-@startuml
-skinparam backgroundColor #FFFFFF
-skinparam defaultFontName Arial
-
-participant "Client" as client
-participant "Coordinator" as coord
-database "Replica 1" as r1
-database "Replica 2" as r2
-database "Replica 3" as r3
-
-client -> coord : UPDATE ... IF ...
-
-group Paxos Consensus (4 Round Trips)
-    coord -> r1 : 1. PREPARE (ballot N)
-    coord -> r2 : 1. PREPARE (ballot N)
-    coord -> r3 : 1. PREPARE (ballot N)
-    r1 --> coord : 2. PROMISE (accept ballot ≥ N)
-    r2 --> coord : 2. PROMISE
-    r3 --> coord : 2. PROMISE
-
-    coord -> r1 : 3. READ current value
-    coord -> r2 : 3. READ current value
-    r1 --> coord : Current value
-    r2 --> coord : Current value
-
-    note over coord : Evaluate IF condition
-
-    coord -> r1 : 4. PROPOSE (commit value)
-    coord -> r2 : 4. PROPOSE (commit value)
-    coord -> r3 : 4. PROPOSE (commit value)
-    r1 --> coord : 5. ACCEPT
-    r2 --> coord : 5. ACCEPT
-    r3 --> coord : 5. ACCEPT
-end
-
-coord --> client : [applied] = true/false
-
-@enduml
-```
-
-### Why LWT Is Slow
-
-| Operation | Round Trips | Typical Latency |
-|-----------|-------------|-----------------|
-| Regular write | 1 | 1-5ms |
-| Regular read | 1 | 1-5ms |
-| LWT | 4 | 10-50ms |
-
-**Contributing factors:**
-
-- Multiple network round trips
-- Contention handling (ballot conflicts)
-- Serial execution per partition
 
 ---
 
@@ -420,32 +295,9 @@ UPDATE accounts SET balance = 100 WHERE id = ? IF balance = 50;
 
 ## Contention and Retries
 
-### Contention Handling
+When multiple clients attempt LWT operations on the same partition simultaneously, Paxos serializes the operations. Only one client succeeds; others receive `[applied]=false` with the current row values.
 
-When multiple clients try LWT on the same partition:
-
-```plantuml
-@startuml
-skinparam backgroundColor #FFFFFF
-skinparam defaultFontName Arial
-
-participant "Client A\n(Ballot 100)" as clientA #d4edda
-participant "Paxos" as paxos #fff3cd
-participant "Client B\n(Ballot 101)" as clientB #f8d7da
-
-clientA -> paxos : PREPARE ballot 100
-clientB -> paxos : PREPARE ballot 101
-
-note over paxos : Higher ballot wins\n(101 > 100)
-
-paxos --> clientA : NACK (higher ballot seen)
-paxos --> clientB : PROMISE
-
-note over clientA #f8d7da : Must retry with\nhigher ballot
-note over clientB #d4edda : Proceeds with\nPROPOSE phase
-
-@enduml
-```
+For details on how Paxos handles contention through ballot numbers, see [Paxos Consensus](../../architecture/distributed-data/paxos.md#the-protocol).
 
 ### Client-Side Retry Logic
 
@@ -741,23 +593,9 @@ IF owner = 'node_1';
 
 ---
 
-## Future: Accord Transactions
-
-Cassandra 5.0+ introduces Accord, a new transaction protocol:
-
-| Aspect | Paxos (LWT) | Accord |
-|--------|-------------|--------|
-| Scope | Single partition | Multi-partition |
-| Consistency | Linearizable | Serializable |
-| Latency | 4 round trips | 2 round trips (optimistic) |
-| Throughput | Limited | Higher |
-
-Accord enables true multi-partition transactions without the limitations of batch LWT.
-
----
-
 ## Related Documentation
 
+- **[Paxos Architecture](../../architecture/distributed-data/paxos.md)** - Consensus algorithms and Paxos internals
 - **[INSERT](insert.md)** - IF NOT EXISTS
 - **[UPDATE](update.md)** - IF condition
 - **[DELETE](delete.md)** - IF EXISTS

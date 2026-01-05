@@ -326,6 +326,7 @@ nav:
           - Partitioning: data-platforms/cassandra/architecture/distributed-data/partitioning.md
           - Replication: data-platforms/cassandra/architecture/distributed-data/replication.md
           - Consistency: data-platforms/cassandra/architecture/distributed-data/consistency.md
+          - Consistency Levels Reference: data-platforms/cassandra/architecture/distributed-data/consistency-levels.md
           - Replica Synchronization: data-platforms/cassandra/architecture/distributed-data/replica-synchronization.md
           - Secondary Index Queries: data-platforms/cassandra/architecture/distributed-data/secondary-index-queries.md
           - Materialized Views: data-platforms/cassandra/architecture/distributed-data/materialized-views.md
@@ -387,6 +388,7 @@ nav:
             - Dynamic Data Masking: data-platforms/cassandra/cql/security/dynamic-data-masking.md
           - Indexing: data-platforms/cassandra/cql/indexing/index.md
           - Functions: data-platforms/cassandra/cql/functions/index.md
+          - Lightweight Transactions: data-platforms/cassandra/cql/dml/lightweight-transactions.md
         - Data Modeling:
           - Overview: data-platforms/cassandra/data-modeling/index.md
           - Concepts: data-platforms/cassandra/data-modeling/concepts/index.md
@@ -410,6 +412,7 @@ nav:
           - Sidecar CDC Outbox: data-platforms/cassandra/application-development/patterns/sidecar-cdc-outbox.md
           - Idempotency: data-platforms/cassandra/application-development/patterns/idempotency.md
           - Time-Series Data: data-platforms/cassandra/application-development/patterns/time-series.md
+          - Time Bucketing: data-platforms/cassandra/application-development/patterns/time-bucketing.md
           - Ledger (Finance): data-platforms/cassandra/application-development/patterns/ledger.md
           - Saga: data-platforms/cassandra/application-development/patterns/saga.md
           - Digital Twin (IoT): data-platforms/cassandra/application-development/patterns/digital-twin.md
@@ -602,7 +605,16 @@ nav:
             - sstablelevelreset: data-platforms/cassandra/operations/sstable-management/sstablelevelreset.md
             - sstableofflinerelevel: data-platforms/cassandra/operations/sstable-management/sstableofflinerelevel.md
             - sstablerepairedset: data-platforms/cassandra/operations/sstable-management/sstablerepairedset.md
-        - Cluster Management: data-platforms/cassandra/operations/cluster-management/index.md
+        - Cluster Management:
+          - Overview: data-platforms/cassandra/operations/cluster-management/index.md
+          - Adding Nodes: data-platforms/cassandra/operations/cluster-management/adding-nodes.md
+          - Removing Nodes: data-platforms/cassandra/operations/cluster-management/removing-nodes.md
+          - Replacing Nodes: data-platforms/cassandra/operations/cluster-management/replacing-nodes.md
+          - Scaling Operations: data-platforms/cassandra/operations/cluster-management/scaling.md
+          - Multi-Datacenter: data-platforms/cassandra/operations/cluster-management/multi-datacenter.md
+          - Cleanup Operations: data-platforms/cassandra/operations/cluster-management/cleanup.md
+          - Rolling Restart: data-platforms/cassandra/operations/cluster-management/rolling-restart.md
+          - Troubleshooting: data-platforms/cassandra/operations/cluster-management/troubleshooting.md
         - Backup & Restore:
           - Overview: data-platforms/cassandra/operations/backup-restore/index.md
           - Backup Procedures: data-platforms/cassandra/operations/backup-restore/backup.md

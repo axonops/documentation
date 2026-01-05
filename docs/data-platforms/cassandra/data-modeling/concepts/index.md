@@ -801,7 +801,7 @@ VALUES (?, ?, 'Bob', 'Designer');
 
 ## Next Steps
 
-- **[Time Bucketing Pattern](../patterns/time-bucketing.md)** - Managing time-series data
+- **[Time Bucketing Pattern](../../application-development/patterns/time-bucketing.md)** - Managing time-series data
 - **[Anti-Patterns](../anti-patterns/index.md)** - Mistakes to avoid
 - **[E-Commerce Example](../examples/e-commerce.md)** - Complete schema design
 - **[CQL Reference](../../cql/index.md)** - Query language details

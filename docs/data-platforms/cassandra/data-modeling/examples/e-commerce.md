@@ -938,7 +938,7 @@ nodetool tablehistograms ecommerce.shopping_carts    # Abandoned carts
 
 ## Next Steps
 
-- **[Time Bucketing](../patterns/time-bucketing.md)** - For high-volume events
+- **[Time Bucketing](../../application-development/patterns/time-bucketing.md)** - For high-volume events
 - **[Anti-Patterns](../anti-patterns/index.md)** - Mistakes to avoid
 - **[Operations Guide](../../operations/index.md)** - Production operations
 - **[Performance Tuning](../../operations/performance/index.md)** - Optimization

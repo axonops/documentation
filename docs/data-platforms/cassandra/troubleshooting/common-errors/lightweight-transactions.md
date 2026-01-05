@@ -203,5 +203,5 @@ See [Failure Semantics](../../cql/dml/lightweight-transactions.md#failure-semant
 ## Related Documentation
 
 - [Lightweight Transactions Reference](../../cql/dml/lightweight-transactions.md) - Complete LWT documentation
-- [Consistency Levels](../../cql/consistency.md) - Understanding SERIAL and LOCAL_SERIAL
+- [Consistency Levels](../../architecture/distributed-data/consistency.md) - Understanding SERIAL and LOCAL_SERIAL
 - [Troubleshooting Overview](../index.md) - General troubleshooting framework

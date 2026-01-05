@@ -414,6 +414,8 @@ Recovery = Restore snapshot + replay commit logs to target time
 | Incremental | Changed SSTables | Hours | Medium | Reduce storage between snapshots |
 | Commit log archiving | Continuous | Minutes | High | Point-in-time recovery |
 
+AxonOps simplifies backup implementation by handling snapshot scheduling, remote storage transfer, and commit log archiving—configuration takes minutes and requires no cluster restart.
+
 See **[Backup Procedures](backup.md)** for implementation details.
 
 ---
@@ -429,6 +431,8 @@ See **[Backup Procedures](backup.md)** for implementation details.
 | Point-in-time recovery | High | Snapshot + commit log replay |
 | Migration to new cluster | Medium | `sstableloader` |
 
+AxonOps provides guided restore workflows for each scenario, reducing complexity and eliminating manual file handling.
+
 See **[Restore Procedures](restore.md)** for detailed procedures.
 
 ---
@@ -443,14 +447,15 @@ Implementing enterprise-grade backup and restore requires significant operationa
 - Regular restore testing and validation
 - Documentation and runbook maintenance
 
-AxonOps provides a fully managed backup solution:
+AxonOps provides a fully managed backup solution that can be configured in minutes:
 
+- **Rapid setup**: Configure backups against S3, GCS, Azure Blob, or S3-compatible storage in minutes
+- **No restart required**: Enable backup and commit log archiving on running clusters without downtime
+- **Efficient transfers**: Only SSTables not already in remote storage are transferred, minimizing bandwidth and time
+- **Point-in-time recovery**: Commit log archiving with visual timeline for precise recovery point selection
+- **Guided restore**: Dashboard-driven restore process for both snapshot and PITR operations
 - **Automated scheduling** with configurable retention policies
-- **Remote storage integration** (S3, GCS, Azure Blob)
-- **Point-in-time recovery** with commit log archiving
-- **Backup monitoring and alerting**
-- **One-click restore** through the dashboard
-- **Compliance reporting** for audit requirements
+- **Backup monitoring and alerting** for failures, capacity, and compliance
 
 See **[AxonOps Backup](../../../../operations/cassandra/backup/overview.md)** for configuration and usage.
 
