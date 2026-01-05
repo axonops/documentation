@@ -4398,6 +4398,66 @@ data-et-multi-view="{&quot;schema&quot;:{&quot;content&quot;:{&quot;desktop&quot
     <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
       
         <li class="md-nav__item">
+  <a href="#how-cassandra-drivers-differ-from-traditional-database-drivers" class="md-nav__link">
+    <span class="md-ellipsis">
+      How Cassandra Drivers Differ from Traditional Database Drivers
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="How Cassandra Drivers Differ from Traditional Database Drivers">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#multiplexed-connections-not-connection-pools" class="md-nav__link">
+    <span class="md-ellipsis">
+      Multiplexed Connections, Not Connection Pools
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#persistent-connections-with-cluster-awareness" class="md-nav__link">
+    <span class="md-ellipsis">
+      Persistent Connections with Cluster Awareness
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#dynamic-connection-management" class="md-nav__link">
+    <span class="md-ellipsis">
+      Dynamic Connection Management
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#request-routing-intelligence" class="md-nav__link">
+    <span class="md-ellipsis">
+      Request Routing Intelligence
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#implications-for-application-design" class="md-nav__link">
+    <span class="md-ellipsis">
+      Implications for Application Design
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#available-drivers" class="md-nav__link">
     <span class="md-ellipsis">
       Available Drivers
@@ -4429,6 +4489,15 @@ data-et-multi-view="{&quot;schema&quot;:{&quot;content&quot;:{&quot;desktop&quot
   <a href="#python" class="md-nav__link">
     <span class="md-ellipsis">
       Python
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#python-async" class="md-nav__link">
+    <span class="md-ellipsis">
+      Python (Async)
     </span>
   </a>
   
@@ -4494,6 +4563,75 @@ data-et-multi-view="{&quot;schema&quot;:{&quot;content&quot;:{&quot;desktop&quot
   
 </li>
         
+          <li class="md-nav__item">
+  <a href="#java-driver-configuration-system" class="md-nav__link">
+    <span class="md-ellipsis">
+      Java Driver Configuration System
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Java Driver Configuration System">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#how-it-works" class="md-nav__link">
+    <span class="md-ellipsis">
+      How It Works
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#configuration-loading-order" class="md-nav__link">
+    <span class="md-ellipsis">
+      Configuration Loading Order
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#execution-profiles" class="md-nav__link">
+    <span class="md-ellipsis">
+      Execution Profiles
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#programmatic-configuration" class="md-nav__link">
+    <span class="md-ellipsis">
+      Programmatic Configuration
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#loading-from-external-files" class="md-nav__link">
+    <span class="md-ellipsis">
+      Loading from External Files
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#configuration-reloading" class="md-nav__link">
+    <span class="md-ellipsis">
+      Configuration Reloading
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
       </ul>
     </nav>
   
@@ -4510,9 +4648,36 @@ data-et-multi-view="{&quot;schema&quot;:{&quot;content&quot;:{&quot;desktop&quot
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
-  <a href="#token-aware-recommended" class="md-nav__link">
+  <a href="#understanding-contact-points" class="md-nav__link">
     <span class="md-ellipsis">
-      Token-Aware (Recommended)
+      Understanding Contact Points
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#why-load-balancing-matters" class="md-nav__link">
+    <span class="md-ellipsis">
+      Why Load Balancing Matters
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#policy-types" class="md-nav__link">
+    <span class="md-ellipsis">
+      Policy Types
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#token-aware-policy-recommended" class="md-nav__link">
+    <span class="md-ellipsis">
+      Token-Aware Policy (Recommended)
     </span>
   </a>
   
@@ -4522,6 +4687,24 @@ data-et-multi-view="{&quot;schema&quot;:{&quot;content&quot;:{&quot;desktop&quot
   <a href="#dc-aware-round-robin" class="md-nav__link">
     <span class="md-ellipsis">
       DC-Aware Round Robin
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#configuring-failover-to-remote-dcs" class="md-nav__link">
+    <span class="md-ellipsis">
+      Configuring Failover to Remote DCs
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#avoiding-common-mistakes" class="md-nav__link">
+    <span class="md-ellipsis">
+      Avoiding Common Mistakes
     </span>
   </a>
   
@@ -4543,9 +4726,69 @@ data-et-multi-view="{&quot;schema&quot;:{&quot;content&quot;:{&quot;desktop&quot
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
-  <a href="#example" class="md-nav__link">
+  <a href="#why-use-prepared-statements" class="md-nav__link">
     <span class="md-ellipsis">
-      Example
+      Why Use Prepared Statements?
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#correct-usage-pattern" class="md-nav__link">
+    <span class="md-ellipsis">
+      Correct Usage Pattern
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#anti-patterns-to-avoid" class="md-nav__link">
+    <span class="md-ellipsis">
+      Anti-Patterns to Avoid
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Anti-Patterns to Avoid">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#preparing-the-same-statement-repeatedly" class="md-nav__link">
+    <span class="md-ellipsis">
+      ❌ Preparing the Same Statement Repeatedly
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#embedding-values-in-the-query-string" class="md-nav__link">
+    <span class="md-ellipsis">
+      ❌ Embedding Values in the Query String
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#dynamic-table-or-column-names" class="md-nav__link">
+    <span class="md-ellipsis">
+      ❌ Dynamic Table or Column Names
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#server-side-prepared-statement-cache" class="md-nav__link">
+    <span class="md-ellipsis">
+      Server-Side Prepared Statement Cache
     </span>
   </a>
   
@@ -4591,6 +4834,15 @@ data-et-multi-view="{&quot;schema&quot;:{&quot;content&quot;:{&quot;desktop&quot
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
+  <a href="#why-async-matters" class="md-nav__link">
+    <span class="md-ellipsis">
+      Why Async Matters
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
   <a href="#python-asyncio" class="md-nav__link">
     <span class="md-ellipsis">
       Python (asyncio)
@@ -4633,9 +4885,18 @@ data-et-multi-view="{&quot;schema&quot;:{&quot;content&quot;:{&quot;desktop&quot
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
-  <a href="#python_1" class="md-nav__link">
+  <a href="#python-sync-driver" class="md-nav__link">
     <span class="md-ellipsis">
-      Python
+      Python (sync driver)
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#python-async-driver" class="md-nav__link">
+    <span class="md-ellipsis">
+      Python (async driver)
     </span>
   </a>
   
@@ -4662,6 +4923,57 @@ data-et-multi-view="{&quot;schema&quot;:{&quot;content&quot;:{&quot;desktop&quot
     </span>
   </a>
   
+    <nav class="md-nav" aria-label="Retry Policies">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#idempotency-critical-for-safe-retries" class="md-nav__link">
+    <span class="md-ellipsis">
+      Idempotency: Critical for Safe Retries
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#python-sync-driver_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      Python (sync driver)
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#python-async-driver_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      Python (async driver)
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#java_2" class="md-nav__link">
+    <span class="md-ellipsis">
+      Java
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#built-in-retry-policies" class="md-nav__link">
+    <span class="md-ellipsis">
+      Built-in Retry Policies
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
 </li>
       
         <li class="md-nav__item">
@@ -4675,9 +4987,9 @@ data-et-multi-view="{&quot;schema&quot;:{&quot;content&quot;:{&quot;desktop&quot
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
-  <a href="#example_1" class="md-nav__link">
+  <a href="#examples" class="md-nav__link">
     <span class="md-ellipsis">
-      Example
+      Examples
     </span>
   </a>
   
@@ -14480,7 +14792,7 @@ data-et-multi-view="{&quot;schema&quot;:{&quot;content&quot;:{&quot;desktop&quot
             
   
   <span class="md-ellipsis">
-    Playbooks
+    Common Errors
   </span>
   
 
@@ -14489,6 +14801,136 @@ data-et-multi-view="{&quot;schema&quot;:{&quot;content&quot;:{&quot;desktop&quot
         
         <nav class="md-nav" data-md-level="4" aria-labelledby="__nav_7_2_8_4_label" aria-expanded="false">
           <label class="md-nav__title" for="__nav_7_2_8_4">
+            <span class="md-nav__icon md-icon"></span>
+            Common Errors
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../troubleshooting/common-errors/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Overview
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../troubleshooting/common-errors/read-timeout/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Read Timeout
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../troubleshooting/common-errors/write-timeout/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Write Timeout
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../troubleshooting/common-errors/lightweight-transactions/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Lightweight Transactions
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+    
+      
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_7_2_8_5" >
+        
+          
+          <label class="md-nav__link" for="__nav_7_2_8_5" id="__nav_7_2_8_5_label" tabindex="0">
+            
+  
+  <span class="md-ellipsis">
+    Playbooks
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="4" aria-labelledby="__nav_7_2_8_5_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_7_2_8_5">
             <span class="md-nav__icon md-icon"></span>
             Playbooks
           </label>
@@ -19322,6 +19764,66 @@ data-et-multi-view="{&quot;schema&quot;:{&quot;content&quot;:{&quot;desktop&quot
     <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
       
         <li class="md-nav__item">
+  <a href="#how-cassandra-drivers-differ-from-traditional-database-drivers" class="md-nav__link">
+    <span class="md-ellipsis">
+      How Cassandra Drivers Differ from Traditional Database Drivers
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="How Cassandra Drivers Differ from Traditional Database Drivers">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#multiplexed-connections-not-connection-pools" class="md-nav__link">
+    <span class="md-ellipsis">
+      Multiplexed Connections, Not Connection Pools
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#persistent-connections-with-cluster-awareness" class="md-nav__link">
+    <span class="md-ellipsis">
+      Persistent Connections with Cluster Awareness
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#dynamic-connection-management" class="md-nav__link">
+    <span class="md-ellipsis">
+      Dynamic Connection Management
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#request-routing-intelligence" class="md-nav__link">
+    <span class="md-ellipsis">
+      Request Routing Intelligence
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#implications-for-application-design" class="md-nav__link">
+    <span class="md-ellipsis">
+      Implications for Application Design
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#available-drivers" class="md-nav__link">
     <span class="md-ellipsis">
       Available Drivers
@@ -19353,6 +19855,15 @@ data-et-multi-view="{&quot;schema&quot;:{&quot;content&quot;:{&quot;desktop&quot
   <a href="#python" class="md-nav__link">
     <span class="md-ellipsis">
       Python
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#python-async" class="md-nav__link">
+    <span class="md-ellipsis">
+      Python (Async)
     </span>
   </a>
   
@@ -19418,6 +19929,75 @@ data-et-multi-view="{&quot;schema&quot;:{&quot;content&quot;:{&quot;desktop&quot
   
 </li>
         
+          <li class="md-nav__item">
+  <a href="#java-driver-configuration-system" class="md-nav__link">
+    <span class="md-ellipsis">
+      Java Driver Configuration System
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Java Driver Configuration System">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#how-it-works" class="md-nav__link">
+    <span class="md-ellipsis">
+      How It Works
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#configuration-loading-order" class="md-nav__link">
+    <span class="md-ellipsis">
+      Configuration Loading Order
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#execution-profiles" class="md-nav__link">
+    <span class="md-ellipsis">
+      Execution Profiles
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#programmatic-configuration" class="md-nav__link">
+    <span class="md-ellipsis">
+      Programmatic Configuration
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#loading-from-external-files" class="md-nav__link">
+    <span class="md-ellipsis">
+      Loading from External Files
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#configuration-reloading" class="md-nav__link">
+    <span class="md-ellipsis">
+      Configuration Reloading
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
       </ul>
     </nav>
   
@@ -19434,9 +20014,36 @@ data-et-multi-view="{&quot;schema&quot;:{&quot;content&quot;:{&quot;desktop&quot
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
-  <a href="#token-aware-recommended" class="md-nav__link">
+  <a href="#understanding-contact-points" class="md-nav__link">
     <span class="md-ellipsis">
-      Token-Aware (Recommended)
+      Understanding Contact Points
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#why-load-balancing-matters" class="md-nav__link">
+    <span class="md-ellipsis">
+      Why Load Balancing Matters
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#policy-types" class="md-nav__link">
+    <span class="md-ellipsis">
+      Policy Types
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#token-aware-policy-recommended" class="md-nav__link">
+    <span class="md-ellipsis">
+      Token-Aware Policy (Recommended)
     </span>
   </a>
   
@@ -19446,6 +20053,24 @@ data-et-multi-view="{&quot;schema&quot;:{&quot;content&quot;:{&quot;desktop&quot
   <a href="#dc-aware-round-robin" class="md-nav__link">
     <span class="md-ellipsis">
       DC-Aware Round Robin
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#configuring-failover-to-remote-dcs" class="md-nav__link">
+    <span class="md-ellipsis">
+      Configuring Failover to Remote DCs
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#avoiding-common-mistakes" class="md-nav__link">
+    <span class="md-ellipsis">
+      Avoiding Common Mistakes
     </span>
   </a>
   
@@ -19467,9 +20092,69 @@ data-et-multi-view="{&quot;schema&quot;:{&quot;content&quot;:{&quot;desktop&quot
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
-  <a href="#example" class="md-nav__link">
+  <a href="#why-use-prepared-statements" class="md-nav__link">
     <span class="md-ellipsis">
-      Example
+      Why Use Prepared Statements?
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#correct-usage-pattern" class="md-nav__link">
+    <span class="md-ellipsis">
+      Correct Usage Pattern
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#anti-patterns-to-avoid" class="md-nav__link">
+    <span class="md-ellipsis">
+      Anti-Patterns to Avoid
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Anti-Patterns to Avoid">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#preparing-the-same-statement-repeatedly" class="md-nav__link">
+    <span class="md-ellipsis">
+      ❌ Preparing the Same Statement Repeatedly
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#embedding-values-in-the-query-string" class="md-nav__link">
+    <span class="md-ellipsis">
+      ❌ Embedding Values in the Query String
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#dynamic-table-or-column-names" class="md-nav__link">
+    <span class="md-ellipsis">
+      ❌ Dynamic Table or Column Names
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#server-side-prepared-statement-cache" class="md-nav__link">
+    <span class="md-ellipsis">
+      Server-Side Prepared Statement Cache
     </span>
   </a>
   
@@ -19515,6 +20200,15 @@ data-et-multi-view="{&quot;schema&quot;:{&quot;content&quot;:{&quot;desktop&quot
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
+  <a href="#why-async-matters" class="md-nav__link">
+    <span class="md-ellipsis">
+      Why Async Matters
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
   <a href="#python-asyncio" class="md-nav__link">
     <span class="md-ellipsis">
       Python (asyncio)
@@ -19557,9 +20251,18 @@ data-et-multi-view="{&quot;schema&quot;:{&quot;content&quot;:{&quot;desktop&quot
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
-  <a href="#python_1" class="md-nav__link">
+  <a href="#python-sync-driver" class="md-nav__link">
     <span class="md-ellipsis">
-      Python
+      Python (sync driver)
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#python-async-driver" class="md-nav__link">
+    <span class="md-ellipsis">
+      Python (async driver)
     </span>
   </a>
   
@@ -19586,6 +20289,57 @@ data-et-multi-view="{&quot;schema&quot;:{&quot;content&quot;:{&quot;desktop&quot
     </span>
   </a>
   
+    <nav class="md-nav" aria-label="Retry Policies">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#idempotency-critical-for-safe-retries" class="md-nav__link">
+    <span class="md-ellipsis">
+      Idempotency: Critical for Safe Retries
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#python-sync-driver_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      Python (sync driver)
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#python-async-driver_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      Python (async driver)
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#java_2" class="md-nav__link">
+    <span class="md-ellipsis">
+      Java
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#built-in-retry-policies" class="md-nav__link">
+    <span class="md-ellipsis">
+      Built-in Retry Policies
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
 </li>
       
         <li class="md-nav__item">
@@ -19599,9 +20353,9 @@ data-et-multi-view="{&quot;schema&quot;:{&quot;content&quot;:{&quot;desktop&quot
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
-  <a href="#example_1" class="md-nav__link">
+  <a href="#examples" class="md-nav__link">
     <span class="md-ellipsis">
-      Example
+      Examples
     </span>
   </a>
   
@@ -19680,6 +20434,108 @@ data-et-multi-view="{&quot;schema&quot;:{&quot;content&quot;:{&quot;desktop&quot
 
 <div><h1 id="cassandra-driver-guide">Cassandra Driver Guide<a class="headerlink" href="#cassandra-driver-guide" title="Permanent link">¶</a></h1>
 <p>This guide covers connecting applications to Apache Cassandra using official drivers, with setup and basic usage for popular programming languages.</p>
+<h2 id="how-cassandra-drivers-differ-from-traditional-database-drivers">How Cassandra Drivers Differ from Traditional Database Drivers<a class="headerlink" href="#how-cassandra-drivers-differ-from-traditional-database-drivers" title="Permanent link">¶</a></h2>
+<p>Cassandra's native protocol works fundamentally differently from traditional database drivers (JDBC, ODBC, etc.). Understanding these differences is essential for building efficient applications.</p>
+<h3 id="multiplexed-connections-not-connection-pools">Multiplexed Connections, Not Connection Pools<a class="headerlink" href="#multiplexed-connections-not-connection-pools" title="Permanent link">¶</a></h3>
+<p>Traditional database drivers use a <strong>connection-per-query</strong> model:</p>
+<ul>
+<li>Each query requires an exclusive connection</li>
+<li>Connection pools manage a fixed set of connections (e.g., 10-100)</li>
+<li>Under load, queries queue waiting for an available connection</li>
+<li>Each connection = one in-flight request</li>
+</ul>
+<p>Cassandra drivers use a <strong>multiplexed connection</strong> model:</p>
+<ul>
+<li>A single TCP connection handles <strong>thousands of concurrent requests</strong> (up to 32,768 with protocol v3+)</li>
+<li>Requests are tagged with unique stream IDs and multiplexed over the connection</li>
+<li>Responses are matched to requests by stream ID, arriving in any order</li>
+<li>No query queuing at the connection level - all requests are immediately in-flight</li>
+</ul>
+<div class="highlight"><pre><span></span><code>Traditional (MySQL, PostgreSQL):
+  Connection 1: [Query A waiting...] → [Response A]
+  Connection 2: [Query B waiting...] → [Response B]
+  Connection 3: [Query C waiting...] → [Response C]
+  (3 connections for 3 concurrent queries)
+
+Cassandra (multiplexed):
+  Connection 1: [Query A id=1] [Query B id=2] [Query C id=3] → [Response B] [Response A] [Response C]
+  (1 connection for thousands of concurrent queries)
+</code></pre></div>
+<p>This means you <strong>do not need large connection pools</strong>. A single connection per host is often sufficient, and the driver manages this automatically.</p>
+<h3 id="persistent-connections-with-cluster-awareness">Persistent Connections with Cluster Awareness<a class="headerlink" href="#persistent-connections-with-cluster-awareness" title="Permanent link">¶</a></h3>
+<p>Unlike traditional drivers that simply execute queries, Cassandra drivers maintain an <strong>ongoing relationship</strong> with the cluster. This is why <code>Cluster</code> and <code>Session</code> instances are designed to be <strong>long-lived</strong> - you create them once at application startup and reuse them for the entire application lifecycle. Creating multiple instances is unnecessary and wasteful; a single <code>Session</code> can handle all your application's queries concurrently.</p>
+<p><strong>At connection time:</strong></p>
+<ol>
+<li>Driver connects to one of the provided contact points</li>
+<li>Queries system tables to discover all nodes, their tokens, and datacenter/rack topology</li>
+<li>Establishes connections to nodes based on the load balancing policy</li>
+<li>Subscribes to cluster event notifications</li>
+</ol>
+<p><strong>During operation:</strong></p>
+<p>The driver continuously receives <strong>push notifications</strong> from the cluster about:</p>
+<ul>
+<li><strong>Topology changes</strong> - nodes added, removed, or moving tokens</li>
+<li><strong>Status changes</strong> - nodes going up or down (immediate notification, not polling)</li>
+<li><strong>Schema changes</strong> - tables created, altered, or dropped</li>
+</ul>
+<p>This makes the driver <strong>highly available and self-healing</strong>:</p>
+<ul>
+<li>If a node goes down, the driver is notified immediately and routes around it</li>
+<li>New nodes are automatically discovered and added to the connection pool</li>
+<li>Schema changes are detected and prepared statements are automatically re-prepared</li>
+</ul>
+<h3 id="dynamic-connection-management">Dynamic Connection Management<a class="headerlink" href="#dynamic-connection-management" title="Permanent link">¶</a></h3>
+<p>The driver automatically adjusts connections based on load and cluster changes:</p>
+<ul>
+<li>Connections are established lazily to nodes as needed</li>
+<li>Failed connections are automatically retried with configurable backoff</li>
+<li>Connections are distributed based on load balancing policy (not all nodes need connections)</li>
+<li>The driver maintains heartbeats to detect stale connections</li>
+</ul>
+<h3 id="request-routing-intelligence">Request Routing Intelligence<a class="headerlink" href="#request-routing-intelligence" title="Permanent link">¶</a></h3>
+<p>Unlike traditional drivers that send all queries to a single endpoint (or load balancer), Cassandra drivers include <strong>token-aware routing</strong>:</p>
+<ul>
+<li>The driver knows which nodes own which data (via token ranges)</li>
+<li>Queries are sent directly to a node that has the data locally</li>
+<li>This eliminates an extra network hop that a coordinator would add</li>
+<li>The routing table is continuously updated as topology changes</li>
+</ul>
+<h3 id="implications-for-application-design">Implications for Application Design<a class="headerlink" href="#implications-for-application-design" title="Permanent link">¶</a></h3>
+<table>
+<thead>
+<tr>
+<th>Traditional Driver Pattern</th>
+<th>Cassandra Driver Pattern</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Configure connection pool size carefully</td>
+<td>Minimal configuration needed - driver auto-manages</td>
+</tr>
+<tr>
+<td>Monitor pool exhaustion</td>
+<td>Monitor per-host request queues</td>
+</tr>
+<tr>
+<td>Scale connections with load</td>
+<td>Scale with more application instances</td>
+</tr>
+<tr>
+<td>Health checks via test queries</td>
+<td>Health managed via protocol events</td>
+</tr>
+<tr>
+<td>Retry logic in application</td>
+<td>Retry policies built into driver</td>
+</tr>
+<tr>
+<td>Manual failover configuration</td>
+<td>Automatic failover via cluster awareness</td>
+</tr>
+</tbody>
+</table>
+<hr>
 <h2 id="available-drivers">Available Drivers<a class="headerlink" href="#available-drivers" title="Permanent link">¶</a></h2>
 <table>
 <thead>
@@ -19698,10 +20554,22 @@ data-et-multi-view="{&quot;schema&quot;:{&quot;content&quot;:{&quot;desktop&quot
 <td><a href="https://github.com/apache/cassandra-java-driver">GitHub</a></td>
 </tr>
 <tr>
+<td><strong>Scala/Java</strong></td>
+<td>Apache Spark Cassandra Connector</td>
+<td>Production</td>
+<td><a href="https://github.com/datastax/spark-cassandra-connector">GitHub</a></td>
+</tr>
+<tr>
 <td><strong>Python</strong></td>
 <td>Apache Cassandra Python Driver</td>
 <td>Production</td>
 <td><a href="https://github.com/apache/cassandra-python-driver">GitHub</a></td>
+</tr>
+<tr>
+<td><strong>Python</strong></td>
+<td>Async Python Cassandra Client</td>
+<td>Early Release</td>
+<td><a href="https://github.com/axonops/async-python-cassandra-client">GitHub</a></td>
 </tr>
 <tr>
 <td><strong>Node.js</strong></td>
@@ -19717,9 +20585,9 @@ data-et-multi-view="{&quot;schema&quot;:{&quot;content&quot;:{&quot;desktop&quot
 </tr>
 <tr>
 <td><strong>C#/.NET</strong></td>
-<td>Apache Cassandra C# Driver</td>
+<td>DataStax C# Driver</td>
 <td>Production</td>
-<td><a href="https://github.com/apache/cassandra-csharp-driver">GitHub</a></td>
+<td><a href="https://github.com/datastax/csharp-driver">GitHub</a></td>
 </tr>
 <tr>
 <td><strong>C/C++</strong></td>
@@ -19729,15 +20597,15 @@ data-et-multi-view="{&quot;schema&quot;:{&quot;content&quot;:{&quot;desktop&quot
 </tr>
 <tr>
 <td><strong>Ruby</strong></td>
-<td>Apache Cassandra Ruby Driver</td>
-<td>Production</td>
-<td><a href="https://github.com/apache/cassandra-ruby-driver">GitHub</a></td>
+<td>DataStax Ruby Driver</td>
+<td>Maintenance</td>
+<td><a href="https://github.com/datastax/ruby-driver">GitHub</a></td>
 </tr>
 <tr>
 <td><strong>PHP</strong></td>
-<td>Apache Cassandra PHP Driver</td>
-<td>Production</td>
-<td><a href="https://github.com/apache/cassandra-php-driver">GitHub</a></td>
+<td>DataStax PHP Driver</td>
+<td>Maintenance</td>
+<td><a href="https://github.com/datastax/php-driver">GitHub</a></td>
 </tr>
 </tbody>
 </table>
@@ -19780,6 +20648,27 @@ data-et-multi-view="{&quot;schema&quot;:{&quot;content&quot;:{&quot;desktop&quot
 <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">"Cassandra version: </span><span class="si">{</span><span class="n">row</span><span class="o">.</span><span class="n">release_version</span><span class="si">}</span><span class="s2">"</span><span class="p">)</span>
 
 <span class="n">cluster</span><span class="o">.</span><span class="n">shutdown</span><span class="p">()</span>
+</code></pre></div>
+<h3 id="python-async">Python (Async)<a class="headerlink" href="#python-async" title="Permanent link">¶</a></h3>
+<p>For async frameworks like FastAPI and aiohttp. Requires Python 3.12+ and Cassandra 4.0+:</p>
+<div class="highlight"><pre><span></span><code>pip<span class="w"> </span>install<span class="w"> </span>async-cassandra
+</code></pre></div>
+<div class="highlight"><pre><span></span><code><span class="kn">import</span> <span class="nn">asyncio</span>
+<span class="kn">from</span> <span class="nn">async_cassandra</span> <span class="kn">import</span> <span class="n">AsyncCluster</span>
+
+<span class="k">async</span> <span class="k">def</span> <span class="nf">main</span><span class="p">():</span>
+    <span class="c1"># Create long-lived cluster and session</span>
+    <span class="n">cluster</span> <span class="o">=</span> <span class="n">AsyncCluster</span><span class="p">([</span><span class="s1">'127.0.0.1'</span><span class="p">])</span>
+    <span class="n">session</span> <span class="o">=</span> <span class="k">await</span> <span class="n">cluster</span><span class="o">.</span><span class="n">connect</span><span class="p">()</span>
+
+    <span class="n">result</span> <span class="o">=</span> <span class="k">await</span> <span class="n">session</span><span class="o">.</span><span class="n">execute</span><span class="p">(</span><span class="s2">"SELECT release_version FROM system.local"</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">"Cassandra version: </span><span class="si">{</span><span class="n">result</span><span class="o">.</span><span class="n">one</span><span class="p">()</span><span class="o">.</span><span class="n">release_version</span><span class="si">}</span><span class="s2">"</span><span class="p">)</span>
+
+    <span class="c1"># Only close when application shuts down</span>
+    <span class="k">await</span> <span class="n">session</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
+    <span class="k">await</span> <span class="n">cluster</span><span class="o">.</span><span class="n">shutdown</span><span class="p">()</span>
+
+<span class="n">asyncio</span><span class="o">.</span><span class="n">run</span><span class="p">(</span><span class="n">main</span><span class="p">())</span>
 </code></pre></div>
 <h3 id="nodejs">Node.js<a class="headerlink" href="#nodejs" title="Permanent link">¶</a></h3>
 <div class="highlight"><pre><span></span><code>npm<span class="w"> </span>install<span class="w"> </span>cassandra-driver
@@ -19863,7 +20752,15 @@ data-et-multi-view="{&quot;schema&quot;:{&quot;content&quot;:{&quot;desktop&quot
 </tbody>
 </table>
 <h3 id="authentication">Authentication<a class="headerlink" href="#authentication" title="Permanent link">¶</a></h3>
-<div class="highlight"><pre><span></span><code><span class="c1"># Python example with authentication</span>
+<p><strong>Java</strong>:</p>
+<div class="highlight"><pre><span></span><code><span class="n">CqlSession</span><span class="w"> </span><span class="n">session</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">CqlSession</span><span class="p">.</span><span class="na">builder</span><span class="p">()</span>
+<span class="w">    </span><span class="p">.</span><span class="na">addContactPoint</span><span class="p">(</span><span class="k">new</span><span class="w"> </span><span class="n">InetSocketAddress</span><span class="p">(</span><span class="s">"127.0.0.1"</span><span class="p">,</span><span class="w"> </span><span class="mi">9042</span><span class="p">))</span>
+<span class="w">    </span><span class="p">.</span><span class="na">withLocalDatacenter</span><span class="p">(</span><span class="s">"dc1"</span><span class="p">)</span>
+<span class="w">    </span><span class="p">.</span><span class="na">withAuthCredentials</span><span class="p">(</span><span class="s">"app_user"</span><span class="p">,</span><span class="w"> </span><span class="s">"app_password"</span><span class="p">)</span>
+<span class="w">    </span><span class="p">.</span><span class="na">build</span><span class="p">();</span>
+</code></pre></div>
+<p><strong>Python</strong>:</p>
+<div class="highlight"><pre><span></span><code><span class="kn">from</span> <span class="nn">cassandra.cluster</span> <span class="kn">import</span> <span class="n">Cluster</span>
 <span class="kn">from</span> <span class="nn">cassandra.auth</span> <span class="kn">import</span> <span class="n">PlainTextAuthProvider</span>
 
 <span class="n">auth_provider</span> <span class="o">=</span> <span class="n">PlainTextAuthProvider</span><span class="p">(</span>
@@ -19877,8 +20774,25 @@ data-et-multi-view="{&quot;schema&quot;:{&quot;content&quot;:{&quot;desktop&quot
 <span class="p">)</span>
 </code></pre></div>
 <h3 id="ssltls">SSL/TLS<a class="headerlink" href="#ssltls" title="Permanent link">¶</a></h3>
-<div class="highlight"><pre><span></span><code><span class="c1"># Python example with SSL</span>
-<span class="kn">from</span> <span class="nn">cassandra.cluster</span> <span class="kn">import</span> <span class="n">Cluster</span>
+<p><strong>Java</strong> (application.conf):</p>
+<div class="highlight"><pre><span></span><code>datastax-java-driver {
+  advanced.ssl-engine-factory {
+    class = DefaultSslEngineFactory
+    truststore-path = /path/to/truststore.jks
+    truststore-password = truststorepass
+    keystore-path = /path/to/keystore.jks
+    keystore-password = keystorepass
+  }
+}
+</code></pre></div>
+<div class="highlight"><pre><span></span><code><span class="c1">// SSL is automatically enabled when ssl-engine-factory is configured</span>
+<span class="n">CqlSession</span><span class="w"> </span><span class="n">session</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">CqlSession</span><span class="p">.</span><span class="na">builder</span><span class="p">()</span>
+<span class="w">    </span><span class="p">.</span><span class="na">addContactPoint</span><span class="p">(</span><span class="k">new</span><span class="w"> </span><span class="n">InetSocketAddress</span><span class="p">(</span><span class="s">"127.0.0.1"</span><span class="p">,</span><span class="w"> </span><span class="mi">9042</span><span class="p">))</span>
+<span class="w">    </span><span class="p">.</span><span class="na">withLocalDatacenter</span><span class="p">(</span><span class="s">"dc1"</span><span class="p">)</span>
+<span class="w">    </span><span class="p">.</span><span class="na">build</span><span class="p">();</span>
+</code></pre></div>
+<p><strong>Python</strong>:</p>
+<div class="highlight"><pre><span></span><code><span class="kn">from</span> <span class="nn">cassandra.cluster</span> <span class="kn">import</span> <span class="n">Cluster</span>
 <span class="kn">import</span> <span class="nn">ssl</span>
 
 <span class="n">ssl_context</span> <span class="o">=</span> <span class="n">ssl</span><span class="o">.</span><span class="n">SSLContext</span><span class="p">(</span><span class="n">ssl</span><span class="o">.</span><span class="n">PROTOCOL_TLS_CLIENT</span><span class="p">)</span>
@@ -19893,19 +20807,207 @@ data-et-multi-view="{&quot;schema&quot;:{&quot;content&quot;:{&quot;desktop&quot
     <span class="n">ssl_context</span><span class="o">=</span><span class="n">ssl_context</span>
 <span class="p">)</span>
 </code></pre></div>
-<hr>
-<h2 id="load-balancing-policies">Load Balancing Policies<a class="headerlink" href="#load-balancing-policies" title="Permanent link">¶</a></h2>
-<h3 id="token-aware-recommended">Token-Aware (Recommended)<a class="headerlink" href="#token-aware-recommended" title="Permanent link">¶</a></h3>
-<p>Routes queries to the node that owns the data:</p>
-<div class="highlight"><pre><span></span><code><span class="c1">// Java - Token-aware is default in v4+</span>
+<h3 id="java-driver-configuration-system">Java Driver Configuration System<a class="headerlink" href="#java-driver-configuration-system" title="Permanent link">¶</a></h3>
+<p>The Java driver uses a unique configuration approach based on the <a href="https://github.com/lightbend/config">Typesafe Config</a> library. This is different from other drivers which typically use only programmatic configuration.</p>
+<h4 id="how-it-works">How It Works<a class="headerlink" href="#how-it-works" title="Permanent link">¶</a></h4>
+<p>The driver ships with a <code>reference.conf</code> file containing sensible defaults for all options. You create an <code>application.conf</code> file to override specific settings - you only need to specify what you want to change, not the entire configuration.</p>
+<p>Configuration files use <strong>HOCON</strong> (Human-Optimized Config Object Notation), an improved JSON superset that supports comments, substitutions, and includes.</p>
+<p><strong>application.conf</strong> (place in your classpath):</p>
+<div class="highlight"><pre><span></span><code>datastax-java-driver {
+  basic {
+    contact-points = ["10.0.0.1:9042", "10.0.0.2:9042"]
+
+    # Explicit local DC - if omitted, driver uses the DC of the first contact point that responds
+    load-balancing-policy.local-datacenter = "dc1"
+
+    request.timeout = 5 seconds
+  }
+
+  advanced {
+    connection {
+      pool.local.size = 4
+      pool.remote.size = 2
+    }
+    retry-policy.class = DefaultRetryPolicy
+  }
+}
+</code></pre></div>
+<div class="highlight"><pre><span></span><code><span class="c1">// Driver automatically loads application.conf from classpath</span>
+<span class="n">CqlSession</span><span class="w"> </span><span class="n">session</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">CqlSession</span><span class="p">.</span><span class="na">builder</span><span class="p">().</span><span class="na">build</span><span class="p">();</span>
+</code></pre></div>
+<h4 id="configuration-loading-order">Configuration Loading Order<a class="headerlink" href="#configuration-loading-order" title="Permanent link">¶</a></h4>
+<p>The driver checks these locations in order (later sources override earlier ones):</p>
+<ol>
+<li><code>reference.conf</code> (built-in driver defaults)</li>
+<li><code>application.properties</code> (classpath)</li>
+<li><code>application.json</code> (classpath)</li>
+<li><code>application.conf</code> (classpath)</li>
+<li>System properties</li>
+</ol>
+<h4 id="execution-profiles">Execution Profiles<a class="headerlink" href="#execution-profiles" title="Permanent link">¶</a></h4>
+<p>Profiles allow different configuration sets for different query types without changing code:</p>
+<div class="highlight"><pre><span></span><code>datastax-java-driver {
+  basic.request.timeout = 2 seconds
+
+  profiles {
+    oltp {
+      basic.request.timeout = 100 milliseconds
+      basic.request.consistency = LOCAL_QUORUM
+    }
+    olap {
+      basic.request.timeout = 30 seconds
+      basic.request.consistency = LOCAL_ONE
+    }
+  }
+}
+</code></pre></div>
+<div class="highlight"><pre><span></span><code><span class="c1">// Use profiles per-query</span>
+<span class="n">PreparedStatement</span><span class="w"> </span><span class="n">stmt</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">session</span><span class="p">.</span><span class="na">prepare</span><span class="p">(</span><span class="s">"SELECT * FROM large_table"</span><span class="p">);</span>
+<span class="n">session</span><span class="p">.</span><span class="na">execute</span><span class="p">(</span><span class="n">stmt</span><span class="p">.</span><span class="na">bind</span><span class="p">().</span><span class="na">setExecutionProfileName</span><span class="p">(</span><span class="s">"olap"</span><span class="p">));</span>
+</code></pre></div>
+<h4 id="programmatic-configuration">Programmatic Configuration<a class="headerlink" href="#programmatic-configuration" title="Permanent link">¶</a></h4>
+<p>For frameworks with their own configuration mechanisms (Spring Boot, Quarkus), you can build configuration programmatically:</p>
+<div class="highlight"><pre><span></span><code><span class="n">DriverConfigLoader</span><span class="w"> </span><span class="n">loader</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">DriverConfigLoader</span><span class="p">.</span><span class="na">programmaticBuilder</span><span class="p">()</span>
+<span class="w">    </span><span class="p">.</span><span class="na">withDuration</span><span class="p">(</span><span class="n">DefaultDriverOption</span><span class="p">.</span><span class="na">REQUEST_TIMEOUT</span><span class="p">,</span><span class="w"> </span><span class="n">Duration</span><span class="p">.</span><span class="na">ofSeconds</span><span class="p">(</span><span class="mi">5</span><span class="p">))</span>
+<span class="w">    </span><span class="p">.</span><span class="na">withString</span><span class="p">(</span><span class="n">DefaultDriverOption</span><span class="p">.</span><span class="na">LOAD_BALANCING_LOCAL_DATACENTER</span><span class="p">,</span><span class="w"> </span><span class="s">"dc1"</span><span class="p">)</span>
+<span class="w">    </span><span class="p">.</span><span class="na">startProfile</span><span class="p">(</span><span class="s">"slow"</span><span class="p">)</span>
+<span class="w">        </span><span class="p">.</span><span class="na">withDuration</span><span class="p">(</span><span class="n">DefaultDriverOption</span><span class="p">.</span><span class="na">REQUEST_TIMEOUT</span><span class="p">,</span><span class="w"> </span><span class="n">Duration</span><span class="p">.</span><span class="na">ofSeconds</span><span class="p">(</span><span class="mi">30</span><span class="p">))</span>
+<span class="w">    </span><span class="p">.</span><span class="na">endProfile</span><span class="p">()</span>
+<span class="w">    </span><span class="p">.</span><span class="na">build</span><span class="p">();</span>
+
 <span class="n">CqlSession</span><span class="w"> </span><span class="n">session</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">CqlSession</span><span class="p">.</span><span class="na">builder</span><span class="p">()</span>
-<span class="w">    </span><span class="p">.</span><span class="na">addContactPoint</span><span class="p">(</span><span class="k">new</span><span class="w"> </span><span class="n">InetSocketAddress</span><span class="p">(</span><span class="s">"127.0.0.1"</span><span class="p">,</span><span class="w"> </span><span class="mi">9042</span><span class="p">))</span>
-<span class="w">    </span><span class="p">.</span><span class="na">withLocalDatacenter</span><span class="p">(</span><span class="s">"dc1"</span><span class="p">)</span>
+<span class="w">    </span><span class="p">.</span><span class="na">withConfigLoader</span><span class="p">(</span><span class="n">loader</span><span class="p">)</span>
 <span class="w">    </span><span class="p">.</span><span class="na">build</span><span class="p">();</span>
 </code></pre></div>
-<div class="highlight"><pre><span></span><code><span class="c1"># Python</span>
+<h4 id="loading-from-external-files">Loading from External Files<a class="headerlink" href="#loading-from-external-files" title="Permanent link">¶</a></h4>
+<p>Load configuration from files outside the classpath:</p>
+<div class="highlight"><pre><span></span><code><span class="c1">// From filesystem</span>
+<span class="n">DriverConfigLoader</span><span class="w"> </span><span class="n">loader</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">DriverConfigLoader</span><span class="p">.</span><span class="na">fromFile</span><span class="p">(</span>
+<span class="w">    </span><span class="k">new</span><span class="w"> </span><span class="n">File</span><span class="p">(</span><span class="s">"/etc/myapp/cassandra.conf"</span><span class="p">));</span>
+
+<span class="c1">// From URL</span>
+<span class="n">DriverConfigLoader</span><span class="w"> </span><span class="n">loader</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">DriverConfigLoader</span><span class="p">.</span><span class="na">fromUrl</span><span class="p">(</span>
+<span class="w">    </span><span class="k">new</span><span class="w"> </span><span class="n">URL</span><span class="p">(</span><span class="s">"http://config-server/cassandra.conf"</span><span class="p">));</span>
+
+<span class="n">CqlSession</span><span class="w"> </span><span class="n">session</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">CqlSession</span><span class="p">.</span><span class="na">builder</span><span class="p">()</span>
+<span class="w">    </span><span class="p">.</span><span class="na">withConfigLoader</span><span class="p">(</span><span class="n">loader</span><span class="p">)</span>
+<span class="w">    </span><span class="p">.</span><span class="na">build</span><span class="p">();</span>
+</code></pre></div>
+<h4 id="configuration-reloading">Configuration Reloading<a class="headerlink" href="#configuration-reloading" title="Permanent link">¶</a></h4>
+<p>By default, configuration files are reloaded periodically and the driver adjusts settings dynamically:</p>
+<div class="highlight"><pre><span></span><code>datastax-java-driver {
+  basic.config-reload-interval = 5 minutes
+}
+</code></pre></div>
+<div class="admonition note">
+<p class="admonition-title">Java Driver Only</p>
+<p>This file-based configuration system is unique to the Java driver. Python, Node.js, Go, and other drivers use programmatic configuration only. For comprehensive details, see the <a href="https://github.com/apache/cassandra-java-driver/tree/4.x/manual/core/configuration">Java Driver Configuration Reference</a>.</p>
+</div>
+<hr>
+<h2 id="load-balancing-policies">Load Balancing Policies<a class="headerlink" href="#load-balancing-policies" title="Permanent link">¶</a></h2>
+<p>Load balancing policies determine which Cassandra node receives each query. The right policy reduces latency, distributes load evenly, and ensures queries stay within the correct datacenter for multi-DC deployments.</p>
+<h3 id="understanding-contact-points">Understanding Contact Points<a class="headerlink" href="#understanding-contact-points" title="Permanent link">¶</a></h3>
+<p>The contact points you provide when creating a cluster connection are <strong>not</strong> a list of nodes for failover - they are <strong>bootstrap points</strong> used only for initial cluster discovery.</p>
+<p>When the driver connects:</p>
+<ol>
+<li>It connects to one of the contact points</li>
+<li>It queries the system tables to discover <strong>all</strong> nodes in the cluster</li>
+<li>It establishes connections to other nodes based on the load balancing policy</li>
+<li>It subscribes to <strong>cluster events</strong> via the native protocol</li>
+</ol>
+<p>After bootstrap, the driver <strong>continuously receives updates</strong> about:</p>
+<ul>
+<li><strong>Topology changes</strong> - nodes joining, leaving, or moving tokens</li>
+<li><strong>Node status</strong> - nodes going up or down</li>
+<li><strong>Schema changes</strong> - new tables, altered columns, dropped keyspaces</li>
+</ul>
+<p>This means even if all your contact points go down after initial connection, the driver remains connected and aware of the cluster state through its existing connections. The contact points are only needed again if the driver completely disconnects and needs to re-bootstrap.</p>
+<p><strong>Java</strong>:</p>
+<div class="highlight"><pre><span></span><code><span class="c1">// Contact points are ONLY used for initial bootstrap - not ongoing connections</span>
+<span class="c1">// When using multi-DC contact points, set local DC explicitly to ensure deterministic routing</span>
+<span class="n">CqlSession</span><span class="w"> </span><span class="n">session</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">CqlSession</span><span class="p">.</span><span class="na">builder</span><span class="p">()</span>
+<span class="w">    </span><span class="p">.</span><span class="na">addContactPoint</span><span class="p">(</span><span class="k">new</span><span class="w"> </span><span class="n">InetSocketAddress</span><span class="p">(</span><span class="s">"node1.dc1.example.com"</span><span class="p">,</span><span class="w"> </span><span class="mi">9042</span><span class="p">))</span>
+<span class="w">    </span><span class="p">.</span><span class="na">addContactPoint</span><span class="p">(</span><span class="k">new</span><span class="w"> </span><span class="n">InetSocketAddress</span><span class="p">(</span><span class="s">"node1.dc2.example.com"</span><span class="p">,</span><span class="w"> </span><span class="mi">9042</span><span class="p">))</span><span class="w">  </span><span class="c1">// DC2 - bootstrap fallback</span>
+<span class="w">    </span><span class="p">.</span><span class="na">withLocalDatacenter</span><span class="p">(</span><span class="s">"dc1"</span><span class="p">)</span><span class="w">  </span><span class="c1">// Explicit DC; if omitted, uses DC of first responding contact point</span>
+<span class="w">    </span><span class="p">.</span><span class="na">build</span><span class="p">();</span>
+</code></pre></div>
+<p><strong>Python</strong>:</p>
+<div class="highlight"><pre><span></span><code><span class="kn">from</span> <span class="nn">cassandra.cluster</span> <span class="kn">import</span> <span class="n">Cluster</span>
+<span class="kn">from</span> <span class="nn">cassandra.policies</span> <span class="kn">import</span> <span class="n">DCAwareRoundRobinPolicy</span>
+
+<span class="c1"># Contact points are ONLY used for initial bootstrap - not ongoing connections</span>
+<span class="c1"># If all contact points are in the same DC, the driver auto-detects local DC</span>
+<span class="n">cluster</span> <span class="o">=</span> <span class="n">Cluster</span><span class="p">([</span><span class="s1">'node1.dc1.example.com'</span><span class="p">,</span> <span class="s1">'node2.dc1.example.com'</span><span class="p">])</span>
+
+<span class="c1"># When using multi-DC contact points, set local DC explicitly to ensure deterministic routing</span>
+<span class="n">cluster</span> <span class="o">=</span> <span class="n">Cluster</span><span class="p">(</span>
+    <span class="n">contact_points</span><span class="o">=</span><span class="p">[</span>
+        <span class="s1">'node1.dc1.example.com'</span><span class="p">,</span>  <span class="c1"># DC1</span>
+        <span class="s1">'node1.dc2.example.com'</span><span class="p">,</span>  <span class="c1"># DC2 - in case DC1 is unreachable at startup</span>
+    <span class="p">],</span>
+    <span class="n">load_balancing_policy</span><span class="o">=</span><span class="n">DCAwareRoundRobinPolicy</span><span class="p">(</span><span class="n">local_dc</span><span class="o">=</span><span class="s1">'dc1'</span><span class="p">)</span>
+<span class="p">)</span>
+</code></pre></div>
+<h3 id="why-load-balancing-matters">Why Load Balancing Matters<a class="headerlink" href="#why-load-balancing-matters" title="Permanent link">¶</a></h3>
+<p>In a Cassandra cluster, data is distributed across nodes using consistent hashing. Each partition key hashes to a specific token, and that token determines which nodes store the data (based on replication factor). A good load balancing policy:</p>
+<ul>
+<li><strong>Reduces latency</strong> by sending queries directly to nodes that own the data</li>
+<li><strong>Avoids cross-DC traffic</strong> by preferring local nodes in multi-DC deployments</li>
+<li><strong>Distributes load</strong> evenly to prevent hotspots</li>
+<li><strong>Handles failures</strong> gracefully by trying other nodes when one is unavailable</li>
+</ul>
+<h3 id="policy-types">Policy Types<a class="headerlink" href="#policy-types" title="Permanent link">¶</a></h3>
+<table>
+<thead>
+<tr>
+<th>Policy</th>
+<th>Description</th>
+<th>Use Case</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Token-Aware</strong></td>
+<td>Routes to the node owning the partition</td>
+<td>Default choice - lowest latency</td>
+</tr>
+<tr>
+<td><strong>DC-Aware Round Robin</strong></td>
+<td>Prefers nodes in the local DC, round-robins among them</td>
+<td>Multi-DC deployments</td>
+</tr>
+<tr>
+<td><strong>Round Robin</strong></td>
+<td>Distributes evenly across all nodes</td>
+<td>Rarely used - ignores data locality</td>
+</tr>
+<tr>
+<td><strong>Whitelist/Allowlist</strong></td>
+<td>Restricts to specific nodes</td>
+<td>Testing, maintenance</td>
+</tr>
+</tbody>
+</table>
+<h3 id="token-aware-policy-recommended">Token-Aware Policy (Recommended)<a class="headerlink" href="#token-aware-policy-recommended" title="Permanent link">¶</a></h3>
+<p>Token-aware routing sends queries directly to a node that owns the requested partition, eliminating an extra network hop. Without token-awareness, a coordinator node must forward the query to the replica nodes, adding latency.</p>
+<div class="highlight"><pre><span></span><code>Without Token-Aware:
+  Client → Coordinator → Replica (owns data) → Coordinator → Client
+
+With Token-Aware:
+  Client → Replica (owns data) → Client
+</code></pre></div>
+<p><strong>Java</strong> (token-aware is default in driver v4+):</p>
+<div class="highlight"><pre><span></span><code><span class="c1">// Token-aware + DC-aware is the default behavior</span>
+<span class="n">CqlSession</span><span class="w"> </span><span class="n">session</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">CqlSession</span><span class="p">.</span><span class="na">builder</span><span class="p">()</span>
+<span class="w">    </span><span class="p">.</span><span class="na">addContactPoint</span><span class="p">(</span><span class="k">new</span><span class="w"> </span><span class="n">InetSocketAddress</span><span class="p">(</span><span class="s">"127.0.0.1"</span><span class="p">,</span><span class="w"> </span><span class="mi">9042</span><span class="p">))</span>
+<span class="w">    </span><span class="p">.</span><span class="na">withLocalDatacenter</span><span class="p">(</span><span class="s">"dc1"</span><span class="p">)</span><span class="w">  </span><span class="c1">// Explicit DC; if omitted, uses DC of first responding contact point</span>
+<span class="w">    </span><span class="p">.</span><span class="na">build</span><span class="p">();</span>
+</code></pre></div>
+<p><strong>Python (sync driver)</strong>:</p>
+<div class="highlight"><pre><span></span><code><span class="kn">from</span> <span class="nn">cassandra.cluster</span> <span class="kn">import</span> <span class="n">Cluster</span>
 <span class="kn">from</span> <span class="nn">cassandra.policies</span> <span class="kn">import</span> <span class="n">TokenAwarePolicy</span><span class="p">,</span> <span class="n">DCAwareRoundRobinPolicy</span>
 
+<span class="c1"># Wrap DC-aware policy with token-aware for best performance</span>
 <span class="n">cluster</span> <span class="o">=</span> <span class="n">Cluster</span><span class="p">(</span>
     <span class="p">[</span><span class="s1">'127.0.0.1'</span><span class="p">],</span>
     <span class="n">load_balancing_policy</span><span class="o">=</span><span class="n">TokenAwarePolicy</span><span class="p">(</span>
@@ -19913,51 +21015,299 @@ data-et-multi-view="{&quot;schema&quot;:{&quot;content&quot;:{&quot;desktop&quot
     <span class="p">)</span>
 <span class="p">)</span>
 </code></pre></div>
-<h3 id="dc-aware-round-robin">DC-Aware Round Robin<a class="headerlink" href="#dc-aware-round-robin" title="Permanent link">¶</a></h3>
-<p>Prefers nodes in the local datacenter:</p>
-<div class="highlight"><pre><span></span><code><span class="c1">// Node.js</span>
+<p><strong>Python (async driver)</strong>:</p>
+<div class="highlight"><pre><span></span><code><span class="kn">from</span> <span class="nn">async_cassandra</span> <span class="kn">import</span> <span class="n">AsyncCluster</span>
+<span class="kn">from</span> <span class="nn">cassandra.policies</span> <span class="kn">import</span> <span class="n">TokenAwarePolicy</span><span class="p">,</span> <span class="n">DCAwareRoundRobinPolicy</span>
+
+<span class="n">cluster</span> <span class="o">=</span> <span class="n">AsyncCluster</span><span class="p">(</span>
+    <span class="p">[</span><span class="s1">'127.0.0.1'</span><span class="p">],</span>
+    <span class="n">load_balancing_policy</span><span class="o">=</span><span class="n">TokenAwarePolicy</span><span class="p">(</span>
+        <span class="n">DCAwareRoundRobinPolicy</span><span class="p">(</span><span class="n">local_dc</span><span class="o">=</span><span class="s1">'dc1'</span><span class="p">)</span>
+    <span class="p">)</span>
+<span class="p">)</span>
+<span class="n">session</span> <span class="o">=</span> <span class="k">await</span> <span class="n">cluster</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span><span class="s1">'my_keyspace'</span><span class="p">)</span>
+</code></pre></div>
+<p><strong>Node.js</strong>:</p>
+<div class="highlight"><pre><span></span><code><span class="kd">const</span><span class="w"> </span><span class="nx">cassandra</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">require</span><span class="p">(</span><span class="s1">'cassandra-driver'</span><span class="p">);</span>
+
 <span class="kd">const</span><span class="w"> </span><span class="nx">client</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="ow">new</span><span class="w"> </span><span class="nx">cassandra</span><span class="p">.</span><span class="nx">Client</span><span class="p">({</span>
 <span class="w">  </span><span class="nx">contactPoints</span><span class="o">:</span><span class="w"> </span><span class="p">[</span><span class="s1">'127.0.0.1'</span><span class="p">],</span>
 <span class="w">  </span><span class="nx">localDataCenter</span><span class="o">:</span><span class="w"> </span><span class="s1">'dc1'</span><span class="p">,</span>
-<span class="w">  </span><span class="nx">policies</span><span class="o">:</span><span class="w"> </span><span class="p">{</span>
-<span class="w">    </span><span class="nx">loadBalancing</span><span class="o">:</span><span class="w"> </span><span class="ow">new</span><span class="w"> </span><span class="nx">cassandra</span><span class="p">.</span><span class="nx">policies</span><span class="p">.</span><span class="nx">loadBalancing</span><span class="p">.</span><span class="nx">DCAwareRoundRobinPolicy</span><span class="p">(</span><span class="s1">'dc1'</span><span class="p">)</span>
-<span class="w">  </span><span class="p">}</span>
+<span class="w">  </span><span class="c1">// Token-aware is enabled by default in Node.js driver</span>
 <span class="p">});</span>
 </code></pre></div>
+<h3 id="dc-aware-round-robin">DC-Aware Round Robin<a class="headerlink" href="#dc-aware-round-robin" title="Permanent link">¶</a></h3>
+<p>In multi-datacenter deployments, DC-aware routing ensures queries go to nodes in the local datacenter, avoiding cross-DC latency (which can be 10-100x higher than local).</p>
+<p><strong>Java</strong>:</p>
+<div class="highlight"><pre><span></span><code><span class="c1">// Local DC is required in Java driver v4+</span>
+<span class="n">CqlSession</span><span class="w"> </span><span class="n">session</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">CqlSession</span><span class="p">.</span><span class="na">builder</span><span class="p">()</span>
+<span class="w">    </span><span class="p">.</span><span class="na">addContactPoint</span><span class="p">(</span><span class="k">new</span><span class="w"> </span><span class="n">InetSocketAddress</span><span class="p">(</span><span class="s">"127.0.0.1"</span><span class="p">,</span><span class="w"> </span><span class="mi">9042</span><span class="p">))</span>
+<span class="w">    </span><span class="p">.</span><span class="na">withLocalDatacenter</span><span class="p">(</span><span class="s">"dc1"</span><span class="p">)</span><span class="w">  </span><span class="c1">// Queries only go to dc1 nodes</span>
+<span class="w">    </span><span class="p">.</span><span class="na">build</span><span class="p">();</span>
+</code></pre></div>
+<p><strong>Python</strong>:</p>
+<div class="highlight"><pre><span></span><code><span class="kn">from</span> <span class="nn">cassandra.cluster</span> <span class="kn">import</span> <span class="n">Cluster</span>
+<span class="kn">from</span> <span class="nn">cassandra.policies</span> <span class="kn">import</span> <span class="n">DCAwareRoundRobinPolicy</span>
+
+<span class="n">cluster</span> <span class="o">=</span> <span class="n">Cluster</span><span class="p">(</span>
+    <span class="p">[</span><span class="s1">'127.0.0.1'</span><span class="p">],</span>
+    <span class="n">load_balancing_policy</span><span class="o">=</span><span class="n">DCAwareRoundRobinPolicy</span><span class="p">(</span>
+        <span class="n">local_dc</span><span class="o">=</span><span class="s1">'dc1'</span><span class="p">,</span>
+        <span class="n">used_hosts_per_remote_dc</span><span class="o">=</span><span class="mi">0</span>  <span class="c1"># Never use remote DC nodes (default)</span>
+    <span class="p">)</span>
+<span class="p">)</span>
+</code></pre></div>
+<p><strong>Node.js</strong>:</p>
+<div class="highlight"><pre><span></span><code><span class="kd">const</span><span class="w"> </span><span class="nx">client</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="ow">new</span><span class="w"> </span><span class="nx">cassandra</span><span class="p">.</span><span class="nx">Client</span><span class="p">({</span>
+<span class="w">  </span><span class="nx">contactPoints</span><span class="o">:</span><span class="w"> </span><span class="p">[</span><span class="s1">'127.0.0.1'</span><span class="p">],</span>
+<span class="w">  </span><span class="nx">localDataCenter</span><span class="o">:</span><span class="w"> </span><span class="s1">'dc1'</span><span class="p">,</span><span class="w">  </span><span class="c1">// Explicit DC; if omitted, uses DC of first responding contact point</span>
+<span class="p">});</span>
+</code></pre></div>
+<div class="admonition info">
+<p class="admonition-title">Automatic Local Datacenter Detection</p>
+<p>If you don't explicitly set the local datacenter, the driver uses the datacenter of the <strong>first contact point that responds</strong>. This means you can control the local DC implicitly by only providing contact points from a single DC. However, if your contact points span multiple DCs, the driver's local DC becomes non-deterministic - whichever node responds first determines routing for the lifetime of the session.</p>
+</div>
+<h3 id="configuring-failover-to-remote-dcs">Configuring Failover to Remote DCs<a class="headerlink" href="#configuring-failover-to-remote-dcs" title="Permanent link">¶</a></h3>
+<p>By default, drivers only use local DC nodes. To allow failover to remote DCs when all local nodes are down:</p>
+<p><strong>Python</strong>:</p>
+<div class="highlight"><pre><span></span><code><span class="kn">from</span> <span class="nn">cassandra.policies</span> <span class="kn">import</span> <span class="n">DCAwareRoundRobinPolicy</span><span class="p">,</span> <span class="n">TokenAwarePolicy</span>
+
+<span class="n">cluster</span> <span class="o">=</span> <span class="n">Cluster</span><span class="p">(</span>
+    <span class="p">[</span><span class="s1">'127.0.0.1'</span><span class="p">],</span>
+    <span class="n">load_balancing_policy</span><span class="o">=</span><span class="n">TokenAwarePolicy</span><span class="p">(</span>
+        <span class="n">DCAwareRoundRobinPolicy</span><span class="p">(</span>
+            <span class="n">local_dc</span><span class="o">=</span><span class="s1">'dc1'</span><span class="p">,</span>
+            <span class="n">used_hosts_per_remote_dc</span><span class="o">=</span><span class="mi">2</span>  <span class="c1"># Use up to 2 nodes per remote DC as fallback</span>
+        <span class="p">)</span>
+    <span class="p">)</span>
+<span class="p">)</span>
+</code></pre></div>
+<p><strong>Java</strong> (application.conf):</p>
+<div class="highlight"><pre><span></span><code>datastax-java-driver {
+  basic.load-balancing-policy {
+    local-datacenter = "dc1"
+  }
+  advanced.load-balancing-policy {
+    dc-failover {
+      max-nodes-per-remote-dc = 2
+      allow-for-local-consistency-levels = false
+    }
+  }
+}
+</code></pre></div>
+<h3 id="avoiding-common-mistakes">Avoiding Common Mistakes<a class="headerlink" href="#avoiding-common-mistakes" title="Permanent link">¶</a></h3>
+<table>
+<thead>
+<tr>
+<th>Mistake</th>
+<th>Problem</th>
+<th>Solution</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Multi-DC contact points without explicit local DC</td>
+<td>Non-deterministic DC selection based on first responder</td>
+<td>Set explicit <code>local_dc</code> or use contact points from single DC only</td>
+</tr>
+<tr>
+<td>Using Round Robin</td>
+<td>Ignores data locality, higher latency</td>
+<td>Use Token-Aware + DC-Aware</td>
+</tr>
+<tr>
+<td>Hardcoding contact points from one DC</td>
+<td>If that DC is down, cannot bootstrap</td>
+<td>Include contact points from multiple DCs (with explicit local DC)</td>
+</tr>
+<tr>
+<td>Allowing remote DC for LOCAL_* consistency</td>
+<td>Violates consistency guarantees</td>
+<td>Set <code>allow-for-local-consistency-levels = false</code></td>
+</tr>
+</tbody>
+</table>
 <hr>
 <h2 id="prepared-statements">Prepared Statements<a class="headerlink" href="#prepared-statements" title="Permanent link">¶</a></h2>
-<p>Always use prepared statements for:
-- Better performance (parsed once)
-- Protection against CQL injection
-- Type safety</p>
-<h3 id="example">Example<a class="headerlink" href="#example" title="Permanent link">¶</a></h3>
-<div class="highlight"><pre><span></span><code><span class="c1"># Python</span>
+<p>Prepared statements are the correct way to execute parameterized queries in Cassandra. They provide significant benefits over simple string-based queries.</p>
+<h3 id="why-use-prepared-statements">Why Use Prepared Statements?<a class="headerlink" href="#why-use-prepared-statements" title="Permanent link">¶</a></h3>
+<p><strong>Performance</strong>: When you prepare a statement, Cassandra parses the CQL, validates it against the schema, and creates an execution plan. This happens <strong>once</strong>. Subsequent executions skip all parsing and planning - only the bound values are sent to the server. For queries executed thousands of times, this dramatically reduces CPU usage on both client and server.</p>
+<p><strong>Security</strong>: Prepared statements prevent CQL injection attacks. Values are bound as typed parameters, not concatenated into the query string, so malicious input cannot alter the query structure.</p>
+<p><strong>Type Safety</strong>: The driver validates that bound values match the expected types before sending to the server, catching type errors early rather than at execution time.</p>
+<p><strong>Token-Aware Routing</strong>: Prepared statements include partition key metadata, enabling the driver to route queries directly to the node that owns the data - impossible with unparsed query strings.</p>
+<h3 id="correct-usage-pattern">Correct Usage Pattern<a class="headerlink" href="#correct-usage-pattern" title="Permanent link">¶</a></h3>
+<p>Prepare statements <strong>once</strong> at application startup or first use, then reuse the prepared statement for all executions:</p>
+<div class="highlight"><pre><span></span><code><span class="c1"># Python - Prepare once, execute many times</span>
 <span class="kn">from</span> <span class="nn">cassandra.cluster</span> <span class="kn">import</span> <span class="n">Cluster</span>
 
 <span class="n">cluster</span> <span class="o">=</span> <span class="n">Cluster</span><span class="p">([</span><span class="s1">'127.0.0.1'</span><span class="p">])</span>
 <span class="n">session</span> <span class="o">=</span> <span class="n">cluster</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span><span class="s1">'my_keyspace'</span><span class="p">)</span>
 
-<span class="c1"># Prepare once</span>
+<span class="c1"># Prepare once (typically at startup or in an initialization block)</span>
 <span class="n">insert_stmt</span> <span class="o">=</span> <span class="n">session</span><span class="o">.</span><span class="n">prepare</span><span class="p">(</span><span class="s2">"""</span>
 <span class="s2">    INSERT INTO users (user_id, username, email)</span>
 <span class="s2">    VALUES (?, ?, ?)</span>
 <span class="s2">"""</span><span class="p">)</span>
 
-<span class="c1"># Execute many times</span>
+<span class="c1"># Execute many times with different values</span>
 <span class="kn">import</span> <span class="nn">uuid</span>
 <span class="n">session</span><span class="o">.</span><span class="n">execute</span><span class="p">(</span><span class="n">insert_stmt</span><span class="p">,</span> <span class="p">[</span><span class="n">uuid</span><span class="o">.</span><span class="n">uuid4</span><span class="p">(),</span> <span class="s1">'john_doe'</span><span class="p">,</span> <span class="s1">'john@example.com'</span><span class="p">])</span>
 <span class="n">session</span><span class="o">.</span><span class="n">execute</span><span class="p">(</span><span class="n">insert_stmt</span><span class="p">,</span> <span class="p">[</span><span class="n">uuid</span><span class="o">.</span><span class="n">uuid4</span><span class="p">(),</span> <span class="s1">'jane_doe'</span><span class="p">,</span> <span class="s1">'jane@example.com'</span><span class="p">])</span>
 </code></pre></div>
-<div class="highlight"><pre><span></span><code><span class="c1">// Java</span>
-<span class="n">PreparedStatement</span><span class="w"> </span><span class="n">prepared</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">session</span><span class="p">.</span><span class="na">prepare</span><span class="p">(</span>
+<div class="highlight"><pre><span></span><code><span class="c1">// Java - Prepare once, execute many times</span>
+<span class="n">PreparedStatement</span><span class="w"> </span><span class="n">insertStmt</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">session</span><span class="p">.</span><span class="na">prepare</span><span class="p">(</span>
 <span class="w">    </span><span class="s">"INSERT INTO users (user_id, username, email) VALUES (?, ?, ?)"</span>
 <span class="p">);</span>
 
-<span class="n">BoundStatement</span><span class="w"> </span><span class="n">bound</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">prepared</span><span class="p">.</span><span class="na">bind</span><span class="p">(</span>
-<span class="w">    </span><span class="n">UUID</span><span class="p">.</span><span class="na">randomUUID</span><span class="p">(),</span><span class="w"> </span><span class="s">"john_doe"</span><span class="p">,</span><span class="w"> </span><span class="s">"john@example.com"</span>
-<span class="p">);</span>
+<span class="c1">// Execute many times</span>
+<span class="n">BoundStatement</span><span class="w"> </span><span class="n">bound</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">insertStmt</span><span class="p">.</span><span class="na">bind</span><span class="p">(</span><span class="n">UUID</span><span class="p">.</span><span class="na">randomUUID</span><span class="p">(),</span><span class="w"> </span><span class="s">"john_doe"</span><span class="p">,</span><span class="w"> </span><span class="s">"john@example.com"</span><span class="p">);</span>
 <span class="n">session</span><span class="p">.</span><span class="na">execute</span><span class="p">(</span><span class="n">bound</span><span class="p">);</span>
 </code></pre></div>
+<div class="highlight"><pre><span></span><code><span class="c1"># Python (async) - Prepare once, execute many times</span>
+<span class="kn">from</span> <span class="nn">async_cassandra</span> <span class="kn">import</span> <span class="n">AsyncCluster</span>
+
+<span class="n">cluster</span> <span class="o">=</span> <span class="n">AsyncCluster</span><span class="p">([</span><span class="s1">'127.0.0.1'</span><span class="p">])</span>
+<span class="n">session</span> <span class="o">=</span> <span class="k">await</span> <span class="n">cluster</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span><span class="s1">'my_keyspace'</span><span class="p">)</span>
+
+<span class="c1"># Prepare once</span>
+<span class="n">insert_stmt</span> <span class="o">=</span> <span class="k">await</span> <span class="n">session</span><span class="o">.</span><span class="n">prepare</span><span class="p">(</span>
+    <span class="s2">"INSERT INTO users (user_id, username, email) VALUES (?, ?, ?)"</span>
+<span class="p">)</span>
+
+<span class="c1"># Execute many times</span>
+<span class="k">await</span> <span class="n">session</span><span class="o">.</span><span class="n">execute</span><span class="p">(</span><span class="n">insert_stmt</span><span class="p">,</span> <span class="p">[</span><span class="n">user_id</span><span class="p">,</span> <span class="s1">'john_doe'</span><span class="p">,</span> <span class="s1">'john@example.com'</span><span class="p">])</span>
+</code></pre></div>
+<h3 id="anti-patterns-to-avoid">Anti-Patterns to Avoid<a class="headerlink" href="#anti-patterns-to-avoid" title="Permanent link">¶</a></h3>
+<h4 id="preparing-the-same-statement-repeatedly">❌ Preparing the Same Statement Repeatedly<a class="headerlink" href="#preparing-the-same-statement-repeatedly" title="Permanent link">¶</a></h4>
+<p><strong>Java</strong>:</p>
+<div class="highlight"><pre><span></span><code><span class="c1">// WRONG - Prepares on every call, wasting resources</span>
+<span class="kd">public</span><span class="w"> </span><span class="kt">void</span><span class="w"> </span><span class="nf">insertUser</span><span class="p">(</span><span class="n">CqlSession</span><span class="w"> </span><span class="n">session</span><span class="p">,</span><span class="w"> </span><span class="n">UUID</span><span class="w"> </span><span class="n">userId</span><span class="p">,</span><span class="w"> </span><span class="n">String</span><span class="w"> </span><span class="n">username</span><span class="p">,</span><span class="w"> </span><span class="n">String</span><span class="w"> </span><span class="n">email</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="n">PreparedStatement</span><span class="w"> </span><span class="n">stmt</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">session</span><span class="p">.</span><span class="na">prepare</span><span class="p">(</span>
+<span class="w">        </span><span class="s">"INSERT INTO users (user_id, username, email) VALUES (?, ?, ?)"</span><span class="p">);</span>
+<span class="w">    </span><span class="n">session</span><span class="p">.</span><span class="na">execute</span><span class="p">(</span><span class="n">stmt</span><span class="p">.</span><span class="na">bind</span><span class="p">(</span><span class="n">userId</span><span class="p">,</span><span class="w"> </span><span class="n">username</span><span class="p">,</span><span class="w"> </span><span class="n">email</span><span class="p">));</span>
+<span class="p">}</span>
+
+<span class="c1">// RIGHT - Prepare once at startup, reuse</span>
+<span class="kd">private</span><span class="w"> </span><span class="kd">final</span><span class="w"> </span><span class="n">PreparedStatement</span><span class="w"> </span><span class="n">insertStmt</span><span class="p">;</span>
+
+<span class="kd">public</span><span class="w"> </span><span class="nf">UserRepository</span><span class="p">(</span><span class="n">CqlSession</span><span class="w"> </span><span class="n">session</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="k">this</span><span class="p">.</span><span class="na">insertStmt</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">session</span><span class="p">.</span><span class="na">prepare</span><span class="p">(</span>
+<span class="w">        </span><span class="s">"INSERT INTO users (user_id, username, email) VALUES (?, ?, ?)"</span><span class="p">);</span>
+<span class="p">}</span>
+
+<span class="kd">public</span><span class="w"> </span><span class="kt">void</span><span class="w"> </span><span class="nf">insertUser</span><span class="p">(</span><span class="n">UUID</span><span class="w"> </span><span class="n">userId</span><span class="p">,</span><span class="w"> </span><span class="n">String</span><span class="w"> </span><span class="n">username</span><span class="p">,</span><span class="w"> </span><span class="n">String</span><span class="w"> </span><span class="n">email</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="n">session</span><span class="p">.</span><span class="na">execute</span><span class="p">(</span><span class="n">insertStmt</span><span class="p">.</span><span class="na">bind</span><span class="p">(</span><span class="n">userId</span><span class="p">,</span><span class="w"> </span><span class="n">username</span><span class="p">,</span><span class="w"> </span><span class="n">email</span><span class="p">));</span>
+<span class="p">}</span>
+</code></pre></div>
+<p><strong>Python</strong>:</p>
+<div class="highlight"><pre><span></span><code><span class="c1"># WRONG - Prepares on every call, wasting resources</span>
+<span class="k">def</span> <span class="nf">insert_user</span><span class="p">(</span><span class="n">session</span><span class="p">,</span> <span class="n">user_id</span><span class="p">,</span> <span class="n">username</span><span class="p">,</span> <span class="n">email</span><span class="p">):</span>
+    <span class="n">stmt</span> <span class="o">=</span> <span class="n">session</span><span class="o">.</span><span class="n">prepare</span><span class="p">(</span><span class="s2">"INSERT INTO users (user_id, username, email) VALUES (?, ?, ?)"</span><span class="p">)</span>
+    <span class="n">session</span><span class="o">.</span><span class="n">execute</span><span class="p">(</span><span class="n">stmt</span><span class="p">,</span> <span class="p">[</span><span class="n">user_id</span><span class="p">,</span> <span class="n">username</span><span class="p">,</span> <span class="n">email</span><span class="p">])</span>
+
+<span class="c1"># RIGHT - Prepare once, reuse</span>
+<span class="n">insert_stmt</span> <span class="o">=</span> <span class="n">session</span><span class="o">.</span><span class="n">prepare</span><span class="p">(</span><span class="s2">"INSERT INTO users (user_id, username, email) VALUES (?, ?, ?)"</span><span class="p">)</span>
+
+<span class="k">def</span> <span class="nf">insert_user</span><span class="p">(</span><span class="n">session</span><span class="p">,</span> <span class="n">user_id</span><span class="p">,</span> <span class="n">username</span><span class="p">,</span> <span class="n">email</span><span class="p">):</span>
+    <span class="n">session</span><span class="o">.</span><span class="n">execute</span><span class="p">(</span><span class="n">insert_stmt</span><span class="p">,</span> <span class="p">[</span><span class="n">user_id</span><span class="p">,</span> <span class="n">username</span><span class="p">,</span> <span class="n">email</span><span class="p">])</span>
+</code></pre></div>
+<p>Each <code>prepare()</code> call sends a request to the server. Preparing the same statement repeatedly wastes network round-trips and server CPU.</p>
+<h4 id="embedding-values-in-the-query-string">❌ Embedding Values in the Query String<a class="headerlink" href="#embedding-values-in-the-query-string" title="Permanent link">¶</a></h4>
+<p><strong>Java</strong>:</p>
+<div class="highlight"><pre><span></span><code><span class="c1">// WRONG - Values in query string (CQL injection risk, no caching benefit)</span>
+<span class="n">String</span><span class="w"> </span><span class="n">username</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">"john_doe"</span><span class="p">;</span>
+<span class="n">session</span><span class="p">.</span><span class="na">execute</span><span class="p">(</span><span class="s">"SELECT * FROM users WHERE username = '"</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">username</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="s">"'"</span><span class="p">);</span>
+
+<span class="c1">// WRONG - Still wrong, even with prepare</span>
+<span class="n">session</span><span class="p">.</span><span class="na">prepare</span><span class="p">(</span><span class="s">"SELECT * FROM users WHERE username = '"</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">username</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="s">"'"</span><span class="p">);</span>
+
+<span class="c1">// RIGHT - Use bind parameters</span>
+<span class="n">PreparedStatement</span><span class="w"> </span><span class="n">stmt</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">session</span><span class="p">.</span><span class="na">prepare</span><span class="p">(</span><span class="s">"SELECT * FROM users WHERE username = ?"</span><span class="p">);</span>
+<span class="n">session</span><span class="p">.</span><span class="na">execute</span><span class="p">(</span><span class="n">stmt</span><span class="p">.</span><span class="na">bind</span><span class="p">(</span><span class="n">username</span><span class="p">));</span>
+</code></pre></div>
+<p><strong>Python</strong>:</p>
+<div class="highlight"><pre><span></span><code><span class="c1"># WRONG - Values in query string (CQL injection risk, no caching benefit)</span>
+<span class="n">username</span> <span class="o">=</span> <span class="s2">"john_doe"</span>
+<span class="n">session</span><span class="o">.</span><span class="n">execute</span><span class="p">(</span><span class="sa">f</span><span class="s2">"SELECT * FROM users WHERE username = '</span><span class="si">{</span><span class="n">username</span><span class="si">}</span><span class="s2">'"</span><span class="p">)</span>
+
+<span class="c1"># WRONG - Still wrong, even with prepare</span>
+<span class="n">session</span><span class="o">.</span><span class="n">prepare</span><span class="p">(</span><span class="sa">f</span><span class="s2">"SELECT * FROM users WHERE username = '</span><span class="si">{</span><span class="n">username</span><span class="si">}</span><span class="s2">'"</span><span class="p">)</span>
+
+<span class="c1"># RIGHT - Use bind parameters</span>
+<span class="n">stmt</span> <span class="o">=</span> <span class="n">session</span><span class="o">.</span><span class="n">prepare</span><span class="p">(</span><span class="s2">"SELECT * FROM users WHERE username = ?"</span><span class="p">)</span>
+<span class="n">session</span><span class="o">.</span><span class="n">execute</span><span class="p">(</span><span class="n">stmt</span><span class="p">,</span> <span class="p">[</span><span class="n">username</span><span class="p">])</span>
+</code></pre></div>
+<p>Embedding values in the query string:
+- Creates a unique query for each value, defeating caching
+- Opens CQL injection vulnerabilities
+- Prevents token-aware routing</p>
+<h4 id="dynamic-table-or-column-names">❌ Dynamic Table or Column Names<a class="headerlink" href="#dynamic-table-or-column-names" title="Permanent link">¶</a></h4>
+<p><strong>Java</strong>:</p>
+<div class="highlight"><pre><span></span><code><span class="c1">// WRONG - Cannot use bind parameters for table/column names</span>
+<span class="n">String</span><span class="w"> </span><span class="n">table</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">"users"</span><span class="p">;</span>
+<span class="n">PreparedStatement</span><span class="w"> </span><span class="n">stmt</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">session</span><span class="p">.</span><span class="na">prepare</span><span class="p">(</span>
+<span class="w">    </span><span class="s">"SELECT * FROM "</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">table</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="s">" WHERE id = ?"</span><span class="p">);</span><span class="w">  </span><span class="c1">// Creates new prepared stmt per table</span>
+
+<span class="c1">// Acceptable only if limited set of tables - prepare each once at startup</span>
+<span class="kd">private</span><span class="w"> </span><span class="kd">final</span><span class="w"> </span><span class="n">PreparedStatement</span><span class="w"> </span><span class="n">userStmt</span><span class="p">;</span>
+<span class="kd">private</span><span class="w"> </span><span class="kd">final</span><span class="w"> </span><span class="n">PreparedStatement</span><span class="w"> </span><span class="n">orderStmt</span><span class="p">;</span>
+
+<span class="kd">public</span><span class="w"> </span><span class="nf">Repository</span><span class="p">(</span><span class="n">CqlSession</span><span class="w"> </span><span class="n">session</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="k">this</span><span class="p">.</span><span class="na">userStmt</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">session</span><span class="p">.</span><span class="na">prepare</span><span class="p">(</span><span class="s">"SELECT * FROM users WHERE id = ?"</span><span class="p">);</span>
+<span class="w">    </span><span class="k">this</span><span class="p">.</span><span class="na">orderStmt</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">session</span><span class="p">.</span><span class="na">prepare</span><span class="p">(</span><span class="s">"SELECT * FROM orders WHERE id = ?"</span><span class="p">);</span>
+<span class="p">}</span>
+</code></pre></div>
+<p><strong>Python</strong>:</p>
+<div class="highlight"><pre><span></span><code><span class="c1"># WRONG - Cannot use bind parameters for table/column names</span>
+<span class="n">table</span> <span class="o">=</span> <span class="s2">"users"</span>
+<span class="n">stmt</span> <span class="o">=</span> <span class="n">session</span><span class="o">.</span><span class="n">prepare</span><span class="p">(</span><span class="sa">f</span><span class="s2">"SELECT * FROM </span><span class="si">{</span><span class="n">table</span><span class="si">}</span><span class="s2"> WHERE id = ?"</span><span class="p">)</span>  <span class="c1"># Creates new prepared stmt per table</span>
+
+<span class="c1"># Acceptable only if limited set of tables - prepare each once at startup</span>
+<span class="n">user_stmt</span> <span class="o">=</span> <span class="n">session</span><span class="o">.</span><span class="n">prepare</span><span class="p">(</span><span class="s2">"SELECT * FROM users WHERE id = ?"</span><span class="p">)</span>
+<span class="n">order_stmt</span> <span class="o">=</span> <span class="n">session</span><span class="o">.</span><span class="n">prepare</span><span class="p">(</span><span class="s2">"SELECT * FROM orders WHERE id = ?"</span><span class="p">)</span>
+</code></pre></div>
+<p>Bind parameters (<code>?</code>) can only be used for <strong>values</strong>, not for table names, column names, or other CQL syntax. If you need dynamic table access, prepare all variants at startup.</p>
+<h3 id="server-side-prepared-statement-cache">Server-Side Prepared Statement Cache<a class="headerlink" href="#server-side-prepared-statement-cache" title="Permanent link">¶</a></h3>
+<p>Cassandra caches prepared statements on each node. You can monitor this cache to detect issues:</p>
+<p><strong>Key metrics to monitor:</strong></p>
+<table>
+<thead>
+<tr>
+<th>Metric</th>
+<th>Description</th>
+<th>Warning Sign</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>PreparedStatementsCount</code></td>
+<td>Number of cached prepared statements</td>
+<td>Continuously growing = prepare leak</td>
+</tr>
+<tr>
+<td><code>PreparedStatementsEvicted</code></td>
+<td>Statements evicted from cache</td>
+<td>High rate = cache too small or over-preparing</td>
+</tr>
+<tr>
+<td><code>PreparedStatementsExecuted</code></td>
+<td>Execution count</td>
+<td>Should be &gt;&gt; PreparedStatementsCount</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Using nodetool:</strong></p>
+<div class="highlight"><pre><span></span><code><span class="c1"># View prepared statement cache stats</span>
+nodetool<span class="w"> </span>info<span class="w"> </span><span class="p">|</span><span class="w"> </span>grep<span class="w"> </span>-i<span class="w"> </span>prepared
+</code></pre></div>
+<p><strong>Cassandra configuration (cassandra.yaml):</strong></p>
+<div class="highlight"><pre><span></span><code><span class="c1"># Maximum number of prepared statements to cache (default: 10000)</span>
+<span class="nt">prepared_statements_cache_size_mb</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">100</span>
+</code></pre></div>
+<div class="admonition warning">
+<p class="admonition-title">Prepared Statement Leak</p>
+<p>If <code>PreparedStatementsCount</code> grows continuously without bound, you likely have a prepare leak - code that prepares statements with dynamic values embedded in the query string. Each unique query string creates a new cache entry until the cache fills and evictions begin, degrading performance.</p>
+</div>
 <hr>
 <h2 id="consistency-levels">Consistency Levels<a class="headerlink" href="#consistency-levels" title="Permanent link">¶</a></h2>
 <p>Set consistency per query:</p>
@@ -20016,30 +21366,66 @@ data-et-multi-view="{&quot;schema&quot;:{&quot;content&quot;:{&quot;desktop&quot
 </table>
 <hr>
 <h2 id="async-operations">Async Operations<a class="headerlink" href="#async-operations" title="Permanent link">¶</a></h2>
-<p>For high-throughput applications:</p>
+<p>Asynchronous database operations are essential for building high-throughput, responsive applications. Rather than blocking a thread while waiting for Cassandra to respond, async operations allow your application to handle other work concurrently.</p>
+<h3 id="why-async-matters">Why Async Matters<a class="headerlink" href="#why-async-matters" title="Permanent link">¶</a></h3>
+<p><strong>Python and the GIL</strong>: Python's Global Interpreter Lock (GIL) means only one thread can execute Python bytecode at a time. In synchronous code, when your application waits for a Cassandra query to return, that thread is blocked and cannot process other requests. With async/await, the event loop can handle thousands of concurrent requests on a single thread by switching between tasks during I/O waits. This is particularly critical for web frameworks like FastAPI and aiohttp where blocking the event loop freezes your entire application.</p>
+<p><strong>Java and Thread Efficiency</strong>: While Java does not have a GIL, creating threads is expensive (typically 1MB of stack memory each). Synchronous drivers require one thread per concurrent query, limiting scalability. Async operations with <code>CompletionStage</code> allow a small thread pool to handle many concurrent requests, reducing memory overhead and context-switching costs. This is especially valuable in reactive frameworks like Spring WebFlux and Vert.x.</p>
+<p><strong>Node.js</strong>: Being single-threaded and event-driven by design, Node.js naturally benefits from async operations. The driver's Promise-based API integrates seamlessly with the event loop.</p>
 <h3 id="python-asyncio">Python (asyncio)<a class="headerlink" href="#python-asyncio" title="Permanent link">¶</a></h3>
-<div class="highlight"><pre><span></span><code><span class="kn">from</span> <span class="nn">cassandra.cluster</span> <span class="kn">import</span> <span class="n">Cluster</span>
-<span class="kn">import</span> <span class="nn">asyncio</span>
+<p>Use the <a href="https://github.com/axonops/async-python-cassandra-client">Async Python Cassandra Client</a> for true async/await support with frameworks like FastAPI and aiohttp:</p>
+<div class="highlight"><pre><span></span><code><span class="kn">import</span> <span class="nn">asyncio</span>
+<span class="kn">import</span> <span class="nn">uuid</span>
+<span class="kn">from</span> <span class="nn">async_cassandra</span> <span class="kn">import</span> <span class="n">AsyncCluster</span>
 
-<span class="n">cluster</span> <span class="o">=</span> <span class="n">Cluster</span><span class="p">([</span><span class="s1">'127.0.0.1'</span><span class="p">])</span>
-<span class="n">session</span> <span class="o">=</span> <span class="n">cluster</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span><span class="s1">'my_keyspace'</span><span class="p">)</span>
+<span class="c1"># Long-lived cluster and session (create once, reuse for all requests)</span>
+<span class="n">cluster</span> <span class="o">=</span> <span class="kc">None</span>
+<span class="n">session</span> <span class="o">=</span> <span class="kc">None</span>
 
-<span class="k">async</span> <span class="k">def</span> <span class="nf">insert_user</span><span class="p">(</span><span class="n">user_id</span><span class="p">,</span> <span class="n">username</span><span class="p">,</span> <span class="n">email</span><span class="p">):</span>
-    <span class="n">future</span> <span class="o">=</span> <span class="n">session</span><span class="o">.</span><span class="n">execute_async</span><span class="p">(</span>
-        <span class="s2">"INSERT INTO users (user_id, username, email) VALUES (</span><span class="si">%s</span><span class="s2">, </span><span class="si">%s</span><span class="s2">, </span><span class="si">%s</span><span class="s2">)"</span><span class="p">,</span>
-        <span class="p">[</span><span class="n">user_id</span><span class="p">,</span> <span class="n">username</span><span class="p">,</span> <span class="n">email</span><span class="p">]</span>
+<span class="k">async</span> <span class="k">def</span> <span class="nf">startup</span><span class="p">():</span>
+    <span class="k">global</span> <span class="n">cluster</span><span class="p">,</span> <span class="n">session</span>
+    <span class="n">cluster</span> <span class="o">=</span> <span class="n">AsyncCluster</span><span class="p">([</span><span class="s1">'127.0.0.1'</span><span class="p">])</span>
+    <span class="n">session</span> <span class="o">=</span> <span class="k">await</span> <span class="n">cluster</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span><span class="s1">'my_keyspace'</span><span class="p">)</span>
+
+<span class="k">async</span> <span class="k">def</span> <span class="nf">shutdown</span><span class="p">():</span>
+    <span class="k">if</span> <span class="n">session</span><span class="p">:</span>
+        <span class="k">await</span> <span class="n">session</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
+    <span class="k">if</span> <span class="n">cluster</span><span class="p">:</span>
+        <span class="k">await</span> <span class="n">cluster</span><span class="o">.</span><span class="n">shutdown</span><span class="p">()</span>
+
+<span class="k">async</span> <span class="k">def</span> <span class="nf">insert_users</span><span class="p">():</span>
+    <span class="c1"># Prepare statement once, execute many times</span>
+    <span class="n">insert_stmt</span> <span class="o">=</span> <span class="k">await</span> <span class="n">session</span><span class="o">.</span><span class="n">prepare</span><span class="p">(</span>
+        <span class="s2">"INSERT INTO users (user_id, username, email) VALUES (?, ?, ?)"</span>
     <span class="p">)</span>
-    <span class="k">return</span> <span class="n">future</span><span class="o">.</span><span class="n">result</span><span class="p">()</span>
 
-<span class="c1"># Run multiple inserts concurrently</span>
-<span class="k">async</span> <span class="k">def</span> <span class="nf">main</span><span class="p">():</span>
+    <span class="c1"># Run multiple inserts concurrently</span>
     <span class="n">tasks</span> <span class="o">=</span> <span class="p">[</span>
-        <span class="n">insert_user</span><span class="p">(</span><span class="n">uuid</span><span class="o">.</span><span class="n">uuid4</span><span class="p">(),</span> <span class="sa">f</span><span class="s1">'user</span><span class="si">{</span><span class="n">i</span><span class="si">}</span><span class="s1">'</span><span class="p">,</span> <span class="sa">f</span><span class="s1">'user</span><span class="si">{</span><span class="n">i</span><span class="si">}</span><span class="s1">@example.com'</span><span class="p">)</span>
+        <span class="n">session</span><span class="o">.</span><span class="n">execute</span><span class="p">(</span><span class="n">insert_stmt</span><span class="p">,</span> <span class="p">[</span><span class="n">uuid</span><span class="o">.</span><span class="n">uuid4</span><span class="p">(),</span> <span class="sa">f</span><span class="s1">'user</span><span class="si">{</span><span class="n">i</span><span class="si">}</span><span class="s1">'</span><span class="p">,</span> <span class="sa">f</span><span class="s1">'user</span><span class="si">{</span><span class="n">i</span><span class="si">}</span><span class="s1">@example.com'</span><span class="p">])</span>
         <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">100</span><span class="p">)</span>
     <span class="p">]</span>
     <span class="k">await</span> <span class="n">asyncio</span><span class="o">.</span><span class="n">gather</span><span class="p">(</span><span class="o">*</span><span class="n">tasks</span><span class="p">)</span>
 
+<span class="k">async</span> <span class="k">def</span> <span class="nf">main</span><span class="p">():</span>
+    <span class="k">await</span> <span class="n">startup</span><span class="p">()</span>
+    <span class="k">try</span><span class="p">:</span>
+        <span class="k">await</span> <span class="n">insert_users</span><span class="p">()</span>
+    <span class="k">finally</span><span class="p">:</span>
+        <span class="k">await</span> <span class="n">shutdown</span><span class="p">()</span>
+
 <span class="n">asyncio</span><span class="o">.</span><span class="n">run</span><span class="p">(</span><span class="n">main</span><span class="p">())</span>
+</code></pre></div>
+<p>For streaming large result sets without memory exhaustion, use <code>execute_stream()</code> with a context manager:</p>
+<div class="highlight"><pre><span></span><code><span class="kn">from</span> <span class="nn">async_cassandra.streaming</span> <span class="kn">import</span> <span class="n">StreamConfig</span>
+
+<span class="n">config</span> <span class="o">=</span> <span class="n">StreamConfig</span><span class="p">(</span><span class="n">fetch_size</span><span class="o">=</span><span class="mi">1000</span><span class="p">)</span>
+
+<span class="c1"># Context manager ensures streaming resources are cleaned up</span>
+<span class="k">async</span> <span class="k">with</span> <span class="k">await</span> <span class="n">session</span><span class="o">.</span><span class="n">execute_stream</span><span class="p">(</span>
+    <span class="s2">"SELECT * FROM large_table"</span><span class="p">,</span>
+    <span class="n">stream_config</span><span class="o">=</span><span class="n">config</span>
+<span class="p">)</span> <span class="k">as</span> <span class="n">result</span><span class="p">:</span>
+    <span class="k">async</span> <span class="k">for</span> <span class="n">row</span> <span class="ow">in</span> <span class="n">result</span><span class="p">:</span>
+        <span class="k">await</span> <span class="n">process_row</span><span class="p">(</span><span class="n">row</span><span class="p">)</span>  <span class="c1"># Non-blocking, other requests keep flowing</span>
 </code></pre></div>
 <h3 id="java-completionstage">Java (CompletionStage)<a class="headerlink" href="#java-completionstage" title="Permanent link">¶</a></h3>
 <div class="highlight"><pre><span></span><code><span class="n">CompletionStage</span><span class="o">&lt;</span><span class="n">AsyncResultSet</span><span class="o">&gt;</span><span class="w"> </span><span class="n">future</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">session</span><span class="p">.</span><span class="na">executeAsync</span><span class="p">(</span>
@@ -20064,15 +21450,27 @@ data-et-multi-view="{&quot;schema&quot;:{&quot;content&quot;:{&quot;desktop&quot
 <hr>
 <h2 id="connection-pooling">Connection Pooling<a class="headerlink" href="#connection-pooling" title="Permanent link">¶</a></h2>
 <p>Drivers maintain connection pools automatically. Key settings:</p>
-<h3 id="python_1">Python<a class="headerlink" href="#python_1" title="Permanent link">¶</a></h3>
+<h3 id="python-sync-driver">Python (sync driver)<a class="headerlink" href="#python-sync-driver" title="Permanent link">¶</a></h3>
 <div class="highlight"><pre><span></span><code><span class="kn">from</span> <span class="nn">cassandra.cluster</span> <span class="kn">import</span> <span class="n">Cluster</span>
 <span class="kn">from</span> <span class="nn">cassandra.policies</span> <span class="kn">import</span> <span class="n">HostDistance</span>
 
 <span class="n">cluster</span> <span class="o">=</span> <span class="n">Cluster</span><span class="p">([</span><span class="s1">'127.0.0.1'</span><span class="p">])</span>
 
-<span class="c1"># Set pool size per host</span>
+<span class="c1"># Set pool size per host (only works with protocol v1/v2)</span>
 <span class="n">cluster</span><span class="o">.</span><span class="n">set_core_connections_per_host</span><span class="p">(</span><span class="n">HostDistance</span><span class="o">.</span><span class="n">LOCAL</span><span class="p">,</span> <span class="mi">4</span><span class="p">)</span>
 <span class="n">cluster</span><span class="o">.</span><span class="n">set_max_connections_per_host</span><span class="p">(</span><span class="n">HostDistance</span><span class="o">.</span><span class="n">LOCAL</span><span class="p">,</span> <span class="mi">10</span><span class="p">)</span>
+</code></pre></div>
+<h3 id="python-async-driver">Python (async driver)<a class="headerlink" href="#python-async-driver" title="Permanent link">¶</a></h3>
+<p>With protocol v3+ (required by async-cassandra), the Python driver uses a <strong>single connection per host</strong> that supports up to 32,768 concurrent requests. This is more efficient than multiple connections due to reduced lock contention and overhead.</p>
+<div class="highlight"><pre><span></span><code><span class="kn">from</span> <span class="nn">async_cassandra</span> <span class="kn">import</span> <span class="n">AsyncCluster</span>
+
+<span class="n">cluster</span> <span class="o">=</span> <span class="n">AsyncCluster</span><span class="p">(</span>
+    <span class="p">[</span><span class="s1">'127.0.0.1'</span><span class="p">],</span>
+    <span class="n">executor_threads</span><span class="o">=</span><span class="mi">4</span><span class="p">,</span>          <span class="c1"># Thread pool for callbacks (default: 2)</span>
+    <span class="n">idle_heartbeat_interval</span><span class="o">=</span><span class="mi">30</span><span class="p">,</span>  <span class="c1"># Keep-alive interval in seconds</span>
+    <span class="n">connect_timeout</span><span class="o">=</span><span class="mi">10</span><span class="p">,</span>          <span class="c1"># Connection timeout (default: 5)</span>
+    <span class="n">request_timeout</span><span class="o">=</span><span class="mi">10</span><span class="p">,</span>          <span class="c1"># Per-request timeout (default: 10)</span>
+<span class="p">)</span>
 </code></pre></div>
 <h3 id="java_1">Java<a class="headerlink" href="#java_1" title="Permanent link">¶</a></h3>
 <div class="highlight"><pre><span></span><code><span class="c1">// application.conf</span>
@@ -20087,22 +21485,166 @@ data-et-multi-view="{&quot;schema&quot;:{&quot;content&quot;:{&quot;desktop&quot
 </code></pre></div>
 <hr>
 <h2 id="retry-policies">Retry Policies<a class="headerlink" href="#retry-policies" title="Permanent link">¶</a></h2>
-<p>Handle transient failures:</p>
-<div class="highlight"><pre><span></span><code><span class="c1"># Python</span>
-<span class="kn">from</span> <span class="nn">cassandra.policies</span> <span class="kn">import</span> <span class="n">RetryPolicy</span>
-<span class="kn">from</span> <span class="nn">cassandra.cluster</span> <span class="kn">import</span> <span class="n">Cluster</span>
+<p>Retry policies determine how drivers handle transient failures such as timeouts, temporary node unavailability, or network issues. When a query fails, the retry policy decides whether to:</p>
+<ul>
+<li><strong>Retry</strong> the query on the same or a different node</li>
+<li><strong>Rethrow</strong> the exception to the application</li>
+<li><strong>Ignore</strong> the failure (for writes where partial success is acceptable)</li>
+</ul>
+<h3 id="idempotency-critical-for-safe-retries">Idempotency: Critical for Safe Retries<a class="headerlink" href="#idempotency-critical-for-safe-retries" title="Permanent link">¶</a></h3>
+<p><strong>Drivers only retry queries that are marked as idempotent.</strong> A query is idempotent if executing it multiple times produces the same result as executing it once. This is essential because when a timeout occurs, the driver cannot know whether the query actually succeeded on the server.</p>
+<table>
+<thead>
+<tr>
+<th>Query Type</th>
+<th>Idempotent?</th>
+<th>Reason</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>SELECT * FROM users WHERE id = ?</code></td>
+<td>✅ Yes</td>
+<td>Same data returned each time</td>
+</tr>
+<tr>
+<td><code>UPDATE users SET name = 'John' WHERE id = ?</code></td>
+<td>✅ Yes</td>
+<td>Setting to absolute value is repeatable</td>
+</tr>
+<tr>
+<td><code>DELETE FROM users WHERE id = ?</code></td>
+<td>✅ Yes</td>
+<td>Deleting twice has same effect</td>
+</tr>
+<tr>
+<td><code>INSERT INTO users (id, name) VALUES (?, ?) IF NOT EXISTS</code></td>
+<td>✅ Yes</td>
+<td>LWT ensures exactly-once semantics</td>
+</tr>
+<tr>
+<td><code>SELECT now() FROM system.local</code></td>
+<td>❌ No</td>
+<td>Returns different timestamp each call</td>
+</tr>
+<tr>
+<td><code>UPDATE users SET counter = counter + 1 WHERE id = ?</code></td>
+<td>❌ No</td>
+<td>Increment applied multiple times</td>
+</tr>
+<tr>
+<td><code>INSERT INTO logs (id, ts) VALUES (uuid(), ?)</code></td>
+<td>❌ No</td>
+<td>Generates different UUID each time</td>
+</tr>
+</tbody>
+</table>
+<div class="admonition warning">
+<p class="admonition-title">Default: Queries are NOT idempotent</p>
+<p>By default, drivers assume queries are <strong>not</strong> idempotent and will not retry them on timeout. You MUST explicitly mark queries as idempotent to enable retries.</p>
+</div>
+<h3 id="python-sync-driver_1">Python (sync driver)<a class="headerlink" href="#python-sync-driver_1" title="Permanent link">¶</a></h3>
+<div class="highlight"><pre><span></span><code><span class="kn">from</span> <span class="nn">cassandra.cluster</span> <span class="kn">import</span> <span class="n">Cluster</span>
 
-<span class="k">class</span> <span class="nc">CustomRetryPolicy</span><span class="p">(</span><span class="n">RetryPolicy</span><span class="p">):</span>
-    <span class="k">def</span> <span class="nf">on_read_timeout</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">query</span><span class="p">,</span> <span class="n">consistency</span><span class="p">,</span> <span class="n">required</span><span class="p">,</span> <span class="n">received</span><span class="p">,</span> <span class="n">data_retrieved</span><span class="p">,</span> <span class="n">retry_num</span><span class="p">):</span>
-        <span class="k">if</span> <span class="n">retry_num</span> <span class="o">&lt;</span> <span class="mi">3</span><span class="p">:</span>
-            <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">RETRY</span><span class="p">,</span> <span class="n">consistency</span>
-        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">RETHROW</span><span class="p">,</span> <span class="kc">None</span>
+<span class="n">cluster</span> <span class="o">=</span> <span class="n">Cluster</span><span class="p">([</span><span class="s1">'127.0.0.1'</span><span class="p">])</span>
+<span class="n">session</span> <span class="o">=</span> <span class="n">cluster</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span><span class="s1">'my_keyspace'</span><span class="p">)</span>
 
-<span class="n">cluster</span> <span class="o">=</span> <span class="n">Cluster</span><span class="p">(</span>
-    <span class="p">[</span><span class="s1">'127.0.0.1'</span><span class="p">],</span>
-    <span class="n">default_retry_policy</span><span class="o">=</span><span class="n">CustomRetryPolicy</span><span class="p">()</span>
-<span class="p">)</span>
+<span class="c1"># Prepared statement for idempotent read</span>
+<span class="n">select_stmt</span> <span class="o">=</span> <span class="n">session</span><span class="o">.</span><span class="n">prepare</span><span class="p">(</span><span class="s2">"SELECT * FROM users WHERE id = ?"</span><span class="p">)</span>
+<span class="n">select_stmt</span><span class="o">.</span><span class="n">is_idempotent</span> <span class="o">=</span> <span class="kc">True</span>  <span class="c1"># SELECTs are safe to retry</span>
+<span class="n">result</span> <span class="o">=</span> <span class="n">session</span><span class="o">.</span><span class="n">execute</span><span class="p">(</span><span class="n">select_stmt</span><span class="p">,</span> <span class="p">[</span><span class="n">user_id</span><span class="p">])</span>
+
+<span class="c1"># Prepared statement for idempotent write (absolute value update)</span>
+<span class="n">update_stmt</span> <span class="o">=</span> <span class="n">session</span><span class="o">.</span><span class="n">prepare</span><span class="p">(</span><span class="s2">"UPDATE users SET name = ? WHERE id = ?"</span><span class="p">)</span>
+<span class="n">bound</span> <span class="o">=</span> <span class="n">update_stmt</span><span class="o">.</span><span class="n">bind</span><span class="p">([</span><span class="s1">'John'</span><span class="p">,</span> <span class="n">user_id</span><span class="p">])</span>
+<span class="n">bound</span><span class="o">.</span><span class="n">is_idempotent</span> <span class="o">=</span> <span class="kc">True</span>  <span class="c1"># Setting absolute value is safe to retry</span>
+<span class="n">session</span><span class="o">.</span><span class="n">execute</span><span class="p">(</span><span class="n">bound</span><span class="p">)</span>
+
+<span class="c1"># Prepared statement for non-idempotent write - do NOT mark</span>
+<span class="n">counter_stmt</span> <span class="o">=</span> <span class="n">session</span><span class="o">.</span><span class="n">prepare</span><span class="p">(</span><span class="s2">"UPDATE counters SET views = views + 1 WHERE page_id = ?"</span><span class="p">)</span>
+<span class="n">session</span><span class="o">.</span><span class="n">execute</span><span class="p">(</span><span class="n">counter_stmt</span><span class="p">,</span> <span class="p">[</span><span class="n">page_id</span><span class="p">])</span>  <span class="c1"># Counter increment must not retry</span>
 </code></pre></div>
+<h3 id="python-async-driver_1">Python (async driver)<a class="headerlink" href="#python-async-driver_1" title="Permanent link">¶</a></h3>
+<p>The async driver includes <code>AsyncRetryPolicy</code> with configurable retry attempts. Read operations (SELECTs) are automatically retried without needing to mark them as idempotent.</p>
+<div class="highlight"><pre><span></span><code><span class="kn">from</span> <span class="nn">async_cassandra</span> <span class="kn">import</span> <span class="n">AsyncCluster</span>
+<span class="kn">from</span> <span class="nn">async_cassandra.retry_policy</span> <span class="kn">import</span> <span class="n">AsyncRetryPolicy</span>
+
+<span class="c1"># Configure retry policy with max retries</span>
+<span class="n">cluster</span> <span class="o">=</span> <span class="n">AsyncCluster</span><span class="p">(</span>
+    <span class="p">[</span><span class="s1">'127.0.0.1'</span><span class="p">],</span>
+    <span class="n">retry_policy</span><span class="o">=</span><span class="n">AsyncRetryPolicy</span><span class="p">(</span><span class="n">max_retries</span><span class="o">=</span><span class="mi">5</span><span class="p">)</span>
+<span class="p">)</span>
+<span class="n">session</span> <span class="o">=</span> <span class="k">await</span> <span class="n">cluster</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span><span class="s1">'my_keyspace'</span><span class="p">)</span>
+
+<span class="c1"># Prepared statement for read - automatically retried</span>
+<span class="n">select_stmt</span> <span class="o">=</span> <span class="k">await</span> <span class="n">session</span><span class="o">.</span><span class="n">prepare</span><span class="p">(</span><span class="s2">"SELECT * FROM users WHERE id = ?"</span><span class="p">)</span>
+<span class="n">result</span> <span class="o">=</span> <span class="k">await</span> <span class="n">session</span><span class="o">.</span><span class="n">execute</span><span class="p">(</span><span class="n">select_stmt</span><span class="p">,</span> <span class="p">[</span><span class="n">user_id</span><span class="p">])</span>
+
+<span class="c1"># Prepared statement for idempotent write</span>
+<span class="n">insert_stmt</span> <span class="o">=</span> <span class="k">await</span> <span class="n">session</span><span class="o">.</span><span class="n">prepare</span><span class="p">(</span><span class="s2">"INSERT INTO users (id, email) VALUES (?, ?) IF NOT EXISTS"</span><span class="p">)</span>
+<span class="n">insert_stmt</span><span class="o">.</span><span class="n">is_idempotent</span> <span class="o">=</span> <span class="kc">True</span>  <span class="c1"># LWT is safe to retry</span>
+<span class="k">await</span> <span class="n">session</span><span class="o">.</span><span class="n">execute</span><span class="p">(</span><span class="n">insert_stmt</span><span class="p">,</span> <span class="p">[</span><span class="n">user_id</span><span class="p">,</span> <span class="s1">'john@example.com'</span><span class="p">])</span>
+
+<span class="c1"># Prepared statement for non-idempotent write - do NOT mark</span>
+<span class="n">counter_stmt</span> <span class="o">=</span> <span class="k">await</span> <span class="n">session</span><span class="o">.</span><span class="n">prepare</span><span class="p">(</span><span class="s2">"UPDATE counters SET views = views + 1 WHERE page_id = ?"</span><span class="p">)</span>
+<span class="k">await</span> <span class="n">session</span><span class="o">.</span><span class="n">execute</span><span class="p">(</span><span class="n">counter_stmt</span><span class="p">,</span> <span class="p">[</span><span class="n">page_id</span><span class="p">])</span>  <span class="c1"># Counter increment must not retry</span>
+</code></pre></div>
+<h3 id="java_2">Java<a class="headerlink" href="#java_2" title="Permanent link">¶</a></h3>
+<div class="highlight"><pre><span></span><code><span class="kn">import</span><span class="w"> </span><span class="nn">com.datastax.oss.driver.api.core.CqlSession</span><span class="p">;</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">com.datastax.oss.driver.api.core.cql.*</span><span class="p">;</span>
+
+<span class="n">CqlSession</span><span class="w"> </span><span class="n">session</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">CqlSession</span><span class="p">.</span><span class="na">builder</span><span class="p">()</span>
+<span class="w">    </span><span class="p">.</span><span class="na">addContactPoint</span><span class="p">(</span><span class="k">new</span><span class="w"> </span><span class="n">InetSocketAddress</span><span class="p">(</span><span class="s">"127.0.0.1"</span><span class="p">,</span><span class="w"> </span><span class="mi">9042</span><span class="p">))</span>
+<span class="w">    </span><span class="p">.</span><span class="na">withLocalDatacenter</span><span class="p">(</span><span class="s">"dc1"</span><span class="p">)</span>
+<span class="w">    </span><span class="p">.</span><span class="na">build</span><span class="p">();</span>
+
+<span class="c1">// Mark simple statement as idempotent</span>
+<span class="n">SimpleStatement</span><span class="w"> </span><span class="n">stmt</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">SimpleStatement</span><span class="p">.</span><span class="na">newInstance</span><span class="p">(</span>
+<span class="w">    </span><span class="s">"SELECT * FROM users WHERE id = ?"</span><span class="p">,</span><span class="w"> </span><span class="n">userId</span><span class="p">)</span>
+<span class="w">    </span><span class="p">.</span><span class="na">setIdempotent</span><span class="p">(</span><span class="kc">true</span><span class="p">);</span>
+<span class="n">session</span><span class="p">.</span><span class="na">execute</span><span class="p">(</span><span class="n">stmt</span><span class="p">);</span>
+
+<span class="c1">// Prepared statements - set on bound statement</span>
+<span class="n">PreparedStatement</span><span class="w"> </span><span class="n">prepared</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">session</span><span class="p">.</span><span class="na">prepare</span><span class="p">(</span>
+<span class="w">    </span><span class="s">"UPDATE users SET name = ? WHERE id = ?"</span><span class="p">);</span>
+<span class="n">BoundStatement</span><span class="w"> </span><span class="n">bound</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">prepared</span><span class="p">.</span><span class="na">bind</span><span class="p">(</span><span class="s">"John"</span><span class="p">,</span><span class="w"> </span><span class="n">userId</span><span class="p">)</span>
+<span class="w">    </span><span class="p">.</span><span class="na">setIdempotent</span><span class="p">(</span><span class="kc">true</span><span class="p">);</span>
+<span class="n">session</span><span class="p">.</span><span class="na">execute</span><span class="p">(</span><span class="n">bound</span><span class="p">);</span>
+</code></pre></div>
+<p><strong>Configure retry policy in application.conf:</strong></p>
+<div class="highlight"><pre><span></span><code>datastax-java-driver {
+  advanced.retry-policy {
+    class = DefaultRetryPolicy
+  }
+
+  # Or use a custom policy
+  # class = com.example.MyRetryPolicy
+}
+</code></pre></div>
+<h3 id="built-in-retry-policies">Built-in Retry Policies<a class="headerlink" href="#built-in-retry-policies" title="Permanent link">¶</a></h3>
+<table>
+<thead>
+<tr>
+<th>Policy</th>
+<th>Behavior</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>DefaultRetryPolicy</strong></td>
+<td>Retries reads once if enough replicas responded; never retries writes</td>
+</tr>
+<tr>
+<td><strong>FallthroughRetryPolicy</strong></td>
+<td>Never retries - always rethrows to application</td>
+</tr>
+<tr>
+<td><strong>DowngradingConsistencyRetryPolicy</strong></td>
+<td>Retries at lower consistency level (use with caution)</td>
+</tr>
+</tbody>
+</table>
+<p>Consult your driver's documentation for the complete list of available retry policies and guidance on implementing custom policies for your specific requirements.</p>
 <hr>
 <h2 id="error-handling">Error Handling<a class="headerlink" href="#error-handling" title="Permanent link">¶</a></h2>
 <p>Common exceptions to handle:</p>
@@ -20142,7 +21684,25 @@ data-et-multi-view="{&quot;schema&quot;:{&quot;content&quot;:{&quot;desktop&quot
 </tr>
 </tbody>
 </table>
-<h3 id="example_1">Example<a class="headerlink" href="#example_1" title="Permanent link">¶</a></h3>
+<h3 id="examples">Examples<a class="headerlink" href="#examples" title="Permanent link">¶</a></h3>
+<p><strong>Java</strong>:</p>
+<div class="highlight"><pre><span></span><code><span class="kn">import</span><span class="w"> </span><span class="nn">com.datastax.oss.driver.api.core.servererrors.*</span><span class="p">;</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">com.datastax.oss.driver.api.core.AllNodesFailedException</span><span class="p">;</span>
+
+<span class="k">try</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="n">session</span><span class="p">.</span><span class="na">execute</span><span class="p">(</span><span class="s">"SELECT * FROM users"</span><span class="p">);</span>
+<span class="p">}</span><span class="w"> </span><span class="k">catch</span><span class="w"> </span><span class="p">(</span><span class="n">ReadTimeoutException</span><span class="w"> </span><span class="n">e</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="n">System</span><span class="p">.</span><span class="na">out</span><span class="p">.</span><span class="na">println</span><span class="p">(</span><span class="s">"Query timed out - consider adjusting timeout or data model"</span><span class="p">);</span>
+<span class="p">}</span><span class="w"> </span><span class="k">catch</span><span class="w"> </span><span class="p">(</span><span class="n">UnavailableException</span><span class="w"> </span><span class="n">e</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="n">System</span><span class="p">.</span><span class="na">out</span><span class="p">.</span><span class="na">printf</span><span class="p">(</span><span class="s">"Not enough replicas: required=%d, alive=%d%n"</span><span class="p">,</span>
+<span class="w">        </span><span class="n">e</span><span class="p">.</span><span class="na">getRequired</span><span class="p">(),</span><span class="w"> </span><span class="n">e</span><span class="p">.</span><span class="na">getAlive</span><span class="p">());</span>
+<span class="p">}</span><span class="w"> </span><span class="k">catch</span><span class="w"> </span><span class="p">(</span><span class="n">WriteTimeoutException</span><span class="w"> </span><span class="n">e</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="n">System</span><span class="p">.</span><span class="na">out</span><span class="p">.</span><span class="na">println</span><span class="p">(</span><span class="s">"Write timed out - check cluster health"</span><span class="p">);</span>
+<span class="p">}</span><span class="w"> </span><span class="k">catch</span><span class="w"> </span><span class="p">(</span><span class="n">AllNodesFailedException</span><span class="w"> </span><span class="n">e</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="n">System</span><span class="p">.</span><span class="na">out</span><span class="p">.</span><span class="na">println</span><span class="p">(</span><span class="s">"Cannot connect to any host: "</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">e</span><span class="p">.</span><span class="na">getAllErrors</span><span class="p">());</span>
+<span class="p">}</span>
+</code></pre></div>
+<p><strong>Python</strong>:</p>
 <div class="highlight"><pre><span></span><code><span class="kn">from</span> <span class="nn">cassandra</span> <span class="kn">import</span> <span class="n">ReadTimeout</span><span class="p">,</span> <span class="n">Unavailable</span><span class="p">,</span> <span class="n">NoHostAvailable</span>
 
 <span class="k">try</span><span class="p">:</span>
@@ -20178,9 +21738,15 @@ data-et-multi-view="{&quot;schema&quot;:{&quot;content&quot;:{&quot;desktop&quot
 <p>For detailed driver documentation, refer to the official repositories:</p>
 <ul>
 <li><strong><a href="https://github.com/apache/cassandra-java-driver">Java Driver</a></strong> - Apache Cassandra Java Driver</li>
+<li><strong><a href="https://github.com/datastax/spark-cassandra-connector">Spark Cassandra Connector</a></strong> - Apache Spark integration for Cassandra</li>
 <li><strong><a href="https://github.com/apache/cassandra-python-driver">Python Driver</a></strong> - Apache Cassandra Python Driver</li>
+<li><strong><a href="https://github.com/axonops/async-python-cassandra-client">Async Python Client</a></strong> - Async Python Cassandra Client</li>
 <li><strong><a href="https://github.com/datastax/nodejs-driver">Node.js Driver</a></strong> - DataStax Node.js Driver</li>
 <li><strong><a href="https://github.com/gocql/gocql">Go Driver</a></strong> - GoCQL</li>
+<li><strong><a href="https://github.com/datastax/csharp-driver">C# Driver</a></strong> - DataStax C# Driver</li>
+<li><strong><a href="https://github.com/apache/cassandra-cpp-driver">C++ Driver</a></strong> - Apache Cassandra C++ Driver</li>
+<li><strong><a href="https://github.com/datastax/ruby-driver">Ruby Driver</a></strong> - DataStax Ruby Driver (maintenance mode)</li>
+<li><strong><a href="https://github.com/datastax/php-driver">PHP Driver</a></strong> - DataStax PHP Driver (maintenance mode)</li>
 </ul>
 <hr>
 <h2 id="next-steps">Next Steps<a class="headerlink" href="#next-steps" title="Permanent link">¶</a></h2>

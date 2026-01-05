@@ -6566,6 +6566,15 @@ data-et-multi-view="{&quot;schema&quot;:{&quot;content&quot;:{&quot;desktop&quot
 </li>
         
           <li class="md-nav__item">
+  <a href="#mixing-lwt-and-non-lwt-operations" class="md-nav__link">
+    <span class="md-ellipsis">
+      Mixing LWT and Non-LWT Operations
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
   <a href="#version-specific-behavior" class="md-nav__link">
     <span class="md-ellipsis">
       Version-Specific Behavior
@@ -14700,7 +14709,7 @@ data-et-multi-view="{&quot;schema&quot;:{&quot;content&quot;:{&quot;desktop&quot
             
   
   <span class="md-ellipsis">
-    Playbooks
+    Common Errors
   </span>
   
 
@@ -14709,6 +14718,136 @@ data-et-multi-view="{&quot;schema&quot;:{&quot;content&quot;:{&quot;desktop&quot
         
         <nav class="md-nav" data-md-level="4" aria-labelledby="__nav_7_2_8_4_label" aria-expanded="false">
           <label class="md-nav__title" for="__nav_7_2_8_4">
+            <span class="md-nav__icon md-icon"></span>
+            Common Errors
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../troubleshooting/common-errors/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Overview
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../troubleshooting/common-errors/read-timeout/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Read Timeout
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../troubleshooting/common-errors/write-timeout/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Write Timeout
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../troubleshooting/common-errors/lightweight-transactions/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Lightweight Transactions
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+    
+      
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_7_2_8_5" >
+        
+          
+          <label class="md-nav__link" for="__nav_7_2_8_5" id="__nav_7_2_8_5_label" tabindex="0">
+            
+  
+  <span class="md-ellipsis">
+    Playbooks
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="4" aria-labelledby="__nav_7_2_8_5_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_7_2_8_5">
             <span class="md-nav__icon md-icon"></span>
             Playbooks
           </label>
@@ -19570,6 +19709,15 @@ data-et-multi-view="{&quot;schema&quot;:{&quot;content&quot;:{&quot;desktop&quot
 </li>
         
           <li class="md-nav__item">
+  <a href="#mixing-lwt-and-non-lwt-operations" class="md-nav__link">
+    <span class="md-ellipsis">
+      Mixing LWT and Non-LWT Operations
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
   <a href="#version-specific-behavior" class="md-nav__link">
     <span class="md-ellipsis">
       Version-Specific Behavior
@@ -20140,6 +20288,39 @@ data-et-multi-view="{&quot;schema&quot;:{&quot;content&quot;:{&quot;desktop&quot
 <li><strong>Timeout outcomes</strong>: If an LWT times out, the operation may or may not have been applied. The outcome is undefined.</li>
 <li><strong>Retry safety without idempotency</strong>: Retrying a failed LWT without checking the result may cause duplicate application.</li>
 </ul>
+</div>
+<h3 id="mixing-lwt-and-non-lwt-operations">Mixing LWT and Non-LWT Operations<a class="headerlink" href="#mixing-lwt-and-non-lwt-operations" title="Permanent link">¶</a></h3>
+<div class="admonition danger">
+<p class="admonition-title">Mixing LWT with Non-LWT Is Unsafe</p>
+<p>Mixing lightweight transactions with standard (non-LWT) operations on the same data is <strong>inherently unsafe</strong> and SHOULD be avoided.</p>
+<p><strong>Why this is dangerous:</strong></p>
+<p>Paxos uses its own <strong>hybrid-logical clock</strong> to ensure linearizability within LWT operations. This clock is separate from the regular Cassandra timestamp mechanism used by non-LWT writes. When you mix the two:</p>
+<ul>
+<li>The clocks are never perfectly synchronized between LWT and non-LWT requests</li>
+<li>A non-LWT operation executed immediately after an LWT may appear to succeed but have no effect</li>
+<li>The Paxos consensus may not have fully propagated when the non-LWT operation executes</li>
+</ul>
+<p><strong>Example of the problem:</strong></p>
+<div class="highlight"><pre><span></span><code><span class="c1">-- Step 1: Insert with LWT (uses Paxos clock)</span>
+<span class="k">INSERT</span><span class="w"> </span><span class="k">INTO</span><span class="w"> </span><span class="n">users</span><span class="w"> </span><span class="p">(</span><span class="n">user_id</span><span class="p">,</span><span class="w"> </span><span class="n">username</span><span class="p">)</span><span class="w"> </span><span class="k">VALUES</span><span class="w"> </span><span class="p">(</span><span class="mi">123</span><span class="p">,</span><span class="w"> </span><span class="s1">'alice'</span><span class="p">)</span><span class="w"> </span><span class="k">IF</span><span class="w"> </span><span class="k">NOT</span><span class="w"> </span><span class="k">EXISTS</span><span class="p">;</span>
+<span class="c1">-- Returns [applied] = true</span>
+
+<span class="c1">-- Step 2: Immediately delete without LWT (uses regular timestamp)</span>
+<span class="k">DELETE</span><span class="w"> </span><span class="k">FROM</span><span class="w"> </span><span class="n">users</span><span class="w"> </span><span class="k">WHERE</span><span class="w"> </span><span class="n">user_id</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">123</span><span class="p">;</span>
+<span class="c1">-- Returns success, but row may still exist!</span>
+
+<span class="c1">-- Step 3: Verify</span>
+<span class="k">SELECT</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="k">FROM</span><span class="w"> </span><span class="n">users</span><span class="w"> </span><span class="k">WHERE</span><span class="w"> </span><span class="n">user_id</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">123</span><span class="p">;</span>
+<span class="c1">-- Row still exists despite "successful" delete</span>
+</code></pre></div>
+<p><strong>If you MUST mix LWT and non-LWT operations:</strong></p>
+<ol>
+<li><strong>Use LWT consistently</strong>: If you use <code>INSERT ... IF NOT EXISTS</code>, also use <code>DELETE ... IF EXISTS</code> for the same data</li>
+<li><strong>Add delays</strong> (not recommended for production): Waiting between operations may allow Paxos to complete, but this is fragile and timing-dependent</li>
+<li><strong>Understand the risk</strong>: Even with precautions, edge cases may cause unexpected behavior</li>
+</ol>
+<p><strong>Best practice:</strong> Design your data model so that LWT operations are self-contained. If a piece of data is managed with LWT, ALL operations on that data SHOULD use LWT conditions.</p>
+<p>See <a href="../../../troubleshooting/common-errors/lightweight-transactions/">Troubleshooting: LWT and Non-LWT Mixing Issues</a> for diagnosis and resolution steps.</p>
 </div>
 <h3 id="version-specific-behavior">Version-Specific Behavior<a class="headerlink" href="#version-specific-behavior" title="Permanent link">¶</a></h3>
 <table>
