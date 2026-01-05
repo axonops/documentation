@@ -6,7 +6,7 @@
       <meta charset="utf-8">
       <meta name="viewport" content="width=device-width,initial-scale=1">
       
-        <meta name="description" content="Cassandra cluster management. Scaling, topology changes, and node operations.">
+        <meta name="description" content="Operational procedures for Cassandra cluster topology changes. Adding, removing, replacing nodes and scaling operations.">
       
       
       
@@ -16,7 +16,7 @@
         <link rel="prev" href="../sstable-management/sstablerepairedset/">
       
       
-        <link rel="next" href="../backup-restore/">
+        <link rel="next" href="adding-nodes/">
       
       
       <link rel="icon" href="/img/favicon.ico">
@@ -65,7 +65,7 @@
     
     
       
-        <meta  name="keywords"  content="Cassandra cluster management, cluster operations, node management" >
+        <meta  name="keywords"  content="Cassandra cluster management, topology changes, bootstrap, decommission, node replacement" >
       
     
     
@@ -74,8 +74,8 @@
 {
   "@context": "https://schema.org",
   "@type": "HowTo",
-  "headline": "Cluster Management - Apache Cassandra Documentation",
-  "description": "Cassandra cluster management. Scaling, topology changes, and node operations.",
+  "headline": "Overview - Apache Cassandra Documentation",
+  "description": "Operational procedures for Cassandra cluster topology changes. Adding, removing, replacing nodes and scaling operations.",
   "about": {
     "@type": "SoftwareApplication",
     "name": "Apache Cassandra",
@@ -5185,6 +5185,27 @@ data-et-multi-view="{&quot;schema&quot;:{&quot;content&quot;:{&quot;desktop&quot
   
   
     <li class="md-nav__item">
+      <a href="../../architecture/distributed-data/consistency-levels/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Consistency Levels Reference
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
       <a href="../../architecture/distributed-data/replica-synchronization/" class="md-nav__link">
         
   
@@ -6659,6 +6680,27 @@ data-et-multi-view="{&quot;schema&quot;:{&quot;content&quot;:{&quot;desktop&quot
 
               
             
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../cql/dml/lightweight-transactions/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Lightweight Transactions
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
           </ul>
         </nav>
       
@@ -7233,6 +7275,27 @@ data-et-multi-view="{&quot;schema&quot;:{&quot;content&quot;:{&quot;desktop&quot
   
   <span class="md-ellipsis">
     Time-Series Data
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../application-development/patterns/time-bucketing/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Time Bucketing
   </span>
   
 
@@ -11842,6 +11905,46 @@ data-et-multi-view="{&quot;schema&quot;:{&quot;content&quot;:{&quot;desktop&quot
   
   
   
+    
+    
+    
+      
+      
+    
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_7_2_5_4" checked>
+        
+          
+          <label class="md-nav__link" for="__nav_7_2_5_4" id="__nav_7_2_5_4_label" tabindex="0">
+            
+  
+  <span class="md-ellipsis">
+    Cluster Management
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="4" aria-labelledby="__nav_7_2_5_4_label" aria-expanded="true">
+          <label class="md-nav__title" for="__nav_7_2_5_4">
+            <span class="md-nav__icon md-icon"></span>
+            Cluster Management
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+    
+  
+  
+  
     <li class="md-nav__item md-nav__item--active">
       
       <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
@@ -11854,7 +11957,7 @@ data-et-multi-view="{&quot;schema&quot;:{&quot;content&quot;:{&quot;desktop&quot
           
   
   <span class="md-ellipsis">
-    Cluster Management
+    Overview
   </span>
   
 
@@ -11865,7 +11968,7 @@ data-et-multi-view="{&quot;schema&quot;:{&quot;content&quot;:{&quot;desktop&quot
         
   
   <span class="md-ellipsis">
-    Cluster Management
+    Overview
   </span>
   
 
@@ -11887,28 +11990,37 @@ data-et-multi-view="{&quot;schema&quot;:{&quot;content&quot;:{&quot;desktop&quot
     <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
       
         <li class="md-nav__item">
-  <a href="#understanding-topology-changes" class="md-nav__link">
+  <a href="#operations-reference" class="md-nav__link">
     <span class="md-ellipsis">
-      Understanding Topology Changes
+      Operations Reference
     </span>
   </a>
   
-    <nav class="md-nav" aria-label="Understanding Topology Changes">
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#safety-requirements" class="md-nav__link">
+    <span class="md-ellipsis">
+      Safety Requirements
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Safety Requirements">
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
-  <a href="#how-cassandra-handles-topology-changes" class="md-nav__link">
+  <a href="#pre-operation-requirements" class="md-nav__link">
     <span class="md-ellipsis">
-      How Cassandra Handles Topology Changes
+      Pre-Operation Requirements
     </span>
   </a>
   
 </li>
         
           <li class="md-nav__item">
-  <a href="#token-ownership-and-streaming" class="md-nav__link">
+  <a href="#operational-constraints" class="md-nav__link">
     <span class="md-ellipsis">
-      Token Ownership and Streaming
+      Operational Constraints
     </span>
   </a>
   
@@ -11920,64 +12032,37 @@ data-et-multi-view="{&quot;schema&quot;:{&quot;content&quot;:{&quot;desktop&quot
 </li>
       
         <li class="md-nav__item">
-  <a href="#cluster-operations-overview" class="md-nav__link">
+  <a href="#operation-selection-guide" class="md-nav__link">
     <span class="md-ellipsis">
-      Cluster Operations Overview
+      Operation Selection Guide
     </span>
   </a>
   
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#adding-nodes" class="md-nav__link">
-    <span class="md-ellipsis">
-      Adding Nodes
-    </span>
-  </a>
-  
-    <nav class="md-nav" aria-label="Adding Nodes">
+    <nav class="md-nav" aria-label="Operation Selection Guide">
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
-  <a href="#pre-flight-checklist" class="md-nav__link">
+  <a href="#node-is-healthy-and-accessible" class="md-nav__link">
     <span class="md-ellipsis">
-      Pre-flight Checklist
+      Node is Healthy and Accessible
     </span>
   </a>
   
 </li>
         
           <li class="md-nav__item">
-  <a href="#adding-a-single-node" class="md-nav__link">
+  <a href="#node-is-down-or-unresponsive" class="md-nav__link">
     <span class="md-ellipsis">
-      Adding a Single Node
+      Node is Down or Unresponsive
     </span>
   </a>
   
 </li>
         
           <li class="md-nav__item">
-  <a href="#adding-multiple-nodes" class="md-nav__link">
+  <a href="#capacity-planning" class="md-nav__link">
     <span class="md-ellipsis">
-      Adding Multiple Nodes
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#bootstrap-performance-tuning" class="md-nav__link">
-    <span class="md-ellipsis">
-      Bootstrap Performance Tuning
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#troubleshooting-bootstrap" class="md-nav__link">
-    <span class="md-ellipsis">
-      Troubleshooting Bootstrap
+      Capacity Planning
     </span>
   </a>
   
@@ -11989,163 +12074,28 @@ data-et-multi-view="{&quot;schema&quot;:{&quot;content&quot;:{&quot;desktop&quot
 </li>
       
         <li class="md-nav__item">
-  <a href="#removing-nodes" class="md-nav__link">
+  <a href="#streaming-behavior" class="md-nav__link">
     <span class="md-ellipsis">
-      Removing Nodes
+      Streaming Behavior
     </span>
   </a>
   
-    <nav class="md-nav" aria-label="Removing Nodes">
+    <nav class="md-nav" aria-label="Streaming Behavior">
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
-  <a href="#graceful-decommission-node-is-healthy" class="md-nav__link">
+  <a href="#streaming-direction-by-operation" class="md-nav__link">
     <span class="md-ellipsis">
-      Graceful Decommission (Node is Healthy)
+      Streaming Direction by Operation
     </span>
   </a>
   
 </li>
         
           <li class="md-nav__item">
-  <a href="#forced-removal-node-is-down" class="md-nav__link">
+  <a href="#estimated-duration" class="md-nav__link">
     <span class="md-ellipsis">
-      Forced Removal (Node is Down)
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#assassinate-last-resort" class="md-nav__link">
-    <span class="md-ellipsis">
-      Assassinate (Last Resort)
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#post-removal-verification" class="md-nav__link">
-    <span class="md-ellipsis">
-      Post-Removal Verification
-    </span>
-  </a>
-  
-</li>
-        
-      </ul>
-    </nav>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#replacing-nodes" class="md-nav__link">
-    <span class="md-ellipsis">
-      Replacing Nodes
-    </span>
-  </a>
-  
-    <nav class="md-nav" aria-label="Replacing Nodes">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#replace-with-same-ip-address" class="md-nav__link">
-    <span class="md-ellipsis">
-      Replace with Same IP Address
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#replace-with-different-ip-address" class="md-nav__link">
-    <span class="md-ellipsis">
-      Replace with Different IP Address
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#replace-with-different-host-id" class="md-nav__link">
-    <span class="md-ellipsis">
-      Replace with Different Host ID
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#replacement-vs-removenode-bootstrap" class="md-nav__link">
-    <span class="md-ellipsis">
-      Replacement vs Removenode + Bootstrap
-    </span>
-  </a>
-  
-</li>
-        
-      </ul>
-    </nav>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#scaling-operations" class="md-nav__link">
-    <span class="md-ellipsis">
-      Scaling Operations
-    </span>
-  </a>
-  
-    <nav class="md-nav" aria-label="Scaling Operations">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#scaling-up-adding-capacity" class="md-nav__link">
-    <span class="md-ellipsis">
-      Scaling Up (Adding Capacity)
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#scaling-down-reducing-capacity" class="md-nav__link">
-    <span class="md-ellipsis">
-      Scaling Down (Reducing Capacity)
-    </span>
-  </a>
-  
-</li>
-        
-      </ul>
-    </nav>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#multi-datacenter-operations" class="md-nav__link">
-    <span class="md-ellipsis">
-      Multi-Datacenter Operations
-    </span>
-  </a>
-  
-    <nav class="md-nav" aria-label="Multi-Datacenter Operations">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#adding-a-new-datacenter" class="md-nav__link">
-    <span class="md-ellipsis">
-      Adding a New Datacenter
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#removing-a-datacenter" class="md-nav__link">
-    <span class="md-ellipsis">
-      Removing a Datacenter
+      Estimated Duration
     </span>
   </a>
   
@@ -12167,27 +12117,27 @@ data-et-multi-view="{&quot;schema&quot;:{&quot;content&quot;:{&quot;desktop&quot
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
-  <a href="#key-metrics-during-topology-changes" class="md-nav__link">
+  <a href="#key-commands" class="md-nav__link">
     <span class="md-ellipsis">
-      Key Metrics During Topology Changes
+      Key Commands
     </span>
   </a>
   
 </li>
         
           <li class="md-nav__item">
-  <a href="#streaming-progress-monitoring" class="md-nav__link">
+  <a href="#node-states-during-operations" class="md-nav__link">
     <span class="md-ellipsis">
-      Streaming Progress Monitoring
+      Node States During Operations
     </span>
   </a>
   
 </li>
         
           <li class="md-nav__item">
-  <a href="#health-verification-commands" class="md-nav__link">
+  <a href="#jmx-metrics" class="md-nav__link">
     <span class="md-ellipsis">
-      Health Verification Commands
+      JMX Metrics
     </span>
   </a>
   
@@ -12199,70 +12149,19 @@ data-et-multi-view="{&quot;schema&quot;:{&quot;content&quot;:{&quot;desktop&quot
 </li>
       
         <li class="md-nav__item">
-  <a href="#axonops-cluster-management" class="md-nav__link">
+  <a href="#failure-handling" class="md-nav__link">
     <span class="md-ellipsis">
-      AxonOps Cluster Management
+      Failure Handling
     </span>
   </a>
   
-    <nav class="md-nav" aria-label="AxonOps Cluster Management">
+    <nav class="md-nav" aria-label="Failure Handling">
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
-  <a href="#automated-node-operations" class="md-nav__link">
+  <a href="#operation-interrupted" class="md-nav__link">
     <span class="md-ellipsis">
-      Automated Node Operations
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#topology-change-safeguards" class="md-nav__link">
-    <span class="md-ellipsis">
-      Topology Change Safeguards
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#multi-datacenter-management" class="md-nav__link">
-    <span class="md-ellipsis">
-      Multi-Datacenter Management
-    </span>
-  </a>
-  
-</li>
-        
-      </ul>
-    </nav>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#troubleshooting" class="md-nav__link">
-    <span class="md-ellipsis">
-      Troubleshooting
-    </span>
-  </a>
-  
-    <nav class="md-nav" aria-label="Troubleshooting">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#node-wont-join-cluster" class="md-nav__link">
-    <span class="md-ellipsis">
-      Node Won't Join Cluster
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#decommission-stuck" class="md-nav__link">
-    <span class="md-ellipsis">
-      Decommission Stuck
+      Operation Interrupted
     </span>
   </a>
   
@@ -12283,44 +12182,11 @@ data-et-multi-view="{&quot;schema&quot;:{&quot;content&quot;:{&quot;desktop&quot
 </li>
       
         <li class="md-nav__item">
-  <a href="#best-practices" class="md-nav__link">
+  <a href="#procedures" class="md-nav__link">
     <span class="md-ellipsis">
-      Best Practices
+      Procedures
     </span>
   </a>
-  
-    <nav class="md-nav" aria-label="Best Practices">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#planning-topology-changes" class="md-nav__link">
-    <span class="md-ellipsis">
-      Planning Topology Changes
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#capacity-management" class="md-nav__link">
-    <span class="md-ellipsis">
-      Capacity Management
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#documentation" class="md-nav__link">
-    <span class="md-ellipsis">
-      Documentation
-    </span>
-  </a>
-  
-</li>
-        
-      </ul>
-    </nav>
   
 </li>
       
@@ -12336,6 +12202,182 @@ data-et-multi-view="{&quot;schema&quot;:{&quot;content&quot;:{&quot;desktop&quot
     </ul>
   
 </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="adding-nodes/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Adding Nodes
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="removing-nodes/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Removing Nodes
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="replacing-nodes/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Replacing Nodes
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="scaling/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Scaling Operations
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="multi-datacenter/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Multi-Datacenter
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="cleanup/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Cleanup Operations
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="rolling-restart/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Rolling Restart
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="troubleshooting/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Troubleshooting
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
       
     </li>
   
@@ -19557,28 +19599,37 @@ data-et-multi-view="{&quot;schema&quot;:{&quot;content&quot;:{&quot;desktop&quot
     <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
       
         <li class="md-nav__item">
-  <a href="#understanding-topology-changes" class="md-nav__link">
+  <a href="#operations-reference" class="md-nav__link">
     <span class="md-ellipsis">
-      Understanding Topology Changes
+      Operations Reference
     </span>
   </a>
   
-    <nav class="md-nav" aria-label="Understanding Topology Changes">
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#safety-requirements" class="md-nav__link">
+    <span class="md-ellipsis">
+      Safety Requirements
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Safety Requirements">
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
-  <a href="#how-cassandra-handles-topology-changes" class="md-nav__link">
+  <a href="#pre-operation-requirements" class="md-nav__link">
     <span class="md-ellipsis">
-      How Cassandra Handles Topology Changes
+      Pre-Operation Requirements
     </span>
   </a>
   
 </li>
         
           <li class="md-nav__item">
-  <a href="#token-ownership-and-streaming" class="md-nav__link">
+  <a href="#operational-constraints" class="md-nav__link">
     <span class="md-ellipsis">
-      Token Ownership and Streaming
+      Operational Constraints
     </span>
   </a>
   
@@ -19590,64 +19641,37 @@ data-et-multi-view="{&quot;schema&quot;:{&quot;content&quot;:{&quot;desktop&quot
 </li>
       
         <li class="md-nav__item">
-  <a href="#cluster-operations-overview" class="md-nav__link">
+  <a href="#operation-selection-guide" class="md-nav__link">
     <span class="md-ellipsis">
-      Cluster Operations Overview
+      Operation Selection Guide
     </span>
   </a>
   
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#adding-nodes" class="md-nav__link">
-    <span class="md-ellipsis">
-      Adding Nodes
-    </span>
-  </a>
-  
-    <nav class="md-nav" aria-label="Adding Nodes">
+    <nav class="md-nav" aria-label="Operation Selection Guide">
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
-  <a href="#pre-flight-checklist" class="md-nav__link">
+  <a href="#node-is-healthy-and-accessible" class="md-nav__link">
     <span class="md-ellipsis">
-      Pre-flight Checklist
+      Node is Healthy and Accessible
     </span>
   </a>
   
 </li>
         
           <li class="md-nav__item">
-  <a href="#adding-a-single-node" class="md-nav__link">
+  <a href="#node-is-down-or-unresponsive" class="md-nav__link">
     <span class="md-ellipsis">
-      Adding a Single Node
+      Node is Down or Unresponsive
     </span>
   </a>
   
 </li>
         
           <li class="md-nav__item">
-  <a href="#adding-multiple-nodes" class="md-nav__link">
+  <a href="#capacity-planning" class="md-nav__link">
     <span class="md-ellipsis">
-      Adding Multiple Nodes
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#bootstrap-performance-tuning" class="md-nav__link">
-    <span class="md-ellipsis">
-      Bootstrap Performance Tuning
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#troubleshooting-bootstrap" class="md-nav__link">
-    <span class="md-ellipsis">
-      Troubleshooting Bootstrap
+      Capacity Planning
     </span>
   </a>
   
@@ -19659,163 +19683,28 @@ data-et-multi-view="{&quot;schema&quot;:{&quot;content&quot;:{&quot;desktop&quot
 </li>
       
         <li class="md-nav__item">
-  <a href="#removing-nodes" class="md-nav__link">
+  <a href="#streaming-behavior" class="md-nav__link">
     <span class="md-ellipsis">
-      Removing Nodes
+      Streaming Behavior
     </span>
   </a>
   
-    <nav class="md-nav" aria-label="Removing Nodes">
+    <nav class="md-nav" aria-label="Streaming Behavior">
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
-  <a href="#graceful-decommission-node-is-healthy" class="md-nav__link">
+  <a href="#streaming-direction-by-operation" class="md-nav__link">
     <span class="md-ellipsis">
-      Graceful Decommission (Node is Healthy)
+      Streaming Direction by Operation
     </span>
   </a>
   
 </li>
         
           <li class="md-nav__item">
-  <a href="#forced-removal-node-is-down" class="md-nav__link">
+  <a href="#estimated-duration" class="md-nav__link">
     <span class="md-ellipsis">
-      Forced Removal (Node is Down)
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#assassinate-last-resort" class="md-nav__link">
-    <span class="md-ellipsis">
-      Assassinate (Last Resort)
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#post-removal-verification" class="md-nav__link">
-    <span class="md-ellipsis">
-      Post-Removal Verification
-    </span>
-  </a>
-  
-</li>
-        
-      </ul>
-    </nav>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#replacing-nodes" class="md-nav__link">
-    <span class="md-ellipsis">
-      Replacing Nodes
-    </span>
-  </a>
-  
-    <nav class="md-nav" aria-label="Replacing Nodes">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#replace-with-same-ip-address" class="md-nav__link">
-    <span class="md-ellipsis">
-      Replace with Same IP Address
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#replace-with-different-ip-address" class="md-nav__link">
-    <span class="md-ellipsis">
-      Replace with Different IP Address
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#replace-with-different-host-id" class="md-nav__link">
-    <span class="md-ellipsis">
-      Replace with Different Host ID
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#replacement-vs-removenode-bootstrap" class="md-nav__link">
-    <span class="md-ellipsis">
-      Replacement vs Removenode + Bootstrap
-    </span>
-  </a>
-  
-</li>
-        
-      </ul>
-    </nav>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#scaling-operations" class="md-nav__link">
-    <span class="md-ellipsis">
-      Scaling Operations
-    </span>
-  </a>
-  
-    <nav class="md-nav" aria-label="Scaling Operations">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#scaling-up-adding-capacity" class="md-nav__link">
-    <span class="md-ellipsis">
-      Scaling Up (Adding Capacity)
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#scaling-down-reducing-capacity" class="md-nav__link">
-    <span class="md-ellipsis">
-      Scaling Down (Reducing Capacity)
-    </span>
-  </a>
-  
-</li>
-        
-      </ul>
-    </nav>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#multi-datacenter-operations" class="md-nav__link">
-    <span class="md-ellipsis">
-      Multi-Datacenter Operations
-    </span>
-  </a>
-  
-    <nav class="md-nav" aria-label="Multi-Datacenter Operations">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#adding-a-new-datacenter" class="md-nav__link">
-    <span class="md-ellipsis">
-      Adding a New Datacenter
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#removing-a-datacenter" class="md-nav__link">
-    <span class="md-ellipsis">
-      Removing a Datacenter
+      Estimated Duration
     </span>
   </a>
   
@@ -19837,27 +19726,27 @@ data-et-multi-view="{&quot;schema&quot;:{&quot;content&quot;:{&quot;desktop&quot
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
-  <a href="#key-metrics-during-topology-changes" class="md-nav__link">
+  <a href="#key-commands" class="md-nav__link">
     <span class="md-ellipsis">
-      Key Metrics During Topology Changes
+      Key Commands
     </span>
   </a>
   
 </li>
         
           <li class="md-nav__item">
-  <a href="#streaming-progress-monitoring" class="md-nav__link">
+  <a href="#node-states-during-operations" class="md-nav__link">
     <span class="md-ellipsis">
-      Streaming Progress Monitoring
+      Node States During Operations
     </span>
   </a>
   
 </li>
         
           <li class="md-nav__item">
-  <a href="#health-verification-commands" class="md-nav__link">
+  <a href="#jmx-metrics" class="md-nav__link">
     <span class="md-ellipsis">
-      Health Verification Commands
+      JMX Metrics
     </span>
   </a>
   
@@ -19869,70 +19758,19 @@ data-et-multi-view="{&quot;schema&quot;:{&quot;content&quot;:{&quot;desktop&quot
 </li>
       
         <li class="md-nav__item">
-  <a href="#axonops-cluster-management" class="md-nav__link">
+  <a href="#failure-handling" class="md-nav__link">
     <span class="md-ellipsis">
-      AxonOps Cluster Management
+      Failure Handling
     </span>
   </a>
   
-    <nav class="md-nav" aria-label="AxonOps Cluster Management">
+    <nav class="md-nav" aria-label="Failure Handling">
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
-  <a href="#automated-node-operations" class="md-nav__link">
+  <a href="#operation-interrupted" class="md-nav__link">
     <span class="md-ellipsis">
-      Automated Node Operations
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#topology-change-safeguards" class="md-nav__link">
-    <span class="md-ellipsis">
-      Topology Change Safeguards
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#multi-datacenter-management" class="md-nav__link">
-    <span class="md-ellipsis">
-      Multi-Datacenter Management
-    </span>
-  </a>
-  
-</li>
-        
-      </ul>
-    </nav>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#troubleshooting" class="md-nav__link">
-    <span class="md-ellipsis">
-      Troubleshooting
-    </span>
-  </a>
-  
-    <nav class="md-nav" aria-label="Troubleshooting">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#node-wont-join-cluster" class="md-nav__link">
-    <span class="md-ellipsis">
-      Node Won't Join Cluster
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#decommission-stuck" class="md-nav__link">
-    <span class="md-ellipsis">
-      Decommission Stuck
+      Operation Interrupted
     </span>
   </a>
   
@@ -19953,44 +19791,11 @@ data-et-multi-view="{&quot;schema&quot;:{&quot;content&quot;:{&quot;desktop&quot
 </li>
       
         <li class="md-nav__item">
-  <a href="#best-practices" class="md-nav__link">
+  <a href="#procedures" class="md-nav__link">
     <span class="md-ellipsis">
-      Best Practices
+      Procedures
     </span>
   </a>
-  
-    <nav class="md-nav" aria-label="Best Practices">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#planning-topology-changes" class="md-nav__link">
-    <span class="md-ellipsis">
-      Planning Topology Changes
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#capacity-management" class="md-nav__link">
-    <span class="md-ellipsis">
-      Capacity Management
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#documentation" class="md-nav__link">
-    <span class="md-ellipsis">
-      Documentation
-    </span>
-  </a>
-  
-</li>
-        
-      </ul>
-    </nav>
   
 </li>
       
@@ -20019,654 +19824,413 @@ data-et-multi-view="{&quot;schema&quot;:{&quot;content&quot;:{&quot;desktop&quot
 
 
 <div><h1 id="cluster-management-operations">Cluster Management Operations<a class="headerlink" href="#cluster-management-operations" title="Permanent link">¶</a></h1>
-<p>This guide covers operational procedures for managing Cassandra cluster topology: adding capacity, removing nodes, replacing failed hardware, and maintaining cluster health.</p>
+<p>This section covers operational procedures for managing Cassandra cluster topology: adding capacity, removing nodes, replacing failed hardware, and managing multi-datacenter deployments.</p>
 <div class="admonition info">
-<p class="admonition-title">No Single Point of Failure</p>
-<p>Cassandra's peer-to-peer architecture enables online topology changes. Every node knows the cluster state through gossip, and token ranges determine data ownership. Topology changes trigger automatic data streaming in the background while the cluster continues serving traffic.</p>
+<p class="admonition-title">Architecture Reference</p>
+<p>For conceptual details on how Cassandra manages cluster membership, see <a href="../../architecture/cluster-management/">Cluster Management Architecture</a>.</p>
 </div>
 <hr>
-<h2 id="understanding-topology-changes">Understanding Topology Changes<a class="headerlink" href="#understanding-topology-changes" title="Permanent link">¶</a></h2>
-<h3 id="how-cassandra-handles-topology-changes">How Cassandra Handles Topology Changes<a class="headerlink" href="#how-cassandra-handles-topology-changes" title="Permanent link">¶</a></h3>
-<p>When cluster membership changes, Cassandra automatically redistributes data:</p>
-<p><a class="glightbox" href="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHhtbG5zOnhsaW5rPSJodHRwOi8vd3d3LnczLm9yZy8xOTk5L3hsaW5rIiBjb250ZW50U3R5bGVUeXBlPSJ0ZXh0L2NzcyIgZGF0YS1kaWFncmFtLXR5cGU9IkFDVElWSVRZIiBoZWlnaHQ9IjQ5OXB4IiBwcmVzZXJ2ZUFzcGVjdFJhdGlvPSJub25lIiBzdHlsZT0id2lkdGg6NTUzcHg7aGVpZ2h0OjQ5OXB4OyIgdmVyc2lvbj0iMS4xIiB2aWV3Qm94PSIwIDAgNTUzIDQ5OSIgd2lkdGg9IjU1M3B4IiB6b29tQW5kUGFuPSJtYWduaWZ5Ij48dGl0bGU+VG9wb2xvZ3kgQ2hhbmdlIERhdGEgRmxvdzwvdGl0bGU+PGRlZnMvPjxnPjxnIGNsYXNzPSJ0aXRsZSIgZGF0YS1zb3VyY2UtbGluZT0iMiI+PHRleHQgZmlsbD0iIzAwMDAwMCIgZm9udC1mYW1pbHk9InNhbnMtc2VyaWYiIGZvbnQtc2l6ZT0iMTQiIGZvbnQtd2VpZ2h0PSJib2xkIiBsZW5ndGhBZGp1c3Q9InNwYWNpbmciIHRleHRMZW5ndGg9IjIyMC4yODgxIiB4PSIxNjUuMzQ5NCIgeT0iMzIuOTk1MSI+VG9wb2xvZ3kgQ2hhbmdlIERhdGEgRmxvdzwvdGV4dD48L2c+PGVsbGlwc2UgY3g9IjI0My44NzMiIGN5PSI1Ny4yOTY5IiBmaWxsPSIjMjIyMjIyIiByeD0iMTAiIHJ5PSIxMCIgc3R5bGU9InN0cm9rZTojMjIyMjIyO3N0cm9rZS13aWR0aDoxOyIvPjxyZWN0IGZpbGw9IiNGOUU1RkYiIGhlaWdodD0iMzMuOTY4OCIgcng9IjEyLjUiIHJ5PSIxMi41IiBzdHlsZT0ic3Ryb2tlOiM3QjRCOTY7c3Ryb2tlLXdpZHRoOjAuNTsiIHdpZHRoPSIxODAuMjA3IiB4PSIxNTMuNzY5NSIgeT0iODcuMjk2OSIvPjx0ZXh0IGZpbGw9IiMwMDAwMDAiIGZvbnQtZmFtaWx5PSJzYW5zLXNlcmlmIiBmb250LXNpemU9IjEyIiBsZW5ndGhBZGp1c3Q9InNwYWNpbmciIHRleHRMZW5ndGg9IjE2MC4yMDciIHg9IjE2My43Njk1IiB5PSIxMDguNDM1NSI+VG9wb2xvZ3kgY2hhbmdlIGRldGVjdGVkPC90ZXh0PjxyZWN0IGZpbGw9IiNGOUU1RkYiIGhlaWdodD0iMzMuOTY4OCIgcng9IjEyLjUiIHJ5PSIxMi41IiBzdHlsZT0ic3Ryb2tlOiM3QjRCOTY7c3Ryb2tlLXdpZHRoOjAuNTsiIHdpZHRoPSIyMDUuNzk0OSIgeD0iMTQwLjk3NTYiIHk9IjE0MS4yNjU2Ii8+PHRleHQgZmlsbD0iIzAwMDAwMCIgZm9udC1mYW1pbHk9InNhbnMtc2VyaWYiIGZvbnQtc2l6ZT0iMTIiIGxlbmd0aEFkanVzdD0ic3BhY2luZyIgdGV4dExlbmd0aD0iMTg1Ljc5NDkiIHg9IjE1MC45NzU2IiB5PSIxNjIuNDA0MyI+R29zc2lwIHByb3BhZ2F0ZXMgdG8gYWxsIG5vZGVzPC90ZXh0PjxyZWN0IGZpbGw9IiNGOUU1RkYiIGhlaWdodD0iMzMuOTY4OCIgcng9IjEyLjUiIHJ5PSIxMi41IiBzdHlsZT0ic3Ryb2tlOiM3QjRCOTY7c3Ryb2tlLXdpZHRoOjAuNTsiIHdpZHRoPSIyNzkuMzQ3NyIgeD0iMTA0LjE5OTIiIHk9IjE5NS4yMzQ0Ii8+PHRleHQgZmlsbD0iIzAwMDAwMCIgZm9udC1mYW1pbHk9InNhbnMtc2VyaWYiIGZvbnQtc2l6ZT0iMTIiIGxlbmd0aEFkanVzdD0ic3BhY2luZyIgdGV4dExlbmd0aD0iMjU5LjM0NzciIHg9IjExNC4xOTkyIiB5PSIyMTYuMzczIj5FYWNoIG5vZGUgY2FsY3VsYXRlcyBuZXcgdG9rZW4gb3duZXJzaGlwPC90ZXh0PjxyZWN0IGZpbGw9IiM1NTU1NTUiIGhlaWdodD0iNiIgcng9IjIuNSIgcnk9IjIuNSIgc3R5bGU9InN0cm9rZTojNTU1NTU1O3N0cm9rZS13aWR0aDoxOyIgd2lkdGg9IjQ2Ny43NDYxIiB4PSIxMSIgeT0iMjQ5LjIwMzEiLz48cmVjdCBmaWxsPSIjRjlFNUZGIiBoZWlnaHQ9IjMzLjk2ODgiIHJ4PSIxMi41IiByeT0iMTIuNSIgc3R5bGU9InN0cm9rZTojN0I0Qjk2O3N0cm9rZS13aWR0aDowLjU7IiB3aWR0aD0iMTg0LjYyNSIgeD0iMjMiIHk9IjI3NS4yMDMxIi8+PHRleHQgZmlsbD0iIzAwMDAwMCIgZm9udC1mYW1pbHk9InNhbnMtc2VyaWYiIGZvbnQtc2l6ZT0iMTIiIGxlbmd0aEFkanVzdD0ic3BhY2luZyIgdGV4dExlbmd0aD0iMTY0LjYyNSIgeD0iMzMiIHk9IjI5Ni4zNDE4Ij5TdHJlYW0gZGF0YSBUTyBuZXcgb3duZXI8L3RleHQ+PHJlY3QgZmlsbD0iI0Y5RTVGRiIgaGVpZ2h0PSIzMy45Njg4IiByeD0iMTIuNSIgcnk9IjEyLjUiIHN0eWxlPSJzdHJva2U6IzdCNEI5NjtzdHJva2Utd2lkdGg6MC41OyIgd2lkdGg9IjIyOS4xMjExIiB4PSIyMzUuNjI1IiB5PSIyNzUuMjAzMSIvPjx0ZXh0IGZpbGw9IiMwMDAwMDAiIGZvbnQtZmFtaWx5PSJzYW5zLXNlcmlmIiBmb250LXNpemU9IjEyIiBsZW5ndGhBZGp1c3Q9InNwYWNpbmciIHRleHRMZW5ndGg9IjIwOS4xMjExIiB4PSIyNDUuNjI1IiB5PSIyOTYuMzQxOCI+U3RyZWFtIGRhdGEgRlJPTSBkZXBhcnRpbmcgbm9kZTwvdGV4dD48cmVjdCBmaWxsPSIjNTU1NTU1IiBoZWlnaHQ9IjYiIHJ4PSIyLjUiIHJ5PSIyLjUiIHN0eWxlPSJzdHJva2U6IzU1NTU1NTtzdHJva2Utd2lkdGg6MTsiIHdpZHRoPSI0NjcuNzQ2MSIgeD0iMTEiIHk9IjMyOS4xNzE5Ii8+PHJlY3QgZmlsbD0iI0Y5RTVGRiIgaGVpZ2h0PSIzMy45Njg4IiByeD0iMTIuNSIgcnk9IjEyLjUiIHN0eWxlPSJzdHJva2U6IzdCNEI5NjtzdHJva2Utd2lkdGg6MC41OyIgd2lkdGg9IjE2My4yMzI0IiB4PSIxNjIuMjU2OCIgeT0iMzU1LjE3MTkiLz48dGV4dCBmaWxsPSIjMDAwMDAwIiBmb250LWZhbWlseT0ic2Fucy1zZXJpZiIgZm9udC1zaXplPSIxMiIgbGVuZ3RoQWRqdXN0PSJzcGFjaW5nIiB0ZXh0TGVuZ3RoPSIxNDMuMjMyNCIgeD0iMTcyLjI1NjgiIHk9IjM3Ni4zMTA1Ij5VcGRhdGUgdG9rZW4gbWV0YWRhdGE8L3RleHQ+PHBhdGggZD0iTTM1NS4zMDY2LDQwNS45OTIyIEwzNTUuMzA2Niw0MjIuMTI1IEwzMzUuMzA2Niw0MjYuMTI1IEwzNTUuMzA2Niw0MzAuMTI1IEwzNTUuMzA2Niw0NDYuMjU3OCBBMCwwIDAgMCAwIDM1NS4zMDY2LDQ0Ni4yNTc4IEw1NDEuOTg2OCw0NDYuMjU3OCBBMCwwIDAgMCAwIDU0MS45ODY4LDQ0Ni4yNTc4IEw1NDEuOTg2OCw0MTUuOTkyMiBMNTMxLjk4NjgsNDA1Ljk5MjIgTDM1NS4zMDY2LDQwNS45OTIyIEEwLDAgMCAwIDAgMzU1LjMwNjYsNDA1Ljk5MjIiIGZpbGw9IiNGRUZGREQiIHN0eWxlPSJzdHJva2U6IzE4MTgxODtzdHJva2Utd2lkdGg6MC41OyIvPjxwYXRoIGQ9Ik01MzEuOTg2OCw0MDUuOTkyMiBMNTMxLjk4NjgsNDE1Ljk5MjIgTDU0MS45ODY4LDQxNS45OTIyIEw1MzEuOTg2OCw0MDUuOTkyMiIgZmlsbD0iI0ZFRkZERCIgc3R5bGU9InN0cm9rZTojMTgxODE4O3N0cm9rZS13aWR0aDowLjU7Ii8+PHRleHQgZmlsbD0iIzAwMDAwMCIgZm9udC1mYW1pbHk9InNhbnMtc2VyaWYiIGZvbnQtc2l6ZT0iMTMiIGxlbmd0aEFkanVzdD0ic3BhY2luZyIgdGV4dExlbmd0aD0iMTY1LjY4MDIiIHg9IjM2MS4zMDY2IiB5PSI0MjMuMDU5MSI+Q2x1c3RlciByZW1haW5zIGF2YWlsYWJsZTwvdGV4dD48dGV4dCBmaWxsPSIjMDAwMDAwIiBmb250LWZhbWlseT0ic2Fucy1zZXJpZiIgZm9udC1zaXplPSIxMyIgbGVuZ3RoQWRqdXN0PSJzcGFjaW5nIiB0ZXh0TGVuZ3RoPSIxNTQuODgyOCIgeD0iMzYxLjMwNjYiIHk9IjQzOC4xOTE5Ij50aHJvdWdob3V0IHRoaXMgcHJvY2VzczwvdGV4dD48cmVjdCBmaWxsPSIjRjlFNUZGIiBoZWlnaHQ9IjMzLjk2ODgiIHJ4PSIxMi41IiByeT0iMTIuNSIgc3R5bGU9InN0cm9rZTojN0I0Qjk2O3N0cm9rZS13aWR0aDowLjU7IiB3aWR0aD0iMTgyLjg2NzIiIHg9IjE1Mi40Mzk1IiB5PSI0MDkuMTQwNiIvPjx0ZXh0IGZpbGw9IiMwMDAwMDAiIGZvbnQtZmFtaWx5PSJzYW5zLXNlcmlmIiBmb250LXNpemU9IjEyIiBsZW5ndGhBZGp1c3Q9InNwYWNpbmciIHRleHRMZW5ndGg9IjE2Mi44NjcyIiB4PSIxNjIuNDM5NSIgeT0iNDMwLjI3OTMiPlRvcG9sb2d5IGNoYW5nZSBjb21wbGV0ZTwvdGV4dD48ZWxsaXBzZSBjeD0iMjQzLjg3MyIgY3k9IjQ3Ny4yNTc4IiBmaWxsPSJub25lIiByeD0iMTEiIHJ5PSIxMSIgc3R5bGU9InN0cm9rZTojMjIyMjIyO3N0cm9rZS13aWR0aDoxOyIvPjxlbGxpcHNlIGN4PSIyNDMuODczIiBjeT0iNDc3LjI1NzgiIGZpbGw9IiMyMjIyMjIiIHJ4PSI2IiByeT0iNiIgc3R5bGU9InN0cm9rZTojMjIyMjIyO3N0cm9rZS13aWR0aDoxOyIvPjxsaW5lIHN0eWxlPSJzdHJva2U6IzE4MTgxODtzdHJva2Utd2lkdGg6MTsiIHgxPSIyNDMuODczIiB4Mj0iMjQzLjg3MyIgeTE9IjY3LjI5NjkiIHkyPSI4Ny4yOTY5Ii8+PHBvbHlnb24gZmlsbD0iIzE4MTgxOCIgcG9pbnRzPSIyMzkuODczLDc3LjI5NjksMjQzLjg3Myw4Ny4yOTY5LDI0Ny44NzMsNzcuMjk2OSwyNDMuODczLDgxLjI5NjkiIHN0eWxlPSJzdHJva2U6IzE4MTgxODtzdHJva2Utd2lkdGg6MTsiLz48bGluZSBzdHlsZT0ic3Ryb2tlOiMxODE4MTg7c3Ryb2tlLXdpZHRoOjE7IiB4MT0iMjQzLjg3MyIgeDI9IjI0My44NzMiIHkxPSIxMjEuMjY1NiIgeTI9IjE0MS4yNjU2Ii8+PHBvbHlnb24gZmlsbD0iIzE4MTgxOCIgcG9pbnRzPSIyMzkuODczLDEzMS4yNjU2LDI0My44NzMsMTQxLjI2NTYsMjQ3Ljg3MywxMzEuMjY1NiwyNDMuODczLDEzNS4yNjU2IiBzdHlsZT0ic3Ryb2tlOiMxODE4MTg7c3Ryb2tlLXdpZHRoOjE7Ii8+PGxpbmUgc3R5bGU9InN0cm9rZTojMTgxODE4O3N0cm9rZS13aWR0aDoxOyIgeDE9IjI0My44NzMiIHgyPSIyNDMuODczIiB5MT0iMTc1LjIzNDQiIHkyPSIxOTUuMjM0NCIvPjxwb2x5Z29uIGZpbGw9IiMxODE4MTgiIHBvaW50cz0iMjM5Ljg3MywxODUuMjM0NCwyNDMuODczLDE5NS4yMzQ0LDI0Ny44NzMsMTg1LjIzNDQsMjQzLjg3MywxODkuMjM0NCIgc3R5bGU9InN0cm9rZTojMTgxODE4O3N0cm9rZS13aWR0aDoxOyIvPjxsaW5lIHN0eWxlPSJzdHJva2U6IzE4MTgxODtzdHJva2Utd2lkdGg6MTsiIHgxPSIxMTUuMzEyNSIgeDI9IjExNS4zMTI1IiB5MT0iMjU1LjIwMzEiIHkyPSIyNzUuMjAzMSIvPjxwb2x5Z29uIGZpbGw9IiMxODE4MTgiIHBvaW50cz0iMTExLjMxMjUsMjY1LjIwMzEsMTE1LjMxMjUsMjc1LjIwMzEsMTE5LjMxMjUsMjY1LjIwMzEsMTE1LjMxMjUsMjY5LjIwMzEiIHN0eWxlPSJzdHJva2U6IzE4MTgxODtzdHJva2Utd2lkdGg6MTsiLz48bGluZSBzdHlsZT0ic3Ryb2tlOiMxODE4MTg7c3Ryb2tlLXdpZHRoOjE7IiB4MT0iMzUwLjE4NTUiIHgyPSIzNTAuMTg1NSIgeTE9IjI1NS4yMDMxIiB5Mj0iMjc1LjIwMzEiLz48cG9seWdvbiBmaWxsPSIjMTgxODE4IiBwb2ludHM9IjM0Ni4xODU1LDI2NS4yMDMxLDM1MC4xODU1LDI3NS4yMDMxLDM1NC4xODU1LDI2NS4yMDMxLDM1MC4xODU1LDI2OS4yMDMxIiBzdHlsZT0ic3Ryb2tlOiMxODE4MTg7c3Ryb2tlLXdpZHRoOjE7Ii8+PGxpbmUgc3R5bGU9InN0cm9rZTojMTgxODE4O3N0cm9rZS13aWR0aDoxOyIgeDE9IjExNS4zMTI1IiB4Mj0iMTE1LjMxMjUiIHkxPSIzMDkuMTcxOSIgeTI9IjMyOS4xNzE5Ii8+PHBvbHlnb24gZmlsbD0iIzE4MTgxOCIgcG9pbnRzPSIxMTEuMzEyNSwzMTkuMTcxOSwxMTUuMzEyNSwzMjkuMTcxOSwxMTkuMzEyNSwzMTkuMTcxOSwxMTUuMzEyNSwzMjMuMTcxOSIgc3R5bGU9InN0cm9rZTojMTgxODE4O3N0cm9rZS13aWR0aDoxOyIvPjxsaW5lIHN0eWxlPSJzdHJva2U6IzE4MTgxODtzdHJva2Utd2lkdGg6MTsiIHgxPSIzNTAuMTg1NSIgeDI9IjM1MC4xODU1IiB5MT0iMzA5LjE3MTkiIHkyPSIzMjkuMTcxOSIvPjxwb2x5Z29uIGZpbGw9IiMxODE4MTgiIHBvaW50cz0iMzQ2LjE4NTUsMzE5LjE3MTksMzUwLjE4NTUsMzI5LjE3MTksMzU0LjE4NTUsMzE5LjE3MTksMzUwLjE4NTUsMzIzLjE3MTkiIHN0eWxlPSJzdHJva2U6IzE4MTgxODtzdHJva2Utd2lkdGg6MTsiLz48bGluZSBzdHlsZT0ic3Ryb2tlOiMxODE4MTg7c3Ryb2tlLXdpZHRoOjE7IiB4MT0iMjQzLjg3MyIgeDI9IjI0My44NzMiIHkxPSIyMjkuMjAzMSIgeTI9IjI0OS4yMDMxIi8+PHBvbHlnb24gZmlsbD0iIzE4MTgxOCIgcG9pbnRzPSIyMzkuODczLDIzOS4yMDMxLDI0My44NzMsMjQ5LjIwMzEsMjQ3Ljg3MywyMzkuMjAzMSwyNDMuODczLDI0My4yMDMxIiBzdHlsZT0ic3Ryb2tlOiMxODE4MTg7c3Ryb2tlLXdpZHRoOjE7Ii8+PGxpbmUgc3R5bGU9InN0cm9rZTojMTgxODE4O3N0cm9rZS13aWR0aDoxOyIgeDE9IjI0My44NzMiIHgyPSIyNDMuODczIiB5MT0iMzM1LjE3MTkiIHkyPSIzNTUuMTcxOSIvPjxwb2x5Z29uIGZpbGw9IiMxODE4MTgiIHBvaW50cz0iMjM5Ljg3MywzNDUuMTcxOSwyNDMuODczLDM1NS4xNzE5LDI0Ny44NzMsMzQ1LjE3MTksMjQzLjg3MywzNDkuMTcxOSIgc3R5bGU9InN0cm9rZTojMTgxODE4O3N0cm9rZS13aWR0aDoxOyIvPjxsaW5lIHN0eWxlPSJzdHJva2U6IzE4MTgxODtzdHJva2Utd2lkdGg6MTsiIHgxPSIyNDMuODczIiB4Mj0iMjQzLjg3MyIgeTE9IjM4OS4xNDA2IiB5Mj0iNDA5LjE0MDYiLz48cG9seWdvbiBmaWxsPSIjMTgxODE4IiBwb2ludHM9IjIzOS44NzMsMzk5LjE0MDYsMjQzLjg3Myw0MDkuMTQwNiwyNDcuODczLDM5OS4xNDA2LDI0My44NzMsNDAzLjE0MDYiIHN0eWxlPSJzdHJva2U6IzE4MTgxODtzdHJva2Utd2lkdGg6MTsiLz48bGluZSBzdHlsZT0ic3Ryb2tlOiMxODE4MTg7c3Ryb2tlLXdpZHRoOjE7IiB4MT0iMjQzLjg3MyIgeDI9IjI0My44NzMiIHkxPSI0NDMuMTA5NCIgeTI9IjQ2Ni4yNTc4Ii8+PHBvbHlnb24gZmlsbD0iIzE4MTgxOCIgcG9pbnRzPSIyMzkuODczLDQ1Ni4yNTc4LDI0My44NzMsNDY2LjI1NzgsMjQ3Ljg3Myw0NTYuMjU3OCwyNDMuODczLDQ2MC4yNTc4IiBzdHlsZT0ic3Ryb2tlOiMxODE4MTg7c3Ryb2tlLXdpZHRoOjE7Ii8+PCEtLVNSQz1bVlAxREppRDAzOE50RU9LYkJpMlkxVGdpLWZFbUdmTVc3QzJUQ1NhZWFfNWVuY2RMcy1FNGdhQXE4Z2s5dGtWdF85bXg1bzhjeEU2MGZjaUkzeTVrczdDMklIWW9JWElhNDJVVU9DekhiVU9DY25QM0d4MTVHUVd6ZHVlWU5zck1IanBIb05kem4td1hOYkpwa2h2N1NoQUtCakpwVWhQVUZEc1hqV3Z4M2xSNmpkZ2Z2ek5ZZHU3VnhoRkRnZnVfd2hnMklPZllVTXJhVlhmUDRaOTJqYkpqYk5EczRNQllZMHFBUEgwNnoxdTJNeWVaS1E1ZmZweW13Q3RXOW9aR0lTNkUwbDBmS0Nnall5Zi1TVWVBcTZfdjhPYnFJcGxVUmgtUnkwYWk5bU9xb2VMUmlkeFZsVWJzc2IxU1FBUkdpZzFXT0o4a2JmekhDUmU0em9HdUpmTHQ2WGhrZXpVTWdXTk1ZVUlRTFpIbHV1U2liMjFIaG1qYW0yQ3dabVRGZ2FjaDFzelE3YUlWQmV5ZENQSnBiMy1RWkZWYS0wcTBdLS0+PC9nPjwvc3ZnPg==" data-type="image" data-width="100%" data-height="auto" data-desc-position="bottom"><img src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHhtbG5zOnhsaW5rPSJodHRwOi8vd3d3LnczLm9yZy8xOTk5L3hsaW5rIiBjb250ZW50U3R5bGVUeXBlPSJ0ZXh0L2NzcyIgZGF0YS1kaWFncmFtLXR5cGU9IkFDVElWSVRZIiBoZWlnaHQ9IjQ5OXB4IiBwcmVzZXJ2ZUFzcGVjdFJhdGlvPSJub25lIiBzdHlsZT0id2lkdGg6NTUzcHg7aGVpZ2h0OjQ5OXB4OyIgdmVyc2lvbj0iMS4xIiB2aWV3Qm94PSIwIDAgNTUzIDQ5OSIgd2lkdGg9IjU1M3B4IiB6b29tQW5kUGFuPSJtYWduaWZ5Ij48dGl0bGU+VG9wb2xvZ3kgQ2hhbmdlIERhdGEgRmxvdzwvdGl0bGU+PGRlZnMvPjxnPjxnIGNsYXNzPSJ0aXRsZSIgZGF0YS1zb3VyY2UtbGluZT0iMiI+PHRleHQgZmlsbD0iIzAwMDAwMCIgZm9udC1mYW1pbHk9InNhbnMtc2VyaWYiIGZvbnQtc2l6ZT0iMTQiIGZvbnQtd2VpZ2h0PSJib2xkIiBsZW5ndGhBZGp1c3Q9InNwYWNpbmciIHRleHRMZW5ndGg9IjIyMC4yODgxIiB4PSIxNjUuMzQ5NCIgeT0iMzIuOTk1MSI+VG9wb2xvZ3kgQ2hhbmdlIERhdGEgRmxvdzwvdGV4dD48L2c+PGVsbGlwc2UgY3g9IjI0My44NzMiIGN5PSI1Ny4yOTY5IiBmaWxsPSIjMjIyMjIyIiByeD0iMTAiIHJ5PSIxMCIgc3R5bGU9InN0cm9rZTojMjIyMjIyO3N0cm9rZS13aWR0aDoxOyIvPjxyZWN0IGZpbGw9IiNGOUU1RkYiIGhlaWdodD0iMzMuOTY4OCIgcng9IjEyLjUiIHJ5PSIxMi41IiBzdHlsZT0ic3Ryb2tlOiM3QjRCOTY7c3Ryb2tlLXdpZHRoOjAuNTsiIHdpZHRoPSIxODAuMjA3IiB4PSIxNTMuNzY5NSIgeT0iODcuMjk2OSIvPjx0ZXh0IGZpbGw9IiMwMDAwMDAiIGZvbnQtZmFtaWx5PSJzYW5zLXNlcmlmIiBmb250LXNpemU9IjEyIiBsZW5ndGhBZGp1c3Q9InNwYWNpbmciIHRleHRMZW5ndGg9IjE2MC4yMDciIHg9IjE2My43Njk1IiB5PSIxMDguNDM1NSI+VG9wb2xvZ3kgY2hhbmdlIGRldGVjdGVkPC90ZXh0PjxyZWN0IGZpbGw9IiNGOUU1RkYiIGhlaWdodD0iMzMuOTY4OCIgcng9IjEyLjUiIHJ5PSIxMi41IiBzdHlsZT0ic3Ryb2tlOiM3QjRCOTY7c3Ryb2tlLXdpZHRoOjAuNTsiIHdpZHRoPSIyMDUuNzk0OSIgeD0iMTQwLjk3NTYiIHk9IjE0MS4yNjU2Ii8+PHRleHQgZmlsbD0iIzAwMDAwMCIgZm9udC1mYW1pbHk9InNhbnMtc2VyaWYiIGZvbnQtc2l6ZT0iMTIiIGxlbmd0aEFkanVzdD0ic3BhY2luZyIgdGV4dExlbmd0aD0iMTg1Ljc5NDkiIHg9IjE1MC45NzU2IiB5PSIxNjIuNDA0MyI+R29zc2lwIHByb3BhZ2F0ZXMgdG8gYWxsIG5vZGVzPC90ZXh0PjxyZWN0IGZpbGw9IiNGOUU1RkYiIGhlaWdodD0iMzMuOTY4OCIgcng9IjEyLjUiIHJ5PSIxMi41IiBzdHlsZT0ic3Ryb2tlOiM3QjRCOTY7c3Ryb2tlLXdpZHRoOjAuNTsiIHdpZHRoPSIyNzkuMzQ3NyIgeD0iMTA0LjE5OTIiIHk9IjE5NS4yMzQ0Ii8+PHRleHQgZmlsbD0iIzAwMDAwMCIgZm9udC1mYW1pbHk9InNhbnMtc2VyaWYiIGZvbnQtc2l6ZT0iMTIiIGxlbmd0aEFkanVzdD0ic3BhY2luZyIgdGV4dExlbmd0aD0iMjU5LjM0NzciIHg9IjExNC4xOTkyIiB5PSIyMTYuMzczIj5FYWNoIG5vZGUgY2FsY3VsYXRlcyBuZXcgdG9rZW4gb3duZXJzaGlwPC90ZXh0PjxyZWN0IGZpbGw9IiM1NTU1NTUiIGhlaWdodD0iNiIgcng9IjIuNSIgcnk9IjIuNSIgc3R5bGU9InN0cm9rZTojNTU1NTU1O3N0cm9rZS13aWR0aDoxOyIgd2lkdGg9IjQ2Ny43NDYxIiB4PSIxMSIgeT0iMjQ5LjIwMzEiLz48cmVjdCBmaWxsPSIjRjlFNUZGIiBoZWlnaHQ9IjMzLjk2ODgiIHJ4PSIxMi41IiByeT0iMTIuNSIgc3R5bGU9InN0cm9rZTojN0I0Qjk2O3N0cm9rZS13aWR0aDowLjU7IiB3aWR0aD0iMTg0LjYyNSIgeD0iMjMiIHk9IjI3NS4yMDMxIi8+PHRleHQgZmlsbD0iIzAwMDAwMCIgZm9udC1mYW1pbHk9InNhbnMtc2VyaWYiIGZvbnQtc2l6ZT0iMTIiIGxlbmd0aEFkanVzdD0ic3BhY2luZyIgdGV4dExlbmd0aD0iMTY0LjYyNSIgeD0iMzMiIHk9IjI5Ni4zNDE4Ij5TdHJlYW0gZGF0YSBUTyBuZXcgb3duZXI8L3RleHQ+PHJlY3QgZmlsbD0iI0Y5RTVGRiIgaGVpZ2h0PSIzMy45Njg4IiByeD0iMTIuNSIgcnk9IjEyLjUiIHN0eWxlPSJzdHJva2U6IzdCNEI5NjtzdHJva2Utd2lkdGg6MC41OyIgd2lkdGg9IjIyOS4xMjExIiB4PSIyMzUuNjI1IiB5PSIyNzUuMjAzMSIvPjx0ZXh0IGZpbGw9IiMwMDAwMDAiIGZvbnQtZmFtaWx5PSJzYW5zLXNlcmlmIiBmb250LXNpemU9IjEyIiBsZW5ndGhBZGp1c3Q9InNwYWNpbmciIHRleHRMZW5ndGg9IjIwOS4xMjExIiB4PSIyNDUuNjI1IiB5PSIyOTYuMzQxOCI+U3RyZWFtIGRhdGEgRlJPTSBkZXBhcnRpbmcgbm9kZTwvdGV4dD48cmVjdCBmaWxsPSIjNTU1NTU1IiBoZWlnaHQ9IjYiIHJ4PSIyLjUiIHJ5PSIyLjUiIHN0eWxlPSJzdHJva2U6IzU1NTU1NTtzdHJva2Utd2lkdGg6MTsiIHdpZHRoPSI0NjcuNzQ2MSIgeD0iMTEiIHk9IjMyOS4xNzE5Ii8+PHJlY3QgZmlsbD0iI0Y5RTVGRiIgaGVpZ2h0PSIzMy45Njg4IiByeD0iMTIuNSIgcnk9IjEyLjUiIHN0eWxlPSJzdHJva2U6IzdCNEI5NjtzdHJva2Utd2lkdGg6MC41OyIgd2lkdGg9IjE2My4yMzI0IiB4PSIxNjIuMjU2OCIgeT0iMzU1LjE3MTkiLz48dGV4dCBmaWxsPSIjMDAwMDAwIiBmb250LWZhbWlseT0ic2Fucy1zZXJpZiIgZm9udC1zaXplPSIxMiIgbGVuZ3RoQWRqdXN0PSJzcGFjaW5nIiB0ZXh0TGVuZ3RoPSIxNDMuMjMyNCIgeD0iMTcyLjI1NjgiIHk9IjM3Ni4zMTA1Ij5VcGRhdGUgdG9rZW4gbWV0YWRhdGE8L3RleHQ+PHBhdGggZD0iTTM1NS4zMDY2LDQwNS45OTIyIEwzNTUuMzA2Niw0MjIuMTI1IEwzMzUuMzA2Niw0MjYuMTI1IEwzNTUuMzA2Niw0MzAuMTI1IEwzNTUuMzA2Niw0NDYuMjU3OCBBMCwwIDAgMCAwIDM1NS4zMDY2LDQ0Ni4yNTc4IEw1NDEuOTg2OCw0NDYuMjU3OCBBMCwwIDAgMCAwIDU0MS45ODY4LDQ0Ni4yNTc4IEw1NDEuOTg2OCw0MTUuOTkyMiBMNTMxLjk4NjgsNDA1Ljk5MjIgTDM1NS4zMDY2LDQwNS45OTIyIEEwLDAgMCAwIDAgMzU1LjMwNjYsNDA1Ljk5MjIiIGZpbGw9IiNGRUZGREQiIHN0eWxlPSJzdHJva2U6IzE4MTgxODtzdHJva2Utd2lkdGg6MC41OyIvPjxwYXRoIGQ9Ik01MzEuOTg2OCw0MDUuOTkyMiBMNTMxLjk4NjgsNDE1Ljk5MjIgTDU0MS45ODY4LDQxNS45OTIyIEw1MzEuOTg2OCw0MDUuOTkyMiIgZmlsbD0iI0ZFRkZERCIgc3R5bGU9InN0cm9rZTojMTgxODE4O3N0cm9rZS13aWR0aDowLjU7Ii8+PHRleHQgZmlsbD0iIzAwMDAwMCIgZm9udC1mYW1pbHk9InNhbnMtc2VyaWYiIGZvbnQtc2l6ZT0iMTMiIGxlbmd0aEFkanVzdD0ic3BhY2luZyIgdGV4dExlbmd0aD0iMTY1LjY4MDIiIHg9IjM2MS4zMDY2IiB5PSI0MjMuMDU5MSI+Q2x1c3RlciByZW1haW5zIGF2YWlsYWJsZTwvdGV4dD48dGV4dCBmaWxsPSIjMDAwMDAwIiBmb250LWZhbWlseT0ic2Fucy1zZXJpZiIgZm9udC1zaXplPSIxMyIgbGVuZ3RoQWRqdXN0PSJzcGFjaW5nIiB0ZXh0TGVuZ3RoPSIxNTQuODgyOCIgeD0iMzYxLjMwNjYiIHk9IjQzOC4xOTE5Ij50aHJvdWdob3V0IHRoaXMgcHJvY2VzczwvdGV4dD48cmVjdCBmaWxsPSIjRjlFNUZGIiBoZWlnaHQ9IjMzLjk2ODgiIHJ4PSIxMi41IiByeT0iMTIuNSIgc3R5bGU9InN0cm9rZTojN0I0Qjk2O3N0cm9rZS13aWR0aDowLjU7IiB3aWR0aD0iMTgyLjg2NzIiIHg9IjE1Mi40Mzk1IiB5PSI0MDkuMTQwNiIvPjx0ZXh0IGZpbGw9IiMwMDAwMDAiIGZvbnQtZmFtaWx5PSJzYW5zLXNlcmlmIiBmb250LXNpemU9IjEyIiBsZW5ndGhBZGp1c3Q9InNwYWNpbmciIHRleHRMZW5ndGg9IjE2Mi44NjcyIiB4PSIxNjIuNDM5NSIgeT0iNDMwLjI3OTMiPlRvcG9sb2d5IGNoYW5nZSBjb21wbGV0ZTwvdGV4dD48ZWxsaXBzZSBjeD0iMjQzLjg3MyIgY3k9IjQ3Ny4yNTc4IiBmaWxsPSJub25lIiByeD0iMTEiIHJ5PSIxMSIgc3R5bGU9InN0cm9rZTojMjIyMjIyO3N0cm9rZS13aWR0aDoxOyIvPjxlbGxpcHNlIGN4PSIyNDMuODczIiBjeT0iNDc3LjI1NzgiIGZpbGw9IiMyMjIyMjIiIHJ4PSI2IiByeT0iNiIgc3R5bGU9InN0cm9rZTojMjIyMjIyO3N0cm9rZS13aWR0aDoxOyIvPjxsaW5lIHN0eWxlPSJzdHJva2U6IzE4MTgxODtzdHJva2Utd2lkdGg6MTsiIHgxPSIyNDMuODczIiB4Mj0iMjQzLjg3MyIgeTE9IjY3LjI5NjkiIHkyPSI4Ny4yOTY5Ii8+PHBvbHlnb24gZmlsbD0iIzE4MTgxOCIgcG9pbnRzPSIyMzkuODczLDc3LjI5NjksMjQzLjg3Myw4Ny4yOTY5LDI0Ny44NzMsNzcuMjk2OSwyNDMuODczLDgxLjI5NjkiIHN0eWxlPSJzdHJva2U6IzE4MTgxODtzdHJva2Utd2lkdGg6MTsiLz48bGluZSBzdHlsZT0ic3Ryb2tlOiMxODE4MTg7c3Ryb2tlLXdpZHRoOjE7IiB4MT0iMjQzLjg3MyIgeDI9IjI0My44NzMiIHkxPSIxMjEuMjY1NiIgeTI9IjE0MS4yNjU2Ii8+PHBvbHlnb24gZmlsbD0iIzE4MTgxOCIgcG9pbnRzPSIyMzkuODczLDEzMS4yNjU2LDI0My44NzMsMTQxLjI2NTYsMjQ3Ljg3MywxMzEuMjY1NiwyNDMuODczLDEzNS4yNjU2IiBzdHlsZT0ic3Ryb2tlOiMxODE4MTg7c3Ryb2tlLXdpZHRoOjE7Ii8+PGxpbmUgc3R5bGU9InN0cm9rZTojMTgxODE4O3N0cm9rZS13aWR0aDoxOyIgeDE9IjI0My44NzMiIHgyPSIyNDMuODczIiB5MT0iMTc1LjIzNDQiIHkyPSIxOTUuMjM0NCIvPjxwb2x5Z29uIGZpbGw9IiMxODE4MTgiIHBvaW50cz0iMjM5Ljg3MywxODUuMjM0NCwyNDMuODczLDE5NS4yMzQ0LDI0Ny44NzMsMTg1LjIzNDQsMjQzLjg3MywxODkuMjM0NCIgc3R5bGU9InN0cm9rZTojMTgxODE4O3N0cm9rZS13aWR0aDoxOyIvPjxsaW5lIHN0eWxlPSJzdHJva2U6IzE4MTgxODtzdHJva2Utd2lkdGg6MTsiIHgxPSIxMTUuMzEyNSIgeDI9IjExNS4zMTI1IiB5MT0iMjU1LjIwMzEiIHkyPSIyNzUuMjAzMSIvPjxwb2x5Z29uIGZpbGw9IiMxODE4MTgiIHBvaW50cz0iMTExLjMxMjUsMjY1LjIwMzEsMTE1LjMxMjUsMjc1LjIwMzEsMTE5LjMxMjUsMjY1LjIwMzEsMTE1LjMxMjUsMjY5LjIwMzEiIHN0eWxlPSJzdHJva2U6IzE4MTgxODtzdHJva2Utd2lkdGg6MTsiLz48bGluZSBzdHlsZT0ic3Ryb2tlOiMxODE4MTg7c3Ryb2tlLXdpZHRoOjE7IiB4MT0iMzUwLjE4NTUiIHgyPSIzNTAuMTg1NSIgeTE9IjI1NS4yMDMxIiB5Mj0iMjc1LjIwMzEiLz48cG9seWdvbiBmaWxsPSIjMTgxODE4IiBwb2ludHM9IjM0Ni4xODU1LDI2NS4yMDMxLDM1MC4xODU1LDI3NS4yMDMxLDM1NC4xODU1LDI2NS4yMDMxLDM1MC4xODU1LDI2OS4yMDMxIiBzdHlsZT0ic3Ryb2tlOiMxODE4MTg7c3Ryb2tlLXdpZHRoOjE7Ii8+PGxpbmUgc3R5bGU9InN0cm9rZTojMTgxODE4O3N0cm9rZS13aWR0aDoxOyIgeDE9IjExNS4zMTI1IiB4Mj0iMTE1LjMxMjUiIHkxPSIzMDkuMTcxOSIgeTI9IjMyOS4xNzE5Ii8+PHBvbHlnb24gZmlsbD0iIzE4MTgxOCIgcG9pbnRzPSIxMTEuMzEyNSwzMTkuMTcxOSwxMTUuMzEyNSwzMjkuMTcxOSwxMTkuMzEyNSwzMTkuMTcxOSwxMTUuMzEyNSwzMjMuMTcxOSIgc3R5bGU9InN0cm9rZTojMTgxODE4O3N0cm9rZS13aWR0aDoxOyIvPjxsaW5lIHN0eWxlPSJzdHJva2U6IzE4MTgxODtzdHJva2Utd2lkdGg6MTsiIHgxPSIzNTAuMTg1NSIgeDI9IjM1MC4xODU1IiB5MT0iMzA5LjE3MTkiIHkyPSIzMjkuMTcxOSIvPjxwb2x5Z29uIGZpbGw9IiMxODE4MTgiIHBvaW50cz0iMzQ2LjE4NTUsMzE5LjE3MTksMzUwLjE4NTUsMzI5LjE3MTksMzU0LjE4NTUsMzE5LjE3MTksMzUwLjE4NTUsMzIzLjE3MTkiIHN0eWxlPSJzdHJva2U6IzE4MTgxODtzdHJva2Utd2lkdGg6MTsiLz48bGluZSBzdHlsZT0ic3Ryb2tlOiMxODE4MTg7c3Ryb2tlLXdpZHRoOjE7IiB4MT0iMjQzLjg3MyIgeDI9IjI0My44NzMiIHkxPSIyMjkuMjAzMSIgeTI9IjI0OS4yMDMxIi8+PHBvbHlnb24gZmlsbD0iIzE4MTgxOCIgcG9pbnRzPSIyMzkuODczLDIzOS4yMDMxLDI0My44NzMsMjQ5LjIwMzEsMjQ3Ljg3MywyMzkuMjAzMSwyNDMuODczLDI0My4yMDMxIiBzdHlsZT0ic3Ryb2tlOiMxODE4MTg7c3Ryb2tlLXdpZHRoOjE7Ii8+PGxpbmUgc3R5bGU9InN0cm9rZTojMTgxODE4O3N0cm9rZS13aWR0aDoxOyIgeDE9IjI0My44NzMiIHgyPSIyNDMuODczIiB5MT0iMzM1LjE3MTkiIHkyPSIzNTUuMTcxOSIvPjxwb2x5Z29uIGZpbGw9IiMxODE4MTgiIHBvaW50cz0iMjM5Ljg3MywzNDUuMTcxOSwyNDMuODczLDM1NS4xNzE5LDI0Ny44NzMsMzQ1LjE3MTksMjQzLjg3MywzNDkuMTcxOSIgc3R5bGU9InN0cm9rZTojMTgxODE4O3N0cm9rZS13aWR0aDoxOyIvPjxsaW5lIHN0eWxlPSJzdHJva2U6IzE4MTgxODtzdHJva2Utd2lkdGg6MTsiIHgxPSIyNDMuODczIiB4Mj0iMjQzLjg3MyIgeTE9IjM4OS4xNDA2IiB5Mj0iNDA5LjE0MDYiLz48cG9seWdvbiBmaWxsPSIjMTgxODE4IiBwb2ludHM9IjIzOS44NzMsMzk5LjE0MDYsMjQzLjg3Myw0MDkuMTQwNiwyNDcuODczLDM5OS4xNDA2LDI0My44NzMsNDAzLjE0MDYiIHN0eWxlPSJzdHJva2U6IzE4MTgxODtzdHJva2Utd2lkdGg6MTsiLz48bGluZSBzdHlsZT0ic3Ryb2tlOiMxODE4MTg7c3Ryb2tlLXdpZHRoOjE7IiB4MT0iMjQzLjg3MyIgeDI9IjI0My44NzMiIHkxPSI0NDMuMTA5NCIgeTI9IjQ2Ni4yNTc4Ii8+PHBvbHlnb24gZmlsbD0iIzE4MTgxOCIgcG9pbnRzPSIyMzkuODczLDQ1Ni4yNTc4LDI0My44NzMsNDY2LjI1NzgsMjQ3Ljg3Myw0NTYuMjU3OCwyNDMuODczLDQ2MC4yNTc4IiBzdHlsZT0ic3Ryb2tlOiMxODE4MTg7c3Ryb2tlLXdpZHRoOjE7Ii8+PCEtLVNSQz1bVlAxREppRDAzOE50RU9LYkJpMlkxVGdpLWZFbUdmTVc3QzJUQ1NhZWFfNWVuY2RMcy1FNGdhQXE4Z2s5dGtWdF85bXg1bzhjeEU2MGZjaUkzeTVrczdDMklIWW9JWElhNDJVVU9DekhiVU9DY25QM0d4MTVHUVd6ZHVlWU5zck1IanBIb05kem4td1hOYkpwa2h2N1NoQUtCakpwVWhQVUZEc1hqV3Z4M2xSNmpkZ2Z2ek5ZZHU3VnhoRkRnZnVfd2hnMklPZllVTXJhVlhmUDRaOTJqYkpqYk5EczRNQllZMHFBUEgwNnoxdTJNeWVaS1E1ZmZweW13Q3RXOW9aR0lTNkUwbDBmS0Nnall5Zi1TVWVBcTZfdjhPYnFJcGxVUmgtUnkwYWk5bU9xb2VMUmlkeFZsVWJzc2IxU1FBUkdpZzFXT0o4a2JmekhDUmU0em9HdUpmTHQ2WGhrZXpVTWdXTk1ZVUlRTFpIbHV1U2liMjFIaG1qYW0yQ3dabVRGZ2FjaDFzelE3YUlWQmV5ZENQSnBiMy1RWkZWYS0wcTBdLS0+PC9nPjwvc3ZnPg==" class="uml" alt="uml diagram" title=""></a></p>
-<h3 id="token-ownership-and-streaming">Token Ownership and Streaming<a class="headerlink" href="#token-ownership-and-streaming" title="Permanent link">¶</a></h3>
-<table>
-<thead>
-<tr>
-<th>Scenario</th>
-<th>Data Movement</th>
-<th>Cleanup Required</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>Add node</td>
-<td>Existing nodes stream data to new node</td>
-<td>Yes, on existing nodes</td>
-</tr>
-<tr>
-<td>Remove node (decommission)</td>
-<td>Departing node streams to remaining nodes</td>
-<td>No</td>
-</tr>
-<tr>
-<td>Remove node (dead)</td>
-<td>Remaining nodes stream among themselves</td>
-<td>No</td>
-</tr>
-<tr>
-<td>Replace node</td>
-<td>Remaining nodes stream to replacement</td>
-<td>No</td>
-</tr>
-</tbody>
-</table>
-<div class="admonition warning">
-<p class="admonition-title">Always Run Cleanup After Adding Nodes</p>
-<p>After adding nodes, existing nodes retain copies of data they no longer own. Run <code>nodetool cleanup</code> on each existing node to reclaim disk space. Schedule this during low-traffic periods as cleanup involves reading and rewriting SSTables.</p>
-</div>
-<hr>
-<h2 id="cluster-operations-overview">Cluster Operations Overview<a class="headerlink" href="#cluster-operations-overview" title="Permanent link">¶</a></h2>
+<h2 id="operations-reference">Operations Reference<a class="headerlink" href="#operations-reference" title="Permanent link">¶</a></h2>
 <table>
 <thead>
 <tr>
 <th>Operation</th>
-<th>When to Use</th>
-<th>Command/Method</th>
+<th>Use Case</th>
+<th>Command</th>
 <th>Impact</th>
 </tr>
 </thead>
 <tbody>
 <tr>
-<td><strong>Add node</strong></td>
-<td>Scaling capacity</td>
-<td>Start new node with proper config</td>
-<td>Streaming ~hours</td>
+<td><a href="adding-nodes/">Add Node</a></td>
+<td>Expand capacity</td>
+<td>Start node with <code>auto_bootstrap: true</code></td>
+<td>Streaming to new node</td>
 </tr>
 <tr>
-<td><strong>Decommission</strong></td>
+<td><a href="removing-nodes/#decommission">Decommission</a></td>
 <td>Graceful removal (node up)</td>
 <td><code>nodetool decommission</code></td>
-<td>Streaming ~hours</td>
+<td>Streaming from departing node</td>
 </tr>
 <tr>
-<td><strong>Remove node</strong></td>
+<td><a href="removing-nodes/#removenode">Remove Node</a></td>
 <td>Forced removal (node down)</td>
 <td><code>nodetool removenode</code></td>
-<td>Streaming ~hours</td>
+<td>Streaming among remaining nodes</td>
 </tr>
 <tr>
-<td><strong>Replace node</strong></td>
+<td><a href="replacing-nodes/">Replace Node</a></td>
 <td>Hardware replacement</td>
 <td><code>replace_address_first_boot</code></td>
-<td>Streaming ~hours</td>
+<td>Streaming to replacement</td>
 </tr>
 <tr>
-<td><strong>Move token</strong></td>
-<td>Rebalancing (rarely needed)</td>
-<td><code>nodetool move</code></td>
-<td>Streaming</td>
+<td><a href="scaling/#scaling-up">Scale Up</a></td>
+<td>Add multiple nodes</td>
+<td>Sequential bootstrap</td>
+<td>Multiple streaming operations</td>
 </tr>
 <tr>
-<td><strong>Cleanup</strong></td>
-<td>After adding nodes</td>
+<td><a href="scaling/#scaling-down">Scale Down</a></td>
+<td>Reduce capacity</td>
+<td>Sequential decommission</td>
+<td>Multiple streaming operations</td>
+</tr>
+<tr>
+<td><a href="multi-datacenter/#adding-a-datacenter">Add Datacenter</a></td>
+<td>Geographic expansion</td>
+<td>Rebuild from existing DC</td>
+<td>Cross-DC streaming</td>
+</tr>
+<tr>
+<td><a href="multi-datacenter/#removing-a-datacenter">Remove Datacenter</a></td>
+<td>Consolidation</td>
+<td>Decommission all DC nodes</td>
+<td>Data redistribution</td>
+</tr>
+<tr>
+<td><a href="cleanup/">Cleanup</a></td>
+<td>Reclaim space after adding</td>
 <td><code>nodetool cleanup</code></td>
 <td>I/O intensive</td>
 </tr>
 <tr>
-<td><strong>Assassinate</strong></td>
-<td>Last resort (stuck node)</td>
+<td><a href="removing-nodes/#assassinate">Assassinate</a></td>
+<td>Last resort removal</td>
 <td><code>nodetool assassinate</code></td>
-<td>Immediate</td>
+<td>Immediate, no streaming</td>
 </tr>
 </tbody>
 </table>
 <hr>
-<h2 id="adding-nodes">Adding Nodes<a class="headerlink" href="#adding-nodes" title="Permanent link">¶</a></h2>
-<h3 id="pre-flight-checklist">Pre-flight Checklist<a class="headerlink" href="#pre-flight-checklist" title="Permanent link">¶</a></h3>
-<p>Before adding a node, verify:</p>
-<ul>
-<li>[ ] Same Cassandra version as existing cluster</li>
-<li>[ ] Same JDK version and vendor</li>
-<li>[ ] Adequate disk space (check existing node usage)</li>
-<li>[ ] Network connectivity to all existing nodes (storage port 7000, native port 9042)</li>
-<li>[ ] Firewall rules configured</li>
-<li>[ ] NTP synchronized across all nodes</li>
-<li>[ ] Seed nodes identified (use 2-3 existing stable nodes)</li>
-</ul>
-<h3 id="adding-a-single-node">Adding a Single Node<a class="headerlink" href="#adding-a-single-node" title="Permanent link">¶</a></h3>
-<p><strong>Step 1: Prepare the new node</strong></p>
-<div class="highlight"><pre><span></span><code><span class="c1"># Install Cassandra (same version as cluster)</span>
-<span class="c1"># Configure cassandra.yaml</span>
-
-cluster_name:<span class="w"> </span><span class="s1">'Production'</span><span class="w">           </span><span class="c1"># Must match existing cluster</span>
-num_tokens:<span class="w"> </span><span class="m">256</span><span class="w">                      </span><span class="c1"># Match existing nodes (or 16 for vnodes)</span>
-seeds:<span class="w"> </span><span class="s2">"10.0.1.1,10.0.1.2"</span><span class="w">          </span><span class="c1"># 2-3 existing nodes, NOT the new node</span>
-listen_address:<span class="w"> </span><span class="m">10</span>.0.1.10<span class="w">           </span><span class="c1"># This node's IP</span>
-rpc_address:<span class="w"> </span><span class="m">10</span>.0.1.10<span class="w">              </span><span class="c1"># Or 0.0.0.0</span>
-endpoint_snitch:<span class="w"> </span>GossipingPropertyFileSnitch
-auto_bootstrap:<span class="w"> </span><span class="nb">true</span><span class="w">                 </span><span class="c1"># Default, ensures data streaming</span>
-</code></pre></div>
-<p><strong>Step 2: Configure rack and datacenter</strong></p>
-<div class="highlight"><pre><span></span><code><span class="c1"># /etc/cassandra/cassandra-rackdc.properties</span>
-<span class="nv">dc</span><span class="o">=</span>dc1
-<span class="nv">rack</span><span class="o">=</span>rack1
-</code></pre></div>
-<p><strong>Step 3: Start the node</strong></p>
-<div class="highlight"><pre><span></span><code>sudo<span class="w"> </span>systemctl<span class="w"> </span>start<span class="w"> </span>cassandra
-
-<span class="c1"># Monitor bootstrap progress</span>
-watch<span class="w"> </span>-n<span class="w"> </span><span class="m">5</span><span class="w"> </span><span class="s1">'nodetool netstats | head -30'</span>
-
-<span class="c1"># Check joining status</span>
-nodetool<span class="w"> </span>status
-<span class="c1"># New node shows UJ (Up, Joining) during bootstrap</span>
-</code></pre></div>
-<p><strong>Step 4: Verify bootstrap completion</strong></p>
-<div class="highlight"><pre><span></span><code><span class="c1"># Node should show UN (Up, Normal)</span>
-nodetool<span class="w"> </span>status
-
-<span class="c1"># Verify data distribution</span>
-nodetool<span class="w"> </span>ring<span class="w"> </span><span class="p">|</span><span class="w"> </span>grep<span class="w"> </span>&lt;new_node_ip&gt;
-
-<span class="c1"># Check no streaming in progress</span>
-nodetool<span class="w"> </span>netstats
-</code></pre></div>
-<p><strong>Step 5: Run cleanup on existing nodes</strong></p>
-<div class="highlight"><pre><span></span><code><span class="c1"># On EACH existing node (not the new one)</span>
-<span class="c1"># Schedule during low-traffic period</span>
-nodetool<span class="w"> </span>cleanup
-
-<span class="c1"># Monitor progress</span>
-nodetool<span class="w"> </span>compactionstats
-</code></pre></div>
-<h3 id="adding-multiple-nodes">Adding Multiple Nodes<a class="headerlink" href="#adding-multiple-nodes" title="Permanent link">¶</a></h3>
-<div class="admonition danger">
-<p class="admonition-title">Never Bootstrap Multiple Nodes Simultaneously</p>
-<p>Adding multiple nodes at once can overwhelm the cluster with streaming operations. Add nodes sequentially, waiting for each to complete bootstrap before starting the next.</p>
-</div>
-<p><strong>Sequential addition procedure:</strong></p>
-<div class="highlight"><pre><span></span><code><span class="c1"># Add first node</span>
-<span class="c1"># Wait for bootstrap complete (UN status)</span>
-<span class="c1"># Add second node</span>
-<span class="c1"># Wait for bootstrap complete</span>
-<span class="c1"># ... repeat ...</span>
-<span class="c1"># Run cleanup on ALL original nodes after all additions complete</span>
-</code></pre></div>
-<p><strong>Recommended timing:</strong></p>
+<h2 id="safety-requirements">Safety Requirements<a class="headerlink" href="#safety-requirements" title="Permanent link">¶</a></h2>
+<p>The following requirements must be observed for all topology operations:</p>
+<h3 id="pre-operation-requirements">Pre-Operation Requirements<a class="headerlink" href="#pre-operation-requirements" title="Permanent link">¶</a></h3>
 <table>
 <thead>
 <tr>
-<th>Cluster Size</th>
-<th>Wait Between Additions</th>
+<th>Requirement</th>
+<th>Rationale</th>
 </tr>
 </thead>
 <tbody>
 <tr>
-<td>&lt; 10 nodes</td>
-<td>1-2 hours</td>
+<td>All nodes must show <code>UN</code> status</td>
+<td>Topology changes with degraded nodes risk data loss</td>
 </tr>
 <tr>
-<td>10-50 nodes</td>
-<td>2-4 hours</td>
+<td>No pending repairs must be running</td>
+<td>Concurrent operations cause unpredictable behavior</td>
 </tr>
 <tr>
-<td>50+ nodes</td>
-<td>4-8 hours or overnight</td>
+<td>No other topology changes must be in progress</td>
+<td>Only one topology change may occur at a time</td>
+</tr>
+<tr>
+<td>Sufficient disk headroom must exist</td>
+<td>Streaming requires temporary additional space</td>
+</tr>
+<tr>
+<td>Schema agreement must be confirmed</td>
+<td>Schema disagreement causes bootstrap failures</td>
 </tr>
 </tbody>
 </table>
-<h3 id="bootstrap-performance-tuning">Bootstrap Performance Tuning<a class="headerlink" href="#bootstrap-performance-tuning" title="Permanent link">¶</a></h3>
-<p>For faster bootstrap (at cost of cluster performance):</p>
-<div class="highlight"><pre><span></span><code><span class="c1"># cassandra.yaml on NEW node only</span>
-<span class="nt">stream_throughput_outbound_megabits_per_sec</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">400</span><span class="w">  </span><span class="c1"># Default 200</span>
-<span class="nt">stream_entire_sstables</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">true</span><span class="w">                       </span><span class="c1"># Cassandra 4.0+</span>
+<div class="highlight"><pre><span></span><code><span class="c1"># Pre-flight verification</span>
+nodetool<span class="w"> </span>status<span class="w">              </span><span class="c1"># All nodes UN</span>
+nodetool<span class="w"> </span>describecluster<span class="w">     </span><span class="c1"># Single schema version</span>
+nodetool<span class="w"> </span>compactionstats<span class="w">     </span><span class="c1"># No heavy compaction</span>
+nodetool<span class="w"> </span>netstats<span class="w">            </span><span class="c1"># No active streaming</span>
 </code></pre></div>
-<div class="highlight"><pre><span></span><code><span class="c1"># On existing nodes, temporarily increase streaming</span>
-nodetool<span class="w"> </span>setstreamthroughput<span class="w"> </span><span class="m">400</span>
-</code></pre></div>
-<h3 id="troubleshooting-bootstrap">Troubleshooting Bootstrap<a class="headerlink" href="#troubleshooting-bootstrap" title="Permanent link">¶</a></h3>
-<p><strong>Bootstrap stuck or slow:</strong></p>
-<div class="highlight"><pre><span></span><code><span class="c1"># Check streaming status</span>
-nodetool<span class="w"> </span>netstats
-
-<span class="c1"># Check for errors in logs</span>
-tail<span class="w"> </span>-f<span class="w"> </span>/var/log/cassandra/system.log<span class="w"> </span><span class="p">|</span><span class="w"> </span>grep<span class="w"> </span>-i<span class="w"> </span>stream
-
-<span class="c1"># If stuck, check network connectivity</span>
-nc<span class="w"> </span>-zv<span class="w"> </span>&lt;seed_node&gt;<span class="w"> </span><span class="m">7000</span>
-</code></pre></div>
-<p><strong>Bootstrap failed:</strong></p>
-<div class="highlight"><pre><span></span><code><span class="c1"># Clear data and retry</span>
-sudo<span class="w"> </span>systemctl<span class="w"> </span>stop<span class="w"> </span>cassandra
-rm<span class="w"> </span>-rf<span class="w"> </span>/var/lib/cassandra/data/*
-rm<span class="w"> </span>-rf<span class="w"> </span>/var/lib/cassandra/commitlog/*
-rm<span class="w"> </span>-rf<span class="w"> </span>/var/lib/cassandra/saved_caches/*
-sudo<span class="w"> </span>systemctl<span class="w"> </span>start<span class="w"> </span>cassandra
-</code></pre></div>
+<h3 id="operational-constraints">Operational Constraints<a class="headerlink" href="#operational-constraints" title="Permanent link">¶</a></h3>
+<div class="admonition danger">
+<p class="admonition-title">Critical Constraints</p>
+<p><strong>One operation at a time:</strong> Multiple concurrent topology changes must not be performed. The cluster must complete one operation before starting another.</p>
+<p><strong>Never bootstrap multiple nodes simultaneously</strong> unless using manual token assignment. Concurrent bootstraps with vnodes cause token collisions.</p>
+<p><strong>Cleanup must run after adding nodes.</strong> Existing nodes retain data they no longer own until cleanup executes.</p>
+</div>
 <hr>
-<h2 id="removing-nodes">Removing Nodes<a class="headerlink" href="#removing-nodes" title="Permanent link">¶</a></h2>
-<h3 id="graceful-decommission-node-is-healthy">Graceful Decommission (Node is Healthy)<a class="headerlink" href="#graceful-decommission-node-is-healthy" title="Permanent link">¶</a></h3>
-<p>Use decommission when the node is up and responsive:</p>
-<div class="highlight"><pre><span></span><code><span class="c1"># On the node being removed</span>
-nodetool<span class="w"> </span>decommission
-
-<span class="c1"># Monitor streaming progress (from another node)</span>
-nodetool<span class="w"> </span>netstats
-watch<span class="w"> </span><span class="s1">'nodetool status'</span>
-
-<span class="c1"># Node transitions: UN → UL (Leaving) → removed from ring</span>
-</code></pre></div>
-<p><strong>Decommission takes time</strong> based on data volume:</p>
+<h2 id="operation-selection-guide">Operation Selection Guide<a class="headerlink" href="#operation-selection-guide" title="Permanent link">¶</a></h2>
+<h3 id="node-is-healthy-and-accessible">Node is Healthy and Accessible<a class="headerlink" href="#node-is-healthy-and-accessible" title="Permanent link">¶</a></h3>
 <table>
 <thead>
 <tr>
-<th>Data per Node</th>
-<th>Approximate Time</th>
+<th>Goal</th>
+<th>Operation</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Remove node permanently</td>
+<td><a href="removing-nodes/#decommission">Decommission</a></td>
+</tr>
+<tr>
+<td>Move node to different hardware</td>
+<td><a href="removing-nodes/#decommission">Decommission</a> → <a href="adding-nodes/">Add Node</a></td>
+</tr>
+<tr>
+<td>Replace with same IP</td>
+<td><a href="replacing-nodes/">Replace Node</a> (faster)</td>
+</tr>
+</tbody>
+</table>
+<h3 id="node-is-down-or-unresponsive">Node is Down or Unresponsive<a class="headerlink" href="#node-is-down-or-unresponsive" title="Permanent link">¶</a></h3>
+<table>
+<thead>
+<tr>
+<th>Scenario</th>
+<th>Operation</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Node recoverable (disk/network issue)</td>
+<td>Fix issue, node rejoins automatically</td>
+</tr>
+<tr>
+<td>Node unrecoverable, data on other replicas</td>
+<td><a href="removing-nodes/#removenode">Remove Node</a></td>
+</tr>
+<tr>
+<td>Node unrecoverable, need same token range</td>
+<td><a href="replacing-nodes/">Replace Node</a></td>
+</tr>
+<tr>
+<td>Remove stuck in gossip</td>
+<td><a href="removing-nodes/#assassinate">Assassinate</a> (last resort)</td>
+</tr>
+</tbody>
+</table>
+<h3 id="capacity-planning">Capacity Planning<a class="headerlink" href="#capacity-planning" title="Permanent link">¶</a></h3>
+<table>
+<thead>
+<tr>
+<th>Goal</th>
+<th>Operation</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Increase capacity</td>
+<td><a href="scaling/#scaling-up">Scale Up</a> (add nodes)</td>
+</tr>
+<tr>
+<td>Decrease capacity</td>
+<td><a href="scaling/#scaling-down">Scale Down</a> (decommission nodes)</td>
+</tr>
+<tr>
+<td>Add geographic redundancy</td>
+<td><a href="multi-datacenter/#adding-a-datacenter">Add Datacenter</a></td>
+</tr>
+<tr>
+<td>Consolidate datacenters</td>
+<td><a href="multi-datacenter/#removing-a-datacenter">Remove Datacenter</a></td>
+</tr>
+</tbody>
+</table>
+<hr>
+<h2 id="streaming-behavior">Streaming Behavior<a class="headerlink" href="#streaming-behavior" title="Permanent link">¶</a></h2>
+<p>All topology changes except assassinate involve data streaming between nodes.</p>
+<h3 id="streaming-direction-by-operation">Streaming Direction by Operation<a class="headerlink" href="#streaming-direction-by-operation" title="Permanent link">¶</a></h3>
+<table>
+<thead>
+<tr>
+<th>Operation</th>
+<th>Data Flows From</th>
+<th>Data Flows To</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Add node</td>
+<td>Existing nodes</td>
+<td>New node</td>
+</tr>
+<tr>
+<td>Decommission</td>
+<td>Departing node</td>
+<td>Remaining nodes</td>
+</tr>
+<tr>
+<td>Remove node</td>
+<td>Remaining replicas</td>
+<td>Other replicas</td>
+</tr>
+<tr>
+<td>Replace node</td>
+<td>Remaining replicas</td>
+<td>Replacement node</td>
+</tr>
+<tr>
+<td>Rebuild</td>
+<td>Source datacenter</td>
+<td>Target datacenter</td>
+</tr>
+</tbody>
+</table>
+<h3 id="estimated-duration">Estimated Duration<a class="headerlink" href="#estimated-duration" title="Permanent link">¶</a></h3>
+<p>Streaming duration depends on data volume and network bandwidth:</p>
+<table>
+<thead>
+<tr>
+<th>Data Volume</th>
+<th>1 Gbps Network</th>
+<th>10 Gbps Network</th>
 </tr>
 </thead>
 <tbody>
 <tr>
 <td>100 GB</td>
-<td>1-2 hours</td>
+<td>15-30 min</td>
+<td>5-10 min</td>
 </tr>
 <tr>
 <td>500 GB</td>
-<td>4-8 hours</td>
+<td>1-2 hours</td>
+<td>15-30 min</td>
 </tr>
 <tr>
-<td>1 TB+</td>
-<td>8-24 hours</td>
+<td>1 TB</td>
+<td>2-4 hours</td>
+<td>30-60 min</td>
+</tr>
+<tr>
+<td>5 TB</td>
+<td>12-24 hours</td>
+<td>2-4 hours</td>
 </tr>
 </tbody>
 </table>
-<div class="admonition warning">
-<p class="admonition-title">Cannot Cancel Decommission</p>
-<p>Once started, decommission cannot be safely cancelled. The node will stream all its data before leaving the ring. Plan accordingly.</p>
+<div class="admonition tip">
+<p class="admonition-title">Streaming Throughput</p>
+<p>Default streaming throughput is 200 Mbps. This may be increased for faster operations:
+</p><div class="highlight"><pre><span></span><code>nodetool<span class="w"> </span>setstreamthroughput<span class="w"> </span><span class="m">400</span><span class="w">  </span><span class="c1"># MB/s</span>
+</code></pre></div>
+Higher values increase operation speed but may impact client request latency.
 </div>
-<h3 id="forced-removal-node-is-down">Forced Removal (Node is Down)<a class="headerlink" href="#forced-removal-node-is-down" title="Permanent link">¶</a></h3>
-<p>When a node is unrecoverable and cannot be decommissioned:</p>
-<div class="highlight"><pre><span></span><code><span class="c1"># Get the host ID of the dead node</span>
-nodetool<span class="w"> </span>status
-<span class="c1"># Note the host ID (UUID) of the DN (Down, Normal) node</span>
-
-<span class="c1"># Remove from any surviving node</span>
-nodetool<span class="w"> </span>removenode<span class="w"> </span>&lt;host_id&gt;
-
-<span class="c1"># Monitor progress</span>
-nodetool<span class="w"> </span>removenode<span class="w"> </span>status
-
-<span class="c1"># If removenode hangs (&gt;1 hour with no progress)</span>
-nodetool<span class="w"> </span>removenode<span class="w"> </span>force<span class="w"> </span>&lt;host_id&gt;
-</code></pre></div>
-<p><strong>When to use force:</strong></p>
-<ul>
-<li><code>removenode</code> stuck for extended period</li>
-<li>Other nodes show repeated connection failures to dead node</li>
-<li>Streaming progress at 0% for &gt;30 minutes</li>
-</ul>
-<h3 id="assassinate-last-resort">Assassinate (Last Resort)<a class="headerlink" href="#assassinate-last-resort" title="Permanent link">¶</a></h3>
-<p>Use only when removenode fails completely:</p>
-<div class="highlight"><pre><span></span><code><span class="c1"># Only if removenode force doesn't work</span>
-nodetool<span class="w"> </span>assassinate<span class="w"> </span>&lt;node_ip&gt;
-</code></pre></div>
-<div class="admonition danger">
-<p class="admonition-title">Assassinate Risks</p>
-<p>Assassinate immediately removes the node from gossip without data redistribution. Use only when the node's data is recoverable through repair from other replicas.</p>
-</div>
-<h3 id="post-removal-verification">Post-Removal Verification<a class="headerlink" href="#post-removal-verification" title="Permanent link">¶</a></h3>
-<div class="highlight"><pre><span></span><code><span class="c1"># Verify node removed</span>
-nodetool<span class="w"> </span>status
-<span class="c1"># Dead node should not appear</span>
-
-<span class="c1"># Check cluster health</span>
-nodetool<span class="w"> </span>describecluster
-
-<span class="c1"># Run full repair to ensure data consistency</span>
-nodetool<span class="w"> </span>repair<span class="w"> </span>-full
-</code></pre></div>
-<hr>
-<h2 id="replacing-nodes">Replacing Nodes<a class="headerlink" href="#replacing-nodes" title="Permanent link">¶</a></h2>
-<p>Node replacement is used when hardware fails but the IP address or host identity needs to be preserved (or when replacing with new hardware).</p>
-<h3 id="replace-with-same-ip-address">Replace with Same IP Address<a class="headerlink" href="#replace-with-same-ip-address" title="Permanent link">¶</a></h3>
-<p><strong>Step 1: Ensure dead node is recognized as down</strong></p>
-<div class="highlight"><pre><span></span><code><span class="c1"># From any live node</span>
-nodetool<span class="w"> </span>status
-<span class="c1"># Dead node should show DN (Down, Normal)</span>
-</code></pre></div>
-<p><strong>Step 2: Prepare replacement node</strong></p>
-<div class="highlight"><pre><span></span><code><span class="c1"># Same configuration as dead node</span>
-<span class="c1"># cassandra.yaml: same settings</span>
-
-<span class="c1"># Add JVM option for replacement</span>
-<span class="c1"># In jvm.options or jvm-server.options (Cassandra 4.0+)</span>
--Dcassandra.replace_address_first_boot<span class="o">=</span>&lt;dead_node_ip&gt;
-</code></pre></div>
-<p><strong>Step 3: Start replacement</strong></p>
-<div class="highlight"><pre><span></span><code>sudo<span class="w"> </span>systemctl<span class="w"> </span>start<span class="w"> </span>cassandra
-
-<span class="c1"># Monitor replacement streaming</span>
-nodetool<span class="w"> </span>netstats
-</code></pre></div>
-<p><strong>Step 4: Remove JVM option and restart</strong></p>
-<div class="highlight"><pre><span></span><code><span class="c1"># After replacement complete (node shows UN)</span>
-<span class="c1"># Remove the replace_address_first_boot option</span>
-<span class="c1"># Restart is optional but recommended</span>
-
-sudo<span class="w"> </span>systemctl<span class="w"> </span>restart<span class="w"> </span>cassandra
-</code></pre></div>
-<h3 id="replace-with-different-ip-address">Replace with Different IP Address<a class="headerlink" href="#replace-with-different-ip-address" title="Permanent link">¶</a></h3>
-<div class="highlight"><pre><span></span><code><span class="c1"># Use replace_address_first_boot with the OLD (dead) node's IP</span>
--Dcassandra.replace_address_first_boot<span class="o">=</span>&lt;dead_node_ip&gt;
-
-<span class="c1"># Configure cassandra.yaml with NEW IP</span>
-listen_address:<span class="w"> </span>&lt;new_node_ip&gt;
-rpc_address:<span class="w"> </span>&lt;new_node_ip&gt;
-</code></pre></div>
-<h3 id="replace-with-different-host-id">Replace with Different Host ID<a class="headerlink" href="#replace-with-different-host-id" title="Permanent link">¶</a></h3>
-<p>Starting Cassandra 4.0, use host ID instead of IP:</p>
-<div class="highlight"><pre><span></span><code><span class="c1"># Get dead node's host ID</span>
-nodetool<span class="w"> </span>status
-
-<span class="c1"># On new node</span>
--Dcassandra.replace_address_first_boot<span class="o">=</span>&lt;dead_node_host_id&gt;
-</code></pre></div>
-<h3 id="replacement-vs-removenode-bootstrap">Replacement vs Removenode + Bootstrap<a class="headerlink" href="#replacement-vs-removenode-bootstrap" title="Permanent link">¶</a></h3>
-<table>
-<thead>
-<tr>
-<th>Approach</th>
-<th>Pros</th>
-<th>Cons</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td><strong>Replace</strong></td>
-<td>Faster (streams from replicas)</td>
-<td>Must match token count</td>
-</tr>
-<tr>
-<td><strong>Remove + Add</strong></td>
-<td>Clean slate</td>
-<td>Two streaming operations</td>
-</tr>
-</tbody>
-</table>
-<p><strong>Use replacement when:</strong></p>
-<ul>
-<li>Hardware failure with recoverable scenario</li>
-<li>Same token configuration</li>
-<li>Need faster recovery</li>
-</ul>
-<p><strong>Use remove + add when:</strong></p>
-<ul>
-<li>Changing token configuration</li>
-<li>Datacenter restructuring</li>
-<li>Clean start preferred</li>
-</ul>
-<hr>
-<h2 id="scaling-operations">Scaling Operations<a class="headerlink" href="#scaling-operations" title="Permanent link">¶</a></h2>
-<h3 id="scaling-up-adding-capacity">Scaling Up (Adding Capacity)<a class="headerlink" href="#scaling-up-adding-capacity" title="Permanent link">¶</a></h3>
-<p><strong>Calculate nodes needed:</strong></p>
-<div class="highlight"><pre><span></span><code>Current: 6 nodes, 80% disk utilization
-Target: 50% utilization for growth headroom
-
-New node count = 6 × (80/50) = 9.6 → 10 nodes
-Add 4 nodes
-</code></pre></div>
-<p><strong>Scaling procedure:</strong></p>
-<ol>
-<li>Add nodes one at a time (see Adding Nodes)</li>
-<li>Wait for each bootstrap to complete</li>
-<li>Run cleanup on original nodes after all additions</li>
-<li>Verify data distribution with <code>nodetool status</code></li>
-</ol>
-<h3 id="scaling-down-reducing-capacity">Scaling Down (Reducing Capacity)<a class="headerlink" href="#scaling-down-reducing-capacity" title="Permanent link">¶</a></h3>
-<p><strong>Verify data fits on remaining nodes:</strong></p>
-<div class="highlight"><pre><span></span><code><span class="c1"># Check current disk usage</span>
-nodetool<span class="w"> </span>status
-
-<span class="c1"># Ensure remaining nodes have capacity</span>
-<span class="c1"># Rule: Post-removal utilization &lt; 70%</span>
-</code></pre></div>
-<p><strong>Scale-down procedure:</strong></p>
-<ol>
-<li>Decommission nodes one at a time</li>
-<li>Wait for each decommission to complete</li>
-<li>Verify data integrity after each removal</li>
-</ol>
-<div class="admonition warning">
-<p class="admonition-title">Replication Factor Constraint</p>
-<p>The remaining cluster must have at least RF nodes per datacenter. Removing below RF makes writes impossible at QUORUM consistency.</p>
-</div>
-<hr>
-<h2 id="multi-datacenter-operations">Multi-Datacenter Operations<a class="headerlink" href="#multi-datacenter-operations" title="Permanent link">¶</a></h2>
-<h3 id="adding-a-new-datacenter">Adding a New Datacenter<a class="headerlink" href="#adding-a-new-datacenter" title="Permanent link">¶</a></h3>
-<p><strong>Step 1: Configure replication for existing keyspaces</strong></p>
-<div class="highlight"><pre><span></span><code><span class="c1">-- Update keyspace to include new DC (before adding nodes)</span>
-<span class="k">ALTER</span><span class="w"> </span><span class="n">KEYSPACE</span><span class="w"> </span><span class="n">my_keyspace</span><span class="w"> </span><span class="k">WITH</span><span class="w"> </span><span class="n">replication</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="err">{</span>
-<span class="w">    </span><span class="s1">'class'</span><span class="p">:</span><span class="w"> </span><span class="s1">'NetworkTopologyStrategy'</span><span class="p">,</span>
-<span class="w">    </span><span class="s1">'dc1'</span><span class="p">:</span><span class="w"> </span><span class="mi">3</span><span class="p">,</span>
-<span class="w">    </span><span class="s1">'dc2'</span><span class="p">:</span><span class="w"> </span><span class="mi">3</span><span class="w">  </span><span class="c1">-- New datacenter</span>
-<span class="err">}</span><span class="p">;</span>
-</code></pre></div>
-<p><strong>Step 2: Add nodes to new datacenter</strong></p>
-<div class="highlight"><pre><span></span><code><span class="c1"># cassandra-rackdc.properties on new nodes</span>
-<span class="nv">dc</span><span class="o">=</span>dc2
-<span class="nv">rack</span><span class="o">=</span>rack1
-
-<span class="c1"># cassandra.yaml - use seeds from BOTH datacenters</span>
-seeds:<span class="w"> </span><span class="s2">"dc1-node1,dc1-node2,dc2-node1"</span>
-</code></pre></div>
-<p><strong>Step 3: Rebuild data in new datacenter</strong></p>
-<div class="highlight"><pre><span></span><code><span class="c1"># On EACH new node in dc2</span>
-nodetool<span class="w"> </span>rebuild<span class="w"> </span>dc1
-
-<span class="c1"># This streams data from dc1 to populate dc2</span>
-</code></pre></div>
-<h3 id="removing-a-datacenter">Removing a Datacenter<a class="headerlink" href="#removing-a-datacenter" title="Permanent link">¶</a></h3>
-<p><strong>Step 1: Update replication to exclude DC</strong></p>
-<div class="highlight"><pre><span></span><code><span class="k">ALTER</span><span class="w"> </span><span class="n">KEYSPACE</span><span class="w"> </span><span class="n">my_keyspace</span><span class="w"> </span><span class="k">WITH</span><span class="w"> </span><span class="n">replication</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="err">{</span>
-<span class="w">    </span><span class="s1">'class'</span><span class="p">:</span><span class="w"> </span><span class="s1">'NetworkTopologyStrategy'</span><span class="p">,</span>
-<span class="w">    </span><span class="s1">'dc1'</span><span class="p">:</span><span class="w"> </span><span class="mi">3</span>
-<span class="w">    </span><span class="c1">-- dc2 removed</span>
-<span class="err">}</span><span class="p">;</span>
-
-<span class="c1">-- For ALL keyspaces including system_auth, system_distributed</span>
-</code></pre></div>
-<p><strong>Step 2: Decommission all nodes in the DC</strong></p>
-<div class="highlight"><pre><span></span><code><span class="c1"># Decommission each node in dc2</span>
-nodetool<span class="w"> </span>decommission
-</code></pre></div>
 <hr>
 <h2 id="monitoring-topology-operations">Monitoring Topology Operations<a class="headerlink" href="#monitoring-topology-operations" title="Permanent link">¶</a></h2>
-<h3 id="key-metrics-during-topology-changes">Key Metrics During Topology Changes<a class="headerlink" href="#key-metrics-during-topology-changes" title="Permanent link">¶</a></h3>
+<h3 id="key-commands">Key Commands<a class="headerlink" href="#key-commands" title="Permanent link">¶</a></h3>
+<div class="highlight"><pre><span></span><code><span class="c1"># Cluster membership status</span>
+nodetool<span class="w"> </span>status
+
+<span class="c1"># Streaming progress</span>
+nodetool<span class="w"> </span>netstats
+
+<span class="c1"># Detailed streaming sessions</span>
+nodetool<span class="w"> </span>netstats<span class="w"> </span>-H
+
+<span class="c1"># Node state transitions</span>
+nodetool<span class="w"> </span>gossipinfo<span class="w"> </span><span class="p">|</span><span class="w"> </span>grep<span class="w"> </span>STATUS
+</code></pre></div>
+<h3 id="node-states-during-operations">Node States During Operations<a class="headerlink" href="#node-states-during-operations" title="Permanent link">¶</a></h3>
 <table>
 <thead>
 <tr>
-<th>Metric</th>
-<th>Source</th>
-<th>Alert Threshold</th>
+<th>State</th>
+<th>Code</th>
+<th>Meaning</th>
 </tr>
 </thead>
 <tbody>
 <tr>
-<td>Streaming progress</td>
-<td><code>nodetool netstats</code></td>
-<td>Stalled &gt;30 min</td>
+<td>Normal</td>
+<td><code>UN</code></td>
+<td>Fully operational</td>
 </tr>
 <tr>
-<td>Pending compactions</td>
-<td><code>nodetool compactionstats</code></td>
-<td>&gt;100 sustained</td>
+<td>Joining</td>
+<td><code>UJ</code></td>
+<td>Bootstrap in progress</td>
 </tr>
 <tr>
-<td>Heap usage</td>
-<td>JMX</td>
-<td>&gt;80%</td>
+<td>Leaving</td>
+<td><code>UL</code></td>
+<td>Decommission in progress</td>
 </tr>
 <tr>
-<td>Disk usage</td>
-<td>OS</td>
-<td>&gt;85%</td>
+<td>Moving</td>
+<td><code>UM</code></td>
+<td>Token move in progress</td>
+</tr>
+<tr>
+<td>Down</td>
+<td><code>DN</code></td>
+<td>Node unreachable</td>
 </tr>
 </tbody>
 </table>
-<h3 id="streaming-progress-monitoring">Streaming Progress Monitoring<a class="headerlink" href="#streaming-progress-monitoring" title="Permanent link">¶</a></h3>
-<div class="highlight"><pre><span></span><code><span class="c1"># Detailed streaming status</span>
-nodetool<span class="w"> </span>netstats
+<h3 id="jmx-metrics">JMX Metrics<a class="headerlink" href="#jmx-metrics" title="Permanent link">¶</a></h3>
+<div class="highlight"><pre><span></span><code># Streaming progress
+org.apache.cassandra.metrics:type=Streaming,scope=*,name=*
 
-<span class="c1"># Watch for progress</span>
-watch<span class="w"> </span>-n<span class="w"> </span><span class="m">30</span><span class="w"> </span><span class="s1">'nodetool netstats | grep -A 20 "Streaming"'</span>
-
-<span class="c1"># Estimate completion</span>
-<span class="c1"># Progress shown as bytes transferred / total bytes</span>
-</code></pre></div>
-<h3 id="health-verification-commands">Health Verification Commands<a class="headerlink" href="#health-verification-commands" title="Permanent link">¶</a></h3>
-<div class="highlight"><pre><span></span><code><span class="c1"># Cluster membership</span>
-nodetool<span class="w"> </span>status
-
-<span class="c1"># Schema agreement (should show single version)</span>
-nodetool<span class="w"> </span>describecluster
-
-<span class="c1"># Token distribution</span>
-nodetool<span class="w"> </span>ring
-
-<span class="c1"># Gossip state</span>
-nodetool<span class="w"> </span>gossipinfo
+# Compaction (impacts streaming)
+org.apache.cassandra.metrics:type=Compaction,name=PendingTasks
 </code></pre></div>
 <hr>
-<h2 id="axonops-cluster-management">AxonOps Cluster Management<a class="headerlink" href="#axonops-cluster-management" title="Permanent link">¶</a></h2>
-<p>Managing cluster topology through command-line tools requires careful coordination, monitoring, and expertise. <a href="https://axonops.com">AxonOps</a> provides operational automation that simplifies and safeguards these procedures.</p>
-<h3 id="automated-node-operations">Automated Node Operations<a class="headerlink" href="#automated-node-operations" title="Permanent link">¶</a></h3>
-<p>AxonOps provides:</p>
-<ul>
-<li><strong>Visual cluster topology</strong>: Real-time view of all nodes, their status, and token distribution</li>
-<li><strong>Guided node operations</strong>: Step-by-step wizards for adding, removing, and replacing nodes</li>
-<li><strong>Pre-flight validation</strong>: Automatic checks before topology changes (disk space, network, version compatibility)</li>
-<li><strong>Progress monitoring</strong>: Real-time streaming progress with ETA and throughput metrics</li>
-<li><strong>Automatic cleanup scheduling</strong>: Post-addition cleanup orchestrated across nodes</li>
-</ul>
-<h3 id="topology-change-safeguards">Topology Change Safeguards<a class="headerlink" href="#topology-change-safeguards" title="Permanent link">¶</a></h3>
-<ul>
-<li><strong>Impact analysis</strong>: Projected data movement and time estimates before operations</li>
-<li><strong>Rollback guidance</strong>: Clear procedures if operations need to be aborted</li>
-<li><strong>Audit logging</strong>: Complete history of who performed what topology changes</li>
-<li><strong>Alerting</strong>: Notifications for stalled operations or failures</li>
-</ul>
-<h3 id="multi-datacenter-management">Multi-Datacenter Management<a class="headerlink" href="#multi-datacenter-management" title="Permanent link">¶</a></h3>
-<ul>
-<li><strong>Cross-DC visibility</strong>: Unified view of all datacenters</li>
-<li><strong>Coordinated operations</strong>: Manage topology changes across datacenters</li>
-<li><strong>Replication monitoring</strong>: Verify data consistency across DCs</li>
-</ul>
-<p>See the <a href="../../../../operations/cassandra/repair/">AxonOps documentation</a> for detailed configuration and usage guides.</p>
-<hr>
-<h2 id="troubleshooting">Troubleshooting<a class="headerlink" href="#troubleshooting" title="Permanent link">¶</a></h2>
-<h3 id="node-wont-join-cluster">Node Won't Join Cluster<a class="headerlink" href="#node-wont-join-cluster" title="Permanent link">¶</a></h3>
-<p><strong>Symptoms:</strong> New node starts but doesn't appear in <code>nodetool status</code></p>
-<p><strong>Checks:</strong></p>
-<div class="highlight"><pre><span></span><code><span class="c1"># Verify cluster name matches</span>
-grep<span class="w"> </span>cluster_name<span class="w"> </span>/etc/cassandra/cassandra.yaml
-
-<span class="c1"># Check seed connectivity</span>
-nc<span class="w"> </span>-zv<span class="w"> </span>&lt;seed_ip&gt;<span class="w"> </span><span class="m">7000</span>
-
-<span class="c1"># Check gossip</span>
-nodetool<span class="w"> </span>gossipinfo
-
-<span class="c1"># Review logs for errors</span>
-tail<span class="w"> </span>-100<span class="w"> </span>/var/log/cassandra/system.log<span class="w"> </span><span class="p">|</span><span class="w"> </span>grep<span class="w"> </span>-i<span class="w"> </span>error
-</code></pre></div>
-<p><strong>Common causes:</strong></p>
+<h2 id="failure-handling">Failure Handling<a class="headerlink" href="#failure-handling" title="Permanent link">¶</a></h2>
+<h3 id="operation-interrupted">Operation Interrupted<a class="headerlink" href="#operation-interrupted" title="Permanent link">¶</a></h3>
 <table>
 <thead>
 <tr>
-<th>Cause</th>
-<th>Solution</th>
+<th>Operation</th>
+<th>If Interrupted</th>
+<th>Recovery</th>
 </tr>
 </thead>
 <tbody>
 <tr>
-<td>Cluster name mismatch</td>
-<td>Fix cassandra.yaml, clear data directory</td>
+<td>Bootstrap</td>
+<td>Node partially populated</td>
+<td>Clear data, restart bootstrap</td>
 </tr>
 <tr>
-<td>Firewall blocking 7000</td>
-<td>Open port 7000 between all nodes</td>
+<td>Decommission</td>
+<td>Node partially drained</td>
+<td>Cannot resume; complete manually or restore</td>
 </tr>
 <tr>
-<td>Seeds unreachable</td>
-<td>Verify seed IPs and connectivity</td>
+<td>Remove</td>
+<td>Partial redistribution</td>
+<td>Re-run removenode</td>
 </tr>
 <tr>
-<td>Schema disagreement</td>
-<td>Wait for agreement or restart seeds</td>
+<td>Replace</td>
+<td>Replacement partially populated</td>
+<td>Clear data, restart replacement</td>
 </tr>
 </tbody>
 </table>
-<h3 id="decommission-stuck">Decommission Stuck<a class="headerlink" href="#decommission-stuck" title="Permanent link">¶</a></h3>
-<p><strong>Symptoms:</strong> Node stays in UL (Leaving) state for extended time</p>
-<div class="highlight"><pre><span></span><code><span class="c1"># Check streaming progress</span>
-nodetool<span class="w"> </span>netstats
-
-<span class="c1"># If no progress, check for streaming errors</span>
-grep<span class="w"> </span>-i<span class="w"> </span>stream<span class="w"> </span>/var/log/cassandra/system.log<span class="w"> </span><span class="p">|</span><span class="w"> </span>tail<span class="w"> </span>-50
-
-<span class="c1"># Check target nodes are healthy</span>
-nodetool<span class="w"> </span>status
-</code></pre></div>
-<p><strong>Resolution:</strong></p>
-<ul>
-<li>If target nodes are overloaded, reduce concurrent streaming</li>
-<li>If network issues, resolve connectivity</li>
-<li>As last resort, stop the node and use <code>nodetool removenode</code> from another node</li>
-</ul>
 <h3 id="streaming-failures">Streaming Failures<a class="headerlink" href="#streaming-failures" title="Permanent link">¶</a></h3>
-<p><strong>Symptoms:</strong> Topology operation fails with streaming errors</p>
-<div class="highlight"><pre><span></span><code><span class="c1"># Check for failed streams</span>
-nodetool<span class="w"> </span>netstats<span class="w"> </span><span class="p">|</span><span class="w"> </span>grep<span class="w"> </span>-i<span class="w"> </span>failed
-
-<span class="c1"># Common causes:</span>
-<span class="c1"># - Network timeouts (increase streaming_socket_timeout_in_ms)</span>
-<span class="c1"># - Disk space exhaustion</span>
-<span class="c1"># - Memory pressure</span>
-</code></pre></div>
-<p><strong>Mitigation:</strong></p>
-<div class="highlight"><pre><span></span><code><span class="c1"># cassandra.yaml - increase timeouts</span>
+<p>If streaming fails during an operation:</p>
+<ol>
+<li>Check network connectivity between nodes</li>
+<li>Verify disk space on source and target</li>
+<li>Review <code>system.log</code> for specific errors</li>
+<li>Increase <code>streaming_socket_timeout_in_ms</code> if timeouts occur</li>
+</ol>
+<div class="highlight"><pre><span></span><code><span class="c1"># cassandra.yaml - increase for large partitions</span>
 <span class="nt">streaming_socket_timeout_in_ms</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">86400000</span><span class="w">  </span><span class="c1"># 24 hours</span>
-<span class="nt">stream_throughput_outbound_megabits_per_sec</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">200</span><span class="w">  </span><span class="c1"># Reduce if overwhelming</span>
 </code></pre></div>
 <hr>
-<h2 id="best-practices">Best Practices<a class="headerlink" href="#best-practices" title="Permanent link">¶</a></h2>
-<h3 id="planning-topology-changes">Planning Topology Changes<a class="headerlink" href="#planning-topology-changes" title="Permanent link">¶</a></h3>
-<ol>
-<li><strong>Schedule during low-traffic periods</strong>: Streaming competes with client requests</li>
-<li><strong>Monitor throughout</strong>: Watch netstats, logs, and metrics</li>
-<li><strong>One operation at a time</strong>: Never overlap topology changes</li>
-<li><strong>Have rollback plan</strong>: Know how to recover if operation fails</li>
-</ol>
-<h3 id="capacity-management">Capacity Management<a class="headerlink" href="#capacity-management" title="Permanent link">¶</a></h3>
-<ol>
-<li><strong>Maintain headroom</strong>: Keep disk utilization below 50% for operational flexibility</li>
-<li><strong>Plan for failures</strong>: Size cluster to survive losing a rack</li>
-<li><strong>Regular assessment</strong>: Review capacity quarterly</li>
-</ol>
-<h3 id="documentation">Documentation<a class="headerlink" href="#documentation" title="Permanent link">¶</a></h3>
-<ol>
-<li><strong>Record all changes</strong>: Date, operator, reason, outcome</li>
-<li><strong>Maintain runbooks</strong>: Step-by-step procedures for common operations</li>
-<li><strong>Post-mortems</strong>: Document issues and resolutions</li>
-</ol>
+<h2 id="procedures">Procedures<a class="headerlink" href="#procedures" title="Permanent link">¶</a></h2>
+<ul>
+<li><strong><a href="adding-nodes/">Adding Nodes</a></strong> - Bootstrap new nodes into the cluster</li>
+<li><strong><a href="removing-nodes/">Removing Nodes</a></strong> - Decommission, removenode, and assassinate</li>
+<li><strong><a href="replacing-nodes/">Replacing Nodes</a></strong> - Replace failed nodes with new hardware</li>
+<li><strong><a href="scaling/">Scaling Operations</a></strong> - Scale cluster capacity up or down</li>
+<li><strong><a href="multi-datacenter/">Multi-Datacenter Operations</a></strong> - Add and remove datacenters</li>
+<li><strong><a href="cleanup/">Cleanup Operations</a></strong> - Post-topology-change maintenance</li>
+<li><strong><a href="troubleshooting/">Troubleshooting</a></strong> - Diagnose and resolve topology issues</li>
+</ul>
 <hr>
 <h2 id="related-documentation">Related Documentation<a class="headerlink" href="#related-documentation" title="Permanent link">¶</a></h2>
 <ul>
-<li><strong><a href="../repair/">Repair Operations</a></strong> - Post-topology-change repair</li>
+<li><strong><a href="../../architecture/cluster-management/gossip/">Gossip Protocol</a></strong> - How nodes discover cluster state</li>
+<li><strong><a href="../../architecture/cluster-management/node-lifecycle/">Node Lifecycle</a></strong> - Node states and transitions</li>
+<li><strong><a href="../repair/">Repair Operations</a></strong> - Post-topology repair procedures</li>
 <li><strong><a href="../backup-restore/">Backup &amp; Restore</a></strong> - Data protection during changes</li>
-<li><strong><a href="../maintenance/">Maintenance</a></strong> - Rolling restarts and cleanup</li>
-<li><strong><a href="../../architecture/cluster-management/gossip/">Architecture: Gossip</a></strong> - How nodes discover each other</li>
-<li><strong><a href="../../architecture/cluster-management/node-lifecycle/">Architecture: Node Lifecycle</a></strong> - Node states and transitions</li>
 </ul></div>
 
 
@@ -20725,13 +20289,13 @@ nodetool<span class="w"> </span>netstats<span class="w"> </span><span class="p">
         
         
           
-          <a href="../backup-restore/" class="md-footer__link md-footer__link--next" aria-label="Next: Overview">
+          <a href="adding-nodes/" class="md-footer__link md-footer__link--next" aria-label="Next: Adding Nodes">
             <div class="md-footer__title">
               <span class="md-footer__direction">
                 Next
               </span>
               <div class="md-ellipsis">
-                Overview
+                Adding Nodes
               </div>
             </div>
             <div class="md-footer__button md-icon">

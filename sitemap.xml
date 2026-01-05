@@ -196,22 +196,17 @@
          <changefreq>daily</changefreq>
     </url>
     <url>
+         <loc>https://docs.axonops.com/data-platforms/cassandra/application-development/patterns/time-bucketing/</loc>
+         <lastmod>2026-01-05</lastmod>
+         <changefreq>daily</changefreq>
+    </url>
+    <url>
          <loc>https://docs.axonops.com/data-platforms/cassandra/application-development/patterns/time-series/</loc>
          <lastmod>2026-01-05</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://docs.axonops.com/data-platforms/cassandra/architecture/</loc>
-         <lastmod>2026-01-05</lastmod>
-         <changefreq>daily</changefreq>
-    </url>
-    <url>
-         <loc>https://docs.axonops.com/data-platforms/cassandra/architecture/data-distribution/</loc>
-         <lastmod>2026-01-05</lastmod>
-         <changefreq>daily</changefreq>
-    </url>
-    <url>
-         <loc>https://docs.axonops.com/data-platforms/cassandra/architecture/gossip/</loc>
          <lastmod>2026-01-05</lastmod>
          <changefreq>daily</changefreq>
     </url>
@@ -301,12 +296,12 @@
          <changefreq>daily</changefreq>
     </url>
     <url>
-         <loc>https://docs.axonops.com/data-platforms/cassandra/architecture/consistency/</loc>
+         <loc>https://docs.axonops.com/data-platforms/cassandra/architecture/distributed-data/</loc>
          <lastmod>2026-01-05</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
-         <loc>https://docs.axonops.com/data-platforms/cassandra/architecture/distributed-data/</loc>
+         <loc>https://docs.axonops.com/data-platforms/cassandra/architecture/distributed-data/consistency-levels/</loc>
          <lastmod>2026-01-05</lastmod>
          <changefreq>daily</changefreq>
     </url>
@@ -641,11 +636,6 @@
          <changefreq>daily</changefreq>
     </url>
     <url>
-         <loc>https://docs.axonops.com/data-platforms/cassandra/data-modeling/patterns/time-bucketing/</loc>
-         <lastmod>2026-01-05</lastmod>
-         <changefreq>daily</changefreq>
-    </url>
-    <url>
          <loc>https://docs.axonops.com/data-platforms/cassandra/getting-started/</loc>
          <lastmod>2026-01-05</lastmod>
          <changefreq>daily</changefreq>
@@ -707,6 +697,41 @@
     </url>
     <url>
          <loc>https://docs.axonops.com/data-platforms/cassandra/operations/cluster-management/adding-nodes/</loc>
+         <lastmod>2026-01-05</lastmod>
+         <changefreq>daily</changefreq>
+    </url>
+    <url>
+         <loc>https://docs.axonops.com/data-platforms/cassandra/operations/cluster-management/cleanup/</loc>
+         <lastmod>2026-01-05</lastmod>
+         <changefreq>daily</changefreq>
+    </url>
+    <url>
+         <loc>https://docs.axonops.com/data-platforms/cassandra/operations/cluster-management/multi-datacenter/</loc>
+         <lastmod>2026-01-05</lastmod>
+         <changefreq>daily</changefreq>
+    </url>
+    <url>
+         <loc>https://docs.axonops.com/data-platforms/cassandra/operations/cluster-management/removing-nodes/</loc>
+         <lastmod>2026-01-05</lastmod>
+         <changefreq>daily</changefreq>
+    </url>
+    <url>
+         <loc>https://docs.axonops.com/data-platforms/cassandra/operations/cluster-management/replacing-nodes/</loc>
+         <lastmod>2026-01-05</lastmod>
+         <changefreq>daily</changefreq>
+    </url>
+    <url>
+         <loc>https://docs.axonops.com/data-platforms/cassandra/operations/cluster-management/rolling-restart/</loc>
+         <lastmod>2026-01-05</lastmod>
+         <changefreq>daily</changefreq>
+    </url>
+    <url>
+         <loc>https://docs.axonops.com/data-platforms/cassandra/operations/cluster-management/scaling/</loc>
+         <lastmod>2026-01-05</lastmod>
+         <changefreq>daily</changefreq>
+    </url>
+    <url>
+         <loc>https://docs.axonops.com/data-platforms/cassandra/operations/cluster-management/troubleshooting/</loc>
          <lastmod>2026-01-05</lastmod>
          <changefreq>daily</changefreq>
     </url>

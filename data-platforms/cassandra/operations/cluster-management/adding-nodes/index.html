@@ -6,13 +6,17 @@
       <meta charset="utf-8">
       <meta name="viewport" content="width=device-width,initial-scale=1">
       
-        <meta name="description" content="Add nodes to Cassandra cluster. Scale out procedure and bootstrap process.">
+        <meta name="description" content="Add nodes to Cassandra cluster. Bootstrap procedure with behavioral contracts and pre-flight requirements.">
       
       
       
         <link rel="canonical" href="https://docs.axonops.com/data-platforms/cassandra/operations/cluster-management/adding-nodes/">
       
       
+        <link rel="prev" href="../">
+      
+      
+        <link rel="next" href="../removing-nodes/">
       
       
       <link rel="icon" href="/img/favicon.ico">
@@ -61,7 +65,7 @@
     
     
       
-        <meta  name="keywords"  content="add Cassandra node, cluster scaling, bootstrap node" >
+        <meta  name="keywords"  content="Cassandra bootstrap, add node, cluster scaling, expand cluster" >
       
     
     
@@ -70,8 +74,8 @@
 {
   "@context": "https://schema.org",
   "@type": "HowTo",
-  "headline": "Cassandra Adding Nodes - Apache Cassandra Documentation",
-  "description": "Add nodes to Cassandra cluster. Scale out procedure and bootstrap process.",
+  "headline": "Adding Nodes - Apache Cassandra Documentation",
+  "description": "Add nodes to Cassandra cluster. Bootstrap procedure with behavioral contracts and pre-flight requirements.",
   "about": {
     "@type": "SoftwareApplication",
     "name": "Apache Cassandra",
@@ -492,10 +496,12 @@ data-et-multi-view="{&quot;schema&quot;:{&quot;content&quot;:{&quot;desktop&quot
         
   
   
+    
+  
   
     
     
-      <li class="md-tabs__item">
+      <li class="md-tabs__item md-tabs__item--active">
         <a href="../../../../" class="md-tabs__link">
           
   
@@ -4073,23 +4079,28 @@ data-et-multi-view="{&quot;schema&quot;:{&quot;content&quot;:{&quot;desktop&quot
       
   
   
+    
   
   
+  
     
     
     
-      
-      
-    
-    
-    <li class="md-nav__item md-nav__item--nested">
       
         
         
-        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_7" >
+      
+      
+    
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_7" checked>
         
           
-          <label class="md-nav__link" for="__nav_7" id="__nav_7_label" tabindex="0">
+          <label class="md-nav__link" for="__nav_7" id="__nav_7_label" tabindex="">
             
   
   <span class="md-ellipsis">
@@ -4100,7 +4111,7 @@ data-et-multi-view="{&quot;schema&quot;:{&quot;content&quot;:{&quot;desktop&quot
             <span class="md-nav__icon md-icon"></span>
           </label>
         
-        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_7_label" aria-expanded="false">
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_7_label" aria-expanded="true">
           <label class="md-nav__title" for="__nav_7">
             <span class="md-nav__icon md-icon"></span>
             Data Platforms
@@ -4132,6 +4143,8 @@ data-et-multi-view="{&quot;schema&quot;:{&quot;content&quot;:{&quot;desktop&quot
                 
   
   
+    
+  
   
   
     
@@ -4141,11 +4154,11 @@ data-et-multi-view="{&quot;schema&quot;:{&quot;content&quot;:{&quot;desktop&quot
       
     
     
-    <li class="md-nav__item md-nav__item--nested">
+    <li class="md-nav__item md-nav__item--active md-nav__item--nested">
       
         
         
-        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_7_2" >
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_7_2" checked>
         
           
           <label class="md-nav__link" for="__nav_7_2" id="__nav_7_2_label" tabindex="0">
@@ -4159,7 +4172,7 @@ data-et-multi-view="{&quot;schema&quot;:{&quot;content&quot;:{&quot;desktop&quot
             <span class="md-nav__icon md-icon"></span>
           </label>
         
-        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_7_2_label" aria-expanded="false">
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_7_2_label" aria-expanded="true">
           <label class="md-nav__title" for="__nav_7_2">
             <span class="md-nav__icon md-icon"></span>
             Apache Cassandra
@@ -5156,6 +5169,27 @@ data-et-multi-view="{&quot;schema&quot;:{&quot;content&quot;:{&quot;desktop&quot
   
   <span class="md-ellipsis">
     Consistency
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../architecture/distributed-data/consistency-levels/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Consistency Levels Reference
   </span>
   
 
@@ -6646,6 +6680,27 @@ data-et-multi-view="{&quot;schema&quot;:{&quot;content&quot;:{&quot;desktop&quot
 
               
             
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../cql/dml/lightweight-transactions/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Lightweight Transactions
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
           </ul>
         </nav>
       
@@ -7236,6 +7291,27 @@ data-et-multi-view="{&quot;schema&quot;:{&quot;content&quot;:{&quot;desktop&quot
   
   
     <li class="md-nav__item">
+      <a href="../../../application-development/patterns/time-bucketing/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Time Bucketing
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
       <a href="../../../application-development/patterns/ledger/" class="md-nav__link">
         
   
@@ -7438,6 +7514,8 @@ data-et-multi-view="{&quot;schema&quot;:{&quot;content&quot;:{&quot;desktop&quot
                 
   
   
+    
+  
   
   
     
@@ -7447,11 +7525,11 @@ data-et-multi-view="{&quot;schema&quot;:{&quot;content&quot;:{&quot;desktop&quot
       
     
     
-    <li class="md-nav__item md-nav__item--nested">
+    <li class="md-nav__item md-nav__item--active md-nav__item--nested">
       
         
         
-        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_7_2_5" >
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_7_2_5" checked>
         
           
           <label class="md-nav__link" for="__nav_7_2_5" id="__nav_7_2_5_label" tabindex="0">
@@ -7465,7 +7543,7 @@ data-et-multi-view="{&quot;schema&quot;:{&quot;content&quot;:{&quot;desktop&quot
             <span class="md-nav__icon md-icon"></span>
           </label>
         
-        <nav class="md-nav" data-md-level="3" aria-labelledby="__nav_7_2_5_label" aria-expanded="false">
+        <nav class="md-nav" data-md-level="3" aria-labelledby="__nav_7_2_5_label" aria-expanded="true">
           <label class="md-nav__title" for="__nav_7_2_5">
             <span class="md-nav__icon md-icon"></span>
             Operations
@@ -11823,6 +11901,46 @@ data-et-multi-view="{&quot;schema&quot;:{&quot;content&quot;:{&quot;desktop&quot
                 
   
   
+    
+  
+  
+  
+    
+    
+    
+      
+      
+    
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_7_2_5_4" checked>
+        
+          
+          <label class="md-nav__link" for="__nav_7_2_5_4" id="__nav_7_2_5_4_label" tabindex="0">
+            
+  
+  <span class="md-ellipsis">
+    Cluster Management
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="4" aria-labelledby="__nav_7_2_5_4_label" aria-expanded="true">
+          <label class="md-nav__title" for="__nav_7_2_5_4">
+            <span class="md-nav__icon md-icon"></span>
+            Cluster Management
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
   
   
     <li class="md-nav__item">
@@ -11830,11 +11948,641 @@ data-et-multi-view="{&quot;schema&quot;:{&quot;content&quot;:{&quot;desktop&quot
         
   
   <span class="md-ellipsis">
-    Cluster Management
+    Overview
   </span>
   
 
       </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+    
+  
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  <span class="md-ellipsis">
+    Adding Nodes
+  </span>
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
+        
+  
+  <span class="md-ellipsis">
+    Adding Nodes
+  </span>
+  
+
+      </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#prerequisites" class="md-nav__link">
+    <span class="md-ellipsis">
+      Prerequisites
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Prerequisites">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#cluster-state-requirements" class="md-nav__link">
+    <span class="md-ellipsis">
+      Cluster State Requirements
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#hardware-requirements" class="md-nav__link">
+    <span class="md-ellipsis">
+      Hardware Requirements
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#software-requirements" class="md-nav__link">
+    <span class="md-ellipsis">
+      Software Requirements
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#network-requirements" class="md-nav__link">
+    <span class="md-ellipsis">
+      Network Requirements
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#behavioral-contract" class="md-nav__link">
+    <span class="md-ellipsis">
+      Behavioral Contract
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Behavioral Contract">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#guarantees" class="md-nav__link">
+    <span class="md-ellipsis">
+      Guarantees
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#token-assignment" class="md-nav__link">
+    <span class="md-ellipsis">
+      Token Assignment
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#failure-semantics" class="md-nav__link">
+    <span class="md-ellipsis">
+      Failure Semantics
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#configuration" class="md-nav__link">
+    <span class="md-ellipsis">
+      Configuration
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Configuration">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#cassandrayaml" class="md-nav__link">
+    <span class="md-ellipsis">
+      cassandra.yaml
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#cassandra-rackdcproperties" class="md-nav__link">
+    <span class="md-ellipsis">
+      cassandra-rackdc.properties
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#procedure" class="md-nav__link">
+    <span class="md-ellipsis">
+      Procedure
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Procedure">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#step-1-verify-cluster-health" class="md-nav__link">
+    <span class="md-ellipsis">
+      Step 1: Verify Cluster Health
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#step-2-prepare-new-node" class="md-nav__link">
+    <span class="md-ellipsis">
+      Step 2: Prepare New Node
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#step-3-start-bootstrap" class="md-nav__link">
+    <span class="md-ellipsis">
+      Step 3: Start Bootstrap
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#step-4-monitor-progress" class="md-nav__link">
+    <span class="md-ellipsis">
+      Step 4: Monitor Progress
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#step-5-verify-completion" class="md-nav__link">
+    <span class="md-ellipsis">
+      Step 5: Verify Completion
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#step-6-run-cleanup" class="md-nav__link">
+    <span class="md-ellipsis">
+      Step 6: Run Cleanup
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#duration-estimates" class="md-nav__link">
+    <span class="md-ellipsis">
+      Duration Estimates
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#performance-tuning" class="md-nav__link">
+    <span class="md-ellipsis">
+      Performance Tuning
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Performance Tuning">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#increase-streaming-throughput" class="md-nav__link">
+    <span class="md-ellipsis">
+      Increase Streaming Throughput
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#cassandra-40-optimizations" class="md-nav__link">
+    <span class="md-ellipsis">
+      Cassandra 4.0+ Optimizations
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#rack-aware-scaling" class="md-nav__link">
+    <span class="md-ellipsis">
+      Rack-Aware Scaling
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Rack-Aware Scaling">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#the-imbalance-problem" class="md-nav__link">
+    <span class="md-ellipsis">
+      The Imbalance Problem
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#balanced-addition-rules" class="md-nav__link">
+    <span class="md-ellipsis">
+      Balanced Addition Rules
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#verification" class="md-nav__link">
+    <span class="md-ellipsis">
+      Verification
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#adding-multiple-nodes" class="md-nav__link">
+    <span class="md-ellipsis">
+      Adding Multiple Nodes
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Adding Multiple Nodes">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#sequential-addition-required" class="md-nav__link">
+    <span class="md-ellipsis">
+      Sequential Addition (Required)
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#manual-token-assignment-advanced" class="md-nav__link">
+    <span class="md-ellipsis">
+      Manual Token Assignment (Advanced)
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#troubleshooting" class="md-nav__link">
+    <span class="md-ellipsis">
+      Troubleshooting
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Troubleshooting">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#bootstrap-wont-start" class="md-nav__link">
+    <span class="md-ellipsis">
+      Bootstrap Won't Start
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#bootstrap-stalled" class="md-nav__link">
+    <span class="md-ellipsis">
+      Bootstrap Stalled
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#bootstrap-failed" class="md-nav__link">
+    <span class="md-ellipsis">
+      Bootstrap Failed
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#post-bootstrap-tasks" class="md-nav__link">
+    <span class="md-ellipsis">
+      Post-Bootstrap Tasks
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Post-Bootstrap Tasks">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#required-run-cleanup" class="md-nav__link">
+    <span class="md-ellipsis">
+      Required: Run Cleanup
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#recommended-update-monitoring" class="md-nav__link">
+    <span class="md-ellipsis">
+      Recommended: Update Monitoring
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#optional-update-seed-list" class="md-nav__link">
+    <span class="md-ellipsis">
+      Optional: Update Seed List
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#optional-run-repair" class="md-nav__link">
+    <span class="md-ellipsis">
+      Optional: Run Repair
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#related-documentation" class="md-nav__link">
+    <span class="md-ellipsis">
+      Related Documentation
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../removing-nodes/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Removing Nodes
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../replacing-nodes/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Replacing Nodes
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../scaling/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Scaling Operations
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../multi-datacenter/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Multi-Datacenter
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../cleanup/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Cleanup Operations
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../rolling-restart/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Rolling Restart
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../troubleshooting/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Troubleshooting
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
     </li>
   
 
@@ -19055,15 +19803,6 @@ data-et-multi-view="{&quot;schema&quot;:{&quot;content&quot;:{&quot;desktop&quot
     <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
       
         <li class="md-nav__item">
-  <a href="#overview" class="md-nav__link">
-    <span class="md-ellipsis">
-      Overview
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
   <a href="#prerequisites" class="md-nav__link">
     <span class="md-ellipsis">
       Prerequisites
@@ -19072,6 +19811,15 @@ data-et-multi-view="{&quot;schema&quot;:{&quot;content&quot;:{&quot;desktop&quot
   
     <nav class="md-nav" aria-label="Prerequisites">
       <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#cluster-state-requirements" class="md-nav__link">
+    <span class="md-ellipsis">
+      Cluster State Requirements
+    </span>
+  </a>
+  
+</li>
         
           <li class="md-nav__item">
   <a href="#hardware-requirements" class="md-nav__link">
@@ -19106,28 +19854,37 @@ data-et-multi-view="{&quot;schema&quot;:{&quot;content&quot;:{&quot;desktop&quot
 </li>
       
         <li class="md-nav__item">
-  <a href="#configuration" class="md-nav__link">
+  <a href="#behavioral-contract" class="md-nav__link">
     <span class="md-ellipsis">
-      Configuration
+      Behavioral Contract
     </span>
   </a>
   
-    <nav class="md-nav" aria-label="Configuration">
+    <nav class="md-nav" aria-label="Behavioral Contract">
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
-  <a href="#cassandrayaml-settings" class="md-nav__link">
+  <a href="#guarantees" class="md-nav__link">
     <span class="md-ellipsis">
-      cassandra.yaml Settings
+      Guarantees
     </span>
   </a>
   
 </li>
         
           <li class="md-nav__item">
-  <a href="#for-multi-datacenter" class="md-nav__link">
+  <a href="#token-assignment" class="md-nav__link">
     <span class="md-ellipsis">
-      For Multi-Datacenter
+      Token Assignment
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#failure-semantics" class="md-nav__link">
+    <span class="md-ellipsis">
+      Failure Semantics
     </span>
   </a>
   
@@ -19139,13 +19896,46 @@ data-et-multi-view="{&quot;schema&quot;:{&quot;content&quot;:{&quot;desktop&quot
 </li>
       
         <li class="md-nav__item">
-  <a href="#bootstrap-procedure" class="md-nav__link">
+  <a href="#configuration" class="md-nav__link">
     <span class="md-ellipsis">
-      Bootstrap Procedure
+      Configuration
     </span>
   </a>
   
-    <nav class="md-nav" aria-label="Bootstrap Procedure">
+    <nav class="md-nav" aria-label="Configuration">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#cassandrayaml" class="md-nav__link">
+    <span class="md-ellipsis">
+      cassandra.yaml
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#cassandra-rackdcproperties" class="md-nav__link">
+    <span class="md-ellipsis">
+      cassandra-rackdc.properties
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#procedure" class="md-nav__link">
+    <span class="md-ellipsis">
+      Procedure
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Procedure">
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
@@ -19158,27 +19948,27 @@ data-et-multi-view="{&quot;schema&quot;:{&quot;content&quot;:{&quot;desktop&quot
 </li>
         
           <li class="md-nav__item">
-  <a href="#step-2-verify-no-ongoing-operations" class="md-nav__link">
+  <a href="#step-2-prepare-new-node" class="md-nav__link">
     <span class="md-ellipsis">
-      Step 2: Verify No Ongoing Operations
+      Step 2: Prepare New Node
     </span>
   </a>
   
 </li>
         
           <li class="md-nav__item">
-  <a href="#step-3-start-new-node" class="md-nav__link">
+  <a href="#step-3-start-bootstrap" class="md-nav__link">
     <span class="md-ellipsis">
-      Step 3: Start New Node
+      Step 3: Start Bootstrap
     </span>
   </a>
   
 </li>
         
           <li class="md-nav__item">
-  <a href="#step-4-monitor-bootstrap" class="md-nav__link">
+  <a href="#step-4-monitor-progress" class="md-nav__link">
     <span class="md-ellipsis">
-      Step 4: Monitor Bootstrap
+      Step 4: Monitor Progress
     </span>
   </a>
   
@@ -19208,28 +19998,37 @@ data-et-multi-view="{&quot;schema&quot;:{&quot;content&quot;:{&quot;desktop&quot
 </li>
       
         <li class="md-nav__item">
-  <a href="#monitoring-bootstrap" class="md-nav__link">
+  <a href="#duration-estimates" class="md-nav__link">
     <span class="md-ellipsis">
-      Monitoring Bootstrap
+      Duration Estimates
     </span>
   </a>
   
-    <nav class="md-nav" aria-label="Monitoring Bootstrap">
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#performance-tuning" class="md-nav__link">
+    <span class="md-ellipsis">
+      Performance Tuning
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Performance Tuning">
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
-  <a href="#progress-indicators" class="md-nav__link">
+  <a href="#increase-streaming-throughput" class="md-nav__link">
     <span class="md-ellipsis">
-      Progress Indicators
+      Increase Streaming Throughput
     </span>
   </a>
   
 </li>
         
           <li class="md-nav__item">
-  <a href="#streaming-throughput" class="md-nav__link">
+  <a href="#cassandra-40-optimizations" class="md-nav__link">
     <span class="md-ellipsis">
-      Streaming Throughput
+      Cassandra 4.0+ Optimizations
     </span>
   </a>
   
@@ -19241,11 +20040,44 @@ data-et-multi-view="{&quot;schema&quot;:{&quot;content&quot;:{&quot;desktop&quot
 </li>
       
         <li class="md-nav__item">
-  <a href="#time-estimation" class="md-nav__link">
+  <a href="#rack-aware-scaling" class="md-nav__link">
     <span class="md-ellipsis">
-      Time Estimation
+      Rack-Aware Scaling
     </span>
   </a>
+  
+    <nav class="md-nav" aria-label="Rack-Aware Scaling">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#the-imbalance-problem" class="md-nav__link">
+    <span class="md-ellipsis">
+      The Imbalance Problem
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#balanced-addition-rules" class="md-nav__link">
+    <span class="md-ellipsis">
+      Balanced Addition Rules
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#verification" class="md-nav__link">
+    <span class="md-ellipsis">
+      Verification
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
   
 </li>
       
@@ -19260,18 +20092,18 @@ data-et-multi-view="{&quot;schema&quot;:{&quot;content&quot;:{&quot;desktop&quot
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
-  <a href="#sequential-addition-recommended" class="md-nav__link">
+  <a href="#sequential-addition-required" class="md-nav__link">
     <span class="md-ellipsis">
-      Sequential Addition (Recommended)
+      Sequential Addition (Required)
     </span>
   </a>
   
 </li>
         
           <li class="md-nav__item">
-  <a href="#concurrent-addition-advanced" class="md-nav__link">
+  <a href="#manual-token-assignment-advanced" class="md-nav__link">
     <span class="md-ellipsis">
-      Concurrent Addition (Advanced)
+      Manual Token Assignment (Advanced)
     </span>
   </a>
   
@@ -19293,36 +20125,27 @@ data-et-multi-view="{&quot;schema&quot;:{&quot;content&quot;:{&quot;desktop&quot
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
-  <a href="#bootstrap-fails-to-start" class="md-nav__link">
+  <a href="#bootstrap-wont-start" class="md-nav__link">
     <span class="md-ellipsis">
-      Bootstrap Fails to Start
+      Bootstrap Won't Start
     </span>
   </a>
   
 </li>
         
           <li class="md-nav__item">
-  <a href="#bootstrap-slow-or-stalled" class="md-nav__link">
+  <a href="#bootstrap-stalled" class="md-nav__link">
     <span class="md-ellipsis">
-      Bootstrap Slow or Stalled
+      Bootstrap Stalled
     </span>
   </a>
   
 </li>
         
           <li class="md-nav__item">
-  <a href="#bootstrap-fails-mid-way" class="md-nav__link">
+  <a href="#bootstrap-failed" class="md-nav__link">
     <span class="md-ellipsis">
-      Bootstrap Fails Mid-Way
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#wrong-token-assignment" class="md-nav__link">
-    <span class="md-ellipsis">
-      Wrong Token Assignment
+      Bootstrap Failed
     </span>
   </a>
   
@@ -19344,36 +20167,36 @@ data-et-multi-view="{&quot;schema&quot;:{&quot;content&quot;:{&quot;desktop&quot
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
-  <a href="#1-run-cleanup" class="md-nav__link">
+  <a href="#required-run-cleanup" class="md-nav__link">
     <span class="md-ellipsis">
-      1. Run Cleanup
+      Required: Run Cleanup
     </span>
   </a>
   
 </li>
         
           <li class="md-nav__item">
-  <a href="#2-update-monitoring" class="md-nav__link">
+  <a href="#recommended-update-monitoring" class="md-nav__link">
     <span class="md-ellipsis">
-      2. Update Monitoring
+      Recommended: Update Monitoring
     </span>
   </a>
   
 </li>
         
           <li class="md-nav__item">
-  <a href="#3-update-seed-list-optional" class="md-nav__link">
+  <a href="#optional-update-seed-list" class="md-nav__link">
     <span class="md-ellipsis">
-      3. Update Seed List (Optional)
+      Optional: Update Seed List
     </span>
   </a>
   
 </li>
         
           <li class="md-nav__item">
-  <a href="#4-run-repair" class="md-nav__link">
+  <a href="#optional-run-repair" class="md-nav__link">
     <span class="md-ellipsis">
-      4. Run Repair
+      Optional: Run Repair
     </span>
   </a>
   
@@ -19381,24 +20204,6 @@ data-et-multi-view="{&quot;schema&quot;:{&quot;content&quot;:{&quot;desktop&quot
         
       </ul>
     </nav>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#best-practices" class="md-nav__link">
-    <span class="md-ellipsis">
-      Best Practices
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#related-commands" class="md-nav__link">
-    <span class="md-ellipsis">
-      Related Commands
-    </span>
-  </a>
   
 </li>
       
@@ -19427,320 +20232,629 @@ data-et-multi-view="{&quot;schema&quot;:{&quot;content&quot;:{&quot;desktop&quot
 
 
 <div><h1 id="adding-nodes">Adding Nodes<a class="headerlink" href="#adding-nodes" title="Permanent link">¶</a></h1>
-<p>Adding nodes (bootstrapping) expands cluster capacity by introducing new nodes that automatically receive a portion of existing data.</p>
-<hr>
-<h2 id="overview">Overview<a class="headerlink" href="#overview" title="Permanent link">¶</a></h2>
-<p>When a new node joins a Cassandra cluster:</p>
-<ol>
-<li>Node contacts seed nodes to learn cluster topology</li>
-<li>Gossip propagates the new node information</li>
-<li>Existing nodes stream data to the new node</li>
-<li>New node becomes operational after bootstrap completes</li>
-</ol>
+<p>Adding nodes (bootstrapping) expands cluster capacity by introducing new nodes that automatically receive a portion of existing data through streaming.</p>
 <hr>
 <h2 id="prerequisites">Prerequisites<a class="headerlink" href="#prerequisites" title="Permanent link">¶</a></h2>
+<p>The following requirements must be met before adding a node:</p>
+<h3 id="cluster-state-requirements">Cluster State Requirements<a class="headerlink" href="#cluster-state-requirements" title="Permanent link">¶</a></h3>
+<table>
+<thead>
+<tr>
+<th>Requirement</th>
+<th>Verification</th>
+<th>Rationale</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>All nodes must show <code>UN</code> status</td>
+<td><code>nodetool status</code></td>
+<td>Bootstrap from degraded cluster risks data loss</td>
+</tr>
+<tr>
+<td>No topology changes in progress</td>
+<td><code>nodetool netstats</code></td>
+<td>Only one topology change may occur at a time</td>
+</tr>
+<tr>
+<td>No active repairs</td>
+<td><code>nodetool netstats</code></td>
+<td>Concurrent operations cause unpredictable behavior</td>
+</tr>
+<tr>
+<td>Schema agreement</td>
+<td><code>nodetool describecluster</code></td>
+<td>Schema disagreement causes bootstrap failures</td>
+</tr>
+</tbody>
+</table>
+<div class="highlight"><pre><span></span><code><span class="c1"># Pre-flight verification</span>
+nodetool<span class="w"> </span>status<span class="w">              </span><span class="c1"># All nodes UN</span>
+nodetool<span class="w"> </span>describecluster<span class="w">     </span><span class="c1"># Single schema version</span>
+nodetool<span class="w"> </span>netstats<span class="w">            </span><span class="c1"># No active streaming</span>
+nodetool<span class="w"> </span>compactionstats<span class="w">     </span><span class="c1"># No heavy compaction</span>
+</code></pre></div>
 <h3 id="hardware-requirements">Hardware Requirements<a class="headerlink" href="#hardware-requirements" title="Permanent link">¶</a></h3>
-<ul>
-<li>Same or compatible hardware as existing nodes</li>
-<li>Sufficient disk space for expected data share</li>
-<li>Network connectivity to all existing nodes</li>
-</ul>
+<table>
+<thead>
+<tr>
+<th>Requirement</th>
+<th>Rationale</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Same or better specs as existing nodes</td>
+<td>Uniform performance</td>
+</tr>
+<tr>
+<td>Sufficient disk for expected data share</td>
+<td>Node receives 1/N of cluster data</td>
+</tr>
+<tr>
+<td>Network connectivity to all existing nodes</td>
+<td>Gossip and streaming</td>
+</tr>
+</tbody>
+</table>
 <h3 id="software-requirements">Software Requirements<a class="headerlink" href="#software-requirements" title="Permanent link">¶</a></h3>
-<ul>
-<li>Same Cassandra version as existing cluster</li>
-<li>Matching JVM version</li>
-<li>Consistent configuration (snitch, partitioner)</li>
-</ul>
+<table>
+<thead>
+<tr>
+<th>Requirement</th>
+<th>Consequence if Violated</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Same Cassandra version</td>
+<td>Schema conflicts, potential data corruption</td>
+</tr>
+<tr>
+<td>Same JVM version</td>
+<td>Undefined behavior</td>
+</tr>
+<tr>
+<td>Same partitioner</td>
+<td>Node cannot join cluster</td>
+</tr>
+<tr>
+<td>Compatible snitch</td>
+<td>Topology awareness failures</td>
+</tr>
+</tbody>
+</table>
 <h3 id="network-requirements">Network Requirements<a class="headerlink" href="#network-requirements" title="Permanent link">¶</a></h3>
 <table>
 <thead>
 <tr>
 <th>Port</th>
+<th>Protocol</th>
 <th>Purpose</th>
 </tr>
 </thead>
 <tbody>
 <tr>
 <td>7000</td>
-<td>Internode communication (gossip)</td>
+<td>TCP</td>
+<td>Internode communication (gossip, streaming)</td>
 </tr>
 <tr>
 <td>7001</td>
-<td>Internode communication (SSL)</td>
+<td>TCP</td>
+<td>Internode communication (SSL, if enabled)</td>
 </tr>
 <tr>
 <td>9042</td>
+<td>TCP</td>
 <td>CQL native transport</td>
 </tr>
 <tr>
 <td>7199</td>
-<td>JMX monitoring</td>
+<td>TCP</td>
+<td>JMX monitoring (optional)</td>
+</tr>
+</tbody>
+</table>
+<hr>
+<h2 id="behavioral-contract">Behavioral Contract<a class="headerlink" href="#behavioral-contract" title="Permanent link">¶</a></h2>
+<h3 id="guarantees">Guarantees<a class="headerlink" href="#guarantees" title="Permanent link">¶</a></h3>
+<ul>
+<li>New node receives data for its assigned token ranges from existing nodes</li>
+<li>Existing nodes continue serving client requests during bootstrap</li>
+<li>Data consistency is maintained (new node receives consistent replicas)</li>
+<li>Bootstrap is resumable if interrupted (with data directory cleared)</li>
+</ul>
+<h3 id="token-assignment">Token Assignment<a class="headerlink" href="#token-assignment" title="Permanent link">¶</a></h3>
+<table>
+<thead>
+<tr>
+<th>Configuration</th>
+<th>Behavior</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>num_tokens</code> set (vnodes)</td>
+<td>Tokens automatically assigned from random distribution</td>
+</tr>
+<tr>
+<td><code>initial_token</code> set</td>
+<td>Explicit token assignment (advanced)</td>
+</tr>
+</tbody>
+</table>
+<div class="admonition note">
+<p class="admonition-title">Token Count</p>
+<p>The <code>num_tokens</code> value should match existing nodes. Cassandra 4.0+ defaults to 16 tokens; earlier versions defaulted to 256.</p>
+</div>
+<h3 id="failure-semantics">Failure Semantics<a class="headerlink" href="#failure-semantics" title="Permanent link">¶</a></h3>
+<table>
+<thead>
+<tr>
+<th>Scenario</th>
+<th>Outcome</th>
+<th>Recovery</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Bootstrap completes</td>
+<td>Node joins ring with full data</td>
+<td>None required</td>
+</tr>
+<tr>
+<td>Bootstrap interrupted</td>
+<td>Partial data on new node</td>
+<td>Clear data, restart</td>
+</tr>
+<tr>
+<td>Source node fails during bootstrap</td>
+<td>Streaming stalls</td>
+<td>Wait for recovery or restart bootstrap</td>
+</tr>
+<tr>
+<td>Network partition</td>
+<td>Streaming fails</td>
+<td>Resolve network, restart bootstrap</td>
+</tr>
+<tr>
+<td>Disk full on new node</td>
+<td>Bootstrap fails</td>
+<td>Free space, clear data, restart</td>
 </tr>
 </tbody>
 </table>
 <hr>
 <h2 id="configuration">Configuration<a class="headerlink" href="#configuration" title="Permanent link">¶</a></h2>
-<h3 id="cassandrayaml-settings">cassandra.yaml Settings<a class="headerlink" href="#cassandrayaml-settings" title="Permanent link">¶</a></h3>
-<div class="highlight"><pre><span></span><code><span class="c1"># Must match existing cluster</span>
+<h3 id="cassandrayaml">cassandra.yaml<a class="headerlink" href="#cassandrayaml" title="Permanent link">¶</a></h3>
+<p>The following settings must be configured on the new node:</p>
+<div class="highlight"><pre><span></span><code><span class="c1"># Must match existing cluster exactly</span>
 <span class="nt">cluster_name</span><span class="p">:</span><span class="w"> </span><span class="s">'ProductionCluster'</span>
 
-<span class="c1"># Seed nodes (2-3 existing nodes)</span>
+<span class="c1"># Token configuration - must match existing nodes</span>
+<span class="nt">num_tokens</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">16</span><span class="w">                       </span><span class="c1"># Or 256 for older clusters</span>
+
+<span class="c1"># Seed nodes - 2-3 existing stable nodes</span>
+<span class="c1"># The new node must NOT be listed as a seed</span>
 <span class="nt">seed_provider</span><span class="p">:</span>
 <span class="w">  </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">class_name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">org.apache.cassandra.locator.SimpleSeedProvider</span>
 <span class="w">    </span><span class="nt">parameters</span><span class="p">:</span>
 <span class="w">      </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">seeds</span><span class="p">:</span><span class="w"> </span><span class="s">"10.0.1.1,10.0.1.2"</span>
 
-<span class="c1"># New node's address</span>
+<span class="c1"># This node's address - must be reachable by all other nodes</span>
 <span class="nt">listen_address</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">10.0.1.10</span>
 <span class="nt">rpc_address</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">10.0.1.10</span>
 
-<span class="c1"># Enable bootstrap (default)</span>
-<span class="nt">auto_bootstrap</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">true</span>
-
-<span class="c1"># Match existing cluster settings</span>
+<span class="c1"># Must match cluster configuration</span>
 <span class="nt">endpoint_snitch</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">GossipingPropertyFileSnitch</span>
 <span class="nt">partitioner</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">org.apache.cassandra.dht.Murmur3Partitioner</span>
+
+<span class="c1"># Enable bootstrap (default is true)</span>
+<span class="nt">auto_bootstrap</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">true</span>
 </code></pre></div>
-<h3 id="for-multi-datacenter">For Multi-Datacenter<a class="headerlink" href="#for-multi-datacenter" title="Permanent link">¶</a></h3>
-<p>Configure datacenter and rack in <code>cassandra-rackdc.properties</code>:</p>
+<div class="admonition warning">
+<p class="admonition-title">Seed Configuration</p>
+<p>The new node must not be listed in its own seed list. Seeds should be 2-3 existing, stable nodes.</p>
+</div>
+<h3 id="cassandra-rackdcproperties">cassandra-rackdc.properties<a class="headerlink" href="#cassandra-rackdcproperties" title="Permanent link">¶</a></h3>
+<p>For multi-datacenter deployments:</p>
 <div class="highlight"><pre><span></span><code><span class="na">dc</span><span class="o">=</span><span class="s">dc1</span>
 <span class="na">rack</span><span class="o">=</span><span class="s">rack1</span>
 </code></pre></div>
+<p>The datacenter and rack must match the intended topology placement.</p>
 <hr>
-<h2 id="bootstrap-procedure">Bootstrap Procedure<a class="headerlink" href="#bootstrap-procedure" title="Permanent link">¶</a></h2>
+<h2 id="procedure">Procedure<a class="headerlink" href="#procedure" title="Permanent link">¶</a></h2>
 <h3 id="step-1-verify-cluster-health">Step 1: Verify Cluster Health<a class="headerlink" href="#step-1-verify-cluster-health" title="Permanent link">¶</a></h3>
 <p>On any existing node:</p>
-<div class="highlight"><pre><span></span><code>nodetool<span class="w"> </span>status
-</code></pre></div>
-<p>All nodes should show <code>UN</code> (Up/Normal).</p>
-<h3 id="step-2-verify-no-ongoing-operations">Step 2: Verify No Ongoing Operations<a class="headerlink" href="#step-2-verify-no-ongoing-operations" title="Permanent link">¶</a></h3>
-<div class="highlight"><pre><span></span><code>nodetool<span class="w"> </span>compactionstats
+<div class="highlight"><pre><span></span><code><span class="c1"># All nodes must show UN</span>
+nodetool<span class="w"> </span>status
+
+<span class="c1"># Schema must be in agreement</span>
+nodetool<span class="w"> </span>describecluster
+
+<span class="c1"># No active streaming or repairs</span>
 nodetool<span class="w"> </span>netstats
 </code></pre></div>
-<p>Avoid bootstrapping during heavy compaction or repairs.</p>
-<h3 id="step-3-start-new-node">Step 3: Start New Node<a class="headerlink" href="#step-3-start-new-node" title="Permanent link">¶</a></h3>
-<div class="highlight"><pre><span></span><code><span class="c1"># Clear any existing data (if reusing hardware)</span>
+<div class="admonition danger">
+<p class="admonition-title">Do Not Proceed If</p>
+<ul>
+<li>Any node shows status other than <code>UN</code></li>
+<li>Schema versions disagree</li>
+<li>Streaming or repair is in progress</li>
+</ul>
+</div>
+<h3 id="step-2-prepare-new-node">Step 2: Prepare New Node<a class="headerlink" href="#step-2-prepare-new-node" title="Permanent link">¶</a></h3>
+<div class="highlight"><pre><span></span><code><span class="c1"># Install Cassandra (same version as cluster)</span>
+<span class="c1"># Configure cassandra.yaml and cassandra-rackdc.properties</span>
+
+<span class="c1"># Ensure data directories are empty</span>
+sudo<span class="w"> </span>rm<span class="w"> </span>-rf<span class="w"> </span>/var/lib/cassandra/data/*
+sudo<span class="w"> </span>rm<span class="w"> </span>-rf<span class="w"> </span>/var/lib/cassandra/commitlog/*
+sudo<span class="w"> </span>rm<span class="w"> </span>-rf<span class="w"> </span>/var/lib/cassandra/saved_caches/*
+</code></pre></div>
+<h3 id="step-3-start-bootstrap">Step 3: Start Bootstrap<a class="headerlink" href="#step-3-start-bootstrap" title="Permanent link">¶</a></h3>
+<div class="highlight"><pre><span></span><code>sudo<span class="w"> </span>systemctl<span class="w"> </span>start<span class="w"> </span>cassandra
+</code></pre></div>
+<p>The node begins bootstrap automatically:</p>
+<ol>
+<li>Contacts seed nodes to learn cluster topology</li>
+<li>Gossip propagates new node information to all nodes</li>
+<li>Existing nodes stream data to new node</li>
+<li>New node transitions from <code>UJ</code> (Joining) to <code>UN</code> (Normal)</li>
+</ol>
+<h3 id="step-4-monitor-progress">Step 4: Monitor Progress<a class="headerlink" href="#step-4-monitor-progress" title="Permanent link">¶</a></h3>
+<div class="highlight"><pre><span></span><code><span class="c1"># Watch node status (from any node)</span>
+watch<span class="w"> </span>-n<span class="w"> </span><span class="m">10</span><span class="w"> </span><span class="s1">'nodetool status'</span>
+
+<span class="c1"># Monitor streaming progress (on new node)</span>
+nodetool<span class="w"> </span>netstats
+
+<span class="c1"># Watch logs for progress and errors</span>
+tail<span class="w"> </span>-f<span class="w"> </span>/var/log/cassandra/system.log<span class="w"> </span><span class="p">|</span><span class="w"> </span>grep<span class="w"> </span>-i<span class="w"> </span><span class="s2">"stream\|bootstrap"</span>
+</code></pre></div>
+<p><strong>Expected state transitions:</strong></p>
+<table>
+<thead>
+<tr>
+<th>State</th>
+<th>Code</th>
+<th>Duration</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Joining</td>
+<td><code>UJ</code></td>
+<td>Until streaming completes</td>
+</tr>
+<tr>
+<td>Normal</td>
+<td><code>UN</code></td>
+<td>Bootstrap complete</td>
+</tr>
+</tbody>
+</table>
+<h3 id="step-5-verify-completion">Step 5: Verify Completion<a class="headerlink" href="#step-5-verify-completion" title="Permanent link">¶</a></h3>
+<div class="highlight"><pre><span></span><code><span class="c1"># Node should show UN with data</span>
+nodetool<span class="w"> </span>status
+
+<span class="c1"># Verify token ownership</span>
+nodetool<span class="w"> </span>ring<span class="w"> </span><span class="p">|</span><span class="w"> </span>grep<span class="w"> </span>&lt;new_node_ip&gt;
+
+<span class="c1"># No active streaming</span>
+nodetool<span class="w"> </span>netstats
+</code></pre></div>
+<h3 id="step-6-run-cleanup">Step 6: Run Cleanup<a class="headerlink" href="#step-6-run-cleanup" title="Permanent link">¶</a></h3>
+<p>After bootstrap completes, existing nodes retain data that moved to the new node. Cleanup must run on all existing nodes:</p>
+<div class="highlight"><pre><span></span><code><span class="c1"># On EACH existing node (not the new node)</span>
+<span class="c1"># Run one node at a time</span>
+nodetool<span class="w"> </span>cleanup
+</code></pre></div>
+<p>See <a href="../cleanup/">Cleanup Operations</a> for detailed guidance.</p>
+<hr>
+<h2 id="duration-estimates">Duration Estimates<a class="headerlink" href="#duration-estimates" title="Permanent link">¶</a></h2>
+<p>Bootstrap duration depends on data volume and network throughput:</p>
+<table>
+<thead>
+<tr>
+<th>Data to Stream</th>
+<th>200 Mbps (default)</th>
+<th>400 Mbps</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>100 GB</td>
+<td>1-2 hours</td>
+<td>30-60 min</td>
+</tr>
+<tr>
+<td>500 GB</td>
+<td>4-8 hours</td>
+<td>2-4 hours</td>
+</tr>
+<tr>
+<td>1 TB</td>
+<td>8-16 hours</td>
+<td>4-8 hours</td>
+</tr>
+<tr>
+<td>2 TB</td>
+<td>16-32 hours</td>
+<td>8-16 hours</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Factors affecting duration:</strong></p>
+<ul>
+<li>Network bandwidth between nodes</li>
+<li>Disk I/O throughput on source and target</li>
+<li>Number of source nodes (more nodes = more parallel streams)</li>
+<li>Stream throughput configuration</li>
+<li>Cluster load during bootstrap</li>
+</ul>
+<hr>
+<h2 id="performance-tuning">Performance Tuning<a class="headerlink" href="#performance-tuning" title="Permanent link">¶</a></h2>
+<h3 id="increase-streaming-throughput">Increase Streaming Throughput<a class="headerlink" href="#increase-streaming-throughput" title="Permanent link">¶</a></h3>
+<p>Default streaming throughput is 200 Mbps. To accelerate bootstrap:</p>
+<div class="highlight"><pre><span></span><code><span class="c1"># On existing nodes - increase outbound streaming</span>
+nodetool<span class="w"> </span>setstreamthroughput<span class="w"> </span><span class="m">400</span><span class="w">  </span><span class="c1"># MB/s</span>
+</code></pre></div>
+<div class="highlight"><pre><span></span><code><span class="c1"># On new node - cassandra.yaml</span>
+<span class="nt">stream_throughput_outbound_megabits_per_sec</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">400</span>
+</code></pre></div>
+<div class="admonition warning">
+<p class="admonition-title">Client Impact</p>
+<p>Higher streaming throughput increases network and I/O load, potentially impacting client request latency. Use aggressive settings only during maintenance windows.</p>
+</div>
+<h3 id="cassandra-40-optimizations">Cassandra 4.0+ Optimizations<a class="headerlink" href="#cassandra-40-optimizations" title="Permanent link">¶</a></h3>
+<div class="highlight"><pre><span></span><code><span class="c1"># cassandra.yaml - stream entire SSTables (faster)</span>
+<span class="nt">stream_entire_sstables</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">true</span>
+</code></pre></div>
+<hr>
+<h2 id="rack-aware-scaling">Rack-Aware Scaling<a class="headerlink" href="#rack-aware-scaling" title="Permanent link">¶</a></h2>
+<p>When using <code>NetworkTopologyStrategy</code> with multiple racks, nodes must be added evenly across racks to maintain balanced data distribution.</p>
+<h3 id="the-imbalance-problem">The Imbalance Problem<a class="headerlink" href="#the-imbalance-problem" title="Permanent link">¶</a></h3>
+<p>Cassandra places one replica per rack (when RF ≤ rack count). Uneven node distribution causes uneven load:</p>
+<div class="highlight"><pre><span></span><code>RF=3, 3 racks, uneven distribution:
+
+Rack1: 3 nodes → each handles 1/3 of rack's replica load
+Rack2: 2 nodes → each handles 1/2 of rack's replica load
+Rack3: 1 node  → handles 100% of rack's replica load ← OVERLOADED
+</code></pre></div>
+<h3 id="balanced-addition-rules">Balanced Addition Rules<a class="headerlink" href="#balanced-addition-rules" title="Permanent link">¶</a></h3>
+<table>
+<thead>
+<tr>
+<th>Current State</th>
+<th>Correct Addition</th>
+<th>Incorrect Addition</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>3 nodes (1 per rack)</td>
+<td>Add 3 (1 to each rack)</td>
+<td>Add 1 or 2</td>
+</tr>
+<tr>
+<td>6 nodes (2 per rack)</td>
+<td>Add 3 (1 to each rack)</td>
+<td>Add 1 or 2</td>
+</tr>
+<tr>
+<td>9 nodes (3 per rack)</td>
+<td>Add 3 (1 to each rack)</td>
+<td>Add 1 or 2</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Formula:</strong> When adding nodes to a cluster with R racks, add in multiples of R to maintain balance.</p>
+<h3 id="verification">Verification<a class="headerlink" href="#verification" title="Permanent link">¶</a></h3>
+<p>Check current rack distribution:</p>
+<div class="highlight"><pre><span></span><code>nodetool<span class="w"> </span>status
+
+<span class="c1"># Example balanced output (2 per rack):</span>
+<span class="c1"># Datacenter: dc1</span>
+<span class="c1"># UN  10.0.1.1  100 GB  rack1</span>
+<span class="c1"># UN  10.0.1.2  100 GB  rack1</span>
+<span class="c1"># UN  10.0.1.3  100 GB  rack2</span>
+<span class="c1"># UN  10.0.1.4  100 GB  rack2</span>
+<span class="c1"># UN  10.0.1.5  100 GB  rack3</span>
+<span class="c1"># UN  10.0.1.6  100 GB  rack3</span>
+</code></pre></div>
+<p>Check load distribution after adding:</p>
+<div class="highlight"><pre><span></span><code><span class="c1"># Load should be roughly equal across all nodes</span>
+nodetool<span class="w"> </span>status<span class="w"> </span><span class="p">|</span><span class="w"> </span>awk<span class="w"> </span><span class="s1">'/UN/ {print $3, $8}'</span>
+</code></pre></div>
+<div class="admonition warning">
+<p class="admonition-title">Imbalanced Clusters</p>
+<p>If an imbalanced state already exists, adding nodes to underrepresented racks is acceptable to restore balance. The goal is equal nodes per rack.</p>
+</div>
+<hr>
+<h2 id="adding-multiple-nodes">Adding Multiple Nodes<a class="headerlink" href="#adding-multiple-nodes" title="Permanent link">¶</a></h2>
+<h3 id="sequential-addition-required">Sequential Addition (Required)<a class="headerlink" href="#sequential-addition-required" title="Permanent link">¶</a></h3>
+<p>Nodes must be added one at a time when using vnodes (default):</p>
+<div class="highlight"><pre><span></span><code><span class="c1"># 1. Add first node, wait for UN status</span>
+<span class="c1"># 2. Add second node, wait for UN status</span>
+<span class="c1"># 3. Continue for all nodes</span>
+<span class="c1"># 4. Run cleanup on all original nodes</span>
+</code></pre></div>
+<p><strong>Wait times between additions:</strong></p>
+<table>
+<thead>
+<tr>
+<th>Cluster Size</th>
+<th>Minimum Wait</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>&lt; 10 nodes</td>
+<td>Until previous node shows UN</td>
+</tr>
+<tr>
+<td>10-50 nodes</td>
+<td>UN + 1 hour stabilization</td>
+</tr>
+<tr>
+<td>50+ nodes</td>
+<td>UN + 2-4 hours stabilization</td>
+</tr>
+</tbody>
+</table>
+<div class="admonition danger">
+<p class="admonition-title">Never Bootstrap Multiple Nodes Simultaneously</p>
+<p>Concurrent bootstraps with vnodes cause token collisions and unpredictable data distribution. Add nodes strictly sequentially.</p>
+</div>
+<h3 id="manual-token-assignment-advanced">Manual Token Assignment (Advanced)<a class="headerlink" href="#manual-token-assignment-advanced" title="Permanent link">¶</a></h3>
+<p>Multiple nodes may bootstrap concurrently only with manually assigned, non-overlapping tokens:</p>
+<div class="highlight"><pre><span></span><code><span class="c1"># cassandra.yaml - explicit token (disables vnodes)</span>
+<span class="nt">num_tokens</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">1</span>
+<span class="nt">initial_token</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">&lt;calculated_token&gt;</span>
+</code></pre></div>
+<p>This approach is complex and rarely necessary.</p>
+<hr>
+<h2 id="troubleshooting">Troubleshooting<a class="headerlink" href="#troubleshooting" title="Permanent link">¶</a></h2>
+<h3 id="bootstrap-wont-start">Bootstrap Won't Start<a class="headerlink" href="#bootstrap-wont-start" title="Permanent link">¶</a></h3>
+<p><strong>Symptoms:</strong> Node starts but doesn't appear in <code>nodetool status</code></p>
+<table>
+<thead>
+<tr>
+<th>Cause</th>
+<th>Diagnosis</th>
+<th>Solution</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Cluster name mismatch</td>
+<td>Check <code>cluster_name</code> in yaml</td>
+<td>Fix name, clear data, restart</td>
+</tr>
+<tr>
+<td>Seeds unreachable</td>
+<td><code>nc -zv seed 7000</code></td>
+<td>Check firewall, network</td>
+</tr>
+<tr>
+<td>Wrong listen_address</td>
+<td>Log shows binding errors</td>
+<td>Fix address in yaml</td>
+</tr>
+<tr>
+<td>Data directory not empty</td>
+<td>Check <code>/var/lib/cassandra/data</code></td>
+<td>Clear data directories</td>
+</tr>
+</tbody>
+</table>
+<div class="highlight"><pre><span></span><code><span class="c1"># Check for errors</span>
+grep<span class="w"> </span>-i<span class="w"> </span><span class="s2">"error\|failed"</span><span class="w"> </span>/var/log/cassandra/system.log<span class="w"> </span><span class="p">|</span><span class="w"> </span>tail<span class="w"> </span>-50
+</code></pre></div>
+<h3 id="bootstrap-stalled">Bootstrap Stalled<a class="headerlink" href="#bootstrap-stalled" title="Permanent link">¶</a></h3>
+<p><strong>Symptoms:</strong> Node stuck in <code>UJ</code> state, streaming shows no progress</p>
+<table>
+<thead>
+<tr>
+<th>Cause</th>
+<th>Diagnosis</th>
+<th>Solution</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Source nodes overloaded</td>
+<td>High CPU/IO on sources</td>
+<td>Reduce stream throughput</td>
+</tr>
+<tr>
+<td>Network issues</td>
+<td>Packet loss, timeouts</td>
+<td>Fix network</td>
+</tr>
+<tr>
+<td>Large partitions</td>
+<td>Timeout errors in logs</td>
+<td>Increase <code>streaming_socket_timeout_in_ms</code></td>
+</tr>
+<tr>
+<td>Disk full</td>
+<td><code>df -h</code> on new node</td>
+<td>Free space</td>
+</tr>
+</tbody>
+</table>
+<div class="highlight"><pre><span></span><code><span class="c1"># cassandra.yaml - for large partition timeouts</span>
+<span class="nt">streaming_socket_timeout_in_ms</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">86400000</span><span class="w">  </span><span class="c1"># 24 hours</span>
+</code></pre></div>
+<h3 id="bootstrap-failed">Bootstrap Failed<a class="headerlink" href="#bootstrap-failed" title="Permanent link">¶</a></h3>
+<p><strong>Symptoms:</strong> Node crashed or stopped during bootstrap</p>
+<p><strong>Recovery:</strong></p>
+<div class="highlight"><pre><span></span><code><span class="c1"># Clear partial data</span>
+sudo<span class="w"> </span>systemctl<span class="w"> </span>stop<span class="w"> </span>cassandra
 sudo<span class="w"> </span>rm<span class="w"> </span>-rf<span class="w"> </span>/var/lib/cassandra/data/*
 sudo<span class="w"> </span>rm<span class="w"> </span>-rf<span class="w"> </span>/var/lib/cassandra/commitlog/*
 sudo<span class="w"> </span>rm<span class="w"> </span>-rf<span class="w"> </span>/var/lib/cassandra/saved_caches/*
 
-<span class="c1"># Start Cassandra</span>
+<span class="c1"># Restart bootstrap</span>
 sudo<span class="w"> </span>systemctl<span class="w"> </span>start<span class="w"> </span>cassandra
 </code></pre></div>
-<h3 id="step-4-monitor-bootstrap">Step 4: Monitor Bootstrap<a class="headerlink" href="#step-4-monitor-bootstrap" title="Permanent link">¶</a></h3>
-<p>From any node:</p>
-<div class="highlight"><pre><span></span><code><span class="c1"># Watch node status</span>
-nodetool<span class="w"> </span>status
-</code></pre></div>
-<p>New node shows as <code>UJ</code> (Up/Joining) during bootstrap.</p>
-<p>On new node:</p>
-<div class="highlight"><pre><span></span><code><span class="c1"># Monitor streaming progress</span>
-nodetool<span class="w"> </span>netstats
-
-<span class="c1"># Watch logs</span>
-tail<span class="w"> </span>-f<span class="w"> </span>/var/log/cassandra/system.log
-</code></pre></div>
-<h3 id="step-5-verify-completion">Step 5: Verify Completion<a class="headerlink" href="#step-5-verify-completion" title="Permanent link">¶</a></h3>
-<div class="highlight"><pre><span></span><code>nodetool<span class="w"> </span>status
-</code></pre></div>
-<p>New node should show <code>UN</code> (Up/Normal).</p>
-<h3 id="step-6-run-cleanup">Step 6: Run Cleanup<a class="headerlink" href="#step-6-run-cleanup" title="Permanent link">¶</a></h3>
-<p>After bootstrap, run cleanup on <strong>existing nodes</strong> to remove data that moved to the new node:</p>
+<p>See <a href="../troubleshooting/">Troubleshooting</a> for additional diagnostics.</p>
+<hr>
+<h2 id="post-bootstrap-tasks">Post-Bootstrap Tasks<a class="headerlink" href="#post-bootstrap-tasks" title="Permanent link">¶</a></h2>
+<h3 id="required-run-cleanup">Required: Run Cleanup<a class="headerlink" href="#required-run-cleanup" title="Permanent link">¶</a></h3>
+<p>Cleanup must run on all existing nodes after bootstrap:</p>
 <div class="highlight"><pre><span></span><code><span class="c1"># On each existing node (one at a time)</span>
 nodetool<span class="w"> </span>cleanup
 </code></pre></div>
-<hr>
-<h2 id="monitoring-bootstrap">Monitoring Bootstrap<a class="headerlink" href="#monitoring-bootstrap" title="Permanent link">¶</a></h2>
-<h3 id="progress-indicators">Progress Indicators<a class="headerlink" href="#progress-indicators" title="Permanent link">¶</a></h3>
-<div class="highlight"><pre><span></span><code><span class="c1"># Streaming sessions</span>
-nodetool<span class="w"> </span>netstats
-
-<span class="c1"># Bootstrap status in logs</span>
-grep<span class="w"> </span>-i<span class="w"> </span>bootstrap<span class="w"> </span>/var/log/cassandra/system.log<span class="w"> </span><span class="p">|</span><span class="w"> </span>tail<span class="w"> </span>-20
-</code></pre></div>
-<h3 id="streaming-throughput">Streaming Throughput<a class="headerlink" href="#streaming-throughput" title="Permanent link">¶</a></h3>
-<div class="highlight"><pre><span></span><code><span class="c1"># Check current throughput</span>
-nodetool<span class="w"> </span>getstreamthroughput
-
-<span class="c1"># Increase if needed (MB/s)</span>
-nodetool<span class="w"> </span>setstreamthroughput<span class="w"> </span><span class="m">400</span>
-</code></pre></div>
-<hr>
-<h2 id="time-estimation">Time Estimation<a class="headerlink" href="#time-estimation" title="Permanent link">¶</a></h2>
+<h3 id="recommended-update-monitoring">Recommended: Update Monitoring<a class="headerlink" href="#recommended-update-monitoring" title="Permanent link">¶</a></h3>
 <table>
 <thead>
 <tr>
-<th>Total Cluster Data</th>
-<th>Expected Duration</th>
+<th>Task</th>
+<th>Action</th>
 </tr>
 </thead>
 <tbody>
 <tr>
-<td>&lt; 100 GB</td>
-<td>30 min - 1 hour</td>
+<td>Monitoring</td>
+<td>Add new node to monitoring systems</td>
 </tr>
 <tr>
-<td>100 GB - 500 GB</td>
-<td>1-4 hours</td>
+<td>Alerting</td>
+<td>Update alert configurations</td>
 </tr>
 <tr>
-<td>500 GB - 2 TB</td>
-<td>4-12 hours</td>
+<td>Backups</td>
+<td>Add to backup schedules</td>
 </tr>
 <tr>
-<td>&gt; 2 TB</td>
-<td>12+ hours</td>
+<td>Documentation</td>
+<td>Update cluster inventory</td>
 </tr>
 </tbody>
 </table>
-<p>Factors affecting duration:
-- Network bandwidth
-- Disk I/O speed
-- Number of existing nodes
-- Stream throughput settings</p>
-<hr>
-<h2 id="adding-multiple-nodes">Adding Multiple Nodes<a class="headerlink" href="#adding-multiple-nodes" title="Permanent link">¶</a></h2>
-<h3 id="sequential-addition-recommended">Sequential Addition (Recommended)<a class="headerlink" href="#sequential-addition-recommended" title="Permanent link">¶</a></h3>
-<div class="highlight"><pre><span></span><code><span class="c1"># Add nodes one at a time</span>
-<span class="c1"># 1. Bootstrap node A, wait for UN status</span>
-<span class="c1"># 2. Bootstrap node B, wait for UN status</span>
-<span class="c1"># 3. Run cleanup on all original nodes</span>
-</code></pre></div>
-<h3 id="concurrent-addition-advanced">Concurrent Addition (Advanced)<a class="headerlink" href="#concurrent-addition-advanced" title="Permanent link">¶</a></h3>
-<p>Multiple nodes can bootstrap simultaneously if:
-- Sufficient network bandwidth
-- Adequate disk I/O on source nodes
-- Tokens are manually assigned to prevent overlap</p>
-<hr>
-<h2 id="troubleshooting">Troubleshooting<a class="headerlink" href="#troubleshooting" title="Permanent link">¶</a></h2>
-<h3 id="bootstrap-fails-to-start">Bootstrap Fails to Start<a class="headerlink" href="#bootstrap-fails-to-start" title="Permanent link">¶</a></h3>
-<p><strong>Check connectivity:</strong>
-</p><div class="highlight"><pre><span></span><code>nc<span class="w"> </span>-zv<span class="w"> </span>seed-node1<span class="w"> </span><span class="m">7000</span>
-nc<span class="w"> </span>-zv<span class="w"> </span>seed-node1<span class="w"> </span><span class="m">9042</span>
-</code></pre></div>
-<p><strong>Check configuration:</strong>
-</p><div class="highlight"><pre><span></span><code>grep<span class="w"> </span>-E<span class="w"> </span><span class="s2">"cluster_name|seeds"</span><span class="w"> </span>/etc/cassandra/cassandra.yaml
-</code></pre></div>
-<p><strong>Check logs:</strong>
-</p><div class="highlight"><pre><span></span><code>grep<span class="w"> </span>-i<span class="w"> </span><span class="s2">"error\|failed"</span><span class="w"> </span>/var/log/cassandra/system.log<span class="w"> </span><span class="p">|</span><span class="w"> </span>tail<span class="w"> </span>-50
-</code></pre></div>
-<h3 id="bootstrap-slow-or-stalled">Bootstrap Slow or Stalled<a class="headerlink" href="#bootstrap-slow-or-stalled" title="Permanent link">¶</a></h3>
-<p><strong>Check streaming:</strong>
-</p><div class="highlight"><pre><span></span><code>nodetool<span class="w"> </span>netstats
-</code></pre></div>
-<p><strong>Increase throughput:</strong>
-</p><div class="highlight"><pre><span></span><code>nodetool<span class="w"> </span>setstreamthroughput<span class="w"> </span><span class="m">400</span>
-</code></pre></div>
-<p><strong>Check source node disk:</strong>
-</p><div class="highlight"><pre><span></span><code><span class="c1"># On source nodes</span>
-iostat<span class="w"> </span>-x<span class="w"> </span><span class="m">1</span><span class="w"> </span><span class="m">5</span>
-</code></pre></div>
-<h3 id="bootstrap-fails-mid-way">Bootstrap Fails Mid-Way<a class="headerlink" href="#bootstrap-fails-mid-way" title="Permanent link">¶</a></h3>
-<p><strong>Clear and retry:</strong>
-</p><div class="highlight"><pre><span></span><code>sudo<span class="w"> </span>systemctl<span class="w"> </span>stop<span class="w"> </span>cassandra
-sudo<span class="w"> </span>rm<span class="w"> </span>-rf<span class="w"> </span>/var/lib/cassandra/data/*
-sudo<span class="w"> </span>rm<span class="w"> </span>-rf<span class="w"> </span>/var/lib/cassandra/commitlog/*
-sudo<span class="w"> </span>systemctl<span class="w"> </span>start<span class="w"> </span>cassandra
-</code></pre></div>
-<h3 id="wrong-token-assignment">Wrong Token Assignment<a class="headerlink" href="#wrong-token-assignment" title="Permanent link">¶</a></h3>
-<p>With vnodes (default), tokens are automatically assigned. If tokens appear wrong:</p>
-<div class="highlight"><pre><span></span><code><span class="c1"># Check token distribution</span>
-nodetool<span class="w"> </span>ring
-
-<span class="c1"># May need to decommission and re-add</span>
-nodetool<span class="w"> </span>decommission
-<span class="c1"># Then clear data and restart</span>
-</code></pre></div>
-<hr>
-<h2 id="post-bootstrap-tasks">Post-Bootstrap Tasks<a class="headerlink" href="#post-bootstrap-tasks" title="Permanent link">¶</a></h2>
-<h3 id="1-run-cleanup">1. Run Cleanup<a class="headerlink" href="#1-run-cleanup" title="Permanent link">¶</a></h3>
-<p>On all existing nodes:</p>
-<div class="highlight"><pre><span></span><code>nodetool<span class="w"> </span>cleanup<span class="w"> </span>my_keyspace
-</code></pre></div>
-<h3 id="2-update-monitoring">2. Update Monitoring<a class="headerlink" href="#2-update-monitoring" title="Permanent link">¶</a></h3>
-<ul>
-<li>Add new node to monitoring systems</li>
-<li>Update alerting configuration</li>
-<li>Add to backup schedules</li>
-</ul>
-<h3 id="3-update-seed-list-optional">3. Update Seed List (Optional)<a class="headerlink" href="#3-update-seed-list-optional" title="Permanent link">¶</a></h3>
-<p>If adding the node as a seed:</p>
-<div class="highlight"><pre><span></span><code><span class="c1"># On all nodes, update cassandra.yaml</span>
+<h3 id="optional-update-seed-list">Optional: Update Seed List<a class="headerlink" href="#optional-update-seed-list" title="Permanent link">¶</a></h3>
+<p>If the new node should be a seed (only if replacing an unreliable seed):</p>
+<div class="highlight"><pre><span></span><code><span class="c1"># On ALL nodes, update cassandra.yaml</span>
 <span class="nt">seeds</span><span class="p">:</span><span class="w"> </span><span class="s">"existing-seed1,existing-seed2,new-node"</span>
 </code></pre></div>
-<h3 id="4-run-repair">4. Run Repair<a class="headerlink" href="#4-run-repair" title="Permanent link">¶</a></h3>
+<p>Rolling restart required for seed list changes to take effect.</p>
+<h3 id="optional-run-repair">Optional: Run Repair<a class="headerlink" href="#optional-run-repair" title="Permanent link">¶</a></h3>
 <p>After cluster stabilizes:</p>
-<div class="highlight"><pre><span></span><code>nodetool<span class="w"> </span>repair<span class="w"> </span>-pr
+<div class="highlight"><pre><span></span><code><span class="c1"># Repair the new node's token ranges</span>
+nodetool<span class="w"> </span>repair<span class="w"> </span>-pr
 </code></pre></div>
 <hr>
-<h2 id="best-practices">Best Practices<a class="headerlink" href="#best-practices" title="Permanent link">¶</a></h2>
-<table>
-<thead>
-<tr>
-<th>Practice</th>
-<th>Reason</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>Add one node at a time</td>
-<td>Prevents overload</td>
-</tr>
-<tr>
-<td>Run during low traffic</td>
-<td>Reduces impact</td>
-</tr>
-<tr>
-<td>Monitor throughout</td>
-<td>Catch issues early</td>
-</tr>
-<tr>
-<td>Run cleanup after</td>
-<td>Reclaim space</td>
-</tr>
-<tr>
-<td>Update documentation</td>
-<td>Track cluster changes</td>
-</tr>
-</tbody>
-</table>
-<hr>
-<h2 id="related-commands">Related Commands<a class="headerlink" href="#related-commands" title="Permanent link">¶</a></h2>
-<table>
-<thead>
-<tr>
-<th>Command</th>
-<th>Purpose</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td><code>nodetool status</code></td>
-<td>Cluster status</td>
-</tr>
-<tr>
-<td><code>nodetool netstats</code></td>
-<td>Streaming status</td>
-</tr>
-<tr>
-<td><code>nodetool cleanup</code></td>
-<td>Remove old data</td>
-</tr>
-<tr>
-<td><code>nodetool ring</code></td>
-<td>Token distribution</td>
-</tr>
-<tr>
-<td><code>nodetool decommission</code></td>
-<td>Remove node</td>
-</tr>
-</tbody>
-</table>
 <h2 id="related-documentation">Related Documentation<a class="headerlink" href="#related-documentation" title="Permanent link">¶</a></h2>
 <ul>
-<li><a href="../">Cluster Management Overview</a> - Cluster operations</li>
-<li><a href="../../../troubleshooting/playbooks/decommission-node/">Decommission Node</a> - Removing nodes</li>
-<li><a href="../../../troubleshooting/playbooks/replace-dead-node/">Replace Dead Node</a> - Replacing failed nodes</li>
+<li><strong><a href="../">Cluster Management Overview</a></strong> - Operation selection guide</li>
+<li><strong><a href="../cleanup/">Cleanup Operations</a></strong> - Post-bootstrap cleanup</li>
+<li><strong><a href="../scaling/">Scaling Operations</a></strong> - Adding multiple nodes</li>
+<li><strong><a href="../removing-nodes/">Removing Nodes</a></strong> - Decommission procedures</li>
+<li><strong><a href="../troubleshooting/">Troubleshooting</a></strong> - Diagnostic procedures</li>
 </ul></div>
 
 
@@ -19777,6 +20891,44 @@ nodetool<span class="w"> </span>decommission
       
         <footer class="md-footer">
   
+    
+      
+      <nav class="md-footer__inner md-grid" aria-label="Footer" >
+        
+          
+          <a href="../" class="md-footer__link md-footer__link--prev" aria-label="Previous: Overview">
+            <div class="md-footer__button md-icon">
+              
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12Z"/></svg>
+            </div>
+            <div class="md-footer__title">
+              <span class="md-footer__direction">
+                Previous
+              </span>
+              <div class="md-ellipsis">
+                Overview
+              </div>
+            </div>
+          </a>
+        
+        
+          
+          <a href="../removing-nodes/" class="md-footer__link md-footer__link--next" aria-label="Next: Removing Nodes">
+            <div class="md-footer__title">
+              <span class="md-footer__direction">
+                Next
+              </span>
+              <div class="md-ellipsis">
+                Removing Nodes
+              </div>
+            </div>
+            <div class="md-footer__button md-icon">
+              
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M4 11v2h12l-5.5 5.5 1.42 1.42L19.84 12l-7.92-7.92L10.5 5.5 16 11H4Z"/></svg>
+            </div>
+          </a>
+        
+      </nav>
     
   
   <div class="md-footer-meta md-typeset">
