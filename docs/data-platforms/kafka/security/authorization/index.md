@@ -74,6 +74,8 @@ allow.everyone.if.no.acl.found=false
 principal.builder.class=org.apache.kafka.common.security.authenticator.DefaultKafkaPrincipalBuilder
 ```
 
+AxonOps provides a dashboard interface for configuring authorization settings across all brokers without manual configuration file editing.
+
 ---
 
 ## Managing ACLs
@@ -143,6 +145,8 @@ kafka-acls.sh --bootstrap-server kafka:9092 \
   --operation Write \
   --topic orders
 ```
+
+AxonOps provides a visual interface for managing ACLs without command-line operations. ACL changes are tracked in audit logs with the user who made the change, timestamp, and before/after state.
 
 ---
 
@@ -371,6 +375,8 @@ log4j.logger.kafka.authorizer.logger=DEBUG
 | `ClusterAuthorizationException` | No cluster ACL | Add cluster ACL |
 | `TransactionalIdAuthorizationException` | No txn ID ACL | Add transactional-id ACL |
 
+AxonOps correlates authorization errors with the specific ACLs in place, simplifying troubleshooting by showing which ACL rule caused the denial and what ACL would be needed to allow the operation.
+
 ---
 
 ## Principal Mapping
@@ -511,6 +517,40 @@ For custom principals to work with KRaft, the principal builder must implement `
 # server.properties
 principal.builder.class=com.example.CustomPrincipalBuilder
 ```
+
+---
+
+## AxonOps ACL Management
+
+Managing Kafka ACLs through command-line tools becomes increasingly complex as clusters grow and teams expand. AxonOps provides enterprise-grade ACL management:
+
+### Visual ACL Management
+
+- **Topic ACL browser**: View and manage ACLs per topic with point-and-click interface
+- **Principal view**: See all permissions granted to a specific user or service account
+- **Bulk operations**: Apply ACL templates across multiple topics or consumer groups
+- **ACL validation**: Preview ACL changes before applying to prevent misconfigurations
+
+### Enterprise Security Controls
+
+- **Role-based permissions**: Control which AxonOps users can view, create, or modify ACLs
+- **Approval workflows**: Require approval for ACL changes in production environments
+- **Segregation of duties**: Separate ACL management from other Kafka operations
+
+### Audit Logging
+
+- **Complete audit trail**: Every ACL change is logged with user, timestamp, and change details
+- **Before/after state**: Full record of ACL state before and after each modification
+- **Compliance reporting**: Export audit logs for security reviews and compliance requirements
+- **Integration**: Forward audit events to SIEM systems
+
+### API Access
+
+- **REST API**: Programmatic ACL management for automation and CI/CD pipelines
+- **Terraform provider**: Infrastructure-as-code support for ACL definitions
+- **Idempotent operations**: Safe to re-apply ACL configurations
+
+See **[AxonOps Kafka Security](../../../../kafka/acl/overview.md)** for configuration details.
 
 ---
 
