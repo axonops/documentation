@@ -390,8 +390,13 @@ Adding nodes creates streaming load:
 
 ```yaml
 # cassandra.yaml - Streaming throttle
-stream_throughput_outbound_megabits_per_sec: 200  # Adjust based on network
-inter_dc_stream_throughput_outbound_megabits_per_sec: 50
+# 4.1+ format (data rate)
+stream_throughput_outbound: 200MiB/s
+inter_dc_stream_throughput_outbound: 50MiB/s
+
+# Pre-4.1 format
+# stream_throughput_outbound_megabits_per_sec: 200
+# inter_dc_stream_throughput_outbound_megabits_per_sec: 50
 ```
 
 ### During Scale-Down

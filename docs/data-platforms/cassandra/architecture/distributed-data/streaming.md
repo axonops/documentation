@@ -498,13 +498,15 @@ hint -[hidden]down-> storage
 hinted_handoff_enabled: true
 
 # Maximum time to store hints (default: 3 hours)
-max_hint_window_in_ms: 10800000
+max_hint_window: 3h                    # 4.1+ (duration format)
+# max_hint_window_in_ms: 10800000      # Pre-4.1
 
 # Directory for hint files
 hints_directory: /var/lib/cassandra/hints
 
-# Hint delivery throttle (KB/s per destination)
-hinted_handoff_throttle_in_kb: 1024
+# Hint delivery throttle per destination
+hinted_handoff_throttle: 1024KiB       # 4.1+ (data size format)
+# hinted_handoff_throttle_in_kb: 1024  # Pre-4.1
 
 # Maximum hints delivery threads
 max_hints_delivery_threads: 2
@@ -513,6 +515,12 @@ max_hints_delivery_threads: 2
 hints_compression:
   - class_name: LZ4Compressor
 ```
+
+| Parameter | Pre-4.1 | 4.1+ |
+|-----------|---------|------|
+| Hint window | `max_hint_window_in_ms` | `max_hint_window` (duration) |
+| Delivery throttle | `hinted_handoff_throttle_in_kb` | `hinted_handoff_throttle` (data size) |
+| Flush period | `hints_flush_period_in_ms` | `hints_flush_period` (duration) |
 
 ### Hint Delivery Streaming
 
@@ -568,33 +576,33 @@ ack ..> cleanup
 
 The following parameters control hint delivery throughput and resource usage:
 
-| Parameter | Default | Description |
-|-----------|---------|-------------|
-| `hinted_handoff_throttle_in_kb` | 1024 | Maximum throughput per destination (KB/s) |
-| `max_hints_delivery_threads` | 2 | Concurrent delivery threads |
-| `hints_flush_period_in_ms` | 10000 | How often hint buffers flush to disk |
-| `max_hints_file_size_in_mb` | 128 | Maximum size per hint file |
+| Parameter (4.1+) | Parameter (Pre-4.1) | Default | Description |
+|------------------|---------------------|---------|-------------|
+| `hinted_handoff_throttle` | `hinted_handoff_throttle_in_kb` | 1024KiB | Max throughput per destination |
+| `max_hints_delivery_threads` | `max_hints_delivery_threads` | 2 | Concurrent delivery threads |
+| `hints_flush_period` | `hints_flush_period_in_ms` | 10s | How often hint buffers flush to disk |
+| `max_hints_file_size` | `max_hints_file_size_in_mb` | 128MiB | Maximum size per hint file |
 
 **Throttling calculation:**
 
 ```
-Effective hint throughput = hinted_handoff_throttle_in_kb × max_hints_delivery_threads
+Effective hint throughput = hinted_handoff_throttle × max_hints_delivery_threads
 
 Example with defaults:
-  1024 KB/s × 2 threads = 2048 KB/s = ~2 MB/s total hint delivery capacity
+  1024 KiB/s × 2 threads = 2048 KiB/s = ~2 MiB/s total hint delivery capacity
 ```
 
 ```yaml
-# cassandra.yaml - Hint delivery tuning
+# cassandra.yaml - Hint delivery tuning (4.1+ syntax)
 
 # Increase for faster hint delivery (impacts production traffic)
-hinted_handoff_throttle_in_kb: 2048
+hinted_handoff_throttle: 2048KiB
 
 # More threads for parallel delivery to multiple recovering nodes
 max_hints_delivery_threads: 4
 
 # Smaller files for more granular cleanup
-max_hints_file_size_in_mb: 64
+max_hints_file_size: 64MiB
 ```
 
 ### Hint Delivery Process
@@ -604,7 +612,7 @@ max_hints_file_size_in_mb: 64
 | **Detection** | Gossip announces target node UP |
 | **Scheduling** | HintsDispatcher assigns delivery thread |
 | **Reading** | Hints read from local hint files in timestamp order |
-| **Throttling** | Delivery rate limited by `hinted_handoff_throttle_in_kb` |
+| **Throttling** | Delivery rate limited by `hinted_handoff_throttle` |
 | **Streaming** | Mutations sent via messaging service |
 | **Application** | Target node applies mutations to memtable |
 | **Acknowledgment** | Target confirms receipt |
@@ -622,7 +630,7 @@ max_hints_file_size_in_mb: 64
 | **Port** | `native_transport_port` / `storage_port` | `storage_port` |
 
 !!! warning "Hint Window Limitations"
-    Hints are only stored for `max_hint_window_in_ms` duration (default: 3 hours). Nodes down longer than this window will not receive hints and require repair to restore consistency. For extended outages, full repair is necessary.
+    Hints are only stored for `max_hint_window` duration (default: 3 hours). Nodes down longer than this window will not receive hints and require repair to restore consistency. For extended outages, full repair is necessary.
 
 ---
 
@@ -809,7 +817,7 @@ nodetool repair_admin list
 |---------|----------------|------------|
 | Streaming stuck | Network partition | Check connectivity between nodes |
 | Slow streaming | Disk I/O saturation | Reduce throttle, check disk health |
-| Streaming failures | Timeout | Increase `streaming_socket_timeout_in_ms` |
+| Streaming failures | Timeout | Increase `streaming_socket_timeout` (4.1+) or `streaming_socket_timeout_in_ms` (pre-4.1) |
 | OOM during streaming | Traditional mode on large data | Enable zero-copy or increase heap |
 
 ### Recovery from Failed Streaming

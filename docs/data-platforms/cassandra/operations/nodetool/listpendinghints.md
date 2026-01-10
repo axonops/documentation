@@ -8,6 +8,9 @@ meta:
 
 # nodetool listpendinghints
 
+!!! info "Cassandra 4.1+"
+    This command is available in Cassandra 4.1 and later.
+
 Lists the pending hints for each node in the cluster.
 
 ---

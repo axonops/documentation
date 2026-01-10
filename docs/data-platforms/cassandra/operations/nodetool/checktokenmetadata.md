@@ -8,6 +8,9 @@ meta:
 
 # nodetool checktokenmetadata
 
+!!! info "Cassandra 5.0+"
+    This command is available in Cassandra 5.0 and later.
+
 Checks the token metadata for inconsistencies.
 
 ---

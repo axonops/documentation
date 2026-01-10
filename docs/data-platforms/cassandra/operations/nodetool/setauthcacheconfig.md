@@ -8,6 +8,9 @@ meta:
 
 # nodetool setauthcacheconfig
 
+!!! info "Cassandra 4.1+"
+    This command is available in Cassandra 4.1 and later.
+
 Modifies authentication cache configuration settings.
 
 ---

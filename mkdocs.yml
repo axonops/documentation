@@ -629,7 +629,10 @@ nav:
         - Maintenance: data-platforms/cassandra/operations/maintenance/index.md
         - Configuration:
           - Overview: data-platforms/cassandra/operations/configuration/index.md
-          - cassandra.yaml: data-platforms/cassandra/operations/configuration/cassandra-yaml/index.md
+          - cassandra.yaml:
+            - Overview: data-platforms/cassandra/operations/configuration/cassandra-yaml/index.md
+            - Parameter Reference: data-platforms/cassandra/operations/configuration/cassandra-yaml/reference.md
+            - Configuration Guide: data-platforms/cassandra/operations/configuration/cassandra-yaml/guide.md
           - JVM Options: data-platforms/cassandra/operations/configuration/jvm-options/index.md
           - Snitch Configuration: data-platforms/cassandra/operations/configuration/snitch-config/index.md
           - Logging (logback.xml): data-platforms/cassandra/operations/configuration/logback.md

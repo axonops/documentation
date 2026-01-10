@@ -8,6 +8,9 @@ meta:
 
 # nodetool dropcidrgroup
 
+!!! info "Cassandra 5.0+"
+    This command is available in Cassandra 5.0 and later.
+
 Removes a CIDR group from the cluster.
 
 ---

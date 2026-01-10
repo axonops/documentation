@@ -147,19 +147,23 @@ Other significant verbs for context:
 Message queuing prevents overwhelming slow or temporarily unreachable endpoints:
 
 ```yaml
-# cassandra.yaml - Internode messaging queue configuration
+# cassandra.yaml - Internode messaging queue configuration (4.0+)
 
 # Per-endpoint send queue capacity
-internode_application_send_queue_capacity: 4MiB
+internode_application_send_queue_capacity: 4MiB           # 4.1+ format
+# internode_application_send_queue_capacity_in_bytes: 4194304   # Pre-4.1
 
 # Reserve capacity per endpoint (borrowed from global)
-internode_application_send_queue_reserve_endpoint_capacity: 128MiB
+internode_application_send_queue_reserve_endpoint_capacity: 128MiB    # 4.1+ format
+# internode_application_send_queue_reserve_endpoint_capacity_in_bytes  # Pre-4.1
 
 # Global reserve capacity across all endpoints
-internode_application_send_queue_reserve_global_capacity: 512MiB
+internode_application_send_queue_reserve_global_capacity: 512MiB      # 4.1+ format
+# internode_application_send_queue_reserve_global_capacity_in_bytes    # Pre-4.1
 
-# Message timeout
-internode_application_receive_queue_capacity: 4MiB
+# Receive queue capacity
+internode_application_receive_queue_capacity: 4MiB        # 4.1+ format
+# internode_application_receive_queue_capacity_in_bytes: 4194304      # Pre-4.1
 ```
 
 **Queue behavior:**

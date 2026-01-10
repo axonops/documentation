@@ -8,6 +8,9 @@ meta:
 
 # nodetool getcidrgroupsofip
 
+!!! info "Cassandra 5.0+"
+    This command is available in Cassandra 5.0 and later.
+
 Finds which CIDR groups contain a specific IP address.
 
 ---

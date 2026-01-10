@@ -8,6 +8,9 @@ meta:
 
 # nodetool updatecidrgroup
 
+!!! info "Cassandra 5.0+"
+    This command is available in Cassandra 5.0 and later.
+
 Creates or updates a CIDR group with specified IP ranges.
 
 ---

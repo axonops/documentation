@@ -8,6 +8,9 @@ meta:
 
 # nodetool setcolumnindexsize
 
+!!! info "Cassandra 4.1+"
+    This command is available in Cassandra 4.1 and later.
+
 Sets the column index size threshold for SSTable partition index granularity.
 
 ---

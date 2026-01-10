@@ -958,7 +958,8 @@ LIMIT 10000;
 
 ```yaml
 # cassandra.yaml
-slow_query_log_timeout_in_ms: 500
+slow_query_log_timeout: 500ms           # 4.1+ (duration format)
+# slow_query_log_timeout_in_ms: 500     # Pre-4.1
 ```
 
 ```bash

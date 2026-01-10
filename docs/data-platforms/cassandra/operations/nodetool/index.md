@@ -58,6 +58,47 @@ nodetool -u admin -pwf /path/to/jmx_password_file status
 
 ---
 
+## Version Compatibility
+
+Most nodetool commands are available across all Cassandra 4.x and 5.x versions. The tables below list commands introduced in specific versions.
+
+### Commands Added in Cassandra 4.1
+
+| Command | Description |
+|---------|-------------|
+| [datapaths](datapaths.md) | Display data file locations |
+| [getauditlog](getauditlog.md) | Get audit log configuration |
+| [getauthcacheconfig](getauthcacheconfig.md) | Get auth cache configuration |
+| [getcolumnindexsize](getcolumnindexsize.md) | Get column index size |
+| [getdefaultrf](getdefaultrf.md) | Get default replication factor |
+| [invalidatecredentialscache](invalidatecredentialscache.md) | Invalidate credentials cache |
+| [invalidatejmxpermissionscache](invalidatejmxpermissionscache.md) | Invalidate JMX permissions cache |
+| [invalidatenetworkpermissionscache](invalidatenetworkpermissionscache.md) | Invalidate network permissions cache |
+| [invalidaterolescache](invalidaterolescache.md) | Invalidate roles cache |
+| [listpendinghints](listpendinghints.md) | List pending hints |
+| [recompress_sstables](recompress_sstables.md) | Recompress SSTables |
+| [setauthcacheconfig](setauthcacheconfig.md) | Set auth cache configuration |
+| [setcolumnindexsize](setcolumnindexsize.md) | Set column index size |
+| [setdefaultrf](setdefaultrf.md) | Set default replication factor |
+
+### Commands Added in Cassandra 5.0
+
+| Command | Description |
+|---------|-------------|
+| [checktokenmetadata](checktokenmetadata.md) | Check token metadata for inconsistencies |
+| [cidrfilteringstats](cidrfilteringstats.md) | Display CIDR filtering statistics |
+| [dropcidrgroup](dropcidrgroup.md) | Remove CIDR group |
+| [forcecompact](forcecompact.md) | Force user-defined compaction |
+| [getcidrgroupsofip](getcidrgroupsofip.md) | Get CIDR groups for an IP |
+| [getguardrailsconfig](getguardrailsconfig.md) | Get guardrails configuration |
+| [invalidatecidrpermissionscache](invalidatecidrpermissionscache.md) | Invalidate CIDR permissions cache |
+| [listcidrgroups](listcidrgroups.md) | List all CIDR groups |
+| [reloadcidrgroupscache](reloadcidrgroupscache.md) | Reload CIDR groups cache |
+| [setguardrailsconfig](setguardrailsconfig.md) | Set guardrails configuration |
+| [updatecidrgroup](updatecidrgroup.md) | Create or update CIDR group |
+
+---
+
 ## Command Categories
 
 ### Cluster Information

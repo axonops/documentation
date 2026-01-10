@@ -8,6 +8,9 @@ meta:
 
 # nodetool cidrfilteringstats
 
+!!! info "Cassandra 5.0+"
+    This command is available in Cassandra 5.0 and later.
+
 Displays CIDR filtering statistics for the node.
 
 ---
