@@ -490,8 +490,20 @@ CREATE TABLE events (
 | `max_index_interval` | 2048 | Maximum gap between index entries |
 | `memtable_flush_period_in_ms` | 0 | Automatic memtable flush interval (0 = disabled) |
 | `min_index_interval` | 128 | Minimum gap between index entries |
-| `read_repair` | `BLOCKING` | Read repair behavior |
+| `read_repair` | `NONE` | Read repair behavior (4.0+: only `NONE` supported) |
 | `speculative_retry` | `99p` | Speculative retry threshold |
+
+**Version-specific option changes:**
+
+| Option (Pre-4.1) | Option (4.1+) | Example |
+|------------------|---------------|---------|
+| `default_time_to_live` (seconds) | `default_time_to_live` (duration) | `'90d'`, `'24h'` |
+| `gc_grace_seconds` (seconds) | `gc_grace_seconds` (duration) | `'10d'`, `'240h'` |
+| `memtable_flush_period_in_ms` | `memtable_flush_period` (duration) | `'1h'`, `'30m'` |
+
+| Option | 3.x | 4.0+ |
+|--------|-----|------|
+| `read_repair` | `BLOCKING`, `NONE` | `NONE` only (BLOCKING removed) |
 
 ##### Compaction Strategies
 

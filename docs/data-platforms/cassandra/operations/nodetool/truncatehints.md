@@ -156,11 +156,11 @@ nodetool repair -pr keyspace
 
 Related settings in `cassandra.yaml`:
 
-| Setting | Default | Description |
-|---------|---------|-------------|
-| `max_hint_window_in_ms` | 10800000 (3 hours) | Stop hinting after this duration |
-| `hinted_handoff_enabled` | true | Whether hints are created |
-| `hints_directory` | `$DATA/hints` | Hint storage location |
+| Setting (4.1+) | Setting (Pre-4.1) | Default | Description |
+|----------------|-------------------|---------|-------------|
+| `max_hint_window` | `max_hint_window_in_ms` | 3h / 10800000 | Stop hinting after this duration |
+| `hinted_handoff_enabled` | `hinted_handoff_enabled` | true | Whether hints are created |
+| `hints_directory` | `hints_directory` | `$DATA/hints` | Hint storage location |
 
 ---
 

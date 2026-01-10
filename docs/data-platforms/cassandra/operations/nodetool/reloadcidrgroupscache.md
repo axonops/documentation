@@ -8,6 +8,9 @@ meta:
 
 # nodetool reloadcidrgroupscache
 
+!!! info "Cassandra 5.0+"
+    This command is available in Cassandra 5.0 and later.
+
 Reloads the CIDR groups cache from system tables.
 
 ---

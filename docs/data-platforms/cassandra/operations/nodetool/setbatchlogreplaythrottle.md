@@ -30,6 +30,12 @@ nodetool [connection_options] setbatchlogreplaythrottle <throttle_in_kb>
 |----------|-------------|
 | `throttle_in_kb` | Replay throttle in KB/s |
 
+!!! note "cassandra.yaml Parameter"
+    The corresponding cassandra.yaml parameter changed in 4.1:
+
+    - **4.1+**: `batchlog_replay_throttle: 1024KiB` (data size format)
+    - **Pre-4.1**: `batchlog_replay_throttle_in_kb: 1024`
+
 ---
 
 ## Examples

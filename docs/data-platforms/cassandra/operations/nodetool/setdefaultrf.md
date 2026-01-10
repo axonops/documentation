@@ -8,6 +8,9 @@ meta:
 
 # nodetool setdefaultrf
 
+!!! info "Cassandra 4.1+"
+    This command is available in Cassandra 4.1 and later.
+
 Sets the default replication factor used by NetworkTopologyStrategy auto-expansion.
 
 ---

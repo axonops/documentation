@@ -173,7 +173,8 @@ Batchlog replay:
 
 | Batchlog Parameter | Default | Description |
 |-------------------|---------|-------------|
-| `batchlog_replay_throttle_in_kb` | 1024 | Replay throughput limit |
+| `batchlog_replay_throttle` (5.0+) | 1024KiB/s | Replay throughput limit |
+| `batchlog_replay_throttle_in_kb` (pre-5.0) | 1024 | Replay throughput limit (KB/s) |
 | View mutation timeout | 1 hour | When batchlog entries expire |
 
 !!! warning "Batchlog Limitations"

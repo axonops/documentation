@@ -8,6 +8,9 @@ meta:
 
 # nodetool invalidatenetworkpermissionscache
 
+!!! info "Cassandra 4.1+"
+    This command is available in Cassandra 4.1 and later.
+
 Invalidates the network permissions cache on the node.
 
 ---

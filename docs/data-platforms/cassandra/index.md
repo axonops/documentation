@@ -16,7 +16,6 @@ This reference documentation covers Apache Cassandra versions 4.0 through 5.x, w
 
 | Version Range | Java Requirement | Documentation Status |
 |--------------|:----------------:|---------------------|
-| 3.11.x       | Java 8           | Legacy reference |
 | 4.0.x        | Java 8/11        | Supported |
 | 4.1.x        | Java 8/11        | Fully Documented |
 | 5.0.x        | Java 11/17       | **Current (5.0.6)** |

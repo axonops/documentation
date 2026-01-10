@@ -154,7 +154,8 @@ Hints are only stored for nodes that are expected to recover within the hint win
 
 ```yaml
 # cassandra.yaml
-max_hint_window_in_ms: 10800000  # 3 hours (default)
+max_hint_window: 3h                    # 4.1+ (duration format)
+# max_hint_window_in_ms: 10800000      # Pre-4.1 (milliseconds)
 ```
 
 If a node is down longer than the hint window, hints are not stored, and repair is required.
@@ -170,10 +171,12 @@ If a node is down longer than the hint window, hints are not stored, and repair 
 hinted_handoff_enabled: true
 
 # Maximum time to store hints for a dead node
-max_hint_window_in_ms: 10800000  # 3 hours
+max_hint_window: 3h                     # 4.1+ (duration format)
+# max_hint_window_in_ms: 10800000       # Pre-4.1
 
 # Throttle hint delivery
-hinted_handoff_throttle_in_kb: 1024
+hinted_handoff_throttle: 1024KiB        # 4.1+ (data size format)
+# hinted_handoff_throttle_in_kb: 1024   # Pre-4.1
 
 # Maximum hint delivery threads
 max_hints_delivery_threads: 2

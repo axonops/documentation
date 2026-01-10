@@ -8,6 +8,9 @@ meta:
 
 # nodetool invalidatecredentialscache
 
+!!! info "Cassandra 4.1+"
+    This command is available in Cassandra 4.1 and later.
+
 Invalidates the credentials cache on the node.
 
 ---

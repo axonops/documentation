@@ -8,6 +8,9 @@ meta:
 
 # nodetool getauditlog
 
+!!! info "Cassandra 4.1+"
+    This command is available in Cassandra 4.1 and later.
+
 Displays the current audit logging configuration.
 
 ---

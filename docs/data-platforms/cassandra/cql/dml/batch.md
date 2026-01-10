@@ -191,7 +191,8 @@ Batch log entries are replayed automatically:
 
 ```yaml
 # cassandra.yaml
-batchlog_replay_throttle_in_kb: 1024  # Throttle replay bandwidth
+batchlog_replay_throttle: 1024KiB     # 4.1+ (data size format)
+# batchlog_replay_throttle_in_kb: 1024  # Pre-4.1
 ```
 
 **Guarantees:**
@@ -380,8 +381,13 @@ APPLY BATCH;
 **Thresholds (cassandra.yaml):**
 
 ```yaml
-batch_size_warn_threshold_in_kb: 5
-batch_size_fail_threshold_in_kb: 50
+# 4.1+ (data size format)
+batch_size_warn_threshold: 5KiB
+batch_size_fail_threshold: 50KiB
+
+# Pre-4.1
+# batch_size_warn_threshold_in_kb: 5
+# batch_size_fail_threshold_in_kb: 50
 ```
 
 ### Anti-Pattern 3: Batching Different Tables Without Need
@@ -456,9 +462,11 @@ stop
 ### Configuration
 
 ```yaml
-# cassandra.yaml
-batch_size_warn_threshold_in_kb: 5     # Log warning
-batch_size_fail_threshold_in_kb: 50    # Reject batch
+# cassandra.yaml (4.1+ data size format)
+batch_size_warn_threshold: 5KiB     # Log warning
+batch_size_fail_threshold: 50KiB    # Reject batch
+
+# Pre-4.1: batch_size_warn_threshold_in_kb / batch_size_fail_threshold_in_kb
 ```
 
 ### Monitoring
@@ -588,9 +596,9 @@ SELECT * FROM system.batches;
     **Configuration limits:**
 
     ```yaml
-    # cassandra.yaml
-    batch_size_warn_threshold_in_kb: 5     # Warn above 5KB
-    batch_size_fail_threshold_in_kb: 50    # Fail above 50KB
+    # cassandra.yaml (4.1+)
+    batch_size_warn_threshold: 5KiB     # Warn above 5KB
+    batch_size_fail_threshold: 50KiB    # Fail above 50KB
     ```
 
     **Warning signs in logs:**

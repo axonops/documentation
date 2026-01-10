@@ -70,10 +70,12 @@ hinted_handoff_enabled: true
 
 # How long to store hints (default 3 hours)
 # Hints older than this are dropped
-max_hint_window_in_ms: 10800000
+max_hint_window: 3h                    # 4.1+ (duration format)
+# max_hint_window_in_ms: 10800000      # Pre-4.1
 
 # Throttle hint delivery to avoid overwhelming recovering nodes
-hinted_handoff_throttle_in_kb: 1024
+hinted_handoff_throttle: 1024KiB       # 4.1+ (data size format)
+# hinted_handoff_throttle_in_kb: 1024  # Pre-4.1
 
 # Maximum delivery threads
 max_hints_delivery_threads: 2
@@ -82,9 +84,14 @@ max_hints_delivery_threads: 2
 hints_directory: /var/lib/cassandra/hints
 ```
 
+| Parameter | Pre-4.1 | 4.1+ |
+|-----------|---------|------|
+| Hint window | `max_hint_window_in_ms` (milliseconds) | `max_hint_window` (duration: `3h`, `30m`) |
+| Delivery throttle | `hinted_handoff_throttle_in_kb` (KB/s) | `hinted_handoff_throttle` (data size: `1024KiB`) |
+
 ### Hint Window
 
-The `max_hint_window_in_ms` setting is critical:
+The hint window setting (`max_hint_window` in 4.1+, `max_hint_window_in_ms` in earlier versions) is critical:
 
 ```
 Node down for 2 hours:
@@ -178,7 +185,7 @@ N2: user_id=123 → name='Alicia', timestamp=2000
 
 ### Reconciliation Modes
 
-**Blocking Reconciliation** (pre-Cassandra 4.0 default):
+**Blocking Reconciliation** (Cassandra 3.x):
 
 ```
 Divergence resolution completes BEFORE returning result to client.
@@ -196,18 +203,35 @@ Result returned immediately, propagation occurs asynchronously.
 
 ### Configuration
 
+Configuration changed significantly across versions:
+
+**Cassandra 3.x:**
+
 ```sql
--- Per-table reconciliation mode (deprecated in 4.0+)
+-- Per-table read repair probability (removed in 4.0)
+ALTER TABLE my_table WITH
+  read_repair_chance = 0.1 AND
+  dclocal_read_repair_chance = 0.1;
+
+-- Blocking or none
 ALTER TABLE my_table WITH read_repair = 'BLOCKING';
--- or
+```
+
+**Cassandra 4.0+:**
+
+The `read_repair_chance` and `dclocal_read_repair_chance` properties were removed. Read repair is now always attempted when divergence is detected during a read that contacts multiple replicas.
+
+```sql
+-- Only NONE is supported (to disable read repair entirely)
 ALTER TABLE my_table WITH read_repair = 'NONE';
 ```
 
-```yaml
-# cassandra.yaml (Cassandra 4.0+)
-# Reconciliation is always attempted when divergence is detected
-# No configuration needed
-```
+| Property | 3.x | 4.0+ |
+|----------|-----|------|
+| `read_repair_chance` | Probability of read repair (0.0-1.0) | Removed |
+| `dclocal_read_repair_chance` | Probability for local DC | Removed |
+| `read_repair = 'BLOCKING'` | Synchronous repair | Removed |
+| `read_repair = 'NONE'` | Disable read repair | Supported |
 
 ### Limitations
 
@@ -305,6 +329,11 @@ nodetool repair keyspace_name
 - SSTables are marked as "repaired" or "unrepaired"
 - Lower overhead for regular maintenance
 
+| Version | Default Repair Mode |
+|---------|---------------------|
+| 3.x | Full (`-full` not required) |
+| 4.0+ | Incremental (use `-full` for full repair) |
+
 **Subrange Synchronization:**
 
 ```bash
@@ -314,6 +343,15 @@ nodetool repair -st <start_token> -et <end_token> keyspace_name
 - Limits comparison to specific token range
 - Enables parallelization across nodes
 
+**Preview Repair (4.0+):**
+
+```bash
+nodetool repair --preview keyspace_name
+```
+
+- Reports inconsistencies without repairing them
+- Useful for assessing cluster state before maintenance
+
 ### The gc_grace_seconds Constraint
 
 Tombstones (deletion markers) have a finite lifespan defined by `gc_grace_seconds`. This parameter creates a critical constraint on synchronization frequency.
@@ -321,6 +359,9 @@ Tombstones (deletion markers) have a finite lifespan defined by `gc_grace_second
 ```
 gc_grace_seconds defines tombstone retention period.
 Default: 864000 (10 days)
+
+Note: In Cassandra 4.1+, this can also be specified as a duration
+      (e.g., '10d').
 
 CRITICAL CONSTRAINT:
 Synchronization must complete on every node within gc_grace_seconds.
@@ -368,6 +409,9 @@ Repeat
 # Full synchronization of keyspace
 nodetool repair -full my_keyspace
 
+# Incremental synchronization (default in 4.0+)
+nodetool repair my_keyspace
+
 # Synchronize single table
 nodetool repair my_keyspace my_table
 
@@ -376,6 +420,12 @@ nodetool repair -par my_keyspace
 
 # Sequential mode (one node at a time, lower impact)
 nodetool repair -seq my_keyspace
+
+# Preview mode - report inconsistencies without repairing (4.0+)
+nodetool repair --preview my_keyspace
+
+# Validate repaired data only (4.0+)
+nodetool repair --validate my_keyspace
 
 # Check synchronization status
 nodetool repair_admin list
@@ -386,6 +436,15 @@ nodetool repair_admin cancel <repair_id>
 # View synchronization history
 nodetool repair_admin summary
 ```
+
+| Option | Version | Description |
+|--------|---------|-------------|
+| `-full` | 3.x+ | Full repair (default in 3.x, explicit in 4.0+) |
+| `-par` | 3.x+ | Parallel repair |
+| `-seq` | 3.x+ | Sequential repair |
+| `--preview` | 4.0+ | Report inconsistencies without repairing |
+| `--validate` | 4.0+ | Validate repaired data consistency |
+| `-pr` | 3.x+ | Primary range only |
 
 ### Monitoring
 

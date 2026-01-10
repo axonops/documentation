@@ -300,10 +300,15 @@ done
 ### Making Changes Permanent
 
 ```yaml
-# cassandra.yaml
-key_cache_size_in_mb: 200
-row_cache_size_in_mb: 0
-counter_cache_size_in_mb: 50
+# cassandra.yaml (4.1+ data size format)
+key_cache_size: 200MiB
+row_cache_size: 0MiB
+counter_cache_size: 50MiB
+
+# Pre-4.1
+# key_cache_size_in_mb: 200
+# row_cache_size_in_mb: 0
+# counter_cache_size_in_mb: 50
 ```
 
 After editing, changes apply on next restart.

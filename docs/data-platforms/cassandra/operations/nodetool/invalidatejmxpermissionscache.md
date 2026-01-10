@@ -8,6 +8,9 @@ meta:
 
 # nodetool invalidatejmxpermissionscache
 
+!!! info "Cassandra 4.1+"
+    This command is available in Cassandra 4.1 and later.
+
 Invalidates the JMX permissions cache on the node.
 
 ---

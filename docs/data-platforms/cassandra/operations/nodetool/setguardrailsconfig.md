@@ -8,6 +8,9 @@ meta:
 
 # nodetool setguardrailsconfig
 
+!!! info "Cassandra 5.0+"
+    This command is available in Cassandra 5.0 and later.
+
 Modifies guardrail configuration settings at runtime.
 
 ---

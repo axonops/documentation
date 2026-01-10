@@ -8,6 +8,9 @@ meta:
 
 # nodetool recompress_sstables
 
+!!! info "Cassandra 4.1+"
+    This command is available in Cassandra 4.1 and later.
+
 Recompresses SSTables with current compression settings.
 
 ---

@@ -8,6 +8,9 @@ meta:
 
 # nodetool invalidatecidrpermissionscache
 
+!!! info "Cassandra 5.0+"
+    This command is available in Cassandra 5.0 and later.
+
 Invalidates the CIDR permissions cache on the node.
 
 ---
