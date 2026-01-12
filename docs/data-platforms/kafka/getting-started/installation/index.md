@@ -189,7 +189,7 @@ production-grade Kafka deployments on Kubernetes. Strimzi provides a complete op
 native Kubernetes integration, automated management, and enhanced operational capabilities.
 
 For detailed instructions on deploying Kafka with Strimzi and AxonOps monitoring integration, see the
-[Kubernetes Strimzi Installation Guide](/installation/kubernetes/strimzi/).
+[Kubernetes Strimzi Installation Guide](../../../../installation/kubernetes/strimzi/index.md).
 
 
 ## System Configuration
