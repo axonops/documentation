@@ -182,6 +182,16 @@ volumes:
 
 ---
 
+## Kubernetes
+
+While the Docker container above can be deployed in Kubernetes, we recommend using **Apache Strimzi** for
+production-grade Kafka deployments on Kubernetes. Strimzi provides a complete operator-based solution with
+native Kubernetes integration, automated management, and enhanced operational capabilities.
+
+For detailed instructions on deploying Kafka with Strimzi and AxonOps monitoring integration, see the
+[Kubernetes Strimzi Installation Guide](/installation/kubernetes/strimzi/).
+
+
 ## System Configuration
 
 ### Linux Kernel Tuning
