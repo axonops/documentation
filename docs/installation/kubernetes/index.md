@@ -3,177 +3,104 @@ title: "Running AxonOps on Kubernetes"
 description: "AxonOps Kubernetes installation. Deploy monitoring in K8s clusters."
 meta:
   - name: keywords
-    content: "AxonOps Kubernetes, K8s installation, container deployment"
+    content: "AxonOps Kubernetes, K8s installation, container deployment, Strimzi, K8ssandra, Kafka, Cassandra"
 ---
 
 # Running AxonOps on Kubernetes
 
 ## Introduction
 
-The following shows how to install AxonOps for monitoring cassandra. AxonOps requires ElasticSearch and the documentation below shows how to install both. If you already have ElasticSearch running, you can omit the installation and just ensure the AxonOps config points to it.
+AxonOps provides comprehensive monitoring and management solutions for Apache Cassandra and Apache Kafka deployments running on Kubernetes. This section provides detailed guides for deploying AxonOps components and integrating them with your Kubernetes-based data infrastructure.
 
-AxonOps installation uses Helm Charts. Helm v3.8.0 or later is required in order to access the OCI repository hosting the charts.
-The raw charts can be downloaded from the [GitHub repository](https://github.com/axonops/helm-axonops).
+Whether you're running Cassandra for time-series metrics storage, Kafka clusters managed by Strimzi, or other data platforms, AxonOps seamlessly integrates with Kubernetes to provide:
 
-## Preparing the configuration
+- **Real-time monitoring** of cluster health and performance
+- **Automated management** capabilities through the AxonOps agent
+- **Centralized dashboards** for visualization and analysis
+- **Native Kubernetes integration** using Helm charts and operators
+- **Flexible storage options** including hostPath and persistent volume claims
 
-### Resources
+## Deployment Guides
 
-| Cassandra Nodes | ElasticSearch CPU | ElasticSearch Memory | AxonOps Server CPU | AxonOps Server Memory |
-|-----------------|-------------------|----------------------|--------------------|-----------------------|
-| <10             | 1000m             | 4Gi                  | 750m               | 1Gi                   |
-| <50             | 1000m             | 4Gi                  | 2000m              | 6Gi                   |
-| 100             | 2000m             | 16Gi                 | 4000m              | 12Gi                  |
-| 200             | 4000m             | 32Gi                 | 8000m              | 24Gi                  |
+### [AxonOps Platform Deployment](axonops/index.md)
 
-### ElasticSearch
+Complete guide for deploying the core AxonOps platform on Kubernetes, including:
 
-The example below is a configuration file for the official [ElasticSearch helm repository](https://artifacthub.io/packages/helm/elastic/elasticsearch). See inline comments:
+- AxonOps Server - Core management server
+- AxonOps Dashboard - Web UI for monitoring and management
+- AxonOps Timeseries DB - Cassandra-based metrics storage
+- AxonOps Search DB - OpenSearch-based log and event storage
+- cert-manager integration for automatic TLS certificate management
+- Configuration options for both local (hostPath) and shared storage
 
-```yaml
----
-clusterName: "axonops-elastic"
+[View AxonOps deployment guide →](axonops/index.md)
 
-replicas: 1
+### [Strimzi Kafka Cluster with AxonOps](strimzi/index.md)
 
-esConfig:
-  elasticsearch.yml: |
-    thread_pool.write.queue_size: 2000
+Deploy a production-ready Kafka cluster using the Strimzi operator with integrated AxonOps monitoring:
 
-roles:
-  master: "true"
-  ingest: "true"
-  data: "true"
-  remote_cluster_client: "false"
-  ml: "false"
+- KRaft-based Kafka cluster (no ZooKeeper required)
+- 3 Controller nodes + 3 Broker nodes architecture
+- Local hostPath or shared storage configuration
+- AxonOps agent integration for comprehensive monitoring
+- Step-by-step configuration for node pools and persistent volumes
 
-# Adjust the memory and cpu requirements to your deployment
-# 
-esJavaOpts: "-Xms2g -Xmx2g"
+[View Strimzi deployment guide →](strimzi/index.md)
 
-resources:
-  requests:
-    cpu: "750m"
-    memory: "2Gi"
-  limits:
-    cpu: "1500m"
-    memory: "4Gi"
+### [K8ssandra Cassandra Cluster with AxonOps](k8ssandra/index.md)
 
-volumeClaimTemplate:
-  accessModes: ["ReadWriteOnce"]
-  storageClassName: "" # adjust to your storageClass if you don't want to use default
-  resources:
-    requests:
-      storage: 50Gi
+Deploy a production-ready Cassandra cluster using the K8ssandra operator with integrated AxonOps monitoring:
 
-rbac:
-  create: true
+- Cassandra 5.0.6+ with pre-integrated AxonOps agent
+- Multi-datacenter support for high availability
+- Configurable resource allocation and JVM tuning
+- Persistent storage with custom storage classes
+- Automated backup and restore with Medusa integration
+- Comprehensive monitoring through AxonOps
+
+[View K8ssandra deployment guide →](k8ssandra/index.md)
+
+## Prerequisites
+
+Before deploying AxonOps on Kubernetes, ensure you have:
+
+1. **Kubernetes cluster** (v1.23 or higher)
+2. **kubectl** configured to access your cluster
+3. **Helm 3** installed for package management
+4. **Storage provisioner** or manual storage setup
+5. **Network connectivity** between pods and services
+
+## Architecture Overview
+
+A typical AxonOps deployment on Kubernetes consists of:
+
+```
+┌─────────────────────────────────────────────────────────────┐
+│                     Kubernetes Cluster                      │
+├─────────────────────────────────────────────────────────────┤
+│                                                             │
+│  ┌──────────────────┐         ┌──────────────────┐          │
+│  │  AxonOps Server  │◄────────┤ AxonOps Dashboard│          │
+│  │   (Management)   │         │     (Web UI)     │          │
+│  └────────┬─────────┘         └──────────────────┘          │
+│           │                                                 │
+│           ├──────────┬──────────────────-─────────────-─────┤
+│           │          │                                      │
+│  ┌────────▼───────┐ ┌▼───────────────┐                      │
+│  │  Timeseries DB │ │   Search DB    │                      │
+│  │  (Cassandra)   │ │  (OpenSearch)  │.                     │ 
+│  └────────────────┘ └────────────────┘.                     │ 
+│                                                             │
+└─────────────────────────────────────────────────────────────┘
 ```
 
-Save the configuration as `elastic.yaml` and you install it with:
+## Getting Started
 
-```sh
-helm upgrade --install elasticsearch elastic/elasticsearch --create-namespace -n axonops \
-  --set secret.password="password" -f elastic.yaml
-```
+1. **[Deploy AxonOps Platform](axonops/index.md)** - Start by deploying the core AxonOps infrastructure including the server, dashboard, and backing databases.
 
-> **_NOTE:_** This example uses as password in plaintext. Check out the helm chart documentation on how to use
-secrets and consider using a secrets manager.
+2. **Deploy Monitored Services** - Once AxonOps is running, deploy your data platform clusters with integrated monitoring agents:
+   - **[Strimzi Kafka Cluster](strimzi/index.md)** - Deploy a KRaft-based Kafka cluster with AxonOps monitoring
+   - **[K8ssandra Cassandra Cluster](k8ssandra/index.md)** - Deploy a Cassandra cluster with AxonOps monitoring
 
-### AxonOps
+3. **Configure and Monitor** - Access the AxonOps dashboard to visualize metrics, manage clusters, and configure alerts.
 
-The default AxonOps installation does not expose the services outside of the cluster. We recommend that you use either a LoadBalancer service or an Ingress.
-
-Below you can find an example using `Ingress` to expose both the dashboard and the AxonOps server.
-
-```yaml
-axon-dash:
-  image:
-    pullPolicy: IfNotPresent
-    repository: registry.axonops.com/axonops-public/axonops-docker/axon-dash
-    tag: latest
-  ingress:
-    enabled: true
-    className: nginx
-    annotations:
-      external-dns.alpha.kubernetes.io/hostname: axonops.mycompany.com
-    hosts:
-      - host: axonops.mycompany.com
-        path: "/"
-    tls:
-      - hosts:
-          - axonops.mycompany.com
-        secretName: axon-dash-tls
-  resources:
-    limits:
-      cpu: 1000m
-      memory: 1536Mi
-    requests:
-      cpu: 25m
-      memory: 256Mi
-
-# If you are using an existing ElasticSearch rather than installing it 
-# as shown above then make sure you update the elasticHost URL below
-axon-server:
-  elasticHost: http://username:password@axonops-elastic-master:9200
-  dashboardUrl: https://axonops.mycompany.com
-  config:
-    # Set your organization name here. This must match the name used in your license key
-    org_name: demo
-    # Enter your AxonOps license key here
-    license_key: "..."
-  image:
-    pullPolicy: IfNotPresent
-    repository: registry.axonops.com/axonops-public/axonops-docker/axon-server
-    tag: latest
-  # Enable the agent ingress to allow agents to connect from outside the Kubernetes cluster
-  agentIngress:
-    enabled: true
-    className: nginx
-    annotations:
-      external-dns.alpha.kubernetes.io/hostname: axonops-server.mycompany.com
-    hosts:
-      - host: axonops-server.mycompany.com
-        path: "/"
-    tls:
-      - hosts:
-          - axonops-server.mycompany.com
-        secretName: axon-server-tls
-
-  resources:
-    limits:
-      cpu: 1
-      memory: 1Gi
-    requests:
-      cpu: 100m
-      memory: 256Mi
-```
-
-An example values file showing all available options can be found in the GitHub repository here: [values-full.yaml](https://github.com/axonops/helm-axonops/blob/main/values-full.yaml)
-
-
-## Installing
-
-### ElasticSearch
-
-Now you can install Elasticsearch referencing the configuration file created in the previous step:
-
-```sh
-helm repo add elastic https://helm.elastic.co
-helm update
-helm upgrade -n axonops --install \
-  --create-namespace \
-  -f "elasticsearch.yaml" \
-  elasticsearch elastic/elasticsearch
-```
-
-### AxonOps
-
-Finally install the AxonOps helm chart:
-
-```sh
-helm upgrade -n axonops --install \
-  --create-namespace \
-  -f "axonops.yaml" \
-  axonops oci://helm.axonops.com/axonops-public/axonops-helm/axonops
-```

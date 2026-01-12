@@ -146,7 +146,11 @@ nav:
       - AxonOps Server: 'installation/axon-server/axonserver_install.md'
       - AxonOps Dashboard: 'installation/axon-dash/install.md'
       - AxonOps Agent: 'installation/agent/install.md'
-      - Kubernetes: 'installation/kubernetes/index.md'
+      - Kubernetes:
+        - Overview: 'installation/kubernetes/index.md'
+        - AxonOps Platform: 'installation/kubernetes/axonops/index.md'
+        - Strimzi Kafka Cluster: 'installation/kubernetes/strimzi/index.md'
+        - K8ssandra Cassandra Cluster: 'installation/kubernetes/k8ssandra/index.md'
       - System Requirements: system-requirements/index.md
 
     - Authentication:

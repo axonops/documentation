@@ -17,7 +17,7 @@ The AxonOps Agent also enables the following maintence operations to be performe
 * Adaptive repairs
 * Backups
 
-See [Installing axon-agent for Cassandra in Docker](./docker.md) if you are running Cassandra under Docker.
+See [Installing axon-agent for Cassandra in Docker](./docker.md) if you are running Cassandra under Docker and the [Kubernetes](../kubernetes/index.md) if you are setting up either Strimzi or K8ssandra clusters.
 
 ## Version Compatibility
 

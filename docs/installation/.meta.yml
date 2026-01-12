@@ -3,4 +3,4 @@ description: Installation guides for AxonOps Server, Dashboard, and Agent on var
 
 meta:
   - name: keywords
-    content: AxonOps installation, AxonOps setup, Kubernetes deployment, agent installation, server configuration
+    content: AxonOps installation, AxonOps setup, Kubernetes deployment, agent installation, server configuration, Kafka, Strimzi, K8ssandra, Cassandra, Kubernetes 
