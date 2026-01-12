@@ -146,6 +146,7 @@ When creating a dedicated AxonOps role in Elasticsearch, the following privilege
 * Cluster privileges:
     * `monitor`
     * `manage_index_templates`
+    * `manage_ilm`
 * Index privileges:
     * `auto_configure`
     * `manage`
@@ -153,7 +154,7 @@ When creating a dedicated AxonOps role in Elasticsearch, the following privilege
     * `view_index_metadata`
     * `write`
 
-The index privileges should be applied to the the following indices:
+The index privileges should be applied to the following indices:
 
 * `orgs`
 * `orgname_*`
