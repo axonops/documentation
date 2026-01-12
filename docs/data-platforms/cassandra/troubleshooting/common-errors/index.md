@@ -109,37 +109,34 @@ nodetool tablestats my_keyspace.my_table
 
 ## Error Resolution Workflow
 
-```
-Error Occurs
-    │
-    ▼
-┌─────────────────────────────────────┐
-│  1. Identify error type             │
-│     - Check client exception        │
-│     - Check Cassandra logs          │
-└──────────────┬──────────────────────┘
-               │
-               ▼
-┌─────────────────────────────────────┐
-│  2. Check cluster health            │
-│     - nodetool status               │
-│     - nodetool tpstats              │
-└──────────────┬──────────────────────┘
-               │
-               ▼
-┌─────────────────────────────────────┐
-│  3. Check specific component        │
-│     - Table stats for data issues   │
-│     - Compaction for performance    │
-│     - Logs for stack traces         │
-└──────────────┬──────────────────────┘
-               │
-               ▼
-┌─────────────────────────────────────┐
-│  4. Apply fix                       │
-│     - See specific error page       │
-│     - Follow playbook if available  │
-└─────────────────────────────────────┘
+```plantuml
+@startuml
+skinparam activityBackgroundColor #f5f5f5
+skinparam activityBorderColor #333333
+skinparam arrowColor #333333
+
+start
+:Error Occurs;
+
+:1. Identify error type
+  - Check client exception
+  - Check Cassandra logs;
+
+:2. Check cluster health
+  - nodetool status
+  - nodetool tpstats;
+
+:3. Check specific component
+  - Table stats for data issues
+  - Compaction for performance
+  - Logs for stack traces;
+
+:4. Apply fix
+  - See specific error page
+  - Follow playbook if available;
+
+stop
+@enduml
 ```
 
 ---
