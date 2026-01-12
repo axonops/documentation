@@ -9,6 +9,12 @@ hide:
 
 This guide explains how to deploy AxonOps components and a Strimzi Kafka cluster on Kubernetes with local (hostPath) storage or shared storage and AxonOps monitoring agent integration.
 
+:::tip Quick Start Alternative
+For a streamlined deployment experience, you can use our automated installation script that handles the complete setup process. This script automates many of the manual steps described in this guide.
+
+[View the automated deployment guide →](https://github.com/axonops/axonops-containers/blob/development/examples/full-on-prems/DEPLOYMENT_GUIDE.md)
+:::
+
 ## Components Required
 
 - **AxonOps Server** - Core management server

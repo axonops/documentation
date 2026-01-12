@@ -47,6 +47,19 @@ Deploy a production-ready Kafka cluster using the Strimzi operator with integrat
 
 [View Strimzi deployment guide →](strimzi/index.md)
 
+### [K8ssandra Cassandra Cluster with AxonOps](k8ssandra/index.md)
+
+Deploy a production-ready Cassandra cluster using the K8ssandra operator with integrated AxonOps monitoring:
+
+- Cassandra 5.0.6+ with pre-integrated AxonOps agent
+- Multi-datacenter support for high availability
+- Configurable resource allocation and JVM tuning
+- Persistent storage with custom storage classes
+- Automated backup and restore with Medusa integration
+- Comprehensive monitoring through AxonOps
+
+[View K8ssandra deployment guide →](k8ssandra/index.md)
+
 ## Prerequisites
 
 Before deploying AxonOps on Kubernetes, ensure you have:
@@ -85,7 +98,9 @@ A typical AxonOps deployment on Kubernetes consists of:
 
 1. **[Deploy AxonOps Platform](axonops/index.md)** - Start by deploying the core AxonOps infrastructure including the server, dashboard, and backing databases.
 
-2. **[Deploy Monitored Services](strimzi/index.md)** - Once AxonOps is running, deploy your Kafka or Cassandra clusters with integrated monitoring agents.
+2. **Deploy Monitored Services** - Once AxonOps is running, deploy your data platform clusters with integrated monitoring agents:
+   - **[Strimzi Kafka Cluster](strimzi/index.md)** - Deploy a KRaft-based Kafka cluster with AxonOps monitoring
+   - **[K8ssandra Cassandra Cluster](k8ssandra/index.md)** - Deploy a Cassandra cluster with AxonOps monitoring
 
 3. **Configure and Monitor** - Access the AxonOps dashboard to visualize metrics, manage clusters, and configure alerts.
 
