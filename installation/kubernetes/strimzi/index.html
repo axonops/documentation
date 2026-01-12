@@ -20251,9 +20251,10 @@ helm<span class="w"> </span>install<span class="w"> </span>strimzi-kafka-operato
 </code></pre></div>
 <h2 id="step-3-create-controller-node-pools">Step 3: Create Controller Node Pools<a class="headerlink" href="#step-3-create-controller-node-pools" title="Permanent link">¶</a></h2>
 <p>In Strimzi, <strong>Node Pools</strong> are a way to group and manage Kafka nodes (brokers or controllers) within a single Kafka cluster using different configurations. Instead of treating every node in the cluster as an identical twin, node pools allow you to define distinct sets of nodes with unique hardware, storage, or roles.</p>
-<p>:::info
-The section under <code>pod</code>, the topology constraint, can be removed if you are not using hostPath or have strict requirements to pin brokers or controllers to specific nodes.
-:::</p>
+<div class="admonition info">
+<p class="admonition-title">Info</p>
+<p>The section under <code>pod</code>, the topology constraint, can be removed if you are not using hostPath or have strict requirements to pin brokers or controllers to specific nodes.</p>
+</div>
 <p>The example below creates the nodepool for the controllers.</p>
 <table>
 <thead>
@@ -20345,9 +20346,10 @@ The section under <code>pod</code>, the topology constraint, can be removed if y
 <span class="w">        </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">AXON_AGENT_SERVER_HOST</span>
 <span class="w">          </span><span class="nt">value</span><span class="p">:</span><span class="w"> </span><span class="s">"${AXON_AGENT_SERVER_HOST}"</span>
 </code></pre></div>
-<p>:::info
-If you are using shared storage and you can permit the pods moving to different hosts, it is recommended to use a topology spread configuration to ensure that not all brokers are in the same k8s hosts.
-:::</p>
+<div class="admonition info">
+<p class="admonition-title">Info</p>
+<p>If you are using shared storage and you can permit the pods moving to different hosts, it is recommended to use a topology spread configuration to ensure that not all brokers are in the same k8s hosts.</p>
+</div>
 <div class="highlight"><pre><span></span><code><span class="nt">template</span><span class="p">:</span>
 <span class="w">  </span><span class="nt">pod</span><span class="p">:</span>
 <span class="w">    </span><span class="nt">topologySpreadConstraints</span><span class="p">:</span>
@@ -20636,9 +20638,10 @@ my-cluster-entity-operator-xxxxxxxxx-xxxxx 2/2     Running
 <span class="nt">default.replication.factor</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">1</span>
 <span class="nt">min.insync.replicas</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">1</span>
 </code></pre></div>
-<p>:::warning
-These replication settings are suitable for development/testing. For production, increase replication factors to at least 3.
-:::</p>
+<div class="admonition warning">
+<p class="admonition-title">Warning</p>
+<p>These replication settings are suitable for development/testing. For production, increase replication factors to at least 3.</p>
+</div>
 <h2 id="troubleshooting">Troubleshooting<a class="headerlink" href="#troubleshooting" title="Permanent link">¶</a></h2>
 <h3 id="pods-stuck-in-pending">Pods Stuck in Pending<a class="headerlink" href="#pods-stuck-in-pending" title="Permanent link">¶</a></h3>
 <p>Check if PersistentVolumeClaims are bound:</p>

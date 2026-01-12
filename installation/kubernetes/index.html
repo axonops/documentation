@@ -19809,24 +19809,13 @@ data-et-multi-view="{&quot;schema&quot;:{&quot;content&quot;:{&quot;desktop&quot
 </ol>
 <h2 id="architecture-overview">Architecture Overview<a class="headerlink" href="#architecture-overview" title="Permanent link">¶</a></h2>
 <p>A typical AxonOps deployment on Kubernetes consists of:</p>
-<div class="highlight"><pre><span></span><code>┌─────────────────────────────────────────────────────────────┐
-│                     Kubernetes Cluster                      │
-├─────────────────────────────────────────────────────────────┤
-│                                                             │
-│  ┌──────────────────┐         ┌──────────────────┐          │
-│  │  AxonOps Server  │◄────────┤ AxonOps Dashboard│          │
-│  │   (Management)   │         │     (Web UI)     │          │
-│  └────────┬─────────┘         └──────────────────┘          │
-│           │                                                 │
-│           ├──────────┬──────────────────-─────────────-─────┤
-│           │          │                                      │
-│  ┌────────▼───────┐ ┌▼───────────────┐                      │
-│  │  Timeseries DB │ │   Search DB    │                      │
-│  │  (Cassandra)   │ │  (OpenSearch)  │.                     │ 
-│  └────────────────┘ └────────────────┘.                     │ 
-│                                                             │
-└─────────────────────────────────────────────────────────────┘
-</code></pre></div>
+<ul>
+<li>AxonOps Server</li>
+<li>AxonOps Dashboard</li>
+<li>AxonOps Search DB</li>
+<li>AxonOps Timeseries DB</li>
+</ul>
+<p><a class="glightbox" href="axonops_cluster.png" data-type="image" data-width="100%" data-height="auto" data-desc-position="bottom"><img alt="Alt text" src="axonops_cluster.png" title="AxonOps Kubernetes Cluster"></a></p>
 <h2 id="getting-started">Getting Started<a class="headerlink" href="#getting-started" title="Permanent link">¶</a></h2>
 <ol>
 <li>

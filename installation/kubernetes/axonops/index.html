@@ -19752,10 +19752,11 @@ data-et-multi-view="{&quot;schema&quot;:{&quot;content&quot;:{&quot;desktop&quot
 
 <div><h1 id="deploying-axonops-on-kubernetes">Deploying AxonOps on Kubernetes<a class="headerlink" href="#deploying-axonops-on-kubernetes" title="Permanent link">¶</a></h1>
 <p>This guide explains how to deploy AxonOps components and a Strimzi Kafka cluster on Kubernetes with local (hostPath) storage or shared storage and AxonOps monitoring agent integration.</p>
-<p>:::tip Quick Start Alternative
-For a streamlined deployment experience, you can use our automated installation script that handles the complete setup process. This script automates many of the manual steps described in this guide.</p>
-<p><a href="https://github.com/axonops/axonops-containers/blob/development/examples/full-on-prems/DEPLOYMENT_GUIDE.md">View the automated deployment guide →</a>
-:::</p>
+<div class="admonition tip">
+<p class="admonition-title">Quick Start Alternative</p>
+<p>For a streamlined deployment experience, you can use our automated installation script that handles the complete setup process. This script automates many of the manual steps described in this guide.</p>
+<p><a href="https://github.com/axonops/axonops-containers/blob/development/examples/full-on-prems/DEPLOYMENT_GUIDE.md">View the automated deployment guide →</a></p>
+</div>
 <h2 id="components-required">Components Required<a class="headerlink" href="#components-required" title="Permanent link">¶</a></h2>
 <ul>
 <li><strong>AxonOps Server</strong> - Core management server</li>
@@ -19914,9 +19915,10 @@ chown<span class="w"> </span>-R<span class="w"> </span><span class="m">999</span
 <span class="w">    </span><span class="no">cql_username: cassandra</span>
 <span class="w">    </span><span class="no">cql_password: cassandra</span>
 </code></pre></div>
-<p>:::note
-The default installation assumes your clients will be all in Kubernetes. If you will have AxonOps clients outside of Kubernetes (external Cassandra or Kafka clusters) you will also need to add an ingress or NodePort configuration.
-:::</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>The default installation assumes your clients will be all in Kubernetes. If you will have AxonOps clients outside of Kubernetes (external Cassandra or Kafka clusters) you will also need to add an ingress or NodePort configuration.</p>
+</div>
 <p>If you need external access, create <code>axon-server-values.yaml</code> using the following example:</p>
 <div class="highlight"><pre><span></span><code><span class="c1"># If you do not have an ingress (Preferred) you can use nodePort by setting</span>
 <span class="c1"># it up here</span>
@@ -20012,9 +20014,10 @@ helm<span class="w"> </span>install<span class="w"> </span>axon-server<span clas
 <span class="w">    </span><span class="c1">#   hosts:</span>
 <span class="w">    </span><span class="c1">#     - axonops.mycompany.com</span>
 </code></pre></div>
-<p>:::note
-You will need to choose between Ingress (preferred option) or NodePort for external access.
-:::</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>You will need to choose between Ingress (preferred option) or NodePort for external access.</p>
+</div>
 <p>Install:</p>
 <div class="highlight"><pre><span></span><code>helm<span class="w"> </span>install<span class="w"> </span>axon-dash<span class="w"> </span>oci://ghcr.io/axonops/charts/axon-dash<span class="w"> </span><span class="se">\</span>
 <span class="w">  </span>--namespace<span class="w"> </span>axonops<span class="w"> </span><span class="se">\</span>

@@ -20727,9 +20727,10 @@ UN  10.42.0.12  100 KB     16      33.4%   xxx-xxx-xxx-xxx-xxx                  
 <span class="w">  </span><span class="nt">heap_initial_size</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">2G</span>
 <span class="w">  </span><span class="nt">heap_max_size</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">2G</span>
 </code></pre></div>
-<p>:::warning
-Ensure heap size is set appropriately based on available memory. A general rule is to set the heap to 25-50% of the available RAM, with a maximum of 8GB for optimal GC performance.
-:::</p>
+<div class="admonition warning">
+<p class="admonition-title">Warning</p>
+<p>Ensure heap size is set appropriately based on available memory. A general rule is to set the heap to 25-50% of the available RAM, with a maximum of 8GB for optimal GC performance.</p>
+</div>
 <h2 id="advanced-configuration">Advanced Configuration<a class="headerlink" href="#advanced-configuration" title="Permanent link">¶</a></h2>
 <h3 id="multi-datacenter-setup">Multi-Datacenter Setup<a class="headerlink" href="#multi-datacenter-setup" title="Permanent link">¶</a></h3>
 <p>To deploy a multi-datacenter cluster:</p>
@@ -20888,9 +20889,10 @@ kubectl<span class="w"> </span>describe<span class="w"> </span>pvc<span class="w
 <span class="w">    </span><span class="nt">size</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">5</span><span class="w">  </span><span class="c1"># Changed from 3</span>
 </code></pre></div>
 <h3 id="removing-nodes">Removing Nodes<a class="headerlink" href="#removing-nodes" title="Permanent link">¶</a></h3>
-<p>:::warning
-Scaling down requires careful consideration. Ensure your replication factor allows for the reduced node count without data loss.
-:::</p>
+<div class="admonition warning">
+<p class="admonition-title">Warning</p>
+<p>Scaling down requires careful consideration. Ensure your replication factor allows for the reduced node count without data loss.</p>
+</div>
 <p>To scale down:</p>
 <div class="highlight"><pre><span></span><code>kubectl<span class="w"> </span>patch<span class="w"> </span>k8ssandracluster<span class="w"> </span>axonops-k8ssandra-5<span class="w"> </span>-n<span class="w"> </span>k8ssandra-operator<span class="w"> </span><span class="se">\</span>
 <span class="w">  </span>--type<span class="w"> </span>merge<span class="w"> </span><span class="se">\</span>
