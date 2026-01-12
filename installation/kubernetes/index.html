@@ -13,14 +13,14 @@
         <link rel="prev" href="../agent/install/">
       
       
-        <link rel="next" href="../../system-requirements/">
+        <link rel="next" href="axonops/">
       
       
         
       
       
       <link rel="icon" href="/img/favicon.ico">
-      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.7.0">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.7.1">
     
     
 
@@ -28,7 +28,7 @@
 
 
     
-      <link rel="stylesheet" href="../../assets/stylesheets/main.618322db.min.css">
+      <link rel="stylesheet" href="../../assets/stylesheets/main.484c7ddc.min.css">
       
         
         <link rel="stylesheet" href="../../assets/stylesheets/palette.ab4e12ef.min.css">
@@ -69,7 +69,7 @@
 {
   "@context": "https://schema.org",
   "@type": "TechArticle",
-  "headline": "Kubernetes - AxonOps Documentation",
+  "headline": "Overview - AxonOps Documentation",
   "description": "AxonOps Kubernetes installation. Deploy monitoring in K8s clusters.",
   "about": {
     "@type": "SoftwareApplication",
@@ -1326,6 +1326,58 @@ data-et-multi-view="{&quot;schema&quot;:{&quot;content&quot;:{&quot;desktop&quot
   
   
   
+    
+    
+    
+    
+      
+      
+    
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_4_3_6" checked>
+        
+          
+          <label class="md-nav__link" for="__nav_4_3_6" id="__nav_4_3_6_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Kubernetes
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="3" aria-labelledby="__nav_4_3_6_label" aria-expanded="true">
+          <label class="md-nav__title" for="__nav_4_3_6">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Kubernetes
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+    
+  
+  
+  
     <li class="md-nav__item md-nav__item--active">
       
       <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
@@ -1341,7 +1393,7 @@ data-et-multi-view="{&quot;schema&quot;:{&quot;content&quot;:{&quot;desktop&quot
   <span class="md-ellipsis">
     
   
-    Kubernetes
+    Overview
   
 
     
@@ -1359,7 +1411,7 @@ data-et-multi-view="{&quot;schema&quot;:{&quot;content&quot;:{&quot;desktop&quot
   <span class="md-ellipsis">
     
   
-    Kubernetes
+    Overview
   
 
     
@@ -1396,22 +1448,22 @@ data-et-multi-view="{&quot;schema&quot;:{&quot;content&quot;:{&quot;desktop&quot
 </li>
       
         <li class="md-nav__item">
-  <a href="#preparing-the-configuration" class="md-nav__link">
+  <a href="#deployment-guides" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Preparing the configuration
+        Deployment Guides
       
     </span>
   </a>
   
-    <nav class="md-nav" aria-label="Preparing the configuration">
+    <nav class="md-nav" aria-label="Deployment Guides">
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
-  <a href="#resources" class="md-nav__link">
+  <a href="#axonops-platform-deployment" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Resources
+        AxonOps Platform Deployment
       
     </span>
   </a>
@@ -1419,10 +1471,10 @@ data-et-multi-view="{&quot;schema&quot;:{&quot;content&quot;:{&quot;desktop&quot
 </li>
         
           <li class="md-nav__item">
-  <a href="#elasticsearch" class="md-nav__link">
+  <a href="#strimzi-kafka-cluster-with-axonops" class="md-nav__link">
     <span class="md-ellipsis">
       
-        ElasticSearch
+        Strimzi Kafka Cluster with AxonOps
       
     </span>
   </a>
@@ -1430,10 +1482,10 @@ data-et-multi-view="{&quot;schema&quot;:{&quot;content&quot;:{&quot;desktop&quot
 </li>
         
           <li class="md-nav__item">
-  <a href="#axonops" class="md-nav__link">
+  <a href="#k8ssandra-cassandra-cluster-with-axonops" class="md-nav__link">
     <span class="md-ellipsis">
       
-        AxonOps
+        K8ssandra Cassandra Cluster with AxonOps
       
     </span>
   </a>
@@ -1446,47 +1498,133 @@ data-et-multi-view="{&quot;schema&quot;:{&quot;content&quot;:{&quot;desktop&quot
 </li>
       
         <li class="md-nav__item">
-  <a href="#installing" class="md-nav__link">
+  <a href="#prerequisites" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Installing
-      
-    </span>
-  </a>
-  
-    <nav class="md-nav" aria-label="Installing">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#elasticsearch_1" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        ElasticSearch
+        Prerequisites
       
     </span>
   </a>
   
 </li>
-        
-          <li class="md-nav__item">
-  <a href="#axonops_1" class="md-nav__link">
+      
+        <li class="md-nav__item">
+  <a href="#architecture-overview" class="md-nav__link">
     <span class="md-ellipsis">
       
-        AxonOps
+        Architecture Overview
       
     </span>
   </a>
   
 </li>
-        
-      </ul>
-    </nav>
+      
+        <li class="md-nav__item">
+  <a href="#getting-started" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Getting Started
+      
+    </span>
+  </a>
   
 </li>
       
     </ul>
   
 </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="axonops/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    AxonOps Platform
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="strimzi/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Strimzi Kafka Cluster
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="k8ssandra/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    K8ssandra Cassandra Cluster
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
       
     </li>
   
@@ -25487,22 +25625,22 @@ data-et-multi-view="{&quot;schema&quot;:{&quot;content&quot;:{&quot;desktop&quot
 </li>
       
         <li class="md-nav__item">
-  <a href="#preparing-the-configuration" class="md-nav__link">
+  <a href="#deployment-guides" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Preparing the configuration
+        Deployment Guides
       
     </span>
   </a>
   
-    <nav class="md-nav" aria-label="Preparing the configuration">
+    <nav class="md-nav" aria-label="Deployment Guides">
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
-  <a href="#resources" class="md-nav__link">
+  <a href="#axonops-platform-deployment" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Resources
+        AxonOps Platform Deployment
       
     </span>
   </a>
@@ -25510,10 +25648,10 @@ data-et-multi-view="{&quot;schema&quot;:{&quot;content&quot;:{&quot;desktop&quot
 </li>
         
           <li class="md-nav__item">
-  <a href="#elasticsearch" class="md-nav__link">
+  <a href="#strimzi-kafka-cluster-with-axonops" class="md-nav__link">
     <span class="md-ellipsis">
       
-        ElasticSearch
+        Strimzi Kafka Cluster with AxonOps
       
     </span>
   </a>
@@ -25521,10 +25659,10 @@ data-et-multi-view="{&quot;schema&quot;:{&quot;content&quot;:{&quot;desktop&quot
 </li>
         
           <li class="md-nav__item">
-  <a href="#axonops" class="md-nav__link">
+  <a href="#k8ssandra-cassandra-cluster-with-axonops" class="md-nav__link">
     <span class="md-ellipsis">
       
-        AxonOps
+        K8ssandra Cassandra Cluster with AxonOps
       
     </span>
   </a>
@@ -25537,41 +25675,35 @@ data-et-multi-view="{&quot;schema&quot;:{&quot;content&quot;:{&quot;desktop&quot
 </li>
       
         <li class="md-nav__item">
-  <a href="#installing" class="md-nav__link">
+  <a href="#prerequisites" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Installing
-      
-    </span>
-  </a>
-  
-    <nav class="md-nav" aria-label="Installing">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#elasticsearch_1" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        ElasticSearch
+        Prerequisites
       
     </span>
   </a>
   
 </li>
-        
-          <li class="md-nav__item">
-  <a href="#axonops_1" class="md-nav__link">
+      
+        <li class="md-nav__item">
+  <a href="#architecture-overview" class="md-nav__link">
     <span class="md-ellipsis">
       
-        AxonOps
+        Architecture Overview
       
     </span>
   </a>
   
 </li>
-        
-      </ul>
-    </nav>
+      
+        <li class="md-nav__item">
+  <a href="#getting-started" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Getting Started
+      
+    </span>
+  </a>
   
 </li>
       
@@ -25594,182 +25726,93 @@ data-et-multi-view="{&quot;schema&quot;:{&quot;content&quot;:{&quot;desktop&quot
 
 <div><h1 id="running-axonops-on-kubernetes">Running AxonOps on Kubernetes<a class="headerlink" href="#running-axonops-on-kubernetes" title="Permanent link">¶</a></h1>
 <h2 id="introduction">Introduction<a class="headerlink" href="#introduction" title="Permanent link">¶</a></h2>
-<p>The following shows how to install AxonOps for monitoring cassandra. AxonOps requires ElasticSearch and the documentation below shows how to install both. If you already have ElasticSearch running, you can omit the installation and just ensure the AxonOps config points to it.</p>
-<p>AxonOps installation uses Helm Charts. Helm v3.8.0 or later is required in order to access the OCI repository hosting the charts.
-The raw charts can be downloaded from the <a href="https://github.com/axonops/helm-axonops">GitHub repository</a>.</p>
-<h2 id="preparing-the-configuration">Preparing the configuration<a class="headerlink" href="#preparing-the-configuration" title="Permanent link">¶</a></h2>
-<h3 id="resources">Resources<a class="headerlink" href="#resources" title="Permanent link">¶</a></h3>
-<table>
-<thead>
-<tr>
-<th>Cassandra Nodes</th>
-<th>ElasticSearch CPU</th>
-<th>ElasticSearch Memory</th>
-<th>AxonOps Server CPU</th>
-<th>AxonOps Server Memory</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>&lt;10</td>
-<td>1000m</td>
-<td>4Gi</td>
-<td>750m</td>
-<td>1Gi</td>
-</tr>
-<tr>
-<td>&lt;50</td>
-<td>1000m</td>
-<td>4Gi</td>
-<td>2000m</td>
-<td>6Gi</td>
-</tr>
-<tr>
-<td>100</td>
-<td>2000m</td>
-<td>16Gi</td>
-<td>4000m</td>
-<td>12Gi</td>
-</tr>
-<tr>
-<td>200</td>
-<td>4000m</td>
-<td>32Gi</td>
-<td>8000m</td>
-<td>24Gi</td>
-</tr>
-</tbody>
-</table>
-<h3 id="elasticsearch">ElasticSearch<a class="headerlink" href="#elasticsearch" title="Permanent link">¶</a></h3>
-<p>The example below is a configuration file for the official <a href="https://artifacthub.io/packages/helm/elastic/elasticsearch">ElasticSearch helm repository</a>. See inline comments:</p>
-<div class="highlight"><pre><span></span><code><span class="nn">---</span>
-<span class="nt">clusterName</span><span class="p">:</span><span class="w"> </span><span class="s">"axonops-elastic"</span>
-
-<span class="nt">replicas</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">1</span>
-
-<span class="nt">esConfig</span><span class="p">:</span>
-<span class="w">  </span><span class="nt">elasticsearch.yml</span><span class="p">:</span><span class="w"> </span><span class="p p-Indicator">|</span>
-<span class="w">    </span><span class="no">thread_pool.write.queue_size: 2000</span>
-
-<span class="nt">roles</span><span class="p">:</span>
-<span class="w">  </span><span class="nt">master</span><span class="p">:</span><span class="w"> </span><span class="s">"true"</span>
-<span class="w">  </span><span class="nt">ingest</span><span class="p">:</span><span class="w"> </span><span class="s">"true"</span>
-<span class="w">  </span><span class="nt">data</span><span class="p">:</span><span class="w"> </span><span class="s">"true"</span>
-<span class="w">  </span><span class="nt">remote_cluster_client</span><span class="p">:</span><span class="w"> </span><span class="s">"false"</span>
-<span class="w">  </span><span class="nt">ml</span><span class="p">:</span><span class="w"> </span><span class="s">"false"</span>
-
-<span class="c1"># Adjust the memory and cpu requirements to your deployment</span>
-<span class="c1"># </span>
-<span class="nt">esJavaOpts</span><span class="p">:</span><span class="w"> </span><span class="s">"-Xms2g</span><span class="nv"> </span><span class="s">-Xmx2g"</span>
-
-<span class="nt">resources</span><span class="p">:</span>
-<span class="w">  </span><span class="nt">requests</span><span class="p">:</span>
-<span class="w">    </span><span class="nt">cpu</span><span class="p">:</span><span class="w"> </span><span class="s">"750m"</span>
-<span class="w">    </span><span class="nt">memory</span><span class="p">:</span><span class="w"> </span><span class="s">"2Gi"</span>
-<span class="w">  </span><span class="nt">limits</span><span class="p">:</span>
-<span class="w">    </span><span class="nt">cpu</span><span class="p">:</span><span class="w"> </span><span class="s">"1500m"</span>
-<span class="w">    </span><span class="nt">memory</span><span class="p">:</span><span class="w"> </span><span class="s">"4Gi"</span>
-
-<span class="nt">volumeClaimTemplate</span><span class="p">:</span>
-<span class="w">  </span><span class="nt">accessModes</span><span class="p">:</span><span class="w"> </span><span class="p p-Indicator">[</span><span class="s">"ReadWriteOnce"</span><span class="p p-Indicator">]</span>
-<span class="w">  </span><span class="nt">storageClassName</span><span class="p">:</span><span class="w"> </span><span class="s">""</span><span class="w"> </span><span class="c1"># adjust to your storageClass if you don't want to use default</span>
-<span class="w">  </span><span class="nt">resources</span><span class="p">:</span>
-<span class="w">    </span><span class="nt">requests</span><span class="p">:</span>
-<span class="w">      </span><span class="nt">storage</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">50Gi</span>
-
-<span class="nt">rbac</span><span class="p">:</span>
-<span class="w">  </span><span class="nt">create</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">true</span>
+<p>AxonOps provides comprehensive monitoring and management solutions for Apache Cassandra and Apache Kafka deployments running on Kubernetes. This section provides detailed guides for deploying AxonOps components and integrating them with your Kubernetes-based data infrastructure.</p>
+<p>Whether you're running Cassandra for time-series metrics storage, Kafka clusters managed by Strimzi, or other data platforms, AxonOps seamlessly integrates with Kubernetes to provide:</p>
+<ul>
+<li><strong>Real-time monitoring</strong> of cluster health and performance</li>
+<li><strong>Automated management</strong> capabilities through the AxonOps agent</li>
+<li><strong>Centralized dashboards</strong> for visualization and analysis</li>
+<li><strong>Native Kubernetes integration</strong> using Helm charts and operators</li>
+<li><strong>Flexible storage options</strong> including hostPath and persistent volume claims</li>
+</ul>
+<h2 id="deployment-guides">Deployment Guides<a class="headerlink" href="#deployment-guides" title="Permanent link">¶</a></h2>
+<h3 id="axonops-platform-deployment"><a href="axonops/">AxonOps Platform Deployment</a><a class="headerlink" href="#axonops-platform-deployment" title="Permanent link">¶</a></h3>
+<p>Complete guide for deploying the core AxonOps platform on Kubernetes, including:</p>
+<ul>
+<li>AxonOps Server - Core management server</li>
+<li>AxonOps Dashboard - Web UI for monitoring and management</li>
+<li>AxonOps Timeseries DB - Cassandra-based metrics storage</li>
+<li>AxonOps Search DB - OpenSearch-based log and event storage</li>
+<li>cert-manager integration for automatic TLS certificate management</li>
+<li>Configuration options for both local (hostPath) and shared storage</li>
+</ul>
+<p><a href="axonops/">View AxonOps deployment guide →</a></p>
+<h3 id="strimzi-kafka-cluster-with-axonops"><a href="strimzi/">Strimzi Kafka Cluster with AxonOps</a><a class="headerlink" href="#strimzi-kafka-cluster-with-axonops" title="Permanent link">¶</a></h3>
+<p>Deploy a production-ready Kafka cluster using the Strimzi operator with integrated AxonOps monitoring:</p>
+<ul>
+<li>KRaft-based Kafka cluster (no ZooKeeper required)</li>
+<li>3 Controller nodes + 3 Broker nodes architecture</li>
+<li>Local hostPath or shared storage configuration</li>
+<li>AxonOps agent integration for comprehensive monitoring</li>
+<li>Step-by-step configuration for node pools and persistent volumes</li>
+</ul>
+<p><a href="strimzi/">View Strimzi deployment guide →</a></p>
+<h3 id="k8ssandra-cassandra-cluster-with-axonops"><a href="k8ssandra/">K8ssandra Cassandra Cluster with AxonOps</a><a class="headerlink" href="#k8ssandra-cassandra-cluster-with-axonops" title="Permanent link">¶</a></h3>
+<p>Deploy a production-ready Cassandra cluster using the K8ssandra operator with integrated AxonOps monitoring:</p>
+<ul>
+<li>Cassandra 5.0.6+ with pre-integrated AxonOps agent</li>
+<li>Multi-datacenter support for high availability</li>
+<li>Configurable resource allocation and JVM tuning</li>
+<li>Persistent storage with custom storage classes</li>
+<li>Automated backup and restore with Medusa integration</li>
+<li>Comprehensive monitoring through AxonOps</li>
+</ul>
+<p><a href="k8ssandra/">View K8ssandra deployment guide →</a></p>
+<h2 id="prerequisites">Prerequisites<a class="headerlink" href="#prerequisites" title="Permanent link">¶</a></h2>
+<p>Before deploying AxonOps on Kubernetes, ensure you have:</p>
+<ol>
+<li><strong>Kubernetes cluster</strong> (v1.23 or higher)</li>
+<li><strong>kubectl</strong> configured to access your cluster</li>
+<li><strong>Helm 3</strong> installed for package management</li>
+<li><strong>Storage provisioner</strong> or manual storage setup</li>
+<li><strong>Network connectivity</strong> between pods and services</li>
+</ol>
+<h2 id="architecture-overview">Architecture Overview<a class="headerlink" href="#architecture-overview" title="Permanent link">¶</a></h2>
+<p>A typical AxonOps deployment on Kubernetes consists of:</p>
+<div class="highlight"><pre><span></span><code>┌─────────────────────────────────────────────────────────────┐
+│                     Kubernetes Cluster                      │
+├─────────────────────────────────────────────────────────────┤
+│                                                             │
+│  ┌──────────────────┐         ┌──────────────────┐          │
+│  │  AxonOps Server  │◄────────┤ AxonOps Dashboard│          │
+│  │   (Management)   │         │     (Web UI)     │          │
+│  └────────┬─────────┘         └──────────────────┘          │
+│           │                                                 │
+│           ├──────────┬──────────────────-─────────────-─────┤
+│           │          │                                      │
+│  ┌────────▼───────┐ ┌▼───────────────┐                      │
+│  │  Timeseries DB │ │   Search DB    │                      │
+│  │  (Cassandra)   │ │  (OpenSearch)  │.                     │ 
+│  └────────────────┘ └────────────────┘.                     │ 
+│                                                             │
+└─────────────────────────────────────────────────────────────┘
 </code></pre></div>
-<p>Save the configuration as <code>elastic.yaml</code> and you install it with:</p>
-<div class="highlight"><pre><span></span><code>helm<span class="w"> </span>upgrade<span class="w"> </span>--install<span class="w"> </span>elasticsearch<span class="w"> </span>elastic/elasticsearch<span class="w"> </span>--create-namespace<span class="w"> </span>-n<span class="w"> </span>axonops<span class="w"> </span><span class="se">\</span>
-<span class="w">  </span>--set<span class="w"> </span>secret.password<span class="o">=</span><span class="s2">"password"</span><span class="w"> </span>-f<span class="w"> </span>elastic.yaml
-</code></pre></div>
-<blockquote>
-<p><strong><em>NOTE:</em></strong> This example uses as password in plaintext. Check out the helm chart documentation on how to use
-secrets and consider using a secrets manager.</p>
-</blockquote>
-<h3 id="axonops">AxonOps<a class="headerlink" href="#axonops" title="Permanent link">¶</a></h3>
-<p>The default AxonOps installation does not expose the services outside of the cluster. We recommend that you use either a LoadBalancer service or an Ingress.</p>
-<p>Below you can find an example using <code>Ingress</code> to expose both the dashboard and the AxonOps server.</p>
-<div class="highlight"><pre><span></span><code><span class="nt">axon-dash</span><span class="p">:</span>
-<span class="w">  </span><span class="nt">image</span><span class="p">:</span>
-<span class="w">    </span><span class="nt">pullPolicy</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">IfNotPresent</span>
-<span class="w">    </span><span class="nt">repository</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">registry.axonops.com/axonops-public/axonops-docker/axon-dash</span>
-<span class="w">    </span><span class="nt">tag</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">latest</span>
-<span class="w">  </span><span class="nt">ingress</span><span class="p">:</span>
-<span class="w">    </span><span class="nt">enabled</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">true</span>
-<span class="w">    </span><span class="nt">className</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">nginx</span>
-<span class="w">    </span><span class="nt">annotations</span><span class="p">:</span>
-<span class="w">      </span><span class="nt">external-dns.alpha.kubernetes.io/hostname</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">axonops.mycompany.com</span>
-<span class="w">    </span><span class="nt">hosts</span><span class="p">:</span>
-<span class="w">      </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">host</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">axonops.mycompany.com</span>
-<span class="w">        </span><span class="nt">path</span><span class="p">:</span><span class="w"> </span><span class="s">"/"</span>
-<span class="w">    </span><span class="nt">tls</span><span class="p">:</span>
-<span class="w">      </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">hosts</span><span class="p">:</span>
-<span class="w">          </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">axonops.mycompany.com</span>
-<span class="w">        </span><span class="nt">secretName</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">axon-dash-tls</span>
-<span class="w">  </span><span class="nt">resources</span><span class="p">:</span>
-<span class="w">    </span><span class="nt">limits</span><span class="p">:</span>
-<span class="w">      </span><span class="nt">cpu</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">1000m</span>
-<span class="w">      </span><span class="nt">memory</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">1536Mi</span>
-<span class="w">    </span><span class="nt">requests</span><span class="p">:</span>
-<span class="w">      </span><span class="nt">cpu</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">25m</span>
-<span class="w">      </span><span class="nt">memory</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">256Mi</span>
-
-<span class="c1"># If you are using an existing ElasticSearch rather than installing it </span>
-<span class="c1"># as shown above then make sure you update the elasticHost URL below</span>
-<span class="nt">axon-server</span><span class="p">:</span>
-<span class="w">  </span><span class="nt">elasticHost</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">http://username:password@axonops-elastic-master:9200</span>
-<span class="w">  </span><span class="nt">dashboardUrl</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">https://axonops.mycompany.com</span>
-<span class="w">  </span><span class="nt">config</span><span class="p">:</span>
-<span class="w">    </span><span class="c1"># Set your organization name here. This must match the name used in your license key</span>
-<span class="w">    </span><span class="nt">org_name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">demo</span>
-<span class="w">    </span><span class="c1"># Enter your AxonOps license key here</span>
-<span class="w">    </span><span class="nt">license_key</span><span class="p">:</span><span class="w"> </span><span class="s">"..."</span>
-<span class="w">  </span><span class="nt">image</span><span class="p">:</span>
-<span class="w">    </span><span class="nt">pullPolicy</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">IfNotPresent</span>
-<span class="w">    </span><span class="nt">repository</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">registry.axonops.com/axonops-public/axonops-docker/axon-server</span>
-<span class="w">    </span><span class="nt">tag</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">latest</span>
-<span class="w">  </span><span class="c1"># Enable the agent ingress to allow agents to connect from outside the Kubernetes cluster</span>
-<span class="w">  </span><span class="nt">agentIngress</span><span class="p">:</span>
-<span class="w">    </span><span class="nt">enabled</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">true</span>
-<span class="w">    </span><span class="nt">className</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">nginx</span>
-<span class="w">    </span><span class="nt">annotations</span><span class="p">:</span>
-<span class="w">      </span><span class="nt">external-dns.alpha.kubernetes.io/hostname</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">axonops-server.mycompany.com</span>
-<span class="w">    </span><span class="nt">hosts</span><span class="p">:</span>
-<span class="w">      </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">host</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">axonops-server.mycompany.com</span>
-<span class="w">        </span><span class="nt">path</span><span class="p">:</span><span class="w"> </span><span class="s">"/"</span>
-<span class="w">    </span><span class="nt">tls</span><span class="p">:</span>
-<span class="w">      </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">hosts</span><span class="p">:</span>
-<span class="w">          </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">axonops-server.mycompany.com</span>
-<span class="w">        </span><span class="nt">secretName</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">axon-server-tls</span>
-
-<span class="w">  </span><span class="nt">resources</span><span class="p">:</span>
-<span class="w">    </span><span class="nt">limits</span><span class="p">:</span>
-<span class="w">      </span><span class="nt">cpu</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">1</span>
-<span class="w">      </span><span class="nt">memory</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">1Gi</span>
-<span class="w">    </span><span class="nt">requests</span><span class="p">:</span>
-<span class="w">      </span><span class="nt">cpu</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">100m</span>
-<span class="w">      </span><span class="nt">memory</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">256Mi</span>
-</code></pre></div>
-<p>An example values file showing all available options can be found in the GitHub repository here: <a href="https://github.com/axonops/helm-axonops/blob/main/values-full.yaml">values-full.yaml</a></p>
-<h2 id="installing">Installing<a class="headerlink" href="#installing" title="Permanent link">¶</a></h2>
-<h3 id="elasticsearch_1">ElasticSearch<a class="headerlink" href="#elasticsearch_1" title="Permanent link">¶</a></h3>
-<p>Now you can install Elasticsearch referencing the configuration file created in the previous step:</p>
-<div class="highlight"><pre><span></span><code>helm<span class="w"> </span>repo<span class="w"> </span>add<span class="w"> </span>elastic<span class="w"> </span>https://helm.elastic.co
-helm<span class="w"> </span>update
-helm<span class="w"> </span>upgrade<span class="w"> </span>-n<span class="w"> </span>axonops<span class="w"> </span>--install<span class="w"> </span><span class="se">\</span>
-<span class="w">  </span>--create-namespace<span class="w"> </span><span class="se">\</span>
-<span class="w">  </span>-f<span class="w"> </span><span class="s2">"elasticsearch.yaml"</span><span class="w"> </span><span class="se">\</span>
-<span class="w">  </span>elasticsearch<span class="w"> </span>elastic/elasticsearch
-</code></pre></div>
-<h3 id="axonops_1">AxonOps<a class="headerlink" href="#axonops_1" title="Permanent link">¶</a></h3>
-<p>Finally install the AxonOps helm chart:</p>
-<div class="highlight"><pre><span></span><code>helm<span class="w"> </span>upgrade<span class="w"> </span>-n<span class="w"> </span>axonops<span class="w"> </span>--install<span class="w"> </span><span class="se">\</span>
-<span class="w">  </span>--create-namespace<span class="w"> </span><span class="se">\</span>
-<span class="w">  </span>-f<span class="w"> </span><span class="s2">"axonops.yaml"</span><span class="w"> </span><span class="se">\</span>
-<span class="w">  </span>axonops<span class="w"> </span>oci://helm.axonops.com/axonops-public/axonops-helm/axonops
-</code></pre></div></div>
+<h2 id="getting-started">Getting Started<a class="headerlink" href="#getting-started" title="Permanent link">¶</a></h2>
+<ol>
+<li>
+<p><strong><a href="axonops/">Deploy AxonOps Platform</a></strong> - Start by deploying the core AxonOps infrastructure including the server, dashboard, and backing databases.</p>
+</li>
+<li>
+<p><strong>Deploy Monitored Services</strong> - Once AxonOps is running, deploy your data platform clusters with integrated monitoring agents:</p>
+</li>
+<li><strong><a href="strimzi/">Strimzi Kafka Cluster</a></strong> - Deploy a KRaft-based Kafka cluster with AxonOps monitoring</li>
+<li>
+<p><strong><a href="k8ssandra/">K8ssandra Cassandra Cluster</a></strong> - Deploy a Cassandra cluster with AxonOps monitoring</p>
+</li>
+<li>
+<p><strong>Configure and Monitor</strong> - Access the AxonOps dashboard to visualize metrics, manage clusters, and configure alerts.</p>
+</li>
+</ol></div>
 
 
 
@@ -25827,13 +25870,13 @@ helm<span class="w"> </span>upgrade<span class="w"> </span>-n<span class="w"> </
         
         
           
-          <a href="../../system-requirements/" class="md-footer__link md-footer__link--next" aria-label="Next: System Requirements">
+          <a href="axonops/" class="md-footer__link md-footer__link--next" aria-label="Next: AxonOps Platform">
             <div class="md-footer__title">
               <span class="md-footer__direction">
                 Next
               </span>
               <div class="md-ellipsis">
-                System Requirements
+                AxonOps Platform
               </div>
             </div>
             <div class="md-footer__button md-icon">
@@ -25969,10 +26012,10 @@ helm<span class="w"> </span>upgrade<span class="w"> </span>-n<span class="w"> </
     
       
       
-      <script id="__config" type="application/json">{"annotate": null, "base": "../..", "features": ["navigation.instant", "navigation.tabs", "announce.dismiss", "navigation.top", "navigation.footer", "content.code.copy"], "search": "../../assets/javascripts/workers/search.7a47a382.min.js", "tags": null, "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": null}</script>
+      <script id="__config" type="application/json">{"annotate": null, "base": "../..", "features": ["navigation.instant", "navigation.tabs", "announce.dismiss", "navigation.top", "navigation.footer", "content.code.copy"], "search": "../../assets/javascripts/workers/search.2c215733.min.js", "tags": null, "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": null}</script>
     
     
-      <script src="../../assets/javascripts/bundle.e71a0d61.min.js"></script>
+      <script src="../../assets/javascripts/bundle.79ae519e.min.js"></script>
       
         <script src="../../javascripts/extra.js"></script>
       

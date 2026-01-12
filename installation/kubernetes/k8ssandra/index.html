@@ -3,28 +3,32 @@
       <meta charset="utf-8">
       <meta name="viewport" content="width=device-width,initial-scale=1">
       
-        <meta name="description" content="AxonOps Minikube installation. Local Kubernetes development setup.">
+        <meta name="description" content="Deploy a production-ready Cassandra cluster using K8ssandra with AxonOps monitoring integration">
       
       
       
-        <link rel="canonical" href="https://docs.axonops.com/installation/kubernetes/minikube/">
+        <link rel="canonical" href="https://docs.axonops.com/installation/kubernetes/k8ssandra/">
       
       
+        <link rel="prev" href="../strimzi/">
+      
+      
+        <link rel="next" href="../../../system-requirements/">
       
       
         
       
       
       <link rel="icon" href="/img/favicon.ico">
-      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.7.0">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.7.1">
     
     
 
-  <title>Cassandra with AxonOps on Kubernetes</title>
+  <title>K8ssandra Cassandra Cluster with AxonOps Agent</title>
 
 
     
-      <link rel="stylesheet" href="../../../assets/stylesheets/main.618322db.min.css">
+      <link rel="stylesheet" href="../../../assets/stylesheets/main.484c7ddc.min.css">
       
         
         <link rel="stylesheet" href="../../../assets/stylesheets/palette.ab4e12ef.min.css">
@@ -65,8 +69,8 @@
 {
   "@context": "https://schema.org",
   "@type": "TechArticle",
-  "headline": "Cassandra with AxonOps on Kubernetes - AxonOps Documentation",
-  "description": "AxonOps Minikube installation. Local Kubernetes development setup.",
+  "headline": "K8ssandra Cassandra Cluster - AxonOps Documentation",
+  "description": "Deploy a production-ready Cassandra cluster using K8ssandra with AxonOps monitoring integration",
   "about": {
     "@type": "SoftwareApplication",
     "name": "AxonOps",
@@ -89,7 +93,7 @@
   },
   "mainEntityOfPage": {
     "@type": "WebPage",
-    "@id": "https://docs.axonops.com/installation/kubernetes/minikube/"
+    "@id": "https://docs.axonops.com/installation/kubernetes/k8ssandra/"
   },
   "inLanguage": "en",
   "isAccessibleForFree": true,
@@ -189,7 +193,7 @@ document.addEventListener('DOMContentLoaded', function() {
     <div data-md-component="skip">
       
         
-        <a href="#cassandra-with-axonops-on-kubernetes" class="md-skip">
+        <a href="#k8ssandra-cassandra-cluster-with-axonops-agent" class="md-skip">
           Skip to content
         </a>
       
@@ -243,7 +247,7 @@ document.addEventListener('DOMContentLoaded', function() {
         <div class="md-header__topic" data-md-component="header-topic">
           <span class="md-ellipsis">
             
-              Cassandra with AxonOps on Kubernetes
+              K8ssandra Cassandra Cluster with AxonOps Agent
             
           </span>
         </div>
@@ -424,10 +428,12 @@ data-et-multi-view="{&quot;schema&quot;:{&quot;content&quot;:{&quot;desktop&quot
   
   
   
+    
+  
   
     
     
-      <li class="md-tabs__item">
+      <li class="md-tabs__item md-tabs__item--active">
         <a href="../../../get_started/getting_started/" class="md-tabs__link">
           
   
@@ -955,24 +961,29 @@ data-et-multi-view="{&quot;schema&quot;:{&quot;content&quot;:{&quot;desktop&quot
       
   
   
+    
   
   
+  
     
     
     
     
-      
-      
-    
-    
-    <li class="md-nav__item md-nav__item--nested">
       
         
         
-        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_4">
+      
+      
+    
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_4" checked>
         
           
-          <label class="md-nav__link" for="__nav_4" id="__nav_4_label" tabindex="0">
+          <label class="md-nav__link" for="__nav_4" id="__nav_4_label" tabindex="">
             
   
   
@@ -990,7 +1001,7 @@ data-et-multi-view="{&quot;schema&quot;:{&quot;content&quot;:{&quot;desktop&quot
             <span class="md-nav__icon md-icon"></span>
           </label>
         
-        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_4_label" aria-expanded="false">
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_4_label" aria-expanded="true">
           <label class="md-nav__title" for="__nav_4">
             <span class="md-nav__icon md-icon"></span>
             
@@ -1119,6 +1130,8 @@ data-et-multi-view="{&quot;schema&quot;:{&quot;content&quot;:{&quot;desktop&quot
                 
   
   
+    
+  
   
   
     
@@ -1129,11 +1142,11 @@ data-et-multi-view="{&quot;schema&quot;:{&quot;content&quot;:{&quot;desktop&quot
       
     
     
-    <li class="md-nav__item md-nav__item--nested">
+    <li class="md-nav__item md-nav__item--active md-nav__item--nested">
       
         
         
-        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_4_3">
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_4_3" checked>
         
           
           <label class="md-nav__link" for="__nav_4_3" id="__nav_4_3_label" tabindex="0">
@@ -1154,7 +1167,7 @@ data-et-multi-view="{&quot;schema&quot;:{&quot;content&quot;:{&quot;desktop&quot
             <span class="md-nav__icon md-icon"></span>
           </label>
         
-        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_4_3_label" aria-expanded="false">
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_4_3_label" aria-expanded="true">
           <label class="md-nav__title" for="__nav_4_3">
             <span class="md-nav__icon md-icon"></span>
             
@@ -1309,11 +1322,27 @@ data-et-multi-view="{&quot;schema&quot;:{&quot;content&quot;:{&quot;desktop&quot
                 
   
   
+    
   
   
-    <li class="md-nav__item">
-      <a href="../" class="md-nav__link">
+  
+    
+    
+    
+    
+      
+      
+    
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--nested">
+      
         
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_4_3_6" checked>
+        
+          
+          <label class="md-nav__link" for="__nav_4_3_6" id="__nav_4_3_6_label" tabindex="0">
+            
   
   
   <span class="md-ellipsis">
@@ -1327,7 +1356,642 @@ data-et-multi-view="{&quot;schema&quot;:{&quot;content&quot;:{&quot;desktop&quot
   
   
 
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="3" aria-labelledby="__nav_4_3_6_label" aria-expanded="true">
+          <label class="md-nav__title" for="__nav_4_3_6">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Kubernetes
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Overview
+  
+
+    
+  </span>
+  
+  
+
       </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../axonops/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    AxonOps Platform
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../strimzi/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Strimzi Kafka Cluster
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+    
+  
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    K8ssandra Cassandra Cluster
+  
+
+    
+  </span>
+  
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    K8ssandra Cassandra Cluster
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#components" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Components
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#overview" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Overview
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#architecture" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Architecture
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#prerequisites" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Prerequisites
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#step-1-install-cert-manager" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Step 1: Install cert-manager
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#step-2-install-k8ssandra-operator" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Step 2: Install K8ssandra Operator
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#step-3-create-k8ssandra-cluster" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Step 3: Create K8ssandra Cluster
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Step 3: Create K8ssandra Cluster">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#configuration-variables" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Configuration Variables
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#basic-cluster-configuration" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Basic Cluster Configuration
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#example-configuration" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Example Configuration
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#step-4-deploy-the-cluster" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Step 4: Deploy the Cluster
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#verification" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Verification
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Verification">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#check-cluster-status" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Check Cluster Status
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#check-pod-status" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Check Pod Status
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#check-storage" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Check Storage
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#verify-cassandra-cluster" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Verify Cassandra Cluster
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#verify-axonops-agent-connection" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Verify AxonOps Agent Connection
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#cluster-configuration-details" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Cluster Configuration Details
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Cluster Configuration Details">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#cassandra-settings" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Cassandra Settings
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#resource-configuration" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Resource Configuration
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#jvm-settings" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        JVM Settings
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#advanced-configuration" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Advanced Configuration
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Advanced Configuration">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#multi-datacenter-setup" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Multi-Datacenter Setup
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#using-secrets-for-axonops-credentials" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Using Secrets for AxonOps Credentials
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#accessing-the-cluster" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Accessing the Cluster
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Accessing the Cluster">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#using-kubectl-port-forward" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Using kubectl port-forward
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#creating-a-service" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Creating a Service
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#troubleshooting" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Troubleshooting
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Troubleshooting">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#pods-not-starting" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Pods Not Starting
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#cassandra-nodes-not-joining" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Cassandra Nodes Not Joining
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#axonops-agent-not-connecting" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        AxonOps Agent Not Connecting
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#storage-issues" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Storage Issues
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#scaling-the-cluster" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Scaling the Cluster
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Scaling the Cluster">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#adding-nodes" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Adding Nodes
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#removing-nodes" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Removing Nodes
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#backup-and-restore" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Backup and Restore
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#cleanup" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Cleanup
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#additional-resources" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Additional Resources
+      
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
     </li>
   
 
@@ -25316,10 +25980,10 @@ data-et-multi-view="{&quot;schema&quot;:{&quot;content&quot;:{&quot;desktop&quot
     <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
       
         <li class="md-nav__item">
-  <a href="#introduction" class="md-nav__link">
+  <a href="#components" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Introduction
+        Components
       
     </span>
   </a>
@@ -25327,29 +25991,6 @@ data-et-multi-view="{&quot;schema&quot;:{&quot;content&quot;:{&quot;desktop&quot
 </li>
       
         <li class="md-nav__item">
-  <a href="#using-minikube" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Using minikube
-      
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#helmfile" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Helmfile
-      
-    </span>
-  </a>
-  
-    <nav class="md-nav" aria-label="Helmfile">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
   <a href="#overview" class="md-nav__link">
     <span class="md-ellipsis">
       
@@ -25359,35 +26000,68 @@ data-et-multi-view="{&quot;schema&quot;:{&quot;content&quot;:{&quot;desktop&quot
   </a>
   
 </li>
-        
-          <li class="md-nav__item">
-  <a href="#install-requirements" class="md-nav__link">
+      
+        <li class="md-nav__item">
+  <a href="#architecture" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Install requirements
+        Architecture
       
     </span>
   </a>
   
 </li>
-        
-          <li class="md-nav__item">
-  <a href="#config-files" class="md-nav__link">
+      
+        <li class="md-nav__item">
+  <a href="#prerequisites" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Config files
+        Prerequisites
       
     </span>
   </a>
   
-    <nav class="md-nav" aria-label="Config files">
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#step-1-install-cert-manager" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Step 1: Install cert-manager
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#step-2-install-k8ssandra-operator" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Step 2: Install K8ssandra Operator
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#step-3-create-k8ssandra-cluster" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Step 3: Create K8ssandra Cluster
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Step 3: Create K8ssandra Cluster">
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
-  <a href="#helmfileyaml" class="md-nav__link">
+  <a href="#configuration-variables" class="md-nav__link">
     <span class="md-ellipsis">
       
-        helmfile.yaml
+        Configuration Variables
       
     </span>
   </a>
@@ -25395,10 +26069,10 @@ data-et-multi-view="{&quot;schema&quot;:{&quot;content&quot;:{&quot;desktop&quot
 </li>
         
           <li class="md-nav__item">
-  <a href="#valuesyaml" class="md-nav__link">
+  <a href="#basic-cluster-configuration" class="md-nav__link">
     <span class="md-ellipsis">
       
-        values.yaml
+        Basic Cluster Configuration
       
     </span>
   </a>
@@ -25406,18 +26080,13 @@ data-et-multi-view="{&quot;schema&quot;:{&quot;content&quot;:{&quot;desktop&quot
 </li>
         
           <li class="md-nav__item">
-  <a href="#axon-agentyml" class="md-nav__link">
+  <a href="#example-configuration" class="md-nav__link">
     <span class="md-ellipsis">
       
-        axon-agent.yml
+        Example Configuration
       
     </span>
   </a>
-  
-</li>
-        
-      </ul>
-    </nav>
   
 </li>
         
@@ -25427,22 +26096,33 @@ data-et-multi-view="{&quot;schema&quot;:{&quot;content&quot;:{&quot;desktop&quot
 </li>
       
         <li class="md-nav__item">
-  <a href="#start-up" class="md-nav__link">
+  <a href="#step-4-deploy-the-cluster" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Start up
+        Step 4: Deploy the Cluster
       
     </span>
   </a>
   
-    <nav class="md-nav" aria-label="Start up">
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#verification" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Verification
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Verification">
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
-  <a href="#create-axon-agent-configuration" class="md-nav__link">
+  <a href="#check-cluster-status" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Create Axon Agent configuration
+        Check Cluster Status
       
     </span>
   </a>
@@ -25450,22 +26130,10 @@ data-et-multi-view="{&quot;schema&quot;:{&quot;content&quot;:{&quot;desktop&quot
 </li>
         
           <li class="md-nav__item">
-  <a href="#run-helmfile" class="md-nav__link">
+  <a href="#check-pod-status" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Run helmfile
-      
-    </span>
-  </a>
-  
-    <nav class="md-nav" aria-label="Run helmfile">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#with-locally-installed-helm-and-helmfile" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        With locally installed helm and helmfile
+        Check Pod Status
       
     </span>
   </a>
@@ -25473,18 +26141,35 @@ data-et-multi-view="{&quot;schema&quot;:{&quot;content&quot;:{&quot;desktop&quot
 </li>
         
           <li class="md-nav__item">
-  <a href="#with-docker-image" class="md-nav__link">
+  <a href="#check-storage" class="md-nav__link">
     <span class="md-ellipsis">
       
-        With docker image
+        Check Storage
       
     </span>
   </a>
   
 </li>
         
-      </ul>
-    </nav>
+          <li class="md-nav__item">
+  <a href="#verify-cassandra-cluster" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Verify Cassandra Cluster
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#verify-axonops-agent-connection" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Verify AxonOps Agent Connection
+      
+    </span>
+  </a>
   
 </li>
         
@@ -25494,22 +26179,22 @@ data-et-multi-view="{&quot;schema&quot;:{&quot;content&quot;:{&quot;desktop&quot
 </li>
       
         <li class="md-nav__item">
-  <a href="#access" class="md-nav__link">
+  <a href="#cluster-configuration-details" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Access
+        Cluster Configuration Details
       
     </span>
   </a>
   
-    <nav class="md-nav" aria-label="Access">
+    <nav class="md-nav" aria-label="Cluster Configuration Details">
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
-  <a href="#minikube" class="md-nav__link">
+  <a href="#cassandra-settings" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Minikube
+        Cassandra Settings
       
     </span>
   </a>
@@ -25517,10 +26202,99 @@ data-et-multi-view="{&quot;schema&quot;:{&quot;content&quot;:{&quot;desktop&quot
 </li>
         
           <li class="md-nav__item">
-  <a href="#loadbalancer" class="md-nav__link">
+  <a href="#resource-configuration" class="md-nav__link">
     <span class="md-ellipsis">
       
-        LoadBalancer
+        Resource Configuration
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#jvm-settings" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        JVM Settings
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#advanced-configuration" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Advanced Configuration
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Advanced Configuration">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#multi-datacenter-setup" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Multi-Datacenter Setup
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#using-secrets-for-axonops-credentials" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Using Secrets for AxonOps Credentials
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#accessing-the-cluster" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Accessing the Cluster
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Accessing the Cluster">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#using-kubectl-port-forward" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Using kubectl port-forward
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#creating-a-service" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Creating a Service
       
     </span>
   </a>
@@ -25545,10 +26319,10 @@ data-et-multi-view="{&quot;schema&quot;:{&quot;content&quot;:{&quot;desktop&quot
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
-  <a href="#storage" class="md-nav__link">
+  <a href="#pods-not-starting" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Storage
+        Pods Not Starting
       
     </span>
   </a>
@@ -25556,30 +26330,35 @@ data-et-multi-view="{&quot;schema&quot;:{&quot;content&quot;:{&quot;desktop&quot
 </li>
         
           <li class="md-nav__item">
-  <a href="#memory" class="md-nav__link">
+  <a href="#cassandra-nodes-not-joining" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Memory
-      
-    </span>
-  </a>
-  
-    <nav class="md-nav" aria-label="Memory">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#minikube_1" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Minikube
+        Cassandra Nodes Not Joining
       
     </span>
   </a>
   
 </li>
         
-      </ul>
-    </nav>
+          <li class="md-nav__item">
+  <a href="#axonops-agent-not-connecting" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        AxonOps Agent Not Connecting
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#storage-issues" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Storage Issues
+      
+    </span>
+  </a>
   
 </li>
         
@@ -25589,10 +26368,71 @@ data-et-multi-view="{&quot;schema&quot;:{&quot;content&quot;:{&quot;desktop&quot
 </li>
       
         <li class="md-nav__item">
-  <a href="#putting-it-all-together" class="md-nav__link">
+  <a href="#scaling-the-cluster" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Putting it all together
+        Scaling the Cluster
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Scaling the Cluster">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#adding-nodes" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Adding Nodes
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#removing-nodes" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Removing Nodes
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#backup-and-restore" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Backup and Restore
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#cleanup" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Cleanup
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#additional-resources" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Additional Resources
       
     </span>
   </a>
@@ -25616,364 +26456,574 @@ data-et-multi-view="{&quot;schema&quot;:{&quot;content&quot;:{&quot;desktop&quot
 
 
 
-<div><h1 id="cassandra-with-axonops-on-kubernetes">Cassandra with AxonOps on Kubernetes<a class="headerlink" href="#cassandra-with-axonops-on-kubernetes" title="Permanent link">¶</a></h1>
-<h2 id="introduction">Introduction<a class="headerlink" href="#introduction" title="Permanent link">¶</a></h2>
-<p>The following shows how to install AxonOps for monitoring cassandra. This process specifically requires the official <a href="https://github.com/helm/charts/tree/master/incubator/cassandra">cassandra helm repository</a>.</p>
-<h2 id="using-minikube">Using minikube<a class="headerlink" href="#using-minikube" title="Permanent link">¶</a></h2>
-<p>The deployment should work fine on latest versions of <a href="https://kubernetes.io/docs/tasks/tools/install-minikube/">minikube</a> as long as you provide enough memory for it.</p>
-<p></p><div class="highlight"><pre><span></span><code>minikube<span class="w"> </span>start<span class="w"> </span>--memory<span class="w"> </span><span class="m">8192</span><span class="w"> </span>--cpus<span class="o">=</span><span class="m">4</span>
-minikube<span class="w"> </span>addons<span class="w"> </span><span class="nb">enable</span><span class="w"> </span>storage-provisioner
-</code></pre></div>
-<strong><img alt="⚠" class="twemoji" src="https://cdn.jsdelivr.net/gh/jdecked/twemoji@16.0.1/assets/svg/26a0.svg" title=":warning:"> Make sure you use a recent version of minikube. Also check available <a href="https://minikube.sigs.k8s.io/docs/drivers/">drivers</a> and select the most appropriate for your platform</strong>
-<h2 id="helmfile">Helmfile<a class="headerlink" href="#helmfile" title="Permanent link">¶</a></h2>
-<h3 id="overview">Overview<a class="headerlink" href="#overview" title="Permanent link">¶</a></h3>
-<p>As this deployment contains multiple applications we recommend you use an automation system such as Ansible or <a href="https://github.com/roboll/helmfile">Helmfile</a> to put together the config. The example below uses helmfile.</p>
-<h3 id="install-requirements">Install requirements<a class="headerlink" href="#install-requirements" title="Permanent link">¶</a></h3>
-<p>You would need to install the following components:</p>
+<div><h1 id="k8ssandra-cassandra-cluster-with-axonops-agent">K8ssandra Cassandra Cluster with AxonOps Agent<a class="headerlink" href="#k8ssandra-cassandra-cluster-with-axonops-agent" title="Permanent link">¶</a></h1>
+<p>This section explains how to deploy a K8ssandra-managed Cassandra cluster on Kubernetes with integrated AxonOps monitoring agent.</p>
+<h2 id="components">Components<a class="headerlink" href="#components" title="Permanent link">¶</a></h2>
 <ul>
-<li>helm: https://helm.sh/docs/intro/install/</li>
-<li>helmfile: https://github.com/roboll/helmfile/releases</li>
+<li><strong>K8ssandra Operator</strong> - Kubernetes operator for managing Cassandra clusters</li>
+<li><strong>cert-manager</strong> (Recommended) - Automatic TLS certificate management</li>
 </ul>
-<p>Alternatively you can consider using a dockerized version of them both such as https://hub.docker.com/r/chatwork/helmfile</p>
-<h3 id="config-files">Config files<a class="headerlink" href="#config-files" title="Permanent link">¶</a></h3>
-<p>The values below are set for running on a laptop with <code>minikube</code>, adjust accordingly for larger deployments.</p>
-<h4 id="helmfileyaml">helmfile.yaml<a class="headerlink" href="#helmfileyaml" title="Permanent link">¶</a></h4>
-<div class="highlight"><pre><span></span><code><span class="nn">---</span>
-<span class="nt">repositories</span><span class="p">:</span>
-<span class="w">  </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">axonops</span>
-<span class="w">    </span><span class="nt">url</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">helm.axonops.com/axonops-public/axonops-helm/axonops</span>
-<span class="w">    </span><span class="nt">oci</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">true</span>
-<span class="w">  </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">bitnami</span>
-<span class="w">    </span><span class="nt">url</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">https://charts.bitnami.com/bitnami</span>
-<span class="w">  </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">ckotzbauer</span>
-<span class="w">    </span><span class="nt">url</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">https://ckotzbauer.github.io/helm-charts</span>
-<span class="nt">releases</span><span class="p">:</span>
-<span class="w">  </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">axon-elastic</span>
-<span class="w">    </span><span class="nt">namespace</span><span class="p">:</span><span class="w"> </span><span class="p p-Indicator">{{</span><span class="w"> </span><span class="nv">env "NAMESPACE" | default "axonops"</span><span class="w"> </span><span class="p p-Indicator">}}</span>
-<span class="w">    </span><span class="nt">chart</span><span class="p">:</span><span class="w"> </span><span class="s">"bitnami/elasticsearch"</span>
-<span class="w">    </span><span class="nt">version</span><span class="p">:</span><span class="w"> </span><span class="s">'12.8.1'</span>
-<span class="w">    </span><span class="nt">wait</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">true</span>
-<span class="w">    </span><span class="nt">values</span><span class="p">:</span>
-<span class="w">      </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">fullnameOverride</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">axon-elastic</span>
-<span class="w">      </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">imageTag</span><span class="p">:</span><span class="w"> </span><span class="s">"7.8.0"</span>
-<span class="w">      </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">data</span><span class="p">:</span>
-<span class="w">          </span><span class="nt">replicas</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">1</span>
-<span class="w">          </span><span class="nt">persistence</span><span class="p">:</span>
-<span class="w">            </span><span class="nt">size</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">1Gi</span>
-<span class="w">            </span><span class="nt">enabled</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">true</span>
-<span class="w">            </span><span class="nt">accessModes</span><span class="p">:</span><span class="w"> </span><span class="p p-Indicator">[</span><span class="w"> </span><span class="s">"ReadWriteOnce"</span><span class="w"> </span><span class="p p-Indicator">]</span>
-<span class="w">      </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">curator</span><span class="p">:</span>
-<span class="w">          </span><span class="nt">enabled</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">true</span>
-<span class="w">      </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">coordinating</span><span class="p">:</span>
-<span class="w">          </span><span class="nt">replicas</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">1</span>
-<span class="w">      </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">master</span><span class="p">:</span>
-<span class="w">          </span><span class="nt">replicas</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">1</span>
-<span class="w">          </span><span class="nt">persistence</span><span class="p">:</span>
-<span class="w">            </span><span class="nt">size</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">1Gi</span>
-<span class="w">            </span><span class="nt">enabled</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">true</span>
-<span class="w">            </span><span class="nt">accessModes</span><span class="p">:</span><span class="w"> </span><span class="p p-Indicator">[</span><span class="w"> </span><span class="s">"ReadWriteOnce"</span><span class="w"> </span><span class="p p-Indicator">]</span>
-
-<span class="w">  </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">axonops</span>
-<span class="w">    </span><span class="nt">namespace</span><span class="p">:</span><span class="w"> </span><span class="p p-Indicator">{{</span><span class="w"> </span><span class="nv">env "NAMESPACE" | default "axonops"</span><span class="w"> </span><span class="p p-Indicator">}}</span>
-<span class="w">    </span><span class="nt">chart</span><span class="p">:</span><span class="w"> </span><span class="s">"digitalis/axonops"</span>
-<span class="w">    </span><span class="nt">wait</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">true</span>
-<span class="w">    </span><span class="nt">values</span><span class="p">:</span>
-<span class="w">      </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">values.yaml</span>
-
-<span class="w">  </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">cassandra</span>
-<span class="w">    </span><span class="nt">namespace</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">cassandra</span>
-<span class="w">    </span><span class="nt">chart</span><span class="p">:</span><span class="w"> </span><span class="s">"digitalis/cassandra"</span>
-<span class="w">    </span><span class="nt">wait</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">true</span>
-<span class="w">    </span><span class="nt">values</span><span class="p">:</span>
-<span class="w">      </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">values.yaml</span>
-
-<span class="w">  </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">cadvisor</span>
-<span class="w">    </span><span class="nt">namespace</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">kube-system</span>
-<span class="w">    </span><span class="nt">chart</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">ckotzbauer/cadvisor</span>
-<span class="w">    </span><span class="nt">version</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">1.2.0</span>
-<span class="w">    </span><span class="nt">values</span><span class="p">:</span>
-<span class="w">      </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">container</span><span class="p">:</span>
-<span class="w">          </span><span class="nt">additionalArgs</span><span class="p">:</span>
-<span class="w">            </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">--housekeeping_interval=5s</span><span class="w">                       </span><span class="c1"># kubernetes default args</span>
-<span class="w">            </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">--max_housekeeping_interval=10s</span>
-<span class="w">            </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">--event_storage_event_limit=default=0</span>
-<span class="w">            </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">--event_storage_age_limit=default=0</span>
-<span class="w">            </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">--disable_metrics=percpu,process,sched,tcp,udp</span><span class="w">    </span><span class="c1"># enable only diskIO, cpu, memory, network, disk</span>
-<span class="w">            </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">--docker_only</span>
-<span class="w">      </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">image</span><span class="p">:</span>
-<span class="w">          </span><span class="nt">repository</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">gcr.io/cadvisor/cadvisor</span>
-<span class="w">          </span><span class="nt">tag</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">v0.37.0</span>
+<h2 id="overview">Overview<a class="headerlink" href="#overview" title="Permanent link">¶</a></h2>
+<p>This deployment creates a production-ready Cassandra cluster with:</p>
+<ul>
+<li>Cassandra 5.0.6+ with AxonOps agent pre-integrated</li>
+<li>Multi-datacenter support</li>
+<li>Configurable resource allocation</li>
+<li>Persistent storage with custom storage classes</li>
+<li>AxonOps agent for comprehensive monitoring and management</li>
+</ul>
+<h2 id="architecture">Architecture<a class="headerlink" href="#architecture" title="Permanent link">¶</a></h2>
+<div class="highlight"><pre><span></span><code>┌─────────────────────────────────────────────────────────────┐
+│ Kubernetes Cluster                                          │
+├─────────────────────────────────────────────────────────────┤
+│ ┌─────────────────┐ ┌─────────────────┐ ┌──────────────┐    │
+│ │ Cassandra-0     │ │ Cassandra-1     │ │ Cassandra-2  │    │
+│ │ (DC1)           │ │ (DC1)           │ │ (DC1)        │    │
+│ │ + AxonOps Agent │ │ + AxonOps Agent │ │ + AxonOps    │    │
+│ └────────┬────────┘ └────────┬────────┘ └──────┬───────┘    │
+│          │                   │                  │           │
+│          └───────────────────┴──────────────────┘           │
+│                              │                              │
+│          ┌───────────────────┴──────────────────┐           │
+│          │ Persistent Storage (PVCs)            │           │
+│          │ /var/lib/cassandra                   │           │
+│          └──────────────────────────────────────┘           │
+└─────────────────────────────────────────────────────────────┘
 </code></pre></div>
-<h4 id="valuesyaml">values.yaml<a class="headerlink" href="#valuesyaml" title="Permanent link">¶</a></h4>
-<div class="highlight"><pre><span></span><code><span class="nn">---</span>
-<span class="nt">persistence</span><span class="p">:</span>
-<span class="w">  </span><span class="nt">enabled</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">true</span>
-<span class="w">  </span><span class="nt">size</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">2Gi</span>
-<span class="w">  </span><span class="nt">accessMode</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">ReadWriteMany</span>
+<h2 id="prerequisites">Prerequisites<a class="headerlink" href="#prerequisites" title="Permanent link">¶</a></h2>
+<ol>
+<li><strong>Kubernetes cluster</strong> (v1.23+)</li>
+<li><strong>AxonOps Server</strong> deployed and accessible</li>
+<li><strong>kubectl</strong> configured to access your cluster</li>
+<li><strong>Helm 3</strong> installed</li>
+<li><strong>AxonOps API key and organization name</strong> for agent authentication</li>
+</ol>
+<h2 id="step-1-install-cert-manager">Step 1: Install cert-manager<a class="headerlink" href="#step-1-install-cert-manager" title="Permanent link">¶</a></h2>
+<p>Install cert-manager for automatic TLS certificate management:</p>
+<div class="highlight"><pre><span></span><code>helm<span class="w"> </span>upgrade<span class="w"> </span>--install<span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>cert-manager<span class="w"> </span>oci://quay.io/jetstack/charts/cert-manager<span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>--version<span class="w"> </span>v1.19.1<span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>--namespace<span class="w"> </span>cert-manager<span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>--create-namespace<span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>--set<span class="w"> </span>crds.enabled<span class="o">=</span><span class="nb">true</span>
+</code></pre></div>
+<h2 id="step-2-install-k8ssandra-operator">Step 2: Install K8ssandra Operator<a class="headerlink" href="#step-2-install-k8ssandra-operator" title="Permanent link">¶</a></h2>
+<p>Add the K8ssandra Helm repository and install the operator:</p>
+<div class="highlight"><pre><span></span><code>helm<span class="w"> </span>repo<span class="w"> </span>add<span class="w"> </span>k8ssandra<span class="w"> </span>https://helm.k8ssandra.io/stable
+helm<span class="w"> </span>repo<span class="w"> </span>update
 
-<span class="nt">podSettings</span><span class="p">:</span>
-<span class="w">  </span><span class="nt">terminationGracePeriodSeconds</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">300</span>
-
-<span class="nt">image</span><span class="p">:</span>
-<span class="w">  </span><span class="nt">tag</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">3.11.6</span>
-<span class="w">  </span><span class="nt">pullPolicy</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">IfNotPresent</span>
-
-<span class="nt">config</span><span class="p">:</span>
-<span class="w">  </span><span class="nt">cluster_name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">digitalis</span>
-<span class="w">  </span><span class="nt">cluster_size</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">2</span>
-<span class="w">  </span><span class="nt">dc_name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">dc1</span>
-<span class="w">  </span><span class="nt">seed_size</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">1</span>
-<span class="w">  </span><span class="nt">num_tokens</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">256</span>
-<span class="w">  </span><span class="nt">max_heap_size</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">512M</span>
-<span class="w">  </span><span class="nt">heap_new_size</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">512M</span>
-<span class="w">  </span><span class="nt">endpoint_snitch</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">GossipingPropertyFileSnitch</span>
-
-<span class="nt">env</span><span class="p">:</span>
-<span class="w">  </span><span class="nt">JVM_OPTS</span><span class="p">:</span><span class="w"> </span><span class="s">"-javaagent:/var/lib/axonops/axon-cassandra3.11-agent.jar=/etc/axonops/axon-agent.yml"</span>
-
-<span class="nt">serviceAccount</span><span class="p">:</span>
-<span class="w">  </span><span class="nt">create</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">true</span>
-<span class="w">  </span><span class="nt">rules</span><span class="p">:</span>
-<span class="w">  </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">apiGroups</span><span class="p">:</span>
-<span class="w">    </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="s">""</span>
+helm<span class="w"> </span>upgrade<span class="w"> </span>--install<span class="w"> </span>k8ssandra-operator<span class="w"> </span>k8ssandra/k8ssandra-operator<span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>-n<span class="w"> </span>k8ssandra-operator<span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>--create-namespace<span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>--set<span class="w"> </span>image.tag<span class="o">=</span>v1.29.0
+</code></pre></div>
+<p>Verify the operator is running:</p>
+<div class="highlight"><pre><span></span><code>kubectl<span class="w"> </span>get<span class="w"> </span>pods<span class="w"> </span>-n<span class="w"> </span>k8ssandra-operator
+</code></pre></div>
+<p>Expected output:</p>
+<div class="highlight"><pre><span></span><code>NAME                                                READY   STATUS    RESTARTS   AGE
+k8ssandra-operator-cass-operator-xxx-xxx           1/1     Running   0          30s
+k8ssandra-operator-controller-manager-xxx-xxx      1/1     Running   0          30s
+</code></pre></div>
+<h2 id="step-3-create-k8ssandra-cluster">Step 3: Create K8ssandra Cluster<a class="headerlink" href="#step-3-create-k8ssandra-cluster" title="Permanent link">¶</a></h2>
+<h3 id="configuration-variables">Configuration Variables<a class="headerlink" href="#configuration-variables" title="Permanent link">¶</a></h3>
+<p>Before deploying, configure these variables according to your environment:</p>
+<table>
+<thead>
+<tr>
+<th>Variable</th>
+<th>Meaning / What To Set</th>
+<th>Example Value</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>CLUSTER_NAME</code></td>
+<td>Name of your Cassandra cluster</td>
+<td><code>axonops-k8ssandra-5</code></td>
+</tr>
+<tr>
+<td><code>NAMESPACE</code></td>
+<td>Kubernetes namespace for the cluster</td>
+<td><code>k8ssandra-operator</code></td>
+</tr>
+<tr>
+<td><code>CASSANDRA_VERSION</code></td>
+<td>Cassandra version to deploy</td>
+<td><code>5.0.6</code></td>
+</tr>
+<tr>
+<td><code>DATACENTER_NAME</code></td>
+<td>Name for the datacenter</td>
+<td><code>dc1</code></td>
+</tr>
+<tr>
+<td><code>DATACENTER_SIZE</code></td>
+<td>Number of Cassandra nodes</td>
+<td><code>3</code></td>
+</tr>
+<tr>
+<td><code>STORAGE_CLASS</code></td>
+<td>Storage class for persistent volumes</td>
+<td>cluster default</td>
+</tr>
+<tr>
+<td><code>STORAGE_SIZE</code></td>
+<td>Size of storage per node</td>
+<td><code>2Gi</code></td>
+</tr>
+<tr>
+<td><code>HEAP_SIZE</code></td>
+<td>JVM heap size (initial and max)</td>
+<td><code>1G</code></td>
+</tr>
+<tr>
+<td><code>CPU_LIMIT</code></td>
+<td>CPU limit per pod</td>
+<td><code>1</code> or <code>2000m</code></td>
+</tr>
+<tr>
+<td><code>MEMORY_LIMIT</code></td>
+<td>Memory limit per pod</td>
+<td><code>2Gi</code></td>
+</tr>
+<tr>
+<td><code>AXON_AGENT_KEY</code></td>
+<td>Your AxonOps API key for authentication</td>
+<td><code>your-api-key-here</code></td>
+</tr>
+<tr>
+<td><code>AXON_AGENT_ORG</code></td>
+<td>Your AxonOps organization identifier</td>
+<td><code>your-org-name</code></td>
+</tr>
+<tr>
+<td><code>AXON_AGENT_SERVER_HOST</code></td>
+<td>DNS name/address of AxonOps server</td>
+<td><code>axon-server-agent.axonops.svc.cluster.local</code></td>
+</tr>
+<tr>
+<td><code>AXON_AGENT_SERVER_PORT</code></td>
+<td>Port for AxonOps agent connections</td>
+<td><code>1888</code></td>
+</tr>
+<tr>
+<td><code>AXON_AGENT_TLS_MODE</code></td>
+<td>Whether agent uses TLS (<code>true</code> or <code>false</code>)</td>
+<td><code>false</code></td>
+</tr>
+</tbody>
+</table>
+<h3 id="basic-cluster-configuration">Basic Cluster Configuration<a class="headerlink" href="#basic-cluster-configuration" title="Permanent link">¶</a></h3>
+<p>Create a file named <code>k8ssandra-cluster.yaml</code>:</p>
+<div class="highlight"><pre><span></span><code><span class="nt">apiVersion</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">k8ssandra.io/v1alpha1</span>
+<span class="nt">kind</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">K8ssandraCluster</span>
+<span class="nt">metadata</span><span class="p">:</span>
+<span class="w">  </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">${CLUSTER_NAME}</span>
+<span class="w">  </span><span class="nt">namespace</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">${NAMESPACE}</span>
+<span class="nt">spec</span><span class="p">:</span>
+<span class="w">  </span><span class="nt">cassandra</span><span class="p">:</span>
+<span class="w">    </span><span class="nt">serverVersion</span><span class="p">:</span><span class="w"> </span><span class="s">"${CASSANDRA_VERSION}"</span>
+<span class="w">    </span><span class="nt">serverImage</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">ghcr.io/axonops/k8ssandra/cassandra:${CASSANDRA_VERSION}-v0.1.111-1.2.0</span>
+<span class="w">    </span><span class="nt">softPodAntiAffinity</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">true</span>
 <span class="w">    </span><span class="nt">resources</span><span class="p">:</span>
-<span class="w">    </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">nodes</span>
-<span class="w">    </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">nodes/metrics</span>
-<span class="w">    </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">pods</span>
-<span class="w">    </span><span class="nt">verbs</span><span class="p">:</span>
-<span class="w">    </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">get</span>
-<span class="w">    </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">list</span>
-<span class="w">    </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">watch</span>
-<span class="w">  </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">nonResourceURLs</span><span class="p">:</span>
-<span class="w">    </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">/metrics</span>
-<span class="w">    </span><span class="nt">verbs</span><span class="p">:</span>
-<span class="w">    </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">get</span>
+<span class="w">      </span><span class="nt">limits</span><span class="p">:</span>
+<span class="w">        </span><span class="nt">cpu</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">${CPU_LIMIT}</span>
+<span class="w">        </span><span class="nt">memory</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">${MEMORY_LIMIT}</span>
+<span class="w">      </span><span class="nt">requests</span><span class="p">:</span>
+<span class="w">        </span><span class="nt">cpu</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">1</span>
+<span class="w">        </span><span class="nt">memory</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">1Gi</span>
+<span class="w">    </span><span class="nt">datacenters</span><span class="p">:</span>
+<span class="w">      </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">metadata</span><span class="p">:</span>
+<span class="w">          </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">${DATACENTER_NAME}</span>
+<span class="w">        </span><span class="nt">size</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">${DATACENTER_SIZE}</span>
+<span class="w">        </span><span class="nt">containers</span><span class="p">:</span>
+<span class="w">          </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">cassandra</span>
+<span class="w">            </span><span class="nt">env</span><span class="p">:</span>
+<span class="w">              </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">AXON_AGENT_KEY</span>
+<span class="w">                </span><span class="nt">value</span><span class="p">:</span><span class="w"> </span><span class="s">"${AXON_AGENT_KEY}"</span>
+<span class="w">              </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">AXON_AGENT_ORG</span>
+<span class="w">                </span><span class="nt">value</span><span class="p">:</span><span class="w"> </span><span class="s">"${AXON_AGENT_ORG}"</span>
+<span class="w">              </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">AXON_AGENT_SERVER_HOST</span>
+<span class="w">                </span><span class="nt">value</span><span class="p">:</span><span class="w"> </span><span class="s">"${AXON_AGENT_SERVER_HOST}"</span>
+<span class="w">              </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">AXON_AGENT_SERVER_PORT</span>
+<span class="w">                </span><span class="nt">value</span><span class="p">:</span><span class="w"> </span><span class="s">"${AXON_AGENT_SERVER_PORT}"</span>
+<span class="w">              </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">AXON_AGENT_TLS_MODE</span>
+<span class="w">                </span><span class="nt">value</span><span class="p">:</span><span class="w"> </span><span class="s">"${AXON_AGENT_TLS_MODE}"</span>
+<span class="w">        </span><span class="nt">config</span><span class="p">:</span>
+<span class="w">          </span><span class="nt">jvmOptions</span><span class="p">:</span>
+<span class="w">            </span><span class="nt">heap_initial_size</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">${HEAP_SIZE}</span>
+<span class="w">            </span><span class="nt">heap_max_size</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">${HEAP_SIZE}</span>
+<span class="w">        </span><span class="nt">storageConfig</span><span class="p">:</span>
+<span class="w">          </span><span class="nt">cassandraDataVolumeClaimSpec</span><span class="p">:</span>
+<span class="w">            </span><span class="nt">storageClassName</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">${STORAGE_CLASS}</span>
+<span class="w">            </span><span class="nt">accessModes</span><span class="p">:</span>
+<span class="w">              </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">ReadWriteOnce</span>
+<span class="w">            </span><span class="nt">resources</span><span class="p">:</span>
+<span class="w">              </span><span class="nt">requests</span><span class="p">:</span>
+<span class="w">                </span><span class="nt">storage</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">${STORAGE_SIZE}</span>
+</code></pre></div>
+<h3 id="example-configuration">Example Configuration<a class="headerlink" href="#example-configuration" title="Permanent link">¶</a></h3>
+<p>Here's a complete example for a 3-node cluster:</p>
+<div class="highlight"><pre><span></span><code><span class="nt">apiVersion</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">k8ssandra.io/v1alpha1</span>
+<span class="nt">kind</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">K8ssandraCluster</span>
+<span class="nt">metadata</span><span class="p">:</span>
+<span class="w">  </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">axonops-k8ssandra-5</span>
+<span class="w">  </span><span class="nt">namespace</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">k8ssandra-operator</span>
+<span class="nt">spec</span><span class="p">:</span>
+<span class="w">  </span><span class="nt">cassandra</span><span class="p">:</span>
+<span class="w">    </span><span class="nt">serverVersion</span><span class="p">:</span><span class="w"> </span><span class="s">"5.0.6"</span>
+<span class="w">    </span><span class="nt">serverImage</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">ghcr.io/axonops/k8ssandra/cassandra:5.0.6-v0.1.111-1.2.0</span>
+<span class="w">    </span><span class="nt">softPodAntiAffinity</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">true</span>
+<span class="w">    </span><span class="nt">resources</span><span class="p">:</span>
+<span class="w">      </span><span class="nt">limits</span><span class="p">:</span>
+<span class="w">        </span><span class="nt">cpu</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">2</span>
+<span class="w">        </span><span class="nt">memory</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">12Gi</span>
+<span class="w">      </span><span class="nt">requests</span><span class="p">:</span>
+<span class="w">        </span><span class="nt">cpu</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">1</span>
+<span class="w">        </span><span class="nt">memory</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">8Gi</span>
+<span class="w">    </span><span class="nt">datacenters</span><span class="p">:</span>
+<span class="w">      </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">metadata</span><span class="p">:</span>
+<span class="w">          </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">dc1</span>
+<span class="w">        </span><span class="nt">size</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">3</span>
+<span class="w">        </span><span class="nt">containers</span><span class="p">:</span>
+<span class="w">          </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">cassandra</span>
+<span class="w">            </span><span class="nt">env</span><span class="p">:</span>
+<span class="w">              </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">AXON_AGENT_KEY</span>
+<span class="w">                </span><span class="nt">value</span><span class="p">:</span><span class="w"> </span><span class="s">"your-api-key-here"</span>
+<span class="w">              </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">AXON_AGENT_ORG</span>
+<span class="w">                </span><span class="nt">value</span><span class="p">:</span><span class="w"> </span><span class="s">"your-org-name"</span>
+<span class="w">              </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">AXON_AGENT_SERVER_HOST</span>
+<span class="w">                </span><span class="nt">value</span><span class="p">:</span><span class="w"> </span><span class="s">"axon-server-agent.axonops.svc.cluster.local"</span>
+<span class="w">              </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">AXON_AGENT_SERVER_PORT</span>
+<span class="w">                </span><span class="nt">value</span><span class="p">:</span><span class="w"> </span><span class="s">"1888"</span>
+<span class="w">              </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">AXON_AGENT_TLS_MODE</span>
+<span class="w">                </span><span class="nt">value</span><span class="p">:</span><span class="w"> </span><span class="s">"false"</span>
+<span class="w">        </span><span class="nt">config</span><span class="p">:</span>
+<span class="w">          </span><span class="nt">jvmOptions</span><span class="p">:</span>
+<span class="w">            </span><span class="nt">heap_initial_size</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">8G</span>
+<span class="w">            </span><span class="nt">heap_max_size</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">8G</span>
+<span class="w">        </span><span class="nt">storageConfig</span><span class="p">:</span>
+<span class="w">          </span><span class="nt">cassandraDataVolumeClaimSpec</span><span class="p">:</span>
+<span class="w">            </span><span class="nt">storageClassName</span><span class="p">:</span><span class="w"> </span><span class="s">""</span>
+<span class="w">            </span><span class="nt">accessModes</span><span class="p">:</span>
+<span class="w">              </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">ReadWriteOnce</span>
+<span class="w">            </span><span class="nt">resources</span><span class="p">:</span>
+<span class="w">              </span><span class="nt">requests</span><span class="p">:</span>
+<span class="w">                </span><span class="nt">storage</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">10Gi</span>
+</code></pre></div>
+<h2 id="step-4-deploy-the-cluster">Step 4: Deploy the Cluster<a class="headerlink" href="#step-4-deploy-the-cluster" title="Permanent link">¶</a></h2>
+<p>Apply the cluster configuration:</p>
+<div class="highlight"><pre><span></span><code>kubectl<span class="w"> </span>apply<span class="w"> </span>-f<span class="w"> </span>k8ssandra-cluster.yaml
+</code></pre></div>
+<p>Monitor the deployment:</p>
+<div class="highlight"><pre><span></span><code><span class="c1"># Watch the K8ssandraCluster status</span>
+kubectl<span class="w"> </span>get<span class="w"> </span>k8ssandracluster<span class="w"> </span>-n<span class="w"> </span>k8ssandra-operator<span class="w"> </span>-w
 
-<span class="nt">extraVolumes</span><span class="p">:</span>
-<span class="w">  </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">axonops-agent-config</span>
-<span class="w">    </span><span class="nt">configMap</span><span class="p">:</span>
-<span class="w">      </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">axonops-agent</span>
-<span class="w">  </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">axonops-shared</span>
-<span class="w">    </span><span class="nt">emptyDir</span><span class="p">:</span><span class="w"> </span><span class="p p-Indicator">{}</span>
-<span class="w">  </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">axonops-logs</span>
-<span class="w">    </span><span class="nt">emptyDir</span><span class="p">:</span><span class="w"> </span><span class="p p-Indicator">{}</span>
-
-<span class="nt">extraVolumeMounts</span><span class="p">:</span>
-<span class="w">  </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">axonops-shared</span>
-<span class="w">    </span><span class="nt">mountPath</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">/var/lib/axonops</span>
-<span class="w">    </span><span class="nt">readOnly</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">false</span>
-<span class="w">  </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">axonops-agent-config</span>
-<span class="w">    </span><span class="nt">mountPath</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">/etc/axonops</span>
-<span class="w">    </span><span class="nt">readOnly</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">true</span>
-<span class="w">  </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">axonops-logs</span>
-<span class="w">    </span><span class="nt">mountPath</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">/var/log/axonops</span>
-
-<span class="nt">extraContainers</span><span class="p">:</span>
-<span class="w">  </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">axonops-agent</span>
-<span class="w">    </span><span class="nt">image</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">digitalisdocker/axon-agent:latest</span>
+<span class="c1"># Watch pods being created</span>
+kubectl<span class="w"> </span>get<span class="w"> </span>pods<span class="w"> </span>-n<span class="w"> </span>k8ssandra-operator<span class="w"> </span>-w
+</code></pre></div>
+<h2 id="verification">Verification<a class="headerlink" href="#verification" title="Permanent link">¶</a></h2>
+<h3 id="check-cluster-status">Check Cluster Status<a class="headerlink" href="#check-cluster-status" title="Permanent link">¶</a></h3>
+<p>Check the K8ssandraCluster resource:</p>
+<div class="highlight"><pre><span></span><code>kubectl<span class="w"> </span>get<span class="w"> </span>k8ssandracluster<span class="w"> </span>-n<span class="w"> </span>k8ssandra-operator
+</code></pre></div>
+<p>Expected output:</p>
+<div class="highlight"><pre><span></span><code>NAME                  AGE
+axonops-k8ssandra-5   5m
+</code></pre></div>
+<p>Get detailed status:</p>
+<div class="highlight"><pre><span></span><code>kubectl<span class="w"> </span>describe<span class="w"> </span>k8ssandracluster<span class="w"> </span>axonops-k8ssandra-5<span class="w"> </span>-n<span class="w"> </span>k8ssandra-operator
+</code></pre></div>
+<h3 id="check-pod-status">Check Pod Status<a class="headerlink" href="#check-pod-status" title="Permanent link">¶</a></h3>
+<p>Verify all Cassandra pods are running:</p>
+<div class="highlight"><pre><span></span><code>kubectl<span class="w"> </span>get<span class="w"> </span>pods<span class="w"> </span>-n<span class="w"> </span>k8ssandra-operator<span class="w"> </span>-l<span class="w"> </span>app.kubernetes.io/managed-by<span class="o">=</span>cass-operator
+</code></pre></div>
+<p>Expected output:</p>
+<div class="highlight"><pre><span></span><code>NAME                             READY   STATUS    RESTARTS   AGE
+axonops-k8ssandra-5-dc1-rack1-0  2/2     Running   0          5m
+axonops-k8ssandra-5-dc1-rack1-1  2/2     Running   0          4m
+axonops-k8ssandra-5-dc1-rack1-2  2/2     Running   0          3m
+</code></pre></div>
+<h3 id="check-storage">Check Storage<a class="headerlink" href="#check-storage" title="Permanent link">¶</a></h3>
+<p>Verify persistent volume claims are bound:</p>
+<div class="highlight"><pre><span></span><code>kubectl<span class="w"> </span>get<span class="w"> </span>pvc<span class="w"> </span>-n<span class="w"> </span>k8ssandra-operator
+</code></pre></div>
+<p>Expected output:</p>
+<div class="highlight"><pre><span></span><code>NAME                                        STATUS   VOLUME   CAPACITY   ACCESS MODES   STORAGECLASS
+server-data-axonops-k8ssandra-5-dc1-rack1-0 Bound    pv-xxx   10Gi       RWO            local-path
+server-data-axonops-k8ssandra-5-dc1-rack1-1 Bound    pv-xxx   10Gi       RWO            local-path
+server-data-axonops-k8ssandra-5-dc1-rack1-2 Bound    pv-xxx   10Gi       RWO            local-path
+</code></pre></div>
+<h3 id="verify-cassandra-cluster">Verify Cassandra Cluster<a class="headerlink" href="#verify-cassandra-cluster" title="Permanent link">¶</a></h3>
+<p>Connect to a Cassandra pod and check the cluster status:</p>
+<div class="highlight"><pre><span></span><code>kubectl<span class="w"> </span><span class="nb">exec</span><span class="w"> </span>-it<span class="w"> </span>axonops-k8ssandra-5-dc1-rack1-0<span class="w"> </span>-n<span class="w"> </span>k8ssandra-operator<span class="w"> </span>-c<span class="w"> </span>cassandra<span class="w"> </span>--<span class="w"> </span>nodetool<span class="w"> </span>status
+</code></pre></div>
+<p>Expected output:</p>
+<div class="highlight"><pre><span></span><code>Datacenter: dc1
+===============
+Status=Up/Down
+|/ State=Normal/Leaving/Joining/Moving
+--  Address     Load       Tokens  Owns    Host ID                               Rack
+UN  10.42.0.10  100 KB     16      33.3%   xxx-xxx-xxx-xxx-xxx                   rack1
+UN  10.42.0.11  100 KB     16      33.3%   xxx-xxx-xxx-xxx-xxx                   rack1
+UN  10.42.0.12  100 KB     16      33.4%   xxx-xxx-xxx-xxx-xxx                   rack1
+</code></pre></div>
+<h3 id="verify-axonops-agent-connection">Verify AxonOps Agent Connection<a class="headerlink" href="#verify-axonops-agent-connection" title="Permanent link">¶</a></h3>
+<p>Check the Cassandra logs for AxonOps agent connection:</p>
+<div class="highlight"><pre><span></span><code>kubectl<span class="w"> </span>logs<span class="w"> </span>axonops-k8ssandra-5-dc1-rack1-0<span class="w"> </span>-n<span class="w"> </span>k8ssandra-operator<span class="w"> </span>-c<span class="w"> </span>cassandra<span class="w"> </span><span class="p">|</span><span class="w"> </span>grep<span class="w"> </span>-i<span class="w"> </span>axon
+</code></pre></div>
+<p>You should see log entries indicating the agent has connected to the AxonOps server.</p>
+<h2 id="cluster-configuration-details">Cluster Configuration Details<a class="headerlink" href="#cluster-configuration-details" title="Permanent link">¶</a></h2>
+<h3 id="cassandra-settings">Cassandra Settings<a class="headerlink" href="#cassandra-settings" title="Permanent link">¶</a></h3>
+<table>
+<thead>
+<tr>
+<th>Setting</th>
+<th>Value</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Cassandra Version</td>
+<td>5.0.6+</td>
+<td>Apache Cassandra version with AxonOps agent</td>
+</tr>
+<tr>
+<td>Container Image</td>
+<td>ghcr.io/axonops/k8ssandra/cassandra</td>
+<td>Pre-built image with AxonOps agent</td>
+</tr>
+<tr>
+<td>Anti-Affinity</td>
+<td>Soft</td>
+<td>Prefers to schedule pods on different nodes</td>
+</tr>
+<tr>
+<td>Default Replicas</td>
+<td>3</td>
+<td>Number of Cassandra nodes per datacenter</td>
+</tr>
+</tbody>
+</table>
+<h3 id="resource-configuration">Resource Configuration<a class="headerlink" href="#resource-configuration" title="Permanent link">¶</a></h3>
+<div class="highlight"><pre><span></span><code><span class="nt">resources</span><span class="p">:</span>
+<span class="w">  </span><span class="nt">limits</span><span class="p">:</span>
+<span class="w">    </span><span class="nt">cpu</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">2</span>
+<span class="w">    </span><span class="nt">memory</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">4Gi</span>
+<span class="w">  </span><span class="nt">requests</span><span class="p">:</span>
+<span class="w">    </span><span class="nt">cpu</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">1</span>
+<span class="w">    </span><span class="nt">memory</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">2Gi</span>
+</code></pre></div>
+<h3 id="jvm-settings">JVM Settings<a class="headerlink" href="#jvm-settings" title="Permanent link">¶</a></h3>
+<div class="highlight"><pre><span></span><code><span class="nt">jvmOptions</span><span class="p">:</span>
+<span class="w">  </span><span class="nt">heap_initial_size</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">2G</span>
+<span class="w">  </span><span class="nt">heap_max_size</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">2G</span>
+</code></pre></div>
+<p>:::warning
+Ensure heap size is set appropriately based on available memory. A general rule is to set the heap to 25-50% of the available RAM, with a maximum of 8GB for optimal GC performance.
+:::</p>
+<h2 id="advanced-configuration">Advanced Configuration<a class="headerlink" href="#advanced-configuration" title="Permanent link">¶</a></h2>
+<h3 id="multi-datacenter-setup">Multi-Datacenter Setup<a class="headerlink" href="#multi-datacenter-setup" title="Permanent link">¶</a></h3>
+<p>To deploy a multi-datacenter cluster:</p>
+<div class="highlight"><pre><span></span><code><span class="nt">apiVersion</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">k8ssandra.io/v1alpha1</span>
+<span class="nt">kind</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">K8ssandraCluster</span>
+<span class="nt">metadata</span><span class="p">:</span>
+<span class="w">  </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">axonops-k8ssandra-multi-dc</span>
+<span class="w">  </span><span class="nt">namespace</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">k8ssandra-operator</span>
+<span class="nt">spec</span><span class="p">:</span>
+<span class="w">  </span><span class="nt">cassandra</span><span class="p">:</span>
+<span class="w">    </span><span class="nt">serverVersion</span><span class="p">:</span><span class="w"> </span><span class="s">"5.0.6"</span>
+<span class="w">    </span><span class="nt">serverImage</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">ghcr.io/axonops/k8ssandra/cassandra:5.0.6-v0.1.111-1.2.0</span>
+<span class="w">    </span><span class="nt">datacenters</span><span class="p">:</span>
+<span class="w">      </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">metadata</span><span class="p">:</span>
+<span class="w">          </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">dc1</span>
+<span class="w">        </span><span class="nt">size</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">3</span>
+<span class="w">        </span><span class="nt">containers</span><span class="p">:</span>
+<span class="w">          </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">cassandra</span>
+<span class="w">            </span><span class="nt">env</span><span class="p">:</span>
+<span class="w">              </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">AXON_AGENT_KEY</span>
+<span class="w">                </span><span class="nt">value</span><span class="p">:</span><span class="w"> </span><span class="s">"your-api-key-here"</span>
+<span class="w">              </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">AXON_AGENT_ORG</span>
+<span class="w">                </span><span class="nt">value</span><span class="p">:</span><span class="w"> </span><span class="s">"your-org-name"</span>
+<span class="w">              </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">AXON_AGENT_CLUSTER_NAME</span>
+<span class="w">                </span><span class="nt">value</span><span class="p">:</span><span class="w"> </span><span class="s">"k8ssandra-multi-dc"</span>
+<span class="w">        </span><span class="nt">storageConfig</span><span class="p">:</span>
+<span class="w">          </span><span class="nt">cassandraDataVolumeClaimSpec</span><span class="p">:</span>
+<span class="w">            </span><span class="nt">storageClassName</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">local-path</span>
+<span class="w">            </span><span class="nt">accessModes</span><span class="p">:</span>
+<span class="w">              </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">ReadWriteOnce</span>
+<span class="w">            </span><span class="nt">resources</span><span class="p">:</span>
+<span class="w">              </span><span class="nt">requests</span><span class="p">:</span>
+<span class="w">                </span><span class="nt">storage</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">10Gi</span>
+<span class="w">      </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">metadata</span><span class="p">:</span>
+<span class="w">          </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">dc2</span>
+<span class="w">        </span><span class="nt">size</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">3</span>
+<span class="w">        </span><span class="nt">containers</span><span class="p">:</span>
+<span class="w">          </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">cassandra</span>
+<span class="w">            </span><span class="nt">env</span><span class="p">:</span>
+<span class="w">              </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">AXON_AGENT_KEY</span>
+<span class="w">                </span><span class="nt">value</span><span class="p">:</span><span class="w"> </span><span class="s">"your-api-key-here"</span>
+<span class="w">              </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">AXON_AGENT_ORG</span>
+<span class="w">                </span><span class="nt">value</span><span class="p">:</span><span class="w"> </span><span class="s">"your-org-name"</span>
+<span class="w">              </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">AXON_AGENT_CLUSTER_NAME</span>
+<span class="w">                </span><span class="nt">value</span><span class="p">:</span><span class="w"> </span><span class="s">"k8ssandra-multi-dc"</span>
+<span class="w">        </span><span class="nt">storageConfig</span><span class="p">:</span>
+<span class="w">          </span><span class="nt">cassandraDataVolumeClaimSpec</span><span class="p">:</span>
+<span class="w">            </span><span class="nt">storageClassName</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">local-path</span>
+<span class="w">            </span><span class="nt">accessModes</span><span class="p">:</span>
+<span class="w">              </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">ReadWriteOnce</span>
+<span class="w">            </span><span class="nt">resources</span><span class="p">:</span>
+<span class="w">              </span><span class="nt">requests</span><span class="p">:</span>
+<span class="w">                </span><span class="nt">storage</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">10Gi</span>
+</code></pre></div>
+<h3 id="using-secrets-for-axonops-credentials">Using Secrets for AxonOps Credentials<a class="headerlink" href="#using-secrets-for-axonops-credentials" title="Permanent link">¶</a></h3>
+<p>For better security, store AxonOps credentials in a Kubernetes Secret:</p>
+<div class="highlight"><pre><span></span><code>kubectl<span class="w"> </span>create<span class="w"> </span>secret<span class="w"> </span>generic<span class="w"> </span>axonops-credentials<span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>-n<span class="w"> </span>k8ssandra-operator<span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>--from-literal<span class="o">=</span>api-key<span class="o">=</span><span class="s1">'your-api-key-here'</span><span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>--from-literal<span class="o">=</span><span class="nv">org</span><span class="o">=</span><span class="s1">'your-org-name'</span>
+</code></pre></div>
+<p>Reference the secret in your cluster configuration:</p>
+<div class="highlight"><pre><span></span><code><span class="nt">containers</span><span class="p">:</span>
+<span class="w">  </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">cassandra</span>
 <span class="w">    </span><span class="nt">env</span><span class="p">:</span>
-<span class="w">      </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">AXON_AGENT_VERBOSITY</span>
-<span class="w">        </span><span class="nt">value</span><span class="p">:</span><span class="w"> </span><span class="s">"1"</span>
-<span class="w">      </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">AXON_AGENT_ARGS</span>
-<span class="w">        </span><span class="nt">value</span><span class="p">:</span><span class="w"> </span><span class="s">"-v</span><span class="nv"> </span><span class="s">1"</span>
-<span class="w">      </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">DATA_FILE_DIRECTORY</span>
-<span class="w">        </span><span class="nt">value</span><span class="p">:</span><span class="w"> </span><span class="s">"/var/lib/cassandra"</span>
-<span class="w">      </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">CASSANDRA_POD_NAME</span>
+<span class="w">      </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">AXON_AGENT_KEY</span>
 <span class="w">        </span><span class="nt">valueFrom</span><span class="p">:</span>
-<span class="w">          </span><span class="nt">fieldRef</span><span class="p">:</span>
-<span class="w">            </span><span class="nt">fieldPath</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">metadata.name</span>
-<span class="w">      </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">CASSANDRA_POD_NAMESPACE</span>
+<span class="w">          </span><span class="nt">secretKeyRef</span><span class="p">:</span>
+<span class="w">            </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">axonops-credentials</span>
+<span class="w">            </span><span class="nt">key</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">api-key</span>
+<span class="w">      </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">AXON_AGENT_ORG</span>
 <span class="w">        </span><span class="nt">valueFrom</span><span class="p">:</span>
-<span class="w">          </span><span class="nt">fieldRef</span><span class="p">:</span>
-<span class="w">            </span><span class="nt">fieldPath</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">metadata.namespace</span>
-<span class="w">      </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">CASSANDRA_NODE_NAME</span>
-<span class="w">        </span><span class="nt">valueFrom</span><span class="p">:</span>
-<span class="w">          </span><span class="nt">fieldRef</span><span class="p">:</span>
-<span class="w">            </span><span class="nt">fieldPath</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">spec.nodeName</span>
-<span class="w">      </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">CASSANDRA_POD_IP</span>
-<span class="w">        </span><span class="nt">valueFrom</span><span class="p">:</span>
-<span class="w">          </span><span class="nt">fieldRef</span><span class="p">:</span>
-<span class="w">            </span><span class="nt">apiVersion</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">v1</span>
-<span class="w">            </span><span class="nt">fieldPath</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">status.podIP</span>
-<span class="w">    </span><span class="nt">volumeMounts</span><span class="p">:</span>
-<span class="w">      </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">axonops-agent-config</span>
-<span class="w">        </span><span class="nt">mountPath</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">/etc/axonops</span>
-<span class="w">        </span><span class="nt">readOnly</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">true</span>
-<span class="w">      </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">axonops-shared</span>
-<span class="w">        </span><span class="nt">mountPath</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">/var/lib/axonops</span>
-<span class="w">        </span><span class="nt">readOnly</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">false</span>
-<span class="w">      </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">axonops-logs</span>
-<span class="w">        </span><span class="nt">mountPath</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">/var/log/axonops</span>
-<span class="w">      </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">data</span>
-<span class="w">        </span><span class="nt">mountPath</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">/var/lib/cassandra</span>
-
-
-<span class="nt">axon-server</span><span class="p">:</span>
-<span class="w">  </span><span class="nt">global</span><span class="p">:</span>
-<span class="w">    </span><span class="nt">customer</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">minikube</span>
-<span class="w">    </span><span class="nt">baseDomain</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">axonops.com</span>
-
-<span class="w">  </span><span class="nt">elasticHost</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">http://axon-elastic-elasticsearch-master.axonops:9200</span>
-<span class="w">  </span><span class="nt">dashboardUrl</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">https://axonops.axonops.com</span>
-
-<span class="w">  </span><span class="nt">image</span><span class="p">:</span>
-<span class="w">    </span><span class="nt">repository</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">digitalisdocker/axon-server</span>
-<span class="w">    </span><span class="nt">tag</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">latest</span>
-<span class="w">    </span><span class="nt">pullPolicy</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">IfNotPresent</span>
-<span class="w">  </span><span class="nt">config</span><span class="p">:</span>
-<span class="w">    </span><span class="nt">extraConfig</span><span class="p">:</span>
-<span class="w">      </span><span class="nt">cql_hosts</span><span class="p">:</span>
-<span class="w">        </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">cassandra-0.cassandra.cassandra.svc.cluster.local</span>
-<span class="w">      </span><span class="nt">cql_username</span><span class="p">:</span><span class="w"> </span><span class="s">"cassandra"</span>
-<span class="w">      </span><span class="nt">cql_password</span><span class="p">:</span><span class="w"> </span><span class="s">"cassandra"</span>
-<span class="w">      </span><span class="nt">cql_local_dc</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">dc1</span>
-<span class="w">      </span><span class="nt">cql_proto_version</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">4</span>
-<span class="w">      </span><span class="nt">cql_max_searchqueriesparallelism</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">100</span>
-<span class="w">      </span><span class="nt">cql_batch_size</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">100</span>
-<span class="w">      </span><span class="nt">cql_page_size</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">100</span>
-<span class="w">      </span><span class="nt">cql_autocreate_tables</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">false</span>
-<span class="w">      </span><span class="nt">cql_retrypolicy_numretries</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">3</span>
-<span class="w">      </span><span class="nt">cql_retrypolicy_min</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">2s</span>
-<span class="w">      </span><span class="nt">cql_retrypolicy_max</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">10s</span>
-<span class="w">      </span><span class="nt">cql_reconnectionpolicy_maxretries</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">10</span>
-<span class="w">      </span><span class="nt">cql_reconnectionpolicy_initialinterval</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">1s</span>
-<span class="w">      </span><span class="nt">cql_reconnectionpolicy_maxinterval</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">10s</span>
-<span class="w">      </span><span class="nt">cql_keyspace_replication</span><span class="p">:</span><span class="w"> </span><span class="s">"{</span><span class="nv"> </span><span class="s">'class':</span><span class="nv"> </span><span class="s">'NetworkTopologyStrategy',</span><span class="nv"> </span><span class="s">'dc1':</span><span class="nv"> </span><span class="s">1</span><span class="nv"> </span><span class="s">}"</span>
-<span class="w">      </span><span class="nt">cql_metrics_cache_max_size</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">128</span><span class="w">  </span><span class="c1">#MB</span>
-<span class="w">      </span><span class="nt">cql_metrics_cache_max_items </span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">500000</span>
-
-<span class="nt">axon-dash</span><span class="p">:</span>
-<span class="w">  </span><span class="nt">replicaCount</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">1</span>
-<span class="w">  </span><span class="nt">config</span><span class="p">:</span>
-<span class="w">    </span><span class="nt">axonServerUrl</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">http://axonops-axon-server:8080</span>
-<span class="w">  </span><span class="nt">service</span><span class="p">:</span>
-<span class="w">    </span><span class="nt">type</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">NodePort</span>
-<span class="w">  </span><span class="nt">ingress</span><span class="p">:</span>
-<span class="w">    </span><span class="nt">enabled</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">true</span>
-<span class="w">    </span><span class="nt">annotations</span><span class="p">:</span>
-<span class="w">      </span><span class="nt">nginx.ingress.kubernetes.io/ssl-redirect</span><span class="p">:</span><span class="w"> </span><span class="s">"true"</span>
-<span class="w">    </span><span class="nt">hosts</span><span class="p">:</span>
-<span class="w">      </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">hosts</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">axonops.axonops.com</span>
-<span class="w">        </span><span class="nt">paths</span><span class="p">:</span>
-<span class="w">          </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">/</span>
-<span class="w">  </span><span class="nt">image</span><span class="p">:</span>
-<span class="w">    </span><span class="nt">repository</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">digitalisdocker/axon-dash</span>
-<span class="w">    </span><span class="nt">tag</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">latest</span>
-<span class="w">    </span><span class="nt">pullPolicy</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">IfNotPresent</span>
-<span class="w">  </span><span class="nt">autoscaling</span><span class="p">:</span>
-<span class="w">    </span><span class="nt">enabled</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">true</span>
-<span class="w">  </span><span class="nt">resources</span><span class="p">:</span>
-<span class="w">    </span><span class="nt">limits</span><span class="p">:</span>
-<span class="w">      </span><span class="nt">cpu</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">500m</span>
-<span class="w">      </span><span class="nt">memory</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">512Mi</span>
-<span class="w">    </span><span class="nt">requests</span><span class="p">:</span>
-<span class="w">      </span><span class="nt">cpu</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">50m</span>
-<span class="w">      </span><span class="nt">memory</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">128Mi</span>
+<span class="w">          </span><span class="nt">secretKeyRef</span><span class="p">:</span>
+<span class="w">            </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">axonops-credentials</span>
+<span class="w">            </span><span class="nt">key</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">org</span>
 </code></pre></div>
-<h4 id="axon-agentyml">axon-agent.yml<a class="headerlink" href="#axon-agentyml" title="Permanent link">¶</a></h4>
-<div class="highlight"><pre><span></span><code><span class="nt">axon-server</span><span class="p">:</span>
-<span class="w">    </span><span class="nt">hosts</span><span class="p">:</span><span class="w"> </span><span class="s">"axonops-axon-server.axonops"</span><span class="w"> </span><span class="c1"># Specify axon-server IP axon-server.mycompany.</span>
-<span class="w">    </span><span class="nt">port</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">1888</span>
-
-<span class="nt">axon-agent</span><span class="p">:</span>
-<span class="w">    </span><span class="nt">org</span><span class="p">:</span><span class="w"> </span><span class="s">"digitalis"</span>
-<span class="w">    </span><span class="nt">human_readable_identifier</span><span class="p">:</span><span class="w"> </span><span class="s">"axon_agent_ip"</span><span class="w"> </span><span class="c1"># one of the following:</span>
-
-<span class="nt">NTP</span><span class="p">:</span>
-<span class="w">    </span><span class="nt">host</span><span class="p">:</span><span class="w"> </span><span class="s">"pool.ntp.org"</span><span class="w"> </span><span class="c1"># Specify a NTP to determine a NTP offset</span>
-
-<span class="nt">cassandra</span><span class="p">:</span>
-<span class="w">  </span><span class="nt">tier0</span><span class="p">:</span><span class="w"> </span><span class="c1"># metrics collected every 5 seconds</span>
-<span class="w">      </span><span class="nt">metrics</span><span class="p">:</span>
-<span class="w">          </span><span class="nt">jvm_</span><span class="p">:</span>
-<span class="w">            </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="s">"java.lang:*"</span>
-<span class="w">          </span><span class="nt">cas_</span><span class="p">:</span>
-<span class="w">            </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="s">"org.apache.cassandra.metrics:*"</span>
-<span class="w">            </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="s">"org.apache.cassandra.net:type=FailureDetector"</span>
-
-<span class="w">  </span><span class="nt">tier1</span><span class="p">:</span>
-<span class="w">      </span><span class="nt">frequency</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">300</span><span class="w"> </span><span class="c1"># metrics collected every 300 seconds (5m)</span>
-<span class="w">      </span><span class="nt">metrics</span><span class="p">:</span>
-<span class="w">          </span><span class="nt">cas_</span><span class="p">:</span>
-<span class="w">            </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="s">"org.apache.cassandra.metrics:name=EstimatedPartitionCount,*"</span>
-
-<span class="w">  </span><span class="nt">blacklist</span><span class="p">:</span><span class="w"> </span><span class="c1"># You can blacklist metrics based on Regex pattern. Hit the agent on http://agentIP:9916/metricslist to list JMX metrics it is collecting</span>
-<span class="w">    </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="s">"org.apache.cassandra.metrics:type=ColumnFamily.*"</span><span class="w"> </span><span class="c1"># duplication of table metrics</span>
-<span class="w">    </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="s">"org.apache.cassandra.metrics:.*scope=Repair#.*"</span><span class="w"> </span><span class="c1"># ignore each repair instance metrics</span>
-<span class="w">    </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="s">"org.apache.cassandra.metrics:.*name=SnapshotsSize.*"</span><span class="w"> </span><span class="c1"># Collecting SnapshotsSize metrics slows down collection</span>
-<span class="w">    </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="s">"org.apache.cassandra.metrics:.*Max.*"</span>
-<span class="w">    </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="s">"org.apache.cassandra.metrics:.*Min.*"</span>
-<span class="w">    </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="s">".*999thPercentile|.*50thPercentile|.*FifteenMinuteRate|.*FiveMinuteRate|.*MeanRate|.*Mean|.*OneMinuteRate|.*StdDev"</span>
-
-<span class="w">  </span><span class="nt">JMXOperationsBlacklist</span><span class="p">:</span>
-<span class="w">    </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="s">"getThreadInfo"</span>
-<span class="w">    </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="s">"getDatacenter"</span>
-<span class="w">    </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="s">"getRack"</span>
-
-<span class="w">  </span><span class="nt">DMLEventsWhitelist</span><span class="p">:</span><span class="w"> </span><span class="c1"># You can whitelist keyspaces / tables (list of "keyspace" and/or "keyspace.table") to log DML queries. Data is not analysed.</span>
-<span class="w">  </span><span class="c1"># - "system_distributed"</span>
-
-<span class="w">  </span><span class="nt">DMLEventsBlacklist</span><span class="p">:</span><span class="w"> </span><span class="c1"># You can blacklist keyspaces / tables from the DMLEventsWhitelist (list of "keyspace" and/or "keyspace.table") to log DML queries. Data is not analysed.</span>
-<span class="w">  </span><span class="c1"># - system_distributed.parent_repair_history</span>
-
-<span class="w">  </span><span class="nt">logSuccessfulRepairs</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">false</span><span class="w"> </span><span class="c1"># set it to true if you want to log all the successful repair events.</span>
-
-<span class="w">  </span><span class="nt">warningThresholdMillis</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">200</span><span class="w"> </span><span class="c1"># This will warn in logs when a MBean takes longer than the specified value.</span>
-
-<span class="w">  </span><span class="nt">logFormat</span><span class="p">:</span><span class="w"> </span><span class="s">"%4$s</span><span class="nv"> </span><span class="s">%1$tY-%1$tm-%1$td</span><span class="nv"> </span><span class="s">%1$tH:%1$tM:%1$tS,%1$tL</span><span class="nv"> </span><span class="s">%5$s%6$s%n"</span>
+<h2 id="accessing-the-cluster">Accessing the Cluster<a class="headerlink" href="#accessing-the-cluster" title="Permanent link">¶</a></h2>
+<h3 id="using-kubectl-port-forward">Using kubectl port-forward<a class="headerlink" href="#using-kubectl-port-forward" title="Permanent link">¶</a></h3>
+<p>Forward the CQL port to your local machine:</p>
+<div class="highlight"><pre><span></span><code>kubectl<span class="w"> </span>port-forward<span class="w"> </span>-n<span class="w"> </span>k8ssandra-operator<span class="w"> </span>svc/axonops-k8ssandra-5-dc1-service<span class="w"> </span><span class="m">9042</span>:9042
 </code></pre></div>
-<h2 id="start-up">Start up<a class="headerlink" href="#start-up" title="Permanent link">¶</a></h2>
-<h3 id="create-axon-agent-configuration">Create Axon Agent configuration<a class="headerlink" href="#create-axon-agent-configuration" title="Permanent link">¶</a></h3>
-<div class="highlight"><pre><span></span><code>kubectl<span class="w"> </span>create<span class="w"> </span>ns<span class="w"> </span>cassandra
-kubectl<span class="w"> </span>create<span class="w"> </span>configmap<span class="w"> </span>axonops-agent<span class="w"> </span>--from-file<span class="o">=</span>axon-agent.yml<span class="w"> </span>-n<span class="w"> </span>cassandra
+<p>Connect using cqlsh or any CQL client:</p>
+<div class="highlight"><pre><span></span><code>cqlsh<span class="w"> </span>localhost<span class="w"> </span><span class="m">9042</span>
 </code></pre></div>
-<h3 id="run-helmfile">Run helmfile<a class="headerlink" href="#run-helmfile" title="Permanent link">¶</a></h3>
-<h4 id="with-locally-installed-helm-and-helmfile">With locally installed helm and helmfile<a class="headerlink" href="#with-locally-installed-helm-and-helmfile" title="Permanent link">¶</a></h4>
-<div class="highlight"><pre><span></span><code><span class="nb">cd</span><span class="w"> </span>your/config/directory
-hemlfile<span class="w"> </span>sync
+<h3 id="creating-a-service">Creating a Service<a class="headerlink" href="#creating-a-service" title="Permanent link">¶</a></h3>
+<p>For internal cluster access, K8ssandra automatically creates a service:</p>
+<div class="highlight"><pre><span></span><code>kubectl<span class="w"> </span>get<span class="w"> </span>svc<span class="w"> </span>-n<span class="w"> </span>k8ssandra-operator
 </code></pre></div>
-<h4 id="with-docker-image">With docker image<a class="headerlink" href="#with-docker-image" title="Permanent link">¶</a></h4>
-<div class="highlight"><pre><span></span><code>docker<span class="w"> </span>run<span class="w"> </span>--rm<span class="w"> </span><span class="se">\</span>
-<span class="w">    </span>-v<span class="w"> </span>~/.kube:/root/.kube<span class="w"> </span><span class="se">\</span>
-<span class="w">    </span>-v<span class="w"> </span><span class="si">${</span><span class="nv">PWD</span><span class="si">}</span>/.helm:/root/.helm<span class="w"> </span><span class="se">\</span>
-<span class="w">    </span>-v<span class="w"> </span><span class="si">${</span><span class="nv">PWD</span><span class="si">}</span>/helmfile.yaml:/helmfile.yaml<span class="w"> </span><span class="se">\</span>
-<span class="w">    </span>-v<span class="w"> </span><span class="si">${</span><span class="nv">PWD</span><span class="si">}</span>/values.yaml:/values.yaml<span class="w"> </span><span class="se">\</span>
-<span class="w">    </span>--net<span class="o">=</span>host<span class="w"> </span>chatwork/helmfile<span class="w"> </span>sync
+<p>Access from within the cluster using:</p>
+<div class="highlight"><pre><span></span><code>axonops-k8ssandra-5-dc1-service.k8ssandra-operator.svc.cluster.local:9042
 </code></pre></div>
-<h2 id="access">Access<a class="headerlink" href="#access" title="Permanent link">¶</a></h2>
-<h3 id="minikube">Minikube<a class="headerlink" href="#minikube" title="Permanent link">¶</a></h3>
-<p>If you used <code>minikube</code>, identify the name of the service with <code>kubectl get svc -n monitoring</code> and launch it with </p>
-<div class="highlight"><pre><span></span><code>minikube<span class="w"> </span>service<span class="w"> </span>axonops-axon-dash<span class="w"> </span>-n<span class="w"> </span>monitoring
-</code></pre></div>
-<h3 id="loadbalancer">LoadBalancer<a class="headerlink" href="#loadbalancer" title="Permanent link">¶</a></h3>
-<p>Find the DNS entry for it:</p>
-<div class="highlight"><pre><span></span><code>kubectl<span class="w"> </span>get<span class="w"> </span>svc<span class="w"> </span>-n<span class="w"> </span>monitoring<span class="w"> </span>-o<span class="w"> </span>wide
-</code></pre></div>
-<p>Open your browser and copy and paste the URL.</p>
 <h2 id="troubleshooting">Troubleshooting<a class="headerlink" href="#troubleshooting" title="Permanent link">¶</a></h2>
-<p>Check the status of the pods:</p>
-<div class="highlight"><pre><span></span><code>kubectl<span class="w"> </span>get<span class="w"> </span>pod<span class="w"> </span>-n<span class="w"> </span>monitoring
-kubectl<span class="w"> </span>get<span class="w"> </span>pod<span class="w"> </span>-n<span class="w"> </span>cassandra
+<h3 id="pods-not-starting">Pods Not Starting<a class="headerlink" href="#pods-not-starting" title="Permanent link">¶</a></h3>
+<p>Check the pod events:</p>
+<div class="highlight"><pre><span></span><code>kubectl<span class="w"> </span>describe<span class="w"> </span>pod<span class="w"> </span>axonops-k8ssandra-5-dc1-rack1-0<span class="w"> </span>-n<span class="w"> </span>k8ssandra-operator
 </code></pre></div>
-<p>Any pod which is not on state <code>Running</code> check it out with</p>
-<div class="highlight"><pre><span></span><code>kubectl<span class="w"> </span>describe<span class="w"> </span>-n<span class="w"> </span>NAMESPACE<span class="w"> </span>pod<span class="w"> </span>POD-NAME
+<p>Common issues:</p>
+<ul>
+<li><strong>Insufficient resources</strong>: Verify your nodes have enough CPU and memory</li>
+<li><strong>Storage class not available</strong>: Ensure the storage class exists (<code>kubectl get storageclass</code>)</li>
+<li><strong>Image pull errors</strong>: Verify network connectivity and image name</li>
+</ul>
+<h3 id="cassandra-nodes-not-joining">Cassandra Nodes Not Joining<a class="headerlink" href="#cassandra-nodes-not-joining" title="Permanent link">¶</a></h3>
+<p>Check Cassandra logs:</p>
+<div class="highlight"><pre><span></span><code>kubectl<span class="w"> </span>logs<span class="w"> </span>axonops-k8ssandra-5-dc1-rack1-0<span class="w"> </span>-n<span class="w"> </span>k8ssandra-operator<span class="w"> </span>-c<span class="w"> </span>cassandra
 </code></pre></div>
-<h3 id="storage">Storage<a class="headerlink" href="#storage" title="Permanent link">¶</a></h3>
-<p>One common problem is regarding storage. If you have enabled persistent storage you may see an error about persistent volume claims (not found, unclaimed, etc.). If you're using <code>minikube</code> make sure you enable storage with </p>
-<div class="highlight"><pre><span></span><code>minikube<span class="w"> </span>addons<span class="w"> </span><span class="nb">enable</span><span class="w"> </span>storage-provisioner
+<p>Common issues:</p>
+<ul>
+<li><strong>Network policies</strong>: Ensure pods can communicate on port 7000 (gossip)</li>
+<li><strong>DNS resolution</strong>: Verify pod DNS is working correctly</li>
+<li><strong>Anti-affinity conflicts</strong>: Check if there are enough nodes for the anti-affinity rules</li>
+</ul>
+<h3 id="axonops-agent-not-connecting">AxonOps Agent Not Connecting<a class="headerlink" href="#axonops-agent-not-connecting" title="Permanent link">¶</a></h3>
+<ol>
+<li>Verify AxonOps server is accessible:</li>
+</ol>
+<div class="highlight"><pre><span></span><code>kubectl<span class="w"> </span>run<span class="w"> </span>test-connection<span class="w"> </span>--rm<span class="w"> </span>-it<span class="w"> </span>--image<span class="o">=</span>busybox<span class="w"> </span>--<span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>nc<span class="w"> </span>-zv<span class="w"> </span>axon-server-agent.axonops.svc.cluster.local<span class="w"> </span><span class="m">1888</span>
 </code></pre></div>
-<h3 id="memory">Memory<a class="headerlink" href="#memory" title="Permanent link">¶</a></h3>
-<p>The second most common problem is not enough memory (OOMKilled). You will see this often if your node does not have enough memory to run the containers or if the <code>heap</code> settings for Cassandra are not right. <code>kubectl describe</code> command will be showing <code>Error 127</code> when this occurs.</p>
-<p>In the <code>values.yaml</code> file adjust the heap options to match your hardware:</p>
-<div class="highlight"><pre><span></span><code><span class="w">  </span><span class="nt">max_heap_size</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">512M</span>
-<span class="w">  </span><span class="nt">heap_new_size</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">512M</span>
+<ol>
+<li>Check agent environment variables:</li>
+</ol>
+<div class="highlight"><pre><span></span><code>kubectl<span class="w"> </span><span class="nb">exec</span><span class="w"> </span>axonops-k8ssandra-5-dc1-rack1-0<span class="w"> </span>-n<span class="w"> </span>k8ssandra-operator<span class="w"> </span>-c<span class="w"> </span>cassandra<span class="w"> </span>--<span class="w"> </span>env<span class="w"> </span><span class="p">|</span><span class="w"> </span>grep<span class="w"> </span>AXON
 </code></pre></div>
-<h4 id="minikube_1">Minikube<a class="headerlink" href="#minikube_1" title="Permanent link">¶</a></h4>
-<p>Review the way you have started up <code>minikube</code> and assign more memory if you can. Also check the <a href="https://minikube.sigs.k8s.io/docs/drivers/">available drivers</a> and select the appropriate for your platform. On macOS where I tested <code>hyperkit</code> or <code>virtualbox</code> are the best ones.</p>
-<div class="highlight"><pre><span></span><code>minikube<span class="w"> </span>start<span class="w"> </span>--memory<span class="w"> </span><span class="m">10240</span><span class="w"> </span>--cpus<span class="o">=</span><span class="m">4</span><span class="w"> </span>--driver<span class="o">=</span>hyperkit
+<ol>
+<li>Check agent logs in the Cassandra container:</li>
+</ol>
+<div class="highlight"><pre><span></span><code>kubectl<span class="w"> </span>logs<span class="w"> </span>axonops-k8ssandra-5-dc1-rack1-0<span class="w"> </span>-n<span class="w"> </span>k8ssandra-operator<span class="w"> </span>-c<span class="w"> </span>cassandra<span class="w"> </span><span class="p">|</span><span class="w"> </span>grep<span class="w"> </span>-i<span class="w"> </span><span class="s2">"axon\|agent"</span>
 </code></pre></div>
-<h2 id="putting-it-all-together">Putting it all together<a class="headerlink" href="#putting-it-all-together" title="Permanent link">¶</a></h2>
-<p><a href="https://youtu.be/Qa1dWx5atqQ" title="AxonOps Minikube"><img alt="AxonOps on Minikube" src="https://img.youtube.com/vi/Qa1dWx5atqQ/0.jpg"></a></p></div>
+<h3 id="storage-issues">Storage Issues<a class="headerlink" href="#storage-issues" title="Permanent link">¶</a></h3>
+<p>If persistent volumes are not binding:</p>
+<div class="highlight"><pre><span></span><code>kubectl<span class="w"> </span>get<span class="w"> </span>pv
+kubectl<span class="w"> </span>get<span class="w"> </span>pvc<span class="w"> </span>-n<span class="w"> </span>k8ssandra-operator
+kubectl<span class="w"> </span>describe<span class="w"> </span>pvc<span class="w"> </span>&lt;pvc-name&gt;<span class="w"> </span>-n<span class="w"> </span>k8ssandra-operator
+</code></pre></div>
+<p>Common issues:</p>
+<ul>
+<li><strong>No available volumes</strong>: Create persistent volumes or use dynamic provisioning</li>
+<li><strong>Storage class mismatch</strong>: Verify the storage class name is correct</li>
+<li><strong>Access mode incompatibility</strong>: Ensure your storage supports the requested access mode</li>
+</ul>
+<h2 id="scaling-the-cluster">Scaling the Cluster<a class="headerlink" href="#scaling-the-cluster" title="Permanent link">¶</a></h2>
+<h3 id="adding-nodes">Adding Nodes<a class="headerlink" href="#adding-nodes" title="Permanent link">¶</a></h3>
+<p>To scale up the cluster, update the <code>size</code> field:</p>
+<div class="highlight"><pre><span></span><code>kubectl<span class="w"> </span>patch<span class="w"> </span>k8ssandracluster<span class="w"> </span>axonops-k8ssandra-5<span class="w"> </span>-n<span class="w"> </span>k8ssandra-operator<span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>--type<span class="w"> </span>merge<span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>-p<span class="w"> </span><span class="s1">'{"spec":{"cassandra":{"datacenters":[{"metadata":{"name":"dc1"},"size":5}]}}}'</span>
+</code></pre></div>
+<p>Or edit the cluster directly:</p>
+<div class="highlight"><pre><span></span><code>kubectl<span class="w"> </span>edit<span class="w"> </span>k8ssandracluster<span class="w"> </span>axonops-k8ssandra-5<span class="w"> </span>-n<span class="w"> </span>k8ssandra-operator
+</code></pre></div>
+<p>Change the size value:</p>
+<div class="highlight"><pre><span></span><code><span class="nt">datacenters</span><span class="p">:</span>
+<span class="w">  </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">metadata</span><span class="p">:</span>
+<span class="w">      </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">dc1</span>
+<span class="w">    </span><span class="nt">size</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">5</span><span class="w">  </span><span class="c1"># Changed from 3</span>
+</code></pre></div>
+<h3 id="removing-nodes">Removing Nodes<a class="headerlink" href="#removing-nodes" title="Permanent link">¶</a></h3>
+<p>:::warning
+Scaling down requires careful consideration. Ensure your replication factor allows for the reduced node count without data loss.
+:::</p>
+<p>To scale down:</p>
+<div class="highlight"><pre><span></span><code>kubectl<span class="w"> </span>patch<span class="w"> </span>k8ssandracluster<span class="w"> </span>axonops-k8ssandra-5<span class="w"> </span>-n<span class="w"> </span>k8ssandra-operator<span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>--type<span class="w"> </span>merge<span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>-p<span class="w"> </span><span class="s1">'{"spec":{"cassandra":{"datacenters":[{"metadata":{"name":"dc1"},"size":2}]}}}'</span>
+</code></pre></div>
+<p>K8ssandra will automatically handle the decommissioning process.</p>
+<h2 id="backup-and-restore">Backup and Restore<a class="headerlink" href="#backup-and-restore" title="Permanent link">¶</a></h2>
+<p>K8ssandra includes Medusa for backup and restore operations. Configure Medusa by adding it to your cluster spec:</p>
+<div class="highlight"><pre><span></span><code><span class="nt">spec</span><span class="p">:</span>
+<span class="w">  </span><span class="nt">medusa</span><span class="p">:</span>
+<span class="w">    </span><span class="nt">storageProperties</span><span class="p">:</span>
+<span class="w">      </span><span class="nt">storageProvider</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">s3</span>
+<span class="w">      </span><span class="nt">bucketName</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">k8ssandra-backups</span>
+<span class="w">      </span><span class="nt">region</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">us-east-1</span>
+<span class="w">      </span><span class="nt">storageSecretRef</span><span class="p">:</span>
+<span class="w">        </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">medusa-s3-credentials</span>
+</code></pre></div>
+<p>Refer to the <a href="https://docs.k8ssandra.io/tasks/backup-restore/">K8ssandra Medusa documentation</a> for detailed backup and restore procedures.</p>
+<h2 id="cleanup">Cleanup<a class="headerlink" href="#cleanup" title="Permanent link">¶</a></h2>
+<p>To remove the cluster:</p>
+<div class="highlight"><pre><span></span><code><span class="c1"># Delete the K8ssandraCluster</span>
+kubectl<span class="w"> </span>delete<span class="w"> </span>k8ssandracluster<span class="w"> </span>axonops-k8ssandra-5<span class="w"> </span>-n<span class="w"> </span>k8ssandra-operator
+
+<span class="c1"># Optionally, delete PVCs (this will delete all data)</span>
+kubectl<span class="w"> </span>delete<span class="w"> </span>pvc<span class="w"> </span>-n<span class="w"> </span>k8ssandra-operator<span class="w"> </span>-l<span class="w"> </span>app.kubernetes.io/managed-by<span class="o">=</span>cass-operator
+
+<span class="c1"># Uninstall the K8ssandra operator</span>
+helm<span class="w"> </span>uninstall<span class="w"> </span>k8ssandra-operator<span class="w"> </span>-n<span class="w"> </span>k8ssandra-operator
+
+<span class="c1"># Delete the namespace</span>
+kubectl<span class="w"> </span>delete<span class="w"> </span>namespace<span class="w"> </span>k8ssandra-operator
+</code></pre></div>
+<h2 id="additional-resources">Additional Resources<a class="headerlink" href="#additional-resources" title="Permanent link">¶</a></h2>
+<ul>
+<li><a href="https://docs.k8ssandra.io/">K8ssandra Documentation</a></li>
+<li><a href="https://github.com/k8ssandra/k8ssandra-operator">K8ssandra Operator GitHub</a></li>
+<li><a href="https://docs.axonops.com/">AxonOps Documentation</a></li>
+<li><a href="https://cassandra.apache.org/doc/latest/configuration/">Cassandra Configuration Reference</a></li>
+</ul></div>
 
 
 
@@ -26009,6 +27059,44 @@ kubectl<span class="w"> </span>get<span class="w"> </span>pod<span class="w"> </
       
         <footer class="md-footer">
   
+    
+      
+      <nav class="md-footer__inner md-grid" aria-label="Footer">
+        
+          
+          <a href="../strimzi/" class="md-footer__link md-footer__link--prev" aria-label="Previous: Strimzi Kafka Cluster">
+            <div class="md-footer__button md-icon">
+              
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"></path></svg>
+            </div>
+            <div class="md-footer__title">
+              <span class="md-footer__direction">
+                Previous
+              </span>
+              <div class="md-ellipsis">
+                Strimzi Kafka Cluster
+              </div>
+            </div>
+          </a>
+        
+        
+          
+          <a href="../../../system-requirements/" class="md-footer__link md-footer__link--next" aria-label="Next: System Requirements">
+            <div class="md-footer__title">
+              <span class="md-footer__direction">
+                Next
+              </span>
+              <div class="md-ellipsis">
+                System Requirements
+              </div>
+            </div>
+            <div class="md-footer__button md-icon">
+              
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M4 11v2h12l-5.5 5.5 1.42 1.42L19.84 12l-7.92-7.92L10.5 5.5 16 11z"></path></svg>
+            </div>
+          </a>
+        
+      </nav>
     
   
   <div class="md-footer-meta md-typeset">
@@ -26135,10 +27223,10 @@ kubectl<span class="w"> </span>get<span class="w"> </span>pod<span class="w"> </
     
       
       
-      <script id="__config" type="application/json">{"annotate": null, "base": "../../..", "features": ["navigation.instant", "navigation.tabs", "announce.dismiss", "navigation.top", "navigation.footer", "content.code.copy"], "search": "../../../assets/javascripts/workers/search.7a47a382.min.js", "tags": null, "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": null}</script>
+      <script id="__config" type="application/json">{"annotate": null, "base": "../../..", "features": ["navigation.instant", "navigation.tabs", "announce.dismiss", "navigation.top", "navigation.footer", "content.code.copy"], "search": "../../../assets/javascripts/workers/search.2c215733.min.js", "tags": null, "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": null}</script>
     
     
-      <script src="../../../assets/javascripts/bundle.e71a0d61.min.js"></script>
+      <script src="../../../assets/javascripts/bundle.79ae519e.min.js"></script>
       
         <script src="../../../javascripts/extra.js"></script>
       
