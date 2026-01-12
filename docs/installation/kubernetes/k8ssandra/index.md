@@ -105,7 +105,7 @@ Before deploying, configure these variables according to your environment:
 | `CASSANDRA_VERSION` | Cassandra version to deploy | `5.0.6` |
 | `DATACENTER_NAME` | Name for the datacenter | `dc1` |
 | `DATACENTER_SIZE` | Number of Cassandra nodes | `3` |
-| `STORAGE_CLASS` | Storage class for persistent volumes | `local-path` |
+| `STORAGE_CLASS` | Storage class for persistent volumes | cluster default |
 | `STORAGE_SIZE` | Size of storage per node | `2Gi` |
 | `HEAP_SIZE` | JVM heap size (initial and max) | `1G` |
 | `CPU_LIMIT` | CPU limit per pod | `1` or `2000m` |
@@ -187,10 +187,10 @@ spec:
     resources:
       limits:
         cpu: 2
-        memory: 4Gi
+        memory: 12Gi
       requests:
         cpu: 1
-        memory: 2Gi
+        memory: 8Gi
     datacenters:
       - metadata:
           name: dc1
@@ -210,11 +210,11 @@ spec:
                 value: "false"
         config:
           jvmOptions:
-            heap_initial_size: 2G
-            heap_max_size: 2G
+            heap_initial_size: 8G
+            heap_max_size: 8G
         storageConfig:
           cassandraDataVolumeClaimSpec:
-            storageClassName: local-path
+            storageClassName: ""
             accessModes:
               - ReadWriteOnce
             resources:
