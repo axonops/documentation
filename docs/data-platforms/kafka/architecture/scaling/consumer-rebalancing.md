@@ -632,6 +632,167 @@ Empty --> Dead : Group expires
 
 ---
 
+## Next Generation Protocol (KIP-848)
+
+### Overview
+
+KIP-848 introduces a fundamentally redesigned consumer rebalance protocol that moves partition assignment from the client to the server (broker). This eliminates the multi-round rebalance problem of cooperative rebalancing and provides truly seamless partition reassignment.
+
+| Aspect | Classic Protocol | KIP-848 Protocol |
+|--------|------------------|------------------|
+| **Assignment location** | Consumer (leader) | Broker (group coordinator) |
+| **Rebalance rounds** | 1 (eager) or 2+ (cooperative) | Single notification |
+| **Stop-the-world** | Yes (eager) or partial (cooperative) | No |
+| **Protocol complexity** | Client-side logic | Server-side logic |
+| **Kafka version** | All versions | 3.7+ (early access), 4.0+ (stable) |
+
+### Version Support
+
+| Kafka Version | KIP-848 Status | Notes |
+|---------------|----------------|-------|
+| < 3.7 | ❌ Not available | Use classic protocol |
+| 3.7.x | ⚠️ Early Access | Enable with feature flag, not for production |
+| 3.8.x | ⚠️ Early Access | Improved stability |
+| 4.0+ | ✅ Stable | Production ready, recommended for new deployments |
+
+!!! warning "Early Access Limitations"
+    In Kafka 3.7 and 3.8, KIP-848 is early access. Do not use in production. The protocol and configuration may change between versions.
+
+### How It Works
+
+```plantuml
+@startuml
+
+skinparam backgroundColor transparent
+
+participant "Consumer 1" as C1
+participant "Consumer 2" as C2
+participant "Group Coordinator" as Coord
+
+note over C1: Owns P0, P1
+note over C2: Owns P2, P3
+
+== Consumer 3 Joins ==
+
+note over Coord: Coordinator computes\nnew assignment
+
+Coord --> C1 : Assignment [P0]
+note right: Revoke P1
+Coord --> C2 : Assignment [P2]
+note right: Revoke P3
+note right: Consumer 3 gets P1, P3
+
+note over C1: Release P1,\ncontinue P0
+note over C2: Release P3,\ncontinue P2
+
+note over C1, C2 #lightgreen: No stop-the-world!\nProcessing continues
+
+@enduml
+```
+
+**Key difference:** The broker computes and pushes assignments directly to consumers. Consumers do not need to coordinate with each other through JoinGroup/SyncGroup rounds.
+
+### Configuration
+
+```properties
+# Enable KIP-848 protocol (Kafka 3.7+)
+group.protocol=consumer
+
+# Classic protocol (default, backward compatible)
+group.protocol=classic
+```
+
+**Broker configuration (Kafka 3.7-3.8 early access):**
+
+```properties
+# Enable new group coordinator
+group.coordinator.rebalance.protocols=consumer,classic
+
+# Feature flag for early access
+unstable.api.versions.enable=true
+```
+
+### Protocol Comparison
+
+```plantuml
+@startuml
+
+skinparam backgroundColor transparent
+
+rectangle "Classic Protocol (Cooperative)" {
+  rectangle "Round 1" as R1 {
+    (JoinGroup) --> (SyncGroup)
+    note right: Identify partitions to revoke
+  }
+  rectangle "Round 2" as R2 {
+    (JoinGroup) --> (SyncGroup)
+    note right: Assign revoked partitions
+  }
+  R1 --> R2 : Partitions revoked
+}
+
+rectangle "KIP-848 Protocol" {
+  rectangle "Single Operation" as S1 {
+    (ConsumerGroupHeartbeat) --> (Assignment)
+    note right: Broker pushes new assignment
+  }
+}
+
+@enduml
+```
+
+| Aspect | Cooperative (Classic) | KIP-848 |
+|--------|----------------------|---------|
+| **Rebalance trigger** | Heartbeat returns REBALANCE_IN_PROGRESS | Heartbeat returns new assignment |
+| **Assignment computation** | Leader consumer | Group coordinator |
+| **Partition release** | Consumer-initiated after SyncGroup | Consumer-initiated after heartbeat |
+| **New partition assignment** | Requires second rebalance round | Immediate in same response |
+| **Minimum latency** | 2× heartbeat interval | 1× heartbeat interval |
+
+### Migration Path
+
+**From Classic to KIP-848:**
+
+1. **Upgrade brokers** to Kafka 3.7+ (early access) or 4.0+ (stable)
+2. **Enable new coordinator** on brokers (3.7-3.8 only)
+3. **Upgrade consumers** to compatible client version
+4. **Set `group.protocol=consumer`** on consumers
+5. **Rolling restart** consumers (group will have mixed protocols temporarily)
+
+!!! note "Mixed Protocol Groups"
+    During migration, a consumer group can have members using both protocols. The coordinator handles this gracefully, but full benefits are only realized when all members use KIP-848.
+
+### Benefits
+
+| Benefit | Description |
+|---------|-------------|
+| **Lower latency** | Single round-trip vs multiple rounds |
+| **No stop-the-world** | Stable partitions continue processing |
+| **Simpler clients** | Assignment logic moved to broker |
+| **Better scalability** | Reduced coordination overhead |
+| **Predictable behavior** | Broker has global view of group |
+
+### Limitations
+
+| Limitation | Description |
+|------------|-------------|
+| **Kafka version** | Requires 3.7+ (early access) or 4.0+ (stable) |
+| **Client support** | Requires updated client libraries |
+| **Custom assignors** | Server-side assignors only |
+| **Feature maturity** | Early access in 3.7/3.8 |
+
+### Monitoring
+
+New metrics for KIP-848 protocol:
+
+| Metric | Description |
+|--------|-------------|
+| `group-coordinator-metrics` | New coordinator metrics |
+| `consumer-group-heartbeat-rate` | Heartbeat frequency |
+| `consumer-group-rebalance-rate` | Assignment change frequency |
+
+---
+
 ## Version Compatibility
 
 | Feature | Kafka Version |
@@ -641,6 +802,8 @@ Empty --> Dead : Group expires
 | Static membership | 2.3.0+ |
 | Cooperative rebalancing | 2.4.0+ |
 | Incremental cooperative | 2.5.0+ |
+| KIP-848 (early access) | 3.7.0+ |
+| KIP-848 (stable) | 4.0.0+ |
 
 ---
 
