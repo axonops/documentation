@@ -123,9 +123,8 @@ spec:
 
 In Strimzi, **Node Pools** are a way to group and manage Kafka nodes (brokers or controllers) within a single Kafka cluster using different configurations. Instead of treating every node in the cluster as an identical twin, node pools allow you to define distinct sets of nodes with unique hardware, storage, or roles.
 
-:::info
-The section under `pod`, the topology constraint, can be removed if you are not using hostPath or have strict requirements to pin brokers or controllers to specific nodes.
-:::
+!!! info
+    The section under `pod`, the topology constraint, can be removed if you are not using hostPath or have strict requirements to pin brokers or controllers to specific nodes.
 
 The example below creates the nodepool for the controllers.
 
@@ -177,9 +176,8 @@ spec:
           value: "${AXON_AGENT_SERVER_HOST}"
 ```
 
-:::info
-If you are using shared storage and you can permit the pods moving to different hosts, it is recommended to use a topology spread configuration to ensure that not all brokers are in the same k8s hosts.
-:::
+!!! info
+    If you are using shared storage and you can permit the pods moving to different hosts, it is recommended to use a topology spread configuration to ensure that not all brokers are in the same k8s hosts.
 
 ```yaml
 template:
@@ -452,9 +450,8 @@ default.replication.factor: 1
 min.insync.replicas: 1
 ```
 
-:::warning
-These replication settings are suitable for development/testing. For production, increase replication factors to at least 3.
-:::
+!!! warning
+    These replication settings are suitable for development/testing. For production, increase replication factors to at least 3.
 
 ## Troubleshooting
 

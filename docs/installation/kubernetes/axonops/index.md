@@ -7,11 +7,11 @@ description: Complete guide to deploying AxonOps components on Kubernetes with c
 
 This guide explains how to deploy AxonOps components and a Strimzi Kafka cluster on Kubernetes with local (hostPath) storage or shared storage and AxonOps monitoring agent integration.
 
-:::tip Quick Start Alternative
-For a streamlined deployment experience, you can use our automated installation script that handles the complete setup process. This script automates many of the manual steps described in this guide.
+!!! tip "Quick Start Alternative"
+    For a streamlined deployment experience, you can use our automated installation script that handles the complete setup process. This script automates many of the manual steps described in this guide.
 
-[View the automated deployment guide →](https://github.com/axonops/axonops-containers/blob/development/examples/full-on-prems/DEPLOYMENT_GUIDE.md)
-:::
+    [View the automated deployment guide →](https://github.com/axonops/axonops-containers/blob/development/examples/full-on-prems/DEPLOYMENT_GUIDE.md)
+
 
 ## Components Required
 
@@ -203,9 +203,8 @@ stringData:
     cql_password: cassandra
 ```
 
-:::note
-The default installation assumes your clients will be all in Kubernetes. If you will have AxonOps clients outside of Kubernetes (external Cassandra or Kafka clusters) you will also need to add an ingress or NodePort configuration.
-:::
+!!! note
+    The default installation assumes your clients will be all in Kubernetes. If you will have AxonOps clients outside of Kubernetes (external Cassandra or Kafka clusters) you will also need to add an ingress or NodePort configuration.
 
 If you need external access, create `axon-server-values.yaml` using the following example:
 
@@ -312,9 +311,8 @@ ingress:
     #     - axonops.mycompany.com
 ```
 
-:::note
-You will need to choose between Ingress (preferred option) or NodePort for external access.
-:::
+!!! note
+    You will need to choose between Ingress (preferred option) or NodePort for external access.
 
 Install:
 

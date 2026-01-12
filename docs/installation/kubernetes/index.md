@@ -74,25 +74,12 @@ Before deploying AxonOps on Kubernetes, ensure you have:
 
 A typical AxonOps deployment on Kubernetes consists of:
 
-```
-┌─────────────────────────────────────────────────────────────┐
-│                     Kubernetes Cluster                      │
-├─────────────────────────────────────────────────────────────┤
-│                                                             │
-│  ┌──────────────────┐         ┌──────────────────┐          │
-│  │  AxonOps Server  │◄────────┤ AxonOps Dashboard│          │
-│  │   (Management)   │         │     (Web UI)     │          │
-│  └────────┬─────────┘         └──────────────────┘          │
-│           │                                                 │
-│           ├──────────┬──────────────────-─────────────-─────┤
-│           │          │                                      │
-│  ┌────────▼───────┐ ┌▼───────────────┐                      │
-│  │  Timeseries DB │ │   Search DB    │                      │
-│  │  (Cassandra)   │ │  (OpenSearch)  │.                     │ 
-│  └────────────────┘ └────────────────┘.                     │ 
-│                                                             │
-└─────────────────────────────────────────────────────────────┘
-```
+- AxonOps Server
+- AxonOps Dashboard
+- AxonOps Search DB
+- AxonOps Timeseries DB
+
+![Alt text](./axonops_cluster.png "AxonOps Kubernetes Cluster")
 
 ## Getting Started
 

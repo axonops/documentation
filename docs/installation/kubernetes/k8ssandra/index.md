@@ -359,9 +359,8 @@ jvmOptions:
   heap_max_size: 2G
 ```
 
-:::warning
-Ensure heap size is set appropriately based on available memory. A general rule is to set the heap to 25-50% of the available RAM, with a maximum of 8GB for optimal GC performance.
-:::
+!!! warning
+    Ensure heap size is set appropriately based on available memory. A general rule is to set the heap to 25-50% of the available RAM, with a maximum of 8GB for optimal GC performance.
 
 ## Advanced Configuration
 
@@ -577,9 +576,8 @@ datacenters:
 
 ### Removing Nodes
 
-:::warning
-Scaling down requires careful consideration. Ensure your replication factor allows for the reduced node count without data loss.
-:::
+!!! warning
+    Scaling down requires careful consideration. Ensure your replication factor allows for the reduced node count without data loss.
 
 To scale down:
 
