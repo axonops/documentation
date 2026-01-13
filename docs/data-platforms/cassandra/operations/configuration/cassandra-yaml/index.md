@@ -84,17 +84,17 @@ endpoint_snitch: GossipingPropertyFileSnitch
 
 | Category | Key Parameters | Reference |
 |----------|----------------|-----------|
-| **Cluster Identity** | `cluster_name`, `num_tokens`, `allocate_tokens_for_local_replication_factor` | [Reference](reference.md#cluster-identity) |
-| **Network** | `listen_address`, `rpc_address`, `broadcast_address`, ports | [Reference](reference.md#network-configuration) |
-| **Storage** | `data_file_directories`, `commitlog_directory`, `hints_directory` | [Reference](reference.md#storage-configuration) |
-| **Performance** | `concurrent_reads`, `concurrent_writes`, memtable settings | [Reference](reference.md#performance-tuning) |
+| **Cluster Identity** | `cluster_name`, `num_tokens`, `allocate_tokens_for_local_replication_factor` | [Reference](reference.md#cluster-configuration) |
+| **Network** | `listen_address`, `rpc_address`, `broadcast_address`, ports | [Reference](reference.md#network-listen-addresses) |
+| **Storage** | `data_file_directories`, `commitlog_directory`, `hints_directory` | [Reference](reference.md#data-directories) |
+| **Performance** | `concurrent_reads`, `concurrent_writes`, memtable settings | [Reference](reference.md#concurrent-operations) |
 | **Commit Log** | `commitlog_sync`, `commitlog_segment_size`, `commitlog_total_space` | [Reference](reference.md#commit-log) |
 | **Compaction** | `compaction_throughput`, `concurrent_compactors` | [Reference](reference.md#compaction) |
 | **Caching** | `key_cache_size`, `row_cache_size`, `counter_cache_size` | [Reference](reference.md#caching) |
-| **Timeouts** | `read_request_timeout`, `write_request_timeout`, `range_request_timeout` | [Reference](reference.md#timeouts) |
+| **Timeouts** | `read_request_timeout`, `write_request_timeout`, `range_request_timeout` | [Reference](reference.md#request-timeouts) |
 | **Hinted Handoff** | `hinted_handoff_enabled`, `max_hint_window`, `hinted_handoff_throttle` | [Reference](reference.md#hinted-handoff) |
-| **Security** | `authenticator`, `authorizer`, encryption options | [Reference](reference.md#security) |
-| **Gossip** | `seed_provider`, `endpoint_snitch`, `phi_convict_threshold` | [Reference](reference.md#gossip-and-failure-detection) |
+| **Security** | `authenticator`, `authorizer`, encryption options | [Reference](reference.md#security-authentication) |
+| **Gossip** | `seed_provider`, `endpoint_snitch`, `phi_convict_threshold` | [Reference](reference.md#snitch-configuration) |
 
 ---
 
