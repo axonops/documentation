@@ -84,7 +84,7 @@ Instructions and files can be found [here](https://github.com/axonops/axonops-an
 
 For deployments into Kubernetes environments, a Helm chart is available.
 
-Instructions and files can be found [here](https://github.com/axonops/helm-axonops).
+Instructions and files can be found [here](https://github.com/axonops/axonops-containers/tree/development/axonops/charts).
 
 ### Offline Installations
 
