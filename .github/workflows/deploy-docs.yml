@@ -32,7 +32,7 @@ jobs:
       - name: Install plantuml
         run: |
           sudo apt-get install -y plantuml
-          curl -LO https://github.com/plantuml/plantuml/releases/download/snapshot/plantuml-SNAPSHOT.jar -o plantuml.jar
+          curl -L https://github.com/plantuml/plantuml/releases/download/snapshot/plantuml-SNAPSHOT.jar -o plantuml.jar
           sudo cp plantuml.jar /usr/share/plantuml/plantuml.jar
 
       - name: Set up Python
@@ -73,7 +73,7 @@ jobs:
       - name: Install plantuml
         run: |
           sudo apt-get install -y plantuml
-          curl -LO https://github.com/plantuml/plantuml/releases/download/snapshot/plantuml-SNAPSHOT.jar -o plantuml.jar
+          curl -L https://github.com/plantuml/plantuml/releases/download/snapshot/plantuml-SNAPSHOT.jar -o plantuml.jar
           sudo cp plantuml.jar /usr/share/plantuml/plantuml.jar
 
       - name: Set up Python
