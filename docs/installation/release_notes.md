@@ -6,7 +6,7 @@ meta:
     content: "release notes, AxonOps updates, changelog, new features"
 ---
 
-## Release 2025-01-13
+## Release 2026-01-13
 
 * axon-server: 2.0.17
     * Elasticsearch DataStreams migration, Kafka improvements, and stability fixes for repairs.
