@@ -152,6 +152,7 @@ nav:
         - Strimzi Kafka Cluster: 'installation/kubernetes/strimzi/index.md'
         - K8ssandra Cassandra Cluster: 'installation/kubernetes/k8ssandra/index.md'
       - System Requirements: system-requirements/index.md
+      - Air-Gapped Installation: installation/air-gapped/index.md
 
     - Authentication:
       - LDAP: 'authentication/ldap.md' 
