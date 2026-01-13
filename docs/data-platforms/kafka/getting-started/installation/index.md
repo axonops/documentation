@@ -184,7 +184,7 @@ volumes:
 
 ## Kubernetes
 
-While the Docker container above can be deployed in Kubernetes, we recommend using **Apache Strimzi** for
+While the Docker container above can be deployed in Kubernetes, we recommend using [Strimzi](https://strimzi.io/docs/operators/latest/deploying) for
 production-grade Kafka deployments on Kubernetes. Strimzi provides a complete operator-based solution with
 native Kubernetes integration, automated management, and enhanced operational capabilities.
 
