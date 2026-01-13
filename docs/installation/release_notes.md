@@ -10,8 +10,7 @@ meta:
 
 * axon-server: 2.0.17
     * Elasticsearch DataStreams migration, Kafka improvements, and stability fixes for repairs.
-    * **Note:** Requires Elasticsearch 7.9 or later. On-premise customers with restricted Elasticsearch permissions may need to grant additional permissions for data stream and ILM management.
-    **Note:** Multiple organization IDs are no longer supported for Grafana integrations.
+    * **Note:** Requires Elasticsearch 7.9 or later. On-premise customers with restricted Elasticsearch permissions may need to grant additional `manage_ilm` permissions for data stream and ILM management.
 * axon-dash: 2.0.19
     * Kafka management improvements, dashboard customization, and various UI fixes.
 * axon-agent: 2.0.14
