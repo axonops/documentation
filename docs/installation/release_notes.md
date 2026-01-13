@@ -25,22 +25,20 @@ meta:
 * [Server] Stop repairs gracefully when timestamp validation errors occur.
 * [Server] Fix crash caused by concurrency issue during repairs.
 * [Server] Fix race condition when saving cluster data.
-* [Dash] Hide the add plugin button for Kafka Connect until functionality is available.
 * [Dash] Fix clipboard copy functionality for older browsers.
-* [Dash] Remove unnecessary Actions column from cluster view table.
 * [Dash] Update Next.js to version 15.5.7 for security fixes.
 * [Dash] Fix backup restore API payload.
 * [Dash] Fix timezone display names.
 * [Dash] Fix dashboard filter text search.
 * [Dash] Fix topic sorting by cleanup policy.
 * [Dash] Fix issues with the time navigation jump back button.
+* [Dash] Fix control positioning in Node Details popup.
 * [Dash] Prepare for Next.js v16 by migrating from deprecated environment variable methods.
 * [Dash] Fix validation on the Silence Alerts form.
 * [Dash] Increase API proxy timeout to 2 minutes for longer operations.
 * [Dash] Update Next.js to version 15.5.9 for security fixes.
 * [Dash] Fix issue loading Kafka dashboard templates.
 * [Dash] Fix log viewer scrolling behavior.
-* [Dash] Fix control positioning in Node Details popup.
 * [Agent] Fix calculation and downsampling of rated metrics.
 
 ### New Features
@@ -48,11 +46,10 @@ meta:
 * [Server] Migrate to Elasticsearch DataStreams for improved events storage.
 * [Server] Add ability to delete and truncate Kafka topic records.
 * [Server] Add support for `*.table` wildcard pattern in Adaptive Repair table exclusions.
-* [Server] Use the events retention time as the default rollover time for ILM data streams.
 * [Dash] Allow freeform topic entry on Kafka ACLs form.
 * [Dash] Filter Kafka Connectors by connection state.
 * [Dash] Add `*.table` wildcard pattern support for Adaptive Repair table exclusions.
-* [Dash] Introduce improved table component, currently available for Service Checks.
+* [Dash] Introduce improved table component for Service Checks.
 * [Dash] Add support for creating custom filters on dashboards.
 * [Dash] Add ability to delete and truncate Kafka topic records.
 * [Dash] Add horizontal scrolling to logs viewer.
