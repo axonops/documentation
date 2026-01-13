@@ -11,6 +11,7 @@ meta:
 * axon-server: 2.0.17
     * Elasticsearch DataStreams migration, Kafka improvements, and stability fixes for repairs.
     * **Note:** Requires Elasticsearch 7.9 or later. On-premise customers with restricted Elasticsearch permissions may need to grant additional permissions for data stream and ILM management.
+    **Note:** Multiple organization IDs are no longer supported for Grafana integrations.
 * axon-dash: 2.0.19
     * Kafka management improvements, dashboard customization, and various UI fixes.
 * axon-agent: 2.0.14
@@ -20,8 +21,7 @@ meta:
 
 * [Server] Fix Kafka topics not displaying associated consumer groups.
 * [Server] Update dependencies to address security vulnerabilities.
-* [Server] Update dependencies to address additional security vulnerabilities.
-* [Server] Fix Grafana integration support. Note: Multiple organization IDs are no longer supported.
+* [Server] Fix Grafana integration support.
 * [Server] Improve stability for non-segmented scheduled repairs.
 * [Server] Stop repairs gracefully when timestamp validation errors occur.
 * [Server] Fix crash caused by concurrency issue during repairs.
