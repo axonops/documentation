@@ -6,6 +6,59 @@ meta:
     content: "release notes, AxonOps updates, changelog, new features"
 ---
 
+## Release 2025-01-13
+
+* axon-server: 2.0.17
+    * Elasticsearch DataStreams migration, Kafka improvements, and stability fixes for repairs.
+    * **Note:** Requires Elasticsearch 7.9 or later. On-premise customers with restricted Elasticsearch permissions may need to grant additional `manage_ilm` permissions for data stream and ILM management.
+* axon-dash: 2.0.19
+    * Kafka management improvements, dashboard customization, and various UI fixes.
+* axon-agent: 2.0.14
+    * Fix for metric calculations.
+
+### Fixes
+
+* [Server] Fix Kafka topics not displaying associated consumer groups.
+* [Server] Update dependencies to address security vulnerabilities.
+* [Server] Fix Grafana integration support.
+* [Server] Improve stability for non-segmented scheduled repairs.
+* [Server] Stop repairs gracefully when timestamp validation errors occur.
+* [Server] Fix crash caused by concurrency issue during repairs.
+* [Server] Fix race condition when saving cluster data.
+* [Dash] Fix clipboard copy functionality for older browsers.
+* [Dash] Update Next.js to version 15.5.7 for security fixes.
+* [Dash] Fix backup restore API payload.
+* [Dash] Fix timezone display names.
+* [Dash] Fix dashboard filter text search.
+* [Dash] Fix topic sorting by cleanup policy.
+* [Dash] Fix issues with the time navigation jump back button.
+* [Dash] Fix control positioning in Node Details popup.
+* [Dash] Prepare for Next.js v16 by migrating from deprecated environment variable methods.
+* [Dash] Fix validation on the Silence Alerts form.
+* [Dash] Increase API proxy timeout to 2 minutes for longer operations.
+* [Dash] Update Next.js to version 15.5.9 for security fixes.
+* [Dash] Fix issue loading Kafka dashboard templates.
+* [Dash] Fix log viewer scrolling behavior.
+* [Agent] Fix calculation and downsampling of rated metrics.
+
+### New Features
+
+* [Server] Migrate to Elasticsearch DataStreams for improved events storage.
+* [Server] Add ability to delete and truncate Kafka topic records.
+* [Server] Add support for `*.table` wildcard pattern in Adaptive Repair table exclusions.
+* [Dash] Allow freeform topic entry on Kafka ACLs form.
+* [Dash] Filter Kafka Connectors by connection state.
+* [Dash] Add `*.table` wildcard pattern support for Adaptive Repair table exclusions.
+* [Dash] Introduce improved table component for Service Checks.
+* [Dash] Add support for creating custom filters on dashboards.
+* [Dash] Add ability to delete and truncate Kafka topic records.
+* [Dash] Add horizontal scrolling to logs viewer.
+* [Dash] Display detailed information for Kafka Connect task failures.
+* [Dash] Add option to replace existing dashboards during import.
+* [Dash] Improve time picker interface.
+* [Dash] Increase maximum length of health check names to 100 characters.
+
+
 ## Release 2025-08-29
 
 * axon-server: 2.0.10
