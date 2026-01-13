@@ -5,17 +5,15 @@ on:
     branches:
       - master
     paths:
-      - 'docs/**'
+      - '**/*.md'
       - 'mkdocs.yml'
-      - 'requirements.txt'
       - '.github/workflows/deploy-docs.yml'
   pull_request:
     branches:
       - master
     paths:
-      - 'docs/**'
+      - '**/*.md'
       - 'mkdocs.yml'
-      - 'requirements.txt'
       - '.github/workflows/deploy-docs.yml'
 
 permissions:
