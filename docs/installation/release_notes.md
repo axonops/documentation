@@ -1,5 +1,5 @@
 ---
-title: "Release 2025-08-29"
+title: "Release 2026-01-13"
 description: "AxonOps release notes. Latest features, improvements, and bug fixes."
 meta:
   - name: keywords
@@ -8,9 +8,11 @@ meta:
 
 ## Release 2026-01-13
 
+!!! danger "Elasticsearch Upgrade Required"
+    Requires Elasticsearch 7.9 or later. On-premise customers with restricted Elasticsearch permissions may need to grant additional `manage_ilm` permissions for data stream and ILM management.
+
 * axon-server: 2.0.17
     * Elasticsearch DataStreams migration, Kafka improvements, and stability fixes for repairs.
-    * **Note:** Requires Elasticsearch 7.9 or later. On-premise customers with restricted Elasticsearch permissions may need to grant additional `manage_ilm` permissions for data stream and ILM management.
 * axon-dash: 2.0.19
     * Kafka management improvements, dashboard customization, and various UI fixes.
 * axon-agent: 2.0.14
@@ -58,6 +60,195 @@ meta:
 * [Dash] Improve time picker interface.
 * [Dash] Increase maximum length of health check names to 100 characters.
 
+## Release 2025-12-12
+
+* axon-agent: 2.0.12
+    * Command-line restore tool enhancements and security updates.
+
+### Fixes
+
+* [Agent] Update dependencies and Go version to address security vulnerabilities.
+* [Agent] Increase timeout when requesting settings from axon-server.
+
+### New Features
+
+* [Agent] Add option to allow segmented full repairs after running incremental repairs.
+* [Agent] Add support for truncating Kafka topics.
+* [Agent] Store node-level manifests for backups to speed up command-line restores.
+* [Agent] Append timestamp to archived commitlog filenames.
+* [Agent] Add parallelism, ownership, permissions, and commitlog restore options to `axon-cassandra-restore` tool.
+
+## Release 2025-11-18
+
+* axon-agent: 2.0.11
+    * Kafka connector and S3 backup fixes.
+* axon-cassandra5.0-agent: 1.0.11
+    * Cassandra 5 metrics fix.
+
+### Fixes
+
+* [Agent] Fix error message when restarting Kafka connectors.
+* [Agent] Fix S3 multipart upload errors.
+* [Cassandra 5 Agent] Fix batch metrics for Cassandra 5.
+
+## Release 2025-11-13
+
+* axon-server: 2.0.16
+    * Stability improvements for repairs, backups, and silence windows.
+* axon-dash: 2.0.16
+    * Kafka Connect UI and Scheduled Repair History.
+
+### Fixes
+
+* [Server] Fix error message when deleting backups from the database.
+* [Server] Increase the Elasticsearch request timeout.
+* [Server] Fix conflicting API endpoint for Kafka cluster info.
+* [Server] Fix silence windows at the DC and Rack level.
+* [Server] Fix concurrent map access error when serializing repairs.
+* [Server] Fix display of paused backup schedules.
+* [Server] Fix EOF errors in repairs.
+* [Server] Improve safety of axon-server restarts.
+* [Server] Fix authentication on Kafka Connect API endpoints.
+* [Dash] Use more efficient method to get Kafka consumer groups.
+* [Dash] Fix error when clicking on alerts in charts.
+* [Dash] Use new endpoints to get metric label names and values.
+
+### New Features
+
+* [Server] Add integration type and name to audit logs for alerting routes.
+* [Server] Improve events for scheduled repairs.
+* [Dash] Add Kafka Connect UI.
+* [Dash] Add Scheduled Repair History view.
+
+## Release 2025-11-11
+
+* axon-kafka-java-agent: 1.0.4
+    * Confluent compatibility fix.
+
+### Fixes
+
+* [Kafka Java Agent] Fix library conflict with Confluent 7.4.12 and later.
+
+## Release 2025-11-05
+
+* axon-server: 2.0.15
+    * Kafka schema and consumer group improvements, backup schedule fix.
+* axon-dash: 2.0.15
+    * Kafka consumer group fixes and configuration comparison.
+
+### Fixes
+
+* [Server] Fix error restarting Kafka Connect tasks when connect cluster has a different name.
+* [Server] Reduce noise from Kafka consumer group debug messages.
+* [Server] Fix deadlock when editing backup schedules.
+* [Dash] Tweak backup status display.
+* [Dash] Fix rounding tokens in repair failed token ranges view.
+* [Dash] Hide the Retry Upload button on local-only backups.
+* [Dash] Fix Kafka consumer groups partition assignment display.
+
+### New Features
+
+* [Server] Add support for raw format schemas in Kafka Schema Registry.
+* [Server] Add lightweight API endpoint to list Kafka consumer groups.
+* [Dash] Make actions easier to find in Cluster Overview.
+* [Dash] Add configuration comparison feature for Kafka brokers.
+* [Dash] Add button to navigate to parent dashboard from alerts.
+
+## Release 2025-10-30
+
+* axon-agent: 2.0.10
+    * Kafka logging improvements, proxy support, and security updates.
+
+### Fixes
+
+* [Agent] Reduce noise in logs from Kafka transaction processing messages.
+* [Agent] Update dependencies to address security vulnerabilities.
+* [Agent] Skip `repaired_at` timestamp checks for non-segmented repairs.
+
+### New Features
+
+* [Agent] Add environment variables for configuring Schema Registry connection.
+* [Agent] Add support for scraping Prometheus endpoints via a proxy.
+
+## Release 2025-10-22
+
+* axon-kafka-agent: 1.0.3
+    * Configuration reporting improvements.
+
+### New Features
+
+* [Kafka Agent] Send Kafka configurations as part of node inventory.
+
+## Release 2025-10-20
+
+* axon-server: 2.0.14
+    * Kafka improvements, Adaptive Repair fixes, and security updates.
+* axon-dash: 2.0.14
+    * PromQL fix and Adaptive Repair configuration options.
+
+### Fixes
+
+* [Server] Fix metrics filtering.
+* [Server] Remove duplicated table name in repair alerts.
+* [Server] Fix issues with Kafka primary node selection.
+* [Server] Update dependencies to address security vulnerabilities.
+* [Server] Fix saving and loading Adaptive Repair progress, segment timeout and retry handling.
+* [Dash] Fix PromQL interpolation when excluding empty labels.
+* [Dash] Fix missing Kafka topics in display.
+
+### New Features
+
+* [Server] Add environment variables for configuring schema registry support.
+* [Server] Add environment variables for configuring `search_db` options.
+* [Server] Add ability to restart Kafka Connect tasks.
+* [Server] Cache Kafka API responses.
+* [Dash] Click on a node to filter logs and events for that node.
+* [Dash] Add Adaptive Repair segment timeout field.
+
+## Release 2025-10-07
+
+* axon-server: 2.0.13
+    * Repair timeout handling and event improvements.
+* axon-dash: 2.0.13
+    * Kafka consumer group improvements and various fixes.
+
+### Fixes
+
+* [Server] Improve repair timeout handling when a node is down.
+* [Server] Fix erroneous timeout errors after stopping or resetting adaptive repairs.
+* [Dash] Fix sorting of Kafka consumer groups by state.
+* [Dash] Fix display of "Preparing Rebalance" Kafka consumer group state.
+* [Dash] Fix display of ISR alerts on Kafka Topics page.
+* [Dash] Improve node selection behavior on Silence Alerts page.
+* [Dash] Fix Adaptive Repair view collapsing unexpectedly.
+* [Dash] Fix exception when clicking on alerts in the Alerts Dashboard.
+* [Dash] Fix text box focus on Cluster Overview page.
+* [Dash] Fix missing events in Adaptive Repair history.
+
+### New Features
+
+* [Server] Add table name to repair plan start, end, and failed events and alerts.
+* [Dash] Add UI to modify Kafka consumer group offsets.
+* [Dash] Improve backup operations buttons.
+* [Dash] Show start, stop, and reset events in Adaptive Repair history.
+
+## Release 2025-10-01
+
+* axon-server: 2.0.12
+    * Improved repair logging and alerting.
+* axon-dash: 2.0.12
+    * Font loading fixes and Kafka performance improvement.
+
+### Fixes
+
+* [Dash] Fix font loading for SaaS and Linux desktop clients.
+* [Dash] Use more efficient API call to get Kafka consumer group details.
+* [Dash] Fix PromQL query interpolation.
+
+### New Features
+
+* [Server] Log an event when a repair segment completes successfully after a previous failure.
+* [Server] Include the table name in "repair plan ended with errors" alert messages.
 
 ## Release 2025-08-29
 
@@ -97,7 +288,7 @@ meta:
 
 ### Fixes
 
-* [Server] Fix critical issue in backup and repair messaging (introduced in axon-server 2.0.4).
+* [Server] Fix critical issue in backup and repair messaging.
 * [Server] Fix select dashboard thread pool templates.
 
 ## Release 2025-08-15
@@ -139,7 +330,7 @@ meta:
 ### Customer Requests
 
 * [Server] Failed backups have been downgraded from Critical (red) alerts to Warning (yellow) alerts, reserving Critical alerts for operational issues.
-* [Dash] Improve Firefox compatibilty.
+* [Dash] Improve Firefox compatibility.
 * [Dash] Disable auto-saving of adaptive repair settings and add ability to revert settings.
 
 ### New Features
@@ -164,7 +355,7 @@ meta:
 
 * [Server, Agent] Improve resilience of repair and backup messages.
 * [Server] Update Go and dependencies to eliminate known security vulnerabilities.
-* [Server] Fix issues displayed when there are no failed adapative repair segments.
+* [Server] Fix issues displayed when there are no failed adaptive repair segments.
 * [Agent] Fix concurrency issues for service checks.
 * [Agent] Fix security issues when `disable_command_exec` is set to `true`.
 * [Dash] Ensure the default shell that appears in the dashboard matches the backend `/bin/sh`.
