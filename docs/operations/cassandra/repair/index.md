@@ -56,7 +56,7 @@ You can, however, customize the following:
 
 * Max total segments per table
 
-    Maximum number of segments to split each table into for repair (range: 1 to 1,000,000). Larger tables are divided into segments for parallel processing.
+    Maximum number of segments to split each table into for repair (range: 1 to 1,000,000). Larger tables are divided into more segments to restrict the repair time of each segment.
 
 ### Increasing Data Consistency
 
