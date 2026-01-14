@@ -51,8 +51,12 @@ You can, however, customize the following:
     Splits each table into segments of up to this size and repairs each segment in turn.
 
 * GC grace threshold
-  
+
     If a table has a gc grace lesser than the specified value, the table will be ignored by the adaptive repair service.
+
+* Max total segments per table
+
+    Maximum number of segments to split each table into for repair (range: 1 to 1,000,000). Larger tables are divided into segments for parallel processing.
 
 ### Increasing Data Consistency
 
