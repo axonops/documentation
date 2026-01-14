@@ -13,7 +13,7 @@ meta:
 
 * axon-server: 2.0.19
     * Elasticsearch DataStreams migration, Kafka improvements, and stability fixes for repairs.
-* axon-dash: 2.0.21
+* axon-dash: 2.0.22
     * Kafka management improvements, dashboard customization, and various UI fixes.
 * axon-agent: 2.0.14
     * Fix for metric calculations.
