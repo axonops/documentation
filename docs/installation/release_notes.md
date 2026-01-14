@@ -11,9 +11,9 @@ meta:
 !!! danger "Elasticsearch Upgrade Required"
     Requires Elasticsearch 7.9 or later. On-premise customers with restricted Elasticsearch permissions may need to grant additional `manage_ilm` permissions for data stream and ILM management.
 
-* axon-server: 2.0.17
+* axon-server: 2.0.19
     * Elasticsearch DataStreams migration, Kafka improvements, and stability fixes for repairs.
-* axon-dash: 2.0.19
+* axon-dash: 2.0.21
     * Kafka management improvements, dashboard customization, and various UI fixes.
 * axon-agent: 2.0.14
     * Fix for metric calculations.
