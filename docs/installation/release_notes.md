@@ -1,10 +1,19 @@
 ---
-title: "Release 2025-08-29"
+title: "Release 2026-01-15"
 description: "AxonOps release notes. Latest features, improvements, and bug fixes."
 meta:
   - name: keywords
     content: "release notes, AxonOps updates, changelog, new features"
 ---
+
+## Release 2026-01-15
+
+* axon-dash: 2.0.22
+    * Fix for on-premise deployments.
+
+### Fixes
+
+* [Dash] Fix startup failure due to new configuration logic.
 
 ## Release 2026-01-13
 
