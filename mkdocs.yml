@@ -897,7 +897,14 @@ nav:
         - Migration: data-platforms/kafka/operations/migration/index.md
       - Security:
         - Overview: data-platforms/kafka/security/index.md
-        - Authentication: data-platforms/kafka/security/authentication/index.md
+        - Authentication:
+          - Overview: data-platforms/kafka/security/authentication/index.md
+          - SASL/SCRAM: data-platforms/kafka/security/authentication/sasl-scram.md
+          - SASL/PLAIN: data-platforms/kafka/security/authentication/sasl-plain.md
+          - Kerberos: data-platforms/kafka/security/authentication/kerberos.md
+          - OAuth/OIDC: data-platforms/kafka/security/authentication/oauth.md
+          - mTLS: data-platforms/kafka/security/authentication/mtls.md
+          - Delegation Tokens: data-platforms/kafka/security/authentication/delegation-tokens.md
         - Authorization: data-platforms/kafka/security/authorization/index.md
         - Encryption: data-platforms/kafka/security/encryption/index.md
       - Cloud:

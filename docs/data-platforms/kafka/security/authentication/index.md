@@ -1,528 +1,303 @@
 ---
 title: "Kafka Authentication"
-description: "Apache Kafka authentication configuration. SASL/SCRAM, SASL/PLAIN, mTLS, and OAuth authentication mechanisms."
+description: "Apache Kafka authentication mechanisms overview. SASL/SCRAM, SASL/PLAIN, mTLS, Kerberos, and OAuth authentication comparison and selection guide."
 meta:
   - name: keywords
-    content: "Kafka authentication, SASL, SCRAM, mTLS, Kafka security"
+    content: "Kafka authentication, SASL, SCRAM, mTLS, Kerberos, OAuth, Kafka security"
 ---
 
 # Kafka Authentication
 
-Authentication mechanisms for verifying client and broker identities in Apache Kafka.
+Authentication verifies the identity of clients connecting to Kafka brokers and brokers communicating with each other. Kafka supports multiple authentication mechanisms to integrate with different security infrastructures.
 
 ---
 
 ## Authentication Mechanisms
 
-| Mechanism | Description | Use Case |
-|-----------|-------------|----------|
-| **SASL/PLAIN** | Username/password | Development, simple setups |
-| **SASL/SCRAM** | Salted challenge-response | Production without Kerberos |
-| **SASL/GSSAPI** | Kerberos | Enterprise with KDC |
-| **SASL/OAUTHBEARER** | OAuth 2.0 tokens | Cloud-native environments |
-| **mTLS** | Mutual TLS certificates | Certificate-based auth |
+| Mechanism | Protocol | Description | Documentation |
+|-----------|----------|-------------|---------------|
+| **SASL/SCRAM** | SASL | Salted challenge-response with SHA-256/512 | [SASL/SCRAM Guide](sasl-scram.md) |
+| **SASL/PLAIN** | SASL | Simple username/password | [SASL/PLAIN Guide](sasl-plain.md) |
+| **SASL/GSSAPI** | SASL | Kerberos authentication | [Kerberos Guide](kerberos.md) |
+| **SASL/OAUTHBEARER** | SASL | OAuth 2.0 / OIDC tokens | [OAuth Guide](oauth.md) |
+| **mTLS** | SSL/TLS | Mutual TLS certificates | [mTLS Guide](mtls.md) |
+| **Delegation Tokens** | SASL | Lightweight token-based auth | [Delegation Tokens](delegation-tokens.md) |
 
 ---
 
-## SASL/SCRAM
+## Mechanism Selection Guide
 
-SCRAM (Salted Challenge Response Authentication Mechanism) provides secure password-based authentication.
+### Decision Matrix
 
-### Broker Configuration
+| Requirement | SCRAM | PLAIN | Kerberos | OAuth | mTLS |
+|-------------|:-----:|:-----:|:--------:|:-----:|:----:|
+| No external infrastructure | ✅ | ✅ | ❌ | ❌ | ✅ |
+| Enterprise SSO integration | ❌ | ❌ | ✅ | ✅ | ❌ |
+| Cloud-native environments | ✅ | ❌ | ❌ | ✅ | ✅ |
+| Certificate-based identity | ❌ | ❌ | ❌ | ❌ | ✅ |
+| Password-based auth | ✅ | ✅ | ❌ | ❌ | ❌ |
+| Token refresh support | ❌ | ❌ | ✅ | ✅ | ❌ |
+| Simple to set up | ✅ | ✅ | ❌ | ⚠️ | ⚠️ |
 
-```properties
-# server.properties
+### Recommended Use Cases
 
-# Listeners
-listeners=SASL_SSL://0.0.0.0:9093
-advertised.listeners=SASL_SSL://kafka1:9093
+```plantuml
+@startuml
+skinparam backgroundColor transparent
 
-# Inter-broker communication
-security.inter.broker.protocol=SASL_SSL
-sasl.mechanism.inter.broker.protocol=SCRAM-SHA-512
+rectangle "Choose Authentication Mechanism" as start
 
-# Enabled mechanisms
-sasl.enabled.mechanisms=SCRAM-SHA-512
+rectangle "SASL/SCRAM" as scram #lightgreen
+rectangle "SASL/PLAIN" as plain #lightyellow
+rectangle "Kerberos" as kerb #lightblue
+rectangle "OAuth/OIDC" as oauth #lightcoral
+rectangle "mTLS" as mtls #lavender
 
-# JAAS configuration
-listener.name.sasl_ssl.scram-sha-512.sasl.jaas.config=org.apache.kafka.common.security.scram.ScramLoginModule required \
-  username="kafka-broker" \
-  password="broker-password";
+start --> scram : Production without\nexternal IdP
+start --> plain : Development\nonly
+start --> kerb : Active Directory\nenterprise
+start --> oauth : Cloud IdP\n(Okta, Azure AD)
+start --> mtls : PKI infrastructure\navailable
 
-# TLS (required for SASL_SSL)
-ssl.keystore.location=/etc/kafka/ssl/kafka.keystore.jks
-ssl.keystore.password=keystore-password
-ssl.key.password=key-password
-ssl.truststore.location=/etc/kafka/ssl/kafka.truststore.jks
-ssl.truststore.password=truststore-password
+note right of scram
+  Most common for
+  self-managed Kafka
+end note
+
+note right of oauth
+  Modern cloud-native
+  deployments
+end note
+
+@enduml
 ```
 
-### Create SCRAM Credentials
-
-```bash
-# Create broker user
-kafka-configs.sh --bootstrap-server kafka:9092 \
-  --alter \
-  --add-config 'SCRAM-SHA-512=[password=broker-password]' \
-  --entity-type users \
-  --entity-name kafka-broker
-
-# Create application user
-kafka-configs.sh --bootstrap-server kafka:9092 \
-  --alter \
-  --add-config 'SCRAM-SHA-512=[password=app-password]' \
-  --entity-type users \
-  --entity-name my-application
-
-# List users
-kafka-configs.sh --bootstrap-server kafka:9092 \
-  --describe \
-  --entity-type users
-```
-
-### Client Configuration
-
-```properties
-# client.properties
-security.protocol=SASL_SSL
-sasl.mechanism=SCRAM-SHA-512
-sasl.jaas.config=org.apache.kafka.common.security.scram.ScramLoginModule required \
-  username="my-application" \
-  password="app-password";
-
-ssl.truststore.location=/etc/kafka/ssl/client.truststore.jks
-ssl.truststore.password=truststore-password
-```
-
-### Java Client
-
-```java
-Properties props = new Properties();
-props.put("bootstrap.servers", "kafka:9093");
-props.put("security.protocol", "SASL_SSL");
-props.put("sasl.mechanism", "SCRAM-SHA-512");
-props.put("sasl.jaas.config",
-    "org.apache.kafka.common.security.scram.ScramLoginModule required " +
-    "username=\"my-application\" " +
-    "password=\"app-password\";");
-props.put("ssl.truststore.location", "/path/to/truststore.jks");
-props.put("ssl.truststore.password", "truststore-password");
-```
+| Environment | Recommended Mechanism | Rationale |
+|-------------|----------------------|-----------|
+| **Development** | SASL/PLAIN or SASL/SCRAM | Simple setup, no external dependencies |
+| **Production (standalone)** | SASL/SCRAM-SHA-512 | Secure, no external infrastructure needed |
+| **Enterprise (AD/Kerberos)** | SASL/GSSAPI | Integrates with existing Kerberos KDC |
+| **Cloud-native** | SASL/OAUTHBEARER | Integrates with cloud identity providers |
+| **PKI environment** | mTLS | Certificate-based, no passwords |
+| **Managed Kafka** | Provider-specific | Follow provider recommendations |
 
 ---
 
-## SASL/PLAIN
+## Security Protocols
 
-Simple username/password authentication. Should only be used with TLS encryption.
+Kafka combines authentication mechanisms with transport security:
 
-### Broker Configuration
+| Security Protocol | Authentication | Encryption | Use Case |
+|-------------------|----------------|------------|----------|
+| `PLAINTEXT` | None | None | Development only |
+| `SSL` | mTLS (optional) | TLS | Certificate auth or encryption only |
+| `SASL_PLAINTEXT` | SASL | None | Internal networks (not recommended) |
+| `SASL_SSL` | SASL | TLS | **Production recommended** |
 
-```properties
-# server.properties
-listeners=SASL_SSL://0.0.0.0:9093
-sasl.enabled.mechanisms=PLAIN
+!!! danger "Never Use PLAINTEXT in Production"
+    `PLAINTEXT` and `SASL_PLAINTEXT` transmit data unencrypted. Always use `SSL` or `SASL_SSL` in production.
 
-# JAAS configuration with users
-listener.name.sasl_ssl.plain.sasl.jaas.config=org.apache.kafka.common.security.plain.PlainLoginModule required \
-  username="admin" \
-  password="admin-password" \
-  user_admin="admin-password" \
-  user_producer="producer-password" \
-  user_consumer="consumer-password";
-```
-
-### Client Configuration
+### Protocol Selection
 
 ```properties
-security.protocol=SASL_SSL
-sasl.mechanism=PLAIN
-sasl.jaas.config=org.apache.kafka.common.security.plain.PlainLoginModule required \
-  username="producer" \
-  password="producer-password";
-```
-
-!!! warning "Security Note"
-    SASL/PLAIN transmits credentials in plain text. Always use with TLS (SASL_SSL).
-
----
-
-## mTLS (Mutual TLS)
-
-Certificate-based authentication where both client and server present certificates.
-
-### Broker Configuration
-
-```properties
-# server.properties
-listeners=SSL://0.0.0.0:9093
-advertised.listeners=SSL://kafka1:9093
-
-security.inter.broker.protocol=SSL
-
-# Keystore (broker identity)
-ssl.keystore.location=/etc/kafka/ssl/kafka.keystore.jks
-ssl.keystore.password=keystore-password
-ssl.key.password=key-password
-
-# Truststore (trusted CAs)
-ssl.truststore.location=/etc/kafka/ssl/kafka.truststore.jks
-ssl.truststore.password=truststore-password
-
-# Require client certificates
-ssl.client.auth=required
-
-# Principal mapping
-ssl.principal.mapping.rules=RULE:^CN=([^,]+),.*$/$1/
-```
-
-### Client Configuration
-
-```properties
+# Encryption only (no authentication)
 security.protocol=SSL
 
-# Client keystore (client identity)
-ssl.keystore.location=/etc/kafka/ssl/client.keystore.jks
-ssl.keystore.password=keystore-password
-ssl.key.password=key-password
-
-# Truststore (trusted CAs)
-ssl.truststore.location=/etc/kafka/ssl/client.truststore.jks
-ssl.truststore.password=truststore-password
-```
-
-### Certificate Generation
-
-```bash
-# Generate CA
-openssl req -new -x509 -keyout ca-key -out ca-cert -days 365 \
-  -subj "/CN=Kafka-CA" -nodes
-
-# Generate broker keystore
-keytool -keystore kafka.keystore.jks -alias kafka-broker \
-  -validity 365 -genkey -keyalg RSA -storepass changeit \
-  -dname "CN=kafka1.example.com"
-
-# Create CSR
-keytool -keystore kafka.keystore.jks -alias kafka-broker \
-  -certreq -file kafka-broker.csr -storepass changeit
-
-# Sign certificate
-openssl x509 -req -CA ca-cert -CAkey ca-key \
-  -in kafka-broker.csr -out kafka-broker-signed.crt \
-  -days 365 -CAcreateserial
-
-# Import CA cert
-keytool -keystore kafka.keystore.jks -alias CARoot \
-  -import -file ca-cert -storepass changeit -noprompt
-
-# Import signed cert
-keytool -keystore kafka.keystore.jks -alias kafka-broker \
-  -import -file kafka-broker-signed.crt -storepass changeit
-
-# Create truststore with CA
-keytool -keystore kafka.truststore.jks -alias CARoot \
-  -import -file ca-cert -storepass changeit -noprompt
-```
-
----
-
-## SASL/OAUTHBEARER
-
-OAuth 2.0 token-based authentication for modern identity systems.
-
-### Broker Configuration
-
-```properties
-# server.properties
-listeners=SASL_SSL://0.0.0.0:9093
-sasl.enabled.mechanisms=OAUTHBEARER
-
-# Custom callback handler for token validation
-listener.name.sasl_ssl.oauthbearer.sasl.server.callback.handler.class=\
-  com.example.OAuthBearerValidatorCallbackHandler
-
-# OIDC settings
-listener.name.sasl_ssl.oauthbearer.sasl.oauthbearer.jwks.endpoint.url=\
-  https://identity-provider/.well-known/jwks.json
-listener.name.sasl_ssl.oauthbearer.sasl.oauthbearer.expected.audience=kafka
-```
-
-### Client Configuration
-
-```properties
+# SASL authentication with encryption (recommended)
 security.protocol=SASL_SSL
-sasl.mechanism=OAUTHBEARER
-sasl.login.callback.handler.class=\
-  org.apache.kafka.common.security.oauthbearer.secured.OAuthBearerLoginCallbackHandler
-sasl.oauthbearer.token.endpoint.url=https://identity-provider/oauth2/token
-sasl.jaas.config=org.apache.kafka.common.security.oauthbearer.OAuthBearerLoginModule required \
-  clientId="kafka-client" \
-  clientSecret="client-secret";
+
+# mTLS authentication with encryption
+security.protocol=SSL
+ssl.client.auth=required
 ```
 
 ---
 
-## Multiple Listeners
+## Listener Configuration
 
-Configure different authentication per listener.
+Kafka supports different authentication mechanisms on different listeners, enabling separate configurations for internal and external traffic.
+
+### Multiple Listeners Example
 
 ```properties
-# Different auth for internal vs external
-listeners=INTERNAL://0.0.0.0:9092,EXTERNAL://0.0.0.0:9093
-listener.security.protocol.map=INTERNAL:SASL_PLAINTEXT,EXTERNAL:SASL_SSL
+# Define listeners
+listeners=INTERNAL://0.0.0.0:9092,EXTERNAL://0.0.0.0:9093,REPLICATION://0.0.0.0:9094
 
-# Internal uses PLAIN
+# Map listener names to security protocols
+listener.security.protocol.map=INTERNAL:SASL_PLAINTEXT,EXTERNAL:SASL_SSL,REPLICATION:SASL_SSL
+
+# Inter-broker communication
+inter.broker.listener.name=REPLICATION
+
+# Different mechanisms per listener
 listener.name.internal.sasl.enabled.mechanisms=PLAIN
-listener.name.internal.plain.sasl.jaas.config=...
-
-# External uses SCRAM
-listener.name.external.sasl.enabled.mechanisms=SCRAM-SHA-512
-listener.name.external.scram-sha-512.sasl.jaas.config=...
-
-inter.broker.listener.name=INTERNAL
+listener.name.external.sasl.enabled.mechanisms=SCRAM-SHA-512,OAUTHBEARER
+listener.name.replication.sasl.enabled.mechanisms=SCRAM-SHA-512
 ```
 
----
+### Listener Architecture
 
-## Troubleshooting
+```plantuml
+@startuml
+skinparam backgroundColor transparent
 
-| Issue | Cause | Solution |
-|-------|-------|----------|
-| Authentication failed | Invalid credentials | Verify username/password |
-| SSL handshake failed | Certificate mismatch | Check truststore contains CA |
-| SCRAM user not found | User not created | Run kafka-configs to create user |
-| Principal mapping failed | Invalid mapping rule | Check ssl.principal.mapping.rules |
+rectangle "Kafka Broker" {
+  rectangle "INTERNAL:9092\nSASL_PLAINTEXT\nPLAIN" as internal #lightgreen
+  rectangle "EXTERNAL:9093\nSASL_SSL\nSCRAM/OAuth" as external #lightblue
+  rectangle "REPLICATION:9094\nSASL_SSL\nSCRAM" as replication #lightyellow
+}
 
----
+rectangle "Internal Apps" as apps #lightgreen
+rectangle "External Clients" as clients #lightblue
+rectangle "Other Brokers" as brokers #lightyellow
 
-## SASL/GSSAPI (Kerberos)
+apps --> internal : Private network
+clients --> external : Public/DMZ
+brokers --> replication : Broker-to-broker
 
-Enterprise authentication using Kerberos Key Distribution Center (KDC).
-
-### Prerequisites
-
-1. Access to Kerberos KDC (Active Directory or MIT Kerberos)
-2. Principal for each broker: `kafka/{hostname}@{REALM}`
-3. Principal for each client application
-4. Keytab files for service accounts
-
-### Create Kerberos Principals
-
-```bash
-# Create broker principal
-sudo /usr/sbin/kadmin.local -q 'addprinc -randkey kafka/kafka1.example.com@EXAMPLE.COM'
-
-# Export to keytab
-sudo /usr/sbin/kadmin.local -q "ktadd -k /etc/security/keytabs/kafka.keytab kafka/kafka1.example.com@EXAMPLE.COM"
-```
-
-### Broker Configuration
-
-```properties
-# server.properties
-listeners=SASL_SSL://0.0.0.0:9093
-security.inter.broker.protocol=SASL_SSL
-sasl.mechanism.inter.broker.protocol=GSSAPI
-sasl.enabled.mechanisms=GSSAPI
-sasl.kerberos.service.name=kafka
-```
-
-**JAAS configuration (kafka_server_jaas.conf):**
-
-```
-KafkaServer {
-    com.sun.security.auth.module.Krb5LoginModule required
-    useKeyTab=true
-    storeKey=true
-    keyTab="/etc/security/keytabs/kafka.keytab"
-    principal="kafka/kafka1.example.com@EXAMPLE.COM";
-};
-```
-
-**JVM parameters:**
-
-```bash
--Djava.security.krb5.conf=/etc/kafka/krb5.conf
--Djava.security.auth.login.config=/etc/kafka/kafka_server_jaas.conf
-```
-
-### Client Configuration
-
-```properties
-security.protocol=SASL_SSL
-sasl.mechanism=GSSAPI
-sasl.kerberos.service.name=kafka
-sasl.jaas.config=com.sun.security.auth.module.Krb5LoginModule required \
-  useKeyTab=true \
-  storeKey=true \
-  keyTab="/etc/security/keytabs/client.keytab" \
-  principal="kafka-client@EXAMPLE.COM";
-```
-
-For interactive use with kinit:
-
-```properties
-sasl.jaas.config=com.sun.security.auth.module.Krb5LoginModule required \
-  useTicketCache=true;
+@enduml
 ```
 
 ---
 
 ## JAAS Configuration
 
-### Configuration Precedence
+Java Authentication and Authorization Service (JAAS) provides the authentication framework for SASL mechanisms.
 
-JAAS configuration can be specified at multiple levels. The order of precedence:
+### Configuration Methods
 
-1. Broker property: `listener.name.{listenerName}.{mechanism}.sasl.jaas.config`
-2. Static JAAS file section: `{listenerName}.KafkaServer`
-3. Static JAAS file section: `KafkaServer`
+| Method | Scope | Use Case |
+|--------|-------|----------|
+| **Broker property** | Per-listener, per-mechanism | Recommended for brokers |
+| **Static JAAS file** | JVM-wide | Legacy, complex setups |
+| **Programmatic** | Per-client | Application code |
 
-**Example with multiple mechanisms:**
+### Broker Property (Recommended)
 
 ```properties
-# server.properties
+# Per-listener, per-mechanism JAAS config
 listener.name.sasl_ssl.scram-sha-512.sasl.jaas.config=\
   org.apache.kafka.common.security.scram.ScramLoginModule required \
-  username="admin" password="admin-secret";
-
-listener.name.sasl_ssl.plain.sasl.jaas.config=\
-  org.apache.kafka.common.security.plain.PlainLoginModule required \
-  username="admin" password="admin-secret" \
-  user_admin="admin-secret" user_alice="alice-secret";
+  username="broker" \
+  password="broker-secret";
 ```
 
 ### Static JAAS File
 
-For clients using static JAAS configuration:
-
-**kafka_client_jaas.conf:**
-
 ```
-KafkaClient {
-    org.apache.kafka.common.security.scram.ScramLoginModule required
-    username="my-application"
-    password="app-password";
+// kafka_server_jaas.conf
+KafkaServer {
+  org.apache.kafka.common.security.scram.ScramLoginModule required
+  username="broker"
+  password="broker-secret";
 };
 ```
 
-**JVM parameter:**
-
 ```bash
--Djava.security.auth.login.config=/etc/kafka/kafka_client_jaas.conf
+# JVM parameter
+-Djava.security.auth.login.config=/etc/kafka/kafka_server_jaas.conf
 ```
+
+### Client Programmatic
+
+```java
+props.put("sasl.jaas.config",
+    "org.apache.kafka.common.security.scram.ScramLoginModule required " +
+    "username=\"app\" password=\"app-secret\";");
+```
+
+See individual mechanism guides for detailed JAAS configuration.
 
 ---
 
-## SCRAM Credential Management
+## Version Compatibility
 
-### Initial Credentials (KRaft)
-
-For KRaft clusters, create initial credentials during storage formatting:
-
-```bash
-# Format storage with initial SCRAM credentials
-kafka-storage.sh format \
-  -t $(kafka-storage.sh random-uuid) \
-  -c config/kraft/server.properties \
-  --add-scram 'SCRAM-SHA-512=[name="admin",password="admin-secret"]'
-```
-
-### Runtime Credential Management
-
-```bash
-# Create user with custom iteration count
-kafka-configs.sh --bootstrap-server kafka:9092 \
-  --alter \
-  --add-config 'SCRAM-SHA-512=[iterations=8192,password=user-password]' \
-  --entity-type users \
-  --entity-name my-user
-
-# List user credentials (shows hash, not password)
-kafka-configs.sh --bootstrap-server kafka:9092 \
-  --describe \
-  --entity-type users \
-  --entity-name my-user
-
-# Delete user credentials
-kafka-configs.sh --bootstrap-server kafka:9092 \
-  --alter \
-  --delete-config 'SCRAM-SHA-512' \
-  --entity-type users \
-  --entity-name my-user
-```
-
-### Security Considerations
-
-| Consideration | Recommendation |
-|---------------|----------------|
-| **Storage** | SCRAM credentials stored in metadata log (KRaft) |
-| **Hash functions** | Only SHA-256 and SHA-512 supported |
-| **Iterations** | Minimum 4096 (default); increase for stronger protection |
-| **Transport** | Always use with TLS (SASL_SSL) |
-| **Controller security** | Ensure KRaft controllers on secure, private network |
+| Feature | Kafka Version |
+|---------|---------------|
+| SASL/PLAIN | 0.9.0+ |
+| SASL/SCRAM | 0.10.2+ |
+| SASL/GSSAPI | 0.9.0+ |
+| SASL/OAUTHBEARER | 2.0.0+ |
+| OAUTHBEARER OIDC support | 3.1.0+ |
+| Delegation tokens | 1.1.0+ |
+| mTLS | 0.9.0+ |
+| Re-authentication | 2.2.0+ |
+| KRaft SCRAM bootstrap | 3.5.0+ |
 
 ---
 
-## Delegation Tokens
+## Common Configuration
 
-Delegation tokens provide lightweight authentication for short-lived operations without exposing primary credentials.
-
-### Enable Delegation Tokens
+### Connection Timeouts
 
 ```properties
-# server.properties
-delegation.token.secret.key=<base64-encoded-secret>
-delegation.token.max.lifetime.ms=604800000  # 7 days
-delegation.token.expiry.time.ms=86400000    # 1 day
-delegation.token.expiry.check.interval.ms=3600000  # 1 hour
+# SASL handshake timeout
+sasl.login.connect.timeout.ms=10000
+
+# SASL login retry
+sasl.login.retry.backoff.ms=100
+sasl.login.retry.backoff.max.ms=10000
 ```
 
-### Create Delegation Token
-
-```bash
-kafka-delegation-tokens.sh --bootstrap-server kafka:9092 \
-  --command-config admin.properties \
-  --create \
-  --max-life-time-period 86400000 \
-  --owner-principal User:my-user
-```
-
-### Use Delegation Token
-
-```properties
-security.protocol=SASL_SSL
-sasl.mechanism=SCRAM-SHA-512
-sasl.jaas.config=org.apache.kafka.common.security.scram.ScramLoginModule required \
-  username="my-user" \
-  password="<delegation-token-value>" \
-  tokenauth=true;
-```
-
----
-
-## Connection Performance
-
-!!! note "DNS Lookup Performance"
-    Clients perform reverse DNS lookups during SASL handshake. Use fully qualified domain names (FQDNs) in both `bootstrap.servers` and broker `advertised.listeners` to avoid slow handshakes.
-
----
-
-## Re-authentication
+### Re-authentication
 
 Enable periodic re-authentication for long-running connections:
 
 ```properties
-# Broker configuration
-connections.max.reauth.ms=3600000  # Re-authenticate every hour
+# Broker: force re-authentication every hour
+connections.max.reauth.ms=3600000
 ```
 
-Client connections are re-authenticated transparently without disconnection when credentials or tokens are refreshed.
+### DNS Performance
+
+!!! tip "Use FQDNs"
+    SASL authentication performs reverse DNS lookups. Use fully qualified domain names in `bootstrap.servers` and `advertised.listeners` to avoid slow handshakes.
+
+---
+
+## Troubleshooting
+
+### Common Issues
+
+| Issue | Symptom | Solution |
+|-------|---------|----------|
+| **Authentication failed** | `SaslAuthenticationException` | Verify credentials, check JAAS config |
+| **Mechanism not enabled** | `UnsupportedSaslMechanismException` | Add mechanism to `sasl.enabled.mechanisms` |
+| **SSL handshake failed** | `SSLHandshakeException` | Verify truststore contains broker CA |
+| **Principal not found** | Authorization failures | Check principal mapping rules |
+| **Slow connections** | High connection latency | Use FQDNs, check DNS resolution |
+
+### Debug Logging
+
+```properties
+# Enable SASL debug logging
+log4j.logger.org.apache.kafka.common.security=DEBUG
+
+# Enable SSL debug (JVM parameter)
+-Djavax.net.debug=ssl:handshake
+```
+
+### Verify Configuration
+
+```bash
+# Test SASL authentication
+kafka-broker-api-versions.sh --bootstrap-server kafka:9093 \
+  --command-config client.properties
+
+# List SCRAM users
+kafka-configs.sh --bootstrap-server kafka:9092 \
+  --describe --entity-type users
+```
 
 ---
 
 ## Related Documentation
 
-- [Security Overview](../index.md) - Security concepts
+- [SASL/SCRAM Authentication](sasl-scram.md) - Password-based authentication
+- [SASL/PLAIN Authentication](sasl-plain.md) - Simple username/password
+- [Kerberos Authentication](kerberos.md) - Enterprise SSO
+- [OAuth Authentication](oauth.md) - Cloud identity providers
+- [mTLS Authentication](mtls.md) - Certificate-based authentication
+- [Delegation Tokens](delegation-tokens.md) - Lightweight tokens
 - [Authorization](../authorization/index.md) - ACL configuration
 - [Encryption](../encryption/index.md) - TLS setup
