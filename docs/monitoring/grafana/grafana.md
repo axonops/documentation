@@ -46,8 +46,8 @@ AxonOps exposes metrics using a Prometheus-compatible API. Metrics are organized
 
 For complete metric references, see:
 
-- [Cassandra Metrics Reference](/metrics/cassandra/all_dashboards_metrics_reference/)
-- [Kafka Metrics Reference](/metrics/kafka/all_kafka_dashboards_metrics_reference/)
+- [Cassandra Metrics Reference](../../metrics/cassandra/all_dashboards_metrics_reference.md)
+- [Kafka Metrics Reference](../../metrics/kafka/all_kafka_dashboards_metrics_reference.md)
 
 ### Cassandra Metrics
 
