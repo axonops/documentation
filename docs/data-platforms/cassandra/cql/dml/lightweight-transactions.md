@@ -388,24 +388,117 @@ UPDATE users SET name = 'Alice' WHERE id = 1 IF name = 'Bob';
 
 ## Batches with LWT
 
-LWT can be used in batches with special semantics:
-
-```sql
-BEGIN BATCH
-    INSERT INTO users (user_id, username) VALUES (?, 'alice') IF NOT EXISTS;
-    INSERT INTO usernames (username, user_id) VALUES ('alice', ?) IF NOT EXISTS;
-APPLY BATCH;
-```
+LWT can be used in batches, but with strict constraints. **All statements in a batch containing any IF condition MUST target the same table AND the same partition.**
 
 ### Batch LWT Behavior
 
-- All conditions must be on same partition OR...
-- Batch becomes a multi-partition Paxos (very expensive)
-- All conditions evaluated atomically
-- If ANY condition fails, entire batch fails
+When a batch contains any IF condition:
 
-!!! danger "Multi-Partition LWT Batches"
-    Multi-partition LWT batches require Paxos across all involved partitions, dramatically increasing latency and contention. Avoid if possible.
+- All statements MUST target the **same table**
+- All statements MUST target the **same partition**
+- All conditions are evaluated atomically
+- If ANY condition evaluates to false, the entire batch is rejected
+- The batch returns `[applied] = false` with current values if any condition fails
+
+### LWT Batch Constraints
+
+The following examples demonstrate what is and is not permitted in batches containing LWT conditions. All examples use these table definitions:
+
+```sql
+-- Table with composite primary key (partition key + clustering key)
+CREATE TABLE orders (
+    order_id uuid,
+    item_id int,
+    quantity int,
+    status text,
+    PRIMARY KEY (order_id, item_id)
+);
+
+-- Table with simple primary key
+CREATE TABLE users (
+    user_id uuid PRIMARY KEY,
+    username text
+);
+
+-- Another table with simple primary key
+CREATE TABLE user_profiles (
+    user_id uuid PRIMARY KEY,
+    bio text
+);
+```
+
+#### Permitted: Same table, same partition, single row
+
+```sql
+BEGIN BATCH
+    INSERT INTO orders (order_id, item_id, quantity, status)
+        VALUES (uuid-A, 1, 5, 'pending') IF NOT EXISTS;
+APPLY BATCH;
+```
+
+#### Permitted: Same table, same partition, multiple rows via clustering key
+
+```sql
+BEGIN BATCH
+    INSERT INTO orders (order_id, item_id, quantity, status)
+        VALUES (uuid-A, 1, 5, 'pending') IF NOT EXISTS;
+    INSERT INTO orders (order_id, item_id, quantity, status)
+        VALUES (uuid-A, 2, 3, 'pending') IF NOT EXISTS;
+APPLY BATCH;
+```
+
+#### Permitted: Mixed INSERT IF NOT EXISTS and UPDATE IF on same table and partition
+
+```sql
+BEGIN BATCH
+    INSERT INTO orders (order_id, item_id, quantity, status)
+        VALUES (uuid-A, 3, 1, 'pending') IF NOT EXISTS;
+    UPDATE orders SET status = 'confirmed'
+        WHERE order_id = uuid-A AND item_id = 1 IF status = 'pending';
+APPLY BATCH;
+```
+
+#### Rejected: Same table, different partitions
+
+```sql
+BEGIN BATCH
+    INSERT INTO orders (order_id, item_id, quantity, status)
+        VALUES (uuid-A, 1, 5, 'pending') IF NOT EXISTS;
+    INSERT INTO orders (order_id, item_id, quantity, status)
+        VALUES (uuid-B, 1, 3, 'pending') IF NOT EXISTS;
+APPLY BATCH;
+-- Error: Batch with conditions cannot span multiple partitions
+```
+
+#### Rejected: Different tables, same partition key value
+
+```sql
+BEGIN BATCH
+    INSERT INTO users (user_id, username)
+        VALUES (uuid-A, 'alice') IF NOT EXISTS;
+    INSERT INTO user_profiles (user_id, bio)
+        VALUES (uuid-A, 'Hello') IF NOT EXISTS;
+APPLY BATCH;
+-- Error: Batch with conditions cannot span multiple tables
+```
+
+#### Rejected: Different tables, one LWT + one non-LWT statement
+
+```sql
+BEGIN BATCH
+    INSERT INTO users (user_id, username)
+        VALUES (uuid-A, 'bob') IF NOT EXISTS;
+    INSERT INTO user_profiles (user_id, bio)
+        VALUES (uuid-A, 'Hi there');
+APPLY BATCH;
+-- Error: Batch with conditions cannot span multiple tables
+```
+
+!!! warning "Partition Key Value vs Partition Identity"
+    Two tables MAY use the same partition key column name and even the same value (for example, a UUID), but they are still **different partitions** from Cassandra's perspective. LWT batches cannot span tables regardless of partition key values.
+
+!!! danger "No Cross-Table or Cross-Partition LWT Batches"
+    Unlike regular (non-LWT) batches, which CAN span multiple tables and partitions, batches containing any IF condition are restricted to a single table and single partition. This is a hard constraint enforced by Cassandra—there is no "multi-partition Paxos" option for batches.
 
 ---
 
@@ -484,24 +577,26 @@ LWT operations should be designed for safe retry:
 
     **Timestamps:**
 
-    - `USING TIMESTAMP` must not be used with IF conditions—Paxos manages timestamps internally
+    - `USING TIMESTAMP` MUST NOT be used with IF conditions—Paxos manages timestamps internally
     - Attempting to specify timestamp results in `InvalidRequest`
 
     **Counters:**
 
-    - Counter columns must not be used with IF conditions
+    - Counter columns MUST NOT be used with IF conditions
     - Use regular counter increment/decrement instead
 
     **Scope:**
 
-    - LWT operates on single partition only
-    - Cross-partition coordination requires batch (with significant limitations)
-    - No cross-table LWT
+    - Single statements with IF conditions operate on a single partition only
+    - Batches with IF conditions MUST target a single table AND a single partition
+    - Cross-partition LWT batches are rejected: `Batch with conditions cannot span multiple partitions`
+    - Cross-table LWT batches are rejected: `Batch with conditions cannot span multiple tables`
+    - See [LWT Batch Constraints](#lwt-batch-constraints) for detailed examples
 
     **Conditions:**
 
-    - Conditions must only reference non-primary-key columns
-    - Conditions must not reference columns in SET clause (no self-reference)
+    - Conditions MUST only reference non-primary-key columns
+    - Conditions MUST NOT reference columns in SET clause (no self-reference)
     - Collection element conditions require proper syntax
 
 ---
