@@ -427,15 +427,6 @@ CREATE TABLE user_profiles (
 );
 ```
 
-#### Permitted: Same table, same partition, single row
-
-```sql
-BEGIN BATCH
-    INSERT INTO orders (order_id, item_id, quantity, status)
-        VALUES (uuid-A, 1, 5, 'pending') IF NOT EXISTS;
-APPLY BATCH;
-```
-
 #### Permitted: Same table, same partition, multiple rows via clustering key
 
 ```sql
