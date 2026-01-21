@@ -17,8 +17,8 @@ Strategies for deploying Apache Kafka across multiple datacenters for disaster r
 | Model | RPO | RTO | Complexity | Use Case |
 |-------|-----|-----|------------|----------|
 | **Active-Passive** | Minutes | Minutes | Low | Disaster recovery |
-| **Active-Active** | Near-zero | Near-zero | High | Global distribution |
-| **Stretch Cluster** | Zero | Seconds | Medium | Low-latency DR |
+| **Active-Active** | Near-zero (bounded by replication lag) | Near-zero | High | Global distribution |
+| **Stretch Cluster** | Zero (with synchronous replication) | Seconds | Medium | Low-latency DR |
 
 ---
 
@@ -87,6 +87,8 @@ sync.group.offsets.interval.seconds=60
 # Emit checkpoints for offset translation
 emit.checkpoints.enabled=true
 emit.checkpoints.interval.seconds=60
+
+# Note: replication factors must not exceed the broker count in each target cluster.
 ```
 
 ### Failover Procedure
@@ -106,6 +108,8 @@ kafka-consumer-groups.sh --bootstrap-server kafka-secondary:9092 \
   --topic primary.my-topic \
   --execute
 ```
+
+The translated offsets are derived from the `primary.checkpoints.internal` topic emitted by MirrorMaker 2.
 
 ---
 
@@ -368,7 +372,7 @@ replica.selector.class=org.apache.kafka.common.replica.RackAwareReplicaSelector
 
 | Requirement | Threshold |
 |-------------|-----------|
-| **Network latency** | < 10ms RTT between DCs |
+| **Network latency** | Typically < 10ms RTT between DCs |
 | **Network bandwidth** | Sufficient for replication traffic |
 | **Broker count** | Odd number for controller quorum |
 

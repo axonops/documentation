@@ -77,7 +77,7 @@ endif
 
 | Requirement | At-Most-Once | At-Least-Once | Exactly-Once |
 |-------------|:------------:|:-------------:|:------------:|
-| No data loss | ❌ | ✅ | ✅ |
+| No data loss (acks=all, ISR ok, unclean leader election disabled) | ❌ | ✅ | ✅ |
 | No duplicates | ✅ | ❌ | ✅ |
 | High throughput | ✅ | ✅ | ⚠️ |
 | Low latency | ✅ | ✅ | ⚠️ |
@@ -86,6 +86,8 @@ endif
 | External systems | ✅ | ✅ | ⚠️ |
 
 **Legend:** ✅ Supported | ⚠️ With constraints | ❌ Not supported
+
+Kafka exactly-once applies to Kafka clients and Kafka Streams transactions. End-to-end exactly-once with external systems still requires idempotent or transactional integration.
 
 ---
 
@@ -134,10 +136,10 @@ end note
 
 | Use Case | Why At-Most-Once |
 |----------|------------------|
-| **IoT telemetry** | 1M+ msgs/sec; individual readings expendable |
-| **Application metrics** | Statistical accuracy preserved with 99.9% delivery |
-| **Real-time gaming** | Next update arrives in milliseconds |
-| **Log streaming** | Missing log lines rarely impact debugging |
+| **IoT telemetry** | High-volume; individual readings expendable |
+| **Application metrics** | Aggregate accuracy tolerates occasional loss |
+| **Real-time gaming** | Next update arrives quickly |
+| **Log streaming** | Missing lines rarely block debugging |
 
 ### At-Least-Once Use Cases
 
@@ -285,9 +287,11 @@ rectangle "Data Criticality Spectrum" {
 
 | Semantic | Latency Overhead | Throughput Impact | Resource Usage |
 |----------|:----------------:|:-----------------:|:--------------:|
-| At-most-once | Baseline | 100% | Low |
-| At-least-once | +5-10ms | 90-95% | Medium |
-| Exactly-once | +15-50ms | 50-70% | High |
+| At-most-once | Baseline | Baseline | Low |
+| At-least-once | +2-10ms (workload-dependent) | 85-95% (workload-dependent) | Medium |
+| Exactly-once | +10-50ms (workload-dependent) | 50-80% (workload-dependent) | High |
+
+Actual performance impact depends on batching, compression, replication, and disk/network latency.
 
 ### Implementation Cost
 
@@ -404,6 +408,7 @@ consumer.commitSync();
 **Additional requirements:**
 - Implement idempotent consumer logic
 - Add message ID tracking or natural idempotence
+- Idempotence requires `acks=all` and `max.in.flight.requests.per.connection<=5`
 
 ### At-Least-Once → Exactly-Once
 

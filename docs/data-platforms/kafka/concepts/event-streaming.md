@@ -59,7 +59,7 @@ rr -[hidden]down- ed
 
 Events are named in past tense because they represent facts that have already happened. Commands are named in imperative form because they request future action.
 
-Key distinction: Events cannot be rejected—they describe what has happened. Commands can be accepted or rejected based on business rules.
+Key distinction: Events describe what happened. Commands can be accepted or rejected based on business rules; if a command is rejected, no event is emitted (or a rejection event is emitted).
 
 ---
 
@@ -111,8 +111,8 @@ end note
 | **Append-only** | New records are only added to the end; existing records are never modified |
 | **Immutable** | Once written, records cannot be changed |
 | **Ordered** | Records have a strict sequence (offset) |
-| **Durable** | Records are persisted to disk and replicated |
-| **Replayable** | Readers can start from any position and replay forward |
+| **Durable** | Records are persisted to disk and replicated when configured |
+| **Replayable** | Readers can start from any retained position and replay forward |
 
 ### Why Append-Only?
 
@@ -242,7 +242,7 @@ end note
 | Delivery | Pull-based—consumers fetch at their own pace |
 | Lifetime | Retained based on time or size policy |
 | Consumers | Consumer groups enable both queue and pub/sub semantics |
-| Ordering | Guaranteed within partition |
+| Ordering | Guaranteed per partition; per-producer order preserved |
 | Replay | Full replay from any retained offset |
 
 ---

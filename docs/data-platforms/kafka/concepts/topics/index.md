@@ -78,9 +78,9 @@ The partition count must be chosen at topic creation. It may be increased but mu
 | Factor | Guidance |
 |--------|----------|
 | Consumer parallelism | Partition count should be ≥ expected consumer count |
-| Throughput | Each partition adds ~10 MB/s write capacity (varies by hardware) |
+| Throughput | Each partition adds ~10 MB/s write capacity (rule-of-thumb; varies by hardware) |
 | Ordering requirements | Fewer partitions = broader ordering scope |
-| Broker memory | Each partition consumes ~1-2 MB of broker heap |
+| Broker memory | Each partition consumes ~1-2 MB of broker heap (rule-of-thumb) |
 | Recovery time | More partitions increases leader election and rebalance time |
 
 ---
@@ -94,7 +94,7 @@ Each partition may be replicated across multiple brokers. Replication provides f
 | Role | Behavior |
 |------|----------|
 | **Leader** | Must handle all produce and consume requests for the partition |
-| **Follower** | Must replicate records from leader; may not serve client requests (prior to Kafka 2.4) |
+| **Follower** | Must replicate records from leader; serving client reads requires `replica.selector.class` |
 | **ISR member** | Follower that has fully caught up with the leader within `replica.lag.time.max.ms` |
 
 Changed in Kafka 2.4 (KIP-392): Followers may serve read requests when `replica.selector.class` is configured.
@@ -221,7 +221,7 @@ When a partition leader fails:
 2. Controller selects new leader from ISR
 3. New leader must have all committed records
 4. Producers receive `NotLeaderOrFollowerException` and must refresh metadata
-5. In-flight requests with `acks=all` may timeout; clients should retry
+5. In-flight requests with `acks=all` may timeout; clients should retry (or see `NotLeaderForPartition` on older clients)
 
 | Scenario | Outcome |
 |----------|---------|

@@ -30,9 +30,9 @@ Object storage became the analytics standard because it solved fundamental probl
 
 | Problem | Object Storage Solution |
 |---------|------------------------|
-| **Cost** | 10-100x cheaper than block storage; pay only for what's stored |
+| **Cost** | Typically lower cost than block storage; pay only for what's stored |
 | **Scale** | Effectively unlimited capacity; no cluster sizing decisions |
-| **Durability** | 99.999999999% (11 nines); automatic replication across zones |
+| **Durability** | Provider-specific targets (for example S3/GCS advertise 11 nines); automatic replication across zones |
 | **Decoupled compute** | Query with any engine (Spark, Presto, Athena, Snowflake) without moving data |
 | **Open formats** | Parquet, Avro, ORC readable by any tool; no vendor lock-in |
 | **Separation of concerns** | Storage team manages buckets; analytics teams query independently |
@@ -196,7 +196,8 @@ rectangle "Kafka Broker" as broker {
 hot --> cold : segments older\nthan threshold
 
 note right of cold
-  Kafka 3.6+ native feature
+  Tiered storage availability
+  depends on Kafka version
   Transparent to producers/consumers
   Controlled by topic configuration
 end note
@@ -421,6 +422,8 @@ Create new file every 10,000 records.
 Create new file every hour.
 
 ### Recommendations
+
+Example starting points; tune based on throughput and query patterns.
 
 | Workload | Flush Size | Rotation Interval |
 |----------|:----------:|:-----------------:|
