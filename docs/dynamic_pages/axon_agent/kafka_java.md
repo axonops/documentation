@@ -80,45 +80,40 @@ The final state of the last lines of the file should look like this:
 <div id="Kafka20JavaDiv" class="javakafka">
 <div id="Broker" class="axon_kafka_dynamic_s3">
 
-```shell hl_lines="1-2"
+```shell hl_lines="1"
 . /usr/share/axonops/axonops-jvm.options
-EXTRA_ARGS=...
 
 exec $base_dir/kafka-run-class.sh $EXTRA_ARGS kafka.Kafka "$@"
 ```
 </div>
 <div id="Zookeeper" class="axon_kafka_dynamic_s3" style="display:none">
 
-```shell hl_lines="1-2"
+```shell hl_lines="1"
 . /usr/share/axonops/axonops-jvm.options
-EXTRA_ARGS=...
 
 exec $base_dir/kafka-run-class.sh $EXTRA_ARGS org.apache.zookeeper.server.quorum.QuorumPeerMain "$@"
 ```
 </div>
 <div id="KRaftBroker" class="axon_kafka_dynamic_s3" style="display:none">
 
-```shell hl_lines="1-2"
+```shell hl_lines="1"
 . /usr/share/axonops/axonops-jvm.options
-EXTRA_ARGS=...
 
 exec $base_dir/kafka-run-class.sh $EXTRA_ARGS kafka.Kafka "$@"
 ```
 </div>
 <div id="KRaftController" class="axon_kafka_dynamic_s3" style="display:none">
 
-```shell hl_lines="1-2"
+```shell hl_lines="1"
 . /usr/share/axonops/axonops-jvm.options
-EXTRA_ARGS=...
 
 exec $base_dir/kafka-run-class.sh $EXTRA_ARGS kafka.Kafka "$@"
 ```
 </div>
 <div id="Connect" class="axon_kafka_dynamic_s3" style="display:none">
 
-```shell hl_lines="1-2"
+```shell hl_lines="1"
 . /usr/share/axonops/axonops-jvm.options
-EXTRA_ARGS=...
 
 exec $(dirname $0)/kafka-run-class.sh $EXTRA_ARGS org.apache.kafka.connect.cli.ConnectDistributed "$@"
 ```
@@ -131,45 +126,40 @@ exec $(dirname $0)/kafka-run-class.sh $EXTRA_ARGS org.apache.kafka.connect.cli.C
 <div id="Kafka30JavaDiv" class="javakafka">
 <div id="Broker" class="axon_kafka_dynamic_s6">
 
-```shell hl_lines="1-2"
+```shell hl_lines="1"
 . /usr/share/axonops/axonops-jvm.options
-EXTRA_ARGS=...
 
 exec $base_dir/kafka-run-class.sh $EXTRA_ARGS kafka.Kafka "$@"
 ```
 </div>
 <div id="Zookeeper" class="axon_kafka_dynamic_s6" style="display:none">
 
-```shell hl_lines="1-2"
+```shell hl_lines="1"
 . /usr/share/axonops/axonops-jvm.options
-EXTRA_ARGS=...
 
 exec $base_dir/kafka-run-class.sh $EXTRA_ARGS org.apache.zookeeper.server.quorum.QuorumPeerMain "$@"
 ```
 </div>
 <div id="KRaftBroker" class="axon_kafka_dynamic_s6" style="display:none">
 
-```shell hl_lines="1-2"
+```shell hl_lines="1"
 . /usr/share/axonops/axonops-jvm.options
-EXTRA_ARGS=...
 
 exec $base_dir/kafka-run-class.sh $EXTRA_ARGS kafka.Kafka "$@"
 ```
 </div>
 <div id="KRaftController" class="axon_kafka_dynamic_s6" style="display:none">
 
-```shell hl_lines="1-2"
+```shell hl_lines="1"
 . /usr/share/axonops/axonops-jvm.options
-EXTRA_ARGS=...
 
 exec $base_dir/kafka-run-class.sh $EXTRA_ARGS kafka.Kafka "$@"
 ```
 </div>
 <div id="Connect" class="axon_kafka_dynamic_s6" style="display:none">
 
-```shell hl_lines="1-2"
+```shell hl_lines="1"
 . /usr/share/axonops/axonops-jvm.options
-EXTRA_ARGS=...
 
 exec $(dirname $0)/kafka-run-class.sh $EXTRA_ARGS org.apache.kafka.connect.cli.ConnectDistributed "$@"
 ```
