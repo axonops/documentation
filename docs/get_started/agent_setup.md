@@ -77,4 +77,4 @@ If your network does not have direct internet access and it requires a proxy to 
 sudo systemctl start axon-agent
 ```
 
-Once the Agents have been setup please use the [Using AxonOps](../cluster/cluster-overview.md) to familiarise yourself with AxonOps UI.
+Once the Agents have been setup, please use the [Using AxonOps](../cluster/cluster-overview.md) guide to familiarize yourself with AxonOps UI.
