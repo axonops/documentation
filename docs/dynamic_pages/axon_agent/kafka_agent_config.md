@@ -287,7 +287,7 @@ sudo chmod 0640 /etc/axonops/axon-agent.yml
 <div id="Broker" class="axon_kafka_dynamic_s2">
 <h2>Configure Kafka</h2>
 
-Edit kafka-server-start.sh, usually located in your Kafka install path such as: 
+Edit <code>kafka-server-start.sh</code>, usually located in your Kafka install path such as:
 
 <p><code>/&lt;Kafka_Home&gt;/bin/kafka-server-start.sh</code></p>
 </div>
@@ -295,7 +295,7 @@ Edit kafka-server-start.sh, usually located in your Kafka install path such as:
 <div id="Zookeeper" class="axon_kafka_dynamic_s2" style="display:none">
 <h2>Configure Zookeeper</h2>
 
-Edit zookeeper-server-start.sh, usually located in your Zookeeper install path such as: 
+Edit <code>zookeeper-server-start.sh</code>, usually located in your Zookeeper install path such as:
 
 <p><code>/&lt;Zookeeper_Home&gt;/bin/zookeeper-server-start.sh</code></p>
 </div>
@@ -303,7 +303,7 @@ Edit zookeeper-server-start.sh, usually located in your Zookeeper install path s
 <div id="KRaftBroker" class="axon_kafka_dynamic_s2" style="display:none">
 <h2>Configure KRaft Broker</h2>
 
-Edit kafka-server-start.sh, usually located in your Kafka install path such as: 
+Edit <code>kafka-server-start.sh</code>, usually located in your Kafka install path such as:
 
 <p><code>/&lt;Kafka_Home&gt;/bin/kafka-server-start.sh</code></p>
 </div>
@@ -311,7 +311,7 @@ Edit kafka-server-start.sh, usually located in your Kafka install path such as:
 <div id="KRaftController" class="axon_kafka_dynamic_s2" style="display:none">
 <h2>Configure KRaft Controller</h2>
 
-Edit kafka-server-start.sh, usually located in your Kafka install path such as: 
+Edit <code>kafka-server-start.sh</code>, usually located in your Kafka install path such as:
 
 <p><code>/&lt;Kafka_Home&gt;/bin/kafka-server-start.sh</code></p>
 </div>
@@ -319,7 +319,7 @@ Edit kafka-server-start.sh, usually located in your Kafka install path such as:
 <div id="Connect" class="axon_kafka_dynamic_s2" style="display:none">
 <h2>Configure Connect</h2>
 
-Edit connect-distributed.sh, usually located in your Kafka install path such as: 
+Edit <code>connect-distributed.sh</code>, usually located in your Kafka install path such as:
 
 <p><code>/&lt;Kafka_Home&gt;/bin/connect-distributed.sh </code></p>
 </div>
