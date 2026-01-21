@@ -74,12 +74,13 @@ def update_front_matter(file_path, boost):
     """
     Update or add search boost to file's front matter.
     Preserves existing front matter formatting exactly.
+    Skips files with boost values of 10 or 0.1 (manually set).
     """
     full_path = os.path.join(DOCS_DIR, file_path)
 
     if not os.path.exists(full_path):
         print(f"  WARNING: File not found: {file_path}")
-        return False
+        return 'error'
 
     with open(full_path, 'r', encoding='utf-8') as f:
         content = f.read()
@@ -87,6 +88,15 @@ def update_front_matter(file_path, boost):
     # Check if file has front matter
     front_matter_pattern = re.compile(r'^(---\s*\n)(.*?)(\n---\s*\n)', re.DOTALL)
     match = front_matter_pattern.match(content)
+
+    # Check for existing boost value that should be preserved
+    if match:
+        front_matter_text = match.group(2)
+        existing_boost = re.search(r'^\s+boost:\s*([\d.]+)', front_matter_text, re.MULTILINE)
+        if existing_boost:
+            val = float(existing_boost.group(1))
+            if val == 10 or val == 0.1:
+                return 'skipped'
 
     if match:
         opening = match.group(1)
@@ -125,7 +135,7 @@ def update_front_matter(file_path, boost):
     with open(full_path, 'w', encoding='utf-8') as f:
         f.write(new_content)
 
-    return True
+    return 'updated'
 
 
 def main():
@@ -160,17 +170,22 @@ def main():
 
     # Update each file
     updated = 0
+    skipped = 0
     errors = 0
 
     for file_path, boost in files:
-        print(f"  Updating {file_path} (boost: {boost})")
-        if update_front_matter(file_path, boost):
+        result = update_front_matter(file_path, boost)
+        if result == 'updated':
+            print(f"  Updating {file_path} (boost: {boost})")
             updated += 1
+        elif result == 'skipped':
+            print(f"  Skipping {file_path} (manual boost preserved)")
+            skipped += 1
         else:
             errors += 1
 
     print()
-    print(f"Done! Updated {updated} files, {errors} errors")
+    print(f"Done! Updated {updated} files, skipped {skipped} (manual), {errors} errors")
 
 
 if __name__ == '__main__':
