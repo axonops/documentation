@@ -75,7 +75,7 @@ end note
 @enduml
 ```
 
-### Configuration
+### Configuration (Example Tuning)
 
 ```properties
 # At-most-once producer configuration
@@ -121,7 +121,7 @@ producer.flush();
 producer.close();
 ```
 
-### Performance Characteristics
+### Performance Characteristics (Repository Guidance)
 
 ```plantuml
 @startuml
@@ -240,7 +240,7 @@ while (running) {
 
 ### Auto-Commit Alternative
 
-Using auto-commit for at-most-once semantics (not recommended due to timing complexity):
+Using auto-commit for at-most-once semantics (example only; not recommended due to timing complexity):
 
 ```properties
 enable.auto.commit=true
@@ -531,7 +531,7 @@ metrics-critical    → at-least-once (auditing, billing)
 
 | Aspect | At-Most-Once | At-Least-Once | Exactly-Once |
 |--------|--------------|---------------|--------------|
-| **Message loss** | Possible | Never | Never |
+| **Message loss** | Possible | No loss when durability settings are met | Never |
 | **Duplicates** | Never | Possible | Never |
 | **Latency** | Lowest | Low | Higher |
 | **Throughput** | Highest | High | Moderate |

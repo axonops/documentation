@@ -8,7 +8,7 @@ meta:
 
 # Exactly-Once Semantics
 
-Exactly-once semantics (EOS) guarantee that messages are processed exactly once, even in the presence of failures. Kafka achieves this through idempotent producers, transactions, and transactional consumers.
+Exactly-once semantics (EOS) ensure Kafka transactional read-process-write pipelines process committed records exactly once. Kafka achieves this through idempotent producers, transactions, and transactional consumers.
 
 ---
 
@@ -41,8 +41,8 @@ end note
 | Property | Guarantee |
 |----------|-----------|
 | **Delivery count** | Exactly 1 |
-| **Message loss** | Never |
-| **Duplicates** | Never (within Kafka) |
+| **Message loss** | Avoided for committed transactions when replication is healthy |
+| **Duplicates** | Avoided within Kafka transactions |
 | **Atomicity** | Yes (transactions) |
 
 ---
@@ -97,7 +97,7 @@ rectangle "Exactly-Once Components" {
 | **Idempotent Producer** | Prevent duplicate writes from retries |
 | **Transaction Coordinator** | Manage transaction state |
 | **Transactional Consumer** | Read only committed data |
-| **Consumer Group Coordinator** | Atomic offset commits |
+| **Consumer Group Coordinator** | Stores offsets committed atomically via the transaction coordinator |
 
 ---
 
@@ -142,8 +142,8 @@ B --> P : ack
 | State | Action |
 |-------|--------|
 | `seq == expected` | Accept record, increment expected |
-| `seq < expected` | Duplicate; reject with DuplicateSequenceException |
-| `seq > expected` | Out of order; reject with OutOfOrderSequenceException |
+| `seq < expected` | Duplicate; ignore |
+| `seq > expected` | Out of order; reject |
 
 ### Configuration
 
@@ -234,8 +234,8 @@ TC --> P : PID=1000, epoch=0
 P -> TC : AddPartitionsToTxn(topic-0, topic-1)
 TC --> P : OK
 
-P -> PL : Produce(topic-0, txn marker)
-P -> PL : Produce(topic-1, txn marker)
+P -> PL : Produce(topic-0, records)
+P -> PL : Produce(topic-1, records)
 PL --> P : ack
 
 P -> CC : AddOffsetsToTxn(group-id)
@@ -655,9 +655,9 @@ EOS is "Done"
 
 | Metric | At-Least-Once | Exactly-Once | Overhead |
 |--------|:-------------:|:------------:|:--------:|
-| **Latency (p50)** | ~5ms | ~20ms | +15ms |
-| **Latency (p99)** | ~20ms | ~100ms | +80ms |
-| **Throughput** | High | Moderate | -30-50% |
+| **Latency (p50)** | ~5ms (workload-dependent) | ~20ms (workload-dependent) | +15ms (workload-dependent) |
+| **Latency (p99)** | ~20ms (workload-dependent) | ~100ms (workload-dependent) | +80ms (workload-dependent) |
+| **Throughput** | High (workload-dependent) | Moderate (workload-dependent) | -30-50% (workload-dependent) |
 
 ### Throughput Optimization
 
@@ -816,7 +816,6 @@ try {
 | Transactions | 0.11.0 |
 | Exactly-once (original) | 0.11.0 |
 | Exactly-once v2 | 2.5.0 |
-| Kafka Connect EOS | 3.3.0 |
 
 ---
 

@@ -57,7 +57,8 @@ brokers --> consumers : consume
 connect <--> brokers : source/sink
 streams <--> brokers : read/write
 
-brokers <--> sr : schema validation
+producers <--> sr : schema registration
+consumers <--> sr : schema lookup
 
 connect --> lakes
 connect --> search
@@ -143,10 +144,10 @@ zk_mode -[hidden]down- kraft_mode
 | **Metadata storage** | Split between ZK and brokers | Unified in Kafka |
 | **Operational complexity** | Two systems to manage | Single system |
 | **Recovery time** | Slower (ZK sync required) | Faster failover |
-| **Scale limits** | ~200K partitions | Millions of partitions |
+| **Scale limits** | Lower metadata scale vs KRaft (varies by hardware/config) | Millions of partitions |
 | **Version support** | All versions | Kafka 3.3+ production ready |
 
-KRaft mode is the recommended deployment model for new clusters (Kafka 3.3+).
+KRaft mode is the recommended deployment model for new clusters (Kafka 3.3+). Kafka 4.x brokers are KRaft-only.
 
 ---
 
@@ -291,7 +292,7 @@ end note
 
 ### Connector Ecosystem
 
-Over 200 connectors are available:
+200+ production-grade connectors are available:
 
 | Category | Examples |
 |----------|----------|

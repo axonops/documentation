@@ -35,14 +35,16 @@ note bottom of amo
 end note
 
 note bottom of alo
-  Never loses messages
+  Avoids loss when replication
+  is healthy
   May duplicate
   Requires idempotent handling
 end note
 
 note bottom of eo
-  Never loses messages
-  Never duplicates
+  Avoids loss within
+  Kafka transactions
+  Avoids duplicates
   Most complex
 end note
 
@@ -52,8 +54,8 @@ end note
 | Semantic | Message Loss | Duplicates | Complexity |
 |----------|:------------:|:----------:|:----------:|
 | **At-most-once** | Possible | Never | Low |
-| **At-least-once** | Never | Possible | Medium |
-| **Exactly-once** | Never | Never | High |
+| **At-least-once** | Avoided when replication is healthy | Possible | Medium |
+| **Exactly-once** | Avoided within Kafka transactions | Avoided within Kafka transactions | High |
 
 The choice of delivery semantics depends on the use case, with tradeoffs between reliability, complexity, and performance.
 
@@ -254,7 +256,7 @@ for (ConsumerRecord<String, String> record : records) {
 
 ## Exactly-Once Semantics (EOS)
 
-Exactly-once semantics guarantee that messages are processed exactly once, even in the presence of failures. Kafka achieves this through idempotent producers, transactions, and transactional consumers.
+Exactly-once semantics ensure Kafka transactional read-process-write pipelines process committed records exactly once. Kafka achieves this through idempotent producers, transactions, and transactional consumers.
 
 ```plantuml
 @startuml
@@ -420,8 +422,8 @@ rectangle "EOS Coverage" {
 
 | Aspect | Impact |
 |--------|--------|
-| **Latency** | Transaction commit adds latency (~10-50ms typical) |
-| **Throughput** | Lower than at-least-once due to coordination |
+| **Latency** | Transaction commit adds latency (~10-50ms typical, workload-dependent) |
+| **Throughput** | Lower than at-least-once due to coordination (workload-dependent) |
 | **Complexity** | More failure modes to handle |
 | **Resource usage** | Transaction coordinator memory and CPU |
 
@@ -486,7 +488,7 @@ endif
 | **Producer** | At-least-once | Idempotent producer (enable.idempotence=true) |
 | **Consumer** | At-least-once | read_committed isolation |
 | **Kafka Streams** | At-least-once | processing.guarantee=exactly_once_v2 |
-| **Kafka Connect** | At-least-once | Exactly-once (Kafka 3.3+, compatible connectors) |
+| **Kafka Connect** | At-least-once | Connector-dependent |
 
 ---
 

@@ -24,7 +24,7 @@ Every Kafka deployment requires moving data between Kafka and external systemsâ€
 | **Offset management** | Tracking position to enable resume after failures |
 | **Scaling** | Parallelizing work across partitions and workers |
 | **Monitoring** | Metrics, logging, alerting on integration health |
-| **Exactly-once** | Ensuring records are neither lost nor duplicated |
+| **Exactly-once processing** | Connector-dependent duplicate avoidance |
 
 Building this infrastructure from scratch for each integration requires significant engineering effort. Kafka Connect exists to provide this infrastructure as a reusable framework.
 
@@ -39,7 +39,7 @@ Use the Kafka Connect framework with pre-built or custom connectors:
 - **Connectors** handle system-specific logic (database queries, API calls, file operations)
 - **Framework** handles common concerns (offset management, fault tolerance, scaling)
 - **Configuration-driven**â€”deploy integrations without writing code
-- **Ecosystem** of 200+ existing connectors
+- **Ecosystem** of 200+ production-grade connectors
 
 ### Custom Code (Build)
 
@@ -126,7 +126,7 @@ stop
 | **Schema Registry integration** | Automatic serialization |
 | **Single Message Transforms** | Lightweight transformations |
 | **Dead letter queues** | Standardized error handling |
-| **Exactly-once** | Supported for compatible connectors |
+| **Exactly-once** | Supported for compatible connectors and configurations |
 | **Converters** | Multiple serialization formats |
 
 ### Cost Benefits
@@ -146,7 +146,7 @@ stop
 
 | Scenario | Rationale |
 |----------|-----------|
-| **Standard sink (S3, Cassandra, Elasticsearch)** | Mature, tested connectors exist |
+| **Standard sinks (object storage, search, databases)** | Mature, tested connectors exist |
 | **CDC from databases** | Debezium connectors are excellent |
 | **Cloud service integration** | Vendor-maintained connectors |
 | **Operational simplicity required** | Same management for all integrations |

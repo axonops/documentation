@@ -221,14 +221,14 @@ end note
 
 | Capability | Description |
 |------------|-------------|
-| **200+ pre-built connectors** | Database CDC, cloud storage, search engines, messaging systems |
+| **200+ production-grade connectors** | Database CDC, cloud storage, search engines, messaging systems |
 | **Standardized operations** | Same deployment, monitoring, and management for all connectors |
 | **Distributed mode** | Automatic task distribution and fault tolerance |
 | **Offset tracking** | Framework manages position in source/sink systems |
 | **Schema integration** | Automatic serialization via Schema Registry |
 | **Single Message Transforms** | Lightweight transformations without custom code |
 | **Dead letter queues** | Standardized error handling |
-| **Exactly-once delivery** | Supported for compatible connectors (Kafka 3.3+) |
+| **Exactly-once processing** | Supported for compatible connectors and configurations |
 
 ---
 
@@ -281,7 +281,7 @@ package "Kafka Connect Ecosystem" {
 |----------|------------|------------------|
 | **Event Sources** | HTTP/REST, MQTT, File/Syslog, JMS/MQ | Streaming events into Kafka |
 | **Cloud Storage Sinks** | S3, GCS, Azure Blob, HDFS | Data lake ingestion |
-| **Database Sinks** | Cassandra, JDBC, Elasticsearch, OpenSearch | Persistent storage and search |
+| **Database Sinks** | Cassandra, JDBC, Elasticsearch, OpenSearch (examples) | Persistent storage and search |
 | **Data Warehouse Sinks** | Snowflake, BigQuery, Redshift, Databricks | Analytics pipelines |
 
 ---
@@ -297,7 +297,7 @@ Production connectors implement complex logic that is difficult to replicate:
 | Connector | Complexity Handled |
 |-----------|-------------------|
 | **HTTP Source** | Pagination, rate limiting, authentication, retry logic |
-| **S3 Sink** | Partitioning, rotation, exactly-once with idempotent writes |
+| **S3 Sink** | Partitioning, rotation, at-least-once; use idempotent sinks/dedup if required |
 | **Cassandra Sink** | Batching, retry policies, consistency levels, schema mapping |
 | **MQTT Source** | QoS handling, reconnection, message ordering, topic mapping |
 

@@ -27,7 +27,7 @@ Writing integration code from scratch requires implementing:
 
 - Connection management and authentication
 - Data serialization and schema handling
-- Offset tracking for exactly-once semantics
+- Offset tracking for at-least-once; exactly-once is connector/config dependent
 - Error handling and retry logic
 - Scaling across partitions
 - Monitoring and metrics
@@ -269,7 +269,7 @@ Stream Kafka data to S3 for data lake storage.
 **Capabilities:**
 - Multiple output formats (Parquet, Avro, JSON)
 - Time-based and field-based partitioning
-- Exactly-once with idempotent writes
+- At-least-once; use idempotent sinks/dedup if required
 - Automatic file rotation
 
 ### Google Cloud Storage
@@ -414,7 +414,7 @@ Write to any JDBC-compatible database.
 
 | Capability | Production Requirement |
 |------------|----------------------|
-| Exactly-once support | Critical for financial data |
+| Exactly-once support | Required only when the pipeline demands it; verify connector capability |
 | Dead letter queue | Essential for error handling |
 | Schema Registry integration | Required for governed deployments |
 | SMT support | Flexibility for transformations |

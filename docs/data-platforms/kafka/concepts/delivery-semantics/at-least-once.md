@@ -30,7 +30,7 @@ rectangle "At-Least-Once Guarantee" {
 
 note right of delivered
   Scenarios causing duplicates:
-  - Producer retry after timeout
+  - Producer retry after timeout (when idempotence is disabled)
   - Consumer crash before commit
   - Rebalance during processing
 end note
@@ -41,9 +41,12 @@ end note
 | Property | Guarantee |
 |----------|-----------|
 | **Delivery count** | ≥ 1 |
-| **Message loss** | Never |
+| **Message loss** | Never when durability settings are met |
 | **Duplicates** | Possible |
 | **Ordering** | Preserved within partition (with constraints) |
+
+!!! note "Durability requirements"
+    To avoid loss, use `acks=all`, keep `min.insync.replicas` satisfied, and disable unclean leader election.
 
 ---
 
@@ -88,6 +91,9 @@ retry.backoff.ms=100                       # Initial retry delay
 delivery.timeout.ms=120000                 # Total delivery timeout
 max.in.flight.requests.per.connection=5    # Default parallelism
 request.timeout.ms=30000                   # Per-request timeout
+
+!!! note "Idempotence default"
+    `enable.idempotence=true` is the default in current Kafka releases, which prevents duplicates caused by producer retries.
 ```
 
 ### Configuration Explanation

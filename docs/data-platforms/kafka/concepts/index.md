@@ -109,6 +109,8 @@ The log model provides unique capabilities:
 - **Replay and reprocessing**: Consumers can reset to earlier offsets to reprocess historical data
 - **Ordering guarantees**: Events within a partition maintain strict ordering
 
+Replayability is bounded by retention and compaction policies configured per topic.
+
 ---
 
 ## Events, Messages, and Records
@@ -293,8 +295,8 @@ Event time is essential for accurate analytics—processing delays, consumer res
 | **Replay** | Not supported | Supported via offset reset |
 | **Consumer coupling** | Consumers must be online | Consumers can catch up later |
 | **Multiple consumers** | Requires separate queues | Single topic, multiple groups |
-| **Message ordering** | Queue-wide (often) | Partition-scoped |
-| **Throughput** | Thousands/second typical | Millions/second achievable |
+| **Message ordering** | Often FIFO per queue | Partition-scoped |
+| **Throughput** | Varies by broker and configuration | Varies by broker and configuration |
 | **Primary use case** | Task distribution | Event streaming, data integration |
 
 ---
@@ -305,11 +307,11 @@ Event streaming with Kafka is well-suited for:
 
 | Use Case | Why Kafka |
 |----------|-----------|
-| **Real-time data pipelines** | High throughput, exactly-once delivery, connector ecosystem |
+| **Real-time data pipelines** | High throughput, exactly-once processing within Kafka, connector ecosystem |
 | **Event-driven microservices** | Decoupling, replay capability, event sourcing support |
-| **Event persistence** | Log compaction, exactly-once semantics, Cassandra Sink |
+| **Event persistence** | Log compaction, exactly-once semantics, connector sinks |
 | **Stream processing** | Kafka Streams for stateful processing |
-| **Data integration** | Kafka Connect with 200+ connectors |
+| **Data integration** | Kafka Connect connector ecosystem |
 | **Audit logging** | Immutable log, long retention, compliance |
 
 Event streaming may not be the best fit for:
