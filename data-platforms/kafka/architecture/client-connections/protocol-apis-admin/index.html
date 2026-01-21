@@ -21609,6 +21609,11 @@ data-et-multi-view="{&quot;schema&quot;:{&quot;content&quot;:{&quot;desktop&quot
 <td>RemoveRaftVoter</td>
 <td>Remove voter from KRaft quorum</td>
 </tr>
+<tr>
+<td style="text-align: center;">82</td>
+<td>UpdateRaftVoter</td>
+<td>Update KRaft voter endpoints</td>
+</tr>
 </tbody>
 </table>
 <hr>
@@ -21628,37 +21633,37 @@ data-et-multi-view="{&quot;schema&quot;:{&quot;content&quot;:{&quot;desktop&quot
 <tr>
 <td style="text-align: center;">0</td>
 <td>0.10.1</td>
-<td>Initial version</td>
+<td>Initial version (removed in 4.0)</td>
 </tr>
 <tr>
 <td style="text-align: center;">1</td>
 <td>0.10.2</td>
-<td>Error message</td>
+<td>Error message (removed in 4.0)</td>
 </tr>
 <tr>
 <td style="text-align: center;">2</td>
 <td>0.11.0</td>
-<td>Response config</td>
+<td>Throttle time (4.0 baseline)</td>
 </tr>
 <tr>
 <td style="text-align: center;">3</td>
 <td>1.0.0</td>
-<td>Throttle time</td>
+<td>Response before quota throttling</td>
 </tr>
 <tr>
 <td style="text-align: center;">4</td>
 <td>2.0.0</td>
-<td>KIP-339</td>
+<td>KIP-464 optional partitions/replication</td>
 </tr>
 <tr>
 <td style="text-align: center;">5</td>
 <td>2.4.0</td>
-<td>Flexible versions</td>
+<td>Flexible versions; response configs (KIP-525)</td>
 </tr>
 <tr>
 <td style="text-align: center;">6</td>
 <td>2.7.0</td>
-<td>KIP-525</td>
+<td>KIP-599 THROTTLING_QUOTA_EXCEEDED</td>
 </tr>
 <tr>
 <td style="text-align: center;">7</td>
@@ -21744,9 +21749,17 @@ Topic =&gt;
     topic_id: UUID
     error_code: INT16
     error_message: NULLABLE_STRING
+    topic_config_error_code: INT16
     num_partitions: INT32
     replication_factor: INT16
     configs: [Config]
+
+Config =&gt;
+    name: STRING
+    value: NULLABLE_STRING
+    read_only: BOOLEAN
+    config_source: INT8
+    is_sensitive: BOOLEAN
 </code></pre></div>
 <h3 id="behavioral-contract">Behavioral Contract<a class="headerlink" href="#behavioral-contract" title="Permanent link">¶</a></h3>
 <table>
@@ -21845,22 +21858,22 @@ Topic =&gt;
 <tr>
 <td style="text-align: center;">0</td>
 <td>0.10.1</td>
-<td>Initial version</td>
+<td>Initial version (removed in 4.0)</td>
 </tr>
 <tr>
 <td style="text-align: center;">1</td>
 <td>0.10.2</td>
-<td>Error message</td>
+<td>Throttle time (4.0 baseline)</td>
 </tr>
 <tr>
 <td style="text-align: center;">2</td>
 <td>0.11.0</td>
-<td>Throttle time</td>
+<td>Response before quota throttling</td>
 </tr>
 <tr>
 <td style="text-align: center;">3</td>
 <td>1.2.0</td>
-<td>Response improvements</td>
+<td>TOPIC_DELETION_DISABLED error</td>
 </tr>
 <tr>
 <td style="text-align: center;">4</td>
@@ -21870,12 +21883,12 @@ Topic =&gt;
 <tr>
 <td style="text-align: center;">5</td>
 <td>2.8.0</td>
-<td>KIP-516 topic ID</td>
+<td>Error message; THROTTLING_QUOTA_EXCEEDED</td>
 </tr>
 <tr>
 <td style="text-align: center;">6</td>
 <td>3.0.0</td>
-<td>KIP-516 improvements</td>
+<td>Topic ID support</td>
 </tr>
 </tbody>
 </table>
@@ -21901,7 +21914,12 @@ Topic =&gt;
 <tr>
 <td><code>topics</code></td>
 <td>ARRAY</td>
-<td>Topics to delete (by name or ID)</td>
+<td>Topics to delete (v6+; by name or ID)</td>
+</tr>
+<tr>
+<td><code>topic_names</code></td>
+<td>ARRAY</td>
+<td>Topic names to delete (v0-5)</td>
 </tr>
 <tr>
 <td><code>timeout_ms</code></td>
@@ -22173,6 +22191,11 @@ Resource =&gt;
 <td>CLIENT_METRICS</td>
 <td>Client metrics</td>
 </tr>
+<tr>
+<td style="text-align: center;">32</td>
+<td>GROUP</td>
+<td>Group configuration</td>
+</tr>
 </tbody>
 </table>
 <h3 id="response-schema_3">Response Schema<a class="headerlink" href="#response-schema_3" title="Permanent link">¶</a></h3>
@@ -22215,8 +22238,8 @@ Config =&gt;
 </tr>
 <tr>
 <td style="text-align: center;">1</td>
-<td>DYNAMIC_TOPIC_CONFIG</td>
-<td>Topic-level override</td>
+<td>TOPIC_CONFIG</td>
+<td>Dynamic topic config</td>
 </tr>
 <tr>
 <td style="text-align: center;">2</td>
@@ -22226,7 +22249,7 @@ Config =&gt;
 <tr>
 <td style="text-align: center;">3</td>
 <td>DYNAMIC_DEFAULT_BROKER_CONFIG</td>
-<td>Dynamic cluster default</td>
+<td>Dynamic broker default</td>
 </tr>
 <tr>
 <td style="text-align: center;">4</td>
@@ -22241,7 +22264,17 @@ Config =&gt;
 <tr>
 <td style="text-align: center;">6</td>
 <td>DYNAMIC_BROKER_LOGGER_CONFIG</td>
-<td>Dynamic logger config</td>
+<td>Dynamic broker logger config</td>
+</tr>
+<tr>
+<td style="text-align: center;">7</td>
+<td>CLIENT_METRICS_CONFIG</td>
+<td>Dynamic client metrics config</td>
+</tr>
+<tr>
+<td style="text-align: center;">8</td>
+<td>GROUP_CONFIG</td>
+<td>Dynamic group config</td>
 </tr>
 </tbody>
 </table>
@@ -22768,12 +22801,12 @@ MatchingAcl =&gt;
 <tr>
 <td style="text-align: center;">1</td>
 <td>2.4.0</td>
-<td>Flexible versions</td>
+<td>KIP-460 election types</td>
 </tr>
 <tr>
 <td style="text-align: center;">2</td>
 <td>2.4.0</td>
-<td>Unclean leader election</td>
+<td>Flexible versions</td>
 </tr>
 </tbody>
 </table>
@@ -22955,12 +22988,12 @@ Partition =&gt;
 <tr>
 <td style="text-align: center;">0</td>
 <td>0.11.0</td>
-<td>Initial version</td>
+<td>Initial version (removed in 4.0)</td>
 </tr>
 <tr>
 <td style="text-align: center;">1</td>
 <td>2.0.0</td>
-<td>Throttle time</td>
+<td>Throttle time (4.0 baseline)</td>
 </tr>
 <tr>
 <td style="text-align: center;">2</td>
@@ -22970,12 +23003,12 @@ Partition =&gt;
 <tr>
 <td style="text-align: center;">3</td>
 <td>2.7.0</td>
-<td>KIP-516</td>
+<td>Top-level error code</td>
 </tr>
 <tr>
 <td style="text-align: center;">4</td>
 <td>3.5.0</td>
-<td>KIP-827</td>
+<td>Total/usable bytes (KIP-827)</td>
 </tr>
 </tbody>
 </table>
@@ -23043,12 +23076,12 @@ Partition =&gt;
 <tr>
 <td><code>total_bytes</code></td>
 <td>INT64</td>
-<td>Total directory capacity</td>
+<td>Total size of the log volume (excludes remote storage)</td>
 </tr>
 <tr>
 <td><code>usable_bytes</code></td>
 <td>INT64</td>
-<td>Available space</td>
+<td>Usable size of the log volume (excludes remote storage)</td>
 </tr>
 <tr>
 <td><code>partition_size</code></td>
@@ -23084,12 +23117,12 @@ Partition =&gt;
 <tr>
 <td style="text-align: center;">1</td>
 <td>3.4.0</td>
-<td>Endpoints</td>
+<td>EndpointType (KIP-919)</td>
 </tr>
 <tr>
 <td style="text-align: center;">2</td>
 <td>3.9.0</td>
-<td>KIP-1082</td>
+<td>IncludeFencedBrokers (KIP-1073)</td>
 </tr>
 </tbody>
 </table>
@@ -23097,12 +23130,14 @@ Partition =&gt;
 <div class="highlight"><pre><span></span><code>DescribeClusterRequest =&gt;
     include_cluster_authorized_operations: BOOLEAN
     endpoint_type: INT8
+    include_fenced_brokers: BOOLEAN
 </code></pre></div>
 <h3 id="response-schema_11">Response Schema<a class="headerlink" href="#response-schema_11" title="Permanent link">¶</a></h3>
 <div class="highlight"><pre><span></span><code>DescribeClusterResponse =&gt;
     throttle_time_ms: INT32
     error_code: INT16
     error_message: NULLABLE_STRING
+    endpoint_type: INT8
     cluster_id: STRING
     controller_id: INT32
     brokers: [Broker]
@@ -23113,6 +23148,7 @@ Broker =&gt;
     host: STRING
     port: INT32
     rack: NULLABLE_STRING
+    is_fenced: BOOLEAN
 </code></pre></div>
 <hr>
 <h2 id="administrative-best-practices">Administrative Best Practices<a class="headerlink" href="#administrative-best-practices" title="Permanent link">¶</a></h2>

@@ -16476,9 +16476,9 @@ data-et-multi-view="{&quot;schema&quot;:{&quot;content&quot;:{&quot;desktop&quot
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
-  <a href="#client-broker-compatibility" class="md-nav__link">
+  <a href="#clientbroker-forward-compatibility-kafka-40-brokers" class="md-nav__link">
     <span class="md-ellipsis">
-      Client-Broker Compatibility
+      Client/Broker Forward Compatibility (Kafka 4.0+ brokers)
     </span>
   </a>
   
@@ -20196,9 +20196,9 @@ data-et-multi-view="{&quot;schema&quot;:{&quot;content&quot;:{&quot;desktop&quot
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
-  <a href="#client-broker-compatibility" class="md-nav__link">
+  <a href="#clientbroker-forward-compatibility-kafka-40-brokers" class="md-nav__link">
     <span class="md-ellipsis">
-      Client-Broker Compatibility
+      Client/Broker Forward Compatibility (Kafka 4.0+ brokers)
     </span>
   </a>
   
@@ -20345,7 +20345,7 @@ data-et-multi-view="{&quot;schema&quot;:{&quot;content&quot;:{&quot;desktop&quot
 <p>This documentation provides a comprehensive specification of the Apache Kafka binary wire protocol. The protocol defines how clients communicate with brokers over TCP connections using a request-response model with explicit versioning.</p>
 <hr>
 <h2 id="specification-scope">Specification Scope<a class="headerlink" href="#specification-scope" title="Permanent link">¶</a></h2>
-<p>This specification covers Kafka protocol versions through Kafka 3.7. For the authoritative grammar reference and exhaustive API schemas, the <a href="https://kafka.apache.org/protocol">Apache Kafka Protocol Documentation</a> provides additional detail. This documentation provides:</p>
+<p>This specification covers Kafka protocol versions for Kafka 2.8 through 4.1. For the authoritative grammar reference and exhaustive API schemas, the <a href="https://kafka.apache.org/protocol">Apache Kafka Protocol Documentation</a> provides additional detail. This documentation provides:</p>
 <ul>
 <li>Behavioral contracts and guarantees</li>
 <li>Failure semantics and error handling</li>
@@ -20378,7 +20378,7 @@ data-et-multi-view="{&quot;schema&quot;:{&quot;content&quot;:{&quot;desktop&quot
 </tr>
 <tr>
 <td><a href="../protocol-errors/">Protocol Errors</a></td>
-<td>Complete error code reference (133+ codes)</td>
+<td>Complete error code reference (count varies by version)</td>
 </tr>
 </tbody>
 </table>
@@ -20448,7 +20448,7 @@ data-et-multi-view="{&quot;schema&quot;:{&quot;content&quot;:{&quot;desktop&quot
 <h3 id="behavioral-contract">Behavioral Contract<a class="headerlink" href="#behavioral-contract" title="Permanent link">¶</a></h3>
 <div class="admonition note">
 <p class="admonition-title">Request Processing Guarantee</p>
-<p>Brokers must process requests from a single connection in the order received. Responses must be sent in request order.</p>
+<p>Brokers process requests from a single connection in the order received and return responses in the same order. The broker processes one in-flight request per connection; clients may still pipeline requests in the TCP buffer.</p>
 </div>
 <hr>
 <h2 id="protocol-layers">Protocol Layers<a class="headerlink" href="#protocol-layers" title="Permanent link">¶</a></h2>
@@ -20570,60 +20570,43 @@ data-et-multi-view="{&quot;schema&quot;:{&quot;content&quot;:{&quot;desktop&quot
 <td>Cluster administration</td>
 </tr>
 <tr>
-<td style="text-align: center;">52-75</td>
+<td style="text-align: center;">52+</td>
 <td>KRaft/Advanced</td>
 <td>Internal</td>
-<td>KRaft consensus, features</td>
+<td>KRaft consensus, features (range evolves by version)</td>
 </tr>
 </tbody>
 </table>
 <p>See individual API documentation for complete details.</p>
 <hr>
 <h2 id="version-compatibility">Version Compatibility<a class="headerlink" href="#version-compatibility" title="Permanent link">¶</a></h2>
-<h3 id="client-broker-compatibility">Client-Broker Compatibility<a class="headerlink" href="#client-broker-compatibility" title="Permanent link">¶</a></h3>
+<h3 id="clientbroker-forward-compatibility-kafka-40-brokers">Client/Broker Forward Compatibility (Kafka 4.0+ brokers)<a class="headerlink" href="#clientbroker-forward-compatibility-kafka-40-brokers" title="Permanent link">¶</a></h3>
 <table>
 <thead>
 <tr>
 <th>Client Version</th>
-<th style="text-align: center;">Broker 2.x</th>
-<th style="text-align: center;">Broker 3.x</th>
+<th style="text-align: center;">Compatibility</th>
 <th>Notes</th>
 </tr>
 </thead>
 <tbody>
 <tr>
-<td>0.10.x</td>
-<td style="text-align: center;">⚠️</td>
-<td style="text-align: center;">⚠️</td>
-<td>Limited API support</td>
+<td>0.x, 1.x, 2.0</td>
+<td style="text-align: center;">❌ Not compatible</td>
+<td>Pre-0.10 protocols removed in Kafka 4.0 (KIP-896)</td>
 </tr>
 <tr>
-<td>2.0.x</td>
-<td style="text-align: center;">✅</td>
-<td style="text-align: center;">✅</td>
-<td>Full support</td>
+<td>2.1 - 2.8</td>
+<td style="text-align: center;">⚠️ Partially compatible</td>
+<td>See Kafka 4.0 upgrade notes for client-specific limitations</td>
 </tr>
 <tr>
-<td>2.4.x</td>
-<td style="text-align: center;">✅</td>
-<td style="text-align: center;">✅</td>
-<td>Flexible versions</td>
-</tr>
-<tr>
-<td>3.0.x</td>
-<td style="text-align: center;">✅</td>
-<td style="text-align: center;">✅</td>
-<td>KRaft APIs</td>
-</tr>
-<tr>
-<td>3.5.x+</td>
-<td style="text-align: center;">⚠️</td>
-<td style="text-align: center;">✅</td>
-<td>May use new APIs</td>
+<td>3.x</td>
+<td style="text-align: center;">✅ Fully compatible</td>
+<td>No protocol-level limitations</td>
 </tr>
 </tbody>
 </table>
-<p>Legend: ✅ Full Support | ⚠️ Partial Support | ❌ Not Supported</p>
 <h3 id="flexible-versions">Flexible Versions<a class="headerlink" href="#flexible-versions" title="Permanent link">¶</a></h3>
 <p>Kafka 2.4 introduced "flexible versions" (KIP-482):</p>
 <table>
@@ -20671,7 +20654,7 @@ data-et-multi-view="{&quot;schema&quot;:{&quot;content&quot;:{&quot;desktop&quot
 <tbody>
 <tr>
 <td>Negotiate API versions before requests</td>
-<td>must</td>
+<td>should</td>
 <td><a href="../protocol-messages/">Protocol Messages</a></td>
 </tr>
 <tr>
@@ -20701,6 +20684,10 @@ data-et-multi-view="{&quot;schema&quot;:{&quot;content&quot;:{&quot;desktop&quot
 </tr>
 </tbody>
 </table>
+<div class="admonition note">
+<p class="admonition-title">ApiVersions</p>
+<p>Legacy clients may skip ApiVersions; brokers still support older request versions where available.</p>
+</div>
 <h3 id="broker-requirements">Broker Requirements<a class="headerlink" href="#broker-requirements" title="Permanent link">¶</a></h3>
 <table>
 <thead>

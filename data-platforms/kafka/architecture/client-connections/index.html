@@ -20599,7 +20599,7 @@ data-et-multi-view="{&quot;schema&quot;:{&quot;content&quot;:{&quot;desktop&quot
 <h2 id="connection-configuration">Connection Configuration<a class="headerlink" href="#connection-configuration" title="Permanent link">¶</a></h2>
 <div class="admonition warning">
 <p class="admonition-title">Bootstrap Servers Required</p>
-<p>The <code>bootstrap.servers</code> configuration is required. Include at least 3 brokers for redundancy during broker failures or maintenance.</p>
+<p>The <code>bootstrap.servers</code> configuration is required. Include multiple brokers (2-3 recommended) for redundancy during broker failures or maintenance.</p>
 </div>
 <h3 id="essential-parameters">Essential Parameters<a class="headerlink" href="#essential-parameters" title="Permanent link">¶</a></h3>
 <table>
@@ -20704,7 +20704,7 @@ data-et-multi-view="{&quot;schema&quot;:{&quot;content&quot;:{&quot;desktop&quot
 <li>On initial connection</li>
 <li>When <code>metadata.max.age.ms</code> expires (default 5 minutes)</li>
 <li>On <code>NOT_LEADER_OR_FOLLOWER</code> errors</li>
-<li>On <code>UNKNOWN_TOPIC_OR_PARTITION</code> errors</li>
+<li>On <code>UNKNOWN_TOPIC_OR_PARTITION</code> errors (if the topic is expected to exist)</li>
 <li>When accessing a new topic</li>
 </ul>
 <div class="admonition note">
@@ -20763,6 +20763,10 @@ data-et-multi-view="{&quot;schema&quot;:{&quot;content&quot;:{&quot;desktop&quot
 </tr>
 </tbody>
 </table>
+<div class="admonition note">
+<p class="admonition-title">Latency ranges</p>
+<p>These ranges are illustrative and vary by hardware, workload, network conditions, and broker configuration.</p>
+</div>
 <h3 id="throughput-factors">Throughput Factors<a class="headerlink" href="#throughput-factors" title="Permanent link">¶</a></h3>
 <p>Maximum throughput depends on:</p>
 <ul>
@@ -20851,7 +20855,7 @@ data-et-multi-view="{&quot;schema&quot;:{&quot;content&quot;:{&quot;desktop&quot
 </tr>
 <tr>
 <td>KRaft mode</td>
-<td>3.3.0</td>
+<td>2.8.0 (introduced), 3.3.0 (production-ready)</td>
 </tr>
 </tbody>
 </table>

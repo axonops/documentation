@@ -17156,6 +17156,57 @@ data-et-multi-view="{&quot;schema&quot;:{&quot;content&quot;:{&quot;desktop&quot
 </li>
       
         <li class="md-nav__item">
+  <a href="#offsetdelete-api-key-47" class="md-nav__link">
+    <span class="md-ellipsis">
+      OffsetDelete API (Key 47)
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="OffsetDelete API (Key 47)">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#overview_10" class="md-nav__link">
+    <span class="md-ellipsis">
+      Overview
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#version-history_10" class="md-nav__link">
+    <span class="md-ellipsis">
+      Version History
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#request-schema_10" class="md-nav__link">
+    <span class="md-ellipsis">
+      Request Schema
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#response-schema_10" class="md-nav__link">
+    <span class="md-ellipsis">
+      Response Schema
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#consumer-group-protocol-summary" class="md-nav__link">
     <span class="md-ellipsis">
       Consumer Group Protocol Summary
@@ -21206,6 +21257,57 @@ data-et-multi-view="{&quot;schema&quot;:{&quot;content&quot;:{&quot;desktop&quot
 </li>
       
         <li class="md-nav__item">
+  <a href="#offsetdelete-api-key-47" class="md-nav__link">
+    <span class="md-ellipsis">
+      OffsetDelete API (Key 47)
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="OffsetDelete API (Key 47)">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#overview_10" class="md-nav__link">
+    <span class="md-ellipsis">
+      Overview
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#version-history_10" class="md-nav__link">
+    <span class="md-ellipsis">
+      Version History
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#request-schema_10" class="md-nav__link">
+    <span class="md-ellipsis">
+      Request Schema
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#response-schema_10" class="md-nav__link">
+    <span class="md-ellipsis">
+      Response Schema
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#consumer-group-protocol-summary" class="md-nav__link">
     <span class="md-ellipsis">
       Consumer Group Protocol Summary
@@ -21330,7 +21432,7 @@ data-et-multi-view="{&quot;schema&quot;:{&quot;content&quot;:{&quot;desktop&quot
 <hr>
 <h2 id="findcoordinator-api-key-10">FindCoordinator API (Key 10)<a class="headerlink" href="#findcoordinator-api-key-10" title="Permanent link">¶</a></h2>
 <h3 id="overview">Overview<a class="headerlink" href="#overview" title="Permanent link">¶</a></h3>
-<p>The FindCoordinator API locates the broker serving as coordinator for a consumer group or transaction.</p>
+<p>The FindCoordinator API locates the broker serving as coordinator for a consumer group, transaction, or share group.</p>
 <h3 id="version-history">Version History<a class="headerlink" href="#version-history" title="Permanent link">¶</a></h3>
 <table>
 <thead>
@@ -21363,13 +21465,18 @@ data-et-multi-view="{&quot;schema&quot;:{&quot;content&quot;:{&quot;desktop&quot
 </tr>
 <tr>
 <td style="text-align: center;">4</td>
-<td>3.0.0</td>
-<td>Batched requests</td>
+<td>3.6.0</td>
+<td>Batched requests (KIP-699)</td>
 </tr>
 <tr>
 <td style="text-align: center;">5</td>
-<td>3.6.0</td>
-<td>KIP-699</td>
+<td>3.8.0</td>
+<td>TRANSACTION_ABORTABLE errors (KIP-890)</td>
+</tr>
+<tr>
+<td style="text-align: center;">6</td>
+<td>4.0.0</td>
+<td>Share groups (KIP-932)</td>
 </tr>
 </tbody>
 </table>
@@ -21391,12 +21498,12 @@ data-et-multi-view="{&quot;schema&quot;:{&quot;content&quot;:{&quot;desktop&quot
 <tr>
 <td><code>key</code></td>
 <td>STRING</td>
-<td>Group ID or transactional ID</td>
+<td>Coordinator key (v0-3)</td>
 </tr>
 <tr>
 <td><code>key_type</code></td>
 <td>INT8</td>
-<td>0=GROUP, 1=TRANSACTION</td>
+<td>0=GROUP, 1=TRANSACTION, 2=SHARE</td>
 </tr>
 <tr>
 <td><code>coordinator_keys</code></td>
@@ -21405,6 +21512,7 @@ data-et-multi-view="{&quot;schema&quot;:{&quot;content&quot;:{&quot;desktop&quot
 </tr>
 </tbody>
 </table>
+<p>For <code>key_type=SHARE</code>, the coordinator key format is <code>groupId:topicId:partition</code>.</p>
 <h3 id="response-schema">Response Schema<a class="headerlink" href="#response-schema" title="Permanent link">¶</a></h3>
 <div class="highlight"><pre><span></span><code>FindCoordinatorResponse =&gt;
     throttle_time_ms: INT32
@@ -21435,25 +21543,31 @@ Coordinator =&gt;
 <tr>
 <td><code>node_id</code></td>
 <td>INT32</td>
-<td>Coordinator broker ID</td>
+<td>Coordinator broker ID (v0-3)</td>
 </tr>
 <tr>
 <td><code>host</code></td>
 <td>STRING</td>
-<td>Coordinator hostname</td>
+<td>Coordinator hostname (v0-3)</td>
 </tr>
 <tr>
 <td><code>port</code></td>
 <td>INT32</td>
-<td>Coordinator port</td>
+<td>Coordinator port (v0-3)</td>
 </tr>
 </tbody>
 </table>
 <h3 id="coordinator-selection">Coordinator Selection<a class="headerlink" href="#coordinator-selection" title="Permanent link">¶</a></h3>
-<p>The coordinator is deterministically selected based on the group ID hash:</p>
-<div class="highlight"><pre><span></span><code>partition = abs(hash(group_id)) % __consumer_offsets.partitions
-coordinator = leader(__consumer_offsets, partition)
+<p>The coordinator is deterministically selected based on the coordinator key and internal topic:</p>
+<div class="highlight"><pre><span></span><code>partition = abs(hash(key)) % internal_topic.partitions
+coordinator = leader(internal_topic, partition)
 </code></pre></div>
+<p>Key types map to internal topics:</p>
+<ul>
+<li>GROUP -&gt; <code>__consumer_offsets</code></li>
+<li>TRANSACTION -&gt; <code>__transaction_state</code></li>
+<li>SHARE -&gt; <code>__share_group_state</code></li>
+</ul>
 <h3 id="behavioral-contract">Behavioral Contract<a class="headerlink" href="#behavioral-contract" title="Permanent link">¶</a></h3>
 <table>
 <thead>
@@ -21511,7 +21625,7 @@ coordinator = leader(__consumer_offsets, partition)
 <hr>
 <h2 id="joingroup-api-key-11">JoinGroup API (Key 11)<a class="headerlink" href="#joingroup-api-key-11" title="Permanent link">¶</a></h2>
 <h3 id="overview_1">Overview<a class="headerlink" href="#overview_1" title="Permanent link">¶</a></h3>
-<p>The JoinGroup API joins a consumer to a group, triggering rebalancing if necessary. The first member to join becomes the group leader.</p>
+<p>The JoinGroup API joins a consumer to a group, triggering rebalancing if necessary. The coordinator selects a group leader.</p>
 <h3 id="version-history_1">Version History<a class="headerlink" href="#version-history_1" title="Permanent link">¶</a></h3>
 <table>
 <thead>
@@ -21533,24 +21647,14 @@ coordinator = leader(__consumer_offsets, partition)
 <td>Rebalance timeout</td>
 </tr>
 <tr>
-<td style="text-align: center;">2</td>
-<td>0.11.0</td>
-<td>Response member data</td>
-</tr>
-<tr>
-<td style="text-align: center;">3</td>
-<td>2.0.0</td>
-<td>KIP-345</td>
-</tr>
-<tr>
 <td style="text-align: center;">4</td>
-<td>2.2.0</td>
-<td>KIP-394 group instance ID</td>
+<td>2.1.0</td>
+<td>Second join with assigned member ID</td>
 </tr>
 <tr>
 <td style="text-align: center;">5</td>
 <td>2.3.0</td>
-<td>Group instance ID support</td>
+<td>Group instance ID</td>
 </tr>
 <tr>
 <td style="text-align: center;">6</td>
@@ -21560,17 +21664,17 @@ coordinator = leader(__consumer_offsets, partition)
 <tr>
 <td style="text-align: center;">7</td>
 <td>2.7.0</td>
-<td>KIP-559 protocol type</td>
+<td>Protocol type in response (KIP-559)</td>
 </tr>
 <tr>
 <td style="text-align: center;">8</td>
 <td>3.0.0</td>
-<td>KIP-848</td>
+<td>Reason field (KIP-800)</td>
 </tr>
 <tr>
 <td style="text-align: center;">9</td>
 <td>3.5.0</td>
-<td>KIP-848 improvements</td>
+<td>Skip assignment in response</td>
 </tr>
 </tbody>
 </table>
@@ -21703,7 +21807,7 @@ Member =&gt;
 <tbody>
 <tr>
 <td><strong>Leader election</strong></td>
-<td>First member to join becomes leader</td>
+<td>Coordinator selects leader (often the first to join)</td>
 </tr>
 <tr>
 <td><strong>Generation ID</strong></td>
@@ -21770,7 +21874,7 @@ Member =&gt;
 <tr>
 <td style="text-align: center;">2</td>
 <td>0.11.0</td>
-<td>Response error</td>
+<td>Response before throttling</td>
 </tr>
 <tr>
 <td style="text-align: center;">3</td>
@@ -22051,12 +22155,12 @@ TopicPartition =&gt;
 <tr>
 <td style="text-align: center;">2</td>
 <td>0.11.0</td>
-<td>Response improvements</td>
+<td>Response before throttling</td>
 </tr>
 <tr>
 <td style="text-align: center;">3</td>
 <td>2.3.0</td>
-<td>Batch member removal</td>
+<td>Batch member removal + group instance ID</td>
 </tr>
 <tr>
 <td style="text-align: center;">4</td>
@@ -22065,13 +22169,8 @@ TopicPartition =&gt;
 </tr>
 <tr>
 <td style="text-align: center;">5</td>
-<td>2.7.0</td>
-<td>KIP-345</td>
-</tr>
-<tr>
-<td style="text-align: center;">6</td>
-<td>3.5.0</td>
-<td>KIP-848</td>
+<td>3.0.0</td>
+<td>Reason field (KIP-800)</td>
 </tr>
 </tbody>
 </table>
@@ -22137,17 +22236,17 @@ MemberResponse =&gt;
 <tr>
 <td style="text-align: center;">0</td>
 <td>0.8.1</td>
-<td>Initial version (Zookeeper)</td>
+<td>Initial version (removed in 4.0)</td>
 </tr>
 <tr>
 <td style="text-align: center;">1</td>
 <td>0.8.2</td>
-<td>Timestamp, Kafka storage</td>
+<td>Commit timestamp (removed in 4.0)</td>
 </tr>
 <tr>
 <td style="text-align: center;">2</td>
 <td>0.9.0</td>
-<td>Retention time</td>
+<td>Retention time (4.0 baseline)</td>
 </tr>
 <tr>
 <td style="text-align: center;">3</td>
@@ -22155,24 +22254,19 @@ MemberResponse =&gt;
 <td>Throttle time</td>
 </tr>
 <tr>
-<td style="text-align: center;">4</td>
-<td>2.0.0</td>
-<td>KIP-98</td>
-</tr>
-<tr>
 <td style="text-align: center;">5</td>
 <td>2.1.0</td>
-<td>KIP-211</td>
+<td>Retention time removed</td>
 </tr>
 <tr>
 <td style="text-align: center;">6</td>
-<td>2.3.0</td>
-<td>Group instance ID</td>
+<td>2.1.0</td>
+<td>Leader epoch</td>
 </tr>
 <tr>
 <td style="text-align: center;">7</td>
 <td>2.3.0</td>
-<td>KIP-345 leader epoch</td>
+<td>Group instance ID</td>
 </tr>
 <tr>
 <td style="text-align: center;">8</td>
@@ -22181,8 +22275,13 @@ MemberResponse =&gt;
 </tr>
 <tr>
 <td style="text-align: center;">9</td>
-<td>2.8.0</td>
-<td>KIP-709</td>
+<td>3.5.0</td>
+<td>Consumer group protocol (KIP-848)</td>
+</tr>
+<tr>
+<td style="text-align: center;">10</td>
+<td>4.0.0</td>
+<td>Topic IDs</td>
 </tr>
 </tbody>
 </table>
@@ -22196,15 +22295,16 @@ MemberResponse =&gt;
 
 Topic =&gt;
     name: STRING
+    topic_id: UUID
     partitions: [Partition]
 
 Partition =&gt;
     partition_index: INT32
     committed_offset: INT64
     committed_leader_epoch: INT32
-    commit_timestamp: INT64
     committed_metadata: NULLABLE_STRING
 </code></pre></div>
+<p>Topic names are used through v9; v10+ uses <code>topic_id</code> instead.</p>
 <table>
 <thead>
 <tr>
@@ -22217,7 +22317,7 @@ Partition =&gt;
 <tr>
 <td><code>generation_id_or_member_epoch</code></td>
 <td>INT32</td>
-<td>Group generation or member epoch</td>
+<td>Group generation (classic) or member epoch (consumer protocol)</td>
 </tr>
 <tr>
 <td><code>committed_offset</code></td>
@@ -22243,6 +22343,7 @@ Partition =&gt;
 
 Topic =&gt;
     name: STRING
+    topic_id: UUID
     partitions: [Partition]
 
 Partition =&gt;
@@ -22330,17 +22431,17 @@ Partition =&gt;
 <tr>
 <td style="text-align: center;">0</td>
 <td>0.8.1</td>
-<td>Initial version</td>
+<td>Initial version (removed in 4.0)</td>
 </tr>
 <tr>
 <td style="text-align: center;">1</td>
 <td>0.8.2</td>
-<td>Kafka-stored offsets</td>
+<td>Kafka-stored offsets (4.0 baseline)</td>
 </tr>
 <tr>
 <td style="text-align: center;">2</td>
 <td>0.10.2</td>
-<td>All partitions</td>
+<td>All partitions + top-level error</td>
 </tr>
 <tr>
 <td style="text-align: center;">3</td>
@@ -22348,14 +22449,9 @@ Partition =&gt;
 <td>Throttle time</td>
 </tr>
 <tr>
-<td style="text-align: center;">4</td>
-<td>2.0.0</td>
-<td>KIP-98</td>
-</tr>
-<tr>
 <td style="text-align: center;">5</td>
 <td>2.1.0</td>
-<td>KIP-211</td>
+<td>Leader epoch</td>
 </tr>
 <tr>
 <td style="text-align: center;">6</td>
@@ -22374,8 +22470,13 @@ Partition =&gt;
 </tr>
 <tr>
 <td style="text-align: center;">9</td>
-<td>3.7.0</td>
-<td>KIP-848</td>
+<td>3.5.0</td>
+<td>Consumer group protocol (KIP-848)</td>
+</tr>
+<tr>
+<td style="text-align: center;">10</td>
+<td>4.0.0</td>
+<td>Topic IDs</td>
 </tr>
 </tbody>
 </table>
@@ -22413,7 +22514,7 @@ Group =&gt;
 <tr>
 <td><code>require_stable</code></td>
 <td>BOOLEAN</td>
-<td>Require stable offsets (no pending transactions)</td>
+<td>If true, unstable offsets return a retriable error</td>
 </tr>
 </tbody>
 </table>
@@ -22531,7 +22632,7 @@ Partition =&gt;
 <tr>
 <td style="text-align: center;">6</td>
 <td>3.9.0</td>
-<td>KIP-848</td>
+<td>GROUP_ID_NOT_FOUND (KIP-1043)</td>
 </tr>
 </tbody>
 </table>
@@ -22649,24 +22750,19 @@ Member =&gt;
 <td>Throttle time</td>
 </tr>
 <tr>
-<td style="text-align: center;">2</td>
-<td>2.0.0</td>
-<td>Response improvements</td>
-</tr>
-<tr>
 <td style="text-align: center;">3</td>
-<td>2.6.0</td>
-<td>States filter</td>
-</tr>
-<tr>
-<td style="text-align: center;">4</td>
 <td>2.4.0</td>
 <td>Flexible versions</td>
 </tr>
 <tr>
+<td style="text-align: center;">4</td>
+<td>2.6.0</td>
+<td>States filter (KIP-518)</td>
+</tr>
+<tr>
 <td style="text-align: center;">5</td>
 <td>3.5.0</td>
-<td>KIP-848 types filter</td>
+<td>Types filter (KIP-848)</td>
 </tr>
 </tbody>
 </table>
@@ -22775,6 +22871,53 @@ Result =&gt;
 </tr>
 </tbody>
 </table>
+<hr>
+<h2 id="offsetdelete-api-key-47">OffsetDelete API (Key 47)<a class="headerlink" href="#offsetdelete-api-key-47" title="Permanent link">¶</a></h2>
+<h3 id="overview_10">Overview<a class="headerlink" href="#overview_10" title="Permanent link">¶</a></h3>
+<p>The OffsetDelete API deletes committed offsets for a group and set of partitions.</p>
+<h3 id="version-history_10">Version History<a class="headerlink" href="#version-history_10" title="Permanent link">¶</a></h3>
+<table>
+<thead>
+<tr>
+<th style="text-align: center;">Version</th>
+<th>Kafka</th>
+<th>Key Changes</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: center;">0</td>
+<td>0.11.0</td>
+<td>Initial version</td>
+</tr>
+</tbody>
+</table>
+<h3 id="request-schema_10">Request Schema<a class="headerlink" href="#request-schema_10" title="Permanent link">¶</a></h3>
+<div class="highlight"><pre><span></span><code>OffsetDeleteRequest =&gt;
+    group_id: STRING
+    topics: [Topic]
+
+Topic =&gt;
+    name: STRING
+    partitions: [Partition]
+
+Partition =&gt;
+    partition_index: INT32
+</code></pre></div>
+<h3 id="response-schema_10">Response Schema<a class="headerlink" href="#response-schema_10" title="Permanent link">¶</a></h3>
+<div class="highlight"><pre><span></span><code>OffsetDeleteResponse =&gt;
+    error_code: INT16
+    throttle_time_ms: INT32
+    topics: [Topic]
+
+Topic =&gt;
+    name: STRING
+    partitions: [Partition]
+
+Partition =&gt;
+    partition_index: INT32
+    error_code: INT16
+</code></pre></div>
 <hr>
 <h2 id="consumer-group-protocol-summary">Consumer Group Protocol Summary<a class="headerlink" href="#consumer-group-protocol-summary" title="Permanent link">¶</a></h2>
 <h3 id="complete-flow">Complete Flow<a class="headerlink" href="#complete-flow" title="Permanent link">¶</a></h3>

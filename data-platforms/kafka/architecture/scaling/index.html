@@ -20495,9 +20495,9 @@ data-et-multi-view="{&quot;schema&quot;:{&quot;content&quot;:{&quot;desktop&quot
 </tr>
 <tr>
 <td>Add partitions</td>
-<td style="text-align: center;">✅</td>
+<td style="text-align: center;">❌</td>
 <td style="text-align: center;">None</td>
-<td>Immediate</td>
+<td>Immediate after admin request</td>
 </tr>
 <tr>
 <td>Add consumers</td>
@@ -20556,7 +20556,7 @@ data-et-multi-view="{&quot;schema&quot;:{&quot;content&quot;:{&quot;desktop&quot
 <thead>
 <tr>
 <th>Factor</th>
-<th>Guideline</th>
+<th>Guideline (Repository Guidance)</th>
 </tr>
 </thead>
 <tbody>
@@ -20595,7 +20595,8 @@ data-et-multi-view="{&quot;schema&quot;:{&quot;content&quot;:{&quot;desktop&quot
 kafka-server-start.sh<span class="w"> </span>config/server.properties
 
 <span class="c1"># Step 2: Verify registration</span>
-kafka-broker-api-versions.sh<span class="w"> </span>--bootstrap-server<span class="w"> </span>kafka:9092<span class="w"> </span><span class="p">|</span><span class="w"> </span>grep<span class="w"> </span><span class="s2">"id:4"</span>
+kafka-broker-api-versions.sh<span class="w"> </span>--bootstrap-server<span class="w"> </span>kafka:9092
+kafka-topics.sh<span class="w"> </span>--bootstrap-server<span class="w"> </span>kafka:9092<span class="w"> </span>--describe<span class="w"> </span><span class="p">|</span><span class="w"> </span>rg<span class="w"> </span><span class="s2">"Replicas:.*\\b4\\b"</span>
 
 <span class="c1"># Step 3: Generate reassignment plan</span>
 cat<span class="w"> </span>&gt;<span class="w"> </span>topics.json<span class="w"> </span><span class="s">&lt;&lt; 'EOF'</span>
@@ -20639,7 +20640,7 @@ kafka-reassign-partitions.sh<span class="w"> </span>--bootstrap-server<span clas
 <span class="w">  </span>--verify
 
 <span class="c1"># Step 4: Verify no partitions on broker 4</span>
-kafka-topics.sh<span class="w"> </span>--bootstrap-server<span class="w"> </span>kafka:9092<span class="w"> </span>--describe<span class="w"> </span><span class="p">|</span><span class="w"> </span>grep<span class="w"> </span><span class="s2">"Broker: 4"</span>
+kafka-topics.sh<span class="w"> </span>--bootstrap-server<span class="w"> </span>kafka:9092<span class="w"> </span>--describe<span class="w"> </span><span class="p">|</span><span class="w"> </span>rg<span class="w"> </span><span class="s2">"Replicas:.*\\b4\\b"</span>
 
 <span class="c1"># Step 5: Stop broker</span>
 kafka-server-stop.sh
@@ -20657,7 +20658,7 @@ kafka-server-stop.sh
 <thead>
 <tr>
 <th>Metric</th>
-<th style="text-align: center;">Threshold</th>
+<th style="text-align: center;">Threshold (Repository Guidance)</th>
 <th>Action</th>
 </tr>
 </thead>

@@ -20349,6 +20349,8 @@ data-et-multi-view="{&quot;schema&quot;:{&quot;content&quot;:{&quot;desktop&quot
 │   ├── 00000000000000000000.log      # Segment file
 │   ├── 00000000000000000000.index    # Offset index
 │   ├── 00000000000000000000.timeindex # Timestamp index
+│   ├── 00000000000000000000.txnindex  # Transaction index
+│   ├── 00000000000000000000.snapshot  # Producer state
 │   ├── 00000000000000001000.log
 │   ├── 00000000000000001000.index
 │   ├── 00000000000000001000.timeindex
@@ -20414,7 +20416,7 @@ data-et-multi-view="{&quot;schema&quot;:{&quot;content&quot;:{&quot;desktop&quot
 </tr>
 <tr>
 <td>Time threshold</td>
-<td><code>log.roll.ms</code> / <code>log.roll.hours</code></td>
+<td><code>log.roll.ms</code> / <code>log.roll.hours</code> (broker defaults for <code>segment.ms</code>)</td>
 </tr>
 <tr>
 <td>Index full</td>
@@ -20481,11 +20483,13 @@ kafka-consumer-groups.sh<span class="w"> </span>--bootstrap-server<span class="w
 <h2 id="retention">Retention<a class="headerlink" href="#retention" title="Permanent link">¶</a></h2>
 <h3 id="time-based-retention">Time-Based Retention<a class="headerlink" href="#time-based-retention" title="Permanent link">¶</a></h3>
 <p>Delete segments older than retention period.</p>
-<div class="highlight"><pre><span></span><code><span class="na">log.retention.hours</span><span class="o">=</span><span class="s">168           # 7 days (default)</span>
-<span class="na">log.retention.minutes</span><span class="o">=</span><span class="s">10080       # Alternative</span>
-<span class="na">log.retention.ms</span><span class="o">=</span><span class="s">604800000        # Most precise</span>
+<div class="highlight"><pre><span></span><code><span class="na">log.retention.ms</span><span class="o">=</span><span class="s">604800000        # 7 days (default)</span>
 <span class="na">log.retention.check.interval.ms</span><span class="o">=</span><span class="s">300000  # Check every 5 min</span>
 </code></pre></div>
+<div class="admonition note">
+<p class="admonition-title">Retention aliases</p>
+<p><code>log.retention.hours</code> and <code>log.retention.minutes</code> are legacy aliases for <code>log.retention.ms</code>.</p>
+</div>
 <h3 id="size-based-retention">Size-Based Retention<a class="headerlink" href="#size-based-retention" title="Permanent link">¶</a></h3>
 <p>Delete oldest segments when partition exceeds size limit.</p>
 <div class="highlight"><pre><span></span><code><span class="na">log.retention.bytes</span><span class="o">=</span><span class="s">107374182400  # 100GB per partition</span>
@@ -20503,7 +20507,7 @@ kafka-consumer-groups.sh<span class="w"> </span>--bootstrap-server<span class="w
 <span class="c1"># Or both delete and compact</span>
 <span class="na">log.cleanup.policy</span><span class="o">=</span><span class="s">compact,delete</span>
 
-<span class="c1"># Compaction settings</span>
+<span class="c1"># Broker compaction defaults</span>
 <span class="na">log.cleaner.enable</span><span class="o">=</span><span class="s">true</span>
 <span class="na">log.cleaner.threads</span><span class="o">=</span><span class="s">1</span>
 <span class="na">log.cleaner.min.cleanable.ratio</span><span class="o">=</span><span class="s">0.5</span>
@@ -20513,6 +20517,9 @@ kafka-consumer-groups.sh<span class="w"> </span>--bootstrap-server<span class="w
 <span class="c1"># Segment eligibility</span>
 <span class="na">log.segment.bytes</span><span class="o">=</span><span class="s">1073741824</span>
 <span class="na">min.cleanable.dirty.ratio</span><span class="o">=</span><span class="s">0.5</span>
+
+<span class="c1">!!! note "Scope"</span>
+<span class="w">    </span><span class="na">`log.cleaner.*`</span><span class="w"> </span><span class="s">settings are broker defaults. `min.cleanable.dirty.ratio` is a topic-level override.</span>
 </code></pre></div>
 <h3 id="tombstones">Tombstones<a class="headerlink" href="#tombstones" title="Permanent link">¶</a></h3>
 <p>Delete a key by producing a record with null value (tombstone).</p>
@@ -20530,7 +20537,7 @@ kafka-consumer-groups.sh<span class="w"> </span>--bootstrap-server<span class="w
 <table>
 <thead>
 <tr>
-<th>Recommendation</th>
+<th>Recommendation (Repository Guidance)</th>
 <th>Rationale</th>
 </tr>
 </thead>

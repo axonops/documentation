@@ -20711,47 +20711,32 @@ data-et-multi-view="{&quot;schema&quot;:{&quot;content&quot;:{&quot;desktop&quot
 <tr>
 <td style="text-align: center;">0</td>
 <td>0.8.0</td>
-<td>Initial version</td>
-</tr>
-<tr>
-<td style="text-align: center;">1</td>
-<td>0.9.0</td>
-<td>Throttle time in response</td>
-</tr>
-<tr>
-<td style="text-align: center;">2</td>
-<td>0.10.0</td>
-<td>Timestamp in response</td>
+<td>Initial version (removed in 4.0)</td>
 </tr>
 <tr>
 <td style="text-align: center;">3</td>
 <td>0.11.0</td>
-<td>Transactional support</td>
+<td>Transactional ID + message format v2 (4.0 baseline)</td>
 </tr>
 <tr>
 <td style="text-align: center;">4</td>
-<td>1.0.0</td>
-<td>KIP-112</td>
+<td>0.11.0</td>
+<td>KAFKA_STORAGE_ERROR</td>
 </tr>
 <tr>
 <td style="text-align: center;">5</td>
 <td>1.0.0</td>
-<td>KIP-219 log_start_offset</td>
-</tr>
-<tr>
-<td style="text-align: center;">6</td>
-<td>2.0.0</td>
-<td>KIP-279 error improvements</td>
+<td>Log start offset in response</td>
 </tr>
 <tr>
 <td style="text-align: center;">7</td>
 <td>2.1.0</td>
-<td>KIP-227 leader epoch</td>
+<td>Zstandard compression (KIP-110)</td>
 </tr>
 <tr>
 <td style="text-align: center;">8</td>
 <td>2.3.0</td>
-<td>KIP-467 record errors</td>
+<td>Record errors + error message (KIP-467)</td>
 </tr>
 <tr>
 <td style="text-align: center;">9</td>
@@ -20760,13 +20745,18 @@ data-et-multi-view="{&quot;schema&quot;:{&quot;content&quot;:{&quot;desktop&quot
 </tr>
 <tr>
 <td style="text-align: center;">10</td>
-<td>3.0.0</td>
-<td>KIP-700 current_leader</td>
+<td>3.7.0</td>
+<td>Current leader + node endpoints (KIP-951)</td>
 </tr>
 <tr>
 <td style="text-align: center;">11</td>
-<td>3.7.0</td>
-<td>KIP-951 async produce</td>
+<td>3.8.0</td>
+<td>TRANSACTION_ABORTABLE (KIP-890)</td>
+</tr>
+<tr>
+<td style="text-align: center;">13</td>
+<td>4.0.0</td>
+<td>Topic IDs (KIP-516)</td>
 </tr>
 </tbody>
 </table>
@@ -20779,12 +20769,14 @@ data-et-multi-view="{&quot;schema&quot;:{&quot;content&quot;:{&quot;desktop&quot
 
 TopicData =&gt;
     name: STRING
+    topic_id: UUID
     partition_data: [PartitionData]
 
 PartitionData =&gt;
     index: INT32
     records: RECORDS
 </code></pre></div>
+<p>Topic names are used through v12; v13+ uses <code>topic_id</code> instead.</p>
 <table>
 <thead>
 <tr>
@@ -20830,9 +20822,11 @@ PartitionData =&gt;
 <div class="highlight"><pre><span></span><code>ProduceResponse =&gt;
     responses: [TopicResponse]
     throttle_time_ms: INT32
+    node_endpoints: [NodeEndpoint]
 
 TopicResponse =&gt;
     name: STRING
+    topic_id: UUID
     partition_responses: [PartitionResponse]
 
 PartitionResponse =&gt;
@@ -20843,6 +20837,13 @@ PartitionResponse =&gt;
     log_start_offset: INT64
     record_errors: [RecordError]
     error_message: NULLABLE_STRING
+    current_leader: LeaderIdAndEpoch
+
+NodeEndpoint =&gt;
+    node_id: INT32
+    host: STRING
+    port: INT32
+    rack: NULLABLE_STRING
 </code></pre></div>
 <table>
 <thead>
@@ -20882,6 +20883,16 @@ PartitionResponse =&gt;
 <td><code>throttle_time_ms</code></td>
 <td>INT32</td>
 <td>Quota throttle time</td>
+</tr>
+<tr>
+<td><code>current_leader</code></td>
+<td>STRUCT</td>
+<td>Suggested leader for future requests (v10+)</td>
+</tr>
+<tr>
+<td><code>node_endpoints</code></td>
+<td>ARRAY</td>
+<td>Endpoint list for leaders in response (v10+)</td>
 </tr>
 </tbody>
 </table>
@@ -21014,37 +21025,17 @@ PartitionResponse =&gt;
 <tr>
 <td style="text-align: center;">0</td>
 <td>0.8.0</td>
-<td>Initial version</td>
-</tr>
-<tr>
-<td style="text-align: center;">1</td>
-<td>0.9.0</td>
-<td>Throttle time</td>
-</tr>
-<tr>
-<td style="text-align: center;">2</td>
-<td>0.10.0</td>
-<td>Small improvements</td>
-</tr>
-<tr>
-<td style="text-align: center;">3</td>
-<td>0.10.1</td>
-<td>Max bytes limit</td>
+<td>Initial version (removed in 4.0)</td>
 </tr>
 <tr>
 <td style="text-align: center;">4</td>
 <td>0.11.0</td>
-<td>Isolation level</td>
+<td>Isolation level (4.0 baseline)</td>
 </tr>
 <tr>
 <td style="text-align: center;">5</td>
 <td>1.0.0</td>
-<td>Log truncation detection</td>
-</tr>
-<tr>
-<td style="text-align: center;">6</td>
-<td>1.1.0</td>
-<td>KIP-226</td>
+<td>Log start offset</td>
 </tr>
 <tr>
 <td style="text-align: center;">7</td>
@@ -21052,19 +21043,14 @@ PartitionResponse =&gt;
 <td>Fetch sessions</td>
 </tr>
 <tr>
-<td style="text-align: center;">8</td>
-<td>2.0.0</td>
-<td>KIP-227 leader epoch</td>
-</tr>
-<tr>
 <td style="text-align: center;">9</td>
 <td>2.1.0</td>
-<td>Current leader</td>
+<td>Current leader epoch (KIP-320)</td>
 </tr>
 <tr>
 <td style="text-align: center;">10</td>
 <td>2.1.0</td>
-<td>KIP-320</td>
+<td>Zstandard support (KIP-110)</td>
 </tr>
 <tr>
 <td style="text-align: center;">11</td>
@@ -21074,33 +21060,45 @@ PartitionResponse =&gt;
 <tr>
 <td style="text-align: center;">12</td>
 <td>2.4.0</td>
-<td>Flexible versions</td>
+<td>Flexible versions + last fetched epoch</td>
 </tr>
 <tr>
 <td style="text-align: center;">13</td>
-<td>2.7.0</td>
-<td>Topic IDs</td>
+<td>2.8.0</td>
+<td>Topic IDs (KIP-516)</td>
 </tr>
 <tr>
 <td style="text-align: center;">14</td>
-<td>3.1.0</td>
-<td>KIP-516</td>
+<td>3.4.0</td>
+<td>Tiered storage offset moved (KIP-405)</td>
 </tr>
 <tr>
 <td style="text-align: center;">15</td>
 <td>3.5.0</td>
-<td>KIP-632</td>
+<td>Replica state (KIP-903)</td>
 </tr>
 <tr>
 <td style="text-align: center;">16</td>
-<td>3.5.0</td>
-<td>KIP-903</td>
+<td>3.7.0</td>
+<td>Node endpoints (KIP-951)</td>
+</tr>
+<tr>
+<td style="text-align: center;">17</td>
+<td>3.8.0</td>
+<td>Replica directory ID (KIP-853)</td>
+</tr>
+<tr>
+<td style="text-align: center;">18</td>
+<td>4.1.0</td>
+<td>High-watermark in request (KIP-1166)</td>
 </tr>
 </tbody>
 </table>
 <h3 id="request-schema_1">Request Schema<a class="headerlink" href="#request-schema_1" title="Permanent link">¶</a></h3>
 <div class="highlight"><pre><span></span><code>FetchRequest =&gt;
+    cluster_id: NULLABLE_STRING
     replica_id: INT32
+    replica_state: ReplicaState
     max_wait_ms: INT32
     min_bytes: INT32
     max_bytes: INT32
@@ -21113,6 +21111,7 @@ PartitionResponse =&gt;
 
 TopicRequest =&gt;
     topic: STRING
+    topic_id: UUID
     partitions: [PartitionRequest]
 
 PartitionRequest =&gt;
@@ -21122,7 +21121,14 @@ PartitionRequest =&gt;
     last_fetched_epoch: INT32
     log_start_offset: INT64
     partition_max_bytes: INT32
+    replica_directory_id: UUID
+    high_watermark: INT64
+
+ReplicaState =&gt;
+    replica_id: INT32
+    replica_epoch: INT64
 </code></pre></div>
+<p>Topic names are used through v12; v13+ uses <code>topic_id</code> instead.</p>
 <table>
 <thead>
 <tr>
@@ -21133,9 +21139,19 @@ PartitionRequest =&gt;
 </thead>
 <tbody>
 <tr>
+<td><code>cluster_id</code></td>
+<td>NULLABLE_STRING</td>
+<td>Cluster ID for validation (v12+)</td>
+</tr>
+<tr>
 <td><code>replica_id</code></td>
 <td>INT32</td>
-<td>Replica ID (-1 for consumers)</td>
+<td>Replica ID (-1 for consumers, v0-14)</td>
+</tr>
+<tr>
+<td><code>replica_state</code></td>
+<td>STRUCT</td>
+<td>Replica ID + epoch (v15+)</td>
 </tr>
 <tr>
 <td><code>max_wait_ms</code></td>
@@ -21168,9 +21184,24 @@ PartitionRequest =&gt;
 <td>Offset to fetch from</td>
 </tr>
 <tr>
+<td><code>last_fetched_epoch</code></td>
+<td>INT32</td>
+<td>Last fetched epoch for fencing (v12+)</td>
+</tr>
+<tr>
 <td><code>partition_max_bytes</code></td>
 <td>INT32</td>
 <td>Maximum bytes per partition</td>
+</tr>
+<tr>
+<td><code>forgotten_topics_data</code></td>
+<td>ARRAY</td>
+<td>Partitions to remove from session (v7+)</td>
+</tr>
+<tr>
+<td><code>rack_id</code></td>
+<td>STRING</td>
+<td>Consumer rack ID (v11+)</td>
 </tr>
 </tbody>
 </table>
@@ -21180,9 +21211,11 @@ PartitionRequest =&gt;
     error_code: INT16
     session_id: INT32
     responses: [TopicResponse]
+    node_endpoints: [NodeEndpoint]
 
 TopicResponse =&gt;
     topic: STRING
+    topic_id: UUID
     partitions: [PartitionResponse]
 
 PartitionResponse =&gt;
@@ -21191,9 +21224,20 @@ PartitionResponse =&gt;
     high_watermark: INT64
     last_stable_offset: INT64
     log_start_offset: INT64
+    diverging_epoch: EpochEndOffset
+    current_leader: LeaderIdAndEpoch
+    snapshot_id: SnapshotId
     aborted_transactions: [AbortedTransaction]
     preferred_read_replica: INT32
     records: RECORDS
+
+EpochEndOffset =&gt;
+    epoch: INT32
+    end_offset: INT64
+
+SnapshotId =&gt;
+    end_offset: INT64
+    epoch: INT32
 </code></pre></div>
 <table>
 <thead>
@@ -21343,22 +21387,17 @@ PartitionResponse =&gt;
 <tr>
 <td style="text-align: center;">0</td>
 <td>0.8.0</td>
-<td>Initial version</td>
+<td>Initial version (removed in 4.0)</td>
 </tr>
 <tr>
 <td style="text-align: center;">1</td>
 <td>0.10.1</td>
-<td>Timestamp-based lookup</td>
+<td>Single-offset response (4.0 baseline)</td>
 </tr>
 <tr>
 <td style="text-align: center;">2</td>
 <td>0.11.0</td>
 <td>Isolation level</td>
-</tr>
-<tr>
-<td style="text-align: center;">3</td>
-<td>2.0.0</td>
-<td>KIP-279</td>
 </tr>
 <tr>
 <td style="text-align: center;">4</td>
@@ -21368,7 +21407,7 @@ PartitionResponse =&gt;
 <tr>
 <td style="text-align: center;">5</td>
 <td>2.2.0</td>
-<td>KIP-320</td>
+<td>OFFSET_NOT_AVAILABLE</td>
 </tr>
 <tr>
 <td style="text-align: center;">6</td>
@@ -21378,12 +21417,27 @@ PartitionResponse =&gt;
 <tr>
 <td style="text-align: center;">7</td>
 <td>2.8.0</td>
-<td>KIP-734</td>
+<td>MAX_TIMESTAMP (KIP-734)</td>
 </tr>
 <tr>
 <td style="text-align: center;">8</td>
 <td>3.4.0</td>
-<td>KIP-405</td>
+<td>EARLIEST_LOCAL (KIP-405)</td>
+</tr>
+<tr>
+<td style="text-align: center;">9</td>
+<td>3.6.0</td>
+<td>LATEST_TIERED (KIP-1005)</td>
+</tr>
+<tr>
+<td style="text-align: center;">10</td>
+<td>3.8.0</td>
+<td>Remote list offsets (KIP-1075)</td>
+</tr>
+<tr>
+<td style="text-align: center;">11</td>
+<td>4.0.0</td>
+<td>EARLIEST_PENDING_UPLOAD (KIP-1023)</td>
 </tr>
 </tbody>
 </table>
@@ -21392,6 +21446,7 @@ PartitionResponse =&gt;
     replica_id: INT32
     isolation_level: INT8
     topics: [TopicRequest]
+    timeout_ms: INT32
 
 TopicRequest =&gt;
     name: STRING
@@ -21426,6 +21481,11 @@ PartitionRequest =&gt;
 <td>INT64</td>
 <td>Target timestamp or special value</td>
 </tr>
+<tr>
+<td><code>timeout_ms</code></td>
+<td>INT32</td>
+<td>Timeout for remote tiered reads (v10+)</td>
+</tr>
 </tbody>
 </table>
 <h3 id="special-timestamp-values">Special Timestamp Values<a class="headerlink" href="#special-timestamp-values" title="Permanent link">¶</a></h3>
@@ -21452,6 +21512,21 @@ PartitionRequest =&gt;
 <td style="text-align: right;">-3</td>
 <td>MAX_TIMESTAMP</td>
 <td>Offset of record with max timestamp (v7+)</td>
+</tr>
+<tr>
+<td style="text-align: right;">-4</td>
+<td>EARLIEST_LOCAL</td>
+<td>Earliest local log offset (v8+)</td>
+</tr>
+<tr>
+<td style="text-align: right;">-5</td>
+<td>LATEST_TIERED</td>
+<td>Latest tiered storage offset (v9+)</td>
+</tr>
+<tr>
+<td style="text-align: right;">-6</td>
+<td>EARLIEST_PENDING_UPLOAD</td>
+<td>Earliest pending upload offset (v11+)</td>
 </tr>
 <tr>
 <td style="text-align: right;">≥0</td>
@@ -21575,13 +21650,13 @@ PartitionResponse =&gt;
 </tr>
 <tr>
 <td style="text-align: center;">6</td>
-<td>1.0.0</td>
-<td>KIP-226</td>
+<td>1.1.0</td>
+<td>Response before throttling</td>
 </tr>
 <tr>
 <td style="text-align: center;">7</td>
 <td>2.0.0</td>
-<td>KIP-226 leader epoch</td>
+<td>Leader epoch</td>
 </tr>
 <tr>
 <td style="text-align: center;">8</td>
@@ -21596,17 +21671,22 @@ PartitionResponse =&gt;
 <tr>
 <td style="text-align: center;">10</td>
 <td>2.8.0</td>
-<td>KIP-516 topic IDs</td>
+<td>Topic ID field (not implemented)</td>
 </tr>
 <tr>
 <td style="text-align: center;">11</td>
 <td>3.0.0</td>
-<td>KIP-516 improvements</td>
+<td>Cluster authorized ops deprecated</td>
 </tr>
 <tr>
 <td style="text-align: center;">12</td>
 <td>3.4.0</td>
-<td>KIP-866</td>
+<td>Topic ID supported</td>
+</tr>
+<tr>
+<td style="text-align: center;">13</td>
+<td>4.0.0</td>
+<td>Top-level error code</td>
 </tr>
 </tbody>
 </table>
@@ -21643,7 +21723,7 @@ TopicRequest =&gt;
 <tr>
 <td><code>include_cluster_authorized_operations</code></td>
 <td>BOOLEAN</td>
-<td>Include cluster ACL info</td>
+<td>Include cluster ACL info (v8-10)</td>
 </tr>
 <tr>
 <td><code>include_topic_authorized_operations</code></td>
@@ -21652,6 +21732,7 @@ TopicRequest =&gt;
 </tr>
 </tbody>
 </table>
+<p>Topic IDs are supported in v12+; v10-11 include the field but brokers do not implement it.</p>
 <h3 id="response-schema_3">Response Schema<a class="headerlink" href="#response-schema_3" title="Permanent link">¶</a></h3>
 <div class="highlight"><pre><span></span><code>MetadataResponse =&gt;
     throttle_time_ms: INT32
@@ -21660,6 +21741,7 @@ TopicRequest =&gt;
     controller_id: INT32
     topics: [TopicMetadata]
     cluster_authorized_operations: INT32
+    error_code: INT16
 
 BrokerMetadata =&gt;
     node_id: INT32
@@ -21777,10 +21859,6 @@ PartitionMetadata =&gt;
 <td>Periodic refresh interval</td>
 <td><code>metadata.max.age.ms</code></td>
 </tr>
-<tr>
-<td>Minimum refresh interval</td>
-<td><code>metadata.min.age.ms</code> (internal)</td>
-</tr>
 </tbody>
 </table>
 <hr>
@@ -21810,19 +21888,24 @@ PartitionMetadata =&gt;
 <tr>
 <td style="text-align: center;">2</td>
 <td>2.1.0</td>
-<td>KIP-359</td>
+<td>Response before throttling</td>
 </tr>
 <tr>
 <td style="text-align: center;">3</td>
 <td>2.4.0</td>
 <td>Flexible versions</td>
 </tr>
+<tr>
+<td style="text-align: center;">4</td>
+<td>4.0.0</td>
+<td>SupportedFeatures min version fix</td>
+</tr>
 </tbody>
 </table>
 <h3 id="request-schema_4">Request Schema<a class="headerlink" href="#request-schema_4" title="Permanent link">¶</a></h3>
 <div class="highlight"><pre><span></span><code>ApiVersionsRequest =&gt;
-    client_software_name: COMPACT_STRING
-    client_software_version: COMPACT_STRING
+    client_software_name: STRING
+    client_software_version: STRING
 </code></pre></div>
 <table>
 <thead>
@@ -21835,12 +21918,12 @@ PartitionMetadata =&gt;
 <tbody>
 <tr>
 <td><code>client_software_name</code></td>
-<td>COMPACT_STRING</td>
+<td>STRING</td>
 <td>Client library name (v3+)</td>
 </tr>
 <tr>
 <td><code>client_software_version</code></td>
-<td>COMPACT_STRING</td>
+<td>STRING</td>
 <td>Client library version (v3+)</td>
 </tr>
 </tbody>
@@ -22236,7 +22319,7 @@ ApiVersion =&gt;
 <td style="text-align: center;">47</td>
 <td>OffsetDelete</td>
 <td>Consumer</td>
-<td style="text-align: center;">2.4.0</td>
+<td style="text-align: center;">0.11.0</td>
 </tr>
 <tr>
 <td style="text-align: center;">48</td>
@@ -22396,7 +22479,7 @@ ApiVersion =&gt;
 </tr>
 <tr>
 <td style="text-align: center;">74</td>
-<td>ListClientMetricsResources</td>
+<td>ListConfigResources</td>
 <td>Telemetry</td>
 <td style="text-align: center;">3.6.0</td>
 </tr>
@@ -22405,6 +22488,108 @@ ApiVersion =&gt;
 <td>DescribeTopicPartitions</td>
 <td>Admin</td>
 <td style="text-align: center;">3.7.0</td>
+</tr>
+<tr>
+<td style="text-align: center;">76</td>
+<td>ShareGroupHeartbeat</td>
+<td>Share</td>
+<td style="text-align: center;">4.0.0</td>
+</tr>
+<tr>
+<td style="text-align: center;">77</td>
+<td>ShareGroupDescribe</td>
+<td>Share</td>
+<td style="text-align: center;">4.0.0</td>
+</tr>
+<tr>
+<td style="text-align: center;">78</td>
+<td>ShareFetch</td>
+<td>Share</td>
+<td style="text-align: center;">4.0.0</td>
+</tr>
+<tr>
+<td style="text-align: center;">79</td>
+<td>ShareAcknowledge</td>
+<td>Share</td>
+<td style="text-align: center;">4.0.0</td>
+</tr>
+<tr>
+<td style="text-align: center;">80</td>
+<td>AddRaftVoter</td>
+<td>KRaft</td>
+<td style="text-align: center;">4.0.0</td>
+</tr>
+<tr>
+<td style="text-align: center;">81</td>
+<td>RemoveRaftVoter</td>
+<td>KRaft</td>
+<td style="text-align: center;">4.0.0</td>
+</tr>
+<tr>
+<td style="text-align: center;">82</td>
+<td>UpdateRaftVoter</td>
+<td>KRaft</td>
+<td style="text-align: center;">4.0.0</td>
+</tr>
+<tr>
+<td style="text-align: center;">83</td>
+<td>InitializeShareGroupState</td>
+<td>Share</td>
+<td style="text-align: center;">4.0.0</td>
+</tr>
+<tr>
+<td style="text-align: center;">84</td>
+<td>ReadShareGroupState</td>
+<td>Share</td>
+<td style="text-align: center;">4.0.0</td>
+</tr>
+<tr>
+<td style="text-align: center;">85</td>
+<td>WriteShareGroupState</td>
+<td>Share</td>
+<td style="text-align: center;">4.0.0</td>
+</tr>
+<tr>
+<td style="text-align: center;">86</td>
+<td>DeleteShareGroupState</td>
+<td>Share</td>
+<td style="text-align: center;">4.0.0</td>
+</tr>
+<tr>
+<td style="text-align: center;">87</td>
+<td>ReadShareGroupStateSummary</td>
+<td>Share</td>
+<td style="text-align: center;">4.0.0</td>
+</tr>
+<tr>
+<td style="text-align: center;">88</td>
+<td>StreamsGroupHeartbeat</td>
+<td>Streams</td>
+<td style="text-align: center;">4.0.0</td>
+</tr>
+<tr>
+<td style="text-align: center;">89</td>
+<td>StreamsGroupDescribe</td>
+<td>Streams</td>
+<td style="text-align: center;">4.0.0</td>
+</tr>
+<tr>
+<td style="text-align: center;">90</td>
+<td>DescribeShareGroupOffsets</td>
+<td>Share</td>
+<td style="text-align: center;">4.0.0</td>
+</tr>
+<tr>
+<td style="text-align: center;">91</td>
+<td>AlterShareGroupOffsets</td>
+<td>Share</td>
+<td style="text-align: center;">4.0.0</td>
+</tr>
+<tr>
+<td style="text-align: center;">92</td>
+<td>DeleteShareGroupOffsets</td>
+<td>Share</td>
+<td style="text-align: center;">4.0.0</td>
 </tr>
 </tbody>
 </table>

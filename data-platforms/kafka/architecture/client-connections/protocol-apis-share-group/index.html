@@ -20564,7 +20564,7 @@ data-et-multi-view="{&quot;schema&quot;:{&quot;content&quot;:{&quot;desktop&quot
 
 
 <div><h1 id="kafka-share-group-protocol-apis">Kafka Share Group Protocol APIs<a class="headerlink" href="#kafka-share-group-protocol-apis" title="Permanent link">¶</a></h1>
-<p>This document specifies the Kafka protocol APIs used for Share Groups, a new consumer model introduced in KIP-932 (Kafka 4.0+). Share Groups provide queue-like semantics where messages are distributed among consumers without partition assignment.</p>
+<p>This document specifies the Kafka protocol APIs used for Share Groups, a new consumer model introduced in KIP-932 (Kafka 4.0+). Share Groups provide queue-like semantics where messages are distributed among consumers without client-side partition assignment.</p>
 <hr>
 <h2 id="share-group-overview">Share Group Overview<a class="headerlink" href="#share-group-overview" title="Permanent link">¶</a></h2>
 <p>Share Groups differ fundamentally from traditional Consumer Groups:</p>
@@ -20619,7 +20619,7 @@ data-et-multi-view="{&quot;schema&quot;:{&quot;content&quot;:{&quot;desktop&quot
 <tr>
 <td style="text-align: center;">76</td>
 <td>ShareGroupHeartbeat</td>
-<td>Maintain membership and get assignments</td>
+<td>Maintain membership and receive assignments</td>
 </tr>
 <tr>
 <td style="text-align: center;">77</td>
@@ -20723,16 +20723,8 @@ data-et-multi-view="{&quot;schema&quot;:{&quot;content&quot;:{&quot;desktop&quot
     group_id: STRING
     member_id: STRING
     member_epoch: INT32
-    instance_id: NULLABLE_STRING
     rack_id: NULLABLE_STRING
-    rebalance_timeout_ms: INT32
     subscribed_topic_names: [STRING]
-    server_assignor: NULLABLE_STRING
-    topic_partitions: [TopicPartition]
-
-TopicPartition =&gt;
-    topic_id: UUID
-    partitions: [INT32]
 </code></pre></div>
 <table>
 <thead>
@@ -20751,22 +20743,22 @@ TopicPartition =&gt;
 <tr>
 <td><code>member_id</code></td>
 <td>STRING</td>
-<td>Member ID (empty on first join)</td>
+<td>Member ID (client-generated)</td>
 </tr>
 <tr>
 <td><code>member_epoch</code></td>
 <td>INT32</td>
-<td>Member epoch for fencing</td>
+<td>Member epoch (0=join, -1=leave)</td>
+</tr>
+<tr>
+<td><code>rack_id</code></td>
+<td>NULLABLE_STRING</td>
+<td>Rack ID (null if unchanged)</td>
 </tr>
 <tr>
 <td><code>subscribed_topic_names</code></td>
 <td>ARRAY</td>
-<td>Topics to subscribe to</td>
-</tr>
-<tr>
-<td><code>topic_partitions</code></td>
-<td>ARRAY</td>
-<td>Current partition assignments</td>
+<td>Subscribed topic names (null if unchanged)</td>
 </tr>
 </tbody>
 </table>
@@ -20808,6 +20800,10 @@ TopicPartition =&gt;
 <td><strong>Heartbeat interval</strong></td>
 <td>Server specifies next heartbeat timing</td>
 </tr>
+<tr>
+<td><strong>Versioning</strong></td>
+<td>v0 early access removed in 4.1; v1 stable</td>
+</tr>
 </tbody>
 </table>
 <hr>
@@ -20843,6 +20839,14 @@ Member =&gt;
     client_host: STRING
     subscribed_topic_names: [STRING]
     assignment: Assignment
+
+Assignment =&gt;
+    topic_partitions: [TopicPartition]
+
+TopicPartition =&gt;
+    topic_id: UUID
+    topic_name: STRING
+    partitions: [INT32]
 </code></pre></div>
 <hr>
 <h2 id="sharefetch-api-key-78">ShareFetch API (Key 78)<a class="headerlink" href="#sharefetch-api-key-78" title="Permanent link">¶</a></h2>
@@ -20856,6 +20860,10 @@ Member =&gt;
     max_wait_ms: INT32
     min_bytes: INT32
     max_bytes: INT32
+    max_records: INT32
+    batch_size: INT32
+    share_acquire_mode: INT8
+    is_renew_ack: BOOLEAN
     topics: [Topic]
     forgotten_topics_data: [ForgottenTopic]
 
@@ -20893,6 +20901,16 @@ AcknowledgementBatch =&gt;
 <td>Session epoch for incremental fetch</td>
 </tr>
 <tr>
+<td><code>share_acquire_mode</code></td>
+<td>INT8</td>
+<td>0=batch-optimized, 1=record-limit (v2+)</td>
+</tr>
+<tr>
+<td><code>is_renew_ack</code></td>
+<td>BOOLEAN</td>
+<td>True if renew acks are present (v2+)</td>
+</tr>
+<tr>
 <td><code>acknowledgement_batches</code></td>
 <td>ARRAY</td>
 <td>Inline acknowledgments (optional)</td>
@@ -20904,6 +20922,7 @@ AcknowledgementBatch =&gt;
     throttle_time_ms: INT32
     error_code: INT16
     error_message: NULLABLE_STRING
+    acquisition_lock_timeout_ms: INT32
     responses: [Response]
     node_endpoints: [NodeEndpoint]
 
@@ -20915,6 +20934,8 @@ Partition =&gt;
     partition_index: INT32
     error_code: INT16
     error_message: NULLABLE_STRING
+    acknowledge_error_code: INT16
+    acknowledge_error_message: NULLABLE_STRING
     current_leader: LeaderIdAndEpoch
     records: RECORDS
     acquired_records: [AcquiredRecords]
@@ -20977,6 +20998,7 @@ AcquiredRecords =&gt;
     group_id: NULLABLE_STRING
     member_id: NULLABLE_STRING
     share_session_epoch: INT32
+    is_renew_ack: BOOLEAN
     topics: [Topic]
 
 Topic =&gt;
@@ -21003,6 +21025,11 @@ AcknowledgementBatch =&gt;
 </thead>
 <tbody>
 <tr>
+<td style="text-align: center;">0</td>
+<td>GAP</td>
+<td>Placeholder for gaps</td>
+</tr>
+<tr>
 <td style="text-align: center;">1</td>
 <td>ACCEPT</td>
 <td>Successfully processed</td>
@@ -21017,6 +21044,11 @@ AcknowledgementBatch =&gt;
 <td>REJECT</td>
 <td>Reject permanently (DLQ)</td>
 </tr>
+<tr>
+<td style="text-align: center;">4</td>
+<td>RENEW</td>
+<td>Renew record lock (v2+)</td>
+</tr>
 </tbody>
 </table>
 <h3 id="response-schema_3">Response Schema<a class="headerlink" href="#response-schema_3" title="Permanent link">¶</a></h3>
@@ -21024,6 +21056,7 @@ AcknowledgementBatch =&gt;
     throttle_time_ms: INT32
     error_code: INT16
     error_message: NULLABLE_STRING
+    acquisition_lock_timeout_ms: INT32
     responses: [Response]
     node_endpoints: [NodeEndpoint]
 
@@ -21035,6 +21068,7 @@ Partition =&gt;
     partition_index: INT32
     error_code: INT16
     error_message: NULLABLE_STRING
+    current_leader: LeaderIdAndEpoch
 </code></pre></div>
 <h3 id="behavioral-contract_2">Behavioral Contract<a class="headerlink" href="#behavioral-contract_2" title="Permanent link">¶</a></h3>
 <table>
@@ -21084,7 +21118,11 @@ Partition =&gt;
 
 Topic =&gt;
     topic_id: UUID
-    partitions: [INT32]
+    partitions: [Partition]
+
+Partition =&gt;
+    partition: INT32
+    leader_epoch: INT32
 </code></pre></div>
 <h3 id="writesharegroupstate-api-key-85">WriteShareGroupState API (Key 85)<a class="headerlink" href="#writesharegroupstate-api-key-85" title="Permanent link">¶</a></h3>
 <p>Writes updated share partition state.</p>
@@ -21101,7 +21139,14 @@ Partition =&gt;
     state_epoch: INT32
     leader_epoch: INT32
     start_offset: INT64
+    delivery_complete_count: INT32
     state_batches: [StateBatch]
+
+StateBatch =&gt;
+    first_offset: INT64
+    last_offset: INT64
+    delivery_state: INT8
+    delivery_count: INT16
 </code></pre></div>
 <h3 id="deletesharegroupstate-api-key-86">DeleteShareGroupState API (Key 86)<a class="headerlink" href="#deletesharegroupstate-api-key-86" title="Permanent link">¶</a></h3>
 <p>Deletes share partition state when cleaning up a share group.</p>
@@ -21121,13 +21166,20 @@ Topic =&gt;
 
 Topic =&gt;
     topic_id: UUID
-    partitions: [INT32]
+    partitions: [Partition]
+
+Partition =&gt;
+    partition: INT32
+    leader_epoch: INT32
 </code></pre></div>
 <hr>
 <h2 id="offset-management-apis">Offset Management APIs<a class="headerlink" href="#offset-management-apis" title="Permanent link">¶</a></h2>
 <h3 id="describesharegroupoffsets-api-key-90">DescribeShareGroupOffsets API (Key 90)<a class="headerlink" href="#describesharegroupoffsets-api-key-90" title="Permanent link">¶</a></h3>
 <p>Describes the current offsets for a share group.</p>
 <div class="highlight"><pre><span></span><code>DescribeShareGroupOffsetsRequest =&gt;
+    groups: [Group]
+
+Group =&gt;
     group_id: STRING
     topics: [Topic]
 
@@ -21157,7 +21209,6 @@ Partition =&gt;
 
 Topic =&gt;
     topic_name: STRING
-    partitions: [INT32]
 </code></pre></div>
 <hr>
 <h2 id="version-compatibility">Version Compatibility<a class="headerlink" href="#version-compatibility" title="Permanent link">¶</a></h2>

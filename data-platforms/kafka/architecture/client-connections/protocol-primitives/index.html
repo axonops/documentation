@@ -20732,7 +20732,7 @@ data-et-multi-view="{&quot;schema&quot;:{&quot;content&quot;:{&quot;desktop&quot
 </table>
 <div class="admonition note">
 <p class="admonition-title">Unsigned Integer Usage</p>
-<p>Unsigned integers are used sparingly in the protocol, primarily for lengths in compact encodings where negative values are invalid.</p>
+<p>Unsigned integers are used sparingly in the protocol. <code>UINT16</code> and <code>UINT32</code> appear only in specific APIs, while <code>UNSIGNED_VARINT</code> is the compact length primitive.</p>
 </div>
 <hr>
 <h2 id="variable-length-integers">Variable-Length Integers<a class="headerlink" href="#variable-length-integers" title="Permanent link">¶</a></h2>
@@ -20999,7 +20999,7 @@ Bits 51-0:  Mantissa (52 bits)
 </code></pre></div>
 <div class="admonition note">
 <p class="admonition-title">NaN Handling</p>
-<p>Implementations should use the canonical NaN representation (<code>7FF8000000000000</code>) when serializing NaN values. When deserializing, any value with exponent bits all set and non-zero mantissa must be interpreted as NaN.</p>
+<p>The Kafka protocol does not mandate a specific NaN payload. When deserializing, any value with exponent bits all set and non-zero mantissa must be interpreted as NaN.</p>
 </div>
 <hr>
 <h2 id="uuid">UUID<a class="headerlink" href="#uuid" title="Permanent link">¶</a></h2>
@@ -21021,8 +21021,8 @@ Bits 51-0:  Mantissa (52 bits)
 <td>Big-endian (most significant bits first)</td>
 </tr>
 <tr>
-<td><strong>Null representation</strong></td>
-<td>16 zero bytes</td>
+<td><strong>Zero UUID</strong></td>
+<td>16 zero bytes (sentinel in some APIs)</td>
 </tr>
 </tbody>
 </table>
@@ -21030,13 +21030,13 @@ Bits 51-0:  Mantissa (52 bits)
 <div class="highlight"><pre><span></span><code>Bytes 0-7:  Most significant 64 bits (time_low, time_mid, time_hi_and_version)
 Bytes 8-15: Least significant 64 bits (clock_seq, node)
 </code></pre></div>
-<p><strong>Null UUID:</strong></p>
-<p>A null UUID is represented as 16 consecutive zero bytes:</p>
+<p><strong>Zero UUID:</strong></p>
+<p>Some APIs use an all-zero UUID as a sentinel value:</p>
 <div class="highlight"><pre><span></span><code>00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
 </code></pre></div>
 <div class="admonition note">
 <p class="admonition-title">UUID Version</p>
-<p>The Kafka protocol does not mandate a specific UUID version. Implementations commonly use version 4 (random) UUIDs.</p>
+<p>The Kafka protocol does not mandate a specific UUID version.</p>
 </div>
 <hr>
 <h2 id="boolean">Boolean<a class="headerlink" href="#boolean" title="Permanent link">¶</a></h2>
@@ -21417,6 +21417,10 @@ Bytes 8-15: Least significant 64 bits (clock_seq, node)
 <p><strong>Wire Format:</strong></p>
 <div class="highlight"><pre><span></span><code>COMPACT_BYTES =&gt; length:UNSIGNED_VARINT data:BYTE[length-1]
 </code></pre></div>
+<div class="admonition warning">
+<p class="admonition-title">Null Constraint</p>
+<p>A length value of 0 must be rejected as invalid for non-nullable COMPACT_BYTES.</p>
+</div>
 <h3 id="compact_nullable_bytes">COMPACT_NULLABLE_BYTES<a class="headerlink" href="#compact_nullable_bytes" title="Permanent link">¶</a></h3>
 <p>A variable-length prefixed byte array using compact encoding that may be null.</p>
 <table>

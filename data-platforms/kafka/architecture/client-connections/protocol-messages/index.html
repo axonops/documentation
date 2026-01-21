@@ -20724,13 +20724,13 @@ data-et-multi-view="{&quot;schema&quot;:{&quot;content&quot;:{&quot;desktop&quot
 </tr>
 <tr>
 <td>Maximum response size</td>
-<td style="text-align: center;">Unlimited</td>
-<td><code>fetch.max.bytes</code> (client)</td>
+<td style="text-align: center;">Request-bounded</td>
+<td><code>fetch.max.bytes</code> and <code>max.partition.fetch.bytes</code> (client), <code>message.max.bytes</code> (broker)</td>
 </tr>
 <tr>
 <td>Minimum frame size</td>
-<td style="text-align: center;">4 bytes</td>
-<td>Header-only (empty body)</td>
+<td style="text-align: center;">Header-only</td>
+<td>4 bytes (response header v0), 10 bytes (request header v1), 11 bytes (request header v2)</td>
 </tr>
 </tbody>
 </table>
@@ -20768,9 +20768,9 @@ RequestBody =&gt; (API-specific fields)
 <tbody>
 <tr>
 <td style="text-align: center;">0</td>
-<td>0.8.0 - 0.8.2</td>
+<td>0.8.x - 3.x</td>
 <td style="text-align: center;">❌</td>
-<td>Legacy (ControlledShutdown only)</td>
+<td>ControlledShutdownRequest v0 only (removed in 4.0)</td>
 </tr>
 <tr>
 <td style="text-align: center;">1</td>
@@ -20999,37 +20999,37 @@ ResponseBody =&gt; (API-specific fields)
 <tr>
 <td>Produce</td>
 <td style="text-align: center;">9</td>
-<td style="text-align: center;">11</td>
+<td style="text-align: center;">13</td>
 </tr>
 <tr>
 <td>Fetch</td>
 <td style="text-align: center;">12</td>
-<td style="text-align: center;">16</td>
+<td style="text-align: center;">18</td>
 </tr>
 <tr>
 <td>ListOffsets</td>
 <td style="text-align: center;">6</td>
-<td style="text-align: center;">8</td>
+<td style="text-align: center;">11</td>
 </tr>
 <tr>
 <td>Metadata</td>
 <td style="text-align: center;">9</td>
-<td style="text-align: center;">12</td>
+<td style="text-align: center;">13</td>
 </tr>
 <tr>
 <td>OffsetCommit</td>
 <td style="text-align: center;">8</td>
-<td style="text-align: center;">9</td>
+<td style="text-align: center;">10</td>
 </tr>
 <tr>
 <td>OffsetFetch</td>
 <td style="text-align: center;">6</td>
-<td style="text-align: center;">9</td>
+<td style="text-align: center;">10</td>
 </tr>
 <tr>
 <td>FindCoordinator</td>
 <td style="text-align: center;">3</td>
-<td style="text-align: center;">5</td>
+<td style="text-align: center;">6</td>
 </tr>
 <tr>
 <td>JoinGroup</td>
@@ -21044,7 +21044,7 @@ ResponseBody =&gt; (API-specific fields)
 <tr>
 <td>LeaveGroup</td>
 <td style="text-align: center;">4</td>
-<td style="text-align: center;">6</td>
+<td style="text-align: center;">5</td>
 </tr>
 <tr>
 <td>SyncGroup</td>
@@ -21054,11 +21054,11 @@ ResponseBody =&gt; (API-specific fields)
 <tr>
 <td>DescribeGroups</td>
 <td style="text-align: center;">5</td>
-<td style="text-align: center;">5</td>
+<td style="text-align: center;">6</td>
 </tr>
 <tr>
 <td>ListGroups</td>
-<td style="text-align: center;">4</td>
+<td style="text-align: center;">3</td>
 <td style="text-align: center;">5</td>
 </tr>
 <tr>
@@ -21074,7 +21074,7 @@ ResponseBody =&gt; (API-specific fields)
 <tr>
 <td>ApiVersions</td>
 <td style="text-align: center;">3</td>
-<td style="text-align: center;">3</td>
+<td style="text-align: center;">4</td>
 </tr>
 </tbody>
 </table>
@@ -21216,11 +21216,11 @@ ResponseBody =&gt; (API-specific fields)
 </tr>
 <tr>
 <td>Version tolerance</td>
-<td>Broker should accept any version (0-3)</td>
+<td>Broker should accept any version (0-4)</td>
 </tr>
 <tr>
 <td>Header version</td>
-<td>Always uses request header v1 (or v2 for v3)</td>
+<td>Uses request header v1 (or v2 for v3+)</td>
 </tr>
 </tbody>
 </table>
@@ -21259,7 +21259,7 @@ ResponseBody =&gt; (API-specific fields)
 <div class="highlight"><pre><span></span><code>Request: Metadata, version 0, correlation_id=1, client_id="test"
 
 Hex dump:
-00 00 00 11        // Size: 17 bytes
+00 00 00 12        // Size: 18 bytes
 00 03              // api_key: 3 (Metadata)
 00 00              // api_version: 0
 00 00 00 01        // correlation_id: 1
@@ -21271,7 +21271,7 @@ FF FF FF FF        // topics: null (all topics)
 <div class="highlight"><pre><span></span><code>Response: Metadata v0, correlation_id=1
 
 Hex dump:
-00 00 00 06        // Size: 6 bytes
+00 00 00 0C        // Size: 12 bytes
 00 00 00 01        // correlation_id: 1
 00 00 00 00        // brokers: empty array
 00 00 00 00        // topics: empty array
@@ -21306,7 +21306,7 @@ Hex dump:
 </tr>
 <tr>
 <td>Unknown API key</td>
-<td>UNSUPPORTED_VERSION error</td>
+<td>Close connection (invalid request)</td>
 </tr>
 <tr>
 <td>Unsupported API version</td>

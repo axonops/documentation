@@ -21190,11 +21190,6 @@ data-et-multi-view="{&quot;schema&quot;:{&quot;content&quot;:{&quot;desktop&quot
 <td>Initial version</td>
 </tr>
 <tr>
-<td style="text-align: center;">1</td>
-<td>2.0.0</td>
-<td>Transaction timeout validation</td>
-</tr>
-<tr>
 <td style="text-align: center;">2</td>
 <td>2.4.0</td>
 <td>Flexible versions</td>
@@ -21202,17 +21197,22 @@ data-et-multi-view="{&quot;schema&quot;:{&quot;content&quot;:{&quot;desktop&quot
 <tr>
 <td style="text-align: center;">3</td>
 <td>2.5.0</td>
-<td>KIP-360 producer ID recovery</td>
+<td>Producer ID/epoch in request</td>
 </tr>
 <tr>
 <td style="text-align: center;">4</td>
 <td>2.6.0</td>
-<td>KIP-588</td>
+<td>PRODUCER_FENCED error</td>
 </tr>
 <tr>
 <td style="text-align: center;">5</td>
 <td>3.9.0</td>
-<td>KIP-890</td>
+<td>TRANSACTION_ABORTABLE error (KIP-890)</td>
+</tr>
+<tr>
+<td style="text-align: center;">6</td>
+<td>4.0.0</td>
+<td>2PC support (KIP-939)</td>
 </tr>
 </tbody>
 </table>
@@ -21222,6 +21222,8 @@ data-et-multi-view="{&quot;schema&quot;:{&quot;content&quot;:{&quot;desktop&quot
     transaction_timeout_ms: INT32
     producer_id: INT64
     producer_epoch: INT16
+    enable2pc: BOOLEAN
+    keep_prepared_txn: BOOLEAN
 </code></pre></div>
 <table>
 <thead>
@@ -21252,6 +21254,16 @@ data-et-multi-view="{&quot;schema&quot;:{&quot;content&quot;:{&quot;desktop&quot
 <td>INT16</td>
 <td>Existing epoch to recover (-1 for new)</td>
 </tr>
+<tr>
+<td><code>enable2pc</code></td>
+<td>BOOLEAN</td>
+<td>Enable two-phase commit (v6+)</td>
+</tr>
+<tr>
+<td><code>keep_prepared_txn</code></td>
+<td>BOOLEAN</td>
+<td>Keep prepared transaction (v6+)</td>
+</tr>
 </tbody>
 </table>
 <h3 id="response-schema">Response Schema<a class="headerlink" href="#response-schema" title="Permanent link">¶</a></h3>
@@ -21260,6 +21272,8 @@ data-et-multi-view="{&quot;schema&quot;:{&quot;content&quot;:{&quot;desktop&quot
     error_code: INT16
     producer_id: INT64
     producer_epoch: INT16
+    ongoing_txn_producer_id: INT64
+    ongoing_txn_producer_epoch: INT16
 </code></pre></div>
 <table>
 <thead>
@@ -21279,6 +21293,16 @@ data-et-multi-view="{&quot;schema&quot;:{&quot;content&quot;:{&quot;desktop&quot
 <td><code>producer_epoch</code></td>
 <td>INT16</td>
 <td>Producer epoch</td>
+</tr>
+<tr>
+<td><code>ongoing_txn_producer_id</code></td>
+<td>INT64</td>
+<td>Producer ID for ongoing txn (v6+)</td>
+</tr>
+<tr>
+<td><code>ongoing_txn_producer_epoch</code></td>
+<td>INT16</td>
+<td>Producer epoch for ongoing txn (v6+)</td>
 </tr>
 </tbody>
 </table>
@@ -21374,29 +21398,24 @@ data-et-multi-view="{&quot;schema&quot;:{&quot;content&quot;:{&quot;desktop&quot
 <td>Initial version</td>
 </tr>
 <tr>
-<td style="text-align: center;">1</td>
-<td>2.0.0</td>
-<td>Response improvements</td>
+<td style="text-align: center;">2</td>
+<td>2.1.0</td>
+<td>PRODUCER_FENCED error</td>
 </tr>
 <tr>
-<td style="text-align: center;">2</td>
+<td style="text-align: center;">3</td>
 <td>2.4.0</td>
 <td>Flexible versions</td>
 </tr>
 <tr>
-<td style="text-align: center;">3</td>
-<td>2.7.0</td>
-<td>KIP-679</td>
-</tr>
-<tr>
 <td style="text-align: center;">4</td>
-<td>3.0.0</td>
-<td>KIP-679 batch support</td>
+<td>2.8.0</td>
+<td>VerifyOnly + batched transactions</td>
 </tr>
 <tr>
 <td style="text-align: center;">5</td>
 <td>3.9.0</td>
-<td>KIP-890</td>
+<td>TRANSACTION_ABORTABLE (KIP-890)</td>
 </tr>
 </tbody>
 </table>
@@ -21442,6 +21461,16 @@ Transaction =&gt;
 <td><code>producer_epoch</code></td>
 <td>INT16</td>
 <td>Producer epoch</td>
+</tr>
+<tr>
+<td><code>ongoing_txn_producer_id</code></td>
+<td>INT64</td>
+<td>Producer ID for ongoing txn (v6+)</td>
+</tr>
+<tr>
+<td><code>ongoing_txn_producer_epoch</code></td>
+<td>INT16</td>
+<td>Producer epoch for ongoing txn (v6+)</td>
 </tr>
 <tr>
 <td><code>topics</code></td>
@@ -21512,24 +21541,19 @@ PartitionResult =&gt;
 <td>Initial version</td>
 </tr>
 <tr>
-<td style="text-align: center;">1</td>
-<td>2.0.0</td>
-<td>Response improvements</td>
+<td style="text-align: center;">2</td>
+<td>2.1.0</td>
+<td>PRODUCER_FENCED error</td>
 </tr>
 <tr>
-<td style="text-align: center;">2</td>
+<td style="text-align: center;">3</td>
 <td>2.4.0</td>
 <td>Flexible versions</td>
 </tr>
 <tr>
-<td style="text-align: center;">3</td>
-<td>3.0.0</td>
-<td>KIP-679</td>
-</tr>
-<tr>
 <td style="text-align: center;">4</td>
 <td>3.9.0</td>
-<td>KIP-890</td>
+<td>TRANSACTION_ABORTABLE (KIP-890)</td>
 </tr>
 </tbody>
 </table>
@@ -21604,24 +21628,24 @@ PartitionResult =&gt;
 <td>Initial version</td>
 </tr>
 <tr>
-<td style="text-align: center;">1</td>
-<td>2.0.0</td>
-<td>Response improvements</td>
-</tr>
-<tr>
 <td style="text-align: center;">2</td>
 <td>2.1.0</td>
-<td>KIP-98</td>
+<td>Committed leader epoch</td>
 </tr>
 <tr>
 <td style="text-align: center;">3</td>
 <td>2.4.0</td>
-<td>Flexible versions</td>
+<td>Flexible versions + member fields</td>
 </tr>
 <tr>
 <td style="text-align: center;">4</td>
 <td>3.9.0</td>
-<td>KIP-890</td>
+<td>TRANSACTION_ABORTABLE (KIP-890)</td>
+</tr>
+<tr>
+<td style="text-align: center;">5</td>
+<td>4.0.0</td>
+<td>Txn V2 add-offsets path (KIP-890 part 2)</td>
 </tr>
 </tbody>
 </table>
@@ -21728,24 +21752,24 @@ Partition =&gt;
 <td>Initial version</td>
 </tr>
 <tr>
-<td style="text-align: center;">1</td>
-<td>2.0.0</td>
-<td>Response improvements</td>
+<td style="text-align: center;">2</td>
+<td>2.1.0</td>
+<td>PRODUCER_FENCED error</td>
 </tr>
 <tr>
-<td style="text-align: center;">2</td>
+<td style="text-align: center;">3</td>
 <td>2.4.0</td>
 <td>Flexible versions</td>
 </tr>
 <tr>
-<td style="text-align: center;">3</td>
-<td>2.7.0</td>
-<td>KIP-360</td>
-</tr>
-<tr>
 <td style="text-align: center;">4</td>
 <td>3.9.0</td>
-<td>KIP-890</td>
+<td>TRANSACTION_ABORTABLE (KIP-890)</td>
+</tr>
+<tr>
+<td style="text-align: center;">5</td>
+<td>4.0.0</td>
+<td>Producer ID/epoch in response</td>
 </tr>
 </tbody>
 </table>
@@ -21870,12 +21894,17 @@ Partition =&gt;
 <tr>
 <td style="text-align: center;">0</td>
 <td>0.11.0</td>
-<td>Initial version</td>
+<td>Initial version (removed in 4.0)</td>
 </tr>
 <tr>
 <td style="text-align: center;">1</td>
 <td>2.4.0</td>
-<td>Flexible versions</td>
+<td>Flexible versions (4.0 baseline)</td>
+</tr>
+<tr>
+<td style="text-align: center;">2</td>
+<td>4.0.0</td>
+<td>TransactionVersion (KIP-1228)</td>
 </tr>
 </tbody>
 </table>
@@ -21889,6 +21918,7 @@ Marker =&gt;
     transaction_result: BOOLEAN
     topics: [Topic]
     coordinator_epoch: INT32
+    transaction_version: INT8
 
 Topic =&gt;
     name: STRING
@@ -22022,8 +22052,13 @@ Topic =&gt;
 </tr>
 <tr>
 <td style="text-align: center;">1</td>
-<td>3.9.0</td>
-<td>KIP-890</td>
+<td>3.5.0</td>
+<td>Duration filter</td>
+</tr>
+<tr>
+<td style="text-align: center;">2</td>
+<td>4.0.0</td>
+<td>TransactionalIdPattern (KIP-1152)</td>
 </tr>
 </tbody>
 </table>
@@ -22032,6 +22067,7 @@ Topic =&gt;
     state_filters: [STRING]
     producer_id_filters: [INT64]
     duration_filter: INT64
+    transactional_id_pattern: NULLABLE_STRING
 </code></pre></div>
 <table>
 <thead>
@@ -22056,6 +22092,11 @@ Topic =&gt;
 <td><code>duration_filter</code></td>
 <td>INT64</td>
 <td>Minimum transaction duration (ms)</td>
+</tr>
+<tr>
+<td><code>transactional_id_pattern</code></td>
+<td>NULLABLE_STRING</td>
+<td>Regex filter for transactional.id (v2+)</td>
 </tr>
 </tbody>
 </table>
