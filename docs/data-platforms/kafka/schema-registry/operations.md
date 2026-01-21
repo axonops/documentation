@@ -354,52 +354,52 @@ sudo yum install axonops-schema-registry
 
 ### Storage Configuration
 
-=== "PostgreSQL"
+#### PostgreSQL
 
-    ```yaml
-    storage:
-      type: postgresql
-      postgresql:
-        host: localhost
-        port: 5432
-        user: schemaregistry
-        password: secret
-        database: schemaregistry
-        sslmode: disable  # disable, require, verify-ca, verify-full
-        max_connections: 25
-        connection_timeout: 30s
-    ```
+```yaml
+storage:
+  type: postgresql
+  postgresql:
+    host: localhost
+    port: 5432
+    user: schemaregistry
+    password: secret
+    database: schemaregistry
+    sslmode: disable  # disable, require, verify-ca, verify-full
+    max_connections: 25
+    connection_timeout: 30s
+```
 
-=== "MySQL"
+#### MySQL
 
-    ```yaml
-    storage:
-      type: mysql
-      mysql:
-        host: localhost
-        port: 3306
-        user: schemaregistry
-        password: secret
-        database: schemaregistry
-        tls: false
-        max_connections: 25
-    ```
+```yaml
+storage:
+  type: mysql
+  mysql:
+    host: localhost
+    port: 3306
+    user: schemaregistry
+    password: secret
+    database: schemaregistry
+    tls: false
+    max_connections: 25
+```
 
-=== "Cassandra"
+#### Cassandra
 
-    ```yaml
-    storage:
-      type: cassandra
-      cassandra:
-        hosts:
-          - cassandra1:9042
-          - cassandra2:9042
-        keyspace: schema_registry
-        replication_factor: 3
-        consistency_level: LOCAL_QUORUM
-        username: schemaregistry
-        password: secret
-    ```
+```yaml
+storage:
+  type: cassandra
+  cassandra:
+    hosts:
+      - cassandra1:9042
+      - cassandra2:9042
+    keyspace: schema_registry
+    replication_factor: 3
+    consistency_level: LOCAL_QUORUM
+    username: schemaregistry
+    password: secret
+```
 
 ### Security Configuration
 

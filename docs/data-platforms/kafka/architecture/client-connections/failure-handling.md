@@ -50,7 +50,7 @@ rectangle "Failure Types" {
 
 | Error Code | Name | Cause | Client Action |
 |:----------:|------|-------|---------------|
-| 3 | `UNKNOWN_TOPIC_OR_PARTITION` | Topic not yet created | Wait and retry |
+| 3 | `UNKNOWN_TOPIC_OR_PARTITION` | Topic missing or metadata stale | Refresh metadata; retry only if topic is expected to exist |
 | 5 | `LEADER_NOT_AVAILABLE` | Election in progress | Wait and retry |
 | 6 | `NOT_LEADER_OR_FOLLOWER` | Stale metadata | Refresh metadata, retry |
 | 7 | `REQUEST_TIMED_OUT` | Broker too slow | Retry |
@@ -300,13 +300,12 @@ TC --> P : PID, Epoch
 == Transaction ==
 P -> TC : BeginTransaction
 
+P -> TC : AddPartitionsToTxn
 P -> B : Produce(P0, TXN)
 B --> P : Ack
 
 P -> B : Produce(P1, TXN)
 B --> P : Ack
-
-P -> TC : AddPartitionsToTxn
 
 == Commit ==
 P -> TC : EndTxn(COMMIT)
@@ -575,7 +574,7 @@ DLQConsumer --> Retry
 
 | Pattern | Guarantee | Duplicates | Loss |
 |---------|-----------|:----------:|:----:|
-| Auto-commit | At-least-once | Possible | Possible |
+| Auto-commit | Not guaranteed (can be at-most-once) | Possible | Possible |
 | Commit before process | At-most-once | No | Possible |
 | Commit after process | At-least-once | Possible | No |
 | Transactional | Exactly-once | No | No |

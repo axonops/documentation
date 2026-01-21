@@ -158,7 +158,7 @@ API versions are negotiated per-request:
 ## Connection Configuration
 
 !!! warning "Bootstrap Servers Required"
-    The `bootstrap.servers` configuration is required. Include at least 3 brokers for redundancy during broker failures or maintenance.
+    The `bootstrap.servers` configuration is required. Include multiple brokers (2-3 recommended) for redundancy during broker failures or maintenance.
 
 ### Essential Parameters
 
@@ -206,7 +206,7 @@ Metadata is refreshed:
 - On initial connection
 - When `metadata.max.age.ms` expires (default 5 minutes)
 - On `NOT_LEADER_OR_FOLLOWER` errors
-- On `UNKNOWN_TOPIC_OR_PARTITION` errors
+- On `UNKNOWN_TOPIC_OR_PARTITION` errors (if the topic is expected to exist)
 - When accessing a new topic
 
 !!! note "Metadata Refresh on Errors"
@@ -239,6 +239,9 @@ Kafka minimizes connections by:
 | Network RTT | 0.1-2 ms (same DC) | Co-locate clients |
 | Broker processing | 1-50 ms | Tune broker resources |
 | Serialization | 1-100 μs | Use efficient serializers |
+
+!!! note "Latency ranges"
+    These ranges are illustrative and vary by hardware, workload, network conditions, and broker configuration.
 
 ### Throughput Factors
 
@@ -310,7 +313,7 @@ Maximum throughput depends on:
 | Idempotent producer | 0.11.0 |
 | Transactions | 0.11.0 |
 | Flexible protocol versions | 2.4.0 |
-| KRaft mode | 3.3.0 |
+| KRaft mode | 2.8.0 (introduced), 3.3.0 (production-ready) |
 
 ---
 

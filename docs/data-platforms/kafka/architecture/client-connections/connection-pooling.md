@@ -64,7 +64,7 @@ KC3 <--> B3 : TCP
 
 ### One Connection Per Broker
 
-Kafka clients maintain exactly one TCP connection per broker they need to communicate with. This differs from connection pooling in databases:
+Kafka clients maintain exactly one TCP connection per broker they need to communicate with, per client instance. Separate producers/consumers in the same JVM each open their own connections. This differs from connection pooling in databases:
 
 | Aspect | Kafka | Traditional DB Pools |
 |--------|-------|---------------------|
@@ -75,7 +75,7 @@ Kafka clients maintain exactly one TCP connection per broker they need to commun
 
 ### Connection Multiplexing
 
-Multiple requests share a single connection through stream multiplexing:
+Multiple in-flight requests share a single connection and are correlated by request id:
 
 ```plantuml
 @startuml

@@ -49,7 +49,6 @@ note right of RA
   per partition until:
   - Batch is full
   - linger.ms expires
-  - buffer.memory full
 end note
 
 @enduml
@@ -90,6 +89,9 @@ end note
 
 @enduml
 ```
+
+!!! note "Illustrative throughput"
+    The throughput figures above are illustrative; actual results vary with message size, hardware, compression, and broker configuration.
 
 ---
 
@@ -156,7 +158,7 @@ Building --> Building : append records
 
 Building --> Ready : batch.size reached
 Building --> Ready : linger.ms expired
-Building --> Ready : send() blocks (buffer full)
+Building --> Building : buffer exhausted (append blocks)
 
 Ready --> InFlight : sender drains batch
 InFlight --> Completed : ack received
@@ -255,9 +257,10 @@ A batch is sent when ANY condition is met:
 
 1. **Batch full**: `batch.size` reached
 2. **Linger expired**: `linger.ms` elapsed since first record
-3. **Buffer pressure**: `buffer.memory` nearly full
-4. **Explicit flush**: `producer.flush()` called
-5. **Close**: `producer.close()` called
+3. **Explicit flush**: `producer.flush()` called
+4. **Close**: `producer.close()` called
+
+When the buffer is exhausted, `send()` blocks until memory is freed; it does not force a batch to send.
 
 ---
 

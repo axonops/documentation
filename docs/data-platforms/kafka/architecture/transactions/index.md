@@ -144,13 +144,13 @@ Transactions add overhead and complexity. They are not always the right choice.
 
 | Scenario | Why Transactions Are Wrong | Better Approach |
 |----------|---------------------------|-----------------|
-| **High-throughput logging** | Overhead reduces throughput 30-50% | Idempotent producer (no transactions) |
+| **High-throughput logging** | Overhead can reduce throughput | Idempotent producer (no transactions) |
 | **Fire-and-forget metrics** | Occasional duplicates acceptable | `acks=1` or `acks=0` |
 | **Single-partition writes** | No cross-partition atomicity needed | Idempotent producer only |
 | **Latency-critical paths** | Transaction commit adds latency | At-least-once with idempotent consumers |
 | **Independent events** | Events don't need atomic grouping | Separate non-transactional writes |
 
-### Performance Impact
+### Performance Impact (Repository Guidance)
 
 | Metric | Non-Transactional | Transactional | Impact |
 |--------|-------------------|---------------|--------|
@@ -813,7 +813,7 @@ Kafka Streams uses transactions internally for exactly-once:
 
 | Configuration | Default | Description |
 |---------------|---------|-------------|
-| `enable.idempotence` | true (2.8+) | Enable idempotent producer |
+| `enable.idempotence` | true | Enable idempotent producer |
 | `transactional.id` | null | Transaction identifier (enables transactions) |
 | `transaction.timeout.ms` | 60000 | Transaction timeout |
 | `max.in.flight.requests.per.connection` | 5 | Must be ≤5 for idempotence |

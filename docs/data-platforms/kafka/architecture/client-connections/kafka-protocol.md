@@ -14,7 +14,7 @@ This documentation provides a comprehensive specification of the Apache Kafka bi
 
 ## Specification Scope
 
-This specification covers Kafka protocol versions through Kafka 3.7. For the authoritative grammar reference and exhaustive API schemas, the [Apache Kafka Protocol Documentation](https://kafka.apache.org/protocol) provides additional detail. This documentation provides:
+This specification covers Kafka protocol versions for Kafka 2.8 through 4.1. For the authoritative grammar reference and exhaustive API schemas, the [Apache Kafka Protocol Documentation](https://kafka.apache.org/protocol) provides additional detail. This documentation provides:
 
 - Behavioral contracts and guarantees
 - Failure semantics and error handling
@@ -33,7 +33,7 @@ This specification covers Kafka protocol versions through Kafka 3.7. For the aut
 | [Protocol Primitives](protocol-primitives.md) | Data types: integers, varints, strings, bytes, arrays, tagged fields |
 | [Protocol Messages](protocol-messages.md) | Message framing, request/response headers, correlation IDs |
 | [Protocol Records](protocol-records.md) | Record batch format, compression, timestamps, transactions |
-| [Protocol Errors](protocol-errors.md) | Complete error code reference (133+ codes) |
+| [Protocol Errors](protocol-errors.md) | Complete error code reference (count varies by version) |
 
 ### API References
 
@@ -90,7 +90,7 @@ B --> C : Response (correlation_id, data)
 ### Behavioral Contract
 
 !!! note "Request Processing Guarantee"
-    Brokers must process requests from a single connection in the order received. Responses must be sent in request order.
+    Brokers process requests from a single connection in the order received and return responses in the same order. The broker processes one in-flight request per connection; clients may still pipeline requests in the TCP buffer.
 
 ---
 
@@ -157,7 +157,7 @@ TCP --> Broker
 | 22-28 | Transaction APIs | Transaction | Exactly-once semantics |
 | 29-31 | ACL APIs | Admin | Authorization management |
 | 32-51 | Config/Admin | Admin | Cluster administration |
-| 52-75 | KRaft/Advanced | Internal | KRaft consensus, features |
+| 52+ | KRaft/Advanced | Internal | KRaft consensus, features (range evolves by version) |
 
 See individual API documentation for complete details.
 
@@ -165,17 +165,13 @@ See individual API documentation for complete details.
 
 ## Version Compatibility
 
-### Client-Broker Compatibility
+### Client/Broker Forward Compatibility (Kafka 4.0+ brokers)
 
-| Client Version | Broker 2.x | Broker 3.x | Notes |
-|---------------|:----------:|:----------:|-------|
-| 0.10.x | ⚠️ | ⚠️ | Limited API support |
-| 2.0.x | ✅ | ✅ | Full support |
-| 2.4.x | ✅ | ✅ | Flexible versions |
-| 3.0.x | ✅ | ✅ | KRaft APIs |
-| 3.5.x+ | ⚠️ | ✅ | May use new APIs |
-
-Legend: ✅ Full Support | ⚠️ Partial Support | ❌ Not Supported
+| Client Version | Compatibility | Notes |
+|---------------|:-------------:|-------|
+| 0.x, 1.x, 2.0 | ❌ Not compatible | Pre-0.10 protocols removed in Kafka 4.0 (KIP-896) |
+| 2.1 - 2.8 | ⚠️ Partially compatible | See Kafka 4.0 upgrade notes for client-specific limitations |
+| 3.x | ✅ Fully compatible | No protocol-level limitations |
 
 ### Flexible Versions
 
@@ -196,12 +192,15 @@ Kafka 2.4 introduced "flexible versions" (KIP-482):
 
 | Requirement | Level | Reference |
 |-------------|-------|-----------|
-| Negotiate API versions before requests | must | [Protocol Messages](protocol-messages.md) |
+| Negotiate API versions before requests | should | [Protocol Messages](protocol-messages.md) |
 | Track correlation IDs for response matching | must | [Protocol Messages](protocol-messages.md) |
 | Handle all error codes appropriately | must | [Protocol Errors](protocol-errors.md) |
 | Refresh metadata on leader change errors | should | [Core APIs](protocol-apis-core.md) |
 | Use exponential backoff on retries | should | [Protocol Errors](protocol-errors.md) |
 | Ignore unknown tagged fields | must | [Protocol Primitives](protocol-primitives.md) |
+
+!!! note "ApiVersions"
+    Legacy clients may skip ApiVersions; brokers still support older request versions where available.
 
 ### Broker Requirements
 

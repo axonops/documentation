@@ -16,11 +16,11 @@ This document specifies the record batch format used in Apache Kafka for storing
 
 ### Message Format Versions
 
-| Magic Value | Kafka Version | Name | Key Features |
-|:-----------:|---------------|------|--------------|
-| 0 | 0.8.0 - 0.9.0 | Message v0 | Basic messages |
-| 1 | 0.10.0 - 0.10.2 | Message v1 | Timestamps |
-| 2 | 0.11.0+ | Record Batch | Compression, headers, transactions |
+| Magic Value | Introduced | Name | Key Features |
+|:-----------:|------------|------|--------------|
+| 0 | 0.8.0 | Message v0 | Basic messages |
+| 1 | 0.10.0 | Message v1 | Timestamps |
+| 2 | 0.11.0 | Record Batch | Compression, headers, transactions |
 
 !!! note "Current Format"
     This document focuses on Magic 2 (Record Batch format), the current format used since Kafka 0.11.0. Legacy formats (Magic 0 and 1) are deprecated but may still be encountered in older clusters.
@@ -37,7 +37,7 @@ This document specifies the record batch format used in Apache Kafka for storing
 skinparam backgroundColor transparent
 
 rectangle "Record Batch" {
-    rectangle "Batch Header (61+ bytes)" as Header #lightblue {
+        rectangle "Batch Header (61 bytes)" as Header #lightblue {
         rectangle "baseOffset (8B)" as BO
         rectangle "batchLength (4B)" as BL
         rectangle "partitionLeaderEpoch (4B)" as PLE
@@ -208,7 +208,7 @@ end note
 ```
 Header =>
     keyLength: VARINT
-    key: STRING
+    key: BYTES
     valueLength: VARINT
     value: BYTES
 ```
@@ -216,7 +216,7 @@ Header =>
 | Field | Type | Description |
 |-------|------|-------------|
 | `keyLength` | VARINT | Header key length |
-| `key` | STRING | Header key (UTF-8, not null-terminated) |
+| `key` | BYTES | Header key (UTF-8, not null-terminated) |
 | `valueLength` | VARINT | Header value length (-1 for null) |
 | `value` | BYTES | Header value (omitted if valueLength < 0) |
 
@@ -498,8 +498,6 @@ end note
 |----------|-------|
 | Algorithm | CRC32-C (Castagnoli) |
 | Polynomial | 0x1EDC6F41 |
-| Initial value | 0xFFFFFFFF |
-| Final XOR | 0xFFFFFFFF |
 
 ### CRC Coverage
 
@@ -554,8 +552,8 @@ end note
 
 | Limit | Default | Configuration |
 |-------|:-------:|---------------|
-| Maximum record size | 1 MB | `max.message.bytes` (broker) |
-| Maximum batch size | 1 MB | `max.partition.fetch.bytes` (consumer) |
+| Maximum record size | 1 MB | `message.max.bytes` (broker), `max.message.bytes` (topic) |
+| Maximum batch size | 1 MB | `max.partition.fetch.bytes` (consumer fetch limit) |
 | Maximum request size | 100 MB | `socket.request.max.bytes` (broker) |
 
 ### Size Calculation

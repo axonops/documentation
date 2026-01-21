@@ -59,7 +59,7 @@ note over C1, C3 #lightgreen: Processing Resumed
 
 | Impact | Description |
 |--------|-------------|
-| **Processing pause** | All consumers stop processing during rebalance |
+| **Processing pause** | Eager stops all; cooperative/consumer protocol pauses only moved partitions |
 | **Increased latency** | Messages delayed during rebalance |
 | **Duplicate processing** | At-least-once semantics may cause reprocessing |
 | **State loss** | In-memory state may need rebuilding |
@@ -642,21 +642,21 @@ KIP-848 introduces a fundamentally redesigned consumer rebalance protocol that m
 |--------|------------------|------------------|
 | **Assignment location** | Consumer (leader) | Broker (group coordinator) |
 | **Rebalance rounds** | 1 (eager) or 2+ (cooperative) | Single notification |
-| **Stop-the-world** | Yes (eager) or partial (cooperative) | No |
+| **Stop-the-world** | Yes (eager) or partial (cooperative) | No global stop-the-world |
 | **Protocol complexity** | Client-side logic | Server-side logic |
-| **Kafka version** | All versions | 3.7+ (early access), 4.0+ (stable) |
+| **Kafka version** | All versions | 4.0+ (GA) |
 
 ### Version Support
 
 | Kafka Version | KIP-848 Status | Notes |
 |---------------|----------------|-------|
 | < 3.7 | ❌ Not available | Use classic protocol |
-| 3.7.x | ⚠️ Early Access | Enable with feature flag, not for production |
-| 3.8.x | ⚠️ Early Access | Improved stability |
-| 4.0+ | ✅ Stable | Production ready, recommended for new deployments |
+| 3.7.x | ⚠️ Early access | Use classic protocol for production |
+| 3.8.x | ⚠️ Early access | Improved stability |
+| 4.0+ | ✅ Stable (GA) | Production ready, recommended for new deployments |
 
-!!! warning "Early Access Limitations"
-    In Kafka 3.7 and 3.8, KIP-848 is early access. Do not use in production. The protocol and configuration may change between versions.
+!!! note "Version guidance"
+    Kafka docs state KIP-848 is GA in 4.0. This guide treats 3.7/3.8 as early access.
 
 ### How It Works
 
@@ -705,11 +705,11 @@ group.protocol=classic
 **Broker configuration (Kafka 3.7-3.8 early access):**
 
 ```properties
-# Enable new group coordinator
-group.coordinator.rebalance.protocols=consumer,classic
+# Enable consumer protocol (4.0+)
+group.version=1
 
-# Feature flag for early access
-unstable.api.versions.enable=true
+# Enabled protocols (default includes classic, consumer, streams)
+group.coordinator.rebalance.protocols=classic,consumer,streams
 ```
 
 ### Protocol Comparison
@@ -801,9 +801,7 @@ New metrics for KIP-848 protocol:
 | Sticky assignor | 0.11.0+ |
 | Static membership | 2.3.0+ |
 | Cooperative rebalancing | 2.4.0+ |
-| Incremental cooperative | 2.5.0+ |
-| KIP-848 (early access) | 3.7.0+ |
-| KIP-848 (stable) | 4.0.0+ |
+| KIP-848 (GA) | 4.0.0+ |
 
 ---
 

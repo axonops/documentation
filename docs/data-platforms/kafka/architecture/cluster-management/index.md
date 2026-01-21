@@ -65,15 +65,15 @@ b3 --> c1 : registration,\nheartbeat
 
 ## Metadata Management
 
-### Cluster Metadata Topic
+### Cluster Metadata Log
 
-In KRaft mode, all metadata is stored in the `__cluster_metadata` topic.
+In KRaft mode, all metadata is stored in the `__cluster_metadata` internal log.
 
 ```plantuml
 @startuml
 
 
-rectangle "__cluster_metadata Topic" as meta {
+rectangle "__cluster_metadata Log" as meta {
   rectangle "Partition 0" as p0 {
     card "Broker\nRegistration" as reg
     card "Topic\nCreated" as topic
@@ -87,7 +87,7 @@ rectangle "Controller" as ctrl
 rectangle "Brokers" as brokers
 
 ctrl --> p0 : write
-p0 --> brokers : replicate
+p0 --> brokers : fetch/apply
 
 note bottom of meta
   Single partition
@@ -98,36 +98,46 @@ end note
 @enduml
 ```
 
+Brokers do not replicate the metadata log; they fetch metadata updates from the controller quorum.
+
 ### Metadata Record Types
+
+Common record types include:
 
 | Record Type | Description |
 |-------------|-------------|
 | `RegisterBrokerRecord` | Broker joins cluster |
+| `BrokerRegistrationChangeRecord` | Broker registration update |
+| `FenceBrokerRecord` | Broker fenced |
+| `UnfenceBrokerRecord` | Broker unfenced |
 | `UnregisterBrokerRecord` | Broker leaves cluster |
+| `RegisterControllerRecord` | Controller registration |
 | `TopicRecord` | Topic created |
+| `RemoveTopicRecord` | Topic removed |
 | `PartitionRecord` | Partition assignment |
 | `PartitionChangeRecord` | Leader/ISR change |
 | `ConfigRecord` | Configuration change |
 | `ClientQuotaRecord` | Quota configuration |
 | `ProducerIdsRecord` | Producer ID allocation |
+| `FeatureLevelRecord` | Feature level changes |
 
 ### Inspecting Metadata
 
 ```bash
 # Dump metadata log
-kafka-metadata.sh --snapshot /var/kafka-logs/__cluster_metadata-0/00000000000000000000.log \
+kafka-metadata-shell.sh --snapshot /var/kafka-logs/__cluster_metadata-0/00000000000000000000.log \
   --command "cat"
 
 # Describe cluster
-kafka-metadata.sh --snapshot /var/kafka-logs/__cluster_metadata-0/00000000000000000000.log \
+kafka-metadata-shell.sh --snapshot /var/kafka-logs/__cluster_metadata-0/00000000000000000000.log \
   --command "describe"
 
 # List brokers
-kafka-metadata.sh --snapshot /var/kafka-logs/__cluster_metadata-0/00000000000000000000.log \
+kafka-metadata-shell.sh --snapshot /var/kafka-logs/__cluster_metadata-0/00000000000000000000.log \
   --command "brokers"
 
 # Show topic details
-kafka-metadata.sh --snapshot /var/kafka-logs/__cluster_metadata-0/00000000000000000000.log \
+kafka-metadata-shell.sh --snapshot /var/kafka-logs/__cluster_metadata-0/00000000000000000000.log \
   --command "topic" --topic-name my-topic
 ```
 
@@ -169,10 +179,12 @@ end note
 
 | State | Description |
 |-------|-------------|
-| **FENCED** | Broker registered but not yet active |
-| **UNFENCED** | Broker active and can accept requests |
-| **CONTROLLED_SHUTDOWN** | Broker shutting down gracefully |
-| **SHUTDOWN** | Broker removed from cluster |
+| **NOT_RUNNING** | Broker not running |
+| **STARTING** | Broker starting and catching up with metadata |
+| **RECOVERY** | Broker caught up, waiting to be unfenced |
+| **RUNNING** | Broker registered and accepting requests |
+| **PENDING_CONTROLLED_SHUTDOWN** | Broker initiating controlled shutdown |
+| **SHUTTING_DOWN** | Broker shutting down |
 
 ### Heartbeat Configuration
 
@@ -346,7 +358,7 @@ participant "Broker" as broker
 participant "Controller" as ctrl
 participant "Other Brokers" as others
 
-broker -> ctrl : ControlledShutdownRequest
+broker -> ctrl : BrokerHeartbeatRequest\n(want_shutdown=true)
 activate ctrl
 
 ctrl -> ctrl : Elect new leaders for\naffected partitions
@@ -355,7 +367,7 @@ ctrl -> others : LeaderAndIsrRequest\n(new leaders)
 
 others -> ctrl : Ack
 
-ctrl -> broker : ControlledShutdownResponse\n(remaining_partitions=[])
+ctrl -> broker : BrokerHeartbeatResponse\n(permissions + state)
 deactivate ctrl
 
 broker -> broker : Shutdown
@@ -367,6 +379,9 @@ end note
 
 @enduml
 ```
+
+!!! note "ControlledShutdownRequest"
+    ControlledShutdownRequest was removed in Kafka 4.0. In KRaft, brokers signal shutdown intent via BrokerHeartbeatRequest.
 
 ### Shutdown Configuration
 
@@ -398,7 +413,7 @@ controlled.shutdown.retry.backoff.ms=5000
 
 ```bash
 # Check controller
-kafka-metadata.sh --snapshot /var/kafka-logs/__cluster_metadata-0/*.log \
+kafka-metadata-shell.sh --snapshot /var/kafka-logs/__cluster_metadata-0/*.log \
   --command "describe" | grep -i controller
 
 # Check offline partitions

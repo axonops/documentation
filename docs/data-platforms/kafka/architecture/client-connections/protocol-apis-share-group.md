@@ -8,7 +8,7 @@ meta:
 
 # Kafka Share Group Protocol APIs
 
-This document specifies the Kafka protocol APIs used for Share Groups, a new consumer model introduced in KIP-932 (Kafka 4.0+). Share Groups provide queue-like semantics where messages are distributed among consumers without partition assignment.
+This document specifies the Kafka protocol APIs used for Share Groups, a new consumer model introduced in KIP-932 (Kafka 4.0+). Share Groups provide queue-like semantics where messages are distributed among consumers without client-side partition assignment.
 
 ---
 
@@ -32,7 +32,7 @@ Share Groups differ fundamentally from traditional Consumer Groups:
 
 | API Key | Name | Purpose |
 |:-------:|------|---------|
-| 76 | ShareGroupHeartbeat | Maintain membership and get assignments |
+| 76 | ShareGroupHeartbeat | Maintain membership and receive assignments |
 | 77 | ShareGroupDescribe | Describe share group state |
 
 ### Data Operations
@@ -75,25 +75,17 @@ ShareGroupHeartbeatRequest =>
     group_id: STRING
     member_id: STRING
     member_epoch: INT32
-    instance_id: NULLABLE_STRING
     rack_id: NULLABLE_STRING
-    rebalance_timeout_ms: INT32
     subscribed_topic_names: [STRING]
-    server_assignor: NULLABLE_STRING
-    topic_partitions: [TopicPartition]
-
-TopicPartition =>
-    topic_id: UUID
-    partitions: [INT32]
 ```
 
 | Field | Type | Description |
 |-------|------|-------------|
 | `group_id` | STRING | Share group identifier |
-| `member_id` | STRING | Member ID (empty on first join) |
-| `member_epoch` | INT32 | Member epoch for fencing |
-| `subscribed_topic_names` | ARRAY | Topics to subscribe to |
-| `topic_partitions` | ARRAY | Current partition assignments |
+| `member_id` | STRING | Member ID (client-generated) |
+| `member_epoch` | INT32 | Member epoch (0=join, -1=leave) |
+| `rack_id` | NULLABLE_STRING | Rack ID (null if unchanged) |
+| `subscribed_topic_names` | ARRAY | Subscribed topic names (null if unchanged) |
 
 ### Response Schema
 
@@ -122,6 +114,7 @@ TopicPartition =>
 | **Epoch fencing** | Stale members rejected via epoch |
 | **Assignment** | Server-side assignment, no leader election |
 | **Heartbeat interval** | Server specifies next heartbeat timing |
+| **Versioning** | v0 early access removed in 4.1; v1 stable |
 
 ---
 
@@ -165,6 +158,14 @@ Member =>
     client_host: STRING
     subscribed_topic_names: [STRING]
     assignment: Assignment
+
+Assignment =>
+    topic_partitions: [TopicPartition]
+
+TopicPartition =>
+    topic_id: UUID
+    topic_name: STRING
+    partitions: [INT32]
 ```
 
 ---
@@ -185,6 +186,10 @@ ShareFetchRequest =>
     max_wait_ms: INT32
     min_bytes: INT32
     max_bytes: INT32
+    max_records: INT32
+    batch_size: INT32
+    share_acquire_mode: INT8
+    is_renew_ack: BOOLEAN
     topics: [Topic]
     forgotten_topics_data: [ForgottenTopic]
 
@@ -207,6 +212,8 @@ AcknowledgementBatch =>
 |-------|------|-------------|
 | `group_id` | STRING | Share group identifier |
 | `share_session_epoch` | INT32 | Session epoch for incremental fetch |
+| `share_acquire_mode` | INT8 | 0=batch-optimized, 1=record-limit (v2+) |
+| `is_renew_ack` | BOOLEAN | True if renew acks are present (v2+) |
 | `acknowledgement_batches` | ARRAY | Inline acknowledgments (optional) |
 
 ### Response Schema
@@ -216,6 +223,7 @@ ShareFetchResponse =>
     throttle_time_ms: INT32
     error_code: INT16
     error_message: NULLABLE_STRING
+    acquisition_lock_timeout_ms: INT32
     responses: [Response]
     node_endpoints: [NodeEndpoint]
 
@@ -227,6 +235,8 @@ Partition =>
     partition_index: INT32
     error_code: INT16
     error_message: NULLABLE_STRING
+    acknowledge_error_code: INT16
+    acknowledge_error_message: NULLABLE_STRING
     current_leader: LeaderIdAndEpoch
     records: RECORDS
     acquired_records: [AcquiredRecords]
@@ -265,6 +275,7 @@ ShareAcknowledgeRequest =>
     group_id: NULLABLE_STRING
     member_id: NULLABLE_STRING
     share_session_epoch: INT32
+    is_renew_ack: BOOLEAN
     topics: [Topic]
 
 Topic =>
@@ -285,9 +296,11 @@ AcknowledgementBatch =>
 
 | Value | Type | Description |
 |:-----:|------|-------------|
+| 0 | GAP | Placeholder for gaps |
 | 1 | ACCEPT | Successfully processed |
 | 2 | RELEASE | Release for redelivery |
 | 3 | REJECT | Reject permanently (DLQ) |
+| 4 | RENEW | Renew record lock (v2+) |
 
 ### Response Schema
 
@@ -296,6 +309,7 @@ ShareAcknowledgeResponse =>
     throttle_time_ms: INT32
     error_code: INT16
     error_message: NULLABLE_STRING
+    acquisition_lock_timeout_ms: INT32
     responses: [Response]
     node_endpoints: [NodeEndpoint]
 
@@ -307,6 +321,7 @@ Partition =>
     partition_index: INT32
     error_code: INT16
     error_message: NULLABLE_STRING
+    current_leader: LeaderIdAndEpoch
 ```
 
 ### Behavioral Contract
@@ -351,7 +366,11 @@ ReadShareGroupStateRequest =>
 
 Topic =>
     topic_id: UUID
-    partitions: [INT32]
+    partitions: [Partition]
+
+Partition =>
+    partition: INT32
+    leader_epoch: INT32
 ```
 
 ### WriteShareGroupState API (Key 85)
@@ -372,7 +391,14 @@ Partition =>
     state_epoch: INT32
     leader_epoch: INT32
     start_offset: INT64
+    delivery_complete_count: INT32
     state_batches: [StateBatch]
+
+StateBatch =>
+    first_offset: INT64
+    last_offset: INT64
+    delivery_state: INT8
+    delivery_count: INT16
 ```
 
 ### DeleteShareGroupState API (Key 86)
@@ -400,7 +426,11 @@ ReadShareGroupStateSummaryRequest =>
 
 Topic =>
     topic_id: UUID
-    partitions: [INT32]
+    partitions: [Partition]
+
+Partition =>
+    partition: INT32
+    leader_epoch: INT32
 ```
 
 ---
@@ -413,6 +443,9 @@ Describes the current offsets for a share group.
 
 ```
 DescribeShareGroupOffsetsRequest =>
+    groups: [Group]
+
+Group =>
     group_id: STRING
     topics: [Topic]
 
@@ -450,7 +483,6 @@ DeleteShareGroupOffsetsRequest =>
 
 Topic =>
     topic_name: STRING
-    partitions: [INT32]
 ```
 
 ---

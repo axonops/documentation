@@ -71,6 +71,9 @@ end note
 | LZ4 | 3 | Low | 2-4:1 | Lowest | High throughput |
 | ZSTD | 4 | Medium | 3-6:1 | Medium | Best ratio/speed |
 
+!!! note "Illustrative figures"
+    Compression ratios and CPU costs vary by data type, batch size, and hardware. Treat the tables and charts as directional guidance, not guarantees.
+
 ### Codec Comparison
 
 ```plantuml
@@ -451,7 +454,7 @@ stop
 | `compression-rate-avg` | Average compression ratio |
 | `record-size-avg` | Average uncompressed record size |
 | `batch-size-avg` | Average compressed batch size |
-| `produce-throttle-time-avg` | Throttle time (may indicate CPU saturation) |
+| `produce-throttle-time-avg` | Time throttled by quota limits |
 
 ### Consumer Metrics
 

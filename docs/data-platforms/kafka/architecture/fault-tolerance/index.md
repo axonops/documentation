@@ -30,7 +30,7 @@ rectangle "Cluster Layer" as cluster {
 
 rectangle "Infrastructure Layer" as infra {
   rectangle "Rack Awareness" as rack
-  rectangle "Multi-DC Replication" as multi_dc
+  rectangle "Cross-Cluster Replication" as multi_dc
 }
 
 app -[hidden]down- cluster
@@ -82,8 +82,8 @@ during -down-> after : B1 recovers
 
 | Scenario | Impact | Mitigation |
 |----------|--------|------------|
-| Brokers < RF fail | No data loss if ISR healthy | Use RF ≥ 3 |
-| All ISR fail | Partition unavailable | Use min.insync.replicas |
+| ISR drops below `min.insync.replicas` | `acks=all` producers fail with `NOT_ENOUGH_REPLICAS` | Set RF and `min.insync.replicas` for your failure budget |
+| ISR empty | Partition unavailable until a replica catches up | Monitor ISR shrinkage |
 | Unclean election | Potential data loss | Disable unclean election |
 
 ---
@@ -193,19 +193,35 @@ default.replication.factor=3
 min.insync.replicas=2
 unclean.leader.election.enable=false
 
-# Durability
-log.flush.interval.messages=10000
-log.flush.interval.ms=1000
+# Durability (optional overrides)
+# log.flush.interval.messages=10000
+# log.flush.interval.ms=1000
 ```
 
-### Durability Matrix
+!!! warning "Durability note"
+    The flush settings above are disabled by default (`log.flush.interval.messages` and the scheduler interval default to `Long.MAX_VALUE`). Explicit flush settings are not required for durability and reduce throughput.
 
-| acks | min.insync.replicas | RF | Survives |
-|------|---------------------|-----|----------|
-| 1 | 1 | 3 | 0 broker failures (leader) |
-| all | 1 | 3 | RF-1 broker failures |
-| all | 2 | 3 | 1 broker failure |
-| all | 2 | 5 | 3 broker failures |
+### Durability Rules
+
+- `acks=all` requires the ISR size to be ≥ `min.insync.replicas`, otherwise the write is rejected.
+- With `acks=all`, the system can lose up to `RF - min.insync.replicas` brokers without losing committed data.
+- `acks=1` can acknowledge data that is not yet replicated; a leader failure can lose recent records.
+
+### Data Loss Conditions
+
+| Condition | Result |
+|-----------|--------|
+| Unclean leader election enabled | Acknowledged data can be lost |
+| `acks=1` and leader fails before followers replicate | Acknowledged data can be lost |
+
+### Durability Table (Unclean Election Disabled)
+
+| acks | min.insync.replicas | RF | Max broker failures without losing acknowledged data |
+|------|---------------------|----|-----------------------------------------------------|
+| 1 | 1 | 3 | 0 (leader failure can lose recent records) |
+| all | 1 | 3 | 2 |
+| all | 2 | 3 | 1 |
+| all | 2 | 5 | 3 |
 
 ---
 
@@ -215,8 +231,11 @@ log.flush.interval.ms=1000
 
 | Mechanism | Configuration | Default |
 |-----------|---------------|---------|
-| Session timeout | `broker.session.timeout.ms` | 18000 |
+| Session timeout | `broker.session.timeout.ms` | 9000 |
 | Heartbeat interval | `broker.heartbeat.interval.ms` | 2000 |
+
+!!! note "Broker heartbeat constraints"
+    The controller enforces `broker.heartbeat.interval.ms` ≤ `broker.session.timeout.ms / 2`. The session timeout is configured on controllers; the heartbeat interval is configured on brokers.
 
 ### Client Detection
 

@@ -51,7 +51,7 @@ store -[hidden]down-> serve
 | **Serve producers** | Accept writes, acknowledge based on `acks` setting |
 | **Serve consumers** | Return records from requested offsets |
 | **Replicate data** | Send records to follower replicas |
-| **Receive replicas** | Accept records from leader replicas |
+| **Receive replicas** | Accept records from the leader replica |
 | **Report metadata** | Register with controller, report partition state |
 
 ---
@@ -71,6 +71,9 @@ advertised.listeners=PLAINTEXT://broker1.example.com:9092
 # Data directory
 log.dirs=/var/kafka-logs
 ```
+
+!!! note "Controller listener only in combined mode"
+    Include the `CONTROLLER` listener only when `process.roles=broker,controller`. Broker-only nodes should not expose a controller listener.
 
 Clients discover brokers through the bootstrap servers, then connect directly to the broker hosting each partition's leader.
 
@@ -126,7 +129,7 @@ For replication protocol details, ISR management, and leader election, see [Repl
 
 ## KRaft Mode
 
-Modern Kafka clusters (3.3+) use KRaft (Kafka Raft) for metadata management, eliminating the ZooKeeper dependency.
+KRaft (Kafka Raft) is production-ready from Kafka 3.3+ and is the only metadata mode in Kafka 4.0+; ZooKeeper remains supported through 3.9.x.
 
 ```plantuml
 @startuml
@@ -145,13 +148,13 @@ rectangle "Broker 3" as b3 #BBDEFB
 c1 --> c2 : Raft replication
 c1 --> c3 : Raft replication
 
-c1 --> b1 : metadata push
-c1 --> b2 : metadata push
-c1 --> b3 : metadata push
+c1 --> b1 : metadata updates
+c1 --> b2 : metadata updates
+c1 --> b3 : metadata updates
 
 note right of cq
   Stores cluster metadata in
-  __cluster_metadata topic
+  __cluster_metadata log
 end note
 
 @enduml
@@ -237,7 +240,7 @@ The purgatory holds delayed requests waiting for conditions to be satisfied, ena
 |-----------|---------------------|---------|
 | **DelayedProduce** | All ISR replicas acknowledged | `request.timeout.ms` |
 | **DelayedFetch** | `min.bytes` data available | `fetch.max.wait.ms` |
-| **DelayedJoin** | All group members joined | `rebalance.timeout.ms` |
+| **DelayedJoin** | Rebalance window ends (join/sync complete or timeout) | `rebalance.timeout.ms` |
 | **DelayedHeartbeat** | Session timeout check | `session.timeout.ms` |
 
 ### Purgatory Architecture
@@ -325,7 +328,7 @@ Brokers host two coordinator components based on internal topic partition assign
 Manages consumer group membership, partition assignment, and offset storage.
 
 ```
-coordinator_partition = hash(group.id) % 50
+coordinator_partition = hash(group.id) % offsets.topic.num.partitions
 coordinator_broker = leader of __consumer_offsets partition
 ```
 
@@ -342,7 +345,7 @@ For consumer group protocol and operations, see [Consumer Groups](../../applicat
 Manages exactly-once semantics for transactional producers.
 
 ```
-coordinator = hash(transactional.id) % 50
+coordinator = hash(transactional.id) % transaction.state.log.num.partitions
 coordinator_broker = leader of __transaction_state partition
 ```
 
@@ -358,9 +361,9 @@ For transaction semantics and protocol, see [Transactions](../transactions/index
 
 | Topic | Partitions | Purpose |
 |-------|------------|---------|
-| `__consumer_offsets` | 50 | Consumer group offsets |
-| `__transaction_state` | 50 | Transaction coordinator state |
-| `__cluster_metadata` | 1 | KRaft metadata log |
+| `__consumer_offsets` | Default 50 (configurable) | Consumer group offsets |
+| `__transaction_state` | Default 50 (configurable) | Transaction coordinator state |
+| `__cluster_metadata` | 1 (internal log) | KRaft metadata log |
 
 ---
 

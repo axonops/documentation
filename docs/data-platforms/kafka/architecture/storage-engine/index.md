@@ -44,6 +44,8 @@ end note
 │   ├── 00000000000000000000.log      # Segment file
 │   ├── 00000000000000000000.index    # Offset index
 │   ├── 00000000000000000000.timeindex # Timestamp index
+│   ├── 00000000000000000000.txnindex  # Transaction index
+│   ├── 00000000000000000000.snapshot  # Producer state
 │   ├── 00000000000000001000.log
 │   ├── 00000000000000001000.index
 │   ├── 00000000000000001000.timeindex
@@ -76,7 +78,7 @@ New segments are created when:
 | Condition | Configuration |
 |-----------|---------------|
 | Size threshold | `log.segment.bytes` (default: 1GB) |
-| Time threshold | `log.roll.ms` / `log.roll.hours` |
+| Time threshold | `log.roll.ms` / `log.roll.hours` (broker defaults for `segment.ms`) |
 | Index full | `log.index.size.max.bytes` |
 
 ```properties
@@ -189,11 +191,12 @@ kafka-consumer-groups.sh --bootstrap-server kafka:9092 \
 Delete segments older than retention period.
 
 ```properties
-log.retention.hours=168           # 7 days (default)
-log.retention.minutes=10080       # Alternative
-log.retention.ms=604800000        # Most precise
+log.retention.ms=604800000        # 7 days (default)
 log.retention.check.interval.ms=300000  # Check every 5 min
 ```
+
+!!! note "Retention aliases"
+    `log.retention.hours` and `log.retention.minutes` are legacy aliases for `log.retention.ms`.
 
 ### Size-Based Retention
 
@@ -268,7 +271,7 @@ log.cleanup.policy=compact
 # Or both delete and compact
 log.cleanup.policy=compact,delete
 
-# Compaction settings
+# Broker compaction defaults
 log.cleaner.enable=true
 log.cleaner.threads=1
 log.cleaner.min.cleanable.ratio=0.5
@@ -278,6 +281,9 @@ log.cleaner.delete.retention.ms=86400000  # 24h tombstone retention
 # Segment eligibility
 log.segment.bytes=1073741824
 min.cleanable.dirty.ratio=0.5
+
+!!! note "Scope"
+    `log.cleaner.*` settings are broker defaults. `min.cleanable.dirty.ratio` is a topic-level override.
 ```
 
 ### Tombstones
@@ -338,7 +344,7 @@ end note
 
 Kafka relies heavily on OS page cache for read performance.
 
-| Recommendation | Rationale |
+| Recommendation (Repository Guidance) | Rationale |
 |----------------|-----------|
 | Allocate 25-50% RAM to page cache | Caches active segments |
 | Use SSDs | Faster random reads for index lookups |

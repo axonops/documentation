@@ -59,11 +59,18 @@ end note
 |-----------|-------------|---------------|
 | **Request buffers** | Incoming/outgoing request data | Proportional to connections |
 | **Metadata cache** | Topic/partition metadata | Proportional to partitions |
-| **Index structures** | In-memory index pointers | ~10MB per 1000 partitions |
-| **Producer state** | Idempotent producer tracking | ~5KB per producer per partition |
+| **Index structures** | In-memory index pointers | Proportional to partitions |
+| **Producer state** | Idempotent producer tracking | Proportional to producers × partitions |
 | **Group coordinator** | Consumer group state | Proportional to groups/members |
 
-### Recommended Heap Sizes
+### Heap Footprint Estimates (Repository Guidance)
+
+| Area | Rule of Thumb |
+|------|---------------|
+| **Broker heap per partition replica** | ~1-2 MB |
+| **Controller metadata heap** | ~5 GB for typical clusters |
+
+### Heap Sizing (Repository Guidance)
 
 | Cluster Size | Partitions | Heap Size |
 |--------------|------------|-----------|
@@ -75,10 +82,10 @@ end note
 ### JVM Configuration
 
 ```bash
-# Recommended JVM settings
+# Example JVM settings (tune per workload)
 export KAFKA_HEAP_OPTS="-Xms6g -Xmx6g"
 
-# GC settings (G1GC recommended)
+# GC settings (example values)
 export KAFKA_JVM_PERFORMANCE_OPTS="-server \
   -XX:+UseG1GC \
   -XX:MaxGCPauseMillis=20 \
@@ -110,7 +117,7 @@ rectangle "Read Path" {
 
   cons -> broker : fetch request
   broker -> cache : read data
-  cache -> disk : cache miss\n(rare)
+  cache -> disk : cache miss
   cache -> broker : return data
   broker -> cons : response
 }
@@ -143,7 +150,7 @@ Example:
 # Check memory usage
 free -g
 
-# Check page cache hit ratio
+# Check page cache usage
 cat /proc/meminfo | grep -E "Cached|Buffers|MemFree|MemTotal"
 
 # Monitor disk I/O (high I/O = cache misses)
@@ -164,6 +171,23 @@ socket.send.buffer.bytes=102400
 socket.receive.buffer.bytes=102400
 socket.request.max.bytes=104857600
 ```
+
+### Default Memory/Buffer Limits (Kafka Defaults)
+
+| Component | Setting | Default |
+|-----------|---------|---------|
+| **Broker** | `socket.send.buffer.bytes` | 102400 |
+| **Broker** | `socket.receive.buffer.bytes` | 102400 |
+| **Broker** | `socket.request.max.bytes` | 104857600 |
+| **Producer** | `buffer.memory` | 33554432 |
+| **Producer** | `batch.size` | 16384 |
+| **Producer** | `linger.ms` | 0 |
+| **Producer** | `max.block.ms` | 60000 |
+| **Consumer** | `fetch.min.bytes` | 1 |
+| **Consumer** | `fetch.max.bytes` | 52428800 |
+| **Consumer** | `fetch.max.wait.ms` | 500 |
+| **Consumer** | `max.partition.fetch.bytes` | 1048576 |
+| **Topic** | `index.interval.bytes` | 4096 |
 
 ### Producer Buffer Pool
 
@@ -195,7 +219,7 @@ end note
 ```
 
 ```properties
-# Producer buffer configuration
+# Producer buffer configuration (example tuning)
 buffer.memory=33554432           # 32MB total buffer pool
 batch.size=16384                 # 16KB per batch
 linger.ms=5                      # Wait time for batching
@@ -276,13 +300,9 @@ jstat -gc <pid> 1000
 # Look for: pause times, frequency, throughput
 ```
 
-### GC Metrics
+### GC Monitoring Targets (Repository Guidance)
 
-| Metric | Target |
-|--------|--------|
-| GC pause time | < 20ms |
-| GC frequency | < 1 per second |
-| GC throughput | > 99% |
+Use GC pause time, frequency, and throughput as trend indicators rather than fixed SLAs.
 
 ---
 
@@ -293,7 +313,7 @@ jstat -gc <pid> 1000
 Kafka uses direct memory for network I/O operations.
 
 ```bash
-# Configure direct memory limit
+# Configure direct memory limit (example)
 -XX:MaxDirectMemorySize=2g
 ```
 

@@ -48,57 +48,55 @@ end note
 @enduml
 ```
 
-**Cloud offerings:**
+#### AWS
 
-=== "AWS"
+AWS provides multiple storage-optimized instance families with different processor architectures:
 
-    AWS provides multiple storage-optimized instance families with different processor architectures:
+| Instance Family | Processor | vCPUs (max) | RAM (max) | NVMe Storage (max) | Notes |
+|----------------|-----------|-------------|-----------|-------------------|-------|
+| **I8g** | Graviton4 (ARM) | 192 | 1,536 GiB | 45 TB | Latest generation, best performance |
+| **I8ge** | Graviton4 (ARM) | 192 | 1,536 GiB | 120 TB | Extended storage variant |
+| **I7i** | Intel Emerald Rapids | 192 | 1,536 GiB | 45 TB | Latest Intel, 50% better than I4i |
+| **I7ie** | Intel Emerald Rapids | 192 | 1,536 GiB | 120 TB | Extended storage variant |
+| **I4i** | Intel Ice Lake | 128 | 1,024 GiB | 30 TB | Previous generation Intel |
+| **I4g** | Graviton2 (ARM) | 64 | 512 GiB | 15 TB | Previous generation ARM |
+| **Im4gn** | Graviton2 (ARM) | 64 | 256 GiB | 30 TB | Higher storage density per vCPU |
+| **Is4gen** | Graviton2 (ARM) | 96 | 192 GiB | 30 TB | Lowest cost per TB |
 
-    | Instance Family | Processor | vCPUs (max) | RAM (max) | NVMe Storage (max) | Notes |
-    |----------------|-----------|-------------|-----------|-------------------|-------|
-    | **I8g** | Graviton4 (ARM) | 192 | 1,536 GiB | 45 TB | Latest generation, best performance |
-    | **I8ge** | Graviton4 (ARM) | 192 | 1,536 GiB | 120 TB | Extended storage variant |
-    | **I7i** | Intel Emerald Rapids | 192 | 1,536 GiB | 45 TB | Latest Intel, 50% better than I4i |
-    | **I7ie** | Intel Emerald Rapids | 192 | 1,536 GiB | 120 TB | Extended storage variant |
-    | **I4i** | Intel Ice Lake | 128 | 1,024 GiB | 30 TB | Previous generation Intel |
-    | **I4g** | Graviton2 (ARM) | 64 | 512 GiB | 15 TB | Previous generation ARM |
-    | **Im4gn** | Graviton2 (ARM) | 64 | 256 GiB | 30 TB | Higher storage density per vCPU |
-    | **Is4gen** | Graviton2 (ARM) | 96 | 192 GiB | 30 TB | Lowest cost per TB |
+**Processor selection:**
 
-    **Processor selection:**
+| Architecture | Best For | Price-Performance |
+|-------------|----------|-------------------|
+| Graviton (ARM) | Native ARM workloads, cost optimization | 20-40% better |
+| Intel | x86 compatibility, specific instruction sets | Baseline |
+| AMD (via R-series) | General purpose with EBS | Competitive |
 
-    | Architecture | Best For | Price-Performance |
-    |-------------|----------|-------------------|
-    | Graviton (ARM) | Native ARM workloads, cost optimization | 20-40% better |
-    | Intel | x86 compatibility, specific instruction sets | Baseline |
-    | AMD (via R-series) | General purpose with EBS | Competitive |
+#### GCP
 
-=== "GCP"
+GCP offers Local SSD through `-lssd` suffix on machine types:
 
-    GCP offers Local SSD through `-lssd` suffix on machine types:
+| Machine Series | Processor | vCPUs (max) | RAM (max) | Local SSD (max) | Notes |
+|---------------|-----------|-------------|-----------|-----------------|-------|
+| **C4D-lssd** | AMD EPYC Genoa | 384 | 3 TB | 12 TB | Latest AMD, 55% more QPS vs C3D |
+| **C4-lssd** | Intel Sapphire Rapids | 192 | 1.5 TB | 12 TB | Latest Intel |
+| **C4A-lssd** | Ampere Altra (ARM) | 72 | 576 GiB | 6 TB | ARM-based option |
+| **C3D-lssd** | AMD EPYC Genoa | 360 | 2,880 GiB | 6 TB | High vCPU count |
+| **C3-lssd** | Intel Sapphire Rapids | 176 | 1,408 GiB | 6 TB | Intel alternative |
+| **N2D** | AMD EPYC Milan | 224 | 896 GiB | 9 TB | General purpose |
 
-    | Machine Series | Processor | vCPUs (max) | RAM (max) | Local SSD (max) | Notes |
-    |---------------|-----------|-------------|-----------|-----------------|-------|
-    | **C4D-lssd** | AMD EPYC Genoa | 384 | 3 TB | 12 TB | Latest AMD, 55% more QPS vs C3D |
-    | **C4-lssd** | Intel Sapphire Rapids | 192 | 1.5 TB | 12 TB | Latest Intel |
-    | **C4A-lssd** | Ampere Altra (ARM) | 72 | 576 GiB | 6 TB | ARM-based option |
-    | **C3D-lssd** | AMD EPYC Genoa | 360 | 2,880 GiB | 6 TB | High vCPU count |
-    | **C3-lssd** | Intel Sapphire Rapids | 176 | 1,408 GiB | 6 TB | Intel alternative |
-    | **N2D** | AMD EPYC Milan | 224 | 896 GiB | 9 TB | General purpose |
+Local SSD disks are 375 GiB each, attached in predetermined quantities per machine type.
 
-    Local SSD disks are 375 GiB each, attached in predetermined quantities per machine type.
+#### Azure
 
-=== "Azure"
+Azure L-series provides storage-optimized instances:
 
-    Azure L-series provides storage-optimized instances:
+| VM Series | Processor | vCPUs (max) | RAM (max) | NVMe Storage (max) | Notes |
+|-----------|-----------|-------------|-----------|-------------------|-------|
+| **Lsv3** | Intel Ice Lake | 80 | 640 GiB | 19.2 TB (10×1.92TB) | Intel-based, default encryption |
+| **Lasv3** | AMD EPYC 7763v | 80 | 640 GiB | 19.2 TB (10×1.92TB) | AMD-based alternative |
+| **Lsv2** | AMD EPYC 7551 | 80 | 640 GiB | 19.2 TB | Previous generation |
 
-    | VM Series | Processor | vCPUs (max) | RAM (max) | NVMe Storage (max) | Notes |
-    |-----------|-----------|-------------|-----------|-------------------|-------|
-    | **Lsv3** | Intel Ice Lake | 80 | 640 GiB | 19.2 TB (10×1.92TB) | Intel-based, default encryption |
-    | **Lasv3** | AMD EPYC 7763v | 80 | 640 GiB | 19.2 TB (10×1.92TB) | AMD-based alternative |
-    | **Lsv2** | AMD EPYC 7551 | 80 | 640 GiB | 19.2 TB | Previous generation |
-
-    One 1.92TB NVMe device per 8 vCPUs. NVMe drives encrypted by default using hardware-based encryption.
+One 1.92TB NVMe device per 8 vCPUs. NVMe drives encrypted by default using hardware-based encryption.
 
 ### Persistent Storage (Network-Attached)
 

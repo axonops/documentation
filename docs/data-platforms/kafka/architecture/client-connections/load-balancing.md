@@ -279,13 +279,9 @@ rectangle "All Partitions (sorted)" as All {
     rectangle "A-P0, A-P1, A-P2, B-P0, B-P1, B-P2" as List
 }
 
-rectangle "Consumer 1" as C1 {
-    note: A-P0, A-P2, B-P1
-}
+rectangle "Consumer 1\nA-P0, A-P2, B-P1" as C1
 
-rectangle "Consumer 2" as C2 {
-    note: A-P1, B-P0, B-P2
-}
+rectangle "Consumer 2\nA-P1, B-P0, B-P2" as C2
 
 All --> C1 : odd positions
 All --> C2 : even positions
@@ -374,12 +370,9 @@ end note
 ### Monitoring Broker Load
 
 ```bash
-# Check partition distribution
+# Check partition distribution (leaders per broker)
 kafka-topics.sh --describe --topic orders \
     --bootstrap-server localhost:9092
-
-# Check leader imbalance
-kafka-broker-api-versions.sh --bootstrap-server localhost:9092
 
 # Trigger preferred leader election
 kafka-leader-election.sh --bootstrap-server localhost:9092 \
@@ -451,7 +444,7 @@ Kafka clients don't use connection load balancing in the traditional sense. Inst
 | Aspect | Behavior |
 |--------|----------|
 | **Connection target** | Determined by partition leader |
-| **Number of connections** | One per broker needed |
+| **Number of connections** | One per broker needed (per client instance) |
 | **Request routing** | Client routes to correct broker |
 
 ### Avoiding External Load Balancers
@@ -479,7 +472,8 @@ note bottom of LB
   Load balancer doesn't know
   partition leaders
   → Requests go to wrong broker
-  → Forwarded to correct broker
+  → Broker returns NOT_LEADER_OR_FOLLOWER
+  → Client refreshes metadata and retries
   → Extra latency + overhead
 end note
 

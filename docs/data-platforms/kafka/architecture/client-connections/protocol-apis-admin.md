@@ -56,6 +56,7 @@ This document specifies the Kafka protocol APIs used for cluster administration,
 |:-------:|------|---------|
 | 80 | AddRaftVoter | Add voter to KRaft quorum |
 | 81 | RemoveRaftVoter | Remove voter from KRaft quorum |
+| 82 | UpdateRaftVoter | Update KRaft voter endpoints |
 
 ---
 
@@ -69,13 +70,13 @@ The CreateTopics API creates new topics with specified configurations.
 
 | Version | Kafka | Key Changes |
 |:-------:|-------|-------------|
-| 0 | 0.10.1 | Initial version |
-| 1 | 0.10.2 | Error message |
-| 2 | 0.11.0 | Response config |
-| 3 | 1.0.0 | Throttle time |
-| 4 | 2.0.0 | KIP-339 |
-| 5 | 2.4.0 | Flexible versions |
-| 6 | 2.7.0 | KIP-525 |
+| 0 | 0.10.1 | Initial version (removed in 4.0) |
+| 1 | 0.10.2 | Error message (removed in 4.0) |
+| 2 | 0.11.0 | Throttle time (4.0 baseline) |
+| 3 | 1.0.0 | Response before quota throttling |
+| 4 | 2.0.0 | KIP-464 optional partitions/replication |
+| 5 | 2.4.0 | Flexible versions; response configs (KIP-525) |
+| 6 | 2.7.0 | KIP-599 THROTTLING_QUOTA_EXCEEDED |
 | 7 | 3.0.0 | KIP-516 topic ID |
 
 ### Request Schema
@@ -124,9 +125,17 @@ Topic =>
     topic_id: UUID
     error_code: INT16
     error_message: NULLABLE_STRING
+    topic_config_error_code: INT16
     num_partitions: INT32
     replication_factor: INT16
     configs: [Config]
+
+Config =>
+    name: STRING
+    value: NULLABLE_STRING
+    read_only: BOOLEAN
+    config_source: INT8
+    is_sensitive: BOOLEAN
 ```
 
 ### Behavioral Contract
@@ -164,13 +173,13 @@ The DeleteTopics API deletes topics and all their data.
 
 | Version | Kafka | Key Changes |
 |:-------:|-------|-------------|
-| 0 | 0.10.1 | Initial version |
-| 1 | 0.10.2 | Error message |
-| 2 | 0.11.0 | Throttle time |
-| 3 | 1.2.0 | Response improvements |
+| 0 | 0.10.1 | Initial version (removed in 4.0) |
+| 1 | 0.10.2 | Throttle time (4.0 baseline) |
+| 2 | 0.11.0 | Response before quota throttling |
+| 3 | 1.2.0 | TOPIC_DELETION_DISABLED error |
 | 4 | 2.4.0 | Flexible versions |
-| 5 | 2.8.0 | KIP-516 topic ID |
-| 6 | 3.0.0 | KIP-516 improvements |
+| 5 | 2.8.0 | Error message; THROTTLING_QUOTA_EXCEEDED |
+| 6 | 3.0.0 | Topic ID support |
 
 ### Request Schema
 
@@ -187,7 +196,8 @@ Topic =>
 
 | Field | Type | Description |
 |-------|------|-------------|
-| `topics` | ARRAY | Topics to delete (by name or ID) |
+| `topics` | ARRAY | Topics to delete (v6+; by name or ID) |
+| `topic_names` | ARRAY | Topic names to delete (v0-5) |
 | `timeout_ms` | INT32 | Operation timeout |
 
 ### Response Schema
@@ -326,6 +336,7 @@ Resource =>
 | 4 | BROKER | Broker configuration |
 | 8 | BROKER_LOGGER | Broker logger level |
 | 16 | CLIENT_METRICS | Client metrics |
+| 32 | GROUP | Group configuration |
 
 ### Response Schema
 
@@ -358,12 +369,14 @@ Config =>
 | Value | Source | Description |
 |:-----:|--------|-------------|
 | 0 | UNKNOWN | Unknown source |
-| 1 | DYNAMIC_TOPIC_CONFIG | Topic-level override |
+| 1 | TOPIC_CONFIG | Dynamic topic config |
 | 2 | DYNAMIC_BROKER_CONFIG | Dynamic broker config |
-| 3 | DYNAMIC_DEFAULT_BROKER_CONFIG | Dynamic cluster default |
+| 3 | DYNAMIC_DEFAULT_BROKER_CONFIG | Dynamic broker default |
 | 4 | STATIC_BROKER_CONFIG | Static broker config |
 | 5 | DEFAULT_CONFIG | Built-in default |
-| 6 | DYNAMIC_BROKER_LOGGER_CONFIG | Dynamic logger config |
+| 6 | DYNAMIC_BROKER_LOGGER_CONFIG | Dynamic broker logger config |
+| 7 | CLIENT_METRICS_CONFIG | Dynamic client metrics config |
+| 8 | GROUP_CONFIG | Dynamic group config |
 
 ---
 
@@ -648,8 +661,8 @@ The ElectLeaders API triggers leader election for partitions.
 | Version | Kafka | Key Changes |
 |:-------:|-------|-------------|
 | 0 | 2.2.0 | Initial version (preferred leaders) |
-| 1 | 2.4.0 | Flexible versions |
-| 2 | 2.4.0 | Unclean leader election |
+| 1 | 2.4.0 | KIP-460 election types |
+| 2 | 2.4.0 | Flexible versions |
 
 ### Request Schema
 
@@ -770,11 +783,11 @@ The DescribeLogDirs API queries log directory usage on brokers.
 
 | Version | Kafka | Key Changes |
 |:-------:|-------|-------------|
-| 0 | 0.11.0 | Initial version |
-| 1 | 2.0.0 | Throttle time |
+| 0 | 0.11.0 | Initial version (removed in 4.0) |
+| 1 | 2.0.0 | Throttle time (4.0 baseline) |
 | 2 | 2.4.0 | Flexible versions |
-| 3 | 2.7.0 | KIP-516 |
-| 4 | 3.5.0 | KIP-827 |
+| 3 | 2.7.0 | Top-level error code |
+| 4 | 3.5.0 | Total/usable bytes (KIP-827) |
 
 ### Request Schema
 
@@ -820,8 +833,8 @@ Partition =>
 | Field | Type | Description |
 |-------|------|-------------|
 | `log_dir` | STRING | Log directory path |
-| `total_bytes` | INT64 | Total directory capacity |
-| `usable_bytes` | INT64 | Available space |
+| `total_bytes` | INT64 | Total size of the log volume (excludes remote storage) |
+| `usable_bytes` | INT64 | Usable size of the log volume (excludes remote storage) |
 | `partition_size` | INT64 | Partition data size |
 | `offset_lag` | INT64 | Replication lag (future replicas) |
 
@@ -838,8 +851,8 @@ The DescribeCluster API retrieves cluster metadata including controller and brok
 | Version | Kafka | Key Changes |
 |:-------:|-------|-------------|
 | 0 | 3.0.0 | Initial version |
-| 1 | 3.4.0 | Endpoints |
-| 2 | 3.9.0 | KIP-1082 |
+| 1 | 3.4.0 | EndpointType (KIP-919) |
+| 2 | 3.9.0 | IncludeFencedBrokers (KIP-1073) |
 
 ### Request Schema
 
@@ -847,6 +860,7 @@ The DescribeCluster API retrieves cluster metadata including controller and brok
 DescribeClusterRequest =>
     include_cluster_authorized_operations: BOOLEAN
     endpoint_type: INT8
+    include_fenced_brokers: BOOLEAN
 ```
 
 ### Response Schema
@@ -856,6 +870,7 @@ DescribeClusterResponse =>
     throttle_time_ms: INT32
     error_code: INT16
     error_message: NULLABLE_STRING
+    endpoint_type: INT8
     cluster_id: STRING
     controller_id: INT32
     brokers: [Broker]
@@ -866,6 +881,7 @@ Broker =>
     host: STRING
     port: INT32
     rack: NULLABLE_STRING
+    is_fenced: BOOLEAN
 ```
 
 ---

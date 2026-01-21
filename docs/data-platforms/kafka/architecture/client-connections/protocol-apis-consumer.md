@@ -75,7 +75,7 @@ Coord --> C : LeaveGroupResponse
 
 ### Overview
 
-The FindCoordinator API locates the broker serving as coordinator for a consumer group or transaction.
+The FindCoordinator API locates the broker serving as coordinator for a consumer group, transaction, or share group.
 
 ### Version History
 
@@ -85,8 +85,9 @@ The FindCoordinator API locates the broker serving as coordinator for a consumer
 | 1 | 0.10.0 | Throttle time |
 | 2 | 0.11.0 | Key type (transaction support) |
 | 3 | 2.4.0 | Flexible versions |
-| 4 | 3.0.0 | Batched requests |
-| 5 | 3.6.0 | KIP-699 |
+| 4 | 3.6.0 | Batched requests (KIP-699) |
+| 5 | 3.8.0 | TRANSACTION_ABORTABLE errors (KIP-890) |
+| 6 | 4.0.0 | Share groups (KIP-932) |
 
 ### Request Schema
 
@@ -99,9 +100,11 @@ FindCoordinatorRequest =>
 
 | Field | Type | Description |
 |-------|------|-------------|
-| `key` | STRING | Group ID or transactional ID |
-| `key_type` | INT8 | 0=GROUP, 1=TRANSACTION |
+| `key` | STRING | Coordinator key (v0-3) |
+| `key_type` | INT8 | 0=GROUP, 1=TRANSACTION, 2=SHARE |
 | `coordinator_keys` | ARRAY | Multiple keys (v4+) |
+
+For `key_type=SHARE`, the coordinator key format is `groupId:topicId:partition`.
 
 ### Response Schema
 
@@ -126,18 +129,24 @@ Coordinator =>
 
 | Field | Type | Description |
 |-------|------|-------------|
-| `node_id` | INT32 | Coordinator broker ID |
-| `host` | STRING | Coordinator hostname |
-| `port` | INT32 | Coordinator port |
+| `node_id` | INT32 | Coordinator broker ID (v0-3) |
+| `host` | STRING | Coordinator hostname (v0-3) |
+| `port` | INT32 | Coordinator port (v0-3) |
 
 ### Coordinator Selection
 
-The coordinator is deterministically selected based on the group ID hash:
+The coordinator is deterministically selected based on the coordinator key and internal topic:
 
 ```
-partition = abs(hash(group_id)) % __consumer_offsets.partitions
-coordinator = leader(__consumer_offsets, partition)
+partition = abs(hash(key)) % internal_topic.partitions
+coordinator = leader(internal_topic, partition)
 ```
+
+Key types map to internal topics:
+
+- GROUP -> `__consumer_offsets`
+- TRANSACTION -> `__transaction_state`
+- SHARE -> `__share_group_state`
 
 ### Behavioral Contract
 
@@ -161,7 +170,7 @@ coordinator = leader(__consumer_offsets, partition)
 
 ### Overview
 
-The JoinGroup API joins a consumer to a group, triggering rebalancing if necessary. The first member to join becomes the group leader.
+The JoinGroup API joins a consumer to a group, triggering rebalancing if necessary. The coordinator selects a group leader.
 
 ### Version History
 
@@ -169,14 +178,12 @@ The JoinGroup API joins a consumer to a group, triggering rebalancing if necessa
 |:-------:|-------|-------------|
 | 0 | 0.9.0 | Initial version |
 | 1 | 0.10.1 | Rebalance timeout |
-| 2 | 0.11.0 | Response member data |
-| 3 | 2.0.0 | KIP-345 |
-| 4 | 2.2.0 | KIP-394 group instance ID |
-| 5 | 2.3.0 | Group instance ID support |
+| 4 | 2.1.0 | Second join with assigned member ID |
+| 5 | 2.3.0 | Group instance ID |
 | 6 | 2.4.0 | Flexible versions |
-| 7 | 2.7.0 | KIP-559 protocol type |
-| 8 | 3.0.0 | KIP-848 |
-| 9 | 3.5.0 | KIP-848 improvements |
+| 7 | 2.7.0 | Protocol type in response (KIP-559) |
+| 8 | 3.0.0 | Reason field (KIP-800) |
+| 9 | 3.5.0 | Skip assignment in response |
 
 ### Request Schema
 
@@ -295,7 +302,7 @@ Dead --> [*] : group deleted
 
 | Aspect | Guarantee |
 |--------|-----------|
-| **Leader election** | First member to join becomes leader |
+| **Leader election** | Coordinator selects leader (often the first to join) |
 | **Generation ID** | Increments on each successful rebalance |
 | **Member ID** | Assigned by coordinator, must be used in subsequent requests |
 | **Timeout** | Members not completing join within rebalance_timeout are removed |
@@ -324,7 +331,7 @@ The Heartbeat API maintains consumer group membership and detects failures.
 |:-------:|-------|-------------|
 | 0 | 0.9.0 | Initial version |
 | 1 | 0.10.1 | Throttle time |
-| 2 | 0.11.0 | Response error |
+| 2 | 0.11.0 | Response before throttling |
 | 3 | 2.3.0 | Group instance ID |
 | 4 | 2.4.0 | Flexible versions |
 
@@ -463,11 +470,10 @@ The LeaveGroup API gracefully removes members from a consumer group.
 |:-------:|-------|-------------|
 | 0 | 0.9.0 | Initial version |
 | 1 | 0.10.1 | Throttle time |
-| 2 | 0.11.0 | Response improvements |
-| 3 | 2.3.0 | Batch member removal |
+| 2 | 0.11.0 | Response before throttling |
+| 3 | 2.3.0 | Batch member removal + group instance ID |
 | 4 | 2.4.0 | Flexible versions |
-| 5 | 2.7.0 | KIP-345 |
-| 6 | 3.5.0 | KIP-848 |
+| 5 | 3.0.0 | Reason field (KIP-800) |
 
 ### Request Schema
 
@@ -517,16 +523,16 @@ The OffsetCommit API stores consumer offsets in the `__consumer_offsets` topic.
 
 | Version | Kafka | Key Changes |
 |:-------:|-------|-------------|
-| 0 | 0.8.1 | Initial version (Zookeeper) |
-| 1 | 0.8.2 | Timestamp, Kafka storage |
-| 2 | 0.9.0 | Retention time |
+| 0 | 0.8.1 | Initial version (removed in 4.0) |
+| 1 | 0.8.2 | Commit timestamp (removed in 4.0) |
+| 2 | 0.9.0 | Retention time (4.0 baseline) |
 | 3 | 0.11.0 | Throttle time |
-| 4 | 2.0.0 | KIP-98 |
-| 5 | 2.1.0 | KIP-211 |
-| 6 | 2.3.0 | Group instance ID |
-| 7 | 2.3.0 | KIP-345 leader epoch |
+| 5 | 2.1.0 | Retention time removed |
+| 6 | 2.1.0 | Leader epoch |
+| 7 | 2.3.0 | Group instance ID |
 | 8 | 2.4.0 | Flexible versions |
-| 9 | 2.8.0 | KIP-709 |
+| 9 | 3.5.0 | Consumer group protocol (KIP-848) |
+| 10 | 4.0.0 | Topic IDs |
 
 ### Request Schema
 
@@ -540,19 +546,21 @@ OffsetCommitRequest =>
 
 Topic =>
     name: STRING
+    topic_id: UUID
     partitions: [Partition]
 
 Partition =>
     partition_index: INT32
     committed_offset: INT64
     committed_leader_epoch: INT32
-    commit_timestamp: INT64
     committed_metadata: NULLABLE_STRING
 ```
 
+Topic names are used through v9; v10+ uses `topic_id` instead.
+
 | Field | Type | Description |
 |-------|------|-------------|
-| `generation_id_or_member_epoch` | INT32 | Group generation or member epoch |
+| `generation_id_or_member_epoch` | INT32 | Group generation (classic) or member epoch (consumer protocol) |
 | `committed_offset` | INT64 | Offset to commit |
 | `committed_leader_epoch` | INT32 | Leader epoch of committed offset |
 | `committed_metadata` | NULLABLE_STRING | Application metadata |
@@ -566,6 +574,7 @@ OffsetCommitResponse =>
 
 Topic =>
     name: STRING
+    topic_id: UUID
     partitions: [Partition]
 
 Partition =>
@@ -603,16 +612,16 @@ The OffsetFetch API retrieves committed offsets for a consumer group.
 
 | Version | Kafka | Key Changes |
 |:-------:|-------|-------------|
-| 0 | 0.8.1 | Initial version |
-| 1 | 0.8.2 | Kafka-stored offsets |
-| 2 | 0.10.2 | All partitions |
+| 0 | 0.8.1 | Initial version (removed in 4.0) |
+| 1 | 0.8.2 | Kafka-stored offsets (4.0 baseline) |
+| 2 | 0.10.2 | All partitions + top-level error |
 | 3 | 0.11.0 | Throttle time |
-| 4 | 2.0.0 | KIP-98 |
-| 5 | 2.1.0 | KIP-211 |
+| 5 | 2.1.0 | Leader epoch |
 | 6 | 2.4.0 | Flexible versions |
 | 7 | 2.5.0 | Require stable |
 | 8 | 3.0.0 | Multiple groups |
-| 9 | 3.7.0 | KIP-848 |
+| 9 | 3.5.0 | Consumer group protocol (KIP-848) |
+| 10 | 4.0.0 | Topic IDs |
 
 ### Request Schema
 
@@ -637,7 +646,7 @@ Group =>
 | Field | Type | Description |
 |-------|------|-------------|
 | `topics` | ARRAY | Topics/partitions to fetch (null for all) |
-| `require_stable` | BOOLEAN | Require stable offsets (no pending transactions) |
+| `require_stable` | BOOLEAN | If true, unstable offsets return a retriable error |
 
 ### Response Schema
 
@@ -692,7 +701,7 @@ The DescribeGroups API retrieves detailed information about consumer groups.
 | 3 | 2.3.0 | Authorized operations |
 | 4 | 2.4.0 | KIP-345 |
 | 5 | 2.4.0 | Flexible versions |
-| 6 | 3.9.0 | KIP-848 |
+| 6 | 3.9.0 | GROUP_ID_NOT_FOUND (KIP-1043) |
 
 ### Request Schema
 
@@ -758,10 +767,9 @@ The ListGroups API lists all consumer groups on a broker.
 |:-------:|-------|-------------|
 | 0 | 0.9.0 | Initial version |
 | 1 | 0.10.1 | Throttle time |
-| 2 | 2.0.0 | Response improvements |
-| 3 | 2.6.0 | States filter |
-| 4 | 2.4.0 | Flexible versions |
-| 5 | 3.5.0 | KIP-848 types filter |
+| 3 | 2.4.0 | Flexible versions |
+| 4 | 2.6.0 | States filter (KIP-518) |
+| 5 | 3.5.0 | Types filter (KIP-848) |
 
 ### Request Schema
 
@@ -833,6 +841,52 @@ Result =>
 | **Precondition** | Group must be Empty or Dead |
 | **Atomicity** | Each group deletion is independent |
 | **Effect** | Removes group and all committed offsets |
+
+---
+
+## OffsetDelete API (Key 47)
+
+### Overview
+
+The OffsetDelete API deletes committed offsets for a group and set of partitions.
+
+### Version History
+
+| Version | Kafka | Key Changes |
+|:-------:|-------|-------------|
+| 0 | 0.11.0 | Initial version |
+
+### Request Schema
+
+```
+OffsetDeleteRequest =>
+    group_id: STRING
+    topics: [Topic]
+
+Topic =>
+    name: STRING
+    partitions: [Partition]
+
+Partition =>
+    partition_index: INT32
+```
+
+### Response Schema
+
+```
+OffsetDeleteResponse =>
+    error_code: INT16
+    throttle_time_ms: INT32
+    topics: [Topic]
+
+Topic =>
+    name: STRING
+    partitions: [Partition]
+
+Partition =>
+    partition_index: INT32
+    error_code: INT16
+```
 
 ---
 
