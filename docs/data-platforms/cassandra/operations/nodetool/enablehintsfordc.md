@@ -4,6 +4,8 @@ description: "Enable hinted handoff for a specific datacenter using nodetool ena
 meta:
   - name: keywords
     content: "nodetool enablehintsfordc, enable hints DC, hinted handoff, multi-datacenter"
+search:
+  boost: 3
 ---
 
 # nodetool enablehintsfordc

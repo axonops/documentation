@@ -4,6 +4,8 @@ description: "Kafka Connect error handling. Error tolerance, dead letter queues,
 meta:
   - name: keywords
     content: "Kafka Connect error handling, dead letter queue, error tolerance, connector failures"
+search:
+  boost: 3
 ---
 
 # Kafka Connect Error Handling

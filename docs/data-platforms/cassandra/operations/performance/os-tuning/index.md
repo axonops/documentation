@@ -4,6 +4,8 @@ description: "Operating system tuning for Cassandra. Linux kernel and file syste
 meta:
   - name: keywords
     content: "Cassandra OS tuning, Linux tuning, kernel settings"
+search:
+  boost: 3
 ---
 
 # Operating System Tuning for Cassandra

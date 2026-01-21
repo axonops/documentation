@@ -4,6 +4,8 @@ description: "Cassandra snitch configuration. Data center and rack awareness set
 meta:
   - name: keywords
     content: "Cassandra snitch, rack awareness, data center topology"
+search:
+  boost: 3
 ---
 
 # Cassandra Snitch Configuration

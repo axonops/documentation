@@ -4,6 +4,8 @@ description: "Implementing high-performance data access layers with Apache Cassa
 meta:
   - name: keywords
     content: "Cassandra speed layer, bank account data, low-latency, hot data, mobile banking, Lambda architecture"
+search:
+  boost: 3
 ---
 
 # Speed Layer Pattern

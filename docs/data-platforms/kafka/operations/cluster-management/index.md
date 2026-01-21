@@ -4,6 +4,8 @@ description: "Apache Kafka cluster management operations. Adding brokers, decomm
 meta:
   - name: keywords
     content: "Kafka cluster management, add broker, remove broker, rolling upgrade, partition reassignment"
+search:
+  boost: 3
 ---
 
 # Kafka Cluster Management

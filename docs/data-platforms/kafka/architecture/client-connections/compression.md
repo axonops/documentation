@@ -4,6 +4,8 @@ description: "Apache Kafka message compression. Compression codecs (GZIP, Snappy
 meta:
   - name: keywords
     content: "Kafka compression, lz4, snappy, zstd, gzip, message compression"
+search:
+  boost: 3
 ---
 
 # Kafka Message Compression

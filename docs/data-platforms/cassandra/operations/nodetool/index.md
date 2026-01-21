@@ -4,6 +4,8 @@ description: "Complete nodetool command reference for Apache Cassandra cluster m
 meta:
   - name: keywords
     content: "nodetool commands, Cassandra nodetool, cluster management, operations reference"
+search:
+  boost: 3
 ---
 
 # nodetool Reference

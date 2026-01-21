@@ -4,6 +4,8 @@ description: "Apache Kafka client quotas for rate limiting. Producer, consumer, 
 meta:
   - name: keywords
     content: "Kafka quotas, client quotas, producer quotas, consumer quotas, rate limiting"
+search:
+  boost: 3
 ---
 
 # Quotas Configuration

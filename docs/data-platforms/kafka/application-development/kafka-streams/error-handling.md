@@ -4,6 +4,8 @@ description: "Kafka Streams error handling patterns. Deserialization errors, pro
 meta:
   - name: keywords
     content: "Kafka Streams error handling, deserialization exception, production exception, dead letter queue, stream recovery"
+search:
+  boost: 3
 ---
 
 # Error Handling

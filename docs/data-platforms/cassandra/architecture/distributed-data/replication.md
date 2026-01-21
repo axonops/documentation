@@ -4,6 +4,8 @@ description: "Data replication in Cassandra. Replication factor, strategies, and
 meta:
   - name: keywords
     content: "Cassandra replication, replication factor, NetworkTopologyStrategy, replica"
+search:
+  boost: 3
 ---
 
 # Replication

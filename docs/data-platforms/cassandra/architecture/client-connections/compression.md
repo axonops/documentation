@@ -4,6 +4,8 @@ description: "Protocol compression in Cassandra connections. LZ4 and Snappy comp
 meta:
   - name: keywords
     content: "protocol compression, LZ4, Snappy, network compression, Cassandra"
+search:
+  boost: 3
 ---
 
 # Protocol Compression

@@ -4,6 +4,8 @@ description: "Apache Kafka Schema Registry for schema management, compatibility 
 meta:
   - name: keywords
     content: "Schema Registry, Kafka schema management, Avro, Protobuf, JSON Schema, schema evolution, compatibility"
+search:
+  boost: 3
 ---
 
 # Schema Registry

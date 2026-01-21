@@ -4,6 +4,8 @@ description: "Kafka Connect Elasticsearch Sink connector. Configuration, index m
 meta:
   - name: keywords
     content: "Kafka Elasticsearch connector, Elasticsearch sink, search indexing, Kafka to Elasticsearch"
+search:
+  boost: 3
 ---
 
 # Elasticsearch Sink Connector

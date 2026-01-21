@@ -4,6 +4,8 @@ description: "Apache Kafka .NET client guide using confluent-kafka-dotnet. Produ
 meta:
   - name: keywords
     content: "Kafka .NET, Confluent.Kafka, C# Kafka, .NET Kafka producer, NuGet Kafka, Kafka ASP.NET"
+search:
+  boost: 3
 ---
 
 # Kafka .NET Client

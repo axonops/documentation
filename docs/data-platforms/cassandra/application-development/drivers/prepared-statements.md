@@ -4,6 +4,8 @@ description: "Cassandra prepared statements guide. Optimize performance and prev
 meta:
   - name: keywords
     content: "Cassandra prepared statements, CQL performance, query optimization"
+search:
+  boost: 3
 ---
 
 # Prepared Statements

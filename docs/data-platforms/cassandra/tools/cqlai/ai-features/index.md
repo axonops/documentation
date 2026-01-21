@@ -4,6 +4,8 @@ description: "CQLAI AI features overview. Natural language queries and intellige
 meta:
   - name: keywords
     content: "CQLAI AI features, natural language, intelligent suggestions"
+search:
+  boost: 3
 ---
 
 # CQLAI AI Features

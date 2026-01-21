@@ -4,6 +4,8 @@ description: "Configure Microsoft Teams notifications in AxonOps. Send alerts to
 meta:
   - name: keywords
     content: "Microsoft Teams, Teams integration, AxonOps alerts, chat notifications"
+search:
+  boost: 8
 ---
 
 # Setup Microsoft Teams Integration

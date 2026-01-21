@@ -4,6 +4,8 @@ description: "Apache Kafka Node.js client guide using KafkaJS. Producer, consume
 meta:
   - name: keywords
     content: "Kafka Node.js, KafkaJS, node-rdkafka, JavaScript Kafka, npm kafka, Kafka TypeScript"
+search:
+  boost: 3
 ---
 
 # Kafka Node.js Client

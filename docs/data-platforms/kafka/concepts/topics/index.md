@@ -4,6 +4,8 @@ description: "Apache Kafka topics - partitions, replication, ordering guarantees
 meta:
   - name: keywords
     content: "Kafka topics, topic configuration, partitions, replication factor, topic management"
+search:
+  boost: 3
 ---
 
 # Kafka Topics

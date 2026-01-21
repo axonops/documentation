@@ -4,6 +4,8 @@ description: "Implementing digital currencies, loyalty points, and token systems
 meta:
   - name: keywords
     content: "Cassandra digital currency, token system, loyalty points, wallet management, double-spend prevention"
+search:
+  boost: 3
 ---
 
 # Digital Currency & Token Systems

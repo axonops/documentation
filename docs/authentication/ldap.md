@@ -4,6 +4,8 @@ description: "Configure LDAP authentication for AxonOps. Integrate with Active D
 meta:
   - name: keywords
     content: "LDAP authentication, Active Directory, OpenLDAP, AxonOps login"
+search:
+  boost: 5
 ---
 
 # LDAP Authentication

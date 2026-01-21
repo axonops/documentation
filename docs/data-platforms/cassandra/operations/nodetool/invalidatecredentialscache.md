@@ -4,6 +4,8 @@ description: "Clear credentials cache in Cassandra using nodetool invalidatecred
 meta:
   - name: keywords
     content: "nodetool invalidatecredentialscache, credentials cache, authentication, Cassandra"
+search:
+  boost: 3
 ---
 
 # nodetool invalidatecredentialscache

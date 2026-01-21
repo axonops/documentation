@@ -4,6 +4,8 @@ description: "Verify SSTable integrity and checksums in Cassandra using sstablev
 meta:
   - name: keywords
     content: "sstableverify, SSTable verification, checksum, Cassandra corruption"
+search:
+  boost: 3
 ---
 
 # sstableverify

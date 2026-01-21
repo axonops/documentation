@@ -4,6 +4,8 @@ description: "Complete Apache Kafka consumer configuration reference. Session ma
 meta:
   - name: keywords
     content: "Kafka consumer configuration, consumer settings, fetch.max.bytes, max.poll.records, consumer tuning"
+search:
+  boost: 3
 ---
 
 # Consumer Configuration

@@ -4,6 +4,8 @@ description: "Introduction to Apache Cassandra, a distributed NoSQL database des
 meta:
   - name: keywords
     content: "what is Cassandra, Apache Cassandra introduction, NoSQL database"
+search:
+  boost: 3
 ---
 
 # What is Apache Cassandra?

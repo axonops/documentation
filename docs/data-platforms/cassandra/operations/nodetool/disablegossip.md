@@ -4,6 +4,8 @@ description: "Disable gossip protocol on a Cassandra node using nodetool disable
 meta:
   - name: keywords
     content: "nodetool disablegossip, disable gossip, Cassandra gossip, node maintenance"
+search:
+  boost: 3
 ---
 
 # nodetool disablegossip

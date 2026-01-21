@@ -4,6 +4,8 @@ description: "Apache Kafka consumer group rebalancing internals. Rebalance proto
 meta:
   - name: keywords
     content: "Kafka consumer rebalancing, partition assignment, rebalance protocol, incremental rebalancing"
+search:
+  boost: 3
 ---
 
 # Kafka Consumer Group Rebalancing

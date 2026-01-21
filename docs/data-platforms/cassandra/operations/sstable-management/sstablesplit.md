@@ -4,6 +4,8 @@ description: "Split large SSTables into smaller files using sstablesplit. Manage
 meta:
   - name: keywords
     content: "sstablesplit, split SSTable, Cassandra disk space, large SSTable"
+search:
+  boost: 3
 ---
 
 # sstablesplit

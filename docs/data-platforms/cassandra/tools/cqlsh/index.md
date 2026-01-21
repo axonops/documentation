@@ -4,6 +4,8 @@ description: "CQLSH command-line shell reference for Apache Cassandra. Execute C
 meta:
   - name: keywords
     content: "cqlsh, CQL shell, command line, interactive queries"
+search:
+  boost: 3
 ---
 
 # cqlsh Reference Guide

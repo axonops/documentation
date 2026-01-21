@@ -4,6 +4,8 @@ description: "Size-Tiered Compaction Strategy (STCS) in Cassandra. How it works,
 meta:
   - name: keywords
     content: "STCS, Size-Tiered Compaction, Cassandra compaction, write-heavy workloads"
+search:
+  boost: 3
 ---
 
 # Size-Tiered Compaction Strategy (STCS)

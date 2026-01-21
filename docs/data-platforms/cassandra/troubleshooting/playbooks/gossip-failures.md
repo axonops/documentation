@@ -4,6 +4,8 @@ description: "Gossip failures troubleshooting playbook. Debug cluster communicat
 meta:
   - name: keywords
     content: "gossip troubleshooting, gossip failures, cluster communication"
+search:
+  boost: 3
 ---
 
 # Gossip Failures

@@ -4,6 +4,8 @@ description: "Getting started with CQLAI. Quick setup and first queries."
 meta:
   - name: keywords
     content: "CQLAI getting started, quick start, first queries"
+search:
+  boost: 3
 ---
 
 # Getting Started with CQLAI

@@ -4,6 +4,8 @@ description: "Complete guide to SASL/SCRAM authentication in Apache Kafka. SCRAM
 meta:
   - name: keywords
     content: "Kafka SCRAM, SASL SCRAM, Kafka authentication, SCRAM-SHA-512, Kafka security"
+search:
+  boost: 3
 ---
 
 # SASL/SCRAM Authentication

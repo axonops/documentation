@@ -4,6 +4,8 @@ description: "Identify SSTables blocking tombstone removal in Cassandra using ss
 meta:
   - name: keywords
     content: "sstableexpiredblockers, tombstone blockers, Cassandra tombstones, gc_grace_seconds"
+search:
+  boost: 3
 ---
 
 # sstableexpiredblockers

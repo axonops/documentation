@@ -4,6 +4,8 @@ description: "Cassandra CQL native protocol specification. Binary protocol, requ
 meta:
   - name: keywords
     content: "CQL protocol, native protocol, binary protocol, Cassandra protocol"
+search:
+  boost: 3
 ---
 
 # CQL Native Protocol Specification

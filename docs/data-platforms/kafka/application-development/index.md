@@ -4,6 +4,8 @@ description: "Developing applications with Apache Kafka. Producer and consumer p
 meta:
   - name: keywords
     content: "Kafka development, Kafka producer, Kafka consumer, Kafka Streams, Kafka client, application development"
+search:
+  boost: 3
 ---
 
 # Kafka Application Development

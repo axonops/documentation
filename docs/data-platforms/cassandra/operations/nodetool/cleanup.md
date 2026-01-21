@@ -4,6 +4,8 @@ description: "Remove data that no longer belongs to a node after topology change
 meta:
   - name: keywords
     content: "nodetool cleanup, Cassandra cleanup, remove old data, topology change"
+search:
+  boost: 3
 ---
 
 # nodetool cleanup

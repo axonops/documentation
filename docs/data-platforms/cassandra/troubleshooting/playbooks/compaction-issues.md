@@ -4,6 +4,8 @@ description: "Compaction issues troubleshooting playbook. Diagnose compaction pr
 meta:
   - name: keywords
     content: "compaction troubleshooting, compaction issues, stuck compaction"
+search:
+  boost: 3
 ---
 
 # Compaction Issues

@@ -4,6 +4,8 @@ description: "Apache Kafka configuration providers for external secret managemen
 meta:
   - name: keywords
     content: "Kafka configuration providers, secret management, external configuration, dynamic secrets"
+search:
+  boost: 3
 ---
 
 # Configuration Providers

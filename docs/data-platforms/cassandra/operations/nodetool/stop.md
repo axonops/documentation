@@ -4,6 +4,8 @@ description: "Stop compaction operations in Cassandra using nodetool stop comman
 meta:
   - name: keywords
     content: "nodetool stop, stop compaction, cancel compaction, Cassandra"
+search:
+  boost: 3
 ---
 
 # nodetool stop

@@ -4,6 +4,8 @@ description: "Set timeout for Cassandra operations using nodetool settimeout com
 meta:
   - name: keywords
     content: "nodetool settimeout, timeout settings, operation timeout, Cassandra"
+search:
+  boost: 3
 ---
 
 # nodetool settimeout

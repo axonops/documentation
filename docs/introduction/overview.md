@@ -4,6 +4,8 @@ description: "AxonOps overview. Unified monitoring, maintenance, and backup plat
 meta:
   - name: keywords
     content: "AxonOps overview, Cassandra monitoring, Kafka monitoring, database management"
+search:
+  boost: 5
 ---
 
 # Introduction to AxonOps

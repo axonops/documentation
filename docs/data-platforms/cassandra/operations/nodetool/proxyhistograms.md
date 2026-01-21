@@ -4,6 +4,8 @@ description: "Display coordinator read/write latency histograms using nodetool p
 meta:
   - name: keywords
     content: "nodetool proxyhistograms, latency histogram, coordinator latency, Cassandra"
+search:
+  boost: 3
 ---
 
 # nodetool proxyhistograms

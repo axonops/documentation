@@ -4,6 +4,8 @@ description: "Apache Kafka consumer groups deep dive. Group coordination, partit
 meta:
   - name: keywords
     content: "Kafka consumer group, group coordinator, group.id, consumer membership, partition assignment"
+search:
+  boost: 3
 ---
 
 # Consumer Groups

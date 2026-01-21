@@ -4,6 +4,8 @@ description: "Cassandra CREATE KEYSPACE syntax and options in CQL. Configure rep
 meta:
   - name: keywords
     content: "CREATE KEYSPACE, CQL keyspace, replication strategy, NetworkTopologyStrategy"
+search:
+  boost: 3
 ---
 
 # Keyspace Commands

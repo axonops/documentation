@@ -4,6 +4,8 @@ description: "Cassandra cluster state virtual tables. Monitor gossip, pending hi
 meta:
   - name: keywords
     content: "Cassandra gossip, pending hints, internode communication, cluster state"
+search:
+  boost: 3
 ---
 
 # Cluster State

@@ -4,6 +4,8 @@ description: "Cassandra reconnection policies. Configure exponential backoff and
 meta:
   - name: keywords
     content: "Cassandra reconnection, exponential backoff, connection retry"
+search:
+  boost: 3
 ---
 
 # Reconnection Policy

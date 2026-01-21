@@ -4,6 +4,8 @@ description: "Cassandra caches virtual table reference. Monitor key cache, row c
 meta:
   - name: keywords
     content: "Cassandra cache, key cache, row cache, cache hit ratio, cache monitoring"
+search:
+  boost: 3
 ---
 
 # Caches

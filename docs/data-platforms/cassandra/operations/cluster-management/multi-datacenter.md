@@ -4,6 +4,8 @@ description: "Add and remove Cassandra datacenters. Multi-DC expansion and conso
 meta:
   - name: keywords
     content: "Cassandra multi-datacenter, add datacenter, remove datacenter, geographic replication"
+search:
+  boost: 3
 ---
 
 # Multi-Datacenter Operations

@@ -4,6 +4,8 @@ description: "Cassandra SELECT statement syntax in CQL. Query data with WHERE, O
 meta:
   - name: keywords
     content: "CQL SELECT, query data, WHERE clause, Cassandra query, ALLOW FILTERING"
+search:
+  boost: 3
 ---
 
 # SELECT

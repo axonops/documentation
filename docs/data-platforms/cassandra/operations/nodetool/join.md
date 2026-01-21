@@ -4,6 +4,8 @@ description: "Complete node bootstrap and join the Cassandra ring using nodetool
 meta:
   - name: keywords
     content: "nodetool join, join ring, Cassandra bootstrap, node joining"
+search:
+  boost: 3
 ---
 
 # nodetool join

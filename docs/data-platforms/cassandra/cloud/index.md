@@ -4,6 +4,8 @@ description: "Cassandra cloud deployment options. AWS, Azure, GCP, and Kubernete
 meta:
   - name: keywords
     content: "Cassandra cloud, cloud deployment, AWS, Azure, GCP, Kubernetes"
+search:
+  boost: 3
 ---
 
 # Cassandra Cloud Deployment Guide

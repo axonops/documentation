@@ -4,6 +4,8 @@ description: "Cassandra index architecture covering secondary indexes, SASI, and
 meta:
   - name: keywords
     content: "Cassandra indexes, secondary index architecture, SASI, SAI"
+search:
+  boost: 3
 ---
 
 # Indexes

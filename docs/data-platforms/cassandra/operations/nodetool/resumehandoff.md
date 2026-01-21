@@ -4,6 +4,8 @@ description: "Resume hinted handoff delivery in Cassandra using nodetool resumeh
 meta:
   - name: keywords
     content: "nodetool resumehandoff, resume hints, hinted handoff, Cassandra"
+search:
+  boost: 3
 ---
 
 # nodetool resumehandoff

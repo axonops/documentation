@@ -4,6 +4,8 @@ description: "Apache Kafka performance tuning guide. Producer throughput, consum
 meta:
   - name: keywords
     content: "Kafka performance tuning, producer throughput, consumer optimization, Kafka benchmarking, latency tuning"
+search:
+  boost: 3
 ---
 
 # Performance Tuning

@@ -4,6 +4,8 @@ description: "Cassandra repair strategies. Full vs incremental, subrange repairs
 meta:
   - name: keywords
     content: "Cassandra repair strategies, incremental repair, subrange repair"
+search:
+  boost: 3
 ---
 
 # Repair Strategies

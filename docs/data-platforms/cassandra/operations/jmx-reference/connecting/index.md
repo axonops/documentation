@@ -4,6 +4,8 @@ description: "Connect to Cassandra JMX. Remote JMX setup and authentication conf
 meta:
   - name: keywords
     content: "Cassandra JMX connection, remote JMX, JMX authentication"
+search:
+  boost: 3
 ---
 
 # Connecting to Cassandra JMX

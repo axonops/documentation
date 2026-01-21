@@ -4,6 +4,8 @@ description: "Implementing idempotent operations with Apache Cassandra. Covers i
 meta:
   - name: keywords
     content: "Cassandra idempotency, idempotent operations, deduplication, retry safety, distributed systems"
+search:
+  boost: 3
 ---
 
 # Idempotency Patterns

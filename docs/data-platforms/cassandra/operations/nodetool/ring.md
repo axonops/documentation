@@ -4,6 +4,8 @@ description: "Display token ring information for Cassandra cluster using nodetoo
 meta:
   - name: keywords
     content: "nodetool ring, token ring, Cassandra ring, cluster topology"
+search:
+  boost: 3
 ---
 
 # nodetool ring

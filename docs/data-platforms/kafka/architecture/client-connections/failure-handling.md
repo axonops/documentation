@@ -4,6 +4,8 @@ description: "Apache Kafka client failure handling. Retry policies, idempotent p
 meta:
   - name: keywords
     content: "Kafka failure handling, connection retry, broker failure, client resilience"
+search:
+  boost: 3
 ---
 
 # Kafka Client Failure Handling

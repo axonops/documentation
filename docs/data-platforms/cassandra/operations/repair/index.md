@@ -4,6 +4,8 @@ description: "Cassandra repair overview. Keep data consistent across replicas."
 meta:
   - name: keywords
     content: "Cassandra repair, data consistency, repair operations"
+search:
+  boost: 3
 ---
 
 # Repair Operations Guide

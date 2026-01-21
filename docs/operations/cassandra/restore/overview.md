@@ -4,6 +4,8 @@ description: "Cassandra restore overview with AxonOps. Restore from backups to r
 meta:
   - name: keywords
     content: "Cassandra restore, data recovery, AxonOps restore, backup restore"
+search:
+  boost: 8
 ---
 
 AxonOps provides the ability to restore from local snapshots and remote backups.

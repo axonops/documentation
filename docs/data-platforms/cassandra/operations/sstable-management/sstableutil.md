@@ -4,6 +4,8 @@ description: "List SSTable component files for a table using sstableutil. Find d
 meta:
   - name: keywords
     content: "sstableutil, list SSTables, SSTable files, Cassandra storage"
+search:
+  boost: 3
 ---
 
 # sstableutil

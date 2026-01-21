@@ -4,6 +4,8 @@ description: "Common application development mistakes with Cassandra. Driver mis
 meta:
   - name: keywords
     content: "Cassandra anti-patterns, driver mistakes, application errors, production failures"
+search:
+  boost: 3
 ---
 
 # Application Development Anti-Patterns

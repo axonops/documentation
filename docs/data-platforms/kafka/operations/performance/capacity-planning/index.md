@@ -4,6 +4,8 @@ description: "Apache Kafka capacity planning guide. Sizing brokers, storage, net
 meta:
   - name: keywords
     content: "Kafka capacity planning, Kafka sizing, broker sizing, storage planning"
+search:
+  boost: 3
 ---
 
 # Kafka Capacity Planning

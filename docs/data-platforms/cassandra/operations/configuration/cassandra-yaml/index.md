@@ -4,6 +4,8 @@ description: "Apache Cassandra cassandra.yaml configuration documentation includ
 meta:
   - name: keywords
     content: "cassandra.yaml, Cassandra configuration, config reference"
+search:
+  boost: 3
 ---
 
 # cassandra.yaml Configuration

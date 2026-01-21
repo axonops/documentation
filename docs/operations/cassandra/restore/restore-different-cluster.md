@@ -4,6 +4,8 @@ description: "Restore Cassandra data to a different cluster. Cross-cluster data 
 meta:
   - name: keywords
     content: "restore different cluster, data migration, cross-cluster, Cassandra"
+search:
+  boost: 8
 ---
 
 # Restore a backup to a different cluster

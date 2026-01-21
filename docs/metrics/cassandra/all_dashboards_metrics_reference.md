@@ -4,6 +4,8 @@ description: "Complete Cassandra metrics reference for AxonOps dashboards. All a
 meta:
   - name: keywords
     content: "Cassandra metrics reference, all metrics, dashboard metrics"
+search:
+  boost: 8
 ---
 
 # AxonOps All Dashboards Metrics Reference

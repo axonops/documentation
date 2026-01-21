@@ -4,6 +4,8 @@ description: "Restore single Cassandra node with same IP address. Node recovery 
 meta:
   - name: keywords
     content: "restore node same IP, node recovery, single node restore"
+search:
+  boost: 8
 ---
 
 # Restore a single node from a remote backup

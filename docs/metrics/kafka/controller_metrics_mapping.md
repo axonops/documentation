@@ -4,6 +4,8 @@ description: "Kafka controller dashboard metrics mapping. Controller election an
 meta:
   - name: keywords
     content: "Kafka controller metrics, controller election, partitions"
+search:
+  boost: 8
 ---
 
 # AxonOps Kafka Controller Dashboard Metrics Mapping

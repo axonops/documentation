@@ -4,6 +4,8 @@ description: "CQLAI configuration guide. Set up connections and customize behavi
 meta:
   - name: keywords
     content: "CQLAI configuration, setup, connection config"
+search:
+  boost: 3
 ---
 
 # CQLAI Configuration

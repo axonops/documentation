@@ -4,6 +4,8 @@ description: "Apache Kafka core protocol APIs. Produce, Fetch, ListOffsets, Meta
 meta:
   - name: keywords
     content: "Kafka core API, Produce API, Metadata API, Kafka request types"
+search:
+  boost: 3
 ---
 
 # Kafka Core Protocol APIs

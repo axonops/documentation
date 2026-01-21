@@ -4,6 +4,8 @@ description: "Deploy Apache Cassandra on Microsoft Azure. VM size selection, man
 meta:
   - name: keywords
     content: "Cassandra Azure, Azure deployment, managed disks, Azure VMs"
+search:
+  boost: 3
 ---
 
 # Cassandra on Microsoft Azure

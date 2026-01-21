@@ -4,6 +4,8 @@ description: "View compaction history in Cassandra using nodetool compactionhist
 meta:
   - name: keywords
     content: "nodetool compactionhistory, compaction history, Cassandra compaction, SSTable history"
+search:
+  boost: 3
 ---
 
 # nodetool compactionhistory

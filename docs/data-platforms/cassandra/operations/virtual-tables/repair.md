@@ -4,6 +4,8 @@ description: "Cassandra repair virtual tables. Track repair operations, sessions
 meta:
   - name: keywords
     content: "Cassandra repair, repair tracking, repair sessions, Merkle tree validation"
+search:
+  boost: 3
 ---
 
 # Repair

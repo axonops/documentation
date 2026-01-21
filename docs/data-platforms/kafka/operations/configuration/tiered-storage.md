@@ -4,6 +4,8 @@ description: "Apache Kafka tiered storage configuration. Remote storage for cost
 meta:
   - name: keywords
     content: "Kafka tiered storage, remote storage, cloud storage tier, infinite retention"
+search:
+  boost: 3
 ---
 
 # Tiered Storage Configuration

@@ -4,6 +4,8 @@ description: "Implementing multi-tenant architectures with Apache Cassandra. Cov
 meta:
   - name: keywords
     content: "Cassandra multi-tenant, SaaS architecture, tenant isolation, noisy neighbor, resource quotas"
+search:
+  boost: 3
 ---
 
 # Multi-Tenant Data Isolation

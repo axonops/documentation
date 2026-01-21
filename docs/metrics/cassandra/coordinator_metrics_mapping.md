@@ -4,6 +4,8 @@ description: "Cassandra coordinator dashboard metrics mapping. Request coordinat
 meta:
   - name: keywords
     content: "coordinator metrics, request coordination, Cassandra"
+search:
+  boost: 8
 ---
 
 # AxonOps Coordinator Dashboard Metrics Mapping

@@ -4,6 +4,8 @@ description: "Disable old CQL protocol versions in Cassandra using nodetool disa
 meta:
   - name: keywords
     content: "nodetool disableoldprotocolversions, CQL protocol, protocol versions, Cassandra"
+search:
+  boost: 3
 ---
 
 # nodetool disableoldprotocolversions

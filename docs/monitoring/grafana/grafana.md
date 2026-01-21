@@ -4,6 +4,8 @@ description: "View AxonOps metrics in Grafana. Export and visualize Cassandra an
 meta:
   - name: keywords
     content: "Grafana integration, AxonOps Grafana, metrics visualization"
+search:
+  boost: 8
 ---
 
 # Accessing AxonOps Metrics with Grafana

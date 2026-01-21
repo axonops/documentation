@@ -4,6 +4,8 @@ description: "Display network statistics and streaming operations in Cassandra u
 meta:
   - name: keywords
     content: "nodetool netstats, network statistics, streaming status, Cassandra"
+search:
+  boost: 3
 ---
 
 # nodetool netstats

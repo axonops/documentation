@@ -4,6 +4,8 @@ description: "Cassandra MBeans reference. All available management beans and ope
 meta:
   - name: keywords
     content: "Cassandra MBeans, JMX management, MBean operations"
+search:
+  boost: 3
 ---
 
 # Cassandra MBeans Reference

@@ -4,6 +4,8 @@ description: "Kafka Connect File Source connector. Log file streaming, file watc
 meta:
   - name: keywords
     content: "Kafka file source connector, FileStreamSource, file ingestion, log file connector"
+search:
+  boost: 3
 ---
 
 # File Source Connector

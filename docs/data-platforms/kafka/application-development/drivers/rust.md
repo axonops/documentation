@@ -4,6 +4,8 @@ description: "Apache Kafka Rust client guide using rdkafka. Producer, consumer, 
 meta:
   - name: keywords
     content: "Kafka Rust, rdkafka, Rust Kafka client, Tokio Kafka, async Kafka, Cargo kafka"
+search:
+  boost: 3
 ---
 
 # Kafka Rust Client

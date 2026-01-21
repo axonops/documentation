@@ -4,6 +4,8 @@ description: "Filesystem architecture comparison and recommendations for Apache 
 meta:
   - name: keywords
     content: "Cassandra filesystem, XFS, ext4, commit log performance, storage optimization"
+search:
+  boost: 3
 ---
 
 # Filesystem Selection for Cassandra

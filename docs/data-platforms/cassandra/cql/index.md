@@ -4,6 +4,8 @@ description: "Complete CQL (Cassandra Query Language) reference documentation wi
 meta:
   - name: keywords
     content: "CQL, Cassandra Query Language, CQL reference, CQL syntax, CQL tutorial, Apache Cassandra query"
+search:
+  boost: 3
 ---
 
 # CQL Reference

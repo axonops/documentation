@@ -4,6 +4,8 @@ description: "Cassandra backup strategies. Snapshot-based and incremental backup
 meta:
   - name: keywords
     content: "Cassandra backup, snapshot backup, incremental backup"
+search:
+  boost: 3
 ---
 
 # Backup Procedures

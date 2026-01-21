@@ -1,6 +1,8 @@
 ---
 title: Strimzi Kafka Cluster with Local Storage and AxonOps Agent
 description: Deploy a KRaft-based Kafka cluster using Strimzi with local hostPath storage and AxonOps monitoring integration
+search:
+  boost: 5
 ---
 
 # Strimzi Kafka Cluster with Local Storage and AxonOps Agent

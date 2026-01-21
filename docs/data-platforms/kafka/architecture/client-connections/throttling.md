@@ -4,6 +4,8 @@ description: "Apache Kafka client throttling. Quotas, rate limiting, backpressur
 meta:
   - name: keywords
     content: "Kafka throttling, client quotas, rate limiting, quota enforcement"
+search:
+  boost: 3
 ---
 
 # Kafka Client Throttling

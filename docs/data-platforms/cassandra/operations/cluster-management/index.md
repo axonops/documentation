@@ -4,6 +4,8 @@ description: "Operational procedures for Cassandra cluster topology changes. Add
 meta:
   - name: keywords
     content: "Cassandra cluster management, topology changes, bootstrap, decommission, node replacement"
+search:
+  boost: 3
 ---
 
 # Cluster Management Operations

@@ -4,6 +4,8 @@ description: "Deploying Apache Kafka on Kubernetes. StatefulSets, persistent vol
 meta:
   - name: keywords
     content: "Kafka Kubernetes, Kafka K8s, Kafka StatefulSet, Kafka operator, container deployment"
+search:
+  boost: 3
 ---
 
 # Kafka on Kubernetes

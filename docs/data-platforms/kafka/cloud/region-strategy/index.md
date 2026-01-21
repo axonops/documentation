@@ -4,6 +4,8 @@ description: "Kafka region strategy for cloud deployments. Cloud availability st
 meta:
   - name: keywords
     content: "Kafka multi-region, Kafka disaster recovery, cloud region strategy, Kafka high availability, RPO RTO"
+search:
+  boost: 3
 ---
 
 # Single Region vs Multi-Region

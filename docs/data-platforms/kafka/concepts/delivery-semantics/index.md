@@ -4,6 +4,8 @@ description: "Kafka message delivery guarantees: at-most-once, at-least-once, an
 meta:
   - name: keywords
     content: "Kafka delivery semantics, at-most-once, at-least-once, exactly-once, EOS, message delivery"
+search:
+  boost: 3
 ---
 
 # Delivery Semantics

@@ -4,6 +4,8 @@ description: "Client-side load balancing in Cassandra drivers. Token-aware routi
 meta:
   - name: keywords
     content: "load balancing, token-aware routing, datacenter aware, Cassandra driver"
+search:
+  boost: 3
 ---
 
 # Load Balancing Policies

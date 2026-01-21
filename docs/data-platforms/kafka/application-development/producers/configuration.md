@@ -4,6 +4,8 @@ description: "Complete Apache Kafka producer configuration reference. All settin
 meta:
   - name: keywords
     content: "Kafka producer configuration, producer settings, acks, batch.size, linger.ms, producer tuning"
+search:
+  boost: 3
 ---
 
 # Kafka Producer Configuration

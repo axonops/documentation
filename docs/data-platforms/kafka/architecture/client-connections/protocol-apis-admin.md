@@ -4,6 +4,8 @@ description: "Apache Kafka administrative protocol APIs. CreateTopics, DeleteTop
 meta:
   - name: keywords
     content: "Kafka admin API, AdminClient, topic management, broker admin, cluster administration"
+search:
+  boost: 3
 ---
 
 # Kafka Administrative Protocol APIs

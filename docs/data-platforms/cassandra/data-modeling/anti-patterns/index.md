@@ -4,6 +4,8 @@ description: "Cassandra data modeling anti-patterns. Common mistakes and how to 
 meta:
   - name: keywords
     content: "Cassandra anti-patterns, data modeling mistakes, design pitfalls"
+search:
+  boost: 3
 ---
 
 # Cassandra Anti-Patterns

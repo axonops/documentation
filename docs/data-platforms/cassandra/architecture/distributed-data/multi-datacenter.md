@@ -4,6 +4,8 @@ description: "Comprehensive guide to deploying Apache Cassandra across multiple 
 meta:
   - name: keywords
     content: "Cassandra multi-datacenter, multi-region Cassandra, geo-distributed database, cross-DC replication, LOCAL_QUORUM"
+search:
+  boost: 3
 ---
 
 # Multi-Datacenter Deployments

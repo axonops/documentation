@@ -4,6 +4,8 @@ description: "Apache Kafka Python client guide using confluent-kafka-python. Pro
 meta:
   - name: keywords
     content: "Kafka Python, confluent-kafka, kafka-python, Python Kafka producer, Python Kafka consumer, pip kafka"
+search:
+  boost: 3
 ---
 
 # Kafka Python Client

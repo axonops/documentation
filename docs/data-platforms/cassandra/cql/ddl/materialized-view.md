@@ -4,6 +4,8 @@ description: "Cassandra CREATE MATERIALIZED VIEW syntax in CQL. Build pre-comput
 meta:
   - name: keywords
     content: "materialized view, CREATE MATERIALIZED VIEW, CQL view, Cassandra"
+search:
+  boost: 3
 ---
 
 # Materialized View Commands

@@ -4,6 +4,8 @@ description: "Client authentication in Cassandra. Password authenticator, and cu
 meta:
   - name: keywords
     content: "Cassandra authentication, password authenticator, client auth"
+search:
+  boost: 3
 ---
 
 # Authentication Architecture

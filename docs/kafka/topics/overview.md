@@ -4,6 +4,8 @@ description: "Kafka topic management in AxonOps. Monitor and manage topics acros
 meta:
   - name: keywords
     content: "Kafka topics, topic management, AxonOps Kafka"
+search:
+  boost: 8
 ---
 
 # Kafka Topics

@@ -4,6 +4,8 @@ description: "List all snapshots on a Cassandra node using nodetool listsnapshot
 meta:
   - name: keywords
     content: "nodetool listsnapshots, list snapshots, Cassandra backup, snapshot info"
+search:
+  boost: 3
 ---
 
 # nodetool listsnapshots

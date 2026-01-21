@@ -4,6 +4,8 @@ description: "Cassandra CREATE TABLE syntax in CQL. Define partition keys, clust
 meta:
   - name: keywords
     content: "CREATE TABLE, CQL table, partition key, clustering column, Cassandra schema"
+search:
+  boost: 3
 ---
 
 # Table Commands

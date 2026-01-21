@@ -4,6 +4,8 @@ description: "Cassandra CQL security features: role-based access control (RBAC) 
 meta:
   - name: keywords
     content: "CQL security, RBAC, data masking, Cassandra permissions, access control"
+search:
+  boost: 3
 ---
 
 # CQL Security

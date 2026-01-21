@@ -4,6 +4,8 @@ description: "CQL secondary index queries in Cassandra. Use WHERE clauses on ind
 meta:
   - name: keywords
     content: "secondary index query, CQL index, WHERE clause, Cassandra indexing"
+search:
+  boost: 3
 ---
 
 # Secondary Index Queries

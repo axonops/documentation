@@ -4,6 +4,8 @@ description: "Apache Cassandra architecture overview covering storage engine, di
 meta:
   - name: keywords
     content: "Cassandra architecture, distributed database, NoSQL architecture, cluster design"
+search:
+  boost: 3
 ---
 
 # Cassandra Architecture

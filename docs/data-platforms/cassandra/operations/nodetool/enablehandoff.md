@@ -4,6 +4,8 @@ description: "Enable hinted handoff in Cassandra using nodetool enablehandoff co
 meta:
   - name: keywords
     content: "nodetool enablehandoff, enable hints, hinted handoff, Cassandra"
+search:
+  boost: 3
 ---
 
 # nodetool enablehandoff

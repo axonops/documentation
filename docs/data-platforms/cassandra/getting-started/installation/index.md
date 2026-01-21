@@ -4,6 +4,8 @@ description: "Cassandra installation guide. Install on Linux, macOS, and Windows
 meta:
   - name: keywords
     content: "Cassandra installation, install Cassandra, setup guide"
+search:
+  boost: 3
 ---
 
 # Installing Apache Cassandra

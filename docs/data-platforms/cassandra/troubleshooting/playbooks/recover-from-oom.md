@@ -4,6 +4,8 @@ description: "OOM recovery troubleshooting playbook. Recover from out-of-memory 
 meta:
   - name: keywords
     content: "OOM recovery, out of memory, crash recovery"
+search:
+  boost: 3
 ---
 
 # Recover from OOM

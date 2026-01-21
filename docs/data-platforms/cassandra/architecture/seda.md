@@ -4,6 +4,8 @@ description: "Staged Event-Driven Architecture in Apache Cassandra. Thread pools
 meta:
   - name: keywords
     content: "Cassandra SEDA, staged event-driven architecture, thread pools, tpstats, backpressure"
+search:
+  boost: 3
 ---
 
 # Staged Event-Driven Architecture (SEDA)

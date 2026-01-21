@@ -4,6 +4,8 @@ description: "Decommission node troubleshooting playbook. Handle decommission fa
 meta:
   - name: keywords
     content: "decommission troubleshooting, node removal, decommission issues"
+search:
+  boost: 3
 ---
 
 # Decommission Node

@@ -4,6 +4,8 @@ description: "Set read/write concurrency in Cassandra using nodetool setconcurre
 meta:
   - name: keywords
     content: "nodetool setconcurrency, concurrency, thread pool, Cassandra performance"
+search:
+  boost: 3
 ---
 
 # nodetool setconcurrency

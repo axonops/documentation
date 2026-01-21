@@ -4,6 +4,8 @@ description: "Apache Kafka wire protocol message framing. Request and response h
 meta:
   - name: keywords
     content: "Kafka protocol messages, request header, response header, message format"
+search:
+  boost: 3
 ---
 
 # Kafka Protocol Message Format

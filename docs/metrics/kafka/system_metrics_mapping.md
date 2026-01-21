@@ -4,6 +4,8 @@ description: "Kafka system dashboard metrics mapping. CPU, memory, and disk metr
 meta:
   - name: keywords
     content: "Kafka system metrics, CPU, memory, disk"
+search:
+  boost: 8
 ---
 
 # AxonOps Kafka System Dashboard Metrics Mapping

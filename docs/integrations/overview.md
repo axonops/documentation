@@ -4,6 +4,8 @@ description: "AxonOps notification integrations overview. Connect to Slack, Page
 meta:
   - name: keywords
     content: "integrations overview, notifications, alerting channels, AxonOps"
+search:
+  boost: 8
 ---
 
 AxonOps provide various integrations for the notifications.

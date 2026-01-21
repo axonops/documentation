@@ -4,6 +4,8 @@ description: "Apache Kafka record batch format specification. Message format ver
 meta:
   - name: keywords
     content: "Kafka record batch, message format, record headers, record compression"
+search:
+  boost: 3
 ---
 
 # Kafka Record Batch Format

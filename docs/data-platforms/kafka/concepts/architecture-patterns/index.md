@@ -4,6 +4,8 @@ description: "Event-driven architecture patterns with Apache Kafka. Event sourci
 meta:
   - name: keywords
     content: "Kafka patterns, event sourcing, CQRS, saga pattern, event-driven architecture"
+search:
+  boost: 3
 ---
 
 # Architecture Patterns

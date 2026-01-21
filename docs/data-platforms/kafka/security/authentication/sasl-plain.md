@@ -4,6 +4,8 @@ description: "SASL/PLAIN authentication in Apache Kafka. Configuration guide for
 meta:
   - name: keywords
     content: "Kafka PLAIN, SASL PLAIN, Kafka authentication, Kafka security, username password"
+search:
+  boost: 3
 ---
 
 # SASL/PLAIN Authentication

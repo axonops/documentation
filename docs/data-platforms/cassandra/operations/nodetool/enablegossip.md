@@ -4,6 +4,8 @@ description: "Enable gossip protocol on a Cassandra node using nodetool enablego
 meta:
   - name: keywords
     content: "nodetool enablegossip, enable gossip, Cassandra gossip, node maintenance"
+search:
+  boost: 3
 ---
 
 # nodetool enablegossip

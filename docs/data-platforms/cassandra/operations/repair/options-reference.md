@@ -4,6 +4,8 @@ description: "Cassandra repair options reference. All nodetool repair flags and 
 meta:
   - name: keywords
     content: "Cassandra repair options, nodetool repair flags, repair settings"
+search:
+  boost: 3
 ---
 
 # Repair Options Reference

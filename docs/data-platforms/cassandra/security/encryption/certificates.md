@@ -4,6 +4,8 @@ description: "Certificate management for Cassandra TLS. Generate, sign, and rota
 meta:
   - name: keywords
     content: "Cassandra certificates, certificate generation, certificate rotation, TLS"
+search:
+  boost: 3
 ---
 
 # Certificate Types and Generation

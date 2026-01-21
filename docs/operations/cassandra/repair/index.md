@@ -4,6 +4,8 @@ description: "Cassandra repair with AxonOps. Automated repair scheduling and man
 meta:
   - name: keywords
     content: "Cassandra repair, automated repair, AxonOps repair, anti-entropy"
+search:
+  boost: 8
 ---
 
 Repairs must be completed regularly to maintain Cassandra nodes.

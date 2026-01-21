@@ -4,6 +4,8 @@ description: "AxonOps release notes. Latest features, improvements, and bug fixe
 meta:
   - name: keywords
     content: "release notes, AxonOps updates, changelog, new features"
+search:
+  boost: 5
 ---
 
 ## Release 2026-01-15

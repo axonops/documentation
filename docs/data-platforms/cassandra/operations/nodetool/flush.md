@@ -4,6 +4,8 @@ description: "Flush memtables to SSTables on disk in Cassandra using nodetool fl
 meta:
   - name: keywords
     content: "nodetool flush, flush memtables, Cassandra flush, write to disk"
+search:
+  boost: 3
 ---
 
 # nodetool flush

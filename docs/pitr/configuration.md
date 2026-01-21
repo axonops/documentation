@@ -4,6 +4,8 @@ description: "Configure point-in-time restore for Cassandra. Commitlog archiving
 meta:
   - name: keywords
     content: "PITR configuration, commitlog archiving, point-in-time setup"
+search:
+  boost: 8
 ---
 
 #### Prerequisites

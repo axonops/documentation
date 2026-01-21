@@ -4,6 +4,8 @@ description: "Apache Kafka replication protocol. ISR, leader election, replica f
 meta:
   - name: keywords
     content: "Kafka replication, ISR, leader election, replica, Kafka durability"
+search:
+  boost: 3
 ---
 
 # Replication

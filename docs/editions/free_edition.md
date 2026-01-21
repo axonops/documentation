@@ -4,6 +4,8 @@ description: "AxonOps Free Edition features. Get started with Cassandra and Kafk
 meta:
   - name: keywords
     content: "AxonOps Free, free tier, getting started, trial"
+search:
+  boost: 5
 ---
 
 # Free Edition

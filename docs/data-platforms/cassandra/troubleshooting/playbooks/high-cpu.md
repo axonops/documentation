@@ -4,6 +4,8 @@ description: "High CPU troubleshooting playbook. Diagnose CPU-bound issues."
 meta:
   - name: keywords
     content: "high CPU troubleshooting, CPU issues, performance problems"
+search:
+  boost: 3
 ---
 
 # High CPU Usage Playbook

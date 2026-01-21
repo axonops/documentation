@@ -4,6 +4,8 @@ description: "Cassandra security dashboard metrics mapping. Authentication and a
 meta:
   - name: keywords
     content: "security metrics, authentication metrics, authorization, Cassandra"
+search:
+  boost: 8
 ---
 
 # AxonOps Security Dashboard Metrics Mapping

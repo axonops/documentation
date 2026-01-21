@@ -4,6 +4,8 @@ description: "Complete Kafka metrics reference for AxonOps dashboards. All avail
 meta:
   - name: keywords
     content: "Kafka metrics reference, all metrics, dashboard metrics"
+search:
+  boost: 8
 ---
 
 # AxonOps All Kafka Dashboards Metrics Reference

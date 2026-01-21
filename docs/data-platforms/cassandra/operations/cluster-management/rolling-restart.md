@@ -4,6 +4,8 @@ description: "Execute rolling restarts in Cassandra clusters. Node-by-node and r
 meta:
   - name: keywords
     content: "Cassandra rolling restart, restart cluster, maintenance restart, rack-aware restart"
+search:
+  boost: 3
 ---
 
 # Rolling Restart

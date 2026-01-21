@@ -4,6 +4,8 @@ description: "AxonOps Enterprise Edition features. Advanced monitoring, backup, 
 meta:
   - name: keywords
     content: "AxonOps Enterprise, enterprise features, production monitoring"
+search:
+  boost: 5
 ---
 
 # Enterprise Edition

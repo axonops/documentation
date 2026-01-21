@@ -4,6 +4,8 @@ description: "Schema management importance for Kafka. Data contracts, compatibil
 meta:
   - name: keywords
     content: "Kafka schemas, schema benefits, data contracts, schema enforcement, data governance"
+search:
+  boost: 3
 ---
 
 # Schema Management Benefits

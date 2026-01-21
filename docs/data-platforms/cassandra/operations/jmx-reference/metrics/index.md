@@ -4,6 +4,8 @@ description: "Cassandra JMX metrics reference. Key metrics for monitoring and al
 meta:
   - name: keywords
     content: "Cassandra JMX metrics, monitoring metrics, performance metrics"
+search:
+  boost: 3
 ---
 
 # Cassandra Metrics Reference

@@ -4,6 +4,8 @@ description: "CQL Query pagination in Cassandra. Paging state, automatic paging,
 meta:
   - name: keywords
     content: "Cassandra CQL pagination, paging state, large queries, result paging"
+search:
+  boost: 3
 ---
 
 # Query Pagination

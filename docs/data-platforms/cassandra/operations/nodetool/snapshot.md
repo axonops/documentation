@@ -4,6 +4,8 @@ description: "Create backup snapshots of Cassandra tables using nodetool snapsho
 meta:
   - name: keywords
     content: "nodetool snapshot, Cassandra backup, create snapshot, table backup"
+search:
+  boost: 3
 ---
 
 # nodetool snapshot

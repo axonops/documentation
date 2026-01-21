@@ -4,6 +4,8 @@ description: "Clear key cache in Cassandra using nodetool invalidatekeycache com
 meta:
   - name: keywords
     content: "nodetool invalidatekeycache, key cache, clear cache, Cassandra performance"
+search:
+  boost: 3
 ---
 
 # nodetool invalidatekeycache

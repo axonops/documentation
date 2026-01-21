@@ -4,6 +4,8 @@ description: "Check if CQL native transport is enabled using nodetool statusbina
 meta:
   - name: keywords
     content: "nodetool statusbinary, CQL status, native transport, Cassandra"
+search:
+  boost: 3
 ---
 
 # nodetool statusbinary

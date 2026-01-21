@@ -4,6 +4,8 @@ description: "Apache Kafka reference documentation. Configuration reference, pro
 meta:
   - name: keywords
     content: "Kafka reference, Kafka configuration, Kafka protocol, Kafka API"
+search:
+  boost: 3
 ---
 
 # Kafka Reference

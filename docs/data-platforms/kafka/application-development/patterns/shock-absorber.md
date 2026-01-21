@@ -1,6 +1,8 @@
 ---
 title: "Shock Absorber Pattern"
 description: "Using Kafka as a buffer for load leveling and traffic spike absorption. Protecting downstream systems, backpressure handling, and throughput management."
+search:
+  boost: 3
 ---
 
 # Shock Absorber Pattern

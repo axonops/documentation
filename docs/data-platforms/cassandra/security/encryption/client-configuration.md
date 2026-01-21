@@ -4,6 +4,8 @@ description: "Configure TLS encryption for Cassandra clients. SSL settings for c
 meta:
   - name: keywords
     content: "client TLS, driver SSL, truststore, client encryption"
+search:
+  boost: 3
 ---
 
 # Client TLS Configuration

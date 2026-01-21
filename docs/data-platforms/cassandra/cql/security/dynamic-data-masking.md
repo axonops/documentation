@@ -4,6 +4,8 @@ description: "Cassandra dynamic data masking in CQL for protecting sensitive dat
 meta:
   - name: keywords
     content: "data masking, dynamic masking, CQL security, sensitive data, Cassandra"
+search:
+  boost: 3
 ---
 
 # Dynamic Data Masking

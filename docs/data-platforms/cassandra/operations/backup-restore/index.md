@@ -4,6 +4,8 @@ description: "Cassandra backup and restore overview. Strategies and tools for da
 meta:
   - name: keywords
     content: "Cassandra backup restore, data protection, backup strategies"
+search:
+  boost: 3
 ---
 
 # Backup and Restore Overview

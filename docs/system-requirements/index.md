@@ -4,6 +4,8 @@ description: "AxonOps system requirements. Hardware, software, and network prere
 meta:
   - name: keywords
     content: "system requirements, prerequisites, hardware requirements, AxonOps"
+search:
+  boost: 5
 ---
 
 # System requirements

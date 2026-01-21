@@ -4,6 +4,8 @@ description: "Cassandra indexing guide covering secondary indexes, SASI, and SAI
 meta:
   - name: keywords
     content: "Cassandra indexing, secondary index, SASI, SAI, index types"
+search:
+  boost: 3
 ---
 
 # CQL Indexing Reference

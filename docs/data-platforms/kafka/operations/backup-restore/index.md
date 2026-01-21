@@ -4,6 +4,8 @@ description: "Apache Kafka backup and restore strategies. Topic data backup, con
 meta:
   - name: keywords
     content: "Kafka backup, Kafka restore, disaster recovery, data recovery, Kafka DR"
+search:
+  boost: 3
 ---
 
 # Kafka Backup and Restore

@@ -4,6 +4,8 @@ description: "Data streaming in Cassandra for bootstrap, rebuild, and repair ope
 meta:
   - name: keywords
     content: "Cassandra streaming, data streaming, bootstrap, rebuild, stream throughput"
+search:
+  boost: 3
 ---
 
 # Inter-Node Data Streaming

@@ -4,6 +4,8 @@ description: "Linux operating system security for Cassandra deployments. Patchin
 meta:
   - name: keywords
     content: "Cassandra OS security, Linux hardening, patching, filesystem security, user management"
+search:
+  boost: 3
 ---
 
 # Operating System Security

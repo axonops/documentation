@@ -4,6 +4,8 @@ description: "ZooKeeper dashboard metrics mapping for Kafka. ZK cluster health m
 meta:
   - name: keywords
     content: "ZooKeeper metrics, ZK health, Kafka ZooKeeper"
+search:
+  boost: 8
 ---
 
 # AxonOps Kafka ZooKeeper Dashboard Metrics Mapping

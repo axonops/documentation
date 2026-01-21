@@ -4,6 +4,8 @@ description: "Cassandra thread_pools virtual table reference. Monitor thread poo
 meta:
   - name: keywords
     content: "Cassandra thread pools, tpstats, thread pool monitoring, backpressure"
+search:
+  boost: 3
 ---
 
 # Thread Pools

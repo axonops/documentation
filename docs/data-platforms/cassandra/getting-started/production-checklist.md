@@ -4,6 +4,8 @@ description: "Cassandra production readiness checklist. Hardware, configuration,
 meta:
   - name: keywords
     content: "Cassandra production checklist, production readiness, deployment checklist"
+search:
+  boost: 3
 ---
 
 # Production Readiness Checklist

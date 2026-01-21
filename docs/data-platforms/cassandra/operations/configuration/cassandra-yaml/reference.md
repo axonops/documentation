@@ -1,3 +1,7 @@
+---
+search:
+  boost: 3
+---
 # cassandra.yaml Reference
 
 Comprehensive reference for cassandra.yaml configuration parameters, organized by category.

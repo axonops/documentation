@@ -4,6 +4,8 @@ description: "Cassandra driver policies for load balancing, retry logic, reconne
 meta:
   - name: keywords
     content: "Cassandra driver policies, load balancing policy, retry policy"
+search:
+  boost: 3
 ---
 
 # Driver Policies

@@ -4,6 +4,8 @@ description: "Display timeout settings for various Cassandra operations using no
 meta:
   - name: keywords
     content: "nodetool gettimeout, timeout settings, Cassandra timeouts, operation timeout"
+search:
+  boost: 3
 ---
 
 # nodetool gettimeout

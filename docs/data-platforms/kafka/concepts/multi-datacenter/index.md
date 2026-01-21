@@ -4,6 +4,8 @@ description: "Multi-datacenter Kafka deployments. MirrorMaker 2, active-passive,
 meta:
   - name: keywords
     content: "Kafka multi-DC, MirrorMaker 2, disaster recovery, Kafka replication, geo-replication"
+search:
+  boost: 3
 ---
 
 # Multi-Datacenter Deployments

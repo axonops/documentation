@@ -4,6 +4,8 @@ description: "Cassandra log analysis guide for troubleshooting. Interpret system
 meta:
   - name: keywords
     content: "Cassandra logs, log analysis, system.log, debug.log, GC logs"
+search:
+  boost: 3
 ---
 
 # Cassandra Log Analysis

@@ -4,6 +4,8 @@ description: "GC pause troubleshooting playbook. Diagnose garbage collection iss
 meta:
   - name: keywords
     content: "GC pause troubleshooting, garbage collection, JVM GC issues"
+search:
+  boost: 3
 ---
 
 # GC Pause Issues

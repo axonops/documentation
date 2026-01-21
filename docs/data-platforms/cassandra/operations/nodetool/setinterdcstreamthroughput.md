@@ -4,6 +4,8 @@ description: "Set inter-datacenter streaming throughput limit using nodetool set
 meta:
   - name: keywords
     content: "nodetool setinterdcstreamthroughput, inter-DC streaming, throughput, multi-datacenter"
+search:
+  boost: 3
 ---
 
 # nodetool setinterdcstreamthroughput

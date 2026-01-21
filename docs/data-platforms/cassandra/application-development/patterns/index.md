@@ -4,6 +4,8 @@ description: "Architectural patterns for building enterprise applications with A
 meta:
   - name: keywords
     content: "Cassandra patterns, enterprise architecture, CQRS, event sourcing, distributed systems, finance, IoT, healthcare"
+search:
+  boost: 3
 ---
 
 # Enterprise Application Patterns

@@ -4,6 +4,8 @@ description: "Troubleshooting Cassandra lightweight transaction (LWT) issues inc
 meta:
   - name: keywords
     content: "LWT errors, Paxos, IF NOT EXISTS, IF EXISTS, CAS, compare-and-set, Cassandra troubleshooting"
+search:
+  boost: 3
 ---
 
 # Lightweight Transaction Errors

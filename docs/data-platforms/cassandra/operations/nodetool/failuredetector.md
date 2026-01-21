@@ -4,6 +4,8 @@ description: "Display failure detector information for Cassandra cluster nodes u
 meta:
   - name: keywords
     content: "nodetool failuredetector, failure detection, Cassandra cluster, node status"
+search:
+  boost: 3
 ---
 
 # nodetool failuredetector

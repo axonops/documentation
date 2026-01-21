@@ -4,6 +4,8 @@ description: "Set compaction throughput limit in Cassandra using nodetool setcom
 meta:
   - name: keywords
     content: "nodetool setcompactionthroughput, compaction throughput, throttle, Cassandra"
+search:
+  boost: 3
 ---
 
 # nodetool setcompactionthroughput

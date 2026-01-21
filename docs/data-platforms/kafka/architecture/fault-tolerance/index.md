@@ -4,6 +4,8 @@ description: "Apache Kafka fault tolerance mechanisms. Broker failures, partitio
 meta:
   - name: keywords
     content: "Kafka fault tolerance, high availability, broker failure, disaster recovery"
+search:
+  boost: 3
 ---
 
 # Fault Tolerance

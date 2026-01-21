@@ -4,6 +4,8 @@ description: "Complete Apache Kafka protocol error code reference. All error cod
 meta:
   - name: keywords
     content: "Kafka protocol errors, error codes, retriable errors, Kafka exceptions"
+search:
+  boost: 3
 ---
 
 # Kafka Protocol Error Codes

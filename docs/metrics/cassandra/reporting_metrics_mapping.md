@@ -4,6 +4,8 @@ description: "Cassandra reporting dashboard metrics mapping. Operational reporti
 meta:
   - name: keywords
     content: "reporting metrics, operational metrics, Cassandra"
+search:
+  boost: 8
 ---
 
 # AxonOps Reporting Dashboard Metrics Mapping

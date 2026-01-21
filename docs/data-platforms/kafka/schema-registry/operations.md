@@ -4,6 +4,8 @@ description: "Schema Registry operations using AxonOps Schema Registry. Deployme
 meta:
   - name: keywords
     content: "Schema Registry operations, AxonOps Schema Registry, schema management, REST API, schema deployment"
+search:
+  boost: 3
 ---
 
 # Schema Registry Operations

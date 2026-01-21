@@ -4,6 +4,8 @@ description: "Testing Apache Kafka applications. Unit testing with mocks, integr
 meta:
   - name: keywords
     content: "Kafka testing, MockProducer, MockConsumer, Testcontainers, integration testing, unit testing Kafka"
+search:
+  boost: 3
 ---
 
 # Kafka Testing Guide

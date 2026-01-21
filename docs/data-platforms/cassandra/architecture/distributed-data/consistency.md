@@ -4,6 +4,8 @@ description: "Consistency levels in Cassandra. ONE, QUORUM, ALL, LOCAL_QUORUM ex
 meta:
   - name: keywords
     content: "consistency level, Cassandra consistency, QUORUM, eventual consistency"
+search:
+  boost: 3
 ---
 
 # Consistency

@@ -4,6 +4,8 @@ description: "Apache Kafka consumer error handling patterns. Poison pills, dead 
 meta:
   - name: keywords
     content: "Kafka consumer error handling, dead letter queue, retry topic, consumer exception, error recovery"
+search:
+  boost: 3
 ---
 
 # Consumer Error Handling

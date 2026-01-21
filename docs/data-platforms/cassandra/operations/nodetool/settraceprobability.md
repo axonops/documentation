@@ -4,6 +4,8 @@ description: "Set query tracing probability in Cassandra using nodetool settrace
 meta:
   - name: keywords
     content: "nodetool settraceprobability, query tracing, trace probability, Cassandra"
+search:
+  boost: 3
 ---
 
 # nodetool settraceprobability

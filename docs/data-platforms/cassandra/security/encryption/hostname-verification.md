@@ -4,6 +4,8 @@ description: "Hostname verification in Cassandra TLS. Server identity validation
 meta:
   - name: keywords
     content: "hostname verification, certificate verification, SAN, Cassandra TLS"
+search:
+  boost: 3
 ---
 
 # Hostname Verification

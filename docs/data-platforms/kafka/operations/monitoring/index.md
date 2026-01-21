@@ -4,6 +4,8 @@ description: "Apache Kafka monitoring guide. Key metrics, JMX configuration, ale
 meta:
   - name: keywords
     content: "Kafka monitoring, Kafka metrics, JMX, Kafka alerting, Kafka dashboards"
+search:
+  boost: 3
 ---
 
 # Kafka Monitoring

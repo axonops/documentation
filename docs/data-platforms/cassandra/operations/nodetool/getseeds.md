@@ -4,6 +4,8 @@ description: "Display seed nodes for the Cassandra cluster using nodetool getsee
 meta:
   - name: keywords
     content: "nodetool getseeds, seed nodes, Cassandra cluster, cluster discovery"
+search:
+  boost: 3
 ---
 
 # nodetool getseeds

@@ -4,6 +4,8 @@ description: "Asynchronous connections in Cassandra drivers. Non-blocking I/O an
 meta:
   - name: keywords
     content: "async connections, non-blocking, request pipelining, Cassandra driver"
+search:
+  boost: 3
 ---
 
 # Asynchronous Connections

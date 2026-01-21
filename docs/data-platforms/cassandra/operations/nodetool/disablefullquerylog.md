@@ -4,6 +4,8 @@ description: "Disable full query logging in Cassandra using nodetool disablefull
 meta:
   - name: keywords
     content: "nodetool disablefullquerylog, disable FQL, query logging, Cassandra"
+search:
+  boost: 3
 ---
 
 # nodetool disablefullquerylog

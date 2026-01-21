@@ -4,6 +4,8 @@ description: "Cassandra network security. Firewall rules, port configuration, an
 meta:
   - name: keywords
     content: "network security, Cassandra firewall, port security, network isolation"
+search:
+  boost: 3
 ---
 
 # Network Authorization

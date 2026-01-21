@@ -4,6 +4,8 @@ description: "Kafka ACL management in AxonOps. Overview of access control list f
 meta:
   - name: keywords
     content: "Kafka ACL overview, access control, AxonOps Kafka"
+search:
+  boost: 8
 ---
 
 # Topic Access Control List (ACL)

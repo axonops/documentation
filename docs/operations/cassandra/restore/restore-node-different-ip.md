@@ -4,6 +4,8 @@ description: "Restore single Cassandra node with different IP address. Node repl
 meta:
   - name: keywords
     content: "restore node different IP, node replacement, single node restore"
+search:
+  boost: 8
 ---
 
 # Replace a node from a remote backup

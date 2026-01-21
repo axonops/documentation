@@ -4,6 +4,8 @@ description: "Cassandra audit logging for compliance. Log authentication, querie
 meta:
   - name: keywords
     content: "audit logging, Cassandra audit, compliance logging, query logging"
+search:
+  boost: 3
 ---
 
 # Audit Logging

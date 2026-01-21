@@ -4,6 +4,8 @@ description: "Apache Kafka maintenance procedures. Log cleanup, compaction, disk
 meta:
   - name: keywords
     content: "Kafka maintenance, log cleanup, compaction, disk management, Kafka operations"
+search:
+  boost: 3
 ---
 
 # Kafka Maintenance

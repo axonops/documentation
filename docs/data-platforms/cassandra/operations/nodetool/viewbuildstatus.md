@@ -4,6 +4,8 @@ description: "Display materialized view build progress using nodetool viewbuilds
 meta:
   - name: keywords
     content: "nodetool viewbuildstatus, view build status, materialized view, Cassandra"
+search:
+  boost: 3
 ---
 
 # nodetool viewbuildstatus

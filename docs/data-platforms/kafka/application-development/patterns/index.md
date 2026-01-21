@@ -4,6 +4,8 @@ description: "Design patterns for Apache Kafka applications. Event sourcing, CQR
 meta:
   - name: keywords
     content: "Kafka design patterns, event-driven architecture, messaging patterns, Kafka integration patterns"
+search:
+  boost: 3
 ---
 
 # Kafka Design Patterns

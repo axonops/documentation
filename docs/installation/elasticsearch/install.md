@@ -4,6 +4,8 @@ description: "Install Elasticsearch for AxonOps. Log storage and search engine i
 meta:
   - name: keywords
     content: "Elasticsearch install, AxonOps logs, search installation"
+search:
+  boost: 5
 ---
 
 # Install Elasticsearch

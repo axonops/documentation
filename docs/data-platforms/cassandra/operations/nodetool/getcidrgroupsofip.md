@@ -4,6 +4,8 @@ description: "Find CIDR groups containing an IP address using nodetool getcidrgr
 meta:
   - name: keywords
     content: "nodetool getcidrgroupsofip, CIDR groups, IP address, Cassandra network"
+search:
+  boost: 3
 ---
 
 # nodetool getcidrgroupsofip

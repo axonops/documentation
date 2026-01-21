@@ -4,6 +4,8 @@ description: "Apache Kafka client drivers for all major programming languages. I
 meta:
   - name: keywords
     content: "Kafka client, Kafka driver, librdkafka, confluent-kafka, KafkaJS, kafka-python, franz-go"
+search:
+  boost: 3
 ---
 
 # Kafka Client Drivers

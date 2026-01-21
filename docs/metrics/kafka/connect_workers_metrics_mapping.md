@@ -4,6 +4,8 @@ description: "Kafka Connect workers dashboard metrics mapping. Worker node stati
 meta:
   - name: keywords
     content: "Connect workers metrics, worker stats, Kafka Connect"
+search:
+  boost: 8
 ---
 
 # AxonOps Kafka Connect Workers Dashboard Metrics Mapping

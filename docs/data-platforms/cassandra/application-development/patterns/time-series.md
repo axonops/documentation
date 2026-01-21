@@ -4,6 +4,8 @@ description: "Architectural patterns for time-series applications with Apache Ca
 meta:
   - name: keywords
     content: "Cassandra time-series, IoT architecture, metrics storage, temporal data, event streams"
+search:
+  boost: 3
 ---
 
 # Time-Series Data

@@ -4,6 +4,8 @@ description: "Replica synchronization mechanisms in Cassandra including read rep
 meta:
   - name: keywords
     content: "replica sync, read repair, hinted handoff, anti-entropy repair"
+search:
+  boost: 3
 ---
 
 # Replica Synchronization

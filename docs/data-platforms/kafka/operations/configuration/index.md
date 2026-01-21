@@ -4,6 +4,8 @@ description: "Apache Kafka configuration reference. Broker, topic, ACL, quotas, 
 meta:
   - name: keywords
     content: "Kafka configuration, broker configuration, topic configuration, client configuration"
+search:
+  boost: 3
 ---
 
 # Kafka Configuration

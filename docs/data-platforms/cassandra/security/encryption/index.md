@@ -4,6 +4,8 @@ description: "Cassandra encryption guide covering TLS/SSL for client and interno
 meta:
   - name: keywords
     content: "Cassandra encryption, TLS, SSL, client encryption, internode encryption"
+search:
+  boost: 3
 ---
 
 # Encryption

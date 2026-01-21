@@ -4,6 +4,8 @@ description: "AxonOps query syntax for Cassandra metrics. Build custom queries a
 meta:
   - name: keywords
     content: "query syntax, Cassandra metrics, custom queries, AxonOps"
+search:
+  boost: 8
 ---
 
 # AxonOps Query Language Documentation

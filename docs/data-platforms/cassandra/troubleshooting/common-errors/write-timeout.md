@@ -4,6 +4,8 @@ description: "Cassandra WriteTimeout error. Causes and solutions for write timeo
 meta:
   - name: keywords
     content: "Cassandra WriteTimeout, write timeout error, timeout troubleshooting"
+search:
+  boost: 3
 ---
 
 # WriteTimeoutException Troubleshooting

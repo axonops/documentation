@@ -4,6 +4,8 @@ description: "Display column index size setting in Cassandra using nodetool getc
 meta:
   - name: keywords
     content: "nodetool getcolumnindexsize, column index, index size, Cassandra configuration"
+search:
+  boost: 3
 ---
 
 # nodetool getcolumnindexsize

@@ -4,6 +4,8 @@ description: "Troubleshoot Cassandra TLS issues. Common SSL errors and debugging
 meta:
   - name: keywords
     content: "TLS troubleshooting, SSL errors, certificate debugging, Cassandra"
+search:
+  boost: 3
 ---
 
 # TLS Troubleshooting

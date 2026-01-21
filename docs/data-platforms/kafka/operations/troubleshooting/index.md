@@ -4,6 +4,8 @@ description: "Apache Kafka operational troubleshooting. Quick diagnosis, common 
 meta:
   - name: keywords
     content: "Kafka troubleshooting, Kafka operations, Kafka diagnosis, operational issues"
+search:
+  boost: 3
 ---
 
 # Kafka Operations Troubleshooting

@@ -4,6 +4,8 @@ description: "Kafka metrics dashboards in AxonOps. Pre-built dashboards for moni
 meta:
   - name: keywords
     content: "Kafka dashboards, metrics dashboards, AxonOps monitoring"
+search:
+  boost: 8
 ---
 
 AxonOps dashboards provides a comprehensive set of charts with an embedded view for logs and events. 

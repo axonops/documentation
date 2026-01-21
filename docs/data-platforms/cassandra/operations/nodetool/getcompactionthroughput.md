@@ -4,6 +4,8 @@ description: "Display compaction throughput limit in Cassandra using nodetool ge
 meta:
   - name: keywords
     content: "nodetool getcompactionthroughput, compaction throughput, Cassandra performance, throttle"
+search:
+  boost: 3
 ---
 
 # nodetool getcompactionthroughput

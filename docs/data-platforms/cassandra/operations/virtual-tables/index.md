@@ -4,6 +4,8 @@ description: "Cassandra virtual tables provide real-time cluster insights via CQ
 meta:
   - name: keywords
     content: "Cassandra virtual tables, system_views, system_virtual_schema, CQL monitoring"
+search:
+  boost: 3
 ---
 
 # Virtual Tables

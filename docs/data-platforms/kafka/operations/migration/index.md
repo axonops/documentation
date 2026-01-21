@@ -4,6 +4,8 @@ description: "Apache Kafka migration guide. ZooKeeper to KRaft migration, versio
 meta:
   - name: keywords
     content: "Kafka migration, ZooKeeper to KRaft, Kafka upgrade, cluster migration"
+search:
+  boost: 3
 ---
 
 # Kafka Migration

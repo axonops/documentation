@@ -4,6 +4,8 @@ description: "Force compaction on specific SSTables in Cassandra using nodetool 
 meta:
   - name: keywords
     content: "nodetool forcecompact, force compaction, Cassandra compaction, SSTable"
+search:
+  boost: 3
 ---
 
 # nodetool forcecompact

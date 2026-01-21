@@ -4,6 +4,8 @@ description: "Implementing financial ledgers with Apache Cassandra. Covers doubl
 meta:
   - name: keywords
     content: "Cassandra ledger, double-entry bookkeeping, financial transactions, immutable log, balance calculation"
+search:
+  boost: 3
 ---
 
 # Ledger Pattern

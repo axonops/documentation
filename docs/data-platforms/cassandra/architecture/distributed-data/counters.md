@@ -4,6 +4,8 @@ description: "Distributed counters in Cassandra. Counter columns, consistency, a
 meta:
   - name: keywords
     content: "Cassandra counters, distributed counters, counter column, increment"
+search:
+  boost: 3
 ---
 
 # Distributed Counters

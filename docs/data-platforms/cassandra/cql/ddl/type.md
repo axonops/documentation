@@ -4,6 +4,8 @@ description: "Cassandra CREATE TYPE syntax for user-defined types (UDT) in CQL. 
 meta:
   - name: keywords
     content: "CREATE TYPE, UDT, user-defined type, CQL type, Cassandra"
+search:
+  boost: 3
 ---
 
 # User-Defined Type Commands

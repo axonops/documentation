@@ -4,6 +4,8 @@ description: "Cassandra configuration overview. YAML files, JVM options, and run
 meta:
   - name: keywords
     content: "Cassandra configuration, config files, settings overview"
+search:
+  boost: 3
 ---
 
 # Cassandra Configuration Reference

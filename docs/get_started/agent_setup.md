@@ -2,6 +2,8 @@
 title: "Axon Agent Setup"
 hide:
   - toc
+search:
+  boost: 5
 ---
 
 # Axon Agent Setup

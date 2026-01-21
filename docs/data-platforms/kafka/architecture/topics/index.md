@@ -4,6 +4,8 @@ description: "Apache Kafka topic architecture. Partitions, partition leaders, IS
 meta:
   - name: keywords
     content: "Kafka topics, Kafka partitions, partition leader, ISR, leader election, high watermark, Kafka replication"
+search:
+  boost: 3
 ---
 
 # Topics and Partitions

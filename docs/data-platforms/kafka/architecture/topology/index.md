@@ -4,6 +4,8 @@ description: "Apache Kafka cluster topology design. Rack awareness, network arch
 meta:
   - name: keywords
     content: "Kafka topology, rack awareness, Kafka network, cluster design, broker placement"
+search:
+  boost: 3
 ---
 
 # Kafka Cluster Topology

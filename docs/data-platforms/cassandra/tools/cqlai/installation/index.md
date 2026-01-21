@@ -4,6 +4,8 @@ description: "CQLAI installation guide. Install on Linux, macOS, and Windows."
 meta:
   - name: keywords
     content: "CQLAI installation, install CQLAI, setup guide"
+search:
+  boost: 3
 ---
 
 # Installing CQLAI

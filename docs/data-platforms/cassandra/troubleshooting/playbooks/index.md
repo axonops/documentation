@@ -4,6 +4,8 @@ description: "Cassandra troubleshooting playbooks index. Runbooks for common iss
 meta:
   - name: keywords
     content: "troubleshooting playbooks, runbooks, operational guides"
+search:
+  boost: 3
 ---
 
 # Troubleshooting Playbooks

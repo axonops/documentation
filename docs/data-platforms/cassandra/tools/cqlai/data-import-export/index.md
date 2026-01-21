@@ -4,6 +4,8 @@ description: "CQLAI data import and export. Load and extract data with various f
 meta:
   - name: keywords
     content: "CQLAI import export, data loading, CSV, JSON"
+search:
+  boost: 3
 ---
 
 # CQLAI Data Import/Export

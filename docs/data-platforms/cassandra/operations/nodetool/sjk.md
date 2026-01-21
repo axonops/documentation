@@ -4,6 +4,8 @@ description: "Run Swiss Java Knife diagnostics on Cassandra JVM using nodetool s
 meta:
   - name: keywords
     content: "nodetool sjk, Swiss Java Knife, JVM diagnostics, Cassandra"
+search:
+  boost: 3
 ---
 
 # nodetool sjk

@@ -4,6 +4,8 @@ description: "Vector search in CQL for similarity queries. Use ANN (approximate 
 meta:
   - name: keywords
     content: "vector search, CQL vector, ANN, similarity search, Cassandra 5.0"
+search:
+  boost: 3
 ---
 
 # Vector Search

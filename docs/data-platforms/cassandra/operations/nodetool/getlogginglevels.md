@@ -4,6 +4,8 @@ description: "Display current logging levels in Cassandra using nodetool getlogg
 meta:
   - name: keywords
     content: "nodetool getlogginglevels, logging levels, Cassandra logs, debug logging"
+search:
+  boost: 3
 ---
 
 # nodetool getlogginglevels

@@ -4,6 +4,8 @@ description: "Cassandra authentication configuration. AllowAllAuthenticator, Pas
 meta:
   - name: keywords
     content: "Cassandra authentication, AllowAllAuthenticator, PasswordAuthenticator, login security"
+search:
+  boost: 3
 ---
 
 # Cassandra Authentication

@@ -4,6 +4,8 @@ description: "Kafka overview dashboard metrics mapping. Cluster health and throu
 meta:
   - name: keywords
     content: "Kafka overview metrics, cluster health, throughput"
+search:
+  boost: 8
 ---
 
 # AxonOps Kafka Overview Dashboard Metrics Mapping

@@ -4,6 +4,8 @@ description: "Verify SSTable integrity and checksums in Cassandra using nodetool
 meta:
   - name: keywords
     content: "nodetool verify, SSTable verification, checksum verification, Cassandra"
+search:
+  boost: 3
 ---
 
 # nodetool verify

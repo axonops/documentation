@@ -4,6 +4,8 @@ description: "Mutual TLS (mTLS) authentication for Apache Kafka. Certificate-bas
 meta:
   - name: keywords
     content: "Kafka mTLS, mutual TLS, Kafka certificates, Kafka PKI, client authentication"
+search:
+  boost: 3
 ---
 
 # Mutual TLS Authentication (mTLS)

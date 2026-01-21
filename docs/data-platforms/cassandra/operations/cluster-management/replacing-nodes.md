@@ -4,6 +4,8 @@ description: "Replace failed Cassandra nodes. Node replacement procedures using 
 meta:
   - name: keywords
     content: "Cassandra replace node, replace_address_first_boot, node replacement, hardware failure"
+search:
+  boost: 3
 ---
 
 # Replacing Nodes

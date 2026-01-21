@@ -4,6 +4,8 @@ description: "Kafka Connect Cassandra Sink connector. Configuration, table mappi
 meta:
   - name: keywords
     content: "Kafka Cassandra connector, Cassandra sink, DataStax connector"
+search:
+  boost: 3
 ---
 
 # Cassandra Sink Connector

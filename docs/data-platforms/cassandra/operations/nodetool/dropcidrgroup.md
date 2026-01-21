@@ -4,6 +4,8 @@ description: "Remove a CIDR group from Cassandra using nodetool dropcidrgroup co
 meta:
   - name: keywords
     content: "nodetool dropcidrgroup, CIDR group, network security, Cassandra"
+search:
+  boost: 3
 ---
 
 # nodetool dropcidrgroup

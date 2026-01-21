@@ -4,6 +4,8 @@ description: "Cassandra keyspace dashboard metrics mapping. Per-keyspace statist
 meta:
   - name: keywords
     content: "keyspace metrics, per-keyspace stats, Cassandra"
+search:
+  boost: 8
 ---
 
 # AxonOps Keyspace Dashboard Metrics Mapping

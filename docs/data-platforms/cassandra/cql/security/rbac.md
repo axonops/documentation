@@ -4,6 +4,8 @@ description: "Cassandra CQL role-based access control: CREATE ROLE, GRANT, REVOK
 meta:
   - name: keywords
     content: "CQL RBAC, CREATE ROLE, GRANT, REVOKE, Cassandra permissions, roles"
+search:
+  boost: 3
 ---
 
 # Role-Based Access Control

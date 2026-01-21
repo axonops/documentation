@@ -4,6 +4,8 @@ description: "Ephemeral vs persistent storage for Cassandra. Cost, performance, 
 meta:
   - name: keywords
     content: "Cassandra storage, ephemeral storage, persistent storage, NVMe, EBS, cloud storage, immutable infrastructure"
+search:
+  boost: 3
 ---
 
 # Cloud Storage Strategy

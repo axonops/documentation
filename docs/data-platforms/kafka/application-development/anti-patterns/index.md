@@ -4,6 +4,8 @@ description: "Common Apache Kafka mistakes and anti-patterns to avoid. Producer,
 meta:
   - name: keywords
     content: "Kafka anti-patterns, Kafka mistakes, Kafka best practices, common Kafka errors, Kafka pitfalls"
+search:
+  boost: 3
 ---
 
 # Kafka Anti-Patterns

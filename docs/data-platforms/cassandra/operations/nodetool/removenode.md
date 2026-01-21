@@ -4,6 +4,8 @@ description: "Remove a dead node from Cassandra cluster using nodetool removenod
 meta:
   - name: keywords
     content: "nodetool removenode, remove node, dead node, Cassandra cluster"
+search:
+  boost: 3
 ---
 
 # nodetool removenode

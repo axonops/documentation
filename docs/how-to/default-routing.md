@@ -4,6 +4,8 @@ description: "Set up default routing for AxonOps alerts. Configure notification 
 meta:
   - name: keywords
     content: "alert routing, default routing, notification channels, AxonOps"
+search:
+  boost: 8
 ---
 
 # Setup Default Routing

@@ -4,6 +4,8 @@ description: "Cassandra entropy dashboard metrics mapping. Repair and consistenc
 meta:
   - name: keywords
     content: "entropy metrics, repair metrics, consistency, Cassandra"
+search:
+  boost: 8
 ---
 
 # AxonOps Entropy Dashboard Metrics Mapping

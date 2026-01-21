@@ -4,6 +4,8 @@ description: "Kafka Connect exactly-once semantics. Source connector transaction
 meta:
   - name: keywords
     content: "Kafka Connect exactly-once, EOS connectors, transactional sink, exactly-once sink"
+search:
+  boost: 3
 ---
 
 # Kafka Connect Exactly-Once

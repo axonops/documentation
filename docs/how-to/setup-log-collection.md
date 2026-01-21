@@ -4,6 +4,8 @@ description: "Configure log collection in AxonOps. Aggregate and search Cassandr
 meta:
   - name: keywords
     content: "log collection, AxonOps logs, log aggregation, search logs"
+search:
+  boost: 8
 ---
 
 AxonOps dashboards provides a comprehensive set of charts with an embedded view for logs and events. The goal is to correlate metrics with logs/events as you can zoom in the logs histogram or metrics charts to drill down both results. 

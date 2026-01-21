@@ -4,6 +4,8 @@ description: "Upgrade SSTables to current Cassandra version format using sstable
 meta:
   - name: keywords
     content: "sstableupgrade, SSTable upgrade, Cassandra upgrade, version migration"
+search:
+  boost: 3
 ---
 
 # sstableupgrade

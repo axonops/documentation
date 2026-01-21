@@ -4,6 +4,8 @@ description: "Apache Kafka architecture internals: brokers, partitions, replicat
 meta:
   - name: keywords
     content: "Kafka architecture, Kafka internals, KRaft, broker architecture, Kafka replication, partition leader"
+search:
+  boost: 3
 ---
 
 # Kafka Architecture

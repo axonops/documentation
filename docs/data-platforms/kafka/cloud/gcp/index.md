@@ -4,6 +4,8 @@ description: "Deploying Apache Kafka on Google Cloud Platform. Compute Engine, P
 meta:
   - name: keywords
     content: "Kafka GCP, Kafka Compute Engine, GCP deployment, Kafka cloud, Persistent Disk"
+search:
+  boost: 3
 ---
 
 # Kafka on GCP

@@ -4,6 +4,8 @@ description: "Privileged access management in Cassandra. Superuser access, role 
 meta:
   - name: keywords
     content: "privileged access, superuser, Cassandra roles, access management"
+search:
+  boost: 3
 ---
 
 # Privileged Access Management

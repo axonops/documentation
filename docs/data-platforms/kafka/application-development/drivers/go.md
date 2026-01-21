@@ -4,6 +4,8 @@ description: "Apache Kafka Go client guide using confluent-kafka-go. Producer, c
 meta:
   - name: keywords
     content: "Kafka Go, confluent-kafka-go, franz-go, segmentio kafka-go, Golang Kafka, Go Kafka producer"
+search:
+  boost: 3
 ---
 
 # Kafka Go Client

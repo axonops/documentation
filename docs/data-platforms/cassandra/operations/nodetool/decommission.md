@@ -4,6 +4,8 @@ description: "Gracefully remove a Cassandra node from the cluster using nodetool
 meta:
   - name: keywords
     content: "nodetool decommission, remove node, Cassandra cluster, data streaming"
+search:
+  boost: 3
 ---
 
 # nodetool decommission

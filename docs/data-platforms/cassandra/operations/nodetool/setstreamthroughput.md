@@ -4,6 +4,8 @@ description: "Set streaming throughput limit in Cassandra using nodetool setstre
 meta:
   - name: keywords
     content: "nodetool setstreamthroughput, streaming throughput, data streaming, Cassandra"
+search:
+  boost: 3
 ---
 
 # nodetool setstreamthroughput

@@ -4,6 +4,8 @@ description: "Materialized views architecture in Cassandra. How views are built 
 meta:
   - name: keywords
     content: "materialized views, view architecture, Cassandra views, automatic updates"
+search:
+  boost: 3
 ---
 
 # Materialized Views

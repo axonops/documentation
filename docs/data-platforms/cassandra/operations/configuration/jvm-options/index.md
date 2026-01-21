@@ -4,6 +4,8 @@ description: "Cassandra JVM options configuration. Heap size, GC settings, and p
 meta:
   - name: keywords
     content: "Cassandra JVM options, heap size, garbage collection, JVM tuning"
+search:
+  boost: 3
 ---
 
 # Cassandra JVM Options

@@ -4,6 +4,8 @@ description: "Deploy Apache Cassandra on Kubernetes using StatefulSets and opera
 meta:
   - name: keywords
     content: "Cassandra Kubernetes, K8s deployment, StatefulSet, operators"
+search:
+  boost: 3
 ---
 
 # Cassandra on Kubernetes

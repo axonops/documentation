@@ -4,6 +4,8 @@ description: "CREATE FUNCTION syntax for user-defined functions (UDF) in CQL. Ex
 meta:
   - name: keywords
     content: "CREATE FUNCTION, UDF, user-defined function, CQL function, Cassandra"
+search:
+  boost: 3
 ---
 
 # Function Commands

@@ -4,6 +4,8 @@ description: "Run nodetool cleanup after adding nodes. Reclaim disk space from o
 meta:
   - name: keywords
     content: "Cassandra cleanup, nodetool cleanup, reclaim disk space, post-bootstrap"
+search:
+  boost: 3
 ---
 
 # Cleanup Operations

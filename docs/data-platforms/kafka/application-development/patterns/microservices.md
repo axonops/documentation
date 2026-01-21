@@ -1,6 +1,8 @@
 ---
 title: "Microservices with Kafka"
 description: "Kafka architecture patterns for microservices. Topic ownership, consumer group strategies, schema governance, distributed tracing, and deployment patterns."
+search:
+  boost: 3
 ---
 
 # Microservices with Kafka

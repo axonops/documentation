@@ -4,6 +4,8 @@ description: "Reset full query log in Cassandra using nodetool resetfullquerylog
 meta:
   - name: keywords
     content: "nodetool resetfullquerylog, reset FQL, query logging, Cassandra"
+search:
+  boost: 3
 ---
 
 # nodetool resetfullquerylog

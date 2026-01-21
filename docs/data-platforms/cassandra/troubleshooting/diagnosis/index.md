@@ -4,6 +4,8 @@ description: "Cassandra diagnosis techniques. Log analysis, metrics interpretati
 meta:
   - name: keywords
     content: "Cassandra diagnosis, log analysis, metrics, problem identification"
+search:
+  boost: 3
 ---
 
 # Cassandra Diagnosis Guide

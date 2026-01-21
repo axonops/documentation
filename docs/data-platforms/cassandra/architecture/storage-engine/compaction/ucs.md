@@ -4,6 +4,8 @@ description: "Unified Compaction Strategy (UCS) in Cassandra 5.0. Next-generatio
 meta:
   - name: keywords
     content: "UCS, Unified Compaction, Cassandra 5.0, adaptive compaction"
+search:
+  boost: 3
 ---
 
 # Unified Compaction Strategy (UCS)

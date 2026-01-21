@@ -4,6 +4,8 @@ description: "Schema Registry compatibility modes. Backward, forward, full compa
 meta:
   - name: keywords
     content: "Schema compatibility, schema evolution, backward compatible, forward compatible, Kafka schemas"
+search:
+  boost: 3
 ---
 
 # Schema Compatibility

@@ -4,6 +4,8 @@ description: "Cassandra JMX reference. MBeans, metrics, and management operation
 meta:
   - name: keywords
     content: "Cassandra JMX, MBeans reference, JMX metrics"
+search:
+  boost: 3
 ---
 
 # Cassandra JMX Reference

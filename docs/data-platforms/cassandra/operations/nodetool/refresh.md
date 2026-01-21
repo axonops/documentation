@@ -4,6 +4,8 @@ description: "Load newly added SSTables without restart using nodetool refresh c
 meta:
   - name: keywords
     content: "nodetool refresh, load SSTables, hot loading, Cassandra"
+search:
+  boost: 3
 ---
 
 # nodetool refresh

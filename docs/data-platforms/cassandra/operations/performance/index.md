@@ -4,6 +4,8 @@ description: "Cassandra performance tuning guide. Optimize throughput and latenc
 meta:
   - name: keywords
     content: "Cassandra performance, tuning guide, optimization"
+search:
+  boost: 3
 ---
 
 # Cassandra Performance Tuning Guide

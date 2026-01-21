@@ -4,6 +4,8 @@ description: "Apache Kafka metadata management. Cluster discovery, topic metadat
 meta:
   - name: keywords
     content: "Kafka metadata, topic metadata, partition metadata, metadata refresh, metadata cache"
+search:
+  boost: 3
 ---
 
 # Kafka Metadata Management

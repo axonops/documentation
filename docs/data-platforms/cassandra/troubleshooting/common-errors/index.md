@@ -4,6 +4,8 @@ description: "Common Cassandra errors reference. Error messages and resolutions.
 meta:
   - name: keywords
     content: "Cassandra errors, common errors, error messages"
+search:
+  boost: 3
 ---
 
 # Common Cassandra Errors

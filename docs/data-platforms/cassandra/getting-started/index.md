@@ -4,6 +4,8 @@ description: "Getting started with Apache Cassandra. Installation, first cluster
 meta:
   - name: keywords
     content: "Cassandra getting started, installation, first cluster, quickstart"
+search:
+  boost: 3
 ---
 
 # Getting Started with Apache Cassandra

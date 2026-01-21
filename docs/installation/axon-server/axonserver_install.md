@@ -4,6 +4,8 @@ description: "Install AxonOps Server. Backend server installation and configurat
 meta:
   - name: keywords
     content: "AxonOps Server install, backend installation, server setup"
+search:
+  boost: 5
 ---
 
 # AxonOps Server Installation

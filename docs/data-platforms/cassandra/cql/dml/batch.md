@@ -4,6 +4,8 @@ description: "Cassandra BATCH statement syntax in CQL. Execute multiple mutation
 meta:
   - name: keywords
     content: "CQL BATCH, atomic batch, logged batch, unlogged batch, Cassandra"
+search:
+  boost: 3
 ---
 
 # BATCH

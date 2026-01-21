@@ -4,6 +4,8 @@ description: "Display number of concurrent compaction threads in Cassandra using
 meta:
   - name: keywords
     content: "nodetool getconcurrentcompactors, compaction threads, concurrent compaction, Cassandra"
+search:
+  boost: 3
 ---
 
 # nodetool getconcurrentcompactors

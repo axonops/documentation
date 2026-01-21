@@ -4,6 +4,8 @@ description: "Display gossip information for all nodes in Cassandra cluster usin
 meta:
   - name: keywords
     content: "nodetool gossipinfo, gossip protocol, node information, Cassandra cluster"
+search:
+  boost: 3
 ---
 
 # nodetool gossipinfo

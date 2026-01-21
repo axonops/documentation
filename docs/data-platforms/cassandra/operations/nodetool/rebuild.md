@@ -4,6 +4,8 @@ description: "Rebuild a Cassandra node by streaming data from other nodes using 
 meta:
   - name: keywords
     content: "nodetool rebuild, rebuild node, data streaming, Cassandra recovery"
+search:
+  boost: 3
 ---
 
 # nodetool rebuild

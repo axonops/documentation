@@ -4,6 +4,8 @@ description: "Dead Letter Queue concepts for Apache Kafka. Understanding poison 
 meta:
   - name: keywords
     content: "Kafka dead letter queue, DLQ, poison message, error handling, retry pattern, Kafka error topic"
+search:
+  boost: 3
 ---
 
 # Dead Letter Queues

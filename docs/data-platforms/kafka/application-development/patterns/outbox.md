@@ -4,6 +4,8 @@ description: "Transactional outbox pattern with Apache Kafka. Reliable event pub
 meta:
   - name: keywords
     content: "outbox pattern, transactional outbox, Kafka CDC, database outbox, reliable messaging"
+search:
+  boost: 3
 ---
 
 # Outbox Pattern with Kafka

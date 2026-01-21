@@ -4,6 +4,8 @@ description: "Kafka Connect tasks dashboard metrics mapping. Task performance st
 meta:
   - name: keywords
     content: "Connect tasks metrics, task performance, Kafka Connect"
+search:
+  boost: 8
 ---
 
 # AxonOps Kafka Connect Tasks Dashboard Metrics Mapping

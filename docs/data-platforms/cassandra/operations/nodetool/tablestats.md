@@ -4,6 +4,8 @@ description: "Display detailed statistics for Cassandra tables using nodetool ta
 meta:
   - name: keywords
     content: "nodetool tablestats, table statistics, Cassandra metrics, table info"
+search:
+  boost: 3
 ---
 
 # nodetool tablestats

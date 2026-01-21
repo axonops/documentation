@@ -4,6 +4,8 @@ description: "Cassandra application dashboard metrics mapping. Client request an
 meta:
   - name: keywords
     content: "application metrics, client requests, latency metrics, Cassandra"
+search:
+  boost: 8
 ---
 
 # AxonOps Application Dashboard Metrics Mapping

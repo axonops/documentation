@@ -4,6 +4,8 @@ description: "Cassandra CQL DML (Data Manipulation Language) commands for SELECT
 meta:
   - name: keywords
     content: "CQL DML, SELECT, INSERT, UPDATE, DELETE, BATCH, Cassandra queries"
+search:
+  boost: 3
 ---
 
 # Data Manipulation Language (DML)

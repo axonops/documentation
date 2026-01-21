@@ -4,6 +4,8 @@ description: "Remove deleted data (tombstones) from Cassandra SSTables using nod
 meta:
   - name: keywords
     content: "nodetool garbagecollect, remove tombstones, Cassandra garbage collection, disk space"
+search:
+  boost: 3
 ---
 
 # nodetool garbagecollect

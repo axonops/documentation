@@ -4,6 +4,8 @@ description: "Check if gossip protocol is enabled using nodetool statusgossip co
 meta:
   - name: keywords
     content: "nodetool statusgossip, gossip status, gossip protocol, Cassandra"
+search:
+  boost: 3
 ---
 
 # nodetool statusgossip

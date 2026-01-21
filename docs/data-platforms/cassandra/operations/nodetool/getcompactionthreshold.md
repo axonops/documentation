@@ -4,6 +4,8 @@ description: "Display min/max compaction thresholds for a table using nodetool g
 meta:
   - name: keywords
     content: "nodetool getcompactionthreshold, compaction threshold, Cassandra compaction, table settings"
+search:
+  boost: 3
 ---
 
 # nodetool getcompactionthreshold

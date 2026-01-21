@@ -4,6 +4,8 @@ description: "AxonOps monitoring overview. Features for Cassandra and Kafka clus
 meta:
   - name: keywords
     content: "monitoring overview, AxonOps monitoring, cluster monitoring"
+search:
+  boost: 8
 ---
 
 When monitoring enterprise service there are 3 categories of how the service is performing that we generally capture and monitor. These are;

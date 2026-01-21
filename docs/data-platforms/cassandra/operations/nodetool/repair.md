@@ -4,6 +4,8 @@ description: "Run anti-entropy repair to synchronize data across Cassandra repli
 meta:
   - name: keywords
     content: "nodetool repair, Cassandra repair, anti-entropy, data consistency, Merkle tree"
+search:
+  boost: 3
 ---
 
 # nodetool repair

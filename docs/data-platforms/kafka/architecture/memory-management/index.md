@@ -4,6 +4,8 @@ description: "Apache Kafka memory architecture. JVM heap, page cache, buffer poo
 meta:
   - name: keywords
     content: "Kafka memory, JVM heap, page cache, buffer pool, memory tuning"
+search:
+  boost: 3
 ---
 
 # Kafka Memory Management

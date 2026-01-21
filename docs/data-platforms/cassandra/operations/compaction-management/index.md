@@ -4,6 +4,8 @@ description: "Cassandra compaction management. Strategies, tuning, and monitorin
 meta:
   - name: keywords
     content: "Cassandra compaction, compaction strategies, STCS, LCS, TWCS"
+search:
+  boost: 3
 ---
 
 # Compaction Management

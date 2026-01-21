@@ -4,6 +4,8 @@ description: "Decision framework for Kafka Connect vs custom integration code. W
 meta:
   - name: keywords
     content: "Kafka Connect build vs buy, custom connector, connector development"
+search:
+  boost: 3
 ---
 
 # Build vs Buy Decision Framework

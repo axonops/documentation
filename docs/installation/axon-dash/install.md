@@ -4,6 +4,8 @@ description: "Install AxonOps Dashboard. Web interface installation for monitori
 meta:
   - name: keywords
     content: "AxonOps Dashboard install, web interface, installation"
+search:
+  boost: 5
 ---
 
 # AxonOps Dashboard Installation

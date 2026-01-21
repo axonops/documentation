@@ -4,6 +4,8 @@ description: "Update CIDR group configuration in Cassandra using nodetool update
 meta:
   - name: keywords
     content: "nodetool updatecidrgroup, CIDR group, network security, Cassandra"
+search:
+  boost: 3
 ---
 
 # nodetool updatecidrgroup

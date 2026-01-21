@@ -4,6 +4,8 @@ description: "Large partition troubleshooting playbook. Handle oversized partiti
 meta:
   - name: keywords
     content: "large partition troubleshooting, partition size, hot partitions"
+search:
+  boost: 3
 ---
 
 # Large Partition Issues

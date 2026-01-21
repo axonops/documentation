@@ -4,6 +4,8 @@ description: "Configure Google Cloud Storage backup for Cassandra with AxonOps."
 meta:
   - name: keywords
     content: "GCS backup, Google Cloud Storage, Cassandra backup, AxonOps"
+search:
+  boost: 8
 ---
 
 ## What is Google Cloud Storage

@@ -4,6 +4,8 @@ description: "Pause hinted handoff delivery in Cassandra using nodetool pausehan
 meta:
   - name: keywords
     content: "nodetool pausehandoff, pause hints, hinted handoff, Cassandra"
+search:
+  boost: 3
 ---
 
 # nodetool pausehandoff

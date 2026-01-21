@@ -4,6 +4,8 @@ description: "Apache Kafka operations guide: cluster management, monitoring, per
 meta:
   - name: keywords
     content: "Kafka operations, Kafka administration, cluster management, Kafka monitoring, Kafka maintenance"
+search:
+  boost: 3
 ---
 
 # Kafka Operations

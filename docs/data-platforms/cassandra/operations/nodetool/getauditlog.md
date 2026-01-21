@@ -4,6 +4,8 @@ description: "Display current audit log configuration in Cassandra using nodetoo
 meta:
   - name: keywords
     content: "nodetool getauditlog, audit log config, Cassandra audit, security settings"
+search:
+  boost: 3
 ---
 
 # nodetool getauditlog

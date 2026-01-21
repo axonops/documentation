@@ -4,6 +4,8 @@ description: "Cassandra benchmarking guide. Test performance with cassandra-stre
 meta:
   - name: keywords
     content: "Cassandra benchmarking, cassandra-stress, performance testing"
+search:
+  boost: 3
 ---
 
 # Cassandra Benchmarking

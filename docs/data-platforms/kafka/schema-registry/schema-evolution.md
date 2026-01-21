@@ -4,6 +4,8 @@ description: "Safe schema evolution practices for Kafka. Adding fields, removing
 meta:
   - name: keywords
     content: "Kafka schema evolution, backward compatibility, forward compatibility, schema versioning"
+search:
+  boost: 3
 ---
 
 # Schema Evolution

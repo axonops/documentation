@@ -4,6 +4,8 @@ description: "Disable CQL native transport (binary protocol) in Cassandra using 
 meta:
   - name: keywords
     content: "nodetool disablebinary, disable CQL, native transport, Cassandra protocol"
+search:
+  boost: 3
 ---
 
 # nodetool disablebinary

@@ -4,6 +4,8 @@ description: "AxonOps Kubernetes installation. Deploy monitoring in K8s clusters
 meta:
   - name: keywords
     content: "AxonOps Kubernetes, K8s installation, container deployment, Strimzi, K8ssandra, Kafka, Cassandra"
+search:
+  boost: 5
 ---
 
 # Running AxonOps on Kubernetes

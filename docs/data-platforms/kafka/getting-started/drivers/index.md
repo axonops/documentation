@@ -4,6 +4,8 @@ description: "Apache Kafka client drivers for Java, Python, Go, Node.js, and .NE
 meta:
   - name: keywords
     content: "Kafka client, Kafka driver, Kafka Java, Kafka Python, Kafka Go"
+search:
+  boost: 3
 ---
 
 # Kafka Client Drivers

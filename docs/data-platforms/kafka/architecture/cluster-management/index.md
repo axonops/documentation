@@ -4,6 +4,8 @@ description: "Apache Kafka cluster management internals. Controller operations, 
 meta:
   - name: keywords
     content: "Kafka cluster management, controller, metadata, KRaft, cluster coordination"
+search:
+  boost: 3
 ---
 
 # Kafka Cluster Management

@@ -4,6 +4,8 @@ description: "Restore Cassandra cluster with same IP addresses. In-place cluster
 meta:
   - name: keywords
     content: "restore same IP, cluster recovery, in-place restore, Cassandra"
+search:
+  boost: 8
 ---
 
 # Restore a whole cluster from a remote backup

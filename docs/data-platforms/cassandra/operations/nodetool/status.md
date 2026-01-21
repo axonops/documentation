@@ -4,6 +4,8 @@ description: "Display cluster status showing all nodes, their state, load, and o
 meta:
   - name: keywords
     content: "nodetool status, cluster status, node status, Cassandra cluster health"
+search:
+  boost: 3
 ---
 
 # nodetool status

@@ -4,6 +4,8 @@ description: "Apache Kafka client authentication mechanisms. SASL/SCRAM, SASL/PL
 meta:
   - name: keywords
     content: "Kafka authentication, SASL, SSL/TLS, client authentication, Kafka security"
+search:
+  boost: 3
 ---
 
 # Kafka Client Authentication

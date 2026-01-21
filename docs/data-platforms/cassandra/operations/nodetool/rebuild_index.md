@@ -4,6 +4,8 @@ description: "Rebuild secondary indexes for a table using nodetool rebuild_index
 meta:
   - name: keywords
     content: "nodetool rebuild_index, rebuild index, secondary index, Cassandra"
+search:
+  boost: 3
 ---
 
 # nodetool rebuild_index

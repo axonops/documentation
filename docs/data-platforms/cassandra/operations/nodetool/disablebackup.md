@@ -4,6 +4,8 @@ description: "Disable incremental backup in Cassandra using nodetool disableback
 meta:
   - name: keywords
     content: "nodetool disablebackup, disable backup, Cassandra backup, incremental backup"
+search:
+  boost: 3
 ---
 
 # nodetool disablebackup

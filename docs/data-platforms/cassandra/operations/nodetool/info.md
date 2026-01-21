@@ -4,6 +4,8 @@ description: "Display node information including uptime, load, and memory usage 
 meta:
   - name: keywords
     content: "nodetool info, node information, Cassandra node, uptime memory"
+search:
+  boost: 3
 ---
 
 # nodetool info

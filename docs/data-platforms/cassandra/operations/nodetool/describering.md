@@ -4,6 +4,8 @@ description: "Show token ring information for a keyspace using nodetool describe
 meta:
   - name: keywords
     content: "nodetool describering, token ring, Cassandra ring, keyspace tokens"
+search:
+  boost: 3
 ---
 
 # nodetool describering

@@ -4,6 +4,8 @@ description: "Display inter-datacenter streaming throughput limit using nodetool
 meta:
   - name: keywords
     content: "nodetool getinterdcstreamthroughput, inter-DC streaming, throughput, multi-datacenter"
+search:
+  boost: 3
 ---
 
 # nodetool getinterdcstreamthroughput

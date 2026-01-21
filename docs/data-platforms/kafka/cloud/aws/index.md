@@ -4,6 +4,8 @@ description: "Deploy Apache Kafka on AWS with EC2 instances, EBS storage, VPC ne
 meta:
   - name: keywords
     content: "Kafka AWS, Kafka EC2, Kafka EBS, AWS deployment, Kafka cloud"
+search:
+  boost: 3
 ---
 
 # Kafka on AWS

@@ -4,6 +4,8 @@ description: "Apache Kafka TLS/SSL encryption configuration. In-transit encrypti
 meta:
   - name: keywords
     content: "Kafka encryption, Kafka TLS, Kafka SSL, in-transit encryption, Kafka certificates"
+search:
+  boost: 3
 ---
 
 # Kafka Encryption

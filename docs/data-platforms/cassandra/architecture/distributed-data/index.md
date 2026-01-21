@@ -4,6 +4,8 @@ description: "Cassandra distributed data architecture covering partitioning, rep
 meta:
   - name: keywords
     content: "distributed data, Cassandra distribution, partitioning, replication"
+search:
+  boost: 3
 ---
 
 # Distributed Data

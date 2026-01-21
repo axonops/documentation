@@ -4,6 +4,8 @@ description: "Apache Kafka consumer group protocol APIs. FindCoordinator, JoinGr
 meta:
   - name: keywords
     content: "Kafka consumer API, Fetch API, consumer protocol, offset fetch, consumer requests"
+search:
+  boost: 3
 ---
 
 # Kafka Consumer Group Protocol APIs

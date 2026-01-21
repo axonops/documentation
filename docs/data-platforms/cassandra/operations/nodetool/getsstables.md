@@ -4,6 +4,8 @@ description: "List SSTable files for a specific partition key using nodetool get
 meta:
   - name: keywords
     content: "nodetool getsstables, SSTable files, partition data, Cassandra storage"
+search:
+  boost: 3
 ---
 
 # nodetool getsstables

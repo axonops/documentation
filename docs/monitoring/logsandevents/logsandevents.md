@@ -4,6 +4,8 @@ description: "Logs and events in AxonOps. View and search Cassandra and Kafka lo
 meta:
   - name: keywords
     content: "logs and events, log search, AxonOps logging"
+search:
+  boost: 8
 ---
 
 

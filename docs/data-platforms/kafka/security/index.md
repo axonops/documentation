@@ -4,6 +4,8 @@ description: "Apache Kafka security configuration: authentication (SASL, mTLS), 
 meta:
   - name: keywords
     content: "Kafka security, SASL, mTLS, ACLs, TLS encryption, Kafka authentication, Kafka authorization"
+search:
+  boost: 3
 ---
 
 # Kafka Security

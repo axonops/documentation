@@ -4,6 +4,8 @@ description: "Reuse host ID in AxonOps when replacing nodes. Maintain monitoring
 meta:
   - name: keywords
     content: "reuse host ID, node replacement, monitoring history, AxonOps"
+search:
+  boost: 8
 ---
 
 # Re-using an existing Host ID

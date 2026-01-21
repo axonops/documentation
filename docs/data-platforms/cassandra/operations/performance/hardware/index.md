@@ -4,6 +4,8 @@ description: "Cassandra hardware recommendations. CPU, memory, storage, and netw
 meta:
   - name: keywords
     content: "Cassandra hardware, server specs, hardware requirements"
+search:
+  boost: 3
 ---
 
 # Hardware Recommendations for Cassandra

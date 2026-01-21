@@ -4,6 +4,8 @@ description: "Distributed materialized views in Cassandra. Cross-partition view 
 meta:
   - name: keywords
     content: "distributed materialized view, view consistency, Cassandra views"
+search:
+  boost: 3
 ---
 
 # Materialized Views: Distributed Coordination

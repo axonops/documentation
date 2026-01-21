@@ -4,6 +4,8 @@ description: "Cassandra load balancing policies. Configure token-aware, data cen
 meta:
   - name: keywords
     content: "Cassandra load balancing, token-aware, DC-aware, round-robin"
+search:
+  boost: 3
 ---
 
 # Load Balancing Policy

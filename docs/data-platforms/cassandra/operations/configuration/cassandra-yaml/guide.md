@@ -4,6 +4,8 @@ description: "Comprehensive guide to cassandra.yaml configuration with explanati
 meta:
   - name: keywords
     content: "cassandra.yaml, Cassandra configuration, config guide, best practices"
+search:
+  boost: 3
 ---
 
 # cassandra.yaml Configuration Guide

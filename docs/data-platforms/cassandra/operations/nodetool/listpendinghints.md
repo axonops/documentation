@@ -4,6 +4,8 @@ description: "Display pending hints for nodes in Cassandra using nodetool listpe
 meta:
   - name: keywords
     content: "nodetool listpendinghints, pending hints, hinted handoff, Cassandra"
+search:
+  boost: 3
 ---
 
 # nodetool listpendinghints

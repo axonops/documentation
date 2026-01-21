@@ -4,6 +4,8 @@ description: "Cassandra dropped messages dashboard metrics mapping. Message drop
 meta:
   - name: keywords
     content: "dropped messages, message drops, Cassandra metrics"
+search:
+  boost: 8
 ---
 
 # AxonOps Dropped Messages Dashboard Metrics Mapping

@@ -4,6 +4,8 @@ description: "Clear roles cache in Cassandra using nodetool invalidaterolescache
 meta:
   - name: keywords
     content: "nodetool invalidaterolescache, roles cache, authorization, Cassandra security"
+search:
+  boost: 3
 ---
 
 # nodetool invalidaterolescache

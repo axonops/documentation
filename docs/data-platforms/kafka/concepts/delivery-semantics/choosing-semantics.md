@@ -4,6 +4,8 @@ description: "Guide to selecting appropriate Kafka delivery semantics. Decision 
 meta:
   - name: keywords
     content: "Kafka delivery semantics, choosing semantics, reliability vs performance"
+search:
+  boost: 3
 ---
 
 # Choosing Delivery Semantics

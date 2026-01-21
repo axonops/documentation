@@ -4,6 +4,8 @@ description: "CQL Prepared statements in Cassandra. Statement preparation, cachi
 meta:
   - name: keywords
     content: "CQL prepared statements, statement cache, query preparation, Cassandra performance"
+search:
+  boost: 3
 ---
 
 # Prepared Statements Architecture

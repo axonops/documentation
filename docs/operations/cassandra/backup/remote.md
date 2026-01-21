@@ -4,6 +4,8 @@ description: "Remote backup destinations for Cassandra in AxonOps. Cloud storage
 meta:
   - name: keywords
     content: "remote backup, cloud backup, Cassandra backup destinations"
+search:
+  boost: 8
 ---
 
 ###  Remote backups 

@@ -4,6 +4,8 @@ description: "Operational procedures for Kafka Dead Letter Queues. Monitoring, a
 meta:
   - name: keywords
     content: "Kafka DLQ operations, dead letter queue monitoring, DLQ reprocessing, Kafka error management, DLQ alerting"
+search:
+  boost: 3
 ---
 
 # Operating Dead Letter Queues

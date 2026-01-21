@@ -4,6 +4,8 @@ description: "Apache Kafka Java client guide. Producer, consumer, and admin clie
 meta:
   - name: keywords
     content: "Kafka Java client, kafka-clients, KafkaProducer, KafkaConsumer, Kafka Java API, Maven Kafka"
+search:
+  boost: 3
 ---
 
 # Kafka Java Client

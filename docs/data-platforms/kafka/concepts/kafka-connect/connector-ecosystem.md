@@ -4,6 +4,8 @@ description: "Kafka Connect connector ecosystem. Available connectors for databa
 meta:
   - name: keywords
     content: "Kafka Connect ecosystem, Confluent Hub, connector catalog, source sink connectors"
+search:
+  boost: 3
 ---
 
 # Connector Ecosystem

@@ -4,6 +4,8 @@ description: "Replace dead node troubleshooting playbook. Node replacement proce
 meta:
   - name: keywords
     content: "replace node troubleshooting, dead node, node replacement"
+search:
+  boost: 3
 ---
 
 # Playbook: Replace a Dead Node

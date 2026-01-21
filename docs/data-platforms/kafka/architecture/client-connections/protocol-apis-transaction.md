@@ -4,6 +4,8 @@ description: "Apache Kafka transaction protocol APIs. InitProducerId, AddPartiti
 meta:
   - name: keywords
     content: "Kafka transaction API, InitProducerId, AddPartitionsToTxn, EndTxn, transaction protocol"
+search:
+  boost: 3
 ---
 
 # Kafka Transaction Protocol APIs

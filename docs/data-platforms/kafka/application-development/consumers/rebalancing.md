@@ -4,6 +4,8 @@ description: "Apache Kafka consumer rebalancing deep dive. Rebalance triggers, p
 meta:
   - name: keywords
     content: "Kafka rebalancing, consumer rebalance, partition reassignment, cooperative rebalancing, rebalance listener"
+search:
+  boost: 3
 ---
 
 # Consumer Rebalancing

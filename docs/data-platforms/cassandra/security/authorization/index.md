@@ -4,6 +4,8 @@ description: "Cassandra authorization and role-based access control. GRANT, REVO
 meta:
   - name: keywords
     content: "Cassandra authorization, RBAC, permissions, GRANT, REVOKE"
+search:
+  boost: 3
 ---
 
 # Cassandra Authorization

@@ -4,6 +4,8 @@ description: "JVM configuration for Cassandra. Heap sizing, garbage collection t
 meta:
   - name: keywords
     content: "Cassandra JVM, heap size, garbage collection, G1GC, JVM tuning"
+search:
+  boost: 3
 ---
 
 # Java Virtual Machine (JVM)

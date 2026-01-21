@@ -4,6 +4,8 @@ description: "Cassandra configuration virtual tables. Query runtime settings, sy
 meta:
   - name: keywords
     content: "Cassandra settings, system properties, cassandra.yaml, runtime configuration, system logs"
+search:
+  boost: 3
 ---
 
 # Configuration

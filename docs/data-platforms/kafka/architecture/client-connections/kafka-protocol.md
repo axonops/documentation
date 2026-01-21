@@ -4,6 +4,8 @@ description: "Canonical Apache Kafka binary wire protocol specification. Protoco
 meta:
   - name: keywords
     content: "Kafka protocol, wire protocol, binary protocol, Kafka API, protocol specification"
+search:
+  boost: 3
 ---
 
 # Kafka Wire Protocol Specification

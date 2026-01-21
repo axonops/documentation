@@ -4,6 +4,8 @@ description: "Configure ServiceNow integration in AxonOps. Create tickets from a
 meta:
   - name: keywords
     content: "ServiceNow integration, ticket creation, ITSM, AxonOps"
+search:
+  boost: 8
 ---
 
 # Setup ServiceNow Integration

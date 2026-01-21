@@ -4,6 +4,8 @@ description: "Cassandra CQL built-in functions reference including aggregates, t
 meta:
   - name: keywords
     content: "CQL functions, built-in functions, uuid(), now(), toTimestamp(), Cassandra"
+search:
+  boost: 3
 ---
 
 # CQL Functions Reference

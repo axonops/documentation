@@ -4,6 +4,8 @@ description: "Cassandra table dashboard metrics mapping. Per-table performance s
 meta:
   - name: keywords
     content: "table metrics, per-table stats, Cassandra performance"
+search:
+  boost: 8
 ---
 
 # AxonOps Table Dashboard Metrics Mapping

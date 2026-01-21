@@ -4,6 +4,8 @@ description: "Cassandra monitoring overview. Tools, metrics, and best practices.
 meta:
   - name: keywords
     content: "Cassandra monitoring, cluster monitoring, observability"
+search:
+  boost: 3
 ---
 
 # Monitoring Operations

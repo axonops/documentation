@@ -4,6 +4,8 @@ description: "Kafka Connect connector guides. Source and sink connectors for Cas
 meta:
   - name: keywords
     content: "Kafka Connect connectors, Cassandra sink, S3 sink, Elasticsearch sink"
+search:
+  boost: 3
 ---
 
 # Kafka Connect Connectors

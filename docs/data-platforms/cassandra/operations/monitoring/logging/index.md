@@ -4,6 +4,8 @@ description: "Cassandra logging overview. Log analysis and troubleshooting with 
 meta:
   - name: keywords
     content: "Cassandra logging, log analysis, system.log"
+search:
+  boost: 3
 ---
 
 # Cassandra Logging Configuration

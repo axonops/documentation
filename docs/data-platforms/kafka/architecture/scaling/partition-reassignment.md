@@ -4,6 +4,8 @@ description: "Apache Kafka partition reassignment internals. Replica movement, t
 meta:
   - name: keywords
     content: "Kafka partition reassignment, replica movement, kafka-reassign-partitions, data migration"
+search:
+  boost: 3
 ---
 
 # Kafka Partition Reassignment

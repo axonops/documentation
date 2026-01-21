@@ -4,6 +4,8 @@ description: "Apache Kafka storage internals. Log segments, indexes, compaction,
 meta:
   - name: keywords
     content: "Kafka storage, log segments, Kafka compaction, retention, Kafka indexes"
+search:
+  boost: 3
 ---
 
 # Storage Engine

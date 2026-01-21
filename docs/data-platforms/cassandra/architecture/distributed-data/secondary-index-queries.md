@@ -4,6 +4,8 @@ description: "How secondary index queries work in distributed Cassandra. Coordin
 meta:
   - name: keywords
     content: "secondary index query, distributed query, scatter-gather, Cassandra"
+search:
+  boost: 3
 ---
 
 # Secondary Index Query Execution

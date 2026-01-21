@@ -4,6 +4,8 @@ description: "Cassandra reference documentation. Project resources, links, and o
 meta:
   - name: keywords
     content: "Cassandra reference, documentation, project resources"
+search:
+  boost: 3
 ---
 
 # Cassandra Reference

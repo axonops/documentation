@@ -4,6 +4,8 @@ description: "Refresh size estimates for tables in Cassandra using nodetool refr
 meta:
   - name: keywords
     content: "nodetool refreshsizeestimates, size estimates, table statistics, Cassandra"
+search:
+  boost: 3
 ---
 
 # nodetool refreshsizeestimates

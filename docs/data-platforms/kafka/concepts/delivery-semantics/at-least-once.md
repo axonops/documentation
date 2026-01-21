@@ -4,6 +4,8 @@ description: "Kafka at-least-once delivery semantics. Retry patterns, idempotent
 meta:
   - name: keywords
     content: "Kafka at-least-once, message delivery, acks=all, guaranteed delivery"
+search:
+  boost: 3
 ---
 
 # At-Least-Once Delivery

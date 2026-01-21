@@ -4,6 +4,8 @@ description: "Kafka Connect's role in the Kafka ecosystem. Data integration patt
 meta:
   - name: keywords
     content: "Kafka Connect, data integration, connectors, CDC, ETL, Kafka ecosystem"
+search:
+  boost: 3
 ---
 
 # Kafka Connect

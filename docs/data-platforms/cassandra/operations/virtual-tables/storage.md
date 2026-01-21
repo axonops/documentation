@@ -4,6 +4,8 @@ description: "Cassandra storage virtual tables. Monitor disk usage, partition si
 meta:
   - name: keywords
     content: "Cassandra disk usage, partition size, snapshots, compaction tasks, SSTable"
+search:
+  boost: 3
 ---
 
 # Storage

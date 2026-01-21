@@ -4,6 +4,8 @@ description: "Disable audit logging in Cassandra using nodetool disableauditlog 
 meta:
   - name: keywords
     content: "nodetool disableauditlog, disable audit, Cassandra audit log, security"
+search:
+  boost: 3
 ---
 
 # nodetool disableauditlog

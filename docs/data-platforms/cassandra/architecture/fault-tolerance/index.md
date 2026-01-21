@@ -4,6 +4,8 @@ description: "Fault tolerance in Cassandra through replication, hinted handoff, 
 meta:
   - name: keywords
     content: "fault tolerance, Cassandra reliability, high availability, replication"
+search:
+  boost: 3
 ---
 
 # Fault Tolerance and Failure Scenarios

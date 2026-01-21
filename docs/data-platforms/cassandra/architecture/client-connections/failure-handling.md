@@ -4,6 +4,8 @@ description: "Connection failure handling in Cassandra drivers. Retry policies a
 meta:
   - name: keywords
     content: "failure handling, retry policy, reconnection, Cassandra resilience"
+search:
+  boost: 3
 ---
 
 # Failure Handling Policies

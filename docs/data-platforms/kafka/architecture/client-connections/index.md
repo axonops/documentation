@@ -4,6 +4,8 @@ description: "Apache Kafka client connections architecture. Connection pooling, 
 meta:
   - name: keywords
     content: "Kafka client connections, Kafka protocol, broker connection, client networking, connection management"
+search:
+  boost: 3
 ---
 
 # Client Connection Architecture

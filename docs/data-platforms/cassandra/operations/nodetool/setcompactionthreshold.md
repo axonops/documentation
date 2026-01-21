@@ -4,6 +4,8 @@ description: "Set min/max compaction thresholds for a table using nodetool setco
 meta:
   - name: keywords
     content: "nodetool setcompactionthreshold, compaction threshold, Cassandra compaction"
+search:
+  boost: 3
 ---
 
 # nodetool setcompactionthreshold

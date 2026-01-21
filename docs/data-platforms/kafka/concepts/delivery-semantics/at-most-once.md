@@ -4,6 +4,8 @@ description: "Kafka at-most-once delivery semantics. Fire and forget patterns, p
 meta:
   - name: keywords
     content: "Kafka at-most-once, fire and forget, acks=0, best effort delivery"
+search:
+  boost: 3
 ---
 
 # At-Most-Once Delivery

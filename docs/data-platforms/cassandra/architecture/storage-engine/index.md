@@ -4,6 +4,8 @@ description: "Cassandra storage engine architecture including memtables, SSTable
 meta:
   - name: keywords
     content: "Cassandra storage engine, memtable, SSTable, commit log, compaction"
+search:
+  boost: 3
 ---
 
 # Storage Engine

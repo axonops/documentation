@@ -4,6 +4,8 @@ description: "Apache Kafka producer batching. Record accumulator, batch configur
 meta:
   - name: keywords
     content: "Kafka batching, batch.size, linger.ms, producer batching, batch optimization"
+search:
+  boost: 3
 ---
 
 # Kafka Producer Batching

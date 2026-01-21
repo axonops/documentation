@@ -4,6 +4,8 @@ description: "Cassandra read path explained. How queries traverse memtables, SST
 meta:
   - name: keywords
     content: "Cassandra read path, bloom filter, partition index, read operation"
+search:
+  boost: 3
 ---
 
 # Read Path

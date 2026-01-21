@@ -4,6 +4,8 @@ description: "Cassandra INSERT statement syntax in CQL. Add data with TTL, times
 meta:
   - name: keywords
     content: "CQL INSERT, insert data, TTL, timestamp, Cassandra write"
+search:
+  boost: 3
 ---
 
 # INSERT

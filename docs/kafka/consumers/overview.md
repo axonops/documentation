@@ -4,6 +4,8 @@ description: "Kafka consumer group management in AxonOps. Monitor consumer lag a
 meta:
   - name: keywords
     content: "Kafka consumers, consumer groups, lag monitoring, AxonOps"
+search:
+  boost: 8
 ---
 
 # Kafka Consumers

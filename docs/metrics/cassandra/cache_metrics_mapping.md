@@ -4,6 +4,8 @@ description: "Cassandra cache dashboard metrics mapping. Key cache and row cache
 meta:
   - name: keywords
     content: "cache metrics, key cache, row cache, Cassandra caching"
+search:
+  boost: 8
 ---
 
 # AxonOps Cache Dashboard Metrics Mapping

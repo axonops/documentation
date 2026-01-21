@@ -4,6 +4,8 @@ description: "Display CIDR filtering statistics in Cassandra using nodetool cidr
 meta:
   - name: keywords
     content: "nodetool cidrfilteringstats, CIDR filtering, network security, Cassandra"
+search:
+  boost: 3
 ---
 
 # nodetool cidrfilteringstats

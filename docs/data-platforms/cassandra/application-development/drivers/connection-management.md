@@ -4,6 +4,8 @@ description: "Cassandra driver connection management. Configure connection pools
 meta:
   - name: keywords
     content: "Cassandra connection management, connection pool, timeouts, keep-alive"
+search:
+  boost: 3
 ---
 
 # Connection Management

@@ -4,6 +4,8 @@ description: "Import SSTables from a directory into Cassandra using nodetool imp
 meta:
   - name: keywords
     content: "nodetool import, import SSTables, Cassandra data import, SSTable loading"
+search:
+  boost: 3
 ---
 
 # nodetool import

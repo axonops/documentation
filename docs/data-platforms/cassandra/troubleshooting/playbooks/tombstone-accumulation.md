@@ -4,6 +4,8 @@ description: "Tombstone accumulation troubleshooting playbook. Handle tombstone 
 meta:
   - name: keywords
     content: "tombstone troubleshooting, tombstone accumulation, delete markers"
+search:
+  boost: 3
 ---
 
 # Tombstone Accumulation

@@ -4,6 +4,8 @@ description: "Upgrade SSTables to current Cassandra version format using nodetoo
 meta:
   - name: keywords
     content: "nodetool upgradesstables, upgrade SSTables, SSTable version, Cassandra upgrade"
+search:
+  boost: 3
 ---
 
 # nodetool upgradesstables

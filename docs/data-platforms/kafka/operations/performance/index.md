@@ -4,6 +4,8 @@ description: "Apache Kafka performance tuning. Throughput optimization, latency 
 meta:
   - name: keywords
     content: "Kafka performance, throughput tuning, latency optimization, Kafka benchmarking"
+search:
+  boost: 3
 ---
 
 # Kafka Performance

@@ -4,6 +4,8 @@ description: "Create alert rules in AxonOps. Configure thresholds and notificati
 meta:
   - name: keywords
     content: "alert rules, AxonOps alerts, threshold configuration, notifications"
+search:
+  boost: 8
 ---
 
 # Setup alert rules

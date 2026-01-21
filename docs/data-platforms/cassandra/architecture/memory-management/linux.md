@@ -4,6 +4,8 @@ description: "Linux OS tuning for Cassandra. Swappiness, zone_reclaim, transpare
 meta:
   - name: keywords
     content: "Linux tuning, Cassandra OS config, swappiness, THP, vm.max_map_count"
+search:
+  boost: 3
 ---
 
 # Linux Memory Configuration

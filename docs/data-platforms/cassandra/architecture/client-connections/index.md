@@ -4,6 +4,8 @@ description: "Cassandra client connections architecture. CQL protocol, connectio
 meta:
   - name: keywords
     content: "client connections, CQL protocol, connection pool, Cassandra drivers"
+search:
+  boost: 3
 ---
 
 # Client Connection Architecture

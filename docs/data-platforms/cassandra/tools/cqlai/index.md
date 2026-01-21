@@ -4,6 +4,8 @@ description: "CQLAI documentation. AI-powered CQL shell for Apache Cassandra."
 meta:
   - name: keywords
     content: "CQLAI documentation, AI CQL shell, Cassandra tool"
+search:
+  boost: 3
 ---
 
 # CQLAI - Modern AI-Powered CQL Shell

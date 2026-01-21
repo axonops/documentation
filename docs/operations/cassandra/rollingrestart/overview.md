@@ -4,6 +4,8 @@ description: "Rolling restart for Cassandra with AxonOps. Zero-downtime cluster 
 meta:
   - name: keywords
     content: "rolling restart, Cassandra restart, zero downtime, AxonOps"
+search:
+  boost: 8
 ---
 
 AxonOps provides a rolling restart functionality for Cassandra.

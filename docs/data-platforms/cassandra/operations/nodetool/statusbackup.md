@@ -4,6 +4,8 @@ description: "Check if incremental backup is enabled using nodetool statusbackup
 meta:
   - name: keywords
     content: "nodetool statusbackup, backup status, incremental backup, Cassandra"
+search:
+  boost: 3
 ---
 
 # nodetool statusbackup

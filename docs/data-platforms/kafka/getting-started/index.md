@@ -4,6 +4,8 @@ description: "Quick start guide for Apache Kafka. Installation options, client d
 meta:
   - name: keywords
     content: "Kafka getting started, Kafka installation, Kafka quickstart, Kafka setup"
+search:
+  boost: 3
 ---
 
 # Getting Started with Kafka

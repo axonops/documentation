@@ -4,6 +4,8 @@ description: "Clear row cache in Cassandra using nodetool invalidaterowcache com
 meta:
   - name: keywords
     content: "nodetool invalidaterowcache, row cache, clear cache, Cassandra performance"
+search:
+  boost: 3
 ---
 
 # nodetool invalidaterowcache

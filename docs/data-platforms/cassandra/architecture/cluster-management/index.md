@@ -4,6 +4,8 @@ description: "Cassandra cluster management covering gossip, seeds, node lifecycl
 meta:
   - name: keywords
     content: "cluster management, Cassandra cluster, gossip, seeds, topology"
+search:
+  boost: 3
 ---
 
 # Cluster Management

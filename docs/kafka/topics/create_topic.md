@@ -4,6 +4,8 @@ description: "Create Kafka topics with AxonOps. Set up new topics with partition
 meta:
   - name: keywords
     content: "create Kafka topic, new topic, partitions, replication"
+search:
+  boost: 8
 ---
 
 # Kafka Topics

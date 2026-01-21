@@ -4,6 +4,8 @@ description: "AxonOps Workbench for Cassandra development. GUI tool for schema d
 meta:
   - name: keywords
     content: "AxonOps Workbench, Cassandra GUI, schema design, query builder"
+search:
+  boost: 3
 ---
 
 # AxonOps Workbench

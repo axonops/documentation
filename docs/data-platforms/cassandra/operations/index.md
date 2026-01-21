@@ -4,6 +4,8 @@ description: "Apache Cassandra operations guide covering repair, compaction, mon
 meta:
   - name: keywords
     content: "Cassandra operations, cluster management, maintenance"
+search:
+  boost: 3
 ---
 
 # Cassandra Operations Guide

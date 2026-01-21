@@ -4,6 +4,8 @@ description: "Find large partitions in Cassandra SSTables using sstablepartition
 meta:
   - name: keywords
     content: "sstablepartitions, large partitions, hot partition, Cassandra sizing"
+search:
+  boost: 3
 ---
 
 # sstablepartitions

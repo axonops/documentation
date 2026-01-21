@@ -4,6 +4,8 @@ description: "Profile read/write load for tables in Cassandra using nodetool pro
 meta:
   - name: keywords
     content: "nodetool profileload, load profiling, table statistics, Cassandra performance"
+search:
+  boost: 3
 ---
 
 # nodetool profileload

@@ -4,6 +4,8 @@ description: "Clear counter cache in Cassandra using nodetool invalidatecounterc
 meta:
   - name: keywords
     content: "nodetool invalidatecountercache, counter cache, clear cache, Cassandra"
+search:
+  boost: 3
 ---
 
 # nodetool invalidatecountercache

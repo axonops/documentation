@@ -4,6 +4,8 @@ description: "Kafka Connect HTTP Source connector for polling REST APIs. Configu
 meta:
   - name: keywords
     content: "Kafka HTTP source connector, REST API source, webhook connector, HTTP polling"
+search:
+  boost: 3
 ---
 
 # HTTP Source Connector

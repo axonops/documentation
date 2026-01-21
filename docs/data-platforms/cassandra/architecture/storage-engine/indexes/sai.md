@@ -4,6 +4,8 @@ description: "SAI (Storage Attached Index) architecture in Cassandra 5.0. Modern
 meta:
   - name: keywords
     content: "SAI, Storage Attached Index, Cassandra 5.0, modern indexing"
+search:
+  boost: 3
 ---
 
 # SAI (Storage Attached Index)

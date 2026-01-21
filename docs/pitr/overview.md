@@ -4,6 +4,8 @@ description: "Point-in-time restore overview for Cassandra. Recover to any point
 meta:
   - name: keywords
     content: "PITR overview, point-in-time restore, Cassandra recovery"
+search:
+  boost: 8
 ---
 
 # Point in Time Recovery

@@ -4,6 +4,8 @@ description: "Scale Cassandra clusters up and down. Capacity planning, node addi
 meta:
   - name: keywords
     content: "Cassandra scaling, scale up, scale down, capacity planning, cluster sizing"
+search:
+  boost: 3
 ---
 
 # Scaling Operations

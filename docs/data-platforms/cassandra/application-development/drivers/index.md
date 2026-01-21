@@ -4,6 +4,8 @@ description: "Cassandra drivers overview. Official drivers for Java, Python, Nod
 meta:
   - name: keywords
     content: "Cassandra drivers, Java driver, Python driver, DataStax drivers"
+search:
+  boost: 3
 ---
 
 # Cassandra Drivers

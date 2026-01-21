@@ -4,6 +4,8 @@ description: "Configure Kafka topics with AxonOps. Modify topic settings and par
 meta:
   - name: keywords
     content: "configure Kafka topic, topic settings, partitions"
+search:
+  boost: 8
 ---
 
 # Kafka Topics

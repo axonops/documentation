@@ -4,6 +4,8 @@ description: "Recalculate LCS levels for SSTables offline using sstableofflinere
 meta:
   - name: keywords
     content: "sstableofflinerelevel, LCS relevel, leveled compaction, Cassandra optimization"
+search:
+  boost: 3
 ---
 
 # sstableofflinerelevel

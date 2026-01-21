@@ -4,6 +4,8 @@ description: "Kafka Connect architecture, deployment modes, connector configurat
 meta:
   - name: keywords
     content: "Kafka Connect, connectors, source connector, sink connector, distributed mode, SMT, data integration"
+search:
+  boost: 3
 ---
 
 # Kafka Connect

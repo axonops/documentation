@@ -4,6 +4,8 @@ description: "Schema disagreement troubleshooting playbook. Resolve schema confl
 meta:
   - name: keywords
     content: "schema disagreement, schema conflict, metadata issues"
+search:
+  boost: 3
 ---
 
 # Schema Disagreement

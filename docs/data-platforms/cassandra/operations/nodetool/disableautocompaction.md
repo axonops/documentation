@@ -4,6 +4,8 @@ description: "Disable automatic compaction for Cassandra tables using nodetool d
 meta:
   - name: keywords
     content: "nodetool disableautocompaction, disable compaction, Cassandra compaction, manual compaction"
+search:
+  boost: 3
 ---
 
 # nodetool disableautocompaction

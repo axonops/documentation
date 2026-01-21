@@ -4,6 +4,8 @@ description: "Apache Kafka diagnostic procedures. Health checks, connectivity te
 meta:
   - name: keywords
     content: "Kafka diagnosis, Kafka health check, Kafka testing, Kafka verification"
+search:
+  boost: 3
 ---
 
 # Kafka Diagnosis

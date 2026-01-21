@@ -4,6 +4,8 @@ description: "Display help information for nodetool commands in Cassandra using 
 meta:
   - name: keywords
     content: "nodetool help, command help, Cassandra nodetool, documentation"
+search:
+  boost: 3
 ---
 
 # nodetool help

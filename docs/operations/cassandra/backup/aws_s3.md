@@ -4,6 +4,8 @@ description: "Configure AWS S3 backup for Cassandra with AxonOps. Store backups 
 meta:
   - name: keywords
     content: "AWS S3 backup, Cassandra backup, Amazon S3, AxonOps"
+search:
+  boost: 8
 ---
 
 

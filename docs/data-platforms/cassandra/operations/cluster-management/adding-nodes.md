@@ -4,6 +4,8 @@ description: "Add nodes to Cassandra cluster. Bootstrap procedure with behaviora
 meta:
   - name: keywords
     content: "Cassandra bootstrap, add node, cluster scaling, expand cluster"
+search:
+  boost: 3
 ---
 
 # Adding Nodes

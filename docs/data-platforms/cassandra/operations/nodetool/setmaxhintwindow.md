@@ -4,6 +4,8 @@ description: "Set maximum hint window duration in Cassandra using nodetool setma
 meta:
   - name: keywords
     content: "nodetool setmaxhintwindow, hint window, hinted handoff, Cassandra"
+search:
+  boost: 3
 ---
 
 # nodetool setmaxhintwindow

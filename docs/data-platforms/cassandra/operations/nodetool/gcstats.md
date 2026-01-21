@@ -4,6 +4,8 @@ description: "Display JVM garbage collection statistics for Cassandra using node
 meta:
   - name: keywords
     content: "nodetool gcstats, GC statistics, JVM garbage collection, Cassandra performance"
+search:
+  boost: 3
 ---
 
 # nodetool gcstats

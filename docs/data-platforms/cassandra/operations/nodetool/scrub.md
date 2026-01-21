@@ -4,6 +4,8 @@ description: "Scrub SSTables to fix corruption in Cassandra using nodetool scrub
 meta:
   - name: keywords
     content: "nodetool scrub, SSTable scrub, fix corruption, Cassandra recovery"
+search:
+  boost: 3
 ---
 
 # nodetool scrub

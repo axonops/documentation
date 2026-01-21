@@ -4,6 +4,8 @@ description: "Apache Kafka cluster scaling architecture. Horizontal scaling, par
 meta:
   - name: keywords
     content: "Kafka scaling, horizontal scaling, partition scaling, cluster expansion"
+search:
+  boost: 3
 ---
 
 # Kafka Cluster Scaling

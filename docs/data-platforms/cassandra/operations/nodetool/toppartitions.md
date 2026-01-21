@@ -4,6 +4,8 @@ description: "Sample and display top partitions by reads/writes using nodetool t
 meta:
   - name: keywords
     content: "nodetool toppartitions, hot partitions, top partitions, Cassandra performance"
+search:
+  boost: 3
 ---
 
 # nodetool toppartitions

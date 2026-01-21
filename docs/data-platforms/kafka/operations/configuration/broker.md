@@ -4,6 +4,8 @@ description: "Apache Kafka broker configuration reference. server.properties set
 meta:
   - name: keywords
     content: "Kafka broker configuration, server.properties, broker settings, cluster configuration"
+search:
+  boost: 3
 ---
 
 # Broker Configuration

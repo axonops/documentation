@@ -4,6 +4,8 @@ description: "Display client connection statistics in Cassandra using nodetool c
 meta:
   - name: keywords
     content: "nodetool clientstats, client connections, Cassandra statistics, connection info"
+search:
+  boost: 3
 ---
 
 # nodetool clientstats

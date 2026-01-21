@@ -4,6 +4,8 @@ description: "Apache Kafka troubleshooting guide: common errors, diagnosis proce
 meta:
   - name: keywords
     content: "Kafka troubleshooting, Kafka errors, diagnosis, log analysis, Kafka problems"
+search:
+  boost: 3
 ---
 
 # Kafka Troubleshooting

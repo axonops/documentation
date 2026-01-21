@@ -4,6 +4,8 @@ description: "CQL quickstart guide. Learn basic Cassandra Query Language operati
 meta:
   - name: keywords
     content: "CQL quickstart, Cassandra Query Language, CQL basics"
+search:
+  boost: 3
 ---
 
 # CQL Quickstart Guide

@@ -4,6 +4,8 @@ description: "Diagnose and resolve Cassandra topology operation issues. Bootstra
 meta:
   - name: keywords
     content: "Cassandra troubleshooting, bootstrap failed, decommission stuck, streaming issues"
+search:
+  boost: 3
 ---
 
 # Cluster Management Troubleshooting

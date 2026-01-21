@@ -2,6 +2,8 @@
 title: "Firewall Rules"
 hide:
   - toc
+search:
+  boost: 5
 ---
 
 # Firewall Rules

@@ -4,6 +4,8 @@ description: "SSTable file format in Cassandra. Data.db, Index.db, Filter.db com
 meta:
   - name: keywords
     content: "SSTable, Cassandra files, Data.db, Index.db, Filter.db, storage format"
+search:
+  boost: 3
 ---
 
 # SSTable Reference

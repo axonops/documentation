@@ -4,6 +4,8 @@ description: "Deep dive into Apache Cassandra's commit log. Segment structure, s
 meta:
   - name: keywords
     content: "Cassandra commit log, write-ahead log, WAL, durability, crash recovery"
+search:
+  boost: 3
 ---
 
 # Commit Log

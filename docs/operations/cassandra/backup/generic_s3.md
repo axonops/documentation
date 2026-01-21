@@ -4,6 +4,8 @@ description: "Configure S3-compatible storage backup for Cassandra. MinIO, Ceph,
 meta:
   - name: keywords
     content: "S3 compatible backup, MinIO, Ceph, Cassandra backup"
+search:
+  boost: 8
 ---
 
 ## What is Generic S3

@@ -4,6 +4,8 @@ description: "Kafka transactional producer. Atomic writes, exactly-once semantic
 meta:
   - name: keywords
     content: "Kafka transactions, transactional producer, exactly-once semantics, transaction API, atomic writes"
+search:
+  boost: 3
 ---
 
 # Kafka Transactional Producer

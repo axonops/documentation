@@ -4,6 +4,8 @@ description: "SSH/SFTP backup configuration for Cassandra. Secure remote backup 
 meta:
   - name: keywords
     content: "SSH backup, SFTP, secure backup, Cassandra"
+search:
+  boost: 8
 ---
 
 ## What is SSH/SFTP

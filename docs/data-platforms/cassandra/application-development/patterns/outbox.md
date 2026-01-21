@@ -4,6 +4,8 @@ description: "Implementing the transactional outbox pattern with Apache Cassandr
 meta:
   - name: keywords
     content: "Cassandra outbox pattern, dual-write problem, reliable messaging, event publishing, distributed systems"
+search:
+  boost: 3
 ---
 
 # Transactional Outbox Pattern

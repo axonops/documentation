@@ -4,6 +4,8 @@ description: "Apache Kafka serialization and deserialization. JSON, Avro, Protob
 meta:
   - name: keywords
     content: "Kafka serialization, Avro, Protobuf, JSON Schema, SerDe, message format"
+search:
+  boost: 3
 ---
 
 # Kafka Serialization

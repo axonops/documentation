@@ -4,6 +4,8 @@ description: "Cassandra memory architecture. Heap vs off-heap memory, memtables,
 meta:
   - name: keywords
     content: "Cassandra memory, heap memory, off-heap, memtable memory, caches"
+search:
+  boost: 3
 ---
 
 # Memory Management

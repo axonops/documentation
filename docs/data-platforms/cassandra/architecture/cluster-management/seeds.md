@@ -4,6 +4,8 @@ description: "Seed nodes in Cassandra for cluster discovery and gossip bootstrap
 meta:
   - name: keywords
     content: "seed nodes, Cassandra seeds, cluster discovery, gossip bootstrap"
+search:
+  boost: 3
 ---
 
 # Seeds and Cluster Discovery

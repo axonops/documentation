@@ -4,6 +4,8 @@ description: "CQLAI commands reference. All available shell commands and shortcu
 meta:
   - name: keywords
     content: "CQLAI commands, shell commands, command reference"
+search:
+  boost: 3
 ---
 
 # CQLAI Commands Reference

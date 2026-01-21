@@ -4,6 +4,8 @@ description: "Kafka connections dashboard metrics mapping. Client connection sta
 meta:
   - name: keywords
     content: "Kafka connections, client connections, connection metrics"
+search:
+  boost: 8
 ---
 
 # AxonOps Kafka Connections Dashboard Metrics Mapping

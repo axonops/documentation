@@ -4,6 +4,8 @@ description: "Mark SSTables as repaired or unrepaired using sstablerepairedset. 
 meta:
   - name: keywords
     content: "sstablerepairedset, repair status, incremental repair, Cassandra repair"
+search:
+  boost: 3
 ---
 
 # sstablerepairedset

@@ -4,6 +4,8 @@ description: "Kafka Connect Single Message Transforms (SMTs). Built-in transform
 meta:
   - name: keywords
     content: "Kafka Connect SMT, single message transforms, field transformation, message routing"
+search:
+  boost: 3
 ---
 
 # Kafka Connect Transforms

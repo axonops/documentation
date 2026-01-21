@@ -4,6 +4,8 @@ description: "Saga pattern for distributed transactions with Apache Kafka. Chore
 meta:
   - name: keywords
     content: "saga pattern Kafka, distributed transactions, choreography saga, orchestration saga, compensation"
+search:
+  boost: 3
 ---
 
 # Saga Pattern with Kafka

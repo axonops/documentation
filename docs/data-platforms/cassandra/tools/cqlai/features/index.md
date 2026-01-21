@@ -4,6 +4,8 @@ description: "CQLAI features overview. All capabilities of the AI-powered CQL sh
 meta:
   - name: keywords
     content: "CQLAI features, shell capabilities, feature overview"
+search:
+  boost: 3
 ---
 
 # CQLAI Features

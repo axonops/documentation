@@ -4,6 +4,8 @@ description: "Cassandra write path explained. How data flows from client through
 meta:
   - name: keywords
     content: "Cassandra write path, commit log, memtable flush, write operation"
+search:
+  boost: 3
 ---
 
 # Write Path

@@ -4,6 +4,8 @@ description: "Filesystem recommendations for Apache Kafka. XFS vs ext4 performan
 meta:
   - name: keywords
     content: "Kafka filesystem, XFS, ext4, log segments, page cache, zero-copy"
+search:
+  boost: 3
 ---
 
 # Filesystem Selection for Kafka

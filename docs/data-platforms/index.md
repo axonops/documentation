@@ -4,6 +4,8 @@ description: "AxonOps supported data platforms. Cassandra and Kafka monitoring o
 meta:
   - name: keywords
     content: "data platforms, AxonOps platforms, Cassandra, Kafka"
+search:
+  boost: 3
 ---
 
 # Data Platforms Documentation

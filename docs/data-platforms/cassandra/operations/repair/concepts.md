@@ -4,6 +4,8 @@ description: "Cassandra repair concepts. Anti-entropy repair and consistency mai
 meta:
   - name: keywords
     content: "Cassandra repair concepts, anti-entropy, Merkle trees"
+search:
+  boost: 3
 ---
 
 # Repair Concepts

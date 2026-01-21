@@ -4,6 +4,8 @@ description: "Command Query Responsibility Segregation pattern with Apache Kafka
 meta:
   - name: keywords
     content: "CQRS Kafka, command query separation, read model, write model, event-driven CQRS"
+search:
+  boost: 3
 ---
 
 # CQRS with Kafka

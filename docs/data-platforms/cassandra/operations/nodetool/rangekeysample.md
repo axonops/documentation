@@ -4,6 +4,8 @@ description: "Sample partition keys from SSTables using nodetool rangekeysample 
 meta:
   - name: keywords
     content: "nodetool rangekeysample, key sample, partition keys, Cassandra"
+search:
+  boost: 3
 ---
 
 # nodetool rangekeysample

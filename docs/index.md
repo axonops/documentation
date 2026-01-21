@@ -3,6 +3,8 @@ title: "Welcome to AxonOps"
 hide:
   - navigation
   - toc
+search:
+  boost: 5
 ---
 
 # Welcome to AxonOps

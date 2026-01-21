@@ -4,6 +4,8 @@ description: "Apache Kafka JVM system properties and environment variables. Runt
 meta:
   - name: keywords
     content: "Kafka system properties, JVM settings, environment variables, Kafka startup"
+search:
+  boost: 3
 ---
 
 # System Properties

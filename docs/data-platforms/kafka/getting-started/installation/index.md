@@ -4,6 +4,8 @@ description: "Apache Kafka installation guide. Local installation, Docker deploy
 meta:
   - name: keywords
     content: "Kafka installation, Kafka setup, KRaft mode, Kafka Docker"
+search:
+  boost: 3
 ---
 
 # Kafka Installation

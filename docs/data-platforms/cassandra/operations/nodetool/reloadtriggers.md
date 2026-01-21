@@ -4,6 +4,8 @@ description: "Reload trigger classes in Cassandra using nodetool reloadtriggers 
 meta:
   - name: keywords
     content: "nodetool reloadtriggers, reload triggers, Cassandra triggers, hot reload"
+search:
+  boost: 3
 ---
 
 # nodetool reloadtriggers

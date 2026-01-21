@@ -4,6 +4,8 @@ description: "Event collaboration pattern with Apache Kafka for service choreogr
 meta:
   - name: keywords
     content: "event collaboration, choreography, event-driven services, service coordination, Kafka events"
+search:
+  boost: 3
 ---
 
 # Event Collaboration Pattern

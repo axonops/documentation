@@ -4,6 +4,8 @@ description: "Implementing Command Query Responsibility Segregation (CQRS) with 
 meta:
   - name: keywords
     content: "CQRS Cassandra, command query segregation, read replicas, event sourcing, query optimization"
+search:
+  boost: 3
 ---
 
 # CQRS Pattern with Cassandra

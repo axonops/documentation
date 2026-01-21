@@ -4,6 +4,8 @@ description: "Cassandra SAI (Storage-Attached Index) virtual tables. Monitor ind
 meta:
   - name: keywords
     content: "Cassandra SAI, Storage-Attached Index, index monitoring, SAI virtual tables"
+search:
+  boost: 3
 ---
 
 # SAI Index Tables

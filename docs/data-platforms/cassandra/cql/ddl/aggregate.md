@@ -4,6 +4,8 @@ description: "Cassandra CREATE AGGREGATE syntax for user-defined aggregates (UDA
 meta:
   - name: keywords
     content: "CREATE AGGREGATE, UDA, user-defined aggregate, CQL aggregate, Cassandra"
+search:
+  boost: 3
 ---
 
 # Aggregate Commands

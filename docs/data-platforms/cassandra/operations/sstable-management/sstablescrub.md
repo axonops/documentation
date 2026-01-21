@@ -4,6 +4,8 @@ description: "Repair corrupted SSTables in Cassandra using sstablescrub. Remove 
 meta:
   - name: keywords
     content: "sstablescrub, SSTable repair, fix corruption, Cassandra recovery"
+search:
+  boost: 3
 ---
 
 # sstablescrub

@@ -4,6 +4,8 @@ description: "Remove a dead node from the Cassandra cluster forcibly using nodet
 meta:
   - name: keywords
     content: "nodetool assassinate, remove dead node, Cassandra cluster, force remove node"
+search:
+  boost: 3
 ---
 
 # nodetool assassinate

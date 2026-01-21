@@ -4,6 +4,8 @@ description: "Install and configure the AxonOps Cassandra Restore Tool for backu
 meta:
   - name: keywords
     content: "Cassandra restore tool, AxonOps backup recovery, axon-cassandra-restore"
+search:
+  boost: 8
 ---
 
 # Installing the Cassandra Restore Tool

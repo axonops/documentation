@@ -4,6 +4,8 @@ description: "Force major compaction in Cassandra using nodetool compact. Merge 
 meta:
   - name: keywords
     content: "nodetool compact, major compaction, Cassandra compaction, merge SSTables"
+search:
+  boost: 3
 ---
 
 # nodetool compact

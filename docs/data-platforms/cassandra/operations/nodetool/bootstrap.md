@@ -4,6 +4,8 @@ description: "Check or resume bootstrap operations in Cassandra using nodetool b
 meta:
   - name: keywords
     content: "nodetool bootstrap, Cassandra bootstrap, node joining, resume bootstrap"
+search:
+  boost: 3
 ---
 
 # nodetool bootstrap

@@ -4,6 +4,8 @@ description: "Gossip protocol in Cassandra for cluster membership and failure de
 meta:
   - name: keywords
     content: "gossip protocol, Cassandra gossip, failure detection, phi accrual"
+search:
+  boost: 3
 ---
 
 # Gossip Protocol and Internode Messaging

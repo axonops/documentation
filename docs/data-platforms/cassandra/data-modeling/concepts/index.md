@@ -4,6 +4,8 @@ description: "Cassandra data modeling concepts. Partition keys, clustering colum
 meta:
   - name: keywords
     content: "Cassandra data modeling, partition key, clustering column, denormalization"
+search:
+  boost: 3
 ---
 
 # Data Modeling Concepts

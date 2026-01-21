@@ -4,6 +4,8 @@ description: "Cassandra system dashboard metrics mapping. CPU, memory, and disk 
 meta:
   - name: keywords
     content: "system metrics, CPU metrics, memory metrics, disk, Cassandra"
+search:
+  boost: 8
 ---
 
 # AxonOps System Dashboard Metrics Mapping

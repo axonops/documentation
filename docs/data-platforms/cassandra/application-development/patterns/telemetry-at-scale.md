@@ -4,6 +4,8 @@ description: "Ingesting and processing high-volume IoT telemetry with Apache Cas
 meta:
   - name: keywords
     content: "Cassandra IoT telemetry, high-volume ingestion, time-series scale, hot partitions, data downsampling"
+search:
+  boost: 3
 ---
 
 # Telemetry at Scale

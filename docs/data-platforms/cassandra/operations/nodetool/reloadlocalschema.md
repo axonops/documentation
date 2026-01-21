@@ -4,6 +4,8 @@ description: "Reload schema from local storage in Cassandra using nodetool reloa
 meta:
   - name: keywords
     content: "nodetool reloadlocalschema, reload schema, local schema, Cassandra"
+search:
+  boost: 3
 ---
 
 # nodetool reloadlocalschema

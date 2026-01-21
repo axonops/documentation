@@ -4,6 +4,8 @@ description: "Kafka Connect overview dashboard metrics mapping. Connector status
 meta:
   - name: keywords
     content: "Kafka Connect metrics, connector status, throughput"
+search:
+  boost: 8
 ---
 
 # AxonOps Kafka Connect Overview Dashboard Metrics Mapping

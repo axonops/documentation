@@ -4,6 +4,8 @@ description: "Dead Letter Queue implementation patterns for Apache Kafka. Produc
 meta:
   - name: keywords
     content: "Kafka DLQ implementation, dead letter queue code, Kafka error handling, retry pattern, Spring Kafka DLQ"
+search:
+  boost: 3
 ---
 
 # Implementing Dead Letter Queues

@@ -4,6 +4,8 @@ description: "Replace failed Cassandra nodes with replace_address_first_boot. De
 meta:
   - name: keywords
     content: "node replacement, replace dead node, replace_address_first_boot, Cassandra"
+search:
+  boost: 3
 ---
 
 # Node Replacement

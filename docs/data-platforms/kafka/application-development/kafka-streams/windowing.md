@@ -4,6 +4,8 @@ description: "Kafka Streams windowing for time-based processing. Tumbling, hoppi
 meta:
   - name: keywords
     content: "Kafka Streams windowing, tumbling window, hopping window, session window, time-based aggregation"
+search:
+  boost: 3
 ---
 
 # Windowing

@@ -4,6 +4,8 @@ description: "Cassandra thread pools dashboard metrics mapping. SEDA stage stati
 meta:
   - name: keywords
     content: "thread pools metrics, SEDA stages, Cassandra threads"
+search:
+  boost: 8
 ---
 
 # AxonOps Thread Pools Dashboard Metrics Mapping

@@ -4,6 +4,8 @@ description: "Cassandra-stress benchmarking tool for load testing, capacity plan
 meta:
   - name: keywords
     content: "cassandra-stress, load testing, benchmarking tool"
+search:
+  boost: 3
 ---
 
 # cassandra-stress

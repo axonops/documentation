@@ -4,6 +4,8 @@ description: "Apache Kafka authorization with ACLs. Configuring access control l
 meta:
   - name: keywords
     content: "Kafka authorization, Kafka ACLs, access control, Kafka permissions"
+search:
+  boost: 3
 ---
 
 # Kafka Authorization

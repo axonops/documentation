@@ -4,6 +4,8 @@ description: "Comprehensive guide to Apache Kafka consumers including consumer g
 meta:
   - name: keywords
     content: "Kafka consumer, consumer group, Kafka subscription, message consumption, Kafka poll, consumer API"
+search:
+  boost: 3
 ---
 
 # Kafka Consumer Guide

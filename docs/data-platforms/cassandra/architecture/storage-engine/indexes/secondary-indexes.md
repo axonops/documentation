@@ -4,6 +4,8 @@ description: "Secondary index (2i) architecture in Cassandra. Local index implem
 meta:
   - name: keywords
     content: "secondary index, 2i, local index, Cassandra indexing"
+search:
+  boost: 3
 ---
 
 # Secondary Indexes (2i)

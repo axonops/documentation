@@ -1,6 +1,8 @@
 ---
 title: "KRaft: Kafka Raft Consensus"
 description: "Deep dive into KRaft, Kafka's built-in consensus protocol. Raft mechanics, metadata management, controller quorum, and migration from ZooKeeper."
+search:
+  boost: 3
 ---
 
 # KRaft: Kafka Raft Consensus

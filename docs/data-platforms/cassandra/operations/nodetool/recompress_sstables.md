@@ -4,6 +4,8 @@ description: "Recompress SSTables with a new compression algorithm using nodetoo
 meta:
   - name: keywords
     content: "nodetool recompress_sstables, recompress, SSTable compression, Cassandra"
+search:
+  boost: 3
 ---
 
 # nodetool recompress_sstables

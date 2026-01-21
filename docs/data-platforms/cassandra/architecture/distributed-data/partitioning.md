@@ -4,6 +4,8 @@ description: "Data partitioning in Cassandra using consistent hashing. Partition
 meta:
   - name: keywords
     content: "Cassandra partitioning, consistent hashing, partition key, token ring"
+search:
+  boost: 3
 ---
 
 # Partitioning

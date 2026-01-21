@@ -4,6 +4,8 @@ description: "Tombstones in Cassandra for delete operations. gc_grace_seconds, t
 meta:
   - name: keywords
     content: "Cassandra tombstones, delete marker, gc_grace_seconds, tombstone accumulation"
+search:
+  boost: 3
 ---
 
 # Tombstones

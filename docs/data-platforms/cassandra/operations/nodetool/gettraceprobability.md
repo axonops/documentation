@@ -4,6 +4,8 @@ description: "Display query tracing probability in Cassandra using nodetool gett
 meta:
   - name: keywords
     content: "nodetool gettraceprobability, query tracing, trace probability, Cassandra debugging"
+search:
+  boost: 3
 ---
 
 # nodetool gettraceprobability

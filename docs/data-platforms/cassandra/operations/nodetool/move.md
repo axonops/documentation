@@ -4,6 +4,8 @@ description: "Move a Cassandra node to a new token position using nodetool move 
 meta:
   - name: keywords
     content: "nodetool move, move token, Cassandra rebalance, token assignment"
+search:
+  boost: 3
 ---
 
 # nodetool move

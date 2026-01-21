@@ -4,6 +4,8 @@ description: "Display read/write concurrency settings in Cassandra using nodetoo
 meta:
   - name: keywords
     content: "nodetool getconcurrency, concurrency settings, read write threads, Cassandra"
+search:
+  boost: 3
 ---
 
 # nodetool getconcurrency

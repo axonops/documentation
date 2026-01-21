@@ -4,6 +4,8 @@ description: "Deploy Apache Cassandra on AWS. EC2 instance selection, EBS vs ins
 meta:
   - name: keywords
     content: "Cassandra AWS, EC2 deployment, EBS storage, AWS best practices"
+search:
+  boost: 3
 ---
 
 # Cassandra on AWS

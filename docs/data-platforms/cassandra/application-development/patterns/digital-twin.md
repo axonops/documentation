@@ -4,6 +4,8 @@ description: "Implementing digital twins for IoT applications with Apache Cassan
 meta:
   - name: keywords
     content: "Cassandra digital twin, IoT device management, device state, command delivery, edge computing"
+search:
+  boost: 3
 ---
 
 # Digital Twin Pattern

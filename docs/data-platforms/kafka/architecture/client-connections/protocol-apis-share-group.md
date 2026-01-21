@@ -4,6 +4,8 @@ description: "Apache Kafka Share Group protocol APIs. ShareGroupHeartbeat, Share
 meta:
   - name: keywords
     content: "Kafka share groups, KIP-932, shared consumption, queue semantics"
+search:
+  boost: 3
 ---
 
 # Kafka Share Group Protocol APIs

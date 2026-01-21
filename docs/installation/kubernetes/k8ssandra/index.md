@@ -1,6 +1,8 @@
 ---
 title: K8ssandra Cassandra Cluster with AxonOps Agent
 description: Deploy a production-ready Cassandra cluster using K8ssandra with AxonOps monitoring integration
+search:
+  boost: 5
 ---
 
 # K8ssandra Cassandra Cluster with AxonOps Agent

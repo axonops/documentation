@@ -4,6 +4,8 @@ description: "Configure TLS encryption in Cassandra. cassandra.yaml SSL settings
 meta:
   - name: keywords
     content: "TLS configuration, SSL settings, cassandra.yaml, encryption setup"
+search:
+  boost: 3
 ---
 
 # Cassandra Encryption Configuration

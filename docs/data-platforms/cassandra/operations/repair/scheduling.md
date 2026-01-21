@@ -4,6 +4,8 @@ description: "Cassandra repair scheduling. Automate repair with schedulers."
 meta:
   - name: keywords
     content: "Cassandra repair scheduling, automated repair, repair scheduler"
+search:
+  boost: 3
 ---
 
 # Repair Scheduling Guide

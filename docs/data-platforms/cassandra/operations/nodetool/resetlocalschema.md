@@ -4,6 +4,8 @@ description: "Reset local schema to match cluster using nodetool resetlocalschem
 meta:
   - name: keywords
     content: "nodetool resetlocalschema, reset schema, schema sync, Cassandra"
+search:
+  boost: 3
 ---
 
 # nodetool resetlocalschema

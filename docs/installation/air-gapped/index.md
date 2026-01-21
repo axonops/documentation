@@ -1,3 +1,7 @@
+---
+search:
+  boost: 5
+---
 Follow the process below to install AxonOps within air-gapped systems.
 
 {!installation/air-gapped/dynamic_page.md!}

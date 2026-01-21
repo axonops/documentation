@@ -4,6 +4,8 @@ description: "Enable full query logging in Cassandra using nodetool enablefullqu
 meta:
   - name: keywords
     content: "nodetool enablefullquerylog, enable FQL, query logging, Cassandra debugging"
+search:
+  boost: 3
 ---
 
 # nodetool enablefullquerylog

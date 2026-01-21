@@ -4,6 +4,8 @@ description: "Create your first Cassandra cluster. Step-by-step guide for beginn
 meta:
   - name: keywords
     content: "first Cassandra cluster, cluster setup, beginner guide"
+search:
+  boost: 3
 ---
 
 # Setting Up a Cassandra Cluster

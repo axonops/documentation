@@ -4,6 +4,8 @@ description: "Display default replication factor for system keyspaces using node
 meta:
   - name: keywords
     content: "nodetool getdefaultrf, replication factor, default RF, Cassandra replication"
+search:
+  boost: 3
 ---
 
 # nodetool getdefaultrf

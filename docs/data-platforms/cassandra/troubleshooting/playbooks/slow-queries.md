@@ -4,6 +4,8 @@ description: "Slow queries troubleshooting playbook. Diagnose query performance.
 meta:
   - name: keywords
     content: "slow queries troubleshooting, query performance, latency issues"
+search:
+  boost: 3
 ---
 
 # Slow Queries

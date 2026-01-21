@@ -4,6 +4,8 @@ description: "Cassandra CQL triggers: server-side code execution on data mutatio
 meta:
   - name: keywords
     content: "Cassandra triggers, CREATE TRIGGER, DROP TRIGGER, ITrigger, mutation triggers"
+search:
+  boost: 3
 ---
 
 # Triggers

@@ -4,6 +4,8 @@ description: "Disable hinted handoff in Cassandra using nodetool disablehandoff 
 meta:
   - name: keywords
     content: "nodetool disablehandoff, disable hints, hinted handoff, Cassandra"
+search:
+  boost: 3
 ---
 
 # nodetool disablehandoff

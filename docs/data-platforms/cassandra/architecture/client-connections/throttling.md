@@ -4,6 +4,8 @@ description: "Request throttling in Cassandra clients. Rate limiting, backpressu
 meta:
   - name: keywords
     content: "Cassandra request throttling, rate limiting, backpressure, Cassandra client"
+search:
+  boost: 3
 ---
 
 # Query Throttling

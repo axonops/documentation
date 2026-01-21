@@ -4,6 +4,8 @@ description: "Reload SSL certificates without restart using nodetool reloadssl c
 meta:
   - name: keywords
     content: "nodetool reloadssl, reload SSL, certificate reload, Cassandra security"
+search:
+  boost: 3
 ---
 
 # nodetool reloadssl

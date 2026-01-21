@@ -4,6 +4,8 @@ description: "Force replay of batch log entries in Cassandra using nodetool repl
 meta:
   - name: keywords
     content: "nodetool replaybatchlog, batch log, replay batches, Cassandra"
+search:
+  boost: 3
 ---
 
 # nodetool replaybatchlog

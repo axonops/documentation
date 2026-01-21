@@ -4,6 +4,8 @@ description: "Using Cassandra Sidecar with CDC for reliable event streaming to K
 meta:
   - name: keywords
     content: "Cassandra Sidecar, CDC outbox, Kafka integration, CEP-44, event streaming, schema registry"
+search:
+  boost: 3
 ---
 
 # Sidecar CDC Outbox Pattern

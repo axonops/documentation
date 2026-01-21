@@ -4,6 +4,8 @@ description: "Cassandra CQL data types reference including text, int, UUID, time
 meta:
   - name: keywords
     content: "CQL data types, Cassandra types, UUID, timestamp, collections, UDT"
+search:
+  boost: 3
 ---
 
 # CQL Data Types

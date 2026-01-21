@@ -4,6 +4,8 @@ description: "Scale Cassandra clusters by adding or removing nodes. Capacity pla
 meta:
   - name: keywords
     content: "Cassandra scaling, add nodes, remove nodes, capacity planning"
+search:
+  boost: 3
 ---
 
 # Scaling Operations

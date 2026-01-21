@@ -4,6 +4,8 @@ description: "Apache Kafka Access Control List (ACL) configuration. Authorizatio
 meta:
   - name: keywords
     content: "Kafka ACL, access control list, authorization, Kafka permissions, security rules"
+search:
+  boost: 3
 ---
 
 # ACL Configuration

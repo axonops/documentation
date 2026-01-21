@@ -4,6 +4,8 @@ description: "Apache Kafka cloud deployment guide. AWS, Azure, GCP, and Kubernet
 meta:
   - name: keywords
     content: "Kafka cloud, Kafka AWS, Kafka Azure, Kafka GCP, Kafka Kubernetes"
+search:
+  boost: 3
 ---
 
 # Kafka Cloud Deployment

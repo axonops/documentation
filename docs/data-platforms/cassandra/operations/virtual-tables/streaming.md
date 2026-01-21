@@ -4,6 +4,8 @@ description: "Cassandra streaming virtual table. Monitor data streaming operatio
 meta:
   - name: keywords
     content: "Cassandra streaming, data streaming, bootstrap, decommission, repair streaming"
+search:
+  boost: 3
 ---
 
 # Streaming

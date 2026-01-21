@@ -4,6 +4,8 @@ description: "Apache Kafka log analysis guide. Log locations, patterns, debug lo
 meta:
   - name: keywords
     content: "Kafka logs, log analysis, Kafka debugging, log patterns, Kafka troubleshooting"
+search:
+  boost: 3
 ---
 
 # Kafka Log Analysis

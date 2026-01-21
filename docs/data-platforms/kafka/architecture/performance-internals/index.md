@@ -4,6 +4,8 @@ description: "Kafka performance internals explaining zero-copy transfers, batchi
 meta:
   - name: keywords
     content: "Kafka performance, zero-copy, batching, compression, I/O optimization"
+search:
+  boost: 3
 ---
 
 # Kafka Performance Internals

@@ -4,6 +4,8 @@ description: "Getting started with Cassandra drivers. Quick setup guides for pop
 meta:
   - name: keywords
     content: "Cassandra drivers setup, quick start, language drivers"
+search:
+  boost: 3
 ---
 
 # Cassandra Driver Guide

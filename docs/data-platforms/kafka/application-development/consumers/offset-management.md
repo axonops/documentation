@@ -4,6 +4,8 @@ description: "Apache Kafka consumer offset management. Commit strategies, offset
 meta:
   - name: keywords
     content: "Kafka offset, offset commit, consumer offset, auto.offset.reset, offset tracking, committed offset"
+search:
+  boost: 3
 ---
 
 # Offset Management

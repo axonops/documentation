@@ -4,6 +4,8 @@ description: "Set number of cache keys to save on shutdown using nodetool setcac
 meta:
   - name: keywords
     content: "nodetool setcachekeystosave, cache persistence, key cache, Cassandra"
+search:
+  boost: 3
 ---
 
 # nodetool setcachekeystosave

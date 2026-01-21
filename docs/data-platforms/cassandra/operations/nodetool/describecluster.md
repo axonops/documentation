@@ -4,6 +4,8 @@ description: "Display cluster information including schema versions and snitch u
 meta:
   - name: keywords
     content: "nodetool describecluster, cluster info, schema version, Cassandra snitch"
+search:
+  boost: 3
 ---
 
 # nodetool describecluster

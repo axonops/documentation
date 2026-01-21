@@ -4,6 +4,8 @@ description: "Configure email notifications in AxonOps. SMTP setup for alert del
 meta:
   - name: keywords
     content: "email integration, SMTP, email alerts, AxonOps notifications"
+search:
+  boost: 8
 ---
 
 # Setup SMTP / Email Notifications

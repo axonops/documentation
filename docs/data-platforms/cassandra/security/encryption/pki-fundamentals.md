@@ -4,6 +4,8 @@ description: "PKI fundamentals for Cassandra TLS. Certificates, certificate auth
 meta:
   - name: keywords
     content: "PKI, certificates, CA, key management, Cassandra TLS"
+search:
+  boost: 3
 ---
 
 # PKI Fundamentals

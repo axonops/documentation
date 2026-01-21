@@ -4,6 +4,8 @@ description: "Full disk troubleshooting playbook. Handle disk space emergencies.
 meta:
   - name: keywords
     content: "full disk troubleshooting, disk space, storage emergency"
+search:
+  boost: 3
 ---
 
 # Handle Full Disk

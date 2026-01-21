@@ -4,6 +4,8 @@ description: "Configure log file output in AxonOps. Write alerts to log files."
 meta:
   - name: keywords
     content: "log file integration, alert logging, file output"
+search:
+  boost: 8
 ---
 
 # Send Notifications to Log Files

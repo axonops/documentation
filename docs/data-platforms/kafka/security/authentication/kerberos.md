@@ -4,6 +4,8 @@ description: "SASL/GSSAPI (Kerberos) authentication for Apache Kafka. Configurat
 meta:
   - name: keywords
     content: "Kafka Kerberos, SASL GSSAPI, Kafka Active Directory, Kafka authentication, KDC"
+search:
+  boost: 3
 ---
 
 # Kerberos Authentication (SASL/GSSAPI)

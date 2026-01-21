@@ -4,6 +4,8 @@ description: "Data integration patterns with Apache Kafka. ETL, ELT, event strea
 meta:
   - name: keywords
     content: "Kafka integration, ETL, ELT, data pipeline, Kafka Connect, event streaming"
+search:
+  boost: 3
 ---
 
 # Data Integration

@@ -4,6 +4,8 @@ description: "Perform point-in-time restore for Cassandra. Step-by-step recovery
 meta:
   - name: keywords
     content: "PITR restore, point-in-time recovery, Cassandra restore"
+search:
+  boost: 8
 ---
 
 #### Requirements

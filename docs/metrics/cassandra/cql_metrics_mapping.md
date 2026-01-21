@@ -4,6 +4,8 @@ description: "Cassandra CQL dashboard metrics mapping. Query performance and pre
 meta:
   - name: keywords
     content: "CQL metrics, query performance, prepared statements"
+search:
+  boost: 8
 ---
 
 # AxonOps CQL Dashboard Metrics Mapping

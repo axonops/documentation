@@ -4,6 +4,8 @@ description: "Apache Kafka command-line tools reference. kafka-topics, kafka-con
 meta:
   - name: keywords
     content: "Kafka CLI, kafka-topics, kafka-consumer-groups, Kafka administration"
+search:
+  boost: 3
 ---
 
 # Kafka CLI Tools

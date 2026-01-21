@@ -4,6 +4,8 @@ description: "Enable old CQL protocol versions in Cassandra using nodetool enabl
 meta:
   - name: keywords
     content: "nodetool enableoldprotocolversions, CQL protocol, protocol versions, Cassandra"
+search:
+  boost: 3
 ---
 
 # nodetool enableoldprotocolversions

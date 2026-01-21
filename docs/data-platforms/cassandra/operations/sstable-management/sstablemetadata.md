@@ -4,6 +4,8 @@ description: "Display SSTable metadata and statistics using sstablemetadata. Vie
 meta:
   - name: keywords
     content: "sstablemetadata, SSTable info, metadata display, Cassandra statistics"
+search:
+  boost: 3
 ---
 
 # sstablemetadata

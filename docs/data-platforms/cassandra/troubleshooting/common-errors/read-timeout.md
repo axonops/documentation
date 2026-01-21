@@ -4,6 +4,8 @@ description: "Cassandra ReadTimeout error. Causes and solutions for read timeout
 meta:
   - name: keywords
     content: "Cassandra ReadTimeout, read timeout error, timeout troubleshooting"
+search:
+  boost: 3
 ---
 
 # ReadTimeoutException

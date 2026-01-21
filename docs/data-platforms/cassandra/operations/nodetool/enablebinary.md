@@ -4,6 +4,8 @@ description: "Enable CQL native transport (binary protocol) in Cassandra using n
 meta:
   - name: keywords
     content: "nodetool enablebinary, enable CQL, native transport, Cassandra protocol"
+search:
+  boost: 3
 ---
 
 # nodetool enablebinary

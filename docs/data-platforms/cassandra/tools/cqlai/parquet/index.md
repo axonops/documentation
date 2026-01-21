@@ -4,6 +4,8 @@ description: "CQLAI Parquet support. Import and export Parquet files with Cassan
 meta:
   - name: keywords
     content: "CQLAI Parquet, Parquet import, columnar data"
+search:
+  boost: 3
 ---
 
 # CQLAI Parquet Support

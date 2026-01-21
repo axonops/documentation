@@ -4,6 +4,8 @@ description: "Cassandra troubleshooting guide. Diagnose and resolve common issue
 meta:
   - name: keywords
     content: "Cassandra troubleshooting, diagnosis, problem resolution"
+search:
+  boost: 3
 ---
 
 # Troubleshooting Guide

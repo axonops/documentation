@@ -4,6 +4,8 @@ description: "Kafka producer partitioning strategies. Default partitioner, custo
 meta:
   - name: keywords
     content: "Kafka partitioning, partition key, custom partitioner, message routing, partition strategy"
+search:
+  boost: 3
 ---
 
 # Kafka Producer Partitioning

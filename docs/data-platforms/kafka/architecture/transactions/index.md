@@ -4,6 +4,8 @@ description: "Apache Kafka transaction coordinator architecture. Transaction man
 meta:
   - name: keywords
     content: "Kafka transactions, transaction coordinator, producer ID, epoch, exactly-once, two-phase commit, transactional.id"
+search:
+  boost: 3
 ---
 
 # Transaction Coordinator

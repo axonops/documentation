@@ -4,6 +4,8 @@ description: "Key Cassandra metrics to monitor. Essential metrics for cluster he
 meta:
   - name: keywords
     content: "Cassandra key metrics, essential metrics, monitoring priorities"
+search:
+  boost: 3
 ---
 
 # Cassandra Key Metrics Reference

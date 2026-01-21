@@ -4,6 +4,8 @@ description: "Cassandra TLS version and cipher suite configuration. Compare TLS 
 meta:
   - name: keywords
     content: "TLS versions, TLS 1.2, TLS 1.3, cipher suites, Cassandra"
+search:
+  boost: 3
 ---
 
 # TLS Versions and Cipher Suites

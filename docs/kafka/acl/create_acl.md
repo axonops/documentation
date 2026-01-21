@@ -4,6 +4,8 @@ description: "Create Kafka ACLs with AxonOps. Set up access control for topics a
 meta:
   - name: keywords
     content: "create Kafka ACL, access control, permissions"
+search:
+  boost: 8
 ---
 
 # Topic Access Control List (ACL).

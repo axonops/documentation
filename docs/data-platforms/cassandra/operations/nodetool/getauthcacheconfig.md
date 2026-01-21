@@ -4,6 +4,8 @@ description: "Display authentication cache configuration in Cassandra using node
 meta:
   - name: keywords
     content: "nodetool getauthcacheconfig, auth cache, authentication cache, Cassandra security"
+search:
+  boost: 3
 ---
 
 # nodetool getauthcacheconfig

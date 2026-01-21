@@ -4,6 +4,8 @@ description: "Find which nodes own a specific partition key using nodetool geten
 meta:
   - name: keywords
     content: "nodetool getendpoints, partition owner, replica nodes, Cassandra routing"
+search:
+  boost: 3
 ---
 
 # nodetool getendpoints

@@ -4,6 +4,8 @@ description: "Delete snapshot files from Cassandra nodes using nodetool clearsna
 meta:
   - name: keywords
     content: "nodetool clearsnapshot, delete snapshots, Cassandra backup, disk space"
+search:
+  boost: 3
 ---
 
 # nodetool clearsnapshot

@@ -4,6 +4,8 @@ description: "Display thread pool statistics for Cassandra stages using nodetool
 meta:
   - name: keywords
     content: "nodetool tpstats, thread pool stats, Cassandra threads, SEDA stages"
+search:
+  boost: 3
 ---
 
 # nodetool tpstats

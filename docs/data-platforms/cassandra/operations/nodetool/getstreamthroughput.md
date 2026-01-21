@@ -4,6 +4,8 @@ description: "Display streaming throughput limit in Cassandra using nodetool get
 meta:
   - name: keywords
     content: "nodetool getstreamthroughput, streaming throughput, data streaming, Cassandra"
+search:
+  boost: 3
 ---
 
 # nodetool getstreamthroughput

@@ -4,6 +4,8 @@ description: "Display Cassandra version information using nodetool version comma
 meta:
   - name: keywords
     content: "nodetool version, Cassandra version, version info"
+search:
+  boost: 3
 ---
 
 # nodetool version

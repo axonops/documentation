@@ -4,6 +4,8 @@ description: "Deploying Apache Kafka on Microsoft Azure. Virtual machines, manag
 meta:
   - name: keywords
     content: "Kafka Azure, Kafka VM, Azure deployment, Kafka cloud, Azure managed disks"
+search:
+  boost: 3
 ---
 
 # Kafka on Azure

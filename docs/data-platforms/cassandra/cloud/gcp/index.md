@@ -4,6 +4,8 @@ description: "Deploy Cassandra on Google Cloud Platform. Compute Engine, persist
 meta:
   - name: keywords
     content: "Cassandra GCP, Google Cloud, Compute Engine, persistent disks"
+search:
+  boost: 3
 ---
 
 # Cassandra on Google Cloud Platform

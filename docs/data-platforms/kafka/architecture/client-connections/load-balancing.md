@@ -4,6 +4,8 @@ description: "Apache Kafka client-side load balancing. Partition assignment, pro
 meta:
   - name: keywords
     content: "Kafka load balancing, partition distribution, consumer load balancing, broker selection"
+search:
+  boost: 3
 ---
 
 # Kafka Client Load Balancing

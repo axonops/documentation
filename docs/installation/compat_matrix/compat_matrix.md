@@ -4,6 +4,8 @@ description: "AxonOps compatibility matrix. Supported versions of Cassandra, Kaf
 meta:
   - name: keywords
     content: "compatibility matrix, supported versions, Cassandra versions, Kafka versions"
+search:
+  boost: 5
 ---
 
 

@@ -4,6 +4,8 @@ description: "Display snapshot throttle setting in Cassandra using nodetool gets
 meta:
   - name: keywords
     content: "nodetool getsnapshotthrottle, snapshot throttle, backup speed, Cassandra"
+search:
+  boost: 3
 ---
 
 # nodetool getsnapshotthrottle

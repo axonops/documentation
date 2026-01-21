@@ -4,6 +4,8 @@ description: "Check if hinted handoff is enabled using nodetool statushandoff co
 meta:
   - name: keywords
     content: "nodetool statushandoff, handoff status, hinted handoff, Cassandra"
+search:
+  boost: 3
 ---
 
 # nodetool statushandoff

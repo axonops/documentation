@@ -4,6 +4,8 @@ description: "Cassandra DELETE statement syntax in CQL. Remove data, columns, or
 meta:
   - name: keywords
     content: "CQL DELETE, delete data, tombstone, Cassandra delete"
+search:
+  boost: 3
 ---
 
 # DELETE

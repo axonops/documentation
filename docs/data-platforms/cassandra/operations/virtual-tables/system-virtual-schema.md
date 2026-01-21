@@ -4,6 +4,8 @@ description: "system_virtual_schema keyspace reference. Query virtual table meta
 meta:
   - name: keywords
     content: "system_virtual_schema, virtual table schema, Cassandra metadata"
+search:
+  boost: 3
 ---
 
 # system_virtual_schema

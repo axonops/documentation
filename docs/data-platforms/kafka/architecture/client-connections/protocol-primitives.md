@@ -4,6 +4,8 @@ description: "Apache Kafka wire protocol primitive data types. Integer encoding,
 meta:
   - name: keywords
     content: "Kafka protocol primitives, data types, varint, compact arrays, tagged fields"
+search:
+  boost: 3
 ---
 
 # Kafka Protocol Primitive Types

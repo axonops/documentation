@@ -4,6 +4,8 @@ description: "Cassandra compaction strategies overview. STCS, LCS, TWCS, and UCS
 meta:
   - name: keywords
     content: "Cassandra compaction, compaction strategy, STCS, LCS, TWCS, UCS"
+search:
+  boost: 3
 ---
 
 # Compaction

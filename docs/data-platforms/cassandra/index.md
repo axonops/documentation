@@ -4,6 +4,8 @@ description: "Complete Apache Cassandra documentation and reference guide. Produ
 meta:
   - name: keywords
     content: "Apache Cassandra documentation, Cassandra reference, Cassandra guide, CQL reference, Cassandra operations"
+search:
+  boost: 3
 ---
 
 # Apache Cassandra® Documentation

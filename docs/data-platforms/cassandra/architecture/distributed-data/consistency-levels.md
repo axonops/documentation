@@ -4,6 +4,8 @@ description: "Quick reference for Cassandra consistency levels. Tables for read/
 meta:
   - name: keywords
     content: "consistency level reference, QUORUM, LOCAL_QUORUM, ONE, ALL, Cassandra"
+search:
+  boost: 3
 ---
 
 # Consistency Levels Reference

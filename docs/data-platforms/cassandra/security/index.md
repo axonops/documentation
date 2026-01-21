@@ -4,6 +4,8 @@ description: "Apache Cassandra security guide covering authentication, authoriza
 meta:
   - name: keywords
     content: "Cassandra security, authentication, authorization, encryption, audit logging"
+search:
+  boost: 3
 ---
 
 # Cassandra Security Guide

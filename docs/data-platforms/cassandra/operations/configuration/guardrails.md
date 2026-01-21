@@ -4,6 +4,8 @@ description: "Cassandra guardrails configuration to protect clusters. Set limits
 meta:
   - name: keywords
     content: "Cassandra guardrails, operation limits, cluster protection"
+search:
+  boost: 3
 ---
 
 # Guardrails

@@ -4,6 +4,8 @@ description: "Export Cassandra SSTable data to JSON format using sstabledump. In
 meta:
   - name: keywords
     content: "sstabledump, SSTable JSON, Cassandra export, inspect data, partition dump"
+search:
+  boost: 3
 ---
 
 # sstabledump

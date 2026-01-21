@@ -4,6 +4,8 @@ description: "Reload CIDR groups cache from disk using nodetool reloadcidrgroups
 meta:
   - name: keywords
     content: "nodetool reloadcidrgroupscache, CIDR cache, reload cache, Cassandra"
+search:
+  boost: 3
 ---
 
 # nodetool reloadcidrgroupscache

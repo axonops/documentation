@@ -4,6 +4,8 @@ description: "Apache Kafka broker internal architecture. Threading, request proc
 meta:
   - name: keywords
     content: "Kafka broker, Kafka server, broker architecture, KRaft, partition leader, broker internals"
+search:
+  boost: 3
 ---
 
 # Kafka Broker Architecture

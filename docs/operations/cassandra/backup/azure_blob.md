@@ -4,6 +4,8 @@ description: "Configure Azure Blob Storage backup for Cassandra with AxonOps."
 meta:
   - name: keywords
     content: "Azure Blob backup, Cassandra backup, Azure storage, AxonOps"
+search:
+  boost: 8
 ---
 
 ## What is Azure Blob Storage

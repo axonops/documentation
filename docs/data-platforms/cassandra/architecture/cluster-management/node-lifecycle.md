@@ -4,6 +4,8 @@ description: "Cassandra node lifecycle states: joining, leaving, moving, and dec
 meta:
   - name: keywords
     content: "node lifecycle, Cassandra node states, joining, leaving, decommission"
+search:
+  boost: 3
 ---
 
 # Node Lifecycle

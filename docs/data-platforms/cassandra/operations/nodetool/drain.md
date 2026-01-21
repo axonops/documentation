@@ -4,6 +4,8 @@ description: "Prepare Cassandra node for shutdown using nodetool drain. Flushes 
 meta:
   - name: keywords
     content: "nodetool drain, Cassandra shutdown, flush memtables, graceful shutdown"
+search:
+  boost: 3
 ---
 
 # nodetool drain

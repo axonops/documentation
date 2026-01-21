@@ -4,6 +4,8 @@ description: "Apache Kafka error reference. Producer, consumer, and broker error
 meta:
   - name: keywords
     content: "Kafka errors, Kafka exceptions, error codes, Kafka troubleshooting"
+search:
+  boost: 3
 ---
 
 # Kafka Common Errors

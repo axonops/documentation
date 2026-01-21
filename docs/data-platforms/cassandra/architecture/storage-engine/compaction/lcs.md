@@ -4,6 +4,8 @@ description: "Leveled Compaction Strategy (LCS) in Cassandra. Level-based compac
 meta:
   - name: keywords
     content: "LCS, Leveled Compaction, Cassandra compaction, read-heavy workloads"
+search:
+  boost: 3
 ---
 
 # Leveled Compaction Strategy (LCS)

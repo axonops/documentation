@@ -4,6 +4,8 @@ description: "Configure PagerDuty integration in AxonOps. Incident management an
 meta:
   - name: keywords
     content: "PagerDuty integration, incident management, on-call alerts, AxonOps"
+search:
+  boost: 8
 ---
 
 # Setup Pagerduty Integration

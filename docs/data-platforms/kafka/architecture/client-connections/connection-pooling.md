@@ -4,6 +4,8 @@ description: "Apache Kafka connection pooling architecture. NetworkClient, Selec
 meta:
   - name: keywords
     content: "Kafka connection pooling, connection management, max.connections, connection reuse"
+search:
+  boost: 3
 ---
 
 # Kafka Connection Pooling

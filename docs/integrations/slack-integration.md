@@ -4,6 +4,8 @@ description: "Configure Slack notifications in AxonOps. Send alerts to Slack cha
 meta:
   - name: keywords
     content: "Slack integration, Slack alerts, chat notifications, AxonOps"
+search:
+  boost: 8
 ---
 
 # Setup Slack Integration

@@ -4,6 +4,8 @@ description: "Clear network permissions cache in Cassandra using nodetool invali
 meta:
   - name: keywords
     content: "nodetool invalidatenetworkpermissionscache, network cache, permissions, Cassandra"
+search:
+  boost: 3
 ---
 
 # nodetool invalidatenetworkpermissionscache

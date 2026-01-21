@@ -4,6 +4,8 @@ description: "Architectural patterns for event sourcing with Apache Cassandra. C
 meta:
   - name: keywords
     content: "Cassandra event sourcing, event store, aggregate reconstruction, CQRS, domain events"
+search:
+  boost: 3
 ---
 
 # Event Sourcing

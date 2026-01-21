@@ -4,6 +4,8 @@ description: "CQLAI - AI-powered CQL shell for Apache Cassandra. Natural languag
 meta:
   - name: keywords
     content: "CQLAI, AI CQL, Cassandra AI, natural language queries, intelligent shell"
+search:
+  boost: 3
 ---
 
 # CQLAI

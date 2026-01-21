@@ -4,6 +4,8 @@ description: "Delegation token authentication for Apache Kafka. Lightweight toke
 meta:
   - name: keywords
     content: "Kafka delegation tokens, Kafka token authentication, Kafka Spark, Kafka distributed auth"
+search:
+  boost: 3
 ---
 
 # Delegation Token Authentication

@@ -4,6 +4,8 @@ description: "Cassandra clients and queries virtual tables. Monitor connected cl
 meta:
   - name: keywords
     content: "Cassandra clients, connected clients, active queries, driver monitoring"
+search:
+  boost: 3
 ---
 
 # Clients

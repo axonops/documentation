@@ -4,6 +4,8 @@ description: "Cassandra application development guide. Drivers, best practices, 
 meta:
   - name: keywords
     content: "Cassandra development, application development, Cassandra drivers"
+search:
+  boost: 3
 ---
 
 # Application Development

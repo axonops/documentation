@@ -4,6 +4,8 @@ description: "Apache Kafka topic configuration reference. Retention, compaction,
 meta:
   - name: keywords
     content: "Kafka topic configuration, retention, compaction, topic settings, partition config"
+search:
+  boost: 3
 ---
 
 # Topic Configuration

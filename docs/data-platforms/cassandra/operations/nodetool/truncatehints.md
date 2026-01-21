@@ -4,6 +4,8 @@ description: "Delete pending hints for a node in Cassandra using nodetool trunca
 meta:
   - name: keywords
     content: "nodetool truncatehints, delete hints, hinted handoff, Cassandra"
+search:
+  boost: 3
 ---
 
 # nodetool truncatehints

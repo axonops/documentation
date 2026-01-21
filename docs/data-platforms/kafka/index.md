@@ -4,6 +4,8 @@ description: "Complete Apache Kafka documentation and reference guide. Productio
 meta:
   - name: keywords
     content: "Apache Kafka, Kafka documentation, Apache Kafka documentation, Kafka docs, event streaming, distributed messaging, Kafka architecture, Kafka operations"
+search:
+  boost: 3
 ---
 
 # Apache Kafka® Documentation

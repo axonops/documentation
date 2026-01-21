@@ -4,6 +4,8 @@ description: "Apache Kafka authentication mechanisms overview. SASL/SCRAM, SASL/
 meta:
   - name: keywords
     content: "Kafka authentication, SASL, SCRAM, mTLS, Kerberos, OAuth, Kafka security"
+search:
+  boost: 3
 ---
 
 # Kafka Authentication

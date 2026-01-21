@@ -4,6 +4,8 @@ description: "Kafka exactly-once semantics (EOS). Idempotent producers, transact
 meta:
   - name: keywords
     content: "Kafka exactly-once, EOS, idempotent producer, transactional messaging"
+search:
+  boost: 3
 ---
 
 # Exactly-Once Semantics

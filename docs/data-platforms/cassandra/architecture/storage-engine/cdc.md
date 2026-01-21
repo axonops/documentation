@@ -4,6 +4,8 @@ description: "Change Data Capture in Apache Cassandra. Architecture, configurati
 meta:
   - name: keywords
     content: "Cassandra CDC, change data capture, commit log, event streaming, data replication"
+search:
+  boost: 3
 ---
 
 # Change Data Capture (CDC)

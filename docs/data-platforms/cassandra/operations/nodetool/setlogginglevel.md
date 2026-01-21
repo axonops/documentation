@@ -4,6 +4,8 @@ description: "Set logging level for Cassandra classes using nodetool setloggingl
 meta:
   - name: keywords
     content: "nodetool setlogginglevel, logging level, debug logging, Cassandra logs"
+search:
+  boost: 3
 ---
 
 # nodetool setlogginglevel

@@ -4,6 +4,8 @@ description: "AxonOps cluster overview dashboard. Monitor Cassandra and Kafka cl
 meta:
   - name: keywords
     content: "cluster overview, AxonOps dashboard, cluster health, monitoring"
+search:
+  boost: 8
 ---
 
 

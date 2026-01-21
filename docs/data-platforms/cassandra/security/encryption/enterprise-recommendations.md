@@ -4,6 +4,8 @@ description: "Enterprise TLS recommendations for Cassandra. Production security 
 meta:
   - name: keywords
     content: "enterprise TLS, production security, best practices, Cassandra"
+search:
+  boost: 3
 ---
 
 # Enterprise Recommendations

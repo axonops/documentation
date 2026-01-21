@@ -4,6 +4,8 @@ description: "Cassandra virtual tables for latency metrics, read statistics, and
 meta:
   - name: keywords
     content: "Cassandra metrics, latency monitoring, tombstones per read, CQL metrics"
+search:
+  boost: 3
 ---
 
 # Metrics Tables

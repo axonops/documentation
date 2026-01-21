@@ -4,6 +4,8 @@ description: "SASL/OAUTHBEARER authentication for Apache Kafka. Configuration gu
 meta:
   - name: keywords
     content: "Kafka OAuth, SASL OAUTHBEARER, Kafka OIDC, Kafka authentication, cloud identity"
+search:
+  boost: 3
 ---
 
 # OAuth/OIDC Authentication (SASL/OAUTHBEARER)

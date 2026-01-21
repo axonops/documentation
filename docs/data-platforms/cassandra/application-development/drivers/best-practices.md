@@ -4,6 +4,8 @@ description: "Best practices for Cassandra driver usage. Connection pooling, ret
 meta:
   - name: keywords
     content: "Cassandra driver best practices, connection pooling, retry logic, performance"
+search:
+  boost: 3
 ---
 
 # Driver Best Practices

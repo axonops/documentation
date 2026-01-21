@@ -4,6 +4,8 @@ description: "Event sourcing pattern implementation with Apache Kafka. Store app
 meta:
   - name: keywords
     content: "event sourcing Kafka, event store, event replay, aggregate events, event-driven architecture"
+search:
+  boost: 3
 ---
 
 # Event Sourcing with Kafka

@@ -4,6 +4,8 @@ description: "Kafka idempotent producer internals. Producer ID, sequence numbers
 meta:
   - name: keywords
     content: "Kafka idempotent producer, exactly-once producer, enable.idempotence, duplicate prevention, producer ID"
+search:
+  boost: 3
 ---
 
 # Kafka Idempotent Producer

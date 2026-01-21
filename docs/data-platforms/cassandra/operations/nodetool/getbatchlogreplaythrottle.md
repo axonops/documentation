@@ -4,6 +4,8 @@ description: "Display batch log replay throttle setting in Cassandra using nodet
 meta:
   - name: keywords
     content: "nodetool getbatchlogreplaythrottle, batch log, replay throttle, Cassandra"
+search:
+  boost: 3
 ---
 
 # nodetool getbatchlogreplaythrottle

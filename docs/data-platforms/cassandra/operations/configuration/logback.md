@@ -4,6 +4,8 @@ description: "Cassandra logback.xml configuration guide. Configure log levels, a
 meta:
   - name: keywords
     content: "Cassandra logback, logging configuration, log levels"
+search:
+  boost: 3
 ---
 
 # Cassandra Logging Configuration (logback.xml)

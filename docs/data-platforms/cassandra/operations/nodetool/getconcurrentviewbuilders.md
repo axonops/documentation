@@ -4,6 +4,8 @@ description: "Display concurrent view builder threads in Cassandra using nodetoo
 meta:
   - name: keywords
     content: "nodetool getconcurrentviewbuilders, view builders, materialized views, Cassandra"
+search:
+  boost: 3
 ---
 
 # nodetool getconcurrentviewbuilders

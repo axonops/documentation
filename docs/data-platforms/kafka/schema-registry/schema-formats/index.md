@@ -4,6 +4,8 @@ description: "Schema Registry serialization formats. Avro, Protobuf, and JSON Sc
 meta:
   - name: keywords
     content: "Schema Registry formats, Avro, Protobuf, JSON Schema, Kafka serialization"
+search:
+  boost: 3
 ---
 
 # Schema Formats

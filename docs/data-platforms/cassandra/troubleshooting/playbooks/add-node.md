@@ -4,6 +4,8 @@ description: "Add node troubleshooting playbook. Debug node bootstrap issues."
 meta:
   - name: keywords
     content: "add node troubleshooting, bootstrap issues, node problems"
+search:
+  boost: 3
 ---
 
 # Add Node

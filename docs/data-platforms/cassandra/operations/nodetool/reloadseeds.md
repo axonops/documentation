@@ -4,6 +4,8 @@ description: "Reload seed node list from configuration using nodetool reloadseed
 meta:
   - name: keywords
     content: "nodetool reloadseeds, reload seeds, seed nodes, Cassandra configuration"
+search:
+  boost: 3
 ---
 
 # nodetool reloadseeds

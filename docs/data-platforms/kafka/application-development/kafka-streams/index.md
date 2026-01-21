@@ -4,6 +4,8 @@ description: "Apache Kafka Streams library for stream processing. Stateless and 
 meta:
   - name: keywords
     content: "Kafka Streams, stream processing, stateful processing, windowing, KStream, KTable"
+search:
+  boost: 3
 ---
 
 # Kafka Streams

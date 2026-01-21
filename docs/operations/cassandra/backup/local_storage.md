@@ -4,6 +4,8 @@ description: "Local storage backup configuration for Cassandra. On-disk backup s
 meta:
   - name: keywords
     content: "local storage backup, disk backup, Cassandra"
+search:
+  boost: 8
 ---
 
 ## What is Local Storage

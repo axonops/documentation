@@ -4,6 +4,8 @@ description: "Restore Cassandra cluster with different IP addresses. Migration a
 meta:
   - name: keywords
     content: "restore different IPs, cluster migration, disaster recovery, Cassandra"
+search:
+  boost: 8
 ---
 
 # Restore a whole cluster from a remote backup with different IP addresses

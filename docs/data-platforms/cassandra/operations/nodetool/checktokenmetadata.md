@@ -4,6 +4,8 @@ description: "Verify token metadata consistency across the Cassandra cluster usi
 meta:
   - name: keywords
     content: "nodetool checktokenmetadata, token metadata, Cassandra tokens, cluster consistency"
+search:
+  boost: 3
 ---
 
 # nodetool checktokenmetadata

@@ -4,6 +4,8 @@ description: "List all CIDR groups configured in Cassandra using nodetool listci
 meta:
   - name: keywords
     content: "nodetool listcidrgroups, CIDR groups, network security, Cassandra"
+search:
+  boost: 3
 ---
 
 # nodetool listcidrgroups

@@ -4,6 +4,8 @@ description: "Display read/write latency histograms for a table using nodetool t
 meta:
   - name: keywords
     content: "nodetool tablehistograms, latency histogram, table statistics, Cassandra"
+search:
+  boost: 3
 ---
 
 # nodetool tablehistograms

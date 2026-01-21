@@ -4,6 +4,8 @@ description: "Kafka Connect operations. Monitoring, scaling, troubleshooting, an
 meta:
   - name: keywords
     content: "Kafka Connect operations, connector management, REST API, Connect cluster operations"
+search:
+  boost: 3
 ---
 
 # Kafka Connect Operations

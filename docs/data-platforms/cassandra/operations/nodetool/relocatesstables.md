@@ -4,6 +4,8 @@ description: "Move SSTables to correct disk locations using nodetool relocatesst
 meta:
   - name: keywords
     content: "nodetool relocatesstables, relocate SSTables, disk management, Cassandra"
+search:
+  boost: 3
 ---
 
 # nodetool relocatesstables

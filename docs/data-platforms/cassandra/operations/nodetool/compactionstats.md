@@ -4,6 +4,8 @@ description: "Monitor active compaction progress in Cassandra using nodetool com
 meta:
   - name: keywords
     content: "nodetool compactionstats, compaction progress, Cassandra monitoring, active compactions"
+search:
+  boost: 3
 ---
 
 # nodetool compactionstats

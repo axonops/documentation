@@ -4,6 +4,8 @@ description: "CQLAI AI providers configuration. Connect to OpenAI, Anthropic, an
 meta:
   - name: keywords
     content: "CQLAI AI providers, OpenAI, Anthropic, LLM configuration"
+search:
+  boost: 3
 ---
 
 # CQLAI AI Providers

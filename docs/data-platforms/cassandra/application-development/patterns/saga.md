@@ -4,6 +4,8 @@ description: "Implementing distributed transactions with the saga pattern in Apa
 meta:
   - name: keywords
     content: "Cassandra saga pattern, distributed transactions, compensation, orchestration, choreography"
+search:
+  boost: 3
 ---
 
 # Saga Pattern

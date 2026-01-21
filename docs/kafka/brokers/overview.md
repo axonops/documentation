@@ -4,6 +4,8 @@ description: "Kafka broker management in AxonOps. Monitor and manage Kafka broke
 meta:
   - name: keywords
     content: "Kafka brokers, broker management, AxonOps Kafka"
+search:
+  boost: 8
 ---
 
 # Kafka Brokers

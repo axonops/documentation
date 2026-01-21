@@ -4,6 +4,8 @@ description: "AxonOps query syntax for Kafka metrics. Build custom queries and d
 meta:
   - name: keywords
     content: "query syntax, Kafka metrics, custom queries, AxonOps"
+search:
+  boost: 8
 ---
 
 # AxonOps Query Language Documentation

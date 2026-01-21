@@ -4,6 +4,8 @@ description: "Set default replication factor for auto-created keyspaces using no
 meta:
   - name: keywords
     content: "nodetool setdefaultrf, replication factor, default RF, Cassandra"
+search:
+  boost: 3
 ---
 
 # nodetool setdefaultrf

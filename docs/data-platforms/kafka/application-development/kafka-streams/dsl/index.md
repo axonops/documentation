@@ -4,6 +4,8 @@ description: "Kafka Streams DSL reference. KStream, KTable operations, joins, ag
 meta:
   - name: keywords
     content: "Kafka Streams DSL, KStream, KTable, stream operations, Kafka aggregations"
+search:
+  boost: 3
 ---
 
 # Kafka Streams DSL

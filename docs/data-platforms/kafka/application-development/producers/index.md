@@ -4,6 +4,8 @@ description: "Apache Kafka producer configuration, partitioning strategies, batc
 meta:
   - name: keywords
     content: "Kafka producer, producer configuration, partitioning, batching, compression, idempotent producer, Kafka transactions"
+search:
+  boost: 3
 ---
 
 # Kafka Producer Guide

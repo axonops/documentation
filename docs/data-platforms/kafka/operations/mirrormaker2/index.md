@@ -4,6 +4,8 @@ description: "Apache Kafka MirrorMaker 2 complete reference. Configuration, depl
 meta:
   - name: keywords
     content: "Kafka MirrorMaker 2, MM2, cluster replication, geo-replication, disaster recovery"
+search:
+  boost: 3
 ---
 
 # MirrorMaker 2

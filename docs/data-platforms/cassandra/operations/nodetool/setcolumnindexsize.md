@@ -4,6 +4,8 @@ description: "Set column index size threshold in Cassandra using nodetool setcol
 meta:
   - name: keywords
     content: "nodetool setcolumnindexsize, column index, index size, Cassandra"
+search:
+  boost: 3
 ---
 
 # nodetool setcolumnindexsize

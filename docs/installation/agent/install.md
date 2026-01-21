@@ -2,6 +2,8 @@
 title: "AxonOps Agent Installation"
 hide:
   - toc
+search:
+  boost: 5
 ---
 
 # AxonOps Agent Installation

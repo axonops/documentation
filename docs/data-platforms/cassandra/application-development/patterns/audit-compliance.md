@@ -4,6 +4,8 @@ description: "Implementing audit trails and regulatory compliance with Apache Ca
 meta:
   - name: keywords
     content: "Cassandra audit trail, compliance, GDPR, HIPAA, SOX, data retention, consent management"
+search:
+  boost: 3
 ---
 
 # Audit & Compliance Patterns

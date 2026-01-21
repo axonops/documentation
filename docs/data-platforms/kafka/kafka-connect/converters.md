@@ -4,6 +4,8 @@ description: "Kafka Connect converters. JSON, Avro, Protobuf, and String convert
 meta:
   - name: keywords
     content: "Kafka Connect converters, Avro converter, JSON converter, Protobuf converter, schema handling"
+search:
+  boost: 3
 ---
 
 # Kafka Connect Converters

@@ -4,6 +4,8 @@ description: "Cassandra speculative execution policy. Reduce tail latencies with
 meta:
   - name: keywords
     content: "speculative execution, Cassandra latency, parallel queries"
+search:
+  boost: 3
 ---
 
 # Speculative Execution Policy

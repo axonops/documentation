@@ -4,6 +4,8 @@ description: "Cassandra JVM tuning guide. Garbage collection and memory optimiza
 meta:
   - name: keywords
     content: "Cassandra JVM tuning, GC tuning, memory optimization"
+search:
+  boost: 3
 ---
 
 # JVM Tuning for Cassandra

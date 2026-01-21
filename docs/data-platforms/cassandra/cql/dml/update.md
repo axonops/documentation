@@ -4,6 +4,8 @@ description: "Cassandra UPDATE statement syntax in CQL. Modify existing data wit
 meta:
   - name: keywords
     content: "CQL UPDATE, update data, conditional update, Cassandra write"
+search:
+  boost: 3
 ---
 
 # UPDATE

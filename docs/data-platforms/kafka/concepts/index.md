@@ -4,6 +4,8 @@ description: "Event streaming concepts and Apache Kafka's role in modern data ar
 meta:
   - name: keywords
     content: "event streaming, Apache Kafka concepts, pub/sub, message queue, event log, Kafka fundamentals"
+search:
+  boost: 3
 ---
 
 # Event Streaming Fundamentals

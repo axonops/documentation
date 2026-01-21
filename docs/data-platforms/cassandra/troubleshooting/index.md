@@ -4,6 +4,8 @@ description: "Cassandra troubleshooting guide covering common errors, diagnosis 
 meta:
   - name: keywords
     content: "Cassandra troubleshooting, diagnosis, common errors, debug, operational issues"
+search:
+  boost: 3
 ---
 
 # Cassandra Troubleshooting Guide

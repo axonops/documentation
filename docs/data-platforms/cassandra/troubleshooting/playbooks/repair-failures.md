@@ -4,6 +4,8 @@ description: "Repair failures troubleshooting playbook. Debug failed repair oper
 meta:
   - name: keywords
     content: "repair failures troubleshooting, failed repair, repair issues"
+search:
+  boost: 3
 ---
 
 # Repair Failures

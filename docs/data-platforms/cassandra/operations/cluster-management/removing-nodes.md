@@ -4,6 +4,8 @@ description: "Remove nodes from Cassandra cluster. Decommission, removenode, and
 meta:
   - name: keywords
     content: "Cassandra decommission, removenode, assassinate, remove node from cluster"
+search:
+  boost: 3
 ---
 
 # Removing Nodes

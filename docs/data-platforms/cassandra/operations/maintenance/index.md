@@ -4,6 +4,8 @@ description: "Cassandra maintenance procedures. Routine tasks for healthy cluste
 meta:
   - name: keywords
     content: "Cassandra maintenance, routine maintenance, cluster health"
+search:
+  boost: 3
 ---
 
 # Cassandra Maintenance Guide

@@ -4,6 +4,8 @@ description: "Cassandra restore procedures. Recover data from snapshots and back
 meta:
   - name: keywords
     content: "Cassandra restore, data recovery, snapshot restore"
+search:
+  boost: 3
 ---
 
 # Restore Guide

@@ -4,6 +4,8 @@ description: "Cassandra compaction dashboard metrics mapping. Compaction progres
 meta:
   - name: keywords
     content: "compaction metrics, compaction progress, throughput, Cassandra"
+search:
+  boost: 8
 ---
 
 # AxonOps Compactions Dashboard Metrics Mapping

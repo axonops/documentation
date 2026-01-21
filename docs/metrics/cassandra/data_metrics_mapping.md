@@ -4,6 +4,8 @@ description: "Cassandra data dashboard metrics mapping. Storage and SSTable metr
 meta:
   - name: keywords
     content: "data metrics, storage metrics, SSTable metrics, Cassandra"
+search:
+  boost: 8
 ---
 
 # AxonOps Data Dashboard Metrics Mapping

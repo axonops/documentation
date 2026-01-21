@@ -4,6 +4,8 @@ description: "Cassandra alerting configuration. Set up alerts for critical metri
 meta:
   - name: keywords
     content: "Cassandra alerting, monitoring alerts, metric thresholds"
+search:
+  boost: 3
 ---
 
 # Cassandra Alerting Configuration

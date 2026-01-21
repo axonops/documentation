@@ -4,6 +4,8 @@ description: "Cassandra retry policies. Handle read/write timeouts and unavailab
 meta:
   - name: keywords
     content: "Cassandra retry policy, timeout handling, unavailable exception"
+search:
+  boost: 3
 ---
 
 # Retry Policy

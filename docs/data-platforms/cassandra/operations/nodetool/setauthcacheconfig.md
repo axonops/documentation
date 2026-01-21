@@ -4,6 +4,8 @@ description: "Configure authentication cache settings in Cassandra using nodetoo
 meta:
   - name: keywords
     content: "nodetool setauthcacheconfig, auth cache, authentication cache, Cassandra"
+search:
+  boost: 3
 ---
 
 # nodetool setauthcacheconfig

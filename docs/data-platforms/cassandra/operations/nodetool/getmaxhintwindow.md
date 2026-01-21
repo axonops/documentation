@@ -4,6 +4,8 @@ description: "Display maximum hint window duration in Cassandra using nodetool g
 meta:
   - name: keywords
     content: "nodetool getmaxhintwindow, hint window, hinted handoff, Cassandra"
+search:
+  boost: 3
 ---
 
 # nodetool getmaxhintwindow

@@ -4,6 +4,8 @@ description: "Cassandra data modeling guide. Design patterns, best practices, an
 meta:
   - name: keywords
     content: "Cassandra data modeling, schema design, data model patterns"
+search:
+  boost: 3
 ---
 
 # Cassandra Data Modeling: The Complete Guide

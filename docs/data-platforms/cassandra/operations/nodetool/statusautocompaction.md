@@ -4,6 +4,8 @@ description: "Check if auto compaction is enabled for tables using nodetool stat
 meta:
   - name: keywords
     content: "nodetool statusautocompaction, compaction status, auto compaction, Cassandra"
+search:
+  boost: 3
 ---
 
 # nodetool statusautocompaction

@@ -4,6 +4,8 @@ description: "Time bucketing pattern for Cassandra. Manage time-series data with
 meta:
   - name: keywords
     content: "time bucketing, Cassandra time-series, partition management"
+search:
+  boost: 3
 ---
 
 # Time Bucketing Pattern

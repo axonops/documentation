@@ -4,6 +4,8 @@ description: "Display guardrails configuration in Cassandra using nodetool getgu
 meta:
   - name: keywords
     content: "nodetool getguardrailsconfig, guardrails, Cassandra limits, configuration"
+search:
+  boost: 3
 ---
 
 # nodetool getguardrailsconfig

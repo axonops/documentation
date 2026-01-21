@@ -4,6 +4,8 @@ description: "Understanding consensus algorithms and how Cassandra uses Paxos fo
 meta:
   - name: keywords
     content: "Paxos, consensus algorithms, lightweight transactions, LWT, distributed consensus, Cassandra consistency"
+search:
+  boost: 3
 ---
 
 # Lightweight Transactions (LWT) - Consensus Algorithms and Paxos

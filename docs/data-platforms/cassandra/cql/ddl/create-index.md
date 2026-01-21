@@ -4,6 +4,8 @@ description: "CREATE INDEX syntax in CQL for secondary indexes and SAI indexes o
 meta:
   - name: keywords
     content: "CREATE INDEX, secondary index, SAI, Cassandra indexing"
+search:
+  boost: 3
 ---
 
 # Index Commands

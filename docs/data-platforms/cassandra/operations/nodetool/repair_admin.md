@@ -4,6 +4,8 @@ description: "Manage and monitor repair operations in Cassandra using nodetool r
 meta:
   - name: keywords
     content: "nodetool repair_admin, repair management, repair status, Cassandra"
+search:
+  boost: 3
 ---
 
 # nodetool repair_admin

@@ -1,6 +1,8 @@
 ---
 title: Deploying AxonOps on Kubernetes
 description: Complete guide to deploying AxonOps components on Kubernetes with cert-manager and storage configuration
+search:
+  boost: 5
 ---
 
 # Deploying AxonOps on Kubernetes

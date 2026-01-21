@@ -4,6 +4,8 @@ description: "Display data file locations for Cassandra tables using nodetool da
 meta:
   - name: keywords
     content: "nodetool datapaths, data directories, Cassandra paths, SSTable locations"
+search:
+  boost: 3
 ---
 
 # nodetool datapaths

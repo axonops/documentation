@@ -4,6 +4,8 @@ description: "SASI (SSTable Attached Secondary Index) architecture in Cassandra.
 meta:
   - name: keywords
     content: "SASI, SSTable Attached Secondary Index, text search, Cassandra"
+search:
+  boost: 3
 ---
 
 # SASI (SSTable Attached Secondary Index)
