@@ -123,7 +123,7 @@ broker.rack=us-east-1a
 client.rack=us-east-1a
 ```
 
-When `client.rack` matches a follower's `broker.rack`, the consumer fetches from that follower instead of the leader.
+When `client.rack` matches a follower's `broker.rack`, the consumer prefers fetching from that follower instead of the leader.
 
 **Trade-offs:**
 
@@ -303,7 +303,7 @@ When a partition leader fails, Kafka elects a new leader to restore availability
 | Capability | Mechanism |
 |------------|-----------|
 | **Automatic failover** | New leader takes over without manual intervention |
-| **Bounded unavailability** | Partition offline only during election (typically <1s) |
+| **Bounded unavailability** | Partition offline only during election; duration depends on timeouts and load |
 | **Data preservation** | ISR-based election prevents data loss |
 
 ### Clean Leader Election
@@ -327,8 +327,6 @@ C -> C : detect failure\n(session timeout)
 note over C #ffffcc
   Election criteria:
   1. Must be in ISR
-  2. Prefer same rack as old leader
-  3. First available wins
 end note
 
 C -> C : select B2 as new leader
@@ -533,7 +531,7 @@ Different applications have different durability requirements:
 |:----:|----------|------------|---------|
 | `0` | No acknowledgment waited | None—fire and forget | Lowest |
 | `1` | Wait for leader persistence | Leader only—lost if leader fails before replication | Low |
-| `all` | Wait for all ISR persistence | Full—survives any single failure | Higher |
+| `all` | Wait for all ISR persistence | Depends on `min.insync.replicas` | Higher |
 
 ### acks=all with min.insync.replicas
 
@@ -576,7 +574,7 @@ end note
 |:--:|:-------------------:|:----:|----------|----------|
 | 3 | 2 | all | 1 failure | Production default |
 | 3 | 1 | all | 0 failures after ack | Development/test |
-| 3 | 2 | 1 | Leader failure only | High throughput |
+| 3 | 2 | 1 | Leader-only durability | High throughput |
 
 ---
 

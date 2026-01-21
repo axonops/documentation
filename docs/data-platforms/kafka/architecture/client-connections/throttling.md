@@ -43,10 +43,11 @@ rectangle "Throttling Mechanisms" {
 
 | Quota Type | Description | Unit |
 |------------|-------------|------|
-| `producer_byte_rate` | Max produce throughput | bytes/sec |
-| `consumer_byte_rate` | Max fetch throughput | bytes/sec |
-| `request_percentage` | Max request handler time | percentage |
-| `controller_mutation_rate` | Max admin operations | mutations/sec |
+| `producer_byte_rate` | Upper bound for producer throughput | bytes/sec |
+| `consumer_byte_rate` | Upper bound for fetch throughput | bytes/sec |
+| `request_percentage` | Upper bound of time spent processing requests | percentage |
+| `controller_mutation_rate` | Rate limit for topic mutations | mutations/sec |
+| `connection_creation_rate` | Upper bound of connections accepted per IP | connections/sec |
 
 ### Quota Hierarchy
 
@@ -57,20 +58,22 @@ skinparam backgroundColor transparent
 
 rectangle "Quota Resolution Order" {
     rectangle "1. User + Client ID" as UC
-    rectangle "2. User" as U
-    rectangle "3. Client ID" as C
-    rectangle "4. Default User + Default Client" as DUC
-    rectangle "5. Default User" as DU
-    rectangle "6. Default Client" as DC
-    rectangle "7. Cluster Default" as CD
+    rectangle "2. User + Default Client" as UDC
+    rectangle "3. User" as U
+    rectangle "4. Default User + Client ID" as DUC
+    rectangle "5. Default User + Default Client" as DUDC
+    rectangle "6. Default User" as DU
+    rectangle "7. Client ID" as C
+    rectangle "8. Default Client" as DC
 }
 
-UC --> U : if not defined
-U --> C : if not defined
-C --> DUC : if not defined
-DUC --> DU : if not defined
-DU --> DC : if not defined
-DC --> CD : if not defined
+UC --> UDC : if not defined
+UDC --> U : if not defined
+U --> DUC : if not defined
+DUC --> DUDC : if not defined
+DUDC --> DU : if not defined
+DU --> C : if not defined
+C --> DC : if not defined
 
 @enduml
 ```
@@ -167,6 +170,8 @@ Example:
 - Excess: 5 MB/s (50% over)
 - Throttle time: ~500ms to bring back to limit
 
+Window size comes from the quota sampling configuration (`quota.window.size.seconds` and `num.quota.samples`).
+
 ### Client Response to Throttling
 
 ```plantuml
@@ -202,13 +207,13 @@ end note
 
 ```properties
 # Percentage of I/O thread time
-request_percentage=25  # Max 25% of one I/O thread
+request_percentage=25
 ```
 
 **Calculation:**
 
 ```
-request_percentage = (processing_time / window_time) × 100 × num_io_threads
+request_percentage is a percentage (double) representing the upper bound of time spent processing requests. Values can exceed 100 (for example, 200).
 ```
 
 ### Mutation Rate Quota (Kafka 2.7+)
@@ -224,7 +229,7 @@ kafka-configs.sh --bootstrap-server localhost:9092 \
 
 | Operation | Mutations |
 |-----------|:---------:|
-| CreateTopics (1 topic, 10 partitions) | 11 |
+| CreateTopics (1 topic, 10 partitions) | 10 |
 | DeleteTopics (1 topic) | 1 |
 | CreatePartitions (+5 partitions) | 5 |
 | AlterConfigs | Variable |
@@ -346,9 +351,13 @@ while (running) {
 
 | Metric | Description |
 |--------|-------------|
-| `kafka.server:type=FetchThrottleQueueSize` | Queued throttled fetch requests |
-| `kafka.server:type=ProduceThrottleQueueSize` | Queued throttled produce requests |
-| `kafka.server:type=ClientQuotaManager,name=throttle-time` | Total throttle time |
+| `kafka.server:type=Fetch,name=queue-size` | Throttled fetch queue size |
+| `kafka.server:type=Produce,name=queue-size` | Throttled produce queue size |
+| `kafka.server:type=Request,name=queue-size` | Throttled request queue size |
+| `kafka.server:type=Fetch,name=throttle-time` | Average fetch throttle time |
+| `kafka.server:type=Produce,name=throttle-time` | Average produce throttle time |
+| `kafka.server:type=Request,name=throttle-time` | Average request throttle time |
+| `kafka.server:type=ControllerMutation,name=throttle-time` | Average controller mutation throttle time |
 
 ### Client Metrics
 

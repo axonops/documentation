@@ -43,7 +43,7 @@ This document specifies the primitive data types used in the Apache Kafka binary
 | `UINT32` | 4 bytes | 0 to 4,294,967,295 | Unsigned, big-endian |
 
 !!! note "Unsigned Integer Usage"
-    Unsigned integers are used sparingly in the protocol, primarily for lengths in compact encodings where negative values are invalid.
+    Unsigned integers are used sparingly in the protocol. `UINT16` and `UINT32` appear only in specific APIs, while `UNSIGNED_VARINT` is the compact length primitive.
 
 ---
 
@@ -178,7 +178,7 @@ Bits 51-0:  Mantissa (52 bits)
 ```
 
 !!! note "NaN Handling"
-    Implementations should use the canonical NaN representation (`7FF8000000000000`) when serializing NaN values. When deserializing, any value with exponent bits all set and non-zero mantissa must be interpreted as NaN.
+    The Kafka protocol does not mandate a specific NaN payload. When deserializing, any value with exponent bits all set and non-zero mantissa must be interpreted as NaN.
 
 ---
 
@@ -190,7 +190,7 @@ A universally unique identifier as defined in RFC 4122.
 |----------|-------|
 | **Size** | 16 bytes |
 | **Encoding** | Big-endian (most significant bits first) |
-| **Null representation** | 16 zero bytes |
+| **Zero UUID** | 16 zero bytes (sentinel in some APIs) |
 
 **Byte Layout:**
 
@@ -199,16 +199,16 @@ Bytes 0-7:  Most significant 64 bits (time_low, time_mid, time_hi_and_version)
 Bytes 8-15: Least significant 64 bits (clock_seq, node)
 ```
 
-**Null UUID:**
+**Zero UUID:**
 
-A null UUID is represented as 16 consecutive zero bytes:
+Some APIs use an all-zero UUID as a sentinel value:
 
 ```
 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
 ```
 
 !!! note "UUID Version"
-    The Kafka protocol does not mandate a specific UUID version. Implementations commonly use version 4 (random) UUIDs.
+    The Kafka protocol does not mandate a specific UUID version.
 
 ---
 
@@ -401,6 +401,9 @@ A variable-length prefixed byte array using compact encoding.
 ```
 COMPACT_BYTES => length:UNSIGNED_VARINT data:BYTE[length-1]
 ```
+
+!!! warning "Null Constraint"
+    A length value of 0 must be rejected as invalid for non-nullable COMPACT_BYTES.
 
 ### COMPACT_NULLABLE_BYTES
 

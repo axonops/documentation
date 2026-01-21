@@ -122,11 +122,11 @@ The InitProducerId API initializes a producer for idempotent or transactional op
 | Version | Kafka | Key Changes |
 |:-------:|-------|-------------|
 | 0 | 0.11.0 | Initial version |
-| 1 | 2.0.0 | Transaction timeout validation |
 | 2 | 2.4.0 | Flexible versions |
-| 3 | 2.5.0 | KIP-360 producer ID recovery |
-| 4 | 2.6.0 | KIP-588 |
-| 5 | 3.9.0 | KIP-890 |
+| 3 | 2.5.0 | Producer ID/epoch in request |
+| 4 | 2.6.0 | PRODUCER_FENCED error |
+| 5 | 3.9.0 | TRANSACTION_ABORTABLE error (KIP-890) |
+| 6 | 4.0.0 | 2PC support (KIP-939) |
 
 ### Request Schema
 
@@ -136,6 +136,8 @@ InitProducerIdRequest =>
     transaction_timeout_ms: INT32
     producer_id: INT64
     producer_epoch: INT16
+    enable2pc: BOOLEAN
+    keep_prepared_txn: BOOLEAN
 ```
 
 | Field | Type | Description |
@@ -144,6 +146,8 @@ InitProducerIdRequest =>
 | `transaction_timeout_ms` | INT32 | Transaction timeout |
 | `producer_id` | INT64 | Existing PID to recover (-1 for new) |
 | `producer_epoch` | INT16 | Existing epoch to recover (-1 for new) |
+| `enable2pc` | BOOLEAN | Enable two-phase commit (v6+) |
+| `keep_prepared_txn` | BOOLEAN | Keep prepared transaction (v6+) |
 
 ### Response Schema
 
@@ -153,12 +157,16 @@ InitProducerIdResponse =>
     error_code: INT16
     producer_id: INT64
     producer_epoch: INT16
+    ongoing_txn_producer_id: INT64
+    ongoing_txn_producer_epoch: INT16
 ```
 
 | Field | Type | Description |
 |-------|------|-------------|
 | `producer_id` | INT64 | Assigned Producer ID |
 | `producer_epoch` | INT16 | Producer epoch |
+| `ongoing_txn_producer_id` | INT64 | Producer ID for ongoing txn (v6+) |
+| `ongoing_txn_producer_epoch` | INT16 | Producer epoch for ongoing txn (v6+) |
 
 ### Producer ID Semantics
 
@@ -218,11 +226,10 @@ The AddPartitionsToTxn API adds topic partitions to an active transaction before
 | Version | Kafka | Key Changes |
 |:-------:|-------|-------------|
 | 0 | 0.11.0 | Initial version |
-| 1 | 2.0.0 | Response improvements |
-| 2 | 2.4.0 | Flexible versions |
-| 3 | 2.7.0 | KIP-679 |
-| 4 | 3.0.0 | KIP-679 batch support |
-| 5 | 3.9.0 | KIP-890 |
+| 2 | 2.1.0 | PRODUCER_FENCED error |
+| 3 | 2.4.0 | Flexible versions |
+| 4 | 2.8.0 | VerifyOnly + batched transactions |
+| 5 | 3.9.0 | TRANSACTION_ABORTABLE (KIP-890) |
 
 ### Request Schema
 
@@ -251,6 +258,8 @@ Transaction =>
 | `transactional_id` | STRING | Transaction identifier |
 | `producer_id` | INT64 | Producer ID from InitProducerId |
 | `producer_epoch` | INT16 | Producer epoch |
+| `ongoing_txn_producer_id` | INT64 | Producer ID for ongoing txn (v6+) |
+| `ongoing_txn_producer_epoch` | INT16 | Producer epoch for ongoing txn (v6+) |
 | `topics` | ARRAY | Partitions to add |
 
 ### Response Schema
@@ -295,10 +304,9 @@ The AddOffsetsToTxn API adds a consumer group's offsets to an active transaction
 | Version | Kafka | Key Changes |
 |:-------:|-------|-------------|
 | 0 | 0.11.0 | Initial version |
-| 1 | 2.0.0 | Response improvements |
-| 2 | 2.4.0 | Flexible versions |
-| 3 | 3.0.0 | KIP-679 |
-| 4 | 3.9.0 | KIP-890 |
+| 2 | 2.1.0 | PRODUCER_FENCED error |
+| 3 | 2.4.0 | Flexible versions |
+| 4 | 3.9.0 | TRANSACTION_ABORTABLE (KIP-890) |
 
 ### Request Schema
 
@@ -343,10 +351,10 @@ The TxnOffsetCommit API commits consumer offsets as part of a transaction.
 | Version | Kafka | Key Changes |
 |:-------:|-------|-------------|
 | 0 | 0.11.0 | Initial version |
-| 1 | 2.0.0 | Response improvements |
-| 2 | 2.1.0 | KIP-98 |
-| 3 | 2.4.0 | Flexible versions |
-| 4 | 3.9.0 | KIP-890 |
+| 2 | 2.1.0 | Committed leader epoch |
+| 3 | 2.4.0 | Flexible versions + member fields |
+| 4 | 3.9.0 | TRANSACTION_ABORTABLE (KIP-890) |
+| 5 | 4.0.0 | Txn V2 add-offsets path (KIP-890 part 2) |
 
 ### Request Schema
 
@@ -415,10 +423,10 @@ The EndTxn API commits or aborts an active transaction.
 | Version | Kafka | Key Changes |
 |:-------:|-------|-------------|
 | 0 | 0.11.0 | Initial version |
-| 1 | 2.0.0 | Response improvements |
-| 2 | 2.4.0 | Flexible versions |
-| 3 | 2.7.0 | KIP-360 |
-| 4 | 3.9.0 | KIP-890 |
+| 2 | 2.1.0 | PRODUCER_FENCED error |
+| 3 | 2.4.0 | Flexible versions |
+| 4 | 3.9.0 | TRANSACTION_ABORTABLE (KIP-890) |
+| 5 | 4.0.0 | Producer ID/epoch in response |
 
 ### Request Schema
 
@@ -508,8 +516,9 @@ The WriteTxnMarkers API is an internal API used by transaction coordinators to w
 
 | Version | Kafka | Key Changes |
 |:-------:|-------|-------------|
-| 0 | 0.11.0 | Initial version |
-| 1 | 2.4.0 | Flexible versions |
+| 0 | 0.11.0 | Initial version (removed in 4.0) |
+| 1 | 2.4.0 | Flexible versions (4.0 baseline) |
+| 2 | 4.0.0 | TransactionVersion (KIP-1228) |
 
 ### Request Schema
 
@@ -523,6 +532,7 @@ Marker =>
     transaction_result: BOOLEAN
     topics: [Topic]
     coordinator_epoch: INT32
+    transaction_version: INT8
 
 Topic =>
     name: STRING
@@ -615,7 +625,8 @@ The ListTransactions API lists transactions on a broker with optional filtering.
 | Version | Kafka | Key Changes |
 |:-------:|-------|-------------|
 | 0 | 3.0.0 | Initial version |
-| 1 | 3.9.0 | KIP-890 |
+| 1 | 3.5.0 | Duration filter |
+| 2 | 4.0.0 | TransactionalIdPattern (KIP-1152) |
 
 ### Request Schema
 
@@ -624,6 +635,7 @@ ListTransactionsRequest =>
     state_filters: [STRING]
     producer_id_filters: [INT64]
     duration_filter: INT64
+    transactional_id_pattern: NULLABLE_STRING
 ```
 
 | Field | Type | Description |
@@ -631,6 +643,7 @@ ListTransactionsRequest =>
 | `state_filters` | ARRAY | Filter by state (empty for all) |
 | `producer_id_filters` | ARRAY | Filter by PID (empty for all) |
 | `duration_filter` | INT64 | Minimum transaction duration (ms) |
+| `transactional_id_pattern` | NULLABLE_STRING | Regex filter for transactional.id (v2+) |
 
 ### Response Schema
 

@@ -48,7 +48,7 @@ loop Data copy
     Src --> Tgt : FetchResponse (data)
 end
 
-Tgt -> Ctrl : AlterPartitionRequest\n(in ISR)
+Ctrl -> Ctrl : Update ISR\nafter target catches up
 
 Ctrl -> Ctrl : Remove source\nfrom replicas
 
@@ -262,8 +262,8 @@ SrcThrottle --> Leader : Limit outbound
 TgtThrottle --> Follower : Limit inbound
 
 note bottom
-  Throttle applies to reassignment
-  traffic only, not normal replication
+  Throttle applies to partitions
+  listed in throttled replicas
 end note
 
 @enduml
@@ -294,10 +294,17 @@ kafka-reassign-partitions.sh --bootstrap-server kafka:9092 \
   --execute
 
 # Remove throttle (after completion)
-kafka-reassign-partitions.sh --bootstrap-server kafka:9092 \
-  --reassignment-json-file reassignment.json \
-  --verify
-# --verify automatically removes throttle on completion
+kafka-configs.sh --bootstrap-server kafka:9092 \
+  --entity-type brokers \
+  --entity-default \
+  --alter \
+  --delete-config leader.replication.throttled.rate,follower.replication.throttled.rate
+
+kafka-configs.sh --bootstrap-server kafka:9092 \
+  --entity-type topics \
+  --entity-name orders \
+  --alter \
+  --delete-config leader.replication.throttled.replicas,follower.replication.throttled.replicas
 ```
 
 ### Throttle Calculation
@@ -426,8 +433,8 @@ kafka-reassign-partitions.sh --bootstrap-server kafka:9092 \
 
 | Metric | Description | Alert |
 |--------|-------------|-------|
-| `kafka.controller:ReassignmentBytesInPerSec` | Bytes/sec being copied | - |
-| `kafka.controller:ReassignmentBytesOutPerSec` | Bytes/sec being sent | - |
+| `kafka.server:type=BrokerTopicMetrics,name=ReassignmentBytesInPerSec` | Bytes/sec being copied | - |
+| `kafka.server:type=BrokerTopicMetrics,name=ReassignmentBytesOutPerSec` | Bytes/sec being sent | - |
 | `kafka.server:UnderReplicatedPartitions` | Partitions below RF | > 0 extended |
 | `kafka.server:IsrShrinksPerSec` | ISR shrink rate | Elevated during reassignment |
 | `kafka.server:IsrExpandsPerSec` | ISR expand rate | Indicates progress |
@@ -446,8 +453,7 @@ kafka-topics.sh --bootstrap-server kafka:9092 \
   --describe --under-replicated-partitions
 
 # Monitor replication lag
-kafka-consumer-groups.sh --bootstrap-server kafka:9092 \
-  --describe --group __reassignment_internal
+# Use broker metrics: ReassignmentBytesInPerSec/OutPerSec
 ```
 
 ---

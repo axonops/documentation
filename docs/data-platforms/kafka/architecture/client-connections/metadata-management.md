@@ -76,8 +76,9 @@ end note
 |-------|-------------|
 | `name` | Topic name |
 | `partitions` | Number of partitions |
-| `replication_factor` | Number of replicas |
 | `is_internal` | Internal topic flag |
+
+Replication factor is derived from the partition replica lists, not returned directly in the metadata response.
 
 ### Partition Metadata
 
@@ -220,7 +221,7 @@ rectangle "Metadata Refresh Triggers" {
 
     rectangle "Error-Driven" as Errors {
         rectangle "NOT_LEADER_OR_FOLLOWER" as NL
-        rectangle "UNKNOWN_TOPIC_OR_PARTITION" as UT
+        rectangle "UNKNOWN_TOPIC_OR_PARTITION\n(topic expected)" as UT
         rectangle "LEADER_NOT_AVAILABLE" as LNA
     }
 
@@ -238,9 +239,6 @@ rectangle "Metadata Refresh Triggers" {
 ```properties
 # Maximum age before forced refresh
 metadata.max.age.ms=300000  # 5 minutes (default)
-
-# Minimum backoff between refresh attempts
-metadata.fetch.timeout.ms=30000  # 30 seconds
 ```
 
 ### Refresh Flow
@@ -353,7 +351,7 @@ public List<PartitionInfo> partitionsForTopic(String topic) {
 
 | Error Code | Name | Cause | Client Action |
 |:----------:|------|-------|---------------|
-| 3 | `UNKNOWN_TOPIC_OR_PARTITION` | Topic/partition doesn't exist | Refresh metadata |
+| 3 | `UNKNOWN_TOPIC_OR_PARTITION` | Topic/partition doesn't exist | Refresh only if the topic is expected to exist |
 | 5 | `LEADER_NOT_AVAILABLE` | Leader election in progress | Wait and retry |
 | 6 | `NOT_LEADER_OR_FOLLOWER` | Stale leader info | Refresh metadata |
 | 29 | `COORDINATOR_NOT_AVAILABLE` | Group coordinator unavailable | Retry FindCoordinator |
@@ -374,7 +372,7 @@ case (NOT_LEADER_OR_FOLLOWER)
     :Refresh metadata immediately;
     :Retry request to new leader;
 case (UNKNOWN_TOPIC_OR_PARTITION)
-    :Refresh metadata;
+    :Refresh metadata (if topic expected);
     :Wait for topic creation (if auto-create);
 case (LEADER_NOT_AVAILABLE)
     :Wait (leader election);
@@ -597,11 +595,12 @@ MM --> T2 : Metadata updated
 
 ### Key Metrics
 
+Producer client metrics are reported under the `producer-metrics` group.
+
 | Metric | Description | Alert Threshold |
 |--------|-------------|-----------------|
-| `metadata-age` | Time since last successful refresh | > 2 × metadata.max.age.ms |
-| `metadata-refresh-rate` | Refresh requests per second | Unusual increase |
-| `metadata-refresh-errors` | Failed refresh attempts | > 0 sustained |
+| `metadata-age` | Age in seconds of the current producer metadata | > 2 × metadata.max.age.ms / 1000 |
+| `metadata-wait-time-ns-total` | Cumulative time spent waiting for metadata (ns) | Sustained increase in rate |
 
 ### Debugging Metadata Issues
 

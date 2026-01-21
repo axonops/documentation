@@ -92,7 +92,7 @@ end note
 |-----------|:---------:|:-------------:|--------|
 | Add broker | ❌ | Required | None until reassignment |
 | Remove broker | ❌ | Required | Must drain first |
-| Add partitions | ✅ | None | Immediate |
+| Add partitions | ❌ | None | Immediate after admin request |
 | Add consumers | ✅ | None | Triggers rebalance |
 
 !!! warning "Broker Addition"
@@ -159,7 +159,7 @@ optimal_partitions = max(
 )
 ```
 
-| Factor | Guideline |
+| Factor | Guideline (Repository Guidance) |
 |--------|-----------|
 | Per-partition throughput | ~10 MB/s typical |
 | Consumer parallelism | 1 partition per consumer thread |
@@ -213,7 +213,8 @@ end note
 kafka-server-start.sh config/server.properties
 
 # Step 2: Verify registration
-kafka-broker-api-versions.sh --bootstrap-server kafka:9092 | grep "id:4"
+kafka-broker-api-versions.sh --bootstrap-server kafka:9092
+kafka-topics.sh --bootstrap-server kafka:9092 --describe | rg "Replicas:.*\\b4\\b"
 
 # Step 3: Generate reassignment plan
 cat > topics.json << 'EOF'
@@ -286,7 +287,7 @@ kafka-reassign-partitions.sh --bootstrap-server kafka:9092 \
   --verify
 
 # Step 4: Verify no partitions on broker 4
-kafka-topics.sh --bootstrap-server kafka:9092 --describe | grep "Broker: 4"
+kafka-topics.sh --bootstrap-server kafka:9092 --describe | rg "Replicas:.*\\b4\\b"
 
 # Step 5: Stop broker
 kafka-server-stop.sh
@@ -330,7 +331,7 @@ end note
 
 ### Metrics for Scaling Decisions
 
-| Metric | Threshold | Action |
+| Metric | Threshold (Repository Guidance) | Action |
 |--------|:---------:|--------|
 | Disk utilization | > 70% | Add brokers or storage |
 | CPU utilization | > 70% sustained | Add brokers |

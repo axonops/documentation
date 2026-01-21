@@ -156,7 +156,7 @@ fetcher --> replica_mgr : sync
 
 ## Controller
 
-The controller is a broker elected to manage cluster-wide operations. In KRaft mode, a quorum of controllers handles this; in ZooKeeper mode, a single controller is elected.
+The controller manages cluster-wide metadata operations. In KRaft mode, controllers are a dedicated process role; in ZooKeeper mode, a broker is elected as controller.
 
 ### Controller Responsibilities
 
@@ -225,9 +225,9 @@ zk_mode -[hidden]right- kraft_mode
 | **External dependency** | ZooKeeper cluster required | None |
 | **Metadata storage** | Split (ZK + broker logs) | Unified (__cluster_metadata topic) |
 | **Failover time** | Seconds to minutes | Milliseconds to seconds |
-| **Partition limit** | ~200K practical limit | Millions of partitions |
+| **Partition scale** | Higher metadata overhead; lower practical limits | Higher practical partition counts |
 | **Operational complexity** | Two systems to manage | Single system |
-| **Version** | All versions | Kafka 3.3+ (production ready) |
+| **Version** | Removed in Kafka 4.0 | Kafka 3.3+ (production ready) |
 
 → [KRaft Deep Dive](kraft/index.md)
 
@@ -340,8 +340,8 @@ The replication factor determines how many copies of each partition exist:
 | RF | Behavior | Use Case |
 |----|----------|----------|
 | **1** | No redundancy; data loss on broker failure | Development only |
-| **2** | Survives 1 broker failure | Limited production use |
-| **3** | Survives 2 broker failures; quorum possible | Production standard |
+| **2** | Tolerates 1 broker failure with `min.insync.replicas=1` | Limited production use |
+| **3** | Tolerates 1 broker failure with `min.insync.replicas=2` | Production standard |
 | **4+** | Higher durability; rarely needed | Critical data |
 
 → [Replication Deep Dive](replication/index.md)
@@ -496,7 +496,7 @@ trad -[hidden]right- zero
 ```
 
 !!! warning "TLS Disables Zero-Copy"
-    When TLS encryption is enabled, zero-copy is not possible because data must be encrypted in user space. This can reduce throughput by 30-50% depending on CPU and workload.
+    When TLS encryption is enabled, zero-copy is not possible because data must be encrypted in user space. Throughput impact depends on CPU and workload.
 
 ### Batching
 
@@ -532,8 +532,8 @@ Kafka survives failures at multiple levels. For complete failure scenarios, reco
 | **Single broker** | Leader election; ISR continues serving |
 | **Multiple brokers** | Service continues if enough replicas remain |
 | **Rack failure** | Rack-aware placement ensures cross-rack replicas |
-| **Network partition** | min.insync.replicas prevents split-brain |
-| **Disk failure** | Affected partitions relocate to healthy disks |
+| **Network partition** | ISR shrinks; `acks=all` writes fail if ISR < `min.insync.replicas` |
+| **Disk failure** | Replicas on failed log dirs go offline; leaders move to healthy replicas |
 
 ### Data Durability Configuration
 

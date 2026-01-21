@@ -36,18 +36,16 @@ The Produce API sends record batches to topic partitions. It is the primary API 
 
 | Version | Kafka | Key Changes |
 |:-------:|-------|-------------|
-| 0 | 0.8.0 | Initial version |
-| 1 | 0.9.0 | Throttle time in response |
-| 2 | 0.10.0 | Timestamp in response |
-| 3 | 0.11.0 | Transactional support |
-| 4 | 1.0.0 | KIP-112 |
-| 5 | 1.0.0 | KIP-219 log_start_offset |
-| 6 | 2.0.0 | KIP-279 error improvements |
-| 7 | 2.1.0 | KIP-227 leader epoch |
-| 8 | 2.3.0 | KIP-467 record errors |
+| 0 | 0.8.0 | Initial version (removed in 4.0) |
+| 3 | 0.11.0 | Transactional ID + message format v2 (4.0 baseline) |
+| 4 | 0.11.0 | KAFKA_STORAGE_ERROR |
+| 5 | 1.0.0 | Log start offset in response |
+| 7 | 2.1.0 | Zstandard compression (KIP-110) |
+| 8 | 2.3.0 | Record errors + error message (KIP-467) |
 | 9 | 2.4.0 | Flexible versions |
-| 10 | 3.0.0 | KIP-700 current_leader |
-| 11 | 3.7.0 | KIP-951 async produce |
+| 10 | 3.7.0 | Current leader + node endpoints (KIP-951) |
+| 11 | 3.8.0 | TRANSACTION_ABORTABLE (KIP-890) |
+| 13 | 4.0.0 | Topic IDs (KIP-516) |
 
 ### Request Schema
 
@@ -60,12 +58,15 @@ ProduceRequest =>
 
 TopicData =>
     name: STRING
+    topic_id: UUID
     partition_data: [PartitionData]
 
 PartitionData =>
     index: INT32
     records: RECORDS
 ```
+
+Topic names are used through v12; v13+ uses `topic_id` instead.
 
 | Field | Type | Description |
 |-------|------|-------------|
@@ -82,9 +83,11 @@ PartitionData =>
 ProduceResponse =>
     responses: [TopicResponse]
     throttle_time_ms: INT32
+    node_endpoints: [NodeEndpoint]
 
 TopicResponse =>
     name: STRING
+    topic_id: UUID
     partition_responses: [PartitionResponse]
 
 PartitionResponse =>
@@ -95,6 +98,13 @@ PartitionResponse =>
     log_start_offset: INT64
     record_errors: [RecordError]
     error_message: NULLABLE_STRING
+    current_leader: LeaderIdAndEpoch
+
+NodeEndpoint =>
+    node_id: INT32
+    host: STRING
+    port: INT32
+    rack: NULLABLE_STRING
 ```
 
 | Field | Type | Description |
@@ -105,6 +115,8 @@ PartitionResponse =>
 | `log_start_offset` | INT64 | Log start offset |
 | `record_errors` | ARRAY | Per-record errors (v8+) |
 | `throttle_time_ms` | INT32 | Quota throttle time |
+| `current_leader` | STRUCT | Suggested leader for future requests (v10+) |
+| `node_endpoints` | ARRAY | Endpoint list for leaders in response (v10+) |
 
 ### acks Semantics
 
@@ -182,29 +194,28 @@ The Fetch API retrieves record batches from topic partitions. It supports long-p
 
 | Version | Kafka | Key Changes |
 |:-------:|-------|-------------|
-| 0 | 0.8.0 | Initial version |
-| 1 | 0.9.0 | Throttle time |
-| 2 | 0.10.0 | Small improvements |
-| 3 | 0.10.1 | Max bytes limit |
-| 4 | 0.11.0 | Isolation level |
-| 5 | 1.0.0 | Log truncation detection |
-| 6 | 1.1.0 | KIP-226 |
+| 0 | 0.8.0 | Initial version (removed in 4.0) |
+| 4 | 0.11.0 | Isolation level (4.0 baseline) |
+| 5 | 1.0.0 | Log start offset |
 | 7 | 1.1.0 | Fetch sessions |
-| 8 | 2.0.0 | KIP-227 leader epoch |
-| 9 | 2.1.0 | Current leader |
-| 10 | 2.1.0 | KIP-320 |
+| 9 | 2.1.0 | Current leader epoch (KIP-320) |
+| 10 | 2.1.0 | Zstandard support (KIP-110) |
 | 11 | 2.3.0 | Rack ID |
-| 12 | 2.4.0 | Flexible versions |
-| 13 | 2.7.0 | Topic IDs |
-| 14 | 3.1.0 | KIP-516 |
-| 15 | 3.5.0 | KIP-632 |
-| 16 | 3.5.0 | KIP-903 |
+| 12 | 2.4.0 | Flexible versions + last fetched epoch |
+| 13 | 2.8.0 | Topic IDs (KIP-516) |
+| 14 | 3.4.0 | Tiered storage offset moved (KIP-405) |
+| 15 | 3.5.0 | Replica state (KIP-903) |
+| 16 | 3.7.0 | Node endpoints (KIP-951) |
+| 17 | 3.8.0 | Replica directory ID (KIP-853) |
+| 18 | 4.1.0 | High-watermark in request (KIP-1166) |
 
 ### Request Schema
 
 ```
 FetchRequest =>
+    cluster_id: NULLABLE_STRING
     replica_id: INT32
+    replica_state: ReplicaState
     max_wait_ms: INT32
     min_bytes: INT32
     max_bytes: INT32
@@ -217,6 +228,7 @@ FetchRequest =>
 
 TopicRequest =>
     topic: STRING
+    topic_id: UUID
     partitions: [PartitionRequest]
 
 PartitionRequest =>
@@ -226,18 +238,31 @@ PartitionRequest =>
     last_fetched_epoch: INT32
     log_start_offset: INT64
     partition_max_bytes: INT32
+    replica_directory_id: UUID
+    high_watermark: INT64
+
+ReplicaState =>
+    replica_id: INT32
+    replica_epoch: INT64
 ```
+
+Topic names are used through v12; v13+ uses `topic_id` instead.
 
 | Field | Type | Description |
 |-------|------|-------------|
-| `replica_id` | INT32 | Replica ID (-1 for consumers) |
+| `cluster_id` | NULLABLE_STRING | Cluster ID for validation (v12+) |
+| `replica_id` | INT32 | Replica ID (-1 for consumers, v0-14) |
+| `replica_state` | STRUCT | Replica ID + epoch (v15+) |
 | `max_wait_ms` | INT32 | Maximum wait time for data |
 | `min_bytes` | INT32 | Minimum bytes to return |
 | `max_bytes` | INT32 | Maximum bytes to return |
 | `isolation_level` | INT8 | 0=read_uncommitted, 1=read_committed |
 | `session_id` | INT32 | Fetch session ID (0 for new) |
 | `fetch_offset` | INT64 | Offset to fetch from |
+| `last_fetched_epoch` | INT32 | Last fetched epoch for fencing (v12+) |
 | `partition_max_bytes` | INT32 | Maximum bytes per partition |
+| `forgotten_topics_data` | ARRAY | Partitions to remove from session (v7+) |
+| `rack_id` | STRING | Consumer rack ID (v11+) |
 
 ### Response Schema
 
@@ -247,9 +272,11 @@ FetchResponse =>
     error_code: INT16
     session_id: INT32
     responses: [TopicResponse]
+    node_endpoints: [NodeEndpoint]
 
 TopicResponse =>
     topic: STRING
+    topic_id: UUID
     partitions: [PartitionResponse]
 
 PartitionResponse =>
@@ -258,9 +285,20 @@ PartitionResponse =>
     high_watermark: INT64
     last_stable_offset: INT64
     log_start_offset: INT64
+    diverging_epoch: EpochEndOffset
+    current_leader: LeaderIdAndEpoch
+    snapshot_id: SnapshotId
     aborted_transactions: [AbortedTransaction]
     preferred_read_replica: INT32
     records: RECORDS
+
+EpochEndOffset =>
+    epoch: INT32
+    end_offset: INT64
+
+SnapshotId =>
+    end_offset: INT64
+    epoch: INT32
 ```
 
 | Field | Type | Description |
@@ -365,15 +403,17 @@ The ListOffsets API retrieves offsets by timestamp or special offset positions (
 
 | Version | Kafka | Key Changes |
 |:-------:|-------|-------------|
-| 0 | 0.8.0 | Initial version |
-| 1 | 0.10.1 | Timestamp-based lookup |
+| 0 | 0.8.0 | Initial version (removed in 4.0) |
+| 1 | 0.10.1 | Single-offset response (4.0 baseline) |
 | 2 | 0.11.0 | Isolation level |
-| 3 | 2.0.0 | KIP-279 |
 | 4 | 2.1.0 | Leader epoch |
-| 5 | 2.2.0 | KIP-320 |
+| 5 | 2.2.0 | OFFSET_NOT_AVAILABLE |
 | 6 | 2.4.0 | Flexible versions |
-| 7 | 2.8.0 | KIP-734 |
-| 8 | 3.4.0 | KIP-405 |
+| 7 | 2.8.0 | MAX_TIMESTAMP (KIP-734) |
+| 8 | 3.4.0 | EARLIEST_LOCAL (KIP-405) |
+| 9 | 3.6.0 | LATEST_TIERED (KIP-1005) |
+| 10 | 3.8.0 | Remote list offsets (KIP-1075) |
+| 11 | 4.0.0 | EARLIEST_PENDING_UPLOAD (KIP-1023) |
 
 ### Request Schema
 
@@ -382,6 +422,7 @@ ListOffsetsRequest =>
     replica_id: INT32
     isolation_level: INT8
     topics: [TopicRequest]
+    timeout_ms: INT32
 
 TopicRequest =>
     name: STRING
@@ -398,6 +439,7 @@ PartitionRequest =>
 | `replica_id` | INT32 | Replica ID (-1 for consumers) |
 | `isolation_level` | INT8 | 0=read_uncommitted, 1=read_committed |
 | `timestamp` | INT64 | Target timestamp or special value |
+| `timeout_ms` | INT32 | Timeout for remote tiered reads (v10+) |
 
 ### Special Timestamp Values
 
@@ -406,6 +448,9 @@ PartitionRequest =>
 | -1 | LATEST | Latest offset (log end offset) |
 | -2 | EARLIEST | Earliest offset (log start offset) |
 | -3 | MAX_TIMESTAMP | Offset of record with max timestamp (v7+) |
+| -4 | EARLIEST_LOCAL | Earliest local log offset (v8+) |
+| -5 | LATEST_TIERED | Latest tiered storage offset (v9+) |
+| -6 | EARLIEST_PENDING_UPLOAD | Earliest pending upload offset (v11+) |
 | ≥0 | Timestamp | First offset with timestamp ≥ value |
 
 ### Response Schema
@@ -460,13 +505,14 @@ The Metadata API retrieves cluster topology, broker information, and topic/parti
 | 3 | 0.10.2 | Throttle time |
 | 4 | 0.11.0 | Topic-level errors |
 | 5 | 1.0.0 | Offline replicas |
-| 6 | 1.0.0 | KIP-226 |
-| 7 | 2.0.0 | KIP-226 leader epoch |
+| 6 | 1.1.0 | Response before throttling |
+| 7 | 2.0.0 | Leader epoch |
 | 8 | 2.1.0 | Allow topic auto-create control |
 | 9 | 2.4.0 | Flexible versions |
-| 10 | 2.8.0 | KIP-516 topic IDs |
-| 11 | 3.0.0 | KIP-516 improvements |
-| 12 | 3.4.0 | KIP-866 |
+| 10 | 2.8.0 | Topic ID field (not implemented) |
+| 11 | 3.0.0 | Cluster authorized ops deprecated |
+| 12 | 3.4.0 | Topic ID supported |
+| 13 | 4.0.0 | Top-level error code |
 
 ### Request Schema
 
@@ -486,8 +532,10 @@ TopicRequest =>
 |-------|------|-------------|
 | `topics` | ARRAY | Topics to fetch (null for all topics) |
 | `allow_auto_topic_creation` | BOOLEAN | Allow auto-creation of missing topics |
-| `include_cluster_authorized_operations` | BOOLEAN | Include cluster ACL info |
+| `include_cluster_authorized_operations` | BOOLEAN | Include cluster ACL info (v8-10) |
 | `include_topic_authorized_operations` | BOOLEAN | Include topic ACL info |
+
+Topic IDs are supported in v12+; v10-11 include the field but brokers do not implement it.
 
 ### Response Schema
 
@@ -499,6 +547,7 @@ MetadataResponse =>
     controller_id: INT32
     topics: [TopicMetadata]
     cluster_authorized_operations: INT32
+    error_code: INT16
 
 BrokerMetadata =>
     node_id: INT32
@@ -552,7 +601,6 @@ PartitionMetadata =>
 | Cache metadata per cluster | should |
 | Refresh on NOT_LEADER errors | must |
 | Periodic refresh interval | `metadata.max.age.ms` |
-| Minimum refresh interval | `metadata.min.age.ms` (internal) |
 
 ---
 
@@ -568,21 +616,22 @@ The ApiVersions API queries the broker for supported API versions. It is the fir
 |:-------:|-------|-------------|
 | 0 | 0.10.0 | Initial version |
 | 1 | 0.10.1 | Throttle time |
-| 2 | 2.1.0 | KIP-359 |
+| 2 | 2.1.0 | Response before throttling |
 | 3 | 2.4.0 | Flexible versions |
+| 4 | 4.0.0 | SupportedFeatures min version fix |
 
 ### Request Schema
 
 ```
 ApiVersionsRequest =>
-    client_software_name: COMPACT_STRING
-    client_software_version: COMPACT_STRING
+    client_software_name: STRING
+    client_software_version: STRING
 ```
 
 | Field | Type | Description |
 |-------|------|-------------|
-| `client_software_name` | COMPACT_STRING | Client library name (v3+) |
-| `client_software_version` | COMPACT_STRING | Client library version (v3+) |
+| `client_software_name` | STRING | Client library name (v3+) |
+| `client_software_version` | STRING | Client library version (v3+) |
 
 ### Response Schema
 
@@ -709,7 +758,7 @@ end note
 | 44 | IncrementalAlterConfigs | Admin | 2.3.0 |
 | 45 | AlterPartitionReassignments | Admin | 2.4.0 |
 | 46 | ListPartitionReassignments | Admin | 2.4.0 |
-| 47 | OffsetDelete | Consumer | 2.4.0 |
+| 47 | OffsetDelete | Consumer | 0.11.0 |
 | 48 | DescribeClientQuotas | Admin | 2.6.0 |
 | 49 | AlterClientQuotas | Admin | 2.6.0 |
 | 50 | DescribeUserScramCredentials | Auth | 2.7.0 |
@@ -736,8 +785,25 @@ end note
 | 71 | GetTelemetrySubscriptions | Telemetry | 3.5.0 |
 | 72 | PushTelemetry | Telemetry | 3.5.0 |
 | 73 | AssignReplicasToDirs | KRaft | 3.6.0 |
-| 74 | ListClientMetricsResources | Telemetry | 3.6.0 |
+| 74 | ListConfigResources | Telemetry | 3.6.0 |
 | 75 | DescribeTopicPartitions | Admin | 3.7.0 |
+| 76 | ShareGroupHeartbeat | Share | 4.0.0 |
+| 77 | ShareGroupDescribe | Share | 4.0.0 |
+| 78 | ShareFetch | Share | 4.0.0 |
+| 79 | ShareAcknowledge | Share | 4.0.0 |
+| 80 | AddRaftVoter | KRaft | 4.0.0 |
+| 81 | RemoveRaftVoter | KRaft | 4.0.0 |
+| 82 | UpdateRaftVoter | KRaft | 4.0.0 |
+| 83 | InitializeShareGroupState | Share | 4.0.0 |
+| 84 | ReadShareGroupState | Share | 4.0.0 |
+| 85 | WriteShareGroupState | Share | 4.0.0 |
+| 86 | DeleteShareGroupState | Share | 4.0.0 |
+| 87 | ReadShareGroupStateSummary | Share | 4.0.0 |
+| 88 | StreamsGroupHeartbeat | Streams | 4.0.0 |
+| 89 | StreamsGroupDescribe | Streams | 4.0.0 |
+| 90 | DescribeShareGroupOffsets | Share | 4.0.0 |
+| 91 | AlterShareGroupOffsets | Share | 4.0.0 |
+| 92 | DeleteShareGroupOffsets | Share | 4.0.0 |
 
 ---
 

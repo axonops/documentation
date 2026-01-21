@@ -51,8 +51,8 @@ end note
 | Constraint | Default | Configuration |
 |------------|:-------:|---------------|
 | Maximum request size | 100 MB | `socket.request.max.bytes` (broker) |
-| Maximum response size | Unlimited | `fetch.max.bytes` (client) |
-| Minimum frame size | 4 bytes | Header-only (empty body) |
+| Maximum response size | Request-bounded | `fetch.max.bytes` and `max.partition.fetch.bytes` (client), `message.max.bytes` (broker) |
+| Minimum frame size | Header-only | 4 bytes (response header v0), 10 bytes (request header v1), 11 bytes (request header v2) |
 
 !!! warning "Size Validation"
     Implementations must validate the Size field before allocating buffers. A Size value exceeding configured limits must result in connection termination.
@@ -112,7 +112,7 @@ end note
 
 | Header Version | Kafka Version | Tagged Fields | Usage |
 |:--------------:|---------------|:-------------:|-------|
-| 0 | 0.8.0 - 0.8.2 | ❌ | Legacy (ControlledShutdown only) |
+| 0 | 0.8.x - 3.x | ❌ | ControlledShutdownRequest v0 only (removed in 4.0) |
 | 1 | 0.9.0+ | ❌ | Most non-flexible APIs |
 | 2 | 2.4.0+ | ✅ | Flexible API versions |
 
@@ -317,22 +317,22 @@ Each API defines which versions are "flexible" (use compact encodings and tagged
 
 | API | First Flexible Version | Current Max Version |
 |-----|:----------------------:|:-------------------:|
-| Produce | 9 | 11 |
-| Fetch | 12 | 16 |
-| ListOffsets | 6 | 8 |
-| Metadata | 9 | 12 |
-| OffsetCommit | 8 | 9 |
-| OffsetFetch | 6 | 9 |
-| FindCoordinator | 3 | 5 |
+| Produce | 9 | 13 |
+| Fetch | 12 | 18 |
+| ListOffsets | 6 | 11 |
+| Metadata | 9 | 13 |
+| OffsetCommit | 8 | 10 |
+| OffsetFetch | 6 | 10 |
+| FindCoordinator | 3 | 6 |
 | JoinGroup | 6 | 9 |
 | Heartbeat | 4 | 4 |
-| LeaveGroup | 4 | 6 |
+| LeaveGroup | 4 | 5 |
 | SyncGroup | 4 | 5 |
-| DescribeGroups | 5 | 5 |
-| ListGroups | 4 | 5 |
+| DescribeGroups | 5 | 6 |
+| ListGroups | 3 | 5 |
 | CreateTopics | 5 | 7 |
 | DeleteTopics | 4 | 6 |
-| ApiVersions | 3 | 3 |
+| ApiVersions | 3 | 4 |
 
 ---
 
@@ -460,8 +460,8 @@ The ApiVersions API has special handling for bootstrap:
 | Behavior | Description |
 |----------|-------------|
 | Pre-authentication | Broker must respond before SASL authentication |
-| Version tolerance | Broker should accept any version (0-3) |
-| Header version | Always uses request header v1 (or v2 for v3) |
+| Version tolerance | Broker should accept any version (0-4) |
+| Header version | Uses request header v1 (or v2 for v3+) |
 
 ```plantuml
 @startuml
@@ -517,7 +517,7 @@ Produce requests with `acks=0` have special response handling:
 Request: Metadata, version 0, correlation_id=1, client_id="test"
 
 Hex dump:
-00 00 00 11        // Size: 17 bytes
+00 00 00 12        // Size: 18 bytes
 00 03              // api_key: 3 (Metadata)
 00 00              // api_version: 0
 00 00 00 01        // correlation_id: 1
@@ -532,7 +532,7 @@ FF FF FF FF        // topics: null (all topics)
 Response: Metadata v0, correlation_id=1
 
 Hex dump:
-00 00 00 06        // Size: 6 bytes
+00 00 00 0C        // Size: 12 bytes
 00 00 00 01        // correlation_id: 1
 00 00 00 00        // brokers: empty array
 00 00 00 00        // topics: empty array
@@ -563,7 +563,7 @@ Hex dump:
 | Error Condition | Broker Response |
 |-----------------|-----------------|
 | Size exceeds maximum | Close connection (no response) |
-| Unknown API key | UNSUPPORTED_VERSION error |
+| Unknown API key | Close connection (invalid request) |
 | Unsupported API version | UNSUPPORTED_VERSION error |
 | Truncated message | Close connection |
 | Invalid encoding | Close connection |

@@ -134,7 +134,7 @@ export KAFKA_OPTS="-Djava.security.auth.login.config=/path/to/kafka_client_jaas.
 ```
 
 !!! danger "Security Warning"
-    SASL/PLAIN transmits credentials in base64 encoding (not encryption). Always use with TLS (`SASL_SSL`) in production. Never use `SASL_PLAINTEXT` with PLAIN mechanism in production.
+    SASL/PLAIN transmits credentials in cleartext. Always use with TLS (`SASL_SSL`) in production. Never use `SASL_PLAINTEXT` with PLAIN mechanism in production.
 
 ---
 
@@ -201,7 +201,7 @@ sasl.jaas.config=org.apache.kafka.common.security.scram.ScramLoginModule require
 | SCRAM-SHA-512 | SHA-512 | Better |
 
 !!! tip "Recommendation"
-    Use SCRAM-SHA-512 for new deployments. It provides stronger security with minimal performance overhead compared to SCRAM-SHA-256.
+    Use SCRAM-SHA-512 for new deployments for stronger hashing.
 
 ### Creating SCRAM Credentials
 
@@ -394,6 +394,9 @@ sasl.jaas.config=org.apache.kafka.common.security.oauthbearer.OAuthBearerLoginMo
     scope="kafka";
 ```
 
+!!! note "Handler Package Change"
+    Kafka 3.4+ also provides `org.apache.kafka.common.security.oauthbearer.OAuthBearerLoginCallbackHandler` (top-level package). Use the secured package name for 3.1–3.3.
+
 ### Custom OAuth Handler
 
 ```java
@@ -562,13 +565,16 @@ CS is "TCP Connect"
 CS is "TLS Handshake"
 
 @200
-CS is "SASL Handshake"
+CS is "ApiVersions (pre-auth)"
 
 @300
+CS is "SASL Handshake"
+
+@400
 CS is "SASL Auth"
 
 @450
-CS is "API Versions"
+CS is "ApiVersions (post-auth)"
 
 @500
 CS is "Ready"
@@ -646,6 +652,9 @@ stop
 | `failed-authentication-total` | Total failed auths | Increasing |
 | `reauthentication-latency-avg` | Avg reauth time | > 1000ms |
 
+!!! note "Metric source"
+    Authentication metrics are emitted by the broker `SocketServer` MBeans (not `BrokerTopicMetrics`).
+
 ### Monitoring Authentication
 
 ```bash
@@ -655,7 +664,7 @@ grep -i "authentication" /var/log/kafka/server.log
 # JMX metrics
 kafka-run-class.sh kafka.tools.JmxTool \
     --jmx-url service:jmx:rmi:///jndi/rmi://localhost:9999/jmxrmi \
-    --object-name kafka.server:type=BrokerTopicMetrics,name=FailedAuthenticationRate
+    --object-name kafka.network:type=SocketServer,name=FailedAuthenticationRate
 ```
 
 ---
@@ -690,8 +699,9 @@ kafka-run-class.sh kafka.tools.JmxTool \
 | SASL/PLAIN | 0.10.0 |
 | SASL/SCRAM | 0.10.2 |
 | SASL/OAUTHBEARER | 2.0.0 |
-| OIDC built-in | 3.1.0 |
-| Re-authentication | 2.2.0 |
+| OAUTHBEARER login callback (secured package) | 3.1.0 |
+| OAUTHBEARER login callback (top-level package) | 3.4.0 |
+| Re-authentication (`connections.max.reauth.ms`) | 2.2.0 |
 
 ---
 

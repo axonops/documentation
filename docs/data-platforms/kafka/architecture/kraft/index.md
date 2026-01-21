@@ -77,9 +77,9 @@ end note
 | Aspect | ZooKeeper Mode | KRaft Mode |
 |--------|----------------|------------|
 | **Operational complexity** | Two systems to manage | Single system |
-| **Scaling** | ZK limits (~200K partitions) | Millions of partitions |
+| **Scaling** | Higher metadata overhead; lower practical limits | Higher practical partition counts |
 | **Recovery time** | Minutes (controller failover) | Seconds |
-| **Metadata propagation** | Pull-based, eventually consistent | Push-based, faster |
+| **Metadata propagation** | Pull-based, eventually consistent | Fetch-based, ordered |
 | **Security** | Separate auth for ZK | Unified Kafka security |
 | **Monitoring** | Two metric systems | Single metric system |
 
@@ -292,12 +292,12 @@ end note
 
 ### Record Types
 
-| Category | Record Types |
+| Category | Record Types (non-exhaustive) |
 |----------|--------------|
 | **Cluster** | `FeatureLevelRecord`, `ZkMigrationStateRecord` |
-| **Brokers** | `RegisterBrokerRecord`, `UnregisterBrokerRecord`, `BrokerRegistrationChangeRecord` |
+| **Brokers** | `RegisterBrokerRecord`, `UnregisterBrokerRecord`, `BrokerRegistrationChangeRecord`, `FenceBrokerRecord`, `UnfenceBrokerRecord` |
 | **Topics** | `TopicRecord`, `RemoveTopicRecord` |
-| **Partitions** | `PartitionRecord`, `PartitionChangeRecord`, `RemovePartitionRecord` |
+| **Partitions** | `PartitionRecord`, `PartitionChangeRecord` |
 | **Configuration** | `ConfigRecord`, `RemoveConfigRecord` |
 | **Security** | `ClientQuotaRecord`, `UserScramCredentialRecord`, `AccessControlEntryRecord` |
 | **Producers** | `ProducerIdsRecord` |
@@ -375,9 +375,9 @@ listeners=CONTROLLER://0.0.0.0:9093
 listener.security.protocol.map=CONTROLLER:SSL
 ```
 
-### Controller-to-Broker (Push)
+### Controller-to-Broker (Metadata Fetch)
 
-Unlike ZooKeeper mode (where brokers pulled metadata), KRaft controllers push metadata updates to brokers:
+In KRaft, brokers fetch metadata updates from the controller log (unlike ZooKeeper watch-based updates):
 
 ```plantuml
 @startuml
@@ -388,7 +388,7 @@ skinparam sequence {
     ParticipantBackgroundColor #F5F5F5
 }
 
-title Metadata Push to Brokers
+title Metadata Fetch by Brokers
 
 participant "Controller\n(Leader)" as ctrl
 participant "Broker 1" as b1
@@ -542,12 +542,17 @@ end note
 
 ### Controller Sizing
 
+Kafka controllers keep cluster metadata in memory and on disk.
+
 | Cluster Size | Controller Count | Controller Resources |
 |--------------|------------------|---------------------|
 | Development | 1 (no HA) | 1 CPU, 1GB RAM |
 | Small (< 10 brokers) | 3 (combined mode) | 2 CPU, 4GB RAM |
 | Medium (10-50 brokers) | 3 (isolated) | 4 CPU, 8GB RAM |
 | Large (50+ brokers) | 5 (isolated) | 8 CPU, 16GB RAM |
+
+!!! note "Sourcing"
+    The table above reflects repository guidance. Kafka's KRaft ops docs note that typical clusters can use ~5 GB memory and ~5 GB disk for the metadata log directory.
 
 ---
 
@@ -594,9 +599,9 @@ state is Normal
 
 | Metric | Typical Value |
 |--------|---------------|
-| Detection time | 1-2 heartbeat intervals (2-4 seconds) |
-| Election time | 50-200 milliseconds |
-| Total failover | 2-5 seconds |
+| Detection time | ≤ `controller.quorum.fetch.timeout.ms` (default 2000ms) |
+| Election time | ≤ `controller.quorum.election.timeout.ms` (default 1000ms) |
+| Total failover | Detection + election + metadata catch-up |
 
 ### Broker Behavior During Failover
 
@@ -744,8 +749,8 @@ controller.quorum.voters=1@ctrl1:9093,2@ctrl2:9093,3@ctrl3:9093
 ```bash
 # Controllers will sync metadata from ZooKeeper
 # Monitor migration progress
-kafka-metadata.sh --snapshot /var/kafka-logs/__cluster_metadata-0/*.log \
-  --command "describe"
+kafka-metadata-shell.sh --snapshot /var/kafka-logs/__cluster_metadata-0/*.log \
+  describe
 ```
 
 4. **Restart brokers in KRaft mode:**
@@ -755,14 +760,6 @@ kafka-metadata.sh --snapshot /var/kafka-logs/__cluster_metadata-0/*.log \
 process.roles=broker
 controller.quorum.voters=1@ctrl1:9093,2@ctrl2:9093,3@ctrl3:9093
 # Remove: zookeeper.connect=...
-```
-
-5. **Finalize migration:**
-
-```bash
-# After all brokers migrated
-kafka-metadata.sh --bootstrap-controller ctrl1:9093 \
-  --command "finalize-migration"
 ```
 
 ### Rollback Capability
@@ -793,16 +790,16 @@ During migration, rollback is possible until finalization:
 
 ```bash
 # Check controller quorum status
-kafka-metadata.sh --snapshot /var/kafka-logs/__cluster_metadata-0/*.log \
-  --command "quorum"
+kafka-metadata-quorum.sh --bootstrap-controller ctrl1:9093 \
+  describe --status
 
 # View current controller leader
-kafka-metadata.sh --bootstrap-controller ctrl1:9093 \
-  --command "describe" | grep -i leader
+kafka-metadata-quorum.sh --bootstrap-controller ctrl1:9093 \
+  describe --status | rg -i leader
 
 # Check metadata log lag
-kafka-metadata.sh --snapshot /var/kafka-logs/__cluster_metadata-0/*.log \
-  --command "log" | tail -20
+kafka-metadata-shell.sh --snapshot /var/kafka-logs/__cluster_metadata-0/*.log \
+  log | tail -20
 
 # Verify broker registration
 kafka-broker-api-versions.sh --bootstrap-server broker1:9092

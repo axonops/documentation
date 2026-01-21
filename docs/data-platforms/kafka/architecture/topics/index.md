@@ -85,6 +85,7 @@ end note
 |------------|------|
 | Length | 1-249 characters |
 | Characters | `[a-zA-Z0-9._-]` only |
+| Reserved | `.` and `..` are not allowed |
 | Reserved | Names starting with `__` are internal topics |
 | Collision | `.` and `_` are interchangeable in metrics; avoid mixing |
 
@@ -93,6 +94,7 @@ end note
 
     - `__consumer_offsets` - Consumer group offset storage
     - `__transaction_state` - Transaction coordinator state
+    - `__share_group_state` - Share group state
     - `__cluster_metadata` - KRaft metadata (KRaft mode only)
 
 ---
@@ -109,7 +111,7 @@ A Kafka broker running on a single server faces hard limits imposed by hardware:
 
 Kafka writes are sequential (append-only), which is optimal for disk performance. However, even sequential I/O has limits:
 
-| Storage Type | Sequential Write | Sequential Read | Notes |
+| Storage Type | Sequential Write (illustrative) | Sequential Read (illustrative) | Notes |
 |--------------|------------------|-----------------|-------|
 | HDD (7200 RPM) | 80-160 MB/s | 80-160 MB/s | Seek time negligible for sequential; still limited by rotational speed |
 | SATA SSD | 400-550 MB/s | 500-550 MB/s | Limited by SATA interface (6 Gbps theoretical max) |
@@ -122,7 +124,7 @@ With a replication factor of 3, each produced record must be written to three br
 
 Network interfaces impose hard ceilings on data transfer:
 
-| Interface | Theoretical Max | Practical Throughput | Notes |
+| Interface | Theoretical Max | Practical Throughput (illustrative) | Notes |
 |-----------|-----------------|----------------------|-------|
 | 1 GbE | 125 MB/s | 100-110 MB/s | Common in older deployments; often the bottleneck |
 | 10 GbE | 1,250 MB/s | 1,000-1,100 MB/s | Standard for modern Kafka deployments |
@@ -151,7 +153,7 @@ CPU becomes a bottleneck primarily in these scenarios:
 | **Zero-copy disabled** | High | TLS prevents zero-copy (`transferTo`); data copied through userspace |
 
 !!! info "TLS Performance Impact"
-    TLS encryption typically reduces Kafka throughput by 20-40% compared to plaintext. However, **raw encryption speed is not the bottleneck** on modern hardware.
+    TLS encryption can reduce Kafka throughput depending on workload and hardware. However, **raw encryption speed is not the bottleneck** on modern hardware.
 
     Modern CPUs with AES-NI achieve 4-7 GB/s AES-256-GCM throughput per core—far exceeding typical Kafka broker throughput. The actual overhead comes from architectural changes required for encryption:
 
@@ -166,14 +168,14 @@ CPU becomes a bottleneck primarily in these scenarios:
 
 Each partition consumes broker memory for:
 
-| Resource | Per-Partition Cost | Notes |
+| Resource | Per-Partition Cost (illustrative) | Notes |
 |----------|-------------------|-------|
 | Page cache utilization | Variable | OS caches recent segments; partitions compete for cache space |
-| Index files (mmap) | ~10 MB typical | `.index` and `.timeindex` mapped into memory |
+| Index files (mmap) | Up to 10 MB per index per segment (default) | `.index` and `.timeindex` mapped into memory |
 | Log segment overhead | ~1-2 MB | Buffers, file handles, metadata structures |
 | Replica fetcher threads | Shared | Each source broker requires a fetcher thread |
 
-With thousands of partitions per broker, memory overhead becomes significant. Kafka's recommendation is to limit partitions to approximately 4,000 per broker (though this varies with hardware).
+With thousands of partitions per broker, memory overhead becomes significant. Repository guidance is to limit partitions to approximately 4,000 per broker (varies with hardware).
 
 ### The Single-Consumer Bottleneck
 
@@ -574,8 +576,8 @@ Records with the same key are routed to the same partition. If strict ordering a
 !!! warning "Partition Count Cannot Be Decreased"
     Once a topic is created, the partition count can only be increased, not decreased. Increasing partitions also breaks key-based ordering guarantees for existing keys (keys may hash to different partitions).
 
-!!! info "Partition Count Upper Bounds"
-    Kafka recommends limiting partitions per broker to approximately 4,000 and partitions per cluster to approximately 200,000 (as of Kafka 3.x). These limits relate to:
+!!! info "Partition Count Upper Bounds (Repository Guidance)"
+    Limit partitions per broker to approximately 4,000 and partitions per cluster to approximately 200,000 (as of Kafka 3.x). These limits relate to:
 
     - Controller metadata management overhead
     - ZooKeeper/KRaft watch overhead
@@ -616,7 +618,7 @@ Kafka maintains metadata about topics and partitions in the controller. Clients 
 
 Actual throughput varies significantly based on hardware, configuration, and workload. The following provides reference points from common deployment scenarios:
 
-### Single-Broker Throughput (Reference)
+### Single-Broker Throughput (Repository Guidance)
 
 | Configuration | Production Throughput | Notes |
 |---------------|----------------------|-------|

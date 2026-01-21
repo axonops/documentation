@@ -91,11 +91,11 @@ end note
 
 ### Performance Comparison
 
-| Access Pattern | HDD Performance | SSD Performance |
+| Access Pattern | HDD Performance (illustrative) | SSD Performance (illustrative) |
 |----------------|-----------------|-----------------|
 | Random 4KB | ~100 IOPS | ~100K IOPS |
 | Sequential | ~100 MB/s | ~500 MB/s |
-| **Kafka advantage** | **1000x better** | **5x better** |
+| **Kafka advantage** | **Order-of-magnitude on HDD** | **Smaller delta on SSD** |
 
 ---
 
@@ -167,10 +167,10 @@ fileChannel.transferTo(position, count, socketChannel);
 |-----------|---------------------|
 | Plaintext | Yes |
 | TLS/SSL enabled | No (encryption requires user-space) |
-| Compression | Only for already-compressed data |
+| Compression | Yes (independent of compression) |
 
 !!! warning "TLS Impact"
-    Enabling TLS disables zero-copy, potentially reducing throughput by 30-50%.
+    Enabling TLS disables zero-copy; throughput impact depends on CPU and workload.
 
 ---
 
@@ -244,7 +244,7 @@ fetch.max.bytes=52428800
 
 ### Compression Algorithms
 
-| Algorithm | Compression Ratio | CPU Usage | Speed |
+| Algorithm | Indicative Ratio (varies by data) | CPU Usage | Speed |
 |-----------|-------------------|-----------|-------|
 | **none** | 1.0x | None | Fastest |
 | **gzip** | ~5-8x | High | Slow |
@@ -277,7 +277,7 @@ stored --> decomp : decompress
 
 note bottom
   Broker stores compressed data
-  No compression/decompression on broker
+  Recompresses only if configured
 end note
 
 @enduml
@@ -403,15 +403,15 @@ rectangle "Broker Thread Model" {
 
 rectangle "Read Scenarios" {
   rectangle "Hot Read\n(cache hit)" as hot {
-    card "0.1 ms" as hot_time
+    card "~sub-ms" as hot_time
   }
 
   rectangle "Warm Read\n(partial hit)" as warm {
-    card "1-5 ms" as warm_time
+    card "~1-5 ms" as warm_time
   }
 
   rectangle "Cold Read\n(cache miss)" as cold {
-    card "10+ ms" as cold_time
+    card "~10+ ms" as cold_time
   }
 }
 
@@ -484,7 +484,7 @@ kafka-run-class.sh kafka.tools.EndToEndLatency \
 
 ### Key Metrics
 
-| Metric | Healthy Range |
+| Metric | Example Range |
 |--------|---------------|
 | `RequestsPerSec` | Depends on workload |
 | `TotalTimeMs (P99)` | < 100 ms |

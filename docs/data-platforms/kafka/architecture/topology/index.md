@@ -90,9 +90,12 @@ client.rack=rack-1
 ```
 
 ```properties
-# broker configuration to enable follower fetching
+# broker configuration (rack-aware replica selection)
 replica.selector.class=org.apache.kafka.common.replica.RackAwareReplicaSelector
 ```
+
+!!! note "Follower fetching"
+    `client.rack` enables clients to prefer local replicas when supported (Kafka 2.4+). If no matching replica is available, consumers read from the leader.
 
 ---
 
@@ -110,7 +113,7 @@ replica.selector.class=org.apache.kafka.common.replica.RackAwareReplicaSelector
 ### Network Sizing Formula
 
 ```
-Required bandwidth = (P × RF) + C
+Required bandwidth = (P × (RF - 1)) + C + P
 
 Where:
 P = Peak produce throughput (MB/s)
@@ -203,7 +206,7 @@ broker.rack=us-central1-a
 
 | Replication Factor | Minimum Brokers | Recommended Brokers |
 |-------------------|-----------------|---------------------|
-| 1 | 1 | 3 (for controller quorum) |
+| 1 | 1 | 1 (plus KRaft controllers if dedicated) |
 | 2 | 2 | 4 (2 per rack) |
 | 3 | 3 | 6 (2 per rack, 3 racks) |
 
@@ -250,11 +253,17 @@ end note
 ### Controller Configuration
 
 ```properties
+*Static quorum example:*
+
+```properties
 # Dedicated controller
 process.roles=controller
 node.id=1
 controller.quorum.voters=1@controller1:9093,2@controller2:9093,3@controller3:9093
 ```
+
+!!! note "Dynamic quorums"
+    Kafka 4.1+ supports dynamic controller quorums; use `controller.quorum.bootstrap.servers` instead of `controller.quorum.voters`.
 
 ### Combined vs Dedicated Controllers
 
@@ -399,7 +408,7 @@ kafka-reassign-partitions.sh --bootstrap-server kafka:9092 \
 |--------|--------|
 | **Throughput** | More brokers = more aggregate throughput |
 | **Storage** | More brokers = more total storage |
-| **Partitions** | ~4000 partitions per broker recommended maximum |
+| **Partitions** | ~4000 partitions per broker (repository guidance) |
 | **Replication** | RF × partitions = total replicas distributed |
 
 ### Partition Count
@@ -407,7 +416,7 @@ kafka-reassign-partitions.sh --bootstrap-server kafka:9092 \
 | Consideration | Guideline |
 |---------------|-----------|
 | **Parallelism** | Partitions ≥ max consumer instances |
-| **Throughput** | ~10 MB/s per partition typical |
+| **Throughput** | ~10 MB/s per partition (repository guidance) |
 | **Overhead** | Each partition has memory/file handle cost |
 | **Rebalance** | More partitions = longer rebalance |
 
