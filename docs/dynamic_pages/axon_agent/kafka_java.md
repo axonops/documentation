@@ -1,39 +1,9 @@
-<p>Insert the line <code>. /usr/share/axonops/axonops-jvm.options</code> right before the final line in your config file. Look for the last line that starts with <code>exec</code>, as demonstrated in the example below.</p>
-<blockquote>
-<p><strong>NB.</strong> Please note the period(.) at the beginning of the config line.</p>
-</blockquote>
-Example:
-<!-- Kafka 2.0 Java 11 -->
-<div id="Kafka20JavaDiv" class="javakafka">
-<div id="Broker" class="axon_kafka_dynamic_s3">
+<p>Insert the following two code blocks into the above file, right before the final line which contains the <code>exec</code> statement:
 
-```shell hl_lines="1" hl_lines="1"
+```shell
+# Please note the period(.) at the beginning of the config line.
 . /usr/share/axonops/axonops-jvm.options
-exec $base_dir/kafka-run-class.sh $EXTRA_ARGS kafka.Kafka "$@"
 ```
-</div>
-<div id="Zookeeper" class="axon_kafka_dynamic_s3" style="display:none">
-
-```shell hl_lines="1"
-. /usr/share/axonops/axonops-jvm.options
-exec $base_dir/kafka-run-class.sh $EXTRA_ARGS org.apache.zookeeper.server.quorum.QuorumPeerMain "$@"
-```
-</div>
-<div id="KRaftBroker" class="axon_kafka_dynamic_s3" style="display:none">
-
-```shell hl_lines="1"
-. /usr/share/axonops/axonops-jvm.options
-exec $base_dir/kafka-run-class.sh $EXTRA_ARGS kafka.Kafka "$@"
-```
-</div>
-<div id="KRaftController" class="axon_kafka_dynamic_s3" style="display:none">
-
-```shell hl_lines="1"
-. /usr/share/axonops/axonops-jvm.options
-exec $base_dir/kafka-run-class.sh $EXTRA_ARGS kafka.Kafka "$@"
-```
-</div>
-<div id="Connect" class="axon_kafka_dynamic_s3" style="display:none">
 
 ```shell hl_lines="1"
 . /usr/share/axonops/axonops-jvm.options
@@ -82,6 +52,8 @@ exec $(dirname $0)/kafka-run-class.sh $EXTRA_ARGS org.apache.kafka.connect.cli.C
 
 ```shell hl_lines="1-2"
 . /usr/share/axonops/axonops-jvm.options
+EXTRA_ARGS=...
+
 exec $base_dir/kafka-run-class.sh $EXTRA_ARGS kafka.Kafka "$@"
 ```
 </div>
@@ -89,6 +61,8 @@ exec $base_dir/kafka-run-class.sh $EXTRA_ARGS kafka.Kafka "$@"
 
 ```shell hl_lines="1-2"
 . /usr/share/axonops/axonops-jvm.options
+EXTRA_ARGS=...
+
 exec $base_dir/kafka-run-class.sh $EXTRA_ARGS org.apache.zookeeper.server.quorum.QuorumPeerMain "$@"
 ```
 </div>
@@ -96,6 +70,8 @@ exec $base_dir/kafka-run-class.sh $EXTRA_ARGS org.apache.zookeeper.server.quorum
 
 ```shell hl_lines="1-2"
 . /usr/share/axonops/axonops-jvm.options
+EXTRA_ARGS=...
+
 exec $base_dir/kafka-run-class.sh $EXTRA_ARGS kafka.Kafka "$@"
 ```
 </div>
@@ -103,6 +79,8 @@ exec $base_dir/kafka-run-class.sh $EXTRA_ARGS kafka.Kafka "$@"
 
 ```shell hl_lines="1-2"
 . /usr/share/axonops/axonops-jvm.options
+EXTRA_ARGS=...
+
 exec $base_dir/kafka-run-class.sh $EXTRA_ARGS kafka.Kafka "$@"
 ```
 </div>
@@ -110,6 +88,8 @@ exec $base_dir/kafka-run-class.sh $EXTRA_ARGS kafka.Kafka "$@"
 
 ```shell hl_lines="1-2"
 . /usr/share/axonops/axonops-jvm.options
+EXTRA_ARGS=...
+
 exec $(dirname $0)/kafka-run-class.sh $EXTRA_ARGS org.apache.kafka.connect.cli.ConnectDistributed "$@"
 ```
 </div>
