@@ -8,6 +8,7 @@ python_version = '3'
 
 [packages]
 mkdocs = "*"
+mkdocs-exclude-search = "*"
 mkdocs-material = "*"
 mkdocs-material-extensions = "*"
 mkdocs-glightbox = "*"

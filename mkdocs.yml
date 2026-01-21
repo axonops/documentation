@@ -89,6 +89,8 @@ markdown_extensions:
 
 plugins:
   - search
+  - exclude-search:
+      exclude_unreferenced: true
   # - social:  # Requires mkdocs-material[imaging] - cairosvg dependency
   #     cards_layout_options:
   #       background_color: "#7B4B96"
