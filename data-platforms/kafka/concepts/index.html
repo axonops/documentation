@@ -20211,6 +20211,7 @@ data-et-multi-view="{&quot;schema&quot;:{&quot;content&quot;:{&quot;desktop&quot
 <li><strong>Replay and reprocessing</strong>: Consumers can reset to earlier offsets to reprocess historical data</li>
 <li><strong>Ordering guarantees</strong>: Events within a partition maintain strict ordering</li>
 </ul>
+<p>Replayability is bounded by retention and compaction policies configured per topic.</p>
 <hr>
 <h2 id="events-messages-and-records">Events, Messages, and Records<a class="headerlink" href="#events-messages-and-records" title="Permanent link">¶</a></h2>
 <p>Kafka uses specific terminology that reflects its log-based architecture.</p>
@@ -20465,13 +20466,13 @@ data-et-multi-view="{&quot;schema&quot;:{&quot;content&quot;:{&quot;desktop&quot
 </tr>
 <tr>
 <td><strong>Message ordering</strong></td>
-<td>Queue-wide (often)</td>
+<td>Often FIFO per queue</td>
 <td>Partition-scoped</td>
 </tr>
 <tr>
 <td><strong>Throughput</strong></td>
-<td>Thousands/second typical</td>
-<td>Millions/second achievable</td>
+<td>Varies by broker and configuration</td>
+<td>Varies by broker and configuration</td>
 </tr>
 <tr>
 <td><strong>Primary use case</strong></td>
@@ -20493,7 +20494,7 @@ data-et-multi-view="{&quot;schema&quot;:{&quot;content&quot;:{&quot;desktop&quot
 <tbody>
 <tr>
 <td><strong>Real-time data pipelines</strong></td>
-<td>High throughput, exactly-once delivery, connector ecosystem</td>
+<td>High throughput, exactly-once processing within Kafka, connector ecosystem</td>
 </tr>
 <tr>
 <td><strong>Event-driven microservices</strong></td>
@@ -20501,7 +20502,7 @@ data-et-multi-view="{&quot;schema&quot;:{&quot;content&quot;:{&quot;desktop&quot
 </tr>
 <tr>
 <td><strong>Event persistence</strong></td>
-<td>Log compaction, exactly-once semantics, Cassandra Sink</td>
+<td>Log compaction, exactly-once semantics, connector sinks</td>
 </tr>
 <tr>
 <td><strong>Stream processing</strong></td>
@@ -20509,7 +20510,7 @@ data-et-multi-view="{&quot;schema&quot;:{&quot;content&quot;:{&quot;desktop&quot
 </tr>
 <tr>
 <td><strong>Data integration</strong></td>
-<td>Kafka Connect with 200+ connectors</td>
+<td>Kafka Connect connector ecosystem</td>
 </tr>
 <tr>
 <td><strong>Audit logging</strong></td>

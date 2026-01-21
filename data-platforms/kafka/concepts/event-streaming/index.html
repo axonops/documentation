@@ -20015,7 +20015,7 @@ data-et-multi-view="{&quot;schema&quot;:{&quot;content&quot;:{&quot;desktop&quot
 </tbody>
 </table>
 <p>Events are named in past tense because they represent facts that have already happened. Commands are named in imperative form because they request future action.</p>
-<p>Key distinction: Events cannot be rejected—they describe what has happened. Commands can be accepted or rejected based on business rules.</p>
+<p>Key distinction: Events describe what happened. Commands can be accepted or rejected based on business rules; if a command is rejected, no event is emitted (or a rejection event is emitted).</p>
 <hr>
 <h2 id="the-commit-log-model">The Commit Log Model<a class="headerlink" href="#the-commit-log-model" title="Permanent link">¶</a></h2>
 <p>At its core, Kafka is a distributed commit log: an ordered, append-only sequence of records. This simple data structure provides powerful guarantees.</p>
@@ -20043,11 +20043,11 @@ data-et-multi-view="{&quot;schema&quot;:{&quot;content&quot;:{&quot;desktop&quot
 </tr>
 <tr>
 <td><strong>Durable</strong></td>
-<td>Records are persisted to disk and replicated</td>
+<td>Records are persisted to disk and replicated when configured</td>
 </tr>
 <tr>
 <td><strong>Replayable</strong></td>
-<td>Readers can start from any position and replay forward</td>
+<td>Readers can start from any retained position and replay forward</td>
 </tr>
 </tbody>
 </table>
@@ -20155,7 +20155,7 @@ data-et-multi-view="{&quot;schema&quot;:{&quot;content&quot;:{&quot;desktop&quot
 </tr>
 <tr>
 <td>Ordering</td>
-<td>Guaranteed within partition</td>
+<td>Guaranteed per partition; per-producer order preserved</td>
 </tr>
 <tr>
 <td>Replay</td>

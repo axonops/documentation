@@ -20455,8 +20455,8 @@ data-et-multi-view="{&quot;schema&quot;:{&quot;content&quot;:{&quot;desktop&quot
 <td>Metrics, logging, alerting on integration health</td>
 </tr>
 <tr>
-<td><strong>Exactly-once</strong></td>
-<td>Ensuring records are neither lost nor duplicated</td>
+<td><strong>Exactly-once processing</strong></td>
+<td>Connector-dependent duplicate avoidance</td>
 </tr>
 </tbody>
 </table>
@@ -20469,7 +20469,7 @@ data-et-multi-view="{&quot;schema&quot;:{&quot;content&quot;:{&quot;desktop&quot
 <li><strong>Connectors</strong> handle system-specific logic (database queries, API calls, file operations)</li>
 <li><strong>Framework</strong> handles common concerns (offset management, fault tolerance, scaling)</li>
 <li><strong>Configuration-driven</strong>—deploy integrations without writing code</li>
-<li><strong>Ecosystem</strong> of 200+ existing connectors</li>
+<li><strong>Ecosystem</strong> of 200+ production-grade connectors</li>
 </ul>
 <h3 id="custom-code-build">Custom Code (Build)<a class="headerlink" href="#custom-code-build" title="Permanent link">¶</a></h3>
 <p>Write application code using the Producer/Consumer APIs directly:</p>
@@ -20576,7 +20576,7 @@ data-et-multi-view="{&quot;schema&quot;:{&quot;content&quot;:{&quot;desktop&quot
 </tr>
 <tr>
 <td><strong>Exactly-once</strong></td>
-<td>Supported for compatible connectors</td>
+<td>Supported for compatible connectors and configurations</td>
 </tr>
 <tr>
 <td><strong>Converters</strong></td>
@@ -20628,7 +20628,7 @@ data-et-multi-view="{&quot;schema&quot;:{&quot;content&quot;:{&quot;desktop&quot
 </thead>
 <tbody>
 <tr>
-<td><strong>Standard sink (S3, Cassandra, Elasticsearch)</strong></td>
+<td><strong>Standard sinks (object storage, search, databases)</strong></td>
 <td>Mature, tested connectors exist</td>
 </tr>
 <tr>

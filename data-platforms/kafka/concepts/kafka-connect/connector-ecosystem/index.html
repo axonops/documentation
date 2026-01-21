@@ -20748,7 +20748,7 @@ data-et-multi-view="{&quot;schema&quot;:{&quot;content&quot;:{&quot;desktop&quot
 <ul>
 <li>Connection management and authentication</li>
 <li>Data serialization and schema handling</li>
-<li>Offset tracking for exactly-once semantics</li>
+<li>Offset tracking for at-least-once; exactly-once is connector/config dependent</li>
 <li>Error handling and retry logic</li>
 <li>Scaling across partitions</li>
 <li>Monitoring and metrics</li>
@@ -21146,7 +21146,7 @@ confluent-hub<span class="w"> </span>install<span class="w"> </span>confluentinc
 <p><strong>Capabilities:</strong>
 - Multiple output formats (Parquet, Avro, JSON)
 - Time-based and field-based partitioning
-- Exactly-once with idempotent writes
+- At-least-once; use idempotent sinks/dedup if required
 - Automatic file rotation</p>
 <h3 id="google-cloud-storage">Google Cloud Storage<a class="headerlink" href="#google-cloud-storage" title="Permanent link">¶</a></h3>
 <table>
@@ -21471,7 +21471,7 @@ confluent-hub<span class="w"> </span>install<span class="w"> </span>confluentinc
 <tbody>
 <tr>
 <td>Exactly-once support</td>
-<td>Critical for financial data</td>
+<td>Required only when the pipeline demands it; verify connector capability</td>
 </tr>
 <tr>
 <td>Dead letter queue</td>

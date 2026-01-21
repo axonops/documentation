@@ -20461,7 +20461,7 @@ data-et-multi-view="{&quot;schema&quot;:{&quot;content&quot;:{&quot;desktop&quot
 </tr>
 <tr>
 <td>Throughput</td>
-<td>Each partition adds ~10 MB/s write capacity (varies by hardware)</td>
+<td>Each partition adds ~10 MB/s write capacity (rule-of-thumb; varies by hardware)</td>
 </tr>
 <tr>
 <td>Ordering requirements</td>
@@ -20469,7 +20469,7 @@ data-et-multi-view="{&quot;schema&quot;:{&quot;content&quot;:{&quot;desktop&quot
 </tr>
 <tr>
 <td>Broker memory</td>
-<td>Each partition consumes ~1-2 MB of broker heap</td>
+<td>Each partition consumes ~1-2 MB of broker heap (rule-of-thumb)</td>
 </tr>
 <tr>
 <td>Recovery time</td>
@@ -20495,7 +20495,7 @@ data-et-multi-view="{&quot;schema&quot;:{&quot;content&quot;:{&quot;desktop&quot
 </tr>
 <tr>
 <td><strong>Follower</strong></td>
-<td>Must replicate records from leader; may not serve client requests (prior to Kafka 2.4)</td>
+<td>Must replicate records from leader; serving client reads requires <code>replica.selector.class</code></td>
 </tr>
 <tr>
 <td><strong>ISR member</strong></td>
@@ -20816,7 +20816,7 @@ data-et-multi-view="{&quot;schema&quot;:{&quot;content&quot;:{&quot;desktop&quot
 <li>Controller selects new leader from ISR</li>
 <li>New leader must have all committed records</li>
 <li>Producers receive <code>NotLeaderOrFollowerException</code> and must refresh metadata</li>
-<li>In-flight requests with <code>acks=all</code> may timeout; clients should retry</li>
+<li>In-flight requests with <code>acks=all</code> may timeout; clients should retry (or see <code>NotLeaderForPartition</code> on older clients)</li>
 </ol>
 <table>
 <thead>

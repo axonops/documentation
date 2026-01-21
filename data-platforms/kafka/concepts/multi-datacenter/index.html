@@ -20307,14 +20307,14 @@ data-et-multi-view="{&quot;schema&quot;:{&quot;content&quot;:{&quot;desktop&quot
 </tr>
 <tr>
 <td><strong>Active-Active</strong></td>
-<td>Near-zero</td>
+<td>Near-zero (bounded by replication lag)</td>
 <td>Near-zero</td>
 <td>High</td>
 <td>Global distribution</td>
 </tr>
 <tr>
 <td><strong>Stretch Cluster</strong></td>
-<td>Zero</td>
+<td>Zero (with synchronous replication)</td>
 <td>Seconds</td>
 <td>Medium</td>
 <td>Low-latency DR</td>
@@ -20355,6 +20355,8 @@ data-et-multi-view="{&quot;schema&quot;:{&quot;content&quot;:{&quot;desktop&quot
 <span class="c1"># Emit checkpoints for offset translation</span>
 <span class="na">emit.checkpoints.enabled</span><span class="o">=</span><span class="s">true</span>
 <span class="na">emit.checkpoints.interval.seconds</span><span class="o">=</span><span class="s">60</span>
+
+<span class="c1"># Note: replication factors must not exceed the broker count in each target cluster.</span>
 </code></pre></div>
 <h3 id="failover-procedure">Failover Procedure<a class="headerlink" href="#failover-procedure" title="Permanent link">¶</a></h3>
 <ol>
@@ -20372,6 +20374,7 @@ kafka-consumer-groups.sh<span class="w"> </span>--bootstrap-server<span class="w
 <span class="w">  </span>--topic<span class="w"> </span>primary.my-topic<span class="w"> </span><span class="se">\</span>
 <span class="w">  </span>--execute
 </code></pre></div>
+<p>The translated offsets are derived from the <code>primary.checkpoints.internal</code> topic emitted by MirrorMaker 2.</p>
 <hr>
 <h2 id="active-active-with-mirrormaker-2">Active-Active with MirrorMaker 2<a class="headerlink" href="#active-active-with-mirrormaker-2" title="Permanent link">¶</a></h2>
 <p>Both datacenters handle traffic. Bidirectional replication requires careful handling of data provenance to prevent infinite replication loops and enable correct data aggregation.</p>
@@ -20585,7 +20588,7 @@ kafka-consumer-groups.sh<span class="w"> </span>--bootstrap-server<span class="w
 <tbody>
 <tr>
 <td><strong>Network latency</strong></td>
-<td>&lt; 10ms RTT between DCs</td>
+<td>Typically &lt; 10ms RTT between DCs</td>
 </tr>
 <tr>
 <td><strong>Network bandwidth</strong></td>
