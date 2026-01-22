@@ -20717,24 +20717,61 @@ iostat<span class="w"> </span>-x<span class="w"> </span><span class="m">1</span>
 - <code>OutOfMemoryError</code>
 - GC taking &gt; 10% of time
 - Request latency spikes</p>
-<p><strong>Causes:</strong>
-| Cause | Solution |
-|-------|----------|
-| Too many partitions | Reduce partitions or increase heap |
-| Large metadata cache | Reduce topic count |
-| Producer state buildup | Reduce idempotent producers |
-| Memory leak | Update Kafka version |</p>
+<p><strong>Causes:</strong></p>
+<table>
+<thead>
+<tr>
+<th>Cause</th>
+<th>Solution</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Too many partitions</td>
+<td>Reduce partitions or increase heap</td>
+</tr>
+<tr>
+<td>Large metadata cache</td>
+<td>Reduce topic count</td>
+</tr>
+<tr>
+<td>Producer state buildup</td>
+<td>Reduce idempotent producers</td>
+</tr>
+<tr>
+<td>Memory leak</td>
+<td>Update Kafka version</td>
+</tr>
+</tbody>
+</table>
 <h3 id="page-cache-exhaustion">Page Cache Exhaustion<a class="headerlink" href="#page-cache-exhaustion" title="Permanent link">¶</a></h3>
 <p><strong>Symptoms:</strong>
 - High disk read I/O
 - Consumer latency increases
 - <code>await</code> time in iostat high</p>
-<p><strong>Causes:</strong>
-| Cause | Solution |
-|-------|----------|
-| Heap too large | Reduce heap, leave more for cache |
-| Too much data | Add more brokers |
-| Random access patterns | Improve consumer patterns |</p>
+<p><strong>Causes:</strong></p>
+<table>
+<thead>
+<tr>
+<th>Cause</th>
+<th>Solution</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Heap too large</td>
+<td>Reduce heap, leave more for cache</td>
+</tr>
+<tr>
+<td>Too much data</td>
+<td>Add more brokers</td>
+</tr>
+<tr>
+<td>Random access patterns</td>
+<td>Improve consumer patterns</td>
+</tr>
+</tbody>
+</table>
 <hr>
 <h2 id="garbage-collection">Garbage Collection<a class="headerlink" href="#garbage-collection" title="Permanent link">¶</a></h2>
 <h3 id="g1gc-tuning">G1GC Tuning<a class="headerlink" href="#g1gc-tuning" title="Permanent link">¶</a></h3>
