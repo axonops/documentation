@@ -20464,6 +20464,8 @@ kafka-metadata.sh<span class="w"> </span>--snapshot<span class="w"> </span>/var/
 <div class="highlight"><pre><span></span><code><span class="c1"># Before upgrade, set in server.properties</span>
 <span class="na">inter.broker.protocol.version</span><span class="o">=</span><span class="s">3.6</span>
 <span class="na">log.message.format.version</span><span class="o">=</span><span class="s">3.6</span>
+
+<span class="c1"># Note: in Kafka 4.x, inter.broker.protocol.version and log.message.format.version are removed.</span>
 </code></pre></div>
 <ol>
 <li><strong>Upgrade each broker</strong></li>

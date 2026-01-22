@@ -20258,7 +20258,7 @@ data-et-multi-view="{&quot;schema&quot;:{&quot;content&quot;:{&quot;desktop&quot
 <tbody>
 <tr>
 <td><strong>MirrorMaker 2</strong></td>
-<td>Near-zero</td>
+<td>Near-zero (bounded by replication lag)</td>
 <td>Minutes</td>
 <td>Cross-DC DR</td>
 </tr>
@@ -20309,6 +20309,8 @@ data-et-multi-view="{&quot;schema&quot;:{&quot;content&quot;:{&quot;desktop&quot
 <span class="c1"># Checkpoints for offset translation</span>
 <span class="na">emit.checkpoints.enabled</span><span class="o">=</span><span class="s">true</span>
 <span class="na">emit.checkpoints.interval.seconds</span><span class="o">=</span><span class="s">60</span>
+
+<span class="c1"># Note: replication factors must not exceed the broker count in the target cluster.</span>
 </code></pre></div>
 <h3 id="starting-mirrormaker-2">Starting MirrorMaker 2<a class="headerlink" href="#starting-mirrormaker-2" title="Permanent link">¶</a></h3>
 <div class="highlight"><pre><span></span><code><span class="c1"># Start as distributed Connect cluster</span>

@@ -6,7 +6,7 @@
       <meta charset="utf-8">
       <meta name="viewport" content="width=device-width,initial-scale=1">
       
-        <meta name="description" content="Apache Kafka tiered storage configuration. Remote storage for cost-effective long-term retention with S3, GCS, and Azure Blob Storage.">
+        <meta name="description" content="Apache Kafka tiered storage configuration. Remote storage for cost-effective long-term retention with plugin-based implementations.">
       
       
       
@@ -75,7 +75,7 @@
   "@context": "https://schema.org",
   "@type": "HowTo",
   "headline": "Tiered Storage - Apache Kafka Documentation",
-  "description": "Apache Kafka tiered storage configuration. Remote storage for cost-effective long-term retention with S3, GCS, and Azure Blob Storage.",
+  "description": "Apache Kafka tiered storage configuration. Remote storage for cost-effective long-term retention with plugin-based implementations.",
   "about": {
     "@type": "SoftwareApplication",
     "name": "Apache Kafka",
@@ -18790,27 +18790,27 @@ data-et-multi-view="{&quot;schema&quot;:{&quot;content&quot;:{&quot;desktop&quot
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
-  <a href="#amazon-s3" class="md-nav__link">
+  <a href="#amazon-s3-vendor-plugin-example" class="md-nav__link">
     <span class="md-ellipsis">
-      Amazon S3
+      Amazon S3 (Vendor Plugin Example)
     </span>
   </a>
   
 </li>
         
           <li class="md-nav__item">
-  <a href="#google-cloud-storage" class="md-nav__link">
+  <a href="#google-cloud-storage-vendor-plugin-example" class="md-nav__link">
     <span class="md-ellipsis">
-      Google Cloud Storage
+      Google Cloud Storage (Vendor Plugin Example)
     </span>
   </a>
   
 </li>
         
           <li class="md-nav__item">
-  <a href="#azure-blob-storage" class="md-nav__link">
+  <a href="#azure-blob-storage-vendor-plugin-example" class="md-nav__link">
     <span class="md-ellipsis">
-      Azure Blob Storage
+      Azure Blob Storage (Vendor Plugin Example)
     </span>
   </a>
   
@@ -20188,27 +20188,27 @@ data-et-multi-view="{&quot;schema&quot;:{&quot;content&quot;:{&quot;desktop&quot
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
-  <a href="#amazon-s3" class="md-nav__link">
+  <a href="#amazon-s3-vendor-plugin-example" class="md-nav__link">
     <span class="md-ellipsis">
-      Amazon S3
+      Amazon S3 (Vendor Plugin Example)
     </span>
   </a>
   
 </li>
         
           <li class="md-nav__item">
-  <a href="#google-cloud-storage" class="md-nav__link">
+  <a href="#google-cloud-storage-vendor-plugin-example" class="md-nav__link">
     <span class="md-ellipsis">
-      Google Cloud Storage
+      Google Cloud Storage (Vendor Plugin Example)
     </span>
   </a>
   
 </li>
         
           <li class="md-nav__item">
-  <a href="#azure-blob-storage" class="md-nav__link">
+  <a href="#azure-blob-storage-vendor-plugin-example" class="md-nav__link">
     <span class="md-ellipsis">
-      Azure Blob Storage
+      Azure Blob Storage (Vendor Plugin Example)
     </span>
   </a>
   
@@ -20481,7 +20481,7 @@ data-et-multi-view="{&quot;schema&quot;:{&quot;content&quot;:{&quot;desktop&quot
 <p>Tiered storage (KIP-405) enables Kafka to offload log segments to remote storage systems, enabling cost-effective long-term retention while maintaining local storage for recent data.</p>
 <div class="admonition note">
 <p class="admonition-title">Version Requirement</p>
-<p>Tiered storage is available as an early access feature in Kafka 3.6+ and production-ready in later versions. Check release notes for current status.</p>
+<p>Tiered storage is an early access feature in Apache Kafka 3.6+. Production readiness varies by release.</p>
 </div>
 <hr>
 <h2 id="architecture-overview">Architecture Overview<a class="headerlink" href="#architecture-overview" title="Permanent link">¶</a></h2>
@@ -20519,8 +20519,8 @@ data-et-multi-view="{&quot;schema&quot;:{&quot;content&quot;:{&quot;desktop&quot
 <span class="c1"># Enable tiered storage</span>
 <span class="na">remote.log.storage.system.enable</span><span class="o">=</span><span class="s">true</span>
 
-<span class="c1"># Remote storage manager plugin</span>
-<span class="na">remote.log.storage.manager.class.name</span><span class="o">=</span><span class="s">org.apache.kafka.server.log.remote.storage.RemoteStorageManager</span>
+<span class="c1"># Remote storage manager plugin (implementation-specific)</span>
+<span class="na">remote.log.storage.manager.class.name</span><span class="o">=</span><span class="s">com.example.kafka.remote.RemoteStorageManager</span>
 <span class="na">remote.log.storage.manager.class.path</span><span class="o">=</span><span class="s">/opt/kafka/plugins/tiered-storage</span>
 
 <span class="c1"># Remote log metadata manager</span>
@@ -20558,7 +20558,11 @@ kafka-configs.sh<span class="w"> </span>--bootstrap-server<span class="w"> </spa
 </code></pre></div>
 <hr>
 <h2 id="remote-storage-backends">Remote Storage Backends<a class="headerlink" href="#remote-storage-backends" title="Permanent link">¶</a></h2>
-<h3 id="amazon-s3">Amazon S3<a class="headerlink" href="#amazon-s3" title="Permanent link">¶</a></h3>
+<div class="admonition warning">
+<p class="admonition-title">Plugin required</p>
+<p>Apache Kafka does not ship an object store implementation. You must install a remote storage manager plugin and use its class name and config keys.</p>
+</div>
+<h3 id="amazon-s3-vendor-plugin-example">Amazon S3 (Vendor Plugin Example)<a class="headerlink" href="#amazon-s3-vendor-plugin-example" title="Permanent link">¶</a></h3>
 <div class="highlight"><pre><span></span><code><span class="c1"># S3 Remote Storage Manager configuration</span>
 <span class="na">remote.log.storage.manager.class.name</span><span class="o">=</span><span class="s">io.confluent.kafka.tiered.storage.s3.S3RemoteStorageManager</span>
 
@@ -20577,7 +20581,7 @@ kafka-configs.sh<span class="w"> </span>--bootstrap-server<span class="w"> </spa
 <span class="na">remote.log.storage.s3.endpoint.override</span><span class="o">=</span><span class="w">  </span><span class="s"># For S3-compatible storage</span>
 <span class="na">remote.log.storage.s3.path.style.access.enabled</span><span class="o">=</span><span class="s">false</span>
 </code></pre></div>
-<h3 id="google-cloud-storage">Google Cloud Storage<a class="headerlink" href="#google-cloud-storage" title="Permanent link">¶</a></h3>
+<h3 id="google-cloud-storage-vendor-plugin-example">Google Cloud Storage (Vendor Plugin Example)<a class="headerlink" href="#google-cloud-storage-vendor-plugin-example" title="Permanent link">¶</a></h3>
 <div class="highlight"><pre><span></span><code><span class="c1"># GCS Remote Storage Manager configuration</span>
 <span class="na">remote.log.storage.manager.class.name</span><span class="o">=</span><span class="s">io.confluent.kafka.tiered.storage.gcs.GCSRemoteStorageManager</span>
 
@@ -20588,7 +20592,7 @@ kafka-configs.sh<span class="w"> </span>--bootstrap-server<span class="w"> </spa
 <span class="c1"># Authentication</span>
 <span class="na">remote.log.storage.gcs.credentials.path</span><span class="o">=</span><span class="s">/etc/kafka/gcs-credentials.json</span>
 </code></pre></div>
-<h3 id="azure-blob-storage">Azure Blob Storage<a class="headerlink" href="#azure-blob-storage" title="Permanent link">¶</a></h3>
+<h3 id="azure-blob-storage-vendor-plugin-example">Azure Blob Storage (Vendor Plugin Example)<a class="headerlink" href="#azure-blob-storage-vendor-plugin-example" title="Permanent link">¶</a></h3>
 <div class="highlight"><pre><span></span><code><span class="c1"># Azure Blob Remote Storage Manager configuration</span>
 <span class="na">remote.log.storage.manager.class.name</span><span class="o">=</span><span class="s">io.confluent.kafka.tiered.storage.azure.AzureBlobRemoteStorageManager</span>
 
