@@ -20771,7 +20771,7 @@ data-et-multi-view="{&quot;schema&quot;:{&quot;content&quot;:{&quot;desktop&quot
 <hr>
 <h2 id="minimizing-rebalance-impact">Minimizing Rebalance Impact<a class="headerlink" href="#minimizing-rebalance-impact" title="Permanent link">¶</a></h2>
 <h3 id="static-membership">Static Membership<a class="headerlink" href="#static-membership" title="Permanent link">¶</a></h3>
-<p>Prevent rebalances on planned restarts:</p>
+<p>Reduce rebalances on planned restarts:</p>
 <div class="highlight"><pre><span></span><code><span class="na">group.instance.id</span><span class="o">=</span><span class="s">consumer-instance-1</span>
 <span class="na">session.timeout.ms</span><span class="o">=</span><span class="s">300000</span>
 </code></pre></div>
@@ -20933,13 +20933,14 @@ grep<span class="w"> </span>-i<span class="w"> </span><span class="s2">"rebalanc
 <ol>
 <li>Check for unresponsive consumers</li>
 <li>Verify network connectivity</li>
-<li>Force remove stuck consumer:</li>
+<li>Force remove stuck consumer (where supported):</li>
 </ol>
 <div class="highlight"><pre><span></span><code><span class="c1"># Remove member from group (broker-side)</span>
 kafka-consumer-groups.sh<span class="w"> </span>--bootstrap-server<span class="w"> </span>localhost:9092<span class="w"> </span><span class="se">\</span>
 <span class="w">    </span>--group<span class="w"> </span>order-processors<span class="w"> </span>--delete-members<span class="w"> </span><span class="se">\</span>
 <span class="w">    </span>--member<span class="w"> </span>consumer-1-abc123
 </code></pre></div>
+<p>If <code>--delete-members</code> is unavailable, restart the stuck consumer to trigger a clean rebalance.</p>
 <h3 id="rebalance-storm">Rebalance Storm<a class="headerlink" href="#rebalance-storm" title="Permanent link">¶</a></h3>
 <p><strong>Symptoms:</strong></p>
 <ul>

@@ -20395,6 +20395,7 @@ data-et-multi-view="{&quot;schema&quot;:{&quot;content&quot;:{&quot;desktop&quot
 </ul>
 <p><strong>Solution:</strong></p>
 <div class="highlight"><pre><span></span><code><span class="c1">// GOOD - Validate and handle large data</span>
+<span class="c1">// Also consider broker/client limits: message.max.bytes, max.request.size, fetch.max.bytes</span>
 <span class="kd">private</span><span class="w"> </span><span class="kd">static</span><span class="w"> </span><span class="kd">final</span><span class="w"> </span><span class="kt">int</span><span class="w"> </span><span class="n">MAX_MESSAGE_SIZE</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">1_000_000</span><span class="p">;</span><span class="w">  </span><span class="c1">// 1MB</span>
 
 <span class="kd">public</span><span class="w"> </span><span class="kt">void</span><span class="w"> </span><span class="nf">sendOrder</span><span class="p">(</span><span class="n">Order</span><span class="w"> </span><span class="n">order</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
@@ -20430,7 +20431,7 @@ data-et-multi-view="{&quot;schema&quot;:{&quot;content&quot;:{&quot;desktop&quot
 <li>Single point of failure</li>
 </ul>
 <p><strong>Solution:</strong></p>
-<p>Producer instances are thread-safe. One producer per application is typically sufficient, but ensure proper configuration:</p>
+<p>Producer instances are thread-safe. One well-configured producer per application is typically sufficient; use multiple producers only for extreme throughput or isolation requirements:</p>
 <div class="highlight"><pre><span></span><code><span class="c1">// GOOD - Properly configured producer handles concurrency</span>
 <span class="n">Properties</span><span class="w"> </span><span class="n">props</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="n">Properties</span><span class="p">();</span>
 <span class="n">props</span><span class="p">.</span><span class="na">put</span><span class="p">(</span><span class="s">"batch.size"</span><span class="p">,</span><span class="w"> </span><span class="mi">65536</span><span class="p">);</span><span class="w">           </span><span class="c1">// Larger batches</span>
@@ -20671,7 +20672,7 @@ kafka-topics.sh<span class="w"> </span>--create<span class="w"> </span>--topic<s
 <li>Leader election delays</li>
 <li>Controller overload</li>
 </ul>
-<p><strong>Guidelines:</strong></p>
+<p><strong>Guidelines (rule-of-thumb; workload-dependent):</strong></p>
 <table>
 <thead>
 <tr>

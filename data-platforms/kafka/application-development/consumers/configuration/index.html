@@ -20525,12 +20525,12 @@ data-et-multi-view="{&quot;schema&quot;:{&quot;content&quot;:{&quot;desktop&quot
 <tr>
 <td><code>group.instance.id</code></td>
 <td>-</td>
-<td>Static membership identifier (Kafka 2.3+). Prevents rebalance on restart.</td>
+<td>Static membership identifier (Kafka 2.3+). Reduces rebalances on restarts within session timeout.</td>
 </tr>
 <tr>
 <td><code>client.rack</code></td>
 <td>-</td>
-<td>Rack identifier for follower fetching.</td>
+<td>Rack identifier for follower fetching (requires broker <code>replica.selector.class</code>).</td>
 </tr>
 </tbody>
 </table>
@@ -20619,6 +20619,7 @@ data-et-multi-view="{&quot;schema&quot;:{&quot;content&quot;:{&quot;desktop&quot
 </tr>
 </tbody>
 </table>
+<p>Example starting points; tune based on processing time and SLA.</p>
 <div class="admonition warning">
 <p class="admonition-title">Processing Time Considerations</p>
 <p>If message processing takes longer than <code>max.poll.interval.ms</code>, the consumer is removed from the group. Either increase this timeout or process messages asynchronously.</p>
@@ -20718,6 +20719,7 @@ data-et-multi-view="{&quot;schema&quot;:{&quot;content&quot;:{&quot;desktop&quot
 </tr>
 </tbody>
 </table>
+<p>Example starting points; tune based on payload size and latency targets.</p>
 <hr>
 <h2 id="offset-configuration">Offset Configuration<a class="headerlink" href="#offset-configuration" title="Permanent link">¶</a></h2>
 <p>Offset configuration controls how the consumer tracks and commits progress.</p>
@@ -21022,6 +21024,7 @@ data-et-multi-view="{&quot;schema&quot;:{&quot;content&quot;:{&quot;desktop&quot
 <hr>
 <h2 id="production-configuration-templates">Production Configuration Templates<a class="headerlink" href="#production-configuration-templates" title="Permanent link">¶</a></h2>
 <h3 id="standard-consumer">Standard Consumer<a class="headerlink" href="#standard-consumer" title="Permanent link">¶</a></h3>
+<p>Example profile; adjust to your workload.</p>
 <div class="highlight"><pre><span></span><code><span class="c1"># Connection</span>
 <span class="na">bootstrap.servers</span><span class="o">=</span><span class="s">kafka-1:9092,kafka-2:9092,kafka-3:9092</span>
 <span class="na">group.id</span><span class="o">=</span><span class="s">order-processors</span>
@@ -21049,6 +21052,7 @@ data-et-multi-view="{&quot;schema&quot;:{&quot;content&quot;:{&quot;desktop&quot
 <span class="na">value.deserializer</span><span class="o">=</span><span class="s">org.apache.kafka.common.serialization.StringDeserializer</span>
 </code></pre></div>
 <h3 id="high-throughput-consumer">High-Throughput Consumer<a class="headerlink" href="#high-throughput-consumer" title="Permanent link">¶</a></h3>
+<p>Example profile; adjust to your workload.</p>
 <div class="highlight"><pre><span></span><code><span class="c1"># Connection</span>
 <span class="na">bootstrap.servers</span><span class="o">=</span><span class="s">kafka-1:9092,kafka-2:9092,kafka-3:9092</span>
 <span class="na">group.id</span><span class="o">=</span><span class="s">high-throughput-processors</span>
@@ -21073,6 +21077,7 @@ data-et-multi-view="{&quot;schema&quot;:{&quot;content&quot;:{&quot;desktop&quot
 <span class="na">partition.assignment.strategy</span><span class="o">=</span><span class="s">org.apache.kafka.clients.consumer.CooperativeStickyAssignor</span>
 </code></pre></div>
 <h3 id="low-latency-consumer">Low-Latency Consumer<a class="headerlink" href="#low-latency-consumer" title="Permanent link">¶</a></h3>
+<p>Example profile; adjust to your workload.</p>
 <div class="highlight"><pre><span></span><code><span class="c1"># Connection</span>
 <span class="na">bootstrap.servers</span><span class="o">=</span><span class="s">kafka-1:9092,kafka-2:9092,kafka-3:9092</span>
 <span class="na">group.id</span><span class="o">=</span><span class="s">low-latency-processors</span>

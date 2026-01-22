@@ -20602,7 +20602,7 @@ coordinator_broker = leader of coordinator_partition
 <ul>
 <li>Even distribution across consumers</li>
 <li>Partitions from different topics interleaved</li>
-<li>All consumers must subscribe to same topics</li>
+<li>All consumers should subscribe to the same set of topics</li>
 </ul>
 <div class="highlight"><pre><span></span><code><span class="na">partition.assignment.strategy</span><span class="o">=</span><span class="s">org.apache.kafka.clients.consumer.RoundRobinAssignor</span>
 </code></pre></div>
@@ -20667,6 +20667,7 @@ coordinator_broker = leader of coordinator_partition
 </tr>
 </tbody>
 </table>
+<p>Static membership reduces rebalances; restarts within the session timeout avoid a rebalance when <code>group.instance.id</code> remains stable.</p>
 <h3 id="kubernetes-integration">Kubernetes Integration<a class="headerlink" href="#kubernetes-integration" title="Permanent link">¶</a></h3>
 <div class="highlight"><pre><span></span><code><span class="nt">apiVersion</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">apps/v1</span>
 <span class="nt">kind</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">StatefulSet</span>
@@ -20816,6 +20817,7 @@ kafka-consumer-groups.sh<span class="w"> </span>--bootstrap-server<span class="w
 <div class="highlight"><pre><span></span><code><span class="c1"># Enable new protocol (Kafka 3.7+, preview)</span>
 <span class="na">group.protocol</span><span class="o">=</span><span class="s">consumer</span>
 </code></pre></div>
+<p>Status: 3.7-3.8 early access; 4.0+ GA and recommended for new deployments.</p>
 <hr>
 <h2 id="best-practices">Best Practices<a class="headerlink" href="#best-practices" title="Permanent link">¶</a></h2>
 <h3 id="group-sizing">Group Sizing<a class="headerlink" href="#group-sizing" title="Permanent link">¶</a></h3>
@@ -20910,9 +20912,10 @@ inventory-sync-workers-dev
 <li>Network partition</li>
 </ul>
 <p><strong>Solutions:</strong></p>
-<div class="highlight"><pre><span></span><code><span class="c1"># Force remove stuck member</span>
+<div class="highlight"><pre><span></span><code><span class="c1"># Stop the stuck consumer, then restart it after the group stabilizes.</span>
+<span class="c1"># If the group is empty, you can delete it:</span>
 kafka-consumer-groups.sh<span class="w"> </span>--bootstrap-server<span class="w"> </span>localhost:9092<span class="w"> </span><span class="se">\</span>
-<span class="w">    </span>--group<span class="w"> </span>order-processors<span class="w"> </span>--delete-offsets<span class="w"> </span>--topic<span class="w"> </span>orders
+<span class="w">    </span>--delete<span class="w"> </span>--group<span class="w"> </span>order-processors
 </code></pre></div>
 <hr>
 <h2 id="related-documentation">Related Documentation<a class="headerlink" href="#related-documentation" title="Permanent link">¶</a></h2>
