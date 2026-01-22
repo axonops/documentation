@@ -1,10 +1,20 @@
 ---
-title: "Release 2026-01-15"
+title: "Release 2026-01-22"
 description: "AxonOps release notes. Latest features, improvements, and bug fixes."
 meta:
   - name: keywords
     content: "release notes, AxonOps updates, changelog, new features"
 ---
+
+## Release 2026-01-22
+
+* axon-cassandra5.0-agent: 1.0.13
+    * Kubernetes compatibility and metric filtering improvements.
+
+### Fixes
+
+* [Cassandra 5 Agent] Improve compatibility with K8ssandra deployments.
+* [Cassandra 5 Agent] Filter out transient repair metrics to reduce collection overhead.
 
 ## Release 2026-01-15
 
