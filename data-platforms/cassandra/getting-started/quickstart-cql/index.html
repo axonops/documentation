@@ -21240,6 +21240,11 @@ cqlai<span class="w"> </span>--host<span class="w"> </span><span class="m">192</
 <span class="w">    </span><span class="mi">660</span><span class="n">e8400</span><span class="o">-</span><span class="n">e29b</span><span class="o">-</span><span class="mi">41</span><span class="n">d4</span><span class="o">-</span><span class="n">a716</span><span class="o">-</span><span class="mi">446655440001</span>
 <span class="p">);</span>
 </code></pre></div>
+<div class="admonition note">
+<p class="admonition-title">IN Clause Behavior</p>
+<p>The <code>IN</code> clause behaves differently on partition keys versus clustering columns. With composite partition keys, separate <code>IN</code> clauses create a cartesian product of all combinations. Multi-column tuple syntax such as <code>(pk1, pk2) IN (...)</code> is <strong>not supported</strong> on partition keys but <strong>is supported</strong> on clustering columns.</p>
+<p>For detailed examples and the complete behavior reference, see <a href="../../cql/dml/select/#multi-partition-queries">Multi-Partition Queries</a>.</p>
+</div>
 <hr>
 <h2 id="updating-data">Updating Data<a class="headerlink" href="#updating-data" title="Permanent link">¶</a></h2>
 <h3 id="basic-update">Basic Update<a class="headerlink" href="#basic-update" title="Permanent link">¶</a></h3>
