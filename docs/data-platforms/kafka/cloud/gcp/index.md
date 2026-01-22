@@ -177,12 +177,13 @@ gcloud compute firewall-rules create kafka-clients \
 
 ### Required Ports
 
+Ports depend on your listener configuration; the table below shows common defaults.
+
 | Port | Protocol | Purpose |
 |------|----------|---------|
-| 9092 | TCP | Client connections (PLAINTEXT) |
-| 9093 | TCP | Client connections (SSL) |
-| 9094 | TCP | Client connections (SASL_SSL) |
-| 9093 | TCP | Inter-broker replication |
+| 9092 | TCP | Client or inter-broker (PLAINTEXT example) |
+| 9093 | TCP | Client or inter-broker (SSL) |
+| 9094 | TCP | Client or inter-broker (SASL_SSL) |
 
 ### Network Tier
 

@@ -193,7 +193,7 @@ spec:
         runAsNonRoot: true
       containers:
         - name: kafka
-          image: apache/kafka:3.7.0
+          image: apache/kafka:4.1.0
           ports:
             - name: client
               containerPort: 9092

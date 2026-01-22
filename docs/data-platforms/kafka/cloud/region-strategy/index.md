@@ -103,18 +103,18 @@ A Kafka cluster deployed across 3 AZs with `replication.factor=3` and `min.insyn
 
 ### Historical Cloud Region Outages
 
-| Date | Provider | Region | Duration | Root Cause |
-|------|----------|--------|----------|------------|
-| Oct 2025 | AWS | us-east-1 | 🟠 ~15 hours | [DNS/DynamoDB routing failure](https://www.thousandeyes.com/blog/aws-outage-analysis-october-20-2025) |
-| Oct 2025 | Azure | Global (Front Door) | 🟡 ~9 hours | [Configuration change error](https://www.thousandeyes.com/blog/microsoft-azure-front-door-outage-analysis-october-29-2025) |
-| Feb 2025 | AWS | eu-north-1 (Stockholm) | 🟡 Several hours | [Internal networking issue](https://aws.amazon.com/premiumsupport/technology/pes/) |
-| Jul 2024 | AWS | us-east-1 | 🟡 ~7 hours | [Kinesis cell management failure](https://aws.amazon.com/premiumsupport/technology/pes/) |
-| Jul 2024 | Azure | Central US | 🟠 ~15 hours | [Storage scale unit update error](https://www.thousandeyes.com/blog/microsoft-azure-disruption-analysis-july-30-2024) |
-| Apr 2023 | GCP | europe-west9 (Paris) | 🔴 ~2 weeks | [Water intrusion and fire](https://status.cloud.google.com/incidents/dS9ps52MUnxQfyDGPfkY) |
-| Dec 2021 | AWS | us-east-1 | 🟡 ~7 hours | [Network automation error](https://aws.amazon.com/premiumsupport/technology/pes/) |
-| Aug 2019 | AWS | ap-northeast-1 (Tokyo) | 🟡 ~6 hours | [Cooling system failure](https://aws.amazon.com/premiumsupport/technology/pes/) |
-| Sep 2018 | Azure | South Central US | 🔴 ~3 days | [Lightning strike, cooling failure](https://devblogs.microsoft.com/devopsservice/?p=17485) |
-| Jun 2019 | GCP | us-east1 | 🟢 ~4 hours | [Network configuration error](https://status.cloud.google.com/incident/cloud-networking/19009) |
+| Date | Provider | Region | Duration | Reference |
+|------|----------|--------|----------|-----------|
+| Oct 2025 | AWS | us-east-1 | 🟠 ~15 hours | Public postmortem |
+| Oct 2025 | Azure | Global (Front Door) | 🟡 ~9 hours | Public postmortem |
+| Feb 2025 | AWS | eu-north-1 (Stockholm) | 🟡 Several hours | Public postmortem |
+| Jul 2024 | AWS | us-east-1 | 🟡 ~7 hours | Public postmortem |
+| Jul 2024 | Azure | Central US | 🟠 ~15 hours | Public postmortem |
+| Apr 2023 | GCP | europe-west9 (Paris) | 🔴 ~2 weeks | Public postmortem |
+| Dec 2021 | AWS | us-east-1 | 🟡 ~7 hours | Public postmortem |
+| Aug 2019 | AWS | ap-northeast-1 (Tokyo) | 🟡 ~6 hours | Public postmortem |
+| Sep 2018 | Azure | South Central US | 🔴 ~3 days | Public postmortem |
+| Jun 2019 | GCP | us-east1 | 🟢 ~4 hours | Public postmortem |
 
 **Duration severity:** 🟢 < 6 hours | 🟡 6-12 hours | 🟠 12-24 hours | 🔴 > 24 hours
 
