@@ -292,7 +292,7 @@ If a consumer doesn't respond within this time, it's removed from the group.
 
 ### Static Membership
 
-Prevent rebalances on planned restarts:
+Reduce rebalances on planned restarts:
 
 ```properties
 group.instance.id=consumer-instance-1
@@ -424,7 +424,7 @@ grep -i "rebalance\|revoked\|assigned" consumer.log
 
 1. Check for unresponsive consumers
 2. Verify network connectivity
-3. Force remove stuck consumer:
+3. Force remove stuck consumer (where supported):
 
 ```bash
 # Remove member from group (broker-side)
@@ -432,6 +432,8 @@ kafka-consumer-groups.sh --bootstrap-server localhost:9092 \
     --group order-processors --delete-members \
     --member consumer-1-abc123
 ```
+
+If `--delete-members` is unavailable, restart the stuck consumer to trigger a clean rebalance.
 
 ### Rebalance Storm
 

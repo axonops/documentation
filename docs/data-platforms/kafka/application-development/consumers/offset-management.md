@@ -85,6 +85,7 @@ note right of CO
     Key: [group, topic, partition]
     Value: [offset, metadata, timestamp]
     Compacted: keeps latest per key
+    50 partitions by default in Apache Kafka (configurable)
 end note
 
 @enduml
@@ -147,7 +148,7 @@ while (running) {
 |------|------|
 | Simple implementation | No control over commit timing |
 | No commit code needed | Duplicates if crash after commit |
-| Lower latency | May lose messages if crash before commit |
+| Lower latency | Messages may be reprocessed if crash before commit |
 
 ### Synchronous Manual Commit
 
@@ -405,7 +406,7 @@ while (running) {
 
 ### Exactly-Once
 
-Use transactions or idempotent processing:
+Use transactions or idempotent processing (Kafka transactions cover Kafka-to-Kafka flows):
 
 ```java
 // Option 1: Kafka transactions (for Kafka-to-Kafka)

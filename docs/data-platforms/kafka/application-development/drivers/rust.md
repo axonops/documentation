@@ -74,7 +74,7 @@ A pure Rust implementation without librdkafka dependency (less maintained):
 
 ```toml
 [dependencies]
-rdkafka = { version = "0.36", features = ["cmake-build"] }
+rdkafka = { version = "0.38", features = ["cmake-build"] }
 tokio = { version = "1", features = ["full"] }
 serde = { version = "1.0", features = ["derive"] }
 serde_json = "1.0"
@@ -84,7 +84,7 @@ serde_json = "1.0"
 
 ```toml
 [dependencies]
-rdkafka = { version = "0.36", features = ["cmake-build", "ssl", "sasl"] }
+rdkafka = { version = "0.38", features = ["cmake-build", "ssl", "sasl"] }
 ```
 
 ### Native Dependencies
@@ -93,7 +93,7 @@ The library requires librdkafka. The `cmake-build` feature compiles librdkafka f
 
 ```toml
 [dependencies]
-rdkafka = "0.36"
+rdkafka = "0.38"
 ```
 
 ```bash

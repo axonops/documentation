@@ -41,8 +41,8 @@ This guide provides a comprehensive reference for Kafka consumer configuration p
 |----------|---------|-------------|
 | `group.id` | - | Consumer group identifier. Required for group consumption. |
 | `client.id` | - | Logical identifier for monitoring and logging. |
-| `group.instance.id` | - | Static membership identifier (Kafka 2.3+). Prevents rebalance on restart. |
-| `client.rack` | - | Rack identifier for follower fetching. |
+| `group.instance.id` | - | Static membership identifier (Kafka 2.3+). Reduces rebalances on restarts within session timeout. |
+| `client.rack` | - | Rack identifier for follower fetching (requires broker `replica.selector.class`). |
 
 ```properties
 # Basic connection configuration
@@ -122,6 +122,8 @@ heartbeat.interval.ms=3000
 | **Slow processing** | 60000 | 15000 | 600000 |
 | **Batch processing** | 120000 | 30000 | 1800000 |
 
+Example starting points; tune based on processing time and SLA.
+
 !!! warning "Processing Time Considerations"
     If message processing takes longer than `max.poll.interval.ms`, the consumer is removed from the group. Either increase this timeout or process messages asynchronously.
 
@@ -167,6 +169,8 @@ max.partition.fetch.bytes=1048576
 | **Low latency** | 1 | 100 | 100 |
 | **Balanced** | 1024 | 500 | 500 |
 | **High throughput** | 65536 | 1000 | 1000 |
+
+Example starting points; tune based on payload size and latency targets.
 
 ---
 
@@ -355,6 +359,8 @@ ssl.key.password=key-password
 
 ### Standard Consumer
 
+Example profile; adjust to your workload.
+
 ```properties
 # Connection
 bootstrap.servers=kafka-1:9092,kafka-2:9092,kafka-3:9092
@@ -385,6 +391,8 @@ value.deserializer=org.apache.kafka.common.serialization.StringDeserializer
 
 ### High-Throughput Consumer
 
+Example profile; adjust to your workload.
+
 ```properties
 # Connection
 bootstrap.servers=kafka-1:9092,kafka-2:9092,kafka-3:9092
@@ -411,6 +419,8 @@ partition.assignment.strategy=org.apache.kafka.clients.consumer.CooperativeStick
 ```
 
 ### Low-Latency Consumer
+
+Example profile; adjust to your workload.
 
 ```properties
 # Connection

@@ -435,7 +435,7 @@ skinparam backgroundColor transparent
 
 rectangle "Failure Handling" {
 
-    rectangle "Success" as success #lightgreen {
+    rectangle "Success" as success {
         rectangle "1. Read records" as s1
         rectangle "2. Process" as s2
         rectangle "3. Produce output" as s3
@@ -447,7 +447,7 @@ rectangle "Failure Handling" {
         s4 --> s5
     }
 
-    rectangle "Failure - Abort" as failure #lightyellow {
+    rectangle "Failure - Abort" as failure {
         rectangle "1. Read records" as f1
         rectangle "2. Process" as f2
         rectangle "3. Produce output" as f3
@@ -461,7 +461,7 @@ rectangle "Failure Handling" {
         f5 --> f6
     }
 
-    rectangle "Zombie Fencing" as zombie #lightpink {
+    rectangle "Zombie Fencing" as zombie {
         rectangle "Old producer continues" as z1
         rectangle "New producer starts" as z2
         rectangle "Old producer fenced" as z3

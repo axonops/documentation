@@ -40,7 +40,7 @@ The Java client is the reference implementation, developed as part of the core A
 ### External Resources
 
 - [Apache Kafka Documentation](https://kafka.apache.org/documentation/)
-- [Kafka Javadocs](https://kafka.apache.org/37/javadoc/index.html)
+- [Kafka Javadocs](https://kafka.apache.org/41/javadoc/index.html)
 - [Confluent Developer Tutorials](https://developer.confluent.io/tutorials/)
 - [Kafka Users Mailing List](https://kafka.apache.org/contact)
 
@@ -54,14 +54,14 @@ The Java client is the reference implementation, developed as part of the core A
 <dependency>
     <groupId>org.apache.kafka</groupId>
     <artifactId>kafka-clients</artifactId>
-    <version>3.7.0</version>
+    <version>4.1.0</version>
 </dependency>
 ```
 
 ### Gradle
 
 ```groovy
-implementation 'org.apache.kafka:kafka-clients:3.7.0'
+implementation 'org.apache.kafka:kafka-clients:4.1.0'
 ```
 
 ### With Schema Registry

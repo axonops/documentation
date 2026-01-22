@@ -114,6 +114,8 @@ acks=1
 | 64KB | 10 | High | Medium |
 | 128KB | 20 | Highest | Higher |
 
+These values are example starting points; tune based on payload size and latency targets.
+
 ```java
 // Monitor batch efficiency
 producer.metrics().get("batch-size-avg");

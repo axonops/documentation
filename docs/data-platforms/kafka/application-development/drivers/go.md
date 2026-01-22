@@ -100,7 +100,7 @@ go get github.com/confluentinc/confluent-kafka-go/v2/kafka
 ### go.mod
 
 ```go
-require github.com/confluentinc/confluent-kafka-go/v2 v2.3.0
+require github.com/confluentinc/confluent-kafka-go/v2 v2.12.0
 ```
 
 ### Dependencies

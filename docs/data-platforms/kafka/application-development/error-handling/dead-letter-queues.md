@@ -213,9 +213,9 @@ Proper error classification determines whether to retry or send to DLQ immediate
 skinparam backgroundColor transparent
 
 class ErrorClassifier {
-    + classify(Exception): ErrorType
-    + isTransient(Exception): boolean
-    + isPermanent(Exception): boolean
+    + classify(Throwable): ErrorType
+    + isTransient(Throwable): boolean
+    + isPermanent(Throwable): boolean
 }
 
 enum ErrorType {
@@ -258,7 +258,7 @@ ErrorClassifier --> PoisonErrors : checks
 ```java
 public class ErrorClassifier {
 
-    private static final Set<Class<? extends Exception>> TRANSIENT_ERRORS = Set.of(
+    private static final Set<Class<? extends Throwable>> TRANSIENT_ERRORS = Set.of(
         ConnectException.class,
         SocketTimeoutException.class,
         RetryableException.class,
@@ -266,7 +266,7 @@ public class ErrorClassifier {
         OptimisticLockException.class
     );
 
-    private static final Set<Class<? extends Exception>> PERMANENT_ERRORS = Set.of(
+    private static final Set<Class<? extends Throwable>> PERMANENT_ERRORS = Set.of(
         SerializationException.class,
         JsonParseException.class,
         ValidationException.class,
@@ -274,7 +274,7 @@ public class ErrorClassifier {
         IllegalArgumentException.class
     );
 
-    public ErrorType classify(Exception e) {
+    public ErrorType classify(Throwable e) {
         // Check for poison messages (errors that might crash the JVM)
         if (e instanceof OutOfMemoryError ||
             e instanceof StackOverflowError) {
@@ -282,13 +282,13 @@ public class ErrorClassifier {
         }
 
         // Check exception hierarchy
-        for (Class<? extends Exception> transient : TRANSIENT_ERRORS) {
+        for (Class<? extends Throwable> transient : TRANSIENT_ERRORS) {
             if (transient.isAssignableFrom(e.getClass())) {
                 return ErrorType.TRANSIENT;
             }
         }
 
-        for (Class<? extends Exception> permanent : PERMANENT_ERRORS) {
+        for (Class<? extends Throwable> permanent : PERMANENT_ERRORS) {
             if (permanent.isAssignableFrom(e.getClass())) {
                 return ErrorType.PERMANENT;
             }
@@ -297,14 +297,14 @@ public class ErrorClassifier {
         // Check cause chain
         Throwable cause = e.getCause();
         if (cause != null && cause != e) {
-            return classify((Exception) cause);
+            return classify(cause);
         }
 
         // Default to permanent (fail safe)
         return ErrorType.PERMANENT;
     }
 
-    public boolean isTransient(Exception e) {
+    public boolean isTransient(Throwable e) {
         return classify(e) == ErrorType.TRANSIENT;
     }
 }
