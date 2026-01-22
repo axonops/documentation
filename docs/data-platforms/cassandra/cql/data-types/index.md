@@ -152,11 +152,18 @@ INSERT INTO measurements (id, temperature, precise_value, currency)
 VALUES (uuid(), 23.5, 3.141592653589793, 1234567.89);
 ```
 
-### IEEE 754 Special Values
+**Best Practices**:
+
+- Use `INT`/`BIGINT` for counters and IDs
+- Use `DECIMAL` for financial data (exact precision)
+- Use `DOUBLE` for scientific calculations
+- Avoid `FLOAT` unless space is critical
+
+#### IEEE 754 Special Values
 
 `FLOAT` and `DOUBLE` columns accept the IEEE 754 special values `NaN` (Not a Number), `Infinity`, and `-Infinity`. These values MAY be used in regular columns, partition keys, and clustering columns.
 
-#### Syntax
+##### Syntax
 
 Special values are specified as **unquoted, case-insensitive keywords** in CQL:
 
@@ -178,7 +185,7 @@ When using JSON format, special values MUST be specified as **quoted strings**:
 INSERT INTO measurements JSON '{"id": "550e8400-e29b-41d4-a716-446655440000", "temperature": "NaN", "precise_value": "Infinity"}';
 ```
 
-#### Special Values in Primary Keys
+##### Special Values in Primary Keys
 
 IEEE 754 special values MAY be used in partition keys and clustering columns:
 
@@ -205,7 +212,7 @@ INSERT INTO timeseries (sensor_id, reading, data) VALUES (1, Infinity, 'max');
 INSERT INTO timeseries (sensor_id, reading, data) VALUES (1, -Infinity, 'min');
 ```
 
-#### Sort Order for Clustering Columns
+##### Sort Order for Clustering Columns
 
 When used as clustering columns, IEEE 754 special values sort in a defined order:
 
@@ -228,7 +235,7 @@ SELECT * FROM timeseries WHERE sensor_id = 1 AND reading >= Infinity;
 -- Returns: Infinity AND NaN
 ```
 
-#### Comparison Semantics
+##### Comparison Semantics
 
 Cassandra's handling of IEEE 754 special values differs from standard IEEE 754 semantics:
 
@@ -254,12 +261,6 @@ Cassandra's handling of IEEE 754 special values differs from standard IEEE 754 s
     ```
 
     The actual values are preserved in storage and returned correctly by non-JSON queries. This behavior occurs because JSON (RFC 8259) does not define representations for IEEE 754 special values.
-
-**Best Practices**:
-- Use `INT`/`BIGINT` for counters and IDs
-- Use `DECIMAL` for financial data (exact precision)
-- Use `DOUBLE` for scientific calculations
-- Avoid `FLOAT` unless space is critical
 
 ---
 
