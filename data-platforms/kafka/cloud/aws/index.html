@@ -20458,6 +20458,7 @@ aws<span class="w"> </span>ec2<span class="w"> </span>authorize-security-group-i
 <span class="w">  </span>--cidr<span class="w"> </span><span class="m">10</span>.0.0.0/16
 </code></pre></div>
 <h3 id="required-ports">Required Ports<a class="headerlink" href="#required-ports" title="Permanent link">¶</a></h3>
+<p>Ports depend on your listener configuration; the table below shows common defaults.</p>
 <table>
 <thead>
 <tr>
@@ -20470,22 +20471,17 @@ aws<span class="w"> </span>ec2<span class="w"> </span>authorize-security-group-i
 <tr>
 <td>9092</td>
 <td>TCP</td>
-<td>Client connections (PLAINTEXT)</td>
+<td>Client or inter-broker (PLAINTEXT example)</td>
 </tr>
 <tr>
 <td>9093</td>
 <td>TCP</td>
-<td>Client connections (SSL)</td>
+<td>Client or inter-broker (SSL)</td>
 </tr>
 <tr>
 <td>9094</td>
 <td>TCP</td>
-<td>Client connections (SASL_SSL)</td>
-</tr>
-<tr>
-<td>9093</td>
-<td>TCP</td>
-<td>Inter-broker replication</td>
+<td>Client or inter-broker (SASL_SSL)</td>
 </tr>
 </tbody>
 </table>

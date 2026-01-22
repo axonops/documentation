@@ -20459,6 +20459,7 @@ gcloud<span class="w"> </span>compute<span class="w"> </span>firewall-rules<span
 <span class="w">  </span>--target-tags<span class="o">=</span>kafka-broker
 </code></pre></div>
 <h3 id="required-ports">Required Ports<a class="headerlink" href="#required-ports" title="Permanent link">¶</a></h3>
+<p>Ports depend on your listener configuration; the table below shows common defaults.</p>
 <table>
 <thead>
 <tr>
@@ -20471,22 +20472,17 @@ gcloud<span class="w"> </span>compute<span class="w"> </span>firewall-rules<span
 <tr>
 <td>9092</td>
 <td>TCP</td>
-<td>Client connections (PLAINTEXT)</td>
+<td>Client or inter-broker (PLAINTEXT example)</td>
 </tr>
 <tr>
 <td>9093</td>
 <td>TCP</td>
-<td>Client connections (SSL)</td>
+<td>Client or inter-broker (SSL)</td>
 </tr>
 <tr>
 <td>9094</td>
 <td>TCP</td>
-<td>Client connections (SASL_SSL)</td>
-</tr>
-<tr>
-<td>9093</td>
-<td>TCP</td>
-<td>Inter-broker replication</td>
+<td>Client or inter-broker (SASL_SSL)</td>
 </tr>
 </tbody>
 </table>
