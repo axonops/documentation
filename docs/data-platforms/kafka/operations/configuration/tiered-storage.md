@@ -1,6 +1,6 @@
 ---
 title: "Kafka Tiered Storage Configuration"
-description: "Apache Kafka tiered storage configuration. Remote storage for cost-effective long-term retention with S3, GCS, and Azure Blob Storage."
+description: "Apache Kafka tiered storage configuration. Remote storage for cost-effective long-term retention with plugin-based implementations."
 meta:
   - name: keywords
     content: "Kafka tiered storage, remote storage, cloud storage tier, infinite retention"
@@ -11,7 +11,7 @@ meta:
 Tiered storage (KIP-405) enables Kafka to offload log segments to remote storage systems, enabling cost-effective long-term retention while maintaining local storage for recent data.
 
 !!! note "Version Requirement"
-    Tiered storage is available as an early access feature in Kafka 3.6+ and production-ready in later versions. Check release notes for current status.
+    Tiered storage is an early access feature in Apache Kafka 3.6+. Production readiness varies by release.
 
 ---
 
@@ -72,8 +72,8 @@ end note
 # Enable tiered storage
 remote.log.storage.system.enable=true
 
-# Remote storage manager plugin
-remote.log.storage.manager.class.name=org.apache.kafka.server.log.remote.storage.RemoteStorageManager
+# Remote storage manager plugin (implementation-specific)
+remote.log.storage.manager.class.name=com.example.kafka.remote.RemoteStorageManager
 remote.log.storage.manager.class.path=/opt/kafka/plugins/tiered-storage
 
 # Remote log metadata manager
@@ -117,7 +117,10 @@ kafka-configs.sh --bootstrap-server kafka:9092 \
 
 ## Remote Storage Backends
 
-### Amazon S3
+!!! warning "Plugin required"
+    Apache Kafka does not ship an object store implementation. You must install a remote storage manager plugin and use its class name and config keys.
+
+### Amazon S3 (Vendor Plugin Example)
 
 ```properties
 # S3 Remote Storage Manager configuration
@@ -139,7 +142,7 @@ remote.log.storage.s3.endpoint.override=  # For S3-compatible storage
 remote.log.storage.s3.path.style.access.enabled=false
 ```
 
-### Google Cloud Storage
+### Google Cloud Storage (Vendor Plugin Example)
 
 ```properties
 # GCS Remote Storage Manager configuration
@@ -153,7 +156,7 @@ remote.log.storage.gcs.project.id=my-project
 remote.log.storage.gcs.credentials.path=/etc/kafka/gcs-credentials.json
 ```
 
-### Azure Blob Storage
+### Azure Blob Storage (Vendor Plugin Example)
 
 ```properties
 # Azure Blob Remote Storage Manager configuration

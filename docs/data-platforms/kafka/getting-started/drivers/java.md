@@ -20,14 +20,14 @@ The official Apache Kafka Java client provides producer, consumer, and admin API
 <dependency>
     <groupId>org.apache.kafka</groupId>
     <artifactId>kafka-clients</artifactId>
-    <version>3.6.0</version>
+    <version>4.1.1</version>
 </dependency>
 ```
 
 ### Gradle
 
 ```groovy
-implementation 'org.apache.kafka:kafka-clients:3.6.0'
+implementation 'org.apache.kafka:kafka-clients:4.1.1'
 ```
 
 ---

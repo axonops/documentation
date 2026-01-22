@@ -40,7 +40,7 @@ rectangle "Backup Options" {
 
 | Strategy | RPO | RTO | Use Case |
 |----------|-----|-----|----------|
-| **MirrorMaker 2** | Near-zero | Minutes | Cross-DC DR |
+| **MirrorMaker 2** | Near-zero (bounded by replication lag) | Minutes | Cross-DC DR |
 | **Sink Connector** | Minutes | Hours | Archival, analytics |
 | **Filesystem backup** | Hours | Hours | Point-in-time recovery |
 
@@ -111,6 +111,8 @@ emit.heartbeats.interval.seconds=5
 # Checkpoints for offset translation
 emit.checkpoints.enabled=true
 emit.checkpoints.interval.seconds=60
+
+# Note: replication factors must not exceed the broker count in the target cluster.
 ```
 
 ### Starting MirrorMaker 2

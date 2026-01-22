@@ -31,12 +31,12 @@ Kafka components have different JDK support levels. Kafka 4.0 introduced signifi
 
 **Kafka 4.0:**
 
-| Component | Java 11 | Java 17 | Java 21 | Java 23 |
-|-----------|:-------:|:-------:|:-------:|:-------:|
-| **Kafka Clients** | ✅ | ✅ | ✅ | ✅ |
-| **Kafka Streams** | ✅ | ✅ | ✅ | ✅ |
-| **Kafka Connect** | ❌ | ✅ | ✅ | ✅ |
-| **Kafka Server** | ❌ | ✅ | ✅ | ✅ |
+| Component | Java 11 | Java 17 | Java 21 |
+|-----------|:-------:|:-------:|:-------:|
+| **Kafka Clients** | ✅ | ✅ | ✅ |
+| **Kafka Streams** | ✅ | ✅ | ✅ |
+| **Kafka Connect** | ❌ | ✅ | ✅ |
+| **Kafka Server** | ❌ | ✅ | ✅ |
 
 Legend: ✅ Supported | ❌ Not Supported
 
@@ -47,9 +47,9 @@ Legend: ✅ Supported | ❌ Not Supported
 
 **Kafka 3.x:**
 
-| Component | Java 8 | Java 11 | Java 17 | Java 21 |
-|-----------|:------:|:-------:|:-------:|:-------:|
-| **All Components** | ✅ | ✅ | ✅ | ✅ |
+| Component | Java 8 | Java 11 | Java 17 |
+|-----------|:------:|:-------:|:-------:|
+| **All Components** | ✅ | ✅ | ✅ |
 
 ### Client-Broker Compatibility
 
@@ -123,11 +123,11 @@ KRaft clusters have specific version requirements for controllers and brokers.
 
 ```bash
 # Download Kafka
-curl -O https://downloads.apache.org/kafka/3.6.0/kafka_2.13-3.6.0.tgz
+curl -O https://downloads.apache.org/kafka/4.1.1/kafka_2.13-4.1.1.tgz
 
 # Extract
-tar -xzf kafka_2.13-3.6.0.tgz
-cd kafka_2.13-3.6.0
+tar -xzf kafka_2.13-4.1.1.tgz
+cd kafka_2.13-4.1.1
 ```
 
 ### 2. Start Kafka (KRaft Mode)
