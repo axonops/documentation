@@ -899,7 +899,7 @@ Partition =>
 
 skinparam backgroundColor transparent
 
-rectangle "Application" as App
+participant "Application" as App
 participant "Consumer" as C
 participant "Any Broker" as AB
 participant "Coordinator" as Coord
@@ -926,10 +926,11 @@ Coord --> C : OffsetFetchResponse(offsets)
 
 == Consume Loop ==
 loop poll()
-    par Heartbeat
+    group Heartbeat (in parallel)
         C -> Coord : HeartbeatRequest
         Coord --> C : HeartbeatResponse
-    and Fetch
+    end
+    group Fetch (in parallel)
         C -> PL : FetchRequest
         PL --> C : FetchResponse(records)
     end
