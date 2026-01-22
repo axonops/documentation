@@ -41,7 +41,7 @@ if (Deserialize) then (success)
         if (Retriable?) then (yes)
             :Retry with backoff;
             if (Max retries?) then (no)
-                backward:Process again;
+                :Process again;
             else (yes)
                 :Send to DLQ;
             endif
