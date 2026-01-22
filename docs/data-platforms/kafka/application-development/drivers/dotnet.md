@@ -73,7 +73,8 @@ dotnet add package Confluent.Kafka
 ### PackageReference
 
 ```xml
-<PackageReference Include="Confluent.Kafka" Version="2.3.0" />
+<!-- Use the current Confluent.Kafka version -->
+<PackageReference Include="Confluent.Kafka" Version="2.12.0" />
 ```
 
 ### With Schema Registry

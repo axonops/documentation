@@ -102,6 +102,7 @@ producer.flush();  // Wait for batch
 
 ```java
 // GOOD - Validate and handle large data
+// Also consider broker/client limits: message.max.bytes, max.request.size, fetch.max.bytes
 private static final int MAX_MESSAGE_SIZE = 1_000_000;  // 1MB
 
 public void sendOrder(Order order) {
@@ -140,7 +141,7 @@ public void sendOrder(Order order) {
 
 **Solution:**
 
-Producer instances are thread-safe. One producer per application is typically sufficient, but ensure proper configuration:
+Producer instances are thread-safe. One well-configured producer per application is typically sufficient; use multiple producers only for extreme throughput or isolation requirements:
 
 ```java
 // GOOD - Properly configured producer handles concurrency
@@ -425,7 +426,7 @@ kafka-topics.sh --create --topic events --partitions 12
 - Leader election delays
 - Controller overload
 
-**Guidelines:**
+**Guidelines (rule-of-thumb; workload-dependent):**
 
 | Scenario | Recommended Partitions |
 |----------|----------------------|

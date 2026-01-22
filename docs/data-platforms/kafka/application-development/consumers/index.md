@@ -113,7 +113,7 @@ rectangle "RoundRobin Assignor" {
 | Strategy | Class | Behavior | Use Case |
 |----------|-------|----------|----------|
 | **Range** | `RangeAssignor` | Assigns consecutive partitions per topic | Co-located topic processing |
-| **RoundRobin** | `RoundRobinAssignor` | Distributes partitions evenly across consumers | Balanced load distribution |
+| **RoundRobin** | `RoundRobinAssignor` | Distributes partitions evenly across consumers (all consumers should subscribe to same topics) | Balanced load distribution |
 | **Sticky** | `StickyAssignor` | Minimizes partition movement during rebalance | Stateful processing |
 | **CooperativeSticky** | `CooperativeStickyAssignor` | Incremental rebalancing with sticky assignment | Production recommended (Kafka 2.4+) |
 
@@ -175,7 +175,7 @@ auto.offset.reset=earliest
 | `max.poll.interval.ms` | 300000 | - | Maximum time between poll() calls |
 
 !!! warning "Session Timeout Considerations"
-    Setting `session.timeout.ms` too low results in frequent spurious rebalances. Setting it too high delays detection of failed consumers. A value between 30-60 seconds is recommended for most production deployments.
+    Setting `session.timeout.ms` too low results in frequent spurious rebalances. Setting it too high delays detection of failed consumers. 30-60 seconds is a common range, but tune it to processing time and failure detection goals.
 
 #### Fetch Behavior
 
@@ -212,7 +212,7 @@ Coordinator --> Consumer : OffsetCommitResponse
 
 note over Offsets
   Compacted topic
-  50 partitions by default
+  50 partitions by default in Apache Kafka (configurable)
   Keyed by (group, topic, partition)
 end note
 
@@ -698,6 +698,8 @@ order-processors orders  2          1500            1600            100
 ---
 
 ## Share Groups (KIP-932)
+
+Share groups require Kafka 4.0+ broker support.
 
 Share groups provide an alternative consumption model where multiple consumers cooperatively consume records from partitions, with finer-grained acknowledgment.
 

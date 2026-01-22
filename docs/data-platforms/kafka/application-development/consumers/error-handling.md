@@ -95,6 +95,7 @@ while (running) {
     for (ConsumerRecord<String, Order> record : records) {
         // Check for deserialization failure
         if (record.value() == null) {
+            // With ErrorHandlingDeserializer, failures are captured in headers
             byte[] rawValue = getRawValue(record);  // Access raw bytes if needed
             log.error("Deserialization failed at offset {}: {}",
                 record.offset(), new String(rawValue));
@@ -317,7 +318,7 @@ public class RetryTopicConsumer {
             .add("retry.timestamp", Instant.now().toString().getBytes())
             .add("retry.delay.ms", Long.toString(delay.toMillis()).getBytes());
 
-        // Delay can be implemented via:
+        // Kafka has no native per-message delay. Delay can be implemented via:
         // 1. Topic-level delay (requires Kafka feature or custom implementation)
         // 2. Consumer-side delay before processing
         // 3. External scheduler
@@ -357,7 +358,7 @@ try {
 |-------|----------|
 | `AuthorizationException` | Alert and fail |
 | `InvalidTopicException` | Configuration error, fix and restart |
-| `SerializationException` | DLQ (poison pill) |
+| `SerializationException` | DLQ (poison pill); without ErrorHandlingDeserializer, this fails poll() before a record is available |
 | `RecordTooLargeException` | DLQ or skip |
 
 ### Commit Errors

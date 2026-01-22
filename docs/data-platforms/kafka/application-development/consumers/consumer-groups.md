@@ -179,7 +179,7 @@ Distributes partitions evenly across consumers.
 
 - Even distribution across consumers
 - Partitions from different topics interleaved
-- All consumers must subscribe to same topics
+- All consumers should subscribe to the same set of topics
 
 ```properties
 partition.assignment.strategy=org.apache.kafka.clients.consumer.RoundRobinAssignor
@@ -261,6 +261,8 @@ session.timeout.ms=300000
 | **Identity** | Assigned by coordinator | Configured `group.instance.id` |
 | **Timeout behavior** | Removed after session timeout | Retains assignment until timeout |
 | **Rolling restarts** | Multiple rebalances | Zero rebalances |
+
+Static membership reduces rebalances; restarts within the session timeout avoid a rebalance when `group.instance.id` remains stable.
 
 ### Kubernetes Integration
 
@@ -433,6 +435,8 @@ Kafka 3.7+ introduces a new protocol with:
 group.protocol=consumer
 ```
 
+Status: 3.7-3.8 early access; 4.0+ GA and recommended for new deployments.
+
 ---
 
 ## Best Practices
@@ -512,9 +516,10 @@ heartbeat.interval.ms=15000
 **Solutions:**
 
 ```bash
-# Force remove stuck member
+# Stop the stuck consumer, then restart it after the group stabilizes.
+# If the group is empty, you can delete it:
 kafka-consumer-groups.sh --bootstrap-server localhost:9092 \
-    --group order-processors --delete-offsets --topic orders
+    --delete --group order-processors
 ```
 
 ---

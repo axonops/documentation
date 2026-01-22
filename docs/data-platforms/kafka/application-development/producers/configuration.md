@@ -169,6 +169,8 @@ end note
 | `lz4` | ~0.5-0.7x | Low | Lowest |
 | `zstd` | ~0.4-0.6x | Medium | Low |
 
+Compression ratios are workload-dependent and should be validated with representative data.
+
 ---
 
 ## Partitioning Configuration
