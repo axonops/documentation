@@ -18,6 +18,7 @@ Exactly-once semantics (EOS) ensure Kafka transactional read-process-write pipel
 @startuml
 
 skinparam backgroundColor transparent
+top to bottom direction
 
 rectangle "Exactly-Once Guarantee" {
     rectangle "Messages Sent: 100" as sent
@@ -435,29 +436,37 @@ skinparam backgroundColor transparent
 rectangle "Failure Handling" {
 
     rectangle "Success" as success #lightgreen {
-        card "1. Read records" as s1
-        card "2. Process" as s2
-        card "3. Produce output" as s3
-        card "4. Commit offsets" as s4
-        card "5. Commit transaction" as s5
-        s1 --> s2 --> s3 --> s4 --> s5
+        rectangle "1. Read records" as s1
+        rectangle "2. Process" as s2
+        rectangle "3. Produce output" as s3
+        rectangle "4. Commit offsets" as s4
+        rectangle "5. Commit transaction" as s5
+        s1 --> s2
+        s2 --> s3
+        s3 --> s4
+        s4 --> s5
     }
 
-    rectangle "Failure → Abort" as failure #lightyellow {
-        card "1. Read records" as f1
-        card "2. Process" as f2
-        card "3. Produce output" as f3
-        card "4. Error occurs" as f4
-        card "5. Abort transaction" as f5
-        card "6. Re-read records" as f6
-        f1 --> f2 --> f3 --> f4 --> f5 --> f6
+    rectangle "Failure - Abort" as failure #lightyellow {
+        rectangle "1. Read records" as f1
+        rectangle "2. Process" as f2
+        rectangle "3. Produce output" as f3
+        rectangle "4. Error occurs" as f4
+        rectangle "5. Abort transaction" as f5
+        rectangle "6. Re-read records" as f6
+        f1 --> f2
+        f2 --> f3
+        f3 --> f4
+        f4 --> f5
+        f5 --> f6
     }
 
     rectangle "Zombie Fencing" as zombie #lightpink {
-        card "Old producer continues" as z1
-        card "New producer starts" as z2
-        card "Old producer fenced" as z3
-        z1 --> z2 --> z3
+        rectangle "Old producer continues" as z1
+        rectangle "New producer starts" as z2
+        rectangle "Old producer fenced" as z3
+        z1 --> z2
+        z2 --> z3
     }
 }
 

@@ -246,6 +246,7 @@ max.partition.fetch.bytes=1048576  # Per partition (1MB)
 - Request latency spikes
 
 **Causes:**
+
 | Cause | Solution |
 |-------|----------|
 | Too many partitions | Reduce partitions or increase heap |
@@ -261,6 +262,7 @@ max.partition.fetch.bytes=1048576  # Per partition (1MB)
 - `await` time in iostat high
 
 **Causes:**
+
 | Cause | Solution |
 |-------|----------|
 | Heap too large | Reduce heap, leave more for cache |

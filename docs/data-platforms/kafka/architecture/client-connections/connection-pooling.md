@@ -452,10 +452,11 @@ GC --> CNC : SyncGroupResponse (assignment)
 loop poll()
     C -> CNC : poll()
 
-    par Heartbeat
+    group Heartbeat (in parallel)
         CNC -> GC : HeartbeatRequest
         GC --> CNC : HeartbeatResponse
-    and Fetch
+    end
+    group Fetch (in parallel)
         CNC -> F : fetch()
         F -> B : FetchRequest
         B --> F : FetchResponse

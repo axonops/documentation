@@ -467,10 +467,11 @@ activate TC
 
 TC -> TC : Move to PrepareCommit
 
-par Write markers to partitions
+group Write markers to partitions (in parallel)
     TC -> PL : WriteTxnMarkers(COMMIT)
     PL --> TC : OK
-and Write markers to __consumer_offsets
+end
+group Write markers to __consumer_offsets (in parallel)
     TC -> CO : WriteTxnMarkers(COMMIT)
     CO --> TC : OK
 end
