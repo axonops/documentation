@@ -54,14 +54,14 @@ The Java client is the reference implementation, developed as part of the core A
 <dependency>
     <groupId>org.apache.kafka</groupId>
     <artifactId>kafka-clients</artifactId>
-    <version>4.1.0</version>
+    <version>4.1.1</version>
 </dependency>
 ```
 
 ### Gradle
 
 ```groovy
-implementation 'org.apache.kafka:kafka-clients:4.1.0'
+implementation 'org.apache.kafka:kafka-clients:4.1.1'
 ```
 
 ### With Schema Registry

@@ -214,6 +214,8 @@ stop
 # Before upgrade, set in server.properties
 inter.broker.protocol.version=3.6
 log.message.format.version=3.6
+
+# Note: in Kafka 4.x, inter.broker.protocol.version and log.message.format.version are removed.
 ```
 
 2. **Upgrade each broker**
