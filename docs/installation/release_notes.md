@@ -9,7 +9,7 @@ meta:
 ## Release 2026-01-15
 
 * axon-dash: 2.0.22
-    * Fix for on-premise deployments.
+    * Fix for self-hosted deployments.
 
 ### Fixes
 
