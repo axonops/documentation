@@ -289,7 +289,9 @@ sudo chmod 0640 /etc/axonops/axon-agent.yml
 
 Edit <code>kafka-server-start.sh</code>, usually located in your Kafka install path such as:
 
-<p><code>/&lt;Kafka_Home&gt;/bin/kafka-server-start.sh</code></p>
+```
+<Kafka_Home>/bin/kafka-server-start.sh
+```
 </div>
 
 <div id="Zookeeper" class="axon_kafka_dynamic_s2" style="display:none">
@@ -297,7 +299,9 @@ Edit <code>kafka-server-start.sh</code>, usually located in your Kafka install p
 
 Edit <code>zookeeper-server-start.sh</code>, usually located in your Zookeeper install path such as:
 
-<p><code>/&lt;Zookeeper_Home&gt;/bin/zookeeper-server-start.sh</code></p>
+```
+<Zookeeper_Home>/bin/zookeeper-server-start.sh
+```
 </div>
 
 <div id="KRaftBroker" class="axon_kafka_dynamic_s2" style="display:none">
@@ -305,7 +309,9 @@ Edit <code>zookeeper-server-start.sh</code>, usually located in your Zookeeper i
 
 Edit <code>kafka-server-start.sh</code>, usually located in your Kafka install path such as:
 
-<p><code>/&lt;Kafka_Home&gt;/bin/kafka-server-start.sh</code></p>
+```
+<Kafka_Home>/bin/kafka-server-start.sh
+```
 </div>
 
 <div id="KRaftController" class="axon_kafka_dynamic_s2" style="display:none">
@@ -313,7 +319,9 @@ Edit <code>kafka-server-start.sh</code>, usually located in your Kafka install p
 
 Edit <code>kafka-server-start.sh</code>, usually located in your Kafka install path such as:
 
-<p><code>/&lt;Kafka_Home&gt;/bin/kafka-server-start.sh</code></p>
+```
+<Kafka_Home>/bin/kafka-server-start.sh
+```
 </div>
 
 <div id="Connect" class="axon_kafka_dynamic_s2" style="display:none">
@@ -321,7 +329,9 @@ Edit <code>kafka-server-start.sh</code>, usually located in your Kafka install p
 
 Edit <code>connect-distributed.sh</code>, usually located in your Kafka install path such as:
 
-<p><code>/&lt;Kafka_Home&gt;/bin/connect-distributed.sh </code></p>
+```
+<Kafka_Home>/bin/connect-distributed.sh
+```
 </div>
 <!-- Load Dynamic Java section -->
 {!dynamic_pages/axon_agent/kafka_java.md!}
@@ -341,6 +351,11 @@ sudo usermod -aG axonops <your_kafka_user>
 <h2>Start/Restart Kafka</h2>
 
 To load the AxonOps Java Agent and Kafka config changes please either start the Kafka service if stopped restart the Kafka service if already running.
+
+```
+<Kafka_Home>/bin/kafka-server-stop.sh
+<Kafka_Home>/bin/kafka-server-start.sh
+```
 </div>
 
 <div id="Zookeeper" class="axon_kafka_dynamic_s5" style="display:none">
@@ -353,6 +368,11 @@ sudo usermod -aG axonops <your_zookeeper_user>
 <h2>Start/Restart Zookeeper</h2>
 
 To load the AxonOps Java Agent and Zookeeper config changes please either start the Zookeeper service if stopped or restart the Zookeeper service if already running.
+
+```
+<Zookeeper_Home>/bin/zookeeper-server-stop.sh
+<Zookeeper_Home>/bin/zookeeper-server-start.sh
+```
 </div>
 
 <div id="KRaftBroker" class="axon_kafka_dynamic_s5" style="display:none">
@@ -365,6 +385,11 @@ sudo usermod -aG axonops <your_kraft_user>
 <h2>Start/Restart KRaft Broker</h2>
 
 To load the AxonOps Java Agent and Kafka KRaft config changes please either start the Kafka KRaft service if stopped or restart the Kafka KRaft service if already running.
+
+```
+<Kafka_Home>/bin/kafka-server-stop.sh
+<Kafka_Home>/bin/kafka-server-start.sh
+```
 </div>
 
 <div id="KRaftController" class="axon_kafka_dynamic_s5" style="display:none">
@@ -377,6 +402,11 @@ sudo usermod -aG axonops <your_kraft_user>
 <h2>Start/Restart KRaft Controller</h2>
 
 To load the AxonOps Java Agent and Kafka KRaft config changes please either start the Kafka KRaft service if stopped or restart the Kafka KRaft service if already running.
+
+```
+<Kafka_Home>/bin/kafka-server-stop.sh
+<Kafka_Home>/bin/kafka-server-start.sh
+```
 </div>
 
 <div id="Connect" class="axon_kafka_dynamic_s5" style="display:none">
@@ -393,4 +423,8 @@ To load the AxonOps Java Agent and Kafka Connect config changes please either:
 * Start the Kafka Connect service if stopped.
 * Restart the Kafka Connect service if already running.
 
+```
+<Kafka_Home>/bin/kafka-server-stop.sh
+<Kafka_Home>/bin/connect-distributed.sh
+```
 </div>
