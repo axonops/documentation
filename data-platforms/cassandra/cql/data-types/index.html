@@ -6330,6 +6330,57 @@ data-et-multi-view="{&quot;schema&quot;:{&quot;content&quot;:{&quot;desktop&quot
   
 </li>
         
+          <li class="md-nav__item">
+  <a href="#ieee-754-special-values" class="md-nav__link">
+    <span class="md-ellipsis">
+      IEEE 754 Special Values
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="IEEE 754 Special Values">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#syntax" class="md-nav__link">
+    <span class="md-ellipsis">
+      Syntax
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#special-values-in-primary-keys" class="md-nav__link">
+    <span class="md-ellipsis">
+      Special Values in Primary Keys
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#sort-order-for-clustering-columns" class="md-nav__link">
+    <span class="md-ellipsis">
+      Sort Order for Clustering Columns
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#comparison-semantics" class="md-nav__link">
+    <span class="md-ellipsis">
+      Comparison Semantics
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
       </ul>
     </nav>
   
@@ -20343,6 +20394,57 @@ data-et-multi-view="{&quot;schema&quot;:{&quot;content&quot;:{&quot;desktop&quot
   
 </li>
         
+          <li class="md-nav__item">
+  <a href="#ieee-754-special-values" class="md-nav__link">
+    <span class="md-ellipsis">
+      IEEE 754 Special Values
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="IEEE 754 Special Values">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#syntax" class="md-nav__link">
+    <span class="md-ellipsis">
+      Syntax
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#special-values-in-primary-keys" class="md-nav__link">
+    <span class="md-ellipsis">
+      Special Values in Primary Keys
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#sort-order-for-clustering-columns" class="md-nav__link">
+    <span class="md-ellipsis">
+      Sort Order for Clustering Columns
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#comparison-semantics" class="md-nav__link">
+    <span class="md-ellipsis">
+      Comparison Semantics
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
       </ul>
     </nav>
   
@@ -21073,6 +21175,103 @@ data-et-multi-view="{&quot;schema&quot;:{&quot;content&quot;:{&quot;desktop&quot
 <span class="k">INSERT</span><span class="w"> </span><span class="k">INTO</span><span class="w"> </span><span class="n">measurements</span><span class="w"> </span><span class="p">(</span><span class="n">id</span><span class="p">,</span><span class="w"> </span><span class="n">temperature</span><span class="p">,</span><span class="w"> </span><span class="n">precise_value</span><span class="p">,</span><span class="w"> </span><span class="n">currency</span><span class="p">)</span>
 <span class="k">VALUES</span><span class="w"> </span><span class="p">(</span><span class="n">uuid</span><span class="p">(),</span><span class="w"> </span><span class="mi">23</span><span class="p">.</span><span class="mi">5</span><span class="p">,</span><span class="w"> </span><span class="mi">3</span><span class="p">.</span><span class="mi">141592653589793</span><span class="p">,</span><span class="w"> </span><span class="mi">1234567</span><span class="p">.</span><span class="mi">89</span><span class="p">);</span>
 </code></pre></div>
+<h3 id="ieee-754-special-values">IEEE 754 Special Values<a class="headerlink" href="#ieee-754-special-values" title="Permanent link">¶</a></h3>
+<p><code>FLOAT</code> and <code>DOUBLE</code> columns accept the IEEE 754 special values <code>NaN</code> (Not a Number), <code>Infinity</code>, and <code>-Infinity</code>. These values MAY be used in regular columns, partition keys, and clustering columns.</p>
+<h4 id="syntax">Syntax<a class="headerlink" href="#syntax" title="Permanent link">¶</a></h4>
+<p>Special values are specified as <strong>unquoted, case-insensitive keywords</strong> in CQL:</p>
+<div class="highlight"><pre><span></span><code><span class="c1">-- Insert special values (case-insensitive)</span>
+<span class="k">INSERT</span><span class="w"> </span><span class="k">INTO</span><span class="w"> </span><span class="n">measurements</span><span class="w"> </span><span class="p">(</span><span class="n">id</span><span class="p">,</span><span class="w"> </span><span class="n">temperature</span><span class="p">,</span><span class="w"> </span><span class="n">precise_value</span><span class="p">)</span>
+<span class="k">VALUES</span><span class="w"> </span><span class="p">(</span><span class="n">uuid</span><span class="p">(),</span><span class="w"> </span><span class="n">NaN</span><span class="p">,</span><span class="w"> </span><span class="n">Infinity</span><span class="p">);</span>
+
+<span class="k">INSERT</span><span class="w"> </span><span class="k">INTO</span><span class="w"> </span><span class="n">measurements</span><span class="w"> </span><span class="p">(</span><span class="n">id</span><span class="p">,</span><span class="w"> </span><span class="n">temperature</span><span class="p">,</span><span class="w"> </span><span class="n">precise_value</span><span class="p">)</span>
+<span class="k">VALUES</span><span class="w"> </span><span class="p">(</span><span class="n">uuid</span><span class="p">(),</span><span class="w"> </span><span class="o">-</span><span class="n">infinity</span><span class="p">,</span><span class="w"> </span><span class="n">nan</span><span class="p">);</span>
+
+<span class="c1">-- Query using special values</span>
+<span class="k">SELECT</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="k">FROM</span><span class="w"> </span><span class="n">measurements</span><span class="w"> </span><span class="k">WHERE</span><span class="w"> </span><span class="n">temperature</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">NaN</span><span class="w"> </span><span class="n">ALLOW</span><span class="w"> </span><span class="n">FILTERING</span><span class="p">;</span>
+</code></pre></div>
+<p>When using JSON format, special values MUST be specified as <strong>quoted strings</strong>:</p>
+<div class="highlight"><pre><span></span><code><span class="k">INSERT</span><span class="w"> </span><span class="k">INTO</span><span class="w"> </span><span class="n">measurements</span><span class="w"> </span><span class="n">JSON</span><span class="w"> </span><span class="s1">'{"id": "550e8400-e29b-41d4-a716-446655440000", "temperature": "NaN", "precise_value": "Infinity"}'</span><span class="p">;</span>
+</code></pre></div>
+<h4 id="special-values-in-primary-keys">Special Values in Primary Keys<a class="headerlink" href="#special-values-in-primary-keys" title="Permanent link">¶</a></h4>
+<p>IEEE 754 special values MAY be used in partition keys and clustering columns:</p>
+<div class="highlight"><pre><span></span><code><span class="c1">-- Float as partition key</span>
+<span class="k">CREATE</span><span class="w"> </span><span class="k">TABLE</span><span class="w"> </span><span class="n">sensor_readings</span><span class="w"> </span><span class="p">(</span>
+<span class="w">    </span><span class="n">sensor_value</span><span class="w"> </span><span class="nb">FLOAT</span><span class="w"> </span><span class="k">PRIMARY</span><span class="w"> </span><span class="k">KEY</span><span class="p">,</span>
+<span class="w">    </span><span class="n">description</span><span class="w"> </span><span class="nb">TEXT</span>
+<span class="p">);</span>
+
+<span class="k">INSERT</span><span class="w"> </span><span class="k">INTO</span><span class="w"> </span><span class="n">sensor_readings</span><span class="w"> </span><span class="p">(</span><span class="n">sensor_value</span><span class="p">,</span><span class="w"> </span><span class="n">description</span><span class="p">)</span><span class="w"> </span><span class="k">VALUES</span><span class="w"> </span><span class="p">(</span><span class="n">NaN</span><span class="p">,</span><span class="w"> </span><span class="s1">'Invalid reading'</span><span class="p">);</span>
+<span class="k">INSERT</span><span class="w"> </span><span class="k">INTO</span><span class="w"> </span><span class="n">sensor_readings</span><span class="w"> </span><span class="p">(</span><span class="n">sensor_value</span><span class="p">,</span><span class="w"> </span><span class="n">description</span><span class="p">)</span><span class="w"> </span><span class="k">VALUES</span><span class="w"> </span><span class="p">(</span><span class="n">Infinity</span><span class="p">,</span><span class="w"> </span><span class="s1">'Overflow'</span><span class="p">);</span>
+
+<span class="c1">-- Float as clustering column</span>
+<span class="k">CREATE</span><span class="w"> </span><span class="k">TABLE</span><span class="w"> </span><span class="n">timeseries</span><span class="w"> </span><span class="p">(</span>
+<span class="w">    </span><span class="n">sensor_id</span><span class="w"> </span><span class="nb">INT</span><span class="p">,</span>
+<span class="w">    </span><span class="n">reading</span><span class="w"> </span><span class="nb">FLOAT</span><span class="p">,</span>
+<span class="w">    </span><span class="k">data</span><span class="w"> </span><span class="nb">TEXT</span><span class="p">,</span>
+<span class="w">    </span><span class="k">PRIMARY</span><span class="w"> </span><span class="k">KEY</span><span class="w"> </span><span class="p">((</span><span class="n">sensor_id</span><span class="p">),</span><span class="w"> </span><span class="n">reading</span><span class="p">)</span>
+<span class="p">);</span>
+
+<span class="k">INSERT</span><span class="w"> </span><span class="k">INTO</span><span class="w"> </span><span class="n">timeseries</span><span class="w"> </span><span class="p">(</span><span class="n">sensor_id</span><span class="p">,</span><span class="w"> </span><span class="n">reading</span><span class="p">,</span><span class="w"> </span><span class="k">data</span><span class="p">)</span><span class="w"> </span><span class="k">VALUES</span><span class="w"> </span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="w"> </span><span class="n">NaN</span><span class="p">,</span><span class="w"> </span><span class="s1">'error'</span><span class="p">);</span>
+<span class="k">INSERT</span><span class="w"> </span><span class="k">INTO</span><span class="w"> </span><span class="n">timeseries</span><span class="w"> </span><span class="p">(</span><span class="n">sensor_id</span><span class="p">,</span><span class="w"> </span><span class="n">reading</span><span class="p">,</span><span class="w"> </span><span class="k">data</span><span class="p">)</span><span class="w"> </span><span class="k">VALUES</span><span class="w"> </span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="w"> </span><span class="n">Infinity</span><span class="p">,</span><span class="w"> </span><span class="s1">'max'</span><span class="p">);</span>
+<span class="k">INSERT</span><span class="w"> </span><span class="k">INTO</span><span class="w"> </span><span class="n">timeseries</span><span class="w"> </span><span class="p">(</span><span class="n">sensor_id</span><span class="p">,</span><span class="w"> </span><span class="n">reading</span><span class="p">,</span><span class="w"> </span><span class="k">data</span><span class="p">)</span><span class="w"> </span><span class="k">VALUES</span><span class="w"> </span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="w"> </span><span class="o">-</span><span class="n">Infinity</span><span class="p">,</span><span class="w"> </span><span class="s1">'min'</span><span class="p">);</span>
+</code></pre></div>
+<h4 id="sort-order-for-clustering-columns">Sort Order for Clustering Columns<a class="headerlink" href="#sort-order-for-clustering-columns" title="Permanent link">¶</a></h4>
+<p>When used as clustering columns, IEEE 754 special values sort in a defined order:</p>
+<div class="highlight"><pre><span></span><code>-Infinity &lt; -0 &lt; 0 &lt; normal positive values &lt; Infinity &lt; NaN
+</code></pre></div>
+<p>This means:</p>
+<ul>
+<li><code>-Infinity</code> sorts before all other values</li>
+<li><code>NaN</code> sorts after all other values (including <code>Infinity</code>)</li>
+<li><code>-0</code> and <code>0</code> are distinct values with <code>-0</code> sorting before <code>0</code></li>
+</ul>
+<div class="highlight"><pre><span></span><code><span class="c1">-- Example: range query behavior</span>
+<span class="k">SELECT</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="k">FROM</span><span class="w"> </span><span class="n">timeseries</span><span class="w"> </span><span class="k">WHERE</span><span class="w"> </span><span class="n">sensor_id</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">1</span><span class="w"> </span><span class="k">AND</span><span class="w"> </span><span class="n">reading</span><span class="w"> </span><span class="o">&gt;</span><span class="w"> </span><span class="mi">0</span><span class="p">;</span>
+<span class="c1">-- Returns: normal positives, Infinity, AND NaN</span>
+
+<span class="k">SELECT</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="k">FROM</span><span class="w"> </span><span class="n">timeseries</span><span class="w"> </span><span class="k">WHERE</span><span class="w"> </span><span class="n">sensor_id</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">1</span><span class="w"> </span><span class="k">AND</span><span class="w"> </span><span class="n">reading</span><span class="w"> </span><span class="o">&gt;=</span><span class="w"> </span><span class="n">Infinity</span><span class="p">;</span>
+<span class="c1">-- Returns: Infinity AND NaN</span>
+</code></pre></div>
+<h4 id="comparison-semantics">Comparison Semantics<a class="headerlink" href="#comparison-semantics" title="Permanent link">¶</a></h4>
+<p>Cassandra's handling of IEEE 754 special values differs from standard IEEE 754 semantics:</p>
+<table>
+<thead>
+<tr>
+<th>Comparison</th>
+<th>IEEE 754 Standard</th>
+<th>Cassandra CQL</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>NaN = NaN</code></td>
+<td><code>false</code></td>
+<td><code>true</code></td>
+</tr>
+<tr>
+<td><code>-0 = 0</code></td>
+<td><code>true</code></td>
+<td><code>false</code></td>
+</tr>
+</tbody>
+</table>
+<ul>
+<li><strong>NaN equality</strong>: In CQL, <code>NaN = NaN</code> evaluates to <code>true</code>, allowing queries like <code>WHERE col = NaN</code> to match rows containing <code>NaN</code>. This differs from the IEEE 754 standard where <code>NaN</code> is not equal to itself.</li>
+<li><strong>Negative zero</strong>: Cassandra treats <code>-0</code> and <code>0</code> as distinct values. Rows inserted with <code>-0</code> will not match queries for <code>0</code> and vice versa.</li>
+</ul>
+<div class="admonition warning">
+<p class="admonition-title">JSON Output Converts Special Values to Null</p>
+<p>When using <code>SELECT JSON</code> or the <code>toJson()</code> function, <code>NaN</code>, <code>Infinity</code>, and <code>-Infinity</code> values are output as <code>null</code>:</p>
+<div class="highlight"><pre><span></span><code><span class="k">INSERT</span><span class="w"> </span><span class="k">INTO</span><span class="w"> </span><span class="n">measurements</span><span class="w"> </span><span class="p">(</span><span class="n">id</span><span class="p">,</span><span class="w"> </span><span class="n">temperature</span><span class="p">)</span><span class="w"> </span><span class="k">VALUES</span><span class="w"> </span><span class="p">(</span><span class="n">uuid</span><span class="p">(),</span><span class="w"> </span><span class="n">NaN</span><span class="p">);</span>
+
+<span class="k">SELECT</span><span class="w"> </span><span class="n">JSON</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="k">FROM</span><span class="w"> </span><span class="n">measurements</span><span class="w"> </span><span class="k">WHERE</span><span class="w"> </span><span class="n">id</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="o">?</span><span class="p">;</span>
+<span class="c1">-- Returns: {"id": "...", "temperature": null}</span>
+
+<span class="k">SELECT</span><span class="w"> </span><span class="n">toJson</span><span class="p">(</span><span class="n">temperature</span><span class="p">)</span><span class="w"> </span><span class="k">FROM</span><span class="w"> </span><span class="n">measurements</span><span class="w"> </span><span class="k">WHERE</span><span class="w"> </span><span class="n">id</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="o">?</span><span class="p">;</span>
+<span class="c1">-- Returns: null</span>
+</code></pre></div>
+<p>The actual values are preserved in storage and returned correctly by non-JSON queries. This behavior occurs because JSON (RFC 8259) does not define representations for IEEE 754 special values.</p>
+</div>
 <p><strong>Best Practices</strong>:
 - Use <code>INT</code>/<code>BIGINT</code> for counters and IDs
 - Use <code>DECIMAL</code> for financial data (exact precision)
