@@ -6328,7 +6328,8 @@ data-et-multi-view="{&quot;schema&quot;:{&quot;content&quot;:{&quot;desktop&quot
     </span>
   </a>
   
-</li>
+    <nav class="md-nav" aria-label="Floating Point Types">
+      <ul class="md-nav__list">
         
           <li class="md-nav__item">
   <a href="#ieee-754-special-values" class="md-nav__link">
@@ -6373,6 +6374,11 @@ data-et-multi-view="{&quot;schema&quot;:{&quot;content&quot;:{&quot;desktop&quot
       Comparison Semantics
     </span>
   </a>
+  
+</li>
+        
+      </ul>
+    </nav>
   
 </li>
         
@@ -20392,7 +20398,8 @@ data-et-multi-view="{&quot;schema&quot;:{&quot;content&quot;:{&quot;desktop&quot
     </span>
   </a>
   
-</li>
+    <nav class="md-nav" aria-label="Floating Point Types">
+      <ul class="md-nav__list">
         
           <li class="md-nav__item">
   <a href="#ieee-754-special-values" class="md-nav__link">
@@ -20437,6 +20444,11 @@ data-et-multi-view="{&quot;schema&quot;:{&quot;content&quot;:{&quot;desktop&quot
       Comparison Semantics
     </span>
   </a>
+  
+</li>
+        
+      </ul>
+    </nav>
   
 </li>
         
@@ -21175,9 +21187,16 @@ data-et-multi-view="{&quot;schema&quot;:{&quot;content&quot;:{&quot;desktop&quot
 <span class="k">INSERT</span><span class="w"> </span><span class="k">INTO</span><span class="w"> </span><span class="n">measurements</span><span class="w"> </span><span class="p">(</span><span class="n">id</span><span class="p">,</span><span class="w"> </span><span class="n">temperature</span><span class="p">,</span><span class="w"> </span><span class="n">precise_value</span><span class="p">,</span><span class="w"> </span><span class="n">currency</span><span class="p">)</span>
 <span class="k">VALUES</span><span class="w"> </span><span class="p">(</span><span class="n">uuid</span><span class="p">(),</span><span class="w"> </span><span class="mi">23</span><span class="p">.</span><span class="mi">5</span><span class="p">,</span><span class="w"> </span><span class="mi">3</span><span class="p">.</span><span class="mi">141592653589793</span><span class="p">,</span><span class="w"> </span><span class="mi">1234567</span><span class="p">.</span><span class="mi">89</span><span class="p">);</span>
 </code></pre></div>
-<h3 id="ieee-754-special-values">IEEE 754 Special Values<a class="headerlink" href="#ieee-754-special-values" title="Permanent link">¶</a></h3>
+<p><strong>Best Practices</strong>:</p>
+<ul>
+<li>Use <code>INT</code>/<code>BIGINT</code> for counters and IDs</li>
+<li>Use <code>DECIMAL</code> for financial data (exact precision)</li>
+<li>Use <code>DOUBLE</code> for scientific calculations</li>
+<li>Avoid <code>FLOAT</code> unless space is critical</li>
+</ul>
+<h4 id="ieee-754-special-values">IEEE 754 Special Values<a class="headerlink" href="#ieee-754-special-values" title="Permanent link">¶</a></h4>
 <p><code>FLOAT</code> and <code>DOUBLE</code> columns accept the IEEE 754 special values <code>NaN</code> (Not a Number), <code>Infinity</code>, and <code>-Infinity</code>. These values MAY be used in regular columns, partition keys, and clustering columns.</p>
-<h4 id="syntax">Syntax<a class="headerlink" href="#syntax" title="Permanent link">¶</a></h4>
+<h5 id="syntax">Syntax<a class="headerlink" href="#syntax" title="Permanent link">¶</a></h5>
 <p>Special values are specified as <strong>unquoted, case-insensitive keywords</strong> in CQL:</p>
 <div class="highlight"><pre><span></span><code><span class="c1">-- Insert special values (case-insensitive)</span>
 <span class="k">INSERT</span><span class="w"> </span><span class="k">INTO</span><span class="w"> </span><span class="n">measurements</span><span class="w"> </span><span class="p">(</span><span class="n">id</span><span class="p">,</span><span class="w"> </span><span class="n">temperature</span><span class="p">,</span><span class="w"> </span><span class="n">precise_value</span><span class="p">)</span>
@@ -21192,7 +21211,7 @@ data-et-multi-view="{&quot;schema&quot;:{&quot;content&quot;:{&quot;desktop&quot
 <p>When using JSON format, special values MUST be specified as <strong>quoted strings</strong>:</p>
 <div class="highlight"><pre><span></span><code><span class="k">INSERT</span><span class="w"> </span><span class="k">INTO</span><span class="w"> </span><span class="n">measurements</span><span class="w"> </span><span class="n">JSON</span><span class="w"> </span><span class="s1">'{"id": "550e8400-e29b-41d4-a716-446655440000", "temperature": "NaN", "precise_value": "Infinity"}'</span><span class="p">;</span>
 </code></pre></div>
-<h4 id="special-values-in-primary-keys">Special Values in Primary Keys<a class="headerlink" href="#special-values-in-primary-keys" title="Permanent link">¶</a></h4>
+<h5 id="special-values-in-primary-keys">Special Values in Primary Keys<a class="headerlink" href="#special-values-in-primary-keys" title="Permanent link">¶</a></h5>
 <p>IEEE 754 special values MAY be used in partition keys and clustering columns:</p>
 <div class="highlight"><pre><span></span><code><span class="c1">-- Float as partition key</span>
 <span class="k">CREATE</span><span class="w"> </span><span class="k">TABLE</span><span class="w"> </span><span class="n">sensor_readings</span><span class="w"> </span><span class="p">(</span>
@@ -21215,7 +21234,7 @@ data-et-multi-view="{&quot;schema&quot;:{&quot;content&quot;:{&quot;desktop&quot
 <span class="k">INSERT</span><span class="w"> </span><span class="k">INTO</span><span class="w"> </span><span class="n">timeseries</span><span class="w"> </span><span class="p">(</span><span class="n">sensor_id</span><span class="p">,</span><span class="w"> </span><span class="n">reading</span><span class="p">,</span><span class="w"> </span><span class="k">data</span><span class="p">)</span><span class="w"> </span><span class="k">VALUES</span><span class="w"> </span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="w"> </span><span class="n">Infinity</span><span class="p">,</span><span class="w"> </span><span class="s1">'max'</span><span class="p">);</span>
 <span class="k">INSERT</span><span class="w"> </span><span class="k">INTO</span><span class="w"> </span><span class="n">timeseries</span><span class="w"> </span><span class="p">(</span><span class="n">sensor_id</span><span class="p">,</span><span class="w"> </span><span class="n">reading</span><span class="p">,</span><span class="w"> </span><span class="k">data</span><span class="p">)</span><span class="w"> </span><span class="k">VALUES</span><span class="w"> </span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="w"> </span><span class="o">-</span><span class="n">Infinity</span><span class="p">,</span><span class="w"> </span><span class="s1">'min'</span><span class="p">);</span>
 </code></pre></div>
-<h4 id="sort-order-for-clustering-columns">Sort Order for Clustering Columns<a class="headerlink" href="#sort-order-for-clustering-columns" title="Permanent link">¶</a></h4>
+<h5 id="sort-order-for-clustering-columns">Sort Order for Clustering Columns<a class="headerlink" href="#sort-order-for-clustering-columns" title="Permanent link">¶</a></h5>
 <p>When used as clustering columns, IEEE 754 special values sort in a defined order:</p>
 <div class="highlight"><pre><span></span><code>-Infinity &lt; -0 &lt; 0 &lt; normal positive values &lt; Infinity &lt; NaN
 </code></pre></div>
@@ -21232,7 +21251,7 @@ data-et-multi-view="{&quot;schema&quot;:{&quot;content&quot;:{&quot;desktop&quot
 <span class="k">SELECT</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="k">FROM</span><span class="w"> </span><span class="n">timeseries</span><span class="w"> </span><span class="k">WHERE</span><span class="w"> </span><span class="n">sensor_id</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">1</span><span class="w"> </span><span class="k">AND</span><span class="w"> </span><span class="n">reading</span><span class="w"> </span><span class="o">&gt;=</span><span class="w"> </span><span class="n">Infinity</span><span class="p">;</span>
 <span class="c1">-- Returns: Infinity AND NaN</span>
 </code></pre></div>
-<h4 id="comparison-semantics">Comparison Semantics<a class="headerlink" href="#comparison-semantics" title="Permanent link">¶</a></h4>
+<h5 id="comparison-semantics">Comparison Semantics<a class="headerlink" href="#comparison-semantics" title="Permanent link">¶</a></h5>
 <p>Cassandra's handling of IEEE 754 special values differs from standard IEEE 754 semantics:</p>
 <table>
 <thead>
@@ -21272,11 +21291,6 @@ data-et-multi-view="{&quot;schema&quot;:{&quot;content&quot;:{&quot;desktop&quot
 </code></pre></div>
 <p>The actual values are preserved in storage and returned correctly by non-JSON queries. This behavior occurs because JSON (RFC 8259) does not define representations for IEEE 754 special values.</p>
 </div>
-<p><strong>Best Practices</strong>:
-- Use <code>INT</code>/<code>BIGINT</code> for counters and IDs
-- Use <code>DECIMAL</code> for financial data (exact precision)
-- Use <code>DOUBLE</code> for scientific calculations
-- Avoid <code>FLOAT</code> unless space is critical</p>
 <hr>
 <h2 id="text-types">Text Types<a class="headerlink" href="#text-types" title="Permanent link">¶</a></h2>
 <table>

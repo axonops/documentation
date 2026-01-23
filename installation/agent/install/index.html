@@ -20969,8 +20969,6 @@ and CPU utilization of the Kafka process.</p>
 <h2 id="agent-configuration_1">Agent Configuration<a class="headerlink" href="#agent-configuration_1" title="Permanent link">¶</a></h2>
 <p>Update the highlighted lines in <code>/etc/axonops/axon-agent.yml</code>.</p>
 <p>These need to match the config that you have in your <code>axon-server.yml</code> setup.</p>
-<p><br>
-<br></p>
 <div class="w3-bar w3-light-grey">
   <button class="w3-bar-item w3-button tabSelected w3-grey" id="Broker" onclick="selectKafkaType(event,'Broker')">Kafka Broker</button>
   <button class="w3-bar-item w3-button tabSelected" id="Zookeeper" onclick="selectKafkaType(event,'Zookeeper')">Zookeeper</button>
@@ -21247,170 +21245,134 @@ and CPU utilization of the Kafka process.</p>
 <div class="axon_kafka_dynamic_s2" id="Broker">
 <h2 id="configure-kafka">Configure Kafka<a class="headerlink" href="#configure-kafka" title="Permanent link">¶</a></h2>
 
-Edit kafka-server-start.sh, usually located in your Kafka install path such as: 
+Edit <code>kafka-server-start.sh</code>, usually located in your Kafka install path such as:
 
-<p><code>/&lt;Kafka_Home&gt;/bin/kafka-server-start.sh</code></p>
+<div class="highlight"><pre><span></span><code>&lt;Kafka_Home&gt;/bin/kafka-server-start.sh
+</code></pre></div>
 </div>
 <div class="axon_kafka_dynamic_s2" id="Zookeeper" style="display:none">
 <h2 id="configure-zookeeper">Configure Zookeeper<a class="headerlink" href="#configure-zookeeper" title="Permanent link">¶</a></h2>
 
-Edit zookeeper-server-start.sh, usually located in your Zookeeper install path such as: 
+Edit <code>zookeeper-server-start.sh</code>, usually located in your Zookeeper install path such as:
 
-<p><code>/&lt;Zookeeper_Home&gt;/bin/zookeeper-server-start.sh</code></p>
+<div class="highlight"><pre><span></span><code>&lt;Zookeeper_Home&gt;/bin/zookeeper-server-start.sh
+</code></pre></div>
 </div>
 <div class="axon_kafka_dynamic_s2" id="KRaftBroker" style="display:none">
 <h2 id="configure-kraft-broker">Configure KRaft Broker<a class="headerlink" href="#configure-kraft-broker" title="Permanent link">¶</a></h2>
 
-Edit kafka-server-start.sh, usually located in your Kafka install path such as: 
+Edit <code>kafka-server-start.sh</code>, usually located in your Kafka install path such as:
 
-<p><code>/&lt;Kafka_Home&gt;/bin/kafka-server-start.sh</code></p>
+<div class="highlight"><pre><span></span><code>&lt;Kafka_Home&gt;/bin/kafka-server-start.sh
+</code></pre></div>
 </div>
 <div class="axon_kafka_dynamic_s2" id="KRaftController" style="display:none">
 <h2 id="configure-kraft-controller">Configure KRaft Controller<a class="headerlink" href="#configure-kraft-controller" title="Permanent link">¶</a></h2>
 
-Edit kafka-server-start.sh, usually located in your Kafka install path such as: 
+Edit <code>kafka-server-start.sh</code>, usually located in your Kafka install path such as:
 
-<p><code>/&lt;Kafka_Home&gt;/bin/kafka-server-start.sh</code></p>
+<div class="highlight"><pre><span></span><code>&lt;Kafka_Home&gt;/bin/kafka-server-start.sh
+</code></pre></div>
 </div>
 <div class="axon_kafka_dynamic_s2" id="Connect" style="display:none">
 <h2 id="configure-connect">Configure Connect<a class="headerlink" href="#configure-connect" title="Permanent link">¶</a></h2>
 
-Edit connect-distributed.sh, usually located in your Kafka install path such as: 
+Edit <code>connect-distributed.sh</code>, usually located in your Kafka install path such as:
 
-<p><code>/&lt;Kafka_Home&gt;/bin/connect-distributed.sh </code></p>
+<div class="highlight"><pre><span></span><code>&lt;Kafka_Home&gt;/bin/connect-distributed.sh
+</code></pre></div>
 </div>
 <!-- Load Dynamic Java section -->
-<p>Insert the line <code>. /usr/share/axonops/axonops-jvm.options</code> right before the final line in your config file. Look for the last line that starts with <code>exec</code>, as demonstrated in the example below.</p>
-<blockquote>
-<p><strong>NB.</strong> Please note the period(.) at the beginning of the config line.</p>
-</blockquote>
-<p>Example:</p>
+<p>Insert the following code block into the above file, right before the final line which contains the <code>exec</code> statement:
+
+</p><div class="highlight"><pre><span></span><code><span class="c1"># Please note the period(.) at the beginning of the config line.</span>
+.<span class="w"> </span>/usr/share/axonops/axonops-jvm.options
+</code></pre></div>
+
+The final state of the last lines of the file should look like this:
+
+
 <!-- Kafka 2.0 Java 11 -->
+
+
+
 <div class="javakafka" id="Kafka20JavaDiv">
 <div class="axon_kafka_dynamic_s3" id="Broker">
 
 <div class="highlight"><pre><span></span><code><span class="hll">.<span class="w"> </span>/usr/share/axonops/axonops-jvm.options
-</span><span class="nb">exec</span><span class="w"> </span><span class="nv">$base_dir</span>/kafka-run-class.sh<span class="w"> </span><span class="nv">$EXTRA_ARGS</span><span class="w"> </span>kafka.Kafka<span class="w"> </span><span class="s2">"</span><span class="nv">$@</span><span class="s2">"</span>
+</span>
+<span class="nb">exec</span><span class="w"> </span><span class="nv">$base_dir</span>/kafka-run-class.sh<span class="w"> </span><span class="nv">$EXTRA_ARGS</span><span class="w"> </span>kafka.Kafka<span class="w"> </span><span class="s2">"</span><span class="nv">$@</span><span class="s2">"</span>
 </code></pre></div>
 </div>
 <div class="axon_kafka_dynamic_s3" id="Zookeeper" style="display:none">
 
 <div class="highlight"><pre><span></span><code><span class="hll">.<span class="w"> </span>/usr/share/axonops/axonops-jvm.options
-</span><span class="nb">exec</span><span class="w"> </span><span class="nv">$base_dir</span>/kafka-run-class.sh<span class="w"> </span><span class="nv">$EXTRA_ARGS</span><span class="w"> </span>org.apache.zookeeper.server.quorum.QuorumPeerMain<span class="w"> </span><span class="s2">"</span><span class="nv">$@</span><span class="s2">"</span>
+</span>
+<span class="nb">exec</span><span class="w"> </span><span class="nv">$base_dir</span>/kafka-run-class.sh<span class="w"> </span><span class="nv">$EXTRA_ARGS</span><span class="w"> </span>org.apache.zookeeper.server.quorum.QuorumPeerMain<span class="w"> </span><span class="s2">"</span><span class="nv">$@</span><span class="s2">"</span>
 </code></pre></div>
 </div>
 <div class="axon_kafka_dynamic_s3" id="KRaftBroker" style="display:none">
 
 <div class="highlight"><pre><span></span><code><span class="hll">.<span class="w"> </span>/usr/share/axonops/axonops-jvm.options
-</span><span class="nb">exec</span><span class="w"> </span><span class="nv">$base_dir</span>/kafka-run-class.sh<span class="w"> </span><span class="nv">$EXTRA_ARGS</span><span class="w"> </span>kafka.Kafka<span class="w"> </span><span class="s2">"</span><span class="nv">$@</span><span class="s2">"</span>
+</span>
+<span class="nb">exec</span><span class="w"> </span><span class="nv">$base_dir</span>/kafka-run-class.sh<span class="w"> </span><span class="nv">$EXTRA_ARGS</span><span class="w"> </span>kafka.Kafka<span class="w"> </span><span class="s2">"</span><span class="nv">$@</span><span class="s2">"</span>
 </code></pre></div>
 </div>
 <div class="axon_kafka_dynamic_s3" id="KRaftController" style="display:none">
 
 <div class="highlight"><pre><span></span><code><span class="hll">.<span class="w"> </span>/usr/share/axonops/axonops-jvm.options
-</span><span class="nb">exec</span><span class="w"> </span><span class="nv">$base_dir</span>/kafka-run-class.sh<span class="w"> </span><span class="nv">$EXTRA_ARGS</span><span class="w"> </span>kafka.Kafka<span class="w"> </span><span class="s2">"</span><span class="nv">$@</span><span class="s2">"</span>
+</span>
+<span class="nb">exec</span><span class="w"> </span><span class="nv">$base_dir</span>/kafka-run-class.sh<span class="w"> </span><span class="nv">$EXTRA_ARGS</span><span class="w"> </span>kafka.Kafka<span class="w"> </span><span class="s2">"</span><span class="nv">$@</span><span class="s2">"</span>
 </code></pre></div>
 </div>
 <div class="axon_kafka_dynamic_s3" id="Connect" style="display:none">
 
 <div class="highlight"><pre><span></span><code><span class="hll">.<span class="w"> </span>/usr/share/axonops/axonops-jvm.options
-</span><span class="nb">exec</span><span class="w"> </span><span class="k">$(</span>dirname<span class="w"> </span><span class="nv">$0</span><span class="k">)</span>/kafka-run-class.sh<span class="w"> </span><span class="nv">$EXTRA_ARGS</span><span class="w"> </span>org.apache.kafka.connect.cli.ConnectDistributed<span class="w"> </span><span class="s2">"</span><span class="nv">$@</span><span class="s2">"</span>
+</span>
+<span class="nb">exec</span><span class="w"> </span><span class="k">$(</span>dirname<span class="w"> </span><span class="nv">$0</span><span class="k">)</span>/kafka-run-class.sh<span class="w"> </span><span class="nv">$EXTRA_ARGS</span><span class="w"> </span>org.apache.kafka.connect.cli.ConnectDistributed<span class="w"> </span><span class="s2">"</span><span class="nv">$@</span><span class="s2">"</span>
 </code></pre></div>
 </div>
 </div>
 <!-- END Kafka 2.0 Java 11 -->
-<!-- Kafka 2.0 Java 17 -->
-<div class="javakafka" id="Kafka20Java17Div">
-<div class="axon_kafka_dynamic_s4" id="Broker">
-
-<div class="highlight"><pre><span></span><code><span class="hll"><span class="w">  </span><span class="nv">EXTRA_ARGS</span><span class="o">=</span><span class="si">${</span><span class="nv">EXTRA_ARGS</span><span class="p">-</span><span class="s1">'-name kafkaServer -loggc -javaagent:/usr/share/axonops/axon-kafka2.0-agent.jar=/etc/axonops/axon-agent.yml --add-exports=java.base/sun.nio.ch=ALL-UNNAMED --add-opens=java.base/sun.nio.ch=ALL-UNNAMED --add-exports=jdk.unsupported/sun.misc=ALL-UNNAMED --add-exports=jdk.compiler/com.sun.tools.javac.tree=ALL-UNNAMED  --add-exports=jdk.compiler/com.sun.tools.javac.code=ALL-UNNAMED  --add-exports=jdk.compiler/com.sun.tools.javac.util=ALL-UNNAMED --add-opens=java.management/com.sun.jmx.mbeanserver=ALL-UNNAMED --add-exports=java.management/com.sun.jmx.mbeanserver=ALL-UNNAMED --add-opens=java.management/com.sun.jmx.interceptor=ALL-UNNAMED --add-exports=java.management/com.sun.jmx.interceptor=ALL-UNNAMED'</span><span class="si">}</span>
-</span></code></pre></div>
-</div>
-<div class="axon_kafka_dynamic_s4" id="Zookeeper" style="display:none">
-
-<div class="highlight"><pre><span></span><code><span class="hll"><span class="w">  </span><span class="nv">EXTRA_ARGS</span><span class="o">=</span><span class="si">${</span><span class="nv">EXTRA_ARGS</span><span class="p">-</span><span class="s1">'-name zookeeper -loggc -javaagent:/usr/share/axonops/axon-kafka2.0-agent.jar=/etc/axonops/axon-agent.yml --add-exports=java.base/sun.nio.ch=ALL-UNNAMED --add-opens=java.base/sun.nio.ch=ALL-UNNAMED --add-exports=jdk.unsupported/sun.misc=ALL-UNNAMED --add-exports=jdk.compiler/com.sun.tools.javac.tree=ALL-UNNAMED  --add-exports=jdk.compiler/com.sun.tools.javac.code=ALL-UNNAMED  --add-exports=jdk.compiler/com.sun.tools.javac.util=ALL-UNNAMED --add-opens=java.management/com.sun.jmx.mbeanserver=ALL-UNNAMED --add-exports=java.management/com.sun.jmx.mbeanserver=ALL-UNNAMED --add-opens=java.management/com.sun.jmx.interceptor=ALL-UNNAMED --add-exports=java.management/com.sun.jmx.interceptor=ALL-UNNAMED'</span><span class="si">}</span>
-</span></code></pre></div>
-</div>
-<div class="axon_kafka_dynamic_s4" id="KRaftBroker" style="display:none">
-
-<div class="highlight"><pre><span></span><code><span class="hll"><span class="w">  </span><span class="nv">EXTRA_ARGS</span><span class="o">=</span><span class="si">${</span><span class="nv">EXTRA_ARGS</span><span class="p">-</span><span class="s1">'-name kafkaServer -loggc -javaagent:/usr/share/axonops/axon-kafka2.0-agent.jar=/etc/axonops/axon-agent.yml --add-exports=java.base/sun.nio.ch=ALL-UNNAMED --add-opens=java.base/sun.nio.ch=ALL-UNNAMED --add-exports=jdk.unsupported/sun.misc=ALL-UNNAMED --add-exports=jdk.compiler/com.sun.tools.javac.tree=ALL-UNNAMED  --add-exports=jdk.compiler/com.sun.tools.javac.code=ALL-UNNAMED  --add-exports=jdk.compiler/com.sun.tools.javac.util=ALL-UNNAMED --add-opens=java.management/com.sun.jmx.mbeanserver=ALL-UNNAMED --add-exports=java.management/com.sun.jmx.mbeanserver=ALL-UNNAMED --add-opens=java.management/com.sun.jmx.interceptor=ALL-UNNAMED --add-exports=java.management/com.sun.jmx.interceptor=ALL-UNNAMED'</span><span class="si">}</span>
-</span></code></pre></div>
-</div>
-<div class="axon_kafka_dynamic_s4" id="KRaftController" style="display:none">
-
-<div class="highlight"><pre><span></span><code><span class="hll"><span class="w">  </span><span class="nv">EXTRA_ARGS</span><span class="o">=</span><span class="si">${</span><span class="nv">EXTRA_ARGS</span><span class="p">-</span><span class="s1">'-name kafkaServer -loggc -javaagent:/usr/share/axonops/axon-kafka2.0-agent.jar=/etc/axonops/axon-agent.yml --add-exports=java.base/sun.nio.ch=ALL-UNNAMED --add-opens=java.base/sun.nio.ch=ALL-UNNAMED --add-exports=jdk.unsupported/sun.misc=ALL-UNNAMED --add-exports=jdk.compiler/com.sun.tools.javac.tree=ALL-UNNAMED  --add-exports=jdk.compiler/com.sun.tools.javac.code=ALL-UNNAMED  --add-exports=jdk.compiler/com.sun.tools.javac.util=ALL-UNNAMED --add-opens=java.management/com.sun.jmx.mbeanserver=ALL-UNNAMED --add-exports=java.management/com.sun.jmx.mbeanserver=ALL-UNNAMED --add-opens=java.management/com.sun.jmx.interceptor=ALL-UNNAMED --add-exports=java.management/com.sun.jmx.interceptor=ALL-UNNAMED'</span><span class="si">}</span>
-</span></code></pre></div>
-</div>
-<div class="axon_kafka_dynamic_s4" id="Connect" style="display:none">
-
-<div class="highlight"><pre><span></span><code><span class="hll"><span class="w">  </span><span class="nv">EXTRA_ARGS</span><span class="o">=</span><span class="si">${</span><span class="nv">EXTRA_ARGS</span><span class="p">-</span><span class="s1">'-name connectDistributed -javaagent:/usr/share/axonops/axon-kafka2.0-agent.jar=/etc/axonops/axon-agent.yml --add-exports=java.base/sun.nio.ch=ALL-UNNAMED --add-opens=java.base/sun.nio.ch=ALL-UNNAMED --add-exports=jdk.unsupported/sun.misc=ALL-UNNAMED --add-exports=jdk.compiler/com.sun.tools.javac.tree=ALL-UNNAMED  --add-exports=jdk.compiler/com.sun.tools.javac.code=ALL-UNNAMED  --add-exports=jdk.compiler/com.sun.tools.javac.util=ALL-UNNAMED --add-opens=java.management/com.sun.jmx.mbeanserver=ALL-UNNAMED --add-exports=java.management/com.sun.jmx.mbeanserver=ALL-UNNAMED --add-opens=java.management/com.sun.jmx.interceptor=ALL-UNNAMED --add-exports=java.management/com.sun.jmx.interceptor=ALL-UNNAMED'</span><span class="si">}</span>
-</span></code></pre></div>
-</div>
-</div>
-<!-- END Kafka 2.0 Java 17 -->
 <!-- Kafka 3.0 Java 11 -->
 <div class="javakafka" id="Kafka30JavaDiv">
 <div class="axon_kafka_dynamic_s6" id="Broker">
 
 <div class="highlight"><pre><span></span><code><span class="hll">.<span class="w"> </span>/usr/share/axonops/axonops-jvm.options
-</span><span class="nb">exec</span><span class="w"> </span><span class="nv">$base_dir</span>/kafka-run-class.sh<span class="w"> </span><span class="nv">$EXTRA_ARGS</span><span class="w"> </span>kafka.Kafka<span class="w"> </span><span class="s2">"</span><span class="nv">$@</span><span class="s2">"</span>
+</span>
+<span class="nb">exec</span><span class="w"> </span><span class="nv">$base_dir</span>/kafka-run-class.sh<span class="w"> </span><span class="nv">$EXTRA_ARGS</span><span class="w"> </span>kafka.Kafka<span class="w"> </span><span class="s2">"</span><span class="nv">$@</span><span class="s2">"</span>
 </code></pre></div>
 </div>
 <div class="axon_kafka_dynamic_s6" id="Zookeeper" style="display:none">
 
 <div class="highlight"><pre><span></span><code><span class="hll">.<span class="w"> </span>/usr/share/axonops/axonops-jvm.options
-</span><span class="nb">exec</span><span class="w"> </span><span class="nv">$base_dir</span>/kafka-run-class.sh<span class="w"> </span><span class="nv">$EXTRA_ARGS</span><span class="w"> </span>org.apache.zookeeper.server.quorum.QuorumPeerMain<span class="w"> </span><span class="s2">"</span><span class="nv">$@</span><span class="s2">"</span>
+</span>
+<span class="nb">exec</span><span class="w"> </span><span class="nv">$base_dir</span>/kafka-run-class.sh<span class="w"> </span><span class="nv">$EXTRA_ARGS</span><span class="w"> </span>org.apache.zookeeper.server.quorum.QuorumPeerMain<span class="w"> </span><span class="s2">"</span><span class="nv">$@</span><span class="s2">"</span>
 </code></pre></div>
 </div>
 <div class="axon_kafka_dynamic_s6" id="KRaftBroker" style="display:none">
 
 <div class="highlight"><pre><span></span><code><span class="hll">.<span class="w"> </span>/usr/share/axonops/axonops-jvm.options
-</span><span class="nb">exec</span><span class="w"> </span><span class="nv">$base_dir</span>/kafka-run-class.sh<span class="w"> </span><span class="nv">$EXTRA_ARGS</span><span class="w"> </span>kafka.Kafka<span class="w"> </span><span class="s2">"</span><span class="nv">$@</span><span class="s2">"</span>
+</span>
+<span class="nb">exec</span><span class="w"> </span><span class="nv">$base_dir</span>/kafka-run-class.sh<span class="w"> </span><span class="nv">$EXTRA_ARGS</span><span class="w"> </span>kafka.Kafka<span class="w"> </span><span class="s2">"</span><span class="nv">$@</span><span class="s2">"</span>
 </code></pre></div>
 </div>
 <div class="axon_kafka_dynamic_s6" id="KRaftController" style="display:none">
 
 <div class="highlight"><pre><span></span><code><span class="hll">.<span class="w"> </span>/usr/share/axonops/axonops-jvm.options
-</span><span class="nb">exec</span><span class="w"> </span><span class="nv">$base_dir</span>/kafka-run-class.sh<span class="w"> </span><span class="nv">$EXTRA_ARGS</span><span class="w"> </span>kafka.Kafka<span class="w"> </span><span class="s2">"</span><span class="nv">$@</span><span class="s2">"</span>
+</span>
+<span class="nb">exec</span><span class="w"> </span><span class="nv">$base_dir</span>/kafka-run-class.sh<span class="w"> </span><span class="nv">$EXTRA_ARGS</span><span class="w"> </span>kafka.Kafka<span class="w"> </span><span class="s2">"</span><span class="nv">$@</span><span class="s2">"</span>
 </code></pre></div>
 </div>
 <div class="axon_kafka_dynamic_s6" id="Connect" style="display:none">
 
 <div class="highlight"><pre><span></span><code><span class="hll">.<span class="w"> </span>/usr/share/axonops/axonops-jvm.options
-</span><span class="nb">exec</span><span class="w"> </span><span class="k">$(</span>dirname<span class="w"> </span><span class="nv">$0</span><span class="k">)</span>/kafka-run-class.sh<span class="w"> </span><span class="nv">$EXTRA_ARGS</span><span class="w"> </span>org.apache.kafka.connect.cli.ConnectDistributed<span class="w"> </span><span class="s2">"</span><span class="nv">$@</span><span class="s2">"</span>
+</span>
+<span class="nb">exec</span><span class="w"> </span><span class="k">$(</span>dirname<span class="w"> </span><span class="nv">$0</span><span class="k">)</span>/kafka-run-class.sh<span class="w"> </span><span class="nv">$EXTRA_ARGS</span><span class="w"> </span>org.apache.kafka.connect.cli.ConnectDistributed<span class="w"> </span><span class="s2">"</span><span class="nv">$@</span><span class="s2">"</span>
 </code></pre></div>
 </div>
 </div>
 <!-- END Kafka 3.0 Java 11 -->
-<!-- Kafka 3.0 Java 17 -->
-<div class="javakafka" id="Kafka30Java17Div">
-<div class="axon_kafka_dynamic_s7" id="Broker">
-
-<div class="highlight"><pre><span></span><code><span class="hll"><span class="w">  </span><span class="nv">EXTRA_ARGS</span><span class="o">=</span><span class="si">${</span><span class="nv">EXTRA_ARGS</span><span class="p">-</span><span class="s1">'-name kafkaServer -loggc -javaagent:/usr/share/axonops/axon-kafka3.0-agent.jar=/etc/axonops/axon-agent.yml --add-exports=java.base/sun.nio.ch=ALL-UNNAMED --add-opens=java.base/sun.nio.ch=ALL-UNNAMED --add-exports=jdk.unsupported/sun.misc=ALL-UNNAMED --add-exports=jdk.compiler/com.sun.tools.javac.tree=ALL-UNNAMED  --add-exports=jdk.compiler/com.sun.tools.javac.code=ALL-UNNAMED  --add-exports=jdk.compiler/com.sun.tools.javac.util=ALL-UNNAMED --add-opens=java.management/com.sun.jmx.mbeanserver=ALL-UNNAMED --add-exports=java.management/com.sun.jmx.mbeanserver=ALL-UNNAMED --add-opens=java.management/com.sun.jmx.interceptor=ALL-UNNAMED --add-exports=java.management/com.sun.jmx.interceptor=ALL-UNNAMED'</span><span class="si">}</span>
-</span></code></pre></div>
-</div>
-<div class="axon_kafka_dynamic_s7" id="Zookeeper" style="display:none">
-
-<div class="highlight"><pre><span></span><code><span class="hll"><span class="w">  </span><span class="nv">EXTRA_ARGS</span><span class="o">=</span><span class="si">${</span><span class="nv">EXTRA_ARGS</span><span class="p">-</span><span class="s1">'-name zookeeper -loggc -javaagent:/usr/share/axonops/axon-kafka3.0-agent.jar=/etc/axonops/axon-agent.yml --add-exports=java.base/sun.nio.ch=ALL-UNNAMED --add-opens=java.base/sun.nio.ch=ALL-UNNAMED --add-exports=jdk.unsupported/sun.misc=ALL-UNNAMED --add-exports=jdk.compiler/com.sun.tools.javac.tree=ALL-UNNAMED  --add-exports=jdk.compiler/com.sun.tools.javac.code=ALL-UNNAMED  --add-exports=jdk.compiler/com.sun.tools.javac.util=ALL-UNNAMED --add-opens=java.management/com.sun.jmx.mbeanserver=ALL-UNNAMED --add-exports=java.management/com.sun.jmx.mbeanserver=ALL-UNNAMED --add-opens=java.management/com.sun.jmx.interceptor=ALL-UNNAMED --add-exports=java.management/com.sun.jmx.interceptor=ALL-UNNAMED'</span><span class="si">}</span>
-</span></code></pre></div>
-</div>
-<div class="axon_kafka_dynamic_s7" id="KRaftBroker" style="display:none">
-
-<div class="highlight"><pre><span></span><code><span class="hll"><span class="w">  </span><span class="nv">EXTRA_ARGS</span><span class="o">=</span><span class="si">${</span><span class="nv">EXTRA_ARGS</span><span class="p">-</span><span class="s1">'-name kafkaServer -loggc -javaagent:/usr/share/axonops/axon-kafka3.0-agent.jar=/etc/axonops/axon-agent.yml --add-exports=java.base/sun.nio.ch=ALL-UNNAMED --add-opens=java.base/sun.nio.ch=ALL-UNNAMED --add-exports=jdk.unsupported/sun.misc=ALL-UNNAMED --add-exports=jdk.compiler/com.sun.tools.javac.tree=ALL-UNNAMED  --add-exports=jdk.compiler/com.sun.tools.javac.code=ALL-UNNAMED  --add-exports=jdk.compiler/com.sun.tools.javac.util=ALL-UNNAMED --add-opens=java.management/com.sun.jmx.mbeanserver=ALL-UNNAMED --add-exports=java.management/com.sun.jmx.mbeanserver=ALL-UNNAMED --add-opens=java.management/com.sun.jmx.interceptor=ALL-UNNAMED --add-exports=java.management/com.sun.jmx.interceptor=ALL-UNNAMED'</span><span class="si">}</span>
-</span></code></pre></div>
-</div>
-<div class="axon_kafka_dynamic_s7" id="KRaftController" style="display:none">
-
-<div class="highlight"><pre><span></span><code><span class="hll"><span class="w">  </span><span class="nv">EXTRA_ARGS</span><span class="o">=</span><span class="si">${</span><span class="nv">EXTRA_ARGS</span><span class="p">-</span><span class="s1">'-name kafkaServer -loggc -javaagent:/usr/share/axonops/axon-kafka3.0-agent.jar=/etc/axonops/axon-agent.yml --add-exports=java.base/sun.nio.ch=ALL-UNNAMED --add-opens=java.base/sun.nio.ch=ALL-UNNAMED --add-exports=jdk.unsupported/sun.misc=ALL-UNNAMED --add-exports=jdk.compiler/com.sun.tools.javac.tree=ALL-UNNAMED  --add-exports=jdk.compiler/com.sun.tools.javac.code=ALL-UNNAMED  --add-exports=jdk.compiler/com.sun.tools.javac.util=ALL-UNNAMED --add-opens=java.management/com.sun.jmx.mbeanserver=ALL-UNNAMED --add-exports=java.management/com.sun.jmx.mbeanserver=ALL-UNNAMED --add-opens=java.management/com.sun.jmx.interceptor=ALL-UNNAMED --add-exports=java.management/com.sun.jmx.interceptor=ALL-UNNAMED'</span><span class="si">}</span>
-</span></code></pre></div>
-</div>
-<div class="axon_kafka_dynamic_s7" id="Connect" style="display:none">
-
-<div class="highlight"><pre><span></span><code><span class="hll"><span class="w">  </span><span class="nv">EXTRA_ARGS</span><span class="o">=</span><span class="si">${</span><span class="nv">EXTRA_ARGS</span><span class="p">-</span><span class="s1">'-name connectDistributed -javaagent:/usr/share/axonops/axon-kafka3.0-agent.jar=/etc/axonops/axon-agent.yml --add-exports=java.base/sun.nio.ch=ALL-UNNAMED --add-opens=java.base/sun.nio.ch=ALL-UNNAMED --add-exports=jdk.unsupported/sun.misc=ALL-UNNAMED --add-exports=jdk.compiler/com.sun.tools.javac.tree=ALL-UNNAMED  --add-exports=jdk.compiler/com.sun.tools.javac.code=ALL-UNNAMED  --add-exports=jdk.compiler/com.sun.tools.javac.util=ALL-UNNAMED --add-opens=java.management/com.sun.jmx.mbeanserver=ALL-UNNAMED --add-exports=java.management/com.sun.jmx.mbeanserver=ALL-UNNAMED --add-opens=java.management/com.sun.jmx.interceptor=ALL-UNNAMED --add-exports=java.management/com.sun.jmx.interceptor=ALL-UNNAMED'</span><span class="si">}</span>
-</span></code></pre></div>
-</div>
-</div>
-<!-- END Kafka 3.0 Java 17 -->
 <!-- Step 4 end -->
 <blockquote>
 <p><strong>NB.</strong> Make sure that this configuration will not get overridden by an automation tool.</p>
@@ -21425,6 +21387,10 @@ sudo usermod -aG axonops &lt;your_kafka_user&gt;
 <h2 id="startrestart-kafka">Start/Restart Kafka<a class="headerlink" href="#startrestart-kafka" title="Permanent link">¶</a></h2>
 
 To load the AxonOps Java Agent and Kafka config changes please either start the Kafka service if stopped restart the Kafka service if already running.
+
+<div class="highlight"><pre><span></span><code>&lt;Kafka_Home&gt;/bin/kafka-server-stop.sh
+&lt;Kafka_Home&gt;/bin/kafka-server-start.sh
+</code></pre></div>
 </div>
 <div class="axon_kafka_dynamic_s5" id="Zookeeper" style="display:none">
 <h2 id="add-axonops-user-to-zookeeper-user-group-and-zookeeper-user-to-axonops-group">Add axonops user to Zookeeper user group and Zookeeper user to axonops group<a class="headerlink" href="#add-axonops-user-to-zookeeper-user-group-and-zookeeper-user-to-axonops-group" title="Permanent link">¶</a></h2>
@@ -21435,6 +21401,10 @@ sudo usermod -aG axonops &lt;your_zookeeper_user&gt;
 <h2 id="startrestart-zookeeper">Start/Restart Zookeeper<a class="headerlink" href="#startrestart-zookeeper" title="Permanent link">¶</a></h2>
 
 To load the AxonOps Java Agent and Zookeeper config changes please either start the Zookeeper service if stopped or restart the Zookeeper service if already running.
+
+<div class="highlight"><pre><span></span><code>&lt;Zookeeper_Home&gt;/bin/zookeeper-server-stop.sh
+&lt;Zookeeper_Home&gt;/bin/zookeeper-server-start.sh
+</code></pre></div>
 </div>
 <div class="axon_kafka_dynamic_s5" id="KRaftBroker" style="display:none">
 <h2 id="add-axonops-user-to-kraft-broker-user-group-and-kraft-broker-user-to-axonops-group">Add axonops user to KRaft Broker user group and KRaft Broker user to axonops group<a class="headerlink" href="#add-axonops-user-to-kraft-broker-user-group-and-kraft-broker-user-to-axonops-group" title="Permanent link">¶</a></h2>
@@ -21445,6 +21415,10 @@ sudo usermod -aG axonops &lt;your_kraft_user&gt;
 <h2 id="startrestart-kraft-broker">Start/Restart KRaft Broker<a class="headerlink" href="#startrestart-kraft-broker" title="Permanent link">¶</a></h2>
 
 To load the AxonOps Java Agent and Kafka KRaft config changes please either start the Kafka KRaft service if stopped or restart the Kafka KRaft service if already running.
+
+<div class="highlight"><pre><span></span><code>&lt;Kafka_Home&gt;/bin/kafka-server-stop.sh
+&lt;Kafka_Home&gt;/bin/kafka-server-start.sh
+</code></pre></div>
 </div>
 <div class="axon_kafka_dynamic_s5" id="KRaftController" style="display:none">
 <h2 id="add-axonops-user-to-kraft-controller-user-group-and-kraft-controller-user-to-axonops-group">Add axonops user to KRaft Controller user group and KRaft Controller user to axonops group<a class="headerlink" href="#add-axonops-user-to-kraft-controller-user-group-and-kraft-controller-user-to-axonops-group" title="Permanent link">¶</a></h2>
@@ -21455,6 +21429,10 @@ sudo usermod -aG axonops &lt;your_kraft_user&gt;
 <h2 id="startrestart-kraft-controller">Start/Restart KRaft Controller<a class="headerlink" href="#startrestart-kraft-controller" title="Permanent link">¶</a></h2>
 
 To load the AxonOps Java Agent and Kafka KRaft config changes please either start the Kafka KRaft service if stopped or restart the Kafka KRaft service if already running.
+
+<div class="highlight"><pre><span></span><code>&lt;Kafka_Home&gt;/bin/kafka-server-stop.sh
+&lt;Kafka_Home&gt;/bin/kafka-server-start.sh
+</code></pre></div>
 </div>
 <div class="axon_kafka_dynamic_s5" id="Connect" style="display:none">
 <h2 id="add-axonops-user-to-kafka-connect-user-group-and-kafka-connect-user-to-axonops-group">Add axonops user to Kafka Connect user group and Kafka Connect user to axonops group<a class="headerlink" href="#add-axonops-user-to-kafka-connect-user-group-and-kafka-connect-user-to-axonops-group" title="Permanent link">¶</a></h2>
@@ -21469,6 +21447,9 @@ To load the AxonOps Java Agent and Kafka Connect config changes please either:
 * Start the Kafka Connect service if stopped.
 * Restart the Kafka Connect service if already running.
 
+<div class="highlight"><pre><span></span><code>&lt;Kafka_Home&gt;/bin/kafka-server-stop.sh
+&lt;Kafka_Home&gt;/bin/connect-distributed.sh
+</code></pre></div>
 </div>
 </div>
 <h2 id="start-the-axonops-agent">Start the AxonOps Agent<a class="headerlink" href="#start-the-axonops-agent" title="Permanent link">¶</a></h2>
