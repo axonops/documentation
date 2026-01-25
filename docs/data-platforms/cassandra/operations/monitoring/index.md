@@ -95,7 +95,7 @@ AlertEng --> Alert
 | Unreachable nodes | StorageService.UnreachableNodes | Empty | Any node unreachable |
 | Schema versions | StorageService.SchemaVersion | Single version | Multiple versions >5 min |
 | Pending compactions | Compaction.PendingTasks | <50 | >100 sustained |
-| Dropped messages | DroppedMessage.Dropped | 0 | Any drops |
+| Dropped messages | DroppedMessage.Dropped | 0 | Sustained drops (>10/s) |
 
 ### Read Performance
 

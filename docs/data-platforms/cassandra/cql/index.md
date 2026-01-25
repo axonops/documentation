@@ -61,7 +61,7 @@ This documentation uses syntax notation conventions adopted from [PostgreSQL Doc
 
 ```cqlsyntax
 INSERT INTO *table_name* [ ( *column_name* [, ...] ) ]
-    { DEFAULT VALUES | VALUES ( *value* [, ...] ) | *query* }
+    VALUES ( *value* [, ...] )
     [ IF NOT EXISTS ]
     [ USING TTL *seconds* ]
 ```
@@ -69,7 +69,7 @@ INSERT INTO *table_name* [ ( *column_name* [, ...] ) ]
 Reading this syntax:
 - `INSERT INTO` and *table_name* are required
 - Column list `( *column_name* [, ...] )` is optional
-- One of the three alternatives in `{ }` is required: `DEFAULT VALUES`, `VALUES (...)`, or a *query*
+- `VALUES (...)` clause is required
 - `IF NOT EXISTS` clause is optional
 - `USING TTL` clause is optional
 
@@ -98,7 +98,7 @@ Placeholder terms follow SQL grammar conventions from the ISO/IEC 9075 standard:
 
 | CQL Version | Cassandra Version | Key Features |
 |-------------|-------------------|--------------|
-| CQL 3.0 | 2.0+ | Collections, lightweight transactions |
+| CQL 3.0 | 1.2+ | Collections, compound primary keys |
 | CQL 3.4 | 3.0+ | Materialized views, JSON support, UDFs |
 | CQL 3.4.5 | 4.0+ | Virtual tables, audit logging, duration type |
 | CQL 3.4.6 | 4.1+ | CONTAINS KEY for maps, improved aggregations |

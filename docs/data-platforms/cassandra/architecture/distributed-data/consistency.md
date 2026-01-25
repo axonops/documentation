@@ -17,16 +17,21 @@ Consistency in Cassandra is tunable—the number of replicas that must acknowled
 
 ## Consistency Is Per-Request
 
-Unlike traditional databases where consistency is a system property, Cassandra allows specifying consistency per statement:
+Unlike traditional databases where consistency is a system property, Cassandra allows specifying consistency per statement.
+
+In **cqlsh**, consistency is set as a session command:
 
 ```sql
--- Strong consistency for this critical write
+-- cqlsh session command (not standard CQL)
 CONSISTENCY QUORUM;
 INSERT INTO orders (id, amount) VALUES (uuid(), 100.00);
+```
 
--- Weaker consistency for this non-critical read
-CONSISTENCY ONE;
-SELECT * FROM page_views WHERE page_id = 'homepage';
+In **application code**, consistency is set via driver API:
+
+```java
+// Java Driver example
+session.execute(statement.setConsistencyLevel(ConsistencyLevel.QUORUM));
 ```
 
 Different operations can be optimized differently within the same application.
@@ -117,7 +122,7 @@ H ..> Replicas : later delivery
 ```
 
 !!! danger "Data Loss Risk"
-    If the coordinator crashes before delivering the hint, the data is **permanently lost**. Use ANY only for truly non-critical data.
+    If the coordinator is permanently lost before delivering the hint, the data may be lost. Hints are durable on the coordinator but require the coordinator to survive. Use ANY only for truly non-critical data.
 
 **When to use**: Almost never. Only for truly non-critical data where losing some writes is acceptable.
 
@@ -289,7 +294,7 @@ Coord --> Client : SUCCESS
     | QUORUM (multi-DC) | Client → DC1 → DC2 → DC1 → Client | 50-200ms |
     | LOCAL_QUORUM | Client → DC1 → Client | 1-5ms |
 
-    LOCAL_QUORUM is **10-100x faster** for multi-DC deployments.
+    LOCAL_QUORUM is significantly faster for multi-DC deployments by avoiding cross-DC latency.
 
 **When to use**: Multi-DC deployments (almost always the right choice).
 
@@ -484,15 +489,18 @@ Coord -> Client : TIMEOUT ERROR
 
 ### R + W > N
 
-The fundamental rule for strong consistency:
+A common heuristic for strong consistency:
 
 ```
 R = Number of replicas read
 W = Number of replicas written
 N = Replication factor
 
-If R + W > N, reads will see the latest writes.
+If R + W > N, there is at least one replica overlap between reads and writes.
 ```
+
+!!! note "Heuristic, Not Guarantee"
+    R + W > N provides overlap between read and write replicas but does not account for concurrent writes, hinted handoff, or clock skew. It is a useful heuristic, not a strict guarantee of linearizability.
 
 **Why it works**:
 

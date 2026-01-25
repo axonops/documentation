@@ -207,14 +207,20 @@ cqlai --config-file /path/to/config.json
 
 ### AI Provider Variables
 
-| Variable | Description |
-|----------|-------------|
-| `OPENAI_API_KEY` | OpenAI API key |
-| `ANTHROPIC_API_KEY` | Anthropic API key |
-| `GEMINI_API_KEY` | Google Gemini API key |
-| `OPENROUTER_API_KEY` | OpenRouter API key |
-| `OLLAMA_URL` | Ollama server URL |
-| `OLLAMA_MODEL` | Ollama model name |
+CQLAI supports two naming conventions for AI provider environment variables:
+
+| CQLAI Variable | Compatibility Variable | Description |
+|----------------|------------------------|-------------|
+| `CQLAI_AI_PROVIDER` | — | AI provider name (openai, anthropic, ollama, etc.) |
+| `CQLAI_AI_KEY` | `OPENAI_API_KEY` | OpenAI API key |
+| `CQLAI_AI_KEY` | `ANTHROPIC_API_KEY` | Anthropic API key |
+| `CQLAI_AI_KEY` | `GEMINI_API_KEY` | Google Gemini API key |
+| `CQLAI_AI_KEY` | `OPENROUTER_API_KEY` | OpenRouter API key |
+| `CQLAI_OLLAMA_HOST` | `OLLAMA_URL` | Ollama server URL |
+| — | `OLLAMA_MODEL` | Ollama model name |
+
+!!! note "Variable Precedence"
+    CQLAI-prefixed variables (`CQLAI_AI_KEY`, `CQLAI_OLLAMA_HOST`) take precedence over provider-specific compatibility variables (`OPENAI_API_KEY`, `OLLAMA_URL`). For detailed AI provider configuration, see [AI Providers](../ai-features/ai-providers/index.md).
 
 ### Example
 

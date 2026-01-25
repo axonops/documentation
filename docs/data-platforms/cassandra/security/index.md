@@ -95,11 +95,23 @@ LIST ROLES;
 
 ### Authentication Cache
 
+!!! note "Setting Name Changes"
+    | Setting | Pre-4.1 | 4.1+ |
+    |---------|---------|------|
+    | Credentials validity | `credentials_validity_in_ms` | `credentials_validity` |
+    | Credentials update interval | `credentials_update_interval_in_ms` | `credentials_update_interval` |
+
+    Cassandra 4.1+ uses duration literals (e.g., `2000ms`, `2s`) instead of milliseconds.
+
 ```yaml
-# cassandra.yaml
-credentials_validity_in_ms: 2000
-credentials_update_interval_in_ms: 2000
+# cassandra.yaml (4.1+ syntax)
+credentials_validity: 2000ms
+credentials_update_interval: 2000ms
 credentials_cache_max_entries: 1000
+
+# Pre-4.1 syntax (deprecated)
+# credentials_validity_in_ms: 2000
+# credentials_update_interval_in_ms: 2000
 ```
 
 ---
@@ -131,6 +143,8 @@ role_manager: CassandraRoleManager
 | `EXECUTE` | Function | Execute functions |
 | `MODIFY` | Keyspace, Table | INSERT, UPDATE, DELETE |
 | `SELECT` | Keyspace, Table, MBean | Read data |
+| `SELECT_MASKED` | Table | Read masked data (Dynamic Data Masking, Cassandra 5.0+) |
+| `UNMASK` | Table | Read unmasked data (Dynamic Data Masking, Cassandra 5.0+) |
 
 ### Granting Permissions
 
@@ -361,7 +375,7 @@ server_encryption_options:
       - TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256
 
     # Enable for legacy SSL port (optional)
-    enable_legacy_ssl_storage_port: false
+    legacy_ssl_storage_port_enabled: false
 ```
 
 ### Encryption Modes

@@ -18,14 +18,22 @@ Displays authentication cache configuration settings.
 ## Synopsis
 
 ```bash
-nodetool [connection_options] getauthcacheconfig
+nodetool [connection_options] getauthcacheconfig --cache-name <cache>
 ```
+
+---
+
+## Options
+
+| Option | Description |
+|--------|-------------|
+| `--cache-name <cache>` | Required. Cache to query: `CredentialsCache`, `PermissionsCache`, `RolesCache`, or `NetworkPermissionsCache` |
 
 ---
 
 ## Description
 
-`nodetool getauthcacheconfig` displays the current configuration of Cassandra's authentication and authorization caches. These caches improve performance by storing authentication credentials and authorization decisions, reducing the need to query system tables for every operation.
+`nodetool getauthcacheconfig` displays the current configuration of a specific Cassandra authentication or authorization cache. These caches improve performance by storing authentication credentials and authorization decisions, reducing the need to query system tables for every operation.
 
 ---
 
@@ -33,42 +41,43 @@ nodetool [connection_options] getauthcacheconfig
 
 | Field | Description |
 |-------|-------------|
-| `credentials_validity` | How long credential cache entries remain valid (ms) |
-| `credentials_update_interval` | Background refresh interval for credentials (ms) |
-| `credentials_cache_max_entries` | Maximum entries in credentials cache |
-| `permissions_validity` | How long permission cache entries remain valid (ms) |
-| `permissions_update_interval` | Background refresh interval for permissions (ms) |
-| `permissions_cache_max_entries` | Maximum entries in permissions cache |
-| `roles_validity` | How long role cache entries remain valid (ms) |
-| `roles_update_interval` | Background refresh interval for roles (ms) |
-| `roles_cache_max_entries` | Maximum entries in roles cache |
+| `Validity Period` | How long cache entries remain valid |
+| `Update Interval` | Background refresh interval |
+| `Max Entries` | Maximum entries in cache |
+| `Active Update` | Whether entries are actively refreshed before expiry |
 
 ---
 
 ## Examples
 
-### Basic Usage
+### Query Credentials Cache
 
 ```bash
-nodetool getauthcacheconfig
+nodetool getauthcacheconfig --cache-name CredentialsCache
 ```
 
 **Sample output:**
 
 ```
-Auth Cache Configuration:
-  Credentials:
-    Validity: 2000 ms
-    Update Interval: 1000 ms
-    Max Entries: 1000
-  Permissions:
-    Validity: 2000 ms
-    Update Interval: 1000 ms
-    Max Entries: 1000
-  Roles:
-    Validity: 2000 ms
-    Update Interval: 1000 ms
-    Max Entries: 1000
+Validity Period: 2000 ms
+Update Interval: 1000 ms
+Max Entries: 1000
+Active Update: true
+```
+
+### Query Permissions Cache
+
+```bash
+nodetool getauthcacheconfig --cache-name PermissionsCache
+```
+
+### Query All Caches
+
+```bash
+for cache in CredentialsCache PermissionsCache RolesCache NetworkPermissionsCache; do
+    echo "=== $cache ==="
+    nodetool getauthcacheconfig --cache-name $cache
+done
 ```
 
 ---

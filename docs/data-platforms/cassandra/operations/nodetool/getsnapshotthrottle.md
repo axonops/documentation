@@ -20,7 +20,23 @@ nodetool [connection_options] getsnapshotthrottle
 
 ## Description
 
-`nodetool getsnapshotthrottle` shows the current throttle rate for snapshot hard link creation in MB/s. This limits the I/O impact of snapshot operations.
+`nodetool getsnapshotthrottle` shows the current throttle rate for snapshot hard link creation in **links per second**. This limits how fast hard links are created during snapshot operations.
+
+---
+
+## Output
+
+When throttling is enabled:
+
+```
+Snapshot throttle: 1000 links/second
+```
+
+When throttling is disabled (value is 0):
+
+```
+Snapshot throttle is disabled
+```
 
 ---
 

@@ -223,7 +223,7 @@ VIRTUAL TABLE system_views.sstable_tasks (
 | `keyspace_name` | text | Keyspace |
 | `table_name` | text | Table |
 | `task_id` | timeuuid | Unique task identifier |
-| `kind` | text | Operation type (Compaction, Cleanup, Scrub, etc.) |
+| `kind` | text | Operation type (lowercase: `compaction`, `cleanup`, `scrub`, etc.) |
 | `progress` | bigint | Bytes/rows processed |
 | `total` | bigint | Total bytes/rows to process |
 | `completion_ratio` | double | Progress percentage (0.0-1.0) |
@@ -240,12 +240,12 @@ VIRTUAL TABLE system_views.sstable_tasks (
 SELECT keyspace_name, table_name, kind, completion_ratio, sstables
 FROM system_views.sstable_tasks;
 
--- Compaction progress
+-- Compaction progress (note: kind values are lowercase)
 SELECT keyspace_name, table_name, kind,
        progress, total,
        completion_ratio * 100 AS percent_complete
 FROM system_views.sstable_tasks
-WHERE kind = 'Compaction';
+WHERE kind = 'compaction';
 
 -- Large compaction operations
 SELECT keyspace_name, table_name, sstables, total / 1073741824 AS total_gb
@@ -282,7 +282,7 @@ WHERE created_at < toTimestamp(now()) - 604800s;
 -- Requires application logic to track over time
 SELECT keyspace_name, table_name, kind, completion_ratio
 FROM system_views.sstable_tasks
-WHERE kind = 'Compaction';
+WHERE kind = 'compaction';
 ```
 
 ### Disk Usage Growth

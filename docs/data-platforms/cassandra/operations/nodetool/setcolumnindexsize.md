@@ -101,7 +101,7 @@ The `column_index_size` (default: 64 KB) determines how much partition data is w
 ```bash
 # Current setting (check first)
 nodetool getcolumnindexsize
-# Output: Current column index size: 64 KB
+# Output: Current value for column_index_size: 64 KiB
 
 # Reduce for more granular indexing
 nodetool setcolumnindexsize 16
@@ -204,7 +204,7 @@ nodetool getcolumnindexsize
 
 **Sample output:**
 ```
-Current column index size: 64 KB
+Current value for column_index_size: 64 KiB
 ```
 
 ### Set to Default Value
@@ -336,11 +336,19 @@ nodetool tablestats my_keyspace.my_table | grep -i "memory"
 
 ### cassandra.yaml Setting
 
-The column index size can also be set in `cassandra.yaml` for persistence across restarts:
+The column index size can also be set in `cassandra.yaml` for persistence across restarts. The parameter name varies by version:
+
+| Cassandra Version | Parameter Name | Example |
+|-------------------|----------------|---------|
+| Pre-4.1 | `column_index_size_in_kb` | `64` |
+| 4.1+ | `column_index_size` | `64KiB` |
 
 ```yaml
-# cassandra.yaml
-column_index_size_in_kb: 64
+# cassandra.yaml (4.1+)
+column_index_size: 64KiB
+
+# cassandra.yaml (Pre-4.1)
+# column_index_size_in_kb: 64
 ```
 
 **Comparison:**

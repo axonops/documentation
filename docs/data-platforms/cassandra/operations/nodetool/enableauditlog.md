@@ -46,9 +46,11 @@ Audit logging is essential for:
 | `--included-users` | Comma-separated list of users to include for auditing |
 | `--logger` | Audit logger class name |
 | `--roll-cycle` | Log file roll cycle (HOURLY, DAILY, etc.) |
-| `--block` | Block operations if audit log is full |
+| `--blocking` | Block operations if audit log is full |
 | `--max-archive-retries` | Maximum archive retries |
-| `--archive-command` | Archive command for rolled logs |
+| `--max-queue-weight` | Maximum weight of in-memory log queue (bytes) |
+| `--max-log-size` | Maximum total log size before oldest logs deleted |
+| `--archive-command` | Archive command for rolled logs (requires `allow_nodetool_archive_command: true` in cassandra.yaml) |
 
 ---
 
@@ -114,7 +116,7 @@ nodetool enableauditlog \
     --excluded-keyspaces system,system_schema \
     --excluded-users monitoring \
     --roll-cycle HOURLY \
-    --block true
+    --blocking true
 ```
 
 ---

@@ -16,6 +16,7 @@ Marks SSTables as repaired or unrepaired, controlling their participation in inc
 
 ```bash
 sstablerepairedset --really-set [--is-repaired | --is-unrepaired] <sstable_files>
+sstablerepairedset --really-set [--is-repaired | --is-unrepaired] -f <sstable_list_file>
 ```
 
 ---
@@ -102,8 +103,12 @@ end note
 | `--really-set` | Required safety flag to confirm modification |
 | `--is-repaired` | Mark SSTables as repaired |
 | `--is-unrepaired` | Mark SSTables as unrepaired |
+| `-f <file>` | Read list of SSTable paths from file (one path per line) |
 
 The `--really-set` flag is mandatory to prevent accidental modification.
+
+!!! note "Repaired Timestamp Behavior"
+    When using `--is-repaired`, the tool sets `repaired_at` to the Data.db file's last-modified time, not to the current time or an actual repair timestamp. This is important when interpreting the metadata later.
 
 ---
 
@@ -145,6 +150,16 @@ sstablerepairedset --really-set --is-unrepaired \
 # Mark all SSTables in keyspace as unrepaired
 find /var/lib/cassandra/data/my_keyspace/ -name "*-Data.db" -print0 | \
     xargs -0 sstablerepairedset --really-set --is-unrepaired
+```
+
+### Using File Input
+
+```bash
+# Create a list of SSTable paths
+find /var/lib/cassandra/data/my_keyspace/ -name "*-Data.db" > /tmp/sstables.txt
+
+# Mark all listed SSTables as unrepaired
+sstablerepairedset --really-set --is-unrepaired -f /tmp/sstables.txt
 ```
 
 ### Mark All SSTables on Node

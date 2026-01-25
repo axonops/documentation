@@ -22,6 +22,9 @@ nodetool [connection_options] verify [options] [--] [keyspace [table ...]]
 
 `nodetool verify` performs a non-destructive check of SSTable integrity. Unlike `scrub`, verify only reads and validates—it never modifies data. Use verify to detect corruption before deciding whether to run scrub.
 
+!!! warning "Force Flag Required"
+    By default, the command exits with an error unless the `-f/--force` flag is provided. This is a safety mechanism to ensure operators understand the I/O impact of verification.
+
 ### How Verification Works
 
 The verify command performs integrity checks by reading SSTable files and validating their internal consistency:
@@ -124,12 +127,18 @@ Cassandra uses different checksum mechanisms depending on whether SSTables are c
 
 | Option | Description |
 |--------|-------------|
-| `-e, --extended` | Extended verification (checks all components) |
+| `-f, --force` | **Required.** Force verification to proceed |
+| `-e, --extended-verify` | Extended verification (checks all components) |
 | `-c, --check-version` | Check SSTable version compatibility |
 | `-d, --dfp` | Invoke disk failure policy on failure |
-| `-r, --rfrpfc` | Mutate repairedAt and pendingRepair |
-| `-t, --check-tokens` | Verify tokens are within node's ranges |
+| `-r, --rsc` | Mutate repairedAt, pendingRepair, and repairedSessionColumn |
+| `-t, --check-tokens` | Verify tokens are within node's ranges (requires `-e`) |
 | `-q, --quick` | Quick check (fewer validations) |
+| `-s, --sai-only` | Verify only Storage-Attached Indexes (SAI) |
+| `-i, --include-sai` | Include SAI verification along with SSTable verification |
+
+!!! note "Option Dependencies"
+    The `--check-tokens` option requires `--extended-verify` to be specified.
 
 ---
 
@@ -143,13 +152,14 @@ Cassandra uses different checksum mechanisms depending on whether SSTables are c
 - Index consistency
 - Bloom filter validity
 
-### Extended Verification (`-e`)
+### Extended Verification (`-e/--extended-verify`)
 
 - All data component files
 - Compression metadata
 - Statistics file integrity
 - Summary file consistency
 - TOC file completeness
+- Token range validation (when `-t` also specified)
 
 ---
 
@@ -158,31 +168,44 @@ Cassandra uses different checksum mechanisms depending on whether SSTables are c
 ### Verify Specific Table
 
 ```bash
-nodetool verify my_keyspace my_table
+nodetool verify -f my_keyspace my_table
 ```
 
 ### Verify All Tables in Keyspace
 
 ```bash
-nodetool verify my_keyspace
+nodetool verify -f my_keyspace
 ```
 
 ### Extended Verification
 
 ```bash
-nodetool verify -e my_keyspace my_table
+nodetool verify -f -e my_keyspace my_table
 ```
 
 ### Quick Verification
 
 ```bash
-nodetool verify -q my_keyspace
+nodetool verify -f -q my_keyspace
 ```
 
 ### Verify with Token Range Check
 
 ```bash
-nodetool verify -t my_keyspace my_table
+# Note: -t requires -e (extended-verify)
+nodetool verify -f -e -t my_keyspace my_table
+```
+
+### Verify SAI Indexes Only
+
+```bash
+nodetool verify -f -s my_keyspace my_table
+```
+
+### Include SAI in Verification
+
+```bash
+nodetool verify -f -i my_keyspace my_table
 ```
 
 ---
@@ -211,21 +234,21 @@ ERROR: Corrupted SSTable: /var/lib/cassandra/data/my_keyspace/my_table-abc123/nb
 
 ```bash
 # Regular integrity check (e.g., weekly)
-nodetool verify my_keyspace
+nodetool verify -f my_keyspace
 ```
 
 ### After Disk Errors
 
 ```bash
 # After seeing I/O errors in logs
-nodetool verify
+nodetool verify -f
 ```
 
 ### Before Maintenance
 
 ```bash
 # Verify before backup
-nodetool verify my_keyspace
+nodetool verify -f my_keyspace
 nodetool snapshot -t pre_backup my_keyspace
 ```
 
@@ -233,7 +256,7 @@ nodetool snapshot -t pre_backup my_keyspace
 
 ```bash
 # After crash or power loss
-nodetool verify
+nodetool verify -f
 ```
 
 ---
@@ -283,7 +306,7 @@ echo "Starting verification at $(date)" >> $LOG
 
 for ks in $(nodetool tablestats | grep "Keyspace:" | awk '{print $2}'); do
     echo "Verifying $ks..." >> $LOG
-    nodetool verify $ks >> $LOG 2>&1
+    nodetool verify -f $ks >> $LOG 2>&1
 done
 
 echo "Completed at $(date)" >> $LOG
@@ -304,18 +327,18 @@ Verify needs memory for checksums:
 
 ```bash
 # Run on one table at a time
-nodetool verify my_keyspace table1
-nodetool verify my_keyspace table2
+nodetool verify -f my_keyspace table1
+nodetool verify -f my_keyspace table2
 ```
 
 ### Verification Takes Too Long
 
 ```bash
 # Use quick mode for faster check
-nodetool verify -q my_keyspace
+nodetool verify -f -q my_keyspace
 
 # Or verify specific tables only
-nodetool verify my_keyspace critical_table
+nodetool verify -f my_keyspace critical_table
 ```
 
 ---

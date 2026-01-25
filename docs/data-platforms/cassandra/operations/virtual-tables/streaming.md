@@ -87,12 +87,15 @@ VIRTUAL TABLE system_views.streaming (
 
 ## Status Values
 
+!!! note "Lowercase Status Values"
+    Status values are lowercase in the implementation. Use lowercase in queries.
+
 | Status | Description |
 |--------|-------------|
-| `INIT` | Streaming session initialized |
-| `START` | Streaming in progress |
-| `SUCCESS` | Streaming completed successfully |
-| `FAILURE` | Streaming failed with error |
+| `init` | Streaming session initialized |
+| `start` | Streaming in progress |
+| `success` | Streaming completed successfully |
+| `failure` | Streaming failed with error |
 
 ---
 
@@ -106,13 +109,13 @@ SELECT id, operation, status, progress_percentage,
        bytes_sent / 1048576 AS sent_mb,
        bytes_to_send / 1048576 AS total_mb
 FROM system_views.streaming
-WHERE status IN ('INIT', 'START');
+WHERE status IN ('init', 'start');
 
 -- Streaming progress
 SELECT id, operation, peers, progress_percentage,
        bytes_sent, bytes_received, duration_millis
 FROM system_views.streaming
-WHERE status = 'START';
+WHERE status = 'start';
 ```
 
 Calculate throughput in application: `(bytes_sent + bytes_received) / duration_millis * 1000`.
@@ -171,7 +174,7 @@ FROM system_views.streaming;
 SELECT id, operation, peers, failure_cause,
        status_failure_timestamp
 FROM system_views.streaming
-WHERE status = 'FAILURE';
+WHERE status = 'failure';
 ```
 
 ### File vs Byte Progress
@@ -184,7 +187,7 @@ SELECT id, operation,
        bytes_sent, bytes_to_send,
        bytes_received, bytes_to_receive
 FROM system_views.streaming
-WHERE status = 'START';
+WHERE status = 'start';
 ```
 
 Format progress strings in application (e.g., `files_sent/files_to_send`).
@@ -219,7 +222,7 @@ SELECT peers, operation,
        (bytes_sent + bytes_received) / 1048576 AS total_mb,
        duration_millis / 1000 AS duration_sec
 FROM system_views.streaming
-WHERE status = 'SUCCESS'
+WHERE status = 'success'
   AND duration_millis > 0;
 ```
 
@@ -250,7 +253,7 @@ Alert when `last_updated_at` shows no recent progress (> 5 minutes old).
 SELECT id, operation, peers, failure_cause,
        status_failure_timestamp
 FROM system_views.streaming
-WHERE status = 'FAILURE';
+WHERE status = 'failure';
 ```
 
 Filter in application for failures within the last hour.
@@ -262,7 +265,7 @@ Filter in application for failures within the last hour.
 SELECT id, operation, progress_percentage,
        duration_millis / 3600000 AS duration_hours
 FROM system_views.streaming
-WHERE status IN ('INIT', 'START');
+WHERE status IN ('init', 'start');
 ```
 
 Alert when `duration_millis > 14400000` (4 hours).
@@ -313,7 +316,7 @@ Calculate MB/s as `total_mb / seconds`. Low values indicate slow streaming.
 SELECT id, operation, peers, failure_cause,
        progress_percentage, status_failure_timestamp
 FROM system_views.streaming
-WHERE status = 'FAILURE';
+WHERE status = 'failure';
 ```
 
 Sort by `status_failure_timestamp` in application to see most recent failures first.
@@ -360,10 +363,18 @@ Key settings that affect streaming performance:
 
 | Setting | Default | Description |
 |---------|---------|-------------|
-| `stream_throughput_outbound` | 200 Mbps | Max throughput per node |
-| `inter_dc_stream_throughput_outbound` | 200 Mbps | Max cross-DC throughput |
+| `stream_throughput_outbound` | 24 MiB/s | Max throughput per node |
+| `inter_dc_stream_throughput_outbound` | 24 MiB/s | Max cross-DC throughput |
 | `streaming_socket_timeout_in_ms` | 86400000 | Socket timeout (24h default) |
 | `streaming_connections_per_host` | 1 | Parallel connections per peer |
+
+!!! note "Setting Name Changes in Cassandra 4.1+"
+    In Cassandra 4.1+, the `_megabits_per_sec` suffixed names were deprecated. The new names use MiB/s units:
+
+    | Pre-4.1 | 4.1+ |
+    |---------|------|
+    | `stream_throughput_outbound_megabits_per_sec` | `stream_throughput_outbound` |
+    | `inter_dc_stream_throughput_outbound_megabits_per_sec` | `inter_dc_stream_throughput_outbound` |
 
 Check current values:
 ```sql

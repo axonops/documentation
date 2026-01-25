@@ -24,7 +24,7 @@ title Cluster Management Subsystems
 
 rectangle "Core Coordination" as core #E8F4E8 {
     card "Gossip Protocol\n• State dissemination\n• Failure detection\n• Membership tracking" as gossip #5B9BD5
-    card "Seed Nodes\n• Bootstrap discovery\n• Partition recovery\n• Initial contact points" as seeds #5B9BD5
+    card "Seed Nodes\n• Bootstrap discovery\n• Gossip fallback\n• Initial contact points" as seeds #5B9BD5
 }
 
 rectangle "Node Lifecycle" as lifecycle #FFE8E8 {
@@ -77,10 +77,10 @@ See **[Gossip Protocol](gossip.md)** for detailed protocol mechanics, failure de
 
 ### Seed Nodes
 
-Seed nodes serve as initial contact points for cluster discovery and partition recovery:
+Seed nodes serve as initial contact points for cluster discovery:
 
 - **Bootstrap discovery**: New nodes contact seeds to learn cluster topology
-- **Gossip hotspots**: Seeds receive preferential gossip traffic
+- **Gossip fallback**: Seeds are contacted opportunistically during gossip rounds
 - **Partition bridging**: Help reconnect fragmented cluster segments
 
 See **[Seeds and Discovery](seeds.md)** for seed selection guidelines, configuration, and operational considerations.

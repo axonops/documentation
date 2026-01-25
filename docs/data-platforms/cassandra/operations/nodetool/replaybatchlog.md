@@ -28,7 +28,7 @@ A batch in Cassandra groups multiple CQL mutations (INSERT, UPDATE, DELETE) into
 
 | Type | CQL Syntax | Atomicity | Use Case |
 |------|------------|-----------|----------|
-| **Logged batch** | `BEGIN BATCH ... APPLY BATCH;` | Guaranteed | Mutations to same partition or requiring atomicity |
+| **Logged batch** | `BEGIN BATCH ... APPLY BATCH;` | Eventual (all or none applied, but not isolated) | Mutations to same partition or requiring atomicity |
 | **Unlogged batch** | `BEGIN UNLOGGED BATCH ... APPLY BATCH;` | Not guaranteed | Performance optimization for same-partition writes |
 
 ```cql
@@ -193,9 +193,9 @@ nodetool replaybatchlog
 
 ```bash
 #!/bin/bash
-# replay_all_batchlogs.sh# Get list of node IPs from local nodetool status
+# replay_all_batchlogs.sh
 
-
+# Get list of node IPs from local nodetool status
 nodes=$(nodetool status | grep "^UN" | awk '{print $2}')
 
 for node in $nodes; do
@@ -233,7 +233,7 @@ Under normal operation, Cassandra automatically replays the batchlog:
 
 | Parameter | Default | Description |
 |-----------|---------|-------------|
-| Replay interval | 60 seconds | How often the batchlog is checked for stale entries |
+| Replay interval | 10 seconds | How often the batchlog is checked for stale entries |
 | Batch timeout | 2x write timeout | Time before a batch is considered stale and needs replay |
 
 The automatic replay process:
@@ -255,13 +255,22 @@ The automatic replay process:
 
 ### cassandra.yaml Settings
 
+The parameter names vary by version:
+
+| Cassandra Version | Throttle Parameter | Example |
+|-------------------|-------------------|---------|
+| Pre-4.1 | `batchlog_replay_throttle_in_kb` | `1024` |
+| 4.1+ | `batchlog_replay_throttle` | `1024KiB` |
+
 ```yaml
-# Throttle for batchlog replay (KB/s)
-# Limits I/O impact during replay
-batchlog_replay_throttle_in_kb: 1024
+# cassandra.yaml (4.1+)
+batchlog_replay_throttle: 1024KiB
+
+# cassandra.yaml (Pre-4.1)
+# batchlog_replay_throttle_in_kb: 1024
 
 # Write request timeout affects batch timeout
-write_request_timeout_in_ms: 2000
+write_request_timeout: 2s  # (4.1+) or write_request_timeout_in_ms: 2000 (Pre-4.1)
 ```
 
 ### Runtime Configuration
@@ -346,7 +355,7 @@ nodetool replaybatchlog
 
 ### What Batchlog Guarantees
 
-- **Atomicity** - All mutations in a batch will eventually be applied
+- **Eventual completion** - All mutations in a batch will eventually be applied
 - **Durability** - Batch survives coordinator failure (stored on batchlog replicas)
 
 ### What Batchlog Does NOT Guarantee

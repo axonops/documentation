@@ -112,10 +112,8 @@ grep -i "large partition" /var/log/cassandra/system.log
 
 **Fix:** See [Large Partition Issues](large-partition.md)
 
-```bash
-# Immediate: Reduce concurrent reads
-nodetool setconcurrency read 8
-```
+!!! note "Concurrent Reads"
+    Concurrent reads are configured via `concurrent_reads` in `cassandra.yaml` and require a restart to change.
 
 ### Cause 2: Compaction
 
@@ -146,9 +144,10 @@ nodetool setconcurrentcompactors 1
 # Reduce repair scope
 nodetool repair -pr my_keyspace my_table  # One table at a time
 
-# Or reduce Merkle tree depth
-# In cassandra.yaml
-repair_session_max_tree_depth: 16  # Default 20
+# Reduce repair memory usage
+# In cassandra.yaml (4.1+ syntax)
+repair_session_space: 256MiB
+concurrent_merkle_tree_requests: 2
 ```
 
 ### Cause 4: Batch Operations
@@ -211,16 +210,19 @@ repair_session_max_tree_depth: 16  # Default 20
 
 ```yaml
 # Limit compaction memory
-compaction_large_partition_warning_threshold_mb: 100
+compaction_large_partition_warning_threshold: 100MiB
 
-# Limit repair memory
-repair_session_max_tree_depth: 18
-repair_session_space_in_mb: 256
+# Limit repair memory (4.1+ syntax)
+repair_session_space: 256MiB
+concurrent_merkle_tree_requests: 2
 
-# Limit memtable size
-memtable_heap_space_in_mb: 2048
-memtable_offheap_space_in_mb: 2048
+# Limit memtable size (4.1+ syntax)
+memtable_heap_space: 2048MiB
+memtable_offheap_space: 2048MiB
 ```
+
+!!! note "Setting Name Changes"
+    In Cassandra 4.1+, settings use size literals (e.g., `256MiB`) instead of `_in_mb` suffixes.
 
 ---
 
@@ -329,5 +331,5 @@ ls -la /var/lib/cassandra/commitlog/
 |---------|---------|
 | `nodetool info` | Check heap usage |
 | `nodetool gcstats` | GC statistics |
-| `nodetool setconcurrency` | Reduce concurrent operations |
+| `nodetool flush` | Flush memtables to reduce memory |
 | `nodetool setconcurrentcompactors` | Reduce compaction parallelism |

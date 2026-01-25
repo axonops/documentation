@@ -199,8 +199,8 @@ end note
 | **Connection Management** | Per-node pools with automatic scaling |
 | **Health Monitoring** | Continuous heartbeats, state tracking |
 | **Reconnection** | Exponential backoff with configurable limits |
-| **Circuit Breakers** | Node-level failure isolation |
-| **Idempotency Awareness** | Safe retry decisions based on operation type |
+| **Circuit Breakers** | Node-level failure isolation (driver-dependent) |
+| **Idempotency Awareness** | Safe retry decisions based on operation type (driver-dependent) |
 | **Topology Awareness** | Automatic discovery, rack/DC awareness |
 | **Metadata Sync** | Schema and token ring synchronization |
 
@@ -217,7 +217,7 @@ skinparam rectangle {
 }
 
 package "RDBMS Stack" as RDBMS #FFCDD2 {
-    rectangle "Application Code\n~500-2000 lines\nfor error handling" as AC1
+    rectangle "Application Code\n(custom error handling)" as AC1
     rectangle "RDBMS Driver\n(minimal)" as RD
     rectangle "Load Balancer\n(HAProxy/F5)" as LB1
     rectangle "Primary" as P1
@@ -225,7 +225,7 @@ package "RDBMS Stack" as RDBMS #FFCDD2 {
 }
 
 package "Cassandra Stack" as Cass #E8F5E9 {
-    rectangle "Application Code\n~50 lines\nconfiguration only" as AC2
+    rectangle "Application Code\n(driver configuration)" as AC2
     rectangle "Cassandra Driver\n(intelligent)" as CD
     rectangle "Node 1" as N1
     rectangle "Node 2" as N2
@@ -246,7 +246,7 @@ N2 -[hidden]right- N3
 
 | Aspect | RDBMS | Cassandra |
 |--------|-------|-----------|
-| Error handling code | 500-2000 lines | Configuration only |
+| Error handling code | Significant custom code | Primarily configuration |
 | Failover implementation | Manual/custom | Automatic |
 | Retry logic | Application responsibility | Driver policy |
 | Node health tracking | External monitoring | Built-in |
@@ -577,12 +577,18 @@ Non-idempotent operations may cause problems when retried:
 ```
 Non-idempotent:
   counter += 1    → Retry doubles increment
-  INSERT IF NOT EXISTS → Retry may fail unexpectedly
+
+Conditionally idempotent:
+  INSERT IF NOT EXISTS → Data outcome is idempotent (won't change after success)
+                        but applied flag may differ on retry
 
 Idempotent:
   SET value = 5   → Retry is safe
   DELETE WHERE... → Retry is safe
 ```
+
+!!! note "LWT and Retries"
+    Lightweight transactions (IF clauses) are generally safe to retry for data correctness—retrying after an unknown outcome won't corrupt data. However, the `wasApplied()` result may differ between the original and retry, requiring careful handling in application logic.
 
 !!! tip "Design for Idempotency"
     Design write operations to be idempotent whenever possible. Use absolute values (SET x = 5) rather than increments (SET x = x + 1) to enable safe retries.

@@ -23,7 +23,7 @@ This page provides quick-reference tables for Cassandra consistency levels. For 
 | `QUORUM` | ⌊RF/2⌋ + 1 (global) | Majority of all replicas across all datacenters | Medium |
 | `LOCAL_ONE` | 1 (local DC) | Single replica in coordinator's datacenter | High |
 | `LOCAL_QUORUM` | ⌊local_RF/2⌋ + 1 | Majority in coordinator's datacenter only | High |
-| `EACH_QUORUM` | ⌊RF/2⌋ + 1 per DC | Majority in every datacenter | Low |
+| `EACH_QUORUM` | ⌊local_RF/2⌋ + 1 per DC | Majority in every datacenter (each DC's RF used independently) | Low |
 | `ALL` | RF (all replicas) | Every replica must acknowledge | Lowest |
 
 ---
@@ -88,13 +88,13 @@ For a cluster with RF=3 per datacenter (total RF=6 across 2 DCs):
 | `ALL` | 6 (all DCs) | Yes | No |
 
 !!! tip "Recommended for Multi-DC"
-    `LOCAL_QUORUM` is recommended for most multi-datacenter deployments. It provides strong consistency within each datacenter while tolerating complete datacenter failure.
+    `LOCAL_QUORUM` is recommended for most multi-datacenter deployments. It provides strong consistency within each datacenter. Datacenter failure tolerance depends on client placement; clients must be able to reach another DC to fail over.
 
 ---
 
 ## Strong Consistency Formula
 
-**Rule:** `R + W > RF` guarantees strong consistency (reads see latest writes).
+**Heuristic:** `R + W > RF` generally provides strong consistency (reads see latest writes) under normal operation. This assumes no concurrent failures affecting the same replica set and does not account for edge cases like `ANY` writes or transient divergence.
 
 | Write CL | Read CL | RF=3 | Strong? | Notes |
 |----------|---------|------|---------|-------|
@@ -134,11 +134,13 @@ For a cluster with RF=3 per datacenter (total RF=6 across 2 DCs):
 | Level | Single DC | Multi-DC | Notes |
 |-------|-----------|----------|-------|
 | `ONE` | ~1-2ms | ~1-2ms | Fastest |
-| `LOCAL_ONE` | ~1-2ms | ~1-2ms | Same as ONE for local |
-| `QUORUM` | ~2-5ms | ~50-200ms | Cross-DC round trip in multi-DC |
-| `LOCAL_QUORUM` | ~2-5ms | ~2-5ms | No cross-DC wait |
-| `EACH_QUORUM` | N/A | ~50-200ms | Waits for slowest DC |
-| `ALL` | ~3-10ms | ~50-200ms | Waits for slowest replica |
+| `LOCAL_ONE` | Low | Low | Same as ONE for local |
+| `QUORUM` | Low | Higher (cross-DC) | Cross-DC round trip in multi-DC |
+| `LOCAL_QUORUM` | Low | Low | No cross-DC wait |
+| `EACH_QUORUM` | N/A | Higher (cross-DC) | Waits for slowest DC |
+| `ALL` | Higher | Higher (cross-DC) | Waits for slowest replica |
+
+Actual latencies are workload-, topology-, and hardware-dependent.
 
 ---
 

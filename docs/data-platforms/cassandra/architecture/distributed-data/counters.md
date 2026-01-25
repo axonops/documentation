@@ -296,9 +296,9 @@ step4 --> step5
 | Characteristic | Explanation |
 |----------------|-------------|
 | Read-before-write | Every counter update requires a local read, adding latency |
-| Coordinator affinity | The coordinator's host_id determines which shard is updated |
-| Clock dependency | Accurate timestamps are essential for correct merge behavior |
-| Higher overhead | Counter writes are ~2x the cost of regular writes |
+| Replica-local shards | Each replica uses its own CounterId for its shard |
+| Logical clock | Shards use logical clocks (not requiring global timestamp accuracy) |
+| Higher overhead | Counter writes have additional overhead compared to regular writes |
 
 ### Counter Read Path
 
@@ -444,8 +444,8 @@ Counters are explicitly excluded from several Cassandra features:
 
 | Consideration | Details |
 |---------------|---------|
-| Write latency | 2x regular writes due to read-before-write |
-| Storage overhead | Each updating node adds a shard (~20 bytes) |
+| Write latency | Higher than regular writes due to read-before-write |
+| Storage overhead | Each updating replica adds a shard |
 | Repair behavior | Counter repair uses different mechanics; ensure counters are included in repair schedule |
 | Backup/restore | Counter state must be consistent across all replicas after restore |
 

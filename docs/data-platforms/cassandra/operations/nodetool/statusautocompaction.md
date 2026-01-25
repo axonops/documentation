@@ -15,7 +15,7 @@ Displays the auto-compaction status for specified keyspaces and tables.
 ## Synopsis
 
 ```bash
-nodetool [connection_options] statusautocompaction [--] [<keyspace> <tables>...]
+nodetool [connection_options] statusautocompaction [options] [--] [<keyspace> <tables>...]
 ```
 
 ## Description
@@ -35,21 +35,39 @@ Auto-compaction status is a per-table setting that determines whether Cassandra'
 
 ---
 
+## Options
+
+| Option | Description |
+|--------|-------------|
+| `-a, --all` | Show per-keyspace/table status instead of summary |
+
+---
+
 ## Output
 
-### Enabled (Normal State)
+### Summary (Default)
+
+Without `-a/--all`, the command prints a summary:
 
 ```
-my_keyspace.my_table running=true
+running
 ```
 
-### Disabled
+Possible summary values:
 
-```
-my_keyspace.my_table running=false
-```
+| Output | Meaning |
+|--------|---------|
+| `running` | All tables have auto-compaction enabled |
+| `not running` | All tables have auto-compaction disabled |
+| `partially running` | Some tables enabled, some disabled |
 
-### Multiple Tables
+### Detailed Output (with -a/--all)
+
+With `-a` option, the command shows per-table status:
+
+```bash
+nodetool statusautocompaction -a
+```
 
 ```
 my_keyspace.users running=true
@@ -95,6 +113,16 @@ ssh 192.168.1.100 "nodetool statusautocompaction my_keyspace"
 
 ## Output Interpretation
 
+### Summary Output (without -a)
+
+| Output | Meaning | Action Needed |
+|--------|---------|---------------|
+| `running` | All tables have auto-compaction enabled | None (normal state) |
+| `not running` | All tables have auto-compaction disabled | Investigate and re-enable |
+| `partially running` | Mixed status across tables | Use `-a` to identify disabled tables |
+
+### Detailed Output (with -a)
+
 | Output | Meaning | Action Needed |
 |--------|---------|---------------|
 | `running=true` | Auto-compaction is enabled | None (normal state) |
@@ -128,8 +156,11 @@ nodetool statusautocompaction my_keyspace my_table
 Check auto-compaction status across all tables:
 
 ```bash
-# Find any tables with disabled auto-compaction
-nodetool statusautocompaction | grep "running=false"
+# Quick check - summary
+nodetool statusautocompaction
+
+# Find any tables with disabled auto-compaction (use -a for details)
+nodetool statusautocompaction -a | grep "running=false"
 ```
 
 ### Health Check Integration
@@ -140,15 +171,18 @@ Include in operational health checks:
 #!/bin/bash
 # Check for unexpectedly disabled auto-compaction
 
-disabled=$(nodetool statusautocompaction 2>/dev/null | grep "running=false" | wc -l)
+status=$(nodetool statusautocompaction 2>/dev/null)
 
-if [ "$disabled" -gt 0 ]; then
-    echo "WARNING: $disabled table(s) have auto-compaction disabled"
-    nodetool statusautocompaction | grep "running=false"
-    exit 1
-else
+if [ "$status" = "running" ]; then
     echo "OK: All tables have auto-compaction enabled"
     exit 0
+elif [ "$status" = "not running" ] || [ "$status" = "partially running" ]; then
+    echo "WARNING: Auto-compaction is disabled or partially disabled"
+    nodetool statusautocompaction -a | grep "running=false"
+    exit 1
+else
+    echo "ERROR: Could not determine status"
+    exit 2
 fi
 ```
 
@@ -178,7 +212,7 @@ Export status as a metric:
 #!/bin/bash
 # Export auto-compaction status for monitoring
 
-nodetool statusautocompaction 2>/dev/null | while read line; do
+nodetool statusautocompaction -a 2>/dev/null | while read line; do
     table=$(echo $line | awk '{print $1}')
     status=$(echo $line | grep -c "running=true")
     echo "cassandra_autocompaction_enabled{table=\"$table\"} $status"
@@ -191,21 +225,22 @@ done
 #!/bin/bash
 # check_autocompaction.sh
 
-disabled_count=$(nodetool statusautocompaction 2>/dev/null | grep -c "running=false")
+status=$(nodetool statusautocompaction 2>/dev/null)
 
 if [ $? -ne 0 ]; then
     echo "UNKNOWN - Cannot connect to Cassandra"
     exit 3
 fi
 
-if [ "$disabled_count" -eq 0 ]; then
+if [ "$status" = "running" ]; then
     echo "OK - All tables have auto-compaction enabled"
     exit 0
-elif [ "$disabled_count" -lt 5 ]; then
+elif [ "$status" = "partially running" ]; then
+    disabled_count=$(nodetool statusautocompaction -a 2>/dev/null | grep -c "running=false")
     echo "WARNING - $disabled_count table(s) have auto-compaction disabled"
     exit 1
 else
-    echo "CRITICAL - $disabled_count table(s) have auto-compaction disabled"
+    echo "CRITICAL - All tables have auto-compaction disabled"
     exit 2
 fi
 ```
@@ -221,7 +256,7 @@ echo "  \"timestamp\": \"$(date -Iseconds)\","
 echo "  \"tables\": ["
 
 first=true
-nodetool statusautocompaction 2>/dev/null | while read line; do
+nodetool statusautocompaction -a 2>/dev/null | while read line; do
     table=$(echo $line | awk '{print $1}')
     enabled=$(echo $line | grep -q "running=true" && echo "true" || echo "false")
 
@@ -249,19 +284,20 @@ echo "}"
 # audit_autocompaction_cluster.sh
 
 echo "=== Cluster Auto-Compaction Audit ==="
-echo ""# Get list of node IPs from local nodetool status
+echo ""
 
-
+# Get list of node IPs from local nodetool status
 nodes=$(nodetool status | grep "^UN" | awk '{print $2}')
 
 for node in $nodes; do
     echo "=== Node: $node ==="
-    disabled=$(ssh "$node" "nodetool statusautocompaction 2>/dev/null | grep "running=false")"
-    if [ -z "$disabled" ]; then
+    status=$(ssh "$node" 'nodetool statusautocompaction 2>/dev/null')
+    if [ "$status" = "running" ]; then
         echo "All tables have auto-compaction enabled"
     else
+        echo "Status: $status"
         echo "Tables with disabled auto-compaction:"
-        echo "$disabled"
+        ssh "$node" 'nodetool statusautocompaction -a 2>/dev/null | grep "running=false"'
     fi
     echo ""
 done
@@ -277,14 +313,14 @@ done
 KEYSPACE="my_keyspace"
 TABLE="my_table"
 
-echo "Checking $KEYSPACE.$TABLE across cluster..."# Get list of node IPs from local nodetool status
+echo "Checking $KEYSPACE.$TABLE across cluster..."
 
-
+# Get list of node IPs from local nodetool status
 nodes=$(nodetool status | grep "^UN" | awk '{print $2}')
 statuses=""
 
 for node in $nodes; do
-    status=$(ssh "$node" "nodetool statusautocompaction $KEYSPACE $TABLE 2>/dev/null | awk '{print $2}')"
+    status=$(ssh "$node" 'nodetool statusautocompaction -a '"$KEYSPACE"' '"$TABLE"' 2>/dev/null | awk '"'"'{print $2}'"'"'')
     echo "$node: $status"
     statuses="$statuses$status\n"
 done
@@ -308,7 +344,7 @@ fi
 
 ```bash
 # List all tables with disabled auto-compaction
-nodetool statusautocompaction | grep "running=false"
+nodetool statusautocompaction -a | grep "running=false"
 ```
 
 ### Verifying Bulk Load Setup
@@ -386,8 +422,8 @@ echo "" | tee -a $OUTPUT_FILE
 
 # Count totals
 total=$(nodetool statusautocompaction 2>/dev/null | wc -l)
-enabled=$(nodetool statusautocompaction 2>/dev/null | grep -c "running=true")
-disabled=$(nodetool statusautocompaction 2>/dev/null | grep -c "running=false")
+enabled=$(nodetool statusautocompaction -a 2>/dev/null | grep -c "running=true")
+disabled=$(nodetool statusautocompaction -a 2>/dev/null | grep -c "running=false")
 
 echo "Summary:" | tee -a $OUTPUT_FILE
 echo "  Total tables: $total" | tee -a $OUTPUT_FILE
@@ -397,7 +433,7 @@ echo "" | tee -a $OUTPUT_FILE
 
 if [ "$disabled" -gt 0 ]; then
     echo "Tables with disabled auto-compaction:" | tee -a $OUTPUT_FILE
-    nodetool statusautocompaction | grep "running=false" | tee -a $OUTPUT_FILE
+    nodetool statusautocompaction -a | grep "running=false" | tee -a $OUTPUT_FILE
     echo "" | tee -a $OUTPUT_FILE
     echo "ACTION REQUIRED: Review and re-enable if appropriate" | tee -a $OUTPUT_FILE
 else

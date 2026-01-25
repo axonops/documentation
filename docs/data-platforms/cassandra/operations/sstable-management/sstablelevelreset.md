@@ -83,10 +83,18 @@ end note
 
 | Level | Max Size | Non-overlapping | SSTables |
 |-------|----------|-----------------|----------|
-| L0 | ~160 MB | No | 1-4 |
-| L1 | ~10 × L0 | Yes | ~10 |
-| L2 | ~10 × L1 | Yes | ~100 |
-| L3+ | ~10 × previous | Yes | ~1000+ |
+| L0 | Up to 4 × `sstable_size_in_mb` | No | 1-4 |
+| L1 | `fanout_size` × L0 size | Yes | ~10 |
+| L2 | `fanout_size` × L1 size | Yes | ~100 |
+| L3+ | `fanout_size` × previous | Yes | ~1000+ |
+
+!!! note "Configuration-Dependent Values"
+    Level sizes depend on LCS compaction strategy settings:
+
+    - `sstable_size_in_mb`: Target SSTable size (default: 160 MiB)
+    - `fanout_size`: Size multiplier between levels (default: 10)
+
+    With defaults, L0 holds up to ~640 MiB (4 × 160 MiB) before triggering compaction to L1.
 
 ---
 

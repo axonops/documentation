@@ -211,6 +211,9 @@ WHERE p99th > 100;
 
 Metrics specific to BATCH statement execution.
 
+!!! warning "Deprecated in Cassandra 5.1"
+    The `system_views.batch_metrics` table is deprecated since Cassandra 5.1 and will be removed in a future release. Use `system_metrics.batch_group` or `system_metrics.type_histogram` instead.
+
 ```sql
 VIRTUAL TABLE system_views.batch_metrics (
     name text PRIMARY KEY,
@@ -256,6 +259,9 @@ FROM system_views.batch_metrics;
 ### cql_metrics
 
 CQL layer metrics including prepared statement cache statistics.
+
+!!! warning "Deprecated in Cassandra 5.1"
+    The `system_views.cql_metrics` table is deprecated since Cassandra 5.1 and will be removed in a future release. Use `system_metrics.cql_group` instead.
 
 ```sql
 VIRTUAL TABLE system_views.cql_metrics (

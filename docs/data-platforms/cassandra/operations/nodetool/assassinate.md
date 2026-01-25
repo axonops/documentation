@@ -98,7 +98,7 @@ nodetool assassinate 192.168.1.102
 
     - Data inconsistency will occur
     - Node will try to rejoin
-    - Creates split-brain scenario
+    - Causes data inconsistency as both nodes serve conflicting data
 
     Verify node is truly dead first.
 
@@ -222,7 +222,7 @@ If the assassinated node still exists physically:
 
 If the "dead" node was actually alive:
 
-!!! danger "Split Brain"
+!!! danger "Data Inconsistency"
     The node will attempt to rejoin, causing data conflicts:
 
     1. Immediately stop Cassandra on that node

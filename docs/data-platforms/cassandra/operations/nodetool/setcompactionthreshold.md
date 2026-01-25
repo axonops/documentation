@@ -328,16 +328,14 @@ MAX_THRESHOLD="$4"
 if [ -z "$MAX_THRESHOLD" ]; then
     echo "Usage: $0 <keyspace> <table> <min_threshold> <max_threshold>"
     exit 1
-fi# Get list of node IPs from local nodetool status
+fi
 
-
+# Get list of node IPs from local nodetool status
 nodes=$(nodetool status | grep "^UN" | awk '{print $2}')
 
 for node in $nodes; do
     echo -n "$node: "
-    ssh "$node" "nodetool setcompactionthreshold $KEYSPACE $TABLE $MIN_THRESHOLD $MAX_THRESHOLD \"
-        && echo "set to $MIN_THRESHOLD/$MAX_THRESHOLD" \
-        || echo "FAILED"
+    ssh "$node" 'nodetool setcompactionthreshold '"$KEYSPACE"' '"$TABLE"' '"$MIN_THRESHOLD"' '"$MAX_THRESHOLD"' && echo "set to '"$MIN_THRESHOLD"'/'"$MAX_THRESHOLD"'" || echo "FAILED"'
 done
 ```
 
@@ -371,9 +369,10 @@ WITH compaction = {
 
 ### Values to Avoid
 
-!!! danger "Problematic Settings"
+!!! danger "Invalid and Problematic Settings"
 
-    - **min_threshold = 1**: Triggers compaction on every flush, extremely wasteful
+    - **min_threshold < 2**: Not allowed. The minimum valid value is 2.
+    - **min_threshold = 0 or max_threshold = 0**: Deprecated and rejected in current versions. Use `nodetool disableautocompaction` or set `compaction = {'enabled': 'false'}` instead.
     - **min_threshold > max_threshold**: Invalid configuration
     - **Very high min_threshold (32+)**: Too many SSTables accumulate, degrading reads
     - **Very low max_threshold (< 4)**: Tiny compactions, inefficient

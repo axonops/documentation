@@ -35,13 +35,14 @@ nodetool [connection_options] describering <keyspace>
 ## Output Format
 
 ```
-Schema versions:
-    abc123-def456-... [node1, node2, node3]
-
+Schema Version:a1b2c3d4-e5f6-7890-abcd-ef1234567890
+TokenRange:
 TokenRange(start_token:-9223372036854775808, end_token:-6148914691236517206, endpoints:[192.168.1.101, 192.168.1.102, 192.168.1.103], rpc_endpoints:[192.168.1.101, 192.168.1.102, 192.168.1.103], endpoint_details:[EndpointDetails(host:192.168.1.101, datacenter:dc1, rack:rack1), ...])
 TokenRange(start_token:-6148914691236517206, end_token:-3074457345618258604, endpoints:[192.168.1.102, 192.168.1.103, 192.168.1.101], ...)
 ...
 ```
+
+Note: The command prints a single `Schema Version:` line (the local node's schema version), followed by a `TokenRange:` header and the list of token ranges.
 
 ---
 
@@ -65,11 +66,13 @@ TokenRange(start_token:-6148914691236517206, end_token:-3074457345618258604, end
 nodetool describering my_keyspace
 ```
 
-### Parse with jq (if JSON output available)
+### Filter TokenRange Lines
 
 ```bash
 nodetool describering my_keyspace | grep TokenRange
 ```
+
+Note: The command does not support JSON or YAML output formats.
 
 ### Count Token Ranges
 

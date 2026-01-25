@@ -15,7 +15,7 @@ Relocates SSTables to the correct disk based on the configured disk allocation s
 ## Synopsis
 
 ```bash
-nodetool [connection_options] relocatesstables [--jobs <jobs>] <keyspace> [tables...]
+nodetool [connection_options] relocatesstables [options] [keyspace] [tables...]
 ```
 
 ---
@@ -53,16 +53,9 @@ data_file_directories:
 | Failure isolation | One disk failure affects only some SSTables |
 | Scalability | Easy to add more disks |
 
-### Disk Allocation Strategies
+### Disk Allocation
 
-Cassandra decides which disk to use for new SSTables based on the configured strategy:
-
-```yaml
-# cassandra.yaml
-disk_access_mode: auto  # or mmap, mmap_index_only, standard
-```
-
-**How Cassandra places SSTables:**
+Cassandra decides which disk to use for new SSTables based on several factors:
 
 1. **By available space** - Prefers disks with more free space
 2. **By table** - Tries to keep a table's SSTables together
@@ -144,14 +137,14 @@ data_file_directories:
 
 | Argument | Description |
 |----------|-------------|
-| `keyspace` | Target keyspace name (required) |
+| `keyspace` | Target keyspace name (optional; if omitted, relocates all keyspaces) |
 | `tables` | Optional: specific table names. If omitted, relocates all tables in the keyspace |
 
 ## Options
 
 | Option | Description | Default |
 |--------|-------------|---------|
-| `--jobs`, `-j` | Number of parallel relocation jobs | 0 (sequential) |
+| `-j, --jobs` | Number of parallel relocation jobs. 0 means use all available compaction threads | 2 |
 
 ---
 

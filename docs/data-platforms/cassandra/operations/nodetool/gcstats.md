@@ -15,8 +15,15 @@ Displays garbage collection statistics for the Cassandra JVM.
 ## Synopsis
 
 ```bash
-nodetool [connection_options] gcstats
+nodetool [connection_options] gcstats [options]
 ```
+
+## Options
+
+| Option | Description |
+|--------|-------------|
+| `-F, --format <format>` | Output format: `json`, `yaml`, or `table` (default) |
+| `-H, --human-readable` | Display sizes in human-readable format |
 
 ## Description
 
@@ -45,8 +52,8 @@ Monitoring GC is critical as excessive garbage collection can cause latency spik
 ## Output Example
 
 ```
-       Interval (ms) Max GC Elapsed (ms)Total GC Elapsed (ms)Stdev GC Elapsed (ms)   GC Reclaimed (MB)         Collections      Direct Memory Bytes
-                 986                 123                45678                   45               123456                1234                 67108864
+       Interval (ms) Max GC Elapsed (ms)Total GC Elapsed (ms)Stdev GC Elapsed (ms)   GC Reclaimed (bytes)         GC Count   Allocated Direct Memory Bytes  Max Direct Memory Bytes  Reserved Direct Memory Bytes
+                 986                 123                45678                   45              129536000             1234                        67108864                134217728                     134217728
 ```
 
 ---
@@ -59,9 +66,11 @@ Monitoring GC is critical as excessive garbage collection can cause latency spik
 | Max GC Elapsed (ms) | Longest single GC pause |
 | Total GC Elapsed (ms) | Cumulative GC time |
 | Stdev GC Elapsed (ms) | Standard deviation of GC times |
-| GC Reclaimed (MB) | Memory reclaimed by GC |
-| Collections | Number of GC invocations |
-| Direct Memory Bytes | Off-heap memory usage |
+| GC Reclaimed (bytes) | Memory reclaimed by GC (in bytes; use `-H` for human-readable units) |
+| GC Count | Number of GC invocations |
+| Allocated Direct Memory Bytes | Currently allocated off-heap (direct) memory |
+| Max Direct Memory Bytes | Maximum off-heap memory configured |
+| Reserved Direct Memory Bytes | Reserved off-heap memory |
 
 ---
 

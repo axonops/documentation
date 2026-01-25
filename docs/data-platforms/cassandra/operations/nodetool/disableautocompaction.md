@@ -397,15 +397,15 @@ nodetool statusautocompaction my_keyspace my_table
 # disable_autocompaction_cluster.sh
 
 KEYSPACE="my_keyspace"
-TABLE="my_table"# Get list of node IPs from local nodetool status
+TABLE="my_table"
 
-
+# Get list of node IPs from local nodetool status
 nodes=$(nodetool status | grep "^UN" | awk '{print $2}')
 
 echo "Disabling auto-compaction cluster-wide..."
 for node in $nodes; do
     echo -n "$node: "
-    ssh "$node" "nodetool disableautocompaction $KEYSPACE $TABLE && echo "disabled" || echo "FAILED""
+    ssh "$node" "nodetool disableautocompaction $KEYSPACE $TABLE && echo 'disabled' || echo 'FAILED'"
 done
 
 echo ""

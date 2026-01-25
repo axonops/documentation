@@ -178,8 +178,16 @@ iostat -x 1
 SATA SSDs (~550 MB/s) are sufficient for most production workloads. Bandwidth matters primarily for:
 
 - **Compaction**: Background merging of SSTables
-- **Streaming**: Throttled by default (~25 MB/s via `stream_throughput_outbound_megabits_per_sec`)
+- **Streaming**: Throttled by default (~24 MiB/s via `stream_throughput_outbound`)
 - **Repair**: Merkle tree validation and data synchronization
+
+!!! note "Streaming Configuration Parameter"
+    The streaming throughput parameter changed in Cassandra 4.1:
+
+    | Cassandra Version | Parameter Name | Default |
+    |-------------------|----------------|---------|
+    | Pre-4.1 | `stream_throughput_outbound_megabits_per_sec` | `200` (Mb/s ≈ 25 MB/s) |
+    | 4.1+ | `stream_throughput_outbound` | `24MiB/s` |
 
 NVMe provides higher bandwidth that can speed up compaction and repair, but is not required for most deployments.
 

@@ -141,38 +141,50 @@ Execute? [Y/n]: y
 ### To CSV
 
 ```sql
-cqlai> .export csv users.csv SELECT * FROM users;
+cqlai> .export users users.csv
+cqlai> .export users users.csv --format csv
 ```
 
 ### To Parquet
 
 ```sql
-cqlai> .export parquet users.parquet SELECT * FROM users;
+cqlai> .export users users.parquet --format parquet
 ```
 
 ### To JSON
 
 ```sql
-cqlai> .export json users.json SELECT * FROM users;
+cqlai> .export users users.json --format json
+```
+
+Export query results:
+```sql
+cqlai> .export "SELECT * FROM orders WHERE status = 'pending'" pending.csv
 ```
 
 ---
 
 ## Configuration File
 
-Create `~/.cqlai/config.yaml` for persistent settings:
+Create a configuration file for persistent settings. CQLAI supports JSON format:
 
-```yaml
-connection:
-  host: cassandra.example.com
-  port: 9042
-  username: myuser
-  ssl: true
-
-ai:
-  provider: openai
-  model: gpt-4
+```json
+// ~/.config/cqlai/config.json (or ~/.cqlai.json or ./cqlai.json)
+{
+  "host": "cassandra.example.com",
+  "port": 9042,
+  "username": "myuser",
+  "ssl": {
+    "enabled": true
+  },
+  "ai": {
+    "provider": "openai",
+    "model": "gpt-4"
+  }
+}
 ```
+
+See [Configuration](configuration/index.md) for all available options.
 
 ---
 

@@ -135,11 +135,14 @@ stop
 
 | Practice | Rationale |
 |----------|-----------|
-| **Add multiple of RF** | Maintains balanced distribution |
+| **Add multiple of RF** | Helps maintain balanced distribution (mainly for single-token deployments) |
 | **Add one at a time** | Reduces cluster stress |
 | **Wait for NORMAL** | Ensure complete bootstrap |
 | **Schedule during low traffic** | Minimize impact |
 | **Monitor existing nodes** | Watch for compaction backlog |
+
+!!! note "Vnodes vs Single-Token"
+    With vnodes (multiple tokens per node), adding exact multiples of RF is less critical as data is distributed across many token ranges.
 
 ### Multi-Datacenter Scaling
 
@@ -261,7 +264,7 @@ nodetool decommission
 # This:
 # - Streams all data to remaining nodes
 # - Takes significant time (hours for large datasets)
-# - Cannot be cancelled
+# - Can be cancelled with nodetool abortdecommission
 
 # Step 4: Monitor progress
 watch -n 10 'nodetool netstats'

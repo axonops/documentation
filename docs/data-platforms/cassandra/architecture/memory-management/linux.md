@@ -98,7 +98,7 @@ Cassandra uses memory-mapped files for SSTable access. The kernel limits the num
 # Check current limit
 cat /proc/sys/vm/max_map_count
 
-# Increase if needed (default 65530 is usually sufficient)
+# Increase if needed (default 65530 may be insufficient with many SSTables)
 sudo sysctl vm.max_map_count=1048575
 
 # Make permanent

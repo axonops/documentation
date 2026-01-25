@@ -18,8 +18,14 @@ Lists all defined CIDR groups in the cluster.
 ## Synopsis
 
 ```bash
-nodetool [connection_options] listcidrgroups
+nodetool [connection_options] listcidrgroups [cidrGroup]
 ```
+
+## Arguments
+
+| Argument | Description |
+|----------|-------------|
+| `cidrGroup` | Optional. Name of a specific CIDR group to list CIDRs for |
 
 ---
 
@@ -33,19 +39,30 @@ CIDR groups can be assigned to roles to restrict which IP addresses can authenti
 
 ## Output Format
 
-The command displays each CIDR group with its associated IP ranges:
+Without arguments, the command displays a list of CIDR group names:
 
 ```
-CIDR Group: <group_name>
-  - <cidr_range_1>
-  - <cidr_range_2>
+CIDR Groups
+internal_network
+datacenter_us
+datacenter_eu
+vpn_clients
+```
+
+With a group name argument, it displays the CIDRs for that group:
+
+```
+CIDRs for Group: internal_network
+10.0.0.0/8
+172.16.0.0/12
+192.168.0.0/16
 ```
 
 ---
 
 ## Examples
 
-### Basic Usage
+### List All Group Names
 
 ```bash
 nodetool listcidrgroups
@@ -54,22 +71,26 @@ nodetool listcidrgroups
 **Sample output:**
 
 ```
-CIDR Groups:
-  internal_network:
-    - 10.0.0.0/8
-    - 172.16.0.0/12
-    - 192.168.0.0/16
+CIDR Groups
+internal_network
+datacenter_us
+datacenter_eu
+vpn_clients
+```
 
-  datacenter_us:
-    - 10.1.0.0/16
-    - 10.2.0.0/16
+### List CIDRs for a Specific Group
 
-  datacenter_eu:
-    - 10.3.0.0/16
-    - 10.4.0.0/16
+```bash
+nodetool listcidrgroups internal_network
+```
 
-  vpn_clients:
-    - 172.20.0.0/16
+**Sample output:**
+
+```
+CIDRs for Group: internal_network
+10.0.0.0/8
+172.16.0.0/12
+192.168.0.0/16
 ```
 
 ---

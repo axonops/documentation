@@ -39,6 +39,14 @@ This is typically the first command run when checking cluster health.
 |----------|-------------|
 | `keyspace` | Optional. Show ownership percentages for specific keyspace |
 
+## Options
+
+| Option | Description |
+|--------|-------------|
+| `-r, --resolve-ip` | Show hostnames instead of IP addresses |
+| `-s, --sort` | Sort output by a column (address, state, load, owns, host_id) |
+| `-o, --order` | Order direction: `asc` or `desc` (default: asc) |
+
 ---
 
 ## Output Format

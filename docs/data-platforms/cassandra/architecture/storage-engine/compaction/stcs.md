@@ -141,6 +141,8 @@ $$\text{hotness} = \frac{\text{readMeter.twoHourRate()}}{\text{estimatedKeys()}}
 
 This formula measures recent read activity (two-hour rate) divided by the number of keys in the SSTable. The bucket with the highest aggregate hotness is selected first, ensuring that frequently-read data is compacted and consolidated sooner.
 
+*Note: The effective hotness values vary based on workload read patterns, key distribution, and SSTable age. SSTables without read meters (e.g., newly flushed) have zero hotness.*
+
 **Tie-breaking:** When buckets have equal hotness, STCS prioritizes buckets with smaller average file size to reduce compaction I/O.
 
 #### Tombstone Compaction Fallback
@@ -155,7 +157,7 @@ This ensures tombstones are eventually reclaimed even when SSTables lack compact
 
 ### Write Amplification Calculation
 
-STCS achieves logarithmic write amplification:
+STCS achieves logarithmic write amplification. The following analysis shows theoretical behavior; actual amplification varies with workload patterns, data distribution, and configuration.
 
 **Data progression with $t = 4$ (min_threshold):**
 
@@ -177,11 +179,11 @@ Where:
 - $N$ = total data size
 - $s_f$ = flush size
 
-**Example:** 1GB dataset with 1MB flushes:
+**Example:** 1GB dataset with 1MB flushes (theoretical):
 
 $$W = \log_4(1024) \approx 5\times$$
 
-This is significantly lower than LCS's $10\times$ per level amplification.
+This theoretical value is significantly lower than LCS's per-level amplification. In practice, actual write amplification depends on factors such as bucket boundaries, SSTable size variance, and compaction timing.
 
 ### Read Amplification Problem
 

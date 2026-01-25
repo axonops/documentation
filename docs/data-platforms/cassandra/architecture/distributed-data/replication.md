@@ -8,7 +8,7 @@ meta:
 
 # Replication
 
-Replication is fundamental to Cassandra's architecture. Every write is automatically copied to multiple nodes with no special configuration, no external tools, no application logic required. This built-in redundancy means nodes can fail, disks can die, and entire datacenters can go offline, yet the data remains available and intact.
+Replication is fundamental to Cassandra's architecture. Every write is automatically copied to multiple nodes based on the keyspace's replication factor configuration, with no external tools or application logic required. This built-in redundancy means nodes can fail, disks can die, and with appropriate per-datacenter replication factors and consistency levels, entire datacenters can go offline while the data remains available and intact.
 
 Unlike traditional databases that treat replication as an add-on feature, Cassandra was designed from the ground up with replication as a core primitive. The system assumes failures will happen and handles them transparently. A node crashes during a write? The replicas have the data. Network partitions a datacenter? The other datacenters continue serving requests. This design enables true 24/7 availability without the operational complexity of failover procedures.
 
@@ -35,7 +35,8 @@ The replication factor specifies how many nodes store a copy of each partition.
 ```
 RF = 3 with QUORUM:
 - One node down: Still have quorum (2 of 3)
-- Can run repair with one node down
+- Can serve reads/writes with one node down
+- Note: Full repair requires all replicas available for complete synchronization
 - Balances durability, availability, and storage cost
 ```
 

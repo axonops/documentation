@@ -41,7 +41,14 @@ Data inconsistencies arise from several scenarios in distributed systems:
 
 | Scenario | Description | Recovery Mechanism |
 |----------|-------------|-------------------|
-| Hints expired | Node was down longer than `max_hint_window_in_ms` (default 3 hours) | Anti-entropy repair only |
+| Hints expired | Node was down longer than hint window (default 3 hours) | Anti-entropy repair only |
+
+**Hint window configuration by version:**
+
+| Version | Parameter | Default | Syntax |
+|---------|-----------|---------|--------|
+| 4.0 | `max_hint_window_in_ms` | `10800000` | Integer (milliseconds) |
+| 4.1+ | `max_hint_window` | `3h` | Duration literal (`3h`, `180m`) |
 | Hinted handoff disabled | Hints not stored for unavailable replicas | Anti-entropy repair only |
 
 **Operational Events**
@@ -148,7 +155,14 @@ note over A : Repair session complete
 
 **Merkle tree segments:**
 
-The token range being repaired is divided into segments, with each segment represented as a leaf node in the Merkle tree. By default, Cassandra creates approximately 32,768 (2^15) segments per repair session. The tree depth is controlled by `repair_session_max_tree_depth` (default: 18 in Cassandra 4.0+).
+The token range being repaired is divided into segments, with each segment represented as a leaf node in the Merkle tree. By default, Cassandra creates approximately 32,768 (2^15) segments per repair session.
+
+**Merkle tree configuration by version:**
+
+| Version | Parameter | Default | Description |
+|---------|-----------|---------|-------------|
+| 4.0 | `repair_session_max_tree_depth` | `20` | Maximum depth of Merkle tree |
+| 4.1+ | `repair_session_space` | `16MiB` | Memory limit for Merkle trees (replaces depth) |
 
 **Streaming granularity:**
 
