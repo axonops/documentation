@@ -63,7 +63,7 @@ cluster_name: 'MyCluster'
 
 # Network binding
 listen_address: <node_ip>
-rpc_address: 0.0.0.0
+rpc_address: <node_ip>  # Or 0.0.0.0 with broadcast_rpc_address set
 
 # Seed nodes for cluster discovery
 seed_provider:

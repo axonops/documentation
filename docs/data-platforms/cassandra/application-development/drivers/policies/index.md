@@ -35,7 +35,7 @@ This design is intentional: Cassandra's distributed architecture means that "fai
 |--------|--------------------|--------------------|
 | **Load Balancing** | Which node should handle this request? | Round-robin across local datacenter, token-aware |
 | **Retry** | Should a failed request be retried? | Retry read timeouts once, don't retry write timeouts |
-| **Reconnection** | How quickly to reconnect after node failure? | Exponential backoff (1s base, 10min max) |
+| **Reconnection** | How quickly to reconnect after node failure? | Exponential backoff (driver-specific defaults) |
 | **Speculative Execution** | Should redundant requests be sent? | Disabled |
 
 ---
@@ -46,11 +46,11 @@ Understanding default behavior is essential before customizing policies.
 
 ### Java Driver Defaults (v4.x)
 
-| Policy | Default Implementation | Behavior |
-|--------|----------------------|----------|
-| Load Balancing | `DefaultLoadBalancingPolicy` | Token-aware, prefers local DC, round-robin within replicas |
+| Policy | Configuration | Behavior |
+|--------|---------------|----------|
+| Load Balancing | `basic.load-balancing-policy` | Token-aware, prefers local DC, round-robin within replicas |
 | Retry | `DefaultRetryPolicy` | Retry read timeout if enough replicas responded; never retry write timeout |
-| Reconnection | `ExponentialReconnectionPolicy` | Base: 1 second, Max: 10 minutes |
+| Reconnection | `ExponentialReconnectionPolicy` | Base: 1 second, Max: 60 seconds (verify for specific version) |
 | Speculative Execution | None | Disabled—must explicitly enable |
 
 ### Python Driver Defaults
@@ -251,23 +251,27 @@ App ..> N5 : FAILOVER ONLY
 | Configuration | Normal Operation | Local DC Down |
 |---------------|-----------------|---------------|
 | `LOCAL_QUORUM` + local DC only | Routes to local DC | **All requests fail** |
-| `LOCAL_QUORUM` + remote DC allowed | Routes to local DC | Fails over to remote DC |
-| `QUORUM` | May route anywhere | Continues if global quorum available |
+| `LOCAL_QUORUM` + remote DC allowed | Routes to local DC | **Still fails** (`LOCAL_*` CLs only count local replicas) |
+| `QUORUM` + remote DC allowed | May route anywhere | Continues if global quorum available |
 
 ### Multi-DC Policy Configuration
 
-```java
-// Java - Multi-DC with controlled failover
-CqlSession session = CqlSession.builder()
-    .withLocalDatacenter("dc1")
-    .withLoadBalancingPolicy(
-        DefaultLoadBalancingPolicy.builder()
-            .withLocalDatacenter("dc1")
-            // Permit failover to remote DC for LOCAL consistency levels
-            .withDcFailoverMaxNodesPerRemoteDc(2)
-            .build())
-    .build();
+Configure multi-DC failover via `application.conf`:
+
+```hocon
+datastax-java-driver {
+  basic.load-balancing-policy {
+    local-datacenter = "dc1"
+  }
+  advanced.load-balancing-policy {
+    # Allow failover to remote DC (requires non-LOCAL consistency levels)
+    dc-failover.max-nodes-per-remote-dc = 2
+  }
+}
 ```
+
+!!! warning "LOCAL consistency levels"
+    Allowing remote DC nodes in the load balancing policy does not enable failover for `LOCAL_*` consistency levels. These levels only count replicas in the coordinator's datacenter regardless of where the request originates.
 
 ### Consistency Level Implications
 
@@ -375,28 +379,33 @@ N1 --> Drv: Response [ignored]
 
 ### Explicit Configuration
 
-Do not rely on defaults for production deployments. Configure each policy explicitly:
+Do not rely on defaults for production deployments. Configure each policy explicitly via `application.conf` (preferred) or programmatically:
+
+```hocon
+# application.conf - Recommended approach for Java Driver 4.x
+datastax-java-driver {
+  basic {
+    load-balancing-policy.local-datacenter = "dc1"
+  }
+  advanced {
+    reconnection-policy {
+      class = ExponentialReconnectionPolicy
+      base-delay = 1 second
+      max-delay = 5 minutes
+    }
+    speculative-execution-policy {
+      class = ConstantSpeculativeExecutionPolicy
+      max-executions = 2
+      delay = 100 milliseconds
+    }
+  }
+}
+```
 
 ```java
-// Java driver example - explicit policy configuration
+// Load configuration from application.conf
 CqlSession session = CqlSession.builder()
-    .withLocalDatacenter("dc1")
-    .withLoadBalancingPolicy(
-        DefaultLoadBalancingPolicy.builder()
-            .withLocalDatacenter("dc1")
-            .withSlowReplicaAvoidance(true)
-            .build())
-    .withRetryPolicy(new CustomRetryPolicy())
-    .withReconnectionPolicy(
-        ExponentialReconnectionPolicy.builder()
-            .withBaseDelay(Duration.ofSeconds(1))
-            .withMaxDelay(Duration.ofMinutes(5))
-            .build())
-    .withSpeculativeExecutionPolicy(
-        ConstantSpeculativeExecutionPolicy.builder()
-            .withMaxExecutions(2)
-            .withDelay(Duration.ofMillis(100))
-            .build())
+    .withConfigLoader(DriverConfigLoader.fromClasspath("application.conf"))
     .build();
 ```
 
@@ -428,54 +437,45 @@ This allows different behavior for different query types (e.g., strict no-retry 
 
 ### OLTP Application Configuration
 
-```java
-// Low-latency OLTP configuration
-CqlSession session = CqlSession.builder()
-    .withLocalDatacenter("dc1")
-    .withLoadBalancingPolicy(
-        DefaultLoadBalancingPolicy.builder()
-            .withLocalDatacenter("dc1")
-            .withSlowReplicaAvoidance(true)
-            .build())
-    // Conservative retry - only idempotent operations
-    .withRetryPolicy(DefaultRetryPolicy.INSTANCE)
-    // Fast reconnection for quick recovery
-    .withReconnectionPolicy(
-        ExponentialReconnectionPolicy.builder()
-            .withBaseDelay(Duration.ofMillis(500))
-            .withMaxDelay(Duration.ofMinutes(2))
-            .build())
-    // Speculative execution for tail latency
-    .withSpeculativeExecutionPolicy(
-        ConstantSpeculativeExecutionPolicy.builder()
-            .withMaxExecutions(2)
-            .withDelay(Duration.ofMillis(50))
-            .build())
-    .build();
+```hocon
+# application-oltp.conf
+datastax-java-driver {
+  basic.load-balancing-policy.local-datacenter = "dc1"
+  advanced {
+    load-balancing-policy.slow-replica-avoidance = true
+    reconnection-policy {
+      class = ExponentialReconnectionPolicy
+      base-delay = 500 milliseconds
+      max-delay = 2 minutes
+    }
+    speculative-execution-policy {
+      class = ConstantSpeculativeExecutionPolicy
+      max-executions = 2
+      delay = 50 milliseconds
+    }
+  }
+}
 ```
 
 ### Multi-DC Active-Active Configuration
 
-```java
-// Multi-DC with controlled failover
-CqlSession session = CqlSession.builder()
-    .withLocalDatacenter("dc1")
-    .withLoadBalancingPolicy(
-        DefaultLoadBalancingPolicy.builder()
-            .withLocalDatacenter("dc1")
-            // Allow failover to 2 nodes in remote DC
-            .withDcFailoverMaxNodesPerRemoteDc(2)
-            .build())
-    // Standard retry
-    .withRetryPolicy(DefaultRetryPolicy.INSTANCE)
-    // Standard reconnection
-    .withReconnectionPolicy(
-        ExponentialReconnectionPolicy.builder()
-            .withBaseDelay(Duration.ofSeconds(1))
-            .withMaxDelay(Duration.ofMinutes(5))
-            .build())
-    // No speculative execution across DCs (latency difference too high)
-    .build();
+```hocon
+# application-multi-dc.conf
+datastax-java-driver {
+  basic.load-balancing-policy.local-datacenter = "dc1"
+  advanced {
+    load-balancing-policy {
+      # Allow failover to remote DC (requires non-LOCAL consistency levels)
+      dc-failover.max-nodes-per-remote-dc = 2
+    }
+    reconnection-policy {
+      class = ExponentialReconnectionPolicy
+      base-delay = 1 second
+      max-delay = 5 minutes
+    }
+    # No speculative execution across DCs (latency difference too high)
+  }
+}
 ```
 
 ---

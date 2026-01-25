@@ -15,7 +15,7 @@ Sets the streaming throughput limit for inter-node data transfers.
 ## Synopsis
 
 ```bash
-nodetool [connection_options] setstreamthroughput <throughput_mb_per_sec>
+nodetool [connection_options] setstreamthroughput [options] <throughput>
 ```
 
 ## Description
@@ -31,13 +31,22 @@ nodetool [connection_options] setstreamthroughput <throughput_mb_per_sec>
 This setting affects outgoing streams from the node where the command is executed.
 
 !!! warning "Non-Persistent Setting"
-    This setting is applied at runtime only and does not persist across node restarts. After a restart, the value reverts to the `stream_throughput_outbound` setting in `cassandra.yaml` (default: 200 MB/s).
+    This setting is applied at runtime only and does not persist across node restarts. After a restart, the value reverts to the `stream_throughput_outbound` setting in `cassandra.yaml` (default: 24 MiB/s).
 
     To make the change permanent, update `cassandra.yaml`:
 
     ```yaml
-    stream_throughput_outbound: 200MiB/s
+    stream_throughput_outbound: 24MiB/s
     ```
+
+---
+
+## Options
+
+| Option | Description |
+|--------|-------------|
+| `-m, --mib` | Interpret the throughput value as MiB/s instead of Mb/s |
+| `-e, --entire-sstable-throughput` | Set the entire-SSTable streaming throughput |
 
 ---
 
@@ -45,16 +54,38 @@ This setting affects outgoing streams from the node where the command is execute
 
 | Argument | Description |
 |----------|-------------|
-| `throughput_mb_per_sec` | Maximum streaming rate in MB/s. Use `0` for unlimited |
+| `throughput` | Maximum streaming rate. Default unit is **megabits per second (Mb/s)**. Use `-m` for MiB/s. Use `0` for unlimited. |
+
+!!! note "Unit Clarification"
+    By default, the argument is in **megabits per second (Mb/s)**, not megabytes. For example:
+
+    - `nodetool setstreamthroughput 200` = 200 Mb/s = ~25 MiB/s
+    - `nodetool setstreamthroughput -m 25` = 25 MiB/s = ~200 Mb/s
+
+!!! note "cassandra.yaml Parameter"
+    The corresponding cassandra.yaml parameter changed in 4.1:
+
+    | Cassandra Version | Parameter Name | Default | Unit |
+    |-------------------|----------------|---------|------|
+    | Pre-4.1 | `stream_throughput_outbound_megabits_per_sec` | `200` | Megabits/s |
+    | 4.1+ | `stream_throughput_outbound` | `24MiB/s` | Various |
 
 ---
 
 ## Examples
 
-### Set Throughput
+### Set Throughput (Megabits per Second)
 
 ```bash
+# Set to 200 Mb/s (~25 MiB/s)
 nodetool setstreamthroughput 200
+```
+
+### Set Throughput (MiB per Second)
+
+```bash
+# Set to 25 MiB/s using the -m flag
+nodetool setstreamthroughput -m 25
 ```
 
 ### Unlimited Streaming
@@ -66,12 +97,18 @@ nodetool setstreamthroughput 0
 !!! warning "Unlimited Streaming"
     Setting to 0 removes all throttling. Use with caution as it may saturate network bandwidth and impact other operations.
 
+### Set Entire-SSTable Streaming Throughput
+
+```bash
+# Set entire-SSTable streaming throughput
+nodetool setstreamthroughput -e 200
+```
+
 ### Verify Setting
 
 ```bash
 nodetool setstreamthroughput 200
 nodetool getstreamthroughput
-# Output: Current stream throughput: 200 MB/s
 ```
 
 ---

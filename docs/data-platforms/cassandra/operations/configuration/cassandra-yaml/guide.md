@@ -105,7 +105,7 @@ stream_throughput_outbound: 200MiB/s
 | Duration/size format (human-readable) | ❌ | ✅ |
 | `audit_logging_options` | ✅ | ✅ |
 | `full_query_logging_options` | ✅ | ✅ |
-| Guardrails | ❌ | ✅ (5.0+) |
+| Guardrails | ✅ (4.1+) | ✅ (expanded) |
 
 ---
 

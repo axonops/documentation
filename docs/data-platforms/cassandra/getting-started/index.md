@@ -10,7 +10,7 @@ meta:
 
 Getting Cassandra running takes about five minutes with Docker—the real learning curve is understanding how to use it effectively. Cassandra is not a drop-in replacement for PostgreSQL or MySQL; it requires a different mental model.
 
-The core difference: in relational databases, the schema is designed first and queried as needed. In Cassandra, tables are designed around specific queries. This means denormalized tables, no JOINs, and knowing access patterns upfront. This is a trade-off—query flexibility is exchanged for predictable performance at any scale.
+The core difference: in relational databases, the schema is designed first and queried as needed. In Cassandra, tables are designed around specific queries. This means denormalized tables, no JOINs, and knowing access patterns upfront. This is a trade-off—query flexibility is exchanged for more consistent performance characteristics, though actual performance depends on data model, partition sizing, and workload patterns.
 
 This guide walks through installation, initial configuration, and initial queries.
 

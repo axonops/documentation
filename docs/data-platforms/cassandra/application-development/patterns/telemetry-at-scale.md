@@ -22,7 +22,7 @@ Consider a fleet telemetry scenario:
 - **30-day retention** at full resolution
 - **Multi-tenant** with isolation requirements
 
-At this scale, problems that don't exist at smaller deployments become critical:
+At this scale, problems that don't exist at smaller deployments become critical. The figures below are illustrative and vary with hardware, configuration, and workload:
 
 **Hot partitions**: A device reporting every second for a year creates 31 million rows in one partition, far exceeding Cassandra's comfortable limits.
 
@@ -405,14 +405,19 @@ public class TenantQuotaEnforcer {
 Different tenants may have different retention requirements:
 
 ```java
+// Prepared statement with TTL placeholder
+private final PreparedStatement insertTelemetry = session.prepare(
+    "INSERT INTO telemetry (tenant_id, device_id, ts, value) VALUES (?, ?, ?, ?) USING TTL ?"
+);
+
 public int getTTL(UUID tenantId) {
     TenantConfig config = configService.getConfig(tenantId);
     return config.getRetentionDays() * 86400;  // Convert to seconds
 }
 
-// Apply per-write
-session.execute(insertTelemetry.bind(...)
-    .setInt("[ttl]", getTTL(tenantId)));
+// Apply per-write - TTL is bound as the last parameter
+session.execute(insertTelemetry.bind(
+    tenantId, deviceId, timestamp, value, getTTL(tenantId)));
 ```
 
 ---

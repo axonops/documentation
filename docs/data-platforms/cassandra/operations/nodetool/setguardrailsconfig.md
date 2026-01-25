@@ -18,7 +18,7 @@ Modifies guardrail configuration settings at runtime.
 ## Synopsis
 
 ```bash
-nodetool [connection_options] setguardrailsconfig [options]
+nodetool [connection_options] setguardrailsconfig <guardrail_setter> <value(s)>
 ```
 
 ---
@@ -27,40 +27,58 @@ nodetool [connection_options] setguardrailsconfig [options]
 
 `nodetool setguardrailsconfig` modifies guardrail settings at runtime without requiring a node restart. Guardrails protect the cluster from potentially harmful operations by enforcing limits on schema, queries, and data sizes.
 
+The command takes a guardrail setter name followed by one or more values, depending on the guardrail type.
+
 !!! warning "Non-Persistent Setting"
 
     Settings modified with this command are **not persisted** to configuration files. Changes will be lost on node restart. Update `cassandra.yaml` to make changes permanent.
 
 ---
 
-## Common Options
+## Arguments
+
+| Argument | Description |
+|----------|-------------|
+| `guardrail_setter` | Name of the guardrail setter (e.g., `tables`, `page_size`) |
+| `value(s)` | One or more values depending on the guardrail type |
+
+### Value Semantics
+
+Different guardrail types require different argument patterns:
+
+| Guardrail Type | Arguments | Reset Value |
+|----------------|-----------|-------------|
+| **Threshold guardrails** (e.g., `tables`, `page_size`) | `<fail_threshold> <warn_threshold>` | `-1` to disable |
+| **Flag guardrails** (e.g., `allow_filtering`) | `true` or `false` | N/A |
+| **String/list thresholds** | Value as string | `null` or `[]` to reset |
+
+!!! info "Argument Order"
+    For threshold guardrails, specify **fail threshold first, then warn threshold**.
+
+---
+
+## Common Guardrail Setters
 
 ### Table Guardrails
 
-| Option | Description |
-|--------|-------------|
-| `--tables-warn-threshold <n>` | Warning threshold for table count |
-| `--tables-fail-threshold <n>` | Failure threshold for table count |
-| `--columns-per-table-warn-threshold <n>` | Warning for columns per table |
-| `--columns-per-table-fail-threshold <n>` | Failure for columns per table |
+| Setter | Arguments | Description |
+|--------|-----------|-------------|
+| `tables` | `<fail> <warn>` | Table count thresholds |
+| `columns_per_table` | `<fail> <warn>` | Columns per table thresholds |
 
 ### Query Guardrails
 
-| Option | Description |
-|--------|-------------|
-| `--page-size-warn-threshold <n>` | Warning for large page sizes |
-| `--page-size-fail-threshold <n>` | Rejection for excessive page sizes |
-| `--partition-keys-in-select-warn-threshold <n>` | Warning for partition keys in SELECT |
-| `--partition-keys-in-select-fail-threshold <n>` | Rejection for partition keys in SELECT |
+| Setter | Arguments | Description |
+|--------|-----------|-------------|
+| `page_size` | `<fail> <warn>` | Page size thresholds |
+| `partition_keys_in_select` | `<fail> <warn>` | Partition keys in SELECT thresholds |
 
 ### Collection Guardrails
 
-| Option | Description |
-|--------|-------------|
-| `--collection-size-warn-threshold <bytes>` | Warning for collection sizes |
-| `--collection-size-fail-threshold <bytes>` | Rejection for collection sizes |
-| `--items-per-collection-warn-threshold <n>` | Warning for collection item count |
-| `--items-per-collection-fail-threshold <n>` | Rejection for collection item count |
+| Setter | Arguments | Description |
+|--------|-----------|-------------|
+| `collection_size` | `<fail> <warn>` | Collection size thresholds (in bytes) |
+| `items_per_collection` | `<fail> <warn>` | Collection item count thresholds |
 
 ---
 
@@ -69,43 +87,40 @@ nodetool [connection_options] setguardrailsconfig [options]
 ### Increase Table Limit
 
 ```bash
-nodetool setguardrailsconfig --tables-warn-threshold 200 --tables-fail-threshold 300
+# Set fail=300, warn=200
+nodetool setguardrailsconfig tables 300 200
 ```
 
 ### Set Page Size Limits
 
 ```bash
-nodetool setguardrailsconfig \
-    --page-size-warn-threshold 5000 \
-    --page-size-fail-threshold 10000
+# Set fail=10000, warn=5000
+nodetool setguardrailsconfig page_size 10000 5000
 ```
 
 ### Disable a Guardrail
 
 ```bash
-# Set to -1 to disable
-nodetool setguardrailsconfig --tables-fail-threshold -1
+# Set to -1 to disable (both fail and warn)
+nodetool setguardrailsconfig tables -1 -1
 ```
 
 ### Stricter Collection Limits
 
 ```bash
-nodetool setguardrailsconfig \
-    --collection-size-warn-threshold 32768 \
-    --collection-size-fail-threshold 65536 \
-    --items-per-collection-warn-threshold 50 \
-    --items-per-collection-fail-threshold 100
+# Collection size: fail=65536, warn=32768
+nodetool setguardrailsconfig collection_size 65536 32768
+
+# Items per collection: fail=100, warn=50
+nodetool setguardrailsconfig items_per_collection 100 50
 ```
 
 ### Enterprise Multi-Tenant Settings
 
 ```bash
 # Stricter limits for shared clusters
-nodetool setguardrailsconfig \
-    --tables-warn-threshold 50 \
-    --tables-fail-threshold 75 \
-    --columns-per-table-warn-threshold 30 \
-    --columns-per-table-fail-threshold 50
+nodetool setguardrailsconfig tables 75 50
+nodetool setguardrailsconfig columns_per_table 50 30
 ```
 
 ---
@@ -115,36 +130,33 @@ nodetool setguardrailsconfig \
 ### Temporary Relaxation for Migration
 
 ```bash
-# Temporarily allow more tables for migration
-nodetool setguardrailsconfig --tables-fail-threshold 500
+# Temporarily allow more tables for migration (fail=500, warn=400)
+nodetool setguardrailsconfig tables 500 400
 
 # Perform migration...
 
-# Restore normal limits
-nodetool setguardrailsconfig --tables-fail-threshold 150
+# Restore normal limits (fail=150, warn=100)
+nodetool setguardrailsconfig tables 150 100
 ```
 
 ### Emergency Unblock
 
 ```bash
-# Unblock critical operation
-nodetool setguardrailsconfig --page-size-fail-threshold 20000
+# Unblock critical operation (fail=20000, warn=15000)
+nodetool setguardrailsconfig page_size 20000 15000
 
 # Perform operation...
 
-# Restore limits
-nodetool setguardrailsconfig --page-size-fail-threshold 10000
+# Restore limits (fail=10000, warn=5000)
+nodetool setguardrailsconfig page_size 10000 5000
 ```
 
 ### Hardening New Clusters
 
 ```bash
 # Apply stricter guardrails for new deployments
-nodetool setguardrailsconfig \
-    --tables-warn-threshold 50 \
-    --tables-fail-threshold 100 \
-    --columns-per-table-warn-threshold 25 \
-    --columns-per-table-fail-threshold 50
+nodetool setguardrailsconfig tables 100 50
+nodetool setguardrailsconfig columns_per_table 50 25
 ```
 
 ---
@@ -225,9 +237,7 @@ To apply guardrails across the cluster:
 ```bash
 # Apply to all nodes
 for host in node1 node2 node3; do
-    ssh "$host" "nodetool setguardrailsconfig \"
-        --tables-warn-threshold 100 \
-        --tables-fail-threshold 150
+    ssh "$host" 'nodetool setguardrailsconfig tables 150 100'
 done
 ```
 

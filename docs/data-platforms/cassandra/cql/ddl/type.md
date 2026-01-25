@@ -256,7 +256,7 @@ Name of a field within the type. Field names must be unique within the type.
 Data type for the field. Supports:
 
 - Native types: `TEXT`, `INT`, `UUID`, `TIMESTAMP`, etc.
-- Collections: `LIST<T>`, `SET<T>`, `MAP<K,V>` (must be frozen in fields)
+- Collections: `LIST<T>`, `SET<T>`, `MAP<K,V>` (non-frozen collections allowed in UDT fields)
 - Other UDTs: `FROZEN<other_type>`
 - Tuples: `TUPLE<T1, T2, ...>`
 

@@ -92,25 +92,25 @@ rectangle "1. Client Write\nto Base Table" as write
 
 package "Coordinator" {
     rectangle "2. Receive Write" as receive
-    rectangle "3. Compute MV\nMutations" as compute
 }
 
 package "Base Table Replica" {
-    rectangle "4a. Apply Base\nTable Write" as base_write
-    rectangle "4b. Read Current\nRow (if needed)" as read_before
+    rectangle "3. Apply Base\nTable Write" as base_write
+    rectangle "4. Read Current\nRow (if needed)" as read_before
+    rectangle "5. Compute MV\nMutations" as compute
 }
 
 package "MV Replica (may differ)" {
-    rectangle "5. Apply MV\nMutation" as mv_write
+    rectangle "6. Apply MV\nMutation" as mv_write
 }
 
-rectangle "6. Acknowledge\nto Client" as ack
+rectangle "7. Acknowledge\nto Client" as ack
 
 write --> receive
-receive --> compute
-compute --> base_write
-compute --> read_before
-read_before ..> mv_write : async
+receive --> base_write
+base_write --> read_before
+read_before --> compute
+compute ..> mv_write : async
 base_write --> ack
 
 @enduml
@@ -119,11 +119,12 @@ base_write --> ack
 **Key points:**
 
 1. Write arrives at coordinator
-2. Coordinator computes what MV rows need to change
-3. Base table mutation applied
+2. Coordinator forwards write to base table replicas
+3. Base table mutation applied on each replica
 4. For updates/deletes: current row read to determine old MV key
-5. MV mutations sent asynchronously to MV replicas
-6. Client acknowledgment based on base table consistency level
+5. MV mutations computed on base table replicas (not coordinator)
+6. MV mutations propagated asynchronously to MV replicas
+7. Client acknowledgment based on base table consistency level
 
 ### Partition Key Mapping
 

@@ -15,7 +15,7 @@ Rewrites SSTables to the current Cassandra version format for compatibility afte
 ## Synopsis
 
 ```bash
-sstableupgrade [options] <keyspace> <table>
+sstableupgrade [options] <keyspace> <table> [snapshot]
 ```
 
 ---
@@ -72,8 +72,7 @@ serialize --> write
 write --> new
 
 note right of old
-  Can be from Cassandra
-  2.x, 3.x, or 4.x
+  Older SSTable format
 end note
 
 note right of new
@@ -104,6 +103,10 @@ end note
 |----------|-------------|
 | `keyspace` | Name of the keyspace containing the table |
 | `table` | Name of the table to upgrade |
+| `snapshot` | (Optional) Name of a specific snapshot to upgrade |
+
+!!! warning "Snapshot Upgrade Breaks Hard Links"
+    When upgrading a snapshot, the hard links between snapshot files and active data files are broken. This increases disk usage as the snapshot files become independent copies.
 
 ---
 
@@ -112,6 +115,7 @@ end note
 | Option | Description |
 |--------|-------------|
 | `-k, --keep-source` | Keep original SSTables after upgrade (do not delete) |
+| `-h, --help` | Display help information |
 | `--debug` | Enable debug output |
 
 ---
@@ -208,8 +212,8 @@ After upgrading Cassandra from one major version to another:
 # Example: After upgrading from 3.11 to 4.0
 
 # 1. Complete rolling upgrade of all nodes
-# 2. On each node, upgrade SSTables (can be done with Cassandra running for 4.0+)
-# Or stop Cassandra and run offline:
+# 2. Stop Cassandra on each node and run sstableupgrade offline
+#    (For online upgrade, use nodetool upgradesstables instead)
 
 sudo systemctl stop cassandra
 

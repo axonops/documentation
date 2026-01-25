@@ -41,8 +41,8 @@ The SELECT statement retrieves rows and columns from Cassandra tables. Unlike SQ
 | `ALL` | All replicas respond; highest consistency, lowest availability |
 | `LOCAL_ONE` | At least one replica in local DC responds |
 | `LOCAL_QUORUM` | Majority in local DC responds |
-| `SERIAL` | Linearizable read (Paxos); sees all committed LWT operations |
-| `LOCAL_SERIAL` | Linearizable read within local DC only |
+| `SERIAL` | For LWT operations only; sees all committed LWT operations |
+| `LOCAL_SERIAL` | For LWT operations within local DC only |
 
 ### Version-Specific Behavior
 
@@ -61,9 +61,9 @@ The SELECT statement retrieves rows and columns from Cassandra tables. Unlike SQ
 
 Cassandra's query model follows a fundamental principle: **queries must specify how to find data, not just what data to find**. This design enables:
 
-- **Predictable performance**: Queries execute in bounded time
-- **Linear scalability**: Response time independent of cluster size
-- **Partition locality**: Data retrieved from minimal nodes
+- **Predictable performance**: Partition-restricted queries execute in bounded time
+- **Scalability**: Partition-restricted queries have response time independent of cluster size
+- **Partition locality**: Data retrieved from minimal nodes when partition key is specified
 
 ```plantuml
 @startuml
@@ -391,7 +391,7 @@ WHERE TOKEN(user_id) > -9223372036854775808
 
     - Contact every node in the cluster
     - Do not scale with cluster size
-    - Can cause timeouts on tables > 1M rows
+    - Risk timeouts on large tables (depending on schema, hardware, and workload)
     - Block coordinator resources
 
     Never use in production application code. Use Spark or analytics tools for full scans.

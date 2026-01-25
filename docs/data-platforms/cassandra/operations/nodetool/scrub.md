@@ -67,12 +67,16 @@ SSTable corruption is relatively rare but can occur due to several factors:
 
 ## Options
 
-| Option | Description |
-|--------|-------------|
-| `-s, --skip-corrupted` | Skip corrupted partitions instead of failing |
-| `-n, --no-validate` | Skip validation (faster but less thorough) |
-| `-r, --reinsert-overflowed-ttl` | Reinsert rows with overflowed TTL |
-| `-j, --jobs` | Number of concurrent scrub jobs |
+| Option | Description | Default |
+|--------|-------------|---------|
+| `-j, --jobs` | Number of concurrent scrub jobs. 0 means use all available compaction threads | 2 |
+| `-n, --no-validate` | Skip validation (faster but less thorough) | |
+| `-ns, --no-snapshot` | Do not take a snapshot before scrubbing | |
+| `-r, --reinsert-overflowed-ttl` | Reinsert rows with overflowed TTL | |
+| `-s, --skip-corrupted` | Skip corrupted partitions instead of failing | |
+
+!!! info "Default Snapshot Behavior"
+    By default, `scrub` creates a snapshot of tables before scrubbing. Use `-ns` to skip this if space is limited.
 
 ---
 

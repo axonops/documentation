@@ -53,15 +53,23 @@ Optimize JVM settings for optimal Cassandra performance.
 -XX:G1HeapWastePercent=10
 ```
 
-### ZGC (JDK 17+, Low Latency)
+### ZGC (Low Latency)
 
 ```bash
 # ZGC for ultra-low latency
 -XX:+UseZGC
--XX:+ZGenerational
+
+# ZGenerational is available in JDK 21+ only
+# -XX:+ZGenerational
+
 -XX:SoftMaxHeapSize=28G
 -XX:ZCollectionInterval=0
 ```
+
+!!! note "ZGC Version Requirements"
+    - **JDK 11-16**: ZGC is experimental (`-XX:+UnlockExperimentalVMOptions` required)
+    - **JDK 17-20**: ZGC is production-ready (non-generational)
+    - **JDK 21+**: ZGenerational mode available via `-XX:+ZGenerational`
 
 ### Shenandoah (JDK 11+, Alternative)
 

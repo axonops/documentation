@@ -8,7 +8,7 @@ meta:
 
 # Cassandra Architecture
 
-Cassandra's architecture explains its behavior. The partition key determines which node stores data—get it wrong, and queries become slow or impossible. Deletes write tombstones instead of removing data immediately—ignore this, and deleted records can reappear. Nodes can disagree on data temporarily—skip repair, and that disagreement becomes permanent.
+Cassandra's architecture explains its behavior. The partition key determines which node stores data—get it wrong, and queries become slow or impossible. Deletes write tombstones instead of removing data immediately—ignore this, and deleted records can reappear. Nodes can disagree on data temporarily—while repair is the primary mechanism for full convergence, hinted handoff and read repair also help synchronize replicas.
 
 The design combines Amazon Dynamo's distribution approach (masterless ring, gossip protocol, tunable consistency) with Google BigTable's storage approach (LSM-tree, [SSTables](storage-engine/sstables.md), memtables). Understanding both sides leads to better decisions about data modeling and operations.
 
@@ -17,7 +17,7 @@ The design combines Amazon Dynamo's distribution approach (masterless ring, goss
 Apache Cassandra is a distributed, peer-to-peer database designed for:
 
 - **High Availability**: No single point of failure
-- **Linear Scalability**: Add nodes to increase capacity
+- **Scalability**: Add nodes to increase capacity (actual scaling depends on workload and data model)
 - **Geographic Distribution**: Multi-datacenter replication
 - **Tunable Consistency**: Balance between consistency and availability
 

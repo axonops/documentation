@@ -28,7 +28,7 @@ The INSERT statement adds rows to Cassandra tables. Unlike SQL databases, Cassan
     The following behaviors are undefined and must not be relied upon:
 
     - **Write visibility timing**: After INSERT returns, the data may not immediately be visible to reads at lower consistency levels
-    - **Cross-column atomicity**: Columns in a single INSERT are written as separate cells; partial visibility is possible during read
+    - **Cross-column atomicity at low CL reads**: A single-partition INSERT is atomic per replica, but reads at lower consistency levels may see stale data from replicas that haven't received the write
     - **Order of concurrent writes**: Two INSERTs with the same timestamp have undefined conflict resolution (implementation-dependent tie-breaker)
     - **Exactly-once without LWT**: Without IF NOT EXISTS, the same INSERT may be applied multiple times (idempotent, but no uniqueness)
 
@@ -170,7 +170,7 @@ IF NOT EXISTS;
 ```
 
 !!! warning "LWT Performance"
-    `IF NOT EXISTS` uses Paxos consensus, adding ~4x latency compared to regular inserts. Use sparingly and only when uniqueness is critical.
+    `IF NOT EXISTS` uses Paxos consensus, adding significant latency compared to regular inserts (commonly 2-4x or more, workload-dependent). Use sparingly and only when uniqueness is critical.
 
 ### USING TTL
 
@@ -229,7 +229,7 @@ USING TIMESTAMP 1705315800000000;
 - Data migration with preserved timestamps
 
 !!! danger "Timestamp Pitfalls"
-    - Future timestamps can make data "invisible" until that time
+    - Future timestamps cause the write to win immediately; subsequent real-time writes may be ignored until their timestamps surpass the future value
     - Past timestamps may be ignored if newer data exists
     - Clock skew between application servers causes inconsistencies
 

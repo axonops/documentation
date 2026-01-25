@@ -85,12 +85,15 @@ end note
 | `-b, --backups` | Include backup directories in scan |
 | `-c, --min-cells <n>` | Minimum cell count threshold |
 | `-k, --key <key>` | Only show specific partition key |
+| `-x, --exclude-key <key>` | Exclude specific partition key |
 | `-m, --csv` | Output in CSV format |
-| `-r, --min-rows <n>` | Minimum row count threshold |
+| `-w, --min-rows <n>` | Minimum row count threshold |
 | `-s, --snapshots` | Include snapshot directories in scan |
-| `-t, --min-tombstones <n>` | Minimum tombstone count threshold |
+| `-o, --min-tombstones <n>` | Minimum tombstone count threshold |
 | `-u, --current-timestamp <ts>` | Override current time for TTL calculations |
-| `-y, --min-size <size>` | Minimum partition size threshold (e.g., 100MB, 1GB) |
+| `-t, --min-size <size>` | Minimum partition size threshold (e.g., 100MB, 1GB) |
+| `-y, --partitions-only` | Output only partition key information |
+| `-r, --recursive` | Recursively scan directories |
 
 ---
 
@@ -107,31 +110,31 @@ sstablepartitions /var/lib/cassandra/data/my_keyspace/my_table-*/
 
 ```bash
 # Find partitions larger than 100MB
-sstablepartitions --min-size 100MB /var/lib/cassandra/data/my_keyspace/my_table-*/
+sstablepartitions -t 100MB /var/lib/cassandra/data/my_keyspace/my_table-*/
 
 # Find partitions larger than 1GB
-sstablepartitions -y 1GB /var/lib/cassandra/data/my_keyspace/my_table-*/
+sstablepartitions --min-size 1GB /var/lib/cassandra/data/my_keyspace/my_table-*/
 ```
 
 ### Find Wide Partitions (High Row Count)
 
 ```bash
 # Find partitions with more than 100,000 rows
-sstablepartitions --min-rows 100000 /var/lib/cassandra/data/my_keyspace/my_table-*/
+sstablepartitions -w 100000 /var/lib/cassandra/data/my_keyspace/my_table-*/
 ```
 
 ### Find Tombstone-Heavy Partitions
 
 ```bash
 # Find partitions with excessive tombstones
-sstablepartitions --min-tombstones 10000 /var/lib/cassandra/data/my_keyspace/my_table-*/
+sstablepartitions -o 10000 /var/lib/cassandra/data/my_keyspace/my_table-*/
 ```
 
 ### Find High Cell Count Partitions
 
 ```bash
 # Find partitions with more than 1 million cells
-sstablepartitions --min-cells 1000000 /var/lib/cassandra/data/my_keyspace/my_table-*/
+sstablepartitions -c 1000000 /var/lib/cassandra/data/my_keyspace/my_table-*/
 ```
 
 ### CSV Output for Processing
@@ -208,7 +211,7 @@ SIZE_THRESHOLD="${3:-100MB}"
 echo "Finding partitions larger than $SIZE_THRESHOLD in ${KEYSPACE}.${TABLE}"
 echo "======================================================================="
 
-sstablepartitions --min-size "$SIZE_THRESHOLD" \
+sstablepartitions -t "$SIZE_THRESHOLD" \
     ${DATA_DIR}/${KEYSPACE}/${TABLE}-*/ 2>/dev/null | \
     grep "Partition:" | \
     sort -t',' -k6 -n -r | \
@@ -230,7 +233,7 @@ mkdir -p "$OUTPUT_DIR"
 TIMESTAMP=$(date +%Y%m%d_%H%M%S)
 OUTPUT_FILE="${OUTPUT_DIR}/${KEYSPACE}_${TABLE}_${TIMESTAMP}.csv"
 
-sstablepartitions --csv --min-size 10MB \
+sstablepartitions --csv -t 10MB \
     ${DATA_DIR}/${KEYSPACE}/${TABLE}-*/ > "$OUTPUT_FILE"
 
 echo "Report saved to $OUTPUT_FILE"
@@ -252,7 +255,7 @@ TOMBSTONE_THRESHOLD="${3:-10000}"
 echo "Partitions with more than $TOMBSTONE_THRESHOLD tombstones"
 echo "========================================================="
 
-sstablepartitions --min-tombstones "$TOMBSTONE_THRESHOLD" \
+sstablepartitions -o "$TOMBSTONE_THRESHOLD" \
     ${DATA_DIR}/${KEYSPACE}/${TABLE}-*/ 2>/dev/null | \
     grep "Partition:" | \
     while read line; do
@@ -278,17 +281,17 @@ echo "======================================================="
 # Partitions that may cause repair timeout
 echo ""
 echo "Large partitions (may cause repair timeout):"
-sstablepartitions --min-size 500MB ${DATA_DIR}/${KEYSPACE}/${TABLE}-*/ 2>/dev/null | grep "Partition:"
+sstablepartitions -t 500MB ${DATA_DIR}/${KEYSPACE}/${TABLE}-*/ 2>/dev/null | grep "Partition:"
 
 # High tombstone partitions
 echo ""
 echo "High tombstone partitions (may cause streaming issues):"
-sstablepartitions --min-tombstones 50000 ${DATA_DIR}/${KEYSPACE}/${TABLE}-*/ 2>/dev/null | grep "Partition:"
+sstablepartitions -o 50000 ${DATA_DIR}/${KEYSPACE}/${TABLE}-*/ 2>/dev/null | grep "Partition:"
 
 # Wide partitions
 echo ""
 echo "Wide partitions (may cause memory pressure):"
-sstablepartitions --min-rows 500000 ${DATA_DIR}/${KEYSPACE}/${TABLE}-*/ 2>/dev/null | grep "Partition:"
+sstablepartitions -w 500000 ${DATA_DIR}/${KEYSPACE}/${TABLE}-*/ 2>/dev/null | grep "Partition:"
 ```
 
 ### Cluster-Wide Analysis
@@ -306,7 +309,7 @@ mkdir -p "$OUTPUT_DIR"
 
 for node in $NODES; do
     echo "Collecting from $node..."
-    ssh "$node" "sstablepartitions --csv --min-size 50MB \
+    ssh "$node" "sstablepartitions --csv -t 50MB \
         /var/lib/cassandra/data/${KEYSPACE}/${TABLE}-*/" \
         > "${OUTPUT_DIR}/${node}.csv" 2>/dev/null
 done

@@ -279,7 +279,7 @@ Send to Node1
     │
     ├─── Node2 responds ──► Return to application
     │
-    └─── Cancel pending requests
+    └─── Ignore late responses (most drivers do not cancel in-flight requests)
 ```
 
 ---
@@ -293,16 +293,18 @@ Send to Node1
 | Total request rate | Including speculative requests | Unexpected increase in cluster load |
 
 ```
-Healthy metrics:
+Example metrics (workload-dependent; use as starting point, not targets):
   Trigger rate: 5-15%
   Win rate: 40-60% of triggered
   Latency improvement: 50%+ reduction in P99
 
-Unhealthy metrics:
+Warning signs (investigate if observed):
   Trigger rate: >50% (delay too low or cluster too slow)
   Win rate: <20% (delay too high, speculative rarely faster)
   Win rate: >80% (delay too low, original always slow)
 ```
+
+Optimal thresholds vary significantly by workload, cluster topology, and latency distribution.
 
 ---
 

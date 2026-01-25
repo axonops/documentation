@@ -63,13 +63,13 @@ public User getUser(UUID userId) {
 | **Execute** | Run the actual query | 2-10 ms |
 | **Close** | Tear down all connections | 10-50 ms |
 
-**Total overhead per request: 170-790 ms** for a 2-10 ms query.
+**Illustrative overhead per request: ~170-790 ms** (depending on network and cluster topology) for a typical 2-10 ms query.
 
 At 100 requests/second:
 - 100 full connection cycles per second
 - 100 × (nodes in cluster) TCP connections opened and closed
 - Cluster sees connection storms during traffic spikes
-- `nodetool netstats` shows thousands of pending connections
+- `nodetool clientstats` shows thousands of connected clients
 
 ### The Fix
 
@@ -107,8 +107,8 @@ public class CassandraService {
 # Connection churn in Cassandra logs
 grep "connections" /var/log/cassandra/debug.log | grep -E "(opened|closed)"
 
-# High connection counts
-nodetool netstats | grep -A 20 "Mode:"
+# High client connection counts
+nodetool clientstats
 
 # In application metrics: session creation rate should be ~0
 ```
@@ -251,7 +251,7 @@ It does NOT mean the write failed:
 | WriteType | What Happened | Data State |
 |-----------|---------------|------------|
 | `SIMPLE` | Coordinator timed out waiting for replicas | Write may exist on 0, 1, 2, or all replicas |
-| `BATCH` | Batch log written, mutations may be partial | Batch will eventually complete |
+| `BATCH` | Batch log written, mutations may be partial | Completion is not guaranteed; mutations may or may not be replayed |
 | `BATCH_LOG` | Batch log write timed out | Batch may or may not execute |
 | `UNLOGGED_BATCH` | Some mutations may have applied | Partial writes possible |
 
@@ -592,10 +592,9 @@ CqlSession session = CqlSession.builder()
 
 | Scenario | Result |
 |----------|--------|
-| Single DC cluster | Works (sometimes) |
-| Multi-DC cluster | Queries route to random DC |
-| DC failure | Failover may route to wrong DC |
-| Driver 4.x | Throws exception: "No local datacenter set" |
+| Driver 4.x (any topology) | Throws `IllegalStateException`: local datacenter is mandatory |
+| Multi-DC cluster (Driver 3.x) | Queries route to random DC |
+| DC failure (Driver 3.x) | Failover may route to wrong DC |
 
 ### The Fix
 
@@ -925,9 +924,9 @@ LWT uses Paxos consensus:
 
 | Operation | Regular Write | LWT |
 |-----------|---------------|-----|
-| Round trips | 1 | 4 (Prepare, Promise, Accept, Ack) |
-| Latency | 2-5 ms | 20-50 ms |
-| Throughput | 10,000+/s per partition | ~100/s per partition |
+| Round trips | 1 | 2-4 (varies by Cassandra version and contention) |
+| Latency | Typically 2-5 ms | Typically 10-50+ ms (varies with contention and topology) |
+| Throughput | High (partition-independent) | Significantly reduced (serial per partition) |
 
 ### The Fix
 

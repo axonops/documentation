@@ -147,13 +147,13 @@ fi
 #!/bin/bash
 # check_binary_cluster.sh
 
-echo "=== Native Transport Status Across Cluster ==="# Get list of node IPs from local nodetool status
+echo "=== Native Transport Status Across Cluster ==="
 
-
+# Get list of node IPs from local nodetool status
 nodes=$(nodetool status | grep "^UN\|^DN" | awk '{print $2}')
 
 for node in $nodes; do
-    status=$(ssh "$node" "nodetool statusbinary 2>/dev/null || echo "UNREACHABLE")"
+    status=$(ssh "$node" 'nodetool statusbinary 2>/dev/null || echo "UNREACHABLE"')
     echo "$node: $status"
 done
 ```

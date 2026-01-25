@@ -8,7 +8,7 @@ meta:
 
 # BATCH
 
-The BATCH statement groups multiple INSERT, UPDATE, and DELETE statements into a single atomic operation. Batches ensure that all statements either complete or none do, providing atomicity guarantees. However, batches are frequently misused as a performance optimization—they are not.
+The BATCH statement groups multiple INSERT, UPDATE, and DELETE statements into a single logical operation. Same-partition batches are atomic at the storage layer. Multi-partition logged batches provide durability via the batch log (ensuring eventual replay on failure), but do not provide true atomicity—partial visibility is possible. Batches are frequently misused as a performance optimization—they are not.
 
 ---
 
@@ -16,11 +16,12 @@ The BATCH statement groups multiple INSERT, UPDATE, and DELETE statements into a
 
 ### What BATCH Guarantees
 
-- All statements in a logged batch eventually execute or none execute
-- Statements to the same partition are atomic at the storage layer
-- Logged batches write to batch log before executing mutations
+- Statements to the same partition are atomic at the partition mutation level
+- Logged batches write to batch log before executing mutations, enabling replay on coordinator failure
 - USING TIMESTAMP applies the same timestamp to all statements
 - If any IF condition fails, no statements in the batch execute
+
+*Note: The batch log provides durability/replay for logged batches, but replay is best-effort and partial visibility can occur during or after failures.*
 
 ### What BATCH Does NOT Guarantee
 
@@ -29,16 +30,16 @@ The BATCH statement groups multiple INSERT, UPDATE, and DELETE statements into a
 
     - **Isolation**: Other reads may see partial batch results before completion
     - **Performance improvement**: Batches do not improve throughput over parallel writes
-    - **Cross-datacenter atomicity**: Logged batches provide atomicity within a datacenter, not globally
-    - **Unlogged batch atomicity**: UNLOGGED batches have no atomicity guarantee on coordinator failure
+    - **Multi-partition atomicity**: Logged batches do not provide atomicity; they provide durability via replay
+    - **Unlogged batch atomicity**: UNLOGGED batches have no durability guarantee on coordinator failure
     - **Order of execution**: Statements within a batch may execute in any order
 
 ### Logged vs Unlogged Contracts
 
 | Aspect | Logged Batch | Unlogged Batch |
 |--------|--------------|----------------|
-| Coordinator failure | Recovers via batch log | Undefined - partial execution possible |
-| Multi-partition | Atomic (via batch log) | Not atomic |
+| Coordinator failure | Recovers via batch log replay | Undefined - partial execution possible |
+| Multi-partition | Durable (via batch log), not atomic | Not durable, not atomic |
 | Same-partition | Atomic | Atomic (storage layer) |
 | Performance | Higher latency (batch log overhead) | Lower latency |
 
@@ -185,7 +186,7 @@ SELECT * FROM system.batches;
 Batch log entries are replayed automatically:
 
 - Each node periodically scans its local batch log
-- Entries older than `batchlog_replay_throttle` are candidates for replay
+- Entries older than the batchlog timeout threshold are candidates for replay
 - Mutations are re-executed to ensure completion
 - Successfully replayed entries are removed
 
@@ -197,7 +198,7 @@ batchlog_replay_throttle: 1024KiB     # 4.1+ (data size format)
 
 **Guarantees:**
 
-- All statements eventually execute or none do
+- Replay is attempted until successful (best-effort eventual delivery)
 - Coordinator failure doesn't lose the batch (batch log on other nodes)
 - Batch log written to 2 endpoints for redundancy
 
@@ -286,7 +287,7 @@ APPLY BATCH;
 **Benefits:**
 
 - Single coordinator to single replica set
-- Atomic at storage layer (same SSTable)
+- Atomic at partition mutation level
 - Minimal coordination overhead
 
 ### Multi-Partition Batch (Use Carefully)

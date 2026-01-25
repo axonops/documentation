@@ -12,7 +12,7 @@ CQL includes built-in functions for common operations: generating UUIDs, working
 
 Aggregates deserve a warning: `SELECT COUNT(*) FROM users` looks innocent, but without a partition key it scans the entire cluster. That is fine for a thousand rows; it will timeout with a billion. Aggregates work efficiently when scoped to a partition.
 
-This reference covers scalar functions, aggregates, and user-defined functions (available since Cassandra 4.0).
+This reference covers scalar functions, aggregates, and user-defined functions (available since Cassandra 2.2).
 
 ---
 
@@ -22,7 +22,7 @@ This reference covers scalar functions, aggregates, and user-defined functions (
 
 - Scalar functions are evaluated on the coordinator for each result row
 - `uuid()` generates a unique random UUID (version 4) per invocation
-- `now()` generates a unique time-based UUID (version 1) per invocation within a statement
+- `now()` generates the same time-based UUID (version 1) for all invocations within a single statement
 - `token()` returns the partition token for the given partition key columns
 - Aggregate functions are evaluated on the coordinator after collecting all matching rows
 - Type conversion functions fail predictably on incompatible input

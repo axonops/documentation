@@ -14,11 +14,13 @@ Quick reference for Apache Cassandra.
 
 | Port | Protocol | Purpose |
 |------|----------|---------|
-| 9042 | CQL | Native client connections |
-| 9142 | CQL/SSL | Encrypted client connections |
-| 7000 | TCP | Inter-node communication |
-| 7001 | TCP/SSL | Encrypted inter-node |
+| 9042 | CQL | Native client connections (TLS configured via `client_encryption_options`) |
+| 7000 | TCP | Inter-node communication (TLS configured via `server_encryption_options`) |
 | 7199 | JMX | JMX monitoring |
+
+!!! note "Deprecated Ports"
+    - Port 9142 (`native_transport_port_ssl`) was deprecated in Cassandra 4.x and removed in 5.0. TLS is now configured on the standard 9042 port.
+    - Port 7001 (`ssl_storage_port`) is deprecated. Internode TLS is configured on the standard 7000 port.
 
 ## Directories
 

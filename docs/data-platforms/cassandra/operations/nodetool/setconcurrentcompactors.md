@@ -141,20 +141,28 @@ queue2 -down-> active2
 
 ## Default Value Calculation
 
-If not explicitly configured, Cassandra calculates the default based on:
+If not explicitly configured, Cassandra calculates the default with bounds:
 
 ```
-concurrent_compactors = min(number_of_data_directories, number_of_cpu_cores)
+concurrent_compactors = min(8, max(2, min(number_of_data_directories, number_of_cpu_cores)))
 ```
 
-| System Configuration | Default Compactors |
-|---------------------|-------------------|
-| 8 cores, 1 disk | 1 |
-| 8 cores, 4 disks (JBOD) | 4 |
-| 16 cores, 8 disks | 8 |
-| 4 cores, 8 disks | 4 |
+This formula:
+1. Takes the minimum of data directories and CPU cores
+2. Ensures at least 2 compactors (floor)
+3. Caps at 8 compactors (ceiling)
+
+| System Configuration | Calculation | Default Compactors |
+|---------------------|-------------|-------------------|
+| 2 cores, 1 disk | min(8, max(2, min(1, 2))) = min(8, max(2, 1)) = 2 | 2 |
+| 8 cores, 1 disk | min(8, max(2, min(1, 8))) = min(8, max(2, 1)) = 2 | 2 |
+| 8 cores, 4 disks (JBOD) | min(8, max(2, min(4, 8))) = min(8, max(2, 4)) = 4 | 4 |
+| 16 cores, 8 disks | min(8, max(2, min(8, 16))) = min(8, max(2, 8)) = 8 | 8 |
+| 32 cores, 16 disks | min(8, max(2, min(16, 32))) = min(8, 16) = 8 | 8 (capped) |
 
 The rationale:
+- **Minimum of 2**: Ensures adequate parallelism even on single-disk systems
+- **Maximum of 8**: Prevents excessive parallelism that can cause resource contention
 - **Disk-limited**: Each disk can only do one compaction efficiently at a time
 - **CPU-limited**: Each compaction thread consumes CPU for data processing
 

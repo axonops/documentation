@@ -20,7 +20,7 @@ Multi-datacenter deployment distributes data across geographically separated loc
 
 | Use Case | Benefit |
 |----------|---------|
-| **Geographic read locality** | Users read from nearby nodes (1-5ms vs 50-200ms cross-region) |
+| **Geographic read locality** | Users read from nearby nodes (latency varies by network topology) |
 | **Disaster recovery** | Survive complete datacenter failure |
 | **Regulatory compliance** | Keep data within geographic boundaries |
 | **Follow-the-sun operations** | Shift load to active regions |
@@ -30,7 +30,7 @@ Multi-datacenter deployment distributes data across geographically separated loc
 
 | Capability | Description |
 |------------|-------------|
-| **Asynchronous replication** | Writes replicate across DCs without blocking |
+| **Asynchronous replication** | With LOCAL_* consistency levels, writes replicate to remote DCs without blocking the coordinator response |
 | **Per-DC replication factor** | Configure replicas independently per datacenter |
 | **LOCAL consistency levels** | Queries execute within local DC only |
 | **Automatic topology awareness** | Drivers discover and route to local nodes |
@@ -209,15 +209,10 @@ Routing is controlled through:
 ### Java (DataStax Driver 4.x)
 
 ```java
+// Java Driver 4.x - withLocalDatacenter() configures DC-aware routing
 CqlSession session = CqlSession.builder()
     .addContactPoint(new InetSocketAddress("cassandra-us-east.example.com", 9042))
-    .withLocalDatacenter("us-east")  // Critical: sets local DC
-    .withLoadBalancingPolicy(
-        DefaultLoadBalancingPolicy.builder()
-            .withLocalDatacenter("us-east")
-            .withSlowReplicaAvoidance(true)
-            .build()
-    )
+    .withLocalDatacenter("us-east")  // Critical: sets local DC for routing
     .build();
 
 // All queries route to us-east by default
@@ -318,9 +313,9 @@ const result = await client.execute(query, [userId], { prepare: true });
 
 | Level | Scope | Latency | Durability |
 |-------|-------|---------|------------|
-| `LOCAL_ONE` | 1 replica in local DC | Lowest (~1ms) | Single node |
-| `LOCAL_QUORUM` | Quorum in local DC | Low (~2-5ms) | Local DC durable |
-| `QUORUM` | Quorum across all DCs | High (~50-200ms) | Global durable |
+| `LOCAL_ONE` | 1 replica in local DC | Lowest | Single node (replicates to remote DCs asynchronously) |
+| `LOCAL_QUORUM` | Quorum in local DC | Low | Local DC durable (replicates to remote DCs asynchronously) |
+| `QUORUM` | Quorum across all DCs | High (cross-region RTT) | Global durable |
 | `EACH_QUORUM` | Quorum in each DC | Highest | Strongest |
 | `ALL` | All replicas everywhere | Highest | Complete |
 
@@ -335,10 +330,12 @@ const result = await client.execute(query, [userId], { prepare: true });
 
 ### Latency Impact
 
+Latency values are workload and network dependent. Representative ranges for illustrative purposes:
+
 ```
-LOCAL_QUORUM (same region):     ~2-5ms
-QUORUM (cross-region):          ~50-200ms (depends on distance)
-EACH_QUORUM (all regions):      ~100-300ms (slowest DC determines latency)
+LOCAL_QUORUM (same region):     Low latency (network RTT within region)
+QUORUM (cross-region):          Higher latency (requires cross-region round trips)
+EACH_QUORUM (all regions):      Highest latency (slowest DC determines latency)
 ```
 
 !!! warning "QUORUM in Multi-DC"
@@ -360,25 +357,23 @@ CQRS aligns naturally with multi-DC deployments:
 
 ## Cross-Region Failover
 
-### Automatic Failover (Driver-Level)
+### Failover (Driver-Level)
 
-The driver automatically fails over to remote DCs when local nodes are unavailable:
+Driver failover to remote DCs requires explicit configuration. By default, most drivers do not contact remote DC nodes.
 
 ```java
-// Java: Configure remote DC fallback
-DefaultLoadBalancingPolicy policy = DefaultLoadBalancingPolicy.builder()
-    .withLocalDatacenter("us-east")
-    .build();
-
-// Driver automatically tries remote DCs if local DC is completely down
+// Java Driver 4.x: Remote DC failover requires configuration in application.conf
+// datastax-java-driver.basic.load-balancing-policy.slow-replica-avoidance = true
+// Note: Cross-DC failover behavior is driver-version dependent
 ```
 
 ```python
-# Python: Configure remote DC fallback
+# Python: Configure remote DC fallback (explicit configuration required)
 policy = DCAwareRoundRobinPolicy(
     local_dc='us-east',
-    used_hosts_per_remote_dc=2  # Try 2 hosts per remote DC on failure
+    used_hosts_per_remote_dc=2  # Must set >0 to enable remote DC fallback
 )
+# Without used_hosts_per_remote_dc, remote DCs are not contacted
 ```
 
 ### Failover Behavior
@@ -387,8 +382,8 @@ policy = DCAwareRoundRobinPolicy(
 |----------|-----------------|
 | Single node failure | Routes to other local DC nodes |
 | Multiple node failures | Continues with remaining local nodes |
-| Complete local DC failure | Falls back to remote DC (if configured) |
-| Network partition | May route to accessible DC |
+| Complete local DC failure | Falls back to remote DC only if `used_hosts_per_remote_dc > 0` (Python) or equivalent configured |
+| Network partition | Behavior depends on which nodes are reachable and driver configuration |
 
 ### Manual Failover Procedure
 

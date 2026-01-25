@@ -11,7 +11,7 @@ meta:
 Compaction is the process of merging SSTables to reduce read amplification, reclaim space from tombstones, and maintain manageable file counts. Selecting an appropriate strategy and configuration is critical for cluster performance.
 
 !!! tip "Cassandra 5.0+ Recommendation"
-    For new deployments on Cassandra 5.0+, [Unified Compaction Strategy (UCS)](ucs.md) is the recommended default. UCS provides a single, configurable strategy that can emulate STCS, LCS, or hybrid behaviors through its `scaling_parameters` option. Existing clusters can continue using their current strategies or migrate to UCS with a simple ALTER TABLE.
+    For new deployments on Cassandra 5.0+, [Unified Compaction Strategy (UCS)](ucs.md) is the recommended default. UCS provides a single, configurable strategy that can emulate STCS, LCS, or hybrid behaviors through its `scaling_parameters` option. Existing clusters can continue using their current strategies or migrate to UCS via ALTER TABLE, though migration should be validated against workload characteristics and monitored for operational impact.
 
 ---
 

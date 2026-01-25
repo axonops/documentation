@@ -213,18 +213,21 @@ WHERE email IS NOT NULL
 
 The `IS NOT NULL` constraint ensures the view only contains rows where primary key columns have values (views cannot store rows with null primary keys).
 
-Additional filter conditions are allowed:
+!!! warning "Non-Primary-Key Predicates"
+    By default, Cassandra only allows `IS NOT NULL` predicates in the MV WHERE clause. Non-primary-key predicates (like `status = 'active'` or `total > 1000`) are rejected unless the unsafe guardrail `cassandra.mv.allow_filtering_nonkey_columns_unsafe` is enabled. This restriction exists because filtered MVs have significant consistency and performance implications.
 
-```sql
-WHERE email IS NOT NULL
-  AND user_id IS NOT NULL
-  AND status = 'active'
-```
-
-!!! tip "Filtered Views"
-    Add filter conditions to create partial views containing only relevant data:
     ```sql
-    -- View of only premium users
+    -- This is valid (IS NOT NULL only):
+    WHERE email IS NOT NULL AND user_id IS NOT NULL
+
+    -- This requires unsafe flag to be enabled:
+    WHERE email IS NOT NULL AND user_id IS NOT NULL AND status = 'active'
+    ```
+
+!!! tip "Filtered Views (requires unsafe flag)"
+    If the guardrail is enabled, filter conditions can create partial views containing only relevant data:
+    ```sql
+    -- View of only premium users (requires unsafe flag)
     CREATE MATERIALIZED VIEW premium_users AS
         SELECT * FROM users
         WHERE is_premium = true

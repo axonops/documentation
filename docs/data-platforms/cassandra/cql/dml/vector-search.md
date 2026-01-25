@@ -74,7 +74,7 @@ Machine learning models transform unstructured data (text, images, audio) into f
 
 | Function | Range | Best Match | Use Case |
 |----------|-------|------------|----------|
-| `similarity_cosine` | -1 to 1 | 1 (identical direction) | Normalized embeddings, text similarity |
+| `similarity_cosine` | 0 to 1 | 1 (identical direction) | Normalized embeddings, text similarity |
 | `similarity_euclidean` | 0 to ∞ | 0 (identical) | Spatial data, unnormalized vectors |
 | `similarity_dot_product` | -∞ to ∞ | Higher is more similar | Pre-normalized vectors, performance |
 
@@ -114,7 +114,7 @@ VECTOR<element_type, dimension>
 
 | Parameter | Description | Constraints |
 |-----------|-------------|-------------|
-| `element_type` | Numeric type for elements | `FLOAT` (recommended), `DOUBLE` |
+| `element_type` | Numeric type for elements | `FLOAT` (required for SAI vector indexes and similarity functions) |
 | `dimension` | Number of elements | Fixed at table creation, typically 128-3072 |
 
 ### Creating Tables with Vectors
@@ -273,7 +273,7 @@ CREATE CUSTOM INDEX ON products (text_embedding)
 
 | Function | Formula | Range | Best For |
 |----------|---------|-------|----------|
-| `cosine` | 1 - cos(θ) | 0 to 2 | Normalized embeddings, text similarity |
+| `cosine` | (1 + cos(θ)) / 2 | 0 to 1 | Normalized embeddings, text similarity |
 | `euclidean` | √Σ(aᵢ - bᵢ)² | 0 to ∞ | Spatial data, image features |
 | `dot_product` | Σ(aᵢ × bᵢ) | -∞ to ∞ | Pre-normalized vectors, performance |
 

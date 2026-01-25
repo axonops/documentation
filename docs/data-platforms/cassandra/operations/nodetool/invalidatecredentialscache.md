@@ -163,16 +163,28 @@ nodetool invalidatecredentialscache
 
 ### Cache Settings
 
+The cassandra.yaml parameter names vary by version:
+
+| Cassandra Version | Validity Parameter | Update Interval Parameter |
+|-------------------|-------------------|---------------------------|
+| Pre-4.1 | `credentials_validity_in_ms` | `credentials_update_interval_in_ms` |
+| 4.1+ | `credentials_validity` | `credentials_update_interval` |
+
 ```yaml
-# cassandra.yaml
-credentials_validity_in_ms: 2000     # How long entries are valid
-credentials_update_interval_in_ms: 1000  # Background refresh interval
-credentials_cache_max_entries: 1000  # Maximum cached entries
+# cassandra.yaml (4.1+)
+credentials_validity: 2s
+credentials_update_interval: 1s
+credentials_cache_max_entries: 1000
+
+# cassandra.yaml (Pre-4.1)
+# credentials_validity_in_ms: 2000
+# credentials_update_interval_in_ms: 1000
+# credentials_cache_max_entries: 1000
 ```
 
 ### Automatic Refresh
 
-Credentials are automatically refreshed based on `credentials_validity_in_ms`. Invalidation forces immediate refresh for new connections.
+Credentials are automatically refreshed based on `credentials_validity`. Invalidation forces immediate refresh for new connections.
 
 ---
 
@@ -186,14 +198,14 @@ For credential changes to take effect cluster-wide immediately:
 #!/bin/bash
 # invalidate_credentials_cluster.sh
 
-echo "Invalidating credentials cache cluster-wide..."# Get list of node IPs from local nodetool status
+echo "Invalidating credentials cache cluster-wide..."
 
-
+# Get list of node IPs from local nodetool status
 nodes=$(nodetool status | grep "^UN" | awk '{print $2}')
 
 for node in $nodes; do
     echo -n "$node: "
-    ssh "$node" "nodetool invalidatecredentialscache 2>/dev/null && echo "invalidated" || echo "FAILED""
+    ssh "$node" 'nodetool invalidatecredentialscache 2>/dev/null && echo "invalidated" || echo "FAILED"'
 done
 
 echo "Credentials cache cleared on all nodes."
@@ -220,8 +232,9 @@ echo "1. Changing password for $USER..."
 cqlsh -e "ALTER ROLE $USER WITH PASSWORD = '$NEW_PASSWORD';"
 
 # 2. Invalidate cache cluster-wide
-echo "2. Invalidating credentials cache..."# Get list of node IPs from local nodetool status
+echo "2. Invalidating credentials cache..."
 
+# Get list of node IPs from local nodetool status
 nodes=$(nodetool status | grep "^UN" | awk '{print $2}')
 for node in $nodes; do
     ssh "$node" "nodetool invalidatecredentialscache 2>/dev/null"

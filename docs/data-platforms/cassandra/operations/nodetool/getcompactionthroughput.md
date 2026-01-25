@@ -15,12 +15,18 @@ Displays the current compaction throughput limit.
 ## Synopsis
 
 ```bash
-nodetool [connection_options] getcompactionthroughput
+nodetool [connection_options] getcompactionthroughput [options]
 ```
+
+## Options
+
+| Option | Description |
+|--------|-------------|
+| `-d, --precise-mib` | Display precise MiB/s value as a decimal (avoids rounding errors when configured value is not an integer) |
 
 ## Description
 
-`nodetool getcompactionthroughput` returns the maximum rate at which compaction operations can write data, measured in megabytes per second (MB/s). This throttle helps prevent compaction from consuming excessive disk I/O and impacting read/write performance.
+`nodetool getcompactionthroughput` returns the maximum rate at which compaction operations can write data, measured in mebibytes per second (MiB/s). The output also includes current throughput metrics for the last 1/5/15 minute intervals. This throttle helps prevent compaction from consuming excessive disk I/O and impacting read/write performance.
 
 Compaction throughput affects:
 
@@ -36,16 +42,19 @@ Compaction throughput affects:
 ### Standard Output
 
 ```
-Current compaction throughput: 64 MB/s
+Current compaction throughput: 64 MiB/s
+throughput_1min: 45 MiB/s
+throughput_5min: 52 MiB/s
+throughput_15min: 48 MiB/s
 ```
 
 ### Output Values
 
 | Value | Meaning |
 |-------|---------|
-| `64 MB/s` | Default throughput limit |
-| `0 MB/s` | Unlimited (no throttling) |
-| `16-256 MB/s` | Typical operational range |
+| `64 MiB/s` | Default throughput limit |
+| `0 MiB/s` | Unlimited (no throttling) |
+| `16-256 MiB/s` | Typical operational range |
 
 ---
 
@@ -219,21 +228,25 @@ If "Throughput" consistently matches the configured limit, compaction is being t
 
 ## Default Values
 
-### By Version
+### Default Value
 
-| Cassandra Version | Default | Notes |
-|-------------------|---------|-------|
-| 4.x | 64 MB/s | Recommended default |
-| 3.x | 16 MB/s | Conservative default |
-| 2.x | 16 MB/s | Legacy default |
+The default compaction throughput is **64 MB/s** in Cassandra 4.x and later.
 
 ### Configuration File
 
-In `cassandra.yaml`:
+The cassandra.yaml parameter name varies by version:
+
+| Cassandra Version | Parameter Name | Example |
+|-------------------|----------------|---------|
+| Pre-4.1 | `compaction_throughput_mb_per_sec` | `64` |
+| 4.1+ | `compaction_throughput` | `64MiB/s` |
 
 ```yaml
-# Throttle for compaction in MB/s. Set to 0 to disable throttling.
-compaction_throughput_mb_per_sec: 64
+# cassandra.yaml (4.1+)
+compaction_throughput: 64MiB/s
+
+# cassandra.yaml (Pre-4.1)
+# compaction_throughput_mb_per_sec: 64
 ```
 
 ---

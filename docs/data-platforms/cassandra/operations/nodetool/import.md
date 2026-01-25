@@ -15,7 +15,7 @@ Imports SSTables from an external directory into a table.
 ## Synopsis
 
 ```bash
-nodetool [connection_options] import [options] <keyspace> <table> <directory>
+nodetool [connection_options] import [options] <keyspace> <table> <directory>...
 ```
 
 ## Description
@@ -32,7 +32,7 @@ Available in Cassandra 4.0+.
 |----------|-------------|
 | `keyspace` | Target keyspace |
 | `table` | Target table |
-| `directory` | Directory containing SSTables to import |
+| `directory` | One or more directories containing SSTables to import |
 
 ---
 
@@ -40,14 +40,16 @@ Available in Cassandra 4.0+.
 
 | Option | Description |
 |--------|-------------|
-| `-c, --no-verify` | Skip SSTable verification |
+| `-c, --no-invalidate-caches` | Skip row cache invalidation |
+| `-cd, --copy-data` | Copy files instead of moving |
 | `-e, --extended-verify` | Extended verification of SSTables |
 | `-k, --keep-level` | Keep original SSTable level (for LCS) |
 | `-l, --keep-repaired` | Keep repaired status |
+| `-niv, --no-index-validation` | Skip index component validation |
 | `-q, --quick` | Quick import (less verification) |
-| `-r, --no-invalidate-caches` | Don't invalidate caches |
-| `-v, --no-verify-tokens` | Skip token verification |
-| `-p, --copy-data` | Copy files instead of moving |
+| `-ri, --require-index-components` | Require index components to be present |
+| `-t, --no-tokens` | Skip token verification |
+| `-v, --no-verify` | Skip SSTable verification |
 
 ---
 
@@ -62,7 +64,7 @@ nodetool import my_keyspace my_table /path/to/sstables/
 ### Import with Copy (Keep Original)
 
 ```bash
-nodetool import -p my_keyspace my_table /backup/sstables/
+nodetool import -cd my_keyspace my_table /backup/sstables/
 ```
 
 ### Quick Import (Less Verification)
@@ -93,7 +95,6 @@ nodetool import -e my_keyspace my_table /path/to/sstables/
 | Move/copy files | Yes | No | Streams |
 | Token verification | Optional | No | Yes |
 | Different topology | No | No | Yes |
-| Cassandra version | 4.0+ | 3.x+ | All |
 | Speed | Fast | Fast | Slower |
 
 ---
@@ -154,11 +155,11 @@ By default, import verifies tokens belong to this node:
 nodetool import my_keyspace my_table /path/
 
 # Skip token verification (use carefully)
-nodetool import -v my_keyspace my_table /path/
+nodetool import -t my_keyspace my_table /path/
 ```
 
 !!! warning "Token Verification"
-    Skipping token verification (`-v`) may import data that doesn't belong to this node. Only use when certain about data placement.
+    Skipping token verification (`-t`) may import data that doesn't belong to this node. Only use when certain about data placement.
 
 ---
 
@@ -176,10 +177,10 @@ nodetool import my_keyspace my_table /tmp/sstables/
 
 ### Copy Mode
 
-Use `-p` to copy instead of move:
+Use `-cd` to copy instead of move:
 
 ```bash
-nodetool import -p my_keyspace my_table /backup/sstables/
+nodetool import -cd my_keyspace my_table /backup/sstables/
 # Files copied, originals remain in /backup/sstables/
 ```
 
@@ -242,7 +243,7 @@ nodetool repair -pr my_keyspace my_table
 ## Best Practices
 
 !!! tip "Import Guidelines"
-    1. **Use copy mode for backups** - Keep original files with `-p`
+    1. **Use copy mode for backups** - Keep original files with `-cd`
     2. **Verify first** - Use extended verification for critical data
     3. **Check token ownership** - Ensure SSTables belong to this node
     4. **Run repair after** - Ensure consistency across replicas

@@ -61,7 +61,7 @@ The CEP proposed a framework for configurable guardrails that would:
 | **5.0** | Data disk usage guardrails | [CASSANDRA-17989](https://issues.apache.org/jira/browse/CASSANDRA-17989) |
 
 !!! note "Version Availability"
-    Guardrails are available in Cassandra 4.0 and later. Clusters running Cassandra 3.x do not have this feature. A subset of guardrails may also be available in DataStax Enterprise (DSE) 6.8+.
+    Guardrails are available in Cassandra 4.0 and later. A subset of guardrails may also be available in DataStax Enterprise (DSE) 6.8+.
 
 ---
 
@@ -629,8 +629,9 @@ guardrails:
 The guardrails section in `cassandra.yaml` contains all settings:
 
 ```yaml
-# Guardrails configuration (Cassandra 4.0+)
-guardrails:
+# Guardrails configuration (Cassandra 4.1+)
+# Note: In Cassandra 4.1, guardrails are top-level settings without a parent section.
+# The nested format shown here is for illustration; check your version's cassandra.yaml.
     #
     # Schema guardrails
     #

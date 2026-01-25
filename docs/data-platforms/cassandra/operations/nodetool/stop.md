@@ -15,7 +15,7 @@ Stops compaction operations.
 ## Synopsis
 
 ```bash
-nodetool [connection_options] stop <compaction_type>
+nodetool [connection_options] stop [options] <compaction_type>
 ```
 
 ## Description
@@ -30,6 +30,14 @@ nodetool [connection_options] stop <compaction_type>
 |----------|-------------|
 | `compaction_type` | Type of compaction to stop |
 
+---
+
+## Options
+
+| Option | Description |
+|--------|-------------|
+| `-id, --compaction-id <id>` | Stop a specific compaction by its ID (from `compactionstats`) |
+
 ### Compaction Types
 
 | Type | Description |
@@ -40,10 +48,13 @@ nodetool [connection_options] stop <compaction_type>
 | `SCRUB` | Scrub operation |
 | `UPGRADE_SSTABLES` | SSTable upgrade |
 | `INDEX_BUILD` | Secondary index builds |
+| `VIEW_BUILD` | Materialized view builds |
+| `INDEX_SUMMARY` | Index summary redistribution |
 | `TOMBSTONE_COMPACTION` | Tombstone-only compaction |
 | `ANTICOMPACTION` | Post-repair anticompaction |
 | `VERIFY` | Verification operations |
 | `RELOCATE` | SSTable relocation |
+| `GARBAGE_COLLECT` | Garbage collection compaction |
 
 ---
 
@@ -71,6 +82,22 @@ nodetool stop CLEANUP
 
 ```bash
 nodetool stop INDEX_BUILD
+```
+
+### Stop View Build
+
+```bash
+nodetool stop VIEW_BUILD
+```
+
+### Stop Specific Compaction by ID
+
+```bash
+# First, get the compaction ID from compactionstats
+nodetool compactionstats
+
+# Stop specific compaction by ID
+nodetool stop -id 12345678-1234-1234-1234-123456789abc COMPACTION
 ```
 
 ### Stop All Types
@@ -180,6 +207,8 @@ nodetool compactionstats
 | VALIDATION | Repair incomplete |
 | CLEANUP | Extra data remains temporarily |
 | INDEX_BUILD | Index incomplete |
+| VIEW_BUILD | Materialized view incomplete |
+| GARBAGE_COLLECT | Garbage not collected |
 
 ---
 

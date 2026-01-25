@@ -10,9 +10,9 @@ meta:
 
 Indexes in Cassandra do not work like relational indexes, and that surprises many. A relational index is a global structure—query it, and all matching rows are returned. A Cassandra secondary index is local to each node—query it without a partition key, and Cassandra has to ask every node in the cluster. That is an all-node scatter query, and it does not scale.
 
-This makes secondary indexes useful only in specific situations: low-cardinality columns (status fields, categories) or queries that always include the partition key. For high-cardinality lookups like email addresses, a separate denormalized table is usually more appropriate.
+This makes secondary indexes useful only in specific situations: queries that always include the partition key, or low-cardinality columns when combined with partition key constraints. For high-cardinality lookups like email addresses, a separate denormalized table is usually more appropriate.
 
-Cassandra 5.0 introduced SAI (Storage-Attached Indexes), which handle more use cases efficiently. Materialized views offer another option—automated denormalization at the cost of write amplification.
+SAI (Storage-Attached Indexes), available experimentally in 4.0 and production-ready in 5.0, handle more use cases efficiently. Materialized views offer another option—automated denormalization at the cost of write amplification.
 
 This guide covers when each approach makes sense.
 

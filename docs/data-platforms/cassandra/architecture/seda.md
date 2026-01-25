@@ -218,10 +218,14 @@ The native transport layer has memory-based backpressure:
 # cassandra.yaml
 
 # Total bytes allowed in flight (node-wide)
-native_transport_max_concurrent_requests_in_bytes: 0  # unlimited by default
+# Cassandra 4.1+: native_transport_max_request_data_in_flight (auto-calculated ~1/10 heap)
+# Cassandra 4.0:  native_transport_max_concurrent_requests_in_bytes
+native_transport_max_request_data_in_flight: # auto (default)
 
 # Bytes allowed per client IP
-native_transport_max_concurrent_requests_in_bytes_per_ip: 0  # unlimited
+# Cassandra 4.1+: native_transport_max_request_data_in_flight_per_ip (auto-calculated ~1/40 heap)
+# Cassandra 4.0:  native_transport_max_concurrent_requests_in_bytes_per_ip
+native_transport_max_request_data_in_flight_per_ip: # auto (default)
 
 # Response when overloaded
 # false: Apply TCP backpressure (recommended)

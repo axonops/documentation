@@ -24,6 +24,7 @@ VIRTUAL TABLE system_views.gossip_info (
     port int,
     dc text,
     rack text,
+    hostname text,
     status text,
     load text,
     host_id text,
@@ -31,7 +32,9 @@ VIRTUAL TABLE system_views.gossip_info (
     "schema" text,
     generation int,
     heartbeat int,
-    -- Additional columns for various gossip state values
+    -- Additional columns for each ApplicationState (lowercase)
+    -- e.g., tokens, severity, net_version, etc.
+    -- Plus <state>_version columns for each state
     PRIMARY KEY (address, port)
 ) WITH CLUSTERING ORDER BY (port ASC)
 ```
@@ -40,6 +43,7 @@ VIRTUAL TABLE system_views.gossip_info (
 |--------|------|-------------|
 | `address` | inet | Node IP address |
 | `port` | int | Storage port |
+| `hostname` | text | Node hostname |
 | `dc` | text | Datacenter name |
 | `rack` | text | Rack name |
 | `status` | text | Node status (NORMAL, LEAVING, JOINING, MOVING) |
@@ -49,6 +53,9 @@ VIRTUAL TABLE system_views.gossip_info (
 | `schema` | text | Schema version UUID |
 | `generation` | int | Gossip generation number |
 | `heartbeat` | int | Current heartbeat version |
+
+!!! note "Dynamic Columns"
+    The `gossip_info` table includes a column for each `ApplicationState` (lowercase names), plus a `<state>_version` column for each state tracking the gossip version of that state.
 
 **Equivalent nodetool command:** `nodetool gossipinfo`
 
@@ -113,7 +120,10 @@ VIRTUAL TABLE system_views.pending_hints (
     oldest timestamp,
     newest timestamp,
     port int,
-    status text
+    status text,
+    total_size bigint,
+    corrupted_files int,
+    total_corrupted_files_size bigint
 )
 ```
 
@@ -124,9 +134,12 @@ VIRTUAL TABLE system_views.pending_hints (
 | `dc` | text | Target datacenter |
 | `rack` | text | Target rack |
 | `files` | int | Number of hint files pending |
+| `total_size` | bigint | Total size of pending hints (bytes) |
 | `oldest` | timestamp | Timestamp of oldest pending hint |
 | `newest` | timestamp | Timestamp of newest pending hint |
 | `status` | text | Hint delivery status |
+| `corrupted_files` | int | Number of corrupted hint files |
+| `total_corrupted_files_size` | bigint | Total size of corrupted hint files (bytes) |
 
 **Equivalent nodetool command:** `nodetool listpendinghints`
 
@@ -300,7 +313,7 @@ Calculate failed attempts in application: `connection_attempts - successful_conn
 -- Alert: Nodes in transitional states
 SELECT address, dc, status
 FROM system_views.gossip_info
-WHERE status NOT IN ('NORMAL', 'NORMAL');
+WHERE status != 'NORMAL';
 ```
 
 ### Schema Disagreement

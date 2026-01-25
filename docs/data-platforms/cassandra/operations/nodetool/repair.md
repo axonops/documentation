@@ -52,7 +52,6 @@ nodetool [connection_options] repair [options] [--] [keyspace [table ...]]
 | `-pr, --partitioner-range` | Repair only primary range (recommended) |
 | `--full` | Full repair instead of incremental |
 | `-seq, --sequential` | Repair one node at a time |
-| `--parallel` | Repair all replicas simultaneously (default in 4.0+) |
 | `-dcpar, --dc-parallel` | Parallel within DC, sequential across DCs |
 | `-dc, --in-dc` | Repair only within specified datacenter(s) |
 | `-local, --in-local-dc` | Repair only within local datacenter |

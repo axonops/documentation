@@ -56,9 +56,13 @@ db      - File extension
 | `mb` | 3.0 | Storage format revision |
 | `mc` | 3.0 | Storage format revision |
 | `md` | 3.11 | Storage format revision |
-| `na` | 4.0 | Trie-based partition index |
+| `me` | 3.0.25, 3.11.11 | Storage format revision |
+| `na` | 4.0 | Storage format revision |
 | `nb` | 4.0+ | Format revision |
-| `nc` | 5.0 | Latest format |
+| `oa` | 5.0 | Storage format revision |
+| `pa` | 6.0 | Storage format revision |
+
+*Note: Version identifiers are for the Big format. BTI format uses `bti` as the format component instead of `big`.*
 
 ### SSTable Format Types
 
@@ -109,9 +113,9 @@ end note
 | **Partition index** | Index.db + Summary.db | Partitions.db (trie) |
 | **Row index** | Embedded in Index.db | Rows.db (trie) |
 | **Memory usage** | Higher (summary in heap) | Lower (off-heap, memory-mapped) |
-| **Index size** | Larger | 50-80% smaller (prefix compression) |
+| **Index size** | Larger | Generally smaller (prefix compression), degree varies by data |
 | **Lookup complexity** | O(log n) | O(key length) |
-| **Write amplification** | Standard | Slightly higher during flush |
+| **Write amplification** | Standard | May be slightly higher during flush (workload-dependent) |
 
 ### BTI Format File Components
 
@@ -177,16 +181,20 @@ The trie structure naturally supports efficient iteration for range queries, as 
 
 ### Configuration
 
-SSTable format is configured cluster-wide in `cassandra.yaml`:
+SSTable format is configured cluster-wide in `cassandra.yaml` using the `sstable` section:
 
 ```yaml
-# cassandra.yaml
+# cassandra.yaml (Cassandra 5.0+)
 
-# Default SSTable format for new SSTables
-# Options: big, bti
-# Default: big (for compatibility), bti recommended for 5.0+
-sstable_format: bti
+# SSTable configuration
+sstable:
+  # Default SSTable format for new SSTables
+  # Options: big, bti
+  # Default: big (for compatibility)
+  selected_format: bti
 ```
+
+*Note: The configuration structure changed in Cassandra 5.0. There is no top-level `sstable_format` key.*
 
 Per-table SSTable format configuration is not yet available. See [CASSANDRA-18534](https://issues.apache.org/jira/browse/CASSANDRA-18534) for status.
 
@@ -473,7 +481,7 @@ Partition Key → Index.db (trie lookup) → Data.db offset
 | **Purpose** | Block-based trie partition index |
 | **Structure** | Byte-ordered trie with fixed-size blocks |
 | **Memory** | Memory-mapped, fully off-heap |
-| **Benefits** | 50-80% smaller than Index.db, O(key length) lookups |
+| **Benefits** | Generally smaller than Index.db, O(key length) lookups |
 
 **BTI lookup flow:**
 ```
@@ -521,7 +529,7 @@ Probabilistic data structure for quick partition key lookups.
 | **Contents** | Bit array with hashed partition keys |
 | **False Positives** | Possible (configurable rate) |
 | **False Negatives** | Impossible |
-| **Memory** | Loaded into off-heap memory |
+| **Memory** | Loaded into memory (may be on-heap or off-heap depending on implementation) |
 
 **Configuration:**
 
@@ -531,9 +539,9 @@ ALTER TABLE my_table WITH bloom_filter_fp_chance = 0.01;
 
 ---
 
-### Summary (Summary.db) - Big Format Pre-4.0 Only
+### Summary (Summary.db) - Big Format Only
 
-Sampled index for efficient partition lookup. **Not present in Cassandra 4.0+ Big format or BTI format.**
+Sampled index for efficient partition lookup.
 
 | Attribute | Description |
 |-----------|-------------|
@@ -541,13 +549,11 @@ Sampled index for efficient partition lookup. **Not present in Cassandra 4.0+ Bi
 | **Purpose** | In-memory sample of partition index |
 | **Contents** | Every Nth partition key from Index.db |
 | **Memory** | Loaded into JVM heap |
-| **Status** | Eliminated in 4.0 (Big format uses trie in Index.db); not used in BTI |
+| **Status** | Used by Big format (including 4.0+); not used by BTI format |
 
-The summary file was necessary in pre-4.0 because Index.db contained a flat list of all partition keys. Scanning the entire index for each lookup was too slow, so the summary provided jump points into the index.
+The summary file provides jump points into Index.db, enabling faster partition key lookups without scanning the entire index.
 
-Cassandra 4.0+ replaced this with trie-based indexes that provide O(key length) lookups directly, eliminating the need for sampling.
-
-**Configuration (pre-4.0 only):**
+**Configuration:**
 
 ```yaml
 # cassandra.yaml
@@ -557,8 +563,7 @@ max_index_interval: 2048   # Maximum sampling rate
 
 | Format | Summary.db Present? |
 |--------|-------------------|
-| Big (pre-4.0) | Yes |
-| Big (4.0+) | No |
+| Big (all versions) | Yes |
 | BTI (5.0+) | No |
 
 ---
@@ -624,7 +629,7 @@ Checksum for data integrity verification.
 |-----------|-------------|
 | **Purpose** | Detect data corruption |
 | **Contents** | Checksum of Data.db contents |
-| **Verification** | Checked during reads and streaming |
+| **Verification** | Used primarily during streaming and certain verification operations (not checked on every read) |
 
 ---
 

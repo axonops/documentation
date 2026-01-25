@@ -76,7 +76,7 @@ The name of the cluster. This is mainly used to prevent machines in one logical 
 
 This defines the number of tokens randomly assigned to this node on the ring The more tokens, relative to other nodes, the larger the proportion of data that this node will store. You probably want all nodes to have the same number of tokens assuming they have equal hardware capability.
 
-If you leave this unspecified, Cassandra will use the default of 1 token for legacy compatibility, and will use the initial_token as described below.
+If you leave this unspecified, Cassandra 4.0+ uses the default of 16 tokens. Earlier versions defaulted to 1 token for legacy compatibility.
 
 Specifying initial_token will override this setting on the node's initial start, on subsequent starts, this setting will apply even if initial token is set.
 

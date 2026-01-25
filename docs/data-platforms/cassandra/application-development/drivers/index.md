@@ -22,8 +22,8 @@ Cassandra uses the CQL Native Protocol, a binary protocol designed for high-thro
 |---------|-------------|
 | Multiplexed connections | Multiple concurrent requests share a single TCP connection |
 | Stream IDs | Each request tagged with ID; responses matched asynchronously |
-| Non-blocking I/O | Driver does not block threads waiting for responses |
-| Configurable concurrency | Limit in-flight requests per connection (default typically 1024-2048) |
+| Non-blocking I/O | Underlying network I/O is non-blocking; synchronous API wrappers may block caller threads |
+| Configurable concurrency | Limit in-flight requests per connection (driver and version-specific defaults) |
 
 ```plantuml
 @startuml
@@ -135,9 +135,8 @@ Pool configuration parameters:
 
 | Parameter | Description | Typical Default |
 |-----------|-------------|-----------------|
-| Core connections per host | Minimum connections maintained | 1 |
-| Max connections per host | Maximum connections allowed | 2-8 |
-| Max requests per connection | Concurrent requests before opening new connection | 1024-2048 |
+| Connections per host | Connections maintained per node (Java 4.x: fixed size; other drivers may have min/max) | 1 |
+| Max requests per connection | Concurrent in-flight requests per connection | 2048 (Java 4.x) |
 | Heartbeat interval | Frequency of idle connection health checks | 30 seconds |
 
 ---
@@ -195,7 +194,7 @@ Official and community-maintained drivers exist for most languages:
 | Python | Apache Cassandra Python Driver | Apache | [cassandra-python-driver](https://github.com/apache/cassandra-python-driver) |
 | Node.js | DataStax Node.js Driver | DataStax | [nodejs-driver](https://github.com/datastax/nodejs-driver) |
 | C# | DataStax C# Driver | DataStax | [csharp-driver](https://github.com/datastax/csharp-driver) |
-| Go | Apache Cassandra GoCQL Driver | Apache | [cassandra-gocql-driver](https://github.com/apache/cassandra-gocql-driver) |
+| Go | GoCQL Driver | Community (Apache donation in progress) | [gocql](https://github.com/gocql/gocql) |
 | Rust | ScyllaDB Rust Driver | ScyllaDB | [scylla-rust-driver](https://github.com/scylladb/scylla-rust-driver) |
 | C/C++ | Apache Cassandra C++ Driver | Apache | [cassandra-cpp-driver](https://github.com/apache/cassandra-cpp-driver) |
 

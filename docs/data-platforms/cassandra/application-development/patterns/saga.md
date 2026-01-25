@@ -367,7 +367,7 @@ public class OrderSagaOrchestrator {
 - Better for complex sagas with many steps
 
 **Disadvantages**:
-- Orchestrator is a single point of failure
+- Orchestrator can be a single point of failure without HA/leadership failover
 - Tighter coupling to orchestrator
 - Can become a bottleneck
 
@@ -720,26 +720,43 @@ public void timeoutStaleSagas() {
 
 ### Dashboard Queries
 
+!!! note "Aggregation Queries"
+    The queries below require dedicated aggregation tables or external analytics (Spark, Presto) since Cassandra does not support cross-partition GROUP BY or queries without partition key restrictions.
+
+**Aggregation table approach:**
+
 ```sql
--- Active sagas by status
+-- Pre-aggregated counters updated on saga state changes
+CREATE TABLE saga_status_counts (
+    date_bucket DATE,
+    status TEXT,
+    count COUNTER,
+    PRIMARY KEY ((date_bucket), status)
+);
+
+-- Query pre-aggregated data
+SELECT status, count FROM saga_status_counts WHERE date_bucket = ?;
+```
+
+**External analytics approach:**
+
+```sql
+-- Example Spark SQL / Presto query (not CQL)
 SELECT status, COUNT(*) as count
 FROM saga_instances
 WHERE started_at > ?
 GROUP BY status;
+```
 
--- Failure reasons
-SELECT failure_reason, COUNT(*) as count
-FROM saga_instances
-WHERE status IN ('COMPENSATED', 'COMPENSATION_FAILED')
-  AND completed_at > ?
-GROUP BY failure_reason
-ORDER BY count DESC;
+**Stuck saga detection (requires secondary index or materialized view):**
 
--- Stuck sagas (running > 1 hour)
+```sql
+-- If using SAI index on status
 SELECT saga_id, saga_type, current_step, started_at
 FROM saga_instances
 WHERE status = 'RUNNING'
-  AND updated_at < ?;
+  AND updated_at < ?
+ALLOW FILTERING;  -- Use with caution in production
 ```
 
 ---

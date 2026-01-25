@@ -15,8 +15,14 @@ Displays the token ring information showing token assignments for each node in t
 ## Synopsis
 
 ```bash
-nodetool [connection_options] ring [keyspace]
+nodetool [connection_options] ring [options] [keyspace]
 ```
+
+## Options
+
+| Option | Description |
+|--------|-------------|
+| `-r, --resolve-ip` | Show DNS names instead of IP addresses |
 
 ## Description
 

@@ -68,7 +68,7 @@ The `cleanup` command explicitly scans all SSTables and removes partitions whose
 
 ### After Adding Nodes
 
-!!! tip "Required After Scaling Up"
+!!! tip "Recommended After Scaling Up"
     After adding nodes and bootstrap completes:
 
     ```bash

@@ -70,9 +70,9 @@ The clustering columns (event_time, event_type) become part of each cell's inter
 
 This is why Cassandra queries have strict rules:
 
-- **Partition key required**: Without it, Cassandra does not know which node to ask
+- **Partition key recommended**: For efficient queries; index-based or filtered queries can omit it but with significant performance trade-offs
 - **Clustering columns in order**: They form a composite key—columns cannot be skipped
-- **Range queries only on last column**: The storage is sorted, so ranges work on the final sort key
+- **Range queries require clustering order**: Ranges are allowed on the first clustering column not restricted by equality; earlier clustering columns must use equality
 
 Understanding this mapping explains Cassandra's query restrictions.
 
@@ -104,7 +104,7 @@ This is not a limitation—it is how Cassandra achieves consistent performance a
 4. Accept write duplication for read optimization
 5. Scale horizontally by adding nodes
 
-*Result: Predictable latency regardless of data size, but queries must be planned*
+*Result: More predictable latency for well-designed queries (though still affected by partition size, compaction state, and workload), but queries must be planned*
 
 A poorly designed Cassandra table does not just slow down—it can bring down the entire cluster:
 

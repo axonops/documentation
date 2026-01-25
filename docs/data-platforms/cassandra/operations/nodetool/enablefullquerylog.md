@@ -41,10 +41,10 @@ Full query logging is essential for:
 |--------|-------------|
 | `--path` | Path to the FQL log directory |
 | `--roll-cycle` | Log file roll cycle (MINUTELY, HOURLY, DAILY) |
-| `--block` | Block queries if log falls behind (default: true) |
+| `--blocking` | Block queries if log falls behind (default: true) |
 | `--max-queue-weight` | Maximum weight of in-memory queue (bytes) |
 | `--max-log-size` | Maximum total log size before oldest logs deleted |
-| `--archive-command` | Command to archive rolled log segments |
+| `--archive-command` | Command to archive rolled log segments (requires `allow_nodetool_archive_command: true` in cassandra.yaml) |
 | `--max-archive-retries` | Maximum retries for archive command |
 
 ---
@@ -78,7 +78,7 @@ nodetool enablefullquerylog \
 # Don't block queries if logging falls behind
 nodetool enablefullquerylog \
     --path /var/log/cassandra/fql \
-    --block false
+    --blocking false
 ```
 
 ### Full Configuration
