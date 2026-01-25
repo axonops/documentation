@@ -10294,9 +10294,27 @@ data-et-multi-view="{&quot;schema&quot;:{&quot;content&quot;:{&quot;desktop&quot
 </li>
       
         <li class="md-nav__item">
+  <a href="#arguments" class="md-nav__link">
+    <span class="md-ellipsis">
+      Arguments
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#description" class="md-nav__link">
     <span class="md-ellipsis">
       Description
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#output-format" class="md-nav__link">
+    <span class="md-ellipsis">
+      Output Format
     </span>
   </a>
   
@@ -10313,9 +10331,18 @@ data-et-multi-view="{&quot;schema&quot;:{&quot;content&quot;:{&quot;desktop&quot
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
-  <a href="#basic-usage" class="md-nav__link">
+  <a href="#basic-usage-all-stages" class="md-nav__link">
     <span class="md-ellipsis">
-      Basic Usage
+      Basic Usage (All Stages)
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#filter-by-stage-name" class="md-nav__link">
+    <span class="md-ellipsis">
+      Filter by Stage Name
     </span>
   </a>
   
@@ -19841,9 +19868,27 @@ data-et-multi-view="{&quot;schema&quot;:{&quot;content&quot;:{&quot;desktop&quot
 </li>
       
         <li class="md-nav__item">
+  <a href="#arguments" class="md-nav__link">
+    <span class="md-ellipsis">
+      Arguments
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#description" class="md-nav__link">
     <span class="md-ellipsis">
       Description
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#output-format" class="md-nav__link">
+    <span class="md-ellipsis">
+      Output Format
     </span>
   </a>
   
@@ -19860,9 +19905,18 @@ data-et-multi-view="{&quot;schema&quot;:{&quot;content&quot;:{&quot;desktop&quot
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
-  <a href="#basic-usage" class="md-nav__link">
+  <a href="#basic-usage-all-stages" class="md-nav__link">
     <span class="md-ellipsis">
-      Basic Usage
+      Basic Usage (All Stages)
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#filter-by-stage-name" class="md-nav__link">
+    <span class="md-ellipsis">
+      Filter by Stage Name
     </span>
   </a>
   
@@ -19901,14 +19955,63 @@ data-et-multi-view="{&quot;schema&quot;:{&quot;content&quot;:{&quot;desktop&quot
 <p>Displays the concurrency settings.</p>
 <hr>
 <h2 id="synopsis">Synopsis<a class="headerlink" href="#synopsis" title="Permanent link">¶</a></h2>
-<div class="highlight"><pre><span></span><code>nodetool<span class="w"> </span><span class="o">[</span>connection_options<span class="o">]</span><span class="w"> </span>getconcurrency
+<div class="highlight"><pre><span></span><code>nodetool<span class="w"> </span><span class="o">[</span>connection_options<span class="o">]</span><span class="w"> </span>getconcurrency<span class="w"> </span><span class="o">[</span>stage_name<span class="w"> </span>...<span class="o">]</span>
 </code></pre></div>
+<h2 id="arguments">Arguments<a class="headerlink" href="#arguments" title="Permanent link">¶</a></h2>
+<table>
+<thead>
+<tr>
+<th>Argument</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>stage_name</code></td>
+<td>Optional. One or more stage names to filter output (e.g., <code>READ</code>, <code>MUTATION</code>)</td>
+</tr>
+</tbody>
+</table>
 <h2 id="description">Description<a class="headerlink" href="#description" title="Permanent link">¶</a></h2>
-<p><code>nodetool getconcurrency</code> shows the current concurrency settings for various operations including reads, writes, and counter writes.</p>
+<p><code>nodetool getconcurrency</code> displays the core and maximum pool sizes for Cassandra's thread stages. These stages handle various internal operations and can be filtered by name.</p>
+<hr>
+<h2 id="output-format">Output Format<a class="headerlink" href="#output-format" title="Permanent link">¶</a></h2>
+<table>
+<thead>
+<tr>
+<th>Field</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>Stage</code></td>
+<td>Thread stage name</td>
+</tr>
+<tr>
+<td><code>CorePoolSize</code></td>
+<td>Minimum number of threads maintained</td>
+</tr>
+<tr>
+<td><code>MaximumPoolSize</code></td>
+<td>Maximum threads allowed under load</td>
+</tr>
+</tbody>
+</table>
 <hr>
 <h2 id="examples">Examples<a class="headerlink" href="#examples" title="Permanent link">¶</a></h2>
-<h3 id="basic-usage">Basic Usage<a class="headerlink" href="#basic-usage" title="Permanent link">¶</a></h3>
+<h3 id="basic-usage-all-stages">Basic Usage (All Stages)<a class="headerlink" href="#basic-usage-all-stages" title="Permanent link">¶</a></h3>
 <div class="highlight"><pre><span></span><code>nodetool<span class="w"> </span>getconcurrency
+</code></pre></div>
+<p><strong>Sample output:</strong>
+</p><div class="highlight"><pre><span></span><code>Stage                           CorePoolSize  MaximumPoolSize
+READ                            32            32
+MUTATION                        32            32
+COUNTER_MUTATION                32            32
+...
+</code></pre></div>
+<h3 id="filter-by-stage-name">Filter by Stage Name<a class="headerlink" href="#filter-by-stage-name" title="Permanent link">¶</a></h3>
+<div class="highlight"><pre><span></span><code>nodetool<span class="w"> </span>getconcurrency<span class="w"> </span>READ<span class="w"> </span>MUTATION
 </code></pre></div>
 <hr>
 <h2 id="related-commands">Related Commands<a class="headerlink" href="#related-commands" title="Permanent link">¶</a></h2>

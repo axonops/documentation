@@ -20620,7 +20620,7 @@ data-et-multi-view="{&quot;schema&quot;:{&quot;content&quot;:{&quot;desktop&quot
 <td>Log file roll cycle (MINUTELY, HOURLY, DAILY)</td>
 </tr>
 <tr>
-<td><code>--block</code></td>
+<td><code>--blocking</code></td>
 <td>Block queries if log falls behind (default: true)</td>
 </tr>
 <tr>
@@ -20633,7 +20633,7 @@ data-et-multi-view="{&quot;schema&quot;:{&quot;content&quot;:{&quot;desktop&quot
 </tr>
 <tr>
 <td><code>--archive-command</code></td>
-<td>Command to archive rolled log segments</td>
+<td>Command to archive rolled log segments (requires <code>allow_nodetool_archive_command: true</code> in cassandra.yaml)</td>
 </tr>
 <tr>
 <td><code>--max-archive-retries</code></td>
@@ -20659,7 +20659,7 @@ data-et-multi-view="{&quot;schema&quot;:{&quot;content&quot;:{&quot;desktop&quot
 <div class="highlight"><pre><span></span><code><span class="c1"># Don't block queries if logging falls behind</span>
 nodetool<span class="w"> </span>enablefullquerylog<span class="w"> </span><span class="se">\</span>
 <span class="w">    </span>--path<span class="w"> </span>/var/log/cassandra/fql<span class="w"> </span><span class="se">\</span>
-<span class="w">    </span>--block<span class="w"> </span><span class="nb">false</span>
+<span class="w">    </span>--blocking<span class="w"> </span><span class="nb">false</span>
 </code></pre></div>
 <h3 id="full-configuration">Full Configuration<a class="headerlink" href="#full-configuration" title="Permanent link">¶</a></h3>
 <div class="highlight"><pre><span></span><code>nodetool<span class="w"> </span>enablefullquerylog<span class="w"> </span><span class="se">\</span>

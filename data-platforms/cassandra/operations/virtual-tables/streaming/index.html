@@ -20454,6 +20454,10 @@ data-et-multi-view="{&quot;schema&quot;:{&quot;content&quot;:{&quot;desktop&quot
 </table>
 <hr>
 <h2 id="status-values">Status Values<a class="headerlink" href="#status-values" title="Permanent link">¶</a></h2>
+<div class="admonition note">
+<p class="admonition-title">Lowercase Status Values</p>
+<p>Status values are lowercase in the implementation. Use lowercase in queries.</p>
+</div>
 <table>
 <thead>
 <tr>
@@ -20463,19 +20467,19 @@ data-et-multi-view="{&quot;schema&quot;:{&quot;content&quot;:{&quot;desktop&quot
 </thead>
 <tbody>
 <tr>
-<td><code>INIT</code></td>
+<td><code>init</code></td>
 <td>Streaming session initialized</td>
 </tr>
 <tr>
-<td><code>START</code></td>
+<td><code>start</code></td>
 <td>Streaming in progress</td>
 </tr>
 <tr>
-<td><code>SUCCESS</code></td>
+<td><code>success</code></td>
 <td>Streaming completed successfully</td>
 </tr>
 <tr>
-<td><code>FAILURE</code></td>
+<td><code>failure</code></td>
 <td>Streaming failed with error</td>
 </tr>
 </tbody>
@@ -20488,13 +20492,13 @@ data-et-multi-view="{&quot;schema&quot;:{&quot;content&quot;:{&quot;desktop&quot
 <span class="w">       </span><span class="n">bytes_sent</span><span class="w"> </span><span class="o">/</span><span class="w"> </span><span class="mi">1048576</span><span class="w"> </span><span class="k">AS</span><span class="w"> </span><span class="n">sent_mb</span><span class="p">,</span>
 <span class="w">       </span><span class="n">bytes_to_send</span><span class="w"> </span><span class="o">/</span><span class="w"> </span><span class="mi">1048576</span><span class="w"> </span><span class="k">AS</span><span class="w"> </span><span class="n">total_mb</span>
 <span class="k">FROM</span><span class="w"> </span><span class="n">system_views</span><span class="p">.</span><span class="n">streaming</span>
-<span class="k">WHERE</span><span class="w"> </span><span class="n">status</span><span class="w"> </span><span class="k">IN</span><span class="w"> </span><span class="p">(</span><span class="s1">'INIT'</span><span class="p">,</span><span class="w"> </span><span class="s1">'START'</span><span class="p">);</span>
+<span class="k">WHERE</span><span class="w"> </span><span class="n">status</span><span class="w"> </span><span class="k">IN</span><span class="w"> </span><span class="p">(</span><span class="s1">'init'</span><span class="p">,</span><span class="w"> </span><span class="s1">'start'</span><span class="p">);</span>
 
 <span class="c1">-- Streaming progress</span>
 <span class="k">SELECT</span><span class="w"> </span><span class="n">id</span><span class="p">,</span><span class="w"> </span><span class="k">operation</span><span class="p">,</span><span class="w"> </span><span class="n">peers</span><span class="p">,</span><span class="w"> </span><span class="n">progress_percentage</span><span class="p">,</span>
 <span class="w">       </span><span class="n">bytes_sent</span><span class="p">,</span><span class="w"> </span><span class="n">bytes_received</span><span class="p">,</span><span class="w"> </span><span class="n">duration_millis</span>
 <span class="k">FROM</span><span class="w"> </span><span class="n">system_views</span><span class="p">.</span><span class="n">streaming</span>
-<span class="k">WHERE</span><span class="w"> </span><span class="n">status</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s1">'START'</span><span class="p">;</span>
+<span class="k">WHERE</span><span class="w"> </span><span class="n">status</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s1">'start'</span><span class="p">;</span>
 </code></pre></div>
 <p>Calculate throughput in application: <code>(bytes_sent + bytes_received) / duration_millis * 1000</code>.</p>
 <h3 id="bootstrap-monitoring">Bootstrap Monitoring<a class="headerlink" href="#bootstrap-monitoring" title="Permanent link">¶</a></h3>
@@ -20540,7 +20544,7 @@ data-et-multi-view="{&quot;schema&quot;:{&quot;content&quot;:{&quot;desktop&quot
 <span class="k">SELECT</span><span class="w"> </span><span class="n">id</span><span class="p">,</span><span class="w"> </span><span class="k">operation</span><span class="p">,</span><span class="w"> </span><span class="n">peers</span><span class="p">,</span><span class="w"> </span><span class="n">failure_cause</span><span class="p">,</span>
 <span class="w">       </span><span class="n">status_failure_timestamp</span>
 <span class="k">FROM</span><span class="w"> </span><span class="n">system_views</span><span class="p">.</span><span class="n">streaming</span>
-<span class="k">WHERE</span><span class="w"> </span><span class="n">status</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s1">'FAILURE'</span><span class="p">;</span>
+<span class="k">WHERE</span><span class="w"> </span><span class="n">status</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s1">'failure'</span><span class="p">;</span>
 </code></pre></div>
 <h3 id="file-vs-byte-progress">File vs Byte Progress<a class="headerlink" href="#file-vs-byte-progress" title="Permanent link">¶</a></h3>
 <div class="highlight"><pre><span></span><code><span class="c1">-- Detailed file and byte progress</span>
@@ -20550,7 +20554,7 @@ data-et-multi-view="{&quot;schema&quot;:{&quot;content&quot;:{&quot;desktop&quot
 <span class="w">       </span><span class="n">bytes_sent</span><span class="p">,</span><span class="w"> </span><span class="n">bytes_to_send</span><span class="p">,</span>
 <span class="w">       </span><span class="n">bytes_received</span><span class="p">,</span><span class="w"> </span><span class="n">bytes_to_receive</span>
 <span class="k">FROM</span><span class="w"> </span><span class="n">system_views</span><span class="p">.</span><span class="n">streaming</span>
-<span class="k">WHERE</span><span class="w"> </span><span class="n">status</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s1">'START'</span><span class="p">;</span>
+<span class="k">WHERE</span><span class="w"> </span><span class="n">status</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s1">'start'</span><span class="p">;</span>
 </code></pre></div>
 <p>Format progress strings in application (e.g., <code>files_sent/files_to_send</code>).</p>
 <hr>
@@ -20575,7 +20579,7 @@ data-et-multi-view="{&quot;schema&quot;:{&quot;content&quot;:{&quot;desktop&quot
 <span class="w">       </span><span class="p">(</span><span class="n">bytes_sent</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">bytes_received</span><span class="p">)</span><span class="w"> </span><span class="o">/</span><span class="w"> </span><span class="mi">1048576</span><span class="w"> </span><span class="k">AS</span><span class="w"> </span><span class="n">total_mb</span><span class="p">,</span>
 <span class="w">       </span><span class="n">duration_millis</span><span class="w"> </span><span class="o">/</span><span class="w"> </span><span class="mi">1000</span><span class="w"> </span><span class="k">AS</span><span class="w"> </span><span class="n">duration_sec</span>
 <span class="k">FROM</span><span class="w"> </span><span class="n">system_views</span><span class="p">.</span><span class="n">streaming</span>
-<span class="k">WHERE</span><span class="w"> </span><span class="n">status</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s1">'SUCCESS'</span>
+<span class="k">WHERE</span><span class="w"> </span><span class="n">status</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s1">'success'</span>
 <span class="w">  </span><span class="k">AND</span><span class="w"> </span><span class="n">duration_millis</span><span class="w"> </span><span class="o">&gt;</span><span class="w"> </span><span class="mi">0</span><span class="p">;</span>
 </code></pre></div>
 <p>Calculate MB/s in application: <code>total_mb / duration_sec</code>.</p>
@@ -20596,7 +20600,7 @@ data-et-multi-view="{&quot;schema&quot;:{&quot;content&quot;:{&quot;desktop&quot
 <span class="k">SELECT</span><span class="w"> </span><span class="n">id</span><span class="p">,</span><span class="w"> </span><span class="k">operation</span><span class="p">,</span><span class="w"> </span><span class="n">peers</span><span class="p">,</span><span class="w"> </span><span class="n">failure_cause</span><span class="p">,</span>
 <span class="w">       </span><span class="n">status_failure_timestamp</span>
 <span class="k">FROM</span><span class="w"> </span><span class="n">system_views</span><span class="p">.</span><span class="n">streaming</span>
-<span class="k">WHERE</span><span class="w"> </span><span class="n">status</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s1">'FAILURE'</span><span class="p">;</span>
+<span class="k">WHERE</span><span class="w"> </span><span class="n">status</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s1">'failure'</span><span class="p">;</span>
 </code></pre></div>
 <p>Filter in application for failures within the last hour.</p>
 <h3 id="long-running-operations">Long-Running Operations<a class="headerlink" href="#long-running-operations" title="Permanent link">¶</a></h3>
@@ -20604,7 +20608,7 @@ data-et-multi-view="{&quot;schema&quot;:{&quot;content&quot;:{&quot;desktop&quot
 <span class="k">SELECT</span><span class="w"> </span><span class="n">id</span><span class="p">,</span><span class="w"> </span><span class="k">operation</span><span class="p">,</span><span class="w"> </span><span class="n">progress_percentage</span><span class="p">,</span>
 <span class="w">       </span><span class="n">duration_millis</span><span class="w"> </span><span class="o">/</span><span class="w"> </span><span class="mi">3600000</span><span class="w"> </span><span class="k">AS</span><span class="w"> </span><span class="n">duration_hours</span>
 <span class="k">FROM</span><span class="w"> </span><span class="n">system_views</span><span class="p">.</span><span class="n">streaming</span>
-<span class="k">WHERE</span><span class="w"> </span><span class="n">status</span><span class="w"> </span><span class="k">IN</span><span class="w"> </span><span class="p">(</span><span class="s1">'INIT'</span><span class="p">,</span><span class="w"> </span><span class="s1">'START'</span><span class="p">);</span>
+<span class="k">WHERE</span><span class="w"> </span><span class="n">status</span><span class="w"> </span><span class="k">IN</span><span class="w"> </span><span class="p">(</span><span class="s1">'init'</span><span class="p">,</span><span class="w"> </span><span class="s1">'start'</span><span class="p">);</span>
 </code></pre></div>
 <p>Alert when <code>duration_millis &gt; 14400000</code> (4 hours).</p>
 <hr>
@@ -20641,7 +20645,7 @@ data-et-multi-view="{&quot;schema&quot;:{&quot;content&quot;:{&quot;desktop&quot
 </p><div class="highlight"><pre><span></span><code><span class="k">SELECT</span><span class="w"> </span><span class="n">id</span><span class="p">,</span><span class="w"> </span><span class="k">operation</span><span class="p">,</span><span class="w"> </span><span class="n">peers</span><span class="p">,</span><span class="w"> </span><span class="n">failure_cause</span><span class="p">,</span>
 <span class="w">       </span><span class="n">progress_percentage</span><span class="p">,</span><span class="w"> </span><span class="n">status_failure_timestamp</span>
 <span class="k">FROM</span><span class="w"> </span><span class="n">system_views</span><span class="p">.</span><span class="n">streaming</span>
-<span class="k">WHERE</span><span class="w"> </span><span class="n">status</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s1">'FAILURE'</span><span class="p">;</span>
+<span class="k">WHERE</span><span class="w"> </span><span class="n">status</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s1">'failure'</span><span class="p">;</span>
 </code></pre></div>
 <p>Sort by <code>status_failure_timestamp</code> in application to see most recent failures first.</p>
 <p><strong>Common Causes:</strong>
@@ -20685,12 +20689,12 @@ data-et-multi-view="{&quot;schema&quot;:{&quot;content&quot;:{&quot;desktop&quot
 <tbody>
 <tr>
 <td><code>stream_throughput_outbound</code></td>
-<td>200 Mbps</td>
+<td>24 MiB/s</td>
 <td>Max throughput per node</td>
 </tr>
 <tr>
 <td><code>inter_dc_stream_throughput_outbound</code></td>
-<td>200 Mbps</td>
+<td>24 MiB/s</td>
 <td>Max cross-DC throughput</td>
 </tr>
 <tr>
@@ -20705,6 +20709,28 @@ data-et-multi-view="{&quot;schema&quot;:{&quot;content&quot;:{&quot;desktop&quot
 </tr>
 </tbody>
 </table>
+<div class="admonition note">
+<p class="admonition-title">Setting Name Changes in Cassandra 4.1+</p>
+<p>In Cassandra 4.1+, the <code>_megabits_per_sec</code> suffixed names were deprecated. The new names use MiB/s units:</p>
+<table>
+<thead>
+<tr>
+<th>Pre-4.1</th>
+<th>4.1+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>stream_throughput_outbound_megabits_per_sec</code></td>
+<td><code>stream_throughput_outbound</code></td>
+</tr>
+<tr>
+<td><code>inter_dc_stream_throughput_outbound_megabits_per_sec</code></td>
+<td><code>inter_dc_stream_throughput_outbound</code></td>
+</tr>
+</tbody>
+</table>
+</div>
 <p>Check current values:
 </p><div class="highlight"><pre><span></span><code><span class="k">SELECT</span><span class="w"> </span><span class="n">name</span><span class="p">,</span><span class="w"> </span><span class="n">value</span><span class="w"> </span><span class="k">FROM</span><span class="w"> </span><span class="n">system_views</span><span class="p">.</span><span class="n">settings</span>
 <span class="k">WHERE</span><span class="w"> </span><span class="n">name</span><span class="w"> </span><span class="k">IN</span><span class="w"> </span><span class="p">(</span><span class="s1">'stream_throughput_outbound'</span><span class="p">,</span>

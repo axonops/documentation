@@ -20651,7 +20651,7 @@ Distribution: Uniform random distribution
 </tr>
 <tr>
 <td>Range queries</td>
-<td>Not supported across partition keys</td>
+<td>Not supported across partition keys via value comparison; token-range queries are possible but operationally heavy and generally discouraged</td>
 </tr>
 <tr>
 <td>Hot spots</td>
@@ -21333,16 +21333,10 @@ nodetool<span class="w"> </span>status<span class="w"> </span>keyspace_name
 </thead>
 <tbody>
 <tr>
-<td><strong>New cluster, Cassandra 4.0+</strong></td>
+<td><strong>New cluster</strong></td>
 <td>16</td>
 <td><code>allocate_tokens_for_local_replication_factor: 3</code></td>
 <td>Optimal balance with minimal overhead</td>
-</tr>
-<tr>
-<td><strong>New cluster, Cassandra 3.x</strong></td>
-<td>32</td>
-<td><code>allocate_tokens_for_keyspace: system_auth</code></td>
-<td>Good distribution without 4.0 allocator</td>
 </tr>
 <tr>
 <td><strong>Existing cluster, upgrading</strong></td>

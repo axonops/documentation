@@ -20565,7 +20565,7 @@ data-et-multi-view="{&quot;schema&quot;:{&quot;content&quot;:{&quot;desktop&quot
 </code></pre></div>
 <h2 id="description">Description<a class="headerlink" href="#description" title="Permanent link">¶</a></h2>
 <p><code>nodetool disablebackup</code> disables incremental backup mode on the node. Once disabled, Cassandra stops creating hard links to newly flushed SSTables. Existing backup files in the <code>backups</code> directory are not removed—they must be cleaned up manually.</p>
-<p>Incremental backup creates hard links to SSTables upon memtable flush, providing continuous backup capability. Disabling this feature stops the automatic link creation process.</p>
+<p>Incremental backup creates hard links to new SSTables when they are created (during memtable flush, compaction, and other SSTable-producing operations), providing continuous backup capability. Disabling this feature stops the automatic link creation process.</p>
 <div class="admonition warning">
 <p class="admonition-title">Non-Persistent Setting</p>
 <p>This setting is applied at runtime only and does not persist across node restarts. After a restart, incremental backup reverts to the <code>incremental_backups</code> setting in <code>cassandra.yaml</code> (default: <code>false</code>).</p>
@@ -20880,9 +20880,9 @@ sudo<span class="w"> </span>-u<span class="w"> </span>cassandra<span class="w"> 
 <h2 id="cluster-wide-disable">Cluster-Wide Disable<a class="headerlink" href="#cluster-wide-disable" title="Permanent link">¶</a></h2>
 <p>Disable backup across all nodes:</p>
 <div class="highlight"><pre><span></span><code><span class="ch">#!/bin/bash</span>
-<span class="c1"># disable_backup_cluster.sh# Get list of node IPs from local nodetool status</span>
+<span class="c1"># disable_backup_cluster.sh</span>
 
-
+<span class="c1"># Get list of node IPs from local nodetool status</span>
 <span class="nv">nodes</span><span class="o">=</span><span class="k">$(</span>nodetool<span class="w"> </span>status<span class="w"> </span><span class="p">|</span><span class="w"> </span>grep<span class="w"> </span><span class="s2">"^UN"</span><span class="w"> </span><span class="p">|</span><span class="w"> </span>awk<span class="w"> </span><span class="s1">'{print $2}'</span><span class="k">)</span>
 
 <span class="nb">echo</span><span class="w"> </span><span class="s2">"Disabling incremental backup cluster-wide"</span>
@@ -20890,7 +20890,7 @@ sudo<span class="w"> </span>-u<span class="w"> </span>cassandra<span class="w"> 
 
 <span class="k">for</span><span class="w"> </span>node<span class="w"> </span><span class="k">in</span><span class="w"> </span><span class="nv">$nodes</span><span class="p">;</span><span class="w"> </span><span class="k">do</span>
 <span class="w">    </span><span class="nb">echo</span><span class="w"> </span>-n<span class="w"> </span><span class="s2">"</span><span class="nv">$node</span><span class="s2">: "</span>
-<span class="w">    </span>ssh<span class="w"> </span><span class="s2">"</span><span class="nv">$node</span><span class="s2">"</span><span class="w"> </span><span class="s2">"nodetool disablebackup 2&gt;/dev/null &amp;&amp; echo "</span>disabled<span class="s2">" || echo "</span>failed<span class="s2">""</span>
+<span class="w">    </span>ssh<span class="w"> </span><span class="s2">"</span><span class="nv">$node</span><span class="s2">"</span><span class="w"> </span><span class="s2">"nodetool disablebackup 2&gt;/dev/null &amp;&amp; echo 'disabled' || echo 'failed'"</span>
 <span class="k">done</span>
 
 <span class="nb">echo</span><span class="w"> </span><span class="s2">""</span>

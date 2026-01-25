@@ -8232,9 +8232,9 @@ data-et-multi-view="{&quot;schema&quot;:{&quot;content&quot;:{&quot;desktop&quot
 </li>
         
           <li class="md-nav__item">
-  <a href="#extended-verification-e" class="md-nav__link">
+  <a href="#extended-verification-e-extended-verify" class="md-nav__link">
     <span class="md-ellipsis">
-      Extended Verification (-e)
+      Extended Verification (-e/--extended-verify)
     </span>
   </a>
   
@@ -8295,6 +8295,24 @@ data-et-multi-view="{&quot;schema&quot;:{&quot;content&quot;:{&quot;desktop&quot
   <a href="#verify-with-token-range-check" class="md-nav__link">
     <span class="md-ellipsis">
       Verify with Token Range Check
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#verify-sai-indexes-only" class="md-nav__link">
+    <span class="md-ellipsis">
+      Verify SAI Indexes Only
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#include-sai-in-verification" class="md-nav__link">
+    <span class="md-ellipsis">
+      Include SAI in Verification
     </span>
   </a>
   
@@ -20205,9 +20223,9 @@ data-et-multi-view="{&quot;schema&quot;:{&quot;content&quot;:{&quot;desktop&quot
 </li>
         
           <li class="md-nav__item">
-  <a href="#extended-verification-e" class="md-nav__link">
+  <a href="#extended-verification-e-extended-verify" class="md-nav__link">
     <span class="md-ellipsis">
-      Extended Verification (-e)
+      Extended Verification (-e/--extended-verify)
     </span>
   </a>
   
@@ -20268,6 +20286,24 @@ data-et-multi-view="{&quot;schema&quot;:{&quot;content&quot;:{&quot;desktop&quot
   <a href="#verify-with-token-range-check" class="md-nav__link">
     <span class="md-ellipsis">
       Verify with Token Range Check
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#verify-sai-indexes-only" class="md-nav__link">
+    <span class="md-ellipsis">
+      Verify SAI Indexes Only
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#include-sai-in-verification" class="md-nav__link">
+    <span class="md-ellipsis">
+      Include SAI in Verification
     </span>
   </a>
   
@@ -20493,6 +20529,10 @@ data-et-multi-view="{&quot;schema&quot;:{&quot;content&quot;:{&quot;desktop&quot
 </code></pre></div>
 <h2 id="description">Description<a class="headerlink" href="#description" title="Permanent link">¶</a></h2>
 <p><code>nodetool verify</code> performs a non-destructive check of SSTable integrity. Unlike <code>scrub</code>, verify only reads and validates—it never modifies data. Use verify to detect corruption before deciding whether to run scrub.</p>
+<div class="admonition warning">
+<p class="admonition-title">Force Flag Required</p>
+<p>By default, the command exits with an error unless the <code>-f/--force</code> flag is provided. This is a safety mechanism to ensure operators understand the I/O impact of verification.</p>
+</div>
 <h3 id="how-verification-works">How Verification Works<a class="headerlink" href="#how-verification-works" title="Permanent link">¶</a></h3>
 <p>The verify command performs integrity checks by reading SSTable files and validating their internal consistency:</p>
 <ol>
@@ -20577,7 +20617,11 @@ data-et-multi-view="{&quot;schema&quot;:{&quot;content&quot;:{&quot;desktop&quot
 </thead>
 <tbody>
 <tr>
-<td><code>-e, --extended</code></td>
+<td><code>-f, --force</code></td>
+<td><strong>Required.</strong> Force verification to proceed</td>
+</tr>
+<tr>
+<td><code>-e, --extended-verify</code></td>
 <td>Extended verification (checks all components)</td>
 </tr>
 <tr>
@@ -20589,19 +20633,31 @@ data-et-multi-view="{&quot;schema&quot;:{&quot;content&quot;:{&quot;desktop&quot
 <td>Invoke disk failure policy on failure</td>
 </tr>
 <tr>
-<td><code>-r, --rfrpfc</code></td>
-<td>Mutate repairedAt and pendingRepair</td>
+<td><code>-r, --rsc</code></td>
+<td>Mutate repairedAt, pendingRepair, and repairedSessionColumn</td>
 </tr>
 <tr>
 <td><code>-t, --check-tokens</code></td>
-<td>Verify tokens are within node's ranges</td>
+<td>Verify tokens are within node's ranges (requires <code>-e</code>)</td>
 </tr>
 <tr>
 <td><code>-q, --quick</code></td>
 <td>Quick check (fewer validations)</td>
 </tr>
+<tr>
+<td><code>-s, --sai-only</code></td>
+<td>Verify only Storage-Attached Indexes (SAI)</td>
+</tr>
+<tr>
+<td><code>-i, --include-sai</code></td>
+<td>Include SAI verification along with SSTable verification</td>
+</tr>
 </tbody>
 </table>
+<div class="admonition note">
+<p class="admonition-title">Option Dependencies</p>
+<p>The <code>--check-tokens</code> option requires <code>--extended-verify</code> to be specified.</p>
+</div>
 <hr>
 <h2 id="what-verify-checks">What Verify Checks<a class="headerlink" href="#what-verify-checks" title="Permanent link">¶</a></h2>
 <h3 id="standard-verification">Standard Verification<a class="headerlink" href="#standard-verification" title="Permanent link">¶</a></h3>
@@ -20612,30 +20668,38 @@ data-et-multi-view="{&quot;schema&quot;:{&quot;content&quot;:{&quot;desktop&quot
 <li>Index consistency</li>
 <li>Bloom filter validity</li>
 </ul>
-<h3 id="extended-verification-e">Extended Verification (<code>-e</code>)<a class="headerlink" href="#extended-verification-e" title="Permanent link">¶</a></h3>
+<h3 id="extended-verification-e-extended-verify">Extended Verification (<code>-e/--extended-verify</code>)<a class="headerlink" href="#extended-verification-e-extended-verify" title="Permanent link">¶</a></h3>
 <ul>
 <li>All data component files</li>
 <li>Compression metadata</li>
 <li>Statistics file integrity</li>
 <li>Summary file consistency</li>
 <li>TOC file completeness</li>
+<li>Token range validation (when <code>-t</code> also specified)</li>
 </ul>
 <hr>
 <h2 id="examples">Examples<a class="headerlink" href="#examples" title="Permanent link">¶</a></h2>
 <h3 id="verify-specific-table">Verify Specific Table<a class="headerlink" href="#verify-specific-table" title="Permanent link">¶</a></h3>
-<div class="highlight"><pre><span></span><code>nodetool<span class="w"> </span>verify<span class="w"> </span>my_keyspace<span class="w"> </span>my_table
+<div class="highlight"><pre><span></span><code>nodetool<span class="w"> </span>verify<span class="w"> </span>-f<span class="w"> </span>my_keyspace<span class="w"> </span>my_table
 </code></pre></div>
 <h3 id="verify-all-tables-in-keyspace">Verify All Tables in Keyspace<a class="headerlink" href="#verify-all-tables-in-keyspace" title="Permanent link">¶</a></h3>
-<div class="highlight"><pre><span></span><code>nodetool<span class="w"> </span>verify<span class="w"> </span>my_keyspace
+<div class="highlight"><pre><span></span><code>nodetool<span class="w"> </span>verify<span class="w"> </span>-f<span class="w"> </span>my_keyspace
 </code></pre></div>
 <h3 id="extended-verification">Extended Verification<a class="headerlink" href="#extended-verification" title="Permanent link">¶</a></h3>
-<div class="highlight"><pre><span></span><code>nodetool<span class="w"> </span>verify<span class="w"> </span>-e<span class="w"> </span>my_keyspace<span class="w"> </span>my_table
+<div class="highlight"><pre><span></span><code>nodetool<span class="w"> </span>verify<span class="w"> </span>-f<span class="w"> </span>-e<span class="w"> </span>my_keyspace<span class="w"> </span>my_table
 </code></pre></div>
 <h3 id="quick-verification">Quick Verification<a class="headerlink" href="#quick-verification" title="Permanent link">¶</a></h3>
-<div class="highlight"><pre><span></span><code>nodetool<span class="w"> </span>verify<span class="w"> </span>-q<span class="w"> </span>my_keyspace
+<div class="highlight"><pre><span></span><code>nodetool<span class="w"> </span>verify<span class="w"> </span>-f<span class="w"> </span>-q<span class="w"> </span>my_keyspace
 </code></pre></div>
 <h3 id="verify-with-token-range-check">Verify with Token Range Check<a class="headerlink" href="#verify-with-token-range-check" title="Permanent link">¶</a></h3>
-<div class="highlight"><pre><span></span><code>nodetool<span class="w"> </span>verify<span class="w"> </span>-t<span class="w"> </span>my_keyspace<span class="w"> </span>my_table
+<div class="highlight"><pre><span></span><code><span class="c1"># Note: -t requires -e (extended-verify)</span>
+nodetool<span class="w"> </span>verify<span class="w"> </span>-f<span class="w"> </span>-e<span class="w"> </span>-t<span class="w"> </span>my_keyspace<span class="w"> </span>my_table
+</code></pre></div>
+<h3 id="verify-sai-indexes-only">Verify SAI Indexes Only<a class="headerlink" href="#verify-sai-indexes-only" title="Permanent link">¶</a></h3>
+<div class="highlight"><pre><span></span><code>nodetool<span class="w"> </span>verify<span class="w"> </span>-f<span class="w"> </span>-s<span class="w"> </span>my_keyspace<span class="w"> </span>my_table
+</code></pre></div>
+<h3 id="include-sai-in-verification">Include SAI in Verification<a class="headerlink" href="#include-sai-in-verification" title="Permanent link">¶</a></h3>
+<div class="highlight"><pre><span></span><code>nodetool<span class="w"> </span>verify<span class="w"> </span>-f<span class="w"> </span>-i<span class="w"> </span>my_keyspace<span class="w"> </span>my_table
 </code></pre></div>
 <hr>
 <h2 id="output">Output<a class="headerlink" href="#output" title="Permanent link">¶</a></h2>
@@ -20651,20 +20715,20 @@ data-et-multi-view="{&quot;schema&quot;:{&quot;content&quot;:{&quot;desktop&quot
 <h2 id="when-to-use">When to Use<a class="headerlink" href="#when-to-use" title="Permanent link">¶</a></h2>
 <h3 id="proactive-health-checks">Proactive Health Checks<a class="headerlink" href="#proactive-health-checks" title="Permanent link">¶</a></h3>
 <div class="highlight"><pre><span></span><code><span class="c1"># Regular integrity check (e.g., weekly)</span>
-nodetool<span class="w"> </span>verify<span class="w"> </span>my_keyspace
+nodetool<span class="w"> </span>verify<span class="w"> </span>-f<span class="w"> </span>my_keyspace
 </code></pre></div>
 <h3 id="after-disk-errors">After Disk Errors<a class="headerlink" href="#after-disk-errors" title="Permanent link">¶</a></h3>
 <div class="highlight"><pre><span></span><code><span class="c1"># After seeing I/O errors in logs</span>
-nodetool<span class="w"> </span>verify
+nodetool<span class="w"> </span>verify<span class="w"> </span>-f
 </code></pre></div>
 <h3 id="before-maintenance">Before Maintenance<a class="headerlink" href="#before-maintenance" title="Permanent link">¶</a></h3>
 <div class="highlight"><pre><span></span><code><span class="c1"># Verify before backup</span>
-nodetool<span class="w"> </span>verify<span class="w"> </span>my_keyspace
+nodetool<span class="w"> </span>verify<span class="w"> </span>-f<span class="w"> </span>my_keyspace
 nodetool<span class="w"> </span>snapshot<span class="w"> </span>-t<span class="w"> </span>pre_backup<span class="w"> </span>my_keyspace
 </code></pre></div>
 <h3 id="after-unexpected-shutdown">After Unexpected Shutdown<a class="headerlink" href="#after-unexpected-shutdown" title="Permanent link">¶</a></h3>
 <div class="highlight"><pre><span></span><code><span class="c1"># After crash or power loss</span>
-nodetool<span class="w"> </span>verify
+nodetool<span class="w"> </span>verify<span class="w"> </span>-f
 </code></pre></div>
 <hr>
 <h2 id="verify-vs-scrub-decision-flow">Verify vs. Scrub Decision Flow<a class="headerlink" href="#verify-vs-scrub-decision-flow" title="Permanent link">¶</a></h2>
@@ -20741,7 +20805,7 @@ nodetool<span class="w"> </span>verify
 
 <span class="k">for</span><span class="w"> </span>ks<span class="w"> </span><span class="k">in</span><span class="w"> </span><span class="k">$(</span>nodetool<span class="w"> </span>tablestats<span class="w"> </span><span class="p">|</span><span class="w"> </span>grep<span class="w"> </span><span class="s2">"Keyspace:"</span><span class="w"> </span><span class="p">|</span><span class="w"> </span>awk<span class="w"> </span><span class="s1">'{print $2}'</span><span class="k">)</span><span class="p">;</span><span class="w"> </span><span class="k">do</span>
 <span class="w">    </span><span class="nb">echo</span><span class="w"> </span><span class="s2">"Verifying </span><span class="nv">$ks</span><span class="s2">..."</span><span class="w"> </span>&gt;&gt;<span class="w"> </span><span class="nv">$LOG</span>
-<span class="w">    </span>nodetool<span class="w"> </span>verify<span class="w"> </span><span class="nv">$ks</span><span class="w"> </span>&gt;&gt;<span class="w"> </span><span class="nv">$LOG</span><span class="w"> </span><span class="m">2</span>&gt;<span class="p">&amp;</span><span class="m">1</span>
+<span class="w">    </span>nodetool<span class="w"> </span>verify<span class="w"> </span>-f<span class="w"> </span><span class="nv">$ks</span><span class="w"> </span>&gt;&gt;<span class="w"> </span><span class="nv">$LOG</span><span class="w"> </span><span class="m">2</span>&gt;<span class="p">&amp;</span><span class="m">1</span>
 <span class="k">done</span>
 
 <span class="nb">echo</span><span class="w"> </span><span class="s2">"Completed at </span><span class="k">$(</span>date<span class="k">)</span><span class="s2">"</span><span class="w"> </span>&gt;&gt;<span class="w"> </span><span class="nv">$LOG</span>
@@ -20756,15 +20820,15 @@ nodetool<span class="w"> </span>verify
 <h3 id="not-enough-space">"Not enough space"<a class="headerlink" href="#not-enough-space" title="Permanent link">¶</a></h3>
 <p>Verify needs memory for checksums:</p>
 <div class="highlight"><pre><span></span><code><span class="c1"># Run on one table at a time</span>
-nodetool<span class="w"> </span>verify<span class="w"> </span>my_keyspace<span class="w"> </span>table1
-nodetool<span class="w"> </span>verify<span class="w"> </span>my_keyspace<span class="w"> </span>table2
+nodetool<span class="w"> </span>verify<span class="w"> </span>-f<span class="w"> </span>my_keyspace<span class="w"> </span>table1
+nodetool<span class="w"> </span>verify<span class="w"> </span>-f<span class="w"> </span>my_keyspace<span class="w"> </span>table2
 </code></pre></div>
 <h3 id="verification-takes-too-long">Verification Takes Too Long<a class="headerlink" href="#verification-takes-too-long" title="Permanent link">¶</a></h3>
 <div class="highlight"><pre><span></span><code><span class="c1"># Use quick mode for faster check</span>
-nodetool<span class="w"> </span>verify<span class="w"> </span>-q<span class="w"> </span>my_keyspace
+nodetool<span class="w"> </span>verify<span class="w"> </span>-f<span class="w"> </span>-q<span class="w"> </span>my_keyspace
 
 <span class="c1"># Or verify specific tables only</span>
-nodetool<span class="w"> </span>verify<span class="w"> </span>my_keyspace<span class="w"> </span>critical_table
+nodetool<span class="w"> </span>verify<span class="w"> </span>-f<span class="w"> </span>my_keyspace<span class="w"> </span>critical_table
 </code></pre></div>
 <hr>
 <h2 id="best-practices">Best Practices<a class="headerlink" href="#best-practices" title="Permanent link">¶</a></h2>

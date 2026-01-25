@@ -20796,8 +20796,8 @@ For each node in cluster:
    4. Verify cluster health
    5. Proceed to next node
 
-Never: Perform maintenance on multiple nodes simultaneously
-       (unless they are in different failure domains AND RF &gt; 2)
+Avoid: Performing maintenance on multiple nodes simultaneously
+       (exception: nodes in different failure domains with RF &gt; 2)
 </code></pre></div>
 <hr>
 <h2 id="maintenance-task-reference">Maintenance Task Reference<a class="headerlink" href="#maintenance-task-reference" title="Permanent link">¶</a></h2>
@@ -20901,7 +20901,7 @@ nodetool<span class="w"> </span>drain
 <span class="c1"># drain does:</span>
 <span class="c1"># - Stops accepting new connections</span>
 <span class="c1"># - Flushes all memtables to disk</span>
-<span class="c1"># - Stops listening on native and thrift ports</span>
+<span class="c1"># - Stops listening on native protocol port</span>
 
 <span class="c1"># 3. Stop Cassandra</span>
 <span class="nb">echo</span><span class="w"> </span><span class="s2">"Stopping Cassandra..."</span>

@@ -20506,8 +20506,22 @@ data-et-multi-view="{&quot;schema&quot;:{&quot;content&quot;:{&quot;desktop&quot
 <td>Internode connections</td>
 <td>10000 ms</td>
 </tr>
+<tr>
+<td><code>internodeuser</code></td>
+<td>Internode user operations</td>
+<td>varies</td>
+</tr>
+<tr>
+<td><code>internodestreaminguser</code></td>
+<td>Internode streaming user socket timeout</td>
+<td>varies</td>
+</tr>
 </tbody>
 </table>
+<div class="admonition info">
+<p class="admonition-title">Zero Value Behavior</p>
+<p>For <code>internodestreaminguser</code>, setting the value to <code>0</code> disables the socket streaming timeout entirely.</p>
+</div>
 <hr>
 <h2 id="examples">Examples<a class="headerlink" href="#examples" title="Permanent link">¶</a></h2>
 <h3 id="increase-read-timeout">Increase Read Timeout<a class="headerlink" href="#increase-read-timeout" title="Permanent link">¶</a></h3>

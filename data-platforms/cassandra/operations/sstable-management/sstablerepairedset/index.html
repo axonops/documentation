@@ -12153,6 +12153,15 @@ data-et-multi-view="{&quot;schema&quot;:{&quot;content&quot;:{&quot;desktop&quot
 </li>
         
           <li class="md-nav__item">
+  <a href="#using-file-input" class="md-nav__link">
+    <span class="md-ellipsis">
+      Using File Input
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
   <a href="#mark-all-sstables-on-node" class="md-nav__link">
     <span class="md-ellipsis">
       Mark All SSTables on Node
@@ -20220,6 +20229,15 @@ data-et-multi-view="{&quot;schema&quot;:{&quot;content&quot;:{&quot;desktop&quot
 </li>
         
           <li class="md-nav__item">
+  <a href="#using-file-input" class="md-nav__link">
+    <span class="md-ellipsis">
+      Using File Input
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
   <a href="#mark-all-sstables-on-node" class="md-nav__link">
     <span class="md-ellipsis">
       Mark All SSTables on Node
@@ -20466,6 +20484,7 @@ data-et-multi-view="{&quot;schema&quot;:{&quot;content&quot;:{&quot;desktop&quot
 <hr>
 <h2 id="synopsis">Synopsis<a class="headerlink" href="#synopsis" title="Permanent link">¶</a></h2>
 <div class="highlight"><pre><span></span><code>sstablerepairedset<span class="w"> </span>--really-set<span class="w"> </span><span class="o">[</span>--is-repaired<span class="w"> </span><span class="p">|</span><span class="w"> </span>--is-unrepaired<span class="o">]</span><span class="w"> </span>&lt;sstable_files&gt;
+sstablerepairedset<span class="w"> </span>--really-set<span class="w"> </span><span class="o">[</span>--is-repaired<span class="w"> </span><span class="p">|</span><span class="w"> </span>--is-unrepaired<span class="o">]</span><span class="w"> </span>-f<span class="w"> </span>&lt;sstable_list_file&gt;
 </code></pre></div>
 <hr>
 <h2 id="description">Description<a class="headerlink" href="#description" title="Permanent link">¶</a></h2>
@@ -20553,9 +20572,17 @@ data-et-multi-view="{&quot;schema&quot;:{&quot;content&quot;:{&quot;desktop&quot
 <td><code>--is-unrepaired</code></td>
 <td>Mark SSTables as unrepaired</td>
 </tr>
+<tr>
+<td><code>-f &lt;file&gt;</code></td>
+<td>Read list of SSTable paths from file (one path per line)</td>
+</tr>
 </tbody>
 </table>
 <p>The <code>--really-set</code> flag is mandatory to prevent accidental modification.</p>
+<div class="admonition note">
+<p class="admonition-title">Repaired Timestamp Behavior</p>
+<p>When using <code>--is-repaired</code>, the tool sets <code>repaired_at</code> to the Data.db file's last-modified time, not to the current time or an actual repair timestamp. This is important when interpreting the metadata later.</p>
+</div>
 <hr>
 <h2 id="examples">Examples<a class="headerlink" href="#examples" title="Permanent link">¶</a></h2>
 <h3 id="mark-as-repaired">Mark as Repaired<a class="headerlink" href="#mark-as-repaired" title="Permanent link">¶</a></h3>
@@ -20583,6 +20610,13 @@ sstablerepairedset<span class="w"> </span>--really-set<span class="w"> </span>--
 <div class="highlight"><pre><span></span><code><span class="c1"># Mark all SSTables in keyspace as unrepaired</span>
 find<span class="w"> </span>/var/lib/cassandra/data/my_keyspace/<span class="w"> </span>-name<span class="w"> </span><span class="s2">"*-Data.db"</span><span class="w"> </span>-print0<span class="w"> </span><span class="p">|</span><span class="w"> </span><span class="se">\</span>
 <span class="w">    </span>xargs<span class="w"> </span>-0<span class="w"> </span>sstablerepairedset<span class="w"> </span>--really-set<span class="w"> </span>--is-unrepaired
+</code></pre></div>
+<h3 id="using-file-input">Using File Input<a class="headerlink" href="#using-file-input" title="Permanent link">¶</a></h3>
+<div class="highlight"><pre><span></span><code><span class="c1"># Create a list of SSTable paths</span>
+find<span class="w"> </span>/var/lib/cassandra/data/my_keyspace/<span class="w"> </span>-name<span class="w"> </span><span class="s2">"*-Data.db"</span><span class="w"> </span>&gt;<span class="w"> </span>/tmp/sstables.txt
+
+<span class="c1"># Mark all listed SSTables as unrepaired</span>
+sstablerepairedset<span class="w"> </span>--really-set<span class="w"> </span>--is-unrepaired<span class="w"> </span>-f<span class="w"> </span>/tmp/sstables.txt
 </code></pre></div>
 <h3 id="mark-all-sstables-on-node">Mark All SSTables on Node<a class="headerlink" href="#mark-all-sstables-on-node" title="Permanent link">¶</a></h3>
 <div class="highlight"><pre><span></span><code><span class="ch">#!/bin/bash</span>

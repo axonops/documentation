@@ -20629,7 +20629,7 @@ data-et-multi-view="{&quot;schema&quot;:{&quot;content&quot;:{&quot;desktop&quot
 <p>The following behaviors are undefined and must not be relied upon:</p>
 <ul>
 <li><strong>Write visibility timing</strong>: After INSERT returns, the data may not immediately be visible to reads at lower consistency levels</li>
-<li><strong>Cross-column atomicity</strong>: Columns in a single INSERT are written as separate cells; partial visibility is possible during read</li>
+<li><strong>Cross-column atomicity at low CL reads</strong>: A single-partition INSERT is atomic per replica, but reads at lower consistency levels may see stale data from replicas that haven't received the write</li>
 <li><strong>Order of concurrent writes</strong>: Two INSERTs with the same timestamp have undefined conflict resolution (implementation-dependent tie-breaker)</li>
 <li><strong>Exactly-once without LWT</strong>: Without IF NOT EXISTS, the same INSERT may be applied multiple times (idempotent, but no uniqueness)</li>
 </ul>
@@ -20784,7 +20784,7 @@ data-et-multi-view="{&quot;schema&quot;:{&quot;content&quot;:{&quot;desktop&quot
 </code></pre></div>
 <div class="admonition warning">
 <p class="admonition-title">LWT Performance</p>
-<p><code>IF NOT EXISTS</code> uses Paxos consensus, adding ~4x latency compared to regular inserts. Use sparingly and only when uniqueness is critical.</p>
+<p><code>IF NOT EXISTS</code> uses Paxos consensus, adding significant latency compared to regular inserts (commonly 2-4x or more, workload-dependent). Use sparingly and only when uniqueness is critical.</p>
 </div>
 <h3 id="using-ttl">USING TTL<a class="headerlink" href="#using-ttl" title="Permanent link">¶</a></h3>
 <p>Sets Time-To-Live in seconds for non-primary-key columns:</p>
@@ -20819,7 +20819,7 @@ data-et-multi-view="{&quot;schema&quot;:{&quot;content&quot;:{&quot;desktop&quot
 <div class="admonition danger">
 <p class="admonition-title">Timestamp Pitfalls</p>
 <ul>
-<li>Future timestamps can make data "invisible" until that time</li>
+<li>Future timestamps cause the write to win immediately; subsequent real-time writes may be ignored until their timestamps surpass the future value</li>
 <li>Past timestamps may be ignored if newer data exists</li>
 <li>Clock skew between application servers causes inconsistencies</li>
 </ul>

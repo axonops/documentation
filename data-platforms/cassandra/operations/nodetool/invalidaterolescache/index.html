@@ -20653,10 +20653,37 @@ cqlsh<span class="w"> </span>-e<span class="w"> </span><span class="s2">"LIST AL
 <hr>
 <h2 id="configuration">Configuration<a class="headerlink" href="#configuration" title="Permanent link">¶</a></h2>
 <h3 id="cache-settings">Cache Settings<a class="headerlink" href="#cache-settings" title="Permanent link">¶</a></h3>
-<div class="highlight"><pre><span></span><code><span class="c1"># cassandra.yaml</span>
-<span class="nt">roles_validity_in_ms</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">2000</span><span class="w">            </span><span class="c1"># How long entries are valid</span>
-<span class="nt">roles_update_interval_in_ms</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">1000</span><span class="w">     </span><span class="c1"># Background refresh interval</span>
-<span class="nt">roles_cache_max_entries</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">1000</span><span class="w">         </span><span class="c1"># Maximum cached entries</span>
+<p>The cassandra.yaml parameter names vary by version:</p>
+<table>
+<thead>
+<tr>
+<th>Cassandra Version</th>
+<th>Validity Parameter</th>
+<th>Update Interval Parameter</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Pre-4.1</td>
+<td><code>roles_validity_in_ms</code></td>
+<td><code>roles_update_interval_in_ms</code></td>
+</tr>
+<tr>
+<td>4.1+</td>
+<td><code>roles_validity</code></td>
+<td><code>roles_update_interval</code></td>
+</tr>
+</tbody>
+</table>
+<div class="highlight"><pre><span></span><code><span class="c1"># cassandra.yaml (4.1+)</span>
+<span class="nt">roles_validity</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">2s</span>
+<span class="nt">roles_update_interval</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">1s</span>
+<span class="nt">roles_cache_max_entries</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">1000</span>
+
+<span class="c1"># cassandra.yaml (Pre-4.1)</span>
+<span class="c1"># roles_validity_in_ms: 2000</span>
+<span class="c1"># roles_update_interval_in_ms: 1000</span>
+<span class="c1"># roles_cache_max_entries: 1000</span>
 </code></pre></div>
 <h3 id="tuning-considerations">Tuning Considerations<a class="headerlink" href="#tuning-considerations" title="Permanent link">¶</a></h3>
 <table>
@@ -20669,7 +20696,7 @@ cqlsh<span class="w"> </span>-e<span class="w"> </span><span class="s2">"LIST AL
 </thead>
 <tbody>
 <tr>
-<td><code>roles_validity_in_ms</code></td>
+<td><code>roles_validity</code></td>
 <td>Faster permission propagation, more auth queries</td>
 <td>Better performance, delayed propagation</td>
 </tr>
@@ -20687,14 +20714,14 @@ cqlsh<span class="w"> </span>-e<span class="w"> </span><span class="s2">"LIST AL
 <div class="highlight"><pre><span></span><code><span class="ch">#!/bin/bash</span>
 <span class="c1"># invalidate_roles_cluster.sh</span>
 
-<span class="nb">echo</span><span class="w"> </span><span class="s2">"Invalidating roles cache cluster-wide..."</span><span class="c1"># Get list of node IPs from local nodetool status</span>
+<span class="nb">echo</span><span class="w"> </span><span class="s2">"Invalidating roles cache cluster-wide..."</span>
 
-
+<span class="c1"># Get list of node IPs from local nodetool status</span>
 <span class="nv">nodes</span><span class="o">=</span><span class="k">$(</span>nodetool<span class="w"> </span>status<span class="w"> </span><span class="p">|</span><span class="w"> </span>grep<span class="w"> </span><span class="s2">"^UN"</span><span class="w"> </span><span class="p">|</span><span class="w"> </span>awk<span class="w"> </span><span class="s1">'{print $2}'</span><span class="k">)</span>
 
 <span class="k">for</span><span class="w"> </span>node<span class="w"> </span><span class="k">in</span><span class="w"> </span><span class="nv">$nodes</span><span class="p">;</span><span class="w"> </span><span class="k">do</span>
 <span class="w">    </span><span class="nb">echo</span><span class="w"> </span>-n<span class="w"> </span><span class="s2">"</span><span class="nv">$node</span><span class="s2">: "</span>
-<span class="w">    </span>ssh<span class="w"> </span><span class="s2">"</span><span class="nv">$node</span><span class="s2">"</span><span class="w"> </span><span class="s2">"nodetool invalidaterolescache 2&gt;/dev/null &amp;&amp; echo "</span>invalidated<span class="s2">" || echo "</span>FAILED<span class="s2">""</span>
+<span class="w">    </span>ssh<span class="w"> </span><span class="s2">"</span><span class="nv">$node</span><span class="s2">"</span><span class="w"> </span><span class="s1">'nodetool invalidaterolescache 2&gt;/dev/null &amp;&amp; echo "invalidated" || echo "FAILED"'</span>
 <span class="k">done</span>
 
 <span class="nb">echo</span><span class="w"> </span><span class="s2">"Roles cache cleared on all nodes."</span>
@@ -20704,9 +20731,9 @@ cqlsh<span class="w"> </span>-e<span class="w"> </span><span class="s2">"LIST AL
 <div class="highlight"><pre><span></span><code><span class="ch">#!/bin/bash</span>
 <span class="c1"># refresh_all_auth_caches.sh</span>
 
-<span class="nb">echo</span><span class="w"> </span><span class="s2">"Refreshing all authentication caches cluster-wide..."</span><span class="c1"># Get list of node IPs from local nodetool status</span>
+<span class="nb">echo</span><span class="w"> </span><span class="s2">"Refreshing all authentication caches cluster-wide..."</span>
 
-
+<span class="c1"># Get list of node IPs from local nodetool status</span>
 <span class="nv">nodes</span><span class="o">=</span><span class="k">$(</span>nodetool<span class="w"> </span>status<span class="w"> </span><span class="p">|</span><span class="w"> </span>grep<span class="w"> </span><span class="s2">"^UN"</span><span class="w"> </span><span class="p">|</span><span class="w"> </span>awk<span class="w"> </span><span class="s1">'{print $2}'</span><span class="k">)</span>
 
 <span class="k">for</span><span class="w"> </span>node<span class="w"> </span><span class="k">in</span><span class="w"> </span><span class="nv">$nodes</span><span class="p">;</span><span class="w"> </span><span class="k">do</span>

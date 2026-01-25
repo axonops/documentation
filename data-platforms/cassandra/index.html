@@ -20446,12 +20446,12 @@ data-et-multi-view="{&quot;schema&quot;:{&quot;content&quot;:{&quot;desktop&quot
 <tbody>
 <tr>
 <td>4.0.x</td>
-<td style="text-align: center;">Java 8/11</td>
+<td style="text-align: center;">Java 11</td>
 <td>Supported</td>
 </tr>
 <tr>
 <td>4.1.x</td>
-<td style="text-align: center;">Java 8/11</td>
+<td style="text-align: center;">Java 11/17</td>
 <td>Fully Documented</td>
 </tr>
 <tr>
@@ -20470,7 +20470,7 @@ data-et-multi-view="{&quot;schema&quot;:{&quot;content&quot;:{&quot;desktop&quot
 </ul>
 <h3 id="cassandra-500-september-2024-major-release">Cassandra 5.0.0 (September 2024) - Major Release<a class="headerlink" href="#cassandra-500-september-2024-major-release" title="Permanent link">¶</a></h3>
 <ul>
-<li><strong>Storage-Attached Indexes (SAI)</strong> (CEP-7) - Efficient secondary indexing within storage layer</li>
+<li><strong>Storage-Attached Indexes (SAI)</strong> (CEP-7) - Efficient secondary indexing (experimental in 4.0+, production-ready in 5.0)</li>
 <li><strong>Vector data type and search</strong> (CEP-30) - Approximate nearest neighbor searching via SAI</li>
 <li><strong>Unified Compaction Strategy (UCS)</strong> (CEP-26) - Adaptive compaction replacing multiple strategies</li>
 <li><strong>Trie memtables</strong> (CEP-19) - Trie-based in-memory data structures</li>
@@ -20714,7 +20714,7 @@ data-et-multi-view="{&quot;schema&quot;:{&quot;content&quot;:{&quot;desktop&quot
 <tbody>
 <tr>
 <td><strong>"Cassandra is eventually consistent"</strong></td>
-<td>Cassandra offers <strong>tunable</strong> consistency. With <code>QUORUM</code> reads and writes, strong consistency is achieved. "Eventually consistent" only applies when using weaker consistency levels like <code>ONE</code>.</td>
+<td>Cassandra offers <strong>tunable</strong> consistency. With <code>QUORUM</code> reads and writes in a single datacenter, strong consistency is achieved. Multi-datacenter deployments require <code>LOCAL_QUORUM</code> or careful consistency level selection. "Eventually consistent" applies when using weaker consistency levels like <code>ONE</code>.</td>
 </tr>
 <tr>
 <td><strong>"Cassandra doesn't support transactions"</strong></td>

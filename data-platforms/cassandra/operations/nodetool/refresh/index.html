@@ -20342,6 +20342,10 @@ data-et-multi-view="{&quot;schema&quot;:{&quot;content&quot;:{&quot;desktop&quot
 
 
 <div><h1 id="nodetool-refresh">nodetool refresh<a class="headerlink" href="#nodetool-refresh" title="Permanent link">¶</a></h1>
+<div class="admonition warning">
+<p class="admonition-title">Deprecated in Cassandra 4.0+</p>
+<p><code>nodetool refresh</code> is deprecated since Cassandra 4.0. Use <code>nodetool import</code> instead, which provides more options including the ability to import from external directories.</p>
+</div>
 <p>Loads newly placed SSTables into a running node without restart.</p>
 <hr>
 <h2 id="synopsis">Synopsis<a class="headerlink" href="#synopsis" title="Permanent link">¶</a></h2>
@@ -20469,11 +20473,6 @@ nb-1-big-CompressionInfo.db  # If compressed
 <td>File handling</td>
 <td>Files stay in place</td>
 <td>Files can be moved or copied</td>
-</tr>
-<tr>
-<td>Availability</td>
-<td>Cassandra 3.x+</td>
-<td>Cassandra 4.0+</td>
 </tr>
 <tr>
 <td>Use case</td>

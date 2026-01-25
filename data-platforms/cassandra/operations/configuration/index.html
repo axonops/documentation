@@ -20487,6 +20487,7 @@ data-et-multi-view="{&quot;schema&quot;:{&quot;content&quot;:{&quot;desktop&quot
 <span class="nt">concurrent_materialized_view_writes</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">32</span>
 
 <span class="c1"># Compaction</span>
+<span class="c1"># 4.0: compaction_throughput_mb_per_sec, 4.1+: compaction_throughput (e.g., 64MiB/s)</span>
 <span class="nt">compaction_throughput_mb_per_sec</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">64</span>
 <span class="nt">concurrent_compactors</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">2</span>
 
@@ -20497,11 +20498,17 @@ data-et-multi-view="{&quot;schema&quot;:{&quot;content&quot;:{&quot;desktop&quot
 
 <span class="c1"># Commit log</span>
 <span class="nt">commitlog_sync</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">periodic</span>
+<span class="c1"># 4.0: _in_ms suffix, 4.1+: duration syntax (e.g., 10s)</span>
 <span class="nt">commitlog_sync_period_in_ms</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">10000</span>
 <span class="nt">commitlog_segment_size_in_mb</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">32</span>
 </code></pre></div>
+<div class="admonition note">
+<p class="admonition-title">Configuration Syntax Changes in 4.1+</p>
+<p>Cassandra 4.1+ introduced duration literals (e.g., <code>10s</code>, <code>200ms</code>, <code>1h</code>) and data rate units (e.g., <code>64MiB/s</code>). The <code>_in_ms</code> and <code>_mb_per_sec</code> suffixes are deprecated but still accepted. See <a href="cassandra-yaml/">cassandra.yaml</a> for version-specific parameter names.</p>
+</div>
 <h3 id="timeout-settings">Timeout Settings<a class="headerlink" href="#timeout-settings" title="Permanent link">¶</a></h3>
-<div class="highlight"><pre><span></span><code><span class="nt">read_request_timeout_in_ms</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">5000</span>
+<div class="highlight"><pre><span></span><code><span class="c1"># 4.0 syntax shown; 4.1+ uses duration literals (e.g., 5s instead of 5000)</span>
+<span class="nt">read_request_timeout_in_ms</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">5000</span>
 <span class="nt">write_request_timeout_in_ms</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">2000</span>
 <span class="nt">counter_write_request_timeout_in_ms</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">5000</span>
 <span class="nt">range_request_timeout_in_ms</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">10000</span>

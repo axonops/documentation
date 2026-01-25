@@ -20180,7 +20180,7 @@ data-et-multi-view="{&quot;schema&quot;:{&quot;content&quot;:{&quot;desktop&quot
 <p>Complete reference for all repair command options:</p>
 <ul>
 <li>Scope options: <code>-pr</code>, <code>-full</code>, <code>-st</code>/<code>-et</code></li>
-<li>Parallelism options: <code>--parallel</code>, <code>-seq</code>, <code>-dcpar</code>, <code>-j</code></li>
+<li>Parallelism options: <code>-seq</code>, <code>-dcpar</code>, <code>-j</code> (parallel is default)</li>
 <li>Scope limiting: <code>-dc</code>, <code>-local</code>, <code>-hosts</code></li>
 <li>Operational options: <code>--preview</code>, <code>--trace</code>, <code>-os</code></li>
 </ul>
@@ -20210,8 +20210,8 @@ nodetool<span class="w"> </span>repair<span class="w"> </span>-pr<span class="w"
 <span class="c1"># Full repair after node recovery</span>
 nodetool<span class="w"> </span>repair<span class="w"> </span>-full<span class="w"> </span>my_keyspace
 
-<span class="c1"># Parallel repair for faster execution</span>
-nodetool<span class="w"> </span>repair<span class="w"> </span>-pr<span class="w"> </span>--parallel<span class="w"> </span>my_keyspace
+<span class="c1"># Parallel repair is the default in Cassandra 4.0+</span>
+nodetool<span class="w"> </span>repair<span class="w"> </span>-pr<span class="w"> </span>my_keyspace
 
 <span class="c1"># Sequential repair for minimal impact</span>
 nodetool<span class="w"> </span>repair<span class="w"> </span>-pr<span class="w"> </span>-seq<span class="w"> </span>my_keyspace

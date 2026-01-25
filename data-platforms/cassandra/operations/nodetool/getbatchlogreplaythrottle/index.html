@@ -19941,6 +19941,10 @@ data-et-multi-view="{&quot;schema&quot;:{&quot;content&quot;:{&quot;desktop&quot
 </code></pre></div>
 <h2 id="description">Description<a class="headerlink" href="#description" title="Permanent link">¶</a></h2>
 <p><code>nodetool getbatchlogreplaythrottle</code> shows the current throttle rate for batchlog replay operations. This controls how fast pending batches are replayed.</p>
+<div class="admonition info">
+<p class="admonition-title">Per-Node Throttle</p>
+<p>The displayed throttle is the per-node rate. The actual throttle per endpoint is calculated as the total throttle divided by the number of nodes in the cluster.</p>
+</div>
 <hr>
 <h2 id="examples">Examples<a class="headerlink" href="#examples" title="Permanent link">¶</a></h2>
 <h3 id="basic-usage">Basic Usage<a class="headerlink" href="#basic-usage" title="Permanent link">¶</a></h3>
@@ -19951,8 +19955,33 @@ data-et-multi-view="{&quot;schema&quot;:{&quot;content&quot;:{&quot;desktop&quot
 </code></pre></div>
 <hr>
 <h2 id="configuration">Configuration<a class="headerlink" href="#configuration" title="Permanent link">¶</a></h2>
-<div class="highlight"><pre><span></span><code><span class="c1"># cassandra.yaml</span>
-<span class="nt">batchlog_replay_throttle_in_kb</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">1024</span>
+<p>The cassandra.yaml parameter name varies by version:</p>
+<table>
+<thead>
+<tr>
+<th>Cassandra Version</th>
+<th>Parameter Name</th>
+<th>Example</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Pre-4.1</td>
+<td><code>batchlog_replay_throttle_in_kb</code></td>
+<td><code>1024</code></td>
+</tr>
+<tr>
+<td>4.1+</td>
+<td><code>batchlog_replay_throttle</code></td>
+<td><code>1024KiB</code></td>
+</tr>
+</tbody>
+</table>
+<div class="highlight"><pre><span></span><code><span class="c1"># cassandra.yaml (4.1+)</span>
+<span class="nt">batchlog_replay_throttle</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">1024KiB</span>
+
+<span class="c1"># cassandra.yaml (Pre-4.1)</span>
+<span class="c1"># batchlog_replay_throttle_in_kb: 1024</span>
 </code></pre></div>
 <hr>
 <h2 id="related-commands">Related Commands<a class="headerlink" href="#related-commands" title="Permanent link">¶</a></h2>

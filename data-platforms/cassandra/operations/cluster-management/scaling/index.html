@@ -20321,7 +20321,7 @@ nodetool<span class="w"> </span>status
 </table>
 <div class="admonition warning">
 <p class="admonition-title">Headroom Requirement</p>
-<p>Disk utilization should not exceed 50% under normal operations. This provides headroom for:</p>
+<p>Disk utilization should generally not exceed 50-70% under normal operations (depending on compaction strategy and workload). This provides headroom for:</p>
 <ul>
 <li>Compaction (temporary 2x space requirement)</li>
 <li>Streaming during topology changes</li>
@@ -20413,9 +20413,9 @@ Nodes to remove = N - Minimum nodes
 <h3 id="behavioral-contract">Behavioral Contract<a class="headerlink" href="#behavioral-contract" title="Permanent link">¶</a></h3>
 <p><strong>Constraints:</strong></p>
 <ul>
-<li>Nodes must be added sequentially, one at a time</li>
+<li>Nodes should be added sequentially for reduced resource contention (concurrent bootstraps are supported but increase streaming load)</li>
 <li>Each node must complete bootstrap (<code>UN</code> status) before adding the next</li>
-<li>Cleanup must run on all original nodes after all additions complete</li>
+<li>Cleanup should run on all original nodes after additions to reclaim space (recommended but not required for correctness)</li>
 </ul>
 <p><strong>Failure Semantics:</strong></p>
 <table>

@@ -9967,6 +9967,15 @@ data-et-multi-view="{&quot;schema&quot;:{&quot;content&quot;:{&quot;desktop&quot
 </li>
         
           <li class="md-nav__item">
+  <a href="#verbose-output-with-thread-pool-sizes" class="md-nav__link">
+    <span class="md-ellipsis">
+      Verbose Output with Thread Pool Sizes
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
   <a href="#monitor-thread-pools-continuously" class="md-nav__link">
     <span class="md-ellipsis">
       Monitor Thread Pools Continuously
@@ -20319,6 +20328,15 @@ data-et-multi-view="{&quot;schema&quot;:{&quot;content&quot;:{&quot;desktop&quot
 </li>
         
           <li class="md-nav__item">
+  <a href="#verbose-output-with-thread-pool-sizes" class="md-nav__link">
+    <span class="md-ellipsis">
+      Verbose Output with Thread Pool Sizes
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
   <a href="#monitor-thread-pools-continuously" class="md-nav__link">
     <span class="md-ellipsis">
       Monitor Thread Pools Continuously
@@ -20428,6 +20446,10 @@ data-et-multi-view="{&quot;schema&quot;:{&quot;content&quot;:{&quot;desktop&quot
 <tr>
 <td><code>-F, --format</code></td>
 <td>Output format (json, yaml)</td>
+</tr>
+<tr>
+<td><code>-v, --verbose</code></td>
+<td>Show detailed thread pool sizes (core, max, active)</td>
 </tr>
 </tbody>
 </table>
@@ -20746,6 +20768,9 @@ nodetool<span class="w"> </span>proxyhistograms
 </code></pre></div>
 <h3 id="json-output-for-parsing">JSON Output for Parsing<a class="headerlink" href="#json-output-for-parsing" title="Permanent link">¶</a></h3>
 <div class="highlight"><pre><span></span><code>nodetool<span class="w"> </span>tpstats<span class="w"> </span>-F<span class="w"> </span>json
+</code></pre></div>
+<h3 id="verbose-output-with-thread-pool-sizes">Verbose Output with Thread Pool Sizes<a class="headerlink" href="#verbose-output-with-thread-pool-sizes" title="Permanent link">¶</a></h3>
+<div class="highlight"><pre><span></span><code>nodetool<span class="w"> </span>tpstats<span class="w"> </span>-v
 </code></pre></div>
 <h3 id="monitor-thread-pools-continuously">Monitor Thread Pools Continuously<a class="headerlink" href="#monitor-thread-pools-continuously" title="Permanent link">¶</a></h3>
 <div class="highlight"><pre><span></span><code>watch<span class="w"> </span>-n<span class="w"> </span><span class="m">2</span><span class="w"> </span><span class="s1">'nodetool tpstats | head -20'</span>

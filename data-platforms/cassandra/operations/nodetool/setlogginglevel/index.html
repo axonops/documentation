@@ -10078,6 +10078,21 @@ data-et-multi-view="{&quot;schema&quot;:{&quot;content&quot;:{&quot;desktop&quot
     </span>
   </a>
   
+    <nav class="md-nav" aria-label="Arguments">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#built-in-component-shortcuts" class="md-nav__link">
+    <span class="md-ellipsis">
+      Built-in Component Shortcuts
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
 </li>
       
         <li class="md-nav__item">
@@ -10163,9 +10178,27 @@ data-et-multi-view="{&quot;schema&quot;:{&quot;content&quot;:{&quot;desktop&quot
 </li>
         
           <li class="md-nav__item">
-  <a href="#reset-root-logger" class="md-nav__link">
+  <a href="#reset-all-loggers-to-initial-configuration" class="md-nav__link">
     <span class="md-ellipsis">
-      Reset Root Logger
+      Reset All Loggers to Initial Configuration
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#reset-specific-logger" class="md-nav__link">
+    <span class="md-ellipsis">
+      Reset Specific Logger
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#using-component-shortcuts" class="md-nav__link">
+    <span class="md-ellipsis">
+      Using Component Shortcuts
     </span>
   </a>
   
@@ -20075,6 +20108,21 @@ data-et-multi-view="{&quot;schema&quot;:{&quot;content&quot;:{&quot;desktop&quot
     </span>
   </a>
   
+    <nav class="md-nav" aria-label="Arguments">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#built-in-component-shortcuts" class="md-nav__link">
+    <span class="md-ellipsis">
+      Built-in Component Shortcuts
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
 </li>
       
         <li class="md-nav__item">
@@ -20160,9 +20208,27 @@ data-et-multi-view="{&quot;schema&quot;:{&quot;content&quot;:{&quot;desktop&quot
 </li>
         
           <li class="md-nav__item">
-  <a href="#reset-root-logger" class="md-nav__link">
+  <a href="#reset-all-loggers-to-initial-configuration" class="md-nav__link">
     <span class="md-ellipsis">
-      Reset Root Logger
+      Reset All Loggers to Initial Configuration
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#reset-specific-logger" class="md-nav__link">
+    <span class="md-ellipsis">
+      Reset Specific Logger
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#using-component-shortcuts" class="md-nav__link">
+    <span class="md-ellipsis">
+      Using Component Shortcuts
     </span>
   </a>
   
@@ -20339,13 +20405,17 @@ data-et-multi-view="{&quot;schema&quot;:{&quot;content&quot;:{&quot;desktop&quot
 <p>Changes the logging level for a class or package at runtime.</p>
 <hr>
 <h2 id="synopsis">Synopsis<a class="headerlink" href="#synopsis" title="Permanent link">¶</a></h2>
-<div class="highlight"><pre><span></span><code>nodetool<span class="w"> </span><span class="o">[</span>connection_options<span class="o">]</span><span class="w"> </span>setlogginglevel<span class="w"> </span>&lt;class&gt;<span class="w"> </span>&lt;level&gt;
+<div class="highlight"><pre><span></span><code>nodetool<span class="w"> </span><span class="o">[</span>connection_options<span class="o">]</span><span class="w"> </span>setlogginglevel<span class="w"> </span><span class="o">[</span>&lt;class<span class="p">|</span>component&gt;<span class="o">]</span><span class="w"> </span><span class="o">[</span>&lt;level&gt;<span class="o">]</span>
 </code></pre></div>
 <h2 id="description">Description<a class="headerlink" href="#description" title="Permanent link">¶</a></h2>
-<p><code>nodetool setlogginglevel</code> dynamically changes the logging level for a specific Java class or package without restarting Cassandra. This is useful for debugging issues in production.</p>
+<p><code>nodetool setlogginglevel</code> dynamically changes the logging level for a specific Java class, package, or built-in component without restarting Cassandra. This is useful for debugging issues in production.</p>
 <div class="admonition warning">
 <p class="admonition-title">Non-Persistent Setting</p>
 <p>This setting is applied at runtime only and does not persist across node restarts. After a restart, the logging levels revert to the configuration in <code>logback.xml</code>.</p>
+</div>
+<div class="admonition info">
+<p class="admonition-title">Reset All Loggers</p>
+<p>Calling <code>nodetool setlogginglevel</code> with <strong>no arguments</strong> resets all logging levels to the initial configuration from <code>logback.xml</code>.</p>
 </div>
 <hr>
 <h2 id="arguments">Arguments<a class="headerlink" href="#arguments" title="Permanent link">¶</a></h2>
@@ -20359,11 +20429,54 @@ data-et-multi-view="{&quot;schema&quot;:{&quot;content&quot;:{&quot;desktop&quot
 <tbody>
 <tr>
 <td><code>class</code></td>
-<td>Fully qualified class name or package (empty for root logger)</td>
+<td>Fully qualified class name, package, or built-in component name. If omitted with level, resets all loggers</td>
 </tr>
 <tr>
 <td><code>level</code></td>
-<td>Log level: TRACE, DEBUG, INFO, WARN, ERROR, OFF</td>
+<td>Log level: TRACE, DEBUG, INFO, WARN, ERROR, OFF. If omitted, resets the specified logger</td>
+</tr>
+</tbody>
+</table>
+<h3 id="built-in-component-shortcuts">Built-in Component Shortcuts<a class="headerlink" href="#built-in-component-shortcuts" title="Permanent link">¶</a></h3>
+<p>The command supports component shortcuts that map to predefined logger sets:</p>
+<table>
+<thead>
+<tr>
+<th>Component</th>
+<th>Description</th>
+<th>Mapped Loggers</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>bootstrap</code></td>
+<td>Bootstrap operations</td>
+<td>Bootstrap-related loggers</td>
+</tr>
+<tr>
+<td><code>compaction</code></td>
+<td>Compaction operations</td>
+<td><code>org.apache.cassandra.db.compaction</code></td>
+</tr>
+<tr>
+<td><code>repair</code></td>
+<td>Repair operations</td>
+<td><code>org.apache.cassandra.repair</code></td>
+</tr>
+<tr>
+<td><code>streaming</code></td>
+<td>Streaming operations</td>
+<td><code>org.apache.cassandra.streaming</code></td>
+</tr>
+<tr>
+<td><code>cql</code></td>
+<td>CQL query handling</td>
+<td>CQL transport loggers</td>
+</tr>
+<tr>
+<td><code>ring</code></td>
+<td>Ring/token management</td>
+<td>Ring-related loggers</td>
 </tr>
 </tbody>
 </table>
@@ -20426,8 +20539,23 @@ data-et-multi-view="{&quot;schema&quot;:{&quot;content&quot;:{&quot;desktop&quot
 <h3 id="reset-to-default-info">Reset to Default (INFO)<a class="headerlink" href="#reset-to-default-info" title="Permanent link">¶</a></h3>
 <div class="highlight"><pre><span></span><code>nodetool<span class="w"> </span>setlogginglevel<span class="w"> </span>org.apache.cassandra.db.compaction<span class="w"> </span>INFO
 </code></pre></div>
-<h3 id="reset-root-logger">Reset Root Logger<a class="headerlink" href="#reset-root-logger" title="Permanent link">¶</a></h3>
-<div class="highlight"><pre><span></span><code>nodetool<span class="w"> </span>setlogginglevel<span class="w"> </span><span class="s2">""</span><span class="w"> </span>INFO
+<h3 id="reset-all-loggers-to-initial-configuration">Reset All Loggers to Initial Configuration<a class="headerlink" href="#reset-all-loggers-to-initial-configuration" title="Permanent link">¶</a></h3>
+<div class="highlight"><pre><span></span><code><span class="c1"># No arguments resets all loggers</span>
+nodetool<span class="w"> </span>setlogginglevel
+</code></pre></div>
+<h3 id="reset-specific-logger">Reset Specific Logger<a class="headerlink" href="#reset-specific-logger" title="Permanent link">¶</a></h3>
+<div class="highlight"><pre><span></span><code><span class="c1"># Omit level to reset a specific logger</span>
+nodetool<span class="w"> </span>setlogginglevel<span class="w"> </span>org.apache.cassandra.db.compaction
+</code></pre></div>
+<h3 id="using-component-shortcuts">Using Component Shortcuts<a class="headerlink" href="#using-component-shortcuts" title="Permanent link">¶</a></h3>
+<div class="highlight"><pre><span></span><code><span class="c1"># Enable DEBUG for compaction using component shortcut</span>
+nodetool<span class="w"> </span>setlogginglevel<span class="w"> </span>compaction<span class="w"> </span>DEBUG
+
+<span class="c1"># Enable DEBUG for repair</span>
+nodetool<span class="w"> </span>setlogginglevel<span class="w"> </span>repair<span class="w"> </span>DEBUG
+
+<span class="c1"># Enable DEBUG for streaming</span>
+nodetool<span class="w"> </span>setlogginglevel<span class="w"> </span>streaming<span class="w"> </span>DEBUG
 </code></pre></div>
 <hr>
 <h2 id="common-debug-targets">Common Debug Targets<a class="headerlink" href="#common-debug-targets" title="Permanent link">¶</a></h2>

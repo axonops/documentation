@@ -20154,8 +20154,13 @@ data-et-multi-view="{&quot;schema&quot;:{&quot;content&quot;:{&quot;desktop&quot
 <span class="c1"># Options:</span>
 <span class="c1"># - AllowAllNetworkAuthorizer: No restrictions (default)</span>
 <span class="c1"># - CassandraNetworkAuthorizer: Datacenter-based restrictions</span>
-<span class="nt">network_authorizer</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">CassandraNetworkAuthorizer</span>
+<span class="nt">network_authorizer</span><span class="p">:</span>
+<span class="w">  </span><span class="nt">class_name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">CassandraNetworkAuthorizer</span>
 </code></pre></div>
+<div class="admonition note">
+<p class="admonition-title">Configuration Format</p>
+<p>In Cassandra 4.0+, <code>network_authorizer</code> uses a <code>ParameterizedClass</code> format with <code>class_name</code> and optional <code>parameters</code> block, not a simple string value.</p>
+</div>
 <p><strong>Requirements:</strong></p>
 <ul>
 <li><code>authenticator</code> must be set to <code>PasswordAuthenticator</code></li>
@@ -20195,20 +20200,23 @@ data-et-multi-view="{&quot;schema&quot;:{&quot;content&quot;:{&quot;desktop&quot
 <span class="c1"># Options:</span>
 <span class="c1"># - AllowAllCIDRAuthorizer: No restrictions (default)</span>
 <span class="c1"># - CassandraCIDRAuthorizer: CIDR-based restrictions</span>
-<span class="nt">cidr_authorizer</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">CassandraCIDRAuthorizer</span>
-
-<span class="c1"># Enable CIDR checks for superusers (default: false)</span>
-<span class="nt">cidr_checks_for_superusers</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">false</span>
-
-<span class="c1"># Authorizer mode:</span>
-<span class="c1"># - MONITOR: Log violations without enforcement</span>
-<span class="c1"># - ENFORCE: Reject unauthorized access</span>
-<span class="nt">cidr_authorizer_mode</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">MONITOR</span>
-
-<span class="c1"># Cache settings</span>
-<span class="nt">cidr_groups_cache_refresh_interval</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">5</span>
-<span class="nt">ip_cache_max_size</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">100</span>
+<span class="nt">cidr_authorizer</span><span class="p">:</span>
+<span class="w">  </span><span class="nt">class_name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">CassandraCIDRAuthorizer</span>
+<span class="w">  </span><span class="nt">parameters</span><span class="p">:</span>
+<span class="w">    </span><span class="c1"># Enable CIDR checks for superusers (default: false)</span>
+<span class="w">    </span><span class="nt">cidr_checks_for_superusers</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">false</span>
+<span class="w">    </span><span class="c1"># Authorizer mode:</span>
+<span class="w">    </span><span class="c1"># - MONITOR: Log violations without enforcement</span>
+<span class="w">    </span><span class="c1"># - ENFORCE: Reject unauthorized access</span>
+<span class="w">    </span><span class="nt">cidr_authorizer_mode</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">MONITOR</span>
+<span class="w">    </span><span class="c1"># Cache settings</span>
+<span class="w">    </span><span class="nt">cidr_groups_cache_refresh_interval</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">5</span>
+<span class="w">    </span><span class="nt">ip_cache_max_size</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">100</span>
 </code></pre></div>
+<div class="admonition note">
+<p class="admonition-title">Configuration Format</p>
+<p>In Cassandra 5.0+, CIDR authorizer settings (<code>cidr_checks_for_superusers</code>, <code>cidr_authorizer_mode</code>, <code>cidr_groups_cache_refresh_interval</code>, <code>ip_cache_max_size</code>) are placed under <code>cidr_authorizer.parameters</code>, not as top-level keys.</p>
+</div>
 <p><strong>Requirements:</strong></p>
 <ul>
 <li><code>authenticator</code> must be set to <code>PasswordAuthenticator</code></li>

@@ -20172,7 +20172,7 @@ data-et-multi-view="{&quot;schema&quot;:{&quot;content&quot;:{&quot;desktop&quot
 </tr>
 <tr>
 <td><code>cidr_ranges</code></td>
-<td>Comma-separated list of CIDR ranges</td>
+<td>Space-separated list of CIDR ranges (each CIDR as separate argument)</td>
 </tr>
 </tbody>
 </table>
@@ -20218,42 +20218,42 @@ data-et-multi-view="{&quot;schema&quot;:{&quot;content&quot;:{&quot;desktop&quot
 <hr>
 <h2 id="examples">Examples<a class="headerlink" href="#examples" title="Permanent link">¶</a></h2>
 <h3 id="create-new-cidr-group">Create New CIDR Group<a class="headerlink" href="#create-new-cidr-group" title="Permanent link">¶</a></h3>
-<div class="highlight"><pre><span></span><code>nodetool<span class="w"> </span>updatecidrgroup<span class="w"> </span>office_network<span class="w"> </span><span class="s1">'192.168.1.0/24,192.168.2.0/24'</span>
+<div class="highlight"><pre><span></span><code>nodetool<span class="w"> </span>updatecidrgroup<span class="w"> </span>office_network<span class="w"> </span><span class="m">192</span>.168.1.0/24<span class="w"> </span><span class="m">192</span>.168.2.0/24
 </code></pre></div>
 <h3 id="add-private-network-ranges">Add Private Network Ranges<a class="headerlink" href="#add-private-network-ranges" title="Permanent link">¶</a></h3>
-<div class="highlight"><pre><span></span><code>nodetool<span class="w"> </span>updatecidrgroup<span class="w"> </span>internal_network<span class="w"> </span><span class="s1">'10.0.0.0/8,172.16.0.0/12,192.168.0.0/16'</span>
+<div class="highlight"><pre><span></span><code>nodetool<span class="w"> </span>updatecidrgroup<span class="w"> </span>internal_network<span class="w"> </span><span class="m">10</span>.0.0.0/8<span class="w"> </span><span class="m">172</span>.16.0.0/12<span class="w"> </span><span class="m">192</span>.168.0.0/16
 </code></pre></div>
 <h3 id="create-datacenter-specific-group">Create Datacenter-Specific Group<a class="headerlink" href="#create-datacenter-specific-group" title="Permanent link">¶</a></h3>
-<div class="highlight"><pre><span></span><code>nodetool<span class="w"> </span>updatecidrgroup<span class="w"> </span>dc_us_east<span class="w"> </span><span class="s1">'10.1.0.0/16,10.2.0.0/16'</span>
+<div class="highlight"><pre><span></span><code>nodetool<span class="w"> </span>updatecidrgroup<span class="w"> </span>dc_us_east<span class="w"> </span><span class="m">10</span>.1.0.0/16<span class="w"> </span><span class="m">10</span>.2.0.0/16
 </code></pre></div>
 <h3 id="single-ip-address">Single IP Address<a class="headerlink" href="#single-ip-address" title="Permanent link">¶</a></h3>
-<div class="highlight"><pre><span></span><code>nodetool<span class="w"> </span>updatecidrgroup<span class="w"> </span>admin_workstation<span class="w"> </span><span class="s1">'10.0.0.50/32'</span>
+<div class="highlight"><pre><span></span><code>nodetool<span class="w"> </span>updatecidrgroup<span class="w"> </span>admin_workstation<span class="w"> </span><span class="m">10</span>.0.0.50/32
 </code></pre></div>
 <h3 id="ipv6-ranges">IPv6 Ranges<a class="headerlink" href="#ipv6-ranges" title="Permanent link">¶</a></h3>
-<div class="highlight"><pre><span></span><code>nodetool<span class="w"> </span>updatecidrgroup<span class="w"> </span>ipv6_network<span class="w"> </span><span class="s1">'2001:db8::/32,fd00::/8'</span>
+<div class="highlight"><pre><span></span><code>nodetool<span class="w"> </span>updatecidrgroup<span class="w"> </span>ipv6_network<span class="w"> </span><span class="m">2001</span>:db8::/32<span class="w"> </span>fd00::/8
 </code></pre></div>
 <h3 id="update-existing-group">Update Existing Group<a class="headerlink" href="#update-existing-group" title="Permanent link">¶</a></h3>
 <div class="highlight"><pre><span></span><code><span class="c1"># Add new range by redefining the group</span>
-nodetool<span class="w"> </span>updatecidrgroup<span class="w"> </span>office_network<span class="w"> </span><span class="s1">'192.168.1.0/24,192.168.2.0/24,192.168.3.0/24'</span>
+nodetool<span class="w"> </span>updatecidrgroup<span class="w"> </span>office_network<span class="w"> </span><span class="m">192</span>.168.1.0/24<span class="w"> </span><span class="m">192</span>.168.2.0/24<span class="w"> </span><span class="m">192</span>.168.3.0/24
 </code></pre></div>
 <hr>
 <h2 id="when-to-use">When to Use<a class="headerlink" href="#when-to-use" title="Permanent link">¶</a></h2>
 <h3 id="initial-setup">Initial Setup<a class="headerlink" href="#initial-setup" title="Permanent link">¶</a></h3>
 <div class="highlight"><pre><span></span><code><span class="c1"># Define network groups during cluster setup</span>
-nodetool<span class="w"> </span>updatecidrgroup<span class="w"> </span>app_servers<span class="w"> </span><span class="s1">'10.100.0.0/16'</span>
-nodetool<span class="w"> </span>updatecidrgroup<span class="w"> </span>monitoring<span class="w"> </span><span class="s1">'10.200.0.0/24'</span>
-nodetool<span class="w"> </span>updatecidrgroup<span class="w"> </span>admin<span class="w"> </span><span class="s1">'10.0.0.0/24'</span>
+nodetool<span class="w"> </span>updatecidrgroup<span class="w"> </span>app_servers<span class="w"> </span><span class="m">10</span>.100.0.0/16
+nodetool<span class="w"> </span>updatecidrgroup<span class="w"> </span>monitoring<span class="w"> </span><span class="m">10</span>.200.0.0/24
+nodetool<span class="w"> </span>updatecidrgroup<span class="w"> </span>admin<span class="w"> </span><span class="m">10</span>.0.0.0/24
 </code></pre></div>
 <h3 id="network-expansion">Network Expansion<a class="headerlink" href="#network-expansion" title="Permanent link">¶</a></h3>
 <div class="highlight"><pre><span></span><code><span class="c1"># Add new subnet to existing group</span>
 nodetool<span class="w"> </span>listcidrgroups<span class="w">  </span><span class="c1"># Check current ranges</span>
-nodetool<span class="w"> </span>updatecidrgroup<span class="w"> </span>app_servers<span class="w"> </span><span class="s1">'10.100.0.0/16,10.101.0.0/16'</span>
+nodetool<span class="w"> </span>updatecidrgroup<span class="w"> </span>app_servers<span class="w"> </span><span class="m">10</span>.100.0.0/16<span class="w"> </span><span class="m">10</span>.101.0.0/16
 </code></pre></div>
 <h3 id="security-segmentation">Security Segmentation<a class="headerlink" href="#security-segmentation" title="Permanent link">¶</a></h3>
 <div class="highlight"><pre><span></span><code><span class="c1"># Create groups for different access levels</span>
-nodetool<span class="w"> </span>updatecidrgroup<span class="w"> </span>readonly_apps<span class="w"> </span><span class="s1">'10.50.0.0/16'</span>
-nodetool<span class="w"> </span>updatecidrgroup<span class="w"> </span>write_apps<span class="w"> </span><span class="s1">'10.60.0.0/16'</span>
-nodetool<span class="w"> </span>updatecidrgroup<span class="w"> </span>admin_access<span class="w"> </span><span class="s1">'10.0.1.0/24'</span>
+nodetool<span class="w"> </span>updatecidrgroup<span class="w"> </span>readonly_apps<span class="w"> </span><span class="m">10</span>.50.0.0/16
+nodetool<span class="w"> </span>updatecidrgroup<span class="w"> </span>write_apps<span class="w"> </span><span class="m">10</span>.60.0.0/16
+nodetool<span class="w"> </span>updatecidrgroup<span class="w"> </span>admin_access<span class="w"> </span><span class="m">10</span>.0.1.0/24
 </code></pre></div>
 <hr>
 <h2 id="best-practices">Best Practices<a class="headerlink" href="#best-practices" title="Permanent link">¶</a></h2>
@@ -20286,10 +20286,10 @@ nodetool<span class="w"> </span>updatecidrgroup<span class="w"> </span>admin_acc
 <p class="admonition-title">Broad Ranges</p>
 <p>Avoid overly broad CIDR ranges that could allow unintended access:
 </p><div class="highlight"><pre><span></span><code><span class="c1"># Too broad - avoid</span>
-nodetool<span class="w"> </span>updatecidrgroup<span class="w"> </span>all_access<span class="w"> </span><span class="s1">'0.0.0.0/0'</span>
+nodetool<span class="w"> </span>updatecidrgroup<span class="w"> </span>all_access<span class="w"> </span><span class="m">0</span>.0.0.0/0
 
 <span class="c1"># Better - specific ranges</span>
-nodetool<span class="w"> </span>updatecidrgroup<span class="w"> </span>app_access<span class="w"> </span><span class="s1">'10.100.0.0/16'</span>
+nodetool<span class="w"> </span>updatecidrgroup<span class="w"> </span>app_access<span class="w"> </span><span class="m">10</span>.100.0.0/16
 </code></pre></div>
 </div>
 <hr>

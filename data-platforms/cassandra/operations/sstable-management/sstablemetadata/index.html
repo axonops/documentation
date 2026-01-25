@@ -12128,9 +12128,9 @@ data-et-multi-view="{&quot;schema&quot;:{&quot;content&quot;:{&quot;desktop&quot
 </li>
         
           <li class="md-nav__item">
-  <a href="#incorrect-timestamps" class="md-nav__link">
+  <a href="#timestamp-display-options" class="md-nav__link">
     <span class="md-ellipsis">
-      Incorrect Timestamps
+      Timestamp Display Options
     </span>
   </a>
   
@@ -20403,9 +20403,9 @@ data-et-multi-view="{&quot;schema&quot;:{&quot;content&quot;:{&quot;desktop&quot
 </li>
         
           <li class="md-nav__item">
-  <a href="#incorrect-timestamps" class="md-nav__link">
+  <a href="#timestamp-display-options" class="md-nav__link">
     <span class="md-ellipsis">
-      Incorrect Timestamps
+      Timestamp Display Options
     </span>
   </a>
   
@@ -20505,12 +20505,16 @@ data-et-multi-view="{&quot;schema&quot;:{&quot;content&quot;:{&quot;desktop&quot
 <td>Scan data file in addition to metadata</td>
 </tr>
 <tr>
-<td><code>-t, --timestamp &lt;format&gt;</code></td>
-<td>Timestamp format for dates</td>
+<td><code>-t, --timestamp_unit &lt;unit&gt;</code></td>
+<td>Timestamp unit for display (MICROSECONDS, MILLISECONDS, SECONDS, etc.)</td>
 </tr>
 <tr>
-<td><code>-u, --unix-timestamp</code></td>
-<td>Show timestamps as Unix epoch</td>
+<td><code>-u, --unicode</code></td>
+<td>Use unicode characters in output</td>
+</tr>
+<tr>
+<td><code>-h, --help</code></td>
+<td>Display help information</td>
 </tr>
 </tbody>
 </table>
@@ -20972,12 +20976,11 @@ sstableverify<span class="w"> </span>keyspace<span class="w"> </span>table
 <div class="highlight"><pre><span></span><code><span class="c1"># Run as cassandra user</span>
 sudo<span class="w"> </span>-u<span class="w"> </span>cassandra<span class="w"> </span>sstablemetadata<span class="w"> </span>/var/lib/cassandra/data/.../nb-1-big-Data.db
 </code></pre></div>
-<h3 id="incorrect-timestamps">Incorrect Timestamps<a class="headerlink" href="#incorrect-timestamps" title="Permanent link">¶</a></h3>
-<div class="highlight"><pre><span></span><code><span class="c1"># Specify timestamp format</span>
-sstablemetadata<span class="w"> </span>-t<span class="w"> </span><span class="s2">"yyyy-MM-dd'T'HH:mm:ss"</span><span class="w"> </span>/path/to/sstable-Data.db
-
-<span class="c1"># Or use Unix timestamps</span>
-sstablemetadata<span class="w"> </span>-u<span class="w"> </span>/path/to/sstable-Data.db
+<h3 id="timestamp-display-options">Timestamp Display Options<a class="headerlink" href="#timestamp-display-options" title="Permanent link">¶</a></h3>
+<div class="highlight"><pre><span></span><code><span class="c1"># Change timestamp unit display</span>
+sstablemetadata<span class="w"> </span>-t<span class="w"> </span>SECONDS<span class="w"> </span>/path/to/sstable-Data.db
+sstablemetadata<span class="w"> </span>-t<span class="w"> </span>MILLISECONDS<span class="w"> </span>/path/to/sstable-Data.db
+sstablemetadata<span class="w"> </span>--timestamp_unit<span class="w"> </span>MICROSECONDS<span class="w"> </span>/path/to/sstable-Data.db
 </code></pre></div>
 <hr>
 <h2 id="best-practices">Best Practices<a class="headerlink" href="#best-practices" title="Permanent link">¶</a></h2>

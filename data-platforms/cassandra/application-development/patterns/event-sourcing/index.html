@@ -20428,12 +20428,18 @@ data-et-multi-view="{&quot;schema&quot;:{&quot;content&quot;:{&quot;desktop&quot
 </ul>
 <h3 id="sequence-number-management">Sequence Number Management<a class="headerlink" href="#sequence-number-management" title="Permanent link">¶</a></h3>
 <p>The sequence number serves dual purposes: ordering events for replay and detecting concurrent modifications. Two approaches exist:</p>
-<p><strong>Application-managed sequences</strong>: The application tracks the current sequence number and includes it in writes. Cassandra's lightweight transactions (LWT) enforce uniqueness.</p>
-<div class="highlight"><pre><span></span><code><span class="kd">public</span><span class="w"> </span><span class="kt">void</span><span class="w"> </span><span class="nf">appendEvent</span><span class="p">(</span><span class="n">AggregateId</span><span class="w"> </span><span class="n">id</span><span class="p">,</span><span class="w"> </span><span class="n">Event</span><span class="w"> </span><span class="n">event</span><span class="p">,</span><span class="w"> </span><span class="kt">long</span><span class="w"> </span><span class="n">expectedSequence</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<p><strong>Application-managed sequences</strong>: The application tracks the current sequence number and includes it in writes. Cassandra's lightweight transactions (LWT) with an <code>IF NOT EXISTS</code> clause enforce uniqueness.</p>
+<div class="highlight"><pre><span></span><code><span class="c1">// Prepared statement with LWT condition</span>
+<span class="kd">private</span><span class="w"> </span><span class="kd">final</span><span class="w"> </span><span class="n">PreparedStatement</span><span class="w"> </span><span class="n">insertEventIfNotExists</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">session</span><span class="p">.</span><span class="na">prepare</span><span class="p">(</span>
+<span class="w">    </span><span class="s">"INSERT INTO events (aggregate_type, aggregate_id, sequence_num, event_type, event_data, metadata, created_at) "</span><span class="w"> </span><span class="o">+</span>
+<span class="w">    </span><span class="s">"VALUES (?, ?, ?, ?, ?, ?, ?) IF NOT EXISTS"</span>
+<span class="p">);</span>
+
+<span class="kd">public</span><span class="w"> </span><span class="kt">void</span><span class="w"> </span><span class="nf">appendEvent</span><span class="p">(</span><span class="n">AggregateId</span><span class="w"> </span><span class="n">id</span><span class="p">,</span><span class="w"> </span><span class="n">Event</span><span class="w"> </span><span class="n">event</span><span class="p">,</span><span class="w"> </span><span class="kt">long</span><span class="w"> </span><span class="n">expectedSequence</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
 <span class="w">    </span><span class="kt">long</span><span class="w"> </span><span class="n">newSequence</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">expectedSequence</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="mi">1</span><span class="p">;</span>
 
 <span class="w">    </span><span class="n">ResultSet</span><span class="w"> </span><span class="n">result</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">session</span><span class="p">.</span><span class="na">execute</span><span class="p">(</span>
-<span class="w">        </span><span class="n">insertEvent</span><span class="p">.</span><span class="na">bind</span><span class="p">(</span><span class="n">id</span><span class="p">.</span><span class="na">getType</span><span class="p">(),</span><span class="w"> </span><span class="n">id</span><span class="p">.</span><span class="na">getValue</span><span class="p">(),</span><span class="w"> </span><span class="n">newSequence</span><span class="p">,</span>
+<span class="w">        </span><span class="n">insertEventIfNotExists</span><span class="p">.</span><span class="na">bind</span><span class="p">(</span><span class="n">id</span><span class="p">.</span><span class="na">getType</span><span class="p">(),</span><span class="w"> </span><span class="n">id</span><span class="p">.</span><span class="na">getValue</span><span class="p">(),</span><span class="w"> </span><span class="n">newSequence</span><span class="p">,</span>
 <span class="w">                         </span><span class="n">event</span><span class="p">.</span><span class="na">getType</span><span class="p">(),</span><span class="w"> </span><span class="n">serialize</span><span class="p">(</span><span class="n">event</span><span class="p">),</span><span class="w"> </span><span class="n">event</span><span class="p">.</span><span class="na">getMetadata</span><span class="p">(),</span><span class="w"> </span><span class="n">Instant</span><span class="p">.</span><span class="na">now</span><span class="p">())</span>
 <span class="w">            </span><span class="p">.</span><span class="na">setSerialConsistencyLevel</span><span class="p">(</span><span class="n">ConsistencyLevel</span><span class="p">.</span><span class="na">LOCAL_SERIAL</span><span class="p">)</span>
 <span class="w">    </span><span class="p">);</span>
@@ -20444,8 +20450,8 @@ data-et-multi-view="{&quot;schema&quot;:{&quot;content&quot;:{&quot;desktop&quot
 <span class="w">    </span><span class="p">}</span>
 <span class="p">}</span>
 </code></pre></div>
-<p>The LWT ensures that if two processes attempt to write sequence number N simultaneously, exactly one succeeds. The other receives a conflict and must retry with fresh state.</p>
-<p><strong>TimeUUID sequences</strong>: Using <code>TIMEUUID</code> as the clustering column provides automatic ordering without explicit sequence management.</p>
+<p>The LWT <code>IF NOT EXISTS</code> clause ensures that if two processes attempt to write sequence number N simultaneously, exactly one succeeds. The other receives a conflict (<code>wasApplied()</code> returns false) and must retry with fresh state.</p>
+<p><strong>TimeUUID sequences</strong>: Using <code>TIMEUUID</code> as the clustering column provides approximate time-based ordering without explicit sequence management. Ordering is based on the timestamp component of the TIMEUUID; clock skew between nodes or clients may affect strict ordering unless TIMEUUID generation guarantees monotonicity per aggregate.</p>
 <div class="highlight"><pre><span></span><code><span class="k">PRIMARY</span><span class="w"> </span><span class="k">KEY</span><span class="w"> </span><span class="p">((</span><span class="n">aggregate_type</span><span class="p">,</span><span class="w"> </span><span class="n">aggregate_id</span><span class="p">),</span><span class="w"> </span><span class="n">event_id</span><span class="p">)</span>
 <span class="c1">-- where event_id is TIMEUUID</span>
 </code></pre></div>
@@ -20638,7 +20644,7 @@ data-et-multi-view="{&quot;schema&quot;:{&quot;content&quot;:{&quot;desktop&quot
 <p>Projection processors can use these IDs to handle events in causal order even when processing in parallel.</p>
 <h3 id="strong-consistency-when-required">Strong Consistency When Required<a class="headerlink" href="#strong-consistency-when-required" title="Permanent link">¶</a></h3>
 <p>Some scenarios require reading immediately after writing. Options include:</p>
-<p><strong>LOCAL_QUORUM reads</strong>: Accept cross-DC latency for strong reads.</p>
+<p><strong>LOCAL_QUORUM reads</strong>: Ensure same-DC read-your-writes consistency (does not provide cross-DC guarantees).</p>
 <p><strong>Read-your-writes at application level</strong>: Cache recently written events, merge with reads.</p>
 <p><strong>Synchronous projection updates</strong>: Update critical projections in the same request.</p>
 <hr>

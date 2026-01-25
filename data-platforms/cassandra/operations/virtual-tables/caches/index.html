@@ -13149,6 +13149,15 @@ data-et-multi-view="{&quot;schema&quot;:{&quot;content&quot;:{&quot;desktop&quot
 </li>
       
         <li class="md-nav__item">
+  <a href="#cache-names" class="md-nav__link">
+    <span class="md-ellipsis">
+      Cache Names
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#cache-types" class="md-nav__link">
     <span class="md-ellipsis">
       Cache Types
@@ -13159,36 +13168,36 @@ data-et-multi-view="{&quot;schema&quot;:{&quot;content&quot;:{&quot;desktop&quot
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
-  <a href="#keycache" class="md-nav__link">
+  <a href="#key-cache-name-keys" class="md-nav__link">
     <span class="md-ellipsis">
-      KeyCache
+      Key Cache (name: keys)
     </span>
   </a>
   
 </li>
         
           <li class="md-nav__item">
-  <a href="#rowcache" class="md-nav__link">
+  <a href="#row-cache-name-rows" class="md-nav__link">
     <span class="md-ellipsis">
-      RowCache
+      Row Cache (name: rows)
     </span>
   </a>
   
 </li>
         
           <li class="md-nav__item">
-  <a href="#countercache" class="md-nav__link">
+  <a href="#counter-cache-name-counters" class="md-nav__link">
     <span class="md-ellipsis">
-      CounterCache
+      Counter Cache (name: counters)
     </span>
   </a>
   
 </li>
         
           <li class="md-nav__item">
-  <a href="#chunkcache" class="md-nav__link">
+  <a href="#chunk-cache-name-chunks" class="md-nav__link">
     <span class="md-ellipsis">
-      ChunkCache
+      Chunk Cache (name: chunks)
     </span>
   </a>
   
@@ -20043,6 +20052,15 @@ data-et-multi-view="{&quot;schema&quot;:{&quot;content&quot;:{&quot;desktop&quot
 </li>
       
         <li class="md-nav__item">
+  <a href="#cache-names" class="md-nav__link">
+    <span class="md-ellipsis">
+      Cache Names
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#cache-types" class="md-nav__link">
     <span class="md-ellipsis">
       Cache Types
@@ -20053,36 +20071,36 @@ data-et-multi-view="{&quot;schema&quot;:{&quot;content&quot;:{&quot;desktop&quot
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
-  <a href="#keycache" class="md-nav__link">
+  <a href="#key-cache-name-keys" class="md-nav__link">
     <span class="md-ellipsis">
-      KeyCache
+      Key Cache (name: keys)
     </span>
   </a>
   
 </li>
         
           <li class="md-nav__item">
-  <a href="#rowcache" class="md-nav__link">
+  <a href="#row-cache-name-rows" class="md-nav__link">
     <span class="md-ellipsis">
-      RowCache
+      Row Cache (name: rows)
     </span>
   </a>
   
 </li>
         
           <li class="md-nav__item">
-  <a href="#countercache" class="md-nav__link">
+  <a href="#counter-cache-name-counters" class="md-nav__link">
     <span class="md-ellipsis">
-      CounterCache
+      Counter Cache (name: counters)
     </span>
   </a>
   
 </li>
         
           <li class="md-nav__item">
-  <a href="#chunkcache" class="md-nav__link">
+  <a href="#chunk-cache-name-chunks" class="md-nav__link">
     <span class="md-ellipsis">
-      ChunkCache
+      Chunk Cache (name: chunks)
     </span>
   </a>
   
@@ -20364,8 +20382,46 @@ data-et-multi-view="{&quot;schema&quot;:{&quot;content&quot;:{&quot;desktop&quot
 </tbody>
 </table>
 <hr>
+<h2 id="cache-names">Cache Names<a class="headerlink" href="#cache-names" title="Permanent link">¶</a></h2>
+<p>The <code>caches</code> table uses the following internal names (lowercase):</p>
+<table>
+<thead>
+<tr>
+<th>Display Name</th>
+<th><code>name</code> Value</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Key Cache</td>
+<td><code>keys</code></td>
+<td>Partition index locations</td>
+</tr>
+<tr>
+<td>Row Cache</td>
+<td><code>rows</code></td>
+<td>Entire row data</td>
+</tr>
+<tr>
+<td>Counter Cache</td>
+<td><code>counters</code></td>
+<td>Counter values</td>
+</tr>
+<tr>
+<td>Chunk Cache</td>
+<td><code>chunks</code></td>
+<td>Decompressed SSTable chunks</td>
+</tr>
+</tbody>
+</table>
+<div class="admonition note">
+<p class="admonition-title">Querying by Cache Name</p>
+<p>Use lowercase names in queries: <code>WHERE name = 'keys'</code> (not <code>'KeyCache'</code>).</p>
+</div>
+<hr>
 <h2 id="cache-types">Cache Types<a class="headerlink" href="#cache-types" title="Permanent link">¶</a></h2>
-<h3 id="keycache">KeyCache<a class="headerlink" href="#keycache" title="Permanent link">¶</a></h3>
+<h3 id="key-cache-name-keys">Key Cache (name: <code>keys</code>)<a class="headerlink" href="#key-cache-name-keys" title="Permanent link">¶</a></h3>
 <p>Caches partition index locations to avoid index file lookups.</p>
 <table>
 <thead>
@@ -20399,7 +20455,7 @@ data-et-multi-view="{&quot;schema&quot;:{&quot;content&quot;:{&quot;desktop&quot
 <span class="nt">key_cache_save_period</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">14400</span><span class="w">     </span><span class="c1"># Save interval (seconds)</span>
 <span class="nt">key_cache_keys_to_save</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">0</span><span class="w">        </span><span class="c1"># 0 = save all</span>
 </code></pre></div>
-<h3 id="rowcache">RowCache<a class="headerlink" href="#rowcache" title="Permanent link">¶</a></h3>
+<h3 id="row-cache-name-rows">Row Cache (name: <code>rows</code>)<a class="headerlink" href="#row-cache-name-rows" title="Permanent link">¶</a></h3>
 <p>Caches entire rows (off-heap). Disabled by default due to memory overhead.</p>
 <table>
 <thead>
@@ -20444,7 +20500,7 @@ data-et-multi-view="{&quot;schema&quot;:{&quot;content&quot;:{&quot;desktop&quot
 - Frequently-updated data
 - Memory-constrained nodes</p>
 </div>
-<h3 id="countercache">CounterCache<a class="headerlink" href="#countercache" title="Permanent link">¶</a></h3>
+<h3 id="counter-cache-name-counters">Counter Cache (name: <code>counters</code>)<a class="headerlink" href="#counter-cache-name-counters" title="Permanent link">¶</a></h3>
 <p>Caches counter values for faster counter reads.</p>
 <table>
 <thead>
@@ -20477,7 +20533,7 @@ data-et-multi-view="{&quot;schema&quot;:{&quot;content&quot;:{&quot;desktop&quot
 <span class="nt">counter_cache_size_in_mb</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">50</span>
 <span class="nt">counter_cache_save_period</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">7200</span>
 </code></pre></div>
-<h3 id="chunkcache">ChunkCache<a class="headerlink" href="#chunkcache" title="Permanent link">¶</a></h3>
+<h3 id="chunk-cache-name-chunks">Chunk Cache (name: <code>chunks</code>)<a class="headerlink" href="#chunk-cache-name-chunks" title="Permanent link">¶</a></h3>
 <p>Caches compressed SSTable chunks (Cassandra 4.0+).</p>
 <table>
 <thead>
@@ -20561,30 +20617,30 @@ data-et-multi-view="{&quot;schema&quot;:{&quot;content&quot;:{&quot;desktop&quot
 <div class="highlight"><pre><span></span><code><span class="c1">-- Key cache hit ratio degradation</span>
 <span class="k">SELECT</span><span class="w"> </span><span class="n">name</span><span class="p">,</span><span class="w"> </span><span class="n">hit_ratio</span>
 <span class="k">FROM</span><span class="w"> </span><span class="n">system_views</span><span class="p">.</span><span class="n">caches</span>
-<span class="k">WHERE</span><span class="w"> </span><span class="n">name</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s1">'KeyCache'</span><span class="w"> </span><span class="k">AND</span><span class="w"> </span><span class="n">hit_ratio</span><span class="w"> </span><span class="o">&lt;</span><span class="w"> </span><span class="mi">0</span><span class="p">.</span><span class="mi">80</span><span class="p">;</span>
+<span class="k">WHERE</span><span class="w"> </span><span class="n">name</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s1">'keys'</span><span class="w"> </span><span class="k">AND</span><span class="w"> </span><span class="n">hit_ratio</span><span class="w"> </span><span class="o">&lt;</span><span class="w"> </span><span class="mi">0</span><span class="p">.</span><span class="mi">80</span><span class="p">;</span>
 </code></pre></div>
 <p><strong>Thresholds:</strong></p>
 <table>
 <thead>
 <tr>
-<th>Cache</th>
+<th>Cache Name</th>
 <th>Warning</th>
 <th>Critical</th>
 </tr>
 </thead>
 <tbody>
 <tr>
-<td>KeyCache</td>
+<td><code>keys</code></td>
 <td>&lt; 0.85</td>
 <td>&lt; 0.70</td>
 </tr>
 <tr>
-<td>RowCache</td>
+<td><code>rows</code></td>
 <td>&lt; 0.90</td>
 <td>&lt; 0.80</td>
 </tr>
 <tr>
-<td>CounterCache</td>
+<td><code>counters</code></td>
 <td>&lt; 0.85</td>
 <td>&lt; 0.70</td>
 </tr>
@@ -20613,7 +20669,7 @@ data-et-multi-view="{&quot;schema&quot;:{&quot;content&quot;:{&quot;desktop&quot
 <p>Monitor after change:
 </p><div class="highlight"><pre><span></span><code><span class="k">SELECT</span><span class="w"> </span><span class="n">name</span><span class="p">,</span><span class="w"> </span><span class="n">hit_ratio</span><span class="p">,</span><span class="w"> </span><span class="n">entry_count</span>
 <span class="k">FROM</span><span class="w"> </span><span class="n">system_views</span><span class="p">.</span><span class="n">caches</span>
-<span class="k">WHERE</span><span class="w"> </span><span class="n">name</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s1">'KeyCache'</span><span class="p">;</span>
+<span class="k">WHERE</span><span class="w"> </span><span class="n">name</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s1">'keys'</span><span class="p">;</span>
 </code></pre></div>
 <h3 id="cache-thrashing">Cache Thrashing<a class="headerlink" href="#cache-thrashing" title="Permanent link">¶</a></h3>
 <p><strong>Symptoms:</strong>

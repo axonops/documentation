@@ -11969,18 +11969,9 @@ data-et-multi-view="{&quot;schema&quot;:{&quot;content&quot;:{&quot;desktop&quot
 </li>
         
           <li class="md-nav__item">
-  <a href="#find-obsolete-files" class="md-nav__link">
+  <a href="#perform-cleanup" class="md-nav__link">
     <span class="md-ellipsis">
-      Find Obsolete Files
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#list-snapshot-sstables" class="md-nav__link">
-    <span class="md-ellipsis">
-      List Snapshot SSTables
+      Perform Cleanup
     </span>
   </a>
   
@@ -12113,24 +12104,6 @@ data-et-multi-view="{&quot;schema&quot;:{&quot;content&quot;:{&quot;desktop&quot
 </li>
         
           <li class="md-nav__item">
-  <a href="#cleanup-verification" class="md-nav__link">
-    <span class="md-ellipsis">
-      Cleanup Verification
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#snapshot-verification" class="md-nav__link">
-    <span class="md-ellipsis">
-      Snapshot Verification
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
   <a href="#pre-tool-verification" class="md-nav__link">
     <span class="md-ellipsis">
       Pre-Tool Verification
@@ -12173,9 +12146,9 @@ data-et-multi-view="{&quot;schema&quot;:{&quot;content&quot;:{&quot;desktop&quot
 </li>
         
           <li class="md-nav__item">
-  <a href="#obsolete-files" class="md-nav__link">
+  <a href="#cleanup-mode" class="md-nav__link">
     <span class="md-ellipsis">
-      Obsolete Files
+      Cleanup Mode
     </span>
   </a>
   
@@ -20229,18 +20202,9 @@ data-et-multi-view="{&quot;schema&quot;:{&quot;content&quot;:{&quot;desktop&quot
 </li>
         
           <li class="md-nav__item">
-  <a href="#find-obsolete-files" class="md-nav__link">
+  <a href="#perform-cleanup" class="md-nav__link">
     <span class="md-ellipsis">
-      Find Obsolete Files
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#list-snapshot-sstables" class="md-nav__link">
-    <span class="md-ellipsis">
-      List Snapshot SSTables
+      Perform Cleanup
     </span>
   </a>
   
@@ -20373,24 +20337,6 @@ data-et-multi-view="{&quot;schema&quot;:{&quot;content&quot;:{&quot;desktop&quot
 </li>
         
           <li class="md-nav__item">
-  <a href="#cleanup-verification" class="md-nav__link">
-    <span class="md-ellipsis">
-      Cleanup Verification
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#snapshot-verification" class="md-nav__link">
-    <span class="md-ellipsis">
-      Snapshot Verification
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
   <a href="#pre-tool-verification" class="md-nav__link">
     <span class="md-ellipsis">
       Pre-Tool Verification
@@ -20433,9 +20379,9 @@ data-et-multi-view="{&quot;schema&quot;:{&quot;content&quot;:{&quot;desktop&quot
 </li>
         
           <li class="md-nav__item">
-  <a href="#obsolete-files" class="md-nav__link">
+  <a href="#cleanup-mode" class="md-nav__link">
     <span class="md-ellipsis">
-      Obsolete Files
+      Cleanup Mode
     </span>
   </a>
   
@@ -20553,7 +20499,7 @@ data-et-multi-view="{&quot;schema&quot;:{&quot;content&quot;:{&quot;desktop&quot
 </code></pre></div>
 <hr>
 <h2 id="description">Description<a class="headerlink" href="#description" title="Permanent link">¶</a></h2>
-<p><code>sstableutil</code> provides a comprehensive listing of all SSTable files associated with a table. It identifies not only active SSTables but also temporary files from in-progress operations and obsolete files awaiting cleanup.</p>
+<p><code>sstableutil</code> provides a listing of SSTable files associated with a table, including active (final) SSTables and temporary files from in-progress operations.</p>
 <p>This tool is useful for:</p>
 <ul>
 <li><strong>Identifying SSTable files</strong> before running other SSTable tools</li>
@@ -20597,7 +20543,7 @@ data-et-multi-view="{&quot;schema&quot;:{&quot;content&quot;:{&quot;desktop&quot
 <tbody>
 <tr>
 <td><code>-c, --cleanup</code></td>
-<td>Only list obsolete files (cleanup candidates)</td>
+<td><strong>Perform cleanup</strong> - removes unfinished transaction leftovers (destructive)</td>
 </tr>
 <tr>
 <td><code>-d, --debug</code></td>
@@ -20608,15 +20554,23 @@ data-et-multi-view="{&quot;schema&quot;:{&quot;content&quot;:{&quot;desktop&quot
 <td>Include transaction log files</td>
 </tr>
 <tr>
-<td><code>-s, --snapshot &lt;name&gt;</code></td>
-<td>List SSTables in a specific snapshot</td>
-</tr>
-<tr>
 <td><code>-t, --type &lt;type&gt;</code></td>
 <td>Filter by SSTable type: <code>tmp</code>, <code>final</code>, <code>all</code></td>
 </tr>
+<tr>
+<td><code>-v, --verbose</code></td>
+<td>Enable verbose output</td>
+</tr>
+<tr>
+<td><code>-h, --help</code></td>
+<td>Display help information</td>
+</tr>
 </tbody>
 </table>
+<div class="admonition danger">
+<p class="admonition-title">Cleanup is Destructive</p>
+<p>The <code>--cleanup</code> option does not just list files—it actively removes unfinished transaction leftovers by calling <code>LifecycleTransaction.removeUnfinishedLeftovers()</code>. Use with caution and only when Cassandra is stopped.</p>
+</div>
 <hr>
 <h2 id="examples">Examples<a class="headerlink" href="#examples" title="Permanent link">¶</a></h2>
 <h3 id="list-all-sstables">List All SSTables<a class="headerlink" href="#list-all-sstables" title="Permanent link">¶</a></h3>
@@ -20631,13 +20585,10 @@ sstableutil<span class="w"> </span>-t<span class="w"> </span>final<span class="w
 <div class="highlight"><pre><span></span><code><span class="c1"># Show temporary files from in-progress operations</span>
 sstableutil<span class="w"> </span>-t<span class="w"> </span>tmp<span class="w"> </span>my_keyspace<span class="w"> </span>my_table
 </code></pre></div>
-<h3 id="find-obsolete-files">Find Obsolete Files<a class="headerlink" href="#find-obsolete-files" title="Permanent link">¶</a></h3>
-<div class="highlight"><pre><span></span><code><span class="c1"># List files that should be cleaned up</span>
+<h3 id="perform-cleanup">Perform Cleanup<a class="headerlink" href="#perform-cleanup" title="Permanent link">¶</a></h3>
+<div class="highlight"><pre><span></span><code><span class="c1"># Remove unfinished transaction leftovers (DESTRUCTIVE)</span>
+<span class="c1"># Only run when Cassandra is stopped</span>
 sstableutil<span class="w"> </span>--cleanup<span class="w"> </span>my_keyspace<span class="w"> </span>my_table
-</code></pre></div>
-<h3 id="list-snapshot-sstables">List Snapshot SSTables<a class="headerlink" href="#list-snapshot-sstables" title="Permanent link">¶</a></h3>
-<div class="highlight"><pre><span></span><code><span class="c1"># List SSTables in a specific snapshot</span>
-sstableutil<span class="w"> </span>--snapshot<span class="w"> </span>my_snapshot<span class="w"> </span>my_keyspace<span class="w"> </span>my_table
 </code></pre></div>
 <h3 id="include-transaction-logs">Include Transaction Logs<a class="headerlink" href="#include-transaction-logs" title="Permanent link">¶</a></h3>
 <div class="highlight"><pre><span></span><code><span class="c1"># Also show transaction log files</span>
@@ -20814,42 +20765,6 @@ sstableutil<span class="w"> </span>my_keyspace<span class="w"> </span>my_table<s
 <span class="nb">echo</span><span class="w"> </span><span class="s2">"Files not tracked by Cassandra:"</span>
 comm<span class="w"> </span>-13<span class="w"> </span>&lt;<span class="o">(</span><span class="nb">echo</span><span class="w"> </span><span class="s2">"</span><span class="nv">$tracked</span><span class="s2">"</span><span class="o">)</span><span class="w"> </span>&lt;<span class="o">(</span><span class="nb">echo</span><span class="w"> </span><span class="s2">"</span><span class="nv">$all_files</span><span class="s2">"</span><span class="o">)</span>
 </code></pre></div>
-<h3 id="cleanup-verification">Cleanup Verification<a class="headerlink" href="#cleanup-verification" title="Permanent link">¶</a></h3>
-<div class="highlight"><pre><span></span><code><span class="ch">#!/bin/bash</span>
-<span class="c1"># verify_cleanup.sh - Check for files needing cleanup</span>
-
-<span class="nv">KEYSPACE</span><span class="o">=</span><span class="s2">"</span><span class="nv">$1</span><span class="s2">"</span>
-<span class="nv">TABLE</span><span class="o">=</span><span class="s2">"</span><span class="nv">$2</span><span class="s2">"</span>
-
-<span class="nb">echo</span><span class="w"> </span><span class="s2">"Checking for obsolete files in </span><span class="si">${</span><span class="nv">KEYSPACE</span><span class="si">}</span><span class="s2">.</span><span class="si">${</span><span class="nv">TABLE</span><span class="si">}</span><span class="s2">..."</span>
-
-<span class="nv">obsolete</span><span class="o">=</span><span class="k">$(</span>sstableutil<span class="w"> </span>--cleanup<span class="w"> </span><span class="s2">"</span><span class="nv">$KEYSPACE</span><span class="s2">"</span><span class="w"> </span><span class="s2">"</span><span class="nv">$TABLE</span><span class="s2">"</span><span class="k">)</span>
-
-<span class="k">if</span><span class="w"> </span><span class="o">[</span><span class="w"> </span>-z<span class="w"> </span><span class="s2">"</span><span class="nv">$obsolete</span><span class="s2">"</span><span class="w"> </span><span class="o">]</span><span class="p">;</span><span class="w"> </span><span class="k">then</span>
-<span class="w">    </span><span class="nb">echo</span><span class="w"> </span><span class="s2">"No obsolete files found"</span>
-<span class="k">else</span>
-<span class="w">    </span><span class="nb">echo</span><span class="w"> </span><span class="s2">"Obsolete files found:"</span>
-<span class="w">    </span><span class="nb">echo</span><span class="w"> </span><span class="s2">"</span><span class="nv">$obsolete</span><span class="s2">"</span>
-<span class="w">    </span><span class="nb">echo</span><span class="w"> </span><span class="s2">""</span>
-<span class="w">    </span><span class="nb">echo</span><span class="w"> </span><span class="s2">"Run 'nodetool cleanup' or wait for automatic cleanup"</span>
-<span class="k">fi</span>
-</code></pre></div>
-<h3 id="snapshot-verification">Snapshot Verification<a class="headerlink" href="#snapshot-verification" title="Permanent link">¶</a></h3>
-<div class="highlight"><pre><span></span><code><span class="ch">#!/bin/bash</span>
-<span class="c1"># verify_snapshot.sh - Verify snapshot contents</span>
-
-<span class="nv">KEYSPACE</span><span class="o">=</span><span class="s2">"</span><span class="nv">$1</span><span class="s2">"</span>
-<span class="nv">TABLE</span><span class="o">=</span><span class="s2">"</span><span class="nv">$2</span><span class="s2">"</span>
-<span class="nv">SNAPSHOT</span><span class="o">=</span><span class="s2">"</span><span class="nv">$3</span><span class="s2">"</span>
-
-<span class="nb">echo</span><span class="w"> </span><span class="s2">"SSTables in snapshot '</span><span class="nv">$SNAPSHOT</span><span class="s2">' for </span><span class="si">${</span><span class="nv">KEYSPACE</span><span class="si">}</span><span class="s2">.</span><span class="si">${</span><span class="nv">TABLE</span><span class="si">}</span><span class="s2">:"</span>
-
-sstableutil<span class="w"> </span>--snapshot<span class="w"> </span><span class="s2">"</span><span class="nv">$SNAPSHOT</span><span class="s2">"</span><span class="w"> </span><span class="s2">"</span><span class="nv">$KEYSPACE</span><span class="s2">"</span><span class="w"> </span><span class="s2">"</span><span class="nv">$TABLE</span><span class="s2">"</span><span class="w"> </span><span class="p">|</span><span class="w"> </span>grep<span class="w"> </span><span class="s2">"Data.db</span>$<span class="s2">"</span>
-
-<span class="nv">count</span><span class="o">=</span><span class="k">$(</span>sstableutil<span class="w"> </span>--snapshot<span class="w"> </span><span class="s2">"</span><span class="nv">$SNAPSHOT</span><span class="s2">"</span><span class="w"> </span><span class="s2">"</span><span class="nv">$KEYSPACE</span><span class="s2">"</span><span class="w"> </span><span class="s2">"</span><span class="nv">$TABLE</span><span class="s2">"</span><span class="w"> </span><span class="p">|</span><span class="w"> </span>grep<span class="w"> </span>-c<span class="w"> </span><span class="s2">"Data.db</span>$<span class="s2">"</span><span class="k">)</span>
-<span class="nb">echo</span><span class="w"> </span><span class="s2">""</span>
-<span class="nb">echo</span><span class="w"> </span><span class="s2">"Total SSTables in snapshot: </span><span class="nv">$count</span><span class="s2">"</span>
-</code></pre></div>
 <h3 id="pre-tool-verification">Pre-Tool Verification<a class="headerlink" href="#pre-tool-verification" title="Permanent link">¶</a></h3>
 <div class="highlight"><pre><span></span><code><span class="ch">#!/bin/bash</span>
 <span class="c1"># pre_tool_check.sh - Verify SSTables before running offline tools</span>
@@ -20902,14 +20817,12 @@ sstableutil<span class="w"> </span>-t<span class="w"> </span>final<span class="w
 - Active compaction
 - Active streaming
 - Incomplete operation (if Cassandra crashed)</p>
-<h3 id="obsolete-files">Obsolete Files<a class="headerlink" href="#obsolete-files" title="Permanent link">¶</a></h3>
-<p>Files marked for deletion but not yet removed:</p>
-<div class="highlight"><pre><span></span><code>sstableutil<span class="w"> </span>--cleanup<span class="w"> </span>my_keyspace<span class="w"> </span>my_table
+<h3 id="cleanup-mode">Cleanup Mode<a class="headerlink" href="#cleanup-mode" title="Permanent link">¶</a></h3>
+<p>The <code>--cleanup</code> option removes unfinished transaction leftovers:</p>
+<div class="highlight"><pre><span></span><code><span class="c1"># Performs cleanup (destructive) - only when Cassandra is stopped</span>
+sstableutil<span class="w"> </span>--cleanup<span class="w"> </span>my_keyspace<span class="w"> </span>my_table
 </code></pre></div>
-<p>Obsolete files are cleaned up:
-- Automatically after compaction
-- When <code>nodetool cleanup</code> is run
-- After repair operations</p>
+<p>This is useful after a crash to clean up incomplete operations.</p>
 <hr>
 <h2 id="transaction-logs">Transaction Logs<a class="headerlink" href="#transaction-logs" title="Permanent link">¶</a></h2>
 <p>Transaction logs track pending SSTable operations:</p>

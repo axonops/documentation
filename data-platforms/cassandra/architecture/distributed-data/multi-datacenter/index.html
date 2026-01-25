@@ -5750,9 +5750,9 @@ data-et-multi-view="{&quot;schema&quot;:{&quot;content&quot;:{&quot;desktop&quot
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
-  <a href="#automatic-failover-driver-level" class="md-nav__link">
+  <a href="#failover-driver-level" class="md-nav__link">
     <span class="md-ellipsis">
-      Automatic Failover (Driver-Level)
+      Failover (Driver-Level)
     </span>
   </a>
   
@@ -20389,9 +20389,9 @@ data-et-multi-view="{&quot;schema&quot;:{&quot;content&quot;:{&quot;desktop&quot
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
-  <a href="#automatic-failover-driver-level" class="md-nav__link">
+  <a href="#failover-driver-level" class="md-nav__link">
     <span class="md-ellipsis">
-      Automatic Failover (Driver-Level)
+      Failover (Driver-Level)
     </span>
   </a>
   
@@ -20553,7 +20553,7 @@ data-et-multi-view="{&quot;schema&quot;:{&quot;content&quot;:{&quot;desktop&quot
 <tbody>
 <tr>
 <td><strong>Geographic read locality</strong></td>
-<td>Users read from nearby nodes (1-5ms vs 50-200ms cross-region)</td>
+<td>Users read from nearby nodes (latency varies by network topology)</td>
 </tr>
 <tr>
 <td><strong>Disaster recovery</strong></td>
@@ -20584,7 +20584,7 @@ data-et-multi-view="{&quot;schema&quot;:{&quot;content&quot;:{&quot;desktop&quot
 <tbody>
 <tr>
 <td><strong>Asynchronous replication</strong></td>
-<td>Writes replicate across DCs without blocking</td>
+<td>With LOCAL_* consistency levels, writes replicate to remote DCs without blocking the coordinator response</td>
 </tr>
 <tr>
 <td><strong>Per-DC replication factor</strong></td>
@@ -20717,15 +20717,10 @@ data-et-multi-view="{&quot;schema&quot;:{&quot;content&quot;:{&quot;desktop&quot
 <hr>
 <h2 id="driver-configuration-by-language">Driver Configuration by Language<a class="headerlink" href="#driver-configuration-by-language" title="Permanent link">¶</a></h2>
 <h3 id="java-datastax-driver-4x">Java (DataStax Driver 4.x)<a class="headerlink" href="#java-datastax-driver-4x" title="Permanent link">¶</a></h3>
-<div class="highlight"><pre><span></span><code><span class="n">CqlSession</span><span class="w"> </span><span class="n">session</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">CqlSession</span><span class="p">.</span><span class="na">builder</span><span class="p">()</span>
+<div class="highlight"><pre><span></span><code><span class="c1">// Java Driver 4.x - withLocalDatacenter() configures DC-aware routing</span>
+<span class="n">CqlSession</span><span class="w"> </span><span class="n">session</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">CqlSession</span><span class="p">.</span><span class="na">builder</span><span class="p">()</span>
 <span class="w">    </span><span class="p">.</span><span class="na">addContactPoint</span><span class="p">(</span><span class="k">new</span><span class="w"> </span><span class="n">InetSocketAddress</span><span class="p">(</span><span class="s">"cassandra-us-east.example.com"</span><span class="p">,</span><span class="w"> </span><span class="mi">9042</span><span class="p">))</span>
-<span class="w">    </span><span class="p">.</span><span class="na">withLocalDatacenter</span><span class="p">(</span><span class="s">"us-east"</span><span class="p">)</span><span class="w">  </span><span class="c1">// Critical: sets local DC</span>
-<span class="w">    </span><span class="p">.</span><span class="na">withLoadBalancingPolicy</span><span class="p">(</span>
-<span class="w">        </span><span class="n">DefaultLoadBalancingPolicy</span><span class="p">.</span><span class="na">builder</span><span class="p">()</span>
-<span class="w">            </span><span class="p">.</span><span class="na">withLocalDatacenter</span><span class="p">(</span><span class="s">"us-east"</span><span class="p">)</span>
-<span class="w">            </span><span class="p">.</span><span class="na">withSlowReplicaAvoidance</span><span class="p">(</span><span class="kc">true</span><span class="p">)</span>
-<span class="w">            </span><span class="p">.</span><span class="na">build</span><span class="p">()</span>
-<span class="w">    </span><span class="p">)</span>
+<span class="w">    </span><span class="p">.</span><span class="na">withLocalDatacenter</span><span class="p">(</span><span class="s">"us-east"</span><span class="p">)</span><span class="w">  </span><span class="c1">// Critical: sets local DC for routing</span>
 <span class="w">    </span><span class="p">.</span><span class="na">build</span><span class="p">();</span>
 
 <span class="c1">// All queries route to us-east by default</span>
@@ -20824,19 +20819,19 @@ data-et-multi-view="{&quot;schema&quot;:{&quot;content&quot;:{&quot;desktop&quot
 <tr>
 <td><code>LOCAL_ONE</code></td>
 <td>1 replica in local DC</td>
-<td>Lowest (~1ms)</td>
-<td>Single node</td>
+<td>Lowest</td>
+<td>Single node (replicates to remote DCs asynchronously)</td>
 </tr>
 <tr>
 <td><code>LOCAL_QUORUM</code></td>
 <td>Quorum in local DC</td>
-<td>Low (~2-5ms)</td>
-<td>Local DC durable</td>
+<td>Low</td>
+<td>Local DC durable (replicates to remote DCs asynchronously)</td>
 </tr>
 <tr>
 <td><code>QUORUM</code></td>
 <td>Quorum across all DCs</td>
-<td>High (~50-200ms)</td>
+<td>High (cross-region RTT)</td>
 <td>Global durable</td>
 </tr>
 <tr>
@@ -20891,9 +20886,10 @@ data-et-multi-view="{&quot;schema&quot;:{&quot;content&quot;:{&quot;desktop&quot
 </tbody>
 </table>
 <h3 id="latency-impact">Latency Impact<a class="headerlink" href="#latency-impact" title="Permanent link">¶</a></h3>
-<div class="highlight"><pre><span></span><code>LOCAL_QUORUM (same region):     ~2-5ms
-QUORUM (cross-region):          ~50-200ms (depends on distance)
-EACH_QUORUM (all regions):      ~100-300ms (slowest DC determines latency)
+<p>Latency values are workload and network dependent. Representative ranges for illustrative purposes:</p>
+<div class="highlight"><pre><span></span><code>LOCAL_QUORUM (same region):     Low latency (network RTT within region)
+QUORUM (cross-region):          Higher latency (requires cross-region round trips)
+EACH_QUORUM (all regions):      Highest latency (slowest DC determines latency)
 </code></pre></div>
 <div class="admonition warning">
 <p class="admonition-title">QUORUM in Multi-DC</p>
@@ -20910,20 +20906,18 @@ EACH_QUORUM (all regions):      ~100-300ms (slowest DC determines latency)
 </ul>
 <hr>
 <h2 id="cross-region-failover">Cross-Region Failover<a class="headerlink" href="#cross-region-failover" title="Permanent link">¶</a></h2>
-<h3 id="automatic-failover-driver-level">Automatic Failover (Driver-Level)<a class="headerlink" href="#automatic-failover-driver-level" title="Permanent link">¶</a></h3>
-<p>The driver automatically fails over to remote DCs when local nodes are unavailable:</p>
-<div class="highlight"><pre><span></span><code><span class="c1">// Java: Configure remote DC fallback</span>
-<span class="n">DefaultLoadBalancingPolicy</span><span class="w"> </span><span class="n">policy</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">DefaultLoadBalancingPolicy</span><span class="p">.</span><span class="na">builder</span><span class="p">()</span>
-<span class="w">    </span><span class="p">.</span><span class="na">withLocalDatacenter</span><span class="p">(</span><span class="s">"us-east"</span><span class="p">)</span>
-<span class="w">    </span><span class="p">.</span><span class="na">build</span><span class="p">();</span>
-
-<span class="c1">// Driver automatically tries remote DCs if local DC is completely down</span>
+<h3 id="failover-driver-level">Failover (Driver-Level)<a class="headerlink" href="#failover-driver-level" title="Permanent link">¶</a></h3>
+<p>Driver failover to remote DCs requires explicit configuration. By default, most drivers do not contact remote DC nodes.</p>
+<div class="highlight"><pre><span></span><code><span class="c1">// Java Driver 4.x: Remote DC failover requires configuration in application.conf</span>
+<span class="c1">// datastax-java-driver.basic.load-balancing-policy.slow-replica-avoidance = true</span>
+<span class="c1">// Note: Cross-DC failover behavior is driver-version dependent</span>
 </code></pre></div>
-<div class="highlight"><pre><span></span><code><span class="c1"># Python: Configure remote DC fallback</span>
+<div class="highlight"><pre><span></span><code><span class="c1"># Python: Configure remote DC fallback (explicit configuration required)</span>
 <span class="n">policy</span> <span class="o">=</span> <span class="n">DCAwareRoundRobinPolicy</span><span class="p">(</span>
     <span class="n">local_dc</span><span class="o">=</span><span class="s1">'us-east'</span><span class="p">,</span>
-    <span class="n">used_hosts_per_remote_dc</span><span class="o">=</span><span class="mi">2</span>  <span class="c1"># Try 2 hosts per remote DC on failure</span>
+    <span class="n">used_hosts_per_remote_dc</span><span class="o">=</span><span class="mi">2</span>  <span class="c1"># Must set &gt;0 to enable remote DC fallback</span>
 <span class="p">)</span>
+<span class="c1"># Without used_hosts_per_remote_dc, remote DCs are not contacted</span>
 </code></pre></div>
 <h3 id="failover-behavior">Failover Behavior<a class="headerlink" href="#failover-behavior" title="Permanent link">¶</a></h3>
 <table>
@@ -20944,11 +20938,11 @@ EACH_QUORUM (all regions):      ~100-300ms (slowest DC determines latency)
 </tr>
 <tr>
 <td>Complete local DC failure</td>
-<td>Falls back to remote DC (if configured)</td>
+<td>Falls back to remote DC only if <code>used_hosts_per_remote_dc &gt; 0</code> (Python) or equivalent configured</td>
 </tr>
 <tr>
 <td>Network partition</td>
-<td>May route to accessible DC</td>
+<td>Behavior depends on which nodes are reachable and driver configuration</td>
 </tr>
 </tbody>
 </table>

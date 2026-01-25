@@ -20551,7 +20551,7 @@ data-et-multi-view="{&quot;schema&quot;:{&quot;content&quot;:{&quot;desktop&quot
 5. On failure: batchlog replayed later
 
 Batchlog replay:
-- Runs periodically (every 60 seconds by default)
+- Runs periodically (every 10 seconds by default, configurable via `cassandra.batchlog.replay_interval_ms`)
 - Resends pending view mutations
 - Eventually clears after success or expiry
 </code></pre></div>
@@ -20575,9 +20575,9 @@ Batchlog replay:
 <td>Replay throughput limit (KB/s)</td>
 </tr>
 <tr>
-<td>View mutation timeout</td>
-<td>1 hour</td>
-<td>When batchlog entries expire</td>
+<td><code>cassandra.batchlog.replay_interval_ms</code></td>
+<td>10000</td>
+<td>Interval between batchlog replay attempts</td>
 </tr>
 </tbody>
 </table>

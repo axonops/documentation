@@ -20210,12 +20210,13 @@ nodetool<span class="w"> </span>garbagecollect<span class="w"> </span>my_keyspac
 <h3 id="short-term-adjust-thresholds">Short-term: Adjust Thresholds<a class="headerlink" href="#short-term-adjust-thresholds" title="Permanent link">¶</a></h3>
 <p>Increase tombstone thresholds to prevent query failures (temporary fix):</p>
 <div class="highlight"><pre><span></span><code><span class="c1"># In cassandra.yaml</span>
-tombstone_warn_threshold:<span class="w"> </span><span class="m">10000</span>
-tombstone_failure_threshold:<span class="w"> </span><span class="m">100000</span>
+<span class="nt">tombstone_warn_threshold</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">10000</span>
+<span class="nt">tombstone_failure_threshold</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">100000</span>
 </code></pre></div>
-<p>Or per-query in CQL (Cassandra 4.0+):</p>
-<div class="highlight"><pre><span></span><code><span class="k">SELECT</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="k">FROM</span><span class="w"> </span><span class="n">my_table</span><span class="w"> </span><span class="k">WHERE</span><span class="w"> </span><span class="p">...</span><span class="w"> </span><span class="n">BYPASS</span><span class="w"> </span><span class="n">TOMBSTONE</span><span class="w"> </span><span class="n">THRESHOLD</span><span class="p">;</span>
-</code></pre></div>
+<div class="admonition note">
+<p class="admonition-title">Per-Query Override</p>
+<p>There is no per-query syntax to bypass tombstone thresholds. The only options are to adjust the thresholds in <code>cassandra.yaml</code> or fix the underlying data model.</p>
+</div>
 <h3 id="long-term-fix-data-model">Long-term: Fix Data Model<a class="headerlink" href="#long-term-fix-data-model" title="Permanent link">¶</a></h3>
 <p><strong>Problem Pattern 1: Deleting from wide partitions</strong></p>
 <div class="highlight"><pre><span></span><code><span class="c1">-- Bad: Creates tombstone per deletion</span>

@@ -7964,18 +7964,45 @@ data-et-multi-view="{&quot;schema&quot;:{&quot;content&quot;:{&quot;desktop&quot
 </li>
         
           <li class="md-nav__item">
-  <a href="#schema-versions" class="md-nav__link">
+  <a href="#stats-for-all-nodes" class="md-nav__link">
     <span class="md-ellipsis">
-      Schema Versions
+      Stats for all nodes
     </span>
   </a>
   
 </li>
         
           <li class="md-nav__item">
-  <a href="#dynamic-snitch-scores" class="md-nav__link">
+  <a href="#data-centers" class="md-nav__link">
     <span class="md-ellipsis">
-      Dynamic Snitch Scores
+      Data Centers
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#database-versions" class="md-nav__link">
+    <span class="md-ellipsis">
+      Database versions
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#keyspaces" class="md-nav__link">
+    <span class="md-ellipsis">
+      Keyspaces
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#schema-versions" class="md-nav__link">
+    <span class="md-ellipsis">
+      Schema Versions
     </span>
   </a>
   
@@ -8018,15 +8045,6 @@ data-et-multi-view="{&quot;schema&quot;:{&quot;content&quot;:{&quot;desktop&quot
   <a href="#resolving-schema-disagreement" class="md-nav__link">
     <span class="md-ellipsis">
       Resolving Schema Disagreement
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#dynamic-snitch-scores_1" class="md-nav__link">
-    <span class="md-ellipsis">
-      Dynamic Snitch Scores
     </span>
   </a>
   
@@ -20109,18 +20127,45 @@ data-et-multi-view="{&quot;schema&quot;:{&quot;content&quot;:{&quot;desktop&quot
 </li>
         
           <li class="md-nav__item">
-  <a href="#schema-versions" class="md-nav__link">
+  <a href="#stats-for-all-nodes" class="md-nav__link">
     <span class="md-ellipsis">
-      Schema Versions
+      Stats for all nodes
     </span>
   </a>
   
 </li>
         
           <li class="md-nav__item">
-  <a href="#dynamic-snitch-scores" class="md-nav__link">
+  <a href="#data-centers" class="md-nav__link">
     <span class="md-ellipsis">
-      Dynamic Snitch Scores
+      Data Centers
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#database-versions" class="md-nav__link">
+    <span class="md-ellipsis">
+      Database versions
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#keyspaces" class="md-nav__link">
+    <span class="md-ellipsis">
+      Keyspaces
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#schema-versions" class="md-nav__link">
+    <span class="md-ellipsis">
+      Schema Versions
     </span>
   </a>
   
@@ -20163,15 +20208,6 @@ data-et-multi-view="{&quot;schema&quot;:{&quot;content&quot;:{&quot;desktop&quot
   <a href="#resolving-schema-disagreement" class="md-nav__link">
     <span class="md-ellipsis">
       Resolving Schema Disagreement
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#dynamic-snitch-scores_1" class="md-nav__link">
-    <span class="md-ellipsis">
-      Dynamic Snitch Scores
     </span>
   </a>
   
@@ -20381,15 +20417,32 @@ data-et-multi-view="{&quot;schema&quot;:{&quot;content&quot;:{&quot;desktop&quot
         Name: Production Cluster
         Snitch: org.apache.cassandra.locator.GossipingPropertyFileSnitch
         DynamicEndPointSnitch: enabled
-        DatabaseVersion: 4.1.3
+        Partitioner: org.apache.cassandra.dht.Murmur3Partitioner
+
+Stats for all nodes:
+        Live: 3
+        Joining: 0
+        Moving: 0
+        Leaving: 0
+        Unreachable: 0
+
+Data Centers:
+        dc1 #Nodes: 3 #Down: 0
+
+Database versions:
+        4.1.3: [192.168.1.101, 192.168.1.102, 192.168.1.103]
+
+Keyspaces:
+        my_keyspace -&gt; Replication class: NetworkTopologyStrategy {dc1=3}
+        system_auth -&gt; Replication class: NetworkTopologyStrategy {dc1=3}
+
 Schema versions:
         a1b2c3d4-e5f6-7890-abcd-ef1234567890: [192.168.1.101, 192.168.1.102, 192.168.1.103]
-
-Effective Dynamic Snitch Scores:
-        /192.168.1.101: 0.001
-        /192.168.1.102: 0.002
-        /192.168.1.103: 0.001
 </code></pre></div>
+<div class="admonition note">
+<p class="admonition-title">Output Varies by Version</p>
+<p>The exact output format varies between Cassandra versions. Some fields like "Effective Dynamic Snitch Scores" were present in older versions but may be absent in current releases.</p>
+</div>
 <hr>
 <h2 id="output-fields">Output Fields<a class="headerlink" href="#output-fields" title="Permanent link">¶</a></h2>
 <h3 id="cluster-information">Cluster Information<a class="headerlink" href="#cluster-information" title="Permanent link">¶</a></h3>
@@ -20414,22 +20467,52 @@ Effective Dynamic Snitch Scores:
 <td>Whether dynamic snitch is enabled</td>
 </tr>
 <tr>
-<td>DatabaseVersion</td>
-<td>Cassandra version</td>
+<td>Partitioner</td>
+<td>Token partitioner class</td>
 </tr>
 </tbody>
 </table>
+<h3 id="stats-for-all-nodes">Stats for all nodes<a class="headerlink" href="#stats-for-all-nodes" title="Permanent link">¶</a></h3>
+<table>
+<thead>
+<tr>
+<th>Field</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Live</td>
+<td>Number of nodes in UN (Up/Normal) state</td>
+</tr>
+<tr>
+<td>Joining</td>
+<td>Number of nodes currently bootstrapping</td>
+</tr>
+<tr>
+<td>Moving</td>
+<td>Number of nodes moving tokens</td>
+</tr>
+<tr>
+<td>Leaving</td>
+<td>Number of nodes decommissioning</td>
+</tr>
+<tr>
+<td>Unreachable</td>
+<td>Number of nodes that cannot be reached</td>
+</tr>
+</tbody>
+</table>
+<h3 id="data-centers">Data Centers<a class="headerlink" href="#data-centers" title="Permanent link">¶</a></h3>
+<p>Shows each datacenter with node count and down node count.</p>
+<h3 id="database-versions">Database versions<a class="headerlink" href="#database-versions" title="Permanent link">¶</a></h3>
+<p>Lists Cassandra versions with the nodes running each version.</p>
+<h3 id="keyspaces">Keyspaces<a class="headerlink" href="#keyspaces" title="Permanent link">¶</a></h3>
+<p>Shows replication configuration for each keyspace.</p>
 <h3 id="schema-versions">Schema Versions<a class="headerlink" href="#schema-versions" title="Permanent link">¶</a></h3>
 <p>Shows which schema version each node has:</p>
 <div class="highlight"><pre><span></span><code>Schema versions:
         &lt;schema-version-uuid&gt;: [list of nodes]
-</code></pre></div>
-<h3 id="dynamic-snitch-scores">Dynamic Snitch Scores<a class="headerlink" href="#dynamic-snitch-scores" title="Permanent link">¶</a></h3>
-<p>Performance scores for each node (lower is better):</p>
-<div class="highlight"><pre><span></span><code>Effective Dynamic Snitch Scores:
-        /192.168.1.101: 0.001
-        /192.168.1.102: 0.050
-        /192.168.1.103: 0.002
 </code></pre></div>
 <hr>
 <h2 id="interpreting-results">Interpreting Results<a class="headerlink" href="#interpreting-results" title="Permanent link">¶</a></h2>
@@ -20462,44 +20545,6 @@ nodetool<span class="w"> </span>reloadlocalschema
 nodetool<span class="w"> </span>drain
 sudo<span class="w"> </span>systemctl<span class="w"> </span>restart<span class="w"> </span>cassandra
 </code></pre></div>
-<h3 id="dynamic-snitch-scores_1">Dynamic Snitch Scores<a class="headerlink" href="#dynamic-snitch-scores_1" title="Permanent link">¶</a></h3>
-<p>Scores reflect recent performance:</p>
-<table>
-<thead>
-<tr>
-<th>Score</th>
-<th>Meaning</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>~0.001</td>
-<td>Excellent performance</td>
-</tr>
-<tr>
-<td>0.01-0.05</td>
-<td>Good performance</td>
-</tr>
-<tr>
-<td>&gt; 0.1</td>
-<td>Slow compared to others</td>
-</tr>
-<tr>
-<td>Very high</td>
-<td>Node may have issues</td>
-</tr>
-</tbody>
-</table>
-<div class="admonition tip">
-<p class="admonition-title">Score Interpretation</p>
-<p>High dynamic snitch scores cause coordinators to prefer other replicas:</p>
-<ul>
-<li>Can indicate slow disk I/O</li>
-<li>Network latency issues</li>
-<li>GC problems</li>
-<li>Overloaded node</li>
-</ul>
-</div>
 <hr>
 <h2 id="when-to-use">When to Use<a class="headerlink" href="#when-to-use" title="Permanent link">¶</a></h2>
 <h3 id="before-schema-changes">Before Schema Changes<a class="headerlink" href="#before-schema-changes" title="Permanent link">¶</a></h3>

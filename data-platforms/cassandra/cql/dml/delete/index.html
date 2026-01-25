@@ -21393,7 +21393,7 @@ grep<span class="w"> </span>-i<span class="w"> </span>tombstone<span class="w"> 
 <p><strong>Columns:</strong></p>
 <ul>
 <li>Cannot delete primary key columns</li>
-<li>Cannot delete counter columns (use TRUNCATE for counter tables)</li>
+<li>Counter columns can be deleted (deletes the row/column), though counter operations have restrictions on TTL, timestamps, and LWT</li>
 <li>List index deletion requires read-before-write</li>
 </ul>
 <p><strong>Conditional Deletes:</strong></p>

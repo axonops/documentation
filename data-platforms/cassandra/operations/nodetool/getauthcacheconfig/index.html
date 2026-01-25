@@ -10693,6 +10693,15 @@ data-et-multi-view="{&quot;schema&quot;:{&quot;content&quot;:{&quot;desktop&quot
 </li>
       
         <li class="md-nav__item">
+  <a href="#options" class="md-nav__link">
+    <span class="md-ellipsis">
+      Options
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#description" class="md-nav__link">
     <span class="md-ellipsis">
       Description
@@ -10721,9 +10730,27 @@ data-et-multi-view="{&quot;schema&quot;:{&quot;content&quot;:{&quot;desktop&quot
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
-  <a href="#basic-usage" class="md-nav__link">
+  <a href="#query-credentials-cache" class="md-nav__link">
     <span class="md-ellipsis">
-      Basic Usage
+      Query Credentials Cache
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#query-permissions-cache" class="md-nav__link">
+    <span class="md-ellipsis">
+      Query Permissions Cache
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#query-all-caches" class="md-nav__link">
+    <span class="md-ellipsis">
+      Query All Caches
     </span>
   </a>
   
@@ -19943,6 +19970,15 @@ data-et-multi-view="{&quot;schema&quot;:{&quot;content&quot;:{&quot;desktop&quot
 </li>
       
         <li class="md-nav__item">
+  <a href="#options" class="md-nav__link">
+    <span class="md-ellipsis">
+      Options
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#description" class="md-nav__link">
     <span class="md-ellipsis">
       Description
@@ -19971,9 +20007,27 @@ data-et-multi-view="{&quot;schema&quot;:{&quot;content&quot;:{&quot;desktop&quot
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
-  <a href="#basic-usage" class="md-nav__link">
+  <a href="#query-credentials-cache" class="md-nav__link">
     <span class="md-ellipsis">
-      Basic Usage
+      Query Credentials Cache
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#query-permissions-cache" class="md-nav__link">
+    <span class="md-ellipsis">
+      Query Permissions Cache
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#query-all-caches" class="md-nav__link">
+    <span class="md-ellipsis">
+      Query All Caches
     </span>
   </a>
   
@@ -20109,11 +20163,27 @@ data-et-multi-view="{&quot;schema&quot;:{&quot;content&quot;:{&quot;desktop&quot
 <p>Displays authentication cache configuration settings.</p>
 <hr>
 <h2 id="synopsis">Synopsis<a class="headerlink" href="#synopsis" title="Permanent link">¶</a></h2>
-<div class="highlight"><pre><span></span><code>nodetool<span class="w"> </span><span class="o">[</span>connection_options<span class="o">]</span><span class="w"> </span>getauthcacheconfig
+<div class="highlight"><pre><span></span><code>nodetool<span class="w"> </span><span class="o">[</span>connection_options<span class="o">]</span><span class="w"> </span>getauthcacheconfig<span class="w"> </span>--cache-name<span class="w"> </span>&lt;cache&gt;
 </code></pre></div>
 <hr>
+<h2 id="options">Options<a class="headerlink" href="#options" title="Permanent link">¶</a></h2>
+<table>
+<thead>
+<tr>
+<th>Option</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>--cache-name &lt;cache&gt;</code></td>
+<td>Required. Cache to query: <code>CredentialsCache</code>, <code>PermissionsCache</code>, <code>RolesCache</code>, or <code>NetworkPermissionsCache</code></td>
+</tr>
+</tbody>
+</table>
+<hr>
 <h2 id="description">Description<a class="headerlink" href="#description" title="Permanent link">¶</a></h2>
-<p><code>nodetool getauthcacheconfig</code> displays the current configuration of Cassandra's authentication and authorization caches. These caches improve performance by storing authentication credentials and authorization decisions, reducing the need to query system tables for every operation.</p>
+<p><code>nodetool getauthcacheconfig</code> displays the current configuration of a specific Cassandra authentication or authorization cache. These caches improve performance by storing authentication credentials and authorization decisions, reducing the need to query system tables for every operation.</p>
 <hr>
 <h2 id="output-fields">Output Fields<a class="headerlink" href="#output-fields" title="Permanent link">¶</a></h2>
 <table>
@@ -20125,62 +20195,42 @@ data-et-multi-view="{&quot;schema&quot;:{&quot;content&quot;:{&quot;desktop&quot
 </thead>
 <tbody>
 <tr>
-<td><code>credentials_validity</code></td>
-<td>How long credential cache entries remain valid (ms)</td>
+<td><code>Validity Period</code></td>
+<td>How long cache entries remain valid</td>
 </tr>
 <tr>
-<td><code>credentials_update_interval</code></td>
-<td>Background refresh interval for credentials (ms)</td>
+<td><code>Update Interval</code></td>
+<td>Background refresh interval</td>
 </tr>
 <tr>
-<td><code>credentials_cache_max_entries</code></td>
-<td>Maximum entries in credentials cache</td>
+<td><code>Max Entries</code></td>
+<td>Maximum entries in cache</td>
 </tr>
 <tr>
-<td><code>permissions_validity</code></td>
-<td>How long permission cache entries remain valid (ms)</td>
-</tr>
-<tr>
-<td><code>permissions_update_interval</code></td>
-<td>Background refresh interval for permissions (ms)</td>
-</tr>
-<tr>
-<td><code>permissions_cache_max_entries</code></td>
-<td>Maximum entries in permissions cache</td>
-</tr>
-<tr>
-<td><code>roles_validity</code></td>
-<td>How long role cache entries remain valid (ms)</td>
-</tr>
-<tr>
-<td><code>roles_update_interval</code></td>
-<td>Background refresh interval for roles (ms)</td>
-</tr>
-<tr>
-<td><code>roles_cache_max_entries</code></td>
-<td>Maximum entries in roles cache</td>
+<td><code>Active Update</code></td>
+<td>Whether entries are actively refreshed before expiry</td>
 </tr>
 </tbody>
 </table>
 <hr>
 <h2 id="examples">Examples<a class="headerlink" href="#examples" title="Permanent link">¶</a></h2>
-<h3 id="basic-usage">Basic Usage<a class="headerlink" href="#basic-usage" title="Permanent link">¶</a></h3>
-<div class="highlight"><pre><span></span><code>nodetool<span class="w"> </span>getauthcacheconfig
+<h3 id="query-credentials-cache">Query Credentials Cache<a class="headerlink" href="#query-credentials-cache" title="Permanent link">¶</a></h3>
+<div class="highlight"><pre><span></span><code>nodetool<span class="w"> </span>getauthcacheconfig<span class="w"> </span>--cache-name<span class="w"> </span>CredentialsCache
 </code></pre></div>
 <p><strong>Sample output:</strong></p>
-<div class="highlight"><pre><span></span><code>Auth Cache Configuration:
-  Credentials:
-    Validity: 2000 ms
-    Update Interval: 1000 ms
-    Max Entries: 1000
-  Permissions:
-    Validity: 2000 ms
-    Update Interval: 1000 ms
-    Max Entries: 1000
-  Roles:
-    Validity: 2000 ms
-    Update Interval: 1000 ms
-    Max Entries: 1000
+<div class="highlight"><pre><span></span><code>Validity Period: 2000 ms
+Update Interval: 1000 ms
+Max Entries: 1000
+Active Update: true
+</code></pre></div>
+<h3 id="query-permissions-cache">Query Permissions Cache<a class="headerlink" href="#query-permissions-cache" title="Permanent link">¶</a></h3>
+<div class="highlight"><pre><span></span><code>nodetool<span class="w"> </span>getauthcacheconfig<span class="w"> </span>--cache-name<span class="w"> </span>PermissionsCache
+</code></pre></div>
+<h3 id="query-all-caches">Query All Caches<a class="headerlink" href="#query-all-caches" title="Permanent link">¶</a></h3>
+<div class="highlight"><pre><span></span><code><span class="k">for</span><span class="w"> </span>cache<span class="w"> </span><span class="k">in</span><span class="w"> </span>CredentialsCache<span class="w"> </span>PermissionsCache<span class="w"> </span>RolesCache<span class="w"> </span>NetworkPermissionsCache<span class="p">;</span><span class="w"> </span><span class="k">do</span>
+<span class="w">    </span><span class="nb">echo</span><span class="w"> </span><span class="s2">"=== </span><span class="nv">$cache</span><span class="s2"> ==="</span>
+<span class="w">    </span>nodetool<span class="w"> </span>getauthcacheconfig<span class="w"> </span>--cache-name<span class="w"> </span><span class="nv">$cache</span>
+<span class="k">done</span>
 </code></pre></div>
 <hr>
 <h2 id="when-to-use">When to Use<a class="headerlink" href="#when-to-use" title="Permanent link">¶</a></h2>

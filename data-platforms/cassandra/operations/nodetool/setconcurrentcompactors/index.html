@@ -20868,36 +20868,52 @@ data-et-multi-view="{&quot;schema&quot;:{&quot;content&quot;:{&quot;desktop&quot
 </table>
 <hr>
 <h2 id="default-value-calculation">Default Value Calculation<a class="headerlink" href="#default-value-calculation" title="Permanent link">¶</a></h2>
-<p>If not explicitly configured, Cassandra calculates the default based on:</p>
-<div class="highlight"><pre><span></span><code>concurrent_compactors = min(number_of_data_directories, number_of_cpu_cores)
+<p>If not explicitly configured, Cassandra calculates the default with bounds:</p>
+<div class="highlight"><pre><span></span><code>concurrent_compactors = min(8, max(2, min(number_of_data_directories, number_of_cpu_cores)))
 </code></pre></div>
+<p>This formula:
+1. Takes the minimum of data directories and CPU cores
+2. Ensures at least 2 compactors (floor)
+3. Caps at 8 compactors (ceiling)</p>
 <table>
 <thead>
 <tr>
 <th>System Configuration</th>
+<th>Calculation</th>
 <th>Default Compactors</th>
 </tr>
 </thead>
 <tbody>
 <tr>
+<td>2 cores, 1 disk</td>
+<td>min(8, max(2, min(1, 2))) = min(8, max(2, 1)) = 2</td>
+<td>2</td>
+</tr>
+<tr>
 <td>8 cores, 1 disk</td>
-<td>1</td>
+<td>min(8, max(2, min(1, 8))) = min(8, max(2, 1)) = 2</td>
+<td>2</td>
 </tr>
 <tr>
 <td>8 cores, 4 disks (JBOD)</td>
+<td>min(8, max(2, min(4, 8))) = min(8, max(2, 4)) = 4</td>
 <td>4</td>
 </tr>
 <tr>
 <td>16 cores, 8 disks</td>
+<td>min(8, max(2, min(8, 16))) = min(8, max(2, 8)) = 8</td>
 <td>8</td>
 </tr>
 <tr>
-<td>4 cores, 8 disks</td>
-<td>4</td>
+<td>32 cores, 16 disks</td>
+<td>min(8, max(2, min(16, 32))) = min(8, 16) = 8</td>
+<td>8 (capped)</td>
 </tr>
 </tbody>
 </table>
 <p>The rationale:
+- <strong>Minimum of 2</strong>: Ensures adequate parallelism even on single-disk systems
+- <strong>Maximum of 8</strong>: Prevents excessive parallelism that can cause resource contention
 - <strong>Disk-limited</strong>: Each disk can only do one compaction efficiently at a time
 - <strong>CPU-limited</strong>: Each compaction thread consumes CPU for data processing</p>
 <hr>

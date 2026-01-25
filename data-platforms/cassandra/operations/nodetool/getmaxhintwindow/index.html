@@ -9226,6 +9226,15 @@ data-et-multi-view="{&quot;schema&quot;:{&quot;content&quot;:{&quot;desktop&quot
 </li>
         
           <li class="md-nav__item">
+  <a href="#configuration" class="md-nav__link">
+    <span class="md-ellipsis">
+      Configuration
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
   <a href="#how-it-works" class="md-nav__link">
     <span class="md-ellipsis">
       How It Works
@@ -19977,6 +19986,15 @@ data-et-multi-view="{&quot;schema&quot;:{&quot;content&quot;:{&quot;desktop&quot
 </li>
         
           <li class="md-nav__item">
+  <a href="#configuration" class="md-nav__link">
+    <span class="md-ellipsis">
+      Configuration
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
   <a href="#how-it-works" class="md-nav__link">
     <span class="md-ellipsis">
       How It Works
@@ -20066,8 +20084,35 @@ data-et-multi-view="{&quot;schema&quot;:{&quot;content&quot;:{&quot;desktop&quot
 <hr>
 <h2 id="understanding-the-hint-window">Understanding the Hint Window<a class="headerlink" href="#understanding-the-hint-window" title="Permanent link">¶</a></h2>
 <h3 id="default-value">Default Value<a class="headerlink" href="#default-value" title="Permanent link">¶</a></h3>
-<div class="highlight"><pre><span></span><code><span class="c1"># cassandra.yaml</span>
-<span class="nt">max_hint_window_in_ms</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">10800000</span><span class="w">  </span><span class="c1"># 3 hours (default)</span>
+<p>The default is 3 hours.</p>
+<h3 id="configuration">Configuration<a class="headerlink" href="#configuration" title="Permanent link">¶</a></h3>
+<p>The cassandra.yaml parameter name varies by version:</p>
+<table>
+<thead>
+<tr>
+<th>Cassandra Version</th>
+<th>Parameter Name</th>
+<th>Example</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Pre-4.1</td>
+<td><code>max_hint_window_in_ms</code></td>
+<td><code>10800000</code> (3 hours)</td>
+</tr>
+<tr>
+<td>4.1+</td>
+<td><code>max_hint_window</code></td>
+<td><code>3h</code></td>
+</tr>
+</tbody>
+</table>
+<div class="highlight"><pre><span></span><code><span class="c1"># cassandra.yaml (4.1+)</span>
+<span class="nt">max_hint_window</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">3h</span>
+
+<span class="c1"># cassandra.yaml (Pre-4.1)</span>
+<span class="c1"># max_hint_window_in_ms: 10800000</span>
 </code></pre></div>
 <h3 id="how-it-works">How It Works<a class="headerlink" href="#how-it-works" title="Permanent link">¶</a></h3>
 <table>

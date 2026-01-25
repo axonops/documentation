@@ -20337,7 +20337,7 @@ data-et-multi-view="{&quot;schema&quot;:{&quot;content&quot;:{&quot;desktop&quot
 <li>"Retrieve the complete audit trail for this transaction"</li>
 <li>"Find all failed login attempts from this IP address"</li>
 </ul>
-<p>These queries must return results in seconds, not hours. When auditors or investigators request information, batch processing is not acceptable.</p>
+<p>Compliance requirements typically demand that these queries return results in seconds, not hours. When auditors or investigators request information, batch processing is often not acceptable.</p>
 <p><strong>Cassandra characteristics that align with audit requirements:</strong></p>
 <table>
 <thead>
@@ -20369,7 +20369,7 @@ data-et-multi-view="{&quot;schema&quot;:{&quot;content&quot;:{&quot;desktop&quot
 </tr>
 <tr>
 <td>Tamper resistance</td>
-<td>Immutable once written (no in-place updates)</td>
+<td>SSTables are immutable files; application-level controls (append-only schema, hash chaining) provide tamper evidence</td>
 </tr>
 </tbody>
 </table>

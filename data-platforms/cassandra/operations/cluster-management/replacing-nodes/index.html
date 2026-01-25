@@ -12369,9 +12369,9 @@ data-et-multi-view="{&quot;schema&quot;:{&quot;content&quot;:{&quot;desktop&quot
 </li>
       
         <li class="md-nav__item">
-  <a href="#cassandra-version-specific-behavior" class="md-nav__link">
+  <a href="#replace-address-option" class="md-nav__link">
     <span class="md-ellipsis">
-      Cassandra Version-Specific Behavior
+      Replace Address Option
     </span>
   </a>
   
@@ -20355,9 +20355,9 @@ data-et-multi-view="{&quot;schema&quot;:{&quot;content&quot;:{&quot;desktop&quot
 </li>
       
         <li class="md-nav__item">
-  <a href="#cassandra-version-specific-behavior" class="md-nav__link">
+  <a href="#replace-address-option" class="md-nav__link">
     <span class="md-ellipsis">
-      Cassandra Version-Specific Behavior
+      Replace Address Option
     </span>
   </a>
   
@@ -20749,7 +20749,7 @@ nodetool<span class="w"> </span>status
 <div class="highlight"><pre><span></span><code><span class="c1"># cassandra.yaml</span>
 
 <span class="nt">cluster_name</span><span class="p">:</span><span class="w"> </span><span class="s">'ProductionCluster'</span><span class="w">  </span><span class="c1"># Must match exactly</span>
-<span class="nt">num_tokens</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">256</span><span class="w">                    </span><span class="c1"># Must match dead node</span>
+<span class="nt">num_tokens</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">16</span><span class="w">                     </span><span class="c1"># Must match dead node (default is 16 for 4.0+)</span>
 
 <span class="c1"># Network - use dead node's IP</span>
 <span class="nt">listen_address</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">10.0.1.2</span>
@@ -20764,7 +20764,7 @@ nodetool<span class="w"> </span>status
 <span class="c1"># Snitch must match cluster</span>
 <span class="nt">endpoint_snitch</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">GossipingPropertyFileSnitch</span>
 
-<span class="c1"># Do NOT set auto_bootstrap (replacement handles this)</span>
+<span class="c1"># Leave auto_bootstrap at default (true) - replacement still uses streaming</span>
 </code></pre></div>
 <p>Configure datacenter and rack:</p>
 <div class="highlight"><pre><span></span><code><span class="c1"># cassandra-rackdc.properties</span>
@@ -20773,9 +20773,7 @@ nodetool<span class="w"> </span>status
 </code></pre></div>
 <h3 id="step-4-configure-replacement-jvm-option">Step 4: Configure Replacement JVM Option<a class="headerlink" href="#step-4-configure-replacement-jvm-option" title="Permanent link">¶</a></h3>
 <p>Add the replacement directive to JVM options:</p>
-<div class="highlight"><pre><span></span><code><span class="c1"># For Cassandra 4.0+: jvm-server.options or jvm11-server.options</span>
-<span class="c1"># For Cassandra 3.x: jvm.options or cassandra-env.sh</span>
-
+<div class="highlight"><pre><span></span><code><span class="c1"># In jvm-server.options or jvm11-server.options</span>
 -Dcassandra.replace_address_first_boot<span class="o">=</span><span class="m">10</span>.0.1.2
 </code></pre></div>
 <p>Or via environment variable:</p>
@@ -20845,28 +20843,8 @@ sudo<span class="w"> </span>systemctl<span class="w"> </span>restart<span class=
 </code></pre></div>
 <p>The replacement node uses its own IP but replaces the dead node's token ranges.</p>
 <hr>
-<h2 id="cassandra-version-specific-behavior">Cassandra Version-Specific Behavior<a class="headerlink" href="#cassandra-version-specific-behavior" title="Permanent link">¶</a></h2>
-<table>
-<thead>
-<tr>
-<th>Version</th>
-<th>Option</th>
-<th>Notes</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>2.x - 3.x</td>
-<td><code>replace_address</code></td>
-<td>Deprecated; use <code>replace_address_first_boot</code></td>
-</tr>
-<tr>
-<td>3.x+</td>
-<td><code>replace_address_first_boot</code></td>
-<td>Only applies on first start; requires IP address</td>
-</tr>
-</tbody>
-</table>
+<h2 id="replace-address-option">Replace Address Option<a class="headerlink" href="#replace-address-option" title="Permanent link">¶</a></h2>
+<p>Use <code>replace_address_first_boot</code> (not the deprecated <code>replace_address</code>) to specify the IP of the dead node being replaced.</p>
 <div class="admonition note">
 <p class="admonition-title">First Boot Only</p>
 <p>The <code>_first_boot</code> suffix indicates the option only takes effect on the node's first startup. Subsequent restarts ignore it, preventing accidental re-replacement.</p>
@@ -21120,7 +21098,7 @@ sudo<span class="w"> </span>systemctl<span class="w"> </span>stop<span class="w"
 sudo<span class="w"> </span>rm<span class="w"> </span>-rf<span class="w"> </span>/var/lib/cassandra/data/*
 
 <span class="c1"># Fix cassandra.yaml</span>
-num_tokens:<span class="w"> </span><span class="m">256</span><span class="w">  </span><span class="c1"># Match original</span>
+num_tokens:<span class="w"> </span><span class="m">16</span><span class="w">   </span><span class="c1"># Match original cluster value</span>
 
 <span class="c1"># Restart</span>
 sudo<span class="w"> </span>systemctl<span class="w"> </span>start<span class="w"> </span>cassandra

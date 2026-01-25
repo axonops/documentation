@@ -20483,6 +20483,10 @@ data-et-multi-view="{&quot;schema&quot;:{&quot;content&quot;:{&quot;desktop&quot
 </tbody>
 </table>
 <h3 id="status-values">Status Values<a class="headerlink" href="#status-values" title="Permanent link">¶</a></h3>
+<div class="admonition note">
+<p class="admonition-title">Lowercase Status Values</p>
+<p>Status values are lowercase in the implementation. Use lowercase in queries.</p>
+</div>
 <table>
 <thead>
 <tr>
@@ -20492,27 +20496,27 @@ data-et-multi-view="{&quot;schema&quot;:{&quot;content&quot;:{&quot;desktop&quot
 </thead>
 <tbody>
 <tr>
-<td><code>INIT</code></td>
+<td><code>init</code></td>
 <td>Repair initialized</td>
 </tr>
 <tr>
-<td><code>START</code></td>
+<td><code>start</code></td>
 <td>Repair started</td>
 </tr>
 <tr>
-<td><code>RUNNING</code></td>
+<td><code>running</code></td>
 <td>Actively repairing</td>
 </tr>
 <tr>
-<td><code>SUCCESS</code></td>
+<td><code>success</code></td>
 <td>Completed successfully</td>
 </tr>
 <tr>
-<td><code>FAILURE</code></td>
+<td><code>failure</code></td>
 <td>Failed with error</td>
 </tr>
 <tr>
-<td><code>SKIPPED</code></td>
+<td><code>skipped</code></td>
 <td>Skipped (e.g., no ranges)</td>
 </tr>
 </tbody>
@@ -20532,7 +20536,7 @@ data-et-multi-view="{&quot;schema&quot;:{&quot;content&quot;:{&quot;desktop&quot
 <span class="c1">-- Failed repairs</span>
 <span class="k">SELECT</span><span class="w"> </span><span class="n">id</span><span class="p">,</span><span class="w"> </span><span class="n">keyspace_name</span><span class="p">,</span><span class="w"> </span><span class="n">failure_cause</span><span class="p">,</span><span class="w"> </span><span class="n">duration_millis</span>
 <span class="k">FROM</span><span class="w"> </span><span class="n">system_views</span><span class="p">.</span><span class="n">repairs</span>
-<span class="k">WHERE</span><span class="w"> </span><span class="n">status</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s1">'FAILURE'</span><span class="p">;</span>
+<span class="k">WHERE</span><span class="w"> </span><span class="n">status</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s1">'failure'</span><span class="p">;</span>
 </code></pre></div>
 <hr>
 <h2 id="repair_sessions">repair_sessions<a class="headerlink" href="#repair_sessions" title="Permanent link">¶</a></h2>
@@ -20604,6 +20608,10 @@ data-et-multi-view="{&quot;schema&quot;:{&quot;content&quot;:{&quot;desktop&quot
 <span class="p">)</span>
 </code></pre></div>
 <h3 id="job-states">Job States<a class="headerlink" href="#job-states" title="Permanent link">¶</a></h3>
+<div class="admonition note">
+<p class="admonition-title">Lowercase State Values</p>
+<p>State values are lowercase in the implementation. Use lowercase in queries.</p>
+</div>
 <table>
 <thead>
 <tr>
@@ -20613,39 +20621,39 @@ data-et-multi-view="{&quot;schema&quot;:{&quot;content&quot;:{&quot;desktop&quot
 </thead>
 <tbody>
 <tr>
-<td><code>INIT</code></td>
+<td><code>init</code></td>
 <td>Job created</td>
 </tr>
 <tr>
-<td><code>START</code></td>
+<td><code>start</code></td>
 <td>Job started</td>
 </tr>
 <tr>
-<td><code>SNAPSHOT_START</code></td>
+<td><code>snapshot_start</code></td>
 <td>Taking snapshot</td>
 </tr>
 <tr>
-<td><code>SNAPSHOT_COMPLETE</code></td>
+<td><code>snapshot_complete</code></td>
 <td>Snapshot done</td>
 </tr>
 <tr>
-<td><code>VALIDATION_START</code></td>
+<td><code>validation_start</code></td>
 <td>Building Merkle trees</td>
 </tr>
 <tr>
-<td><code>VALIDATION_COMPLETE</code></td>
+<td><code>validation_complete</code></td>
 <td>Merkle trees built</td>
 </tr>
 <tr>
-<td><code>STREAM_START</code></td>
+<td><code>stream_start</code></td>
 <td>Streaming differences</td>
 </tr>
 <tr>
-<td><code>SUCCESS</code></td>
+<td><code>success</code></td>
 <td>Job completed</td>
 </tr>
 <tr>
-<td><code>FAILURE</code></td>
+<td><code>failure</code></td>
 <td>Job failed</td>
 </tr>
 </tbody>
@@ -20666,7 +20674,7 @@ data-et-multi-view="{&quot;schema&quot;:{&quot;content&quot;:{&quot;desktop&quot
 <span class="c1">-- Jobs currently streaming</span>
 <span class="k">SELECT</span><span class="w"> </span><span class="n">keyspace_name</span><span class="p">,</span><span class="w"> </span><span class="k">table_name</span><span class="p">,</span><span class="w"> </span><span class="n">status</span>
 <span class="k">FROM</span><span class="w"> </span><span class="n">system_views</span><span class="p">.</span><span class="n">repair_jobs</span>
-<span class="k">WHERE</span><span class="w"> </span><span class="n">status</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s1">'STREAM_START'</span><span class="p">;</span>
+<span class="k">WHERE</span><span class="w"> </span><span class="n">status</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s1">'stream_start'</span><span class="p">;</span>
 </code></pre></div>
 <p>Calculate validation duration by subtracting timestamps in application.</p>
 <hr>
@@ -20781,7 +20789,7 @@ data-et-multi-view="{&quot;schema&quot;:{&quot;content&quot;:{&quot;desktop&quot
 <span class="k">WHERE</span><span class="w"> </span><span class="n">completed</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">false</span><span class="p">;</span>
 
 <span class="c1">-- Sessions for a specific repair (use repair_id from above)</span>
-<span class="k">SELECT</span><span class="w"> </span><span class="n">id</span><span class="p">,</span><span class="w"> </span><span class="n">repair_id</span><span class="p">,</span><span class="w"> </span><span class="n">status</span><span class="p">,</span><span class="w"> </span><span class="n">ranges_count</span><span class="p">,</span><span class="w"> </span><span class="n">ranges_complete</span>
+<span class="k">SELECT</span><span class="w"> </span><span class="n">id</span><span class="p">,</span><span class="w"> </span><span class="n">repair_id</span><span class="p">,</span><span class="w"> </span><span class="n">status</span><span class="p">,</span><span class="w"> </span><span class="n">ranges</span>
 <span class="k">FROM</span><span class="w"> </span><span class="n">system_views</span><span class="p">.</span><span class="n">repair_sessions</span>
 <span class="k">WHERE</span><span class="w"> </span><span class="n">repair_id</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="o">&lt;</span><span class="n">repair_id</span><span class="o">&gt;</span><span class="p">;</span>
 
@@ -20803,7 +20811,7 @@ data-et-multi-view="{&quot;schema&quot;:{&quot;content&quot;:{&quot;desktop&quot
 <div class="highlight"><pre><span></span><code><span class="c1">-- Alert: Recent repair failures</span>
 <span class="k">SELECT</span><span class="w"> </span><span class="n">id</span><span class="p">,</span><span class="w"> </span><span class="n">keyspace_name</span><span class="p">,</span><span class="w"> </span><span class="n">failure_cause</span><span class="p">,</span><span class="w"> </span><span class="n">state_failure_timestamp</span>
 <span class="k">FROM</span><span class="w"> </span><span class="n">system_views</span><span class="p">.</span><span class="n">repairs</span>
-<span class="k">WHERE</span><span class="w"> </span><span class="n">status</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s1">'FAILURE'</span><span class="p">;</span>
+<span class="k">WHERE</span><span class="w"> </span><span class="n">status</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s1">'failure'</span><span class="p">;</span>
 </code></pre></div>
 <p>Filter in application for failures within the last hour.</p>
 <h3 id="stuck-validations">Stuck Validations<a class="headerlink" href="#stuck-validations" title="Permanent link">¶</a></h3>

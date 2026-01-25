@@ -20011,7 +20011,7 @@ sudo<span class="w"> </span>systemctl<span class="w"> </span>start<span class="w
 <div class="highlight"><pre><span></span><code><span class="c1"># Check current limit</span>
 cat<span class="w"> </span>/proc/sys/vm/max_map_count
 
-<span class="c1"># Increase if needed (default 65530 is usually sufficient)</span>
+<span class="c1"># Increase if needed (default 65530 may be insufficient with many SSTables)</span>
 sudo<span class="w"> </span>sysctl<span class="w"> </span>vm.max_map_count<span class="o">=</span><span class="m">1048575</span>
 
 <span class="c1"># Make permanent</span>

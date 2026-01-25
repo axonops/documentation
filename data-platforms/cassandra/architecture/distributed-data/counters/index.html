@@ -20809,16 +20809,16 @@ previous increments plus additional ones.
 <td>Every counter update requires a local read, adding latency</td>
 </tr>
 <tr>
-<td>Coordinator affinity</td>
-<td>The coordinator's host_id determines which shard is updated</td>
+<td>Replica-local shards</td>
+<td>Each replica uses its own CounterId for its shard</td>
 </tr>
 <tr>
-<td>Clock dependency</td>
-<td>Accurate timestamps are essential for correct merge behavior</td>
+<td>Logical clock</td>
+<td>Shards use logical clocks (not requiring global timestamp accuracy)</td>
 </tr>
 <tr>
 <td>Higher overhead</td>
-<td>Counter writes are ~2x the cost of regular writes</td>
+<td>Counter writes have additional overhead compared to regular writes</td>
 </tr>
 </tbody>
 </table>
@@ -20991,11 +20991,11 @@ Read with CL = ALL (contacts all):
 <tbody>
 <tr>
 <td>Write latency</td>
-<td>2x regular writes due to read-before-write</td>
+<td>Higher than regular writes due to read-before-write</td>
 </tr>
 <tr>
 <td>Storage overhead</td>
-<td>Each updating node adds a shard (~20 bytes)</td>
+<td>Each updating replica adds a shard</td>
 </tr>
 <tr>
 <td>Repair behavior</td>

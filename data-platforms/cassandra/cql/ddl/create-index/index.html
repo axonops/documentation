@@ -20833,7 +20833,7 @@ data-et-multi-view="{&quot;schema&quot;:{&quot;content&quot;:{&quot;desktop&quot
 <tr>
 <td>Built</td>
 <td>Queries return complete results from available nodes</td>
-<td><code>SELECT * FROM system_schema.indexes</code></td>
+<td><code>nodetool indexbuildstatus</code> (no pending builds)</td>
 </tr>
 <tr>
 <td>Failed</td>
@@ -20842,6 +20842,7 @@ data-et-multi-view="{&quot;schema&quot;:{&quot;content&quot;:{&quot;desktop&quot
 </tr>
 </tbody>
 </table>
+<p><em>Note: <code>system_schema.indexes</code> shows index definitions but not build status. Use <code>nodetool indexbuildstatus</code> to check build progress.</em></p>
 <h3 id="query-execution-contract">Query Execution Contract<a class="headerlink" href="#query-execution-contract" title="Permanent link">¶</a></h3>
 <table>
 <thead>

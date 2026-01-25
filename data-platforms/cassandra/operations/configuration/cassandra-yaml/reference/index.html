@@ -26933,7 +26933,7 @@ data-et-multi-view="{&quot;schema&quot;:{&quot;content&quot;:{&quot;desktop&quot
 <p><strong>Versions:</strong> 4.0, 4.1, 5.0</p>
 <p><strong>Default:</strong> 4.0: <code>16</code> | 4.1: <code>16</code> | 5.0: <code>16</code></p>
 <p>This defines the number of tokens randomly assigned to this node on the ring The more tokens, relative to other nodes, the larger the proportion of data that this node will store. You probably want all nodes to have the same number of tokens assuming they have equal hardware capability.</p>
-<p>If you leave this unspecified, Cassandra will use the default of 1 token for legacy compatibility, and will use the initial_token as described below.</p>
+<p>If you leave this unspecified, Cassandra 4.0+ uses the default of 16 tokens. Earlier versions defaulted to 1 token for legacy compatibility.</p>
 <p>Specifying initial_token will override this setting on the node's initial start, on subsequent starts, this setting will apply even if initial token is set.</p>
 <p>See https://cassandra.apache.org/doc/latest/getting_started/production.html#tokens for best practice information about num_tokens.</p>
 <hr>

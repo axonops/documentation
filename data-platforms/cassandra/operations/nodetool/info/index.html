@@ -7978,6 +7978,15 @@ data-et-multi-view="{&quot;schema&quot;:{&quot;content&quot;:{&quot;desktop&quot
   
 </li>
         
+          <li class="md-nav__item">
+  <a href="#bootstrapdecommission-state" class="md-nav__link">
+    <span class="md-ellipsis">
+      Bootstrap/Decommission State
+    </span>
+  </a>
+  
+</li>
+        
       </ul>
     </nav>
   
@@ -20153,6 +20162,15 @@ data-et-multi-view="{&quot;schema&quot;:{&quot;content&quot;:{&quot;desktop&quot
   
 </li>
         
+          <li class="md-nav__item">
+  <a href="#bootstrapdecommission-state" class="md-nav__link">
+    <span class="md-ellipsis">
+      Bootstrap/Decommission State
+    </span>
+  </a>
+  
+</li>
+        
       </ul>
     </nav>
   
@@ -20480,7 +20498,11 @@ Token                  : (invoke with -T/--tokens to see all 256 tokens)
 <tbody>
 <tr>
 <td>Load</td>
-<td>Total data size on disk</td>
+<td>Total data size on disk (compressed)</td>
+</tr>
+<tr>
+<td>Uncompressed load</td>
+<td>Total data size on disk before compression</td>
 </tr>
 <tr>
 <td>Heap Memory</td>
@@ -20533,8 +20555,40 @@ Token                  : (invoke with -T/--tokens to see all 256 tokens)
 <td>Counter value cache</td>
 </tr>
 <tr>
+<td>Chunk Cache</td>
+<td>File chunk cache (when enabled)</td>
+</tr>
+<tr>
 <td>Network Cache</td>
 <td>Buffer cache for network operations</td>
+</tr>
+</tbody>
+</table>
+<h3 id="bootstrapdecommission-state">Bootstrap/Decommission State<a class="headerlink" href="#bootstrapdecommission-state" title="Permanent link">¶</a></h3>
+<p>The following fields appear when a node is bootstrapping or decommissioning:</p>
+<table>
+<thead>
+<tr>
+<th>Field</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Bootstrap state</td>
+<td>Current bootstrap state (e.g., <code>IN_PROGRESS</code>, <code>COMPLETED</code>)</td>
+</tr>
+<tr>
+<td>Bootstrap failed</td>
+<td>Indicates if bootstrap failed</td>
+</tr>
+<tr>
+<td>Decommissioning</td>
+<td>Whether decommission is in progress</td>
+</tr>
+<tr>
+<td>Decommission failed</td>
+<td>Indicates if decommission failed</td>
 </tr>
 </tbody>
 </table>

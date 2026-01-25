@@ -20364,7 +20364,7 @@ data-et-multi-view="{&quot;schema&quot;:{&quot;content&quot;:{&quot;desktop&quot
 <tr>
 <td><strong>Consistency validation</strong></td>
 <td>Not available</td>
-<td>Honors consistency levels</td>
+<td>Configurable replica acknowledgment (not equivalent to CQL consistency levels)</td>
 </tr>
 <tr>
 <td><strong>Schema management</strong></td>
@@ -20509,8 +20509,8 @@ curl<span class="w"> </span>-X<span class="w"> </span>DELETE<span class="w"> </s
 </tr>
 <tr>
 <td><code>bigint</code></td>
-<td><code>int</code></td>
-<td></td>
+<td><code>long</code></td>
+<td>64-bit signed integer</td>
 </tr>
 <tr>
 <td><code>blob</code></td>
@@ -20529,23 +20529,23 @@ curl<span class="w"> </span>-X<span class="w"> </span>DELETE<span class="w"> </s
 </tr>
 <tr>
 <td><code>decimal</code></td>
-<td><code>long</code></td>
-<td></td>
+<td><code>bytes</code></td>
+<td>Avro decimal logical type</td>
 </tr>
 <tr>
 <td><code>double</code></td>
-<td><code>long</code></td>
-<td></td>
+<td><code>double</code></td>
+<td>64-bit IEEE 754</td>
 </tr>
 <tr>
 <td><code>duration</code></td>
-<td><code>long</code></td>
-<td></td>
+<td><code>bytes</code></td>
+<td>Three signed integers (months, days, nanoseconds)</td>
 </tr>
 <tr>
 <td><code>float</code></td>
-<td><code>long</code></td>
-<td></td>
+<td><code>float</code></td>
+<td>32-bit IEEE 754</td>
 </tr>
 <tr>
 <td><code>frozen</code></td>
@@ -20609,8 +20609,8 @@ curl<span class="w"> </span>-X<span class="w"> </span>DELETE<span class="w"> </s
 </tr>
 <tr>
 <td><code>tuple</code></td>
-<td><code>map</code></td>
-<td></td>
+<td><code>record</code></td>
+<td>Fixed-order fields as Avro record</td>
 </tr>
 <tr>
 <td><code>uuid</code></td>
@@ -20624,8 +20624,8 @@ curl<span class="w"> </span>-X<span class="w"> </span>DELETE<span class="w"> </s
 </tr>
 <tr>
 <td><code>varint</code></td>
-<td><code>int</code></td>
-<td></td>
+<td><code>bytes</code></td>
+<td>Arbitrary precision integer</td>
 </tr>
 <tr>
 <td>UDT (frozen)</td>

@@ -10765,13 +10765,37 @@ data-et-multi-view="{&quot;schema&quot;:{&quot;content&quot;:{&quot;desktop&quot
 </li>
       
         <li class="md-nav__item">
-  <a href="#common-options" class="md-nav__link">
+  <a href="#arguments" class="md-nav__link">
     <span class="md-ellipsis">
-      Common Options
+      Arguments
     </span>
   </a>
   
-    <nav class="md-nav" aria-label="Common Options">
+    <nav class="md-nav" aria-label="Arguments">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#value-semantics" class="md-nav__link">
+    <span class="md-ellipsis">
+      Value Semantics
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#common-guardrail-setters" class="md-nav__link">
+    <span class="md-ellipsis">
+      Common Guardrail Setters
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Common Guardrail Setters">
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
@@ -20006,13 +20030,37 @@ data-et-multi-view="{&quot;schema&quot;:{&quot;content&quot;:{&quot;desktop&quot
 </li>
       
         <li class="md-nav__item">
-  <a href="#common-options" class="md-nav__link">
+  <a href="#arguments" class="md-nav__link">
     <span class="md-ellipsis">
-      Common Options
+      Arguments
     </span>
   </a>
   
-    <nav class="md-nav" aria-label="Common Options">
+    <nav class="md-nav" aria-label="Arguments">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#value-semantics" class="md-nav__link">
+    <span class="md-ellipsis">
+      Value Semantics
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#common-guardrail-setters" class="md-nav__link">
+    <span class="md-ellipsis">
+      Common Guardrail Setters
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Common Guardrail Setters">
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
@@ -20217,41 +20265,89 @@ data-et-multi-view="{&quot;schema&quot;:{&quot;content&quot;:{&quot;desktop&quot
 <p>Modifies guardrail configuration settings at runtime.</p>
 <hr>
 <h2 id="synopsis">Synopsis<a class="headerlink" href="#synopsis" title="Permanent link">¶</a></h2>
-<div class="highlight"><pre><span></span><code>nodetool<span class="w"> </span><span class="o">[</span>connection_options<span class="o">]</span><span class="w"> </span>setguardrailsconfig<span class="w"> </span><span class="o">[</span>options<span class="o">]</span>
+<div class="highlight"><pre><span></span><code>nodetool<span class="w"> </span><span class="o">[</span>connection_options<span class="o">]</span><span class="w"> </span>setguardrailsconfig<span class="w"> </span>&lt;guardrail_setter&gt;<span class="w"> </span>&lt;value<span class="o">(</span>s<span class="o">)</span>&gt;
 </code></pre></div>
 <hr>
 <h2 id="description">Description<a class="headerlink" href="#description" title="Permanent link">¶</a></h2>
 <p><code>nodetool setguardrailsconfig</code> modifies guardrail settings at runtime without requiring a node restart. Guardrails protect the cluster from potentially harmful operations by enforcing limits on schema, queries, and data sizes.</p>
+<p>The command takes a guardrail setter name followed by one or more values, depending on the guardrail type.</p>
 <div class="admonition warning">
 <p class="admonition-title">Non-Persistent Setting</p>
 <p>Settings modified with this command are <strong>not persisted</strong> to configuration files. Changes will be lost on node restart. Update <code>cassandra.yaml</code> to make changes permanent.</p>
 </div>
 <hr>
-<h2 id="common-options">Common Options<a class="headerlink" href="#common-options" title="Permanent link">¶</a></h2>
-<h3 id="table-guardrails">Table Guardrails<a class="headerlink" href="#table-guardrails" title="Permanent link">¶</a></h3>
+<h2 id="arguments">Arguments<a class="headerlink" href="#arguments" title="Permanent link">¶</a></h2>
 <table>
 <thead>
 <tr>
-<th>Option</th>
+<th>Argument</th>
 <th>Description</th>
 </tr>
 </thead>
 <tbody>
 <tr>
-<td><code>--tables-warn-threshold &lt;n&gt;</code></td>
-<td>Warning threshold for table count</td>
+<td><code>guardrail_setter</code></td>
+<td>Name of the guardrail setter (e.g., <code>tables</code>, <code>page_size</code>)</td>
 </tr>
 <tr>
-<td><code>--tables-fail-threshold &lt;n&gt;</code></td>
-<td>Failure threshold for table count</td>
+<td><code>value(s)</code></td>
+<td>One or more values depending on the guardrail type</td>
+</tr>
+</tbody>
+</table>
+<h3 id="value-semantics">Value Semantics<a class="headerlink" href="#value-semantics" title="Permanent link">¶</a></h3>
+<p>Different guardrail types require different argument patterns:</p>
+<table>
+<thead>
+<tr>
+<th>Guardrail Type</th>
+<th>Arguments</th>
+<th>Reset Value</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Threshold guardrails</strong> (e.g., <code>tables</code>, <code>page_size</code>)</td>
+<td><code>&lt;fail_threshold&gt; &lt;warn_threshold&gt;</code></td>
+<td><code>-1</code> to disable</td>
 </tr>
 <tr>
-<td><code>--columns-per-table-warn-threshold &lt;n&gt;</code></td>
-<td>Warning for columns per table</td>
+<td><strong>Flag guardrails</strong> (e.g., <code>allow_filtering</code>)</td>
+<td><code>true</code> or <code>false</code></td>
+<td>N/A</td>
 </tr>
 <tr>
-<td><code>--columns-per-table-fail-threshold &lt;n&gt;</code></td>
-<td>Failure for columns per table</td>
+<td><strong>String/list thresholds</strong></td>
+<td>Value as string</td>
+<td><code>null</code> or <code>[]</code> to reset</td>
+</tr>
+</tbody>
+</table>
+<div class="admonition info">
+<p class="admonition-title">Argument Order</p>
+<p>For threshold guardrails, specify <strong>fail threshold first, then warn threshold</strong>.</p>
+</div>
+<hr>
+<h2 id="common-guardrail-setters">Common Guardrail Setters<a class="headerlink" href="#common-guardrail-setters" title="Permanent link">¶</a></h2>
+<h3 id="table-guardrails">Table Guardrails<a class="headerlink" href="#table-guardrails" title="Permanent link">¶</a></h3>
+<table>
+<thead>
+<tr>
+<th>Setter</th>
+<th>Arguments</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>tables</code></td>
+<td><code>&lt;fail&gt; &lt;warn&gt;</code></td>
+<td>Table count thresholds</td>
+</tr>
+<tr>
+<td><code>columns_per_table</code></td>
+<td><code>&lt;fail&gt; &lt;warn&gt;</code></td>
+<td>Columns per table thresholds</td>
 </tr>
 </tbody>
 </table>
@@ -20259,26 +20355,21 @@ data-et-multi-view="{&quot;schema&quot;:{&quot;content&quot;:{&quot;desktop&quot
 <table>
 <thead>
 <tr>
-<th>Option</th>
+<th>Setter</th>
+<th>Arguments</th>
 <th>Description</th>
 </tr>
 </thead>
 <tbody>
 <tr>
-<td><code>--page-size-warn-threshold &lt;n&gt;</code></td>
-<td>Warning for large page sizes</td>
+<td><code>page_size</code></td>
+<td><code>&lt;fail&gt; &lt;warn&gt;</code></td>
+<td>Page size thresholds</td>
 </tr>
 <tr>
-<td><code>--page-size-fail-threshold &lt;n&gt;</code></td>
-<td>Rejection for excessive page sizes</td>
-</tr>
-<tr>
-<td><code>--partition-keys-in-select-warn-threshold &lt;n&gt;</code></td>
-<td>Warning for partition keys in SELECT</td>
-</tr>
-<tr>
-<td><code>--partition-keys-in-select-fail-threshold &lt;n&gt;</code></td>
-<td>Rejection for partition keys in SELECT</td>
+<td><code>partition_keys_in_select</code></td>
+<td><code>&lt;fail&gt; &lt;warn&gt;</code></td>
+<td>Partition keys in SELECT thresholds</td>
 </tr>
 </tbody>
 </table>
@@ -20286,85 +20377,74 @@ data-et-multi-view="{&quot;schema&quot;:{&quot;content&quot;:{&quot;desktop&quot
 <table>
 <thead>
 <tr>
-<th>Option</th>
+<th>Setter</th>
+<th>Arguments</th>
 <th>Description</th>
 </tr>
 </thead>
 <tbody>
 <tr>
-<td><code>--collection-size-warn-threshold &lt;bytes&gt;</code></td>
-<td>Warning for collection sizes</td>
+<td><code>collection_size</code></td>
+<td><code>&lt;fail&gt; &lt;warn&gt;</code></td>
+<td>Collection size thresholds (in bytes)</td>
 </tr>
 <tr>
-<td><code>--collection-size-fail-threshold &lt;bytes&gt;</code></td>
-<td>Rejection for collection sizes</td>
-</tr>
-<tr>
-<td><code>--items-per-collection-warn-threshold &lt;n&gt;</code></td>
-<td>Warning for collection item count</td>
-</tr>
-<tr>
-<td><code>--items-per-collection-fail-threshold &lt;n&gt;</code></td>
-<td>Rejection for collection item count</td>
+<td><code>items_per_collection</code></td>
+<td><code>&lt;fail&gt; &lt;warn&gt;</code></td>
+<td>Collection item count thresholds</td>
 </tr>
 </tbody>
 </table>
 <hr>
 <h2 id="examples">Examples<a class="headerlink" href="#examples" title="Permanent link">¶</a></h2>
 <h3 id="increase-table-limit">Increase Table Limit<a class="headerlink" href="#increase-table-limit" title="Permanent link">¶</a></h3>
-<div class="highlight"><pre><span></span><code>nodetool<span class="w"> </span>setguardrailsconfig<span class="w"> </span>--tables-warn-threshold<span class="w"> </span><span class="m">200</span><span class="w"> </span>--tables-fail-threshold<span class="w"> </span><span class="m">300</span>
+<div class="highlight"><pre><span></span><code><span class="c1"># Set fail=300, warn=200</span>
+nodetool<span class="w"> </span>setguardrailsconfig<span class="w"> </span>tables<span class="w"> </span><span class="m">300</span><span class="w"> </span><span class="m">200</span>
 </code></pre></div>
 <h3 id="set-page-size-limits">Set Page Size Limits<a class="headerlink" href="#set-page-size-limits" title="Permanent link">¶</a></h3>
-<div class="highlight"><pre><span></span><code>nodetool<span class="w"> </span>setguardrailsconfig<span class="w"> </span><span class="se">\</span>
-<span class="w">    </span>--page-size-warn-threshold<span class="w"> </span><span class="m">5000</span><span class="w"> </span><span class="se">\</span>
-<span class="w">    </span>--page-size-fail-threshold<span class="w"> </span><span class="m">10000</span>
+<div class="highlight"><pre><span></span><code><span class="c1"># Set fail=10000, warn=5000</span>
+nodetool<span class="w"> </span>setguardrailsconfig<span class="w"> </span>page_size<span class="w"> </span><span class="m">10000</span><span class="w"> </span><span class="m">5000</span>
 </code></pre></div>
 <h3 id="disable-a-guardrail">Disable a Guardrail<a class="headerlink" href="#disable-a-guardrail" title="Permanent link">¶</a></h3>
-<div class="highlight"><pre><span></span><code><span class="c1"># Set to -1 to disable</span>
-nodetool<span class="w"> </span>setguardrailsconfig<span class="w"> </span>--tables-fail-threshold<span class="w"> </span>-1
+<div class="highlight"><pre><span></span><code><span class="c1"># Set to -1 to disable (both fail and warn)</span>
+nodetool<span class="w"> </span>setguardrailsconfig<span class="w"> </span>tables<span class="w"> </span>-1<span class="w"> </span>-1
 </code></pre></div>
 <h3 id="stricter-collection-limits">Stricter Collection Limits<a class="headerlink" href="#stricter-collection-limits" title="Permanent link">¶</a></h3>
-<div class="highlight"><pre><span></span><code>nodetool<span class="w"> </span>setguardrailsconfig<span class="w"> </span><span class="se">\</span>
-<span class="w">    </span>--collection-size-warn-threshold<span class="w"> </span><span class="m">32768</span><span class="w"> </span><span class="se">\</span>
-<span class="w">    </span>--collection-size-fail-threshold<span class="w"> </span><span class="m">65536</span><span class="w"> </span><span class="se">\</span>
-<span class="w">    </span>--items-per-collection-warn-threshold<span class="w"> </span><span class="m">50</span><span class="w"> </span><span class="se">\</span>
-<span class="w">    </span>--items-per-collection-fail-threshold<span class="w"> </span><span class="m">100</span>
+<div class="highlight"><pre><span></span><code><span class="c1"># Collection size: fail=65536, warn=32768</span>
+nodetool<span class="w"> </span>setguardrailsconfig<span class="w"> </span>collection_size<span class="w"> </span><span class="m">65536</span><span class="w"> </span><span class="m">32768</span>
+
+<span class="c1"># Items per collection: fail=100, warn=50</span>
+nodetool<span class="w"> </span>setguardrailsconfig<span class="w"> </span>items_per_collection<span class="w"> </span><span class="m">100</span><span class="w"> </span><span class="m">50</span>
 </code></pre></div>
 <h3 id="enterprise-multi-tenant-settings">Enterprise Multi-Tenant Settings<a class="headerlink" href="#enterprise-multi-tenant-settings" title="Permanent link">¶</a></h3>
 <div class="highlight"><pre><span></span><code><span class="c1"># Stricter limits for shared clusters</span>
-nodetool<span class="w"> </span>setguardrailsconfig<span class="w"> </span><span class="se">\</span>
-<span class="w">    </span>--tables-warn-threshold<span class="w"> </span><span class="m">50</span><span class="w"> </span><span class="se">\</span>
-<span class="w">    </span>--tables-fail-threshold<span class="w"> </span><span class="m">75</span><span class="w"> </span><span class="se">\</span>
-<span class="w">    </span>--columns-per-table-warn-threshold<span class="w"> </span><span class="m">30</span><span class="w"> </span><span class="se">\</span>
-<span class="w">    </span>--columns-per-table-fail-threshold<span class="w"> </span><span class="m">50</span>
+nodetool<span class="w"> </span>setguardrailsconfig<span class="w"> </span>tables<span class="w"> </span><span class="m">75</span><span class="w"> </span><span class="m">50</span>
+nodetool<span class="w"> </span>setguardrailsconfig<span class="w"> </span>columns_per_table<span class="w"> </span><span class="m">50</span><span class="w"> </span><span class="m">30</span>
 </code></pre></div>
 <hr>
 <h2 id="when-to-use">When to Use<a class="headerlink" href="#when-to-use" title="Permanent link">¶</a></h2>
 <h3 id="temporary-relaxation-for-migration">Temporary Relaxation for Migration<a class="headerlink" href="#temporary-relaxation-for-migration" title="Permanent link">¶</a></h3>
-<div class="highlight"><pre><span></span><code><span class="c1"># Temporarily allow more tables for migration</span>
-nodetool<span class="w"> </span>setguardrailsconfig<span class="w"> </span>--tables-fail-threshold<span class="w"> </span><span class="m">500</span>
+<div class="highlight"><pre><span></span><code><span class="c1"># Temporarily allow more tables for migration (fail=500, warn=400)</span>
+nodetool<span class="w"> </span>setguardrailsconfig<span class="w"> </span>tables<span class="w"> </span><span class="m">500</span><span class="w"> </span><span class="m">400</span>
 
 <span class="c1"># Perform migration...</span>
 
-<span class="c1"># Restore normal limits</span>
-nodetool<span class="w"> </span>setguardrailsconfig<span class="w"> </span>--tables-fail-threshold<span class="w"> </span><span class="m">150</span>
+<span class="c1"># Restore normal limits (fail=150, warn=100)</span>
+nodetool<span class="w"> </span>setguardrailsconfig<span class="w"> </span>tables<span class="w"> </span><span class="m">150</span><span class="w"> </span><span class="m">100</span>
 </code></pre></div>
 <h3 id="emergency-unblock">Emergency Unblock<a class="headerlink" href="#emergency-unblock" title="Permanent link">¶</a></h3>
-<div class="highlight"><pre><span></span><code><span class="c1"># Unblock critical operation</span>
-nodetool<span class="w"> </span>setguardrailsconfig<span class="w"> </span>--page-size-fail-threshold<span class="w"> </span><span class="m">20000</span>
+<div class="highlight"><pre><span></span><code><span class="c1"># Unblock critical operation (fail=20000, warn=15000)</span>
+nodetool<span class="w"> </span>setguardrailsconfig<span class="w"> </span>page_size<span class="w"> </span><span class="m">20000</span><span class="w"> </span><span class="m">15000</span>
 
 <span class="c1"># Perform operation...</span>
 
-<span class="c1"># Restore limits</span>
-nodetool<span class="w"> </span>setguardrailsconfig<span class="w"> </span>--page-size-fail-threshold<span class="w"> </span><span class="m">10000</span>
+<span class="c1"># Restore limits (fail=10000, warn=5000)</span>
+nodetool<span class="w"> </span>setguardrailsconfig<span class="w"> </span>page_size<span class="w"> </span><span class="m">10000</span><span class="w"> </span><span class="m">5000</span>
 </code></pre></div>
 <h3 id="hardening-new-clusters">Hardening New Clusters<a class="headerlink" href="#hardening-new-clusters" title="Permanent link">¶</a></h3>
 <div class="highlight"><pre><span></span><code><span class="c1"># Apply stricter guardrails for new deployments</span>
-nodetool<span class="w"> </span>setguardrailsconfig<span class="w"> </span><span class="se">\</span>
-<span class="w">    </span>--tables-warn-threshold<span class="w"> </span><span class="m">50</span><span class="w"> </span><span class="se">\</span>
-<span class="w">    </span>--tables-fail-threshold<span class="w"> </span><span class="m">100</span><span class="w"> </span><span class="se">\</span>
-<span class="w">    </span>--columns-per-table-warn-threshold<span class="w"> </span><span class="m">25</span><span class="w"> </span><span class="se">\</span>
-<span class="w">    </span>--columns-per-table-fail-threshold<span class="w"> </span><span class="m">50</span>
+nodetool<span class="w"> </span>setguardrailsconfig<span class="w"> </span>tables<span class="w"> </span><span class="m">100</span><span class="w"> </span><span class="m">50</span>
+nodetool<span class="w"> </span>setguardrailsconfig<span class="w"> </span>columns_per_table<span class="w"> </span><span class="m">50</span><span class="w"> </span><span class="m">25</span>
 </code></pre></div>
 <hr>
 <h2 id="best-practices">Best Practices<a class="headerlink" href="#best-practices" title="Permanent link">¶</a></h2>
@@ -20432,10 +20512,8 @@ nodetool<span class="w"> </span>getguardrailsconfig
 <p>To apply guardrails across the cluster:</p>
 <div class="highlight"><pre><span></span><code><span class="c1"># Apply to all nodes</span>
 <span class="k">for</span><span class="w"> </span>host<span class="w"> </span><span class="k">in</span><span class="w"> </span>node1<span class="w"> </span>node2<span class="w"> </span>node3<span class="p">;</span><span class="w"> </span><span class="k">do</span>
-<span class="w">    </span>ssh<span class="w"> </span><span class="s2">"</span><span class="nv">$host</span><span class="s2">"</span><span class="w"> </span><span class="s2">"nodetool setguardrailsconfig \"</span>
-<span class="s2">        --tables-warn-threshold 100 \</span>
-<span class="s2">        --tables-fail-threshold 150</span>
-<span class="s2">done</span>
+<span class="w">    </span>ssh<span class="w"> </span><span class="s2">"</span><span class="nv">$host</span><span class="s2">"</span><span class="w"> </span><span class="s1">'nodetool setguardrailsconfig tables 150 100'</span>
+<span class="k">done</span>
 </code></pre></div>
 <hr>
 <h2 id="related-commands">Related Commands<a class="headerlink" href="#related-commands" title="Permanent link">¶</a></h2>

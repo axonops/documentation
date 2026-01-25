@@ -20430,7 +20430,6 @@ data-et-multi-view="{&quot;schema&quot;:{&quot;content&quot;:{&quot;desktop&quot
 <thead>
 <tr>
 <th>Feature</th>
-<th style="text-align: center;">Cassandra 3.x</th>
 <th style="text-align: center;">Cassandra 4.x</th>
 <th style="text-align: center;">Cassandra 5.0+</th>
 </tr>
@@ -20440,23 +20439,19 @@ data-et-multi-view="{&quot;schema&quot;:{&quot;content&quot;:{&quot;desktop&quot
 <td>Secondary Index (2i)</td>
 <td style="text-align: center;">✅</td>
 <td style="text-align: center;">✅</td>
-<td style="text-align: center;">✅</td>
 </tr>
 <tr>
 <td>SASI (experimental)</td>
-<td style="text-align: center;">✅ 3.4+</td>
 <td style="text-align: center;">✅</td>
 <td style="text-align: center;">✅</td>
 </tr>
 <tr>
 <td>SAI</td>
-<td style="text-align: center;">❌</td>
-<td style="text-align: center;">❌</td>
-<td style="text-align: center;">✅</td>
+<td style="text-align: center;">⚠️ (experimental)</td>
+<td style="text-align: center;">✅ (recommended)</td>
 </tr>
 <tr>
 <td>Vector search</td>
-<td style="text-align: center;">❌</td>
 <td style="text-align: center;">❌</td>
 <td style="text-align: center;">✅</td>
 </tr>
@@ -20464,35 +20459,29 @@ data-et-multi-view="{&quot;schema&quot;:{&quot;content&quot;:{&quot;desktop&quot
 <td>Equality queries</td>
 <td style="text-align: center;">✅</td>
 <td style="text-align: center;">✅</td>
-<td style="text-align: center;">✅</td>
 </tr>
 <tr>
 <td>Range queries</td>
-<td style="text-align: center;">SASI only</td>
 <td style="text-align: center;">SASI only</td>
 <td style="text-align: center;">SAI/SASI</td>
 </tr>
 <tr>
 <td>LIKE prefix</td>
 <td style="text-align: center;">SASI only</td>
-<td style="text-align: center;">SASI only</td>
 <td style="text-align: center;">SAI/SASI</td>
 </tr>
 <tr>
 <td>LIKE contains</td>
-<td style="text-align: center;">SASI only</td>
 <td style="text-align: center;">SASI only</td>
 <td style="text-align: center;">SAI/SASI</td>
 </tr>
 <tr>
 <td>Collection indexing</td>
 <td style="text-align: center;">2i only</td>
-<td style="text-align: center;">2i only</td>
 <td style="text-align: center;">2i/SAI</td>
 </tr>
 <tr>
 <td>ANN (vector)</td>
-<td style="text-align: center;">❌</td>
 <td style="text-align: center;">❌</td>
 <td style="text-align: center;">SAI only</td>
 </tr>
@@ -20503,7 +20492,6 @@ data-et-multi-view="{&quot;schema&quot;:{&quot;content&quot;:{&quot;desktop&quot
 <ul>
 <li><strong>Cassandra 5.0+</strong>: Use SAI for all new indexes</li>
 <li><strong>Cassandra 4.x</strong>: Use 2i for equality, SASI for range (with caution)</li>
-<li><strong>Cassandra 3.x</strong>: Use 2i for equality, SASI for range (with caution)</li>
 <li><strong>Upgrading</strong>: Plan migration from SASI to SAI when moving to 5.0</li>
 </ul>
 </div>
@@ -20575,13 +20563,13 @@ data-et-multi-view="{&quot;schema&quot;:{&quot;content&quot;:{&quot;desktop&quot
 <td><strong>Write Overhead</strong></td>
 <td>Medium</td>
 <td>Medium</td>
-<td>Low</td>
+<td>Low (typical)</td>
 </tr>
 <tr>
 <td><strong>Cardinality Handling</strong></td>
 <td>Poor at extremes</td>
 <td>Better</td>
-<td>Best</td>
+<td>Best (generally)</td>
 </tr>
 <tr>
 <td><strong>Production Ready</strong></td>
@@ -20593,7 +20581,7 @@ data-et-multi-view="{&quot;schema&quot;:{&quot;content&quot;:{&quot;desktop&quot
 </table>
 <hr>
 <h2 id="operator-support-matrix">Operator Support Matrix<a class="headerlink" href="#operator-support-matrix" title="Permanent link">¶</a></h2>
-<p>This table shows exactly which CQL operators are supported by each index type.</p>
+<p>This table shows which CQL operators are generally supported by each index type. Actual behavior may vary by Cassandra version, analyzer configuration, and data type. Consult version-specific documentation for definitive support.</p>
 <table>
 <thead>
 <tr>

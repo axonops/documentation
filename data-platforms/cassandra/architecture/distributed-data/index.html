@@ -20351,7 +20351,7 @@ data-et-multi-view="{&quot;schema&quot;:{&quot;content&quot;:{&quot;desktop&quot
 <p>In Cassandra:
 - Any node can serve as <strong>coordinator</strong> for any request
 - The coordinator role is assigned per-request, not per-cluster
-- No node holds special metadata or routing responsibility
+- In traditional Cassandra, no node holds special metadata or routing responsibility (note: CEP-21 introduces cluster metadata services in newer versions)
 - Cluster continues operating if any node (or multiple nodes) fails</p>
 <h3 id="comparison-with-master-based-systems">Comparison with Master-Based Systems<a class="headerlink" href="#comparison-with-master-based-systems" title="Permanent link">¶</a></h3>
 <table>
@@ -20442,8 +20442,8 @@ No node is "special" or required for cluster operation.
 <td>No election process; operations continue immediately</td>
 </tr>
 <tr>
-<td><strong>Linear write scalability</strong></td>
-<td>All nodes accept writes; adding nodes increases write capacity</td>
+<td><strong>Write scalability</strong></td>
+<td>All nodes accept writes; adding nodes generally increases write capacity</td>
 </tr>
 <tr>
 <td><strong>Simpler operations</strong></td>

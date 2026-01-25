@@ -19955,11 +19955,11 @@ data-et-multi-view="{&quot;schema&quot;:{&quot;content&quot;:{&quot;desktop&quot
 </tr>
 <tr>
 <td>Non-blocking I/O</td>
-<td>Driver does not block threads waiting for responses</td>
+<td>Underlying network I/O is non-blocking; synchronous API wrappers may block caller threads</td>
 </tr>
 <tr>
 <td>Configurable concurrency</td>
-<td>Limit in-flight requests per connection (default typically 1024-2048)</td>
+<td>Limit in-flight requests per connection (driver and version-specific defaults)</td>
 </tr>
 </tbody>
 </table>
@@ -19995,19 +19995,14 @@ data-et-multi-view="{&quot;schema&quot;:{&quot;content&quot;:{&quot;desktop&quot
 </thead>
 <tbody>
 <tr>
-<td>Core connections per host</td>
-<td>Minimum connections maintained</td>
+<td>Connections per host</td>
+<td>Connections maintained per node (Java 4.x: fixed size; other drivers may have min/max)</td>
 <td>1</td>
 </tr>
 <tr>
-<td>Max connections per host</td>
-<td>Maximum connections allowed</td>
-<td>2-8</td>
-</tr>
-<tr>
 <td>Max requests per connection</td>
-<td>Concurrent requests before opening new connection</td>
-<td>1024-2048</td>
+<td>Concurrent in-flight requests per connection</td>
+<td>2048 (Java 4.x)</td>
 </tr>
 <tr>
 <td>Heartbeat interval</td>
@@ -20059,9 +20054,9 @@ data-et-multi-view="{&quot;schema&quot;:{&quot;content&quot;:{&quot;desktop&quot
 </tr>
 <tr>
 <td>Go</td>
-<td>Apache Cassandra GoCQL Driver</td>
-<td>Apache</td>
-<td><a href="https://github.com/apache/cassandra-gocql-driver">cassandra-gocql-driver</a></td>
+<td>GoCQL Driver</td>
+<td>Community (Apache donation in progress)</td>
+<td><a href="https://github.com/gocql/gocql">gocql</a></td>
 </tr>
 <tr>
 <td>Rust</td>

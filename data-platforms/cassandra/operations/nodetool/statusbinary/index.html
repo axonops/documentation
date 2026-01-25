@@ -20743,13 +20743,13 @@ data-et-multi-view="{&quot;schema&quot;:{&quot;content&quot;:{&quot;desktop&quot
 <div class="highlight"><pre><span></span><code><span class="ch">#!/bin/bash</span>
 <span class="c1"># check_binary_cluster.sh</span>
 
-<span class="nb">echo</span><span class="w"> </span><span class="s2">"=== Native Transport Status Across Cluster ==="</span><span class="c1"># Get list of node IPs from local nodetool status</span>
+<span class="nb">echo</span><span class="w"> </span><span class="s2">"=== Native Transport Status Across Cluster ==="</span>
 
-
+<span class="c1"># Get list of node IPs from local nodetool status</span>
 <span class="nv">nodes</span><span class="o">=</span><span class="k">$(</span>nodetool<span class="w"> </span>status<span class="w"> </span><span class="p">|</span><span class="w"> </span>grep<span class="w"> </span><span class="s2">"^UN\|^DN"</span><span class="w"> </span><span class="p">|</span><span class="w"> </span>awk<span class="w"> </span><span class="s1">'{print $2}'</span><span class="k">)</span>
 
 <span class="k">for</span><span class="w"> </span>node<span class="w"> </span><span class="k">in</span><span class="w"> </span><span class="nv">$nodes</span><span class="p">;</span><span class="w"> </span><span class="k">do</span>
-<span class="w">    </span><span class="nv">status</span><span class="o">=</span><span class="k">$(</span>ssh<span class="w"> </span><span class="s2">"</span><span class="nv">$node</span><span class="s2">"</span><span class="w"> </span><span class="s2">"nodetool statusbinary 2&gt;/dev/null || echo "</span>UNREACHABLE<span class="s2">")"</span>
+<span class="w">    </span><span class="nv">status</span><span class="o">=</span><span class="k">$(</span>ssh<span class="w"> </span><span class="s2">"</span><span class="nv">$node</span><span class="s2">"</span><span class="w"> </span><span class="s1">'nodetool statusbinary 2&gt;/dev/null || echo "UNREACHABLE"'</span><span class="k">)</span>
 <span class="w">    </span><span class="nb">echo</span><span class="w"> </span><span class="s2">"</span><span class="nv">$node</span><span class="s2">: </span><span class="nv">$status</span><span class="s2">"</span>
 <span class="k">done</span>
 </code></pre></div>

@@ -20656,7 +20656,7 @@ Example: Adding 3 nodes
 <tbody>
 <tr>
 <td><strong>Add multiple of RF</strong></td>
-<td>Maintains balanced distribution</td>
+<td>Helps maintain balanced distribution (mainly for single-token deployments)</td>
 </tr>
 <tr>
 <td><strong>Add one at a time</strong></td>
@@ -20676,6 +20676,10 @@ Example: Adding 3 nodes
 </tr>
 </tbody>
 </table>
+<div class="admonition note">
+<p class="admonition-title">Vnodes vs Single-Token</p>
+<p>With vnodes (multiple tokens per node), adding exact multiples of RF is less critical as data is distributed across many token ranges.</p>
+</div>
 <h3 id="multi-datacenter-scaling">Multi-Datacenter Scaling<a class="headerlink" href="#multi-datacenter-scaling" title="Permanent link">¶</a></h3>
 <p>When scaling across datacenters:</p>
 <div class="highlight"><pre><span></span><code><span class="c1"># Ensure proportional capacity per DC</span>
@@ -20768,7 +20772,7 @@ nodetool<span class="w"> </span>decommission
 <span class="c1"># This:</span>
 <span class="c1"># - Streams all data to remaining nodes</span>
 <span class="c1"># - Takes significant time (hours for large datasets)</span>
-<span class="c1"># - Cannot be cancelled</span>
+<span class="c1"># - Can be cancelled with nodetool abortdecommission</span>
 
 <span class="c1"># Step 4: Monitor progress</span>
 watch<span class="w"> </span>-n<span class="w"> </span><span class="m">10</span><span class="w"> </span><span class="s1">'nodetool netstats'</span>

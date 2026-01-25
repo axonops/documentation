@@ -20389,15 +20389,15 @@ roll_cycle          HOURLY
 block               true
 max_log_size        17179869184
 max_queue_weight    268435456
+max_archive_retries 10
 </code></pre></div>
 <h3 id="when-disabled">When Disabled<a class="headerlink" href="#when-disabled" title="Permanent link">¶</a></h3>
+<p>The command shows the configuration from <code>cassandra.yaml</code> even when FQL is disabled. Fields will reflect configured values, not necessarily empty:</p>
 <div class="highlight"><pre><span></span><code>enabled             false
-log_dir
+log_dir             /var/log/cassandra/fql
 archive_command
-roll_cycle
-block
-max_log_size
-max_queue_weight
+roll_cycle          HOURLY
+...
 </code></pre></div>
 <hr>
 <h2 id="examples">Examples<a class="headerlink" href="#examples" title="Permanent link">¶</a></h2>
@@ -20451,6 +20451,10 @@ nodetool<span class="w"> </span>getfullquerylog<span class="w"> </span><span cla
 <tr>
 <td><code>max_queue_weight</code></td>
 <td>Maximum in-memory queue size in bytes</td>
+</tr>
+<tr>
+<td><code>max_archive_retries</code></td>
+<td>Maximum retries for archive command</td>
 </tr>
 </tbody>
 </table>
@@ -20523,9 +20527,9 @@ nodetool<span class="w"> </span>getfullquerylog
 <div class="highlight"><pre><span></span><code><span class="ch">#!/bin/bash</span>
 <span class="c1"># check_fql_cluster.sh</span>
 
-<span class="nb">echo</span><span class="w"> </span><span class="s2">"=== Cluster FQL Configuration ==="</span><span class="c1"># Get list of node IPs from local nodetool status</span>
+<span class="nb">echo</span><span class="w"> </span><span class="s2">"=== Cluster FQL Configuration ==="</span>
 
-
+<span class="c1"># Get list of node IPs from local nodetool status</span>
 <span class="nv">nodes</span><span class="o">=</span><span class="k">$(</span>nodetool<span class="w"> </span>status<span class="w"> </span><span class="p">|</span><span class="w"> </span>grep<span class="w"> </span><span class="s2">"^UN"</span><span class="w"> </span><span class="p">|</span><span class="w"> </span>awk<span class="w"> </span><span class="s1">'{print $2}'</span><span class="k">)</span>
 
 <span class="k">for</span><span class="w"> </span>node<span class="w"> </span><span class="k">in</span><span class="w"> </span><span class="nv">$nodes</span><span class="p">;</span><span class="w"> </span><span class="k">do</span>
@@ -20536,9 +20540,9 @@ nodetool<span class="w"> </span>getfullquerylog
 </code></pre></div>
 <h3 id="verify-cluster-consistency">Verify Cluster Consistency<a class="headerlink" href="#verify-cluster-consistency" title="Permanent link">¶</a></h3>
 <div class="highlight"><pre><span></span><code><span class="ch">#!/bin/bash</span>
-<span class="c1"># verify_fql_consistency.sh# Get list of node IPs from local nodetool status</span>
+<span class="c1"># verify_fql_consistency.sh</span>
 
-
+<span class="c1"># Get list of node IPs from local nodetool status</span>
 <span class="nv">nodes</span><span class="o">=</span><span class="k">$(</span>nodetool<span class="w"> </span>status<span class="w"> </span><span class="p">|</span><span class="w"> </span>grep<span class="w"> </span><span class="s2">"^UN"</span><span class="w"> </span><span class="p">|</span><span class="w"> </span>awk<span class="w"> </span><span class="s1">'{print $2}'</span><span class="k">)</span>
 <span class="nv">enabled_count</span><span class="o">=</span><span class="m">0</span>
 <span class="nv">disabled_count</span><span class="o">=</span><span class="m">0</span>

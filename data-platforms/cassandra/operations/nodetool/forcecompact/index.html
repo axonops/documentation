@@ -8790,9 +8790,9 @@ data-et-multi-view="{&quot;schema&quot;:{&quot;content&quot;:{&quot;desktop&quot
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
-  <a href="#force-compact-specific-sstables" class="md-nav__link">
+  <a href="#force-compact-specific-partition-keys" class="md-nav__link">
     <span class="md-ellipsis">
-      Force Compact Specific SSTables
+      Force Compact Specific Partition Keys
     </span>
   </a>
   
@@ -8814,9 +8814,9 @@ data-et-multi-view="{&quot;schema&quot;:{&quot;content&quot;:{&quot;desktop&quot
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
-  <a href="#target-specific-files" class="md-nav__link">
+  <a href="#remove-tombstones-immediately" class="md-nav__link">
     <span class="md-ellipsis">
-      Target Specific Files
+      Remove Tombstones Immediately
     </span>
   </a>
   
@@ -19902,9 +19902,9 @@ data-et-multi-view="{&quot;schema&quot;:{&quot;content&quot;:{&quot;desktop&quot
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
-  <a href="#force-compact-specific-sstables" class="md-nav__link">
+  <a href="#force-compact-specific-partition-keys" class="md-nav__link">
     <span class="md-ellipsis">
-      Force Compact Specific SSTables
+      Force Compact Specific Partition Keys
     </span>
   </a>
   
@@ -19926,9 +19926,9 @@ data-et-multi-view="{&quot;schema&quot;:{&quot;content&quot;:{&quot;desktop&quot
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
-  <a href="#target-specific-files" class="md-nav__link">
+  <a href="#remove-tombstones-immediately" class="md-nav__link">
     <span class="md-ellipsis">
-      Target Specific Files
+      Remove Tombstones Immediately
     </span>
   </a>
   
@@ -19968,13 +19968,17 @@ data-et-multi-view="{&quot;schema&quot;:{&quot;content&quot;:{&quot;desktop&quot
 <p class="admonition-title">Cassandra 5.0+</p>
 <p>This command is available in Cassandra 5.0 and later.</p>
 </div>
-<p>Forces compaction of specified SSTables.</p>
+<p>Forces compaction of SSTables containing specified partition keys, ignoring <code>gc_grace_seconds</code>.</p>
 <hr>
 <h2 id="synopsis">Synopsis<a class="headerlink" href="#synopsis" title="Permanent link">¶</a></h2>
-<div class="highlight"><pre><span></span><code>nodetool<span class="w"> </span><span class="o">[</span>connection_options<span class="o">]</span><span class="w"> </span>forcecompact<span class="w"> </span>&lt;keyspace&gt;<span class="w"> </span>&lt;table&gt;<span class="w"> </span>&lt;sstable_files&gt;...
+<div class="highlight"><pre><span></span><code>nodetool<span class="w"> </span><span class="o">[</span>connection_options<span class="o">]</span><span class="w"> </span>forcecompact<span class="w"> </span>&lt;keyspace&gt;<span class="w"> </span>&lt;table&gt;<span class="w"> </span>&lt;keys&gt;...
 </code></pre></div>
 <h2 id="description">Description<a class="headerlink" href="#description" title="Permanent link">¶</a></h2>
-<p><code>nodetool forcecompact</code> forces compaction of specific SSTable files. Unlike <code>compact</code> which compacts based on strategy, this command allows targeting specific files.</p>
+<p><code>nodetool forcecompact</code> forces compaction of SSTables containing the specified partition keys. Unlike regular compaction, this command ignores <code>gc_grace_seconds</code> when purging tombstones, allowing immediate removal of deleted data for specific partitions.</p>
+<div class="admonition warning">
+<p class="admonition-title">Use With Caution</p>
+<p>This command ignores <code>gc_grace_seconds</code>, which means tombstones may be removed before they have propagated to all replicas. Use only when you are certain all replicas have seen the deletions, or after running repair.</p>
+</div>
 <hr>
 <h2 id="arguments">Arguments<a class="headerlink" href="#arguments" title="Permanent link">¶</a></h2>
 <table>
@@ -19994,21 +19998,24 @@ data-et-multi-view="{&quot;schema&quot;:{&quot;content&quot;:{&quot;desktop&quot
 <td>Target table</td>
 </tr>
 <tr>
-<td><code>sstable_files</code></td>
-<td>SSTable file paths to compact</td>
+<td><code>keys</code></td>
+<td>Partition keys to force compact</td>
 </tr>
 </tbody>
 </table>
 <hr>
 <h2 id="examples">Examples<a class="headerlink" href="#examples" title="Permanent link">¶</a></h2>
-<h3 id="force-compact-specific-sstables">Force Compact Specific SSTables<a class="headerlink" href="#force-compact-specific-sstables" title="Permanent link">¶</a></h3>
-<div class="highlight"><pre><span></span><code>nodetool<span class="w"> </span>forcecompact<span class="w"> </span>my_keyspace<span class="w"> </span>my_table<span class="w"> </span>/path/to/sstable1<span class="w"> </span>/path/to/sstable2
+<h3 id="force-compact-specific-partition-keys">Force Compact Specific Partition Keys<a class="headerlink" href="#force-compact-specific-partition-keys" title="Permanent link">¶</a></h3>
+<div class="highlight"><pre><span></span><code>nodetool<span class="w"> </span>forcecompact<span class="w"> </span>my_keyspace<span class="w"> </span>my_table<span class="w"> </span>user123<span class="w"> </span>user456
 </code></pre></div>
 <hr>
 <h2 id="when-to-use">When to Use<a class="headerlink" href="#when-to-use" title="Permanent link">¶</a></h2>
-<h3 id="target-specific-files">Target Specific Files<a class="headerlink" href="#target-specific-files" title="Permanent link">¶</a></h3>
-<div class="highlight"><pre><span></span><code><span class="c1"># Compact specific problematic SSTables</span>
-nodetool<span class="w"> </span>forcecompact<span class="w"> </span>my_keyspace<span class="w"> </span>my_table<span class="w"> </span>/var/lib/cassandra/data/my_keyspace/my_table-xxx/mc-1-big-Data.db
+<h3 id="remove-tombstones-immediately">Remove Tombstones Immediately<a class="headerlink" href="#remove-tombstones-immediately" title="Permanent link">¶</a></h3>
+<div class="highlight"><pre><span></span><code><span class="c1"># After ensuring all replicas have seen deletions</span>
+nodetool<span class="w"> </span>repair<span class="w"> </span>my_keyspace<span class="w"> </span>my_table
+
+<span class="c1"># Force compact specific partitions to remove tombstones</span>
+nodetool<span class="w"> </span>forcecompact<span class="w"> </span>my_keyspace<span class="w"> </span>my_table<span class="w"> </span>partition_key_value
 </code></pre></div>
 <hr>
 <h2 id="related-commands">Related Commands<a class="headerlink" href="#related-commands" title="Permanent link">¶</a></h2>

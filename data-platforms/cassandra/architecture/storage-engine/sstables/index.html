@@ -5099,9 +5099,9 @@ data-et-multi-view="{&quot;schema&quot;:{&quot;content&quot;:{&quot;desktop&quot
 </li>
         
           <li class="md-nav__item">
-  <a href="#summary-summarydb-big-format-pre-40-only" class="md-nav__link">
+  <a href="#summary-summarydb-big-format-only" class="md-nav__link">
     <span class="md-ellipsis">
-      Summary (Summary.db) - Big Format Pre-4.0 Only
+      Summary (Summary.db) - Big Format Only
     </span>
   </a>
   
@@ -20455,9 +20455,9 @@ data-et-multi-view="{&quot;schema&quot;:{&quot;content&quot;:{&quot;desktop&quot
 </li>
         
           <li class="md-nav__item">
-  <a href="#summary-summarydb-big-format-pre-40-only" class="md-nav__link">
+  <a href="#summary-summarydb-big-format-only" class="md-nav__link">
     <span class="md-ellipsis">
-      Summary (Summary.db) - Big Format Pre-4.0 Only
+      Summary (Summary.db) - Big Format Only
     </span>
   </a>
   
@@ -20756,9 +20756,14 @@ db      - File extension
 <td>Storage format revision</td>
 </tr>
 <tr>
+<td><code>me</code></td>
+<td>3.0.25, 3.11.11</td>
+<td>Storage format revision</td>
+</tr>
+<tr>
 <td><code>na</code></td>
 <td>4.0</td>
-<td>Trie-based partition index</td>
+<td>Storage format revision</td>
 </tr>
 <tr>
 <td><code>nb</code></td>
@@ -20766,12 +20771,18 @@ db      - File extension
 <td>Format revision</td>
 </tr>
 <tr>
-<td><code>nc</code></td>
+<td><code>oa</code></td>
 <td>5.0</td>
-<td>Latest format</td>
+<td>Storage format revision</td>
+</tr>
+<tr>
+<td><code>pa</code></td>
+<td>6.0</td>
+<td>Storage format revision</td>
 </tr>
 </tbody>
 </table>
+<p><em>Note: Version identifiers are for the Big format. BTI format uses <code>bti</code> as the format component instead of <code>big</code>.</em></p>
 <h3 id="sstable-format-types">SSTable Format Types<a class="headerlink" href="#sstable-format-types" title="Permanent link">¶</a></h3>
 <p>The second-to-last component in the filename (e.g., <code>big</code> or <code>bti</code>) indicates the SSTable format type. Cassandra 5.0 introduces the BTI format as an alternative to the legacy "big" format.</p>
 <table>
@@ -20830,7 +20841,7 @@ db      - File extension
 <tr>
 <td><strong>Index size</strong></td>
 <td>Larger</td>
-<td>50-80% smaller (prefix compression)</td>
+<td>Generally smaller (prefix compression), degree varies by data</td>
 </tr>
 <tr>
 <td><strong>Lookup complexity</strong></td>
@@ -20840,7 +20851,7 @@ db      - File extension
 <tr>
 <td><strong>Write amplification</strong></td>
 <td>Standard</td>
-<td>Slightly higher during flush</td>
+<td>May be slightly higher during flush (workload-dependent)</td>
 </tr>
 </tbody>
 </table>
@@ -20917,14 +20928,17 @@ BTI Partitions.db (trie):
 <p><strong>3. Efficient Range Queries</strong></p>
 <p>The trie structure naturally supports efficient iteration for range queries, as entries are stored in sorted order.</p>
 <h3 id="configuration">Configuration<a class="headerlink" href="#configuration" title="Permanent link">¶</a></h3>
-<p>SSTable format is configured cluster-wide in <code>cassandra.yaml</code>:</p>
-<div class="highlight"><pre><span></span><code><span class="c1"># cassandra.yaml</span>
+<p>SSTable format is configured cluster-wide in <code>cassandra.yaml</code> using the <code>sstable</code> section:</p>
+<div class="highlight"><pre><span></span><code><span class="c1"># cassandra.yaml (Cassandra 5.0+)</span>
 
-<span class="c1"># Default SSTable format for new SSTables</span>
-<span class="c1"># Options: big, bti</span>
-<span class="c1"># Default: big (for compatibility), bti recommended for 5.0+</span>
-<span class="nt">sstable_format</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">bti</span>
+<span class="c1"># SSTable configuration</span>
+<span class="nt">sstable</span><span class="p">:</span>
+<span class="w">  </span><span class="c1"># Default SSTable format for new SSTables</span>
+<span class="w">  </span><span class="c1"># Options: big, bti</span>
+<span class="w">  </span><span class="c1"># Default: big (for compatibility)</span>
+<span class="w">  </span><span class="nt">selected_format</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">bti</span>
 </code></pre></div>
+<p><em>Note: The configuration structure changed in Cassandra 5.0. There is no top-level <code>sstable_format</code> key.</em></p>
 <p>Per-table SSTable format configuration is not yet available. See <a href="https://issues.apache.org/jira/browse/CASSANDRA-18534">CASSANDRA-18534</a> for status.</p>
 <h3 id="migration-considerations">Migration Considerations<a class="headerlink" href="#migration-considerations" title="Permanent link">¶</a></h3>
 <table>
@@ -21316,7 +21330,7 @@ Step 4: Restore backup - no conflicts
 </tr>
 <tr>
 <td><strong>Benefits</strong></td>
-<td>50-80% smaller than Index.db, O(key length) lookups</td>
+<td>Generally smaller than Index.db, O(key length) lookups</td>
 </tr>
 </tbody>
 </table>
@@ -21415,7 +21429,7 @@ Step 4: Restore backup - no conflicts
 </tr>
 <tr>
 <td><strong>Memory</strong></td>
-<td>Loaded into off-heap memory</td>
+<td>Loaded into memory (may be on-heap or off-heap depending on implementation)</td>
 </tr>
 </tbody>
 </table>
@@ -21423,8 +21437,8 @@ Step 4: Restore backup - no conflicts
 <div class="highlight"><pre><span></span><code><span class="k">ALTER</span><span class="w"> </span><span class="k">TABLE</span><span class="w"> </span><span class="n">my_table</span><span class="w"> </span><span class="k">WITH</span><span class="w"> </span><span class="n">bloom_filter_fp_chance</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">0</span><span class="p">.</span><span class="mi">01</span><span class="p">;</span>
 </code></pre></div>
 <hr>
-<h3 id="summary-summarydb-big-format-pre-40-only">Summary (Summary.db) - Big Format Pre-4.0 Only<a class="headerlink" href="#summary-summarydb-big-format-pre-40-only" title="Permanent link">¶</a></h3>
-<p>Sampled index for efficient partition lookup. <strong>Not present in Cassandra 4.0+ Big format or BTI format.</strong></p>
+<h3 id="summary-summarydb-big-format-only">Summary (Summary.db) - Big Format Only<a class="headerlink" href="#summary-summarydb-big-format-only" title="Permanent link">¶</a></h3>
+<p>Sampled index for efficient partition lookup.</p>
 <table>
 <thead>
 <tr>
@@ -21451,13 +21465,12 @@ Step 4: Restore backup - no conflicts
 </tr>
 <tr>
 <td><strong>Status</strong></td>
-<td>Eliminated in 4.0 (Big format uses trie in Index.db); not used in BTI</td>
+<td>Used by Big format (including 4.0+); not used by BTI format</td>
 </tr>
 </tbody>
 </table>
-<p>The summary file was necessary in pre-4.0 because Index.db contained a flat list of all partition keys. Scanning the entire index for each lookup was too slow, so the summary provided jump points into the index.</p>
-<p>Cassandra 4.0+ replaced this with trie-based indexes that provide O(key length) lookups directly, eliminating the need for sampling.</p>
-<p><strong>Configuration (pre-4.0 only):</strong></p>
+<p>The summary file provides jump points into Index.db, enabling faster partition key lookups without scanning the entire index.</p>
+<p><strong>Configuration:</strong></p>
 <div class="highlight"><pre><span></span><code><span class="c1"># cassandra.yaml</span>
 <span class="nt">min_index_interval</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">128</span><span class="w">    </span><span class="c1"># Minimum sampling rate</span>
 <span class="nt">max_index_interval</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">2048</span><span class="w">   </span><span class="c1"># Maximum sampling rate</span>
@@ -21471,12 +21484,8 @@ Step 4: Restore backup - no conflicts
 </thead>
 <tbody>
 <tr>
-<td>Big (pre-4.0)</td>
+<td>Big (all versions)</td>
 <td>Yes</td>
-</tr>
-<tr>
-<td>Big (4.0+)</td>
-<td>No</td>
 </tr>
 <tr>
 <td>BTI (5.0+)</td>
@@ -21614,7 +21623,7 @@ CompressionInfo.db stores:
 </tr>
 <tr>
 <td><strong>Verification</strong></td>
-<td>Checked during reads and streaming</td>
+<td>Used primarily during streaming and certain verification operations (not checked on every read)</td>
 </tr>
 </tbody>
 </table>

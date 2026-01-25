@@ -9307,6 +9307,15 @@ data-et-multi-view="{&quot;schema&quot;:{&quot;content&quot;:{&quot;desktop&quot
 </li>
       
         <li class="md-nav__item">
+  <a href="#options" class="md-nav__link">
+    <span class="md-ellipsis">
+      Options
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#finding-the-host-id" class="md-nav__link">
     <span class="md-ellipsis">
       Finding the Host ID
@@ -9437,9 +9446,18 @@ data-et-multi-view="{&quot;schema&quot;:{&quot;content&quot;:{&quot;desktop&quot
 </li>
         
           <li class="md-nav__item">
-  <a href="#force-completion" class="md-nav__link">
+  <a href="#force-removal-bypass-rf-check" class="md-nav__link">
     <span class="md-ellipsis">
-      Force Completion
+      Force Removal (Bypass RF Check)
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#abort-removenode" class="md-nav__link">
+    <span class="md-ellipsis">
+      Abort Removenode
     </span>
   </a>
   
@@ -20219,6 +20237,15 @@ data-et-multi-view="{&quot;schema&quot;:{&quot;content&quot;:{&quot;desktop&quot
 </li>
       
         <li class="md-nav__item">
+  <a href="#options" class="md-nav__link">
+    <span class="md-ellipsis">
+      Options
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#finding-the-host-id" class="md-nav__link">
     <span class="md-ellipsis">
       Finding the Host ID
@@ -20349,9 +20376,18 @@ data-et-multi-view="{&quot;schema&quot;:{&quot;content&quot;:{&quot;desktop&quot
 </li>
         
           <li class="md-nav__item">
-  <a href="#force-completion" class="md-nav__link">
+  <a href="#force-removal-bypass-rf-check" class="md-nav__link">
     <span class="md-ellipsis">
-      Force Completion
+      Force Removal (Bypass RF Check)
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#abort-removenode" class="md-nav__link">
+    <span class="md-ellipsis">
+      Abort Removenode
     </span>
   </a>
   
@@ -20591,7 +20627,8 @@ data-et-multi-view="{&quot;schema&quot;:{&quot;content&quot;:{&quot;desktop&quot
 <p>Removes a dead or unreachable node from the cluster by streaming its data from remaining replicas.</p>
 <hr>
 <h2 id="synopsis">Synopsis<a class="headerlink" href="#synopsis" title="Permanent link">¶</a></h2>
-<div class="highlight"><pre><span></span><code>nodetool<span class="w"> </span><span class="o">[</span>connection_options<span class="o">]</span><span class="w"> </span>removenode<span class="w"> </span>&lt;status<span class="w"> </span><span class="p">|</span><span class="w"> </span>force<span class="w"> </span><span class="p">|</span><span class="w"> </span>&lt;host-id&gt;&gt;
+<div class="highlight"><pre><span></span><code>nodetool<span class="w"> </span><span class="o">[</span>connection_options<span class="o">]</span><span class="w"> </span>removenode<span class="w"> </span><span class="o">[</span>--force<span class="o">]</span><span class="w"> </span>&lt;host-id&gt;
+nodetool<span class="w"> </span><span class="o">[</span>connection_options<span class="o">]</span><span class="w"> </span>removenode<span class="w"> </span>status
 </code></pre></div>
 <h2 id="description">Description<a class="headerlink" href="#description" title="Permanent link">¶</a></h2>
 <p><code>nodetool removenode</code> removes a node that cannot be decommissioned because it is dead or unreachable. Unlike decommission (which runs on the node being removed), removenode runs from any live node and reconstructs the dead node's data from other replicas.</p>
@@ -20633,12 +20670,23 @@ data-et-multi-view="{&quot;schema&quot;:{&quot;content&quot;:{&quot;desktop&quot
 <td>Show status of current removenode operation</td>
 </tr>
 <tr>
-<td><code>force</code></td>
-<td>Force completion of a stuck removenode</td>
-</tr>
-<tr>
 <td><code>&lt;host-id&gt;</code></td>
 <td>UUID of the node to remove</td>
+</tr>
+</tbody>
+</table>
+<h2 id="options">Options<a class="headerlink" href="#options" title="Permanent link">¶</a></h2>
+<table>
+<thead>
+<tr>
+<th>Option</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>--force</code></td>
+<td>Allow removal even if it would break replication factor</td>
 </tr>
 </tbody>
 </table>
@@ -20720,18 +20768,23 @@ nodetool<span class="w"> </span>removenode<span class="w"> </span>b2c3d4e5-f6a7-
 <h3 id="check-removenode-status">Check Removenode Status<a class="headerlink" href="#check-removenode-status" title="Permanent link">¶</a></h3>
 <div class="highlight"><pre><span></span><code>nodetool<span class="w"> </span>removenode<span class="w"> </span>status
 </code></pre></div>
-<p>Output:
-</p><div class="highlight"><pre><span></span><code>RemovalStatus: InProgress
-Progress: 45%
-Streams: 12 active, 8 completed
+<p>Output (when removal in progress):
+</p><div class="highlight"><pre><span></span><code>RemovalStatus: Removing node b2c3d4e5-f6a7-8901-bcde-f12345678901 (192.168.1.102): REMOVING_DATA
 </code></pre></div>
-<h3 id="force-completion">Force Completion<a class="headerlink" href="#force-completion" title="Permanent link">¶</a></h3>
-<div class="highlight"><pre><span></span><code>nodetool<span class="w"> </span>removenode<span class="w"> </span>force
+<p>Output (when no removal active):
+</p><div class="highlight"><pre><span></span><code>No removals in progress.
+</code></pre></div>
+<h3 id="force-removal-bypass-rf-check">Force Removal (Bypass RF Check)<a class="headerlink" href="#force-removal-bypass-rf-check" title="Permanent link">¶</a></h3>
+<div class="highlight"><pre><span></span><code>nodetool<span class="w"> </span>removenode<span class="w"> </span>--force<span class="w"> </span>b2c3d4e5-f6a7-8901-bcde-f12345678901
 </code></pre></div>
 <div class="admonition danger">
-<p class="admonition-title">Force Removal</p>
-<p>Only use <code>force</code> if removenode is stuck and you accept potential data loss. This completes the removal without waiting for all streams.</p>
+<p class="admonition-title">Force Option</p>
+<p>The <code>--force</code> option allows removal even if it would break the replication factor. This may result in some token ranges having fewer replicas than configured.</p>
 </div>
+<h3 id="abort-removenode">Abort Removenode<a class="headerlink" href="#abort-removenode" title="Permanent link">¶</a></h3>
+<p>If a removenode operation needs to be aborted:</p>
+<div class="highlight"><pre><span></span><code>nodetool<span class="w"> </span>abortremovenode
+</code></pre></div>
 <hr>
 <h2 id="before-removenode">Before Removenode<a class="headerlink" href="#before-removenode" title="Permanent link">¶</a></h2>
 <h3 id="verify-node-is-dead">Verify Node is Dead<a class="headerlink" href="#verify-node-is-dead" title="Permanent link">¶</a></h3>

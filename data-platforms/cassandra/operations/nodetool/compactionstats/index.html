@@ -20586,17 +20586,24 @@ data-et-multi-view="{&quot;schema&quot;:{&quot;content&quot;:{&quot;desktop&quot
 <td><code>-H, --human-readable</code></td>
 <td>Display sizes in human-readable format</td>
 </tr>
+<tr>
+<td><code>-V, --vtable</code></td>
+<td>Use virtual table format for output</td>
+</tr>
 </tbody>
 </table>
 <hr>
 <h2 id="output-example">Output Example<a class="headerlink" href="#output-example" title="Permanent link">¶</a></h2>
 <div class="highlight"><pre><span></span><code>pending tasks: 15
-          compaction type        keyspace           table       completed           total      unit   progress
-               Compaction     my_keyspace           users      1234567890      2345678901     bytes     52.65%
-               Compaction     my_keyspace          orders       567890123      1234567890     bytes     46.01%
-               Validation     my_keyspace           users        45678901       123456789     bytes     37.00%
+- my_keyspace.users: 8
+- my_keyspace.orders: 7
+          id                compaction type        keyspace           table       completed           total      unit   progress
+          abc123-def4-...        Compaction     my_keyspace           users      1234567890      2345678901     bytes     52.65%
+          def456-abc7-...        Compaction     my_keyspace          orders       567890123      1234567890     bytes     46.01%
+          ghi789-jkl0-...        Validation     my_keyspace           users        45678901       123456789     bytes     37.00%
 Active compaction remaining time :   0h12m34s
 </code></pre></div>
+<p>Note: The output includes pending tasks broken down by keyspace and table, plus a per-compaction <code>id</code> column (unless <code>-V/--vtable</code> is used).</p>
 <hr>
 <h2 id="output-fields">Output Fields<a class="headerlink" href="#output-fields" title="Permanent link">¶</a></h2>
 <table>
@@ -20609,7 +20616,11 @@ Active compaction remaining time :   0h12m34s
 <tbody>
 <tr>
 <td>pending tasks</td>
-<td>Total compaction tasks waiting to run</td>
+<td>Total compaction tasks waiting to run (with per-keyspace.table breakdown)</td>
+</tr>
+<tr>
+<td>id</td>
+<td>Unique identifier for the active compaction operation</td>
 </tr>
 <tr>
 <td>compaction type</td>

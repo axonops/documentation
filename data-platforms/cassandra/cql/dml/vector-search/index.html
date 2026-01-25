@@ -20816,7 +20816,7 @@ Vector Query:       ORDER BY embedding ANN OF ? → Similarity ranked
 <tbody>
 <tr>
 <td><code>similarity_cosine</code></td>
-<td>-1 to 1</td>
+<td>0 to 1</td>
 <td>1 (identical direction)</td>
 <td>Normalized embeddings, text similarity</td>
 </tr>
@@ -20925,7 +20925,7 @@ Vector Query:       ORDER BY embedding ANN OF ? → Similarity ranked
 <tr>
 <td><code>element_type</code></td>
 <td>Numeric type for elements</td>
-<td><code>FLOAT</code> (recommended), <code>DOUBLE</code></td>
+<td><code>FLOAT</code> (required for SAI vector indexes and similarity functions)</td>
 </tr>
 <tr>
 <td><code>dimension</code></td>
@@ -21077,8 +21077,8 @@ Vector Query:       ORDER BY embedding ANN OF ? → Similarity ranked
 <tbody>
 <tr>
 <td><code>cosine</code></td>
-<td>1 - cos(θ)</td>
-<td>0 to 2</td>
+<td>(1 + cos(θ)) / 2</td>
+<td>0 to 1</td>
 <td>Normalized embeddings, text similarity</td>
 </tr>
 <tr>

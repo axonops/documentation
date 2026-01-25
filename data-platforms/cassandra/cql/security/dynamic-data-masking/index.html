@@ -21114,7 +21114,7 @@ data-et-multi-view="{&quot;schema&quot;:{&quot;content&quot;:{&quot;desktop&quot
 <li><strong>Materialized view masking</strong>: Views may expose unmasked data depending on permissions at view creation</li>
 <li><strong>Index leakage</strong>: Secondary indexes may allow inference of masked values through query patterns</li>
 <li><strong>UDF security</strong>: User-defined masking functions may have implementation vulnerabilities</li>
-<li><strong>Prepared statement caching</strong>: Cached statements may retain permission state from preparation time</li>
+<li><strong>Prepared statement caching</strong>: Application-level caching of query results may bypass masking if not invalidated on permission changes</li>
 <li><strong>CDC and backup exposure</strong>: Change Data Capture and backup files contain unmasked data</li>
 </ul>
 </div>

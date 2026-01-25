@@ -21097,12 +21097,12 @@ data-et-multi-view="{&quot;schema&quot;:{&quot;content&quot;:{&quot;desktop&quot
 </tr>
 </tbody>
 </table>
-<p><strong>Total overhead per request: 170-790 ms</strong> for a 2-10 ms query.</p>
+<p><strong>Illustrative overhead per request: ~170-790 ms</strong> (depending on network and cluster topology) for a typical 2-10 ms query.</p>
 <p>At 100 requests/second:
 - 100 full connection cycles per second
 - 100 × (nodes in cluster) TCP connections opened and closed
 - Cluster sees connection storms during traffic spikes
-- <code>nodetool netstats</code> shows thousands of pending connections</p>
+- <code>nodetool clientstats</code> shows thousands of connected clients</p>
 <h3 id="the-fix">The Fix<a class="headerlink" href="#the-fix" title="Permanent link">¶</a></h3>
 <div class="highlight"><pre><span></span><code><span class="c1">// CORRECT: Single session for application lifetime</span>
 <span class="kd">public</span><span class="w"> </span><span class="kd">class</span> <span class="nc">CassandraService</span><span class="w"> </span><span class="p">{</span>
@@ -21134,8 +21134,8 @@ data-et-multi-view="{&quot;schema&quot;:{&quot;content&quot;:{&quot;desktop&quot
 <div class="highlight"><pre><span></span><code><span class="c1"># Connection churn in Cassandra logs</span>
 grep<span class="w"> </span><span class="s2">"connections"</span><span class="w"> </span>/var/log/cassandra/debug.log<span class="w"> </span><span class="p">|</span><span class="w"> </span>grep<span class="w"> </span>-E<span class="w"> </span><span class="s2">"(opened|closed)"</span>
 
-<span class="c1"># High connection counts</span>
-nodetool<span class="w"> </span>netstats<span class="w"> </span><span class="p">|</span><span class="w"> </span>grep<span class="w"> </span>-A<span class="w"> </span><span class="m">20</span><span class="w"> </span><span class="s2">"Mode:"</span>
+<span class="c1"># High client connection counts</span>
+nodetool<span class="w"> </span>clientstats
 
 <span class="c1"># In application metrics: session creation rate should be ~0</span>
 </code></pre></div>
@@ -21301,7 +21301,7 @@ nodetool<span class="w"> </span>netstats<span class="w"> </span><span class="p">
 <tr>
 <td><code>BATCH</code></td>
 <td>Batch log written, mutations may be partial</td>
-<td>Batch will eventually complete</td>
+<td>Completion is not guaranteed; mutations may or may not be replayed</td>
 </tr>
 <tr>
 <td><code>BATCH_LOG</code></td>
@@ -21684,20 +21684,16 @@ Result: Account shows 70, but 80 was withdrawn
 </thead>
 <tbody>
 <tr>
-<td>Single DC cluster</td>
-<td>Works (sometimes)</td>
+<td>Driver 4.x (any topology)</td>
+<td>Throws <code>IllegalStateException</code>: local datacenter is mandatory</td>
 </tr>
 <tr>
-<td>Multi-DC cluster</td>
+<td>Multi-DC cluster (Driver 3.x)</td>
 <td>Queries route to random DC</td>
 </tr>
 <tr>
-<td>DC failure</td>
+<td>DC failure (Driver 3.x)</td>
 <td>Failover may route to wrong DC</td>
-</tr>
-<tr>
-<td>Driver 4.x</td>
-<td>Throws exception: "No local datacenter set"</td>
 </tr>
 </tbody>
 </table>
@@ -22110,17 +22106,17 @@ Result: Account shows 70, but 80 was withdrawn
 <tr>
 <td>Round trips</td>
 <td>1</td>
-<td>4 (Prepare, Promise, Accept, Ack)</td>
+<td>2-4 (varies by Cassandra version and contention)</td>
 </tr>
 <tr>
 <td>Latency</td>
-<td>2-5 ms</td>
-<td>20-50 ms</td>
+<td>Typically 2-5 ms</td>
+<td>Typically 10-50+ ms (varies with contention and topology)</td>
 </tr>
 <tr>
 <td>Throughput</td>
-<td>10,000+/s per partition</td>
-<td>~100/s per partition</td>
+<td>High (partition-independent)</td>
+<td>Significantly reduced (serial per partition)</td>
 </tr>
 </tbody>
 </table>

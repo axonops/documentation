@@ -20946,7 +20946,7 @@ data-et-multi-view="{&quot;schema&quot;:{&quot;content&quot;:{&quot;desktop&quot
 <li>Functions execute in a sandboxed environment with resource limits</li>
 <li>OR REPLACE atomically updates an existing function definition</li>
 <li>IF NOT EXISTS provides idempotent function creation</li>
-<li>Functions are deterministic by default (same input produces same output)</li>
+<li>Functions should be deterministic (same input produces same output), though this is not enforced by Cassandra</li>
 </ul>
 <h3 id="what-udf-operations-do-not-guarantee">What UDF Operations Do NOT Guarantee<a class="headerlink" href="#what-udf-operations-do-not-guarantee" title="Permanent link">¶</a></h3>
 <div class="admonition warning">

@@ -20079,8 +20079,8 @@ data-et-multi-view="{&quot;schema&quot;:{&quot;content&quot;:{&quot;desktop&quot
 </tr>
 <tr>
 <td><code>EACH_QUORUM</code></td>
-<td>⌊RF/2⌋ + 1 per DC</td>
-<td>Majority in every datacenter</td>
+<td>⌊local_RF/2⌋ + 1 per DC</td>
+<td>Majority in every datacenter (each DC's RF used independently)</td>
 <td>Low</td>
 </tr>
 <tr>
@@ -20278,11 +20278,11 @@ data-et-multi-view="{&quot;schema&quot;:{&quot;content&quot;:{&quot;desktop&quot
 </table>
 <div class="admonition tip">
 <p class="admonition-title">Recommended for Multi-DC</p>
-<p><code>LOCAL_QUORUM</code> is recommended for most multi-datacenter deployments. It provides strong consistency within each datacenter while tolerating complete datacenter failure.</p>
+<p><code>LOCAL_QUORUM</code> is recommended for most multi-datacenter deployments. It provides strong consistency within each datacenter. Datacenter failure tolerance depends on client placement; clients must be able to reach another DC to fail over.</p>
 </div>
 <hr>
 <h2 id="strong-consistency-formula">Strong Consistency Formula<a class="headerlink" href="#strong-consistency-formula" title="Permanent link">¶</a></h2>
-<p><strong>Rule:</strong> <code>R + W &gt; RF</code> guarantees strong consistency (reads see latest writes).</p>
+<p><strong>Heuristic:</strong> <code>R + W &gt; RF</code> generally provides strong consistency (reads see latest writes) under normal operation. This assumes no concurrent failures affecting the same replica set and does not account for edge cases like <code>ANY</code> writes or transient divergence.</p>
 <table>
 <thead>
 <tr>
@@ -20423,36 +20423,37 @@ data-et-multi-view="{&quot;schema&quot;:{&quot;content&quot;:{&quot;desktop&quot
 </tr>
 <tr>
 <td><code>LOCAL_ONE</code></td>
-<td>~1-2ms</td>
-<td>~1-2ms</td>
+<td>Low</td>
+<td>Low</td>
 <td>Same as ONE for local</td>
 </tr>
 <tr>
 <td><code>QUORUM</code></td>
-<td>~2-5ms</td>
-<td>~50-200ms</td>
+<td>Low</td>
+<td>Higher (cross-DC)</td>
 <td>Cross-DC round trip in multi-DC</td>
 </tr>
 <tr>
 <td><code>LOCAL_QUORUM</code></td>
-<td>~2-5ms</td>
-<td>~2-5ms</td>
+<td>Low</td>
+<td>Low</td>
 <td>No cross-DC wait</td>
 </tr>
 <tr>
 <td><code>EACH_QUORUM</code></td>
 <td>N/A</td>
-<td>~50-200ms</td>
+<td>Higher (cross-DC)</td>
 <td>Waits for slowest DC</td>
 </tr>
 <tr>
 <td><code>ALL</code></td>
-<td>~3-10ms</td>
-<td>~50-200ms</td>
+<td>Higher</td>
+<td>Higher (cross-DC)</td>
 <td>Waits for slowest replica</td>
 </tr>
 </tbody>
 </table>
+<p>Actual latencies are workload-, topology-, and hardware-dependent.</p>
 <hr>
 <h2 id="quick-decision-guide">Quick Decision Guide<a class="headerlink" href="#quick-decision-guide" title="Permanent link">¶</a></h2>
 <table>

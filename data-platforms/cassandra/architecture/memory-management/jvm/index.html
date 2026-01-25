@@ -20575,8 +20575,8 @@ data-et-multi-view="{&quot;schema&quot;:{&quot;content&quot;:{&quot;desktop&quot
 -XX:ShenandoahGCMode<span class="o">=</span>generational
 </code></pre></div>
 <div class="admonition warning">
-<p class="admonition-title">Not Yet Available for Cassandra</p>
-<p>Cassandra does not yet support JDK 21+. As of late 2025, Cassandra supports JDK 11 and 17. JDK 21 support is tracked in <a href="https://issues.apache.org/jira/browse/CASSANDRA-18831">CASSANDRA-18831</a>.</p>
+<p class="admonition-title">JDK 21+ Support</p>
+<p>JDK 21+ support depends on Cassandra version. Check the release notes for the target Cassandra version. JDK 21 support is tracked in <a href="https://issues.apache.org/jira/browse/CASSANDRA-18831">CASSANDRA-18831</a>.</p>
 </div>
 <h3 id="timeline-summary">Timeline Summary<a class="headerlink" href="#timeline-summary" title="Permanent link">¶</a></h3>
 <table>
@@ -20692,14 +20692,14 @@ data-et-multi-view="{&quot;schema&quot;:{&quot;content&quot;:{&quot;desktop&quot
 <td><a href="https://aws.amazon.com/corretto/">Amazon Corretto</a></td>
 <td>Amazon</td>
 <td>GPL v2</td>
-<td>JDK 11+</td>
+<td>Verify per version</td>
 <td>Long-term support; production-tested at Amazon</td>
 </tr>
 <tr>
 <td><a href="https://www.azul.com/downloads/">Azul Zulu</a></td>
 <td>Azul</td>
 <td>GPL v2</td>
-<td>JDK 11+</td>
+<td>Verify per version</td>
 <td>Free community and paid enterprise editions</td>
 </tr>
 <tr>
@@ -20768,23 +20768,24 @@ data-et-multi-view="{&quot;schema&quot;:{&quot;content&quot;:{&quot;desktop&quot
 <tr>
 <td>Small (4-8GB)</td>
 <td>More frequent</td>
-<td>Shorter pauses</td>
+<td>Shorter pauses (workload-dependent)</td>
 <td>Lower p99 latency</td>
 </tr>
 <tr>
 <td>Medium (16-24GB)</td>
 <td>Moderate</td>
-<td>Moderate pauses</td>
+<td>Moderate pauses (workload-dependent)</td>
 <td>Balanced</td>
 </tr>
 <tr>
 <td>Large (&gt;24GB)</td>
 <td>Less frequent</td>
-<td>Longer pauses</td>
+<td>Longer pauses (workload-dependent)</td>
 <td>Higher p99 latency spikes</td>
 </tr>
 </tbody>
 </table>
+<p><em>Note: Actual pause durations vary significantly based on workload, object allocation patterns, and GC configuration.</em></p>
 <h3 id="g1-garbage-collector">G1 Garbage Collector<a class="headerlink" href="#g1-garbage-collector" title="Permanent link">¶</a></h3>
 <p>Cassandra uses the <strong>G1 (Garbage First)</strong> garbage collector by default. G1 divides the heap into regions and collects the regions with the most garbage first, aiming to limit pause times while maintaining throughput.</p>
 <p><strong>G1 Configuration:</strong></p>

@@ -20556,12 +20556,13 @@ data-et-multi-view="{&quot;schema&quot;:{&quot;content&quot;:{&quot;desktop&quot
 <p><strong>Query execution steps:</strong></p>
 <ol>
 <li>Query arrives at coordinator</li>
-<li>Coordinator sends query to ALL nodes (or subset for token-aware)</li>
-<li>Each node queries its local index</li>
+<li>Coordinator sends query to replicas (one replica per token range for consistency level, not necessarily all nodes)</li>
+<li>Each contacted node queries its local index</li>
 <li>Each node reads matching base table rows</li>
 <li>Results gathered at coordinator</li>
 <li>Final result returned to client</li>
 </ol>
+<p><em>Note: The coordinator may choose one replica per token range rather than contacting every node, depending on consistency level and load balancing. However, the scatter-gather scope remains broad.</em></p>
 <hr>
 <h2 id="limitations">Limitations<a class="headerlink" href="#limitations" title="Permanent link">¶</a></h2>
 <h3 id="scatter-gather-overhead">Scatter-Gather Overhead<a class="headerlink" href="#scatter-gather-overhead" title="Permanent link">¶</a></h3>

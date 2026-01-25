@@ -20887,9 +20887,34 @@ iostat<span class="w"> </span>-x<span class="w"> </span><span class="m">1</span>
 <p>SATA SSDs (~550 MB/s) are sufficient for most production workloads. Bandwidth matters primarily for:</p>
 <ul>
 <li><strong>Compaction</strong>: Background merging of SSTables</li>
-<li><strong>Streaming</strong>: Throttled by default (~25 MB/s via <code>stream_throughput_outbound_megabits_per_sec</code>)</li>
+<li><strong>Streaming</strong>: Throttled by default (~24 MiB/s via <code>stream_throughput_outbound</code>)</li>
 <li><strong>Repair</strong>: Merkle tree validation and data synchronization</li>
 </ul>
+<div class="admonition note">
+<p class="admonition-title">Streaming Configuration Parameter</p>
+<p>The streaming throughput parameter changed in Cassandra 4.1:</p>
+<table>
+<thead>
+<tr>
+<th>Cassandra Version</th>
+<th>Parameter Name</th>
+<th>Default</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Pre-4.1</td>
+<td><code>stream_throughput_outbound_megabits_per_sec</code></td>
+<td><code>200</code> (Mb/s ≈ 25 MB/s)</td>
+</tr>
+<tr>
+<td>4.1+</td>
+<td><code>stream_throughput_outbound</code></td>
+<td><code>24MiB/s</code></td>
+</tr>
+</tbody>
+</table>
+</div>
 <p>NVMe provides higher bandwidth that can speed up compaction and repair, but is not required for most deployments.</p>
 <h3 id="disk-configuration">Disk Configuration<a class="headerlink" href="#disk-configuration" title="Permanent link">¶</a></h3>
 <p>With NVMe, a single disk is sufficient for all Cassandra directories (data, commit log, hints). NVMe's high IOPS and low latency eliminate the need for separate devices that was common with SATA or spinning disks.</p>

@@ -20368,7 +20368,7 @@ With 128 KB threshold:
 <div class="highlight"><pre><span></span><code>nodetool<span class="w"> </span>getcolumnindexsize
 </code></pre></div>
 <p><strong>Sample output:</strong>
-</p><div class="highlight"><pre><span></span><code>Current column index size: 64 KB
+</p><div class="highlight"><pre><span></span><code>Current value for column_index_size: 64 KiB
 </code></pre></div>
 <h3 id="check-value-on-remote-node">Check Value on Remote Node<a class="headerlink" href="#check-value-on-remote-node" title="Permanent link">¶</a></h3>
 <div class="highlight"><pre><span></span><code>ssh<span class="w"> </span><span class="m">192</span>.168.1.100<span class="w"> </span><span class="s2">"nodetool getcolumnindexsize"</span>
@@ -20377,14 +20377,14 @@ With 128 KB threshold:
 <div class="highlight"><pre><span></span><code><span class="ch">#!/bin/bash</span>
 <span class="c1"># check_column_index_cluster.sh</span>
 
-<span class="nb">echo</span><span class="w"> </span><span class="s2">"=== Column Index Size Across Cluster ==="</span><span class="c1"># Get list of node IPs from local nodetool status</span>
+<span class="nb">echo</span><span class="w"> </span><span class="s2">"=== Column Index Size Across Cluster ==="</span>
 
-
+<span class="c1"># Get list of node IPs from local nodetool status</span>
 <span class="nv">nodes</span><span class="o">=</span><span class="k">$(</span>nodetool<span class="w"> </span>status<span class="w"> </span><span class="p">|</span><span class="w"> </span>grep<span class="w"> </span><span class="s2">"^UN"</span><span class="w"> </span><span class="p">|</span><span class="w"> </span>awk<span class="w"> </span><span class="s1">'{print $2}'</span><span class="k">)</span>
 
 <span class="k">for</span><span class="w"> </span>node<span class="w"> </span><span class="k">in</span><span class="w"> </span><span class="nv">$nodes</span><span class="p">;</span><span class="w"> </span><span class="k">do</span>
 <span class="w">    </span><span class="nb">echo</span><span class="w"> </span>-n<span class="w"> </span><span class="s2">"</span><span class="nv">$node</span><span class="s2">: "</span>
-<span class="w">    </span>ssh<span class="w"> </span><span class="s2">"</span><span class="nv">$node</span><span class="s2">"</span><span class="w"> </span><span class="s2">"nodetool getcolumnindexsize 2&gt;/dev/null | grep -oP '\d+ KB' || echo "</span>FAILED<span class="s2">""</span>
+<span class="w">    </span>ssh<span class="w"> </span><span class="s2">"</span><span class="nv">$node</span><span class="s2">"</span><span class="w"> </span><span class="s2">"nodetool getcolumnindexsize 2&gt;/dev/null | grep -oP '\d+ KiB' || echo 'FAILED'"</span>
 <span class="k">done</span>
 </code></pre></div>
 <p><strong>Sample output:</strong>

@@ -20513,6 +20513,7 @@ data-et-multi-view="{&quot;schema&quot;:{&quot;content&quot;:{&quot;desktop&quot
 <p>Most drivers require explicitly setting the local datacenter. Failing to set this parameter may result in cross-datacenter queries with significantly higher latency.</p>
 </div>
 <h3 id="essential-parameters">Essential Parameters<a class="headerlink" href="#essential-parameters" title="Permanent link">¶</a></h3>
+<p>Values shown are typical defaults; exact defaults vary by driver and version.</p>
 <table>
 <thead>
 <tr>
@@ -20550,6 +20551,7 @@ data-et-multi-view="{&quot;schema&quot;:{&quot;content&quot;:{&quot;desktop&quot
 </tbody>
 </table>
 <h3 id="pool-configuration">Pool Configuration<a class="headerlink" href="#pool-configuration" title="Permanent link">¶</a></h3>
+<p>Values shown are illustrative for Java Driver 4.x; other drivers may differ.</p>
 <table>
 <thead>
 <tr>
@@ -20614,7 +20616,7 @@ data-et-multi-view="{&quot;schema&quot;:{&quot;content&quot;:{&quot;desktop&quot
 <h2 id="performance-considerations">Performance Considerations<a class="headerlink" href="#performance-considerations" title="Permanent link">¶</a></h2>
 <h3 id="connection-efficiency">Connection Efficiency<a class="headerlink" href="#connection-efficiency" title="Permanent link">¶</a></h3>
 <p>Each TCP connection has overhead:
-- Memory for buffers (~64KB per connection)
+- Memory for buffers (varies by driver configuration)
 - File descriptors on both sides
 - TCP keepalive traffic</p>
 <p>Optimal configurations balance:
@@ -20627,14 +20629,14 @@ data-et-multi-view="{&quot;schema&quot;:{&quot;content&quot;:{&quot;desktop&quot
 <thead>
 <tr>
 <th>Component</th>
-<th>Typical Range</th>
+<th>Typical Range (illustrative)</th>
 <th>Optimization</th>
 </tr>
 </thead>
 <tbody>
 <tr>
 <td>Serialization</td>
-<td>10-100 μs</td>
+<td>Varies</td>
 <td>Use prepared statements</td>
 </tr>
 <tr>
@@ -20654,7 +20656,7 @@ data-et-multi-view="{&quot;schema&quot;:{&quot;content&quot;:{&quot;desktop&quot
 </tr>
 <tr>
 <td>Deserialization</td>
-<td>10-100 μs</td>
+<td>Varies</td>
 <td>Minimize result size</td>
 </tr>
 </tbody>

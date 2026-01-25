@@ -20269,10 +20269,13 @@ nodetool<span class="w"> </span>tablestats<span class="w"> </span>my_keyspace<sp
 <div class="highlight"><pre><span></span><code><span class="c1"># Clear key cache if very large</span>
 nodetool<span class="w"> </span>invalidatekeycache
 
-<span class="c1"># Reduce concurrent reads/writes temporarily</span>
-nodetool<span class="w"> </span>setconcurrency<span class="w"> </span><span class="nb">read</span><span class="w"> </span><span class="m">16</span>
-nodetool<span class="w"> </span>setconcurrency<span class="w"> </span>write<span class="w"> </span><span class="m">16</span>
+<span class="c1"># Flush memtables to reduce memory pressure</span>
+nodetool<span class="w"> </span>flush
 </code></pre></div>
+<div class="admonition note">
+<p class="admonition-title">Concurrent Reads/Writes</p>
+<p>Concurrent reads/writes are configured via <code>concurrent_reads</code> and <code>concurrent_writes</code> in <code>cassandra.yaml</code> and require a restart to change. There is no runtime <code>nodetool setconcurrency</code> command.</p>
+</div>
 <h3 id="short-term-tune-gc-settings">Short-term: Tune GC Settings<a class="headerlink" href="#short-term-tune-gc-settings" title="Permanent link">¶</a></h3>
 <p><strong>For G1GC (recommended for heaps &gt; 8GB):</strong></p>
 <div class="highlight"><pre><span></span><code><span class="c1"># In jvm.options or jvm11-server.options</span>

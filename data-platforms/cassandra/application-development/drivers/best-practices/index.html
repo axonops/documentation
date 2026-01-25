@@ -20380,11 +20380,11 @@ data-et-multi-view="{&quot;schema&quot;:{&quot;content&quot;:{&quot;desktop&quot
 </code></pre></div>
 <p>The driver only needs one successful connection to discover the full cluster topology, but multiple contact points provide redundancy during startup.</p>
 <h3 id="local-datacenter">Local Datacenter<a class="headerlink" href="#local-datacenter" title="Permanent link">¶</a></h3>
-<p>Always configure local datacenter explicitly in multi-DC deployments:</p>
-<div class="highlight"><pre><span></span><code><span class="c1">// REQUIRED for multi-DC</span>
+<p>In Java driver 4.x, local datacenter configuration is mandatory regardless of cluster topology. Session creation fails with <code>IllegalStateException</code> if omitted:</p>
+<div class="highlight"><pre><span></span><code><span class="c1">// REQUIRED (driver 4.x, any topology)</span>
 <span class="p">.</span><span class="na">withLocalDatacenter</span><span class="p">(</span><span class="s">"dc1"</span><span class="p">)</span>
 </code></pre></div>
-<p>Failure to configure results in potential cross-DC routing with high latency.</p>
+<p>In multi-DC deployments, this setting also ensures the driver routes queries to the correct datacenter.</p>
 <h3 id="connection-pool-sizing">Connection Pool Sizing<a class="headerlink" href="#connection-pool-sizing" title="Permanent link">¶</a></h3>
 <p>Default pool settings work for most workloads. Adjust only when:</p>
 <ul>
@@ -20392,12 +20392,13 @@ data-et-multi-view="{&quot;schema&quot;:{&quot;content&quot;:{&quot;desktop&quot
 <li>Throughput exceeds tens of thousands requests/second per node</li>
 <li>Monitoring shows pool-related bottlenecks</li>
 </ul>
-<div class="highlight"><pre><span></span><code><span class="c1">// Only if needed based on measurements</span>
-<span class="p">.</span><span class="na">withPoolingOptions</span><span class="p">(</span>
-<span class="w">    </span><span class="n">PoolingOptions</span><span class="p">.</span><span class="na">builder</span><span class="p">()</span>
-<span class="w">        </span><span class="p">.</span><span class="na">setConnectionsPerHost</span><span class="p">(</span><span class="n">DriverConnectionGroup</span><span class="p">.</span><span class="na">REMOTE</span><span class="p">,</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span><span class="w"> </span><span class="mi">1</span><span class="p">)</span>
-<span class="w">        </span><span class="p">.</span><span class="na">setConnectionsPerHost</span><span class="p">(</span><span class="n">DriverConnectionGroup</span><span class="p">.</span><span class="na">LOCAL</span><span class="p">,</span><span class="w"> </span><span class="mi">2</span><span class="p">,</span><span class="w"> </span><span class="mi">4</span><span class="p">)</span>
-<span class="w">        </span><span class="p">.</span><span class="na">build</span><span class="p">())</span>
+<p>In driver 4.x, pool sizing is configured via <code>application.conf</code>:</p>
+<div class="highlight"><pre><span></span><code>datastax-java-driver {
+  advanced.connection.pool {
+    local.size = 2   // connections per local node (default: 1)
+    remote.size = 1  // connections per remote node (default: 1)
+  }
+}
 </code></pre></div>
 <hr>
 <h2 id="query-execution">Query Execution<a class="headerlink" href="#query-execution" title="Permanent link">¶</a></h2>
@@ -20416,7 +20417,7 @@ data-et-multi-view="{&quot;schema&quot;:{&quot;content&quot;:{&quot;desktop&quot
 <p>Benefits:</p>
 <ul>
 <li>Reduced parsing overhead</li>
-<li>Token-aware routing</li>
+<li>Enables token-aware routing (via routing key metadata bound to the statement)</li>
 <li>Protection against CQL injection</li>
 </ul>
 <h3 id="set-appropriate-consistency-levels">Set Appropriate Consistency Levels<a class="headerlink" href="#set-appropriate-consistency-levels" title="Permanent link">¶</a></h3>
@@ -20463,24 +20464,29 @@ data-et-multi-view="{&quot;schema&quot;:{&quot;content&quot;:{&quot;desktop&quot
 <thead>
 <tr>
 <th>Timeout Type</th>
-<th>Recommendation</th>
+<th>Typical Range</th>
+<th>Notes</th>
 </tr>
 </thead>
 <tbody>
 <tr>
 <td>Read timeout</td>
-<td>5-10 seconds (longer than expected P99)</td>
+<td>5-10 seconds</td>
+<td>Should exceed expected P99; align with server-side <code>read_request_timeout</code></td>
 </tr>
 <tr>
 <td>Write timeout</td>
-<td>10-30 seconds (allow for hints, batches)</td>
+<td>10-30 seconds</td>
+<td>Should align with server-side <code>write_request_timeout</code>; varies by workload</td>
 </tr>
 <tr>
 <td>Connection timeout</td>
 <td>5 seconds</td>
+<td>Adjust for network conditions</td>
 </tr>
 </tbody>
 </table>
+<p>Client-side timeouts should be set relative to server-side timeouts and application SLA requirements.</p>
 <hr>
 <h2 id="error-handling">Error Handling<a class="headerlink" href="#error-handling" title="Permanent link">¶</a></h2>
 <h3 id="handle-specific-exceptions">Handle Specific Exceptions<a class="headerlink" href="#handle-specific-exceptions" title="Permanent link">¶</a></h3>
@@ -20530,11 +20536,8 @@ data-et-multi-view="{&quot;schema&quot;:{&quot;content&quot;:{&quot;desktop&quot
 <span class="w">    </span><span class="p">.</span><span class="na">addContactPoints</span><span class="p">(</span><span class="n">contactPoints</span><span class="p">)</span>
 <span class="w">    </span><span class="p">.</span><span class="na">withLocalDatacenter</span><span class="p">(</span><span class="s">"dc1"</span><span class="p">)</span>
 
-<span class="w">    </span><span class="c1">// Load balancing: token-aware with DC awareness</span>
-<span class="w">    </span><span class="p">.</span><span class="na">withLoadBalancingPolicy</span><span class="p">(</span>
-<span class="w">        </span><span class="n">DefaultLoadBalancingPolicy</span><span class="p">.</span><span class="na">builder</span><span class="p">()</span>
-<span class="w">            </span><span class="p">.</span><span class="na">withLocalDatacenter</span><span class="p">(</span><span class="s">"dc1"</span><span class="p">)</span>
-<span class="w">            </span><span class="p">.</span><span class="na">build</span><span class="p">())</span>
+<span class="w">    </span><span class="c1">// Load balancing: configured via application.conf</span>
+<span class="w">    </span><span class="c1">// basic.load-balancing-policy.local-datacenter = "dc1"</span>
 
 <span class="w">    </span><span class="c1">// Retry: conservative, respects idempotency</span>
 <span class="w">    </span><span class="p">.</span><span class="na">withRetryPolicy</span><span class="p">(</span><span class="n">DefaultRetryPolicy</span><span class="p">.</span><span class="na">INSTANCE</span><span class="p">)</span>

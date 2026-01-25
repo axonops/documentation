@@ -20209,17 +20209,16 @@ data-et-multi-view="{&quot;schema&quot;:{&quot;content&quot;:{&quot;desktop&quot
 <td>Overloaded nodes, disk issues</td>
 </tr>
 <tr>
-<td>RangeSliceTimeoutException</td>
-<td>10000ms</td>
-<td>Large range scans</td>
-</tr>
-<tr>
 <td>TruncateException</td>
 <td>60000ms</td>
 <td>Large table truncation</td>
 </tr>
 </tbody>
 </table>
+<div class="admonition note">
+<p class="admonition-title">Legacy Exception</p>
+<p><code>RangeSliceTimeoutException</code> was a Thrift-era exception. In modern Cassandra (4.0+), range scan timeouts surface as <code>ReadTimeoutException</code>.</p>
+</div>
 <h3 id="availability-errors">Availability Errors<a class="headerlink" href="#availability-errors" title="Permanent link">¶</a></h3>
 <p>Errors related to replica availability.</p>
 <table>

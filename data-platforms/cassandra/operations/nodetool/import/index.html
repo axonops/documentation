@@ -20285,7 +20285,7 @@ data-et-multi-view="{&quot;schema&quot;:{&quot;content&quot;:{&quot;desktop&quot
 <p>Imports SSTables from an external directory into a table.</p>
 <hr>
 <h2 id="synopsis">Synopsis<a class="headerlink" href="#synopsis" title="Permanent link">¶</a></h2>
-<div class="highlight"><pre><span></span><code>nodetool<span class="w"> </span><span class="o">[</span>connection_options<span class="o">]</span><span class="w"> </span>import<span class="w"> </span><span class="o">[</span>options<span class="o">]</span><span class="w"> </span>&lt;keyspace&gt;<span class="w"> </span>&lt;table&gt;<span class="w"> </span>&lt;directory&gt;
+<div class="highlight"><pre><span></span><code>nodetool<span class="w"> </span><span class="o">[</span>connection_options<span class="o">]</span><span class="w"> </span>import<span class="w"> </span><span class="o">[</span>options<span class="o">]</span><span class="w"> </span>&lt;keyspace&gt;<span class="w"> </span>&lt;table&gt;<span class="w"> </span>&lt;directory&gt;...
 </code></pre></div>
 <h2 id="description">Description<a class="headerlink" href="#description" title="Permanent link">¶</a></h2>
 <p><code>nodetool import</code> loads SSTables from an external directory into a Cassandra table. Unlike <code>refresh</code>, which requires files to be in the data directory, <code>import</code> can load from any location and optionally moves or copies files.</p>
@@ -20310,7 +20310,7 @@ data-et-multi-view="{&quot;schema&quot;:{&quot;content&quot;:{&quot;desktop&quot
 </tr>
 <tr>
 <td><code>directory</code></td>
-<td>Directory containing SSTables to import</td>
+<td>One or more directories containing SSTables to import</td>
 </tr>
 </tbody>
 </table>
@@ -20325,8 +20325,12 @@ data-et-multi-view="{&quot;schema&quot;:{&quot;content&quot;:{&quot;desktop&quot
 </thead>
 <tbody>
 <tr>
-<td><code>-c, --no-verify</code></td>
-<td>Skip SSTable verification</td>
+<td><code>-c, --no-invalidate-caches</code></td>
+<td>Skip row cache invalidation</td>
+</tr>
+<tr>
+<td><code>-cd, --copy-data</code></td>
+<td>Copy files instead of moving</td>
 </tr>
 <tr>
 <td><code>-e, --extended-verify</code></td>
@@ -20341,20 +20345,24 @@ data-et-multi-view="{&quot;schema&quot;:{&quot;content&quot;:{&quot;desktop&quot
 <td>Keep repaired status</td>
 </tr>
 <tr>
+<td><code>-niv, --no-index-validation</code></td>
+<td>Skip index component validation</td>
+</tr>
+<tr>
 <td><code>-q, --quick</code></td>
 <td>Quick import (less verification)</td>
 </tr>
 <tr>
-<td><code>-r, --no-invalidate-caches</code></td>
-<td>Don't invalidate caches</td>
+<td><code>-ri, --require-index-components</code></td>
+<td>Require index components to be present</td>
 </tr>
 <tr>
-<td><code>-v, --no-verify-tokens</code></td>
+<td><code>-t, --no-tokens</code></td>
 <td>Skip token verification</td>
 </tr>
 <tr>
-<td><code>-p, --copy-data</code></td>
-<td>Copy files instead of moving</td>
+<td><code>-v, --no-verify</code></td>
+<td>Skip SSTable verification</td>
 </tr>
 </tbody>
 </table>
@@ -20364,7 +20372,7 @@ data-et-multi-view="{&quot;schema&quot;:{&quot;content&quot;:{&quot;desktop&quot
 <div class="highlight"><pre><span></span><code>nodetool<span class="w"> </span>import<span class="w"> </span>my_keyspace<span class="w"> </span>my_table<span class="w"> </span>/path/to/sstables/
 </code></pre></div>
 <h3 id="import-with-copy-keep-original">Import with Copy (Keep Original)<a class="headerlink" href="#import-with-copy-keep-original" title="Permanent link">¶</a></h3>
-<div class="highlight"><pre><span></span><code>nodetool<span class="w"> </span>import<span class="w"> </span>-p<span class="w"> </span>my_keyspace<span class="w"> </span>my_table<span class="w"> </span>/backup/sstables/
+<div class="highlight"><pre><span></span><code>nodetool<span class="w"> </span>import<span class="w"> </span>-cd<span class="w"> </span>my_keyspace<span class="w"> </span>my_table<span class="w"> </span>/backup/sstables/
 </code></pre></div>
 <h3 id="quick-import-less-verification">Quick Import (Less Verification)<a class="headerlink" href="#quick-import-less-verification" title="Permanent link">¶</a></h3>
 <div class="highlight"><pre><span></span><code>nodetool<span class="w"> </span>import<span class="w"> </span>-q<span class="w"> </span>my_keyspace<span class="w"> </span>my_table<span class="w"> </span>/path/to/sstables/
@@ -20410,12 +20418,6 @@ data-et-multi-view="{&quot;schema&quot;:{&quot;content&quot;:{&quot;desktop&quot
 <td>No</td>
 <td>No</td>
 <td>Yes</td>
-</tr>
-<tr>
-<td>Cassandra version</td>
-<td>4.0+</td>
-<td>3.x+</td>
-<td>All</td>
 </tr>
 <tr>
 <td>Speed</td>
@@ -20466,11 +20468,11 @@ nodetool<span class="w"> </span>repair<span class="w"> </span>my_keyspace<span c
 nodetool<span class="w"> </span>import<span class="w"> </span>my_keyspace<span class="w"> </span>my_table<span class="w"> </span>/path/
 
 <span class="c1"># Skip token verification (use carefully)</span>
-nodetool<span class="w"> </span>import<span class="w"> </span>-v<span class="w"> </span>my_keyspace<span class="w"> </span>my_table<span class="w"> </span>/path/
+nodetool<span class="w"> </span>import<span class="w"> </span>-t<span class="w"> </span>my_keyspace<span class="w"> </span>my_table<span class="w"> </span>/path/
 </code></pre></div>
 <div class="admonition warning">
 <p class="admonition-title">Token Verification</p>
-<p>Skipping token verification (<code>-v</code>) may import data that doesn't belong to this node. Only use when certain about data placement.</p>
+<p>Skipping token verification (<code>-t</code>) may import data that doesn't belong to this node. Only use when certain about data placement.</p>
 </div>
 <hr>
 <h2 id="file-handling">File Handling<a class="headerlink" href="#file-handling" title="Permanent link">¶</a></h2>
@@ -20481,8 +20483,8 @@ nodetool<span class="w"> </span>import<span class="w"> </span>-v<span class="w">
 <span class="c1"># Source directory will be empty after import</span>
 </code></pre></div>
 <h3 id="copy-mode">Copy Mode<a class="headerlink" href="#copy-mode" title="Permanent link">¶</a></h3>
-<p>Use <code>-p</code> to copy instead of move:</p>
-<div class="highlight"><pre><span></span><code>nodetool<span class="w"> </span>import<span class="w"> </span>-p<span class="w"> </span>my_keyspace<span class="w"> </span>my_table<span class="w"> </span>/backup/sstables/
+<p>Use <code>-cd</code> to copy instead of move:</p>
+<div class="highlight"><pre><span></span><code>nodetool<span class="w"> </span>import<span class="w"> </span>-cd<span class="w"> </span>my_keyspace<span class="w"> </span>my_table<span class="w"> </span>/backup/sstables/
 <span class="c1"># Files copied, originals remain in /backup/sstables/</span>
 </code></pre></div>
 <hr>
@@ -20525,7 +20527,7 @@ nodetool<span class="w"> </span>repair<span class="w"> </span>-pr<span class="w"
 <div class="admonition tip">
 <p class="admonition-title">Import Guidelines</p>
 <ol>
-<li><strong>Use copy mode for backups</strong> - Keep original files with <code>-p</code></li>
+<li><strong>Use copy mode for backups</strong> - Keep original files with <code>-cd</code></li>
 <li><strong>Verify first</strong> - Use extended verification for critical data</li>
 <li><strong>Check token ownership</strong> - Ensure SSTables belong to this node</li>
 <li><strong>Run repair after</strong> - Ensure consistency across replicas</li>

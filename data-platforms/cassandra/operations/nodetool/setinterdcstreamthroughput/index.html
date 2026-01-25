@@ -8922,6 +8922,15 @@ data-et-multi-view="{&quot;schema&quot;:{&quot;content&quot;:{&quot;desktop&quot
 </li>
       
         <li class="md-nav__item">
+  <a href="#options" class="md-nav__link">
+    <span class="md-ellipsis">
+      Options
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#arguments" class="md-nav__link">
     <span class="md-ellipsis">
       Arguments
@@ -8941,9 +8950,18 @@ data-et-multi-view="{&quot;schema&quot;:{&quot;content&quot;:{&quot;desktop&quot
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
-  <a href="#set-throughput" class="md-nav__link">
+  <a href="#set-throughput-megabits-per-second" class="md-nav__link">
     <span class="md-ellipsis">
-      Set Throughput
+      Set Throughput (Megabits per Second)
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#set-throughput-mib-per-second" class="md-nav__link">
+    <span class="md-ellipsis">
+      Set Throughput (MiB per Second)
     </span>
   </a>
   
@@ -8953,6 +8971,24 @@ data-et-multi-view="{&quot;schema&quot;:{&quot;content&quot;:{&quot;desktop&quot
   <a href="#increase-for-faster-cross-dc-operations" class="md-nav__link">
     <span class="md-ellipsis">
       Increase for Faster Cross-DC Operations
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#disable-throttling" class="md-nav__link">
+    <span class="md-ellipsis">
+      Disable Throttling
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#set-entire-sstable-streaming-throughput" class="md-nav__link">
+    <span class="md-ellipsis">
+      Set Entire-SSTable Streaming Throughput
     </span>
   </a>
   
@@ -8986,6 +9022,15 @@ data-et-multi-view="{&quot;schema&quot;:{&quot;content&quot;:{&quot;desktop&quot
   <a href="#cross-dc-rebuild" class="md-nav__link">
     <span class="md-ellipsis">
       Cross-DC Rebuild
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#using-mibs-units" class="md-nav__link">
+    <span class="md-ellipsis">
+      Using MiB/s Units
     </span>
   </a>
   
@@ -19901,6 +19946,15 @@ data-et-multi-view="{&quot;schema&quot;:{&quot;content&quot;:{&quot;desktop&quot
 </li>
       
         <li class="md-nav__item">
+  <a href="#options" class="md-nav__link">
+    <span class="md-ellipsis">
+      Options
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#arguments" class="md-nav__link">
     <span class="md-ellipsis">
       Arguments
@@ -19920,9 +19974,18 @@ data-et-multi-view="{&quot;schema&quot;:{&quot;content&quot;:{&quot;desktop&quot
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
-  <a href="#set-throughput" class="md-nav__link">
+  <a href="#set-throughput-megabits-per-second" class="md-nav__link">
     <span class="md-ellipsis">
-      Set Throughput
+      Set Throughput (Megabits per Second)
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#set-throughput-mib-per-second" class="md-nav__link">
+    <span class="md-ellipsis">
+      Set Throughput (MiB per Second)
     </span>
   </a>
   
@@ -19932,6 +19995,24 @@ data-et-multi-view="{&quot;schema&quot;:{&quot;content&quot;:{&quot;desktop&quot
   <a href="#increase-for-faster-cross-dc-operations" class="md-nav__link">
     <span class="md-ellipsis">
       Increase for Faster Cross-DC Operations
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#disable-throttling" class="md-nav__link">
+    <span class="md-ellipsis">
+      Disable Throttling
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#set-entire-sstable-streaming-throughput" class="md-nav__link">
+    <span class="md-ellipsis">
+      Set Entire-SSTable Streaming Throughput
     </span>
   </a>
   
@@ -19970,6 +20051,15 @@ data-et-multi-view="{&quot;schema&quot;:{&quot;content&quot;:{&quot;desktop&quot
   
 </li>
         
+          <li class="md-nav__item">
+  <a href="#using-mibs-units" class="md-nav__link">
+    <span class="md-ellipsis">
+      Using MiB/s Units
+    </span>
+  </a>
+  
+</li>
+        
       </ul>
     </nav>
   
@@ -20003,10 +20093,30 @@ data-et-multi-view="{&quot;schema&quot;:{&quot;content&quot;:{&quot;desktop&quot
 <p>Sets the inter-datacenter stream throughput limit.</p>
 <hr>
 <h2 id="synopsis">Synopsis<a class="headerlink" href="#synopsis" title="Permanent link">¶</a></h2>
-<div class="highlight"><pre><span></span><code>nodetool<span class="w"> </span><span class="o">[</span>connection_options<span class="o">]</span><span class="w"> </span>setinterdcstreamthroughput<span class="w"> </span>&lt;throughput_mb_per_sec&gt;
+<div class="highlight"><pre><span></span><code>nodetool<span class="w"> </span><span class="o">[</span>connection_options<span class="o">]</span><span class="w"> </span>setinterdcstreamthroughput<span class="w"> </span><span class="o">[</span>options<span class="o">]</span><span class="w"> </span>&lt;throughput&gt;
 </code></pre></div>
 <h2 id="description">Description<a class="headerlink" href="#description" title="Permanent link">¶</a></h2>
 <p><code>nodetool setinterdcstreamthroughput</code> modifies the maximum throughput for streaming between datacenters. This is useful for controlling WAN bandwidth usage during cross-datacenter operations.</p>
+<hr>
+<h2 id="options">Options<a class="headerlink" href="#options" title="Permanent link">¶</a></h2>
+<table>
+<thead>
+<tr>
+<th>Option</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>-m, --mib</code></td>
+<td>Interpret the throughput value as MiB/s instead of Mb/s</td>
+</tr>
+<tr>
+<td><code>-e, --entire-sstable-throughput</code></td>
+<td>Set the entire-SSTable inter-DC streaming throughput</td>
+</tr>
+</tbody>
+</table>
 <hr>
 <h2 id="arguments">Arguments<a class="headerlink" href="#arguments" title="Permanent link">¶</a></h2>
 <table>
@@ -20018,32 +20128,86 @@ data-et-multi-view="{&quot;schema&quot;:{&quot;content&quot;:{&quot;desktop&quot
 </thead>
 <tbody>
 <tr>
-<td><code>throughput_mb_per_sec</code></td>
-<td>Maximum throughput in MB/s</td>
+<td><code>throughput</code></td>
+<td>Maximum throughput. Default unit is <strong>megabits per second (Mb/s)</strong>. Use <code>-m</code> for MiB/s. Set to 0 to disable throttling.</td>
 </tr>
 </tbody>
 </table>
+<div class="admonition note">
+<p class="admonition-title">Unit Clarification</p>
+<p>By default, the argument is in <strong>megabits per second (Mb/s)</strong>, not megabytes. For example:</p>
+<ul>
+<li><code>nodetool setinterdcstreamthroughput 200</code> = 200 Mb/s = ~25 MiB/s</li>
+<li><code>nodetool setinterdcstreamthroughput -m 25</code> = 25 MiB/s = ~200 Mb/s</li>
+</ul>
+</div>
+<div class="admonition note">
+<p class="admonition-title">cassandra.yaml Parameter</p>
+<p>The corresponding cassandra.yaml parameter changed in 4.1:</p>
+<table>
+<thead>
+<tr>
+<th>Cassandra Version</th>
+<th>Parameter Name</th>
+<th>Example</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Pre-4.1</td>
+<td><code>inter_dc_stream_throughput_outbound_megabits_per_sec</code></td>
+<td><code>200</code></td>
+</tr>
+<tr>
+<td>4.1+</td>
+<td><code>inter_dc_stream_throughput</code></td>
+<td><code>200Mb/s</code> or <code>24MiB/s</code></td>
+</tr>
+</tbody>
+</table>
+</div>
 <hr>
 <h2 id="examples">Examples<a class="headerlink" href="#examples" title="Permanent link">¶</a></h2>
-<h3 id="set-throughput">Set Throughput<a class="headerlink" href="#set-throughput" title="Permanent link">¶</a></h3>
-<div class="highlight"><pre><span></span><code>nodetool<span class="w"> </span>setinterdcstreamthroughput<span class="w"> </span><span class="m">50</span>
+<h3 id="set-throughput-megabits-per-second">Set Throughput (Megabits per Second)<a class="headerlink" href="#set-throughput-megabits-per-second" title="Permanent link">¶</a></h3>
+<div class="highlight"><pre><span></span><code><span class="c1"># Set to 50 Mb/s (~6 MiB/s)</span>
+nodetool<span class="w"> </span>setinterdcstreamthroughput<span class="w"> </span><span class="m">50</span>
+</code></pre></div>
+<h3 id="set-throughput-mib-per-second">Set Throughput (MiB per Second)<a class="headerlink" href="#set-throughput-mib-per-second" title="Permanent link">¶</a></h3>
+<div class="highlight"><pre><span></span><code><span class="c1"># Set to 25 MiB/s using the -m flag</span>
+nodetool<span class="w"> </span>setinterdcstreamthroughput<span class="w"> </span>-m<span class="w"> </span><span class="m">25</span>
 </code></pre></div>
 <h3 id="increase-for-faster-cross-dc-operations">Increase for Faster Cross-DC Operations<a class="headerlink" href="#increase-for-faster-cross-dc-operations" title="Permanent link">¶</a></h3>
-<div class="highlight"><pre><span></span><code>nodetool<span class="w"> </span>setinterdcstreamthroughput<span class="w"> </span><span class="m">200</span>
+<div class="highlight"><pre><span></span><code><span class="c1"># Set to 200 Mb/s (~25 MiB/s)</span>
+nodetool<span class="w"> </span>setinterdcstreamthroughput<span class="w"> </span><span class="m">200</span>
+</code></pre></div>
+<h3 id="disable-throttling">Disable Throttling<a class="headerlink" href="#disable-throttling" title="Permanent link">¶</a></h3>
+<div class="highlight"><pre><span></span><code><span class="c1"># Set to 0 for unlimited throughput</span>
+nodetool<span class="w"> </span>setinterdcstreamthroughput<span class="w"> </span><span class="m">0</span>
+</code></pre></div>
+<h3 id="set-entire-sstable-streaming-throughput">Set Entire-SSTable Streaming Throughput<a class="headerlink" href="#set-entire-sstable-streaming-throughput" title="Permanent link">¶</a></h3>
+<div class="highlight"><pre><span></span><code><span class="c1"># Set entire-SSTable inter-DC streaming throughput</span>
+nodetool<span class="w"> </span>setinterdcstreamthroughput<span class="w"> </span>-e<span class="w"> </span><span class="m">200</span>
 </code></pre></div>
 <hr>
 <h2 id="when-to-use">When to Use<a class="headerlink" href="#when-to-use" title="Permanent link">¶</a></h2>
 <h3 id="wan-bandwidth-management">WAN Bandwidth Management<a class="headerlink" href="#wan-bandwidth-management" title="Permanent link">¶</a></h3>
-<div class="highlight"><pre><span></span><code><span class="c1"># Limit during business hours</span>
+<div class="highlight"><pre><span></span><code><span class="c1"># Limit during business hours (25 Mb/s)</span>
 nodetool<span class="w"> </span>setinterdcstreamthroughput<span class="w"> </span><span class="m">25</span>
 
-<span class="c1"># Increase during off-peak</span>
+<span class="c1"># Increase during off-peak (100 Mb/s)</span>
 nodetool<span class="w"> </span>setinterdcstreamthroughput<span class="w"> </span><span class="m">100</span>
 </code></pre></div>
 <h3 id="cross-dc-rebuild">Cross-DC Rebuild<a class="headerlink" href="#cross-dc-rebuild" title="Permanent link">¶</a></h3>
-<div class="highlight"><pre><span></span><code><span class="c1"># Increase for faster rebuild</span>
+<div class="highlight"><pre><span></span><code><span class="c1"># Increase for faster rebuild (150 Mb/s)</span>
 nodetool<span class="w"> </span>setinterdcstreamthroughput<span class="w"> </span><span class="m">150</span>
 nodetool<span class="w"> </span>rebuild<span class="w"> </span>--<span class="w"> </span>dc2
+</code></pre></div>
+<h3 id="using-mibs-units">Using MiB/s Units<a class="headerlink" href="#using-mibs-units" title="Permanent link">¶</a></h3>
+<div class="highlight"><pre><span></span><code><span class="c1"># Set to 10 MiB/s (clearer unit)</span>
+nodetool<span class="w"> </span>setinterdcstreamthroughput<span class="w"> </span>-m<span class="w"> </span><span class="m">10</span>
+
+<span class="c1"># Set to 50 MiB/s during maintenance</span>
+nodetool<span class="w"> </span>setinterdcstreamthroughput<span class="w"> </span>-m<span class="w"> </span><span class="m">50</span>
 </code></pre></div>
 <hr>
 <h2 id="related-commands">Related Commands<a class="headerlink" href="#related-commands" title="Permanent link">¶</a></h2>

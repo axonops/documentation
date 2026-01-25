@@ -20072,27 +20072,36 @@ ollama<span class="w"> </span>serve
 <hr>
 <h2 id="export-data">Export Data<a class="headerlink" href="#export-data" title="Permanent link">¶</a></h2>
 <h3 id="to-csv">To CSV<a class="headerlink" href="#to-csv" title="Permanent link">¶</a></h3>
-<div class="highlight"><pre><span></span><code><span class="n">cqlai</span><span class="o">&gt;</span><span class="w"> </span><span class="p">.</span><span class="n">export</span><span class="w"> </span><span class="n">csv</span><span class="w"> </span><span class="n">users</span><span class="p">.</span><span class="n">csv</span><span class="w"> </span><span class="k">SELECT</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="k">FROM</span><span class="w"> </span><span class="n">users</span><span class="p">;</span>
+<div class="highlight"><pre><span></span><code><span class="n">cqlai</span><span class="o">&gt;</span><span class="w"> </span><span class="p">.</span><span class="n">export</span><span class="w"> </span><span class="n">users</span><span class="w"> </span><span class="n">users</span><span class="p">.</span><span class="n">csv</span>
+<span class="n">cqlai</span><span class="o">&gt;</span><span class="w"> </span><span class="p">.</span><span class="n">export</span><span class="w"> </span><span class="n">users</span><span class="w"> </span><span class="n">users</span><span class="p">.</span><span class="n">csv</span><span class="w"> </span><span class="c1">--format csv</span>
 </code></pre></div>
 <h3 id="to-parquet">To Parquet<a class="headerlink" href="#to-parquet" title="Permanent link">¶</a></h3>
-<div class="highlight"><pre><span></span><code><span class="n">cqlai</span><span class="o">&gt;</span><span class="w"> </span><span class="p">.</span><span class="n">export</span><span class="w"> </span><span class="n">parquet</span><span class="w"> </span><span class="n">users</span><span class="p">.</span><span class="n">parquet</span><span class="w"> </span><span class="k">SELECT</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="k">FROM</span><span class="w"> </span><span class="n">users</span><span class="p">;</span>
+<div class="highlight"><pre><span></span><code><span class="n">cqlai</span><span class="o">&gt;</span><span class="w"> </span><span class="p">.</span><span class="n">export</span><span class="w"> </span><span class="n">users</span><span class="w"> </span><span class="n">users</span><span class="p">.</span><span class="n">parquet</span><span class="w"> </span><span class="c1">--format parquet</span>
 </code></pre></div>
 <h3 id="to-json">To JSON<a class="headerlink" href="#to-json" title="Permanent link">¶</a></h3>
-<div class="highlight"><pre><span></span><code><span class="n">cqlai</span><span class="o">&gt;</span><span class="w"> </span><span class="p">.</span><span class="n">export</span><span class="w"> </span><span class="n">json</span><span class="w"> </span><span class="n">users</span><span class="p">.</span><span class="n">json</span><span class="w"> </span><span class="k">SELECT</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="k">FROM</span><span class="w"> </span><span class="n">users</span><span class="p">;</span>
+<div class="highlight"><pre><span></span><code><span class="n">cqlai</span><span class="o">&gt;</span><span class="w"> </span><span class="p">.</span><span class="n">export</span><span class="w"> </span><span class="n">users</span><span class="w"> </span><span class="n">users</span><span class="p">.</span><span class="n">json</span><span class="w"> </span><span class="c1">--format json</span>
+</code></pre></div>
+<p>Export query results:
+</p><div class="highlight"><pre><span></span><code><span class="n">cqlai</span><span class="o">&gt;</span><span class="w"> </span><span class="p">.</span><span class="n">export</span><span class="w"> </span><span class="ss">"SELECT * FROM orders WHERE status = 'pending'"</span><span class="w"> </span><span class="n">pending</span><span class="p">.</span><span class="n">csv</span>
 </code></pre></div>
 <hr>
 <h2 id="configuration-file">Configuration File<a class="headerlink" href="#configuration-file" title="Permanent link">¶</a></h2>
-<p>Create <code>~/.cqlai/config.yaml</code> for persistent settings:</p>
-<div class="highlight"><pre><span></span><code><span class="nt">connection</span><span class="p">:</span>
-<span class="w">  </span><span class="nt">host</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">cassandra.example.com</span>
-<span class="w">  </span><span class="nt">port</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">9042</span>
-<span class="w">  </span><span class="nt">username</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">myuser</span>
-<span class="w">  </span><span class="nt">ssl</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">true</span>
-
-<span class="nt">ai</span><span class="p">:</span>
-<span class="w">  </span><span class="nt">provider</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">openai</span>
-<span class="w">  </span><span class="nt">model</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">gpt-4</span>
+<p>Create a configuration file for persistent settings. CQLAI supports JSON format:</p>
+<div class="highlight"><pre><span></span><code><span class="c1">// ~/.config/cqlai/config.json (or ~/.cqlai.json or ./cqlai.json)</span>
+<span class="p">{</span>
+<span class="w">  </span><span class="nt">"host"</span><span class="p">:</span><span class="w"> </span><span class="s2">"cassandra.example.com"</span><span class="p">,</span>
+<span class="w">  </span><span class="nt">"port"</span><span class="p">:</span><span class="w"> </span><span class="mi">9042</span><span class="p">,</span>
+<span class="w">  </span><span class="nt">"username"</span><span class="p">:</span><span class="w"> </span><span class="s2">"myuser"</span><span class="p">,</span>
+<span class="w">  </span><span class="nt">"ssl"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="nt">"enabled"</span><span class="p">:</span><span class="w"> </span><span class="kc">true</span>
+<span class="w">  </span><span class="p">},</span>
+<span class="w">  </span><span class="nt">"ai"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="nt">"provider"</span><span class="p">:</span><span class="w"> </span><span class="s2">"openai"</span><span class="p">,</span>
+<span class="w">    </span><span class="nt">"model"</span><span class="p">:</span><span class="w"> </span><span class="s2">"gpt-4"</span>
+<span class="w">  </span><span class="p">}</span>
+<span class="p">}</span>
 </code></pre></div>
+<p>See <a href="../configuration/">Configuration</a> for all available options.</p>
 <hr>
 <h2 id="next-steps">Next Steps<a class="headerlink" href="#next-steps" title="Permanent link">¶</a></h2>
 <ul>

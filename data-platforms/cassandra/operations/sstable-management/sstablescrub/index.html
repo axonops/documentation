@@ -20655,7 +20655,15 @@ data-et-multi-view="{&quot;schema&quot;:{&quot;content&quot;:{&quot;desktop&quot
 </tr>
 <tr>
 <td><code>-e, --header-fix &lt;mode&gt;</code></td>
-<td>Handle serialization header issues: <code>validate</code>, <code>fix</code>, <code>fix-only</code>, <code>off</code></td>
+<td>Handle serialization header issues (see modes below)</td>
+</tr>
+<tr>
+<td><code>-v, --verbose</code></td>
+<td>Enable verbose output</td>
+</tr>
+<tr>
+<td><code>-h, --help</code></td>
+<td>Display help information</td>
 </tr>
 <tr>
 <td><code>--debug</code></td>
@@ -20664,6 +20672,10 @@ data-et-multi-view="{&quot;schema&quot;:{&quot;content&quot;:{&quot;desktop&quot
 </tbody>
 </table>
 <h3 id="header-fix-modes-e">Header Fix Modes (<code>-e</code>)<a class="headerlink" href="#header-fix-modes-e" title="Permanent link">¶</a></h3>
+<div class="admonition warning">
+<p class="admonition-title">Deprecated Option</p>
+<p>The <code>--header-fix</code> option is deprecated and no longer functional in recent Cassandra versions. It only emits a warning and has no effect on scrubbing behavior.</p>
+</div>
 <table>
 <thead>
 <tr>
@@ -20675,6 +20687,10 @@ data-et-multi-view="{&quot;schema&quot;:{&quot;content&quot;:{&quot;desktop&quot
 <tr>
 <td><code>validate</code></td>
 <td>(Default) Validate header, error if mismatch found</td>
+</tr>
+<tr>
+<td><code>validate-only</code></td>
+<td>Only validate header, do not attempt fixes</td>
 </tr>
 <tr>
 <td><code>fix</code></td>

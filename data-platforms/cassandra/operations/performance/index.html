@@ -13587,9 +13587,9 @@ data-et-multi-view="{&quot;schema&quot;:{&quot;content&quot;:{&quot;desktop&quot
 </li>
         
           <li class="md-nav__item">
-  <a href="#zgc-configuration-jdk-17-low-latency" class="md-nav__link">
+  <a href="#zgc-configuration-low-latency" class="md-nav__link">
     <span class="md-ellipsis">
-      ZGC Configuration (JDK 17+, Low Latency)
+      ZGC Configuration (Low Latency)
     </span>
   </a>
   
@@ -20557,9 +20557,9 @@ data-et-multi-view="{&quot;schema&quot;:{&quot;content&quot;:{&quot;desktop&quot
 </li>
         
           <li class="md-nav__item">
-  <a href="#zgc-configuration-jdk-17-low-latency" class="md-nav__link">
+  <a href="#zgc-configuration-low-latency" class="md-nav__link">
     <span class="md-ellipsis">
-      ZGC Configuration (JDK 17+, Low Latency)
+      ZGC Configuration (Low Latency)
     </span>
   </a>
   
@@ -21370,22 +21370,55 @@ Example (64GB server):
 <span class="c1"># GC logging</span>
 -Xlog:gc*:file<span class="o">=</span>/var/log/cassandra/gc.log:time,uptime:filecount<span class="o">=</span><span class="m">10</span>,filesize<span class="o">=</span>10M
 </code></pre></div>
-<h3 id="zgc-configuration-jdk-17-low-latency">ZGC Configuration (JDK 17+, Low Latency)<a class="headerlink" href="#zgc-configuration-jdk-17-low-latency" title="Permanent link">¶</a></h3>
+<h3 id="zgc-configuration-low-latency">ZGC Configuration (Low Latency)<a class="headerlink" href="#zgc-configuration-low-latency" title="Permanent link">¶</a></h3>
 <div class="highlight"><pre><span></span><code><span class="c1"># Use ZGC for sub-millisecond pauses</span>
 -XX:+UseZGC
--XX:+ZGenerational
+
+<span class="c1"># ZGenerational is available in JDK 21+ only</span>
+<span class="c1"># For JDK 21+:</span>
+<span class="c1"># -XX:+ZGenerational</span>
 
 <span class="c1"># Soft max heap (allows expansion under pressure)</span>
 -XX:SoftMaxHeapSize<span class="o">=</span>28G<span class="w">  </span><span class="c1"># With -Xmx31G</span>
 </code></pre></div>
+<div class="admonition note">
+<p class="admonition-title">ZGC Version Requirements</p>
+<ul>
+<li><strong>JDK 11-16</strong>: ZGC is experimental (<code>-XX:+UnlockExperimentalVMOptions</code> required)</li>
+<li><strong>JDK 17-20</strong>: ZGC is production-ready (non-generational)</li>
+<li><strong>JDK 21+</strong>: ZGenerational mode available via <code>-XX:+ZGenerational</code></li>
+</ul>
+</div>
 <h3 id="off-heap-memory">Off-Heap Memory<a class="headerlink" href="#off-heap-memory" title="Permanent link">¶</a></h3>
 <div class="highlight"><pre><span></span><code><span class="c1"># cassandra.yaml</span>
 <span class="c1"># Memtables can use off-heap memory</span>
-<span class="nt">memtable_heap_space_in_mb</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">2048</span>
-<span class="nt">memtable_offheap_space_in_mb</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">2048</span>
+<span class="nt">memtable_heap_space</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">2048MiB</span>
+<span class="nt">memtable_offheap_space</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">2048MiB</span>
 
 <span class="c1"># File system cache is critical - do not starve it!</span>
 </code></pre></div>
+<div class="admonition note">
+<p class="admonition-title">Memtable Configuration Parameter</p>
+<p>The memtable size parameters changed in Cassandra 4.1:</p>
+<table>
+<thead>
+<tr>
+<th>Cassandra Version</th>
+<th>Parameter Names</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Pre-4.1</td>
+<td><code>memtable_heap_space_in_mb</code>, <code>memtable_offheap_space_in_mb</code></td>
+</tr>
+<tr>
+<td>4.1+</td>
+<td><code>memtable_heap_space</code>, <code>memtable_offheap_space</code> (with units like <code>MiB</code>)</td>
+</tr>
+</tbody>
+</table>
+</div>
 <hr>
 <h2 id="os-tuning-quick-reference">OS Tuning Quick Reference<a class="headerlink" href="#os-tuning-quick-reference" title="Permanent link">¶</a></h2>
 <h3 id="essential-sysctl-settings">Essential sysctl Settings<a class="headerlink" href="#essential-sysctl-settings" title="Permanent link">¶</a></h3>

@@ -20440,26 +20440,64 @@ ls<span class="w"> </span>-la<span class="w"> </span>/var/lib/cassandra/commitlo
 <span class="c1"># (first segment ID after restart reflects startup time)</span>
 </code></pre></div>
 <h3 id="configuration">Configuration<a class="headerlink" href="#configuration" title="Permanent link">¶</a></h3>
-<div class="highlight"><pre><span></span><code><span class="c1"># cassandra.yaml</span>
+<p><strong>Commit log parameters by version:</strong></p>
+<table>
+<thead>
+<tr>
+<th>Parameter</th>
+<th>4.0</th>
+<th>4.1+</th>
+<th>Default</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Sync period</td>
+<td><code>commitlog_sync_period_in_ms</code></td>
+<td><code>commitlog_sync_period</code></td>
+<td><code>10000</code> / <code>10s</code></td>
+</tr>
+<tr>
+<td>Group window</td>
+<td><code>commitlog_sync_batch_window_in_ms</code></td>
+<td><code>commitlog_sync_group_window</code></td>
+<td><code>2</code> / <code>2ms</code></td>
+</tr>
+<tr>
+<td>Segment size</td>
+<td><code>commitlog_segment_size_in_mb</code></td>
+<td><code>commitlog_segment_size</code></td>
+<td><code>32</code> / <code>32MiB</code></td>
+</tr>
+<tr>
+<td>Total space</td>
+<td><code>commitlog_total_space_in_mb</code></td>
+<td><code>commitlog_total_space</code></td>
+<td>varies</td>
+</tr>
+</tbody>
+</table>
+<div class="highlight"><pre><span></span><code><span class="c1"># cassandra.yaml (4.0 syntax shown, 4.1+ uses duration/size literals)</span>
 
 <span class="c1"># Sync mode determines durability guarantees</span>
-<span class="c1"># periodic: sync every N milliseconds (default)</span>
-<span class="c1"># batch: sync after each write batch</span>
+<span class="c1"># periodic: sync every N milliseconds (default, best throughput)</span>
+<span class="c1"># group: sync after window of writes (replaces old "batch" behavior)</span>
+<span class="c1"># batch: sync after each write (lowest throughput, strongest durability)</span>
 <span class="nt">commitlog_sync</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">periodic</span>
-<span class="nt">commitlog_sync_period_in_ms</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">10000</span>
+<span class="nt">commitlog_sync_period_in_ms</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">10000</span><span class="w">  </span><span class="c1"># 4.1+: commitlog_sync_period: 10s</span>
 
-<span class="c1"># For batch mode</span>
-<span class="c1"># commitlog_sync: batch</span>
+<span class="c1"># For group mode (4.1+: commitlog_sync_group_window)</span>
+<span class="c1"># commitlog_sync: group</span>
 <span class="c1"># commitlog_sync_batch_window_in_ms: 2</span>
 
 <span class="c1"># Segment size (default 32MB)</span>
-<span class="nt">commitlog_segment_size_in_mb</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">32</span>
+<span class="nt">commitlog_segment_size_in_mb</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">32</span><span class="w">  </span><span class="c1"># 4.1+: commitlog_segment_size: 32MiB</span>
 
 <span class="c1"># Directory (should be on fast storage, separate from data)</span>
 <span class="nt">commitlog_directory</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">/var/lib/cassandra/commitlog</span>
 
 <span class="c1"># Maximum total space for commit log segments</span>
-<span class="nt">commitlog_total_space_in_mb</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">8192</span>
+<span class="nt">commitlog_total_space_in_mb</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">8192</span><span class="w">  </span><span class="c1"># 4.1+: commitlog_total_space: 8GiB</span>
 </code></pre></div>
 <h3 id="sync-mode-comparison">Sync Mode Comparison<a class="headerlink" href="#sync-mode-comparison" title="Permanent link">¶</a></h3>
 <p>Cassandra supports three sync modes: periodic, batch, and group. See <a href="../commitlog/#sync-modes">Commit Log: Sync Modes</a> for detailed diagrams and trade-offs.</p>
@@ -20468,7 +20506,7 @@ ls<span class="w"> </span>-la<span class="w"> </span>/var/lib/cassandra/commitlo
 <tr>
 <th>Mode</th>
 <th>Configuration</th>
-<th>Latency</th>
+<th>Throughput</th>
 <th>Data Loss Window</th>
 </tr>
 </thead>
@@ -20476,29 +20514,33 @@ ls<span class="w"> </span>-la<span class="w"> </span>/var/lib/cassandra/commitlo
 <tr>
 <td>Periodic (10s)</td>
 <td><code>commitlog_sync: periodic</code></td>
-<td>Lowest</td>
+<td>Highest</td>
 <td>Up to 10 seconds</td>
 </tr>
 <tr>
 <td>Periodic (1s)</td>
-<td><code>commitlog_sync_period_in_ms: 1000</code></td>
-<td>Low</td>
+<td><code>commitlog_sync_period: 1s</code></td>
+<td>High</td>
 <td>Up to 1 second</td>
 </tr>
 <tr>
-<td>Batch (2ms)</td>
-<td><code>commitlog_sync: batch</code></td>
-<td>Higher</td>
-<td>Up to 2ms</td>
+<td>Group (2ms)</td>
+<td><code>commitlog_sync: group</code></td>
+<td>Medium</td>
+<td>Up to group window</td>
 </tr>
 <tr>
-<td>Batch (50ms)</td>
-<td><code>commitlog_sync_batch_window_in_ms: 50</code></td>
-<td>Medium</td>
-<td>Up to 50ms</td>
+<td>Batch</td>
+<td><code>commitlog_sync: batch</code></td>
+<td>Lowest</td>
+<td>Per-write fsync</td>
 </tr>
 </tbody>
 </table>
+<div class="admonition note">
+<p class="admonition-title">Batch mode</p>
+<p>Batch mode performs fsync after each write, providing strongest durability at the cost of throughput. There is no batch window setting; for windowed sync, use group mode.</p>
+</div>
 <h3 id="understanding-filesystem-buffering-and-fsync">Understanding Filesystem Buffering and fsync<a class="headerlink" href="#understanding-filesystem-buffering-and-fsync" title="Permanent link">¶</a></h3>
 <p>To understand why 10-second periodic sync is acceptable, it is necessary to understand UNIX filesystem architecture.</p>
 <p><strong>Write Path Through the Operating System:</strong>
@@ -20662,13 +20704,44 @@ Data loss requires:
 <h3 id="memtable-structure">Memtable Structure<a class="headerlink" href="#memtable-structure" title="Permanent link">¶</a></h3>
 <p><span class="graphviz-light-dark" data-library-default="#789abc" data-default="#789abc" data-light="#000000" data-dark="#ffffff"></span><svg width="743pt" height="279pt" viewbox="0.00 0.00 742.50 279.00" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" class="graphviz dot"><g id="graph0" class="graph" transform="scale(1 1) rotate(0) translate(4 275)"><title>Memtable</title><polygon fill="transparent" stroke="transparent" points="-4,4 -4,-275 738.5,-275 738.5,4 -4,4"></polygon><g id="clust1" class="cluster"><title>cluster_memtable</title><path fill="#f5f5f5" stroke="#789abc" d="M20,-8C20,-8 626,-8 626,-8 632,-8 638,-14 638,-20 638,-20 638,-251 638,-251 638,-257 632,-263 626,-263 626,-263 20,-263 20,-263 14,-263 8,-257 8,-251 8,-251 8,-20 8,-20 8,-14 14,-8 20,-8"></path><text text-anchor="middle" x="147" y="-250.2" font-family="Helvetica,sans-Serif" font-size="11.00" fill="#789abc">MEMTABLE (ConcurrentSkipListMap)</text><text text-anchor="middle" x="147" y="-238.2" font-family="Helvetica,sans-Serif" font-size="11.00" fill="#789abc">Sorted by: partition token → clustering columns</text></g><g id="clust2" class="cluster"><title>cluster_p1</title><path fill="#789abc" stroke="#789abc" d="M28,-87C28,-87 450,-87 450,-87 456,-87 462,-93 462,-99 462,-99 462,-211 462,-211 462,-217 456,-223 450,-223 450,-223 28,-223 28,-223 22,-223 16,-217 16,-211 16,-211 16,-99 16,-99 16,-93 22,-87 28,-87"></path></g><g id="clust3" class="cluster"><title>cluster_p2</title><path fill="#789abc" stroke="#789abc" d="M482,-16C482,-16 618,-16 618,-16 624,-16 630,-22 630,-28 630,-28 630,-130 630,-130 630,-136 624,-142 618,-142 618,-142 482,-142 482,-142 476,-142 470,-136 470,-130 470,-130 470,-28 470,-28 470,-22 476,-16 482,-16"></path></g><!-- p1_header --><g id="node1" class="node"><title>p1_header</title><polygon fill="#a8d5a2" stroke="#789abc" points="240,-176.5 240,-214.5 382,-214.5 382,-176.5 240,-176.5"></polygon><text text-anchor="middle" x="311" y="-202.5" font-family="Helvetica,sans-Serif" font-size="10.00" fill="#789abc">Token: -923874...</text><polyline fill="none" stroke="#789abc" points="240,-195.5 382,-195.5 "></polyline><text text-anchor="middle" x="311" y="-183.5" font-family="Helvetica,sans-Serif" font-size="10.00" fill="#789abc">Partition: user_id=abc123</text></g><!-- p1_rows --><g id="node2" class="node"><title>p1_rows</title><polygon fill="white" stroke="#789abc" points="24.5,-95.5 24.5,-133.5 453.5,-133.5 453.5,-95.5 24.5,-95.5"></polygon><text text-anchor="middle" x="96" y="-121.5" font-family="Helvetica,sans-Serif" font-size="10.00" fill="#789abc">Row: created=2024-01-01</text><polyline fill="none" stroke="#789abc" points="24.5,-114.5 167.5,-114.5 "></polyline><text text-anchor="middle" x="48" y="-102.5" font-family="Helvetica,sans-Serif" font-size="10.00" fill="#789abc">col1</text><polyline fill="none" stroke="#789abc" points="71.5,-95.5 71.5,-114.5 "></polyline><text text-anchor="middle" x="95.5" y="-102.5" font-family="Helvetica,sans-Serif" font-size="10.00" fill="#789abc">col2</text><polyline fill="none" stroke="#789abc" points="119.5,-95.5 119.5,-114.5 "></polyline><text text-anchor="middle" x="143.5" y="-102.5" font-family="Helvetica,sans-Serif" font-size="10.00" fill="#789abc">col3</text><polyline fill="none" stroke="#789abc" points="167.5,-95.5 167.5,-133.5 "></polyline><text text-anchor="middle" x="239" y="-121.5" font-family="Helvetica,sans-Serif" font-size="10.00" fill="#789abc">Row: created=2024-01-02</text><polyline fill="none" stroke="#789abc" points="167.5,-114.5 310.5,-114.5 "></polyline><text text-anchor="middle" x="191" y="-102.5" font-family="Helvetica,sans-Serif" font-size="10.00" fill="#789abc">col1</text><polyline fill="none" stroke="#789abc" points="214.5,-95.5 214.5,-114.5 "></polyline><text text-anchor="middle" x="238.5" y="-102.5" font-family="Helvetica,sans-Serif" font-size="10.00" fill="#789abc">col2</text><polyline fill="none" stroke="#789abc" points="262.5,-95.5 262.5,-114.5 "></polyline><text text-anchor="middle" x="286.5" y="-102.5" font-family="Helvetica,sans-Serif" font-size="10.00" fill="#789abc">col3</text><polyline fill="none" stroke="#789abc" points="310.5,-95.5 310.5,-133.5 "></polyline><text text-anchor="middle" x="382" y="-121.5" font-family="Helvetica,sans-Serif" font-size="10.00" fill="#789abc">Row: created=2024-01-03</text><polyline fill="none" stroke="#789abc" points="310.5,-114.5 453.5,-114.5 "></polyline><text text-anchor="middle" x="334" y="-102.5" font-family="Helvetica,sans-Serif" font-size="10.00" fill="#789abc">col1</text><polyline fill="none" stroke="#789abc" points="357.5,-95.5 357.5,-114.5 "></polyline><text text-anchor="middle" x="381.5" y="-102.5" font-family="Helvetica,sans-Serif" font-size="10.00" fill="#789abc">col2</text><polyline fill="none" stroke="#789abc" points="405.5,-95.5 405.5,-114.5 "></polyline><text text-anchor="middle" x="429.5" y="-102.5" font-family="Helvetica,sans-Serif" font-size="10.00" fill="#789abc">col3</text></g><!-- p1_header&#45;&gt;p1_rows --><!-- p2_header --><g id="node3" class="node"><title>p2_header</title><polygon fill="#a8c8e8" stroke="#789abc" points="479,-95.5 479,-133.5 619,-133.5 619,-95.5 479,-95.5"></polygon><text text-anchor="middle" x="549" y="-121.5" font-family="Helvetica,sans-Serif" font-size="10.00" fill="#789abc">Token: -512983...</text><polyline fill="none" stroke="#789abc" points="479,-114.5 619,-114.5 "></polyline><text text-anchor="middle" x="549" y="-102.5" font-family="Helvetica,sans-Serif" font-size="10.00" fill="#789abc">Partition: user_id=def456</text></g><!-- p1_header&#45;&gt;p2_header --><g id="edge3" class="edge"><title>p1_header-&gt;p2_header</title><path fill="none" stroke="#333333" stroke-dasharray="5,2" d="M365.3,-176.47C400.82,-164.69 447.38,-149.23 484.74,-136.83"></path><polygon fill="#333333" stroke="#333333" points="486.13,-140.06 494.52,-133.58 483.92,-133.41 486.13,-140.06"></polygon><text text-anchor="middle" x="470.5" y="-152.8" font-family="Helvetica,sans-Serif" font-size="9.00" fill="#000000">token order</text></g><!-- p2_rows --><g id="node4" class="node"><title>p2_rows</title><polygon fill="white" stroke="#789abc" points="478.5,-24.5 478.5,-62.5 621.5,-62.5 621.5,-24.5 478.5,-24.5"></polygon><text text-anchor="middle" x="550" y="-50.5" font-family="Helvetica,sans-Serif" font-size="10.00" fill="#789abc">Row: created=2024-01-15</text><polyline fill="none" stroke="#789abc" points="478.5,-43.5 621.5,-43.5 "></polyline><text text-anchor="middle" x="502" y="-31.5" font-family="Helvetica,sans-Serif" font-size="10.00" fill="#789abc">col1</text><polyline fill="none" stroke="#789abc" points="525.5,-24.5 525.5,-43.5 "></polyline><text text-anchor="middle" x="549.5" y="-31.5" font-family="Helvetica,sans-Serif" font-size="10.00" fill="#789abc">col2</text><polyline fill="none" stroke="#789abc" points="573.5,-24.5 573.5,-43.5 "></polyline><text text-anchor="middle" x="597.5" y="-31.5" font-family="Helvetica,sans-Serif" font-size="10.00" fill="#789abc">col3</text></g><!-- p2_header&#45;&gt;p2_rows --><!-- note --><g id="node5" class="node"><title>note</title><polygon fill="#ffffcc" stroke="#789abc" points="728.5,-216 645.5,-216 645.5,-175 734.5,-175 734.5,-210 728.5,-216"></polygon><polyline fill="none" stroke="#789abc" points="728.5,-216 728.5,-210 "></polyline><polyline fill="none" stroke="#789abc" points="734.5,-210 728.5,-210 "></polyline><text text-anchor="middle" x="690" y="-204" font-family="Helvetica,sans-Serif" font-size="10.00" fill="#789abc">One memtable</text><text text-anchor="middle" x="690" y="-193" font-family="Helvetica,sans-Serif" font-size="10.00" fill="#789abc">per table</text><text text-anchor="middle" x="690" y="-182" font-family="Helvetica,sans-Serif" font-size="10.00" fill="#789abc">per node</text></g></g></svg></p>
 <h3 id="configuration_1">Configuration<a class="headerlink" href="#configuration_1" title="Permanent link">¶</a></h3>
-<div class="highlight"><pre><span></span><code><span class="c1"># cassandra.yaml</span>
+<p><strong>Memtable parameters by version:</strong></p>
+<table>
+<thead>
+<tr>
+<th>Parameter</th>
+<th>4.0</th>
+<th>4.1+</th>
+<th>Default</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Heap space</td>
+<td><code>memtable_heap_space_in_mb</code></td>
+<td><code>memtable_heap_space</code></td>
+<td>1/4 heap</td>
+</tr>
+<tr>
+<td>Off-heap space</td>
+<td><code>memtable_offheap_space_in_mb</code></td>
+<td><code>memtable_offheap_space</code></td>
+<td>1/4 heap</td>
+</tr>
+<tr>
+<td>Cleanup threshold</td>
+<td><code>memtable_cleanup_threshold</code></td>
+<td>Deprecated (derived from <code>memtable_flush_writers</code>)</td>
+<td>0.11</td>
+</tr>
+</tbody>
+</table>
+<div class="highlight"><pre><span></span><code><span class="c1"># cassandra.yaml (4.0 syntax shown)</span>
 
 <span class="c1"># Total heap space for all memtables</span>
-<span class="nt">memtable_heap_space_in_mb</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">2048</span>
+<span class="nt">memtable_heap_space_in_mb</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">2048</span><span class="w">  </span><span class="c1"># 4.1+: memtable_heap_space: 2GiB</span>
 
 <span class="c1"># Total off-heap space for memtables</span>
-<span class="nt">memtable_offheap_space_in_mb</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">2048</span>
+<span class="nt">memtable_offheap_space_in_mb</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">2048</span><span class="w">  </span><span class="c1"># 4.1+: memtable_offheap_space: 2GiB</span>
 
 <span class="c1"># Allocation type</span>
 <span class="c1"># heap_buffers: on-heap (default)</span>
@@ -20679,8 +20752,7 @@ Data loss requires:
 <span class="c1"># Concurrent flush operations</span>
 <span class="nt">memtable_flush_writers</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">2</span>
 
-<span class="c1"># Flush threshold as fraction of heap</span>
-<span class="c1"># Flush starts when memtables exceed this percentage</span>
+<span class="c1"># Flush threshold as fraction of heap (4.0 only; deprecated in 4.1+)</span>
 <span class="nt">memtable_cleanup_threshold</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">0.11</span>
 </code></pre></div>
 <h3 id="memory-calculation">Memory Calculation<a class="headerlink" href="#memory-calculation" title="Permanent link">¶</a></h3>
@@ -20816,14 +20888,14 @@ T+0.4ms:  Acknowledgment sent to coordinator
 <h2 id="write-performance-tuning">Write Performance Tuning<a class="headerlink" href="#write-performance-tuning" title="Permanent link">¶</a></h2>
 <h3 id="high-write-throughput">High Write Throughput<a class="headerlink" href="#high-write-throughput" title="Permanent link">¶</a></h3>
 <div class="highlight"><pre><span></span><code><span class="c1"># Larger memtables reduce flush frequency</span>
-<span class="nt">memtable_heap_space_in_mb</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">4096</span>
+<span class="nt">memtable_heap_space_in_mb</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">4096</span><span class="w">  </span><span class="c1"># 4.1+: memtable_heap_space: 4GiB</span>
 
 <span class="c1"># More flush writers for parallel I/O</span>
 <span class="nt">memtable_flush_writers</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">4</span>
 
-<span class="c1"># Batch sync for throughput (higher latency)</span>
-<span class="nt">commitlog_sync</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">batch</span>
-<span class="nt">commitlog_sync_batch_window_in_ms</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">2</span>
+<span class="c1"># Periodic sync for best throughput (accepts larger data loss window)</span>
+<span class="nt">commitlog_sync</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">periodic</span>
+<span class="nt">commitlog_sync_period_in_ms</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">10000</span><span class="w">  </span><span class="c1"># 4.1+: commitlog_sync_period: 10s</span>
 
 <span class="c1"># Separate commit log storage</span>
 <span class="nt">commitlog_directory</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">/mnt/nvme/commitlog</span>
@@ -20849,7 +20921,7 @@ nodetool<span class="w"> </span>tpstats<span class="w"> </span><span class="p">|
 <p><strong>Causes:</strong></p>
 <ul>
 <li>Memtables not flushing (disk I/O bottleneck)</li>
-<li><code>commitlog_total_space_in_mb</code> too low</li>
+<li><code>commitlog_total_space</code> too low (4.0: <code>commitlog_total_space_in_mb</code>)</li>
 <li>Too many tables consuming flush capacity</li>
 </ul>
 <p><strong>Solutions:</strong></p>

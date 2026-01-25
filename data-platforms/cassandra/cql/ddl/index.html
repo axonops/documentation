@@ -20629,7 +20629,11 @@ data-et-multi-view="{&quot;schema&quot;:{&quot;content&quot;:{&quot;desktop&quot
 <p>Before returning success for a DDL operation, Cassandra waits for schema agreement—a state where all live nodes have the same schema version. The schema version is a UUID computed from the hash of all schema metadata.</p>
 <div class="highlight"><pre><span></span><code><span class="c1">-- Check current schema versions across the cluster</span>
 <span class="k">SELECT</span><span class="w"> </span><span class="n">schema_version</span><span class="w"> </span><span class="k">FROM</span><span class="w"> </span><span class="k">system</span><span class="p">.</span><span class="k">local</span><span class="p">;</span>
-<span class="k">SELECT</span><span class="w"> </span><span class="n">peer</span><span class="p">,</span><span class="w"> </span><span class="n">schema_version</span><span class="w"> </span><span class="k">FROM</span><span class="w"> </span><span class="k">system</span><span class="p">.</span><span class="n">peers</span><span class="p">;</span>
+
+<span class="c1">-- Cassandra 4.0+: prefer system.peers_v2</span>
+<span class="k">SELECT</span><span class="w"> </span><span class="n">peer</span><span class="p">,</span><span class="w"> </span><span class="n">schema_version</span><span class="w"> </span><span class="k">FROM</span><span class="w"> </span><span class="k">system</span><span class="p">.</span><span class="n">peers_v2</span><span class="p">;</span>
+<span class="c1">-- Legacy (may be disabled in newer versions):</span>
+<span class="c1">-- SELECT peer, schema_version FROM system.peers;</span>
 
 <span class="c1">-- Using nodetool</span>
 <span class="c1">-- nodetool describecluster | grep -A 10 "Schema versions"</span>

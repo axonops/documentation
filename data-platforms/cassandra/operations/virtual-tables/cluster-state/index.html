@@ -20326,6 +20326,7 @@ data-et-multi-view="{&quot;schema&quot;:{&quot;content&quot;:{&quot;desktop&quot
 <span class="w">    </span><span class="n">port</span><span class="w"> </span><span class="nb">int</span><span class="p">,</span>
 <span class="w">    </span><span class="n">dc</span><span class="w"> </span><span class="nb">text</span><span class="p">,</span>
 <span class="w">    </span><span class="n">rack</span><span class="w"> </span><span class="nb">text</span><span class="p">,</span>
+<span class="w">    </span><span class="n">hostname</span><span class="w"> </span><span class="nb">text</span><span class="p">,</span>
 <span class="w">    </span><span class="n">status</span><span class="w"> </span><span class="nb">text</span><span class="p">,</span>
 <span class="w">    </span><span class="k">load</span><span class="w"> </span><span class="nb">text</span><span class="p">,</span>
 <span class="w">    </span><span class="n">host_id</span><span class="w"> </span><span class="nb">text</span><span class="p">,</span>
@@ -20333,7 +20334,9 @@ data-et-multi-view="{&quot;schema&quot;:{&quot;content&quot;:{&quot;desktop&quot
 <span class="w">    </span><span class="ss">"schema"</span><span class="w"> </span><span class="nb">text</span><span class="p">,</span>
 <span class="w">    </span><span class="n">generation</span><span class="w"> </span><span class="nb">int</span><span class="p">,</span>
 <span class="w">    </span><span class="n">heartbeat</span><span class="w"> </span><span class="nb">int</span><span class="p">,</span>
-<span class="w">    </span><span class="c1">-- Additional columns for various gossip state values</span>
+<span class="w">    </span><span class="c1">-- Additional columns for each ApplicationState (lowercase)</span>
+<span class="w">    </span><span class="c1">-- e.g., tokens, severity, net_version, etc.</span>
+<span class="w">    </span><span class="c1">-- Plus &lt;state&gt;_version columns for each state</span>
 <span class="w">    </span><span class="k">PRIMARY</span><span class="w"> </span><span class="k">KEY</span><span class="w"> </span><span class="p">(</span><span class="n">address</span><span class="p">,</span><span class="w"> </span><span class="n">port</span><span class="p">)</span>
 <span class="p">)</span><span class="w"> </span><span class="k">WITH</span><span class="w"> </span><span class="n">CLUSTERING</span><span class="w"> </span><span class="k">ORDER</span><span class="w"> </span><span class="k">BY</span><span class="w"> </span><span class="p">(</span><span class="n">port</span><span class="w"> </span><span class="k">ASC</span><span class="p">)</span>
 </code></pre></div>
@@ -20355,6 +20358,11 @@ data-et-multi-view="{&quot;schema&quot;:{&quot;content&quot;:{&quot;desktop&quot
 <td><code>port</code></td>
 <td>int</td>
 <td>Storage port</td>
+</tr>
+<tr>
+<td><code>hostname</code></td>
+<td>text</td>
+<td>Node hostname</td>
 </tr>
 <tr>
 <td><code>dc</code></td>
@@ -20403,6 +20411,10 @@ data-et-multi-view="{&quot;schema&quot;:{&quot;content&quot;:{&quot;desktop&quot
 </tr>
 </tbody>
 </table>
+<div class="admonition note">
+<p class="admonition-title">Dynamic Columns</p>
+<p>The <code>gossip_info</code> table includes a column for each <code>ApplicationState</code> (lowercase names), plus a <code>&lt;state&gt;_version</code> column for each state tracking the gossip version of that state.</p>
+</div>
 <p><strong>Equivalent nodetool command:</strong> <code>nodetool gossipinfo</code></p>
 <h3 id="basic-queries">Basic Queries<a class="headerlink" href="#basic-queries" title="Permanent link">¶</a></h3>
 <div class="highlight"><pre><span></span><code><span class="c1">-- Cluster overview</span>
@@ -20448,7 +20460,10 @@ data-et-multi-view="{&quot;schema&quot;:{&quot;content&quot;:{&quot;desktop&quot
 <span class="w">    </span><span class="n">oldest</span><span class="w"> </span><span class="k">timestamp</span><span class="p">,</span>
 <span class="w">    </span><span class="n">newest</span><span class="w"> </span><span class="k">timestamp</span><span class="p">,</span>
 <span class="w">    </span><span class="n">port</span><span class="w"> </span><span class="nb">int</span><span class="p">,</span>
-<span class="w">    </span><span class="n">status</span><span class="w"> </span><span class="nb">text</span>
+<span class="w">    </span><span class="n">status</span><span class="w"> </span><span class="nb">text</span><span class="p">,</span>
+<span class="w">    </span><span class="n">total_size</span><span class="w"> </span><span class="nb">bigint</span><span class="p">,</span>
+<span class="w">    </span><span class="n">corrupted_files</span><span class="w"> </span><span class="nb">int</span><span class="p">,</span>
+<span class="w">    </span><span class="n">total_corrupted_files_size</span><span class="w"> </span><span class="nb">bigint</span>
 <span class="p">)</span>
 </code></pre></div>
 <table>
@@ -20486,6 +20501,11 @@ data-et-multi-view="{&quot;schema&quot;:{&quot;content&quot;:{&quot;desktop&quot
 <td>Number of hint files pending</td>
 </tr>
 <tr>
+<td><code>total_size</code></td>
+<td>bigint</td>
+<td>Total size of pending hints (bytes)</td>
+</tr>
+<tr>
 <td><code>oldest</code></td>
 <td>timestamp</td>
 <td>Timestamp of oldest pending hint</td>
@@ -20499,6 +20519,16 @@ data-et-multi-view="{&quot;schema&quot;:{&quot;content&quot;:{&quot;desktop&quot
 <td><code>status</code></td>
 <td>text</td>
 <td>Hint delivery status</td>
+</tr>
+<tr>
+<td><code>corrupted_files</code></td>
+<td>int</td>
+<td>Number of corrupted hint files</td>
+</tr>
+<tr>
+<td><code>total_corrupted_files_size</code></td>
+<td>bigint</td>
+<td>Total size of corrupted hint files (bytes)</td>
 </tr>
 </tbody>
 </table>
@@ -20737,7 +20767,7 @@ data-et-multi-view="{&quot;schema&quot;:{&quot;content&quot;:{&quot;desktop&quot
 <div class="highlight"><pre><span></span><code><span class="c1">-- Alert: Nodes in transitional states</span>
 <span class="k">SELECT</span><span class="w"> </span><span class="n">address</span><span class="p">,</span><span class="w"> </span><span class="n">dc</span><span class="p">,</span><span class="w"> </span><span class="n">status</span>
 <span class="k">FROM</span><span class="w"> </span><span class="n">system_views</span><span class="p">.</span><span class="n">gossip_info</span>
-<span class="k">WHERE</span><span class="w"> </span><span class="n">status</span><span class="w"> </span><span class="k">NOT</span><span class="w"> </span><span class="k">IN</span><span class="w"> </span><span class="p">(</span><span class="s1">'NORMAL'</span><span class="p">,</span><span class="w"> </span><span class="s1">'NORMAL'</span><span class="p">);</span>
+<span class="k">WHERE</span><span class="w"> </span><span class="n">status</span><span class="w"> </span><span class="o">!=</span><span class="w"> </span><span class="s1">'NORMAL'</span><span class="p">;</span>
 </code></pre></div>
 <h3 id="schema-disagreement">Schema Disagreement<a class="headerlink" href="#schema-disagreement" title="Permanent link">¶</a></h3>
 <div class="highlight"><pre><span></span><code><span class="c1">-- Check schema versions</span>

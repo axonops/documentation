@@ -20699,10 +20699,14 @@ data-et-multi-view="{&quot;schema&quot;:{&quot;content&quot;:{&quot;desktop&quot
 <div class="highlight"><pre><span></span><code><span class="c1"># cassandra.yaml</span>
 
 <span class="c1"># Total bytes allowed in flight (node-wide)</span>
-<span class="nt">native_transport_max_concurrent_requests_in_bytes</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">0</span><span class="w">  </span><span class="c1"># unlimited by default</span>
+<span class="c1"># Cassandra 4.1+: native_transport_max_request_data_in_flight (auto-calculated ~1/10 heap)</span>
+<span class="c1"># Cassandra 4.0:  native_transport_max_concurrent_requests_in_bytes</span>
+<span class="nt">native_transport_max_request_data_in_flight</span><span class="p">:</span><span class="w"> </span><span class="c1"># auto (default)</span>
 
 <span class="c1"># Bytes allowed per client IP</span>
-<span class="nt">native_transport_max_concurrent_requests_in_bytes_per_ip</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">0</span><span class="w">  </span><span class="c1"># unlimited</span>
+<span class="c1"># Cassandra 4.1+: native_transport_max_request_data_in_flight_per_ip (auto-calculated ~1/40 heap)</span>
+<span class="c1"># Cassandra 4.0:  native_transport_max_concurrent_requests_in_bytes_per_ip</span>
+<span class="nt">native_transport_max_request_data_in_flight_per_ip</span><span class="p">:</span><span class="w"> </span><span class="c1"># auto (default)</span>
 
 <span class="c1"># Response when overloaded</span>
 <span class="c1"># false: Apply TCP backpressure (recommended)</span>

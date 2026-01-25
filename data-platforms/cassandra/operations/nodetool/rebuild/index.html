@@ -20625,8 +20625,8 @@ data-et-multi-view="{&quot;schema&quot;:{&quot;content&quot;:{&quot;desktop&quot
 <td>Specific source nodes to stream from</td>
 </tr>
 <tr>
-<td><code>--mode</code></td>
-<td>Rebuild mode: ALL, NORMAL, REFETCH</td>
+<td><code>--exclude-local-dc</code></td>
+<td>Exclude sources from the local datacenter</td>
 </tr>
 </tbody>
 </table>
@@ -20661,12 +20661,13 @@ nodetool<span class="w"> </span>rebuild<span class="w"> </span>&lt;source_dc&gt;
 <hr>
 <h2 id="when-not-to-use">When NOT to Use<a class="headerlink" href="#when-not-to-use" title="Permanent link">¶</a></h2>
 <h3 id="single-datacenter-clusters">Single Datacenter Clusters<a class="headerlink" href="#single-datacenter-clusters" title="Permanent link">¶</a></h3>
-<div class="admonition danger">
-<p class="admonition-title">Requires Multiple DCs</p>
-<p><code>rebuild</code> streams from other datacenters. For single-DC clusters:</p>
-<div class="highlight"><pre><span></span><code><span class="c1"># Use repair instead</span>
+<div class="admonition info">
+<p class="admonition-title">Single-DC Considerations</p>
+<p>By default, <code>rebuild</code> can stream from any datacenter including the local one. However, for single-DC clusters where rebuild would stream from the same replicas as repair, using <code>nodetool repair</code> is typically more appropriate:</p>
+<div class="highlight"><pre><span></span><code><span class="c1"># Use repair for single-DC consistency</span>
 nodetool<span class="w"> </span>repair<span class="w"> </span>-pr
 </code></pre></div>
+<p>Use <code>--exclude-local-dc</code> if sources from the local datacenter should not be used.</p>
 </div>
 <h3 id="normal-bootstrap-scenarios">Normal Bootstrap Scenarios<a class="headerlink" href="#normal-bootstrap-scenarios" title="Permanent link">¶</a></h3>
 <p>When adding nodes to an existing DC, use bootstrap (normal node startup) instead:</p>

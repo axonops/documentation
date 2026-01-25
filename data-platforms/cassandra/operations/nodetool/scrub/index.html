@@ -20673,27 +20673,41 @@ data-et-multi-view="{&quot;schema&quot;:{&quot;content&quot;:{&quot;desktop&quot
 <tr>
 <th>Option</th>
 <th>Description</th>
+<th>Default</th>
 </tr>
 </thead>
 <tbody>
 <tr>
-<td><code>-s, --skip-corrupted</code></td>
-<td>Skip corrupted partitions instead of failing</td>
+<td><code>-j, --jobs</code></td>
+<td>Number of concurrent scrub jobs. 0 means use all available compaction threads</td>
+<td>2</td>
 </tr>
 <tr>
 <td><code>-n, --no-validate</code></td>
 <td>Skip validation (faster but less thorough)</td>
+<td></td>
+</tr>
+<tr>
+<td><code>-ns, --no-snapshot</code></td>
+<td>Do not take a snapshot before scrubbing</td>
+<td></td>
 </tr>
 <tr>
 <td><code>-r, --reinsert-overflowed-ttl</code></td>
 <td>Reinsert rows with overflowed TTL</td>
+<td></td>
 </tr>
 <tr>
-<td><code>-j, --jobs</code></td>
-<td>Number of concurrent scrub jobs</td>
+<td><code>-s, --skip-corrupted</code></td>
+<td>Skip corrupted partitions instead of failing</td>
+<td></td>
 </tr>
 </tbody>
 </table>
+<div class="admonition info">
+<p class="admonition-title">Default Snapshot Behavior</p>
+<p>By default, <code>scrub</code> creates a snapshot of tables before scrubbing. Use <code>-ns</code> to skip this if space is limited.</p>
+</div>
 <hr>
 <h2 id="when-to-use">When to Use<a class="headerlink" href="#when-to-use" title="Permanent link">¶</a></h2>
 <h3 id="after-detecting-corruption">After Detecting Corruption<a class="headerlink" href="#after-detecting-corruption" title="Permanent link">¶</a></h3>

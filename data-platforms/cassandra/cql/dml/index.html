@@ -20451,7 +20451,7 @@ data-et-multi-view="{&quot;schema&quot;:{&quot;content&quot;:{&quot;desktop&quot
 <li>Contacts every node in the cluster</li>
 <li>Does not scale with cluster size</li>
 <li>Can cause timeouts on large tables</li>
-<li>Should never be used in production application queries</li>
+<li>Should be avoided in production application queries (exceptions: small tables, admin/operational queries, or when combined with partition key)</li>
 </ul>
 </div>
 <hr>
@@ -20562,19 +20562,20 @@ data-et-multi-view="{&quot;schema&quot;:{&quot;content&quot;:{&quot;desktop&quot
 <tr>
 <td><code>SERIAL</code></td>
 <td>Paxos quorum</td>
-<td>Linearizable reads (LWT)</td>
+<td>For LWT operations only (not general reads)</td>
 </tr>
 <tr>
 <td><code>LOCAL_SERIAL</code></td>
 <td>Local Paxos quorum</td>
-<td>Local linearizable reads</td>
+<td>For LWT operations only (not general reads)</td>
 </tr>
 </tbody>
 </table>
 <h3 id="strong-consistency-formula">Strong Consistency Formula<a class="headerlink" href="#strong-consistency-formula" title="Permanent link">¶</a></h3>
-<p>To achieve strong consistency (read-your-writes):</p>
+<p>To achieve strong consistency (read-your-writes) for single-partition operations within the same datacenter:</p>
 <div class="highlight"><pre><span></span><code>READ_CL + WRITE_CL &gt; REPLICATION_FACTOR
 </code></pre></div>
+<p>Note: This formula applies to single-partition operations. Multi-partition queries and cross-datacenter scenarios have additional considerations.</p>
 <p>Common patterns:</p>
 <table>
 <thead>

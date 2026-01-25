@@ -20446,8 +20446,8 @@ data-et-multi-view="{&quot;schema&quot;:{&quot;content&quot;:{&quot;desktop&quot
 <tr>
 <td>Max requests per connection</td>
 <td>2048</td>
-<td>65536</td>
-<td>Concurrent requests multiplexed on single socket</td>
+<td>32768</td>
+<td>Concurrent requests multiplexed on single socket (protocol max: 32768)</td>
 </tr>
 <tr>
 <td>Protocol max streams</td>
@@ -20485,9 +20485,9 @@ data-et-multi-view="{&quot;schema&quot;:{&quot;content&quot;:{&quot;desktop&quot
 </tr>
 </tbody>
 </table>
-<p><strong>Example capacity calculation:</strong></p>
-<div class="highlight"><pre><span></span><code>Single connection capacity:
-  Max concurrent requests = 2048 (typical driver default)
+<p><strong>Illustrative capacity calculation:</strong></p>
+<div class="highlight"><pre><span></span><code>Single connection (theoretical maximum, not a practical capacity estimate):
+  Max concurrent requests = 2048 (typical Java driver default)
   Average request latency = 5ms
   Theoretical throughput  = 2048 / 0.005 = 409,600 requests/sec
 
@@ -20495,6 +20495,10 @@ With 1 connection per node, 6-node cluster:
   Total connections = 6
   Total capacity    = 6 × 409,600 = 2.4M requests/sec theoretical max
 </code></pre></div>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>These figures represent mathematical concurrency limits, not achievable throughput. Actual capacity is lower due to server-side processing, garbage collection, backpressure, and client-side overhead.</p>
+</div>
 <p>In practice, most applications require only 1-2 connections per node. The multiplexed protocol makes Cassandra connection pooling fundamentally different from RDBMS pools where each connection handles one request at a time.</p>
 <h4 id="when-to-increase-connections">When to Increase Connections<a class="headerlink" href="#when-to-increase-connections" title="Permanent link">¶</a></h4>
 <p>Additional connections per node are needed when:</p>
@@ -20681,7 +20685,7 @@ For latency spikes (e.g., 50ms P99):
 <tr>
 <td>Request routing</td>
 <td>Preferred for all requests</td>
-<td>Used only for failover (if configured)</td>
+<td>Used for failover or when permitted by load balancing policy</td>
 </tr>
 <tr>
 <td>Pool sizing</td>

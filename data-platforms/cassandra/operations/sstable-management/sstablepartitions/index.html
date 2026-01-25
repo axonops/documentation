@@ -20594,11 +20594,15 @@ data-et-multi-view="{&quot;schema&quot;:{&quot;content&quot;:{&quot;desktop&quot
 <td>Only show specific partition key</td>
 </tr>
 <tr>
+<td><code>-x, --exclude-key &lt;key&gt;</code></td>
+<td>Exclude specific partition key</td>
+</tr>
+<tr>
 <td><code>-m, --csv</code></td>
 <td>Output in CSV format</td>
 </tr>
 <tr>
-<td><code>-r, --min-rows &lt;n&gt;</code></td>
+<td><code>-w, --min-rows &lt;n&gt;</code></td>
 <td>Minimum row count threshold</td>
 </tr>
 <tr>
@@ -20606,7 +20610,7 @@ data-et-multi-view="{&quot;schema&quot;:{&quot;content&quot;:{&quot;desktop&quot
 <td>Include snapshot directories in scan</td>
 </tr>
 <tr>
-<td><code>-t, --min-tombstones &lt;n&gt;</code></td>
+<td><code>-o, --min-tombstones &lt;n&gt;</code></td>
 <td>Minimum tombstone count threshold</td>
 </tr>
 <tr>
@@ -20614,8 +20618,16 @@ data-et-multi-view="{&quot;schema&quot;:{&quot;content&quot;:{&quot;desktop&quot
 <td>Override current time for TTL calculations</td>
 </tr>
 <tr>
-<td><code>-y, --min-size &lt;size&gt;</code></td>
+<td><code>-t, --min-size &lt;size&gt;</code></td>
 <td>Minimum partition size threshold (e.g., 100MB, 1GB)</td>
+</tr>
+<tr>
+<td><code>-y, --partitions-only</code></td>
+<td>Output only partition key information</td>
+</tr>
+<tr>
+<td><code>-r, --recursive</code></td>
+<td>Recursively scan directories</td>
 </tr>
 </tbody>
 </table>
@@ -20627,22 +20639,22 @@ sstablepartitions<span class="w"> </span>/var/lib/cassandra/data/my_keyspace/my_
 </code></pre></div>
 <h3 id="find-large-partitions">Find Large Partitions<a class="headerlink" href="#find-large-partitions" title="Permanent link">¶</a></h3>
 <div class="highlight"><pre><span></span><code><span class="c1"># Find partitions larger than 100MB</span>
-sstablepartitions<span class="w"> </span>--min-size<span class="w"> </span>100MB<span class="w"> </span>/var/lib/cassandra/data/my_keyspace/my_table-*/
+sstablepartitions<span class="w"> </span>-t<span class="w"> </span>100MB<span class="w"> </span>/var/lib/cassandra/data/my_keyspace/my_table-*/
 
 <span class="c1"># Find partitions larger than 1GB</span>
-sstablepartitions<span class="w"> </span>-y<span class="w"> </span>1GB<span class="w"> </span>/var/lib/cassandra/data/my_keyspace/my_table-*/
+sstablepartitions<span class="w"> </span>--min-size<span class="w"> </span>1GB<span class="w"> </span>/var/lib/cassandra/data/my_keyspace/my_table-*/
 </code></pre></div>
 <h3 id="find-wide-partitions-high-row-count">Find Wide Partitions (High Row Count)<a class="headerlink" href="#find-wide-partitions-high-row-count" title="Permanent link">¶</a></h3>
 <div class="highlight"><pre><span></span><code><span class="c1"># Find partitions with more than 100,000 rows</span>
-sstablepartitions<span class="w"> </span>--min-rows<span class="w"> </span><span class="m">100000</span><span class="w"> </span>/var/lib/cassandra/data/my_keyspace/my_table-*/
+sstablepartitions<span class="w"> </span>-w<span class="w"> </span><span class="m">100000</span><span class="w"> </span>/var/lib/cassandra/data/my_keyspace/my_table-*/
 </code></pre></div>
 <h3 id="find-tombstone-heavy-partitions">Find Tombstone-Heavy Partitions<a class="headerlink" href="#find-tombstone-heavy-partitions" title="Permanent link">¶</a></h3>
 <div class="highlight"><pre><span></span><code><span class="c1"># Find partitions with excessive tombstones</span>
-sstablepartitions<span class="w"> </span>--min-tombstones<span class="w"> </span><span class="m">10000</span><span class="w"> </span>/var/lib/cassandra/data/my_keyspace/my_table-*/
+sstablepartitions<span class="w"> </span>-o<span class="w"> </span><span class="m">10000</span><span class="w"> </span>/var/lib/cassandra/data/my_keyspace/my_table-*/
 </code></pre></div>
 <h3 id="find-high-cell-count-partitions">Find High Cell Count Partitions<a class="headerlink" href="#find-high-cell-count-partitions" title="Permanent link">¶</a></h3>
 <div class="highlight"><pre><span></span><code><span class="c1"># Find partitions with more than 1 million cells</span>
-sstablepartitions<span class="w"> </span>--min-cells<span class="w"> </span><span class="m">1000000</span><span class="w"> </span>/var/lib/cassandra/data/my_keyspace/my_table-*/
+sstablepartitions<span class="w"> </span>-c<span class="w"> </span><span class="m">1000000</span><span class="w"> </span>/var/lib/cassandra/data/my_keyspace/my_table-*/
 </code></pre></div>
 <h3 id="csv-output-for-processing">CSV Output for Processing<a class="headerlink" href="#csv-output-for-processing" title="Permanent link">¶</a></h3>
 <div class="highlight"><pre><span></span><code><span class="c1"># Generate CSV for spreadsheet analysis</span>
@@ -20724,7 +20736,7 @@ user789,c06b4d3e,345678,8000,400000,200,78643200,nb-2-big-Data.db
 <span class="nb">echo</span><span class="w"> </span><span class="s2">"Finding partitions larger than </span><span class="nv">$SIZE_THRESHOLD</span><span class="s2"> in </span><span class="si">${</span><span class="nv">KEYSPACE</span><span class="si">}</span><span class="s2">.</span><span class="si">${</span><span class="nv">TABLE</span><span class="si">}</span><span class="s2">"</span>
 <span class="nb">echo</span><span class="w"> </span><span class="s2">"======================================================================="</span>
 
-sstablepartitions<span class="w"> </span>--min-size<span class="w"> </span><span class="s2">"</span><span class="nv">$SIZE_THRESHOLD</span><span class="s2">"</span><span class="w"> </span><span class="se">\</span>
+sstablepartitions<span class="w"> </span>-t<span class="w"> </span><span class="s2">"</span><span class="nv">$SIZE_THRESHOLD</span><span class="s2">"</span><span class="w"> </span><span class="se">\</span>
 <span class="w">    </span><span class="si">${</span><span class="nv">DATA_DIR</span><span class="si">}</span>/<span class="si">${</span><span class="nv">KEYSPACE</span><span class="si">}</span>/<span class="si">${</span><span class="nv">TABLE</span><span class="si">}</span>-*/<span class="w"> </span><span class="m">2</span>&gt;/dev/null<span class="w"> </span><span class="p">|</span><span class="w"> </span><span class="se">\</span>
 <span class="w">    </span>grep<span class="w"> </span><span class="s2">"Partition:"</span><span class="w"> </span><span class="p">|</span><span class="w"> </span><span class="se">\</span>
 <span class="w">    </span>sort<span class="w"> </span>-t<span class="s1">','</span><span class="w"> </span>-k6<span class="w"> </span>-n<span class="w"> </span>-r<span class="w"> </span><span class="p">|</span><span class="w"> </span><span class="se">\</span>
@@ -20743,7 +20755,7 @@ mkdir<span class="w"> </span>-p<span class="w"> </span><span class="s2">"</span>
 <span class="nv">TIMESTAMP</span><span class="o">=</span><span class="k">$(</span>date<span class="w"> </span>+%Y%m%d_%H%M%S<span class="k">)</span>
 <span class="nv">OUTPUT_FILE</span><span class="o">=</span><span class="s2">"</span><span class="si">${</span><span class="nv">OUTPUT_DIR</span><span class="si">}</span><span class="s2">/</span><span class="si">${</span><span class="nv">KEYSPACE</span><span class="si">}</span><span class="s2">_</span><span class="si">${</span><span class="nv">TABLE</span><span class="si">}</span><span class="s2">_</span><span class="si">${</span><span class="nv">TIMESTAMP</span><span class="si">}</span><span class="s2">.csv"</span>
 
-sstablepartitions<span class="w"> </span>--csv<span class="w"> </span>--min-size<span class="w"> </span>10MB<span class="w"> </span><span class="se">\</span>
+sstablepartitions<span class="w"> </span>--csv<span class="w"> </span>-t<span class="w"> </span>10MB<span class="w"> </span><span class="se">\</span>
 <span class="w">    </span><span class="si">${</span><span class="nv">DATA_DIR</span><span class="si">}</span>/<span class="si">${</span><span class="nv">KEYSPACE</span><span class="si">}</span>/<span class="si">${</span><span class="nv">TABLE</span><span class="si">}</span>-*/<span class="w"> </span>&gt;<span class="w"> </span><span class="s2">"</span><span class="nv">$OUTPUT_FILE</span><span class="s2">"</span>
 
 <span class="nb">echo</span><span class="w"> </span><span class="s2">"Report saved to </span><span class="nv">$OUTPUT_FILE</span><span class="s2">"</span>
@@ -20762,7 +20774,7 @@ tail<span class="w"> </span>-n<span class="w"> </span>+2<span class="w"> </span>
 <span class="nb">echo</span><span class="w"> </span><span class="s2">"Partitions with more than </span><span class="nv">$TOMBSTONE_THRESHOLD</span><span class="s2"> tombstones"</span>
 <span class="nb">echo</span><span class="w"> </span><span class="s2">"========================================================="</span>
 
-sstablepartitions<span class="w"> </span>--min-tombstones<span class="w"> </span><span class="s2">"</span><span class="nv">$TOMBSTONE_THRESHOLD</span><span class="s2">"</span><span class="w"> </span><span class="se">\</span>
+sstablepartitions<span class="w"> </span>-o<span class="w"> </span><span class="s2">"</span><span class="nv">$TOMBSTONE_THRESHOLD</span><span class="s2">"</span><span class="w"> </span><span class="se">\</span>
 <span class="w">    </span><span class="si">${</span><span class="nv">DATA_DIR</span><span class="si">}</span>/<span class="si">${</span><span class="nv">KEYSPACE</span><span class="si">}</span>/<span class="si">${</span><span class="nv">TABLE</span><span class="si">}</span>-*/<span class="w"> </span><span class="m">2</span>&gt;/dev/null<span class="w"> </span><span class="p">|</span><span class="w"> </span><span class="se">\</span>
 <span class="w">    </span>grep<span class="w"> </span><span class="s2">"Partition:"</span><span class="w"> </span><span class="p">|</span><span class="w"> </span><span class="se">\</span>
 <span class="w">    </span><span class="k">while</span><span class="w"> </span><span class="nb">read</span><span class="w"> </span>line<span class="p">;</span><span class="w"> </span><span class="k">do</span>
@@ -20785,17 +20797,17 @@ sstablepartitions<span class="w"> </span>--min-tombstones<span class="w"> </span
 <span class="c1"># Partitions that may cause repair timeout</span>
 <span class="nb">echo</span><span class="w"> </span><span class="s2">""</span>
 <span class="nb">echo</span><span class="w"> </span><span class="s2">"Large partitions (may cause repair timeout):"</span>
-sstablepartitions<span class="w"> </span>--min-size<span class="w"> </span>500MB<span class="w"> </span><span class="si">${</span><span class="nv">DATA_DIR</span><span class="si">}</span>/<span class="si">${</span><span class="nv">KEYSPACE</span><span class="si">}</span>/<span class="si">${</span><span class="nv">TABLE</span><span class="si">}</span>-*/<span class="w"> </span><span class="m">2</span>&gt;/dev/null<span class="w"> </span><span class="p">|</span><span class="w"> </span>grep<span class="w"> </span><span class="s2">"Partition:"</span>
+sstablepartitions<span class="w"> </span>-t<span class="w"> </span>500MB<span class="w"> </span><span class="si">${</span><span class="nv">DATA_DIR</span><span class="si">}</span>/<span class="si">${</span><span class="nv">KEYSPACE</span><span class="si">}</span>/<span class="si">${</span><span class="nv">TABLE</span><span class="si">}</span>-*/<span class="w"> </span><span class="m">2</span>&gt;/dev/null<span class="w"> </span><span class="p">|</span><span class="w"> </span>grep<span class="w"> </span><span class="s2">"Partition:"</span>
 
 <span class="c1"># High tombstone partitions</span>
 <span class="nb">echo</span><span class="w"> </span><span class="s2">""</span>
 <span class="nb">echo</span><span class="w"> </span><span class="s2">"High tombstone partitions (may cause streaming issues):"</span>
-sstablepartitions<span class="w"> </span>--min-tombstones<span class="w"> </span><span class="m">50000</span><span class="w"> </span><span class="si">${</span><span class="nv">DATA_DIR</span><span class="si">}</span>/<span class="si">${</span><span class="nv">KEYSPACE</span><span class="si">}</span>/<span class="si">${</span><span class="nv">TABLE</span><span class="si">}</span>-*/<span class="w"> </span><span class="m">2</span>&gt;/dev/null<span class="w"> </span><span class="p">|</span><span class="w"> </span>grep<span class="w"> </span><span class="s2">"Partition:"</span>
+sstablepartitions<span class="w"> </span>-o<span class="w"> </span><span class="m">50000</span><span class="w"> </span><span class="si">${</span><span class="nv">DATA_DIR</span><span class="si">}</span>/<span class="si">${</span><span class="nv">KEYSPACE</span><span class="si">}</span>/<span class="si">${</span><span class="nv">TABLE</span><span class="si">}</span>-*/<span class="w"> </span><span class="m">2</span>&gt;/dev/null<span class="w"> </span><span class="p">|</span><span class="w"> </span>grep<span class="w"> </span><span class="s2">"Partition:"</span>
 
 <span class="c1"># Wide partitions</span>
 <span class="nb">echo</span><span class="w"> </span><span class="s2">""</span>
 <span class="nb">echo</span><span class="w"> </span><span class="s2">"Wide partitions (may cause memory pressure):"</span>
-sstablepartitions<span class="w"> </span>--min-rows<span class="w"> </span><span class="m">500000</span><span class="w"> </span><span class="si">${</span><span class="nv">DATA_DIR</span><span class="si">}</span>/<span class="si">${</span><span class="nv">KEYSPACE</span><span class="si">}</span>/<span class="si">${</span><span class="nv">TABLE</span><span class="si">}</span>-*/<span class="w"> </span><span class="m">2</span>&gt;/dev/null<span class="w"> </span><span class="p">|</span><span class="w"> </span>grep<span class="w"> </span><span class="s2">"Partition:"</span>
+sstablepartitions<span class="w"> </span>-w<span class="w"> </span><span class="m">500000</span><span class="w"> </span><span class="si">${</span><span class="nv">DATA_DIR</span><span class="si">}</span>/<span class="si">${</span><span class="nv">KEYSPACE</span><span class="si">}</span>/<span class="si">${</span><span class="nv">TABLE</span><span class="si">}</span>-*/<span class="w"> </span><span class="m">2</span>&gt;/dev/null<span class="w"> </span><span class="p">|</span><span class="w"> </span>grep<span class="w"> </span><span class="s2">"Partition:"</span>
 </code></pre></div>
 <h3 id="cluster-wide-analysis">Cluster-Wide Analysis<a class="headerlink" href="#cluster-wide-analysis" title="Permanent link">¶</a></h3>
 <div class="highlight"><pre><span></span><code><span class="ch">#!/bin/bash</span>
@@ -20810,7 +20822,7 @@ mkdir<span class="w"> </span>-p<span class="w"> </span><span class="s2">"</span>
 
 <span class="k">for</span><span class="w"> </span>node<span class="w"> </span><span class="k">in</span><span class="w"> </span><span class="nv">$NODES</span><span class="p">;</span><span class="w"> </span><span class="k">do</span>
 <span class="w">    </span><span class="nb">echo</span><span class="w"> </span><span class="s2">"Collecting from </span><span class="nv">$node</span><span class="s2">..."</span>
-<span class="w">    </span>ssh<span class="w"> </span><span class="s2">"</span><span class="nv">$node</span><span class="s2">"</span><span class="w"> </span><span class="s2">"sstablepartitions --csv --min-size 50MB \</span>
+<span class="w">    </span>ssh<span class="w"> </span><span class="s2">"</span><span class="nv">$node</span><span class="s2">"</span><span class="w"> </span><span class="s2">"sstablepartitions --csv -t 50MB \</span>
 <span class="s2">        /var/lib/cassandra/data/</span><span class="si">${</span><span class="nv">KEYSPACE</span><span class="si">}</span><span class="s2">/</span><span class="si">${</span><span class="nv">TABLE</span><span class="si">}</span><span class="s2">-*/"</span><span class="w"> </span><span class="se">\</span>
 <span class="w">        </span>&gt;<span class="w"> </span><span class="s2">"</span><span class="si">${</span><span class="nv">OUTPUT_DIR</span><span class="si">}</span><span class="s2">/</span><span class="si">${</span><span class="nv">node</span><span class="si">}</span><span class="s2">.csv"</span><span class="w"> </span><span class="m">2</span>&gt;/dev/null
 <span class="k">done</span>

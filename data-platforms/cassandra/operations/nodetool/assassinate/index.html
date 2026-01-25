@@ -20613,7 +20613,7 @@ nodetool<span class="w"> </span>assassinate<span class="w"> </span><span class="
 <ul>
 <li>Data inconsistency will occur</li>
 <li>Node will try to rejoin</li>
-<li>Creates split-brain scenario</li>
+<li>Causes data inconsistency as both nodes serve conflicting data</li>
 </ul>
 <p>Verify node is truly dead first.</p>
 </div>
@@ -20729,7 +20729,7 @@ nodetool<span class="w"> </span>repair<span class="w"> </span>-pr
 <h3 id="node-reappears-after-assassination">Node Reappears After Assassination<a class="headerlink" href="#node-reappears-after-assassination" title="Permanent link">¶</a></h3>
 <p>If the "dead" node was actually alive:</p>
 <div class="admonition danger">
-<p class="admonition-title">Split Brain</p>
+<p class="admonition-title">Data Inconsistency</p>
 <p>The node will attempt to rejoin, causing data conflicts:</p>
 <ol>
 <li>Immediately stop Cassandra on that node</li>

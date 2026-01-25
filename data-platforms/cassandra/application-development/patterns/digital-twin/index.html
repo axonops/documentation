@@ -20890,7 +20890,7 @@ data-et-multi-view="{&quot;schema&quot;:{&quot;content&quot;:{&quot;desktop&quot
 <li><strong>Handles offline scenarios</strong> with conflict resolution</li>
 <li><strong>Enables queries</strong> across device fleet state</li>
 </ol>
-<p>Cassandra's characteristics (high write throughput, tunable consistency, linear scalability) make it well-suited for digital twin storage at IoT scale. The pattern decouples applications from device connectivity, enabling robust systems that function correctly regardless of network conditions.</p>
+<p>Cassandra's characteristics (high write throughput, tunable consistency, linear scalability) make it well-suited for digital twin storage at IoT scale, though operational constraints apply. Partition sizes should remain bounded (typically under 100MB) by using time-bucketing for historical data, and high-frequency updates to the same partition may require careful capacity planning. The pattern decouples applications from device connectivity, enabling robust systems that function correctly regardless of network conditions.</p>
 <hr>
 <h2 id="related-documentation">Related Documentation<a class="headerlink" href="#related-documentation" title="Permanent link">¶</a></h2>
 <ul>

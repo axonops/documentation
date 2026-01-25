@@ -20981,15 +20981,15 @@ nodetool<span class="w"> </span>statusautocompaction<span class="w"> </span>my_k
 <span class="c1"># disable_autocompaction_cluster.sh</span>
 
 <span class="nv">KEYSPACE</span><span class="o">=</span><span class="s2">"my_keyspace"</span>
-<span class="nv">TABLE</span><span class="o">=</span><span class="s2">"my_table"</span><span class="c1"># Get list of node IPs from local nodetool status</span>
+<span class="nv">TABLE</span><span class="o">=</span><span class="s2">"my_table"</span>
 
-
+<span class="c1"># Get list of node IPs from local nodetool status</span>
 <span class="nv">nodes</span><span class="o">=</span><span class="k">$(</span>nodetool<span class="w"> </span>status<span class="w"> </span><span class="p">|</span><span class="w"> </span>grep<span class="w"> </span><span class="s2">"^UN"</span><span class="w"> </span><span class="p">|</span><span class="w"> </span>awk<span class="w"> </span><span class="s1">'{print $2}'</span><span class="k">)</span>
 
 <span class="nb">echo</span><span class="w"> </span><span class="s2">"Disabling auto-compaction cluster-wide..."</span>
 <span class="k">for</span><span class="w"> </span>node<span class="w"> </span><span class="k">in</span><span class="w"> </span><span class="nv">$nodes</span><span class="p">;</span><span class="w"> </span><span class="k">do</span>
 <span class="w">    </span><span class="nb">echo</span><span class="w"> </span>-n<span class="w"> </span><span class="s2">"</span><span class="nv">$node</span><span class="s2">: "</span>
-<span class="w">    </span>ssh<span class="w"> </span><span class="s2">"</span><span class="nv">$node</span><span class="s2">"</span><span class="w"> </span><span class="s2">"nodetool disableautocompaction </span><span class="nv">$KEYSPACE</span><span class="s2"> </span><span class="nv">$TABLE</span><span class="s2"> &amp;&amp; echo "</span>disabled<span class="s2">" || echo "</span>FAILED<span class="s2">""</span>
+<span class="w">    </span>ssh<span class="w"> </span><span class="s2">"</span><span class="nv">$node</span><span class="s2">"</span><span class="w"> </span><span class="s2">"nodetool disableautocompaction </span><span class="nv">$KEYSPACE</span><span class="s2"> </span><span class="nv">$TABLE</span><span class="s2"> &amp;&amp; echo 'disabled' || echo 'FAILED'"</span>
 <span class="k">done</span>
 
 <span class="nb">echo</span><span class="w"> </span><span class="s2">""</span>

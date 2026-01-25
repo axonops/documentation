@@ -20530,9 +20530,16 @@ nodetool<span class="w"> </span>clearsnapshot<span class="w"> </span>--all<span 
 <div class="highlight"><pre><span></span><code><span class="c1"># Check streaming throughput</span>
 nodetool<span class="w"> </span>getstreamthroughput
 
-<span class="c1"># Increase if network allows</span>
-nodetool<span class="w"> </span>setstreamthroughput<span class="w"> </span><span class="m">400</span><span class="w">  </span><span class="c1"># MB/s</span>
+<span class="c1"># Increase if network allows (value in Mb/s by default)</span>
+nodetool<span class="w"> </span>setstreamthroughput<span class="w"> </span><span class="m">400</span>
+
+<span class="c1"># Or specify MiB/s explicitly with -m flag</span>
+nodetool<span class="w"> </span>setstreamthroughput<span class="w"> </span>-m<span class="w"> </span><span class="m">50</span><span class="w">  </span><span class="c1"># 50 MiB/s</span>
 </code></pre></div>
+<div class="admonition note">
+<p class="admonition-title">Streaming Throughput Units</p>
+<p><code>nodetool setstreamthroughput</code> uses megabits per second (Mb/s) by default. Use the <code>-m</code> flag to specify MiB/s instead. The <code>cassandra.yaml</code> setting <code>stream_throughput_outbound</code> uses MiB/s (24 MiB/s default in Cassandra 4.1+).</p>
+</div>
 <h3 id="node-joins-but-shows-wrong-token-range">Node Joins but Shows Wrong Token Range<a class="headerlink" href="#node-joins-but-shows-wrong-token-range" title="Permanent link">¶</a></h3>
 <p>This may indicate <code>initial_token</code> is set incorrectly or <code>auto_bootstrap</code> was false.</p>
 <div class="highlight"><pre><span></span><code><span class="c1"># Check token assignment</span>
@@ -20544,8 +20551,11 @@ nodetool<span class="w"> </span>ring<span class="w"> </span><span class="p">|</s
 <h2 id="streaming-performance">Streaming Performance<a class="headerlink" href="#streaming-performance" title="Permanent link">¶</a></h2>
 <h3 id="speed-up-bootstrap">Speed Up Bootstrap<a class="headerlink" href="#speed-up-bootstrap" title="Permanent link">¶</a></h3>
 <p>On source and target nodes:</p>
-<div class="highlight"><pre><span></span><code><span class="c1"># Increase stream throughput (default usually 200 Mbps)</span>
+<div class="highlight"><pre><span></span><code><span class="c1"># Increase stream throughput (value in Mb/s by default)</span>
 nodetool<span class="w"> </span>setstreamthroughput<span class="w"> </span><span class="m">400</span>
+
+<span class="c1"># Or specify MiB/s explicitly</span>
+nodetool<span class="w"> </span>setstreamthroughput<span class="w"> </span>-m<span class="w"> </span><span class="m">50</span><span class="w">  </span><span class="c1"># 50 MiB/s</span>
 </code></pre></div>
 <h3 id="monitor-streaming">Monitor Streaming<a class="headerlink" href="#monitor-streaming" title="Permanent link">¶</a></h3>
 <div class="highlight"><pre><span></span><code><span class="c1"># On new node</span>

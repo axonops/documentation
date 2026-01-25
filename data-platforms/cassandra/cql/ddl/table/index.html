@@ -21945,22 +21945,10 @@ data-et-multi-view="{&quot;schema&quot;:{&quot;content&quot;:{&quot;desktop&quot
 </tr>
 </tbody>
 </table>
-<table>
-<thead>
-<tr>
-<th>Option</th>
-<th>3.x</th>
-<th>4.0+</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td><code>read_repair</code></td>
-<td><code>BLOCKING</code>, <code>NONE</code></td>
-<td><code>NONE</code> only (BLOCKING removed)</td>
-</tr>
-</tbody>
-</table>
+<div class="admonition note">
+<p class="admonition-title">Read Repair Changes</p>
+<p>In Cassandra 4.0+, <code>read_repair</code> only accepts <code>NONE</code>. The <code>BLOCKING</code> option was removed.</p>
+</div>
 <h5 id="compaction-strategies">Compaction Strategies<a class="headerlink" href="#compaction-strategies" title="Permanent link">¶</a></h5>
 <p>Compaction merges SSTables to reclaim space from overwrites and deletes, and to optimize read performance by reducing the number of SSTables to scan. Choose a strategy based on workload characteristics:</p>
 <table>

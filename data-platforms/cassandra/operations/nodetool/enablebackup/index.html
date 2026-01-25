@@ -20210,7 +20210,7 @@ data-et-multi-view="{&quot;schema&quot;:{&quot;content&quot;:{&quot;desktop&quot
 <h2 id="how-incremental-backup-works">How Incremental Backup Works<a class="headerlink" href="#how-incremental-backup-works" title="Permanent link">¶</a></h2>
 <p>When incremental backup is enabled:</p>
 <ol>
-<li>Each time memtables flush to SSTables, a hard link is created</li>
+<li>Each time new SSTables are created (during flush, compaction, or other operations), a hard link is created</li>
 <li>Hard links go to: <code>&lt;data_dir&gt;/&lt;keyspace&gt;/&lt;table&gt;/backups/</code></li>
 <li>Links point to the same data blocks (no extra disk space initially)</li>
 <li>Backup files remain even after compaction removes the original</li>
@@ -20241,7 +20241,7 @@ data-et-multi-view="{&quot;schema&quot;:{&quot;content&quot;:{&quot;desktop&quot
 nodetool<span class="w"> </span>enablebackup
 
 <span class="c1"># 2. Periodically copy backup files to external storage</span>
-rsync<span class="w"> </span>-av<span class="w"> </span>/var/lib/cassandra/data/*/backups/<span class="w"> </span>/backup/incremental/
+rsync<span class="w"> </span>-av<span class="w"> </span>/var/lib/cassandra/data/*/*/backups/<span class="w"> </span>/backup/incremental/
 
 <span class="c1"># 3. Clear processed backups</span>
 rm<span class="w"> </span>-rf<span class="w"> </span>/var/lib/cassandra/data/*/*/backups/*

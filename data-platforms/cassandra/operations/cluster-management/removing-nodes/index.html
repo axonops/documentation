@@ -20577,7 +20577,7 @@ nodetool<span class="w"> </span>status<span class="w"> </span><span class="p">|<
 <ul>
 <li>All data owned by the decommissioning node is streamed to new owners before removal</li>
 <li>The node transitions through states: <code>UN</code> → <code>UL</code> (Leaving) → removed from ring</li>
-<li>Client requests are rejected once decommission starts</li>
+<li>The node continues serving client requests while streaming (state <code>UL</code>); coordinator routing shifts as streaming completes</li>
 <li>Hints destined for this node are cleared from other nodes</li>
 </ul>
 <p><strong>Failure Semantics:</strong></p>

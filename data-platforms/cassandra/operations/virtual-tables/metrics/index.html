@@ -20532,6 +20532,10 @@ data-et-multi-view="{&quot;schema&quot;:{&quot;content&quot;:{&quot;desktop&quot
 <h2 id="batch-metrics">Batch Metrics<a class="headerlink" href="#batch-metrics" title="Permanent link">¶</a></h2>
 <h3 id="batch_metrics">batch_metrics<a class="headerlink" href="#batch_metrics" title="Permanent link">¶</a></h3>
 <p>Metrics specific to BATCH statement execution.</p>
+<div class="admonition warning">
+<p class="admonition-title">Deprecated in Cassandra 5.1</p>
+<p>The <code>system_views.batch_metrics</code> table is deprecated since Cassandra 5.1 and will be removed in a future release. Use <code>system_metrics.batch_group</code> or <code>system_metrics.type_histogram</code> instead.</p>
+</div>
 <div class="highlight"><pre><span></span><code><span class="n">VIRTUAL</span><span class="w"> </span><span class="k">TABLE</span><span class="w"> </span><span class="n">system_views</span><span class="p">.</span><span class="n">batch_metrics</span><span class="w"> </span><span class="p">(</span>
 <span class="w">    </span><span class="n">name</span><span class="w"> </span><span class="nb">text</span><span class="w"> </span><span class="k">PRIMARY</span><span class="w"> </span><span class="k">KEY</span><span class="p">,</span>
 <span class="w">    </span><span class="k">max</span><span class="w"> </span><span class="nb">bigint</span><span class="p">,</span>
@@ -20583,6 +20587,10 @@ data-et-multi-view="{&quot;schema&quot;:{&quot;content&quot;:{&quot;desktop&quot
 <h2 id="cql-metrics">CQL Metrics<a class="headerlink" href="#cql-metrics" title="Permanent link">¶</a></h2>
 <h3 id="cql_metrics">cql_metrics<a class="headerlink" href="#cql_metrics" title="Permanent link">¶</a></h3>
 <p>CQL layer metrics including prepared statement cache statistics.</p>
+<div class="admonition warning">
+<p class="admonition-title">Deprecated in Cassandra 5.1</p>
+<p>The <code>system_views.cql_metrics</code> table is deprecated since Cassandra 5.1 and will be removed in a future release. Use <code>system_metrics.cql_group</code> instead.</p>
+</div>
 <div class="highlight"><pre><span></span><code><span class="n">VIRTUAL</span><span class="w"> </span><span class="k">TABLE</span><span class="w"> </span><span class="n">system_views</span><span class="p">.</span><span class="n">cql_metrics</span><span class="w"> </span><span class="p">(</span>
 <span class="w">    </span><span class="n">name</span><span class="w"> </span><span class="nb">text</span><span class="w"> </span><span class="k">PRIMARY</span><span class="w"> </span><span class="k">KEY</span><span class="p">,</span>
 <span class="w">    </span><span class="n">value</span><span class="w"> </span><span class="n">double</span>

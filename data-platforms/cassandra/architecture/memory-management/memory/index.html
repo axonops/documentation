@@ -20519,7 +20519,9 @@ data-et-multi-view="{&quot;schema&quot;:{&quot;content&quot;:{&quot;desktop&quot
 <span class="nt">memtable_heap_space_in_mb</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">4096</span>
 
 <span class="c1"># Flush threshold (fraction of memtable space)</span>
-<span class="nt">memtable_cleanup_threshold</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">0.11</span>
+<span class="c1"># Note: memtable_cleanup_threshold is deprecated in modern Cassandra versions</span>
+<span class="c1"># and is auto-calculated. Only set if you need to override the default.</span>
+<span class="c1"># memtable_cleanup_threshold: 0.11</span>
 </code></pre></div>
 <div class="admonition tip">
 <p class="admonition-title">Memtable Sizing</p>

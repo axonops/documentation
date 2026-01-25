@@ -21255,7 +21255,7 @@ data-et-multi-view="{&quot;schema&quot;:{&quot;content&quot;:{&quot;desktop&quot
 <p>The primary cost of LCS is rewriting data multiple times:</p>
 <ul>
 <li>Each level transition involves merging with existing data</li>
-<li>Write amplification of 10-30× is common</li>
+<li>Write amplification of 10-30× is typical, though actual values depend on workload characteristics, data distribution, and configuration</li>
 <li>SSD endurance is consumed faster</li>
 </ul>
 <h3 id="compaction-throughput-limits">Compaction Throughput Limits<a class="headerlink" href="#compaction-throughput-limits" title="Permanent link">¶</a></h3>
@@ -21526,23 +21526,23 @@ data-et-multi-view="{&quot;schema&quot;:{&quot;content&quot;:{&quot;desktop&quot
 <p>The maximum dataset size per table with default settings is theoretically 16+ PB, though practical limits are reached well before this due to compaction throughput constraints.</p>
 <hr>
 <h2 id="write-amplification-analysis">Write Amplification Analysis<a class="headerlink" href="#write-amplification-analysis" title="Permanent link">¶</a></h2>
-<p>LCS has high write amplification due to the promotion process:</p>
-<p><strong>Per-level amplification:</strong></p>
+<p>LCS has high write amplification due to the promotion process. The following figures are theoretical maximums; actual amplification depends on workload characteristics, data distribution, update patterns, and configuration.</p>
+<p><strong>Per-level amplification (theoretical):</strong></p>
 <ul>
-<li>L0 → L1: SSTable overlaps with potentially all L1 SSTables → <span class="arithmatex">\(\sim 10\times\)</span></li>
-<li>L1 → L2: Same process with L2 overlaps → <span class="arithmatex">\(\sim 10\times\)</span></li>
-<li>Each subsequent level: <span class="arithmatex">\(\sim f\times\)</span> where <span class="arithmatex">\(f\)</span> = fanout</li>
+<li>L0 → L1: SSTable overlaps with potentially all L1 SSTables → up to <span class="arithmatex">\(\sim 10\times\)</span></li>
+<li>L1 → L2: Same process with L2 overlaps → up to <span class="arithmatex">\(\sim 10\times\)</span></li>
+<li>Each subsequent level: up to <span class="arithmatex">\(\sim f\times\)</span> where <span class="arithmatex">\(f\)</span> = fanout</li>
 </ul>
-<p><strong>Total write amplification:</strong></p>
+<p><strong>Total write amplification (theoretical maximum):</strong></p>
 <div class="arithmatex">\[W_{\text{total}} \approx f \times L\]</div>
 <p>Where:</p>
 <ul>
 <li><span class="arithmatex">\(f\)</span> = fanout (default: 10)</li>
 <li><span class="arithmatex">\(L\)</span> = number of levels data traverses</li>
 </ul>
-<p><strong>Example:</strong> 100GB dataset with 5 levels:</p>
+<p><strong>Example:</strong> 100GB dataset with 5 levels (worst case):</p>
 <div class="arithmatex">\[W = 10 \times 5 = 50\times\]</div>
-<p>This high write amplification makes LCS unsuitable for write-heavy workloads.</p>
+<p>In practice, write amplification is often lower due to factors like non-uniform key distribution, <code>single_sstable_uplevel</code> optimization, and varying overlap patterns. However, the high theoretical amplification makes LCS generally unsuitable for write-heavy workloads.</p>
 <hr>
 <h2 id="read-path-analysis">Read Path Analysis<a class="headerlink" href="#read-path-analysis" title="Permanent link">¶</a></h2>
 <p>LCS provides predictable, low read amplification through its non-overlapping level structure:</p>

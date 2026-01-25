@@ -20302,7 +20302,7 @@ data-et-multi-view="{&quot;schema&quot;:{&quot;content&quot;:{&quot;desktop&quot
 <span class="w">    </span><span class="k">PRIMARY</span><span class="w"> </span><span class="k">KEY</span><span class="w"> </span><span class="p">(</span><span class="n">sensor_id</span><span class="p">,</span><span class="w"> </span><span class="n">event_time</span><span class="p">)</span>
 <span class="p">);</span>
 </code></pre></div>
-<p>This schema partitions by sensor, with time as a clustering column. For a sensor reporting every second, the partition grows by 86,400 rows daily, over 31 million rows annually. Cassandra partitions are not designed for this scale; performance degrades as partitions exceed approximately 100,000 rows or 100MB.</p>
+<p>This schema partitions by sensor, with time as a clustering column. For a sensor reporting every second, the partition grows by 86,400 rows daily, over 31 million rows annually. Cassandra partitions are not designed for this scale; performance tends to degrade as partitions grow large. A common heuristic suggests keeping partitions under approximately 100,000 rows or 100MB, though actual limits depend on row size, access patterns, and hardware.</p>
 <p>The degradation is insidious. Queries slow gradually. Compaction takes longer. Repairs timeout. By the time the problem is obvious, remediation requires data migration.</p>
 <h3 id="temporal-bucketing">Temporal Bucketing<a class="headerlink" href="#temporal-bucketing" title="Permanent link">¶</a></h3>
 <p>The solution is to incorporate time into the partition key, bounding partition size by construction.</p>
@@ -20340,7 +20340,7 @@ data-et-multi-view="{&quot;schema&quot;:{&quot;content&quot;:{&quot;desktop&quot
 <tr>
 <td>100-1000 events/minute</td>
 <td>Hourly</td>
-<td>Keep partitions under 100K rows</td>
+<td>Keep partitions reasonably sized</td>
 </tr>
 <tr>
 <td>&gt; 1000 events/minute</td>
@@ -20469,10 +20469,14 @@ data-et-multi-view="{&quot;schema&quot;:{&quot;content&quot;:{&quot;desktop&quot
 <hr>
 <h2 id="retention-and-expiration">Retention and Expiration<a class="headerlink" href="#retention-and-expiration" title="Permanent link">¶</a></h2>
 <p>Time-series data has natural retention requirements: raw data for days, aggregates for months or years. Cassandra's TTL mechanism handles expiration automatically.</p>
-<div class="highlight"><pre><span></span><code><span class="c1">// Insert with TTL</span>
+<div class="highlight"><pre><span></span><code><span class="c1">// Prepared statement with TTL</span>
+<span class="n">PreparedStatement</span><span class="w"> </span><span class="n">insertWithTtl</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">session</span><span class="p">.</span><span class="na">prepare</span><span class="p">(</span>
+<span class="w">    </span><span class="s">"INSERT INTO sensor_readings (sensor_id, event_time, value) VALUES (?, ?, ?) USING TTL ?"</span>
+<span class="p">);</span>
+
+<span class="c1">// Insert with TTL</span>
 <span class="kt">int</span><span class="w"> </span><span class="n">ttlSeconds</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">7</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="mi">24</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="mi">60</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="mi">60</span><span class="p">;</span><span class="w">  </span><span class="c1">// 7 days</span>
-<span class="n">session</span><span class="p">.</span><span class="na">execute</span><span class="p">(</span><span class="n">insert</span><span class="p">.</span><span class="na">bind</span><span class="p">(...)</span>
-<span class="w">    </span><span class="p">.</span><span class="na">setInt</span><span class="p">(</span><span class="s">"[ttl]"</span><span class="p">,</span><span class="w"> </span><span class="n">ttlSeconds</span><span class="p">));</span>
+<span class="n">session</span><span class="p">.</span><span class="na">execute</span><span class="p">(</span><span class="n">insertWithTtl</span><span class="p">.</span><span class="na">bind</span><span class="p">(</span><span class="n">sensorId</span><span class="p">,</span><span class="w"> </span><span class="n">eventTime</span><span class="p">,</span><span class="w"> </span><span class="n">value</span><span class="p">,</span><span class="w"> </span><span class="n">ttlSeconds</span><span class="p">));</span>
 </code></pre></div>
 <h3 id="time-window-compaction-strategy">Time-Window Compaction Strategy<a class="headerlink" href="#time-window-compaction-strategy" title="Permanent link">¶</a></h3>
 <p>For time-series workloads with TTL, the Time-Window Compaction Strategy (TWCS) is essential. TWCS groups SSTables by time window, enabling entire SSTables to be dropped when all contained data expires without the write amplification of compacting expired data.</p>

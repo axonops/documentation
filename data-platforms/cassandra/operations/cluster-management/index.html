@@ -20306,8 +20306,8 @@ data-et-multi-view="{&quot;schema&quot;:{&quot;content&quot;:{&quot;desktop&quot
 </thead>
 <tbody>
 <tr>
-<td>All nodes must show <code>UN</code> status</td>
-<td>Topology changes with degraded nodes risk data loss</td>
+<td>All nodes should show <code>UN</code> status</td>
+<td>Topology changes with degraded nodes increase risk; proceed with caution if necessary</td>
 </tr>
 <tr>
 <td>No pending repairs must be running</td>
@@ -20337,7 +20337,7 @@ nodetool<span class="w"> </span>netstats<span class="w">            </span><span
 <div class="admonition danger">
 <p class="admonition-title">Critical Constraints</p>
 <p><strong>One operation at a time:</strong> Multiple concurrent topology changes must not be performed. The cluster must complete one operation before starting another.</p>
-<p><strong>Never bootstrap multiple nodes simultaneously</strong> unless using manual token assignment. Concurrent bootstraps with vnodes cause token collisions.</p>
+<p><strong>Avoid bootstrapping multiple nodes simultaneously</strong> to reduce streaming load. Concurrent bootstraps are supported but increase resource contention.</p>
 <p><strong>Cleanup must run after adding nodes.</strong> Existing nodes retain data they no longer own until cleanup executes.</p>
 </div>
 <hr>

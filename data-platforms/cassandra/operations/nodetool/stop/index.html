@@ -8798,7 +8798,16 @@ data-et-multi-view="{&quot;schema&quot;:{&quot;content&quot;:{&quot;desktop&quot
     </span>
   </a>
   
-    <nav class="md-nav" aria-label="Arguments">
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#options" class="md-nav__link">
+    <span class="md-ellipsis">
+      Options
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Options">
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
@@ -8856,6 +8865,24 @@ data-et-multi-view="{&quot;schema&quot;:{&quot;content&quot;:{&quot;desktop&quot
   <a href="#stop-index-build" class="md-nav__link">
     <span class="md-ellipsis">
       Stop Index Build
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#stop-view-build" class="md-nav__link">
+    <span class="md-ellipsis">
+      Stop View Build
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#stop-specific-compaction-by-id" class="md-nav__link">
+    <span class="md-ellipsis">
+      Stop Specific Compaction by ID
     </span>
   </a>
   
@@ -20090,7 +20117,16 @@ data-et-multi-view="{&quot;schema&quot;:{&quot;content&quot;:{&quot;desktop&quot
     </span>
   </a>
   
-    <nav class="md-nav" aria-label="Arguments">
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#options" class="md-nav__link">
+    <span class="md-ellipsis">
+      Options
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Options">
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
@@ -20148,6 +20184,24 @@ data-et-multi-view="{&quot;schema&quot;:{&quot;content&quot;:{&quot;desktop&quot
   <a href="#stop-index-build" class="md-nav__link">
     <span class="md-ellipsis">
       Stop Index Build
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#stop-view-build" class="md-nav__link">
+    <span class="md-ellipsis">
+      Stop View Build
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#stop-specific-compaction-by-id" class="md-nav__link">
+    <span class="md-ellipsis">
+      Stop Specific Compaction by ID
     </span>
   </a>
   
@@ -20369,7 +20423,7 @@ data-et-multi-view="{&quot;schema&quot;:{&quot;content&quot;:{&quot;desktop&quot
 <p>Stops compaction operations.</p>
 <hr>
 <h2 id="synopsis">Synopsis<a class="headerlink" href="#synopsis" title="Permanent link">¶</a></h2>
-<div class="highlight"><pre><span></span><code>nodetool<span class="w"> </span><span class="o">[</span>connection_options<span class="o">]</span><span class="w"> </span>stop<span class="w"> </span>&lt;compaction_type&gt;
+<div class="highlight"><pre><span></span><code>nodetool<span class="w"> </span><span class="o">[</span>connection_options<span class="o">]</span><span class="w"> </span>stop<span class="w"> </span><span class="o">[</span>options<span class="o">]</span><span class="w"> </span>&lt;compaction_type&gt;
 </code></pre></div>
 <h2 id="description">Description<a class="headerlink" href="#description" title="Permanent link">¶</a></h2>
 <p><code>nodetool stop</code> interrupts running compaction operations. This is useful when compaction is impacting cluster performance or when emergency intervention is needed.</p>
@@ -20386,6 +20440,22 @@ data-et-multi-view="{&quot;schema&quot;:{&quot;content&quot;:{&quot;desktop&quot
 <tr>
 <td><code>compaction_type</code></td>
 <td>Type of compaction to stop</td>
+</tr>
+</tbody>
+</table>
+<hr>
+<h2 id="options">Options<a class="headerlink" href="#options" title="Permanent link">¶</a></h2>
+<table>
+<thead>
+<tr>
+<th>Option</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>-id, --compaction-id &lt;id&gt;</code></td>
+<td>Stop a specific compaction by its ID (from <code>compactionstats</code>)</td>
 </tr>
 </tbody>
 </table>
@@ -20423,6 +20493,14 @@ data-et-multi-view="{&quot;schema&quot;:{&quot;content&quot;:{&quot;desktop&quot
 <td>Secondary index builds</td>
 </tr>
 <tr>
+<td><code>VIEW_BUILD</code></td>
+<td>Materialized view builds</td>
+</tr>
+<tr>
+<td><code>INDEX_SUMMARY</code></td>
+<td>Index summary redistribution</td>
+</tr>
+<tr>
 <td><code>TOMBSTONE_COMPACTION</code></td>
 <td>Tombstone-only compaction</td>
 </tr>
@@ -20437,6 +20515,10 @@ data-et-multi-view="{&quot;schema&quot;:{&quot;content&quot;:{&quot;desktop&quot
 <tr>
 <td><code>RELOCATE</code></td>
 <td>SSTable relocation</td>
+</tr>
+<tr>
+<td><code>GARBAGE_COLLECT</code></td>
+<td>Garbage collection compaction</td>
 </tr>
 </tbody>
 </table>
@@ -20453,6 +20535,16 @@ data-et-multi-view="{&quot;schema&quot;:{&quot;content&quot;:{&quot;desktop&quot
 </code></pre></div>
 <h3 id="stop-index-build">Stop Index Build<a class="headerlink" href="#stop-index-build" title="Permanent link">¶</a></h3>
 <div class="highlight"><pre><span></span><code>nodetool<span class="w"> </span>stop<span class="w"> </span>INDEX_BUILD
+</code></pre></div>
+<h3 id="stop-view-build">Stop View Build<a class="headerlink" href="#stop-view-build" title="Permanent link">¶</a></h3>
+<div class="highlight"><pre><span></span><code>nodetool<span class="w"> </span>stop<span class="w"> </span>VIEW_BUILD
+</code></pre></div>
+<h3 id="stop-specific-compaction-by-id">Stop Specific Compaction by ID<a class="headerlink" href="#stop-specific-compaction-by-id" title="Permanent link">¶</a></h3>
+<div class="highlight"><pre><span></span><code><span class="c1"># First, get the compaction ID from compactionstats</span>
+nodetool<span class="w"> </span>compactionstats
+
+<span class="c1"># Stop specific compaction by ID</span>
+nodetool<span class="w"> </span>stop<span class="w"> </span>-id<span class="w"> </span><span class="m">12345678</span>-1234-1234-1234-123456789abc<span class="w"> </span>COMPACTION
 </code></pre></div>
 <h3 id="stop-all-types">Stop All Types<a class="headerlink" href="#stop-all-types" title="Permanent link">¶</a></h3>
 <div class="highlight"><pre><span></span><code>nodetool<span class="w"> </span>stop<span class="w"> </span>COMPACTION
@@ -20547,6 +20639,14 @@ nodetool<span class="w"> </span>compactionstats
 <tr>
 <td>INDEX_BUILD</td>
 <td>Index incomplete</td>
+</tr>
+<tr>
+<td>VIEW_BUILD</td>
+<td>Materialized view incomplete</td>
+</tr>
+<tr>
+<td>GARBAGE_COLLECT</td>
+<td>Garbage not collected</td>
 </tr>
 </tbody>
 </table>

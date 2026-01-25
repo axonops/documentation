@@ -20086,22 +20086,12 @@ data-et-multi-view="{&quot;schema&quot;:{&quot;content&quot;:{&quot;desktop&quot
 <tr>
 <td>9042</td>
 <td>CQL</td>
-<td>Native client connections</td>
-</tr>
-<tr>
-<td>9142</td>
-<td>CQL/SSL</td>
-<td>Encrypted client connections</td>
+<td>Native client connections (TLS configured via <code>client_encryption_options</code>)</td>
 </tr>
 <tr>
 <td>7000</td>
 <td>TCP</td>
-<td>Inter-node communication</td>
-</tr>
-<tr>
-<td>7001</td>
-<td>TCP/SSL</td>
-<td>Encrypted inter-node</td>
+<td>Inter-node communication (TLS configured via <code>server_encryption_options</code>)</td>
 </tr>
 <tr>
 <td>7199</td>
@@ -20110,6 +20100,13 @@ data-et-multi-view="{&quot;schema&quot;:{&quot;content&quot;:{&quot;desktop&quot
 </tr>
 </tbody>
 </table>
+<div class="admonition note">
+<p class="admonition-title">Deprecated Ports</p>
+<ul>
+<li>Port 9142 (<code>native_transport_port_ssl</code>) was deprecated in Cassandra 4.x and removed in 5.0. TLS is now configured on the standard 9042 port.</li>
+<li>Port 7001 (<code>ssl_storage_port</code>) is deprecated. Internode TLS is configured on the standard 7000 port.</li>
+</ul>
+</div>
 <h2 id="directories">Directories<a class="headerlink" href="#directories" title="Permanent link">¶</a></h2>
 <table>
 <thead>

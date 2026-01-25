@@ -20438,7 +20438,7 @@ data-et-multi-view="{&quot;schema&quot;:{&quot;content&quot;:{&quot;desktop&quot
 <tr>
 <td><strong>Reconnection</strong></td>
 <td>How quickly to reconnect after node failure?</td>
-<td>Exponential backoff (1s base, 10min max)</td>
+<td>Exponential backoff (driver-specific defaults)</td>
 </tr>
 <tr>
 <td><strong>Speculative Execution</strong></td>
@@ -20455,14 +20455,14 @@ data-et-multi-view="{&quot;schema&quot;:{&quot;content&quot;:{&quot;desktop&quot
 <thead>
 <tr>
 <th>Policy</th>
-<th>Default Implementation</th>
+<th>Configuration</th>
 <th>Behavior</th>
 </tr>
 </thead>
 <tbody>
 <tr>
 <td>Load Balancing</td>
-<td><code>DefaultLoadBalancingPolicy</code></td>
+<td><code>basic.load-balancing-policy</code></td>
 <td>Token-aware, prefers local DC, round-robin within replicas</td>
 </tr>
 <tr>
@@ -20473,7 +20473,7 @@ data-et-multi-view="{&quot;schema&quot;:{&quot;content&quot;:{&quot;desktop&quot
 <tr>
 <td>Reconnection</td>
 <td><code>ExponentialReconnectionPolicy</code></td>
-<td>Base: 1 second, Max: 10 minutes</td>
+<td>Base: 1 second, Max: 60 seconds (verify for specific version)</td>
 </tr>
 <tr>
 <td>Speculative Execution</td>
@@ -20579,27 +20579,31 @@ data-et-multi-view="{&quot;schema&quot;:{&quot;content&quot;:{&quot;desktop&quot
 <tr>
 <td><code>LOCAL_QUORUM</code> + remote DC allowed</td>
 <td>Routes to local DC</td>
-<td>Fails over to remote DC</td>
+<td><strong>Still fails</strong> (<code>LOCAL_*</code> CLs only count local replicas)</td>
 </tr>
 <tr>
-<td><code>QUORUM</code></td>
+<td><code>QUORUM</code> + remote DC allowed</td>
 <td>May route anywhere</td>
 <td>Continues if global quorum available</td>
 </tr>
 </tbody>
 </table>
 <h3 id="multi-dc-policy-configuration">Multi-DC Policy Configuration<a class="headerlink" href="#multi-dc-policy-configuration" title="Permanent link">¶</a></h3>
-<div class="highlight"><pre><span></span><code><span class="c1">// Java - Multi-DC with controlled failover</span>
-<span class="n">CqlSession</span><span class="w"> </span><span class="n">session</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">CqlSession</span><span class="p">.</span><span class="na">builder</span><span class="p">()</span>
-<span class="w">    </span><span class="p">.</span><span class="na">withLocalDatacenter</span><span class="p">(</span><span class="s">"dc1"</span><span class="p">)</span>
-<span class="w">    </span><span class="p">.</span><span class="na">withLoadBalancingPolicy</span><span class="p">(</span>
-<span class="w">        </span><span class="n">DefaultLoadBalancingPolicy</span><span class="p">.</span><span class="na">builder</span><span class="p">()</span>
-<span class="w">            </span><span class="p">.</span><span class="na">withLocalDatacenter</span><span class="p">(</span><span class="s">"dc1"</span><span class="p">)</span>
-<span class="w">            </span><span class="c1">// Permit failover to remote DC for LOCAL consistency levels</span>
-<span class="w">            </span><span class="p">.</span><span class="na">withDcFailoverMaxNodesPerRemoteDc</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span>
-<span class="w">            </span><span class="p">.</span><span class="na">build</span><span class="p">())</span>
-<span class="w">    </span><span class="p">.</span><span class="na">build</span><span class="p">();</span>
+<p>Configure multi-DC failover via <code>application.conf</code>:</p>
+<div class="highlight"><pre><span></span><code>datastax-java-driver {
+  basic.load-balancing-policy {
+    local-datacenter = "dc1"
+  }
+  advanced.load-balancing-policy {
+    # Allow failover to remote DC (requires non-LOCAL consistency levels)
+    dc-failover.max-nodes-per-remote-dc = 2
+  }
+}
 </code></pre></div>
+<div class="admonition warning">
+<p class="admonition-title">LOCAL consistency levels</p>
+<p>Allowing remote DC nodes in the load balancing policy does not enable failover for <code>LOCAL_*</code> consistency levels. These levels only count replicas in the coordinator's datacenter regardless of where the request originates.</p>
+</div>
 <h3 id="consistency-level-implications">Consistency Level Implications<a class="headerlink" href="#consistency-level-implications" title="Permanent link">¶</a></h3>
 <table>
 <thead>
@@ -20731,26 +20735,29 @@ data-et-multi-view="{&quot;schema&quot;:{&quot;content&quot;:{&quot;desktop&quot
 <hr>
 <h2 id="configuration-approach">Configuration Approach<a class="headerlink" href="#configuration-approach" title="Permanent link">¶</a></h2>
 <h3 id="explicit-configuration">Explicit Configuration<a class="headerlink" href="#explicit-configuration" title="Permanent link">¶</a></h3>
-<p>Do not rely on defaults for production deployments. Configure each policy explicitly:</p>
-<div class="highlight"><pre><span></span><code><span class="c1">// Java driver example - explicit policy configuration</span>
+<p>Do not rely on defaults for production deployments. Configure each policy explicitly via <code>application.conf</code> (preferred) or programmatically:</p>
+<div class="highlight"><pre><span></span><code># application.conf - Recommended approach for Java Driver 4.x
+datastax-java-driver {
+  basic {
+    load-balancing-policy.local-datacenter = "dc1"
+  }
+  advanced {
+    reconnection-policy {
+      class = ExponentialReconnectionPolicy
+      base-delay = 1 second
+      max-delay = 5 minutes
+    }
+    speculative-execution-policy {
+      class = ConstantSpeculativeExecutionPolicy
+      max-executions = 2
+      delay = 100 milliseconds
+    }
+  }
+}
+</code></pre></div>
+<div class="highlight"><pre><span></span><code><span class="c1">// Load configuration from application.conf</span>
 <span class="n">CqlSession</span><span class="w"> </span><span class="n">session</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">CqlSession</span><span class="p">.</span><span class="na">builder</span><span class="p">()</span>
-<span class="w">    </span><span class="p">.</span><span class="na">withLocalDatacenter</span><span class="p">(</span><span class="s">"dc1"</span><span class="p">)</span>
-<span class="w">    </span><span class="p">.</span><span class="na">withLoadBalancingPolicy</span><span class="p">(</span>
-<span class="w">        </span><span class="n">DefaultLoadBalancingPolicy</span><span class="p">.</span><span class="na">builder</span><span class="p">()</span>
-<span class="w">            </span><span class="p">.</span><span class="na">withLocalDatacenter</span><span class="p">(</span><span class="s">"dc1"</span><span class="p">)</span>
-<span class="w">            </span><span class="p">.</span><span class="na">withSlowReplicaAvoidance</span><span class="p">(</span><span class="kc">true</span><span class="p">)</span>
-<span class="w">            </span><span class="p">.</span><span class="na">build</span><span class="p">())</span>
-<span class="w">    </span><span class="p">.</span><span class="na">withRetryPolicy</span><span class="p">(</span><span class="k">new</span><span class="w"> </span><span class="n">CustomRetryPolicy</span><span class="p">())</span>
-<span class="w">    </span><span class="p">.</span><span class="na">withReconnectionPolicy</span><span class="p">(</span>
-<span class="w">        </span><span class="n">ExponentialReconnectionPolicy</span><span class="p">.</span><span class="na">builder</span><span class="p">()</span>
-<span class="w">            </span><span class="p">.</span><span class="na">withBaseDelay</span><span class="p">(</span><span class="n">Duration</span><span class="p">.</span><span class="na">ofSeconds</span><span class="p">(</span><span class="mi">1</span><span class="p">))</span>
-<span class="w">            </span><span class="p">.</span><span class="na">withMaxDelay</span><span class="p">(</span><span class="n">Duration</span><span class="p">.</span><span class="na">ofMinutes</span><span class="p">(</span><span class="mi">5</span><span class="p">))</span>
-<span class="w">            </span><span class="p">.</span><span class="na">build</span><span class="p">())</span>
-<span class="w">    </span><span class="p">.</span><span class="na">withSpeculativeExecutionPolicy</span><span class="p">(</span>
-<span class="w">        </span><span class="n">ConstantSpeculativeExecutionPolicy</span><span class="p">.</span><span class="na">builder</span><span class="p">()</span>
-<span class="w">            </span><span class="p">.</span><span class="na">withMaxExecutions</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span>
-<span class="w">            </span><span class="p">.</span><span class="na">withDelay</span><span class="p">(</span><span class="n">Duration</span><span class="p">.</span><span class="na">ofMillis</span><span class="p">(</span><span class="mi">100</span><span class="p">))</span>
-<span class="w">            </span><span class="p">.</span><span class="na">build</span><span class="p">())</span>
+<span class="w">    </span><span class="p">.</span><span class="na">withConfigLoader</span><span class="p">(</span><span class="n">DriverConfigLoader</span><span class="p">.</span><span class="na">fromClasspath</span><span class="p">(</span><span class="s">"application.conf"</span><span class="p">))</span>
 <span class="w">    </span><span class="p">.</span><span class="na">build</span><span class="p">();</span>
 </code></pre></div>
 <h3 id="per-statement-override">Per-Statement Override<a class="headerlink" href="#per-statement-override" title="Permanent link">¶</a></h3>
@@ -20813,50 +20820,41 @@ data-et-multi-view="{&quot;schema&quot;:{&quot;content&quot;:{&quot;desktop&quot
 </tbody>
 </table>
 <h3 id="oltp-application-configuration">OLTP Application Configuration<a class="headerlink" href="#oltp-application-configuration" title="Permanent link">¶</a></h3>
-<div class="highlight"><pre><span></span><code><span class="c1">// Low-latency OLTP configuration</span>
-<span class="n">CqlSession</span><span class="w"> </span><span class="n">session</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">CqlSession</span><span class="p">.</span><span class="na">builder</span><span class="p">()</span>
-<span class="w">    </span><span class="p">.</span><span class="na">withLocalDatacenter</span><span class="p">(</span><span class="s">"dc1"</span><span class="p">)</span>
-<span class="w">    </span><span class="p">.</span><span class="na">withLoadBalancingPolicy</span><span class="p">(</span>
-<span class="w">        </span><span class="n">DefaultLoadBalancingPolicy</span><span class="p">.</span><span class="na">builder</span><span class="p">()</span>
-<span class="w">            </span><span class="p">.</span><span class="na">withLocalDatacenter</span><span class="p">(</span><span class="s">"dc1"</span><span class="p">)</span>
-<span class="w">            </span><span class="p">.</span><span class="na">withSlowReplicaAvoidance</span><span class="p">(</span><span class="kc">true</span><span class="p">)</span>
-<span class="w">            </span><span class="p">.</span><span class="na">build</span><span class="p">())</span>
-<span class="w">    </span><span class="c1">// Conservative retry - only idempotent operations</span>
-<span class="w">    </span><span class="p">.</span><span class="na">withRetryPolicy</span><span class="p">(</span><span class="n">DefaultRetryPolicy</span><span class="p">.</span><span class="na">INSTANCE</span><span class="p">)</span>
-<span class="w">    </span><span class="c1">// Fast reconnection for quick recovery</span>
-<span class="w">    </span><span class="p">.</span><span class="na">withReconnectionPolicy</span><span class="p">(</span>
-<span class="w">        </span><span class="n">ExponentialReconnectionPolicy</span><span class="p">.</span><span class="na">builder</span><span class="p">()</span>
-<span class="w">            </span><span class="p">.</span><span class="na">withBaseDelay</span><span class="p">(</span><span class="n">Duration</span><span class="p">.</span><span class="na">ofMillis</span><span class="p">(</span><span class="mi">500</span><span class="p">))</span>
-<span class="w">            </span><span class="p">.</span><span class="na">withMaxDelay</span><span class="p">(</span><span class="n">Duration</span><span class="p">.</span><span class="na">ofMinutes</span><span class="p">(</span><span class="mi">2</span><span class="p">))</span>
-<span class="w">            </span><span class="p">.</span><span class="na">build</span><span class="p">())</span>
-<span class="w">    </span><span class="c1">// Speculative execution for tail latency</span>
-<span class="w">    </span><span class="p">.</span><span class="na">withSpeculativeExecutionPolicy</span><span class="p">(</span>
-<span class="w">        </span><span class="n">ConstantSpeculativeExecutionPolicy</span><span class="p">.</span><span class="na">builder</span><span class="p">()</span>
-<span class="w">            </span><span class="p">.</span><span class="na">withMaxExecutions</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span>
-<span class="w">            </span><span class="p">.</span><span class="na">withDelay</span><span class="p">(</span><span class="n">Duration</span><span class="p">.</span><span class="na">ofMillis</span><span class="p">(</span><span class="mi">50</span><span class="p">))</span>
-<span class="w">            </span><span class="p">.</span><span class="na">build</span><span class="p">())</span>
-<span class="w">    </span><span class="p">.</span><span class="na">build</span><span class="p">();</span>
+<div class="highlight"><pre><span></span><code># application-oltp.conf
+datastax-java-driver {
+  basic.load-balancing-policy.local-datacenter = "dc1"
+  advanced {
+    load-balancing-policy.slow-replica-avoidance = true
+    reconnection-policy {
+      class = ExponentialReconnectionPolicy
+      base-delay = 500 milliseconds
+      max-delay = 2 minutes
+    }
+    speculative-execution-policy {
+      class = ConstantSpeculativeExecutionPolicy
+      max-executions = 2
+      delay = 50 milliseconds
+    }
+  }
+}
 </code></pre></div>
 <h3 id="multi-dc-active-active-configuration">Multi-DC Active-Active Configuration<a class="headerlink" href="#multi-dc-active-active-configuration" title="Permanent link">¶</a></h3>
-<div class="highlight"><pre><span></span><code><span class="c1">// Multi-DC with controlled failover</span>
-<span class="n">CqlSession</span><span class="w"> </span><span class="n">session</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">CqlSession</span><span class="p">.</span><span class="na">builder</span><span class="p">()</span>
-<span class="w">    </span><span class="p">.</span><span class="na">withLocalDatacenter</span><span class="p">(</span><span class="s">"dc1"</span><span class="p">)</span>
-<span class="w">    </span><span class="p">.</span><span class="na">withLoadBalancingPolicy</span><span class="p">(</span>
-<span class="w">        </span><span class="n">DefaultLoadBalancingPolicy</span><span class="p">.</span><span class="na">builder</span><span class="p">()</span>
-<span class="w">            </span><span class="p">.</span><span class="na">withLocalDatacenter</span><span class="p">(</span><span class="s">"dc1"</span><span class="p">)</span>
-<span class="w">            </span><span class="c1">// Allow failover to 2 nodes in remote DC</span>
-<span class="w">            </span><span class="p">.</span><span class="na">withDcFailoverMaxNodesPerRemoteDc</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span>
-<span class="w">            </span><span class="p">.</span><span class="na">build</span><span class="p">())</span>
-<span class="w">    </span><span class="c1">// Standard retry</span>
-<span class="w">    </span><span class="p">.</span><span class="na">withRetryPolicy</span><span class="p">(</span><span class="n">DefaultRetryPolicy</span><span class="p">.</span><span class="na">INSTANCE</span><span class="p">)</span>
-<span class="w">    </span><span class="c1">// Standard reconnection</span>
-<span class="w">    </span><span class="p">.</span><span class="na">withReconnectionPolicy</span><span class="p">(</span>
-<span class="w">        </span><span class="n">ExponentialReconnectionPolicy</span><span class="p">.</span><span class="na">builder</span><span class="p">()</span>
-<span class="w">            </span><span class="p">.</span><span class="na">withBaseDelay</span><span class="p">(</span><span class="n">Duration</span><span class="p">.</span><span class="na">ofSeconds</span><span class="p">(</span><span class="mi">1</span><span class="p">))</span>
-<span class="w">            </span><span class="p">.</span><span class="na">withMaxDelay</span><span class="p">(</span><span class="n">Duration</span><span class="p">.</span><span class="na">ofMinutes</span><span class="p">(</span><span class="mi">5</span><span class="p">))</span>
-<span class="w">            </span><span class="p">.</span><span class="na">build</span><span class="p">())</span>
-<span class="w">    </span><span class="c1">// No speculative execution across DCs (latency difference too high)</span>
-<span class="w">    </span><span class="p">.</span><span class="na">build</span><span class="p">();</span>
+<div class="highlight"><pre><span></span><code># application-multi-dc.conf
+datastax-java-driver {
+  basic.load-balancing-policy.local-datacenter = "dc1"
+  advanced {
+    load-balancing-policy {
+      # Allow failover to remote DC (requires non-LOCAL consistency levels)
+      dc-failover.max-nodes-per-remote-dc = 2
+    }
+    reconnection-policy {
+      class = ExponentialReconnectionPolicy
+      base-delay = 1 second
+      max-delay = 5 minutes
+    }
+    # No speculative execution across DCs (latency difference too high)
+  }
+}
 </code></pre></div>
 <hr>
 <h2 id="section-contents">Section Contents<a class="headerlink" href="#section-contents" title="Permanent link">¶</a></h2>

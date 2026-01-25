@@ -20817,40 +20817,57 @@ cqlai<span class="w"> </span>--host<span class="w"> </span><span class="m">127</
 </tbody>
 </table>
 <h3 id="ai-provider-variables">AI Provider Variables<a class="headerlink" href="#ai-provider-variables" title="Permanent link">¶</a></h3>
+<p>CQLAI supports two naming conventions for AI provider environment variables:</p>
 <table>
 <thead>
 <tr>
-<th>Variable</th>
+<th>CQLAI Variable</th>
+<th>Compatibility Variable</th>
 <th>Description</th>
 </tr>
 </thead>
 <tbody>
 <tr>
+<td><code>CQLAI_AI_PROVIDER</code></td>
+<td>—</td>
+<td>AI provider name (openai, anthropic, ollama, etc.)</td>
+</tr>
+<tr>
+<td><code>CQLAI_AI_KEY</code></td>
 <td><code>OPENAI_API_KEY</code></td>
 <td>OpenAI API key</td>
 </tr>
 <tr>
+<td><code>CQLAI_AI_KEY</code></td>
 <td><code>ANTHROPIC_API_KEY</code></td>
 <td>Anthropic API key</td>
 </tr>
 <tr>
+<td><code>CQLAI_AI_KEY</code></td>
 <td><code>GEMINI_API_KEY</code></td>
 <td>Google Gemini API key</td>
 </tr>
 <tr>
+<td><code>CQLAI_AI_KEY</code></td>
 <td><code>OPENROUTER_API_KEY</code></td>
 <td>OpenRouter API key</td>
 </tr>
 <tr>
+<td><code>CQLAI_OLLAMA_HOST</code></td>
 <td><code>OLLAMA_URL</code></td>
 <td>Ollama server URL</td>
 </tr>
 <tr>
+<td>—</td>
 <td><code>OLLAMA_MODEL</code></td>
 <td>Ollama model name</td>
 </tr>
 </tbody>
 </table>
+<div class="admonition note">
+<p class="admonition-title">Variable Precedence</p>
+<p>CQLAI-prefixed variables (<code>CQLAI_AI_KEY</code>, <code>CQLAI_OLLAMA_HOST</code>) take precedence over provider-specific compatibility variables (<code>OPENAI_API_KEY</code>, <code>OLLAMA_URL</code>). For detailed AI provider configuration, see <a href="../ai-features/ai-providers/">AI Providers</a>.</p>
+</div>
 <h3 id="example">Example<a class="headerlink" href="#example" title="Permanent link">¶</a></h3>
 <div class="highlight"><pre><span></span><code><span class="c1"># Set credentials via environment</span>
 <span class="nb">export</span><span class="w"> </span><span class="nv">CQLAI_HOST</span><span class="o">=</span>cassandra.example.com

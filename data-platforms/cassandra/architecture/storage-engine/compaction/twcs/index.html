@@ -5199,9 +5199,9 @@ data-et-multi-view="{&quot;schema&quot;:{&quot;content&quot;:{&quot;desktop&quot
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
-  <a href="#requires-append-only-workload" class="md-nav__link">
+  <a href="#best-with-append-only-workloads" class="md-nav__link">
     <span class="md-ellipsis">
-      Requires Append-Only Workload
+      Best with Append-Only Workloads
     </span>
   </a>
   
@@ -20490,9 +20490,9 @@ data-et-multi-view="{&quot;schema&quot;:{&quot;content&quot;:{&quot;desktop&quot
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
-  <a href="#requires-append-only-workload" class="md-nav__link">
+  <a href="#best-with-append-only-workloads" class="md-nav__link">
     <span class="md-ellipsis">
-      Requires Append-Only Workload
+      Best with Append-Only Workloads
     </span>
   </a>
   
@@ -20893,8 +20893,8 @@ data-et-multi-view="{&quot;schema&quot;:{&quot;content&quot;:{&quot;desktop&quot
 <p>Starting with Cassandra 5.0, <a href="../ucs/">Unified Compaction Strategy (UCS)</a> is the recommended compaction strategy for most workloads, including time-series patterns. UCS can handle time-series data efficiently with appropriate configuration. TWCS remains fully supported for existing deployments.</p>
 </div>
 <div class="admonition warning">
-<p class="admonition-title">Append-Only Workloads Only</p>
-<p>TWCS is designed exclusively for <strong>immutable, append-only time-series data</strong>. Once data is written, it must never be updated. Updates to existing rows create new SSTables in the current time window while original data remains in older windows—these versions never merge through compaction, causing read amplification and preventing efficient space reclamation.</p>
+<p class="admonition-title">Optimized for Append-Only Workloads</p>
+<p>TWCS is designed for <strong>append-only time-series data</strong> and performs best when data is written once and not updated. Updates to existing rows create new SSTables in the current time window while original data remains in older windows—since TWCS does not compact across window boundaries, these versions never merge, causing read amplification and preventing efficient space reclamation. TWCS can tolerate occasional updates, but frequent updates significantly degrade performance and space efficiency.</p>
 </div>
 <div class="admonition danger">
 <p class="admonition-title">Do Not Use DELETE Statements</p>
@@ -21037,12 +21037,13 @@ Result: SSTable assigned to window [10:00:00 - 11:00:00)
 </ul>
 <hr>
 <h2 id="drawbacks">Drawbacks<a class="headerlink" href="#drawbacks" title="Permanent link">¶</a></h2>
-<h3 id="requires-append-only-workload">Requires Append-Only Workload<a class="headerlink" href="#requires-append-only-workload" title="Permanent link">¶</a></h3>
-<p>TWCS assumes data is never updated:</p>
+<h3 id="best-with-append-only-workloads">Best with Append-Only Workloads<a class="headerlink" href="#best-with-append-only-workloads" title="Permanent link">¶</a></h3>
+<p>TWCS performs optimally with append-only data:</p>
 <ul>
-<li>Updates to old data create new SSTables in current window</li>
-<li>Original data in old window never merges with update</li>
+<li>Updates to old data create new SSTables in the current window</li>
+<li>Original data in old window never merges with update (no cross-window compaction)</li>
 <li>Both versions persist until TTL expires</li>
+<li>Occasional updates are tolerable but degrade read performance and space efficiency proportionally to update frequency</li>
 </ul>
 <h3 id="sensitive-to-out-of-order-writes">Sensitive to Out-of-Order Writes<a class="headerlink" href="#sensitive-to-out-of-order-writes" title="Permanent link">¶</a></h3>
 <p>Late-arriving data causes problems:</p>

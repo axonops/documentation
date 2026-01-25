@@ -20626,12 +20626,14 @@ data-et-multi-view="{&quot;schema&quot;:{&quot;content&quot;:{&quot;desktop&quot
 cqlsh
 </code></pre></div>
 <h3 id="standalone-installation">Standalone Installation<a class="headerlink" href="#standalone-installation" title="Permanent link">¶</a></h3>
-<div class="highlight"><pre><span></span><code><span class="c1"># Python 3.6+ required</span>
-pip<span class="w"> </span>install<span class="w"> </span>cqlsh
-
-<span class="c1"># Or from Cassandra package</span>
+<div class="highlight"><pre><span></span><code><span class="c1"># Python 3.6–3.11 required</span>
+<span class="c1"># cqlsh is included with Cassandra; for standalone use, install the driver:</span>
 pip<span class="w"> </span>install<span class="w"> </span>cassandra-driver
 </code></pre></div>
+<div class="admonition note">
+<p class="admonition-title">Python Version Compatibility</p>
+<p>cqlsh requires Python 3.6 through 3.11. Python 3.12+ may not be fully compatible. Use <code>python3 --version</code> to verify.</p>
+</div>
 <hr>
 <h2 id="connecting-to-cassandra">Connecting to Cassandra<a class="headerlink" href="#connecting-to-cassandra" title="Permanent link">¶</a></h2>
 <h3 id="basic-connection">Basic Connection<a class="headerlink" href="#basic-connection" title="Permanent link">¶</a></h3>
@@ -20652,12 +20654,13 @@ cqlsh<span class="w"> </span>-u<span class="w"> </span>username<span class="w"> 
 <span class="c1"># Enter password when prompted</span>
 </code></pre></div>
 <h3 id="connection-with-ssl">Connection with SSL<a class="headerlink" href="#connection-with-ssl" title="Permanent link">¶</a></h3>
-<div class="highlight"><pre><span></span><code><span class="c1"># Basic SSL</span>
+<div class="highlight"><pre><span></span><code><span class="c1"># Basic SSL (certificate paths configured in cqlshrc)</span>
 cqlsh<span class="w"> </span>--ssl<span class="w"> </span><span class="m">10</span>.0.0.1
-
-<span class="c1"># With certificate file</span>
-cqlsh<span class="w"> </span>--ssl<span class="w"> </span>--ssl-certfile<span class="o">=</span>/path/to/ca-cert.pem<span class="w"> </span><span class="m">10</span>.0.0.1
 </code></pre></div>
+<div class="admonition note">
+<p class="admonition-title">SSL Configuration</p>
+<p>SSL certificates must be configured in <code>~/.cassandra/cqlshrc</code> under the <code>[ssl]</code> section. There is no command-line flag for specifying certificate files directly.</p>
+</div>
 <h3 id="cqlshrc-configuration">cqlshrc Configuration<a class="headerlink" href="#cqlshrc-configuration" title="Permanent link">¶</a></h3>
 <div class="highlight"><pre><span></span><code><span class="c1"># ~/.cassandra/cqlshrc</span>
 
@@ -20687,6 +20690,11 @@ cqlsh<span class="w"> </span>--ssl<span class="w"> </span>--ssl-certfile<span cl
 </code></pre></div>
 <hr>
 <h2 id="command-line-options">Command-Line Options<a class="headerlink" href="#command-line-options" title="Permanent link">¶</a></h2>
+<p><strong>Usage:</strong> <code>cqlsh [options] [host [port]]</code></p>
+<div class="admonition note">
+<p class="admonition-title">Port Specification</p>
+<p>Port is a positional argument, not a flag. Use <code>cqlsh hostname 9042</code> (not <code>--port</code>).</p>
+</div>
 <table>
 <thead>
 <tr>
@@ -20696,19 +20704,11 @@ cqlsh<span class="w"> </span>--ssl<span class="w"> </span>--ssl-certfile<span cl
 </thead>
 <tbody>
 <tr>
-<td><code>-h, --host</code></td>
-<td>Host to connect to</td>
-</tr>
-<tr>
-<td><code>-p, --port</code></td>
-<td>Port number (default: 9042)</td>
-</tr>
-<tr>
 <td><code>-u, --username</code></td>
 <td>Username for authentication</td>
 </tr>
 <tr>
-<td><code>-P, --password</code></td>
+<td><code>-p, --password</code></td>
 <td>Password for authentication</td>
 </tr>
 <tr>
@@ -20725,7 +20725,7 @@ cqlsh<span class="w"> </span>--ssl<span class="w"> </span>--ssl-certfile<span cl
 </tr>
 <tr>
 <td><code>--ssl</code></td>
-<td>Use SSL</td>
+<td>Use SSL (configure certs in cqlshrc)</td>
 </tr>
 <tr>
 <td><code>--connect-timeout</code></td>

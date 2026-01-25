@@ -20534,9 +20534,9 @@ data-et-multi-view="{&quot;schema&quot;:{&quot;content&quot;:{&quot;desktop&quot
 <p>The clustering columns (event_time, event_type) become part of each cell's internal key. The partition key determines which node stores the data. All cells with the same partition key are stored together, sorted by clustering column.</p>
 <p>This is why Cassandra queries have strict rules:</p>
 <ul>
-<li><strong>Partition key required</strong>: Without it, Cassandra does not know which node to ask</li>
+<li><strong>Partition key recommended</strong>: For efficient queries; index-based or filtered queries can omit it but with significant performance trade-offs</li>
 <li><strong>Clustering columns in order</strong>: They form a composite key—columns cannot be skipped</li>
-<li><strong>Range queries only on last column</strong>: The storage is sorted, so ranges work on the final sort key</li>
+<li><strong>Range queries require clustering order</strong>: Ranges are allowed on the first clustering column not restricted by equality; earlier clustering columns must use equality</li>
 </ul>
 <p>Understanding this mapping explains Cassandra's query restrictions.</p>
 <hr>
@@ -20561,7 +20561,7 @@ data-et-multi-view="{&quot;schema&quot;:{&quot;content&quot;:{&quot;desktop&quot
 <li>Accept write duplication for read optimization</li>
 <li>Scale horizontally by adding nodes</li>
 </ol>
-<p><em>Result: Predictable latency regardless of data size, but queries must be planned</em></p>
+<p><em>Result: More predictable latency for well-designed queries (though still affected by partition size, compaction state, and workload), but queries must be planned</em></p>
 <p>A poorly designed Cassandra table does not just slow down—it can bring down the entire cluster:</p>
 <table>
 <thead>

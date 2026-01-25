@@ -8636,6 +8636,15 @@ data-et-multi-view="{&quot;schema&quot;:{&quot;content&quot;:{&quot;desktop&quot
 </li>
       
         <li class="md-nav__item">
+  <a href="#options" class="md-nav__link">
+    <span class="md-ellipsis">
+      Options
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#description" class="md-nav__link">
     <span class="md-ellipsis">
       Description
@@ -8865,9 +8874,9 @@ data-et-multi-view="{&quot;schema&quot;:{&quot;content&quot;:{&quot;desktop&quot
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
-  <a href="#by-version" class="md-nav__link">
+  <a href="#default-value" class="md-nav__link">
     <span class="md-ellipsis">
-      By Version
+      Default Value
     </span>
   </a>
   
@@ -20177,6 +20186,15 @@ data-et-multi-view="{&quot;schema&quot;:{&quot;content&quot;:{&quot;desktop&quot
 </li>
       
         <li class="md-nav__item">
+  <a href="#options" class="md-nav__link">
+    <span class="md-ellipsis">
+      Options
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#description" class="md-nav__link">
     <span class="md-ellipsis">
       Description
@@ -20406,9 +20424,9 @@ data-et-multi-view="{&quot;schema&quot;:{&quot;content&quot;:{&quot;desktop&quot
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
-  <a href="#by-version" class="md-nav__link">
+  <a href="#default-value" class="md-nav__link">
     <span class="md-ellipsis">
-      By Version
+      Default Value
     </span>
   </a>
   
@@ -20573,10 +20591,25 @@ data-et-multi-view="{&quot;schema&quot;:{&quot;content&quot;:{&quot;desktop&quot
 <p>Displays the current compaction throughput limit.</p>
 <hr>
 <h2 id="synopsis">Synopsis<a class="headerlink" href="#synopsis" title="Permanent link">¶</a></h2>
-<div class="highlight"><pre><span></span><code>nodetool<span class="w"> </span><span class="o">[</span>connection_options<span class="o">]</span><span class="w"> </span>getcompactionthroughput
+<div class="highlight"><pre><span></span><code>nodetool<span class="w"> </span><span class="o">[</span>connection_options<span class="o">]</span><span class="w"> </span>getcompactionthroughput<span class="w"> </span><span class="o">[</span>options<span class="o">]</span>
 </code></pre></div>
+<h2 id="options">Options<a class="headerlink" href="#options" title="Permanent link">¶</a></h2>
+<table>
+<thead>
+<tr>
+<th>Option</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>-d, --precise-mib</code></td>
+<td>Display precise MiB/s value as a decimal (avoids rounding errors when configured value is not an integer)</td>
+</tr>
+</tbody>
+</table>
 <h2 id="description">Description<a class="headerlink" href="#description" title="Permanent link">¶</a></h2>
-<p><code>nodetool getcompactionthroughput</code> returns the maximum rate at which compaction operations can write data, measured in megabytes per second (MB/s). This throttle helps prevent compaction from consuming excessive disk I/O and impacting read/write performance.</p>
+<p><code>nodetool getcompactionthroughput</code> returns the maximum rate at which compaction operations can write data, measured in mebibytes per second (MiB/s). The output also includes current throughput metrics for the last 1/5/15 minute intervals. This throttle helps prevent compaction from consuming excessive disk I/O and impacting read/write performance.</p>
 <p>Compaction throughput affects:</p>
 <ul>
 <li><strong>SSTable merge operations</strong> - How fast SSTables are combined</li>
@@ -20587,7 +20620,10 @@ data-et-multi-view="{&quot;schema&quot;:{&quot;content&quot;:{&quot;desktop&quot
 <hr>
 <h2 id="output">Output<a class="headerlink" href="#output" title="Permanent link">¶</a></h2>
 <h3 id="standard-output">Standard Output<a class="headerlink" href="#standard-output" title="Permanent link">¶</a></h3>
-<div class="highlight"><pre><span></span><code>Current compaction throughput: 64 MB/s
+<div class="highlight"><pre><span></span><code>Current compaction throughput: 64 MiB/s
+throughput_1min: 45 MiB/s
+throughput_5min: 52 MiB/s
+throughput_15min: 48 MiB/s
 </code></pre></div>
 <h3 id="output-values">Output Values<a class="headerlink" href="#output-values" title="Permanent link">¶</a></h3>
 <table>
@@ -20599,15 +20635,15 @@ data-et-multi-view="{&quot;schema&quot;:{&quot;content&quot;:{&quot;desktop&quot
 </thead>
 <tbody>
 <tr>
-<td><code>64 MB/s</code></td>
+<td><code>64 MiB/s</code></td>
 <td>Default throughput limit</td>
 </tr>
 <tr>
-<td><code>0 MB/s</code></td>
+<td><code>0 MiB/s</code></td>
 <td>Unlimited (no throttling)</td>
 </tr>
 <tr>
-<td><code>16-256 MB/s</code></td>
+<td><code>16-256 MiB/s</code></td>
 <td>Typical operational range</td>
 </tr>
 </tbody>
@@ -20809,37 +20845,36 @@ Active compaction:
 </table>
 <hr>
 <h2 id="default-values">Default Values<a class="headerlink" href="#default-values" title="Permanent link">¶</a></h2>
-<h3 id="by-version">By Version<a class="headerlink" href="#by-version" title="Permanent link">¶</a></h3>
+<h3 id="default-value">Default Value<a class="headerlink" href="#default-value" title="Permanent link">¶</a></h3>
+<p>The default compaction throughput is <strong>64 MB/s</strong> in Cassandra 4.x and later.</p>
+<h3 id="configuration-file">Configuration File<a class="headerlink" href="#configuration-file" title="Permanent link">¶</a></h3>
+<p>The cassandra.yaml parameter name varies by version:</p>
 <table>
 <thead>
 <tr>
 <th>Cassandra Version</th>
-<th>Default</th>
-<th>Notes</th>
+<th>Parameter Name</th>
+<th>Example</th>
 </tr>
 </thead>
 <tbody>
 <tr>
-<td>4.x</td>
-<td>64 MB/s</td>
-<td>Recommended default</td>
+<td>Pre-4.1</td>
+<td><code>compaction_throughput_mb_per_sec</code></td>
+<td><code>64</code></td>
 </tr>
 <tr>
-<td>3.x</td>
-<td>16 MB/s</td>
-<td>Conservative default</td>
-</tr>
-<tr>
-<td>2.x</td>
-<td>16 MB/s</td>
-<td>Legacy default</td>
+<td>4.1+</td>
+<td><code>compaction_throughput</code></td>
+<td><code>64MiB/s</code></td>
 </tr>
 </tbody>
 </table>
-<h3 id="configuration-file">Configuration File<a class="headerlink" href="#configuration-file" title="Permanent link">¶</a></h3>
-<p>In <code>cassandra.yaml</code>:</p>
-<div class="highlight"><pre><span></span><code><span class="c1"># Throttle for compaction in MB/s. Set to 0 to disable throttling.</span>
-<span class="nt">compaction_throughput_mb_per_sec</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">64</span>
+<div class="highlight"><pre><span></span><code><span class="c1"># cassandra.yaml (4.1+)</span>
+<span class="nt">compaction_throughput</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">64MiB/s</span>
+
+<span class="c1"># cassandra.yaml (Pre-4.1)</span>
+<span class="c1"># compaction_throughput_mb_per_sec: 64</span>
 </code></pre></div>
 <hr>
 <h2 id="comparison-with-related-settings">Comparison with Related Settings<a class="headerlink" href="#comparison-with-related-settings" title="Permanent link">¶</a></h2>

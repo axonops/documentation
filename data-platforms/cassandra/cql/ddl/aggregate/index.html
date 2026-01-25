@@ -21141,7 +21141,7 @@ data-et-multi-view="{&quot;schema&quot;:{&quot;content&quot;:{&quot;desktop&quot
 </tr>
 <tr>
 <td>Initial state</td>
-<td>INITCOND value or type default if null</td>
+<td>INITCOND value, or NULL if INITCOND not specified</td>
 </tr>
 <tr>
 <td>Null row handling</td>
@@ -21163,15 +21163,16 @@ data-et-multi-view="{&quot;schema&quot;:{&quot;content&quot;:{&quot;desktop&quot
 <td>Undefined (implementation-dependent)</td>
 </tr>
 <tr>
-<td>With ORDER BY</td>
-<td>Specified order</td>
+<td>With ORDER BY (single partition)</td>
+<td>Specified order within that partition</td>
 </tr>
 <tr>
 <td>Multiple partitions</td>
-<td>Undefined between partitions</td>
+<td>Undefined between partitions; ORDER BY only applies within each partition</td>
 </tr>
 </tbody>
 </table>
+<p><em>Note: ORDER BY in CQL applies within a partition, not globally. When querying multiple partitions, there is no guaranteed global processing order even with ORDER BY.</em></p>
 <h3 id="failure-semantics">Failure Semantics<a class="headerlink" href="#failure-semantics" title="Permanent link">¶</a></h3>
 <table>
 <thead>

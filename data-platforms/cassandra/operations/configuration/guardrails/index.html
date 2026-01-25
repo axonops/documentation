@@ -21162,7 +21162,7 @@ data-et-multi-view="{&quot;schema&quot;:{&quot;content&quot;:{&quot;desktop&quot
 </table>
 <div class="admonition note">
 <p class="admonition-title">Version Availability</p>
-<p>Guardrails are available in Cassandra 4.0 and later. Clusters running Cassandra 3.x do not have this feature. A subset of guardrails may also be available in DataStax Enterprise (DSE) 6.8+.</p>
+<p>Guardrails are available in Cassandra 4.0 and later. A subset of guardrails may also be available in DataStax Enterprise (DSE) 6.8+.</p>
 </div>
 <hr>
 <h2 id="how-guardrails-work">How Guardrails Work<a class="headerlink" href="#how-guardrails-work" title="Permanent link">¶</a></h2>
@@ -21971,8 +21971,9 @@ Dangerous consistency levels like <code>ALL</code> can:
 <h2 id="configuration">Configuration<a class="headerlink" href="#configuration" title="Permanent link">¶</a></h2>
 <h3 id="cassandrayaml-configuration">cassandra.yaml Configuration<a class="headerlink" href="#cassandrayaml-configuration" title="Permanent link">¶</a></h3>
 <p>The guardrails section in <code>cassandra.yaml</code> contains all settings:</p>
-<div class="highlight"><pre><span></span><code><span class="c1"># Guardrails configuration (Cassandra 4.0+)</span>
-<span class="nt">guardrails</span><span class="p">:</span>
+<div class="highlight"><pre><span></span><code><span class="c1"># Guardrails configuration (Cassandra 4.1+)</span>
+<span class="c1"># Note: In Cassandra 4.1, guardrails are top-level settings without a parent section.</span>
+<span class="c1"># The nested format shown here is for illustration; check your version's cassandra.yaml.</span>
 <span class="w">    </span><span class="c1">#</span>
 <span class="w">    </span><span class="c1"># Schema guardrails</span>
 <span class="w">    </span><span class="c1">#</span>

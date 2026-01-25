@@ -13979,9 +13979,9 @@ data-et-multi-view="{&quot;schema&quot;:{&quot;content&quot;:{&quot;desktop&quot
 </li>
         
           <li class="md-nav__item">
-  <a href="#table-filtering" class="md-nav__link">
+  <a href="#keyspace-level-filtering-only" class="md-nav__link">
     <span class="md-ellipsis">
-      Table Filtering
+      Keyspace-Level Filtering Only
     </span>
   </a>
   
@@ -14105,9 +14105,9 @@ data-et-multi-view="{&quot;schema&quot;:{&quot;content&quot;:{&quot;desktop&quot
 </li>
         
           <li class="md-nav__item">
-  <a href="#rotate-logs" class="md-nav__link">
+  <a href="#log-rotation" class="md-nav__link">
     <span class="md-ellipsis">
-      Rotate Logs
+      Log Rotation
     </span>
   </a>
   
@@ -20417,9 +20417,9 @@ data-et-multi-view="{&quot;schema&quot;:{&quot;content&quot;:{&quot;desktop&quot
 </li>
         
           <li class="md-nav__item">
-  <a href="#table-filtering" class="md-nav__link">
+  <a href="#keyspace-level-filtering-only" class="md-nav__link">
     <span class="md-ellipsis">
-      Table Filtering
+      Keyspace-Level Filtering Only
     </span>
   </a>
   
@@ -20543,9 +20543,9 @@ data-et-multi-view="{&quot;schema&quot;:{&quot;content&quot;:{&quot;desktop&quot
 </li>
         
           <li class="md-nav__item">
-  <a href="#rotate-logs" class="md-nav__link">
+  <a href="#log-rotation" class="md-nav__link">
     <span class="md-ellipsis">
-      Rotate Logs
+      Log Rotation
     </span>
   </a>
   
@@ -20865,12 +20865,6 @@ data-et-multi-view="{&quot;schema&quot;:{&quot;content&quot;:{&quot;desktop&quot
 
 <span class="w">    </span><span class="c1"># Users to exclude from auditing</span>
 <span class="w">    </span><span class="nt">excluded_users</span><span class="p">:</span>
-
-<span class="w">    </span><span class="c1"># Tables to audit (empty = all)</span>
-<span class="w">    </span><span class="nt">included_tables</span><span class="p">:</span>
-
-<span class="w">    </span><span class="c1"># Tables to exclude</span>
-<span class="w">    </span><span class="nt">excluded_tables</span><span class="p">:</span>
 </code></pre></div>
 <h3 id="audit-categories">Audit Categories<a class="headerlink" href="#audit-categories" title="Permanent link">¶</a></h3>
 <table>
@@ -20924,13 +20918,14 @@ data-et-multi-view="{&quot;schema&quot;:{&quot;content&quot;:{&quot;desktop&quot
 <span class="w">    </span><span class="nt">enabled</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">true</span>
 <span class="w">    </span><span class="nt">logger</span><span class="p">:</span>
 <span class="w">      </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">class_name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">BinAuditLogger</span>
-<span class="w">        </span><span class="nt">parameters</span><span class="p">:</span>
-<span class="w">          </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">log_dir</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">/var/log/cassandra/audit</span>
-<span class="w">          </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">roll_cycle</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">HOURLY</span>
-<span class="w">          </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">block</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">true</span>
-<span class="w">          </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">max_queue_weight</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">268435456</span><span class="w">  </span><span class="c1"># 256 MB</span>
-<span class="w">          </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">max_log_size</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">17179869184</span><span class="w">    </span><span class="c1"># 16 GB</span>
-<span class="w">          </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">archive_command</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">/usr/local/bin/archive-audit-logs.sh %path</span>
+
+<span class="w">    </span><span class="c1"># Top-level BinAuditLogger settings (not under logger.parameters)</span>
+<span class="w">    </span><span class="nt">audit_logs_dir</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">/var/log/cassandra/audit</span>
+<span class="w">    </span><span class="nt">roll_cycle</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">HOURLY</span>
+<span class="w">    </span><span class="nt">block</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">true</span>
+<span class="w">    </span><span class="nt">max_queue_weight</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">268435456</span><span class="w">  </span><span class="c1"># 256 MB</span>
+<span class="w">    </span><span class="nt">max_log_size</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">17179869184</span><span class="w">    </span><span class="c1"># 16 GB</span>
+<span class="w">    </span><span class="nt">archive_command</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">/usr/local/bin/archive-audit-logs.sh %path</span>
 
 <span class="w">    </span><span class="c1"># Recommended: Don't log DML for high-throughput tables</span>
 <span class="w">    </span><span class="nt">included_categories</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">AUTH,DCL,DDL</span>
@@ -20941,6 +20936,10 @@ data-et-multi-view="{&quot;schema&quot;:{&quot;content&quot;:{&quot;desktop&quot
 <span class="w">    </span><span class="c1"># Exclude service accounts from routine logging</span>
 <span class="w">    </span><span class="nt">excluded_users</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">monitoring_user,backup_user</span>
 </code></pre></div>
+<div class="admonition note">
+<p class="admonition-title">BinAuditLogger Configuration</p>
+<p>BinAuditLogger settings (<code>roll_cycle</code>, <code>block</code>, <code>max_queue_weight</code>, <code>max_log_size</code>, <code>archive_command</code>) are top-level fields under <code>audit_logging_options</code>, not under <code>logger.parameters</code>. The <code>logger.parameters</code> section only supports <code>key_value_separator</code> and <code>field_separator</code> for output formatting.</p>
+</div>
 <hr>
 <h2 id="audit-loggers">Audit Loggers<a class="headerlink" href="#audit-loggers" title="Permanent link">¶</a></h2>
 <h3 id="binauditlogger-default">BinAuditLogger (Default)<a class="headerlink" href="#binauditlogger-default" title="Permanent link">¶</a></h3>
@@ -20949,14 +20948,14 @@ data-et-multi-view="{&quot;schema&quot;:{&quot;content&quot;:{&quot;desktop&quot
 <span class="w">    </span><span class="nt">enabled</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">true</span>
 <span class="w">    </span><span class="nt">logger</span><span class="p">:</span>
 <span class="w">      </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">class_name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">BinAuditLogger</span>
-<span class="w">        </span><span class="nt">parameters</span><span class="p">:</span>
-<span class="w">          </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">log_dir</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">/var/log/cassandra/audit</span>
-<span class="w">          </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">roll_cycle</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">HOURLY</span>
-<span class="w">          </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">block</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">true</span>
-<span class="w">          </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">max_queue_weight</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">268435456</span>
-<span class="w">          </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">max_log_size</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">17179869184</span>
+<span class="w">    </span><span class="c1"># BinAuditLogger settings are top-level, not under logger.parameters</span>
+<span class="w">    </span><span class="nt">audit_logs_dir</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">/var/log/cassandra/audit</span>
+<span class="w">    </span><span class="nt">roll_cycle</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">HOURLY</span>
+<span class="w">    </span><span class="nt">block</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">true</span>
+<span class="w">    </span><span class="nt">max_queue_weight</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">268435456</span>
+<span class="w">    </span><span class="nt">max_log_size</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">17179869184</span>
 </code></pre></div>
-<p><strong>Parameters:</strong></p>
+<p><strong>Parameters (top-level under <code>audit_logging_options</code>):</strong></p>
 <table>
 <thead>
 <tr>
@@ -20967,7 +20966,7 @@ data-et-multi-view="{&quot;schema&quot;:{&quot;content&quot;:{&quot;desktop&quot
 </thead>
 <tbody>
 <tr>
-<td><code>log_dir</code></td>
+<td><code>audit_logs_dir</code></td>
 <td><code>${CASSANDRA_LOG_DIR}/audit</code></td>
 <td>Directory for audit log files</td>
 </tr>
@@ -21071,16 +21070,11 @@ auditlogviewer<span class="w"> </span>/var/log/cassandra/audit/<span class="w"> 
 <span class="w">    </span><span class="c1"># Or exclude specific users (if included_users is empty)</span>
 <span class="w">    </span><span class="nt">excluded_users</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">monitoring_service,healthcheck_user</span>
 </code></pre></div>
-<h3 id="table-filtering">Table Filtering<a class="headerlink" href="#table-filtering" title="Permanent link">¶</a></h3>
-<div class="highlight"><pre><span></span><code><span class="nt">audit_logging_options</span><span class="p">:</span>
-<span class="w">    </span><span class="nt">enabled</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">true</span>
-
-<span class="w">    </span><span class="c1"># Only audit specific tables (keyspace.table format)</span>
-<span class="w">    </span><span class="nt">included_tables</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">production.payments,production.users,sensitive.credentials</span>
-
-<span class="w">    </span><span class="c1"># Or exclude specific tables</span>
-<span class="w">    </span><span class="nt">excluded_tables</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">production.logs,production.metrics</span>
-</code></pre></div>
+<h3 id="keyspace-level-filtering-only">Keyspace-Level Filtering Only<a class="headerlink" href="#keyspace-level-filtering-only" title="Permanent link">¶</a></h3>
+<div class="admonition warning">
+<p class="admonition-title">No Table-Level Filtering</p>
+<p>Cassandra audit logging does not support table-level filtering (<code>included_tables</code> / <code>excluded_tables</code>). Filtering is available at the keyspace, user, and category levels only.</p>
+</div>
 <h3 id="category-based-filtering">Category-Based Filtering<a class="headerlink" href="#category-based-filtering" title="Permanent link">¶</a></h3>
 <div class="highlight"><pre><span></span><code><span class="nt">audit_logging_options</span><span class="p">:</span>
 <span class="w">    </span><span class="nt">enabled</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">true</span>
@@ -21272,10 +21266,12 @@ nodetool<span class="w"> </span>disableauditlog
 <div class="highlight"><pre><span></span><code><span class="c1"># View current audit logging status</span>
 nodetool<span class="w"> </span>getauditlog
 </code></pre></div>
-<h3 id="rotate-logs">Rotate Logs<a class="headerlink" href="#rotate-logs" title="Permanent link">¶</a></h3>
-<div class="highlight"><pre><span></span><code><span class="c1"># Force log rotation (for custom archival)</span>
-nodetool<span class="w"> </span>resetfullquerylog
-</code></pre></div>
+<h3 id="log-rotation">Log Rotation<a class="headerlink" href="#log-rotation" title="Permanent link">¶</a></h3>
+<p>Audit log rotation is handled automatically by the <code>roll_cycle</code> setting. There is no nodetool command to force audit log rotation. For custom archival, use the <code>archive_command</code> setting or external log rotation tools.</p>
+<div class="admonition note">
+<p class="admonition-title">FQL vs Audit Logs</p>
+<p><code>nodetool resetfullquerylog</code> resets Full Query Logging (FQL), not audit logs. FQL and audit logging are separate features.</p>
+</div>
 <hr>
 <h2 id="siem-integration">SIEM Integration<a class="headerlink" href="#siem-integration" title="Permanent link">¶</a></h2>
 <h3 id="custom-syslog-integration">Custom Syslog Integration<a class="headerlink" href="#custom-syslog-integration" title="Permanent link">¶</a></h3>

@@ -20396,7 +20396,7 @@ data-et-multi-view="{&quot;schema&quot;:{&quot;content&quot;:{&quot;desktop&quot
 <ul>
 <li>Single write region (simplifies consistency)</li>
 <li>Multiple read regions (low-latency queries)</li>
-<li>Asynchronous replication (typically &lt;1 second lag)</li>
+<li>Asynchronous replication (lag varies by network and load; often sub-second in well-provisioned clusters)</li>
 <li>Read services deployed per region</li>
 </ul>
 <h3 id="pattern-2-separate-readwrite-tables">Pattern 2: Separate Read/Write Tables<a class="headerlink" href="#pattern-2-separate-readwrite-tables" title="Permanent link">¶</a></h3>
@@ -20595,7 +20595,7 @@ data-et-multi-view="{&quot;schema&quot;:{&quot;content&quot;:{&quot;desktop&quot
 <thead>
 <tr>
 <th>Scenario</th>
-<th>Latency</th>
+<th>Latency (illustrative)</th>
 <th>Mitigation</th>
 </tr>
 </thead>
@@ -20603,12 +20603,12 @@ data-et-multi-view="{&quot;schema&quot;:{&quot;content&quot;:{&quot;desktop&quot
 <tr>
 <td>Same-region read after write</td>
 <td>&lt;10ms</td>
-<td>Usually consistent</td>
+<td>Usually consistent with LOCAL_QUORUM write</td>
 </tr>
 <tr>
 <td>Cross-region read after write</td>
 <td>50-500ms</td>
-<td>Accept or use QUORUM</td>
+<td>Accept eventual consistency, or route reads to write region</td>
 </tr>
 <tr>
 <td>Read model sync delay</td>
@@ -20617,12 +20617,16 @@ data-et-multi-view="{&quot;schema&quot;:{&quot;content&quot;:{&quot;desktop&quot
 </tr>
 </tbody>
 </table>
+<div class="admonition note">
+<p class="admonition-title">Cross-DC Read-Your-Writes</p>
+<p><code>QUORUM</code> does not guarantee cross-DC read-your-writes with NetworkTopologyStrategy. For strict cross-DC guarantees, use <code>EACH_QUORUM</code> writes or route reads to the write region.</p>
+</div>
 <h3 id="read-your-writes-patterns">Read-Your-Writes Patterns<a class="headerlink" href="#read-your-writes-patterns" title="Permanent link">¶</a></h3>
 <p>When users must see their own writes immediately:</p>
 <p><strong>Option 1: Route to write region</strong></p>
-<div class="highlight"><pre><span></span><code><span class="c1">// For critical read-after-write, use QUORUM</span>
+<div class="highlight"><pre><span></span><code><span class="c1">// For critical read-after-write within same DC, use LOCAL_QUORUM</span>
 <span class="n">Row</span><span class="w"> </span><span class="n">row</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">session</span><span class="p">.</span><span class="na">execute</span><span class="p">(</span><span class="n">stmt</span><span class="p">.</span><span class="na">bind</span><span class="p">(</span><span class="n">orderId</span><span class="p">)</span>
-<span class="w">    </span><span class="p">.</span><span class="na">setConsistencyLevel</span><span class="p">(</span><span class="n">ConsistencyLevel</span><span class="p">.</span><span class="na">QUORUM</span><span class="p">))</span>
+<span class="w">    </span><span class="p">.</span><span class="na">setConsistencyLevel</span><span class="p">(</span><span class="n">ConsistencyLevel</span><span class="p">.</span><span class="na">LOCAL_QUORUM</span><span class="p">))</span>
 <span class="w">    </span><span class="p">.</span><span class="na">one</span><span class="p">();</span>
 </code></pre></div>
 <p><strong>Option 2: Sticky sessions</strong></p>
@@ -20662,14 +20666,14 @@ data-et-multi-view="{&quot;schema&quot;:{&quot;content&quot;:{&quot;desktop&quot
 <td>Low latency, eventual consistency acceptable</td>
 </tr>
 <tr>
-<td>Critical read</td>
-<td>QUORUM</td>
-<td>Cross-DC consistency when required</td>
+<td>Read-your-writes (same DC)</td>
+<td>LOCAL_QUORUM</td>
+<td>Consistency within write region</td>
 </tr>
 <tr>
-<td>Read-your-writes</td>
-<td>LOCAL_QUORUM</td>
-<td>Same-region consistency</td>
+<td>Cross-DC critical read</td>
+<td>EACH_QUORUM (write) + LOCAL_QUORUM (read)</td>
+<td>Requires EACH_QUORUM on write path for cross-DC guarantees</td>
 </tr>
 </tbody>
 </table>

@@ -8759,6 +8759,15 @@ data-et-multi-view="{&quot;schema&quot;:{&quot;content&quot;:{&quot;desktop&quot
 </li>
       
         <li class="md-nav__item">
+  <a href="#options" class="md-nav__link">
+    <span class="md-ellipsis">
+      Options
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#output" class="md-nav__link">
     <span class="md-ellipsis">
       Output
@@ -8769,27 +8778,18 @@ data-et-multi-view="{&quot;schema&quot;:{&quot;content&quot;:{&quot;desktop&quot
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
-  <a href="#enabled-normal-state" class="md-nav__link">
+  <a href="#summary-default" class="md-nav__link">
     <span class="md-ellipsis">
-      Enabled (Normal State)
+      Summary (Default)
     </span>
   </a>
   
 </li>
         
           <li class="md-nav__item">
-  <a href="#disabled" class="md-nav__link">
+  <a href="#detailed-output-with-a-all" class="md-nav__link">
     <span class="md-ellipsis">
-      Disabled
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#multiple-tables" class="md-nav__link">
-    <span class="md-ellipsis">
-      Multiple Tables
+      Detailed Output (with -a/--all)
     </span>
   </a>
   
@@ -8866,6 +8866,30 @@ data-et-multi-view="{&quot;schema&quot;:{&quot;content&quot;:{&quot;desktop&quot
       Output Interpretation
     </span>
   </a>
+  
+    <nav class="md-nav" aria-label="Output Interpretation">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#summary-output-without-a" class="md-nav__link">
+    <span class="md-ellipsis">
+      Summary Output (without -a)
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#detailed-output-with-a" class="md-nav__link">
+    <span class="md-ellipsis">
+      Detailed Output (with -a)
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
   
 </li>
       
@@ -20183,6 +20207,15 @@ data-et-multi-view="{&quot;schema&quot;:{&quot;content&quot;:{&quot;desktop&quot
 </li>
       
         <li class="md-nav__item">
+  <a href="#options" class="md-nav__link">
+    <span class="md-ellipsis">
+      Options
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#output" class="md-nav__link">
     <span class="md-ellipsis">
       Output
@@ -20193,27 +20226,18 @@ data-et-multi-view="{&quot;schema&quot;:{&quot;content&quot;:{&quot;desktop&quot
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
-  <a href="#enabled-normal-state" class="md-nav__link">
+  <a href="#summary-default" class="md-nav__link">
     <span class="md-ellipsis">
-      Enabled (Normal State)
+      Summary (Default)
     </span>
   </a>
   
 </li>
         
           <li class="md-nav__item">
-  <a href="#disabled" class="md-nav__link">
+  <a href="#detailed-output-with-a-all" class="md-nav__link">
     <span class="md-ellipsis">
-      Disabled
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#multiple-tables" class="md-nav__link">
-    <span class="md-ellipsis">
-      Multiple Tables
+      Detailed Output (with -a/--all)
     </span>
   </a>
   
@@ -20290,6 +20314,30 @@ data-et-multi-view="{&quot;schema&quot;:{&quot;content&quot;:{&quot;desktop&quot
       Output Interpretation
     </span>
   </a>
+  
+    <nav class="md-nav" aria-label="Output Interpretation">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#summary-output-without-a" class="md-nav__link">
+    <span class="md-ellipsis">
+      Summary Output (without -a)
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#detailed-output-with-a" class="md-nav__link">
+    <span class="md-ellipsis">
+      Detailed Output (with -a)
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
   
 </li>
       
@@ -20549,7 +20597,7 @@ data-et-multi-view="{&quot;schema&quot;:{&quot;content&quot;:{&quot;desktop&quot
 <p>Displays the auto-compaction status for specified keyspaces and tables.</p>
 <hr>
 <h2 id="synopsis">Synopsis<a class="headerlink" href="#synopsis" title="Permanent link">¶</a></h2>
-<div class="highlight"><pre><span></span><code>nodetool<span class="w"> </span><span class="o">[</span>connection_options<span class="o">]</span><span class="w"> </span>statusautocompaction<span class="w"> </span><span class="o">[</span>--<span class="o">]</span><span class="w"> </span><span class="o">[</span>&lt;keyspace&gt;<span class="w"> </span>&lt;tables&gt;...<span class="o">]</span>
+<div class="highlight"><pre><span></span><code>nodetool<span class="w"> </span><span class="o">[</span>connection_options<span class="o">]</span><span class="w"> </span>statusautocompaction<span class="w"> </span><span class="o">[</span>options<span class="o">]</span><span class="w"> </span><span class="o">[</span>--<span class="o">]</span><span class="w"> </span><span class="o">[</span>&lt;keyspace&gt;<span class="w"> </span>&lt;tables&gt;...<span class="o">]</span>
 </code></pre></div>
 <h2 id="description">Description<a class="headerlink" href="#description" title="Permanent link">¶</a></h2>
 <p><code>nodetool statusautocompaction</code> reports whether automatic compaction is enabled or disabled for specified tables. This command is essential for verifying the state of auto-compaction after enable/disable operations and for auditing cluster configuration.</p>
@@ -20575,14 +20623,54 @@ data-et-multi-view="{&quot;schema&quot;:{&quot;content&quot;:{&quot;desktop&quot
 </tbody>
 </table>
 <hr>
+<h2 id="options">Options<a class="headerlink" href="#options" title="Permanent link">¶</a></h2>
+<table>
+<thead>
+<tr>
+<th>Option</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>-a, --all</code></td>
+<td>Show per-keyspace/table status instead of summary</td>
+</tr>
+</tbody>
+</table>
+<hr>
 <h2 id="output">Output<a class="headerlink" href="#output" title="Permanent link">¶</a></h2>
-<h3 id="enabled-normal-state">Enabled (Normal State)<a class="headerlink" href="#enabled-normal-state" title="Permanent link">¶</a></h3>
-<div class="highlight"><pre><span></span><code>my_keyspace.my_table running=true
+<h3 id="summary-default">Summary (Default)<a class="headerlink" href="#summary-default" title="Permanent link">¶</a></h3>
+<p>Without <code>-a/--all</code>, the command prints a summary:</p>
+<div class="highlight"><pre><span></span><code>running
 </code></pre></div>
-<h3 id="disabled">Disabled<a class="headerlink" href="#disabled" title="Permanent link">¶</a></h3>
-<div class="highlight"><pre><span></span><code>my_keyspace.my_table running=false
+<p>Possible summary values:</p>
+<table>
+<thead>
+<tr>
+<th>Output</th>
+<th>Meaning</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>running</code></td>
+<td>All tables have auto-compaction enabled</td>
+</tr>
+<tr>
+<td><code>not running</code></td>
+<td>All tables have auto-compaction disabled</td>
+</tr>
+<tr>
+<td><code>partially running</code></td>
+<td>Some tables enabled, some disabled</td>
+</tr>
+</tbody>
+</table>
+<h3 id="detailed-output-with-a-all">Detailed Output (with -a/--all)<a class="headerlink" href="#detailed-output-with-a-all" title="Permanent link">¶</a></h3>
+<p>With <code>-a</code> option, the command shows per-table status:</p>
+<div class="highlight"><pre><span></span><code>nodetool<span class="w"> </span>statusautocompaction<span class="w"> </span>-a
 </code></pre></div>
-<h3 id="multiple-tables">Multiple Tables<a class="headerlink" href="#multiple-tables" title="Permanent link">¶</a></h3>
 <div class="highlight"><pre><span></span><code>my_keyspace.users running=true
 my_keyspace.orders running=true
 my_keyspace.products running=false
@@ -20606,6 +20694,34 @@ my_keyspace.products running=false
 </code></pre></div>
 <hr>
 <h2 id="output-interpretation">Output Interpretation<a class="headerlink" href="#output-interpretation" title="Permanent link">¶</a></h2>
+<h3 id="summary-output-without-a">Summary Output (without -a)<a class="headerlink" href="#summary-output-without-a" title="Permanent link">¶</a></h3>
+<table>
+<thead>
+<tr>
+<th>Output</th>
+<th>Meaning</th>
+<th>Action Needed</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>running</code></td>
+<td>All tables have auto-compaction enabled</td>
+<td>None (normal state)</td>
+</tr>
+<tr>
+<td><code>not running</code></td>
+<td>All tables have auto-compaction disabled</td>
+<td>Investigate and re-enable</td>
+</tr>
+<tr>
+<td><code>partially running</code></td>
+<td>Mixed status across tables</td>
+<td>Use <code>-a</code> to identify disabled tables</td>
+</tr>
+</tbody>
+</table>
+<h3 id="detailed-output-with-a">Detailed Output (with -a)<a class="headerlink" href="#detailed-output-with-a" title="Permanent link">¶</a></h3>
 <table>
 <thead>
 <tr>
@@ -20647,23 +20763,29 @@ nodetool<span class="w"> </span>statusautocompaction<span class="w"> </span>my_k
 </code></pre></div>
 <h3 id="cluster-audit">Cluster Audit<a class="headerlink" href="#cluster-audit" title="Permanent link">¶</a></h3>
 <p>Check auto-compaction status across all tables:</p>
-<div class="highlight"><pre><span></span><code><span class="c1"># Find any tables with disabled auto-compaction</span>
-nodetool<span class="w"> </span>statusautocompaction<span class="w"> </span><span class="p">|</span><span class="w"> </span>grep<span class="w"> </span><span class="s2">"running=false"</span>
+<div class="highlight"><pre><span></span><code><span class="c1"># Quick check - summary</span>
+nodetool<span class="w"> </span>statusautocompaction
+
+<span class="c1"># Find any tables with disabled auto-compaction (use -a for details)</span>
+nodetool<span class="w"> </span>statusautocompaction<span class="w"> </span>-a<span class="w"> </span><span class="p">|</span><span class="w"> </span>grep<span class="w"> </span><span class="s2">"running=false"</span>
 </code></pre></div>
 <h3 id="health-check-integration">Health Check Integration<a class="headerlink" href="#health-check-integration" title="Permanent link">¶</a></h3>
 <p>Include in operational health checks:</p>
 <div class="highlight"><pre><span></span><code><span class="ch">#!/bin/bash</span>
 <span class="c1"># Check for unexpectedly disabled auto-compaction</span>
 
-<span class="nv">disabled</span><span class="o">=</span><span class="k">$(</span>nodetool<span class="w"> </span>statusautocompaction<span class="w"> </span><span class="m">2</span>&gt;/dev/null<span class="w"> </span><span class="p">|</span><span class="w"> </span>grep<span class="w"> </span><span class="s2">"running=false"</span><span class="w"> </span><span class="p">|</span><span class="w"> </span>wc<span class="w"> </span>-l<span class="k">)</span>
+<span class="nv">status</span><span class="o">=</span><span class="k">$(</span>nodetool<span class="w"> </span>statusautocompaction<span class="w"> </span><span class="m">2</span>&gt;/dev/null<span class="k">)</span>
 
-<span class="k">if</span><span class="w"> </span><span class="o">[</span><span class="w"> </span><span class="s2">"</span><span class="nv">$disabled</span><span class="s2">"</span><span class="w"> </span>-gt<span class="w"> </span><span class="m">0</span><span class="w"> </span><span class="o">]</span><span class="p">;</span><span class="w"> </span><span class="k">then</span>
-<span class="w">    </span><span class="nb">echo</span><span class="w"> </span><span class="s2">"WARNING: </span><span class="nv">$disabled</span><span class="s2"> table(s) have auto-compaction disabled"</span>
-<span class="w">    </span>nodetool<span class="w"> </span>statusautocompaction<span class="w"> </span><span class="p">|</span><span class="w"> </span>grep<span class="w"> </span><span class="s2">"running=false"</span>
-<span class="w">    </span><span class="nb">exit</span><span class="w"> </span><span class="m">1</span>
-<span class="k">else</span>
+<span class="k">if</span><span class="w"> </span><span class="o">[</span><span class="w"> </span><span class="s2">"</span><span class="nv">$status</span><span class="s2">"</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">"running"</span><span class="w"> </span><span class="o">]</span><span class="p">;</span><span class="w"> </span><span class="k">then</span>
 <span class="w">    </span><span class="nb">echo</span><span class="w"> </span><span class="s2">"OK: All tables have auto-compaction enabled"</span>
 <span class="w">    </span><span class="nb">exit</span><span class="w"> </span><span class="m">0</span>
+<span class="k">elif</span><span class="w"> </span><span class="o">[</span><span class="w"> </span><span class="s2">"</span><span class="nv">$status</span><span class="s2">"</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">"not running"</span><span class="w"> </span><span class="o">]</span><span class="w"> </span><span class="o">||</span><span class="w"> </span><span class="o">[</span><span class="w"> </span><span class="s2">"</span><span class="nv">$status</span><span class="s2">"</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">"partially running"</span><span class="w"> </span><span class="o">]</span><span class="p">;</span><span class="w"> </span><span class="k">then</span>
+<span class="w">    </span><span class="nb">echo</span><span class="w"> </span><span class="s2">"WARNING: Auto-compaction is disabled or partially disabled"</span>
+<span class="w">    </span>nodetool<span class="w"> </span>statusautocompaction<span class="w"> </span>-a<span class="w"> </span><span class="p">|</span><span class="w"> </span>grep<span class="w"> </span><span class="s2">"running=false"</span>
+<span class="w">    </span><span class="nb">exit</span><span class="w"> </span><span class="m">1</span>
+<span class="k">else</span>
+<span class="w">    </span><span class="nb">echo</span><span class="w"> </span><span class="s2">"ERROR: Could not determine status"</span>
+<span class="w">    </span><span class="nb">exit</span><span class="w"> </span><span class="m">2</span>
 <span class="k">fi</span>
 </code></pre></div>
 <h3 id="pre-maintenance-check">Pre-Maintenance Check<a class="headerlink" href="#pre-maintenance-check" title="Permanent link">¶</a></h3>
@@ -20683,7 +20805,7 @@ nodetool<span class="w"> </span>statusautocompaction<span class="w"> </span>my_k
 <div class="highlight"><pre><span></span><code><span class="ch">#!/bin/bash</span>
 <span class="c1"># Export auto-compaction status for monitoring</span>
 
-nodetool<span class="w"> </span>statusautocompaction<span class="w"> </span><span class="m">2</span>&gt;/dev/null<span class="w"> </span><span class="p">|</span><span class="w"> </span><span class="k">while</span><span class="w"> </span><span class="nb">read</span><span class="w"> </span>line<span class="p">;</span><span class="w"> </span><span class="k">do</span>
+nodetool<span class="w"> </span>statusautocompaction<span class="w"> </span>-a<span class="w"> </span><span class="m">2</span>&gt;/dev/null<span class="w"> </span><span class="p">|</span><span class="w"> </span><span class="k">while</span><span class="w"> </span><span class="nb">read</span><span class="w"> </span>line<span class="p">;</span><span class="w"> </span><span class="k">do</span>
 <span class="w">    </span><span class="nv">table</span><span class="o">=</span><span class="k">$(</span><span class="nb">echo</span><span class="w"> </span><span class="nv">$line</span><span class="w"> </span><span class="p">|</span><span class="w"> </span>awk<span class="w"> </span><span class="s1">'{print $1}'</span><span class="k">)</span>
 <span class="w">    </span><span class="nv">status</span><span class="o">=</span><span class="k">$(</span><span class="nb">echo</span><span class="w"> </span><span class="nv">$line</span><span class="w"> </span><span class="p">|</span><span class="w"> </span>grep<span class="w"> </span>-c<span class="w"> </span><span class="s2">"running=true"</span><span class="k">)</span>
 <span class="w">    </span><span class="nb">echo</span><span class="w"> </span><span class="s2">"cassandra_autocompaction_enabled{table=\"</span><span class="nv">$table</span><span class="s2">\"} </span><span class="nv">$status</span><span class="s2">"</span>
@@ -20693,21 +20815,22 @@ nodetool<span class="w"> </span>statusautocompaction<span class="w"> </span><spa
 <div class="highlight"><pre><span></span><code><span class="ch">#!/bin/bash</span>
 <span class="c1"># check_autocompaction.sh</span>
 
-<span class="nv">disabled_count</span><span class="o">=</span><span class="k">$(</span>nodetool<span class="w"> </span>statusautocompaction<span class="w"> </span><span class="m">2</span>&gt;/dev/null<span class="w"> </span><span class="p">|</span><span class="w"> </span>grep<span class="w"> </span>-c<span class="w"> </span><span class="s2">"running=false"</span><span class="k">)</span>
+<span class="nv">status</span><span class="o">=</span><span class="k">$(</span>nodetool<span class="w"> </span>statusautocompaction<span class="w"> </span><span class="m">2</span>&gt;/dev/null<span class="k">)</span>
 
 <span class="k">if</span><span class="w"> </span><span class="o">[</span><span class="w"> </span><span class="nv">$?</span><span class="w"> </span>-ne<span class="w"> </span><span class="m">0</span><span class="w"> </span><span class="o">]</span><span class="p">;</span><span class="w"> </span><span class="k">then</span>
 <span class="w">    </span><span class="nb">echo</span><span class="w"> </span><span class="s2">"UNKNOWN - Cannot connect to Cassandra"</span>
 <span class="w">    </span><span class="nb">exit</span><span class="w"> </span><span class="m">3</span>
 <span class="k">fi</span>
 
-<span class="k">if</span><span class="w"> </span><span class="o">[</span><span class="w"> </span><span class="s2">"</span><span class="nv">$disabled_count</span><span class="s2">"</span><span class="w"> </span>-eq<span class="w"> </span><span class="m">0</span><span class="w"> </span><span class="o">]</span><span class="p">;</span><span class="w"> </span><span class="k">then</span>
+<span class="k">if</span><span class="w"> </span><span class="o">[</span><span class="w"> </span><span class="s2">"</span><span class="nv">$status</span><span class="s2">"</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">"running"</span><span class="w"> </span><span class="o">]</span><span class="p">;</span><span class="w"> </span><span class="k">then</span>
 <span class="w">    </span><span class="nb">echo</span><span class="w"> </span><span class="s2">"OK - All tables have auto-compaction enabled"</span>
 <span class="w">    </span><span class="nb">exit</span><span class="w"> </span><span class="m">0</span>
-<span class="k">elif</span><span class="w"> </span><span class="o">[</span><span class="w"> </span><span class="s2">"</span><span class="nv">$disabled_count</span><span class="s2">"</span><span class="w"> </span>-lt<span class="w"> </span><span class="m">5</span><span class="w"> </span><span class="o">]</span><span class="p">;</span><span class="w"> </span><span class="k">then</span>
+<span class="k">elif</span><span class="w"> </span><span class="o">[</span><span class="w"> </span><span class="s2">"</span><span class="nv">$status</span><span class="s2">"</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">"partially running"</span><span class="w"> </span><span class="o">]</span><span class="p">;</span><span class="w"> </span><span class="k">then</span>
+<span class="w">    </span><span class="nv">disabled_count</span><span class="o">=</span><span class="k">$(</span>nodetool<span class="w"> </span>statusautocompaction<span class="w"> </span>-a<span class="w"> </span><span class="m">2</span>&gt;/dev/null<span class="w"> </span><span class="p">|</span><span class="w"> </span>grep<span class="w"> </span>-c<span class="w"> </span><span class="s2">"running=false"</span><span class="k">)</span>
 <span class="w">    </span><span class="nb">echo</span><span class="w"> </span><span class="s2">"WARNING - </span><span class="nv">$disabled_count</span><span class="s2"> table(s) have auto-compaction disabled"</span>
 <span class="w">    </span><span class="nb">exit</span><span class="w"> </span><span class="m">1</span>
 <span class="k">else</span>
-<span class="w">    </span><span class="nb">echo</span><span class="w"> </span><span class="s2">"CRITICAL - </span><span class="nv">$disabled_count</span><span class="s2"> table(s) have auto-compaction disabled"</span>
+<span class="w">    </span><span class="nb">echo</span><span class="w"> </span><span class="s2">"CRITICAL - All tables have auto-compaction disabled"</span>
 <span class="w">    </span><span class="nb">exit</span><span class="w"> </span><span class="m">2</span>
 <span class="k">fi</span>
 </code></pre></div>
@@ -20720,7 +20843,7 @@ nodetool<span class="w"> </span>statusautocompaction<span class="w"> </span><spa
 <span class="nb">echo</span><span class="w"> </span><span class="s2">"  \"tables\": ["</span>
 
 <span class="nv">first</span><span class="o">=</span><span class="nb">true</span>
-nodetool<span class="w"> </span>statusautocompaction<span class="w"> </span><span class="m">2</span>&gt;/dev/null<span class="w"> </span><span class="p">|</span><span class="w"> </span><span class="k">while</span><span class="w"> </span><span class="nb">read</span><span class="w"> </span>line<span class="p">;</span><span class="w"> </span><span class="k">do</span>
+nodetool<span class="w"> </span>statusautocompaction<span class="w"> </span>-a<span class="w"> </span><span class="m">2</span>&gt;/dev/null<span class="w"> </span><span class="p">|</span><span class="w"> </span><span class="k">while</span><span class="w"> </span><span class="nb">read</span><span class="w"> </span>line<span class="p">;</span><span class="w"> </span><span class="k">do</span>
 <span class="w">    </span><span class="nv">table</span><span class="o">=</span><span class="k">$(</span><span class="nb">echo</span><span class="w"> </span><span class="nv">$line</span><span class="w"> </span><span class="p">|</span><span class="w"> </span>awk<span class="w"> </span><span class="s1">'{print $1}'</span><span class="k">)</span>
 <span class="w">    </span><span class="nv">enabled</span><span class="o">=</span><span class="k">$(</span><span class="nb">echo</span><span class="w"> </span><span class="nv">$line</span><span class="w"> </span><span class="p">|</span><span class="w"> </span>grep<span class="w"> </span>-q<span class="w"> </span><span class="s2">"running=true"</span><span class="w"> </span><span class="o">&amp;&amp;</span><span class="w"> </span><span class="nb">echo</span><span class="w"> </span><span class="s2">"true"</span><span class="w"> </span><span class="o">||</span><span class="w"> </span><span class="nb">echo</span><span class="w"> </span><span class="s2">"false"</span><span class="k">)</span>
 
@@ -20743,19 +20866,20 @@ nodetool<span class="w"> </span>statusautocompaction<span class="w"> </span><spa
 <span class="c1"># audit_autocompaction_cluster.sh</span>
 
 <span class="nb">echo</span><span class="w"> </span><span class="s2">"=== Cluster Auto-Compaction Audit ==="</span>
-<span class="nb">echo</span><span class="w"> </span><span class="s2">""</span><span class="c1"># Get list of node IPs from local nodetool status</span>
+<span class="nb">echo</span><span class="w"> </span><span class="s2">""</span>
 
-
+<span class="c1"># Get list of node IPs from local nodetool status</span>
 <span class="nv">nodes</span><span class="o">=</span><span class="k">$(</span>nodetool<span class="w"> </span>status<span class="w"> </span><span class="p">|</span><span class="w"> </span>grep<span class="w"> </span><span class="s2">"^UN"</span><span class="w"> </span><span class="p">|</span><span class="w"> </span>awk<span class="w"> </span><span class="s1">'{print $2}'</span><span class="k">)</span>
 
 <span class="k">for</span><span class="w"> </span>node<span class="w"> </span><span class="k">in</span><span class="w"> </span><span class="nv">$nodes</span><span class="p">;</span><span class="w"> </span><span class="k">do</span>
 <span class="w">    </span><span class="nb">echo</span><span class="w"> </span><span class="s2">"=== Node: </span><span class="nv">$node</span><span class="s2"> ==="</span>
-<span class="w">    </span><span class="nv">disabled</span><span class="o">=</span><span class="k">$(</span>ssh<span class="w"> </span><span class="s2">"</span><span class="nv">$node</span><span class="s2">"</span><span class="w"> </span><span class="s2">"nodetool statusautocompaction 2&gt;/dev/null | grep "</span><span class="nv">running</span><span class="o">=</span>false<span class="s2">")"</span>
-<span class="w">    </span><span class="k">if</span><span class="w"> </span><span class="o">[</span><span class="w"> </span>-z<span class="w"> </span><span class="s2">"</span><span class="nv">$disabled</span><span class="s2">"</span><span class="w"> </span><span class="o">]</span><span class="p">;</span><span class="w"> </span><span class="k">then</span>
+<span class="w">    </span><span class="nv">status</span><span class="o">=</span><span class="k">$(</span>ssh<span class="w"> </span><span class="s2">"</span><span class="nv">$node</span><span class="s2">"</span><span class="w"> </span><span class="s1">'nodetool statusautocompaction 2&gt;/dev/null'</span><span class="k">)</span>
+<span class="w">    </span><span class="k">if</span><span class="w"> </span><span class="o">[</span><span class="w"> </span><span class="s2">"</span><span class="nv">$status</span><span class="s2">"</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">"running"</span><span class="w"> </span><span class="o">]</span><span class="p">;</span><span class="w"> </span><span class="k">then</span>
 <span class="w">        </span><span class="nb">echo</span><span class="w"> </span><span class="s2">"All tables have auto-compaction enabled"</span>
 <span class="w">    </span><span class="k">else</span>
+<span class="w">        </span><span class="nb">echo</span><span class="w"> </span><span class="s2">"Status: </span><span class="nv">$status</span><span class="s2">"</span>
 <span class="w">        </span><span class="nb">echo</span><span class="w"> </span><span class="s2">"Tables with disabled auto-compaction:"</span>
-<span class="w">        </span><span class="nb">echo</span><span class="w"> </span><span class="s2">"</span><span class="nv">$disabled</span><span class="s2">"</span>
+<span class="w">        </span>ssh<span class="w"> </span><span class="s2">"</span><span class="nv">$node</span><span class="s2">"</span><span class="w"> </span><span class="s1">'nodetool statusautocompaction -a 2&gt;/dev/null | grep "running=false"'</span>
 <span class="w">    </span><span class="k">fi</span>
 <span class="w">    </span><span class="nb">echo</span><span class="w"> </span><span class="s2">""</span>
 <span class="k">done</span>
@@ -20768,14 +20892,14 @@ nodetool<span class="w"> </span>statusautocompaction<span class="w"> </span><spa
 <span class="nv">KEYSPACE</span><span class="o">=</span><span class="s2">"my_keyspace"</span>
 <span class="nv">TABLE</span><span class="o">=</span><span class="s2">"my_table"</span>
 
-<span class="nb">echo</span><span class="w"> </span><span class="s2">"Checking </span><span class="nv">$KEYSPACE</span><span class="s2">.</span><span class="nv">$TABLE</span><span class="s2"> across cluster..."</span><span class="c1"># Get list of node IPs from local nodetool status</span>
+<span class="nb">echo</span><span class="w"> </span><span class="s2">"Checking </span><span class="nv">$KEYSPACE</span><span class="s2">.</span><span class="nv">$TABLE</span><span class="s2"> across cluster..."</span>
 
-
+<span class="c1"># Get list of node IPs from local nodetool status</span>
 <span class="nv">nodes</span><span class="o">=</span><span class="k">$(</span>nodetool<span class="w"> </span>status<span class="w"> </span><span class="p">|</span><span class="w"> </span>grep<span class="w"> </span><span class="s2">"^UN"</span><span class="w"> </span><span class="p">|</span><span class="w"> </span>awk<span class="w"> </span><span class="s1">'{print $2}'</span><span class="k">)</span>
 <span class="nv">statuses</span><span class="o">=</span><span class="s2">""</span>
 
 <span class="k">for</span><span class="w"> </span>node<span class="w"> </span><span class="k">in</span><span class="w"> </span><span class="nv">$nodes</span><span class="p">;</span><span class="w"> </span><span class="k">do</span>
-<span class="w">    </span><span class="nv">status</span><span class="o">=</span><span class="k">$(</span>ssh<span class="w"> </span><span class="s2">"</span><span class="nv">$node</span><span class="s2">"</span><span class="w"> </span><span class="s2">"nodetool statusautocompaction </span><span class="nv">$KEYSPACE</span><span class="s2"> </span><span class="nv">$TABLE</span><span class="s2"> 2&gt;/dev/null | awk '{print </span><span class="nv">$2</span><span class="s2">}')"</span>
+<span class="w">    </span><span class="nv">status</span><span class="o">=</span><span class="k">$(</span>ssh<span class="w"> </span><span class="s2">"</span><span class="nv">$node</span><span class="s2">"</span><span class="w"> </span><span class="s1">'nodetool statusautocompaction -a '</span><span class="s2">"</span><span class="nv">$KEYSPACE</span><span class="s2">"</span><span class="s1">' '</span><span class="s2">"</span><span class="nv">$TABLE</span><span class="s2">"</span><span class="s1">' 2&gt;/dev/null | awk '</span><span class="s2">"'"</span><span class="s1">'{print $2}'</span><span class="s2">"'"</span><span class="s1">''</span><span class="k">)</span>
 <span class="w">    </span><span class="nb">echo</span><span class="w"> </span><span class="s2">"</span><span class="nv">$node</span><span class="s2">: </span><span class="nv">$status</span><span class="s2">"</span>
 <span class="w">    </span><span class="nv">statuses</span><span class="o">=</span><span class="s2">"</span><span class="nv">$statuses$status</span><span class="s2">\n"</span>
 <span class="k">done</span>
@@ -20794,7 +20918,7 @@ nodetool<span class="w"> </span>statusautocompaction<span class="w"> </span><spa
 <h2 id="common-scenarios">Common Scenarios<a class="headerlink" href="#common-scenarios" title="Permanent link">¶</a></h2>
 <h3 id="finding-forgotten-disabled-tables">Finding Forgotten Disabled Tables<a class="headerlink" href="#finding-forgotten-disabled-tables" title="Permanent link">¶</a></h3>
 <div class="highlight"><pre><span></span><code><span class="c1"># List all tables with disabled auto-compaction</span>
-nodetool<span class="w"> </span>statusautocompaction<span class="w"> </span><span class="p">|</span><span class="w"> </span>grep<span class="w"> </span><span class="s2">"running=false"</span>
+nodetool<span class="w"> </span>statusautocompaction<span class="w"> </span>-a<span class="w"> </span><span class="p">|</span><span class="w"> </span>grep<span class="w"> </span><span class="s2">"running=false"</span>
 </code></pre></div>
 <h3 id="verifying-bulk-load-setup">Verifying Bulk Load Setup<a class="headerlink" href="#verifying-bulk-load-setup" title="Permanent link">¶</a></h3>
 <div class="highlight"><pre><span></span><code><span class="c1"># Before bulk load - verify target table is disabled</span>
@@ -20849,8 +20973,8 @@ pgrep<span class="w"> </span>-f<span class="w"> </span>CassandraDaemon
 
 <span class="c1"># Count totals</span>
 <span class="nv">total</span><span class="o">=</span><span class="k">$(</span>nodetool<span class="w"> </span>statusautocompaction<span class="w"> </span><span class="m">2</span>&gt;/dev/null<span class="w"> </span><span class="p">|</span><span class="w"> </span>wc<span class="w"> </span>-l<span class="k">)</span>
-<span class="nv">enabled</span><span class="o">=</span><span class="k">$(</span>nodetool<span class="w"> </span>statusautocompaction<span class="w"> </span><span class="m">2</span>&gt;/dev/null<span class="w"> </span><span class="p">|</span><span class="w"> </span>grep<span class="w"> </span>-c<span class="w"> </span><span class="s2">"running=true"</span><span class="k">)</span>
-<span class="nv">disabled</span><span class="o">=</span><span class="k">$(</span>nodetool<span class="w"> </span>statusautocompaction<span class="w"> </span><span class="m">2</span>&gt;/dev/null<span class="w"> </span><span class="p">|</span><span class="w"> </span>grep<span class="w"> </span>-c<span class="w"> </span><span class="s2">"running=false"</span><span class="k">)</span>
+<span class="nv">enabled</span><span class="o">=</span><span class="k">$(</span>nodetool<span class="w"> </span>statusautocompaction<span class="w"> </span>-a<span class="w"> </span><span class="m">2</span>&gt;/dev/null<span class="w"> </span><span class="p">|</span><span class="w"> </span>grep<span class="w"> </span>-c<span class="w"> </span><span class="s2">"running=true"</span><span class="k">)</span>
+<span class="nv">disabled</span><span class="o">=</span><span class="k">$(</span>nodetool<span class="w"> </span>statusautocompaction<span class="w"> </span>-a<span class="w"> </span><span class="m">2</span>&gt;/dev/null<span class="w"> </span><span class="p">|</span><span class="w"> </span>grep<span class="w"> </span>-c<span class="w"> </span><span class="s2">"running=false"</span><span class="k">)</span>
 
 <span class="nb">echo</span><span class="w"> </span><span class="s2">"Summary:"</span><span class="w"> </span><span class="p">|</span><span class="w"> </span>tee<span class="w"> </span>-a<span class="w"> </span><span class="nv">$OUTPUT_FILE</span>
 <span class="nb">echo</span><span class="w"> </span><span class="s2">"  Total tables: </span><span class="nv">$total</span><span class="s2">"</span><span class="w"> </span><span class="p">|</span><span class="w"> </span>tee<span class="w"> </span>-a<span class="w"> </span><span class="nv">$OUTPUT_FILE</span>
@@ -20860,7 +20984,7 @@ pgrep<span class="w"> </span>-f<span class="w"> </span>CassandraDaemon
 
 <span class="k">if</span><span class="w"> </span><span class="o">[</span><span class="w"> </span><span class="s2">"</span><span class="nv">$disabled</span><span class="s2">"</span><span class="w"> </span>-gt<span class="w"> </span><span class="m">0</span><span class="w"> </span><span class="o">]</span><span class="p">;</span><span class="w"> </span><span class="k">then</span>
 <span class="w">    </span><span class="nb">echo</span><span class="w"> </span><span class="s2">"Tables with disabled auto-compaction:"</span><span class="w"> </span><span class="p">|</span><span class="w"> </span>tee<span class="w"> </span>-a<span class="w"> </span><span class="nv">$OUTPUT_FILE</span>
-<span class="w">    </span>nodetool<span class="w"> </span>statusautocompaction<span class="w"> </span><span class="p">|</span><span class="w"> </span>grep<span class="w"> </span><span class="s2">"running=false"</span><span class="w"> </span><span class="p">|</span><span class="w"> </span>tee<span class="w"> </span>-a<span class="w"> </span><span class="nv">$OUTPUT_FILE</span>
+<span class="w">    </span>nodetool<span class="w"> </span>statusautocompaction<span class="w"> </span>-a<span class="w"> </span><span class="p">|</span><span class="w"> </span>grep<span class="w"> </span><span class="s2">"running=false"</span><span class="w"> </span><span class="p">|</span><span class="w"> </span>tee<span class="w"> </span>-a<span class="w"> </span><span class="nv">$OUTPUT_FILE</span>
 <span class="w">    </span><span class="nb">echo</span><span class="w"> </span><span class="s2">""</span><span class="w"> </span><span class="p">|</span><span class="w"> </span>tee<span class="w"> </span>-a<span class="w"> </span><span class="nv">$OUTPUT_FILE</span>
 <span class="w">    </span><span class="nb">echo</span><span class="w"> </span><span class="s2">"ACTION REQUIRED: Review and re-enable if appropriate"</span><span class="w"> </span><span class="p">|</span><span class="w"> </span>tee<span class="w"> </span>-a<span class="w"> </span><span class="nv">$OUTPUT_FILE</span>
 <span class="k">else</span>

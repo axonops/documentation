@@ -20609,13 +20609,40 @@ nodetool<span class="w"> </span>invalidatecredentialscache
 <hr>
 <h2 id="configuration">Configuration<a class="headerlink" href="#configuration" title="Permanent link">¶</a></h2>
 <h3 id="cache-settings">Cache Settings<a class="headerlink" href="#cache-settings" title="Permanent link">¶</a></h3>
-<div class="highlight"><pre><span></span><code><span class="c1"># cassandra.yaml</span>
-<span class="nt">credentials_validity_in_ms</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">2000</span><span class="w">     </span><span class="c1"># How long entries are valid</span>
-<span class="nt">credentials_update_interval_in_ms</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">1000</span><span class="w">  </span><span class="c1"># Background refresh interval</span>
-<span class="nt">credentials_cache_max_entries</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">1000</span><span class="w">  </span><span class="c1"># Maximum cached entries</span>
+<p>The cassandra.yaml parameter names vary by version:</p>
+<table>
+<thead>
+<tr>
+<th>Cassandra Version</th>
+<th>Validity Parameter</th>
+<th>Update Interval Parameter</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Pre-4.1</td>
+<td><code>credentials_validity_in_ms</code></td>
+<td><code>credentials_update_interval_in_ms</code></td>
+</tr>
+<tr>
+<td>4.1+</td>
+<td><code>credentials_validity</code></td>
+<td><code>credentials_update_interval</code></td>
+</tr>
+</tbody>
+</table>
+<div class="highlight"><pre><span></span><code><span class="c1"># cassandra.yaml (4.1+)</span>
+<span class="nt">credentials_validity</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">2s</span>
+<span class="nt">credentials_update_interval</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">1s</span>
+<span class="nt">credentials_cache_max_entries</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">1000</span>
+
+<span class="c1"># cassandra.yaml (Pre-4.1)</span>
+<span class="c1"># credentials_validity_in_ms: 2000</span>
+<span class="c1"># credentials_update_interval_in_ms: 1000</span>
+<span class="c1"># credentials_cache_max_entries: 1000</span>
 </code></pre></div>
 <h3 id="automatic-refresh">Automatic Refresh<a class="headerlink" href="#automatic-refresh" title="Permanent link">¶</a></h3>
-<p>Credentials are automatically refreshed based on <code>credentials_validity_in_ms</code>. Invalidation forces immediate refresh for new connections.</p>
+<p>Credentials are automatically refreshed based on <code>credentials_validity</code>. Invalidation forces immediate refresh for new connections.</p>
 <hr>
 <h2 id="cluster-wide-operations">Cluster-Wide Operations<a class="headerlink" href="#cluster-wide-operations" title="Permanent link">¶</a></h2>
 <h3 id="invalidate-on-all-nodes">Invalidate on All Nodes<a class="headerlink" href="#invalidate-on-all-nodes" title="Permanent link">¶</a></h3>
@@ -20623,14 +20650,14 @@ nodetool<span class="w"> </span>invalidatecredentialscache
 <div class="highlight"><pre><span></span><code><span class="ch">#!/bin/bash</span>
 <span class="c1"># invalidate_credentials_cluster.sh</span>
 
-<span class="nb">echo</span><span class="w"> </span><span class="s2">"Invalidating credentials cache cluster-wide..."</span><span class="c1"># Get list of node IPs from local nodetool status</span>
+<span class="nb">echo</span><span class="w"> </span><span class="s2">"Invalidating credentials cache cluster-wide..."</span>
 
-
+<span class="c1"># Get list of node IPs from local nodetool status</span>
 <span class="nv">nodes</span><span class="o">=</span><span class="k">$(</span>nodetool<span class="w"> </span>status<span class="w"> </span><span class="p">|</span><span class="w"> </span>grep<span class="w"> </span><span class="s2">"^UN"</span><span class="w"> </span><span class="p">|</span><span class="w"> </span>awk<span class="w"> </span><span class="s1">'{print $2}'</span><span class="k">)</span>
 
 <span class="k">for</span><span class="w"> </span>node<span class="w"> </span><span class="k">in</span><span class="w"> </span><span class="nv">$nodes</span><span class="p">;</span><span class="w"> </span><span class="k">do</span>
 <span class="w">    </span><span class="nb">echo</span><span class="w"> </span>-n<span class="w"> </span><span class="s2">"</span><span class="nv">$node</span><span class="s2">: "</span>
-<span class="w">    </span>ssh<span class="w"> </span><span class="s2">"</span><span class="nv">$node</span><span class="s2">"</span><span class="w"> </span><span class="s2">"nodetool invalidatecredentialscache 2&gt;/dev/null &amp;&amp; echo "</span>invalidated<span class="s2">" || echo "</span>FAILED<span class="s2">""</span>
+<span class="w">    </span>ssh<span class="w"> </span><span class="s2">"</span><span class="nv">$node</span><span class="s2">"</span><span class="w"> </span><span class="s1">'nodetool invalidatecredentialscache 2&gt;/dev/null &amp;&amp; echo "invalidated" || echo "FAILED"'</span>
 <span class="k">done</span>
 
 <span class="nb">echo</span><span class="w"> </span><span class="s2">"Credentials cache cleared on all nodes."</span>
@@ -20654,8 +20681,9 @@ nodetool<span class="w"> </span>invalidatecredentialscache
 cqlsh<span class="w"> </span>-e<span class="w"> </span><span class="s2">"ALTER ROLE </span><span class="nv">$USER</span><span class="s2"> WITH PASSWORD = '</span><span class="nv">$NEW_PASSWORD</span><span class="s2">';"</span>
 
 <span class="c1"># 2. Invalidate cache cluster-wide</span>
-<span class="nb">echo</span><span class="w"> </span><span class="s2">"2. Invalidating credentials cache..."</span><span class="c1"># Get list of node IPs from local nodetool status</span>
+<span class="nb">echo</span><span class="w"> </span><span class="s2">"2. Invalidating credentials cache..."</span>
 
+<span class="c1"># Get list of node IPs from local nodetool status</span>
 <span class="nv">nodes</span><span class="o">=</span><span class="k">$(</span>nodetool<span class="w"> </span>status<span class="w"> </span><span class="p">|</span><span class="w"> </span>grep<span class="w"> </span><span class="s2">"^UN"</span><span class="w"> </span><span class="p">|</span><span class="w"> </span>awk<span class="w"> </span><span class="s1">'{print $2}'</span><span class="k">)</span>
 <span class="k">for</span><span class="w"> </span>node<span class="w"> </span><span class="k">in</span><span class="w"> </span><span class="nv">$nodes</span><span class="p">;</span><span class="w"> </span><span class="k">do</span>
 <span class="w">    </span>ssh<span class="w"> </span><span class="s2">"</span><span class="nv">$node</span><span class="s2">"</span><span class="w"> </span><span class="s2">"nodetool invalidatecredentialscache 2&gt;/dev/null"</span>

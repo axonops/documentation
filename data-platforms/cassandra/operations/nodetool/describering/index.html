@@ -8003,9 +8003,9 @@ data-et-multi-view="{&quot;schema&quot;:{&quot;content&quot;:{&quot;desktop&quot
 </li>
         
           <li class="md-nav__item">
-  <a href="#parse-with-jq-if-json-output-available" class="md-nav__link">
+  <a href="#filter-tokenrange-lines" class="md-nav__link">
     <span class="md-ellipsis">
-      Parse with jq (if JSON output available)
+      Filter TokenRange Lines
     </span>
   </a>
   
@@ -20109,9 +20109,9 @@ data-et-multi-view="{&quot;schema&quot;:{&quot;content&quot;:{&quot;desktop&quot
 </li>
         
           <li class="md-nav__item">
-  <a href="#parse-with-jq-if-json-output-available" class="md-nav__link">
+  <a href="#filter-tokenrange-lines" class="md-nav__link">
     <span class="md-ellipsis">
-      Parse with jq (if JSON output available)
+      Filter TokenRange Lines
     </span>
   </a>
   
@@ -20349,13 +20349,13 @@ data-et-multi-view="{&quot;schema&quot;:{&quot;content&quot;:{&quot;desktop&quot
 </table>
 <hr>
 <h2 id="output-format">Output Format<a class="headerlink" href="#output-format" title="Permanent link">¶</a></h2>
-<div class="highlight"><pre><span></span><code>Schema versions:
-    abc123-def456-... [node1, node2, node3]
-
+<div class="highlight"><pre><span></span><code>Schema Version:a1b2c3d4-e5f6-7890-abcd-ef1234567890
+TokenRange:
 TokenRange(start_token:-9223372036854775808, end_token:-6148914691236517206, endpoints:[192.168.1.101, 192.168.1.102, 192.168.1.103], rpc_endpoints:[192.168.1.101, 192.168.1.102, 192.168.1.103], endpoint_details:[EndpointDetails(host:192.168.1.101, datacenter:dc1, rack:rack1), ...])
 TokenRange(start_token:-6148914691236517206, end_token:-3074457345618258604, endpoints:[192.168.1.102, 192.168.1.103, 192.168.1.101], ...)
 ...
 </code></pre></div>
+<p>Note: The command prints a single <code>Schema Version:</code> line (the local node's schema version), followed by a <code>TokenRange:</code> header and the list of token ranges.</p>
 <hr>
 <h2 id="output-fields">Output Fields<a class="headerlink" href="#output-fields" title="Permanent link">¶</a></h2>
 <table>
@@ -20393,9 +20393,10 @@ TokenRange(start_token:-6148914691236517206, end_token:-3074457345618258604, end
 <h3 id="describe-keyspace-token-ranges">Describe Keyspace Token Ranges<a class="headerlink" href="#describe-keyspace-token-ranges" title="Permanent link">¶</a></h3>
 <div class="highlight"><pre><span></span><code>nodetool<span class="w"> </span>describering<span class="w"> </span>my_keyspace
 </code></pre></div>
-<h3 id="parse-with-jq-if-json-output-available">Parse with jq (if JSON output available)<a class="headerlink" href="#parse-with-jq-if-json-output-available" title="Permanent link">¶</a></h3>
+<h3 id="filter-tokenrange-lines">Filter TokenRange Lines<a class="headerlink" href="#filter-tokenrange-lines" title="Permanent link">¶</a></h3>
 <div class="highlight"><pre><span></span><code>nodetool<span class="w"> </span>describering<span class="w"> </span>my_keyspace<span class="w"> </span><span class="p">|</span><span class="w"> </span>grep<span class="w"> </span>TokenRange
 </code></pre></div>
+<p>Note: The command does not support JSON or YAML output formats.</p>
 <h3 id="count-token-ranges">Count Token Ranges<a class="headerlink" href="#count-token-ranges" title="Permanent link">¶</a></h3>
 <div class="highlight"><pre><span></span><code>nodetool<span class="w"> </span>describering<span class="w"> </span>my_keyspace<span class="w"> </span><span class="p">|</span><span class="w"> </span>grep<span class="w"> </span>-c<span class="w"> </span><span class="s2">"TokenRange"</span>
 </code></pre></div>

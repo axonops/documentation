@@ -5483,9 +5483,9 @@ data-et-multi-view="{&quot;schema&quot;:{&quot;content&quot;:{&quot;desktop&quot
 </li>
         
           <li class="md-nav__item">
-  <a href="#reconciliation-modes" class="md-nav__link">
+  <a href="#reconciliation-mode" class="md-nav__link">
     <span class="md-ellipsis">
-      Reconciliation Modes
+      Reconciliation Mode
     </span>
   </a>
   
@@ -20227,9 +20227,9 @@ data-et-multi-view="{&quot;schema&quot;:{&quot;content&quot;:{&quot;desktop&quot
 </li>
         
           <li class="md-nav__item">
-  <a href="#reconciliation-modes" class="md-nav__link">
+  <a href="#reconciliation-mode" class="md-nav__link">
     <span class="md-ellipsis">
-      Reconciliation Modes
+      Reconciliation Mode
     </span>
   </a>
   
@@ -20604,7 +20604,8 @@ All replicas down:
 - Returns SUCCESS to client
 
 DANGER:
-- If coordinator crashes before hint delivery → DATA LOST
+- Hints are durable on the coordinator (written to commitlog)
+- If coordinator is PERMANENTLY lost before hint delivery → DATA LOST
 - Hint is only on coordinator, not replicated
 
 ANY should almost never be used for important data.
@@ -20616,8 +20617,11 @@ nodetool<span class="w"> </span>tpstats<span class="w"> </span><span class="p">|
 <span class="c1"># View hint files</span>
 ls<span class="w"> </span>-la<span class="w"> </span>/var/lib/cassandra/hints/
 
-<span class="c1"># Force hint delivery</span>
-nodetool<span class="w"> </span>handoffwindow
+<span class="c1"># Hinted handoff control commands</span>
+nodetool<span class="w"> </span>disablehandoff<span class="w">   </span><span class="c1"># Disable hinted handoff</span>
+nodetool<span class="w"> </span>enablehandoff<span class="w">    </span><span class="c1"># Enable hinted handoff</span>
+nodetool<span class="w"> </span>pausehandoff<span class="w">     </span><span class="c1"># Pause hint delivery</span>
+nodetool<span class="w"> </span>resumehandoff<span class="w">    </span><span class="c1"># Resume hint delivery</span>
 </code></pre></div>
 <p><strong>JMX Metrics:</strong></p>
 <div class="highlight"><pre><span></span><code>org.apache.cassandra.metrics:type=Storage,name=TotalHints
@@ -20672,64 +20676,26 @@ After repair:
 N1: user_id=123 → name='Alicia', timestamp=2000  ← Fixed
 N2: user_id=123 → name='Alicia', timestamp=2000
 </code></pre></div>
-<h3 id="reconciliation-modes">Reconciliation Modes<a class="headerlink" href="#reconciliation-modes" title="Permanent link">¶</a></h3>
-<p><strong>Blocking Reconciliation</strong> (Cassandra 3.x):</p>
-<div class="highlight"><pre><span></span><code>Divergence resolution completes BEFORE returning result to client.
-- Higher read latency
-- Immediate consistency after read
-</code></pre></div>
-<p><strong>Background Reconciliation</strong> (Cassandra 4.0+):</p>
+<h3 id="reconciliation-mode">Reconciliation Mode<a class="headerlink" href="#reconciliation-mode" title="Permanent link">¶</a></h3>
+<p>In Cassandra 4.0+, read repair uses <strong>background reconciliation</strong>:</p>
 <div class="highlight"><pre><span></span><code>Result returned immediately, propagation occurs asynchronously.
 - Lower read latency
 - Stale replicas updated after response
 </code></pre></div>
 <h3 id="configuration_1">Configuration<a class="headerlink" href="#configuration_1" title="Permanent link">¶</a></h3>
-<p>Configuration changed significantly across versions:</p>
-<p><strong>Cassandra 3.x:</strong></p>
-<div class="highlight"><pre><span></span><code><span class="c1">-- Per-table read repair probability (removed in 4.0)</span>
-<span class="k">ALTER</span><span class="w"> </span><span class="k">TABLE</span><span class="w"> </span><span class="n">my_table</span><span class="w"> </span><span class="k">WITH</span>
-<span class="w">  </span><span class="n">read_repair_chance</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">0</span><span class="p">.</span><span class="mi">1</span><span class="w"> </span><span class="k">AND</span>
-<span class="w">  </span><span class="n">dclocal_read_repair_chance</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">0</span><span class="p">.</span><span class="mi">1</span><span class="p">;</span>
-
-<span class="c1">-- Blocking or none</span>
-<span class="k">ALTER</span><span class="w"> </span><span class="k">TABLE</span><span class="w"> </span><span class="n">my_table</span><span class="w"> </span><span class="k">WITH</span><span class="w"> </span><span class="n">read_repair</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s1">'BLOCKING'</span><span class="p">;</span>
-</code></pre></div>
-<p><strong>Cassandra 4.0+:</strong></p>
-<p>The <code>read_repair_chance</code> and <code>dclocal_read_repair_chance</code> properties were removed. Read repair is now always attempted when divergence is detected during a read that contacts multiple replicas.</p>
-<div class="highlight"><pre><span></span><code><span class="c1">-- Only NONE is supported (to disable read repair entirely)</span>
+<p>Read repair is now always attempted when divergence is detected during a read that contacts multiple replicas. The legacy <code>read_repair_chance</code> and <code>dclocal_read_repair_chance</code> properties were removed in Cassandra 4.0.</p>
+<div class="highlight"><pre><span></span><code><span class="c1">-- Disable read repair entirely (only option in 4.0+)</span>
 <span class="k">ALTER</span><span class="w"> </span><span class="k">TABLE</span><span class="w"> </span><span class="n">my_table</span><span class="w"> </span><span class="k">WITH</span><span class="w"> </span><span class="n">read_repair</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s1">'NONE'</span><span class="p">;</span>
 </code></pre></div>
-<table>
-<thead>
-<tr>
-<th>Property</th>
-<th>3.x</th>
-<th>4.0+</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td><code>read_repair_chance</code></td>
-<td>Probability of read repair (0.0-1.0)</td>
-<td>Removed</td>
-</tr>
-<tr>
-<td><code>dclocal_read_repair_chance</code></td>
-<td>Probability for local DC</td>
-<td>Removed</td>
-</tr>
-<tr>
-<td><code>read_repair = 'BLOCKING'</code></td>
-<td>Synchronous repair</td>
-<td>Removed</td>
-</tr>
-<tr>
-<td><code>read_repair = 'NONE'</code></td>
-<td>Disable read repair</td>
-<td>Supported</td>
-</tr>
-</tbody>
-</table>
+<div class="admonition note">
+<p class="admonition-title">Removed Properties</p>
+<p>The following properties were removed in Cassandra 4.0:</p>
+<ul>
+<li><code>read_repair_chance</code> - Was probability of read repair (0.0-1.0)</li>
+<li><code>dclocal_read_repair_chance</code> - Was probability for local DC</li>
+<li><code>read_repair = 'BLOCKING'</code> - Blocking mode removed; background is now default</li>
+</ul>
+</div>
 <h3 id="limitations">Limitations<a class="headerlink" href="#limitations" title="Permanent link">¶</a></h3>
 <table>
 <thead>
@@ -20796,24 +20762,7 @@ N2: user_id=123 → name='Alicia', timestamp=2000
 <li>SSTables are marked as "repaired" or "unrepaired"</li>
 <li>Lower overhead for regular maintenance</li>
 </ul>
-<table>
-<thead>
-<tr>
-<th>Version</th>
-<th>Default Repair Mode</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>3.x</td>
-<td>Full (<code>-full</code> not required)</td>
-</tr>
-<tr>
-<td>4.0+</td>
-<td>Incremental (use <code>-full</code> for full repair)</td>
-</tr>
-</tbody>
-</table>
+<p>In Cassandra 4.0+, the default repair mode is <strong>incremental</strong>. Use <code>-full</code> for full repair.</p>
 <p><strong>Subrange Synchronization:</strong></p>
 <div class="highlight"><pre><span></span><code>nodetool<span class="w"> </span>repair<span class="w"> </span>-st<span class="w"> </span>&lt;start_token&gt;<span class="w"> </span>-et<span class="w"> </span>&lt;end_token&gt;<span class="w"> </span>keyspace_name
 </code></pre></div>
@@ -20907,39 +20856,32 @@ nodetool<span class="w"> </span>repair_admin<span class="w"> </span>summary
 <thead>
 <tr>
 <th>Option</th>
-<th>Version</th>
 <th>Description</th>
 </tr>
 </thead>
 <tbody>
 <tr>
 <td><code>-full</code></td>
-<td>3.x+</td>
-<td>Full repair (default in 3.x, explicit in 4.0+)</td>
+<td>Full repair (required in 4.0+ as default is incremental)</td>
 </tr>
 <tr>
 <td><code>-par</code></td>
-<td>3.x+</td>
 <td>Parallel repair</td>
 </tr>
 <tr>
 <td><code>-seq</code></td>
-<td>3.x+</td>
 <td>Sequential repair</td>
 </tr>
 <tr>
 <td><code>--preview</code></td>
-<td>4.0+</td>
-<td>Report inconsistencies without repairing</td>
+<td>Report inconsistencies without repairing (4.0+)</td>
 </tr>
 <tr>
 <td><code>--validate</code></td>
-<td>4.0+</td>
-<td>Validate repaired data consistency</td>
+<td>Validate repaired data consistency (4.0+)</td>
 </tr>
 <tr>
 <td><code>-pr</code></td>
-<td>3.x+</td>
 <td>Primary range only</td>
 </tr>
 </tbody>

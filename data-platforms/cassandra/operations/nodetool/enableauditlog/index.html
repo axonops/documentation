@@ -20655,7 +20655,7 @@ data-et-multi-view="{&quot;schema&quot;:{&quot;content&quot;:{&quot;desktop&quot
 <td>Log file roll cycle (HOURLY, DAILY, etc.)</td>
 </tr>
 <tr>
-<td><code>--block</code></td>
+<td><code>--blocking</code></td>
 <td>Block operations if audit log is full</td>
 </tr>
 <tr>
@@ -20663,8 +20663,16 @@ data-et-multi-view="{&quot;schema&quot;:{&quot;content&quot;:{&quot;desktop&quot
 <td>Maximum archive retries</td>
 </tr>
 <tr>
+<td><code>--max-queue-weight</code></td>
+<td>Maximum weight of in-memory log queue (bytes)</td>
+</tr>
+<tr>
+<td><code>--max-log-size</code></td>
+<td>Maximum total log size before oldest logs deleted</td>
+</tr>
+<tr>
 <td><code>--archive-command</code></td>
-<td>Archive command for rolled logs</td>
+<td>Archive command for rolled logs (requires <code>allow_nodetool_archive_command: true</code> in cassandra.yaml)</td>
 </tr>
 </tbody>
 </table>
@@ -20742,7 +20750,7 @@ nodetool<span class="w"> </span>enableauditlog<span class="w"> </span>--included
 <span class="w">    </span>--excluded-keyspaces<span class="w"> </span>system,system_schema<span class="w"> </span><span class="se">\</span>
 <span class="w">    </span>--excluded-users<span class="w"> </span>monitoring<span class="w"> </span><span class="se">\</span>
 <span class="w">    </span>--roll-cycle<span class="w"> </span>HOURLY<span class="w"> </span><span class="se">\</span>
-<span class="w">    </span>--block<span class="w"> </span><span class="nb">true</span>
+<span class="w">    </span>--blocking<span class="w"> </span><span class="nb">true</span>
 </code></pre></div>
 <hr>
 <h2 id="audit-log-output">Audit Log Output<a class="headerlink" href="#audit-log-output" title="Permanent link">¶</a></h2>

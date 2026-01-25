@@ -6,7 +6,7 @@
       <meta charset="utf-8">
       <meta name="viewport" content="width=device-width,initial-scale=1">
       
-        <meta name="description" content="Display default replication factor for system keyspaces using nodetool getdefaultrf.">
+        <meta name="description" content="Display default replication factor for keyspace validation using nodetool getdefaultrf.">
       
       
       
@@ -75,7 +75,7 @@
   "@context": "https://schema.org",
   "@type": "HowTo",
   "headline": "getdefaultrf - Apache Cassandra Documentation",
-  "description": "Display default replication factor for system keyspaces using nodetool getdefaultrf.",
+  "description": "Display default replication factor for keyspace validation using nodetool getdefaultrf.",
   "about": {
     "@type": "SoftwareApplication",
     "name": "Apache Cassandra",
@@ -10345,6 +10345,15 @@ data-et-multi-view="{&quot;schema&quot;:{&quot;content&quot;:{&quot;desktop&quot
 </li>
       
         <li class="md-nav__item">
+  <a href="#output-format" class="md-nav__link">
+    <span class="md-ellipsis">
+      Output Format
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#examples" class="md-nav__link">
     <span class="md-ellipsis">
       Examples
@@ -19850,6 +19859,15 @@ data-et-multi-view="{&quot;schema&quot;:{&quot;content&quot;:{&quot;desktop&quot
 </li>
       
         <li class="md-nav__item">
+  <a href="#output-format" class="md-nav__link">
+    <span class="md-ellipsis">
+      Output Format
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#examples" class="md-nav__link">
     <span class="md-ellipsis">
       Examples
@@ -19908,11 +19926,19 @@ data-et-multi-view="{&quot;schema&quot;:{&quot;content&quot;:{&quot;desktop&quot
 <div class="highlight"><pre><span></span><code>nodetool<span class="w"> </span><span class="o">[</span>connection_options<span class="o">]</span><span class="w"> </span>getdefaultrf
 </code></pre></div>
 <h2 id="description">Description<a class="headerlink" href="#description" title="Permanent link">¶</a></h2>
-<p><code>nodetool getdefaultrf</code> shows the default replication factor that will be used for keyspaces when not explicitly specified.</p>
+<p><code>nodetool getdefaultrf</code> shows the default replication factor used for keyspace creation and validation. This setting affects guardrails that validate replication factor adequacy when creating or altering keyspaces.</p>
+<hr>
+<h2 id="output-format">Output Format<a class="headerlink" href="#output-format" title="Permanent link">¶</a></h2>
+<p>The command outputs a single numeric value representing the default replication factor:</p>
+<div class="highlight"><pre><span></span><code>3
+</code></pre></div>
 <hr>
 <h2 id="examples">Examples<a class="headerlink" href="#examples" title="Permanent link">¶</a></h2>
 <h3 id="basic-usage">Basic Usage<a class="headerlink" href="#basic-usage" title="Permanent link">¶</a></h3>
 <div class="highlight"><pre><span></span><code>nodetool<span class="w"> </span>getdefaultrf
+</code></pre></div>
+<p><strong>Sample output:</strong>
+</p><div class="highlight"><pre><span></span><code>3
 </code></pre></div>
 <hr>
 <h2 id="related-commands">Related Commands<a class="headerlink" href="#related-commands" title="Permanent link">¶</a></h2>

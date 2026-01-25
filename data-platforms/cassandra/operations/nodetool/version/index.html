@@ -20530,7 +20530,8 @@ node5: ReleaseVersion: 4.1.3
 
 <span class="nb">echo</span><span class="w"> </span><span class="s2">"=== Pre-Upgrade Versions ==="</span>
 <span class="k">for</span><span class="w"> </span>node<span class="w"> </span><span class="k">in</span><span class="w"> </span><span class="k">$(</span>nodetool<span class="w"> </span>status<span class="w"> </span><span class="p">|</span><span class="w"> </span>grep<span class="w"> </span>-E<span class="w"> </span><span class="s2">"^UN|^DN"</span><span class="w"> </span><span class="p">|</span><span class="w"> </span>awk<span class="w"> </span><span class="s1">'{print $2}'</span><span class="k">)</span><span class="p">;</span><span class="w"> </span><span class="k">do</span>
-<span class="w">    </span><span class="nb">echo</span><span class="w"> </span><span class="s2">"</span><span class="nv">$node</span><span class="s2">: </span><span class="k">$(</span>ssh<span class="w"> </span><span class="s2">"</span><span class="nv">$node</span><span class="s2">"</span><span class="w"> </span><span class="s2">"nodetool version"</span><span class="w"> </span><span class="p">|</span><span class="w"> </span>awk<span class="w"> </span><span class="s1">'{print $2}'</span><span class="k">)</span><span class="s2">"</span>
+<span class="w">    </span><span class="nv">version</span><span class="o">=</span><span class="k">$(</span>ssh<span class="w"> </span><span class="s2">"</span><span class="nv">$node</span><span class="s2">"</span><span class="w"> </span><span class="s1">'nodetool version'</span><span class="w"> </span><span class="p">|</span><span class="w"> </span>awk<span class="w"> </span><span class="s1">'{print $2}'</span><span class="k">)</span>
+<span class="w">    </span><span class="nb">echo</span><span class="w"> </span><span class="s2">"</span><span class="nv">$node</span><span class="s2">: </span><span class="nv">$version</span><span class="s2">"</span>
 <span class="k">done</span><span class="w"> </span>&gt;<span class="w"> </span>pre_upgrade_versions.txt
 </code></pre></div>
 <h3 id="post-upgrade-verification">Post-Upgrade Verification<a class="headerlink" href="#post-upgrade-verification" title="Permanent link">¶</a></h3>
@@ -20541,7 +20542,7 @@ node5: ReleaseVersion: 4.1.3
 <span class="nb">echo</span><span class="w"> </span><span class="s2">"=== Post-Upgrade Verification ==="</span>
 <span class="nv">expected</span><span class="o">=</span><span class="s2">"4.1.4"</span>
 <span class="k">for</span><span class="w"> </span>node<span class="w"> </span><span class="k">in</span><span class="w"> </span><span class="k">$(</span>nodetool<span class="w"> </span>status<span class="w"> </span><span class="p">|</span><span class="w"> </span>grep<span class="w"> </span>-E<span class="w"> </span><span class="s2">"^UN|^DN"</span><span class="w"> </span><span class="p">|</span><span class="w"> </span>awk<span class="w"> </span><span class="s1">'{print $2}'</span><span class="k">)</span><span class="p">;</span><span class="w"> </span><span class="k">do</span>
-<span class="w">    </span><span class="nv">actual</span><span class="o">=</span><span class="k">$(</span>ssh<span class="w"> </span><span class="s2">"</span><span class="nv">$node</span><span class="s2">"</span><span class="w"> </span><span class="s2">"nodetool version"</span><span class="w"> </span><span class="p">|</span><span class="w"> </span>awk<span class="w"> </span><span class="s1">'{print $2}'</span><span class="k">)</span>
+<span class="w">    </span><span class="nv">actual</span><span class="o">=</span><span class="k">$(</span>ssh<span class="w"> </span><span class="s2">"</span><span class="nv">$node</span><span class="s2">"</span><span class="w"> </span><span class="s1">'nodetool version'</span><span class="w"> </span><span class="p">|</span><span class="w"> </span>awk<span class="w"> </span><span class="s1">'{print $2}'</span><span class="k">)</span>
 <span class="w">    </span><span class="k">if</span><span class="w"> </span><span class="o">[</span><span class="w"> </span><span class="s2">"</span><span class="nv">$actual</span><span class="s2">"</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">"</span><span class="nv">$expected</span><span class="s2">"</span><span class="w"> </span><span class="o">]</span><span class="p">;</span><span class="w"> </span><span class="k">then</span>
 <span class="w">        </span><span class="nb">echo</span><span class="w"> </span><span class="s2">"</span><span class="nv">$node</span><span class="s2">: </span><span class="nv">$actual</span><span class="s2"> ✓"</span>
 <span class="w">    </span><span class="k">else</span>
@@ -20556,7 +20557,7 @@ node5: ReleaseVersion: 4.1.3
 
 <span class="c1"># Collect all versions via SSH</span>
 nodetool<span class="w"> </span>status<span class="w"> </span><span class="p">|</span><span class="w"> </span>grep<span class="w"> </span>-E<span class="w"> </span><span class="s2">"^UN|^DN"</span><span class="w"> </span><span class="p">|</span><span class="w"> </span>awk<span class="w"> </span><span class="s1">'{print $2}'</span><span class="w"> </span><span class="p">|</span><span class="w"> </span><span class="k">while</span><span class="w"> </span><span class="nb">read</span><span class="w"> </span>node<span class="p">;</span><span class="w"> </span><span class="k">do</span>
-<span class="w">    </span>ssh<span class="w"> </span><span class="s2">"</span><span class="nv">$node</span><span class="s2">"</span><span class="w"> </span><span class="s2">"nodetool version"</span>
+<span class="w">    </span>ssh<span class="w"> </span><span class="s2">"</span><span class="nv">$node</span><span class="s2">"</span><span class="w"> </span><span class="s1">'nodetool version'</span>
 <span class="k">done</span><span class="w"> </span><span class="p">|</span><span class="w"> </span>sort<span class="w"> </span><span class="p">|</span><span class="w"> </span>uniq<span class="w"> </span>-c
 </code></pre></div>
 <p>Output showing mixed versions:
@@ -20568,10 +20569,10 @@ nodetool<span class="w"> </span>status<span class="w"> </span><span class="p">|<
 <div class="highlight"><pre><span></span><code><span class="nv">version</span><span class="o">=</span><span class="k">$(</span>nodetool<span class="w"> </span>version<span class="w"> </span><span class="p">|</span><span class="w"> </span>awk<span class="w"> </span><span class="s1">'{print $2}'</span><span class="k">)</span>
 <span class="nv">major</span><span class="o">=</span><span class="k">$(</span><span class="nb">echo</span><span class="w"> </span><span class="nv">$version</span><span class="w"> </span><span class="p">|</span><span class="w"> </span>cut<span class="w"> </span>-d.<span class="w"> </span>-f1<span class="k">)</span>
 
-<span class="k">if</span><span class="w"> </span><span class="o">[</span><span class="w"> </span><span class="s2">"</span><span class="nv">$major</span><span class="s2">"</span><span class="w"> </span>-ge<span class="w"> </span><span class="m">4</span><span class="w"> </span><span class="o">]</span><span class="p">;</span><span class="w"> </span><span class="k">then</span>
-<span class="w">    </span><span class="nb">echo</span><span class="w"> </span><span class="s2">"Cassandra 4.x features available"</span>
+<span class="k">if</span><span class="w"> </span><span class="o">[</span><span class="w"> </span><span class="s2">"</span><span class="nv">$major</span><span class="s2">"</span><span class="w"> </span>-ge<span class="w"> </span><span class="m">5</span><span class="w"> </span><span class="o">]</span><span class="p">;</span><span class="w"> </span><span class="k">then</span>
+<span class="w">    </span><span class="nb">echo</span><span class="w"> </span><span class="s2">"Cassandra 5.x features available"</span>
 <span class="k">else</span>
-<span class="w">    </span><span class="nb">echo</span><span class="w"> </span><span class="s2">"Running Cassandra 3.x or earlier"</span>
+<span class="w">    </span><span class="nb">echo</span><span class="w"> </span><span class="s2">"Running Cassandra 4.x"</span>
 <span class="k">fi</span>
 </code></pre></div>
 <hr>
@@ -20687,7 +20688,7 @@ Heap Memory (MB)       : 4096.00 / 8192.00
 <span class="nv">unreachable</span><span class="o">=</span><span class="m">0</span>
 
 <span class="k">for</span><span class="w"> </span>node<span class="w"> </span><span class="k">in</span><span class="w"> </span><span class="nv">$nodes</span><span class="p">;</span><span class="w"> </span><span class="k">do</span>
-<span class="w">    </span><span class="nv">actual</span><span class="o">=</span><span class="k">$(</span>ssh<span class="w"> </span><span class="s2">"</span><span class="nv">$node</span><span class="s2">"</span><span class="w"> </span><span class="s2">"nodetool version"</span><span class="w"> </span><span class="m">2</span>&gt;/dev/null<span class="w"> </span><span class="p">|</span><span class="w"> </span>awk<span class="w"> </span><span class="s1">'{print $2}'</span><span class="k">)</span>
+<span class="w">    </span><span class="nv">actual</span><span class="o">=</span><span class="k">$(</span>ssh<span class="w"> </span><span class="s2">"</span><span class="nv">$node</span><span class="s2">"</span><span class="w"> </span><span class="s1">'nodetool version'</span><span class="w"> </span><span class="m">2</span>&gt;/dev/null<span class="w"> </span><span class="p">|</span><span class="w"> </span>awk<span class="w"> </span><span class="s1">'{print $2}'</span><span class="k">)</span>
 
 <span class="w">    </span><span class="k">if</span><span class="w"> </span><span class="o">[</span><span class="w"> </span>-z<span class="w"> </span><span class="s2">"</span><span class="nv">$actual</span><span class="s2">"</span><span class="w"> </span><span class="o">]</span><span class="p">;</span><span class="w"> </span><span class="k">then</span>
 <span class="w">        </span><span class="nb">echo</span><span class="w"> </span><span class="s2">"</span><span class="nv">$node</span><span class="s2">: UNREACHABLE"</span>

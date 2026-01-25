@@ -11739,6 +11739,15 @@ data-et-multi-view="{&quot;schema&quot;:{&quot;content&quot;:{&quot;desktop&quot
 </li>
         
           <li class="md-nav__item">
+  <a href="#target-override-options" class="md-nav__link">
+    <span class="md-ellipsis">
+      Target Override Options
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
   <a href="#ssltls-options" class="md-nav__link">
     <span class="md-ellipsis">
       SSL/TLS Options
@@ -20256,6 +20265,15 @@ data-et-multi-view="{&quot;schema&quot;:{&quot;content&quot;:{&quot;desktop&quot
 </li>
         
           <li class="md-nav__item">
+  <a href="#target-override-options" class="md-nav__link">
+    <span class="md-ellipsis">
+      Target Override Options
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
   <a href="#ssltls-options" class="md-nav__link">
     <span class="md-ellipsis">
       SSL/TLS Options
@@ -20610,10 +20628,15 @@ data-et-multi-view="{&quot;schema&quot;:{&quot;content&quot;:{&quot;desktop&quot
 <div class="highlight"><pre><span></span><code>&lt;base_path&gt;/&lt;keyspace&gt;/&lt;table&gt;/
 
 Examples:
-/tmp/restore/my_keyspace/users/           # Correct
-/var/backup/cycling/cyclist_name/         # Correct
-/restore/my_keyspace/my_table/snapshots/  # Incorrect - extra directory level
+/tmp/restore/my_keyspace/users/                     # Correct - plain table name
+/tmp/restore/my_keyspace/users-a1b2c3d4e5f6g7h8/   # Correct - table with UUID suffix
+/var/backup/cycling/cyclist_name/                   # Correct
+/restore/my_keyspace/my_table/snapshots/            # Incorrect - extra directory level
 </code></pre></div>
+<div class="admonition tip">
+<p class="admonition-title">On-Disk Table Directory Names</p>
+<p>Cassandra stores tables with UUID suffixes (e.g., <code>users-a1b2c3d4e5f6g7h8</code>). When loading from live data or snapshots, the full directory name with UUID is accepted. Use <code>-k</code> and <code>-tb</code> options to override target keyspace/table if names differ.</p>
+</div>
 <p>The tool uses the directory names to determine the target keyspace and table:</p>
 <div class="highlight"><pre><span></span><code><span class="c1"># This path:</span>
 /tmp/load/my_keyspace/my_table/nb-1-big-Data.db
@@ -20673,8 +20696,16 @@ Examples:
 <td>Password for authentication</td>
 </tr>
 <tr>
+<td><code>-ap, --auth-provider &lt;class&gt;</code></td>
+<td>Custom auth provider class</td>
+</tr>
+<tr>
 <td><code>-p, --port &lt;port&gt;</code></td>
 <td>Native transport port (default: 9042)</td>
+</tr>
+<tr>
+<td><code>-sp, --storage-port &lt;port&gt;</code></td>
+<td>Storage port for streaming (default: 7000)</td>
 </tr>
 </tbody>
 </table>
@@ -20696,8 +20727,35 @@ Examples:
 <td>Throttle for inter-datacenter streaming</td>
 </tr>
 <tr>
+<td><code>--entire-sstable-throttle-mib &lt;MiB/s&gt;</code></td>
+<td>Throttle for entire-SSTable streaming</td>
+</tr>
+<tr>
+<td><code>--entire-sstable-inter-dc-throttle-mib &lt;MiB/s&gt;</code></td>
+<td>Inter-DC throttle for entire-SSTable streaming</td>
+</tr>
+<tr>
 <td><code>-cph, --connections-per-host &lt;n&gt;</code></td>
 <td>Number of concurrent connections per host</td>
+</tr>
+</tbody>
+</table>
+<h3 id="target-override-options">Target Override Options<a class="headerlink" href="#target-override-options" title="Permanent link">¶</a></h3>
+<table>
+<thead>
+<tr>
+<th>Option</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>-k, --target-keyspace &lt;name&gt;</code></td>
+<td>Override target keyspace (different from directory name)</td>
+</tr>
+<tr>
+<td><code>-tb, --target-table &lt;name&gt;</code></td>
+<td>Override target table (different from directory name)</td>
 </tr>
 </tbody>
 </table>
@@ -20712,7 +20770,7 @@ Examples:
 <tbody>
 <tr>
 <td><code>-f, --conf-path &lt;path&gt;</code></td>
-<td>Path to cassandra.yaml for SSL configuration</td>
+<td>Path to cassandra.yaml. Reads <code>stream_throughput_outbound</code>, <code>client_encryption_options</code>, and <code>server_encryption_options</code></td>
 </tr>
 <tr>
 <td><code>--keystore &lt;path&gt;</code></td>

@@ -10003,27 +10003,36 @@ data-et-multi-view="{&quot;schema&quot;:{&quot;content&quot;:{&quot;desktop&quot
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
-  <a href="#check-all-views" class="md-nav__link">
+  <a href="#check-specific-view-two-arguments" class="md-nav__link">
     <span class="md-ellipsis">
-      Check All Views
+      Check Specific View (two arguments)
     </span>
   </a>
   
 </li>
         
           <li class="md-nav__item">
-  <a href="#check-specific-view" class="md-nav__link">
+  <a href="#check-specific-view-dotted-notation" class="md-nav__link">
     <span class="md-ellipsis">
-      Check Specific View
+      Check Specific View (dotted notation)
     </span>
   </a>
   
 </li>
         
           <li class="md-nav__item">
-  <a href="#sample-output" class="md-nav__link">
+  <a href="#sample-output-build-complete" class="md-nav__link">
     <span class="md-ellipsis">
-      Sample Output
+      Sample Output (Build Complete)
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#sample-output-build-in-progress-or-failed" class="md-nav__link">
+    <span class="md-ellipsis">
+      Sample Output (Build In Progress or Failed)
     </span>
   </a>
   
@@ -19947,27 +19956,36 @@ data-et-multi-view="{&quot;schema&quot;:{&quot;content&quot;:{&quot;desktop&quot
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
-  <a href="#check-all-views" class="md-nav__link">
+  <a href="#check-specific-view-two-arguments" class="md-nav__link">
     <span class="md-ellipsis">
-      Check All Views
+      Check Specific View (two arguments)
     </span>
   </a>
   
 </li>
         
           <li class="md-nav__item">
-  <a href="#check-specific-view" class="md-nav__link">
+  <a href="#check-specific-view-dotted-notation" class="md-nav__link">
     <span class="md-ellipsis">
-      Check Specific View
+      Check Specific View (dotted notation)
     </span>
   </a>
   
 </li>
         
           <li class="md-nav__item">
-  <a href="#sample-output" class="md-nav__link">
+  <a href="#sample-output-build-complete" class="md-nav__link">
     <span class="md-ellipsis">
-      Sample Output
+      Sample Output (Build Complete)
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#sample-output-build-in-progress-or-failed" class="md-nav__link">
+    <span class="md-ellipsis">
+      Sample Output (Build In Progress or Failed)
     </span>
   </a>
   
@@ -20057,10 +20075,11 @@ data-et-multi-view="{&quot;schema&quot;:{&quot;content&quot;:{&quot;desktop&quot
 <p>Displays the build status of materialized views.</p>
 <hr>
 <h2 id="synopsis">Synopsis<a class="headerlink" href="#synopsis" title="Permanent link">¶</a></h2>
-<div class="highlight"><pre><span></span><code>nodetool<span class="w"> </span><span class="o">[</span>connection_options<span class="o">]</span><span class="w"> </span>viewbuildstatus<span class="w"> </span><span class="o">[</span>keyspace.view<span class="o">]</span>
+<div class="highlight"><pre><span></span><code>nodetool<span class="w"> </span><span class="o">[</span>connection_options<span class="o">]</span><span class="w"> </span>viewbuildstatus<span class="w"> </span>&lt;keyspace&gt;<span class="w"> </span>&lt;view&gt;
+nodetool<span class="w"> </span><span class="o">[</span>connection_options<span class="o">]</span><span class="w"> </span>viewbuildstatus<span class="w"> </span>&lt;keyspace.view&gt;
 </code></pre></div>
 <h2 id="description">Description<a class="headerlink" href="#description" title="Permanent link">¶</a></h2>
-<p><code>nodetool viewbuildstatus</code> shows the progress of materialized view builds. When a materialized view is created, Cassandra must populate it with existing data, which can take time for large tables.</p>
+<p><code>nodetool viewbuildstatus</code> shows the progress of a materialized view build across all nodes. When a materialized view is created, Cassandra must populate it with existing data, which can take time for large tables.</p>
 <hr>
 <h2 id="arguments">Arguments<a class="headerlink" href="#arguments" title="Permanent link">¶</a></h2>
 <table>
@@ -20072,24 +20091,35 @@ data-et-multi-view="{&quot;schema&quot;:{&quot;content&quot;:{&quot;desktop&quot
 </thead>
 <tbody>
 <tr>
-<td><code>keyspace.view</code></td>
-<td>Optional: specific view to check</td>
+<td><code>keyspace</code></td>
+<td><strong>Required.</strong> The keyspace containing the view</td>
+</tr>
+<tr>
+<td><code>view</code></td>
+<td><strong>Required.</strong> The materialized view name to check</td>
 </tr>
 </tbody>
 </table>
+<p>The view can be specified as two separate arguments (<code>keyspace view</code>) or as a single dotted notation (<code>keyspace.view</code>).</p>
 <hr>
 <h2 id="examples">Examples<a class="headerlink" href="#examples" title="Permanent link">¶</a></h2>
-<h3 id="check-all-views">Check All Views<a class="headerlink" href="#check-all-views" title="Permanent link">¶</a></h3>
-<div class="highlight"><pre><span></span><code>nodetool<span class="w"> </span>viewbuildstatus
+<h3 id="check-specific-view-two-arguments">Check Specific View (two arguments)<a class="headerlink" href="#check-specific-view-two-arguments" title="Permanent link">¶</a></h3>
+<div class="highlight"><pre><span></span><code>nodetool<span class="w"> </span>viewbuildstatus<span class="w"> </span>my_keyspace<span class="w"> </span>my_view
 </code></pre></div>
-<h3 id="check-specific-view">Check Specific View<a class="headerlink" href="#check-specific-view" title="Permanent link">¶</a></h3>
+<h3 id="check-specific-view-dotted-notation">Check Specific View (dotted notation)<a class="headerlink" href="#check-specific-view-dotted-notation" title="Permanent link">¶</a></h3>
 <div class="highlight"><pre><span></span><code>nodetool<span class="w"> </span>viewbuildstatus<span class="w"> </span>my_keyspace.my_view
 </code></pre></div>
-<h3 id="sample-output">Sample Output<a class="headerlink" href="#sample-output" title="Permanent link">¶</a></h3>
-<div class="highlight"><pre><span></span><code>Keyspace     View          Host          Status
-my_keyspace  my_view       192.168.1.101 SUCCESS
-my_keyspace  my_view       192.168.1.102 BUILDING
-my_keyspace  my_view       192.168.1.103 SUCCESS
+<h3 id="sample-output-build-complete">Sample Output (Build Complete)<a class="headerlink" href="#sample-output-build-complete" title="Permanent link">¶</a></h3>
+<p>When the view build has finished successfully on all nodes:</p>
+<div class="highlight"><pre><span></span><code>my_keyspace.my_view has finished building
+</code></pre></div>
+<h3 id="sample-output-build-in-progress-or-failed">Sample Output (Build In Progress or Failed)<a class="headerlink" href="#sample-output-build-in-progress-or-failed" title="Permanent link">¶</a></h3>
+<p>When any node has not completed the build, the command outputs a status message and a table with per-host status, then exits with an error:</p>
+<div class="highlight"><pre><span></span><code>my_keyspace.my_view has not finished building; node status is below.
+Host            Info
+192.168.1.101   SUCCESS
+192.168.1.102   BUILDING
+192.168.1.103   SUCCESS
 </code></pre></div>
 <hr>
 <h2 id="status-values">Status Values<a class="headerlink" href="#status-values" title="Permanent link">¶</a></h2>
@@ -20129,8 +20159,8 @@ cqlsh<span class="w"> </span>-e<span class="w"> </span><span class="s2">"CREATE 
 watch<span class="w"> </span>nodetool<span class="w"> </span>viewbuildstatus<span class="w"> </span>my_keyspace.my_view
 </code></pre></div>
 <h3 id="troubleshoot-view-issues">Troubleshoot View Issues<a class="headerlink" href="#troubleshoot-view-issues" title="Permanent link">¶</a></h3>
-<div class="highlight"><pre><span></span><code><span class="c1"># Check if view build failed</span>
-nodetool<span class="w"> </span>viewbuildstatus<span class="w"> </span><span class="p">|</span><span class="w"> </span>grep<span class="w"> </span>FAILED
+<div class="highlight"><pre><span></span><code><span class="c1"># Check if view build failed (output goes to stderr on failure)</span>
+nodetool<span class="w"> </span>viewbuildstatus<span class="w"> </span>my_keyspace<span class="w"> </span>my_view<span class="w"> </span><span class="m">2</span>&gt;<span class="p">&amp;</span><span class="m">1</span><span class="w"> </span><span class="p">|</span><span class="w"> </span>grep<span class="w"> </span>FAILED
 </code></pre></div>
 <hr>
 <h2 id="best-practices">Best Practices<a class="headerlink" href="#best-practices" title="Permanent link">¶</a></h2>

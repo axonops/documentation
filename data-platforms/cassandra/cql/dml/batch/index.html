@@ -20792,17 +20792,17 @@ data-et-multi-view="{&quot;schema&quot;:{&quot;content&quot;:{&quot;desktop&quot
 
 
 <div><h1 id="batch">BATCH<a class="headerlink" href="#batch" title="Permanent link">¶</a></h1>
-<p>The BATCH statement groups multiple INSERT, UPDATE, and DELETE statements into a single atomic operation. Batches ensure that all statements either complete or none do, providing atomicity guarantees. However, batches are frequently misused as a performance optimization—they are not.</p>
+<p>The BATCH statement groups multiple INSERT, UPDATE, and DELETE statements into a single logical operation. Same-partition batches are atomic at the storage layer. Multi-partition logged batches provide durability via the batch log (ensuring eventual replay on failure), but do not provide true atomicity—partial visibility is possible. Batches are frequently misused as a performance optimization—they are not.</p>
 <hr>
 <h2 id="behavioral-guarantees">Behavioral Guarantees<a class="headerlink" href="#behavioral-guarantees" title="Permanent link">¶</a></h2>
 <h3 id="what-batch-guarantees">What BATCH Guarantees<a class="headerlink" href="#what-batch-guarantees" title="Permanent link">¶</a></h3>
 <ul>
-<li>All statements in a logged batch eventually execute or none execute</li>
-<li>Statements to the same partition are atomic at the storage layer</li>
-<li>Logged batches write to batch log before executing mutations</li>
+<li>Statements to the same partition are atomic at the partition mutation level</li>
+<li>Logged batches write to batch log before executing mutations, enabling replay on coordinator failure</li>
 <li>USING TIMESTAMP applies the same timestamp to all statements</li>
 <li>If any IF condition fails, no statements in the batch execute</li>
 </ul>
+<p><em>Note: The batch log provides durability/replay for logged batches, but replay is best-effort and partial visibility can occur during or after failures.</em></p>
 <h3 id="what-batch-does-not-guarantee">What BATCH Does NOT Guarantee<a class="headerlink" href="#what-batch-does-not-guarantee" title="Permanent link">¶</a></h3>
 <div class="admonition warning">
 <p class="admonition-title">Undefined Behavior</p>
@@ -20810,8 +20810,8 @@ data-et-multi-view="{&quot;schema&quot;:{&quot;content&quot;:{&quot;desktop&quot
 <ul>
 <li><strong>Isolation</strong>: Other reads may see partial batch results before completion</li>
 <li><strong>Performance improvement</strong>: Batches do not improve throughput over parallel writes</li>
-<li><strong>Cross-datacenter atomicity</strong>: Logged batches provide atomicity within a datacenter, not globally</li>
-<li><strong>Unlogged batch atomicity</strong>: UNLOGGED batches have no atomicity guarantee on coordinator failure</li>
+<li><strong>Multi-partition atomicity</strong>: Logged batches do not provide atomicity; they provide durability via replay</li>
+<li><strong>Unlogged batch atomicity</strong>: UNLOGGED batches have no durability guarantee on coordinator failure</li>
 <li><strong>Order of execution</strong>: Statements within a batch may execute in any order</li>
 </ul>
 </div>
@@ -20827,13 +20827,13 @@ data-et-multi-view="{&quot;schema&quot;:{&quot;content&quot;:{&quot;desktop&quot
 <tbody>
 <tr>
 <td>Coordinator failure</td>
-<td>Recovers via batch log</td>
+<td>Recovers via batch log replay</td>
 <td>Undefined - partial execution possible</td>
 </tr>
 <tr>
 <td>Multi-partition</td>
-<td>Atomic (via batch log)</td>
-<td>Not atomic</td>
+<td>Durable (via batch log), not atomic</td>
+<td>Not durable, not atomic</td>
 </tr>
 <tr>
 <td>Same-partition</td>
@@ -21043,7 +21043,7 @@ APPLY BATCH
 <p>Batch log entries are replayed automatically:</p>
 <ul>
 <li>Each node periodically scans its local batch log</li>
-<li>Entries older than <code>batchlog_replay_throttle</code> are candidates for replay</li>
+<li>Entries older than the batchlog timeout threshold are candidates for replay</li>
 <li>Mutations are re-executed to ensure completion</li>
 <li>Successfully replayed entries are removed</li>
 </ul>
@@ -21053,7 +21053,7 @@ APPLY BATCH
 </code></pre></div>
 <p><strong>Guarantees:</strong></p>
 <ul>
-<li>All statements eventually execute or none do</li>
+<li>Replay is attempted until successful (best-effort eventual delivery)</li>
 <li>Coordinator failure doesn't lose the batch (batch log on other nodes)</li>
 <li>Batch log written to 2 endpoints for redundancy</li>
 </ul>
@@ -21124,7 +21124,7 @@ APPLY BATCH
 <p><strong>Benefits:</strong></p>
 <ul>
 <li>Single coordinator to single replica set</li>
-<li>Atomic at storage layer (same SSTable)</li>
+<li>Atomic at partition mutation level</li>
 <li>Minimal coordination overhead</li>
 </ul>
 <h3 id="multi-partition-batch-use-carefully">Multi-Partition Batch (Use Carefully)<a class="headerlink" href="#multi-partition-batch-use-carefully" title="Permanent link">¶</a></h3>

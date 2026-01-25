@@ -20538,9 +20538,9 @@ data-et-multi-view="{&quot;schema&quot;:{&quot;content&quot;:{&quot;desktop&quot
 <td>Node startup</td>
 </tr>
 <tr>
-<td><strong>Partition recovery</strong></td>
-<td>Bridge isolated cluster segments</td>
-<td>Network partition healing</td>
+<td><strong>Gossip fallback</strong></td>
+<td>Contacted opportunistically during gossip rounds</td>
+<td>Steady-state gossip</td>
 </tr>
 <tr>
 <td><strong>Cluster formation</strong></td>
@@ -20570,7 +20570,7 @@ data-et-multi-view="{&quot;schema&quot;:{&quot;content&quot;:{&quot;desktop&quot
 <p><strong>Discovery sequence details:</strong></p>
 <ol>
 <li><strong>Read configuration</strong>: Parse <code>seed_provider</code> from cassandra.yaml</li>
-<li><strong>Attempt seed contact</strong>: Try each seed in order until one responds</li>
+<li><strong>Attempt seed contact</strong>: Contact seeds (order may vary) until one responds</li>
 <li><strong>Receive cluster state</strong>: Seed sends complete gossip state (all known endpoints)</li>
 <li><strong>Integrate into gossip</strong>: Begin participating in gossip protocol</li>
 <li><strong>Determine ownership</strong>: Calculate token ranges (automatic with vnodes)</li>
@@ -20665,8 +20665,8 @@ data-et-multi-view="{&quot;schema&quot;:{&quot;content&quot;:{&quot;desktop&quot
 <td>Consistent cluster discovery</td>
 </tr>
 <tr>
-<td><strong>Seeds must know each other</strong></td>
-<td>At least one seed must be reachable from others</td>
+<td><strong>Ensure reachability</strong></td>
+<td>At least one seed should be reachable from starting nodes</td>
 </tr>
 </tbody>
 </table>

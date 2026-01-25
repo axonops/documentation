@@ -20316,9 +20316,9 @@ data-et-multi-view="{&quot;schema&quot;:{&quot;content&quot;:{&quot;desktop&quot
 <hr>
 <h2 id="output-format">Output Format<a class="headerlink" href="#output-format" title="Permanent link">¶</a></h2>
 <div class="highlight"><pre><span></span><code>Compaction History:
-id                                   keyspace_name columnfamily_name compacted_at            bytes_in    bytes_out   rows_merged
-abc12345-def6-7890-abcd-ef1234567890 my_keyspace   my_table          2024-01-15T10:30:00     1073741824  536870912   {1:150, 2:50}
-def67890-abcd-1234-ef56-7890abcdef12 my_keyspace   my_table          2024-01-15T09:15:00     2147483648  1073741824  {1:300, 2:100}
+id                                   keyspace_name columnfamily_name compacted_at            bytes_in    bytes_out   rows_merged     compaction_properties
+abc12345-def6-7890-abcd-ef1234567890 my_keyspace   my_table          2024-01-15T10:30:00     1073741824  536870912   {1:150, 2:50}   {id:abc12345-...}
+def67890-abcd-1234-ef56-7890abcdef12 my_keyspace   my_table          2024-01-15T09:15:00     2147483648  1073741824  {1:300, 2:100}  {id:def67890-...}
 </code></pre></div>
 <hr>
 <h2 id="output-fields">Output Fields<a class="headerlink" href="#output-fields" title="Permanent link">¶</a></h2>
@@ -20357,6 +20357,10 @@ def67890-abcd-1234-ef56-7890abcdef12 my_keyspace   my_table          2024-01-15T
 <tr>
 <td><code>rows_merged</code></td>
 <td>Distribution of rows merged per SSTable</td>
+</tr>
+<tr>
+<td><code>compaction_properties</code></td>
+<td>Additional compaction metadata (strategy-specific properties)</td>
 </tr>
 </tbody>
 </table>
@@ -20478,11 +20482,11 @@ nodetool<span class="w"> </span>compactionhistory<span class="w"> </span><span c
 <div class="highlight"><pre><span></span><code><span class="k">SELECT</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="k">FROM</span><span class="w"> </span><span class="k">system</span><span class="p">.</span><span class="n">compaction_history</span><span class="w"> </span><span class="k">LIMIT</span><span class="w"> </span><span class="mi">10</span><span class="p">;</span>
 </code></pre></div>
 <div class="admonition info">
-<p class="admonition-title">History Limits</p>
+<p class="admonition-title">History Retention (7 Days Default)</p>
 <ul>
-<li>History is kept for a limited time</li>
-<li>Older entries are automatically removed</li>
-<li>For long-term analysis, export to external monitoring</li>
+<li>The <code>system.compaction_history</code> table has a default TTL of 7 days</li>
+<li>Entries are automatically removed after this retention period via TTL expiration, not compaction</li>
+<li>For long-term analysis, export to external monitoring before entries expire</li>
 </ul>
 </div>
 <hr>

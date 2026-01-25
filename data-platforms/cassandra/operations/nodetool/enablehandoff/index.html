@@ -20515,10 +20515,31 @@ data-et-multi-view="{&quot;schema&quot;:{&quot;content&quot;:{&quot;desktop&quot
 <p>When hinted handoff is enabled:</p>
 <ol>
 <li>Coordinator nodes store hints for unavailable replicas</li>
-<li>Hints are stored in the <code>system.hints</code> table</li>
+<li>Hints are stored as files in the hints directory (e.g., <code>/var/lib/cassandra/hints/</code>)</li>
 <li>When target nodes recover, hints are replayed automatically</li>
-<li>Old hints expire based on <code>max_hint_window_in_ms</code> (default: 3 hours)</li>
+<li>Old hints expire based on the hint window setting (default: 3 hours)</li>
 </ol>
+<table>
+<thead>
+<tr>
+<th>Cassandra Version</th>
+<th>Parameter Name</th>
+<th>Example</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Pre-4.1</td>
+<td><code>max_hint_window_in_ms</code></td>
+<td><code>10800000</code> (3 hours)</td>
+</tr>
+<tr>
+<td>4.1+</td>
+<td><code>max_hint_window</code></td>
+<td><code>3h</code></td>
+</tr>
+</tbody>
+</table>
 <h3 id="hint-storage">Hint Storage<a class="headerlink" href="#hint-storage" title="Permanent link">¶</a></h3>
 <p>Hints are stored on the <strong>coordinator</strong> node that received the original write request, not on the unavailable node.</p>
 <hr>

@@ -12072,9 +12072,9 @@ data-et-multi-view="{&quot;schema&quot;:{&quot;content&quot;:{&quot;desktop&quot
 </li>
         
           <li class="md-nav__item">
-  <a href="#keep-original-sstable" class="md-nav__link">
+  <a href="#skip-pre-split-snapshot" class="md-nav__link">
     <span class="md-ellipsis">
-      Keep Original SSTable
+      Skip Pre-Split Snapshot
     </span>
   </a>
   
@@ -20226,9 +20226,9 @@ data-et-multi-view="{&quot;schema&quot;:{&quot;content&quot;:{&quot;desktop&quot
 </li>
         
           <li class="md-nav__item">
-  <a href="#keep-original-sstable" class="md-nav__link">
+  <a href="#skip-pre-split-snapshot" class="md-nav__link">
     <span class="md-ellipsis">
-      Keep Original SSTable
+      Skip Pre-Split Snapshot
     </span>
   </a>
   
@@ -20572,7 +20572,11 @@ data-et-multi-view="{&quot;schema&quot;:{&quot;content&quot;:{&quot;desktop&quot
 </tr>
 <tr>
 <td><code>-n, --no-snapshot</code></td>
-<td>Do not remove original SSTable after split</td>
+<td>Skip creating a pre-split snapshot (original SSTable is still removed after split)</td>
+</tr>
+<tr>
+<td><code>-h, --help</code></td>
+<td>Display help information</td>
 </tr>
 <tr>
 <td><code>--debug</code></td>
@@ -20599,12 +20603,10 @@ sstablesplit<span class="w"> </span>--size<span class="w"> </span><span class="m
 <span class="c1"># Split into 200 MB chunks</span>
 sstablesplit<span class="w"> </span>-s<span class="w"> </span><span class="m">200</span><span class="w"> </span>/path/to/sstable-Data.db
 </code></pre></div>
-<h3 id="keep-original-sstable">Keep Original SSTable<a class="headerlink" href="#keep-original-sstable" title="Permanent link">¶</a></h3>
-<div class="highlight"><pre><span></span><code><span class="c1"># Split but keep the original file</span>
+<h3 id="skip-pre-split-snapshot">Skip Pre-Split Snapshot<a class="headerlink" href="#skip-pre-split-snapshot" title="Permanent link">¶</a></h3>
+<div class="highlight"><pre><span></span><code><span class="c1"># Split without creating a snapshot first</span>
+<span class="c1"># Note: The original SSTable is still removed after successful split</span>
 sstablesplit<span class="w"> </span>--no-snapshot<span class="w"> </span>/path/to/sstable-Data.db
-
-<span class="c1"># Verify split was successful, then manually remove original</span>
-rm<span class="w"> </span>/path/to/original-sstable-*
 </code></pre></div>
 <h3 id="split-multiple-sstables">Split Multiple SSTables<a class="headerlink" href="#split-multiple-sstables" title="Permanent link">¶</a></h3>
 <div class="highlight"><pre><span></span><code><span class="c1"># Split all SSTables larger than 1GB</span>

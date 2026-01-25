@@ -20110,8 +20110,8 @@ data-et-multi-view="{&quot;schema&quot;:{&quot;content&quot;:{&quot;desktop&quot
 </code></pre></div>
 <h3 id="zgc-jdk-17">ZGC (JDK 17+)<a class="headerlink" href="#zgc-jdk-17" title="Permanent link">¶</a></h3>
 <div class="highlight"><pre><span></span><code>-XX:+UseZGC
--XX:+ZGenerational
 -XX:SoftMaxHeapSize<span class="o">=</span>28G
+<span class="c1"># -XX:+ZGenerational  # JDK 21+ only, improves GC efficiency</span>
 </code></pre></div>
 <h2 id="gc-logging">GC Logging<a class="headerlink" href="#gc-logging" title="Permanent link">¶</a></h2>
 <div class="highlight"><pre><span></span><code><span class="c1"># JDK 11+</span>

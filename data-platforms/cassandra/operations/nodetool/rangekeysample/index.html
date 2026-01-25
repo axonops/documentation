@@ -20558,35 +20558,32 @@ data-et-multi-view="{&quot;schema&quot;:{&quot;content&quot;:{&quot;desktop&quot
 <h3 id="what-the-output-represents">What the Output Represents<a class="headerlink" href="#what-the-output-represents" title="Permanent link">¶</a></h3>
 <p>Each line in the output represents a sampled partition key. The keys shown are:</p>
 <ul>
-<li><strong>Actual partition keys</strong> from SSTables on the local node</li>
+<li><strong>Token values</strong> derived from partition keys in SSTables on the local node</li>
 <li><strong>Distributed across token ranges</strong> the node owns</li>
 <li><strong>A statistical sample</strong>, not an exhaustive list</li>
 <li><strong>Representative of data distribution</strong> patterns</li>
 </ul>
 <hr>
 <h2 id="output-format">Output Format<a class="headerlink" href="#output-format" title="Permanent link">¶</a></h2>
-<div class="highlight"><pre><span></span><code>&lt;partition_key_1&gt;
-&lt;partition_key_2&gt;
-&lt;partition_key_3&gt;
+<p>The command outputs <strong>token values</strong> (not the partition key strings directly) with a header:</p>
+<div class="highlight"><pre><span></span><code>RangeKeySample:
+&lt;token_value_1&gt;
+&lt;token_value_2&gt;
+&lt;token_value_3&gt;
 ...
 </code></pre></div>
 <h3 id="example-output">Example Output<a class="headerlink" href="#example-output" title="Permanent link">¶</a></h3>
-<p>For a table with UUID partition keys:</p>
-<div class="highlight"><pre><span></span><code>550e8400-e29b-41d4-a716-446655440000
-6ba7b810-9dad-11d1-80b4-00c04fd430c8
-6ba7b811-9dad-11d1-80b4-00c04fd430c8
-7c9e6679-7425-40de-944b-e07fc1f90ae7
+<div class="highlight"><pre><span></span><code>RangeKeySample:
+-9223372036854775808
+-8523372036854775000
+-7123372036854775123
+-6023372036854775456
 ...
 </code></pre></div>
-<p>For a table with text partition keys:</p>
-<div class="highlight"><pre><span></span><code>user_12345
-user_23456
-user_34567
-order_98765
-order_87654
-...
-</code></pre></div>
-<p>For composite partition keys, the output shows the combined key representation.</p>
+<div class="admonition info">
+<p class="admonition-title">Token Values vs Partition Keys</p>
+<p>The output shows token values (the hash of partition keys), not the human-readable partition key strings. To find which partition key corresponds to a token, use <code>SELECT * FROM table WHERE token(partition_key) = &lt;token&gt;</code>.</p>
+</div>
 <hr>
 <h2 id="arguments">Arguments<a class="headerlink" href="#arguments" title="Permanent link">¶</a></h2>
 <p>This command takes no arguments. It samples keys from all keyspaces and tables on the node.</p>

@@ -9238,9 +9238,9 @@ data-et-multi-view="{&quot;schema&quot;:{&quot;content&quot;:{&quot;desktop&quot
 </li>
         
           <li class="md-nav__item">
-  <a href="#track-hints-table-size" class="md-nav__link">
+  <a href="#track-hints-directory-size" class="md-nav__link">
     <span class="md-ellipsis">
-      Track Hints Table Size
+      Track Hints Directory Size
     </span>
   </a>
   
@@ -20331,9 +20331,9 @@ data-et-multi-view="{&quot;schema&quot;:{&quot;content&quot;:{&quot;desktop&quot
 </li>
         
           <li class="md-nav__item">
-  <a href="#track-hints-table-size" class="md-nav__link">
+  <a href="#track-hints-directory-size" class="md-nav__link">
     <span class="md-ellipsis">
-      Track Hints Table Size
+      Track Hints Directory Size
     </span>
   </a>
   
@@ -20657,7 +20657,7 @@ watch<span class="w"> </span><span class="s1">'nodetool listpendinghints'</span>
 </table>
 <div class="admonition info">
 <p class="admonition-title">Gradual Delivery</p>
-<p>Hints are delivered gradually based on <code>hinted_handoff_throttle_in_kb</code> to prevent overwhelming target nodes.</p>
+<p>Hints are delivered gradually based on <code>hinted_handoff_throttle</code> to prevent overwhelming target nodes.</p>
 </div>
 <hr>
 <h2 id="monitoring-after-resume">Monitoring After Resume<a class="headerlink" href="#monitoring-after-resume" title="Permanent link">¶</a></h2>
@@ -20673,9 +20673,9 @@ nodetool<span class="w"> </span>tpstats<span class="w"> </span><span class="p">|
 </p><div class="highlight"><pre><span></span><code>Pool Name                         Active   Pending      Completed   Blocked  All time blocked
 HintedHandoff                          2         0           1523         0                 0
 </code></pre></div>
-<h3 id="track-hints-table-size">Track Hints Table Size<a class="headerlink" href="#track-hints-table-size" title="Permanent link">¶</a></h3>
-<div class="highlight"><pre><span></span><code><span class="c1"># Monitor hints table shrinking</span>
-watch<span class="w"> </span>-n<span class="w"> </span><span class="m">30</span><span class="w"> </span><span class="s1">'nodetool tablestats system.hints | grep "Space used"'</span>
+<h3 id="track-hints-directory-size">Track Hints Directory Size<a class="headerlink" href="#track-hints-directory-size" title="Permanent link">¶</a></h3>
+<div class="highlight"><pre><span></span><code><span class="c1"># Monitor hints directory shrinking (hints stored as files)</span>
+watch<span class="w"> </span>-n<span class="w"> </span><span class="m">30</span><span class="w"> </span><span class="s1">'du -sh /var/lib/cassandra/hints/'</span>
 </code></pre></div>
 <hr>
 <h2 id="workflow-complete-pauseresume-cycle">Workflow: Complete Pause/Resume Cycle<a class="headerlink" href="#workflow-complete-pauseresume-cycle" title="Permanent link">¶</a></h2>
@@ -20727,10 +20727,35 @@ nodetool<span class="w"> </span>resumehandoff
 <hr>
 <h2 id="throttling-hint-delivery">Throttling Hint Delivery<a class="headerlink" href="#throttling-hint-delivery" title="Permanent link">¶</a></h2>
 <h3 id="default-throttling">Default Throttling<a class="headerlink" href="#default-throttling" title="Permanent link">¶</a></h3>
-<p>Hint delivery is throttled by default to prevent overwhelming target nodes:</p>
-<div class="highlight"><pre><span></span><code><span class="c1"># cassandra.yaml</span>
-<span class="nt">hinted_handoff_throttle_in_kb</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">1024</span><span class="w">  </span><span class="c1"># KB per second</span>
+<p>Hint delivery is throttled by default to prevent overwhelming target nodes. Parameter names vary by version:</p>
+<table>
+<thead>
+<tr>
+<th>Cassandra Version</th>
+<th>Throttle Parameter</th>
+<th>Example</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Pre-4.1</td>
+<td><code>hinted_handoff_throttle_in_kb</code></td>
+<td><code>1024</code></td>
+</tr>
+<tr>
+<td>4.1+</td>
+<td><code>hinted_handoff_throttle</code></td>
+<td><code>1024KiB</code></td>
+</tr>
+</tbody>
+</table>
+<div class="highlight"><pre><span></span><code><span class="c1"># cassandra.yaml (4.1+)</span>
+<span class="nt">hinted_handoff_throttle</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">1024KiB</span>
 <span class="nt">max_hints_delivery_threads</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">2</span>
+
+<span class="c1"># cassandra.yaml (Pre-4.1)</span>
+<span class="c1"># hinted_handoff_throttle_in_kb: 1024</span>
+<span class="c1"># max_hints_delivery_threads: 2</span>
 </code></pre></div>
 <h3 id="adjust-during-delivery">Adjust During Delivery<a class="headerlink" href="#adjust-during-delivery" title="Permanent link">¶</a></h3>
 <div class="highlight"><pre><span></span><code><span class="c1"># If delivery is too slow and nodes can handle more</span>
@@ -20760,14 +20785,14 @@ nodetool<span class="w"> </span>sethintedhandoffthrottlekb<span class="w"> </spa
 <div class="highlight"><pre><span></span><code><span class="ch">#!/bin/bash</span>
 <span class="c1"># resume_handoff_cluster.sh</span>
 
-<span class="nb">echo</span><span class="w"> </span><span class="s2">"Resuming hint delivery cluster-wide..."</span><span class="c1"># Get list of node IPs from local nodetool status</span>
+<span class="nb">echo</span><span class="w"> </span><span class="s2">"Resuming hint delivery cluster-wide..."</span>
 
-
+<span class="c1"># Get list of node IPs from local nodetool status</span>
 <span class="nv">nodes</span><span class="o">=</span><span class="k">$(</span>nodetool<span class="w"> </span>status<span class="w"> </span><span class="p">|</span><span class="w"> </span>grep<span class="w"> </span><span class="s2">"^UN"</span><span class="w"> </span><span class="p">|</span><span class="w"> </span>awk<span class="w"> </span><span class="s1">'{print $2}'</span><span class="k">)</span>
 
 <span class="k">for</span><span class="w"> </span>node<span class="w"> </span><span class="k">in</span><span class="w"> </span><span class="nv">$nodes</span><span class="p">;</span><span class="w"> </span><span class="k">do</span>
 <span class="w">    </span><span class="nb">echo</span><span class="w"> </span>-n<span class="w"> </span><span class="s2">"</span><span class="nv">$node</span><span class="s2">: "</span>
-<span class="w">    </span>ssh<span class="w"> </span><span class="s2">"</span><span class="nv">$node</span><span class="s2">"</span><span class="w"> </span><span class="s2">"nodetool resumehandoff 2&gt;/dev/null &amp;&amp; echo "</span>resumed<span class="s2">" || echo "</span>FAILED<span class="s2">""</span>
+<span class="w">    </span>ssh<span class="w"> </span><span class="s2">"</span><span class="nv">$node</span><span class="s2">"</span><span class="w"> </span><span class="s1">'nodetool resumehandoff 2&gt;/dev/null &amp;&amp; echo "resumed" || echo "FAILED"'</span>
 <span class="k">done</span>
 
 <span class="nb">echo</span><span class="w"> </span><span class="s2">""</span>
@@ -20781,9 +20806,9 @@ nodetool<span class="w"> </span>sethintedhandoffthrottlekb<span class="w"> </spa
 <div class="highlight"><pre><span></span><code><span class="ch">#!/bin/bash</span>
 <span class="c1"># monitor_cluster_hint_delivery.sh</span>
 
-<span class="nb">echo</span><span class="w"> </span><span class="s2">"=== Cluster Hint Delivery Status ==="</span><span class="c1"># Get list of node IPs from local nodetool status</span>
+<span class="nb">echo</span><span class="w"> </span><span class="s2">"=== Cluster Hint Delivery Status ==="</span>
 
-
+<span class="c1"># Get list of node IPs from local nodetool status</span>
 <span class="nv">nodes</span><span class="o">=</span><span class="k">$(</span>nodetool<span class="w"> </span>status<span class="w"> </span><span class="p">|</span><span class="w"> </span>grep<span class="w"> </span><span class="s2">"^UN"</span><span class="w"> </span><span class="p">|</span><span class="w"> </span>awk<span class="w"> </span><span class="s1">'{print $2}'</span><span class="k">)</span>
 
 <span class="nv">total_pending</span><span class="o">=</span><span class="m">0</span>
@@ -20892,7 +20917,7 @@ nodetool<span class="w"> </span>listpendinghints
 </div>
 <div class="admonition warning">
 <p class="admonition-title">After Extended Pause</p>
-<p>If hints were paused longer than <code>max_hint_window_in_ms</code> (default 3 hours), some hints may have expired. Run <code>nodetool repair -pr</code> after resuming to ensure full consistency.</p>
+<p>If hints were paused longer than <code>max_hint_window</code> (default 3 hours), some hints may have expired. Run <code>nodetool repair -pr</code> after resuming to ensure full consistency.</p>
 </div>
 <hr>
 <h2 id="related-commands">Related Commands<a class="headerlink" href="#related-commands" title="Permanent link">¶</a></h2>

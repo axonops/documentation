@@ -9849,6 +9849,15 @@ data-et-multi-view="{&quot;schema&quot;:{&quot;content&quot;:{&quot;desktop&quot
 </li>
       
         <li class="md-nav__item">
+  <a href="#options" class="md-nav__link">
+    <span class="md-ellipsis">
+      Options
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#description" class="md-nav__link">
     <span class="md-ellipsis">
       Description
@@ -20147,6 +20156,15 @@ data-et-multi-view="{&quot;schema&quot;:{&quot;content&quot;:{&quot;desktop&quot
 </li>
       
         <li class="md-nav__item">
+  <a href="#options" class="md-nav__link">
+    <span class="md-ellipsis">
+      Options
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#description" class="md-nav__link">
     <span class="md-ellipsis">
       Description
@@ -20513,8 +20531,27 @@ data-et-multi-view="{&quot;schema&quot;:{&quot;content&quot;:{&quot;desktop&quot
 <p>Displays garbage collection statistics for the Cassandra JVM.</p>
 <hr>
 <h2 id="synopsis">Synopsis<a class="headerlink" href="#synopsis" title="Permanent link">¶</a></h2>
-<div class="highlight"><pre><span></span><code>nodetool<span class="w"> </span><span class="o">[</span>connection_options<span class="o">]</span><span class="w"> </span>gcstats
+<div class="highlight"><pre><span></span><code>nodetool<span class="w"> </span><span class="o">[</span>connection_options<span class="o">]</span><span class="w"> </span>gcstats<span class="w"> </span><span class="o">[</span>options<span class="o">]</span>
 </code></pre></div>
+<h2 id="options">Options<a class="headerlink" href="#options" title="Permanent link">¶</a></h2>
+<table>
+<thead>
+<tr>
+<th>Option</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>-F, --format &lt;format&gt;</code></td>
+<td>Output format: <code>json</code>, <code>yaml</code>, or <code>table</code> (default)</td>
+</tr>
+<tr>
+<td><code>-H, --human-readable</code></td>
+<td>Display sizes in human-readable format</td>
+</tr>
+</tbody>
+</table>
 <h2 id="description">Description<a class="headerlink" href="#description" title="Permanent link">¶</a></h2>
 <p><code>nodetool gcstats</code> shows cumulative garbage collection metrics including:</p>
 <ul>
@@ -20539,8 +20576,8 @@ data-et-multi-view="{&quot;schema&quot;:{&quot;content&quot;:{&quot;desktop&quot
 </div>
 <hr>
 <h2 id="output-example">Output Example<a class="headerlink" href="#output-example" title="Permanent link">¶</a></h2>
-<div class="highlight"><pre><span></span><code>       Interval (ms) Max GC Elapsed (ms)Total GC Elapsed (ms)Stdev GC Elapsed (ms)   GC Reclaimed (MB)         Collections      Direct Memory Bytes
-                 986                 123                45678                   45               123456                1234                 67108864
+<div class="highlight"><pre><span></span><code>       Interval (ms) Max GC Elapsed (ms)Total GC Elapsed (ms)Stdev GC Elapsed (ms)   GC Reclaimed (bytes)         GC Count   Allocated Direct Memory Bytes  Max Direct Memory Bytes  Reserved Direct Memory Bytes
+                 986                 123                45678                   45              129536000             1234                        67108864                134217728                     134217728
 </code></pre></div>
 <hr>
 <h2 id="output-fields">Output Fields<a class="headerlink" href="#output-fields" title="Permanent link">¶</a></h2>
@@ -20569,16 +20606,24 @@ data-et-multi-view="{&quot;schema&quot;:{&quot;content&quot;:{&quot;desktop&quot
 <td>Standard deviation of GC times</td>
 </tr>
 <tr>
-<td>GC Reclaimed (MB)</td>
-<td>Memory reclaimed by GC</td>
+<td>GC Reclaimed (bytes)</td>
+<td>Memory reclaimed by GC (in bytes; use <code>-H</code> for human-readable units)</td>
 </tr>
 <tr>
-<td>Collections</td>
+<td>GC Count</td>
 <td>Number of GC invocations</td>
 </tr>
 <tr>
-<td>Direct Memory Bytes</td>
-<td>Off-heap memory usage</td>
+<td>Allocated Direct Memory Bytes</td>
+<td>Currently allocated off-heap (direct) memory</td>
+</tr>
+<tr>
+<td>Max Direct Memory Bytes</td>
+<td>Maximum off-heap memory configured</td>
+</tr>
+<tr>
+<td>Reserved Direct Memory Bytes</td>
+<td>Reserved off-heap memory</td>
 </tr>
 </tbody>
 </table>

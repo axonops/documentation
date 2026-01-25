@@ -20098,26 +20098,31 @@ data-et-multi-view="{&quot;schema&quot;:{&quot;content&quot;:{&quot;desktop&quot
 </tr>
 <tr>
 <td><code>SERIAL</code> / <code>LOCAL_SERIAL</code></td>
-<td>Linearizable (via Paxos)</td>
-<td>Compare-and-set operations</td>
+<td>Linearizable per-partition (via Paxos)</td>
+<td>Compare-and-set operations (LWT)</td>
 </tr>
 </tbody>
 </table>
 <div class="admonition tip">
-<p class="admonition-title">Strong Consistency Formula</p>
-<p>When <code>R + W &gt; RF</code> (reads + writes &gt; replication factor), strong consistency is achieved. With <code>RF=3</code>, using <code>QUORUM</code> for both reads and writes satisfies this: <code>2 + 2 &gt; 3</code>.</p>
+<p class="admonition-title">Strong Consistency Heuristic</p>
+<p>When <code>R + W &gt; RF</code> (reads + writes &gt; replication factor), strong consistency is generally achieved under normal operation. With <code>RF=3</code>, using <code>QUORUM</code> for both reads and writes satisfies this: <code>2 + 2 &gt; 3</code>. Note: this is a heuristic that assumes no concurrent failures; edge cases exist under specific failure modes.</p>
 </div>
 <h3 id="common-patterns">Common Patterns<a class="headerlink" href="#common-patterns" title="Permanent link">¶</a></h3>
 <p><strong>Strong consistency (most applications):</strong>
-</p><div class="highlight"><pre><span></span><code>-- Write with QUORUM
-INSERT INTO users (id, name) VALUES (?, ?) USING CONSISTENCY QUORUM;
+</p><div class="highlight"><pre><span></span><code><span class="c1">// Consistency is set via driver, not in CQL</span>
+<span class="n">Statement</span><span class="w"> </span><span class="n">stmt</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">SimpleStatement</span><span class="p">.</span><span class="na">builder</span><span class="p">(</span><span class="s">"INSERT INTO users (id, name) VALUES (?, ?)"</span><span class="p">)</span>
+<span class="w">    </span><span class="p">.</span><span class="na">setConsistencyLevel</span><span class="p">(</span><span class="n">ConsistencyLevel</span><span class="p">.</span><span class="na">QUORUM</span><span class="p">)</span>
+<span class="w">    </span><span class="p">.</span><span class="na">build</span><span class="p">();</span>
 
--- Read with QUORUM
-SELECT * FROM users WHERE id = ? CONSISTENCY QUORUM;
+<span class="n">Statement</span><span class="w"> </span><span class="n">read</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">SimpleStatement</span><span class="p">.</span><span class="na">builder</span><span class="p">(</span><span class="s">"SELECT * FROM users WHERE id = ?"</span><span class="p">)</span>
+<span class="w">    </span><span class="p">.</span><span class="na">setConsistencyLevel</span><span class="p">(</span><span class="n">ConsistencyLevel</span><span class="p">.</span><span class="na">QUORUM</span><span class="p">)</span>
+<span class="w">    </span><span class="p">.</span><span class="na">build</span><span class="p">();</span>
 </code></pre></div>
 <p><strong>Eventual consistency (high-throughput, loss-tolerant):</strong>
-</p><div class="highlight"><pre><span></span><code>-- Metrics, logs, time-series where some loss is acceptable
-INSERT INTO metrics (sensor_id, ts, value) VALUES (?, ?, ?) USING CONSISTENCY ONE;
+</p><div class="highlight"><pre><span></span><code><span class="c1">// Metrics, logs, time-series where some loss is acceptable</span>
+<span class="n">Statement</span><span class="w"> </span><span class="n">stmt</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">SimpleStatement</span><span class="p">.</span><span class="na">builder</span><span class="p">(</span><span class="s">"INSERT INTO metrics (sensor_id, ts, value) VALUES (?, ?, ?)"</span><span class="p">)</span>
+<span class="w">    </span><span class="p">.</span><span class="na">setConsistencyLevel</span><span class="p">(</span><span class="n">ConsistencyLevel</span><span class="p">.</span><span class="na">ONE</span><span class="p">)</span>
+<span class="w">    </span><span class="p">.</span><span class="na">build</span><span class="p">();</span>
 </code></pre></div>
 <p><strong>Linearizable consistency (compare-and-set):</strong>
 </p><div class="highlight"><pre><span></span><code>-- Lightweight transaction for conditional updates
@@ -20132,7 +20137,7 @@ UPDATE accounts SET balance = ? WHERE id = ? IF balance = ?;
 </ul>
 <div class="admonition warning">
 <p class="admonition-title">Configure Consistency Explicitly</p>
-<p>Driver defaults are optimized for availability, not consistency. Production applications should explicitly set consistency levels based on data requirements rather than relying on defaults.</p>
+<p>Driver defaults vary by driver and version (often <code>LOCAL_ONE</code> or <code>ONE</code>). Production applications should explicitly set consistency levels based on data requirements rather than relying on defaults.</p>
 </div>
 <hr>
 <h2 id="developer-responsibility">Developer Responsibility<a class="headerlink" href="#developer-responsibility" title="Permanent link">¶</a></h2>

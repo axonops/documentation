@@ -20780,7 +20780,7 @@ Result: balance = 120 (Client A's update lost!)
 <tr>
 <td>Round trips</td>
 <td>1</td>
-<td>4 (prepare, read, propose, commit)</td>
+<td>Typically 4 (prepare, read, propose, commit); varies with contention and Paxos version</td>
 </tr>
 <tr>
 <td>Latency</td>
@@ -20795,7 +20795,7 @@ Result: balance = 120 (Client A's update lost!)
 <tr>
 <td>Replicas involved</td>
 <td>Configurable (CL)</td>
-<td>All replicas (SERIAL)</td>
+<td>Quorum for Paxos phase (SERIAL), write CL for commit</td>
 </tr>
 </tbody>
 </table>
@@ -20832,7 +20832,7 @@ Result: balance = 120 (Client A's update lost!)
 <tbody>
 <tr>
 <td><strong>Reduced round-trips</strong></td>
-<td>Optimized protocol reduces WAN round trips from four to two for writes</td>
+<td>Optimized protocol reduces round trips in common cases (exact reduction depends on contention and scenario)</td>
 </tr>
 <tr>
 <td><strong>Better contention handling</strong></td>

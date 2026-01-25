@@ -20662,21 +20662,21 @@ data-et-multi-view="{&quot;schema&quot;:{&quot;content&quot;:{&quot;desktop&quot
 </tr>
 <tr>
 <td>Token-aware routing</td>
-<td>Better coordinator selection</td>
+<td>Explicit partition key metadata for routing</td>
 </tr>
 <tr>
 <td>Type safety</td>
-<td>Compile-time validation in drivers</td>
+<td>Runtime validation of bound values</td>
 </tr>
 <tr>
 <td>Security</td>
-<td>No CQL injection possible</td>
+<td>Reduced CQL injection risk when inputs are bound</td>
 </tr>
 </tbody>
 </table>
 <div class="admonition tip">
 <p class="admonition-title">Always Use Prepared Statements</p>
-<p>Prepared statements should be used for all production queries. They provide security against injection attacks, enable token-aware routing, and reduce message sizes.</p>
+<p>Prepared statements should be used for all production queries. They reduce injection risk (when inputs are bound, not concatenated), enable token-aware routing, and reduce message sizes.</p>
 </div>
 <hr>
 <h2 id="protocol-flow">Protocol Flow<a class="headerlink" href="#protocol-flow" title="Permanent link">¶</a></h2>
@@ -20694,7 +20694,7 @@ data-et-multi-view="{&quot;schema&quot;:{&quot;content&quot;:{&quot;desktop&quot
 <li>Protocol-relevant settings</li>
 </ul>
 <p><strong>ID Computation:</strong>
-</p><div class="highlight"><pre><span></span><code>ID = MD5(query_string + keyspace + settings)
+</p><div class="highlight"><pre><span></span><code>ID = MD5(query_string [+ keyspace if provided])
      ↓
 16-byte identifier
 </code></pre></div>
@@ -20711,14 +20711,33 @@ Purpose:
 <h2 id="server-side-architecture">Server-Side Architecture<a class="headerlink" href="#server-side-architecture" title="Permanent link">¶</a></h2>
 <h3 id="prepared-statement-cache">Prepared Statement Cache<a class="headerlink" href="#prepared-statement-cache" title="Permanent link">¶</a></h3>
 <p>Cassandra maintains a cache of prepared statements:</p>
-<div class="highlight"><pre><span></span><code><span class="c1"># cassandra.yaml</span>
-<span class="nt">prepared_statements_cache_size_mb</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">100</span><span class="w">  </span><span class="c1"># Maximum cache size</span>
-</code></pre></div>
+<p><strong>Cache configuration:</strong></p>
+<table>
+<thead>
+<tr>
+<th>Version</th>
+<th>Parameter</th>
+<th>Default</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>4.0</td>
+<td><code>prepared_statements_cache_size_mb</code></td>
+<td><code>auto</code> (1/256 heap or 10MiB, whichever is greater)</td>
+</tr>
+<tr>
+<td>4.1+</td>
+<td><code>prepared_statements_cache_size</code></td>
+<td><code>auto</code></td>
+</tr>
+</tbody>
+</table>
 <p><strong>Cache characteristics:</strong>
 - Per-node cache (not distributed)
-- LRU eviction when full
+- Size-based eviction (Caffeine W-TinyLFU algorithm)
 - Survives connection close
-- Lost on node restart</p>
+- Persisted in <code>system.prepared_statements</code> and reloaded on startup</p>
 <h3 id="cache-structure">Cache Structure<a class="headerlink" href="#cache-structure" title="Permanent link">¶</a></h3>
 <div class="highlight"><pre><span></span><code>Cache Entry:
   Key: Statement ID (16 bytes)
@@ -20987,11 +21006,11 @@ Savings: 56% smaller
 </ul>
 <div class="admonition note">
 <p class="admonition-title">Automatic Reprepare</p>
-<p>All modern drivers handle UNPREPARED errors transparently by re-preparing the statement and retrying. Applications typically do not need special handling for this scenario.</p>
+<p>Most drivers handle UNPREPARED errors transparently by re-preparing the statement and retrying. Behavior varies by driver and configuration; consult driver documentation for specifics.</p>
 </div>
-<p><strong>Statement not found on all nodes:</strong>
-- Prepared on one node only
-- Solution: Prepare on each connection</p>
+<p><strong>Statement not found on a node:</strong>
+- Typically caused by cache eviction or node restart
+- Drivers automatically re-prepare on the affected node</p>
 <p><strong>Cache exhaustion:</strong>
 - Too many unique queries
 - Solution: Increase cache size or reduce unique queries</p>

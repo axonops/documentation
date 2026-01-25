@@ -20621,7 +20621,7 @@ data-et-multi-view="{&quot;schema&quot;:{&quot;content&quot;:{&quot;desktop&quot
 <p><strong>Sets node state to LEAVING</strong> - The node announces via gossip that it is leaving the cluster. Other nodes see status change from UN (Up/Normal) to UL (Up/Leaving).</p>
 </li>
 <li>
-<p><strong>Stops accepting coordinator requests</strong> - The node stops accepting new client write requests as a coordinator, though it continues to accept replica writes from other coordinators during streaming.</p>
+<p><strong>Continues serving requests during streaming</strong> - The node keeps networking up and continues to serve requests as a coordinator and replica during the streaming phase. This allows clients to continue using the node until streaming completes.</p>
 </li>
 <li>
 <p><strong>Calculates token range transfers</strong> - The node determines which other nodes should receive its token ranges based on the replication strategy and token allocation.</p>
@@ -20636,7 +20636,7 @@ data-et-multi-view="{&quot;schema&quot;:{&quot;content&quot;:{&quot;desktop&quot
 <p><strong>Updates cluster topology</strong> - The ring topology is updated across all nodes via gossip. The node's entry is removed from <code>system.peers</code> on other nodes.</p>
 </li>
 <li>
-<p><strong>Shuts down</strong> - The Cassandra process exits. The node no longer appears in <code>nodetool status</code>.</p>
+<p><strong>Networking shuts down</strong> - After streaming and topology updates complete, Cassandra shuts down its networking (gossip, native protocol). The process does <strong>not</strong> exit automatically; the operator must stop the Cassandra process manually. The node no longer appears in <code>nodetool status</code>.</p>
 </li>
 </ol>
 <div class="admonition info">
@@ -20714,14 +20714,18 @@ nodetool<span class="w"> </span>decommission
 <hr>
 <h2 id="decommission-process">Decommission Process<a class="headerlink" href="#decommission-process" title="Permanent link">¶</a></h2>
 <ol>
-<li>Stop accepting new writes</li>
+<li>Announce LEAVING state via gossip</li>
 <li>Calculate token ranges to stream</li>
 <li>Stream data to remaining nodes (monitor with <code>nodetool netstats</code>)</li>
-<li>Wait for streaming to complete</li>
-<li>Update cluster topology</li>
+<li>Continue serving requests during streaming</li>
+<li>Update cluster topology when streaming completes</li>
 <li>Remove node from ring</li>
-<li>Shutdown</li>
+<li>Shut down networking (operator must stop Cassandra process)</li>
 </ol>
+<div class="admonition info">
+<p class="admonition-title">Continuing a Decommission</p>
+<p>If a decommission was interrupted and restarted, running <code>nodetool decommission</code> again will print "This node is still decommissioning" and continue the operation.</p>
+</div>
 <h3 id="duration-estimate">Duration Estimate<a class="headerlink" href="#duration-estimate" title="Permanent link">¶</a></h3>
 <table>
 <thead>

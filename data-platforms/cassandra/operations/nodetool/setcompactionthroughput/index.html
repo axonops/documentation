@@ -8658,9 +8658,9 @@ data-et-multi-view="{&quot;schema&quot;:{&quot;content&quot;:{&quot;desktop&quot
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
-  <a href="#set-throughput-to-128-mbs" class="md-nav__link">
+  <a href="#set-throughput-to-128-mibs" class="md-nav__link">
     <span class="md-ellipsis">
-      Set Throughput to 128 MB/s
+      Set Throughput to 128 MiB/s
     </span>
   </a>
   
@@ -20187,9 +20187,9 @@ data-et-multi-view="{&quot;schema&quot;:{&quot;content&quot;:{&quot;desktop&quot
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
-  <a href="#set-throughput-to-128-mbs" class="md-nav__link">
+  <a href="#set-throughput-to-128-mibs" class="md-nav__link">
     <span class="md-ellipsis">
-      Set Throughput to 128 MB/s
+      Set Throughput to 128 MiB/s
     </span>
   </a>
   
@@ -20515,17 +20515,17 @@ data-et-multi-view="{&quot;schema&quot;:{&quot;content&quot;:{&quot;desktop&quot
 <div class="admonition info">
 <p class="admonition-title">Aggregate Limit</p>
 <p>The throughput limit is the <strong>total aggregate limit across all concurrent compaction threads</strong>, not a per-thread limit.</p>
-<p>For example, with <code>concurrent_compactors: 4</code> and throughput set to <code>128 MB/s</code>:</p>
+<p>For example, with <code>concurrent_compactors: 4</code> and throughput set to <code>128 MiB/s</code>:</p>
 <ul>
-<li>All 4 compaction threads <strong>share</strong> the 128 MB/s budget</li>
-<li>Each thread averages approximately 32 MB/s (128 ÷ 4)</li>
+<li>All 4 compaction threads <strong>share</strong> the 128 MiB/s budget</li>
+<li>Each thread averages approximately 32 MiB/s (128 ÷ 4)</li>
 <li>The actual distribution varies based on workload</li>
 </ul>
 <div class="highlight"><pre><span></span><code>┌─────────────────────────────────────────────────────┐
-│              Total Throughput: 128 MB/s             │
+│              Total Throughput: 128 MiB/s             │
 ├─────────────────────────────────────────────────────┤
 │  Thread 1    Thread 2    Thread 3    Thread 4       │
-│   ~32 MB/s    ~32 MB/s    ~32 MB/s    ~32 MB/s      │
+│   ~32 MiB/s    ~32 MiB/s    ~32 MiB/s    ~32 MiB/s      │
 │      ↓           ↓           ↓           ↓          │
 │  ═══════════════════════════════════════════════    │
 │                    Disk I/O                         │
@@ -20534,7 +20534,7 @@ data-et-multi-view="{&quot;schema&quot;:{&quot;content&quot;:{&quot;desktop&quot
 </div>
 <div class="admonition warning">
 <p class="admonition-title">Non-Persistent Setting</p>
-<p>This setting is applied at runtime only and does not persist across node restarts. After a restart, the value reverts to the <code>compaction_throughput</code> setting in <code>cassandra.yaml</code> (default: 64 MB/s).</p>
+<p>This setting is applied at runtime only and does not persist across node restarts. After a restart, the value reverts to the <code>compaction_throughput</code> setting in <code>cassandra.yaml</code> (default: 64 MiB/s).</p>
 <p>To make the change permanent, update <code>cassandra.yaml</code>:</p>
 <div class="highlight"><pre><span></span><code><span class="nt">compaction_throughput</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">128MiB/s</span>
 </code></pre></div>
@@ -20550,14 +20550,39 @@ data-et-multi-view="{&quot;schema&quot;:{&quot;content&quot;:{&quot;desktop&quot
 </thead>
 <tbody>
 <tr>
-<td><code>throughput_mb_per_sec</code></td>
-<td>Maximum MB/s for all compaction writes combined. 0 = unlimited</td>
+<td><code>throughput_mib_per_sec</code></td>
+<td>Maximum MiB/s for all compaction writes combined. 0 = unlimited</td>
 </tr>
 </tbody>
 </table>
+<div class="admonition note">
+<p class="admonition-title">cassandra.yaml Parameter</p>
+<p>The corresponding cassandra.yaml parameter changed in 4.1:</p>
+<table>
+<thead>
+<tr>
+<th>Cassandra Version</th>
+<th>Parameter Name</th>
+<th>Example</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Pre-4.1</td>
+<td><code>compaction_throughput_mb_per_sec</code></td>
+<td><code>64</code></td>
+</tr>
+<tr>
+<td>4.1+</td>
+<td><code>compaction_throughput</code></td>
+<td><code>64MiB/s</code></td>
+</tr>
+</tbody>
+</table>
+</div>
 <hr>
 <h2 id="examples">Examples<a class="headerlink" href="#examples" title="Permanent link">¶</a></h2>
-<h3 id="set-throughput-to-128-mbs">Set Throughput to 128 MB/s<a class="headerlink" href="#set-throughput-to-128-mbs" title="Permanent link">¶</a></h3>
+<h3 id="set-throughput-to-128-mibs">Set Throughput to 128 MiB/s<a class="headerlink" href="#set-throughput-to-128-mibs" title="Permanent link">¶</a></h3>
 <div class="highlight"><pre><span></span><code>nodetool<span class="w"> </span>setcompactionthroughput<span class="w"> </span><span class="m">128</span>
 </code></pre></div>
 <h3 id="remove-throttling-unlimited">Remove Throttling (Unlimited)<a class="headerlink" href="#remove-throttling-unlimited" title="Permanent link">¶</a></h3>
@@ -20715,7 +20740,7 @@ nodetool<span class="w"> </span>proxyhistograms
 <tr>
 <td><strong>Compaction throughput</strong></td>
 <td><code>nodetool compactionstats</code></td>
-<td>Actual MB/s being written</td>
+<td>Actual MiB/s being written</td>
 </tr>
 </tbody>
 </table>
@@ -20794,44 +20819,44 @@ nodetool<span class="w"> </span>proxyhistograms
 <tbody>
 <tr>
 <td><strong>HDD (7200 RPM)</strong></td>
-<td>64 MB/s</td>
-<td>32 MB/s</td>
-<td>128 MB/s</td>
+<td>64 MiB/s</td>
+<td>32 MiB/s</td>
+<td>128 MiB/s</td>
 <td>Limited by seek time, be conservative</td>
 </tr>
 <tr>
 <td><strong>HDD (15K RPM)</strong></td>
-<td>64 MB/s</td>
-<td>48 MB/s</td>
-<td>160 MB/s</td>
+<td>64 MiB/s</td>
+<td>48 MiB/s</td>
+<td>160 MiB/s</td>
 <td>Slightly better than 7200 RPM</td>
 </tr>
 <tr>
 <td><strong>SATA SSD</strong></td>
-<td>128 MB/s</td>
-<td>64 MB/s</td>
-<td>256 MB/s</td>
+<td>128 MiB/s</td>
+<td>64 MiB/s</td>
+<td>256 MiB/s</td>
 <td>Good baseline for most SSDs</td>
 </tr>
 <tr>
 <td><strong>NVMe SSD</strong></td>
-<td>256 MB/s</td>
-<td>128 MB/s</td>
-<td>512+ MB/s</td>
+<td>256 MiB/s</td>
+<td>128 MiB/s</td>
+<td>512+ MiB/s</td>
 <td>Can handle much higher throughput</td>
 </tr>
 <tr>
 <td><strong>Cloud (EBS gp3)</strong></td>
-<td>128 MB/s</td>
-<td>64 MB/s</td>
+<td>128 MiB/s</td>
+<td>64 MiB/s</td>
 <td>Provisioned IOPS</td>
 <td>Depends on provisioned performance</td>
 </tr>
 <tr>
 <td><strong>Cloud (local NVMe)</strong></td>
-<td>256 MB/s</td>
-<td>128 MB/s</td>
-<td>512+ MB/s</td>
+<td>256 MiB/s</td>
+<td>128 MiB/s</td>
+<td>512+ MiB/s</td>
 <td>Similar to on-prem NVMe</td>
 </tr>
 </tbody>
@@ -20859,7 +20884,7 @@ nodetool<span class="w"> </span>setcompactionthroughput<span class="w"> </span><
 <hr>
 <h2 id="impact-analysis">Impact Analysis<a class="headerlink" href="#impact-analysis" title="Permanent link">¶</a></h2>
 <h3 id="effects-of-different-throughput-settings">Effects of Different Throughput Settings<a class="headerlink" href="#effects-of-different-throughput-settings" title="Permanent link">¶</a></h3>
-<div class="highlight"><pre><span></span><code>Low Throughput (32-64 MB/s)
+<div class="highlight"><pre><span></span><code>Low Throughput (32-64 MiB/s)
 ├── Pros
 │   ├── Minimal impact on production I/O
 │   ├── Stable read/write latencies
@@ -20870,7 +20895,7 @@ nodetool<span class="w"> </span>setcompactionthroughput<span class="w"> </span><
     ├── Read performance degrades over time
     └── Disk space may fill with uncompacted data
 
-High Throughput (256+ MB/s)
+High Throughput (256+ MiB/s)
 ├── Pros
 │   ├── Compaction keeps pace with writes
 │   ├── Fewer SSTables, better read performance
@@ -20920,28 +20945,28 @@ Unlimited (0)
 <tbody>
 <tr>
 <td>2</td>
-<td>128 MB/s</td>
-<td>~64 MB/s</td>
+<td>128 MiB/s</td>
+<td>~64 MiB/s</td>
 </tr>
 <tr>
 <td>4</td>
-<td>128 MB/s</td>
-<td>~32 MB/s</td>
+<td>128 MiB/s</td>
+<td>~32 MiB/s</td>
 </tr>
 <tr>
 <td>8</td>
-<td>128 MB/s</td>
-<td>~16 MB/s</td>
+<td>128 MiB/s</td>
+<td>~16 MiB/s</td>
 </tr>
 <tr>
 <td>4</td>
-<td>256 MB/s</td>
-<td>~64 MB/s</td>
+<td>256 MiB/s</td>
+<td>~64 MiB/s</td>
 </tr>
 <tr>
 <td>4</td>
-<td>512 MB/s</td>
-<td>~128 MB/s</td>
+<td>512 MiB/s</td>
+<td>~128 MiB/s</td>
 </tr>
 </tbody>
 </table>
@@ -20956,26 +20981,24 @@ Unlimited (0)
 <div class="highlight"><pre><span></span><code><span class="ch">#!/bin/bash</span>
 <span class="c1"># set_compaction_throughput_cluster.sh</span>
 
-<span class="nv">THROUGHPUT</span><span class="o">=</span><span class="s2">"</span><span class="si">${</span><span class="nv">1</span><span class="k">:-</span><span class="nv">128</span><span class="si">}</span><span class="s2">"</span><span class="c1"># Get list of node IPs from local nodetool status</span>
+<span class="nv">THROUGHPUT</span><span class="o">=</span><span class="s2">"</span><span class="si">${</span><span class="nv">1</span><span class="k">:-</span><span class="nv">128</span><span class="si">}</span><span class="s2">"</span>
 
-
+<span class="c1"># Get list of node IPs from local nodetool status</span>
 <span class="nv">nodes</span><span class="o">=</span><span class="k">$(</span>nodetool<span class="w"> </span>status<span class="w"> </span><span class="p">|</span><span class="w"> </span>grep<span class="w"> </span><span class="s2">"^UN"</span><span class="w"> </span><span class="p">|</span><span class="w"> </span>awk<span class="w"> </span><span class="s1">'{print $2}'</span><span class="k">)</span>
 
-<span class="nb">echo</span><span class="w"> </span><span class="s2">"Setting compaction throughput to </span><span class="nv">$THROUGHPUT</span><span class="s2"> MB/s on all nodes..."</span>
+<span class="nb">echo</span><span class="w"> </span><span class="s2">"Setting compaction throughput to </span><span class="nv">$THROUGHPUT</span><span class="s2"> MiB/s on all nodes..."</span>
 
 <span class="k">for</span><span class="w"> </span>node<span class="w"> </span><span class="k">in</span><span class="w"> </span><span class="nv">$nodes</span><span class="p">;</span><span class="w"> </span><span class="k">do</span>
 <span class="w">    </span><span class="nb">echo</span><span class="w"> </span>-n<span class="w"> </span><span class="s2">"</span><span class="nv">$node</span><span class="s2">: "</span>
-<span class="w">    </span>ssh<span class="w"> </span><span class="s2">"</span><span class="nv">$node</span><span class="s2">"</span><span class="w"> </span><span class="s2">"nodetool setcompactionthroughput </span><span class="nv">$THROUGHPUT</span><span class="s2"> \"</span>
-<span class="s2">        &amp;&amp; echo "</span><span class="nb">set</span><span class="w"> </span>to<span class="w"> </span><span class="nv">$THROUGHPUT</span><span class="w"> </span>MB/s<span class="s2">" \</span>
-<span class="s2">        || echo "</span>FAILED<span class="s2">"</span>
-<span class="s2">done</span>
+<span class="w">    </span>ssh<span class="w"> </span><span class="s2">"</span><span class="nv">$node</span><span class="s2">"</span><span class="w"> </span><span class="s1">'nodetool setcompactionthroughput '</span><span class="s2">"</span><span class="nv">$THROUGHPUT</span><span class="s2">"</span><span class="s1">' &amp;&amp; echo "set to '</span><span class="s2">"</span><span class="nv">$THROUGHPUT</span><span class="s2">"</span><span class="s1">' MiB/s" || echo "FAILED"'</span>
+<span class="k">done</span>
 
-<span class="s2">echo ""</span>
-<span class="s2">echo "</span>Verification:<span class="s2">"</span>
-<span class="s2">for node in </span><span class="nv">$nodes</span><span class="s2">; do</span>
-<span class="s2">    echo -n "</span><span class="nv">$node</span>:<span class="w"> </span><span class="s2">"</span>
-<span class="s2">    ssh "</span><span class="nv">$node</span><span class="s2">" "</span>nodetool<span class="w"> </span>getcompactionthroughput<span class="s2">"</span>
-<span class="s2">done</span>
+<span class="nb">echo</span><span class="w"> </span><span class="s2">""</span>
+<span class="nb">echo</span><span class="w"> </span><span class="s2">"Verification:"</span>
+<span class="k">for</span><span class="w"> </span>node<span class="w"> </span><span class="k">in</span><span class="w"> </span><span class="nv">$nodes</span><span class="p">;</span><span class="w"> </span><span class="k">do</span>
+<span class="w">    </span><span class="nb">echo</span><span class="w"> </span>-n<span class="w"> </span><span class="s2">"</span><span class="nv">$node</span><span class="s2">: "</span>
+<span class="w">    </span>ssh<span class="w"> </span><span class="s2">"</span><span class="nv">$node</span><span class="s2">"</span><span class="w"> </span><span class="s2">"nodetool getcompactionthroughput"</span>
+<span class="k">done</span>
 </code></pre></div>
 <h3 id="making-changes-permanent">Making Changes Permanent<a class="headerlink" href="#making-changes-permanent" title="Permanent link">¶</a></h3>
 <div class="highlight"><pre><span></span><code><span class="c1"># cassandra.yaml - applies after restart</span>

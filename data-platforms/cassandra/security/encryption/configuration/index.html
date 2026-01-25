@@ -20352,7 +20352,7 @@ data-et-multi-view="{&quot;schema&quot;:{&quot;content&quot;:{&quot;desktop&quot
 
 <span class="w">    </span><span class="c1"># Enable legacy SSL storage port (7001)</span>
 <span class="w">    </span><span class="c1"># Set to true during migration from unencrypted</span>
-<span class="w">    </span><span class="nt">enable_legacy_ssl_storage_port</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">false</span>
+<span class="w">    </span><span class="nt">legacy_ssl_storage_port_enabled</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">false</span>
 
 <span class="w">    </span><span class="c1"># Keystore containing node's private key and certificate</span>
 <span class="w">    </span><span class="nt">keystore</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">/etc/cassandra/certs/node-keystore.jks</span>
@@ -20431,7 +20431,7 @@ data-et-multi-view="{&quot;schema&quot;:{&quot;content&quot;:{&quot;desktop&quot
 <div class="highlight"><pre><span></span><code><span class="c1"># On all nodes</span>
 <span class="nt">server_encryption_options</span><span class="p">:</span>
 <span class="w">    </span><span class="nt">internode_encryption</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">all</span>
-<span class="w">    </span><span class="nt">enable_legacy_ssl_storage_port</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">true</span>
+<span class="w">    </span><span class="nt">legacy_ssl_storage_port_enabled</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">true</span>
 <span class="w">    </span><span class="nt">optional</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">true</span><span class="w">  </span><span class="c1"># Accept both encrypted and unencrypted</span>
 </code></pre></div>
 <p>Perform rolling restart.</p>
@@ -20439,7 +20439,7 @@ data-et-multi-view="{&quot;schema&quot;:{&quot;content&quot;:{&quot;desktop&quot
 <div class="highlight"><pre><span></span><code><span class="c1"># On all nodes</span>
 <span class="nt">server_encryption_options</span><span class="p">:</span>
 <span class="w">    </span><span class="nt">internode_encryption</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">all</span>
-<span class="w">    </span><span class="nt">enable_legacy_ssl_storage_port</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">false</span>
+<span class="w">    </span><span class="nt">legacy_ssl_storage_port_enabled</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">false</span>
 <span class="w">    </span><span class="nt">optional</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">false</span>
 </code></pre></div>
 <p>Perform rolling restart.</p>

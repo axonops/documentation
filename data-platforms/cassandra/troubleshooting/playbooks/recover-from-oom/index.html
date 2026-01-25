@@ -20540,9 +20540,10 @@ ls<span class="w"> </span>-la<span class="w"> </span>/var/lib/cassandra/*.hprof
 <div class="highlight"><pre><span></span><code>grep<span class="w"> </span>-i<span class="w"> </span><span class="s2">"large partition"</span><span class="w"> </span>/var/log/cassandra/system.log
 </code></pre></div>
 <p><strong>Fix:</strong> See <a href="../large-partition/">Large Partition Issues</a></p>
-<div class="highlight"><pre><span></span><code><span class="c1"># Immediate: Reduce concurrent reads</span>
-nodetool<span class="w"> </span>setconcurrency<span class="w"> </span><span class="nb">read</span><span class="w"> </span><span class="m">8</span>
-</code></pre></div>
+<div class="admonition note">
+<p class="admonition-title">Concurrent Reads</p>
+<p>Concurrent reads are configured via <code>concurrent_reads</code> in <code>cassandra.yaml</code> and require a restart to change.</p>
+</div>
 <h3 id="cause-2-compaction">Cause 2: Compaction<a class="headerlink" href="#cause-2-compaction" title="Permanent link">¶</a></h3>
 <p><strong>Symptom:</strong> OOM during compaction</p>
 <div class="highlight"><pre><span></span><code>grep<span class="w"> </span>-i<span class="w"> </span><span class="s2">"compacting"</span><span class="w"> </span>/var/log/cassandra/system.log<span class="w"> </span><span class="p">|</span><span class="w"> </span>tail<span class="w"> </span>-20
@@ -20561,9 +20562,10 @@ nodetool<span class="w"> </span>setconcurrentcompactors<span class="w"> </span><
 <div class="highlight"><pre><span></span><code><span class="c1"># Reduce repair scope</span>
 nodetool<span class="w"> </span>repair<span class="w"> </span>-pr<span class="w"> </span>my_keyspace<span class="w"> </span>my_table<span class="w">  </span><span class="c1"># One table at a time</span>
 
-<span class="c1"># Or reduce Merkle tree depth</span>
-<span class="c1"># In cassandra.yaml</span>
-repair_session_max_tree_depth:<span class="w"> </span><span class="m">16</span><span class="w">  </span><span class="c1"># Default 20</span>
+<span class="c1"># Reduce repair memory usage</span>
+<span class="c1"># In cassandra.yaml (4.1+ syntax)</span>
+repair_session_space:<span class="w"> </span>256MiB
+concurrent_merkle_tree_requests:<span class="w"> </span><span class="m">2</span>
 </code></pre></div>
 <h3 id="cause-4-batch-operations">Cause 4: Batch Operations<a class="headerlink" href="#cause-4-batch-operations" title="Permanent link">¶</a></h3>
 <p><strong>Symptom:</strong> OOM during large batch writes</p>
@@ -20606,16 +20608,20 @@ repair_session_max_tree_depth:<span class="w"> </span><span class="m">16</span><
 </code></pre></div>
 <h3 id="cassandrayaml">cassandra.yaml<a class="headerlink" href="#cassandrayaml" title="Permanent link">¶</a></h3>
 <div class="highlight"><pre><span></span><code><span class="c1"># Limit compaction memory</span>
-<span class="nt">compaction_large_partition_warning_threshold_mb</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">100</span>
+<span class="nt">compaction_large_partition_warning_threshold</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">100MiB</span>
 
-<span class="c1"># Limit repair memory</span>
-<span class="nt">repair_session_max_tree_depth</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">18</span>
-<span class="nt">repair_session_space_in_mb</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">256</span>
+<span class="c1"># Limit repair memory (4.1+ syntax)</span>
+<span class="nt">repair_session_space</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">256MiB</span>
+<span class="nt">concurrent_merkle_tree_requests</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">2</span>
 
-<span class="c1"># Limit memtable size</span>
-<span class="nt">memtable_heap_space_in_mb</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">2048</span>
-<span class="nt">memtable_offheap_space_in_mb</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">2048</span>
+<span class="c1"># Limit memtable size (4.1+ syntax)</span>
+<span class="nt">memtable_heap_space</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">2048MiB</span>
+<span class="nt">memtable_offheap_space</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">2048MiB</span>
 </code></pre></div>
+<div class="admonition note">
+<p class="admonition-title">Setting Name Changes</p>
+<p>In Cassandra 4.1+, settings use size literals (e.g., <code>256MiB</code>) instead of <code>_in_mb</code> suffixes.</p>
+</div>
 <hr>
 <h2 id="monitoring-for-oom-prevention">Monitoring for OOM Prevention<a class="headerlink" href="#monitoring-for-oom-prevention" title="Permanent link">¶</a></h2>
 <h3 id="key-metrics-to-watch">Key Metrics to Watch<a class="headerlink" href="#key-metrics-to-watch" title="Permanent link">¶</a></h3>
@@ -20771,8 +20777,8 @@ ls<span class="w"> </span>-la<span class="w"> </span>/var/lib/cassandra/commitlo
 <td>GC statistics</td>
 </tr>
 <tr>
-<td><code>nodetool setconcurrency</code></td>
-<td>Reduce concurrent operations</td>
+<td><code>nodetool flush</code></td>
+<td>Flush memtables to reduce memory</td>
 </tr>
 <tr>
 <td><code>nodetool setconcurrentcompactors</code></td>

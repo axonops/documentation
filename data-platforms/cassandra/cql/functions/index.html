@@ -20888,14 +20888,14 @@ data-et-multi-view="{&quot;schema&quot;:{&quot;content&quot;:{&quot;desktop&quot
 <div><h1 id="cql-functions-reference">CQL Functions Reference<a class="headerlink" href="#cql-functions-reference" title="Permanent link">¶</a></h1>
 <p>CQL includes built-in functions for common operations: generating UUIDs, working with timestamps, computing aggregates. The most useful ones <code>now()</code> for time-based UUIDs, <code>token()</code> for understanding data distribution, <code>toTimestamp()</code> for converting between time formats show up constantly in production schemas.</p>
 <p>Aggregates deserve a warning: <code>SELECT COUNT(*) FROM users</code> looks innocent, but without a partition key it scans the entire cluster. That is fine for a thousand rows; it will timeout with a billion. Aggregates work efficiently when scoped to a partition.</p>
-<p>This reference covers scalar functions, aggregates, and user-defined functions (available since Cassandra 4.0).</p>
+<p>This reference covers scalar functions, aggregates, and user-defined functions (available since Cassandra 2.2).</p>
 <hr>
 <h2 id="behavioral-guarantees">Behavioral Guarantees<a class="headerlink" href="#behavioral-guarantees" title="Permanent link">¶</a></h2>
 <h3 id="what-functions-guarantee">What Functions Guarantee<a class="headerlink" href="#what-functions-guarantee" title="Permanent link">¶</a></h3>
 <ul>
 <li>Scalar functions are evaluated on the coordinator for each result row</li>
 <li><code>uuid()</code> generates a unique random UUID (version 4) per invocation</li>
-<li><code>now()</code> generates a unique time-based UUID (version 1) per invocation within a statement</li>
+<li><code>now()</code> generates the same time-based UUID (version 1) for all invocations within a single statement</li>
 <li><code>token()</code> returns the partition token for the given partition key columns</li>
 <li>Aggregate functions are evaluated on the coordinator after collecting all matching rows</li>
 <li>Type conversion functions fail predictably on incompatible input</li>

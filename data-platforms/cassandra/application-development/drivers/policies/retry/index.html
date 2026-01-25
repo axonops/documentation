@@ -20158,7 +20158,7 @@ data-et-multi-view="{&quot;schema&quot;:{&quot;content&quot;:{&quot;desktop&quot
 <tr>
 <td><strong>UnavailableException</strong></td>
 <td>Not enough replicas alive</td>
-<td>Retry on different node</td>
+<td>Usually no (same CL will fail); consider fallback CL or circuit breaker</td>
 </tr>
 <tr>
 <td><strong>OverloadedException</strong></td>
@@ -20229,9 +20229,14 @@ Danger:
 <td>Yes</td>
 </tr>
 <tr>
-<td>INSERT (no LWT)</td>
-<td>Yes*</td>
-<td>Yes*</td>
+<td>INSERT (no LWT) with explicit timestamp</td>
+<td>Yes</td>
+<td>Yes</td>
+</tr>
+<tr>
+<td>INSERT (no LWT) with server timestamp</td>
+<td><strong>No</strong>*</td>
+<td><strong>No</strong>*</td>
 </tr>
 <tr>
 <td>UPDATE SET column = value</td>
@@ -20255,7 +20260,7 @@ Danger:
 </tr>
 </tbody>
 </table>
-<p>*INSERT is idempotent if the same row/values are written. If using auto-generated timestamps, retries produce identical results.</p>
+<p>*When using server-generated timestamps (default), retries may produce different timestamps, affecting LWW conflict resolution. Use explicit <code>USING TIMESTAMP</code> for true idempotency.</p>
 <div class="highlight"><pre><span></span><code>Idempotent vs Non-Idempotent:
 
 Idempotent (safe to retry):

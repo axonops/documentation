@@ -20368,17 +20368,16 @@ nodetool<span class="w"> </span>listpendinghints<span class="w"> </span><span cl
 <div class="highlight"><pre><span></span><code><span class="ch">#!/bin/bash</span>
 <span class="c1"># cluster_pending_hints.sh</span>
 
-<span class="nb">echo</span><span class="w"> </span><span class="s2">"=== Cluster Pending Hints ==="</span><span class="c1"># Get list of node IPs from local nodetool status</span>
+<span class="nb">echo</span><span class="w"> </span><span class="s2">"=== Cluster Pending Hints ==="</span>
 
-
+<span class="c1"># Get list of node IPs from local nodetool status</span>
 <span class="nv">nodes</span><span class="o">=</span><span class="k">$(</span>nodetool<span class="w"> </span>status<span class="w"> </span><span class="p">|</span><span class="w"> </span>grep<span class="w"> </span><span class="s2">"^UN"</span><span class="w"> </span><span class="p">|</span><span class="w"> </span>awk<span class="w"> </span><span class="s1">'{print $2}'</span><span class="k">)</span>
 
 <span class="k">for</span><span class="w"> </span>node<span class="w"> </span><span class="k">in</span><span class="w"> </span><span class="nv">$nodes</span><span class="p">;</span><span class="w"> </span><span class="k">do</span>
 <span class="w">    </span><span class="nb">echo</span><span class="w"> </span><span class="s2">""</span>
 <span class="w">    </span><span class="nb">echo</span><span class="w"> </span><span class="s2">"=== Hints on </span><span class="nv">$node</span><span class="s2"> ==="</span>
-<span class="w">    </span>ssh<span class="w"> </span><span class="s2">"</span><span class="nv">$node</span><span class="s2">"</span><span class="w"> </span><span class="s2">"nodetool listpendinghints 2&gt;/dev/null | tail -n +2 | \"</span>
-<span class="s2">        awk '{sum+=</span><span class="nv">$2</span><span class="s2">} END {print "</span>Total:<span class="s2">", sum}'</span>
-<span class="s2">done</span>
+<span class="w">    </span>ssh<span class="w"> </span><span class="s2">"</span><span class="nv">$node</span><span class="s2">"</span><span class="w"> </span><span class="s1">'nodetool listpendinghints 2&gt;/dev/null | tail -n +2 | awk "{sum+=\$2} END {print \"Total:\", sum}"'</span>
+<span class="k">done</span>
 </code></pre></div>
 <hr>
 <h2 id="understanding-hints">Understanding Hints<a class="headerlink" href="#understanding-hints" title="Permanent link">¶</a></h2>
@@ -20389,9 +20388,33 @@ nodetool<span class="w"> </span>listpendinghints<span class="w"> </span><span cl
 4. Successful delivery → hint deleted
 </code></pre></div>
 <h3 id="hint-window">Hint Window<a class="headerlink" href="#hint-window" title="Permanent link">¶</a></h3>
-<p>Hints are only stored for nodes that have been down less than the hint window:</p>
-<div class="highlight"><pre><span></span><code><span class="c1"># cassandra.yaml</span>
-<span class="nt">max_hint_window_in_ms</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">10800000</span><span class="w">  </span><span class="c1"># 3 hours default</span>
+<p>Hints are only stored for nodes that have been down less than the hint window. The cassandra.yaml parameter name varies by version:</p>
+<table>
+<thead>
+<tr>
+<th>Cassandra Version</th>
+<th>Parameter Name</th>
+<th>Example</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Pre-4.1</td>
+<td><code>max_hint_window_in_ms</code></td>
+<td><code>10800000</code> (3 hours)</td>
+</tr>
+<tr>
+<td>4.1+</td>
+<td><code>max_hint_window</code></td>
+<td><code>3h</code></td>
+</tr>
+</tbody>
+</table>
+<div class="highlight"><pre><span></span><code><span class="c1"># cassandra.yaml (4.1+)</span>
+<span class="nt">max_hint_window</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">3h</span>
+
+<span class="c1"># cassandra.yaml (Pre-4.1)</span>
+<span class="c1"># max_hint_window_in_ms: 10800000</span>
 </code></pre></div>
 <hr>
 <h2 id="troubleshooting">Troubleshooting<a class="headerlink" href="#troubleshooting" title="Permanent link">¶</a></h2>
@@ -20453,7 +20476,7 @@ nodetool<span class="w"> </span>failuredetector
 </table>
 <div class="admonition warning">
 <p class="admonition-title">Hint Expiration</p>
-<p>Hints older than <code>max_hint_window_in_ms</code> are dropped. If a node was down longer than this window, use <code>nodetool repair</code> to restore consistency.</p>
+<p>Hints older than <code>max_hint_window</code> are dropped. If a node was down longer than this window, use <code>nodetool repair</code> to restore consistency.</p>
 </div>
 <hr>
 <h2 id="best-practices">Best Practices<a class="headerlink" href="#best-practices" title="Permanent link">¶</a></h2>

@@ -20330,7 +20330,9 @@ data-et-multi-view="{&quot;schema&quot;:{&quot;content&quot;:{&quot;desktop&quot
 <div class="highlight"><pre><span></span><code><span class="n">VIRTUAL</span><span class="w"> </span><span class="k">TABLE</span><span class="w"> </span><span class="n">system_views</span><span class="p">.</span><span class="n">clients</span><span class="w"> </span><span class="p">(</span>
 <span class="w">    </span><span class="n">address</span><span class="w"> </span><span class="n">inet</span><span class="p">,</span>
 <span class="w">    </span><span class="n">port</span><span class="w"> </span><span class="nb">int</span><span class="p">,</span>
-<span class="w">    </span><span class="n">client_options</span><span class="w"> </span><span class="n">frozen</span><span class="o">&lt;</span><span class="k">map</span><span class="o">&lt;</span><span class="nb">text</span><span class="p">,</span><span class="w"> </span><span class="nb">text</span><span class="o">&gt;&gt;</span><span class="p">,</span>
+<span class="w">    </span><span class="n">authentication_metadata</span><span class="w"> </span><span class="k">map</span><span class="o">&lt;</span><span class="nb">text</span><span class="p">,</span><span class="w"> </span><span class="nb">text</span><span class="o">&gt;</span><span class="p">,</span>
+<span class="w">    </span><span class="n">authentication_mode</span><span class="w"> </span><span class="nb">text</span><span class="p">,</span>
+<span class="w">    </span><span class="n">client_options</span><span class="w"> </span><span class="k">map</span><span class="o">&lt;</span><span class="nb">text</span><span class="p">,</span><span class="w"> </span><span class="nb">text</span><span class="o">&gt;</span><span class="p">,</span>
 <span class="w">    </span><span class="n">connection_stage</span><span class="w"> </span><span class="nb">text</span><span class="p">,</span>
 <span class="w">    </span><span class="n">driver_name</span><span class="w"> </span><span class="nb">text</span><span class="p">,</span>
 <span class="w">    </span><span class="n">driver_version</span><span class="w"> </span><span class="nb">text</span><span class="p">,</span>
@@ -20373,6 +20375,16 @@ data-et-multi-view="{&quot;schema&quot;:{&quot;content&quot;:{&quot;desktop&quot
 <td><code>username</code></td>
 <td>text</td>
 <td>Authenticated username</td>
+</tr>
+<tr>
+<td><code>authentication_mode</code></td>
+<td>text</td>
+<td>Authentication mode used</td>
+</tr>
+<tr>
+<td><code>authentication_metadata</code></td>
+<td>map</td>
+<td>Additional authentication metadata</td>
 </tr>
 <tr>
 <td><code>keyspace_name</code></td>

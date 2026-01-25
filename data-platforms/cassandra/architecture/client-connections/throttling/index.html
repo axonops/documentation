@@ -20723,52 +20723,79 @@ Example:
 <h2 id="server-side-throttling">Server-Side Throttling<a class="headerlink" href="#server-side-throttling" title="Permanent link">¶</a></h2>
 <h3 id="native-transport-limits">Native Transport Limits<a class="headerlink" href="#native-transport-limits" title="Permanent link">¶</a></h3>
 <p>Cassandra limits concurrent connections and requests:</p>
+<table>
+<thead>
+<tr>
+<th>Version</th>
+<th>Parameter</th>
+<th>Default</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>4.0</td>
+<td><code>native_transport_max_frame_size_in_mb</code></td>
+<td>16</td>
+</tr>
+<tr>
+<td>4.1+</td>
+<td><code>native_transport_max_frame_size</code></td>
+<td><code>16MiB</code></td>
+</tr>
+</tbody>
+</table>
 <div class="highlight"><pre><span></span><code><span class="c1"># cassandra.yaml</span>
 <span class="nt">native_transport_max_threads</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">128</span>
-<span class="nt">native_transport_max_frame_size_in_mb</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">256</span>
 <span class="nt">native_transport_max_concurrent_connections</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">-1</span><span class="w">  </span><span class="c1"># unlimited</span>
 <span class="nt">native_transport_max_concurrent_connections_per_ip</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">-1</span>
 </code></pre></div>
 <h3 id="memory-based-backpressure-cassandra-40">Memory-Based Backpressure (Cassandra 4.0+)<a class="headerlink" href="#memory-based-backpressure-cassandra-40" title="Permanent link">¶</a></h3>
 <p>Cassandra 4.0 introduced memory-based backpressure for the native transport (CASSANDRA-15013). This prevents unbounded memory growth from in-flight requests.</p>
-<div class="highlight"><pre><span></span><code><span class="c1"># cassandra.yaml</span>
-
-<span class="c1"># Maximum bytes of in-flight requests (node-wide)</span>
-<span class="c1"># 0 = unlimited (default, not recommended for production)</span>
-<span class="nt">native_transport_max_concurrent_requests_in_bytes</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">0</span>
-
-<span class="c1"># Maximum bytes per client IP</span>
-<span class="c1"># 0 = unlimited</span>
-<span class="nt">native_transport_max_concurrent_requests_in_bytes_per_ip</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">0</span>
+<p><strong>Configuration parameter names (version-specific):</strong></p>
+<table>
+<thead>
+<tr>
+<th>Version</th>
+<th>Global Limit</th>
+<th>Per-IP Limit</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>4.0</td>
+<td><code>native_transport_max_concurrent_requests_in_bytes</code></td>
+<td><code>native_transport_max_concurrent_requests_in_bytes_per_ip</code></td>
+</tr>
+<tr>
+<td>4.1+</td>
+<td><code>native_transport_max_request_data_in_flight</code></td>
+<td><code>native_transport_max_request_data_in_flight_per_ip</code></td>
+</tr>
+</tbody>
+</table>
+<p><strong>Defaults:</strong> When unset, defaults are auto-calculated (global: ~1/10 heap, per-IP: ~1/40 heap).</p>
+<div class="highlight"><pre><span></span><code><span class="c1"># cassandra.yaml (4.1+ syntax)</span>
+<span class="nt">native_transport_max_request_data_in_flight</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">null</span><span class="w">  </span><span class="c1"># auto (1/10 heap)</span>
+<span class="nt">native_transport_max_request_data_in_flight_per_ip</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">null</span><span class="w">  </span><span class="c1"># auto (1/40 heap)</span>
 
 <span class="c1"># Behavior when limits exceeded</span>
-<span class="c1"># false (default): Apply TCP backpressure (stop reading from socket)</span>
-<span class="c1"># true: Return OverloadedException immediately</span>
-<span class="nt">native_transport_throw_on_overload</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">false</span>
+<span class="nt">native_transport_throw_on_overload</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">false</span><span class="w">  </span><span class="c1"># false = TCP backpressure; true = OverloadedException</span>
 </code></pre></div>
 <table>
 <thead>
 <tr>
-<th>Setting</th>
-<th>Recommended Value</th>
+<th>Approach</th>
 <th>Description</th>
 </tr>
 </thead>
 <tbody>
 <tr>
-<td><code>native_transport_max_concurrent_requests_in_bytes</code></td>
-<td>1/4 of heap</td>
-<td>Total in-flight request bytes</td>
+<td>TCP backpressure (<code>throw_on_overload: false</code>)</td>
+<td>Preferred; automatically throttles clients without requiring exception handling</td>
 </tr>
 <tr>
-<td><code>native_transport_max_concurrent_requests_in_bytes_per_ip</code></td>
-<td>1/40 of heap</td>
-<td>Per-client limit prevents one client from monopolizing</td>
-</tr>
-<tr>
-<td><code>native_transport_throw_on_overload</code></td>
-<td><code>false</code></td>
-<td>TCP backpressure is gentler than exceptions</td>
+<td>OverloadedException (<code>throw_on_overload: true</code>)</td>
+<td>Client receives error immediately; requires retry logic</td>
 </tr>
 </tbody>
 </table>

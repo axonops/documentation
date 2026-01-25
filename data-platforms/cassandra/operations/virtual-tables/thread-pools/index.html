@@ -20357,6 +20357,9 @@ data-et-multi-view="{&quot;schema&quot;:{&quot;content&quot;:{&quot;desktop&quot
 <span class="w">    </span><span class="n">blocked_tasks</span><span class="w"> </span><span class="nb">bigint</span><span class="p">,</span>
 <span class="w">    </span><span class="n">blocked_tasks_all_time</span><span class="w"> </span><span class="nb">bigint</span><span class="p">,</span>
 <span class="w">    </span><span class="n">completed_tasks</span><span class="w"> </span><span class="nb">bigint</span><span class="p">,</span>
+<span class="w">    </span><span class="n">core_pool_size</span><span class="w"> </span><span class="nb">int</span><span class="p">,</span>
+<span class="w">    </span><span class="n">max_pool_size</span><span class="w"> </span><span class="nb">int</span><span class="p">,</span>
+<span class="w">    </span><span class="n">max_tasks_queued</span><span class="w"> </span><span class="nb">int</span><span class="p">,</span>
 <span class="w">    </span><span class="n">pending_tasks</span><span class="w"> </span><span class="nb">int</span>
 <span class="p">)</span>
 </code></pre></div>
@@ -20383,6 +20386,21 @@ data-et-multi-view="{&quot;schema&quot;:{&quot;content&quot;:{&quot;desktop&quot
 <td><code>active_tasks_limit</code></td>
 <td>int</td>
 <td>Maximum concurrent tasks (pool size)</td>
+</tr>
+<tr>
+<td><code>core_pool_size</code></td>
+<td>int</td>
+<td>Core thread pool size</td>
+</tr>
+<tr>
+<td><code>max_pool_size</code></td>
+<td>int</td>
+<td>Maximum thread pool size</td>
+</tr>
+<tr>
+<td><code>max_tasks_queued</code></td>
+<td>int</td>
+<td>Maximum tasks that can be queued</td>
 </tr>
 <tr>
 <td><code>pending_tasks</code></td>

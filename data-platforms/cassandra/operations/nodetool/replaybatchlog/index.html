@@ -20628,7 +20628,7 @@ data-et-multi-view="{&quot;schema&quot;:{&quot;content&quot;:{&quot;desktop&quot
 <tr>
 <td><strong>Logged batch</strong></td>
 <td><code>BEGIN BATCH ... APPLY BATCH;</code></td>
-<td>Guaranteed</td>
+<td>Eventual (all or none applied, but not isolated)</td>
 <td>Mutations to same partition or requiring atomicity</td>
 </tr>
 <tr>
@@ -20728,9 +20728,9 @@ nodetool<span class="w"> </span>tpstats<span class="w"> </span><span class="p">|
 </code></pre></div>
 <h3 id="replay-on-all-nodes">Replay on All Nodes<a class="headerlink" href="#replay-on-all-nodes" title="Permanent link">¶</a></h3>
 <div class="highlight"><pre><span></span><code><span class="ch">#!/bin/bash</span>
-<span class="c1"># replay_all_batchlogs.sh# Get list of node IPs from local nodetool status</span>
+<span class="c1"># replay_all_batchlogs.sh</span>
 
-
+<span class="c1"># Get list of node IPs from local nodetool status</span>
 <span class="nv">nodes</span><span class="o">=</span><span class="k">$(</span>nodetool<span class="w"> </span>status<span class="w"> </span><span class="p">|</span><span class="w"> </span>grep<span class="w"> </span><span class="s2">"^UN"</span><span class="w"> </span><span class="p">|</span><span class="w"> </span>awk<span class="w"> </span><span class="s1">'{print $2}'</span><span class="k">)</span>
 
 <span class="k">for</span><span class="w"> </span>node<span class="w"> </span><span class="k">in</span><span class="w"> </span><span class="nv">$nodes</span><span class="p">;</span><span class="w"> </span><span class="k">do</span>
@@ -20770,7 +20770,7 @@ cqlsh<span class="w"> </span>-e<span class="w"> </span><span class="s2">"SELECT 
 <tbody>
 <tr>
 <td>Replay interval</td>
-<td>60 seconds</td>
+<td>10 seconds</td>
 <td>How often the batchlog is checked for stale entries</td>
 </tr>
 <tr>
@@ -20796,12 +20796,36 @@ cqlsh<span class="w"> </span>-e<span class="w"> </span><span class="s2">"SELECT 
 <hr>
 <h2 id="batchlog-configuration">Batchlog Configuration<a class="headerlink" href="#batchlog-configuration" title="Permanent link">¶</a></h2>
 <h3 id="cassandrayaml-settings">cassandra.yaml Settings<a class="headerlink" href="#cassandrayaml-settings" title="Permanent link">¶</a></h3>
-<div class="highlight"><pre><span></span><code><span class="c1"># Throttle for batchlog replay (KB/s)</span>
-<span class="c1"># Limits I/O impact during replay</span>
-<span class="nt">batchlog_replay_throttle_in_kb</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">1024</span>
+<p>The parameter names vary by version:</p>
+<table>
+<thead>
+<tr>
+<th>Cassandra Version</th>
+<th>Throttle Parameter</th>
+<th>Example</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Pre-4.1</td>
+<td><code>batchlog_replay_throttle_in_kb</code></td>
+<td><code>1024</code></td>
+</tr>
+<tr>
+<td>4.1+</td>
+<td><code>batchlog_replay_throttle</code></td>
+<td><code>1024KiB</code></td>
+</tr>
+</tbody>
+</table>
+<div class="highlight"><pre><span></span><code><span class="c1"># cassandra.yaml (4.1+)</span>
+<span class="nt">batchlog_replay_throttle</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">1024KiB</span>
+
+<span class="c1"># cassandra.yaml (Pre-4.1)</span>
+<span class="c1"># batchlog_replay_throttle_in_kb: 1024</span>
 
 <span class="c1"># Write request timeout affects batch timeout</span>
-<span class="nt">write_request_timeout_in_ms</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">2000</span>
+<span class="nt">write_request_timeout</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">2s</span><span class="w">  </span><span class="c1"># (4.1+) or write_request_timeout_in_ms: 2000 (Pre-4.1)</span>
 </code></pre></div>
 <h3 id="runtime-configuration">Runtime Configuration<a class="headerlink" href="#runtime-configuration" title="Permanent link">¶</a></h3>
 <div class="highlight"><pre><span></span><code><span class="c1"># View current replay throttle</span>
@@ -20899,7 +20923,7 @@ nodetool<span class="w"> </span>replaybatchlog
 <h2 id="batchlog-and-consistency">Batchlog and Consistency<a class="headerlink" href="#batchlog-and-consistency" title="Permanent link">¶</a></h2>
 <h3 id="what-batchlog-guarantees">What Batchlog Guarantees<a class="headerlink" href="#what-batchlog-guarantees" title="Permanent link">¶</a></h3>
 <ul>
-<li><strong>Atomicity</strong> - All mutations in a batch will eventually be applied</li>
+<li><strong>Eventual completion</strong> - All mutations in a batch will eventually be applied</li>
 <li><strong>Durability</strong> - Batch survives coordinator failure (stored on batchlog replicas)</li>
 </ul>
 <h3 id="what-batchlog-does-not-guarantee">What Batchlog Does NOT Guarantee<a class="headerlink" href="#what-batchlog-does-not-guarantee" title="Permanent link">¶</a></h3>

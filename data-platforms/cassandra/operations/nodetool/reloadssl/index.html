@@ -20332,22 +20332,6 @@ data-et-multi-view="{&quot;schema&quot;:{&quot;content&quot;:{&quot;desktop&quot
 </code></pre></div>
 <h2 id="description">Description<a class="headerlink" href="#description" title="Permanent link">¶</a></h2>
 <p><code>nodetool reloadssl</code> reloads the SSL/TLS certificates configured for client and inter-node encryption. This allows certificate rotation without downtime—essential for maintaining security while keeping the cluster operational.</p>
-<div class="admonition danger">
-<p class="admonition-title">Cassandra 3.x and Earlier: Certificate Expiration is Critical</p>
-<p>The <code>reloadssl</code> command is not available in Cassandra versions prior to 4.0. In these versions, SSL certificate changes require a node restart.</p>
-<p><strong>This creates a critical operational risk:</strong> If certificates expire before renewal, restarting a node with new certificates will fail to establish communication with other nodes still using expired certificates. This can result in:</p>
-<ul>
-<li>Nodes unable to rejoin the cluster</li>
-<li>Complete cluster communication failure if multiple nodes restart</li>
-<li>Potential data unavailability</li>
-</ul>
-<p><strong>For Cassandra 3.x clusters:</strong></p>
-<ul>
-<li>Implement certificate monitoring with alerts well before expiration (60+ days)</li>
-<li>Perform rolling certificate replacements while certificates are still valid</li>
-<li>Consider upgrading to Cassandra 4.0+ to enable hot certificate reloading</li>
-</ul>
-</div>
 <hr>
 <h2 id="when-to-use">When to Use<a class="headerlink" href="#when-to-use" title="Permanent link">¶</a></h2>
 <h3 id="certificate-renewal">Certificate Renewal<a class="headerlink" href="#certificate-renewal" title="Permanent link">¶</a></h3>
@@ -20570,7 +20554,7 @@ chown<span class="w"> </span>cassandra:cassandra<span class="w"> </span>/etc/cas
 <tr>
 <td><code>native_transport_port_ssl</code></td>
 <td>cassandra.yaml</td>
-<td>SSL-only CQL port</td>
+<td>SSL-only CQL port (removed in 5.0)</td>
 </tr>
 </tbody>
 </table>

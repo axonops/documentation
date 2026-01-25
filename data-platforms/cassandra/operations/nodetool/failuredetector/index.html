@@ -20334,12 +20334,13 @@ data-et-multi-view="{&quot;schema&quot;:{&quot;content&quot;:{&quot;desktop&quot
 <hr>
 <h2 id="output">Output<a class="headerlink" href="#output" title="Permanent link">¶</a></h2>
 <h3 id="sample-output">Sample Output<a class="headerlink" href="#sample-output" title="Permanent link">¶</a></h3>
-<div class="highlight"><pre><span></span><code>Endpoint            Phi
-192.168.1.101       0.0034521
-192.168.1.102       0.0028934
-192.168.1.103       0.0041256
-192.168.1.104       5.2341567
+<div class="highlight"><pre><span></span><code>Endpoint,Phi
+192.168.1.101,0.0034521
+192.168.1.102,0.0028934
+192.168.1.103,0.0041256
+192.168.1.104,5.2341567
 </code></pre></div>
+<p>Note: Output is in CSV format with comma-separated values.</p>
 <h3 id="interpreting-phi-values">Interpreting Phi Values<a class="headerlink" href="#interpreting-phi-values" title="Permanent link">¶</a></h3>
 <table>
 <thead>
@@ -20431,15 +20432,15 @@ nodetool<span class="w"> </span>failuredetector<span class="w"> </span><span cla
 <div class="highlight"><pre><span></span><code><span class="ch">#!/bin/bash</span>
 <span class="c1"># cluster_failure_detector.sh</span>
 
-<span class="nb">echo</span><span class="w"> </span><span class="s2">"=== Cluster Failure Detector Status ==="</span><span class="c1"># Get list of node IPs from local nodetool status</span>
+<span class="nb">echo</span><span class="w"> </span><span class="s2">"=== Cluster Failure Detector Status ==="</span>
 
-
+<span class="c1"># Get list of node IPs from local nodetool status</span>
 <span class="nv">nodes</span><span class="o">=</span><span class="k">$(</span>nodetool<span class="w"> </span>status<span class="w"> </span><span class="p">|</span><span class="w"> </span>grep<span class="w"> </span><span class="s2">"^UN\|^DN"</span><span class="w"> </span><span class="p">|</span><span class="w"> </span>awk<span class="w"> </span><span class="s1">'{print $2}'</span><span class="k">)</span>
 
 <span class="k">for</span><span class="w"> </span>node<span class="w"> </span><span class="k">in</span><span class="w"> </span><span class="nv">$nodes</span><span class="p">;</span><span class="w"> </span><span class="k">do</span>
 <span class="w">    </span><span class="nb">echo</span><span class="w"> </span><span class="s2">""</span>
 <span class="w">    </span><span class="nb">echo</span><span class="w"> </span><span class="s2">"=== From perspective of </span><span class="nv">$node</span><span class="s2"> ==="</span>
-<span class="w">    </span>ssh<span class="w"> </span><span class="s2">"</span><span class="nv">$node</span><span class="s2">"</span><span class="w"> </span><span class="s2">"nodetool failuredetector 2&gt;/dev/null || echo "</span>Cannot<span class="w"> </span>connect<span class="w"> </span>to<span class="w"> </span><span class="nv">$node</span><span class="s2">""</span>
+<span class="w">    </span>ssh<span class="w"> </span><span class="s2">"</span><span class="nv">$node</span><span class="s2">"</span><span class="w"> </span><span class="s2">"nodetool failuredetector 2&gt;/dev/null || echo 'Cannot connect to </span><span class="nv">$node</span><span class="s2">'"</span>
 <span class="k">done</span>
 </code></pre></div>
 <hr>

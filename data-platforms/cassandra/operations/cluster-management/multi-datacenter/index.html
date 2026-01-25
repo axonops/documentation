@@ -20287,7 +20287,7 @@ data-et-multi-view="{&quot;schema&quot;:{&quot;content&quot;:{&quot;desktop&quot
 <div class="highlight"><pre><span></span><code><span class="c1"># cassandra.yaml</span>
 
 <span class="nt">cluster_name</span><span class="p">:</span><span class="w"> </span><span class="s">'ProductionCluster'</span><span class="w">  </span><span class="c1"># Must match</span>
-<span class="nt">num_tokens</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">256</span><span class="w">                    </span><span class="c1"># Match existing</span>
+<span class="nt">num_tokens</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">16</span><span class="w">                     </span><span class="c1"># Match existing cluster value (default is 16 for 4.0+)</span>
 
 <span class="c1"># Seeds from BOTH datacenters</span>
 <span class="nt">seed_provider</span><span class="p">:</span>

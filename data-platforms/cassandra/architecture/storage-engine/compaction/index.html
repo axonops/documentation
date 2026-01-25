@@ -20201,7 +20201,7 @@ data-et-multi-view="{&quot;schema&quot;:{&quot;content&quot;:{&quot;desktop&quot
 <p>Compaction is the process of merging SSTables to reduce read amplification, reclaim space from tombstones, and maintain manageable file counts. Selecting an appropriate strategy and configuration is critical for cluster performance.</p>
 <div class="admonition tip">
 <p class="admonition-title">Cassandra 5.0+ Recommendation</p>
-<p>For new deployments on Cassandra 5.0+, <a href="ucs/">Unified Compaction Strategy (UCS)</a> is the recommended default. UCS provides a single, configurable strategy that can emulate STCS, LCS, or hybrid behaviors through its <code>scaling_parameters</code> option. Existing clusters can continue using their current strategies or migrate to UCS with a simple ALTER TABLE.</p>
+<p>For new deployments on Cassandra 5.0+, <a href="ucs/">Unified Compaction Strategy (UCS)</a> is the recommended default. UCS provides a single, configurable strategy that can emulate STCS, LCS, or hybrid behaviors through its <code>scaling_parameters</code> option. Existing clusters can continue using their current strategies or migrate to UCS via ALTER TABLE, though migration should be validated against workload characteristics and monitored for operational impact.</p>
 </div>
 <hr>
 <h2 id="sstable-accumulation">SSTable Accumulation<a class="headerlink" href="#sstable-accumulation" title="Permanent link">¶</a></h2>

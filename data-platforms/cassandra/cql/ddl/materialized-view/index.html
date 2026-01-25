@@ -21339,15 +21339,20 @@ data-et-multi-view="{&quot;schema&quot;:{&quot;content&quot;:{&quot;desktop&quot
 <span class="w">  </span><span class="k">AND</span><span class="w"> </span><span class="n">user_id</span><span class="w"> </span><span class="k">IS</span><span class="w"> </span><span class="k">NOT</span><span class="w"> </span><span class="k">NULL</span>
 </code></pre></div>
 <p>The <code>IS NOT NULL</code> constraint ensures the view only contains rows where primary key columns have values (views cannot store rows with null primary keys).</p>
-<p>Additional filter conditions are allowed:</p>
-<div class="highlight"><pre><span></span><code><span class="k">WHERE</span><span class="w"> </span><span class="n">email</span><span class="w"> </span><span class="k">IS</span><span class="w"> </span><span class="k">NOT</span><span class="w"> </span><span class="k">NULL</span>
-<span class="w">  </span><span class="k">AND</span><span class="w"> </span><span class="n">user_id</span><span class="w"> </span><span class="k">IS</span><span class="w"> </span><span class="k">NOT</span><span class="w"> </span><span class="k">NULL</span>
-<span class="w">  </span><span class="k">AND</span><span class="w"> </span><span class="n">status</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s1">'active'</span>
+<div class="admonition warning">
+<p class="admonition-title">Non-Primary-Key Predicates</p>
+<p>By default, Cassandra only allows <code>IS NOT NULL</code> predicates in the MV WHERE clause. Non-primary-key predicates (like <code>status = 'active'</code> or <code>total &gt; 1000</code>) are rejected unless the unsafe guardrail <code>cassandra.mv.allow_filtering_nonkey_columns_unsafe</code> is enabled. This restriction exists because filtered MVs have significant consistency and performance implications.</p>
+<div class="highlight"><pre><span></span><code><span class="c1">-- This is valid (IS NOT NULL only):</span>
+<span class="k">WHERE</span><span class="w"> </span><span class="n">email</span><span class="w"> </span><span class="k">IS</span><span class="w"> </span><span class="k">NOT</span><span class="w"> </span><span class="k">NULL</span><span class="w"> </span><span class="k">AND</span><span class="w"> </span><span class="n">user_id</span><span class="w"> </span><span class="k">IS</span><span class="w"> </span><span class="k">NOT</span><span class="w"> </span><span class="k">NULL</span>
+
+<span class="c1">-- This requires unsafe flag to be enabled:</span>
+<span class="k">WHERE</span><span class="w"> </span><span class="n">email</span><span class="w"> </span><span class="k">IS</span><span class="w"> </span><span class="k">NOT</span><span class="w"> </span><span class="k">NULL</span><span class="w"> </span><span class="k">AND</span><span class="w"> </span><span class="n">user_id</span><span class="w"> </span><span class="k">IS</span><span class="w"> </span><span class="k">NOT</span><span class="w"> </span><span class="k">NULL</span><span class="w"> </span><span class="k">AND</span><span class="w"> </span><span class="n">status</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s1">'active'</span>
 </code></pre></div>
+</div>
 <div class="admonition tip">
-<p class="admonition-title">Filtered Views</p>
-<p>Add filter conditions to create partial views containing only relevant data:
-</p><div class="highlight"><pre><span></span><code><span class="c1">-- View of only premium users</span>
+<p class="admonition-title">Filtered Views (requires unsafe flag)</p>
+<p>If the guardrail is enabled, filter conditions can create partial views containing only relevant data:
+</p><div class="highlight"><pre><span></span><code><span class="c1">-- View of only premium users (requires unsafe flag)</span>
 <span class="k">CREATE</span><span class="w"> </span><span class="n">MATERIALIZED</span><span class="w"> </span><span class="k">VIEW</span><span class="w"> </span><span class="n">premium_users</span><span class="w"> </span><span class="k">AS</span>
 <span class="w">    </span><span class="k">SELECT</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="k">FROM</span><span class="w"> </span><span class="n">users</span>
 <span class="w">    </span><span class="k">WHERE</span><span class="w"> </span><span class="n">is_premium</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">true</span>

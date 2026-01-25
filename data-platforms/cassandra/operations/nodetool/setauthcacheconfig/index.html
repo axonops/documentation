@@ -10760,9 +10760,9 @@ data-et-multi-view="{&quot;schema&quot;:{&quot;content&quot;:{&quot;desktop&quot
 </li>
         
           <li class="md-nav__item">
-  <a href="#tune-all-cache-settings" class="md-nav__link">
+  <a href="#tune-credentials-cache-settings" class="md-nav__link">
     <span class="md-ellipsis">
-      Tune All Cache Settings
+      Tune Credentials Cache Settings
     </span>
   </a>
   
@@ -10778,9 +10778,9 @@ data-et-multi-view="{&quot;schema&quot;:{&quot;content&quot;:{&quot;desktop&quot
 </li>
         
           <li class="md-nav__item">
-  <a href="#performance-optimized-settings" class="md-nav__link">
+  <a href="#enable-active-update" class="md-nav__link">
     <span class="md-ellipsis">
-      Performance-Optimized Settings
+      Enable Active Update
     </span>
   </a>
   
@@ -20025,9 +20025,9 @@ data-et-multi-view="{&quot;schema&quot;:{&quot;content&quot;:{&quot;desktop&quot
 </li>
         
           <li class="md-nav__item">
-  <a href="#tune-all-cache-settings" class="md-nav__link">
+  <a href="#tune-credentials-cache-settings" class="md-nav__link">
     <span class="md-ellipsis">
-      Tune All Cache Settings
+      Tune Credentials Cache Settings
     </span>
   </a>
   
@@ -20043,9 +20043,9 @@ data-et-multi-view="{&quot;schema&quot;:{&quot;content&quot;:{&quot;desktop&quot
 </li>
         
           <li class="md-nav__item">
-  <a href="#performance-optimized-settings" class="md-nav__link">
+  <a href="#enable-active-update" class="md-nav__link">
     <span class="md-ellipsis">
-      Performance-Optimized Settings
+      Enable Active Update
     </span>
   </a>
   
@@ -20181,11 +20181,11 @@ data-et-multi-view="{&quot;schema&quot;:{&quot;content&quot;:{&quot;desktop&quot
 <p>Modifies authentication cache configuration settings.</p>
 <hr>
 <h2 id="synopsis">Synopsis<a class="headerlink" href="#synopsis" title="Permanent link">¶</a></h2>
-<div class="highlight"><pre><span></span><code>nodetool<span class="w"> </span><span class="o">[</span>connection_options<span class="o">]</span><span class="w"> </span>setauthcacheconfig<span class="w"> </span><span class="o">[</span>options<span class="o">]</span>
+<div class="highlight"><pre><span></span><code>nodetool<span class="w"> </span><span class="o">[</span>connection_options<span class="o">]</span><span class="w"> </span>setauthcacheconfig<span class="w"> </span>--cache-name<span class="w"> </span>&lt;cache&gt;<span class="w"> </span><span class="o">[</span>options<span class="o">]</span>
 </code></pre></div>
 <hr>
 <h2 id="description">Description<a class="headerlink" href="#description" title="Permanent link">¶</a></h2>
-<p><code>nodetool setauthcacheconfig</code> modifies the configuration of Cassandra's authentication and authorization caches at runtime. This allows tuning cache behavior without restarting the node.</p>
+<p><code>nodetool setauthcacheconfig</code> modifies the configuration of a specific authentication or authorization cache at runtime. This allows tuning cache behavior without restarting the node.</p>
 <div class="admonition warning">
 <p class="admonition-title">Non-Persistent Setting</p>
 <p>Settings modified with this command are <strong>not persisted</strong> to configuration files. Changes will be lost on node restart. Update <code>cassandra.yaml</code> to make changes permanent.</p>
@@ -20201,82 +20201,60 @@ data-et-multi-view="{&quot;schema&quot;:{&quot;content&quot;:{&quot;desktop&quot
 </thead>
 <tbody>
 <tr>
-<td><code>--credentials-validity &lt;ms&gt;</code></td>
-<td>Set credentials cache validity period</td>
+<td><code>--cache-name &lt;name&gt;</code></td>
+<td><strong>Required.</strong> Cache to configure: <code>CredentialsCache</code>, <code>PermissionsCache</code>, <code>RolesCache</code>, or <code>NetworkPermissionsCache</code></td>
 </tr>
 <tr>
-<td><code>--credentials-update-interval &lt;ms&gt;</code></td>
-<td>Set credentials cache update interval</td>
+<td><code>--validity-period &lt;ms&gt;</code></td>
+<td>Set cache validity period in milliseconds</td>
 </tr>
 <tr>
-<td><code>--credentials-max-entries &lt;n&gt;</code></td>
-<td>Set maximum credentials cache entries</td>
+<td><code>--update-interval &lt;ms&gt;</code></td>
+<td>Set cache update interval in milliseconds</td>
 </tr>
 <tr>
-<td><code>--permissions-validity &lt;ms&gt;</code></td>
-<td>Set permissions cache validity period</td>
+<td><code>--max-entries &lt;n&gt;</code></td>
+<td>Set maximum cache entries</td>
 </tr>
 <tr>
-<td><code>--permissions-update-interval &lt;ms&gt;</code></td>
-<td>Set permissions cache update interval</td>
+<td><code>--enable-active-update</code></td>
+<td>Enable active update for the cache</td>
 </tr>
 <tr>
-<td><code>--permissions-max-entries &lt;n&gt;</code></td>
-<td>Set maximum permissions cache entries</td>
-</tr>
-<tr>
-<td><code>--roles-validity &lt;ms&gt;</code></td>
-<td>Set roles cache validity period</td>
-</tr>
-<tr>
-<td><code>--roles-update-interval &lt;ms&gt;</code></td>
-<td>Set roles cache update interval</td>
-</tr>
-<tr>
-<td><code>--roles-max-entries &lt;n&gt;</code></td>
-<td>Set maximum roles cache entries</td>
+<td><code>--disable-active-update</code></td>
+<td>Disable active update for the cache</td>
 </tr>
 </tbody>
 </table>
 <hr>
 <h2 id="examples">Examples<a class="headerlink" href="#examples" title="Permanent link">¶</a></h2>
 <h3 id="increase-permissions-cache-validity">Increase Permissions Cache Validity<a class="headerlink" href="#increase-permissions-cache-validity" title="Permanent link">¶</a></h3>
-<div class="highlight"><pre><span></span><code>nodetool<span class="w"> </span>setauthcacheconfig<span class="w"> </span>--permissions-validity<span class="w"> </span><span class="m">5000</span>
+<div class="highlight"><pre><span></span><code>nodetool<span class="w"> </span>setauthcacheconfig<span class="w"> </span>--cache-name<span class="w"> </span>PermissionsCache<span class="w"> </span>--validity-period<span class="w"> </span><span class="m">5000</span>
 </code></pre></div>
 <h3 id="set-larger-credentials-cache">Set Larger Credentials Cache<a class="headerlink" href="#set-larger-credentials-cache" title="Permanent link">¶</a></h3>
-<div class="highlight"><pre><span></span><code>nodetool<span class="w"> </span>setauthcacheconfig<span class="w"> </span>--credentials-max-entries<span class="w"> </span><span class="m">5000</span>
+<div class="highlight"><pre><span></span><code>nodetool<span class="w"> </span>setauthcacheconfig<span class="w"> </span>--cache-name<span class="w"> </span>CredentialsCache<span class="w"> </span>--max-entries<span class="w"> </span><span class="m">5000</span>
 </code></pre></div>
-<h3 id="tune-all-cache-settings">Tune All Cache Settings<a class="headerlink" href="#tune-all-cache-settings" title="Permanent link">¶</a></h3>
-<div class="highlight"><pre><span></span><code>nodetool<span class="w"> </span>setauthcacheconfig<span class="w"> </span><span class="se">\</span>
-<span class="w">    </span>--credentials-validity<span class="w"> </span><span class="m">5000</span><span class="w"> </span><span class="se">\</span>
-<span class="w">    </span>--credentials-update-interval<span class="w"> </span><span class="m">3000</span><span class="w"> </span><span class="se">\</span>
-<span class="w">    </span>--credentials-max-entries<span class="w"> </span><span class="m">2000</span><span class="w"> </span><span class="se">\</span>
-<span class="w">    </span>--permissions-validity<span class="w"> </span><span class="m">5000</span><span class="w"> </span><span class="se">\</span>
-<span class="w">    </span>--permissions-update-interval<span class="w"> </span><span class="m">3000</span><span class="w"> </span><span class="se">\</span>
-<span class="w">    </span>--permissions-max-entries<span class="w"> </span><span class="m">2000</span><span class="w"> </span><span class="se">\</span>
-<span class="w">    </span>--roles-validity<span class="w"> </span><span class="m">5000</span><span class="w"> </span><span class="se">\</span>
-<span class="w">    </span>--roles-update-interval<span class="w"> </span><span class="m">3000</span><span class="w"> </span><span class="se">\</span>
-<span class="w">    </span>--roles-max-entries<span class="w"> </span><span class="m">2000</span>
+<h3 id="tune-credentials-cache-settings">Tune Credentials Cache Settings<a class="headerlink" href="#tune-credentials-cache-settings" title="Permanent link">¶</a></h3>
+<div class="highlight"><pre><span></span><code>nodetool<span class="w"> </span>setauthcacheconfig<span class="w"> </span>--cache-name<span class="w"> </span>CredentialsCache<span class="w"> </span><span class="se">\</span>
+<span class="w">    </span>--validity-period<span class="w"> </span><span class="m">5000</span><span class="w"> </span><span class="se">\</span>
+<span class="w">    </span>--update-interval<span class="w"> </span><span class="m">3000</span><span class="w"> </span><span class="se">\</span>
+<span class="w">    </span>--max-entries<span class="w"> </span><span class="m">2000</span>
 </code></pre></div>
 <h3 id="fast-permission-propagation">Fast Permission Propagation<a class="headerlink" href="#fast-permission-propagation" title="Permanent link">¶</a></h3>
 <div class="highlight"><pre><span></span><code><span class="c1"># Shorter validity for quick permission changes</span>
-nodetool<span class="w"> </span>setauthcacheconfig<span class="w"> </span><span class="se">\</span>
-<span class="w">    </span>--permissions-validity<span class="w"> </span><span class="m">1000</span><span class="w"> </span><span class="se">\</span>
-<span class="w">    </span>--permissions-update-interval<span class="w"> </span><span class="m">500</span>
+nodetool<span class="w"> </span>setauthcacheconfig<span class="w"> </span>--cache-name<span class="w"> </span>PermissionsCache<span class="w"> </span><span class="se">\</span>
+<span class="w">    </span>--validity-period<span class="w"> </span><span class="m">1000</span><span class="w"> </span><span class="se">\</span>
+<span class="w">    </span>--update-interval<span class="w"> </span><span class="m">500</span>
 </code></pre></div>
-<h3 id="performance-optimized-settings">Performance-Optimized Settings<a class="headerlink" href="#performance-optimized-settings" title="Permanent link">¶</a></h3>
-<div class="highlight"><pre><span></span><code><span class="c1"># Longer validity for reduced system_auth load</span>
-nodetool<span class="w"> </span>setauthcacheconfig<span class="w"> </span><span class="se">\</span>
-<span class="w">    </span>--credentials-validity<span class="w"> </span><span class="m">60000</span><span class="w"> </span><span class="se">\</span>
-<span class="w">    </span>--credentials-update-interval<span class="w"> </span><span class="m">30000</span><span class="w"> </span><span class="se">\</span>
-<span class="w">    </span>--permissions-validity<span class="w"> </span><span class="m">60000</span><span class="w"> </span><span class="se">\</span>
-<span class="w">    </span>--permissions-update-interval<span class="w"> </span><span class="m">30000</span>
+<h3 id="enable-active-update">Enable Active Update<a class="headerlink" href="#enable-active-update" title="Permanent link">¶</a></h3>
+<div class="highlight"><pre><span></span><code><span class="c1"># Enable background refresh before cache entries expire</span>
+nodetool<span class="w"> </span>setauthcacheconfig<span class="w"> </span>--cache-name<span class="w"> </span>CredentialsCache<span class="w"> </span>--enable-active-update
 </code></pre></div>
 <hr>
 <h2 id="when-to-use">When to Use<a class="headerlink" href="#when-to-use" title="Permanent link">¶</a></h2>
 <h3 id="performance-tuning">Performance Tuning<a class="headerlink" href="#performance-tuning" title="Permanent link">¶</a></h3>
 <div class="highlight"><pre><span></span><code><span class="c1"># Reduce system_auth load</span>
-nodetool<span class="w"> </span>setauthcacheconfig<span class="w"> </span>--credentials-validity<span class="w"> </span><span class="m">30000</span>
+nodetool<span class="w"> </span>setauthcacheconfig<span class="w"> </span>--cache-name<span class="w"> </span>CredentialsCache<span class="w"> </span>--validity-period<span class="w"> </span><span class="m">30000</span>
 </code></pre></div>
 <p>Increase cache validity when:</p>
 <ul>
@@ -20286,7 +20264,7 @@ nodetool<span class="w"> </span>setauthcacheconfig<span class="w"> </span>--cred
 </ul>
 <h3 id="security-response">Security Response<a class="headerlink" href="#security-response" title="Permanent link">¶</a></h3>
 <div class="highlight"><pre><span></span><code><span class="c1"># Decrease validity for faster permission revocation</span>
-nodetool<span class="w"> </span>setauthcacheconfig<span class="w"> </span>--permissions-validity<span class="w"> </span><span class="m">1000</span>
+nodetool<span class="w"> </span>setauthcacheconfig<span class="w"> </span>--cache-name<span class="w"> </span>PermissionsCache<span class="w"> </span>--validity-period<span class="w"> </span><span class="m">1000</span>
 
 <span class="c1"># Invalidate existing cache</span>
 nodetool<span class="w"> </span>invalidatepermissionscache
@@ -20294,9 +20272,8 @@ nodetool<span class="w"> </span>invalidatepermissionscache
 <p>During security incidents, reduce cache validity to ensure permission changes take effect quickly.</p>
 <h3 id="high-connection-scenarios">High-Connection Scenarios<a class="headerlink" href="#high-connection-scenarios" title="Permanent link">¶</a></h3>
 <div class="highlight"><pre><span></span><code><span class="c1"># Increase cache size for many concurrent connections</span>
-nodetool<span class="w"> </span>setauthcacheconfig<span class="w"> </span><span class="se">\</span>
-<span class="w">    </span>--credentials-max-entries<span class="w"> </span><span class="m">10000</span><span class="w"> </span><span class="se">\</span>
-<span class="w">    </span>--permissions-max-entries<span class="w"> </span><span class="m">10000</span>
+nodetool<span class="w"> </span>setauthcacheconfig<span class="w"> </span>--cache-name<span class="w"> </span>CredentialsCache<span class="w"> </span>--max-entries<span class="w"> </span><span class="m">10000</span>
+nodetool<span class="w"> </span>setauthcacheconfig<span class="w"> </span>--cache-name<span class="w"> </span>PermissionsCache<span class="w"> </span>--max-entries<span class="w"> </span><span class="m">10000</span>
 </code></pre></div>
 <p>When handling many concurrent authenticated connections, increase cache size to maintain hit rates.</p>
 <hr>
@@ -20304,14 +20281,14 @@ nodetool<span class="w"> </span>setauthcacheconfig<span class="w"> </span><span 
 <h3 id="update-interval-vs-validity">Update Interval vs Validity<a class="headerlink" href="#update-interval-vs-validity" title="Permanent link">¶</a></h3>
 <p>The update interval should be less than the validity period:</p>
 <div class="highlight"><pre><span></span><code><span class="c1"># Good: Update happens before expiry</span>
-nodetool<span class="w"> </span>setauthcacheconfig<span class="w"> </span><span class="se">\</span>
-<span class="w">    </span>--permissions-validity<span class="w"> </span><span class="m">5000</span><span class="w"> </span><span class="se">\</span>
-<span class="w">    </span>--permissions-update-interval<span class="w"> </span><span class="m">3000</span>
+nodetool<span class="w"> </span>setauthcacheconfig<span class="w"> </span>--cache-name<span class="w"> </span>PermissionsCache<span class="w"> </span><span class="se">\</span>
+<span class="w">    </span>--validity-period<span class="w"> </span><span class="m">5000</span><span class="w"> </span><span class="se">\</span>
+<span class="w">    </span>--update-interval<span class="w"> </span><span class="m">3000</span>
 
 <span class="c1"># Bad: Update interval &gt;= validity (no background refresh)</span>
-nodetool<span class="w"> </span>setauthcacheconfig<span class="w"> </span><span class="se">\</span>
-<span class="w">    </span>--permissions-validity<span class="w"> </span><span class="m">5000</span><span class="w"> </span><span class="se">\</span>
-<span class="w">    </span>--permissions-update-interval<span class="w"> </span><span class="m">6000</span>
+nodetool<span class="w"> </span>setauthcacheconfig<span class="w"> </span>--cache-name<span class="w"> </span>PermissionsCache<span class="w"> </span><span class="se">\</span>
+<span class="w">    </span>--validity-period<span class="w"> </span><span class="m">5000</span><span class="w"> </span><span class="se">\</span>
+<span class="w">    </span>--update-interval<span class="w"> </span><span class="m">6000</span>
 </code></pre></div>
 <h3 id="cache-sizing">Cache Sizing<a class="headerlink" href="#cache-sizing" title="Permanent link">¶</a></h3>
 <p>Calculate max entries based on:</p>
@@ -20321,9 +20298,8 @@ nodetool<span class="w"> </span>setauthcacheconfig<span class="w"> </span><span 
 <li>Memory available for caching</li>
 </ul>
 <div class="highlight"><pre><span></span><code><span class="c1"># For 5000 concurrent users</span>
-nodetool<span class="w"> </span>setauthcacheconfig<span class="w"> </span><span class="se">\</span>
-<span class="w">    </span>--credentials-max-entries<span class="w"> </span><span class="m">6000</span><span class="w"> </span><span class="se">\</span>
-<span class="w">    </span>--roles-max-entries<span class="w"> </span><span class="m">1000</span>
+nodetool<span class="w"> </span>setauthcacheconfig<span class="w"> </span>--cache-name<span class="w"> </span>CredentialsCache<span class="w"> </span>--max-entries<span class="w"> </span><span class="m">6000</span>
+nodetool<span class="w"> </span>setauthcacheconfig<span class="w"> </span>--cache-name<span class="w"> </span>RolesCache<span class="w"> </span>--max-entries<span class="w"> </span><span class="m">1000</span>
 </code></pre></div>
 <hr>
 <h2 id="best-practices">Best Practices<a class="headerlink" href="#best-practices" title="Permanent link">¶</a></h2>
@@ -20347,7 +20323,29 @@ nodetool<span class="w"> </span>setauthcacheconfig<span class="w"> </span><span 
 </div>
 <div class="admonition info">
 <p class="admonition-title">Corresponding cassandra.yaml Settings</p>
-<p>For persistent configuration, update these settings in <code>cassandra.yaml</code>:</p>
+<p>The configuration parameter names vary by Cassandra version:</p>
+<table>
+<thead>
+<tr>
+<th>Cassandra Version</th>
+<th>Parameter Pattern</th>
+<th>Example</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Pre-4.1</td>
+<td><code>*_validity_in_ms</code>, <code>*_update_interval_in_ms</code>, <code>*_cache_max_entries</code></td>
+<td><code>credentials_validity_in_ms: 2000</code></td>
+</tr>
+<tr>
+<td>4.1+</td>
+<td><code>*_validity</code>, <code>*_update_interval</code>, <code>*_cache_max_entries</code>, <code>*_cache_active_update</code></td>
+<td><code>credentials_validity: 2s</code></td>
+</tr>
+</tbody>
+</table>
+<p><strong>Pre-4.1 example:</strong></p>
 <div class="highlight"><pre><span></span><code><span class="nt">credentials_validity_in_ms</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">5000</span>
 <span class="nt">credentials_update_interval_in_ms</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">3000</span>
 <span class="nt">credentials_cache_max_entries</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">1000</span>
@@ -20357,6 +20355,20 @@ nodetool<span class="w"> </span>setauthcacheconfig<span class="w"> </span><span 
 <span class="nt">roles_validity_in_ms</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">5000</span>
 <span class="nt">roles_update_interval_in_ms</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">3000</span>
 <span class="nt">roles_cache_max_entries</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">1000</span>
+</code></pre></div>
+<p><strong>4.1+ example (with duration literals):</strong></p>
+<div class="highlight"><pre><span></span><code><span class="nt">credentials_validity</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">5s</span>
+<span class="nt">credentials_update_interval</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">3s</span>
+<span class="nt">credentials_cache_max_entries</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">1000</span>
+<span class="nt">credentials_cache_active_update</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">true</span>
+<span class="nt">permissions_validity</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">5s</span>
+<span class="nt">permissions_update_interval</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">3s</span>
+<span class="nt">permissions_cache_max_entries</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">1000</span>
+<span class="nt">permissions_cache_active_update</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">true</span>
+<span class="nt">roles_validity</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">5s</span>
+<span class="nt">roles_update_interval</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">3s</span>
+<span class="nt">roles_cache_max_entries</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">1000</span>
+<span class="nt">roles_cache_active_update</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">true</span>
 </code></pre></div>
 </div>
 <hr>

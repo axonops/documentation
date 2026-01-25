@@ -20491,30 +20491,39 @@ data-et-multi-view="{&quot;schema&quot;:{&quot;content&quot;:{&quot;desktop&quot
 <tbody>
 <tr>
 <td>L0</td>
-<td>~160 MB</td>
+<td>Up to 4 × <code>sstable_size_in_mb</code></td>
 <td>No</td>
 <td>1-4</td>
 </tr>
 <tr>
 <td>L1</td>
-<td>~10 × L0</td>
+<td><code>fanout_size</code> × L0 size</td>
 <td>Yes</td>
 <td>~10</td>
 </tr>
 <tr>
 <td>L2</td>
-<td>~10 × L1</td>
+<td><code>fanout_size</code> × L1 size</td>
 <td>Yes</td>
 <td>~100</td>
 </tr>
 <tr>
 <td>L3+</td>
-<td>~10 × previous</td>
+<td><code>fanout_size</code> × previous</td>
 <td>Yes</td>
 <td>~1000+</td>
 </tr>
 </tbody>
 </table>
+<div class="admonition note">
+<p class="admonition-title">Configuration-Dependent Values</p>
+<p>Level sizes depend on LCS compaction strategy settings:</p>
+<ul>
+<li><code>sstable_size_in_mb</code>: Target SSTable size (default: 160 MiB)</li>
+<li><code>fanout_size</code>: Size multiplier between levels (default: 10)</li>
+</ul>
+<p>With defaults, L0 holds up to ~640 MiB (4 × 160 MiB) before triggering compaction to L1.</p>
+</div>
 <hr>
 <h2 id="arguments">Arguments<a class="headerlink" href="#arguments" title="Permanent link">¶</a></h2>
 <table>

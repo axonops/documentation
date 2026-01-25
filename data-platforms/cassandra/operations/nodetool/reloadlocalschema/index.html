@@ -20018,7 +20018,11 @@ data-et-multi-view="{&quot;schema&quot;:{&quot;content&quot;:{&quot;desktop&quot
 <div class="highlight"><pre><span></span><code>nodetool<span class="w"> </span><span class="o">[</span>connection_options<span class="o">]</span><span class="w"> </span>reloadlocalschema
 </code></pre></div>
 <h2 id="description">Description<a class="headerlink" href="#description" title="Permanent link">¶</a></h2>
-<p><code>nodetool reloadlocalschema</code> re-reads the schema definition from the local system tables. This can help resolve schema disagreements or refresh schema after manual modifications.</p>
+<p><code>nodetool reloadlocalschema</code> re-reads the schema definition from the local system tables. This can help resolve schema disagreements.</p>
+<div class="admonition warning">
+<p class="admonition-title">Do Not Manually Modify Schema Tables</p>
+<p>Direct modifications to schema system tables (<code>system_schema.*</code>) are unsupported and can corrupt the schema. Always use CQL DDL statements (CREATE, ALTER, DROP) to modify schema. The <code>reloadlocalschema</code> command is intended for recovery scenarios, not for applying manual edits.</p>
+</div>
 <hr>
 <h2 id="examples">Examples<a class="headerlink" href="#examples" title="Permanent link">¶</a></h2>
 <h3 id="basic-usage">Basic Usage<a class="headerlink" href="#basic-usage" title="Permanent link">¶</a></h3>

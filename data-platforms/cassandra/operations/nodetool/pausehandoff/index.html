@@ -9226,9 +9226,9 @@ data-et-multi-view="{&quot;schema&quot;:{&quot;content&quot;:{&quot;desktop&quot
 </li>
         
           <li class="md-nav__item">
-  <a href="#monitor-hints-table-size" class="md-nav__link">
+  <a href="#monitor-hints-directory-size" class="md-nav__link">
     <span class="md-ellipsis">
-      Monitor Hints Table Size
+      Monitor Hints Directory Size
     </span>
   </a>
   
@@ -20364,9 +20364,9 @@ data-et-multi-view="{&quot;schema&quot;:{&quot;content&quot;:{&quot;desktop&quot
 </li>
         
           <li class="md-nav__item">
-  <a href="#monitor-hints-table-size" class="md-nav__link">
+  <a href="#monitor-hints-directory-size" class="md-nav__link">
     <span class="md-ellipsis">
-      Monitor Hints Table Size
+      Monitor Hints Directory Size
     </span>
   </a>
   
@@ -20687,7 +20687,6 @@ nodetool<span class="w"> </span>pausehandoff
 
 <span class="c1"># 3. Investigate</span>
 nodetool<span class="w"> </span>listpendinghints
-nodetool<span class="w"> </span>tablestats<span class="w"> </span>system.hints
 
 <span class="c1"># 4. Resume when resolved</span>
 nodetool<span class="w"> </span>resumehandoff
@@ -20804,9 +20803,9 @@ watch<span class="w"> </span>-n<span class="w"> </span><span class="m">2</span><
 <div class="highlight"><pre><span></span><code><span class="c1"># Check pending hints periodically</span>
 watch<span class="w"> </span>-n<span class="w"> </span><span class="m">60</span><span class="w"> </span><span class="s1">'nodetool listpendinghints'</span>
 </code></pre></div>
-<h3 id="monitor-hints-table-size">Monitor Hints Table Size<a class="headerlink" href="#monitor-hints-table-size" title="Permanent link">¶</a></h3>
-<div class="highlight"><pre><span></span><code><span class="c1"># Track disk usage by hints</span>
-watch<span class="w"> </span>-n<span class="w"> </span><span class="m">60</span><span class="w"> </span><span class="s1">'nodetool tablestats system.hints | grep "Space used"'</span>
+<h3 id="monitor-hints-directory-size">Monitor Hints Directory Size<a class="headerlink" href="#monitor-hints-directory-size" title="Permanent link">¶</a></h3>
+<div class="highlight"><pre><span></span><code><span class="c1"># Track disk usage by hints (hints stored as files)</span>
+watch<span class="w"> </span>-n<span class="w"> </span><span class="m">60</span><span class="w"> </span><span class="s1">'du -sh /var/lib/cassandra/hints/'</span>
 </code></pre></div>
 <h3 id="check-hint-age">Check Hint Age<a class="headerlink" href="#check-hint-age" title="Permanent link">¶</a></h3>
 <div class="highlight"><pre><span></span><code><span class="ch">#!/bin/bash</span>
@@ -20818,10 +20817,10 @@ watch<span class="w"> </span>-n<span class="w"> </span><span class="m">60</span>
 <span class="nb">echo</span><span class="w"> </span><span class="s2">"Pending hints by target:"</span>
 nodetool<span class="w"> </span>listpendinghints
 
-<span class="c1"># Hints table size</span>
+<span class="c1"># Hints directory size</span>
 <span class="nb">echo</span><span class="w"> </span><span class="s2">""</span>
-<span class="nb">echo</span><span class="w"> </span><span class="s2">"Hints table size:"</span>
-nodetool<span class="w"> </span>tablestats<span class="w"> </span>system.hints<span class="w"> </span><span class="m">2</span>&gt;/dev/null<span class="w"> </span><span class="p">|</span><span class="w"> </span>grep<span class="w"> </span>-E<span class="w"> </span><span class="s2">"Space used|SSTable count"</span>
+<span class="nb">echo</span><span class="w"> </span><span class="s2">"Hints directory size:"</span>
+du<span class="w"> </span>-sh<span class="w"> </span>/var/lib/cassandra/hints/
 
 <span class="c1"># Warn about expiration</span>
 <span class="nb">echo</span><span class="w"> </span><span class="s2">""</span>
@@ -20880,14 +20879,14 @@ nodetool<span class="w"> </span>repair<span class="w"> </span>-pr
 <div class="highlight"><pre><span></span><code><span class="ch">#!/bin/bash</span>
 <span class="c1"># pause_handoff_cluster.sh</span>
 
-<span class="nb">echo</span><span class="w"> </span><span class="s2">"Pausing hint delivery cluster-wide..."</span><span class="c1"># Get list of node IPs from local nodetool status</span>
+<span class="nb">echo</span><span class="w"> </span><span class="s2">"Pausing hint delivery cluster-wide..."</span>
 
-
+<span class="c1"># Get list of node IPs from local nodetool status</span>
 <span class="nv">nodes</span><span class="o">=</span><span class="k">$(</span>nodetool<span class="w"> </span>status<span class="w"> </span><span class="p">|</span><span class="w"> </span>grep<span class="w"> </span><span class="s2">"^UN"</span><span class="w"> </span><span class="p">|</span><span class="w"> </span>awk<span class="w"> </span><span class="s1">'{print $2}'</span><span class="k">)</span>
 
 <span class="k">for</span><span class="w"> </span>node<span class="w"> </span><span class="k">in</span><span class="w"> </span><span class="nv">$nodes</span><span class="p">;</span><span class="w"> </span><span class="k">do</span>
 <span class="w">    </span><span class="nb">echo</span><span class="w"> </span>-n<span class="w"> </span><span class="s2">"</span><span class="nv">$node</span><span class="s2">: "</span>
-<span class="w">    </span>ssh<span class="w"> </span><span class="s2">"</span><span class="nv">$node</span><span class="s2">"</span><span class="w"> </span><span class="s2">"nodetool pausehandoff 2&gt;/dev/null &amp;&amp; echo "</span>paused<span class="s2">" || echo "</span>FAILED<span class="s2">""</span>
+<span class="w">    </span>ssh<span class="w"> </span><span class="s2">"</span><span class="nv">$node</span><span class="s2">"</span><span class="w"> </span><span class="s1">'nodetool pausehandoff 2&gt;/dev/null &amp;&amp; echo "paused" || echo "FAILED"'</span>
 <span class="k">done</span>
 
 <span class="nb">echo</span><span class="w"> </span><span class="s2">""</span>
@@ -20904,14 +20903,14 @@ nodetool<span class="w"> </span>repair<span class="w"> </span>-pr
 <div class="highlight"><pre><span></span><code><span class="ch">#!/bin/bash</span>
 <span class="c1"># resume_handoff_cluster.sh</span>
 
-<span class="nb">echo</span><span class="w"> </span><span class="s2">"Resuming hint delivery cluster-wide..."</span><span class="c1"># Get list of node IPs from local nodetool status</span>
+<span class="nb">echo</span><span class="w"> </span><span class="s2">"Resuming hint delivery cluster-wide..."</span>
 
-
+<span class="c1"># Get list of node IPs from local nodetool status</span>
 <span class="nv">nodes</span><span class="o">=</span><span class="k">$(</span>nodetool<span class="w"> </span>status<span class="w"> </span><span class="p">|</span><span class="w"> </span>grep<span class="w"> </span><span class="s2">"^UN"</span><span class="w"> </span><span class="p">|</span><span class="w"> </span>awk<span class="w"> </span><span class="s1">'{print $2}'</span><span class="k">)</span>
 
 <span class="k">for</span><span class="w"> </span>node<span class="w"> </span><span class="k">in</span><span class="w"> </span><span class="nv">$nodes</span><span class="p">;</span><span class="w"> </span><span class="k">do</span>
 <span class="w">    </span><span class="nb">echo</span><span class="w"> </span>-n<span class="w"> </span><span class="s2">"</span><span class="nv">$node</span><span class="s2">: "</span>
-<span class="w">    </span>ssh<span class="w"> </span><span class="s2">"</span><span class="nv">$node</span><span class="s2">"</span><span class="w"> </span><span class="s2">"nodetool resumehandoff 2&gt;/dev/null &amp;&amp; echo "</span>resumed<span class="s2">" || echo "</span>FAILED<span class="s2">""</span>
+<span class="w">    </span>ssh<span class="w"> </span><span class="s2">"</span><span class="nv">$node</span><span class="s2">"</span><span class="w"> </span><span class="s1">'nodetool resumehandoff 2&gt;/dev/null &amp;&amp; echo "resumed" || echo "FAILED"'</span>
 <span class="k">done</span>
 
 <span class="nb">echo</span><span class="w"> </span><span class="s2">""</span>
@@ -20940,8 +20939,8 @@ tail<span class="w"> </span>-100<span class="w"> </span>/var/log/cassandra/syste
 <div class="highlight"><pre><span></span><code><span class="c1"># Check pending hints</span>
 nodetool<span class="w"> </span>listpendinghints
 
-<span class="c1"># Check hints table size</span>
-nodetool<span class="w"> </span>tablestats<span class="w"> </span>system.hints
+<span class="c1"># Check hints directory size</span>
+du<span class="w"> </span>-sh<span class="w"> </span>/var/lib/cassandra/hints/
 
 <span class="c1"># If too many hints, consider:</span>
 <span class="c1"># 1. Resume delivery to reduce backlog</span>

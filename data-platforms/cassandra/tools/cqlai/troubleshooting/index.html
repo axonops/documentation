@@ -20156,8 +20156,10 @@ curl<span class="w"> </span>http://localhost:11434/api/tags
 <span class="c1"># Check model is available</span>
 ollama<span class="w"> </span>list
 
-<span class="c1"># Set correct endpoint</span>
-<span class="nb">export</span><span class="w"> </span><span class="nv">OLLAMA_HOST</span><span class="o">=</span>http://localhost:11434
+<span class="c1"># Set correct endpoint (both variable names are supported)</span>
+<span class="nb">export</span><span class="w"> </span><span class="nv">CQLAI_OLLAMA_HOST</span><span class="o">=</span>http://localhost:11434
+<span class="c1"># or</span>
+<span class="nb">export</span><span class="w"> </span><span class="nv">OLLAMA_URL</span><span class="o">=</span>http://localhost:11434
 </code></pre></div>
 <hr>
 <h2 id="query-execution-issues">Query Execution Issues<a class="headerlink" href="#query-execution-issues" title="Permanent link">¶</a></h2>
@@ -20173,8 +20175,8 @@ ollama<span class="w"> </span>list
 <h3 id="timeout-during-query">Timeout During Query<a class="headerlink" href="#timeout-during-query" title="Permanent link">¶</a></h3>
 <p><strong>Symptom:</strong> Query times out before completing.</p>
 <p><strong>Solutions:</strong></p>
-<div class="highlight"><pre><span></span><code><span class="c1"># Increase timeout</span>
-cqlai<span class="w"> </span>--request-timeout<span class="w"> </span>60s
+<div class="highlight"><pre><span></span><code><span class="c1"># Increase timeout (value in seconds)</span>
+cqlai<span class="w"> </span>--request-timeout<span class="w"> </span><span class="m">60</span>
 
 <span class="c1"># For large result sets, use paging</span>
 cqlai<span class="w"> </span>--page-size<span class="w"> </span><span class="m">100</span>
@@ -20189,7 +20191,7 @@ SELECT<span class="w"> </span>*<span class="w"> </span>FROM<span class="w"> </sp
 cqlai<span class="w"> </span>--page-size<span class="w"> </span><span class="m">1000</span>
 
 <span class="c1"># Export to file instead</span>
-.export<span class="w"> </span>csv<span class="w"> </span>results.csv<span class="w"> </span>SELECT<span class="w"> </span>*<span class="w"> </span>FROM<span class="w"> </span>table<span class="p">;</span>
+.export<span class="w"> </span>table<span class="w"> </span>results.csv
 </code></pre></div>
 <hr>
 <h2 id="parquet-export-issues">Parquet Export Issues<a class="headerlink" href="#parquet-export-issues" title="Permanent link">¶</a></h2>
@@ -20282,17 +20284,17 @@ touch<span class="w"> </span>test.parquet<span class="w"> </span><span class="o"
 <h3 id="configuration-not-loading">Configuration Not Loading<a class="headerlink" href="#configuration-not-loading" title="Permanent link">¶</a></h3>
 <p><strong>Symptom:</strong> Settings from config file are ignored.</p>
 <p><strong>Diagnosis:</strong></p>
-<div class="highlight"><pre><span></span><code><span class="c1"># Check config file location</span>
-ls<span class="w"> </span>-la<span class="w"> </span>~/.cqlai/config.yaml
+<div class="highlight"><pre><span></span><code><span class="c1"># Check config file locations</span>
+ls<span class="w"> </span>-la<span class="w"> </span>~/.cqlai.json<span class="w"> </span>~/.config/cqlai/config.json<span class="w"> </span>./cqlai.json
 
-<span class="c1"># Verify YAML syntax</span>
-cat<span class="w"> </span>~/.cqlai/config.yaml
+<span class="c1"># Verify JSON syntax</span>
+cat<span class="w"> </span>~/.config/cqlai/config.json<span class="w"> </span><span class="p">|</span><span class="w"> </span>python3<span class="w"> </span>-m<span class="w"> </span>json.tool
 </code></pre></div>
 <p><strong>Solutions:</strong></p>
 <ol>
-<li>Ensure config file is valid YAML</li>
+<li>Ensure config file is valid JSON</li>
 <li>Check file permissions</li>
-<li>Use explicit config path: <code>cqlai --config /path/to/config.yaml</code></li>
+<li>Use explicit config path: <code>cqlai --config-file /path/to/config.json</code></li>
 </ol>
 <h3 id="environment-variables-not-working">Environment Variables Not Working<a class="headerlink" href="#environment-variables-not-working" title="Permanent link">¶</a></h3>
 <p><strong>Symptom:</strong> Environment variables are ignored.</p>

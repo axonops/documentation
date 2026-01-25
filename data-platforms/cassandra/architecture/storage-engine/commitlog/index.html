@@ -20491,7 +20491,7 @@ data-et-multi-view="{&quot;schema&quot;:{&quot;content&quot;:{&quot;desktop&quot
 </tr>
 <tr>
 <td>Ordering</td>
-<td>Mutations are replayed in write order</td>
+<td>Mutations are replayed in segment order; correctness relies on mutation timestamps</td>
 </tr>
 <tr>
 <td>Atomicity</td>
@@ -20564,7 +20564,7 @@ Dirty Intervals:
 │                         HEADER                              │
 ├──────────┬───────────┬─────────────┬────────────┬───────────┤
 │ Version  │ Segment   │ Params Len  │ Params     │ Header    │
-│ (4 bytes)│ ID (8)    │ (4 bytes)   │ (JSON)     │ CRC (4)   │
+│ (4 bytes)│ ID (8)    │ (2 bytes)   │ (JSON)     │ CRC (4)   │
 └──────────┴───────────┴─────────────┴────────────┴───────────┘
 
 ┌─────────────────────────────────────────────────────────────┐
@@ -20604,8 +20604,8 @@ Dirty Intervals:
 </tr>
 <tr>
 <td>Parameters length</td>
-<td>4 bytes</td>
-<td>Length of JSON parameters</td>
+<td>2 bytes</td>
+<td>Length of JSON parameters (unsigned short)</td>
 </tr>
 <tr>
 <td>Parameters</td>

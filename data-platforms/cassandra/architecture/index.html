@@ -20392,13 +20392,13 @@ data-et-multi-view="{&quot;schema&quot;:{&quot;content&quot;:{&quot;desktop&quot
 
 
 <div><h1 id="cassandra-architecture">Cassandra Architecture<a class="headerlink" href="#cassandra-architecture" title="Permanent link">¶</a></h1>
-<p>Cassandra's architecture explains its behavior. The partition key determines which node stores data—get it wrong, and queries become slow or impossible. Deletes write tombstones instead of removing data immediately—ignore this, and deleted records can reappear. Nodes can disagree on data temporarily—skip repair, and that disagreement becomes permanent.</p>
+<p>Cassandra's architecture explains its behavior. The partition key determines which node stores data—get it wrong, and queries become slow or impossible. Deletes write tombstones instead of removing data immediately—ignore this, and deleted records can reappear. Nodes can disagree on data temporarily—while repair is the primary mechanism for full convergence, hinted handoff and read repair also help synchronize replicas.</p>
 <p>The design combines Amazon Dynamo's distribution approach (masterless ring, gossip protocol, tunable consistency) with Google BigTable's storage approach (LSM-tree, <a href="storage-engine/sstables/">SSTables</a>, memtables). Understanding both sides leads to better decisions about data modeling and operations.</p>
 <h2 id="architecture-overview">Architecture Overview<a class="headerlink" href="#architecture-overview" title="Permanent link">¶</a></h2>
 <p>Apache Cassandra is a distributed, peer-to-peer database designed for:</p>
 <ul>
 <li><strong>High Availability</strong>: No single point of failure</li>
-<li><strong>Linear Scalability</strong>: Add nodes to increase capacity</li>
+<li><strong>Scalability</strong>: Add nodes to increase capacity (actual scaling depends on workload and data model)</li>
 <li><strong>Geographic Distribution</strong>: Multi-datacenter replication</li>
 <li><strong>Tunable Consistency</strong>: Balance between consistency and availability</li>
 </ul>

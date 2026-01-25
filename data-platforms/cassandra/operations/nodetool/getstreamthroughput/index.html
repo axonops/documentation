@@ -8892,6 +8892,15 @@ data-et-multi-view="{&quot;schema&quot;:{&quot;content&quot;:{&quot;desktop&quot
 </li>
       
         <li class="md-nav__item">
+  <a href="#options" class="md-nav__link">
+    <span class="md-ellipsis">
+      Options
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#description" class="md-nav__link">
     <span class="md-ellipsis">
       Description
@@ -8923,6 +8932,15 @@ data-et-multi-view="{&quot;schema&quot;:{&quot;content&quot;:{&quot;desktop&quot
   <a href="#sample-output" class="md-nav__link">
     <span class="md-ellipsis">
       Sample Output
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#display-in-mibs" class="md-nav__link">
+    <span class="md-ellipsis">
+      Display in MiB/s
     </span>
   </a>
   
@@ -19892,6 +19910,15 @@ data-et-multi-view="{&quot;schema&quot;:{&quot;content&quot;:{&quot;desktop&quot
 </li>
       
         <li class="md-nav__item">
+  <a href="#options" class="md-nav__link">
+    <span class="md-ellipsis">
+      Options
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#description" class="md-nav__link">
     <span class="md-ellipsis">
       Description
@@ -19923,6 +19950,15 @@ data-et-multi-view="{&quot;schema&quot;:{&quot;content&quot;:{&quot;desktop&quot
   <a href="#sample-output" class="md-nav__link">
     <span class="md-ellipsis">
       Sample Output
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#display-in-mibs" class="md-nav__link">
+    <span class="md-ellipsis">
+      Display in MiB/s
     </span>
   </a>
   
@@ -20000,25 +20036,80 @@ data-et-multi-view="{&quot;schema&quot;:{&quot;content&quot;:{&quot;desktop&quot
 
 
 <div><h1 id="nodetool-getstreamthroughput">nodetool getstreamthroughput<a class="headerlink" href="#nodetool-getstreamthroughput" title="Permanent link">¶</a></h1>
-<p>Displays the stream throughput limit in MB/s.</p>
+<p>Displays the stream throughput limit.</p>
 <hr>
 <h2 id="synopsis">Synopsis<a class="headerlink" href="#synopsis" title="Permanent link">¶</a></h2>
-<div class="highlight"><pre><span></span><code>nodetool<span class="w"> </span><span class="o">[</span>connection_options<span class="o">]</span><span class="w"> </span>getstreamthroughput
+<div class="highlight"><pre><span></span><code>nodetool<span class="w"> </span><span class="o">[</span>connection_options<span class="o">]</span><span class="w"> </span>getstreamthroughput<span class="w"> </span><span class="o">[</span>options<span class="o">]</span>
 </code></pre></div>
+<h2 id="options">Options<a class="headerlink" href="#options" title="Permanent link">¶</a></h2>
+<table>
+<thead>
+<tr>
+<th>Option</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>-m, --mib</code></td>
+<td>Display throughput in MiB/s instead of Mb/s</td>
+</tr>
+<tr>
+<td><code>-d, --precise-mbit</code></td>
+<td>Display precise Mb/s value as a decimal</td>
+</tr>
+<tr>
+<td><code>-e, --entire-sstable-throughput</code></td>
+<td>Show entire SSTable streaming throughput instead of standard streaming throughput</td>
+</tr>
+</tbody>
+</table>
 <h2 id="description">Description<a class="headerlink" href="#description" title="Permanent link">¶</a></h2>
-<p><code>nodetool getstreamthroughput</code> shows the current maximum throughput for streaming operations such as bootstrap, rebuild, and repair. This limit controls how fast data is transferred between nodes.</p>
+<p><code>nodetool getstreamthroughput</code> shows the current maximum throughput for streaming operations such as bootstrap, rebuild, and repair. By default, the output is in <strong>megabits per second (Mb/s)</strong>, not megabytes. This limit controls how fast data is transferred between nodes.</p>
 <hr>
 <h2 id="examples">Examples<a class="headerlink" href="#examples" title="Permanent link">¶</a></h2>
 <h3 id="basic-usage">Basic Usage<a class="headerlink" href="#basic-usage" title="Permanent link">¶</a></h3>
 <div class="highlight"><pre><span></span><code>nodetool<span class="w"> </span>getstreamthroughput
 </code></pre></div>
 <h3 id="sample-output">Sample Output<a class="headerlink" href="#sample-output" title="Permanent link">¶</a></h3>
-<div class="highlight"><pre><span></span><code>Current stream throughput: 200 MB/s
+<div class="highlight"><pre><span></span><code>Current stream throughput: 200 Mb/s
+</code></pre></div>
+<p>A value of <code>unlimited</code> indicates that the configured value is <code>0</code> or negative (no throttling).</p>
+<h3 id="display-in-mibs">Display in MiB/s<a class="headerlink" href="#display-in-mibs" title="Permanent link">¶</a></h3>
+<div class="highlight"><pre><span></span><code>nodetool<span class="w"> </span>getstreamthroughput<span class="w"> </span>--mib
 </code></pre></div>
 <hr>
 <h2 id="configuration">Configuration<a class="headerlink" href="#configuration" title="Permanent link">¶</a></h2>
-<div class="highlight"><pre><span></span><code><span class="c1"># cassandra.yaml</span>
-<span class="nt">stream_throughput_outbound_megabits_per_sec</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">200</span>
+<p>The cassandra.yaml parameter name varies by version:</p>
+<table>
+<thead>
+<tr>
+<th>Cassandra Version</th>
+<th>Parameter Name</th>
+<th>Example</th>
+<th>Unit</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Pre-4.1</td>
+<td><code>stream_throughput_outbound_megabits_per_sec</code></td>
+<td><code>200</code></td>
+<td>Megabits/s</td>
+</tr>
+<tr>
+<td>4.1+</td>
+<td><code>stream_throughput</code></td>
+<td><code>200Mb/s</code> or <code>24MiB/s</code></td>
+<td>Various</td>
+</tr>
+</tbody>
+</table>
+<div class="highlight"><pre><span></span><code><span class="c1"># cassandra.yaml (4.1+)</span>
+<span class="nt">stream_throughput</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">200Mb/s</span>
+
+<span class="c1"># cassandra.yaml (Pre-4.1)</span>
+<span class="c1"># stream_throughput_outbound_megabits_per_sec: 200</span>
 </code></pre></div>
 <hr>
 <h2 id="use-cases">Use Cases<a class="headerlink" href="#use-cases" title="Permanent link">¶</a></h2>

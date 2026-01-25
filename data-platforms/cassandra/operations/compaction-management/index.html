@@ -20619,7 +20619,7 @@ data-et-multi-view="{&quot;schema&quot;:{&quot;content&quot;:{&quot;desktop&quot
 <span class="nt">compaction_throughput_mb_per_sec</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">64</span>
 
 <span class="c1"># Number of concurrent compaction threads</span>
-<span class="c1"># Default: min(4, number_of_disks)</span>
+<span class="c1"># Default: min(number_of_disks, number_of_cores), min 2, max 8</span>
 <span class="nt">concurrent_compactors</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">4</span>
 
 <span class="c1"># Compaction large partition warning threshold</span>

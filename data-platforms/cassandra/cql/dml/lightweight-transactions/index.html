@@ -21439,10 +21439,10 @@ data-et-multi-view="{&quot;schema&quot;:{&quot;content&quot;:{&quot;desktop&quot
 </div>
 <h3 id="mixing-lwt-and-non-lwt-operations">Mixing LWT and Non-LWT Operations<a class="headerlink" href="#mixing-lwt-and-non-lwt-operations" title="Permanent link">¶</a></h3>
 <div class="admonition danger">
-<p class="admonition-title">Mixing LWT with Non-LWT Is Unsafe</p>
-<p>Mixing lightweight transactions with standard (non-LWT) operations on the same data is <strong>inherently unsafe</strong> and SHOULD be avoided.</p>
+<p class="admonition-title">Mixing LWT with Non-LWT Is High Risk</p>
+<p>Mixing lightweight transactions with standard (non-LWT) operations on the same data is a <strong>high-risk pattern</strong> and should be avoided unless the implications are well understood.</p>
 <p><strong>Why this is dangerous:</strong></p>
-<p>Paxos uses its own <strong>hybrid-logical clock</strong> to ensure linearizability within LWT operations. This clock is separate from the regular Cassandra timestamp mechanism used by non-LWT writes. When you mix the two:</p>
+<p>Paxos uses <strong>ballot timestamps</strong> (TimeUUID-based) to ensure linearizability within LWT operations. This timestamp mechanism is separate from the regular Cassandra client-side or server-side timestamps used by non-LWT writes. When mixed:</p>
 <ul>
 <li>The clocks are never perfectly synchronized between LWT and non-LWT requests</li>
 <li>A non-LWT operation executed immediately after an LWT may appear to succeed but have no effect</li>
@@ -21981,7 +21981,7 @@ UPDATE<span class="w"> </span>users<span class="w"> </span>SET<span class="w"> <
 <p><strong>Conditions:</strong></p>
 <ul>
 <li>Conditions MUST only reference non-primary-key columns</li>
-<li>Conditions MUST NOT reference columns in SET clause (no self-reference)</li>
+<li>Conditions may reference columns being updated in the SET clause (e.g., <code>IF balance &gt;= 100</code>)</li>
 <li>Collection element conditions require proper syntax</li>
 </ul>
 </div>

@@ -20547,7 +20547,7 @@ Where T_node_i = T_index_lookup + T_base_read + T_serialization
 <h2 id="sai-query-model-adaptive-range-reading">SAI Query Model: Adaptive Range Reading<a class="headerlink" href="#sai-query-model-adaptive-range-reading" title="Permanent link">¶</a></h2>
 <p>Storage Attached Index introduces a fundamentally different distributed query architecture. Rather than employing static scatter-gather, SAI implements adaptive coordinator-based range reading with dynamic concurrency adjustment.</p>
 <h3 id="coordinator-level-query-planning">Coordinator-Level Query Planning<a class="headerlink" href="#coordinator-level-query-planning" title="Permanent link">¶</a></h3>
-<p>The SAI coordinator performs query analysis to optimize distributed execution:</p>
+<p>The SAI coordinator performs query analysis to optimize distributed execution. The following describes the conceptual approach; actual behavior may vary by Cassandra version and implementation:</p>
 <ol>
 <li><strong>Index selectivity analysis</strong>: Identifies the most selective index among available SAI indexes to narrow the filtering space</li>
 <li><strong>Read command construction</strong>: Embeds selected index metadata into the distributed range read command</li>

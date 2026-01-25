@@ -20593,9 +20593,9 @@ Year 5:   15.77 GB per sensor partition
 <td>30-second query, then timeout</td>
 </tr>
 <tr>
-<td><strong>Memory Exhaustion</strong></td>
-<td>Compaction must load partition into memory. A 15GB partition requires 15GB+ heap during compaction.</td>
-<td>OOM with 8GB heap</td>
+<td><strong>Memory Pressure</strong></td>
+<td>Very large partitions increase memory pressure during compaction and queries.</td>
+<td>Increased GC, potential OOM with undersized heap</td>
 </tr>
 <tr>
 <td><strong>Repair Failures</strong></td>
@@ -21174,8 +21174,8 @@ Year 5:   15.77 GB per sensor partition
     <span class="n">hours_since_epoch</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">timestamp</span><span class="o">.</span><span class="n">timestamp</span><span class="p">()</span> <span class="o">/</span> <span class="mi">3600</span><span class="p">)</span>
     <span class="k">return</span> <span class="p">(</span><span class="n">hours_since_epoch</span> <span class="o">//</span> <span class="n">bucket_hours</span><span class="p">)</span> <span class="o">%</span> <span class="n">num_buckets</span>
 
-<span class="c1"># Data automatically overwrites when bucket cycles</span>
-<span class="c1"># No need for TTL or explicit deletes</span>
+<span class="c1"># Note: Bucket reuse requires matching clustering keys for overwrites.</span>
+<span class="c1"># TTL or explicit deletion is still needed to remove old data within buckets.</span>
 </code></pre></div>
 <h3 id="dynamic-bucket-sizing">Dynamic Bucket Sizing<a class="headerlink" href="#dynamic-bucket-sizing" title="Permanent link">¶</a></h3>
 <p>Adjust bucket size based on entity volume:</p>

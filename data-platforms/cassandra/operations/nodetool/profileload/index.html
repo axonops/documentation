@@ -9933,6 +9933,15 @@ data-et-multi-view="{&quot;schema&quot;:{&quot;content&quot;:{&quot;desktop&quot
 </li>
       
         <li class="md-nav__item">
+  <a href="#options" class="md-nav__link">
+    <span class="md-ellipsis">
+      Options
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#output-format" class="md-nav__link">
     <span class="md-ellipsis">
       Output Format
@@ -20246,6 +20255,15 @@ data-et-multi-view="{&quot;schema&quot;:{&quot;content&quot;:{&quot;desktop&quot
 </li>
       
         <li class="md-nav__item">
+  <a href="#options" class="md-nav__link">
+    <span class="md-ellipsis">
+      Options
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#output-format" class="md-nav__link">
     <span class="md-ellipsis">
       Output Format
@@ -20627,7 +20645,7 @@ data-et-multi-view="{&quot;schema&quot;:{&quot;content&quot;:{&quot;desktop&quot
 <p>Profiles read and write operations on a table for a specified duration to identify hot partitions and access patterns.</p>
 <hr>
 <h2 id="synopsis">Synopsis<a class="headerlink" href="#synopsis" title="Permanent link">¶</a></h2>
-<div class="highlight"><pre><span></span><code>nodetool<span class="w"> </span><span class="o">[</span>connection_options<span class="o">]</span><span class="w"> </span>profileload<span class="w"> </span>&lt;keyspace&gt;<span class="w"> </span>&lt;table&gt;<span class="w"> </span>&lt;duration&gt;
+<div class="highlight"><pre><span></span><code>nodetool<span class="w"> </span><span class="o">[</span>connection_options<span class="o">]</span><span class="w"> </span>profileload<span class="w"> </span><span class="o">[</span>options<span class="o">]</span><span class="w"> </span><span class="o">[</span>keyspace<span class="o">]</span><span class="w"> </span><span class="o">[</span>table<span class="o">]</span><span class="w"> </span><span class="o">[</span>duration<span class="o">]</span>
 </code></pre></div>
 <h2 id="description">Description<a class="headerlink" href="#description" title="Permanent link">¶</a></h2>
 <p><code>nodetool profileload</code> samples operations on a specific table for the given duration and produces a report showing the most frequently accessed partitions. This is essential for identifying hot partitions—partitions that receive disproportionately high traffic compared to others.</p>
@@ -20684,15 +20702,50 @@ data-et-multi-view="{&quot;schema&quot;:{&quot;content&quot;:{&quot;desktop&quot
 <tbody>
 <tr>
 <td><code>keyspace</code></td>
-<td>Target keyspace name</td>
+<td>Target keyspace name (or <code>*</code> for all keyspaces)</td>
 </tr>
 <tr>
 <td><code>table</code></td>
-<td>Target table name</td>
+<td>Target table name (or <code>*</code> for all tables)</td>
 </tr>
 <tr>
 <td><code>duration</code></td>
-<td>Sampling duration in milliseconds</td>
+<td>Sampling duration in milliseconds (default: 10000)</td>
+</tr>
+</tbody>
+</table>
+<h2 id="options">Options<a class="headerlink" href="#options" title="Permanent link">¶</a></h2>
+<table>
+<thead>
+<tr>
+<th>Option</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>-s &lt;capacity&gt;</code></td>
+<td>Sampler capacity (number of top keys to track)</td>
+</tr>
+<tr>
+<td><code>-k &lt;count&gt;</code></td>
+<td>Number of top partitions to display</td>
+</tr>
+<tr>
+<td><code>-a &lt;samplers&gt;</code></td>
+<td>Comma-separated list of samplers to use</td>
+</tr>
+<tr>
+<td><code>-i, --interval &lt;ms&gt;</code></td>
+<td>Schedule sampling at regular intervals</td>
+</tr>
+<tr>
+<td><code>-t, --stop</code></td>
+<td>Stop scheduled sampling</td>
+</tr>
+<tr>
+<td><code>-l, --list</code></td>
+<td>List scheduled samplings</td>
 </tr>
 </tbody>
 </table>
@@ -20997,9 +21050,9 @@ CREATE TABLE user_events_v2 (
 <span class="k">fi</span>
 
 <span class="nv">OUTPUT_DIR</span><span class="o">=</span><span class="s2">"/tmp/profiles_</span><span class="k">$(</span>date<span class="w"> </span>+%Y%m%d_%H%M%S<span class="k">)</span><span class="s2">"</span>
-mkdir<span class="w"> </span>-p<span class="w"> </span><span class="nv">$OUTPUT_DIR</span><span class="c1"># Get list of node IPs from local nodetool status</span>
+mkdir<span class="w"> </span>-p<span class="w"> </span><span class="nv">$OUTPUT_DIR</span>
 
-
+<span class="c1"># Get list of node IPs from local nodetool status</span>
 <span class="nv">nodes</span><span class="o">=</span><span class="k">$(</span>nodetool<span class="w"> </span>status<span class="w"> </span><span class="p">|</span><span class="w"> </span>grep<span class="w"> </span><span class="s2">"^UN"</span><span class="w"> </span><span class="p">|</span><span class="w"> </span>awk<span class="w"> </span><span class="s1">'{print $2}'</span><span class="k">)</span>
 
 <span class="nb">echo</span><span class="w"> </span><span class="s2">"Profiling </span><span class="nv">$KEYSPACE</span><span class="s2">.</span><span class="nv">$TABLE</span><span class="s2"> for </span><span class="si">${</span><span class="nv">DURATION</span><span class="si">}</span><span class="s2">ms on all nodes..."</span>

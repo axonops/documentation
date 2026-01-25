@@ -20901,17 +20901,15 @@ nodetool<span class="w"> </span>tablehistograms<span class="w"> </span>my_keyspa
 <span class="k">if</span><span class="w"> </span><span class="o">[</span><span class="w"> </span>-z<span class="w"> </span><span class="s2">"</span><span class="nv">$MAX_THRESHOLD</span><span class="s2">"</span><span class="w"> </span><span class="o">]</span><span class="p">;</span><span class="w"> </span><span class="k">then</span>
 <span class="w">    </span><span class="nb">echo</span><span class="w"> </span><span class="s2">"Usage: </span><span class="nv">$0</span><span class="s2"> &lt;keyspace&gt; &lt;table&gt; &lt;min_threshold&gt; &lt;max_threshold&gt;"</span>
 <span class="w">    </span><span class="nb">exit</span><span class="w"> </span><span class="m">1</span>
-<span class="k">fi</span><span class="c1"># Get list of node IPs from local nodetool status</span>
+<span class="k">fi</span>
 
-
+<span class="c1"># Get list of node IPs from local nodetool status</span>
 <span class="nv">nodes</span><span class="o">=</span><span class="k">$(</span>nodetool<span class="w"> </span>status<span class="w"> </span><span class="p">|</span><span class="w"> </span>grep<span class="w"> </span><span class="s2">"^UN"</span><span class="w"> </span><span class="p">|</span><span class="w"> </span>awk<span class="w"> </span><span class="s1">'{print $2}'</span><span class="k">)</span>
 
 <span class="k">for</span><span class="w"> </span>node<span class="w"> </span><span class="k">in</span><span class="w"> </span><span class="nv">$nodes</span><span class="p">;</span><span class="w"> </span><span class="k">do</span>
 <span class="w">    </span><span class="nb">echo</span><span class="w"> </span>-n<span class="w"> </span><span class="s2">"</span><span class="nv">$node</span><span class="s2">: "</span>
-<span class="w">    </span>ssh<span class="w"> </span><span class="s2">"</span><span class="nv">$node</span><span class="s2">"</span><span class="w"> </span><span class="s2">"nodetool setcompactionthreshold </span><span class="nv">$KEYSPACE</span><span class="s2"> </span><span class="nv">$TABLE</span><span class="s2"> </span><span class="nv">$MIN_THRESHOLD</span><span class="s2"> </span><span class="nv">$MAX_THRESHOLD</span><span class="s2"> \"</span>
-<span class="s2">        &amp;&amp; echo "</span><span class="nb">set</span><span class="w"> </span>to<span class="w"> </span><span class="nv">$MIN_THRESHOLD</span>/<span class="nv">$MAX_THRESHOLD</span><span class="s2">" \</span>
-<span class="s2">        || echo "</span>FAILED<span class="s2">"</span>
-<span class="s2">done</span>
+<span class="w">    </span>ssh<span class="w"> </span><span class="s2">"</span><span class="nv">$node</span><span class="s2">"</span><span class="w"> </span><span class="s1">'nodetool setcompactionthreshold '</span><span class="s2">"</span><span class="nv">$KEYSPACE</span><span class="s2">"</span><span class="s1">' '</span><span class="s2">"</span><span class="nv">$TABLE</span><span class="s2">"</span><span class="s1">' '</span><span class="s2">"</span><span class="nv">$MIN_THRESHOLD</span><span class="s2">"</span><span class="s1">' '</span><span class="s2">"</span><span class="nv">$MAX_THRESHOLD</span><span class="s2">"</span><span class="s1">' &amp;&amp; echo "set to '</span><span class="s2">"</span><span class="nv">$MIN_THRESHOLD</span><span class="s2">"</span><span class="s1">'/'</span><span class="s2">"</span><span class="nv">$MAX_THRESHOLD</span><span class="s2">"</span><span class="s1">'" || echo "FAILED"'</span>
+<span class="k">done</span>
 </code></pre></div>
 <h3 id="making-changes-permanent">Making Changes Permanent<a class="headerlink" href="#making-changes-permanent" title="Permanent link">¶</a></h3>
 <p>Runtime changes don't persist. Use <code>ALTER TABLE</code> for permanent changes:</p>
@@ -20970,9 +20968,10 @@ WITH compaction = {
 </table>
 <h3 id="values-to-avoid">Values to Avoid<a class="headerlink" href="#values-to-avoid" title="Permanent link">¶</a></h3>
 <div class="admonition danger">
-<p class="admonition-title">Problematic Settings</p>
+<p class="admonition-title">Invalid and Problematic Settings</p>
 <ul>
-<li><strong>min_threshold = 1</strong>: Triggers compaction on every flush, extremely wasteful</li>
+<li><strong>min_threshold &lt; 2</strong>: Not allowed. The minimum valid value is 2.</li>
+<li><strong>min_threshold = 0 or max_threshold = 0</strong>: Deprecated and rejected in current versions. Use <code>nodetool disableautocompaction</code> or set <code>compaction = {'enabled': 'false'}</code> instead.</li>
 <li><strong>min_threshold &gt; max_threshold</strong>: Invalid configuration</li>
 <li><strong>Very high min_threshold (32+)</strong>: Too many SSTables accumulate, degrading reads</li>
 <li><strong>Very low max_threshold (&lt; 4)</strong>: Tiny compactions, inefficient</li>

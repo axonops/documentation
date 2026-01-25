@@ -20500,7 +20500,7 @@ Send to Node1
     │
     ├─── Node2 responds ──► Return to application
     │
-    └─── Cancel pending requests
+    └─── Ignore late responses (most drivers do not cancel in-flight requests)
 </code></pre></div>
 <hr>
 <h2 id="monitoring-speculative-execution">Monitoring Speculative Execution<a class="headerlink" href="#monitoring-speculative-execution" title="Permanent link">¶</a></h2>
@@ -20530,16 +20530,17 @@ Send to Node1
 </tr>
 </tbody>
 </table>
-<div class="highlight"><pre><span></span><code>Healthy metrics:
+<div class="highlight"><pre><span></span><code>Example metrics (workload-dependent; use as starting point, not targets):
   Trigger rate: 5-15%
   Win rate: 40-60% of triggered
   Latency improvement: 50%+ reduction in P99
 
-Unhealthy metrics:
+Warning signs (investigate if observed):
   Trigger rate: &gt;50% (delay too low or cluster too slow)
   Win rate: &lt;20% (delay too high, speculative rarely faster)
   Win rate: &gt;80% (delay too low, original always slow)
 </code></pre></div>
+<p>Optimal thresholds vary significantly by workload, cluster topology, and latency distribution.</p>
 <hr>
 <h2 id="configuration-recommendations">Configuration Recommendations<a class="headerlink" href="#configuration-recommendations" title="Permanent link">¶</a></h2>
 <table>

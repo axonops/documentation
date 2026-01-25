@@ -20370,14 +20370,14 @@ data-et-multi-view="{&quot;schema&quot;:{&quot;content&quot;:{&quot;desktop&quot
 </table>
 <h3 id="example">Example<a class="headerlink" href="#example" title="Permanent link">¶</a></h3>
 <div class="highlight"><pre><span></span><code>INSERT INTO *table_name* [ ( *column_name* [, ...] ) ]
-    { DEFAULT VALUES | VALUES ( *value* [, ...] ) | *query* }
+    VALUES ( *value* [, ...] )
     [ IF NOT EXISTS ]
     [ USING TTL *seconds* ]
 </code></pre></div>
 <p>Reading this syntax:
 - <code>INSERT INTO</code> and <em>table_name</em> are required
 - Column list <code>( *column_name* [, ...] )</code> is optional
-- One of the three alternatives in <code>{ }</code> is required: <code>DEFAULT VALUES</code>, <code>VALUES (...)</code>, or a <em>query</em>
+- <code>VALUES (...)</code> clause is required
 - <code>IF NOT EXISTS</code> clause is optional
 - <code>USING TTL</code> clause is optional</p>
 <h3 id="standard-terminology">Standard Terminology<a class="headerlink" href="#standard-terminology" title="Permanent link">¶</a></h3>
@@ -20435,8 +20435,8 @@ data-et-multi-view="{&quot;schema&quot;:{&quot;content&quot;:{&quot;desktop&quot
 <tbody>
 <tr>
 <td>CQL 3.0</td>
-<td>2.0+</td>
-<td>Collections, lightweight transactions</td>
+<td>1.2+</td>
+<td>Collections, compound primary keys</td>
 </tr>
 <tr>
 <td>CQL 3.4</td>

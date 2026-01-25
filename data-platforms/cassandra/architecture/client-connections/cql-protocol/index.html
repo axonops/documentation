@@ -21510,7 +21510,7 @@ data-et-multi-view="{&quot;schema&quot;:{&quot;content&quot;:{&quot;desktop&quot
 <tr>
 <td>v6</td>
 <td>5.0+</td>
-<td>Current</td>
+<td>Current (as of 5.0)</td>
 <td>Tablets, vector types, rate limiting errors</td>
 </tr>
 </tbody>
@@ -21863,10 +21863,31 @@ Bits 6-0: Protocol version number
 <p>Protocol v1-v2 supported only streams 0-127. Protocol v3+ expanded this to 32768 concurrent streams per connection.</p>
 </div>
 <h3 id="maximum-frame-size">Maximum Frame Size<a class="headerlink" href="#maximum-frame-size" title="Permanent link">¶</a></h3>
-<p>The default maximum frame size is 256 MB (268,435,456 bytes). This is configurable on the server via <code>native_transport_max_frame_size_in_mb</code>.</p>
+<p>The protocol supports frames up to 256 MB, but the server default is much smaller:</p>
+<table>
+<thead>
+<tr>
+<th>Version</th>
+<th>Parameter</th>
+<th>Default</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>4.0</td>
+<td><code>native_transport_max_frame_size_in_mb</code></td>
+<td>16</td>
+</tr>
+<tr>
+<td>4.1+</td>
+<td><code>native_transport_max_frame_size</code></td>
+<td><code>16MiB</code></td>
+</tr>
+</tbody>
+</table>
 <div class="admonition tip">
 <p class="admonition-title">Frame Size Tuning</p>
-<p>Increasing the maximum frame size may be necessary for queries returning very large result sets or batch operations with many statements.</p>
+<p>Increasing the maximum frame size may be necessary for queries returning very large result sets. Most workloads do not need to change the default.</p>
 </div>
 <hr>
 <h2 id="opcodes">Opcodes<a class="headerlink" href="#opcodes" title="Permanent link">¶</a></h2>
@@ -22275,7 +22296,7 @@ Bits 6-0: Protocol version number
 </code></pre></div>
 <p>The <code>result_metadata_id</code> allows the server to skip sending result metadata if it hasn't changed since preparation.</p>
 <h3 id="batch-request">BATCH Request<a class="headerlink" href="#batch-request" title="Permanent link">¶</a></h3>
-<p>Execute multiple statements atomically.</p>
+<p>Execute multiple statements in a single request. Logged batches provide atomicity via batchlog replay (eventual completion, not rollback semantics). Unlogged and counter batches do not provide atomicity guarantees.</p>
 <p><strong>Body:</strong>
 </p><div class="highlight"><pre><span></span><code>BATCH {
     &lt;type&gt;: [byte] Batch type
@@ -23278,7 +23299,7 @@ Missing trailing fields assumed null
 <tbody>
 <tr>
 <td>Max frame size</td>
-<td>256 MB</td>
+<td>16 MiB (default; protocol allows up to 256 MB)</td>
 </tr>
 <tr>
 <td>Max streams</td>

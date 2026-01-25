@@ -11086,9 +11086,9 @@ data-et-multi-view="{&quot;schema&quot;:{&quot;content&quot;:{&quot;desktop&quot
 </li>
         
           <li class="md-nav__item">
-  <a href="#disk-allocation-strategies" class="md-nav__link">
+  <a href="#disk-allocation" class="md-nav__link">
     <span class="md-ellipsis">
-      Disk Allocation Strategies
+      Disk Allocation
     </span>
   </a>
   
@@ -20286,9 +20286,9 @@ data-et-multi-view="{&quot;schema&quot;:{&quot;content&quot;:{&quot;desktop&quot
 </li>
         
           <li class="md-nav__item">
-  <a href="#disk-allocation-strategies" class="md-nav__link">
+  <a href="#disk-allocation" class="md-nav__link">
     <span class="md-ellipsis">
-      Disk Allocation Strategies
+      Disk Allocation
     </span>
   </a>
   
@@ -20735,7 +20735,7 @@ data-et-multi-view="{&quot;schema&quot;:{&quot;content&quot;:{&quot;desktop&quot
 <p>Relocates SSTables to the correct disk based on the configured disk allocation strategy.</p>
 <hr>
 <h2 id="synopsis">Synopsis<a class="headerlink" href="#synopsis" title="Permanent link">¶</a></h2>
-<div class="highlight"><pre><span></span><code>nodetool<span class="w"> </span><span class="o">[</span>connection_options<span class="o">]</span><span class="w"> </span>relocatesstables<span class="w"> </span><span class="o">[</span>--jobs<span class="w"> </span>&lt;jobs&gt;<span class="o">]</span><span class="w"> </span>&lt;keyspace&gt;<span class="w"> </span><span class="o">[</span>tables...<span class="o">]</span>
+<div class="highlight"><pre><span></span><code>nodetool<span class="w"> </span><span class="o">[</span>connection_options<span class="o">]</span><span class="w"> </span>relocatesstables<span class="w"> </span><span class="o">[</span>options<span class="o">]</span><span class="w"> </span><span class="o">[</span>keyspace<span class="o">]</span><span class="w"> </span><span class="o">[</span>tables...<span class="o">]</span>
 </code></pre></div>
 <hr>
 <h2 id="description">Description<a class="headerlink" href="#description" title="Permanent link">¶</a></h2>
@@ -20782,12 +20782,8 @@ data-et-multi-view="{&quot;schema&quot;:{&quot;content&quot;:{&quot;desktop&quot
 </tr>
 </tbody>
 </table>
-<h3 id="disk-allocation-strategies">Disk Allocation Strategies<a class="headerlink" href="#disk-allocation-strategies" title="Permanent link">¶</a></h3>
-<p>Cassandra decides which disk to use for new SSTables based on the configured strategy:</p>
-<div class="highlight"><pre><span></span><code><span class="c1"># cassandra.yaml</span>
-<span class="nt">disk_access_mode</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">auto</span><span class="w">  </span><span class="c1"># or mmap, mmap_index_only, standard</span>
-</code></pre></div>
-<p><strong>How Cassandra places SSTables:</strong></p>
+<h3 id="disk-allocation">Disk Allocation<a class="headerlink" href="#disk-allocation" title="Permanent link">¶</a></h3>
+<p>Cassandra decides which disk to use for new SSTables based on several factors:</p>
 <ol>
 <li><strong>By available space</strong> - Prefers disks with more free space</li>
 <li><strong>By table</strong> - Tries to keep a table's SSTables together</li>
@@ -20852,7 +20848,7 @@ After Compaction:
 <tbody>
 <tr>
 <td><code>keyspace</code></td>
-<td>Target keyspace name (required)</td>
+<td>Target keyspace name (optional; if omitted, relocates all keyspaces)</td>
 </tr>
 <tr>
 <td><code>tables</code></td>
@@ -20871,9 +20867,9 @@ After Compaction:
 </thead>
 <tbody>
 <tr>
-<td><code>--jobs</code>, <code>-j</code></td>
-<td>Number of parallel relocation jobs</td>
-<td>0 (sequential)</td>
+<td><code>-j, --jobs</code></td>
+<td>Number of parallel relocation jobs. 0 means use all available compaction threads</td>
+<td>2</td>
 </tr>
 </tbody>
 </table>

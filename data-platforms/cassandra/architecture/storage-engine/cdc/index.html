@@ -20393,12 +20393,41 @@ data-et-multi-view="{&quot;schema&quot;:{&quot;content&quot;:{&quot;desktop&quot
 
 <span class="c1"># Maximum space for CDC logs before writes are rejected</span>
 <span class="c1"># Default: min(4096 MiB, 1/8 of volume space)</span>
-<span class="nt">cdc_total_space_in_mb</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">4096</span>
+<span class="c1"># Cassandra 4.1+: cdc_total_space (with size unit, e.g., 4096MiB)</span>
+<span class="c1"># Cassandra 4.0:  cdc_total_space_in_mb (integer MB)</span>
+<span class="nt">cdc_total_space</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">4096MiB</span>
 
 <span class="c1"># How often to check CDC directory space usage</span>
 <span class="c1"># Default: 250ms</span>
-<span class="nt">cdc_free_space_check_interval_ms</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">250</span>
+<span class="c1"># Cassandra 4.1+: cdc_free_space_check_interval (with duration, e.g., 250ms)</span>
+<span class="c1"># Cassandra 4.0:  cdc_free_space_check_interval_ms (integer milliseconds)</span>
+<span class="nt">cdc_free_space_check_interval</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">250ms</span>
 </code></pre></div>
+<p><strong>CDC Configuration by Version:</strong></p>
+<table>
+<thead>
+<tr>
+<th>Parameter</th>
+<th>Cassandra 4.0</th>
+<th>Cassandra 4.1+</th>
+<th>Default</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>CDC space limit</td>
+<td><code>cdc_total_space_in_mb</code> (integer)</td>
+<td><code>cdc_total_space</code> (e.g., <code>4096MiB</code>)</td>
+<td>min(4096 MiB, 1/8 volume)</td>
+</tr>
+<tr>
+<td>Space check interval</td>
+<td><code>cdc_free_space_check_interval_ms</code> (integer)</td>
+<td><code>cdc_free_space_check_interval</code> (e.g., <code>250ms</code>)</td>
+<td>250ms</td>
+</tr>
+</tbody>
+</table>
 <table>
 <thead>
 <tr>
@@ -20419,13 +20448,13 @@ data-et-multi-view="{&quot;schema&quot;:{&quot;content&quot;:{&quot;desktop&quot
 <td>Destination for commit log hard links</td>
 </tr>
 <tr>
-<td><code>cdc_total_space_in_mb</code></td>
-<td>min(4096, 1/8 volume)</td>
+<td><code>cdc_total_space</code></td>
+<td>min(4096MiB, 1/8 volume)</td>
 <td>Space threshold before write rejection</td>
 </tr>
 <tr>
-<td><code>cdc_free_space_check_interval_ms</code></td>
-<td>250</td>
+<td><code>cdc_free_space_check_interval</code></td>
+<td>250ms</td>
 <td>Frequency of space usage recalculation</td>
 </tr>
 </tbody>
@@ -20452,10 +20481,14 @@ data-et-multi-view="{&quot;schema&quot;:{&quot;content&quot;:{&quot;desktop&quot
 <h3 id="commit-log-hard-links">Commit Log Hard Links<a class="headerlink" href="#commit-log-hard-links" title="Permanent link">¶</a></h3>
 <p>Files in <code>cdc_raw_directory</code> are hard links to commit log segments. They share the same inode as the original commit log file, meaning:</p>
 <ul>
-<li>No additional disk space is consumed (until the original segment is recycled)</li>
+<li>Hard links initially consume no additional disk space for the data itself</li>
 <li>Reading from CDC directory reads the same data as the commit log</li>
 <li>Modifications to the original segment are visible through the hard link</li>
 </ul>
+<div class="admonition note">
+<p class="admonition-title">Disk Space Impact</p>
+<p>While hard links share data with the original commit log segment, they prevent segment reuse. Cassandra cannot recycle commit log segments that have CDC hard links until consumers delete the hard links. This effectively increases disk utilization over time if consumers fall behind—space is held until both the original segment is flushed and the CDC hard link is deleted.</p>
+</div>
 <div class="highlight"><pre><span></span><code>cdc_raw_directory/
 ├── CommitLog-7-1702987654321.log      # Hard link to commit log segment
 ├── CommitLog-7-1702987654321_cdc.idx  # Index file with offset
@@ -20671,7 +20704,7 @@ grep<span class="w"> </span>-l<span class="w"> </span><span class="s2">"COMPLETE
 </tr>
 <tr>
 <td>Disk space</td>
-<td>None (hard links share inodes) until consumer processes</td>
+<td>Hard links share inodes but prevent segment reuse until consumers delete files</td>
 </tr>
 <tr>
 <td>CPU</td>

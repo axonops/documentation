@@ -20361,9 +20361,10 @@ data-et-multi-view="{&quot;schema&quot;:{&quot;content&quot;:{&quot;desktop&quot
 <hr>
 <h2 id="understanding-the-value">Understanding the Value<a class="headerlink" href="#understanding-the-value" title="Permanent link">¶</a></h2>
 <h3 id="default-calculation">Default Calculation<a class="headerlink" href="#default-calculation" title="Permanent link">¶</a></h3>
-<p>If not explicitly configured, Cassandra calculates the default:</p>
-<div class="highlight"><pre><span></span><code>concurrent_compactors = min(number_of_data_directories, number_of_cpu_cores)
+<p>If not explicitly configured, Cassandra calculates the default using the following formula:</p>
+<div class="highlight"><pre><span></span><code>concurrent_compactors = min(8, max(2, min(number_of_cpu_cores, number_of_data_directories)))
 </code></pre></div>
+<p>This ensures a minimum of 2 compactors and a maximum of 8, bounded by available CPU cores and data directories.</p>
 <table>
 <thead>
 <tr>
@@ -20374,7 +20375,7 @@ data-et-multi-view="{&quot;schema&quot;:{&quot;content&quot;:{&quot;desktop&quot
 <tbody>
 <tr>
 <td>8 cores, 1 disk</td>
-<td>1</td>
+<td>2 (minimum)</td>
 </tr>
 <tr>
 <td>8 cores, 4 disks</td>
@@ -20382,11 +20383,15 @@ data-et-multi-view="{&quot;schema&quot;:{&quot;content&quot;:{&quot;desktop&quot
 </tr>
 <tr>
 <td>16 cores, 8 disks</td>
-<td>8</td>
+<td>8 (maximum)</td>
 </tr>
 <tr>
 <td>4 cores, 8 disks</td>
 <td>4</td>
+</tr>
+<tr>
+<td>1 core, 1 disk</td>
+<td>2 (minimum)</td>
 </tr>
 </tbody>
 </table>

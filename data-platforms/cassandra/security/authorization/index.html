@@ -13802,6 +13802,15 @@ data-et-multi-view="{&quot;schema&quot;:{&quot;content&quot;:{&quot;desktop&quot
 </li>
         
           <li class="md-nav__item">
+  <a href="#cache-setting-names-by-version" class="md-nav__link">
+    <span class="md-ellipsis">
+      Cache Setting Names by Version
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
   <a href="#permission-types" class="md-nav__link">
     <span class="md-ellipsis">
       Permission Types
@@ -20135,6 +20144,15 @@ data-et-multi-view="{&quot;schema&quot;:{&quot;content&quot;:{&quot;desktop&quot
 </li>
         
           <li class="md-nav__item">
+  <a href="#cache-setting-names-by-version" class="md-nav__link">
+    <span class="md-ellipsis">
+      Cache Setting Names by Version
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
   <a href="#permission-types" class="md-nav__link">
     <span class="md-ellipsis">
       Permission Types
@@ -20488,14 +20506,45 @@ data-et-multi-view="{&quot;schema&quot;:{&quot;content&quot;:{&quot;desktop&quot
 <span class="c1"># Enable role management</span>
 <span class="nt">role_manager</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">CassandraRoleManager</span>
 
-<span class="c1"># Cache settings for performance</span>
-<span class="nt">roles_validity_in_ms</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">2000</span>
-<span class="nt">permissions_validity_in_ms</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">2000</span>
-<span class="nt">credentials_validity_in_ms</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">2000</span>
+<span class="c1"># Cache settings for performance (see version table below)</span>
+<span class="nt">roles_validity</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">2000ms</span>
+<span class="nt">permissions_validity</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">2000ms</span>
+<span class="nt">credentials_validity</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">2000ms</span>
 </code></pre></div>
 <div class="admonition warning">
 <p class="admonition-title">Enable Authentication First</p>
 <p>Authorization without authentication is ineffective. Always configure <code>authenticator</code> before <code>authorizer</code>. The default <code>AllowAllAuthenticator</code> bypasses all security.</p>
+</div>
+<h3 id="cache-setting-names-by-version">Cache Setting Names by Version<a class="headerlink" href="#cache-setting-names-by-version" title="Permanent link">¶</a></h3>
+<table>
+<thead>
+<tr>
+<th>Setting</th>
+<th>Pre-4.1</th>
+<th>4.1+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Roles cache validity</td>
+<td><code>roles_validity_in_ms</code></td>
+<td><code>roles_validity</code></td>
+</tr>
+<tr>
+<td>Permissions cache validity</td>
+<td><code>permissions_validity_in_ms</code></td>
+<td><code>permissions_validity</code></td>
+</tr>
+<tr>
+<td>Credentials cache validity</td>
+<td><code>credentials_validity_in_ms</code></td>
+<td><code>credentials_validity</code></td>
+</tr>
+</tbody>
+</table>
+<div class="admonition note">
+<p class="admonition-title">Duration Literals</p>
+<p>In Cassandra 4.1+, cache validity settings support duration literals (e.g., <code>2000ms</code>, <code>2s</code>). The <code>_in_ms</code> suffixed names are deprecated but still functional.</p>
 </div>
 <h3 id="permission-types">Permission Types<a class="headerlink" href="#permission-types" title="Permanent link">¶</a></h3>
 <table>
@@ -20552,8 +20601,22 @@ data-et-multi-view="{&quot;schema&quot;:{&quot;content&quot;:{&quot;desktop&quot
 <td>Keyspace, Table, MBean</td>
 <td>Read data</td>
 </tr>
+<tr>
+<td><code>SELECT_MASKED</code></td>
+<td>Table</td>
+<td>Read masked data (Dynamic Data Masking)</td>
+</tr>
+<tr>
+<td><code>UNMASK</code></td>
+<td>Table</td>
+<td>Read unmasked data (Dynamic Data Masking)</td>
+</tr>
 </tbody>
 </table>
+<div class="admonition note">
+<p class="admonition-title">Dynamic Data Masking Permissions</p>
+<p><code>SELECT_MASKED</code> and <code>UNMASK</code> permissions are used with Cassandra's Dynamic Data Masking feature to control access to sensitive column data.</p>
+</div>
 <h3 id="resource-hierarchy">Resource Hierarchy<a class="headerlink" href="#resource-hierarchy" title="Permanent link">¶</a></h3>
 <p>Permissions can be granted at different granularity levels:</p>
 <div class="highlight"><pre><span></span><code>ALL KEYSPACES
@@ -21008,13 +21071,17 @@ ALL MBEANS
 <span class="k">GRANT</span><span class="w"> </span><span class="n">AUTHORIZE</span><span class="w"> </span><span class="k">ON</span><span class="w"> </span><span class="n">KEYSPACE</span><span class="w"> </span><span class="n">my_keyspace</span><span class="w"> </span><span class="k">TO</span><span class="w"> </span><span class="n">granting_user</span><span class="p">;</span>
 </code></pre></div>
 <h3 id="permission-cache-issues">Permission Cache Issues<a class="headerlink" href="#permission-cache-issues" title="Permanent link">¶</a></h3>
-<div class="highlight"><pre><span></span><code><span class="c1"># Reduce cache time during troubleshooting</span>
+<div class="highlight"><pre><span></span><code><span class="c1"># Pre-4.1 syntax</span>
 <span class="nt">permissions_validity_in_ms</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">0</span>
 <span class="nt">roles_validity_in_ms</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">0</span>
 
+<span class="c1"># 4.1+ syntax (recommended)</span>
+<span class="nt">permissions_validity</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">0ms</span>
+<span class="nt">roles_validity</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">0ms</span>
+
 <span class="c1"># Reset to production values after</span>
-<span class="nt">permissions_validity_in_ms</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">2000</span>
-<span class="nt">roles_validity_in_ms</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">2000</span>
+<span class="nt">permissions_validity</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">2000ms</span>
+<span class="nt">roles_validity</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">2000ms</span>
 </code></pre></div>
 <hr>
 <h2 id="related-documentation">Related Documentation<a class="headerlink" href="#related-documentation" title="Permanent link">¶</a></h2>

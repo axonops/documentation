@@ -6942,9 +6942,9 @@ data-et-multi-view="{&quot;schema&quot;:{&quot;content&quot;:{&quot;desktop&quot
 </li>
         
           <li class="md-nav__item">
-  <a href="#anti-pattern-2-indexing-very-low-cardinality-columns" class="md-nav__link">
+  <a href="#anti-pattern-2-indexing-very-low-cardinality-columns-for-global-queries" class="md-nav__link">
     <span class="md-ellipsis">
-      Anti-Pattern 2: Indexing Very Low-Cardinality Columns
+      Anti-Pattern 2: Indexing Very Low-Cardinality Columns for Global Queries
     </span>
   </a>
   
@@ -20523,9 +20523,9 @@ data-et-multi-view="{&quot;schema&quot;:{&quot;content&quot;:{&quot;desktop&quot
 </li>
         
           <li class="md-nav__item">
-  <a href="#anti-pattern-2-indexing-very-low-cardinality-columns" class="md-nav__link">
+  <a href="#anti-pattern-2-indexing-very-low-cardinality-columns-for-global-queries" class="md-nav__link">
     <span class="md-ellipsis">
-      Anti-Pattern 2: Indexing Very Low-Cardinality Columns
+      Anti-Pattern 2: Indexing Very Low-Cardinality Columns for Global Queries
     </span>
   </a>
   
@@ -20754,7 +20754,7 @@ Secondary Index Query: Client → Coordinator → Token Range Coverage → Respo
 <li>Queries with partition key constraint contact only replicas for that partition</li>
 <li>Results are returned in clustering order within each partition</li>
 <li>Index queries respect the specified consistency level</li>
-<li>All matching rows visible to the consistency level are returned</li>
+<li>Results include matching rows visible to the consistency level (subject to index build state and replica synchronization)</li>
 <li>Multiple indexed predicates (AND) are evaluated correctly</li>
 </ul>
 <h3 id="what-secondary-index-queries-do-not-guarantee">What Secondary Index Queries Do NOT Guarantee<a class="headerlink" href="#what-secondary-index-queries-do-not-guarantee" title="Permanent link">¶</a></h3>
@@ -20902,8 +20902,12 @@ Secondary Index Query: Client → Coordinator → Token Range Coverage → Respo
 <td>SASI indexes (experimental, not recommended for production)</td>
 </tr>
 <tr>
+<td>4.0+</td>
+<td>SAI available (experimental)</td>
+</tr>
+<tr>
 <td>5.0+</td>
-<td>Storage-Attached Indexes (SAI), recommended for new deployments</td>
+<td>SAI production-ready and recommended for new deployments</td>
 </tr>
 </tbody>
 </table>
@@ -21277,16 +21281,24 @@ Secondary Index Query: Client → Coordinator → Token Range Coverage → Respo
 <li>Use the column as part of the primary key</li>
 <li>Create a denormalized lookup table</li>
 </ul>
-<h3 id="anti-pattern-2-indexing-very-low-cardinality-columns">Anti-Pattern 2: Indexing Very Low-Cardinality Columns<a class="headerlink" href="#anti-pattern-2-indexing-very-low-cardinality-columns" title="Permanent link">¶</a></h3>
-<div class="highlight"><pre><span></span><code><span class="c1">-- ANTI-PATTERN: Indexing columns with 2-3 values</span>
+<h3 id="anti-pattern-2-indexing-very-low-cardinality-columns-for-global-queries">Anti-Pattern 2: Indexing Very Low-Cardinality Columns for Global Queries<a class="headerlink" href="#anti-pattern-2-indexing-very-low-cardinality-columns-for-global-queries" title="Permanent link">¶</a></h3>
+<div class="highlight"><pre><span></span><code><span class="c1">-- ANTI-PATTERN: Indexing columns with 2-3 values for global queries</span>
 <span class="k">CREATE</span><span class="w"> </span><span class="k">INDEX</span><span class="w"> </span><span class="k">ON</span><span class="w"> </span><span class="n">users</span><span class="w"> </span><span class="p">(</span><span class="n">is_active</span><span class="p">);</span><span class="w">    </span><span class="c1">-- true/false</span>
 <span class="k">CREATE</span><span class="w"> </span><span class="k">INDEX</span><span class="w"> </span><span class="k">ON</span><span class="w"> </span><span class="n">orders</span><span class="w"> </span><span class="p">(</span><span class="n">status</span><span class="p">);</span><span class="w">      </span><span class="c1">-- pending/completed/cancelled (if few values)</span>
+
+<span class="c1">-- Then querying without partition key:</span>
+<span class="k">SELECT</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="k">FROM</span><span class="w"> </span><span class="n">users</span><span class="w"> </span><span class="k">WHERE</span><span class="w"> </span><span class="n">is_active</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">true</span><span class="p">;</span><span class="w">  </span><span class="c1">-- returns ~50% of all data</span>
 </code></pre></div>
-<p><strong>Why it fails:</strong></p>
+<p><strong>Why it fails for global queries:</strong></p>
 <ul>
 <li>Each index entry points to a large fraction of all rows</li>
 <li>Queries return excessive data</li>
 <li>No selectivity benefit</li>
+</ul>
+<p><strong>When low-cardinality indexes are acceptable:</strong></p>
+<ul>
+<li>When queries always include the partition key (limits scan to single partition)</li>
+<li>When combined with other selective predicates</li>
 </ul>
 <p><strong>Alternative approaches:</strong></p>
 <ul>

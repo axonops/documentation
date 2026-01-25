@@ -20452,10 +20452,10 @@ data-et-multi-view="{&quot;schema&quot;:{&quot;content&quot;:{&quot;desktop&quot
 <span class="k">FROM</span><span class="w"> </span><span class="n">system_views</span><span class="p">.</span><span class="n">thread_pools</span>
 <span class="k">WHERE</span><span class="w"> </span><span class="n">blocked_tasks</span><span class="w"> </span><span class="o">&gt;</span><span class="w"> </span><span class="mi">0</span><span class="p">;</span>
 
-<span class="c1">-- Alert: Low cache hit ratio</span>
+<span class="c1">-- Alert: Low cache hit ratio (note: use lowercase 'keys', not 'KeyCache')</span>
 <span class="k">SELECT</span><span class="w"> </span><span class="n">name</span><span class="p">,</span><span class="w"> </span><span class="n">hit_ratio</span>
 <span class="k">FROM</span><span class="w"> </span><span class="n">system_views</span><span class="p">.</span><span class="n">caches</span>
-<span class="k">WHERE</span><span class="w"> </span><span class="n">name</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s1">'KeyCache'</span><span class="w"> </span><span class="k">AND</span><span class="w"> </span><span class="n">hit_ratio</span><span class="w"> </span><span class="o">&lt;</span><span class="w"> </span><span class="mi">0</span><span class="p">.</span><span class="mi">80</span><span class="p">;</span>
+<span class="k">WHERE</span><span class="w"> </span><span class="n">name</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s1">'keys'</span><span class="w"> </span><span class="k">AND</span><span class="w"> </span><span class="n">hit_ratio</span><span class="w"> </span><span class="o">&lt;</span><span class="w"> </span><span class="mi">0</span><span class="p">.</span><span class="mi">80</span><span class="p">;</span>
 
 <span class="c1">-- Alert: Large pending hints</span>
 <span class="k">SELECT</span><span class="w"> </span><span class="n">host_id</span><span class="p">,</span><span class="w"> </span><span class="n">address</span><span class="p">,</span><span class="w"> </span><span class="n">files</span>

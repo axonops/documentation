@@ -21378,7 +21378,7 @@ Gossip merges states by comparing versions per-key.
 </tr>
 <tr>
 <td>Ring delay (quarantine)</td>
-<td>1000 ms</td>
+<td>30000 ms</td>
 <td><code>cassandra.ring_delay_ms</code></td>
 <td>Delay before node is considered for ring membership changes</td>
 </tr>
@@ -21705,7 +21705,7 @@ nodetool<span class="w"> </span>removenode<span class="w"> </span>&lt;host_id&gt
 </tr>
 </tbody>
 </table>
-<p>Gossip overhead is negligible in almost all deployments.</p>
+<p>Gossip overhead is typically low in small to medium clusters. Overhead grows with cluster size and state change frequency.</p>
 <h3 id="large-cluster-considerations">Large Cluster Considerations<a class="headerlink" href="#large-cluster-considerations" title="Permanent link">¶</a></h3>
 <p>In very large clusters (500+ nodes):</p>
 <table>

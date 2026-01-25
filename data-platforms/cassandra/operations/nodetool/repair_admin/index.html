@@ -8379,6 +8379,24 @@ data-et-multi-view="{&quot;schema&quot;:{&quot;content&quot;:{&quot;desktop&quot
   
 </li>
         
+          <li class="md-nav__item">
+  <a href="#summarize-pending" class="md-nav__link">
+    <span class="md-ellipsis">
+      summarize-pending
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#summarize-repaired" class="md-nav__link">
+    <span class="md-ellipsis">
+      summarize-repaired
+    </span>
+  </a>
+  
+</li>
+        
       </ul>
     </nav>
   
@@ -20282,6 +20300,24 @@ data-et-multi-view="{&quot;schema&quot;:{&quot;content&quot;:{&quot;desktop&quot
   
 </li>
         
+          <li class="md-nav__item">
+  <a href="#summarize-pending" class="md-nav__link">
+    <span class="md-ellipsis">
+      summarize-pending
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#summarize-repaired" class="md-nav__link">
+    <span class="md-ellipsis">
+      summarize-repaired
+    </span>
+  </a>
+  
+</li>
+        
       </ul>
     </nav>
   
@@ -20693,7 +20729,7 @@ data-et-multi-view="{&quot;schema&quot;:{&quot;content&quot;:{&quot;desktop&quot
 <p>Manages and monitors repair sessions on the cluster.</p>
 <hr>
 <h2 id="synopsis">Synopsis<a class="headerlink" href="#synopsis" title="Permanent link">¶</a></h2>
-<div class="highlight"><pre><span></span><code>nodetool<span class="w"> </span><span class="o">[</span>connection_options<span class="o">]</span><span class="w"> </span>repair_admin<span class="w"> </span>&lt;list<span class="w"> </span><span class="p">|</span><span class="w"> </span>cancel<span class="w"> </span><span class="p">|</span><span class="w"> </span>cleanup&gt;<span class="w"> </span><span class="o">[</span>options<span class="o">]</span>
+<div class="highlight"><pre><span></span><code>nodetool<span class="w"> </span><span class="o">[</span>connection_options<span class="o">]</span><span class="w"> </span>repair_admin<span class="w"> </span>&lt;list<span class="w"> </span><span class="p">|</span><span class="w"> </span>cancel<span class="w"> </span><span class="p">|</span><span class="w"> </span>cleanup<span class="w"> </span><span class="p">|</span><span class="w"> </span>summarize-pending<span class="w"> </span><span class="p">|</span><span class="w"> </span>summarize-repaired&gt;<span class="w"> </span><span class="o">[</span>options<span class="o">]</span>
 </code></pre></div>
 <h2 id="description">Description<a class="headerlink" href="#description" title="Permanent link">¶</a></h2>
 <p><code>nodetool repair_admin</code> provides administrative control over repair sessions:</p>
@@ -20707,7 +20743,7 @@ data-et-multi-view="{&quot;schema&quot;:{&quot;content&quot;:{&quot;desktop&quot
 <h2 id="subcommands">Subcommands<a class="headerlink" href="#subcommands" title="Permanent link">¶</a></h2>
 <h3 id="list">list<a class="headerlink" href="#list" title="Permanent link">¶</a></h3>
 <p>List repair sessions.</p>
-<div class="highlight"><pre><span></span><code>nodetool<span class="w"> </span>repair_admin<span class="w"> </span>list<span class="w"> </span><span class="o">[</span>--all<span class="o">]</span>
+<div class="highlight"><pre><span></span><code>nodetool<span class="w"> </span>repair_admin<span class="w"> </span>list<span class="w"> </span><span class="o">[</span>options<span class="o">]</span>
 </code></pre></div>
 <table>
 <thead>
@@ -20718,18 +20754,74 @@ data-et-multi-view="{&quot;schema&quot;:{&quot;content&quot;:{&quot;desktop&quot
 </thead>
 <tbody>
 <tr>
-<td><code>--all</code></td>
+<td><code>-a, --all</code></td>
 <td>Include completed repairs, not just active</td>
+</tr>
+<tr>
+<td><code>-st, --start-token</code></td>
+<td>Start token for filtering</td>
+</tr>
+<tr>
+<td><code>-et, --end-token</code></td>
+<td>End token for filtering</td>
 </tr>
 </tbody>
 </table>
 <h3 id="cancel">cancel<a class="headerlink" href="#cancel" title="Permanent link">¶</a></h3>
 <p>Cancel a running repair.</p>
-<div class="highlight"><pre><span></span><code>nodetool<span class="w"> </span>repair_admin<span class="w"> </span>cancel<span class="w"> </span>&lt;session_id&gt;
+<div class="highlight"><pre><span></span><code>nodetool<span class="w"> </span>repair_admin<span class="w"> </span>cancel<span class="w"> </span>-s<span class="w"> </span>&lt;session_id&gt;<span class="w"> </span><span class="o">[</span>-f<span class="o">]</span>
 </code></pre></div>
+<table>
+<thead>
+<tr>
+<th>Option</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>-s, --session</code></td>
+<td>Session ID to cancel (required)</td>
+</tr>
+<tr>
+<td><code>-f, --force</code></td>
+<td>Force cancellation</td>
+</tr>
+</tbody>
+</table>
 <h3 id="cleanup-40">cleanup (4.0+)<a class="headerlink" href="#cleanup-40" title="Permanent link">¶</a></h3>
 <p>Clean up orphaned repair metadata.</p>
-<div class="highlight"><pre><span></span><code>nodetool<span class="w"> </span>repair_admin<span class="w"> </span>cleanup
+<div class="highlight"><pre><span></span><code>nodetool<span class="w"> </span>repair_admin<span class="w"> </span>cleanup<span class="w"> </span><span class="o">[</span>-f<span class="o">]</span><span class="w"> </span><span class="o">[</span>keyspace<span class="o">]</span><span class="w"> </span><span class="o">[</span>tables...<span class="o">]</span>
+</code></pre></div>
+<table>
+<thead>
+<tr>
+<th>Option</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>-f, --force</code></td>
+<td>Force cleanup</td>
+</tr>
+<tr>
+<td><code>-st, --start-token</code></td>
+<td>Start token</td>
+</tr>
+<tr>
+<td><code>-et, --end-token</code></td>
+<td>End token</td>
+</tr>
+</tbody>
+</table>
+<h3 id="summarize-pending">summarize-pending<a class="headerlink" href="#summarize-pending" title="Permanent link">¶</a></h3>
+<p>Summarize pending repairs.</p>
+<div class="highlight"><pre><span></span><code>nodetool<span class="w"> </span>repair_admin<span class="w"> </span>summarize-pending
+</code></pre></div>
+<h3 id="summarize-repaired">summarize-repaired<a class="headerlink" href="#summarize-repaired" title="Permanent link">¶</a></h3>
+<p>Summarize repaired ranges.</p>
+<div class="highlight"><pre><span></span><code>nodetool<span class="w"> </span>repair_admin<span class="w"> </span>summarize-repaired
 </code></pre></div>
 <hr>
 <h2 id="examples">Examples<a class="headerlink" href="#examples" title="Permanent link">¶</a></h2>
@@ -20737,16 +20829,16 @@ data-et-multi-view="{&quot;schema&quot;:{&quot;content&quot;:{&quot;desktop&quot
 <div class="highlight"><pre><span></span><code>nodetool<span class="w"> </span>repair_admin<span class="w"> </span>list
 </code></pre></div>
 <p>Output:
-</p><div class="highlight"><pre><span></span><code>id                                   state        command          coordinator                  participants                 last_update
-a1b2c3d4-e5f6-7890-abcd-ef1234567890 RUNNING      RANGE            192.168.1.101                192.168.1.101,192.168.1.102  2024-01-15T10:30:00Z
-b2c3d4e5-f6a7-8901-bcde-f12345678901 RUNNING      VALIDATION       192.168.1.102                192.168.1.102,192.168.1.103  2024-01-15T10:31:00Z
+</p><div class="highlight"><pre><span></span><code>id                                   state     last activity         coordinator      participants             participants_wp
+a1b2c3d4-e5f6-7890-abcd-ef1234567890 RUNNING   2024-01-15T10:30:00Z  192.168.1.101    192.168.1.101,102       192.168.1.101,102
+b2c3d4e5-f6a7-8901-bcde-f12345678901 RUNNING   2024-01-15T10:31:00Z  192.168.1.102    192.168.1.102,103       192.168.1.102,103
 </code></pre></div>
 <h3 id="list-all-repairs-including-completed">List All Repairs (Including Completed)<a class="headerlink" href="#list-all-repairs-including-completed" title="Permanent link">¶</a></h3>
 <div class="highlight"><pre><span></span><code>nodetool<span class="w"> </span>repair_admin<span class="w"> </span>list<span class="w"> </span>--all
 </code></pre></div>
 <p>Shows history of repairs including completed and failed.</p>
 <h3 id="cancel-a-repair">Cancel a Repair<a class="headerlink" href="#cancel-a-repair" title="Permanent link">¶</a></h3>
-<div class="highlight"><pre><span></span><code>nodetool<span class="w"> </span>repair_admin<span class="w"> </span>cancel<span class="w"> </span>a1b2c3d4-e5f6-7890-abcd-ef1234567890
+<div class="highlight"><pre><span></span><code>nodetool<span class="w"> </span>repair_admin<span class="w"> </span>cancel<span class="w"> </span>-s<span class="w"> </span>a1b2c3d4-e5f6-7890-abcd-ef1234567890
 </code></pre></div>
 <h3 id="clean-up-orphaned-sessions-40">Clean Up Orphaned Sessions (4.0+)<a class="headerlink" href="#clean-up-orphaned-sessions-40" title="Permanent link">¶</a></h3>
 <div class="highlight"><pre><span></span><code>nodetool<span class="w"> </span>repair_admin<span class="w"> </span>cleanup

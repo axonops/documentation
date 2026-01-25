@@ -20459,7 +20459,7 @@ data-et-multi-view="{&quot;schema&quot;:{&quot;content&quot;:{&quot;desktop&quot
 <li><strong>30-day retention</strong> at full resolution</li>
 <li><strong>Multi-tenant</strong> with isolation requirements</li>
 </ul>
-<p>At this scale, problems that don't exist at smaller deployments become critical:</p>
+<p>At this scale, problems that don't exist at smaller deployments become critical. The figures below are illustrative and vary with hardware, configuration, and workload:</p>
 <p><strong>Hot partitions</strong>: A device reporting every second for a year creates 31 million rows in one partition, far exceeding Cassandra's comfortable limits.</p>
 <p><strong>Write amplification</strong>: With RF=3, 100K writes/second becomes 300K writes/second across the cluster.</p>
 <p><strong>Compaction pressure</strong>: Continuous writes generate SSTables faster than compaction can process them without proper strategy.</p>
@@ -20698,14 +20698,19 @@ data-et-multi-view="{&quot;schema&quot;:{&quot;content&quot;:{&quot;desktop&quot
 </code></pre></div>
 <h3 id="tenant-specific-ttl">Tenant-Specific TTL<a class="headerlink" href="#tenant-specific-ttl" title="Permanent link">¶</a></h3>
 <p>Different tenants may have different retention requirements:</p>
-<div class="highlight"><pre><span></span><code><span class="kd">public</span><span class="w"> </span><span class="kt">int</span><span class="w"> </span><span class="nf">getTTL</span><span class="p">(</span><span class="n">UUID</span><span class="w"> </span><span class="n">tenantId</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<div class="highlight"><pre><span></span><code><span class="c1">// Prepared statement with TTL placeholder</span>
+<span class="kd">private</span><span class="w"> </span><span class="kd">final</span><span class="w"> </span><span class="n">PreparedStatement</span><span class="w"> </span><span class="n">insertTelemetry</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">session</span><span class="p">.</span><span class="na">prepare</span><span class="p">(</span>
+<span class="w">    </span><span class="s">"INSERT INTO telemetry (tenant_id, device_id, ts, value) VALUES (?, ?, ?, ?) USING TTL ?"</span>
+<span class="p">);</span>
+
+<span class="kd">public</span><span class="w"> </span><span class="kt">int</span><span class="w"> </span><span class="nf">getTTL</span><span class="p">(</span><span class="n">UUID</span><span class="w"> </span><span class="n">tenantId</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
 <span class="w">    </span><span class="n">TenantConfig</span><span class="w"> </span><span class="n">config</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">configService</span><span class="p">.</span><span class="na">getConfig</span><span class="p">(</span><span class="n">tenantId</span><span class="p">);</span>
 <span class="w">    </span><span class="k">return</span><span class="w"> </span><span class="n">config</span><span class="p">.</span><span class="na">getRetentionDays</span><span class="p">()</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="mi">86400</span><span class="p">;</span><span class="w">  </span><span class="c1">// Convert to seconds</span>
 <span class="p">}</span>
 
-<span class="c1">// Apply per-write</span>
-<span class="n">session</span><span class="p">.</span><span class="na">execute</span><span class="p">(</span><span class="n">insertTelemetry</span><span class="p">.</span><span class="na">bind</span><span class="p">(...)</span>
-<span class="w">    </span><span class="p">.</span><span class="na">setInt</span><span class="p">(</span><span class="s">"[ttl]"</span><span class="p">,</span><span class="w"> </span><span class="n">getTTL</span><span class="p">(</span><span class="n">tenantId</span><span class="p">)));</span>
+<span class="c1">// Apply per-write - TTL is bound as the last parameter</span>
+<span class="n">session</span><span class="p">.</span><span class="na">execute</span><span class="p">(</span><span class="n">insertTelemetry</span><span class="p">.</span><span class="na">bind</span><span class="p">(</span>
+<span class="w">    </span><span class="n">tenantId</span><span class="p">,</span><span class="w"> </span><span class="n">deviceId</span><span class="p">,</span><span class="w"> </span><span class="n">timestamp</span><span class="p">,</span><span class="w"> </span><span class="n">value</span><span class="p">,</span><span class="w"> </span><span class="n">getTTL</span><span class="p">(</span><span class="n">tenantId</span><span class="p">)));</span>
 </code></pre></div>
 <hr>
 <h2 id="downsampling-and-aggregation">Downsampling and Aggregation<a class="headerlink" href="#downsampling-and-aggregation" title="Permanent link">¶</a></h2>

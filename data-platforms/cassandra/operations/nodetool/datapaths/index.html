@@ -9942,6 +9942,15 @@ data-et-multi-view="{&quot;schema&quot;:{&quot;content&quot;:{&quot;desktop&quot
 </li>
       
         <li class="md-nav__item">
+  <a href="#options" class="md-nav__link">
+    <span class="md-ellipsis">
+      Options
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#examples" class="md-nav__link">
     <span class="md-ellipsis">
       Examples
@@ -9964,6 +9973,15 @@ data-et-multi-view="{&quot;schema&quot;:{&quot;content&quot;:{&quot;desktop&quot
   <a href="#sample-output" class="md-nav__link">
     <span class="md-ellipsis">
       Sample Output
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#filter-by-keyspace-or-table" class="md-nav__link">
+    <span class="md-ellipsis">
+      Filter by Keyspace or Table
     </span>
   </a>
   
@@ -10012,9 +10030,9 @@ data-et-multi-view="{&quot;schema&quot;:{&quot;content&quot;:{&quot;desktop&quot
 </li>
         
           <li class="md-nav__item">
-  <a href="#troubleshooting" class="md-nav__link">
+  <a href="#json-output" class="md-nav__link">
     <span class="md-ellipsis">
-      Troubleshooting
+      JSON Output
     </span>
   </a>
   
@@ -19919,6 +19937,15 @@ data-et-multi-view="{&quot;schema&quot;:{&quot;content&quot;:{&quot;desktop&quot
 </li>
       
         <li class="md-nav__item">
+  <a href="#options" class="md-nav__link">
+    <span class="md-ellipsis">
+      Options
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#examples" class="md-nav__link">
     <span class="md-ellipsis">
       Examples
@@ -19941,6 +19968,15 @@ data-et-multi-view="{&quot;schema&quot;:{&quot;content&quot;:{&quot;desktop&quot
   <a href="#sample-output" class="md-nav__link">
     <span class="md-ellipsis">
       Sample Output
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#filter-by-keyspace-or-table" class="md-nav__link">
+    <span class="md-ellipsis">
+      Filter by Keyspace or Table
     </span>
   </a>
   
@@ -19989,9 +20025,9 @@ data-et-multi-view="{&quot;schema&quot;:{&quot;content&quot;:{&quot;desktop&quot
 </li>
         
           <li class="md-nav__item">
-  <a href="#troubleshooting" class="md-nav__link">
+  <a href="#json-output" class="md-nav__link">
     <span class="md-ellipsis">
-      Troubleshooting
+      JSON Output
     </span>
   </a>
   
@@ -20043,22 +20079,47 @@ data-et-multi-view="{&quot;schema&quot;:{&quot;content&quot;:{&quot;desktop&quot
 <p>Displays the data file directories for the node.</p>
 <hr>
 <h2 id="synopsis">Synopsis<a class="headerlink" href="#synopsis" title="Permanent link">¶</a></h2>
-<div class="highlight"><pre><span></span><code>nodetool<span class="w"> </span><span class="o">[</span>connection_options<span class="o">]</span><span class="w"> </span>datapaths
+<div class="highlight"><pre><span></span><code>nodetool<span class="w"> </span><span class="o">[</span>connection_options<span class="o">]</span><span class="w"> </span>datapaths<span class="w"> </span><span class="o">[</span>options<span class="o">]</span><span class="w"> </span><span class="o">[</span>--<span class="o">]</span><span class="w"> </span><span class="o">[</span>&lt;keyspace.table&gt;<span class="w"> </span><span class="p">|</span><span class="w"> </span>&lt;keyspace&gt;<span class="o">]</span>
 </code></pre></div>
 <h2 id="description">Description<a class="headerlink" href="#description" title="Permanent link">¶</a></h2>
-<p><code>nodetool datapaths</code> shows the configured data directories for the Cassandra node. These are the filesystem paths where Cassandra stores SSTables and other data files.</p>
+<p><code>nodetool datapaths</code> shows the data file paths for tables on the Cassandra node. The output is organized by keyspace and table, showing where each table's SSTables are stored.</p>
+<h2 id="options">Options<a class="headerlink" href="#options" title="Permanent link">¶</a></h2>
+<table>
+<thead>
+<tr>
+<th>Option</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>-F, --format &lt;format&gt;</code></td>
+<td>Output format (<code>json</code> or <code>yaml</code>)</td>
+</tr>
+</tbody>
+</table>
 <hr>
 <h2 id="examples">Examples<a class="headerlink" href="#examples" title="Permanent link">¶</a></h2>
 <h3 id="basic-usage">Basic Usage<a class="headerlink" href="#basic-usage" title="Permanent link">¶</a></h3>
 <div class="highlight"><pre><span></span><code>nodetool<span class="w"> </span>datapaths
 </code></pre></div>
 <h3 id="sample-output">Sample Output<a class="headerlink" href="#sample-output" title="Permanent link">¶</a></h3>
-<div class="highlight"><pre><span></span><code>/var/lib/cassandra/data
+<div class="highlight"><pre><span></span><code>Keyspace: my_keyspace
+        Table: users
+                /var/lib/cassandra/data/my_keyspace/users-abc123
+        Table: orders
+                /var/lib/cassandra/data/my_keyspace/orders-def456
+Keyspace: system
+        Table: local
+                /var/lib/cassandra/data/system/local-xyz789
+...
 </code></pre></div>
-<p>Or for multiple data directories:</p>
-<div class="highlight"><pre><span></span><code>/mnt/disk1/cassandra/data
-/mnt/disk2/cassandra/data
-/mnt/disk3/cassandra/data
+<h3 id="filter-by-keyspace-or-table">Filter by Keyspace or Table<a class="headerlink" href="#filter-by-keyspace-or-table" title="Permanent link">¶</a></h3>
+<div class="highlight"><pre><span></span><code><span class="c1"># Show paths for specific table</span>
+nodetool<span class="w"> </span>datapaths<span class="w"> </span>my_keyspace.users
+
+<span class="c1"># Show paths for all tables in a keyspace</span>
+nodetool<span class="w"> </span>datapaths<span class="w"> </span>my_keyspace
 </code></pre></div>
 <hr>
 <h2 id="configuration">Configuration<a class="headerlink" href="#configuration" title="Permanent link">¶</a></h2>
@@ -20079,14 +20140,12 @@ data-et-multi-view="{&quot;schema&quot;:{&quot;content&quot;:{&quot;desktop&quot
 nodetool<span class="w"> </span>datapaths
 </code></pre></div>
 <h3 id="disk-space-monitoring">Disk Space Monitoring<a class="headerlink" href="#disk-space-monitoring" title="Permanent link">¶</a></h3>
-<div class="highlight"><pre><span></span><code><span class="c1"># Check space on data directories</span>
-<span class="k">for</span><span class="w"> </span>path<span class="w"> </span><span class="k">in</span><span class="w"> </span><span class="k">$(</span>nodetool<span class="w"> </span>datapaths<span class="k">)</span><span class="p">;</span><span class="w"> </span><span class="k">do</span>
-<span class="w">    </span><span class="nb">echo</span><span class="w"> </span><span class="s2">"</span><span class="nv">$path</span><span class="s2">: </span><span class="k">$(</span>df<span class="w"> </span>-h<span class="w"> </span><span class="nv">$path</span><span class="w"> </span><span class="p">|</span><span class="w"> </span>tail<span class="w"> </span>-1<span class="w"> </span><span class="p">|</span><span class="w"> </span>awk<span class="w"> </span><span class="s1">'{print $4}'</span><span class="k">)</span><span class="s2"> free"</span>
-<span class="k">done</span>
+<div class="highlight"><pre><span></span><code><span class="c1"># Check disk space on data directories using tablestats</span>
+nodetool<span class="w"> </span>tablestats<span class="w"> </span>my_keyspace<span class="w"> </span><span class="p">|</span><span class="w"> </span>grep<span class="w"> </span><span class="s2">"Space used"</span>
 </code></pre></div>
-<h3 id="troubleshooting">Troubleshooting<a class="headerlink" href="#troubleshooting" title="Permanent link">¶</a></h3>
-<div class="highlight"><pre><span></span><code><span class="c1"># Verify data directories exist and are accessible</span>
-nodetool<span class="w"> </span>datapaths<span class="w"> </span><span class="p">|</span><span class="w"> </span>xargs<span class="w"> </span>-I<span class="w"> </span><span class="o">{}</span><span class="w"> </span>ls<span class="w"> </span>-la<span class="w"> </span><span class="o">{}</span>
+<h3 id="json-output">JSON Output<a class="headerlink" href="#json-output" title="Permanent link">¶</a></h3>
+<div class="highlight"><pre><span></span><code><span class="c1"># Get paths in JSON format for scripting</span>
+nodetool<span class="w"> </span>datapaths<span class="w"> </span>-F<span class="w"> </span>json<span class="w"> </span>my_keyspace
 </code></pre></div>
 <hr>
 <h2 id="best-practices">Best Practices<a class="headerlink" href="#best-practices" title="Permanent link">¶</a></h2>

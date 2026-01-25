@@ -20894,7 +20894,7 @@ To find a row:
 <p><strong>Solution:</strong> Decrease the threshold (e.g., 16 KB or 32 KB) to create more index entries.</p>
 <div class="highlight"><pre><span></span><code><span class="c1"># Current setting (check first)</span>
 nodetool<span class="w"> </span>getcolumnindexsize
-<span class="c1"># Output: Current column index size: 64 KB</span>
+<span class="c1"># Output: Current value for column_index_size: 64 KiB</span>
 
 <span class="c1"># Reduce for more granular indexing</span>
 nodetool<span class="w"> </span>setcolumnindexsize<span class="w"> </span><span class="m">16</span>
@@ -21008,7 +21008,7 @@ nodetool<span class="w"> </span>setcolumnindexsize<span class="w"> </span><span 
 <div class="highlight"><pre><span></span><code>nodetool<span class="w"> </span>getcolumnindexsize
 </code></pre></div>
 <p><strong>Sample output:</strong>
-</p><div class="highlight"><pre><span></span><code>Current column index size: 64 KB
+</p><div class="highlight"><pre><span></span><code>Current value for column_index_size: 64 KiB
 </code></pre></div>
 <h3 id="set-to-default-value">Set to Default Value<a class="headerlink" href="#set-to-default-value" title="Permanent link">¶</a></h3>
 <div class="highlight"><pre><span></span><code>nodetool<span class="w"> </span>setcolumnindexsize<span class="w"> </span><span class="m">64</span>
@@ -21149,9 +21149,33 @@ nodetool<span class="w"> </span>tablestats<span class="w"> </span>my_keyspace.my
 <hr>
 <h2 id="configuration-alternative">Configuration Alternative<a class="headerlink" href="#configuration-alternative" title="Permanent link">¶</a></h2>
 <h3 id="cassandrayaml-setting">cassandra.yaml Setting<a class="headerlink" href="#cassandrayaml-setting" title="Permanent link">¶</a></h3>
-<p>The column index size can also be set in <code>cassandra.yaml</code> for persistence across restarts:</p>
-<div class="highlight"><pre><span></span><code><span class="c1"># cassandra.yaml</span>
-<span class="nt">column_index_size_in_kb</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">64</span>
+<p>The column index size can also be set in <code>cassandra.yaml</code> for persistence across restarts. The parameter name varies by version:</p>
+<table>
+<thead>
+<tr>
+<th>Cassandra Version</th>
+<th>Parameter Name</th>
+<th>Example</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Pre-4.1</td>
+<td><code>column_index_size_in_kb</code></td>
+<td><code>64</code></td>
+</tr>
+<tr>
+<td>4.1+</td>
+<td><code>column_index_size</code></td>
+<td><code>64KiB</code></td>
+</tr>
+</tbody>
+</table>
+<div class="highlight"><pre><span></span><code><span class="c1"># cassandra.yaml (4.1+)</span>
+<span class="nt">column_index_size</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">64KiB</span>
+
+<span class="c1"># cassandra.yaml (Pre-4.1)</span>
+<span class="c1"># column_index_size_in_kb: 64</span>
 </code></pre></div>
 <p><strong>Comparison:</strong></p>
 <table>

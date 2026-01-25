@@ -13798,9 +13798,9 @@ data-et-multi-view="{&quot;schema&quot;:{&quot;content&quot;:{&quot;desktop&quot
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
-  <a href="#token-based-pagination" class="md-nav__link">
+  <a href="#pagination-within-a-partition" class="md-nav__link">
     <span class="md-ellipsis">
-      Token-Based Pagination
+      Pagination Within a Partition
     </span>
   </a>
   
@@ -20254,9 +20254,9 @@ data-et-multi-view="{&quot;schema&quot;:{&quot;content&quot;:{&quot;desktop&quot
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
-  <a href="#token-based-pagination" class="md-nav__link">
+  <a href="#pagination-within-a-partition" class="md-nav__link">
     <span class="md-ellipsis">
-      Token-Based Pagination
+      Pagination Within a Partition
     </span>
   </a>
   
@@ -20546,18 +20546,23 @@ grep<span class="w"> </span><span class="s2">"slow query"</span><span class="w">
 </tbody>
 </table>
 <h2 id="pagination">Pagination<a class="headerlink" href="#pagination" title="Permanent link">¶</a></h2>
-<h3 id="token-based-pagination">Token-Based Pagination<a class="headerlink" href="#token-based-pagination" title="Permanent link">¶</a></h3>
+<h3 id="pagination-within-a-partition">Pagination Within a Partition<a class="headerlink" href="#pagination-within-a-partition" title="Permanent link">¶</a></h3>
+<p>For paging within a single partition, use clustering column comparisons:</p>
 <div class="highlight"><pre><span></span><code><span class="c1">-- First page</span>
 <span class="k">SELECT</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="k">FROM</span><span class="w"> </span><span class="n">events</span>
 <span class="k">WHERE</span><span class="w"> </span><span class="n">bucket</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s1">'2024-01'</span>
 <span class="k">LIMIT</span><span class="w"> </span><span class="mi">100</span><span class="p">;</span>
 
-<span class="c1">-- Next page (using last token)</span>
+<span class="c1">-- Next page (using last clustering key value)</span>
 <span class="k">SELECT</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="k">FROM</span><span class="w"> </span><span class="n">events</span>
 <span class="k">WHERE</span><span class="w"> </span><span class="n">bucket</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s1">'2024-01'</span>
-<span class="w">  </span><span class="k">AND</span><span class="w"> </span><span class="n">token</span><span class="p">(</span><span class="n">event_id</span><span class="p">)</span><span class="w"> </span><span class="o">&gt;</span><span class="w"> </span><span class="n">token</span><span class="p">(</span><span class="s1">'last-event-id'</span><span class="p">)</span>
+<span class="w">  </span><span class="k">AND</span><span class="w"> </span><span class="n">event_id</span><span class="w"> </span><span class="o">&gt;</span><span class="w"> </span><span class="s1">'last-event-id'</span>
 <span class="k">LIMIT</span><span class="w"> </span><span class="mi">100</span><span class="p">;</span>
 </code></pre></div>
+<div class="admonition note">
+<p class="admonition-title">Token Functions and Partition Keys</p>
+<p>The <code>token()</code> function only applies to partition keys for cross-partition pagination. Within a single partition, use clustering column comparisons for efficient paging.</p>
+</div>
 <h3 id="driver-pagination">Driver Pagination<a class="headerlink" href="#driver-pagination" title="Permanent link">¶</a></h3>
 <div class="highlight"><pre><span></span><code><span class="c1">// Java driver automatic pagination</span>
 <span class="n">Statement</span><span class="w"> </span><span class="n">stmt</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">SimpleStatement</span><span class="p">.</span><span class="na">builder</span><span class="p">(</span><span class="s">"SELECT * FROM large_table"</span><span class="p">)</span>

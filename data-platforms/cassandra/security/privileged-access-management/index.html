@@ -20951,8 +20951,11 @@ GRANT<span class="w"> </span>AUTHORIZE<span class="w"> </span>ON<span class="w">
 <p><strong>Stale credentials after rotation</strong></p>
 <ul>
 <li>Reduce Cassandra credential cache validity:
-  <div class="highlight"><pre><span></span><code><span class="c1"># cassandra.yaml</span>
-<span class="nt">credentials_validity_in_ms</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">2000</span>
+  <div class="highlight"><pre><span></span><code><span class="c1"># cassandra.yaml (4.1+ syntax)</span>
+<span class="nt">credentials_validity</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">2000ms</span>
+
+<span class="c1"># Pre-4.1 syntax (deprecated)</span>
+<span class="c1"># credentials_validity_in_ms: 2000</span>
 </code></pre></div></li>
 <li>Ensure applications handle authentication failures gracefully</li>
 </ul>

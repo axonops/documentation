@@ -13324,6 +13324,15 @@ data-et-multi-view="{&quot;schema&quot;:{&quot;content&quot;:{&quot;desktop&quot
 </li>
         
           <li class="md-nav__item">
+  <a href="#setting-name-changes-by-version" class="md-nav__link">
+    <span class="md-ellipsis">
+      Setting Name Changes by Version
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
   <a href="#configuration-audit" class="md-nav__link">
     <span class="md-ellipsis">
       Configuration Audit
@@ -20071,6 +20080,15 @@ data-et-multi-view="{&quot;schema&quot;:{&quot;content&quot;:{&quot;desktop&quot
 </li>
         
           <li class="md-nav__item">
+  <a href="#setting-name-changes-by-version" class="md-nav__link">
+    <span class="md-ellipsis">
+      Setting Name Changes by Version
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
   <a href="#configuration-audit" class="md-nav__link">
     <span class="md-ellipsis">
       Configuration Audit
@@ -20358,31 +20376,78 @@ data-et-multi-view="{&quot;schema&quot;:{&quot;content&quot;:{&quot;desktop&quot
 <span class="k">WHERE</span><span class="w"> </span><span class="n">name</span><span class="w"> </span><span class="k">IN</span><span class="w"> </span><span class="p">(</span><span class="s1">'listen_address'</span><span class="p">,</span><span class="w"> </span><span class="s1">'rpc_address'</span><span class="p">,</span><span class="w"> </span><span class="s1">'broadcast_address'</span><span class="p">,</span>
 <span class="w">               </span><span class="s1">'native_transport_port'</span><span class="p">,</span><span class="w"> </span><span class="s1">'storage_port'</span><span class="p">);</span>
 
-<span class="c1">-- Compaction settings</span>
+<span class="c1">-- Compaction settings (setting name varies by version - see table below)</span>
 <span class="k">SELECT</span><span class="w"> </span><span class="n">name</span><span class="p">,</span><span class="w"> </span><span class="n">value</span><span class="w"> </span><span class="k">FROM</span><span class="w"> </span><span class="n">system_views</span><span class="p">.</span><span class="n">settings</span>
-<span class="k">WHERE</span><span class="w"> </span><span class="n">name</span><span class="w"> </span><span class="k">IN</span><span class="w"> </span><span class="p">(</span><span class="s1">'compaction_throughput_mb_per_sec'</span><span class="p">,</span><span class="w"> </span><span class="s1">'concurrent_compactors'</span><span class="p">,</span>
-<span class="w">               </span><span class="s1">'compaction_large_partition_warning_threshold_mb'</span><span class="p">);</span>
+<span class="k">WHERE</span><span class="w"> </span><span class="n">name</span><span class="w"> </span><span class="k">IN</span><span class="w"> </span><span class="p">(</span><span class="s1">'compaction_throughput'</span><span class="p">,</span><span class="w"> </span><span class="s1">'concurrent_compactors'</span><span class="p">,</span>
+<span class="w">               </span><span class="s1">'compaction_large_partition_warning_threshold'</span><span class="p">);</span>
 
 <span class="c1">-- Read/write settings</span>
 <span class="k">SELECT</span><span class="w"> </span><span class="n">name</span><span class="p">,</span><span class="w"> </span><span class="n">value</span><span class="w"> </span><span class="k">FROM</span><span class="w"> </span><span class="n">system_views</span><span class="p">.</span><span class="n">settings</span>
 <span class="k">WHERE</span><span class="w"> </span><span class="n">name</span><span class="w"> </span><span class="k">IN</span><span class="w"> </span><span class="p">(</span><span class="s1">'read_request_timeout'</span><span class="p">,</span><span class="w"> </span><span class="s1">'write_request_timeout'</span><span class="p">,</span>
 <span class="w">               </span><span class="s1">'range_request_timeout'</span><span class="p">,</span><span class="w"> </span><span class="s1">'counter_write_request_timeout'</span><span class="p">);</span>
 
-<span class="c1">-- Hinted handoff</span>
+<span class="c1">-- Hinted handoff (setting name varies by version - see table below)</span>
 <span class="k">SELECT</span><span class="w"> </span><span class="n">name</span><span class="p">,</span><span class="w"> </span><span class="n">value</span><span class="w"> </span><span class="k">FROM</span><span class="w"> </span><span class="n">system_views</span><span class="p">.</span><span class="n">settings</span>
 <span class="k">WHERE</span><span class="w"> </span><span class="n">name</span><span class="w"> </span><span class="k">IN</span><span class="w"> </span><span class="p">(</span><span class="s1">'hinted_handoff_enabled'</span><span class="p">,</span><span class="w"> </span><span class="s1">'max_hint_window'</span><span class="p">,</span>
-<span class="w">               </span><span class="s1">'hinted_handoff_throttle_in_kb'</span><span class="p">,</span><span class="w"> </span><span class="s1">'max_hints_delivery_threads'</span><span class="p">);</span>
+<span class="w">               </span><span class="s1">'hinted_handoff_throttle'</span><span class="p">,</span><span class="w"> </span><span class="s1">'max_hints_delivery_threads'</span><span class="p">);</span>
 
 <span class="c1">-- Commit log</span>
 <span class="k">SELECT</span><span class="w"> </span><span class="n">name</span><span class="p">,</span><span class="w"> </span><span class="n">value</span><span class="w"> </span><span class="k">FROM</span><span class="w"> </span><span class="n">system_views</span><span class="p">.</span><span class="n">settings</span>
 <span class="k">WHERE</span><span class="w"> </span><span class="n">name</span><span class="w"> </span><span class="k">IN</span><span class="w"> </span><span class="p">(</span><span class="s1">'commitlog_sync'</span><span class="p">,</span><span class="w"> </span><span class="s1">'commitlog_sync_period'</span><span class="p">,</span>
 <span class="w">               </span><span class="s1">'commitlog_segment_size'</span><span class="p">,</span><span class="w"> </span><span class="s1">'commitlog_total_space'</span><span class="p">);</span>
 
-<span class="c1">-- Memtable configuration</span>
+<span class="c1">-- Memtable configuration (setting name varies by version - see table below)</span>
 <span class="k">SELECT</span><span class="w"> </span><span class="n">name</span><span class="p">,</span><span class="w"> </span><span class="n">value</span><span class="w"> </span><span class="k">FROM</span><span class="w"> </span><span class="n">system_views</span><span class="p">.</span><span class="n">settings</span>
 <span class="k">WHERE</span><span class="w"> </span><span class="n">name</span><span class="w"> </span><span class="k">IN</span><span class="w"> </span><span class="p">(</span><span class="s1">'memtable_heap_space'</span><span class="p">,</span><span class="w"> </span><span class="s1">'memtable_offheap_space'</span><span class="p">,</span>
 <span class="w">               </span><span class="s1">'memtable_allocation_type'</span><span class="p">,</span><span class="w"> </span><span class="s1">'memtable_flush_writers'</span><span class="p">);</span>
 </code></pre></div>
+<h3 id="setting-name-changes-by-version">Setting Name Changes by Version<a class="headerlink" href="#setting-name-changes-by-version" title="Permanent link">¶</a></h3>
+<p>Configuration setting names changed between Cassandra versions. Use the appropriate name for the target version:</p>
+<table>
+<thead>
+<tr>
+<th>Setting</th>
+<th>Pre-4.1</th>
+<th>4.1+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Compaction throughput</td>
+<td><code>compaction_throughput_mb_per_sec</code></td>
+<td><code>compaction_throughput</code></td>
+</tr>
+<tr>
+<td>Stream throughput</td>
+<td><code>stream_throughput_outbound_megabits_per_sec</code></td>
+<td><code>stream_throughput_outbound</code></td>
+</tr>
+<tr>
+<td>Inter-DC stream throughput</td>
+<td><code>inter_dc_stream_throughput_outbound_megabits_per_sec</code></td>
+<td><code>inter_dc_stream_throughput_outbound</code></td>
+</tr>
+<tr>
+<td>Hinted handoff throttle</td>
+<td><code>hinted_handoff_throttle_in_kb</code></td>
+<td><code>hinted_handoff_throttle</code></td>
+</tr>
+<tr>
+<td>Memtable heap space</td>
+<td><code>memtable_heap_space_in_mb</code></td>
+<td><code>memtable_heap_space</code></td>
+</tr>
+<tr>
+<td>Memtable offheap space</td>
+<td><code>memtable_offheap_space_in_mb</code></td>
+<td><code>memtable_offheap_space</code></td>
+</tr>
+</tbody>
+</table>
+<div class="admonition note">
+<p class="admonition-title">Duration and Size Literals</p>
+<p>In Cassandra 4.1+, settings support duration literals (<code>3h</code>, <code>200ms</code>) and size/rate units (<code>64MiB</code>, <code>16MiB/s</code>). The old <code>_in_ms</code>, <code>_in_mb</code>, and <code>_in_kb</code> suffixed names are deprecated but still functional as aliases.</p>
+</div>
 <h3 id="configuration-audit">Configuration Audit<a class="headerlink" href="#configuration-audit" title="Permanent link">¶</a></h3>
 <div class="highlight"><pre><span></span><code><span class="c1">-- Check authentication/authorization settings</span>
 <span class="k">SELECT</span><span class="w"> </span><span class="n">name</span><span class="p">,</span><span class="w"> </span><span class="n">value</span><span class="w"> </span><span class="k">FROM</span><span class="w"> </span><span class="n">system_views</span><span class="p">.</span><span class="n">settings</span>
@@ -20530,13 +20595,16 @@ data-et-multi-view="{&quot;schema&quot;:{&quot;content&quot;:{&quot;desktop&quot
 
 <span class="c1">-- Encryption settings</span>
 <span class="k">SELECT</span><span class="w"> </span><span class="n">name</span><span class="p">,</span><span class="w"> </span><span class="n">value</span><span class="w"> </span><span class="k">FROM</span><span class="w"> </span><span class="n">system_views</span><span class="p">.</span><span class="n">settings</span>
-<span class="k">WHERE</span><span class="w"> </span><span class="n">name</span><span class="w"> </span><span class="k">IN</span><span class="w"> </span><span class="p">(</span><span class="s1">'server_encryption_options'</span><span class="p">,</span><span class="w"> </span><span class="s1">'client_encryption_options'</span><span class="p">,</span>
-<span class="w">               </span><span class="s1">'native_transport_port_ssl'</span><span class="p">);</span>
+<span class="k">WHERE</span><span class="w"> </span><span class="n">name</span><span class="w"> </span><span class="k">IN</span><span class="w"> </span><span class="p">(</span><span class="s1">'server_encryption_options'</span><span class="p">,</span><span class="w"> </span><span class="s1">'client_encryption_options'</span><span class="p">);</span>
 
 <span class="c1">-- Audit settings (Cassandra 4.0+)</span>
 <span class="k">SELECT</span><span class="w"> </span><span class="n">name</span><span class="p">,</span><span class="w"> </span><span class="n">value</span><span class="w"> </span><span class="k">FROM</span><span class="w"> </span><span class="n">system_views</span><span class="p">.</span><span class="n">settings</span>
 <span class="k">WHERE</span><span class="w"> </span><span class="n">name</span><span class="w"> </span><span class="k">IN</span><span class="w"> </span><span class="p">(</span><span class="s1">'audit_logging_options'</span><span class="p">);</span>
 </code></pre></div>
+<div class="admonition note">
+<p class="admonition-title">Removed Settings</p>
+<p><code>native_transport_port_ssl</code> was deprecated in Cassandra 4.x and removed in 5.0. Use <code>client_encryption_options</code> for SSL/TLS configuration.</p>
+</div>
 <h3 id="performance-configuration-review">Performance Configuration Review<a class="headerlink" href="#performance-configuration-review" title="Permanent link">¶</a></h3>
 <div class="highlight"><pre><span></span><code><span class="c1">-- Thread pool sizing (compare with thread_pools table)</span>
 <span class="k">SELECT</span><span class="w"> </span><span class="n">name</span><span class="p">,</span><span class="w"> </span><span class="n">value</span><span class="w"> </span><span class="k">FROM</span><span class="w"> </span><span class="n">system_views</span><span class="p">.</span><span class="n">settings</span>
@@ -20548,11 +20616,12 @@ data-et-multi-view="{&quot;schema&quot;:{&quot;content&quot;:{&quot;desktop&quot
 <span class="k">WHERE</span><span class="w"> </span><span class="n">name</span><span class="w"> </span><span class="k">IN</span><span class="w"> </span><span class="p">(</span><span class="s1">'key_cache_size_in_mb'</span><span class="p">,</span><span class="w"> </span><span class="s1">'row_cache_size_in_mb'</span><span class="p">,</span>
 <span class="w">               </span><span class="s1">'counter_cache_size_in_mb'</span><span class="p">);</span>
 
-<span class="c1">-- Throughput settings</span>
+<span class="c1">-- Throughput settings (use version-appropriate names)</span>
+<span class="c1">-- Pre-4.1: compaction_throughput_mb_per_sec, stream_throughput_outbound_megabits_per_sec</span>
+<span class="c1">-- 4.1+: compaction_throughput, stream_throughput_outbound</span>
 <span class="k">SELECT</span><span class="w"> </span><span class="n">name</span><span class="p">,</span><span class="w"> </span><span class="n">value</span><span class="w"> </span><span class="k">FROM</span><span class="w"> </span><span class="n">system_views</span><span class="p">.</span><span class="n">settings</span>
-<span class="k">WHERE</span><span class="w"> </span><span class="n">name</span><span class="w"> </span><span class="k">IN</span><span class="w"> </span><span class="p">(</span><span class="s1">'compaction_throughput_mb_per_sec'</span><span class="p">,</span>
-<span class="w">               </span><span class="s1">'stream_throughput_outbound_megabits_per_sec'</span><span class="p">,</span>
-<span class="w">               </span><span class="s1">'inter_dc_stream_throughput_outbound_megabits_per_sec'</span><span class="p">);</span>
+<span class="k">WHERE</span><span class="w"> </span><span class="n">name</span><span class="w"> </span><span class="k">IN</span><span class="w"> </span><span class="p">(</span><span class="s1">'compaction_throughput'</span><span class="p">,</span><span class="w"> </span><span class="s1">'stream_throughput_outbound'</span><span class="p">,</span>
+<span class="w">               </span><span class="s1">'inter_dc_stream_throughput_outbound'</span><span class="p">);</span>
 </code></pre></div>
 <hr>
 <h2 id="alerting-rules">Alerting Rules<a class="headerlink" href="#alerting-rules" title="Permanent link">¶</a></h2>

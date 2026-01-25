@@ -20570,7 +20570,13 @@ data-et-multi-view="{&quot;schema&quot;:{&quot;content&quot;:{&quot;desktop&quot
 <hr>
 <h2 id="deduplication-with-cassandra-lwt">Deduplication with Cassandra LWT<a class="headerlink" href="#deduplication-with-cassandra-lwt" title="Permanent link">¶</a></h2>
 <p>Cassandra's lightweight transactions (LWT) provide atomic check-and-set operations suitable for deduplication:</p>
-<div class="highlight"><pre><span></span><code><span class="kd">public</span><span class="w"> </span><span class="kt">boolean</span><span class="w"> </span><span class="nf">executeOnce</span><span class="p">(</span><span class="n">String</span><span class="w"> </span><span class="n">operationId</span><span class="p">,</span><span class="w"> </span><span class="n">Runnable</span><span class="w"> </span><span class="n">operation</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<div class="highlight"><pre><span></span><code><span class="c1">// Prepared statement must include IF NOT EXISTS for LWT behavior</span>
+<span class="kd">private</span><span class="w"> </span><span class="kd">final</span><span class="w"> </span><span class="n">PreparedStatement</span><span class="w"> </span><span class="n">insertOperation</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">session</span><span class="p">.</span><span class="na">prepare</span><span class="p">(</span>
+<span class="w">    </span><span class="s">"INSERT INTO operations (operation_id, started_at, status) "</span><span class="w"> </span><span class="o">+</span>
+<span class="w">    </span><span class="s">"VALUES (?, ?, ?) IF NOT EXISTS"</span>
+<span class="p">);</span>
+
+<span class="kd">public</span><span class="w"> </span><span class="kt">boolean</span><span class="w"> </span><span class="nf">executeOnce</span><span class="p">(</span><span class="n">String</span><span class="w"> </span><span class="n">operationId</span><span class="p">,</span><span class="w"> </span><span class="n">Runnable</span><span class="w"> </span><span class="n">operation</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
 <span class="w">    </span><span class="c1">// Atomic: insert only if not exists</span>
 <span class="w">    </span><span class="n">ResultSet</span><span class="w"> </span><span class="n">result</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">session</span><span class="p">.</span><span class="na">execute</span><span class="p">(</span>
 <span class="w">        </span><span class="n">insertOperation</span><span class="p">.</span><span class="na">bind</span><span class="p">(</span><span class="n">operationId</span><span class="p">,</span><span class="w"> </span><span class="n">Instant</span><span class="p">.</span><span class="na">now</span><span class="p">(),</span><span class="w"> </span><span class="s">"STARTED"</span><span class="p">)</span>
@@ -20596,14 +20602,14 @@ data-et-multi-view="{&quot;schema&quot;:{&quot;content&quot;:{&quot;desktop&quot
 <span class="w">    </span><span class="p">}</span>
 <span class="p">}</span>
 </code></pre></div>
-<p>The <code>IF NOT EXISTS</code> clause ensures exactly one execution proceeds. Concurrent attempts receive <code>wasApplied() == false</code> and can handle accordingly.</p>
+<p>The <code>IF NOT EXISTS</code> clause in the prepared statement is required for LWT behavior. Concurrent attempts receive <code>wasApplied() == false</code> and can handle accordingly.</p>
 <h3 id="lwt-performance-considerations">LWT Performance Considerations<a class="headerlink" href="#lwt-performance-considerations" title="Permanent link">¶</a></h3>
 <p>Lightweight transactions incur overhead compared to regular operations:</p>
 <table>
 <thead>
 <tr>
 <th>Operation Type</th>
-<th>Typical Latency</th>
+<th>Latency (illustrative)</th>
 </tr>
 </thead>
 <tbody>
@@ -20617,6 +20623,7 @@ data-et-multi-view="{&quot;schema&quot;:{&quot;content&quot;:{&quot;desktop&quot
 </tr>
 </tbody>
 </table>
+<p>Actual latencies depend on cluster topology, network, and workload.</p>
 <p>This overhead is acceptable for critical operations (payments, order creation) but may be prohibitive for high-frequency operations. Alternatives include:</p>
 <ul>
 <li><strong>Timestamp-based deduplication</strong> using Cassandra's built-in timestamp resolution</li>
@@ -20721,7 +20728,13 @@ data-et-multi-view="{&quot;schema&quot;:{&quot;content&quot;:{&quot;desktop&quot
 <p>A 7-day window handles most operational scenarios. Longer windows increase storage but reduce duplicate processing risk.</p>
 <h3 id="transactional-processing">Transactional Processing<a class="headerlink" href="#transactional-processing" title="Permanent link">¶</a></h3>
 <p>For stronger guarantees, process and mark in a single operation:</p>
-<div class="highlight"><pre><span></span><code><span class="kd">public</span><span class="w"> </span><span class="kt">void</span><span class="w"> </span><span class="nf">processOrderTransactionally</span><span class="p">(</span><span class="n">OrderMessage</span><span class="w"> </span><span class="n">message</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<div class="highlight"><pre><span></span><code><span class="c1">// Prepared statement with IF NOT EXISTS for LWT deduplication</span>
+<span class="kd">private</span><span class="w"> </span><span class="kd">final</span><span class="w"> </span><span class="n">PreparedStatement</span><span class="w"> </span><span class="n">insertProcessedMessage</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">session</span><span class="p">.</span><span class="na">prepare</span><span class="p">(</span>
+<span class="w">    </span><span class="s">"INSERT INTO processed_messages (consumer_group, topic, message_id, processed_at, payload) "</span><span class="w"> </span><span class="o">+</span>
+<span class="w">    </span><span class="s">"VALUES (?, ?, ?, ?, ?) IF NOT EXISTS"</span>
+<span class="p">);</span>
+
+<span class="kd">public</span><span class="w"> </span><span class="kt">void</span><span class="w"> </span><span class="nf">processOrderTransactionally</span><span class="p">(</span><span class="n">OrderMessage</span><span class="w"> </span><span class="n">message</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
 <span class="w">    </span><span class="c1">// Use LWT to atomically check and record</span>
 <span class="w">    </span><span class="n">ResultSet</span><span class="w"> </span><span class="n">result</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">session</span><span class="p">.</span><span class="na">execute</span><span class="p">(</span>
 <span class="w">        </span><span class="n">insertProcessedMessage</span><span class="p">.</span><span class="na">bind</span><span class="p">(</span>

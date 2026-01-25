@@ -6,7 +6,7 @@
       <meta charset="utf-8">
       <meta name="viewport" content="width=device-width,initial-scale=1">
       
-        <meta name="description" content="Implementing digital currencies, loyalty points, and token systems with Apache Cassandra. Covers balance management, transaction integrity, double-spend prevention, and distributed ledger patterns.">
+        <meta name="description" content="Implementing digital currencies, loyalty points, and token systems with Apache Cassandra. Covers balance management, transaction integrity, and distributed ledger patterns.">
       
       
       
@@ -75,7 +75,7 @@
   "@context": "https://schema.org",
   "@type": "TechArticle",
   "headline": "Digital Currency - Apache Cassandra Documentation",
-  "description": "Implementing digital currencies, loyalty points, and token systems with Apache Cassandra. Covers balance management, transaction integrity, double-spend prevention, and distributed ledger patterns.",
+  "description": "Implementing digital currencies, loyalty points, and token systems with Apache Cassandra. Covers balance management, transaction integrity, and distributed ledger patterns.",
   "about": {
     "@type": "SoftwareApplication",
     "name": "Apache Cassandra",
@@ -20348,12 +20348,12 @@ data-et-multi-view="{&quot;schema&quot;:{&quot;content&quot;:{&quot;desktop&quot
 </tr>
 <tr>
 <td><strong>Transaction throughput</strong></td>
-<td>100K+ TPS</td>
-<td>10-10K TPS (varies by chain)</td>
+<td>High (workload-dependent)</td>
+<td>Lower (varies by chain)</td>
 </tr>
 <tr>
 <td><strong>Finality latency</strong></td>
-<td>Milliseconds</td>
+<td>Low (sub-second typical)</td>
 <td>Seconds to minutes</td>
 </tr>
 <tr>
@@ -20378,6 +20378,10 @@ data-et-multi-view="{&quot;schema&quot;:{&quot;content&quot;:{&quot;desktop&quot
 </tr>
 </tbody>
 </table>
+<div class="admonition note">
+<p class="admonition-title">Performance Characteristics</p>
+<p>Throughput and latency depend heavily on cluster topology, workload, and consistency requirements. Systems requiring double-spend prevention must use application-level concurrency control (LWT or external locking), which affects achievable throughput.</p>
+</div>
 <p><strong>Use Cassandra for</strong>:
 - Loyalty programs (airline miles, retail points)
 - In-game virtual currencies

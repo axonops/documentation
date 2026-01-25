@@ -20052,9 +20052,9 @@ data-et-multi-view="{&quot;schema&quot;:{&quot;content&quot;:{&quot;desktop&quot
 <p class="admonition-title">Persistent Change</p>
 <p>Unlike many nodetool commands, this change <strong>is persistent</strong> across node restarts. CIDR groups are stored in the <code>system_auth.cidr_groups</code> table, which is replicated across the cluster. Once a group is dropped, it remains deleted until explicitly recreated.</p>
 </div>
-<div class="admonition danger">
-<p class="admonition-title">Irreversible Operation</p>
-<p>Dropping a CIDR group immediately removes it from all role associations. This may cause authorization failures for clients currently relying on that group for access. Ensure no roles depend on the group before dropping.</p>
+<div class="admonition warning">
+<p class="admonition-title">Important Behavior</p>
+<p>Dropping a CIDR group removes the group definition from <code>system_auth.cidr_groups</code> but does <strong>not</strong> automatically remove references to the group from role permissions in <code>system_auth.cidr_permissions</code>. Roles that reference the dropped group will have an invalid group reference. Update role permissions to remove group references before or after dropping the group.</p>
 </div>
 <hr>
 <h2 id="arguments">Arguments<a class="headerlink" href="#arguments" title="Permanent link">¶</a></h2>

@@ -20546,7 +20546,7 @@ T1 → T2 → T3(fail) → C2 → C1 → Aborted
 - Simpler to add/modify steps
 - Better for complex sagas with many steps</p>
 <p><strong>Disadvantages</strong>:
-- Orchestrator is a single point of failure
+- Orchestrator can be a single point of failure without HA/leadership failover
 - Tighter coupling to orchestrator
 - Can become a bottleneck</p>
 <hr>
@@ -20840,25 +20840,36 @@ T1 → T2 → T3(fail) → C2 → C1 → Aborted
 </tbody>
 </table>
 <h3 id="dashboard-queries">Dashboard Queries<a class="headerlink" href="#dashboard-queries" title="Permanent link">¶</a></h3>
-<div class="highlight"><pre><span></span><code><span class="c1">-- Active sagas by status</span>
+<div class="admonition note">
+<p class="admonition-title">Aggregation Queries</p>
+<p>The queries below require dedicated aggregation tables or external analytics (Spark, Presto) since Cassandra does not support cross-partition GROUP BY or queries without partition key restrictions.</p>
+</div>
+<p><strong>Aggregation table approach:</strong></p>
+<div class="highlight"><pre><span></span><code><span class="c1">-- Pre-aggregated counters updated on saga state changes</span>
+<span class="k">CREATE</span><span class="w"> </span><span class="k">TABLE</span><span class="w"> </span><span class="n">saga_status_counts</span><span class="w"> </span><span class="p">(</span>
+<span class="w">    </span><span class="n">date_bucket</span><span class="w"> </span><span class="nb">DATE</span><span class="p">,</span>
+<span class="w">    </span><span class="n">status</span><span class="w"> </span><span class="nb">TEXT</span><span class="p">,</span>
+<span class="w">    </span><span class="k">count</span><span class="w"> </span><span class="n">COUNTER</span><span class="p">,</span>
+<span class="w">    </span><span class="k">PRIMARY</span><span class="w"> </span><span class="k">KEY</span><span class="w"> </span><span class="p">((</span><span class="n">date_bucket</span><span class="p">),</span><span class="w"> </span><span class="n">status</span><span class="p">)</span>
+<span class="p">);</span>
+
+<span class="c1">-- Query pre-aggregated data</span>
+<span class="k">SELECT</span><span class="w"> </span><span class="n">status</span><span class="p">,</span><span class="w"> </span><span class="k">count</span><span class="w"> </span><span class="k">FROM</span><span class="w"> </span><span class="n">saga_status_counts</span><span class="w"> </span><span class="k">WHERE</span><span class="w"> </span><span class="n">date_bucket</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="o">?</span><span class="p">;</span>
+</code></pre></div>
+<p><strong>External analytics approach:</strong></p>
+<div class="highlight"><pre><span></span><code><span class="c1">-- Example Spark SQL / Presto query (not CQL)</span>
 <span class="k">SELECT</span><span class="w"> </span><span class="n">status</span><span class="p">,</span><span class="w"> </span><span class="k">COUNT</span><span class="p">(</span><span class="o">*</span><span class="p">)</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="k">count</span>
 <span class="k">FROM</span><span class="w"> </span><span class="n">saga_instances</span>
 <span class="k">WHERE</span><span class="w"> </span><span class="n">started_at</span><span class="w"> </span><span class="o">&gt;</span><span class="w"> </span><span class="o">?</span>
 <span class="k">GROUP</span><span class="w"> </span><span class="k">BY</span><span class="w"> </span><span class="n">status</span><span class="p">;</span>
-
-<span class="c1">-- Failure reasons</span>
-<span class="k">SELECT</span><span class="w"> </span><span class="n">failure_reason</span><span class="p">,</span><span class="w"> </span><span class="k">COUNT</span><span class="p">(</span><span class="o">*</span><span class="p">)</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="k">count</span>
-<span class="k">FROM</span><span class="w"> </span><span class="n">saga_instances</span>
-<span class="k">WHERE</span><span class="w"> </span><span class="n">status</span><span class="w"> </span><span class="k">IN</span><span class="w"> </span><span class="p">(</span><span class="s1">'COMPENSATED'</span><span class="p">,</span><span class="w"> </span><span class="s1">'COMPENSATION_FAILED'</span><span class="p">)</span>
-<span class="w">  </span><span class="k">AND</span><span class="w"> </span><span class="n">completed_at</span><span class="w"> </span><span class="o">&gt;</span><span class="w"> </span><span class="o">?</span>
-<span class="k">GROUP</span><span class="w"> </span><span class="k">BY</span><span class="w"> </span><span class="n">failure_reason</span>
-<span class="k">ORDER</span><span class="w"> </span><span class="k">BY</span><span class="w"> </span><span class="k">count</span><span class="w"> </span><span class="k">DESC</span><span class="p">;</span>
-
-<span class="c1">-- Stuck sagas (running &gt; 1 hour)</span>
+</code></pre></div>
+<p><strong>Stuck saga detection (requires secondary index or materialized view):</strong></p>
+<div class="highlight"><pre><span></span><code><span class="c1">-- If using SAI index on status</span>
 <span class="k">SELECT</span><span class="w"> </span><span class="n">saga_id</span><span class="p">,</span><span class="w"> </span><span class="n">saga_type</span><span class="p">,</span><span class="w"> </span><span class="n">current_step</span><span class="p">,</span><span class="w"> </span><span class="n">started_at</span>
 <span class="k">FROM</span><span class="w"> </span><span class="n">saga_instances</span>
 <span class="k">WHERE</span><span class="w"> </span><span class="n">status</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s1">'RUNNING'</span>
-<span class="w">  </span><span class="k">AND</span><span class="w"> </span><span class="n">updated_at</span><span class="w"> </span><span class="o">&lt;</span><span class="w"> </span><span class="o">?</span><span class="p">;</span>
+<span class="w">  </span><span class="k">AND</span><span class="w"> </span><span class="n">updated_at</span><span class="w"> </span><span class="o">&lt;</span><span class="w"> </span><span class="o">?</span>
+<span class="n">ALLOW</span><span class="w"> </span><span class="n">FILTERING</span><span class="p">;</span><span class="w">  </span><span class="c1">-- Use with caution in production</span>
 </code></pre></div>
 <hr>
 <h2 id="when-to-use-the-saga-pattern">When to Use the Saga Pattern<a class="headerlink" href="#when-to-use-the-saga-pattern" title="Permanent link">¶</a></h2>
