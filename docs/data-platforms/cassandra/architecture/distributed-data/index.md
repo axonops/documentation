@@ -105,7 +105,7 @@ graph Masterless {
 In Cassandra:
 - Any node can serve as **coordinator** for any request
 - The coordinator role is assigned per-request, not per-cluster
-- No node holds special metadata or routing responsibility
+- In traditional Cassandra, no node holds special metadata or routing responsibility (note: CEP-21 introduces cluster metadata services in newer versions)
 - Cluster continues operating if any node (or multiple nodes) fails
 
 ### Comparison with Master-Based Systems
@@ -178,7 +178,7 @@ digraph CoordinatorFlow {
 |---------|-------------|
 | **No single point of failure** | Any node can fail without affecting cluster availability |
 | **No failover delay** | No election process; operations continue immediately |
-| **Linear write scalability** | All nodes accept writes; adding nodes increases write capacity |
+| **Write scalability** | All nodes accept writes; adding nodes generally increases write capacity |
 | **Simpler operations** | No primary/replica distinction to manage |
 | **Geographic distribution** | Each datacenter is autonomous; no cross-DC leader election |
 

@@ -596,8 +596,11 @@ GRANT ALTER ON ROLE target_role TO cyberark_cpm;
 
 - Reduce Cassandra credential cache validity:
   ```yaml
-  # cassandra.yaml
-  credentials_validity_in_ms: 2000
+  # cassandra.yaml (4.1+ syntax)
+  credentials_validity: 2000ms
+
+  # Pre-4.1 syntax (deprecated)
+  # credentials_validity_in_ms: 2000
   ```
 - Ensure applications handle authentication failures gracefully
 

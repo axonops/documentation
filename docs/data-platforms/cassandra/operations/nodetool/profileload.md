@@ -15,7 +15,7 @@ Profiles read and write operations on a table for a specified duration to identi
 ## Synopsis
 
 ```bash
-nodetool [connection_options] profileload <keyspace> <table> <duration>
+nodetool [connection_options] profileload [options] [keyspace] [table] [duration]
 ```
 
 ## Description
@@ -51,9 +51,20 @@ The profiling uses sampling (not exhaustive tracking) to minimize overhead.
 
 | Argument | Description |
 |----------|-------------|
-| `keyspace` | Target keyspace name |
-| `table` | Target table name |
-| `duration` | Sampling duration in milliseconds |
+| `keyspace` | Target keyspace name (or `*` for all keyspaces) |
+| `table` | Target table name (or `*` for all tables) |
+| `duration` | Sampling duration in milliseconds (default: 10000) |
+
+## Options
+
+| Option | Description |
+|--------|-------------|
+| `-s <capacity>` | Sampler capacity (number of top keys to track) |
+| `-k <count>` | Number of top partitions to display |
+| `-a <samplers>` | Comma-separated list of samplers to use |
+| `-i, --interval <ms>` | Schedule sampling at regular intervals |
+| `-t, --stop` | Stop scheduled sampling |
+| `-l, --list` | List scheduled samplings |
 
 ---
 
@@ -358,9 +369,9 @@ if [ -z "$KEYSPACE" ] || [ -z "$TABLE" ]; then
 fi
 
 OUTPUT_DIR="/tmp/profiles_$(date +%Y%m%d_%H%M%S)"
-mkdir -p $OUTPUT_DIR# Get list of node IPs from local nodetool status
+mkdir -p $OUTPUT_DIR
 
-
+# Get list of node IPs from local nodetool status
 nodes=$(nodetool status | grep "^UN" | awk '{print $2}')
 
 echo "Profiling $KEYSPACE.$TABLE for ${DURATION}ms on all nodes..."

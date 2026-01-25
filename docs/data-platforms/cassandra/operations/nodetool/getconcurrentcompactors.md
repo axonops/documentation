@@ -73,18 +73,21 @@ done
 
 ### Default Calculation
 
-If not explicitly configured, Cassandra calculates the default:
+If not explicitly configured, Cassandra calculates the default using the following formula:
 
 ```
-concurrent_compactors = min(number_of_data_directories, number_of_cpu_cores)
+concurrent_compactors = min(8, max(2, min(number_of_cpu_cores, number_of_data_directories)))
 ```
+
+This ensures a minimum of 2 compactors and a maximum of 8, bounded by available CPU cores and data directories.
 
 | Hardware | Expected Default |
 |----------|------------------|
-| 8 cores, 1 disk | 1 |
+| 8 cores, 1 disk | 2 (minimum) |
 | 8 cores, 4 disks | 4 |
-| 16 cores, 8 disks | 8 |
+| 16 cores, 8 disks | 8 (maximum) |
 | 4 cores, 8 disks | 4 |
+| 1 core, 1 disk | 2 (minimum) |
 
 ### Interpreting Different Values
 

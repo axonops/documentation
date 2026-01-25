@@ -64,7 +64,11 @@ Before returning success for a DDL operation, Cassandra waits for schema agreeme
 ```sql
 -- Check current schema versions across the cluster
 SELECT schema_version FROM system.local;
-SELECT peer, schema_version FROM system.peers;
+
+-- Cassandra 4.0+: prefer system.peers_v2
+SELECT peer, schema_version FROM system.peers_v2;
+-- Legacy (may be disabled in newer versions):
+-- SELECT peer, schema_version FROM system.peers;
 
 -- Using nodetool
 -- nodetool describecluster | grep -A 10 "Schema versions"

@@ -32,12 +32,12 @@ With prepared statements:
 |---------|--------|
 | Reduced parsing | Lower server CPU |
 | Smaller messages | Less network bandwidth |
-| Token-aware routing | Better coordinator selection |
-| Type safety | Compile-time validation in drivers |
-| Security | No CQL injection possible |
+| Token-aware routing | Explicit partition key metadata for routing |
+| Type safety | Runtime validation of bound values |
+| Security | Reduced CQL injection risk when inputs are bound |
 
 !!! tip "Always Use Prepared Statements"
-    Prepared statements should be used for all production queries. They provide security against injection attacks, enable token-aware routing, and reduce message sizes.
+    Prepared statements should be used for all production queries. They reduce injection risk (when inputs are bound, not concatenated), enable token-aware routing, and reduce message sizes.
 
 ---
 
@@ -96,7 +96,7 @@ The prepared statement ID is a hash that uniquely identifies:
 
 **ID Computation:**
 ```
-ID = MD5(query_string + keyspace + settings)
+ID = MD5(query_string [+ keyspace if provided])
      ↓
 16-byte identifier
 ```
@@ -122,16 +122,18 @@ Purpose:
 
 Cassandra maintains a cache of prepared statements:
 
-```yaml
-# cassandra.yaml
-prepared_statements_cache_size_mb: 100  # Maximum cache size
-```
+**Cache configuration:**
+
+| Version | Parameter | Default |
+|---------|-----------|---------|
+| 4.0 | `prepared_statements_cache_size_mb` | `auto` (1/256 heap or 10MiB, whichever is greater) |
+| 4.1+ | `prepared_statements_cache_size` | `auto` |
 
 **Cache characteristics:**
 - Per-node cache (not distributed)
-- LRU eviction when full
+- Size-based eviction (Caffeine W-TinyLFU algorithm)
 - Survives connection close
-- Lost on node restart
+- Persisted in `system.prepared_statements` and reloaded on startup
 
 ### Cache Structure
 
@@ -464,11 +466,11 @@ for user_id in user_ids:
 - Solution: Driver should auto-reprepare
 
 !!! note "Automatic Reprepare"
-    All modern drivers handle UNPREPARED errors transparently by re-preparing the statement and retrying. Applications typically do not need special handling for this scenario.
+    Most drivers handle UNPREPARED errors transparently by re-preparing the statement and retrying. Behavior varies by driver and configuration; consult driver documentation for specifics.
 
-**Statement not found on all nodes:**
-- Prepared on one node only
-- Solution: Prepare on each connection
+**Statement not found on a node:**
+- Typically caused by cache eviction or node restart
+- Drivers automatically re-prepare on the affected node
 
 **Cache exhaustion:**
 - Too many unique queries

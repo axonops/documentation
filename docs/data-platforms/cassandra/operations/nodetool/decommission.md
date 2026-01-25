@@ -30,7 +30,7 @@ When `decommission` executes, Cassandra performs the following operations:
 
 1. **Sets node state to LEAVING** - The node announces via gossip that it is leaving the cluster. Other nodes see status change from UN (Up/Normal) to UL (Up/Leaving).
 
-2. **Stops accepting coordinator requests** - The node stops accepting new client write requests as a coordinator, though it continues to accept replica writes from other coordinators during streaming.
+2. **Continues serving requests during streaming** - The node keeps networking up and continues to serve requests as a coordinator and replica during the streaming phase. This allows clients to continue using the node until streaming completes.
 
 3. **Calculates token range transfers** - The node determines which other nodes should receive its token ranges based on the replication strategy and token allocation.
 
@@ -40,7 +40,7 @@ When `decommission` executes, Cassandra performs the following operations:
 
 6. **Updates cluster topology** - The ring topology is updated across all nodes via gossip. The node's entry is removed from `system.peers` on other nodes.
 
-7. **Shuts down** - The Cassandra process exits. The node no longer appears in `nodetool status`.
+7. **Networking shuts down** - After streaming and topology updates complete, Cassandra shuts down its networking (gossip, native protocol). The process does **not** exit automatically; the operator must stop the Cassandra process manually. The node no longer appears in `nodetool status`.
 
 !!! info "Decommission vs Removenode"
     The key difference from `removenode` is that decommission streams data directly from the departing node's local storage, while `removenode` must reconstruct data from other replicas. This makes decommission faster and more reliable when the node is healthy.
@@ -129,13 +129,16 @@ nodetool decommission
 
 ## Decommission Process
 
-1. Stop accepting new writes
+1. Announce LEAVING state via gossip
 2. Calculate token ranges to stream
 3. Stream data to remaining nodes (monitor with `nodetool netstats`)
-4. Wait for streaming to complete
-5. Update cluster topology
+4. Continue serving requests during streaming
+5. Update cluster topology when streaming completes
 6. Remove node from ring
-7. Shutdown
+7. Shut down networking (operator must stop Cassandra process)
+
+!!! info "Continuing a Decommission"
+    If a decommission was interrupted and restarted, running `nodetool decommission` again will print "This node is still decommissioning" and continue the operation.
 
 ### Duration Estimate
 

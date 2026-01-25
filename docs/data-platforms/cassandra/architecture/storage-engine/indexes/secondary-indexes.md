@@ -188,11 +188,13 @@ results --> client : final result
 **Query execution steps:**
 
 1. Query arrives at coordinator
-2. Coordinator sends query to ALL nodes (or subset for token-aware)
-3. Each node queries its local index
+2. Coordinator sends query to replicas (one replica per token range for consistency level, not necessarily all nodes)
+3. Each contacted node queries its local index
 4. Each node reads matching base table rows
 5. Results gathered at coordinator
 6. Final result returned to client
+
+*Note: The coordinator may choose one replica per token range rather than contacting every node, depending on consistency level and load balancing. However, the scatter-gather scope remains broad.*
 
 ---
 

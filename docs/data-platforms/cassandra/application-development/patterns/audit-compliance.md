@@ -39,7 +39,7 @@ Audit logs could be written to files, shipped to object storage, or streamed to 
 - "Retrieve the complete audit trail for this transaction"
 - "Find all failed login attempts from this IP address"
 
-These queries must return results in seconds, not hours. When auditors or investigators request information, batch processing is not acceptable.
+Compliance requirements typically demand that these queries return results in seconds, not hours. When auditors or investigators request information, batch processing is often not acceptable.
 
 **Cassandra characteristics that align with audit requirements:**
 
@@ -50,7 +50,7 @@ These queries must return results in seconds, not hours. When auditors or invest
 | High write throughput | Append-only writes, no read-before-write |
 | Durability | Configurable replication factor |
 | Retention flexibility | TTL or explicit deletion |
-| Tamper resistance | Immutable once written (no in-place updates) |
+| Tamper resistance | SSTables are immutable files; application-level controls (append-only schema, hash chaining) provide tamper evidence |
 
 File-based or object storage systems excel at batch analytics but lack the query flexibility compliance demands. Cassandra provides both: high-throughput ingestion for capturing every event, and efficient queries for investigating specific records.
 

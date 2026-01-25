@@ -345,8 +345,8 @@ nc -zv <seed_ip> 7000
 # Check repair history
 nodetool netstats | grep -i repair
 
-# Run consistency check
-nodetool verify <keyspace> <table>
+# Run consistency check (--force required)
+nodetool verify -f <keyspace> <table>
 
 # Check for read repair errors
 grep -i "read repair" /var/log/cassandra/system.log | tail -20
@@ -487,8 +487,8 @@ nc -zv <other_node> 7000
 # Instead of full keyspace repair:
 nodetool repair <keyspace> <single_table>
 
-# Use parallel repair for faster completion
-nodetool repair -par <keyspace>
+# Parallel repair is the default in Cassandra 4.0+
+nodetool repair <keyspace>
 ```
 
 ### Repair Failures
@@ -609,8 +609,8 @@ ping -M do -s 1472 <other_node>
 **Diagnostic steps:**
 
 ```bash
-# Check native transport
-nodetool status | grep -i native
+# Check native transport status
+nodetool statusbinary
 
 # Test from client machine
 nc -zv <cassandra_node> 9042

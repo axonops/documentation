@@ -92,6 +92,7 @@ concurrent_counter_writes: 32
 concurrent_materialized_view_writes: 32
 
 # Compaction
+# 4.0: compaction_throughput_mb_per_sec, 4.1+: compaction_throughput (e.g., 64MiB/s)
 compaction_throughput_mb_per_sec: 64
 concurrent_compactors: 2
 
@@ -102,13 +103,18 @@ memtable_flush_writers: 2
 
 # Commit log
 commitlog_sync: periodic
+# 4.0: _in_ms suffix, 4.1+: duration syntax (e.g., 10s)
 commitlog_sync_period_in_ms: 10000
 commitlog_segment_size_in_mb: 32
 ```
 
+!!! note "Configuration Syntax Changes in 4.1+"
+    Cassandra 4.1+ introduced duration literals (e.g., `10s`, `200ms`, `1h`) and data rate units (e.g., `64MiB/s`). The `_in_ms` and `_mb_per_sec` suffixes are deprecated but still accepted. See [cassandra.yaml](cassandra-yaml/index.md) for version-specific parameter names.
+
 ### Timeout Settings
 
 ```yaml
+# 4.0 syntax shown; 4.1+ uses duration literals (e.g., 5s instead of 5000)
 read_request_timeout_in_ms: 5000
 write_request_timeout_in_ms: 2000
 counter_write_request_timeout_in_ms: 5000

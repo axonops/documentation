@@ -146,7 +146,7 @@ watch 'nodetool listpendinghints'
 | Read performance | May improve on target nodes |
 
 !!! info "Gradual Delivery"
-    Hints are delivered gradually based on `hinted_handoff_throttle_in_kb` to prevent overwhelming target nodes.
+    Hints are delivered gradually based on `hinted_handoff_throttle` to prevent overwhelming target nodes.
 
 ---
 
@@ -172,11 +172,11 @@ Pool Name                         Active   Pending      Completed   Blocked  All
 HintedHandoff                          2         0           1523         0                 0
 ```
 
-### Track Hints Table Size
+### Track Hints Directory Size
 
 ```bash
-# Monitor hints table shrinking
-watch -n 30 'nodetool tablestats system.hints | grep "Space used"'
+# Monitor hints directory shrinking (hints stored as files)
+watch -n 30 'du -sh /var/lib/cassandra/hints/'
 ```
 
 ---
@@ -236,12 +236,21 @@ echo "=== Cycle Complete ==="
 
 ### Default Throttling
 
-Hint delivery is throttled by default to prevent overwhelming target nodes:
+Hint delivery is throttled by default to prevent overwhelming target nodes. Parameter names vary by version:
+
+| Cassandra Version | Throttle Parameter | Example |
+|-------------------|-------------------|---------|
+| Pre-4.1 | `hinted_handoff_throttle_in_kb` | `1024` |
+| 4.1+ | `hinted_handoff_throttle` | `1024KiB` |
 
 ```yaml
-# cassandra.yaml
-hinted_handoff_throttle_in_kb: 1024  # KB per second
+# cassandra.yaml (4.1+)
+hinted_handoff_throttle: 1024KiB
 max_hints_delivery_threads: 2
+
+# cassandra.yaml (Pre-4.1)
+# hinted_handoff_throttle_in_kb: 1024
+# max_hints_delivery_threads: 2
 ```
 
 ### Adjust During Delivery
@@ -282,14 +291,14 @@ done
 #!/bin/bash
 # resume_handoff_cluster.sh
 
-echo "Resuming hint delivery cluster-wide..."# Get list of node IPs from local nodetool status
+echo "Resuming hint delivery cluster-wide..."
 
-
+# Get list of node IPs from local nodetool status
 nodes=$(nodetool status | grep "^UN" | awk '{print $2}')
 
 for node in $nodes; do
     echo -n "$node: "
-    ssh "$node" "nodetool resumehandoff 2>/dev/null && echo "resumed" || echo "FAILED""
+    ssh "$node" 'nodetool resumehandoff 2>/dev/null && echo "resumed" || echo "FAILED"'
 done
 
 echo ""
@@ -306,9 +315,9 @@ done
 #!/bin/bash
 # monitor_cluster_hint_delivery.sh
 
-echo "=== Cluster Hint Delivery Status ==="# Get list of node IPs from local nodetool status
+echo "=== Cluster Hint Delivery Status ==="
 
-
+# Get list of node IPs from local nodetool status
 nodes=$(nodetool status | grep "^UN" | awk '{print $2}')
 
 total_pending=0
@@ -437,7 +446,7 @@ echo "=== Recovery Complete ==="
     6. **Resume cluster-wide** - If paused cluster-wide, resume on all nodes
 
 !!! warning "After Extended Pause"
-    If hints were paused longer than `max_hint_window_in_ms` (default 3 hours), some hints may have expired. Run `nodetool repair -pr` after resuming to ensure full consistency.
+    If hints were paused longer than `max_hint_window` (default 3 hours), some hints may have expired. Run `nodetool repair -pr` after resuming to ensure full consistency.
 
 ---
 

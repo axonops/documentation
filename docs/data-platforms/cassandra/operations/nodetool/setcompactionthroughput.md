@@ -27,18 +27,18 @@ nodetool [connection_options] setcompactionthroughput <throughput_mb_per_sec>
 !!! info "Aggregate Limit"
     The throughput limit is the **total aggregate limit across all concurrent compaction threads**, not a per-thread limit.
 
-    For example, with `concurrent_compactors: 4` and throughput set to `128 MB/s`:
+    For example, with `concurrent_compactors: 4` and throughput set to `128 MiB/s`:
 
-    - All 4 compaction threads **share** the 128 MB/s budget
-    - Each thread averages approximately 32 MB/s (128 ÷ 4)
+    - All 4 compaction threads **share** the 128 MiB/s budget
+    - Each thread averages approximately 32 MiB/s (128 ÷ 4)
     - The actual distribution varies based on workload
 
     ```
     ┌─────────────────────────────────────────────────────┐
-    │              Total Throughput: 128 MB/s             │
+    │              Total Throughput: 128 MiB/s             │
     ├─────────────────────────────────────────────────────┤
     │  Thread 1    Thread 2    Thread 3    Thread 4       │
-    │   ~32 MB/s    ~32 MB/s    ~32 MB/s    ~32 MB/s      │
+    │   ~32 MiB/s    ~32 MiB/s    ~32 MiB/s    ~32 MiB/s      │
     │      ↓           ↓           ↓           ↓          │
     │  ═══════════════════════════════════════════════    │
     │                    Disk I/O                         │
@@ -46,7 +46,7 @@ nodetool [connection_options] setcompactionthroughput <throughput_mb_per_sec>
     ```
 
 !!! warning "Non-Persistent Setting"
-    This setting is applied at runtime only and does not persist across node restarts. After a restart, the value reverts to the `compaction_throughput` setting in `cassandra.yaml` (default: 64 MB/s).
+    This setting is applied at runtime only and does not persist across node restarts. After a restart, the value reverts to the `compaction_throughput` setting in `cassandra.yaml` (default: 64 MiB/s).
 
     To make the change permanent, update `cassandra.yaml`:
 
@@ -60,13 +60,21 @@ nodetool [connection_options] setcompactionthroughput <throughput_mb_per_sec>
 
 | Argument | Description |
 |----------|-------------|
-| `throughput_mb_per_sec` | Maximum MB/s for all compaction writes combined. 0 = unlimited |
+| `throughput_mib_per_sec` | Maximum MiB/s for all compaction writes combined. 0 = unlimited |
+
+!!! note "cassandra.yaml Parameter"
+    The corresponding cassandra.yaml parameter changed in 4.1:
+
+    | Cassandra Version | Parameter Name | Example |
+    |-------------------|----------------|---------|
+    | Pre-4.1 | `compaction_throughput_mb_per_sec` | `64` |
+    | 4.1+ | `compaction_throughput` | `64MiB/s` |
 
 ---
 
 ## Examples
 
-### Set Throughput to 128 MB/s
+### Set Throughput to 128 MiB/s
 
 ```bash
 nodetool setcompactionthroughput 128
@@ -233,7 +241,7 @@ nodetool proxyhistograms
 | **Read latency** | `nodetool proxyhistograms` | 99th percentile read latency |
 | **Write latency** | `nodetool proxyhistograms` | 99th percentile write latency |
 | **SSTable count** | `nodetool tablestats` | Should decrease as compaction catches up |
-| **Compaction throughput** | `nodetool compactionstats` | Actual MB/s being written |
+| **Compaction throughput** | `nodetool compactionstats` | Actual MiB/s being written |
 
 ### Monitoring During Adjustment
 
@@ -277,12 +285,12 @@ done
 
 | Storage Type | Default | Conservative | Aggressive | Notes |
 |--------------|---------|--------------|------------|-------|
-| **HDD (7200 RPM)** | 64 MB/s | 32 MB/s | 128 MB/s | Limited by seek time, be conservative |
-| **HDD (15K RPM)** | 64 MB/s | 48 MB/s | 160 MB/s | Slightly better than 7200 RPM |
-| **SATA SSD** | 128 MB/s | 64 MB/s | 256 MB/s | Good baseline for most SSDs |
-| **NVMe SSD** | 256 MB/s | 128 MB/s | 512+ MB/s | Can handle much higher throughput |
-| **Cloud (EBS gp3)** | 128 MB/s | 64 MB/s | Provisioned IOPS | Depends on provisioned performance |
-| **Cloud (local NVMe)** | 256 MB/s | 128 MB/s | 512+ MB/s | Similar to on-prem NVMe |
+| **HDD (7200 RPM)** | 64 MiB/s | 32 MiB/s | 128 MiB/s | Limited by seek time, be conservative |
+| **HDD (15K RPM)** | 64 MiB/s | 48 MiB/s | 160 MiB/s | Slightly better than 7200 RPM |
+| **SATA SSD** | 128 MiB/s | 64 MiB/s | 256 MiB/s | Good baseline for most SSDs |
+| **NVMe SSD** | 256 MiB/s | 128 MiB/s | 512+ MiB/s | Can handle much higher throughput |
+| **Cloud (EBS gp3)** | 128 MiB/s | 64 MiB/s | Provisioned IOPS | Depends on provisioned performance |
+| **Cloud (local NVMe)** | 256 MiB/s | 128 MiB/s | 512+ MiB/s | Similar to on-prem NVMe |
 
 ### Tuning Approach
 
@@ -314,7 +322,7 @@ nodetool setcompactionthroughput 96
 ### Effects of Different Throughput Settings
 
 ```
-Low Throughput (32-64 MB/s)
+Low Throughput (32-64 MiB/s)
 ├── Pros
 │   ├── Minimal impact on production I/O
 │   ├── Stable read/write latencies
@@ -325,7 +333,7 @@ Low Throughput (32-64 MB/s)
     ├── Read performance degrades over time
     └── Disk space may fill with uncompacted data
 
-High Throughput (256+ MB/s)
+High Throughput (256+ MiB/s)
 ├── Pros
 │   ├── Compaction keeps pace with writes
 │   ├── Fewer SSTables, better read performance
@@ -375,11 +383,11 @@ compaction_throughput: 128MiB/s  # Total throughput for all threads
 
 | concurrent_compactors | throughput | Per-Thread Average |
 |-----------------------|------------|-------------------|
-| 2 | 128 MB/s | ~64 MB/s |
-| 4 | 128 MB/s | ~32 MB/s |
-| 8 | 128 MB/s | ~16 MB/s |
-| 4 | 256 MB/s | ~64 MB/s |
-| 4 | 512 MB/s | ~128 MB/s |
+| 2 | 128 MiB/s | ~64 MiB/s |
+| 4 | 128 MiB/s | ~32 MiB/s |
+| 8 | 128 MiB/s | ~16 MiB/s |
+| 4 | 256 MiB/s | ~64 MiB/s |
+| 4 | 512 MiB/s | ~128 MiB/s |
 
 !!! tip "Balancing Threads and Throughput"
     More compactors with the same throughput means each individual compaction runs slower, but more compactions run in parallel. The total throughput remains capped.
@@ -396,18 +404,16 @@ compaction_throughput: 128MiB/s  # Total throughput for all threads
 #!/bin/bash
 # set_compaction_throughput_cluster.sh
 
-THROUGHPUT="${1:-128}"# Get list of node IPs from local nodetool status
+THROUGHPUT="${1:-128}"
 
-
+# Get list of node IPs from local nodetool status
 nodes=$(nodetool status | grep "^UN" | awk '{print $2}')
 
-echo "Setting compaction throughput to $THROUGHPUT MB/s on all nodes..."
+echo "Setting compaction throughput to $THROUGHPUT MiB/s on all nodes..."
 
 for node in $nodes; do
     echo -n "$node: "
-    ssh "$node" "nodetool setcompactionthroughput $THROUGHPUT \"
-        && echo "set to $THROUGHPUT MB/s" \
-        || echo "FAILED"
+    ssh "$node" 'nodetool setcompactionthroughput '"$THROUGHPUT"' && echo "set to '"$THROUGHPUT"' MiB/s" || echo "FAILED"'
 done
 
 echo ""

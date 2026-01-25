@@ -36,6 +36,7 @@ This is essential for monitoring compaction health and identifying backlogs.
 | Option | Description |
 |--------|-------------|
 | `-H, --human-readable` | Display sizes in human-readable format |
+| `-V, --vtable` | Use virtual table format for output |
 
 ---
 
@@ -43,12 +44,16 @@ This is essential for monitoring compaction health and identifying backlogs.
 
 ```
 pending tasks: 15
-          compaction type        keyspace           table       completed           total      unit   progress
-               Compaction     my_keyspace           users      1234567890      2345678901     bytes     52.65%
-               Compaction     my_keyspace          orders       567890123      1234567890     bytes     46.01%
-               Validation     my_keyspace           users        45678901       123456789     bytes     37.00%
+- my_keyspace.users: 8
+- my_keyspace.orders: 7
+          id                compaction type        keyspace           table       completed           total      unit   progress
+          abc123-def4-...        Compaction     my_keyspace           users      1234567890      2345678901     bytes     52.65%
+          def456-abc7-...        Compaction     my_keyspace          orders       567890123      1234567890     bytes     46.01%
+          ghi789-jkl0-...        Validation     my_keyspace           users        45678901       123456789     bytes     37.00%
 Active compaction remaining time :   0h12m34s
 ```
+
+Note: The output includes pending tasks broken down by keyspace and table, plus a per-compaction `id` column (unless `-V/--vtable` is used).
 
 ---
 
@@ -56,7 +61,8 @@ Active compaction remaining time :   0h12m34s
 
 | Field | Description |
 |-------|-------------|
-| pending tasks | Total compaction tasks waiting to run |
+| pending tasks | Total compaction tasks waiting to run (with per-keyspace.table breakdown) |
+| id | Unique identifier for the active compaction operation |
 | compaction type | Type of operation (Compaction, Validation, Cleanup, etc.) |
 | keyspace | Keyspace being compacted |
 | table | Table being compacted |

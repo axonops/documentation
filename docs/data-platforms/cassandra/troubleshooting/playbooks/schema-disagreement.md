@@ -116,20 +116,28 @@ nodetool status
 
 ### Option 5: Force Schema Rebuild (Last Resort)
 
-If all else fails, on the problematic node:
+If all else fails, use `nodetool resetlocalschema` on the problematic node:
 
 ```bash
-# 1. Stop Cassandra
-sudo systemctl stop cassandra
-
-# 2. Clear local schema tables
-cqlsh -e "TRUNCATE system_schema.tables;"
-cqlsh -e "TRUNCATE system_schema.columns;"
-# ... (other system_schema tables)
-
-# 3. Restart and let it rebuild from peers
-sudo systemctl start cassandra
+# This drops local schema and reloads from cluster peers
+nodetool resetlocalschema
 ```
+
+!!! danger "Extreme Last Resort: Clear Schema Files"
+    Only if the node cannot start and all other options fail:
+
+    ```bash
+    # 1. Stop Cassandra
+    sudo systemctl stop cassandra
+
+    # 2. Remove local schema SSTables (forces reload from peers on restart)
+    sudo rm -rf /var/lib/cassandra/data/system_schema/*
+
+    # 3. Restart and let it rebuild from peers
+    sudo systemctl start cassandra
+    ```
+
+    This should only be used when the node cannot start due to schema corruption.
 
 ---
 

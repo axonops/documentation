@@ -68,7 +68,7 @@ cqlai
 cqlai -h 192.168.1.10 -p 9042
 
 # With authentication
-cqlai -h 192.168.1.10 -u cassandra -P cassandra
+cqlai -h 192.168.1.10 -u cassandra -p cassandra
 
 # Connect to specific keyspace
 cqlai -h 192.168.1.10 -k my_keyspace
@@ -173,24 +173,24 @@ cqlai> .import /tmp/users.csv users --preview
 
 ### Configuration File
 
-```yaml
-# ~/.cqlai/config.yaml
-connection:
-  host: localhost
-  port: 9042
-  username: cassandra
-  keyspace: default_ks
+CQLAI supports both JSON and YAML configuration formats:
 
-ai:
-  provider: openai
-  model: gpt-4
-  # key loaded from CQLAI_AI_KEY environment variable
-
-display:
-  page_size: 100
-  color: true
-  format: table
+```json
+// ~/.config/cqlai/config.json (or ~/.cqlai.json or ./cqlai.json)
+{
+  "host": "localhost",
+  "port": 9042,
+  "username": "cassandra",
+  "keyspace": "default_ks",
+  "pageSize": 100,
+  "ai": {
+    "provider": "openai",
+    "model": "gpt-4"
+  }
+}
 ```
+
+See [Configuration](../configuration/index.md) for all available options and file locations.
 
 ### Environment Variables
 

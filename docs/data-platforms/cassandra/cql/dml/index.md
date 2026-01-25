@@ -164,7 +164,7 @@ SELECT * FROM users WHERE name = 'Alice' ALLOW FILTERING;
     - Contacts every node in the cluster
     - Does not scale with cluster size
     - Can cause timeouts on large tables
-    - Should never be used in production application queries
+    - Should be avoided in production application queries (exceptions: small tables, admin/operational queries, or when combined with partition key)
 
 ---
 
@@ -197,16 +197,18 @@ Consistency levels control how many replicas must respond before a query succeed
 | `EACH_QUORUM` | Quorum in each DC | Not typically used for reads |
 | `ALL` | All replicas | Maximum consistency |
 | `LOCAL_ONE` | 1 in local DC | Low latency local reads |
-| `SERIAL` | Paxos quorum | Linearizable reads (LWT) |
-| `LOCAL_SERIAL` | Local Paxos quorum | Local linearizable reads |
+| `SERIAL` | Paxos quorum | For LWT operations only (not general reads) |
+| `LOCAL_SERIAL` | Local Paxos quorum | For LWT operations only (not general reads) |
 
 ### Strong Consistency Formula
 
-To achieve strong consistency (read-your-writes):
+To achieve strong consistency (read-your-writes) for single-partition operations within the same datacenter:
 
 ```
 READ_CL + WRITE_CL > REPLICATION_FACTOR
 ```
+
+Note: This formula applies to single-partition operations. Multi-partition queries and cross-datacenter scenarios have additional considerations.
 
 Common patterns:
 

@@ -40,7 +40,7 @@ The following requirements must be observed for all topology operations:
 
 | Requirement | Rationale |
 |-------------|-----------|
-| All nodes must show `UN` status | Topology changes with degraded nodes risk data loss |
+| All nodes should show `UN` status | Topology changes with degraded nodes increase risk; proceed with caution if necessary |
 | No pending repairs must be running | Concurrent operations cause unpredictable behavior |
 | No other topology changes must be in progress | Only one topology change may occur at a time |
 | Sufficient disk headroom must exist | Streaming requires temporary additional space |
@@ -60,7 +60,7 @@ nodetool netstats            # No active streaming
 
     **One operation at a time:** Multiple concurrent topology changes must not be performed. The cluster must complete one operation before starting another.
 
-    **Never bootstrap multiple nodes simultaneously** unless using manual token assignment. Concurrent bootstraps with vnodes cause token collisions.
+    **Avoid bootstrapping multiple nodes simultaneously** to reduce streaming load. Concurrent bootstraps are supported but increase resource contention.
 
     **Cleanup must run after adding nodes.** Existing nodes retain data they no longer own until cleanup executes.
 

@@ -70,7 +70,7 @@ package "Shared Cluster" {
 
 note bottom
 + Logical separation         - Schema management overhead
-+ Per-tenant RF              - Limited tenant scalability
++ Per-keyspace RF            - Limited tenant scalability
 + Moderate isolation         - Keyspace proliferation
 end note
 @enduml

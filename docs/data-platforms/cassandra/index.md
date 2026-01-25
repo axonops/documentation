@@ -16,8 +16,8 @@ This reference documentation covers Apache Cassandra versions 4.0 through 5.x, w
 
 | Version Range | Java Requirement | Documentation Status |
 |--------------|:----------------:|---------------------|
-| 4.0.x        | Java 8/11        | Supported |
-| 4.1.x        | Java 8/11        | Fully Documented |
+| 4.0.x        | Java 11          | Supported |
+| 4.1.x        | Java 11/17       | Fully Documented |
 | 5.0.x        | Java 11/17       | **Current (5.0.6)** |
 
 Legend: ✅ Production Ready | ⚠️ Limited/Deprecated | ❌ Not Supported
@@ -32,7 +32,7 @@ Legend: ✅ Production Ready | ⚠️ Limited/Deprecated | ❌ Not Supported
 
 ### Cassandra 5.0.0 (September 2024) - Major Release
 
-- **Storage-Attached Indexes (SAI)** (CEP-7) - Efficient secondary indexing within storage layer
+- **Storage-Attached Indexes (SAI)** (CEP-7) - Efficient secondary indexing (experimental in 4.0+, production-ready in 5.0)
 - **Vector data type and search** (CEP-30) - Approximate nearest neighbor searching via SAI
 - **Unified Compaction Strategy (UCS)** (CEP-26) - Adaptive compaction replacing multiple strategies
 - **Trie memtables** (CEP-19) - Trie-based in-memory data structures
@@ -173,7 +173,7 @@ Understanding what Cassandra is *not* helps set appropriate expectations.
 
 | Misconception | Reality |
 |---------------|---------|
-| **"Cassandra is eventually consistent"** | Cassandra offers **tunable** consistency. With `QUORUM` reads and writes, strong consistency is achieved. "Eventually consistent" only applies when using weaker consistency levels like `ONE`. |
+| **"Cassandra is eventually consistent"** | Cassandra offers **tunable** consistency. With `QUORUM` reads and writes in a single datacenter, strong consistency is achieved. Multi-datacenter deployments require `LOCAL_QUORUM` or careful consistency level selection. "Eventually consistent" applies when using weaker consistency levels like `ONE`. |
 | **"Cassandra doesn't support transactions"** | Cassandra supports lightweight transactions (LWT) using Paxos for compare-and-set operations. Accord, a general-purpose distributed transaction protocol, is under active development for a future release. LWT provides linearizable consistency for specific use cases, though not ACID transactions across arbitrary rows. |
 | **"Cassandra can't do joins"** | Correct—by design. Cassandra optimizes for fast reads at scale by denormalizing data. Model data according to query patterns rather than normalizing and joining at read time. |
 | **"Cassandra is only for write-heavy workloads"** | Cassandra handles read-heavy workloads effectively when data is modeled correctly. The key is designing tables around query patterns, not write patterns. |

@@ -10,27 +10,34 @@ meta:
 
 Samples and displays the most active partitions.
 
+!!! warning "Deprecated in Cassandra 4.0+"
+    `toppartitions` is deprecated since Cassandra 4.0 and is now an alias for `profileload`. Consider using `nodetool profileload` directly for new scripts and automation.
+
 ---
 
 ## Synopsis
 
 ```bash
-nodetool [connection_options] toppartitions [options] <keyspace> <table> <duration>
+nodetool [connection_options] toppartitions [options] [keyspace] [table] [duration]
 ```
 
 ## Description
 
 `nodetool toppartitions` samples partition access over a specified duration and reports the most frequently accessed partitions. This helps identify hot partitions that may be causing performance issues.
 
+Since Cassandra 4.0, this command is an alias for `profileload` and shares its functionality.
+
 ---
 
 ## Arguments
 
-| Argument | Description |
-|----------|-------------|
-| `keyspace` | The keyspace to sample |
-| `table` | The table to sample |
-| `duration` | Sampling duration in milliseconds |
+All arguments are optional. When omitted, defaults are used.
+
+| Argument | Description | Default |
+|----------|-------------|---------|
+| `keyspace` | The keyspace to sample | All keyspaces |
+| `table` | The table to sample | All tables |
+| `duration` | Sampling duration in milliseconds | 10000 (10 seconds) |
 
 ---
 
@@ -38,10 +45,12 @@ nodetool [connection_options] toppartitions [options] <keyspace> <table> <durati
 
 | Option | Description |
 |--------|-------------|
-| `-s, --size <count>` | Number of top partitions to return (default: 10) |
-| `-k, --ks-filters <filters>` | Keyspace filters |
-| `-c, --cf-filters <filters>` | Table (column family) filters |
-| `-a, --samplers <samplers>` | Sampler types: READS, WRITES, CAS_CONTENTIONS |
+| `-s, --capacity <count>` | Capacity of the sampler reservoir (default: 256) |
+| `-k, --top-count <count>` | Number of top partitions to return (default: 10) |
+| `-a, --samplers <samplers>` | Comma-separated sampler types: READS, WRITES, CAS_CONTENTIONS, LOCAL_READ_TIME, WRITE_SIZE (default: all) |
+| `-i, --interval <ms>` | Sampling interval in milliseconds |
+| `-t, --stop` | Stop ongoing sampling |
+| `-l, --list` | List active sampling sessions |
 
 ---
 
@@ -79,7 +88,7 @@ nodetool toppartitions my_keyspace my_table 10000
 ### Sample with More Results
 
 ```bash
-nodetool toppartitions -s 20 my_keyspace my_table 30000
+nodetool toppartitions -k 20 my_keyspace my_table 30000
 ```
 
 ### Sample Reads Only
@@ -98,6 +107,18 @@ nodetool toppartitions -a WRITES my_keyspace my_table 10000
 
 ```bash
 nodetool toppartitions -a CAS_CONTENTIONS my_keyspace my_table 10000
+```
+
+### List Active Sampling Sessions
+
+```bash
+nodetool toppartitions -l
+```
+
+### Stop Ongoing Sampling
+
+```bash
+nodetool toppartitions -t
 ```
 
 ---
@@ -195,6 +216,12 @@ nodetool toppartitions my_keyspace my_table 300000
 
 Good for: Capturing intermittent patterns
 
+### Show Top 50 Partitions
+
+```bash
+nodetool toppartitions -k 50 my_keyspace my_table 300000
+```
+
 ---
 
 ## Interpreting Access Patterns
@@ -277,7 +304,7 @@ TABLE=$2
 DURATION=60000  # 1 minute
 THRESHOLD=100   # Alert if count > 100
 
-result=$(nodetool toppartitions -s 5 $KEYSPACE $TABLE $DURATION 2>/dev/null)
+result=$(nodetool toppartitions -k 5 $KEYSPACE $TABLE $DURATION 2>/dev/null)
 
 # Parse top partition count
 top_count=$(echo "$result" | grep -A2 "Top" | tail -1 | awk '{print $2}')
@@ -304,6 +331,7 @@ fi
 
 | Command | Relationship |
 |---------|--------------|
+| [profileload](profileload.md) | Primary command (toppartitions is an alias) |
 | [tablestats](tablestats.md) | Overall table statistics |
 | [tablehistograms](tablehistograms.md) | Latency distributions |
 | [proxyhistograms](proxyhistograms.md) | Coordinator latencies |

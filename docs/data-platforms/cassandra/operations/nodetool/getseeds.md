@@ -35,10 +35,13 @@ nodetool getseeds
 ### Sample Output
 
 ```
-Seeds:
-192.168.1.101
-192.168.1.102
-192.168.1.103
+Current list of seed node IPs, excluding the current node's IP: 192.168.1.101, 192.168.1.102, 192.168.1.103
+```
+
+If this node is the only seed or no remote seeds are configured:
+
+```
+Current list of seed node IPs, excluding the current node's IP: (no remote seed IPs)
 ```
 
 ---
@@ -68,11 +71,6 @@ nodetool getseeds
 ```bash
 # Check seeds when node can't join cluster
 nodetool getseeds
-
-# Verify connectivity to seeds
-for seed in $(nodetool getseeds | tail -n +2); do
-    ping -c 1 $seed
-done
 ```
 
 ---

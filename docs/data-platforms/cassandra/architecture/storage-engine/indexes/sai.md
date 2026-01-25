@@ -8,7 +8,7 @@ meta:
 
 # SAI (Storage Attached Index)
 
-SAI (Storage Attached Index) is Cassandra's modern indexing system introduced in Cassandra 5.0 (2023). It provides production-ready support for equality, range, and text queries with improved performance characteristics compared to legacy indexing approaches.
+SAI (Storage Attached Index) is Cassandra's modern indexing system. It was initially available in experimental form in Cassandra 4.x and became production-ready and recommended starting with Cassandra 5.0 (2023). SAI provides support for equality, range, and text queries with improved performance characteristics compared to legacy indexing approaches.
 
 !!! tip "Recommended Index Type"
     SAI is the recommended indexing solution for Cassandra 5.0+ deployments. It replaces both legacy secondary indexes (2i) and SASI for most use cases.
@@ -46,7 +46,7 @@ SAI represents the third generation of Cassandra secondary indexing:
 |------------|------------|--------|------------------|
 | 1st | Secondary Index (2i) | Legacy | - |
 | 2nd | SASI | Experimental | Range queries, text search |
-| 3rd | SAI | Production | Stability, memory, performance |
+| 3rd | SAI | Experimental (4.x), Production (5.0+) | Stability, memory, performance |
 
 ---
 
@@ -93,7 +93,7 @@ end note
 
 ### On-Disk File Structure
 
-SAI creates multiple component files per indexed column within the SSTable directory:
+SAI creates multiple component files per indexed column within the SSTable directory. The exact file naming scheme uses the format `SAI+<version>+<indexName>+<Component>.db` and may vary between Cassandra versions:
 
 ```
 data/
@@ -107,27 +107,29 @@ data/
         ├── nb-1-big-CompressionInfo.db                       # Compression metadata
         ├── nb-1-big-TOC.txt                                  # Table of contents
         │
-        │   # SAI components for 'city' column index
-        ├── nb-1-big-SAI_city_city_idx_ColumnComplete.db      # Completion marker
-        ├── nb-1-big-SAI_city_city_idx_TermsData.db           # Term dictionary
-        ├── nb-1-big-SAI_city_city_idx_PostingLists.db        # Row ID lists
-        ├── nb-1-big-SAI_city_city_idx_Meta.db                # Index metadata
+        │   # SAI components for 'city' column index (example names)
+        ├── nb-1-big-SAI+aa+city_idx+ColumnComplete.db        # Completion marker
+        ├── nb-1-big-SAI+aa+city_idx+TermsData.db             # Term dictionary
+        ├── nb-1-big-SAI+aa+city_idx+PostingLists.db          # Row ID lists
+        ├── nb-1-big-SAI+aa+city_idx+Meta.db                  # Index metadata
         │
         │   # SAI components for 'age' column index (numeric)
-        ├── nb-1-big-SAI_age_age_idx_ColumnComplete.db
-        ├── nb-1-big-SAI_age_age_idx_KDTree.db                # KD-tree for ranges
-        ├── nb-1-big-SAI_age_age_idx_KDTreePostingLists.db
-        ├── nb-1-big-SAI_age_age_idx_Meta.db
+        ├── nb-1-big-SAI+aa+age_idx+ColumnComplete.db
+        ├── nb-1-big-SAI+aa+age_idx+BalancedTree.db           # Balanced tree for ranges
+        ├── nb-1-big-SAI+aa+age_idx+PostingLists.db
+        ├── nb-1-big-SAI+aa+age_idx+Meta.db
         │
         │   # Per-SSTable completion marker
-        └── nb-1-big-SAI_GroupComplete.db
+        └── nb-1-big-SAI+aa+GroupComplete.db
 ```
+
+*Note: File naming conventions may differ between Cassandra versions. The version component (e.g., `aa`) indicates the SAI format version.*
 
 | Component | Description |
 |-----------|-------------|
 | `ColumnComplete.db` | Signals column index fully written; used for crash recovery |
 | `TermsData.db` | Term dictionary (trie structure for strings) |
-| `KDTree.db` | Balanced KD-tree for numeric range queries |
+| `BalancedTree.db` | Balanced tree structure for numeric range queries |
 | `PostingLists.db` | Compressed row ID lists for each indexed term |
 | `Meta.db` | Index metadata, statistics, and configuration |
 | `GroupComplete.db` | Marks all SAI indexes for this SSTable as complete |
@@ -158,11 +160,13 @@ data/
 
 #### Size Estimation
 
+The following size estimates are illustrative ranges; actual index sizes depend heavily on data characteristics, cardinality, and workload patterns:
+
 | Index Type | Size Relative to Indexed Column | Notes |
 |------------|--------------------------------|-------|
-| String (trie) | 5-30% | Depends on string length and cardinality |
-| Numeric (KD-tree) | 10-25% | Fixed overhead per value |
-| Vector | 100-200% | Graph structures and quantization add significant overhead |
+| String (trie) | 5-30% (typical) | Varies with string length, cardinality, and compression |
+| Numeric (balanced tree) | 10-25% (typical) | Varies with value distribution |
+| Vector | 100-200% (typical) | Graph structures and quantization add significant overhead |
 
 !!! tip "Monitoring Index Size"
     Use `nodetool tablestats keyspace.table` to view actual index sizes. The SAI components are included in the SSTable size metrics.
@@ -177,7 +181,7 @@ skinparam backgroundColor transparent
 title SAI Index Structures by Data Type
 
 package "Numeric Types (int, bigint, float, double, timestamp)" {
-    rectangle "Balanced KD-Tree\n\nRange queries: O(log n + k)\nPoint queries: O(log n)\nSpace efficient" as kdtree
+    rectangle "Balanced Tree\n\nRange queries: O(log n + k)\nPoint queries: O(log n)\nSpace efficient" as kdtree
 }
 
 package "String Types (text, varchar, ascii)" {
@@ -193,7 +197,7 @@ package "Other Types (uuid, inet, blob)" {
 
 | Data Type | Structure | Query Types |
 |-----------|-----------|-------------|
-| Numeric | KD-Tree | Equality, range, comparison |
+| Numeric | Balanced Tree | Equality, range, comparison |
 | String | Trie/Term Dictionary | Equality, prefix, analyzed |
 | UUID | Hash-based | Equality |
 | Boolean | Bitmap | Equality |
@@ -282,7 +286,7 @@ For **string columns**, the construction process:
 
 For **numeric columns**, the construction process:
 
-1. Constructs balanced KD-tree from value-row-ID pairs
+1. Constructs balanced tree from value-row-ID pairs
 2. Writes tree nodes to disk during construction
 3. Buffers leaf block postings temporarily in memory
 4. Builds final posting structures at leaf and internal node levels
@@ -297,7 +301,7 @@ String Index Construction:
 │ "charlie"  ──────► [row_3, row_4]  ◄─── offset_2        │
 └─────────────────────────────────────────────────────────┘
 
-Numeric Index Construction (KD-Tree):
+Numeric Index Construction (Balanced Tree):
 ┌─────────────────────────────────────────────────────────┐
 │           [pivot: 50]                                   │
 │           /          \                                  │

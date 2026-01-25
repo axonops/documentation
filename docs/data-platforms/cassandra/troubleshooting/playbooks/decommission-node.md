@@ -198,12 +198,18 @@ nodetool getstreamthroughput
 ### Speed Up Streaming (If Needed)
 
 ```bash
-# Increase throughput (Mbps)
+# Increase throughput (value in Mb/s by default)
 nodetool setstreamthroughput 400
 
-# On receiving nodes, ensure capacity
+# Or specify MiB/s explicitly with -m flag
+nodetool setstreamthroughput -m 50  # 50 MiB/s
+
+# On receiving nodes, adjust concurrent compactors
 nodetool setconcurrentcompactors 2
 ```
+
+!!! note "Streaming Throughput Units"
+    `nodetool setstreamthroughput` uses megabits per second (Mb/s) by default. Use the `-m` flag to specify MiB/s instead.
 
 ---
 

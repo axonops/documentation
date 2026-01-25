@@ -19,7 +19,7 @@ The UPDATE statement modifies column values in Cassandra tables. Like INSERT, UP
 - UPDATE creates the row if it does not exist (upsert semantics)
 - Each column value is written atomically
 - Higher timestamps win in conflict resolution
-- Collection add/remove operations are applied atomically per element
+- Collection add/remove operations are applied as part of the partition mutation (not guaranteed atomic across concurrent updates to the same element)
 - Counter increment/decrement operations are applied correctly (though not idempotent)
 
 ### What UPDATE Does NOT Guarantee
@@ -47,7 +47,7 @@ The UPDATE statement modifies column values in Cassandra tables. Like INSERT, UP
 |---------|----------|
 | 2.0+ | IF EXISTS and IF condition (LWT) supported (CASSANDRA-5062) |
 | 2.1+ | Non-frozen UDT field updates (CASSANDRA-7423) |
-| 3.0+ | Range updates with clustering column ranges |
+| 3.0+ | Range updates on static columns with clustering column ranges |
 
 ---
 
@@ -499,22 +499,44 @@ WHERE user_id = ?;
 
 ## Range Updates
 
-Update multiple rows within a partition using clustering column ranges:
+Range updates with clustering column inequalities are only supported for **static columns**. Regular (non-static) columns require full clustering key equality.
+
+### Static Column Range Updates
 
 ```sql
--- Update all rows in time range
-UPDATE sensor_readings
-SET status = 'archived'
+-- Table with static column
+CREATE TABLE sensor_metadata (
+    sensor_id TEXT,
+    reading_time TIMESTAMP,
+    location TEXT STATIC,  -- static column
+    value DOUBLE,
+    PRIMARY KEY (sensor_id, reading_time)
+);
+
+-- Valid: Update static column with clustering range
+UPDATE sensor_metadata
+SET location = 'warehouse-b'
 WHERE sensor_id = 'temp-001'
   AND reading_time >= '2024-01-01'
   AND reading_time < '2024-02-01';
-
--- Update with TTL for future cleanup
-UPDATE events USING TTL 86400
-SET archived = true
-WHERE tenant_id = 'acme'
-  AND event_date = '2024-01-15';
 ```
+
+### Regular Column Updates (Full Key Required)
+
+```sql
+-- Regular columns require full clustering key equality
+UPDATE sensor_readings
+SET status = 'archived'
+WHERE sensor_id = 'temp-001'
+  AND reading_time = '2024-01-15 10:30:00';
+
+-- This will be REJECTED for non-static columns:
+-- UPDATE sensor_readings SET status = 'archived'
+-- WHERE sensor_id = 'temp-001' AND reading_time >= '2024-01-01';
+```
+
+!!! warning "Range Updates Restriction"
+    Range updates with clustering column inequalities (`<`, `>`, `<=`, `>=`) are only valid for static columns. Attempting range updates on regular columns results in an error.
 
 ---
 

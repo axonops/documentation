@@ -78,7 +78,7 @@ nodetool getcolumnindexsize
 
 **Sample output:**
 ```
-Current column index size: 64 KB
+Current value for column_index_size: 64 KiB
 ```
 
 ### Check Value on Remote Node
@@ -93,14 +93,14 @@ ssh 192.168.1.100 "nodetool getcolumnindexsize"
 #!/bin/bash
 # check_column_index_cluster.sh
 
-echo "=== Column Index Size Across Cluster ==="# Get list of node IPs from local nodetool status
+echo "=== Column Index Size Across Cluster ==="
 
-
+# Get list of node IPs from local nodetool status
 nodes=$(nodetool status | grep "^UN" | awk '{print $2}')
 
 for node in $nodes; do
     echo -n "$node: "
-    ssh "$node" "nodetool getcolumnindexsize 2>/dev/null | grep -oP '\d+ KB' || echo "FAILED""
+    ssh "$node" "nodetool getcolumnindexsize 2>/dev/null | grep -oP '\d+ KiB' || echo 'FAILED'"
 done
 ```
 

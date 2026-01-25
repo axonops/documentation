@@ -15,7 +15,7 @@ CQLAI is a fast, portable interactive terminal for Apache Cassandra, built in Go
 | Feature | cqlsh | CQLAI |
 |---------|-------|-------|
 | **Language** | Python (requires Python) | Go (single binary) |
-| **Dependencies** | Python 2.7/3.x required | None |
+| **Dependencies** | Python 3.x required | None |
 | **AI Query Generation** | No | Yes (optional) |
 | **Tab Completion** | Basic | Context-aware |
 | **Output Formats** | Limited | Table, JSON, CSV, Parquet |
@@ -146,7 +146,7 @@ CONSISTENCY QUORUM;
 ### What CQLAI Does Better
 
 1. **No Python Required**
-   - cqlsh requires Python 2.7 or 3.x with cassandra-driver
+   - cqlsh requires Python 3.x with cassandra-driver
    - CQLAI is a single binary with zero dependencies
 
 2. **Better Performance**

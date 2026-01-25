@@ -51,7 +51,7 @@ package "Streaming Path (SSTable-level)" {
 | Repair | Bidirectional between replicas | Manual or scheduled repair |
 | Rebuild | Existing → Rebuilt node | `nodetool rebuild` command |
 | Host replacement | Existing → Replacement node | Dead node replaced |
-| Hinted handoff | Coordinator → Recovered node | Node recovers after failure |
+| Hinted handoff | Coordinator → Recovered node | Node recovers after failure (uses mutation delivery, not SSTable streaming) |
 
 ---
 
@@ -73,7 +73,7 @@ package "Streaming Session" {
 
 rectangle "Messaging Layer\nStreamInitMessage | FileMessage | StreamReceivedMessage | StreamCompleteMessage" as messaging
 
-rectangle "Transport Layer\n• Dedicated streaming port (default: storage_port)\n• Optionally encrypted (TLS)\n• Compression (LZ4)" as transport
+rectangle "Transport Layer\n• Uses internode messaging port (storage_port)\n• Optionally encrypted (TLS)\n• Compression configurable (e.g., LZ4)" as transport
 
 coord -[hidden]down-> messaging
 recv -[hidden]down-> messaging

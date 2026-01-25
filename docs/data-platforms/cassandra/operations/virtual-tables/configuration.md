@@ -65,31 +65,47 @@ SELECT name, value FROM system_views.settings
 WHERE name IN ('listen_address', 'rpc_address', 'broadcast_address',
                'native_transport_port', 'storage_port');
 
--- Compaction settings
+-- Compaction settings (setting name varies by version - see table below)
 SELECT name, value FROM system_views.settings
-WHERE name IN ('compaction_throughput_mb_per_sec', 'concurrent_compactors',
-               'compaction_large_partition_warning_threshold_mb');
+WHERE name IN ('compaction_throughput', 'concurrent_compactors',
+               'compaction_large_partition_warning_threshold');
 
 -- Read/write settings
 SELECT name, value FROM system_views.settings
 WHERE name IN ('read_request_timeout', 'write_request_timeout',
                'range_request_timeout', 'counter_write_request_timeout');
 
--- Hinted handoff
+-- Hinted handoff (setting name varies by version - see table below)
 SELECT name, value FROM system_views.settings
 WHERE name IN ('hinted_handoff_enabled', 'max_hint_window',
-               'hinted_handoff_throttle_in_kb', 'max_hints_delivery_threads');
+               'hinted_handoff_throttle', 'max_hints_delivery_threads');
 
 -- Commit log
 SELECT name, value FROM system_views.settings
 WHERE name IN ('commitlog_sync', 'commitlog_sync_period',
                'commitlog_segment_size', 'commitlog_total_space');
 
--- Memtable configuration
+-- Memtable configuration (setting name varies by version - see table below)
 SELECT name, value FROM system_views.settings
 WHERE name IN ('memtable_heap_space', 'memtable_offheap_space',
                'memtable_allocation_type', 'memtable_flush_writers');
 ```
+
+### Setting Name Changes by Version
+
+Configuration setting names changed between Cassandra versions. Use the appropriate name for the target version:
+
+| Setting | Pre-4.1 | 4.1+ |
+|---------|---------|------|
+| Compaction throughput | `compaction_throughput_mb_per_sec` | `compaction_throughput` |
+| Stream throughput | `stream_throughput_outbound_megabits_per_sec` | `stream_throughput_outbound` |
+| Inter-DC stream throughput | `inter_dc_stream_throughput_outbound_megabits_per_sec` | `inter_dc_stream_throughput_outbound` |
+| Hinted handoff throttle | `hinted_handoff_throttle_in_kb` | `hinted_handoff_throttle` |
+| Memtable heap space | `memtable_heap_space_in_mb` | `memtable_heap_space` |
+| Memtable offheap space | `memtable_offheap_space_in_mb` | `memtable_offheap_space` |
+
+!!! note "Duration and Size Literals"
+    In Cassandra 4.1+, settings support duration literals (`3h`, `200ms`) and size/rate units (`64MiB`, `16MiB/s`). The old `_in_ms`, `_in_mb`, and `_in_kb` suffixed names are deprecated but still functional as aliases.
 
 ### Configuration Audit
 
@@ -233,13 +249,15 @@ WHERE name IN ('authenticator', 'authorizer', 'role_manager',
 
 -- Encryption settings
 SELECT name, value FROM system_views.settings
-WHERE name IN ('server_encryption_options', 'client_encryption_options',
-               'native_transport_port_ssl');
+WHERE name IN ('server_encryption_options', 'client_encryption_options');
 
 -- Audit settings (Cassandra 4.0+)
 SELECT name, value FROM system_views.settings
 WHERE name IN ('audit_logging_options');
 ```
+
+!!! note "Removed Settings"
+    `native_transport_port_ssl` was deprecated in Cassandra 4.x and removed in 5.0. Use `client_encryption_options` for SSL/TLS configuration.
 
 ### Performance Configuration Review
 
@@ -254,11 +272,12 @@ SELECT name, value FROM system_views.settings
 WHERE name IN ('key_cache_size_in_mb', 'row_cache_size_in_mb',
                'counter_cache_size_in_mb');
 
--- Throughput settings
+-- Throughput settings (use version-appropriate names)
+-- Pre-4.1: compaction_throughput_mb_per_sec, stream_throughput_outbound_megabits_per_sec
+-- 4.1+: compaction_throughput, stream_throughput_outbound
 SELECT name, value FROM system_views.settings
-WHERE name IN ('compaction_throughput_mb_per_sec',
-               'stream_throughput_outbound_megabits_per_sec',
-               'inter_dc_stream_throughput_outbound_megabits_per_sec');
+WHERE name IN ('compaction_throughput', 'stream_throughput_outbound',
+               'inter_dc_stream_throughput_outbound');
 ```
 
 ---

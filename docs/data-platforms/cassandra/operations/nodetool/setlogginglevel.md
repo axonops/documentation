@@ -15,15 +15,18 @@ Changes the logging level for a class or package at runtime.
 ## Synopsis
 
 ```bash
-nodetool [connection_options] setlogginglevel <class> <level>
+nodetool [connection_options] setlogginglevel [<class|component>] [<level>]
 ```
 
 ## Description
 
-`nodetool setlogginglevel` dynamically changes the logging level for a specific Java class or package without restarting Cassandra. This is useful for debugging issues in production.
+`nodetool setlogginglevel` dynamically changes the logging level for a specific Java class, package, or built-in component without restarting Cassandra. This is useful for debugging issues in production.
 
 !!! warning "Non-Persistent Setting"
     This setting is applied at runtime only and does not persist across node restarts. After a restart, the logging levels revert to the configuration in `logback.xml`.
+
+!!! info "Reset All Loggers"
+    Calling `nodetool setlogginglevel` with **no arguments** resets all logging levels to the initial configuration from `logback.xml`.
 
 ---
 
@@ -31,8 +34,21 @@ nodetool [connection_options] setlogginglevel <class> <level>
 
 | Argument | Description |
 |----------|-------------|
-| `class` | Fully qualified class name or package (empty for root logger) |
-| `level` | Log level: TRACE, DEBUG, INFO, WARN, ERROR, OFF |
+| `class` | Fully qualified class name, package, or built-in component name. If omitted with level, resets all loggers |
+| `level` | Log level: TRACE, DEBUG, INFO, WARN, ERROR, OFF. If omitted, resets the specified logger |
+
+### Built-in Component Shortcuts
+
+The command supports component shortcuts that map to predefined logger sets:
+
+| Component | Description | Mapped Loggers |
+|-----------|-------------|----------------|
+| `bootstrap` | Bootstrap operations | Bootstrap-related loggers |
+| `compaction` | Compaction operations | `org.apache.cassandra.db.compaction` |
+| `repair` | Repair operations | `org.apache.cassandra.repair` |
+| `streaming` | Streaming operations | `org.apache.cassandra.streaming` |
+| `cql` | CQL query handling | CQL transport loggers |
+| `ring` | Ring/token management | Ring-related loggers |
 
 ---
 
@@ -93,10 +109,31 @@ nodetool setlogginglevel org.apache.cassandra.transport.messages OFF
 nodetool setlogginglevel org.apache.cassandra.db.compaction INFO
 ```
 
-### Reset Root Logger
+### Reset All Loggers to Initial Configuration
 
 ```bash
-nodetool setlogginglevel "" INFO
+# No arguments resets all loggers
+nodetool setlogginglevel
+```
+
+### Reset Specific Logger
+
+```bash
+# Omit level to reset a specific logger
+nodetool setlogginglevel org.apache.cassandra.db.compaction
+```
+
+### Using Component Shortcuts
+
+```bash
+# Enable DEBUG for compaction using component shortcut
+nodetool setlogginglevel compaction DEBUG
+
+# Enable DEBUG for repair
+nodetool setlogginglevel repair DEBUG
+
+# Enable DEBUG for streaming
+nodetool setlogginglevel streaming DEBUG
 ```
 
 ---

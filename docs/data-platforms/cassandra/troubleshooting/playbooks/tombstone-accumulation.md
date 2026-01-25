@@ -90,17 +90,14 @@ nodetool garbagecollect my_keyspace my_table
 
 Increase tombstone thresholds to prevent query failures (temporary fix):
 
-```bash
+```yaml
 # In cassandra.yaml
 tombstone_warn_threshold: 10000
 tombstone_failure_threshold: 100000
 ```
 
-Or per-query in CQL (Cassandra 4.0+):
-
-```sql
-SELECT * FROM my_table WHERE ... BYPASS TOMBSTONE THRESHOLD;
-```
+!!! note "Per-Query Override"
+    There is no per-query syntax to bypass tombstone thresholds. The only options are to adjust the thresholds in `cassandra.yaml` or fix the underlying data model.
 
 ### Long-term: Fix Data Model
 

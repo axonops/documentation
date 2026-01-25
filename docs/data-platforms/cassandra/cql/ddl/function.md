@@ -21,7 +21,7 @@ User-Defined Functions (UDFs) extend CQL with custom scalar operations written i
 - Functions execute in a sandboxed environment with resource limits
 - OR REPLACE atomically updates an existing function definition
 - IF NOT EXISTS provides idempotent function creation
-- Functions are deterministic by default (same input produces same output)
+- Functions should be deterministic (same input produces same output), though this is not enforced by Cassandra
 
 ### What UDF Operations Do NOT Guarantee
 

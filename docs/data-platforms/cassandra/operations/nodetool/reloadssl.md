@@ -24,21 +24,6 @@ nodetool [connection_options] reloadssl
 
 `nodetool reloadssl` reloads the SSL/TLS certificates configured for client and inter-node encryption. This allows certificate rotation without downtime—essential for maintaining security while keeping the cluster operational.
 
-!!! danger "Cassandra 3.x and Earlier: Certificate Expiration is Critical"
-    The `reloadssl` command is not available in Cassandra versions prior to 4.0. In these versions, SSL certificate changes require a node restart.
-
-    **This creates a critical operational risk:** If certificates expire before renewal, restarting a node with new certificates will fail to establish communication with other nodes still using expired certificates. This can result in:
-
-    - Nodes unable to rejoin the cluster
-    - Complete cluster communication failure if multiple nodes restart
-    - Potential data unavailability
-
-    **For Cassandra 3.x clusters:**
-
-    - Implement certificate monitoring with alerts well before expiration (60+ days)
-    - Perform rolling certificate replacements while certificates are still valid
-    - Consider upgrading to Cassandra 4.0+ to enable hot certificate reloading
-
 ---
 
 ## When to Use
@@ -283,7 +268,7 @@ fi
 |---------|------|-------------|
 | `server_encryption_options` | cassandra.yaml | Internode SSL |
 | `client_encryption_options` | cassandra.yaml | Client SSL |
-| `native_transport_port_ssl` | cassandra.yaml | SSL-only CQL port |
+| `native_transport_port_ssl` | cassandra.yaml | SSL-only CQL port (removed in 5.0) |
 
 ---
 

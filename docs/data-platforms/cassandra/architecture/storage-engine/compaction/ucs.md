@@ -153,6 +153,8 @@ Each shard maintains its own set of SSTables and compacts without coordination w
 - **Bounded scope**: Each compaction touches only one shard's data
 - **Independent progress**: Slow shards don't block fast shards
 
+*Note: Actual performance benefits from sharding depend on data distribution, hardware characteristics, and workload patterns. Results may vary from theoretical expectations.*
+
 ### Tiered Mode (T)
 
 When `scaling_parameters` starts with `T` (e.g., T4), UCS behaves similarly to STCS:
@@ -494,6 +496,8 @@ The `sstable_growth` parameter ($\lambda$) controls the trade-off between increa
 | 0.333 (default) | Cubic-root growth | Square-root growth | Balanced: both grow moderately |
 | 0.5 | Square-root growth | Square-root growth | Equal growth for both |
 | 1 | Fixed at base count | Grows with density | Fewer large SSTables, less parallelism |
+
+*Note: Actual behavior depends on data distribution and may not match theoretical growth patterns exactly.*
 
 **Detailed effects:**
 

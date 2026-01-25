@@ -15,12 +15,13 @@ Displays the build status of materialized views.
 ## Synopsis
 
 ```bash
-nodetool [connection_options] viewbuildstatus [keyspace.view]
+nodetool [connection_options] viewbuildstatus <keyspace> <view>
+nodetool [connection_options] viewbuildstatus <keyspace.view>
 ```
 
 ## Description
 
-`nodetool viewbuildstatus` shows the progress of materialized view builds. When a materialized view is created, Cassandra must populate it with existing data, which can take time for large tables.
+`nodetool viewbuildstatus` shows the progress of a materialized view build across all nodes. When a materialized view is created, Cassandra must populate it with existing data, which can take time for large tables.
 
 ---
 
@@ -28,31 +29,45 @@ nodetool [connection_options] viewbuildstatus [keyspace.view]
 
 | Argument | Description |
 |----------|-------------|
-| `keyspace.view` | Optional: specific view to check |
+| `keyspace` | **Required.** The keyspace containing the view |
+| `view` | **Required.** The materialized view name to check |
+
+The view can be specified as two separate arguments (`keyspace view`) or as a single dotted notation (`keyspace.view`).
 
 ---
 
 ## Examples
 
-### Check All Views
+### Check Specific View (two arguments)
 
 ```bash
-nodetool viewbuildstatus
+nodetool viewbuildstatus my_keyspace my_view
 ```
 
-### Check Specific View
+### Check Specific View (dotted notation)
 
 ```bash
 nodetool viewbuildstatus my_keyspace.my_view
 ```
 
-### Sample Output
+### Sample Output (Build Complete)
+
+When the view build has finished successfully on all nodes:
 
 ```
-Keyspace     View          Host          Status
-my_keyspace  my_view       192.168.1.101 SUCCESS
-my_keyspace  my_view       192.168.1.102 BUILDING
-my_keyspace  my_view       192.168.1.103 SUCCESS
+my_keyspace.my_view has finished building
+```
+
+### Sample Output (Build In Progress or Failed)
+
+When any node has not completed the build, the command outputs a status message and a table with per-host status, then exits with an error:
+
+```
+my_keyspace.my_view has not finished building; node status is below.
+Host            Info
+192.168.1.101   SUCCESS
+192.168.1.102   BUILDING
+192.168.1.103   SUCCESS
 ```
 
 ---
@@ -83,8 +98,8 @@ watch nodetool viewbuildstatus my_keyspace.my_view
 ### Troubleshoot View Issues
 
 ```bash
-# Check if view build failed
-nodetool viewbuildstatus | grep FAILED
+# Check if view build failed (output goes to stderr on failure)
+nodetool viewbuildstatus my_keyspace my_view 2>&1 | grep FAILED
 ```
 
 ---

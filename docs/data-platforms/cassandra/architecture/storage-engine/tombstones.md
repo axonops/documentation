@@ -81,8 +81,8 @@ package "T+0 to T+gc_grace_seconds" {
     rectangle "Tombstone is ACTIVE" as active
     note right of active
       • Reads see tombstone, filter out deleted data
-      • Tombstone replicates to all nodes
-      • Repair propagates tombstone to nodes that missed it
+      • Tombstone propagates to replicas at write CL
+      • Hints/repair propagate to nodes that missed it
     end note
 }
 
@@ -141,7 +141,7 @@ After DELETE:
 If Node C returns AFTER gc_grace_seconds:
   - Tombstones on A and B may have been compacted away
   - Node C still has "Alice"
-  - Read repair sees Node C has data, A and B do not
+  - Anti-entropy repair or read (if read repair enabled) sees inconsistency
   - "Alice" gets RESURRECTED (zombie data)
 ```
 

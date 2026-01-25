@@ -34,7 +34,7 @@ nodetool [connection_options] updatecidrgroup <group_name> <cidr_ranges>
 | Argument | Description |
 |----------|-------------|
 | `group_name` | Name for the CIDR group (alphanumeric and underscores) |
-| `cidr_ranges` | Comma-separated list of CIDR ranges |
+| `cidr_ranges` | Space-separated list of CIDR ranges (each CIDR as separate argument) |
 
 ---
 
@@ -57,38 +57,38 @@ CIDR (Classless Inter-Domain Routing) notation specifies IP ranges:
 ### Create New CIDR Group
 
 ```bash
-nodetool updatecidrgroup office_network '192.168.1.0/24,192.168.2.0/24'
+nodetool updatecidrgroup office_network 192.168.1.0/24 192.168.2.0/24
 ```
 
 ### Add Private Network Ranges
 
 ```bash
-nodetool updatecidrgroup internal_network '10.0.0.0/8,172.16.0.0/12,192.168.0.0/16'
+nodetool updatecidrgroup internal_network 10.0.0.0/8 172.16.0.0/12 192.168.0.0/16
 ```
 
 ### Create Datacenter-Specific Group
 
 ```bash
-nodetool updatecidrgroup dc_us_east '10.1.0.0/16,10.2.0.0/16'
+nodetool updatecidrgroup dc_us_east 10.1.0.0/16 10.2.0.0/16
 ```
 
 ### Single IP Address
 
 ```bash
-nodetool updatecidrgroup admin_workstation '10.0.0.50/32'
+nodetool updatecidrgroup admin_workstation 10.0.0.50/32
 ```
 
 ### IPv6 Ranges
 
 ```bash
-nodetool updatecidrgroup ipv6_network '2001:db8::/32,fd00::/8'
+nodetool updatecidrgroup ipv6_network 2001:db8::/32 fd00::/8
 ```
 
 ### Update Existing Group
 
 ```bash
 # Add new range by redefining the group
-nodetool updatecidrgroup office_network '192.168.1.0/24,192.168.2.0/24,192.168.3.0/24'
+nodetool updatecidrgroup office_network 192.168.1.0/24 192.168.2.0/24 192.168.3.0/24
 ```
 
 ---
@@ -99,9 +99,9 @@ nodetool updatecidrgroup office_network '192.168.1.0/24,192.168.2.0/24,192.168.3
 
 ```bash
 # Define network groups during cluster setup
-nodetool updatecidrgroup app_servers '10.100.0.0/16'
-nodetool updatecidrgroup monitoring '10.200.0.0/24'
-nodetool updatecidrgroup admin '10.0.0.0/24'
+nodetool updatecidrgroup app_servers 10.100.0.0/16
+nodetool updatecidrgroup monitoring 10.200.0.0/24
+nodetool updatecidrgroup admin 10.0.0.0/24
 ```
 
 ### Network Expansion
@@ -109,16 +109,16 @@ nodetool updatecidrgroup admin '10.0.0.0/24'
 ```bash
 # Add new subnet to existing group
 nodetool listcidrgroups  # Check current ranges
-nodetool updatecidrgroup app_servers '10.100.0.0/16,10.101.0.0/16'
+nodetool updatecidrgroup app_servers 10.100.0.0/16 10.101.0.0/16
 ```
 
 ### Security Segmentation
 
 ```bash
 # Create groups for different access levels
-nodetool updatecidrgroup readonly_apps '10.50.0.0/16'
-nodetool updatecidrgroup write_apps '10.60.0.0/16'
-nodetool updatecidrgroup admin_access '10.0.1.0/24'
+nodetool updatecidrgroup readonly_apps 10.50.0.0/16
+nodetool updatecidrgroup write_apps 10.60.0.0/16
+nodetool updatecidrgroup admin_access 10.0.1.0/24
 ```
 
 ---
@@ -153,10 +153,10 @@ nodetool updatecidrgroup admin_access '10.0.1.0/24'
     Avoid overly broad CIDR ranges that could allow unintended access:
     ```bash
     # Too broad - avoid
-    nodetool updatecidrgroup all_access '0.0.0.0/0'
+    nodetool updatecidrgroup all_access 0.0.0.0/0
 
     # Better - specific ranges
-    nodetool updatecidrgroup app_access '10.100.0.0/16'
+    nodetool updatecidrgroup app_access 10.100.0.0/16
     ```
 
 ---

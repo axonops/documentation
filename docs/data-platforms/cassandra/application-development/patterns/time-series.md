@@ -80,7 +80,7 @@ CREATE TABLE sensor_readings (
 );
 ```
 
-This schema partitions by sensor, with time as a clustering column. For a sensor reporting every second, the partition grows by 86,400 rows daily, over 31 million rows annually. Cassandra partitions are not designed for this scale; performance degrades as partitions exceed approximately 100,000 rows or 100MB.
+This schema partitions by sensor, with time as a clustering column. For a sensor reporting every second, the partition grows by 86,400 rows daily, over 31 million rows annually. Cassandra partitions are not designed for this scale; performance tends to degrade as partitions grow large. A common heuristic suggests keeping partitions under approximately 100,000 rows or 100MB, though actual limits depend on row size, access patterns, and hardware.
 
 The degradation is insidious. Queries slow gradually. Compaction takes longer. Repairs timeout. By the time the problem is obvious, remediation requires data migration.
 
@@ -147,7 +147,7 @@ The bucket granularity depends on write velocity:
 |------------|-------------------|-----------|
 | < 1 event/minute | Monthly | Avoid excessive partition count |
 | 1-100 events/minute | Daily | Balance partition size and count |
-| 100-1000 events/minute | Hourly | Keep partitions under 100K rows |
+| 100-1000 events/minute | Hourly | Keep partitions reasonably sized |
 | > 1000 events/minute | Sub-hourly | Custom bucketing required |
 
 The trade-off is query complexity. A query spanning multiple buckets must issue multiple partition queries:
@@ -430,10 +430,14 @@ This routing should be transparent to consumers. An API requesting "the last 30 
 Time-series data has natural retention requirements: raw data for days, aggregates for months or years. Cassandra's TTL mechanism handles expiration automatically.
 
 ```java
+// Prepared statement with TTL
+PreparedStatement insertWithTtl = session.prepare(
+    "INSERT INTO sensor_readings (sensor_id, event_time, value) VALUES (?, ?, ?) USING TTL ?"
+);
+
 // Insert with TTL
 int ttlSeconds = 7 * 24 * 60 * 60;  // 7 days
-session.execute(insert.bind(...)
-    .setInt("[ttl]", ttlSeconds));
+session.execute(insertWithTtl.bind(sensorId, eventTime, value, ttlSeconds));
 ```
 
 ### Time-Window Compaction Strategy

@@ -28,8 +28,8 @@ For each node in cluster:
    4. Verify cluster health
    5. Proceed to next node
 
-Never: Perform maintenance on multiple nodes simultaneously
-       (unless they are in different failure domains AND RF > 2)
+Avoid: Performing maintenance on multiple nodes simultaneously
+       (exception: nodes in different failure domains with RF > 2)
 ```
 
 ---
@@ -91,7 +91,7 @@ nodetool drain
 # drain does:
 # - Stops accepting new connections
 # - Flushes all memtables to disk
-# - Stops listening on native and thrift ports
+# - Stops listening on native protocol port
 
 # 3. Stop Cassandra
 echo "Stopping Cassandra..."

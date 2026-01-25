@@ -34,9 +34,14 @@ When a coordinator receives a write request and a replica is temporarily unavail
 When hinted handoff is enabled:
 
 1. Coordinator nodes store hints for unavailable replicas
-2. Hints are stored in the `system.hints` table
+2. Hints are stored as files in the hints directory (e.g., `/var/lib/cassandra/hints/`)
 3. When target nodes recover, hints are replayed automatically
-4. Old hints expire based on `max_hint_window_in_ms` (default: 3 hours)
+4. Old hints expire based on the hint window setting (default: 3 hours)
+
+| Cassandra Version | Parameter Name | Example |
+|-------------------|----------------|---------|
+| Pre-4.1 | `max_hint_window_in_ms` | `10800000` (3 hours) |
+| 4.1+ | `max_hint_window` | `3h` |
 
 ### Hint Storage
 

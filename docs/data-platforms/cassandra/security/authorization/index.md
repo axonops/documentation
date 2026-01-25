@@ -61,14 +61,25 @@ authorizer: CassandraAuthorizer
 # Enable role management
 role_manager: CassandraRoleManager
 
-# Cache settings for performance
-roles_validity_in_ms: 2000
-permissions_validity_in_ms: 2000
-credentials_validity_in_ms: 2000
+# Cache settings for performance (see version table below)
+roles_validity: 2000ms
+permissions_validity: 2000ms
+credentials_validity: 2000ms
 ```
 
 !!! warning "Enable Authentication First"
     Authorization without authentication is ineffective. Always configure `authenticator` before `authorizer`. The default `AllowAllAuthenticator` bypasses all security.
+
+### Cache Setting Names by Version
+
+| Setting | Pre-4.1 | 4.1+ |
+|---------|---------|------|
+| Roles cache validity | `roles_validity_in_ms` | `roles_validity` |
+| Permissions cache validity | `permissions_validity_in_ms` | `permissions_validity` |
+| Credentials cache validity | `credentials_validity_in_ms` | `credentials_validity` |
+
+!!! note "Duration Literals"
+    In Cassandra 4.1+, cache validity settings support duration literals (e.g., `2000ms`, `2s`). The `_in_ms` suffixed names are deprecated but still functional.
 
 ### Permission Types
 
@@ -83,6 +94,11 @@ credentials_validity_in_ms: 2000
 | `EXECUTE` | Function, Aggregate | Execute UDFs/UDAs |
 | `MODIFY` | Keyspace, Table | INSERT, UPDATE, DELETE |
 | `SELECT` | Keyspace, Table, MBean | Read data |
+| `SELECT_MASKED` | Table | Read masked data (Dynamic Data Masking) |
+| `UNMASK` | Table | Read unmasked data (Dynamic Data Masking) |
+
+!!! note "Dynamic Data Masking Permissions"
+    `SELECT_MASKED` and `UNMASK` permissions are used with Cassandra's Dynamic Data Masking feature to control access to sensitive column data.
 
 ### Resource Hierarchy
 
@@ -643,13 +659,17 @@ GRANT AUTHORIZE ON KEYSPACE my_keyspace TO granting_user;
 ### Permission Cache Issues
 
 ```yaml
-# Reduce cache time during troubleshooting
+# Pre-4.1 syntax
 permissions_validity_in_ms: 0
 roles_validity_in_ms: 0
 
+# 4.1+ syntax (recommended)
+permissions_validity: 0ms
+roles_validity: 0ms
+
 # Reset to production values after
-permissions_validity_in_ms: 2000
-roles_validity_in_ms: 2000
+permissions_validity: 2000ms
+roles_validity: 2000ms
 ```
 
 ---

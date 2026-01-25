@@ -97,14 +97,17 @@ VIRTUAL TABLE system_views.repairs (
 
 ### Status Values
 
+!!! note "Lowercase Status Values"
+    Status values are lowercase in the implementation. Use lowercase in queries.
+
 | Status | Description |
 |--------|-------------|
-| `INIT` | Repair initialized |
-| `START` | Repair started |
-| `RUNNING` | Actively repairing |
-| `SUCCESS` | Completed successfully |
-| `FAILURE` | Failed with error |
-| `SKIPPED` | Skipped (e.g., no ranges) |
+| `init` | Repair initialized |
+| `start` | Repair started |
+| `running` | Actively repairing |
+| `success` | Completed successfully |
+| `failure` | Failed with error |
+| `skipped` | Skipped (e.g., no ranges) |
 
 ### Example Queries
 
@@ -123,7 +126,7 @@ WHERE completed = false;
 -- Failed repairs
 SELECT id, keyspace_name, failure_cause, duration_millis
 FROM system_views.repairs
-WHERE status = 'FAILURE';
+WHERE status = 'failure';
 ```
 
 ---
@@ -213,17 +216,20 @@ VIRTUAL TABLE system_views.repair_jobs (
 
 ### Job States
 
+!!! note "Lowercase State Values"
+    State values are lowercase in the implementation. Use lowercase in queries.
+
 | State | Description |
 |-------|-------------|
-| `INIT` | Job created |
-| `START` | Job started |
-| `SNAPSHOT_START` | Taking snapshot |
-| `SNAPSHOT_COMPLETE` | Snapshot done |
-| `VALIDATION_START` | Building Merkle trees |
-| `VALIDATION_COMPLETE` | Merkle trees built |
-| `STREAM_START` | Streaming differences |
-| `SUCCESS` | Job completed |
-| `FAILURE` | Job failed |
+| `init` | Job created |
+| `start` | Job started |
+| `snapshot_start` | Taking snapshot |
+| `snapshot_complete` | Snapshot done |
+| `validation_start` | Building Merkle trees |
+| `validation_complete` | Merkle trees built |
+| `stream_start` | Streaming differences |
+| `success` | Job completed |
+| `failure` | Job failed |
 
 ### Example Queries
 
@@ -243,7 +249,7 @@ WHERE completed = true;
 -- Jobs currently streaming
 SELECT keyspace_name, table_name, status
 FROM system_views.repair_jobs
-WHERE status = 'STREAM_START';
+WHERE status = 'stream_start';
 ```
 
 Calculate validation duration by subtracting timestamps in application.
@@ -388,7 +394,7 @@ FROM system_views.repairs
 WHERE completed = false;
 
 -- Sessions for a specific repair (use repair_id from above)
-SELECT id, repair_id, status, ranges_count, ranges_complete
+SELECT id, repair_id, status, ranges
 FROM system_views.repair_sessions
 WHERE repair_id = <repair_id>;
 
@@ -418,7 +424,7 @@ WHERE completed = false
 -- Alert: Recent repair failures
 SELECT id, keyspace_name, failure_cause, state_failure_timestamp
 FROM system_views.repairs
-WHERE status = 'FAILURE';
+WHERE status = 'failure';
 ```
 
 Filter in application for failures within the last hour.

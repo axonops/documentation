@@ -18,8 +18,21 @@ Displays the current guardrails configuration.
 ## Synopsis
 
 ```bash
-nodetool [connection_options] getguardrailsconfig
+nodetool [connection_options] getguardrailsconfig [options] [guardrail_name]
 ```
+
+## Options
+
+| Option | Description |
+|--------|-------------|
+| `-c, --category <category>` | Filter output by category: `values`, `thresholds`, `flags`, `others` |
+| `--expand` | Show expanded details for each guardrail |
+
+## Arguments
+
+| Argument | Description |
+|----------|-------------|
+| `guardrail_name` | Optional. Show configuration for a specific guardrail only |
 
 ---
 
@@ -32,6 +45,15 @@ Guardrails help maintain cluster stability by enforcing best practices and preve
 ---
 
 ## Output Categories
+
+The guardrails are organized into the following categories:
+
+| Category | Description |
+|----------|-------------|
+| `values` | Numeric limit values (warn/fail thresholds) |
+| `thresholds` | Size and count thresholds |
+| `flags` | Boolean enable/disable settings |
+| `others` | Other guardrail configurations |
 
 ### Table Guardrails
 
