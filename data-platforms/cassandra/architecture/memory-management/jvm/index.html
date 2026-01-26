@@ -20575,8 +20575,8 @@ data-et-multi-view="{&quot;schema&quot;:{&quot;content&quot;:{&quot;desktop&quot
 -XX:ShenandoahGCMode<span class="o">=</span>generational
 </code></pre></div>
 <div class="admonition warning">
-<p class="admonition-title">JDK 21+ Support</p>
-<p>JDK 21+ support depends on Cassandra version. Check the release notes for the target Cassandra version. JDK 21 support is tracked in <a href="https://issues.apache.org/jira/browse/CASSANDRA-18831">CASSANDRA-18831</a>.</p>
+<p class="admonition-title">Cassandra Does Not Yet Support JDK 21+</p>
+<p>Cassandra does not currently support JDK 21 or later. JDK 21 support is tracked in <a href="https://issues.apache.org/jira/browse/CASSANDRA-18831">CASSANDRA-18831</a>. Until JDK 21+ support is added, the generational GC options above are not available for Cassandra deployments.</p>
 </div>
 <h3 id="timeline-summary">Timeline Summary<a class="headerlink" href="#timeline-summary" title="Permanent link">¶</a></h3>
 <table>
@@ -20627,7 +20627,7 @@ data-et-multi-view="{&quot;schema&quot;:{&quot;content&quot;:{&quot;desktop&quot
 </tr>
 </tbody>
 </table>
-<p><em>Note: Timeline shows JDK release years. Availability for Cassandra depends on Cassandra's JDK support.</em></p>
+<p><em>Note: Timeline shows JDK release years. Cassandra does not yet support JDK 21+, so Generational ZGC and Generational Shenandoah are not currently available for Cassandra.</em></p>
 <hr>
 <h2 id="jvm-requirements">JVM Requirements<a class="headerlink" href="#jvm-requirements" title="Permanent link">¶</a></h2>
 <table>
@@ -20646,8 +20646,8 @@ data-et-multi-view="{&quot;schema&quot;:{&quot;content&quot;:{&quot;desktop&quot
 </tr>
 <tr>
 <td>4.1</td>
-<td>JDK 8, 11, 17</td>
-<td>JDK 11 or 17</td>
+<td>JDK 8, 11</td>
+<td>JDK 11</td>
 </tr>
 <tr>
 <td>5.0</td>
