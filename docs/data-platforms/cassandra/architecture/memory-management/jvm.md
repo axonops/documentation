@@ -102,8 +102,8 @@ Generational Shenandoah was experimental in JDK 21-24 and became a production fe
 -XX:ShenandoahGCMode=generational
 ```
 
-!!! warning "JDK 21+ Support"
-    JDK 21+ support depends on Cassandra version. Check the release notes for the target Cassandra version. JDK 21 support is tracked in [CASSANDRA-18831](https://issues.apache.org/jira/browse/CASSANDRA-18831).
+!!! warning "Cassandra Does Not Yet Support JDK 21+"
+    Cassandra does not currently support JDK 21 or later. JDK 21 support is tracked in [CASSANDRA-18831](https://issues.apache.org/jira/browse/CASSANDRA-18831). Until JDK 21+ support is added, the generational GC options above are not available for Cassandra deployments.
 
 ### Timeline Summary
 
@@ -116,7 +116,7 @@ Generational Shenandoah was experimental in JDK 21-24 and became a production fe
 | 2023 | Generational ZGC (JDK 21) | < 1ms | Generational + concurrent compaction |
 | 2025 | Generational Shenandoah (JDK 25) | < 1ms | Generational + concurrent compaction |
 
-*Note: Timeline shows JDK release years. Availability for Cassandra depends on Cassandra's JDK support.*
+*Note: Timeline shows JDK release years. Cassandra does not yet support JDK 21+, so Generational ZGC and Generational Shenandoah are not currently available for Cassandra.*
 
 ---
 
@@ -125,7 +125,7 @@ Generational Shenandoah was experimental in JDK 21-24 and became a production fe
 | Cassandra Version | Supported JDK | Recommended |
 |-------------------|---------------|-------------|
 | 4.0 | JDK 8, 11 | JDK 11 |
-| 4.1 | JDK 8, 11, 17 | JDK 11 or 17 |
+| 4.1 | JDK 8, 11 | JDK 11 |
 | 5.0 | JDK 11, 17 | JDK 17 |
 
 !!! tip "Use Latest Patch Version"
