@@ -125,9 +125,9 @@ nav:
   
   # - Get Started:
   - AxonOps Cloud:
+    - Overview: 'overview/axonops-cloud.md'
     - Editions: 
-      - Free Edition: 'editions/free_edition.md'
-      - Enterprise Edition: 'editions/enterprise_edition.md'
+      - Editions & Plans: 'editions/index.md'
 
 
     - Setup:
@@ -135,6 +135,7 @@ nav:
       - AxonOps Cloud agents: 'get_started/agent_setup.md'
 
   - AxonOps Self-Hosted:
+    - Overview: overview/axonops-self-hosted.md
     - Get Started: get_started/getting_started.md
 
     - Security:
@@ -272,7 +273,7 @@ nav:
     
     - Notification Integrations:
       - Overview : 'integrations/overview.md'
-      - PagerDuty: 'integrations/pagerduy-integration.md'
+      - PagerDuty: 'integrations/pagerduty-integration.md'
       - Slack: 'integrations/slack-integration.md'
       - Microsoft Teams: 'integrations/microsoft-teams-integration.md'
       - ServiceNow: 'integrations/servicenow-integration.md'

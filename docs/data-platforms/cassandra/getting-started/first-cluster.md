@@ -94,7 +94,7 @@ After (16 tokens):
 
 ---
 
-## Single-Node Development Setup
+## Single-Node Development Set up
 
 For development and testing, one node is sufficient.
 
@@ -736,7 +736,7 @@ nodetool cleanup
 
 ---
 
-## Troubleshooting Cluster Setup
+## Troubleshooting Cluster Set up
 
 ### Problem: Node Won't Start
 

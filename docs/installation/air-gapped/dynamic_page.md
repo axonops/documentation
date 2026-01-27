@@ -3,22 +3,22 @@ Select the OS Family
 
 <label>
   <input type="radio" id="Debian" name="osFamily" onChange="selectOS()" checked=true />
-  <img src="/get_started/debian.png" class="skip-lightbox" width="180px">
+  <img src="/get_started/debian.png" class="skip-lightbox" width="180px" alt="debian">
 </label>
 <label>
   <input type="radio" id="RedHat" name="osFamily" onChange="selectOS()" />
-  <img src="/get_started/red_hat.png" class="skip-lightbox" width="180px">
+  <img src="/get_started/red_hat.png" class="skip-lightbox" width="180px" alt="red_hat">
 </label>
 
 
 ## Download Packages on Online Machine
 
-### Setup Dependencies
+### Set up Dependencies
 
 Prior to downloading the AxonOps packages, we must first install any missing packages
 on our online machine and setup the AxonOps package repository using the following steps:
 
-<div id="DebianDiv" class="os" markdown="span">
+<div id="DebianDiv-1" class="os os-debian" markdown="span" data-os="Debian">
 
 ```bash
 {!installation/air-gapped/debian/online-dependencies.sh!}
@@ -26,7 +26,7 @@ on our online machine and setup the AxonOps package repository using the followi
 
 </div>
 
-<div id="RedHatDiv" class="os" style="display:none">
+<div id="RedHatDiv-1" class="os os-redhat" style="display:none" data-os="RedHat">
 
 ```bash
 {!installation/air-gapped/redhat/online-dependencies.sh!}
@@ -40,7 +40,7 @@ Follow the instructions below to download the necessary packages to the online m
 `/tmp` directory. The bundled tarball(s) can then be easily transferred to the air-gapped
 machine.
 
-<div id="DebianDiv" class="os" markdown="span">
+<div id="DebianDiv-2" class="os os-debian" markdown="span" data-os="Debian">
 
 Since `axon-dash-pdf2` relies on virtual Debian packages, we must first download these
 packages separately and by name: 
@@ -57,7 +57,7 @@ Download all additional AxonOps packages and dependencies:
 
 </div>
 
-<div id="RedHatDiv" class="os" style="display:none">
+<div id="RedHatDiv-2" class="os os-redhat" style="display:none" data-os="RedHat">
 
 ```bash
 {!installation/air-gapped/redhat/online-download.sh!}
@@ -67,7 +67,7 @@ Download all additional AxonOps packages and dependencies:
 
 ## Install Packages on Air-Gapped Machine
 
-<div id="DebianDiv" class="os" markdown="1">
+<div id="DebianDiv-3" class="os os-debian" markdown="1" data-os="Debian">
 
 On the air-gapped machine:
 
@@ -75,9 +75,9 @@ On the air-gapped machine:
 * navigate into that directory,
 * and run the following commands to:
     * define the helper function
-    * and install the targetted software(s).
+    * and install the targeted software(s).
 </div>
-<div id="RedHatDiv" class="os" style="display:none" markdown="1">
+<div id="RedHatDiv-3" class="os os-redhat" style="display:none" markdown="1" data-os="RedHat">
 
 On the air-gapped machine:
 
@@ -86,7 +86,7 @@ On the air-gapped machine:
 * and run the following commands to:
     * setup the offline repo,
     * define the helper function,
-    * and install the targetted software(s).
+    * and install the targeted software(s).
 
 </div>
 
@@ -98,7 +98,7 @@ configured to communicate across two machines.
 
 The `axon-dash-pdf2` package is optional and provides support for generating PDF reports.
 
-<div id="DebianDiv" class="os" markdown="1">
+<div id="DebianDiv-4" class="os os-debian" markdown="1" data-os="Debian">
 
 ```bash
 {!installation/air-gapped/debian/offline-install.sh!}
@@ -106,7 +106,7 @@ The `axon-dash-pdf2` package is optional and provides support for generating PDF
 
 </div>
 
-<div id="RedHatDiv" class="os" style="display:none" markdown="1">
+<div id="RedHatDiv-4" class="os os-redhat" style="display:none" markdown="1" data-os="RedHat">
 
 ```bash
 {!installation/air-gapped/redhat/offline-install.sh!}
@@ -116,18 +116,18 @@ The `axon-dash-pdf2` package is optional and provides support for generating PDF
 
 ### Install the Agent
 
-Use the following script to install the `axon-agent` as well as a version of
+Use the following script to install the `AxonOps agent` as well as a version of
 `axon-cassandra*-agent` or `axon-kafka*-agent` that coincides with the version of
 Cassandra/Kafka and the Java JDK that is being used.
 
-<div id="DebianDiv" class="os" markdown="1">
+<div id="DebianDiv-5" class="os os-debian" markdown="1" data-os="Debian">
 
 ```bash
 {!installation/air-gapped/debian/offline-install-agent.sh!}
 ```
 
 </div>
-<div id="RedHatDiv" class="os" style="display:none" markdown="1">
+<div id="RedHatDiv-5" class="os os-redhat" style="display:none" markdown="1" data-os="RedHat">
 
 ```bash
 {!installation/air-gapped/redhat/offline-install-agent.sh!}

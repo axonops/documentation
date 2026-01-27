@@ -6,35 +6,35 @@ meta:
     content: "PITR restore, point-in-time recovery, Cassandra restore"
 ---
 
-#### Requirements
+# Requirements
 
-- Make sure Cassandra service is stopped on every node in the Cluster/Data Center(DC)
-- Make sure Cassandra commitlog directory is emptied for every node you want to restore too.
-- Check Cassandra Application Keyspace table directories are emptied for every node and keyspace/table you want to restore. 
+- Make sure the Cassandra service is stopped on every node in the cluster/data center (DC).
+- Make sure the Cassandra commitlog directory is emptied for every node you want to restore to.
+- Check that Cassandra application keyspace table directories are emptied for every node and keyspace/table you want to restore.
 
-#### Steps:
+## Steps
 
-In the AxonOps Dashboard on the left hand menu navigate to Operations --> Restore
+In the AxonOps Dashboard on the left-hand menu, navigate to **Operations > Restore**.
 
-<img src="/pitr/pitr_left_restore.png" width="200">
+<img src="/pitr/pitr_left_restore.png" width="200" alt="pitr_left_restore">
 
-On the top tab select Point-In-Time Recovery
+On the top tab, select **Point-in-Time Recovery**.
 
-<img src="/pitr/pitr_top_recovery.png" width="700">
+<img src="/pitr/pitr_top_recovery.png" width="700" alt="pitr_top_recovery">
 
-You will be presented with the Point-In-Time restore screen. There are several steps that need to be done to complete a Point-in-time restore. 
+You will be presented with the point-in-time restore screen. There are several steps to complete a point-in-time restore.
 
 <br/>
 
-#### Step 1: Select Restore Point-in-time.
+## Step 1: Select restore point-in-time
 
-<img src="/pitr/pitr_full.png" width="700">
+<img src="/pitr/pitr_full.png" width="700" alt="pitr_full">
 
-Select the Point-In-Time you want to restore your cluster too. 
+Select the point in time you want to restore your cluster to.
 
-Please complete the Date/Time selection and fields of the keyspace and table/s that you would like to restore.
+Complete the date/time selection and the keyspace and table fields you want to restore.
 
-- **```Wide Time Range```**
+- **Wide Time Range**
     
     The wide time range is always a calendar month from the 1st to the last day of the selected month.
 
@@ -42,97 +42,95 @@ Please complete the Date/Time selection and fields of the keyspace and table/s t
 
     At the beginning and end of the Wide Time Range slider there is a black bar that you can slide left and right to narrow the Date/Time of when you want to restore to.
 
-- **``` Zoomed Section```**
+- **Zoomed Section**
 
     This is a narrower view of the wide selection in the above slider.
     
     By default if the Wide Time Range slider is 30 days the Zoomed Section will be 30 days. 
     
-    The narrower the time range in the Wide Time Range slider the more precise the available date/time selection will be in the Zoomed section.
+    The narrower the time range in the Wide Time Range slider, the more precise the available date/time selection will be in the Zoomed section.
 
     Example of what the Zoomed section will look like when snapshots are available to select for PITR.
 
     ![zoomed section](zoomed_section.png)
-    ```
-    The Camera Icon represents a snapshot at a point-in-time where a commitlog is archived.
-    ```
 
-- **```Point in time```**
+    The Camera icon represents a snapshot at a point in time where a commitlog is archived.
 
-    A text based representation of the selection made in the Zoomed section slider. This is an altenative if you want to manually input a specific time. 
+- **Point in time**
 
-- **```Keyspace(optional)```**
+    A text-based representation of the selection made in the Zoomed section slider. This is an alternative if you want to manually input a specific time.
 
-    The Application or System Keyspaces that were included as part of the commitlog archive process. If you don't specify a Keyspace all Keyspaces will be included in the restore process.
+- **Keyspace(optional)**
 
-- **```Tables(optional)```**
+    The application or system keyspaces that were included as part of the commitlog archive process. If you do not specify a keyspace, all keyspaces are included in the restore process.
 
-    The Application or System Tables that were included as part of the commitlog archive process. If you don't specify a Table all Tables will be included in the restore process.
+- **Tables(optional)**
 
-#### Step 2: Overview of Point-in-time nodes,keyspaces and tables.
+    The application or system tables that were included as part of the commitlog archive process. If you do not specify a table, all tables are included in the restore process.
 
-<img src="/pitr/step_2_full.png" width="700">
+## Step 2: Overview of point-in-time nodes, keyspaces, and tables
 
-Confirm by clicking show details that all the tables and keyspaces you want to restore will be part of the restoration. You will be presented with the following screen. 
+<img src="/pitr/step_2_full.png" width="700" alt="step_2_full">
 
-<img src="/pitr/step_2_full_details.png" width="700">
+Click **Show details** to confirm that all the tables and keyspaces you want to restore are included. You will be presented with the following screen.
 
-- **```Tables```**
+<img src="/pitr/step_2_full_details.png" width="700" alt="step_2_full_details">
 
-    Tables to be restored will be highlighted in Green, those to be excluded will be Greyed out. 
-    The search box will allow you to search for and confirm specific tables or keyspaces will be restored.
+- **Tables**
 
-- **```Commit Logs ```**
+    Tables to be restored are highlighted in green, and excluded tables are greyed out.
+    The search box lets you confirm which tables or keyspaces will be restored.
+
+- **Commit Logs**
 
     The last timestamp and file name of the commit log that will be used to recover to the specified point-in-time.
 
-- **```Snapshots```**
+- **Snapshots**
 
     The Snapshot/s that will be used to recover to the specified point-in-time
 
-#### Step 3: Confirmation of Point-in-time restoration to proceed.
+## Step 3: Confirm point-in-time restore
 
-Confirm you are ready to start the Point-in-time restore.
+Confirm you are ready to start the point-in-time restore.
 
-<img src="/pitr/step_3_full.png" width="700">
+<img src="/pitr/step_3_full.png" width="700" alt="step_3_full">
 
-- Stop Cassandra on the nodes that need to be restored. 
-- Delete the SStable files in the target table directories
+- Stop Cassandra on the nodes that need to be restored.
+- Delete the SSTable files in the target table directories.
 - Delete commitlog files in the commitlog directory
 
-#### Step 4: Final checks and last steps before Point-in-time restore starts.
+## Step 4: Final checks before restore starts
 
-The Axon-Agent service confirm the Cassandra nodes are stopped.
-Checks to ensure the clstuer is ready for the Point-in-time restore.
+The AxonOps agent confirms the Cassandra nodes are stopped and checks that the cluster is ready for the point-in-time restore.
 
-<img src="/pitr/step_4_full.png" width="700">
+<img src="/pitr/step_4_full.png" width="700" alt="step_4_full">
 
-Once you have clicked Check PITR Readiness it will confirm that the Cluster is in the correct state for recovery to proceed.
+Once you have clicked **Check PITR Readiness**, it will confirm that the cluster is in the correct state for recovery to proceed.
 
-If any of the data directories still contain sstables a warning may be displayed. 
+If any of the data directories still contain SSTables, a warning may be displayed.
 
-Click on show details button to view the tables affected and any errors/warnings.
+Click **Show details** to view affected tables and any errors or warnings.
 
-<img src="/pitr/step_4_full_details.png" width="700">
-
-
-#### Step 5: Start the Point-in-time restore.
-
-Start the restore process
-
-<img src="/pitr/step_5_full.png" width="700">
-
-#### Step 6: Wait for completion and start Cassandra nodes.
-
-The Status page of the Point-in-time restore process. 
-Once the restore has been completed the status will remain in a progressing state until the Cassandra nodes are restarted.
-
-<img src="/pitr/step_6_full.png" width="700">
+<img src="/pitr/step_4_full_details.png" width="700" alt="step_4_full_details">
 
 
-#### Step 7: Check data in Cassandra has been recovered to specified Point-in-time.
+## Step 5: Start the point-in-time restore
 
-Successful Point-in-time restore. 
-Please confirm the details and data in the tables that have been restored are present as expected.
+Start the restore process.
 
-<img src="/pitr/step_7_full.png" width="700">
+<img src="/pitr/step_5_full.png" width="700" alt="step_5_full">
+
+## Step 6: Wait for completion and start Cassandra nodes
+
+This status page shows the point-in-time restore process.
+Once the restore has completed, the status remains in a progressing state until the Cassandra nodes are restarted.
+
+<img src="/pitr/step_6_full.png" width="700" alt="step_6_full">
+
+
+## Step 7: Verify restored data
+
+Successful point-in-time restore.
+Confirm that the restored tables contain the expected data.
+
+<img src="/pitr/step_7_full.png" width="700" alt="step_7_full">

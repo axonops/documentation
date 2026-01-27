@@ -6,4 +6,4 @@ meta:
     content: "S3 compatible, alternative S3, Cassandra backup"
 ---
 
-# S3 Compatible Storage
+# S3 Compatible Storage

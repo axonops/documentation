@@ -26,7 +26,7 @@ meta:
 </script>
 
 <div style="position: relative; padding-top: 56.25%;">
-  <iframe
+  <iframe title="Embedded media"
     src="https://customer-e7nrn6nt0ozdk9tl.cloudflarestream.com/e44f3932551b2b90944be9b8ea7c0093/iframe?muted=true&preload=true&loop=true&autoplay=true&poster=https%3A%2F%2Fcustomer-e7nrn6nt0ozdk9tl.cloudflarestream.com%2Fe44f3932551b2b90944be9b8ea7c0093%2Fthumbnails%2Fthumbnail.jpg%3Ftime%3D%26height%3D600"
     loading="lazy"
     style="border: none; position: absolute; top: 0; left: 0; height: 100%; width: 100%;"
@@ -43,7 +43,7 @@ AxonOps is a comprehensive platform for managing and monitoring Apache Cassandra
 ### Cluster View
 
 <div style="position: relative; padding-top: 56.25%;">
-  <iframe
+  <iframe title="Embedded media"
     src="https://customer-e7nrn6nt0ozdk9tl.cloudflarestream.com/5e1b6de8a7c6cee94a389ca23a753fad/iframe?muted=true&preload=true&loop=true&autoplay=true&poster=https%3A%2F%2Fcustomer-e7nrn6nt0ozdk9tl.cloudflarestream.com%2F5e1b6de8a7c6cee94a389ca23a753fad%2Fthumbnails%2Fthumbnail.jpg%3Ftime%3D%26height%3D600"
     loading="lazy"
     style="border: none; position: absolute; top: 0; left: 0; height: 100%; width: 100%;"
@@ -61,7 +61,7 @@ This consolidated perspective transforms cluster management from a scattered, kn
 ### Dashboards
 
 <div style="position: relative; padding-top: 56.25%;">
-  <iframe
+  <iframe title="Embedded media"
     src="https://customer-e7nrn6nt0ozdk9tl.cloudflarestream.com/036eec9c63346ec5978d6603c975374f/iframe?muted=true&preload=true&loop=true&autoplay=true&poster=https%3A%2F%2Fcustomer-e7nrn6nt0ozdk9tl.cloudflarestream.com%2F036eec9c63346ec5978d6603c975374f%2Fthumbnails%2Fthumbnail.jpg%3Ftime%3D%26height%3D600"
     loading="lazy"
     style="border: none; position: absolute; top: 0; left: 0; height: 100%; width: 100%;"
@@ -78,7 +78,7 @@ These aren't generic monitoring templates. Every dashboard reflects hard won kno
 ### Event Logs
 
 <div style="position: relative; padding-top: 56.25%;">
-  <iframe
+  <iframe title="Embedded media"
     src="https://customer-e7nrn6nt0ozdk9tl.cloudflarestream.com/996ed10f1b950ee926f14df9d931b01a/iframe?muted=true&preload=true&loop=true&autoplay=true&poster=https%3A%2F%2Fcustomer-e7nrn6nt0ozdk9tl.cloudflarestream.com%2F996ed10f1b950ee926f14df9d931b01a%2Fthumbnails%2Fthumbnail.jpg%3Ftime%3D%26height%3D600"
     loading="lazy"
     style="border: none; position: absolute; top: 0; left: 0; height: 100%; width: 100%;"
@@ -97,7 +97,7 @@ The real power comes from correlation. Spot a latency spike in a dashboard? Clic
 ### Alerts
 
 <div style="position: relative; padding-top: 56.25%;">
-  <iframe
+  <iframe title="Embedded media"
     src="https://customer-e7nrn6nt0ozdk9tl.cloudflarestream.com/0d6c7a294bb18a5567a7eeaba7d8c43d/iframe?muted=true&preload=true&loop=true&autoplay=true&poster=https%3A%2F%2Fcustomer-e7nrn6nt0ozdk9tl.cloudflarestream.com%2F0d6c7a294bb18a5567a7eeaba7d8c43d%2Fthumbnails%2Fthumbnail.jpg%3Ftime%3D%26height%3D600"
     loading="lazy"
     style="border: none; position: absolute; top: 0; left: 0; height: 100%; width: 100%;"
@@ -114,7 +114,7 @@ Stop configuring complex alerting rules across multiple systems or waking up the
 ### Service Checks
 
 <div style="position: relative; padding-top: 56.25%;">
-  <iframe
+  <iframe title="Embedded media"
     src="https://customer-e7nrn6nt0ozdk9tl.cloudflarestream.com/e00ec30b7f79bf65cf6ab8786d819329/iframe?muted=true&preload=true&loop=true&autoplay=true&poster=https%3A%2F%2Fcustomer-e7nrn6nt0ozdk9tl.cloudflarestream.com%2Fe00ec30b7f79bf65cf6ab8786d819329%2Fthumbnails%2Fthumbnail.jpg%3Ftime%3D%26height%3D600"
     loading="lazy"
     style="border: none; position: absolute; top: 0; left: 0; height: 100%; width: 100%;"
@@ -131,7 +131,7 @@ These checks are automatically deployed to your agents without manual configurat
 ### Integrations
 
 <div style="position: relative; padding-top: 56.25%;">
-  <iframe
+  <iframe title="Embedded media"
     src="https://customer-e7nrn6nt0ozdk9tl.cloudflarestream.com/4b772c370349eeeb7b54d4bb2e9d172a/iframe?muted=true&preload=true&loop=true&autoplay=true&poster=https%3A%2F%2Fcustomer-e7nrn6nt0ozdk9tl.cloudflarestream.com%2F4b772c370349eeeb7b54d4bb2e9d172a%2Fthumbnails%2Fthumbnail.jpg%3Ftime%3D%26height%3D600"
     loading="lazy"
     style="border: none; position: absolute; top: 0; left: 0; height: 100%; width: 100%;"
@@ -150,7 +150,7 @@ Sophisticated routing lets you send different alert types to different destinati
 ### Rolling Restarts
 
 <div style="position: relative; padding-top: 56.25%;">
-  <iframe
+  <iframe title="Embedded media"
     src="https://customer-e7nrn6nt0ozdk9tl.cloudflarestream.com/34fda982a8e0799038feeb849cbd1e95/iframe?muted=true&preload=true&loop=true&autoplay=true&poster=https%3A%2F%2Fcustomer-e7nrn6nt0ozdk9tl.cloudflarestream.com%2F34fda982a8e0799038feeb849cbd1e95%2Fthumbnails%2Fthumbnail.jpg%3Ftime%3D%26height%3D600"
     loading="lazy"
     style="border: none; position: absolute; top: 0; left: 0; height: 100%; width: 100%;"
@@ -169,7 +169,7 @@ Schedule restarts for maintenance windows or execute them immediately when neede
 ### Repairs
 
 <div style="position: relative; padding-top: 56.25%;">
-  <iframe
+  <iframe title="Embedded media"
     src="https://customer-e7nrn6nt0ozdk9tl.cloudflarestream.com/910960f7e4e6fa708c2325d09c0ea45e/iframe?muted=true&preload=true&loop=true&autoplay=true&poster=https%3A%2F%2Fcustomer-e7nrn6nt0ozdk9tl.cloudflarestream.com%2F910960f7e4e6fa708c2325d09c0ea45e%2Fthumbnails%2Fthumbnail.jpg%3Ftime%3D%26height%3D600"
     loading="lazy"
     style="border: none; position: absolute; top: 0; left: 0; height: 100%; width: 100%;"
@@ -186,7 +186,7 @@ This isn't a scheduled job that runs blindly. Adaptive Repair slows down when it
 ### Backups
 
 <div style="position: relative; padding-top: 56.25%;">
-  <iframe
+  <iframe title="Embedded media"
     src="https://customer-e7nrn6nt0ozdk9tl.cloudflarestream.com/7f63f96656425c695ec2f0a0428ef79a/iframe?muted=true&preload=true&loop=true&autoplay=true&poster=https%3A%2F%2Fcustomer-e7nrn6nt0ozdk9tl.cloudflarestream.com%2F7f63f96656425c695ec2f0a0428ef79a%2Fthumbnails%2Fthumbnail.jpg%3Ftime%3D%26height%3D600"
     loading="lazy"
     style="border: none; position: absolute; top: 0; left: 0; height: 100%; width: 100%;"
@@ -205,7 +205,7 @@ Beyond simple backups, AxonOps includes point-in-time recovery through automated
 ### Broker Monitoring
 
 <div style="position: relative; padding-top: 56.25%;">
-  <iframe
+  <iframe title="Embedded media"
     src="https://customer-e7nrn6nt0ozdk9tl.cloudflarestream.com/1ca32022c98d3d2edb4b7c9f6733a5bd/iframe?muted=true&preload=true&loop=true&autoplay=true&poster=https%3A%2F%2Fcustomer-e7nrn6nt0ozdk9tl.cloudflarestream.com%2F1ca32022c98d3d2edb4b7c9f6733a5bd%2Fthumbnails%2Fthumbnail.jpg%3Ftime%3D%26height%3D600"
     loading="lazy"
     style="border: none; position: absolute; top: 0; left: 0; height: 100%; width: 100%;"
@@ -220,7 +220,7 @@ Comprehensive visibility into controller status, partition distribution, replica
 ### Consumer Tracking
 
 <div style="position: relative; padding-top: 56.25%;">
-  <iframe
+  <iframe title="Embedded media"
     src="https://customer-e7nrn6nt0ozdk9tl.cloudflarestream.com/35bddbbd01e800e73f102fe0a6d0bee9/iframe?muted=true&preload=true&loop=true&autoplay=true&poster=https%3A%2F%2Fcustomer-e7nrn6nt0ozdk9tl.cloudflarestream.com%2F35bddbbd01e800e73f102fe0a6d0bee9%2Fthumbnails%2Fthumbnail.jpg%3Ftime%3D%26height%3D600"
     loading="lazy"
     style="border: none; position: absolute; top: 0; left: 0; height: 100%; width: 100%;"
@@ -235,7 +235,7 @@ Real-time lag visibility for every consumer group with alerts on thresholds that
 ### Kafka Connect
 
 <div style="position: relative; padding-top: 56.25%;">
-  <iframe
+  <iframe title="Embedded media"
     src="https://customer-e7nrn6nt0ozdk9tl.cloudflarestream.com/91f327a34a384dc22d271c9efe72b83d/iframe?muted=true&preload=true&loop=true&autoplay=true&poster=https%3A%2F%2Fcustomer-e7nrn6nt0ozdk9tl.cloudflarestream.com%2F91f327a34a384dc22d271c9efe72b83d%2Fthumbnails%2Fthumbnail.jpg%3Ftime%3D%26height%3D600"
     loading="lazy"
     style="border: none; position: absolute; top: 0; left: 0; height: 100%; width: 100%;"
@@ -252,7 +252,7 @@ Comprehensive monitoring showing worker status, task health, connector throughpu
 ### Topic Management
 
 <div style="position: relative; padding-top: 56.25%;">
-  <iframe
+  <iframe title="Embedded media"
     src="https://customer-e7nrn6nt0ozdk9tl.cloudflarestream.com/19db702178db8f95c0b6adc7b627072d/iframe?muted=true&preload=true&loop=true&autoplay=true&poster=https%3A%2F%2Fcustomer-e7nrn6nt0ozdk9tl.cloudflarestream.com%2F19db702178db8f95c0b6adc7b627072d%2Fthumbnails%2Fthumbnail.jpg%3Ftime%3D%26height%3D600"
     loading="lazy"
     style="border: none; position: absolute; top: 0; left: 0; height: 100%; width: 100%;"
@@ -267,7 +267,7 @@ GUI-driven topic creation, configuration editing, cloning, and deletion without 
 ### ACL Administration
 
 <div style="position: relative; padding-top: 56.25%;">
-  <iframe
+  <iframe title="Embedded media"
     src="https://customer-e7nrn6nt0ozdk9tl.cloudflarestream.com/0d161e3395ab1f452e27c6e5125a9573/iframe?muted=true&preload=true&loop=true&autoplay=true&poster=https%3A%2F%2Fcustomer-e7nrn6nt0ozdk9tl.cloudflarestream.com%2F0d161e3395ab1f452e27c6e5125a9573%2Fthumbnails%2Fthumbnail.jpg%3Ftime%3D%26height%3D600"
     loading="lazy"
     style="border: none; position: absolute; top: 0; left: 0; height: 100%; width: 100%;"
@@ -277,4 +277,3 @@ GUI-driven topic creation, configuration editing, cloning, and deletion without 
 </div>
 
 Intuitive interface for security governance. View existing ACLs organized by resource, create access rules specifying principals and operations, configure permissions with full context about access being granted.
-

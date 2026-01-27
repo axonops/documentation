@@ -274,4 +274,3 @@ Node2 recovers:
 
 - **[Connection Management](../connection-management.md)** — Connection lifecycle and pooling
 - **[Load Balancing Policy](load-balancing.md)** — How requests are routed during node recovery
-

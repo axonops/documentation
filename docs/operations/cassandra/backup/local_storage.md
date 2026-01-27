@@ -1,10 +1,12 @@
 ---
-title: "Check current permissions"
+title: "Local Storage"
 description: "Local storage backup configuration for Cassandra. On-disk backup settings."
 meta:
   - name: keywords
     content: "local storage backup, disk backup, Cassandra"
 ---
+
+# Local Storage
 
 ## What is Local Storage
 
@@ -12,12 +14,12 @@ Local Storage in the context of AxonOps remote backups refers to any file system
 
 When selecting Local Storage as a remote option, configuration is straightforward with minimal fields required.
 
-![](./local_filesystem.png)
+![local_filesystem](./local_filesystem.png)
 
 #### Remote Backup Retention
 
-The amount of days that backup files will be kept in the remote storage provider location. 
-After this amount of days the files that are older will be removed.
+The number of days that backup files will be kept in the storage location.
+After this number of days, older files are removed.
 
 #### Base Remote Path
 
@@ -33,9 +35,9 @@ Examples:
 * `/data/backup/production`
 * `D:\Backups\Cassandra` (Windows)
 
-By default, AxonOps will create subdirectories under this path following the pattern: `/base/path/org/clustertype/clustername/host-id/`
+By default, AxonOps will create subdirectories under this path following the pattern: `/base/path/org/clustertype/clustername/host-id/`.
 
-The org/clustertype/clustername/host-id/ will match the top breadcrumb navigation in your AxonOps Dashboard.
+The `org/clustertype/clustername/host-id/` path matches the top breadcrumb navigation in the AxonOps Dashboard.
 
 ### Common Use Cases
 

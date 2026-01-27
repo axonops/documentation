@@ -59,7 +59,7 @@ axon-dash:
   https: false
 ```
 
-Subesquently, update the `axon_dash_url` value within `/etc/axonops/axon-server.yml`:
+Subsequently, update the `axon_dash_url` value within `/etc/axonops/axon-server.yml`:
 
 ```yaml
 axon_dash_url: http://127.0.0.1:3000
@@ -84,9 +84,9 @@ The following will start the `axon-dash` process as the `axonops` user, which wa
 
 The default listening address is [0.0.0.0:3000](http://0.0.0.0:3000).
 
-## Setup SSL/TLS for AxonOps Dashboard
+## Set up SSL/TLS for AxonOps Dashboard
 
-The AxonOps Dashboard does not support SSL/TLS and needs Nginx to be setup in front of
+The AxonOps Dashboard does not support SSL/TLS and needs Nginx set up in front of
 the dashboard.
 
 ### Installing Nginx
@@ -137,4 +137,4 @@ server {
 ## Next - Installing AxonOps Agents
 
 Now that the AxonOps Dashboard is installed,
-we will  [install the AxonOps Agents](../agent/install.md) to populate the dashboard.
+we will [install the AxonOps Agents](../agent/install.md) to populate the dashboard.

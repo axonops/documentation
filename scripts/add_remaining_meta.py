@@ -251,7 +251,7 @@ ALL_META = {
         "description": "AxonOps notification integrations overview. Connect to Slack, PagerDuty, Teams, and more.",
         "keywords": "integrations overview, notifications, alerting channels, AxonOps"
     },
-    "integrations/pagerduy-integration": {
+    "integrations/pagerduty-integration": {
         "description": "Configure PagerDuty integration in AxonOps. Incident management and on-call alerting.",
         "keywords": "PagerDuty integration, incident management, on-call alerts, AxonOps"
     },

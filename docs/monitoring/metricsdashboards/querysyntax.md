@@ -43,4 +43,3 @@ cas_ClientRequest_Latency{axonfunction='rate',scope='Write_*$consistency',functi
 - **`host_id`**: Filters metrics by host ID.
 
 
-

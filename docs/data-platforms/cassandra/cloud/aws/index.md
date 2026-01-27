@@ -45,7 +45,7 @@ i3_series:
 
 ## Network Configuration
 
-### VPC Setup
+### VPC Set up
 
 ```hcl
 # Terraform example

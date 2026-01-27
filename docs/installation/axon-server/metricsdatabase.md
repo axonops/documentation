@@ -14,7 +14,7 @@ A dedicated Cassandra cluster is required to use Cassandra as AxonOps' metrics s
 Using a Cassandra cluster with at least 3 nodes is recommended.
 
 For better performance on larger clusters (10+ nodes),
-it is recommended to use Cassandra as a Metrics Storage engine.
+it is recommended to use Cassandra as a metrics storage engine.
 
 Currently supported versions of Cassandra include:
 
@@ -28,7 +28,7 @@ For more information on Cassandra versioning, see the [Cassandra Downloads Page]
 
 To use a Cassandra cluster as the AxonOps metrics store, specify CQL hosts in `axon-server.yml`:
 
-``` bash
+```yaml
 cql_hosts :
     - 192.168.0.1:9042
     - 192.168.0.2:9042
@@ -38,21 +38,21 @@ cql_hosts :
 By default, the AxonOps server automatically creates the necessary keyspace and tables.
 You can override this behavior by specifying the following fields in `axon-server.yml`:
 
-``` bash
+```yaml
 cql_autocreate_tables : false
 cql_keyspace : "axonops"
 cql_keyspace_replication : "{ 'class' : 'NetworkTopologyStrategy', 'dc1' : 3 }"
 ```
 
-Setting up at least a 3 nodes cluster with `NetworkTopologyStrategy` and a replication factor of `3` is recommended.
+Setting up at least a 3-node cluster with `NetworkTopologyStrategy` and a replication factor of `3` is recommended.
 
 ## Connecting to an Encrypted Cassandra Metrics Store
 
-Setting up a Secured Socket Layer (SSL) connection to Cassandra is recommended.
+Setting up a Secure Sockets Layer (SSL) connection to Cassandra is recommended.
 
 When connecting to Cassandra using SSL, update the following fields in `axon-server.yml`:
 
-``` bash
+```yaml
 cql_ssl: true
 cql_skip_verify: false
 cql_ca_file: '/path/to/ca_cert'
@@ -65,7 +65,7 @@ cql_key_file: '/path/to/key_file'
 
 Additional CQL fields are available within `axon-server.yml`, as required:
 
-```golang
+```text
 cql_proto_version int                   
 cql_batch_size  int                   
 cql_page_size int                   
@@ -81,11 +81,11 @@ cql_reconnectionpolicy_initialinterval string "1s"
 cql_reconnectionpolicy_maxinterval string  "10s"                     
 cql_read_consistency string (controls the consistency of read operations, defaults to LOCAL_ONE)              
 cql_write_consistency string (controls the consistency of write operations, defaults to LOCAL_ONE)               
-cql_lvl1_compaction_window_size int (used for the table named 'metrics5' when you let axonserver managing the tables automatically)                  
-cql_lvl2_compaction_window_size int (used for the table named 'metrics60' when you let axonserver managing the tables automatically)                  
-cql_lvl3_compaction_window_size int (used for the table named 'metrics720' when you let axonserver managing the tables automatically)                  
-cql_lvl4_compaction_window_size int (used for the table named 'metrics7200' when you let axonserver managing the tables automatically)                  
-cql_lvl5_compaction_window_size int (used for the table named 'metrics86400' when you let axonserver managing the tables automatically)                  
+cql_lvl1_compaction_window_size int (used for the table named 'metrics5' when you let axon-server manage the tables automatically)                  
+cql_lvl2_compaction_window_size int (used for the table named 'metrics60' when you let axon-server manage the tables automatically)                  
+cql_lvl3_compaction_window_size int (used for the table named 'metrics720' when you let axon-server manage the tables automatically)                  
+cql_lvl4_compaction_window_size int (used for the table named 'metrics7200' when you let axon-server manage the tables automatically)                  
+cql_lvl5_compaction_window_size int (used for the table named 'metrics86400' when you let axon-server manage the tables automatically)                  
 ```
 
 ## Create AxonOps Schema

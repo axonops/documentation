@@ -6,6 +6,7 @@ meta:
     content: "JumpCloud, SAML, SSO, AxonOps authentication, single sign-on"
 ---
 
+# Prerequisites and notes
 Configuring SAML authentication with JumpCloud for AxonOps Cloud
 ================================================================
 

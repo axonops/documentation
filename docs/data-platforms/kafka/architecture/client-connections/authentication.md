@@ -481,7 +481,7 @@ ssl.keystore.password=keystore-password
 ssl.key.password=key-password
 ```
 
-### Certificate Setup
+### Certificate Set up
 
 ```bash
 # Generate client key pair

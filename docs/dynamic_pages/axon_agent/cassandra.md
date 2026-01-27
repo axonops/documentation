@@ -1,37 +1,37 @@
 <h3>Select the Cassandra Version</h3>
 <label>
   <input type="radio" id="Cassandra30" name="casFamily" onChange="selectCas()" checked=true />
-  <img src="/get_started/cas_3.png" class="skip-lightbox" width="180px">
+  <img src="/get_started/cas_3.png" class="skip-lightbox" width="180px" alt="cas_3">
 </label>
 <label>
   <input type="radio" id="Cassandra311" name="casFamily" onChange="selectCas()" />
-  <img src="/get_started/cas_3_11.png" class="skip-lightbox" width="180px">
+  <img src="/get_started/cas_3_11.png" class="skip-lightbox" width="180px" alt="cas_3_11">
 </label>
 <label>
   <input type="radio" id="Cassandra40" name="casFamily" onChange="selectCas()" />
-  <img src="/get_started/cas_4.png" class="skip-lightbox" width="180px">
+  <img src="/get_started/cas_4.png" class="skip-lightbox" width="180px" alt="cas_4">
 </label>
 <label>
   <input type="radio" id="Cassandra41" name="casFamily" onChange="selectCas()" />
-  <img src="/get_started/cas_4_1.png" class="skip-lightbox" width="180px">
+  <img src="/get_started/cas_4_1.png" class="skip-lightbox" width="180px" alt="cas_4_1">
 </label>
 <label>
   <input type="radio" id="Cassandra50" name="casFamily" onChange="selectCas()" />
-  <img src="/get_started/cas_5_0.png" class="skip-lightbox" width="180px">
+  <img src="/get_started/cas_5_0.png" class="skip-lightbox" width="180px" alt="cas_5_0">
 </label>
 
 <h3>Select the Java Version.</h3>
 <label>
   <input type="radio" id="Java8" name="javaFamily" onChange="selectJava()" checked=true />
-  <img id="Java8img" src="/get_started/Java_8.png" class="skip-lightbox" width="180px">
+  <img id="Java8img" src="/get_started/Java_8.png" class="skip-lightbox" width="180px" alt="Java_8">
 </label>
 <label>
   <input type="radio" id="Java11" name="javaFamily" onChange="selectJava()" />
-  <img id="Java11img" src="/get_started/Java_11.png" class="skip-lightbox" width="180px" style="display:none">
+  <img id="Java11img" src="/get_started/Java_11.png" class="skip-lightbox" width="180px" style="display:none" alt="Java_11">
 </label>
 <label>
   <input type="radio" id="Java17" name="javaFamily" onChange="selectJava()" />
-  <img id="Java17img" src="/get_started/Java_17.png" class="skip-lightbox" width="180px" style="display:none">
+  <img id="Java17img" src="/get_started/Java_17.png" class="skip-lightbox" width="180px" style="display:none" alt="Java_17">
 </label>
 
 <!-- Debian -->

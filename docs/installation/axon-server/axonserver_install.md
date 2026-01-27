@@ -49,7 +49,7 @@ search_db:
   hosts:
     - http://localhost:9200
 
-  username: opensearch-user
+  username: elastic
   password: my-strong-password
 ```
 
@@ -60,14 +60,14 @@ Update the above `username` and `password` with the dedicated service account/us
 
 By default, AxonOps Server will only connect to the Elasticsearch nodes listed in its
 configuration and will not automatically discover other nodes in the cluster.
-To enable AxonOps' node discovery, set `search_db.discover_nodes:true` which will
+To enable AxonOps' node discovery, set `search_db.discover_nodes: true` which will
 utilize the full list of discovered nodes to round-robin requests sent to Elasticsearch.
 
 When setting up load balancing nodes or infrastructure in front of Elasticsearch,
-the load balancer has smart load balancing capabilites and AxonOps' node discovery
+the load balancer has smart load balancing capabilities and AxonOps' node discovery
 is not required.
 
-### Setup AxonOps License
+### Set up AxonOps License
 
 > This section is for Enterprise plan clients and is not needed on the Free Forever plan.
 
@@ -95,7 +95,7 @@ it is recommended to use Cassandra as a Metrics Storage engine.
 The following is a sample configuration file that can be used as a quick reference:
 
 ```yaml hl_lines="7 8 33 34"
-# axon-server listening address (used by axon-agents for connections)
+# axon-server listening address (used by AxonOps agents for connections)
 # (env variable: AXONSERVER_HOST)
 host: 0.0.0.0
 # axon-server listening port for agent connections
@@ -115,7 +115,7 @@ search_db:
   hosts:
     - http://localhost:9200
 
-  username: opensearch-user
+  username: elastic
   password: my-strong-password
 
   # SSL/TLS config for Elasticsearch

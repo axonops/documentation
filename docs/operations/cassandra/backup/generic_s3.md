@@ -6,24 +6,24 @@ meta:
     content: "S3 compatible backup, MinIO, Ceph, Cassandra backup"
 ---
 
-## What is Generic S3
+# What is Generic S3
 
 Generic S3 (S3 Compatible) storage refers to object storage services that implement the Amazon S3 API but are not provided by AWS. Many cloud providers and storage solutions offer S3-compatible APIs, including MinIO, Ceph, DigitalOcean Spaces, Wasabi, Backblaze B2, and many others. This allows you to use the same S3 protocol with different storage providers.
 
 When selecting Generic S3 as a remote option there are several fields that need to be configured.
 
-![](./s3_compatible.png)
+![s3_compatible](./s3_compatible.png)
 
 #### Remote Backup Retention
 
-The amount of days that backup files will be kept in the remote storage provider location. 
-After this amount of days the files that are older will be removed.
+The number of days that backup files will be kept in the remote storage provider location.
+After this number of days, older files are removed.
 
 #### Base Remote Path
 
-This is the name of the storage bucket, you can also add subfolders if using shared storage buckets or saving multiple clusters to the same bucket. By default AxonOps will save the backups to `/bucket/folder/org/clustertype/clustername/host-id/`
+This is the name of the storage bucket. You can also add subfolders if using shared buckets or saving multiple clusters to the same bucket. By default AxonOps saves backups to `/bucket/folder/org/clustertype/clustername/host-id/`.
 
-The org/clustertype/clustername/host-id/ will match the top breadcrumb navigation in your AxonOps Dashboard.
+The `org/clustertype/clustername/host-id/` path matches the top breadcrumb navigation in the AxonOps Dashboard.
 
 #### Endpoint URL
 
@@ -128,4 +128,4 @@ Normally AxonOps Backups will check that the checksums of transferred files matc
 2. **Access Denied**: Verify access keys and bucket permissions
 3. **Invalid Region**: Confirm the region matches your provider's requirements
 4. **SSL Errors**: May need to disable certificate verification for self-signed certs
-5. **Signature Errors**: Ensure clock synchronization between AxonOps and storage service
+5. **Signature Errors**: Ensure clock synchronization between AxonOps and the storage service.

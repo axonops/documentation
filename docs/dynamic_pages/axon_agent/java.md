@@ -2,22 +2,22 @@ Add the following line at the end of `/etc/cassandra/cassandra-env.sh`:
 
 <div id="Cassandra30Div" class="javacas">
   ```
-  JVM_OPTS="$JVM_OPTS -javaagent:/usr/share/axonops/axon-cassandra3.0-agent.jar=/etc/axonops/axon-agent.yml"
+  JVM_OPTS="$JVM_OPTS -javaagent:/usr/share/axonops/axon-cassandra3.0-agent.jar=/etc/axonops/AxonOps agent.yml"
   ```
 </div>
 <div id="Cassandra311Div" class="javacas" style="display:none">
   ```
-  JVM_OPTS="$JVM_OPTS -javaagent:/usr/share/axonops/axon-cassandra3.11-agent.jar=/etc/axonops/axon-agent.yml"
+  JVM_OPTS="$JVM_OPTS -javaagent:/usr/share/axonops/axon-cassandra3.11-agent.jar=/etc/axonops/AxonOps agent.yml"
   ```
 </div>
 <div id="Cassandra40Div" class="javacas" style="display:none">
   ```
-  JVM_OPTS="$JVM_OPTS -javaagent:/usr/share/axonops/axon-cassandra4.0-agent.jar=/etc/axonops/axon-agent.yml"
+  JVM_OPTS="$JVM_OPTS -javaagent:/usr/share/axonops/axon-cassandra4.0-agent.jar=/etc/axonops/AxonOps agent.yml"
   ```
 </div>
 <div id="Cassandra41Div" class="javacas" style="display:none">
   ```
-  JVM_OPTS="$JVM_OPTS -javaagent:/usr/share/axonops/axon-cassandra4.1-agent.jar=/etc/axonops/axon-agent.yml"
+  JVM_OPTS="$JVM_OPTS -javaagent:/usr/share/axonops/axon-cassandra4.1-agent.jar=/etc/axonops/AxonOps agent.yml"
   ```
 </div>
 <div id="Cassandra50Div" class="javacas" style="display:none">
@@ -52,4 +52,4 @@ Due to recent change with `needrestart`, as seen in Ubuntu 24.04, uninstalling t
 `needrestart` package is currently recommended.
 
 Failure to uninstall the `needrestart` package may cause the Cassandra service to be
-restarted when updating the `axon-agent` package.
+restarted when updating the `AxonOps agent` package.

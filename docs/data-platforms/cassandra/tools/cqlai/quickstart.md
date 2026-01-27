@@ -108,7 +108,7 @@ cqlai> .schema
 
 Generate CQL queries from natural language descriptions.
 
-### Setup (Choose One Provider)
+### Set up (Choose One Provider)
 
 ```bash
 # OpenAI

@@ -62,4 +62,3 @@ Paste the PEM-format private key you generated in the prerequisites into the `SP
 Save the settings.
 
 ![Click 'Save'](https://static.guidde.com/v0/qg%2FDYav2XnW7MMsJ8b5Y7XiJvaQaH43%2F1AECrRf967vPL4phK53PdL%2F88beaEbCPABY2XjYnFprNR_doc.png?alt=media&token=d2288c1e-fec8-4d94-9e3e-6562c18d9e33)
-

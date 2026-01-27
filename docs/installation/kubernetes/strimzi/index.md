@@ -49,7 +49,7 @@ helm install strimzi-kafka-operator \
 
 ## Step 2: Setting up the storage
 
-You will need to set up the storage for each of the brokers and controller. If you are using a shared storage such as EBS in AWS the configuration is simpler but if you don't have a storage CSI and you use hostPath you will need to follow the steps below.
+You will need to set up storage for each broker and controller. If you are using shared storage such as EBS in AWS, the configuration is simpler. If you do not have a storage CSI and you use hostPath, follow the steps below.
 
 Each broker and controller will need to be pinned to the Kubernetes Worker Node that contains its storage. This is required to prevent the pod from starting on a different node which would cause a data loss.
 
@@ -107,7 +107,7 @@ spec:
   persistentVolumeReclaimPolicy: Retain
   storageClassName: strimzi-hostpath-manual
   hostPath:
-    path: /data/strimzi/${STRIMZI_CLUSTER_NAME}/broker-pool-${STRIMZI_BROKER_ID}
+    path: /data/strimzi/${STRIMZI_CLUSTER_NAME}/${STRIMZI_ROLE}-pool-${STRIMZI_BROKER_ID}
     type: Directory
   nodeAffinity:
     required:

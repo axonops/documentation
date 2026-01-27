@@ -704,4 +704,3 @@ dc1 <--> dc2 : async replication
 - **[Driver Policies](../../application-development/drivers/policies/index.md)** - Detailed policy configuration
 - **[Retry Policy](../../application-development/drivers/policies/retry.md)** - Retry behavior configuration
 - **[Load Balancing](../../application-development/drivers/policies/load-balancing.md)** - Routing policy configuration
-

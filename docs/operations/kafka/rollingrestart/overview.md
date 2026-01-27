@@ -6,16 +6,17 @@ meta:
     content: "rolling restart, Kafka restart, zero downtime, broker restart"
 ---
 
-AxonOps provides a rolling restart functionality for Kafka.
+# Overview
 
-The feature is accessible via ***Operations > Rolling Restart***
+AxonOps provides a rolling restart feature for Kafka.
 
-!!! infomy 
+The feature is accessible via **Operations > Rolling Restart**.
 
-    [![rollingrestart](./1.png)](./1.png)
 
-> **axonops** user will require permissions to be able to stop and start Kafka service. To do so you will add **axonops** user in the sudoers with for instance the following permissions:
-``` bash
+[![rollingrestart](./1.png)](./1.png)
+
+> The **AxonOps** user requires permissions to stop and start the Kafka service. Add the **AxonOps** user to sudoers, for example:
+```bash
 #/etc/sudoers.d/axonops
 axonops ALL=NOPASSWD: /sbin/service kafka *, /usr/bin/systemctl * kafka*
 ```
@@ -24,12 +25,12 @@ axonops ALL=NOPASSWD: /sbin/service kafka *, /usr/bin/systemctl * kafka*
 
 You can start an **immediate** rolling restart or **schedule** it.
 
-The **script** field let you able to tweak the predefined script executed by **axon-agents** during the restart process.
+The **script** field lets you customize the predefined script executed by the AxonOps agent during the restart process.
 
-You can also specify different degree of parallelism for the restart: **DC**, **Rack** and **Node**.
+You can also specify different degrees of parallelism for the restart: **DC**, **Rack**, and **Node**.
 
-For instance, to **restart one entire rack** at once across the cluster, you can set a large **Node parallelism** (greater than the number of nodes the rack has, ie 999).
-``` bash
+For example, to **restart one entire rack** at once across the cluster, you can set a large **Node parallelism** (greater than the number of nodes in the rack, for example 999).
+```bash
 DC parallelism: 1
 Rack parallelism: 1
 Node parallelism: 999
@@ -37,12 +38,10 @@ Node parallelism: 999
 
 
 To **restart one entire rack across each DC**:
-``` bash
+```bash
 DC parallelism: 999
 Rack parallelism: 1
 Node parallelism: 999
 ```
-
-
 
 

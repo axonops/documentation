@@ -1,15 +1,15 @@
 ---
-title: "Axon Agent Setup"
+title: "AxonOps Agent Set up"
 hide:
   - toc
 ---
 
-# Axon Agent Setup
-<!-- ![](agent_steps.png) -->
+# AxonOps Agent Set up
+<!-- ![agent_steps](agent_steps.png) -->
 
 ## AxonOps Cloud Agent Network Requirements
 
-AxonOps agent connects securely to the following AxonOps Cloud service endpoint;
+The AxonOps agent connects securely to the following AxonOps Cloud service endpoint:
 
 ``` { .bash .no-copy }
 https://agents.axonops.cloud
@@ -17,20 +17,20 @@ https://agents.axonops.cloud
 
 The TLS HTTPS connection initiated by the agent is upgraded to a WebSocket connection and thus requires WebSocket support in your corporate infrastructure, such as a secure web proxy service.
 
-If you have a DNS based security policy then you will be required to allow outbound access to the following domain.
+If you have a DNS-based security policy, you must allow outbound access to the following domain.
 
 ``` { .bash .no-copy }
 agents.axonops.cloud
 ```
 
-If you have an IP address based security policy you will be required to open access to the IP address ranges provided in the following links.
+If you have an IP address-based security policy, you must open access to the IP address ranges provided in the following links.
 
 ``` { .bash .no-copy }
 https://agents.axonops.cloud/ips-v4
 https://agents.axonops.cloud/ips-v6
 ```
 
-In order to test your connectivity execute the following command:
+To test connectivity, execute the following command:
 
 ``` { .bash .copy }
 curl https://agents.axonops.cloud/test.html
@@ -40,18 +40,18 @@ You should expect the following response:
 
 *AxonOps Agent Test Page*
 
-## Setup the AxonOps repository and install AxonOps Agent
+## Set up the AxonOps repository and install the AxonOps agent
 
 {!dynamic_pages/axon_agent/os.md!}
 
-### Select the Service you want to configure 
+### Select the service you want to configure
 <label>
   <input type="radio" id="Cassandra" name="Service" onChange="updateService()" checked=true />
-  <img src="/get_started/cassandra.png" class="skip-lightbox" width="180px" height="180px">
+  <img src="/get_started/cassandra.png" class="skip-lightbox" width="180px" height="180px" alt="cassandra">
 </label>
 <label>
   <input type="radio" id="Kafka" name="Service" onChange="updateService()" />
-  <img src="/get_started/kafka.png" class="skip-lightbox" width="180px" height="180px">
+  <img src="/get_started/kafka.png" class="skip-lightbox" width="180px" height="180px" alt="kafka">
 </label>
 
 <div id="CassandraDiv" name="service_div" markdown="1">
@@ -71,10 +71,10 @@ You should expect the following response:
 If your network does not have direct internet access and it requires a proxy to connect to the AxonOps Server, follow
 [these instructions](proxy.md).
 
-## Start axon-agent
+## Start the AxonOps agent
 
 ```
 sudo systemctl start axon-agent
 ```
 
-Once the Agents have been setup, please use the [Using AxonOps](../cluster/cluster-overview.md) guide to familiarize yourself with AxonOps UI.
+Once the agent is set up, use the [Using AxonOps](../cluster/cluster-overview.md) guide to familiarize yourself with the AxonOps UI.

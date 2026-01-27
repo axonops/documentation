@@ -19,7 +19,7 @@ based on different parameters such as:
 * Log Content
 
 The logs and events are visible in two locations allowing quick access to them without
-having to login to the individual servers:
+having to log in to the individual servers:
 
 1. Within the Logs & Events tab:
 
@@ -55,7 +55,7 @@ due to its high CPU usage.
 
 ## Search by Logs Source and Event Type
 
-You can filter logs based on the log Source (`cassandra`, `axon-server`, and `axon-agent` logs) and Event Type to narrow down search results.
+You can filter logs based on the log source (`cassandra`, `axon-server`, and `AxonOps agent` logs) and event type to narrow down search results.
 
 ![Event Types](imgs/logs_event_type1.png)
 ![Event Types continued](imgs/logs_event_type2.png)
@@ -81,10 +81,10 @@ Currently the following keyword syntax is supported:
 * `+-hello +-world`
     * matches excluding `hello` or `world`
 * `/.*repair.*/`
-    * display logs that contain a specific word or phrase
+    * displays logs that contain a specific word or phrase
 * `/(Validated|Compacted)/`
-    * display logs that matches either what is before or after the `|`, in this case
+    * displays logs that match either what is before or after the `|`, in this case
     `Validated` or `Compacted`
 * `/Segment.*deleted/`
-    * display logs that contain both patterns in a line, in this case `Segment` and
+    * displays logs that contain both patterns in a line, in this case `Segment` and
     `deleted`

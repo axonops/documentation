@@ -183,7 +183,7 @@ nodetool describecluster
 
 High scores indicate slow nodes.
 
-### Initial Setup Verification
+### Initial Set up Verification
 
 ```bash
 # Verify cluster configuration

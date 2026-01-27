@@ -326,7 +326,7 @@ echo never > /sys/kernel/mm/transparent_hugepage/defrag
 
 ---
 
-## Monitoring Setup
+## Monitoring Set up
 
 ### Key Metrics to Monitor
 

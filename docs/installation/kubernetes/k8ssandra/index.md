@@ -110,7 +110,7 @@ Before deploying, configure these variables according to your environment:
 | `HEAP_SIZE` | JVM heap size (initial and max) | `1G` |
 | `CPU_LIMIT` | CPU limit per pod | `1` or `2000m` |
 | `MEMORY_LIMIT` | Memory limit per pod | `2Gi` |
-| `AXON_AGENT_KEY` | Your AxonOps API key for authentication | `your-api-key-here` |
+| `AXON_AGENT_KEY` | Your AxonOps API key for authentication | Use a Kubernetes Secret |
 | `AXON_AGENT_ORG` | Your AxonOps organization identifier | `your-org-name` |
 | `AXON_AGENT_SERVER_HOST` | DNS name/address of AxonOps server | `axon-server-agent.axonops.svc.cluster.local` |
 | `AXON_AGENT_SERVER_PORT` | Port for AxonOps agent connections | `1888` |
@@ -199,9 +199,15 @@ spec:
           - name: cassandra
             env:
               - name: AXON_AGENT_KEY
-                value: "your-api-key-here"
+                valueFrom:
+                  secretKeyRef:
+                    name: axonops-credentials
+                    key: api-key
               - name: AXON_AGENT_ORG
-                value: "your-org-name"
+                valueFrom:
+                  secretKeyRef:
+                    name: axonops-credentials
+                    key: org
               - name: AXON_AGENT_SERVER_HOST
                 value: "axon-server-agent.axonops.svc.cluster.local"
               - name: AXON_AGENT_SERVER_PORT
@@ -364,7 +370,7 @@ jvmOptions:
 
 ## Advanced Configuration
 
-### Multi-Datacenter Setup
+### Multi-Datacenter Set up
 
 To deploy a multi-datacenter cluster:
 
@@ -386,9 +392,15 @@ spec:
           - name: cassandra
             env:
               - name: AXON_AGENT_KEY
-                value: "your-api-key-here"
+                valueFrom:
+                  secretKeyRef:
+                    name: axonops-credentials
+                    key: api-key
               - name: AXON_AGENT_ORG
-                value: "your-org-name"
+                valueFrom:
+                  secretKeyRef:
+                    name: axonops-credentials
+                    key: org
               - name: AXON_AGENT_CLUSTER_NAME
                 value: "k8ssandra-multi-dc"
         storageConfig:
@@ -406,9 +418,15 @@ spec:
           - name: cassandra
             env:
               - name: AXON_AGENT_KEY
-                value: "your-api-key-here"
+                valueFrom:
+                  secretKeyRef:
+                    name: axonops-credentials
+                    key: api-key
               - name: AXON_AGENT_ORG
-                value: "your-org-name"
+                valueFrom:
+                  secretKeyRef:
+                    name: axonops-credentials
+                    key: org
               - name: AXON_AGENT_CLUSTER_NAME
                 value: "k8ssandra-multi-dc"
         storageConfig:

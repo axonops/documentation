@@ -11,7 +11,13 @@ if(typeof document$!=='undefined')document$.subscribe(processCqlSyntaxBlocks);
 
 // OS/Version selection
 function selectOS(){var e=document.getElementsByName('osFamily');for(var i=0;i<e.length;i++)if(e[i].checked){localStorage.setItem('OS_State',e[i].id);showHideOSPanel(e[i].id);updatePage()}}
-function showHideOSPanel(os){var x=document.getElementsByClassName('os');for(var i=0;i<x.length;i++)x[i].style.display='none';var d=document.getElementById(os+'Div');if(d)d.style.display='block'}
+function showHideOSPanel(os){
+  var x=document.getElementsByClassName('os');
+  for(var i=0;i<x.length;i++)x[i].style.display='none';
+  var byData=document.querySelectorAll('.os[data-os=\"'+os+'\"]');
+  if(byData.length){for(var j=0;j<byData.length;j++)byData[j].style.display='block';return;}
+  var d=document.getElementById(os+'Div');if(d)d.style.display='block'
+}
 function selectCas(){var e=document.getElementsByName('casFamily');for(var i=0;i<e.length;i++)if(e[i].checked){localStorage.setItem('CAS_State',e[i].id);updatePage()}}
 function showHideCASPanel(){if(!document.getElementsByClassName('cas').length)return;var x=document.getElementsByClassName('cas');for(var i=0;i<x.length;i++)x[i].style.display='none';var c=(localStorage.getItem('OS_State')||'')+(localStorage.getItem('CAS_State')||'')+(localStorage.getItem('JAVA_State')||'')+'Div';var el=document.getElementById(c);if(el)el.style.display='block'}
 function selectJava(){var e=document.getElementsByName('javaFamily');for(var i=0;i<e.length;i++)if(e[i].checked){localStorage.setItem('JAVA_State',e[i].id);updatePage()}}

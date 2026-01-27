@@ -222,7 +222,7 @@ cfssl gencert -ca=ca.pem -ca-key=ca-key.pem -config=ca-config.json \
 
 ## Broker Configuration
 
-### Basic mTLS Setup
+### Basic mTLS Set up
 
 ```properties
 # server.properties

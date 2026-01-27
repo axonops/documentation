@@ -1,17 +1,17 @@
 ---
-title: "Installing axon-agent for Cassandra in Docker"
+title: "Installing AxonOps agent for Cassandra in Docker"
 description: "Run AxonOps agent in Docker containers. Container deployment guide."
 meta:
   - name: keywords
     content: "AxonOps agent Docker, container deployment, Docker agent"
 ---
 
-# Installing axon-agent for Cassandra in Docker
+# Installing AxonOps agent for Cassandra in Docker
 
 !!! info "Caveats"
       - Cassandra logs cannot normally be collected by AxonOps as they are sent to stdout and handled by the
         Docker logging driver.
-      - If axon-agent is running under Docker it assumes that the Cassandra user's GID is 999 as it is in the
+      - If AxonOps agent is running under Docker it assumes that the Cassandra user's GID is 999 as it is in the
         official Cassandra images. If this is not the case then AxonOps may not be able to backup the Cassandra data.
 
 To enable the full functionality of the AxonOps agent some directories must be accessible to both the Cassandra and
@@ -50,11 +50,11 @@ services:
     ports:
       - "9042:9042"
     environment:
-      - JVM_EXTRA_OPTS=-javaagent:/var/lib/axonops/axon-cassandra4.0-agent.jar=/etc/axonops/axon-agent.yml
+      - JVM_EXTRA_OPTS=-javaagent:/var/lib/axonops/axon-cassandra4.0-agent.jar=/etc/axonops/AxonOps agent.yml
       - CASSANDRA_CLUSTER_NAME=my-cluster
 
-  axon-agent:
-    image: registry.axonops.com/axonops-public/axonops-docker/axon-agent:latest
+  AxonOps agent:
+    image: registry.axonops.com/axonops-public/axonops-docker/AxonOps agent:latest
     restart: always
     environment:
       # Enter the hostname or IP address of your AxonOps server here
