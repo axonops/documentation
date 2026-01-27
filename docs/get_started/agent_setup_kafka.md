@@ -5,7 +5,7 @@
 ## Agent Configuration
 
 Update the `key` and `org` values within the highlighted lines of
-`/etc/axonops/axon-agent.yml` below.
+`/etc/axonops/AxonOps agent.yml` below.
 
 The values can be found by logging into
 [console.axonops.cloud](https://console.axonops.cloud){target="_blank"}:
@@ -18,4 +18,3 @@ The values can be found by logging into
 If there is a Dedicated NTP server in your Organization please uncomment and update the NTP section.
 
 {!dynamic_pages/axon_agent/kafka_agent_config.md!}
-

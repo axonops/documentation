@@ -1,27 +1,26 @@
 ---
-title: "Setup ServiceNow Integration"
+title: "Set up ServiceNow Integration"
 description: "Configure ServiceNow integration in AxonOps. Create tickets from alerts automatically."
 meta:
   - name: keywords
     content: "ServiceNow integration, ticket creation, ITSM, AxonOps"
 ---
 
-# Setup ServiceNow Integration
+# Set up ServiceNow Integration
 
-## Login to ServiceNow
+## Log in to ServiceNow
 
-Navigate to  `Settings -> Integrations` and click on `ServiceNow`.
+Navigate to `Settings -> Integrations` and click `ServiceNow`.
 
-![](imgs/servicenow-1.png)
+![servicenow-1](imgs/servicenow-1.png)
 
 Gather the `instance name`, `username`, and `password` from ServiceNow to fill out the form:
-![](imgs/servicenow-2.png)
+![servicenow-2](imgs/servicenow-2.png)
 
 ## Update ServiceNow Incident Template
 
-If you want to see the detailed description of a notification, you'll need to add the `description` field into the ServiceNow incidents templates.
+If you want to see the detailed description of a notification, add the `description` field to the ServiceNow incident templates.
 
-![](imgs/servicenow-3.png)
+![servicenow-3](imgs/servicenow-3.png)
 
-![](imgs/servicenow-4.png)
-
+![servicenow-4](imgs/servicenow-4.png)

@@ -335,4 +335,3 @@ Considerations:
 
 - **[Retry Policy](retry.md)** — What happens when the selected node fails
 - **[Speculative Execution](speculative-execution.md)** — Sending to multiple nodes concurrently
-

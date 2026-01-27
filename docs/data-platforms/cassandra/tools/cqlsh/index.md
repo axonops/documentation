@@ -14,7 +14,7 @@ cqlsh is written in Python, which means Python must be installed, and occasional
 
 But cqlsh is everywhere. It is on every Cassandra node, requires no installation, and every tutorial assumes its use. This reference covers everything needed to be productive with it.
 
-## Installation and Setup
+## Installation and Set up
 
 ### Included with Cassandra
 

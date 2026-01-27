@@ -335,7 +335,7 @@ public class ConsumerRecordTest {
 
 ## Testcontainers
 
-### Basic Setup
+### Basic Set up
 
 ```java
 @Testcontainers

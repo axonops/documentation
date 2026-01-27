@@ -6,14 +6,15 @@ meta:
     content: "Cassandra dashboards, metrics dashboards, AxonOps monitoring"
 ---
 
-AxonOps dashboards provides a comprehensive set of charts with an embedded view for logs and events. 
+# Cassandra
 
-You can correlate metrics with logs/events as you can zoom in the logs histogram or metrics charts to drill down both results. 
+AxonOps dashboards provide a comprehensive set of charts with an embedded view for logs and events.
 
-[Alert rules](../../how-to/setup-alert-rules.md) can be defined graphically in each chart and [Log collection](../../how-to/setup-log-collection.md) is  defined in the bottom part of that page.
+You can correlate metrics with logs/events by zooming into the logs histogram or metrics charts to drill down on both.
 
-!!! infomy 
+[Alert rules](../../how-to/setup-alert-rules.md) can be defined in each chart. [Log collection](../../how-to/setup-log-collection.md) is defined in the bottom part of the page.
 
-![](./0.JPG)
+For a detailed list of Cassandra metrics and dashboards, see the [Cassandra Metrics Reference](../../metrics/cassandra/all_dashboards_metrics_reference.md).
 
 
+![0](./0.JPG)

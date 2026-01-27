@@ -6,18 +6,17 @@ meta:
     content: "cluster overview, AxonOps dashboard, cluster health, monitoring"
 ---
 
+# Cluster Overview
 
-## Cluster Overview
+**Cluster Overview** is the home page and provides a visual overview of your cluster health.
 
-**Cluster Overview** is the home page and provides a visual overview of your clusters health.
-
-The information is automatically extracted by the AxonOps agent and pushed to AxonOps server. There is no need to configure anything on the agent or the server side for this information to be populated in the Cluster Overview dashboard.
+The information is automatically extracted by the AxonOps agent and pushed to the AxonOps server. There is no need to configure anything on the agent or the server side for this information to be populated in the Cluster Overview dashboard.
 
 <br/>
 
-![](./0.JPG)
+![0](./0.JPG)
 
-![](./1.JPG)
+![1](./1.JPG)
 
 ## Supported Clusters
 
@@ -27,34 +26,34 @@ The information is automatically extracted by the AxonOps agent and pushed to Ax
 
 ### Switching between Clusters
 
-- On the page breadcrumb click on Show List of Clusters
+- In the page breadcrumb, click **Show List of Clusters**.
 
-![](./show_clusters.png)
+![show_clusters](./show_clusters.png)
 
-- Select the Apache Cassandra or Apache Kafka Cluster
+- Select the Apache Cassandra or Apache Kafka cluster.
 
-![](./select_cluster.png)
+![select_cluster](./select_cluster.png)
 
 
 ### Overview - Graph and List Views
 
-On the Axonops application menu, select `Cluster Overview`.
+On the AxonOps application menu, select `Cluster Overview`.
 
 Select a node to view configuration details.
 
 #### Graph View
 
-![](./2.JPG)
+![2](./2.JPG)
 
 #### List View
 
-![](./list_view.png)
-![](./list_view2.png)
+![list_view](./list_view.png)
+![list_view2](./list_view2.png)
 
 
-### Configuration detail sections:
+### Configuration detail sections
 
-Configuration detail sections show service specific information and differ based on cluster and node type.
+Configuration detail sections show service-specific information and differ based on cluster and node type.
 
 - *Operating System (OS) Configuration*
 - *Cassandra Configuration*
@@ -67,7 +66,7 @@ Configuration detail sections show service specific information and differ based
 
 #### OS Details
 
-Operating System Details section shows general information including:
+The Operating System Details section shows general information including:
 
 - *General Information*
 - *CPU*
@@ -75,20 +74,19 @@ Operating System Details section shows general information including:
 - *Swap*
 - *Disk volumes*
 
-!!! infomy
 
-![](./3.JPG)
+![3](./3.JPG)
 
 
 #### Node Details
 
-Node Details view shows the details from the specific node configuration files and differ based on cluster and node type. 
+The Node Details view shows details from specific node configuration files and differs based on cluster and node type.
 
 There is a search field available near the top to filter the configuration parameters.
 
 Node configuration files:
 
-- Casssandra
+- Cassandra
     - cassandra.yml
 - Kafka 
     - server.properties
@@ -101,9 +99,8 @@ Node configuration files:
     - connect-standalone.properties
     - connect-distributed.properties
 
-!!! infomy
 
-![](./4.JPG)
+![4](./4.JPG)
 
 
 
@@ -111,6 +108,5 @@ Node configuration files:
 
 JVM Details section shows the general information about the Java Virtual Machine (JVM), including the version and some configuration options such as the heap and Garbage Collection settings.
 
-!!! infomy
 
-![](./5.JPG)
+![5](./5.JPG)

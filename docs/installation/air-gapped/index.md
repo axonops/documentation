@@ -1,3 +1,13 @@
+---
+title: "Air-Gapped Installation"
+description: "Install AxonOps in air-gapped environments. Offline package installation and configuration."
+meta:
+  - name: keywords
+    content: "air-gapped install, offline installation, AxonOps"
+---
+
+# Air-Gapped Installation
+
 Follow the process below to install AxonOps within air-gapped systems.
 
 {!installation/air-gapped/dynamic_page.md!}
@@ -20,11 +30,11 @@ configuration file,
 
 ### Configure and Load Agents
 
-On the Cassandra/Kafka machine, run the following commands to configure `axon-agent` and
+On the Cassandra/Kafka machine, run the following commands to configure `AxonOps agent` and
 ensure Cassandra/Kafka loads the agent. Use the instructions found on the
 [AxonOps Agent Installation](../agent/install.md) page to:
 
-* configure `axon-agent`,
+* configure `AxonOps agent`,
 * configure Cassandra/Kafka to load the agent,
 * configure the Cassandra/Kafka user groups,
 * and restart the Cassandra/Kafka process.

@@ -596,7 +596,7 @@ grep -i "kerberos\|gssapi\|sasl" /var/log/kafka/server.log | tail -50
 
 ## Active Directory Integration
 
-### Service Account Setup
+### Service Account Set up
 
 1. Create a service account in AD
 2. Configure Service Principal Name (SPN)

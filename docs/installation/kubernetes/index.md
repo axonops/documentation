@@ -90,4 +90,3 @@ A typical AxonOps deployment on Kubernetes consists of:
    - **[K8ssandra Cassandra Cluster](k8ssandra/index.md)** - Deploy a Cassandra cluster with AxonOps monitoring
 
 3. **Configure and Monitor** - Access the AxonOps dashboard to visualize metrics, manage clusters, and configure alerts.
-

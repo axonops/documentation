@@ -6,24 +6,24 @@ meta:
     content: "Azure Blob backup, Cassandra backup, Azure storage, AxonOps"
 ---
 
-## What is Azure Blob Storage
+# What is Azure Blob Storage
 
 Azure Blob Storage is Microsoft's object storage solution for the cloud. Blob storage is optimized for storing massive amounts of unstructured data, such as text or binary data. Azure Blob Storage is ideal for serving images or documents, storing files for distributed access, streaming video and audio, storing data for backup and restore, disaster recovery, and archiving. Read more at [Azure Blob Storage documentation](https://docs.microsoft.com/en-us/azure/storage/blobs/)
 
 When selecting Azure Blob Storage as a remote option there are several fields that need to be configured.
 
-![](./azure_blob_storage.png)
+![azure_blob_storage](./azure_blob_storage.png)
 
 #### Remote Backup Retention
 
-The amount of days that backup files will be kept in the remote storage provider location. 
-After this amount of days the files that are older will be removed.
+The number of days that backup files will be kept in the remote storage provider location.
+After this number of days, older files are removed.
 
 #### Base Remote Path
 
-This is the name of the container, you can also add subfolders if using shared containers or saving multiple clusters to the same container. By default AxonOps will save the backups to `/container/folder/org/clustertype/clustername/host-id/`
+This is the name of the container. You can also add subfolders if using shared containers or saving multiple clusters to the same container. By default AxonOps saves backups to `/container/folder/org/clustertype/clustername/host-id/`.
 
-The org/clustertype/clustername/host-id/ will match the top breadcrumb navigation in your AxonOps Dashboard.
+The `org/clustertype/clustername/host-id/` path matches the top breadcrumb navigation in the AxonOps Dashboard.
 
 Note: Azure container names must be lowercase and follow specific naming rules. See [Azure naming conventions](https://docs.microsoft.com/en-us/azure/storage/blobs/storage-blobs-introduction#containers)
 
@@ -108,6 +108,10 @@ Example SAS token format:
 ?sv=2020-08-04&ss=b&srt=sco&sp=rwdlacx&se=2024-12-31T23:59:59Z&st=2023-01-01T00:00:00Z&spr=https&sig=...
 ```
 
+## Storage account settings
+
+These settings are configured in Azure, not in AxonOps.
+
 #### Access Tier
 
 Azure Blob Storage offers different access tiers optimized for different data access patterns:
@@ -167,7 +171,7 @@ Normally AxonOps Backups will check that the checksums of transferred files matc
 
 ### Best Practices
 
-1. **Use SAS Tokens**: Prefer SAS tokens over account keys for better security
+1. **Use Managed Identity**: Prefer managed identities over account keys for better security
 2. **Enable Soft Delete**: Protect against accidental deletion
 3. **Set Lifecycle Policies**: Automatically move old backups to cooler tiers
 4. **Monitor Costs**: Use Azure Cost Management to track storage expenses
@@ -176,10 +180,8 @@ Normally AxonOps Backups will check that the checksums of transferred files matc
 ### Performance Optimization
 
 1. **Use Premium Storage**: For performance-critical restore operations
-2. **Enable Large File Shares**: For better throughput
-3. **Optimize Block Size**: Larger blocks for large files
-4. **Parallel Uploads**: Configure appropriate parallelism
-5. **CDN Integration**: For geo-distributed restore needs
+2. **Optimize Block Size**: Larger blocks for large files
+3. **Parallel Uploads**: Configure appropriate parallelism
 
 ### Cost Management
 

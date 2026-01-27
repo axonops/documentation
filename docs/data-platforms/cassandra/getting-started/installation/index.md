@@ -30,7 +30,6 @@ Before running any installation commands, certain decisions must be made that ar
 - **4.0**: Audit logging, full query logging, Java 11 support, improved compaction
 - **3.11**: Still runs Java 8, no audit logging, missing modern features
 
-!!! tip "Recommendation"
    Apache Cassandra 5.0 is GA and suitable for production when running a recent 5.0.x release. Use it for new clusters, and upgrade existing ones after normal staging validation.
 
 ---
@@ -1641,7 +1640,7 @@ ansible -i inventories/prd/hosts.ini cassandra -a "nodetool status"
 ansible -i inventories/prd/hosts.ini cassandra -a "tail -50 /var/log/cassandra/system.log"
 
 # Check AxonOps agent status
-ansible -i inventories/prd/hosts.ini cassandra -a "systemctl status axon-agent"
+ansible -i inventories/prd/hosts.ini cassandra -a "systemctl status AxonOps agent"
 ```
 
 ### Reference Implementation: AxonOps Cassandra Lab

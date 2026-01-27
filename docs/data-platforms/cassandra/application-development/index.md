@@ -138,4 +138,3 @@ When developing applications against Cassandra:
 - **[Data Modeling](../data-modeling/index.md)** — Principles for designing effective Cassandra data models
 - **[Drivers](drivers/index.md)** — Driver architecture, connection management, and policy configuration
 - **[Design Patterns](patterns/index.md)** — Battle-tested patterns for common use cases
-

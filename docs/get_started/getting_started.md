@@ -14,25 +14,25 @@ AxonOps components run on a wide array of operating systems including (but not l
 
 - Ubuntu
 - Debian
-- RedHat Enterprise Linux (RHEL)
+- Red Hat Enterprise Linux (RHEL)
 - Amazon Linux
 
 
 AxonOps Unified Monitoring consists of 4 main components:
 
 - axon-server
-    - backend that collects cluster information and interacts with your clusters.
+    - Backend that collects cluster information and interacts with your clusters.
 - axon-dash
-    - web UI to display and interact with your clusters.
-- axon-agent
+    - Web UI to display and interact with your clusters.
+- AxonOps agent
     - called from within the JVM to send metrics to axon-server.
 - storage engine
     - stores metrics, logs, configurations, and metadata about your cluster.
 
 
-Below are the steps to install and configure an on-premise AxonOps Unified Monitoring installation.
+Below are the steps to install and configure an on-premises AxonOps Unified Monitoring installation.
 
-### Setup Storage Engine
+### Set up Storage Engine
 
 Elasticsearch is always required and the default data storage for all Cassandra and Kafka metrics as well as application logs, AxonOps configuration and metrics metadata. 
 
@@ -50,17 +50,17 @@ We recommend [installing the latest available Elasticsearch release](../installa
 
 For more information please read more on setting up [Cassandra as a Metrics Database](../installation/axon-server/metricsdatabase.md).
 
-### Setup AxonOps Server
+### Set up AxonOps Server
 
 [Install and configure AxonOps Server (`axon-server`)](../installation/axon-server/axonserver_install.md).
 
-### Setup AxonOps Dashboard
+### Set up AxonOps Dashboard
 
 [Install and configure AxonOps Dashboard (`axon-dash`)](../installation/axon-dash/install.md).
 
-### Setup AxonOps Agent
+### Set up AxonOps Agent
 
-[Install and configure AxonOps Agent (`axon-agent`) for Cassandra or Kafka](../installation/agent/install.md).
+[Install and configure AxonOps Agent (`AxonOps agent`) for Cassandra or Kafka](../installation/agent/install.md).
 
 ## Alternative Installation Options
 
@@ -94,7 +94,7 @@ Instructions and files can be found [here](https://github.com/axonops/axonops-in
 
 ## Configuration Automation
 
-To easily setup alerts, dashboards, backups, integrations, and other configurations,
+To easily set up alerts, dashboards, backups, integrations, and other configurations,
 use this repository of Ansible playbooks to automate AxonOps configuration.
 
 Instructions and files can be found [here](https://github.com/axonops/axonops-config-automation).

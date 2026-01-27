@@ -12,26 +12,26 @@ AxonOps uses a powerful query language for dashboarding performance metrics coll
 
 ## Key Difference in AxonOps Query Language
 
-While most of the AxonOps query language is identical to Prometheus, there is a notable difference in the handling of the `rate` function, specifically for metrics of the "Count" type. AxonOps has implemented an optimized method for generating rate graphs for these metrics at the source in the agent. This method ensures accurate rated metrics, as well as faster query time for the rated metrics when compared to dynamically calculating at query time.
+While most of the AxonOps query language is identical to Prometheus, there is a notable difference in the handling of the `rate` function for metrics of the `Count` type. AxonOps generates rate values at the agent, which improves accuracy and reduces query time compared to computing rates at query time.
 
 ## Querying Rated Metrics
 
-To query rated metrics in AxonOps, you need to use a specific syntax that includes embedding the `axonfunction='rate'` label within the query. This informs the AxonOps agent to generate the rated values for the Count metrics data at source. The following is an example of how to structure such a query:
+To query rate metrics in AxonOps, include the `axonfunction='rate'` label in the query. This tells the agent to generate rate values for `Count` metrics at source. The following is an example of how to structure such a query:
 
 ### Example Query
 
 ```promql
-sum(kaf_BrokerTopicMetrics_MessagesInPerSec{axonfunction='rate',rack=~'$rack',host_id=~'$host_id',topic=~'$topic'}) by (host_id)
+sum(kaf_BrokerTopicMetrics_MessagesInPerSec{axonfunction='rate',dc=~'$dc',rack=~'$rack',host_id=~'$host_id',topic=~'$topic'}) by (host_id)
 ```
 
 ### Explanation of the Query
 
 - `sum()`: adds up the values returned by the metric 
 - `kaf_BrokerTopicMetrics_MessagesInPerSec`: The specific metric being queried.
-- `{axonfunction='rate', ...}`: The curly braces set the includes for e.g. `axonfunction='rate'`, which instructs the AxonOps agent to generate the rated values.
+- `{axonfunction='rate', ...}`: Label matchers (for example, `axonfunction='rate'`) instruct the AxonOps agent to generate rate values.
     - `axonfunction='rate'`: This label indicates that the agent should compute rate values.
     - `dc=~'$dc'`, `rack=~'$rack'`, `host_id=~'$host_id'`, `topic=~'$topic'`: Additional labels that allow filtering by data center, rack, host ID and topic using regular expressions.
-- `by (host_id)`: groups the metric query by host_id. can be grouped by host–id,topic,rack or dc.
+- `by (host_id)`: groups the metric query by host_id. You can group by `host_id`, `topic`, `rack`, or `dc`.
 
 ### Parameters
 
@@ -40,6 +40,3 @@ sum(kaf_BrokerTopicMetrics_MessagesInPerSec{axonfunction='rate',rack=~'$rack',ho
 - **`rack`**: Filters metrics by rack.
 - **`host_id`**: Filters metrics by host ID.
 - **`topic`**: A Topic Name
-
-
-

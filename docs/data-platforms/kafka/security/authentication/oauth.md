@@ -87,7 +87,7 @@ C -> B : Re-authenticate\n(new token)
 
 ---
 
-## Identity Provider Setup
+## Identity Provider Set up
 
 ### Azure AD / Entra ID
 
@@ -167,7 +167,7 @@ JWKS URI: https://{keycloak}/realms/{realm}/protocol/openid-connect/certs
 
 ## Broker Configuration (Kafka 3.1+)
 
-### Basic OIDC Setup
+### Basic OIDC Set up
 
 ```properties
 # server.properties

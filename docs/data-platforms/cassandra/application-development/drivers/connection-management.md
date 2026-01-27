@@ -402,4 +402,3 @@ for (Node node : session.getMetadata().getNodes().values()) {
 
 - **[Reconnection Policy](policies/reconnection.md)** — Configuring reconnection behavior after node failures
 - **[Load Balancing Policy](policies/load-balancing.md)** — How requests are distributed across connections
-

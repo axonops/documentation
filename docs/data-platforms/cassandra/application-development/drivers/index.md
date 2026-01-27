@@ -208,4 +208,3 @@ All major drivers implement similar concepts (policies, connection pooling, prep
 - **[Policies](policies/index.md)** — Load balancing, retry, reconnection, and speculative execution
 - **[Prepared Statements](prepared-statements.md)** — Efficient query execution with prepared statements
 - **[Best Practices](best-practices.md)** — Production configuration recommendations
-

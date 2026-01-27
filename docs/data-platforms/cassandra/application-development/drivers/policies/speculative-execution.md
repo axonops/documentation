@@ -323,4 +323,3 @@ Optimal thresholds vary significantly by workload, cluster topology, and latency
 
 - **[Retry Policy](retry.md)** — Error handling (complementary to speculative execution)
 - **[Load Balancing Policy](load-balancing.md)** — Node selection for speculative requests
-

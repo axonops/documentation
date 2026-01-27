@@ -24,7 +24,7 @@ Configure AI providers for natural language query generation in CQLAI.
 
 ## OpenAI Configuration
 
-### Setup
+### Set up
 
 ```bash
 # Environment variable
@@ -59,7 +59,7 @@ ai:
 
 ## Anthropic Configuration
 
-### Setup
+### Set up
 
 ```bash
 export CQLAI_AI_PROVIDER=anthropic
@@ -88,7 +88,7 @@ ai:
 
 ## Azure OpenAI Configuration
 
-### Setup
+### Set up
 
 ```bash
 export CQLAI_AI_PROVIDER=azure
@@ -110,7 +110,7 @@ ai:
 
 ## AWS Bedrock Configuration
 
-### Setup
+### Set up
 
 ```bash
 export CQLAI_AI_PROVIDER=bedrock
@@ -132,7 +132,7 @@ ai:
 
 ## Google Vertex AI Configuration
 
-### Setup
+### Set up
 
 ```bash
 export CQLAI_AI_PROVIDER=vertex

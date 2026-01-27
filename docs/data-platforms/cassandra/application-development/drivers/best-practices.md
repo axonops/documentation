@@ -364,4 +364,3 @@ Before deploying to production:
 - **[Connection Management](connection-management.md)** — Connection pooling details
 - **[Policies](policies/index.md)** — Policy configuration reference
 - **[Prepared Statements](prepared-statements.md)** — Statement preparation and caching
-

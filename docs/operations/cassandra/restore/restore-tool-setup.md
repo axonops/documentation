@@ -18,10 +18,10 @@ sudo apt-get install -y curl gnupg ca-certificates
 curl -L https://packages.axonops.com/apt/repo-signing-key.gpg | sudo gpg --dearmor -o /usr/share/keyrings/axonops.gpg
 echo "deb [arch=arm64,amd64 signed-by=/usr/share/keyrings/axonops.gpg] https://packages.axonops.com/apt axonops-apt main" | sudo tee /etc/apt/sources.list.d/axonops-apt.list
 sudo apt-get update
-sudo apt-get install axon-agent
+sudo apt-get install AxonOps agent
 ```
 
-#### Installing on CentOS / RedHat
+#### Installing on CentOS / Red Hat
 
 ```bash
 sudo tee /etc/yum.repos.d/axonops-yum.repo << EOL
@@ -32,7 +32,7 @@ enabled=1
 repo_gpgcheck=0
 gpgcheck=0
 EOL
-sudo yum install axon-agent
+sudo yum install AxonOps agent
 ```
 
 After the package has been installed you can find the Cassandra Restore Tool at `/usr/share/axonops/axon-cassandra-restore`.
@@ -59,7 +59,7 @@ Usage of /usr/share/axonops/axon-cassandra-restore:
       --org-id string                   ID of the AxonOps organisation from which the backup was created
   -r, --restore                         Restore a backup from remote storage
       --restore-commitlogs              Download commitlog segments from remote storage
-      --restore-peerlist                Enable restoring the systyem.peers and system.peers_v2 tables (disabled by default)
+      --restore-peerlist                Enable restoring the system.peers and system.peers_v2 tables (disabled by default)
       --restore-schema                  Set this when using --use-sstable-loader to restore the CQL schema for each table. Keyspaces must already exist.
       --set-owner string                Set ownership of restored files/directories (user, user.group, or user:group). Requires root.
   -e, --skip-existing-files             Don't download files that already exist in the local destination path
@@ -83,11 +83,11 @@ The `--source-hosts` IDs used by `axon-cassandra-restore` are the IDs given to e
 
 You can find the AxonOps host ID by selecting the node on the `Cluster Overview` page of the AxonOps dashboard and looking at the `Agent ID` field.
 
-## Storage Config and Storage Config File options
+## Storage Config and Storage Config File options
 
 > **The `--storage-config-file` option was added to v1.0.95 and later of AxonOps Agent**
 
-The `axonops-cassandra-restore` tool has two options when passing the remote storage configuration:
+The `axon-cassandra-restore` tool has two options when passing the remote storage configuration:
 
 * reference a [pre-populated JSON file](#storage-config-file-examples) to `--storage-config-file`
 * pass a [JSON-formatted string](#storage-config-examples) to `--storage-config`
@@ -98,7 +98,7 @@ The `axonops-cassandra-restore` tool has two options when passing the remote sto
 
 This method is ideal when restoring across multiple nodes in a cluster and when running verification tests since this file can easily be transferred across nodes and simplifies the command line arguments.
 
-Most paramters are straight-forward and match the settings found in the AxonOps Backup GUI, including the `path` parameter which matches the `Base Remote Path` setting.
+Most parameters are straightforward and match the settings found in the AxonOps Backup GUI, including the `path` parameter which matches the `Base Remote Path` setting.
 
 Below are some example files that can be passed into the `--storage-config-file` argument.
 
@@ -188,4 +188,3 @@ Here are some examples of the most common storage types that can be passed to `-
 ```sh
 --storage-config '{"type":"sftp","host":"<sftp_server_hostname>","port":"22","path":"/backup/path","user":"<sftp_username>","pass":"<sftp_password>"}'
 ```
-

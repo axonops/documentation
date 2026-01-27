@@ -13,7 +13,7 @@ axon-server:
   # hosts: "${AXONOPS_SERVER_HOSTS}" # AxonOps Server On-Premise Endpoint
   # port: 1888 # AxonOps Server On-Premise Port (Default is 1888)
 
-axon-agent:
+AxonOps agent:
   key: "<THIS_IS_A_DUMMY_KEY_PLEASE_UPDATE>"
   org: "<THIS_IS_A_DUMMY_ORG_NAME_PLEASE_UPDATE>"
   cluster_name: "<THIS_IS_A_DUMMY_CLUSTER_NAME_PLEASE_UPDATE>"
@@ -28,10 +28,10 @@ axon-agent:
 # NTP:
 #    hosts:
 #        - "x.x.x.x:123"
-# Optionally restrict which commands can be executed by axon-agent.
-# If "true", only scripts placed in scripts_location can be executed by axon-agent.
+# Optionally restrict which commands can be executed by AxonOps agent.
+# If "true", only scripts placed in scripts_location can be executed by AxonOps agent.
 # disable_command_exec: false
-# If disable_command_exec is true then axon-agent is only allowed to execute scripts
+# If disable_command_exec is true then AxonOps agent is only allowed to execute scripts
 # under this path
 # scripts_location: /var/lib/axonops/scripts/
 
@@ -78,7 +78,7 @@ axon-server:
   # hosts: "${AXONOPS_SERVER_HOSTS}" # AxonOps Server On-Premise Endpoint
   # port: 1888 # AxonOps Server On-Premise Port (Default is 1888)
 
-axon-agent:
+AxonOps agent:
   key: "<THIS_IS_A_DUMMY_KEY_PLEASE_UPDATE>"
   org: "<THIS_IS_A_DUMMY_ORG_NAME_PLEASE_UPDATE>"
   cluster_name: "<THIS_IS_A_DUMMY_CLUSTER_NAME_PLEASE_UPDATE>"
@@ -94,10 +94,10 @@ axon-agent:
 # NTP:
 #    hosts:
 #        - "x.x.x.x:123"
-# Optionally restrict which commands can be executed by axon-agent.
-# If "true", only scripts placed in scripts_location can be executed by axon-agent.
+# Optionally restrict which commands can be executed by AxonOps agent.
+# If "true", only scripts placed in scripts_location can be executed by AxonOps agent.
 # disable_command_exec: false
-# If disable_command_exec is true then axon-agent is only allowed to execute scripts
+# If disable_command_exec is true then AxonOps agent is only allowed to execute scripts
 # under this path
 # scripts_location: /var/lib/axonops/scripts/
 
@@ -115,7 +115,7 @@ axon-server:
   # hosts: "${AXONOPS_SERVER_HOSTS}" # AxonOps Server On-Premise Endpoint
   # port: 1888 # AxonOps Server On-Premise Port (Default is 1888)
 
-axon-agent:
+AxonOps agent:
   key: "<THIS_IS_A_DUMMY_KEY_PLEASE_UPDATE>"
   org: "<THIS_IS_A_DUMMY_ORG_NAME_PLEASE_UPDATE>"
   cluster_name: "<THIS_IS_A_DUMMY_CLUSTER_NAME_PLEASE_UPDATE>"
@@ -131,10 +131,10 @@ axon-agent:
 # NTP:
 #    hosts:
 #        - "x.x.x.x:123"
-# Optionally restrict which commands can be executed by axon-agent.
-# If "true", only scripts placed in scripts_location can be executed by axon-agent.
+# Optionally restrict which commands can be executed by AxonOps agent.
+# If "true", only scripts placed in scripts_location can be executed by AxonOps agent.
 # disable_command_exec: false
-# If disable_command_exec is true then axon-agent is only allowed to execute scripts
+# If disable_command_exec is true then AxonOps agent is only allowed to execute scripts
 # under this path
 # scripts_location: /var/lib/axonops/scripts/
 
@@ -181,7 +181,7 @@ axon-server:
   # hosts: "${AXONOPS_SERVER_HOSTS}" # AxonOps Server On-Premise Endpoint
   # port: 1888 # AxonOps Server On-Premise Port (Default is 1888)
 
-axon-agent:
+AxonOps agent:
   key: "<THIS_IS_A_DUMMY_KEY_PLEASE_UPDATE>"
   org: "<THIS_IS_A_DUMMY_ORG_NAME_PLEASE_UPDATE>"
   cluster_name: "<THIS_IS_A_DUMMY_CLUSTER_NAME_PLEASE_UPDATE>"
@@ -197,10 +197,10 @@ axon-agent:
 # NTP:
 #    hosts:
 #        - "x.x.x.x:123"
-# Optionally restrict which commands can be executed by axon-agent.
-# If "true", only scripts placed in scripts_location can be executed by axon-agent.
+# Optionally restrict which commands can be executed by AxonOps agent.
+# If "true", only scripts placed in scripts_location can be executed by AxonOps agent.
 # disable_command_exec: false
-# If disable_command_exec is true then axon-agent is only allowed to execute scripts
+# If disable_command_exec is true then AxonOps agent is only allowed to execute scripts
 # under this path
 # scripts_location: /var/lib/axonops/scripts/
 
@@ -247,7 +247,7 @@ axon-server:
   # hosts: "${AXONOPS_SERVER_HOSTS}" # AxonOps Server On-Premise Endpoint
   # port: 1888 # AxonOps Server On-Premise Port (Default is 1888)
 
-axon-agent:
+AxonOps agent:
   key: "<THIS_IS_A_DUMMY_KEY_PLEASE_UPDATE>"
   org: "<THIS_IS_A_DUMMY_ORG_NAME_PLEASE_UPDATE>"
   cluster_name: "<THIS_IS_A_DUMMY_CLUSTER_NAME_PLEASE_UPDATE>"
@@ -263,10 +263,10 @@ axon-agent:
 # NTP:
 #    hosts:
 #        - "x.x.x.x:123"
-# Optionally restrict which commands can be executed by axon-agent.
-# If "true", only scripts placed in scripts_location can be executed by axon-agent.
+# Optionally restrict which commands can be executed by AxonOps agent.
+# If "true", only scripts placed in scripts_location can be executed by AxonOps agent.
 # disable_command_exec: false
-# If disable_command_exec is true then axon-agent is only allowed to execute scripts
+# If disable_command_exec is true then AxonOps agent is only allowed to execute scripts
 # under this path
 # scripts_location: /var/lib/axonops/scripts/
 
@@ -277,10 +277,10 @@ kafka:
 </div>
 
 <!-- Set the Axon-Agent File Permissions -->
-Set file permissions on /etc/axonops/axon-agent.yml file by executing the following command
+Set file permissions on /etc/axonops/AxonOps agent.yml file by executing the following command
 
 ```shell
-sudo chmod 0640 /etc/axonops/axon-agent.yml
+sudo chmod 0640 /etc/axonops/AxonOps agent.yml
 ```
 
 <!-- Step 4 -->

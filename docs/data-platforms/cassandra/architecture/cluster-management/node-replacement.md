@@ -362,4 +362,3 @@ The hint window (default: 3 hours) determines whether hinted handoff can cover w
 - **[Scaling Operations](scaling.md)** - Capacity planning after node removal
 - **[Fault Tolerance](../fault-tolerance/index.md)** - Failure scenarios and recovery patterns
 - **[Operations: Cluster Management](../../operations/cluster-management/index.md)** - Step-by-step procedures
-

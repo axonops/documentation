@@ -816,4 +816,3 @@ In very large clusters (500+ nodes):
 - **[Replication](../distributed-data/replication.md)** - How gossip enables replica placement decisions
 - **[Consistency](../distributed-data/consistency.md)** - How gossip enables consistency level guarantees
 - **[Partitioning](../distributed-data/partitioning.md)** - Token ownership propagated via gossip
-

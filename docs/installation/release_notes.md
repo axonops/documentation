@@ -6,7 +6,7 @@ meta:
     content: "release notes, AxonOps updates, changelog, new features"
 ---
 
-## Release 2026-01-22
+# Release 2026-01-22
 
 * axon-cassandra5.0-agent: 1.0.13
     * Kubernetes compatibility and metric filtering improvements.
@@ -34,7 +34,7 @@ meta:
     * Elasticsearch DataStreams migration, Kafka improvements, and stability fixes for repairs.
 * axon-dash: 2.0.22
     * Kafka management improvements, dashboard customization, and various UI fixes.
-* axon-agent: 2.0.14
+* AxonOps agent: 2.0.14
     * Fix for metric calculations.
 
 ### Fixes
@@ -81,7 +81,7 @@ meta:
 
 ## Release 2025-12-12
 
-* axon-agent: 2.0.12
+* AxonOps agent: 2.0.12
     * Command-line restore tool enhancements and security updates.
 
 ### Fixes
@@ -99,7 +99,7 @@ meta:
 
 ## Release 2025-11-18
 
-* axon-agent: 2.0.11
+* AxonOps agent: 2.0.11
     * Kafka connector and S3 backup fixes.
 * axon-cassandra5.0-agent: 1.0.11
     * Cassandra 5 metrics fix.
@@ -175,7 +175,7 @@ meta:
 
 ## Release 2025-10-30
 
-* axon-agent: 2.0.10
+* AxonOps agent: 2.0.10
     * Kafka logging improvements, proxy support, and security updates.
 
 ### Fixes
@@ -291,7 +291,7 @@ meta:
 
 * axon-server: 2.0.8
     * Prevents erroneously raised snapshot errors.
-* axon-agent: 2.0.7
+* AxonOps agent: 2.0.7
     * Strengthen connection management and environment variable configurations for Kafka agent.
 
 ### Fixes
@@ -334,7 +334,7 @@ meta:
 
 * axon-server: 2.0.5
     * Mainly new features and simple bug fixes.
-* axon-agent: 2.0.6
+* AxonOps agent: 2.0.6
     * Introduction of new, efficient log collector. Tested thoroughly with edge cases.
 * axon-dash: 2.0.9
     * Fixes for adaptive repairs and Alerts dashboard timeline, along with new features.
@@ -363,7 +363,7 @@ meta:
 
 * axon-server: 2.0.4
     * Internal messages for repairs and backups have changed.
-* axon-agent: 2.0.5
+* AxonOps agent: 2.0.5
     * Internal messages for repairs and backups have changed.
     * OpenSearch support required changes that could have affected Elasticsearch access
       code. Routinely tested with our nightly builds.
@@ -419,7 +419,7 @@ meta:
 
 ## Release 2025-06-24
 
-* axon-agent: 2.0.4
+* AxonOps agent: 2.0.4
 * axon-kafka3-agent: 1.0.1
 * axon-kafka2-agent: 1.0.1
 

@@ -185,7 +185,7 @@ With vnodes enabled (recommended), tokens should be:
 - Each node has the same number of tokens (typically 256)
 - Ownership percentages roughly equal
 
-### Single-Token Setup (Legacy)
+### Single-Token Set up (Legacy)
 
 ```
 192.168.1.101    rack1       Up      Normal  256.12 GiB      33.33%   0

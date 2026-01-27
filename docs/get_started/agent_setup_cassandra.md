@@ -4,13 +4,13 @@
 
 <h2>Agent Configuration </h2>
 
-<p>Update the following highlighted lines from <code>/etc/axonops/axon-agent.yml</code>:</p>
+<p>Update the following highlighted lines from <code>/etc/axonops/AxonOps agent.yml</code>:</p>
 <p>Please update the <strong>key</strong> and <strong>org</strong> values, they can be viewed by logging into <a href="https://console.axonops.cloud" target="_blank">console.axonops.cloud</a></p>
 <ul>
 <li><strong>Organization (org)</strong> name is next to the logo in the console</li>
 <li><strong>Agent Keys (key)</strong> found in Agent Setup</li>
 </ul>
-<p><img src="/get_started/agent_keys.png" /></p>
+<p><img src="/get_started/agent_keys.png" / alt="agent_keys"></p>
 
 If there is a Dedicated NTP server in your Organization please uncomment and update the NTP section. 
 
@@ -18,7 +18,7 @@ If there is a Dedicated NTP server in your Organization please uncomment and upd
   axon-server:
       hosts: "agents.axonops.cloud"
   
-  axon-agent:
+  AxonOps agent:
       key: <THIS_IS_A_DUMMY_KEY_PLEASE_UPDATE>
       org: <THIS_IS_A_DUMMY_ORG_NAME_PLEASE_UPDATE>
 
@@ -28,18 +28,18 @@ If there is a Dedicated NTP server in your Organization please uncomment and upd
   # NTP:
   #    hosts:
   #        - "x.x.x.x:123"
-  # Optionally restrict which commands can be executed by axon-agent.
-  # If "true", only scripts placed in scripts_location can be executed by axon-agent.
+  # Optionally restrict which commands can be executed by AxonOps agent.
+  # If "true", only scripts placed in scripts_location can be executed by AxonOps agent.
   # disable_command_exec: false
-  # If disable_command_exec is true then axon-agent is only allowed to execute scripts
+  # If disable_command_exec is true then AxonOps agent is only allowed to execute scripts
   # under this path
   # scripts_location: /var/lib/axonops/scripts/
 ```
 
-Set file permissions on /etc/axonops/axon-agent.yml file by executing the following command
+Set file permissions on /etc/axonops/AxonOps agent.yml file by executing the following command
 
 ```
-sudo chmod 0640 /etc/axonops/axon-agent.yml
+sudo chmod 0640 /etc/axonops/AxonOps agent.yml
 ```
 
 <h2>Configure Cassandra</h2>

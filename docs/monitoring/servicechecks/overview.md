@@ -6,48 +6,48 @@ meta:
     content: "service checks, health checks, availability monitoring"
 ---
 
-## Overview
+# Overview
 
-Service Checks in AxonOps allows you to configure custom checks using three types of checks:
+Service Checks in AxonOps lets you configure custom checks using three types of checks:
 
 1. Shell Scripts
 2. HTTP endpoint checks
 3. TCP endpoint checks
 
 
-The functionality is accessible via the ***Service Checks*** menu
+The functionality is accessible via the **Service Checks** menu.
 
 You can list the service checks by **node**:
-![](./0.JPG)
+![0](./0.JPG)
 
 Or by **services**:
-![](./1.JPG)
+![1](./1.JPG)
 
 
-You can click on a row within the node view to see all the `services` for that given **Node**.
-![](./3.JPG)
+You can click on a row within the node view to see all the **services** for that given node.
+![3](./3.JPG)
 
 
 The following shows a successful check:
 
-![](4.png)
+![4](4.png)
 
 And a failing check:
 
-![](5.png)
+![5](5.png)
 
 ## Configure service checks
-To set up the checks, go to ***Settings > Service Checks*** and click one of the `+` buttons
+To set up checks, go to **Settings > Service Checks** and click one of the **+** buttons.
 
-![](./2.JPG)
+![2](./2.JPG)
 > Any changes made and saved are automatically pushed down to the agents. There is no need to deploy the check scripts to individual servers like you may do for instance with Nagios. The status will show once the check has been executed on the agent, so it might take some time depending on the interval you have specified within the Service Checks. Although the first execution of the checks will be spread across 30 seconds to prevent running all the checks at the same time.
 
 ## Service checks templating
 You can provide templated checks with the following pattern: `{{.variable_name}}`
 
-![](2021-01-08-18-32-37.png)
+![2021-01-08-18-32-37](2021-01-08-18-32-37.png)
 
->`{{.comp_listen_address}}` will be replace with **Cassandra listen address**.
+>`{{.comp_listen_address}}` will be replaced with the **Cassandra listen address**.
 
 For instance, port `7000` in the previous example for ***check storage port*** could be replaced with **{{.comp_storage_port}}** on a Cassandra cluster:
 
@@ -57,7 +57,7 @@ endpoint: `{{.comp_listen_address}}:{{.comp_storage_port}}`
 
 ## Cassandra variables
 Here is the full list of variables that can be specified in any service check:
-```
+```text
 agent_version
 comp_PROPERTY_PREFIX
 comp_SENSITIVE_KEYS

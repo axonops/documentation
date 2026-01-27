@@ -8,13 +8,13 @@ meta:
 
 # Kafka Consumers
 
-## What is a Consumer
+## What is a consumer?
 
 Kafka consumers are client applications that read (consume) messages from Kafka topics. 
 They are fundamental for retrieving and processing data from a Kafka cluster. 
 Consumers connect to Kafka brokers, subscribe to one or more topics, and continuously poll for new messages to process.
 
-### How Consumers Work:
+### How consumers work
 
 A consumer subscribes to one or more topics and fetches messages from assigned partitions.
 
@@ -32,28 +32,28 @@ Multiple consumer groups can independently consume the same data from a topic, s
 - Event-driven microservices
 - Data ingestion pipelines
 
-### Key Configuration Tips:
+### Key Configuration Tips
 
 - Use a unique `group.id` for each logical application or processing pipeline.
 
-- Decide between automatic (`enable.auto.commit=true`) and manual offset commits depending on your need for processing guarantees.
+- Decide between automatic (`enable.auto.commit=true`) and manual offset commits depending on your required processing guarantees.
 
 - Adjust `max.poll.records` and `max.poll.interval.ms` based on your message processing time and throughput needs.
 
-- Set up security parameters (security.protocol, SSL/SASL configs) if your Kafka cluster requires authentication or encryption
+- Set up security parameters (`security.protocol`, SSL/SASL configs) if your Kafka cluster requires authentication or encryption.
 
-### View consumer List and Consumer Metrics
+### View consumer list and consumer metrics
 
-#### Click Consumer in the Left Navigation
+#### Click Consumers in the left navigation
 
-Navigate to the Consumers Section
+Navigate to the Consumers section.
 
-<img src="/kafka/consumers/consumer_click.png" width="700">
+<img src="../consumer_click.png" width="700" alt="Consumers navigation item">
 
-#### Click any of the Consumers in the list
+#### Click any of the consumers in the list
 
-<img src="/kafka/consumers/consumer_overview.png" width="700">
+<img src="../consumer_overview.png" width="700" alt="Consumer overview page">
 
 #### Partitions and Consumer Overview
 
-<img src="/kafka/consumers/consumer_metrics.png" width="700">
+<img src="../consumer_metrics.png" width="700" alt="Consumer metrics panel">

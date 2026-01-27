@@ -316,4 +316,3 @@ Monitor retry behavior in production:
 
 - **[Load Balancing Policy](load-balancing.md)** — Determines which node receives retry
 - **[Speculative Execution](speculative-execution.md)** — Alternative to retry for latency reduction
-

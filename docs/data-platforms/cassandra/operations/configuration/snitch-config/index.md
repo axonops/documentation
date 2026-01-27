@@ -41,7 +41,7 @@ prefer_local=true
 dc_suffix=_analytics
 ```
 
-### Multi-DC Setup
+### Multi-DC Set up
 
 ```properties
 # Node in DC1

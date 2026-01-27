@@ -347,7 +347,7 @@ fi
 nodetool statusautocompaction -a | grep "running=false"
 ```
 
-### Verifying Bulk Load Setup
+### Verifying Bulk Load Set up
 
 ```bash
 # Before bulk load - verify target table is disabled

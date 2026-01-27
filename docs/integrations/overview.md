@@ -6,24 +6,25 @@ meta:
     content: "integrations overview, notifications, alerting channels, AxonOps"
 ---
 
-AxonOps provide various integrations for the notifications.
+# Incident Management Integration
+
+AxonOps provides several integrations for notifications.
 
 The functionality is accessible via ***Settings > Integrations***
 
 The current integrations are:
 
 * [SMTP / Email](email-integration.md)
-* [Pagerduty](pagerduy-integration.md)
+* [PagerDuty](pagerduty-integration.md)
 * [Slack](slack-integration.md)
 * [Microsoft Teams](microsoft-teams-integration.md)
 * [ServiceNow](servicenow-integration.md)
-* OpsGenie
-* Generic webhooks
+* OpsGenie (coming soon)
+* Generic webhooks (coming soon)
 * [Log file](log-file-integration.md) (configurable through `axon-server.yml`)
 
-!!! infomy
 
-![](imgs/integrations.png)
+![integrations](imgs/integrations.png)
 
 ## Incident Management Integration
 
@@ -55,25 +56,26 @@ For more information on configuring alert grouping and incident rules, see:
 * [PagerDuty: Content-Based Alert Grouping](https://support.pagerduty.com/main/docs/content-based-alert-grouping) - Group alerts based on matching field values like source, component, or severity
 * [PagerDuty: Time-Based Alert Grouping](https://support.pagerduty.com/main/docs/time-based-alert-grouping) - Group all alerts on a service within a specified time window
 
-##  Routing
-AxonOps provide a rich routing mechanism for the notifications.
+## Routing
+
+AxonOps provides a rich routing mechanism for notifications.
 
 The current routing options are:
 
-* Global - this will route all the notifications
-* Metrics - notifications about the alerts on metrics
-* Backups - notifications about the backups / restore
-* Service Checks - notifications about the service checks / health checks
-* Nodes - notifications raised from the nodes
+* Global - routes all notifications
+* Metrics - alerts on metrics
+* Backups - backups and restore events
+* Service Checks - service checks and health checks
+* Nodes - notifications raised from nodes
 * Commands - notifications from generic tasks
 * Repairs - notifications from Cassandra repairs
-* Rolling Restart - notification from the rolling restart feature
+* Rolling Restart - notifications from the rolling restart feature
 
-Each severity (`info, warning, error`) can be routed independently 
+Each severity (`info`, `warning`, `error`) can be routed independently.
 
-   ![](imgs/routing.jpg)
+   ![routing](imgs/routing.jpg)
 
-## Errors per routing mechanism and severity levels
+## Errors per routing mechanism and severity levels
 
 ### Backup
 
@@ -82,25 +84,24 @@ Each severity (`info, warning, error`) can be routed independently
 | Backup     | Critical	      | Any error that is returned from the 3rd party remote location providers. |
 | Backup     | Warning	      | Clear local snapshots timed out                                          |
 | Backup     | Warning	      | Unable to find local snapshot                                            |
-| Backup     | Warning	      | Local backup process erros                                               |
+| Backup     | Warning	      | Local backup process errors                                              |
 | Backup     | Warning	      | Clear remote snapshot timed out                                          |
 | Backup     | Warning	      | Remote backup process errors                                             |
 | Backup     | Warning	      | Unable to find remote snapshot                                           |
-| Backup     | Warning	      | Clear remote snapshot timed out                                          |
 | Backup     | Warning	      | Backup not triggered (Backups paused)                                    |
 | Backup     | Warning	      | Failed to create backup                                                  |
 | Backup     | Warning	      | Failed to create remote config for backups                               |
-| Backup     | Warning	      | Create cassandra snapshot failed                                         |
+| Backup     | Warning	      | Create Cassandra snapshot failed                                         |
 | Backup     | Warning	      | Snapshot request timed out                                               |
 | Backup     | Warning	      | Cassandra node is inactive                                               |
 | Backup     | Info	          | Local backup created successfully                                        |
-| Backup     | Info	          | Backup deleted succesfully                                               |
+| Backup     | Info	          | Backup deleted successfully                                               |
 
 ### Repair
 
 | **Source** | **Severity**   | **Description**                                                          |
 | :--------- | :------------- | :----------------------------------------------------------------------- |
-| Repair     | Critical	      | Update repairs error, can be casued by tables being created or removed while a repair is running  |
+| Repair     | Critical	      | Update repairs error, can be caused by tables being created or removed while a repair is running  |
 | Repair     | Critical	      | Any error that is generated by Cassandra for a repair processes                                   |
 | Repair     | Critical	      | Repair job is over 60% complete and the estimated time to completion is after gc_grace deadline   |
 | Repair     | Warning	      | Repair job is over 40% complete and the estimated time to completion is after gc_grace deadline   |
@@ -110,4 +111,3 @@ Each severity (`info, warning, error`) can be routed independently
 | Repair     | Warning	      | Repair unit errors                                                                                |
 | Repair     | Warning	      | Repair errors for nonexistent correlation ID                                                      |
 | Repair     | Warning	      | Repair request timed out after n-amount of attempts to connect to host                            |
-

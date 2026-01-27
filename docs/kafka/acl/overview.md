@@ -6,7 +6,7 @@ meta:
     content: "Kafka ACL overview, access control, AxonOps Kafka"
 ---
 
-# Topic Access Control List (ACL)
+# Topic Access Control List (ACL)
 
 ## What is an Access Control List
 
@@ -43,8 +43,6 @@ Format examples:
 
 `User:admin`
 
-`Group:devs`
-
 #### Operations
 
 Define which users or services (principals) can perform specific operations.
@@ -62,7 +60,7 @@ Define which users or services (principals) can perform specific operations.
 | DESCRIBE | View metadata of a resource (e.g., see topic or group details) | Topic, Group, Cluster |
 | DESCRIBE_CONFIGS |	View resource configuration |	Topic, Cluster |
 | CLUSTER_ACTION | Perform internal cluster operations (e.g., leader election, replication) |	Cluster |
-| ALL	All | possible operations (admin-level permission) | Any |
+| ALL | All possible operations (admin-level permission) | Any |
 | IDEMPOTENT_WRITE |	Allow idempotent producer operations| Cluster |
 
 ##### Transactional and Delegation Token Operations
@@ -72,7 +70,7 @@ Define which users or services (principals) can perform specific operations.
 | WRITE |	Initiate and commit/abort transactions |	TransactionalId |
 | DESCRIBE |	View transactional state or delegation token details |	TransactionalId, DelegationToken |
 
-#### Resource Types
+#### Resource Types
 
 The type of Kafka resource to which the ACL applies:
 

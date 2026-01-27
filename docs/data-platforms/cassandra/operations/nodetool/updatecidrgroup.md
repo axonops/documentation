@@ -95,7 +95,7 @@ nodetool updatecidrgroup office_network 192.168.1.0/24 192.168.2.0/24 192.168.3.
 
 ## When to Use
 
-### Initial Setup
+### Initial Set up
 
 ```bash
 # Define network groups during cluster setup

@@ -441,4 +441,3 @@ String query = "SELECT * FROM users WHERE id IN (" +
 
 - **[Load Balancing Policy](policies/load-balancing.md)** — Token-aware routing with prepared statements
 - **[CQL Reference](../../cql/index.md)** — Query syntax
-

@@ -1,42 +1,39 @@
 ---
-title: "Setup Dashboards Global Integrations"
+title: "Set up Dashboards Global Integrations"
 description: "Set up global dashboard integrations in AxonOps. Configure organization-wide settings."
 meta:
   - name: keywords
     content: "global integrations, dashboard setup, AxonOps configuration"
 ---
 
-# Setup Dashboards Global Integrations
+# Set up Dashboards Global Integrations
 
 
 
-On the Axonops application menu, click `Alerts & Notifications -> Active` and select `Dashboards Global Routing` tab.
+On the AxonOps application menu, click `Alerts & Notifications -> Active` and select `Dashboards Global Routing` tab.
 
 ## Notification Severities.
 
-!!! info "Notification Severities."
 
-    For each notifications severity  <span class="buttons">[![info](../img/info.png)](../img/info.png) </span> Info    <span class="buttons">[![warning](../img/warning.png)](../img/warning.png) </span> Warning    <span class="buttons">[![error](../img/error.png)](../img/error.png) </span> Error
-    you can either use the slider <span class="buttons"> [![sliderbar](../img/sliderbar.png)](../img/sliderbar.png) </span> to use the default routing or use the <span class="buttons"> [![editwarningIcon](../img/editwarningIcon.png)](../img/editwarningIcon.png) </span>  icon to customize the notification integrations.
-    > Notice: <span class="buttons">[![editwarningIcon](../img/editwarningIcon.png)](../img/editwarningIcon.png) </span> not available when [default routing][1] <span class="buttons">[![defaultroutingselected](../img/defaultroutingselected.png)](../img/defaultroutingselected.png) </span> selected
+For each notifications severity  <span class="buttons">[![info](../img/info.png)](../img/info.png) </span> Info    <span class="buttons">[![warning](../img/warning.png)](../img/warning.png) </span> Warning    <span class="buttons">[![error](../img/error.png)](../img/error.png) </span> Error
+you can either use the slider <span class="buttons"> [![sliderbar](../img/sliderbar.png)](../img/sliderbar.png) </span> to use the default routing or use the <span class="buttons"> [![editwarningIcon](../img/editwarningIcon.png)](../img/editwarningIcon.png) </span>  icon to customize the notification integrations.
+> Notice: <span class="buttons">[![editwarningIcon](../img/editwarningIcon.png)](../img/editwarningIcon.png) </span> not available when [default routing][1] <span class="buttons">[![defaultroutingselected](../img/defaultroutingselected.png)](../img/defaultroutingselected.png) </span> selected
 
 
 [1]: default-routing.md
 
-!!! infomy 
 
-    [![globaldashboardroutings](../img/globaldashboardroutings.png)](../img/globaldashboardroutings.png)
+[![globaldashboardroutings](../img/globaldashboardroutings.png)](../img/globaldashboardroutings.png)
 
 
 ## Customize Notifications.
 
 To customize notifications `click` on <span class="buttons">[![editwarningIcon](../img/editwarningIcon.png)](../img/editwarningIcon.png)</span> select the integrations that you require and click `Close`.
 
-!!! infomy 
 
-    [![customizednotifications](../img/customizednotifications.png)](../img/customizednotifications.png)
+[![customizednotifications](../img/customizednotifications.png)](../img/customizednotifications.png)
 
-     > Noticed: The` Warning Integration` were customized. You can remove these by clicking the <span class="buttons">[![delbtn](../img/delbtn.png)](../img/delbtn.png)</span>.
+ > Noticed: The` Warning Integration` were customized. You can remove these by clicking the <span class="buttons">[![delbtn](../img/delbtn.png)](../img/delbtn.png)</span>.
 
 
 > If you want to remove [default routing][1] groups from a severity and create custom groups , use the slider bar to remove default routing `click` the <span class="buttons">[![editwarningIcon](../img/editwarningIcon.png)](../img/editwarningIcon.png) </span> and follow this [steps][2]
@@ -45,7 +42,5 @@ To customize notifications `click` on <span class="buttons">[![editwarningIcon](
 
 [2]: #notification-severities
 
-!!! infomy 
 
-    [![globaldashboardroutings](../img/globaldashboardroutings.png)](../img/globaldashboardroutings.png)
-
+[![globaldashboardroutings](../img/globaldashboardroutings.png)](../img/globaldashboardroutings.png)

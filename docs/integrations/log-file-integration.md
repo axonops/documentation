@@ -21,3 +21,6 @@ alert_log:
 ```
 
 `max_size_mb` and `max_files` are used to define how log rotation is handled.
+
+Ensure the AxonOps server process can write to the directory specified in `alert_log.path`.
+Restart `axon-server` after updating `axon-server.yml` to apply changes.

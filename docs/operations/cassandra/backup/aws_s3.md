@@ -6,8 +6,7 @@ meta:
     content: "AWS S3 backup, Cassandra backup, Amazon S3, AxonOps"
 ---
 
-
-## What is S3
+# What is S3
 
 Amazon Simple Storage Service (Amazon S3) is an object storage service that offers industry-leading scalability, data availability, security, and performance. Read more at [Amazon S3](https://docs.aws.amazon.com/AmazonS3/latest/userguide/Welcome.html)
 
@@ -15,20 +14,20 @@ When selecting AWS S3 as a remote option there are a few fields that are mandato
 
 S3 allows any valid UTF-8 string as a key.
 
-![](./s3.png)
+![s3](./s3.png)
 
 #### Remote Backup Retention
 
-The amount of days that backup files will be kept in the remote storage provider location. 
-After this amount of days the file that are older will be removed.
+The number of days that backup files will be kept in the remote storage provider location.
+After this number of days, older files are removed.
 
-#### Base Remote Path
+#### Base Remote Path
 
-This is the name of the storage buckets, you can also add subfolders if using shared storage buckets or saving multiple clusters to the same bucket. by default AxonOps will save the backups to /bucket/folder/org/clustertype/clustername/host-id/
+This is the name of the storage bucket. You can also add subfolders if using shared buckets or saving multiple clusters to the same bucket. By default AxonOps saves backups to `/bucket/folder/org/clustertype/clustername/host-id/`.
 
-The org/clustertype/clustername/host-id/ will match the top breadcrump navigation in your AxonOps Dashboard.
+The `org/clustertype/clustername/host-id/` path matches the top breadcrumb navigation in the AxonOps Dashboard.
 
-#### Region
+#### Region
 
 This is a drop down selection of all the AWS regions that are available for your AWS account.
 
@@ -102,9 +101,9 @@ Please pick from the available AWS Storage classes:
 * One Zone Infrequent Access
 * Reduced Redundancy
 * Standard
-* Stadard Infrequent Access
+* Standard Infrequent Access
 
-For more inforamtion on S3 Storage classes please go [here](https://aws.amazon.com/s3/storage-classes/)
+For more information on S3 storage classes, see [AWS S3 storage classes](https://aws.amazon.com/s3/storage-classes/).
 
 #### ACL
 
@@ -119,7 +118,7 @@ Please pick from the available AWS ACL's:
 * Bucket Owner Read
 * Bucket Owner Full Control
 
-For more inforamtion on S3 ACL's please go [here](https://docs.aws.amazon.com/AmazonS3/latest/userguide/acl-overview.html#canned-acl)
+For more information on S3 ACLs, see [S3 ACL overview](https://docs.aws.amazon.com/AmazonS3/latest/userguide/acl-overview.html#canned-acl).
 
 #### Server Side Encryption
 
@@ -128,5 +127,3 @@ The server-side encryption algorithm used when storing this object in S3.
 #### Disable Checksum
 
 Normally AxonOps Backups will check that the checksums of transferred files match, and give an error "corrupted on transfer" if they don't. If you disable this then the checksum will be ignored if there are differences. This is not advised. 
-
-

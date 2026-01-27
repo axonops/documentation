@@ -486,4 +486,3 @@ datastax-java-driver {
 - **[Retry Policy](retry.md)** — Handling failed requests and error classification
 - **[Reconnection Policy](reconnection.md)** — Recovery after node failures
 - **[Speculative Execution Policy](speculative-execution.md)** — Reducing tail latency through redundant requests
-

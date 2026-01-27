@@ -352,7 +352,7 @@ AxonOps provides comprehensive backup monitoring with automatic alerting for fai
 
 ---
 
-## AxonOps Backup Setup
+## AxonOps Backup Set up
 
 AxonOps backup configuration takes minutes to complete:
 

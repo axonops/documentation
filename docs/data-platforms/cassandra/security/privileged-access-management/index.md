@@ -107,7 +107,7 @@ Before configuring Vault integration:
 3. **Vault admin role** in Cassandra with role management permissions
 4. **Network connectivity** between Vault and Cassandra nodes
 
-### Vault Database Secrets Engine Setup
+### Vault Database Secrets Engine Set up
 
 Enable and configure the database secrets engine:
 
@@ -364,7 +364,7 @@ Configure Cassandra accounts in CyberArk:
    - Define password policy
    - Configure verification settings
 
-### CPM Password Rotation Setup
+### CPM Password Rotation Set up
 
 CyberArk CPM requires a privileged account to perform password changes:
 

@@ -142,7 +142,7 @@ cassandra-stress counter_write n=1000000 \
 
 Alternative benchmark suite for database comparison.
 
-### Setup
+### Set up
 
 ```bash
 # Clone YCSB

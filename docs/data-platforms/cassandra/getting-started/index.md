@@ -73,7 +73,7 @@ For production deployments, follow our detailed guides:
 - **[Installation Overview](installation/index.md)** - Various installation methods
   - [Cloud Providers](../cloud/index.md) - AWS, GCP, Azure
 
-### 3. First Cluster Setup
+### 3. First Cluster Set up
 
 - **[First Cluster Setup](first-cluster.md)**
   - Single-node development setup

@@ -8,9 +8,9 @@ meta:
 
 # Kafka Topics
 
-## What is a topic
+## What is a topic?
 
-A Kafka topic is a core concept in Apache Kafka, serving as a logical channel or category where data streams are organized and managed. Producers write (publish) messages to topics, and consumers read (subscribe) to messages from topics. Topics decouple producers from consumers, enabling scalable and real-time data pipelines
+A Kafka topic is a core concept in Apache Kafka, serving as a logical channel or category where data streams are organized and managed. Producers write (publish) messages to topics, and consumers read (subscribe) to messages from topics. Topics decouple producers from consumers, enabling scalable and real-time data pipelines.
 
 - Naming: Topics are named to reflect the data they contain, such as temperature_readings or user_activity.
 
@@ -24,27 +24,29 @@ A Kafka topic is a core concept in Apache Kafka, serving as a logical channel or
 
 ## Topic Overview
 
-In the topic overview page you can get a holistic view of all the topics in you Kafka Cluster.
+In the topic overview page you can get a holistic view of all the topics in your Kafka cluster.
 
-**Click Topics in the Left Navigation to open the Overview page.**
+**Click Topics in the left navigation to open the overview page.**
 
-<img src="/kafka/topics/topic_click.png" width="700">
+<img src="../topic_click.png" width="700" alt="Topic navigation item">
 
-On the overview page interact with topics and topic information relating to Topics, Partitions, ISR(In-Sync Replicas), Alerts, Counters, Sizes and Topic Actions like:
+On the overview page, interact with topic information including Topics, Partitions, ISR (In-Sync Replicas), Alerts, Counters, Sizes, and topic actions such as:
 
-- Edit Topic : :material-pencil:{ .edit_config }
-- Clone Topic : :material-content-copy:{ .copy_config }
-- Delete Topic : :material-trash-can:{ .delete_config }
+- Edit Topic: :material-pencil:{ .edit_config }
+- Clone Topic: :material-content-copy:{ .copy_config }
+- Delete Topic: :material-trash-can:{ .delete_config }
 
-<img src="/kafka/topics/topic_overview.png" width="700">
+<img src="../topic_overview.png" width="700" alt="Topic overview page">
 
 ### Selected Topic Information
 
-<img src="/kafka/topics/topic_configuration.png" width="700">
+<img src="../topic_configuration.png" width="700" alt="Selected topic details panel">
 
-Once a topic has been selected the following information is displayed.
+Once a topic has been selected, the following information is displayed:
 
-- Configuration - Kafka Topic Configuration Options. To read more about configuration options [Click here](configure_topic.md#topic-configuration)
-- Partitions - View information such as Partition ID, Brokers the Partition resides and offsets.
-- Consumers - Current list of consumers that are consuming from the topic.
-- ACLs -  Current ACLs applied to the Topic. To read more about ACLs [Click here](../acl/overview.md)
+| Detail | Description |
+| --- | --- |
+| Configuration | Kafka topic configuration options. See [topic configuration](configure_topic.md#topic-configuration). |
+| Partitions | Partition ID, brokers where each partition resides, and offsets. |
+| Consumers | Current list of consumers that are consuming from the topic. |
+| ACLs | Current ACLs applied to the topic. See [Kafka ACL overview](../acl/overview.md). |
