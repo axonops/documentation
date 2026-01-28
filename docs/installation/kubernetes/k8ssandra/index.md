@@ -24,24 +24,7 @@ This deployment creates a production-ready Cassandra cluster with:
 
 ## Architecture
 
-```
-┌─────────────────────────────────────────────────────────────┐
-│ Kubernetes Cluster                                          │
-├─────────────────────────────────────────────────────────────┤
-│ ┌─────────────────┐ ┌─────────────────┐ ┌──────────────┐    │
-│ │ Cassandra-0     │ │ Cassandra-1     │ │ Cassandra-2  │    │
-│ │ (DC1)           │ │ (DC1)           │ │ (DC1)        │    │
-│ │ + AxonOps Agent │ │ + AxonOps Agent │ │ + AxonOps    │    │
-│ └────────┬────────┘ └────────┬────────┘ └──────┬───────┘    │
-│          │                   │                  │           │
-│          └───────────────────┴──────────────────┘           │
-│                              │                              │
-│          ┌───────────────────┴──────────────────┐           │
-│          │ Persistent Storage (PVCs)            │           │
-│          │ /var/lib/cassandra                   │           │
-│          └──────────────────────────────────────┘           │
-└─────────────────────────────────────────────────────────────┘
-```
+![K8ssandra with AxonOps](./k8ssandra-axonops.png)
 
 ## Prerequisites
 
