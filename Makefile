@@ -30,3 +30,8 @@ build: prep ## Build locally the generated pages
 publish: prep ## Publish new docs
 	${PIPENVCMD} mkdocs gh-deploy
 
+docker-build: ## Build the docker image
+	docker build -t mkdocs-axonops .
+
+docker-serve: docker-build ## Serve the site using docker
+	docker run --rm -it -p 8000:8000 -w /AxonOps.Docs mkdocs-axonop
