@@ -20584,23 +20584,7 @@ data-et-multi-view="{&quot;schema&quot;:{&quot;content&quot;:{&quot;desktop&quot
 <li>AxonOps agent for comprehensive monitoring and management</li>
 </ul>
 <h2 id="architecture">Architecture<a class="headerlink" href="#architecture" title="Permanent link">¶</a></h2>
-<div class="highlight"><pre><span></span><code>┌─────────────────────────────────────────────────────────────┐
-│ Kubernetes Cluster                                          │
-├─────────────────────────────────────────────────────────────┤
-│ ┌─────────────────┐ ┌─────────────────┐ ┌──────────────┐    │
-│ │ Cassandra-0     │ │ Cassandra-1     │ │ Cassandra-2  │    │
-│ │ (DC1)           │ │ (DC1)           │ │ (DC1)        │    │
-│ │ + AxonOps Agent │ │ + AxonOps Agent │ │ + AxonOps    │    │
-│ └────────┬────────┘ └────────┬────────┘ └──────┬───────┘    │
-│          │                   │                  │           │
-│          └───────────────────┴──────────────────┘           │
-│                              │                              │
-│          ┌───────────────────┴──────────────────┐           │
-│          │ Persistent Storage (PVCs)            │           │
-│          │ /var/lib/cassandra                   │           │
-│          └──────────────────────────────────────┘           │
-└─────────────────────────────────────────────────────────────┘
-</code></pre></div>
+<p><a class="glightbox" href="k8ssandra-axonops.png" data-type="image" data-width="100%" data-height="auto" data-desc-position="bottom"><img alt="K8ssandra with AxonOps" src="k8ssandra-axonops.png"></a></p>
 <h2 id="prerequisites">Prerequisites<a class="headerlink" href="#prerequisites" title="Permanent link">¶</a></h2>
 <ol>
 <li><strong>Kubernetes cluster</strong> (v1.23+)</li>
