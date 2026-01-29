@@ -64,7 +64,9 @@ Memtables buffer writes before flushing to SSTables. Each table has one active m
 memtable_heap_space_in_mb: 4096
 
 # Flush threshold (fraction of memtable space)
-memtable_cleanup_threshold: 0.11
+# Note: memtable_cleanup_threshold is deprecated in modern Cassandra versions
+# and is auto-calculated. Only set if you need to override the default.
+# memtable_cleanup_threshold: 0.11
 ```
 
 !!! tip "Memtable Sizing"

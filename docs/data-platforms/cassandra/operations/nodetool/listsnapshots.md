@@ -15,7 +15,7 @@ Displays a list of all snapshots on the node with their sizes.
 ## Synopsis
 
 ```bash
-nodetool [connection_options] listsnapshots [-e] [-n]
+nodetool [connection_options] listsnapshots [options]
 ```
 
 ## Description
@@ -36,7 +36,10 @@ Essential for monitoring backup state and managing disk space.
 | Option | Description |
 |--------|-------------|
 | `-e, --ephemeral` | Include ephemeral snapshots |
-| `-n, --no-ttl` | Exclude snapshots with TTL |
+| `-k, --keyspace <keyspace>` | Filter by keyspace name |
+| `-n, --snapshot <name>` | Filter by snapshot name |
+| `-nt, --no-ttl` | Exclude snapshots with TTL |
+| `-t, --table <table>` | Filter by table name |
 
 ---
 

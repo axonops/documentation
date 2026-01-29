@@ -93,17 +93,17 @@ Throughput comparison (10,000 queries/sec):
 
 Simple statements:
   10,000 × (parse + validate + plan + execute)
-  CPU overhead: ~30% spent on parsing
+  CPU overhead: significant portion spent on parsing (workload-dependent)
 
 Prepared statements:
   1 × (parse + validate + plan)
   10,000 × (execute only)
-  CPU overhead: <5% for statement handling
+  CPU overhead: minimal for statement handling
 ```
 
 ### Token-Aware Routing
 
-Prepared statements enable token-aware routing because the driver knows the partition key structure:
+Prepared statements facilitate token-aware routing by providing partition key metadata to the driver:
 
 ```plantuml
 @startuml
@@ -134,7 +134,7 @@ Driver --> App: Results
 @enduml
 ```
 
-Without prepared statements, the driver cannot determine partition key values from embedded query strings.
+Without prepared statements, token-aware routing requires explicitly setting the routing key on the statement. Embedded literal values in query strings cannot be automatically extracted for routing.
 
 ---
 
@@ -371,11 +371,15 @@ session.execute(batch);
 
 Cassandra limits prepared statements per node:
 
-| Parameter | Default | Description |
-|-----------|---------|-------------|
-| prepared_statements_cache_size_mb | 10MB | Memory for prepared statement cache |
+| Version | Parameter | Default | Syntax |
+|---------|-----------|---------|--------|
+| 4.0 | `prepared_statements_cache_size_mb` | `auto` | Integer (MB) |
+| 4.1 | `prepared_statements_cache_size` | `auto` | Size literal (`10MiB`, `256KiB`) |
+| 5.0 | `prepared_statements_cache_size` | `auto` | Size literal (`10MiB`, `256KiB`) |
 
-When cache is full, least-recently-used statements are evicted:
+The `auto` default calculates as 1/256 of heap or 10MiB, whichever is greater.
+
+When cache is full, statements are evicted using a weighted cache algorithm (Caffeine/W-TinyLFU), which approximates frequency-based eviction rather than strict LRU:
 
 ```plantuml
 @startuml
@@ -386,7 +390,7 @@ participant "Cassandra" as C
 
 note over C: Cache full (10MB)
 Driver -> C: PREPARE new statement
-note right of C: Evict LRU statement
+note right of C: Evict statement (weighted cache)
 note right of C: Cache new statement
 C --> Driver: Prepared ID
 
@@ -437,4 +441,3 @@ String query = "SELECT * FROM users WHERE id IN (" +
 
 - **[Load Balancing Policy](policies/load-balancing.md)** — Token-aware routing with prepared statements
 - **[CQL Reference](../../cql/index.md)** — Query syntax
-

@@ -202,10 +202,14 @@ class AdaptiveThrottler:
 
 Cassandra limits concurrent connections and requests:
 
+| Version | Parameter | Default |
+|---------|-----------|---------|
+| 4.0 | `native_transport_max_frame_size_in_mb` | 16 |
+| 4.1+ | `native_transport_max_frame_size` | `16MiB` |
+
 ```yaml
 # cassandra.yaml
 native_transport_max_threads: 128
-native_transport_max_frame_size_in_mb: 256
 native_transport_max_concurrent_connections: -1  # unlimited
 native_transport_max_concurrent_connections_per_ip: -1
 ```
@@ -214,28 +218,28 @@ native_transport_max_concurrent_connections_per_ip: -1
 
 Cassandra 4.0 introduced memory-based backpressure for the native transport (CASSANDRA-15013). This prevents unbounded memory growth from in-flight requests.
 
+**Configuration parameter names (version-specific):**
+
+| Version | Global Limit | Per-IP Limit |
+|---------|--------------|--------------|
+| 4.0 | `native_transport_max_concurrent_requests_in_bytes` | `native_transport_max_concurrent_requests_in_bytes_per_ip` |
+| 4.1+ | `native_transport_max_request_data_in_flight` | `native_transport_max_request_data_in_flight_per_ip` |
+
+**Defaults:** When unset, defaults are auto-calculated (global: ~1/10 heap, per-IP: ~1/40 heap).
+
 ```yaml
-# cassandra.yaml
-
-# Maximum bytes of in-flight requests (node-wide)
-# 0 = unlimited (default, not recommended for production)
-native_transport_max_concurrent_requests_in_bytes: 0
-
-# Maximum bytes per client IP
-# 0 = unlimited
-native_transport_max_concurrent_requests_in_bytes_per_ip: 0
+# cassandra.yaml (4.1+ syntax)
+native_transport_max_request_data_in_flight: null  # auto (1/10 heap)
+native_transport_max_request_data_in_flight_per_ip: null  # auto (1/40 heap)
 
 # Behavior when limits exceeded
-# false (default): Apply TCP backpressure (stop reading from socket)
-# true: Return OverloadedException immediately
-native_transport_throw_on_overload: false
+native_transport_throw_on_overload: false  # false = TCP backpressure; true = OverloadedException
 ```
 
-| Setting | Recommended Value | Description |
-|---------|-------------------|-------------|
-| `native_transport_max_concurrent_requests_in_bytes` | 1/4 of heap | Total in-flight request bytes |
-| `native_transport_max_concurrent_requests_in_bytes_per_ip` | 1/40 of heap | Per-client limit prevents one client from monopolizing |
-| `native_transport_throw_on_overload` | `false` | TCP backpressure is gentler than exceptions |
+| Approach | Description |
+|----------|-------------|
+| TCP backpressure (`throw_on_overload: false`) | Preferred; automatically throttles clients without requiring exception handling |
+| OverloadedException (`throw_on_overload: true`) | Client receives error immediately; requires retry logic |
 
 **How TCP backpressure works:**
 

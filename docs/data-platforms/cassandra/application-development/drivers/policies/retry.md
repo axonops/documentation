@@ -20,7 +20,7 @@ Not all errors are retryable. The retry policy classifies errors and decides app
 |------------|---------------|------------|
 | **ReadTimeoutException** | Replica(s) did not respond in time | Depends on received/required |
 | **WriteTimeoutException** | Write coordinator timeout | Usually no (non-idempotent) |
-| **UnavailableException** | Not enough replicas alive | Retry on different node |
+| **UnavailableException** | Not enough replicas alive | Usually no (same CL will fail); consider fallback CL or circuit breaker |
 | **OverloadedException** | Coordinator is overloaded | Retry on different node |
 | **ServerError** | Unexpected server error | Usually no |
 | **QueryValidationException** | Syntax or schema error | No (not transient) |
@@ -76,13 +76,14 @@ The most important factor in retry decisions is whether the operation is idempot
 | Operation Type | Idempotent? | Safe to Retry? |
 |----------------|-------------|----------------|
 | SELECT | Yes | Yes |
-| INSERT (no LWT) | Yes* | Yes* |
+| INSERT (no LWT) with explicit timestamp | Yes | Yes |
+| INSERT (no LWT) with server timestamp | **No*** | **No*** |
 | UPDATE SET column = value | Yes | Yes |
 | UPDATE SET counter = counter + 1 | **No** | **No** |
 | DELETE | Yes | Yes |
 | INSERT with TTL | **Depends** | Depends on timing sensitivity |
 
-*INSERT is idempotent if the same row/values are written. If using auto-generated timestamps, retries produce identical results.
+*When using server-generated timestamps (default), retries may produce different timestamps, affecting LWW conflict resolution. Use explicit `USING TIMESTAMP` for true idempotency.
 
 ```
 Idempotent vs Non-Idempotent:
@@ -315,4 +316,3 @@ Monitor retry behavior in production:
 
 - **[Load Balancing Policy](load-balancing.md)** — Determines which node receives retry
 - **[Speculative Execution](speculative-execution.md)** — Alternative to retry for latency reduction
-

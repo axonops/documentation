@@ -23,7 +23,7 @@ This document covers compaction configuration, tuning, strategy changes, and tro
 compaction_throughput_mb_per_sec: 64
 
 # Number of concurrent compaction threads
-# Default: min(4, number_of_disks)
+# Default: min(number_of_disks, number_of_cores), min 2, max 8
 concurrent_compactors: 4
 
 # Compaction large partition warning threshold

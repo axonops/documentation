@@ -107,7 +107,7 @@ Before configuring Vault integration:
 3. **Vault admin role** in Cassandra with role management permissions
 4. **Network connectivity** between Vault and Cassandra nodes
 
-### Vault Database Secrets Engine Setup
+### Vault Database Secrets Engine Set up
 
 Enable and configure the database secrets engine:
 
@@ -364,7 +364,7 @@ Configure Cassandra accounts in CyberArk:
    - Define password policy
    - Configure verification settings
 
-### CPM Password Rotation Setup
+### CPM Password Rotation Set up
 
 CyberArk CPM requires a privileged account to perform password changes:
 
@@ -596,8 +596,11 @@ GRANT ALTER ON ROLE target_role TO cyberark_cpm;
 
 - Reduce Cassandra credential cache validity:
   ```yaml
-  # cassandra.yaml
-  credentials_validity_in_ms: 2000
+  # cassandra.yaml (4.1+ syntax)
+  credentials_validity: 2000ms
+
+  # Pre-4.1 syntax (deprecated)
+  # credentials_validity_in_ms: 2000
   ```
 - Ensure applications handle authentication failures gracefully
 

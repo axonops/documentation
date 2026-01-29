@@ -120,7 +120,8 @@ All replicas down:
 - Returns SUCCESS to client
 
 DANGER:
-- If coordinator crashes before hint delivery → DATA LOST
+- Hints are durable on the coordinator (written to commitlog)
+- If coordinator is PERMANENTLY lost before hint delivery → DATA LOST
 - Hint is only on coordinator, not replicated
 
 ANY should almost never be used for important data.
@@ -135,8 +136,11 @@ nodetool tpstats | grep Hint
 # View hint files
 ls -la /var/lib/cassandra/hints/
 
-# Force hint delivery
-nodetool handoffwindow
+# Hinted handoff control commands
+nodetool disablehandoff   # Disable hinted handoff
+nodetool enablehandoff    # Enable hinted handoff
+nodetool pausehandoff     # Pause hint delivery
+nodetool resumehandoff    # Resume hint delivery
 ```
 
 **JMX Metrics:**
@@ -183,17 +187,9 @@ N1: user_id=123 → name='Alicia', timestamp=2000  ← Fixed
 N2: user_id=123 → name='Alicia', timestamp=2000
 ```
 
-### Reconciliation Modes
+### Reconciliation Mode
 
-**Blocking Reconciliation** (Cassandra 3.x):
-
-```
-Divergence resolution completes BEFORE returning result to client.
-- Higher read latency
-- Immediate consistency after read
-```
-
-**Background Reconciliation** (Cassandra 4.0+):
+In Cassandra 4.0+, read repair uses **background reconciliation**:
 
 ```
 Result returned immediately, propagation occurs asynchronously.
@@ -203,35 +199,19 @@ Result returned immediately, propagation occurs asynchronously.
 
 ### Configuration
 
-Configuration changed significantly across versions:
-
-**Cassandra 3.x:**
+Read repair is now always attempted when divergence is detected during a read that contacts multiple replicas. The legacy `read_repair_chance` and `dclocal_read_repair_chance` properties were removed in Cassandra 4.0.
 
 ```sql
--- Per-table read repair probability (removed in 4.0)
-ALTER TABLE my_table WITH
-  read_repair_chance = 0.1 AND
-  dclocal_read_repair_chance = 0.1;
-
--- Blocking or none
-ALTER TABLE my_table WITH read_repair = 'BLOCKING';
-```
-
-**Cassandra 4.0+:**
-
-The `read_repair_chance` and `dclocal_read_repair_chance` properties were removed. Read repair is now always attempted when divergence is detected during a read that contacts multiple replicas.
-
-```sql
--- Only NONE is supported (to disable read repair entirely)
+-- Disable read repair entirely (only option in 4.0+)
 ALTER TABLE my_table WITH read_repair = 'NONE';
 ```
 
-| Property | 3.x | 4.0+ |
-|----------|-----|------|
-| `read_repair_chance` | Probability of read repair (0.0-1.0) | Removed |
-| `dclocal_read_repair_chance` | Probability for local DC | Removed |
-| `read_repair = 'BLOCKING'` | Synchronous repair | Removed |
-| `read_repair = 'NONE'` | Disable read repair | Supported |
+!!! note "Removed Properties"
+    The following properties were removed in Cassandra 4.0:
+
+    - `read_repair_chance` - Was probability of read repair (0.0-1.0)
+    - `dclocal_read_repair_chance` - Was probability for local DC
+    - `read_repair = 'BLOCKING'` - Blocking mode removed; background is now default
 
 ### Limitations
 
@@ -329,10 +309,7 @@ nodetool repair keyspace_name
 - SSTables are marked as "repaired" or "unrepaired"
 - Lower overhead for regular maintenance
 
-| Version | Default Repair Mode |
-|---------|---------------------|
-| 3.x | Full (`-full` not required) |
-| 4.0+ | Incremental (use `-full` for full repair) |
+In Cassandra 4.0+, the default repair mode is **incremental**. Use `-full` for full repair.
 
 **Subrange Synchronization:**
 
@@ -437,14 +414,14 @@ nodetool repair_admin cancel <repair_id>
 nodetool repair_admin summary
 ```
 
-| Option | Version | Description |
-|--------|---------|-------------|
-| `-full` | 3.x+ | Full repair (default in 3.x, explicit in 4.0+) |
-| `-par` | 3.x+ | Parallel repair |
-| `-seq` | 3.x+ | Sequential repair |
-| `--preview` | 4.0+ | Report inconsistencies without repairing |
-| `--validate` | 4.0+ | Validate repaired data consistency |
-| `-pr` | 3.x+ | Primary range only |
+| Option | Description |
+|--------|-------------|
+| `-full` | Full repair (required in 4.0+ as default is incremental) |
+| `-par` | Parallel repair |
+| `-seq` | Sequential repair |
+| `--preview` | Report inconsistencies without repairing (4.0+) |
+| `--validate` | Validate repaired data consistency (4.0+) |
+| `-pr` | Primary range only |
 
 ### Monitoring
 

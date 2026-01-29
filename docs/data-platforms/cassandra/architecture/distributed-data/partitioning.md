@@ -212,7 +212,7 @@ Distribution: Uniform random distribution
 | Characteristic | Description |
 |----------------|-------------|
 | Distribution | Excellent—keys distribute evenly regardless of input patterns |
-| Range queries | Not supported across partition keys |
+| Range queries | Not supported across partition keys via value comparison; token-range queries are possible but operationally heavy and generally discouraged |
 | Hot spots | Rare—even sequential keys distribute randomly |
 | Token range | -9,223,372,036,854,775,808 to +9,223,372,036,854,775,807 |
 
@@ -856,8 +856,7 @@ nodetool status keyspace_name
 
 | Scenario | num_tokens | Allocator Setting | Rationale |
 |----------|-----------|-------------------|-----------|
-| **New cluster, Cassandra 4.0+** | 16 | `allocate_tokens_for_local_replication_factor: 3` | Optimal balance with minimal overhead |
-| **New cluster, Cassandra 3.x** | 32 | `allocate_tokens_for_keyspace: system_auth` | Good distribution without 4.0 allocator |
+| **New cluster** | 16 | `allocate_tokens_for_local_replication_factor: 3` | Optimal balance with minimal overhead |
 | **Existing cluster, upgrading** | Keep current | Keep current | Changing requires node replacement |
 | **Single-token (advanced)** | 1 | Set `initial_token` manually | Maximum control, complex operations |
 | **Heterogeneous hardware** | Proportional | Per-node configuration | More tokens on larger nodes |

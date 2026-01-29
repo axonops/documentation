@@ -41,12 +41,14 @@ nodetool failuredetector
 ### Sample Output
 
 ```
-Endpoint            Phi
-192.168.1.101       0.0034521
-192.168.1.102       0.0028934
-192.168.1.103       0.0041256
-192.168.1.104       5.2341567
+Endpoint,Phi
+192.168.1.101,0.0034521
+192.168.1.102,0.0028934
+192.168.1.103,0.0041256
+192.168.1.104,5.2341567
 ```
+
+Note: Output is in CSV format with comma-separated values.
 
 ### Interpreting Phi Values
 
@@ -150,15 +152,15 @@ done
 #!/bin/bash
 # cluster_failure_detector.sh
 
-echo "=== Cluster Failure Detector Status ==="# Get list of node IPs from local nodetool status
+echo "=== Cluster Failure Detector Status ==="
 
-
+# Get list of node IPs from local nodetool status
 nodes=$(nodetool status | grep "^UN\|^DN" | awk '{print $2}')
 
 for node in $nodes; do
     echo ""
     echo "=== From perspective of $node ==="
-    ssh "$node" "nodetool failuredetector 2>/dev/null || echo "Cannot connect to $node""
+    ssh "$node" "nodetool failuredetector 2>/dev/null || echo 'Cannot connect to $node'"
 done
 ```
 

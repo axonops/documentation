@@ -48,7 +48,8 @@ Understanding current timeout settings is essential for:
 | `truncate` | Timeout for truncate operations |
 | `misc` | Timeout for miscellaneous operations |
 | `internodeconnect` | Timeout for internode connections |
-| `internodeuser` | Timeout for internode streaming |
+| `internodeuser` | Timeout for internode user operations |
+| `internodestreaminguser` | Timeout for internode streaming operations |
 
 ---
 

@@ -20,7 +20,10 @@ nodetool [connection_options] reloadlocalschema
 
 ## Description
 
-`nodetool reloadlocalschema` re-reads the schema definition from the local system tables. This can help resolve schema disagreements or refresh schema after manual modifications.
+`nodetool reloadlocalschema` re-reads the schema definition from the local system tables. This can help resolve schema disagreements.
+
+!!! warning "Do Not Manually Modify Schema Tables"
+    Direct modifications to schema system tables (`system_schema.*`) are unsupported and can corrupt the schema. Always use CQL DDL statements (CREATE, ALTER, DROP) to modify schema. The `reloadlocalschema` command is intended for recovery scenarios, not for applying manual edits.
 
 ---
 

@@ -49,7 +49,7 @@ SASL/PLAIN provides simple username/password authentication for Kafka. While eas
 
 ## Broker Configuration
 
-### Basic Setup
+### Basic Set up
 
 ```properties
 # server.properties

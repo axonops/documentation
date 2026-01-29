@@ -36,7 +36,7 @@ The `rangekeysample` command exposes these samples, showing actual partition key
 
 Each line in the output represents a sampled partition key. The keys shown are:
 
-- **Actual partition keys** from SSTables on the local node
+- **Token values** derived from partition keys in SSTables on the local node
 - **Distributed across token ranges** the node owns
 - **A statistical sample**, not an exhaustive list
 - **Representative of data distribution** patterns
@@ -45,37 +45,29 @@ Each line in the output represents a sampled partition key. The keys shown are:
 
 ## Output Format
 
+The command outputs **token values** (not the partition key strings directly) with a header:
+
 ```
-<partition_key_1>
-<partition_key_2>
-<partition_key_3>
+RangeKeySample:
+<token_value_1>
+<token_value_2>
+<token_value_3>
 ...
 ```
 
 ### Example Output
 
-For a table with UUID partition keys:
-
 ```
-550e8400-e29b-41d4-a716-446655440000
-6ba7b810-9dad-11d1-80b4-00c04fd430c8
-6ba7b811-9dad-11d1-80b4-00c04fd430c8
-7c9e6679-7425-40de-944b-e07fc1f90ae7
+RangeKeySample:
+-9223372036854775808
+-8523372036854775000
+-7123372036854775123
+-6023372036854775456
 ...
 ```
 
-For a table with text partition keys:
-
-```
-user_12345
-user_23456
-user_34567
-order_98765
-order_87654
-...
-```
-
-For composite partition keys, the output shows the combined key representation.
+!!! info "Token Values vs Partition Keys"
+    The output shows token values (the hash of partition keys), not the human-readable partition key strings. To find which partition key corresponds to a token, use `SELECT * FROM table WHERE token(partition_key) = <token>`.
 
 ---
 

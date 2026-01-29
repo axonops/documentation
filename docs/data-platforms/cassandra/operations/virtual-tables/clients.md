@@ -22,7 +22,9 @@ Shows all currently connected CQL clients with connection details.
 VIRTUAL TABLE system_views.clients (
     address inet,
     port int,
-    client_options frozen<map<text, text>>,
+    authentication_metadata map<text, text>,
+    authentication_mode text,
+    client_options map<text, text>,
     connection_stage text,
     driver_name text,
     driver_version text,
@@ -44,6 +46,8 @@ VIRTUAL TABLE system_views.clients (
 | `port` | int | Client source port |
 | `hostname` | text | Client hostname (if resolvable) |
 | `username` | text | Authenticated username |
+| `authentication_mode` | text | Authentication mode used |
+| `authentication_metadata` | map | Additional authentication metadata |
 | `keyspace_name` | text | Current keyspace |
 | `driver_name` | text | Client driver name |
 | `driver_version` | text | Driver version |

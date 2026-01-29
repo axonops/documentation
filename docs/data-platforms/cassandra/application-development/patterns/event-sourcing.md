@@ -102,14 +102,20 @@ CREATE TABLE events (
 
 The sequence number serves dual purposes: ordering events for replay and detecting concurrent modifications. Two approaches exist:
 
-**Application-managed sequences**: The application tracks the current sequence number and includes it in writes. Cassandra's lightweight transactions (LWT) enforce uniqueness.
+**Application-managed sequences**: The application tracks the current sequence number and includes it in writes. Cassandra's lightweight transactions (LWT) with an `IF NOT EXISTS` clause enforce uniqueness.
 
 ```java
+// Prepared statement with LWT condition
+private final PreparedStatement insertEventIfNotExists = session.prepare(
+    "INSERT INTO events (aggregate_type, aggregate_id, sequence_num, event_type, event_data, metadata, created_at) " +
+    "VALUES (?, ?, ?, ?, ?, ?, ?) IF NOT EXISTS"
+);
+
 public void appendEvent(AggregateId id, Event event, long expectedSequence) {
     long newSequence = expectedSequence + 1;
 
     ResultSet result = session.execute(
-        insertEvent.bind(id.getType(), id.getValue(), newSequence,
+        insertEventIfNotExists.bind(id.getType(), id.getValue(), newSequence,
                          event.getType(), serialize(event), event.getMetadata(), Instant.now())
             .setSerialConsistencyLevel(ConsistencyLevel.LOCAL_SERIAL)
     );
@@ -121,9 +127,9 @@ public void appendEvent(AggregateId id, Event event, long expectedSequence) {
 }
 ```
 
-The LWT ensures that if two processes attempt to write sequence number N simultaneously, exactly one succeeds. The other receives a conflict and must retry with fresh state.
+The LWT `IF NOT EXISTS` clause ensures that if two processes attempt to write sequence number N simultaneously, exactly one succeeds. The other receives a conflict (`wasApplied()` returns false) and must retry with fresh state.
 
-**TimeUUID sequences**: Using `TIMEUUID` as the clustering column provides automatic ordering without explicit sequence management.
+**TimeUUID sequences**: Using `TIMEUUID` as the clustering column provides approximate time-based ordering without explicit sequence management. Ordering is based on the timestamp component of the TIMEUUID; clock skew between nodes or clients may affect strict ordering unless TIMEUUID generation guarantees monotonicity per aggregate.
 
 ```sql
 PRIMARY KEY ((aggregate_type, aggregate_id), event_id)
@@ -462,7 +468,7 @@ Projection processors can use these IDs to handle events in causal order even wh
 
 Some scenarios require reading immediately after writing. Options include:
 
-**LOCAL_QUORUM reads**: Accept cross-DC latency for strong reads.
+**LOCAL_QUORUM reads**: Ensure same-DC read-your-writes consistency (does not provide cross-DC guarantees).
 
 **Read-your-writes at application level**: Cache recently written events, merge with reads.
 

@@ -10,6 +10,17 @@ meta:
 
 Topics are the fundamental unit of organization in Kafka. The topic architecture directly addresses the core problems Kafka was designed to solve: **horizontal scalability** through partitioning and **high availability** through replication.
 
+## What Is a Topic?
+
+A Kafka topic is a **named, partitioned, append-only log** that represents a logical stream of records. Producers write records to a topic, and consumers read records from a topic. A topic MUST provide:
+
+- **A stable name** used by producers and consumers to identify the stream.
+- **Partitioned storage**, where each partition is an ordered log.
+- **Offset-based addressing**, where each record has a unique offset within its partition.
+- **Retention control**, where records are retained for a configured time or size (or compacted by key).
+
+Topics define the **behavioral contract** between producers and consumers: ordering is guaranteed **within** a partition, but not across partitions; durability and availability depend on replication configuration; and retention defines how long records remain readable.
+
 ---
 
 ## Design Rationale

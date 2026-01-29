@@ -102,7 +102,8 @@ end note
 | Option | Description |
 |--------|-------------|
 | `-s, --size <MB>` | Target size for output SSTables in MB (default: 50) |
-| `-n, --no-snapshot` | Do not remove original SSTable after split |
+| `-n, --no-snapshot` | Skip creating a pre-split snapshot (original SSTable is still removed after split) |
+| `-h, --help` | Display help information |
 | `--debug` | Enable debug output |
 
 ---
@@ -132,14 +133,12 @@ sstablesplit --size 100 /path/to/sstable-Data.db
 sstablesplit -s 200 /path/to/sstable-Data.db
 ```
 
-### Keep Original SSTable
+### Skip Pre-Split Snapshot
 
 ```bash
-# Split but keep the original file
+# Split without creating a snapshot first
+# Note: The original SSTable is still removed after successful split
 sstablesplit --no-snapshot /path/to/sstable-Data.db
-
-# Verify split was successful, then manually remove original
-rm /path/to/original-sstable-*
 ```
 
 ### Split Multiple SSTables

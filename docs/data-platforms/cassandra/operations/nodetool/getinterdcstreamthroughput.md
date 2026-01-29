@@ -15,12 +15,20 @@ Displays the inter-datacenter stream throughput limit.
 ## Synopsis
 
 ```bash
-nodetool [connection_options] getinterdcstreamthroughput
+nodetool [connection_options] getinterdcstreamthroughput [options]
 ```
+
+## Options
+
+| Option | Description |
+|--------|-------------|
+| `-m, --mib` | Display throughput in MiB/s instead of Mb/s |
+| `-d, --precise-mbit` | Display precise Mb/s value as a decimal |
+| `-e, --entire-sstable-throughput` | Show entire SSTable streaming throughput instead of inter-DC throughput |
 
 ## Description
 
-`nodetool getinterdcstreamthroughput` shows the maximum throughput for streaming operations between datacenters. This separate limit allows controlling bandwidth usage across potentially slower or more expensive WAN links.
+`nodetool getinterdcstreamthroughput` shows the maximum throughput for streaming operations between datacenters. By default, the output is in **megabits per second (Mb/s)**, not megabytes. This separate limit allows controlling bandwidth usage across potentially slower or more expensive WAN links.
 
 ---
 
@@ -35,16 +43,34 @@ nodetool getinterdcstreamthroughput
 ### Sample Output
 
 ```
-Current inter-datacenter stream throughput: 100 MB/s
+Current inter-datacenter stream throughput: 100 Mb/s
+```
+
+A value of `unlimited` indicates that the configured value is `0` or negative (no throttling).
+
+### Display in MiB/s
+
+```bash
+nodetool getinterdcstreamthroughput --mib
 ```
 
 ---
 
 ## Configuration
 
+The cassandra.yaml parameter name varies by version:
+
+| Cassandra Version | Parameter Name | Example | Unit |
+|-------------------|----------------|---------|------|
+| Pre-4.1 | `inter_dc_stream_throughput_outbound_megabits_per_sec` | `100` | Megabits/s |
+| 4.1+ | `inter_dc_stream_throughput` | `100Mb/s` or `12MiB/s` | Various |
+
 ```yaml
-# cassandra.yaml
-inter_dc_stream_throughput_outbound_megabits_per_sec: 100
+# cassandra.yaml (4.1+)
+inter_dc_stream_throughput: 100Mb/s
+
+# cassandra.yaml (Pre-4.1)
+# inter_dc_stream_throughput_outbound_megabits_per_sec: 100
 ```
 
 ---

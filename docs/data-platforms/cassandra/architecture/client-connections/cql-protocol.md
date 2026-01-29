@@ -29,7 +29,7 @@ The CQL Native Protocol operates over TCP and provides:
 | v3 | 2.1+ | Supported | 32K streams, UDT, tuple types, timestamps on queries |
 | v4 | 2.2+ | Supported | Custom payloads, warnings, unset values, dates/times |
 | v5 | 4.0+ | Supported | Per-query keyspace, NOW_IN_SECONDS, duration type, result metadata ID |
-| v6 | 5.0+ | Current | Tablets, vector types, rate limiting errors |
+| v6 | 5.0+ | Current (as of 5.0) | Tablets, vector types, rate limiting errors |
 
 ### Version Negotiation
 
@@ -176,10 +176,15 @@ The stream ID enables request-response multiplexing:
 
 ### Maximum Frame Size
 
-The default maximum frame size is 256 MB (268,435,456 bytes). This is configurable on the server via `native_transport_max_frame_size_in_mb`.
+The protocol supports frames up to 256 MB, but the server default is much smaller:
+
+| Version | Parameter | Default |
+|---------|-----------|---------|
+| 4.0 | `native_transport_max_frame_size_in_mb` | 16 |
+| 4.1+ | `native_transport_max_frame_size` | `16MiB` |
 
 !!! tip "Frame Size Tuning"
-    Increasing the maximum frame size may be necessary for queries returning very large result sets or batch operations with many statements.
+    Increasing the maximum frame size may be necessary for queries returning very large result sets. Most workloads do not need to change the default.
 
 ---
 
@@ -482,7 +487,7 @@ The `result_metadata_id` allows the server to skip sending result metadata if it
 
 ### BATCH Request
 
-Execute multiple statements atomically.
+Execute multiple statements in a single request. Logged batches provide atomicity via batchlog replay (eventual completion, not rollback semantics). Unlogged and counter batches do not provide atomicity guarantees.
 
 **Body:**
 ```
@@ -1219,7 +1224,7 @@ All strings are UTF-8 encoded.
 
 | Resource | Default Limit |
 |----------|---------------|
-| Max frame size | 256 MB |
+| Max frame size | 16 MiB (default; protocol allows up to 256 MB) |
 | Max streams | 32768 |
 | Max concurrent connections per IP | Unlimited |
 

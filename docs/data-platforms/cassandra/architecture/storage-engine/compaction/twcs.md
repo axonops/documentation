@@ -11,8 +11,8 @@ meta:
 !!! note "Cassandra 5.0+"
     Starting with Cassandra 5.0, [Unified Compaction Strategy (UCS)](ucs.md) is the recommended compaction strategy for most workloads, including time-series patterns. UCS can handle time-series data efficiently with appropriate configuration. TWCS remains fully supported for existing deployments.
 
-!!! warning "Append-Only Workloads Only"
-    TWCS is designed exclusively for **immutable, append-only time-series data**. Once data is written, it must never be updated. Updates to existing rows create new SSTables in the current time window while original data remains in older windows—these versions never merge through compaction, causing read amplification and preventing efficient space reclamation.
+!!! warning "Optimized for Append-Only Workloads"
+    TWCS is designed for **append-only time-series data** and performs best when data is written once and not updated. Updates to existing rows create new SSTables in the current time window while original data remains in older windows—since TWCS does not compact across window boundaries, these versions never merge, causing read amplification and preventing efficient space reclamation. TWCS can tolerate occasional updates, but frequent updates significantly degrade performance and space efficiency.
 
 !!! danger "Do Not Use DELETE Statements"
     Avoid explicit `DELETE` operations with TWCS. Tombstones are written to the current window while the data they mark for deletion exists in older windows. Since TWCS never compacts across window boundaries, tombstones and their target data never meet, preventing proper space reclamation. Use TTL-based expiration instead.
@@ -259,13 +259,14 @@ By avoiding cross-window compaction:
 
 ## Drawbacks
 
-### Requires Append-Only Workload
+### Best with Append-Only Workloads
 
-TWCS assumes data is never updated:
+TWCS performs optimally with append-only data:
 
-- Updates to old data create new SSTables in current window
-- Original data in old window never merges with update
+- Updates to old data create new SSTables in the current window
+- Original data in old window never merges with update (no cross-window compaction)
 - Both versions persist until TTL expires
+- Occasional updates are tolerable but degrade read performance and space efficiency proportionally to update frequency
 
 ### Sensitive to Out-of-Order Writes
 

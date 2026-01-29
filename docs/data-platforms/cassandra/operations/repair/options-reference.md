@@ -190,9 +190,9 @@ nodetool describering my_keyspace
 
 ## Parallelism Options
 
-### --parallel vs -seq, --sequential
+### Parallel (Default) vs -seq, --sequential
 
-Controls whether replicas validate data simultaneously or one at a time. Parallel is the default in Cassandra 4.0+.
+Controls whether replicas validate data simultaneously or one at a time. Parallel is the default in Cassandra 4.0+. There is no `--parallel` flag; parallel mode is the default behavior.
 
 ```plantuml
 @startuml
@@ -249,11 +249,11 @@ end note
 # Sequential (lower impact, slower)
 nodetool repair -pr -seq my_keyspace
 
-# Parallel (faster, higher resource usage)
-nodetool repair -pr --parallel my_keyspace
+# Parallel (default - faster, higher resource usage)
+nodetool repair -pr my_keyspace
 ```
 
-| Aspect | Sequential (`-seq`) | Parallel (`--parallel`) |
+| Aspect | Sequential (`-seq`) | Parallel (default) |
 |--------|------------|----------|
 | Default (4.0+) | No | Yes |
 | Duration | Longer | Shorter |
@@ -324,7 +324,7 @@ note right: 1 step total\nFastest, highest impact
 |--------|-----------------------------------|----------|
 | `-seq` | 1 | Minimize impact during peak hours |
 | `-dcpar` | 1 per DC | Balance speed and safety in multi-DC clusters |
-| `--parallel` | All | Fastest repair during maintenance windows |
+| (default) | All | Fastest repair during maintenance windows |
 
 **Usage:**
 ```bash
@@ -602,7 +602,7 @@ nodetool repair --ignore-unreplicated-keyspaces
 |----------|---------|-------------|
 | Daily maintenance | `nodetool repair -pr my_keyspace` | Incremental, primary range only |
 | Weekly full check | `nodetool repair -pr -full my_keyspace` | Full repair, primary range |
-| Fast maintenance | `nodetool repair -pr --parallel -j 2 my_keyspace` | Parallel with 2 table threads |
+| Fast maintenance | `nodetool repair -pr -j 2 my_keyspace` | Parallel (default) with 2 table threads |
 | Conservative repair | `nodetool repair -pr -seq my_keyspace` | Sequential, minimal impact |
 | Multi-DC cluster | `nodetool repair -pr -dcpar my_keyspace` | DC-parallel mode |
 | Single DC repair | `nodetool repair -pr -dc dc1 my_keyspace` | Limit to specific DC |
@@ -610,16 +610,19 @@ nodetool repair --ignore-unreplicated-keyspaces
 
 ### Options Compatibility Matrix
 
-| Option | -pr | -full | -seq | --parallel | -j | -dc | --paxos-only | --skip-paxos |
-|--------|-----|-------|------|------------|-----|-----|--------------|--------------|
+| Option | -pr | -full | -seq | -dcpar | -j | -dc | --paxos-only | --skip-paxos |
+|--------|-----|-------|------|--------|-----|-----|--------------|--------------|
 | -pr | - | ✓ | ✓ | ✓ | ✓ | ✓ | ✗ | ✓ |
 | -full | ✓ | - | ✓ | ✓ | ✓ | ✓ | ✗ | ✓ |
 | -seq | ✓ | ✓ | - | ✗ | ✓ | ✓ | ✗ | ✓ |
-| --parallel | ✓ | ✓ | ✗ | - | ✓ | ✓ | ✗ | ✓ |
+| -dcpar | ✓ | ✓ | ✗ | - | ✓ | ✓ | ✗ | ✓ |
 | -j | ✓ | ✓ | ✓ | ✓ | - | ✓ | ✗ | ✓ |
 | -dc | ✓ | ✓ | ✓ | ✓ | ✓ | - | ✗ | ✓ |
 | --paxos-only | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | - | ✗ |
 | --skip-paxos | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✗ | - |
+
+!!! note "No --parallel Flag"
+    Parallel repair is the default in Cassandra 4.0+. There is no explicit `--parallel` flag; to use sequential mode, specify `-seq`. To use datacenter-parallel mode, specify `-dcpar`.
 
 ---
 

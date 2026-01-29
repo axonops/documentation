@@ -39,15 +39,31 @@ Cluster Information:
         Name: Production Cluster
         Snitch: org.apache.cassandra.locator.GossipingPropertyFileSnitch
         DynamicEndPointSnitch: enabled
-        DatabaseVersion: 4.1.3
+        Partitioner: org.apache.cassandra.dht.Murmur3Partitioner
+
+Stats for all nodes:
+        Live: 3
+        Joining: 0
+        Moving: 0
+        Leaving: 0
+        Unreachable: 0
+
+Data Centers:
+        dc1 #Nodes: 3 #Down: 0
+
+Database versions:
+        4.1.3: [192.168.1.101, 192.168.1.102, 192.168.1.103]
+
+Keyspaces:
+        my_keyspace -> Replication class: NetworkTopologyStrategy {dc1=3}
+        system_auth -> Replication class: NetworkTopologyStrategy {dc1=3}
+
 Schema versions:
         a1b2c3d4-e5f6-7890-abcd-ef1234567890: [192.168.1.101, 192.168.1.102, 192.168.1.103]
-
-Effective Dynamic Snitch Scores:
-        /192.168.1.101: 0.001
-        /192.168.1.102: 0.002
-        /192.168.1.103: 0.001
 ```
+
+!!! note "Output Varies by Version"
+    The exact output format varies between Cassandra versions. Some fields like "Effective Dynamic Snitch Scores" were present in older versions but may be absent in current releases.
 
 ---
 
@@ -60,7 +76,29 @@ Effective Dynamic Snitch Scores:
 | Name | Cluster name from cassandra.yaml |
 | Snitch | Endpoint snitch class in use |
 | DynamicEndPointSnitch | Whether dynamic snitch is enabled |
-| DatabaseVersion | Cassandra version |
+| Partitioner | Token partitioner class |
+
+### Stats for all nodes
+
+| Field | Description |
+|-------|-------------|
+| Live | Number of nodes in UN (Up/Normal) state |
+| Joining | Number of nodes currently bootstrapping |
+| Moving | Number of nodes moving tokens |
+| Leaving | Number of nodes decommissioning |
+| Unreachable | Number of nodes that cannot be reached |
+
+### Data Centers
+
+Shows each datacenter with node count and down node count.
+
+### Database versions
+
+Lists Cassandra versions with the nodes running each version.
+
+### Keyspaces
+
+Shows replication configuration for each keyspace.
 
 ### Schema Versions
 
@@ -69,17 +107,6 @@ Shows which schema version each node has:
 ```
 Schema versions:
         <schema-version-uuid>: [list of nodes]
-```
-
-### Dynamic Snitch Scores
-
-Performance scores for each node (lower is better):
-
-```
-Effective Dynamic Snitch Scores:
-        /192.168.1.101: 0.001
-        /192.168.1.102: 0.050
-        /192.168.1.103: 0.002
 ```
 
 ---
@@ -125,25 +152,6 @@ nodetool drain
 sudo systemctl restart cassandra
 ```
 
-### Dynamic Snitch Scores
-
-Scores reflect recent performance:
-
-| Score | Meaning |
-|-------|---------|
-| ~0.001 | Excellent performance |
-| 0.01-0.05 | Good performance |
-| > 0.1 | Slow compared to others |
-| Very high | Node may have issues |
-
-!!! tip "Score Interpretation"
-    High dynamic snitch scores cause coordinators to prefer other replicas:
-
-    - Can indicate slow disk I/O
-    - Network latency issues
-    - GC problems
-    - Overloaded node
-
 ---
 
 ## When to Use
@@ -175,7 +183,7 @@ nodetool describecluster
 
 High scores indicate slow nodes.
 
-### Initial Setup Verification
+### Initial Set up Verification
 
 ```bash
 # Verify cluster configuration

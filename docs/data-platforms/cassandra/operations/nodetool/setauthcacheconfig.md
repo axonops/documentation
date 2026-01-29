@@ -18,14 +18,14 @@ Modifies authentication cache configuration settings.
 ## Synopsis
 
 ```bash
-nodetool [connection_options] setauthcacheconfig [options]
+nodetool [connection_options] setauthcacheconfig --cache-name <cache> [options]
 ```
 
 ---
 
 ## Description
 
-`nodetool setauthcacheconfig` modifies the configuration of Cassandra's authentication and authorization caches at runtime. This allows tuning cache behavior without restarting the node.
+`nodetool setauthcacheconfig` modifies the configuration of a specific authentication or authorization cache at runtime. This allows tuning cache behavior without restarting the node.
 
 !!! warning "Non-Persistent Setting"
 
@@ -37,15 +37,12 @@ nodetool [connection_options] setauthcacheconfig [options]
 
 | Option | Description |
 |--------|-------------|
-| `--credentials-validity <ms>` | Set credentials cache validity period |
-| `--credentials-update-interval <ms>` | Set credentials cache update interval |
-| `--credentials-max-entries <n>` | Set maximum credentials cache entries |
-| `--permissions-validity <ms>` | Set permissions cache validity period |
-| `--permissions-update-interval <ms>` | Set permissions cache update interval |
-| `--permissions-max-entries <n>` | Set maximum permissions cache entries |
-| `--roles-validity <ms>` | Set roles cache validity period |
-| `--roles-update-interval <ms>` | Set roles cache update interval |
-| `--roles-max-entries <n>` | Set maximum roles cache entries |
+| `--cache-name <name>` | **Required.** Cache to configure: `CredentialsCache`, `PermissionsCache`, `RolesCache`, or `NetworkPermissionsCache` |
+| `--validity-period <ms>` | Set cache validity period in milliseconds |
+| `--update-interval <ms>` | Set cache update interval in milliseconds |
+| `--max-entries <n>` | Set maximum cache entries |
+| `--enable-active-update` | Enable active update for the cache |
+| `--disable-active-update` | Disable active update for the cache |
 
 ---
 
@@ -54,48 +51,38 @@ nodetool [connection_options] setauthcacheconfig [options]
 ### Increase Permissions Cache Validity
 
 ```bash
-nodetool setauthcacheconfig --permissions-validity 5000
+nodetool setauthcacheconfig --cache-name PermissionsCache --validity-period 5000
 ```
 
 ### Set Larger Credentials Cache
 
 ```bash
-nodetool setauthcacheconfig --credentials-max-entries 5000
+nodetool setauthcacheconfig --cache-name CredentialsCache --max-entries 5000
 ```
 
-### Tune All Cache Settings
+### Tune Credentials Cache Settings
 
 ```bash
-nodetool setauthcacheconfig \
-    --credentials-validity 5000 \
-    --credentials-update-interval 3000 \
-    --credentials-max-entries 2000 \
-    --permissions-validity 5000 \
-    --permissions-update-interval 3000 \
-    --permissions-max-entries 2000 \
-    --roles-validity 5000 \
-    --roles-update-interval 3000 \
-    --roles-max-entries 2000
+nodetool setauthcacheconfig --cache-name CredentialsCache \
+    --validity-period 5000 \
+    --update-interval 3000 \
+    --max-entries 2000
 ```
 
 ### Fast Permission Propagation
 
 ```bash
 # Shorter validity for quick permission changes
-nodetool setauthcacheconfig \
-    --permissions-validity 1000 \
-    --permissions-update-interval 500
+nodetool setauthcacheconfig --cache-name PermissionsCache \
+    --validity-period 1000 \
+    --update-interval 500
 ```
 
-### Performance-Optimized Settings
+### Enable Active Update
 
 ```bash
-# Longer validity for reduced system_auth load
-nodetool setauthcacheconfig \
-    --credentials-validity 60000 \
-    --credentials-update-interval 30000 \
-    --permissions-validity 60000 \
-    --permissions-update-interval 30000
+# Enable background refresh before cache entries expire
+nodetool setauthcacheconfig --cache-name CredentialsCache --enable-active-update
 ```
 
 ---
@@ -106,7 +93,7 @@ nodetool setauthcacheconfig \
 
 ```bash
 # Reduce system_auth load
-nodetool setauthcacheconfig --credentials-validity 30000
+nodetool setauthcacheconfig --cache-name CredentialsCache --validity-period 30000
 ```
 
 Increase cache validity when:
@@ -119,7 +106,7 @@ Increase cache validity when:
 
 ```bash
 # Decrease validity for faster permission revocation
-nodetool setauthcacheconfig --permissions-validity 1000
+nodetool setauthcacheconfig --cache-name PermissionsCache --validity-period 1000
 
 # Invalidate existing cache
 nodetool invalidatepermissionscache
@@ -131,9 +118,8 @@ During security incidents, reduce cache validity to ensure permission changes ta
 
 ```bash
 # Increase cache size for many concurrent connections
-nodetool setauthcacheconfig \
-    --credentials-max-entries 10000 \
-    --permissions-max-entries 10000
+nodetool setauthcacheconfig --cache-name CredentialsCache --max-entries 10000
+nodetool setauthcacheconfig --cache-name PermissionsCache --max-entries 10000
 ```
 
 When handling many concurrent authenticated connections, increase cache size to maintain hit rates.
@@ -148,14 +134,14 @@ The update interval should be less than the validity period:
 
 ```bash
 # Good: Update happens before expiry
-nodetool setauthcacheconfig \
-    --permissions-validity 5000 \
-    --permissions-update-interval 3000
+nodetool setauthcacheconfig --cache-name PermissionsCache \
+    --validity-period 5000 \
+    --update-interval 3000
 
 # Bad: Update interval >= validity (no background refresh)
-nodetool setauthcacheconfig \
-    --permissions-validity 5000 \
-    --permissions-update-interval 6000
+nodetool setauthcacheconfig --cache-name PermissionsCache \
+    --validity-period 5000 \
+    --update-interval 6000
 ```
 
 ### Cache Sizing
@@ -168,9 +154,8 @@ Calculate max entries based on:
 
 ```bash
 # For 5000 concurrent users
-nodetool setauthcacheconfig \
-    --credentials-max-entries 6000 \
-    --roles-max-entries 1000
+nodetool setauthcacheconfig --cache-name CredentialsCache --max-entries 6000
+nodetool setauthcacheconfig --cache-name RolesCache --max-entries 1000
 ```
 
 ---
@@ -193,7 +178,14 @@ nodetool setauthcacheconfig \
 
 !!! info "Corresponding cassandra.yaml Settings"
 
-    For persistent configuration, update these settings in `cassandra.yaml`:
+    The configuration parameter names vary by Cassandra version:
+
+    | Cassandra Version | Parameter Pattern | Example |
+    |-------------------|-------------------|---------|
+    | Pre-4.1 | `*_validity_in_ms`, `*_update_interval_in_ms`, `*_cache_max_entries` | `credentials_validity_in_ms: 2000` |
+    | 4.1+ | `*_validity`, `*_update_interval`, `*_cache_max_entries`, `*_cache_active_update` | `credentials_validity: 2s` |
+
+    **Pre-4.1 example:**
 
     ```yaml
     credentials_validity_in_ms: 5000
@@ -205,6 +197,23 @@ nodetool setauthcacheconfig \
     roles_validity_in_ms: 5000
     roles_update_interval_in_ms: 3000
     roles_cache_max_entries: 1000
+    ```
+
+    **4.1+ example (with duration literals):**
+
+    ```yaml
+    credentials_validity: 5s
+    credentials_update_interval: 3s
+    credentials_cache_max_entries: 1000
+    credentials_cache_active_update: true
+    permissions_validity: 5s
+    permissions_update_interval: 3s
+    permissions_cache_max_entries: 1000
+    permissions_cache_active_update: true
+    roles_validity: 5s
+    roles_update_interval: 3s
+    roles_cache_max_entries: 1000
+    roles_cache_active_update: true
     ```
 
 ---

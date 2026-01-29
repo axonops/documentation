@@ -102,7 +102,7 @@ The following conditions must be met before decommissioning:
 
 - All data owned by the decommissioning node is streamed to new owners before removal
 - The node transitions through states: `UN` → `UL` (Leaving) → removed from ring
-- Client requests are rejected once decommission starts
+- The node continues serving client requests while streaming (state `UL`); coordinator routing shifts as streaming completes
 - Hints destined for this node are cleared from other nodes
 
 **Failure Semantics:**

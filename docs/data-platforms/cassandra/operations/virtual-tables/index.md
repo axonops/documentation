@@ -184,10 +184,10 @@ SELECT name, blocked_tasks
 FROM system_views.thread_pools
 WHERE blocked_tasks > 0;
 
--- Alert: Low cache hit ratio
+-- Alert: Low cache hit ratio (note: use lowercase 'keys', not 'KeyCache')
 SELECT name, hit_ratio
 FROM system_views.caches
-WHERE name = 'KeyCache' AND hit_ratio < 0.80;
+WHERE name = 'keys' AND hit_ratio < 0.80;
 
 -- Alert: Large pending hints
 SELECT host_id, address, files

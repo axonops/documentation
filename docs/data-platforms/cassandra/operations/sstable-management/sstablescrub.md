@@ -114,14 +114,20 @@ end note
 | `-n, --no-validate` | Skip validation of data values; only check structure |
 | `-r, --reinsert-overflowed-ttl` | Rewrite rows with TTL overflow (TTL > max allowed) |
 | `-s, --skip-corrupted` | Skip scrubbing counter tables if corruption prevents completion |
-| `-e, --header-fix <mode>` | Handle serialization header issues: `validate`, `fix`, `fix-only`, `off` |
+| `-e, --header-fix <mode>` | Handle serialization header issues (see modes below) |
+| `-v, --verbose` | Enable verbose output |
+| `-h, --help` | Display help information |
 | `--debug` | Enable debug output |
 
 ### Header Fix Modes (`-e`)
 
+!!! warning "Deprecated Option"
+    The `--header-fix` option is deprecated and no longer functional in recent Cassandra versions. It only emits a warning and has no effect on scrubbing behavior.
+
 | Mode | Behavior |
 |------|----------|
 | `validate` | (Default) Validate header, error if mismatch found |
+| `validate-only` | Only validate header, do not attempt fixes |
 | `fix` | Validate header, fix issues if possible, then scrub |
 | `fix-only` | Only fix header issues, don't scrub data |
 | `off` | Disable header validation entirely |

@@ -38,8 +38,10 @@ Secondary indexes enable queries on columns that are not part of the primary key
 | State | Query Behavior | How to Check |
 |-------|---------------|--------------|
 | Building | Queries may fail or return partial results | `nodetool indexbuildstatus` |
-| Built | Queries return complete results from available nodes | `SELECT * FROM system_schema.indexes` |
+| Built | Queries return complete results from available nodes | `nodetool indexbuildstatus` (no pending builds) |
 | Failed | Index unusable; must drop and recreate | Check logs for build errors |
+
+*Note: `system_schema.indexes` shows index definitions but not build status. Use `nodetool indexbuildstatus` to check build progress.*
 
 ### Query Execution Contract
 

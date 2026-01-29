@@ -36,18 +36,19 @@ roll_cycle          HOURLY
 block               true
 max_log_size        17179869184
 max_queue_weight    268435456
+max_archive_retries 10
 ```
 
 ### When Disabled
 
+The command shows the configuration from `cassandra.yaml` even when FQL is disabled. Fields will reflect configured values, not necessarily empty:
+
 ```
 enabled             false
-log_dir
+log_dir             /var/log/cassandra/fql
 archive_command
-roll_cycle
-block
-max_log_size
-max_queue_weight
+roll_cycle          HOURLY
+...
 ```
 
 ---
@@ -89,6 +90,7 @@ ssh 192.168.1.100 "nodetool getfullquerylog"
 | `block` | Whether to block queries if logging falls behind |
 | `max_log_size` | Maximum total log size in bytes |
 | `max_queue_weight` | Maximum in-memory queue size in bytes |
+| `max_archive_retries` | Maximum retries for archive command |
 
 ---
 
@@ -172,9 +174,9 @@ fi
 #!/bin/bash
 # check_fql_cluster.sh
 
-echo "=== Cluster FQL Configuration ==="# Get list of node IPs from local nodetool status
+echo "=== Cluster FQL Configuration ==="
 
-
+# Get list of node IPs from local nodetool status
 nodes=$(nodetool status | grep "^UN" | awk '{print $2}')
 
 for node in $nodes; do
@@ -188,9 +190,9 @@ done
 
 ```bash
 #!/bin/bash
-# verify_fql_consistency.sh# Get list of node IPs from local nodetool status
+# verify_fql_consistency.sh
 
-
+# Get list of node IPs from local nodetool status
 nodes=$(nodetool status | grep "^UN" | awk '{print $2}')
 enabled_count=0
 disabled_count=0

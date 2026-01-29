@@ -160,39 +160,52 @@ ls -la /var/lib/cassandra/commitlog/
 
 ### Configuration
 
+**Commit log parameters by version:**
+
+| Parameter | 4.0 | 4.1+ | Default |
+|-----------|-----|------|---------|
+| Sync period | `commitlog_sync_period_in_ms` | `commitlog_sync_period` | `10000` / `10s` |
+| Group window | `commitlog_sync_batch_window_in_ms` | `commitlog_sync_group_window` | `2` / `2ms` |
+| Segment size | `commitlog_segment_size_in_mb` | `commitlog_segment_size` | `32` / `32MiB` |
+| Total space | `commitlog_total_space_in_mb` | `commitlog_total_space` | varies |
+
 ```yaml
-# cassandra.yaml
+# cassandra.yaml (4.0 syntax shown, 4.1+ uses duration/size literals)
 
 # Sync mode determines durability guarantees
-# periodic: sync every N milliseconds (default)
-# batch: sync after each write batch
+# periodic: sync every N milliseconds (default, best throughput)
+# group: sync after window of writes (replaces old "batch" behavior)
+# batch: sync after each write (lowest throughput, strongest durability)
 commitlog_sync: periodic
-commitlog_sync_period_in_ms: 10000
+commitlog_sync_period_in_ms: 10000  # 4.1+: commitlog_sync_period: 10s
 
-# For batch mode
-# commitlog_sync: batch
+# For group mode (4.1+: commitlog_sync_group_window)
+# commitlog_sync: group
 # commitlog_sync_batch_window_in_ms: 2
 
 # Segment size (default 32MB)
-commitlog_segment_size_in_mb: 32
+commitlog_segment_size_in_mb: 32  # 4.1+: commitlog_segment_size: 32MiB
 
 # Directory (should be on fast storage, separate from data)
 commitlog_directory: /var/lib/cassandra/commitlog
 
 # Maximum total space for commit log segments
-commitlog_total_space_in_mb: 8192
+commitlog_total_space_in_mb: 8192  # 4.1+: commitlog_total_space: 8GiB
 ```
 
 ### Sync Mode Comparison
 
 Cassandra supports three sync modes: periodic, batch, and group. See [Commit Log: Sync Modes](commitlog.md#sync-modes) for detailed diagrams and trade-offs.
 
-| Mode | Configuration | Latency | Data Loss Window |
-|------|---------------|---------|------------------|
-| Periodic (10s) | `commitlog_sync: periodic` | Lowest | Up to 10 seconds |
-| Periodic (1s) | `commitlog_sync_period_in_ms: 1000` | Low | Up to 1 second |
-| Batch (2ms) | `commitlog_sync: batch` | Higher | Up to 2ms |
-| Batch (50ms) | `commitlog_sync_batch_window_in_ms: 50` | Medium | Up to 50ms |
+| Mode | Configuration | Throughput | Data Loss Window |
+|------|---------------|------------|------------------|
+| Periodic (10s) | `commitlog_sync: periodic` | Highest | Up to 10 seconds |
+| Periodic (1s) | `commitlog_sync_period: 1s` | High | Up to 1 second |
+| Group (2ms) | `commitlog_sync: group` | Medium | Up to group window |
+| Batch | `commitlog_sync: batch` | Lowest | Per-write fsync |
+
+!!! note "Batch mode"
+    Batch mode performs fsync after each write, providing strongest durability at the cost of throughput. There is no batch window setting; for windowed sync, use group mode.
 
 ### Understanding Filesystem Buffering and fsync
 
@@ -423,14 +436,22 @@ digraph Memtable {
 
 ### Configuration
 
+**Memtable parameters by version:**
+
+| Parameter | 4.0 | 4.1+ | Default |
+|-----------|-----|------|---------|
+| Heap space | `memtable_heap_space_in_mb` | `memtable_heap_space` | 1/4 heap |
+| Off-heap space | `memtable_offheap_space_in_mb` | `memtable_offheap_space` | 1/4 heap |
+| Cleanup threshold | `memtable_cleanup_threshold` | Deprecated (derived from `memtable_flush_writers`) | 0.11 |
+
 ```yaml
-# cassandra.yaml
+# cassandra.yaml (4.0 syntax shown)
 
 # Total heap space for all memtables
-memtable_heap_space_in_mb: 2048
+memtable_heap_space_in_mb: 2048  # 4.1+: memtable_heap_space: 2GiB
 
 # Total off-heap space for memtables
-memtable_offheap_space_in_mb: 2048
+memtable_offheap_space_in_mb: 2048  # 4.1+: memtable_offheap_space: 2GiB
 
 # Allocation type
 # heap_buffers: on-heap (default)
@@ -441,8 +462,7 @@ memtable_allocation_type: heap_buffers
 # Concurrent flush operations
 memtable_flush_writers: 2
 
-# Flush threshold as fraction of heap
-# Flush starts when memtables exceed this percentage
+# Flush threshold as fraction of heap (4.0 only; deprecated in 4.1+)
 memtable_cleanup_threshold: 0.11
 ```
 
@@ -587,14 +607,14 @@ The node sends its acknowledgment to the coordinator (or client, if this node is
 
 ```yaml
 # Larger memtables reduce flush frequency
-memtable_heap_space_in_mb: 4096
+memtable_heap_space_in_mb: 4096  # 4.1+: memtable_heap_space: 4GiB
 
 # More flush writers for parallel I/O
 memtable_flush_writers: 4
 
-# Batch sync for throughput (higher latency)
-commitlog_sync: batch
-commitlog_sync_batch_window_in_ms: 2
+# Periodic sync for best throughput (accepts larger data loss window)
+commitlog_sync: periodic
+commitlog_sync_period_in_ms: 10000  # 4.1+: commitlog_sync_period: 10s
 
 # Separate commit log storage
 commitlog_directory: /mnt/nvme/commitlog
@@ -630,7 +650,7 @@ nodetool tpstats | grep -i flush
 **Causes:**
 
 - Memtables not flushing (disk I/O bottleneck)
-- `commitlog_total_space_in_mb` too low
+- `commitlog_total_space` too low (4.0: `commitlog_total_space_in_mb`)
 - Too many tables consuming flush capacity
 
 **Solutions:**

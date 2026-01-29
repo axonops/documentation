@@ -20,10 +20,10 @@ nodetool [connection_options] resetfullquerylog
 
 ## Description
 
-`nodetool resetfullquerylog` resets the full query logging (FQL) path to the default value configured in `cassandra.yaml`. This is useful when FQL was enabled with a custom path via `enablefullquerylog --path` and needs to be restored to the configuration file setting.
+`nodetool resetfullquerylog` stops full query logging and cleans up log files in the configured log directory (and any path specified via JMX). This command effectively disables FQL if it was enabled.
 
-!!! info "Path Reset Only"
-    This command resets the log path configuration but does not delete existing log files or change the enabled/disabled state of FQL.
+!!! warning "Cleans Log Directory"
+    This command **stops FQL and cleans log files** in the configured directories. It does not simply reset the path—it deactivates logging and removes log data.
 
 ---
 
@@ -48,24 +48,18 @@ nodetool getfullquerylog
 
 When `resetfullquerylog` is executed:
 
-1. FQL path is reset to the `cassandra.yaml` configured value
-2. If FQL is enabled, logging continues to the reset path
-3. Existing log files at the previous path remain unchanged
-4. FQL enabled/disabled state is not affected
+1. FQL is disabled if it was enabled
+2. Log files in the configured directory are cleaned up
+3. Log files in any JMX-specified path are also cleaned
+4. The FQL configuration is reset to defaults
 
 ### What Changes
 
 | Aspect | Before | After |
 |--------|--------|-------|
-| Log path | Custom path from `--path` | Path from `cassandra.yaml` |
-
-### What Stays the Same
-
-| Aspect | Status |
-|--------|--------|
-| FQL enabled/disabled | Unchanged |
-| Existing log files | Preserved at old location |
-| Other FQL settings | Unchanged |
+| FQL enabled | Yes (if was enabled) | No |
+| Log files | Present | Cleaned |
+| Log path | Custom or configured | Reset to config |
 
 ---
 
@@ -200,21 +194,21 @@ nodetool resetfullquerylog
 #!/bin/bash
 # reset_fql_cluster.sh
 
-echo "Resetting FQL path cluster-wide..."# Get list of node IPs from local nodetool status
+echo "Resetting FQL cluster-wide..."
 
-
+# Get list of node IPs from local nodetool status
 nodes=$(nodetool status | grep "^UN" | awk '{print $2}')
 
 for node in $nodes; do
     echo -n "$node: "
-    ssh "$node" "nodetool resetfullquerylog 2>/dev/null && echo "reset" || echo "FAILED""
+    ssh "$node" 'nodetool resetfullquerylog 2>/dev/null && echo "reset" || echo "FAILED"'
 done
 
 echo ""
 echo "Verification:"
 for node in $nodes; do
     echo "=== $node ==="
-    ssh "$node" "nodetool getfullquerylog 2>/dev/null | grep "log_dir""
+    ssh "$node" 'nodetool getfullquerylog 2>/dev/null | grep "log_dir"'
 done
 ```
 

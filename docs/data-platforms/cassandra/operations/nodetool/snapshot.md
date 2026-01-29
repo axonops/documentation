@@ -35,9 +35,12 @@ Cassandra continuously modifies data through compaction, which merges and delete
 | Captured | Not Captured |
 |----------|--------------|
 | All committed SSTable data | Uncommitted data in memtables (unless flushed first) |
-| Table schema definitions | Commit log files |
-| Secondary index data | Configuration files |
-| Materialized view data | System keyspace data (unless explicitly included) |
+| Secondary index data | Commit log files |
+| Materialized view data | Configuration files |
+| Schema file (`schema.cql`) per table | System keyspace data (unless explicitly included) |
+
+!!! note "Schema in Snapshots"
+    Each snapshot directory includes a `schema.cql` file with the table definition at snapshot time. However, this is limited to individual table schema—not full keyspace or cluster schema. To capture complete schema, export separately using `DESCRIBE KEYSPACE` or snapshot the system schema keyspaces.
 
 ---
 
@@ -54,10 +57,22 @@ Cassandra continuously modifies data through compaction, which merges and delete
 | Option | Description |
 |--------|-------------|
 | `-t, --tag` | Name/tag for the snapshot |
-| `-cf, --column-family` | Table(s) to snapshot (comma-separated) |
+| `-cf, --column-family` | Single table name to snapshot (requires exactly one keyspace argument) |
 | `-sf, --skip-flush` | Skip flushing memtables before snapshot |
-| `-kt, --kt-list` | List of keyspace.table to snapshot |
+| `-kt, --kt-list` | Comma-separated list of `keyspace.table` pairs to snapshot multiple tables |
 | `--ttl` | Time-to-live for snapshot (auto-deletion) |
+
+!!! note "-cf vs -kt"
+    - Use `-cf` when snapshotting a **single table** from a single keyspace
+    - Use `-kt` when snapshotting **multiple tables** (can span keyspaces)
+
+    ```bash
+    # Single table (use -cf)
+    nodetool snapshot -t backup -cf users my_keyspace
+
+    # Multiple tables (use -kt)
+    nodetool snapshot -t backup -kt my_keyspace.users,my_keyspace.orders
+    ```
 
 ---
 
@@ -77,15 +92,17 @@ Creates snapshot of all user keyspaces.
 nodetool snapshot -t my_backup my_keyspace
 ```
 
-### Snapshot Specific Table
+### Snapshot Single Table
 
 ```bash
+# -cf requires exactly one keyspace and one table name
 nodetool snapshot -t users_backup -cf users my_keyspace
 ```
 
 ### Snapshot Multiple Tables
 
 ```bash
+# Use -kt for multiple tables (comma-separated keyspace.table pairs)
 nodetool snapshot -t tables_backup -kt my_keyspace.users,my_keyspace.orders
 ```
 

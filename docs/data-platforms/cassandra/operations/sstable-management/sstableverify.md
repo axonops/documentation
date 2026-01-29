@@ -102,10 +102,18 @@ stop
 
 | Option | Description |
 |--------|-------------|
-| `-e, --extended` | Extended verification - read and validate every row |
-| `-t, --token <range>` | Only verify SSTables that contain tokens in the specified range |
+| `-f, --force` | **Required.** Force verification to proceed (safety flag) |
+| `-e, --extended-verify` | Extended verification - read and validate every row |
+| `-t, --token_range <left,right>` | Only verify SSTables containing tokens in range (comma-separated, can be specified multiple times) |
+| `-q, --quick` | Quick verification (less thorough) |
+| `-c, --check_version` | Check SSTable version compatibility |
+| `-r, --mutate_repair_status` | Mutate repair status metadata |
 | `-v, --verbose` | Verbose output showing progress |
+| `-h, --help` | Display help information |
 | `--debug` | Enable debug logging |
+
+!!! warning "Force Flag Required"
+    The `-f` or `--force` flag is required to run verification (CASSANDRA-17017). This is a safety measure to prevent accidental execution.
 
 ### Extended Verification (`-e`)
 
@@ -153,8 +161,8 @@ end note
 # Stop Cassandra first
 sudo systemctl stop cassandra
 
-# Verify a specific table
-sstableverify my_keyspace my_table
+# Verify a specific table (--force is required)
+sstableverify -f my_keyspace my_table
 
 # Start Cassandra
 sudo systemctl start cassandra
@@ -164,21 +172,24 @@ sudo systemctl start cassandra
 
 ```bash
 # Full row-by-row verification
-sstableverify -e my_keyspace my_table
+sstableverify -f -e my_keyspace my_table
 ```
 
 ### Verbose Output
 
 ```bash
 # See progress during verification
-sstableverify -v my_keyspace my_table
+sstableverify -f -v my_keyspace my_table
 ```
 
 ### Verify Token Range
 
 ```bash
-# Only verify SSTables containing specific tokens
-sstableverify -t 0:1000000000000000000 my_keyspace my_table
+# Only verify SSTables containing specific tokens (comma-separated range)
+sstableverify -f -t -9223372036854775808,0 my_keyspace my_table
+
+# Multiple token ranges can be specified
+sstableverify -f -t -9223372036854775808,0 -t 0,9223372036854775807 my_keyspace my_table
 ```
 
 ### Verify All Tables in Keyspace
@@ -252,7 +263,7 @@ for ks in $KEYSPACES; do
     for table_dir in /var/lib/cassandra/data/$ks/*/; do
         table=$(basename "$table_dir" | cut -d'-' -f1)
         echo "Verifying $ks.$table" >> $LOG_FILE
-        sstableverify "$ks" "$table" >> $LOG_FILE 2>&1
+        sstableverify -f "$ks" "$table" >> $LOG_FILE 2>&1
     done
 done
 
@@ -267,9 +278,9 @@ echo "Verification complete: $(date)" >> $LOG_FILE
 
 sudo systemctl stop cassandra
 
-# Verify critical tables first
-sstableverify -e system_auth roles
-sstableverify -e my_keyspace critical_table
+# Verify critical tables first (--force required)
+sstableverify -f -e system_auth roles
+sstableverify -f -e my_keyspace critical_table
 
 # If issues found, scrub before starting
 # sstablescrub my_keyspace corrupted_table
@@ -281,7 +292,7 @@ sudo systemctl start cassandra
 
 ```bash
 # Verify before upgrades or migrations
-sstableverify my_keyspace my_table
+sstableverify -f my_keyspace my_table
 
 # If clean, proceed with operation
 if [ $? -eq 0 ]; then
@@ -300,8 +311,8 @@ fi
 # 1. Stop Cassandra
 sudo systemctl stop cassandra
 
-# 2. Verify the suspect table
-sstableverify -e -v my_keyspace problematic_table 2>&1 | tee verify.log
+# 2. Verify the suspect table (--force required)
+sstableverify -f -e -v my_keyspace problematic_table 2>&1 | tee verify.log
 
 # 3. Identify corrupted SSTables from output
 grep -i "error\|corrupt" verify.log
@@ -393,14 +404,14 @@ stop
 
 ```bash
 # Verify tables in parallel (if I/O allows)
-sstableverify keyspace table1 &
-sstableverify keyspace table2 &
-sstableverify keyspace table3 &
+sstableverify -f keyspace table1 &
+sstableverify -f keyspace table2 &
+sstableverify -f keyspace table3 &
 wait
 
-# Or limit to specific token ranges
-sstableverify -t -9223372036854775808:0 keyspace table &
-sstableverify -t 0:9223372036854775807 keyspace table &
+# Or limit to specific token ranges (comma-separated)
+sstableverify -f -t -9223372036854775808,0 keyspace table &
+sstableverify -f -t 0,9223372036854775807 keyspace table &
 wait
 ```
 

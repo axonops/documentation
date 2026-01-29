@@ -41,8 +41,8 @@ The SELECT statement retrieves rows and columns from Cassandra tables. Unlike SQ
 | `ALL` | All replicas respond; highest consistency, lowest availability |
 | `LOCAL_ONE` | At least one replica in local DC responds |
 | `LOCAL_QUORUM` | Majority in local DC responds |
-| `SERIAL` | Linearizable read (Paxos); sees all committed LWT operations |
-| `LOCAL_SERIAL` | Linearizable read within local DC only |
+| `SERIAL` | For LWT operations only; sees all committed LWT operations |
+| `LOCAL_SERIAL` | For LWT operations within local DC only |
 
 ### Version-Specific Behavior
 
@@ -61,9 +61,9 @@ The SELECT statement retrieves rows and columns from Cassandra tables. Unlike SQ
 
 Cassandra's query model follows a fundamental principle: **queries must specify how to find data, not just what data to find**. This design enables:
 
-- **Predictable performance**: Queries execute in bounded time
-- **Linear scalability**: Response time independent of cluster size
-- **Partition locality**: Data retrieved from minimal nodes
+- **Predictable performance**: Partition-restricted queries execute in bounded time
+- **Scalability**: Partition-restricted queries have response time independent of cluster size
+- **Partition locality**: Data retrieved from minimal nodes when partition key is specified
 
 ```plantuml
 @startuml
@@ -210,6 +210,168 @@ coord --> client : Combined response
     - Recommended limit: 10-20 values
     - Large IN lists cause coordinator memory pressure
 
+#### IN Clause Behavior: Partition Keys vs Clustering Columns
+
+The `IN` clause behaves differently depending on whether it is applied to partition key columns or clustering columns. Understanding this distinction is critical for writing correct and efficient queries.
+
+##### Example Schema
+
+The following examples use this schema:
+
+```sql
+-- Table with composite partition key and composite clustering key
+CREATE TABLE metrics.events (
+    tenant TEXT,
+    user_id INT,
+    event_id INT,
+    timestamp INT,
+    description TEXT,
+    PRIMARY KEY ((tenant, user_id), event_id, timestamp)
+);
+
+-- Insert sample data
+INSERT INTO metrics.events (tenant, user_id, event_id, timestamp, description)
+    VALUES ('acme', 1, 100, 1000, 'acme-1-100-1000');
+INSERT INTO metrics.events (tenant, user_id, event_id, timestamp, description)
+    VALUES ('acme', 1, 100, 2000, 'acme-1-100-2000');
+INSERT INTO metrics.events (tenant, user_id, event_id, timestamp, description)
+    VALUES ('acme', 1, 200, 1000, 'acme-1-200-1000');
+INSERT INTO metrics.events (tenant, user_id, event_id, timestamp, description)
+    VALUES ('acme', 2, 100, 1000, 'acme-2-100-1000');
+INSERT INTO metrics.events (tenant, user_id, event_id, timestamp, description)
+    VALUES ('acme', 3, 100, 1000, 'acme-3-100-1000');
+INSERT INTO metrics.events (tenant, user_id, event_id, timestamp, description)
+    VALUES ('beta', 1, 100, 1000, 'beta-1-100-1000');
+```
+
+##### IN on Single Partition Key Column
+
+When a table has a single partition key column, IN works as expected:
+
+```sql
+-- Works: queries partitions 1, 2, and 3
+SELECT * FROM users WHERE user_id IN (1, 2, 3);
+```
+
+##### IN on Composite Partition Key Columns
+
+With composite partition keys, you MUST specify all partition key columns. You MAY use `IN` on any or all of them:
+
+```sql
+-- Works: equality on tenant, IN on user_id
+SELECT * FROM metrics.events
+WHERE tenant = 'acme' AND user_id IN (1, 2, 3);
+
+-- Works: IN on tenant, equality on user_id
+SELECT * FROM metrics.events
+WHERE tenant IN ('acme', 'beta') AND user_id = 1;
+
+-- Works: IN on both partition key columns
+SELECT * FROM metrics.events
+WHERE tenant IN ('acme', 'beta') AND user_id IN (1, 2);
+```
+
+!!! warning "Cartesian Product Behavior"
+    When using separate `IN` clauses on multiple partition key columns, Cassandra creates a **cartesian product** of all combinations and queries each resulting partition separately.
+
+    ```sql
+    -- This query:
+    SELECT * FROM metrics.events
+    WHERE tenant IN ('acme', 'beta') AND user_id IN (1, 2);
+
+    -- Queries 4 partitions (2 × 2 = 4):
+    -- (acme, 1), (acme, 2), (beta, 1), (beta, 2)
+    ```
+
+    If you only need specific partition combinations such as `(acme, 1)` and `(beta, 2)`, you MUST execute separate queries for each combination.
+
+##### Multi-Column (Tuple) IN on Partition Keys: NOT Supported
+
+Cassandra does **not** support multi-column tuple syntax for partition keys:
+
+```sql
+-- ERROR: Multi-column relations can only be applied to clustering columns
+SELECT * FROM metrics.events
+WHERE (tenant, user_id) IN (('acme', 1), ('acme', 3));
+```
+
+This query fails with:
+
+> `InvalidRequest: Multi-column relations can only be applied to clustering columns but was applied to: tenant`
+
+##### IN on Clustering Columns
+
+The `IN` clause works on clustering columns when the full partition key is specified:
+
+```sql
+-- Works: full partition key + IN on first clustering column
+SELECT * FROM metrics.events
+WHERE tenant = 'acme' AND user_id = 1
+AND event_id IN (100, 200);
+
+-- Works: full partition key + IN on last clustering column
+SELECT * FROM metrics.events
+WHERE tenant = 'acme' AND user_id = 1 AND event_id = 100
+AND timestamp IN (1000, 2000, 3000);
+```
+
+##### Multi-Column (Tuple) IN on Clustering Columns: Supported
+
+Unlike partition keys, clustering columns **do** support multi-column tuple syntax:
+
+```sql
+-- Works: select specific (event_id, timestamp) pairs
+SELECT * FROM metrics.events
+WHERE tenant = 'acme' AND user_id = 1
+AND (event_id, timestamp) IN ((100, 1000), (100, 2000));
+```
+
+This returns exactly the two specified rows.
+
+!!! tip "Tuple IN vs Separate INs on Clustering Columns"
+    **Tuple IN** returns only the specific combinations you request:
+
+    ```sql
+    -- Returns 2 rows: (100, 1000) and (100, 2000)
+    SELECT * FROM metrics.events
+    WHERE tenant = 'acme' AND user_id = 1
+    AND (event_id, timestamp) IN ((100, 1000), (100, 2000));
+    ```
+
+    **Separate INs** return the cartesian product:
+
+    ```sql
+    -- Returns 3 rows: (100, 1000), (100, 2000), AND (200, 1000)
+    SELECT * FROM metrics.events
+    WHERE tenant = 'acme' AND user_id = 1
+    AND event_id IN (100, 200) AND timestamp IN (1000, 2000);
+    ```
+
+    Use tuple IN when you need precise control over which row combinations to retrieve.
+
+##### Why Multi-Column IN Works on Clustering Columns But Not Partition Keys
+
+The difference stems from how Cassandra stores and retrieves data:
+
+- **Partition keys** determine which node stores the data. The composite partition key `(tenant, user_id)` is hashed together as a single unit to compute the token. Multi-column `IN` on partition keys would require the query planner to enumerate specific partition combinations—functionality that Cassandra does not implement.
+
+- **Clustering columns** are sorted within each partition on disk. Multi-column comparisons like `(ck1, ck2) > (x, y)` or `(ck1, ck2) IN ((a, b), (c, d))` map efficiently to SSTable seeks within a single partition.
+
+##### IN Clause Quick Reference
+
+| Query Pattern | Supported | Notes |
+|--------------|-----------|-------|
+| `pk IN (1, 2)` | ✅ Yes | Single partition key |
+| `pk1 = 'a' AND pk2 IN (1, 2)` | ✅ Yes | Queries N partitions |
+| `pk1 IN ('a', 'b') AND pk2 IN (1, 2)` | ✅ Yes | Cartesian product: N × M partitions |
+| `(pk1, pk2) IN (('a', 1), ('b', 2))` | ❌ No | Multi-column IN not supported on partition keys |
+| `pk1 IN ('a', 'b')` (missing pk2) | ❌ No | Requires ALLOW FILTERING |
+| `ck IN (1, 2)` | ✅ Yes | With full partition key specified |
+| `(ck1, ck2) IN ((1, 1), (2, 1))` | ✅ Yes | Tuple IN supported on clustering columns |
+| `ck1 IN (1, 2) AND ck2 IN (1, 2)` | ✅ Yes | Cartesian product within partition |
+| `ck2 IN (1, 2)` (skipping ck1) | ❌ No | Must follow clustering column order |
+| `ck IN (1, 2) AND ck > 0` | ❌ No | Cannot combine IN with range on same column |
+
 ### Full Table Scans
 
 Queries without partition key restrictions scan all partitions:
@@ -229,7 +391,7 @@ WHERE TOKEN(user_id) > -9223372036854775808
 
     - Contact every node in the cluster
     - Do not scale with cluster size
-    - Can cause timeouts on tables > 1M rows
+    - Risk timeouts on large tables (depending on schema, hardware, and workload)
     - Block coordinator resources
 
     Never use in production application code. Use Spark or analytics tools for full scans.

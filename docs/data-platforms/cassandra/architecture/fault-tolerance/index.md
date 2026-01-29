@@ -89,9 +89,9 @@ dc --> region : correlates
 
 | Scope | Typical Duration | Detection Time | Recovery Approach |
 |-------|------------------|----------------|-------------------|
-| **Process** | Seconds-minutes | ~10 seconds (Phi) | Automatic restart |
-| **Node** | Minutes-hours | ~10 seconds (Phi) | Replacement or repair |
-| **Rack** | Minutes-hours | ~10 seconds (Phi) | Wait or redistribute |
+| **Process** | Seconds-minutes | Typically seconds (varies with Phi configuration and inter-arrival history) | Automatic restart |
+| **Node** | Minutes-hours | Typically seconds (varies with Phi configuration) | Replacement or repair |
+| **Rack** | Minutes-hours | Typically seconds (varies with Phi configuration) | Wait or redistribute |
 | **Datacenter** | Hours-days | Seconds (network) | Failover to other DC |
 | **Region** | Hours-days | Seconds (network) | DR procedures |
 
@@ -154,8 +154,8 @@ skinparam backgroundColor #FEFEFE
 title Server-Side Failure Response
 
 card "Node Failure\nDetected" as failure #C00000
-card "1. Phi Accrual Detection\nφ exceeds threshold (~8-10s)" as phi #5B9BD5
-card "2. Gossip Propagation\nDOWN status spreads (~seconds)" as gossip #5B9BD5
+card "1. Phi Accrual Detection\nφ exceeds threshold (timing varies)" as phi #5B9BD5
+card "2. Local DOWN Decision\nNode marked DOWN locally" as gossip #5B9BD5
 card "3. Hinted Handoff\nWrites stored for failed node" as hints #FFC000
 card "4. Request Rerouting\nExclude from replica selection" as reroute #70AD47
 
@@ -173,8 +173,8 @@ gossip --> reroute
 |------|-------|
 | T+0 | Node stops responding |
 | T+1-8s | Phi value rises as heartbeats missed |
-| T+8-10s | Phi exceeds threshold, node marked DOWN locally |
-| T+10-15s | DOWN status propagates via gossip |
+| T+variable | Phi exceeds threshold, node marked DOWN locally on each observing node |
+| T+variable | Each node independently detects failure via Phi (DOWN decisions are local, not propagated via gossip) |
 | T+10s+ | Hints accumulate on coordinators |
 | T+recovery | Node restarts, hints replay |
 
@@ -704,4 +704,3 @@ dc1 <--> dc2 : async replication
 - **[Driver Policies](../../application-development/drivers/policies/index.md)** - Detailed policy configuration
 - **[Retry Policy](../../application-development/drivers/policies/retry.md)** - Retry behavior configuration
 - **[Load Balancing](../../application-development/drivers/policies/load-balancing.md)** - Routing policy configuration
-

@@ -8,19 +8,24 @@ meta:
 
 # nodetool setconcurrency
 
-Sets the maximum concurrent operations for read, write, or counter write thread pools.
+Sets the concurrency level (thread pool size) for a specific stage in Cassandra's SEDA architecture.
 
 ---
 
 ## Synopsis
 
 ```bash
-nodetool [connection_options] setconcurrency <type> <value>
+nodetool [connection_options] setconcurrency <stage> <max>
+nodetool [connection_options] setconcurrency <stage> <core> <max>
 ```
 
 ## Description
 
-`nodetool setconcurrency` modifies the maximum number of concurrent operations that can execute simultaneously for a specific operation type. This controls how Cassandra's thread pools handle incoming requests and directly impacts throughput, latency, and resource utilization.
+`nodetool setconcurrency` modifies the thread pool configuration for a specific stage. This controls how Cassandra's thread pools handle incoming requests and directly impacts throughput, latency, and resource utilization.
+
+The command accepts either one or two numeric arguments:
+- **One argument (`<max>`)**: Sets the maximum pool size
+- **Two arguments (`<core> <max>`)**: Sets both core and maximum pool sizes
 
 ### Understanding Cassandra's Threading Model (SEDA)
 
@@ -86,13 +91,21 @@ end note
 @enduml
 ```
 
-### Concurrency Types
+### Stage Names
 
-| Type | Thread Pool | Default | Purpose |
-|------|-------------|---------|---------|
-| `read` | ReadStage | 32 | Local read operations (single-partition and range queries) |
-| `write` | MutationStage | 32 | Local write operations (inserts, updates, deletes) |
-| `counter_write` | CounterMutationStage | 32 | Counter increment/decrement operations |
+The command accepts any valid stage name. Common stages include:
+
+| Stage Name | Thread Pool | Default | Purpose |
+|------------|-------------|---------|---------|
+| `ReadStage` | ReadStage | 32 | Local read operations (single-partition and range queries) |
+| `MutationStage` | MutationStage | 32 | Local write operations (inserts, updates, deletes) |
+| `CounterMutationStage` | CounterMutationStage | 32 | Counter increment/decrement operations |
+| `GossipStage` | GossipStage | 1 | Gossip protocol handling |
+| `RequestResponseStage` | RequestResponseStage | varies | Inter-node request/response handling |
+| `ViewMutationStage` | ViewMutationStage | 32 | Materialized view updates |
+| `AntiEntropyStage` | AntiEntropyStage | 1 | Repair Merkle tree operations |
+
+Use `nodetool tpstats` to see all available stages and their current statistics.
 
 !!! warning "Non-Persistent Setting"
     This setting is applied at runtime only and does not persist across node restarts. After a restart, concurrency reverts to the settings in `cassandra.yaml`.
@@ -111,8 +124,9 @@ end note
 
 | Argument | Description |
 |----------|-------------|
-| `type` | Concurrency type: `read`, `write`, or `counter_write` |
-| `value` | Maximum concurrent operations (number of threads) |
+| `stage` | Stage name (e.g., `ReadStage`, `MutationStage`, `CounterMutationStage`) |
+| `max` | Maximum pool size (number of threads) |
+| `core` | (Optional) Core pool size. If omitted, only max is set. |
 
 ---
 
@@ -121,25 +135,32 @@ end note
 ### View Current Concurrency
 
 ```bash
-nodetool getconcurrency
+nodetool tpstats
 ```
 
-### Set Read Concurrency
+### Set Read Stage Maximum
 
 ```bash
-nodetool setconcurrency read 64
+nodetool setconcurrency ReadStage 64
 ```
 
-### Set Write Concurrency
+### Set Write Stage Maximum
 
 ```bash
-nodetool setconcurrency write 64
+nodetool setconcurrency MutationStage 64
+```
+
+### Set Core and Maximum
+
+```bash
+# Set core=16, max=64 for ReadStage
+nodetool setconcurrency ReadStage 16 64
 ```
 
 ### Set Counter Write Concurrency
 
 ```bash
-nodetool setconcurrency counter_write 32
+nodetool setconcurrency CounterMutationStage 32
 ```
 
 ---
@@ -167,10 +188,9 @@ ReadStage                        32       245        1523456         0
 
 **Action:** Increase read concurrency:
 ```bash
-nodetool setconcurrency read 64
+nodetool setconcurrency ReadStage 64
 
 # Verify
-nodetool getconcurrency
 nodetool tpstats | grep ReadStage
 ```
 
@@ -188,7 +208,7 @@ nodetool tpstats | grep -E "Pool Name|MutationStage"
 
 **Action:** Increase write concurrency:
 ```bash
-nodetool setconcurrency write 64
+nodetool setconcurrency MutationStage 64
 ```
 
 ### Scenario 3: CPU Saturation
@@ -210,8 +230,8 @@ nodetool tpstats
 **Action:** Consider reducing concurrency if over-threaded:
 ```bash
 # Too many threads can cause contention
-nodetool setconcurrency read 24
-nodetool setconcurrency write 24
+nodetool setconcurrency ReadStage 24
+nodetool setconcurrency MutationStage 24
 ```
 
 ### Scenario 4: High-Core-Count Servers
@@ -224,8 +244,8 @@ nodetool setconcurrency write 24
 **Action:** Scale concurrency with core count:
 ```bash
 # For a 64-core server
-nodetool setconcurrency read 64
-nodetool setconcurrency write 64
+nodetool setconcurrency ReadStage 64
+nodetool setconcurrency MutationStage 64
 ```
 
 ### Scenario 5: Heavy Counter Workload
@@ -241,7 +261,7 @@ nodetool tpstats | grep -E "Pool Name|CounterMutationStage"
 
 **Action:**
 ```bash
-nodetool setconcurrency counter_write 48
+nodetool setconcurrency CounterMutationStage 48
 ```
 
 ---
@@ -298,8 +318,8 @@ while true; do
     clear
     echo "=== $(date) ==="
     echo ""
-    echo "--- Current Concurrency Settings ---"
-    nodetool getconcurrency
+    echo "--- Thread Pool Stats ---"
+    nodetool tpstats | head -10
     echo ""
     echo "--- Thread Pool Stats ---"
     nodetool tpstats | head -20
@@ -445,20 +465,20 @@ High concurrency values increase overall heap pressure indirectly.
 # set_concurrency_cluster.sh
 
 READ_CONCURRENCY="${1:-32}"
-WRITE_CONCURRENCY="${2:-32}"# Get list of node IPs from local nodetool status
+WRITE_CONCURRENCY="${2:-32}"
 
-
+# Get list of node IPs from local nodetool status
 nodes=$(nodetool status | grep "^UN" | awk '{print $2}')
 
 echo "Setting concurrency across cluster..."
-echo "Read: $READ_CONCURRENCY, Write: $WRITE_CONCURRENCY"
+echo "ReadStage: $READ_CONCURRENCY, MutationStage: $WRITE_CONCURRENCY"
 echo ""
 
 for node in $nodes; do
     echo "=== $node ==="
-    ssh "$node" "nodetool setconcurrency read $READ_CONCURRENCY"
-    ssh "$node" "nodetool setconcurrency write $WRITE_CONCURRENCY"
-    ssh "$node" "nodetool getconcurrency"
+    ssh "$node" "nodetool setconcurrency ReadStage $READ_CONCURRENCY"
+    ssh "$node" "nodetool setconcurrency MutationStage $WRITE_CONCURRENCY"
+    ssh "$node" "nodetool tpstats | grep -E 'ReadStage|MutationStage'"
     echo ""
 done
 ```
@@ -507,7 +527,7 @@ nodetool tpstats | grep -E "Pool Name|Blocked"
 
 # Immediate actions:
 # 1. Increase concurrency
-nodetool setconcurrency read 128
+nodetool setconcurrency ReadStage 128
 
 # 2. Check for resource bottlenecks
 iostat -x 1 3
@@ -520,13 +540,13 @@ top -H
 
 ```bash
 # Verify change applied
-nodetool getconcurrency
+nodetool tpstats | grep -E "ReadStage|MutationStage"
 
 # Check logs for errors
 tail -100 /var/log/cassandra/system.log | grep -i concurrency
 
 # Try again
-nodetool setconcurrency read 64
+nodetool setconcurrency ReadStage 64
 ```
 
 ---
@@ -557,7 +577,6 @@ nodetool setconcurrency read 64
 
 | Command | Relationship |
 |---------|--------------|
-| [getconcurrency](getconcurrency.md) | View current concurrency settings |
-| [tpstats](tpstats.md) | Monitor thread pool statistics |
+| [tpstats](tpstats.md) | Monitor thread pool statistics and view current concurrency |
 | [proxyhistograms](proxyhistograms.md) | View read/write latency distributions |
 | [info](info.md) | General node information |

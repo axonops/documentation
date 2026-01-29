@@ -97,8 +97,8 @@ nodetool compact my_keyspace
 nodetool compact
 ```
 
-!!! danger "Never in Production"
-    Running `nodetool compact` without arguments compacts every table on the node. This is almost never appropriate in production.
+!!! danger "Use With Caution"
+    Running `nodetool compact` without arguments compacts every table on the node. This is rarely appropriate in production and should only be performed during planned maintenance windows with careful monitoring.
 
 ---
 

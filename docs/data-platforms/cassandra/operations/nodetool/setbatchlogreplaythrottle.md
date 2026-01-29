@@ -28,13 +28,19 @@ nodetool [connection_options] setbatchlogreplaythrottle <throttle_in_kb>
 
 | Argument | Description |
 |----------|-------------|
-| `throttle_in_kb` | Replay throttle in KB/s |
+| `batchlog_replay_throttle` | Replay throttle in KiB/s. Set to 0 to disable throttling. |
+
+!!! info "Throttle Behavior"
+    - Setting the value to **0 disables throttling** entirely
+    - The effective throttle is **proportionally reduced based on cluster size** to prevent overwhelming recovered nodes during replay
 
 !!! note "cassandra.yaml Parameter"
     The corresponding cassandra.yaml parameter changed in 4.1:
 
-    - **4.1+**: `batchlog_replay_throttle: 1024KiB` (data size format)
-    - **Pre-4.1**: `batchlog_replay_throttle_in_kb: 1024`
+    | Cassandra Version | Parameter Name | Example |
+    |-------------------|----------------|---------|
+    | Pre-4.1 | `batchlog_replay_throttle_in_kb` | `1024` |
+    | 4.1+ | `batchlog_replay_throttle` | `1024KiB` |
 
 ---
 
@@ -69,6 +75,13 @@ nodetool replaybatchlog
 ```bash
 # During high load
 nodetool setbatchlogreplaythrottle 512
+```
+
+### Disable Throttling
+
+```bash
+# Remove throttle limit (use with caution)
+nodetool setbatchlogreplaythrottle 0
 ```
 
 ---

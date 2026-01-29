@@ -1,57 +1,52 @@
 ---
-title: "Setup alert rules"
+title: "Set up alert rules"
 description: "Create alert rules in AxonOps. Configure thresholds and notifications for metrics."
 meta:
   - name: keywords
     content: "alert rules, AxonOps alerts, threshold configuration, notifications"
 ---
 
-# Setup alert rules
+# Set up alert rules
 
 
 
-###  Insert Alert Rules Credentials
+### Create an alert rule
 
-On the Axonops application menu, click `Dashboards` and `select` required Dashboard. eg. `System`
+On the AxonOps application menu, click **Dashboards** and select the required dashboard (e.g., **System**).
 
-`Hover over` the desired Chart `click` on the <span class="buttons"> [![testb](../img/testb.png)](../img/testb.png) </span> button.
-
-
-!!! infomy 
-
-    [![createrule](../img/createrule.gif)](../img/createrule.gif)
-
-###  Complete The Fields In Form
-
-* Below the chart `click` on the `alert` tab.
+Hover over the desired chart and click <span class="buttons">[![testb](../img/testb.png)](../img/testb.png)</span>.
 
 
-!!! infomy 
 
-    [![alertform](../img/alertform.png)](../img/alertform.png)
+[![createrule](../img/createrule.gif)](../img/createrule.gif)
 
+### Complete the form fields
 
-* A form will appear
-
-!!! infomy 
-
-    [![alertformfields](../img/alertformfields.png)](../img/alertformfields.png)
+* Below the chart, click the **Alert** tab.
 
 
-* Complete Alert settings in `Comparator Warning value` or `Critical value` or Both and the `Duration` ==> (how often to check) In
 
-!!! infomy 
-
-    [![allertfields](../img/allertfields.png)](../img/allertfields.png)
+[![alertform](../img/alertform.png)](../img/alertform.png)
 
 
-####  Annotations
-
-In the `Summary` box you can include free text & type one `or` many of the following `$labels`
+* A form will appear.
 
 
-``` yaml
+[![alertformfields](../img/alertformfields.png)](../img/alertformfields.png)
 
+
+* Complete the alert settings by setting **Comparator Warning value** and/or **Critical value**, and the **Duration** (how often to check).
+
+
+[![allertfields](../img/allertfields.png)](../img/allertfields.png)
+
+
+#### Annotations
+
+In the **Summary** box, you can include free text and one or more of the following `$labels`:
+
+
+```yaml
 $labels:
    - cluster
    - dc
@@ -64,38 +59,36 @@ $value:
 
 ```
 
-In the `Description` box you can include free along with one `or` many of the above  `$labels`
+In the **Description** box, you can include free text along with one or more of the above `$labels`.
 
 !!! info "Example"
 
     `CPU usage per DC Alerts usage on {{ $labels.hostname }} and cluster {{$labels.cluster}}`
     
 
-!!! infomy
-
-    
-    [![annotations](../img/annotations.png)](../img/annotations.png)
 
 
-####  Integrations
+[![annotations](../img/annotations.png)](../img/annotations.png)
 
 
-* Using the slider bar <span class="buttons"> [![sliderbar](../img/sliderbar.png)](../img/sliderbar.png) </span> you can select any [Integrations][1].
+#### Integrations
 
-    Then `click` on the `Info`, `Warning`, `Error` icons, to select the group(s) of [Integrations][1] for the alert.
+
+* Using the slider bar <span class="buttons">[![sliderbar](../img/sliderbar.png)](../img/sliderbar.png)</span> you can select any [Integrations][1].
+
+    Then click the **Info**, **Warning**, and **Error** icons to select the group(s) of [Integrations][1] for the alert.
 
 [1]: ../integrations/overview.md
 
 
-!!! infomy
 
-    [![alertintegrations](../img/alertintegrations.png)](../img/alertintegrations.png)
-    [![alertintegrationswith](../img/alertintegrationswith.png)](../img/alertintegrationswith.png)
+[![alertintegrations](../img/alertintegrations.png)](../img/alertintegrations.png)
+[![alertintegrationswith](../img/alertintegrationswith.png)](../img/alertintegrationswith.png)
 
-    
+
 !!! info "Not selecting integrations"
 
-    If you do not select any specific [Integrations][1] the Alert will automatically follow the `Global Dashboard Routing` or if this has not been setup the[ Default Routing][2] Integrations.
+    If you do not select any specific [Integrations][1], the alert automatically follows **Global Dashboard Routing**. If this has not been set up, it uses [Default Routing][2].
 
 
 
@@ -104,24 +97,22 @@ In the `Description` box you can include free along with one `or` many of the ab
 
 ### Edit Alert Rule
 
-On the Axonops application menu, click `Alerts & Notifications` and `click` Active. `Select` the `Alert Rules` tab and click <span class="buttons"> [![edit](../img/edit.png)](../img/edit.png) </span>
+On the AxonOps application menu, click **Alerts & Notifications**, select **Active**, then select the **Alert Rules** tab and click <span class="buttons">[![edit](../img/edit.png)](../img/edit.png)</span>.
 
-!!! infomy
 
-    [![editalertrule](../img/editalertrule.png)](../img/editalertrule.png)
+[![editalertrule](../img/editalertrule.png)](../img/editalertrule.png)
 
 
 ### Delete Alert Rule(s)
 
-To Delete An Alert Either...
+To delete an alert, either:
 
-* On the Axonops application menu, click `Dashboards` and `select` required Dashboard. `eg. System` `Hover over` the desired Chart click on the <span class="buttons"> [![edit](../img/edit.png)](../img/edit.png) </span> button. Below the chart `click` on the `alert` tab and `click` on the <span class="buttons"> [![delbtn](../img/delbtn.png)](../img/delbtn.png) </span> of the alert rule you want to remove.
+* On the AxonOps application menu, click **Dashboards** and select the required dashboard (e.g., **System**). Hover over the desired chart and click <span class="buttons">[![edit](../img/edit.png)](../img/edit.png)</span>. Below the chart, click the **Alert** tab and click <span class="buttons">[![delbtn](../img/delbtn.png)](../img/delbtn.png)</span> on the alert rule you want to remove.
 
 OR...
 
-* On the Axonops application menu, click `Alerts & Notifications` and `click` Active. `Select` the Alert Rules tab and click  <span class="buttons"> [![delbtn](../img/delbtn.png)](../img/delbtn.png) </span>
+* On the AxonOps application menu, click **Alerts & Notifications**, select **Active**, then select the **Alert Rules** tab and click <span class="buttons">[![delbtn](../img/delbtn.png)](../img/delbtn.png)</span>.
 
 
-!!! infomy
 
   [![activealertrules](../img/activealertrules.png)](../img/activealertrules.png)

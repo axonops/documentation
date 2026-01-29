@@ -303,7 +303,7 @@ Compaction work is distributed evenly over time:
 The primary cost of LCS is rewriting data multiple times:
 
 - Each level transition involves merging with existing data
-- Write amplification of 10-30× is common
+- Write amplification of 10-30× is typical, though actual values depend on workload characteristics, data distribution, and configuration
 - SSD endurance is consumed faster
 
 ### Compaction Throughput Limits
@@ -451,15 +451,15 @@ The maximum dataset size per table with default settings is theoretically 16+ PB
 
 ## Write Amplification Analysis
 
-LCS has high write amplification due to the promotion process:
+LCS has high write amplification due to the promotion process. The following figures are theoretical maximums; actual amplification depends on workload characteristics, data distribution, update patterns, and configuration.
 
-**Per-level amplification:**
+**Per-level amplification (theoretical):**
 
-- L0 → L1: SSTable overlaps with potentially all L1 SSTables → $\sim 10\times$
-- L1 → L2: Same process with L2 overlaps → $\sim 10\times$
-- Each subsequent level: $\sim f\times$ where $f$ = fanout
+- L0 → L1: SSTable overlaps with potentially all L1 SSTables → up to $\sim 10\times$
+- L1 → L2: Same process with L2 overlaps → up to $\sim 10\times$
+- Each subsequent level: up to $\sim f\times$ where $f$ = fanout
 
-**Total write amplification:**
+**Total write amplification (theoretical maximum):**
 
 $$W_{\text{total}} \approx f \times L$$
 
@@ -468,11 +468,11 @@ Where:
 - $f$ = fanout (default: 10)
 - $L$ = number of levels data traverses
 
-**Example:** 100GB dataset with 5 levels:
+**Example:** 100GB dataset with 5 levels (worst case):
 
 $$W = 10 \times 5 = 50\times$$
 
-This high write amplification makes LCS unsuitable for write-heavy workloads.
+In practice, write amplification is often lower due to factors like non-uniform key distribution, `single_sstable_uplevel` optimization, and varying overlap patterns. However, the high theoretical amplification makes LCS generally unsuitable for write-heavy workloads.
 
 ---
 

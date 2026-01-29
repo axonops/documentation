@@ -3,48 +3,47 @@ title: "Step 1 - Register your interest in AxonOps Cloud"
 glightbox: false
 ---
 
-Click on the <a href="https://axonops.com/free" target="_blank"><span class="sign-up-button">Free Sign Up</span></a> button to get started.
+# Step 1 - Register your interest in AxonOps Cloud
+Click the <a href="https://axonops.com/free" target="_blank"><span class="sign-up-button">Free Sign Up</span></a> button to get started.
 
-## Step 1 - Register your interest in AxonOps Cloud 
+Fill in your details on the registration screen.
 
-Fill in your details on the registration screen
+<img src="/get_started/CloudRegistration.png" width="500" alt="CloudRegistration">
 
-<img src="/get_started/CloudRegistration.png" width="500">
+Once your account has been registered, a confirmation email will be sent.
 
-Once your account has been registered a confirmation email will be sent. 
+<img src="/get_started/confirmation.png" width="500" alt="confirmation">
 
-<img src="/get_started/confirmation.png" width="500">
+## Step 2 - Complete your AxonOps Cloud account sign-up
 
-## Step 2 - Complete your AxonOps Cloud account sign-up
-
-Click on the link in the email to complete the sign-up process. 
+Click the link in the email to complete the sign-up process.
 
 You will be taken to the sign-up screen where you can enter your details or choose to use either Google or Microsoft Azure to complete the process.
 
-<img src="/get_started/signup.png" width="300">
+<img src="/get_started/signup.png" width="300" alt="signup">
 
-There will be another email sent to verify that your email address is correct. 
+Another email will be sent to verify that your email address is correct.
 
-<img src="/get_started/email_verification.png" width="500">
+<img src="/get_started/email_verification.png" width="500" alt="email_verification">
 
 Once the email has been verified you are signed in to AxonOps Cloud Console.
 
-## Step 3 - Setup your Organisation.
+## Step 3 - Set up your organization
 
-<img src="/get_started/create_new_org.png" width="700">
+<img src="/get_started/create_new_org.png" width="700" alt="create_new_org">
 
-- Enter your Organization name. (Organization names are unique and cannot be re-used.)
-- Confirmation tick on Organization name box will show you if the name is available. 
+- Enter your organization name. (Organization names are unique and cannot be reused.)
+- The confirmation tick in the organization name box shows whether the name is available.
 - Click Create.
 
-## Step 4 - Choose Subscription
+## Step 4 - Choose subscription
 
-- On left hand menu select 'Subscriptions'
-- Under 'Subscriptions' select 'Plans'
-- On the 'Plans' page select 'Get Started Free'
+- On the left-hand menu select **Subscriptions**.
+- Under **Subscriptions**, select **Plans**.
+- On the **Plans** page, select **Get Started Free**.
 
-<img src="/get_started/get_started_free.png" width="500">
+<img src="/get_started/get_started_free.png" width="500" alt="get_started_free">
 
-## Step 5 - Setup AxonOps Agents
+## Step 5 - Set up AxonOps Agents
 
 Follow the [AxonOps Cloud agent setup](agent_setup.md) to connect your cluster to AxonOps Cloud.

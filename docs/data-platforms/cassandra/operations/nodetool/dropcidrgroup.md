@@ -30,9 +30,9 @@ nodetool [connection_options] dropcidrgroup <group_name>
 !!! info "Persistent Change"
     Unlike many nodetool commands, this change **is persistent** across node restarts. CIDR groups are stored in the `system_auth.cidr_groups` table, which is replicated across the cluster. Once a group is dropped, it remains deleted until explicitly recreated.
 
-!!! danger "Irreversible Operation"
+!!! warning "Important Behavior"
 
-    Dropping a CIDR group immediately removes it from all role associations. This may cause authorization failures for clients currently relying on that group for access. Ensure no roles depend on the group before dropping.
+    Dropping a CIDR group removes the group definition from `system_auth.cidr_groups` but does **not** automatically remove references to the group from role permissions in `system_auth.cidr_permissions`. Roles that reference the dropped group will have an invalid group reference. Update role permissions to remove group references before or after dropping the group.
 
 ---
 

@@ -157,16 +157,28 @@ nodetool invalidatepermissionscache
 
 ### Cache Settings
 
+The cassandra.yaml parameter names vary by version:
+
+| Cassandra Version | Validity Parameter | Update Interval Parameter |
+|-------------------|-------------------|---------------------------|
+| Pre-4.1 | `permissions_validity_in_ms` | `permissions_update_interval_in_ms` |
+| 4.1+ | `permissions_validity` | `permissions_update_interval` |
+
 ```yaml
-# cassandra.yaml
-permissions_validity_in_ms: 2000     # How long entries are valid
-permissions_update_interval_in_ms: 1000  # Background refresh interval
-permissions_cache_max_entries: 1000  # Maximum cached entries
+# cassandra.yaml (4.1+)
+permissions_validity: 2s
+permissions_update_interval: 1s
+permissions_cache_max_entries: 1000
+
+# cassandra.yaml (Pre-4.1)
+# permissions_validity_in_ms: 2000
+# permissions_update_interval_in_ms: 1000
+# permissions_cache_max_entries: 1000
 ```
 
 ### Automatic Refresh
 
-Permissions are automatically refreshed based on `permissions_validity_in_ms`. Invalidation forces immediate refresh.
+Permissions are automatically refreshed based on `permissions_validity`. Invalidation forces immediate refresh.
 
 ---
 
@@ -180,14 +192,14 @@ For permission changes to take effect cluster-wide immediately:
 #!/bin/bash
 # invalidate_permissions_cluster.sh
 
-echo "Invalidating permissions cache cluster-wide..."# Get list of node IPs from local nodetool status
+echo "Invalidating permissions cache cluster-wide..."
 
-
+# Get list of node IPs from local nodetool status
 nodes=$(nodetool status | grep "^UN" | awk '{print $2}')
 
 for node in $nodes; do
     echo -n "$node: "
-    ssh "$node" "nodetool invalidatepermissionscache 2>/dev/null && echo "invalidated" || echo "FAILED""
+    ssh "$node" 'nodetool invalidatepermissionscache 2>/dev/null && echo "invalidated" || echo "FAILED"'
 done
 
 echo "Permissions cache cleared on all nodes."
@@ -212,8 +224,8 @@ echo "Revoking all permissions for: $USER_TO_REVOKE"
 # 1. Revoke permissions
 cqlsh -e "REVOKE ALL PERMISSIONS ON ALL KEYSPACES FROM $USER_TO_REVOKE;"
 
-# 2. Invalidate cache on all nodes# Get list of node IPs from local nodetool status
-
+# 2. Invalidate cache on all nodes
+# Get list of node IPs from local nodetool status
 nodes=$(nodetool status | grep "^UN" | awk '{print $2}')
 for node in $nodes; do
     ssh "$node" "nodetool invalidatepermissionscache 2>/dev/null"
@@ -311,7 +323,7 @@ nodetool tpstats | grep -i auth
 
     - Always invalidate cluster-wide when revoking permissions
     - Consider the cache validity period for security-sensitive environments
-    - Shorter `permissions_validity_in_ms` = more responsive but higher overhead
+    - Shorter `permissions_validity` = more responsive but higher overhead
     - Log all permission changes for audit purposes
 
 ---

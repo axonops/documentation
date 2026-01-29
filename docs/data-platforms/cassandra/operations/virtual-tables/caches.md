@@ -53,9 +53,25 @@ VIRTUAL TABLE system_views.caches (
 
 ---
 
+## Cache Names
+
+The `caches` table uses the following internal names (lowercase):
+
+| Display Name | `name` Value | Description |
+|--------------|--------------|-------------|
+| Key Cache | `keys` | Partition index locations |
+| Row Cache | `rows` | Entire row data |
+| Counter Cache | `counters` | Counter values |
+| Chunk Cache | `chunks` | Decompressed SSTable chunks |
+
+!!! note "Querying by Cache Name"
+    Use lowercase names in queries: `WHERE name = 'keys'` (not `'KeyCache'`).
+
+---
+
 ## Cache Types
 
-### KeyCache
+### Key Cache (name: `keys`)
 
 Caches partition index locations to avoid index file lookups.
 
@@ -75,7 +91,7 @@ key_cache_save_period: 14400     # Save interval (seconds)
 key_cache_keys_to_save: 0        # 0 = save all
 ```
 
-### RowCache
+### Row Cache (name: `rows`)
 
 Caches entire rows (off-heap). Disabled by default due to memory overhead.
 
@@ -106,7 +122,7 @@ ALTER TABLE my_table WITH caching = {
     - Frequently-updated data
     - Memory-constrained nodes
 
-### CounterCache
+### Counter Cache (name: `counters`)
 
 Caches counter values for faster counter reads.
 
@@ -125,7 +141,7 @@ counter_cache_size_in_mb: 50
 counter_cache_save_period: 7200
 ```
 
-### ChunkCache
+### Chunk Cache (name: `chunks`)
 
 Caches compressed SSTable chunks (Cassandra 4.0+).
 
@@ -190,16 +206,16 @@ Cache is at pressure when `size_bytes / capacity_bytes > 0.95`.
 -- Key cache hit ratio degradation
 SELECT name, hit_ratio
 FROM system_views.caches
-WHERE name = 'KeyCache' AND hit_ratio < 0.80;
+WHERE name = 'keys' AND hit_ratio < 0.80;
 ```
 
 **Thresholds:**
 
-| Cache | Warning | Critical |
-|-------|---------|----------|
-| KeyCache | < 0.85 | < 0.70 |
-| RowCache | < 0.90 | < 0.80 |
-| CounterCache | < 0.85 | < 0.70 |
+| Cache Name | Warning | Critical |
+|------------|---------|----------|
+| `keys` | < 0.85 | < 0.70 |
+| `rows` | < 0.90 | < 0.80 |
+| `counters` | < 0.85 | < 0.70 |
 
 ### Cache Full Alert
 
@@ -236,7 +252,7 @@ Monitor after change:
 ```sql
 SELECT name, hit_ratio, entry_count
 FROM system_views.caches
-WHERE name = 'KeyCache';
+WHERE name = 'keys';
 ```
 
 ### Cache Thrashing

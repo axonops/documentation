@@ -18,12 +18,18 @@ Displays the data file directories for the node.
 ## Synopsis
 
 ```bash
-nodetool [connection_options] datapaths
+nodetool [connection_options] datapaths [options] [--] [<keyspace.table> | <keyspace>]
 ```
 
 ## Description
 
-`nodetool datapaths` shows the configured data directories for the Cassandra node. These are the filesystem paths where Cassandra stores SSTables and other data files.
+`nodetool datapaths` shows the data file paths for tables on the Cassandra node. The output is organized by keyspace and table, showing where each table's SSTables are stored.
+
+## Options
+
+| Option | Description |
+|--------|-------------|
+| `-F, --format <format>` | Output format (`json` or `yaml`) |
 
 ---
 
@@ -38,15 +44,25 @@ nodetool datapaths
 ### Sample Output
 
 ```
-/var/lib/cassandra/data
+Keyspace: my_keyspace
+        Table: users
+                /var/lib/cassandra/data/my_keyspace/users-abc123
+        Table: orders
+                /var/lib/cassandra/data/my_keyspace/orders-def456
+Keyspace: system
+        Table: local
+                /var/lib/cassandra/data/system/local-xyz789
+...
 ```
 
-Or for multiple data directories:
+### Filter by Keyspace or Table
 
-```
-/mnt/disk1/cassandra/data
-/mnt/disk2/cassandra/data
-/mnt/disk3/cassandra/data
+```bash
+# Show paths for specific table
+nodetool datapaths my_keyspace.users
+
+# Show paths for all tables in a keyspace
+nodetool datapaths my_keyspace
 ```
 
 ---
@@ -80,17 +96,15 @@ nodetool datapaths
 ### Disk Space Monitoring
 
 ```bash
-# Check space on data directories
-for path in $(nodetool datapaths); do
-    echo "$path: $(df -h $path | tail -1 | awk '{print $4}') free"
-done
+# Check disk space on data directories using tablestats
+nodetool tablestats my_keyspace | grep "Space used"
 ```
 
-### Troubleshooting
+### JSON Output
 
 ```bash
-# Verify data directories exist and are accessible
-nodetool datapaths | xargs -I {} ls -la {}
+# Get paths in JSON format for scripting
+nodetool datapaths -F json my_keyspace
 ```
 
 ---

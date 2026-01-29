@@ -22,7 +22,7 @@ nodetool [connection_options] disablebackup
 
 `nodetool disablebackup` disables incremental backup mode on the node. Once disabled, Cassandra stops creating hard links to newly flushed SSTables. Existing backup files in the `backups` directory are not removed—they must be cleaned up manually.
 
-Incremental backup creates hard links to SSTables upon memtable flush, providing continuous backup capability. Disabling this feature stops the automatic link creation process.
+Incremental backup creates hard links to new SSTables when they are created (during memtable flush, compaction, and other SSTable-producing operations), providing continuous backup capability. Disabling this feature stops the automatic link creation process.
 
 !!! warning "Non-Persistent Setting"
     This setting is applied at runtime only and does not persist across node restarts. After a restart, incremental backup reverts to the `incremental_backups` setting in `cassandra.yaml` (default: `false`).
@@ -397,9 +397,9 @@ Disable backup across all nodes:
 
 ```bash
 #!/bin/bash
-# disable_backup_cluster.sh# Get list of node IPs from local nodetool status
+# disable_backup_cluster.sh
 
-
+# Get list of node IPs from local nodetool status
 nodes=$(nodetool status | grep "^UN" | awk '{print $2}')
 
 echo "Disabling incremental backup cluster-wide"
@@ -407,7 +407,7 @@ echo "==========================================="
 
 for node in $nodes; do
     echo -n "$node: "
-    ssh "$node" "nodetool disablebackup 2>/dev/null && echo "disabled" || echo "failed""
+    ssh "$node" "nodetool disablebackup 2>/dev/null && echo 'disabled' || echo 'failed'"
 done
 
 echo ""

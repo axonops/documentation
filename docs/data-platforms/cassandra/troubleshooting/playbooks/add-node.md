@@ -170,9 +170,15 @@ nodetool clearsnapshot --all  # On source nodes
 # Check streaming throughput
 nodetool getstreamthroughput
 
-# Increase if network allows
-nodetool setstreamthroughput 400  # MB/s
+# Increase if network allows (value in Mb/s by default)
+nodetool setstreamthroughput 400
+
+# Or specify MiB/s explicitly with -m flag
+nodetool setstreamthroughput -m 50  # 50 MiB/s
 ```
+
+!!! note "Streaming Throughput Units"
+    `nodetool setstreamthroughput` uses megabits per second (Mb/s) by default. Use the `-m` flag to specify MiB/s instead. The `cassandra.yaml` setting `stream_throughput_outbound` uses MiB/s (24 MiB/s default in Cassandra 4.1+).
 
 ### Node Joins but Shows Wrong Token Range
 
@@ -194,8 +200,11 @@ nodetool ring | grep <new-node-ip>
 On source and target nodes:
 
 ```bash
-# Increase stream throughput (default usually 200 Mbps)
+# Increase stream throughput (value in Mb/s by default)
 nodetool setstreamthroughput 400
+
+# Or specify MiB/s explicitly
+nodetool setstreamthroughput -m 50  # 50 MiB/s
 ```
 
 ### Monitor Streaming

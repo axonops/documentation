@@ -34,6 +34,8 @@ nodetool [connection_options] getauditlog
 ```
 enabled: true
 logger: BinAuditLogger
+audit_logs_dir: /var/log/cassandra/audit
+archive_command:
 included_keyspaces: customer_data,financial
 excluded_keyspaces: system,system_schema,system_auth
 included_categories: AUTH,DML,DDL,DCL
@@ -44,23 +46,19 @@ roll_cycle: HOURLY
 block: true
 max_queue_weight: 268435456
 max_log_size: 17179869184
+max_archive_retries: 10
 ```
 
 ### When Disabled
 
+The command shows the configuration from `cassandra.yaml` even when auditing is disabled. Fields will reflect the configured values, not necessarily empty:
+
 ```
 enabled: false
-logger:
-included_keyspaces:
-excluded_keyspaces:
-included_categories:
-excluded_categories:
-included_users:
-excluded_users:
-roll_cycle:
-block:
-max_queue_weight:
-max_log_size:
+logger: BinAuditLogger
+audit_logs_dir: /var/log/cassandra/audit
+archive_command:
+...
 ```
 
 ---
@@ -97,6 +95,8 @@ ssh 192.168.1.100 "nodetool getauditlog"
 |-------|-------------|
 | `enabled` | Whether audit logging is active |
 | `logger` | Audit logger class name |
+| `audit_logs_dir` | Directory where audit logs are stored |
+| `archive_command` | Command executed to archive rolled logs |
 | `included_keyspaces` | Keyspaces being audited (if set) |
 | `excluded_keyspaces` | Keyspaces excluded from auditing |
 | `included_categories` | Audit event categories being captured |
@@ -107,6 +107,7 @@ ssh 192.168.1.100 "nodetool getauditlog"
 | `block` | Whether to block operations if log is full |
 | `max_queue_weight` | Maximum queue size in bytes |
 | `max_log_size` | Maximum total log size |
+| `max_archive_retries` | Maximum retries for archive command |
 
 ---
 

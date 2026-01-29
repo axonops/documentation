@@ -49,7 +49,7 @@ Operational concepts for repair execution:
 Complete reference for all repair command options:
 
 - Scope options: `-pr`, `-full`, `-st`/`-et`
-- Parallelism options: `--parallel`, `-seq`, `-dcpar`, `-j`
+- Parallelism options: `-seq`, `-dcpar`, `-j` (parallel is default)
 - Scope limiting: `-dc`, `-local`, `-hosts`
 - Operational options: `--preview`, `--trace`, `-os`
 
@@ -85,8 +85,8 @@ nodetool repair -pr my_keyspace
 # Full repair after node recovery
 nodetool repair -full my_keyspace
 
-# Parallel repair for faster execution
-nodetool repair -pr --parallel my_keyspace
+# Parallel repair is the default in Cassandra 4.0+
+nodetool repair -pr my_keyspace
 
 # Sequential repair for minimal impact
 nodetool repair -pr -seq my_keyspace

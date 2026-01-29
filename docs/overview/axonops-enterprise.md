@@ -6,4 +6,4 @@ meta:
     content: "AxonOps Enterprise, self-hosted, on-premises monitoring"
 ---
 
-# AxonOps Enterprise
+# AxonOps Enterprise

@@ -97,7 +97,7 @@ The identifier for the new keyspace. Must be unique within the cluster.
 
 - Unquoted names are case-insensitive and stored in lowercase
 - Quoted names (`"MyKeyspace"`) preserve case
-- Maximum length: 48 characters
+- Maximum length: 48 characters (may vary by version)
 - Valid characters: letters, digits, underscores (must start with letter)
 
 #### IF NOT EXISTS

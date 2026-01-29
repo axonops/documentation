@@ -166,7 +166,7 @@ View Update with Batchlog:
 5. On failure: batchlog replayed later
 
 Batchlog replay:
-- Runs periodically (every 60 seconds by default)
+- Runs periodically (every 10 seconds by default, configurable via `cassandra.batchlog.replay_interval_ms`)
 - Resends pending view mutations
 - Eventually clears after success or expiry
 ```
@@ -175,7 +175,7 @@ Batchlog replay:
 |-------------------|---------|-------------|
 | `batchlog_replay_throttle` (5.0+) | 1024KiB/s | Replay throughput limit |
 | `batchlog_replay_throttle_in_kb` (pre-5.0) | 1024 | Replay throughput limit (KB/s) |
-| View mutation timeout | 1 hour | When batchlog entries expire |
+| `cassandra.batchlog.replay_interval_ms` | 10000 | Interval between batchlog replay attempts |
 
 !!! warning "Batchlog Limitations"
     The batchlog provides best-effort delivery, not guaranteed consistency:

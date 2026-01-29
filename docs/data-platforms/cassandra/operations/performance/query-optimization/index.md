@@ -124,7 +124,9 @@ APPLY BATCH;
 
 ## Pagination
 
-### Token-Based Pagination
+### Pagination Within a Partition
+
+For paging within a single partition, use clustering column comparisons:
 
 ```sql
 -- First page
@@ -132,12 +134,15 @@ SELECT * FROM events
 WHERE bucket = '2024-01'
 LIMIT 100;
 
--- Next page (using last token)
+-- Next page (using last clustering key value)
 SELECT * FROM events
 WHERE bucket = '2024-01'
-  AND token(event_id) > token('last-event-id')
+  AND event_id > 'last-event-id'
 LIMIT 100;
 ```
+
+!!! note "Token Functions and Partition Keys"
+    The `token()` function only applies to partition keys for cross-partition pagination. Within a single partition, use clustering column comparisons for efficient paging.
 
 ### Driver Pagination
 

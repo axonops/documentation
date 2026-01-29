@@ -87,14 +87,14 @@ The driver only needs one successful connection to discover the full cluster top
 
 ### Local Datacenter
 
-Always configure local datacenter explicitly in multi-DC deployments:
+In Java driver 4.x, local datacenter configuration is mandatory regardless of cluster topology. Session creation fails with `IllegalStateException` if omitted:
 
 ```java
-// REQUIRED for multi-DC
+// REQUIRED (driver 4.x, any topology)
 .withLocalDatacenter("dc1")
 ```
 
-Failure to configure results in potential cross-DC routing with high latency.
+In multi-DC deployments, this setting also ensures the driver routes queries to the correct datacenter.
 
 ### Connection Pool Sizing
 
@@ -104,13 +104,15 @@ Default pool settings work for most workloads. Adjust only when:
 - Throughput exceeds tens of thousands requests/second per node
 - Monitoring shows pool-related bottlenecks
 
-```java
-// Only if needed based on measurements
-.withPoolingOptions(
-    PoolingOptions.builder()
-        .setConnectionsPerHost(DriverConnectionGroup.REMOTE, 1, 1)
-        .setConnectionsPerHost(DriverConnectionGroup.LOCAL, 2, 4)
-        .build())
+In driver 4.x, pool sizing is configured via `application.conf`:
+
+```hocon
+datastax-java-driver {
+  advanced.connection.pool {
+    local.size = 2   // connections per local node (default: 1)
+    remote.size = 1  // connections per remote node (default: 1)
+  }
+}
 ```
 
 ---
@@ -136,7 +138,7 @@ public User getUser(UUID userId) {
 Benefits:
 
 - Reduced parsing overhead
-- Token-aware routing
+- Enables token-aware routing (via routing key metadata bound to the statement)
 - Protection against CQL injection
 
 ### Set Appropriate Consistency Levels
@@ -165,11 +167,13 @@ Statement statement = selectUser.bind(userId)
     .setTimeout(Duration.ofSeconds(5));  // Query-specific timeout
 ```
 
-| Timeout Type | Recommendation |
-|--------------|----------------|
-| Read timeout | 5-10 seconds (longer than expected P99) |
-| Write timeout | 10-30 seconds (allow for hints, batches) |
-| Connection timeout | 5 seconds |
+| Timeout Type | Typical Range | Notes |
+|--------------|---------------|-------|
+| Read timeout | 5-10 seconds | Should exceed expected P99; align with server-side `read_request_timeout` |
+| Write timeout | 10-30 seconds | Should align with server-side `write_request_timeout`; varies by workload |
+| Connection timeout | 5 seconds | Adjust for network conditions |
+
+Client-side timeouts should be set relative to server-side timeouts and application SLA requirements.
 
 ---
 
@@ -233,11 +237,8 @@ CqlSession session = CqlSession.builder()
     .addContactPoints(contactPoints)
     .withLocalDatacenter("dc1")
 
-    // Load balancing: token-aware with DC awareness
-    .withLoadBalancingPolicy(
-        DefaultLoadBalancingPolicy.builder()
-            .withLocalDatacenter("dc1")
-            .build())
+    // Load balancing: configured via application.conf
+    // basic.load-balancing-policy.local-datacenter = "dc1"
 
     // Retry: conservative, respects idempotency
     .withRetryPolicy(DefaultRetryPolicy.INSTANCE)
@@ -363,4 +364,3 @@ Before deploying to production:
 - **[Connection Management](connection-management.md)** — Connection pooling details
 - **[Policies](policies/index.md)** — Policy configuration reference
 - **[Prepared Statements](prepared-statements.md)** — Statement preparation and caching
-

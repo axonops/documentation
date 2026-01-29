@@ -15,7 +15,7 @@ Manages and monitors repair sessions on the cluster.
 ## Synopsis
 
 ```bash
-nodetool [connection_options] repair_admin <list | cancel | cleanup> [options]
+nodetool [connection_options] repair_admin <list | cancel | cleanup | summarize-pending | summarize-repaired> [options]
 ```
 
 ## Description
@@ -37,27 +37,56 @@ Essential for managing repairs in production environments.
 List repair sessions.
 
 ```bash
-nodetool repair_admin list [--all]
+nodetool repair_admin list [options]
 ```
 
 | Option | Description |
 |--------|-------------|
-| `--all` | Include completed repairs, not just active |
+| `-a, --all` | Include completed repairs, not just active |
+| `-st, --start-token` | Start token for filtering |
+| `-et, --end-token` | End token for filtering |
 
 ### cancel
 
 Cancel a running repair.
 
 ```bash
-nodetool repair_admin cancel <session_id>
+nodetool repair_admin cancel -s <session_id> [-f]
 ```
+
+| Option | Description |
+|--------|-------------|
+| `-s, --session` | Session ID to cancel (required) |
+| `-f, --force` | Force cancellation |
 
 ### cleanup (4.0+)
 
 Clean up orphaned repair metadata.
 
 ```bash
-nodetool repair_admin cleanup
+nodetool repair_admin cleanup [-f] [keyspace] [tables...]
+```
+
+| Option | Description |
+|--------|-------------|
+| `-f, --force` | Force cleanup |
+| `-st, --start-token` | Start token |
+| `-et, --end-token` | End token |
+
+### summarize-pending
+
+Summarize pending repairs.
+
+```bash
+nodetool repair_admin summarize-pending
+```
+
+### summarize-repaired
+
+Summarize repaired ranges.
+
+```bash
+nodetool repair_admin summarize-repaired
 ```
 
 ---
@@ -72,9 +101,9 @@ nodetool repair_admin list
 
 Output:
 ```
-id                                   state        command          coordinator                  participants                 last_update
-a1b2c3d4-e5f6-7890-abcd-ef1234567890 RUNNING      RANGE            192.168.1.101                192.168.1.101,192.168.1.102  2024-01-15T10:30:00Z
-b2c3d4e5-f6a7-8901-bcde-f12345678901 RUNNING      VALIDATION       192.168.1.102                192.168.1.102,192.168.1.103  2024-01-15T10:31:00Z
+id                                   state     last activity         coordinator      participants             participants_wp
+a1b2c3d4-e5f6-7890-abcd-ef1234567890 RUNNING   2024-01-15T10:30:00Z  192.168.1.101    192.168.1.101,102       192.168.1.101,102
+b2c3d4e5-f6a7-8901-bcde-f12345678901 RUNNING   2024-01-15T10:31:00Z  192.168.1.102    192.168.1.102,103       192.168.1.102,103
 ```
 
 ### List All Repairs (Including Completed)
@@ -88,7 +117,7 @@ Shows history of repairs including completed and failed.
 ### Cancel a Repair
 
 ```bash
-nodetool repair_admin cancel a1b2c3d4-e5f6-7890-abcd-ef1234567890
+nodetool repair_admin cancel -s a1b2c3d4-e5f6-7890-abcd-ef1234567890
 ```
 
 ### Clean Up Orphaned Sessions (4.0+)

@@ -499,7 +499,7 @@ grep -i tombstone /var/log/cassandra/system.log
     **Columns:**
 
     - Cannot delete primary key columns
-    - Cannot delete counter columns (use TRUNCATE for counter tables)
+    - Counter columns can be deleted (deletes the row/column), though counter operations have restrictions on TTL, timestamps, and LWT
     - List index deletion requires read-before-write
 
     **Conditional Deletes:**

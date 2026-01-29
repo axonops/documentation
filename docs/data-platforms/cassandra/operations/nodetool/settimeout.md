@@ -50,6 +50,11 @@ nodetool [connection_options] settimeout <timeout_type> <timeout_value_in_ms>
 | `truncate` | Truncate operations | 60000 ms |
 | `misc` | Miscellaneous operations | 10000 ms |
 | `internodeconnect` | Internode connections | 10000 ms |
+| `internodeuser` | Internode user operations | varies |
+| `internodestreaminguser` | Internode streaming user socket timeout | varies |
+
+!!! info "Zero Value Behavior"
+    For `internodestreaminguser`, setting the value to `0` disables the socket streaming timeout entirely.
 
 ---
 

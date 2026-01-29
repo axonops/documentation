@@ -6,27 +6,27 @@ meta:
     content: "remote backup, cloud backup, Cassandra backup destinations"
 ---
 
-###  Remote backups 
+# Remote Backups
 
-> Note that **axonops** user will need read access on Cassandra data folders to be able to perform a remote backup.
+> Note that the AxonOps user needs read access to Cassandra data folders to perform a remote backup.
 
-When selecting Remote backups there is some basic config presets.
+When selecting remote backups there are some basic configuration presets.
 
-![](./remote_backup_basic_config.png)
+![remote_backup_basic_config](./remote_backup_basic_config.png)
 
 #### Transfers (File Transfer Parallelism)
 
-The number of file transfers to run in parallel. It can be beneficial to set this to a smaller number if the remote is giving timeouts. You can set this to a bigger number or leave it at 0  if you have lots of bandwidth and a fast remote.
+The number of file transfers to run in parallel. It can be beneficial to set this to a smaller number if the remote is timing out. You can set this to a larger number or leave it at 0 if you have plenty of bandwidth and a fast remote.
 
-#### TPS Limit 
+#### TPS Limit 
 
-If you are getting errors from the cloud storage provider then you need to start adjusting this limit.
+If you are getting errors from the cloud storage provider, start adjusting this limit.
 
-The default is 0
+The default is 0.
 
 Storage provider errors consist of getting you banned or imposing rate limits.
 
-A transaction is any of but not limited to, PUT/GET/POST calls to the Storage backend. 
+A transaction includes, but is not limited to, PUT/GET/POST calls to the storage backend.
 
 Different Storage providers have different limits. 
 
@@ -37,9 +37,7 @@ Different Storage providers have different limits.
 #### Bandwidth Limit
 
 This will allow you to set a limit on how much data you want to transfer to your Storage provider during backups. 
-Note that the units are Byte/s, not bit/s. Typically connections are measured in bit/s - to convert divide by 8. For example, let's say you have a 10 Mbit/s connection and you wish AxonOps to use half of it - 5 Mbit/s. 
-You will calculate the limit value as 5MB/8 = 0.625 MiB/s.
-The value you would set it 0.625
+Note that the units are bytes per second, not bits per second. Connections are typically measured in bits per second, so divide by 8. For example, if you have a 10 Mbit/s connection and you want AxonOps to use half of it (5 Mbit/s), set the limit to 0.625 MB/s.
 
 In most modern storage systems the value is not normally this low but if you have a VPN Gateway connection setup between an on-premise cluster and a storage provider that has a 100MB connection you could potentially limit how much of the pipe gets used by backups. 
 
@@ -47,7 +45,7 @@ In most modern storage systems the value is not normally this low but if you hav
 
 * AWS S3
 * Google Cloud Storage
-* local filesystem
+* Local filesystem
 * Microsoft Azure Blob Storage
 * S3 Compatible
 * SFTP/SSH

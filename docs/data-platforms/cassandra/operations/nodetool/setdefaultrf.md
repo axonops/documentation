@@ -135,7 +135,7 @@ nodetool getdefaultrf
 **Output:**
 
 ```
-Current default replication factor: 3
+3
 ```
 
 ### Applying Across All Nodes

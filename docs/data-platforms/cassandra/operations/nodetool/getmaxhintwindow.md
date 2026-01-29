@@ -44,9 +44,23 @@ Current max hint window: 10800000 ms
 
 ### Default Value
 
+The default is 3 hours.
+
+### Configuration
+
+The cassandra.yaml parameter name varies by version:
+
+| Cassandra Version | Parameter Name | Example |
+|-------------------|----------------|---------|
+| Pre-4.1 | `max_hint_window_in_ms` | `10800000` (3 hours) |
+| 4.1+ | `max_hint_window` | `3h` |
+
 ```yaml
-# cassandra.yaml
-max_hint_window_in_ms: 10800000  # 3 hours (default)
+# cassandra.yaml (4.1+)
+max_hint_window: 3h
+
+# cassandra.yaml (Pre-4.1)
+# max_hint_window_in_ms: 10800000
 ```
 
 ### How It Works

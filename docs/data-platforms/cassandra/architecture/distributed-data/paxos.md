@@ -305,10 +305,10 @@ LWTs trade throughput for consistency:
 
 | Aspect | Regular Write | LWT Write |
 |--------|---------------|-----------|
-| Round trips | 1 | 4 (prepare, read, propose, commit) |
+| Round trips | 1 | Typically 4 (prepare, read, propose, commit); varies with contention and Paxos version |
 | Latency | ~1-5ms | ~10-30ms |
 | Throughput | High | Lower |
-| Replicas involved | Configurable (CL) | All replicas (SERIAL) |
+| Replicas involved | Configurable (CL) | Quorum for Paxos phase (SERIAL), write CL for commit |
 
 !!! warning "Use LWTs Selectively"
     LWTs are 4-10x slower than regular writes. Use them only when you genuinely need compare-and-set semantics. Using LWTs for all writes negates Cassandra's performance advantages.
@@ -339,7 +339,7 @@ Cassandra 4.1 introduced **Paxos v2**, an improved implementation with significa
 
 | Improvement | Description |
 |-------------|-------------|
-| **Reduced round-trips** | Optimized protocol reduces WAN round trips from four to two for writes |
+| **Reduced round-trips** | Optimized protocol reduces round trips in common cases (exact reduction depends on contention and scenario) |
 | **Better contention handling** | Improved behavior when multiple clients compete for the same partition |
 | **Automatic state purging** | Paxos state cleaned up automatically instead of accumulating indefinitely |
 | **Lower latency** | Faster LWT operations in common cases |

@@ -97,7 +97,7 @@ On each new node:
 # cassandra.yaml
 
 cluster_name: 'ProductionCluster'  # Must match
-num_tokens: 256                    # Match existing
+num_tokens: 16                     # Match existing cluster value (default is 16 for 4.0+)
 
 # Seeds from BOTH datacenters
 seed_provider:

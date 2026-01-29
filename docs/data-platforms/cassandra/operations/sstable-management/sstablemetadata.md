@@ -49,8 +49,9 @@ The tool can run while Cassandra is active as it only reads metadata files.
 | `-g, --gc_grace_seconds <n>` | Override gc_grace_seconds for TTL calculations |
 | `-c, --colors` | Colorize output for better readability |
 | `-s, --scan` | Scan data file in addition to metadata |
-| `-t, --timestamp <format>` | Timestamp format for dates |
-| `-u, --unix-timestamp` | Show timestamps as Unix epoch |
+| `-t, --timestamp_unit <unit>` | Timestamp unit for display (MICROSECONDS, MILLISECONDS, SECONDS, etc.) |
+| `-u, --unicode` | Use unicode characters in output |
+| `-h, --help` | Display help information |
 
 ---
 
@@ -388,14 +389,13 @@ sstableverify keyspace table
 sudo -u cassandra sstablemetadata /var/lib/cassandra/data/.../nb-1-big-Data.db
 ```
 
-### Incorrect Timestamps
+### Timestamp Display Options
 
 ```bash
-# Specify timestamp format
-sstablemetadata -t "yyyy-MM-dd'T'HH:mm:ss" /path/to/sstable-Data.db
-
-# Or use Unix timestamps
-sstablemetadata -u /path/to/sstable-Data.db
+# Change timestamp unit display
+sstablemetadata -t SECONDS /path/to/sstable-Data.db
+sstablemetadata -t MILLISECONDS /path/to/sstable-Data.db
+sstablemetadata --timestamp_unit MICROSECONDS /path/to/sstable-Data.db
 ```
 
 ---

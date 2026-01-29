@@ -40,7 +40,8 @@ This operation is recommended after upgrading Cassandra to ensure all SSTables b
 | Option | Description |
 |--------|-------------|
 | `-a, --include-all-sstables` | Upgrade all SSTables, even if already current version |
-| `-j, --jobs <jobs>` | Number of concurrent upgrade jobs (default: 2) |
+| `-j, --jobs <jobs>` | Number of concurrent upgrade jobs (default: 2). Use `0` to use all available compaction threads. |
+| `-t, --max-timestamp <timestamp>` | Only upgrade SSTables with max timestamp older than the specified value (epoch time in seconds) |
 
 ---
 
@@ -99,6 +100,19 @@ nodetool upgradesstables -a my_keyspace
 
 ```bash
 nodetool upgradesstables -j 4 my_keyspace
+```
+
+### Use All Available Compaction Threads
+
+```bash
+nodetool upgradesstables -j 0 my_keyspace
+```
+
+### Upgrade Only Old SSTables
+
+```bash
+# Upgrade SSTables older than 30 days (timestamp in epoch seconds)
+nodetool upgradesstables -t $(date -d '30 days ago' +%s) my_keyspace
 ```
 
 ---

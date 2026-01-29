@@ -1,12 +1,3 @@
----
-title: "Install Kafka Agent"
-description: "Set up AxonOps agent for Kafka monitoring. Step-by-step installation guide."
-meta:
-  - name: keywords
-    content: "Kafka agent setup, AxonOps installation, monitoring setup"
----
-
-
 ## Install Kafka Agent
 
 {!dynamic_pages/axon_agent/kafka_agent.md!}
@@ -27,4 +18,3 @@ The values can be found by logging into
 If there is a Dedicated NTP server in your Organization please uncomment and update the NTP section.
 
 {!dynamic_pages/axon_agent/kafka_agent_config.md!}
-

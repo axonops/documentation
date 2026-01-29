@@ -93,7 +93,7 @@ Data connections handle application queries. The driver maintains a separate con
 |-----------|--------------------|-----------------------|-------------|
 | Connections per local node | 1 | 2 | TCP sockets maintained to each node in local DC |
 | Connections per remote node | 1 | 1 | TCP sockets maintained to each node in remote DC |
-| Max requests per connection | 2048 | 65536 | Concurrent requests multiplexed on single socket |
+| Max requests per connection | 2048 | 32768 | Concurrent requests multiplexed on single socket (protocol max: 32768) |
 | Protocol max streams | 32768 | 32768 | CQL Native Protocol v4+ limit per connection |
 
 #### Connection Multiplexing
@@ -107,11 +107,11 @@ Each TCP connection supports thousands of concurrent requests through stream mul
 | **Concurrency** | Multiple requests in-flight simultaneously on one socket |
 | **Practical limit** | Drivers often cap below protocol max (e.g., 2048) for memory/latency reasons |
 
-**Example capacity calculation:**
+**Illustrative capacity calculation:**
 
 ```
-Single connection capacity:
-  Max concurrent requests = 2048 (typical driver default)
+Single connection (theoretical maximum, not a practical capacity estimate):
+  Max concurrent requests = 2048 (typical Java driver default)
   Average request latency = 5ms
   Theoretical throughput  = 2048 / 0.005 = 409,600 requests/sec
 
@@ -119,6 +119,9 @@ With 1 connection per node, 6-node cluster:
   Total connections = 6
   Total capacity    = 6 × 409,600 = 2.4M requests/sec theoretical max
 ```
+
+!!! note
+    These figures represent mathematical concurrency limits, not achievable throughput. Actual capacity is lower due to server-side processing, garbage collection, backpressure, and client-side overhead.
 
 In practice, most applications require only 1-2 connections per node. The multiplexed protocol makes Cassandra connection pooling fundamentally different from RDBMS pools where each connection handles one request at a time.
 
@@ -336,7 +339,7 @@ Drivers distinguish between local and remote datacenters for connection manageme
 | Aspect | Local DC | Remote DC |
 |--------|----------|-----------|
 | Connection pools | Full pools maintained | Minimal or no pools (depends on policy) |
-| Request routing | Preferred for all requests | Used only for failover (if configured) |
+| Request routing | Preferred for all requests | Used for failover or when permitted by load balancing policy |
 | Pool sizing | Use standard configuration | Often reduced or zero |
 
 Configure local datacenter explicitly:
@@ -399,4 +402,3 @@ for (Node node : session.getMetadata().getNodes().values()) {
 
 - **[Reconnection Policy](policies/reconnection.md)** — Configuring reconnection behavior after node failures
 - **[Load Balancing Policy](policies/load-balancing.md)** — How requests are distributed across connections
-

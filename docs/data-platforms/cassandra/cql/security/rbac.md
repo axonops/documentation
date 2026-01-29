@@ -75,7 +75,7 @@ credentials_validity_in_ms: 2000 # Authentication cache
 |---------|----------|
 | 2.2+ | RBAC introduced (CASSANDRA-7653), replaces per-user model |
 | 3.0+ | Network authorization, improved role management |
-| 4.0+ | Data masking permissions (UNMASK, SELECT_MASKED) |
+| 5.0+ | Data masking permissions (UNMASK, SELECT_MASKED) |
 | 5.0+ | Enhanced CIDR-based authorization |
 
 ---

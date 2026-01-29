@@ -15,7 +15,8 @@ Removes a dead or unreachable node from the cluster by streaming its data from r
 ## Synopsis
 
 ```bash
-nodetool [connection_options] removenode <status | force | <host-id>>
+nodetool [connection_options] removenode [--force] <host-id>
+nodetool [connection_options] removenode status
 ```
 
 ## Description
@@ -46,8 +47,13 @@ When `removenode` executes, Cassandra performs the following operations:
 | Argument | Description |
 |----------|-------------|
 | `status` | Show status of current removenode operation |
-| `force` | Force completion of a stuck removenode |
 | `<host-id>` | UUID of the node to remove |
+
+## Options
+
+| Option | Description |
+|--------|-------------|
+| `--force` | Allow removal even if it would break replication factor |
 
 ---
 
@@ -160,21 +166,32 @@ nodetool removenode b2c3d4e5-f6a7-8901-bcde-f12345678901
 nodetool removenode status
 ```
 
-Output:
+Output (when removal in progress):
 ```
-RemovalStatus: InProgress
-Progress: 45%
-Streams: 12 active, 8 completed
+RemovalStatus: Removing node b2c3d4e5-f6a7-8901-bcde-f12345678901 (192.168.1.102): REMOVING_DATA
 ```
 
-### Force Completion
+Output (when no removal active):
+```
+No removals in progress.
+```
+
+### Force Removal (Bypass RF Check)
 
 ```bash
-nodetool removenode force
+nodetool removenode --force b2c3d4e5-f6a7-8901-bcde-f12345678901
 ```
 
-!!! danger "Force Removal"
-    Only use `force` if removenode is stuck and you accept potential data loss. This completes the removal without waiting for all streams.
+!!! danger "Force Option"
+    The `--force` option allows removal even if it would break the replication factor. This may result in some token ranges having fewer replicas than configured.
+
+### Abort Removenode
+
+If a removenode operation needs to be aborted:
+
+```bash
+nodetool abortremovenode
+```
 
 ---
 

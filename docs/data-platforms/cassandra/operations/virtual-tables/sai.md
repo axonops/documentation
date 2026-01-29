@@ -175,7 +175,7 @@ VIRTUAL TABLE system_views.sai_sstable_index_segments (
     max_term text,
     start_token text,
     end_token text,
-    component_metadata frozen<map<text, frozen<map<text, text>>>>,
+    component_metadata map<text, map<text, text>>,
     PRIMARY KEY (keyspace_name, index_name, sstable_name, segment_row_id_offset)
 ) WITH CLUSTERING ORDER BY (index_name ASC, sstable_name ASC, segment_row_id_offset ASC)
 ```

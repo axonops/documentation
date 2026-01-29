@@ -255,15 +255,15 @@ end note
 @enduml
 ```
 
-**Key Differences:**
+**Key Differences (values are illustrative and driver/configuration-dependent):**
 
 | Aspect | Traditional RDBMS | Cassandra |
 |--------|-------------------|-----------|
 | Connection utilization | 1 query at a time | 32,768 concurrent queries |
-| Threads required | 1 per query | 1-2 for all I/O |
+| Threads required | 1 per query | Minimal (event-loop based) |
 | Connection count | 100s needed | 2-8 per node sufficient |
 | Response ordering | Sequential | Multiplexed (any order) |
-| Memory per connection | ~1MB (thread) | ~64KB (buffers) |
+| Memory per connection | ~1MB (thread) | Much smaller (buffer-based) |
 | New connection cost | Paid frequently | Paid rarely (persistent) |
 
 ### Why This Works for Cassandra
@@ -428,10 +428,10 @@ Pros: Fast allocation, no fragmentation
 
 ### In-Flight Request Limits
 
-Drivers limit concurrent requests per connection:
+Drivers limit concurrent requests per connection. Values vary by driver and version:
 
-| Configuration | Typical Value | Purpose |
-|---------------|---------------|---------|
+| Configuration | Typical Value (Java Driver 4.x) | Purpose |
+|---------------|--------------------------------|---------|
 | Max requests per connection | 1024-2048 | Prevent overload |
 | High watermark | 80% of max | Trigger backpressure |
 | Low watermark | 50% of max | Resume after backpressure |

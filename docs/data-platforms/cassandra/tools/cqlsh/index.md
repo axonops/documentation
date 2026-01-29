@@ -14,7 +14,7 @@ cqlsh is written in Python, which means Python must be installed, and occasional
 
 But cqlsh is everywhere. It is on every Cassandra node, requires no installation, and every tutorial assumes its use. This reference covers everything needed to be productive with it.
 
-## Installation and Setup
+## Installation and Set up
 
 ### Included with Cassandra
 
@@ -29,12 +29,13 @@ cqlsh
 ### Standalone Installation
 
 ```bash
-# Python 3.6+ required
-pip install cqlsh
-
-# Or from Cassandra package
+# Python 3.6–3.11 required
+# cqlsh is included with Cassandra; for standalone use, install the driver:
 pip install cassandra-driver
 ```
+
+!!! note "Python Version Compatibility"
+    cqlsh requires Python 3.6 through 3.11. Python 3.12+ may not be fully compatible. Use `python3 --version` to verify.
 
 ---
 
@@ -63,12 +64,12 @@ cqlsh -u username 10.0.0.1
 ### Connection with SSL
 
 ```bash
-# Basic SSL
+# Basic SSL (certificate paths configured in cqlshrc)
 cqlsh --ssl 10.0.0.1
-
-# With certificate file
-cqlsh --ssl --ssl-certfile=/path/to/ca-cert.pem 10.0.0.1
 ```
+
+!!! note "SSL Configuration"
+    SSL certificates must be configured in `~/.cassandra/cqlshrc` under the `[ssl]` section. There is no command-line flag for specifying certificate files directly.
 
 ### cqlshrc Configuration
 
@@ -104,16 +105,19 @@ encoding = utf8
 
 ## Command-Line Options
 
+**Usage:** `cqlsh [options] [host [port]]`
+
+!!! note "Port Specification"
+    Port is a positional argument, not a flag. Use `cqlsh hostname 9042` (not `--port`).
+
 | Option | Description |
 |--------|-------------|
-| `-h, --host` | Host to connect to |
-| `-p, --port` | Port number (default: 9042) |
 | `-u, --username` | Username for authentication |
-| `-P, --password` | Password for authentication |
+| `-p, --password` | Password for authentication |
 | `-k, --keyspace` | Keyspace to use |
 | `-f, --file` | Execute commands from file |
 | `-e, --execute` | Execute command and exit |
-| `--ssl` | Use SSL |
+| `--ssl` | Use SSL (configure certs in cqlshrc) |
 | `--connect-timeout` | Connection timeout in seconds |
 | `--request-timeout` | Request timeout in seconds |
 | `--encoding` | Character encoding |

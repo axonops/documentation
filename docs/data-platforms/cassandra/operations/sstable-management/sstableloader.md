@@ -92,10 +92,14 @@ The directory path must follow Cassandra's data directory structure:
 <base_path>/<keyspace>/<table>/
 
 Examples:
-/tmp/restore/my_keyspace/users/           # Correct
-/var/backup/cycling/cyclist_name/         # Correct
-/restore/my_keyspace/my_table/snapshots/  # Incorrect - extra directory level
+/tmp/restore/my_keyspace/users/                     # Correct - plain table name
+/tmp/restore/my_keyspace/users-a1b2c3d4e5f6g7h8/   # Correct - table with UUID suffix
+/var/backup/cycling/cyclist_name/                   # Correct
+/restore/my_keyspace/my_table/snapshots/            # Incorrect - extra directory level
 ```
+
+!!! tip "On-Disk Table Directory Names"
+    Cassandra stores tables with UUID suffixes (e.g., `users-a1b2c3d4e5f6g7h8`). When loading from live data or snapshots, the full directory name with UUID is accepted. Use `-k` and `-tb` options to override target keyspace/table if names differ.
 
 The tool uses the directory names to determine the target keyspace and table:
 
@@ -132,7 +136,9 @@ The tool uses the directory names to determine the target keyspace and table:
 |--------|-------------|
 | `-u, --username <user>` | Username for authentication |
 | `-pw, --password <password>` | Password for authentication |
+| `-ap, --auth-provider <class>` | Custom auth provider class |
 | `-p, --port <port>` | Native transport port (default: 9042) |
+| `-sp, --storage-port <port>` | Storage port for streaming (default: 7000) |
 
 ### Performance Options
 
@@ -140,13 +146,22 @@ The tool uses the directory names to determine the target keyspace and table:
 |--------|-------------|
 | `--throttle-mib <MiB/s>` | Throttle streaming speed in MiB per second |
 | `--inter-dc-throttle-mib <MiB/s>` | Throttle for inter-datacenter streaming |
+| `--entire-sstable-throttle-mib <MiB/s>` | Throttle for entire-SSTable streaming |
+| `--entire-sstable-inter-dc-throttle-mib <MiB/s>` | Inter-DC throttle for entire-SSTable streaming |
 | `-cph, --connections-per-host <n>` | Number of concurrent connections per host |
+
+### Target Override Options
+
+| Option | Description |
+|--------|-------------|
+| `-k, --target-keyspace <name>` | Override target keyspace (different from directory name) |
+| `-tb, --target-table <name>` | Override target table (different from directory name) |
 
 ### SSL/TLS Options
 
 | Option | Description |
 |--------|-------------|
-| `-f, --conf-path <path>` | Path to cassandra.yaml for SSL configuration |
+| `-f, --conf-path <path>` | Path to cassandra.yaml. Reads `stream_throughput_outbound`, `client_encryption_options`, and `server_encryption_options` |
 | `--keystore <path>` | Path to SSL keystore |
 | `--keystore-password <pass>` | Keystore password |
 | `--truststore <path>` | Path to SSL truststore |

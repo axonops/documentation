@@ -106,7 +106,7 @@ Install Cassandra with identical version and configure:
 # cassandra.yaml
 
 cluster_name: 'ProductionCluster'  # Must match exactly
-num_tokens: 256                    # Must match dead node
+num_tokens: 16                     # Must match dead node (default is 16 for 4.0+)
 
 # Network - use dead node's IP
 listen_address: 10.0.1.2
@@ -121,7 +121,7 @@ seed_provider:
 # Snitch must match cluster
 endpoint_snitch: GossipingPropertyFileSnitch
 
-# Do NOT set auto_bootstrap (replacement handles this)
+# Leave auto_bootstrap at default (true) - replacement still uses streaming
 ```
 
 Configure datacenter and rack:
@@ -137,9 +137,7 @@ rack=rack1
 Add the replacement directive to JVM options:
 
 ```bash
-# For Cassandra 4.0+: jvm-server.options or jvm11-server.options
-# For Cassandra 3.x: jvm.options or cassandra-env.sh
-
+# In jvm-server.options or jvm11-server.options
 -Dcassandra.replace_address_first_boot=10.0.1.2
 ```
 
@@ -237,12 +235,9 @@ The replacement node uses its own IP but replaces the dead node's token ranges.
 
 ---
 
-## Cassandra Version-Specific Behavior
+## Replace Address Option
 
-| Version | Option | Notes |
-|---------|--------|-------|
-| 2.x - 3.x | `replace_address` | Deprecated; use `replace_address_first_boot` |
-| 3.x+ | `replace_address_first_boot` | Only applies on first start; requires IP address |
+Use `replace_address_first_boot` (not the deprecated `replace_address`) to specify the IP of the dead node being replaced.
 
 !!! note "First Boot Only"
     The `_first_boot` suffix indicates the option only takes effect on the node's first startup. Subsequent restarts ignore it, preventing accidental re-replacement.
@@ -438,7 +433,7 @@ sudo systemctl stop cassandra
 sudo rm -rf /var/lib/cassandra/data/*
 
 # Fix cassandra.yaml
-num_tokens: 256  # Match original
+num_tokens: 16   # Match original cluster value
 
 # Restart
 sudo systemctl start cassandra

@@ -70,7 +70,7 @@ The Sidecar approach addresses key limitations of other CDC solutions:
 | Challenge | Debezium | Sidecar CDC |
 |-----------|----------|-------------|
 | **Deduplication** | Consumer must deduplicate | Built-in deduplication |
-| **Consistency validation** | Not available | Honors consistency levels |
+| **Consistency validation** | Not available | Configurable replica acknowledgment (not equivalent to CQL consistency levels) |
 | **Schema management** | Separate configuration | Integrated Schema Registry |
 | **Official support** | Third-party | Apache Cassandra project |
 | **Configuration** | External config files | CQL syntax + REST API |
@@ -305,14 +305,14 @@ schema_id = MD5(keyspace + table + column_definitions)
 | Cassandra Type | Avro Type | Notes |
 |----------------|-----------|-------|
 | `ascii` | `string` | |
-| `bigint` | `int` | |
+| `bigint` | `long` | 64-bit signed integer |
 | `blob` | `bytes` | |
 | `boolean` | `boolean` | |
 | `date` | `int` | Days since epoch |
-| `decimal` | `long` | |
-| `double` | `long` | |
-| `duration` | `long` | |
-| `float` | `long` | |
+| `decimal` | `bytes` | Avro decimal logical type |
+| `double` | `double` | 64-bit IEEE 754 |
+| `duration` | `bytes` | Three signed integers (months, days, nanoseconds) |
+| `float` | `float` | 32-bit IEEE 754 |
 | `frozen` | `bytes` | Serialized bytes |
 | `inet` | `string` | IP address as string |
 | `int` | `int` | |
@@ -325,10 +325,10 @@ schema_id = MD5(keyspace + table + column_definitions)
 | `timestamp` | `long` | Milliseconds since epoch |
 | `timeuuid` | `string` | |
 | `tinyint` | `int` | |
-| `tuple` | `map` | |
+| `tuple` | `record` | Fixed-order fields as Avro record |
 | `uuid` | `string` | |
 | `varchar` | `string` | |
-| `varint` | `int` | |
+| `varint` | `bytes` | Arbitrary precision integer |
 | UDT (frozen) | `record` | Nested record with supported types |
 
 !!! warning "Unsupported Types"

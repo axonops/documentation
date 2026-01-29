@@ -105,10 +105,11 @@ nodetool repair -pr -st <start_token> -et <end_token> my_keyspace
 
 **Adjust memory settings:**
 
-```bash
-# Reduce merkle tree memory
-# In cassandra.yaml
-repair_session_max_tree_depth: 18  # Default 20, reduce for large partitions
+```yaml
+# In cassandra.yaml (4.1+ syntax)
+# Reduce repair memory usage
+repair_session_space: 256MiB
+concurrent_merkle_tree_requests: 2
 ```
 
 ### Case 3: Streaming Failures
@@ -146,8 +147,11 @@ nodetool repair -pr --parallel my_keyspace
 # Check current setting
 nodetool getstreamthroughput
 
-# Increase if network allows (MB/s)
-nodetool setstreamthroughput 200
+# Increase if network allows (value in Mb/s by default)
+nodetool setstreamthroughput 400
+
+# Or specify MiB/s explicitly with -m flag
+nodetool setstreamthroughput -m 50  # 50 MiB/s
 ```
 
 **Schedule repairs by token range:**
@@ -249,14 +253,21 @@ nodetool repair -pr -local my_keyspace
 ### Resource Management
 
 ```yaml
-# cassandra.yaml - repair settings
-repair_session_max_tree_depth: 18
-repair_session_space_in_mb: 256
+# cassandra.yaml - repair settings (4.1+ syntax)
+repair_session_space: 256MiB
+concurrent_merkle_tree_requests: 2
 
-# Limit repair impact
-compaction_throughput_mb_per_sec: 64
-stream_throughput_outbound_megabits_per_sec: 200
+# Limit repair impact (4.1+ syntax)
+compaction_throughput: 64MiB/s
+stream_throughput_outbound: 24MiB/s
 ```
+
+!!! note "Setting Name Changes"
+    | Setting | Pre-4.1 | 4.1+ |
+    |---------|---------|------|
+    | Compaction throughput | `compaction_throughput_mb_per_sec` | `compaction_throughput` (with units) |
+    | Stream throughput | `stream_throughput_outbound_megabits_per_sec` | `stream_throughput_outbound` (MiB/s) |
+    | Repair session space | `repair_session_space_in_mb` | `repair_session_space` (with units) |
 
 ---
 

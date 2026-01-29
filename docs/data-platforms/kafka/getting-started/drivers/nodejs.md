@@ -26,7 +26,7 @@ yarn add kafkajs
 
 ---
 
-## Client Setup
+## Client Set up
 
 ```javascript
 const { Kafka } = require('kafkajs');

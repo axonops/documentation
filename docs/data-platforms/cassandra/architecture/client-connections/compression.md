@@ -153,10 +153,10 @@ def should_compress(body):
 
 ### Algorithm Characteristics
 
-LZ4 is a fast lossless compression algorithm:
+LZ4 is a fast lossless compression algorithm. The following values are illustrative and vary by hardware and data characteristics:
 
-| Metric | Value |
-|--------|-------|
+| Metric | Illustrative Value |
+|--------|-------------------|
 | Compression speed | ~780 MB/s |
 | Decompression speed | ~4970 MB/s |
 | Compression ratio | 2.1:1 (typical text) |

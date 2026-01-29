@@ -527,7 +527,7 @@ stop
 | Parameter | Default | JVM Property | Description |
 |-----------|---------|--------------|-------------|
 | Gossip interval | 1000 ms | - | Fixed interval between gossip rounds |
-| Ring delay (quarantine) | 1000 ms | `cassandra.ring_delay_ms` | Delay before node is considered for ring membership changes |
+| Ring delay (quarantine) | 30000 ms | `cassandra.ring_delay_ms` | Delay before node is considered for ring membership changes |
 | Shutdown announce delay | 2000 ms | `cassandra.shutdown_announce_in_ms` | Time to announce shutdown before stopping gossip |
 
 ### Convergence Analysis
@@ -791,7 +791,7 @@ nodetool removenode <host_id>
 | Bytes per message | 1-10 KB | Depends on cluster size and changes |
 | CPU overhead | Minimal | Simple comparisons and updates |
 
-Gossip overhead is negligible in almost all deployments.
+Gossip overhead is typically low in small to medium clusters. Overhead grows with cluster size and state change frequency.
 
 ### Large Cluster Considerations
 
@@ -816,4 +816,3 @@ In very large clusters (500+ nodes):
 - **[Replication](../distributed-data/replication.md)** - How gossip enables replica placement decisions
 - **[Consistency](../distributed-data/consistency.md)** - How gossip enables consistency level guarantees
 - **[Partitioning](../distributed-data/partitioning.md)** - Token ownership propagated via gossip
-

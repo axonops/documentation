@@ -102,8 +102,8 @@ Generational Shenandoah was experimental in JDK 21-24 and became a production fe
 -XX:ShenandoahGCMode=generational
 ```
 
-!!! warning "Not Yet Available for Cassandra"
-    Cassandra does not yet support JDK 21+. As of late 2025, Cassandra supports JDK 11 and 17. JDK 21 support is tracked in [CASSANDRA-18831](https://issues.apache.org/jira/browse/CASSANDRA-18831).
+!!! warning "Cassandra Does Not Yet Support JDK 21+"
+    Cassandra does not currently support JDK 21 or later. JDK 21 support is tracked in [CASSANDRA-18831](https://issues.apache.org/jira/browse/CASSANDRA-18831). Until JDK 21+ support is added, the generational GC options above are not available for Cassandra deployments.
 
 ### Timeline Summary
 
@@ -116,7 +116,7 @@ Generational Shenandoah was experimental in JDK 21-24 and became a production fe
 | 2023 | Generational ZGC (JDK 21) | < 1ms | Generational + concurrent compaction |
 | 2025 | Generational Shenandoah (JDK 25) | < 1ms | Generational + concurrent compaction |
 
-*Note: Timeline shows JDK release years. Availability for Cassandra depends on Cassandra's JDK support.*
+*Note: Timeline shows JDK release years. Cassandra does not yet support JDK 21+, so Generational ZGC and Generational Shenandoah are not currently available for Cassandra.*
 
 ---
 
@@ -125,7 +125,7 @@ Generational Shenandoah was experimental in JDK 21-24 and became a production fe
 | Cassandra Version | Supported JDK | Recommended |
 |-------------------|---------------|-------------|
 | 4.0 | JDK 8, 11 | JDK 11 |
-| 4.1 | JDK 8, 11, 17 | JDK 11 or 17 |
+| 4.1 | JDK 8, 11 | JDK 11 |
 | 5.0 | JDK 11, 17 | JDK 17 |
 
 !!! tip "Use Latest Patch Version"
@@ -141,8 +141,8 @@ Several JDK distributions are available, all based on OpenJDK. The choice depend
 |--------------|--------|---------|------------|-------|
 | [OpenJDK](https://openjdk.org/) | Oracle/Community | GPL v2 | JDK 12+ | Reference implementation |
 | [Eclipse Temurin](https://adoptium.net/) | Adoptium | GPL v2 | JDK 17+ | Formerly AdoptOpenJDK; widely used |
-| [Amazon Corretto](https://aws.amazon.com/corretto/) | Amazon | GPL v2 | JDK 11+ | Long-term support; production-tested at Amazon |
-| [Azul Zulu](https://www.azul.com/downloads/) | Azul | GPL v2 | JDK 11+ | Free community and paid enterprise editions |
+| [Amazon Corretto](https://aws.amazon.com/corretto/) | Amazon | GPL v2 | Verify per version | Long-term support; production-tested at Amazon |
+| [Azul Zulu](https://www.azul.com/downloads/) | Azul | GPL v2 | Verify per version | Free community and paid enterprise editions |
 | [Red Hat OpenJDK](https://developers.redhat.com/products/openjdk/download) | Red Hat | GPL v2 | JDK 8+ | Shenandoah backported to JDK 8 |
 | [Oracle JDK](https://www.oracle.com/java/technologies/downloads/) | Oracle | Commercial | No | Requires license for production use |
 | [GraalVM](https://www.graalvm.org/) | Oracle | GPL v2 / Commercial | No | Not recommended for Cassandra |
@@ -184,9 +184,11 @@ The garbage collector (GC) automatically frees memory by identifying and removin
 
 | Heap Size | GC Frequency | GC Pause Duration | Impact |
 |-----------|--------------|-------------------|--------|
-| Small (4-8GB) | More frequent | Shorter pauses | Lower p99 latency |
-| Medium (16-24GB) | Moderate | Moderate pauses | Balanced |
-| Large (>24GB) | Less frequent | Longer pauses | Higher p99 latency spikes |
+| Small (4-8GB) | More frequent | Shorter pauses (workload-dependent) | Lower p99 latency |
+| Medium (16-24GB) | Moderate | Moderate pauses (workload-dependent) | Balanced |
+| Large (>24GB) | Less frequent | Longer pauses (workload-dependent) | Higher p99 latency spikes |
+
+*Note: Actual pause durations vary significantly based on workload, object allocation patterns, and GC configuration.*
 
 ### G1 Garbage Collector
 

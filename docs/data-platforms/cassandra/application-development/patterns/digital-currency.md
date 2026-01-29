@@ -1,6 +1,6 @@
 ---
 title: "Digital Currency & Token Systems"
-description: "Implementing digital currencies, loyalty points, and token systems with Apache Cassandra. Covers balance management, transaction integrity, double-spend prevention, and distributed ledger patterns."
+description: "Implementing digital currencies, loyalty points, and token systems with Apache Cassandra. Covers balance management, transaction integrity, and distributed ledger patterns."
 meta:
   - name: keywords
     content: "Cassandra digital currency, token system, loyalty points, wallet management, double-spend prevention"
@@ -19,12 +19,15 @@ Understanding the trade-offs helps choose the right technology:
 | Requirement | Cassandra | Blockchain |
 |-------------|-----------|------------|
 | **Trust model** | Trusted operator | Trustless/decentralized |
-| **Transaction throughput** | 100K+ TPS | 10-10K TPS (varies by chain) |
-| **Finality latency** | Milliseconds | Seconds to minutes |
+| **Transaction throughput** | High (workload-dependent) | Lower (varies by chain) |
+| **Finality latency** | Low (sub-second typical) | Seconds to minutes |
 | **Storage efficiency** | Optimized | Every node stores everything |
 | **Privacy** | Controlled access | Public (or complex privacy layers) |
 | **Regulatory compliance** | Standard enterprise | Complex, jurisdiction-dependent |
 | **Operational complexity** | Standard database ops | Specialized blockchain ops |
+
+!!! note "Performance Characteristics"
+    Throughput and latency depend heavily on cluster topology, workload, and consistency requirements. Systems requiring double-spend prevention must use application-level concurrency control (LWT or external locking), which affects achievable throughput.
 
 **Use Cassandra for**:
 - Loyalty programs (airline miles, retail points)

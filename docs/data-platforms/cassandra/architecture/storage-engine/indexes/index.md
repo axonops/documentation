@@ -65,23 +65,22 @@ Each generation addressed limitations of its predecessors while introducing new 
 
 ### Feature Availability by Version
 
-| Feature | Cassandra 3.x | Cassandra 4.x | Cassandra 5.0+ |
-|---------|:-------------:|:-------------:|:--------------:|
-| Secondary Index (2i) | ✅ | ✅ | ✅ |
-| SASI (experimental) | ✅ 3.4+ | ✅ | ✅ |
-| SAI | ❌ | ❌ | ✅ |
-| Vector search | ❌ | ❌ | ✅ |
-| Equality queries | ✅ | ✅ | ✅ |
-| Range queries | SASI only | SASI only | SAI/SASI |
-| LIKE prefix | SASI only | SASI only | SAI/SASI |
-| LIKE contains | SASI only | SASI only | SAI/SASI |
-| Collection indexing | 2i only | 2i only | 2i/SAI |
-| ANN (vector) | ❌ | ❌ | SAI only |
+| Feature | Cassandra 4.x | Cassandra 5.0+ |
+|---------|:-------------:|:--------------:|
+| Secondary Index (2i) | ✅ | ✅ |
+| SASI (experimental) | ✅ | ✅ |
+| SAI | ⚠️ (experimental) | ✅ (recommended) |
+| Vector search | ❌ | ✅ |
+| Equality queries | ✅ | ✅ |
+| Range queries | SASI only | SAI/SASI |
+| LIKE prefix | SASI only | SAI/SASI |
+| LIKE contains | SASI only | SAI/SASI |
+| Collection indexing | 2i only | 2i/SAI |
+| ANN (vector) | ❌ | SAI only |
 
 !!! tip "Version Recommendation"
     - **Cassandra 5.0+**: Use SAI for all new indexes
     - **Cassandra 4.x**: Use 2i for equality, SASI for range (with caution)
-    - **Cassandra 3.x**: Use 2i for equality, SASI for range (with caution)
     - **Upgrading**: Plan migration from SASI to SAI when moving to 5.0
 
 ---
@@ -162,15 +161,15 @@ package "SAI - SSTable-Attached" {
 | **Numeric Range** | No | Yes | Yes |
 | **Text Search** | No | PREFIX, CONTAINS | Yes |
 | **AND Queries** | Scatter-gather | Single-pass | Single-pass |
-| **Write Overhead** | Medium | Medium | Low |
-| **Cardinality Handling** | Poor at extremes | Better | Best |
+| **Write Overhead** | Medium | Medium | Low (typical) |
+| **Cardinality Handling** | Poor at extremes | Better | Best (generally) |
 | **Production Ready** | Yes (with caveats) | No | Yes |
 
 ---
 
 ## Operator Support Matrix
 
-This table shows exactly which CQL operators are supported by each index type.
+This table shows which CQL operators are generally supported by each index type. Actual behavior may vary by Cassandra version, analyzer configuration, and data type. Consult version-specific documentation for definitive support.
 
 | Operator | Secondary Index (2i) | SASI | SAI | Notes |
 |----------|:-------------------:|:----:|:---:|-------|

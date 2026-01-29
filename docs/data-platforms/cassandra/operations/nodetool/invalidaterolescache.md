@@ -199,18 +199,30 @@ cqlsh -e "LIST ALL PERMISSIONS OF problem_user;"
 
 ### Cache Settings
 
+The cassandra.yaml parameter names vary by version:
+
+| Cassandra Version | Validity Parameter | Update Interval Parameter |
+|-------------------|-------------------|---------------------------|
+| Pre-4.1 | `roles_validity_in_ms` | `roles_update_interval_in_ms` |
+| 4.1+ | `roles_validity` | `roles_update_interval` |
+
 ```yaml
-# cassandra.yaml
-roles_validity_in_ms: 2000            # How long entries are valid
-roles_update_interval_in_ms: 1000     # Background refresh interval
-roles_cache_max_entries: 1000         # Maximum cached entries
+# cassandra.yaml (4.1+)
+roles_validity: 2s
+roles_update_interval: 1s
+roles_cache_max_entries: 1000
+
+# cassandra.yaml (Pre-4.1)
+# roles_validity_in_ms: 2000
+# roles_update_interval_in_ms: 1000
+# roles_cache_max_entries: 1000
 ```
 
 ### Tuning Considerations
 
 | Setting | Low Value | High Value |
 |---------|-----------|------------|
-| `roles_validity_in_ms` | Faster permission propagation, more auth queries | Better performance, delayed propagation |
+| `roles_validity` | Faster permission propagation, more auth queries | Better performance, delayed propagation |
 | `roles_cache_max_entries` | Lower memory, more cache misses | Higher memory, better hit rate |
 
 ---
@@ -225,14 +237,14 @@ For role changes to take effect cluster-wide immediately:
 #!/bin/bash
 # invalidate_roles_cluster.sh
 
-echo "Invalidating roles cache cluster-wide..."# Get list of node IPs from local nodetool status
+echo "Invalidating roles cache cluster-wide..."
 
-
+# Get list of node IPs from local nodetool status
 nodes=$(nodetool status | grep "^UN" | awk '{print $2}')
 
 for node in $nodes; do
     echo -n "$node: "
-    ssh "$node" "nodetool invalidaterolescache 2>/dev/null && echo "invalidated" || echo "FAILED""
+    ssh "$node" 'nodetool invalidaterolescache 2>/dev/null && echo "invalidated" || echo "FAILED"'
 done
 
 echo "Roles cache cleared on all nodes."
@@ -246,9 +258,9 @@ For comprehensive auth changes:
 #!/bin/bash
 # refresh_all_auth_caches.sh
 
-echo "Refreshing all authentication caches cluster-wide..."# Get list of node IPs from local nodetool status
+echo "Refreshing all authentication caches cluster-wide..."
 
-
+# Get list of node IPs from local nodetool status
 nodes=$(nodetool status | grep "^UN" | awk '{print $2}')
 
 for node in $nodes; do

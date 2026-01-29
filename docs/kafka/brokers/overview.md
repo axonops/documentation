@@ -6,9 +6,9 @@ meta:
     content: "Kafka brokers, broker management, AxonOps Kafka"
 ---
 
-# Kafka Brokers
+# Kafka Brokers
 
-## What is a Broker
+## What is a broker?
 
 A Kafka broker is a server that stores data and handles all data streaming requests in an Apache Kafka cluster. Each running instance of the Kafka server process is called a broker. Brokers manage the storage of messages in topics, handle read and write requests from clients (producers and consumers), and ensure data is distributed and replicated for scalability and reliability.
 
@@ -16,7 +16,7 @@ A Kafka broker is a server that stores data and handles all data streaming reque
 
 - Data Management: When producers send messages, they are written to specific partitions on brokers. Consumers fetch data directly from the broker storing the partition.
 
-- Metadata Coordination: Historically, Kafka used ZooKeeper to coordinate brokers and manage metadata, but since Kafka 4.0, this has shifted to KRaft, Kafka’s built-in Raft-based metadata management system.
+- Metadata Coordination: Historically, Kafka used ZooKeeper to coordinate brokers and manage metadata. Newer Kafka releases support KRaft, Kafka’s built-in Raft-based metadata management system.
 
 - Physical Deployment: Brokers can run on physical servers, cloud instances, or even small devices like Raspberry Pi.
 
@@ -24,12 +24,12 @@ A Kafka broker is a server that stores data and handles all data streaming reque
 
 Broker configuration consists of settings that control how each broker operates within the Kafka cluster. 
 
-These configurations are typically defined in a properties file (like server.properties) and can be customized per broker.
+These configurations are typically defined in a properties file (like `server.properties`) and can be customized per broker.
 
-!!! note 
-    Some parameters are specific to KRaft mode or ZooKeeper mode. KRaft is the default for new clusters as of recent Kafka versions
+!!! note
+    Some parameters are specific to KRaft mode or ZooKeeper mode. Confirm your cluster mode before editing broker settings.
 
-#### Example Broker Configuration Snippet
+#### Example broker configuration snippet (ZooKeeper mode)
 
 ```shell
 broker.id=0
@@ -45,41 +45,41 @@ log.retention.hours=168
 
 ### Networking and Listeners
 
-- listeners: Defines the network interfaces and ports the broker will listen on for client connections.
+- `listeners`: Defines the network interfaces and ports the broker will listen on for client connections.
 
-- advertised.listeners: Specifies the addresses clients should use to connect, which can differ from internal addresses (useful for NAT, proxies, or external DNS).
+- `advertised.listeners`: Specifies the addresses clients should use to connect, which can differ from internal addresses (useful for NAT, proxies, or external DNS).
 
-- inter.broker.listener.name: When multiple listeners are configured, this property specifies which one brokers should use for inter-broker communication.
+- `inter.broker.listener.name`: When multiple listeners are configured, this property specifies which one brokers should use for inter-broker communication.
 
 ### Operational Notes
 
-Each broker in a cluster must have a unique broker.id.
+Each broker in a cluster must have a unique `broker.id`.
 
 Configuration can be fine-tuned for performance, fault tolerance, and network setup.
 
 
-### View Broker List,Broker Metrics and Broker Configuration
+### View broker list, broker metrics, and broker configuration
 
-####  Click Brokers in the Left Navigation
+#### Click Brokers in the left navigation
 
 Navigate to the Brokers section.
 
-<img src="/kafka/brokers/broker_menu.png" width="700">
+<img src="../broker_menu.png" width="700" alt="Broker menu in the navigation">
 
 #### Click on any of the Brokers in the list.
 
 Select a specific broker and access detailed broker information.
 
-<img src="/kafka/brokers/broker_overview.png" width="700">
+<img src="../broker_overview.png" width="700" alt="Broker overview page">
 
 #### Configurations
 
-Access and view all the configurations settings. This cannot be changed or updated from the UI and needs to be updated on the Broker configuration file.
+Access and view all configuration settings. These cannot be changed in the UI; update them in the broker configuration file instead.
 
-<img src="/kafka/brokers/broker_configuration.png" width="700">
+<img src="../broker_configuration.png" width="700" alt="Broker configuration view">
 
 #### Metrics
 
-View performance metrics for the specific Broker.
+View performance metrics for the selected broker.
 
-<img src="/kafka/brokers/broker_metrics.png" width="700">
+<img src="../broker_metrics.png" width="700" alt="Broker metrics view">

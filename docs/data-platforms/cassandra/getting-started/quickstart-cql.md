@@ -253,6 +253,11 @@ WHERE user_id IN (
 );
 ```
 
+!!! note "IN Clause Behavior"
+    The `IN` clause behaves differently on partition keys versus clustering columns. With composite partition keys, separate `IN` clauses create a cartesian product of all combinations. Multi-column tuple syntax such as `(pk1, pk2) IN (...)` is **not supported** on partition keys but **is supported** on clustering columns.
+
+    For detailed examples and the complete behavior reference, see [Multi-Partition Queries](../cql/dml/select.md#multi-partition-queries).
+
 ---
 
 ## Updating Data

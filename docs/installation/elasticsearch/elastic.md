@@ -1,5 +1,5 @@
 ---
-title: "-Xms4g"
+title: "Elasticsearch Configuration"
 description: "Configure Elasticsearch for AxonOps. Search backend setup and optimization."
 meta:
   - name: keywords
@@ -7,7 +7,9 @@ meta:
 ---
 
 
-### Configuration File Locations
+# Elasticsearch Configuration
+
+## Configuration File Locations
 
 Most installations of Elasticsearch have the default configuration location at `/etc/elasticsearch/`.
 
@@ -25,7 +27,7 @@ Depending on the installation method the default location for Elasticsearch conf
 
 ## Configure Elasticsearch
 
-### Increase Bulk Queue Size
+## Increase Bulk Queue Size
 
 Increase the bulk queue size of Elasticsearch by running the following command:
 
@@ -33,7 +35,7 @@ Increase the bulk queue size of Elasticsearch by running the following command:
 {!installation/elasticsearch/scripts/increase-bulk-queue-size.sh!}
 ```
 
-### Increase Heap Size
+## Increase Heap Size
 
 Increase the default heap size of elasticsearch by editing `/etc/elasticsearch/jvm.options`.
 
@@ -61,7 +63,7 @@ $ sudo grep 'Xm' /etc/elasticsearch/jvm.options
 
 In the above example, we set the minimum and maximum heap size to 8 GB.
 
-### Increase Log Compression
+## Increase Log Compression
 
 Set the following index codec by running the following command:
 
@@ -69,7 +71,7 @@ Set the following index codec by running the following command:
 {!installation/elasticsearch/scripts/set-compression.sh!}
 ```
 
-### Increase Number of Available Memory Maps
+## Increase Number of Available Memory Maps
 
 Elasticsearch uses an mmapfs directory by default to store its indices. 
 
@@ -87,7 +89,7 @@ To make this change persist across reboots run this command:
 {!installation/elasticsearch/scripts/max-map-count-persisted.sh!}
 ```
 
-### Increase Number of File Descriptors
+## Increase Number of File Descriptors
 
 > Note: This section is only required for non-package installations. Debian and RPM
 packages already use the intended value.
@@ -99,7 +101,7 @@ which can be updated with this command:
 {!installation/elasticsearch/scripts/increase-file-descriptors.sh!}
 ```
 
-### Enable Security Features
+## Enable Security Features
 
 Enable the Elasticsearch security features to enable basic authentication. Basic authentication is available as part of the basic Elasticsearch license, but disabled by default.
 
@@ -127,13 +129,13 @@ curl "localhost:9200"
 
 In the Elasticsearch `home` folder run **one** of the following commands to setup the default passwords for the built-in `elastic` user.
 
-This commands creates a random secure password:
+This command creates a random secure password:
 
 ```bash
 {!installation/elasticsearch/scripts/create-password-random.sh!}
 ```
 
-This commands sets a self-assigned password:
+This command sets a self-assigned password:
 
 ```bash
 {!installation/elasticsearch/scripts/create-password.sh!}
@@ -160,7 +162,7 @@ The index privileges should be applied to the following indices:
 * `orgname_*`
     * Where the `orgname` prefix should match the `org_name` value in the AxonOps server and agent config files.
 
-<img src="/installation/elasticsearch/elastic_role.png">
+<img src="/installation/elasticsearch/elastic_role.png" alt="elastic_role">
 
 ### Advanced User Setups
 

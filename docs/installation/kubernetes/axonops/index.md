@@ -21,7 +21,7 @@ This guide explains how to deploy AxonOps components and a Strimzi Kafka cluster
 - **AxonOps Search DB** - Log and event storage (OpenSearch-based)
 - **cert-manager** (Recommended) - Automatic TLS certificate management
 
-## AxonOps Infrastructure Setup
+## AxonOps Infrastructure Set up
 
 ### Cert Manager
 
@@ -181,7 +181,7 @@ stringData:
       hosts:
         - https://axondb-search-cluster-master.axonops.svc.cluster.local:9200
       username: admin
-      password: MyS3cur3P@ss2025
+      password: change-me
       skip_verify: true
 
     org_name: example
@@ -200,8 +200,11 @@ stringData:
     cql_skip_verify: true
     cql_ssl: true
     cql_username: cassandra
-    cql_password: cassandra
+    cql_password: change-me
 ```
+
+!!! note
+    Replace the example passwords with real credentials before applying the secret.
 
 !!! note
     The default installation assumes your clients will be all in Kubernetes. If you will have AxonOps clients outside of Kubernetes (external Cassandra or Kafka clusters) you will also need to add an ingress or NodePort configuration.
@@ -328,7 +331,7 @@ helm install axon-dash oci://ghcr.io/axonops/charts/axon-dash \
 Verify all pods are running:
 
 ```bash
-k get po -n axonops
+kubectl get pods -n axonops
 ```
 
 Expected output:
@@ -344,7 +347,7 @@ axondb-timeseries-0               1/1     Running   0          4m43s
 Verify all services are created:
 
 ```bash
-k get svc -n axonops
+kubectl get svc -n axonops
 ```
 
 Expected output:

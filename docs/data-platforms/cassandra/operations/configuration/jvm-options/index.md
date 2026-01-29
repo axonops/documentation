@@ -60,8 +60,8 @@ Location: `/etc/cassandra/`
 
 ```bash
 -XX:+UseZGC
--XX:+ZGenerational
 -XX:SoftMaxHeapSize=28G
+# -XX:+ZGenerational  # JDK 21+ only, improves GC efficiency
 ```
 
 ## GC Logging

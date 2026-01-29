@@ -115,8 +115,13 @@ nodetool status
 
 ```yaml
 # cassandra.yaml - increase timeouts for large partitions
-streaming_socket_timeout_in_ms: 86400000  # 24 hours
+# 4.0: streaming_socket_timeout_in_ms: 86400000
+# 4.1+: streaming_socket_timeout: 24h (duration syntax)
+streaming_socket_timeout_in_ms: 86400000  # 24 hours (4.0 syntax)
 ```
+
+!!! note "Version Differences"
+    Cassandra 4.1+ uses duration syntax (e.g., `24h`) instead of `_in_ms` suffixes. Check the version-specific configuration documentation.
 
 ### Bootstrap Failed Mid-Way
 

@@ -52,4 +52,4 @@ Due to recent change with `needrestart`, as seen in Ubuntu 24.04, uninstalling t
 `needrestart` package is currently recommended.
 
 Failure to uninstall the `needrestart` package may cause the Cassandra service to be
-restarted when updating the `axon-agent` package.
+restarted when updating the `AxonOps agent` package.

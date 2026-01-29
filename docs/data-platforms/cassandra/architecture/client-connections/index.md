@@ -163,6 +163,8 @@ Protocol version is negotiated during connection establishment:
 
 ### Essential Parameters
 
+Values shown are typical defaults; exact defaults vary by driver and version.
+
 | Parameter | Description | Typical Value |
 |-----------|-------------|---------------|
 | Contact Points | Initial nodes for discovery | 2-3 nodes per DC |
@@ -172,6 +174,8 @@ Protocol version is negotiated during connection establishment:
 | Request Timeout | Time for request completion | 12 seconds |
 
 ### Pool Configuration
+
+Values shown are illustrative for Java Driver 4.x; other drivers may differ.
 
 | Parameter | Description | Typical Value |
 |-----------|-------------|---------------|
@@ -219,7 +223,7 @@ Drivers react to server-pushed events:
 ### Connection Efficiency
 
 Each TCP connection has overhead:
-- Memory for buffers (~64KB per connection)
+- Memory for buffers (varies by driver configuration)
 - File descriptors on both sides
 - TCP keepalive traffic
 
@@ -232,13 +236,13 @@ Optimal configurations balance:
 
 Total request latency includes:
 
-| Component | Typical Range | Optimization |
-|-----------|---------------|--------------|
-| Serialization | 10-100 μs | Use prepared statements |
+| Component | Typical Range (illustrative) | Optimization |
+|-----------|------------------------------|--------------|
+| Serialization | Varies | Use prepared statements |
 | Network RTT | 0.1-2 ms (same DC) | Co-locate clients |
 | Queue Time | 0-10 ms | Proper connection sizing |
 | Server Processing | 1-50 ms | Data model optimization |
-| Deserialization | 10-100 μs | Minimize result size |
+| Deserialization | Varies | Minimize result size |
 
 ### Throughput Factors
 

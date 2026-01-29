@@ -6,7 +6,8 @@ hide:
 ---
 
 # Welcome to AxonOps
-AxonOps is the comprehensive operations platform for Apache Cassandra® and Apache Kafka®. Built by distributed systems experts, AxonOps provides all the capabilities required to effectively monitor, maintain, and manage Cassandra databases and Kafka streaming infrastructure. Accessed through a single intuitive UI and driven by a highly efficient bi-directional protocol ensuring unprecedented functionality and exceptional performance.
+
+AxonOps is an operations platform for Apache Cassandra® and Apache Kafka®. Built by distributed systems experts, AxonOps provides the capabilities required to monitor, maintain, and manage Cassandra databases and Kafka streaming infrastructure.
 
 ## Unified Platform for Cassandra & Kafka
 
@@ -60,18 +61,18 @@ AxonOps provides extensive integrations for notifications and operations:
   <div class="column"> 
     Notifications: 
 
-    <img src="/img/alerts.webp" width="500" height="500">
+    <img src="/img/alerts.webp" width="500" height="500" alt="alerts">
   </div>
   <div class="column">
     Backups: 
 
-    <img src="/img/backups.webp" width="500" height="500">
+    <img src="/img/backups.webp" width="500" height="500" alt="backups">
   </div>
 </div>
 
 ## Why Choose AxonOps?
 
-<h3>For Your Cassandra Clusters:</h3>
+### For Your Cassandra Clusters
 
 * Dynamic responsive dashboards curated by Cassandra experts
 * Adaptive Repair process that maintains data integrity
@@ -79,7 +80,7 @@ AxonOps provides extensive integrations for notifications and operations:
 * Easy log-file association and interrogation
 * Reliable rolling restart through automation
 
-<h3>For Your Kafka Infrastructure:</h3>
+### For Your Kafka Infrastructure
 
 * Comprehensive broker and topic monitoring
 * Advanced ACL and security management
@@ -87,7 +88,7 @@ AxonOps provides extensive integrations for notifications and operations:
 * Support for both KRaft and ZooKeeper modes
 * Multi-version compatibility (Kafka 2.x and 3.x)
 
-<h3>Platform Benefits:</h3>
+### Platform Benefits
 
 * Single pane of glass for all your distributed systems
 * Sophisticated alerting integration and routing
@@ -95,7 +96,6 @@ AxonOps provides extensive integrations for notifications and operations:
 * Highly efficient protocol ensuring exceptional performance at scale
 * Built by experts who understand distributed systems
 
-All of this is underpinned by an efficient bi-directional protocol ensuring exceptional performance and scale across both Cassandra and Kafka deployments.
 
 ## AxonOps Editions
 

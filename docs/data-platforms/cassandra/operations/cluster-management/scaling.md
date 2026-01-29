@@ -44,7 +44,7 @@ nodetool status
 | > 85% | Critical | Scale immediately |
 
 !!! warning "Headroom Requirement"
-    Disk utilization should not exceed 50% under normal operations. This provides headroom for:
+    Disk utilization should generally not exceed 50-70% under normal operations (depending on compaction strategy and workload). This provides headroom for:
 
     - Compaction (temporary 2x space requirement)
     - Streaming during topology changes
@@ -120,9 +120,9 @@ Adding multiple nodes to increase cluster capacity.
 
 **Constraints:**
 
-- Nodes must be added sequentially, one at a time
+- Nodes should be added sequentially for reduced resource contention (concurrent bootstraps are supported but increase streaming load)
 - Each node must complete bootstrap (`UN` status) before adding the next
-- Cleanup must run on all original nodes after all additions complete
+- Cleanup should run on all original nodes after additions to reclaim space (recommended but not required for correctness)
 
 **Failure Semantics:**
 

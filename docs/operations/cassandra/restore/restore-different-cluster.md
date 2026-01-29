@@ -110,7 +110,7 @@ you can copy/move the files to another location or import them into a cluster us
 
 ### Download and import a backup using SSTableLoader
 
-The above example highlights how to download the backed up files into a local directory, but it does not import them into a new cluster. The `axon-cassandra-restore` tool can load the downloaded backup files into the new cluster by passing
+The above example shows how to download the backed up files into a local directory, but it does not import them into a new cluster. The `axon-cassandra-restore` tool can load the downloaded backup files into the new cluster by passing
 the `--use-sstable-loader`, `--cassandra-bin-dir`, and `--sstable-loader-options` command-line arguments.
 
 > NOTE: Keyspaces must exist in the target cluster. If you did not create the tables remember to add the option `--restore-schema` to the command line. See [Importing CQL schemas during the restore](#importing-cql-schemas-during-the-restore).
@@ -126,13 +126,13 @@ to import the downloaded files into a new cluster with contact points 10.0.0.1, 
   --source-hosts 026346a0-dc89-4235-ae34-552fcd453b42,84759df0-8a19-497e-965f-200bdb4c1c9b,94ed3811-12ce-487f-ac49-ae31299efa31 \
   --backup-id 2c1d9aca-5312-11ee-b686-bed50b9335ec \
   --local-sstable-dir /opt/cassandra/axonops-restore \
-  --restore /
+  --restore
   --use-sstable-loader \
   --cassandra-bin-dir /opt/cassandra/bin \
   --sstable-loader-options "-d 10.0.0.1,10.0.0.2,10.0.0.3 -u cassandra -pw cassandra"
 ```
 
-> NOTE: If you are using an Apache Cassandra version installed using either the Debian or RedHat package manager, use `--cassandra-bin-dir /usr/bin` when specifying the bin directory.
+> NOTE: If you are using an Apache Cassandra version installed using either the Debian or Red Hat package manager, use `--cassandra-bin-dir /usr/bin` when specifying the bin directory.
 
 ### Importing CQL schemas during the restore
 
@@ -149,7 +149,7 @@ tables, and import the downloaded data with `sstableloader`:
   --source-hosts 026346a0-dc89-4235-ae34-552fcd453b42,84759df0-8a19-497e-965f-200bdb4c1c9b,94ed3811-12ce-487f-ac49-ae31299efa31 \
   --backup-id 2c1d9aca-5312-11ee-b686-bed50b9335ec \
   --local-sstable-dir /opt/cassandra/axonops-restore \
-  --restore /
+  --restore
   --use-sstable-loader \
   --cassandra-bin-dir /opt/cassandra/bin \
   --sstable-loader-options "-d 10.0.0.1,10.0.0.2,10.0.0.3 -u cassandra -pw cassandra" \
@@ -175,7 +175,7 @@ This example shows restoring the table `keyspace1.table1` into a table named `ta
   --source-hosts 026346a0-dc89-4235-ae34-552fcd453b42,84759df0-8a19-497e-965f-200bdb4c1c9b,94ed3811-12ce-487f-ac49-ae31299efa31 \
   --backup-id 2c1d9aca-5312-11ee-b686-bed50b9335ec \
   --local-sstable-dir /opt/cassandra/axonops-restore \
-  --restore /
+  --restore
   --use-sstable-loader \
   --cassandra-bin-dir /opt/cassandra/bin \
   --sstable-loader-options "-d 10.0.0.1,10.0.0.2,10.0.0.3 -u cassandra -pw cassandra" \
@@ -210,7 +210,7 @@ cd /var/lib/cassandra/
 rm -rf commitlog/* data/* hints/* saved_caches/*
 ```
 
-On the new cluster, we must update the `cluster_name` within the `cassandra.yaml` to match the `cluster_name` within the backups. You can find the `cassandra.yaml` within `/etc/cassandra/cassandra.yaml` if using the default packaged-based installation path.
+On the new cluster, update `cluster_name` in `cassandra.yaml` to match the `cluster_name` within the backups. You can find `cassandra.yaml` at `/etc/cassandra/cassandra.yaml` if using the default package-based installation path.
 
 > NOTE: Since the live cluster and restored cluster will have the same `cluster_name`, it is **highly** recommended that all nodes within the live cluster are firewalled away from all the nodes within the restoration cluster. While we do not restore the `peers` and `peers_v2` tables in an effort to prevent conflicts over token ownership across the two clusters, an isolated network setup is **highly** recommended.
 
@@ -227,7 +227,7 @@ Additionally, we will restore the commit logs to support point-in-time restores 
 * `--restore-commitlogs` to also restore any new commit logs since the target backup/snapshot
 * `--local-commitlog-dir` to restore the commit logs to Cassandra's commitlog directory
 
-Note that this command should use a single Source Host ID as [found within Cluster Overview within the AxonOps dashboard](restore-tool-setup.md/#finding-the-source-host-ids).
+Note that this command should use a single Source Host ID as [found within Cluster Overview in the AxonOps Dashboard](restore-tool-setup.md#finding-the-source-host-ids).
 
 ```bash
 AGENT_ID=026346a0-dc89-4235-ae34-552fcd453b42

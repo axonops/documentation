@@ -8,6 +8,9 @@ meta:
 
 # nodetool refresh
 
+!!! warning "Deprecated in Cassandra 4.0+"
+    `nodetool refresh` is deprecated since Cassandra 4.0. Use `nodetool import` instead, which provides more options including the ability to import from external directories.
+
 Loads newly placed SSTables into a running node without restart.
 
 ---
@@ -151,7 +154,6 @@ All files for an SSTable must be present.
 |--------|---------|--------|
 | Location | Must be in data directory | Can be from external directory |
 | File handling | Files stay in place | Files can be moved or copied |
-| Availability | Cassandra 3.x+ | Cassandra 4.0+ |
 | Use case | Quick load | External bulk import |
 
 ---

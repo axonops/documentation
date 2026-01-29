@@ -85,7 +85,7 @@ end note
     - **Materialized view masking**: Views may expose unmasked data depending on permissions at view creation
     - **Index leakage**: Secondary indexes may allow inference of masked values through query patterns
     - **UDF security**: User-defined masking functions may have implementation vulnerabilities
-    - **Prepared statement caching**: Cached statements may retain permission state from preparation time
+    - **Prepared statement caching**: Application-level caching of query results may bypass masking if not invalidated on permission changes
     - **CDC and backup exposure**: Change Data Capture and backup files contain unmasked data
 
 ### Permission Resolution Contract

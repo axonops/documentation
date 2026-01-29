@@ -35,7 +35,7 @@ server_encryption_options:
 
     # Enable legacy SSL storage port (7001)
     # Set to true during migration from unencrypted
-    enable_legacy_ssl_storage_port: false
+    legacy_ssl_storage_port_enabled: false
 
     # Keystore containing node's private key and certificate
     keystore: /etc/cassandra/certs/node-keystore.jks
@@ -96,7 +96,7 @@ Rolling migration from unencrypted to encrypted internode communication:
 # On all nodes
 server_encryption_options:
     internode_encryption: all
-    enable_legacy_ssl_storage_port: true
+    legacy_ssl_storage_port_enabled: true
     optional: true  # Accept both encrypted and unencrypted
 ```
 
@@ -108,7 +108,7 @@ Perform rolling restart.
 # On all nodes
 server_encryption_options:
     internode_encryption: all
-    enable_legacy_ssl_storage_port: false
+    legacy_ssl_storage_port_enabled: false
     optional: false
 ```
 

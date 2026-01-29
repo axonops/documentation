@@ -12,16 +12,16 @@ The AxonOps Agent enables collection of:
 * Logs
 * Events
 
-The AxonOps Agent also enables the following maintence operations to be performed on the cluster:
+The AxonOps Agent also enables the following maintenance operations to be performed on the cluster:
 
 * Adaptive repairs
 * Backups
 
-See [Installing axon-agent for Cassandra in Docker](./docker.md) if you are running Cassandra under Docker and the [Kubernetes](../kubernetes/index.md) if you are setting up either Strimzi or K8ssandra clusters.
+See [Installing AxonOps agent for Cassandra in Docker](./docker.md) if you are running Cassandra under Docker, and the [Kubernetes guide](../kubernetes/index.md) if you are setting up Strimzi or K8ssandra clusters.
 
 ## Version Compatibility
 
-AxonOps Agent is available for the following versions of Apache Casssandra and Apache Kafka:
+AxonOps Agent is available for the following versions of Apache Cassandra and Apache Kafka:
 
 ### Cassandra
 
@@ -33,11 +33,11 @@ AxonOps Agent is available for the following versions of Apache Casssandra and A
 
 ### Kafka
 
-* Apache Kafa 2.x
-* Apache Kafa 3.x
+* Apache Kafka 2.x
+* Apache Kafka 3.x
 
 
-## Setup the Package Repository
+## Set up the package repository
 
 {!dynamic_pages/axon_agent/os.md!}
 
@@ -45,11 +45,11 @@ AxonOps Agent is available for the following versions of Apache Casssandra and A
 
 <label>
   <input type="radio" id="Cassandra" name="Service" onChange="updateService()" checked=true />
-  <img src="/get_started/cassandra.png" class="skip-lightbox" width="180px" height="180px">
+  <img src="/get_started/cassandra.png" class="skip-lightbox" width="180px" height="180px" alt="cassandra">
 </label>
 <label>
   <input type="radio" id="Kafka" name="Service" onChange="updateService()" />
-  <img src="/get_started/kafka.png" class="skip-lightbox" width="180px" height="180px">
+  <img src="/get_started/kafka.png" class="skip-lightbox" width="180px" height="180px" alt="kafka">
 </label>
 
 <div id="CassandraDiv" name="service_div" markdown="1">
@@ -66,6 +66,6 @@ AxonOps Agent is available for the following versions of Apache Casssandra and A
 
 ## Start the AxonOps Agent
 
-``` bash
+```bash
 {!installation/axon-agent/scripts/restart-axon-agent.sh!}
 ```

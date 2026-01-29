@@ -146,7 +146,7 @@ intersect --> results
 @enduml
 ```
 
-**Single-pass intersection**: Multiple SASI predicates are intersected within each SSTable iteration, avoiding the scatter-gather pattern of legacy indexes for multi-predicate queries.
+**Single-pass intersection**: Multiple SASI predicates are intersected within each SSTable iteration on each node, providing more efficient local processing for multi-predicate queries. Note that in a distributed cluster, queries still scatter to replicas and gather results at the coordinator—the intersection occurs locally on each node, not globally.
 
 ---
 
@@ -350,14 +350,16 @@ SELECT * FROM users WHERE name LIKE 'John%';
 
 ### Efficient Multi-Predicate Queries
 
-Single-pass intersection reduces overhead:
+Single-pass intersection reduces overhead on each node:
 
 ```sql
--- 2i: Two scatter-gather operations + coordinator merge
--- SASI: Single pass through SSTables with local intersection
+-- 2i: Two separate index lookups per node + coordinator merge
+-- SASI: Single pass through SSTables with local intersection per node
 SELECT * FROM users
 WHERE age > 25 AND city LIKE 'San%';
 ```
+
+Note: The query still contacts multiple nodes; the efficiency gain is in local processing on each node.
 
 ### SSTable Integration
 

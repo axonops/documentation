@@ -21,7 +21,7 @@ The commit log serves a single purpose: **crash recovery**. It is not used for r
 | Guarantee | Description |
 |-----------|-------------|
 | Durability | Acknowledged writes survive node restart |
-| Ordering | Mutations are replayed in write order |
+| Ordering | Mutations are replayed in segment order; correctness relies on mutation timestamps |
 | Atomicity | Individual mutations are atomic (all-or-nothing) |
 
 !!! info "Commit Log vs Replication"
@@ -127,7 +127,7 @@ Each segment file contains a header followed by sync blocks of serialized mutati
 │                         HEADER                              │
 ├──────────┬───────────┬─────────────┬────────────┬───────────┤
 │ Version  │ Segment   │ Params Len  │ Params     │ Header    │
-│ (4 bytes)│ ID (8)    │ (4 bytes)   │ (JSON)     │ CRC (4)   │
+│ (4 bytes)│ ID (8)    │ (2 bytes)   │ (JSON)     │ CRC (4)   │
 └──────────┴───────────┴─────────────┴────────────┴───────────┘
 
 ┌─────────────────────────────────────────────────────────────┐
@@ -152,7 +152,7 @@ Each segment file contains a header followed by sync blocks of serialized mutati
 |-------|------|-------------|
 | Version | 4 bytes | Commit log format version |
 | Segment ID | 8 bytes | Unique segment identifier |
-| Parameters length | 4 bytes | Length of JSON parameters |
+| Parameters length | 2 bytes | Length of JSON parameters (unsigned short) |
 | Parameters | Variable | JSON: compression/encryption settings |
 | Header CRC | 4 bytes | CRC32 checksum of header |
 

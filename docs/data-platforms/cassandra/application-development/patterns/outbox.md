@@ -122,7 +122,7 @@ skinparam queue {
 title Transactional Outbox Pattern
 
 package "Application Service" {
-    package "Single Database Transaction" {
+    package "Logged Batch (atomic apply)" {
         database "orders table\n\nINSERT order" as orders
         database "outbox table\n\nINSERT event" as outbox
     }
@@ -186,7 +186,7 @@ public void createOrder(Order order, OrderCreatedEvent event) {
 }
 ```
 
-The logged batch ensures both writes succeed or neither does. However, this approach limits the outbox to events related to a single order; cross-order events cannot be batched atomically.
+The logged batch ensures both writes eventually complete via batchlog replay if the coordinator fails. Partial visibility across partitions may occur during execution, but eventual completion is guaranteed. This approach limits the outbox to events related to a single order; cross-order events cannot share the same partition key for atomic visibility.
 
 ### Approach 2: Time-Bucketed Global Outbox
 

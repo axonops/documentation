@@ -15,12 +15,15 @@ Sets the snapshot link creation throttle.
 ## Synopsis
 
 ```bash
-nodetool [connection_options] setsnapshotthrottle <throttle_in_mb>
+nodetool [connection_options] setsnapshotthrottle <links_per_second>
 ```
 
 ## Description
 
-`nodetool setsnapshotthrottle` sets the rate limit for snapshot hard link creation in MB/s.
+`nodetool setsnapshotthrottle` sets the rate limit for snapshot hard link creation. The value specifies the maximum number of hard links that can be created per second during snapshot operations.
+
+!!! info "Unit Clarification"
+    The throttle is measured in **hard links per second**, not MB/s. Each SSTable component file requires a hard link, so the effective speed depends on file count rather than data size.
 
 ---
 
@@ -28,7 +31,7 @@ nodetool [connection_options] setsnapshotthrottle <throttle_in_mb>
 
 | Argument | Description |
 |----------|-------------|
-| `throttle_in_mb` | Throttle rate in MB/s |
+| `links_per_second` | Maximum hard links per second. Set to 0 to disable throttling (unlimited). |
 
 ---
 
@@ -37,7 +40,22 @@ nodetool [connection_options] setsnapshotthrottle <throttle_in_mb>
 ### Set Throttle
 
 ```bash
+# Allow 100 hard links per second
 nodetool setsnapshotthrottle 100
+```
+
+### Disable Throttling
+
+```bash
+# Set to 0 for unlimited (no throttle)
+nodetool setsnapshotthrottle 0
+```
+
+### Reduce for Lower Impact
+
+```bash
+# Slower snapshot creation with less I/O impact
+nodetool setsnapshotthrottle 50
 ```
 
 ---

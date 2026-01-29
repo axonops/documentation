@@ -15,21 +15,52 @@ Displays the concurrency settings.
 ## Synopsis
 
 ```bash
-nodetool [connection_options] getconcurrency
+nodetool [connection_options] getconcurrency [stage_name ...]
 ```
+
+## Arguments
+
+| Argument | Description |
+|----------|-------------|
+| `stage_name` | Optional. One or more stage names to filter output (e.g., `READ`, `MUTATION`) |
 
 ## Description
 
-`nodetool getconcurrency` shows the current concurrency settings for various operations including reads, writes, and counter writes.
+`nodetool getconcurrency` displays the core and maximum pool sizes for Cassandra's thread stages. These stages handle various internal operations and can be filtered by name.
+
+---
+
+## Output Format
+
+| Field | Description |
+|-------|-------------|
+| `Stage` | Thread stage name |
+| `CorePoolSize` | Minimum number of threads maintained |
+| `MaximumPoolSize` | Maximum threads allowed under load |
 
 ---
 
 ## Examples
 
-### Basic Usage
+### Basic Usage (All Stages)
 
 ```bash
 nodetool getconcurrency
+```
+
+**Sample output:**
+```
+Stage                           CorePoolSize  MaximumPoolSize
+READ                            32            32
+MUTATION                        32            32
+COUNTER_MUTATION                32            32
+...
+```
+
+### Filter by Stage Name
+
+```bash
+nodetool getconcurrency READ MUTATION
 ```
 
 ---

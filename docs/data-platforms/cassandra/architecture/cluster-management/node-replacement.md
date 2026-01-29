@@ -32,7 +32,7 @@ rectangle "Transient Failure\n• Temporary outage\n• Restart recovers\n• Da
 rectangle "Permanent Failure\n• Hardware failure\n• Data loss\n• Node unrecoverable" as permanent #C00000
 
 rectangle "Recovery: Restart\nHints replay automatically" as restart #70AD47
-rectangle "Recovery: Replace\nNew node assumes identity" as replace #5B9BD5
+rectangle "Recovery: Replace\nNew node takes tokens\n(new Host ID)" as replace #5B9BD5
 rectangle "Recovery: Remove\nReduce cluster size" as remove #7F7F7F
 
 failure --> transient
@@ -235,8 +235,8 @@ start
 Host ID known;
 #5B9BD5:Removal Initiated
 From any live node;
-#FFC000:Token Recalculation
-Ranges redistributed;
+#FFC000:Ownership Update
+Node removed from ring;
 #C55A11:Data Streaming
 Between remaining nodes;
 #70AD47:Removal Complete
@@ -336,7 +336,7 @@ During replacement, the new node receives data from surviving replicas:
 | Source Selection | Criteria |
 |------------------|----------|
 | **Prefer local DC** | Minimize cross-datacenter traffic |
-| **Prefer least loaded** | Distribute streaming impact |
+| **Replica availability** | Select from nodes holding required data |
 | **Avoid concurrent streamers** | Prevent resource contention |
 
 ### Post-Replacement Consistency
@@ -362,4 +362,3 @@ The hint window (default: 3 hours) determines whether hinted handoff can cover w
 - **[Scaling Operations](scaling.md)** - Capacity planning after node removal
 - **[Fault Tolerance](../fault-tolerance/index.md)** - Failure scenarios and recovery patterns
 - **[Operations: Cluster Management](../../operations/cluster-management/index.md)** - Step-by-step procedures
-

@@ -89,10 +89,12 @@ process --> after
 
 The tool assigns levels based on:
 
-1. **SSTable size** - Larger SSTables go to higher levels
-2. **Token range coverage** - Non-overlapping requirement per level
-3. **Level size limits** - Each level is ~10x the size of previous
-4. **L0 target** - Small number of overlapping SSTables
+1. **Token ordering** - SSTables are sorted by their last token
+2. **Non-overlapping sets** - Groups SSTables into non-overlapping token ranges
+3. **Expected level count** - Based on approximate `log10(sstable_count)`
+
+!!! note "Algorithm Details"
+    The tool does not compute level sizes based on `sstable_size_in_mb` or `fanout_size`. Instead, it creates non-overlapping sets from the sorted SSTables and assigns levels based on the expected distribution for the total SSTable count.
 
 ---
 
@@ -109,8 +111,7 @@ The tool assigns levels based on:
 
 | Option | Description |
 |--------|-------------|
-| `-o, --output` | Output operations without actually modifying files (dry run) |
-| `--debug` | Enable debug output |
+| `--dry-run` | Output operations without actually modifying files |
 
 ---
 
@@ -133,14 +134,7 @@ sudo systemctl start cassandra
 
 ```bash
 # See what changes would be made without applying them
-sstableofflinerelevel -o my_keyspace my_table
-```
-
-### With Debug Output
-
-```bash
-# Verbose output for troubleshooting
-sstableofflinerelevel --debug my_keyspace my_table
+sstableofflinerelevel --dry-run my_keyspace my_table
 ```
 
 ### Check Before and After
@@ -158,7 +152,7 @@ sstablemetadata /var/lib/cassandra/data/${KEYSPACE}/${TABLE}-*/*-Data.db | \
 
 echo ""
 echo "=== Dry Run ==="
-sstableofflinerelevel -o "$KEYSPACE" "$TABLE"
+sstableofflinerelevel --dry-run "$KEYSPACE" "$TABLE"
 
 echo ""
 read -p "Proceed with releveling? (y/n) " confirm
@@ -271,15 +265,18 @@ Releveling complete. Run compaction after starting Cassandra.
 
 ## Level Assignment Details
 
-### How Levels Are Determined
+### LCS Level Properties (Reference)
 
 | Level | Target Size | SSTables | Non-overlapping |
 |-------|-------------|----------|-----------------|
-| L0 | ~160 MB total | 1-4 | No |
-| L1 | ~10 × L0 | ~10 | Yes |
-| L2 | ~10 × L1 | ~100 | Yes |
-| L3 | ~10 × L2 | ~1000 | Yes |
-| L4+ | ~10 × previous | Varies | Yes |
+| L0 | Up to 4 × `sstable_size_in_mb` | 1-4 | No |
+| L1 | `fanout_size` × L0 | ~10 | Yes |
+| L2 | `fanout_size` × L1 | ~100 | Yes |
+| L3 | `fanout_size` × L2 | ~1000 | Yes |
+| L4+ | `fanout_size` × previous | Varies | Yes |
+
+!!! note "Configuration Dependence"
+    These values depend on LCS settings (`sstable_size_in_mb` default: 160 MiB, `fanout_size` default: 10). The offline relevel tool assigns levels based on token ranges rather than size thresholds.
 
 ### What the Tool Considers
 
@@ -446,7 +443,7 @@ cqlsh -e "SELECT * FROM my_keyspace.my_table LIMIT 10;"
 
 !!! tip "sstableofflinerelevel Guidelines"
 
-    1. **Use dry run first** - Preview changes with `-o` flag
+    1. **Use dry run first** - Preview changes with `--dry-run` flag
     2. **Backup before** - Snapshot critical tables
     3. **Off-peak timing** - Run during maintenance windows
     4. **Verify distribution** - Check levels before and after

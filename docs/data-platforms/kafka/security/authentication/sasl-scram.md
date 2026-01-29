@@ -88,7 +88,7 @@ note over C, B #lightgreen: Authentication Complete
 
 ## Broker Configuration
 
-### Basic Setup
+### Basic Set up
 
 ```properties
 # server.properties

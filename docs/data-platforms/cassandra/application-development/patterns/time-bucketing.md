@@ -51,7 +51,7 @@ When a partition grows this large, operations fail in spectacular ways:
 | Problem | Description | Impact |
 |---------|-------------|--------|
 | **Read Timeouts** | Reading "last hour" requires finding rows in a 15GB partition. Even with efficient indexing, this scans gigabytes of SSTable data. | 30-second query, then timeout |
-| **Memory Exhaustion** | Compaction must load partition into memory. A 15GB partition requires 15GB+ heap during compaction. | OOM with 8GB heap |
+| **Memory Pressure** | Very large partitions increase memory pressure during compaction and queries. | Increased GC, potential OOM with undersized heap |
 | **Repair Failures** | Repair streams entire partitions between nodes. A 15GB partition over a 1Gbps network takes 2+ minutes. | Node appears unresponsive; hints queue up, causing cascading issues |
 | **Hot Spots** | Current time queries always hit the same partition. | One node serves 100% of writes while others idle |
 
@@ -570,8 +570,8 @@ def get_rolling_bucket(timestamp: datetime, num_buckets: int = 24, bucket_hours:
     hours_since_epoch = int(timestamp.timestamp() / 3600)
     return (hours_since_epoch // bucket_hours) % num_buckets
 
-# Data automatically overwrites when bucket cycles
-# No need for TTL or explicit deletes
+# Note: Bucket reuse requires matching clustering keys for overwrites.
+# TTL or explicit deletion is still needed to remove old data within buckets.
 ```
 
 ### Dynamic Bucket Sizing

@@ -258,6 +258,12 @@ The idempotency key can be generated various ways:
 Cassandra's lightweight transactions (LWT) provide atomic check-and-set operations suitable for deduplication:
 
 ```java
+// Prepared statement must include IF NOT EXISTS for LWT behavior
+private final PreparedStatement insertOperation = session.prepare(
+    "INSERT INTO operations (operation_id, started_at, status) " +
+    "VALUES (?, ?, ?) IF NOT EXISTS"
+);
+
 public boolean executeOnce(String operationId, Runnable operation) {
     // Atomic: insert only if not exists
     ResultSet result = session.execute(
@@ -285,16 +291,18 @@ public boolean executeOnce(String operationId, Runnable operation) {
 }
 ```
 
-The `IF NOT EXISTS` clause ensures exactly one execution proceeds. Concurrent attempts receive `wasApplied() == false` and can handle accordingly.
+The `IF NOT EXISTS` clause in the prepared statement is required for LWT behavior. Concurrent attempts receive `wasApplied() == false` and can handle accordingly.
 
 ### LWT Performance Considerations
 
 Lightweight transactions incur overhead compared to regular operations:
 
-| Operation Type | Typical Latency |
-|---------------|-----------------|
+| Operation Type | Latency (illustrative) |
+|---------------|------------------------|
 | Regular write | 1-5ms |
 | LWT write | 10-30ms |
+
+Actual latencies depend on cluster topology, network, and workload.
 
 This overhead is acceptable for critical operations (payments, order creation) but may be prohibitive for high-frequency operations. Alternatives include:
 
@@ -481,6 +489,12 @@ A 7-day window handles most operational scenarios. Longer windows increase stora
 For stronger guarantees, process and mark in a single operation:
 
 ```java
+// Prepared statement with IF NOT EXISTS for LWT deduplication
+private final PreparedStatement insertProcessedMessage = session.prepare(
+    "INSERT INTO processed_messages (consumer_group, topic, message_id, processed_at, payload) " +
+    "VALUES (?, ?, ?, ?, ?) IF NOT EXISTS"
+);
+
 public void processOrderTransactionally(OrderMessage message) {
     // Use LWT to atomically check and record
     ResultSet result = session.execute(

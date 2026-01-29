@@ -14,7 +14,7 @@ axon-server:
     hosts: "axon-server_endpoint" # Your axon-server IP or hostname, e.g. axonops.mycompany.com
     port: 1888 # The default axon-server port is 1888
 
-axon-agent:
+AxonOps agent:
     org: "my-company" # Your organisation name
     # SSL/TLS Settings from AxonOps Agent to AxonOps Server
     tls:

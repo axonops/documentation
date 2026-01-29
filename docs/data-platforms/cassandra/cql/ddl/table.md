@@ -501,9 +501,8 @@ CREATE TABLE events (
 | `gc_grace_seconds` (seconds) | `gc_grace_seconds` (duration) | `'10d'`, `'240h'` |
 | `memtable_flush_period_in_ms` | `memtable_flush_period` (duration) | `'1h'`, `'30m'` |
 
-| Option | 3.x | 4.0+ |
-|--------|-----|------|
-| `read_repair` | `BLOCKING`, `NONE` | `NONE` only (BLOCKING removed) |
+!!! note "Read Repair Changes"
+    In Cassandra 4.0+, `read_repair` only accepts `NONE`. The `BLOCKING` option was removed.
 
 ##### Compaction Strategies
 

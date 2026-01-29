@@ -18,7 +18,7 @@ Recompresses SSTables with current compression settings.
 ## Synopsis
 
 ```bash
-nodetool [connection_options] recompress_sstables [--jobs <jobs>] <keyspace> [tables...]
+nodetool [connection_options] recompress_sstables [options] [keyspace] [tables...]
 ```
 
 ## Description
@@ -31,14 +31,14 @@ nodetool [connection_options] recompress_sstables [--jobs <jobs>] <keyspace> [ta
 
 | Argument | Description |
 |----------|-------------|
-| `keyspace` | Target keyspace |
+| `keyspace` | Target keyspace (optional; if omitted, recompresses all keyspaces) |
 | `tables` | Optional: specific tables |
 
 ## Options
 
 | Option | Description |
 |--------|-------------|
-| `--jobs` | Number of parallel jobs |
+| `-j, --jobs` | Number of parallel jobs |
 
 ---
 

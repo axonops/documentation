@@ -29,6 +29,7 @@ nodetool [connection_options] tpstats [options]
 | Option | Description |
 |--------|-------------|
 | `-F, --format` | Output format (json, yaml) |
+| `-v, --verbose` | Show detailed thread pool sizes (core, max, active) |
 
 ---
 
@@ -264,6 +265,12 @@ nodetool tpstats
 
 ```bash
 nodetool tpstats -F json
+```
+
+### Verbose Output with Thread Pool Sizes
+
+```bash
+nodetool tpstats -v
 ```
 
 ### Monitor Thread Pools Continuously

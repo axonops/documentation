@@ -122,8 +122,10 @@ curl http://localhost:11434/api/tags
 # Check model is available
 ollama list
 
-# Set correct endpoint
-export OLLAMA_HOST=http://localhost:11434
+# Set correct endpoint (both variable names are supported)
+export CQLAI_OLLAMA_HOST=http://localhost:11434
+# or
+export OLLAMA_URL=http://localhost:11434
 ```
 
 ---
@@ -148,8 +150,8 @@ export OLLAMA_HOST=http://localhost:11434
 **Solutions:**
 
 ```bash
-# Increase timeout
-cqlai --request-timeout 60s
+# Increase timeout (value in seconds)
+cqlai --request-timeout 60
 
 # For large result sets, use paging
 cqlai --page-size 100
@@ -169,7 +171,7 @@ SELECT * FROM table LIMIT 100;
 cqlai --page-size 1000
 
 # Export to file instead
-.export csv results.csv SELECT * FROM table;
+.export table results.csv
 ```
 
 ---
@@ -275,18 +277,18 @@ touch test.parquet && rm test.parquet
 **Diagnosis:**
 
 ```bash
-# Check config file location
-ls -la ~/.cqlai/config.yaml
+# Check config file locations
+ls -la ~/.cqlai.json ~/.config/cqlai/config.json ./cqlai.json
 
-# Verify YAML syntax
-cat ~/.cqlai/config.yaml
+# Verify JSON syntax
+cat ~/.config/cqlai/config.json | python3 -m json.tool
 ```
 
 **Solutions:**
 
-1. Ensure config file is valid YAML
+1. Ensure config file is valid JSON
 2. Check file permissions
-3. Use explicit config path: `cqlai --config /path/to/config.yaml`
+3. Use explicit config path: `cqlai --config-file /path/to/config.json`
 
 ### Environment Variables Not Working
 

@@ -80,7 +80,8 @@ Token                  : (invoke with -T/--tokens to see all 256 tokens)
 
 | Field | Description |
 |-------|-------------|
-| Load | Total data size on disk |
+| Load | Total data size on disk (compressed) |
+| Uncompressed load | Total data size on disk before compression |
 | Heap Memory | Used / Maximum JVM heap memory |
 | Off Heap Memory | Memory used outside JVM heap (bloom filters, compression metadata, etc.) |
 
@@ -98,7 +99,19 @@ Token                  : (invoke with -T/--tokens to see all 256 tokens)
 | Key Cache | Partition key location cache |
 | Row Cache | Cached row data |
 | Counter Cache | Counter value cache |
+| Chunk Cache | File chunk cache (when enabled) |
 | Network Cache | Buffer cache for network operations |
+
+### Bootstrap/Decommission State
+
+The following fields appear when a node is bootstrapping or decommissioning:
+
+| Field | Description |
+|-------|-------------|
+| Bootstrap state | Current bootstrap state (e.g., `IN_PROGRESS`, `COMPLETED`) |
+| Bootstrap failed | Indicates if bootstrap failed |
+| Decommissioning | Whether decommission is in progress |
+| Decommission failed | Indicates if decommission failed |
 
 ---
 

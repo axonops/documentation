@@ -14,7 +14,7 @@ CQLAI is distributed as a single static binary with no dependencies. Choose the 
 
 ### Using Go
 
-With Go 1.24+ installed:
+With Go 1.21+ installed:
 
 ```bash
 go install github.com/axonops/cqlai/cmd/cqlai@latest
@@ -145,7 +145,7 @@ docker run -it --rm cqlai --host your-cassandra-host
 
 ### Prerequisites
 
-- Go 1.24 or later
+- Go 1.21 or later
 - Git
 
 ### Build Steps

@@ -51,6 +51,7 @@ This is one of the most important commands for capacity planning and performance
 | `-s, --sort` | Sort by column (read, write, space, etc.) |
 | `-t, --top` | Show only top N tables |
 | `-i, --ignore` | Ignore specific keyspaces/tables |
+| `-l, --sstable-location-check` | Verify SSTable locations match expected data directories |
 
 ---
 

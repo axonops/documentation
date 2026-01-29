@@ -18,7 +18,7 @@ The following conditions must be met before starting a rolling restart:
 
 | Requirement | Verification |
 |-------------|--------------|
-| All nodes must show `UN` status | `nodetool status` |
+| All nodes should show `UN` status | `nodetool status` (proceed with caution if some nodes are down) |
 | No topology changes in progress | `nodetool netstats` |
 | No active repairs | `nodetool netstats` |
 | Schema agreement | `nodetool describecluster` |

@@ -83,6 +83,7 @@ This installs the following packages:
 - **mkdocs** - Static site generator
 - **mkdocs-material** - Material Design theme
 - **mkdocs-material-extensions** - Additional Material theme extensions
+- **mkdocs-exclude-search** - Exclude pages from MkDocs search index
 - **mkdocs-glightbox** - Image lightbox plugin
 - **mkdocs-video** - Video embedding plugin
 - **pymdown-extensions** - Markdown extensions (superfences, emoji, etc.)

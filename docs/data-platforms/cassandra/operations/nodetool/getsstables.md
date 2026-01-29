@@ -36,7 +36,8 @@ nodetool [connection_options] getsstables [--hex-format] <keyspace> <table> <key
 
 | Option | Description |
 |--------|-------------|
-| `--hex-format` | Interpret key as hex-encoded bytes |
+| `-hf, --hex-format` | Interpret key as hex-encoded bytes |
+| `-l, --show-levels` | Include SSTable level information (for LCS) |
 
 ---
 

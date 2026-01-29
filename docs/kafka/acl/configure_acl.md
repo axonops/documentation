@@ -1,54 +1,20 @@
 ---
-title: "Topic Access Control List (ACL)."
-description: "Configure Kafka ACLs with AxonOps. Manage access control list settings."
+title: "Topic Access Control List (ACL)"
+description: "Configure Kafka ACLs with AxonOps. Edit existing access control entries."
 meta:
   - name: keywords
     content: "Kafka ACL configure, access control, ACL settings"
 ---
 
-# Topic Access Control List (ACL).
+# Topic Access Control List (ACL)
 
-## Create an Access Control List (ACL).
+## Edit an Access Control List (ACL)
 
-### Click ACLs in the Left Navigation.
+1. Go to `ACLS` in the left navigation.
+2. Use the search field to find the ACL you want to modify.
+3. Click the ACL row to open the edit form.
+4. Update the required fields (resource, principal, host, or operation).
+5. Save your changes.
 
-<img src="/kafka/acl/acl_click.png" width="700">
-
-### Click Create ACL Button.
-
-<img src="/kafka/acl/acl_create_button.png" width="700">
-
-### On the ACL Create screen complete the following fields:
-
-<img src="/kafka/acl/acl_create.png">
-
-### Select the ACL Resource Type.
-
-<img src="/kafka/acl/acl_resource_type.png">
-
-### Select the Topic to apply the ACL too.
-
-<img src="/kafka/acl/acl_topic.png">
-
-### Edit the Host that will have access to the Topic.
-
-<img src="/kafka/acl/acl_host.png" width="700">
-
-### Select Principal User or Group and Principal Value
-
-The user or application (e.g., User:alice, User:app1, Group:developers)
-
-<img src="/kafka/acl/acl_principal.png">
-
-<img src="/kafka/acl/acl_principal_value.png">
-
-### Select the Operation of the ACL.
-
-If you toggle the Operation switch it will flip between 
-
-#### Allow 
-
-<img src="/kafka/acl/acl_allow.png" width="700">
-
-#### Deny
-<img src="/kafka/acl/acl_deny.png" width="700">
+!!! note
+    Editing an ACL takes effect immediately and may impact client access.

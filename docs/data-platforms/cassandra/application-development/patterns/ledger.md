@@ -16,7 +16,7 @@ Financial systems require a fundamentally different approach to data management 
 
 Financial data differs from general application data in ways that influence every design decision:
 
-**Immutability as requirement, not preference**: In most applications, immutability is an architectural choice offering operational benefits. In financial systems, it is a regulatory and legal requirement. A transaction record, once written, cannot be modified; it can only be corrected through additional entries.
+**Immutability as requirement, not preference**: In most applications, immutability is an architectural choice offering operational benefits. In many regulated financial systems, it is a regulatory and legal requirement. A transaction record, once written, cannot be modified; it can only be corrected through additional entries. Specific requirements vary by jurisdiction and regulatory framework.
 
 **Provable correctness**: A user's account balance is not merely a number stored in a database; it is a claim that must be verifiable by summing all transactions affecting that account. The balance and the transaction history must agree, always.
 
@@ -209,16 +209,19 @@ group Atomic (all-or-nothing)
 end
 
 note over svc, txn
-Logged batch ensures atomicity
-across partitions. If any write
-fails, all are rolled back.
+Logged batch ensures all writes
+eventually apply (no partial
+application on coordinator failure).
 end note
 @enduml
 ```
 
 **Approach 1: Logged Batch (Small Transactions)**
 
-For transactions with few entries (2-4 accounts), logged batches provide atomicity:
+For transactions with few entries (2-4 accounts), logged batches ensure all mutations eventually apply:
+
+!!! note "Logged Batch Semantics"
+    Logged batches do not provide rollback semantics. They guarantee that all writes in the batch eventually complete (via batchlog replay if the coordinator fails), but partial application may be observable during execution. This is sufficient for ledger patterns where all entries must eventually be recorded, but applications should not assume traditional transaction isolation.
 
 ```java
 public void executeTransfer(UUID fromAccount, UUID toAccount,

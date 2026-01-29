@@ -120,7 +120,6 @@ nodetool pausehandoff
 
 # 3. Investigate
 nodetool listpendinghints
-nodetool tablestats system.hints
 
 # 4. Resume when resolved
 nodetool resumehandoff
@@ -215,11 +214,11 @@ watch -n 2 'nodetool tpstats | grep -i hint'
 watch -n 60 'nodetool listpendinghints'
 ```
 
-### Monitor Hints Table Size
+### Monitor Hints Directory Size
 
 ```bash
-# Track disk usage by hints
-watch -n 60 'nodetool tablestats system.hints | grep "Space used"'
+# Track disk usage by hints (hints stored as files)
+watch -n 60 'du -sh /var/lib/cassandra/hints/'
 ```
 
 ### Check Hint Age
@@ -234,10 +233,10 @@ echo "=== Hint Status (Delivery Paused) ==="
 echo "Pending hints by target:"
 nodetool listpendinghints
 
-# Hints table size
+# Hints directory size
 echo ""
-echo "Hints table size:"
-nodetool tablestats system.hints 2>/dev/null | grep -E "Space used|SSTable count"
+echo "Hints directory size:"
+du -sh /var/lib/cassandra/hints/
 
 # Warn about expiration
 echo ""
@@ -315,14 +314,14 @@ fi
 #!/bin/bash
 # pause_handoff_cluster.sh
 
-echo "Pausing hint delivery cluster-wide..."# Get list of node IPs from local nodetool status
+echo "Pausing hint delivery cluster-wide..."
 
-
+# Get list of node IPs from local nodetool status
 nodes=$(nodetool status | grep "^UN" | awk '{print $2}')
 
 for node in $nodes; do
     echo -n "$node: "
-    ssh "$node" "nodetool pausehandoff 2>/dev/null && echo "paused" || echo "FAILED""
+    ssh "$node" 'nodetool pausehandoff 2>/dev/null && echo "paused" || echo "FAILED"'
 done
 
 echo ""
@@ -342,14 +341,14 @@ echo "REMEMBER: Resume with 'nodetool resumehandoff' on all nodes"
 #!/bin/bash
 # resume_handoff_cluster.sh
 
-echo "Resuming hint delivery cluster-wide..."# Get list of node IPs from local nodetool status
+echo "Resuming hint delivery cluster-wide..."
 
-
+# Get list of node IPs from local nodetool status
 nodes=$(nodetool status | grep "^UN" | awk '{print $2}')
 
 for node in $nodes; do
     echo -n "$node: "
-    ssh "$node" "nodetool resumehandoff 2>/dev/null && echo "resumed" || echo "FAILED""
+    ssh "$node" 'nodetool resumehandoff 2>/dev/null && echo "resumed" || echo "FAILED"'
 done
 
 echo ""
@@ -389,8 +388,8 @@ tail -100 /var/log/cassandra/system.log | grep -i hint
 # Check pending hints
 nodetool listpendinghints
 
-# Check hints table size
-nodetool tablestats system.hints
+# Check hints directory size
+du -sh /var/lib/cassandra/hints/
 
 # If too many hints, consider:
 # 1. Resume delivery to reduce backlog

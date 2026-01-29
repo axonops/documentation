@@ -22,13 +22,13 @@ To create users please refer to the Elasticsearch docs [here](https://www.elasti
 *AxonOps Server configuration file location :* `/etc/axonops/axon-server.yml`
 
 ``` yaml hl_lines="6 17 18"
-host: 0.0.0.0  # axon-server listening address (used by axon-agents for connections) (env variable: AXONSERVER_HOST)
+host: 0.0.0.0  # axon-server listening address (used by AxonOps agents for connections) (env variable: AXONSERVER_HOST)
 agents_port: 1888 # axon-server listening port for agent connections 
 
 api_host: 127.0.0.1 # axon-server listening address (used by axon-dash for connections)
 api_port: 8080 # axon-server HTTP API listening port (used by axon-dash) (AXONSERVER_PORT)
 
-elastic_hosts: # Elasticsearch endpoint (env variable:ELASTIC_HOSTS, comma separated list)
+elastic_hosts: # Elasticsearch endpoint (env variable:ELASTIC_HOSTS, comma separated list)
   - http://localhost:9200
 # SSL/TLS config for Elasticsearch
 # elastic_hosts:
@@ -39,7 +39,7 @@ elastic_hosts: # Elasticsearch endpoint (env variable:ELASTIC_HOSTS, comma sepa
 
 # Used by Axon-Server to auto discover Elasticsearch nodes in a cluster.
 # Allows more nodes to be added to Elasticsearch for Metrics storage without having to restart Axon-Server and update elastic_hosts with all the ELK node values.
-# elastic_discover_nodes: true # Default = true
+# elastic_discover_nodes: true # Default = true
 
 #integrations_proxy: # proxy endpoint for integrations. (INTEGRATIONS_PROXY)
 
@@ -155,7 +155,6 @@ This will start the `axon-server` process as the `axonops` user, which was creat
 ## Next - Installing axon-dash
 
 Now **axon-server** is installed, you can start installing the GUI for it: [axon-dash](../axon-dash/install.md)
-
 
 
 

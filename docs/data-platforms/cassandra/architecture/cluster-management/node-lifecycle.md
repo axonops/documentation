@@ -118,7 +118,7 @@ Accept client traffic;
 # cassandra.yaml - Bootstrap settings
 
 # Enable/disable automatic bootstrap
-# Set to false for first node in cluster or when using replace_address
+# Set to false only for first node in cluster
 auto_bootstrap: true
 
 # Number of virtual nodes per physical node
@@ -290,7 +290,7 @@ nodetool decommission
 
 # This command:
 # - Blocks until complete
-# - Cannot be cancelled once started
+# - Can be cancelled with nodetool abortdecommission
 # - Requires RF nodes remain after removal
 ```
 
@@ -393,10 +393,8 @@ start
 (crash, network, etc.);
 #FFC000:Phi Accrual Detection
 φ exceeds threshold;
-#5B9BD5:Shadow Round
-Verify with other nodes;
 #C00000:Mark as DOWN
-Local determination;
+Local failure detector determination;
 
 fork
     #5B9BD5:Store Hints

@@ -93,19 +93,30 @@ cdc_raw_directory: /var/lib/cassandra/cdc_raw
 
 # Maximum space for CDC logs before writes are rejected
 # Default: min(4096 MiB, 1/8 of volume space)
-cdc_total_space_in_mb: 4096
+# Cassandra 4.1+: cdc_total_space (with size unit, e.g., 4096MiB)
+# Cassandra 4.0:  cdc_total_space_in_mb (integer MB)
+cdc_total_space: 4096MiB
 
 # How often to check CDC directory space usage
 # Default: 250ms
-cdc_free_space_check_interval_ms: 250
+# Cassandra 4.1+: cdc_free_space_check_interval (with duration, e.g., 250ms)
+# Cassandra 4.0:  cdc_free_space_check_interval_ms (integer milliseconds)
+cdc_free_space_check_interval: 250ms
 ```
+
+**CDC Configuration by Version:**
+
+| Parameter | Cassandra 4.0 | Cassandra 4.1+ | Default |
+|-----------|---------------|----------------|---------|
+| CDC space limit | `cdc_total_space_in_mb` (integer) | `cdc_total_space` (e.g., `4096MiB`) | min(4096 MiB, 1/8 volume) |
+| Space check interval | `cdc_free_space_check_interval_ms` (integer) | `cdc_free_space_check_interval` (e.g., `250ms`) | 250ms |
 
 | Parameter | Default | Description |
 |-----------|---------|-------------|
 | `cdc_enabled` | `false` | Enables CDC node-wide. When `true`, writes to CDC-enabled tables are rejected if `cdc_raw_directory` exceeds space limit |
 | `cdc_raw_directory` | `$CASSANDRA_HOME/data/cdc_raw` | Destination for commit log hard links |
-| `cdc_total_space_in_mb` | min(4096, 1/8 volume) | Space threshold before write rejection |
-| `cdc_free_space_check_interval_ms` | 250 | Frequency of space usage recalculation |
+| `cdc_total_space` | min(4096MiB, 1/8 volume) | Space threshold before write rejection |
+| `cdc_free_space_check_interval` | 250ms | Frequency of space usage recalculation |
 
 ### Table Configuration (CQL)
 
@@ -136,9 +147,12 @@ ALTER TABLE events WITH cdc = false;
 
 Files in `cdc_raw_directory` are hard links to commit log segments. They share the same inode as the original commit log file, meaning:
 
-- No additional disk space is consumed (until the original segment is recycled)
+- Hard links initially consume no additional disk space for the data itself
 - Reading from CDC directory reads the same data as the commit log
 - Modifications to the original segment are visible through the hard link
+
+!!! note "Disk Space Impact"
+    While hard links share data with the original commit log segment, they prevent segment reuse. Cassandra cannot recycle commit log segments that have CDC hard links until consumers delete the hard links. This effectively increases disk utilization over time if consumers fall behind—space is held until both the original segment is flushed and the CDC hard link is deleted.
 
 ```
 cdc_raw_directory/
@@ -337,7 +351,7 @@ CDC has minimal performance impact on normal operations:
 |-----------|--------|
 | Write latency | Negligible (hard link creation is metadata-only) |
 | Commit log fsync | Slight increase (index file creation) |
-| Disk space | None (hard links share inodes) until consumer processes |
+| Disk space | Hard links share inodes but prevent segment reuse until consumers delete files |
 | CPU | None on Cassandra side; consumers bear parsing cost |
 
 ### Version Compatibility

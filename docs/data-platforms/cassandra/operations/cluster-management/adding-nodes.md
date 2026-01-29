@@ -20,7 +20,7 @@ The following requirements must be met before adding a node:
 
 | Requirement | Verification | Rationale |
 |-------------|--------------|-----------|
-| All nodes must show `UN` status | `nodetool status` | Bootstrap from degraded cluster risks data loss |
+| All nodes should show `UN` status | `nodetool status` | Bootstrap from degraded cluster increases risk; proceed with caution if necessary |
 | No topology changes in progress | `nodetool netstats` | Only one topology change may occur at a time |
 | No active repairs | `nodetool netstats` | Concurrent operations cause unpredictable behavior |
 | Schema agreement | `nodetool describecluster` | Schema disagreement causes bootstrap failures |

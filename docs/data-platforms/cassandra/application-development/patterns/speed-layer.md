@@ -102,8 +102,7 @@ cass --> app : Transaction list
 note over mf, cass
 Latency: typically 100ms-2s end-to-end
 Customer sees updated balance within seconds of transaction
-Mainframe handles ~500 TPS for transactions
-Cassandra handles ~500,000 TPS for balance checks
+(TPS figures are illustrative and environment-dependent)
 end note
 @enduml
 ```
@@ -316,7 +315,7 @@ CREATE TABLE accounts_by_customer (
 **Design rationale**:
 
 - **Static columns for balance**: Current balance stored once per partition, returned with every transaction query—single read gets balance + transactions
-- **TTL on transactions only**: Static columns (balance) are not affected by row TTL; only transaction rows expire
+- **TTL considerations**: Table-level `default_time_to_live` applies to all columns including static columns; static columns require periodic writes to remain live, or explicit TTL management
 - **Date-clustered transactions**: Partition per account, clustered by date DESC for recent-first queries
 - **Denormalized balance in accounts_by_customer**: Dashboard view gets all accounts in one query
 
@@ -443,7 +442,7 @@ cache --> app : Balance (< 1ms)
 == Cache Miss ==
 app -> cache : getBalance(accountId)
 cache -> cache : miss
-cache -> cass : SELECT * FROM account_balances\nWHERE account_id = ?
+cache -> cass : SELECT * FROM account_transactions\nWHERE account_id = ? LIMIT 1
 cass --> cache : Row
 cache -> cache : populate cache
 cache --> app : Balance (~2-5ms)
@@ -502,7 +501,7 @@ core -> kafka : TransactionEvent\n{accountId, newBalance}
 kafka -> cdc : Consume event
 
 == Update Speed Layer ==
-cdc -> cass : UPDATE account_balances\nSET current_balance = ?
+cdc -> cass : INSERT INTO account_transactions\n(update static balance columns)
 cdc -> cache : invalidate(accountId)
 cache -> cache : remove entry
 

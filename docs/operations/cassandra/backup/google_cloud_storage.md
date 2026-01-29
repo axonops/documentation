@@ -6,4 +6,4 @@ meta:
     content: "Google Cloud Storage, GCS, Cassandra backup, AxonOps"
 ---
 
-# Google Cloud Storage
+# Google Cloud Storage

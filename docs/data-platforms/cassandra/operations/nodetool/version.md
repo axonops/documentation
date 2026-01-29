@@ -106,7 +106,8 @@ Document current versions before upgrading:
 
 echo "=== Pre-Upgrade Versions ==="
 for node in $(nodetool status | grep -E "^UN|^DN" | awk '{print $2}'); do
-    echo "$node: $(ssh "$node" "nodetool version" | awk '{print $2}')"
+    version=$(ssh "$node" 'nodetool version' | awk '{print $2}')
+    echo "$node: $version"
 done > pre_upgrade_versions.txt
 ```
 
@@ -121,7 +122,7 @@ Confirm all nodes upgraded successfully:
 echo "=== Post-Upgrade Verification ==="
 expected="4.1.4"
 for node in $(nodetool status | grep -E "^UN|^DN" | awk '{print $2}'); do
-    actual=$(ssh "$node" "nodetool version" | awk '{print $2}')
+    actual=$(ssh "$node" 'nodetool version' | awk '{print $2}')
     if [ "$actual" = "$expected" ]; then
         echo "$node: $actual ✓"
     else
@@ -140,7 +141,7 @@ Identify nodes running different versions:
 
 # Collect all versions via SSH
 nodetool status | grep -E "^UN|^DN" | awk '{print $2}' | while read node; do
-    ssh "$node" "nodetool version"
+    ssh "$node" 'nodetool version'
 done | sort | uniq -c
 ```
 
@@ -158,10 +159,10 @@ Before connecting tools or drivers:
 version=$(nodetool version | awk '{print $2}')
 major=$(echo $version | cut -d. -f1)
 
-if [ "$major" -ge 4 ]; then
-    echo "Cassandra 4.x features available"
+if [ "$major" -ge 5 ]; then
+    echo "Cassandra 5.x features available"
 else
-    echo "Running Cassandra 3.x or earlier"
+    echo "Running Cassandra 4.x"
 fi
 ```
 
@@ -248,7 +249,7 @@ mismatch=0
 unreachable=0
 
 for node in $nodes; do
-    actual=$(ssh "$node" "nodetool version" 2>/dev/null | awk '{print $2}')
+    actual=$(ssh "$node" 'nodetool version' 2>/dev/null | awk '{print $2}')
 
     if [ -z "$actual" ]; then
         echo "$node: UNREACHABLE"

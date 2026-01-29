@@ -726,7 +726,7 @@ The digital twin pattern provides a cloud-side representation of physical device
 5. **Handles offline scenarios** with conflict resolution
 6. **Enables queries** across device fleet state
 
-Cassandra's characteristics (high write throughput, tunable consistency, linear scalability) make it well-suited for digital twin storage at IoT scale. The pattern decouples applications from device connectivity, enabling robust systems that function correctly regardless of network conditions.
+Cassandra's characteristics (high write throughput, tunable consistency, linear scalability) make it well-suited for digital twin storage at IoT scale, though operational constraints apply. Partition sizes should remain bounded (typically under 100MB) by using time-bucketing for historical data, and high-frequency updates to the same partition may require careful capacity planning. The pattern decouples applications from device connectivity, enabling robust systems that function correctly regardless of network conditions.
 
 ---
 

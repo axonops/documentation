@@ -1,22 +1,21 @@
 ---
-title: "Setup Service Checks"
+title: "Set up Service Checks"
 description: "Set up service checks in AxonOps. Monitor service availability and health."
 meta:
   - name: keywords
     content: "service checks, health monitoring, availability checks, AxonOps"
 ---
 
-# Setup Service Checks
+# Set up Service Checks
 
 
 
 ###  Add Service Checks
 
-On the Axonops application menu, click `Service Checks` and select `Setup` tab.
+On the AxonOps application menu, click `Service Checks` and select `Setup` tab.
 
-!!! infomy 
 
-    [![servicecheckssetup](../img/servicecheckssetup.png)](../img/servicecheckssetup.png)
+[![servicecheckssetup](../img/servicecheckssetup.png)](../img/servicecheckssetup.png)
 
 
 
@@ -53,10 +52,9 @@ Below there few examples `copy` and `Paste` inside. and click `save` <span class
 
 Example:
 
-!!! infomy
 
-    
-    [![servicecheckseditor](../img/servicecheckseditor.png)](../img/servicecheckseditor.png)
+
+[![servicecheckseditor](../img/servicecheckseditor.png)](../img/servicecheckseditor.png)
 
 
 ####  Delete Services
@@ -75,8 +73,6 @@ To Delete a service `copy` and `Paste` inside. and `click` save <span class="but
 
 Example:
 
-!!! infomy
 
-    
-    [![deleteservices](../img/deleteservices.png)](../img/deleteservices.png)
 
+[![deleteservices](../img/deleteservices.png)](../img/deleteservices.png)

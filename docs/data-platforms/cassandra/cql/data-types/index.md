@@ -153,10 +153,114 @@ VALUES (uuid(), 23.5, 3.141592653589793, 1234567.89);
 ```
 
 **Best Practices**:
+
 - Use `INT`/`BIGINT` for counters and IDs
 - Use `DECIMAL` for financial data (exact precision)
 - Use `DOUBLE` for scientific calculations
 - Avoid `FLOAT` unless space is critical
+
+#### IEEE 754 Special Values
+
+`FLOAT` and `DOUBLE` columns accept the IEEE 754 special values `NaN` (Not a Number), `Infinity`, and `-Infinity`. These values MAY be used in regular columns, partition keys, and clustering columns.
+
+##### Syntax
+
+Special values are specified as **unquoted, case-insensitive keywords** in CQL:
+
+```sql
+-- Insert special values (case-insensitive)
+INSERT INTO measurements (id, temperature, precise_value)
+VALUES (uuid(), NaN, Infinity);
+
+INSERT INTO measurements (id, temperature, precise_value)
+VALUES (uuid(), -infinity, nan);
+
+-- Query using special values
+SELECT * FROM measurements WHERE temperature = NaN ALLOW FILTERING;
+```
+
+When using JSON format, special values MUST be specified as **quoted strings**:
+
+```sql
+INSERT INTO measurements JSON '{"id": "550e8400-e29b-41d4-a716-446655440000", "temperature": "NaN", "precise_value": "Infinity"}';
+```
+
+##### Special Values in Primary Keys
+
+IEEE 754 special values MAY be used in partition keys and clustering columns:
+
+```sql
+-- Float as partition key
+CREATE TABLE sensor_readings (
+    sensor_value FLOAT PRIMARY KEY,
+    description TEXT
+);
+
+INSERT INTO sensor_readings (sensor_value, description) VALUES (NaN, 'Invalid reading');
+INSERT INTO sensor_readings (sensor_value, description) VALUES (Infinity, 'Overflow');
+
+-- Float as clustering column
+CREATE TABLE timeseries (
+    sensor_id INT,
+    reading FLOAT,
+    data TEXT,
+    PRIMARY KEY ((sensor_id), reading)
+);
+
+INSERT INTO timeseries (sensor_id, reading, data) VALUES (1, NaN, 'error');
+INSERT INTO timeseries (sensor_id, reading, data) VALUES (1, Infinity, 'max');
+INSERT INTO timeseries (sensor_id, reading, data) VALUES (1, -Infinity, 'min');
+```
+
+##### Sort Order for Clustering Columns
+
+When used as clustering columns, IEEE 754 special values sort in a defined order:
+
+```
+-Infinity < -0 < 0 < normal positive values < Infinity < NaN
+```
+
+This means:
+
+- `-Infinity` sorts before all other values
+- `NaN` sorts after all other values (including `Infinity`)
+- `-0` and `0` are distinct values with `-0` sorting before `0`
+
+```sql
+-- Example: range query behavior
+SELECT * FROM timeseries WHERE sensor_id = 1 AND reading > 0;
+-- Returns: normal positives, Infinity, AND NaN
+
+SELECT * FROM timeseries WHERE sensor_id = 1 AND reading >= Infinity;
+-- Returns: Infinity AND NaN
+```
+
+##### Comparison Semantics
+
+Cassandra's handling of IEEE 754 special values differs from standard IEEE 754 semantics:
+
+| Comparison | IEEE 754 Standard | Cassandra CQL |
+|------------|-------------------|---------------|
+| `NaN = NaN` | `false` | `true` |
+| `-0 = 0` | `true` | `false` |
+
+- **NaN equality**: In CQL, `NaN = NaN` evaluates to `true`, allowing queries like `WHERE col = NaN` to match rows containing `NaN`. This differs from the IEEE 754 standard where `NaN` is not equal to itself.
+- **Negative zero**: Cassandra treats `-0` and `0` as distinct values. Rows inserted with `-0` will not match queries for `0` and vice versa.
+
+!!! warning "JSON Output Converts Special Values to Null"
+    When using `SELECT JSON` or the `toJson()` function, `NaN`, `Infinity`, and `-Infinity` values are output as `null`:
+
+    ```sql
+    INSERT INTO measurements (id, temperature) VALUES (uuid(), NaN);
+
+    SELECT JSON * FROM measurements WHERE id = ?;
+    -- Returns: {"id": "...", "temperature": null}
+
+    SELECT toJson(temperature) FROM measurements WHERE id = ?;
+    -- Returns: null
+    ```
+
+    The actual values are preserved in storage and returned correctly by non-JSON queries. This behavior occurs because JSON (RFC 8259) does not define representations for IEEE 754 special values.
 
 ---
 

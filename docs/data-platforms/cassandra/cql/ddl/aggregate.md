@@ -104,7 +104,7 @@ user_defined_function_fail_timeout: 10000ms
 | Execution location | Coordinator node only |
 | State function calls | Once per row in result set |
 | Final function calls | Once after all rows processed |
-| Initial state | INITCOND value or type default if null |
+| Initial state | INITCOND value, or NULL if INITCOND not specified |
 | Null row handling | Controlled by underlying state function's null handling |
 
 ### Aggregation Order Contract
@@ -112,8 +112,10 @@ user_defined_function_fail_timeout: 10000ms
 | Query | Row Processing Order |
 |-------|---------------------|
 | Without ORDER BY | Undefined (implementation-dependent) |
-| With ORDER BY | Specified order |
-| Multiple partitions | Undefined between partitions |
+| With ORDER BY (single partition) | Specified order within that partition |
+| Multiple partitions | Undefined between partitions; ORDER BY only applies within each partition |
+
+*Note: ORDER BY in CQL applies within a partition, not globally. When querying multiple partitions, there is no guaranteed global processing order even with ORDER BY.*
 
 ### Failure Semantics
 

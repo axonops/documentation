@@ -38,7 +38,7 @@ nodetool [connection_options] garbagecollect [options] [--] [keyspace [table ...
 | Option | Description |
 |--------|-------------|
 | `-g, --granularity` | ROW or CELL level granularity |
-| `-j, --jobs <jobs>` | Number of concurrent jobs (default: 2) |
+| `-j, --jobs <jobs>` | Number of concurrent jobs (default: 1, use 0 for all available compaction threads) |
 
 ---
 

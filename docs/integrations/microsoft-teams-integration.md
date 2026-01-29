@@ -1,30 +1,30 @@
 ---
-title: "Setup Microsoft Teams Integration"
+title: "Set up Microsoft Teams Integration"
 description: "Configure Microsoft Teams notifications in AxonOps. Send alerts to Teams channels."
 meta:
   - name: keywords
     content: "Microsoft Teams, Teams integration, AxonOps alerts, chat notifications"
 ---
 
-# Setup Microsoft Teams Integration
+# Set up Microsoft Teams Integration
 
 ## Create Microsoft Teams Webhook
 
 On the Microsoft Teams interface, go to `Connectors`.
 
-![](imgs/teams-1.png)
+![teams-1](imgs/teams-1.png)
 
 `Configure` the `Incoming Webhook` connector.
 
-![](imgs/teams-2.png)
+![teams-2](imgs/teams-2.png)
 
 Provide a name and select `Create`.
 
-![](imgs/teams-3.png)
+![teams-3](imgs/teams-3.png)
 
-Copy the url provided to the clipboard.
+Copy the URL provided to the clipboard.
 
-![](imgs/teams-4.png)
+![teams-4](imgs/teams-4.png)
 
 ## Create the Microsoft Teams Integration on axon-server
 
@@ -32,8 +32,8 @@ On the AxonOps application menu, select `Settings -> Integrations`.
 
 Click on the `Microsoft Teams` area.
 
-![](imgs/integrations.png)
+![integrations](imgs/integrations.png)
 
-Enter a `name`, copy the url in the `Webhook URL` field, and select `Create`.
+Enter a `name`, paste the URL in the `Webhook URL` field, and select `Create`.
 
-![](imgs/teams-6.png)
+![teams-6](imgs/teams-6.png)

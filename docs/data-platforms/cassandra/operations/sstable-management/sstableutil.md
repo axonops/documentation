@@ -22,7 +22,7 @@ sstableutil [options] <keyspace> <table>
 
 ## Description
 
-`sstableutil` provides a comprehensive listing of all SSTable files associated with a table. It identifies not only active SSTables but also temporary files from in-progress operations and obsolete files awaiting cleanup.
+`sstableutil` provides a listing of SSTable files associated with a table, including active (final) SSTables and temporary files from in-progress operations.
 
 This tool is useful for:
 
@@ -49,11 +49,15 @@ This tool is useful for:
 
 | Option | Description |
 |--------|-------------|
-| `-c, --cleanup` | Only list obsolete files (cleanup candidates) |
+| `-c, --cleanup` | **Perform cleanup** - removes unfinished transaction leftovers (destructive) |
 | `-d, --debug` | Enable debug output |
 | `-o, --oplog` | Include transaction log files |
-| `-s, --snapshot <name>` | List SSTables in a specific snapshot |
 | `-t, --type <type>` | Filter by SSTable type: `tmp`, `final`, `all` |
+| `-v, --verbose` | Enable verbose output |
+| `-h, --help` | Display help information |
+
+!!! danger "Cleanup is Destructive"
+    The `--cleanup` option does not just list files—it actively removes unfinished transaction leftovers by calling `LifecycleTransaction.removeUnfinishedLeftovers()`. Use with caution and only when Cassandra is stopped.
 
 ---
 
@@ -80,18 +84,12 @@ sstableutil -t final my_keyspace my_table
 sstableutil -t tmp my_keyspace my_table
 ```
 
-### Find Obsolete Files
+### Perform Cleanup
 
 ```bash
-# List files that should be cleaned up
+# Remove unfinished transaction leftovers (DESTRUCTIVE)
+# Only run when Cassandra is stopped
 sstableutil --cleanup my_keyspace my_table
-```
-
-### List Snapshot SSTables
-
-```bash
-# List SSTables in a specific snapshot
-sstableutil --snapshot my_snapshot my_keyspace my_table
 ```
 
 ### Include Transaction Logs
@@ -228,47 +226,6 @@ echo "Files not tracked by Cassandra:"
 comm -13 <(echo "$tracked") <(echo "$all_files")
 ```
 
-### Cleanup Verification
-
-```bash
-#!/bin/bash
-# verify_cleanup.sh - Check for files needing cleanup
-
-KEYSPACE="$1"
-TABLE="$2"
-
-echo "Checking for obsolete files in ${KEYSPACE}.${TABLE}..."
-
-obsolete=$(sstableutil --cleanup "$KEYSPACE" "$TABLE")
-
-if [ -z "$obsolete" ]; then
-    echo "No obsolete files found"
-else
-    echo "Obsolete files found:"
-    echo "$obsolete"
-    echo ""
-    echo "Run 'nodetool cleanup' or wait for automatic cleanup"
-fi
-```
-
-### Snapshot Verification
-
-```bash
-#!/bin/bash
-# verify_snapshot.sh - Verify snapshot contents
-
-KEYSPACE="$1"
-TABLE="$2"
-SNAPSHOT="$3"
-
-echo "SSTables in snapshot '$SNAPSHOT' for ${KEYSPACE}.${TABLE}:"
-
-sstableutil --snapshot "$SNAPSHOT" "$KEYSPACE" "$TABLE" | grep "Data.db$"
-
-count=$(sstableutil --snapshot "$SNAPSHOT" "$KEYSPACE" "$TABLE" | grep -c "Data.db$")
-echo ""
-echo "Total SSTables in snapshot: $count"
-```
 
 ### Pre-Tool Verification
 
@@ -336,18 +293,16 @@ Temporary files may indicate:
 - Active streaming
 - Incomplete operation (if Cassandra crashed)
 
-### Obsolete Files
+### Cleanup Mode
 
-Files marked for deletion but not yet removed:
+The `--cleanup` option removes unfinished transaction leftovers:
 
 ```bash
+# Performs cleanup (destructive) - only when Cassandra is stopped
 sstableutil --cleanup my_keyspace my_table
 ```
 
-Obsolete files are cleaned up:
-- Automatically after compaction
-- When `nodetool cleanup` is run
-- After repair operations
+This is useful after a crash to clean up incomplete operations.
 
 ---
 

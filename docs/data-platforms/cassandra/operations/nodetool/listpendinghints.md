@@ -131,16 +131,15 @@ echo "Total pending hints: $total_hints"
 #!/bin/bash
 # cluster_pending_hints.sh
 
-echo "=== Cluster Pending Hints ==="# Get list of node IPs from local nodetool status
+echo "=== Cluster Pending Hints ==="
 
-
+# Get list of node IPs from local nodetool status
 nodes=$(nodetool status | grep "^UN" | awk '{print $2}')
 
 for node in $nodes; do
     echo ""
     echo "=== Hints on $node ==="
-    ssh "$node" "nodetool listpendinghints 2>/dev/null | tail -n +2 | \"
-        awk '{sum+=$2} END {print "Total:", sum}'
+    ssh "$node" 'nodetool listpendinghints 2>/dev/null | tail -n +2 | awk "{sum+=\$2} END {print \"Total:\", sum}"'
 done
 ```
 
@@ -159,11 +158,19 @@ done
 
 ### Hint Window
 
-Hints are only stored for nodes that have been down less than the hint window:
+Hints are only stored for nodes that have been down less than the hint window. The cassandra.yaml parameter name varies by version:
+
+| Cassandra Version | Parameter Name | Example |
+|-------------------|----------------|---------|
+| Pre-4.1 | `max_hint_window_in_ms` | `10800000` (3 hours) |
+| 4.1+ | `max_hint_window` | `3h` |
 
 ```yaml
-# cassandra.yaml
-max_hint_window_in_ms: 10800000  # 3 hours default
+# cassandra.yaml (4.1+)
+max_hint_window: 3h
+
+# cassandra.yaml (Pre-4.1)
+# max_hint_window_in_ms: 10800000
 ```
 
 ---
@@ -218,7 +225,7 @@ nodetool failuredetector
 | Hints accumulating | Increasing | Target node down |
 
 !!! warning "Hint Expiration"
-    Hints older than `max_hint_window_in_ms` are dropped. If a node was down longer than this window, use `nodetool repair` to restore consistency.
+    Hints older than `max_hint_window` are dropped. If a node was down longer than this window, use `nodetool repair` to restore consistency.
 
 ---
 

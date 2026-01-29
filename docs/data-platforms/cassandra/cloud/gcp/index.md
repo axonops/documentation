@@ -44,7 +44,7 @@ local-ssd:
 
 ## Network Configuration
 
-### VPC Setup
+### VPC Set up
 
 ```hcl
 # Terraform example

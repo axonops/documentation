@@ -15,8 +15,14 @@ Displays the token ring information showing token assignments for each node in t
 ## Synopsis
 
 ```bash
-nodetool [connection_options] ring [keyspace]
+nodetool [connection_options] ring [options] [keyspace]
 ```
+
+## Options
+
+| Option | Description |
+|--------|-------------|
+| `-r, --resolve-ip` | Show DNS names instead of IP addresses |
 
 ## Description
 
@@ -179,7 +185,7 @@ With vnodes enabled (recommended), tokens should be:
 - Each node has the same number of tokens (typically 256)
 - Ownership percentages roughly equal
 
-### Single-Token Setup (Legacy)
+### Single-Token Set up (Legacy)
 
 ```
 192.168.1.101    rack1       Up      Normal  256.12 GiB      33.33%   0

@@ -35,6 +35,9 @@ VIRTUAL TABLE system_views.thread_pools (
     blocked_tasks bigint,
     blocked_tasks_all_time bigint,
     completed_tasks bigint,
+    core_pool_size int,
+    max_pool_size int,
+    max_tasks_queued int,
     pending_tasks int
 )
 ```
@@ -44,6 +47,9 @@ VIRTUAL TABLE system_views.thread_pools (
 | `name` | text | Thread pool name |
 | `active_tasks` | int | Currently executing tasks |
 | `active_tasks_limit` | int | Maximum concurrent tasks (pool size) |
+| `core_pool_size` | int | Core thread pool size |
+| `max_pool_size` | int | Maximum thread pool size |
+| `max_tasks_queued` | int | Maximum tasks that can be queued |
 | `pending_tasks` | int | Tasks queued waiting for execution |
 | `blocked_tasks` | bigint | Tasks currently blocked due to backpressure |
 | `blocked_tasks_all_time` | bigint | Total blocked tasks since node startup |

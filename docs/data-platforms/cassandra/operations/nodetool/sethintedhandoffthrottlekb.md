@@ -22,13 +22,24 @@ nodetool [connection_options] sethintedhandoffthrottlekb <throttle_in_kb>
 
 `nodetool sethintedhandoffthrottlekb` controls the rate at which hints are delivered to recovered nodes. This throttle prevents hint delivery from overwhelming target nodes or consuming excessive network bandwidth.
 
+!!! info "Per-Thread Throttle"
+    The throttle limit is applied **per hinted handoff delivery thread**, not as an aggregate node-wide limit. If multiple delivery threads are active, the total throughput may be a multiple of this value.
+
 ---
 
 ## Arguments
 
 | Argument | Description |
 |----------|-------------|
-| `throttle_in_kb` | Maximum hint delivery rate in kilobytes per second |
+| `throttle_in_kb` | Maximum hint delivery rate in KiB/s per delivery thread. Set to 0 to disable throttling. |
+
+!!! note "cassandra.yaml Parameter"
+    The corresponding cassandra.yaml parameter changed in 4.1:
+
+    | Cassandra Version | Parameter Name | Example |
+    |-------------------|----------------|---------|
+    | Pre-4.1 | `hinted_handoff_throttle_in_kb` | `1024` |
+    | 4.1+ | `hinted_handoff_throttle` | `1024KiB` |
 
 ---
 
@@ -101,9 +112,14 @@ nodetool sethintedhandoffthrottlekb 512
 
 ### Default Value
 
+The default is 1024 KiB/s per delivery thread.
+
 ```yaml
-# cassandra.yaml
-hinted_handoff_throttle_in_kb: 1024  # Default 1 MB/s
+# cassandra.yaml (4.1+)
+hinted_handoff_throttle: 1024KiB
+
+# cassandra.yaml (Pre-4.1)
+# hinted_handoff_throttle_in_kb: 1024
 ```
 
 ### Runtime vs Persistent
@@ -173,15 +189,15 @@ THROTTLE="$1"
 if [ -z "$THROTTLE" ]; then
     echo "Usage: $0 <throttle_kb>"
     exit 1
-fi# Get list of node IPs from local nodetool status
+fi
 
-
+# Get list of node IPs from local nodetool status
 nodes=$(nodetool status | grep "^UN" | awk '{print $2}')
 
-echo "Setting hint throttle to ${THROTTLE} KB/s cluster-wide..."
+echo "Setting hint throttle to ${THROTTLE} KiB/s cluster-wide..."
 for node in $nodes; do
     echo -n "$node: "
-    ssh "$node" "nodetool sethintedhandoffthrottlekb $THROTTLE && echo "OK" || echo "FAILED""
+    ssh "$node" 'nodetool sethintedhandoffthrottlekb '"$THROTTLE"' && echo "OK" || echo "FAILED"'
 done
 ```
 
@@ -226,12 +242,12 @@ nodetool sethintedhandoffthrottlekb 256
     4. **Balance speed vs impact** - Faster isn't always better
     5. **Cluster-wide consistency** - Set same value on all nodes
 
-!!! info "Throttle Selection"
+!!! info "Throttle Selection (per delivery thread)"
 
-    - **256-512 KB/s**: Low-impact, slow recovery
-    - **1024 KB/s**: Balanced (default)
-    - **2048-4096 KB/s**: Fast recovery, higher impact
-    - **Unlimited (0)**: Maximum speed, use cautiously
+    - **256-512 KiB/s**: Low-impact, slow recovery
+    - **1024 KiB/s**: Balanced (default)
+    - **2048-4096 KiB/s**: Fast recovery, higher impact
+    - **0**: Disable throttling (maximum speed, use cautiously)
 
 ---
 

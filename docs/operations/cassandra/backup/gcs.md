@@ -6,24 +6,24 @@ meta:
     content: "GCS backup, Google Cloud Storage, Cassandra backup, AxonOps"
 ---
 
-## What is Google Cloud Storage
+# What is Google Cloud Storage
 
-Google Cloud Storage (GCS) is a RESTful online file storage web service for storing and accessing data on Google Cloud Platform infrastructure. It provides unified object storage for developers and enterprises, from live data serving to data analytics/ML to data archiving. Read more at [Google Cloud Storage documentation](https://cloud.google.com/storage/docs)
+Google Cloud Storage (GCS) is a RESTful online file storage service for storing and accessing data on Google Cloud Platform infrastructure. It provides unified object storage for developers and enterprises, from live data serving to analytics/ML to data archiving. Read more in the [Google Cloud Storage documentation](https://cloud.google.com/storage/docs).
 
 When selecting Google Cloud Storage as a remote option there are several fields that need to be configured.
 
-![](./gcs.png)
+![gcs](./gcs.png)
 
 #### Remote Backup Retention
 
-The amount of days that backup files will be kept in the remote storage provider location. 
-After this amount of days the files that are older will be removed.
+The number of days that backup files will be kept in the remote storage provider location.
+After this number of days, older files are removed.
 
 #### Base Remote Path
 
-This is the name of the GCS bucket, you can also add subfolders if using shared storage buckets or saving multiple clusters to the same bucket. By default AxonOps will save the backups to `/bucket/folder/org/clustertype/clustername/host-id/`
+This is the name of the GCS bucket. You can also add subfolders if using shared buckets or saving multiple clusters to the same bucket. By default AxonOps saves backups to `/bucket/folder/org/clustertype/clustername/host-id/`.
 
-The org/clustertype/clustername/host-id/ will match the top breadcrumb navigation in your AxonOps Dashboard.
+The `org/clustertype/clustername/host-id/` path matches the top breadcrumb navigation in the AxonOps Dashboard.
 
 #### Project ID
 
@@ -93,6 +93,10 @@ Example service account key structure:
   "client_x509_cert_url": "https://www.googleapis.com/robot/v1/metadata/x509/..."
 }
 ```
+
+## Bucket-side settings
+
+These settings are configured in GCS, not in AxonOps.
 
 #### Location
 

@@ -161,27 +161,43 @@ Example (64GB server):
 -Xlog:gc*:file=/var/log/cassandra/gc.log:time,uptime:filecount=10,filesize=10M
 ```
 
-### ZGC Configuration (JDK 17+, Low Latency)
+### ZGC Configuration (Low Latency)
 
 ```bash
 # Use ZGC for sub-millisecond pauses
 -XX:+UseZGC
--XX:+ZGenerational
+
+# ZGenerational is available in JDK 21+ only
+# For JDK 21+:
+# -XX:+ZGenerational
 
 # Soft max heap (allows expansion under pressure)
 -XX:SoftMaxHeapSize=28G  # With -Xmx31G
 ```
+
+!!! note "ZGC Version Requirements"
+    - **JDK 11-16**: ZGC is experimental (`-XX:+UnlockExperimentalVMOptions` required)
+    - **JDK 17-20**: ZGC is production-ready (non-generational)
+    - **JDK 21+**: ZGenerational mode available via `-XX:+ZGenerational`
 
 ### Off-Heap Memory
 
 ```yaml
 # cassandra.yaml
 # Memtables can use off-heap memory
-memtable_heap_space_in_mb: 2048
-memtable_offheap_space_in_mb: 2048
+memtable_heap_space: 2048MiB
+memtable_offheap_space: 2048MiB
 
 # File system cache is critical - do not starve it!
 ```
+
+!!! note "Memtable Configuration Parameter"
+    The memtable size parameters changed in Cassandra 4.1:
+
+    | Cassandra Version | Parameter Names |
+    |-------------------|----------------|
+    | Pre-4.1 | `memtable_heap_space_in_mb`, `memtable_offheap_space_in_mb` |
+    | 4.1+ | `memtable_heap_space`, `memtable_offheap_space` (with units like `MiB`) |
 
 ---
 

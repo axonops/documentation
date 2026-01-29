@@ -1,24 +1,24 @@
 <h3>Select the Kafka Version</h3>
 <label>
   <input type="radio" id="Kafka20" name="kafkaFamily" onChange="updateKafka()" checked=true />
-  <img src="/get_started/kafka20.png" class="skip-lightbox" width="180px">
+  <img src="/get_started/kafka20.png" class="skip-lightbox" width="180px" alt="kafka20">
 </label>
 <label>
   <input type="radio" id="Kafka30" name="kafkaFamily" onChange="updateKafka()" />
-  <img src="/get_started/kafka30.png" class="skip-lightbox" width="180px">
+  <img src="/get_started/kafka30.png" class="skip-lightbox" width="180px" alt="kafka30">
 </label>
 
 <h3 style="display: none;">Select the Java Version.</h3>
 <label style="display: none;">
   <input type="radio" id="Java" name="kjavaFamily" onChange="updateKJava()" checked=true />
-  <img id="KJavaimg" src="/get_started/java.png" class="skip-lightbox" width="180px">
+  <img id="KJavaimg" src="/get_started/java.png" class="skip-lightbox" width="180px" alt="java">
 </label>
 <!-- <label>
   <input type="radio" id="Java17" name="kjavaFamily" onChange="updateKJava()" />
-  <img id="KJava17img" src="/get_started/Java_17.png" class="skip-lightbox" width="180px">
+  <img id="KJava17img" src="/get_started/Java_17.png" class="skip-lightbox" width="180px" alt="Java_17">
 </label> -->
 
-Install the AxonOps Kafka Agent and its dependency `axon-agent`:
+Install the AxonOps Kafka Agent and its dependency `AxonOps agent`:
 
 <!-- Debian -->
 <div id="DebianKafka20JavaDiv" class="kafka">
@@ -86,6 +86,6 @@ contacts the AxonOps Server directly while minimizing the memory footprint
 and CPU utilization of the Kafka process.
 
 - Configuration File: `/etc/axonops/axon-agent.yml`
-- Binary: `usr/share/axonops/axon-agent`
-- Logs: `/var/log/axonops/axon-agent.log`
-- Systemd service: `/usr/lib/systemd/system/axon-agent.service`
+- Binary: `usr/share/axonops/AxonOps agent`
+- Logs: `/var/log/axonops/AxonOps agent.log`
+- Systemd service: `/usr/lib/systemd/system/AxonOps agent.service`

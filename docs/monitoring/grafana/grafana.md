@@ -12,16 +12,16 @@ meta:
 
 Generate an API token with *read-only* permission to the clusters you wish to access.
 
-- Login to (https://console.axonops.com)[https://console.axonops.com]
+- Log in to [https://console.axonops.com](https://console.axonops.com).
 - Navigate in the left menu to API Tokens.
 
-    <img src="/monitoring/grafana/api_token_menu.png" class="skip-lightbox">
+    <img src="/monitoring/grafana/api_token_menu.png" class="skip-lightbox" alt="api_token_menu">
 
 - Click on Create New API Token button and complete the details.
-    <img src="/monitoring/grafana/generate_api_token.png" class="skip-lightbox">
+    <img src="/monitoring/grafana/generate_api_token.png" class="skip-lightbox" alt="generate_api_token">
 
 
-## Configure Grafana
+## Configure Grafana
 
 - Configure a new Prometheus data source in Grafana
 - Set the URL to **https://dash.axonops.cloud/$ORGNAME** 

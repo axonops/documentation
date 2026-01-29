@@ -59,7 +59,7 @@ Unlike bootstrap, rebuild does not require the node to be in JOINING state and c
 | `-ks, --keyspace` | Specific keyspace to rebuild |
 | `-ts, --tokens` | Specific token ranges to rebuild |
 | `-s, --sources` | Specific source nodes to stream from |
-| `--mode` | Rebuild mode: ALL, NORMAL, REFETCH |
+| `--exclude-local-dc` | Exclude sources from the local datacenter |
 
 ---
 
@@ -108,13 +108,15 @@ nodetool rebuild <source_dc>
 
 ### Single Datacenter Clusters
 
-!!! danger "Requires Multiple DCs"
-    `rebuild` streams from other datacenters. For single-DC clusters:
+!!! info "Single-DC Considerations"
+    By default, `rebuild` can stream from any datacenter including the local one. However, for single-DC clusters where rebuild would stream from the same replicas as repair, using `nodetool repair` is typically more appropriate:
 
     ```bash
-    # Use repair instead
+    # Use repair for single-DC consistency
     nodetool repair -pr
     ```
+
+    Use `--exclude-local-dc` if sources from the local datacenter should not be used.
 
 ### Normal Bootstrap Scenarios
 

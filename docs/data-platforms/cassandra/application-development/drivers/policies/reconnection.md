@@ -20,8 +20,9 @@ The driver initiates reconnection when:
 |---------|-------------|
 | Node marked DOWN | All connections to node failed |
 | Connection pool depleted | All connections closed due to errors |
-| STATUS_CHANGE event | Cassandra reports node status change |
-| Startup discovery | Initial connection to contact points |
+| Node state change detected | Driver detects node availability change (via failed requests or gossip hints) |
+
+Initial contact point discovery at startup uses bootstrap logic separate from the reconnection policy.
 
 ```plantuml
 @startuml
@@ -146,7 +147,7 @@ Time    Node State          Driver State           Reconnection
 
 ### Rolling Restart
 
-During rolling restarts, multiple nodes cycle through DOWN/UP states:
+During rolling restarts, multiple nodes cycle through DOWN/UP states. The following timeline is illustrative; actual timings depend on configuration and node startup time:
 
 ```
 Rolling Restart (3 nodes, exponential backoff):
@@ -273,4 +274,3 @@ Node2 recovers:
 
 - **[Connection Management](../connection-management.md)** — Connection lifecycle and pooling
 - **[Load Balancing Policy](load-balancing.md)** — How requests are routed during node recovery
-

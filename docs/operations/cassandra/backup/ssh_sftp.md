@@ -6,24 +6,24 @@ meta:
     content: "SSH backup, SFTP, secure backup, Cassandra"
 ---
 
-## What is SSH/SFTP
+# What is SSH/SFTP
 
 SSH File Transfer Protocol (SFTP) is a network protocol that provides file access, file transfer, and file management over any reliable data stream. It is typically used with SSH protocol to provide secure file transfer capabilities. Read more at [SSH.com SFTP](https://www.ssh.com/academy/ssh/sftp)
 
 When selecting SSH/SFTP as a remote option there are several fields that need to be configured.
 
-![](./sftp.png)
+![sftp](./sftp.png)
 
 #### Remote Backup Retention
 
-The amount of days that backup files will be kept in the remote storage provider location. 
-After this amount of days the files that are older will be removed.
+The number of days that backup files will be kept in the remote storage provider location.
+After this number of days, older files are removed.
 
 #### Base Remote Path
 
-This is the path on the remote SSH/SFTP server where backups will be stored. You can specify an absolute path like `/backups/cassandra` or a relative path from the user's home directory. By default AxonOps will save the backups to `/path/org/clustertype/clustername/host-id/`
+This is the path on the remote SSH/SFTP server where backups will be stored. You can specify an absolute path like `/backups/cassandra` or a relative path from the user's home directory. By default AxonOps saves backups to `/path/org/clustertype/clustername/host-id/`.
 
-The org/clustertype/clustername/host-id/ will match the top breadcrumb navigation in your AxonOps Dashboard.
+The `org/clustertype/clustername/host-id/` path matches the top breadcrumb navigation in the AxonOps Dashboard.
 
 #### Host
 

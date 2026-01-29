@@ -91,13 +91,15 @@ jmap -dump:format=b,file=/tmp/heap.hprof $(pgrep -f CassandraDaemon)
 nodetool invalidatekeycache
 nodetool invalidaterowcache
 
-# Reduce concurrent operations
-nodetool setconcurrency read 16
-nodetool setconcurrency write 16
+# Flush memtables to disk
+nodetool flush
 
-# Trigger GC
-nodetool gcstats  # Shows GC activity
+# Check GC activity
+nodetool gcstats
 ```
+
+!!! note "Concurrent Reads/Writes"
+    Concurrent reads/writes are configured via `concurrent_reads` and `concurrent_writes` in `cassandra.yaml` and require a restart to change. There is no runtime nodetool command to adjust these values.
 
 ### Short-term: Adjust Memory Settings
 

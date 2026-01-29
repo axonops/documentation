@@ -8,7 +8,7 @@ meta:
 
 # CQL Security
 
-CQL provides two categories of security features for controlling access to data:
+CQL provides two categories of security features for controlling access to data: Role-Based Access Control (RBAC) for managing authentication and authorization, and Dynamic Data Masking (DDM) for protecting sensitive column data.
 
 ---
 

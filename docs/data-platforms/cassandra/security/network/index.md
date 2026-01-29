@@ -31,8 +31,12 @@ The `network_authorizer` setting controls which datacenters a role can access. T
 # Options:
 # - AllowAllNetworkAuthorizer: No restrictions (default)
 # - CassandraNetworkAuthorizer: Datacenter-based restrictions
-network_authorizer: CassandraNetworkAuthorizer
+network_authorizer:
+  class_name: CassandraNetworkAuthorizer
 ```
+
+!!! note "Configuration Format"
+    In Cassandra 4.0+, `network_authorizer` uses a `ParameterizedClass` format with `class_name` and optional `parameters` block, not a simple string value.
 
 **Requirements:**
 
@@ -86,20 +90,22 @@ The `cidr_authorizer` setting restricts database access based on client IP addre
 # Options:
 # - AllowAllCIDRAuthorizer: No restrictions (default)
 # - CassandraCIDRAuthorizer: CIDR-based restrictions
-cidr_authorizer: CassandraCIDRAuthorizer
-
-# Enable CIDR checks for superusers (default: false)
-cidr_checks_for_superusers: false
-
-# Authorizer mode:
-# - MONITOR: Log violations without enforcement
-# - ENFORCE: Reject unauthorized access
-cidr_authorizer_mode: MONITOR
-
-# Cache settings
-cidr_groups_cache_refresh_interval: 5
-ip_cache_max_size: 100
+cidr_authorizer:
+  class_name: CassandraCIDRAuthorizer
+  parameters:
+    # Enable CIDR checks for superusers (default: false)
+    cidr_checks_for_superusers: false
+    # Authorizer mode:
+    # - MONITOR: Log violations without enforcement
+    # - ENFORCE: Reject unauthorized access
+    cidr_authorizer_mode: MONITOR
+    # Cache settings
+    cidr_groups_cache_refresh_interval: 5
+    ip_cache_max_size: 100
 ```
+
+!!! note "Configuration Format"
+    In Cassandra 5.0+, CIDR authorizer settings (`cidr_checks_for_superusers`, `cidr_authorizer_mode`, `cidr_groups_cache_refresh_interval`, `ip_cache_max_size`) are placed under `cidr_authorizer.parameters`, not as top-level keys.
 
 **Requirements:**
 

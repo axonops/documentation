@@ -99,11 +99,6 @@ audit_logging_options:
     # Users to exclude from auditing
     excluded_users:
 
-    # Tables to audit (empty = all)
-    included_tables:
-
-    # Tables to exclude
-    excluded_tables:
 ```
 
 ### Audit Categories
@@ -125,13 +120,14 @@ audit_logging_options:
     enabled: true
     logger:
       - class_name: BinAuditLogger
-        parameters:
-          - log_dir: /var/log/cassandra/audit
-          - roll_cycle: HOURLY
-          - block: true
-          - max_queue_weight: 268435456  # 256 MB
-          - max_log_size: 17179869184    # 16 GB
-          - archive_command: /usr/local/bin/archive-audit-logs.sh %path
+
+    # Top-level BinAuditLogger settings (not under logger.parameters)
+    audit_logs_dir: /var/log/cassandra/audit
+    roll_cycle: HOURLY
+    block: true
+    max_queue_weight: 268435456  # 256 MB
+    max_log_size: 17179869184    # 16 GB
+    archive_command: /usr/local/bin/archive-audit-logs.sh %path
 
     # Recommended: Don't log DML for high-throughput tables
     included_categories: AUTH,DCL,DDL
@@ -142,6 +138,9 @@ audit_logging_options:
     # Exclude service accounts from routine logging
     excluded_users: monitoring_user,backup_user
 ```
+
+!!! note "BinAuditLogger Configuration"
+    BinAuditLogger settings (`roll_cycle`, `block`, `max_queue_weight`, `max_log_size`, `archive_command`) are top-level fields under `audit_logging_options`, not under `logger.parameters`. The `logger.parameters` section only supports `key_value_separator` and `field_separator` for output formatting.
 
 ---
 
@@ -156,19 +155,19 @@ audit_logging_options:
     enabled: true
     logger:
       - class_name: BinAuditLogger
-        parameters:
-          - log_dir: /var/log/cassandra/audit
-          - roll_cycle: HOURLY
-          - block: true
-          - max_queue_weight: 268435456
-          - max_log_size: 17179869184
+    # BinAuditLogger settings are top-level, not under logger.parameters
+    audit_logs_dir: /var/log/cassandra/audit
+    roll_cycle: HOURLY
+    block: true
+    max_queue_weight: 268435456
+    max_log_size: 17179869184
 ```
 
-**Parameters:**
+**Parameters (top-level under `audit_logging_options`):**
 
 | Parameter | Default | Description |
 |-----------|---------|-------------|
-| `log_dir` | `${CASSANDRA_LOG_DIR}/audit` | Directory for audit log files |
+| `audit_logs_dir` | `${CASSANDRA_LOG_DIR}/audit` | Directory for audit log files |
 | `roll_cycle` | `HOURLY` | Log rotation: MINUTELY, HOURLY, DAILY |
 | `block` | `true` | Block when queue full (vs drop events) |
 | `max_queue_weight` | `256 MB` | Maximum memory for pending events |
@@ -272,18 +271,10 @@ audit_logging_options:
     excluded_users: monitoring_service,healthcheck_user
 ```
 
-### Table Filtering
+### Keyspace-Level Filtering Only
 
-```yaml
-audit_logging_options:
-    enabled: true
-
-    # Only audit specific tables (keyspace.table format)
-    included_tables: production.payments,production.users,sensitive.credentials
-
-    # Or exclude specific tables
-    excluded_tables: production.logs,production.metrics
-```
+!!! warning "No Table-Level Filtering"
+    Cassandra audit logging does not support table-level filtering (`included_tables` / `excluded_tables`). Filtering is available at the keyspace, user, and category levels only.
 
 ### Category-Based Filtering
 
@@ -428,12 +419,12 @@ nodetool disableauditlog
 nodetool getauditlog
 ```
 
-### Rotate Logs
+### Log Rotation
 
-```bash
-# Force log rotation (for custom archival)
-nodetool resetfullquerylog
-```
+Audit log rotation is handled automatically by the `roll_cycle` setting. There is no nodetool command to force audit log rotation. For custom archival, use the `archive_command` setting or external log rotation tools.
+
+!!! note "FQL vs Audit Logs"
+    `nodetool resetfullquerylog` resets Full Query Logging (FQL), not audit logs. FQL and audit logging are separate features.
 
 ---
 

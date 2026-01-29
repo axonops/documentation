@@ -20,7 +20,7 @@ Seed nodes are designated contact points that facilitate cluster discovery and g
 |----------|-------------|-----------|
 | **Bootstrap discovery** | Provide initial cluster topology to joining nodes | New node startup |
 | **Gossip initialization** | First peers for gossip protocol establishment | Node startup |
-| **Partition recovery** | Bridge isolated cluster segments | Network partition healing |
+| **Gossip fallback** | Contacted opportunistically during gossip rounds | Steady-state gossip |
 | **Cluster formation** | Enable initial cluster creation | First nodes starting |
 
 ### What Seeds Are NOT
@@ -71,7 +71,7 @@ stream --> ready
 **Discovery sequence details:**
 
 1. **Read configuration**: Parse `seed_provider` from cassandra.yaml
-2. **Attempt seed contact**: Try each seed in order until one responds
+2. **Attempt seed contact**: Contact seeds (order may vary) until one responds
 3. **Receive cluster state**: Seed sends complete gossip state (all known endpoints)
 4. **Integrate into gossip**: Begin participating in gossip protocol
 5. **Determine ownership**: Calculate token ranges (automatic with vnodes)
@@ -148,7 +148,7 @@ seed_provider:
 | **Distribute across racks** | Survive rack-level failures |
 | **Use stable, reliable nodes** | Seeds should rarely be replaced |
 | **Same list on all nodes** | Consistent cluster discovery |
-| **Seeds must know each other** | At least one seed must be reachable from others |
+| **Ensure reachability** | At least one seed should be reachable from starting nodes |
 
 ### Seed Count Recommendations
 

@@ -24,26 +24,31 @@ A common misconception is that Cassandra is "eventually consistent" and therefor
 | `QUORUM` | Acknowledged by majority of replicas | Strong consistency with good availability |
 | `LOCAL_QUORUM` | Majority within local datacenter | Strong consistency with low latency in multi-DC |
 | `ALL` | Acknowledged by all replicas | Maximum consistency, reduced availability |
-| `SERIAL` / `LOCAL_SERIAL` | Linearizable (via Paxos) | Compare-and-set operations |
+| `SERIAL` / `LOCAL_SERIAL` | Linearizable per-partition (via Paxos) | Compare-and-set operations (LWT) |
 
-!!! tip "Strong Consistency Formula"
-    When `R + W > RF` (reads + writes > replication factor), strong consistency is achieved. With `RF=3`, using `QUORUM` for both reads and writes satisfies this: `2 + 2 > 3`.
+!!! tip "Strong Consistency Heuristic"
+    When `R + W > RF` (reads + writes > replication factor), strong consistency is generally achieved under normal operation. With `RF=3`, using `QUORUM` for both reads and writes satisfies this: `2 + 2 > 3`. Note: this is a heuristic that assumes no concurrent failures; edge cases exist under specific failure modes.
 
 ### Common Patterns
 
 **Strong consistency (most applications):**
-```cql
--- Write with QUORUM
-INSERT INTO users (id, name) VALUES (?, ?) USING CONSISTENCY QUORUM;
+```java
+// Consistency is set via driver, not in CQL
+Statement stmt = SimpleStatement.builder("INSERT INTO users (id, name) VALUES (?, ?)")
+    .setConsistencyLevel(ConsistencyLevel.QUORUM)
+    .build();
 
--- Read with QUORUM
-SELECT * FROM users WHERE id = ? CONSISTENCY QUORUM;
+Statement read = SimpleStatement.builder("SELECT * FROM users WHERE id = ?")
+    .setConsistencyLevel(ConsistencyLevel.QUORUM)
+    .build();
 ```
 
 **Eventual consistency (high-throughput, loss-tolerant):**
-```cql
--- Metrics, logs, time-series where some loss is acceptable
-INSERT INTO metrics (sensor_id, ts, value) VALUES (?, ?, ?) USING CONSISTENCY ONE;
+```java
+// Metrics, logs, time-series where some loss is acceptable
+Statement stmt = SimpleStatement.builder("INSERT INTO metrics (sensor_id, ts, value) VALUES (?, ?, ?)")
+    .setConsistencyLevel(ConsistencyLevel.ONE)
+    .build();
 ```
 
 **Linearizable consistency (compare-and-set):**
@@ -61,7 +66,7 @@ Early Cassandra documentation emphasized availability and partition tolerance (t
 - The CAP theorem describes behavior during network partitions, not normal operation
 
 !!! warning "Configure Consistency Explicitly"
-    Driver defaults are optimized for availability, not consistency. Production applications should explicitly set consistency levels based on data requirements rather than relying on defaults.
+    Driver defaults vary by driver and version (often `LOCAL_ONE` or `ONE`). Production applications should explicitly set consistency levels based on data requirements rather than relying on defaults.
 
 ---
 
@@ -133,4 +138,3 @@ When developing applications against Cassandra:
 - **[Data Modeling](../data-modeling/index.md)** — Principles for designing effective Cassandra data models
 - **[Drivers](drivers/index.md)** — Driver architecture, connection management, and policy configuration
 - **[Design Patterns](patterns/index.md)** — Battle-tested patterns for common use cases
-

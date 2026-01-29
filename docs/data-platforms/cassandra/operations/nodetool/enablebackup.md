@@ -37,7 +37,7 @@ nodetool [connection_options] enablebackup
 
 When incremental backup is enabled:
 
-1. Each time memtables flush to SSTables, a hard link is created
+1. Each time new SSTables are created (during flush, compaction, or other operations), a hard link is created
 2. Hard links go to: `<data_dir>/<keyspace>/<table>/backups/`
 3. Links point to the same data blocks (no extra disk space initially)
 4. Backup files remain even after compaction removes the original
@@ -85,7 +85,7 @@ Example:
 nodetool enablebackup
 
 # 2. Periodically copy backup files to external storage
-rsync -av /var/lib/cassandra/data/*/backups/ /backup/incremental/
+rsync -av /var/lib/cassandra/data/*/*/backups/ /backup/incremental/
 
 # 3. Clear processed backups
 rm -rf /var/lib/cassandra/data/*/*/backups/*

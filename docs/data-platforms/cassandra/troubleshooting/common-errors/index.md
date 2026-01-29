@@ -22,8 +22,10 @@ Errors occurring when operations exceed configured time limits.
 |-------|-----------------|--------------|
 | [ReadTimeoutException](read-timeout.md) | 5000ms | Slow disk, large partitions, tombstones |
 | [WriteTimeoutException](write-timeout.md) | 2000ms | Overloaded nodes, disk issues |
-| RangeSliceTimeoutException | 10000ms | Large range scans |
 | TruncateException | 60000ms | Large table truncation |
+
+!!! note "Legacy Exception"
+    `RangeSliceTimeoutException` was a Thrift-era exception. In modern Cassandra (4.0+), range scan timeouts surface as `ReadTimeoutException`.
 
 ### Availability Errors
 

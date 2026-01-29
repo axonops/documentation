@@ -58,7 +58,7 @@ Secondary indexes are inappropriate when:
 - Queries with partition key constraint contact only replicas for that partition
 - Results are returned in clustering order within each partition
 - Index queries respect the specified consistency level
-- All matching rows visible to the consistency level are returned
+- Results include matching rows visible to the consistency level (subject to index build state and replica synchronization)
 - Multiple indexed predicates (AND) are evaluated correctly
 
 ### What Secondary Index Queries Do NOT Guarantee
@@ -114,7 +114,8 @@ Secondary indexes are inappropriate when:
 |---------|----------|
 | All | Legacy secondary indexes (2i) |
 | 3.4+ | SASI indexes (experimental, not recommended for production) |
-| 5.0+ | Storage-Attached Indexes (SAI), recommended for new deployments |
+| 4.0+ | SAI available (experimental) |
+| 5.0+ | SAI production-ready and recommended for new deployments |
 
 ---
 
@@ -443,19 +444,27 @@ CREATE INDEX ON logs (timestamp);     -- Microsecond precision, near-unique
 - Use the column as part of the primary key
 - Create a denormalized lookup table
 
-### Anti-Pattern 2: Indexing Very Low-Cardinality Columns
+### Anti-Pattern 2: Indexing Very Low-Cardinality Columns for Global Queries
 
 ```sql
--- ANTI-PATTERN: Indexing columns with 2-3 values
+-- ANTI-PATTERN: Indexing columns with 2-3 values for global queries
 CREATE INDEX ON users (is_active);    -- true/false
 CREATE INDEX ON orders (status);      -- pending/completed/cancelled (if few values)
+
+-- Then querying without partition key:
+SELECT * FROM users WHERE is_active = true;  -- returns ~50% of all data
 ```
 
-**Why it fails:**
+**Why it fails for global queries:**
 
 - Each index entry points to a large fraction of all rows
 - Queries return excessive data
 - No selectivity benefit
+
+**When low-cardinality indexes are acceptable:**
+
+- When queries always include the partition key (limits scan to single partition)
+- When combined with other selective predicates
 
 **Alternative approaches:**
 

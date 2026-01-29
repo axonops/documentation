@@ -49,7 +49,7 @@ nodetool disablefullquerylog
 ```bash
 nodetool disablefullquerylog
 nodetool getfullquerylog
-# Expected: full_query_logging_path: (disabled)
+# Expected output includes: enabled: false
 ```
 
 ---

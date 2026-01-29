@@ -104,7 +104,7 @@ end note
 
 - Single write region (simplifies consistency)
 - Multiple read regions (low-latency queries)
-- Asynchronous replication (typically <1 second lag)
+- Asynchronous replication (lag varies by network and load; often sub-second in well-provisioned clusters)
 - Read services deployed per region
 
 ### Pattern 2: Separate Read/Write Tables
@@ -380,11 +380,14 @@ CqlSession session = CqlSession.builder()
 
 With async replication, reads may not immediately reflect writes:
 
-| Scenario | Latency | Mitigation |
-|----------|---------|------------|
-| Same-region read after write | <10ms | Usually consistent |
-| Cross-region read after write | 50-500ms | Accept or use QUORUM |
+| Scenario | Latency (illustrative) | Mitigation |
+|----------|------------------------|------------|
+| Same-region read after write | <10ms | Usually consistent with LOCAL_QUORUM write |
+| Cross-region read after write | 50-500ms | Accept eventual consistency, or route reads to write region |
 | Read model sync delay | Application-dependent | Async messaging with retries |
+
+!!! note "Cross-DC Read-Your-Writes"
+    `QUORUM` does not guarantee cross-DC read-your-writes with NetworkTopologyStrategy. For strict cross-DC guarantees, use `EACH_QUORUM` writes or route reads to the write region.
 
 ### Read-Your-Writes Patterns
 
@@ -393,9 +396,9 @@ When users must see their own writes immediately:
 **Option 1: Route to write region**
 
 ```java
-// For critical read-after-write, use QUORUM
+// For critical read-after-write within same DC, use LOCAL_QUORUM
 Row row = session.execute(stmt.bind(orderId)
-    .setConsistencyLevel(ConsistencyLevel.QUORUM))
+    .setConsistencyLevel(ConsistencyLevel.LOCAL_QUORUM))
     .one();
 ```
 
@@ -427,8 +430,8 @@ async function createOrder(orderData) {
 |-----------|---------------|-----------|
 | Command (write) | LOCAL_QUORUM | Durable in write region |
 | Query (read) | LOCAL_ONE | Low latency, eventual consistency acceptable |
-| Critical read | QUORUM | Cross-DC consistency when required |
-| Read-your-writes | LOCAL_QUORUM | Same-region consistency |
+| Read-your-writes (same DC) | LOCAL_QUORUM | Consistency within write region |
+| Cross-DC critical read | EACH_QUORUM (write) + LOCAL_QUORUM (read) | Requires EACH_QUORUM on write path for cross-DC guarantees |
 
 ---
 

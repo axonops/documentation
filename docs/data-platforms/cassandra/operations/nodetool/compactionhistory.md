@@ -28,9 +28,9 @@ nodetool [connection_options] compactionhistory
 
 ```
 Compaction History:
-id                                   keyspace_name columnfamily_name compacted_at            bytes_in    bytes_out   rows_merged
-abc12345-def6-7890-abcd-ef1234567890 my_keyspace   my_table          2024-01-15T10:30:00     1073741824  536870912   {1:150, 2:50}
-def67890-abcd-1234-ef56-7890abcdef12 my_keyspace   my_table          2024-01-15T09:15:00     2147483648  1073741824  {1:300, 2:100}
+id                                   keyspace_name columnfamily_name compacted_at            bytes_in    bytes_out   rows_merged     compaction_properties
+abc12345-def6-7890-abcd-ef1234567890 my_keyspace   my_table          2024-01-15T10:30:00     1073741824  536870912   {1:150, 2:50}   {id:abc12345-...}
+def67890-abcd-1234-ef56-7890abcdef12 my_keyspace   my_table          2024-01-15T09:15:00     2147483648  1073741824  {1:300, 2:100}  {id:def67890-...}
 ```
 
 ---
@@ -46,6 +46,7 @@ def67890-abcd-1234-ef56-7890abcdef12 my_keyspace   my_table          2024-01-15T
 | `bytes_in` | Total bytes read from input SSTables |
 | `bytes_out` | Total bytes written to output SSTable |
 | `rows_merged` | Distribution of rows merged per SSTable |
+| `compaction_properties` | Additional compaction metadata (strategy-specific properties) |
 
 ---
 
@@ -225,10 +226,10 @@ Compaction history is stored in `system.compaction_history` table:
 SELECT * FROM system.compaction_history LIMIT 10;
 ```
 
-!!! info "History Limits"
-    - History is kept for a limited time
-    - Older entries are automatically removed
-    - For long-term analysis, export to external monitoring
+!!! info "History Retention (7 Days Default)"
+    - The `system.compaction_history` table has a default TTL of 7 days
+    - Entries are automatically removed after this retention period via TTL expiration, not compaction
+    - For long-term analysis, export to external monitoring before entries expire
 
 ---
 

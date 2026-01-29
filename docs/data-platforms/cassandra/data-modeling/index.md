@@ -31,7 +31,7 @@ In Cassandra, this approach **will fail spectacularly**:
 1. There are no JOINs
 2. Every query must be served by a single table
 3. Data must be denormalized (duplicated intentionally)
-4. Schema design determines query performance (not indexes)
+4. Schema design is the primary determinant of query performance (indexes can help but are secondary)
 5. Wrong design = slow queries that cannot be fixed without migration
 ```
 

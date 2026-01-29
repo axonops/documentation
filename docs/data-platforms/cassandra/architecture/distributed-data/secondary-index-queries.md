@@ -139,7 +139,7 @@ Storage Attached Index introduces a fundamentally different distributed query ar
 
 ### Coordinator-Level Query Planning
 
-The SAI coordinator performs query analysis to optimize distributed execution:
+The SAI coordinator performs query analysis to optimize distributed execution. The following describes the conceptual approach; actual behavior may vary by Cassandra version and implementation:
 
 1. **Index selectivity analysis**: Identifies the most selective index among available SAI indexes to narrow the filtering space
 2. **Read command construction**: Embeds selected index metadata into the distributed range read command

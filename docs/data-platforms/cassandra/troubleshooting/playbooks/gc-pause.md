@@ -84,10 +84,12 @@ nodetool tablestats my_keyspace | grep -E "Table:|partition size"
 # Clear key cache if very large
 nodetool invalidatekeycache
 
-# Reduce concurrent reads/writes temporarily
-nodetool setconcurrency read 16
-nodetool setconcurrency write 16
+# Flush memtables to reduce memory pressure
+nodetool flush
 ```
+
+!!! note "Concurrent Reads/Writes"
+    Concurrent reads/writes are configured via `concurrent_reads` and `concurrent_writes` in `cassandra.yaml` and require a restart to change. There is no runtime `nodetool setconcurrency` command.
 
 ### Short-term: Tune GC Settings
 

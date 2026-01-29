@@ -86,21 +86,33 @@ rectangle "With Token-Aware (1 network hop)" #E8F4E8 {
 
 Token-aware routing requires:
 
-1. **Partition key known** — The driver must be able to extract the partition key from the query
-2. **Prepared statements** — Simple statements without bound parameters cannot be routed token-aware
-3. **Metadata available** — Driver must have current token map
+1. **Routing key available** — The driver must be able to determine the partition key value
+2. **Metadata available** — Driver must have current token map
+
+The routing key can be provided via:
+
+- **Prepared statements with bound values** (most common)
+- **Simple statements with explicit routing key set**
+- **Simple statements with bound values** (driver may infer routing key)
 
 ```java
-// Token-aware: partition key is bound
+// Token-aware: prepared statement with bound partition key
 PreparedStatement prepared = session.prepare(
     "SELECT * FROM users WHERE user_id = ?");
 BoundStatement bound = prepared.bind(userId);  // Driver knows partition key
 session.execute(bound);  // Routes to replica
 
-// NOT token-aware: partition key embedded in query string
-SimpleStatement simple = SimpleStatement.newInstance(
+// Token-aware: simple statement with explicit routing key
+SimpleStatement simple = SimpleStatement.builder(
+    "SELECT * FROM users WHERE user_id = 'abc123'")
+    .setRoutingKey(TypeCodecs.UUID.encode(userId, ProtocolVersion.V4))
+    .build();
+session.execute(simple);  // Routes to replica
+
+// NOT token-aware: literal values without routing key metadata
+SimpleStatement unrouted = SimpleStatement.newInstance(
     "SELECT * FROM users WHERE user_id = 'abc123'");
-session.execute(simple);  // Cannot extract partition key, uses round-robin
+session.execute(unrouted);  // Driver cannot extract partition key, uses round-robin
 ```
 
 ---
@@ -138,8 +150,8 @@ app ..> n5
 app ..> n6
 
 note bottom of n6
-  Local DC nodes always preferred.
-  Remote DC used only if all local nodes unavailable.
+  Local DC nodes preferred.
+  Remote DC usage depends on policy configuration.
 end note
 
 @enduml
@@ -210,7 +222,7 @@ Algorithm:
 | Respects datacenter locality | Slightly more complex configuration |
 | Built-in fallback ordering | |
 
-This is the default and recommended policy for most production deployments.
+This combination is commonly used for production deployments. Verify the default behavior for the specific driver version in use.
 
 ---
 
@@ -323,4 +335,3 @@ Considerations:
 
 - **[Retry Policy](retry.md)** — What happens when the selected node fails
 - **[Speculative Execution](speculative-execution.md)** — Sending to multiple nodes concurrently
-

@@ -162,7 +162,7 @@ Include in cluster health checks:
 # Check trace probability on all nodes
 
 for node in $(nodetool status | grep "^UN" | awk '{print $2}'); do
-    prob=$(ssh "$node" "nodetool gettraceprobability 2>/dev/null | grep -oE "[0-9]+\.[0-9]+")"
+    prob=$(ssh "$node" 'nodetool gettraceprobability 2>/dev/null | grep -oE "[0-9]+\.[0-9]+"')
     if [ "$prob" != "0.0" ]; then
         echo "WARNING: $node has trace probability $prob"
     fi

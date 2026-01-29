@@ -37,12 +37,12 @@ Lightweight Transactions (LWT) provide linearizable consistency through compare-
 
 ### Mixing LWT and Non-LWT Operations
 
-!!! danger "Mixing LWT with Non-LWT Is Unsafe"
-    Mixing lightweight transactions with standard (non-LWT) operations on the same data is **inherently unsafe** and SHOULD be avoided.
+!!! danger "Mixing LWT with Non-LWT Is High Risk"
+    Mixing lightweight transactions with standard (non-LWT) operations on the same data is a **high-risk pattern** and should be avoided unless the implications are well understood.
 
     **Why this is dangerous:**
 
-    Paxos uses its own **hybrid-logical clock** to ensure linearizability within LWT operations. This clock is separate from the regular Cassandra timestamp mechanism used by non-LWT writes. When you mix the two:
+    Paxos uses **ballot timestamps** (TimeUUID-based) to ensure linearizability within LWT operations. This timestamp mechanism is separate from the regular Cassandra client-side or server-side timestamps used by non-LWT writes. When mixed:
 
     - The clocks are never perfectly synchronized between LWT and non-LWT requests
     - A non-LWT operation executed immediately after an LWT may appear to succeed but have no effect
@@ -587,7 +587,7 @@ LWT operations should be designed for safe retry:
     **Conditions:**
 
     - Conditions MUST only reference non-primary-key columns
-    - Conditions MUST NOT reference columns in SET clause (no self-reference)
+    - Conditions may reference columns being updated in the SET clause (e.g., `IF balance >= 100`)
     - Collection element conditions require proper syntax
 
 ---

@@ -77,7 +77,7 @@ Dropped messages indicate the cluster cannot process requests within timeout.
 | Parameter | Value |
 |-----------|-------|
 | Metric | `org.apache.cassandra.metrics:type=DroppedMessage` |
-| Condition | Any dropped messages |
+| Condition | Sustained dropped messages (>10/s for 1 minute) |
 | Severity | Critical |
 
 **Response:**
