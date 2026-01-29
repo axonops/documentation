@@ -4,7 +4,7 @@
 
 ## Agent Configuration
 
-Update the highlighted lines in `/etc/axonops/AxonOps agent.yml`.
+Update the highlighted lines in `/etc/axonops/axon-agent.yml`.
 
 These need to match the config that you have in your `axon-server.yml` setup.
 

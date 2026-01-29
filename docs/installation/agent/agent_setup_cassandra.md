@@ -4,7 +4,7 @@
 
 ## Agent Configuration
 
-Update the following lines within `/etc/axonops/AxonOps agent.yml`.
+Update the following lines within `/etc/axonops/axon-agent.yml`.
 
 The highlighted lines should match the `host` and `org` keys found within
 `/etc/axonops/axon-server.yml`.
@@ -31,11 +31,11 @@ NTP:
 
 ### Ensure Proper Agent Configuration Permissions
 
-After editing the file, ensure the file permissions for `/etc/axonops/AxonOps agent.yml` are set correctly by
+After editing the file, ensure the file permissions for `/etc/axonops/axon-agent.yml` are set correctly by
 running the following commmand:
 
 ```bash
-sudo chmod 0640 /etc/axonops/AxonOps agent.yml
+sudo chmod 0640 /etc/axonops/axon-agent.yml
 ```
 
 ## Configure Cassandra

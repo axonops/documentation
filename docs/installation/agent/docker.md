@@ -50,7 +50,7 @@ services:
     ports:
       - "9042:9042"
     environment:
-      - JVM_EXTRA_OPTS=-javaagent:/var/lib/axonops/axon-cassandra4.0-agent.jar=/etc/axonops/AxonOps agent.yml
+      - JVM_EXTRA_OPTS=-javaagent:/var/lib/axonops/axon-cassandra4.0-agent.jar=/etc/axonops/axon-agent.yml
       - CASSANDRA_CLUSTER_NAME=my-cluster
 
   AxonOps agent:

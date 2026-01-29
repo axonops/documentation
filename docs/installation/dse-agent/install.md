@@ -17,7 +17,7 @@ page.
 
 #### Set up AxonOps agent for DSE
 
-You'll need the specify/update the following lines from **AxonOps agent.yml** located in `/etc/axonops/AxonOps agent.yml`:
+You'll need the specify/update the following lines from **axon-agent.yml** located in `/etc/axonops/axon-agent.yml`:
 
 
 
