@@ -1,0 +1,192 @@
+#!/usr/bin/env python3
+"""
+Script to add search boost values to markdown files listed in mkdocs.yml nav.
+
+- Files in "Using AxonOps" section get boost: 8
+- Files in "Data Platforms" section get boost: 3
+- All other nav files get boost: 5
+"""
+
+import os
+import re
+import sys
+import yaml
+
+# Custom loader that ignores Python-specific tags in mkdocs.yml
+class SafeLineLoader(yaml.SafeLoader):
+    pass
+
+def ignore_unknown(loader, tag_suffix, node):
+    """Ignore unknown tags and return None."""
+    return None
+
+SafeLineLoader.add_multi_constructor('tag:yaml.org,2002:python/', ignore_unknown)
+
+SCRIPT_DIR = os.path.dirname(os.path.abspath(__file__))
+REPO_ROOT = os.path.dirname(SCRIPT_DIR)
+MKDOCS_PATH = os.path.join(REPO_ROOT, 'mkdocs.yml')
+DOCS_DIR = os.path.join(REPO_ROOT, 'docs')
+
+
+def extract_md_files(nav, section=None):
+    """
+    Recursively extract markdown files from nav structure.
+    Returns list of tuples: (file_path, boost_value)
+    """
+    files = []
+
+    if isinstance(nav, list):
+        for item in nav:
+            files.extend(extract_md_files(item, section))
+    elif isinstance(nav, dict):
+        for key, value in nav.items():
+            # Determine which section we're in
+            if key == 'Using AxonOps':
+                current_section = 'using_axonops'
+            elif key == 'Data Platforms':
+                current_section = 'data_platforms'
+            else:
+                current_section = section  # Inherit parent section
+
+            if isinstance(value, str) and value.endswith('.md'):
+                boost = get_boost_for_section(current_section)
+                files.append((value, boost))
+            else:
+                files.extend(extract_md_files(value, current_section))
+    elif isinstance(nav, str) and nav.endswith('.md'):
+        boost = get_boost_for_section(section)
+        files.append((nav, boost))
+
+    return files
+
+
+def get_boost_for_section(section):
+    """Return boost value based on section."""
+    if section == 'using_axonops':
+        return 8
+    elif section == 'data_platforms':
+        return 3
+    else:
+        return 5
+
+
+def update_front_matter(file_path, boost):
+    """
+    Update or add search boost to file's front matter.
+    Preserves existing front matter formatting exactly.
+    Skips files with boost values of 10 or 0.1 (manually set).
+    """
+    full_path = os.path.join(DOCS_DIR, file_path)
+
+    if not os.path.exists(full_path):
+        print(f"  WARNING: File not found: {file_path}")
+        return 'error'
+
+    with open(full_path, 'r', encoding='utf-8') as f:
+        content = f.read()
+
+    # Check if file has front matter
+    front_matter_pattern = re.compile(r'^(---\s*\n)(.*?)(\n---\s*\n)', re.DOTALL)
+    match = front_matter_pattern.match(content)
+
+    # Check for existing boost value that should be preserved
+    if match:
+        front_matter_text = match.group(2)
+        existing_boost = re.search(r'^\s+boost:\s*([\d.]+)', front_matter_text, re.MULTILINE)
+        if existing_boost:
+            val = float(existing_boost.group(1))
+            if val == 10 or val == 0.1:
+                return 'skipped'
+
+    if match:
+        opening = match.group(1)
+        front_matter_text = match.group(2)
+        closing = match.group(3)
+        rest_of_content = content[match.end():]
+
+        # Check if search section exists
+        search_pattern = re.compile(r'^search:\s*$', re.MULTILINE)
+        search_match = search_pattern.search(front_matter_text)
+
+        if search_match:
+            # search: section exists, check for boost
+            boost_pattern = re.compile(r'^(  boost:\s*)(\d+)\s*$', re.MULTILINE)
+            boost_match = boost_pattern.search(front_matter_text)
+
+            if boost_match:
+                # Update existing boost value
+                new_front_matter = front_matter_text[:boost_match.start(2)] + str(boost) + front_matter_text[boost_match.end(2):]
+            else:
+                # Add boost under existing search section
+                # Find where search: line ends and insert boost after it
+                search_line_end = front_matter_text.find('\n', search_match.start())
+                if search_line_end == -1:
+                    search_line_end = len(front_matter_text)
+                new_front_matter = front_matter_text[:search_line_end] + f'\n  boost: {boost}' + front_matter_text[search_line_end:]
+        else:
+            # No search section, add it at the end
+            new_front_matter = front_matter_text.rstrip() + f'\nsearch:\n  boost: {boost}'
+
+        new_content = opening + new_front_matter + closing + rest_of_content
+    else:
+        # No front matter exists, add it
+        new_content = f'---\nsearch:\n  boost: {boost}\n---\n{content}'
+
+    with open(full_path, 'w', encoding='utf-8') as f:
+        f.write(new_content)
+
+    return 'updated'
+
+
+def main():
+    # Load mkdocs.yml
+    if not os.path.exists(MKDOCS_PATH):
+        print(f"Error: mkdocs.yml not found at {MKDOCS_PATH}")
+        sys.exit(1)
+
+    with open(MKDOCS_PATH, 'r', encoding='utf-8') as f:
+        mkdocs_config = yaml.load(f, Loader=SafeLineLoader)
+
+    nav = mkdocs_config.get('nav', [])
+    if not nav:
+        print("Error: No nav section found in mkdocs.yml")
+        sys.exit(1)
+
+    # Extract all markdown files with their boost values
+    files = extract_md_files(nav)
+
+    print(f"Found {len(files)} markdown files in nav")
+    print()
+
+    # Group by boost value for display
+    boost_8_files = [f for f, b in files if b == 8]
+    boost_5_files = [f for f, b in files if b == 5]
+    boost_3_files = [f for f, b in files if b == 3]
+
+    print(f"Files with boost 8 (Using AxonOps): {len(boost_8_files)}")
+    print(f"Files with boost 5 (other sections): {len(boost_5_files)}")
+    print(f"Files with boost 3 (Data Platforms): {len(boost_3_files)}")
+    print()
+
+    # Update each file
+    updated = 0
+    skipped = 0
+    errors = 0
+
+    for file_path, boost in files:
+        result = update_front_matter(file_path, boost)
+        if result == 'updated':
+            print(f"  Updating {file_path} (boost: {boost})")
+            updated += 1
+        elif result == 'skipped':
+            print(f"  Skipping {file_path} (manual boost preserved)")
+            skipped += 1
+        else:
+            errors += 1
+
+    print()
+    print(f"Done! Updated {updated} files, skipped {skipped} (manual), {errors} errors")
+
+
+if __name__ == '__main__':
+    main()
