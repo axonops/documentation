@@ -1,10 +1,26 @@
 ---
-title: "Release 2026-01-22"
+title: "Release 2026-01-29"
 description: "AxonOps release notes. Latest features, improvements, and bug fixes."
 meta:
   - name: keywords
     content: "release notes, AxonOps updates, changelog, new features"
 ---
+
+## Release 2026-01-29
+
+* axon-agent: 2.0.15
+    * Log collection improvements and Schema Registry monitoring support.
+
+### Fixes
+
+* [Agent] Fix rated metrics not displaying for new installs.
+* [Agent] Fix edge cases in log collection when files are unavailable or deleted.
+
+### New Features
+
+* [Agent] Move log collector alerts to the agent for improved file monitoring.
+* [Agent] Add support for node type field on health checks (requires axon-server upgrade).
+* [Agent] Expand Schema Registry support with Prometheus metrics scraping.
 
 ## Release 2026-01-22
 
