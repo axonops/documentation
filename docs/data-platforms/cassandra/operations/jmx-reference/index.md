@@ -201,7 +201,7 @@ AxonOps eliminates the need to manually configure JMX exporters or build dashboa
 ### Agent Configuration
 
 ```yaml
-# AxonOps agent.yml
+# axon-agent.yml
 cassandra:
   jmx:
     host: localhost

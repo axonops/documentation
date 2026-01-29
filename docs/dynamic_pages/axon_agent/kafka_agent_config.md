@@ -277,10 +277,10 @@ kafka:
 </div>
 
 <!-- Set the Axon-Agent File Permissions -->
-Set file permissions on /etc/axonops/AxonOps agent.yml file by executing the following command
+Set file permissions on /etc/axonops/axon-agent.yml file by executing the following command
 
 ```shell
-sudo chmod 0640 /etc/axonops/AxonOps agent.yml
+sudo chmod 0640 /etc/axonops/axon-agent.yml
 ```
 
 <!-- Step 4 -->

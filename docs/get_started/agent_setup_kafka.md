@@ -5,7 +5,7 @@
 ## Agent Configuration
 
 Update the `key` and `org` values within the highlighted lines of
-`/etc/axonops/AxonOps agent.yml` below.
+`/etc/axonops/axon-agent.yml` below.
 
 The values can be found by logging into
 [console.axonops.cloud](https://console.axonops.cloud){target="_blank"}:

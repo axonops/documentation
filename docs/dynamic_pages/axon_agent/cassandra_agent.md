@@ -129,7 +129,7 @@ The AxonOps Cassandra Agent is the jar that is directly loaded by Cassandra.
 The AxonOps Cassandra Agent then reaches out directly to the AxonOps Agent binary
 which contacts the AxonOps Server directly.
 
-- Configuration File: `/etc/axonops/AxonOps agent.yml`
+- Configuration File: `/etc/axonops/axon-agent.yml`
 - Binary: `/usr/share/axonops/axon-cassandra{version}-agent.jar`
 - Version number: `/usr/share/axonops/axon-cassandra{version}-agent.version`
 - Copyright: `/usr/share/doc/axonops/axon-cassandra{version}-agent/copyright`
@@ -142,7 +142,7 @@ The AxonOps Agent is a dependency of the AxonOps Cassandra Agent. This binary
 contacts the AxonOps Server directly while minimizing the memory footprint
 and CPU utilization of the Cassandra process.
 
-- Configuration File: `/etc/axonops/AxonOps agent.yml`
+- Configuration File: `/etc/axonops/axon-agent.yml`
 - Binary: `usr/share/axonops/AxonOps agent`
 - Logs: `/var/log/axonops/AxonOps agent.log`
 - Systemd service: `/usr/lib/systemd/system/AxonOps agent.service`

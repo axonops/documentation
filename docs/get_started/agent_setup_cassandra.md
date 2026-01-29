@@ -4,7 +4,7 @@
 
 <h2>Agent Configuration </h2>
 
-<p>Update the following highlighted lines from <code>/etc/axonops/AxonOps agent.yml</code>:</p>
+<p>Update the following highlighted lines from <code>/etc/axonops/axon-agent.yml</code>:</p>
 <p>Please update the <strong>key</strong> and <strong>org</strong> values, they can be viewed by logging into <a href="https://console.axonops.cloud" target="_blank">console.axonops.cloud</a></p>
 <ul>
 <li><strong>Organization (org)</strong> name is next to the logo in the console</li>
@@ -36,10 +36,10 @@ If there is a Dedicated NTP server in your Organization please uncomment and upd
   # scripts_location: /var/lib/axonops/scripts/
 ```
 
-Set file permissions on /etc/axonops/AxonOps agent.yml file by executing the following command
+Set file permissions on /etc/axonops/axon-agent.yml file by executing the following command
 
 ```
-sudo chmod 0640 /etc/axonops/AxonOps agent.yml
+sudo chmod 0640 /etc/axonops/axon-agent.yml
 ```
 
 <h2>Configure Cassandra</h2>
