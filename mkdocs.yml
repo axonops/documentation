@@ -202,32 +202,31 @@ nav:
       - Operations:
         - Repairs: 'operations/cassandra/repair/index.md'
         - Rolling Restarts: 'operations/cassandra/rollingrestart/overview.md'
-
-      - Backup:
-        - Overview: 'operations/cassandra/backup/overview.md'
-        - Remote Backups:
-          - Overview: 'operations/cassandra/backup/remote.md'
-          - Local Storage: 'operations/cassandra/backup/local_storage.md'
-          - AWS S3: 'operations/cassandra/backup/aws_s3.md'
-          - Generic S3: 'operations/cassandra/backup/generic_s3.md'
-          - Google Cloud Storage: 'operations/cassandra/backup/gcs.md'
-          - Azure Blob Storage: 'operations/cassandra/backup/azure_blob.md'
-          - SSH/SFTP: 'operations/cassandra/backup/ssh_sftp.md'
-      
-      - Restore:
-        - Overview: 'operations/cassandra/restore/overview.md'
-        - Single node: 'operations/cassandra/restore/restore-node-same-ip.md'
-        - Single node with a different IP address: 'operations/cassandra/restore/restore-node-different-ip.md'
-        - Whole cluster: 'operations/cassandra/restore/restore-cluster-same-ip.md'
-        - Whole cluster with changed IP addresses: 'operations/cassandra/restore/restore-cluster-different-ips.md'
-      
-      - Point-in-time Restore:
-        - Overview: pitr/overview.md
-        - Configure Commitlog Archiving: pitr/configuration.md
-        - Restore from Point-in-Time: pitr/restore.md
-
-
-      - Cassandra Restore Tool:
+        - Backup:
+          - Overview: 'operations/cassandra/backup/overview.md'
+          - Remote Backups:
+            - Overview: 'operations/cassandra/backup/remote.md'
+            - Local Storage: 'operations/cassandra/backup/local_storage.md'
+            - AWS S3: 'operations/cassandra/backup/aws_s3.md'
+            - Generic S3: 'operations/cassandra/backup/generic_s3.md'
+            - Google Cloud Storage: 'operations/cassandra/backup/gcs.md'
+            - Azure Blob Storage: 'operations/cassandra/backup/azure_blob.md'
+            - SSH/SFTP: 'operations/cassandra/backup/ssh_sftp.md'
+          - Backup Retention and Purge: 'operations/cassandra/backup/backup-purge.md'
+          - Commitlog Archiving: 'operations/cassandra/backup/commitlog-archiving.md'
+          - Configure Commitlog Archiving: pitr/configuration.md
+        - Restore:
+          - Snapshot Restore:
+            - Overview: 'operations/cassandra/restore/overview.md'
+            - Single node: 'operations/cassandra/restore/restore-node-same-ip.md'
+            - Single node with a different IP address: 'operations/cassandra/restore/restore-node-different-ip.md'
+            - Whole cluster: 'operations/cassandra/restore/restore-cluster-same-ip.md'
+            - Whole cluster with changed IP addresses: 'operations/cassandra/restore/restore-cluster-different-ips.md'
+            - Snapshot Import: 'operations/cassandra/restore/snapshot-import.md'
+          - Point-in-time Restore:
+            - Overview: pitr/overview.md
+            - Restore from Point-in-Time: pitr/restore.md
+      - Cassandra Backup Restore Tool:
         - Setup: 'operations/cassandra/restore/restore-tool-setup.md'
         - Restore to a different cluster: 'operations/cassandra/restore/restore-different-cluster.md'
 
