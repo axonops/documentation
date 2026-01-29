@@ -19865,7 +19865,7 @@ data-et-multi-view="{&quot;schema&quot;:{&quot;content&quot;:{&quot;desktop&quot
 The AxonOps Kafka Agent then reaches out directly to the AxonOps Agent binary
 which contacts the AxonOps Server directly.</p>
 <ul>
-<li>Configuration File: <code>/etc/axonops/AxonOps agent.yml</code></li>
+<li>Configuration File: <code>/etc/axonops/axon-agent.yml</code></li>
 <li>Binary: <code>/usr/share/axonops/axon-kafka{version}-agent.jar</code></li>
 <li>Version number: <code>/usr/share/axonops/axon-kafka{version}-agent.version</code></li>
 <li>Copyright: <code>/usr/share/doc/axonops/axon-kafka{version}-agent/copyright</code></li>
@@ -19876,14 +19876,14 @@ which contacts the AxonOps Server directly.</p>
 contacts the AxonOps Server directly while minimizing the memory footprint
 and CPU utilization of the Kafka process.</p>
 <ul>
-<li>Configuration File: <code>/etc/axonops/AxonOps agent.yml</code></li>
+<li>Configuration File: <code>/etc/axonops/axon-agent.yml</code></li>
 <li>Binary: <code>usr/share/axonops/AxonOps agent</code></li>
 <li>Logs: <code>/var/log/axonops/AxonOps agent.log</code></li>
 <li>Systemd service: <code>/usr/lib/systemd/system/AxonOps agent.service</code></li>
 </ul>
 <h2 id="agent-configuration">Agent Configuration<a class="headerlink" href="#agent-configuration" title="Permanent link">¶</a></h2>
 <p>Update the <code>key</code> and <code>org</code> values within the highlighted lines of
-<code>/etc/axonops/AxonOps agent.yml</code> below.</p>
+<code>/etc/axonops/axon-agent.yml</code> below.</p>
 <p>The values can be found by logging into
 <a href="https://console.axonops.cloud" target="_blank">console.axonops.cloud</a>:</p>
 <ul>
@@ -20166,8 +20166,8 @@ and CPU utilization of the Kafka process.</p>
 </div>
 
 <!-- Set the Axon-Agent File Permissions -->
-<p>Set file permissions on /etc/axonops/AxonOps agent.yml file by executing the following command</p>
-<div class="highlight"><pre><span></span><code>sudo<span class="w"> </span>chmod<span class="w"> </span><span class="m">0640</span><span class="w"> </span>/etc/axonops/AxonOps<span class="w"> </span>agent.yml
+<p>Set file permissions on /etc/axonops/axon-agent.yml file by executing the following command</p>
+<div class="highlight"><pre><span></span><code>sudo<span class="w"> </span>chmod<span class="w"> </span><span class="m">0640</span><span class="w"> </span>/etc/axonops/axon-agent.yml
 </code></pre></div>
 <!-- Step 4 -->
 <div id="Broker" class="axon_kafka_dynamic_s2">

@@ -19923,7 +19923,7 @@ data-et-multi-view="{&quot;schema&quot;:{&quot;content&quot;:{&quot;desktop&quot
 The AxonOps Cassandra Agent then reaches out directly to the AxonOps Agent binary
 which contacts the AxonOps Server directly.</p>
 <ul>
-<li>Configuration File: <code>/etc/axonops/AxonOps agent.yml</code></li>
+<li>Configuration File: <code>/etc/axonops/axon-agent.yml</code></li>
 <li>Binary: <code>/usr/share/axonops/axon-cassandra{version}-agent.jar</code></li>
 <li>Version number: <code>/usr/share/axonops/axon-cassandra{version}-agent.version</code></li>
 <li>Copyright: <code>/usr/share/doc/axonops/axon-cassandra{version}-agent/copyright</code></li>
@@ -19934,14 +19934,14 @@ which contacts the AxonOps Server directly.</p>
 contacts the AxonOps Server directly while minimizing the memory footprint
 and CPU utilization of the Cassandra process.</p>
 <ul>
-<li>Configuration File: <code>/etc/axonops/AxonOps agent.yml</code></li>
+<li>Configuration File: <code>/etc/axonops/axon-agent.yml</code></li>
 <li>Binary: <code>usr/share/axonops/AxonOps agent</code></li>
 <li>Logs: <code>/var/log/axonops/AxonOps agent.log</code></li>
 <li>Systemd service: <code>/usr/lib/systemd/system/AxonOps agent.service</code></li>
 </ul>
 <h2>Agent Configuration </h2>
 
-<p>Update the following highlighted lines from <code>/etc/axonops/AxonOps agent.yml</code>:</p>
+<p>Update the following highlighted lines from <code>/etc/axonops/axon-agent.yml</code>:</p>
 <p>Please update the <strong>key</strong> and <strong>org</strong> values, they can be viewed by logging into <a href="https://console.axonops.cloud" target="_blank">console.axonops.cloud</a></p>
 <ul>
 <li><strong>Organization (org)</strong> name is next to the logo in the console</li>
@@ -19970,26 +19970,26 @@ and CPU utilization of the Cassandra process.</p>
   # under this path
   # scripts_location: /var/lib/axonops/scripts/
 </code></pre></div>
-<p>Set file permissions on /etc/axonops/AxonOps agent.yml file by executing the following command</p>
-<div class="highlight"><pre><span></span><code>sudo chmod 0640 /etc/axonops/AxonOps agent.yml
+<p>Set file permissions on /etc/axonops/axon-agent.yml file by executing the following command</p>
+<div class="highlight"><pre><span></span><code>sudo chmod 0640 /etc/axonops/axon-agent.yml
 </code></pre></div>
 <h2>Configure Cassandra</h2>
 
 <p>Add the following line at the end of <code>/etc/cassandra/cassandra-env.sh</code>:</p>
 <div id="Cassandra30Div" class="javacas">
-  <div class="highlight"><pre><span></span><code>JVM_OPTS="$JVM_OPTS -javaagent:/usr/share/axonops/axon-cassandra3.0-agent.jar=/etc/axonops/AxonOps agent.yml"
+  <div class="highlight"><pre><span></span><code>JVM_OPTS="$JVM_OPTS -javaagent:/usr/share/axonops/axon-cassandra3.0-agent.jar=/etc/axonops/axon-agent.yml"
 </code></pre></div>
 </div>
 <div id="Cassandra311Div" class="javacas" style="display:none">
-  <div class="highlight"><pre><span></span><code>JVM_OPTS="$JVM_OPTS -javaagent:/usr/share/axonops/axon-cassandra3.11-agent.jar=/etc/axonops/AxonOps agent.yml"
+  <div class="highlight"><pre><span></span><code>JVM_OPTS="$JVM_OPTS -javaagent:/usr/share/axonops/axon-cassandra3.11-agent.jar=/etc/axonops/axon-agent.yml"
 </code></pre></div>
 </div>
 <div id="Cassandra40Div" class="javacas" style="display:none">
-  <div class="highlight"><pre><span></span><code>JVM_OPTS="$JVM_OPTS -javaagent:/usr/share/axonops/axon-cassandra4.0-agent.jar=/etc/axonops/AxonOps agent.yml"
+  <div class="highlight"><pre><span></span><code>JVM_OPTS="$JVM_OPTS -javaagent:/usr/share/axonops/axon-cassandra4.0-agent.jar=/etc/axonops/axon-agent.yml"
 </code></pre></div>
 </div>
 <div id="Cassandra41Div" class="javacas" style="display:none">
-  <div class="highlight"><pre><span></span><code>JVM_OPTS="$JVM_OPTS -javaagent:/usr/share/axonops/axon-cassandra4.1-agent.jar=/etc/axonops/AxonOps agent.yml"
+  <div class="highlight"><pre><span></span><code>JVM_OPTS="$JVM_OPTS -javaagent:/usr/share/axonops/axon-cassandra4.1-agent.jar=/etc/axonops/axon-agent.yml"
 </code></pre></div>
 </div>
 <div id="Cassandra50Div" class="javacas" style="display:none">
