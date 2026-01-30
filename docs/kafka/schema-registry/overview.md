@@ -77,10 +77,10 @@ You can also configure Schema Registry in the agent YAML configuration:
 kafka:
   schema_registry_client:
     enabled: true
-    url: "http://schema-registry:8081"
+    url: "https://schema-registry.example.com"
     # Use one of the authentication methods below:
-    # username: "schema_user"
-    # password: "schema_password"
+    # username: "registry_user"
+    # password: "registry_password"
     # bearerToken: "registry_bearer_token"
     log_location: "/var/log/kafka/schema-registry.log"
     metricsScrapeUrl:
@@ -88,12 +88,10 @@ kafka:
       scrape_username: "metrics_user"
       scrape_password: "metrics_password"
     # Optional TLS settings
-    tls:
-      enabled: false
-      caFilepath: "/etc/ssl/certs/ca.pem"
-      certFilepath: "/etc/ssl/certs/client.pem"
-      keyFilepath: "/etc/ssl/private/client.key"
-      insecureSkipTlsVerify: false
+    # tls:
+    #   enabled: true
+    #   caFilepath: /path/to/ca.pem
+    #   insecureSkipTlsVerify: false
 ```
 
 After saving the file, restart the AxonOps agent so it can connect.
