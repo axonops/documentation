@@ -1,12 +1,12 @@
 ---
-title: "Schema Registry"
-description: "Use AxonOps to connect to your Kafka Schema Registry, browse subjects and versions, collect metrics, and monitor schema operations."
+title: "Schema Registry (AxonOps)"
+description: "Use AxonOps to connect to your Kafka Schema Registry and browse subjects, versions, and compatibility."
 meta:
   - name: keywords
-    content: "Schema Registry, Kafka schemas, Avro, Protobuf, JSON Schema, schema monitoring, AxonOps Kafka"
+    content: "AxonOps schema registry, Kafka schema registry UI, subjects, compatibility"
 ---
 
-# Schema Registry
+# Schema Registry (AxonOps)
 
 ## What is Schema Registry
 
@@ -34,13 +34,13 @@ AxonOps connects to your existing Kafka Schema Registry so you can browse schema
 
 ## Prerequisites
 
-- A running Kafka Schema Registry service (Confluent or compatible).
+- A running Kafka Schema Registry service (AxonOps, Confluent, or compatible).
 - Network access from the AxonOps agent to the registry endpoint.
 - Credentials or tokens if your registry is secured.
 
 ## Configure the agent
 
-Enable Schema Registry in the AxonOps agent configuration.
+Enable the schema registry client in the AxonOps agent configuration:
 
 ### Environment variables
 
