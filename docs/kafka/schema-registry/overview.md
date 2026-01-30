@@ -82,11 +82,6 @@ kafka:
     # username: "registry_user"
     # password: "registry_password"
     # bearerToken: "registry_bearer_token"
-    log_location: "/var/log/kafka/schema-registry.log"
-    metricsScrapeUrl:
-      scrape_endpoint: "http://schema-registry:8081/metrics"
-      scrape_username: "metrics_user"
-      scrape_password: "metrics_password"
     # Optional TLS settings
     # tls:
     #   enabled: true
