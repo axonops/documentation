@@ -253,8 +253,7 @@ nav:
           - Connect Tasks Dashboard: metrics/kafka/connect_tasks_metrics_mapping.md
           - Connect Workers Dashboard: metrics/kafka/connect_workers_metrics_mapping.md
 
-      - Brokers: 
-        - Overview : kafka/brokers/overview.md
+      - Brokers: kafka/brokers/overview.md
       
       - Topics: 
         - Overview: kafka/topics/overview.md
@@ -267,9 +266,10 @@ nav:
         # - Configure ACL: kafka/acl/configure_acl.md
         # - Delete ACL: kafka/acl/delete_acl.md
 
-      - Consumers: 
-        - Overview: kafka/consumers/overview.md
-    
+      - Consumers: kafka/consumers/overview.md
+
+      - Schema Registry: kafka/schema-registry/overview.md
+
     - Notification Integrations:
       - Overview : 'integrations/overview.md'
       - PagerDuty: 'integrations/pagerduty-integration.md'
