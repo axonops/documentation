@@ -3760,60 +3760,6 @@ data-et-multi-view="{&quot;schema&quot;:{&quot;content&quot;:{&quot;desktop&quot
 
               
             
-          </ul>
-        </nav>
-      
-    </li>
-  
-
-              
-            
-          </ul>
-        </nav>
-      
-    </li>
-  
-
-              
-            
-              
-                
-  
-  
-  
-  
-    
-    
-    
-      
-      
-    
-    
-    <li class="md-nav__item md-nav__item--nested">
-      
-        
-        
-        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_5_4_2" >
-        
-          
-          <label class="md-nav__link" for="__nav_5_4_2" id="__nav_5_4_2_label" tabindex="0">
-            
-  
-  <span class="md-ellipsis">
-    Brokers
-  </span>
-  
-
-            <span class="md-nav__icon md-icon"></span>
-          </label>
-        
-        <nav class="md-nav" data-md-level="3" aria-labelledby="__nav_5_4_2_label" aria-expanded="false">
-          <label class="md-nav__title" for="__nav_5_4_2">
-            <span class="md-nav__icon md-icon"></span>
-            Brokers
-          </label>
-          <ul class="md-nav__list" data-md-scrollfix>
-            
               
                 
   
@@ -3821,11 +3767,11 @@ data-et-multi-view="{&quot;schema&quot;:{&quot;content&quot;:{&quot;desktop&quot
   
   
     <li class="md-nav__item">
-      <a href="../../../../kafka/brokers/overview/" class="md-nav__link">
+      <a href="../../../../metrics/kafka/schema_registry_metrics_mapping.md" class="md-nav__link">
         
   
   <span class="md-ellipsis">
-    Overview
+    Schema Registry Dashboard
   </span>
   
 
@@ -3838,6 +3784,35 @@ data-et-multi-view="{&quot;schema&quot;:{&quot;content&quot;:{&quot;desktop&quot
           </ul>
         </nav>
       
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../kafka/brokers/overview/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Brokers
+  </span>
+  
+
+      </a>
     </li>
   
 
@@ -4046,50 +4021,12 @@ data-et-multi-view="{&quot;schema&quot;:{&quot;content&quot;:{&quot;desktop&quot
   
   
   
-    
-    
-    
-      
-      
-    
-    
-    <li class="md-nav__item md-nav__item--nested">
-      
-        
-        
-        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_5_4_5" >
-        
-          
-          <label class="md-nav__link" for="__nav_5_4_5" id="__nav_5_4_5_label" tabindex="0">
-            
-  
-  <span class="md-ellipsis">
-    Consumers
-  </span>
-  
-
-            <span class="md-nav__icon md-icon"></span>
-          </label>
-        
-        <nav class="md-nav" data-md-level="3" aria-labelledby="__nav_5_4_5_label" aria-expanded="false">
-          <label class="md-nav__title" for="__nav_5_4_5">
-            <span class="md-nav__icon md-icon"></span>
-            Consumers
-          </label>
-          <ul class="md-nav__list" data-md-scrollfix>
-            
-              
-                
-  
-  
-  
-  
     <li class="md-nav__item">
       <a href="../../../../kafka/consumers/overview/" class="md-nav__link">
         
   
   <span class="md-ellipsis">
-    Overview
+    Consumers
   </span>
   
 
@@ -4099,9 +4036,22 @@ data-et-multi-view="{&quot;schema&quot;:{&quot;content&quot;:{&quot;desktop&quot
 
               
             
-          </ul>
-        </nav>
-      
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../kafka/schema-registry/overview/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Schema Registry
+  </span>
+  
+
+      </a>
     </li>
   
 
@@ -20275,14 +20225,14 @@ data-et-multi-view="{&quot;schema&quot;:{&quot;content&quot;:{&quot;desktop&quot
 
 
 <div><h1 id="installing-the-cassandra-restore-tool">Installing the Cassandra Restore Tool<a class="headerlink" href="#installing-the-cassandra-restore-tool" title="Permanent link">¶</a></h1>
-<p>The AxonOps Cassandra Restore tool is included in the AxonOps Agent package.</p>
+<p>The AxonOps Cassandra Restore tool is included in the axon-agent package.</p>
 <h4 id="installing-on-debian-ubuntu">Installing on Debian / Ubuntu<a class="headerlink" href="#installing-on-debian-ubuntu" title="Permanent link">¶</a></h4>
 <div class="highlight"><pre><span></span><code>sudo<span class="w"> </span>apt-get<span class="w"> </span>update
 sudo<span class="w"> </span>apt-get<span class="w"> </span>install<span class="w"> </span>-y<span class="w"> </span>curl<span class="w"> </span>gnupg<span class="w"> </span>ca-certificates
 curl<span class="w"> </span>-L<span class="w"> </span>https://packages.axonops.com/apt/repo-signing-key.gpg<span class="w"> </span><span class="p">|</span><span class="w"> </span>sudo<span class="w"> </span>gpg<span class="w"> </span>--dearmor<span class="w"> </span>-o<span class="w"> </span>/usr/share/keyrings/axonops.gpg
 <span class="nb">echo</span><span class="w"> </span><span class="s2">"deb [arch=arm64,amd64 signed-by=/usr/share/keyrings/axonops.gpg] https://packages.axonops.com/apt axonops-apt main"</span><span class="w"> </span><span class="p">|</span><span class="w"> </span>sudo<span class="w"> </span>tee<span class="w"> </span>/etc/apt/sources.list.d/axonops-apt.list
 sudo<span class="w"> </span>apt-get<span class="w"> </span>update
-sudo<span class="w"> </span>apt-get<span class="w"> </span>install<span class="w"> </span>AxonOps<span class="w"> </span>agent
+sudo<span class="w"> </span>apt-get<span class="w"> </span>install<span class="w"> </span>axon-agent
 </code></pre></div>
 <h4 id="installing-on-centos-red-hat">Installing on CentOS / Red Hat<a class="headerlink" href="#installing-on-centos-red-hat" title="Permanent link">¶</a></h4>
 <div class="highlight"><pre><span></span><code>sudo<span class="w"> </span>tee<span class="w"> </span>/etc/yum.repos.d/axonops-yum.repo<span class="w"> </span><span class="s">&lt;&lt; EOL</span>
@@ -20293,7 +20243,7 @@ sudo<span class="w"> </span>apt-get<span class="w"> </span>install<span class="w
 <span class="s">repo_gpgcheck=0</span>
 <span class="s">gpgcheck=0</span>
 <span class="s">EOL</span>
-sudo<span class="w"> </span>yum<span class="w"> </span>install<span class="w"> </span>AxonOps<span class="w"> </span>agent
+sudo<span class="w"> </span>yum<span class="w"> </span>install<span class="w"> </span>axon-agent
 </code></pre></div>
 <p>After the package has been installed you can find the Cassandra Restore Tool at <code>/usr/share/axonops/axon-cassandra-restore</code>.</p>
 <p>Run the tool with <code>--help</code> to see the available options:
@@ -20339,7 +20289,7 @@ Usage of /usr/share/axonops/axon-cassandra-restore:
 <p>You can find the AxonOps host ID by selecting the node on the <code>Cluster Overview</code> page of the AxonOps dashboard and looking at the <code>Agent ID</code> field.</p>
 <h2 id="storage-config-and-storage-config-file-options">Storage Config and Storage Config File options<a class="headerlink" href="#storage-config-and-storage-config-file-options" title="Permanent link">¶</a></h2>
 <blockquote>
-<p><strong>The <code>--storage-config-file</code> option was added to v1.0.95 and later of AxonOps Agent</strong></p>
+<p><strong>The <code>--storage-config-file</code> option was added to v1.0.95 and later of axon-agent</strong></p>
 </blockquote>
 <p>The <code>axon-cassandra-restore</code> tool has two options when passing the remote storage configuration:</p>
 <ul>

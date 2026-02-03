@@ -3605,60 +3605,6 @@ data-et-multi-view="{&quot;schema&quot;:{&quot;content&quot;:{&quot;desktop&quot
 
               
             
-          </ul>
-        </nav>
-      
-    </li>
-  
-
-              
-            
-          </ul>
-        </nav>
-      
-    </li>
-  
-
-              
-            
-              
-                
-  
-  
-  
-  
-    
-    
-    
-      
-      
-    
-    
-    <li class="md-nav__item md-nav__item--nested">
-      
-        
-        
-        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_5_4_2" >
-        
-          
-          <label class="md-nav__link" for="__nav_5_4_2" id="__nav_5_4_2_label" tabindex="0">
-            
-  
-  <span class="md-ellipsis">
-    Brokers
-  </span>
-  
-
-            <span class="md-nav__icon md-icon"></span>
-          </label>
-        
-        <nav class="md-nav" data-md-level="3" aria-labelledby="__nav_5_4_2_label" aria-expanded="false">
-          <label class="md-nav__title" for="__nav_5_4_2">
-            <span class="md-nav__icon md-icon"></span>
-            Brokers
-          </label>
-          <ul class="md-nav__list" data-md-scrollfix>
-            
               
                 
   
@@ -3666,11 +3612,11 @@ data-et-multi-view="{&quot;schema&quot;:{&quot;content&quot;:{&quot;desktop&quot
   
   
     <li class="md-nav__item">
-      <a href="../../kafka/brokers/overview/" class="md-nav__link">
+      <a href="../../metrics/kafka/schema_registry_metrics_mapping.md" class="md-nav__link">
         
   
   <span class="md-ellipsis">
-    Overview
+    Schema Registry Dashboard
   </span>
   
 
@@ -3683,6 +3629,35 @@ data-et-multi-view="{&quot;schema&quot;:{&quot;content&quot;:{&quot;desktop&quot
           </ul>
         </nav>
       
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../kafka/brokers/overview/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Brokers
+  </span>
+  
+
+      </a>
     </li>
   
 
@@ -3891,50 +3866,12 @@ data-et-multi-view="{&quot;schema&quot;:{&quot;content&quot;:{&quot;desktop&quot
   
   
   
-    
-    
-    
-      
-      
-    
-    
-    <li class="md-nav__item md-nav__item--nested">
-      
-        
-        
-        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_5_4_5" >
-        
-          
-          <label class="md-nav__link" for="__nav_5_4_5" id="__nav_5_4_5_label" tabindex="0">
-            
-  
-  <span class="md-ellipsis">
-    Consumers
-  </span>
-  
-
-            <span class="md-nav__icon md-icon"></span>
-          </label>
-        
-        <nav class="md-nav" data-md-level="3" aria-labelledby="__nav_5_4_5_label" aria-expanded="false">
-          <label class="md-nav__title" for="__nav_5_4_5">
-            <span class="md-nav__icon md-icon"></span>
-            Consumers
-          </label>
-          <ul class="md-nav__list" data-md-scrollfix>
-            
-              
-                
-  
-  
-  
-  
     <li class="md-nav__item">
       <a href="../../kafka/consumers/overview/" class="md-nav__link">
         
   
   <span class="md-ellipsis">
-    Overview
+    Consumers
   </span>
   
 
@@ -3944,9 +3881,22 @@ data-et-multi-view="{&quot;schema&quot;:{&quot;content&quot;:{&quot;desktop&quot
 
               
             
-          </ul>
-        </nav>
-      
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../kafka/schema-registry/overview/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Schema Registry
+  </span>
+  
+
+      </a>
     </li>
   
 
@@ -19975,9 +19925,9 @@ data-et-multi-view="{&quot;schema&quot;:{&quot;content&quot;:{&quot;desktop&quot
 </ul>
 <h3 id="performance-metrics">Performance Metrics<a class="headerlink" href="#performance-metrics" title="Permanent link">¶</a></h3>
 <p>Performance metrics in Cassandra are extensive. A key set of metrics for understanding database performance is system resource utilization.</p>
-<p>The AxonOps agent captures both Cassandra and OS metrics and pushes them to the AxonOps server.</p>
+<p>axon-agent captures both Cassandra and OS metrics and pushes them to the AxonOps server.</p>
 <h3 id="events">Events<a class="headerlink" href="#events" title="Permanent link">¶</a></h3>
-<p>Cassandra event logs are written to log files by default. The log files contain information that allows SREs and DevOps engineers to identify issues when they occur. The AxonOps agent captures the logs and pushes them to the AxonOps server. These logs are visible within the AxonOps Dashboard, allowing quick access without logging in to individual servers.</p>
+<p>Cassandra event logs are written to log files by default. The log files contain information that allows SREs and DevOps engineers to identify issues when they occur. The axon-agent captures the logs and pushes them to the AxonOps server. These logs are visible within the AxonOps Dashboard, allowing quick access without logging in to individual servers.</p>
 <h3 id="service-availability">Service Availability<a class="headerlink" href="#service-availability" title="Permanent link">¶</a></h3>
 <p>Checking service availability gives confidence that services are running as expected. Example service checks include:</p>
 <ul>
@@ -19985,7 +19935,7 @@ data-et-multi-view="{&quot;schema&quot;:{&quot;content&quot;:{&quot;desktop&quot
 <li>Network open ports - for example, CQL and storage ports</li>
 <li>Database availability - for example, executing a CQL query</li>
 </ul>
-<p>AxonOps implements all three types of monitoring described above. The AxonOps agent captures the information, sends it securely to the AxonOps server, and stores it in the backend data store.</p>
+<p>AxonOps implements all three types of monitoring described above. axon-agent captures the information, sends it securely to the AxonOps server, and stores it in the backend data store.</p>
 <p>The AxonOps Dashboard provides a comprehensive set of metrics dashboards combined with the event log view. It also provides a separate service check status view showing the health of the cluster.</p>
 <p>This section describes how the AxonOps GUI organises the dashboards of all three types of monitoring.</p></div>
 

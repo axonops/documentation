@@ -20,7 +20,7 @@
     
     
 
-  <title>AxonOps agent behind a proxy</title>
+  <title>axon-agent behind a proxy</title>
 
 
     
@@ -70,7 +70,7 @@
 {
   "@context": "https://schema.org",
   "@type": "TechArticle",
-  "headline": "AxonOps agent behind a proxy - AxonOps Documentation",
+  "headline": "axon-agent behind a proxy - AxonOps Documentation",
   "description": "Configure AxonOps with proxy settings. HTTP proxy configuration for agents and server.",
   "about": {
     "@type": "SoftwareApplication",
@@ -193,7 +193,7 @@ document.addEventListener('DOMContentLoaded', function() {
     <div data-md-component="skip">
       
         
-        <a href="#axonops-agent-behind-a-proxy" class="md-skip">
+        <a href="#axon-agent-behind-a-proxy" class="md-skip">
           Skip to content
         </a>
       
@@ -247,7 +247,7 @@ document.addEventListener('DOMContentLoaded', function() {
         <div class="md-header__topic" data-md-component="header-topic">
           <span class="md-ellipsis">
             
-              AxonOps agent behind a proxy
+              axon-agent behind a proxy
             
           </span>
         </div>
@@ -3523,60 +3523,6 @@ data-et-multi-view="{&quot;schema&quot;:{&quot;content&quot;:{&quot;desktop&quot
 
               
             
-          </ul>
-        </nav>
-      
-    </li>
-  
-
-              
-            
-          </ul>
-        </nav>
-      
-    </li>
-  
-
-              
-            
-              
-                
-  
-  
-  
-  
-    
-    
-    
-      
-      
-    
-    
-    <li class="md-nav__item md-nav__item--nested">
-      
-        
-        
-        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_5_4_2" >
-        
-          
-          <label class="md-nav__link" for="__nav_5_4_2" id="__nav_5_4_2_label" tabindex="0">
-            
-  
-  <span class="md-ellipsis">
-    Brokers
-  </span>
-  
-
-            <span class="md-nav__icon md-icon"></span>
-          </label>
-        
-        <nav class="md-nav" data-md-level="3" aria-labelledby="__nav_5_4_2_label" aria-expanded="false">
-          <label class="md-nav__title" for="__nav_5_4_2">
-            <span class="md-nav__icon md-icon"></span>
-            Brokers
-          </label>
-          <ul class="md-nav__list" data-md-scrollfix>
-            
               
                 
   
@@ -3584,11 +3530,11 @@ data-et-multi-view="{&quot;schema&quot;:{&quot;content&quot;:{&quot;desktop&quot
   
   
     <li class="md-nav__item">
-      <a href="../../kafka/brokers/overview/" class="md-nav__link">
+      <a href="../../metrics/kafka/schema_registry_metrics_mapping.md" class="md-nav__link">
         
   
   <span class="md-ellipsis">
-    Overview
+    Schema Registry Dashboard
   </span>
   
 
@@ -3601,6 +3547,35 @@ data-et-multi-view="{&quot;schema&quot;:{&quot;content&quot;:{&quot;desktop&quot
           </ul>
         </nav>
       
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../kafka/brokers/overview/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Brokers
+  </span>
+  
+
+      </a>
     </li>
   
 
@@ -3809,50 +3784,12 @@ data-et-multi-view="{&quot;schema&quot;:{&quot;content&quot;:{&quot;desktop&quot
   
   
   
-    
-    
-    
-      
-      
-    
-    
-    <li class="md-nav__item md-nav__item--nested">
-      
-        
-        
-        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_5_4_5" >
-        
-          
-          <label class="md-nav__link" for="__nav_5_4_5" id="__nav_5_4_5_label" tabindex="0">
-            
-  
-  <span class="md-ellipsis">
-    Consumers
-  </span>
-  
-
-            <span class="md-nav__icon md-icon"></span>
-          </label>
-        
-        <nav class="md-nav" data-md-level="3" aria-labelledby="__nav_5_4_5_label" aria-expanded="false">
-          <label class="md-nav__title" for="__nav_5_4_5">
-            <span class="md-nav__icon md-icon"></span>
-            Consumers
-          </label>
-          <ul class="md-nav__list" data-md-scrollfix>
-            
-              
-                
-  
-  
-  
-  
     <li class="md-nav__item">
       <a href="../../kafka/consumers/overview/" class="md-nav__link">
         
   
   <span class="md-ellipsis">
-    Overview
+    Consumers
   </span>
   
 
@@ -3862,9 +3799,22 @@ data-et-multi-view="{&quot;schema&quot;:{&quot;content&quot;:{&quot;desktop&quot
 
               
             
-          </ul>
-        </nav>
-      
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../kafka/schema-registry/overview/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Schema Registry
+  </span>
+  
+
+      </a>
     </li>
   
 
@@ -19849,13 +19799,13 @@ data-et-multi-view="{&quot;schema&quot;:{&quot;content&quot;:{&quot;desktop&quot
                   
 
 
-<div><h1 id="axonops-agent-behind-a-proxy">AxonOps agent behind a proxy<a class="headerlink" href="#axonops-agent-behind-a-proxy" title="Permanent link">¶</a></h1>
-<p>If your network does not have direct internet access and it requires a proxy to connect to the AxonOps Server, you will need to configure the AxonOps agent to use it.</p>
-<p>To configure the AxonOps agent to use a proxy, you can use a <code>systemd</code> override. This is the recommended approach as it keeps your configuration separate from the agent's default service file.</p>
+<div><h1 id="axon-agent-behind-a-proxy">axon-agent behind a proxy<a class="headerlink" href="#axon-agent-behind-a-proxy" title="Permanent link">¶</a></h1>
+<p>If your network does not have direct internet access and it requires a proxy to connect to the AxonOps Server, you will need to configure axon-agent to use it.</p>
+<p>To configure the axon-agent to use a proxy, you can use a <code>systemd</code> override. This is the recommended approach as it keeps your configuration separate from the agent's default service file.</p>
 <ol>
 <li>
-<p>Create an override file for the <code>AxonOps agent</code> service:</p>
-<div class="highlight"><pre><span></span><code>sudo<span class="w"> </span>systemctl<span class="w"> </span>edit<span class="w"> </span>AxonOps<span class="w"> </span>agent.service
+<p>Create an override file for the <code>axon-agent</code> service:</p>
+<div class="highlight"><pre><span></span><code>sudo<span class="w"> </span>systemctl<span class="w"> </span>edit<span class="w"> </span>axon-agent.service
 </code></pre></div>
 </li>
 <li>
@@ -19876,13 +19826,13 @@ data-et-multi-view="{&quot;schema&quot;:{&quot;content&quot;:{&quot;desktop&quot
 <p>Save the file and exit the editor. <code>systemd</code> will automatically reload the configuration.</p>
 </li>
 <li>
-<p>Restart the <code>AxonOps agent</code> to apply the changes:</p>
-<div class="highlight"><pre><span></span><code>sudo<span class="w"> </span>systemctl<span class="w"> </span>restart<span class="w"> </span>AxonOps<span class="w"> </span>agent
+<p>Restart the <code>axon-agent</code> to apply the changes:</p>
+<div class="highlight"><pre><span></span><code>sudo<span class="w"> </span>systemctl<span class="w"> </span>restart<span class="w"> </span>axon-agent
 </code></pre></div>
 </li>
 <li>
 <p>You can verify that the environment variables have been applied by checking the service's status:</p>
-<div class="highlight"><pre><span></span><code>systemctl<span class="w"> </span>status<span class="w"> </span>AxonOps<span class="w"> </span>agent
+<div class="highlight"><pre><span></span><code>systemctl<span class="w"> </span>status<span class="w"> </span>axon-agent
 </code></pre></div>
 </li>
 </ol></div>

@@ -3529,60 +3529,6 @@ data-et-multi-view="{&quot;schema&quot;:{&quot;content&quot;:{&quot;desktop&quot
 
               
             
-          </ul>
-        </nav>
-      
-    </li>
-  
-
-              
-            
-          </ul>
-        </nav>
-      
-    </li>
-  
-
-              
-            
-              
-                
-  
-  
-  
-  
-    
-    
-    
-      
-      
-    
-    
-    <li class="md-nav__item md-nav__item--nested">
-      
-        
-        
-        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_5_4_2" >
-        
-          
-          <label class="md-nav__link" for="__nav_5_4_2" id="__nav_5_4_2_label" tabindex="0">
-            
-  
-  <span class="md-ellipsis">
-    Brokers
-  </span>
-  
-
-            <span class="md-nav__icon md-icon"></span>
-          </label>
-        
-        <nav class="md-nav" data-md-level="3" aria-labelledby="__nav_5_4_2_label" aria-expanded="false">
-          <label class="md-nav__title" for="__nav_5_4_2">
-            <span class="md-nav__icon md-icon"></span>
-            Brokers
-          </label>
-          <ul class="md-nav__list" data-md-scrollfix>
-            
               
                 
   
@@ -3590,11 +3536,11 @@ data-et-multi-view="{&quot;schema&quot;:{&quot;content&quot;:{&quot;desktop&quot
   
   
     <li class="md-nav__item">
-      <a href="../../../../kafka/brokers/overview/" class="md-nav__link">
+      <a href="../../../../metrics/kafka/schema_registry_metrics_mapping.md" class="md-nav__link">
         
   
   <span class="md-ellipsis">
-    Overview
+    Schema Registry Dashboard
   </span>
   
 
@@ -3607,6 +3553,35 @@ data-et-multi-view="{&quot;schema&quot;:{&quot;content&quot;:{&quot;desktop&quot
           </ul>
         </nav>
       
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../kafka/brokers/overview/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Brokers
+  </span>
+  
+
+      </a>
     </li>
   
 
@@ -3815,50 +3790,12 @@ data-et-multi-view="{&quot;schema&quot;:{&quot;content&quot;:{&quot;desktop&quot
   
   
   
-    
-    
-    
-      
-      
-    
-    
-    <li class="md-nav__item md-nav__item--nested">
-      
-        
-        
-        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_5_4_5" >
-        
-          
-          <label class="md-nav__link" for="__nav_5_4_5" id="__nav_5_4_5_label" tabindex="0">
-            
-  
-  <span class="md-ellipsis">
-    Consumers
-  </span>
-  
-
-            <span class="md-nav__icon md-icon"></span>
-          </label>
-        
-        <nav class="md-nav" data-md-level="3" aria-labelledby="__nav_5_4_5_label" aria-expanded="false">
-          <label class="md-nav__title" for="__nav_5_4_5">
-            <span class="md-nav__icon md-icon"></span>
-            Consumers
-          </label>
-          <ul class="md-nav__list" data-md-scrollfix>
-            
-              
-                
-  
-  
-  
-  
     <li class="md-nav__item">
       <a href="../../../../kafka/consumers/overview/" class="md-nav__link">
         
   
   <span class="md-ellipsis">
-    Overview
+    Consumers
   </span>
   
 
@@ -3868,9 +3805,22 @@ data-et-multi-view="{&quot;schema&quot;:{&quot;content&quot;:{&quot;desktop&quot
 
               
             
-          </ul>
-        </nav>
-      
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../kafka/schema-registry/overview/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Schema Registry
+  </span>
+  
+
+      </a>
     </li>
   
 
@@ -22441,7 +22391,7 @@ kubectl<span class="w"> </span>apply<span class="w"> </span>-f<span class="w"> <
 </tr>
 <tr>
 <td><strong>Optional Monitoring</strong></td>
-<td>Add AxonOps agent for monitoring (SaaS or self-hosted) only if needed</td>
+<td>Add axon-agent for monitoring (SaaS or self-hosted) only if needed</td>
 </tr>
 <tr>
 <td><strong>Idempotent</strong></td>
@@ -22758,7 +22708,7 @@ make<span class="w"> </span>cassandra<span class="w"> </span><span class="nv">EN
 </code></pre></div>
 <p>Place CA-signed certificates in <code>files/prd/ssl/</code> (encrypted or via external secrets management).</p>
 <h3 id="adding-axonops-monitoring">Adding AxonOps Monitoring<a class="headerlink" href="#adding-axonops-monitoring" title="Permanent link">¶</a></h3>
-<p>Add the AxonOps agent role to enable monitoring:</p>
+<p>Add the axon-agent role to enable monitoring:</p>
 <p><strong>cassandra.yml playbook with monitoring:</strong></p>
 <div class="highlight"><pre><span></span><code><span class="nn">---</span>
 <span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">Deploy Apache Cassandra with AxonOps Monitoring</span>
@@ -22886,12 +22836,12 @@ make<span class="w"> </span>cassandra<span class="w"> </span><span class="nv">EN
 <tr>
 <td><code>axon_java_agent</code></td>
 <td>-</td>
-<td>AxonOps agent version</td>
+<td>axon-agent version</td>
 </tr>
 <tr>
 <td><code>axon_agent_server_host</code></td>
 <td>-</td>
-<td>AxonOps server address</td>
+<td>axon-server address</td>
 </tr>
 </tbody>
 </table>
@@ -22955,8 +22905,8 @@ ansible<span class="w"> </span>-i<span class="w"> </span>inventories/prd/hosts.i
 <span class="c1"># View Cassandra logs</span>
 ansible<span class="w"> </span>-i<span class="w"> </span>inventories/prd/hosts.ini<span class="w"> </span>cassandra<span class="w"> </span>-a<span class="w"> </span><span class="s2">"tail -50 /var/log/cassandra/system.log"</span>
 
-<span class="c1"># Check AxonOps agent status</span>
-ansible<span class="w"> </span>-i<span class="w"> </span>inventories/prd/hosts.ini<span class="w"> </span>cassandra<span class="w"> </span>-a<span class="w"> </span><span class="s2">"systemctl status AxonOps agent"</span>
+<span class="c1"># Check axon-agent status</span>
+ansible<span class="w"> </span>-i<span class="w"> </span>inventories/prd/hosts.ini<span class="w"> </span>cassandra<span class="w"> </span>-a<span class="w"> </span><span class="s2">"systemctl status axon-agent"</span>
 </code></pre></div>
 <h3 id="reference-implementation-axonops-cassandra-lab">Reference Implementation: AxonOps Cassandra Lab<a class="headerlink" href="#reference-implementation-axonops-cassandra-lab" title="Permanent link">¶</a></h3>
 <p>For a complete, working example that you can clone and adapt, see the <strong><a href="https://github.com/axonops/ansible-cassandra-lab">AxonOps Cassandra Lab</a></strong>:</p>

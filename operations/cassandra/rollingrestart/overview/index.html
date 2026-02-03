@@ -3550,60 +3550,6 @@ data-et-multi-view="{&quot;schema&quot;:{&quot;content&quot;:{&quot;desktop&quot
 
               
             
-          </ul>
-        </nav>
-      
-    </li>
-  
-
-              
-            
-          </ul>
-        </nav>
-      
-    </li>
-  
-
-              
-            
-              
-                
-  
-  
-  
-  
-    
-    
-    
-      
-      
-    
-    
-    <li class="md-nav__item md-nav__item--nested">
-      
-        
-        
-        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_5_4_2" >
-        
-          
-          <label class="md-nav__link" for="__nav_5_4_2" id="__nav_5_4_2_label" tabindex="0">
-            
-  
-  <span class="md-ellipsis">
-    Brokers
-  </span>
-  
-
-            <span class="md-nav__icon md-icon"></span>
-          </label>
-        
-        <nav class="md-nav" data-md-level="3" aria-labelledby="__nav_5_4_2_label" aria-expanded="false">
-          <label class="md-nav__title" for="__nav_5_4_2">
-            <span class="md-nav__icon md-icon"></span>
-            Brokers
-          </label>
-          <ul class="md-nav__list" data-md-scrollfix>
-            
               
                 
   
@@ -3611,11 +3557,11 @@ data-et-multi-view="{&quot;schema&quot;:{&quot;content&quot;:{&quot;desktop&quot
   
   
     <li class="md-nav__item">
-      <a href="../../../../kafka/brokers/overview/" class="md-nav__link">
+      <a href="../../../../metrics/kafka/schema_registry_metrics_mapping.md" class="md-nav__link">
         
   
   <span class="md-ellipsis">
-    Overview
+    Schema Registry Dashboard
   </span>
   
 
@@ -3628,6 +3574,35 @@ data-et-multi-view="{&quot;schema&quot;:{&quot;content&quot;:{&quot;desktop&quot
           </ul>
         </nav>
       
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../kafka/brokers/overview/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Brokers
+  </span>
+  
+
+      </a>
     </li>
   
 
@@ -3836,50 +3811,12 @@ data-et-multi-view="{&quot;schema&quot;:{&quot;content&quot;:{&quot;desktop&quot
   
   
   
-    
-    
-    
-      
-      
-    
-    
-    <li class="md-nav__item md-nav__item--nested">
-      
-        
-        
-        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_5_4_5" >
-        
-          
-          <label class="md-nav__link" for="__nav_5_4_5" id="__nav_5_4_5_label" tabindex="0">
-            
-  
-  <span class="md-ellipsis">
-    Consumers
-  </span>
-  
-
-            <span class="md-nav__icon md-icon"></span>
-          </label>
-        
-        <nav class="md-nav" data-md-level="3" aria-labelledby="__nav_5_4_5_label" aria-expanded="false">
-          <label class="md-nav__title" for="__nav_5_4_5">
-            <span class="md-nav__icon md-icon"></span>
-            Consumers
-          </label>
-          <ul class="md-nav__list" data-md-scrollfix>
-            
-              
-                
-  
-  
-  
-  
     <li class="md-nav__item">
       <a href="../../../../kafka/consumers/overview/" class="md-nav__link">
         
   
   <span class="md-ellipsis">
-    Overview
+    Consumers
   </span>
   
 
@@ -3889,9 +3826,22 @@ data-et-multi-view="{&quot;schema&quot;:{&quot;content&quot;:{&quot;desktop&quot
 
               
             
-          </ul>
-        </nav>
-      
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../kafka/schema-registry/overview/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Schema Registry
+  </span>
+  
+
+      </a>
     </li>
   
 
@@ -19887,7 +19837,7 @@ axonops<span class="w"> </span><span class="nv">ALL</span><span class="o">=</spa
 </code></pre></div>
 </blockquote>
 <p>You can start an <strong>immediate</strong> rolling restart or <strong>schedule</strong> it.</p>
-<p>The <strong>script</strong> field lets you customize the predefined script executed by the AxonOps agent during the restart process.</p>
+<p>The <strong>script</strong> field lets you customize the predefined script executed by axon-agent during the restart process.</p>
 <p>You can also specify different degrees of parallelism for the restart: <strong>DC</strong>, <strong>Rack</strong>, and <strong>Node</strong>.</p>
 <p>For example, to <strong>restart one entire rack</strong> at once across the cluster, set a large <strong>Node parallelism</strong> (greater than the number of nodes in the rack, for example 999).
 </p><div class="highlight"><pre><span></span><code>DC<span class="w"> </span>parallelism:<span class="w"> </span><span class="m">1</span>

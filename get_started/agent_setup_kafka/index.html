@@ -3519,60 +3519,6 @@ data-et-multi-view="{&quot;schema&quot;:{&quot;content&quot;:{&quot;desktop&quot
 
               
             
-          </ul>
-        </nav>
-      
-    </li>
-  
-
-              
-            
-          </ul>
-        </nav>
-      
-    </li>
-  
-
-              
-            
-              
-                
-  
-  
-  
-  
-    
-    
-    
-      
-      
-    
-    
-    <li class="md-nav__item md-nav__item--nested">
-      
-        
-        
-        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_5_4_2" >
-        
-          
-          <label class="md-nav__link" for="__nav_5_4_2" id="__nav_5_4_2_label" tabindex="0">
-            
-  
-  <span class="md-ellipsis">
-    Brokers
-  </span>
-  
-
-            <span class="md-nav__icon md-icon"></span>
-          </label>
-        
-        <nav class="md-nav" data-md-level="3" aria-labelledby="__nav_5_4_2_label" aria-expanded="false">
-          <label class="md-nav__title" for="__nav_5_4_2">
-            <span class="md-nav__icon md-icon"></span>
-            Brokers
-          </label>
-          <ul class="md-nav__list" data-md-scrollfix>
-            
               
                 
   
@@ -3580,11 +3526,11 @@ data-et-multi-view="{&quot;schema&quot;:{&quot;content&quot;:{&quot;desktop&quot
   
   
     <li class="md-nav__item">
-      <a href="../../kafka/brokers/overview/" class="md-nav__link">
+      <a href="../../metrics/kafka/schema_registry_metrics_mapping.md" class="md-nav__link">
         
   
   <span class="md-ellipsis">
-    Overview
+    Schema Registry Dashboard
   </span>
   
 
@@ -3597,6 +3543,35 @@ data-et-multi-view="{&quot;schema&quot;:{&quot;content&quot;:{&quot;desktop&quot
           </ul>
         </nav>
       
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../kafka/brokers/overview/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Brokers
+  </span>
+  
+
+      </a>
     </li>
   
 
@@ -3805,50 +3780,12 @@ data-et-multi-view="{&quot;schema&quot;:{&quot;content&quot;:{&quot;desktop&quot
   
   
   
-    
-    
-    
-      
-      
-    
-    
-    <li class="md-nav__item md-nav__item--nested">
-      
-        
-        
-        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_5_4_5" >
-        
-          
-          <label class="md-nav__link" for="__nav_5_4_5" id="__nav_5_4_5_label" tabindex="0">
-            
-  
-  <span class="md-ellipsis">
-    Consumers
-  </span>
-  
-
-            <span class="md-nav__icon md-icon"></span>
-          </label>
-        
-        <nav class="md-nav" data-md-level="3" aria-labelledby="__nav_5_4_5_label" aria-expanded="false">
-          <label class="md-nav__title" for="__nav_5_4_5">
-            <span class="md-nav__icon md-icon"></span>
-            Consumers
-          </label>
-          <ul class="md-nav__list" data-md-scrollfix>
-            
-              
-                
-  
-  
-  
-  
     <li class="md-nav__item">
       <a href="../../kafka/consumers/overview/" class="md-nav__link">
         
   
   <span class="md-ellipsis">
-    Overview
+    Consumers
   </span>
   
 
@@ -3858,9 +3795,22 @@ data-et-multi-view="{&quot;schema&quot;:{&quot;content&quot;:{&quot;desktop&quot
 
               
             
-          </ul>
-        </nav>
-      
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../kafka/schema-registry/overview/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Schema Registry
+  </span>
+  
+
+      </a>
     </li>
   
 
@@ -19930,7 +19880,7 @@ data-et-multi-view="{&quot;schema&quot;:{&quot;content&quot;:{&quot;desktop&quot
   <img id="KJava17img" src="/get_started/Java_17.png" class="skip-lightbox" width="180px" alt="Java_17">
 </label> -->
 
-<p>Install the AxonOps Kafka Agent and its dependency <code>AxonOps agent</code>:</p>
+<p>Install the AxonOps Kafka Agent and its dependency <code>axon-agent</code>:</p>
 <!-- Debian -->
 <div id="DebianKafka20JavaDiv" class="kafka">
   <div class="highlight"><pre><span></span><code>sudo apt-get install axon-kafka2-agent
@@ -19986,9 +19936,9 @@ contacts the AxonOps Server directly while minimizing the memory footprint
 and CPU utilization of the Kafka process.</p>
 <ul>
 <li>Configuration File: <code>/etc/axonops/axon-agent.yml</code></li>
-<li>Binary: <code>usr/share/axonops/AxonOps agent</code></li>
-<li>Logs: <code>/var/log/axonops/AxonOps agent.log</code></li>
-<li>Systemd service: <code>/usr/lib/systemd/system/AxonOps agent.service</code></li>
+<li>Binary: <code>usr/share/axonops/axon-agent</code></li>
+<li>Logs: <code>/var/log/axonops/axon-agent.log</code></li>
+<li>Systemd service: <code>/usr/lib/systemd/system/axon-agent.service</code></li>
 </ul>
 <h2 id="agent-configuration">Agent Configuration<a class="headerlink" href="#agent-configuration" title="Permanent link">¶</a></h2>
 <p>Update the <code>key</code> and <code>org</code> values within the highlighted lines of
@@ -20015,7 +19965,7 @@ and CPU utilization of the Kafka process.</p>
 <span class="w">  </span><span class="c1"># hosts: "${AXONOPS_SERVER_HOSTS}" # AxonOps Server On-Premise Endpoint</span>
 <span class="w">  </span><span class="c1"># port: 1888 # AxonOps Server On-Premise Port (Default is 1888)</span>
 
-<span class="nt">AxonOps agent</span><span class="p">:</span>
+<span class="nt">axon-agent</span><span class="p">:</span>
 <span class="hll"><span class="w">  </span><span class="nt">key</span><span class="p">:</span><span class="w"> </span><span class="s">"&lt;THIS_IS_A_DUMMY_KEY_PLEASE_UPDATE&gt;"</span>
 </span><span class="hll"><span class="w">  </span><span class="nt">org</span><span class="p">:</span><span class="w"> </span><span class="s">"&lt;THIS_IS_A_DUMMY_ORG_NAME_PLEASE_UPDATE&gt;"</span>
 </span><span class="hll"><span class="w">  </span><span class="nt">cluster_name</span><span class="p">:</span><span class="w"> </span><span class="s">"&lt;THIS_IS_A_DUMMY_CLUSTER_NAME_PLEASE_UPDATE&gt;"</span>
@@ -20030,10 +19980,10 @@ and CPU utilization of the Kafka process.</p>
 <span class="c1"># NTP:</span>
 <span class="c1">#    hosts:</span>
 <span class="c1">#        - "x.x.x.x:123"</span>
-<span class="c1"># Optionally restrict which commands can be executed by AxonOps agent.</span>
-<span class="c1"># If "true", only scripts placed in scripts_location can be executed by AxonOps agent.</span>
+<span class="c1"># Optionally restrict which commands can be executed by axon-agent.</span>
+<span class="c1"># If "true", only scripts placed in scripts_location can be executed by axon-agent.</span>
 <span class="c1"># disable_command_exec: false</span>
-<span class="c1"># If disable_command_exec is true then AxonOps agent is only allowed to execute scripts</span>
+<span class="c1"># If disable_command_exec is true then axon-agent is only allowed to execute scripts</span>
 <span class="c1"># under this path</span>
 <span class="c1"># scripts_location: /var/lib/axonops/scripts/</span>
 
@@ -20079,7 +20029,7 @@ and CPU utilization of the Kafka process.</p>
 <span class="w">  </span><span class="c1"># hosts: "${AXONOPS_SERVER_HOSTS}" # AxonOps Server On-Premise Endpoint</span>
 <span class="w">  </span><span class="c1"># port: 1888 # AxonOps Server On-Premise Port (Default is 1888)</span>
 
-<span class="nt">AxonOps agent</span><span class="p">:</span>
+<span class="nt">axon-agent</span><span class="p">:</span>
 <span class="hll"><span class="w">  </span><span class="nt">key</span><span class="p">:</span><span class="w"> </span><span class="s">"&lt;THIS_IS_A_DUMMY_KEY_PLEASE_UPDATE&gt;"</span>
 </span><span class="hll"><span class="w">  </span><span class="nt">org</span><span class="p">:</span><span class="w"> </span><span class="s">"&lt;THIS_IS_A_DUMMY_ORG_NAME_PLEASE_UPDATE&gt;"</span>
 </span><span class="hll"><span class="w">  </span><span class="nt">cluster_name</span><span class="p">:</span><span class="w"> </span><span class="s">"&lt;THIS_IS_A_DUMMY_CLUSTER_NAME_PLEASE_UPDATE&gt;"</span>
@@ -20095,10 +20045,10 @@ and CPU utilization of the Kafka process.</p>
 <span class="c1"># NTP:</span>
 <span class="c1">#    hosts:</span>
 <span class="c1">#        - "x.x.x.x:123"</span>
-<span class="c1"># Optionally restrict which commands can be executed by AxonOps agent.</span>
-<span class="c1"># If "true", only scripts placed in scripts_location can be executed by AxonOps agent.</span>
+<span class="c1"># Optionally restrict which commands can be executed by axon-agent.</span>
+<span class="c1"># If "true", only scripts placed in scripts_location can be executed by axon-agent.</span>
 <span class="c1"># disable_command_exec: false</span>
-<span class="c1"># If disable_command_exec is true then AxonOps agent is only allowed to execute scripts</span>
+<span class="c1"># If disable_command_exec is true then axon-agent is only allowed to execute scripts</span>
 <span class="c1"># under this path</span>
 <span class="c1"># scripts_location: /var/lib/axonops/scripts/</span>
 
@@ -20115,7 +20065,7 @@ and CPU utilization of the Kafka process.</p>
 <span class="w">  </span><span class="c1"># hosts: "${AXONOPS_SERVER_HOSTS}" # AxonOps Server On-Premise Endpoint</span>
 <span class="w">  </span><span class="c1"># port: 1888 # AxonOps Server On-Premise Port (Default is 1888)</span>
 
-<span class="nt">AxonOps agent</span><span class="p">:</span>
+<span class="nt">axon-agent</span><span class="p">:</span>
 <span class="hll"><span class="w">  </span><span class="nt">key</span><span class="p">:</span><span class="w"> </span><span class="s">"&lt;THIS_IS_A_DUMMY_KEY_PLEASE_UPDATE&gt;"</span>
 </span><span class="hll"><span class="w">  </span><span class="nt">org</span><span class="p">:</span><span class="w"> </span><span class="s">"&lt;THIS_IS_A_DUMMY_ORG_NAME_PLEASE_UPDATE&gt;"</span>
 </span><span class="hll"><span class="w">  </span><span class="nt">cluster_name</span><span class="p">:</span><span class="w"> </span><span class="s">"&lt;THIS_IS_A_DUMMY_CLUSTER_NAME_PLEASE_UPDATE&gt;"</span>
@@ -20131,10 +20081,10 @@ and CPU utilization of the Kafka process.</p>
 <span class="c1"># NTP:</span>
 <span class="c1">#    hosts:</span>
 <span class="c1">#        - "x.x.x.x:123"</span>
-<span class="c1"># Optionally restrict which commands can be executed by AxonOps agent.</span>
-<span class="c1"># If "true", only scripts placed in scripts_location can be executed by AxonOps agent.</span>
+<span class="c1"># Optionally restrict which commands can be executed by axon-agent.</span>
+<span class="c1"># If "true", only scripts placed in scripts_location can be executed by axon-agent.</span>
 <span class="c1"># disable_command_exec: false</span>
-<span class="c1"># If disable_command_exec is true then AxonOps agent is only allowed to execute scripts</span>
+<span class="c1"># If disable_command_exec is true then axon-agent is only allowed to execute scripts</span>
 <span class="c1"># under this path</span>
 <span class="c1"># scripts_location: /var/lib/axonops/scripts/</span>
 
@@ -20180,7 +20130,7 @@ and CPU utilization of the Kafka process.</p>
 <span class="w">  </span><span class="c1"># hosts: "${AXONOPS_SERVER_HOSTS}" # AxonOps Server On-Premise Endpoint</span>
 <span class="w">  </span><span class="c1"># port: 1888 # AxonOps Server On-Premise Port (Default is 1888)</span>
 
-<span class="nt">AxonOps agent</span><span class="p">:</span>
+<span class="nt">axon-agent</span><span class="p">:</span>
 <span class="hll"><span class="w">  </span><span class="nt">key</span><span class="p">:</span><span class="w"> </span><span class="s">"&lt;THIS_IS_A_DUMMY_KEY_PLEASE_UPDATE&gt;"</span>
 </span><span class="hll"><span class="w">  </span><span class="nt">org</span><span class="p">:</span><span class="w"> </span><span class="s">"&lt;THIS_IS_A_DUMMY_ORG_NAME_PLEASE_UPDATE&gt;"</span>
 </span><span class="hll"><span class="w">  </span><span class="nt">cluster_name</span><span class="p">:</span><span class="w"> </span><span class="s">"&lt;THIS_IS_A_DUMMY_CLUSTER_NAME_PLEASE_UPDATE&gt;"</span>
@@ -20196,10 +20146,10 @@ and CPU utilization of the Kafka process.</p>
 <span class="c1"># NTP:</span>
 <span class="c1">#    hosts:</span>
 <span class="c1">#        - "x.x.x.x:123"</span>
-<span class="c1"># Optionally restrict which commands can be executed by AxonOps agent.</span>
-<span class="c1"># If "true", only scripts placed in scripts_location can be executed by AxonOps agent.</span>
+<span class="c1"># Optionally restrict which commands can be executed by axon-agent.</span>
+<span class="c1"># If "true", only scripts placed in scripts_location can be executed by axon-agent.</span>
 <span class="c1"># disable_command_exec: false</span>
-<span class="c1"># If disable_command_exec is true then AxonOps agent is only allowed to execute scripts</span>
+<span class="c1"># If disable_command_exec is true then axon-agent is only allowed to execute scripts</span>
 <span class="c1"># under this path</span>
 <span class="c1"># scripts_location: /var/lib/axonops/scripts/</span>
 
@@ -20245,7 +20195,7 @@ and CPU utilization of the Kafka process.</p>
 <span class="w">  </span><span class="c1"># hosts: "${AXONOPS_SERVER_HOSTS}" # AxonOps Server On-Premise Endpoint</span>
 <span class="w">  </span><span class="c1"># port: 1888 # AxonOps Server On-Premise Port (Default is 1888)</span>
 
-<span class="nt">AxonOps agent</span><span class="p">:</span>
+<span class="nt">axon-agent</span><span class="p">:</span>
 <span class="hll"><span class="w">  </span><span class="nt">key</span><span class="p">:</span><span class="w"> </span><span class="s">"&lt;THIS_IS_A_DUMMY_KEY_PLEASE_UPDATE&gt;"</span>
 </span><span class="hll"><span class="w">  </span><span class="nt">org</span><span class="p">:</span><span class="w"> </span><span class="s">"&lt;THIS_IS_A_DUMMY_ORG_NAME_PLEASE_UPDATE&gt;"</span>
 </span><span class="hll"><span class="w">  </span><span class="nt">cluster_name</span><span class="p">:</span><span class="w"> </span><span class="s">"&lt;THIS_IS_A_DUMMY_CLUSTER_NAME_PLEASE_UPDATE&gt;"</span>
@@ -20261,10 +20211,10 @@ and CPU utilization of the Kafka process.</p>
 <span class="c1"># NTP:</span>
 <span class="c1">#    hosts:</span>
 <span class="c1">#        - "x.x.x.x:123"</span>
-<span class="c1"># Optionally restrict which commands can be executed by AxonOps agent.</span>
-<span class="c1"># If "true", only scripts placed in scripts_location can be executed by AxonOps agent.</span>
+<span class="c1"># Optionally restrict which commands can be executed by axon-agent.</span>
+<span class="c1"># If "true", only scripts placed in scripts_location can be executed by axon-agent.</span>
 <span class="c1"># disable_command_exec: false</span>
-<span class="c1"># If disable_command_exec is true then AxonOps agent is only allowed to execute scripts</span>
+<span class="c1"># If disable_command_exec is true then axon-agent is only allowed to execute scripts</span>
 <span class="c1"># under this path</span>
 <span class="c1"># scripts_location: /var/lib/axonops/scripts/</span>
 

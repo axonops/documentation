@@ -3628,60 +3628,6 @@ data-et-multi-view="{&quot;schema&quot;:{&quot;content&quot;:{&quot;desktop&quot
 
               
             
-          </ul>
-        </nav>
-      
-    </li>
-  
-
-              
-            
-          </ul>
-        </nav>
-      
-    </li>
-  
-
-              
-            
-              
-                
-  
-  
-  
-  
-    
-    
-    
-      
-      
-    
-    
-    <li class="md-nav__item md-nav__item--nested">
-      
-        
-        
-        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_5_4_2" >
-        
-          
-          <label class="md-nav__link" for="__nav_5_4_2" id="__nav_5_4_2_label" tabindex="0">
-            
-  
-  <span class="md-ellipsis">
-    Brokers
-  </span>
-  
-
-            <span class="md-nav__icon md-icon"></span>
-          </label>
-        
-        <nav class="md-nav" data-md-level="3" aria-labelledby="__nav_5_4_2_label" aria-expanded="false">
-          <label class="md-nav__title" for="__nav_5_4_2">
-            <span class="md-nav__icon md-icon"></span>
-            Brokers
-          </label>
-          <ul class="md-nav__list" data-md-scrollfix>
-            
               
                 
   
@@ -3689,11 +3635,11 @@ data-et-multi-view="{&quot;schema&quot;:{&quot;content&quot;:{&quot;desktop&quot
   
   
     <li class="md-nav__item">
-      <a href="../../kafka/brokers/overview/" class="md-nav__link">
+      <a href="../../metrics/kafka/schema_registry_metrics_mapping.md" class="md-nav__link">
         
   
   <span class="md-ellipsis">
-    Overview
+    Schema Registry Dashboard
   </span>
   
 
@@ -3706,6 +3652,35 @@ data-et-multi-view="{&quot;schema&quot;:{&quot;content&quot;:{&quot;desktop&quot
           </ul>
         </nav>
       
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../kafka/brokers/overview/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Brokers
+  </span>
+  
+
+      </a>
     </li>
   
 
@@ -3914,50 +3889,12 @@ data-et-multi-view="{&quot;schema&quot;:{&quot;content&quot;:{&quot;desktop&quot
   
   
   
-    
-    
-    
-      
-      
-    
-    
-    <li class="md-nav__item md-nav__item--nested">
-      
-        
-        
-        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_5_4_5" >
-        
-          
-          <label class="md-nav__link" for="__nav_5_4_5" id="__nav_5_4_5_label" tabindex="0">
-            
-  
-  <span class="md-ellipsis">
-    Consumers
-  </span>
-  
-
-            <span class="md-nav__icon md-icon"></span>
-          </label>
-        
-        <nav class="md-nav" data-md-level="3" aria-labelledby="__nav_5_4_5_label" aria-expanded="false">
-          <label class="md-nav__title" for="__nav_5_4_5">
-            <span class="md-nav__icon md-icon"></span>
-            Consumers
-          </label>
-          <ul class="md-nav__list" data-md-scrollfix>
-            
-              
-                
-  
-  
-  
-  
     <li class="md-nav__item">
       <a href="../../kafka/consumers/overview/" class="md-nav__link">
         
   
   <span class="md-ellipsis">
-    Overview
+    Consumers
   </span>
   
 
@@ -3967,9 +3904,22 @@ data-et-multi-view="{&quot;schema&quot;:{&quot;content&quot;:{&quot;desktop&quot
 
               
             
-          </ul>
-        </nav>
-      
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../kafka/schema-registry/overview/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Schema Registry
+  </span>
+  
+
+      </a>
     </li>
   
 
@@ -20017,11 +19967,11 @@ data-et-multi-view="{&quot;schema&quot;:{&quot;content&quot;:{&quot;desktop&quot
 
 
 <div><h1 id="axonops-cloud">AxonOps Cloud<a class="headerlink" href="#axonops-cloud" title="Permanent link">¶</a></h1>
-<p>AxonOps Cloud is the hosted AxonOps control plane. You run Cassandra and Kafka in your own infrastructure, install the AxonOps agent on those hosts, and AxonOps Cloud provides the dashboards, alerting, and operational workflows.</p>
+<p>AxonOps Cloud is the hosted AxonOps control plane. You run Cassandra and Kafka in your own infrastructure, install axon-agent on those hosts, and AxonOps Cloud provides the dashboards, alerting, and operational workflows.</p>
 <h2 id="how-it-works">How it works<a class="headerlink" href="#how-it-works" title="Permanent link">¶</a></h2>
 <ul>
 <li><strong>You keep your clusters</strong>: Cassandra and Kafka continue to run in your environment (on‑premises or your cloud).</li>
-<li><strong>You install the agent</strong>: The AxonOps agent collects metrics, logs, and operational signals and sends them to AxonOps Cloud.</li>
+<li><strong>You install the agent</strong>: axon-agent collects metrics, logs, and operational signals and sends them to AxonOps Cloud.</li>
 <li><strong>You get the control plane</strong>: AxonOps Cloud hosts the UI, APIs, alerting, and orchestration so you do not need to run the control plane yourself.</li>
 </ul>
 <p><a class="glightbox" href="../imgs/axonops-cloud.png" data-type="image" data-width="100%" data-height="auto" data-desc-position="bottom"><img alt="AxonOps Cloud architecture" src="../imgs/axonops-cloud.png"></a></p>
@@ -20038,7 +19988,7 @@ data-et-multi-view="{&quot;schema&quot;:{&quot;content&quot;:{&quot;desktop&quot
 </ul>
 <h2 id="security-and-connectivity">Security and connectivity<a class="headerlink" href="#security-and-connectivity" title="Permanent link">¶</a></h2>
 <ul>
-<li>The AxonOps agent connects outbound from your infrastructure to AxonOps Cloud.</li>
+<li>axon-agent connects outbound from your infrastructure to AxonOps Cloud.</li>
 <li>You do not expose your Cassandra or Kafka nodes to the public internet.</li>
 <li>Data is transmitted securely to the AxonOps Cloud control plane.</li>
 </ul>
@@ -20046,7 +19996,7 @@ data-et-multi-view="{&quot;schema&quot;:{&quot;content&quot;:{&quot;desktop&quot
 <h2 id="getting-started">Getting started<a class="headerlink" href="#getting-started" title="Permanent link">¶</a></h2>
 <ol>
 <li>Create an AxonOps Cloud account.</li>
-<li>Install the AxonOps agent on your Cassandra and Kafka hosts.</li>
+<li>Install axon-agent on your Cassandra and Kafka hosts.</li>
 <li>Verify agent connectivity and begin monitoring.</li>
 </ol>
 <p>Start here:</p>

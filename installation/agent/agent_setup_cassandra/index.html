@@ -3519,60 +3519,6 @@ data-et-multi-view="{&quot;schema&quot;:{&quot;content&quot;:{&quot;desktop&quot
 
               
             
-          </ul>
-        </nav>
-      
-    </li>
-  
-
-              
-            
-          </ul>
-        </nav>
-      
-    </li>
-  
-
-              
-            
-              
-                
-  
-  
-  
-  
-    
-    
-    
-      
-      
-    
-    
-    <li class="md-nav__item md-nav__item--nested">
-      
-        
-        
-        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_5_4_2" >
-        
-          
-          <label class="md-nav__link" for="__nav_5_4_2" id="__nav_5_4_2_label" tabindex="0">
-            
-  
-  <span class="md-ellipsis">
-    Brokers
-  </span>
-  
-
-            <span class="md-nav__icon md-icon"></span>
-          </label>
-        
-        <nav class="md-nav" data-md-level="3" aria-labelledby="__nav_5_4_2_label" aria-expanded="false">
-          <label class="md-nav__title" for="__nav_5_4_2">
-            <span class="md-nav__icon md-icon"></span>
-            Brokers
-          </label>
-          <ul class="md-nav__list" data-md-scrollfix>
-            
               
                 
   
@@ -3580,11 +3526,11 @@ data-et-multi-view="{&quot;schema&quot;:{&quot;content&quot;:{&quot;desktop&quot
   
   
     <li class="md-nav__item">
-      <a href="../../../kafka/brokers/overview/" class="md-nav__link">
+      <a href="../../../metrics/kafka/schema_registry_metrics_mapping.md" class="md-nav__link">
         
   
   <span class="md-ellipsis">
-    Overview
+    Schema Registry Dashboard
   </span>
   
 
@@ -3597,6 +3543,35 @@ data-et-multi-view="{&quot;schema&quot;:{&quot;content&quot;:{&quot;desktop&quot
           </ul>
         </nav>
       
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../kafka/brokers/overview/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Brokers
+  </span>
+  
+
+      </a>
     </li>
   
 
@@ -3805,50 +3780,12 @@ data-et-multi-view="{&quot;schema&quot;:{&quot;content&quot;:{&quot;desktop&quot
   
   
   
-    
-    
-    
-      
-      
-    
-    
-    <li class="md-nav__item md-nav__item--nested">
-      
-        
-        
-        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_5_4_5" >
-        
-          
-          <label class="md-nav__link" for="__nav_5_4_5" id="__nav_5_4_5_label" tabindex="0">
-            
-  
-  <span class="md-ellipsis">
-    Consumers
-  </span>
-  
-
-            <span class="md-nav__icon md-icon"></span>
-          </label>
-        
-        <nav class="md-nav" data-md-level="3" aria-labelledby="__nav_5_4_5_label" aria-expanded="false">
-          <label class="md-nav__title" for="__nav_5_4_5">
-            <span class="md-nav__icon md-icon"></span>
-            Consumers
-          </label>
-          <ul class="md-nav__list" data-md-scrollfix>
-            
-              
-                
-  
-  
-  
-  
     <li class="md-nav__item">
       <a href="../../../kafka/consumers/overview/" class="md-nav__link">
         
   
   <span class="md-ellipsis">
-    Overview
+    Consumers
   </span>
   
 
@@ -3858,9 +3795,22 @@ data-et-multi-view="{&quot;schema&quot;:{&quot;content&quot;:{&quot;desktop&quot
 
               
             
-          </ul>
-        </nav>
-      
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../kafka/schema-registry/overview/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Schema Registry
+  </span>
+  
+
+      </a>
     </li>
   
 
@@ -19913,6 +19863,15 @@ data-et-multi-view="{&quot;schema&quot;:{&quot;content&quot;:{&quot;desktop&quot
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
+  <a href="#command-execution-security" class="md-nav__link">
+    <span class="md-ellipsis">
+      Command Execution Security
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
   <a href="#ensure-proper-agent-configuration-permissions" class="md-nav__link">
     <span class="md-ellipsis">
       Ensure Proper Agent Configuration Permissions
@@ -20020,7 +19979,7 @@ data-et-multi-view="{&quot;schema&quot;:{&quot;content&quot;:{&quot;desktop&quot
   <input type="radio" id="Java17" name="javaFamily" onchange="selectJava()">
   <img id="Java17img" src="/get_started/Java_17.png" class="skip-lightbox" width="180px" style="display:none" alt="Java_17">
 </label></p>
-<p>Install the AxonOps Cassandra Agent and its dependency <code>AxonOps agent</code>:</p>
+<p>Install the AxonOps Cassandra Agent and its dependency <code>axon-agent</code>:</p>
 <!-- Debian -->
 <div id="DebianCassandra30Java8Div" class="cas">
   <div class="highlight"><pre><span></span><code>sudo apt-get install axon-cassandra3.0-agent
@@ -20101,14 +20060,14 @@ which contacts the AxonOps Server directly.</p>
 <li>Licenses: <code>/usr/share/axonops/licenses/axon-cassandra{version}-agent/</code></li>
 </ul>
 <h4 id="axonops-agent">AxonOps Agent<a class="headerlink" href="#axonops-agent" title="Permanent link">¶</a></h4>
-<p>The AxonOps Agent is a dependency of the AxonOps Cassandra Agent. This binary
+<p>The axon-agent is a dependency of the AxonOps Cassandra Agent. This binary
 contacts the AxonOps Server directly while minimizing the memory footprint
 and CPU utilization of the Cassandra process.</p>
 <ul>
 <li>Configuration File: <code>/etc/axonops/axon-agent.yml</code></li>
-<li>Binary: <code>usr/share/axonops/AxonOps agent</code></li>
-<li>Logs: <code>/var/log/axonops/AxonOps agent.log</code></li>
-<li>Systemd service: <code>/usr/lib/systemd/system/AxonOps agent.service</code></li>
+<li>Binary: <code>usr/share/axonops/axon-agent</code></li>
+<li>Logs: <code>/var/log/axonops/axon-agent.log</code></li>
+<li>Systemd service: <code>/usr/lib/systemd/system/axon-agent.service</code></li>
 </ul>
 <h2 id="agent-configuration">Agent Configuration<a class="headerlink" href="#agent-configuration" title="Permanent link">¶</a></h2>
 <p>Update the following lines within <code>/etc/axonops/axon-agent.yml</code>.</p>
@@ -20118,7 +20077,7 @@ and CPU utilization of the Cassandra process.</p>
 <span class="hll"><span class="w">    </span><span class="nt">hosts</span><span class="p">:</span><span class="w"> </span><span class="s">"axon-server_endpoint"</span><span class="w"> </span><span class="c1"># Your axon-server IP or hostname, e.g. axonops.mycompany.com</span>
 </span><span class="w">    </span><span class="nt">port</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">1888</span><span class="w"> </span><span class="c1"># The default axon-server port is 1888</span>
 
-<span class="nt">AxonOps agent</span><span class="p">:</span>
+<span class="nt">axon-agent</span><span class="p">:</span>
 <span class="hll"><span class="w">    </span><span class="nt">org</span><span class="p">:</span><span class="w"> </span><span class="s">"my-company"</span><span class="w"> </span><span class="c1"># Your organisation name</span>
 </span><span class="w">    </span><span class="c1"># SSL/TLS Settings from AxonOps Agent to AxonOps Server</span>
 <span class="w">    </span><span class="nt">tls</span><span class="p">:</span>
@@ -20128,10 +20087,72 @@ and CPU utilization of the Cassandra process.</p>
 <span class="w">        </span><span class="nt">caFile</span><span class="p">:</span><span class="w"> </span><span class="s">"path_to_certs_on_axon_agent_node.crt"</span><span class="w"> </span><span class="c1"># required if skipVerify is not set and you are using a self-signed cert</span>
 <span class="w">        </span><span class="nt">certFile</span><span class="p">:</span><span class="w"> </span><span class="s">"path_to_certs_on_axon_agent_node.crt"</span>
 <span class="w">        </span><span class="nt">keyFile</span><span class="p">:</span><span class="w"> </span><span class="s">"path_to_key_file_on_axon_agent_node.key"</span>
+<span class="w">    </span><span class="c1"># Command execution restrictions (see below for details)</span>
+<span class="w">    </span><span class="c1"># disable_command_exec: false</span>
+<span class="w">    </span><span class="c1"># scripts_location: /var/lib/axonops/scripts/</span>
 
 <span class="nt">NTP</span><span class="p">:</span>
-<span class="w">    </span><span class="nt">host</span><span class="p">:</span><span class="w"> </span><span class="s">"ntp.mycompany.com"</span><span class="w"> </span><span class="c1"># Your NTP server IP address or hostname </span>
+<span class="w">    </span><span class="nt">host</span><span class="p">:</span><span class="w"> </span><span class="s">"ntp.mycompany.com"</span><span class="w"> </span><span class="c1"># Your NTP server IP address or hostname</span>
 </code></pre></div>
+<h3 id="command-execution-security">Command Execution Security<a class="headerlink" href="#command-execution-security" title="Permanent link">¶</a></h3>
+<p>The axon-agent can execute commands on the host system to perform operations such as repairs, backups, and restarts. These options allow configuration of the command execution security posture based on organisational requirements:</p>
+<table>
+<thead>
+<tr>
+<th>Option</th>
+<th>Default</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>disable_command_exec</code></td>
+<td><code>false</code></td>
+<td>When set to <code>true</code>, the agent only executes scripts located in the <code>scripts_location</code> directory.</td>
+</tr>
+<tr>
+<td><code>scripts_location</code></td>
+<td><code>/var/lib/axonops/scripts/</code></td>
+<td>The directory containing permitted scripts when <code>disable_command_exec</code> is enabled.</td>
+</tr>
+</tbody>
+</table>
+<p>Three command execution modes are available:</p>
+<table>
+<thead>
+<tr>
+<th>Mode</th>
+<th>Configuration</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Full access</strong></td>
+<td><code>disable_command_exec: false</code></td>
+<td>The agent can execute commands sent from AxonOps. This is the default.</td>
+</tr>
+<tr>
+<td><strong>Permitted scripts only</strong></td>
+<td><code>disable_command_exec: true</code> with scripts in <code>scripts_location</code></td>
+<td>The agent only executes scripts placed in the designated directory.</td>
+</tr>
+<tr>
+<td><strong>No execution</strong></td>
+<td><code>disable_command_exec: true</code> with empty <code>scripts_location</code></td>
+<td>The agent cannot execute any commands.</td>
+</tr>
+</tbody>
+</table>
+<div class="admonition example">
+<p class="admonition-title">Permitted Scripts Only</p>
+<div class="highlight"><pre><span></span><code><span class="nt">axon-agent</span><span class="p">:</span>
+<span class="w">    </span><span class="nt">org</span><span class="p">:</span><span class="w"> </span><span class="s">"my-company"</span>
+<span class="w">    </span><span class="nt">disable_command_exec</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">true</span>
+<span class="w">    </span><span class="nt">scripts_location</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">/var/lib/axonops/scripts/</span>
+</code></pre></div>
+<p>With this configuration, only scripts placed in <code>/var/lib/axonops/scripts/</code> can be executed by the agent.</p>
+</div>
 <h3 id="ensure-proper-agent-configuration-permissions">Ensure Proper Agent Configuration Permissions<a class="headerlink" href="#ensure-proper-agent-configuration-permissions" title="Permanent link">¶</a></h3>
 <p>After editing the file, ensure the file permissions for <code>/etc/axonops/axon-agent.yml</code> are set correctly by
 running the following commmand:</p>
@@ -20184,7 +20205,7 @@ will need be updated accordingly for the above commands to work properly.</p>
 <p>Due to recent change with <code>needrestart</code>, as seen in Ubuntu 24.04, uninstalling the
 <code>needrestart</code> package is currently recommended.</p>
 <p>Failure to uninstall the <code>needrestart</code> package may cause the Cassandra service to be
-restarted when updating the <code>AxonOps agent</code> package.</p>
+restarted when updating the <code>axon-agent</code> package.</p>
 <h2 id="apply-changes-to-cassandra">Apply Changes to Cassandra<a class="headerlink" href="#apply-changes-to-cassandra" title="Permanent link">¶</a></h2>
 <p>To load the AxonOps Java Agent and Cassandra config changes, run the following command:</p>
 <div class="highlight"><pre><span></span><code>sudo<span class="w"> </span>systemctl<span class="w"> </span>restart<span class="w"> </span>cassandra

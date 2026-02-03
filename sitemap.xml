@@ -2,2850 +2,2850 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
     <url>
          <loc>https://docs.axonops.com/</loc>
-         <lastmod>2026-01-29</lastmod>
+         <lastmod>2026-02-03</lastmod>
     </url>
     <url>
          <loc>https://docs.axonops.com/authentication/ldap/</loc>
-         <lastmod>2026-01-29</lastmod>
+         <lastmod>2026-02-03</lastmod>
     </url>
     <url>
          <loc>https://docs.axonops.com/authentication/jumpcloud-axonops-cloud/</loc>
-         <lastmod>2026-01-29</lastmod>
+         <lastmod>2026-02-03</lastmod>
     </url>
     <url>
          <loc>https://docs.axonops.com/authentication/jumpcloud-axonops-cloud/01-jumpcloud-app/</loc>
-         <lastmod>2026-01-29</lastmod>
+         <lastmod>2026-02-03</lastmod>
     </url>
     <url>
          <loc>https://docs.axonops.com/authentication/jumpcloud-axonops-cloud/02-jumpcloud-roles/</loc>
-         <lastmod>2026-01-29</lastmod>
+         <lastmod>2026-02-03</lastmod>
     </url>
     <url>
          <loc>https://docs.axonops.com/authentication/jumpcloud-axonops-cloud/03-axonops-saml-jumpcloud/</loc>
-         <lastmod>2026-01-29</lastmod>
+         <lastmod>2026-02-03</lastmod>
     </url>
     <url>
          <loc>https://docs.axonops.com/cluster/cluster-overview/</loc>
-         <lastmod>2026-01-29</lastmod>
+         <lastmod>2026-02-03</lastmod>
     </url>
     <url>
          <loc>https://docs.axonops.com/configuration/agent-configuration/</loc>
-         <lastmod>2026-01-29</lastmod>
+         <lastmod>2026-02-03</lastmod>
     </url>
     <url>
          <loc>https://docs.axonops.com/configuration/axondash/</loc>
-         <lastmod>2026-01-29</lastmod>
+         <lastmod>2026-02-03</lastmod>
     </url>
     <url>
          <loc>https://docs.axonops.com/configuration/server-configuration/</loc>
-         <lastmod>2026-01-29</lastmod>
+         <lastmod>2026-02-03</lastmod>
     </url>
     <url>
          <loc>https://docs.axonops.com/data-platforms/</loc>
-         <lastmod>2026-01-29</lastmod>
+         <lastmod>2026-02-03</lastmod>
     </url>
     <url>
          <loc>https://docs.axonops.com/data-platforms/cassandra/</loc>
-         <lastmod>2026-01-29</lastmod>
+         <lastmod>2026-02-03</lastmod>
     </url>
     <url>
          <loc>https://docs.axonops.com/data-platforms/cassandra/application-development/</loc>
-         <lastmod>2026-01-29</lastmod>
+         <lastmod>2026-02-03</lastmod>
     </url>
     <url>
          <loc>https://docs.axonops.com/data-platforms/cassandra/application-development/anti-patterns/</loc>
-         <lastmod>2026-01-29</lastmod>
+         <lastmod>2026-02-03</lastmod>
     </url>
     <url>
          <loc>https://docs.axonops.com/data-platforms/cassandra/application-development/cqlai/</loc>
-         <lastmod>2026-01-29</lastmod>
+         <lastmod>2026-02-03</lastmod>
     </url>
     <url>
          <loc>https://docs.axonops.com/data-platforms/cassandra/application-development/workbench/</loc>
-         <lastmod>2026-01-29</lastmod>
+         <lastmod>2026-02-03</lastmod>
     </url>
     <url>
          <loc>https://docs.axonops.com/data-platforms/cassandra/application-development/drivers/</loc>
-         <lastmod>2026-01-29</lastmod>
+         <lastmod>2026-02-03</lastmod>
     </url>
     <url>
          <loc>https://docs.axonops.com/data-platforms/cassandra/application-development/drivers/best-practices/</loc>
-         <lastmod>2026-01-29</lastmod>
+         <lastmod>2026-02-03</lastmod>
     </url>
     <url>
          <loc>https://docs.axonops.com/data-platforms/cassandra/application-development/drivers/connection-management/</loc>
-         <lastmod>2026-01-29</lastmod>
+         <lastmod>2026-02-03</lastmod>
     </url>
     <url>
          <loc>https://docs.axonops.com/data-platforms/cassandra/application-development/drivers/prepared-statements/</loc>
-         <lastmod>2026-01-29</lastmod>
+         <lastmod>2026-02-03</lastmod>
     </url>
     <url>
          <loc>https://docs.axonops.com/data-platforms/cassandra/application-development/drivers/policies/</loc>
-         <lastmod>2026-01-29</lastmod>
+         <lastmod>2026-02-03</lastmod>
     </url>
     <url>
          <loc>https://docs.axonops.com/data-platforms/cassandra/application-development/drivers/policies/load-balancing/</loc>
-         <lastmod>2026-01-29</lastmod>
+         <lastmod>2026-02-03</lastmod>
     </url>
     <url>
          <loc>https://docs.axonops.com/data-platforms/cassandra/application-development/drivers/policies/reconnection/</loc>
-         <lastmod>2026-01-29</lastmod>
+         <lastmod>2026-02-03</lastmod>
     </url>
     <url>
          <loc>https://docs.axonops.com/data-platforms/cassandra/application-development/drivers/policies/retry/</loc>
-         <lastmod>2026-01-29</lastmod>
+         <lastmod>2026-02-03</lastmod>
     </url>
     <url>
          <loc>https://docs.axonops.com/data-platforms/cassandra/application-development/drivers/policies/speculative-execution/</loc>
-         <lastmod>2026-01-29</lastmod>
+         <lastmod>2026-02-03</lastmod>
     </url>
     <url>
          <loc>https://docs.axonops.com/data-platforms/cassandra/application-development/patterns/</loc>
-         <lastmod>2026-01-29</lastmod>
+         <lastmod>2026-02-03</lastmod>
     </url>
     <url>
          <loc>https://docs.axonops.com/data-platforms/cassandra/application-development/patterns/audit-compliance/</loc>
-         <lastmod>2026-01-29</lastmod>
+         <lastmod>2026-02-03</lastmod>
     </url>
     <url>
          <loc>https://docs.axonops.com/data-platforms/cassandra/application-development/patterns/cqrs/</loc>
-         <lastmod>2026-01-29</lastmod>
+         <lastmod>2026-02-03</lastmod>
     </url>
     <url>
          <loc>https://docs.axonops.com/data-platforms/cassandra/application-development/patterns/digital-currency/</loc>
-         <lastmod>2026-01-29</lastmod>
+         <lastmod>2026-02-03</lastmod>
     </url>
     <url>
          <loc>https://docs.axonops.com/data-platforms/cassandra/application-development/patterns/digital-twin/</loc>
-         <lastmod>2026-01-29</lastmod>
+         <lastmod>2026-02-03</lastmod>
     </url>
     <url>
          <loc>https://docs.axonops.com/data-platforms/cassandra/application-development/patterns/event-sourcing/</loc>
-         <lastmod>2026-01-29</lastmod>
+         <lastmod>2026-02-03</lastmod>
     </url>
     <url>
          <loc>https://docs.axonops.com/data-platforms/cassandra/application-development/patterns/idempotency/</loc>
-         <lastmod>2026-01-29</lastmod>
+         <lastmod>2026-02-03</lastmod>
     </url>
     <url>
          <loc>https://docs.axonops.com/data-platforms/cassandra/application-development/patterns/ledger/</loc>
-         <lastmod>2026-01-29</lastmod>
+         <lastmod>2026-02-03</lastmod>
     </url>
     <url>
          <loc>https://docs.axonops.com/data-platforms/cassandra/application-development/patterns/multi-tenant/</loc>
-         <lastmod>2026-01-29</lastmod>
+         <lastmod>2026-02-03</lastmod>
     </url>
     <url>
          <loc>https://docs.axonops.com/data-platforms/cassandra/application-development/patterns/outbox/</loc>
-         <lastmod>2026-01-29</lastmod>
+         <lastmod>2026-02-03</lastmod>
     </url>
     <url>
          <loc>https://docs.axonops.com/data-platforms/cassandra/application-development/patterns/saga/</loc>
-         <lastmod>2026-01-29</lastmod>
+         <lastmod>2026-02-03</lastmod>
     </url>
     <url>
          <loc>https://docs.axonops.com/data-platforms/cassandra/application-development/patterns/sidecar-cdc-outbox/</loc>
-         <lastmod>2026-01-29</lastmod>
+         <lastmod>2026-02-03</lastmod>
     </url>
     <url>
          <loc>https://docs.axonops.com/data-platforms/cassandra/application-development/patterns/speed-layer/</loc>
-         <lastmod>2026-01-29</lastmod>
+         <lastmod>2026-02-03</lastmod>
     </url>
     <url>
          <loc>https://docs.axonops.com/data-platforms/cassandra/application-development/patterns/telemetry-at-scale/</loc>
-         <lastmod>2026-01-29</lastmod>
+         <lastmod>2026-02-03</lastmod>
     </url>
     <url>
          <loc>https://docs.axonops.com/data-platforms/cassandra/application-development/patterns/time-bucketing/</loc>
-         <lastmod>2026-01-29</lastmod>
+         <lastmod>2026-02-03</lastmod>
     </url>
     <url>
          <loc>https://docs.axonops.com/data-platforms/cassandra/application-development/patterns/time-series/</loc>
-         <lastmod>2026-01-29</lastmod>
+         <lastmod>2026-02-03</lastmod>
     </url>
     <url>
          <loc>https://docs.axonops.com/data-platforms/cassandra/architecture/</loc>
-         <lastmod>2026-01-29</lastmod>
+         <lastmod>2026-02-03</lastmod>
     </url>
     <url>
          <loc>https://docs.axonops.com/data-platforms/cassandra/architecture/seda/</loc>
-         <lastmod>2026-01-29</lastmod>
+         <lastmod>2026-02-03</lastmod>
     </url>
     <url>
          <loc>https://docs.axonops.com/data-platforms/cassandra/architecture/client-connections/</loc>
-         <lastmod>2026-01-29</lastmod>
+         <lastmod>2026-02-03</lastmod>
     </url>
     <url>
          <loc>https://docs.axonops.com/data-platforms/cassandra/architecture/client-connections/async-connections/</loc>
-         <lastmod>2026-01-29</lastmod>
+         <lastmod>2026-02-03</lastmod>
     </url>
     <url>
          <loc>https://docs.axonops.com/data-platforms/cassandra/architecture/client-connections/authentication/</loc>
-         <lastmod>2026-01-29</lastmod>
+         <lastmod>2026-02-03</lastmod>
     </url>
     <url>
          <loc>https://docs.axonops.com/data-platforms/cassandra/architecture/client-connections/compression/</loc>
-         <lastmod>2026-01-29</lastmod>
+         <lastmod>2026-02-03</lastmod>
     </url>
     <url>
          <loc>https://docs.axonops.com/data-platforms/cassandra/architecture/client-connections/cql-protocol/</loc>
-         <lastmod>2026-01-29</lastmod>
+         <lastmod>2026-02-03</lastmod>
     </url>
     <url>
          <loc>https://docs.axonops.com/data-platforms/cassandra/architecture/client-connections/failure-handling/</loc>
-         <lastmod>2026-01-29</lastmod>
+         <lastmod>2026-02-03</lastmod>
     </url>
     <url>
          <loc>https://docs.axonops.com/data-platforms/cassandra/architecture/client-connections/load-balancing/</loc>
-         <lastmod>2026-01-29</lastmod>
+         <lastmod>2026-02-03</lastmod>
     </url>
     <url>
          <loc>https://docs.axonops.com/data-platforms/cassandra/architecture/client-connections/pagination/</loc>
-         <lastmod>2026-01-29</lastmod>
+         <lastmod>2026-02-03</lastmod>
     </url>
     <url>
          <loc>https://docs.axonops.com/data-platforms/cassandra/architecture/client-connections/prepared-statements/</loc>
-         <lastmod>2026-01-29</lastmod>
+         <lastmod>2026-02-03</lastmod>
     </url>
     <url>
          <loc>https://docs.axonops.com/data-platforms/cassandra/architecture/client-connections/throttling/</loc>
-         <lastmod>2026-01-29</lastmod>
+         <lastmod>2026-02-03</lastmod>
     </url>
     <url>
          <loc>https://docs.axonops.com/data-platforms/cassandra/architecture/cluster-management/</loc>
-         <lastmod>2026-01-29</lastmod>
+         <lastmod>2026-02-03</lastmod>
     </url>
     <url>
          <loc>https://docs.axonops.com/data-platforms/cassandra/architecture/cluster-management/gossip/</loc>
-         <lastmod>2026-01-29</lastmod>
+         <lastmod>2026-02-03</lastmod>
     </url>
     <url>
          <loc>https://docs.axonops.com/data-platforms/cassandra/architecture/cluster-management/node-lifecycle/</loc>
-         <lastmod>2026-01-29</lastmod>
+         <lastmod>2026-02-03</lastmod>
     </url>
     <url>
          <loc>https://docs.axonops.com/data-platforms/cassandra/architecture/cluster-management/node-replacement/</loc>
-         <lastmod>2026-01-29</lastmod>
+         <lastmod>2026-02-03</lastmod>
     </url>
     <url>
          <loc>https://docs.axonops.com/data-platforms/cassandra/architecture/cluster-management/scaling/</loc>
-         <lastmod>2026-01-29</lastmod>
+         <lastmod>2026-02-03</lastmod>
     </url>
     <url>
          <loc>https://docs.axonops.com/data-platforms/cassandra/architecture/cluster-management/seeds/</loc>
-         <lastmod>2026-01-29</lastmod>
+         <lastmod>2026-02-03</lastmod>
     </url>
     <url>
          <loc>https://docs.axonops.com/data-platforms/cassandra/architecture/distributed-data/</loc>
-         <lastmod>2026-01-29</lastmod>
+         <lastmod>2026-02-03</lastmod>
     </url>
     <url>
          <loc>https://docs.axonops.com/data-platforms/cassandra/architecture/distributed-data/consistency-levels/</loc>
-         <lastmod>2026-01-29</lastmod>
+         <lastmod>2026-02-03</lastmod>
     </url>
     <url>
          <loc>https://docs.axonops.com/data-platforms/cassandra/architecture/distributed-data/consistency/</loc>
-         <lastmod>2026-01-29</lastmod>
+         <lastmod>2026-02-03</lastmod>
     </url>
     <url>
          <loc>https://docs.axonops.com/data-platforms/cassandra/architecture/distributed-data/counters/</loc>
-         <lastmod>2026-01-29</lastmod>
+         <lastmod>2026-02-03</lastmod>
     </url>
     <url>
          <loc>https://docs.axonops.com/data-platforms/cassandra/architecture/distributed-data/materialized-views/</loc>
-         <lastmod>2026-01-29</lastmod>
+         <lastmod>2026-02-03</lastmod>
     </url>
     <url>
          <loc>https://docs.axonops.com/data-platforms/cassandra/architecture/distributed-data/multi-datacenter/</loc>
-         <lastmod>2026-01-29</lastmod>
+         <lastmod>2026-02-03</lastmod>
     </url>
     <url>
          <loc>https://docs.axonops.com/data-platforms/cassandra/architecture/distributed-data/partitioning/</loc>
-         <lastmod>2026-01-29</lastmod>
+         <lastmod>2026-02-03</lastmod>
     </url>
     <url>
          <loc>https://docs.axonops.com/data-platforms/cassandra/architecture/distributed-data/paxos/</loc>
-         <lastmod>2026-01-29</lastmod>
+         <lastmod>2026-02-03</lastmod>
     </url>
     <url>
          <loc>https://docs.axonops.com/data-platforms/cassandra/architecture/distributed-data/replica-synchronization/</loc>
-         <lastmod>2026-01-29</lastmod>
+         <lastmod>2026-02-03</lastmod>
     </url>
     <url>
          <loc>https://docs.axonops.com/data-platforms/cassandra/architecture/distributed-data/replication/</loc>
-         <lastmod>2026-01-29</lastmod>
+         <lastmod>2026-02-03</lastmod>
     </url>
     <url>
          <loc>https://docs.axonops.com/data-platforms/cassandra/architecture/distributed-data/secondary-index-queries/</loc>
-         <lastmod>2026-01-29</lastmod>
+         <lastmod>2026-02-03</lastmod>
     </url>
     <url>
          <loc>https://docs.axonops.com/data-platforms/cassandra/architecture/distributed-data/streaming/</loc>
-         <lastmod>2026-01-29</lastmod>
+         <lastmod>2026-02-03</lastmod>
     </url>
     <url>
          <loc>https://docs.axonops.com/data-platforms/cassandra/architecture/fault-tolerance/</loc>
-         <lastmod>2026-01-29</lastmod>
+         <lastmod>2026-02-03</lastmod>
     </url>
     <url>
          <loc>https://docs.axonops.com/data-platforms/cassandra/architecture/memory-management/jvm/</loc>
-         <lastmod>2026-01-29</lastmod>
+         <lastmod>2026-02-03</lastmod>
     </url>
     <url>
          <loc>https://docs.axonops.com/data-platforms/cassandra/architecture/memory-management/linux/</loc>
-         <lastmod>2026-01-29</lastmod>
+         <lastmod>2026-02-03</lastmod>
     </url>
     <url>
          <loc>https://docs.axonops.com/data-platforms/cassandra/architecture/memory-management/memory/</loc>
-         <lastmod>2026-01-29</lastmod>
+         <lastmod>2026-02-03</lastmod>
     </url>
     <url>
          <loc>https://docs.axonops.com/data-platforms/cassandra/architecture/storage-engine/</loc>
-         <lastmod>2026-01-29</lastmod>
+         <lastmod>2026-02-03</lastmod>
     </url>
     <url>
          <loc>https://docs.axonops.com/data-platforms/cassandra/architecture/storage-engine/cdc/</loc>
-         <lastmod>2026-01-29</lastmod>
+         <lastmod>2026-02-03</lastmod>
     </url>
     <url>
          <loc>https://docs.axonops.com/data-platforms/cassandra/architecture/storage-engine/commitlog/</loc>
-         <lastmod>2026-01-29</lastmod>
+         <lastmod>2026-02-03</lastmod>
     </url>
     <url>
          <loc>https://docs.axonops.com/data-platforms/cassandra/architecture/storage-engine/materialized-views/</loc>
-         <lastmod>2026-01-29</lastmod>
+         <lastmod>2026-02-03</lastmod>
     </url>
     <url>
          <loc>https://docs.axonops.com/data-platforms/cassandra/architecture/storage-engine/read-path/</loc>
-         <lastmod>2026-01-29</lastmod>
+         <lastmod>2026-02-03</lastmod>
     </url>
     <url>
          <loc>https://docs.axonops.com/data-platforms/cassandra/architecture/storage-engine/sstables/</loc>
-         <lastmod>2026-01-29</lastmod>
+         <lastmod>2026-02-03</lastmod>
     </url>
     <url>
          <loc>https://docs.axonops.com/data-platforms/cassandra/architecture/storage-engine/tombstones/</loc>
-         <lastmod>2026-01-29</lastmod>
+         <lastmod>2026-02-03</lastmod>
     </url>
     <url>
          <loc>https://docs.axonops.com/data-platforms/cassandra/architecture/storage-engine/write-path/</loc>
-         <lastmod>2026-01-29</lastmod>
+         <lastmod>2026-02-03</lastmod>
     </url>
     <url>
          <loc>https://docs.axonops.com/data-platforms/cassandra/architecture/storage-engine/compaction/</loc>
-         <lastmod>2026-01-29</lastmod>
+         <lastmod>2026-02-03</lastmod>
     </url>
     <url>
          <loc>https://docs.axonops.com/data-platforms/cassandra/architecture/storage-engine/compaction/lcs/</loc>
-         <lastmod>2026-01-29</lastmod>
+         <lastmod>2026-02-03</lastmod>
     </url>
     <url>
          <loc>https://docs.axonops.com/data-platforms/cassandra/architecture/storage-engine/compaction/stcs/</loc>
-         <lastmod>2026-01-29</lastmod>
+         <lastmod>2026-02-03</lastmod>
     </url>
     <url>
          <loc>https://docs.axonops.com/data-platforms/cassandra/architecture/storage-engine/compaction/twcs/</loc>
-         <lastmod>2026-01-29</lastmod>
+         <lastmod>2026-02-03</lastmod>
     </url>
     <url>
          <loc>https://docs.axonops.com/data-platforms/cassandra/architecture/storage-engine/compaction/ucs/</loc>
-         <lastmod>2026-01-29</lastmod>
+         <lastmod>2026-02-03</lastmod>
     </url>
     <url>
          <loc>https://docs.axonops.com/data-platforms/cassandra/architecture/storage-engine/indexes/</loc>
-         <lastmod>2026-01-29</lastmod>
+         <lastmod>2026-02-03</lastmod>
     </url>
     <url>
          <loc>https://docs.axonops.com/data-platforms/cassandra/architecture/storage-engine/indexes/sai/</loc>
-         <lastmod>2026-01-29</lastmod>
+         <lastmod>2026-02-03</lastmod>
     </url>
     <url>
          <loc>https://docs.axonops.com/data-platforms/cassandra/architecture/storage-engine/indexes/sasi/</loc>
-         <lastmod>2026-01-29</lastmod>
+         <lastmod>2026-02-03</lastmod>
     </url>
     <url>
          <loc>https://docs.axonops.com/data-platforms/cassandra/architecture/storage-engine/indexes/secondary-indexes/</loc>
-         <lastmod>2026-01-29</lastmod>
+         <lastmod>2026-02-03</lastmod>
     </url>
     <url>
          <loc>https://docs.axonops.com/data-platforms/cassandra/cloud/</loc>
-         <lastmod>2026-01-29</lastmod>
+         <lastmod>2026-02-03</lastmod>
     </url>
     <url>
          <loc>https://docs.axonops.com/data-platforms/cassandra/cloud/storage-strategy/</loc>
-         <lastmod>2026-01-29</lastmod>
+         <lastmod>2026-02-03</lastmod>
     </url>
     <url>
          <loc>https://docs.axonops.com/data-platforms/cassandra/cloud/aws/</loc>
-         <lastmod>2026-01-29</lastmod>
+         <lastmod>2026-02-03</lastmod>
     </url>
     <url>
          <loc>https://docs.axonops.com/data-platforms/cassandra/cloud/azure/</loc>
-         <lastmod>2026-01-29</lastmod>
+         <lastmod>2026-02-03</lastmod>
     </url>
     <url>
          <loc>https://docs.axonops.com/data-platforms/cassandra/cloud/gcp/</loc>
-         <lastmod>2026-01-29</lastmod>
+         <lastmod>2026-02-03</lastmod>
     </url>
     <url>
          <loc>https://docs.axonops.com/data-platforms/cassandra/cloud/kubernetes/</loc>
-         <lastmod>2026-01-29</lastmod>
+         <lastmod>2026-02-03</lastmod>
     </url>
     <url>
          <loc>https://docs.axonops.com/data-platforms/cassandra/cql/</loc>
-         <lastmod>2026-01-29</lastmod>
+         <lastmod>2026-02-03</lastmod>
     </url>
     <url>
          <loc>https://docs.axonops.com/data-platforms/cassandra/cql/data-types/</loc>
-         <lastmod>2026-01-29</lastmod>
+         <lastmod>2026-02-03</lastmod>
     </url>
     <url>
          <loc>https://docs.axonops.com/data-platforms/cassandra/cql/ddl/</loc>
-         <lastmod>2026-01-29</lastmod>
+         <lastmod>2026-02-03</lastmod>
     </url>
     <url>
          <loc>https://docs.axonops.com/data-platforms/cassandra/cql/ddl/aggregate/</loc>
-         <lastmod>2026-01-29</lastmod>
+         <lastmod>2026-02-03</lastmod>
     </url>
     <url>
          <loc>https://docs.axonops.com/data-platforms/cassandra/cql/ddl/create-index/</loc>
-         <lastmod>2026-01-29</lastmod>
+         <lastmod>2026-02-03</lastmod>
     </url>
     <url>
          <loc>https://docs.axonops.com/data-platforms/cassandra/cql/ddl/function/</loc>
-         <lastmod>2026-01-29</lastmod>
+         <lastmod>2026-02-03</lastmod>
     </url>
     <url>
          <loc>https://docs.axonops.com/data-platforms/cassandra/cql/ddl/keyspace/</loc>
-         <lastmod>2026-01-29</lastmod>
+         <lastmod>2026-02-03</lastmod>
     </url>
     <url>
          <loc>https://docs.axonops.com/data-platforms/cassandra/cql/ddl/materialized-view/</loc>
-         <lastmod>2026-01-29</lastmod>
+         <lastmod>2026-02-03</lastmod>
     </url>
     <url>
          <loc>https://docs.axonops.com/data-platforms/cassandra/cql/ddl/table/</loc>
-         <lastmod>2026-01-29</lastmod>
+         <lastmod>2026-02-03</lastmod>
     </url>
     <url>
          <loc>https://docs.axonops.com/data-platforms/cassandra/cql/ddl/trigger/</loc>
-         <lastmod>2026-01-29</lastmod>
+         <lastmod>2026-02-03</lastmod>
     </url>
     <url>
          <loc>https://docs.axonops.com/data-platforms/cassandra/cql/ddl/type/</loc>
-         <lastmod>2026-01-29</lastmod>
+         <lastmod>2026-02-03</lastmod>
     </url>
     <url>
          <loc>https://docs.axonops.com/data-platforms/cassandra/cql/dml/</loc>
-         <lastmod>2026-01-29</lastmod>
+         <lastmod>2026-02-03</lastmod>
     </url>
     <url>
          <loc>https://docs.axonops.com/data-platforms/cassandra/cql/dml/batch/</loc>
-         <lastmod>2026-01-29</lastmod>
+         <lastmod>2026-02-03</lastmod>
     </url>
     <url>
          <loc>https://docs.axonops.com/data-platforms/cassandra/cql/dml/delete/</loc>
-         <lastmod>2026-01-29</lastmod>
+         <lastmod>2026-02-03</lastmod>
     </url>
     <url>
          <loc>https://docs.axonops.com/data-platforms/cassandra/cql/dml/insert/</loc>
-         <lastmod>2026-01-29</lastmod>
+         <lastmod>2026-02-03</lastmod>
     </url>
     <url>
          <loc>https://docs.axonops.com/data-platforms/cassandra/cql/dml/lightweight-transactions/</loc>
-         <lastmod>2026-01-29</lastmod>
+         <lastmod>2026-02-03</lastmod>
     </url>
     <url>
          <loc>https://docs.axonops.com/data-platforms/cassandra/cql/dml/secondary-index-queries/</loc>
-         <lastmod>2026-01-29</lastmod>
+         <lastmod>2026-02-03</lastmod>
     </url>
     <url>
          <loc>https://docs.axonops.com/data-platforms/cassandra/cql/dml/select/</loc>
-         <lastmod>2026-01-29</lastmod>
+         <lastmod>2026-02-03</lastmod>
     </url>
     <url>
          <loc>https://docs.axonops.com/data-platforms/cassandra/cql/dml/update/</loc>
-         <lastmod>2026-01-29</lastmod>
+         <lastmod>2026-02-03</lastmod>
     </url>
     <url>
          <loc>https://docs.axonops.com/data-platforms/cassandra/cql/dml/vector-search/</loc>
-         <lastmod>2026-01-29</lastmod>
+         <lastmod>2026-02-03</lastmod>
     </url>
     <url>
          <loc>https://docs.axonops.com/data-platforms/cassandra/cql/functions/</loc>
-         <lastmod>2026-01-29</lastmod>
+         <lastmod>2026-02-03</lastmod>
     </url>
     <url>
          <loc>https://docs.axonops.com/data-platforms/cassandra/cql/indexing/</loc>
-         <lastmod>2026-01-29</lastmod>
+         <lastmod>2026-02-03</lastmod>
     </url>
     <url>
          <loc>https://docs.axonops.com/data-platforms/cassandra/cql/security/</loc>
-         <lastmod>2026-01-29</lastmod>
+         <lastmod>2026-02-03</lastmod>
     </url>
     <url>
          <loc>https://docs.axonops.com/data-platforms/cassandra/cql/security/dynamic-data-masking/</loc>
-         <lastmod>2026-01-29</lastmod>
+         <lastmod>2026-02-03</lastmod>
     </url>
     <url>
          <loc>https://docs.axonops.com/data-platforms/cassandra/cql/security/rbac/</loc>
-         <lastmod>2026-01-29</lastmod>
+         <lastmod>2026-02-03</lastmod>
     </url>
     <url>
          <loc>https://docs.axonops.com/data-platforms/cassandra/data-modeling/</loc>
-         <lastmod>2026-01-29</lastmod>
+         <lastmod>2026-02-03</lastmod>
     </url>
     <url>
          <loc>https://docs.axonops.com/data-platforms/cassandra/data-modeling/anti-patterns/</loc>
-         <lastmod>2026-01-29</lastmod>
+         <lastmod>2026-02-03</lastmod>
     </url>
     <url>
          <loc>https://docs.axonops.com/data-platforms/cassandra/data-modeling/concepts/</loc>
-         <lastmod>2026-01-29</lastmod>
+         <lastmod>2026-02-03</lastmod>
     </url>
     <url>
          <loc>https://docs.axonops.com/data-platforms/cassandra/data-modeling/examples/e-commerce/</loc>
-         <lastmod>2026-01-29</lastmod>
+         <lastmod>2026-02-03</lastmod>
     </url>
     <url>
          <loc>https://docs.axonops.com/data-platforms/cassandra/getting-started/</loc>
-         <lastmod>2026-01-29</lastmod>
+         <lastmod>2026-02-03</lastmod>
     </url>
     <url>
          <loc>https://docs.axonops.com/data-platforms/cassandra/getting-started/first-cluster/</loc>
-         <lastmod>2026-01-29</lastmod>
+         <lastmod>2026-02-03</lastmod>
     </url>
     <url>
          <loc>https://docs.axonops.com/data-platforms/cassandra/getting-started/production-checklist/</loc>
-         <lastmod>2026-01-29</lastmod>
+         <lastmod>2026-02-03</lastmod>
     </url>
     <url>
          <loc>https://docs.axonops.com/data-platforms/cassandra/getting-started/quickstart-cql/</loc>
-         <lastmod>2026-01-29</lastmod>
+         <lastmod>2026-02-03</lastmod>
     </url>
     <url>
          <loc>https://docs.axonops.com/data-platforms/cassandra/getting-started/what-is-cassandra/</loc>
-         <lastmod>2026-01-29</lastmod>
+         <lastmod>2026-02-03</lastmod>
     </url>
     <url>
          <loc>https://docs.axonops.com/data-platforms/cassandra/getting-started/drivers/</loc>
-         <lastmod>2026-01-29</lastmod>
+         <lastmod>2026-02-03</lastmod>
     </url>
     <url>
          <loc>https://docs.axonops.com/data-platforms/cassandra/getting-started/installation/</loc>
-         <lastmod>2026-01-29</lastmod>
+         <lastmod>2026-02-03</lastmod>
     </url>
     <url>
          <loc>https://docs.axonops.com/data-platforms/cassandra/operations/</loc>
-         <lastmod>2026-01-29</lastmod>
+         <lastmod>2026-02-03</lastmod>
     </url>
     <url>
          <loc>https://docs.axonops.com/data-platforms/cassandra/operations/backup-restore/</loc>
-         <lastmod>2026-01-29</lastmod>
+         <lastmod>2026-02-03</lastmod>
     </url>
     <url>
          <loc>https://docs.axonops.com/data-platforms/cassandra/operations/backup-restore/backup/</loc>
-         <lastmod>2026-01-29</lastmod>
+         <lastmod>2026-02-03</lastmod>
     </url>
     <url>
          <loc>https://docs.axonops.com/data-platforms/cassandra/operations/backup-restore/restore/</loc>
-         <lastmod>2026-01-29</lastmod>
+         <lastmod>2026-02-03</lastmod>
     </url>
     <url>
          <loc>https://docs.axonops.com/data-platforms/cassandra/operations/cluster-management/</loc>
-         <lastmod>2026-01-29</lastmod>
+         <lastmod>2026-02-03</lastmod>
     </url>
     <url>
          <loc>https://docs.axonops.com/data-platforms/cassandra/operations/cluster-management/adding-nodes/</loc>
-         <lastmod>2026-01-29</lastmod>
+         <lastmod>2026-02-03</lastmod>
     </url>
     <url>
          <loc>https://docs.axonops.com/data-platforms/cassandra/operations/cluster-management/cleanup/</loc>
-         <lastmod>2026-01-29</lastmod>
+         <lastmod>2026-02-03</lastmod>
     </url>
     <url>
          <loc>https://docs.axonops.com/data-platforms/cassandra/operations/cluster-management/multi-datacenter/</loc>
-         <lastmod>2026-01-29</lastmod>
+         <lastmod>2026-02-03</lastmod>
     </url>
     <url>
          <loc>https://docs.axonops.com/data-platforms/cassandra/operations/cluster-management/removing-nodes/</loc>
-         <lastmod>2026-01-29</lastmod>
+         <lastmod>2026-02-03</lastmod>
     </url>
     <url>
          <loc>https://docs.axonops.com/data-platforms/cassandra/operations/cluster-management/replacing-nodes/</loc>
-         <lastmod>2026-01-29</lastmod>
+         <lastmod>2026-02-03</lastmod>
     </url>
     <url>
          <loc>https://docs.axonops.com/data-platforms/cassandra/operations/cluster-management/rolling-restart/</loc>
-         <lastmod>2026-01-29</lastmod>
+         <lastmod>2026-02-03</lastmod>
     </url>
     <url>
          <loc>https://docs.axonops.com/data-platforms/cassandra/operations/cluster-management/scaling/</loc>
-         <lastmod>2026-01-29</lastmod>
+         <lastmod>2026-02-03</lastmod>
     </url>
     <url>
          <loc>https://docs.axonops.com/data-platforms/cassandra/operations/cluster-management/troubleshooting/</loc>
-         <lastmod>2026-01-29</lastmod>
+         <lastmod>2026-02-03</lastmod>
     </url>
     <url>
          <loc>https://docs.axonops.com/data-platforms/cassandra/operations/compaction-management/</loc>
-         <lastmod>2026-01-29</lastmod>
+         <lastmod>2026-02-03</lastmod>
     </url>
     <url>
          <loc>https://docs.axonops.com/data-platforms/cassandra/operations/configuration/</loc>
-         <lastmod>2026-01-29</lastmod>
+         <lastmod>2026-02-03</lastmod>
     </url>
     <url>
          <loc>https://docs.axonops.com/data-platforms/cassandra/operations/configuration/guardrails/</loc>
-         <lastmod>2026-01-29</lastmod>
+         <lastmod>2026-02-03</lastmod>
     </url>
     <url>
          <loc>https://docs.axonops.com/data-platforms/cassandra/operations/configuration/logback/</loc>
-         <lastmod>2026-01-29</lastmod>
+         <lastmod>2026-02-03</lastmod>
     </url>
     <url>
          <loc>https://docs.axonops.com/data-platforms/cassandra/operations/configuration/cassandra-yaml/</loc>
-         <lastmod>2026-01-29</lastmod>
+         <lastmod>2026-02-03</lastmod>
     </url>
     <url>
          <loc>https://docs.axonops.com/data-platforms/cassandra/operations/configuration/cassandra-yaml/guide/</loc>
-         <lastmod>2026-01-29</lastmod>
+         <lastmod>2026-02-03</lastmod>
     </url>
     <url>
          <loc>https://docs.axonops.com/data-platforms/cassandra/operations/configuration/cassandra-yaml/reference/</loc>
-         <lastmod>2026-01-29</lastmod>
+         <lastmod>2026-02-03</lastmod>
     </url>
     <url>
          <loc>https://docs.axonops.com/data-platforms/cassandra/operations/configuration/jvm-options/</loc>
-         <lastmod>2026-01-29</lastmod>
+         <lastmod>2026-02-03</lastmod>
     </url>
     <url>
          <loc>https://docs.axonops.com/data-platforms/cassandra/operations/configuration/snitch-config/</loc>
-         <lastmod>2026-01-29</lastmod>
+         <lastmod>2026-02-03</lastmod>
     </url>
     <url>
          <loc>https://docs.axonops.com/data-platforms/cassandra/operations/jmx-reference/</loc>
-         <lastmod>2026-01-29</lastmod>
+         <lastmod>2026-02-03</lastmod>
     </url>
     <url>
          <loc>https://docs.axonops.com/data-platforms/cassandra/operations/jmx-reference/connecting/</loc>
-         <lastmod>2026-01-29</lastmod>
+         <lastmod>2026-02-03</lastmod>
     </url>
     <url>
          <loc>https://docs.axonops.com/data-platforms/cassandra/operations/jmx-reference/mbeans/</loc>
-         <lastmod>2026-01-29</lastmod>
+         <lastmod>2026-02-03</lastmod>
     </url>
     <url>
          <loc>https://docs.axonops.com/data-platforms/cassandra/operations/jmx-reference/metrics/</loc>
-         <lastmod>2026-01-29</lastmod>
+         <lastmod>2026-02-03</lastmod>
     </url>
     <url>
          <loc>https://docs.axonops.com/data-platforms/cassandra/operations/maintenance/</loc>
-         <lastmod>2026-01-29</lastmod>
+         <lastmod>2026-02-03</lastmod>
     </url>
     <url>
          <loc>https://docs.axonops.com/data-platforms/cassandra/operations/monitoring/</loc>
-         <lastmod>2026-01-29</lastmod>
+         <lastmod>2026-02-03</lastmod>
     </url>
     <url>
          <loc>https://docs.axonops.com/data-platforms/cassandra/operations/monitoring/alerting/</loc>
-         <lastmod>2026-01-29</lastmod>
+         <lastmod>2026-02-03</lastmod>
     </url>
     <url>
          <loc>https://docs.axonops.com/data-platforms/cassandra/operations/monitoring/key-metrics/</loc>
-         <lastmod>2026-01-29</lastmod>
+         <lastmod>2026-02-03</lastmod>
     </url>
     <url>
          <loc>https://docs.axonops.com/data-platforms/cassandra/operations/monitoring/logging/</loc>
-         <lastmod>2026-01-29</lastmod>
+         <lastmod>2026-02-03</lastmod>
     </url>
     <url>
          <loc>https://docs.axonops.com/data-platforms/cassandra/operations/nodetool/</loc>
-         <lastmod>2026-01-29</lastmod>
+         <lastmod>2026-02-03</lastmod>
     </url>
     <url>
          <loc>https://docs.axonops.com/data-platforms/cassandra/operations/nodetool/assassinate/</loc>
-         <lastmod>2026-01-29</lastmod>
+         <lastmod>2026-02-03</lastmod>
     </url>
     <url>
          <loc>https://docs.axonops.com/data-platforms/cassandra/operations/nodetool/bootstrap/</loc>
-         <lastmod>2026-01-29</lastmod>
+         <lastmod>2026-02-03</lastmod>
     </url>
     <url>
          <loc>https://docs.axonops.com/data-platforms/cassandra/operations/nodetool/checktokenmetadata/</loc>
-         <lastmod>2026-01-29</lastmod>
+         <lastmod>2026-02-03</lastmod>
     </url>
     <url>
          <loc>https://docs.axonops.com/data-platforms/cassandra/operations/nodetool/cidrfilteringstats/</loc>
-         <lastmod>2026-01-29</lastmod>
+         <lastmod>2026-02-03</lastmod>
     </url>
     <url>
          <loc>https://docs.axonops.com/data-platforms/cassandra/operations/nodetool/cleanup/</loc>
-         <lastmod>2026-01-29</lastmod>
+         <lastmod>2026-02-03</lastmod>
     </url>
     <url>
          <loc>https://docs.axonops.com/data-platforms/cassandra/operations/nodetool/clearsnapshot/</loc>
-         <lastmod>2026-01-29</lastmod>
+         <lastmod>2026-02-03</lastmod>
     </url>
     <url>
          <loc>https://docs.axonops.com/data-platforms/cassandra/operations/nodetool/clientstats/</loc>
-         <lastmod>2026-01-29</lastmod>
+         <lastmod>2026-02-03</lastmod>
     </url>
     <url>
          <loc>https://docs.axonops.com/data-platforms/cassandra/operations/nodetool/compact/</loc>
-         <lastmod>2026-01-29</lastmod>
+         <lastmod>2026-02-03</lastmod>
     </url>
     <url>
          <loc>https://docs.axonops.com/data-platforms/cassandra/operations/nodetool/compactionhistory/</loc>
-         <lastmod>2026-01-29</lastmod>
+         <lastmod>2026-02-03</lastmod>
     </url>
     <url>
          <loc>https://docs.axonops.com/data-platforms/cassandra/operations/nodetool/compactionstats/</loc>
-         <lastmod>2026-01-29</lastmod>
+         <lastmod>2026-02-03</lastmod>
     </url>
     <url>
          <loc>https://docs.axonops.com/data-platforms/cassandra/operations/nodetool/datapaths/</loc>
-         <lastmod>2026-01-29</lastmod>
+         <lastmod>2026-02-03</lastmod>
     </url>
     <url>
          <loc>https://docs.axonops.com/data-platforms/cassandra/operations/nodetool/decommission/</loc>
-         <lastmod>2026-01-29</lastmod>
+         <lastmod>2026-02-03</lastmod>
     </url>
     <url>
          <loc>https://docs.axonops.com/data-platforms/cassandra/operations/nodetool/describecluster/</loc>
-         <lastmod>2026-01-29</lastmod>
+         <lastmod>2026-02-03</lastmod>
     </url>
     <url>
          <loc>https://docs.axonops.com/data-platforms/cassandra/operations/nodetool/describering/</loc>
-         <lastmod>2026-01-29</lastmod>
+         <lastmod>2026-02-03</lastmod>
     </url>
     <url>
          <loc>https://docs.axonops.com/data-platforms/cassandra/operations/nodetool/disableauditlog/</loc>
-         <lastmod>2026-01-29</lastmod>
+         <lastmod>2026-02-03</lastmod>
     </url>
     <url>
          <loc>https://docs.axonops.com/data-platforms/cassandra/operations/nodetool/disableautocompaction/</loc>
-         <lastmod>2026-01-29</lastmod>
+         <lastmod>2026-02-03</lastmod>
     </url>
     <url>
          <loc>https://docs.axonops.com/data-platforms/cassandra/operations/nodetool/disablebackup/</loc>
-         <lastmod>2026-01-29</lastmod>
+         <lastmod>2026-02-03</lastmod>
     </url>
     <url>
          <loc>https://docs.axonops.com/data-platforms/cassandra/operations/nodetool/disablebinary/</loc>
-         <lastmod>2026-01-29</lastmod>
+         <lastmod>2026-02-03</lastmod>
     </url>
     <url>
          <loc>https://docs.axonops.com/data-platforms/cassandra/operations/nodetool/disablefullquerylog/</loc>
-         <lastmod>2026-01-29</lastmod>
+         <lastmod>2026-02-03</lastmod>
     </url>
     <url>
          <loc>https://docs.axonops.com/data-platforms/cassandra/operations/nodetool/disablegossip/</loc>
-         <lastmod>2026-01-29</lastmod>
+         <lastmod>2026-02-03</lastmod>
     </url>
     <url>
          <loc>https://docs.axonops.com/data-platforms/cassandra/operations/nodetool/disablehandoff/</loc>
-         <lastmod>2026-01-29</lastmod>
+         <lastmod>2026-02-03</lastmod>
     </url>
     <url>
          <loc>https://docs.axonops.com/data-platforms/cassandra/operations/nodetool/disablehintsfordc/</loc>
-         <lastmod>2026-01-29</lastmod>
+         <lastmod>2026-02-03</lastmod>
     </url>
     <url>
          <loc>https://docs.axonops.com/data-platforms/cassandra/operations/nodetool/disableoldprotocolversions/</loc>
-         <lastmod>2026-01-29</lastmod>
+         <lastmod>2026-02-03</lastmod>
     </url>
     <url>
          <loc>https://docs.axonops.com/data-platforms/cassandra/operations/nodetool/drain/</loc>
-         <lastmod>2026-01-29</lastmod>
+         <lastmod>2026-02-03</lastmod>
     </url>
     <url>
          <loc>https://docs.axonops.com/data-platforms/cassandra/operations/nodetool/dropcidrgroup/</loc>
-         <lastmod>2026-01-29</lastmod>
+         <lastmod>2026-02-03</lastmod>
     </url>
     <url>
          <loc>https://docs.axonops.com/data-platforms/cassandra/operations/nodetool/enableauditlog/</loc>
-         <lastmod>2026-01-29</lastmod>
+         <lastmod>2026-02-03</lastmod>
     </url>
     <url>
          <loc>https://docs.axonops.com/data-platforms/cassandra/operations/nodetool/enableautocompaction/</loc>
-         <lastmod>2026-01-29</lastmod>
+         <lastmod>2026-02-03</lastmod>
     </url>
     <url>
          <loc>https://docs.axonops.com/data-platforms/cassandra/operations/nodetool/enablebackup/</loc>
-         <lastmod>2026-01-29</lastmod>
+         <lastmod>2026-02-03</lastmod>
     </url>
     <url>
          <loc>https://docs.axonops.com/data-platforms/cassandra/operations/nodetool/enablebinary/</loc>
-         <lastmod>2026-01-29</lastmod>
+         <lastmod>2026-02-03</lastmod>
     </url>
     <url>
          <loc>https://docs.axonops.com/data-platforms/cassandra/operations/nodetool/enablefullquerylog/</loc>
-         <lastmod>2026-01-29</lastmod>
+         <lastmod>2026-02-03</lastmod>
     </url>
     <url>
          <loc>https://docs.axonops.com/data-platforms/cassandra/operations/nodetool/enablegossip/</loc>
-         <lastmod>2026-01-29</lastmod>
+         <lastmod>2026-02-03</lastmod>
     </url>
     <url>
          <loc>https://docs.axonops.com/data-platforms/cassandra/operations/nodetool/enablehandoff/</loc>
-         <lastmod>2026-01-29</lastmod>
+         <lastmod>2026-02-03</lastmod>
     </url>
     <url>
          <loc>https://docs.axonops.com/data-platforms/cassandra/operations/nodetool/enablehintsfordc/</loc>
-         <lastmod>2026-01-29</lastmod>
+         <lastmod>2026-02-03</lastmod>
     </url>
     <url>
          <loc>https://docs.axonops.com/data-platforms/cassandra/operations/nodetool/enableoldprotocolversions/</loc>
-         <lastmod>2026-01-29</lastmod>
+         <lastmod>2026-02-03</lastmod>
     </url>
     <url>
          <loc>https://docs.axonops.com/data-platforms/cassandra/operations/nodetool/failuredetector/</loc>
-         <lastmod>2026-01-29</lastmod>
+         <lastmod>2026-02-03</lastmod>
     </url>
     <url>
          <loc>https://docs.axonops.com/data-platforms/cassandra/operations/nodetool/flush/</loc>
-         <lastmod>2026-01-29</lastmod>
+         <lastmod>2026-02-03</lastmod>
     </url>
     <url>
          <loc>https://docs.axonops.com/data-platforms/cassandra/operations/nodetool/forcecompact/</loc>
-         <lastmod>2026-01-29</lastmod>
+         <lastmod>2026-02-03</lastmod>
     </url>
     <url>
          <loc>https://docs.axonops.com/data-platforms/cassandra/operations/nodetool/garbagecollect/</loc>
-         <lastmod>2026-01-29</lastmod>
+         <lastmod>2026-02-03</lastmod>
     </url>
     <url>
          <loc>https://docs.axonops.com/data-platforms/cassandra/operations/nodetool/gcstats/</loc>
-         <lastmod>2026-01-29</lastmod>
+         <lastmod>2026-02-03</lastmod>
     </url>
     <url>
          <loc>https://docs.axonops.com/data-platforms/cassandra/operations/nodetool/getauditlog/</loc>
-         <lastmod>2026-01-29</lastmod>
+         <lastmod>2026-02-03</lastmod>
     </url>
     <url>
          <loc>https://docs.axonops.com/data-platforms/cassandra/operations/nodetool/getauthcacheconfig/</loc>
-         <lastmod>2026-01-29</lastmod>
+         <lastmod>2026-02-03</lastmod>
     </url>
     <url>
          <loc>https://docs.axonops.com/data-platforms/cassandra/operations/nodetool/getbatchlogreplaythrottle/</loc>
-         <lastmod>2026-01-29</lastmod>
+         <lastmod>2026-02-03</lastmod>
     </url>
     <url>
          <loc>https://docs.axonops.com/data-platforms/cassandra/operations/nodetool/getcidrgroupsofip/</loc>
-         <lastmod>2026-01-29</lastmod>
+         <lastmod>2026-02-03</lastmod>
     </url>
     <url>
          <loc>https://docs.axonops.com/data-platforms/cassandra/operations/nodetool/getcolumnindexsize/</loc>
-         <lastmod>2026-01-29</lastmod>
+         <lastmod>2026-02-03</lastmod>
     </url>
     <url>
          <loc>https://docs.axonops.com/data-platforms/cassandra/operations/nodetool/getcompactionthreshold/</loc>
-         <lastmod>2026-01-29</lastmod>
+         <lastmod>2026-02-03</lastmod>
     </url>
     <url>
          <loc>https://docs.axonops.com/data-platforms/cassandra/operations/nodetool/getcompactionthroughput/</loc>
-         <lastmod>2026-01-29</lastmod>
+         <lastmod>2026-02-03</lastmod>
     </url>
     <url>
          <loc>https://docs.axonops.com/data-platforms/cassandra/operations/nodetool/getconcurrency/</loc>
-         <lastmod>2026-01-29</lastmod>
+         <lastmod>2026-02-03</lastmod>
     </url>
     <url>
          <loc>https://docs.axonops.com/data-platforms/cassandra/operations/nodetool/getconcurrentcompactors/</loc>
-         <lastmod>2026-01-29</lastmod>
+         <lastmod>2026-02-03</lastmod>
     </url>
     <url>
          <loc>https://docs.axonops.com/data-platforms/cassandra/operations/nodetool/getconcurrentviewbuilders/</loc>
-         <lastmod>2026-01-29</lastmod>
+         <lastmod>2026-02-03</lastmod>
     </url>
     <url>
          <loc>https://docs.axonops.com/data-platforms/cassandra/operations/nodetool/getdefaultrf/</loc>
-         <lastmod>2026-01-29</lastmod>
+         <lastmod>2026-02-03</lastmod>
     </url>
     <url>
          <loc>https://docs.axonops.com/data-platforms/cassandra/operations/nodetool/getendpoints/</loc>
-         <lastmod>2026-01-29</lastmod>
+         <lastmod>2026-02-03</lastmod>
     </url>
     <url>
          <loc>https://docs.axonops.com/data-platforms/cassandra/operations/nodetool/getfullquerylog/</loc>
-         <lastmod>2026-01-29</lastmod>
+         <lastmod>2026-02-03</lastmod>
     </url>
     <url>
          <loc>https://docs.axonops.com/data-platforms/cassandra/operations/nodetool/getguardrailsconfig/</loc>
-         <lastmod>2026-01-29</lastmod>
+         <lastmod>2026-02-03</lastmod>
     </url>
     <url>
          <loc>https://docs.axonops.com/data-platforms/cassandra/operations/nodetool/getinterdcstreamthroughput/</loc>
-         <lastmod>2026-01-29</lastmod>
+         <lastmod>2026-02-03</lastmod>
     </url>
     <url>
          <loc>https://docs.axonops.com/data-platforms/cassandra/operations/nodetool/getlogginglevels/</loc>
-         <lastmod>2026-01-29</lastmod>
+         <lastmod>2026-02-03</lastmod>
     </url>
     <url>
          <loc>https://docs.axonops.com/data-platforms/cassandra/operations/nodetool/getmaxhintwindow/</loc>
-         <lastmod>2026-01-29</lastmod>
+         <lastmod>2026-02-03</lastmod>
     </url>
     <url>
          <loc>https://docs.axonops.com/data-platforms/cassandra/operations/nodetool/getseeds/</loc>
-         <lastmod>2026-01-29</lastmod>
+         <lastmod>2026-02-03</lastmod>
     </url>
     <url>
          <loc>https://docs.axonops.com/data-platforms/cassandra/operations/nodetool/getsnapshotthrottle/</loc>
-         <lastmod>2026-01-29</lastmod>
+         <lastmod>2026-02-03</lastmod>
     </url>
     <url>
          <loc>https://docs.axonops.com/data-platforms/cassandra/operations/nodetool/getsstables/</loc>
-         <lastmod>2026-01-29</lastmod>
+         <lastmod>2026-02-03</lastmod>
     </url>
     <url>
          <loc>https://docs.axonops.com/data-platforms/cassandra/operations/nodetool/getstreamthroughput/</loc>
-         <lastmod>2026-01-29</lastmod>
+         <lastmod>2026-02-03</lastmod>
     </url>
     <url>
          <loc>https://docs.axonops.com/data-platforms/cassandra/operations/nodetool/gettimeout/</loc>
-         <lastmod>2026-01-29</lastmod>
+         <lastmod>2026-02-03</lastmod>
     </url>
     <url>
          <loc>https://docs.axonops.com/data-platforms/cassandra/operations/nodetool/gettraceprobability/</loc>
-         <lastmod>2026-01-29</lastmod>
+         <lastmod>2026-02-03</lastmod>
     </url>
     <url>
          <loc>https://docs.axonops.com/data-platforms/cassandra/operations/nodetool/gossipinfo/</loc>
-         <lastmod>2026-01-29</lastmod>
+         <lastmod>2026-02-03</lastmod>
     </url>
     <url>
          <loc>https://docs.axonops.com/data-platforms/cassandra/operations/nodetool/help/</loc>
-         <lastmod>2026-01-29</lastmod>
+         <lastmod>2026-02-03</lastmod>
     </url>
     <url>
          <loc>https://docs.axonops.com/data-platforms/cassandra/operations/nodetool/import/</loc>
-         <lastmod>2026-01-29</lastmod>
+         <lastmod>2026-02-03</lastmod>
     </url>
     <url>
          <loc>https://docs.axonops.com/data-platforms/cassandra/operations/nodetool/info/</loc>
-         <lastmod>2026-01-29</lastmod>
+         <lastmod>2026-02-03</lastmod>
     </url>
     <url>
          <loc>https://docs.axonops.com/data-platforms/cassandra/operations/nodetool/invalidatecidrpermissionscache/</loc>
-         <lastmod>2026-01-29</lastmod>
+         <lastmod>2026-02-03</lastmod>
     </url>
     <url>
          <loc>https://docs.axonops.com/data-platforms/cassandra/operations/nodetool/invalidatecountercache/</loc>
-         <lastmod>2026-01-29</lastmod>
+         <lastmod>2026-02-03</lastmod>
     </url>
     <url>
          <loc>https://docs.axonops.com/data-platforms/cassandra/operations/nodetool/invalidatecredentialscache/</loc>
-         <lastmod>2026-01-29</lastmod>
+         <lastmod>2026-02-03</lastmod>
     </url>
     <url>
          <loc>https://docs.axonops.com/data-platforms/cassandra/operations/nodetool/invalidatejmxpermissionscache/</loc>
-         <lastmod>2026-01-29</lastmod>
+         <lastmod>2026-02-03</lastmod>
     </url>
     <url>
          <loc>https://docs.axonops.com/data-platforms/cassandra/operations/nodetool/invalidatekeycache/</loc>
-         <lastmod>2026-01-29</lastmod>
+         <lastmod>2026-02-03</lastmod>
     </url>
     <url>
          <loc>https://docs.axonops.com/data-platforms/cassandra/operations/nodetool/invalidatenetworkpermissionscache/</loc>
-         <lastmod>2026-01-29</lastmod>
+         <lastmod>2026-02-03</lastmod>
     </url>
     <url>
          <loc>https://docs.axonops.com/data-platforms/cassandra/operations/nodetool/invalidatepermissionscache/</loc>
-         <lastmod>2026-01-29</lastmod>
+         <lastmod>2026-02-03</lastmod>
     </url>
     <url>
          <loc>https://docs.axonops.com/data-platforms/cassandra/operations/nodetool/invalidaterolescache/</loc>
-         <lastmod>2026-01-29</lastmod>
+         <lastmod>2026-02-03</lastmod>
     </url>
     <url>
          <loc>https://docs.axonops.com/data-platforms/cassandra/operations/nodetool/invalidaterowcache/</loc>
-         <lastmod>2026-01-29</lastmod>
+         <lastmod>2026-02-03</lastmod>
     </url>
     <url>
          <loc>https://docs.axonops.com/data-platforms/cassandra/operations/nodetool/join/</loc>
-         <lastmod>2026-01-29</lastmod>
+         <lastmod>2026-02-03</lastmod>
     </url>
     <url>
          <loc>https://docs.axonops.com/data-platforms/cassandra/operations/nodetool/listcidrgroups/</loc>
-         <lastmod>2026-01-29</lastmod>
+         <lastmod>2026-02-03</lastmod>
     </url>
     <url>
          <loc>https://docs.axonops.com/data-platforms/cassandra/operations/nodetool/listpendinghints/</loc>
-         <lastmod>2026-01-29</lastmod>
+         <lastmod>2026-02-03</lastmod>
     </url>
     <url>
          <loc>https://docs.axonops.com/data-platforms/cassandra/operations/nodetool/listsnapshots/</loc>
-         <lastmod>2026-01-29</lastmod>
+         <lastmod>2026-02-03</lastmod>
     </url>
     <url>
          <loc>https://docs.axonops.com/data-platforms/cassandra/operations/nodetool/move/</loc>
-         <lastmod>2026-01-29</lastmod>
+         <lastmod>2026-02-03</lastmod>
     </url>
     <url>
          <loc>https://docs.axonops.com/data-platforms/cassandra/operations/nodetool/netstats/</loc>
-         <lastmod>2026-01-29</lastmod>
+         <lastmod>2026-02-03</lastmod>
     </url>
     <url>
          <loc>https://docs.axonops.com/data-platforms/cassandra/operations/nodetool/pausehandoff/</loc>
-         <lastmod>2026-01-29</lastmod>
+         <lastmod>2026-02-03</lastmod>
     </url>
     <url>
          <loc>https://docs.axonops.com/data-platforms/cassandra/operations/nodetool/profileload/</loc>
-         <lastmod>2026-01-29</lastmod>
+         <lastmod>2026-02-03</lastmod>
     </url>
     <url>
          <loc>https://docs.axonops.com/data-platforms/cassandra/operations/nodetool/proxyhistograms/</loc>
-         <lastmod>2026-01-29</lastmod>
+         <lastmod>2026-02-03</lastmod>
     </url>
     <url>
          <loc>https://docs.axonops.com/data-platforms/cassandra/operations/nodetool/rangekeysample/</loc>
-         <lastmod>2026-01-29</lastmod>
+         <lastmod>2026-02-03</lastmod>
     </url>
     <url>
          <loc>https://docs.axonops.com/data-platforms/cassandra/operations/nodetool/rebuild/</loc>
-         <lastmod>2026-01-29</lastmod>
+         <lastmod>2026-02-03</lastmod>
     </url>
     <url>
          <loc>https://docs.axonops.com/data-platforms/cassandra/operations/nodetool/rebuild_index/</loc>
-         <lastmod>2026-01-29</lastmod>
+         <lastmod>2026-02-03</lastmod>
     </url>
     <url>
          <loc>https://docs.axonops.com/data-platforms/cassandra/operations/nodetool/recompress_sstables/</loc>
-         <lastmod>2026-01-29</lastmod>
+         <lastmod>2026-02-03</lastmod>
     </url>
     <url>
          <loc>https://docs.axonops.com/data-platforms/cassandra/operations/nodetool/refresh/</loc>
-         <lastmod>2026-01-29</lastmod>
+         <lastmod>2026-02-03</lastmod>
     </url>
     <url>
          <loc>https://docs.axonops.com/data-platforms/cassandra/operations/nodetool/refreshsizeestimates/</loc>
-         <lastmod>2026-01-29</lastmod>
+         <lastmod>2026-02-03</lastmod>
     </url>
     <url>
          <loc>https://docs.axonops.com/data-platforms/cassandra/operations/nodetool/reloadcidrgroupscache/</loc>
-         <lastmod>2026-01-29</lastmod>
+         <lastmod>2026-02-03</lastmod>
     </url>
     <url>
          <loc>https://docs.axonops.com/data-platforms/cassandra/operations/nodetool/reloadlocalschema/</loc>
-         <lastmod>2026-01-29</lastmod>
+         <lastmod>2026-02-03</lastmod>
     </url>
     <url>
          <loc>https://docs.axonops.com/data-platforms/cassandra/operations/nodetool/reloadseeds/</loc>
-         <lastmod>2026-01-29</lastmod>
+         <lastmod>2026-02-03</lastmod>
     </url>
     <url>
          <loc>https://docs.axonops.com/data-platforms/cassandra/operations/nodetool/reloadssl/</loc>
-         <lastmod>2026-01-29</lastmod>
+         <lastmod>2026-02-03</lastmod>
     </url>
     <url>
          <loc>https://docs.axonops.com/data-platforms/cassandra/operations/nodetool/reloadtriggers/</loc>
-         <lastmod>2026-01-29</lastmod>
+         <lastmod>2026-02-03</lastmod>
     </url>
     <url>
          <loc>https://docs.axonops.com/data-platforms/cassandra/operations/nodetool/relocatesstables/</loc>
-         <lastmod>2026-01-29</lastmod>
+         <lastmod>2026-02-03</lastmod>
     </url>
     <url>
          <loc>https://docs.axonops.com/data-platforms/cassandra/operations/nodetool/removenode/</loc>
-         <lastmod>2026-01-29</lastmod>
+         <lastmod>2026-02-03</lastmod>
     </url>
     <url>
          <loc>https://docs.axonops.com/data-platforms/cassandra/operations/nodetool/repair/</loc>
-         <lastmod>2026-01-29</lastmod>
+         <lastmod>2026-02-03</lastmod>
     </url>
     <url>
          <loc>https://docs.axonops.com/data-platforms/cassandra/operations/nodetool/repair_admin/</loc>
-         <lastmod>2026-01-29</lastmod>
+         <lastmod>2026-02-03</lastmod>
     </url>
     <url>
          <loc>https://docs.axonops.com/data-platforms/cassandra/operations/nodetool/replaybatchlog/</loc>
-         <lastmod>2026-01-29</lastmod>
+         <lastmod>2026-02-03</lastmod>
     </url>
     <url>
          <loc>https://docs.axonops.com/data-platforms/cassandra/operations/nodetool/resetfullquerylog/</loc>
-         <lastmod>2026-01-29</lastmod>
+         <lastmod>2026-02-03</lastmod>
     </url>
     <url>
          <loc>https://docs.axonops.com/data-platforms/cassandra/operations/nodetool/resetlocalschema/</loc>
-         <lastmod>2026-01-29</lastmod>
+         <lastmod>2026-02-03</lastmod>
     </url>
     <url>
          <loc>https://docs.axonops.com/data-platforms/cassandra/operations/nodetool/resumehandoff/</loc>
-         <lastmod>2026-01-29</lastmod>
+         <lastmod>2026-02-03</lastmod>
     </url>
     <url>
          <loc>https://docs.axonops.com/data-platforms/cassandra/operations/nodetool/ring/</loc>
-         <lastmod>2026-01-29</lastmod>
+         <lastmod>2026-02-03</lastmod>
     </url>
     <url>
          <loc>https://docs.axonops.com/data-platforms/cassandra/operations/nodetool/scrub/</loc>
-         <lastmod>2026-01-29</lastmod>
+         <lastmod>2026-02-03</lastmod>
     </url>
     <url>
          <loc>https://docs.axonops.com/data-platforms/cassandra/operations/nodetool/setauthcacheconfig/</loc>
-         <lastmod>2026-01-29</lastmod>
+         <lastmod>2026-02-03</lastmod>
     </url>
     <url>
          <loc>https://docs.axonops.com/data-platforms/cassandra/operations/nodetool/setbatchlogreplaythrottle/</loc>
-         <lastmod>2026-01-29</lastmod>
+         <lastmod>2026-02-03</lastmod>
     </url>
     <url>
          <loc>https://docs.axonops.com/data-platforms/cassandra/operations/nodetool/setcachecapacity/</loc>
-         <lastmod>2026-01-29</lastmod>
+         <lastmod>2026-02-03</lastmod>
     </url>
     <url>
          <loc>https://docs.axonops.com/data-platforms/cassandra/operations/nodetool/setcachekeystosave/</loc>
-         <lastmod>2026-01-29</lastmod>
+         <lastmod>2026-02-03</lastmod>
     </url>
     <url>
          <loc>https://docs.axonops.com/data-platforms/cassandra/operations/nodetool/setcolumnindexsize/</loc>
-         <lastmod>2026-01-29</lastmod>
+         <lastmod>2026-02-03</lastmod>
     </url>
     <url>
          <loc>https://docs.axonops.com/data-platforms/cassandra/operations/nodetool/setcompactionthreshold/</loc>
-         <lastmod>2026-01-29</lastmod>
+         <lastmod>2026-02-03</lastmod>
     </url>
     <url>
          <loc>https://docs.axonops.com/data-platforms/cassandra/operations/nodetool/setcompactionthroughput/</loc>
-         <lastmod>2026-01-29</lastmod>
+         <lastmod>2026-02-03</lastmod>
     </url>
     <url>
          <loc>https://docs.axonops.com/data-platforms/cassandra/operations/nodetool/setconcurrency/</loc>
-         <lastmod>2026-01-29</lastmod>
+         <lastmod>2026-02-03</lastmod>
     </url>
     <url>
          <loc>https://docs.axonops.com/data-platforms/cassandra/operations/nodetool/setconcurrentcompactors/</loc>
-         <lastmod>2026-01-29</lastmod>
+         <lastmod>2026-02-03</lastmod>
     </url>
     <url>
          <loc>https://docs.axonops.com/data-platforms/cassandra/operations/nodetool/setconcurrentviewbuilders/</loc>
-         <lastmod>2026-01-29</lastmod>
+         <lastmod>2026-02-03</lastmod>
     </url>
     <url>
          <loc>https://docs.axonops.com/data-platforms/cassandra/operations/nodetool/setdefaultrf/</loc>
-         <lastmod>2026-01-29</lastmod>
+         <lastmod>2026-02-03</lastmod>
     </url>
     <url>
          <loc>https://docs.axonops.com/data-platforms/cassandra/operations/nodetool/setguardrailsconfig/</loc>
-         <lastmod>2026-01-29</lastmod>
+         <lastmod>2026-02-03</lastmod>
     </url>
     <url>
          <loc>https://docs.axonops.com/data-platforms/cassandra/operations/nodetool/sethintedhandoffthrottlekb/</loc>
-         <lastmod>2026-01-29</lastmod>
+         <lastmod>2026-02-03</lastmod>
     </url>
     <url>
          <loc>https://docs.axonops.com/data-platforms/cassandra/operations/nodetool/setinterdcstreamthroughput/</loc>
-         <lastmod>2026-01-29</lastmod>
+         <lastmod>2026-02-03</lastmod>
     </url>
     <url>
          <loc>https://docs.axonops.com/data-platforms/cassandra/operations/nodetool/setlogginglevel/</loc>
-         <lastmod>2026-01-29</lastmod>
+         <lastmod>2026-02-03</lastmod>
     </url>
     <url>
          <loc>https://docs.axonops.com/data-platforms/cassandra/operations/nodetool/setmaxhintwindow/</loc>
-         <lastmod>2026-01-29</lastmod>
+         <lastmod>2026-02-03</lastmod>
     </url>
     <url>
          <loc>https://docs.axonops.com/data-platforms/cassandra/operations/nodetool/setsnapshotthrottle/</loc>
-         <lastmod>2026-01-29</lastmod>
+         <lastmod>2026-02-03</lastmod>
     </url>
     <url>
          <loc>https://docs.axonops.com/data-platforms/cassandra/operations/nodetool/setstreamthroughput/</loc>
-         <lastmod>2026-01-29</lastmod>
+         <lastmod>2026-02-03</lastmod>
     </url>
     <url>
          <loc>https://docs.axonops.com/data-platforms/cassandra/operations/nodetool/settimeout/</loc>
-         <lastmod>2026-01-29</lastmod>
+         <lastmod>2026-02-03</lastmod>
     </url>
     <url>
          <loc>https://docs.axonops.com/data-platforms/cassandra/operations/nodetool/settraceprobability/</loc>
-         <lastmod>2026-01-29</lastmod>
+         <lastmod>2026-02-03</lastmod>
     </url>
     <url>
          <loc>https://docs.axonops.com/data-platforms/cassandra/operations/nodetool/sjk/</loc>
-         <lastmod>2026-01-29</lastmod>
+         <lastmod>2026-02-03</lastmod>
     </url>
     <url>
          <loc>https://docs.axonops.com/data-platforms/cassandra/operations/nodetool/snapshot/</loc>
-         <lastmod>2026-01-29</lastmod>
+         <lastmod>2026-02-03</lastmod>
     </url>
     <url>
          <loc>https://docs.axonops.com/data-platforms/cassandra/operations/nodetool/status/</loc>
-         <lastmod>2026-01-29</lastmod>
+         <lastmod>2026-02-03</lastmod>
     </url>
     <url>
          <loc>https://docs.axonops.com/data-platforms/cassandra/operations/nodetool/statusautocompaction/</loc>
-         <lastmod>2026-01-29</lastmod>
+         <lastmod>2026-02-03</lastmod>
     </url>
     <url>
          <loc>https://docs.axonops.com/data-platforms/cassandra/operations/nodetool/statusbackup/</loc>
-         <lastmod>2026-01-29</lastmod>
+         <lastmod>2026-02-03</lastmod>
     </url>
     <url>
          <loc>https://docs.axonops.com/data-platforms/cassandra/operations/nodetool/statusbinary/</loc>
-         <lastmod>2026-01-29</lastmod>
+         <lastmod>2026-02-03</lastmod>
     </url>
     <url>
          <loc>https://docs.axonops.com/data-platforms/cassandra/operations/nodetool/statusgossip/</loc>
-         <lastmod>2026-01-29</lastmod>
+         <lastmod>2026-02-03</lastmod>
     </url>
     <url>
          <loc>https://docs.axonops.com/data-platforms/cassandra/operations/nodetool/statushandoff/</loc>
-         <lastmod>2026-01-29</lastmod>
+         <lastmod>2026-02-03</lastmod>
     </url>
     <url>
          <loc>https://docs.axonops.com/data-platforms/cassandra/operations/nodetool/stop/</loc>
-         <lastmod>2026-01-29</lastmod>
+         <lastmod>2026-02-03</lastmod>
     </url>
     <url>
          <loc>https://docs.axonops.com/data-platforms/cassandra/operations/nodetool/stopdaemon/</loc>
-         <lastmod>2026-01-29</lastmod>
+         <lastmod>2026-02-03</lastmod>
     </url>
     <url>
          <loc>https://docs.axonops.com/data-platforms/cassandra/operations/nodetool/tablehistograms/</loc>
-         <lastmod>2026-01-29</lastmod>
+         <lastmod>2026-02-03</lastmod>
     </url>
     <url>
          <loc>https://docs.axonops.com/data-platforms/cassandra/operations/nodetool/tablestats/</loc>
-         <lastmod>2026-01-29</lastmod>
+         <lastmod>2026-02-03</lastmod>
     </url>
     <url>
          <loc>https://docs.axonops.com/data-platforms/cassandra/operations/nodetool/toppartitions/</loc>
-         <lastmod>2026-01-29</lastmod>
+         <lastmod>2026-02-03</lastmod>
     </url>
     <url>
          <loc>https://docs.axonops.com/data-platforms/cassandra/operations/nodetool/tpstats/</loc>
-         <lastmod>2026-01-29</lastmod>
+         <lastmod>2026-02-03</lastmod>
     </url>
     <url>
          <loc>https://docs.axonops.com/data-platforms/cassandra/operations/nodetool/truncatehints/</loc>
-         <lastmod>2026-01-29</lastmod>
+         <lastmod>2026-02-03</lastmod>
     </url>
     <url>
          <loc>https://docs.axonops.com/data-platforms/cassandra/operations/nodetool/updatecidrgroup/</loc>
-         <lastmod>2026-01-29</lastmod>
+         <lastmod>2026-02-03</lastmod>
     </url>
     <url>
          <loc>https://docs.axonops.com/data-platforms/cassandra/operations/nodetool/upgradesstables/</loc>
-         <lastmod>2026-01-29</lastmod>
+         <lastmod>2026-02-03</lastmod>
     </url>
     <url>
          <loc>https://docs.axonops.com/data-platforms/cassandra/operations/nodetool/verify/</loc>
-         <lastmod>2026-01-29</lastmod>
+         <lastmod>2026-02-03</lastmod>
     </url>
     <url>
          <loc>https://docs.axonops.com/data-platforms/cassandra/operations/nodetool/version/</loc>
-         <lastmod>2026-01-29</lastmod>
+         <lastmod>2026-02-03</lastmod>
     </url>
     <url>
          <loc>https://docs.axonops.com/data-platforms/cassandra/operations/nodetool/viewbuildstatus/</loc>
-         <lastmod>2026-01-29</lastmod>
+         <lastmod>2026-02-03</lastmod>
     </url>
     <url>
          <loc>https://docs.axonops.com/data-platforms/cassandra/operations/performance/</loc>
-         <lastmod>2026-01-29</lastmod>
+         <lastmod>2026-02-03</lastmod>
     </url>
     <url>
          <loc>https://docs.axonops.com/data-platforms/cassandra/operations/performance/benchmarking/</loc>
-         <lastmod>2026-01-29</lastmod>
+         <lastmod>2026-02-03</lastmod>
     </url>
     <url>
          <loc>https://docs.axonops.com/data-platforms/cassandra/operations/performance/hardware/</loc>
-         <lastmod>2026-01-29</lastmod>
+         <lastmod>2026-02-03</lastmod>
     </url>
     <url>
          <loc>https://docs.axonops.com/data-platforms/cassandra/operations/performance/jvm-tuning/</loc>
-         <lastmod>2026-01-29</lastmod>
+         <lastmod>2026-02-03</lastmod>
     </url>
     <url>
          <loc>https://docs.axonops.com/data-platforms/cassandra/operations/performance/os-tuning/</loc>
-         <lastmod>2026-01-29</lastmod>
+         <lastmod>2026-02-03</lastmod>
     </url>
     <url>
          <loc>https://docs.axonops.com/data-platforms/cassandra/operations/performance/os-tuning/filesystem/</loc>
-         <lastmod>2026-01-29</lastmod>
+         <lastmod>2026-02-03</lastmod>
     </url>
     <url>
          <loc>https://docs.axonops.com/data-platforms/cassandra/operations/performance/query-optimization/</loc>
-         <lastmod>2026-01-29</lastmod>
+         <lastmod>2026-02-03</lastmod>
     </url>
     <url>
          <loc>https://docs.axonops.com/data-platforms/cassandra/operations/repair/</loc>
-         <lastmod>2026-01-29</lastmod>
+         <lastmod>2026-02-03</lastmod>
     </url>
     <url>
          <loc>https://docs.axonops.com/data-platforms/cassandra/operations/repair/concepts/</loc>
-         <lastmod>2026-01-29</lastmod>
+         <lastmod>2026-02-03</lastmod>
     </url>
     <url>
          <loc>https://docs.axonops.com/data-platforms/cassandra/operations/repair/options-reference/</loc>
-         <lastmod>2026-01-29</lastmod>
+         <lastmod>2026-02-03</lastmod>
     </url>
     <url>
          <loc>https://docs.axonops.com/data-platforms/cassandra/operations/repair/scheduling/</loc>
-         <lastmod>2026-01-29</lastmod>
+         <lastmod>2026-02-03</lastmod>
     </url>
     <url>
          <loc>https://docs.axonops.com/data-platforms/cassandra/operations/repair/strategies/</loc>
-         <lastmod>2026-01-29</lastmod>
+         <lastmod>2026-02-03</lastmod>
     </url>
     <url>
          <loc>https://docs.axonops.com/data-platforms/cassandra/operations/sstable-management/</loc>
-         <lastmod>2026-01-29</lastmod>
+         <lastmod>2026-02-03</lastmod>
     </url>
     <url>
          <loc>https://docs.axonops.com/data-platforms/cassandra/operations/sstable-management/sstabledump/</loc>
-         <lastmod>2026-01-29</lastmod>
+         <lastmod>2026-02-03</lastmod>
     </url>
     <url>
          <loc>https://docs.axonops.com/data-platforms/cassandra/operations/sstable-management/sstableexpiredblockers/</loc>
-         <lastmod>2026-01-29</lastmod>
+         <lastmod>2026-02-03</lastmod>
     </url>
     <url>
          <loc>https://docs.axonops.com/data-platforms/cassandra/operations/sstable-management/sstablelevelreset/</loc>
-         <lastmod>2026-01-29</lastmod>
+         <lastmod>2026-02-03</lastmod>
     </url>
     <url>
          <loc>https://docs.axonops.com/data-platforms/cassandra/operations/sstable-management/sstableloader/</loc>
-         <lastmod>2026-01-29</lastmod>
+         <lastmod>2026-02-03</lastmod>
     </url>
     <url>
          <loc>https://docs.axonops.com/data-platforms/cassandra/operations/sstable-management/sstablemetadata/</loc>
-         <lastmod>2026-01-29</lastmod>
+         <lastmod>2026-02-03</lastmod>
     </url>
     <url>
          <loc>https://docs.axonops.com/data-platforms/cassandra/operations/sstable-management/sstableofflinerelevel/</loc>
-         <lastmod>2026-01-29</lastmod>
+         <lastmod>2026-02-03</lastmod>
     </url>
     <url>
          <loc>https://docs.axonops.com/data-platforms/cassandra/operations/sstable-management/sstablepartitions/</loc>
-         <lastmod>2026-01-29</lastmod>
+         <lastmod>2026-02-03</lastmod>
     </url>
     <url>
          <loc>https://docs.axonops.com/data-platforms/cassandra/operations/sstable-management/sstablerepairedset/</loc>
-         <lastmod>2026-01-29</lastmod>
+         <lastmod>2026-02-03</lastmod>
     </url>
     <url>
          <loc>https://docs.axonops.com/data-platforms/cassandra/operations/sstable-management/sstablescrub/</loc>
-         <lastmod>2026-01-29</lastmod>
+         <lastmod>2026-02-03</lastmod>
     </url>
     <url>
          <loc>https://docs.axonops.com/data-platforms/cassandra/operations/sstable-management/sstablesplit/</loc>
-         <lastmod>2026-01-29</lastmod>
+         <lastmod>2026-02-03</lastmod>
     </url>
     <url>
          <loc>https://docs.axonops.com/data-platforms/cassandra/operations/sstable-management/sstableupgrade/</loc>
-         <lastmod>2026-01-29</lastmod>
+         <lastmod>2026-02-03</lastmod>
     </url>
     <url>
          <loc>https://docs.axonops.com/data-platforms/cassandra/operations/sstable-management/sstableutil/</loc>
-         <lastmod>2026-01-29</lastmod>
+         <lastmod>2026-02-03</lastmod>
     </url>
     <url>
          <loc>https://docs.axonops.com/data-platforms/cassandra/operations/sstable-management/sstableverify/</loc>
-         <lastmod>2026-01-29</lastmod>
+         <lastmod>2026-02-03</lastmod>
     </url>
     <url>
          <loc>https://docs.axonops.com/data-platforms/cassandra/operations/troubleshooting/</loc>
-         <lastmod>2026-01-29</lastmod>
+         <lastmod>2026-02-03</lastmod>
     </url>
     <url>
          <loc>https://docs.axonops.com/data-platforms/cassandra/operations/virtual-tables/</loc>
-         <lastmod>2026-01-29</lastmod>
+         <lastmod>2026-02-03</lastmod>
     </url>
     <url>
          <loc>https://docs.axonops.com/data-platforms/cassandra/operations/virtual-tables/caches/</loc>
-         <lastmod>2026-01-29</lastmod>
+         <lastmod>2026-02-03</lastmod>
     </url>
     <url>
          <loc>https://docs.axonops.com/data-platforms/cassandra/operations/virtual-tables/clients/</loc>
-         <lastmod>2026-01-29</lastmod>
+         <lastmod>2026-02-03</lastmod>
     </url>
     <url>
          <loc>https://docs.axonops.com/data-platforms/cassandra/operations/virtual-tables/cluster-state/</loc>
-         <lastmod>2026-01-29</lastmod>
+         <lastmod>2026-02-03</lastmod>
     </url>
     <url>
          <loc>https://docs.axonops.com/data-platforms/cassandra/operations/virtual-tables/configuration/</loc>
-         <lastmod>2026-01-29</lastmod>
+         <lastmod>2026-02-03</lastmod>
     </url>
     <url>
          <loc>https://docs.axonops.com/data-platforms/cassandra/operations/virtual-tables/metrics/</loc>
-         <lastmod>2026-01-29</lastmod>
+         <lastmod>2026-02-03</lastmod>
     </url>
     <url>
          <loc>https://docs.axonops.com/data-platforms/cassandra/operations/virtual-tables/repair/</loc>
-         <lastmod>2026-01-29</lastmod>
+         <lastmod>2026-02-03</lastmod>
     </url>
     <url>
          <loc>https://docs.axonops.com/data-platforms/cassandra/operations/virtual-tables/sai/</loc>
-         <lastmod>2026-01-29</lastmod>
+         <lastmod>2026-02-03</lastmod>
     </url>
     <url>
          <loc>https://docs.axonops.com/data-platforms/cassandra/operations/virtual-tables/storage/</loc>
-         <lastmod>2026-01-29</lastmod>
+         <lastmod>2026-02-03</lastmod>
     </url>
     <url>
          <loc>https://docs.axonops.com/data-platforms/cassandra/operations/virtual-tables/streaming/</loc>
-         <lastmod>2026-01-29</lastmod>
+         <lastmod>2026-02-03</lastmod>
     </url>
     <url>
          <loc>https://docs.axonops.com/data-platforms/cassandra/operations/virtual-tables/system-virtual-schema/</loc>
-         <lastmod>2026-01-29</lastmod>
+         <lastmod>2026-02-03</lastmod>
     </url>
     <url>
          <loc>https://docs.axonops.com/data-platforms/cassandra/operations/virtual-tables/thread-pools/</loc>
-         <lastmod>2026-01-29</lastmod>
+         <lastmod>2026-02-03</lastmod>
     </url>
     <url>
          <loc>https://docs.axonops.com/data-platforms/cassandra/reference/</loc>
-         <lastmod>2026-01-29</lastmod>
+         <lastmod>2026-02-03</lastmod>
     </url>
     <url>
          <loc>https://docs.axonops.com/data-platforms/cassandra/security/</loc>
-         <lastmod>2026-01-29</lastmod>
+         <lastmod>2026-02-03</lastmod>
     </url>
     <url>
          <loc>https://docs.axonops.com/data-platforms/cassandra/security/audit-logging/</loc>
-         <lastmod>2026-01-29</lastmod>
+         <lastmod>2026-02-03</lastmod>
     </url>
     <url>
          <loc>https://docs.axonops.com/data-platforms/cassandra/security/authentication/</loc>
-         <lastmod>2026-01-29</lastmod>
+         <lastmod>2026-02-03</lastmod>
     </url>
     <url>
          <loc>https://docs.axonops.com/data-platforms/cassandra/security/authorization/</loc>
-         <lastmod>2026-01-29</lastmod>
+         <lastmod>2026-02-03</lastmod>
     </url>
     <url>
          <loc>https://docs.axonops.com/data-platforms/cassandra/security/encryption/</loc>
-         <lastmod>2026-01-29</lastmod>
+         <lastmod>2026-02-03</lastmod>
     </url>
     <url>
          <loc>https://docs.axonops.com/data-platforms/cassandra/security/encryption/certificates/</loc>
-         <lastmod>2026-01-29</lastmod>
+         <lastmod>2026-02-03</lastmod>
     </url>
     <url>
          <loc>https://docs.axonops.com/data-platforms/cassandra/security/encryption/client-configuration/</loc>
-         <lastmod>2026-01-29</lastmod>
+         <lastmod>2026-02-03</lastmod>
     </url>
     <url>
          <loc>https://docs.axonops.com/data-platforms/cassandra/security/encryption/configuration/</loc>
-         <lastmod>2026-01-29</lastmod>
+         <lastmod>2026-02-03</lastmod>
     </url>
     <url>
          <loc>https://docs.axonops.com/data-platforms/cassandra/security/encryption/enterprise-recommendations/</loc>
-         <lastmod>2026-01-29</lastmod>
+         <lastmod>2026-02-03</lastmod>
     </url>
     <url>
          <loc>https://docs.axonops.com/data-platforms/cassandra/security/encryption/hostname-verification/</loc>
-         <lastmod>2026-01-29</lastmod>
+         <lastmod>2026-02-03</lastmod>
     </url>
     <url>
          <loc>https://docs.axonops.com/data-platforms/cassandra/security/encryption/pki-fundamentals/</loc>
-         <lastmod>2026-01-29</lastmod>
+         <lastmod>2026-02-03</lastmod>
     </url>
     <url>
          <loc>https://docs.axonops.com/data-platforms/cassandra/security/encryption/tls-versions/</loc>
-         <lastmod>2026-01-29</lastmod>
+         <lastmod>2026-02-03</lastmod>
     </url>
     <url>
          <loc>https://docs.axonops.com/data-platforms/cassandra/security/encryption/troubleshooting/</loc>
-         <lastmod>2026-01-29</lastmod>
+         <lastmod>2026-02-03</lastmod>
     </url>
     <url>
          <loc>https://docs.axonops.com/data-platforms/cassandra/security/network/</loc>
-         <lastmod>2026-01-29</lastmod>
+         <lastmod>2026-02-03</lastmod>
     </url>
     <url>
          <loc>https://docs.axonops.com/data-platforms/cassandra/security/os-security/</loc>
-         <lastmod>2026-01-29</lastmod>
+         <lastmod>2026-02-03</lastmod>
     </url>
     <url>
          <loc>https://docs.axonops.com/data-platforms/cassandra/security/privileged-access-management/</loc>
-         <lastmod>2026-01-29</lastmod>
+         <lastmod>2026-02-03</lastmod>
     </url>
     <url>
          <loc>https://docs.axonops.com/data-platforms/cassandra/tools/cassandra-stress/</loc>
-         <lastmod>2026-01-29</lastmod>
+         <lastmod>2026-02-03</lastmod>
     </url>
     <url>
          <loc>https://docs.axonops.com/data-platforms/cassandra/tools/cqlai/</loc>
-         <lastmod>2026-01-29</lastmod>
+         <lastmod>2026-02-03</lastmod>
     </url>
     <url>
          <loc>https://docs.axonops.com/data-platforms/cassandra/tools/cqlai/quickstart/</loc>
-         <lastmod>2026-01-29</lastmod>
+         <lastmod>2026-02-03</lastmod>
     </url>
     <url>
          <loc>https://docs.axonops.com/data-platforms/cassandra/tools/cqlai/troubleshooting/</loc>
-         <lastmod>2026-01-29</lastmod>
+         <lastmod>2026-02-03</lastmod>
     </url>
     <url>
          <loc>https://docs.axonops.com/data-platforms/cassandra/tools/cqlai/ai-features/</loc>
-         <lastmod>2026-01-29</lastmod>
+         <lastmod>2026-02-03</lastmod>
     </url>
     <url>
          <loc>https://docs.axonops.com/data-platforms/cassandra/tools/cqlai/ai-features/ai-providers/</loc>
-         <lastmod>2026-01-29</lastmod>
+         <lastmod>2026-02-03</lastmod>
     </url>
     <url>
          <loc>https://docs.axonops.com/data-platforms/cassandra/tools/cqlai/commands/</loc>
-         <lastmod>2026-01-29</lastmod>
+         <lastmod>2026-02-03</lastmod>
     </url>
     <url>
          <loc>https://docs.axonops.com/data-platforms/cassandra/tools/cqlai/configuration/</loc>
-         <lastmod>2026-01-29</lastmod>
+         <lastmod>2026-02-03</lastmod>
     </url>
     <url>
          <loc>https://docs.axonops.com/data-platforms/cassandra/tools/cqlai/data-import-export/</loc>
-         <lastmod>2026-01-29</lastmod>
+         <lastmod>2026-02-03</lastmod>
     </url>
     <url>
          <loc>https://docs.axonops.com/data-platforms/cassandra/tools/cqlai/features/</loc>
-         <lastmod>2026-01-29</lastmod>
+         <lastmod>2026-02-03</lastmod>
     </url>
     <url>
          <loc>https://docs.axonops.com/data-platforms/cassandra/tools/cqlai/getting-started/</loc>
-         <lastmod>2026-01-29</lastmod>
+         <lastmod>2026-02-03</lastmod>
     </url>
     <url>
          <loc>https://docs.axonops.com/data-platforms/cassandra/tools/cqlai/installation/</loc>
-         <lastmod>2026-01-29</lastmod>
+         <lastmod>2026-02-03</lastmod>
     </url>
     <url>
          <loc>https://docs.axonops.com/data-platforms/cassandra/tools/cqlai/parquet/</loc>
-         <lastmod>2026-01-29</lastmod>
+         <lastmod>2026-02-03</lastmod>
     </url>
     <url>
          <loc>https://docs.axonops.com/data-platforms/cassandra/tools/cqlsh/</loc>
-         <lastmod>2026-01-29</lastmod>
+         <lastmod>2026-02-03</lastmod>
     </url>
     <url>
          <loc>https://docs.axonops.com/data-platforms/cassandra/troubleshooting/</loc>
-         <lastmod>2026-01-29</lastmod>
+         <lastmod>2026-02-03</lastmod>
     </url>
     <url>
          <loc>https://docs.axonops.com/data-platforms/cassandra/troubleshooting/common-errors/</loc>
-         <lastmod>2026-01-29</lastmod>
+         <lastmod>2026-02-03</lastmod>
     </url>
     <url>
          <loc>https://docs.axonops.com/data-platforms/cassandra/troubleshooting/common-errors/lightweight-transactions/</loc>
-         <lastmod>2026-01-29</lastmod>
+         <lastmod>2026-02-03</lastmod>
     </url>
     <url>
          <loc>https://docs.axonops.com/data-platforms/cassandra/troubleshooting/common-errors/read-timeout/</loc>
-         <lastmod>2026-01-29</lastmod>
+         <lastmod>2026-02-03</lastmod>
     </url>
     <url>
          <loc>https://docs.axonops.com/data-platforms/cassandra/troubleshooting/common-errors/write-timeout/</loc>
-         <lastmod>2026-01-29</lastmod>
+         <lastmod>2026-02-03</lastmod>
     </url>
     <url>
          <loc>https://docs.axonops.com/data-platforms/cassandra/troubleshooting/diagnosis/</loc>
-         <lastmod>2026-01-29</lastmod>
+         <lastmod>2026-02-03</lastmod>
     </url>
     <url>
          <loc>https://docs.axonops.com/data-platforms/cassandra/troubleshooting/log-analysis/</loc>
-         <lastmod>2026-01-29</lastmod>
+         <lastmod>2026-02-03</lastmod>
     </url>
     <url>
          <loc>https://docs.axonops.com/data-platforms/cassandra/troubleshooting/playbooks/</loc>
-         <lastmod>2026-01-29</lastmod>
+         <lastmod>2026-02-03</lastmod>
     </url>
     <url>
          <loc>https://docs.axonops.com/data-platforms/cassandra/troubleshooting/playbooks/add-node/</loc>
-         <lastmod>2026-01-29</lastmod>
+         <lastmod>2026-02-03</lastmod>
     </url>
     <url>
          <loc>https://docs.axonops.com/data-platforms/cassandra/troubleshooting/playbooks/compaction-issues/</loc>
-         <lastmod>2026-01-29</lastmod>
+         <lastmod>2026-02-03</lastmod>
     </url>
     <url>
          <loc>https://docs.axonops.com/data-platforms/cassandra/troubleshooting/playbooks/decommission-node/</loc>
-         <lastmod>2026-01-29</lastmod>
+         <lastmod>2026-02-03</lastmod>
     </url>
     <url>
          <loc>https://docs.axonops.com/data-platforms/cassandra/troubleshooting/playbooks/gc-pause/</loc>
-         <lastmod>2026-01-29</lastmod>
+         <lastmod>2026-02-03</lastmod>
     </url>
     <url>
          <loc>https://docs.axonops.com/data-platforms/cassandra/troubleshooting/playbooks/gossip-failures/</loc>
-         <lastmod>2026-01-29</lastmod>
+         <lastmod>2026-02-03</lastmod>
     </url>
     <url>
          <loc>https://docs.axonops.com/data-platforms/cassandra/troubleshooting/playbooks/handle-full-disk/</loc>
-         <lastmod>2026-01-29</lastmod>
+         <lastmod>2026-02-03</lastmod>
     </url>
     <url>
          <loc>https://docs.axonops.com/data-platforms/cassandra/troubleshooting/playbooks/high-cpu/</loc>
-         <lastmod>2026-01-29</lastmod>
+         <lastmod>2026-02-03</lastmod>
     </url>
     <url>
          <loc>https://docs.axonops.com/data-platforms/cassandra/troubleshooting/playbooks/high-memory/</loc>
-         <lastmod>2026-01-29</lastmod>
+         <lastmod>2026-02-03</lastmod>
     </url>
     <url>
          <loc>https://docs.axonops.com/data-platforms/cassandra/troubleshooting/playbooks/large-partition/</loc>
-         <lastmod>2026-01-29</lastmod>
+         <lastmod>2026-02-03</lastmod>
     </url>
     <url>
          <loc>https://docs.axonops.com/data-platforms/cassandra/troubleshooting/playbooks/recover-from-oom/</loc>
-         <lastmod>2026-01-29</lastmod>
+         <lastmod>2026-02-03</lastmod>
     </url>
     <url>
          <loc>https://docs.axonops.com/data-platforms/cassandra/troubleshooting/playbooks/repair-failures/</loc>
-         <lastmod>2026-01-29</lastmod>
+         <lastmod>2026-02-03</lastmod>
     </url>
     <url>
          <loc>https://docs.axonops.com/data-platforms/cassandra/troubleshooting/playbooks/replace-dead-node/</loc>
-         <lastmod>2026-01-29</lastmod>
+         <lastmod>2026-02-03</lastmod>
     </url>
     <url>
          <loc>https://docs.axonops.com/data-platforms/cassandra/troubleshooting/playbooks/schema-disagreement/</loc>
-         <lastmod>2026-01-29</lastmod>
+         <lastmod>2026-02-03</lastmod>
     </url>
     <url>
          <loc>https://docs.axonops.com/data-platforms/cassandra/troubleshooting/playbooks/slow-queries/</loc>
-         <lastmod>2026-01-29</lastmod>
+         <lastmod>2026-02-03</lastmod>
     </url>
     <url>
          <loc>https://docs.axonops.com/data-platforms/cassandra/troubleshooting/playbooks/tombstone-accumulation/</loc>
-         <lastmod>2026-01-29</lastmod>
+         <lastmod>2026-02-03</lastmod>
     </url>
     <url>
          <loc>https://docs.axonops.com/data-platforms/kafka/</loc>
-         <lastmod>2026-01-29</lastmod>
+         <lastmod>2026-02-03</lastmod>
     </url>
     <url>
          <loc>https://docs.axonops.com/data-platforms/kafka/application-development/</loc>
-         <lastmod>2026-01-29</lastmod>
+         <lastmod>2026-02-03</lastmod>
     </url>
     <url>
          <loc>https://docs.axonops.com/data-platforms/kafka/application-development/anti-patterns/</loc>
-         <lastmod>2026-01-29</lastmod>
+         <lastmod>2026-02-03</lastmod>
     </url>
     <url>
          <loc>https://docs.axonops.com/data-platforms/kafka/application-development/consumers/</loc>
-         <lastmod>2026-01-29</lastmod>
+         <lastmod>2026-02-03</lastmod>
     </url>
     <url>
          <loc>https://docs.axonops.com/data-platforms/kafka/application-development/consumers/configuration/</loc>
-         <lastmod>2026-01-29</lastmod>
+         <lastmod>2026-02-03</lastmod>
     </url>
     <url>
          <loc>https://docs.axonops.com/data-platforms/kafka/application-development/consumers/consumer-groups/</loc>
-         <lastmod>2026-01-29</lastmod>
+         <lastmod>2026-02-03</lastmod>
     </url>
     <url>
          <loc>https://docs.axonops.com/data-platforms/kafka/application-development/consumers/error-handling/</loc>
-         <lastmod>2026-01-29</lastmod>
+         <lastmod>2026-02-03</lastmod>
     </url>
     <url>
          <loc>https://docs.axonops.com/data-platforms/kafka/application-development/consumers/offset-management/</loc>
-         <lastmod>2026-01-29</lastmod>
+         <lastmod>2026-02-03</lastmod>
     </url>
     <url>
          <loc>https://docs.axonops.com/data-platforms/kafka/application-development/consumers/rebalancing/</loc>
-         <lastmod>2026-01-29</lastmod>
+         <lastmod>2026-02-03</lastmod>
     </url>
     <url>
          <loc>https://docs.axonops.com/data-platforms/kafka/application-development/drivers/</loc>
-         <lastmod>2026-01-29</lastmod>
+         <lastmod>2026-02-03</lastmod>
     </url>
     <url>
          <loc>https://docs.axonops.com/data-platforms/kafka/application-development/drivers/dotnet/</loc>
-         <lastmod>2026-01-29</lastmod>
+         <lastmod>2026-02-03</lastmod>
     </url>
     <url>
          <loc>https://docs.axonops.com/data-platforms/kafka/application-development/drivers/go/</loc>
-         <lastmod>2026-01-29</lastmod>
+         <lastmod>2026-02-03</lastmod>
     </url>
     <url>
          <loc>https://docs.axonops.com/data-platforms/kafka/application-development/drivers/java/</loc>
-         <lastmod>2026-01-29</lastmod>
+         <lastmod>2026-02-03</lastmod>
     </url>
     <url>
          <loc>https://docs.axonops.com/data-platforms/kafka/application-development/drivers/nodejs/</loc>
-         <lastmod>2026-01-29</lastmod>
+         <lastmod>2026-02-03</lastmod>
     </url>
     <url>
          <loc>https://docs.axonops.com/data-platforms/kafka/application-development/drivers/python/</loc>
-         <lastmod>2026-01-29</lastmod>
+         <lastmod>2026-02-03</lastmod>
     </url>
     <url>
          <loc>https://docs.axonops.com/data-platforms/kafka/application-development/drivers/rust/</loc>
-         <lastmod>2026-01-29</lastmod>
+         <lastmod>2026-02-03</lastmod>
     </url>
     <url>
          <loc>https://docs.axonops.com/data-platforms/kafka/application-development/error-handling/dead-letter-queues/</loc>
-         <lastmod>2026-01-29</lastmod>
+         <lastmod>2026-02-03</lastmod>
     </url>
     <url>
          <loc>https://docs.axonops.com/data-platforms/kafka/application-development/kafka-streams/</loc>
-         <lastmod>2026-01-29</lastmod>
+         <lastmod>2026-02-03</lastmod>
     </url>
     <url>
          <loc>https://docs.axonops.com/data-platforms/kafka/application-development/kafka-streams/error-handling/</loc>
-         <lastmod>2026-01-29</lastmod>
+         <lastmod>2026-02-03</lastmod>
     </url>
     <url>
          <loc>https://docs.axonops.com/data-platforms/kafka/application-development/kafka-streams/state-stores/</loc>
-         <lastmod>2026-01-29</lastmod>
+         <lastmod>2026-02-03</lastmod>
     </url>
     <url>
          <loc>https://docs.axonops.com/data-platforms/kafka/application-development/kafka-streams/windowing/</loc>
-         <lastmod>2026-01-29</lastmod>
+         <lastmod>2026-02-03</lastmod>
     </url>
     <url>
          <loc>https://docs.axonops.com/data-platforms/kafka/application-development/kafka-streams/dsl/</loc>
-         <lastmod>2026-01-29</lastmod>
+         <lastmod>2026-02-03</lastmod>
     </url>
     <url>
          <loc>https://docs.axonops.com/data-platforms/kafka/application-development/patterns/</loc>
-         <lastmod>2026-01-29</lastmod>
+         <lastmod>2026-02-03</lastmod>
     </url>
     <url>
          <loc>https://docs.axonops.com/data-platforms/kafka/application-development/patterns/cqrs/</loc>
-         <lastmod>2026-01-29</lastmod>
+         <lastmod>2026-02-03</lastmod>
     </url>
     <url>
          <loc>https://docs.axonops.com/data-platforms/kafka/application-development/patterns/event-collaboration/</loc>
-         <lastmod>2026-01-29</lastmod>
+         <lastmod>2026-02-03</lastmod>
     </url>
     <url>
          <loc>https://docs.axonops.com/data-platforms/kafka/application-development/patterns/event-sourcing/</loc>
-         <lastmod>2026-01-29</lastmod>
+         <lastmod>2026-02-03</lastmod>
     </url>
     <url>
          <loc>https://docs.axonops.com/data-platforms/kafka/application-development/patterns/microservices/</loc>
-         <lastmod>2026-01-29</lastmod>
+         <lastmod>2026-02-03</lastmod>
     </url>
     <url>
          <loc>https://docs.axonops.com/data-platforms/kafka/application-development/patterns/outbox/</loc>
-         <lastmod>2026-01-29</lastmod>
+         <lastmod>2026-02-03</lastmod>
     </url>
     <url>
          <loc>https://docs.axonops.com/data-platforms/kafka/application-development/patterns/saga/</loc>
-         <lastmod>2026-01-29</lastmod>
+         <lastmod>2026-02-03</lastmod>
     </url>
     <url>
          <loc>https://docs.axonops.com/data-platforms/kafka/application-development/patterns/shock-absorber/</loc>
-         <lastmod>2026-01-29</lastmod>
+         <lastmod>2026-02-03</lastmod>
     </url>
     <url>
          <loc>https://docs.axonops.com/data-platforms/kafka/application-development/performance/</loc>
-         <lastmod>2026-01-29</lastmod>
+         <lastmod>2026-02-03</lastmod>
     </url>
     <url>
          <loc>https://docs.axonops.com/data-platforms/kafka/application-development/producers/</loc>
-         <lastmod>2026-01-29</lastmod>
+         <lastmod>2026-02-03</lastmod>
     </url>
     <url>
          <loc>https://docs.axonops.com/data-platforms/kafka/application-development/producers/configuration/</loc>
-         <lastmod>2026-01-29</lastmod>
+         <lastmod>2026-02-03</lastmod>
     </url>
     <url>
          <loc>https://docs.axonops.com/data-platforms/kafka/application-development/producers/error-handling/</loc>
-         <lastmod>2026-01-29</lastmod>
+         <lastmod>2026-02-03</lastmod>
     </url>
     <url>
          <loc>https://docs.axonops.com/data-platforms/kafka/application-development/producers/idempotence/</loc>
-         <lastmod>2026-01-29</lastmod>
+         <lastmod>2026-02-03</lastmod>
     </url>
     <url>
          <loc>https://docs.axonops.com/data-platforms/kafka/application-development/producers/partitioning/</loc>
-         <lastmod>2026-01-29</lastmod>
+         <lastmod>2026-02-03</lastmod>
     </url>
     <url>
          <loc>https://docs.axonops.com/data-platforms/kafka/application-development/producers/transactions/</loc>
-         <lastmod>2026-01-29</lastmod>
+         <lastmod>2026-02-03</lastmod>
     </url>
     <url>
          <loc>https://docs.axonops.com/data-platforms/kafka/application-development/serialization/</loc>
-         <lastmod>2026-01-29</lastmod>
+         <lastmod>2026-02-03</lastmod>
     </url>
     <url>
          <loc>https://docs.axonops.com/data-platforms/kafka/application-development/testing/</loc>
-         <lastmod>2026-01-29</lastmod>
+         <lastmod>2026-02-03</lastmod>
     </url>
     <url>
          <loc>https://docs.axonops.com/data-platforms/kafka/architecture/</loc>
-         <lastmod>2026-01-29</lastmod>
+         <lastmod>2026-02-03</lastmod>
     </url>
     <url>
          <loc>https://docs.axonops.com/data-platforms/kafka/architecture/brokers/</loc>
-         <lastmod>2026-01-29</lastmod>
+         <lastmod>2026-02-03</lastmod>
     </url>
     <url>
          <loc>https://docs.axonops.com/data-platforms/kafka/architecture/client-connections/</loc>
-         <lastmod>2026-01-29</lastmod>
+         <lastmod>2026-02-03</lastmod>
     </url>
     <url>
          <loc>https://docs.axonops.com/data-platforms/kafka/architecture/client-connections/authentication/</loc>
-         <lastmod>2026-01-29</lastmod>
+         <lastmod>2026-02-03</lastmod>
     </url>
     <url>
          <loc>https://docs.axonops.com/data-platforms/kafka/architecture/client-connections/batching/</loc>
-         <lastmod>2026-01-29</lastmod>
+         <lastmod>2026-02-03</lastmod>
     </url>
     <url>
          <loc>https://docs.axonops.com/data-platforms/kafka/architecture/client-connections/compression/</loc>
-         <lastmod>2026-01-29</lastmod>
+         <lastmod>2026-02-03</lastmod>
     </url>
     <url>
          <loc>https://docs.axonops.com/data-platforms/kafka/architecture/client-connections/connection-pooling/</loc>
-         <lastmod>2026-01-29</lastmod>
+         <lastmod>2026-02-03</lastmod>
     </url>
     <url>
          <loc>https://docs.axonops.com/data-platforms/kafka/architecture/client-connections/failure-handling/</loc>
-         <lastmod>2026-01-29</lastmod>
+         <lastmod>2026-02-03</lastmod>
     </url>
     <url>
          <loc>https://docs.axonops.com/data-platforms/kafka/architecture/client-connections/kafka-protocol/</loc>
-         <lastmod>2026-01-29</lastmod>
+         <lastmod>2026-02-03</lastmod>
     </url>
     <url>
          <loc>https://docs.axonops.com/data-platforms/kafka/architecture/client-connections/load-balancing/</loc>
-         <lastmod>2026-01-29</lastmod>
+         <lastmod>2026-02-03</lastmod>
     </url>
     <url>
          <loc>https://docs.axonops.com/data-platforms/kafka/architecture/client-connections/metadata-management/</loc>
-         <lastmod>2026-01-29</lastmod>
+         <lastmod>2026-02-03</lastmod>
     </url>
     <url>
          <loc>https://docs.axonops.com/data-platforms/kafka/architecture/client-connections/protocol-apis-admin/</loc>
-         <lastmod>2026-01-29</lastmod>
+         <lastmod>2026-02-03</lastmod>
     </url>
     <url>
          <loc>https://docs.axonops.com/data-platforms/kafka/architecture/client-connections/protocol-apis-consumer/</loc>
-         <lastmod>2026-01-29</lastmod>
+         <lastmod>2026-02-03</lastmod>
     </url>
     <url>
          <loc>https://docs.axonops.com/data-platforms/kafka/architecture/client-connections/protocol-apis-core/</loc>
-         <lastmod>2026-01-29</lastmod>
+         <lastmod>2026-02-03</lastmod>
     </url>
     <url>
          <loc>https://docs.axonops.com/data-platforms/kafka/architecture/client-connections/protocol-apis-share-group/</loc>
-         <lastmod>2026-01-29</lastmod>
+         <lastmod>2026-02-03</lastmod>
     </url>
     <url>
          <loc>https://docs.axonops.com/data-platforms/kafka/architecture/client-connections/protocol-apis-transaction/</loc>
-         <lastmod>2026-01-29</lastmod>
+         <lastmod>2026-02-03</lastmod>
     </url>
     <url>
          <loc>https://docs.axonops.com/data-platforms/kafka/architecture/client-connections/protocol-errors/</loc>
-         <lastmod>2026-01-29</lastmod>
+         <lastmod>2026-02-03</lastmod>
     </url>
     <url>
          <loc>https://docs.axonops.com/data-platforms/kafka/architecture/client-connections/protocol-messages/</loc>
-         <lastmod>2026-01-29</lastmod>
+         <lastmod>2026-02-03</lastmod>
     </url>
     <url>
          <loc>https://docs.axonops.com/data-platforms/kafka/architecture/client-connections/protocol-primitives/</loc>
-         <lastmod>2026-01-29</lastmod>
+         <lastmod>2026-02-03</lastmod>
     </url>
     <url>
          <loc>https://docs.axonops.com/data-platforms/kafka/architecture/client-connections/protocol-records/</loc>
-         <lastmod>2026-01-29</lastmod>
+         <lastmod>2026-02-03</lastmod>
     </url>
     <url>
          <loc>https://docs.axonops.com/data-platforms/kafka/architecture/client-connections/throttling/</loc>
-         <lastmod>2026-01-29</lastmod>
+         <lastmod>2026-02-03</lastmod>
     </url>
     <url>
          <loc>https://docs.axonops.com/data-platforms/kafka/architecture/cluster-management/</loc>
-         <lastmod>2026-01-29</lastmod>
+         <lastmod>2026-02-03</lastmod>
     </url>
     <url>
          <loc>https://docs.axonops.com/data-platforms/kafka/architecture/fault-tolerance/</loc>
-         <lastmod>2026-01-29</lastmod>
+         <lastmod>2026-02-03</lastmod>
     </url>
     <url>
          <loc>https://docs.axonops.com/data-platforms/kafka/architecture/kraft/</loc>
-         <lastmod>2026-01-29</lastmod>
+         <lastmod>2026-02-03</lastmod>
     </url>
     <url>
          <loc>https://docs.axonops.com/data-platforms/kafka/architecture/memory-management/</loc>
-         <lastmod>2026-01-29</lastmod>
+         <lastmod>2026-02-03</lastmod>
     </url>
     <url>
          <loc>https://docs.axonops.com/data-platforms/kafka/architecture/performance-internals/</loc>
-         <lastmod>2026-01-29</lastmod>
+         <lastmod>2026-02-03</lastmod>
     </url>
     <url>
          <loc>https://docs.axonops.com/data-platforms/kafka/architecture/replication/</loc>
-         <lastmod>2026-01-29</lastmod>
+         <lastmod>2026-02-03</lastmod>
     </url>
     <url>
          <loc>https://docs.axonops.com/data-platforms/kafka/architecture/scaling/</loc>
-         <lastmod>2026-01-29</lastmod>
+         <lastmod>2026-02-03</lastmod>
     </url>
     <url>
          <loc>https://docs.axonops.com/data-platforms/kafka/architecture/scaling/consumer-rebalancing/</loc>
-         <lastmod>2026-01-29</lastmod>
+         <lastmod>2026-02-03</lastmod>
     </url>
     <url>
          <loc>https://docs.axonops.com/data-platforms/kafka/architecture/scaling/partition-reassignment/</loc>
-         <lastmod>2026-01-29</lastmod>
+         <lastmod>2026-02-03</lastmod>
     </url>
     <url>
          <loc>https://docs.axonops.com/data-platforms/kafka/architecture/storage-engine/</loc>
-         <lastmod>2026-01-29</lastmod>
+         <lastmod>2026-02-03</lastmod>
     </url>
     <url>
          <loc>https://docs.axonops.com/data-platforms/kafka/architecture/topics/</loc>
-         <lastmod>2026-01-29</lastmod>
+         <lastmod>2026-02-03</lastmod>
     </url>
     <url>
          <loc>https://docs.axonops.com/data-platforms/kafka/architecture/topology/</loc>
-         <lastmod>2026-01-29</lastmod>
+         <lastmod>2026-02-03</lastmod>
     </url>
     <url>
          <loc>https://docs.axonops.com/data-platforms/kafka/architecture/transactions/</loc>
-         <lastmod>2026-01-29</lastmod>
+         <lastmod>2026-02-03</lastmod>
     </url>
     <url>
          <loc>https://docs.axonops.com/data-platforms/kafka/cloud/</loc>
-         <lastmod>2026-01-29</lastmod>
+         <lastmod>2026-02-03</lastmod>
     </url>
     <url>
          <loc>https://docs.axonops.com/data-platforms/kafka/cloud/aws/</loc>
-         <lastmod>2026-01-29</lastmod>
+         <lastmod>2026-02-03</lastmod>
     </url>
     <url>
          <loc>https://docs.axonops.com/data-platforms/kafka/cloud/azure/</loc>
-         <lastmod>2026-01-29</lastmod>
+         <lastmod>2026-02-03</lastmod>
     </url>
     <url>
          <loc>https://docs.axonops.com/data-platforms/kafka/cloud/gcp/</loc>
-         <lastmod>2026-01-29</lastmod>
+         <lastmod>2026-02-03</lastmod>
     </url>
     <url>
          <loc>https://docs.axonops.com/data-platforms/kafka/cloud/kubernetes/</loc>
-         <lastmod>2026-01-29</lastmod>
+         <lastmod>2026-02-03</lastmod>
     </url>
     <url>
          <loc>https://docs.axonops.com/data-platforms/kafka/cloud/region-strategy/</loc>
-         <lastmod>2026-01-29</lastmod>
+         <lastmod>2026-02-03</lastmod>
     </url>
     <url>
          <loc>https://docs.axonops.com/data-platforms/kafka/concepts/</loc>
-         <lastmod>2026-01-29</lastmod>
+         <lastmod>2026-02-03</lastmod>
     </url>
     <url>
          <loc>https://docs.axonops.com/data-platforms/kafka/concepts/event-streaming/</loc>
-         <lastmod>2026-01-29</lastmod>
+         <lastmod>2026-02-03</lastmod>
     </url>
     <url>
          <loc>https://docs.axonops.com/data-platforms/kafka/concepts/kafka-ecosystem/</loc>
-         <lastmod>2026-01-29</lastmod>
+         <lastmod>2026-02-03</lastmod>
     </url>
     <url>
          <loc>https://docs.axonops.com/data-platforms/kafka/concepts/architecture-patterns/</loc>
-         <lastmod>2026-01-29</lastmod>
+         <lastmod>2026-02-03</lastmod>
     </url>
     <url>
          <loc>https://docs.axonops.com/data-platforms/kafka/concepts/data-integration/</loc>
-         <lastmod>2026-01-29</lastmod>
+         <lastmod>2026-02-03</lastmod>
     </url>
     <url>
          <loc>https://docs.axonops.com/data-platforms/kafka/concepts/dead-letter-queues/</loc>
-         <lastmod>2026-01-29</lastmod>
+         <lastmod>2026-02-03</lastmod>
     </url>
     <url>
          <loc>https://docs.axonops.com/data-platforms/kafka/concepts/delivery-semantics/</loc>
-         <lastmod>2026-01-29</lastmod>
+         <lastmod>2026-02-03</lastmod>
     </url>
     <url>
          <loc>https://docs.axonops.com/data-platforms/kafka/concepts/delivery-semantics/at-least-once/</loc>
-         <lastmod>2026-01-29</lastmod>
+         <lastmod>2026-02-03</lastmod>
     </url>
     <url>
          <loc>https://docs.axonops.com/data-platforms/kafka/concepts/delivery-semantics/at-most-once/</loc>
-         <lastmod>2026-01-29</lastmod>
+         <lastmod>2026-02-03</lastmod>
     </url>
     <url>
          <loc>https://docs.axonops.com/data-platforms/kafka/concepts/delivery-semantics/choosing-semantics/</loc>
-         <lastmod>2026-01-29</lastmod>
+         <lastmod>2026-02-03</lastmod>
     </url>
     <url>
          <loc>https://docs.axonops.com/data-platforms/kafka/concepts/delivery-semantics/exactly-once/</loc>
-         <lastmod>2026-01-29</lastmod>
+         <lastmod>2026-02-03</lastmod>
     </url>
     <url>
          <loc>https://docs.axonops.com/data-platforms/kafka/concepts/kafka-connect/</loc>
-         <lastmod>2026-01-29</lastmod>
+         <lastmod>2026-02-03</lastmod>
     </url>
     <url>
          <loc>https://docs.axonops.com/data-platforms/kafka/concepts/kafka-connect/build-vs-buy/</loc>
-         <lastmod>2026-01-29</lastmod>
+         <lastmod>2026-02-03</lastmod>
     </url>
     <url>
          <loc>https://docs.axonops.com/data-platforms/kafka/concepts/kafka-connect/cloud-storage/</loc>
-         <lastmod>2026-01-29</lastmod>
+         <lastmod>2026-02-03</lastmod>
     </url>
     <url>
          <loc>https://docs.axonops.com/data-platforms/kafka/concepts/kafka-connect/connector-ecosystem/</loc>
-         <lastmod>2026-01-29</lastmod>
+         <lastmod>2026-02-03</lastmod>
     </url>
     <url>
          <loc>https://docs.axonops.com/data-platforms/kafka/concepts/multi-datacenter/</loc>
-         <lastmod>2026-01-29</lastmod>
+         <lastmod>2026-02-03</lastmod>
     </url>
     <url>
          <loc>https://docs.axonops.com/data-platforms/kafka/concepts/topics/</loc>
-         <lastmod>2026-01-29</lastmod>
+         <lastmod>2026-02-03</lastmod>
     </url>
     <url>
          <loc>https://docs.axonops.com/data-platforms/kafka/getting-started/</loc>
-         <lastmod>2026-01-29</lastmod>
+         <lastmod>2026-02-03</lastmod>
     </url>
     <url>
          <loc>https://docs.axonops.com/data-platforms/kafka/getting-started/drivers/</loc>
-         <lastmod>2026-01-29</lastmod>
+         <lastmod>2026-02-03</lastmod>
     </url>
     <url>
          <loc>https://docs.axonops.com/data-platforms/kafka/getting-started/drivers/dotnet/</loc>
-         <lastmod>2026-01-29</lastmod>
+         <lastmod>2026-02-03</lastmod>
     </url>
     <url>
          <loc>https://docs.axonops.com/data-platforms/kafka/getting-started/drivers/go/</loc>
-         <lastmod>2026-01-29</lastmod>
+         <lastmod>2026-02-03</lastmod>
     </url>
     <url>
          <loc>https://docs.axonops.com/data-platforms/kafka/getting-started/drivers/java/</loc>
-         <lastmod>2026-01-29</lastmod>
+         <lastmod>2026-02-03</lastmod>
     </url>
     <url>
          <loc>https://docs.axonops.com/data-platforms/kafka/getting-started/drivers/nodejs/</loc>
-         <lastmod>2026-01-29</lastmod>
+         <lastmod>2026-02-03</lastmod>
     </url>
     <url>
          <loc>https://docs.axonops.com/data-platforms/kafka/getting-started/drivers/python/</loc>
-         <lastmod>2026-01-29</lastmod>
+         <lastmod>2026-02-03</lastmod>
     </url>
     <url>
          <loc>https://docs.axonops.com/data-platforms/kafka/getting-started/installation/</loc>
-         <lastmod>2026-01-29</lastmod>
+         <lastmod>2026-02-03</lastmod>
     </url>
     <url>
          <loc>https://docs.axonops.com/data-platforms/kafka/getting-started/installation/docker/</loc>
-         <lastmod>2026-01-29</lastmod>
+         <lastmod>2026-02-03</lastmod>
     </url>
     <url>
          <loc>https://docs.axonops.com/data-platforms/kafka/getting-started/installation/managed/</loc>
-         <lastmod>2026-01-29</lastmod>
+         <lastmod>2026-02-03</lastmod>
     </url>
     <url>
          <loc>https://docs.axonops.com/data-platforms/kafka/kafka-connect/</loc>
-         <lastmod>2026-01-29</lastmod>
+         <lastmod>2026-02-03</lastmod>
     </url>
     <url>
          <loc>https://docs.axonops.com/data-platforms/kafka/kafka-connect/converters/</loc>
-         <lastmod>2026-01-29</lastmod>
+         <lastmod>2026-02-03</lastmod>
     </url>
     <url>
          <loc>https://docs.axonops.com/data-platforms/kafka/kafka-connect/error-handling/</loc>
-         <lastmod>2026-01-29</lastmod>
+         <lastmod>2026-02-03</lastmod>
     </url>
     <url>
          <loc>https://docs.axonops.com/data-platforms/kafka/kafka-connect/exactly-once/</loc>
-         <lastmod>2026-01-29</lastmod>
+         <lastmod>2026-02-03</lastmod>
     </url>
     <url>
          <loc>https://docs.axonops.com/data-platforms/kafka/kafka-connect/operations/</loc>
-         <lastmod>2026-01-29</lastmod>
+         <lastmod>2026-02-03</lastmod>
     </url>
     <url>
          <loc>https://docs.axonops.com/data-platforms/kafka/kafka-connect/transforms/</loc>
-         <lastmod>2026-01-29</lastmod>
+         <lastmod>2026-02-03</lastmod>
     </url>
     <url>
          <loc>https://docs.axonops.com/data-platforms/kafka/kafka-connect/connectors/</loc>
-         <lastmod>2026-01-29</lastmod>
+         <lastmod>2026-02-03</lastmod>
     </url>
     <url>
          <loc>https://docs.axonops.com/data-platforms/kafka/kafka-connect/connectors/cassandra/</loc>
-         <lastmod>2026-01-29</lastmod>
+         <lastmod>2026-02-03</lastmod>
     </url>
     <url>
          <loc>https://docs.axonops.com/data-platforms/kafka/kafka-connect/connectors/elasticsearch/</loc>
-         <lastmod>2026-01-29</lastmod>
+         <lastmod>2026-02-03</lastmod>
     </url>
     <url>
          <loc>https://docs.axonops.com/data-platforms/kafka/kafka-connect/connectors/file-source/</loc>
-         <lastmod>2026-01-29</lastmod>
+         <lastmod>2026-02-03</lastmod>
     </url>
     <url>
          <loc>https://docs.axonops.com/data-platforms/kafka/kafka-connect/connectors/http-source/</loc>
-         <lastmod>2026-01-29</lastmod>
+         <lastmod>2026-02-03</lastmod>
     </url>
     <url>
          <loc>https://docs.axonops.com/data-platforms/kafka/kafka-connect/connectors/s3/</loc>
-         <lastmod>2026-01-29</lastmod>
+         <lastmod>2026-02-03</lastmod>
     </url>
     <url>
          <loc>https://docs.axonops.com/data-platforms/kafka/operations/</loc>
-         <lastmod>2026-01-29</lastmod>
+         <lastmod>2026-02-03</lastmod>
     </url>
     <url>
          <loc>https://docs.axonops.com/data-platforms/kafka/operations/backup-restore/</loc>
-         <lastmod>2026-01-29</lastmod>
+         <lastmod>2026-02-03</lastmod>
     </url>
     <url>
          <loc>https://docs.axonops.com/data-platforms/kafka/operations/cli-tools/</loc>
-         <lastmod>2026-01-29</lastmod>
+         <lastmod>2026-02-03</lastmod>
     </url>
     <url>
          <loc>https://docs.axonops.com/data-platforms/kafka/operations/cluster-management/</loc>
-         <lastmod>2026-01-29</lastmod>
+         <lastmod>2026-02-03</lastmod>
     </url>
     <url>
          <loc>https://docs.axonops.com/data-platforms/kafka/operations/configuration/</loc>
-         <lastmod>2026-01-29</lastmod>
+         <lastmod>2026-02-03</lastmod>
     </url>
     <url>
          <loc>https://docs.axonops.com/data-platforms/kafka/operations/configuration/acl/</loc>
-         <lastmod>2026-01-29</lastmod>
+         <lastmod>2026-02-03</lastmod>
     </url>
     <url>
          <loc>https://docs.axonops.com/data-platforms/kafka/operations/configuration/broker/</loc>
-         <lastmod>2026-01-29</lastmod>
+         <lastmod>2026-02-03</lastmod>
     </url>
     <url>
          <loc>https://docs.axonops.com/data-platforms/kafka/operations/configuration/configuration-providers/</loc>
-         <lastmod>2026-01-29</lastmod>
+         <lastmod>2026-02-03</lastmod>
     </url>
     <url>
          <loc>https://docs.axonops.com/data-platforms/kafka/operations/configuration/quotas/</loc>
-         <lastmod>2026-01-29</lastmod>
+         <lastmod>2026-02-03</lastmod>
     </url>
     <url>
          <loc>https://docs.axonops.com/data-platforms/kafka/operations/configuration/system-properties/</loc>
-         <lastmod>2026-01-29</lastmod>
+         <lastmod>2026-02-03</lastmod>
     </url>
     <url>
          <loc>https://docs.axonops.com/data-platforms/kafka/operations/configuration/tiered-storage/</loc>
-         <lastmod>2026-01-29</lastmod>
+         <lastmod>2026-02-03</lastmod>
     </url>
     <url>
          <loc>https://docs.axonops.com/data-platforms/kafka/operations/configuration/topic/</loc>
-         <lastmod>2026-01-29</lastmod>
+         <lastmod>2026-02-03</lastmod>
     </url>
     <url>
          <loc>https://docs.axonops.com/data-platforms/kafka/operations/maintenance/</loc>
-         <lastmod>2026-01-29</lastmod>
+         <lastmod>2026-02-03</lastmod>
     </url>
     <url>
          <loc>https://docs.axonops.com/data-platforms/kafka/operations/migration/</loc>
-         <lastmod>2026-01-29</lastmod>
+         <lastmod>2026-02-03</lastmod>
     </url>
     <url>
          <loc>https://docs.axonops.com/data-platforms/kafka/operations/mirrormaker2/</loc>
-         <lastmod>2026-01-29</lastmod>
+         <lastmod>2026-02-03</lastmod>
     </url>
     <url>
          <loc>https://docs.axonops.com/data-platforms/kafka/operations/monitoring/</loc>
-         <lastmod>2026-01-29</lastmod>
+         <lastmod>2026-02-03</lastmod>
     </url>
     <url>
          <loc>https://docs.axonops.com/data-platforms/kafka/operations/performance/</loc>
-         <lastmod>2026-01-29</lastmod>
+         <lastmod>2026-02-03</lastmod>
     </url>
     <url>
          <loc>https://docs.axonops.com/data-platforms/kafka/operations/performance/filesystem/</loc>
-         <lastmod>2026-01-29</lastmod>
+         <lastmod>2026-02-03</lastmod>
     </url>
     <url>
          <loc>https://docs.axonops.com/data-platforms/kafka/operations/performance/capacity-planning/</loc>
-         <lastmod>2026-01-29</lastmod>
+         <lastmod>2026-02-03</lastmod>
     </url>
     <url>
          <loc>https://docs.axonops.com/data-platforms/kafka/operations/troubleshooting/</loc>
-         <lastmod>2026-01-29</lastmod>
+         <lastmod>2026-02-03</lastmod>
     </url>
     <url>
          <loc>https://docs.axonops.com/data-platforms/kafka/operations/troubleshooting/dead-letter-queues/</loc>
-         <lastmod>2026-01-29</lastmod>
+         <lastmod>2026-02-03</lastmod>
     </url>
     <url>
          <loc>https://docs.axonops.com/data-platforms/kafka/reference/</loc>
-         <lastmod>2026-01-29</lastmod>
+         <lastmod>2026-02-03</lastmod>
     </url>
     <url>
          <loc>https://docs.axonops.com/data-platforms/kafka/schema-registry/</loc>
-         <lastmod>2026-01-29</lastmod>
+         <lastmod>2026-02-03</lastmod>
     </url>
     <url>
          <loc>https://docs.axonops.com/data-platforms/kafka/schema-registry/operations/</loc>
-         <lastmod>2026-01-29</lastmod>
+         <lastmod>2026-02-03</lastmod>
     </url>
     <url>
          <loc>https://docs.axonops.com/data-platforms/kafka/schema-registry/schema-evolution/</loc>
-         <lastmod>2026-01-29</lastmod>
+         <lastmod>2026-02-03</lastmod>
     </url>
     <url>
          <loc>https://docs.axonops.com/data-platforms/kafka/schema-registry/why-schemas/</loc>
-         <lastmod>2026-01-29</lastmod>
+         <lastmod>2026-02-03</lastmod>
     </url>
     <url>
          <loc>https://docs.axonops.com/data-platforms/kafka/schema-registry/compatibility/</loc>
-         <lastmod>2026-01-29</lastmod>
+         <lastmod>2026-02-03</lastmod>
     </url>
     <url>
          <loc>https://docs.axonops.com/data-platforms/kafka/schema-registry/schema-formats/</loc>
-         <lastmod>2026-01-29</lastmod>
+         <lastmod>2026-02-03</lastmod>
     </url>
     <url>
          <loc>https://docs.axonops.com/data-platforms/kafka/security/</loc>
-         <lastmod>2026-01-29</lastmod>
+         <lastmod>2026-02-03</lastmod>
     </url>
     <url>
          <loc>https://docs.axonops.com/data-platforms/kafka/security/authentication/</loc>
-         <lastmod>2026-01-29</lastmod>
+         <lastmod>2026-02-03</lastmod>
     </url>
     <url>
          <loc>https://docs.axonops.com/data-platforms/kafka/security/authentication/delegation-tokens/</loc>
-         <lastmod>2026-01-29</lastmod>
+         <lastmod>2026-02-03</lastmod>
     </url>
     <url>
          <loc>https://docs.axonops.com/data-platforms/kafka/security/authentication/kerberos/</loc>
-         <lastmod>2026-01-29</lastmod>
+         <lastmod>2026-02-03</lastmod>
     </url>
     <url>
          <loc>https://docs.axonops.com/data-platforms/kafka/security/authentication/mtls/</loc>
-         <lastmod>2026-01-29</lastmod>
+         <lastmod>2026-02-03</lastmod>
     </url>
     <url>
          <loc>https://docs.axonops.com/data-platforms/kafka/security/authentication/oauth/</loc>
-         <lastmod>2026-01-29</lastmod>
+         <lastmod>2026-02-03</lastmod>
     </url>
     <url>
          <loc>https://docs.axonops.com/data-platforms/kafka/security/authentication/sasl-plain/</loc>
-         <lastmod>2026-01-29</lastmod>
+         <lastmod>2026-02-03</lastmod>
     </url>
     <url>
          <loc>https://docs.axonops.com/data-platforms/kafka/security/authentication/sasl-scram/</loc>
-         <lastmod>2026-01-29</lastmod>
+         <lastmod>2026-02-03</lastmod>
     </url>
     <url>
          <loc>https://docs.axonops.com/data-platforms/kafka/security/authorization/</loc>
-         <lastmod>2026-01-29</lastmod>
+         <lastmod>2026-02-03</lastmod>
     </url>
     <url>
          <loc>https://docs.axonops.com/data-platforms/kafka/security/encryption/</loc>
-         <lastmod>2026-01-29</lastmod>
+         <lastmod>2026-02-03</lastmod>
     </url>
     <url>
          <loc>https://docs.axonops.com/data-platforms/kafka/troubleshooting/</loc>
-         <lastmod>2026-01-29</lastmod>
+         <lastmod>2026-02-03</lastmod>
     </url>
     <url>
          <loc>https://docs.axonops.com/data-platforms/kafka/troubleshooting/common-errors/</loc>
-         <lastmod>2026-01-29</lastmod>
+         <lastmod>2026-02-03</lastmod>
     </url>
     <url>
          <loc>https://docs.axonops.com/data-platforms/kafka/troubleshooting/diagnosis/</loc>
-         <lastmod>2026-01-29</lastmod>
+         <lastmod>2026-02-03</lastmod>
     </url>
     <url>
          <loc>https://docs.axonops.com/data-platforms/kafka/troubleshooting/log-analysis/</loc>
-         <lastmod>2026-01-29</lastmod>
+         <lastmod>2026-02-03</lastmod>
     </url>
     <url>
          <loc>https://docs.axonops.com/dynamic_pages/axon_agent/cassandra/</loc>
-         <lastmod>2026-01-29</lastmod>
+         <lastmod>2026-02-03</lastmod>
     </url>
     <url>
          <loc>https://docs.axonops.com/dynamic_pages/axon_agent/cassandra_agent/</loc>
-         <lastmod>2026-01-29</lastmod>
+         <lastmod>2026-02-03</lastmod>
     </url>
     <url>
          <loc>https://docs.axonops.com/dynamic_pages/axon_agent/java/</loc>
-         <lastmod>2026-01-29</lastmod>
+         <lastmod>2026-02-03</lastmod>
     </url>
     <url>
          <loc>https://docs.axonops.com/dynamic_pages/axon_agent/kafka_agent/</loc>
-         <lastmod>2026-01-29</lastmod>
+         <lastmod>2026-02-03</lastmod>
     </url>
     <url>
          <loc>https://docs.axonops.com/dynamic_pages/axon_agent/kafka_agent_config/</loc>
-         <lastmod>2026-01-29</lastmod>
+         <lastmod>2026-02-03</lastmod>
     </url>
     <url>
          <loc>https://docs.axonops.com/dynamic_pages/axon_agent/kafka_java/</loc>
-         <lastmod>2026-01-29</lastmod>
+         <lastmod>2026-02-03</lastmod>
     </url>
     <url>
          <loc>https://docs.axonops.com/dynamic_pages/axon_agent/os/</loc>
-         <lastmod>2026-01-29</lastmod>
+         <lastmod>2026-02-03</lastmod>
     </url>
     <url>
          <loc>https://docs.axonops.com/dynamic_pages/axon_dash/os/</loc>
-         <lastmod>2026-01-29</lastmod>
+         <lastmod>2026-02-03</lastmod>
     </url>
     <url>
          <loc>https://docs.axonops.com/dynamic_pages/axon_server/elastic/</loc>
-         <lastmod>2026-01-29</lastmod>
+         <lastmod>2026-02-03</lastmod>
     </url>
     <url>
          <loc>https://docs.axonops.com/dynamic_pages/axon_server/os/</loc>
-         <lastmod>2026-01-29</lastmod>
+         <lastmod>2026-02-03</lastmod>
     </url>
     <url>
          <loc>https://docs.axonops.com/editions/</loc>
-         <lastmod>2026-01-29</lastmod>
+         <lastmod>2026-02-03</lastmod>
     </url>
     <url>
          <loc>https://docs.axonops.com/editions/_compare/</loc>
-         <lastmod>2026-01-29</lastmod>
+         <lastmod>2026-02-03</lastmod>
     </url>
     <url>
          <loc>https://docs.axonops.com/editions/enterprise_edition/</loc>
-         <lastmod>2026-01-29</lastmod>
+         <lastmod>2026-02-03</lastmod>
     </url>
     <url>
          <loc>https://docs.axonops.com/editions/free_edition/</loc>
-         <lastmod>2026-01-29</lastmod>
+         <lastmod>2026-02-03</lastmod>
     </url>
     <url>
          <loc>https://docs.axonops.com/editions/intro/</loc>
-         <lastmod>2026-01-29</lastmod>
+         <lastmod>2026-02-03</lastmod>
     </url>
     <url>
          <loc>https://docs.axonops.com/firewall/overview/</loc>
-         <lastmod>2026-01-29</lastmod>
+         <lastmod>2026-02-03</lastmod>
     </url>
     <url>
          <loc>https://docs.axonops.com/get_started/agent_setup/</loc>
-         <lastmod>2026-01-29</lastmod>
+         <lastmod>2026-02-03</lastmod>
     </url>
     <url>
          <loc>https://docs.axonops.com/get_started/agent_setup_cassandra/</loc>
-         <lastmod>2026-01-29</lastmod>
+         <lastmod>2026-02-03</lastmod>
     </url>
     <url>
          <loc>https://docs.axonops.com/get_started/agent_setup_kafka/</loc>
-         <lastmod>2026-01-29</lastmod>
+         <lastmod>2026-02-03</lastmod>
     </url>
     <url>
          <loc>https://docs.axonops.com/get_started/cloud/</loc>
-         <lastmod>2026-01-29</lastmod>
+         <lastmod>2026-02-03</lastmod>
     </url>
     <url>
          <loc>https://docs.axonops.com/get_started/docker/</loc>
-         <lastmod>2026-01-29</lastmod>
+         <lastmod>2026-02-03</lastmod>
     </url>
     <url>
          <loc>https://docs.axonops.com/get_started/getting_started/</loc>
-         <lastmod>2026-01-29</lastmod>
+         <lastmod>2026-02-03</lastmod>
     </url>
     <url>
          <loc>https://docs.axonops.com/get_started/proxy/</loc>
-         <lastmod>2026-01-29</lastmod>
+         <lastmod>2026-02-03</lastmod>
     </url>
     <url>
          <loc>https://docs.axonops.com/how-to/backup-restore-notifications/</loc>
-         <lastmod>2026-01-29</lastmod>
+         <lastmod>2026-02-03</lastmod>
     </url>
     <url>
          <loc>https://docs.axonops.com/how-to/default-routing/</loc>
-         <lastmod>2026-01-29</lastmod>
+         <lastmod>2026-02-03</lastmod>
     </url>
     <url>
          <loc>https://docs.axonops.com/how-to/reuse-host-id/</loc>
-         <lastmod>2026-01-29</lastmod>
+         <lastmod>2026-02-03</lastmod>
     </url>
     <url>
          <loc>https://docs.axonops.com/how-to/rolling-restart/</loc>
-         <lastmod>2026-01-29</lastmod>
+         <lastmod>2026-02-03</lastmod>
     </url>
     <url>
          <loc>https://docs.axonops.com/how-to/setup-alert-rules/</loc>
-         <lastmod>2026-01-29</lastmod>
+         <lastmod>2026-02-03</lastmod>
     </url>
     <url>
          <loc>https://docs.axonops.com/how-to/setup-dashboards-global-integrations/</loc>
-         <lastmod>2026-01-29</lastmod>
+         <lastmod>2026-02-03</lastmod>
     </url>
     <url>
          <loc>https://docs.axonops.com/how-to/setup-log-collection/</loc>
-         <lastmod>2026-01-29</lastmod>
+         <lastmod>2026-02-03</lastmod>
     </url>
     <url>
          <loc>https://docs.axonops.com/how-to/setup-servicechecks/</loc>
-         <lastmod>2026-01-29</lastmod>
+         <lastmod>2026-02-03</lastmod>
     </url>
     <url>
          <loc>https://docs.axonops.com/installation/release_notes/</loc>
-         <lastmod>2026-01-29</lastmod>
+         <lastmod>2026-02-03</lastmod>
     </url>
     <url>
          <loc>https://docs.axonops.com/installation/agent/agent_setup_cassandra/</loc>
-         <lastmod>2026-01-29</lastmod>
+         <lastmod>2026-02-03</lastmod>
     </url>
     <url>
          <loc>https://docs.axonops.com/installation/agent/agent_setup_kafka/</loc>
-         <lastmod>2026-01-29</lastmod>
+         <lastmod>2026-02-03</lastmod>
     </url>
     <url>
          <loc>https://docs.axonops.com/installation/agent/docker/</loc>
-         <lastmod>2026-01-29</lastmod>
+         <lastmod>2026-02-03</lastmod>
     </url>
     <url>
          <loc>https://docs.axonops.com/installation/agent/install/</loc>
-         <lastmod>2026-01-29</lastmod>
+         <lastmod>2026-02-03</lastmod>
     </url>
     <url>
          <loc>https://docs.axonops.com/installation/air-gapped/</loc>
-         <lastmod>2026-01-29</lastmod>
+         <lastmod>2026-02-03</lastmod>
     </url>
     <url>
          <loc>https://docs.axonops.com/installation/air-gapped/dynamic_page/</loc>
-         <lastmod>2026-01-29</lastmod>
+         <lastmod>2026-02-03</lastmod>
     </url>
     <url>
          <loc>https://docs.axonops.com/installation/axon-dash/install/</loc>
-         <lastmod>2026-01-29</lastmod>
+         <lastmod>2026-02-03</lastmod>
     </url>
     <url>
          <loc>https://docs.axonops.com/installation/axon-server/axonserver_install/</loc>
-         <lastmod>2026-01-29</lastmod>
+         <lastmod>2026-02-03</lastmod>
     </url>
     <url>
          <loc>https://docs.axonops.com/installation/axon-server/install/</loc>
-         <lastmod>2026-01-29</lastmod>
+         <lastmod>2026-02-03</lastmod>
     </url>
     <url>
          <loc>https://docs.axonops.com/installation/axon-server/metricsdatabase/</loc>
-         <lastmod>2026-01-29</lastmod>
+         <lastmod>2026-02-03</lastmod>
     </url>
     <url>
          <loc>https://docs.axonops.com/installation/compat_matrix/compat_matrix/</loc>
-         <lastmod>2026-01-29</lastmod>
+         <lastmod>2026-02-03</lastmod>
     </url>
     <url>
          <loc>https://docs.axonops.com/installation/dse-agent/install/</loc>
-         <lastmod>2026-01-29</lastmod>
+         <lastmod>2026-02-03</lastmod>
     </url>
     <url>
          <loc>https://docs.axonops.com/installation/elasticsearch/elastic/</loc>
-         <lastmod>2026-01-29</lastmod>
+         <lastmod>2026-02-03</lastmod>
     </url>
     <url>
          <loc>https://docs.axonops.com/installation/elasticsearch/install/</loc>
-         <lastmod>2026-01-29</lastmod>
+         <lastmod>2026-02-03</lastmod>
     </url>
     <url>
          <loc>https://docs.axonops.com/installation/kubernetes/</loc>
-         <lastmod>2026-01-29</lastmod>
+         <lastmod>2026-02-03</lastmod>
     </url>
     <url>
          <loc>https://docs.axonops.com/installation/kubernetes/axonops/</loc>
-         <lastmod>2026-01-29</lastmod>
+         <lastmod>2026-02-03</lastmod>
     </url>
     <url>
          <loc>https://docs.axonops.com/installation/kubernetes/k8ssandra/</loc>
-         <lastmod>2026-01-29</lastmod>
+         <lastmod>2026-02-03</lastmod>
     </url>
     <url>
          <loc>https://docs.axonops.com/installation/kubernetes/strimzi/</loc>
-         <lastmod>2026-01-29</lastmod>
+         <lastmod>2026-02-03</lastmod>
     </url>
     <url>
          <loc>https://docs.axonops.com/integrations/email-integration/</loc>
-         <lastmod>2026-01-29</lastmod>
+         <lastmod>2026-02-03</lastmod>
     </url>
     <url>
          <loc>https://docs.axonops.com/integrations/log-file-integration/</loc>
-         <lastmod>2026-01-29</lastmod>
+         <lastmod>2026-02-03</lastmod>
     </url>
     <url>
          <loc>https://docs.axonops.com/integrations/microsoft-teams-integration/</loc>
-         <lastmod>2026-01-29</lastmod>
+         <lastmod>2026-02-03</lastmod>
     </url>
     <url>
          <loc>https://docs.axonops.com/integrations/overview/</loc>
-         <lastmod>2026-01-29</lastmod>
+         <lastmod>2026-02-03</lastmod>
     </url>
     <url>
          <loc>https://docs.axonops.com/integrations/pagerduty-integration/</loc>
-         <lastmod>2026-01-29</lastmod>
+         <lastmod>2026-02-03</lastmod>
     </url>
     <url>
          <loc>https://docs.axonops.com/integrations/servicenow-integration/</loc>
-         <lastmod>2026-01-29</lastmod>
+         <lastmod>2026-02-03</lastmod>
     </url>
     <url>
          <loc>https://docs.axonops.com/integrations/slack-integration/</loc>
-         <lastmod>2026-01-29</lastmod>
+         <lastmod>2026-02-03</lastmod>
     </url>
     <url>
          <loc>https://docs.axonops.com/introduction/overview/</loc>
-         <lastmod>2026-01-29</lastmod>
+         <lastmod>2026-02-03</lastmod>
     </url>
     <url>
          <loc>https://docs.axonops.com/kafka/acl/configure_acl/</loc>
-         <lastmod>2026-01-29</lastmod>
+         <lastmod>2026-02-03</lastmod>
     </url>
     <url>
          <loc>https://docs.axonops.com/kafka/acl/create_acl/</loc>
-         <lastmod>2026-01-29</lastmod>
+         <lastmod>2026-02-03</lastmod>
     </url>
     <url>
          <loc>https://docs.axonops.com/kafka/acl/delete_acl/</loc>
-         <lastmod>2026-01-29</lastmod>
+         <lastmod>2026-02-03</lastmod>
     </url>
     <url>
          <loc>https://docs.axonops.com/kafka/acl/overview/</loc>
-         <lastmod>2026-01-29</lastmod>
+         <lastmod>2026-02-03</lastmod>
     </url>
     <url>
          <loc>https://docs.axonops.com/kafka/brokers/overview/</loc>
-         <lastmod>2026-01-29</lastmod>
+         <lastmod>2026-02-03</lastmod>
     </url>
     <url>
          <loc>https://docs.axonops.com/kafka/connect/overview/</loc>
-         <lastmod>2026-01-29</lastmod>
+         <lastmod>2026-02-03</lastmod>
     </url>
     <url>
          <loc>https://docs.axonops.com/kafka/consumers/overview/</loc>
-         <lastmod>2026-01-29</lastmod>
+         <lastmod>2026-02-03</lastmod>
     </url>
     <url>
          <loc>https://docs.axonops.com/kafka/schema-registry/overview/</loc>
-         <lastmod>2026-01-29</lastmod>
+         <lastmod>2026-02-03</lastmod>
     </url>
     <url>
          <loc>https://docs.axonops.com/kafka/topics/configure_topic/</loc>
-         <lastmod>2026-01-29</lastmod>
+         <lastmod>2026-02-03</lastmod>
     </url>
     <url>
          <loc>https://docs.axonops.com/kafka/topics/create_topic/</loc>
-         <lastmod>2026-01-29</lastmod>
+         <lastmod>2026-02-03</lastmod>
     </url>
     <url>
          <loc>https://docs.axonops.com/kafka/topics/overview/</loc>
-         <lastmod>2026-01-29</lastmod>
+         <lastmod>2026-02-03</lastmod>
     </url>
     <url>
          <loc>https://docs.axonops.com/metrics/cassandra/all_dashboards_metrics_reference/</loc>
-         <lastmod>2026-01-29</lastmod>
+         <lastmod>2026-02-03</lastmod>
     </url>
     <url>
          <loc>https://docs.axonops.com/metrics/cassandra/application_metrics_mapping/</loc>
-         <lastmod>2026-01-29</lastmod>
+         <lastmod>2026-02-03</lastmod>
     </url>
     <url>
          <loc>https://docs.axonops.com/metrics/cassandra/cache_metrics_mapping/</loc>
-         <lastmod>2026-01-29</lastmod>
+         <lastmod>2026-02-03</lastmod>
     </url>
     <url>
          <loc>https://docs.axonops.com/metrics/cassandra/compactions_metrics_mapping/</loc>
-         <lastmod>2026-01-29</lastmod>
+         <lastmod>2026-02-03</lastmod>
     </url>
     <url>
          <loc>https://docs.axonops.com/metrics/cassandra/coordinator_metrics_mapping/</loc>
-         <lastmod>2026-01-29</lastmod>
+         <lastmod>2026-02-03</lastmod>
     </url>
     <url>
          <loc>https://docs.axonops.com/metrics/cassandra/cql_metrics_mapping/</loc>
-         <lastmod>2026-01-29</lastmod>
+         <lastmod>2026-02-03</lastmod>
     </url>
     <url>
          <loc>https://docs.axonops.com/metrics/cassandra/data_metrics_mapping/</loc>
-         <lastmod>2026-01-29</lastmod>
+         <lastmod>2026-02-03</lastmod>
     </url>
     <url>
          <loc>https://docs.axonops.com/metrics/cassandra/dropped_messages_metrics_mapping/</loc>
-         <lastmod>2026-01-29</lastmod>
+         <lastmod>2026-02-03</lastmod>
     </url>
     <url>
          <loc>https://docs.axonops.com/metrics/cassandra/entropy_metrics_mapping/</loc>
-         <lastmod>2026-01-29</lastmod>
+         <lastmod>2026-02-03</lastmod>
     </url>
     <url>
          <loc>https://docs.axonops.com/metrics/cassandra/keyspace_metrics_mapping/</loc>
-         <lastmod>2026-01-29</lastmod>
+         <lastmod>2026-02-03</lastmod>
     </url>
     <url>
          <loc>https://docs.axonops.com/metrics/cassandra/reporting_metrics_mapping/</loc>
-         <lastmod>2026-01-29</lastmod>
+         <lastmod>2026-02-03</lastmod>
     </url>
     <url>
          <loc>https://docs.axonops.com/metrics/cassandra/security_metrics_mapping/</loc>
-         <lastmod>2026-01-29</lastmod>
+         <lastmod>2026-02-03</lastmod>
     </url>
     <url>
          <loc>https://docs.axonops.com/metrics/cassandra/system_metrics_mapping/</loc>
-         <lastmod>2026-01-29</lastmod>
+         <lastmod>2026-02-03</lastmod>
     </url>
     <url>
          <loc>https://docs.axonops.com/metrics/cassandra/table_metrics_mapping/</loc>
-         <lastmod>2026-01-29</lastmod>
+         <lastmod>2026-02-03</lastmod>
     </url>
     <url>
          <loc>https://docs.axonops.com/metrics/cassandra/thread_pools_metrics_mapping/</loc>
-         <lastmod>2026-01-29</lastmod>
+         <lastmod>2026-02-03</lastmod>
     </url>
     <url>
          <loc>https://docs.axonops.com/metrics/kafka/all_kafka_dashboards_metrics_reference/</loc>
-         <lastmod>2026-01-29</lastmod>
+         <lastmod>2026-02-03</lastmod>
     </url>
     <url>
          <loc>https://docs.axonops.com/metrics/kafka/connect_overview_metrics_mapping/</loc>
-         <lastmod>2026-01-29</lastmod>
+         <lastmod>2026-02-03</lastmod>
     </url>
     <url>
          <loc>https://docs.axonops.com/metrics/kafka/connect_tasks_metrics_mapping/</loc>
-         <lastmod>2026-01-29</lastmod>
+         <lastmod>2026-02-03</lastmod>
     </url>
     <url>
          <loc>https://docs.axonops.com/metrics/kafka/connect_workers_metrics_mapping/</loc>
-         <lastmod>2026-01-29</lastmod>
+         <lastmod>2026-02-03</lastmod>
     </url>
     <url>
          <loc>https://docs.axonops.com/metrics/kafka/connections_metrics_mapping/</loc>
-         <lastmod>2026-01-29</lastmod>
+         <lastmod>2026-02-03</lastmod>
     </url>
     <url>
          <loc>https://docs.axonops.com/metrics/kafka/consumer_groups_metrics_mapping/</loc>
-         <lastmod>2026-01-29</lastmod>
+         <lastmod>2026-02-03</lastmod>
     </url>
     <url>
          <loc>https://docs.axonops.com/metrics/kafka/controller_metrics_mapping/</loc>
-         <lastmod>2026-01-29</lastmod>
+         <lastmod>2026-02-03</lastmod>
     </url>
     <url>
          <loc>https://docs.axonops.com/metrics/kafka/overview_metrics_mapping/</loc>
-         <lastmod>2026-01-29</lastmod>
+         <lastmod>2026-02-03</lastmod>
     </url>
     <url>
          <loc>https://docs.axonops.com/metrics/kafka/performance_metrics_mapping/</loc>
-         <lastmod>2026-01-29</lastmod>
+         <lastmod>2026-02-03</lastmod>
     </url>
     <url>
          <loc>https://docs.axonops.com/metrics/kafka/replication_metrics_mapping/</loc>
-         <lastmod>2026-01-29</lastmod>
+         <lastmod>2026-02-03</lastmod>
     </url>
     <url>
          <loc>https://docs.axonops.com/metrics/kafka/requests_metrics_mapping/</loc>
-         <lastmod>2026-01-29</lastmod>
+         <lastmod>2026-02-03</lastmod>
     </url>
     <url>
          <loc>https://docs.axonops.com/metrics/kafka/system_metrics_mapping/</loc>
-         <lastmod>2026-01-29</lastmod>
+         <lastmod>2026-02-03</lastmod>
     </url>
     <url>
          <loc>https://docs.axonops.com/metrics/kafka/topics_metrics_mapping/</loc>
-         <lastmod>2026-01-29</lastmod>
+         <lastmod>2026-02-03</lastmod>
     </url>
     <url>
          <loc>https://docs.axonops.com/metrics/kafka/zookeeper_metrics_mapping/</loc>
-         <lastmod>2026-01-29</lastmod>
+         <lastmod>2026-02-03</lastmod>
     </url>
     <url>
          <loc>https://docs.axonops.com/monitoring/overview/</loc>
-         <lastmod>2026-01-29</lastmod>
+         <lastmod>2026-02-03</lastmod>
     </url>
     <url>
          <loc>https://docs.axonops.com/monitoring/grafana/grafana/</loc>
-         <lastmod>2026-01-29</lastmod>
+         <lastmod>2026-02-03</lastmod>
     </url>
     <url>
          <loc>https://docs.axonops.com/monitoring/logsandevents/logsandevents/</loc>
-         <lastmod>2026-01-29</lastmod>
+         <lastmod>2026-02-03</lastmod>
     </url>
     <url>
          <loc>https://docs.axonops.com/monitoring/metricsdashboards/cassandra/</loc>
-         <lastmod>2026-01-29</lastmod>
+         <lastmod>2026-02-03</lastmod>
     </url>
     <url>
          <loc>https://docs.axonops.com/monitoring/metricsdashboards/kafka/</loc>
-         <lastmod>2026-01-29</lastmod>
+         <lastmod>2026-02-03</lastmod>
     </url>
     <url>
          <loc>https://docs.axonops.com/monitoring/metricsdashboards/querysyntax/</loc>
-         <lastmod>2026-01-29</lastmod>
+         <lastmod>2026-02-03</lastmod>
     </url>
     <url>
          <loc>https://docs.axonops.com/monitoring/metricsdashboards/querysyntax_kafka/</loc>
-         <lastmod>2026-01-29</lastmod>
+         <lastmod>2026-02-03</lastmod>
     </url>
     <url>
          <loc>https://docs.axonops.com/monitoring/servicechecks/notifications/</loc>
-         <lastmod>2026-01-29</lastmod>
+         <lastmod>2026-02-03</lastmod>
     </url>
     <url>
          <loc>https://docs.axonops.com/monitoring/servicechecks/overview/</loc>
-         <lastmod>2026-01-29</lastmod>
+         <lastmod>2026-02-03</lastmod>
     </url>
     <url>
          <loc>https://docs.axonops.com/operations/cassandra/backup/aws_s3/</loc>
-         <lastmod>2026-01-29</lastmod>
+         <lastmod>2026-02-03</lastmod>
     </url>
     <url>
          <loc>https://docs.axonops.com/operations/cassandra/backup/azure_blob/</loc>
-         <lastmod>2026-01-29</lastmod>
+         <lastmod>2026-02-03</lastmod>
     </url>
     <url>
          <loc>https://docs.axonops.com/operations/cassandra/backup/azure_blob_storage/</loc>
-         <lastmod>2026-01-29</lastmod>
+         <lastmod>2026-02-03</lastmod>
     </url>
     <url>
          <loc>https://docs.axonops.com/operations/cassandra/backup/backup-purge/</loc>
-         <lastmod>2026-01-29</lastmod>
+         <lastmod>2026-02-03</lastmod>
     </url>
     <url>
          <loc>https://docs.axonops.com/operations/cassandra/backup/commitlog-archiving/</loc>
-         <lastmod>2026-01-29</lastmod>
+         <lastmod>2026-02-03</lastmod>
     </url>
     <url>
          <loc>https://docs.axonops.com/operations/cassandra/backup/gcs/</loc>
-         <lastmod>2026-01-29</lastmod>
+         <lastmod>2026-02-03</lastmod>
     </url>
     <url>
          <loc>https://docs.axonops.com/operations/cassandra/backup/generic_s3/</loc>
-         <lastmod>2026-01-29</lastmod>
+         <lastmod>2026-02-03</lastmod>
     </url>
     <url>
          <loc>https://docs.axonops.com/operations/cassandra/backup/google_cloud_storage/</loc>
-         <lastmod>2026-01-29</lastmod>
+         <lastmod>2026-02-03</lastmod>
     </url>
     <url>
          <loc>https://docs.axonops.com/operations/cassandra/backup/local_filesystem/</loc>
-         <lastmod>2026-01-29</lastmod>
+         <lastmod>2026-02-03</lastmod>
     </url>
     <url>
          <loc>https://docs.axonops.com/operations/cassandra/backup/local_storage/</loc>
-         <lastmod>2026-01-29</lastmod>
+         <lastmod>2026-02-03</lastmod>
     </url>
     <url>
          <loc>https://docs.axonops.com/operations/cassandra/backup/overview/</loc>
-         <lastmod>2026-01-29</lastmod>
+         <lastmod>2026-02-03</lastmod>
     </url>
     <url>
          <loc>https://docs.axonops.com/operations/cassandra/backup/remote/</loc>
-         <lastmod>2026-01-29</lastmod>
+         <lastmod>2026-02-03</lastmod>
     </url>
     <url>
          <loc>https://docs.axonops.com/operations/cassandra/backup/s3_compatible/</loc>
-         <lastmod>2026-01-29</lastmod>
+         <lastmod>2026-02-03</lastmod>
     </url>
     <url>
          <loc>https://docs.axonops.com/operations/cassandra/backup/sftp_ssh/</loc>
-         <lastmod>2026-01-29</lastmod>
+         <lastmod>2026-02-03</lastmod>
     </url>
     <url>
          <loc>https://docs.axonops.com/operations/cassandra/backup/ssh_sftp/</loc>
-         <lastmod>2026-01-29</lastmod>
+         <lastmod>2026-02-03</lastmod>
     </url>
     <url>
          <loc>https://docs.axonops.com/operations/cassandra/repair/</loc>
-         <lastmod>2026-01-29</lastmod>
+         <lastmod>2026-02-03</lastmod>
     </url>
     <url>
          <loc>https://docs.axonops.com/operations/cassandra/restore/overview/</loc>
-         <lastmod>2026-01-29</lastmod>
+         <lastmod>2026-02-03</lastmod>
     </url>
     <url>
          <loc>https://docs.axonops.com/operations/cassandra/restore/restore-cluster-different-ips/</loc>
-         <lastmod>2026-01-29</lastmod>
+         <lastmod>2026-02-03</lastmod>
     </url>
     <url>
          <loc>https://docs.axonops.com/operations/cassandra/restore/restore-cluster-same-ip/</loc>
-         <lastmod>2026-01-29</lastmod>
+         <lastmod>2026-02-03</lastmod>
     </url>
     <url>
          <loc>https://docs.axonops.com/operations/cassandra/restore/restore-different-cluster/</loc>
-         <lastmod>2026-01-29</lastmod>
+         <lastmod>2026-02-03</lastmod>
     </url>
     <url>
          <loc>https://docs.axonops.com/operations/cassandra/restore/restore-node-different-ip/</loc>
-         <lastmod>2026-01-29</lastmod>
+         <lastmod>2026-02-03</lastmod>
     </url>
     <url>
          <loc>https://docs.axonops.com/operations/cassandra/restore/restore-node-same-ip/</loc>
-         <lastmod>2026-01-29</lastmod>
+         <lastmod>2026-02-03</lastmod>
     </url>
     <url>
          <loc>https://docs.axonops.com/operations/cassandra/restore/restore-tool-setup/</loc>
-         <lastmod>2026-01-29</lastmod>
+         <lastmod>2026-02-03</lastmod>
     </url>
     <url>
          <loc>https://docs.axonops.com/operations/cassandra/restore/snapshot-import/</loc>
-         <lastmod>2026-01-29</lastmod>
+         <lastmod>2026-02-03</lastmod>
     </url>
     <url>
          <loc>https://docs.axonops.com/operations/cassandra/rollingrestart/overview/</loc>
-         <lastmod>2026-01-29</lastmod>
+         <lastmod>2026-02-03</lastmod>
     </url>
     <url>
          <loc>https://docs.axonops.com/operations/kafka/rollingrestart/overview/</loc>
-         <lastmod>2026-01-29</lastmod>
+         <lastmod>2026-02-03</lastmod>
     </url>
     <url>
          <loc>https://docs.axonops.com/overview/architecture/</loc>
-         <lastmod>2026-01-29</lastmod>
+         <lastmod>2026-02-03</lastmod>
     </url>
     <url>
          <loc>https://docs.axonops.com/overview/axonops-cloud/</loc>
-         <lastmod>2026-01-29</lastmod>
+         <lastmod>2026-02-03</lastmod>
     </url>
     <url>
          <loc>https://docs.axonops.com/overview/axonops-enterprise/</loc>
-         <lastmod>2026-01-29</lastmod>
+         <lastmod>2026-02-03</lastmod>
     </url>
     <url>
          <loc>https://docs.axonops.com/overview/axonops-self-hosted/</loc>
-         <lastmod>2026-01-29</lastmod>
+         <lastmod>2026-02-03</lastmod>
     </url>
     <url>
          <loc>https://docs.axonops.com/overview/motivation/</loc>
-         <lastmod>2026-01-29</lastmod>
+         <lastmod>2026-02-03</lastmod>
     </url>
     <url>
          <loc>https://docs.axonops.com/pitr/configuration/</loc>
-         <lastmod>2026-01-29</lastmod>
+         <lastmod>2026-02-03</lastmod>
     </url>
     <url>
          <loc>https://docs.axonops.com/pitr/overview/</loc>
-         <lastmod>2026-01-29</lastmod>
+         <lastmod>2026-02-03</lastmod>
     </url>
     <url>
          <loc>https://docs.axonops.com/pitr/restore/</loc>
-         <lastmod>2026-01-29</lastmod>
+         <lastmod>2026-02-03</lastmod>
     </url>
     <url>
          <loc>https://docs.axonops.com/quickstart/docker/</loc>
-         <lastmod>2026-01-29</lastmod>
+         <lastmod>2026-02-03</lastmod>
     </url>
     <url>
          <loc>https://docs.axonops.com/quickstart/saas/</loc>
-         <lastmod>2026-01-29</lastmod>
+         <lastmod>2026-02-03</lastmod>
     </url>
     <url>
          <loc>https://docs.axonops.com/release_notes/releases/</loc>
-         <lastmod>2026-01-29</lastmod>
+         <lastmod>2026-02-03</lastmod>
     </url>
     <url>
          <loc>https://docs.axonops.com/server/api/overview/</loc>
-         <lastmod>2026-01-29</lastmod>
+         <lastmod>2026-02-03</lastmod>
     </url>
     <url>
          <loc>https://docs.axonops.com/system-requirements/</loc>
-         <lastmod>2026-01-29</lastmod>
+         <lastmod>2026-02-03</lastmod>
     </url>
     <url>
          <loc>https://docs.axonops.com/workbench/cassandra/cassandra/</loc>
-         <lastmod>2026-01-29</lastmod>
+         <lastmod>2026-02-03</lastmod>
     </url>
     <url>
          <loc>https://docs.axonops.com/workbench/cassandra/license/</loc>
-         <lastmod>2026-01-29</lastmod>
+         <lastmod>2026-02-03</lastmod>
     </url>
 </urlset>
