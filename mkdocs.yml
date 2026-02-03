@@ -252,6 +252,7 @@ nav:
           - Connect Overview Dashboard: metrics/kafka/connect_overview_metrics_mapping.md
           - Connect Tasks Dashboard: metrics/kafka/connect_tasks_metrics_mapping.md
           - Connect Workers Dashboard: metrics/kafka/connect_workers_metrics_mapping.md
+          - Schema Registry Dashboard: metrics/kafka/schema_registry_metrics_mapping.md
 
       - Brokers: kafka/brokers/overview.md
       

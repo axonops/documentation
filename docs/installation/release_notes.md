@@ -1,10 +1,48 @@
 ---
-title: "Release 2026-01-29"
+title: "Release 2026-02-03"
 description: "AxonOps release notes. Latest features, improvements, and bug fixes."
 meta:
   - name: keywords
     content: "release notes, AxonOps updates, changelog, new features"
 ---
+
+## Release 2026-02-03
+
+* axon-server: 2.0.20
+    * Scheduled repair improvements, and Kafka monitoring enhancements.
+* axon-dash: 2.0.23
+    * Kafka management fixes and scheduled repair configuration.
+* axon-agent: 2.0.16
+    * Security updates and Kafka monitoring improvements.
+
+### Fixes
+
+* [Server] Fix segmented scheduled repairs not completing all segments.
+* [Server] Fix deadlock in enhanced log collectors cleanup.
+* [Server] Fix goroutine leak in repairs caused by error storms and premature timeout tracking.
+* [Server] Fix misleading error response when Kafka Connect cluster has no connectors defined.
+* [Server] Update Go version to address security vulnerabilities.
+* [Dash] Fix Kafka topic configs not displaying for all config source types.
+* [Dash] Fix misleading error response when no connectors are defined in Kafka Connect cluster.
+* [Dash] Fix unnecessary dashboard template saves when editing widgets and add Save/Cancel buttons.
+* [Dash] Fix Kafka Connect operations visibility for read-only users.
+* [Agent] Update Go version to address security vulnerabilities (CVE-2025-61726, CVE-2025-61728).
+
+### New Features
+
+* [Server] Add maximum duration setting for scheduled repairs with alert on timeout.
+* [Server] Add partition reassignment status tracking for Kafka topics.
+* [Server] Alert when Kafka agent is configured with incorrect broker location.
+* [Server] Expand schema registry support with monitoring capabilities.
+* [Server] Add node type filter option for service checks in Kafka clusters.
+* [Server] Support setting licence key via environment variable.
+* [Server] Improve log tailing to detect and report when monitored log files become unavailable.
+* [Dash] Add maximum duration setting for scheduled repairs with alert on timeout.
+* [Dash] Add node type filter option for service checks in Kafka clusters.
+* [Dash] Improve log tailing to detect and report when monitored log files become unavailable.
+* [Agent] Automate Strimzi and K8ssandra container builds on new agent releases.
+* [Agent] Alert when Kafka agent is configured with incorrect broker location.
+* [Agent] Add partition reassignment status tracking for Kafka topics.
 
 ## Release 2026-01-29
 

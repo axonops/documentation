@@ -19,7 +19,8 @@ This document provides a comprehensive reference of all metrics used across Axon
 5. [Kafka Log Metrics](#kafka-log-metrics)
 6. [Kafka Connect Metrics](#kafka-connect-metrics)
 7. [ZooKeeper Metrics](#zookeeper-metrics)
-8. [Special Functions and Attributes](#special-functions-and-attributes)
+8. [Schema Registry Metrics](#schema-registry-metrics)
+9. [Special Functions and Attributes](#special-functions-and-attributes)
 
 ## System Metrics (host_ and jvm_)
 
@@ -258,6 +259,42 @@ Metrics for consumer group coordination and lag monitoring.
 | Metric | Description | Common Attributes | Used In |
 |--------|-------------|-------------------|---------|
 | `kaf_kafka_consumer_lag_millis` | Consumer lag in milliseconds | `group_id`, `topic`, `partition`, `rack`, `host_id` | Consumer Groups |
+
+## Schema Registry Metrics
+
+Metrics for monitoring Kafka Schema Registry service health and performance.
+
+### Schema Counts
+| Metric | Description | Common Attributes | Used In |
+|--------|-------------|-------------------|---------|
+| `kafka_schema_registry_registered_count_registered_count` | Total registered schemas | `dc`, `rack`, `hostname` | Schema Registry |
+| `kafka_schema_registry_deleted_count_deleted_count` | Deleted schemas count | `dc`, `rack`, `hostname` | Schema Registry |
+| `kafka_schema_registry_master_slave_role_master_slave_role` | Node role (1 = primary, 0 = replica) | `dc`, `rack`, `hostname`, `host_id` | Schema Registry |
+
+### Schema Types
+| Metric | Description | Common Attributes | Used In |
+|--------|-------------|-------------------|---------|
+| `kafka_schema_registry_avro_schemas_created_avro_schemas` | Count of Avro schemas | `dc`, `rack`, `hostname` | Schema Registry |
+| `kafka_schema_registry_json_schemas_created_json_schemas` | Count of JSON schemas | `dc`, `rack`, `hostname` | Schema Registry |
+| `kafka_schema_registry_protobuf_schemas_created_protobuf_schemas` | Count of Protobuf schemas | `dc`, `rack`, `hostname` | Schema Registry |
+
+### Request Metrics
+| Metric | Description | Common Attributes | Used In |
+|--------|-------------|-------------------|---------|
+| `kafka_schema_registry_jersey_metrics_request_rate` | Requests per second | `dc`, `rack`, `hostname` | Schema Registry |
+| `kafka_schema_registry_jersey_metrics_request_latency_95` | 95th percentile request latency (ms) | `dc`, `rack`, `hostname` | Schema Registry |
+| `kafka_schema_registry_jersey_metrics_request_error_count` | Error responses by HTTP status | `dc`, `rack`, `hostname`, `http_status_code` | Schema Registry |
+
+### Kafka Store Operations
+| Metric | Description | Common Attributes | Used In |
+|--------|-------------|-------------------|---------|
+| `kafka_producer_producer_metrics_connection_count` | Active producer connections | `dc`, `rack`, `hostname` | Schema Registry |
+| `kafka_consumer_consumer_metrics_connection_count` | Active consumer connections | `dc`, `rack`, `hostname` | Schema Registry |
+| `kafka_producer_producer_metrics_flush_time_ns` | Store flush time (ns) | `dc`, `rack`, `hostname`, `client_id` | Schema Registry |
+| `kafka_producer_producer_metrics_failed_authentication_rate` | Failed authentication rate | `dc`, `rack`, `hostname` | Schema Registry |
+| `kafka_consumer_consumer_fetch_manager_metrics_records_consumed_rate` | Records consumed rate | `dc`, `rack`, `hostname` | Schema Registry |
+| `kafka_consumer_consumer_fetch_manager_metrics_fetch_latency_avg` | Average fetch latency (ms) | `dc`, `rack`, `hostname` | Schema Registry |
+| `kafka_consumer_consumer_fetch_manager_metrics_records_lag` | Consumer lag (records) | `dc`, `rack`, `hostname` | Schema Registry |
 
 ## Special Functions and Attributes
 
