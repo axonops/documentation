@@ -94,7 +94,7 @@ These will trigger based on the selected schedule **repeatedly**.
 
 ### Alert After
 
-You can set a maximum duration for scheduled and manual repairs using the `Alert After` field. If a repair exceeds this duration, AxonOps sends a warning alert to notify you that the repair is taking longer than expected.
+You can set a maximum duration for scheduled and manual repairs using the `Alert After` setting. If a repair exceeds this duration, AxonOps sends a warning alert to notify you that the repair is taking longer than expected.
 
 This is useful for:
 
