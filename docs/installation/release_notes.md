@@ -8,19 +8,10 @@ meta:
 
 ## Release 2026-02-03
 
-* axon-dash: 2.0.24
-    * Security updates.
-
-### Fixes
-
-* [Dash] Update dependencies to address security vulnerabilities.
-
-## Release 2026-02-03
-
 * axon-server: 2.0.20
     * Scheduled repair improvements, and Kafka monitoring enhancements.
-* axon-dash: 2.0.23
-    * Kafka management fixes and scheduled repair configuration.
+* axon-dash: 2.0.24
+    * Kafka management fixes, scheduled repair configuration, and security updates.
 * axon-agent: 2.0.16
     * Security updates and Kafka monitoring improvements.
 
@@ -35,6 +26,7 @@ meta:
 * [Dash] Fix misleading error response when no connectors are defined in Kafka Connect cluster.
 * [Dash] Fix unnecessary dashboard template saves when editing widgets and add Save/Cancel buttons.
 * [Dash] Fix Kafka Connect operations visibility for read-only users.
+* [Dash] Update dependencies to address security vulnerabilities.
 * [Agent] Update Go version to address security vulnerabilities (CVE-2025-61726, CVE-2025-61728).
 
 ### New Features
