@@ -9,7 +9,7 @@ meta:
 ## Release 2026-02-03
 
 * axon-server: 2.0.20
-    * RBAC permissions framework, scheduled repair improvements, and Kafka monitoring enhancements.
+    * Scheduled repair improvements, and Kafka monitoring enhancements.
 * axon-dash: 2.0.23
     * Kafka management fixes and scheduled repair configuration.
 * axon-agent: 2.0.16
@@ -30,7 +30,6 @@ meta:
 
 ### New Features
 
-* [Server] Add RBAC permissions framework for granular access control.
 * [Server] Add maximum duration setting for scheduled repairs with alert on timeout.
 * [Server] Add partition reassignment status tracking for Kafka topics.
 * [Server] Alert when Kafka agent is configured with incorrect broker location.
