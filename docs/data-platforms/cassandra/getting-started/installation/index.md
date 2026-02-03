@@ -1142,7 +1142,7 @@ For automated, repeatable deployments across multiple environments, the [AxonOps
 | **Repeatable** | Same playbook deploys identical clusters across dev, staging, and production |
 | **Multi-Version** | Supports Cassandra 3.11, 4.x, and 5.x with version-specific configurations |
 | **Tarball-Based** | Default tar installation simplifies upgrades and downgrades vs package managers |
-| **Optional Monitoring** | Add AxonOps agent for monitoring (SaaS or self-hosted) only if needed |
+| **Optional Monitoring** | Add axon-agent for monitoring (SaaS or self-hosted) only if needed |
 | **Idempotent** | Run playbooks repeatedly without breaking existing installations |
 | **Multi-Environment** | Hierarchical configuration supports dev, staging, and production from one codebase |
 
@@ -1477,7 +1477,7 @@ Place CA-signed certificates in `files/prd/ssl/` (encrypted or via external secr
 
 ### Adding AxonOps Monitoring
 
-Add the AxonOps agent role to enable monitoring:
+Add the axon-agent role to enable monitoring:
 
 **cassandra.yml playbook with monitoring:**
 
@@ -1561,8 +1561,8 @@ make alerts ENVIRONMENT=prd
 | `cassandra_ssl_create` | `false` | Auto-generate certificates |
 | `cassandra_audit_logging_enabled` | `false` | Enable audit logging |
 | `java_pkg` | `java-11-openjdk-headless` | Java package |
-| `axon_java_agent` | - | AxonOps agent version |
-| `axon_agent_server_host` | - | AxonOps server address |
+| `axon_java_agent` | - | axon-agent version |
+| `axon_agent_server_host` | - | axon-server address |
 
 ### What the Cassandra Role Configures
 
@@ -1639,8 +1639,8 @@ ansible -i inventories/prd/hosts.ini cassandra -a "nodetool status"
 # View Cassandra logs
 ansible -i inventories/prd/hosts.ini cassandra -a "tail -50 /var/log/cassandra/system.log"
 
-# Check AxonOps agent status
-ansible -i inventories/prd/hosts.ini cassandra -a "systemctl status AxonOps agent"
+# Check axon-agent status
+ansible -i inventories/prd/hosts.ini cassandra -a "systemctl status axon-agent"
 ```
 
 ### Reference Implementation: AxonOps Cassandra Lab

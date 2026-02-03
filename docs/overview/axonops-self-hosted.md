@@ -8,13 +8,13 @@ meta:
 
 # AxonOps Self-Hosted
 
-AxonOps Self-Hosted lets you run the AxonOps control plane inside your own infrastructure. You deploy AxonOps Server and AxonOps Dashboard alongside your existing Cassandra and Kafka environments, while the AxonOps agent runs on the data plane hosts.
+AxonOps Self-Hosted lets you run the AxonOps control plane inside your own infrastructure. You deploy AxonOps Server and AxonOps Dashboard alongside your existing Cassandra and Kafka environments, while axon-agent runs on the data plane hosts.
 
 ## How it works
 
 - **You host the control plane**: AxonOps Server and Dashboard run in your environment.
 - **You keep your clusters**: Cassandra and Kafka continue to run in your infrastructure.
-- **You install the agent**: The AxonOps agent collects metrics, logs, and operational signals and connects to your self-hosted AxonOps Server.
+- **You install the agent**: axon-agent collects metrics, logs, and operational signals and connects to your self-hosted AxonOps Server.
 
 ![AxonOps Self-Hosted architecture](imgs/axonops-self-hosted.png)
 
@@ -41,7 +41,7 @@ In a self-hosted deployment, both the control plane and data plane run within yo
 
 1. Install AxonOps Server and Dashboard.
 2. Configure the metrics store (Elasticsearch or Cassandra).
-3. Install the AxonOps agent on Cassandra and Kafka hosts.
+3. Install axon-agent on Cassandra and Kafka hosts.
 
 Start here:
 

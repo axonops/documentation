@@ -26,7 +26,7 @@ sudo chmod -R g+w /var/lib/cassandra/data
 
 > These commands assume you are storing the Cassandra data in the default location `/var/lib/cassandra/`. Update the paths if your data is stored elsewhere.
 
-Start the AxonOps agent if it is not already running.
+Start axon-agent if it is not already running.
 ```bash
 sudo systemctl start axon-agent
 ```

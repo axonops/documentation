@@ -24,7 +24,7 @@ table th:nth-of-type(3) {
 
 | Destination | Port | Origin | Typical Use |
 | ----------- | ---- | ------ | ----------- |
-| axon-server | 1888 | AxonOps agent on Cassandra or Kafka nodes | Inbound agent connections. Server (`axon-server`) must be accessible from the agents either directly or via an HTTP(S) proxy. |
+| axon-server | 1888 | axon-agent on Cassandra or Kafka nodes | Inbound agent connections. Server (`axon-server`) must be accessible from the agents either directly or via an HTTP(S) proxy. |
 | axon-server | 8080 | axon-dash | Server (`axon-server`) internal port for the web UI (`axon-dash`) to connect to. |
 | axon-dash | 3000 | axon-server and HTTP/S proxy or browser | Web UI (`axon-dash`) serves HTTP requests on this port. Recommendation is to run an HTTP proxy to secure traffic. |
 | Multi-Server setup: Cassandra Metrics Node | 9042 | axon-server | Cassandra's default native client protocol port for CQL (Cassandra Query Language) connections. This is the default port for the server (axon-server) to connect to Cassandra. |

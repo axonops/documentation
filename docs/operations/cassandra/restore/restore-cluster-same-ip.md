@@ -19,14 +19,14 @@ sudo systemctl stop cassandra
 sudo rm -rf /var/lib/cassandra/commitlog/* /var/lib/cassandra/data/* /var/lib/cassandra/hints/* /var/lib/cassandra/saved_caches/*
 ```
 
-Allow the AxonOps user to write to the Cassandra data directory.
+Allow axonops user to write to the Cassandra data directory.
 ```bash
 sudo chmod -R g+w /var/lib/cassandra/data
 ```
 
 > These commands assume you are storing the Cassandra data in the default location `/var/lib/cassandra/`. Update the paths if your data is stored elsewhere.
 
-Start the AxonOps agent on all nodes.
+Start axonops-agent on all nodes.
 ```bash
 sudo systemctl start axon-agent
 ```

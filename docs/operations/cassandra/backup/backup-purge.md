@@ -31,5 +31,5 @@ AxonOps enforces retention for remote backups by periodically purging expired ba
 ## Troubleshooting
 
 - If purge fails, check remote storage credentials and network access.
-- Review AxonOps agent logs for error details.
+- Review axon-agent logs for error details.
 - Verify that the configured remote path is correct and writable.

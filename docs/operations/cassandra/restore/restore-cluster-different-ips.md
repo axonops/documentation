@@ -34,7 +34,7 @@ seeds list in `cassandra.yaml` to point to the IPs of the nodes that are replaci
 installations (RPM or DEB) you can find this in `/etc/cassandra/cassandra.yaml` or for tarball installations it should
 be in `<install_path>/conf/cassandra.yaml`.
 
-### Manually configure the AxonOps agent host IDs
+### Manually configure axon-agent host IDs
 
 AxonOps identifies nodes by a unique host ID which is assigned when the agent starts up. In order to restore a backup to
 a node with a different IP address you must manually assign the AxonOps host ID of the old node to its new replacement.
@@ -51,7 +51,7 @@ If you still have access to the old server or its data then its host ID can also
 
 #### Apply the old node's host ID to its replacement
 
-Ensure the AxonOps agent is stopped and clear any data that it may have created on startup.
+Ensure axon-agent is stopped and clear any data that it may have created on startup.
 
 ```bash
 sudo systemctl stop axon-agent
@@ -65,7 +65,7 @@ echo '24d0cbf9-3b5a-11ed-8433-16b3c6a7bcc5' | sudo tee /var/lib/axonops/hostId
 sudo chown axonops.axonops /var/lib/axonops/hostId
 ```
 
-Start the AxonOps agent.
+Start axon-agent.
 
 ```bash
 sudo systemctl start axon-agent

@@ -19,7 +19,7 @@ Frustrated by the lack of tooling available to manage the next generation open s
 
 ## Features
 * [**Metric Dashboard**](https://axonops.com/pricing/) - The AxonOps dashboard is pre-configured and well laid out in order for you to easily visualise the performance of your multiple Cassandra clusters across all of your data centres,
-* [**Logs and Events**](https://axonops.com/pricing/) - AxonOps agents collect logs from log files, as well as internal Cassandra events such as “repair” and JMX calls.
+* [**Logs and Events**](https://axonops.com/pricing/) - axon-agent collect logs from log files, as well as internal Cassandra events such as “repair” and JMX calls.
 * [**Service Checks**](https://axonops.com/pricing/) - As a site reliability engineer, service checks and the RAG status dashboard gives you great confidence in how your platform is operating. Regular checks against your processes, open ports, service health can be quickly implemented and deployed with minimum setup.
 * [**Alert Integrations**](https://axonops.com/pricing/) - Alerts can be configured for multiple services including Slack, PagerDuty, SMTP, and generic webhooks.
 * [**Cassandra Repairs**](https://axonops.com/pricing/) - Cassandra repairs are essential for maintaining the data integrity across all replicas.

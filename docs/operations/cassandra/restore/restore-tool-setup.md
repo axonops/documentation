@@ -8,7 +8,7 @@ meta:
 
 # Installing the Cassandra Restore Tool
 
-The AxonOps Cassandra Restore tool is included in the AxonOps Agent package.
+The AxonOps Cassandra Restore tool is included in the axon-agent package.
 
 #### Installing on Debian / Ubuntu
 
@@ -18,7 +18,7 @@ sudo apt-get install -y curl gnupg ca-certificates
 curl -L https://packages.axonops.com/apt/repo-signing-key.gpg | sudo gpg --dearmor -o /usr/share/keyrings/axonops.gpg
 echo "deb [arch=arm64,amd64 signed-by=/usr/share/keyrings/axonops.gpg] https://packages.axonops.com/apt axonops-apt main" | sudo tee /etc/apt/sources.list.d/axonops-apt.list
 sudo apt-get update
-sudo apt-get install AxonOps agent
+sudo apt-get install axon-agent
 ```
 
 #### Installing on CentOS / Red Hat
@@ -32,7 +32,7 @@ enabled=1
 repo_gpgcheck=0
 gpgcheck=0
 EOL
-sudo yum install AxonOps agent
+sudo yum install axon-agent
 ```
 
 After the package has been installed you can find the Cassandra Restore Tool at `/usr/share/axonops/axon-cassandra-restore`.
@@ -85,7 +85,7 @@ You can find the AxonOps host ID by selecting the node on the `Cluster Overview`
 
 ## Storage Config and Storage Config File options
 
-> **The `--storage-config-file` option was added to v1.0.95 and later of AxonOps Agent**
+> **The `--storage-config-file` option was added to v1.0.95 and later of axon-agent**
 
 The `axon-cassandra-restore` tool has two options when passing the remote storage configuration:
 

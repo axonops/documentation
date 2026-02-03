@@ -210,7 +210,7 @@ cassandra:
 
 ### What AxonOps Collects
 
-The AxonOps agent automatically collects all critical Cassandra JMX metrics:
+The axon-agent automatically collects all critical Cassandra JMX metrics:
 
 - **Request metrics** — Read/write latency percentiles, throughput, timeouts, unavailables
 - **Thread pool metrics** — Pending tasks, active threads, blocked threads per stage

@@ -124,7 +124,7 @@ FATAL - Cannot start Cassandra
 
 ### Getting Started
 
-1. **Enable log collection** - Configure the AxonOps agent to collect Cassandra logs
+1. **Enable log collection** - Configure the axon-agent to collect Cassandra logs
 2. **View logs** - Access centralized logs from the AxonOps dashboard
 3. **Set up alerts** - Configure alerts for specific log patterns (errors, warnings)
 

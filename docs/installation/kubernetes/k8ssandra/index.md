@@ -1,9 +1,9 @@
 ---
-title: K8ssandra Cassandra Cluster with AxonOps Agent
+title: K8ssandra Cassandra Cluster with axon-agent
 description: Deploy a production-ready Cassandra cluster using K8ssandra with AxonOps monitoring integration
 ---
 
-# K8ssandra Cassandra Cluster with AxonOps Agent
+# K8ssandra Cassandra Cluster with axon-agent
 
 This section explains how to deploy a K8ssandra-managed Cassandra cluster on Kubernetes with integrated AxonOps monitoring agent.
 
@@ -16,11 +16,11 @@ This section explains how to deploy a K8ssandra-managed Cassandra cluster on Kub
 
 This deployment creates a production-ready Cassandra cluster with:
 
-- Cassandra 5.0.6+ with AxonOps agent pre-integrated
+- Cassandra 5.0.6+ with axon-agent pre-integrated
 - Multi-datacenter support
 - Configurable resource allocation
 - Persistent storage with custom storage classes
-- AxonOps agent for comprehensive monitoring and management
+- axon-agent for comprehensive monitoring and management
 
 ## Architecture
 
@@ -96,7 +96,7 @@ Before deploying, configure these variables according to your environment:
 | `AXON_AGENT_KEY` | Your AxonOps API key for authentication | Use a Kubernetes Secret |
 | `AXON_AGENT_ORG` | Your AxonOps organization identifier | `your-org-name` |
 | `AXON_AGENT_SERVER_HOST` | DNS name/address of AxonOps server | `axon-server-agent.axonops.svc.cluster.local` |
-| `AXON_AGENT_SERVER_PORT` | Port for AxonOps agent connections | `1888` |
+| `AXON_AGENT_SERVER_PORT` | Port for axon-agent connections | `1888` |
 | `AXON_AGENT_TLS_MODE` | Whether agent uses TLS (`true` or `false`) | `false` |
 
 ### Basic Cluster Configuration
@@ -307,9 +307,9 @@ UN  10.42.0.11  100 KB     16      33.3%   xxx-xxx-xxx-xxx-xxx                  
 UN  10.42.0.12  100 KB     16      33.4%   xxx-xxx-xxx-xxx-xxx                   rack1
 ```
 
-### Verify AxonOps Agent Connection
+### Verify axon-agent Connection
 
-Check the Cassandra logs for AxonOps agent connection:
+Check the Cassandra logs for axon-agent connection:
 
 ```bash
 kubectl logs axonops-k8ssandra-5-dc1-rack1-0 -n k8ssandra-operator -c cassandra | grep -i axon
@@ -323,8 +323,8 @@ You should see log entries indicating the agent has connected to the AxonOps ser
 
 | Setting | Value | Description |
 |---------|-------|-------------|
-| Cassandra Version | 5.0.6+ | Apache Cassandra version with AxonOps agent |
-| Container Image | ghcr.io/axonops/k8ssandra/cassandra | Pre-built image with AxonOps agent |
+| Cassandra Version | 5.0.6+ | Apache Cassandra version with axon-agent |
+| Container Image | ghcr.io/axonops/k8ssandra/cassandra | Pre-built image with axon-agent |
 | Anti-Affinity | Soft | Prefers to schedule pods on different nodes |
 | Default Replicas | 3 | Number of Cassandra nodes per datacenter |
 
@@ -511,7 +511,7 @@ Common issues:
 - **DNS resolution**: Verify pod DNS is working correctly
 - **Anti-affinity conflicts**: Check if there are enough nodes for the anti-affinity rules
 
-### AxonOps Agent Not Connecting
+### axon-agent Not Connecting
 
 1. Verify AxonOps server is accessible:
 

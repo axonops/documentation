@@ -127,7 +127,7 @@ jvm_GarbageCollector_G1_Young_Generation{axonfunction='rate',function='Collectio
 
 ## Notes
 
-1. Host metrics are collected by the AxonOps agent at the OS level
+1. Host metrics are collected by axon-agent at the OS level
 2. JVM metrics are collected via JMX from the Cassandra process
 3. The `axonfunction='rate'` label calculates rate-based metrics
 4. Network interface 'lo' (loopback) is typically excluded from network metrics

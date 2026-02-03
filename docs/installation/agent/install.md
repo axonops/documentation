@@ -1,27 +1,27 @@
 ---
-title: "AxonOps Agent Installation"
+title: "axon-agent Installation"
 hide:
   - toc
 ---
 
-# AxonOps Agent Installation
+# axon-agent Installation
 
-The AxonOps Agent enables collection of:
+The axon-agent enables collection of:
 
 * Metrics
 * Logs
 * Events
 
-The AxonOps Agent also enables the following maintenance operations to be performed on the cluster:
+The axon-agent also enables the following maintenance operations to be performed on the cluster:
 
 * Adaptive repairs
 * Backups
 
-See [Installing AxonOps agent for Cassandra in Docker](./docker.md) if you are running Cassandra under Docker, and the [Kubernetes guide](../kubernetes/index.md) if you are setting up Strimzi or K8ssandra clusters.
+See [Installing axon-agent for Cassandra in Docker](./docker.md) if you are running Cassandra under Docker, and the [Kubernetes guide](../kubernetes/index.md) if you are setting up Strimzi or K8ssandra clusters.
 
 ## Version Compatibility
 
-AxonOps Agent is available for the following versions of Apache Cassandra and Apache Kafka:
+axon-agent is available for the following versions of Apache Cassandra and Apache Kafka:
 
 ### Cassandra
 
@@ -64,7 +64,7 @@ AxonOps Agent is available for the following versions of Apache Cassandra and Ap
 
 </div>
 
-## Start the AxonOps Agent
+## Start the axon-agent
 
 ```bash
 {!installation/axon-agent/scripts/restart-axon-agent.sh!}

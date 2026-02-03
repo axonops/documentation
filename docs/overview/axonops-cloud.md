@@ -8,12 +8,12 @@ meta:
 
 # AxonOps Cloud
 
-AxonOps Cloud is the hosted AxonOps control plane. You run Cassandra and Kafka in your own infrastructure, install the AxonOps agent on those hosts, and AxonOps Cloud provides the dashboards, alerting, and operational workflows.
+AxonOps Cloud is the hosted AxonOps control plane. You run Cassandra and Kafka in your own infrastructure, install axon-agent on those hosts, and AxonOps Cloud provides the dashboards, alerting, and operational workflows.
 
 ## How it works
 
 - **You keep your clusters**: Cassandra and Kafka continue to run in your environment (on‑premises or your cloud).
-- **You install the agent**: The AxonOps agent collects metrics, logs, and operational signals and sends them to AxonOps Cloud.
+- **You install the agent**: axon-agent collects metrics, logs, and operational signals and sends them to AxonOps Cloud.
 - **You get the control plane**: AxonOps Cloud hosts the UI, APIs, alerting, and orchestration so you do not need to run the control plane yourself.
 
 ![AxonOps Cloud architecture](imgs/axonops-cloud.png)
@@ -33,7 +33,7 @@ AxonOps Cloud is the control plane, and your Cassandra/Kafka clusters are the da
 
 ## Security and connectivity
 
-- The AxonOps agent connects outbound from your infrastructure to AxonOps Cloud.
+- axon-agent connects outbound from your infrastructure to AxonOps Cloud.
 - You do not expose your Cassandra or Kafka nodes to the public internet.
 - Data is transmitted securely to the AxonOps Cloud control plane.
 
@@ -42,7 +42,7 @@ If you have additional security requirements, contact AxonOps to discuss options
 ## Getting started
 
 1. Create an AxonOps Cloud account.
-2. Install the AxonOps agent on your Cassandra and Kafka hosts.
+2. Install axon-agent on your Cassandra and Kafka hosts.
 3. Verify agent connectivity and begin monitoring.
 
 Start here:

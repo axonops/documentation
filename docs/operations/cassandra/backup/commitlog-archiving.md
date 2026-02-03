@@ -8,11 +8,11 @@ meta:
 
 # Commit Log Archiving
 
-Commit log archiving extends backups with point-in-time recovery. When enabled, the AxonOps agent collects commit log segments and uploads them to the configured remote storage. This allows you to restore to a specific moment between two backup snapshots.
+Commit log archiving extends backups with point-in-time recovery. When enabled, axon-agent collects commit log segments and uploads them to the configured remote storage. This allows you to restore to a specific moment between two backup snapshots.
 
 ## How it works
 
-AxonOps enables and manages commit log archiving dynamically through the Cassandra JVM agent and the axon-agent binary.
+AxonOps enables and manages commit log archiving dynamically through the Cassandra JVM agent and axon-agent binary.
 
 1. **AxonOps enables archiving dynamically**
     The AxonOps Java agent (running inside the Cassandra JVM) receives a command from axon-agent and applies commit log archiving configuration at runtime.
@@ -27,7 +27,7 @@ AxonOps enables and manages commit log archiving dynamically through the Cassand
     The archiver creates a hardlink in `commitlog_directory/.axon_commit_log/`. Cassandra may delete the original segment, but AxonOps keeps the hardlinked copy alive and manages its lifecycle.
 
 4. **Remote upload and cleanup**
-    The axon-agent uploads the hardlinked segment to the configured remote storage. After a successful upload, the hardlink is removed.
+    axon-agent uploads the hardlinked segment to the configured remote storage. After a successful upload, the hardlink is removed.
 
 ```plantuml
 @startuml
