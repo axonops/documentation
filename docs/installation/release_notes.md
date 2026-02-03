@@ -8,6 +8,15 @@ meta:
 
 ## Release 2026-02-03
 
+* axon-dash: 2.0.24
+    * Security updates.
+
+### Fixes
+
+* [Dash] Update dependencies to address security vulnerabilities.
+
+## Release 2026-02-03
+
 * axon-server: 2.0.20
     * Scheduled repair improvements, and Kafka monitoring enhancements.
 * axon-dash: 2.0.23
