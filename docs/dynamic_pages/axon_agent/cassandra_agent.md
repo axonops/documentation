@@ -36,7 +36,7 @@
   <img id="Java17img" src="/get_started/Java_17.png" class="skip-lightbox" width="180px" style="display:none" alt="Java_17">
 </label>
 
-Install the AxonOps Cassandra Agent and its dependency `AxonOps agent`:
+Install the AxonOps Cassandra Agent and its dependency `axon-agent`:
 
 <!-- Debian -->
 <div id="DebianCassandra30Java8Div" class="cas">
@@ -138,11 +138,11 @@ which contacts the AxonOps Server directly.
 
 #### AxonOps Agent
 
-The AxonOps Agent is a dependency of the AxonOps Cassandra Agent. This binary
+The axon-agent is a dependency of the AxonOps Cassandra Agent. This binary
 contacts the AxonOps Server directly while minimizing the memory footprint
 and CPU utilization of the Cassandra process.
 
 - Configuration File: `/etc/axonops/axon-agent.yml`
-- Binary: `usr/share/axonops/AxonOps agent`
-- Logs: `/var/log/axonops/AxonOps agent.log`
-- Systemd service: `/usr/lib/systemd/system/AxonOps agent.service`
+- Binary: `usr/share/axonops/axon-agent`
+- Logs: `/var/log/axonops/axon-agent.log`
+- Systemd service: `/usr/lib/systemd/system/axon-agent.service`

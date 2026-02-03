@@ -15,7 +15,7 @@ AxonOps provides comprehensive monitoring and management solutions for Apache Ca
 Whether you're running Cassandra for time-series metrics storage, Kafka clusters managed by Strimzi, or other data platforms, AxonOps seamlessly integrates with Kubernetes to provide:
 
 - **Real-time monitoring** of cluster health and performance
-- **Automated management** capabilities through the AxonOps agent
+- **Automated management** capabilities through the axon-agent
 - **Centralized dashboards** for visualization and analysis
 - **Native Kubernetes integration** using Helm charts and operators
 - **Flexible storage options** including hostPath and persistent volume claims
@@ -42,7 +42,7 @@ Deploy a production-ready Kafka cluster using the Strimzi operator with integrat
 - KRaft-based Kafka cluster (no ZooKeeper required)
 - 3 Controller nodes + 3 Broker nodes architecture
 - Local hostPath or shared storage configuration
-- AxonOps agent integration for comprehensive monitoring
+- axon-agent integration for comprehensive monitoring
 - Step-by-step configuration for node pools and persistent volumes
 
 [View Strimzi deployment guide →](strimzi/index.md)
@@ -51,7 +51,7 @@ Deploy a production-ready Kafka cluster using the Strimzi operator with integrat
 
 Deploy a production-ready Cassandra cluster using the K8ssandra operator with integrated AxonOps monitoring:
 
-- Cassandra 5.0.6+ with pre-integrated AxonOps agent
+- Cassandra 5.0.6+ with pre-integrated axon-agent
 - Multi-datacenter support for high availability
 - Configurable resource allocation and JVM tuning
 - Persistent storage with custom storage classes

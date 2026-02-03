@@ -22,7 +22,7 @@ To create users please refer to the Elasticsearch docs [here](https://www.elasti
 *AxonOps Server configuration file location :* `/etc/axonops/axon-server.yml`
 
 ``` yaml hl_lines="6 17 18"
-host: 0.0.0.0  # axon-server listening address (used by AxonOps agents for connections) (env variable: AXONSERVER_HOST)
+host: 0.0.0.0  # axon-server listening address (used by axon-agent for connections) (env variable: AXONSERVER_HOST)
 agents_port: 1888 # axon-server listening port for agent connections 
 
 api_host: 127.0.0.1 # axon-server listening address (used by axon-dash for connections)
@@ -47,7 +47,7 @@ elastic_hosts: # Elasticsearch endpoint (env variable:ELASTIC_HOSTS, comma separ
 license_key: license-key
 org_name: my-company
 
-# SSL/TLS Settings for AxonOps Agent connections
+# SSL/TLS Settings for axon-agent connections
 tls:
   mode: "disabled" # disabled, TLS
   # Only set if mode is TLS

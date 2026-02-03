@@ -14,10 +14,10 @@ You can find the host ID of a node in the AxonOps GUI by going to Cluster Overvi
 
 Follow these steps to start a replacement server using the old host ID:
 
-1. Install the AxonOps agent on the replacement server.
-2. Stop the AxonOps agent if it is running, then delete these files if they exist: `/var/lib/axonops/hostId`, `/var/lib/axonops/local.db`.
+1. Install axon-agent on the replacement server.
+2. Stop axon-agent if it is running, then delete these files if they exist: `/var/lib/axonops/hostId`, `/var/lib/axonops/local.db`.
 3. Create a new file at `/var/lib/axonops/hostId` containing the host ID you wish to use.
-4. Start the AxonOps agent.
+4. Start axon-agent.
 
 !!! warning
     Host IDs must remain unique within a cluster. Only reuse a host ID for the exact node replacement it represents.

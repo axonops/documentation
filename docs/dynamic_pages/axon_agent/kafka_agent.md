@@ -18,7 +18,7 @@
   <img id="KJava17img" src="/get_started/Java_17.png" class="skip-lightbox" width="180px" alt="Java_17">
 </label> -->
 
-Install the AxonOps Kafka Agent and its dependency `AxonOps agent`:
+Install the AxonOps Kafka Agent and its dependency `axon-agent`:
 
 <!-- Debian -->
 <div id="DebianKafka20JavaDiv" class="kafka">
@@ -86,6 +86,6 @@ contacts the AxonOps Server directly while minimizing the memory footprint
 and CPU utilization of the Kafka process.
 
 - Configuration File: `/etc/axonops/axon-agent.yml`
-- Binary: `usr/share/axonops/AxonOps agent`
-- Logs: `/var/log/axonops/AxonOps agent.log`
-- Systemd service: `/usr/lib/systemd/system/AxonOps agent.service`
+- Binary: `usr/share/axonops/axon-agent`
+- Logs: `/var/log/axonops/axon-agent.log`
+- Systemd service: `/usr/lib/systemd/system/axon-agent.service`

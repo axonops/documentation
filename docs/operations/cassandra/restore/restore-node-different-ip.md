@@ -23,9 +23,9 @@ You can find the host ID of the old node on the Cluster Overview page of the Axo
 
 If you still have access to the old server or its data then its host ID can also be found in the file `/var/lib/axonops/hostId`
 
-## Manually configure the AxonOps Agent host ID
+## Manually configure the axon-agent host ID
 
-Ensure the AxonOps agent is stopped and clear any data that it may have created on startup.
+Ensure axon-agent is stopped and clear any data that it may have created on startup.
 
 ```bash
 sudo systemctl stop axon-agent
@@ -39,7 +39,7 @@ echo '24d0cbf9-3b5a-11ed-8433-16b3c6a7bcc5' | sudo tee /var/lib/axonops/hostId
 sudo chown axonops.axonops /var/lib/axonops/hostId
 ```
 
-Start the AxonOps agent.
+Start axon-agent.
 
 ```bash
 sudo systemctl start axon-agent
@@ -53,7 +53,7 @@ sudo systemctl stop cassandra
 sudo rm -rf /var/lib/cassandra/commitlog/* /var/lib/cassandra/data/* /var/lib/cassandra/hints/* /var/lib/cassandra/saved_caches/*
 ```
 
-Allow the AxonOps user to write to the Cassandra data directory.
+Allow axonops user to write to the Cassandra data directory.
 ```bash
 sudo chmod -R g+w /var/lib/cassandra/data
 ```

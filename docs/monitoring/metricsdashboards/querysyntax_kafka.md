@@ -8,7 +8,7 @@ meta:
 
 # AxonOps Query Language Documentation
 
-AxonOps uses a powerful query language for dashboarding performance metrics collected from the AxonOps agent. This language is largely based on the Prometheus query language, allowing users familiar with Prometheus to quickly adapt to AxonOps. For a comprehensive guide on the Prometheus query language, please refer to the [Prometheus Query Language documentation](https://prometheus.io/docs/prometheus/latest/querying/basics/){target="_blank"}
+AxonOps uses a powerful query language for dashboarding performance metrics collected from axon-agent. This language is largely based on the Prometheus query language, allowing users familiar with Prometheus to quickly adapt to AxonOps. For a comprehensive guide on the Prometheus query language, please refer to the [Prometheus Query Language documentation](https://prometheus.io/docs/prometheus/latest/querying/basics/){target="_blank"}
 
 ## Key Difference in AxonOps Query Language
 
@@ -28,14 +28,14 @@ sum(kaf_BrokerTopicMetrics_MessagesInPerSec{axonfunction='rate',dc=~'$dc',rack=~
 
 - `sum()`: adds up the values returned by the metric 
 - `kaf_BrokerTopicMetrics_MessagesInPerSec`: The specific metric being queried.
-- `{axonfunction='rate', ...}`: Label matchers (for example, `axonfunction='rate'`) instruct the AxonOps agent to generate rate values.
+- `{axonfunction='rate', ...}`: Label matchers (for example, `axonfunction='rate'`) instruct axon-agent to generate rate values.
     - `axonfunction='rate'`: This label indicates that the agent should compute rate values.
     - `dc=~'$dc'`, `rack=~'$rack'`, `host_id=~'$host_id'`, `topic=~'$topic'`: Additional labels that allow filtering by data center, rack, host ID and topic using regular expressions.
 - `by (host_id)`: groups the metric query by host_id. You can group by `host_id`, `topic`, `rack`, or `dc`.
 
 ### Parameters
 
-- **`axonfunction='rate'`**: Tells the AxonOps agent to generate rated values for Count metrics.
+- **`axonfunction='rate'`**: Tells axon-agent to generate rated values for Count metrics.
 - **`dc`**: Filters metrics by data center.
 - **`rack`**: Filters metrics by rack.
 - **`host_id`**: Filters metrics by host ID.

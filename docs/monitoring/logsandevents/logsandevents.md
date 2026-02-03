@@ -55,7 +55,7 @@ due to its high CPU usage.
 
 ## Search by Logs Source and Event Type
 
-You can filter logs based on the log source (`cassandra`, `axon-server`, and `AxonOps agent` logs) and event type to narrow down search results.
+You can filter logs based on the log source (`cassandra`, `axon-server`, and `axon-agent` logs) and event type to narrow down search results.
 
 ![Event Types](imgs/logs_event_type1.png)
 ![Event Types continued](imgs/logs_event_type2.png)

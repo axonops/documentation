@@ -361,7 +361,7 @@ AxonOps backup configuration takes minutes to complete:
 3. **Enable scheduling**: Set backup frequency per cluster requirements
 4. **Optional: Enable PITR**: Turn on commit log archiving for point-in-time recovery
 
-No cluster restart is required. The AxonOps agent begins backup operations immediately after configuration.
+No cluster restart is required. The axon-agent begins backup operations immediately after configuration.
 
 See **[AxonOps Backup Configuration](../../../../operations/cassandra/backup/overview.md)** for detailed setup instructions.
 

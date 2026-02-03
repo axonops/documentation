@@ -271,7 +271,7 @@ sum(cas_authentication_success{axonfunction='rate',dc=~'$dc',rack=~'$rack',host_
 
 ### No Events Showing
 1. Verify security features enabled in Cassandra
-2. Check AxonOps agent event collection
+2. Check axon-agent event collection
 3. Confirm event filters match your setup
 
 ### Missing Authentication Metrics

@@ -116,7 +116,7 @@ The `axon-dash-pdf2` package is optional and provides support for generating PDF
 
 ### Install the Agent
 
-Use the following script to install the `AxonOps agent` as well as a version of
+Use the following script to install the `axon-agent` as well as a version of
 `axon-cassandra*-agent` or `axon-kafka*-agent` that coincides with the version of
 Cassandra/Kafka and the Java JDK that is being used.
 

@@ -30,11 +30,11 @@ configuration file,
 
 ### Configure and Load Agents
 
-On the Cassandra/Kafka machine, run the following commands to configure `AxonOps agent` and
+On the Cassandra/Kafka machine, run the following commands to configure `axon-agent` and
 ensure Cassandra/Kafka loads the agent. Use the instructions found on the
-[AxonOps Agent Installation](../agent/install.md) page to:
+[axon-agent Installation](../agent/install.md) page to:
 
-* configure `AxonOps agent`,
+* configure `axon-agent`,
 * configure Cassandra/Kafka to load the agent,
 * configure the Cassandra/Kafka user groups,
 * and restart the Cassandra/Kafka process.

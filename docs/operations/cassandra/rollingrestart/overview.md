@@ -25,7 +25,7 @@ axonops ALL=NOPASSWD: /sbin/service cassandra *, /usr/bin/systemctl * cassandra*
 
 You can start an **immediate** rolling restart or **schedule** it.
 
-The **script** field lets you customize the predefined script executed by the AxonOps agent during the restart process.
+The **script** field lets you customize the predefined script executed by axon-agent during the restart process.
 
 You can also specify different degrees of parallelism for the restart: **DC**, **Rack**, and **Node**.
 

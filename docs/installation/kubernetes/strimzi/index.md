@@ -1,9 +1,9 @@
 ---
-title: Strimzi Kafka Cluster with Local Storage and AxonOps Agent
+title: Strimzi Kafka Cluster with Local Storage and axon-agent
 description: Deploy a KRaft-based Kafka cluster using Strimzi with local hostPath storage and AxonOps monitoring integration
 ---
 
-# Strimzi Kafka Cluster with Local Storage and AxonOps Agent
+# Strimzi Kafka Cluster with Local Storage and axon-agent
 
 This section explains how to deploy a Strimzi Kafka cluster using local (hostPath) storage with AxonOps monitoring agent integration.
 
@@ -19,7 +19,7 @@ This deployment creates a **KRaft-based Kafka cluster** (no ZooKeeper) with:
 - 3 Controller nodes
 - 3 Broker nodes
 - Local hostPath storage
-- AxonOps agent for monitoring and management
+- axon-agent for monitoring and management
 
 ## Architecture
 
@@ -136,7 +136,7 @@ The example below creates the nodepool for the controllers.
 | `STRIMZI_CONTROLLER_STORAGE_SIZE` | Storage size for each controller's persistent volume claim. Must match or be compatible with the PVs you created. | `5Gi` |
 | `AXON_AGENT_CLUSTER_NAME` | Display name for this Kafka cluster as it appears in AxonOps (logical ID for grouping metrics). | `my-kafka-cluster` |
 | `AXON_AGENT_ORG` | Your AxonOps organization identifier (as configured in your AxonOps account). | `axonops` |
-| `AXON_AGENT_TLS_MODE` | Whether the AxonOps agent uses TLS to connect to the AxonOps server. Typically `"false"` for plain TCP, `"true"` when TLS is enabled. | `false` |
+| `AXON_AGENT_TLS_MODE` | Whether axon-agent uses TLS to connect to the AxonOps server. Typically `"false"` for plain TCP, `"true"` when TLS is enabled. | `false` |
 | `AXON_AGENT_SERVER_PORT` | Port on which the AxonOps server listens for agent connections. Must match the `agents_port` in `axon-server.yml`. | `1888` |
 | `AXON_AGENT_SERVER_HOST` | DNS name / address of the AxonOps server as reachable from the Kafka pods. Typically the Kubernetes service name. | `axon-server-agent.axonops.svc.cluster.local` |
 
@@ -415,7 +415,7 @@ my-cluster-entity-operator-xxxxxxxxx-xxxxx 2/2     Running
 
 ### Verify AxonOps Connection
 
-Check the Kafka container logs for AxonOps agent connection:
+Check the Kafka container logs for axon-agent connection:
 
 ```bash
 kubectl logs my-cluster-broker-pool-0 -n kafka -c kafka | grep -i axon
@@ -476,7 +476,7 @@ Common issues:
 - Storage directories not created on the target node
 - StorageClass not created
 
-### AxonOps Agent Not Connecting
+### axon-agent Not Connecting
 
 1. Verify AxonOps server is accessible:
 

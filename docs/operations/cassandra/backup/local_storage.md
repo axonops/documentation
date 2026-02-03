@@ -25,7 +25,7 @@ After this number of days, older files are removed.
 
 This is the absolute file system path where backups will be stored. The path must:
 * Be an absolute path (starting with `/` on Linux/Unix or drive letter on Windows)
-* Be accessible and writable by the AxonOps agent user
+* Be accessible and writable by the axon-agent user
 * Have sufficient disk space for storing backups
 * Be a valid mounted file system
 
@@ -63,7 +63,7 @@ The `org/clustertype/clustername/host-id/` path matches the top breadcrumb navig
 
 ### Permissions and Ownership
 
-Ensure the AxonOps agent user has appropriate permissions:
+Ensure the axon-agent user has appropriate permissions:
 ```bash
 # Check current permissions
 ls -la /path/to/backup/directory

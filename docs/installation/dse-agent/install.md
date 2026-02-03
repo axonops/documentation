@@ -1,6 +1,6 @@
 ---
 title: "axon-java-agent for DSE installation"
-description: "Install AxonOps agent for DataStax Enterprise. DSE monitoring setup guide."
+description: "Install axon-agent for DataStax Enterprise. DSE monitoring setup guide."
 meta:
   - name: keywords
     content: "DSE agent, DataStax Enterprise, AxonOps DSE, monitoring"
@@ -12,10 +12,10 @@ This agent will enable metrics collection from DSE and enable adaptive repairs a
 
 ## Prerequisites
 
-DSE agent needs **AxonOps agent** to be installed and configured properly. If not installed already, please go to [AxonOps agent](../agent/install.md) installation 
+DSE agent needs **axon-agent** to be installed and configured properly. If not installed already, please go to [axon-agent](../agent/install.md) installation 
 page.
 
-#### Set up AxonOps agent for DSE
+#### Set up axon-agent for DSE
 
 You'll need the specify/update the following lines from **axon-agent.yml** located in `/etc/axonops/axon-agent.yml`:
 
@@ -25,9 +25,9 @@ You'll need the specify/update the following lines from **axon-agent.yml** locat
 axon-server:
     hosts: "axon-server_endpoint" # Specify axon-server endpoint
 
-AxonOps agent:
-    host: 0.0.0.0 # AxonOps agent listening address for it's OpenTSDB endpoint
-    port: 9916 # AxonOps agent listening port for it's OpenTSDB endpoint
+axon-agent:
+    host: 0.0.0.0 # axon-agent listening address for it's OpenTSDB endpoint
+    port: 9916 # axon-agent listening port for it's OpenTSDB endpoint
     org: "your_organisation_name" # Specify your organisation name
     standalone_mode: false
     type: "dse"

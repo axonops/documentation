@@ -9,7 +9,7 @@ hide:
 
 ## AxonOps Cloud Agent Network Requirements
 
-The AxonOps agent connects securely to the following AxonOps Cloud service endpoint:
+axon-agent connects securely to the following AxonOps Cloud service endpoint:
 
 ``` { .bash .no-copy }
 https://agents.axonops.cloud
@@ -40,7 +40,7 @@ You should expect the following response:
 
 *AxonOps Agent Test Page*
 
-## Set up the AxonOps repository and install the AxonOps agent
+## Set up the AxonOps repository and install axon-agent
 
 {!dynamic_pages/axon_agent/os.md!}
 
@@ -66,12 +66,12 @@ You should expect the following response:
 
 </div>
 
-## AxonOps agent behind a proxy
+## axon-agent behind a proxy
 
 If your network does not have direct internet access and it requires a proxy to connect to the AxonOps Server, follow
 [these instructions](proxy.md).
 
-## Start the AxonOps agent
+## Start axon-agent
 
 ```
 sudo systemctl start axon-agent

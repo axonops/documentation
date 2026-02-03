@@ -18,7 +18,7 @@ If there is a Dedicated NTP server in your Organization please uncomment and upd
   axon-server:
       hosts: "agents.axonops.cloud"
   
-  AxonOps agent:
+  axon-agent:
       key: <THIS_IS_A_DUMMY_KEY_PLEASE_UPDATE>
       org: <THIS_IS_A_DUMMY_ORG_NAME_PLEASE_UPDATE>
 
@@ -28,10 +28,10 @@ If there is a Dedicated NTP server in your Organization please uncomment and upd
   # NTP:
   #    hosts:
   #        - "x.x.x.x:123"
-  # Optionally restrict which commands can be executed by AxonOps agent.
-  # If "true", only scripts placed in scripts_location can be executed by AxonOps agent.
+  # Optionally restrict which commands can be executed by axon-agent.
+  # If "true", only scripts placed in scripts_location can be executed by axon-agent.
   # disable_command_exec: false
-  # If disable_command_exec is true then AxonOps agent is only allowed to execute scripts
+  # If disable_command_exec is true then axon-agent is only allowed to execute scripts
   # under this path
   # scripts_location: /var/lib/axonops/scripts/
 ```

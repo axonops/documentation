@@ -95,7 +95,7 @@ it is recommended to use Cassandra as a Metrics Storage engine.
 The following is a sample configuration file that can be used as a quick reference:
 
 ```yaml hl_lines="7 8 33 34"
-# axon-server listening address (used by AxonOps agents for connections)
+# axon-server listening address (used by axon-agent for connections)
 # (env variable: AXONSERVER_HOST)
 host: 0.0.0.0
 # axon-server listening port for agent connections
@@ -147,7 +147,7 @@ search_db:
 license_key: license-key
 org_name: my-company
 
-# SSL/TLS Settings for AxonOps Agent connections
+# SSL/TLS Settings for axon-agent connections
 tls:
   mode: "disabled" # disabled, TLS
   # Only set below if mode is TLS

@@ -24,7 +24,7 @@ AxonOps Unified Monitoring consists of 4 main components:
     - Backend that collects cluster information and interacts with your clusters.
 - axon-dash
     - Web UI to display and interact with your clusters.
-- AxonOps agent
+- axon-agent
     - called from within the JVM to send metrics to axon-server.
 - storage engine
     - stores metrics, logs, configurations, and metadata about your cluster.
@@ -60,7 +60,7 @@ For more information please read more on setting up [Cassandra as a Metrics Data
 
 ### Set up AxonOps Agent
 
-[Install and configure AxonOps Agent (`AxonOps agent`) for Cassandra or Kafka](../installation/agent/install.md).
+[Install and configure AxonOps Agent (`axon-agent`) for Cassandra or Kafka](../installation/agent/install.md).
 
 ## Alternative Installation Options
 

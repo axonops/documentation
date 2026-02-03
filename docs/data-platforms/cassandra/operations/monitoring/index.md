@@ -468,7 +468,7 @@ AxonOps extends beyond metrics collection:
 ### Getting Started
 
 - [AxonOps Cloud Setup](../../../../get_started/cloud.md) - Quick start with AxonOps Cloud
-- [Agent Installation](../../../../get_started/agent_setup.md) - Deploy the AxonOps agent
+- [Agent Installation](../../../../get_started/agent_setup.md) - Deploy axon-agent
 - [Metrics Dashboards](../../../../monitoring/metricsdashboards/cassandra.md) - Using the monitoring dashboards
 - [Alert Configuration](../../../../how-to/setup-alert-rules.md) - Configure alerting rules
 

@@ -35,12 +35,12 @@ AxonOps connects to your existing Kafka Schema Registry so you can browse schema
 ## Prerequisites
 
 - A running Kafka Schema Registry service (AxonOps, Confluent, or compatible).
-- Network access from the AxonOps agent to the registry endpoint.
+- Network access from axon-agent to the registry endpoint.
 - Credentials or tokens if your registry is secured.
 
 ## Configure the agent
 
-Enable the schema registry client in the AxonOps agent configuration:
+Enable the schema registry client in axon-agent configuration:
 
 ### Environment variables
 
@@ -89,7 +89,7 @@ kafka:
     #   insecureSkipTlsVerify: false
 ```
 
-After saving the file, restart the AxonOps agent so it can connect.
+After saving the file, restart axon-agent so it can connect.
 
 ## Use Schema Registry in AxonOps
 
