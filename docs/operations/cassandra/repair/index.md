@@ -92,9 +92,9 @@ These will trigger based on the selected schedule **repeatedly**.
 ![Scheduled Repairs](imgs/scheduled_repairs.png)
 
 
-### Maximum Duration
+### Alert After
 
-You can set a maximum duration for scheduled and manual repairs. If a repair exceeds this duration, AxonOps sends a warning alert to notify you that the repair is taking longer than expected.
+You can set a maximum duration for scheduled and manual repairs using the `Alert After` field. If a repair exceeds this duration, AxonOps sends a warning alert to notify you that the repair is taking longer than expected.
 
 This is useful for:
 
@@ -112,4 +112,4 @@ When the maximum duration is reached:
 The alert is sent once per repair run. When the repair plan resets (for example, on the next scheduled run), the alert state is cleared.
 
 !!! note
-    The maximum duration setting applies to scheduled and manual repairs only. Adaptive repairs manage their own pacing and do not use this setting.
+    The `Alert After` maximum duration setting applies to scheduled and manual repairs only. Adaptive repairs manage their own pacing and do not use this setting.
