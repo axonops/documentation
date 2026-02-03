@@ -90,3 +90,26 @@ These will trigger based on the selected schedule **repeatedly**.
 
 
 ![Scheduled Repairs](imgs/scheduled_repairs.png)
+
+
+### Maximum Duration
+
+You can set a maximum duration for scheduled and manual repairs. If a repair exceeds this duration, AxonOps sends a warning alert to notify you that the repair is taking longer than expected.
+
+This is useful for:
+
+- Detecting repairs that are stuck or progressing slower than expected.
+- Ensuring scheduled repairs complete within a maintenance window.
+- Proactively identifying performance issues that may be affecting repair speed.
+
+When the maximum duration is reached:
+
+- A **warning** severity alert is raised with the message: *"Scheduled repair {name} has reached its maximum duration of {duration}"*.
+- The alert is sent to any configured notification integrations (Slack, PagerDuty, email, etc.) using the repair alert routing.
+- An event is logged in the repair history.
+- The repair continues running since the alert is informational and does not stop the repair.
+
+The alert is sent once per repair run. When the repair plan resets (for example, on the next scheduled run), the alert state is cleared.
+
+!!! note
+    The maximum duration setting applies to scheduled and manual repairs only. Adaptive repairs manage their own pacing and do not use this setting.
