@@ -23,11 +23,32 @@ SSH tunneling is the right choice when:
 
 When you enable SSH tunneling, AxonOps Workbench establishes the connection in two stages:
 
-```
-┌─────────────────────┐         ┌─────────────────────┐         ┌─────────────────────┐
-│  AxonOps Workbench  │──SSH───▸│    Bastion Host      │──CQL───▸│  Cassandra Cluster  │
-│  (your machine)     │  :22    │    (jump server)     │  :9042  │  (private network)  │
-└─────────────────────┘         └─────────────────────┘         └─────────────────────┘
+```plantuml
+@startuml
+skinparam backgroundColor transparent
+skinparam defaultFontName Arial
+skinparam defaultFontSize 12
+skinparam componentStyle rectangle
+skinparam shadowing false
+
+skinparam component {
+  BackgroundColor #F5F5F5
+  BorderColor #333333
+  FontColor #333333
+}
+
+skinparam arrow {
+  Color #333333
+  FontColor #333333
+}
+
+component "AxonOps Workbench\n(your machine)" as workbench
+component "Bastion Host\n(jump server)" as bastion
+component "Cassandra Cluster\n(private network)" as cassandra
+
+workbench -right-> bastion : "SSH :22"
+bastion -right-> cassandra : "CQL :9042"
+@enduml
 ```
 
 1. **SSH connection** -- Workbench opens an encrypted SSH session to the bastion host using the credentials you provide (password or private key).
