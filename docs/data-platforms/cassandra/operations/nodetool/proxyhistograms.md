@@ -17,6 +17,7 @@ Displays latency histograms for coordinator operations including reads, writes, 
 ```bash
 nodetool [connection_options] proxyhistograms
 ```
+See [connection options](index.md#connection-options) for connection options.
 
 ## Description
 

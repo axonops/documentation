@@ -17,6 +17,7 @@ Displays the number of concurrent compactor threads.
 ```bash
 nodetool [connection_options] getconcurrentcompactors
 ```
+See [connection options](index.md#connection-options) for connection options.
 
 ---
 

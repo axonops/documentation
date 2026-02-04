@@ -17,6 +17,7 @@ Creates a snapshot (hard-link backup) of one or more tables.
 ```bash
 nodetool [connection_options] snapshot [options] [--] [keyspace ...]
 ```
+See [connection options](index.md#connection-options) for connection options.
 
 ## Description
 

@@ -17,6 +17,7 @@ Sets the minimum and maximum SSTable count thresholds that trigger compaction fo
 ```bash
 nodetool [connection_options] setcompactionthreshold <keyspace> <table> <min_threshold> <max_threshold>
 ```
+See [connection options](index.md#connection-options) for connection options.
 
 ## Description
 

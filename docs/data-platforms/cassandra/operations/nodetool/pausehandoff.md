@@ -17,6 +17,7 @@ Pauses the delivery of hints to recovering nodes.
 ```bash
 nodetool [connection_options] pausehandoff
 ```
+See [connection options](index.md#connection-options) for connection options.
 
 ## Description
 

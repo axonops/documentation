@@ -17,6 +17,7 @@ Gracefully removes the local node from the cluster, streaming its data to remain
 ```bash
 nodetool [connection_options] decommission [-f, --force]
 ```
+See [connection options](index.md#connection-options) for connection options.
 
 ## Description
 

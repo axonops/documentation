@@ -17,6 +17,7 @@ Enables full query logging (FQL) on the node.
 ```bash
 nodetool [connection_options] enablefullquerylog [options]
 ```
+See [connection options](index.md#connection-options) for connection options.
 
 ## Description
 

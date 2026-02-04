@@ -17,6 +17,7 @@ Sets the number of concurrent threads used for building materialized views.
 ```bash
 nodetool [connection_options] setconcurrentviewbuilders <value>
 ```
+See [connection options](index.md#connection-options) for connection options.
 
 ## Description
 

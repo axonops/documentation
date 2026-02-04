@@ -17,6 +17,7 @@ Displays the replica nodes for a specific partition key.
 ```bash
 nodetool [connection_options] getendpoints <keyspace> <table> <key>
 ```
+See [connection options](index.md#connection-options) for connection options.
 
 ## Description
 

@@ -20,6 +20,7 @@ Invalidates the credentials cache on the node.
 ```bash
 nodetool [connection_options] invalidatecredentialscache
 ```
+See [connection options](index.md#connection-options) for connection options.
 
 ## Description
 

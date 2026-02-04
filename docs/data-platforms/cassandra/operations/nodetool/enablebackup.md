@@ -17,6 +17,7 @@ Enables incremental backup.
 ```bash
 nodetool [connection_options] enablebackup
 ```
+See [connection options](index.md#connection-options) for connection options.
 
 ## Description
 

@@ -17,6 +17,7 @@ Re-enables automatic compaction for specified keyspaces and tables.
 ```bash
 nodetool [connection_options] enableautocompaction [--] [<keyspace> <tables>...]
 ```
+See [connection options](index.md#connection-options) for connection options.
 
 ## Description
 

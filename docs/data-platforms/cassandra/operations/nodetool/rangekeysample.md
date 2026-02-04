@@ -17,6 +17,7 @@ Displays a sample of partition keys from each token range owned by the node.
 ```bash
 nodetool [connection_options] rangekeysample
 ```
+See [connection options](index.md#connection-options) for connection options.
 
 ## Description
 

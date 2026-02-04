@@ -17,6 +17,7 @@ Re-enables hinted handoff on the node.
 ```bash
 nodetool [connection_options] enablehandoff
 ```
+See [connection options](index.md#connection-options) for connection options.
 
 ## Description
 

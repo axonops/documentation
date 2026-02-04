@@ -17,6 +17,7 @@ Displays network statistics including streaming operations, messaging activity, 
 ```bash
 nodetool [connection_options] netstats [-H]
 ```
+See [connection options](index.md#connection-options) for connection options.
 
 ## Description
 

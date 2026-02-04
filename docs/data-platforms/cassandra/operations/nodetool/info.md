@@ -17,6 +17,7 @@ Displays detailed information about a single Cassandra node including memory usa
 ```bash
 nodetool [connection_options] info
 ```
+See [connection options](index.md#connection-options) for connection options.
 
 ## Description
 

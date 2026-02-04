@@ -20,6 +20,7 @@ Forces compaction of SSTables containing specified partition keys, ignoring `gc_
 ```bash
 nodetool [connection_options] forcecompact <keyspace> <table> <keys>...
 ```
+See [connection options](index.md#connection-options) for connection options.
 
 ## Description
 

@@ -17,6 +17,7 @@ Disables support for older CQL native protocol versions, requiring clients to us
 ```bash
 nodetool [connection_options] disableoldprotocolversions
 ```
+See [connection options](index.md#connection-options) for connection options.
 
 ## Description
 

@@ -17,6 +17,7 @@ Sets the timeout value for the specified type.
 ```bash
 nodetool [connection_options] settimeout <timeout_type> <timeout_value_in_ms>
 ```
+See [connection options](index.md#connection-options) for connection options.
 
 ## Description
 

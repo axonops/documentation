@@ -20,6 +20,7 @@ Displays the default replication factor.
 ```bash
 nodetool [connection_options] getdefaultrf
 ```
+See [connection options](index.md#connection-options) for connection options.
 
 ## Description
 

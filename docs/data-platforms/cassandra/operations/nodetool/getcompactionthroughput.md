@@ -17,6 +17,7 @@ Displays the current compaction throughput limit.
 ```bash
 nodetool [connection_options] getcompactionthroughput [options]
 ```
+See [connection options](index.md#connection-options) for connection options.
 
 ## Options
 

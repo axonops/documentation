@@ -17,6 +17,7 @@ Reloads the seed node list from configuration.
 ```bash
 nodetool [connection_options] reloadseeds
 ```
+See [connection options](index.md#connection-options) for connection options.
 
 ## Description
 

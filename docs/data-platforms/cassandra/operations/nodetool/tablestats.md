@@ -17,6 +17,7 @@ Displays detailed statistics for tables including read/write latencies, SSTable 
 ```bash
 nodetool [connection_options] tablestats [options] [--] [keyspace[.table] ...]
 ```
+See [connection options](index.md#connection-options) for connection options.
 
 ## Description
 

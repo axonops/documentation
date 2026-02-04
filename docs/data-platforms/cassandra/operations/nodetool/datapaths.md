@@ -20,6 +20,7 @@ Displays the data file directories for the node.
 ```bash
 nodetool [connection_options] datapaths [options] [--] [<keyspace.table> | <keyspace>]
 ```
+See [connection options](index.md#connection-options) for connection options.
 
 ## Description
 

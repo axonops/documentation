@@ -17,6 +17,7 @@ Displays the concurrency settings.
 ```bash
 nodetool [connection_options] getconcurrency [stage_name ...]
 ```
+See [connection options](index.md#connection-options) for connection options.
 
 ## Arguments
 

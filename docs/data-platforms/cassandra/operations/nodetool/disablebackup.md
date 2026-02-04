@@ -17,6 +17,7 @@ Disables incremental backup on the node.
 ```bash
 nodetool [connection_options] disablebackup
 ```
+See [connection options](index.md#connection-options) for connection options.
 
 ## Description
 

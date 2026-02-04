@@ -20,6 +20,7 @@ Creates or updates a CIDR group with specified IP ranges.
 ```bash
 nodetool [connection_options] updatecidrgroup <group_name> <cidr_ranges>
 ```
+See [connection options](index.md#connection-options) for connection options.
 
 ---
 

@@ -20,6 +20,7 @@ Sets the column index size threshold for SSTable partition index granularity.
 ```bash
 nodetool [connection_options] setcolumnindexsize <size_in_kb>
 ```
+See [connection options](index.md#connection-options) for connection options.
 
 ---
 

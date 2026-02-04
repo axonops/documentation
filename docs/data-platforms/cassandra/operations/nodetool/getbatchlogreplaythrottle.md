@@ -17,6 +17,7 @@ Displays the batchlog replay throttle in KB/s.
 ```bash
 nodetool [connection_options] getbatchlogreplaythrottle
 ```
+See [connection options](index.md#connection-options) for connection options.
 
 ## Description
 

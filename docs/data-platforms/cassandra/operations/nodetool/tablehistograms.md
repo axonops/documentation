@@ -17,6 +17,7 @@ Displays latency and size histograms for a specific table.
 ```bash
 nodetool [connection_options] tablehistograms <keyspace> <table>
 ```
+See [connection options](index.md#connection-options) for connection options.
 
 ## Description
 

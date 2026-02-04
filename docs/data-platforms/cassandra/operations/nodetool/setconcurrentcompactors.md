@@ -17,6 +17,7 @@ Sets the number of concurrent compactor threads.
 ```bash
 nodetool [connection_options] setconcurrentcompactors <value>
 ```
+See [connection options](index.md#connection-options) for connection options.
 
 ---
 

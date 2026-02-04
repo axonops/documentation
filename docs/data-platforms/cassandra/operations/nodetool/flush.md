@@ -17,6 +17,7 @@ Flushes memtables from memory to SSTables on disk for one or more tables.
 ```bash
 nodetool [connection_options] flush [--] [keyspace [table ...]]
 ```
+See [connection options](index.md#connection-options) for connection options.
 
 ## Description
 

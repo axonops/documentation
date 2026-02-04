@@ -17,6 +17,7 @@ Rebuilds secondary indexes for a table.
 ```bash
 nodetool [connection_options] rebuild_index <keyspace> <table> [index_name...]
 ```
+See [connection options](index.md#connection-options) for connection options.
 
 ---
 

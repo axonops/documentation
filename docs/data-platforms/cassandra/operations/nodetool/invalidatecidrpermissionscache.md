@@ -20,6 +20,7 @@ Invalidates the CIDR permissions cache on the node.
 ```bash
 nodetool [connection_options] invalidatecidrpermissionscache
 ```
+See [connection options](index.md#connection-options) for connection options.
 
 ---
 

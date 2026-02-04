@@ -17,6 +17,7 @@ Displays statistics for thread pools and message queues, providing insight into 
 ```bash
 nodetool [connection_options] tpstats [options]
 ```
+See [connection options](index.md#connection-options) for connection options.
 
 ## Description
 

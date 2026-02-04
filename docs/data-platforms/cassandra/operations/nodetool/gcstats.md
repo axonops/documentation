@@ -17,6 +17,7 @@ Displays garbage collection statistics for the Cassandra JVM.
 ```bash
 nodetool [connection_options] gcstats [options]
 ```
+See [connection options](index.md#connection-options) for connection options.
 
 ## Options
 

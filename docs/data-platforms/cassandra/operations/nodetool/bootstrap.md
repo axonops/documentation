@@ -17,6 +17,7 @@ Manages the bootstrap process for a node joining the cluster.
 ```bash
 nodetool [connection_options] bootstrap resume
 ```
+See [connection options](index.md#connection-options) for connection options.
 
 ## Description
 

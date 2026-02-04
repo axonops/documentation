@@ -17,6 +17,7 @@ Invalidates the row cache on the node.
 ```bash
 nodetool [connection_options] invalidaterowcache
 ```
+See [connection options](index.md#connection-options) for connection options.
 
 ## Description
 

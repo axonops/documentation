@@ -20,6 +20,7 @@ Displays the current column index size threshold.
 ```bash
 nodetool [connection_options] getcolumnindexsize
 ```
+See [connection options](index.md#connection-options) for connection options.
 
 ---
 

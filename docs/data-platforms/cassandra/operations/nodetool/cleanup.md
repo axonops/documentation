@@ -17,6 +17,7 @@ Removes data that no longer belongs to this node after a topology change, such a
 ```bash
 nodetool [connection_options] cleanup [options] [--] [keyspace [table ...]]
 ```
+See [connection options](index.md#connection-options) for connection options.
 
 ## Description
 

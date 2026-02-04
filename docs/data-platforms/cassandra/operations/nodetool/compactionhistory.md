@@ -17,6 +17,7 @@ Displays the history of completed compaction operations.
 ```bash
 nodetool [connection_options] compactionhistory
 ```
+See [connection options](index.md#connection-options) for connection options.
 
 ## Description
 

@@ -20,6 +20,7 @@ Modifies guardrail configuration settings at runtime.
 ```bash
 nodetool [connection_options] setguardrailsconfig <guardrail_setter> <value(s)>
 ```
+See [connection options](index.md#connection-options) for connection options.
 
 ---
 

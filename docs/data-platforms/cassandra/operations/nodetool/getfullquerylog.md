@@ -17,6 +17,7 @@ Displays the current full query logging configuration.
 ```bash
 nodetool [connection_options] getfullquerylog
 ```
+See [connection options](index.md#connection-options) for connection options.
 
 ## Description
 

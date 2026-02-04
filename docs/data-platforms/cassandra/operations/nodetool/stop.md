@@ -17,6 +17,7 @@ Stops compaction operations.
 ```bash
 nodetool [connection_options] stop [options] <compaction_type>
 ```
+See [connection options](index.md#connection-options) for connection options.
 
 ## Description
 

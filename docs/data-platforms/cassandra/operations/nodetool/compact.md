@@ -17,6 +17,7 @@ Forces a major compaction on one or more tables, merging all SSTables into a sin
 ```bash
 nodetool [connection_options] compact [options] [--] [keyspace [table ...]]
 ```
+See [connection options](index.md#connection-options) for connection options.
 
 ## Description
 

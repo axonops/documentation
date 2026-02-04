@@ -18,6 +18,7 @@ Displays the build status of materialized views.
 nodetool [connection_options] viewbuildstatus <keyspace> <view>
 nodetool [connection_options] viewbuildstatus <keyspace.view>
 ```
+See [connection options](index.md#connection-options) for connection options.
 
 ## Description
 

@@ -17,6 +17,7 @@ Disables hints for a specific datacenter.
 ```bash
 nodetool [connection_options] disablehintsfordc <datacenter>
 ```
+See [connection options](index.md#connection-options) for connection options.
 
 ## Description
 

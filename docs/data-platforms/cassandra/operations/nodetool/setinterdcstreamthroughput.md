@@ -17,6 +17,7 @@ Sets the inter-datacenter stream throughput limit.
 ```bash
 nodetool [connection_options] setinterdcstreamthroughput [options] <throughput>
 ```
+See [connection options](index.md#connection-options) for connection options.
 
 ## Description
 

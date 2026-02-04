@@ -17,6 +17,7 @@ Displays basic cluster information including cluster name, snitch, and schema ve
 ```bash
 nodetool [connection_options] describecluster
 ```
+See [connection options](index.md#connection-options) for connection options.
 
 ## Description
 

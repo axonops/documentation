@@ -17,6 +17,7 @@ Runs anti-entropy repair to synchronize data across replicas, ensuring consisten
 ```bash
 nodetool [connection_options] repair [options] [--] [keyspace [table ...]]
 ```
+See [connection options](index.md#connection-options) for connection options.
 
 ## Description
 

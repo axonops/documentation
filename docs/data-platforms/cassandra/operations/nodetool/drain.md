@@ -17,6 +17,7 @@ Drains the node by flushing all memtables, stopping acceptance of writes, and pr
 ```bash
 nodetool [connection_options] drain
 ```
+See [connection options](index.md#connection-options) for connection options.
 
 ## Description
 

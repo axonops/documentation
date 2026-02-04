@@ -17,6 +17,7 @@ Displays the maximum hint window in milliseconds.
 ```bash
 nodetool [connection_options] getmaxhintwindow
 ```
+See [connection options](index.md#connection-options) for connection options.
 
 ## Description
 

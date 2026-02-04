@@ -17,6 +17,7 @@ Displays the number of concurrent view builders.
 ```bash
 nodetool [connection_options] getconcurrentviewbuilders
 ```
+See [connection options](index.md#connection-options) for connection options.
 
 ## Description
 

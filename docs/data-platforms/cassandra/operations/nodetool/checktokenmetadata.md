@@ -20,6 +20,7 @@ Checks the token metadata for inconsistencies.
 ```bash
 nodetool [connection_options] checktokenmetadata
 ```
+See [connection options](index.md#connection-options) for connection options.
 
 ## Description
 

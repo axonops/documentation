@@ -17,6 +17,7 @@ Displays the current status of hinted handoff on the node.
 ```bash
 nodetool [connection_options] statushandoff
 ```
+See [connection options](index.md#connection-options) for connection options.
 
 ## Description
 

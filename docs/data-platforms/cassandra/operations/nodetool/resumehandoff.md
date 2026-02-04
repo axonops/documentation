@@ -17,6 +17,7 @@ Resumes the delivery of hints that was previously paused.
 ```bash
 nodetool [connection_options] resumehandoff
 ```
+See [connection options](index.md#connection-options) for connection options.
 
 ## Description
 

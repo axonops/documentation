@@ -17,6 +17,7 @@ Disables the CQL native transport, stopping the node from accepting new client c
 ```bash
 nodetool [connection_options] disablebinary
 ```
+See [connection options](index.md#connection-options) for connection options.
 
 ## Description
 

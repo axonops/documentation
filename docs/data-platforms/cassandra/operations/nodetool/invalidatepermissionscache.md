@@ -17,6 +17,7 @@ Invalidates the permissions cache on the node.
 ```bash
 nodetool [connection_options] invalidatepermissionscache
 ```
+See [connection options](index.md#connection-options) for connection options.
 
 ## Description
 

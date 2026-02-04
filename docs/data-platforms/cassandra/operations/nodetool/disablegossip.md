@@ -17,6 +17,7 @@ Disables the gossip protocol, isolating the node from cluster communication.
 ```bash
 nodetool [connection_options] disablegossip
 ```
+See [connection options](index.md#connection-options) for connection options.
 
 ## Description
 

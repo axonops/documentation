@@ -17,6 +17,7 @@ Re-enables the gossip protocol on a node that has been isolated.
 ```bash
 nodetool [connection_options] enablegossip
 ```
+See [connection options](index.md#connection-options) for connection options.
 
 ## Description
 

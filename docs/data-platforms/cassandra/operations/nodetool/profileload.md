@@ -17,6 +17,7 @@ Profiles read and write operations on a table for a specified duration to identi
 ```bash
 nodetool [connection_options] profileload [options] [keyspace] [table] [duration]
 ```
+See [connection options](index.md#connection-options) for connection options.
 
 ## Description
 

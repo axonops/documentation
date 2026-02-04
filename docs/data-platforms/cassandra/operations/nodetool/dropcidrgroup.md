@@ -20,6 +20,7 @@ Removes a CIDR group from the cluster.
 ```bash
 nodetool [connection_options] dropcidrgroup <group_name>
 ```
+See [connection options](index.md#connection-options) for connection options.
 
 ---
 

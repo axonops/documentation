@@ -17,6 +17,7 @@ Relocates SSTables to the correct disk based on the configured disk allocation s
 ```bash
 nodetool [connection_options] relocatesstables [options] [keyspace] [tables...]
 ```
+See [connection options](index.md#connection-options) for connection options.
 
 ---
 

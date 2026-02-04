@@ -18,6 +18,7 @@ Sets the concurrency level (thread pool size) for a specific stage in Cassandra'
 nodetool [connection_options] setconcurrency <stage> <max>
 nodetool [connection_options] setconcurrency <stage> <core> <max>
 ```
+See [connection options](index.md#connection-options) for connection options.
 
 ## Description
 

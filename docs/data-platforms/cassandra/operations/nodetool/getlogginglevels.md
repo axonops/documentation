@@ -17,6 +17,7 @@ Displays the current logging levels for all loggers.
 ```bash
 nodetool [connection_options] getlogginglevels
 ```
+See [connection options](index.md#connection-options) for connection options.
 
 ## Description
 

@@ -17,6 +17,7 @@ Displays the Cassandra version running on the node.
 ```bash
 nodetool [connection_options] version
 ```
+See [connection options](index.md#connection-options) for connection options.
 
 ## Description
 

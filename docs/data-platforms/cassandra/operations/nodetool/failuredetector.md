@@ -17,6 +17,7 @@ Displays the failure detector information for the cluster.
 ```bash
 nodetool [connection_options] failuredetector
 ```
+See [connection options](index.md#connection-options) for connection options.
 
 ## Description
 

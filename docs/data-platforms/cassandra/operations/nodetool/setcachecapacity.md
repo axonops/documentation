@@ -17,6 +17,7 @@ Sets the capacity of the key cache, row cache, and counter cache.
 ```bash
 nodetool [connection_options] setcachecapacity <key-cache-capacity> <row-cache-capacity> <counter-cache-capacity>
 ```
+See [connection options](index.md#connection-options) for connection options.
 
 ## Description
 

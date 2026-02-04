@@ -17,6 +17,7 @@ Disables audit logging on the node.
 ```bash
 nodetool [connection_options] disableauditlog
 ```
+See [connection options](index.md#connection-options) for connection options.
 
 ## Description
 

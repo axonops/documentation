@@ -39,7 +39,7 @@ nodetool -u admin -pwf /path/to/jmx_password_file status
 
     For cluster-wide operations, use SSH to execute nodetool commands on each node, or use orchestration tools like Ansible.
 
-### Common Options
+### Connection Options
 
 | Option | Description |
 |--------|-------------|

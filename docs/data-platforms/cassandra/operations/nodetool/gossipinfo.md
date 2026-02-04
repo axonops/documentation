@@ -17,6 +17,7 @@ Displays the gossip information for all nodes in the cluster as seen by the loca
 ```bash
 nodetool [connection_options] gossipinfo
 ```
+See [connection options](index.md#connection-options) for connection options.
 
 ## Description
 

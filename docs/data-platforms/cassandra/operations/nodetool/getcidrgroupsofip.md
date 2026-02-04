@@ -20,6 +20,7 @@ Finds which CIDR groups contain a specific IP address.
 ```bash
 nodetool [connection_options] getcidrgroupsofip <ip_address>
 ```
+See [connection options](index.md#connection-options) for connection options.
 
 ---
 

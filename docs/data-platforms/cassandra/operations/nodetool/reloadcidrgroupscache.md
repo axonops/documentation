@@ -20,6 +20,7 @@ Reloads the CIDR groups cache from system tables.
 ```bash
 nodetool [connection_options] reloadcidrgroupscache
 ```
+See [connection options](index.md#connection-options) for connection options.
 
 ---
 

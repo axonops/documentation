@@ -17,6 +17,7 @@ Displays the current probability of tracing CQL requests on the node.
 ```bash
 nodetool [connection_options] gettraceprobability
 ```
+See [connection options](index.md#connection-options) for connection options.
 
 ## Description
 

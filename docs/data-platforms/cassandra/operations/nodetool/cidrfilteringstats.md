@@ -20,6 +20,7 @@ Displays CIDR filtering statistics for the node.
 ```bash
 nodetool [connection_options] cidrfilteringstats
 ```
+See [connection options](index.md#connection-options) for connection options.
 
 ---
 
