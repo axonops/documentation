@@ -287,9 +287,30 @@ nav:
       - Re-use an existing host ID: how-to/reuse-host-id.md
     
   - AxonOps Workbench:
-    - Cassandra: 
-      # - 'Overview' : workbench/cassandra/cassandra.md
-      - License: workbench/cassandra/license.md
+    - Overview: workbench/index.md
+    - Getting Started:
+      - Installation: workbench/getting-started/installation.md
+      - First Steps: workbench/getting-started/first-steps.md
+      - Local Clusters: workbench/getting-started/local-clusters.md
+    - Connections:
+      - Overview: workbench/connections/index.md
+      - Apache Cassandra: workbench/connections/cassandra.md
+      - DataStax Astra DB: workbench/connections/astra-db.md
+      - SSH Tunneling: workbench/connections/ssh-tunneling.md
+      - SSL/TLS: workbench/connections/ssl-tls.md
+    - CQL Console:
+      - Overview: workbench/cql-console/index.md
+      - Query Execution: workbench/cql-console/query-execution.md
+      - Query Tracing: workbench/cql-console/query-tracing.md
+      - Results & Export: workbench/cql-console/results-export.md
+    - Schema Management: workbench/schema.md
+    - Workspaces: workbench/workspaces.md
+    - CQL Snippets: workbench/snippets.md
+    - Settings: workbench/settings.md
+    - CLI Reference: workbench/cli.md
+    - AxonOps Integration: workbench/axonops-integration.md
+    - Troubleshooting: workbench/troubleshooting.md
+    - License: workbench/license.md
 
   - Data Platforms:
     - Overview: data-platforms/index.md
