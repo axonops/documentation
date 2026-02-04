@@ -20,6 +20,7 @@ Modifies authentication cache configuration settings.
 ```bash
 nodetool [connection_options] setauthcacheconfig --cache-name <cache> [options]
 ```
+See [connection options](index.md#connection-options) for connection options.
 
 ---
 

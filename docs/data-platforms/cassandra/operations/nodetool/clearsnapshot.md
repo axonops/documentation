@@ -17,6 +17,7 @@ Removes one or more snapshots from the node to reclaim disk space.
 ```bash
 nodetool [connection_options] clearsnapshot [options] [--] [keyspace ...]
 ```
+See [connection options](index.md#connection-options) for connection options.
 
 ## Description
 

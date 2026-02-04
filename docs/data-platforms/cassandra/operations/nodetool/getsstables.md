@@ -17,6 +17,7 @@ Lists SSTables containing a partition key.
 ```bash
 nodetool [connection_options] getsstables [--hex-format] <keyspace> <table> <key>
 ```
+See [connection options](index.md#connection-options) for connection options.
 
 ## Description
 

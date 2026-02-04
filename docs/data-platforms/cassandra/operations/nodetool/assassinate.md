@@ -17,6 +17,7 @@ Forcibly removes a dead node from gossip when normal removal methods fail.
 ```bash
 nodetool [connection_options] assassinate <ip_address>
 ```
+See [connection options](index.md#connection-options) for connection options.
 
 ## Description
 

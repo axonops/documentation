@@ -17,6 +17,7 @@ Displays statistics about currently running compactions and pending compaction t
 ```bash
 nodetool [connection_options] compactionstats [-H]
 ```
+See [connection options](index.md#connection-options) for connection options.
 
 ## Description
 

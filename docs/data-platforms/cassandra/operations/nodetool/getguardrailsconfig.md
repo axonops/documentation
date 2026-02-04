@@ -20,6 +20,7 @@ Displays the current guardrails configuration.
 ```bash
 nodetool [connection_options] getguardrailsconfig [options] [guardrail_name]
 ```
+See [connection options](index.md#connection-options) for connection options.
 
 ## Options
 

@@ -17,6 +17,7 @@ Sets the number of cache keys to save to disk for faster restart warmup.
 ```bash
 nodetool [connection_options] setcachekeystosave <key_cache_keys> <row_cache_keys> <counter_cache_keys>
 ```
+See [connection options](index.md#connection-options) for connection options.
 
 ## Description
 

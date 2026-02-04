@@ -17,6 +17,7 @@ Enables support for older CQL protocol versions.
 ```bash
 nodetool [connection_options] enableoldprotocolversions
 ```
+See [connection options](index.md#connection-options) for connection options.
 
 ## Description
 

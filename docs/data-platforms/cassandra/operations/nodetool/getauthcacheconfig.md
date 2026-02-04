@@ -20,6 +20,7 @@ Displays authentication cache configuration settings.
 ```bash
 nodetool [connection_options] getauthcacheconfig --cache-name <cache>
 ```
+See [connection options](index.md#connection-options) for connection options.
 
 ---
 

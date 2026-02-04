@@ -20,6 +20,7 @@ Lists all defined CIDR groups in the cluster.
 ```bash
 nodetool [connection_options] listcidrgroups [cidrGroup]
 ```
+See [connection options](index.md#connection-options) for connection options.
 
 ## Arguments
 

@@ -17,6 +17,7 @@ Enables the CQL native transport, allowing client connections.
 ```bash
 nodetool [connection_options] enablebinary
 ```
+See [connection options](index.md#connection-options) for connection options.
 
 ## Description
 

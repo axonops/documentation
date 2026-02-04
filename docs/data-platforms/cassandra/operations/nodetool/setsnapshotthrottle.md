@@ -17,6 +17,7 @@ Sets the snapshot link creation throttle.
 ```bash
 nodetool [connection_options] setsnapshotthrottle <links_per_second>
 ```
+See [connection options](index.md#connection-options) for connection options.
 
 ## Description
 

@@ -20,6 +20,7 @@ Samples and displays the most active partitions.
 ```bash
 nodetool [connection_options] toppartitions [options] [keyspace] [table] [duration]
 ```
+See [connection options](index.md#connection-options) for connection options.
 
 ## Description
 

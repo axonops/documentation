@@ -17,6 +17,7 @@ Displays the status of the CQL native transport (client protocol).
 ```bash
 nodetool [connection_options] statusbinary
 ```
+See [connection options](index.md#connection-options) for connection options.
 
 ---
 

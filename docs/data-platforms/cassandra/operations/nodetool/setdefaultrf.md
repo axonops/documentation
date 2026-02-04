@@ -20,6 +20,7 @@ Sets the default replication factor used by NetworkTopologyStrategy auto-expansi
 ```bash
 nodetool [connection_options] setdefaultrf <replication_factor>
 ```
+See [connection options](index.md#connection-options) for connection options.
 
 ## Description
 

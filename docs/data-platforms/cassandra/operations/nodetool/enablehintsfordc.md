@@ -17,6 +17,7 @@ Enables hints for a specific datacenter.
 ```bash
 nodetool [connection_options] enablehintsfordc <datacenter>
 ```
+See [connection options](index.md#connection-options) for connection options.
 
 ## Description
 

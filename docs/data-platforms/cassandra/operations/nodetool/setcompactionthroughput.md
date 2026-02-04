@@ -17,6 +17,7 @@ Sets the total compaction throughput limit across all compaction threads on a no
 ```bash
 nodetool [connection_options] setcompactionthroughput <throughput_mb_per_sec>
 ```
+See [connection options](index.md#connection-options) for connection options.
 
 ## Description
 

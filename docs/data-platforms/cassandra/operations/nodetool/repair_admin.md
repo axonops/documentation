@@ -17,6 +17,7 @@ Manages and monitors repair sessions on the cluster.
 ```bash
 nodetool [connection_options] repair_admin <list | cancel | cleanup | summarize-pending | summarize-repaired> [options]
 ```
+See [connection options](index.md#connection-options) for connection options.
 
 ## Description
 

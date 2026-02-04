@@ -17,6 +17,7 @@ Imports SSTables from an external directory into a table.
 ```bash
 nodetool [connection_options] import [options] <keyspace> <table> <directory>...
 ```
+See [connection options](index.md#connection-options) for connection options.
 
 ## Description
 

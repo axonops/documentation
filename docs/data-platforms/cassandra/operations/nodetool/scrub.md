@@ -17,6 +17,7 @@ Rebuilds SSTables by rewriting them, validating data and optionally discarding c
 ```bash
 nodetool [connection_options] scrub [options] [--] [keyspace [table ...]]
 ```
+See [connection options](index.md#connection-options) for connection options.
 
 ## Description
 

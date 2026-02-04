@@ -17,6 +17,7 @@ Removes deleted data (tombstones) from SSTables without full compaction.
 ```bash
 nodetool [connection_options] garbagecollect [options] [--] [keyspace [table ...]]
 ```
+See [connection options](index.md#connection-options) for connection options.
 
 ## Description
 

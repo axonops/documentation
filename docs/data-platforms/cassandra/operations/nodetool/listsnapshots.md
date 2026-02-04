@@ -17,6 +17,7 @@ Displays a list of all snapshots on the node with their sizes.
 ```bash
 nodetool [connection_options] listsnapshots [options]
 ```
+See [connection options](index.md#connection-options) for connection options.
 
 ## Description
 

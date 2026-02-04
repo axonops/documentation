@@ -17,6 +17,7 @@ Displays detailed token range information for a keyspace.
 ```bash
 nodetool [connection_options] describering <keyspace>
 ```
+See [connection options](index.md#connection-options) for connection options.
 
 ## Description
 

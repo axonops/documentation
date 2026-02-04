@@ -17,6 +17,7 @@ Removes all pending hints from this node.
 ```bash
 nodetool [connection_options] truncatehints [endpoint]
 ```
+See [connection options](index.md#connection-options) for connection options.
 
 ## Description
 

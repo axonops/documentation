@@ -17,6 +17,7 @@ Changes the logging level for a class or package at runtime.
 ```bash
 nodetool [connection_options] setlogginglevel [<class|component>] [<level>]
 ```
+See [connection options](index.md#connection-options) for connection options.
 
 ## Description
 

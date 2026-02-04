@@ -17,6 +17,7 @@ Resets the local schema by fetching it from another node.
 ```bash
 nodetool [connection_options] resetlocalschema
 ```
+See [connection options](index.md#connection-options) for connection options.
 
 ## Description
 

@@ -17,6 +17,7 @@ Forces immediate replay of pending batch mutations stored in the batchlog.
 ```bash
 nodetool [connection_options] replaybatchlog
 ```
+See [connection options](index.md#connection-options) for connection options.
 
 ## Description
 

@@ -17,6 +17,7 @@ Displays the token ring information showing token assignments for each node in t
 ```bash
 nodetool [connection_options] ring [options] [keyspace]
 ```
+See [connection options](index.md#connection-options) for connection options.
 
 ## Options
 

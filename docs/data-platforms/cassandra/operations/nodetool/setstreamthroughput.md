@@ -17,6 +17,7 @@ Sets the streaming throughput limit for inter-node data transfers.
 ```bash
 nodetool [connection_options] setstreamthroughput [options] <throughput>
 ```
+See [connection options](index.md#connection-options) for connection options.
 
 ## Description
 

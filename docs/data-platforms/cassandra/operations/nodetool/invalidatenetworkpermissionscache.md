@@ -20,6 +20,7 @@ Invalidates the network permissions cache on the node.
 ```bash
 nodetool [connection_options] invalidatenetworkpermissionscache
 ```
+See [connection options](index.md#connection-options) for connection options.
 
 ---
 

@@ -18,6 +18,7 @@ Removes a dead or unreachable node from the cluster by streaming its data from r
 nodetool [connection_options] removenode [--force] <host-id>
 nodetool [connection_options] removenode status
 ```
+See [connection options](index.md#connection-options) for connection options.
 
 ## Description
 

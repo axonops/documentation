@@ -20,6 +20,7 @@ Recompresses SSTables with current compression settings.
 ```bash
 nodetool [connection_options] recompress_sstables [options] [keyspace] [tables...]
 ```
+See [connection options](index.md#connection-options) for connection options.
 
 ## Description
 

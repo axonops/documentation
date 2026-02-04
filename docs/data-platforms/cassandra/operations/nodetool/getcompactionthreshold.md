@@ -17,6 +17,7 @@ Displays the compaction thresholds for a table.
 ```bash
 nodetool [connection_options] getcompactionthreshold <keyspace> <table>
 ```
+See [connection options](index.md#connection-options) for connection options.
 
 ## Description
 

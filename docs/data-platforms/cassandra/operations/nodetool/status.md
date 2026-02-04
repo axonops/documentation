@@ -17,6 +17,7 @@ Displays the status of all nodes in the cluster, including their state, load, to
 ```bash
 nodetool [connection_options] status [keyspace]
 ```
+See [connection options](index.md#connection-options) for connection options.
 
 ## Description
 

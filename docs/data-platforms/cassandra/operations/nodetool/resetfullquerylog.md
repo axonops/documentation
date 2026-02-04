@@ -17,6 +17,7 @@ Resets the full query logging path to the configured value.
 ```bash
 nodetool [connection_options] resetfullquerylog
 ```
+See [connection options](index.md#connection-options) for connection options.
 
 ## Description
 

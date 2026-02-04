@@ -17,6 +17,7 @@ Displays the timeout value for the specified type.
 ```bash
 nodetool [connection_options] gettimeout <timeout_type>
 ```
+See [connection options](index.md#connection-options) for connection options.
 
 ## Description
 

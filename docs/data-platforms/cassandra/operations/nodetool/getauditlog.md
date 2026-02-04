@@ -20,6 +20,7 @@ Displays the current audit logging configuration.
 ```bash
 nodetool [connection_options] getauditlog
 ```
+See [connection options](index.md#connection-options) for connection options.
 
 ## Description
 

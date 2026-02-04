@@ -17,6 +17,7 @@ Rebuilds data on a node by streaming from other datacenters, used when adding no
 ```bash
 nodetool [connection_options] rebuild [options] [source_datacenter]
 ```
+See [connection options](index.md#connection-options) for connection options.
 
 ## Description
 

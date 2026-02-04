@@ -17,6 +17,7 @@ Sets the hinted handoff throttle rate in KB per second.
 ```bash
 nodetool [connection_options] sethintedhandoffthrottlekb <throttle_in_kb>
 ```
+See [connection options](index.md#connection-options) for connection options.
 
 ## Description
 

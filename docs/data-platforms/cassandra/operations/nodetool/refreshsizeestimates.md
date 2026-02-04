@@ -17,6 +17,7 @@ Refreshes the size estimates table.
 ```bash
 nodetool [connection_options] refreshsizeestimates
 ```
+See [connection options](index.md#connection-options) for connection options.
 
 ## Description
 

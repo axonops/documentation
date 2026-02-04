@@ -17,6 +17,7 @@ Sets the maximum hint window in milliseconds.
 ```bash
 nodetool [connection_options] setmaxhintwindow <hint_window_in_ms>
 ```
+See [connection options](index.md#connection-options) for connection options.
 
 ## Description
 

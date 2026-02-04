@@ -20,6 +20,7 @@ Loads newly placed SSTables into a running node without restart.
 ```bash
 nodetool [connection_options] refresh <keyspace> <table>
 ```
+See [connection options](index.md#connection-options) for connection options.
 
 ## Description
 

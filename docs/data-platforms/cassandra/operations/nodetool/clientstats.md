@@ -17,6 +17,7 @@ Displays information about connected clients.
 ```bash
 nodetool [connection_options] clientstats [--all] [--by-protocol] [--clear]
 ```
+See [connection options](index.md#connection-options) for connection options.
 
 ## Description
 

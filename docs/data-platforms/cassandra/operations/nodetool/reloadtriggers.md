@@ -17,6 +17,7 @@ Reloads trigger classes.
 ```bash
 nodetool [connection_options] reloadtriggers
 ```
+See [connection options](index.md#connection-options) for connection options.
 
 ## Description
 

@@ -17,6 +17,7 @@ Displays the status of the gossip protocol.
 ```bash
 nodetool [connection_options] statusgossip
 ```
+See [connection options](index.md#connection-options) for connection options.
 
 ## Description
 

@@ -17,6 +17,7 @@ Verifies SSTable integrity without modifying data.
 ```bash
 nodetool [connection_options] verify [options] [--] [keyspace [table ...]]
 ```
+See [connection options](index.md#connection-options) for connection options.
 
 ## Description
 

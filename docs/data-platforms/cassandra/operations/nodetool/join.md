@@ -17,6 +17,7 @@ Causes a node that was started with `join_ring: false` to join the cluster ring.
 ```bash
 nodetool [connection_options] join
 ```
+See [connection options](index.md#connection-options) for connection options.
 
 ## Description
 

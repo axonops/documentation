@@ -17,6 +17,7 @@ Reloads the local schema from disk.
 ```bash
 nodetool [connection_options] reloadlocalschema
 ```
+See [connection options](index.md#connection-options) for connection options.
 
 ## Description
 

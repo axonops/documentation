@@ -17,6 +17,7 @@ Displays the stream throughput limit.
 ```bash
 nodetool [connection_options] getstreamthroughput [options]
 ```
+See [connection options](index.md#connection-options) for connection options.
 
 ## Options
 

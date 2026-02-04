@@ -17,6 +17,7 @@ Rewrites SSTables to the SSTable format version supported by the running Cassand
 ```bash
 nodetool [connection_options] upgradesstables [options] [--] [keyspace [table ...]]
 ```
+See [connection options](index.md#connection-options) for connection options.
 
 ## Description
 

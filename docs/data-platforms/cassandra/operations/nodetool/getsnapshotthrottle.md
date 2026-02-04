@@ -17,6 +17,7 @@ Displays the snapshot link creation throttle.
 ```bash
 nodetool [connection_options] getsnapshotthrottle
 ```
+See [connection options](index.md#connection-options) for connection options.
 
 ## Description
 

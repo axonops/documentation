@@ -17,6 +17,7 @@ Sets the probability of tracing a request.
 ```bash
 nodetool [connection_options] settraceprobability <probability>
 ```
+See [connection options](index.md#connection-options) for connection options.
 
 ## Description
 

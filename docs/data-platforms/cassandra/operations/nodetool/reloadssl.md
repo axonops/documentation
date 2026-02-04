@@ -19,6 +19,7 @@ Reloads SSL certificates without restarting Cassandra.
 ```bash
 nodetool [connection_options] reloadssl
 ```
+See [connection options](index.md#connection-options) for connection options.
 
 ## Description
 

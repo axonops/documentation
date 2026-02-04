@@ -17,6 +17,7 @@ Displays the current status of incremental backup on the node.
 ```bash
 nodetool [connection_options] statusbackup
 ```
+See [connection options](index.md#connection-options) for connection options.
 
 ## Description
 

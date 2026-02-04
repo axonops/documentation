@@ -20,6 +20,7 @@ Lists the pending hints for each node in the cluster.
 ```bash
 nodetool [connection_options] listpendinghints
 ```
+See [connection options](index.md#connection-options) for connection options.
 
 ## Description
 

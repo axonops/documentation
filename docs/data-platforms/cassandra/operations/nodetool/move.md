@@ -17,6 +17,7 @@ Moves the node to a new token position in the ring.
 ```bash
 nodetool [connection_options] move <new_token>
 ```
+See [connection options](index.md#connection-options) for connection options.
 
 ## Description
 
