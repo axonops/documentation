@@ -1,10 +1,19 @@
 ---
-title: "Release 2026-02-03"
+title: "Release 2026-02-06"
 description: "AxonOps release notes. Latest features, improvements, and bug fixes."
 meta:
   - name: keywords
     content: "release notes, AxonOps updates, changelog, new features"
 ---
+
+## Release 2026-02-06
+
+* axon-server: 2.0.21
+    * Adaptive repair improvements.
+
+### Improvements
+
+* [Server] Improve concurrency handling in Adaptive Repairs.
 
 ## Release 2026-02-03
 
