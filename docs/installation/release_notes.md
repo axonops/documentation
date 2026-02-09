@@ -1,10 +1,23 @@
 ---
-title: "Release 2026-02-03"
+title: "Release 2026-02-09"
 description: "AxonOps release notes. Latest features, improvements, and bug fixes."
 meta:
   - name: keywords
     content: "release notes, AxonOps updates, changelog, new features"
 ---
+
+## Release 2026-02-09
+
+* axon-server: 2.0.23
+    * Elasticsearch 9 support and adaptive repair fix.
+
+### Fixes
+
+* [Server] Fix storing adaptive repair progress for new clusters.
+
+### New Features
+
+* [Server] Enable support for Elasticsearch 9.
 
 ## Release 2026-02-03
 
