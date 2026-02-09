@@ -20653,9 +20653,9 @@ nodetool<span class="w"> </span>status
 Status=Up/Down
 |/ State=Normal/Leaving/Joining/Moving
 --  Address       Load       Tokens  Owns   Host ID                               Rack
-UN  10.0.0.1     256.12 KiB  256     ?      550e8400-e29b-41d4-a716-446655440000  rack1
-DN  10.0.0.2     267.89 KiB  256     ?      660e8400-e29b-41d4-a716-446655440001  rack1  &lt;-- Dead node
-UN  10.0.0.3     245.34 KiB  256     ?      770e8400-e29b-41d4-a716-446655440002  rack1
+UN  10.0.0.1     256.12 KiB  16     ?      550e8400-e29b-41d4-a716-446655440000  rack1
+DN  10.0.0.2     267.89 KiB  16     ?      660e8400-e29b-41d4-a716-446655440001  rack1  &lt;-- Dead node
+UN  10.0.0.3     245.34 KiB  16     ?      770e8400-e29b-41d4-a716-446655440002  rack1
 </code></pre></div>
 <h3 id="12-record-dead-node-information">1.2 Record Dead Node Information<a class="headerlink" href="#12-record-dead-node-information" title="Permanent link">¶</a></h3>
 <p><strong>Critical</strong>: Note these values from the dead node:</p>
@@ -20760,9 +20760,9 @@ INFO  [main] Gossiper.java - Replacing /10.0.0.2 with /10.0.0.4
 <p><strong>Expected</strong>: New node shows as <code>UN</code>:</p>
 <div class="highlight"><pre><span></span><code>Datacenter: dc1
 ===============
-UN  10.0.0.1     256.12 KiB  256     33.3%  550e8400-e29b-41d4-a716-446655440000  rack1
-UN  10.0.0.4     267.89 KiB  256     33.3%  880e8400-e29b-41d4-a716-446655440003  rack1  &lt;-- New node
-UN  10.0.0.3     245.34 KiB  256     33.4%  770e8400-e29b-41d4-a716-446655440002  rack1
+UN  10.0.0.1     256.12 KiB  16     33.3%  550e8400-e29b-41d4-a716-446655440000  rack1
+UN  10.0.0.4     267.89 KiB  16     33.3%  880e8400-e29b-41d4-a716-446655440003  rack1  &lt;-- New node
+UN  10.0.0.3     245.34 KiB  16     33.4%  770e8400-e29b-41d4-a716-446655440002  rack1
 </code></pre></div>
 <p><strong>Note</strong>: Dead node (10.0.0.2) is no longer listed.</p>
 <h3 id="52-verify-data-streaming-complete">5.2 Verify Data Streaming Complete<a class="headerlink" href="#52-verify-data-streaming-complete" title="Permanent link">¶</a></h3>

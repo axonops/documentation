@@ -20428,9 +20428,9 @@ See <a href="../#connection-options">connection options</a> for connection optio
 Status=Up/Down
 |/ State=Normal/Leaving/Joining/Moving
 --  Address        Load       Tokens  Owns (effective)  Host ID                               Rack
-UN  192.168.1.101  256.12 GiB  256    33.3%             a1b2c3d4-e5f6-7890-abcd-ef1234567890  rack1
-UN  192.168.1.102  248.87 GiB  256    33.4%             b2c3d4e5-f6a7-8901-bcde-f12345678901  rack2
-UN  192.168.1.103  251.44 GiB  256    33.3%             c3d4e5f6-a7b8-9012-cdef-123456789012  rack3
+UN  192.168.1.101  256.12 GiB  16    33.3%             a1b2c3d4-e5f6-7890-abcd-ef1234567890  rack1
+UN  192.168.1.102  248.87 GiB  16    33.4%             b2c3d4e5-f6a7-8901-bcde-f12345678901  rack2
+UN  192.168.1.103  251.44 GiB  16    33.3%             c3d4e5f6-a7b8-9012-cdef-123456789012  rack3
 </code></pre></div>
 <h3 id="status-codes">Status Codes<a class="headerlink" href="#status-codes" title="Permanent link">¶</a></h3>
 <table>
@@ -20585,9 +20585,9 @@ UN  192.168.1.103  251.44 GiB  256    33.3%             c3d4e5f6-a7b8-9012-cdef-
 <h3 id="healthy-cluster">Healthy Cluster<a class="headerlink" href="#healthy-cluster" title="Permanent link">¶</a></h3>
 <div class="highlight"><pre><span></span><code>Datacenter: dc1
 ===============
-UN  192.168.1.101  256.12 GiB  256    33.3%  ...  rack1
-UN  192.168.1.102  248.87 GiB  256    33.4%  ...  rack2
-UN  192.168.1.103  251.44 GiB  256    33.3%  ...  rack3
+UN  192.168.1.101  256.12 GiB  16    33.3%  ...  rack1
+UN  192.168.1.102  248.87 GiB  16    33.4%  ...  rack2
+UN  192.168.1.103  251.44 GiB  16    33.3%  ...  rack3
 </code></pre></div>
 <ul>
 <li>All nodes <code>UN</code> (Up/Normal)</li>
@@ -20595,9 +20595,9 @@ UN  192.168.1.103  251.44 GiB  256    33.3%  ...  rack3
 <li>Ownership evenly distributed</li>
 </ul>
 <h3 id="unbalanced-load">Unbalanced Load<a class="headerlink" href="#unbalanced-load" title="Permanent link">¶</a></h3>
-<div class="highlight"><pre><span></span><code>UN  192.168.1.101  512.00 GiB  256    33.3%  ...  rack1
-UN  192.168.1.102  128.00 GiB  256    33.4%  ...  rack2
-UN  192.168.1.103  256.00 GiB  256    33.3%  ...  rack3
+<div class="highlight"><pre><span></span><code>UN  192.168.1.101  512.00 GiB  16    33.3%  ...  rack1
+UN  192.168.1.102  128.00 GiB  16    33.4%  ...  rack2
+UN  192.168.1.103  256.00 GiB  16    33.3%  ...  rack3
 </code></pre></div>
 <div class="admonition warning">
 <p class="admonition-title">Load Imbalance</p>
@@ -20609,9 +20609,9 @@ UN  192.168.1.103  256.00 GiB  256    33.3%  ...  rack3
 </ul>
 </div>
 <h3 id="node-down">Node Down<a class="headerlink" href="#node-down" title="Permanent link">¶</a></h3>
-<div class="highlight"><pre><span></span><code>UN  192.168.1.101  256.12 GiB  256    33.3%  ...  rack1
-DN  192.168.1.102  248.87 GiB  256    33.4%  ...  rack2
-UN  192.168.1.103  251.44 GiB  256    33.3%  ...  rack3
+<div class="highlight"><pre><span></span><code>UN  192.168.1.101  256.12 GiB  16    33.3%  ...  rack1
+DN  192.168.1.102  248.87 GiB  16    33.4%  ...  rack2
+UN  192.168.1.103  251.44 GiB  16    33.3%  ...  rack3
 </code></pre></div>
 <div class="admonition danger">
 <p class="admonition-title">Node Down</p>
@@ -20624,10 +20624,10 @@ UN  192.168.1.103  251.44 GiB  256    33.3%  ...  rack3
 </ol>
 </div>
 <h3 id="bootstrap-in-progress">Bootstrap in Progress<a class="headerlink" href="#bootstrap-in-progress" title="Permanent link">¶</a></h3>
-<div class="highlight"><pre><span></span><code>UN  192.168.1.101  256.12 GiB  256    25.0%  ...  rack1
-UN  192.168.1.102  248.87 GiB  256    25.0%  ...  rack2
-UN  192.168.1.103  251.44 GiB  256    25.0%  ...  rack3
-UJ  192.168.1.104  64.00 GiB   256    25.0%  ...  rack1
+<div class="highlight"><pre><span></span><code>UN  192.168.1.101  256.12 GiB  16    25.0%  ...  rack1
+UN  192.168.1.102  248.87 GiB  16    25.0%  ...  rack2
+UN  192.168.1.103  251.44 GiB  16    25.0%  ...  rack3
+UJ  192.168.1.104  64.00 GiB   16    25.0%  ...  rack1
 </code></pre></div>
 <p>The <code>UJ</code> node is joining the cluster and streaming data.</p>
 <hr>
@@ -20654,8 +20654,8 @@ UJ  192.168.1.104  64.00 GiB   256    25.0%  ...  rack1
 <li>Metrics not yet available</li>
 </ul>
 <h3 id="inconsistent-token-counts">Inconsistent Token Counts<a class="headerlink" href="#inconsistent-token-counts" title="Permanent link">¶</a></h3>
-<div class="highlight"><pre><span></span><code>UN  192.168.1.101  256.12 GiB  256    33.3%  ...  rack1
-UN  192.168.1.102  248.87 GiB  128    16.7%  ...  rack2
+<div class="highlight"><pre><span></span><code>UN  192.168.1.101  256.12 GiB  16    33.3%  ...  rack1
+UN  192.168.1.102  248.87 GiB   8    16.7%  ...  rack2
 </code></pre></div>
 <div class="admonition warning">
 <p class="admonition-title">Token Count Mismatch</p>
