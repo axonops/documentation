@@ -54,9 +54,9 @@ Datacenter: dc1
 Status=Up/Down
 |/ State=Normal/Leaving/Joining/Moving
 --  Address       Load       Tokens  Owns   Host ID                               Rack
-UN  10.0.0.1     256.12 KiB  256     ?      550e8400-e29b-41d4-a716-446655440000  rack1
-DN  10.0.0.2     267.89 KiB  256     ?      660e8400-e29b-41d4-a716-446655440001  rack1  <-- Dead node
-UN  10.0.0.3     245.34 KiB  256     ?      770e8400-e29b-41d4-a716-446655440002  rack1
+UN  10.0.0.1     256.12 KiB  16     ?      550e8400-e29b-41d4-a716-446655440000  rack1
+DN  10.0.0.2     267.89 KiB  16     ?      660e8400-e29b-41d4-a716-446655440001  rack1  <-- Dead node
+UN  10.0.0.3     245.34 KiB  16     ?      770e8400-e29b-41d4-a716-446655440002  rack1
 ```
 
 ### 1.2 Record Dead Node Information
@@ -221,9 +221,9 @@ nodetool status
 ```
 Datacenter: dc1
 ===============
-UN  10.0.0.1     256.12 KiB  256     33.3%  550e8400-e29b-41d4-a716-446655440000  rack1
-UN  10.0.0.4     267.89 KiB  256     33.3%  880e8400-e29b-41d4-a716-446655440003  rack1  <-- New node
-UN  10.0.0.3     245.34 KiB  256     33.4%  770e8400-e29b-41d4-a716-446655440002  rack1
+UN  10.0.0.1     256.12 KiB  16     33.3%  550e8400-e29b-41d4-a716-446655440000  rack1
+UN  10.0.0.4     267.89 KiB  16     33.3%  880e8400-e29b-41d4-a716-446655440003  rack1  <-- New node
+UN  10.0.0.3     245.34 KiB  16     33.4%  770e8400-e29b-41d4-a716-446655440002  rack1
 ```
 
 **Note**: Dead node (10.0.0.2) is no longer listed.
