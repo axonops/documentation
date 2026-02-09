@@ -6,6 +6,7 @@ meta:
     content: "release notes, AxonOps updates, changelog, new features"
 ---
 
+
 ## Release 2026-02-09
 
 * axon-server: 2.0.23
@@ -18,6 +19,16 @@ meta:
 ### New Features
 
 * [Server] Enable support for Elasticsearch 9.
+
+## Release 2026-02-06
+
+* axon-server: 2.0.21
+    * Adaptive repair improvements.
+
+### Improvements
+
+* [Server] Improve concurrency handling in Adaptive Repairs.
+
 
 ## Release 2026-02-03
 
