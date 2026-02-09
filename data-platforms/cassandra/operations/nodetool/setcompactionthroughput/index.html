@@ -20578,8 +20578,9 @@ data-et-multi-view="{&quot;schema&quot;:{&quot;content&quot;:{&quot;desktop&quot
 <p>Sets the total compaction throughput limit across all compaction threads on a node.</p>
 <hr>
 <h2 id="synopsis">Synopsis<a class="headerlink" href="#synopsis" title="Permanent link">¶</a></h2>
-<div class="highlight"><pre><span></span><code>nodetool<span class="w"> </span><span class="o">[</span>connection_options<span class="o">]</span><span class="w"> </span>setcompactionthroughput<span class="w"> </span>&lt;throughput_mb_per_sec&gt;
+<p></p><div class="highlight"><pre><span></span><code>nodetool<span class="w"> </span><span class="o">[</span>connection_options<span class="o">]</span><span class="w"> </span>setcompactionthroughput<span class="w"> </span>&lt;throughput_mb_per_sec&gt;
 </code></pre></div>
+See <a href="../#connection-options">connection options</a> for connection options.
 <h2 id="description">Description<a class="headerlink" href="#description" title="Permanent link">¶</a></h2>
 <p><code>nodetool setcompactionthroughput</code> controls the maximum rate at which all compaction operations combined can write data to disk. This throttle prevents compaction from consuming too much disk I/O and impacting production read/write workloads.</p>
 <h3 id="total-throughput-not-per-thread">Total Throughput, Not Per-Thread<a class="headerlink" href="#total-throughput-not-per-thread" title="Permanent link">¶</a></h3>

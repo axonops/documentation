@@ -20392,8 +20392,9 @@ data-et-multi-view="{&quot;schema&quot;:{&quot;content&quot;:{&quot;desktop&quot
 <p>Displays the number of concurrent compactor threads.</p>
 <hr>
 <h2 id="synopsis">Synopsis<a class="headerlink" href="#synopsis" title="Permanent link">¶</a></h2>
-<div class="highlight"><pre><span></span><code>nodetool<span class="w"> </span><span class="o">[</span>connection_options<span class="o">]</span><span class="w"> </span>getconcurrentcompactors
+<p></p><div class="highlight"><pre><span></span><code>nodetool<span class="w"> </span><span class="o">[</span>connection_options<span class="o">]</span><span class="w"> </span>getconcurrentcompactors
 </code></pre></div>
+See <a href="../#connection-options">connection options</a> for connection options.
 <hr>
 <h2 id="description">Description<a class="headerlink" href="#description" title="Permanent link">¶</a></h2>
 <p><code>nodetool getconcurrentcompactors</code> shows the current number of threads available for concurrent compaction operations. Each compactor thread can process one compaction task at a time, allowing multiple compactions to run in parallel when multiple threads are available.</p>

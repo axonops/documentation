@@ -20348,8 +20348,9 @@ data-et-multi-view="{&quot;schema&quot;:{&quot;content&quot;:{&quot;desktop&quot
 <p>Lists the pending hints for each node in the cluster.</p>
 <hr>
 <h2 id="synopsis">Synopsis<a class="headerlink" href="#synopsis" title="Permanent link">¶</a></h2>
-<div class="highlight"><pre><span></span><code>nodetool<span class="w"> </span><span class="o">[</span>connection_options<span class="o">]</span><span class="w"> </span>listpendinghints
+<p></p><div class="highlight"><pre><span></span><code>nodetool<span class="w"> </span><span class="o">[</span>connection_options<span class="o">]</span><span class="w"> </span>listpendinghints
 </code></pre></div>
+See <a href="../#connection-options">connection options</a> for connection options.
 <h2 id="description">Description<a class="headerlink" href="#description" title="Permanent link">¶</a></h2>
 <p><code>nodetool listpendinghints</code> displays information about hints that are waiting to be delivered to their target nodes. Hints are stored when a write cannot reach all replica nodes, and are delivered when those nodes become available again.</p>
 <p>This command helps monitor hint backlog and identify nodes that may have been unavailable.</p>

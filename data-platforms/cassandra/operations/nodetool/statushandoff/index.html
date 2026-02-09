@@ -20560,8 +20560,9 @@ data-et-multi-view="{&quot;schema&quot;:{&quot;content&quot;:{&quot;desktop&quot
 <p>Displays the current status of hinted handoff on the node.</p>
 <hr>
 <h2 id="synopsis">Synopsis<a class="headerlink" href="#synopsis" title="Permanent link">¶</a></h2>
-<div class="highlight"><pre><span></span><code>nodetool<span class="w"> </span><span class="o">[</span>connection_options<span class="o">]</span><span class="w"> </span>statushandoff
+<p></p><div class="highlight"><pre><span></span><code>nodetool<span class="w"> </span><span class="o">[</span>connection_options<span class="o">]</span><span class="w"> </span>statushandoff
 </code></pre></div>
+See <a href="../#connection-options">connection options</a> for connection options.
 <h2 id="description">Description<a class="headerlink" href="#description" title="Permanent link">¶</a></h2>
 <p><code>nodetool statushandoff</code> reports whether the hinted handoff mechanism is currently enabled or disabled on the node. This command is essential for verifying the state of hinted handoff after enable/disable operations and for routine health checks.</p>
 <p>Hinted handoff is a critical consistency mechanism that stores write hints for temporarily unavailable replicas, ensuring data is delivered when those replicas recover.</p>

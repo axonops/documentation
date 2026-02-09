@@ -20392,8 +20392,9 @@ data-et-multi-view="{&quot;schema&quot;:{&quot;content&quot;:{&quot;desktop&quot
 <p>Moves the node to a new token position in the ring.</p>
 <hr>
 <h2 id="synopsis">Synopsis<a class="headerlink" href="#synopsis" title="Permanent link">¶</a></h2>
-<div class="highlight"><pre><span></span><code>nodetool<span class="w"> </span><span class="o">[</span>connection_options<span class="o">]</span><span class="w"> </span>move<span class="w"> </span>&lt;new_token&gt;
+<p></p><div class="highlight"><pre><span></span><code>nodetool<span class="w"> </span><span class="o">[</span>connection_options<span class="o">]</span><span class="w"> </span>move<span class="w"> </span>&lt;new_token&gt;
 </code></pre></div>
+See <a href="../#connection-options">connection options</a> for connection options.
 <h2 id="description">Description<a class="headerlink" href="#description" title="Permanent link">¶</a></h2>
 <p><code>nodetool move</code> reassigns a node's token position in the cluster ring. This causes the node to stream data to/from other nodes to match its new token ownership. Moving a token changes which data the node is responsible for.</p>
 <div class="admonition warning">

@@ -20494,8 +20494,9 @@ data-et-multi-view="{&quot;schema&quot;:{&quot;content&quot;:{&quot;desktop&quot
 <p>Invalidates the permissions cache on the node.</p>
 <hr>
 <h2 id="synopsis">Synopsis<a class="headerlink" href="#synopsis" title="Permanent link">¶</a></h2>
-<div class="highlight"><pre><span></span><code>nodetool<span class="w"> </span><span class="o">[</span>connection_options<span class="o">]</span><span class="w"> </span>invalidatepermissionscache
+<p></p><div class="highlight"><pre><span></span><code>nodetool<span class="w"> </span><span class="o">[</span>connection_options<span class="o">]</span><span class="w"> </span>invalidatepermissionscache
 </code></pre></div>
+See <a href="../#connection-options">connection options</a> for connection options.
 <h2 id="description">Description<a class="headerlink" href="#description" title="Permanent link">¶</a></h2>
 <p><code>nodetool invalidatepermissionscache</code> clears all cached permission entries on the node. The permissions cache stores authorization information, allowing Cassandra to avoid querying the <code>system_auth.role_permissions</code> table for every operation.</p>
 <p>After invalidation, subsequent operations trigger fresh permission lookups from the system tables, which are then re-cached.</p>

@@ -20614,8 +20614,9 @@ data-et-multi-view="{&quot;schema&quot;:{&quot;content&quot;:{&quot;desktop&quot
 <p>Forcibly removes a dead node from gossip when normal removal methods fail.</p>
 <hr>
 <h2 id="synopsis">Synopsis<a class="headerlink" href="#synopsis" title="Permanent link">¶</a></h2>
-<div class="highlight"><pre><span></span><code>nodetool<span class="w"> </span><span class="o">[</span>connection_options<span class="o">]</span><span class="w"> </span>assassinate<span class="w"> </span>&lt;ip_address&gt;
+<p></p><div class="highlight"><pre><span></span><code>nodetool<span class="w"> </span><span class="o">[</span>connection_options<span class="o">]</span><span class="w"> </span>assassinate<span class="w"> </span>&lt;ip_address&gt;
 </code></pre></div>
+See <a href="../#connection-options">connection options</a> for connection options.
 <h2 id="description">Description<a class="headerlink" href="#description" title="Permanent link">¶</a></h2>
 <p><code>nodetool assassinate</code> forcibly removes a node's gossip state from the cluster. This is a last-resort operation when a dead node cannot be removed through normal means (<code>decommission</code> or <code>removenode</code>).</p>
 <div class="admonition danger">

@@ -20308,8 +20308,9 @@ data-et-multi-view="{&quot;schema&quot;:{&quot;content&quot;:{&quot;desktop&quot
 <p>Disables hints for a specific datacenter.</p>
 <hr>
 <h2 id="synopsis">Synopsis<a class="headerlink" href="#synopsis" title="Permanent link">¶</a></h2>
-<div class="highlight"><pre><span></span><code>nodetool<span class="w"> </span><span class="o">[</span>connection_options<span class="o">]</span><span class="w"> </span>disablehintsfordc<span class="w"> </span>&lt;datacenter&gt;
+<p></p><div class="highlight"><pre><span></span><code>nodetool<span class="w"> </span><span class="o">[</span>connection_options<span class="o">]</span><span class="w"> </span>disablehintsfordc<span class="w"> </span>&lt;datacenter&gt;
 </code></pre></div>
+See <a href="../#connection-options">connection options</a> for connection options.
 <h2 id="description">Description<a class="headerlink" href="#description" title="Permanent link">¶</a></h2>
 <p><code>nodetool disablehintsfordc</code> prevents the local node from storing hints for writes destined for nodes in a specific datacenter. This is useful when a datacenter is expected to be unavailable for an extended period or is being decommissioned.</p>
 <div class="admonition warning">

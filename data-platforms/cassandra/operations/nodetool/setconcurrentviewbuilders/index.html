@@ -20800,8 +20800,9 @@ data-et-multi-view="{&quot;schema&quot;:{&quot;content&quot;:{&quot;desktop&quot
 <p>Sets the number of concurrent threads used for building materialized views.</p>
 <hr>
 <h2 id="synopsis">Synopsis<a class="headerlink" href="#synopsis" title="Permanent link">¶</a></h2>
-<div class="highlight"><pre><span></span><code>nodetool<span class="w"> </span><span class="o">[</span>connection_options<span class="o">]</span><span class="w"> </span>setconcurrentviewbuilders<span class="w"> </span>&lt;value&gt;
+<p></p><div class="highlight"><pre><span></span><code>nodetool<span class="w"> </span><span class="o">[</span>connection_options<span class="o">]</span><span class="w"> </span>setconcurrentviewbuilders<span class="w"> </span>&lt;value&gt;
 </code></pre></div>
+See <a href="../#connection-options">connection options</a> for connection options.
 <h2 id="description">Description<a class="headerlink" href="#description" title="Permanent link">¶</a></h2>
 <p><code>nodetool setconcurrentviewbuilders</code> controls how many threads are dedicated to building materialized views. When a materialized view is created or needs to be rebuilt, Cassandra populates it by reading data from the base table and writing corresponding entries to the view. This setting determines how many of these build operations can run in parallel.</p>
 <h3 id="what-are-materialized-views">What Are Materialized Views?<a class="headerlink" href="#what-are-materialized-views" title="Permanent link">¶</a></h3>

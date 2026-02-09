@@ -20680,8 +20680,9 @@ data-et-multi-view="{&quot;schema&quot;:{&quot;content&quot;:{&quot;desktop&quot
 <p>Forces immediate replay of pending batch mutations stored in the batchlog.</p>
 <hr>
 <h2 id="synopsis">Synopsis<a class="headerlink" href="#synopsis" title="Permanent link">¶</a></h2>
-<div class="highlight"><pre><span></span><code>nodetool<span class="w"> </span><span class="o">[</span>connection_options<span class="o">]</span><span class="w"> </span>replaybatchlog
+<p></p><div class="highlight"><pre><span></span><code>nodetool<span class="w"> </span><span class="o">[</span>connection_options<span class="o">]</span><span class="w"> </span>replaybatchlog
 </code></pre></div>
+See <a href="../#connection-options">connection options</a> for connection options.
 <h2 id="description">Description<a class="headerlink" href="#description" title="Permanent link">¶</a></h2>
 <p><code>nodetool replaybatchlog</code> triggers immediate processing of any pending batches stored in the local node's batchlog. Under normal operation, Cassandra automatically replays the batchlog, but this command forces immediate replay without waiting for the scheduled interval.</p>
 <h3 id="what-is-a-batch-in-cassandra">What is a Batch in Cassandra?<a class="headerlink" href="#what-is-a-batch-in-cassandra" title="Permanent link">¶</a></h3>

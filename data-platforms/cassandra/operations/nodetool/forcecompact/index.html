@@ -20042,8 +20042,9 @@ data-et-multi-view="{&quot;schema&quot;:{&quot;content&quot;:{&quot;desktop&quot
 <p>Forces compaction of SSTables containing specified partition keys, ignoring <code>gc_grace_seconds</code>.</p>
 <hr>
 <h2 id="synopsis">Synopsis<a class="headerlink" href="#synopsis" title="Permanent link">¶</a></h2>
-<div class="highlight"><pre><span></span><code>nodetool<span class="w"> </span><span class="o">[</span>connection_options<span class="o">]</span><span class="w"> </span>forcecompact<span class="w"> </span>&lt;keyspace&gt;<span class="w"> </span>&lt;table&gt;<span class="w"> </span>&lt;keys&gt;...
+<p></p><div class="highlight"><pre><span></span><code>nodetool<span class="w"> </span><span class="o">[</span>connection_options<span class="o">]</span><span class="w"> </span>forcecompact<span class="w"> </span>&lt;keyspace&gt;<span class="w"> </span>&lt;table&gt;<span class="w"> </span>&lt;keys&gt;...
 </code></pre></div>
+See <a href="../#connection-options">connection options</a> for connection options.
 <h2 id="description">Description<a class="headerlink" href="#description" title="Permanent link">¶</a></h2>
 <p><code>nodetool forcecompact</code> forces compaction of SSTables containing the specified partition keys. Unlike regular compaction, this command ignores <code>gc_grace_seconds</code> when purging tombstones, allowing immediate removal of deleted data for specific partitions.</p>
 <div class="admonition warning">

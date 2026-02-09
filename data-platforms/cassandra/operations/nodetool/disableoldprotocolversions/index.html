@@ -20776,8 +20776,9 @@ data-et-multi-view="{&quot;schema&quot;:{&quot;content&quot;:{&quot;desktop&quot
 <p>Disables support for older CQL native protocol versions, requiring clients to use modern protocol versions.</p>
 <hr>
 <h2 id="synopsis">Synopsis<a class="headerlink" href="#synopsis" title="Permanent link">¶</a></h2>
-<div class="highlight"><pre><span></span><code>nodetool<span class="w"> </span><span class="o">[</span>connection_options<span class="o">]</span><span class="w"> </span>disableoldprotocolversions
+<p></p><div class="highlight"><pre><span></span><code>nodetool<span class="w"> </span><span class="o">[</span>connection_options<span class="o">]</span><span class="w"> </span>disableoldprotocolversions
 </code></pre></div>
+See <a href="../#connection-options">connection options</a> for connection options.
 <h2 id="description">Description<a class="headerlink" href="#description" title="Permanent link">¶</a></h2>
 <p><code>nodetool disableoldprotocolversions</code> disables support for older CQL native protocol versions on the node. When executed, clients using protocol versions older than the current default will be rejected, requiring them to upgrade to a supported version.</p>
 <h3 id="cql-native-protocol-versions">CQL Native Protocol Versions<a class="headerlink" href="#cql-native-protocol-versions" title="Permanent link">¶</a></h3>

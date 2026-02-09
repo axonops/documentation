@@ -20416,8 +20416,9 @@ data-et-multi-view="{&quot;schema&quot;:{&quot;content&quot;:{&quot;desktop&quot
 <p>Displays the replica nodes for a specific partition key.</p>
 <hr>
 <h2 id="synopsis">Synopsis<a class="headerlink" href="#synopsis" title="Permanent link">¶</a></h2>
-<div class="highlight"><pre><span></span><code>nodetool<span class="w"> </span><span class="o">[</span>connection_options<span class="o">]</span><span class="w"> </span>getendpoints<span class="w"> </span>&lt;keyspace&gt;<span class="w"> </span>&lt;table&gt;<span class="w"> </span>&lt;key&gt;
+<p></p><div class="highlight"><pre><span></span><code>nodetool<span class="w"> </span><span class="o">[</span>connection_options<span class="o">]</span><span class="w"> </span>getendpoints<span class="w"> </span>&lt;keyspace&gt;<span class="w"> </span>&lt;table&gt;<span class="w"> </span>&lt;key&gt;
 </code></pre></div>
+See <a href="../#connection-options">connection options</a> for connection options.
 <h2 id="description">Description<a class="headerlink" href="#description" title="Permanent link">¶</a></h2>
 <p><code>nodetool getendpoints</code> shows which nodes store replicas for a given partition key. This is useful for debugging data placement, understanding query routing, and troubleshooting replication issues.</p>
 <hr>

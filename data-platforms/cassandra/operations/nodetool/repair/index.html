@@ -20638,8 +20638,9 @@ data-et-multi-view="{&quot;schema&quot;:{&quot;content&quot;:{&quot;desktop&quot
 <p>Runs anti-entropy repair to synchronize data across replicas, ensuring consistency and preventing data resurrection from expired tombstones.</p>
 <hr>
 <h2 id="synopsis">Synopsis<a class="headerlink" href="#synopsis" title="Permanent link">¶</a></h2>
-<div class="highlight"><pre><span></span><code>nodetool<span class="w"> </span><span class="o">[</span>connection_options<span class="o">]</span><span class="w"> </span>repair<span class="w"> </span><span class="o">[</span>options<span class="o">]</span><span class="w"> </span><span class="o">[</span>--<span class="o">]</span><span class="w"> </span><span class="o">[</span>keyspace<span class="w"> </span><span class="o">[</span>table<span class="w"> </span>...<span class="o">]]</span>
+<p></p><div class="highlight"><pre><span></span><code>nodetool<span class="w"> </span><span class="o">[</span>connection_options<span class="o">]</span><span class="w"> </span>repair<span class="w"> </span><span class="o">[</span>options<span class="o">]</span><span class="w"> </span><span class="o">[</span>--<span class="o">]</span><span class="w"> </span><span class="o">[</span>keyspace<span class="w"> </span><span class="o">[</span>table<span class="w"> </span>...<span class="o">]]</span>
 </code></pre></div>
+See <a href="../#connection-options">connection options</a> for connection options.
 <h2 id="description">Description<a class="headerlink" href="#description" title="Permanent link">¶</a></h2>
 <p><code>nodetool repair</code> compares data between replica nodes using Merkle trees and streams any differences to ensure all replicas hold identical data. Repair is essential for:</p>
 <ul>

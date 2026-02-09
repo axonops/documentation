@@ -65,7 +65,7 @@
     
     
       
-        <meta  name="keywords"  content="nodetool sjk, Swiss Java Knife, JVM diagnostics, Cassandra" >
+        <meta  name="keywords"  content="nodetool sjk, Swiss Java Knife, JVM diagnostics, Cassandra, thread dump, heap histogram, CPU profiling" >
       
     
     
@@ -9989,40 +9989,22 @@ data-et-multi-view="{&quot;schema&quot;:{&quot;content&quot;:{&quot;desktop&quot
     </span>
   </a>
   
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#examples" class="md-nav__link">
-    <span class="md-ellipsis">
-      Examples
-    </span>
-  </a>
-  
-    <nav class="md-nav" aria-label="Examples">
+    <nav class="md-nav" aria-label="Description">
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
-  <a href="#thread-dump" class="md-nav__link">
+  <a href="#background" class="md-nav__link">
     <span class="md-ellipsis">
-      Thread Dump
+      Background
     </span>
   </a>
   
 </li>
         
           <li class="md-nav__item">
-  <a href="#stack-trace-analysis" class="md-nav__link">
+  <a href="#how-it-works" class="md-nav__link">
     <span class="md-ellipsis">
-      Stack Trace Analysis
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#help" class="md-nav__link">
-    <span class="md-ellipsis">
-      Help
+      How It Works
     </span>
   </a>
   
@@ -10034,37 +10016,199 @@ data-et-multi-view="{&quot;schema&quot;:{&quot;content&quot;:{&quot;desktop&quot
 </li>
       
         <li class="md-nav__item">
-  <a href="#common-sjk-commands" class="md-nav__link">
+  <a href="#getting-help" class="md-nav__link">
     <span class="md-ellipsis">
-      Common SJK Commands
+      Getting Help
     </span>
   </a>
   
 </li>
       
         <li class="md-nav__item">
-  <a href="#when-to-use" class="md-nav__link">
+  <a href="#common-commands" class="md-nav__link">
     <span class="md-ellipsis">
-      When to Use
+      Common Commands
     </span>
   </a>
   
-    <nav class="md-nav" aria-label="When to Use">
+    <nav class="md-nav" aria-label="Common Commands">
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
-  <a href="#cpu-analysis" class="md-nav__link">
+  <a href="#ttop-thread-cpu-usage" class="md-nav__link">
     <span class="md-ellipsis">
-      CPU Analysis
+      ttop - Thread CPU Usage
     </span>
   </a>
   
 </li>
         
           <li class="md-nav__item">
-  <a href="#thread-analysis" class="md-nav__link">
+  <a href="#hh-heap-histogram" class="md-nav__link">
     <span class="md-ellipsis">
-      Thread Analysis
+      hh - Heap Histogram
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#gc-garbage-collection-tracker" class="md-nav__link">
+    <span class="md-ellipsis">
+      gc - Garbage Collection Tracker
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#stcap-stack-trace-capture" class="md-nav__link">
+    <span class="md-ellipsis">
+      stcap - Stack Trace Capture
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#ssa-stack-trace-analyzer" class="md-nav__link">
+    <span class="md-ellipsis">
+      ssa - Stack Trace Analyzer
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#mx-mbean-operations" class="md-nav__link">
+    <span class="md-ellipsis">
+      mx - MBean Operations
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#practical-examples" class="md-nav__link">
+    <span class="md-ellipsis">
+      Practical Examples
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Practical Examples">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#diagnosing-high-cpu-usage" class="md-nav__link">
+    <span class="md-ellipsis">
+      Diagnosing High CPU Usage
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#investigating-memory-issues" class="md-nav__link">
+    <span class="md-ellipsis">
+      Investigating Memory Issues
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#collecting-diagnostic-data" class="md-nav__link">
+    <span class="md-ellipsis">
+      Collecting Diagnostic Data
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#common-cassandra-thread-patterns" class="md-nav__link">
+    <span class="md-ellipsis">
+      Common Cassandra Thread Patterns
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#best-practices" class="md-nav__link">
+    <span class="md-ellipsis">
+      Best Practices
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Best Practices">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#production-usage" class="md-nav__link">
+    <span class="md-ellipsis">
+      Production Usage
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#using-the-separator" class="md-nav__link">
+    <span class="md-ellipsis">
+      Using the Separator
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#troubleshooting" class="md-nav__link">
+    <span class="md-ellipsis">
+      Troubleshooting
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Troubleshooting">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#command-not-recognized" class="md-nav__link">
+    <span class="md-ellipsis">
+      Command Not Recognized
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#connection-issues" class="md-nav__link">
+    <span class="md-ellipsis">
+      Connection Issues
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#option-errors" class="md-nav__link">
+    <span class="md-ellipsis">
+      Option Errors
     </span>
   </a>
   
@@ -10079,6 +10223,15 @@ data-et-multi-view="{&quot;schema&quot;:{&quot;content&quot;:{&quot;desktop&quot
   <a href="#related-commands" class="md-nav__link">
     <span class="md-ellipsis">
       Related Commands
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#external-resources" class="md-nav__link">
+    <span class="md-ellipsis">
+      External Resources
     </span>
   </a>
   
@@ -19978,40 +20131,22 @@ data-et-multi-view="{&quot;schema&quot;:{&quot;content&quot;:{&quot;desktop&quot
     </span>
   </a>
   
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#examples" class="md-nav__link">
-    <span class="md-ellipsis">
-      Examples
-    </span>
-  </a>
-  
-    <nav class="md-nav" aria-label="Examples">
+    <nav class="md-nav" aria-label="Description">
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
-  <a href="#thread-dump" class="md-nav__link">
+  <a href="#background" class="md-nav__link">
     <span class="md-ellipsis">
-      Thread Dump
+      Background
     </span>
   </a>
   
 </li>
         
           <li class="md-nav__item">
-  <a href="#stack-trace-analysis" class="md-nav__link">
+  <a href="#how-it-works" class="md-nav__link">
     <span class="md-ellipsis">
-      Stack Trace Analysis
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#help" class="md-nav__link">
-    <span class="md-ellipsis">
-      Help
+      How It Works
     </span>
   </a>
   
@@ -20023,37 +20158,199 @@ data-et-multi-view="{&quot;schema&quot;:{&quot;content&quot;:{&quot;desktop&quot
 </li>
       
         <li class="md-nav__item">
-  <a href="#common-sjk-commands" class="md-nav__link">
+  <a href="#getting-help" class="md-nav__link">
     <span class="md-ellipsis">
-      Common SJK Commands
+      Getting Help
     </span>
   </a>
   
 </li>
       
         <li class="md-nav__item">
-  <a href="#when-to-use" class="md-nav__link">
+  <a href="#common-commands" class="md-nav__link">
     <span class="md-ellipsis">
-      When to Use
+      Common Commands
     </span>
   </a>
   
-    <nav class="md-nav" aria-label="When to Use">
+    <nav class="md-nav" aria-label="Common Commands">
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
-  <a href="#cpu-analysis" class="md-nav__link">
+  <a href="#ttop-thread-cpu-usage" class="md-nav__link">
     <span class="md-ellipsis">
-      CPU Analysis
+      ttop - Thread CPU Usage
     </span>
   </a>
   
 </li>
         
           <li class="md-nav__item">
-  <a href="#thread-analysis" class="md-nav__link">
+  <a href="#hh-heap-histogram" class="md-nav__link">
     <span class="md-ellipsis">
-      Thread Analysis
+      hh - Heap Histogram
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#gc-garbage-collection-tracker" class="md-nav__link">
+    <span class="md-ellipsis">
+      gc - Garbage Collection Tracker
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#stcap-stack-trace-capture" class="md-nav__link">
+    <span class="md-ellipsis">
+      stcap - Stack Trace Capture
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#ssa-stack-trace-analyzer" class="md-nav__link">
+    <span class="md-ellipsis">
+      ssa - Stack Trace Analyzer
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#mx-mbean-operations" class="md-nav__link">
+    <span class="md-ellipsis">
+      mx - MBean Operations
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#practical-examples" class="md-nav__link">
+    <span class="md-ellipsis">
+      Practical Examples
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Practical Examples">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#diagnosing-high-cpu-usage" class="md-nav__link">
+    <span class="md-ellipsis">
+      Diagnosing High CPU Usage
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#investigating-memory-issues" class="md-nav__link">
+    <span class="md-ellipsis">
+      Investigating Memory Issues
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#collecting-diagnostic-data" class="md-nav__link">
+    <span class="md-ellipsis">
+      Collecting Diagnostic Data
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#common-cassandra-thread-patterns" class="md-nav__link">
+    <span class="md-ellipsis">
+      Common Cassandra Thread Patterns
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#best-practices" class="md-nav__link">
+    <span class="md-ellipsis">
+      Best Practices
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Best Practices">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#production-usage" class="md-nav__link">
+    <span class="md-ellipsis">
+      Production Usage
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#using-the-separator" class="md-nav__link">
+    <span class="md-ellipsis">
+      Using the Separator
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#troubleshooting" class="md-nav__link">
+    <span class="md-ellipsis">
+      Troubleshooting
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Troubleshooting">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#command-not-recognized" class="md-nav__link">
+    <span class="md-ellipsis">
+      Command Not Recognized
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#connection-issues" class="md-nav__link">
+    <span class="md-ellipsis">
+      Connection Issues
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#option-errors" class="md-nav__link">
+    <span class="md-ellipsis">
+      Option Errors
     </span>
   </a>
   
@@ -20068,6 +20365,15 @@ data-et-multi-view="{&quot;schema&quot;:{&quot;content&quot;:{&quot;desktop&quot
   <a href="#related-commands" class="md-nav__link">
     <span class="md-ellipsis">
       Related Commands
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#external-resources" class="md-nav__link">
+    <span class="md-ellipsis">
+      External Resources
     </span>
   </a>
   
@@ -20089,65 +20395,265 @@ data-et-multi-view="{&quot;schema&quot;:{&quot;content&quot;:{&quot;desktop&quot
 
 
 <div><h1 id="nodetool-sjk">nodetool sjk<a class="headerlink" href="#nodetool-sjk" title="Permanent link">¶</a></h1>
-<p>Invokes the Swiss Java Knife diagnostic tool.</p>
+<p>Invokes the Swiss Java Knife (SJK) diagnostic tool for JVM troubleshooting and performance analysis.</p>
 <hr>
 <h2 id="synopsis">Synopsis<a class="headerlink" href="#synopsis" title="Permanent link">¶</a></h2>
-<div class="highlight"><pre><span></span><code>nodetool<span class="w"> </span><span class="o">[</span>connection_options<span class="o">]</span><span class="w"> </span>sjk<span class="w"> </span>&lt;sjk_arguments&gt;
+<div class="highlight"><pre><span></span><code>nodetool<span class="w"> </span><span class="o">[</span>connection_options<span class="o">]</span><span class="w"> </span>sjk<span class="w"> </span><span class="o">[</span>--<span class="o">]</span><span class="w"> </span>&lt;args&gt;
 </code></pre></div>
-<h2 id="description">Description<a class="headerlink" href="#description" title="Permanent link">¶</a></h2>
-<p><code>nodetool sjk</code> provides access to Swiss Java Knife (SJK) diagnostic commands for JVM troubleshooting. SJK offers various tools for analyzing thread dumps, heap usage, and other JVM internals.</p>
-<hr>
-<h2 id="examples">Examples<a class="headerlink" href="#examples" title="Permanent link">¶</a></h2>
-<h3 id="thread-dump">Thread Dump<a class="headerlink" href="#thread-dump" title="Permanent link">¶</a></h3>
-<div class="highlight"><pre><span></span><code>nodetool<span class="w"> </span>sjk<span class="w"> </span>ttop
-</code></pre></div>
-<h3 id="stack-trace-analysis">Stack Trace Analysis<a class="headerlink" href="#stack-trace-analysis" title="Permanent link">¶</a></h3>
-<div class="highlight"><pre><span></span><code>nodetool<span class="w"> </span>sjk<span class="w"> </span>stcap
-</code></pre></div>
-<h3 id="help">Help<a class="headerlink" href="#help" title="Permanent link">¶</a></h3>
-<div class="highlight"><pre><span></span><code>nodetool<span class="w"> </span>sjk<span class="w"> </span>--help
-</code></pre></div>
-<hr>
-<h2 id="common-sjk-commands">Common SJK Commands<a class="headerlink" href="#common-sjk-commands" title="Permanent link">¶</a></h2>
+<p>See <a href="../#connection-options">connection options</a> for connection options.</p>
+<p><strong>Arguments:</strong></p>
 <table>
 <thead>
 <tr>
-<th>Command</th>
+<th>Argument</th>
 <th>Description</th>
 </tr>
 </thead>
 <tbody>
 <tr>
-<td><code>ttop</code></td>
-<td>Thread CPU usage</td>
+<td><code>--</code></td>
+<td>Optional separator to distinguish nodetool options from SJK arguments</td>
 </tr>
 <tr>
-<td><code>stcap</code></td>
-<td>Stack trace capture</td>
+<td><code>&lt;args&gt;</code></td>
+<td>Arguments passed verbatim to Swiss Java Knife</td>
+</tr>
+</tbody>
+</table>
+<p>The <code>--</code> separator is useful when SJK arguments might be mistaken for nodetool options.</p>
+<h2 id="description">Description<a class="headerlink" href="#description" title="Permanent link">¶</a></h2>
+<p><code>nodetool sjk</code> provides access to <a href="https://github.com/aragozin/jvm-tools">Swiss Java Knife (SJK)</a>, a collection of command-line tools for JVM diagnostics, monitoring, and profiling.</p>
+<h3 id="background">Background<a class="headerlink" href="#background" title="Permanent link">¶</a></h3>
+<p>SJK was integrated into Cassandra nodetool via <a href="https://issues.apache.org/jira/browse/CASSANDRA-12197">CASSANDRA-12197</a>. This integration allows operators to perform JVM diagnostics directly through nodetool without needing to install separate tools or manage additional JAR files on Cassandra nodes.</p>
+<h3 id="how-it-works">How It Works<a class="headerlink" href="#how-it-works" title="Permanent link">¶</a></h3>
+<p>When <code>nodetool sjk</code> is invoked:</p>
+<ol>
+<li>Nodetool establishes a JMX connection to the target Cassandra node using standard nodetool connection options (<code>-h</code>, <code>-p</code>, <code>-u</code>, <code>-pw</code>)</li>
+<li>The SJK arguments are passed to the embedded SJK library</li>
+<li>SJK commands that require JVM access use the JMX connection and process ID provided by nodetool</li>
+<li>Results are returned to the console</li>
+</ol>
+<div class="admonition note">
+<p class="admonition-title">Connection Handling</p>
+<p>Cassandra's nodetool integration manages the JMX connection. SJK's own connection options (<code>--pid</code>, <code>--socket</code>, etc.) are not available through <code>nodetool sjk</code>. The connection is always established through nodetool's standard mechanism.</p>
+</div>
+<hr>
+<h2 id="getting-help">Getting Help<a class="headerlink" href="#getting-help" title="Permanent link">¶</a></h2>
+<p>To see available SJK commands for the installed Cassandra version:</p>
+<div class="highlight"><pre><span></span><code><span class="c1"># List all available commands</span>
+nodetool<span class="w"> </span>sjk<span class="w"> </span>--commands
+
+<span class="c1"># Get general help</span>
+nodetool<span class="w"> </span>sjk<span class="w"> </span>--help
+
+<span class="c1"># Get help for a specific command</span>
+nodetool<span class="w"> </span>sjk<span class="w"> </span>&lt;command&gt;<span class="w"> </span>--help
+</code></pre></div>
+<div class="admonition tip">
+<p class="admonition-title">Version-Specific Commands</p>
+<p>The available commands and their options depend on the SJK version bundled with the Cassandra distribution. Always use <code>nodetool sjk --commands</code> to see what is available in the current environment.</p>
+</div>
+<hr>
+<h2 id="common-commands">Common Commands<a class="headerlink" href="#common-commands" title="Permanent link">¶</a></h2>
+<p>The following commands are typically available. Run <code>nodetool sjk --commands</code> to confirm availability and <code>nodetool sjk &lt;command&gt; --help</code> for exact option names.</p>
+<h3 id="ttop-thread-cpu-usage">ttop - Thread CPU Usage<a class="headerlink" href="#ttop-thread-cpu-usage" title="Permanent link">¶</a></h3>
+<p>Displays JVM threads sorted by CPU usage, similar to the Linux <code>top</code> command but for threads within a single JVM process.</p>
+<div class="highlight"><pre><span></span><code><span class="c1"># Show thread CPU usage</span>
+nodetool<span class="w"> </span>sjk<span class="w"> </span>ttop
+
+<span class="c1"># Show top N threads (check --help for exact option name)</span>
+nodetool<span class="w"> </span>sjk<span class="w"> </span>ttop<span class="w"> </span>--help
+</code></pre></div>
+<p><strong>Use cases:</strong></p>
+<ul>
+<li>Identify threads consuming excessive CPU</li>
+<li>Detect runaway compaction or streaming threads</li>
+<li>Find threads blocked in contention</li>
+<li>Monitor allocation rates to diagnose GC pressure</li>
+</ul>
+<hr>
+<h3 id="hh-heap-histogram">hh - Heap Histogram<a class="headerlink" href="#hh-heap-histogram" title="Permanent link">¶</a></h3>
+<p>Prints a histogram of objects on the heap, similar to <code>jmap -histo</code>. This is useful for identifying memory leaks or unexpected object retention.</p>
+<div class="admonition warning">
+<p class="admonition-title">Stop-the-World Pause</p>
+<p>The heap histogram operation may cause a stop-the-world pause. Some options require a full garbage collection. Use with caution on production systems.</p>
+</div>
+<div class="highlight"><pre><span></span><code><span class="c1"># Show heap histogram</span>
+nodetool<span class="w"> </span>sjk<span class="w"> </span>hh
+
+<span class="c1"># Show top N classes with live objects only</span>
+nodetool<span class="w"> </span>sjk<span class="w"> </span>--<span class="w"> </span>hh<span class="w"> </span>--top-number<span class="w"> </span><span class="m">20</span><span class="w"> </span>--live
+
+<span class="c1"># Get help for available options</span>
+nodetool<span class="w"> </span>sjk<span class="w"> </span>hh<span class="w"> </span>--help
+</code></pre></div>
+<p><strong>Use cases:</strong></p>
+<ul>
+<li>Identify classes with unexpectedly high instance counts</li>
+<li>Detect memory leaks (growing instance counts over time)</li>
+<li>Analyze object retention patterns</li>
+<li>Compare live vs dead objects to understand allocation patterns</li>
+</ul>
+<hr>
+<h3 id="gc-garbage-collection-tracker">gc - Garbage Collection Tracker<a class="headerlink" href="#gc-garbage-collection-tracker" title="Permanent link">¶</a></h3>
+<p>Reports garbage collection statistics in real time.</p>
+<div class="highlight"><pre><span></span><code><span class="c1"># Monitor GC activity</span>
+nodetool<span class="w"> </span>sjk<span class="w"> </span>gc
+
+<span class="c1"># Get available options</span>
+nodetool<span class="w"> </span>sjk<span class="w"> </span>gc<span class="w"> </span>--help
+</code></pre></div>
+<p><strong>Use cases:</strong></p>
+<ul>
+<li>Monitor GC behavior under load</li>
+<li>Detect long GC pauses affecting latency</li>
+<li>Verify GC tuning changes</li>
+<li>Correlate GC activity with application performance</li>
+</ul>
+<hr>
+<h3 id="stcap-stack-trace-capture">stcap - Stack Trace Capture<a class="headerlink" href="#stcap-stack-trace-capture" title="Permanent link">¶</a></h3>
+<p>Captures thread stack traces at regular intervals for profiling and analysis.</p>
+<div class="highlight"><pre><span></span><code><span class="c1"># Capture stack traces (check --help for options)</span>
+nodetool<span class="w"> </span>sjk<span class="w"> </span>stcap<span class="w"> </span>--help
+
+<span class="c1"># Example: capture to file for specified duration</span>
+nodetool<span class="w"> </span>sjk<span class="w"> </span>--<span class="w"> </span>stcap<span class="w"> </span>--output<span class="w"> </span>/tmp/stacks.std<span class="w"> </span>--timeout<span class="w"> </span><span class="m">30000</span>
+</code></pre></div>
+<p><strong>Use cases:</strong></p>
+<ul>
+<li>Profile CPU-intensive operations</li>
+<li>Identify hot code paths</li>
+<li>Analyze thread behavior over time</li>
+<li>Create data for flame graph generation</li>
+</ul>
+<hr>
+<h3 id="ssa-stack-trace-analyzer">ssa - Stack Trace Analyzer<a class="headerlink" href="#ssa-stack-trace-analyzer" title="Permanent link">¶</a></h3>
+<p>Analyzes stack trace files created by <code>stcap</code>.</p>
+<div class="highlight"><pre><span></span><code><span class="c1"># Analyze captured file</span>
+nodetool<span class="w"> </span>sjk<span class="w"> </span>--<span class="w"> </span>ssa<span class="w"> </span>--file<span class="w"> </span>/tmp/stacks.std<span class="w"> </span>--help
+
+<span class="c1"># Generate histogram</span>
+nodetool<span class="w"> </span>sjk<span class="w"> </span>--<span class="w"> </span>ssa<span class="w"> </span>--file<span class="w"> </span>/tmp/stacks.std<span class="w"> </span>--histo
+</code></pre></div>
+<hr>
+<h3 id="mx-mbean-operations">mx - MBean Operations<a class="headerlink" href="#mx-mbean-operations" title="Permanent link">¶</a></h3>
+<p>Queries and invokes JMX MBean operations.</p>
+<div class="highlight"><pre><span></span><code><span class="c1"># Get help for MBean operations</span>
+nodetool<span class="w"> </span>sjk<span class="w"> </span>mx<span class="w"> </span>--help
+
+<span class="c1"># Example: list MBean info</span>
+nodetool<span class="w"> </span>sjk<span class="w"> </span>--<span class="w"> </span>mx<span class="w"> </span>--bean<span class="w"> </span><span class="s2">"java.lang:type=Memory"</span><span class="w"> </span>--info
+</code></pre></div>
+<hr>
+<h2 id="practical-examples">Practical Examples<a class="headerlink" href="#practical-examples" title="Permanent link">¶</a></h2>
+<h3 id="diagnosing-high-cpu-usage">Diagnosing High CPU Usage<a class="headerlink" href="#diagnosing-high-cpu-usage" title="Permanent link">¶</a></h3>
+<div class="highlight"><pre><span></span><code><span class="c1"># Step 1: Identify which threads are using CPU</span>
+nodetool<span class="w"> </span>sjk<span class="w"> </span>ttop
+
+<span class="c1"># Step 2: If specific threads are high, capture stack traces</span>
+nodetool<span class="w"> </span>sjk<span class="w"> </span>--<span class="w"> </span>stcap<span class="w"> </span>--output<span class="w"> </span>/tmp/high-cpu.std<span class="w"> </span>--timeout<span class="w"> </span><span class="m">60000</span>
+
+<span class="c1"># Step 3: Analyze the captured data</span>
+nodetool<span class="w"> </span>sjk<span class="w"> </span>--<span class="w"> </span>ssa<span class="w"> </span>--file<span class="w"> </span>/tmp/high-cpu.std<span class="w"> </span>--histo
+</code></pre></div>
+<h3 id="investigating-memory-issues">Investigating Memory Issues<a class="headerlink" href="#investigating-memory-issues" title="Permanent link">¶</a></h3>
+<div class="highlight"><pre><span></span><code><span class="c1"># Step 1: Get heap histogram</span>
+nodetool<span class="w"> </span>sjk<span class="w"> </span>--<span class="w"> </span>hh<span class="w"> </span>--top-number<span class="w"> </span><span class="m">30</span>
+
+<span class="c1"># Step 2: Check for live objects only (triggers GC)</span>
+nodetool<span class="w"> </span>sjk<span class="w"> </span>--<span class="w"> </span>hh<span class="w"> </span>--top-number<span class="w"> </span><span class="m">30</span><span class="w"> </span>--live
+
+<span class="c1"># Step 3: Monitor GC behavior</span>
+nodetool<span class="w"> </span>sjk<span class="w"> </span>gc
+</code></pre></div>
+<h3 id="collecting-diagnostic-data">Collecting Diagnostic Data<a class="headerlink" href="#collecting-diagnostic-data" title="Permanent link">¶</a></h3>
+<div class="highlight"><pre><span></span><code><span class="c1"># Create diagnostic directory</span>
+mkdir<span class="w"> </span>-p<span class="w"> </span>/tmp/cassandra-diag
+
+<span class="c1"># Capture thread CPU usage</span>
+nodetool<span class="w"> </span>sjk<span class="w"> </span>ttop<span class="w"> </span>&gt;<span class="w"> </span>/tmp/cassandra-diag/ttop.txt
+
+<span class="c1"># Capture heap histogram</span>
+nodetool<span class="w"> </span>sjk<span class="w"> </span>--<span class="w"> </span>hh<span class="w"> </span>--top-number<span class="w"> </span><span class="m">50</span><span class="w"> </span>&gt;<span class="w"> </span>/tmp/cassandra-diag/heap.txt
+
+<span class="c1"># Capture stack traces for 60 seconds</span>
+nodetool<span class="w"> </span>sjk<span class="w"> </span>--<span class="w"> </span>stcap<span class="w"> </span>--output<span class="w"> </span>/tmp/cassandra-diag/stacks.std<span class="w"> </span>--timeout<span class="w"> </span><span class="m">60000</span>
+</code></pre></div>
+<hr>
+<h2 id="common-cassandra-thread-patterns">Common Cassandra Thread Patterns<a class="headerlink" href="#common-cassandra-thread-patterns" title="Permanent link">¶</a></h2>
+<p>When analyzing thread output, these patterns indicate Cassandra-specific activity:</p>
+<table>
+<thead>
+<tr>
+<th>Thread Name Pattern</th>
+<th>Purpose</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>ReadStage-*</code></td>
+<td>Processing read requests</td>
 </tr>
 <tr>
-<td><code>stcpy</code></td>
-<td>Stack trace copy</td>
+<td><code>MutationStage-*</code></td>
+<td>Processing write requests</td>
 </tr>
 <tr>
-<td><code>hh</code></td>
-<td>Heap histogram</td>
+<td><code>CompactionExecutor-*</code></td>
+<td>Running compactions</td>
 </tr>
 <tr>
-<td><code>gc</code></td>
-<td>GC statistics</td>
+<td><code>MemtableFlushWriter-*</code></td>
+<td>Flushing memtables</td>
+</tr>
+<tr>
+<td><code>GossipStage-*</code></td>
+<td>Cluster gossip protocol</td>
+</tr>
+<tr>
+<td><code>Native-Transport-*</code></td>
+<td>CQL client connections</td>
+</tr>
+<tr>
+<td><code>HintsDispatcher-*</code></td>
+<td>Delivering stored hints</td>
 </tr>
 </tbody>
 </table>
 <hr>
-<h2 id="when-to-use">When to Use<a class="headerlink" href="#when-to-use" title="Permanent link">¶</a></h2>
-<h3 id="cpu-analysis">CPU Analysis<a class="headerlink" href="#cpu-analysis" title="Permanent link">¶</a></h3>
-<div class="highlight"><pre><span></span><code><span class="c1"># Find threads using most CPU</span>
-nodetool<span class="w"> </span>sjk<span class="w"> </span>ttop<span class="w"> </span>-n<span class="w"> </span><span class="m">10</span>
+<h2 id="best-practices">Best Practices<a class="headerlink" href="#best-practices" title="Permanent link">¶</a></h2>
+<h3 id="production-usage">Production Usage<a class="headerlink" href="#production-usage" title="Permanent link">¶</a></h3>
+<ul>
+<li>Use <code>ttop</code> and <code>gc</code> freely—they have minimal overhead</li>
+<li>Use <code>hh</code> sparingly as it may cause stop-the-world pauses</li>
+<li>Capture stack traces (<code>stcap</code>) during off-peak hours when possible</li>
+<li>Always check <code>--help</code> for exact option names before scripting</li>
+</ul>
+<h3 id="using-the-separator">Using the Separator<a class="headerlink" href="#using-the-separator" title="Permanent link">¶</a></h3>
+<p>When SJK options conflict with nodetool parsing, use <code>--</code> to separate them:</p>
+<div class="highlight"><pre><span></span><code><span class="c1"># Without separator (may cause parsing issues)</span>
+nodetool<span class="w"> </span>sjk<span class="w"> </span>hh<span class="w"> </span>--top-number<span class="w"> </span><span class="m">10</span>
+
+<span class="c1"># With separator (explicit argument passing)</span>
+nodetool<span class="w"> </span>sjk<span class="w"> </span>--<span class="w"> </span>hh<span class="w"> </span>--top-number<span class="w"> </span><span class="m">10</span>
 </code></pre></div>
-<h3 id="thread-analysis">Thread Analysis<a class="headerlink" href="#thread-analysis" title="Permanent link">¶</a></h3>
-<div class="highlight"><pre><span></span><code><span class="c1"># Capture stack traces</span>
-nodetool<span class="w"> </span>sjk<span class="w"> </span>stcap<span class="w"> </span>-o<span class="w"> </span>stacks.txt
+<hr>
+<h2 id="troubleshooting">Troubleshooting<a class="headerlink" href="#troubleshooting" title="Permanent link">¶</a></h2>
+<h3 id="command-not-recognized">Command Not Recognized<a class="headerlink" href="#command-not-recognized" title="Permanent link">¶</a></h3>
+<p>If a command is not recognized, verify it is available:</p>
+<div class="highlight"><pre><span></span><code>nodetool<span class="w"> </span>sjk<span class="w"> </span>--commands
+</code></pre></div>
+<h3 id="connection-issues">Connection Issues<a class="headerlink" href="#connection-issues" title="Permanent link">¶</a></h3>
+<p>SJK commands use the nodetool JMX connection. If commands fail:</p>
+<div class="highlight"><pre><span></span><code><span class="c1"># Verify nodetool connectivity first</span>
+nodetool<span class="w"> </span>status
+
+<span class="c1"># Check JMX settings</span>
+grep<span class="w"> </span>JMX<span class="w"> </span>/etc/cassandra/cassandra-env.sh
+</code></pre></div>
+<h3 id="option-errors">Option Errors<a class="headerlink" href="#option-errors" title="Permanent link">¶</a></h3>
+<p>Option names may vary between SJK versions. Always check:</p>
+<div class="highlight"><pre><span></span><code>nodetool<span class="w"> </span>sjk<span class="w"> </span>&lt;command&gt;<span class="w"> </span>--help
 </code></pre></div>
 <hr>
 <h2 id="related-commands">Related Commands<a class="headerlink" href="#related-commands" title="Permanent link">¶</a></h2>
@@ -20161,14 +20667,27 @@ nodetool<span class="w"> </span>sjk<span class="w"> </span>stcap<span class="w">
 <tbody>
 <tr>
 <td><a href="../tpstats/">tpstats</a></td>
-<td>Thread pool statistics</td>
+<td>Thread pool statistics (Cassandra-specific)</td>
 </tr>
 <tr>
 <td><a href="../gcstats/">gcstats</a></td>
-<td>GC statistics</td>
+<td>GC statistics (Cassandra-specific format)</td>
+</tr>
+<tr>
+<td><a href="../info/">info</a></td>
+<td>General node information including memory</td>
+</tr>
+<tr>
+<td><a href="../tablestats/">tablestats</a></td>
+<td>Table-level metrics</td>
 </tr>
 </tbody>
-</table></div>
+</table>
+<h2 id="external-resources">External Resources<a class="headerlink" href="#external-resources" title="Permanent link">¶</a></h2>
+<ul>
+<li><a href="https://github.com/aragozin/jvm-tools">SJK GitHub Repository</a> - Source code and documentation</li>
+<li><a href="https://issues.apache.org/jira/browse/CASSANDRA-12197">CASSANDRA-12197</a> - Integration ticket</li>
+</ul></div>
 
 
 

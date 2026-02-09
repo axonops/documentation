@@ -20596,8 +20596,9 @@ data-et-multi-view="{&quot;schema&quot;:{&quot;content&quot;:{&quot;desktop&quot
 <p>Resumes the delivery of hints that was previously paused.</p>
 <hr>
 <h2 id="synopsis">Synopsis<a class="headerlink" href="#synopsis" title="Permanent link">¶</a></h2>
-<div class="highlight"><pre><span></span><code>nodetool<span class="w"> </span><span class="o">[</span>connection_options<span class="o">]</span><span class="w"> </span>resumehandoff
+<p></p><div class="highlight"><pre><span></span><code>nodetool<span class="w"> </span><span class="o">[</span>connection_options<span class="o">]</span><span class="w"> </span>resumehandoff
 </code></pre></div>
+See <a href="../#connection-options">connection options</a> for connection options.
 <h2 id="description">Description<a class="headerlink" href="#description" title="Permanent link">¶</a></h2>
 <p><code>nodetool resumehandoff</code> resumes the delivery of stored hints to their target nodes after it was paused with <code>pausehandoff</code>. When resumed, the node begins replaying accumulated hints to recovered replicas, restoring data consistency.</p>
 <p>This command only affects hint delivery—it does not change whether new hints are being stored (controlled by <code>enablehandoff</code>/<code>disablehandoff</code>).</p>

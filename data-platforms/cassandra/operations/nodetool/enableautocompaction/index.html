@@ -20530,8 +20530,9 @@ data-et-multi-view="{&quot;schema&quot;:{&quot;content&quot;:{&quot;desktop&quot
 <p>Re-enables automatic compaction for specified keyspaces and tables.</p>
 <hr>
 <h2 id="synopsis">Synopsis<a class="headerlink" href="#synopsis" title="Permanent link">¶</a></h2>
-<div class="highlight"><pre><span></span><code>nodetool<span class="w"> </span><span class="o">[</span>connection_options<span class="o">]</span><span class="w"> </span>enableautocompaction<span class="w"> </span><span class="o">[</span>--<span class="o">]</span><span class="w"> </span><span class="o">[</span>&lt;keyspace&gt;<span class="w"> </span>&lt;tables&gt;...<span class="o">]</span>
+<p></p><div class="highlight"><pre><span></span><code>nodetool<span class="w"> </span><span class="o">[</span>connection_options<span class="o">]</span><span class="w"> </span>enableautocompaction<span class="w"> </span><span class="o">[</span>--<span class="o">]</span><span class="w"> </span><span class="o">[</span>&lt;keyspace&gt;<span class="w"> </span>&lt;tables&gt;...<span class="o">]</span>
 </code></pre></div>
+See <a href="../#connection-options">connection options</a> for connection options.
 <h2 id="description">Description<a class="headerlink" href="#description" title="Permanent link">¶</a></h2>
 <p><code>nodetool enableautocompaction</code> restores automatic compaction behavior for one or more tables after it was temporarily disabled with <code>disableautocompaction</code>. When auto-compaction is enabled, Cassandra's compaction strategy continuously evaluates SSTables and triggers compaction operations based on configured thresholds and policies.</p>
 <p>Automatic compaction is essential for:</p>

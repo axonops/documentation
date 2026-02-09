@@ -20260,8 +20260,9 @@ data-et-multi-view="{&quot;schema&quot;:{&quot;content&quot;:{&quot;desktop&quot
 <p>Displays the current probability of tracing CQL requests on the node.</p>
 <hr>
 <h2 id="synopsis">Synopsis<a class="headerlink" href="#synopsis" title="Permanent link">¶</a></h2>
-<div class="highlight"><pre><span></span><code>nodetool<span class="w"> </span><span class="o">[</span>connection_options<span class="o">]</span><span class="w"> </span>gettraceprobability
+<p></p><div class="highlight"><pre><span></span><code>nodetool<span class="w"> </span><span class="o">[</span>connection_options<span class="o">]</span><span class="w"> </span>gettraceprobability
 </code></pre></div>
+See <a href="../#connection-options">connection options</a> for connection options.
 <h2 id="description">Description<a class="headerlink" href="#description" title="Permanent link">¶</a></h2>
 <p><code>nodetool gettraceprobability</code> shows the current probability (0.0 to 1.0) that any given CQL request will be traced. This setting controls Cassandra's probabilistic tracing feature, which samples a percentage of requests for detailed performance analysis.</p>
 <h3 id="what-is-request-tracing">What is Request Tracing?<a class="headerlink" href="#what-is-request-tracing" title="Permanent link">¶</a></h3>

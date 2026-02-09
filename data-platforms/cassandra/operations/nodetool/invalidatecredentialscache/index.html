@@ -20528,8 +20528,9 @@ data-et-multi-view="{&quot;schema&quot;:{&quot;content&quot;:{&quot;desktop&quot
 <p>Invalidates the credentials cache on the node.</p>
 <hr>
 <h2 id="synopsis">Synopsis<a class="headerlink" href="#synopsis" title="Permanent link">¶</a></h2>
-<div class="highlight"><pre><span></span><code>nodetool<span class="w"> </span><span class="o">[</span>connection_options<span class="o">]</span><span class="w"> </span>invalidatecredentialscache
+<p></p><div class="highlight"><pre><span></span><code>nodetool<span class="w"> </span><span class="o">[</span>connection_options<span class="o">]</span><span class="w"> </span>invalidatecredentialscache
 </code></pre></div>
+See <a href="../#connection-options">connection options</a> for connection options.
 <h2 id="description">Description<a class="headerlink" href="#description" title="Permanent link">¶</a></h2>
 <p><code>nodetool invalidatecredentialscache</code> clears all cached credential entries on the node. The credentials cache stores authentication information (username/password hashes), allowing Cassandra to validate login attempts without querying the <code>system_auth.roles</code> table for every connection.</p>
 <p>After invalidation, subsequent login attempts trigger fresh credential lookups from the system_auth tables.</p>

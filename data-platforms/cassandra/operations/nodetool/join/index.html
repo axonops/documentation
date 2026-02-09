@@ -20398,8 +20398,9 @@ data-et-multi-view="{&quot;schema&quot;:{&quot;content&quot;:{&quot;desktop&quot
 <p>Causes a node that was started with <code>join_ring: false</code> to join the cluster ring.</p>
 <hr>
 <h2 id="synopsis">Synopsis<a class="headerlink" href="#synopsis" title="Permanent link">¶</a></h2>
-<div class="highlight"><pre><span></span><code>nodetool<span class="w"> </span><span class="o">[</span>connection_options<span class="o">]</span><span class="w"> </span>join
+<p></p><div class="highlight"><pre><span></span><code>nodetool<span class="w"> </span><span class="o">[</span>connection_options<span class="o">]</span><span class="w"> </span>join
 </code></pre></div>
+See <a href="../#connection-options">connection options</a> for connection options.
 <h2 id="description">Description<a class="headerlink" href="#description" title="Permanent link">¶</a></h2>
 <p><code>nodetool join</code> instructs a Cassandra node to join the cluster token ring. This command is only relevant when a node was started with <code>join_ring: false</code> in <code>cassandra.yaml</code>, which prevents automatic ring participation at startup.</p>
 <h3 id="understanding-join_ring-vs-auto_bootstrap">Understanding <code>join_ring</code> vs <code>auto_bootstrap</code><a class="headerlink" href="#understanding-join_ring-vs-auto_bootstrap" title="Permanent link">¶</a></h3>

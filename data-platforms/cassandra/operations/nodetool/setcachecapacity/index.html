@@ -20596,8 +20596,9 @@ data-et-multi-view="{&quot;schema&quot;:{&quot;content&quot;:{&quot;desktop&quot
 <p>Sets the capacity of the key cache, row cache, and counter cache.</p>
 <hr>
 <h2 id="synopsis">Synopsis<a class="headerlink" href="#synopsis" title="Permanent link">¶</a></h2>
-<div class="highlight"><pre><span></span><code>nodetool<span class="w"> </span><span class="o">[</span>connection_options<span class="o">]</span><span class="w"> </span>setcachecapacity<span class="w"> </span>&lt;key-cache-capacity&gt;<span class="w"> </span>&lt;row-cache-capacity&gt;<span class="w"> </span>&lt;counter-cache-capacity&gt;
+<p></p><div class="highlight"><pre><span></span><code>nodetool<span class="w"> </span><span class="o">[</span>connection_options<span class="o">]</span><span class="w"> </span>setcachecapacity<span class="w"> </span>&lt;key-cache-capacity&gt;<span class="w"> </span>&lt;row-cache-capacity&gt;<span class="w"> </span>&lt;counter-cache-capacity&gt;
 </code></pre></div>
+See <a href="../#connection-options">connection options</a> for connection options.
 <h2 id="description">Description<a class="headerlink" href="#description" title="Permanent link">¶</a></h2>
 <p><code>nodetool setcachecapacity</code> adjusts the maximum size of Cassandra's three main caches at runtime. This allows tuning cache sizes without restarting the node, useful for responding to memory pressure or optimizing for workload changes.</p>
 <div class="admonition info">

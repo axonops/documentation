@@ -20668,8 +20668,9 @@ data-et-multi-view="{&quot;schema&quot;:{&quot;content&quot;:{&quot;desktop&quot
 <p>Displays the auto-compaction status for specified keyspaces and tables.</p>
 <hr>
 <h2 id="synopsis">Synopsis<a class="headerlink" href="#synopsis" title="Permanent link">¶</a></h2>
-<div class="highlight"><pre><span></span><code>nodetool<span class="w"> </span><span class="o">[</span>connection_options<span class="o">]</span><span class="w"> </span>statusautocompaction<span class="w"> </span><span class="o">[</span>options<span class="o">]</span><span class="w"> </span><span class="o">[</span>--<span class="o">]</span><span class="w"> </span><span class="o">[</span>&lt;keyspace&gt;<span class="w"> </span>&lt;tables&gt;...<span class="o">]</span>
+<p></p><div class="highlight"><pre><span></span><code>nodetool<span class="w"> </span><span class="o">[</span>connection_options<span class="o">]</span><span class="w"> </span>statusautocompaction<span class="w"> </span><span class="o">[</span>options<span class="o">]</span><span class="w"> </span><span class="o">[</span>--<span class="o">]</span><span class="w"> </span><span class="o">[</span>&lt;keyspace&gt;<span class="w"> </span>&lt;tables&gt;...<span class="o">]</span>
 </code></pre></div>
+See <a href="../#connection-options">connection options</a> for connection options.
 <h2 id="description">Description<a class="headerlink" href="#description" title="Permanent link">¶</a></h2>
 <p><code>nodetool statusautocompaction</code> reports whether automatic compaction is enabled or disabled for specified tables. This command is essential for verifying the state of auto-compaction after enable/disable operations and for auditing cluster configuration.</p>
 <p>Auto-compaction status is a per-table setting that determines whether Cassandra's compaction strategy will automatically schedule compaction tasks.</p>

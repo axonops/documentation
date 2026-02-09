@@ -20282,8 +20282,9 @@ data-et-multi-view="{&quot;schema&quot;:{&quot;content&quot;:{&quot;desktop&quot
 <p>Sets the default replication factor used by NetworkTopologyStrategy auto-expansion.</p>
 <hr>
 <h2 id="synopsis">Synopsis<a class="headerlink" href="#synopsis" title="Permanent link">¶</a></h2>
-<div class="highlight"><pre><span></span><code>nodetool<span class="w"> </span><span class="o">[</span>connection_options<span class="o">]</span><span class="w"> </span>setdefaultrf<span class="w"> </span>&lt;replication_factor&gt;
+<p></p><div class="highlight"><pre><span></span><code>nodetool<span class="w"> </span><span class="o">[</span>connection_options<span class="o">]</span><span class="w"> </span>setdefaultrf<span class="w"> </span>&lt;replication_factor&gt;
 </code></pre></div>
+See <a href="../#connection-options">connection options</a> for connection options.
 <h2 id="description">Description<a class="headerlink" href="#description" title="Permanent link">¶</a></h2>
 <p><code>nodetool setdefaultrf</code> configures the cluster-wide default replication factor that is applied when creating or altering keyspaces using NetworkTopologyStrategy with the <code>replication_factor</code> shorthand instead of explicit datacenter mappings.</p>
 <h3 id="how-auto-expansion-works">How Auto-Expansion Works<a class="headerlink" href="#how-auto-expansion-works" title="Permanent link">¶</a></h3>

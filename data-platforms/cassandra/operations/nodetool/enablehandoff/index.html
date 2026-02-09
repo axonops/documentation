@@ -20572,8 +20572,9 @@ data-et-multi-view="{&quot;schema&quot;:{&quot;content&quot;:{&quot;desktop&quot
 <p>Re-enables hinted handoff on the node.</p>
 <hr>
 <h2 id="synopsis">Synopsis<a class="headerlink" href="#synopsis" title="Permanent link">¶</a></h2>
-<div class="highlight"><pre><span></span><code>nodetool<span class="w"> </span><span class="o">[</span>connection_options<span class="o">]</span><span class="w"> </span>enablehandoff
+<p></p><div class="highlight"><pre><span></span><code>nodetool<span class="w"> </span><span class="o">[</span>connection_options<span class="o">]</span><span class="w"> </span>enablehandoff
 </code></pre></div>
+See <a href="../#connection-options">connection options</a> for connection options.
 <h2 id="description">Description<a class="headerlink" href="#description" title="Permanent link">¶</a></h2>
 <p><code>nodetool enablehandoff</code> re-enables the hinted handoff mechanism after it was disabled with <code>disablehandoff</code>. Hinted handoff is a critical consistency feature that stores write hints for temporarily unavailable nodes, ensuring data is delivered when those nodes recover.</p>
 <p>When a coordinator receives a write request and a replica is temporarily unavailable, the coordinator stores a "hint" locally. Once the unavailable replica comes back online, the coordinator replays the hint to bring the replica up to date.</p>

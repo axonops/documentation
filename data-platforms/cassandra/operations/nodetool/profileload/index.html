@@ -20716,8 +20716,9 @@ data-et-multi-view="{&quot;schema&quot;:{&quot;content&quot;:{&quot;desktop&quot
 <p>Profiles read and write operations on a table for a specified duration to identify hot partitions and access patterns.</p>
 <hr>
 <h2 id="synopsis">Synopsis<a class="headerlink" href="#synopsis" title="Permanent link">¶</a></h2>
-<div class="highlight"><pre><span></span><code>nodetool<span class="w"> </span><span class="o">[</span>connection_options<span class="o">]</span><span class="w"> </span>profileload<span class="w"> </span><span class="o">[</span>options<span class="o">]</span><span class="w"> </span><span class="o">[</span>keyspace<span class="o">]</span><span class="w"> </span><span class="o">[</span>table<span class="o">]</span><span class="w"> </span><span class="o">[</span>duration<span class="o">]</span>
+<p></p><div class="highlight"><pre><span></span><code>nodetool<span class="w"> </span><span class="o">[</span>connection_options<span class="o">]</span><span class="w"> </span>profileload<span class="w"> </span><span class="o">[</span>options<span class="o">]</span><span class="w"> </span><span class="o">[</span>keyspace<span class="o">]</span><span class="w"> </span><span class="o">[</span>table<span class="o">]</span><span class="w"> </span><span class="o">[</span>duration<span class="o">]</span>
 </code></pre></div>
+See <a href="../#connection-options">connection options</a> for connection options.
 <h2 id="description">Description<a class="headerlink" href="#description" title="Permanent link">¶</a></h2>
 <p><code>nodetool profileload</code> samples operations on a specific table for the given duration and produces a report showing the most frequently accessed partitions. This is essential for identifying hot partitions—partitions that receive disproportionately high traffic compared to others.</p>
 <h3 id="why-hot-partitions-matter">Why Hot Partitions Matter<a class="headerlink" href="#why-hot-partitions-matter" title="Permanent link">¶</a></h3>

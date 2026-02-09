@@ -20356,8 +20356,9 @@ data-et-multi-view="{&quot;schema&quot;:{&quot;content&quot;:{&quot;desktop&quot
 <p>Imports SSTables from an external directory into a table.</p>
 <hr>
 <h2 id="synopsis">Synopsis<a class="headerlink" href="#synopsis" title="Permanent link">¶</a></h2>
-<div class="highlight"><pre><span></span><code>nodetool<span class="w"> </span><span class="o">[</span>connection_options<span class="o">]</span><span class="w"> </span>import<span class="w"> </span><span class="o">[</span>options<span class="o">]</span><span class="w"> </span>&lt;keyspace&gt;<span class="w"> </span>&lt;table&gt;<span class="w"> </span>&lt;directory&gt;...
+<p></p><div class="highlight"><pre><span></span><code>nodetool<span class="w"> </span><span class="o">[</span>connection_options<span class="o">]</span><span class="w"> </span>import<span class="w"> </span><span class="o">[</span>options<span class="o">]</span><span class="w"> </span>&lt;keyspace&gt;<span class="w"> </span>&lt;table&gt;<span class="w"> </span>&lt;directory&gt;...
 </code></pre></div>
+See <a href="../#connection-options">connection options</a> for connection options.
 <h2 id="description">Description<a class="headerlink" href="#description" title="Permanent link">¶</a></h2>
 <p><code>nodetool import</code> loads SSTables from an external directory into a Cassandra table. Unlike <code>refresh</code>, which requires files to be in the data directory, <code>import</code> can load from any location and optionally moves or copies files.</p>
 <p>Available in Cassandra 4.0+.</p>

@@ -20380,8 +20380,9 @@ data-et-multi-view="{&quot;schema&quot;:{&quot;content&quot;:{&quot;desktop&quot
 <p>Sets the number of cache keys to save to disk for faster restart warmup.</p>
 <hr>
 <h2 id="synopsis">Synopsis<a class="headerlink" href="#synopsis" title="Permanent link">¶</a></h2>
-<div class="highlight"><pre><span></span><code>nodetool<span class="w"> </span><span class="o">[</span>connection_options<span class="o">]</span><span class="w"> </span>setcachekeystosave<span class="w"> </span>&lt;key_cache_keys&gt;<span class="w"> </span>&lt;row_cache_keys&gt;<span class="w"> </span>&lt;counter_cache_keys&gt;
+<p></p><div class="highlight"><pre><span></span><code>nodetool<span class="w"> </span><span class="o">[</span>connection_options<span class="o">]</span><span class="w"> </span>setcachekeystosave<span class="w"> </span>&lt;key_cache_keys&gt;<span class="w"> </span>&lt;row_cache_keys&gt;<span class="w"> </span>&lt;counter_cache_keys&gt;
 </code></pre></div>
+See <a href="../#connection-options">connection options</a> for connection options.
 <h2 id="description">Description<a class="headerlink" href="#description" title="Permanent link">¶</a></h2>
 <p><code>nodetool setcachekeystosave</code> controls how many keys from each cache type are persisted to disk. These saved cache entries are loaded on node startup, allowing Cassandra to "warm" its caches without waiting for production traffic to populate them.</p>
 <h3 id="cache-persistence-benefits">Cache Persistence Benefits<a class="headerlink" href="#cache-persistence-benefits" title="Permanent link">¶</a></h3>

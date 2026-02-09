@@ -20872,8 +20872,9 @@ data-et-multi-view="{&quot;schema&quot;:{&quot;content&quot;:{&quot;desktop&quot
 <p>Sets the number of concurrent compactor threads.</p>
 <hr>
 <h2 id="synopsis">Synopsis<a class="headerlink" href="#synopsis" title="Permanent link">¶</a></h2>
-<div class="highlight"><pre><span></span><code>nodetool<span class="w"> </span><span class="o">[</span>connection_options<span class="o">]</span><span class="w"> </span>setconcurrentcompactors<span class="w"> </span>&lt;value&gt;
+<p></p><div class="highlight"><pre><span></span><code>nodetool<span class="w"> </span><span class="o">[</span>connection_options<span class="o">]</span><span class="w"> </span>setconcurrentcompactors<span class="w"> </span>&lt;value&gt;
 </code></pre></div>
+See <a href="../#connection-options">connection options</a> for connection options.
 <hr>
 <h2 id="description">Description<a class="headerlink" href="#description" title="Permanent link">¶</a></h2>
 <p><code>nodetool setconcurrentcompactors</code> changes the number of threads available for concurrent compaction operations at runtime. Each compactor thread can process one compaction task independently, allowing multiple compactions to run simultaneously across different tables or SSTables.</p>
