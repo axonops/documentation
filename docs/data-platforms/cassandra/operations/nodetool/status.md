@@ -58,9 +58,9 @@ Datacenter: dc1
 Status=Up/Down
 |/ State=Normal/Leaving/Joining/Moving
 --  Address        Load       Tokens  Owns (effective)  Host ID                               Rack
-UN  192.168.1.101  256.12 GiB  256    33.3%             a1b2c3d4-e5f6-7890-abcd-ef1234567890  rack1
-UN  192.168.1.102  248.87 GiB  256    33.4%             b2c3d4e5-f6a7-8901-bcde-f12345678901  rack2
-UN  192.168.1.103  251.44 GiB  256    33.3%             c3d4e5f6-a7b8-9012-cdef-123456789012  rack3
+UN  192.168.1.101  256.12 GiB  16    33.3%             a1b2c3d4-e5f6-7890-abcd-ef1234567890  rack1
+UN  192.168.1.102  248.87 GiB  16    33.4%             b2c3d4e5-f6a7-8901-bcde-f12345678901  rack2
+UN  192.168.1.103  251.44 GiB  16    33.3%             c3d4e5f6-a7b8-9012-cdef-123456789012  rack3
 ```
 
 ### Status Codes
@@ -148,9 +148,9 @@ nodetool status | grep "^DN"
 ```
 Datacenter: dc1
 ===============
-UN  192.168.1.101  256.12 GiB  256    33.3%  ...  rack1
-UN  192.168.1.102  248.87 GiB  256    33.4%  ...  rack2
-UN  192.168.1.103  251.44 GiB  256    33.3%  ...  rack3
+UN  192.168.1.101  256.12 GiB  16    33.3%  ...  rack1
+UN  192.168.1.102  248.87 GiB  16    33.4%  ...  rack2
+UN  192.168.1.103  251.44 GiB  16    33.3%  ...  rack3
 ```
 
 - All nodes `UN` (Up/Normal)
@@ -160,9 +160,9 @@ UN  192.168.1.103  251.44 GiB  256    33.3%  ...  rack3
 ### Unbalanced Load
 
 ```
-UN  192.168.1.101  512.00 GiB  256    33.3%  ...  rack1
-UN  192.168.1.102  128.00 GiB  256    33.4%  ...  rack2
-UN  192.168.1.103  256.00 GiB  256    33.3%  ...  rack3
+UN  192.168.1.101  512.00 GiB  16    33.3%  ...  rack1
+UN  192.168.1.102  128.00 GiB  16    33.4%  ...  rack2
+UN  192.168.1.103  256.00 GiB  16    33.3%  ...  rack3
 ```
 
 !!! warning "Load Imbalance"
@@ -175,9 +175,9 @@ UN  192.168.1.103  256.00 GiB  256    33.3%  ...  rack3
 ### Node Down
 
 ```
-UN  192.168.1.101  256.12 GiB  256    33.3%  ...  rack1
-DN  192.168.1.102  248.87 GiB  256    33.4%  ...  rack2
-UN  192.168.1.103  251.44 GiB  256    33.3%  ...  rack3
+UN  192.168.1.101  256.12 GiB  16    33.3%  ...  rack1
+DN  192.168.1.102  248.87 GiB  16    33.4%  ...  rack2
+UN  192.168.1.103  251.44 GiB  16    33.3%  ...  rack3
 ```
 
 !!! danger "Node Down"
@@ -191,10 +191,10 @@ UN  192.168.1.103  251.44 GiB  256    33.3%  ...  rack3
 ### Bootstrap in Progress
 
 ```
-UN  192.168.1.101  256.12 GiB  256    25.0%  ...  rack1
-UN  192.168.1.102  248.87 GiB  256    25.0%  ...  rack2
-UN  192.168.1.103  251.44 GiB  256    25.0%  ...  rack3
-UJ  192.168.1.104  64.00 GiB   256    25.0%  ...  rack1
+UN  192.168.1.101  256.12 GiB  16    25.0%  ...  rack1
+UN  192.168.1.102  248.87 GiB  16    25.0%  ...  rack2
+UN  192.168.1.103  251.44 GiB  16    25.0%  ...  rack3
+UJ  192.168.1.104  64.00 GiB   16    25.0%  ...  rack1
 ```
 
 The `UJ` node is joining the cluster and streaming data.
@@ -232,8 +232,8 @@ Possible causes:
 ### Inconsistent Token Counts
 
 ```
-UN  192.168.1.101  256.12 GiB  256    33.3%  ...  rack1
-UN  192.168.1.102  248.87 GiB  128    16.7%  ...  rack2
+UN  192.168.1.101  256.12 GiB  16    33.3%  ...  rack1
+UN  192.168.1.102  248.87 GiB   8    16.7%  ...  rack2
 ```
 
 !!! warning "Token Count Mismatch"
