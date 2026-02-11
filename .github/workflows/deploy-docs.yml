@@ -1,0 +1,113 @@
+name: Deploy Documentation
+
+on:
+  push:
+    branches:
+      - master
+    paths:
+      - 'docs/**'
+      - 'mkdocs.yml'
+      - '.github/workflows/deploy-docs.yml'
+  pull_request:
+    branches:
+      - master
+    paths:
+      - 'docs/**'
+      - 'mkdocs.yml'
+      - '.github/workflows/deploy-docs.yml'
+
+permissions:
+  contents: write
+
+jobs:
+  build:
+    name: Build Docs
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0  # Necessary for plugins that use git history
+
+      - name: Install plantuml
+        run: |
+          sudo apt-get install -y plantuml
+          curl -L https://github.com/plantuml/plantuml/releases/download/snapshot/plantuml-SNAPSHOT.jar -o plantuml.jar
+          sudo cp plantuml.jar /usr/share/plantuml/plantuml.jar
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+
+      - name: Cache dependencies
+        uses: actions/cache@v4
+        with:
+          path: ~/.cache/pip
+          key: ${{ runner.os }}-pip-${{ hashFiles('**/requirements.txt') }}
+          restore-keys: |
+            ${{ runner.os }}-pip-
+
+      - name: Install dependencies
+        run: pip install -r requirements.txt
+
+      - name: Build site
+        # --strict fails the build on any warnings
+        run: mkdocs build --strict
+
+  deploy:
+    name: Deploy Docs
+    runs-on: ubuntu-latest
+    # The deploy job only runs on push events to the master branch
+    if: github.event_name == 'push' && github.ref == 'refs/heads/master'
+    needs: build
+    concurrency:
+      group: gh-pages
+      cancel-in-progress: true
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Install plantuml
+        run: |
+          sudo apt-get install -y plantuml
+          curl -L https://github.com/plantuml/plantuml/releases/download/snapshot/plantuml-SNAPSHOT.jar -o plantuml.jar
+          sudo cp plantuml.jar /usr/share/plantuml/plantuml.jar
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+
+      - name: Cache dependencies
+        uses: actions/cache@v4
+        with:
+          path: ~/.cache/pip
+          key: ${{ runner.os }}-pip-${{ hashFiles('**/requirements.txt') }}
+          restore-keys: |
+            ${{ runner.os }}-pip-
+
+      - name: Install dependencies
+        run: pip install -r requirements.txt
+
+      - name: Configure Git Credentials
+        run: |
+          git config user.name github-actions[bot]
+          git config user.email 41898282+github-actions[bot]@users.noreply.github.com
+
+      - name: Deploy to GitHub Pages
+        run: mkdocs gh-deploy --force --message "Deploy docs from ${{ github.sha }}"
+
+      - name: Purge Cache
+        run: |
+          curl -X POST "https://api.cloudflare.com/client/v4/zones/${{ secrets.CLOUDFLARE_ZONE_ID }}/purge_cache" \
+          -H "Authorization: Bearer ${{ secrets.CLOUDFLARE_API_TOKEN }}" \
+          -H "Content-Type: application/json" \
+          --data '{"purge_everything":true}'
+        env:
+          CLOUDFLARE_API_TOKEN: ${{ secrets.CFAPI }}
+          CLOUDFLARE_ZONE_ID: ${{ secrets.CFZONEID }}
+
+    
