@@ -1,11 +1,20 @@
 ---
-title: "Release 2026-02-09"
+title: "Release 2026-02-11"
 description: "AxonOps release notes. Latest features, improvements, and bug fixes."
 meta:
   - name: keywords
     content: "release notes, AxonOps updates, changelog, new features"
 ---
 
+
+## Release 2026-02-11
+
+* axon-server: 2.0.24
+    * Scheduled Repair history fix for OpenSearch deployments.
+
+### Fixes
+
+* [Server] Fix Scheduled Repair history not displaying when using OpenSearch.
 
 ## Release 2026-02-09
 
