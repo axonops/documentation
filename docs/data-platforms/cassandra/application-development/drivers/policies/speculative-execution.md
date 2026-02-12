@@ -16,27 +16,40 @@ Speculative execution reduces tail latency by sending redundant requests to mult
 
 Instead of waiting for a single request to complete or timeout, speculative execution sends the same request to additional nodes after a delay:
 
+**Without speculative execution:**
+
+```plantuml
+@startuml
+skinparam backgroundColor #FFFFFF
+skinparam sequenceMessageAlign center
+
+participant "Client" as C
+participant "Node 1" as N1
+
+C -> N1 : Request (t=0ms)
+note right of N1 : Slow processing...
+N1 --> C : Response (t=150ms, P99)
+@enduml
 ```
-Without Speculative Execution:
 
-Time:   0ms                                         150ms
-        │                                             │
-        ▼                                             ▼
-    Send to ────────────────────────────────────► Response
-    Node1                    (slow)                 (P99)
+**With speculative execution (delay = 50ms):**
 
+```plantuml
+@startuml
+skinparam backgroundColor #FFFFFF
+skinparam sequenceMessageAlign center
 
-With Speculative Execution (delay=50ms):
+participant "Client" as C
+participant "Node 1" as N1
+participant "Node 2" as N2
 
-Time:   0ms         50ms              80ms         150ms
-        │            │                  │             │
-        ▼            ▼                  ▼             │
-    Send to      Send to           Response           │
-    Node1        Node2             from Node2         │
-        │            │                  │             │
-        └────────────┴──────────────────┘             │
-               Use first response              Node1 response
-               (ignore Node1)                   (ignored)
+C -> N1 : Request (t=0ms)
+note right of N1 : Slow processing...
+C -> N2 : Speculative request (t=50ms)
+N2 --> C : Response (t=80ms)
+note left of C : Use first response\n(Node 2)
+N1 --> C : Response (t=150ms, ignored)
+@enduml
 ```
 
 The application receives the response in 80ms instead of 150ms.
@@ -66,36 +79,13 @@ Speculative execution is less effective when:
 
 ## Latency Distribution Impact
 
-Speculative execution particularly helps with tail latencies:
+Speculative execution particularly helps with tail latencies. P50 and P90 remain largely unchanged, but P99 improves significantly as the slower replica is bypassed:
 
-```
-Latency Distribution:
-
-Without Speculative Execution:
-                                        ▲
-Requests                                │
-    │      ┌───┐                        │
-    │      │   │                     ┌──┤ P99
-    │      │   │                     │  │
-    │      │   │                     │  │
-    │   ┌──┤   ├──┐               ┌──┤  │
-    └───┴──┴───┴──┴───────────────┴──┴──┴──────►
-        1ms 2ms 3ms               50ms 100ms  Latency
-
-
-With Speculative Execution:
-                                        ▲
-Requests                                │
-    │      ┌───┐                        │
-    │      │   │                        │ P99 reduced
-    │      │   │          ┌──┐          │
-    │      │   │          │  │          │
-    │   ┌──┤   ├──┐    ┌──┤  │          │
-    └───┴──┴───┴──┴────┴──┴──┴──────────┴──────►
-        1ms 2ms 3ms    10ms            Latency
-
-Tail compressed: P99 moves from 100ms to ~10ms
-```
+| Percentile | Without Speculative Execution | With Speculative Execution |
+|------------|-------------------------------|----------------------------|
+| P50        | ~2ms                          | ~2ms                       |
+| P90        | ~8ms                          | ~8ms                       |
+| P99        | ~100ms                        | ~10ms                      |
 
 ---
 
@@ -140,18 +130,11 @@ This adapts to actual latency distribution, avoiding unnecessary speculative req
 
 Speculative execution trades increased cluster load for reduced latency:
 
-```
-Load Amplification:
-
-Without speculative execution:
-  1000 requests/sec → 1000 requests to cluster
-
-With speculative execution (10% trigger rate):
-  1000 requests/sec → 1100 requests to cluster (+10%)
-
-With speculative execution (50% trigger rate):
-  1000 requests/sec → 1500 requests to cluster (+50%)
-```
+| Configuration | Application Rate | Cluster Load | Overhead |
+|---------------|-----------------|--------------|----------|
+| No speculative execution | 1000 req/sec | 1000 req/sec | 0% |
+| Speculative, 10% trigger rate | 1000 req/sec | 1100 req/sec | +10% |
+| Speculative, 50% trigger rate | 1000 req/sec | 1500 req/sec | +50% |
 
 ### When Costs Outweigh Benefits
 
@@ -169,24 +152,26 @@ With speculative execution (50% trigger rate):
 
 Both the original and speculative requests may execute:
 
-```
-Dangerous: Non-Idempotent with Speculative Execution
+```plantuml
+@startuml
+skinparam backgroundColor #FFFFFF
+skinparam sequenceMessageAlign center
 
-Time:   0ms              50ms              80ms
-        │                 │                 │
-        ▼                 ▼                 ▼
-    Send to           Send to          Both requests
-    Node1             Node2            may execute!
-        │                 │
-        │  UPDATE counter = counter + 1
-        │                 │
-        ▼                 ▼
-    Executed          Executed
-    (+1)              (+1)
-                          │
-                          ▼
-                    Counter incremented
-                    TWICE (corruption)
+title Non-Idempotent with Speculative Execution (Dangerous)
+
+participant "Client" as C
+participant "Node 1" as N1
+participant "Node 2" as N2
+
+C -> N1 : UPDATE counter = counter + 1\n(t=0ms)
+C -> N2 : UPDATE counter = counter + 1\n(speculative, t=50ms)
+
+N1 -> N1 : Execute (+1)
+N2 -> N2 : Execute (+1)
+
+note over N1, N2 #FF6B6B : Both requests execute\nCounter incremented TWICE (corruption)
+
+@enduml
 ```
 
 ### Safe Usage
@@ -221,21 +206,29 @@ The delay threshold determines when speculative requests trigger:
 
 ### Measurement-Based Tuning
 
-```
-Approach:
+```plantuml
+@startuml
+skinparam backgroundColor #FFFFFF
 
-1. Measure current latency distribution
-   P50 = 2ms, P90 = 8ms, P99 = 50ms
+title Measurement-Based Tuning Approach
 
-2. Set delay slightly above target percentile
-   Target: Reduce P99 without excessive load
-   Delay: 10ms (slightly above P90)
+|Step|
+start
+:1. Measure current latency distribution
+  P50 = 2ms, P90 = 8ms, P99 = 50ms;
 
-3. Monitor trigger rate and latency improvement
-   Before: P99 = 50ms
-   After:  P99 = 12ms, trigger rate = 8%
+:2. Set delay slightly above target percentile
+  Target: Reduce P99 without excessive load
+  Delay: 10ms (slightly above P90);
 
-4. Adjust based on observed behavior
+:3. Monitor trigger rate and latency improvement
+  Before: P99 = 50ms
+  After: P99 = 12ms, trigger rate = 8%;
+
+:4. Adjust based on observed behavior;
+stop
+
+@enduml
 ```
 
 ---
@@ -246,12 +239,23 @@ Approach:
 
 Speculative requests use the same query plan from load balancing:
 
-```
-Query Plan: [Node1, Node2, Node3]
+```plantuml
+@startuml
+skinparam backgroundColor #FFFFFF
+skinparam sequenceMessageAlign center
 
-Original request  → Node1
-Speculative #1    → Node2
-Speculative #2    → Node3 (if configured)
+participant "Client" as C
+participant "Node 1" as N1
+participant "Node 2" as N2
+participant "Node 3" as N3
+
+note over N1, N3 : Query Plan: [Node 1, Node 2, Node 3]
+
+C -> N1 : Original request
+C -> N2 : Speculative #1
+C -> N3 : Speculative #2 (if configured)
+
+@enduml
 ```
 
 ### With Retry Policy
@@ -266,20 +270,38 @@ Speculative execution and retry serve different purposes:
 
 Both can be enabled simultaneously:
 
-```
-Request flow with both policies:
+```plantuml
+@startuml
+skinparam backgroundColor #FFFFFF
+skinparam sequenceMessageAlign center
 
-Send to Node1
-    │
-    ├─── 50ms passes, no response ──► Send speculative to Node2
-    │
-    ├─── Node1 times out (100ms)
-    │    └─► Retry policy: retry on Node2? Already sent, skip
-    │                      retry on Node3? Yes
-    │
-    ├─── Node2 responds ──► Return to application
-    │
-    └─── Ignore late responses (most drivers do not cancel in-flight requests)
+title Request Flow with Both Policies
+
+participant "Client" as C
+participant "Node 1" as N1
+participant "Node 2" as N2
+participant "Node 3" as N3
+
+C -> N1 : Request (t=0ms)
+
+... 50ms passes, no response ...
+
+C -> N2 : Speculative request (t=50ms)
+
+... Node 1 times out at 100ms ...
+
+note right of N1 : Retry policy evaluates:\nNode 2? Already sent, skip\nNode 3? Yes
+C -> N3 : Retry request
+
+N2 --> C : Response
+note left of C : Return to application
+
+N1 --> C : Late response (ignored)
+N3 --> C : Late response (ignored)
+
+note over C : Most drivers do not cancel\nin-flight requests
+
+@enduml
 ```
 
 ---
@@ -292,17 +314,21 @@ Send to Node1
 | Speculative wins | % of responses from speculative request | Low rate means delay too high |
 | Total request rate | Including speculative requests | Unexpected increase in cluster load |
 
-```
-Example metrics (workload-dependent; use as starting point, not targets):
-  Trigger rate: 5-15%
-  Win rate: 40-60% of triggered
-  Latency improvement: 50%+ reduction in P99
+**Example metrics** (workload-dependent; use as starting point, not targets):
 
-Warning signs (investigate if observed):
-  Trigger rate: >50% (delay too low or cluster too slow)
-  Win rate: <20% (delay too high, speculative rarely faster)
-  Win rate: >80% (delay too low, original always slow)
-```
+| Metric | Expected Range |
+|--------|---------------|
+| Trigger rate | 5-15% |
+| Win rate | 40-60% of triggered |
+| Latency improvement | 50%+ reduction in P99 |
+
+**Warning signs** (investigate if observed):
+
+| Observation | Possible Cause |
+|-------------|----------------|
+| Trigger rate >50% | Delay too low or cluster too slow |
+| Win rate <20% | Delay too high, speculative rarely faster |
+| Win rate >80% | Delay too low, original always slow |
 
 Optimal thresholds vary significantly by workload, cluster topology, and latency distribution.
 
