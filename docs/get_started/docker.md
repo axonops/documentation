@@ -4,6 +4,8 @@ description: "Run AxonOps with Docker. Quick development setup using Docker Comp
 meta:
   - name: keywords
     content: "AxonOps Docker, Docker Compose, development setup, containers"
+search:
+  boost: 5
 ---
 
 # Docker-compose 3-Node Cassandra Desktop Install

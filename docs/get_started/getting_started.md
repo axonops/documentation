@@ -4,6 +4,8 @@ description: "Getting started with AxonOps self-hosted deployment. Installation 
 meta:
   - name: keywords
     content: "AxonOps getting started, self-hosted, installation overview"
+search:
+  boost: 5
 ---
 
 # Getting Started

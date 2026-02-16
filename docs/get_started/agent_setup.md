@@ -2,6 +2,8 @@
 title: "AxonOps Agent Set up"
 hide:
   - toc
+search:
+  boost: 5
 ---
 
 # AxonOps Agent Set up
