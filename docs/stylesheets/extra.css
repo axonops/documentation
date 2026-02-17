@@ -719,6 +719,97 @@ table th:nth-of-type(3) {
   margin: 0.14rem;
 }
 
+.md-header__cta {
+  display: none;
+  align-items: center;
+  padding: 0.3rem 0.85rem;
+  margin: 0 0.5rem;
+  font-size: 0.7rem;
+  font-weight: 600;
+  letter-spacing: 0.02em;
+  color: var(--axon-dark);
+  background: var(--axon-accent);
+  border-radius: 9999px;
+  text-decoration: none;
+  white-space: nowrap;
+  transition: background var(--transition-fast), box-shadow var(--transition-fast);
+}
+
+.md-header__cta.md-header__cta--visible {
+  display: inline-flex;
+}
+
+.md-header__cta:hover {
+  background: #8de63a;
+  box-shadow: 0 0 8px rgba(124, 216, 37, 0.4);
+  color: var(--axon-dark);
+}
+
+@media screen and (max-width: 60em) {
+  .md-header__cta.md-header__cta--visible {
+    display: none;
+  }
+}
+
+/* Fixed bottom attribution bar */
+.axon-bottom-bar {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  z-index: 4;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 1rem;
+  background: linear-gradient(90deg, #030737 0%, #0a0f4a 100%);
+  color: rgba(255, 255, 255, 0.85);
+  font-size: 0.85rem;
+  padding: 6px 1rem;
+  border-top: 1px solid rgba(124, 216, 37, 0.3);
+}
+
+.axon-bottom-bar__text a {
+  color: #7CD825;
+  text-decoration: none;
+  font-weight: 500;
+}
+
+.axon-bottom-bar__text a:hover {
+  text-decoration: underline;
+}
+
+.axon-bottom-bar__cta {
+  display: none;
+  align-items: center;
+  padding: 0.2rem 0.7rem;
+  font-size: 0.68rem;
+  font-weight: 600;
+  letter-spacing: 0.02em;
+  color: var(--axon-dark);
+  background: var(--axon-accent);
+  border-radius: 9999px;
+  text-decoration: none;
+  white-space: nowrap;
+  transition: background var(--transition-fast), box-shadow var(--transition-fast);
+}
+
+.axon-bottom-bar__cta.axon-bottom-bar__cta--visible {
+  display: inline-flex;
+}
+
+.axon-bottom-bar__cta:hover {
+  background: #8de63a;
+  box-shadow: 0 0 8px rgba(124, 216, 37, 0.4);
+  color: var(--axon-dark);
+}
+
+@media screen and (max-width: 60em) {
+  .axon-bottom-bar__text {
+    font-size: 0.62rem;
+  }
+}
+
 .md-search__input {
   color: white;
   background-color: rgb(27, 40, 79);

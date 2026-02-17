@@ -1,3 +1,16 @@
+// Show/hide platform-specific CTA buttons based on current URL
+function updateHeaderCta(){
+  var path=window.location.pathname;
+  var isCas=path.indexOf('/data-platforms/cassandra/')!==-1;
+  var isKafka=path.indexOf('/data-platforms/kafka/')!==-1;
+  document.querySelectorAll('.md-header__cta--cassandra').forEach(function(el){el.classList.toggle('md-header__cta--visible',isCas)});
+  document.querySelectorAll('.md-header__cta--kafka').forEach(function(el){el.classList.toggle('md-header__cta--visible',isKafka)});
+  document.querySelectorAll('.axon-bottom-bar__cta--cassandra').forEach(function(el){el.classList.toggle('axon-bottom-bar__cta--visible',isCas)});
+  document.querySelectorAll('.axon-bottom-bar__cta--kafka').forEach(function(el){el.classList.toggle('axon-bottom-bar__cta--visible',isKafka)});
+}
+document.addEventListener('DOMContentLoaded',updateHeaderCta);
+if(typeof document$!=='undefined')document$.subscribe(updateHeaderCta);
+
 // Process CQL syntax blocks to convert *placeholder* to italics
 function processCqlSyntaxBlocks(){
   document.querySelectorAll('.highlight code').forEach(function(b){

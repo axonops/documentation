@@ -34,6 +34,12 @@
         </div>
       </div>
     </div>
+    <a href="https://axonops.com/cassandra-support/" class="md-header__cta md-header__cta--cassandra" target="_blank" rel="noopener">
+      Get Cassandra Help
+    </a>
+    <a href="https://axonops.com/kafka-support/" class="md-header__cta md-header__cta--kafka" target="_blank" rel="noopener">
+      Get Kafka Help
+    </a>
     {% if config.theme.palette %}
       {% if not config.theme.palette is mapping %}
         {% include "partials/palette.html" %}
@@ -67,6 +73,14 @@
     {% endif %}
   {% endif %}
 </header>
-<div class="axon-attribution" style="background: linear-gradient(90deg, #030737 0%, #0a0f4a 100%); color: rgba(255,255,255,0.85); font-size: 0.72rem; text-align: center; padding: 6px 0; border-bottom: 1px solid rgba(124,216,37,0.3);">
-  Maintained by <a href="https://axonops.com" style="color: #7CD825; text-decoration: none; font-weight: 500;">AxonOps</a> — production-grade documentation from engineers who operate distributed databases at scale
+<div class="axon-bottom-bar">
+  <span class="axon-bottom-bar__text">
+    Maintained by <a href="https://axonops.com">AxonOps</a> — production-grade documentation from engineers who operate distributed databases at scale
+  </span>
+  <a href="https://axonops.com/cassandra-support/" class="axon-bottom-bar__cta axon-bottom-bar__cta--cassandra" target="_blank" rel="noopener">
+    Get Cassandra Help
+  </a>
+  <a href="https://axonops.com/kafka-support/" class="axon-bottom-bar__cta axon-bottom-bar__cta--kafka" target="_blank" rel="noopener">
+    Get Kafka Help
+  </a>
 </div>
