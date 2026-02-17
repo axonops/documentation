@@ -26,6 +26,7 @@ theme:
   features:
     - navigation.instant
     - navigation.tabs
+    - navigation.tabs.sticky
     - announce.dismiss
     - navigation.top
     - navigation.footer
