@@ -1,11 +1,34 @@
 ---
-title: "Release 2026-02-11"
+title: "Release 2026-02-17"
 description: "AxonOps release notes. Latest features, improvements, and bug fixes."
 meta:
   - name: keywords
     content: "release notes, AxonOps updates, changelog, new features"
 ---
 
+
+## Release 2026-02-17
+
+* axon-server: 2.0.25
+    * Kafka topic display fix and Helm chart automation.
+* axon-dash: 2.0.25
+    * Bug fixes for alerts, backup forms, and permissions.
+* axon-agent: 2.0.18
+    * Kafka topic display fix and container logging fix.
+
+### Fixes
+
+* [Server] Fix Kafka topic display when cleanup policy is not set.
+* [Dash] Fix unhandled exception when clearing alerts.
+* [Dash] Fix form fields on Commitlog Archiving form.
+* [Dash] Fix permissions for Test Backup button.
+* [Dash] Make Backup Timeout field required.
+* [Agent] Fix Kafka topic display when cleanup policy is not set.
+* [Agent] Fix error logging about missing /var/run/utmp in container environments.
+
+### New Features
+
+* [Server] Auto-update Helm charts on release.
 
 ## Release 2026-02-11
 
