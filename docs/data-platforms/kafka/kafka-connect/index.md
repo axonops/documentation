@@ -1331,6 +1331,26 @@ public void start(Map<String, String> props) {
 
 ---
 
+## Kafka 4.2 Connect Enhancements
+
+Kafka 4.2 includes several Kafka Connect improvements:
+
+| Feature | KIP | Description |
+|---------|-----|-------------|
+| External schema in JsonConverter | KIP-1054 | `schema.content` configuration for external schemas, reducing message sizes |
+| Allowlist override policy | KIP-1188 | New `ConnectorClientConfigOverridePolicy` based on allowlists, enabling fine-grained control over which client configurations connectors may override |
+
+### Connector Client Configuration Override Policy (Kafka 4.2+)
+
+In Kafka 4.2+ (KIP-1188), the new "Allowlist" `ConnectorClientConfigOverridePolicy` provides a middle ground between `None` (no overrides permitted) and `All` (all overrides permitted). Administrators can specify an explicit list of client configuration properties that connectors are allowed to override, restricting access to sensitive settings while still enabling necessary customization.
+
+```properties
+connector.client.config.override.policy=org.apache.kafka.connect.connector.policy.AllowListConnectorClientConfigOverridePolicy
+connector.client.config.override.policy.allowed.configs=batch.size,linger.ms,compression.type
+```
+
+---
+
 ## Related Documentation
 
 - [Connectors](connectors/index.md) - Connector guides (Cassandra, S3, HTTP)

@@ -338,33 +338,12 @@ Group records by time windows for temporal aggregations.
 
 ### Window Types
 
-```plantuml
-@startuml
-
-rectangle "Tumbling Window" as tumbling {
-  rectangle "[0-5)" as t1
-  rectangle "[5-10)" as t2
-  rectangle "[10-15)" as t3
-}
-
-rectangle "Hopping Window\n(size=5, advance=2)" as hopping {
-  rectangle "[0-5)" as h1
-  rectangle "[2-7)" as h2
-  rectangle "[4-9)" as h3
-}
-
-rectangle "Sliding Window\n(difference=5)" as sliding {
-  note "Window created for each\nrecord, includes records\nwithin time difference" as sn
-}
-
-rectangle "Session Window\n(gap=5)" as session {
-  rectangle "[0-3]" as s1
-  rectangle "[10-12]" as s2
-  note "Gap > 5 creates\nnew session" as ssn
-}
-
-@enduml
-```
+| Window Type | Example Boundaries | Overlap | Description |
+|-------------|-------------------|:---:|-------------|
+| **Tumbling** | `[0-5)`, `[5-10)`, `[10-15)` | No | Fixed-size, non-overlapping |
+| **Hopping** (size=5, advance=2) | `[0-5)`, `[2-7)`, `[4-9)` | Yes | Fixed-size, overlapping |
+| **Sliding** (difference=5) | Per-record | Yes | Window created for each record; includes all records within the time difference |
+| **Session** (gap=5) | `[0-3]`, `[10-12]` | No | Dynamic boundaries; inactivity gap exceeding threshold creates a new session |
 
 ### Tumbling Windows
 
@@ -649,6 +628,22 @@ streams.setUncaughtExceptionHandler(exception -> {
 });
 ```
 
+### Dead Letter Queue in Exception Handlers
+
+In Kafka 4.2+ (KIP-1034), Streams exception handlers support dead letter queue (DLQ) routing. Failed records can be forwarded to a designated topic rather than halting the stream or silently dropping the record. This provides a structured path for handling poison pills and malformed records without data loss.
+
+### CloseOptions API
+
+In Kafka 4.2+ (KIP-1153), the `KafkaStreams.close()` method supports a fluent `CloseOptions` API with explicit control over leave-group behavior:
+
+```java
+streams.close(new CloseOptions()
+    .timeout(Duration.ofSeconds(30))
+    .leaveGroup(true));
+```
+
+Setting `leaveGroup(true)` triggers an immediate rebalance, enabling faster failover. Setting it to `false` allows the session timeout to expire naturally, which may be preferable for short-lived restarts.
+
 ---
 
 ## Processor API
@@ -706,6 +701,8 @@ public class WordCountProcessor implements Processor<String, String, String, Lon
 |------|---------|----------|
 | `STREAM_TIME` | Event timestamps advance | Emit results based on event progress |
 | `WALL_CLOCK_TIME` | Real clock time | Periodic actions regardless of data flow |
+
+In Kafka 4.2+ (KIP-1146), wall-clock punctuation supports an optional `startTime` parameter for anchored scheduling. This enables punctuation callbacks to fire at predictable wall-clock intervals rather than relative to the application start time.
 
 ### Build Topology with Processor API
 
@@ -828,6 +825,22 @@ KTable<String, Long> counts = stream
 // Name output
 counts.toStream().to("output", Produced.as("output-sink"));
 ```
+
+---
+
+## Kafka 4.2 Streams Enhancements
+
+Kafka 4.2 includes several Kafka Streams improvements:
+
+| Feature | KIP | Description |
+|---------|-----|-------------|
+| Streams Rebalance Protocol GA | KIP-1071 | Server-side rebalance protocol with broker-coordinated task assignment, promoted from early access (4.1) to generally available |
+| Dead letter queue support | KIP-1034 | Exception handlers can route failed records to a dead letter topic |
+| Anchored punctuation | KIP-1146 | Optional `startTime` parameter for predictable wall-clock punctuation scheduling |
+| Fluent CloseOptions API | KIP-1153 | `CloseOptions` with explicit leave-group control |
+| Rebalance callback latency metrics | KIP-1216 | Thread-level latency metrics for rebalance listener callbacks |
+| `application-id` metric tag | KIP-1221 | `application-id` tag added to client state metric |
+| State directory permissions | KIP-1230 | Optional `allow.os.group.write.access` configuration for state directory file permissions |
 
 ---
 

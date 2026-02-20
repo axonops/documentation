@@ -22,7 +22,7 @@ Kafka clients are available for all major programming languages. This section pr
 | **Repository** | [github.com/apache/kafka](https://github.com/apache/kafka) |
 | **Documentation** | [kafka.apache.org/documentation](https://kafka.apache.org/documentation/) |
 | **Package** | [Maven Central](https://central.sonatype.com/artifact/org.apache.kafka/kafka-clients) |
-| **Current Version** | 4.1.x (as of 2025) |
+| **Current Version** | 4.2.x (as of 2026) |
 | **Maintainer** | Apache Software Foundation |
 | **License** | Apache License 2.0 |
 

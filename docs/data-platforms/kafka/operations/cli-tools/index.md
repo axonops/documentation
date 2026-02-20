@@ -748,6 +748,22 @@ kafka-get-offsets.sh --bootstrap-server kafka:9092 \
 
 ---
 
+## Kafka 4.2 CLI Changes
+
+!!! note "Standardized CLI Arguments (KIP-1147)"
+    Kafka 4.2 standardizes command-line arguments across all tools. `--bootstrap-server` and `--command-config` are now the canonical options for all commands. Legacy argument variants (e.g., `--broker-list`, `--new-consumer`) are deprecated and will be removed in a future release.
+
+Additional CLI enhancements in Kafka 4.2:
+
+| Feature | KIP | Description |
+|---------|-----|-------------|
+| `--warmup-records` | KIP-1052 | Optional warmup argument for `kafka-producer-perf-test.sh` to exclude initial records from performance measurements |
+| `--node-id` for describeFeatures | KIP-1160 | Query supported features from a specific broker node, useful for diagnosing version inconsistencies across a cluster |
+| `--include` for ConsumerPerformance | KIP-1192 | Regex-based topic filtering in `kafka-consumer-perf-test.sh` |
+| EndToEndLatency improvements | KIP-1172 | Named-argument parsing with key and header support in `kafka-e2e-latency.sh` |
+
+---
+
 ## Related Documentation
 
 - [Operations](../index.md) - Operations guide

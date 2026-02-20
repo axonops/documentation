@@ -97,6 +97,21 @@ Output:
 }
 ```
 
+### With External Schema (Kafka 4.2+)
+
+In Kafka 4.2+ (KIP-1054), `JsonConverter` supports external schemas via the `schema.content` configuration. When enabled, the schema is stored externally rather than embedded in each message, significantly reducing message sizes for high-volume topics.
+
+```properties
+key.converter=org.apache.kafka.connect.json.JsonConverter
+key.converter.schemas.enable=true
+key.converter.schema.content=external
+value.converter=org.apache.kafka.connect.json.JsonConverter
+value.converter.schemas.enable=true
+value.converter.schema.content=external
+```
+
+With `schema.content=external`, only the payload is included in the message body. The schema is registered and retrieved from Schema Registry, combining the simplicity of JSON with the efficiency of schema-managed formats.
+
 ---
 
 ## Avro Converter

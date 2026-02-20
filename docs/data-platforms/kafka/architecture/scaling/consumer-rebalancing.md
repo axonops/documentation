@@ -712,6 +712,9 @@ group.version=1
 group.coordinator.rebalance.protocols=classic,consumer,streams
 ```
 
+!!! note "Streams Rebalance Protocol (KIP-1071)"
+    The `streams` protocol enables server-side rebalance for Kafka Streams applications, with broker-coordinated task assignment. Introduced as early access in Kafka 4.1, it is generally available in Kafka 4.2.
+
 ### Protocol Comparison
 
 ```plantuml

@@ -28,10 +28,10 @@ Installation procedures for Apache Kafka across different deployment scenarios.
 ### Download
 
 ```bash
-# Kafka 4.1.x (current stable)
-curl -O https://downloads.apache.org/kafka/4.1.1/kafka_2.13-4.1.1.tgz
-tar -xzf kafka_2.13-4.1.1.tgz
-cd kafka_2.13-4.1.1
+# Kafka 4.2.x (current stable)
+curl -O https://downloads.apache.org/kafka/4.2.0/kafka_2.13-4.2.0.tgz
+tar -xzf kafka_2.13-4.2.0.tgz
+cd kafka_2.13-4.2.0
 ```
 
 ### KRaft Mode (Recommended)
@@ -87,7 +87,7 @@ min.insync.replicas=1
 version: '3.8'
 services:
   kafka:
-    image: apache/kafka:4.1.1
+    image: apache/kafka:4.2.0
     hostname: kafka
     container_name: kafka
     ports:
@@ -118,7 +118,7 @@ docker-compose up -d
 version: '3.8'
 services:
   kafka1:
-    image: apache/kafka:4.1.1
+    image: apache/kafka:4.2.0
     hostname: kafka1
     container_name: kafka1
     ports:
@@ -137,7 +137,7 @@ services:
       - kafka1-data:/tmp/kraft-combined-logs
 
   kafka2:
-    image: apache/kafka:4.1.1
+    image: apache/kafka:4.2.0
     hostname: kafka2
     container_name: kafka2
     ports:
@@ -156,7 +156,7 @@ services:
       - kafka2-data:/tmp/kraft-combined-logs
 
   kafka3:
-    image: apache/kafka:4.1.1
+    image: apache/kafka:4.2.0
     hostname: kafka3
     container_name: kafka3
     ports:

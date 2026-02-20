@@ -639,6 +639,25 @@ Monitor authentication and authorization.
 
 ---
 
+## Kafka 4.2 Metrics Changes
+
+!!! note "Metric Naming Convention (KIP-1100)"
+    Kafka 4.2 corrects metric names to follow the `kafka.COMPONENT` naming convention. Some metric names from earlier versions have been renamed. Monitor for any dashboard or alerting rule breakage after upgrading.
+
+### New Metrics in Kafka 4.2
+
+| Metric | KIP | Description |
+|--------|-----|-------------|
+| `kafka.controller:AvgIdleRatio` | KIP-1190 | Controller thread idle ratio. Low values indicate the controller is under heavy load |
+| `kafka.server:AvgIdleRatio` (MetadataLoader) | KIP-1229 | MetadataLoader thread idle ratio. Monitors metadata processing capacity |
+| `kafka.server:RequestHandlerAvgIdlePercent` | KIP-1207 | Fixed in KRaft combined mode to report accurately (previously incorrect in combined controller+broker nodes) |
+| Feature level metrics | KIP-1180 | Generic metrics for finalized and supported feature levels across the cluster |
+| `client-id` tag on AppInfo | KIP-1120 | AppInfo metrics now include a `client-id` tag for distinguishing between client instances |
+| `application-id` tag on Streams state | KIP-1221 | Kafka Streams client state metric now includes an `application-id` tag |
+| Share partition lag | KIP-1226 | Lag metrics for share group partition consumption progress |
+
+---
+
 ## Related Documentation
 
 - [Operations](../index.md) - Operations overview

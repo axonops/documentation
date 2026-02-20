@@ -34,13 +34,13 @@ Client libraries for connecting applications to Apache Kafka clusters.
 <dependency>
     <groupId>org.apache.kafka</groupId>
     <artifactId>kafka-clients</artifactId>
-    <version>4.1.1</version>
+    <version>4.2.0</version>
 </dependency>
 ```
 
 **Gradle:**
 ```groovy
-implementation 'org.apache.kafka:kafka-clients:4.1.1'
+implementation 'org.apache.kafka:kafka-clients:4.2.0'
 ```
 
 ### Producer Example

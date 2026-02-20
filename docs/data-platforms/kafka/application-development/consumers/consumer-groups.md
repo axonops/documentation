@@ -524,6 +524,12 @@ kafka-consumer-groups.sh --bootstrap-server localhost:9092 \
 
 ---
 
+## Kafka 4.2 Consumer Group Enhancements
+
+In Kafka 4.2+ (KIP-1227), the Admin API exposes rack ID information in `MemberDescription` and `ShareMemberDescription`. This enables operators to verify rack-aware assignment correctness and diagnose unbalanced partition distribution across availability zones when using the `DescribeConsumerGroups` or `DescribeShareGroups` Admin APIs.
+
+---
+
 ## Related Documentation
 
 - [Consumer Guide](index.md) - Consumer patterns
