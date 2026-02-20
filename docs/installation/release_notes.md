@@ -10,8 +10,8 @@ meta:
 ## Release 2026-02-17
 
 * axon-server: 2.0.25
-    * Kafka topic display fix and Helm chart automation.
-* axon-dash: 2.0.25
+    * Kafka topic display fix
+* axon-dash: 2.0.26
     * Bug fixes for alerts, backup forms, and permissions.
 * axon-agent: 2.0.18
     * Kafka topic display fix and container logging fix.
@@ -25,10 +25,6 @@ meta:
 * [Dash] Make Backup Timeout field required.
 * [Agent] Fix Kafka topic display when cleanup policy is not set.
 * [Agent] Fix error logging about missing /var/run/utmp in container environments.
-
-### New Features
-
-* [Server] Auto-update Helm charts on release.
 
 ## Release 2026-02-11
 
