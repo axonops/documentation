@@ -18345,6 +18345,15 @@ data-et-multi-view="{&quot;schema&quot;:{&quot;content&quot;:{&quot;desktop&quot
   
 </li>
         
+          <li class="md-nav__item">
+  <a href="#with-external-schema-kafka-42" class="md-nav__link">
+    <span class="md-ellipsis">
+      With External Schema (Kafka 4.2+)
+    </span>
+  </a>
+  
+</li>
+        
       </ul>
     </nav>
   
@@ -20014,6 +20023,15 @@ data-et-multi-view="{&quot;schema&quot;:{&quot;content&quot;:{&quot;desktop&quot
   
 </li>
         
+          <li class="md-nav__item">
+  <a href="#with-external-schema-kafka-42" class="md-nav__link">
+    <span class="md-ellipsis">
+      With External Schema (Kafka 4.2+)
+    </span>
+  </a>
+  
+</li>
+        
       </ul>
     </nav>
   
@@ -20177,6 +20195,16 @@ data-et-multi-view="{&quot;schema&quot;:{&quot;content&quot;:{&quot;desktop&quot
 <span class="w">  </span><span class="p">}</span>
 <span class="p">}</span>
 </code></pre></div>
+<h3 id="with-external-schema-kafka-42">With External Schema (Kafka 4.2+)<a class="headerlink" href="#with-external-schema-kafka-42" title="Permanent link">¶</a></h3>
+<p>In Kafka 4.2+ (KIP-1054), <code>JsonConverter</code> supports external schemas via the <code>schema.content</code> configuration. When enabled, the schema is stored externally rather than embedded in each message, significantly reducing message sizes for high-volume topics.</p>
+<div class="highlight"><pre><span></span><code><span class="na">key.converter</span><span class="o">=</span><span class="s">org.apache.kafka.connect.json.JsonConverter</span>
+<span class="na">key.converter.schemas.enable</span><span class="o">=</span><span class="s">true</span>
+<span class="na">key.converter.schema.content</span><span class="o">=</span><span class="s">external</span>
+<span class="na">value.converter</span><span class="o">=</span><span class="s">org.apache.kafka.connect.json.JsonConverter</span>
+<span class="na">value.converter.schemas.enable</span><span class="o">=</span><span class="s">true</span>
+<span class="na">value.converter.schema.content</span><span class="o">=</span><span class="s">external</span>
+</code></pre></div>
+<p>With <code>schema.content=external</code>, only the payload is included in the message body. The schema is registered and retrieved from Schema Registry, combining the simplicity of JSON with the efficiency of schema-managed formats.</p>
 <hr>
 <h2 id="avro-converter">Avro Converter<a class="headerlink" href="#avro-converter" title="Permanent link">¶</a></h2>
 <p>Requires Schema Registry.</p>

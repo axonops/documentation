@@ -21513,6 +21513,7 @@ kafka-acls.sh<span class="w"> </span>--bootstrap-server<span class="w"> </span>k
 <div class="highlight"><pre><span></span><code><span class="c1"># server.properties</span>
 <span class="na">principal.builder.class</span><span class="o">=</span><span class="s">com.example.CustomPrincipalBuilder</span>
 </code></pre></div>
+<p>In Kafka 4.2+ (KIP-1157), <code>KafkaPrincipalBuilder</code> extends <code>KafkaPrincipalSerde</code> directly, providing compile-time enforcement. Custom implementations that do not implement serialization will fail to compile, preventing runtime errors during KRaft principal forwarding.</p>
 <hr>
 <h2 id="axonops-acl-management">AxonOps ACL Management<a class="headerlink" href="#axonops-acl-management" title="Permanent link">¶</a></h2>
 <p>Managing Kafka ACLs through command-line tools becomes increasingly complex as clusters grow and teams expand. AxonOps provides enterprise-grade ACL management:</p>

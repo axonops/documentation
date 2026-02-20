@@ -20222,10 +20222,10 @@ data-et-multi-view="{&quot;schema&quot;:{&quot;content&quot;:{&quot;desktop&quot
 <hr>
 <h2 id="binary-installation">Binary Installation<a class="headerlink" href="#binary-installation" title="Permanent link">¶</a></h2>
 <h3 id="download">Download<a class="headerlink" href="#download" title="Permanent link">¶</a></h3>
-<div class="highlight"><pre><span></span><code><span class="c1"># Kafka 4.1.x (current stable)</span>
-curl<span class="w"> </span>-O<span class="w"> </span>https://downloads.apache.org/kafka/4.1.1/kafka_2.13-4.1.1.tgz
-tar<span class="w"> </span>-xzf<span class="w"> </span>kafka_2.13-4.1.1.tgz
-<span class="nb">cd</span><span class="w"> </span>kafka_2.13-4.1.1
+<div class="highlight"><pre><span></span><code><span class="c1"># Kafka 4.2.x (current stable)</span>
+curl<span class="w"> </span>-O<span class="w"> </span>https://downloads.apache.org/kafka/4.2.0/kafka_2.13-4.2.0.tgz
+tar<span class="w"> </span>-xzf<span class="w"> </span>kafka_2.13-4.2.0.tgz
+<span class="nb">cd</span><span class="w"> </span>kafka_2.13-4.2.0
 </code></pre></div>
 <h3 id="kraft-mode-recommended">KRaft Mode (Recommended)<a class="headerlink" href="#kraft-mode-recommended" title="Permanent link">¶</a></h3>
 <p>KRaft mode eliminates the ZooKeeper dependency. This is the recommended deployment mode for Kafka 3.3+.</p>
@@ -20269,7 +20269,7 @@ bin/kafka-server-start.sh<span class="w"> </span>config/kraft/server.properties
 <span class="nt">version</span><span class="p">:</span><span class="w"> </span><span class="s">'3.8'</span>
 <span class="nt">services</span><span class="p">:</span>
 <span class="w">  </span><span class="nt">kafka</span><span class="p">:</span>
-<span class="w">    </span><span class="nt">image</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">apache/kafka:4.1.1</span>
+<span class="w">    </span><span class="nt">image</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">apache/kafka:4.2.0</span>
 <span class="w">    </span><span class="nt">hostname</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">kafka</span>
 <span class="w">    </span><span class="nt">container_name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">kafka</span>
 <span class="w">    </span><span class="nt">ports</span><span class="p">:</span>
@@ -20295,7 +20295,7 @@ bin/kafka-server-start.sh<span class="w"> </span>config/kraft/server.properties
 <span class="nt">version</span><span class="p">:</span><span class="w"> </span><span class="s">'3.8'</span>
 <span class="nt">services</span><span class="p">:</span>
 <span class="w">  </span><span class="nt">kafka1</span><span class="p">:</span>
-<span class="w">    </span><span class="nt">image</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">apache/kafka:4.1.1</span>
+<span class="w">    </span><span class="nt">image</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">apache/kafka:4.2.0</span>
 <span class="w">    </span><span class="nt">hostname</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">kafka1</span>
 <span class="w">    </span><span class="nt">container_name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">kafka1</span>
 <span class="w">    </span><span class="nt">ports</span><span class="p">:</span>
@@ -20314,7 +20314,7 @@ bin/kafka-server-start.sh<span class="w"> </span>config/kraft/server.properties
 <span class="w">      </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">kafka1-data:/tmp/kraft-combined-logs</span>
 
 <span class="w">  </span><span class="nt">kafka2</span><span class="p">:</span>
-<span class="w">    </span><span class="nt">image</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">apache/kafka:4.1.1</span>
+<span class="w">    </span><span class="nt">image</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">apache/kafka:4.2.0</span>
 <span class="w">    </span><span class="nt">hostname</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">kafka2</span>
 <span class="w">    </span><span class="nt">container_name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">kafka2</span>
 <span class="w">    </span><span class="nt">ports</span><span class="p">:</span>
@@ -20333,7 +20333,7 @@ bin/kafka-server-start.sh<span class="w"> </span>config/kraft/server.properties
 <span class="w">      </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">kafka2-data:/tmp/kraft-combined-logs</span>
 
 <span class="w">  </span><span class="nt">kafka3</span><span class="p">:</span>
-<span class="w">    </span><span class="nt">image</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">apache/kafka:4.1.1</span>
+<span class="w">    </span><span class="nt">image</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">apache/kafka:4.2.0</span>
 <span class="w">    </span><span class="nt">hostname</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">kafka3</span>
 <span class="w">    </span><span class="nt">container_name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">kafka3</span>
 <span class="w">    </span><span class="nt">ports</span><span class="p">:</span>
