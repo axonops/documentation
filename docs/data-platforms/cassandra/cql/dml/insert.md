@@ -46,7 +46,7 @@ The INSERT statement adds rows to Cassandra tables. Unlike SQL databases, Cassan
 |---------|----------|
 | 2.0+ | IF NOT EXISTS (LWT) supported (CASSANDRA-5062) |
 | 2.1+ | JSON INSERT syntax supported (CASSANDRA-7970) |
-| 3.0+ | DEFAULT UNSET for JSON inserts (CASSANDRA-9651) |
+| 3.10+ | DEFAULT UNSET for JSON inserts (CASSANDRA-11424) |
 
 ---
 

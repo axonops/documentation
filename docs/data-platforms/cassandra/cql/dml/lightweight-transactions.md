@@ -79,8 +79,8 @@ Lightweight Transactions (LWT) provide linearizable consistency through compare-
 | Version | Behavior |
 |---------|----------|
 | 2.0 - 2.1 | Initial Paxos implementation. Contention handling less efficient. |
-| 3.0+ | Improved Paxos state management (CASSANDRA-9143) |
-| 4.0+ | Paxos state auto-cleanup, configurable timeouts (CASSANDRA-12126) |
+| 3.0+ | Improved incremental repair consistency (CASSANDRA-9143) |
+| 4.0+ | CAS read linearizability fix (CASSANDRA-12126) |
 | 5.0+ | Accord transaction protocol available as alternative (CEP-15) |
 
 ---

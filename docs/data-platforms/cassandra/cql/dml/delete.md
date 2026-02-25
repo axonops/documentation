@@ -55,7 +55,7 @@ The DELETE statement removes rows or column values from Cassandra tables. Unlike
 |---------|----------|
 | 2.0+ | IF EXISTS and IF condition for DELETE (CASSANDRA-5062) |
 | 3.0+ | Range tombstones for efficient bulk deletes (CASSANDRA-6237) |
-| 4.0+ | Improved tombstone handling in reads (CASSANDRA-14227) |
+| 4.0+ | Improved tombstone handling in reads (CASSANDRA-8527) |
 
 ---
 

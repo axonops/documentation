@@ -48,20 +48,19 @@ The CEP proposed a framework for configurable guardrails that would:
 
 | Version | Enhancement | JIRA |
 |---------|-------------|------|
-| **4.0** | Initial guardrails framework | [CASSANDRA-14740](https://issues.apache.org/jira/browse/CASSANDRA-14740) |
-| **4.0** | Table and column limits | [CASSANDRA-15530](https://issues.apache.org/jira/browse/CASSANDRA-15530) |
-| **4.0** | Collection size guardrails | [CASSANDRA-16302](https://issues.apache.org/jira/browse/CASSANDRA-16302) |
-| **4.0** | Query guardrails (page size, IN clause) | [CASSANDRA-16375](https://issues.apache.org/jira/browse/CASSANDRA-16375) |
-| **4.1** | Secondary index guardrails | [CASSANDRA-17188](https://issues.apache.org/jira/browse/CASSANDRA-17188) |
-| **4.1** | Partition size guardrails | [CASSANDRA-17066](https://issues.apache.org/jira/browse/CASSANDRA-17066) |
-| **4.1** | ALLOW FILTERING guardrail | [CASSANDRA-17240](https://issues.apache.org/jira/browse/CASSANDRA-17240) |
-| **4.1** | TTL guardrails | [CASSANDRA-17235](https://issues.apache.org/jira/browse/CASSANDRA-17235) |
-| **5.0** | Additional query guardrails | Multiple JIRAs |
-| **5.0** | Read consistency guardrails | [CASSANDRA-18449](https://issues.apache.org/jira/browse/CASSANDRA-18449) |
-| **5.0** | Data disk usage guardrails | [CASSANDRA-17989](https://issues.apache.org/jira/browse/CASSANDRA-17989) |
+| **4.1** | Initial guardrails framework | [CASSANDRA-17147](https://issues.apache.org/jira/browse/CASSANDRA-17147) |
+| **4.1** | Table and keyspace count limits | [CASSANDRA-17195](https://issues.apache.org/jira/browse/CASSANDRA-17195) |
+| **4.1** | Collection size guardrails | [CASSANDRA-17153](https://issues.apache.org/jira/browse/CASSANDRA-17153) |
+| **4.1** | Query guardrails (page size, IN clause) | [CASSANDRA-17189](https://issues.apache.org/jira/browse/CASSANDRA-17189) |
+| **4.1** | Secondary index guardrails | [CASSANDRA-17498](https://issues.apache.org/jira/browse/CASSANDRA-17498) |
+| **4.1** | Consistency level guardrails | [CASSANDRA-17188](https://issues.apache.org/jira/browse/CASSANDRA-17188) |
+| **4.1** | ALLOW FILTERING guardrail | [CASSANDRA-17370](https://issues.apache.org/jira/browse/CASSANDRA-17370) |
+| **4.1** | Data disk usage guardrails | [CASSANDRA-17150](https://issues.apache.org/jira/browse/CASSANDRA-17150) |
+| **5.0** | Partition size guardrails | [CASSANDRA-18500](https://issues.apache.org/jira/browse/CASSANDRA-18500) |
+| **5.0** | TTL guardrails (TWCS) | [CASSANDRA-18042](https://issues.apache.org/jira/browse/CASSANDRA-18042) |
 
 !!! note "Version Availability"
-    Guardrails are available in Cassandra 4.0 and later. A subset of guardrails may also be available in DataStax Enterprise (DSE) 6.8+.
+    Guardrails are available in Cassandra 4.1 and later. A subset of guardrails may also be available in DataStax Enterprise (DSE) 6.8+.
 
 ---
 
@@ -1179,5 +1178,5 @@ The overhead is negligible compared to actual I/O operations.
 ## External References
 
 - [CEP-3: Guardrails](https://cwiki.apache.org/confluence/display/CASSANDRA/CEP-3%3A+Guardrails) - Original Cassandra Enhancement Proposal
-- [CASSANDRA-14740](https://issues.apache.org/jira/browse/CASSANDRA-14740) - Initial guardrails framework implementation
+- [CASSANDRA-17147](https://issues.apache.org/jira/browse/CASSANDRA-17147) - Initial guardrails framework implementation
 - [Apache Cassandra Documentation](https://cassandra.apache.org/doc/latest/cassandra/configuration/cass_yaml_file.html#guardrails) - Official guardrails documentation
