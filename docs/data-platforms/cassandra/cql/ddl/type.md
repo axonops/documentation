@@ -133,8 +133,8 @@ UDTs were introduced in Cassandra 2.1 to address several data modeling challenge
 | Version | Behavior |
 |---------|----------|
 | 2.1+ | UDTs introduced (CASSANDRA-5590) |
-| 3.0+ | Non-frozen UDTs with field-level updates (CASSANDRA-7423) |
-| 3.6+ | ALTER TYPE RENAME support (CASSANDRA-8178) |
+| 3.6+ | Non-frozen UDTs with field-level updates (CASSANDRA-7423) |
+| 2.1+ | ALTER TYPE RENAME support (CASSANDRA-5590) |
 | 4.0+ | Improved UDT validation and error messages |
 
 ---

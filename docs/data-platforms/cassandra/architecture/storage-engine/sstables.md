@@ -77,7 +77,7 @@ The second-to-last component in the filename (e.g., `big` or `bti`) indicates th
 
 ## SSTable Formats: Big vs BTI
 
-Cassandra 5.0 introduced the **BTI (Big Trie Index)** format ([CASSANDRA-17056](https://issues.apache.org/jira/browse/CASSANDRA-17056)), a significant redesign of SSTable on-disk structure. The BTI format uses block-based trie indexes for both partition and row lookups, replacing the legacy index structures.
+Cassandra 5.0 introduced the **BTI (Big Trie Index)** format (CEP-25, [CASSANDRA-18398](https://issues.apache.org/jira/browse/CASSANDRA-18398)), a significant redesign of SSTable on-disk structure. The BTI format uses block-based trie indexes for both partition and row lookups, replacing the legacy index structures.
 
 ### Format Comparison
 
@@ -701,56 +701,9 @@ Digest.crc32
 
 ## Compression
 
-SSTable data is compressed in chunks for efficient random access.
+SSTable data is compressed in fixed-size chunks for efficient random access. Compression reduces storage footprint and disk I/O at the cost of CPU cycles for compression and decompression. LZ4 is the default compressor since Cassandra 2.0.
 
-### Compression Configuration
-
-```sql
--- View current compression
-SELECT compression FROM system_schema.tables
-WHERE keyspace_name = 'ks' AND table_name = 'table';
-
--- Configure compression
-ALTER TABLE my_table WITH compression = {
-    'class': 'LZ4Compressor',
-    'chunk_length_in_kb': 64
-};
-
--- Disable compression
-ALTER TABLE my_table WITH compression = {'enabled': 'false'};
-```
-
-### Compressor Comparison
-
-| Compressor | Speed | Ratio | CPU | Use Case |
-|------------|-------|-------|-----|----------|
-| LZ4Compressor | Fastest | ~2.5x | Lowest | Default, most workloads |
-| SnappyCompressor | Fast | ~2.5x | Low | Alternative to LZ4 |
-| ZstdCompressor | Medium | ~3-4x | Medium | Better ratio (4.0+) |
-| DeflateCompressor | Slow | ~3-4x | High | Maximum compression |
-| NoCompressor | N/A | 1x | None | Pre-compressed data |
-
-### Chunk Size
-
-| Chunk Size | Read Pattern | Compression Ratio |
-|------------|--------------|-------------------|
-| 16KB | Random reads | Lower |
-| 64KB (default) | Mixed | Balanced |
-| 256KB | Sequential reads | Higher |
-
-```sql
--- Smaller chunks for random reads
-ALTER TABLE random_access WITH compression = {
-    'class': 'LZ4Compressor',
-    'chunk_length_in_kb': 16
-};
-
--- Larger chunks for sequential reads
-ALTER TABLE sequential_access WITH compression = {
-    'class': 'LZ4Compressor',
-    'chunk_length_in_kb': 256
-};
-```
+For a detailed explanation of compression algorithms (LZ4, Zstd, Snappy, Deflate), configuration parameters, chunk size tuning, memory overhead, and operational guidance, see [SSTable Compression](compression.md).
 
 ---
 

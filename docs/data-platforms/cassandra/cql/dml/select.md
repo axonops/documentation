@@ -48,9 +48,9 @@ The SELECT statement retrieves rows and columns from Cassandra tables. Unlike SQ
 
 | Version | Behavior |
 |---------|----------|
-| 3.0+ | PER PARTITION LIMIT supported (CASSANDRA-7017) |
+| 3.6+ | PER PARTITION LIMIT supported (CASSANDRA-7017) |
+| 3.10+ | GROUP BY supports aggregate functions (CASSANDRA-10707) |
 | 4.0+ | Virtual tables queryable, improved paging (CASSANDRA-7622) |
-| 4.0+ | GROUP BY supports aggregate functions (CASSANDRA-10707) |
 | 5.0+ | Vector search with ORDER BY ... ANN OF (CEP-30) |
 
 ---

@@ -1015,6 +1015,12 @@ html .md-footer-meta.md-typeset a:hover {
   max-width: 900px;
 }
 
+/* Center content on pages without left navigation (e.g., homepage) */
+.md-main__inner:not(:has(.md-sidebar--primary)) > .md-content {
+  margin-left: auto;
+  margin-right: auto;
+}
+
 /* ----------------------------------------------------------------------------
    CUSTOM TOP NAVIGATION
    ---------------------------------------------------------------------------- */

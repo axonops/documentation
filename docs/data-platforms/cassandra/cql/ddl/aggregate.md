@@ -130,7 +130,7 @@ user_defined_function_fail_timeout: 10000ms
 
 | Version | Behavior |
 |---------|----------|
-| 2.2+ | User-defined aggregates introduced (CASSANDRA-6890) |
+| 2.2+ | User-defined aggregates introduced (CASSANDRA-8053) |
 | 3.0+ | OR REPLACE syntax, improved null handling |
 | 4.0+ | Better timeout handling during aggregation |
 
