@@ -1,11 +1,29 @@
 ---
-title: "Release 2026-02-17"
+title: "Release 2026-02-25"
 description: "AxonOps release notes. Latest features, improvements, and bug fixes."
 meta:
   - name: keywords
     content: "release notes, AxonOps updates, changelog, new features"
 ---
 
+
+## Release 2026-02-25
+
+* axon-server: 2.0.26
+    * Kafka ACL search and bug fixes.
+* axon-agent: 2.0.19
+    * Kafka Connect fix.
+
+### Fixes
+
+* [Server] Fix support for multiple Kafka Connect clusters.
+* [Server] Fix Adaptive Repair history sometimes displaying as empty.
+* [Server] Update dependencies to address security vulnerabilities.
+* [Agent] Fix support for multiple Kafka Connect clusters.
+
+### New Features
+
+* [Server] Add search option to Kafka ACLs API endpoint.
 
 ## Release 2026-02-17
 
