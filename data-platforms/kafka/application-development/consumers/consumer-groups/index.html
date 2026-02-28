@@ -17827,6 +17827,15 @@ data-et-multi-view="{&quot;schema&quot;:{&quot;content&quot;:{&quot;desktop&quot
 </li>
       
         <li class="md-nav__item">
+  <a href="#kafka-42-consumer-group-enhancements" class="md-nav__link">
+    <span class="md-ellipsis">
+      Kafka 4.2 Consumer Group Enhancements
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#related-documentation" class="md-nav__link">
     <span class="md-ellipsis">
       Related Documentation
@@ -20598,6 +20607,15 @@ data-et-multi-view="{&quot;schema&quot;:{&quot;content&quot;:{&quot;desktop&quot
 </li>
       
         <li class="md-nav__item">
+  <a href="#kafka-42-consumer-group-enhancements" class="md-nav__link">
+    <span class="md-ellipsis">
+      Kafka 4.2 Consumer Group Enhancements
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#related-documentation" class="md-nav__link">
     <span class="md-ellipsis">
       Related Documentation
@@ -21025,6 +21043,9 @@ inventory-sync-workers-dev
 kafka-consumer-groups.sh<span class="w"> </span>--bootstrap-server<span class="w"> </span>localhost:9092<span class="w"> </span><span class="se">\</span>
 <span class="w">    </span>--delete<span class="w"> </span>--group<span class="w"> </span>order-processors
 </code></pre></div>
+<hr>
+<h2 id="kafka-42-consumer-group-enhancements">Kafka 4.2 Consumer Group Enhancements<a class="headerlink" href="#kafka-42-consumer-group-enhancements" title="Permanent link">¶</a></h2>
+<p>In Kafka 4.2+ (KIP-1227), the Admin API exposes rack ID information in <code>MemberDescription</code> and <code>ShareMemberDescription</code>. This enables operators to verify rack-aware assignment correctness and diagnose unbalanced partition distribution across availability zones when using the <code>DescribeConsumerGroups</code> or <code>DescribeShareGroups</code> Admin APIs.</p>
 <hr>
 <h2 id="related-documentation">Related Documentation<a class="headerlink" href="#related-documentation" title="Permanent link">¶</a></h2>
 <ul>

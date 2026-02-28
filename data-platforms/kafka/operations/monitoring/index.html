@@ -19503,6 +19503,30 @@ data-et-multi-view="{&quot;schema&quot;:{&quot;content&quot;:{&quot;desktop&quot
 </li>
       
         <li class="md-nav__item">
+  <a href="#kafka-42-metrics-changes" class="md-nav__link">
+    <span class="md-ellipsis">
+      Kafka 4.2 Metrics Changes
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Kafka 4.2 Metrics Changes">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#new-metrics-in-kafka-42" class="md-nav__link">
+    <span class="md-ellipsis">
+      New Metrics in Kafka 4.2
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#related-documentation" class="md-nav__link">
     <span class="md-ellipsis">
       Related Documentation
@@ -21100,6 +21124,30 @@ data-et-multi-view="{&quot;schema&quot;:{&quot;content&quot;:{&quot;desktop&quot
 </li>
       
         <li class="md-nav__item">
+  <a href="#kafka-42-metrics-changes" class="md-nav__link">
+    <span class="md-ellipsis">
+      Kafka 4.2 Metrics Changes
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Kafka 4.2 Metrics Changes">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#new-metrics-in-kafka-42" class="md-nav__link">
+    <span class="md-ellipsis">
+      New Metrics in Kafka 4.2
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#related-documentation" class="md-nav__link">
     <span class="md-ellipsis">
       Related Documentation
@@ -22562,6 +22610,59 @@ my-group        my-topic        2          1500            1600            100
 <td><code>kafka.network:type=SocketServer,name=ExpiredConnectionsKilledCount</code></td>
 <td>Connections killed (auth expiry)</td>
 <td>&gt; 0 with re-auth enabled</td>
+</tr>
+</tbody>
+</table>
+<hr>
+<h2 id="kafka-42-metrics-changes">Kafka 4.2 Metrics Changes<a class="headerlink" href="#kafka-42-metrics-changes" title="Permanent link">¶</a></h2>
+<div class="admonition note">
+<p class="admonition-title">Metric Naming Convention (KIP-1100)</p>
+<p>Kafka 4.2 corrects metric names to follow the <code>kafka.COMPONENT</code> naming convention. Some metric names from earlier versions have been renamed. Monitor for any dashboard or alerting rule breakage after upgrading.</p>
+</div>
+<h3 id="new-metrics-in-kafka-42">New Metrics in Kafka 4.2<a class="headerlink" href="#new-metrics-in-kafka-42" title="Permanent link">¶</a></h3>
+<table>
+<thead>
+<tr>
+<th>Metric</th>
+<th>KIP</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>kafka.controller:AvgIdleRatio</code></td>
+<td>KIP-1190</td>
+<td>Controller thread idle ratio. Low values indicate the controller is under heavy load</td>
+</tr>
+<tr>
+<td><code>kafka.server:AvgIdleRatio</code> (MetadataLoader)</td>
+<td>KIP-1229</td>
+<td>MetadataLoader thread idle ratio. Monitors metadata processing capacity</td>
+</tr>
+<tr>
+<td><code>kafka.server:RequestHandlerAvgIdlePercent</code></td>
+<td>KIP-1207</td>
+<td>Fixed in KRaft combined mode to report accurately (previously incorrect in combined controller+broker nodes)</td>
+</tr>
+<tr>
+<td>Feature level metrics</td>
+<td>KIP-1180</td>
+<td>Generic metrics for finalized and supported feature levels across the cluster</td>
+</tr>
+<tr>
+<td><code>client-id</code> tag on AppInfo</td>
+<td>KIP-1120</td>
+<td>AppInfo metrics now include a <code>client-id</code> tag for distinguishing between client instances</td>
+</tr>
+<tr>
+<td><code>application-id</code> tag on Streams state</td>
+<td>KIP-1221</td>
+<td>Kafka Streams client state metric now includes an <code>application-id</code> tag</td>
+</tr>
+<tr>
+<td>Share partition lag</td>
+<td>KIP-1226</td>
+<td>Lag metrics for share group partition consumption progress</td>
 </tr>
 </tbody>
 </table>

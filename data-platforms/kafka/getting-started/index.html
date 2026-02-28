@@ -20334,7 +20334,7 @@ data-et-multi-view="{&quot;schema&quot;:{&quot;content&quot;:{&quot;desktop&quot
 <h2 id="version-compatibility">Version Compatibility<a class="headerlink" href="#version-compatibility" title="Permanent link">¶</a></h2>
 <h3 id="jdk-compatibility">JDK Compatibility<a class="headerlink" href="#jdk-compatibility" title="Permanent link">¶</a></h3>
 <p>Kafka components have different JDK support levels. Kafka 4.0 introduced significant changes to Java version requirements.</p>
-<p><strong>Kafka 4.0:</strong></p>
+<p><strong>Kafka 4.0+</strong> (applies to 4.0, 4.1, and 4.2):</p>
 <table>
 <thead>
 <tr>
@@ -20401,13 +20401,13 @@ data-et-multi-view="{&quot;schema&quot;:{&quot;content&quot;:{&quot;desktop&quot
 </table>
 <h3 id="client-broker-compatibility">Client-Broker Compatibility<a class="headerlink" href="#client-broker-compatibility" title="Permanent link">¶</a></h3>
 <p>Kafka maintains bidirectional compatibility between clients and brokers within certain version ranges.</p>
-<p><strong>Client/Broker forward compatibility with Kafka 4.0:</strong></p>
+<p><strong>Client/Broker forward compatibility with Kafka 4.x:</strong></p>
 <table>
 <thead>
 <tr>
 <th>Client Version</th>
 <th>Module</th>
-<th style="text-align: center;">4.0 Compatibility</th>
+<th style="text-align: center;">4.x Compatibility</th>
 <th>Notes</th>
 </tr>
 </thead>
@@ -20416,7 +20416,7 @@ data-et-multi-view="{&quot;schema&quot;:{&quot;content&quot;:{&quot;desktop&quot
 <td><strong>0.x, 1.x, 2.0</strong></td>
 <td>All</td>
 <td style="text-align: center;">❌</td>
-<td>Pre-0.10.x protocols removed (<a href="https://cwiki.apache.org/confluence/x/K5sODg">KIP-896</a>)</td>
+<td>Pre-0.10.x protocols removed in 4.0 (<a href="https://cwiki.apache.org/confluence/x/K5sODg">KIP-896</a>)</td>
 </tr>
 <tr>
 <td><strong>2.1 - 2.8</strong></td>
@@ -20442,15 +20442,21 @@ data-et-multi-view="{&quot;schema&quot;:{&quot;content&quot;:{&quot;desktop&quot
 <td style="text-align: center;">✅ Full</td>
 <td>Fully compatible</td>
 </tr>
+<tr>
+<td><strong>4.0 - 4.1</strong></td>
+<td>All</td>
+<td style="text-align: center;">✅ Full</td>
+<td>Fully compatible with 4.2 brokers</td>
+</tr>
 </tbody>
 </table>
 <p>Legend: ✅ Full | ⚠️ Partial | ❌ Not Compatible</p>
 <div class="admonition warning">
-<p class="admonition-title">Kafka 4.0 Protocol Changes</p>
+<p class="admonition-title">Kafka 4.0+ Protocol Changes</p>
 <ul>
 <li>Pre-0.10.x protocol versions are fully removed in Kafka 4.0 (<a href="https://cwiki.apache.org/confluence/x/K5sODg">KIP-896</a>)</li>
 <li>The <code>--zookeeper</code> option in AdminClient commands has been removed; use <code>--bootstrap-server</code> instead</li>
-<li>Clients older than 2.1 must be upgraded before connecting to Kafka 4.0 brokers</li>
+<li>Clients older than 2.1 must be upgraded before connecting to Kafka 4.0+ brokers</li>
 </ul>
 </div>
 <p><strong>General compatibility guarantees:</strong></p>
@@ -20461,13 +20467,13 @@ data-et-multi-view="{&quot;schema&quot;:{&quot;content&quot;:{&quot;desktop&quot
 </ul>
 <h3 id="kraft-version-compatibility">KRaft Version Compatibility<a class="headerlink" href="#kraft-version-compatibility" title="Permanent link">¶</a></h3>
 <p>KRaft clusters have specific version requirements for controllers and brokers.</p>
-<p><strong>Server compatibility with Kafka 4.0:</strong></p>
+<p><strong>Server compatibility with Kafka 4.x:</strong></p>
 <table>
 <thead>
 <tr>
 <th>KRaft Cluster Version</th>
-<th style="text-align: center;">4.0 Dynamic Voter</th>
-<th style="text-align: center;">4.0 Static Voter</th>
+<th style="text-align: center;">4.x Dynamic Voter</th>
+<th style="text-align: center;">4.x Static Voter</th>
 </tr>
 </thead>
 <tbody>
@@ -20487,7 +20493,7 @@ data-et-multi-view="{&quot;schema&quot;:{&quot;content&quot;:{&quot;desktop&quot
 <td style="text-align: center;">✅</td>
 </tr>
 <tr>
-<td><strong>4.0.x</strong></td>
+<td><strong>4.0.x - 4.2.x</strong></td>
 <td style="text-align: center;">✅</td>
 <td style="text-align: center;">✅</td>
 </tr>
@@ -20530,7 +20536,22 @@ data-et-multi-view="{&quot;schema&quot;:{&quot;content&quot;:{&quot;desktop&quot
 <tr>
 <td><strong>ZooKeeper removal</strong></td>
 <td>4.0</td>
-<td>ZooKeeper mode deprecated</td>
+<td>KRaft required</td>
+</tr>
+<tr>
+<td><strong>Streams Rebalance Protocol</strong></td>
+<td>4.1 (early access), 4.2 (GA)</td>
+<td>KIP-1071</td>
+</tr>
+<tr>
+<td><strong>Share Groups v2</strong></td>
+<td>4.2</td>
+<td>RENEW ack type (KIP-1222), acquire modes (KIP-1206)</td>
+</tr>
+<tr>
+<td><strong>Standardized CLI arguments</strong></td>
+<td>4.2</td>
+<td>KIP-1147</td>
 </tr>
 </tbody>
 </table>
@@ -20571,11 +20592,11 @@ data-et-multi-view="{&quot;schema&quot;:{&quot;content&quot;:{&quot;desktop&quot
 <h2 id="quick-start">Quick Start<a class="headerlink" href="#quick-start" title="Permanent link">¶</a></h2>
 <h3 id="1-download-and-extract">1. Download and Extract<a class="headerlink" href="#1-download-and-extract" title="Permanent link">¶</a></h3>
 <div class="highlight"><pre><span></span><code><span class="c1"># Download Kafka</span>
-curl<span class="w"> </span>-O<span class="w"> </span>https://downloads.apache.org/kafka/4.1.1/kafka_2.13-4.1.1.tgz
+curl<span class="w"> </span>-O<span class="w"> </span>https://downloads.apache.org/kafka/4.2.0/kafka_2.13-4.2.0.tgz
 
 <span class="c1"># Extract</span>
-tar<span class="w"> </span>-xzf<span class="w"> </span>kafka_2.13-4.1.1.tgz
-<span class="nb">cd</span><span class="w"> </span>kafka_2.13-4.1.1
+tar<span class="w"> </span>-xzf<span class="w"> </span>kafka_2.13-4.2.0.tgz
+<span class="nb">cd</span><span class="w"> </span>kafka_2.13-4.2.0
 </code></pre></div>
 <h3 id="2-start-kafka-kraft-mode">2. Start Kafka (KRaft Mode)<a class="headerlink" href="#2-start-kafka-kraft-mode" title="Permanent link">¶</a></h3>
 <p>Kafka 3.3+ supports KRaft mode, eliminating the ZooKeeper dependency.</p>

@@ -15506,9 +15506,18 @@ data-et-multi-view="{&quot;schema&quot;:{&quot;content&quot;:{&quot;desktop&quot
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
-  <a href="#kafka-411-november-2025-current-release" class="md-nav__link">
+  <a href="#kafka-420-february-2026-current-release" class="md-nav__link">
     <span class="md-ellipsis">
-      Kafka 4.1.1 (November 2025) - Current Release
+      Kafka 4.2.0 (February 2026) - Current Release
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#kafka-411-november-2025" class="md-nav__link">
+    <span class="md-ellipsis">
+      Kafka 4.1.1 (November 2025)
     </span>
   </a>
   
@@ -20148,9 +20157,18 @@ data-et-multi-view="{&quot;schema&quot;:{&quot;content&quot;:{&quot;desktop&quot
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
-  <a href="#kafka-411-november-2025-current-release" class="md-nav__link">
+  <a href="#kafka-420-february-2026-current-release" class="md-nav__link">
     <span class="md-ellipsis">
-      Kafka 4.1.1 (November 2025) - Current Release
+      Kafka 4.2.0 (February 2026) - Current Release
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#kafka-411-november-2025" class="md-nav__link">
+    <span class="md-ellipsis">
+      Kafka 4.1.1 (November 2025)
     </span>
   </a>
   
@@ -20392,7 +20410,7 @@ data-et-multi-view="{&quot;schema&quot;:{&quot;content&quot;:{&quot;desktop&quot
 <div><h1 id="apache-kafka-documentation">Apache Kafka® Documentation<a class="headerlink" href="#apache-kafka-documentation" title="Permanent link">¶</a></h1>
 <p>Apache Kafka® is a distributed event streaming platform designed for high-throughput, fault-tolerant data pipelines. This documentation provides comprehensive coverage of Kafka architecture, operations, and best practices for production deployments.</p>
 <h2 id="documentation-scope">Documentation Scope<a class="headerlink" href="#documentation-scope" title="Permanent link">¶</a></h2>
-<p>This reference documentation covers Apache Kafka versions 2.8 through 4.1.x, with particular emphasis on KRaft-mode deployments. <strong>Kafka 4.0 (March 2025) removed ZooKeeper entirely</strong>—KRaft is now the only supported metadata management mode.</p>
+<p>This reference documentation covers Apache Kafka versions 2.8 through 4.2.x, with particular emphasis on KRaft-mode deployments. <strong>Kafka 4.0 (March 2025) removed ZooKeeper entirely</strong>—KRaft is now the only supported metadata management mode.</p>
 <table>
 <thead>
 <tr>
@@ -20435,16 +20453,47 @@ data-et-multi-view="{&quot;schema&quot;:{&quot;content&quot;:{&quot;desktop&quot
 </tr>
 <tr>
 <td>4.1.x</td>
-<td style="text-align: center;">❌ Removed</td>
+<td style="text-align: center;">❌</td>
 <td style="text-align: center;">✅</td>
-<td><strong>Current (4.1.1)</strong></td>
+<td>Fully Documented</td>
+</tr>
+<tr>
+<td>4.2.x</td>
+<td style="text-align: center;">❌</td>
+<td style="text-align: center;">✅</td>
+<td><strong>Current (4.2.0)</strong></td>
 </tr>
 </tbody>
 </table>
 <p>Legend: ✅ Production Ready | ⚠️ Limited/Deprecated | ❌ Not Supported</p>
 <hr>
 <h2 id="whats-new">What's New<a class="headerlink" href="#whats-new" title="Permanent link">¶</a></h2>
-<h3 id="kafka-411-november-2025-current-release">Kafka 4.1.1 (November 2025) - Current Release<a class="headerlink" href="#kafka-411-november-2025-current-release" title="Permanent link">¶</a></h3>
+<h3 id="kafka-420-february-2026-current-release">Kafka 4.2.0 (February 2026) - Current Release<a class="headerlink" href="#kafka-420-february-2026-current-release" title="Permanent link">¶</a></h3>
+<ul>
+<li><strong>Share Groups enhancements</strong> (KIP-932) — RENEW acknowledgement type for extending processing timeouts (KIP-1222), configurable <code>ShareAcquireMode</code> with <code>batch_optimized</code> and <code>record_limit</code> modes (KIP-1206), share partition lag metrics (KIP-1226)</li>
+<li><strong>Streams Rebalance Protocol GA</strong> (KIP-1071) — Server-side rebalance protocol with broker-coordinated task assignment, promoted from early access to generally available</li>
+<li><strong>Kafka Streams dead letter queue</strong> (KIP-1034) — Dead letter queue support in Streams exception handlers</li>
+<li><strong>Kafka Streams CloseOptions API</strong> (KIP-1153) — Fluent-style API with explicit leave-group control</li>
+<li><strong>Anchored punctuation</strong> (KIP-1146) — Optional <code>startTime</code> parameter for wall-clock punctuation scheduling</li>
+<li><strong>Standardized CLI arguments</strong> (KIP-1147) — Consistent <code>--bootstrap-server</code> and <code>--command-config</code> across all tools; legacy argument variants deprecated</li>
+<li><strong>External schema in JsonConverter</strong> (KIP-1054) — <code>schema.content</code> configuration for external schemas, reducing message sizes</li>
+<li><strong>Allowlist connector override policy</strong> (KIP-1188) — New connector client configuration override policy based on allowlists</li>
+<li><strong>Controller idle metrics</strong> (KIP-1190, KIP-1229) — <code>AvgIdleRatio</code> metric for controller thread and MetadataLoader idleness</li>
+<li><strong>Metric naming correction</strong> (KIP-1100) — Metric names corrected to follow <code>kafka.COMPONENT</code> convention</li>
+<li><strong>Adaptive coordinator batching</strong> (KIP-1224) — Automatic linger time adjustment for group and share coordinators</li>
+<li><strong>Thread-safe RecordHeader</strong> (KIP-1205) — Thread-safety improvements using double-checked locking</li>
+<li><strong>KafkaPrincipalBuilder enforcement</strong> (KIP-1157) — <code>KafkaPrincipalBuilder</code> now extends <code>KafkaPrincipalSerde</code> for compile-time enforcement</li>
+<li><strong>Rack ID in Admin API</strong> (KIP-1227) — Rack ID exposure in <code>MemberDescription</code> and <code>ShareMemberDescription</code></li>
+<li><strong>KRaft auto-join</strong> (KIP-1186) — <code>AckWhenCommitted</code> flag in <code>AddRaftVoterRequest</code> for auto-join support</li>
+</ul>
+<p><strong>Deprecations (marked for removal in Kafka 5.0):</strong></p>
+<ul>
+<li><code>ConsumerGroupMetadata</code> constructors (KIP-1136)</li>
+<li>MX4j support (KIP-1193)</li>
+<li><code>BrokerNotFoundException</code> (KIP-1195)</li>
+<li>Misspelled <code>PARTITIONER_ADPATIVE_PARTITIONING_ENABLE</code> constant (KIP-1175); use corrected spelling</li>
+</ul>
+<h3 id="kafka-411-november-2025">Kafka 4.1.1 (November 2025)<a class="headerlink" href="#kafka-411-november-2025" title="Permanent link">¶</a></h3>
 <ul>
 <li>Bug fixes and stability improvements</li>
 </ul>
@@ -20843,8 +20892,8 @@ data-et-multi-view="{&quot;schema&quot;:{&quot;content&quot;:{&quot;desktop&quot
 </tr>
 <tr>
 <td>Current Release</td>
-<td>4.1.1</td>
-<td>November 2025</td>
+<td>4.2.0</td>
+<td>February 2026</td>
 <td>Latest stable</td>
 </tr>
 </tbody>
