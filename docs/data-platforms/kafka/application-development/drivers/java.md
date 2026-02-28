@@ -20,7 +20,7 @@ The official Apache Kafka Java client provides native protocol support with full
 | **Repository** | [github.com/apache/kafka](https://github.com/apache/kafka) |
 | **Documentation** | [kafka.apache.org/documentation](https://kafka.apache.org/documentation/) |
 | **Package** | [Maven Central](https://central.sonatype.com/artifact/org.apache.kafka/kafka-clients) |
-| **Current Version** | 4.1.x (as of 2025) |
+| **Current Version** | 4.2.x (as of 2026) |
 | **Maintainer** | Apache Software Foundation |
 | **License** | Apache License 2.0 |
 
@@ -54,14 +54,14 @@ The Java client is the reference implementation, developed as part of the core A
 <dependency>
     <groupId>org.apache.kafka</groupId>
     <artifactId>kafka-clients</artifactId>
-    <version>4.1.1</version>
+    <version>4.2.0</version>
 </dependency>
 ```
 
 ### Gradle
 
 ```groovy
-implementation 'org.apache.kafka:kafka-clients:4.1.1'
+implementation 'org.apache.kafka:kafka-clients:4.2.0'
 ```
 
 ### With Schema Registry

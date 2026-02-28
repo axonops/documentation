@@ -518,6 +518,8 @@ For custom principals to work with KRaft, the principal builder must implement `
 principal.builder.class=com.example.CustomPrincipalBuilder
 ```
 
+In Kafka 4.2+ (KIP-1157), `KafkaPrincipalBuilder` extends `KafkaPrincipalSerde` directly, providing compile-time enforcement. Custom implementations that do not implement serialization will fail to compile, preventing runtime errors during KRaft principal forwarding.
+
 ---
 
 ## AxonOps ACL Management

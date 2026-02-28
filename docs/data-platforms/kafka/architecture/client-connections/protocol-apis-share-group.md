@@ -114,7 +114,7 @@ TopicPartition =>
 | **Epoch fencing** | Stale members rejected via epoch |
 | **Assignment** | Server-side assignment, no leader election |
 | **Heartbeat interval** | Server specifies next heartbeat timing |
-| **Versioning** | v0 early access removed in 4.1; v1 stable |
+| **Versioning** | v0 early access removed in 4.1; v1 stable; v2 in Kafka 4.2 adds `ShareAcquireMode` and RENEW acknowledgement |
 
 ---
 
@@ -212,8 +212,8 @@ AcknowledgementBatch =>
 |-------|------|-------------|
 | `group_id` | STRING | Share group identifier |
 | `share_session_epoch` | INT32 | Session epoch for incremental fetch |
-| `share_acquire_mode` | INT8 | 0=batch-optimized, 1=record-limit (v2+) |
-| `is_renew_ack` | BOOLEAN | True if renew acks are present (v2+) |
+| `share_acquire_mode` | INT8 | 0=batch-optimized, 1=record-limit. Added in Kafka 4.2 (KIP-1206, v2+) |
+| `is_renew_ack` | BOOLEAN | True if renew acks are present. Added in Kafka 4.2 (KIP-1222, v2+) |
 | `acknowledgement_batches` | ARRAY | Inline acknowledgments (optional) |
 
 ### Response Schema
@@ -300,7 +300,7 @@ AcknowledgementBatch =>
 | 1 | ACCEPT | Successfully processed |
 | 2 | RELEASE | Release for redelivery |
 | 3 | REJECT | Reject permanently (DLQ) |
-| 4 | RENEW | Renew record lock (v2+) |
+| 4 | RENEW | Renew acquisition lock timeout, extending processing time without releasing the record. Added in Kafka 4.2 (KIP-1222, v2+) |
 
 ### Response Schema
 
@@ -491,11 +491,13 @@ Topic =>
 
 | Feature | Minimum Kafka Version |
 |---------|----------------------|
-| Share Groups | 4.0.0 |
-| All Share Group APIs | 4.0.0 |
+| Share Groups (core APIs) | 4.0.0 |
+| ShareAcquireMode (`batch_optimized`, `record_limit`) | 4.2.0 (KIP-1206) |
+| RENEW acknowledgement type | 4.2.0 (KIP-1222) |
+| Share partition lag metrics | 4.2.0 (KIP-1226) |
 
-!!! note "Kafka 4.0+ Feature"
-    Share Groups are a new feature in Kafka 4.0. These APIs are not available in earlier versions.
+!!! note "Share Group API Versions"
+    Share Groups were introduced in Kafka 4.0 (KIP-932). Kafka 4.2 adds v2 of the ShareFetch and ShareAcknowledge APIs with acquisition mode control (KIP-1206) and lock timeout renewal (KIP-1222).
 
 ---
 

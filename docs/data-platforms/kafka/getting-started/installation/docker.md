@@ -31,7 +31,7 @@ Deploy Apache Kafka using Docker containers for development, testing, and lightw
 version: '3.8'
 services:
   kafka:
-    image: apache/kafka:4.1.1
+    image: apache/kafka:4.2.0
     hostname: kafka
     container_name: kafka
     ports:
@@ -90,7 +90,7 @@ version: '3.8'
 
 services:
   kafka1:
-    image: apache/kafka:4.1.1
+    image: apache/kafka:4.2.0
     hostname: kafka1
     container_name: kafka1
     ports:
@@ -114,7 +114,7 @@ services:
       - kafka-net
 
   kafka2:
-    image: apache/kafka:4.1.1
+    image: apache/kafka:4.2.0
     hostname: kafka2
     container_name: kafka2
     ports:
@@ -138,7 +138,7 @@ services:
       - kafka-net
 
   kafka3:
-    image: apache/kafka:4.1.1
+    image: apache/kafka:4.2.0
     hostname: kafka3
     container_name: kafka3
     ports:
@@ -181,7 +181,7 @@ version: '3.8'
 
 services:
   kafka:
-    image: apache/kafka:4.1.1
+    image: apache/kafka:4.2.0
     hostname: kafka
     container_name: kafka
     ports:
@@ -261,7 +261,7 @@ For accessing Kafka from outside Docker network:
 ```yaml
 services:
   kafka:
-    image: apache/kafka:4.1.1
+    image: apache/kafka:4.2.0
     ports:
       - "9092:9092"
       - "9094:9094"
@@ -286,7 +286,7 @@ Connect from host using `localhost:9094`.
 ```yaml
 services:
   kafka:
-    image: apache/kafka:4.1.1
+    image: apache/kafka:4.2.0
     deploy:
       resources:
         limits:
@@ -306,7 +306,7 @@ services:
 ```yaml
 services:
   kafka:
-    image: apache/kafka:4.1.1
+    image: apache/kafka:4.2.0
     healthcheck:
       test: ["CMD", "/opt/kafka/bin/kafka-broker-api-versions.sh", "--bootstrap-server", "localhost:9092"]
       interval: 30s

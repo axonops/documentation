@@ -12,7 +12,7 @@ Apache Kafka® is a distributed event streaming platform designed for high-throu
 
 ## Documentation Scope
 
-This reference documentation covers Apache Kafka versions 2.8 through 4.1.x, with particular emphasis on KRaft-mode deployments. **Kafka 4.0 (March 2025) removed ZooKeeper entirely**—KRaft is now the only supported metadata management mode.
+This reference documentation covers Apache Kafka versions 2.8 through 4.2.x, with particular emphasis on KRaft-mode deployments. **Kafka 4.0 (March 2025) removed ZooKeeper entirely**—KRaft is now the only supported metadata management mode.
 
 | Version Range | ZooKeeper Mode | KRaft Mode | Documentation Status |
 |--------------|:--------------:|:----------:|---------------------|
@@ -21,7 +21,8 @@ This reference documentation covers Apache Kafka versions 2.8 through 4.1.x, wit
 | 3.3.x - 3.5.x | ✅           | ✅         | Supported |
 | 3.6.x - 3.9.x | ⚠️ Deprecated | ✅         | Fully Documented |
 | 4.0.x        | ❌ Removed    | ✅         | Fully Documented |
-| 4.1.x        | ❌ Removed    | ✅         | **Current (4.1.1)** |
+| 4.1.x        | ❌             | ✅         | Fully Documented |
+| 4.2.x        | ❌             | ✅         | **Current (4.2.0)** |
 
 Legend: ✅ Production Ready | ⚠️ Limited/Deprecated | ❌ Not Supported
 
@@ -29,7 +30,32 @@ Legend: ✅ Production Ready | ⚠️ Limited/Deprecated | ❌ Not Supported
 
 ## What's New
 
-### Kafka 4.1.1 (November 2025) - Current Release
+### Kafka 4.2.0 (February 2026) - Current Release
+
+- **Share Groups enhancements** (KIP-932) — RENEW acknowledgement type for extending processing timeouts (KIP-1222), configurable `ShareAcquireMode` with `batch_optimized` and `record_limit` modes (KIP-1206), share partition lag metrics (KIP-1226)
+- **Streams Rebalance Protocol GA** (KIP-1071) — Server-side rebalance protocol with broker-coordinated task assignment, promoted from early access to generally available
+- **Kafka Streams dead letter queue** (KIP-1034) — Dead letter queue support in Streams exception handlers
+- **Kafka Streams CloseOptions API** (KIP-1153) — Fluent-style API with explicit leave-group control
+- **Anchored punctuation** (KIP-1146) — Optional `startTime` parameter for wall-clock punctuation scheduling
+- **Standardized CLI arguments** (KIP-1147) — Consistent `--bootstrap-server` and `--command-config` across all tools; legacy argument variants deprecated
+- **External schema in JsonConverter** (KIP-1054) — `schema.content` configuration for external schemas, reducing message sizes
+- **Allowlist connector override policy** (KIP-1188) — New connector client configuration override policy based on allowlists
+- **Controller idle metrics** (KIP-1190, KIP-1229) — `AvgIdleRatio` metric for controller thread and MetadataLoader idleness
+- **Metric naming correction** (KIP-1100) — Metric names corrected to follow `kafka.COMPONENT` convention
+- **Adaptive coordinator batching** (KIP-1224) — Automatic linger time adjustment for group and share coordinators
+- **Thread-safe RecordHeader** (KIP-1205) — Thread-safety improvements using double-checked locking
+- **KafkaPrincipalBuilder enforcement** (KIP-1157) — `KafkaPrincipalBuilder` now extends `KafkaPrincipalSerde` for compile-time enforcement
+- **Rack ID in Admin API** (KIP-1227) — Rack ID exposure in `MemberDescription` and `ShareMemberDescription`
+- **KRaft auto-join** (KIP-1186) — `AckWhenCommitted` flag in `AddRaftVoterRequest` for auto-join support
+
+**Deprecations (marked for removal in Kafka 5.0):**
+
+- `ConsumerGroupMetadata` constructors (KIP-1136)
+- MX4j support (KIP-1193)
+- `BrokerNotFoundException` (KIP-1195)
+- Misspelled `PARTITIONER_ADPATIVE_PARTITIONING_ENABLE` constant (KIP-1175); use corrected spelling
+
+### Kafka 4.1.1 (November 2025)
 
 - Bug fixes and stability improvements
 
@@ -493,7 +519,7 @@ This documentation follows Apache Kafka's semantic versioning. Behavioral differ
 | ZooKeeper Deprecated | 3.6.0 | October 2023 | Migration recommended |
 | Dynamic KRaft Quorum | 3.9.0 | November 2024 | Add/remove controllers |
 | **ZooKeeper Removed** | **4.0.0** | **March 2025** | **KRaft required** |
-| Current Release | 4.1.1 | November 2025 | Latest stable |
+| Current Release | 4.2.0 | February 2026 | Latest stable |
 
 !!! warning "Kafka 4.0+ Migration Path"
     Kafka 4.0 does not support ZooKeeper mode. To upgrade:
