@@ -32,6 +32,35 @@ AxonOps connects to your existing Kafka Schema Registry so you can browse schema
 - View Kafka store operations (consumer lag, flush times).
 - Collect Schema Registry logs.
 
+### Subjects overview
+
+The Schema Registry page shows summary cards for the total number of **Subjects** and the global **Compatibility** level. Below the summary, a table lists all registered subjects with their latest version number, schema type (AVRO, JSON, or PROTOBUF), compatibility setting, and health status.
+
+You can filter subjects by name and sort by any column. Click a subject row to view its schema details.
+
+![Schema Registry overview](./images/schema-registry-overview.png)
+
+### Creating a new subject
+
+Click the **Create New Subject** button to open the creation dialog. Provide:
+
+1. **Subject** — The subject name (typically follows the `<topic>-key` or `<topic>-value` convention).
+2. **Schema Type** — Select AVRO, JSON, or PROTOBUF from the dropdown.
+3. **Schema** — Enter the schema definition in the editor.
+
+Click **Save schema** to register the new subject.
+
+![Create New Subject dialog](./images/schema-registry-create-subject.png)
+
+### Subject detail
+
+Selecting a subject opens the detail view. Summary cards show the current **Version**, **Type**, and **Compatibility** level for the subject.
+
+The schema definition is displayed in a syntax-highlighted JSON editor, allowing you to inspect the full structure of the schema including field names, types, and defaults.
+
+![Subject detail](./images/schema-registry-subject-detail.png)
+
+
 ## Prerequisites
 
 - A running Kafka Schema Registry service (AxonOps, Confluent, or compatible).
@@ -93,12 +122,11 @@ After saving the file, restart axon-agent so it can connect.
 
 ## Use Schema Registry in AxonOps
 
-1. Open **Kafka** in the AxonOps UI.
-2. Select **Schema Registry**.
-3. Choose the registry/cluster connection.
-4. Monitor **metrics** and **logs** for the registry service.
-5. Browse **subjects** and open a subject to view schema **versions** and details.
-6. Use **Add schema** to register new schema versions.
+1. Open your Kafka cluster in the AxonOps UI.
+2. Select **Schema Registry** from the left navigation.
+3. Browse the subjects table to find the schema you need.
+4. Click a subject to view its schema definition and version history.
+5. Use **Create New Subject** to register new schemas.
 
 Depending on your registry implementation and permissions, AxonOps may allow additional actions (such as changing compatibility or deleting versions). If your registry is read-only, AxonOps will still provide visibility into metrics, logs, subjects, and versions.
 
