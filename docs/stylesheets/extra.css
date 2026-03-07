@@ -764,7 +764,7 @@ table th:nth-of-type(3) {
   gap: 1rem;
   background: linear-gradient(90deg, #030737 0%, #0a0f4a 100%);
   color: rgba(255, 255, 255, 0.85);
-  font-size: 0.85rem;
+  font-size: 0.95rem;
   padding: 6px 1rem;
   border-top: 1px solid rgba(124, 216, 37, 0.3);
 }
@@ -782,8 +782,8 @@ table th:nth-of-type(3) {
 .axon-bottom-bar__cta {
   display: none;
   align-items: center;
-  padding: 0.2rem 0.7rem;
-  font-size: 0.68rem;
+  padding: 0.25rem 0.8rem;
+  font-size: 0.8rem;
   font-weight: 600;
   letter-spacing: 0.02em;
   color: var(--axon-dark);
