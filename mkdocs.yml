@@ -272,6 +272,8 @@ nav:
 
       - Schema Registry: kafka/schema-registry/overview.md
 
+      - Connect: kafka/connect/overview.md
+
     - Notification Integrations:
       - Overview : 'integrations/overview.md'
       - PagerDuty: 'integrations/pagerduty-integration.md'

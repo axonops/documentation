@@ -20,13 +20,69 @@ Common uses:
 
 ## Kafka Connect in AxonOps
 
-AxonOps integrates with your Kafka Connect REST endpoints through the agent. 
-Once configured, you can:
-- Discover Connect clusters and their versions.
-- List connectors and view per-connector status.
-- Create and update connector configurations.
-- Pause, resume, stop, and restart connectors.
-- Restart individual connector tasks.
+AxonOps integrates with your Kafka Connect REST endpoints through the agent.
+Once configured, you can manage your entire Connect deployment from the AxonOps UI.
+
+### Connect overview
+
+The Connect overview page provides a summary of all your Connect clusters at a glance. Summary cards show the total number of **Clusters**, **Connectors**, **Failed Connectors**, and **Failed Tasks** across your deployment.
+
+Below the summary cards, a table lists each Connect cluster with its connector and task counts. You can filter clusters by name and sort by any column. Click on a cluster row to drill into its details.
+
+![Connect overview](./images/connect-overview.png)
+
+### Cluster detail
+
+Clicking a cluster opens the cluster detail view. Summary cards show the cluster-level **Connectors** count, **Failed Connectors**, **Failed Tasks**, and the Connect **Version**.
+
+The view has two tabs:
+
+**Connectors** — Lists all connectors deployed to the cluster. Each row shows the connector name, class, type (source or sink), running tasks ratio and current state. You can filter by state and sort by any column. Click a connector row to view its full details.
+
+![Cluster detail — Connectors tab](./images/connect-cluster-detail.png)
+
+**Plugins** — Lists all connector plugins available on the cluster, showing the fully-qualified class name, version, and type (source or sink).
+
+![Cluster detail — Plugins tab](./images/connect-plugins.png)
+
+### Connector detail
+
+Selecting a connector opens the connector detail view. The header displays the connector name and its current state (e.g. **RUNNING**).
+
+![Connector detail](./images/connect-connector-detail.png)
+
+The page is divided into three sections:
+
+**Configuration** — A JSON editor showing the connector's current configuration. Click the **Edit** icon in the toolbar to modify and save changes.
+
+**Tasks** — A table listing each task with its ID, assigned worker address, current status, and a **Restart** button to restart individual tasks.
+
+### Connector lifecycle actions
+
+The connector toolbar provides the following actions:
+
+| Icon | Action | Description |
+|------|--------|-------------|
+| :material-pencil: | **Edit** | Open the configuration editor to update the connector |
+| :material-refresh: | **Restart** | Restart the connector and all its tasks |
+| :material-pause: | **Pause** | Pause the connector — tasks stop processing but are not removed |
+| :material-stop: | **Stop** | Stop the connector — tasks are shut down |
+| :material-delete: | **Delete** | Permanently remove the connector from the cluster |
+
+Individual tasks can be restarted from the **Tasks** table using the per-task **Restart** button.
+
+### Creating a connector
+
+Click the **Create Connector** button on the cluster detail page to open the creation dialog.
+
+![Create connector dialog](./images/connect-create-connector.png)
+
+Provide:
+
+1. **Connector Name** (mandatory) — A unique name for the connector.
+2. **Configuration** — A JSON payload specifying the connector class and its settings. The editor is pre-populated with a template.
+
+Click **Create Connector** to deploy it to the cluster.
 
 ## Configure Kafka Connect access
 
@@ -55,6 +111,7 @@ kafka:
 ```
 
 Notes:
+
 - `clusters` is a list; `name` is used to target a specific Connect cluster.
 - `username` and `password` enable HTTP basic auth.
 - `token` is supported in config files if your Connect endpoint uses token auth.
@@ -82,27 +139,8 @@ CONNECT_CLIENT_CLUSTER_TLS_KEYFILEPATH=/etc/ssl/private/client.key
 CONNECT_CLIENT_CLUSTER_TLS_VERIFY_ENABLED=false
 ```
 
-Note on TLS verification: `CONNECT_CLIENT_CLUSTER_TLS_VERIFY_ENABLED` maps to the `insecureSkipTlsVerify` field. 
+Note on TLS verification: `CONNECT_CLIENT_CLUSTER_TLS_VERIFY_ENABLED` maps to the `insecureSkipTlsVerify` field.
 When set to `true`, certificate verification is skipped.
-
-## Cluster discovery and status
-
-Once enabled, AxonOps can fetch:
-- Cluster version, commit, and Kafka cluster ID.
-- Available connector plugins.
-- Connector list and status per cluster.
-
-## Connector lifecycle actions
-
-AxonOps supports the following connector operations:
-- Create connector with a full configuration payload.
-- Update connector configuration.
-- Pause / Resume connector execution.
-- Stop connector.
-- Restart connector (optionally include tasks or only failed tasks).
-- Restart individual connector tasks.
-
-These actions are executed against the Connect REST API through the agent.
 
 ## Troubleshooting
 
