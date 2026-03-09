@@ -16,7 +16,7 @@
         <link rel="prev" href="../../consumers/overview/">
       
       
-        <link rel="next" href="../../../integrations/overview/">
+        <link rel="next" href="../../connect/overview/">
       
       
       <link rel="icon" href="/img/favicon.ico">
@@ -3898,6 +3898,39 @@ data-et-multi-view="{&quot;schema&quot;:{&quot;content&quot;:{&quot;desktop&quot
     </span>
   </a>
   
+    <nav class="md-nav" aria-label="Schema Registry in AxonOps">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#subjects-overview" class="md-nav__link">
+    <span class="md-ellipsis">
+      Subjects overview
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#creating-a-new-subject" class="md-nav__link">
+    <span class="md-ellipsis">
+      Creating a new subject
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#subject-detail" class="md-nav__link">
+    <span class="md-ellipsis">
+      Subject detail
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
 </li>
       
         <li class="md-nav__item">
@@ -4033,6 +4066,27 @@ data-et-multi-view="{&quot;schema&quot;:{&quot;content&quot;:{&quot;desktop&quot
   
 </nav>
       
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../connect/overview/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Connect
+  </span>
+  
+
+      </a>
     </li>
   
 
@@ -20047,6 +20101,39 @@ data-et-multi-view="{&quot;schema&quot;:{&quot;content&quot;:{&quot;desktop&quot
     </span>
   </a>
   
+    <nav class="md-nav" aria-label="Schema Registry in AxonOps">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#subjects-overview" class="md-nav__link">
+    <span class="md-ellipsis">
+      Subjects overview
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#creating-a-new-subject" class="md-nav__link">
+    <span class="md-ellipsis">
+      Creating a new subject
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#subject-detail" class="md-nav__link">
+    <span class="md-ellipsis">
+      Subject detail
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
 </li>
       
         <li class="md-nav__item">
@@ -20215,6 +20302,23 @@ data-et-multi-view="{&quot;schema&quot;:{&quot;content&quot;:{&quot;desktop&quot
 <li>View Kafka store operations (consumer lag, flush times).</li>
 <li>Collect Schema Registry logs.</li>
 </ul>
+<h3 id="subjects-overview">Subjects overview<a class="headerlink" href="#subjects-overview" title="Permanent link">¶</a></h3>
+<p>The Schema Registry page shows summary cards for the total number of <strong>Subjects</strong> and the global <strong>Compatibility</strong> level. Below the summary, a table lists all registered subjects with their latest version number, schema type (AVRO, JSON, or PROTOBUF), compatibility setting, and health status.</p>
+<p>You can filter subjects by name and sort by any column. Click a subject row to view its schema details.</p>
+<p><a class="glightbox" href="../images/schema-registry-overview.png" data-type="image" data-width="100%" data-height="auto" data-desc-position="bottom"><img alt="Schema Registry overview" src="../images/schema-registry-overview.png"></a></p>
+<h3 id="creating-a-new-subject">Creating a new subject<a class="headerlink" href="#creating-a-new-subject" title="Permanent link">¶</a></h3>
+<p>Click the <strong>Create New Subject</strong> button to open the creation dialog. Provide:</p>
+<ol>
+<li><strong>Subject</strong> — The subject name (typically follows the <code>&lt;topic&gt;-key</code> or <code>&lt;topic&gt;-value</code> convention).</li>
+<li><strong>Schema Type</strong> — Select AVRO, JSON, or PROTOBUF from the dropdown.</li>
+<li><strong>Schema</strong> — Enter the schema definition in the editor.</li>
+</ol>
+<p>Click <strong>Save schema</strong> to register the new subject.</p>
+<p><a class="glightbox" href="../images/schema-registry-create-subject.png" data-type="image" data-width="100%" data-height="auto" data-desc-position="bottom"><img alt="Create New Subject dialog" src="../images/schema-registry-create-subject.png"></a></p>
+<h3 id="subject-detail">Subject detail<a class="headerlink" href="#subject-detail" title="Permanent link">¶</a></h3>
+<p>Selecting a subject opens the detail view. Summary cards show the current <strong>Version</strong>, <strong>Type</strong>, and <strong>Compatibility</strong> level for the subject.</p>
+<p>The schema definition is displayed in a syntax-highlighted JSON editor, allowing you to inspect the full structure of the schema including field names, types, and defaults.</p>
+<p><a class="glightbox" href="../images/schema-registry-subject-detail.png" data-type="image" data-width="100%" data-height="auto" data-desc-position="bottom"><img alt="Subject detail" src="../images/schema-registry-subject-detail.png"></a></p>
 <h2 id="prerequisites">Prerequisites<a class="headerlink" href="#prerequisites" title="Permanent link">¶</a></h2>
 <ul>
 <li>A running Kafka Schema Registry service (AxonOps, Confluent, or compatible).</li>
@@ -20265,12 +20369,11 @@ data-et-multi-view="{&quot;schema&quot;:{&quot;content&quot;:{&quot;desktop&quot
 <p>After saving the file, restart axon-agent so it can connect.</p>
 <h2 id="use-schema-registry-in-axonops">Use Schema Registry in AxonOps<a class="headerlink" href="#use-schema-registry-in-axonops" title="Permanent link">¶</a></h2>
 <ol>
-<li>Open <strong>Kafka</strong> in the AxonOps UI.</li>
-<li>Select <strong>Schema Registry</strong>.</li>
-<li>Choose the registry/cluster connection.</li>
-<li>Monitor <strong>metrics</strong> and <strong>logs</strong> for the registry service.</li>
-<li>Browse <strong>subjects</strong> and open a subject to view schema <strong>versions</strong> and details.</li>
-<li>Use <strong>Add schema</strong> to register new schema versions.</li>
+<li>Open your Kafka cluster in the AxonOps UI.</li>
+<li>Select <strong>Schema Registry</strong> from the left navigation.</li>
+<li>Browse the subjects table to find the schema you need.</li>
+<li>Click a subject to view its schema definition and version history.</li>
+<li>Use <strong>Create New Subject</strong> to register new schemas.</li>
 </ol>
 <p>Depending on your registry implementation and permissions, AxonOps may allow additional actions (such as changing compatibility or deleting versions). If your registry is read-only, AxonOps will still provide visibility into metrics, logs, subjects, and versions.</p>
 <h2 id="dashboard-metrics">Dashboard metrics<a class="headerlink" href="#dashboard-metrics" title="Permanent link">¶</a></h2>
@@ -20390,13 +20493,13 @@ data-et-multi-view="{&quot;schema&quot;:{&quot;content&quot;:{&quot;desktop&quot
         
         
           
-          <a href="../../../integrations/overview/" class="md-footer__link md-footer__link--next" aria-label="Next: Overview">
+          <a href="../../connect/overview/" class="md-footer__link md-footer__link--next" aria-label="Next: Connect">
             <div class="md-footer__title">
               <span class="md-footer__direction">
                 Next
               </span>
               <div class="md-ellipsis">
-                Overview
+                Connect
               </div>
             </div>
             <div class="md-footer__button md-icon">
