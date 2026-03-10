@@ -1,11 +1,48 @@
 ---
-title: "Release 2026-02-25"
+title: "Release 2026-03-10"
 description: "AxonOps release notes. Latest features, improvements, and bug fixes."
 meta:
   - name: keywords
     content: "release notes, AxonOps updates, changelog, new features"
 ---
 
+
+## Release 2026-03-10
+
+* axon-dash: 2.0.28
+    * Light theme and filter colour fixes.
+
+### Fixes
+
+* [Dash] Fix text colours in light theme.
+* [Dash] Fix keyspace and table filter colours.
+
+## Release 2026-03-10
+
+* axon-server: 2.0.27
+    * Kafka partition management and CQL retry fix.
+* axon-dash: 2.0.27
+    * Kafka partition management, message streaming, ACL search, and Kafka Connect fixes.
+* axon-agent: 2.0.20
+    * Kafka partition management and crash fix.
+
+### Fixes
+
+* [Server] Fix retry policy for CQL queries to ensure metrics data is retrieved reliably from Cassandra.
+* [Server] Fix restarting Kafka Connect connectors.
+* [Agent] Fix agent crash when the same IP address is re-used in a different cluster type.
+* [Dash] Fix issue with empty Kafka Connect clusters.
+* [Dash] Fix restarting Kafka Connect connectors and improve UI feedback.
+* [Dash] Fix filter values not always being populated on dashboards.
+
+### New Features
+
+* [Server] Add ability to increase Kafka topic partitions.
+* [Agent] Add ability to increase Kafka topic partitions.
+* [Dash] Add ability to increase Kafka topic partitions.
+* [Dash] Add ability to reassign Kafka topic partitions.
+* [Dash] Add Kafka message streaming.
+* [Dash] Add search for Kafka ACLs.
 
 ## Release 2026-02-25
 
