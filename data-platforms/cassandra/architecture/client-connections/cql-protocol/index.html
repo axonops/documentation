@@ -6444,15 +6444,6 @@ data-et-multi-view="{&quot;schema&quot;:{&quot;content&quot;:{&quot;desktop&quot
   
 </li>
         
-          <li class="md-nav__item">
-  <a href="#vector-types-v6" class="md-nav__link">
-    <span class="md-ellipsis">
-      Vector Types (v6+)
-    </span>
-  </a>
-  
-</li>
-        
       </ul>
     </nav>
   
@@ -6685,15 +6676,6 @@ data-et-multi-view="{&quot;schema&quot;:{&quot;content&quot;:{&quot;desktop&quot
   <a href="#v4-v5-changes" class="md-nav__link">
     <span class="md-ellipsis">
       v4 → v5 Changes
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#v5-v6-changes" class="md-nav__link">
-    <span class="md-ellipsis">
-      v5 → v6 Changes
     </span>
   </a>
   
@@ -21240,15 +21222,6 @@ data-et-multi-view="{&quot;schema&quot;:{&quot;content&quot;:{&quot;desktop&quot
   
 </li>
         
-          <li class="md-nav__item">
-  <a href="#vector-types-v6" class="md-nav__link">
-    <span class="md-ellipsis">
-      Vector Types (v6+)
-    </span>
-  </a>
-  
-</li>
-        
       </ul>
     </nav>
   
@@ -21486,15 +21459,6 @@ data-et-multi-view="{&quot;schema&quot;:{&quot;content&quot;:{&quot;desktop&quot
   
 </li>
         
-          <li class="md-nav__item">
-  <a href="#v5-v6-changes" class="md-nav__link">
-    <span class="md-ellipsis">
-      v5 → v6 Changes
-    </span>
-  </a>
-  
-</li>
-        
       </ul>
     </nav>
   
@@ -21633,14 +21597,8 @@ data-et-multi-view="{&quot;schema&quot;:{&quot;content&quot;:{&quot;desktop&quot
 <tr>
 <td>v5</td>
 <td>4.0+</td>
-<td>Supported</td>
+<td>Current</td>
 <td>Per-query keyspace, NOW_IN_SECONDS, duration type, result metadata ID</td>
-</tr>
-<tr>
-<td>v6</td>
-<td>5.0+</td>
-<td>Current (as of 5.0)</td>
-<td>Tablets, vector types, rate limiting errors</td>
 </tr>
 </tbody>
 </table>
@@ -22161,7 +22119,7 @@ Bits 6-0: Protocol version number
 <tr>
 <td><code>PROTOCOL_VERSIONS</code></td>
 <td>Supported protocol versions</td>
-<td><code>["3/v3", "4/v4", "5/v5", "6/v6"]</code></td>
+<td><code>["3/v3", "4/v4", "5/v5"]</code></td>
 </tr>
 </tbody>
 </table>
@@ -22901,11 +22859,6 @@ Bits 6-0: Protocol version number
 <td>duration</td>
 <td>varint months + varint days + varint nanoseconds</td>
 </tr>
-<tr>
-<td><code>0x0016</code></td>
-<td>vector</td>
-<td>(v6+) Fixed-size vector with element type and dimensions</td>
-</tr>
 </tbody>
 </table>
 <h3 id="detailed-native-type-encoding">Detailed Native Type Encoding<a class="headerlink" href="#detailed-native-type-encoding" title="Permanent link">¶</a></h3>
@@ -23030,26 +22983,6 @@ Missing trailing fields assumed null
     &lt;elements&gt;: n × [bytes] element values in definition order
 }
 </code></pre></div>
-<h3 id="vector-types-v6">Vector Types (v6+)<a class="headerlink" href="#vector-types-v6" title="Permanent link">¶</a></h3>
-<table>
-<thead>
-<tr>
-<th>ID</th>
-<th>Type Option Value</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td><code>0x0016</code></td>
-<td><code>&lt;element_type&gt;: [option]</code>, <code>&lt;dimensions&gt;: [int]</code></td>
-</tr>
-</tbody>
-</table>
-<p><strong>Vector value encoding:</strong>
-</p><div class="highlight"><pre><span></span><code>&lt;vector_value&gt; {
-    &lt;elements&gt;: dimensions × encoded element (no length prefix per element)
-}
-</code></pre></div>
 <hr>
 <h2 id="error-handling">Error Handling<a class="headerlink" href="#error-handling" title="Permanent link">¶</a></h2>
 <h3 id="error-response">ERROR Response<a class="headerlink" href="#error-response" title="Permanent link">¶</a></h3>
@@ -23164,11 +23097,6 @@ Missing trailing fields assumed null
 <td><code>0x1700</code></td>
 <td>CAS_write_unknown</td>
 <td>See below (v5+)</td>
-</tr>
-<tr>
-<td><code>0x1800</code></td>
-<td>Rate_limit</td>
-<td>(v6+)</td>
 </tr>
 </tbody>
 </table>
@@ -23396,12 +23324,6 @@ Missing trailing fields assumed null
 <li>Failure reason codes in error maps</li>
 <li>METADATA_CHANGED flag in results</li>
 <li>CAS_write_unknown error</li>
-</ul>
-<h3 id="v5-v6-changes">v5 → v6 Changes<a class="headerlink" href="#v5-v6-changes" title="Permanent link">¶</a></h3>
-<ul>
-<li>Tablet support</li>
-<li>Vector type</li>
-<li>Rate limit errors</li>
 </ul>
 <hr>
 <h2 id="implementation-notes">Implementation Notes<a class="headerlink" href="#implementation-notes" title="Permanent link">¶</a></h2>
