@@ -28,8 +28,7 @@ The CQL Native Protocol operates over TCP and provides:
 | v2 | 2.0 | Deprecated | Batch, query paging, result metadata flags |
 | v3 | 2.1+ | Supported | 32K streams, UDT, tuple types, timestamps on queries |
 | v4 | 2.2+ | Supported | Custom payloads, warnings, unset values, dates/times |
-| v5 | 4.0+ | Supported | Per-query keyspace, NOW_IN_SECONDS, duration type, result metadata ID |
-| v6 | 5.0+ | Current (as of 5.0) | Tablets, vector types, rate limiting errors |
+| v5 | 4.0+ | Current | Per-query keyspace, NOW_IN_SECONDS, duration type, result metadata ID |
 
 ### Version Negotiation
 
@@ -280,7 +279,7 @@ SUPPORTED {
 |-----|-------------|----------------|
 | `CQL_VERSION` | Supported CQL versions | `["3.4.6", "3.4.7"]` |
 | `COMPRESSION` | Supported compression algorithms | `["lz4", "snappy"]` |
-| `PROTOCOL_VERSIONS` | Supported protocol versions | `["3/v3", "4/v4", "5/v5", "6/v6"]` |
+| `PROTOCOL_VERSIONS` | Supported protocol versions | `["3/v3", "4/v4", "5/v5"]` |
 
 ### STARTUP Request
 
@@ -776,7 +775,6 @@ Column types are encoded as "options":
 | `0x0013` | smallint | 2 bytes, signed big-endian |
 | `0x0014` | tinyint | 1 byte, signed |
 | `0x0015` | duration | varint months + varint days + varint nanoseconds |
-| `0x0016` | vector | (v6+) Fixed-size vector with element type and dimensions |
 
 ### Detailed Native Type Encoding
 
@@ -883,19 +881,6 @@ Missing trailing fields assumed null
 }
 ```
 
-### Vector Types (v6+)
-
-| ID | Type Option Value |
-|----|-------------------|
-| `0x0016` | `<element_type>: [option]`, `<dimensions>: [int]` |
-
-**Vector value encoding:**
-```
-<vector_value> {
-    <elements>: dimensions × encoded element (no length prefix per element)
-}
-```
-
 ---
 
 ## Error Handling
@@ -941,7 +926,6 @@ ERROR {
 | `0x1500` | Write_failure | See below |
 | `0x1600` | CDC_write_failure | None (v5+) |
 | `0x1700` | CAS_write_unknown | See below (v5+) |
-| `0x1800` | Rate_limit | (v6+) |
 
 #### Query Errors (0x2000 - 0x2FFF)
 
@@ -1193,12 +1177,6 @@ This prefix appears before the normal message body in both requests and response
 - Failure reason codes in error maps
 - METADATA_CHANGED flag in results
 - CAS_write_unknown error
-
-### v5 → v6 Changes
-
-- Tablet support
-- Vector type
-- Rate limit errors
 
 ---
 
