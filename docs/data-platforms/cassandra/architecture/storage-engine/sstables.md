@@ -60,7 +60,6 @@ db      - File extension
 | `na` | 4.0 | Storage format revision |
 | `nb` | 4.0+ | Format revision |
 | `oa` | 5.0 | Storage format revision |
-| `pa` | 6.0 | Storage format revision |
 
 *Note: Version identifiers are for the Big format. BTI format uses `bti` as the format component instead of `big`.*
 
