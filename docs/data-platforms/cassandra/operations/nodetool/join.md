@@ -38,22 +38,32 @@ These two settings are often confused but serve different purposes:
 
 - **`join_ring: false`** - The node starts but does NOT join the cluster ring. It connects to seed nodes, participates in gossip to learn cluster topology, but does not appear as a ring member in `nodetool status`. The node waits for an explicit `nodetool join` command before joining.
 
-```
-┌─────────────────────────────────────────────────────────────────────────┐
-│                        Node Startup Behavior                            │
-├─────────────────────────────────────────────────────────────────────────┤
-│                                                                         │
-│  join_ring: true (default)                                              │
-│  └─> Node joins ring automatically at startup                           │
-│      └─> auto_bootstrap: true  → Streams data, then serves requests     │
-│      └─> auto_bootstrap: false → Joins immediately, no streaming        │
-│                                                                         │
-│  join_ring: false                                                       │
-│  └─> Node starts but does NOT join ring                                 │
-│      └─> Waits for "nodetool join" command                              │
-│          └─> Then auto_bootstrap setting determines if streaming occurs │
-│                                                                         │
-└─────────────────────────────────────────────────────────────────────────┘
+```plantuml
+@startuml
+skinparam backgroundColor white
+
+title Node Startup Behavior
+
+rectangle "join_ring: true (default)" as jt {
+    card "Node joins ring\nautomatically at startup" as jta #BBDEFB
+
+    card "auto_bootstrap: true\nStreams data, then\nserves requests" as ab_true #E8F5E9
+    card "auto_bootstrap: false\nJoins immediately,\nno streaming" as ab_false #FFF9C4
+}
+
+rectangle "join_ring: false" as jf {
+    card "Node starts but\ndoes NOT join ring" as jfa #FFCDD2
+    card "Waits for\n\"nodetool join\"" as wait #FFF9C4
+    card "auto_bootstrap setting\ndetermines if\nstreaming occurs" as ab_then #E8F5E9
+}
+
+jta -down-> ab_true
+jta -down-> ab_false
+
+jfa -down-> wait
+wait -down-> ab_then
+
+@enduml
 ```
 
 ---
@@ -240,8 +250,6 @@ For `nodetool join` to work:
 ```plantuml
 @startuml
 skinparam backgroundColor white
-skinparam activityBackgroundColor #f5f5f5
-skinparam activityBorderColor #333333
 
 start
 

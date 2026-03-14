@@ -76,32 +76,27 @@ With Network Permissions Cache:
 
 ### Network Authorization Flow
 
-```
-Client Connection (IP: 10.1.50.100)
-        │
-        ▼
-┌─────────────────────────┐
-│ Check Network Cache     │
-│ (Is IP authorized?)     │
-└───────────┬─────────────┘
-            │
-    Cache Hit?
-     /      \
-   Yes       No
-    │         │
-    │         ▼
-    │   ┌─────────────────┐
-    │   │ Evaluate CIDR   │
-    │   │ Rules & Groups  │
-    │   └────────┬────────┘
-    │            │
-    │            ▼
-    │   ┌─────────────────┐
-    │   │ Cache Result    │
-    │   └────────┬────────┘
-    │            │
-    ▼            ▼
-  Allow/Deny Connection
+```plantuml
+@startuml
+skinparam backgroundColor white
+
+title Network Authorization Flow
+
+start
+
+:Client connection\n(IP: 10.1.50.100);
+
+if (Cache hit?) then (yes)
+else (no)
+    :Evaluate CIDR\nrules and groups;
+    :Cache result;
+endif
+
+:Allow/Deny connection;
+
+stop
+
+@enduml
 ```
 
 ---

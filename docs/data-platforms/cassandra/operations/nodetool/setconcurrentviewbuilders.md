@@ -62,42 +62,6 @@ View building happens in these scenarios:
 
 ### How View Building Works
 
-```plantuml
-@startuml
-skinparam backgroundColor white
-skinparam componentStyle rectangle
-
-title View Building Process
-
-rectangle "Base Table" as base #lightblue {
-    component "user_id | email\n─────────────\nuuid1  | a@x\nuuid2  | b@y\nuuid3  | c@z\n...    | ..." as basetable
-}
-
-rectangle "View Builder Threads\n(concurrent_view_builders)" as builders {
-    component "Thread 1\n(busy)" as t1 #lightgreen
-    component "Thread 2\n(busy)" as t2 #lightgreen
-    component "Thread 3\n(idle)" as t3 #lightgray
-    component "Thread 4\n(idle)" as t4 #lightgray
-}
-
-rectangle "Materialized View" as view #lightyellow {
-    component "email | user_id\n─────────────\na@x   | uuid1\nb@y   | uuid2\nc@z   | uuid3\n...   | ..." as viewtable
-}
-
-base -right-> builders : "Read\npartitions"
-builders -right-> view : "Write\ntransformed\ndata"
-
-note bottom of builders
-  Each thread:
-  1. Reads partitions from base table
-  2. Transforms data per view definition
-  3. Writes entries to materialized view
-  4. Tracks progress for resumption
-end note
-
-@enduml
-```
-
 Each view builder thread:
 
 1. Reads partitions from the base table

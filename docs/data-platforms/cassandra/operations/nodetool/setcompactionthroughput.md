@@ -36,7 +36,7 @@ See [connection options](index.md#connection-options) for connection options.
 
     ```plantuml
     @startuml
-    skinparam backgroundColor transparent
+    skinparam backgroundColor white
 
     title Compaction Throughput Distribution
 
@@ -335,7 +335,7 @@ nodetool setcompactionthroughput 96
 
 ```plantuml
 @startuml
-skinparam backgroundColor transparent
+skinparam backgroundColor white
 
 title Effects of Different Throughput Settings
 

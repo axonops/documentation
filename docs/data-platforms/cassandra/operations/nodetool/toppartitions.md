@@ -10,8 +10,8 @@ meta:
 
 Samples and displays the most active partitions.
 
-!!! warning "Deprecated in Cassandra 4.0+"
-    `toppartitions` is deprecated since Cassandra 4.0 and is now an alias for `profileload`. Consider using `nodetool profileload` directly for new scripts and automation.
+!!! info "Relationship to profileload"
+    Since Cassandra 4.0, `toppartitions` is a wrapper around `profileload` (`TopPartitions extends ProfileLoad`). Both commands remain available and accept the same options. The `profileload` command offers the same functionality with a broader profiling scope.
 
 ---
 
@@ -26,7 +26,7 @@ See [connection options](index.md#connection-options) for connection options.
 
 `nodetool toppartitions` samples partition access over a specified duration and reports the most frequently accessed partitions. This helps identify hot partitions that may be causing performance issues.
 
-Since Cassandra 4.0, this command is an alias for `profileload` and shares its functionality.
+Since Cassandra 4.0, this command is a wrapper around `profileload` ([source](https://github.com/apache/cassandra/blob/cassandra-4.0/src/java/org/apache/cassandra/tools/nodetool/TopPartitions.java)).
 
 ---
 

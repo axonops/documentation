@@ -214,7 +214,7 @@ A **hard link** is a filesystem feature that allows multiple directory entries t
 
 ```plantuml
 @startuml
-skinparam backgroundColor transparent
+skinparam backgroundColor white
 
 title Hard Link Snapshot — Disk Layout
 

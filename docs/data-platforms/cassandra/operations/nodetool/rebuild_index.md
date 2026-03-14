@@ -53,36 +53,10 @@ Understanding the rebuild process helps in planning and risk assessment:
 
 ### Step-by-Step Process
 
-```
-1. Index Marked as Building
-   └── Index queries return incomplete results or fail
-
-2. Full Table Scan Begins
-   └── Every SSTable is read sequentially
-   └── Each row's indexed column is extracted
-
-3. New Index Entries Created
-   └── Index SSTables are written
-   └── Compaction may occur on index SSTables
-
-4. Index Marked as Built
-   └── Index queries resume normal operation
-   └── New index is fully available
-```
-
-### Timeline Visualization
-
-```
-Time ────────────────────────────────────────────────────────────►
-
-│ Normal    │◄──── Index Unavailable ────►│ Normal Operation │
-│ Operation │     (Rebuild in Progress)    │   (Rebuild Done) │
-
-             ▲                              ▲
-             │                              │
-        rebuild_index                  Rebuild Complete
-          command                      (logged in system.log)
-```
+1. **Index marked as building** — index queries return incomplete results or fail
+2. **Full table scan begins** — every SSTable is read sequentially; each row's indexed column is extracted
+3. **New index entries created** — index SSTables are written; compaction may occur on index SSTables
+4. **Index marked as built** — index queries resume normal operation
 
 ---
 

@@ -118,17 +118,17 @@ WHERE session_id = <session_id_from_above>;
  Parsing SELECT * FROM users WHERE id = ?          | 192.168.1.101 |             52
  Preparing statement                               | 192.168.1.101 |            118
  Determining replicas for query                    | 192.168.1.101 |            156
- Sending READ message to /192.168.1.102           | 192.168.1.101 |            203
- READ message received from /192.168.1.101        | 192.168.1.102 |             45
- Executing single-partition query on users        | 192.168.1.102 |            112
+ Sending READ message to /192.168.1.102            | 192.168.1.101 |            203
+ READ message received from /192.168.1.101         | 192.168.1.102 |             45
+ Executing single-partition query on users         | 192.168.1.102 |            112
  Acquiring sstable references                      | 192.168.1.102 |            158
- Bloom filter allows skipping sstable 1           | 192.168.1.102 |            201
- Partition index with 1 entries found             | 192.168.1.102 |            289
- Seeking to partition indexed section             | 192.168.1.102 |            334
- Merging memtable contents                        | 192.168.1.102 |            412
- Read 1 live rows and 0 tombstone cells           | 192.168.1.102 |            498
- Enqueuing response to /192.168.1.101             | 192.168.1.102 |            534
- Processing response from /192.168.1.102          | 192.168.1.101 |           2341
+ Bloom filter allows skipping sstable 1            | 192.168.1.102 |            201
+ Partition index with 1 entries found              | 192.168.1.102 |            289
+ Seeking to partition indexed section              | 192.168.1.102 |            334
+ Merging memtable contents                         | 192.168.1.102 |            412
+ Read 1 live rows and 0 tombstone cells            | 192.168.1.102 |            498
+ Enqueuing response to /192.168.1.101              | 192.168.1.102 |            534
+ Processing response from /192.168.1.102           | 192.168.1.101 |           2341
  Request complete                                  | 192.168.1.101 |           2456
 ```
 
