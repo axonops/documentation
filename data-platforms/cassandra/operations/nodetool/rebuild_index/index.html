@@ -11265,15 +11265,6 @@ data-et-multi-view="{&quot;schema&quot;:{&quot;content&quot;:{&quot;desktop&quot
   
 </li>
         
-          <li class="md-nav__item">
-  <a href="#timeline-visualization" class="md-nav__link">
-    <span class="md-ellipsis">
-      Timeline Visualization
-    </span>
-  </a>
-  
-</li>
-        
       </ul>
     </nav>
   
@@ -20429,15 +20420,6 @@ data-et-multi-view="{&quot;schema&quot;:{&quot;content&quot;:{&quot;desktop&quot
   
 </li>
         
-          <li class="md-nav__item">
-  <a href="#timeline-visualization" class="md-nav__link">
-    <span class="md-ellipsis">
-      Timeline Visualization
-    </span>
-  </a>
-  
-</li>
-        
       </ul>
     </nav>
   
@@ -20920,32 +20902,12 @@ See <a href="../#connection-options">connection options</a> for connection optio
 <h2 id="what-happens-during-index-rebuild">What Happens During Index Rebuild<a class="headerlink" href="#what-happens-during-index-rebuild" title="Permanent link">¶</a></h2>
 <p>Understanding the rebuild process helps in planning and risk assessment:</p>
 <h3 id="step-by-step-process">Step-by-Step Process<a class="headerlink" href="#step-by-step-process" title="Permanent link">¶</a></h3>
-<div class="highlight"><pre><span></span><code>1. Index Marked as Building
-   └── Index queries return incomplete results or fail
-
-2. Full Table Scan Begins
-   └── Every SSTable is read sequentially
-   └── Each row's indexed column is extracted
-
-3. New Index Entries Created
-   └── Index SSTables are written
-   └── Compaction may occur on index SSTables
-
-4. Index Marked as Built
-   └── Index queries resume normal operation
-   └── New index is fully available
-</code></pre></div>
-<h3 id="timeline-visualization">Timeline Visualization<a class="headerlink" href="#timeline-visualization" title="Permanent link">¶</a></h3>
-<div class="highlight"><pre><span></span><code>Time ────────────────────────────────────────────────────────────►
-
-│ Normal    │◄──── Index Unavailable ────►│ Normal Operation │
-│ Operation │     (Rebuild in Progress)    │   (Rebuild Done) │
-
-             ▲                              ▲
-             │                              │
-        rebuild_index                  Rebuild Complete
-          command                      (logged in system.log)
-</code></pre></div>
+<ol>
+<li><strong>Index marked as building</strong> — index queries return incomplete results or fail</li>
+<li><strong>Full table scan begins</strong> — every SSTable is read sequentially; each row's indexed column is extracted</li>
+<li><strong>New index entries created</strong> — index SSTables are written; compaction may occur on index SSTables</li>
+<li><strong>Index marked as built</strong> — index queries resume normal operation</li>
+</ol>
 <hr>
 <h2 id="application-impact">Application Impact<a class="headerlink" href="#application-impact" title="Permanent link">¶</a></h2>
 <h3 id="what-happens-to-queries-during-rebuild">What Happens to Queries During Rebuild<a class="headerlink" href="#what-happens-to-queries-during-rebuild" title="Permanent link">¶</a></h3>
