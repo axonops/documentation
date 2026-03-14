@@ -212,25 +212,30 @@ nodetool snapshot -t pre_upgrade_4.1
 
 A **hard link** is a filesystem feature that allows multiple directory entries to point to the same physical data on disk. Unlike a copy, a hard link does not duplicate the data—it creates another reference to the existing data blocks.
 
-```
-┌─────────────────────────────────────────────────────────────────┐
-│                         DISK STORAGE                            │
-│  ┌─────────────────────────────────────────────────────────┐    │
-│  │              Actual Data Blocks (100 MB)                │    │
-│  │              [SSTable file contents]                    │    │
-│  └─────────────────────────────────────────────────────────┘    │
-│                    ▲                    ▲                       │
-│                    │                    │                       │
-│               Reference 1          Reference 2                  │
-│                    │                    │                       │
-│  ┌─────────────────┴───┐    ┌──────────┴─────────────────┐     │
-│  │ data/ks/tbl/        │    │ data/ks/tbl/snapshots/     │     │
-│  │   nb-1-big-Data.db  │    │   backup/nb-1-big-Data.db  │     │
-│  │ (original file)     │    │ (hard link - same data)    │     │
-│  └─────────────────────┘    └────────────────────────────┘     │
-└─────────────────────────────────────────────────────────────────┘
+```plantuml
+@startuml
+skinparam backgroundColor transparent
 
-Total disk usage: 100 MB (not 200 MB)
+title Hard Link Snapshot — Disk Layout
+
+rectangle "Disk Storage" as disk {
+    card "Actual Data Blocks\n(100 MB)\n[SSTable file contents]" as blocks #E8F5E9
+}
+
+rectangle "Filesystem References" as refs {
+    card "data/ks/tbl/\nnb-1-big-Data.db\n(original file)" as orig #BBDEFB
+    card "data/ks/tbl/snapshots/\nbackup/nb-1-big-Data.db\n(hard link)" as snap #FFF9C4
+}
+
+orig -down-> blocks : Reference 1
+snap -down-> blocks : Reference 2
+
+note bottom of disk
+    Total disk usage: 100 MB (not 200 MB)
+    Both paths reference the same physical data blocks
+end note
+
+@enduml
 ```
 
 **Key properties of hard links:**

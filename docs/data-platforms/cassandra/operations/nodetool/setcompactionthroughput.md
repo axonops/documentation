@@ -34,16 +34,27 @@ See [connection options](index.md#connection-options) for connection options.
     - Each thread averages approximately 32 MiB/s (128 ÷ 4)
     - The actual distribution varies based on workload
 
-    ```
-    ┌─────────────────────────────────────────────────────┐
-    │              Total Throughput: 128 MiB/s             │
-    ├─────────────────────────────────────────────────────┤
-    │  Thread 1    Thread 2    Thread 3    Thread 4       │
-    │   ~32 MiB/s    ~32 MiB/s    ~32 MiB/s    ~32 MiB/s      │
-    │      ↓           ↓           ↓           ↓          │
-    │  ═══════════════════════════════════════════════    │
-    │                    Disk I/O                         │
-    └─────────────────────────────────────────────────────┘
+    ```plantuml
+    @startuml
+    skinparam backgroundColor transparent
+
+    title Compaction Throughput Distribution
+
+    rectangle "Total Throughput: 128 MiB/s" as total {
+        card "Thread 1\n~32 MiB/s" as t1 #BBDEFB
+        card "Thread 2\n~32 MiB/s" as t2 #BBDEFB
+        card "Thread 3\n~32 MiB/s" as t3 #BBDEFB
+        card "Thread 4\n~32 MiB/s" as t4 #BBDEFB
+    }
+
+    rectangle "Disk I/O" as disk #E8F5E9
+
+    t1 -down-> disk
+    t2 -down-> disk
+    t3 -down-> disk
+    t4 -down-> disk
+
+    @enduml
     ```
 
 !!! warning "Non-Persistent Setting"
@@ -322,36 +333,64 @@ nodetool setcompactionthroughput 96
 
 ### Effects of Different Throughput Settings
 
-```
-Low Throughput (32-64 MiB/s)
-├── Pros
-│   ├── Minimal impact on production I/O
-│   ├── Stable read/write latencies
-│   └── Predictable disk behavior
-└── Cons
-    ├── Compaction may fall behind
-    ├── SSTable count grows
-    ├── Read performance degrades over time
-    └── Disk space may fill with uncompacted data
+```plantuml
+@startuml
+skinparam backgroundColor transparent
 
-High Throughput (256+ MiB/s)
-├── Pros
-│   ├── Compaction keeps pace with writes
-│   ├── Fewer SSTables, better read performance
-│   └── Faster tombstone removal
-└── Cons
-    ├── May impact production I/O
-    ├── Potential latency spikes
-    └── Disk saturation risk
+title Effects of Different Throughput Settings
 
-Unlimited (0)
-├── Pros
-│   ├── Maximum compaction speed
-│   └── Clears backlog fastest
-└── Cons
-    ├── Can severely impact production
-    ├── Risk of disk saturation
-    └── Only safe during maintenance windows
+rectangle "Low Throughput (32–64 MiB/s)" as low {
+    card "Pros" as lp #E8F5E9
+    card "Cons" as lc #FFCDD2
+}
+
+rectangle "High Throughput (256+ MiB/s)" as high {
+    card "Pros" as hp #E8F5E9
+    card "Cons" as hc #FFCDD2
+}
+
+rectangle "Unlimited (0)" as unlim {
+    card "Pros" as up #E8F5E9
+    card "Cons" as uc #FFCDD2
+}
+
+note right of lp
+  Minimal impact on production I/O
+  Stable read/write latencies
+  Predictable disk behavior
+end note
+
+note right of lc
+  Compaction may fall behind
+  SSTable count grows
+  Read performance degrades over time
+  Disk space may fill with uncompacted data
+end note
+
+note right of hp
+  Compaction keeps pace with writes
+  Fewer SSTables, better read performance
+  Faster tombstone removal
+end note
+
+note right of hc
+  May impact production I/O
+  Potential latency spikes
+  Disk saturation risk
+end note
+
+note right of up
+  Maximum compaction speed
+  Clears backlog fastest
+end note
+
+note right of uc
+  Can severely impact production
+  Risk of disk saturation
+  Only safe during maintenance windows
+end note
+
+@enduml
 ```
 
 ### Finding the Right Balance
