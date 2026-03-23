@@ -167,7 +167,7 @@ AxonOps provides production-ready container images that combine Apache Cassandra
 
 | Component | Description |
 |-----------|-------------|
-| Apache Cassandra 5.0.x | Database engine (versions 5.0.1 – 5.0.6) |
+| Apache Cassandra 5.0.x | Database engine (versions 5.0.1 – 5.0.7) |
 | K8ssandra Management API | Operational control interface |
 | AxonOps Agent | Monitoring and management integration |
 | cqlai | Modern CQL shell |
@@ -181,7 +181,7 @@ Images use a three-component versioning scheme for full immutability:
 {CASSANDRA}-v{K8SSANDRA_API}-{AXONOPS}
 ```
 
-Example: `5.0.6-v0.1.110-1.0.0`
+Example: `5.0.7-v0.1.110-1.0.0`
 
 !!! warning "Production Deployments"
     Pin to specific immutable versions rather than floating `latest` tags. Digest-based references provide cryptographic guarantees against supply chain attacks.

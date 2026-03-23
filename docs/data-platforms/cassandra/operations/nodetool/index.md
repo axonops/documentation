@@ -3,7 +3,7 @@ title: "Cassandra nodetool Reference"
 description: "Complete nodetool command reference for Apache Cassandra cluster management and operations."
 meta:
   - name: keywords
-    content: "nodetool commands, Cassandra nodetool, cluster management, operations reference"
+    content: "nodetool commands, Cassandra nodetool, cluster management, operations reference, nodetool reference guide, nodetool complete reference"
 ---
 
 # nodetool Reference

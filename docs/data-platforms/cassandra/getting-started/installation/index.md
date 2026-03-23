@@ -1610,7 +1610,7 @@ make rolling-restart ENVIRONMENT=prd
 
 ```yaml
 # Update version in group_vars
-cassandra_version: "5.0.6"
+cassandra_version: "5.0.7"
 ```
 
 ```bash

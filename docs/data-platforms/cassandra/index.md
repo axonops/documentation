@@ -16,9 +16,9 @@ This reference documentation covers Apache Cassandra versions 4.0 through 5.x, w
 
 | Version Range | Java Requirement | Documentation Status |
 |--------------|:----------------:|---------------------|
-| 4.0.x        | Java 11          | Supported |
-| 4.1.x        | Java 11/17       | Fully Documented |
-| 5.0.x        | Java 11/17       | **Current (5.0.6)** |
+| 4.0.x        | Java 11          | Supported (4.0.20) |
+| 4.1.x        | Java 11/17       | Supported (4.1.11) |
+| 5.0.x        | Java 11/17       | **Current (5.0.7)** |
 
 Legend: ✅ Production Ready | ⚠️ Limited/Deprecated | ❌ Not Supported
 
@@ -26,9 +26,19 @@ Legend: ✅ Production Ready | ⚠️ Limited/Deprecated | ❌ Not Supported
 
 ## What's New
 
-### Cassandra 5.0.6 (October 2025) - Current Release
+### Cassandra 5.0.7 (March 2026) - Current Release
 
-- Bug fixes and stability improvements
+- Refactor SAI ANN query execution to use score ordered iterators for correctness and speed (CASSANDRA-20086)
+- Fix ConcurrentModificationException in compaction garbagecollect (CASSANDRA-21065)
+- Dynamically skip sharding L0 when SAI Vector index present (CASSANDRA-19661)
+- Automatically disable zero-copy streaming for legacy sstables with old bloom filter format (CASSANDRA-21092)
+- Correctly calculate default for FailureDetector max interval (CASSANDRA-21025)
+- Rate limit password changes (CASSANDRA-21202)
+- Obsolete expired SSTables before compaction starts (CASSANDRA-19776)
+- Switch lz4-java to at.yawk.lz4 version due to CVE (CASSANDRA-21052)
+- Fix memory leak in BufferPoolAllocator when capacity needs to be extended (CASSANDRA-20753)
+
+For previous 5.0.x patch release details, see the [Apache Cassandra changelog](https://gitbox.apache.org/repos/asf?p=cassandra.git;a=blob_plain;f=CHANGES.txt;hb=cassandra-5.0).
 
 ### Cassandra 5.0.0 (September 2024) - Major Release
 
@@ -43,11 +53,18 @@ Legend: ✅ Production Ready | ⚠️ Limited/Deprecated | ❌ Not Supported
 - **CIDR-based authorizer** (CEP-33) - Network-based access control
 - **New math functions**: `abs`, `exp`, `log`, `log10`, `round`
 
-### Cassandra 4.1.10 (September 2025)
+### Cassandra 4.1.11 (March 2026) - Current 4.1 Release
 
-- Bug fixes and stability improvements
+- Disk usage guardrail cannot be disabled when failure threshold is reached (CASSANDRA-21057)
+- ReadCommandController should close fast to avoid deadlock when building secondary index (CASSANDRA-19564)
+- Redact security-sensitive information in system_views.settings (CASSANDRA-20856)
+- Rate limit password changes (CASSANDRA-21202)
+- Obsolete expired SSTables before compaction starts (CASSANDRA-19776)
+- Switch lz4-java to at.yawk.lz4 version due to CVE (CASSANDRA-21052)
+- Fix memory leak in BufferPoolAllocator when capacity needs to be extended (CASSANDRA-20753)
+- Add option to disable cqlsh history (CASSANDRA-21180)
 
-### Cassandra 4.1.0 (December 2022)
+### Cassandra 4.1.0 (December 2022) - Major Release
 
 - **Paxos v2** - Enhanced lightweight transaction protocol
 - **Guardrails** - Operational safety boundaries and limits
@@ -57,11 +74,20 @@ Legend: ✅ Production Ready | ⚠️ Limited/Deprecated | ❌ Not Supported
 - **Client-side password hashing** - Enhanced authentication security
 - **Pluggable memtables** - Custom memtable implementations
 
-### Cassandra 4.0.19 (October 2025)
+For previous 4.1.x patch release details, see the [Apache Cassandra changelog](https://github.com/apache/cassandra/blob/cassandra-4.1.11/CHANGES.txt).
 
-- Bug fixes and stability improvements
+### Cassandra 4.0.20 (March 2026) - Current 4.0 Release
 
-### Cassandra 4.0.0 (July 2021)
+- Rate limit password changes (CASSANDRA-21202)
+- Obsolete expired SSTables before compaction starts (CASSANDRA-19776)
+- Switch lz4-java to at.yawk.lz4 version due to CVE (CASSANDRA-21052)
+- Fix memory leak in BufferPoolAllocator when capacity needs to be extended (CASSANDRA-20753)
+- Fix cleanup of old incremental repair sessions on token range changes or table deletion (CASSANDRA-20877)
+- ArrayIndexOutOfBoundsException with repaired data tracking and counters (CASSANDRA-20871)
+- Add option to disable cqlsh history (CASSANDRA-21180)
+- Restrict BytesType compatibility to scalar types only (CASSANDRA-20982)
+
+### Cassandra 4.0.0 (July 2021) - Major Release
 
 - **Virtual tables** - System information via CQL queries
 - **Audit logging** - Comprehensive query audit trail
@@ -69,6 +95,8 @@ Legend: ✅ Production Ready | ⚠️ Limited/Deprecated | ❌ Not Supported
 - **Incremental repair improvements** - More efficient anti-entropy
 - **Zero-copy streaming** - Faster data transfer between nodes
 - **Java 11 support** - Modern JVM compatibility
+
+For previous 4.0.x patch release details, see the [Apache Cassandra changelog](https://github.com/apache/cassandra/blob/cassandra-4.0.20/CHANGES.txt).
 
 ---
 
