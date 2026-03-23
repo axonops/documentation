@@ -22939,7 +22939,7 @@ make<span class="w"> </span>rolling-restart<span class="w"> </span><span class="
 </code></pre></div>
 <p><strong>Upgrade Cassandra version:</strong></p>
 <div class="highlight"><pre><span></span><code><span class="c1"># Update version in group_vars</span>
-<span class="nt">cassandra_version</span><span class="p">:</span><span class="w"> </span><span class="s">"5.0.6"</span>
+<span class="nt">cassandra_version</span><span class="p">:</span><span class="w"> </span><span class="s">"5.0.7"</span>
 </code></pre></div>
 <div class="highlight"><pre><span></span><code><span class="c1"># Apply upgrade</span>
 make<span class="w"> </span>cassandra<span class="w"> </span><span class="nv">ENVIRONMENT</span><span class="o">=</span>prd<span class="w"> </span>-e<span class="w"> </span><span class="s2">"cassandra_upgrade=true"</span>
