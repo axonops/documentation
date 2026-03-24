@@ -8,7 +8,7 @@ meta:
 
 # Unified Compaction Strategy (UCS)
 
-UCS (Cassandra 5.0+) is an adaptive compaction strategy that combines concepts from STCS, LCS, and TWCS. It uses sharding and density-based triggering to provide flexible, efficient compaction across varying workloads.
+UCS (Cassandra 5.0+) is an adaptive compaction strategy that unifies tiered and leveled compaction, using sharding and density-based triggering to provide flexible compaction behavior across varying workloads.
 
 ---
 
@@ -16,9 +16,7 @@ UCS (Cassandra 5.0+) is an adaptive compaction strategy that combines concepts f
 
 ### Origins
 
-Unified Compaction Strategy was introduced in Cassandra 5.0 (2023) as a culmination of years of research into compaction efficiency. It was developed primarily by DataStax engineers, building on academic work around "write-optimized" and "read-optimized" LSM-tree variants and practical experience with STCS, LCS, and TWCS limitations.
-
-The key insight driving UCS was that traditional compaction strategies forced users to choose between write amplification (LCS) and read amplification (STCS), with no middle ground. UCS provides a unified framework where this trade-off is configurable via a single parameter.
+Unified Compaction Strategy was introduced in Cassandra 5.0 (CEP-26). The key observation driving UCS, as stated in the [design document](https://github.com/apache/cassandra/blob/cassandra-5.0/src/java/org/apache/cassandra/db/compaction/UnifiedCompactionStrategy.md), is that tiered and leveled compaction can be generalized as the same density-based framework: both form exponentially-growing levels based on SSTable density and trigger compaction when a threshold number of SSTables are present on one level. UCS provides a unified framework where this trade-off is configurable through `scaling_parameters`.
 
 ### Design Motivation
 
@@ -41,20 +39,10 @@ Each traditional strategy has fundamental limitations:
 
 UCS addresses these by:
 
-1. **Unifying the compaction model**: Single configurable strategy replaces three separate implementations
-2. **Sharding**: Token range divided into independent units for parallel compaction
+1. **Unifying the compaction model**: A single configurable strategy unifies tiered and leveled compaction within one implementation
+2. **Sharding**: Shard-aligned token boundaries used to split output and improve parallelism
 3. **Density-based triggering**: Compaction decisions based on data density, not just counts
-4. **Configurable read/write trade-off**: Single parameter (`scaling_parameters`) adjusts behavior
-
-### Academic Foundation
-
-UCS draws from research on LSM-tree optimization:
-
-- **Dostoevsky (2018)**: Demonstrated that tiered and leveled compaction exist on a continuum
-- **Monkey (2017)**: Showed how to tune bloom filters and compaction together
-- **Lazy Leveling**: Hybrid approach combining tiered and leveled properties
-
-The `scaling_parameters` in UCS directly implements these theoretical insights, allowing operators to position their compaction strategy anywhere on the tiered-to-leveled spectrum.
+4. **Configurable read/write trade-off**: `scaling_parameters` adjusts behavior
 
 ---
 
@@ -64,13 +52,13 @@ The `scaling_parameters` in UCS directly implements these theoretical insights, 
 
 UCS introduces several concepts that differ from traditional strategies:
 
-**Shards**: The token range is divided into fixed segments that compact independently. This enables parallelism and bounds the scope of each compaction.
+**Shards**: UCS uses shard-aligned token boundaries to split flush and compaction output. The effective number of shards is density-dependent, and sharding helps bound SSTable size and improve parallelism.
 
 **Runs**: A sequence of SSTables that collectively represent one "generation" of data. Runs replace the concept of levels (LCS) or tiers (STCS).
 
 **Density**: The amount of data per token range unit. UCS triggers compaction when density reaches thresholds, not when SSTable counts reach thresholds.
 
-**Scaling Parameter**: A single value (e.g., T4, L10) that determines whether UCS behaves more like STCS (tiered) or LCS (leveled).
+**Scaling Parameters**: One or more values (for example `T4` or `T4, T4, L10`) that determine whether UCS behaves more tiered or more leveled at each level.
 
 
 
@@ -78,7 +66,7 @@ UCS introduces several concepts that differ from traditional strategies:
 
 ```plantuml
 @startuml
-skinparam backgroundColor transparent
+skinparam backgroundColor white
 title Token Range Sharding (base_shard_count = 4)
 
 skinparam packageBackgroundColor #F9E5FF
@@ -95,28 +83,28 @@ package "Shard 0\n[-2^63, -2^61)" as S0 #F4E5FF {
     rectangle "SSTable" as s0a
     rectangle "SSTable" as s0b
     rectangle "SSTable" as s0c
-    rectangle "Compacts\nindependently" as comp0
+    rectangle "Shard-aligned\noutput" as comp0
 }
 
 package "Shard 1\n[-2^61, 0)" as S1 #F1DBFA {
     rectangle "SSTable" as s1a
     rectangle "SSTable" as s1b
     rectangle "SSTable" as s1c
-    rectangle "Compacts\nindependently" as comp1
+    rectangle "Shard-aligned\noutput" as comp1
 }
 
 package "Shard 2\n[0, 2^61)" as S2 #EED0F5 {
     rectangle "SSTable" as s2a
     rectangle "SSTable" as s2b
     rectangle "SSTable" as s2c
-    rectangle "Compacts\nindependently" as comp2
+    rectangle "Shard-aligned\noutput" as comp2
 }
 
 package "Shard 3\n[2^61, 2^63]" as S3 #E8C4F1 {
     rectangle "SSTable" as s3a
     rectangle "SSTable" as s3b
     rectangle "SSTable" as s3c
-    rectangle "Compacts\nindependently" as comp3
+    rectangle "Shard-aligned\noutput" as comp3
 }
 
 s0a -down-> comp0
@@ -140,20 +128,21 @@ S1 -[hidden]right- S2
 S2 -[hidden]right- S3
 
 note as N1 #FFFDE7
-  Each shard compacts independently
-  enabling parallel compaction
-  across multiple CPU cores
+  Output is split at shard boundaries
+  enabling parallelism and
+  bounded SSTable size
 end note
 @enduml
 ```
 
-Each shard maintains its own set of SSTables and compacts without coordination with other shards. This provides:
+UCS uses shard boundaries to split output SSTables at token boundaries. This helps:
 
-- **Parallelism**: Multiple CPU cores compact different shards simultaneously
-- **Bounded scope**: Each compaction touches only one shard's data
-- **Independent progress**: Slow shards don't block fast shards
+- **Parallelism**: Output can be split across multiple shard-aligned writers
+- **Bounded scope**: Output SSTables are constrained by shard boundaries
+- **Consistent layout**: Lower-level split points remain valid for higher-density levels
 
-*Note: Actual performance benefits from sharding depend on data distribution, hardware characteristics, and workload patterns. Results may vary from theoretical expectations.*
+!!! note "Example Only"
+    The diagram above illustrates a fixed base shard count. In practice, UCS shard count is determined dynamically from density and may be below, equal to, or above `base_shard_count`.
 
 ### Tiered Mode (T)
 
@@ -161,7 +150,7 @@ When `scaling_parameters` starts with `T` (e.g., T4), UCS behaves similarly to S
 
 ```plantuml
 @startuml
-skinparam backgroundColor transparent
+skinparam backgroundColor white
 title T4 Behavior Within a Shard
 
 skinparam rectangle {
@@ -202,7 +191,7 @@ When `scaling_parameters` starts with `L` (e.g., L10), UCS behaves similarly to 
 
 ```plantuml
 @startuml
-skinparam backgroundColor transparent
+skinparam backgroundColor white
 title L10 Behavior Within a Shard
 
 skinparam rectangle {
@@ -259,7 +248,7 @@ Where:
 - $s$ = SSTable size
 - $v$ = fraction of token space covered by the SSTable
 
-**Traditional (count-based):** Trigger when $\text{SSTable\_count} \geq \text{min\_threshold}$
+**Traditional (count-based):** Trigger when $\text{SSTable count} \geq \text{min threshold}$
 
 - Problem: Doesn't account for SSTable sizes or overlap
 
@@ -289,23 +278,18 @@ Where:
 - $s$ = SSTable size (or density in sharded mode)
 - $m$ = memtable flush size (observed or overridden via `flush_size_override`)
 
-This creates exponentially-growing size ranges per level. Level 0 contains SSTables up to size $m$, level 1 contains up to $m \times f$, level 2 up to $m \times f^2$, etc.
+This creates exponentially-growing size ranges per level:
 
-**Example with $f=4$ and $m=100\text{MB}$:**
+| Level | Min SSTable size | Max SSTable size |
+|-------|-----------------|-----------------|
+| 0 | 0 | $m \cdot f$ |
+| 1 | $m \cdot f$ | $m \cdot f^2$ |
+| 2 | $m \cdot f^2$ | $m \cdot f^3$ |
+| n | $m \cdot f^n$ | $m \cdot f^{n+1}$ |
 
-| SSTable Size | Calculation | Level |
-|--------------|-------------|-------|
-| 50 MB | $s < m$ | 0 |
-| 100 MB | $\lfloor \log_4(1) \rfloor$ | 0 |
-| 400 MB | $\lfloor \log_4(4) \rfloor$ | 1 |
-| 1.6 GB | $\lfloor \log_4(16) \rfloor$ | 2 |
-| 6.4 GB | $\lfloor \log_4(64) \rfloor$ | 3 |
+Level 0 contains SSTables below $m \times f$, level 1 contains SSTables from $m \times f$ up to $m \times f^2$, level 2 from $m \times f^2$ up to $m \times f^3$, and so on.
 
-**Total levels for a dataset:**
-
-$$\text{Number of levels} = \begin{cases} \left\lfloor \log_f \frac{D}{m} \right\rfloor & \text{if } D \geq m \\ 0 & \text{otherwise} \end{cases}$$
-
-Where $D$ = total dataset density.
+The maximal number of levels for a dataset is inversely proportional to $\log f$ — substituting the maximal dataset size $D$ into the level formula above gives the upper bound.
 
 ---
 
@@ -324,8 +308,8 @@ The primary advantage of UCS is tunable behavior:
 
 Sharding enables efficient use of modern hardware:
 
-- Multiple compactions run simultaneously
-- Different shards progress independently
+- Output split across shard-aligned writers enables concurrent work
+- Shard boundaries provide consistent split points across density levels
 - Scales with CPU core count
 - Reduces wall-clock time for compaction
 
@@ -333,7 +317,7 @@ Sharding enables efficient use of modern hardware:
 
 Even in tiered mode, UCS provides better bounds than STCS:
 
-- Sharding limits SSTable count per token range
+- Shard-bounded output and overlap-based selection help keep read amplification more predictable
 - Density-based triggering prevents unbounded accumulation
 - More predictable read performance
 
@@ -341,7 +325,7 @@ Even in tiered mode, UCS provides better bounds than STCS:
 
 Single strategy implementation simplifies Cassandra:
 
-- Fewer edge cases than maintaining STCS + LCS + TWCS
+- A single implementation reduces the complexity of maintaining separate compaction strategies
 - Consistent behavior across configurations
 - Easier to test and maintain
 - Bug fixes benefit all configurations
@@ -363,7 +347,7 @@ Transitioning from traditional strategies is straightforward:
 
 UCS has less production history than traditional strategies:
 
-- Introduced in Cassandra 5.0 (2023)
+- Introduced in Cassandra 5.0
 - Less community experience with edge cases
 - Fewer tuning guides and best practices available
 - Some workloads may have undiscovered issues
@@ -379,11 +363,12 @@ Different conceptual model requires adjustment:
 
 ### Time-Series Trade-offs
 
-TWCS may still be preferable for pure time-series:
+TWCS and UCS each have strengths for time-series workloads:
 
-- TWCS drops entire SSTables on TTL expiry (O(1))
-- UCS must compact to remove expired data
-- Window-based organization provides better locality
+- TWCS drops entire SSTables on TTL expiry (efficient for pure append-only data)
+- UCS handles out-of-order writes and updates more gracefully than TWCS
+- UCS can be configured for time-series using higher tiered fanout (e.g., T8) with `expired_sstable_check_frequency_seconds` tuned for the TTL pattern
+- The Apache Cassandra documentation recommends UCS for most workloads, including time-series
 
 ### Shard Overhead
 
@@ -396,17 +381,8 @@ Sharding adds some overhead:
 
 ### Major Compaction Behavior
 
-!!! warning "Major Compaction May Not Parallelize as Expected"
-    The official documentation states that major compaction under UCS results in `base_shard_count` concurrent compaction tasks, each containing SSTables from one shard. However, community testing has observed that `nodetool compact` may initiate a single compaction task containing all SSTables in the table, rather than parallel per-shard compactions.
-
-    This behavior has been observed with configurations such as:
-    ```
-    'base_shard_count': '4',
-    'class': 'org.apache.cassandra.db.compaction.UnifiedCompactionStrategy',
-    'scaling_parameters': 'T4'
-    ```
-
-    When planning maintenance windows that rely on parallel major compaction, verify actual behavior in the target environment before assuming parallel execution.
+!!! warning "Major Compaction Behavior"
+    When maximal compaction is requested, UCS groups SSTables into non-overlapping sets and creates one compaction task per set, with output split across shard boundaries. The number of tasks depends on the overlap structure of the data, not directly on `base_shard_count`. Verify actual behavior in the target environment before assuming a specific level of parallelism.
 
 ### Migration Considerations
 
@@ -431,14 +407,16 @@ While migration is smooth, considerations exist:
 | Workloads that evolve | T4, then adjust | Easy reconfiguration |
 | Large datasets | T4, target_sstable_size=5GiB | Efficient compaction |
 
-### Avoid UCS When
+### Consider Alternatives When
 
 | Workload Pattern | Alternative | Rationale |
 |------------------|-------------|-----------|
-| Pure time-series with TTL | TWCS | More efficient TTL handling |
 | Cassandra < 5.0 | STCS/LCS | UCS not available |
 | Well-tuned existing cluster | Keep current | Migration has risk |
 | Very small tables | STCS | Shard overhead not justified |
+
+!!! note "UCS and Time-Series Workloads"
+    The Apache Cassandra 5.0 documentation recommends UCS for most workloads including time-series, and provides a time-series configuration example using `T8` with `expired_sstable_check_frequency_seconds=300`. TWCS remains a valid choice for pure append-only time-series with TTL, but UCS should not be ruled out without testing.
 
 ---
 
@@ -446,9 +424,9 @@ While migration is smooth, considerations exist:
 
 UCS divides the token range into shards, enabling:
 
-- **Parallel compaction**: Different shards compact independently
-- **Reduced compaction scope**: Smaller units of work
-- **Better resource utilization**: Multiple CPU cores used effectively
+- **Output splitting**: Compaction output is split across shard boundaries, allowing parallelism and better size control
+- **Bounded SSTable size**: Output SSTables are constrained by shard boundaries
+- **Consistent split points**: Shard boundaries for a given density are also boundaries for all higher densities
 
 ```
 Token range: -2^63 to 2^63
@@ -459,14 +437,15 @@ Shard 1: tokens -2^61 to 0
 Shard 2: tokens 0 to 2^61
 Shard 3: tokens 2^61 to 2^63
 
-Each shard compacts independently with its own SSTable hierarchy
+Output SSTables are written according to shard boundaries, while
+compaction selection is driven by density levels and overlap relationships.
 ```
 
 ### Shard Count Calculation
 
 The number of shards scales dynamically with data density using a four-case formula:
 
-$$S = \begin{cases} 1 & \text{if } d < m \\ \min\left(2^{\lfloor \log_2 \frac{d}{m} \rfloor}, b\right) & \text{if } d < m \cdot b \\ b & \text{if } d < t \cdot b \\ 2^{\lfloor (1-\lambda) \cdot \log_2 (\frac{d}{t} \cdot \frac{1}{b}) \rfloor} \cdot b & \text{otherwise} \end{cases}$$
+$$S = \begin{cases} 1 & \text{if } d < m \\ \min\left(2^{\lfloor \log_2 \frac{d}{m} \rfloor}, x\right) & \text{if } d < m \cdot b \text{, where } x \text{ is the largest power-of-2 divisor of } b \\ b & \text{if } d < t \cdot b \\ 2^{\lfloor (1-\lambda) \cdot \log_2 (\frac{d}{t} \cdot \frac{1}{b}) \rceil} \cdot b & \text{otherwise} \end{cases}$$
 
 Where:
 
@@ -474,8 +453,10 @@ Where:
 - $d$ = density (data size / token fraction)
 - $m$ = `min_sstable_size` (default: 100 MiB)
 - $b$ = `base_shard_count` (default: 4)
+- $x$ = largest power-of-2 divisor of $b$ (e.g. if $b = 12$, then $x = 4$)
 - $t$ = `target_sstable_size` (default: 1 GiB)
 - $\lambda$ = `sstable_growth` (default: 0.333)
+- $\lfloor \cdot \rceil$ = round to nearest integer
 
 **Case breakdown:**
 
@@ -493,7 +474,7 @@ The `sstable_growth` parameter ($\lambda$) controls the trade-off between increa
 | $\lambda$ Value | Shard Growth | SSTable Size | Use Case |
 |---------|--------------|--------------|----------|
 | 0 | Grows with density | Fixed at target | Many small SSTables, maximum parallelism |
-| 0.333 (default) | Cubic-root growth | Square-root growth | Balanced: both grow moderately |
+| 0.333 (default) | Intermediate growth | SSTable size grows as the cubic root of density growth | Balanced: both grow moderately |
 | 0.5 | Square-root growth | Square-root growth | Equal growth for both |
 | 1 | Fixed at base count | Grows with density | Fewer large SSTables, less parallelism |
 
@@ -502,7 +483,7 @@ The `sstable_growth` parameter ($\lambda$) controls the trade-off between increa
 **Detailed effects:**
 
 - **$\lambda = 0$**: Shard count grows proportionally with density; SSTable size stays fixed at `target_sstable_size`
-- **$\lambda = 0.333$**: When density quadruples, SSTable size grows by $\sqrt[3]{4} \approx 1.6\times$ and shard count grows by $4/1.6 \approx 2.5\times$
+- **$\lambda = 0.333$**: SSTable size growth is the cubic root of density growth; equivalently, SSTable size grows with the square root of the growth of the shard count
 - **$\lambda = 0.5$**: When density quadruples, both SSTable size and shard count double
 - **$\lambda = 1$**: Shard count fixed at `base_shard_count`; SSTable size grows linearly with density
 
@@ -510,7 +491,7 @@ The `sstable_growth` parameter ($\lambda$) controls the trade-off between increa
 
 Compaction output SSTables target sizes between:
 
-$$\frac{s_t}{\sqrt{2}} \leq \text{output\_size} \leq s_t \times \sqrt{2}$$
+$$\frac{s_t}{\sqrt{2}} \leq \text{output size} \leq s_t \times \sqrt{2}$$
 
 Where $s_t$ = `target_sstable_size`.
 
@@ -535,7 +516,7 @@ CREATE TABLE my_table (
     -- Scaling parameter (strategy behavior)
     -- T = Tiered (STCS-like), number is fanout
     -- L = Leveled (LCS-like), number is fanout
-    -- N = None (no compaction)
+    -- N = Balanced (midpoint between tiered and leveled, equivalent to T2/L2)
     'scaling_parameters': 'T4',
 
     -- Target SSTable size
@@ -557,16 +538,14 @@ CREATE TABLE my_table (
 |-----------|---------|-------------|
 | `scaling_parameters` | T4 | Strategy behavior: T (tiered), L (leveled), N (balanced) with fanout. Controls the read/write trade-off. Multiple comma-separated values can specify different behavior per level. |
 | `target_sstable_size` | 1 GiB | Target size for output SSTables. Actual sizes may vary between √0.5 and √2 times this value based on sharding calculations. |
-| `base_shard_count` | 4 | Base number of token range shards. Actual shard count scales with data density using the `sstable_growth` modifier. Must be a power of 2. |
-| `min_sstable_size` | 100 MiB | Minimum SSTable size before sharding applies. Data below this threshold is not split into shards. |
-| `sstable_growth` | 0.333 | Controls how shard count grows with data density. Range 0-1. Value of 0 maintains fixed target size; 1 prevents splitting beyond base count; default 0.333 creates cubic-root growth. |
+| `base_shard_count` | 4 | Base shard count used by UCS when determining output sharding. Actual shard count scales with data density using the `sstable_growth` modifier. Must be a positive integer. |
+| `min_sstable_size` | 100 MiB | Minimum SSTable size before sharding applies. Data below this threshold is not split into shards. A value of 0 disables this limit. |
+| `sstable_growth` | 0.333 | Controls how shard count grows with data density. Range 0-1. Value of 0 maintains fixed target size; 1 prevents splitting beyond base count. At the default of 0.333, SSTable size growth is the cubic root of density growth (equivalently, SSTable size grows with the square root of the growth of the shard count). |
 | `flush_size_override` | 0 | Override for expected flush size. When 0, derived automatically from observed flush operations (rounded to whole MB). |
 | `max_sstables_to_compact` | 0 | Maximum SSTables per compaction. Value of 0 defaults to Integer.MAX_VALUE (effectively unlimited). |
 | `expired_sstable_check_frequency_seconds` | 600 | How often to check for fully expired SSTables that can be dropped. |
 | `unsafe_aggressive_sstable_expiration` | false | Drop SSTables without tombstone checking. Same semantics as TWCS. |
 | `overlap_inclusion_method` | TRANSITIVE | How to identify overlapping SSTables. TRANSITIVE uses transitive closure; alternatives available for specific use cases. |
-| `parallelize_output_shards` | true | Enable parallel output shard writing during compaction. Improves throughput on multi-core systems. |
-| `survival_factor` | 1 | Multiplier for calculating space overhead during compaction. Higher values provide more headroom for concurrent compactions. |
 
 #### Common Compaction Options
 
@@ -586,7 +565,7 @@ The following constraints are enforced during configuration:
 | Parameter | Constraint |
 |-----------|------------|
 | `target_sstable_size` | Minimum 1 MiB |
-| `min_sstable_size` | Must be < `target_sstable_size × √0.5` (approximately 70% of target) |
+| `min_sstable_size` | Must be >= 0; if nonzero, must be < `target_sstable_size × √0.5` (approximately 70% of target) |
 | `base_shard_count` | Must be positive integer |
 | `sstable_growth` | Must be between 0.0 and 1.0 (inclusive) |
 | `flush_size_override` | If specified, minimum 1 MiB |
@@ -602,13 +581,10 @@ The `scaling_parameters` option controls compaction behavior through an internal
 ### Format
 
 ```
-[T|L|N][number]
-
-T = Tiered (STCS-like behavior)
-L = Leveled (LCS-like behavior)
-N = Balanced (neutral, neither tiered nor leveled)
-
-number = threshold/fanout (must be ≥ 2 for L and T)
+T<number>  = Tiered (STCS-like behavior), number is fanout (must be ≥ 2)
+L<number>  = Leveled (LCS-like behavior), number is fanout (must be ≥ 2)
+N          = Balanced (midpoint between tiered and leveled, equivalent to T2/L2)
+<integer>  = Raw W value (signed integer, positive = tiered, negative = leveled)
 ```
 
 ### Internal Calculation
@@ -778,7 +754,7 @@ org.apache.cassandra.metrics:type=Table,keyspace=*,scope=*,name=LiveSSTableCount
 | Write amplification | Low | High | Low | Configurable |
 | Read amplification | High | Low | Low | Configurable |
 | Space amplification | Medium | Low | Low | Low |
-| Parallelism | Limited | Limited | Limited | High (sharding) |
+| Parallelism | Limited | Limited | Limited | Improved (shard-enabled) |
 | Adaptability | Fixed | Fixed | Fixed | Configurable |
 | Cassandra version | All | All | 3.0+ | 5.0+ |
 
@@ -787,7 +763,7 @@ org.apache.cassandra.metrics:type=Table,keyspace=*,scope=*,name=LiveSSTableCount
 1. **Single strategy for multiple workloads**: Adjust `scaling_parameters` instead of switching strategies
 2. **Better parallelism**: Sharding enables multi-core utilization
 3. **Density-based triggering**: More intelligent than fixed thresholds
-4. **Unified codebase**: Simplified maintenance and fewer edge cases
+4. **Unified codebase**: Simplified maintenance through a single configurable implementation
 
 ### UCS Considerations
 
@@ -858,12 +834,7 @@ UCS supports up to 32 levels (`MAX_LEVELS = 32`), sufficient for petabytes of da
 
 ### Shard Management
 
-The `ShardManager` organizes compaction across token ranges:
-
-1. **Boundary calculation**: Token range divided into `base_shard_count` segments
-2. **Density tracking**: Each shard tracks data density for triggering decisions
-3. **Dynamic scaling**: Shard count grows based on `sstable_growth` modifier
-4. **Output sharding**: Compaction output can be parallelized via `ShardTracker`
+`ShardManager` provides shard boundaries and density-aware comparisons used by UCS. The effective number of output shards is derived from density through the controller (and may be below, equal to, or above `base_shard_count`), and output is split using `ShardTracker`.
 
 ### Compaction Candidate Selection
 
@@ -886,21 +857,11 @@ Selection process:
 
 ### Major Compaction Behavior
 
-When major compaction is triggered:
-
-1. Compacts all SSTables that have transitive overlap
-2. Produces `base_shard_count` concurrent compaction tasks
-3. Each task handles SSTables from one shard
-4. Output is split at shard boundaries appropriate for resulting density
+When maximal compaction is requested, UCS groups SSTables into non-overlapping sets and creates one compaction task per set. The output of those tasks is then split across shard boundaries according to density. This can provide parallelism, but the number of tasks should not be assumed to equal `base_shard_count`.
 
 ### Output Sharding
 
-When `parallelize_output_shards` is enabled:
-
-- Compaction tasks can write to multiple output shards simultaneously
-- Output SSTables are split at power-of-two shard boundaries
-- Task IDs use sequences 1+ for parallelized operations (sequence 0 for non-parallelized)
-- Improves throughput on multi-core systems
+Compaction output is split at power-of-two shard boundaries, with shard count derived from density through the controller.
 
 ### Overlap Set Formation
 
@@ -937,9 +898,9 @@ The overlap sets determine read amplification: any key lookup touches at most on
 | Default scaling_parameters | T4 | Tiered with fanout/threshold of 4 |
 | Default target_sstable_size | 1 GiB | Target output SSTable size |
 | Default base_shard_count | 4 | Initial token range divisions |
-| Default sstable_growth | 0.333 | Cubic-root density/shard growth |
+| Default sstable_growth | 0.333 | SSTable size growth = cubic root of density growth |
 | Default expired check | 600 seconds | TTL expiration check frequency |
-| Output size range | s_t/√2 to s_t×√2 | Actual output SSTable size bounds |
+| Output size range | target/√2 to target×√2 | Actual output SSTable size bounds |
 
 ---
 

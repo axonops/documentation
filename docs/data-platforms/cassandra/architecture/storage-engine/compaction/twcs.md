@@ -12,12 +12,12 @@ meta:
     Starting with Cassandra 5.0, [Unified Compaction Strategy (UCS)](ucs.md) is the recommended compaction strategy for most workloads, including time-series patterns. UCS can handle time-series data efficiently with appropriate configuration. TWCS remains fully supported for existing deployments.
 
 !!! warning "Optimized for Append-Only Workloads"
-    TWCS is designed for **append-only time-series data** and performs best when data is written once and not updated. Updates to existing rows create new SSTables in the current time window while original data remains in older windows—since TWCS does not compact across window boundaries, these versions never merge, causing read amplification and preventing efficient space reclamation. TWCS can tolerate occasional updates, but frequent updates significantly degrade performance and space efficiency.
+    TWCS is designed for **append-only time-series data** and performs best when data is written once and not updated. When newer writes for previously written data land in SSTables assigned to newer windows, TWCS background compaction does not merge those SSTables back into older windows. This means both versions persist, causing read amplification and preventing efficient space reclamation. TWCS can tolerate occasional updates, but frequent updates significantly degrade performance and space efficiency.
 
-!!! danger "Do Not Use DELETE Statements"
-    Avoid explicit `DELETE` operations with TWCS. Tombstones are written to the current window while the data they mark for deletion exists in older windows. Since TWCS never compacts across window boundaries, tombstones and their target data never meet, preventing proper space reclamation. Use TTL-based expiration instead.
+!!! danger "Avoid Explicit DELETE Statements"
+    TWCS is optimized around time-windowed SSTables and expiration handling. Tombstones from `DELETE` operations are written into SSTables that may be assigned to newer windows, while the data they mark for deletion exists in older windows. Since TWCS background compaction selects candidates within a single window bucket, tombstones and their target data are unlikely to meet during normal background compaction, preventing proper space reclamation. Use TTL-based expiration instead.
 
-TWCS is designed for time-series data. It groups SSTables by time window and never compacts across window boundaries, enabling efficient space reclamation when data expires via TTL.
+TWCS is designed for time-series data. It groups SSTables into time-window buckets using each SSTable's maximum timestamp. In normal background compaction, candidate selection is bucket-based, so compactions are chosen from a single window bucket rather than spanning multiple window buckets. This can enable efficient space reclamation when TTL-aligned SSTables become fully expired and are safe to drop.
 
 ---
 
@@ -43,12 +43,12 @@ With STCS, expired data requires compaction to reclaim space—expensive for lar
 TWCS addresses these issues by:
 
 - Grouping data into time-based windows
-- Never compacting across window boundaries
-- Enabling entire SSTables to be dropped when all data expires
+- Background compaction selecting within a single window bucket
+- Enabling fully expired SSTables to be dropped when the compaction controller determines they are safe to reclaim
 
 | Aspect | STCS | LCS | TWCS |
 |--------|------|-----|------|
-| Space reclamation | Requires compaction | Requires compaction | Drop entire SSTable |
+| Space reclamation | Requires compaction | Requires compaction | Drop fully expired SSTable |
 | TTL efficiency | Poor (scattered data) | Poor (spread across levels) | Excellent (window-aligned) |
 | Time-range queries | No optimization | No optimization | Natural data locality |
 | Write amplification | Low | High | Low |
@@ -62,15 +62,15 @@ TWCS addresses these issues by:
 TWCS organizes compaction around time windows:
 
 1. **Window assignment**: Each SSTable is assigned to a window based on its maximum timestamp
-2. **Intra-window compaction**: Within each window, STCS-style compaction merges SSTables
-3. **No cross-window compaction**: SSTables from different windows are never merged
-4. **Window expiration**: When all data in a window's SSTables expires, the entire SSTable is dropped
+2. **Intra-window compaction**: TWCS applies STCS-style prioritization to the newest window and allows compaction of older windows when sufficient SSTables are present (see [Intra-Window Compaction](#intra-window-compaction) for details).
+3. **Background compaction is bucket-based**: Normal background compaction selects candidates from a single window bucket rather than spanning multiple windows. Note that user-triggered compaction (e.g., `nodetool compact`) and maximal compaction may operate across windows.
+4. **Window expiration**: TWCS periodically checks for fully expired SSTables and can reclaim them directly when the compaction controller determines they are safe to drop.
 
 ### Time Window Structure
 
 ```plantuml
 @startuml
-skinparam backgroundColor transparent
+skinparam backgroundColor white
 title Time-Window Compaction Strategy (TWCS)
 
 skinparam defaultFontName Helvetica
@@ -84,7 +84,7 @@ skinparam rectangle {
     roundCorner 10
 }
 
-package "Window W4: 10:00-11:00\n**ACTIVE**" as W4 <<active>> #E8F5E9 {
+package "Window W4: 10:00-11:00\n**NEWEST**" as W4 <<active>> #E8F5E9 {
     rectangle "SST1" as W4_S1
     rectangle "SST2" as W4_S2
     rectangle "SST3" as W4_S3
@@ -102,7 +102,7 @@ package "Window W1: 07:00-08:00\nTTL: 1h left" as W1 #F3DAFA {
     rectangle "SSTable\n(compacted)" as W1_SST
 }
 
-package "Window W0: 06:00-07:00\n**TTL EXPIRED**" as W0 <<expired>> #FFE0E0 {
+package "Window W0: 06:00-07:00\n**FULLY EXPIRED**" as W0 <<expired>> #FFE0E0 {
     rectangle "SSTable\n(compacted)" as W0_SST #CC6666
 }
 
@@ -117,9 +117,9 @@ note bottom of W4 #E8F5E9
 end note
 
 note bottom of W0 #FFCDD2
-  **DROP entire SSTable**
+  **Drop fully expired SSTable**
   No compaction needed
-  Space reclaimed: O(1)
+  Drop fully expired SSTable directly (no rewrite)
 end note
 
 note as props #FFFDE7
@@ -127,8 +127,8 @@ note as props #FFFDE7
   ....
   Data grouped by time windows
   STCS compaction within each window
-  Never compact across windows
-  Drop entire SSTable on TTL expiry
+  Background compaction within windows only
+  Drop fully expired SSTables directly
 end note
 @enduml
 ```
@@ -147,8 +147,8 @@ Window configuration:
   compaction_window_size: 1
 
 Calculation:
-  Window start = floor(max_timestamp / window_size) × window_size
-  Window start = floor(10:58:12 / 1 hour) × 1 hour
+  Window start = floor(max_timestamp / (window_size × unit)) × (window_size × unit)
+  Window start = floor(10:58:12 / (1 × 1 hour)) × (1 × 1 hour)
   Window start = 10:00:00
 
 Result: SSTable assigned to window [10:00:00 - 11:00:00)
@@ -158,20 +158,19 @@ Using maximum timestamp ensures that all data in the SSTable falls within or bef
 
 ### Intra-Window Compaction
 
-Within each window, TWCS uses STCS-style compaction:
+TWCS applies STCS-style bucketing and prioritization to the newest window it has observed. Older windows are also eligible for compaction when they contain at least two SSTables:
 
-1. SSTables in the same window are grouped by size
-2. When `min_threshold` similar-sized SSTables exist, they compact
-3. The compacted SSTable remains in the same window
-4. Ideally, each completed window has one large SSTable
+1. **Newest window**: SSTables are grouped by size using STCS bucketing. Compaction triggers when `min_threshold` similar-sized SSTables exist.
+2. **Older windows**: Any window with at least 2 SSTables is eligible for compaction, trimmed to `max_threshold`.
+3. In practice, completed windows often converge toward a small number of SSTables, but convergence to exactly one SSTable is not guaranteed.
 
 ### TTL and Space Reclamation
 
-The key advantage of TWCS is efficient space reclamation:
+The key advantage of TWCS is that fully expired SSTables can be dropped directly, avoiding the need to rewrite old and new data together to reclaim expired data:
 
 ```plantuml
 @startuml
-skinparam backgroundColor transparent
+skinparam backgroundColor white
 skinparam defaultFontName Helvetica
 
 skinparam rectangle {
@@ -188,7 +187,7 @@ package "Without TWCS (STCS/LCS)" as pkg1 #FFF3E0 {
         Must compact ALL SSTables
         to remove Hour 1 data
         ....
-        Space reclamation: **O(n)**
+        Space reclamation: **requires rewriting via compaction**
     end note
 }
 
@@ -200,10 +199,10 @@ package "With TWCS" as pkg2 #E8F5E9 {
 
     note bottom of pkg2 #C8E6C9
         Hour 1 TTL expires:
-        Drop Hour 1 SSTable only
+        Drop fully expired Hour 1 SSTable
         No compaction needed
         ....
-        Space reclamation: **O(1)**
+        Space reclamation: **direct SSTable drop (no rewrite)**
     end note
 }
 
@@ -219,9 +218,8 @@ pkg1 -[hidden]right- pkg2
 
 TWCS's primary advantage is space reclamation without compaction:
 
-- Expired SSTables are dropped entirely
-- No I/O cost for removing old data
-- Predictable disk space recovery
+- Fully expired SSTables can be dropped directly rather than rewritten through compaction
+- More predictable disk space recovery when TTL and windowing align well
 
 ### Low Write Amplification
 
@@ -229,13 +227,13 @@ Similar to STCS, TWCS has low write amplification:
 
 - Data is written once to initial SSTable
 - Compacted only within its window (typically once)
-- Total write amplification: ~2× (initial write + one compaction)
+- TWCS generally has lower write amplification than LCS for append-oriented time-series workloads
 
 ### Time-Based Data Locality
 
 Queries for time ranges benefit from data organization:
 
-- Recent data in recent windows (likely in cache)
+- Recent data in newer windows
 - Historical queries touch specific windows
 - Reduced SSTable overlap for time-range scans
 
@@ -243,8 +241,8 @@ Queries for time ranges benefit from data organization:
 
 Fixed window sizes make operations predictable:
 
-- Know exactly when windows close
-- Estimate when space will be reclaimed
+- Window boundaries are deterministic
+- Better estimate when space may be reclaimed
 - Plan capacity based on retention period
 
 ### Reduced Compaction I/O
@@ -252,8 +250,8 @@ Fixed window sizes make operations predictable:
 By avoiding cross-window compaction:
 
 - Less total data movement
-- Compaction confined to active window
-- Old windows are read-only
+- Compaction confined to individual window buckets
+- Older windows are typically no longer selected as the newest compaction bucket
 
 ---
 
@@ -263,8 +261,8 @@ By avoiding cross-window compaction:
 
 TWCS performs optimally with append-only data:
 
-- Updates to old data create new SSTables in the current window
-- Original data in old window never merges with update (no cross-window compaction)
+- Updates to old data can create SSTables assigned to newer windows
+- Background compaction does not merge SSTables from different windows, so both versions persist
 - Both versions persist until TTL expires
 - Occasional updates are tolerable but degrade read performance and space efficiency proportionally to update frequency
 
@@ -273,23 +271,23 @@ TWCS performs optimally with append-only data:
 Late-arriving data causes problems:
 
 ```
-Current window: Hour 10
+Newest observed window: Hour 10
 Late write arrives for Hour 5
 
 Result:
-  - New SSTable created in Hour 5 window
-  - Hour 5 window now has multiple SSTables
+  - New SSTable assigned to Hour 5 window bucket
+  - Hour 5 bucket now has multiple SSTables
   - These may not compact together (different sizes)
-  - When Hour 5 TTL expires, some SSTables may not be fully expired
+  - Some SSTables may not be eligible for direct expiry-based reclamation yet
 ```
 
 ### Tombstone Inefficiency
 
 Explicit deletes (DELETE statements) are problematic:
 
-- Tombstone written to current window
+- Tombstone written to a newer window
 - Original data in old window
-- Tombstone and data never meet in compaction
+- Tombstone and data are unlikely to meet during normal background compaction
 - Must wait for both to expire via TTL
 
 ### Requires Careful Window Sizing
@@ -328,8 +326,8 @@ Some time-series patterns don't fit:
 |------------------|-------------------|
 | Mutable data | Updates span windows |
 | No TTL defined | Windows accumulate indefinitely |
-| Heavy delete workload | Tombstones don't meet data |
-| Significant out-of-order writes | Windows never fully compact |
+| Heavy delete workload | Tombstones are unlikely to meet older data during normal background compaction |
+| Significant out-of-order writes | Windows may retain multiple SSTables |
 | Non-time-based access patterns | No benefit from time organization |
 
 ---
@@ -338,8 +336,8 @@ Some time-series patterns don't fit:
 
 ```plantuml
 @startuml
-skinparam backgroundColor transparent
-title TWCS Compaction Flow
+skinparam backgroundColor white
+title TWCS Background Compaction Model
 
 skinparam ActivityBackgroundColor #F9E5FF
 skinparam ActivityBorderColor #7B4B96
@@ -353,8 +351,8 @@ start
 :Assign SSTable to time window
 based on maximum timestamp;
 
-if (Window still active?) then (yes)
-    :Add SSTable to active window;
+if (Newest window?) then (yes)
+    :Add SSTable to newest window;
     if (min_threshold SSTables?) then (yes)
         :Run STCS compaction
         within window only;
@@ -362,15 +360,16 @@ if (Window still active?) then (yes)
         :Wait for more SSTables;
     endif
 else (no)
-    :Window is sealed;
+    :Older window;
 endif
 
-if (All data TTL expired?) then (yes)
-    #FFCDD2:Drop entire SSTable
-    O(1) space reclamation;
+if (SSTable fully expired?) then (yes)
+    #FFCDD2:Drop fully expired SSTable
+    Drop fully expired SSTable directly
+    (no rewrite required);
 else (no)
     :SSTable remains until
-    all data expires;
+    safe to drop;
 endif
 
 stop
@@ -430,7 +429,7 @@ AND gc_grace_seconds = 3600;      -- 1 hour (shorter for time-series)
 
 #### Inherited STCS Options
 
-TWCS uses STCS for intra-window compaction, so these options also apply:
+TWCS reuses STCS bucketing and sizing options for compaction candidate selection, especially in the newest window, so these options also apply:
 
 | Parameter | Default | Description |
 |-----------|---------|-------------|
@@ -439,7 +438,7 @@ TWCS uses STCS for intra-window compaction, so these options also apply:
 | `bucket_high` | 1.5 | Upper bound multiplier for STCS bucketing within windows. |
 | `bucket_low` | 0.5 | Lower bound multiplier for STCS bucketing within windows. |
 
-#### Common Compaction Options
+#### Common Compaction Options (Inherited)
 
 | Parameter | Default | Description |
 |-----------|---------|-------------|
@@ -449,6 +448,9 @@ TWCS uses STCS for intra-window compaction, so these options also apply:
 | `unchecked_tombstone_compaction` | false | Bypasses tombstone compaction eligibility pre-checking. |
 | `only_purge_repaired_tombstones` | false | Only purge tombstones from repaired SSTables. |
 | `log_all` | false | Enables detailed compaction logging. |
+
+!!! info "Tombstone Compactions Disabled by Default"
+    TWCS disables tombstone compactions unless one of the tombstone-related options (`tombstone_threshold`, `tombstone_compaction_interval`, or `unchecked_tombstone_compaction`) is explicitly present with a value other than `"false"`. This behavior is set in the strategy constructor.
 
 ### Window Size Guidelines
 
@@ -470,7 +472,7 @@ The primary benefit of TWCS is efficient TTL expiration:
 
 ```plantuml
 @startuml
-skinparam backgroundColor transparent
+skinparam backgroundColor white
 skinparam defaultFontName Helvetica
 
 title TWCS + TTL Efficiency
@@ -479,15 +481,15 @@ skinparam rectangle {
     roundCorner 10
 }
 
-rectangle "SSTable deleted\nNo compaction\nO(1) operation" as drop #FFCDD2
+rectangle "SSTable deleted\nNo compaction\nDirect drop" as drop #FFCDD2
 
-package "Day 1: All windows active" as day1 #E3F2FD {
+package "Day 1: All windows present" as day1 #E3F2FD {
     rectangle "Window 1\nTTL: 7 days" as w1a #90CAF9
     rectangle "Window 2\nTTL: 7 days" as w2a #90CAF9
     rectangle "Window 3\nTTL: 7 days" as w3a #90CAF9
 }
 
-package "Day 8: Window 1 expires" as day8 #FAFAFA {
+package "Day 8: Window 1 becomes fully expired" as day8 #FAFAFA {
     rectangle "Window 1\n**EXPIRED**" as w1b #EF9A9A
     rectangle "Window 2\nTTL: 2 days" as w2b #FFF59D
     rectangle "Window 3\nTTL: 3 days" as w3b #A5D6A7
@@ -498,8 +500,8 @@ w1b -down-> drop : DROP
 
 note right of day8 #C8E6C9
     **Space Reclamation**
-    TWCS: O(1) - drop file
-    STCS/LCS: O(n) - compact
+    TWCS: direct SSTable drop
+    STCS/LCS: requires rewriting via compaction
 end note
 
 @enduml
@@ -530,7 +532,7 @@ gc_grace_seconds = 600
 
 **Symptoms:**
 
-- Old windows have multiple SSTables that never compact
+- Old windows have multiple SSTables that do not compact together
 - Space not reclaimed when TTL expires
 - SSTable count growing unexpectedly
 
@@ -548,7 +550,7 @@ done
 
 ```plantuml
 @startuml
-skinparam backgroundColor transparent
+skinparam backgroundColor white
 skinparam defaultFontName Helvetica
 
 title Out-of-Order Write Problem
@@ -557,14 +559,14 @@ skinparam rectangle {
     roundCorner 10
 }
 
-rectangle "Current Time: Hour 10" as time #E3F2FD
+rectangle "Newest Observed Window: Hour 10" as time #E3F2FD
 
-package "Hour 5 Window (sealed)" as h5 #FFF3E0 {
+package "Hour 5 Window (older)" as h5 #FFF3E0 {
     rectangle "SSTable\n(compacted)" as h5ss #FFCC80
     rectangle "NEW SSTable\n(late write)" as h5new #EF9A9A
 }
 
-package "Hour 10 Window (active)" as h10 #E8F5E9 {
+package "Hour 10 Window (newest)" as h10 #E8F5E9 {
     rectangle "SSTable 1" as h10s1 #A5D6A7
     rectangle "SSTable 2" as h10s2 #A5D6A7
 }
@@ -574,10 +576,10 @@ h5 -[hidden]right- h10
 
 note bottom of h5 #FFCDD2
     **Problem:**
-    Late write reopens sealed window
+    Late write creates a new SSTable
+    in an older window bucket
     Multiple SSTables, different sizes
-    Window may not fully compact
-    TTL expiration incomplete
+    May retain multiple SSTables
 end note
 
 @enduml
@@ -607,7 +609,7 @@ TWCS assumes append-only. Updates violate this assumption:
 
 ```plantuml
 @startuml
-skinparam backgroundColor transparent
+skinparam backgroundColor white
 skinparam defaultFontName Helvetica
 
 title Cross-Window Update Problem
@@ -633,7 +635,7 @@ read -down-> v2 : check
 note bottom of w1 #FFCDD2
     **Problem:**
     v1 and v2 in different windows
-    TWCS never compacts across windows
+    Background compaction does not merge across windows
     Both versions persist until TTL
     Reads must merge across windows
 end note
@@ -659,7 +661,7 @@ TWCS is only appropriate for append-only time-series. If updates are required, c
 
 ```plantuml
 @startuml
-skinparam backgroundColor transparent
+skinparam backgroundColor white
 skinparam defaultFontName Helvetica
 
 title Tombstone Spread Problem
@@ -674,7 +676,7 @@ package "Old Windows (W1-W3)" as old #FFF3E0 {
     rectangle "Original data\nfor sensor 'x'" as data #FFCC80
 }
 
-package "Current Window (W10)" as curr #E3F2FD {
+package "Newer Window (W10)" as curr #E3F2FD {
     rectangle "Range tombstone\nfor sensor 'x'" as tomb #EF9A9A
 }
 
@@ -683,9 +685,9 @@ old -[hidden]right- curr
 
 note bottom of old #FFCDD2
     **Problem:**
-    Tombstone in current window
+    Tombstone in newer window
     Data in old windows
-    Never meet in compaction
+    Unlikely to meet in background compaction
     Space not reclaimed
 end note
 
@@ -783,7 +785,7 @@ ALTER TABLE keyspace.table WITH compaction = {
 | SSTables per window | 1-2 (completed) | >4 |
 | Total SSTable count | ~windows × 2 | Much higher |
 | Pending compactions | Low | Sustained growth |
-| Space after TTL expiry | Decreasing | Not changing |
+| Space after SSTables become fully expired | Decreasing | Not changing |
 
 ### Commands
 
@@ -805,7 +807,9 @@ This section documents implementation details from the Cassandra source code.
 
 ### Window Boundary Calculation
 
-Window boundaries are calculated using floor division based on the configured unit:
+Conceptually, window boundaries are calculated by flooring the timestamp to the configured window size. In the current implementation, `getWindowBoundsInMillis()` first normalizes the timestamp to seconds, computes lower and upper bounds in seconds for the configured unit (MINUTES, HOURS, or DAYS), and then converts the result back to milliseconds.
+
+The conceptual formula:
 
 $$
 \begin{aligned}
@@ -818,19 +822,9 @@ Where:
 
 - $L$ = lower bound (window start)
 - $U$ = upper bound (window end)
-- $t$ = timestamp in milliseconds
+- $t$ = timestamp
 - $w$ = `compaction_window_size`
-- $u$ = unit multiplier in milliseconds
-
-**Unit multipliers:**
-
-| Unit | $u$ (milliseconds) |
-|------|-------------------|
-| MINUTES | $60{,}000$ |
-| HOURS | $3{,}600{,}000$ |
-| DAYS | $86{,}400{,}000$ |
-
-The `getWindowBoundsInMillis()` method performs this calculation, normalizing timestamps to window boundaries.
+- $u$ = unit size (e.g., 60 seconds for MINUTES, 3600 seconds for HOURS, 86400 seconds for DAYS)
 
 ### SSTable Window Assignment
 
@@ -846,16 +840,16 @@ Using max timestamp (rather than min) ensures all data in the SSTable falls with
 
 The candidate selection algorithm processes windows in order:
 
-1. **Expired SSTables**: Always collected first (checked every `expired_sstable_check_frequency_seconds`)
-2. **Active window**: Uses STCS-style prioritization with hotness-based bucket selection
-3. **Older windows**: Requires ≥2 SSTables to trigger compaction
+1. **Expired SSTables**: Identified first during candidate selection and included whenever found (checked every `expired_sstable_check_frequency_seconds`)
+2. **Newest window** (determined by `highestWindowSeen`, not wall clock time): Uses STCS-style bucketing and prioritization when at least `min_threshold` SSTables are present
+3. **Older windows**: Any window with ≥2 SSTables is eligible for compaction
 4. **Result limiting**: Candidates trimmed to `max_threshold`
 
 ### Internal Data Structures
 
 ```plantuml
 @startuml
-skinparam backgroundColor transparent
+skinparam backgroundColor white
 skinparam defaultFontName Helvetica
 
 skinparam class {

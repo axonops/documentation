@@ -11,11 +11,14 @@ meta:
 !!! note "Cassandra 5.0+"
     Starting with Cassandra 5.0, [Unified Compaction Strategy (UCS)](ucs.md) is the recommended compaction strategy for most workloads. UCS provides adaptive behavior that can emulate STCS characteristics when appropriate. STCS remains fully supported and is still the default for tables in earlier versions.
 
-STCS is Cassandra's original and default compaction strategy. It groups SSTables of similar size and compacts them together, optimizing for write throughput at the cost of read amplification.
+STCS groups SSTables of similar size and compacts them together, optimizing for write throughput at the cost of read amplification.
 
 ---
 
 ## Background and History
+
+!!! note "Historical Context"
+    The information in this section is based on Cassandra project history, not derived from the STCS source code.
 
 ### Origins
 
@@ -48,7 +51,7 @@ STCS organizes compaction around size similarity rather than key ranges or level
 
 ```plantuml
 @startuml
-skinparam backgroundColor transparent
+skinparam backgroundColor white
 title Size-Tiered Compaction Strategy (STCS)
 
 package "Tier 1 (tiny) - 4 SSTables ~1MB each" #F9E5FF {
@@ -110,7 +113,7 @@ end note
 
 SSTables are assigned to buckets based on size similarity:
 
-$$\bar{s} \times b_{\text{low}} \leq s \leq \bar{s} \times b_{\text{high}}$$
+$$\bar{s} \times b_{\text{low}} < s < \bar{s} \times b_{\text{high}}$$
 
 Where:
 
@@ -121,9 +124,9 @@ Where:
 
 **Example:** Bucket with $\bar{s} = 10\text{MB}$:
 
-$$5\text{MB} \leq s \leq 15\text{MB}$$
+$$5\text{MB} < s < 15\text{MB}$$
 
-SSTables outside this range form separate buckets. The `min_sstable_size` parameter (default 50MB) groups all smaller SSTables together, preventing proliferation of tiny SSTable buckets.
+SSTables outside this range form separate buckets. The `min_sstable_size` parameter (default 50 MiB, specified in bytes) allows SSTables below that threshold to be bucketed together even when they fall outside the normal `bucket_low`/`bucket_high` ratio bounds, provided the target bucket average is also below `min_sstable_size`. This prevents proliferation of tiny-SSTable buckets.
 
 ### Compaction Trigger and Bucket Selection
 
@@ -141,7 +144,7 @@ $$\text{hotness} = \frac{\text{readMeter.twoHourRate()}}{\text{estimatedKeys()}}
 
 This formula measures recent read activity (two-hour rate) divided by the number of keys in the SSTable. The bucket with the highest aggregate hotness is selected first, ensuring that frequently-read data is compacted and consolidated sooner.
 
-*Note: The effective hotness values vary based on workload read patterns, key distribution, and SSTable age. SSTables without read meters (e.g., newly flushed) have zero hotness.*
+*Note: The effective hotness values vary based on workload read patterns, key distribution, and SSTable age. SSTables without read meters (e.g., system tables) contribute zero hotness to bucket selection.*
 
 **Tie-breaking:** When buckets have equal hotness, STCS prioritizes buckets with smaller average file size to reduce compaction I/O.
 
@@ -329,12 +332,12 @@ SSTables are grouped into "buckets" based on size similarity:
 Bucket boundaries determined by bucket_high and bucket_low:
 
 Average size of bucket: X
-- Include SSTables from X × bucket_low to X × bucket_high
-- Default: 0.5X to 1.5X
+- Include SSTables strictly between X × bucket_low and X × bucket_high
+- Default: strictly between 0.5X and 1.5X
 
 Example with 10MB average:
-- Include: 5MB to 15MB SSTables
-- Exclude: 4MB (too small), 20MB (too large)
+- Include: SSTables >5MB and <15MB
+- Exclude: 5MB, 15MB, 4MB, 20MB
 
 When a bucket reaches min_threshold SSTables, compact them.
 ```
@@ -353,20 +356,20 @@ CREATE TABLE my_table (
     -- Minimum SSTables to trigger compaction
     -- Lower = more frequent compaction, fewer SSTables
     -- Higher = less compaction, more SSTables
-    'min_threshold': 4,  -- Default: 4
+    'min_threshold': '4',  -- Default: 4
 
     -- Maximum SSTables per compaction
     -- Limits peak I/O and memory usage
-    'max_threshold': 32,  -- Default: 32
+    'max_threshold': '32',  -- Default: 32
 
     -- Size ratio for grouping into buckets
     -- SSTables within bucket_low to bucket_high ratio are grouped
-    'bucket_high': 1.5,  -- Default: 1.5
-    'bucket_low': 0.5,   -- Default: 0.5
+    'bucket_high': '1.5',  -- Default: 1.5
+    'bucket_low': '0.5',   -- Default: 0.5
 
     -- Minimum SSTable size to consider for compaction
     -- Smaller SSTables are grouped together first
-    'min_sstable_size': 50  -- Default: 50MB
+    'min_sstable_size': '52428800'  -- Default: 50 MiB (specified in bytes)
 };
 ```
 
@@ -378,9 +381,9 @@ CREATE TABLE my_table (
 |-----------|---------|-------------|
 | `min_threshold` | 4 | Minimum SSTables in a bucket to trigger compaction. Lower values reduce SSTable count but increase compaction frequency. |
 | `max_threshold` | 32 | Maximum SSTables to compact at once. Limits peak I/O and memory usage during compaction. |
-| `bucket_high` | 1.5 | Upper bound multiplier for bucket membership. An SSTable joins a bucket if its size ≤ average × bucket_high. Must be > bucket_low. |
-| `bucket_low` | 0.5 | Lower bound multiplier for bucket membership. An SSTable joins a bucket if its size ≥ average × bucket_low. |
-| `min_sstable_size` | 50 MB | SSTables below this size are grouped together regardless of the bucket_low/bucket_high ratio. Prevents proliferation of tiny-SSTable buckets. |
+| `bucket_high` | 1.5 | Upper bound multiplier for bucket membership. An SSTable joins a bucket if its size < average × bucket_high (strict). Must be > bucket_low. |
+| `bucket_low` | 0.5 | Lower bound multiplier for bucket membership. An SSTable joins a bucket if its size > average × bucket_low (strict). |
+| `min_sstable_size` | 52428800 (50 MiB) | SSTables below this size (in bytes) may be grouped together even when they do not satisfy the normal `bucket_low`/`bucket_high` ratio bounds, provided the bucket average is also below `min_sstable_size`. Prevents proliferation of tiny-SSTable buckets. |
 
 #### Common Compaction Options
 
@@ -399,8 +402,13 @@ These options apply to all compaction strategies:
 
 The following constraints are enforced during configuration:
 
+From the STCS options source:
+
 - `bucket_high` must be strictly greater than `bucket_low`
 - `min_sstable_size` must be non-negative
+
+From the parent compaction strategy (not shown in STCS source):
+
 - `min_threshold` must be ≥ 2
 - `max_threshold` must be ≥ `min_threshold`
 
@@ -500,7 +508,7 @@ ls -lhS /var/lib/cassandra/data/keyspace/table-*/
    ```sql
    ALTER TABLE keyspace.table WITH compaction = {
        'class': 'SizeTieredCompactionStrategy',
-       'min_threshold': 2
+       'min_threshold': '2'
    };
    ```
 
@@ -547,14 +555,14 @@ watch 'df -h /var/lib/cassandra/data && nodetool compactionstats'
 -- Adjust bucket boundaries for more inclusive grouping
 ALTER TABLE keyspace.table WITH compaction = {
     'class': 'SizeTieredCompactionStrategy',
-    'bucket_high': 2.0,
-    'bucket_low': 0.33
+    'bucket_high': '2.0',
+    'bucket_low': '0.33'
 };
 
 -- Lower minimum size threshold
 ALTER TABLE keyspace.table WITH compaction = {
     'class': 'SizeTieredCompactionStrategy',
-    'min_sstable_size': 10
+    'min_sstable_size': '10485760'  -- 10 MiB in bytes
 };
 ```
 
@@ -562,13 +570,16 @@ ALTER TABLE keyspace.table WITH compaction = {
 
 ## Tuning Recommendations
 
+!!! note "Operational Guidance"
+    The recommendations in this section and the monitoring/production-issues sections below are based on operational experience and general compaction theory, not derived directly from the STCS source code.
+
 ### High Write Throughput
 
 ```sql
 ALTER TABLE keyspace.table WITH compaction = {
     'class': 'SizeTieredCompactionStrategy',
-    'min_threshold': 4,
-    'max_threshold': 64  -- Allow larger compactions
+    'min_threshold': '4',
+    'max_threshold': '64'  -- Allow larger compactions
 };
 ```
 
@@ -577,9 +588,9 @@ ALTER TABLE keyspace.table WITH compaction = {
 ```sql
 ALTER TABLE keyspace.table WITH compaction = {
     'class': 'SizeTieredCompactionStrategy',
-    'min_threshold': 2,  -- Compact sooner
-    'bucket_high': 2.0,  -- Wider buckets
-    'bucket_low': 0.33
+    'min_threshold': '2',  -- Compact sooner
+    'bucket_high': '2.0',  -- Wider buckets
+    'bucket_low': '0.33'
 };
 ```
 
@@ -588,8 +599,8 @@ ALTER TABLE keyspace.table WITH compaction = {
 ```sql
 ALTER TABLE keyspace.table WITH compaction = {
     'class': 'SizeTieredCompactionStrategy',
-    'min_threshold': 8,   -- Fewer, larger compactions
-    'max_threshold': 16
+    'min_threshold': '8',   -- Fewer, larger compactions
+    'max_threshold': '16'
 };
 ```
 
@@ -632,7 +643,7 @@ The bucket formation algorithm processes SSTables in a specific order:
 
 1. **Sort SSTables** by on-disk size in ascending order (for deterministic results)
 2. **For each SSTable**, attempt to match to an existing bucket:
-   - Match if: `bucket_avg × bucket_low ≤ sstable_size ≤ bucket_avg × bucket_high`
+   - Match if: `bucket_avg × bucket_low < sstable_size < bucket_avg × bucket_high`
    - OR if both SSTable and bucket average are below `min_sstable_size`
 3. **Recalculate bucket average** when adding new SSTables
 4. **Create new bucket** for unmatched SSTables
@@ -656,7 +667,7 @@ hotness = (readMeter != null)
     : 0.0
 ```
 
-SSTables without read meters (e.g., newly flushed) have zero hotness, causing them to be deprioritized unless they form the only eligible bucket.
+SSTables without read meters (e.g., system tables) contribute zero hotness to bucket selection, so buckets containing hotter SSTables will be preferred.
 
 ### Constants Reference
 
@@ -666,7 +677,7 @@ SSTables without read meters (e.g., newly flushed) have zero hotness, causing th
 | Default max_threshold | 32 | Maximum SSTables per compaction |
 | Default bucket_low | 0.5 | Lower size ratio bound |
 | Default bucket_high | 1.5 | Upper size ratio bound |
-| Default min_sstable_size | 50 MiB | Small SSTable grouping threshold |
+| Default min_sstable_size | 52428800 bytes (50 MiB) | Small SSTable grouping threshold |
 
 ---
 
