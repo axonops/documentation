@@ -21623,7 +21623,7 @@ data-et-multi-view="{&quot;schema&quot;:{&quot;content&quot;:{&quot;desktop&quot
 <div class="highlight"><pre><span></span><code><span class="c1"># cassandra.yaml</span>
 <span class="nt">auto_snapshot</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">true</span><span class="w">  </span><span class="c1"># Default: true</span>
 </code></pre></div>
-<p>Automatic snapshots are stored in <code>&lt;data_directory&gt;/&lt;keyspace&gt;/&lt;table&gt;/snapshots/</code>. These can be used to restore data if needed, but should not be relied upon without verification—always confirm <code>auto_snapshot</code> is enabled in the cluster configuration.</p>
+<p>Automatic snapshots are stored in <code>&lt;data_directory&gt;/&lt;keyspace&gt;/&lt;table_name&gt;-&lt;table_uuid&gt;/snapshots/dropped-&lt;epoch_millis&gt;-&lt;table_name&gt;/</code> for each table in the keyspace. The keyspace and table directories are retained on disk to preserve the snapshots. See <a href="../../../operations/backup-restore/backup/#auto_snapshot">Automatic Snapshot Configuration</a> for details. These SHOULD NOT be relied upon without verification—always confirm <code>auto_snapshot</code> is enabled in the cluster configuration.</p>
 </div>
 <h3 id="parameters_2">Parameters<a class="headerlink" href="#parameters_2" title="Permanent link">¶</a></h3>
 <h4 id="if-exists">IF EXISTS<a class="headerlink" href="#if-exists" title="Permanent link">¶</a></h4>

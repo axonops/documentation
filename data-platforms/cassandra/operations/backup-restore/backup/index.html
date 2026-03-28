@@ -12572,12 +12572,99 @@ data-et-multi-view="{&quot;schema&quot;:{&quot;content&quot;:{&quot;desktop&quot
     </span>
   </a>
   
+    <nav class="md-nav" aria-label="auto_snapshot">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#snapshot-directory-naming" class="md-nav__link">
+    <span class="md-ellipsis">
+      Snapshot Directory Naming
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#where-auto-snapshots-are-stored" class="md-nav__link">
+    <span class="md-ellipsis">
+      Where Auto-Snapshots Are Stored
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#understanding-the-table-uuid" class="md-nav__link">
+    <span class="md-ellipsis">
+      Understanding the Table UUID
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#drop-table-snapshot-location-and-directory-behavior" class="md-nav__link">
+    <span class="md-ellipsis">
+      DROP TABLE: Snapshot Location and Directory Behavior
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#drop-keyspace-snapshot-location" class="md-nav__link">
+    <span class="md-ellipsis">
+      DROP KEYSPACE: Snapshot Location
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#truncate-snapshot-location-and-directory-behavior" class="md-nav__link">
+    <span class="md-ellipsis">
+      TRUNCATE: Snapshot Location and Directory Behavior
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#listing-auto-snapshots" class="md-nav__link">
+    <span class="md-ellipsis">
+      Listing Auto-Snapshots
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#auto_snapshot_ttl" class="md-nav__link">
+    <span class="md-ellipsis">
+      auto_snapshot_ttl
+    </span>
+  </a>
+  
 </li>
         
           <li class="md-nav__item">
   <a href="#snapshot_before_compaction" class="md-nav__link">
     <span class="md-ellipsis">
       snapshot_before_compaction
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#snapshot-types-reference" class="md-nav__link">
+    <span class="md-ellipsis">
+      Snapshot Types Reference
     </span>
   </a>
   
@@ -20218,12 +20305,99 @@ data-et-multi-view="{&quot;schema&quot;:{&quot;content&quot;:{&quot;desktop&quot
     </span>
   </a>
   
+    <nav class="md-nav" aria-label="auto_snapshot">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#snapshot-directory-naming" class="md-nav__link">
+    <span class="md-ellipsis">
+      Snapshot Directory Naming
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#where-auto-snapshots-are-stored" class="md-nav__link">
+    <span class="md-ellipsis">
+      Where Auto-Snapshots Are Stored
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#understanding-the-table-uuid" class="md-nav__link">
+    <span class="md-ellipsis">
+      Understanding the Table UUID
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#drop-table-snapshot-location-and-directory-behavior" class="md-nav__link">
+    <span class="md-ellipsis">
+      DROP TABLE: Snapshot Location and Directory Behavior
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#drop-keyspace-snapshot-location" class="md-nav__link">
+    <span class="md-ellipsis">
+      DROP KEYSPACE: Snapshot Location
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#truncate-snapshot-location-and-directory-behavior" class="md-nav__link">
+    <span class="md-ellipsis">
+      TRUNCATE: Snapshot Location and Directory Behavior
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#listing-auto-snapshots" class="md-nav__link">
+    <span class="md-ellipsis">
+      Listing Auto-Snapshots
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#auto_snapshot_ttl" class="md-nav__link">
+    <span class="md-ellipsis">
+      auto_snapshot_ttl
+    </span>
+  </a>
+  
 </li>
         
           <li class="md-nav__item">
   <a href="#snapshot_before_compaction" class="md-nav__link">
     <span class="md-ellipsis">
       snapshot_before_compaction
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#snapshot-types-reference" class="md-nav__link">
+    <span class="md-ellipsis">
+      Snapshot Types Reference
     </span>
   </a>
   
@@ -20551,31 +20725,265 @@ data-et-multi-view="{&quot;schema&quot;:{&quot;content&quot;:{&quot;desktop&quot
 <tr>
 <th>Parameter</th>
 <th>Default</th>
+<th>Versions</th>
 <th>Description</th>
 </tr>
 </thead>
 <tbody>
 <tr>
 <td><code>auto_snapshot</code></td>
-<td>true</td>
-<td>Create snapshot before DROP KEYSPACE/TABLE</td>
+<td><code>true</code></td>
+<td>All</td>
+<td>Create snapshot before <code>DROP TABLE</code>, <code>DROP KEYSPACE</code>, and <code>TRUNCATE</code></td>
+</tr>
+<tr>
+<td><code>auto_snapshot_ttl</code></td>
+<td>(none)</td>
+<td>4.1+</td>
+<td>TTL for auto-snapshots; after expiry, snapshots are automatically cleared</td>
 </tr>
 <tr>
 <td><code>snapshot_before_compaction</code></td>
-<td>false</td>
+<td><code>false</code></td>
+<td>All</td>
 <td>Create snapshot before each compaction</td>
 </tr>
 </tbody>
 </table>
 <h3 id="auto_snapshot">auto_snapshot<a class="headerlink" href="#auto_snapshot" title="Permanent link">¶</a></h3>
-<p>When enabled, Cassandra automatically creates a snapshot before <code>DROP TABLE</code> or <code>DROP KEYSPACE</code> operations. This provides a safety net against accidental schema drops.</p>
-<p>The automatic snapshot is stored at:
-</p><div class="highlight"><pre><span></span><code>/var/lib/cassandra/data/&lt;keyspace&gt;/&lt;table-uuid&gt;/snapshots/dropped-&lt;timestamp&gt;-&lt;table&gt;/
+<p>When <code>auto_snapshot</code> is enabled (the default), Cassandra automatically creates a snapshot of the table's data <strong>before</strong> executing destructive schema or data operations. This acts as a safety net, preserving a point-in-time copy of the data on disk.</p>
+<p>Auto-snapshots are triggered by the following operations:</p>
+<table>
+<thead>
+<tr>
+<th>Operation</th>
+<th>Snapshot Label</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>DROP TABLE</code></td>
+<td><code>dropped</code></td>
+<td>Snapshot taken before the table and its data are removed</td>
+</tr>
+<tr>
+<td><code>DROP KEYSPACE</code></td>
+<td><code>dropped</code></td>
+<td>Snapshot taken for <strong>every table</strong> in the keyspace before removal</td>
+</tr>
+<tr>
+<td><code>TRUNCATE</code></td>
+<td><code>truncated</code></td>
+<td>Snapshot taken before all data in the table is deleted</td>
+</tr>
+</tbody>
+</table>
+<p>The <code>auto_snapshot</code> setting is configured in <code>cassandra.yaml</code>:</p>
+<div class="highlight"><pre><span></span><code><span class="c1"># cassandra.yaml</span>
+<span class="c1"># STRONGLY RECOMMENDED to keep this enabled (default: true)</span>
+<span class="nt">auto_snapshot</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">true</span>
 </code></pre></div>
-<p>These auto-snapshots must still be cleared manually to reclaim space.</p>
+<div class="admonition warning">
+<p class="admonition-title">Data Safety</p>
+<p>Setting <code>auto_snapshot: false</code> means <code>DROP TABLE</code>, <code>DROP KEYSPACE</code>, and <code>TRUNCATE</code> operations will <strong>permanently destroy data</strong> with no automatic recovery path. You SHOULD keep this enabled unless you have a robust external backup strategy in place.</p>
+</div>
+<h4 id="snapshot-directory-naming">Snapshot Directory Naming<a class="headerlink" href="#snapshot-directory-naming" title="Permanent link">¶</a></h4>
+<p>When an auto-snapshot is created, Cassandra writes the snapshot into a directory named with the operation label, an epoch millisecond timestamp, and the table name:</p>
+<div class="highlight"><pre><span></span><code>&lt;label&gt;-&lt;epoch_millis&gt;-&lt;table_name&gt;
+</code></pre></div>
+<table>
+<thead>
+<tr>
+<th>Operation</th>
+<th>Example Snapshot Directory Name</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>DROP TABLE users</code></td>
+<td><code>dropped-1719849600000-users</code></td>
+</tr>
+<tr>
+<td><code>TRUNCATE users</code></td>
+<td><code>truncated-1719849600000-users</code></td>
+</tr>
+</tbody>
+</table>
+<p>The epoch millisecond timestamp records exactly when the snapshot was taken. You can convert it to a human-readable date for identification (e.g., <code>1719849600000</code> → <code>2024-07-01T16:00:00Z</code>).</p>
+<h4 id="where-auto-snapshots-are-stored">Where Auto-Snapshots Are Stored<a class="headerlink" href="#where-auto-snapshots-are-stored" title="Permanent link">¶</a></h4>
+<p>Auto-snapshot files are stored within the table's existing data directory, inside a <code>snapshots/</code> subdirectory. The full path is:</p>
+<div class="highlight"><pre><span></span><code>&lt;data_directory&gt;/&lt;keyspace&gt;/&lt;table_name&gt;-&lt;table_uuid&gt;/snapshots/&lt;snapshot_name&gt;/
+</code></pre></div>
+<p>For a default Cassandra installation:</p>
+<div class="highlight"><pre><span></span><code>/var/lib/cassandra/data/&lt;keyspace&gt;/&lt;table_name&gt;-&lt;table_uuid&gt;/snapshots/&lt;snapshot_name&gt;/
+</code></pre></div>
+<h4 id="understanding-the-table-uuid">Understanding the Table UUID<a class="headerlink" href="#understanding-the-table-uuid" title="Permanent link">¶</a></h4>
+<p>Each table's data directory includes a UUID suffix that uniquely identifies the table:</p>
+<div class="highlight"><pre><span></span><code>/var/lib/cassandra/data/my_keyspace/users-a1b2c3d4e5f6a7b8c9d0e1f2/
+</code></pre></div>
+<p>This UUID is assigned when the table is created and is recorded in <code>system_schema.tables</code>. The UUID ensures that if a table is dropped and recreated with the same name, the old and new table data directories do not collide.</p>
+<h4 id="drop-table-snapshot-location-and-directory-behavior">DROP TABLE: Snapshot Location and Directory Behavior<a class="headerlink" href="#drop-table-snapshot-location-and-directory-behavior" title="Permanent link">¶</a></h4>
+<p>When a table is dropped with <code>auto_snapshot</code> enabled, the following happens:</p>
+<ol>
+<li>Cassandra flushes any in-memory data (memtables) to disk</li>
+<li>Cassandra creates a snapshot of all SSTables in the table's data directory</li>
+<li>The table's live SSTable files are removed</li>
+<li>The table directory <strong>remains on disk</strong> because it still contains the snapshot subdirectory</li>
+</ol>
+<div class="highlight"><pre><span></span><code>/var/lib/cassandra/data/my_keyspace/
+├── users-a1b2c3d4e5f6a7b8c9d0e1f2/           ← OLD table directory (retained)
+│   ├── snapshots/
+│   │   └── dropped-1719849600000-users/        ← Auto-snapshot of dropped table
+│   │       ├── nb-1-big-Data.db
+│   │       ├── nb-1-big-Index.db
+│   │       ├── nb-1-big-Filter.db
+│   │       ├── nb-1-big-Statistics.db
+│   │       ├── nb-1-big-CompressionInfo.db
+│   │       ├── nb-1-big-TOC.txt
+│   │       └── manifest.json
+│   └── (no live SSTable files remain)
+</code></pre></div>
+<p>If you subsequently recreate the table with <code>CREATE TABLE my_keyspace.users (...)</code>, Cassandra creates a <strong>new</strong> data directory with a <strong>new</strong> UUID:</p>
+<div class="highlight"><pre><span></span><code>/var/lib/cassandra/data/my_keyspace/
+├── users-a1b2c3d4e5f6a7b8c9d0e1f2/           ← OLD directory (contains snapshot)
+│   └── snapshots/
+│       └── dropped-1719849600000-users/
+│           └── ... (snapshot files)
+├── users-f1e2d3c4b5a6f7e8d9c0b1a2/           ← NEW directory (new table)
+│   └── (empty, or new data as writes arrive)
+</code></pre></div>
+<div class="admonition tip">
+<p class="admonition-title">Key Point</p>
+<p>After dropping and recreating a table, the auto-snapshot of the dropped table is in the <strong>old</strong> table directory (with the old UUID), <strong>not</strong> in the new table directory. If you need to find snapshots of a dropped table, look for directories that contain a <code>snapshots/</code> subdirectory with a <code>dropped-*</code> snapshot name.</p>
+</div>
+<h4 id="drop-keyspace-snapshot-location">DROP KEYSPACE: Snapshot Location<a class="headerlink" href="#drop-keyspace-snapshot-location" title="Permanent link">¶</a></h4>
+<p>When a keyspace is dropped, Cassandra creates a <code>dropped-*</code> auto-snapshot for <strong>every table</strong> in the keyspace. Each table's snapshot is stored in that table's own data directory under <code>snapshots/</code>, following the same pattern as <code>DROP TABLE</code>. The keyspace directory and all table directories are retained on disk as long as snapshot files exist within them.</p>
+<h4 id="truncate-snapshot-location-and-directory-behavior">TRUNCATE: Snapshot Location and Directory Behavior<a class="headerlink" href="#truncate-snapshot-location-and-directory-behavior" title="Permanent link">¶</a></h4>
+<p>When a table is truncated, the behavior differs from <code>DROP TABLE</code>:</p>
+<ul>
+<li>The table schema remains intact</li>
+<li>The table's data directory retains the <strong>same UUID</strong></li>
+<li>The auto-snapshot is created in the existing table directory</li>
+<li>All live SSTable files are removed after the snapshot is taken</li>
+</ul>
+<div class="highlight"><pre><span></span><code>/var/lib/cassandra/data/my_keyspace/
+├── users-a1b2c3d4e5f6a7b8c9d0e1f2/           ← Same directory (table still exists)
+│   ├── snapshots/
+│   │   └── truncated-1719849600000-users/      ← Auto-snapshot of truncated data
+│   │       ├── nb-1-big-Data.db
+│   │       └── ...
+│   └── (no live SSTable files until new writes arrive)
+</code></pre></div>
+<p>Unlike <code>DROP TABLE</code>, no new UUID is created because the table schema is not removed—only the data is deleted.</p>
+<h4 id="listing-auto-snapshots">Listing Auto-Snapshots<a class="headerlink" href="#listing-auto-snapshots" title="Permanent link">¶</a></h4>
+<p>Use <code>nodetool listsnapshots</code> to view all snapshots on a node, including auto-snapshots:</p>
+<div class="highlight"><pre><span></span><code>nodetool<span class="w"> </span>listsnapshots
+</code></pre></div>
+<p>Auto-snapshots are identifiable by their naming pattern (<code>dropped-*</code> or <code>truncated-*</code>). You can also list snapshots for a specific keyspace:</p>
+<div class="highlight"><pre><span></span><code>nodetool<span class="w"> </span>listsnapshots<span class="w"> </span>-kt<span class="w"> </span>my_keyspace
+</code></pre></div>
+<h3 id="auto_snapshot_ttl">auto_snapshot_ttl<a class="headerlink" href="#auto_snapshot_ttl" title="Permanent link">¶</a></h3>
+<p><em>Available in Cassandra 4.1+</em></p>
+<p>By default, auto-snapshots remain on disk indefinitely until manually cleared with <code>nodetool clearsnapshot</code>. The <code>auto_snapshot_ttl</code> parameter adds a time-to-live to auto-snapshots, after which they are automatically removed by Cassandra's snapshot cleanup process.</p>
+<div class="highlight"><pre><span></span><code><span class="c1"># cassandra.yaml</span>
+<span class="nt">auto_snapshot_ttl</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">30d</span><span class="w">   </span><span class="c1"># Auto-snapshots expire after 30 days</span>
+</code></pre></div>
+<p>Accepted time units: <code>d</code> (days), <code>h</code> (hours), <code>m</code> (minutes).</p>
+<div class="admonition note">
+<p class="admonition-title">Default Behavior</p>
+<p>When <code>auto_snapshot_ttl</code> is not set or is commented out, auto-snapshots have <strong>no TTL</strong> and persist indefinitely. This can lead to significant disk usage accumulation over time, especially in environments where tables are frequently truncated.</p>
+</div>
+<table>
+<thead>
+<tr>
+<th>Scenario</th>
+<th>Without <code>auto_snapshot_ttl</code></th>
+<th>With <code>auto_snapshot_ttl: 30d</code></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>DROP TABLE</code></td>
+<td>Snapshot persists until manually cleared</td>
+<td>Snapshot automatically cleared after 30 days</td>
+</tr>
+<tr>
+<td><code>TRUNCATE</code> (daily)</td>
+<td>Snapshots accumulate indefinitely</td>
+<td>Each snapshot cleared 30 days after creation</td>
+</tr>
+<tr>
+<td>Disk usage</td>
+<td>Grows unbounded</td>
+<td>Self-managing</td>
+</tr>
+</tbody>
+</table>
 <h3 id="snapshot_before_compaction">snapshot_before_compaction<a class="headerlink" href="#snapshot_before_compaction" title="Permanent link">¶</a></h3>
-<p><strong>Warning:</strong> This setting is for debugging only.</p>
+<div class="admonition warning">
+<p class="admonition-title">Debugging Only</p>
+<p>This setting is intended for debugging only and MUST NOT be left enabled in production.</p>
+</div>
 <p>When enabled, creates a snapshot of SSTables before each compaction. Since compactions run frequently (potentially hundreds per day), this causes unbounded disk usage growth. Only enable temporarily when diagnosing compaction-related data issues.</p>
+<h3 id="snapshot-types-reference">Snapshot Types Reference<a class="headerlink" href="#snapshot-types-reference" title="Permanent link">¶</a></h3>
+<p>Cassandra defines the following <a href="https://github.com/apache/cassandra/blob/trunk/src/java/org/apache/cassandra/service/snapshot/SnapshotType.java">snapshot types</a>, each created under different circumstances:</p>
+<table>
+<thead>
+<tr>
+<th>Type</th>
+<th>Label</th>
+<th>Trigger</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>USER</td>
+<td><code>user</code></td>
+<td>Manual snapshots via <code>nodetool snapshot</code></td>
+</tr>
+<tr>
+<td>TRUNCATE</td>
+<td><code>truncated</code></td>
+<td>Automatic snapshot before <code>TRUNCATE</code> (when <code>auto_snapshot: true</code>)</td>
+</tr>
+<tr>
+<td>DROP</td>
+<td><code>dropped</code></td>
+<td>Automatic snapshot before <code>DROP TABLE</code>/<code>DROP KEYSPACE</code> (when <code>auto_snapshot: true</code>)</td>
+</tr>
+<tr>
+<td>PRE_SCRUB</td>
+<td><code>pre-scrub</code></td>
+<td>Automatic snapshot before <code>nodetool scrub</code> (unless <code>--no-snapshot</code>)</td>
+</tr>
+<tr>
+<td>COMPACT</td>
+<td><code>compact</code></td>
+<td>Snapshot before compaction (when <code>snapshot_before_compaction: true</code>)</td>
+</tr>
+<tr>
+<td>UPGRADE</td>
+<td><code>upgrade</code></td>
+<td>Snapshot during <code>nodetool upgradesstables</code></td>
+</tr>
+<tr>
+<td>REPAIR</td>
+<td><code>repair</code></td>
+<td>Snapshot created during repair operations</td>
+</tr>
+<tr>
+<td>DIAGNOSTICS</td>
+<td><code>diagnostics</code></td>
+<td>Diagnostic data collection snapshots</td>
+</tr>
+<tr>
+<td>MISC</td>
+<td><code>misc</code></td>
+<td>Other/unclassified snapshots</td>
+</tr>
+</tbody>
+</table>
 <hr>
 <h2 id="incremental-backups">Incremental Backups<a class="headerlink" href="#incremental-backups" title="Permanent link">¶</a></h2>
 <p>Incremental backups automatically hard-link each new SSTable to a <code>backups/</code> directory.</p>

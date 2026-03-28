@@ -22437,7 +22437,8 @@ data-et-multi-view="{&quot;schema&quot;:{&quot;content&quot;:{&quot;desktop&quot
 <div class="highlight"><pre><span></span><code><span class="c1"># cassandra.yaml</span>
 <span class="nt">auto_snapshot</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">true</span><span class="w">  </span><span class="c1"># Default: true</span>
 </code></pre></div>
-<p>Automatic snapshots are stored in <code>&lt;data_directory&gt;/&lt;keyspace&gt;/&lt;table&gt;/snapshots/dropped-&lt;timestamp&gt;/</code>. To create a manual snapshot before dropping:</p>
+<p>Automatic snapshots are stored in <code>&lt;data_directory&gt;/&lt;keyspace&gt;/&lt;table_name&gt;-&lt;table_uuid&gt;/snapshots/dropped-&lt;epoch_millis&gt;-&lt;table_name&gt;/</code>. The old table directory (with its UUID) is retained on disk to preserve the snapshot, even after the table is dropped. See <a href="../../../operations/backup-restore/backup/#auto_snapshot">Automatic Snapshot Configuration</a> for details.</p>
+<p>To create a manual snapshot before dropping:</p>
 <div class="highlight"><pre><span></span><code>nodetool<span class="w"> </span>snapshot<span class="w"> </span>-t<span class="w"> </span>backup<span class="w"> </span>keyspace_name<span class="w"> </span>table_name
 </code></pre></div>
 </div>
