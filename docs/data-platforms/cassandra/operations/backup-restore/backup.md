@@ -175,27 +175,196 @@ Each snapshot directory contains all SSTable components:
 
 Cassandra provides automatic snapshot options in `cassandra.yaml`:
 
-| Parameter | Default | Description |
-|-----------|---------|-------------|
-| `auto_snapshot` | true | Create snapshot before DROP KEYSPACE/TABLE |
-| `snapshot_before_compaction` | false | Create snapshot before each compaction |
+| Parameter | Default | Versions | Description |
+|-----------|---------|----------|-------------|
+| `auto_snapshot` | `true` | All | Create snapshot before `DROP TABLE`, `DROP KEYSPACE`, and `TRUNCATE` |
+| `auto_snapshot_ttl` | (none) | 4.1+ | TTL for auto-snapshots; after expiry, snapshots are automatically cleared |
+| `snapshot_before_compaction` | `false` | All | Create snapshot before each compaction |
 
 ### auto_snapshot
 
-When enabled, Cassandra automatically creates a snapshot before `DROP TABLE` or `DROP KEYSPACE` operations. This provides a safety net against accidental schema drops.
+When `auto_snapshot` is enabled (the default), Cassandra automatically creates a snapshot of the table's data **before** executing destructive schema or data operations. This acts as a safety net, preserving a point-in-time copy of the data on disk.
 
-The automatic snapshot is stored at:
-```
-/var/lib/cassandra/data/<keyspace>/<table-uuid>/snapshots/dropped-<timestamp>-<table>/
+Auto-snapshots are triggered by the following operations:
+
+| Operation | Snapshot Label | Description |
+|-----------|---------------|-------------|
+| `DROP TABLE` | `dropped` | Snapshot taken before the table and its data are removed |
+| `DROP KEYSPACE` | `dropped` | Snapshot taken for **every table** in the keyspace before removal |
+| `TRUNCATE` | `truncated` | Snapshot taken before all data in the table is deleted |
+
+The `auto_snapshot` setting is configured in `cassandra.yaml`:
+
+```yaml
+# cassandra.yaml
+# STRONGLY RECOMMENDED to keep this enabled (default: true)
+auto_snapshot: true
 ```
 
-These auto-snapshots must still be cleared manually to reclaim space.
+!!! warning "Data Safety"
+    Setting `auto_snapshot: false` means `DROP TABLE`, `DROP KEYSPACE`, and `TRUNCATE` operations will **permanently destroy data** with no automatic recovery path. You SHOULD keep this enabled unless you have a robust external backup strategy in place.
+
+#### Snapshot Directory Naming
+
+When an auto-snapshot is created, Cassandra writes the snapshot into a directory named with the operation label, an epoch millisecond timestamp, and the table name:
+
+```
+<label>-<epoch_millis>-<table_name>
+```
+
+| Operation | Example Snapshot Directory Name |
+|-----------|---------------------------------|
+| `DROP TABLE users` | `dropped-1719849600000-users` |
+| `TRUNCATE users` | `truncated-1719849600000-users` |
+
+The epoch millisecond timestamp records exactly when the snapshot was taken. You can convert it to a human-readable date for identification (e.g., `1719849600000` → `2024-07-01T16:00:00Z`).
+
+#### Where Auto-Snapshots Are Stored
+
+Auto-snapshot files are stored within the table's existing data directory, inside a `snapshots/` subdirectory. The full path is:
+
+```
+<data_directory>/<keyspace>/<table_name>-<table_uuid>/snapshots/<snapshot_name>/
+```
+
+For a default Cassandra installation:
+
+```
+/var/lib/cassandra/data/<keyspace>/<table_name>-<table_uuid>/snapshots/<snapshot_name>/
+```
+
+#### Understanding the Table UUID
+
+Each table's data directory includes a UUID suffix that uniquely identifies the table:
+
+```
+/var/lib/cassandra/data/my_keyspace/users-a1b2c3d4e5f6a7b8c9d0e1f2/
+```
+
+This UUID is assigned when the table is created and is recorded in `system_schema.tables`. The UUID ensures that if a table is dropped and recreated with the same name, the old and new table data directories do not collide.
+
+#### DROP TABLE: Snapshot Location and Directory Behavior
+
+When a table is dropped with `auto_snapshot` enabled, the following happens:
+
+1. Cassandra flushes any in-memory data (memtables) to disk
+2. Cassandra creates a snapshot of all SSTables in the table's data directory
+3. The table's live SSTable files are removed
+4. The table directory **remains on disk** because it still contains the snapshot subdirectory
+
+```
+/var/lib/cassandra/data/my_keyspace/
+├── users-a1b2c3d4e5f6a7b8c9d0e1f2/           ← OLD table directory (retained)
+│   ├── snapshots/
+│   │   └── dropped-1719849600000-users/        ← Auto-snapshot of dropped table
+│   │       ├── nb-1-big-Data.db
+│   │       ├── nb-1-big-Index.db
+│   │       ├── nb-1-big-Filter.db
+│   │       ├── nb-1-big-Statistics.db
+│   │       ├── nb-1-big-CompressionInfo.db
+│   │       ├── nb-1-big-TOC.txt
+│   │       └── manifest.json
+│   └── (no live SSTable files remain)
+```
+
+If you subsequently recreate the table with `CREATE TABLE my_keyspace.users (...)`, Cassandra creates a **new** data directory with a **new** UUID:
+
+```
+/var/lib/cassandra/data/my_keyspace/
+├── users-a1b2c3d4e5f6a7b8c9d0e1f2/           ← OLD directory (contains snapshot)
+│   └── snapshots/
+│       └── dropped-1719849600000-users/
+│           └── ... (snapshot files)
+├── users-f1e2d3c4b5a6f7e8d9c0b1a2/           ← NEW directory (new table)
+│   └── (empty, or new data as writes arrive)
+```
+
+!!! tip "Key Point"
+    After dropping and recreating a table, the auto-snapshot of the dropped table is in the **old** table directory (with the old UUID), **not** in the new table directory. If you need to find snapshots of a dropped table, look for directories that contain a `snapshots/` subdirectory with a `dropped-*` snapshot name.
+
+#### DROP KEYSPACE: Snapshot Location
+
+When a keyspace is dropped, Cassandra creates a `dropped-*` auto-snapshot for **every table** in the keyspace. Each table's snapshot is stored in that table's own data directory under `snapshots/`, following the same pattern as `DROP TABLE`. The keyspace directory and all table directories are retained on disk as long as snapshot files exist within them.
+
+#### TRUNCATE: Snapshot Location and Directory Behavior
+
+When a table is truncated, the behavior differs from `DROP TABLE`:
+
+- The table schema remains intact
+- The table's data directory retains the **same UUID**
+- The auto-snapshot is created in the existing table directory
+- All live SSTable files are removed after the snapshot is taken
+
+```
+/var/lib/cassandra/data/my_keyspace/
+├── users-a1b2c3d4e5f6a7b8c9d0e1f2/           ← Same directory (table still exists)
+│   ├── snapshots/
+│   │   └── truncated-1719849600000-users/      ← Auto-snapshot of truncated data
+│   │       ├── nb-1-big-Data.db
+│   │       └── ...
+│   └── (no live SSTable files until new writes arrive)
+```
+
+Unlike `DROP TABLE`, no new UUID is created because the table schema is not removed—only the data is deleted.
+
+#### Listing Auto-Snapshots
+
+Use `nodetool listsnapshots` to view all snapshots on a node, including auto-snapshots:
+
+```bash
+nodetool listsnapshots
+```
+
+Auto-snapshots are identifiable by their naming pattern (`dropped-*` or `truncated-*`). You can also list snapshots for a specific keyspace:
+
+```bash
+nodetool listsnapshots -kt my_keyspace
+```
+
+### auto_snapshot_ttl
+
+*Available in Cassandra 4.1+*
+
+By default, auto-snapshots remain on disk indefinitely until manually cleared with `nodetool clearsnapshot`. The `auto_snapshot_ttl` parameter adds a time-to-live to auto-snapshots, after which they are automatically removed by Cassandra's snapshot cleanup process.
+
+```yaml
+# cassandra.yaml
+auto_snapshot_ttl: 30d   # Auto-snapshots expire after 30 days
+```
+
+Accepted time units: `d` (days), `h` (hours), `m` (minutes).
+
+!!! note "Default Behavior"
+    When `auto_snapshot_ttl` is not set or is commented out, auto-snapshots have **no TTL** and persist indefinitely. This can lead to significant disk usage accumulation over time, especially in environments where tables are frequently truncated.
+
+| Scenario | Without `auto_snapshot_ttl` | With `auto_snapshot_ttl: 30d` |
+|----------|---------------------------|-------------------------------|
+| `DROP TABLE` | Snapshot persists until manually cleared | Snapshot automatically cleared after 30 days |
+| `TRUNCATE` (daily) | Snapshots accumulate indefinitely | Each snapshot cleared 30 days after creation |
+| Disk usage | Grows unbounded | Self-managing |
 
 ### snapshot_before_compaction
 
-**Warning:** This setting is for debugging only.
+!!! warning "Debugging Only"
+    This setting is intended for debugging only and MUST NOT be left enabled in production.
 
 When enabled, creates a snapshot of SSTables before each compaction. Since compactions run frequently (potentially hundreds per day), this causes unbounded disk usage growth. Only enable temporarily when diagnosing compaction-related data issues.
+
+### Snapshot Types Reference
+
+Cassandra defines the following [snapshot types](https://github.com/apache/cassandra/blob/trunk/src/java/org/apache/cassandra/service/snapshot/SnapshotType.java), each created under different circumstances:
+
+| Type | Label | Trigger |
+|------|-------|---------|
+| USER | `user` | Manual snapshots via `nodetool snapshot` |
+| TRUNCATE | `truncated` | Automatic snapshot before `TRUNCATE` (when `auto_snapshot: true`) |
+| DROP | `dropped` | Automatic snapshot before `DROP TABLE`/`DROP KEYSPACE` (when `auto_snapshot: true`) |
+| PRE_SCRUB | `pre-scrub` | Automatic snapshot before `nodetool scrub` (unless `--no-snapshot`) |
+| COMPACT | `compact` | Snapshot before compaction (when `snapshot_before_compaction: true`) |
+| UPGRADE | `upgrade` | Snapshot during `nodetool upgradesstables` |
+| REPAIR | `repair` | Snapshot created during repair operations |
+| DIAGNOSTICS | `diagnostics` | Diagnostic data collection snapshots |
+| MISC | `misc` | Other/unclassified snapshots |
 
 ---
 

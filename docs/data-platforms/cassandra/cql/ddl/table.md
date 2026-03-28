@@ -874,7 +874,9 @@ DROP TABLE [ IF EXISTS ] [ *keyspace_name*. ] *table_name*
     auto_snapshot: true  # Default: true
     ```
 
-    Automatic snapshots are stored in `<data_directory>/<keyspace>/<table>/snapshots/dropped-<timestamp>/`. To create a manual snapshot before dropping:
+    Automatic snapshots are stored in `<data_directory>/<keyspace>/<table_name>-<table_uuid>/snapshots/dropped-<epoch_millis>-<table_name>/`. The old table directory (with its UUID) is retained on disk to preserve the snapshot, even after the table is dropped. See [Automatic Snapshot Configuration](../../operations/backup-restore/backup.md#auto_snapshot) for details.
+
+    To create a manual snapshot before dropping:
 
     ```bash
     nodetool snapshot -t backup keyspace_name table_name

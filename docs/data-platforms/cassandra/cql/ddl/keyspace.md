@@ -409,7 +409,7 @@ DROP KEYSPACE [ IF EXISTS ] *keyspace_name*
     auto_snapshot: true  # Default: true
     ```
 
-    Automatic snapshots are stored in `<data_directory>/<keyspace>/<table>/snapshots/`. These can be used to restore data if needed, but should not be relied upon without verification—always confirm `auto_snapshot` is enabled in the cluster configuration.
+    Automatic snapshots are stored in `<data_directory>/<keyspace>/<table_name>-<table_uuid>/snapshots/dropped-<epoch_millis>-<table_name>/` for each table in the keyspace. The keyspace and table directories are retained on disk to preserve the snapshots. See [Automatic Snapshot Configuration](../../operations/backup-restore/backup.md#auto_snapshot) for details. These SHOULD NOT be relied upon without verification—always confirm `auto_snapshot` is enabled in the cluster configuration.
 
 ### Parameters
 
