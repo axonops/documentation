@@ -3,7 +3,7 @@ title: "Cassandra Repair Operations Guide"
 description: "Cassandra repair overview. Keep data consistent across replicas."
 meta:
   - name: keywords
-    content: "Cassandra repair, data consistency, repair operations"
+    content: "Cassandra repair, Apache Cassanra repair, How to repair Cassandra, Cassandra repair guide, data consistency, repair operations, Cassandra Merkle Tree, Cassandra anti-entropy"
 ---
 
 # Repair Operations Guide
