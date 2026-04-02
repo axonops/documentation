@@ -1,11 +1,21 @@
 ---
-title: "Release 2026-03-10"
+title: "Release 2026-03-17"
 description: "AxonOps release notes. Latest features, improvements, and bug fixes."
 meta:
   - name: keywords
     content: "release notes, AxonOps updates, changelog, new features"
 ---
 
+
+## Release 2026-03-17
+
+* axon-kafka3-agent: 1.0.3
+* axon-kafka4-agent: 1.0.1
+    * Thread management fix for Netty.
+
+### Fixes
+
+* [Kafka Agent] Add thread limit to Netty to prevent thread leak scenarios.
 
 ## Release 2026-03-10
 
