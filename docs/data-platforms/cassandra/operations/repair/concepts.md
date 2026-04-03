@@ -702,7 +702,12 @@ Paxos repairs maintain LWT **linearizability** and correctness, especially acros
 
 Paxos repairs are only relevant for **keyspaces that use LWTs**. For keyspaces that never use LWTs, Paxos state does not affect correctness, and operators **MAY** safely skip Paxos repairs for those keyspaces.
 
-In Cassandra 4.1+, Paxos repairs run automatically every 5 minutes by default. Operators **SHOULD** ensure Paxos repairs run regularly on clusters where LWTs are in use. See [Paxos Repairs](strategies.md#paxos-repairs) in the Repair Strategies guide for operational details.
+Cassandra 4.1+ provides two distinct Paxos repair mechanisms:
+
+1. **Background Paxos repair** — runs automatically every 5 minutes (configurable). Completes uncommitted Paxos transactions but does **NOT** advance the Paxos repair low bound or enable garbage collection of `system.paxos` data.
+2. **Coordinated Paxos repair** — runs via `nodetool repair --paxos-only` or as part of regular `nodetool repair`. Completes uncommitted transactions **AND** advances the low bound in `system.paxos_repair_history`, enabling garbage collection when using `paxos_state_purging: repaired`.
+
+For clusters using `paxos_state_purging: repaired`, operators **MUST** run regular coordinated Paxos repairs. The automatic background repair alone is not sufficient. See [Understanding the Two Paxos Repair Mechanisms](strategies.md#understanding-the-two-paxos-repair-mechanisms) in the Repair Strategies guide for the full distinction.
 
 ### Paxos Repairs and Topology Changes
 
@@ -760,9 +765,11 @@ Cassandra 4.1+ introduces **Paxos v2**, an updated Paxos implementation for ligh
 
 Paxos v2 is selected via the `paxos_variant` setting in `cassandra.yaml` (values: `v1` or `v2`).
 
-To safely take full advantage of Paxos v2, operators **MUST** ensure:
+`paxos_variant` and `paxos_state_purging` are **independent settings** — neither requires the other. However, the recommended production configuration for LWT-heavy clusters is `paxos_variant: v2` combined with `paxos_state_purging: repaired`, which together enable the [commit consistency optimization](../../architecture/distributed-data/paxos.md#commit-consistency-optimization).
 
-1. **Regular Paxos repairs** are running on all nodes
+To safely take full advantage of Paxos v2 with `repaired` purging, operators **MUST** ensure:
+
+1. **Regular coordinated Paxos repairs** are running (via `nodetool repair --paxos-only` schedule or regular `nodetool repair`)
 2. **Paxos state purging** is configured appropriately (see [Paxos-related cassandra.yaml configuration](strategies.md#paxos-related-cassandrayaml-configuration) in the Repair Strategies guide)
 
 Detailed configuration options and upgrade guidance are covered in the [Repair Strategies](strategies.md) documentation.

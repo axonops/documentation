@@ -642,27 +642,24 @@ nodetool repair --paxos-only my_keyspace
 
 **How it works:**
 
-Paxos repairs synchronize the Paxos commit log entries stored in `system.paxos` across replicas. This ensures that all nodes agree on the outcome of previous LWT operations, which is essential for maintaining linearizability guarantees.
+This command runs a **coordinated Paxos repair** that synchronizes Paxos state stored in `system.paxos` across replicas. Unlike the [automatic background Paxos repair](strategies.md#background-paxos-repair-automatic) (which only completes uncommitted transactions), `--paxos-only` also advances the **Paxos repair low bound** by writing to `system.paxos_repair_history`. This low bound is what enables garbage collection of old `system.paxos` data when using `paxos_state_purging: repaired`.
 
 **When to use:**
 
-- **Pre-4.1 clusters**: Operators **MUST** schedule `--paxos-only` repairs manually (typically hourly) since automatic Paxos repairs are not available
-- **Before topology changes**: Run on all nodes before bootstrap, decommission, replace, or move operations to reduce the risk of Paxos cleanup timeouts
-- **After disabling automatic Paxos repairs**: If `paxos_repair_enabled` is set to `false`, manual Paxos repairs **MUST** be scheduled regularly for clusters using LWTs
-- **Troubleshooting LWT issues**: When LWTs are timing out or behaving unexpectedly
+- **Clusters using `paxos_state_purging: repaired`**: Operators **MUST** run `--paxos-only` repairs regularly (typically hourly) or ensure regular full repairs include the Paxos step. The automatic background repair does **NOT** advance the low bound, so without coordinated repairs, `system.paxos` grows unboundedly.
+- **Pre-4.1 clusters**: Operators **MUST** schedule `--paxos-only` repairs manually since the automatic background repair is not available.
+- **Before topology changes**: Run on all nodes before bootstrap, decommission, replace, or move operations to reduce the risk of Paxos cleanup timeouts.
+- **After disabling automatic Paxos repairs**: If `paxos_repair_enabled` is set to `false`, coordinated Paxos repairs **SHOULD** be scheduled regularly for clusters using LWTs.
+- **Troubleshooting LWT issues**: When LWTs are timing out or behaving unexpectedly.
 
-**Automatic Paxos repairs (Cassandra 4.1+):**
+**Relationship to automatic background Paxos repair (Cassandra 4.1+):**
 
-In Cassandra 4.1 and later, Paxos repairs run automatically every 5 minutes by default when `paxos_repair_enabled` is `true`. Manual `--paxos-only` repairs are typically only needed for:
-
-- Pre-4.1 clusters
-- Clusters where automatic Paxos repairs have been disabled
-- Proactive cleanup before topology changes
+Cassandra 4.1+ includes an automatic background Paxos repair that runs every 5 minutes (controlled by `paxos_repair_enabled`). This background repair completes uncommitted transactions but does **NOT** replace the need for coordinated `--paxos-only` repairs. See [Understanding the Two Paxos Repair Mechanisms](strategies.md#understanding-the-two-paxos-repair-mechanisms) for the full distinction.
 
 **Operational guidance:**
 
 - Running without a keyspace argument repairs Paxos state for **all keyspaces**. This is often **RECOMMENDED** because operators frequently do not know which keyspaces developers are using for LWTs.
-- Paxos repairs are lightweight compared to full data repairs and complete quickly
+- Paxos repairs are lightweight compared to full data repairs and complete quickly.
 
 For more details on Paxos repair strategy and configuration, see [Paxos Repairs](strategies.md#paxos-repairs) in the Repair Strategies guide.
 
