@@ -5834,6 +5834,24 @@ data-et-multi-view="{&quot;schema&quot;:{&quot;content&quot;:{&quot;desktop&quot
 </li>
         
           <li class="md-nav__item">
+  <a href="#paxos-state-purging" class="md-nav__link">
+    <span class="md-ellipsis">
+      Paxos State Purging
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#commit-consistency-optimization" class="md-nav__link">
+    <span class="md-ellipsis">
+      Commit Consistency Optimization
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
   <a href="#upgrade-considerations" class="md-nav__link">
     <span class="md-ellipsis">
       Upgrade Considerations
@@ -20485,6 +20503,24 @@ data-et-multi-view="{&quot;schema&quot;:{&quot;content&quot;:{&quot;desktop&quot
 </li>
         
           <li class="md-nav__item">
+  <a href="#paxos-state-purging" class="md-nav__link">
+    <span class="md-ellipsis">
+      Paxos State Purging
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#commit-consistency-optimization" class="md-nav__link">
+    <span class="md-ellipsis">
+      Commit Consistency Optimization
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
   <a href="#upgrade-considerations" class="md-nav__link">
     <span class="md-ellipsis">
       Upgrade Considerations
@@ -20986,7 +21022,69 @@ Result: balance = 120 (Client A's update lost!)
 <span class="c1"># Configure state purging (recommended with v2)</span>
 <span class="nt">paxos_state_purging</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">repaired</span>
 </code></pre></div>
+<div class="admonition note">
+<p class="admonition-title"><code>paxos_variant</code> and <code>paxos_state_purging</code> Are Independent</p>
+<p>These two settings do not depend on each other. You can enable Paxos v2 without changing <code>paxos_state_purging</code>, or set <code>paxos_state_purging: repaired</code> with Paxos v1. However, the recommended production configuration for LWT-heavy clusters is <code>v2</code> + <code>repaired</code>, which together enable the <a href="#commit-consistency-optimization">commit consistency optimization</a> below.</p>
+</div>
 <p>For detailed configuration options, see <a href="../../../operations/repair/strategies/#paxos-related-cassandrayaml-configuration">Paxos-Related cassandra.yaml Configuration</a>.</p>
+<h3 id="paxos-state-purging">Paxos State Purging<a class="headerlink" href="#paxos-state-purging" title="Permanent link">¶</a></h3>
+<p>The <code>paxos_state_purging</code> setting controls how old entries in the <code>system.paxos</code> table are cleaned up:</p>
+<table>
+<thead>
+<tr>
+<th>Value</th>
+<th>Mechanism</th>
+<th>Safe with Commit CL=ANY</th>
+<th>Revert Path</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>legacy</code></td>
+<td>TTL-based expiration</td>
+<td><strong>No</strong> — committed values may expire before propagation</td>
+<td>N/A (default)</td>
+</tr>
+<tr>
+<td><code>gc_grace</code></td>
+<td>Compaction-time expiry based on <code>gc_grace_seconds</code>, no TTLs</td>
+<td><strong>No</strong></td>
+<td>Safe fallback from <code>repaired</code></td>
+</tr>
+<tr>
+<td><code>repaired</code></td>
+<td>Purged only after Paxos repair low bound confirms quorum persistence</td>
+<td><strong>Yes</strong></td>
+<td><strong>MUST</strong> revert to <code>gc_grace</code>, <strong>NOT</strong> <code>legacy</code></td>
+</tr>
+</tbody>
+</table>
+<p>With <code>repaired</code>, Cassandra uses the low bound recorded in <code>system.paxos_repair_history</code> to determine which <code>system.paxos</code> entries can be safely purged during compaction. This low bound is only advanced by <strong>coordinated Paxos repairs</strong> (<code>nodetool repair --paxos-only</code> or regular <code>nodetool repair</code>), not by the automatic background Paxos repair. See <a href="../../../operations/repair/strategies/#understanding-the-two-paxos-repair-mechanisms">Understanding the Two Paxos Repair Mechanisms</a> for the full distinction.</p>
+<h3 id="commit-consistency-optimization">Commit Consistency Optimization<a class="headerlink" href="#commit-consistency-optimization" title="Permanent link">¶</a></h3>
+<p>LWT operations in Cassandra use two consistency levels:</p>
+<ul>
+<li><strong>Serial consistency level</strong> (<code>SERIAL</code> or <code>LOCAL_SERIAL</code>): Controls the Paxos consensus phase — how many replicas must participate in the prepare/propose/accept rounds.</li>
+<li><strong>Commit (non-serial) consistency level</strong>: Controls the final commit phase — how many replicas must acknowledge that the committed value has been written to the base table.</li>
+</ul>
+<p>These are configured separately in application code. For example, a query might use <code>LOCAL_SERIAL</code> for consensus and <code>LOCAL_QUORUM</code> for the commit.</p>
+<p>With Paxos v2 and <code>paxos_state_purging: repaired</code>, the commit consistency level can be safely set to <code>ANY</code>. This eliminates a WAN round-trip because the coordinator does not need to wait for a quorum acknowledgment of the commit — the Paxos repair mechanism guarantees that committed values will eventually be propagated.</p>
+<p><strong>Prerequisites for commit CL=ANY:</strong></p>
+<ol>
+<li><code>paxos_variant: v2</code> set consistently across <strong>all nodes</strong></li>
+<li><code>paxos_state_purging: repaired</code> set consistently across <strong>all nodes</strong></li>
+<li>Regular coordinated Paxos repairs running (<code>nodetool repair --paxos-only</code> or regular <code>nodetool repair</code>)</li>
+</ol>
+<p><strong>Example driver configuration (Java):</strong></p>
+<div class="highlight"><pre><span></span><code><span class="c1">// Serial consistency controls the Paxos consensus phase</span>
+<span class="n">statement</span><span class="p">.</span><span class="na">setSerialConsistencyLevel</span><span class="p">(</span><span class="n">ConsistencyLevel</span><span class="p">.</span><span class="na">LOCAL_SERIAL</span><span class="p">);</span>
+
+<span class="c1">// Commit consistency controls the final write — can be ANY with v2 + repaired</span>
+<span class="n">statement</span><span class="p">.</span><span class="na">setConsistencyLevel</span><span class="p">(</span><span class="n">ConsistencyLevel</span><span class="p">.</span><span class="na">ANY</span><span class="p">);</span>
+</code></pre></div>
+<div class="admonition warning">
+<p class="admonition-title">Reverting Commit CL</p>
+<p>If <code>paxos_state_purging</code> must be changed from <code>repaired</code> to <code>gc_grace</code> (for example, because coordinated Paxos repairs must be disabled for an extended period), applications <strong>MUST</strong> change their commit consistency level back from <code>ANY</code> to <code>QUORUM</code> or <code>LOCAL_QUORUM</code> to maintain correctness.</p>
+</div>
 <h3 id="upgrade-considerations">Upgrade Considerations<a class="headerlink" href="#upgrade-considerations" title="Permanent link">¶</a></h3>
 <ul>
 <li>Clusters with heavy LWT usage <strong>SHOULD</strong> upgrade to Paxos v2</li>
@@ -21025,16 +21123,28 @@ Result: balance = 120 (Client A's update lost!)
 <td>Entries in <code>system.paxos</code> table tracking proposals and accepted values</td>
 </tr>
 <tr>
-<td><strong>Paxos repair</strong></td>
-<td>Process of reconciling Paxos state across replicas</td>
+<td><strong>Background Paxos repair</strong></td>
+<td>Automatic process (every 5 min in 4.1+) that completes uncommitted Paxos transactions. Does not advance the repair low bound.</td>
+</tr>
+<tr>
+<td><strong>Coordinated Paxos repair</strong></td>
+<td><code>nodetool repair --paxos-only</code> or the Paxos step in regular <code>nodetool repair</code>. Completes uncommitted transactions AND advances the low bound in <code>system.paxos_repair_history</code>, enabling <code>system.paxos</code> garbage collection.</td>
+</tr>
+<tr>
+<td><strong>Paxos repair low bound</strong></td>
+<td>Ballot recorded in <code>system.paxos_repair_history</code> indicating the point up to which Paxos state has been safely reconciled. Used by <code>paxos_state_purging: repaired</code> to determine what can be garbage collected.</td>
+</tr>
+<tr>
+<td><strong>Serial consistency</strong></td>
+<td>Consistency level (<code>SERIAL</code> or <code>LOCAL_SERIAL</code>) controlling the Paxos consensus phase</td>
+</tr>
+<tr>
+<td><strong>Commit consistency</strong></td>
+<td>Non-serial consistency level controlling the final commit write. Can be set to <code>ANY</code> with Paxos v2 + <code>repaired</code> purging.</td>
 </tr>
 <tr>
 <td><strong>LWT</strong></td>
 <td>Lightweight Transaction—Cassandra's conditional atomic operations using Paxos</td>
-</tr>
-<tr>
-<td><strong>SERIAL</strong></td>
-<td>Consistency level that uses Paxos for linearizable operations</td>
 </tr>
 </tbody>
 </table>
@@ -21058,9 +21168,9 @@ Result: balance = 120 (Client A's update lost!)
 </ul>
 <h3 id="operational-requirements">Operational Requirements<a class="headerlink" href="#operational-requirements" title="Permanent link">¶</a></h3>
 <ul>
-<li><strong>Paxos state accumulates</strong>: Without regular Paxos repairs, <code>system.paxos</code> grows unboundedly</li>
+<li><strong>Paxos state accumulates</strong>: Without regular <strong>coordinated</strong> Paxos repairs (<code>nodetool repair --paxos-only</code> or regular <code>nodetool repair</code>), <code>system.paxos</code> grows unboundedly when using <code>paxos_state_purging: repaired</code>. The automatic background Paxos repair does not advance the low bound needed for garbage collection.</li>
 <li><strong>Topology changes</strong>: Paxos repairs <strong>MUST</strong> complete before topology changes (bootstrap, decommission)</li>
-<li><strong>Repair requirements</strong>: Clusters using LWTs <strong>MUST</strong> run regular Paxos repairs</li>
+<li><strong>Repair requirements</strong>: Clusters using LWTs with <code>paxos_state_purging: repaired</code> <strong>MUST</strong> run regular coordinated Paxos repairs</li>
 </ul>
 <p>For operational guidance, see <a href="../../../operations/repair/strategies/#paxos-repairs">Paxos Repairs</a>.</p>
 <hr>

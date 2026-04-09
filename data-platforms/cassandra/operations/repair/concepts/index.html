@@ -20832,7 +20832,12 @@ data-et-multi-view="{&quot;schema&quot;:{&quot;content&quot;:{&quot;desktop&quot
 <p>Paxos repairs maintain LWT <strong>linearizability</strong> and correctness, especially across <strong>topology changes</strong> such as bootstrap, decommission, replace, and move operations.</p>
 <h3 id="when-paxos-repairs-are-required">When Paxos Repairs Are Required<a class="headerlink" href="#when-paxos-repairs-are-required" title="Permanent link">¶</a></h3>
 <p>Paxos repairs are only relevant for <strong>keyspaces that use LWTs</strong>. For keyspaces that never use LWTs, Paxos state does not affect correctness, and operators <strong>MAY</strong> safely skip Paxos repairs for those keyspaces.</p>
-<p>In Cassandra 4.1+, Paxos repairs run automatically every 5 minutes by default. Operators <strong>SHOULD</strong> ensure Paxos repairs run regularly on clusters where LWTs are in use. See <a href="../strategies/#paxos-repairs">Paxos Repairs</a> in the Repair Strategies guide for operational details.</p>
+<p>Cassandra 4.1+ provides two distinct Paxos repair mechanisms:</p>
+<ol>
+<li><strong>Background Paxos repair</strong> — runs automatically every 5 minutes (configurable). Completes uncommitted Paxos transactions but does <strong>NOT</strong> advance the Paxos repair low bound or enable garbage collection of <code>system.paxos</code> data.</li>
+<li><strong>Coordinated Paxos repair</strong> — runs via <code>nodetool repair --paxos-only</code> or as part of regular <code>nodetool repair</code>. Completes uncommitted transactions <strong>AND</strong> advances the low bound in <code>system.paxos_repair_history</code>, enabling garbage collection when using <code>paxos_state_purging: repaired</code>.</li>
+</ol>
+<p>For clusters using <code>paxos_state_purging: repaired</code>, operators <strong>MUST</strong> run regular coordinated Paxos repairs. The automatic background repair alone is not sufficient. See <a href="../strategies/#understanding-the-two-paxos-repair-mechanisms">Understanding the Two Paxos Repair Mechanisms</a> in the Repair Strategies guide for the full distinction.</p>
 <h3 id="paxos-repairs-and-topology-changes">Paxos Repairs and Topology Changes<a class="headerlink" href="#paxos-repairs-and-topology-changes" title="Permanent link">¶</a></h3>
 <p>In Cassandra 4.1 and later, a <strong>Paxos repair gate</strong> runs before certain topology changes complete (for example, node bootstrap). This gate ensures that Paxos state is consistent across all replicas for the affected token ranges before the topology change finalizes.</p>
 <p>If Paxos repair cannot complete for the affected ranges and keyspaces—for example, because nodes are overloaded, have very large partitions, or some replicas are unavailable—the topology change <strong>MUST</strong> fail to avoid violating LWT correctness guarantees.</p>
@@ -20846,9 +20851,10 @@ data-et-multi-view="{&quot;schema&quot;:{&quot;content&quot;:{&quot;desktop&quot
 <li><strong>Works in conjunction with regular Paxos repairs</strong> and Paxos state purging</li>
 </ul>
 <p>Paxos v2 is selected via the <code>paxos_variant</code> setting in <code>cassandra.yaml</code> (values: <code>v1</code> or <code>v2</code>).</p>
-<p>To safely take full advantage of Paxos v2, operators <strong>MUST</strong> ensure:</p>
+<p><code>paxos_variant</code> and <code>paxos_state_purging</code> are <strong>independent settings</strong> — neither requires the other. However, the recommended production configuration for LWT-heavy clusters is <code>paxos_variant: v2</code> combined with <code>paxos_state_purging: repaired</code>, which together enable the <a href="../../../architecture/distributed-data/paxos/#commit-consistency-optimization">commit consistency optimization</a>.</p>
+<p>To safely take full advantage of Paxos v2 with <code>repaired</code> purging, operators <strong>MUST</strong> ensure:</p>
 <ol>
-<li><strong>Regular Paxos repairs</strong> are running on all nodes</li>
+<li><strong>Regular coordinated Paxos repairs</strong> are running (via <code>nodetool repair --paxos-only</code> schedule or regular <code>nodetool repair</code>)</li>
 <li><strong>Paxos state purging</strong> is configured appropriately (see <a href="../strategies/#paxos-related-cassandrayaml-configuration">Paxos-related cassandra.yaml configuration</a> in the Repair Strategies guide)</li>
 </ol>
 <p>Detailed configuration options and upgrade guidance are covered in the <a href="../strategies/">Repair Strategies</a> documentation.</p>
