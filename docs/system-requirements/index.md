@@ -8,7 +8,7 @@ meta:
 
 # System requirements
 
-Minimum system requirements for installing AxonOps Server and AxonOps Dashboard on a self-hosted server to monitor and manage the 6 nodes that are part of the [Starter Tier](https://axonops.com/pricing/){target="_blank"}.
+Minimum system requirements for installing AxonOps Server and AxonOps Dashboard on a self-hosted server to monitor and manage the 3 nodes that are part of the [Starter Tier](https://axonops.com/pricing/){target="_blank"}.
 
 This is not a system requirements spec for Cassandra nodes where the AxonOps Agent is installed.
 
