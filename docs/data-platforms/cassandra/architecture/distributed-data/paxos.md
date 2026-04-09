@@ -356,7 +356,52 @@ paxos_variant: v2
 paxos_state_purging: repaired
 ```
 
+!!! note "`paxos_variant` and `paxos_state_purging` Are Independent"
+    These two settings do not depend on each other. You can enable Paxos v2 without changing `paxos_state_purging`, or set `paxos_state_purging: repaired` with Paxos v1. However, the recommended production configuration for LWT-heavy clusters is `v2` + `repaired`, which together enable the [commit consistency optimization](#commit-consistency-optimization) below.
+
 For detailed configuration options, see [Paxos-Related cassandra.yaml Configuration](../../operations/repair/strategies.md#paxos-related-cassandrayaml-configuration).
+
+### Paxos State Purging
+
+The `paxos_state_purging` setting controls how old entries in the `system.paxos` table are cleaned up:
+
+| Value | Mechanism | Safe with Commit CL=ANY | Revert Path |
+|-------|-----------|------------------------|-------------|
+| `legacy` | TTL-based expiration | **No** — committed values may expire before propagation | N/A (default) |
+| `gc_grace` | Compaction-time expiry based on `gc_grace_seconds`, no TTLs | **No** | Safe fallback from `repaired` |
+| `repaired` | Purged only after Paxos repair low bound confirms quorum persistence | **Yes** | **MUST** revert to `gc_grace`, **NOT** `legacy` |
+
+With `repaired`, Cassandra uses the low bound recorded in `system.paxos_repair_history` to determine which `system.paxos` entries can be safely purged during compaction. This low bound is only advanced by **coordinated Paxos repairs** (`nodetool repair --paxos-only` or regular `nodetool repair`), not by the automatic background Paxos repair. See [Understanding the Two Paxos Repair Mechanisms](../../operations/repair/strategies.md#understanding-the-two-paxos-repair-mechanisms) for the full distinction.
+
+### Commit Consistency Optimization
+
+LWT operations in Cassandra use two consistency levels:
+
+- **Serial consistency level** (`SERIAL` or `LOCAL_SERIAL`): Controls the Paxos consensus phase — how many replicas must participate in the prepare/propose/accept rounds.
+- **Commit (non-serial) consistency level**: Controls the final commit phase — how many replicas must acknowledge that the committed value has been written to the base table.
+
+These are configured separately in application code. For example, a query might use `LOCAL_SERIAL` for consensus and `LOCAL_QUORUM` for the commit.
+
+With Paxos v2 and `paxos_state_purging: repaired`, the commit consistency level can be safely set to `ANY`. This eliminates a WAN round-trip because the coordinator does not need to wait for a quorum acknowledgment of the commit — the Paxos repair mechanism guarantees that committed values will eventually be propagated.
+
+**Prerequisites for commit CL=ANY:**
+
+1. `paxos_variant: v2` set consistently across **all nodes**
+2. `paxos_state_purging: repaired` set consistently across **all nodes**
+3. Regular coordinated Paxos repairs running (`nodetool repair --paxos-only` or regular `nodetool repair`)
+
+**Example driver configuration (Java):**
+
+```java
+// Serial consistency controls the Paxos consensus phase
+statement.setSerialConsistencyLevel(ConsistencyLevel.LOCAL_SERIAL);
+
+// Commit consistency controls the final write — can be ANY with v2 + repaired
+statement.setConsistencyLevel(ConsistencyLevel.ANY);
+```
+
+!!! warning "Reverting Commit CL"
+    If `paxos_state_purging` must be changed from `repaired` to `gc_grace` (for example, because coordinated Paxos repairs must be disabled for an extended period), applications **MUST** change their commit consistency level back from `ANY` to `QUORUM` or `LOCAL_QUORUM` to maintain correctness.
 
 ### Upgrade Considerations
 
@@ -376,9 +421,12 @@ For detailed configuration options, see [Paxos-Related cassandra.yaml Configurat
 | **Quorum** | Majority of replicas; with RF=3, quorum is 2 |
 | **Ballot** | Unique proposal number combining timestamp and node ID |
 | **Paxos state** | Entries in `system.paxos` table tracking proposals and accepted values |
-| **Paxos repair** | Process of reconciling Paxos state across replicas |
+| **Background Paxos repair** | Automatic process (every 5 min in 4.1+) that completes uncommitted Paxos transactions. Does not advance the repair low bound. |
+| **Coordinated Paxos repair** | `nodetool repair --paxos-only` or the Paxos step in regular `nodetool repair`. Completes uncommitted transactions AND advances the low bound in `system.paxos_repair_history`, enabling `system.paxos` garbage collection. |
+| **Paxos repair low bound** | Ballot recorded in `system.paxos_repair_history` indicating the point up to which Paxos state has been safely reconciled. Used by `paxos_state_purging: repaired` to determine what can be garbage collected. |
+| **Serial consistency** | Consistency level (`SERIAL` or `LOCAL_SERIAL`) controlling the Paxos consensus phase |
+| **Commit consistency** | Non-serial consistency level controlling the final commit write. Can be set to `ANY` with Paxos v2 + `repaired` purging. |
 | **LWT** | Lightweight Transaction—Cassandra's conditional atomic operations using Paxos |
-| **SERIAL** | Consistency level that uses Paxos for linearizable operations |
 
 ---
 
@@ -401,9 +449,9 @@ For detailed configuration options, see [Paxos-Related cassandra.yaml Configurat
 
 ### Operational Requirements
 
-- **Paxos state accumulates**: Without regular Paxos repairs, `system.paxos` grows unboundedly
+- **Paxos state accumulates**: Without regular **coordinated** Paxos repairs (`nodetool repair --paxos-only` or regular `nodetool repair`), `system.paxos` grows unboundedly when using `paxos_state_purging: repaired`. The automatic background Paxos repair does not advance the low bound needed for garbage collection.
 - **Topology changes**: Paxos repairs **MUST** complete before topology changes (bootstrap, decommission)
-- **Repair requirements**: Clusters using LWTs **MUST** run regular Paxos repairs
+- **Repair requirements**: Clusters using LWTs with `paxos_state_purging: repaired` **MUST** run regular coordinated Paxos repairs
 
 For operational guidance, see [Paxos Repairs](../../operations/repair/strategies.md#paxos-repairs).
 
