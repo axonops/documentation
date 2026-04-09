@@ -9,7 +9,7 @@ AxonOps is available in two editions. The Free Edition gets you started on AxonO
 
 | Plan | Best for | Pricing | Limits |
 | --- | --- | --- | --- |
-| **Free Edition** | Trying AxonOps Cloud on smaller clusters | Free | Up to 6 nodes, 2 cloud users, 1-day metrics retention |
+| **Free Edition** | Trying AxonOps Cloud on smaller clusters | Free | Up to 3 nodes, 2 cloud users, 1-day metrics retention |
 | **Enterprise Edition** | Production-scale operations and long retention | Contact sales | Unlimited nodes and users, extended retention, optional managed Cassandra |
 
 ## Feature comparison
@@ -28,7 +28,7 @@ AxonOps is available in two editions. The Free Edition gets you started on AxonO
 | Backup and restore workflows | Included | Included |
 | Cassandra support | Optional | Optional |
 | Consulting services | Optional | Optional |
-| Node limits | Up to 6 nodes | Unlimited nodes |
+| Node limits | Up to 3 nodes | Unlimited nodes |
 | Cloud user accounts | 2 users | Unlimited users |
 | Metrics retention | 1 day (all resolutions) | Tiered retention up to 1 year |
 | Event log retention | 1 day | 4 to 8 weeks |
