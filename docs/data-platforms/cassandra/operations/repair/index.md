@@ -8,7 +8,7 @@ meta:
 
 # Repair Operations Guide
 
-This guide covers the operational aspects of running and managing Cassandra repair: command syntax, scheduling strategies, monitoring, and troubleshooting. For the theoretical foundations of how repair works—including Merkle trees, anti-entropy mechanisms, and replica synchronization—refer to the [Replica Synchronization](../../architecture/distributed-data/replica-synchronization.md) documentation in the Architecture section.
+This guide covers the operational aspects of running and managing Cassandra repair: command syntax, scheduling strategies, monitoring, and troubleshooting. For the architectural foundations of how repair works — including Merkle trees, repair modes, and the gc_grace_seconds constraint — refer to the [Repair Architecture](../../architecture/distributed-data/repair.md) page. For the broader context of replica synchronization mechanisms (hinted handoff, read reconciliation), see [Replica Synchronization](../../architecture/distributed-data/replica-synchronization.md).
 
 ## Purpose of This Guide
 

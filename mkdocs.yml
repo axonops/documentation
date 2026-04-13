@@ -340,6 +340,7 @@ nav:
           - Consistency: data-platforms/cassandra/architecture/distributed-data/consistency.md
           - Consistency Levels Reference: data-platforms/cassandra/architecture/distributed-data/consistency-levels.md
           - Replica Synchronization: data-platforms/cassandra/architecture/distributed-data/replica-synchronization.md
+          - Repair Architecture: data-platforms/cassandra/architecture/distributed-data/repair.md
           - Secondary Index Queries: data-platforms/cassandra/architecture/distributed-data/secondary-index-queries.md
           - Materialized Views: data-platforms/cassandra/architecture/distributed-data/materialized-views.md
           - Data Streaming: data-platforms/cassandra/architecture/distributed-data/streaming.md
