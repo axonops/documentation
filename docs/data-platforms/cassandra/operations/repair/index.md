@@ -165,13 +165,13 @@ stop
 
 ## Repair with AxonOps
 
-AxonOps provides automated repair scheduling with:
+[AxonOps Adaptive Repair](https://axonops.com/cassandra-features/repair/) provides automated repair scheduling with:
 
 - Intelligent scheduling across nodes
-- Automatic load-based throttling
-- Failure detection and retry
+- Load-aware throttling that adapts to cluster conditions
+- Automatic failure detection and retry
 - Progress monitoring and alerting
-- Repair history and compliance tracking
+- Repair history and `gc_grace_seconds` compliance tracking
 
 ---
 

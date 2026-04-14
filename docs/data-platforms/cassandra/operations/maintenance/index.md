@@ -748,7 +748,7 @@ nodetool tablestats | grep -i tombstone
 
 ## AxonOps Maintenance Automation
 
-Manual maintenance requires careful coordination, scripting expertise, and vigilant monitoring. [AxonOps](https://axonops.com) provides automated maintenance that reduces operational burden and risk.
+Manual maintenance requires careful coordination, scripting expertise, and vigilant monitoring. [AxonOps Operations](https://axonops.com/cassandra-features/operations/) automates routine maintenance tasks, reducing operational burden and risk.
 
 ### Automated Rolling Operations
 

@@ -366,7 +366,7 @@ When normal repair windows are unavailable:
 
 ## Automated Repair with AxonOps
 
-Manual repair scheduling becomes increasingly difficult as clusters grow. AxonOps offers two approaches to automated repair:
+Manual repair scheduling becomes increasingly difficult as clusters grow. [AxonOps Adaptive Repair](https://axonops.com/cassandra-features/repair/) offers two approaches to automated repair:
 
 ### Scheduled Repair
 

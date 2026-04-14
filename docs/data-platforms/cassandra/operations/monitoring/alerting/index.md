@@ -172,6 +172,8 @@ Early warning of approaching memory pressure.
 
 ## AxonOps Alert Configuration
 
+[AxonOps Monitoring](https://axonops.com/cassandra-features/monitoring/) includes pre-configured alerting for Cassandra clusters.
+
 ### Creating Alerts
 
 Alerts are configured in the AxonOps dashboard under **Settings > Alerts**.

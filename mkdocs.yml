@@ -439,6 +439,7 @@ nav:
         - Overview: data-platforms/cassandra/operations/index.md
         - Nodetool Reference:
           - Overview: data-platforms/cassandra/operations/nodetool/index.md
+          - Scheduling & Orchestration: data-platforms/cassandra/operations/nodetool/scheduling.md
           - Cluster Information:
             - status: data-platforms/cassandra/operations/nodetool/status.md
             - ring: data-platforms/cassandra/operations/nodetool/ring.md

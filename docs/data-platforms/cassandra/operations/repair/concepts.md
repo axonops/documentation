@@ -111,6 +111,9 @@ end note
 
 **Prevention:** Run repair on all nodes within `gc_grace_seconds` to ensure tombstones propagate before deletion.
 
+!!! tip "Simplifying Repair Operations"
+    Ensuring repair completes within `gc_grace_seconds` across every node requires careful scheduling and monitoring. [AxonOps Adaptive Repair](https://axonops.com/cassandra-features/repair/) handles this automatically with load-aware scheduling, failure retry, and compliance tracking.
+
 ## How Repair Works
 
 ### The Merkle Tree Process

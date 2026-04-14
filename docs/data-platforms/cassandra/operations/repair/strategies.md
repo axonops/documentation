@@ -65,6 +65,9 @@ stop
 | Continuous Repair | 50+ nodes | Any | High | Routine maintenance |
 | Single-Rack Repair | Any (with rack-aware setup) | Any | Low | Routine maintenance, recovery |
 
+!!! tip "Automated Repair for Any Cluster Size"
+    [AxonOps Adaptive Repair](https://axonops.com/cassandra-features/repair/) automates strategy selection, scheduling, and execution — handling the coordination complexity described below for clusters of any size.
+
 ---
 
 ## Strategy 1: Sequential Single-Node Repair
@@ -440,12 +443,12 @@ end note
 
 ### Using AxonOps for Continuous Repair
 
-AxonOps provides automated repair scheduling with:
+[AxonOps Adaptive Repair](https://axonops.com/cassandra-features/repair/) provides automated repair scheduling with:
 
-- Cluster-wide coordination
-- Automatic throttling based on cluster load
-- Progress tracking and alerting
-- Repair history and reporting
+- Cluster-wide coordination with adaptive timing
+- Load-aware throttling that responds to cluster conditions
+- Automatic failure detection and retry
+- Progress tracking, alerting, and `gc_grace_seconds` compliance monitoring
 
 ### Timeline Requirements
 

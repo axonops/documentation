@@ -698,6 +698,9 @@ nodetool repair --skip-paxos my_keyspace
 nodetool repair --paxos-only my_keyspace
 ```
 
+!!! tip "Automated Alternative"
+    Managing these options manually across large clusters is error-prone. [AxonOps Adaptive Repair](https://axonops.com/cassandra-features/repair/) automates repair scheduling with intelligent defaults, eliminating the need to manually tune parallelism, scope, and timing options.
+
 ## Next Steps
 
 - **[Repair Concepts](concepts.md)** - Understanding how repair works

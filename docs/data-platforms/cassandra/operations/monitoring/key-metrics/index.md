@@ -347,7 +347,7 @@ nodetool gossipinfo
 
 ### AxonOps Dashboard
 
-[AxonOps](https://axonops.com) provides purpose-built dashboards for Cassandra monitoring, displaying all key metrics in a unified interface without requiring manual dashboard configuration.
+[AxonOps Monitoring](https://axonops.com/cassandra-features/monitoring/) provides purpose-built dashboards for Cassandra monitoring, displaying all key metrics in a unified interface without requiring manual dashboard configuration.
 
 **Pre-built Cassandra dashboards include:**
 

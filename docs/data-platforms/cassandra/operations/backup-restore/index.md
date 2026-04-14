@@ -447,7 +447,7 @@ Implementing enterprise-grade backup and restore requires significant operationa
 - Regular restore testing and validation
 - Documentation and runbook maintenance
 
-AxonOps provides a fully managed backup solution that can be configured in minutes:
+[AxonOps Backup & Restore](https://axonops.com/cassandra-features/backup-and-restore/) provides a fully managed solution that can be configured in minutes:
 
 - **Rapid setup**: Configure backups against S3, GCS, Azure Blob, or S3-compatible storage in minutes
 - **No restart required**: Enable backup and commit log archiving on running clusters without downtime

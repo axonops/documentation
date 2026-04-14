@@ -443,7 +443,7 @@ Track these for capacity planning:
 
 ## AxonOps Monitoring Platform
 
-[AxonOps](https://axonops.com) provides purpose-built monitoring for Apache Cassandra, eliminating the complexity of assembling custom monitoring stacks.
+[AxonOps Monitoring](https://axonops.com/cassandra-features/monitoring/) provides purpose-built monitoring for Apache Cassandra, eliminating the complexity of assembling custom monitoring stacks.
 
 ### Key Capabilities
 

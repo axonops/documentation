@@ -30,6 +30,9 @@ Cassandra provides two opportunistic synchronization mechanisms — [hinted hand
 
 Repair addresses all of these by performing a systematic comparison of data across replicas, independent of read or write activity.
 
+!!! tip "Simplifying Repair Operations"
+    Managing repair scheduling, concurrency tuning, and `gc_grace_seconds` compliance across large clusters is operationally demanding. [AxonOps Adaptive Repair](https://axonops.com/cassandra-features/repair/) automates repair scheduling with load-aware throttling, automatic failure retry, and compliance monitoring — eliminating the manual coordination described in this page.
+
 ---
 
 ## Repair Coordination Protocol

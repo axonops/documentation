@@ -1098,7 +1098,7 @@ If restoring a backup older than gc_grace_seconds:
 
 ## AxonOps Restore
 
-AxonOps provides guided restore operations through its dashboard:
+[AxonOps Backup & Restore](https://axonops.com/cassandra-features/backup-and-restore/) provides guided restore operations through its dashboard:
 
 **Snapshot Restore:**
 

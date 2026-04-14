@@ -523,7 +523,7 @@ AxonOps provides comprehensive backup monitoring with automatic alerting for fai
 
 ## AxonOps Backup Set up
 
-AxonOps backup configuration takes minutes to complete:
+[AxonOps Backup & Restore](https://axonops.com/cassandra-features/backup-and-restore/) configuration takes minutes to complete:
 
 1. **Select storage backend**: S3, Google Cloud Storage, Azure Blob Storage, or S3-compatible storage
 2. **Configure retention policy**: Define how long to retain backups

@@ -149,6 +149,9 @@ grep -i "slow" /var/log/cassandra/system.log
 
 ---
 
+!!! tip "Centralized Log Management"
+    [AxonOps Monitoring](https://axonops.com/cassandra-features/monitoring/) provides centralized log collection and analysis across all Cassandra nodes, with built-in pattern detection and alerting.
+
 ## Next Steps
 
 - **[Alerting](../alerting/index.md)** - Alert configuration
