@@ -1,0 +1,13 @@
+mkdocs
+mkdocs-material
+mkdocs-material-extensions
+mkdocs-glightbox
+mkdocs-video
+markdown
+markdown-include
+jinja2
+requests
+urllib3
+pymdown-extensions
+mkdocs-graphviz
+plantuml-markdown
