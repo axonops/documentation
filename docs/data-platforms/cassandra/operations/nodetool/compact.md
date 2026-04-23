@@ -49,9 +49,17 @@ See [connection options](index.md#connection-options) for connection options.
 | Option | Description |
 |--------|-------------|
 | `-s, --split-output` | Don't create single SSTable; output multiple based on strategy |
-| `--user-defined` | Run user-defined compaction (provide SSTable files) |
-| `-st, --start-token` | Start token for compaction range |
-| `-et, --end-token` | End token for compaction range |
+| `--user-defined` | Treat positional arguments as SSTable `Data.db` file paths and compact only those files |
+| `-st, --start-token` | Start token for compaction range (inclusive) |
+| `-et, --end-token` | End token for compaction range (inclusive) |
+| `--partition` | String representation of a single partition key to compact |
+
+!!! warning "Mutually Exclusive Options"
+    The following option combinations are rejected at invocation:
+
+    - `--user-defined` with `-s/--split-output`
+    - `--user-defined` with `-st/-et` or `--partition`
+    - `-s/--split-output` with `-st/-et` or `--partition`
 
 ---
 
@@ -231,10 +239,23 @@ nodetool tablestats my_keyspace.my_table | grep -i "compacted\|sstable"
 ### For Specific SSTables
 
 ```bash
-nodetool compact --user-defined /path/to/sstable-Data.db
+nodetool compact --user-defined /path/to/nb-1-big-Data.db /path/to/nb-2-big-Data.db ...
 ```
 
-Compacts specific SSTables rather than all.
+Runs a user-defined compaction over only the listed SSTables. Positional arguments are interpreted as SSTable `Data.db` file paths (not a keyspace/table pair). Multiple files may be listed; they are submitted together as a single compaction task via `forceUserDefinedCompaction`.
+
+**Requirements and constraints:**
+
+- Paths must point to existing `Data.db` files on the node where the command is executed
+- All listed SSTables must belong to the same table
+- Must not be combined with `-s/--split-output`, `-st/-et`, or `--partition`
+- The compaction strategy assigned to the table controls how the output SSTable(s) are produced
+
+**Typical uses:**
+
+- Consolidating a specific set of overlapping SSTables identified via `sstablemetadata` or `nodetool tablestats`
+- Forcing tombstone purging on a known-problematic SSTable without a full major compaction
+- Re-running compaction on SSTables left behind by an interrupted compaction or import
 
 ---
 
