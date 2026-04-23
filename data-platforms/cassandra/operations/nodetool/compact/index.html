@@ -20718,18 +20718,31 @@ See <a href="../#connection-options">connection options</a> for connection optio
 </tr>
 <tr>
 <td><code>--user-defined</code></td>
-<td>Run user-defined compaction (provide SSTable files)</td>
+<td>Treat positional arguments as SSTable <code>Data.db</code> file paths and compact only those files</td>
 </tr>
 <tr>
 <td><code>-st, --start-token</code></td>
-<td>Start token for compaction range</td>
+<td>Start token for compaction range (inclusive)</td>
 </tr>
 <tr>
 <td><code>-et, --end-token</code></td>
-<td>End token for compaction range</td>
+<td>End token for compaction range (inclusive)</td>
+</tr>
+<tr>
+<td><code>--partition</code></td>
+<td>String representation of a single partition key to compact</td>
 </tr>
 </tbody>
 </table>
+<div class="admonition warning">
+<p class="admonition-title">Mutually Exclusive Options</p>
+<p>The following option combinations are rejected at invocation:</p>
+<ul>
+<li><code>--user-defined</code> with <code>-s/--split-output</code></li>
+<li><code>--user-defined</code> with <code>-st/-et</code> or <code>--partition</code></li>
+<li><code>-s/--split-output</code> with <code>-st/-et</code> or <code>--partition</code></li>
+</ul>
+</div>
 <hr>
 <h2 id="examples">Examples<a class="headerlink" href="#examples" title="Permanent link">¶</a></h2>
 <h3 id="compact-specific-table">Compact Specific Table<a class="headerlink" href="#compact-specific-table" title="Permanent link">¶</a></h3>
@@ -20892,9 +20905,22 @@ After: 1 SSTable × ~95 GB (after compression/tombstone removal)
 <div class="highlight"><pre><span></span><code>nodetool<span class="w"> </span>tablestats<span class="w"> </span>my_keyspace.my_table<span class="w"> </span><span class="p">|</span><span class="w"> </span>grep<span class="w"> </span>-i<span class="w"> </span><span class="s2">"compacted\|sstable"</span>
 </code></pre></div>
 <h3 id="for-specific-sstables">For Specific SSTables<a class="headerlink" href="#for-specific-sstables" title="Permanent link">¶</a></h3>
-<div class="highlight"><pre><span></span><code>nodetool<span class="w"> </span>compact<span class="w"> </span>--user-defined<span class="w"> </span>/path/to/sstable-Data.db
+<div class="highlight"><pre><span></span><code>nodetool<span class="w"> </span>compact<span class="w"> </span>--user-defined<span class="w"> </span>/path/to/nb-1-big-Data.db<span class="w"> </span>/path/to/nb-2-big-Data.db<span class="w"> </span>...
 </code></pre></div>
-<p>Compacts specific SSTables rather than all.</p>
+<p>Runs a user-defined compaction over only the listed SSTables. Positional arguments are interpreted as SSTable <code>Data.db</code> file paths (not a keyspace/table pair). Multiple files may be listed; they are submitted together as a single compaction task via <code>forceUserDefinedCompaction</code>.</p>
+<p><strong>Requirements and constraints:</strong></p>
+<ul>
+<li>Paths must point to existing <code>Data.db</code> files on the node where the command is executed</li>
+<li>All listed SSTables must belong to the same table</li>
+<li>Must not be combined with <code>-s/--split-output</code>, <code>-st/-et</code>, or <code>--partition</code></li>
+<li>The compaction strategy assigned to the table controls how the output SSTable(s) are produced</li>
+</ul>
+<p><strong>Typical uses:</strong></p>
+<ul>
+<li>Consolidating a specific set of overlapping SSTables identified via <code>sstablemetadata</code> or <code>nodetool tablestats</code></li>
+<li>Forcing tombstone purging on a known-problematic SSTable without a full major compaction</li>
+<li>Re-running compaction on SSTables left behind by an interrupted compaction or import</li>
+</ul>
 <hr>
 <h2 id="strategy-specific-behavior">Strategy-Specific Behavior<a class="headerlink" href="#strategy-specific-behavior" title="Permanent link">¶</a></h2>
 <h3 id="size-tiered-stcs">Size-Tiered (STCS)<a class="headerlink" href="#size-tiered-stcs" title="Permanent link">¶</a></h3>
