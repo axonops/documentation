@@ -33,3 +33,4 @@ install_dependency axon-agent
 # install_dependency axon-cassandra5.0-agent-jdk17
 # install_dependency axon-kafka2-agent
 # install_dependency axon-kafka3-agent
+# install_dependency axon-kafka4-agent

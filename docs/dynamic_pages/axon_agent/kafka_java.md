@@ -97,3 +97,94 @@ exec $(dirname $0)/kafka-run-class.sh $EXTRA_ARGS org.apache.kafka.connect.cli.C
 </div>
 </div>
 <!-- END Kafka 3.0 Java 11 -->
+
+
+<!-- Kafka 4.0 Java 11 -->
+<div id="Kafka40JavaDiv" class="javakafka">
+<div id="Broker" class="axon_kafka_dynamic_s6">
+
+```shell hl_lines="1"
+. /usr/share/axonops/axonops-jvm.options
+
+exec $base_dir/kafka-run-class.sh $EXTRA_ARGS kafka.Kafka "$@"
+```
+</div>
+<div id="Zookeeper" class="axon_kafka_dynamic_s6" style="display:none">
+
+```shell hl_lines="1"
+. /usr/share/axonops/axonops-jvm.options
+
+exec $base_dir/kafka-run-class.sh $EXTRA_ARGS org.apache.zookeeper.server.quorum.QuorumPeerMain "$@"
+```
+</div>
+<div id="KRaftBroker" class="axon_kafka_dynamic_s6" style="display:none">
+
+```shell hl_lines="1"
+. /usr/share/axonops/axonops-jvm.options
+
+exec $base_dir/kafka-run-class.sh $EXTRA_ARGS kafka.Kafka "$@"
+```
+</div>
+<div id="KRaftController" class="axon_kafka_dynamic_s6" style="display:none">
+
+```shell hl_lines="1"
+. /usr/share/axonops/axonops-jvm.options
+
+exec $base_dir/kafka-run-class.sh $EXTRA_ARGS kafka.Kafka "$@"
+```
+</div>
+<div id="Connect" class="axon_kafka_dynamic_s6" style="display:none">
+
+```shell hl_lines="1"
+. /usr/share/axonops/axonops-jvm.options
+
+exec $(dirname $0)/kafka-run-class.sh $EXTRA_ARGS org.apache.kafka.connect.cli.ConnectDistributed "$@"
+```
+</div>
+</div>
+<!-- END Kafka 4.0 Java 11 -->
+
+<!-- Kafka 4.0 Java 17 -->
+<div id="Kafka40Java17Div" class="javakafka">
+<div id="Broker" class="axon_kafka_dynamic_s6">
+
+```shell hl_lines="1"
+. /usr/share/axonops/axonops-jvm.options
+
+exec $base_dir/kafka-run-class.sh $EXTRA_ARGS kafka.Kafka "$@"
+```
+</div>
+<div id="Zookeeper" class="axon_kafka_dynamic_s6" style="display:none">
+
+```shell hl_lines="1"
+. /usr/share/axonops/axonops-jvm.options
+
+exec $base_dir/kafka-run-class.sh $EXTRA_ARGS org.apache.zookeeper.server.quorum.QuorumPeerMain "$@"
+```
+</div>
+<div id="KRaftBroker" class="axon_kafka_dynamic_s6" style="display:none">
+
+```shell hl_lines="1"
+. /usr/share/axonops/axonops-jvm.options
+
+exec $base_dir/kafka-run-class.sh $EXTRA_ARGS kafka.Kafka "$@"
+```
+</div>
+<div id="KRaftController" class="axon_kafka_dynamic_s6" style="display:none">
+
+```shell hl_lines="1"
+. /usr/share/axonops/axonops-jvm.options
+
+exec $base_dir/kafka-run-class.sh $EXTRA_ARGS kafka.Kafka "$@"
+```
+</div>
+<div id="Connect" class="axon_kafka_dynamic_s6" style="display:none">
+
+```shell hl_lines="1"
+. /usr/share/axonops/axonops-jvm.options
+
+exec $(dirname $0)/kafka-run-class.sh $EXTRA_ARGS org.apache.kafka.connect.cli.ConnectDistributed "$@"
+```
+</div>
+</div>
+<!-- END Kafka 4.0 Java 17 -->
