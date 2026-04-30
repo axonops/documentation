@@ -298,6 +298,7 @@ nav:
     - Overview: data-platforms/index.md
     - Apache Cassandra:
       - Overview: data-platforms/cassandra/index.md
+      - Release Notes: data-platforms/cassandra/release-notes.md
       - Getting Started:
         - Overview: data-platforms/cassandra/getting-started/index.md
         - What is Cassandra?: data-platforms/cassandra/getting-started/what-is-cassandra.md
