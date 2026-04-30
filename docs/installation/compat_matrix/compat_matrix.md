@@ -34,6 +34,7 @@ meta:
 |---------------|---------------------------|---------------|--------------------------------------------------------------------------|---------------------|
 | Kafka 2.x     | axon-kafka2-agent         | Java 8/11     | Red Hat [7,8], CentOS [7,8], Ubuntu [18.04, 20.04, 22.04], Debian [11,12] | x86_64, arm64       |
 | Kafka 3.x     | axon-kafka3-agent         | Java 11       | Red Hat [7,8], CentOS [7,8], Ubuntu [18.04, 20.04, 22.04], Debian [11,12] | x86_64, arm64       |
+| Kafka 4.x     | axon-kafka4-agent         | Java 11/17    | Red Hat [7,8], CentOS [7,8], Ubuntu [18.04, 20.04, 22.04], Debian [11,12] | x86_64, arm64       |
 
 ## Java Versions
 

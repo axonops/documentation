@@ -7,6 +7,10 @@
   <input type="radio" id="Kafka30" name="kafkaFamily" onChange="updateKafka()" />
   <img src="/get_started/kafka30.png" class="skip-lightbox" width="180px" alt="kafka30">
 </label>
+<label>
+  <input type="radio" id="Kafka40" name="kafkaFamily" onChange="updateKafka()" />
+  <img src="/get_started/kafka40.png" class="skip-lightbox" width="180px" alt="kafka40">
+</label>
 
 <h3 style="display: none;">Select the Java Version.</h3>
 <label style="display: none;">
@@ -31,6 +35,11 @@ Install the AxonOps Kafka Agent and its dependency `axon-agent`:
   sudo apt-get install axon-kafka3-agent
   ```
 </div>
+<div id="DebianKafka40JavaDiv" class="kafka">
+  ```
+  sudo apt-get install axon-kafka4-agent
+  ```
+</div>
 <!-- Debian Java17 -->
 <div id="DebianKafka20Java17Div" class="kafka">
   ```
@@ -40,6 +49,11 @@ Install the AxonOps Kafka Agent and its dependency `axon-agent`:
 <div id="DebianKafka30Java17Div" class="kafka">
   ```
   sudo apt-get install axon-kafka3-agent
+  ```
+</div>
+<div id="DebianKafka40Java17Div" class="kafka">
+  ```
+  sudo apt-get install axon-kafka4-agent
   ```
 </div>
 <!-- RedHat -->
@@ -53,6 +67,11 @@ Install the AxonOps Kafka Agent and its dependency `axon-agent`:
   sudo yum install axon-kafka3-agent
   ```
 </div>
+<div id="RedHatKafka40JavaDiv" class="kafka" style="display:none">
+  ```
+  sudo yum install axon-kafka4-agent
+  ```
+</div>
 <!-- RedHat Java17 -->
 <div id="RedHatKafka20Java17Div" class="kafka" style="display:none">
   ```
@@ -62,6 +81,11 @@ Install the AxonOps Kafka Agent and its dependency `axon-agent`:
 <div id="RedHatKafka30Java17Div" class="kafka" style="display:none">
   ```
   sudo yum install axon-kafka3-agent
+  ```
+</div>
+<div id="RedHatKafka40Java17Div" class="kafka" style="display:none">
+  ```
+  sudo yum install axon-kafka4-agent
   ```
 </div>
 
