@@ -228,11 +228,11 @@ Modify role properties.
 ### Syntax
 
 ```cql
-ALTER ROLE role_name
-    WITH option [ AND option ... ]
+ALTER ROLE [ IF EXISTS ] role_name
+    [ WITH option [ AND option ... ] ]
 ```
 
-Accepts same options as `CREATE ROLE`.
+Accepts same options as `CREATE ROLE`. With `IF EXISTS`, the statement is a no-op when the role does not exist instead of returning an error.
 
 ### Examples
 
@@ -290,8 +290,13 @@ Grant permissions on resources to a role.
 ### Syntax
 
 ```cql
-GRANT permission ON resource TO role_name
+GRANT ( ALL [ PERMISSIONS ] | permission ) ON resource TO role_name
 ```
+
+| Element | Values |
+|---------|--------|
+| `permission` | `CREATE`, `ALTER`, `DROP`, `SELECT`, `MODIFY`, `AUTHORIZE`, `DESCRIBE`, `UNMASK`, `SELECT_MASKED`, `EXECUTE` |
+| `resource` | `ALL KEYSPACES`, `KEYSPACE name`, `[TABLE] name`, `ALL ROLES`, `ROLE name`, `ALL FUNCTIONS [IN KEYSPACE name]`, `FUNCTION name`, `ALL MBEANS`, `MBEAN name`, `MBEANS pattern` |
 
 ### Examples
 
@@ -373,8 +378,10 @@ Remove permissions from a role.
 ### Syntax
 
 ```cql
-REVOKE permission ON resource FROM role_name
+REVOKE ( ALL [ PERMISSIONS ] | permission ) ON resource FROM role_name
 ```
+
+`permission` and `resource` accept the same forms as in [GRANT (Permission)](#grant-permission).
 
 ### Examples
 
@@ -468,7 +475,9 @@ Display granted permissions.
 ### Syntax
 
 ```cql
-LIST permission [ ON resource ] [ OF role_name ] [ NORECURSIVE ]
+LIST ( ALL [ PERMISSIONS ] | permission )
+    [ ON resource ]
+    [ OF role_name [ NORECURSIVE ] ]
 ```
 
 ### Options
@@ -519,8 +528,10 @@ Associate a certificate identity with a role. Requires `MutualTlsAuthenticator`.
 ### Syntax
 
 ```cql
-ADD IDENTITY 'identity_string' TO ROLE role_name
+ADD IDENTITY [ IF NOT EXISTS ] 'identity_string' TO ROLE role_name
 ```
+
+With `IF NOT EXISTS`, the statement is a no-op when the identity is already associated instead of returning an error.
 
 ### Examples
 
@@ -530,6 +541,9 @@ ADD IDENTITY 'spiffe://cluster.local/ns/default/sa/app-service' TO ROLE app_serv
 
 -- Certificate subject
 ADD IDENTITY 'CN=app-client,O=MyOrg' TO ROLE app_client;
+
+-- Idempotent association
+ADD IDENTITY IF NOT EXISTS 'CN=app-client,O=MyOrg' TO ROLE app_client;
 ```
 
 See [Mutual TLS Authentication](../../security/authentication/index.md#mutual-tls-authentication) for configuration.
@@ -545,13 +559,64 @@ Remove a certificate identity mapping.
 ### Syntax
 
 ```cql
-DROP IDENTITY 'identity_string'
+DROP IDENTITY [ IF EXISTS ] 'identity_string'
 ```
+
+With `IF EXISTS`, the statement is a no-op when the identity does not exist instead of returning an error.
 
 ### Examples
 
 ```sql
 DROP IDENTITY 'spiffe://cluster.local/ns/default/sa/app-service';
+DROP IDENTITY IF EXISTS 'spiffe://cluster.local/ns/default/sa/missing';
+```
+
+---
+
+## Legacy User Statements
+
+The pre-2.2 user-based statements remain supported as a thin layer over the role model. They are accepted for backward compatibility, but `CREATE ROLE` / `ALTER ROLE` / `DROP ROLE` should be preferred for new deployments.
+
+### CREATE USER
+
+```cql
+CREATE USER [ IF NOT EXISTS ] user_name
+    [ WITH PASSWORD 'password' ]
+    [ SUPERUSER | NOSUPERUSER ]
+```
+
+Internally executes `CREATE ROLE ... WITH LOGIN = true`. `SUPERUSER` and `NOSUPERUSER` map to `SUPERUSER = true|false`. The default is `NOSUPERUSER`.
+
+### ALTER USER
+
+```cql
+ALTER USER [ IF EXISTS ] user_name
+    [ WITH PASSWORD 'password' ]
+    [ SUPERUSER | NOSUPERUSER ]
+```
+
+### DROP USER
+
+```cql
+DROP USER [ IF EXISTS ] user_name
+```
+
+### LIST USERS
+
+```cql
+LIST USERS
+```
+
+Returns the subset of roles where `LOGIN = true`.
+
+### Examples
+
+```sql
+CREATE USER IF NOT EXISTS app_user WITH PASSWORD 'secret' NOSUPERUSER;
+ALTER USER app_user WITH PASSWORD 'rotated_secret';
+ALTER USER IF EXISTS app_user SUPERUSER;
+DROP USER IF EXISTS legacy_user;
+LIST USERS;
 ```
 
 ---
