@@ -7581,6 +7581,66 @@ data-et-multi-view="{&quot;schema&quot;:{&quot;content&quot;:{&quot;desktop&quot
 </li>
       
         <li class="md-nav__item">
+  <a href="#legacy-user-statements" class="md-nav__link">
+    <span class="md-ellipsis">
+      Legacy User Statements
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Legacy User Statements">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#create-user" class="md-nav__link">
+    <span class="md-ellipsis">
+      CREATE USER
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#alter-user" class="md-nav__link">
+    <span class="md-ellipsis">
+      ALTER USER
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#drop-user" class="md-nav__link">
+    <span class="md-ellipsis">
+      DROP USER
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#list-users" class="md-nav__link">
+    <span class="md-ellipsis">
+      LIST USERS
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#examples_11" class="md-nav__link">
+    <span class="md-ellipsis">
+      Examples
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#system-tables" class="md-nav__link">
     <span class="md-ellipsis">
       System Tables
@@ -21290,6 +21350,66 @@ data-et-multi-view="{&quot;schema&quot;:{&quot;content&quot;:{&quot;desktop&quot
 </li>
       
         <li class="md-nav__item">
+  <a href="#legacy-user-statements" class="md-nav__link">
+    <span class="md-ellipsis">
+      Legacy User Statements
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Legacy User Statements">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#create-user" class="md-nav__link">
+    <span class="md-ellipsis">
+      CREATE USER
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#alter-user" class="md-nav__link">
+    <span class="md-ellipsis">
+      ALTER USER
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#drop-user" class="md-nav__link">
+    <span class="md-ellipsis">
+      DROP USER
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#list-users" class="md-nav__link">
+    <span class="md-ellipsis">
+      LIST USERS
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#examples_11" class="md-nav__link">
+    <span class="md-ellipsis">
+      Examples
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#system-tables" class="md-nav__link">
     <span class="md-ellipsis">
       System Tables
@@ -21775,10 +21895,10 @@ data-et-multi-view="{&quot;schema&quot;:{&quot;content&quot;:{&quot;desktop&quot
 <h2 id="alter-role">ALTER ROLE<a class="headerlink" href="#alter-role" title="Permanent link">¶</a></h2>
 <p>Modify role properties.</p>
 <h3 id="syntax_1">Syntax<a class="headerlink" href="#syntax_1" title="Permanent link">¶</a></h3>
-<div class="highlight"><pre><span></span><code>ALTER ROLE role_name
-    WITH option [ AND option ... ]
+<div class="highlight"><pre><span></span><code>ALTER ROLE [ IF EXISTS ] role_name
+    [ WITH option [ AND option ... ] ]
 </code></pre></div>
-<p>Accepts same options as <code>CREATE ROLE</code>.</p>
+<p>Accepts same options as <code>CREATE ROLE</code>. With <code>IF EXISTS</code>, the statement is a no-op when the role does not exist instead of returning an error.</p>
 <h3 id="examples_1">Examples<a class="headerlink" href="#examples_1" title="Permanent link">¶</a></h3>
 <div class="highlight"><pre><span></span><code><span class="c1">-- Change password</span>
 <span class="k">ALTER</span><span class="w"> </span><span class="k">ROLE</span><span class="w"> </span><span class="n">app_service</span><span class="w"> </span><span class="k">WITH</span><span class="w"> </span><span class="n">PASSWORD</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s1">'new_password'</span><span class="p">;</span>
@@ -21818,8 +21938,26 @@ data-et-multi-view="{&quot;schema&quot;:{&quot;content&quot;:{&quot;desktop&quot
 <h2 id="grant-permission">GRANT (Permission)<a class="headerlink" href="#grant-permission" title="Permanent link">¶</a></h2>
 <p>Grant permissions on resources to a role.</p>
 <h3 id="syntax_3">Syntax<a class="headerlink" href="#syntax_3" title="Permanent link">¶</a></h3>
-<div class="highlight"><pre><span></span><code>GRANT permission ON resource TO role_name
+<div class="highlight"><pre><span></span><code>GRANT ( ALL [ PERMISSIONS ] | permission ) ON resource TO role_name
 </code></pre></div>
+<table>
+<thead>
+<tr>
+<th>Element</th>
+<th>Values</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>permission</code></td>
+<td><code>CREATE</code>, <code>ALTER</code>, <code>DROP</code>, <code>SELECT</code>, <code>MODIFY</code>, <code>AUTHORIZE</code>, <code>DESCRIBE</code>, <code>UNMASK</code>, <code>SELECT_MASKED</code>, <code>EXECUTE</code></td>
+</tr>
+<tr>
+<td><code>resource</code></td>
+<td><code>ALL KEYSPACES</code>, <code>KEYSPACE name</code>, <code>[TABLE] name</code>, <code>ALL ROLES</code>, <code>ROLE name</code>, <code>ALL FUNCTIONS [IN KEYSPACE name]</code>, <code>FUNCTION name</code>, <code>ALL MBEANS</code>, <code>MBEAN name</code>, <code>MBEANS pattern</code></td>
+</tr>
+</tbody>
+</table>
 <h3 id="examples_3">Examples<a class="headerlink" href="#examples_3" title="Permanent link">¶</a></h3>
 <div class="highlight"><pre><span></span><code><span class="c1">-- Read access to keyspace</span>
 <span class="k">GRANT</span><span class="w"> </span><span class="k">SELECT</span><span class="w"> </span><span class="k">ON</span><span class="w"> </span><span class="n">KEYSPACE</span><span class="w"> </span><span class="n">production</span><span class="w"> </span><span class="k">TO</span><span class="w"> </span><span class="n">analyst</span><span class="p">;</span>
@@ -21883,8 +22021,9 @@ data-et-multi-view="{&quot;schema&quot;:{&quot;content&quot;:{&quot;desktop&quot
 <h2 id="revoke-permission">REVOKE (Permission)<a class="headerlink" href="#revoke-permission" title="Permanent link">¶</a></h2>
 <p>Remove permissions from a role.</p>
 <h3 id="syntax_5">Syntax<a class="headerlink" href="#syntax_5" title="Permanent link">¶</a></h3>
-<div class="highlight"><pre><span></span><code>REVOKE permission ON resource FROM role_name
+<div class="highlight"><pre><span></span><code>REVOKE ( ALL [ PERMISSIONS ] | permission ) ON resource FROM role_name
 </code></pre></div>
+<p><code>permission</code> and <code>resource</code> accept the same forms as in <a href="#grant-permission">GRANT (Permission)</a>.</p>
 <h3 id="examples_5">Examples<a class="headerlink" href="#examples_5" title="Permanent link">¶</a></h3>
 <div class="highlight"><pre><span></span><code><span class="c1">-- Revoke specific permission</span>
 <span class="k">REVOKE</span><span class="w"> </span><span class="k">MODIFY</span><span class="w"> </span><span class="k">ON</span><span class="w"> </span><span class="n">KEYSPACE</span><span class="w"> </span><span class="n">production</span><span class="w"> </span><span class="k">FROM</span><span class="w"> </span><span class="n">app_service</span><span class="p">;</span>
@@ -21960,7 +22099,9 @@ data-et-multi-view="{&quot;schema&quot;:{&quot;content&quot;:{&quot;desktop&quot
 <h2 id="list-permissions">LIST PERMISSIONS<a class="headerlink" href="#list-permissions" title="Permanent link">¶</a></h2>
 <p>Display granted permissions.</p>
 <h3 id="syntax_8">Syntax<a class="headerlink" href="#syntax_8" title="Permanent link">¶</a></h3>
-<div class="highlight"><pre><span></span><code>LIST permission [ ON resource ] [ OF role_name ] [ NORECURSIVE ]
+<div class="highlight"><pre><span></span><code>LIST ( ALL [ PERMISSIONS ] | permission )
+    [ ON resource ]
+    [ OF role_name [ NORECURSIVE ] ]
 </code></pre></div>
 <h3 id="options_2">Options<a class="headerlink" href="#options_2" title="Permanent link">¶</a></h3>
 <table>
@@ -22016,14 +22157,18 @@ data-et-multi-view="{&quot;schema&quot;:{&quot;content&quot;:{&quot;desktop&quot
 <p>Associate a certificate identity with a role. Requires <code>MutualTlsAuthenticator</code>.</p>
 <p><em>Available in Cassandra 5.0+</em></p>
 <h3 id="syntax_9">Syntax<a class="headerlink" href="#syntax_9" title="Permanent link">¶</a></h3>
-<div class="highlight"><pre><span></span><code>ADD IDENTITY 'identity_string' TO ROLE role_name
+<div class="highlight"><pre><span></span><code>ADD IDENTITY [ IF NOT EXISTS ] 'identity_string' TO ROLE role_name
 </code></pre></div>
+<p>With <code>IF NOT EXISTS</code>, the statement is a no-op when the identity is already associated instead of returning an error.</p>
 <h3 id="examples_9">Examples<a class="headerlink" href="#examples_9" title="Permanent link">¶</a></h3>
 <div class="highlight"><pre><span></span><code><span class="c1">-- SPIFFE identity</span>
 <span class="k">ADD</span><span class="w"> </span><span class="k">IDENTITY</span><span class="w"> </span><span class="s1">'spiffe://cluster.local/ns/default/sa/app-service'</span><span class="w"> </span><span class="k">TO</span><span class="w"> </span><span class="k">ROLE</span><span class="w"> </span><span class="n">app_service</span><span class="p">;</span>
 
 <span class="c1">-- Certificate subject</span>
 <span class="k">ADD</span><span class="w"> </span><span class="k">IDENTITY</span><span class="w"> </span><span class="s1">'CN=app-client,O=MyOrg'</span><span class="w"> </span><span class="k">TO</span><span class="w"> </span><span class="k">ROLE</span><span class="w"> </span><span class="n">app_client</span><span class="p">;</span>
+
+<span class="c1">-- Idempotent association</span>
+<span class="k">ADD</span><span class="w"> </span><span class="k">IDENTITY</span><span class="w"> </span><span class="k">IF</span><span class="w"> </span><span class="k">NOT</span><span class="w"> </span><span class="k">EXISTS</span><span class="w"> </span><span class="s1">'CN=app-client,O=MyOrg'</span><span class="w"> </span><span class="k">TO</span><span class="w"> </span><span class="k">ROLE</span><span class="w"> </span><span class="n">app_client</span><span class="p">;</span>
 </code></pre></div>
 <p>See <a href="../../../security/authentication/#mutual-tls-authentication">Mutual TLS Authentication</a> for configuration.</p>
 <hr>
@@ -22031,10 +22176,40 @@ data-et-multi-view="{&quot;schema&quot;:{&quot;content&quot;:{&quot;desktop&quot
 <p>Remove a certificate identity mapping.</p>
 <p><em>Available in Cassandra 5.0+</em></p>
 <h3 id="syntax_10">Syntax<a class="headerlink" href="#syntax_10" title="Permanent link">¶</a></h3>
-<div class="highlight"><pre><span></span><code>DROP IDENTITY 'identity_string'
+<div class="highlight"><pre><span></span><code>DROP IDENTITY [ IF EXISTS ] 'identity_string'
 </code></pre></div>
+<p>With <code>IF EXISTS</code>, the statement is a no-op when the identity does not exist instead of returning an error.</p>
 <h3 id="examples_10">Examples<a class="headerlink" href="#examples_10" title="Permanent link">¶</a></h3>
 <div class="highlight"><pre><span></span><code><span class="k">DROP</span><span class="w"> </span><span class="k">IDENTITY</span><span class="w"> </span><span class="s1">'spiffe://cluster.local/ns/default/sa/app-service'</span><span class="p">;</span>
+<span class="k">DROP</span><span class="w"> </span><span class="k">IDENTITY</span><span class="w"> </span><span class="k">IF</span><span class="w"> </span><span class="k">EXISTS</span><span class="w"> </span><span class="s1">'spiffe://cluster.local/ns/default/sa/missing'</span><span class="p">;</span>
+</code></pre></div>
+<hr>
+<h2 id="legacy-user-statements">Legacy User Statements<a class="headerlink" href="#legacy-user-statements" title="Permanent link">¶</a></h2>
+<p>The pre-2.2 user-based statements remain supported as a thin layer over the role model. They are accepted for backward compatibility, but <code>CREATE ROLE</code> / <code>ALTER ROLE</code> / <code>DROP ROLE</code> should be preferred for new deployments.</p>
+<h3 id="create-user">CREATE USER<a class="headerlink" href="#create-user" title="Permanent link">¶</a></h3>
+<div class="highlight"><pre><span></span><code>CREATE USER [ IF NOT EXISTS ] user_name
+    [ WITH PASSWORD 'password' ]
+    [ SUPERUSER | NOSUPERUSER ]
+</code></pre></div>
+<p>Internally executes <code>CREATE ROLE ... WITH LOGIN = true</code>. <code>SUPERUSER</code> and <code>NOSUPERUSER</code> map to <code>SUPERUSER = true|false</code>. The default is <code>NOSUPERUSER</code>.</p>
+<h3 id="alter-user">ALTER USER<a class="headerlink" href="#alter-user" title="Permanent link">¶</a></h3>
+<div class="highlight"><pre><span></span><code>ALTER USER [ IF EXISTS ] user_name
+    [ WITH PASSWORD 'password' ]
+    [ SUPERUSER | NOSUPERUSER ]
+</code></pre></div>
+<h3 id="drop-user">DROP USER<a class="headerlink" href="#drop-user" title="Permanent link">¶</a></h3>
+<div class="highlight"><pre><span></span><code>DROP USER [ IF EXISTS ] user_name
+</code></pre></div>
+<h3 id="list-users">LIST USERS<a class="headerlink" href="#list-users" title="Permanent link">¶</a></h3>
+<div class="highlight"><pre><span></span><code>LIST USERS
+</code></pre></div>
+<p>Returns the subset of roles where <code>LOGIN = true</code>.</p>
+<h3 id="examples_11">Examples<a class="headerlink" href="#examples_11" title="Permanent link">¶</a></h3>
+<div class="highlight"><pre><span></span><code><span class="k">CREATE</span><span class="w"> </span><span class="k">USER</span><span class="w"> </span><span class="k">IF</span><span class="w"> </span><span class="k">NOT</span><span class="w"> </span><span class="k">EXISTS</span><span class="w"> </span><span class="n">app_user</span><span class="w"> </span><span class="k">WITH</span><span class="w"> </span><span class="n">PASSWORD</span><span class="w"> </span><span class="s1">'secret'</span><span class="w"> </span><span class="n">NOSUPERUSER</span><span class="p">;</span>
+<span class="k">ALTER</span><span class="w"> </span><span class="k">USER</span><span class="w"> </span><span class="n">app_user</span><span class="w"> </span><span class="k">WITH</span><span class="w"> </span><span class="n">PASSWORD</span><span class="w"> </span><span class="s1">'rotated_secret'</span><span class="p">;</span>
+<span class="k">ALTER</span><span class="w"> </span><span class="k">USER</span><span class="w"> </span><span class="k">IF</span><span class="w"> </span><span class="k">EXISTS</span><span class="w"> </span><span class="n">app_user</span><span class="w"> </span><span class="n">SUPERUSER</span><span class="p">;</span>
+<span class="k">DROP</span><span class="w"> </span><span class="k">USER</span><span class="w"> </span><span class="k">IF</span><span class="w"> </span><span class="k">EXISTS</span><span class="w"> </span><span class="n">legacy_user</span><span class="p">;</span>
+<span class="n">LIST</span><span class="w"> </span><span class="n">USERS</span><span class="p">;</span>
 </code></pre></div>
 <hr>
 <h2 id="system-tables">System Tables<a class="headerlink" href="#system-tables" title="Permanent link">¶</a></h2>
