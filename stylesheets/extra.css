@@ -124,7 +124,7 @@ body {
 
 .md-typeset {
   font-family: 'Roboto Flex', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
-  font-size: 0.9375rem;
+  font-size: 1.1075rem;
   line-height: 1.7;
   color: var(--text-primary);
 }
@@ -138,7 +138,7 @@ body {
    HEADINGS
    ---------------------------------------------------------------------------- */
 .md-typeset h1 {
-  font-size: 1.6rem;
+  font-size: 1.77rem;
   font-weight: 700;
   letter-spacing: -0.025em;
   line-height: 1.25;
@@ -150,7 +150,7 @@ body {
 }
 
 .md-typeset h2 {
-  font-size: 1.25rem;
+  font-size: 1.42rem;
   font-weight: 600;
   letter-spacing: -0.02em;
   line-height: 1.3;
@@ -162,7 +162,7 @@ body {
 }
 
 .md-typeset h3 {
-  font-size: 1rem;
+  font-size: 1.17rem;
   font-weight: 600;
   letter-spacing: -0.015em;
   line-height: 1.4;
@@ -172,7 +172,7 @@ body {
 }
 
 .md-typeset h4 {
-  font-size: 0.9rem;
+  font-size: 1.07rem;
   font-weight: 600;
   line-height: 1.4;
   margin-top: var(--space-5);
@@ -182,7 +182,7 @@ body {
 
 .md-typeset h5,
 .md-typeset h6 {
-  font-size: 0.85rem;
+  font-size: 1.02rem;
   font-weight: 600;
   line-height: 1.5;
   margin-top: var(--space-4);
@@ -255,7 +255,7 @@ body {
 .md-typeset pre > code {
   display: block;
   padding: var(--space-4);
-  font-size: 0.8125rem;
+  font-size: 0.98rem;
   line-height: 1.5;
   background-color: var(--bg-code);
   color: #e2e8f0;
@@ -269,7 +269,7 @@ body {
   background-color: #334155;
   color: #94a3b8;
   padding: var(--space-2) var(--space-4);
-  font-size: var(--font-size-sm);
+  font-size: 0.98rem;
   font-family: 'JetBrains Mono', monospace;
   border-bottom: 1px solid #475569;
 }
@@ -430,7 +430,7 @@ body {
   width: 100%;
   border-collapse: separate;
   border-spacing: 0;
-  font-size: 0.8125rem;
+  font-size: 0.98rem;
   border-radius: var(--radius-lg);
   overflow: hidden;
   box-shadow: var(--shadow-sm);
@@ -467,7 +467,7 @@ body {
 
 /* Table cell code */
 .md-typeset table:not([class]) code {
-  font-size: 0.875rem;
+  font-size: 1.045rem;
   padding: 0.15em 0.35em;
 }
 
@@ -541,14 +541,14 @@ table th:nth-of-type(3) {
   border: none;
   box-shadow: var(--shadow-sm);
   overflow: hidden;
-  font-size: var(--font-size-sm);
+  font-size: 1.1075rem;
 }
 
 .md-typeset .admonition-title,
 .md-typeset details summary {
   padding: var(--space-3) var(--space-4);
   font-weight: 600;
-  font-size: var(--font-size-sm);
+  font-size: 1.1075rem;
   letter-spacing: 0.01em;
 }
 
@@ -1240,19 +1240,19 @@ html .md-footer-meta.md-typeset a:hover {
    ---------------------------------------------------------------------------- */
 @media print {
   .md-typeset {
-    font-size: 11pt;
+    font-size: 13pt;
   }
 
   .md-typeset h1 {
-    font-size: 24pt;
+    font-size: 26pt;
   }
 
   .md-typeset h2 {
-    font-size: 18pt;
+    font-size: 20pt;
   }
 
   .md-typeset h3 {
-    font-size: 14pt;
+    font-size: 16pt;
   }
 
   .md-typeset pre {
@@ -1278,21 +1278,21 @@ html .md-footer-meta.md-typeset a:hover {
    ---------------------------------------------------------------------------- */
 @media screen and (max-width: 76.25em) {
   .md-typeset h1 {
-    font-size: 1.4rem;
+    font-size: 1.57rem;
   }
 
   .md-typeset h2 {
-    font-size: 1.15rem;
+    font-size: 1.32rem;
   }
 }
 
 @media screen and (max-width: 60em) {
   .md-typeset {
-    font-size: 0.84rem;
+    font-size: 1.01rem;
   }
 
   .md-typeset pre > code {
-    font-size: 0.76rem;
+    font-size: 0.93rem;
     padding: var(--space-3);
   }
 
